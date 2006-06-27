@@ -125,7 +125,7 @@ void StringsMessageLoader::loadMessageFile( const UnicodeString& fileName )
 
 	parseState_ = psToken;
 
-	ulong32 length = contents.size();
+	uint32 length = contents.size();
 	const VCFChar* P = contents.c_str();
 	const VCFChar* start = P;
 	const VCFChar* token;

@@ -19,7 +19,7 @@ using namespace VCF;
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-Win32SemaphorePeer::Win32SemaphorePeer(long initialCount/* = 1*/, long maxCount /*= 1*/)
+Win32SemaphorePeer::Win32SemaphorePeer(int32 initialCount/* = 1*/, int32 maxCount /*= 1*/)
 {
 	hObject_ = ::CreateSemaphore(NULL, initialCount, maxCount,NULL);
 	if (hObject_ == NULL)

@@ -73,7 +73,7 @@ public:
 				break;
 
 				case RDT_INTEGER :{
-					data_ = (ulong32)*data;
+					data_ = (uint32)*data;
 				}
 				break;
 

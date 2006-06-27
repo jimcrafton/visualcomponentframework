@@ -16,7 +16,7 @@ where you installed the VCF.
 
 using namespace VCF;
 
-LinuxSemaphorePeer::LinuxSemaphorePeer( long initialCount, long maxCount )
+LinuxSemaphorePeer::LinuxSemaphorePeer( int32 initialCount, int32 maxCount )
 {
 	sem_init(&semaphore_, 0, initialCount);
 }

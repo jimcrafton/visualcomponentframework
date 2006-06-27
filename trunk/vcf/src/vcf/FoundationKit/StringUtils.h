@@ -216,10 +216,10 @@ public:
 
 	/**
 	converts the value to a string
-	@param ulong32 the value to convert
+	@param unsigned long the value to convert
 	@return String the string representation of the unsigned long value
 	*/
-	static VCF::String toString( const VCF::ulong32& value );
+	static VCF::String toString( const unsigned long& value );
 
 	/**
 	converts the value to a string
@@ -282,9 +282,9 @@ public:
 	/**
 	converts the value to an int
 	@param String the value to convert
-	@return int the integer representation of the String value
+	@return int32 the integer representation of the String value
 	*/
-	static int fromStringAsInt( const VCF::String& value );
+	static VCF::int32 fromStringAsInt( const VCF::String& value );
 
 	/**
 	converts the value to an unsigned integer
@@ -303,9 +303,9 @@ public:
 	/**
 	converts the value to an unsigned long
 	@param String the value to convert
-	@return ulong32 the unsigned long integer representation of the String value
+	@return unsigned long the unsigned long integer representation of the String value
 	*/
-	static VCF::ulong32 fromStringAsULong( const VCF::String& value );
+	static unsigned long fromStringAsULong( const VCF::String& value );
 
 	/**
 	converts the value to a 64 bit signed integer 

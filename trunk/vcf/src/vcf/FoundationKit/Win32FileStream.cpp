@@ -75,7 +75,7 @@ Win32FileStream::~Win32FileStream()
 	}
 }
 
-void Win32FileStream::seek(const unsigned long& offset, const SeekType& offsetFrom)
+void Win32FileStream::seek(const uint32& offset, const SeekType& offsetFrom)
 {
 	DWORD err = SetFilePointer( fileHandle_, offset, NULL, translateSeekTypeToMoveType( offsetFrom ) );
 	if ( 0xFFFFFFFF == err ) {
@@ -83,12 +83,12 @@ void Win32FileStream::seek(const unsigned long& offset, const SeekType& offsetFr
 	}
 }
 
-unsigned long Win32FileStream::getSize()
+uint32 Win32FileStream::getSize()
 {
 	return GetFileSize( fileHandle_, NULL );
 }
 
-unsigned long Win32FileStream::read( unsigned char* bytesToRead, unsigned long sizeOfBytes )
+uint32 Win32FileStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
 {
 	DWORD bytesRead = 0;
 	BOOL result = ReadFile( fileHandle_, bytesToRead, sizeOfBytes, &bytesRead, NULL );
@@ -104,7 +104,7 @@ unsigned long Win32FileStream::read( unsigned char* bytesToRead, unsigned long s
 	return bytesRead;
 }
 
-unsigned long Win32FileStream::write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes )
+uint32 Win32FileStream::write( const unsigned char* bytesToWrite, uint32 sizeOfBytes )
 {
 	DWORD bytesWritten = 0;
 	BOOL result = WriteFile( fileHandle_, bytesToWrite, sizeOfBytes, &bytesWritten, NULL );

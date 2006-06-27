@@ -94,7 +94,7 @@ public:
 	returns the numbers of arguments required to invoke
 	the method.
 	*/
-	ulong32 getArgCount(){
+	uint32 getArgCount(){
 		return argCount_;
 	}
 
@@ -121,13 +121,13 @@ public:
 
 	/**
 	returns the argument type for the specified argument
-	*@param ulong32 a zero based index representing a particular
+	*@param uint32 a zero based index representing a particular
 	argument. For a method declared like this void someMethod( bool, int )
 	then an index of 0 would represent the frist argument (bool), and
 	index 1 would represnt the second argument(int).
 	*@return PropertyDescriptorType the argument type
 	*/
-	PropertyDescriptorType getArgumentType( const ulong32& argumentIndex ){
+	PropertyDescriptorType getArgumentType( const uint32& argumentIndex ){
 		PropertyDescriptorType result = pdUndefined;
 		char ch = argTypes_[argumentIndex];
 
@@ -202,7 +202,7 @@ public:
 	virtual Method* clone() = 0;
 protected:
 	String argTypes_;
-	ulong32 argCount_;
+	uint32 argCount_;
 	bool hasReturnValue_;
 	String name_;
 };

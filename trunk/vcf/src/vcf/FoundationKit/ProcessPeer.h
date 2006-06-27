@@ -61,7 +61,7 @@ public:
 
 	virtual OSHandleID getHandleID() = 0;
 
-	virtual ulong32 terminate() = 0;
+	virtual uint32 terminate() = 0;
 
 	virtual Waitable::WaitResult wait( uint32 milliseconds ) = 0;
 

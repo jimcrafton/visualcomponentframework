@@ -80,7 +80,7 @@ public:
 	*/
 	static SystemPeer* createSystemPeer();
 
-	static SemaphorePeer* createSemaphorePeer( long initialCount = 1, long maxCount = 1 );
+	static SemaphorePeer* createSemaphorePeer( int32 initialCount = 1, int32 maxCount = 1 );
 
 	static RegistryPeer* createRegistryPeer( Registry* registry );
 
@@ -141,7 +141,7 @@ protected:
 	A port of the FoundationKit to a new platform requires a new class that derives from the 
 	SystemToolkit and implements this method.	
 	*/
-	virtual SemaphorePeer* internal_createSemaphorePeer( long initialCount = 1, long maxCount = 1 ) = 0;
+	virtual SemaphorePeer* internal_createSemaphorePeer( int32 initialCount = 1, int32 maxCount = 1 ) = 0;
 
 	/**
 	A port of the FoundationKit to a new platform requires a new class that derives from the 

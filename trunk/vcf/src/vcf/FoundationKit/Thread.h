@@ -176,7 +176,7 @@ public:
 	milliseconds
 	@param uint32 - the number of milliseconds to sleep
 	*/
-	void sleep( unsigned int milliseconds );
+	void sleep( uint32 milliseconds );
 
 	/**
 	can the thread continue to execute ?

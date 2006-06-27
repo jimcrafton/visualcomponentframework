@@ -30,7 +30,7 @@ public:
 	
 		virtual SystemPeer* internal_createSystemPeer();
 
-		virtual SemaphorePeer* internal_createSemaphorePeer( long initialCount, long maxCount );
+		virtual SemaphorePeer* internal_createSemaphorePeer( int32 initialCount, int32 maxCount );
 
 		virtual RegistryPeer* internal_createRegistryPeer( Registry* registry );
 

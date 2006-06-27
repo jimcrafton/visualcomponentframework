@@ -14,9 +14,6 @@ where you installed the VCF.
 #endif
 
 
-#include "vcf/FoundationKit/VCFulong64.h"
-
-
 
 namespace VCF {
 
@@ -81,7 +78,7 @@ protected:
 /**
 \class DateTime DateTime.h "vcf/FoundationKit/DateTime.h"
 This class is used to represent a point in time. The internal structure is a
-64bit unsigned long that counts the number of milliseconds from ~ 4700BC. The
+64bit unsigned integer that counts the number of milliseconds from ~ 4700BC. The
 calendar used is the Gregorian calendar. There is logic to support switching
 to the Julian calendar for days before the Gregorian switch. At the moment
 there is no time zone support. This will be coming next.
@@ -190,7 +187,7 @@ public:
 	\endcode
 	@throw BadDateFormat
 	*/
-	DateTime( unsigned long year, unsigned long month, unsigned long day );
+	DateTime( uint32 year, uint32 month, uint32 day );
 
 	/**
 	Constructs a date time object given a year, month, day, hour, minute,
@@ -208,8 +205,8 @@ public:
 	@throw BadDateFormat
 	@throw BadTimeFormat
 	*/
-	DateTime( unsigned long year, unsigned long month, unsigned long day,
-				unsigned long hour, unsigned long minute, unsigned long second );
+	DateTime( uint32 year, uint32 month, uint32 day,
+				uint32 hour, uint32 minute, uint32 second );
 
 	/**
 	Static utility function to get the current local date on the computer
@@ -234,37 +231,37 @@ public:
 
 	/**
 	Allows you to modify the date/time of this object.
-	@param unsigned long the year
+	@param uint32 the year
 
-	@param unsigned long the month. This must be a value between 1 and 12. Values
+	@param uint32 the month. This must be a value between 1 and 12. Values
 	outside of this range will cause a BadDateFormat exception to be thrown.
 
-	@param unsigned long the day. This must be a value between 1 and the maximum day
+	@param uint32 the day. This must be a value between 1 and the maximum day
 	for the specified month and year. Values
 	outside of this range will cause a BadDateFormat exception to be thrown.
 
-	@param unsigned long the hour. This must be a value between 0 and 59. Values
+	@param uint32 the hour. This must be a value between 0 and 59. Values
 	outside of this range will cause a BadTimeFormat exception to be thrown.
 
-	@param unsigned long the minutes. This must be a value between 0 and 59. Values
+	@param uint32 the minutes. This must be a value between 0 and 59. Values
 	outside of this range will cause a BadTimeFormat exception to be thrown.
 
-	@param unsigned long the seconds. This must be a value between 0 and 59. Values
+	@param uint32 the seconds. This must be a value between 0 and 59. Values
 	outside of this range will cause a BadTimeFormat exception to be thrown.
 
-	@param unsigned long the milliseconds. This must be a value between 0 and 999. Values
+	@param uint32 the milliseconds. This must be a value between 0 and 999. Values
 	outside of this range will cause a BadTimeFormat exception to be thrown.
 
 	@throw BadDateFormat
 	@throw BadTimeFormat
 	*/
-	void set( const unsigned long& year,
-				const unsigned long& month,
-				const unsigned long& day,
-				const unsigned long& hour=0,
-				const unsigned long& minutes=0,
-				const unsigned long& seconds=0,
-				const unsigned long& milliseconds=0 );
+	void set( const uint32& year,
+				const uint32& month,
+				const uint32& day,
+				const uint32& hour=0,
+				const uint32& minutes=0,
+				const uint32& seconds=0,
+				const uint32& milliseconds=0 );
 
 	/**
 	Setting the date causes the current time to reset to 0:0:0.
@@ -272,19 +269,19 @@ public:
 	you call setDate( 2003, 6, 12 ), the result will be a DateTime object set
 	to June 12, 2003 00:00:00.
 
-	@param unsigned long the year
+	@param uint32 the year
 
-	@param unsigned long the month. This must be a value between 1 and 12. Values
+	@param uint32 the month. This must be a value between 1 and 12. Values
 	outside of this range will cause a BadDateFormat exception to be thrown.
 
-	@param unsigned long the day. This must be a value between 1 and the maximum day
+	@param uint32 the day. This must be a value between 1 and the maximum day
 	for the specified month and year. Values
 	outside of this range will cause a BadDateFormat exception to be thrown.
 	@throw BadDateFormat
 	*/
-	void setDate( const unsigned long& year,
-					const unsigned long& month,
-					const unsigned long& day );
+	void setDate( const uint32& year,
+					const uint32& month,
+					const uint32& day );
 
 	/**
 	Setting the time via this function keeps the current date. So
@@ -292,51 +289,51 @@ public:
 	you call setTime( 16, 2, 45 ) , the result will be a DateTime object set
 	to Jan 23, 2123 16:02:45.
 
-	@param unsigned long the hour. This must be a value between 0 and 23. Values
+	@param uint32 the hour. This must be a value between 0 and 23. Values
 	outside of this range will cause a BadTimeFormat exception to be thrown.
 
-	@param unsigned long the minutes. This must be a value between 0 and 59. Values
+	@param uint32 the minutes. This must be a value between 0 and 59. Values
 	outside of this range will cause a BadTimeFormat exception to be thrown.
 
-	@param unsigned long the seconds. This must be a value between 0 and 59. Values
+	@param uint32 the seconds. This must be a value between 0 and 59. Values
 	outside of this range will cause a BadTimeFormat exception to be thrown.
 
 	@throw BadTimeFormat
 	*/
-	void setTime( const unsigned long& hour,
-					const unsigned long& minutes,
-					const unsigned long& seconds );
+	void setTime( const uint32& hour,
+					const uint32& minutes,
+					const uint32& seconds );
 
 	/**
 	Gets all the components of date/time.
-	@param pointer to unsigned long accepting the year.
-	@param pointer to unsigned long accepting the month.
-	@param pointer to unsigned long accepting the day.
-	@param pointer to unsigned long accepting the hour.
-	@param pointer to unsigned long accepting the minute.
-	@param pointer to unsigned long accepting the second.
-	@param pointer to unsigned long accepting the millisecond.
+	@param pointer to uint32 accepting the year.
+	@param pointer to uint32 accepting the month.
+	@param pointer to uint32 accepting the day.
+	@param pointer to uint32 accepting the hour.
+	@param pointer to uint32 accepting the minute.
+	@param pointer to uint32 accepting the second.
+	@param pointer to uint32 accepting the millisecond.
 	Any pointer that is NULL does not accept any value.
 	*/
-	void get( unsigned long* year, unsigned long* month, unsigned long* day, unsigned long* hour, unsigned long* minute, unsigned long* second, unsigned long* millsecond=NULL ) const;
+	void get( uint32* year, uint32* month, uint32* day, uint32* hour, uint32* minute, uint32* second, uint32* millsecond=NULL ) const;
 
 	/**
 	Gets all the components of the date.
-	@param pointer to unsigned long accepting the year.
-	@param pointer to unsigned long accepting the month.
-	@param pointer to unsigned long accepting the day.
+	@param pointer to uint32 accepting the year.
+	@param pointer to uint32 accepting the month.
+	@param pointer to uint32 accepting the day.
 	Any pointer that is NULL does not accept any value.
 	*/
-	void getDate( unsigned long* year, unsigned long* month, unsigned long* day ) const;
+	void getDate( uint32* year, uint32* month, uint32* day ) const;
 
 	/**
 	Gets all the components of the time.
-	@param pointer to unsigned long accepting the minute.
-	@param pointer to unsigned long accepting the second.
-	@param pointer to unsigned long accepting the millisecond.
+	@param pointer to uint32 accepting the minute.
+	@param pointer to uint32 accepting the second.
+	@param pointer to uint32 accepting the millisecond.
 	Any pointer that is NULL does not accept any value.
 	*/
-	void getTime( unsigned long* hour, unsigned long* minute, unsigned long* second, unsigned long* millsecond=NULL ) const;
+	void getTime( uint32* hour, uint32* minute, uint32* second, uint32* millsecond=NULL ) const;
 
 	/**
 	Converts the time to the system's local time
@@ -435,30 +432,30 @@ public:
 
 	time_t getCTime() const ;
 
-	unsigned long getYear() const;
-	unsigned long getMonth() const;
-	unsigned long getDay() const;
+	uint32 getYear() const;
+	uint32 getMonth() const;
+	uint32 getDay() const;
 
-	unsigned long getHour() const;
-	unsigned long getMinute() const;
-	unsigned long getSecond() const;
-	unsigned long getMillisecond() const;
+	uint32 getHour() const;
+	uint32 getMinute() const;
+	uint32 getSecond() const;
+	uint32 getMillisecond() const;
 
 	/*
 	* Gets the day of the week. Sunday is 0, Monday is 1, and so on. 
 	*/
 	WeekDay getWeekDay() const ;
 
-	unsigned long getDayOfYear() const ;
+	uint32 getDayOfYear() const ;
 
-	unsigned long getDaysInYear() const ;
+	uint32 getDaysInYear() const ;
 
-	unsigned long getNumberOfDaysInMonth() const ;
+	uint32 getNumberOfDaysInMonth() const ;
 
-	unsigned long getWeekOfYearStartingSun() const ;
-	unsigned long getWeekOfYearStartingMon() const ;
+	uint32 getWeekOfYearStartingSun() const ;
+	uint32 getWeekOfYearStartingMon() const ;
 
-	unsigned long getWeeksInYear() const ;
+	uint32 getWeeksInYear() const ;
 
 
 	virtual String toString();
@@ -469,27 +466,27 @@ public:
 
 
 	static void getYearMonthDay( const DateTime& dt, 
-		                           unsigned long* year, unsigned long* month, unsigned long* day );
+		                           uint32* year, uint32* month, uint32* day );
 
 	static void getHourMinuteSecond( const DateTime& dt, 
-	                                 unsigned long* hour, unsigned long* minute, unsigned long* second, 
-	                                 unsigned long* millsecond=NULL );
+	                                 uint32* hour, uint32* minute, uint32* second, 
+	                                 uint32* millsecond=NULL );
 
-	static unsigned long getNumberOfDaysInMonth( unsigned long year, Months month );
+	static uint32 getNumberOfDaysInMonth( uint32 year, Months month );
 
-	static bool isGregorianCalendarDate( const unsigned long& year, const unsigned long& month, const unsigned long& day );
+	static bool isGregorianCalendarDate( const uint32& year, const uint32& month, const uint32& day );
 
 	static bool isGregorianCalendarDate( const DateTime& dt );
 
-	static bool isLeapYear( unsigned long year );
+	static bool isLeapYear( uint32 year );
 
 
 	/**
 	increments the year of this date object.
-	@param unsigned long the amount to increment the year by
+	@param uint32 the amount to increment the year by
 	@return the object itself
 	*/
-	DateTime& incrYear(const unsigned long& by=1);
+	DateTime& incrYear(const uint32& by=1);
 
 	/**
 	increments the month of this date object. This takes into
@@ -500,96 +497,96 @@ public:
 	on the newly incremented months value. For example, if the current date instance
 	is set to Jan 31, 2003, and you increment the month by 1 unit, then the
 	new value will be set to Feb 28, 2003.
-	@param unsigned long the amount to increment the month by
+	@param uint32 the amount to increment the month by
 	@return the object itself
 	*/
-	DateTime& incrMonth(const unsigned long& by=1);
+	DateTime& incrMonth(const uint32& by=1);
 
 	/**
 	increments the day of this date object.
-	@param unsigned long the amount to increment the day by
+	@param uint32 the amount to increment the day by
 	@return the object itself
 	*/
-	DateTime& incrDay(const unsigned long& by=1);
+	DateTime& incrDay(const uint32& by=1);
 
 	/**
 	increments the hour of this date object.
-	@param unsigned long the amount to increment the hour by
+	@param uint32 the amount to increment the hour by
 	@return the object itself
 	*/
-	DateTime& incrHour(const unsigned long& by=1);
+	DateTime& incrHour(const uint32& by=1);
 
 	/**
 	increments the minute of this date object.
-	@param unsigned long the amount to increment the minute by
+	@param uint32 the amount to increment the minute by
 	@return the object itself
 	*/
-	DateTime& incrMinute(const unsigned long& by=1);
+	DateTime& incrMinute(const uint32& by=1);
 
 	/**
 	increments the second of this date object.
-	@param unsigned long the amount to increment the second by
+	@param uint32 the amount to increment the second by
 	@return the object itself
 	*/
-	DateTime& incrSecond(const unsigned long& by=1);
+	DateTime& incrSecond(const uint32& by=1);
 
 	/**
 	increments the millisecond of this date object.
-	@param unsigned long the amount to increment the millisecond by
+	@param uint32 the amount to increment the millisecond by
 	@return the object itself
 	*/
-	DateTime& incrMilliSecond(const unsigned long& by=1);
+	DateTime& incrMilliSecond(const uint32& by=1);
 
 	/**
 	decrements the year of this date object
-	@param unsigned long the amount to decrement the millisecond by
+	@param uint32 the amount to decrement the millisecond by
 	@return the object itself
 	*/
-	DateTime& decrYear(const unsigned long& by=1);
+	DateTime& decrYear(const uint32& by=1);
 
 	/**
 	decrements the month of this date object. See the incrMonth()
 	method for more details on the behaviour of this function.
-	@param unsigned long the amount to decrement the month by
+	@param uint32 the amount to decrement the month by
 	@see incrMonth()
 	@return the object itself
 	*/
-	DateTime& decrMonth(const unsigned long& by=1);
+	DateTime& decrMonth(const uint32& by=1);
 
 	/**
 	decrements the day of this date object
-	@param unsigned long the amount to decrement the day by
+	@param uint32 the amount to decrement the day by
 	@return the object itself
 	*/
-	DateTime& decrDay(const unsigned long& by=1);
+	DateTime& decrDay(const uint32& by=1);
 
 	/**
 	decrements the hour of this date object
-	@param unsigned long the amount to decrement the hour by
+	@param uint32 the amount to decrement the hour by
 	@return the object itself
 	*/
-	DateTime& decrHour(const unsigned long& by=1);
+	DateTime& decrHour(const uint32& by=1);
 
 	/**
 	decrements the minute of this date object
-	@param unsigned long the amount to decrement the minute by
+	@param uint32 the amount to decrement the minute by
 	@return the object itself
 	*/
-	DateTime& decrMinute(const unsigned long& by=1);
+	DateTime& decrMinute(const uint32& by=1);
 
 	/**
 	decrements the second of this date object
-	@param unsigned long the amount to decrement the second by
+	@param uint32 the amount to decrement the second by
 	@return the object itself
 	*/
-	DateTime& decrSecond(const unsigned long& by=1);
+	DateTime& decrSecond(const uint32& by=1);
 
 	/**
 	decrements the millisecond of this date object
-	@param unsigned long the amount to decrement the millisecond by
+	@param uint32 the amount to decrement the millisecond by
 	@return the object itself
 	*/
-	DateTime& decrMilliSecond(const unsigned long& by=1);
+	DateTime& decrMilliSecond(const uint32& by=1);
 
 
 	/**
@@ -599,8 +596,8 @@ public:
 	\code
 	class SomeDateLogic {
 	public:
-		static void incr( DateTime& dt, unsigned long offset );
-		static void decr( DateTime& dt, unsigned long offset );
+		static void incr( DateTime& dt, uint32 offset );
+		static void decr( DateTime& dt, uint32 offset );
 	};
 	\endcode
 	*/
@@ -648,7 +645,7 @@ public:
 			return before;
 		}
 
-		Iterator& operator+=( const unsigned long& rhs ) {
+		Iterator& operator+=( const uint32& rhs ) {
 			DateLogic::incr( dt_, rhs );
 
 			return *this;
@@ -665,7 +662,7 @@ public:
 			return before;
 		}
 
-		Iterator& operator-=( const unsigned long& rhs ) {
+		Iterator& operator-=( const uint32& rhs ) {
 			DateLogic::decr( dt_, rhs );
 
 			return *this;
@@ -680,9 +677,9 @@ public:
 
 protected:
 
-	void setAndAdjustForGregorianDay( const unsigned long& year, const unsigned long& month, const unsigned long& day,
-	                                  const unsigned long& hour, const unsigned long& minutes, const unsigned long& seconds,
-	                                  const unsigned long& milliseconds );
+	void setAndAdjustForGregorianDay( const uint32& year, const uint32& month, const uint32& day,
+	                                  const uint32& hour, const uint32& minutes, const uint32& seconds,
+	                                  const uint32& milliseconds );
 
 	static void setCurrent( DateTime& dt );
 	/**
@@ -735,7 +732,7 @@ protected:
 			return before;
 		}
 
-		Iterator& operator+=( const unsigned long& rhs ) {
+		Iterator& operator+=( const uint32& rhs ) {
 			DateLogic::incr( dt_, rhs );
 
 			return *this;
@@ -752,7 +749,7 @@ protected:
 			return before;
 		}
 
-		Iterator& operator-=( const unsigned long& rhs ) {
+		Iterator& operator-=( const uint32& rhs ) {
 			DateLogic::decr( dt_, rhs );
 
 			return *this;
@@ -767,8 +764,8 @@ protected:
 */
 class FOUNDATIONKIT_API ByMillisecond {
 public :
-	static void incr( DateTime& dt, unsigned long offset );
-	static void decr( DateTime& dt, unsigned long offset );
+	static void incr( DateTime& dt, uint32 offset );
+	static void decr( DateTime& dt, uint32 offset );
 };
 
 /**
@@ -776,8 +773,8 @@ public :
 */
 class FOUNDATIONKIT_API BySecond {
 public :
-	static void incr( DateTime& dt, unsigned long offset );
-	static void decr( DateTime& dt, unsigned long offset );
+	static void incr( DateTime& dt, uint32 offset );
+	static void decr( DateTime& dt, uint32 offset );
 };
 
 /**
@@ -785,8 +782,8 @@ public :
 */
 class FOUNDATIONKIT_API ByMinute {
 public :
-	static void incr( DateTime& dt, unsigned long offset );
-	static void decr( DateTime& dt, unsigned long offset );
+	static void incr( DateTime& dt, uint32 offset );
+	static void decr( DateTime& dt, uint32 offset );
 };
 
 /**
@@ -794,8 +791,8 @@ public :
 */
 class FOUNDATIONKIT_API ByHour {
 public :
-	static void incr( DateTime& dt, unsigned long offset );
-	static void decr( DateTime& dt, unsigned long offset );
+	static void incr( DateTime& dt, uint32 offset );
+	static void decr( DateTime& dt, uint32 offset );
 };
 
 /**
@@ -803,8 +800,8 @@ public :
 */
 class FOUNDATIONKIT_API ByDay {
 public :
-	static void incr( DateTime& dt, unsigned long offset );
-	static void decr( DateTime& dt, unsigned long offset );
+	static void incr( DateTime& dt, uint32 offset );
+	static void decr( DateTime& dt, uint32 offset );
 };
 
 /**
@@ -812,8 +809,8 @@ public :
 */
 class FOUNDATIONKIT_API ByMonth {
 public :
-	static void incr( DateTime& dt, unsigned long offset );
-	static void decr( DateTime& dt, unsigned long offset );
+	static void incr( DateTime& dt, uint32 offset );
+	static void decr( DateTime& dt, uint32 offset );
 };
 
 /**
@@ -821,8 +818,8 @@ public :
 */
 class FOUNDATIONKIT_API ByYear {
 public :
-	static void incr( DateTime& dt, unsigned long offset );
-	static void decr( DateTime& dt, unsigned long offset );
+	static void incr( DateTime& dt, uint32 offset );
+	static void decr( DateTime& dt, uint32 offset );
 };
 
 
@@ -878,68 +875,68 @@ public:
 	/**
 	returns the number of years in this span of time
 	*/
-	unsigned long getYears() const ;
+	uint32 getYears() const ;
 
 	/**
 	returns the number of months in this span of time
 	*/
-	unsigned long getMonths() const ;
+	uint32 getMonths() const ;
 
 	/**
 	returns the number of days in this span of time
 	*/
-	unsigned long getDays() const ;
+	uint32 getDays() const ;
 
 	/**
 	returns the number of hours in this span of time
 	*/
-	unsigned long getHours() const ;
+	uint32 getHours() const ;
 
 	/**
 	returns the number of minutes in this span of time
 	*/
-	unsigned long getMinutes() const ;
+	uint32 getMinutes() const ;
 
 	/**
 	returns the number of seconds in this span of time
 	*/
-	unsigned long getSeconds() const ;
+	uint32 getSeconds() const ;
 
 	/**
 	returns the number of milliseconds in this span of time
 	*/
-	unsigned long getMilliseconds() const ;
+	uint32 getMilliseconds() const ;
 
 
 	/**
 	returns the total number of whole months if this span of time
 	is evaluated in months as the unit of measurement
 	*/
-	unsigned long getTotalMonths() const ;
+	uint32 getTotalMonths() const ;
 
 	/**
 	returns the total number of whole days if this span of time
 	is evaluated in days as the unit of measurement
 	*/
-	unsigned long getTotalDays() const ;
+	uint32 getTotalDays() const ;
 
 	/**
 	returns the total number of whole hours if this span of time
 	is evaluated in hours as the unit of measurement
 	*/
-	unsigned long getTotalHours() const ;
+	uint32 getTotalHours() const ;
 
 	/**
 	returns the total number of whole minutes if this span of time
 	is evaluated in minutes as the unit of measurement
 	*/
-	unsigned long getTotalMinutes() const ;
+	uint32 getTotalMinutes() const ;
 
 	/**
 	returns the total number of whole seconds if this span of time
 	is evaluated in seconds as the unit of measurement
 	*/
-	unsigned long getTotalSeconds() const ;
+	uint32 getTotalSeconds() const ;
 
 	/**
 	returns the total number of whole milliseconds if this span of time
@@ -960,9 +957,9 @@ protected:
 
 	ulong64 start_;
 	ulong64 end_;
-	unsigned long years_;
-	unsigned long months_;
-	unsigned long days_;
+	uint32 years_;
+	uint32 months_;
+	uint32 days_;
 };
 
 
@@ -970,15 +967,15 @@ protected:
 ///////////////////////////////////////////////////////////////////////////////
 // DateTime inlines
 
-inline void DateTime::getDate( unsigned long* year, unsigned long* month, unsigned long* day ) const {
+inline void DateTime::getDate( uint32* year, uint32* month, uint32* day ) const {
 	getYearMonthDay( *this, year, month, day );
 }
 
-inline void DateTime::getTime( unsigned long* hour, unsigned long* minute, unsigned long* second, unsigned long* millsecond/*=NULL*/ ) const {
+inline void DateTime::getTime( uint32* hour, uint32* minute, uint32* second, uint32* millsecond/*=NULL*/ ) const {
 	getHourMinuteSecond( *this, hour, minute, second, millsecond );
 }
 
-inline void DateTime::get( unsigned long* year, unsigned long* month, unsigned long* day, unsigned long* hour, unsigned long* minute, unsigned long* second, unsigned long* millsecond/*=NULL*/ ) const {
+inline void DateTime::get( uint32* year, uint32* month, uint32* day, uint32* hour, uint32* minute, uint32* second, uint32* millsecond/*=NULL*/ ) const {
 	getYearMonthDay( *this, year, month, day );
 
 	getHourMinuteSecond( *this, hour, minute, second, millsecond );

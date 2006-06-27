@@ -35,7 +35,7 @@ public:
 	*/
 	PackageInfo( const String& packageName, const String& packageUUID,
 					const String& staticLibName, const String& sharedLibName,
-					long linkageFlags,
+					int32 linkageFlags,
 					const String& author="", const String& company="",
 					const String& copyright="", const String& additionalInfo="");
 
@@ -107,7 +107,7 @@ protected:
 	String additionalInfo_;
 	String staticLibName_;
 	String sharedLibName_;
-	long linkageFlags_;
+	int32 linkageFlags_;
 
 	std::vector<String> requiredStaticLibs_;
 	EnumeratorContainer<std::vector<String>,String> reqStaticLibsContainer_;

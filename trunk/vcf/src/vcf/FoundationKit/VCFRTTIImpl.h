@@ -37,10 +37,10 @@ of one or more other values.
 class FOUNDATIONKIT_API EnumSetProperty : public Property {
 public:
 
-	typedef unsigned long (Object::*GetFunction)(void);
-	typedef void (Object::*SetFunction)(const unsigned long& );
+	typedef uint32 (Object::*GetFunction)(void);
+	typedef void (Object::*SetFunction)(const uint32& );
 
-	EnumSetProperty( const String& typeName, GetFunction propGetFunction, int count, unsigned long* setArray, String* names ){
+	EnumSetProperty( const String& typeName, GetFunction propGetFunction, int count, uint32* setArray, String* names ){
 		init();
 
 		typeName_ = typeName;
@@ -54,7 +54,7 @@ public:
 	};
 
 	EnumSetProperty( const String& typeName, GetFunction propGetFunction, SetFunction propSetFunction,
-					int count, unsigned long* setArray, String* names ){
+					int count, uint32* setArray, String* names ){
 		init();
 
 		typeName_ = typeName;
@@ -85,33 +85,33 @@ public:
 
 
 	void addAsString( const String& val ) {
-		std::map<String,unsigned long>::iterator found = nameVals_.find( val );
+		std::map<String,uint32>::iterator found = nameVals_.find( val );
 		if ( found != nameVals_.end() ) {
 			add( found->second );
 		}
 	}
 
 	void removeAsString( const String& val ) {
-		std::map<String,unsigned long>::iterator found = nameVals_.find( val );
+		std::map<String,uint32>::iterator found = nameVals_.find( val );
 		if ( found != nameVals_.end() ) {
 			remove( found->second );
 		}
 	}
 
-	void add( const unsigned long& val ) {
-		unsigned long tmp = value_;
+	void add( const uint32& val ) {
+		uint32 tmp = value_;
 		tmp |= val;
 		value_ = tmp;
 	}
 
-	void remove( const unsigned long& val ) {
-		unsigned long tmp = value_;
+	void remove( const uint32& val ) {
+		uint32 tmp = value_;
 		tmp &= ~val;
 		value_ = tmp;
 	}
 
-	bool contains( const unsigned long& val )  {
-		return (((unsigned long)value_) & val) ? true : false;
+	bool contains( const uint32& val )  {
+		return (((uint32)value_) & val) ? true : false;
 	}
 
 	bool hasNames()  {
@@ -182,8 +182,8 @@ public:
 
 		VariantData* data = Property::get();
 		if ( NULL != data ) {
-			unsigned long maskVal = *data;
-			std::map<String,unsigned long>::iterator it = nameVals_.begin();
+			uint32 maskVal = *data;
+			std::map<String,uint32>::iterator it = nameVals_.begin();
 			while ( it != nameVals_.end() ) {
 				if ( it->second & maskVal ) {
 					if ( !result.empty() ) {
@@ -198,8 +198,8 @@ public:
 		return result;
 	}
 
-	bool getNameValuesAsSet( std::vector<String>& names, std::vector<unsigned long>& values ) {
-		std::map<String,unsigned long>::iterator it = nameVals_.begin();
+	bool getNameValuesAsSet( std::vector<String>& names, std::vector<uint32>& values ) {
+		std::map<String,uint32>::iterator it = nameVals_.begin();
 		while ( it != nameVals_.end() ) {
 			names.push_back( it->first );
 			values.push_back( it->second );
@@ -213,7 +213,7 @@ protected:
 	String typeName_;
 	GetFunction getFunction_;
 	SetFunction setFunction_;
-	std::map<String,unsigned long> nameVals_;
+	std::map<String,uint32> nameVals_;
 };
 
 
@@ -235,13 +235,13 @@ public:
 		namesAvailable_ = false;
 	};
 
-	TypedEnum( const ENUM_TYPE& lower, const ENUM_TYPE& upper, const unsigned long& enumNameCount, String* enumNames ){
+	TypedEnum( const ENUM_TYPE& lower, const ENUM_TYPE& upper, const uint32& enumNameCount, String* enumNames ){
 		enum_ = lower;
 		lower_ = (int)lower;
 		upper_ = (int)upper;
 		enumNames_.clear();
 		if ( enumNameCount > 0 ){
-			for ( unsigned long i=0;i<enumNameCount;i++ ){
+			for ( uint32 i=0;i<enumNameCount;i++ ){
 				enumNames_.push_back( enumNames[i] );
 			}
 		}
@@ -806,7 +806,7 @@ public:
 
 	TypedEnumProperty( GetFunction propGetFunction, SetFunction propSetFunction,
 		               const ENUM_PROPERTY& lower, const ENUM_PROPERTY& upper,
-					   const unsigned long& enumNameCount,
+					   const uint32& enumNameCount,
 					   String* enumNames ){
 		init();
 		lower_ = lower;
@@ -901,7 +901,7 @@ protected:
 	TypedEnum<ENUM_PROPERTY>* enum_;
 	ENUM_PROPERTY lower_;
 	ENUM_PROPERTY upper_;
-	unsigned long enumNameCount_;
+	uint32 enumNameCount_;
 	String* enumNames_;
 };
 
@@ -915,9 +915,9 @@ class TypedCollectionProperty : public Property {
 public:
 	typedef Enumerator<ITEM_TYPE>* (Object::*GetFunction)(void);
 	typedef void (Object::*AddFunction)( ITEM_TYPE );
-	typedef void (Object::*InsertFunction)( const unsigned long&, ITEM_TYPE );
+	typedef void (Object::*InsertFunction)( const uint32&, ITEM_TYPE );
 	typedef void (Object::*DeleteFunction1)( ITEM_TYPE );
-	typedef void (Object::*DeleteFunction2)( const unsigned long& );
+	typedef void (Object::*DeleteFunction2)( const uint32& );
 
 	TypedCollectionProperty( GetFunction getFunc, AddFunction addFunc, InsertFunction insertFunc,
 		                     DeleteFunction1 deleteFunc1, DeleteFunction2 deleteFunc2,
@@ -1008,7 +1008,7 @@ public:
 		}
 	};
 
-	virtual void insert( Object* source, const unsigned long& index, VariantData* value ){
+	virtual void insert( Object* source, const uint32& index, VariantData* value ){
 		if ( (NULL != value) && (NULL != source) && (NULL != insertFunc_) ){
 			ITEM_TYPE valToInsert = (ITEM_TYPE)(*value);
 			(source->*insertFunc_)( index, valToInsert );
@@ -1022,7 +1022,7 @@ public:
 		}
 	};
 
-	virtual void remove( Object* source, const unsigned long& index ){
+	virtual void remove( Object* source, const uint32& index ){
 		if ( (NULL != source) && (NULL != deleteFunc2_) ){
 			(source->*deleteFunc2_)( index );
 		}
@@ -1055,9 +1055,9 @@ class TypedObjectCollectionProperty : public Property {
 public:
 	typedef Enumerator<ITEM_TYPE>* (Object::*GetFunction)(void);
 	typedef void (Object::*AddFunction)( ITEM_TYPE );
-	typedef void (Object::*InsertFunction)( const unsigned long&, ITEM_TYPE );
+	typedef void (Object::*InsertFunction)( const uint32&, ITEM_TYPE );
 	typedef void (Object::*DeleteFunction1)( ITEM_TYPE );
-	typedef void (Object::*DeleteFunction2)( const unsigned long& );
+	typedef void (Object::*DeleteFunction2)( const uint32& );
 
 	TypedObjectCollectionProperty( GetFunction getFunc, AddFunction addFunc, InsertFunction insertFunc,
 		                           DeleteFunction1 deleteFunc1, DeleteFunction2 deleteFunc2 ){
@@ -1162,7 +1162,7 @@ public:
 		}
 	};
 
-	virtual void insert( Object* source, const unsigned long& index, VariantData* value ){
+	virtual void insert( Object* source, const uint32& index, VariantData* value ){
 		if ( (NULL != value) && (NULL != insertFunc_) ){
 			if ( pdObject == value->type ){
 				ITEM_TYPE valToInsert = (ITEM_TYPE)(Object*)(*value);
@@ -1178,7 +1178,7 @@ public:
 		}
 	};
 
-	virtual void remove( Object* source, const unsigned long& index ){
+	virtual void remove( Object* source, const uint32& index ){
 		if ( NULL != deleteFunc2_ ){
 			(source->*deleteFunc2_)( index );
 		}
@@ -2306,7 +2306,7 @@ public:
 
 	}
 
-	TypedField( const String& name, ulong32 fieldOffset ):field_(NULL),fieldOffset_(fieldOffset) {
+	TypedField( const String& name, uint32 fieldOffset ):field_(NULL),fieldOffset_(fieldOffset) {
 		setName( name );
 	}
 
@@ -2318,7 +2318,7 @@ public:
 		return new TypedField( *this );
 	}
 
-	virtual ulong32 getFieldSize() {
+	virtual uint32 getFieldSize() {
 		return sizeof( Type );
 	}
 
@@ -2354,7 +2354,7 @@ public:
 
 	VariantData val_;
 	TypePtr field_;
-	ulong32 fieldOffset_;
+	uint32 fieldOffset_;
 };
 
 
@@ -2372,7 +2372,7 @@ public:
 
 	}
 
-	TypedObjectField( const String& name, ulong32 fieldOffset ):field_(NULL),fieldOffset_(fieldOffset) {
+	TypedObjectField( const String& name, uint32 fieldOffset ):field_(NULL),fieldOffset_(fieldOffset) {
 		setName( name );
 	}
 
@@ -2384,7 +2384,7 @@ public:
 		return new TypedObjectField( *this );
 	}
 
-	virtual ulong32 getFieldSize() {
+	virtual uint32 getFieldSize() {
 		return sizeof( Type );
 	}
 
@@ -2419,7 +2419,7 @@ public:
 
 	VariantData val_;
 	TypePtr field_;
-	ulong32 fieldOffset_;
+	uint32 fieldOffset_;
 };
 
 
@@ -2894,7 +2894,7 @@ void registerEnumReadOnlyProperty( const String& className, const String& proper
 *retreiving values from the enum property
 *@param PROPERTY_TYPE the lower bound of enum
 *@param PROPERTY_TYPE the upper bound of enum
-*@param unsigned long the number of string names enumNames points to
+*@param uint32 the number of string names enumNames points to
 *@param String a pointer to an array of Strings that holds a human
 *readable value for each enum type.
 */
@@ -2902,7 +2902,7 @@ template <typename PROPERTY_TYPE>
 void registerEnumReadOnlyPropertyWithLabels( const String& className, const String& propertyName,
 											 _typename_ TypedEnumProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
 											 PROPERTY_TYPE lower, PROPERTY_TYPE upper,
-											 const unsigned long& enumNameCount,
+											 const uint32& enumNameCount,
 											 String* enumNames,
 											 const String& description )
 {
@@ -2931,8 +2931,8 @@ void registerEnumReadOnlyPropertyWithLabels( const String& className, const Stri
 
 static void registerEnumSetReadOnlyPropertyWithLabels( const String& typeName, const String& className, const String& propertyName,
 												         EnumSetProperty::GetFunction propertyGetFunction,
-												         const unsigned long& enumNameCount,
-														 unsigned long* enumMaskValues,
+												         const uint32& enumNameCount,
+														 uint32* enumMaskValues,
 												         String* enumNames,
 														 const String& description )
 {
@@ -2957,8 +2957,8 @@ static void registerEnumSetReadOnlyPropertyWithLabels( const String& typeName, c
 static void registerEnumSetPropertyWithLabels( const String& typeName, const String& className, const String& propertyName,
 								         EnumSetProperty::GetFunction propertyGetFunction,
 										 EnumSetProperty::SetFunction propertySetFunction,
-								         const unsigned long& enumNameCount,
-										 unsigned long* enumMaskValues,
+								         const uint32& enumNameCount,
+										 uint32* enumMaskValues,
 								         String* enumNames,
 										 const String& description ){
 
@@ -3085,7 +3085,7 @@ void registerEnumProperty( const String& className, const String& propertyName,
 *setting values on the property
 *@param PROPERTY_TYPE the lower bound of enum
 *@param PROPERTY_TYPE the upper bound of enum
-*@param unsigned long the number of string names enumNames points to
+*@param uint32 the number of string names enumNames points to
 *@param String a pointer to an array of Strings that holds a human
 *readable value for each enum type.
 */
@@ -3094,7 +3094,7 @@ void registerEnumPropertyWithLabels( const String& className, const String& prop
 									 _typename_ TypedEnumProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
 									 _typename_ TypedEnumProperty<PROPERTY_TYPE>::SetFunction propertySetFunction,
 									 PROPERTY_TYPE lower, PROPERTY_TYPE upper,
-									 const unsigned long& enumNameCount,
+									 const uint32& enumNameCount,
 									 String* enumNames,
 									 const String& description )
 {
@@ -3181,7 +3181,7 @@ void registerObjectCollectionProperty( const String& className, const String& pr
 
 
 template <typename FieldType>
-void registerFieldType( const String& className, const String& fieldName, ulong32 fieldOffset )
+void registerFieldType( const String& className, const String& fieldName, uint32 fieldOffset )
 {
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
@@ -3193,7 +3193,7 @@ void registerFieldType( const String& className, const String& fieldName, ulong3
 }
 
 template <typename FieldType>
-void registerObjectFieldType( const String& className, const String& fieldName, ulong32 fieldOffset )
+void registerObjectFieldType( const String& className, const String& fieldName, uint32 fieldOffset )
 {
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
@@ -3387,7 +3387,7 @@ bool registerEvent( SourceType* dummy1, EventType* dummy2,
 *@param METHOD_TYPE the method pointer of the class
 *@param String the arg types of the method
 *@param bool doe the method have a return value
-*@param ulong32 the number of arguments of the method
+*@param uint32 the number of arguments of the method
 *
 *@return bool true if the method has been registered, otherwise false
 */
@@ -3514,7 +3514,7 @@ void registerMethod6Return( SOURCE_TYPE* fakeParam,
 *@param METHOD_TYPE the method pointer of the class
 *@param String the arg types of the method
 *@param bool doe the method have a return value
-*@param ulong32 the number of arguments of the method
+*@param uint32 the number of arguments of the method
 *
 *@return bool true if the method has been registered, otherwise false
 */

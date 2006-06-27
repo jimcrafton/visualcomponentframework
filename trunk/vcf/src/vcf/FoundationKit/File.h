@@ -90,7 +90,7 @@ public:
 	
 	File( const String& fileName );
 	
-	File( const String& fileName, ulong32 openFlags, ShareFlags shareFlags = File::shMaskAny );
+	File( const String& fileName, uint32 openFlags, ShareFlags shareFlags = File::shMaskAny );
 
 	virtual ~File();
 
@@ -271,7 +271,7 @@ public:
 	*@param openFlags
 	*@param shareFlags
 	*/
-	void openWithRights( const String& fileName, ulong32 openFlags = File::ofRead, ShareFlags shareFlags = File::shMaskAny );
+	void openWithRights( const String& fileName, uint32 openFlags = File::ofRead, ShareFlags shareFlags = File::shMaskAny );
 
 	/**
 	* closes the file if open
@@ -285,7 +285,7 @@ public:
 	If it is a directory name, a directory will be created.
 	@param newFileName the filename
 	*/
-	void create( const String& newFileName, ulong32 openFlags = File::ofRead );
+	void create( const String& newFileName, uint32 openFlags = File::ofRead );
 
 	/**
 	* deletes the file from the file system
@@ -337,11 +337,11 @@ public:
 		validStat_ = val;
 	}
 
-	inline void internal_addToStatMask( const long& val ) {
+	inline void internal_addToStatMask( const uint32& val ) {
 		validStat_ = (StatMask)(validStat_ | val);
 	}
 
-	inline void internal_removeFromStatMask( const long& val ) {
+	inline void internal_removeFromStatMask( const uint32& val ) {
 		validStat_ = (StatMask)(validStat_ & ~val);
 	}
 
@@ -349,7 +349,7 @@ public:
 		fileName_ = val;
 	}
 
-	inline void internal_setFileAttributes( const ulong32& val ) {
+	inline void internal_setFileAttributes( const uint32& val ) {
 		fileAttributes_ = val;
 	}
 
@@ -358,12 +358,12 @@ protected:
 	FilePeer* filePeer_;
 	
 	StatMask validStat_;
-	ulong32 openAccess_;
+	uint32 openAccess_;
 	
 	String   fileName_;
 	String   owner_; // a string ?
 	
-	ulong32  fileAttributes_;	
+	uint32  fileAttributes_;	
 };
 
 

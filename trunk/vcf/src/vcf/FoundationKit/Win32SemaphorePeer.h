@@ -33,7 +33,7 @@ resources
 class Win32SemaphorePeer : public VCF::SemaphorePeer
 {
 public:
-	Win32SemaphorePeer(long initialCount , long maxCount);
+	Win32SemaphorePeer(int32 initialCount , int32 maxCount);
 	virtual ~Win32SemaphorePeer();
 
 	virtual bool lock();

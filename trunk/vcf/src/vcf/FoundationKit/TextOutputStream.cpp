@@ -35,16 +35,16 @@ void TextOutputStream::init()
 	outStream_ = NULL;
 }
 
-void TextOutputStream::seek(const unsigned long& offset, const SeekType& offsetFrom )
+void TextOutputStream::seek(const uint32& offset, const SeekType& offsetFrom )
 {
 	if ( NULL != outStream_ ){
 		outStream_->seek( offset, offsetFrom );
 	}
 }
 
-unsigned long TextOutputStream::getSize()
+uint32 TextOutputStream::getSize()
 {
-	unsigned long result = 0;
+	uint32 result = 0;
 	if ( NULL != outStream_ ){
 		result = outStream_->getSize();
 	}
@@ -63,9 +63,9 @@ char* TextOutputStream::getBuffer()
 	return buffer;
 }
 
-unsigned long TextOutputStream::write( const unsigned char* bytesToRead, unsigned long sizeOfBytes )
+uint32 TextOutputStream::write( const unsigned char* bytesToRead, uint32 sizeOfBytes )
 {
-	unsigned long result = 0;
+	uint32 result = 0;
 
 	textBuffer_.append( (const char*)bytesToRead, sizeOfBytes );
 
@@ -157,7 +157,7 @@ String TextOutputStream::toString()
 	return textBuffer_;
 }
 
-ulong32 TextOutputStream::getCurrentSeekPos()
+uint32 TextOutputStream::getCurrentSeekPos()
 {
 	if ( NULL != outStream_ ) {
 		return outStream_->getCurrentSeekPos();

@@ -33,7 +33,7 @@ public:
 	/**
 	*moves the seek pointer offset number of bytes in the
 	*direction specified by the offsetFrom argument.
-	*@param unsigned long the number of bytes of offset the
+	*@param uint32 the number of bytes of offset the
 	*seek pointer
 	*@param SeekType the direction to offset the seek pointer, which
 	*may be one of the following values <br>
@@ -41,29 +41,29 @@ public:
 	*SEEK_FROM_RELATIVE - offsets relative to the current seek position <br>
 	*SEEK_FROM_END - offsets backwards, starting at the end of the file <br>
 	*/
-	virtual void seek(const unsigned long& offset, const SeekType& offsetFrom) = 0;
+	virtual void seek(const uint32& offset, const SeekType& offsetFrom) = 0;
 
 	/**
 	*returns the size of the file stream in bytes
 	*/
-	virtual unsigned long getSize() = 0;
+	virtual uint32 getSize() = 0;
 
 	/**
 	*reads sizeOfBytes bytes from the stream into the buffer bytesToRead
 	*@param char* a buffer of at least sizeOfBytes long. This must be
 	*allocated by the caller.
-	*@param unsigned long the number of bytes to read from the file, starting
+	*@param uint32 the number of bytes to read from the file, starting
 	*at the current seek position.
 	*/
-	virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes ) = 0;
+	virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes ) = 0;
 
 	/**
 	*writes sizeOfBytes bytes to the file stream from the buffer bytesToWrite.
 	*@param char* a buffer that must be at least sizeOfBytes long, that contains
 	*the data that will written out to the file stream
-	*@param @ unsigned long the number of bytes to write
+	*@param @ uint32 the number of bytes to write
 	*/
-	virtual unsigned long write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes ) = 0;
+	virtual uint32 write( const unsigned char* bytesToWrite, uint32 sizeOfBytes ) = 0;
 
 	/**
 	*returns a pointer to the buffer that represents the file contents

@@ -87,7 +87,7 @@ public:
 
 	virtual void setDateModified( const DateTime& dateModified );
 
-	virtual void open( const String& fileName, ulong32 openFlags = File::ofRead, File::ShareFlags shareFlags = File::shMaskAny );
+	virtual void open( const String& fileName, uint32 openFlags = File::ofRead, File::ShareFlags shareFlags = File::shMaskAny );
 
 	virtual void close();
 
@@ -97,7 +97,7 @@ public:
 	*'DirectorySeparator' character, then a directory 
 	*is created instead of a file.
 	*/
-	virtual void create( ulong32 openFlags );
+	virtual void create( uint32 openFlags );
 
 	virtual void remove();
 
@@ -166,12 +166,12 @@ public:
 	/**
 	* converts the file attributes from the OS specific format into the vcf format.
 	*/
-	static ulong32 convertAttributesFromSystemSpecific( const ulong32& dwAttributes );
+	static uint32 convertAttributesFromSystemSpecific( const uint32& dwAttributes );
 
 	/**
 	* converts the file attributes from the vcf format into the OS specific format.
 	*/
-	static ulong32 convertAttributesToSystemSpecific( File::FileAttributes dwAttributes );
+	static uint32 convertAttributesToSystemSpecific( File::FileAttributes dwAttributes );
 
 	HANDLE getFileHandle() {
 		return fileHandle_;

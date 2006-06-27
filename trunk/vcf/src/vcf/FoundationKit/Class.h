@@ -237,7 +237,7 @@ public:
 	/**
 	the number of properties the Class has
 	*/
-	unsigned long getPropertyCount();
+	uint32 getPropertyCount();
 
 	/**
 	gets the property specified by propertyName, if the class
@@ -265,7 +265,7 @@ public:
 	/**
 	the number of fields the Class has
 	*/
-	unsigned long getFieldCount();
+	uint32 getFieldCount();
 
 	/**
 	gets the field (or member variable) specified by fieldName, if the class
@@ -291,7 +291,7 @@ public:
 	/**
 	the number of methods the Class has
 	*/
-	unsigned long getMethodCount();
+	uint32 getMethodCount();
 
 	/**
 	gets the method specified by methodName, if the class
@@ -334,7 +334,7 @@ public:
 		return interfaceContainer_.getEnumerator();
 	}
 
-	unsigned long getInterfaceCount();
+	uint32 getInterfaceCount();
 
 	bool hasInterface( const String& interfaceName );
 

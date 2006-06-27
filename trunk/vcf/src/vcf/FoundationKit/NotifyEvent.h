@@ -30,7 +30,7 @@ public:
 		Event(source)
 	{};
 
-	NotifyEvent( Object* source, const unsigned long& eventType ):
+	NotifyEvent( Object* source, const uint32& eventType ):
 		Event(source,eventType)
 	{};
 

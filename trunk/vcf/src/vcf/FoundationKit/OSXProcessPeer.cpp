@@ -263,7 +263,7 @@ String OSXProcessPeer::getProcessFileName()
 }
 
 
-ulong32 OSXProcessPeer::terminate()
+uint32 OSXProcessPeer::terminate()
 {
 	if ( processHandle_.isUnixProcess ) {
 		kill( processHandle_.pid, SIGKILL );

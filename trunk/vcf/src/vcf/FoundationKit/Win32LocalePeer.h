@@ -24,8 +24,8 @@ public:
 
 	virtual void setLocale( const UnicodeString& language, const UnicodeString& country, const UnicodeString& variant );
 
-	virtual ulong32 getLanguageCode();
-	virtual ulong32 getCountryCode();
+	virtual uint32 getLanguageCode();
+	virtual uint32 getCountryCode();
 
 	virtual String getLanguage();
 
@@ -64,7 +64,7 @@ public:
 	virtual UnicodeString getCurrencyPositiveSign();
 	virtual UnicodeString getCurrencyNegativeSign();
 
-	virtual bool isCharA( const long& charTypeMask, const VCFChar& c );
+	virtual bool isCharA( const int32& charTypeMask, const VCFChar& c );
 
 	virtual UnicodeString translate( const UnicodeString& id );
 

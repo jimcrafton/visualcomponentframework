@@ -664,9 +664,9 @@ UnicodeString OSXLocalePeer::getCurrencyNegativeSign()
 	return prop;
 }
 
-bool OSXLocalePeer::isCharA( const long& charTypeMask, const VCFChar& c )
+bool OSXLocalePeer::isCharA( const int32& charTypeMask, const VCFChar& c )
 {
-	long mask = 0;
+	int32 mask = 0;
 
 	UnicodeString oldLocaleStr = setlocale( LC_CTYPE, NULL );
 
@@ -759,13 +759,13 @@ UnicodeString OSXLocalePeer::toStringFromDate( const DateTime& val, const Unicod
 
 	CFTextString result;
 
-	unsigned long year;
-	unsigned long month;
-	unsigned long day;
-	unsigned long hour;
-	unsigned long minute;
-	unsigned long second;
-	unsigned long millisecond;	
+	uint32 year;
+	uint32 month;
+	uint32 day;
+	uint32 hour;
+	uint32 minute;
+	uint32 second;
+	uint32 millisecond;	
 	val.get( &year, &month, &day, &hour, &minute, &second, &millisecond );
 
 	CFGregorianDate cfDate;
@@ -792,13 +792,13 @@ UnicodeString OSXLocalePeer::toStringFromTime( const DateTime& val, const Unicod
 {
 	CFTextString result;
 
-	unsigned long year;
-	unsigned long month;
-	unsigned long day;
-	unsigned long hour;
-	unsigned long minute;
-	unsigned long second;
-	unsigned long millisecond;	
+	uint32 year;
+	uint32 month;
+	uint32 day;
+	uint32 hour;
+	uint32 minute;
+	uint32 second;
+	uint32 millisecond;	
 	val.get( &year, &month, &day, &hour, &minute, &second, &millisecond );
 	
 	CFGregorianDate cfDate;
@@ -821,7 +821,7 @@ UnicodeString OSXLocalePeer::toStringFromTime( const DateTime& val, const Unicod
 	return result;
 }
 
-ulong32 OSXLocalePeer::getLanguageCode()
+uint32 OSXLocalePeer::getLanguageCode()
 {
 	CFTextString tmp(CFLocaleGetIdentifier(localeRef_));
 	
@@ -833,7 +833,7 @@ ulong32 OSXLocalePeer::getLanguageCode()
 }
 
 
-ulong32 OSXLocalePeer::getCountryCode()
+uint32 OSXLocalePeer::getCountryCode()
 {
 	CFTextString tmp(CFLocaleGetIdentifier(localeRef_));
 	

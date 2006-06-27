@@ -13,7 +13,7 @@ using namespace VCF;
 
 PackageInfo::PackageInfo( const String& packageName, const String& packageUUID,
 							const String& staticLibName, const String& sharedLibName,
-							long linkageFlags,
+							int32 linkageFlags,
 							const String& author, const String& company,
 							const String& copyright, const String& additionalInfo):
 	ProgramInfo(packageName,"",author,copyright,company,additionalInfo,"","","","")

@@ -87,7 +87,7 @@ OSHandleID LinuxProcessPeer::getHandleID()
 	return reinterpret_cast<OSHandleID>( processHandle_ );
 }
 
-ulong32 LinuxProcessPeer::terminate()
+uint32 LinuxProcessPeer::terminate()
 {
 	return kill(processHandle_, SIGKILL);
 }

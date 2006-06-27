@@ -46,7 +46,7 @@ void Win32FilePeer::setFile( File* file )
 	fileHandle_ = NULL;
 }
 
-void Win32FilePeer::create(  ulong32 openFlags  )
+void Win32FilePeer::create(  uint32 openFlags  )
 {
 	FilePath fp = getName();
 	String filename = fp.transformToOSSpecific();
@@ -300,7 +300,7 @@ File* Win32FilePeer::findNextFileInSearch( Directory::Finder* finder )
 	bool isDir = false;
 
 	bool ok;
-	ulong32 fAttribs;
+	uint32 fAttribs;
 
 	// looping until we find the directory/file matching the filter
 	while ( true )
@@ -565,13 +565,13 @@ void Win32FilePeer::updateStat( File::StatMask statMask/*=File::smMaskAll*/ )
 	try {
 		bool unicodeEnabled = System::isUnicodeEnabled();
 		if ( unicodeEnabled ) {
-			ulong32 dwFileAttributes = Win32FilePeer::convertAttributesToSystemSpecific( fileAttributes );
+			uint32 dwFileAttributes = Win32FilePeer::convertAttributesToSystemSpecific( fileAttributes );
 			if ( ! ::SetFileAttributesW( file_->getName().c_str(), dwFileAttributes ) ) {
 				String error = VCFWin32::Win32Utils::getErrorString( GetLastError() );
 				throw BasicException( error );
 			}
 		} else {
-			ulong32 dwFileAttributes = Win32FilePeer::convertAttributesToSystemSpecific( fileAttributes );
+			uint32 dwFileAttributes = Win32FilePeer::convertAttributesToSystemSpecific( fileAttributes );
 			if ( ! ::SetFileAttributesA( file_->getName().ansi_c_str(), dwFileAttributes ) ) {
 				String error = VCFWin32::Win32Utils::getErrorString( GetLastError() );
 				throw BasicException( error );
@@ -606,7 +606,7 @@ void Win32FilePeer::setDateModified( const DateTime& dateModified )
 		FILETIME   ftUTC;
 		HANDLE hFile = NULL;
 
-		unsigned long y, m, d, h, min, s, ms;
+		uint32 y, m, d, h, min, s, ms;
 		dateModified.get( &y, &m, &d, &h, &min, &s, &ms );
 
 		if ( ( y < 1601 ) || ( 30827 < y ) ) {
@@ -668,9 +668,9 @@ void Win32FilePeer::setDateModified( const DateTime& dateModified )
 	file_->internal_addToStatMask( File::smDateModified );
 }
 
-/*static*/ ulong32 Win32FilePeer::convertAttributesFromSystemSpecific( const ulong32& dwAttributes )
+/*static*/ uint32 Win32FilePeer::convertAttributesFromSystemSpecific( const uint32& dwAttributes )
 {
-	ulong32 fileAttributes = File::faNone;
+	uint32 fileAttributes = File::faNone;
 
 	if ( dwAttributes & FILE_ATTRIBUTE_READONLY ) {
 		fileAttributes += File::faReadOnly;
@@ -700,9 +700,9 @@ void Win32FilePeer::setDateModified( const DateTime& dateModified )
 	return fileAttributes;
 }
 
-/*static*/ ulong32 Win32FilePeer::convertAttributesToSystemSpecific( File::FileAttributes fileAttributes )
+/*static*/ uint32 Win32FilePeer::convertAttributesToSystemSpecific( File::FileAttributes fileAttributes )
 {
-	ulong32 dwAttributes = 0;
+	uint32 dwAttributes = 0;
 
 	if ( fileAttributes & File::faReadOnly ) {
 		dwAttributes += FILE_ATTRIBUTE_READONLY;
@@ -733,10 +733,10 @@ void Win32FilePeer::setDateModified( const DateTime& dateModified )
 }
 
 
-void Win32FilePeer::open( const String& fileName, ulong32 openFlags, File::ShareFlags shareFlags/*=File::shMaskAny*/ )
+void Win32FilePeer::open( const String& fileName, uint32 openFlags, File::ShareFlags shareFlags/*=File::shMaskAny*/ )
 {
 	//check initial arguments
-	ulong32 f1 =  File::ofNone;
+	uint32 f1 =  File::ofNone;
 	VCF_ASSERT( openFlags != f1 );
 
 

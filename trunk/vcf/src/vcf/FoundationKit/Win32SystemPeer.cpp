@@ -28,7 +28,7 @@ Win32SystemPeer::~Win32SystemPeer()
 
 }
 
-unsigned long Win32SystemPeer::getTickCount()
+uint32 Win32SystemPeer::getTickCount()
 {
 	return ::GetTickCount();
 }
@@ -256,7 +256,7 @@ DateTime Win32SystemPeer::convertUTCTimeToLocalTime( const DateTime& date )
 	SYSTEMTIME st;
 
 	// DateTime --> systemTime
-	unsigned long y, m, d, h, min, s, ms;
+	uint32 y, m, d, h, min, s, ms;
 	date.get( &y, &m, &d, &h, &min, &s, &ms );
 
 	if ( ( y < 1601 ) || ( 30827 < y ) ) {
@@ -305,7 +305,7 @@ DateTime Win32SystemPeer::convertLocalTimeToUTCTime( const DateTime& date )
 	FILETIME   ftLocal, ftUTC;
 	SYSTEMTIME st;
 
-	unsigned long y = date.getYear();
+	uint32 y = date.getYear();
 	if ( ( y < 1601 ) || ( 30827 < y ) ) {
 		throw BasicException( "The SYSTEMTIME structure doesn't allow dates outside the range [1601,30827]" );
 	}

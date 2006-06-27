@@ -111,7 +111,7 @@ OSHandleID Win32ProcessPeer::getHandleID()
 	return (OSHandleID)win32ProcessInfo_.hProcess;
 }
 
-ulong32 Win32ProcessPeer::terminate()
+uint32 Win32ProcessPeer::terminate()
 {
 	TerminateProcess( win32ProcessInfo_.hProcess, -1 );
 	return -1;

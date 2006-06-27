@@ -28,7 +28,7 @@ ResourceBundle::~ResourceBundle()
 	delete peer_;
 }
 
-String ResourceBundle::getString( const ulong32& resourceID )
+String ResourceBundle::getString( const uint32& resourceID )
 {
 	return getString( StringUtils::toString( resourceID ) );
 }

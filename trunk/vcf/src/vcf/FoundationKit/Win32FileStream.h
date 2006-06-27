@@ -26,13 +26,13 @@ public:
 
 	virtual ~Win32FileStream();
 
-	virtual void seek( const unsigned long& offset, const SeekType& offsetFrom );
+	virtual void seek( const uint32& offset, const SeekType& offsetFrom );
 
-	virtual unsigned long getSize();
+	virtual uint32 getSize();
 
-	virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes );
+	virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes );
 
-	virtual unsigned long write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes );
+	virtual uint32 write( const unsigned char* bytesToWrite, uint32 sizeOfBytes );
 
 	virtual char* getBuffer();
 private:

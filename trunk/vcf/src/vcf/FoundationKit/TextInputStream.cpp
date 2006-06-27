@@ -24,14 +24,14 @@ TextInputStream::~TextInputStream()
 
 }
 
-void TextInputStream::seek(const unsigned long& offset, const SeekType& offsetFrom )
+void TextInputStream::seek(const uint32& offset, const SeekType& offsetFrom )
 {
 	if ( NULL != inStream_ ){
 		inStream_->seek( offset, offsetFrom );
 	}
 }
 
-unsigned long TextInputStream::getSize()
+uint32 TextInputStream::getSize()
 {
 	return size_;
 }
@@ -41,9 +41,9 @@ char* TextInputStream::getBuffer()
 	return NULL;
 }
 
-unsigned long TextInputStream::read( unsigned char* bytesToRead, unsigned long sizeOfBytes )
+uint32 TextInputStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
 {
-	unsigned long result = 0;
+	uint32 result = 0;
 	if ( NULL != inStream_ ){
 		result = inStream_->read( bytesToRead, sizeOfBytes );
 	}
@@ -187,7 +187,7 @@ String TextInputStream::readTillTokenPair( const char& token )
 	return result;
 }
 
-ulong32 TextInputStream::getCurrentSeekPos()
+uint32 TextInputStream::getCurrentSeekPos()
 {
 	if ( NULL != inStream_ ) {
 		return inStream_->getCurrentSeekPos();

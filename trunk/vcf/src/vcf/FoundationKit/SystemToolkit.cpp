@@ -83,7 +83,7 @@ SystemPeer* SystemToolkit::createSystemPeer()
 	return SystemToolkit::getSystemToolkit()->internal_createSystemPeer();
 }
 
-SemaphorePeer* SystemToolkit::createSemaphorePeer( long initialCount, long maxCount )
+SemaphorePeer* SystemToolkit::createSemaphorePeer( int32 initialCount, int32 maxCount )
 {
 	return SystemToolkit::getSystemToolkit()->internal_createSemaphorePeer(initialCount,maxCount);
 }

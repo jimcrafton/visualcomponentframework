@@ -37,13 +37,13 @@ public:
 	the ansiStrBufferLength parameter is to be ignored, and the function
 	should return the number of characters that would need to be allocated
 	by the caller to successfully hold all of the ansi string.
-	@param ulong32 the length of the ansiStrBuffer. The codec will put no more than this
+	@param uint32 the length of the ansiStrBuffer. The codec will put no more than this
 	number of characters into the ansiStrBuffer.
-	@return ulong32 the number of characters in the ansi string. Will be less than or
+	@return uint32 the number of characters in the ansi string. Will be less than or
 	equal to ansiStrBufferLength.
 	*/
-	virtual ulong32 convertToAnsiString( const UnicodeString& str, UnicodeString::AnsiChar* ansiStrBuffer,
-										const ulong32& ansiStrBufferLength ) = 0;
+	virtual uint32 convertToAnsiString( const UnicodeString& str, UnicodeString::AnsiChar* ansiStrBuffer,
+										const uint32& ansiStrBufferLength ) = 0;
 
 	/**
 	Transforms a single Unicode character to an ansi character.

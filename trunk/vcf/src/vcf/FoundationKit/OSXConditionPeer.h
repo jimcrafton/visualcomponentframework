@@ -43,7 +43,7 @@ class OSXConditionPeer : public VCF::Object, public ConditionPeer {
 public:
 
 	enum {
-		MaxQueue = ((unsigned long)-1)/2
+		MaxQueue = ((uint32)-1)/2
 	};
 
 	OSXConditionPeer( Condition* condition );
@@ -69,7 +69,7 @@ protected:
 	MPCriticalRegionID mutex_;
 
 	unsigned gone_;  // # threads that timed out and never made it to queue_
-    unsigned long blocked_; // # threads blocked on the condition
+    uint32 blocked_; // # threads blocked on the condition
     unsigned waiting_; // # threads no longer waiting for the condition but
                         // still waiting to be removed from queue_
 };

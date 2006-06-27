@@ -795,7 +795,7 @@ public:
 	UnicodeString getCurrencyPositiveSign();
 	UnicodeString getCurrencyNegativeSign();
 
-	bool isCharA( const long& charTypeMask, const VCFChar& c );
+	bool isCharA( const int32& charTypeMask, const VCFChar& c );
 
 	UnicodeString translate( const UnicodeString& id );
 

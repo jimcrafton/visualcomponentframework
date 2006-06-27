@@ -441,7 +441,7 @@ VCF::String StringUtils::toString( const long& value )
 
 }
 
-VCF::String StringUtils::toString( const VCF::ulong32& value )
+VCF::String StringUtils::toString( const unsigned long& value )
 {
 #ifdef VCF_OSX
 	CFTextString cfTmp;
@@ -986,7 +986,7 @@ VCF::uint32 StringUtils::fromStringAsUInt( const VCF::String& value )
 
 long StringUtils::fromStringAsLong( const VCF::String& value )
 {
-	uint32 result = 0;
+	long result = 0;
 	#ifdef VCF_OSX
 		CFTextString tmp;
 		tmp = value;
@@ -1013,9 +1013,9 @@ long StringUtils::fromStringAsLong( const VCF::String& value )
 	return result;
 }
 
-VCF::ulong32 StringUtils::fromStringAsULong( const VCF::String& value )
+unsigned long StringUtils::fromStringAsULong( const VCF::String& value )
 {
-	uint32 result = 0;
+	unsigned long result = 0;
 	#ifdef VCF_OSX
 		CFTextString tmp;
 		tmp = value;
@@ -1224,9 +1224,9 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 	const VCFChar* current = p;
 	int size = formatting.size();
 	int pos = 0;
-	unsigned long  y = date.getYear();
-	unsigned long m = date.getMonth();
-	unsigned long d = date.getDay();
+	uint32 y = date.getYear();
+	uint32 m = date.getMonth();
+	uint32 d = date.getDay();
 
 	VCFChar tmp[256];
 	int tmpLen = sizeof(tmp)/sizeof(VCFChar);

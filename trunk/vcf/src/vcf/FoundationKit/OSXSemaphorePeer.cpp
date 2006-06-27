@@ -15,7 +15,7 @@ using namespace VCF;
 
 
 
-OSXSemaphore::OSXSemaphore( long initialCount, long maxCount ):
+OSXSemaphore::OSXSemaphore( int32 initialCount, int32 maxCount ):
     semaphoreID_(NULL)
 {
     MPLibraryIsLoaded();

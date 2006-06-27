@@ -51,8 +51,8 @@ SystemPeer* LinuxSystemToolkit::internal_createSystemPeer()
 	return new LinuxSystemPeer();
 }
 
-SemaphorePeer* LinuxSystemToolkit::internal_createSemaphorePeer( long initialCount,
-                                                                 long maxCount )
+SemaphorePeer* LinuxSystemToolkit::internal_createSemaphorePeer( int32 initialCount,
+                                                                 int32 maxCount )
 {
 	return new LinuxSemaphorePeer( initialCount, maxCount );
 }

@@ -26,7 +26,7 @@ GenericMemoryBuffer
 template <class DATA_TYPE>
 class GenericMemoryBuffer {
 public:
-	GenericMemoryBuffer( const ulong32 allocationSize = 65536) :
+	GenericMemoryBuffer( const uint32 allocationSize = 65536) :
 			allocationSize_(allocationSize),
 			currentBuffer_(NULL),
 			currentAllocationSize_(0),
@@ -45,11 +45,11 @@ public:
 		return currentBuffer_;
 	}
 
-	inline ulong32 getSize()  {
+	inline uint32 getSize()  {
 		return currentSize_;
 	}
 
-	inline unsigned long write( const unsigned char* buffer, const ulong32& sizeOfBuffer ) {
+	inline uint32 write( const unsigned char* buffer, const uint32& sizeOfBuffer ) {
 		if ( currentAllocationSize_ < (seekPos_ + sizeOfBuffer) ) {
 			allocate( sizeOfBuffer );
 		}
@@ -68,7 +68,7 @@ public:
 		return sizeOfBuffer;
 	}
 
-	inline unsigned long read( unsigned char* buffer, const ulong32& sizeOfBuffer ) {
+	inline uint32 read( unsigned char* buffer, const uint32& sizeOfBuffer ) {
 		if ( currentAllocationSize_ < (seekPos_ + sizeOfBuffer) ) {
 			throw NoFreeMemException("No longer have enough memory in this buffer to read from.");
 		}
@@ -83,11 +83,11 @@ public:
 		return sizeOfBuffer;
 	}
 
-	inline void setSeekPos( ulong32 pos ) {
+	inline void setSeekPos( uint32 pos ) {
 		seekPos_ = pos;
 	}
 
-	inline ulong32 getSeekPos() {
+	inline uint32 getSeekPos() {
 		return seekPos_;
 	}
 
@@ -100,8 +100,8 @@ public:
 		allocate(allocationSize_);
 	}
 protected:
-	inline void allocate( ulong32 sizeToAllocate ) {
-		ulong32 oldSize = currentAllocationSize_;
+	inline void allocate( uint32 sizeToAllocate ) {
+		uint32 oldSize = currentAllocationSize_;
 
 		sizeToAllocate = (sizeToAllocate - oldSize);
 
@@ -123,11 +123,11 @@ protected:
 		currentBuffer_ = tmp;
 	}
 private:
-	ulong32 allocationSize_;
+	uint32 allocationSize_;
 	DATA_TYPE* currentBuffer_;
-	ulong32 currentAllocationSize_;
-	ulong32 seekPos_;
-	ulong32 currentSize_;
+	uint32 currentAllocationSize_;
+	uint32 seekPos_;
+	uint32 currentSize_;
 };
 
 
@@ -138,7 +138,7 @@ private:
 */
 class FOUNDATIONKIT_API CharMemStream : public GenericMemoryBuffer<char> {
 public:
-	CharMemStream( const ulong32& allocationSize = 65536 ) :
+	CharMemStream( const uint32& allocationSize = 65536 ) :
 		GenericMemoryBuffer<char> ( allocationSize ) {
 	}
 

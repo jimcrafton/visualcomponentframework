@@ -57,7 +57,7 @@ public:
 
 	String getName();
 
-	ulong32 terminate();
+	uint32 terminate();
 
 	virtual WaitResult wait();
 

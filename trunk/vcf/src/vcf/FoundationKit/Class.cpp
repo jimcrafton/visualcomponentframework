@@ -153,7 +153,7 @@ bool Class::hasMethod( const String& methodName ){
 	return result;
 }
 
-unsigned long Class::getMethodCount(){
+uint32 Class::getMethodCount(){
 	return methods_.size();
 }
 
@@ -186,7 +186,7 @@ bool Class::hasField( const String& fieldName ){
 	return result;
 }
 
-unsigned long Class::getFieldCount(){
+uint32 Class::getFieldCount(){
 	return fields_.size();
 }
 
@@ -232,7 +232,7 @@ void Class::setSource( Object* source )
 	}
 }
 
-unsigned long Class::getPropertyCount()
+uint32 Class::getPropertyCount()
 {
 	return properties_.size();
 }
@@ -346,7 +346,7 @@ String Class::getClassNameForProperty( Property* property )
 	return result;
 }
 
-unsigned long Class::getInterfaceCount()
+uint32 Class::getInterfaceCount()
 {
 	return interfaces_.size();
 }

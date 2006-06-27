@@ -94,7 +94,7 @@ OSXFileStream::~OSXFileStream()
 	}
 }
 
-void OSXFileStream::seek(const unsigned long& offset, const SeekType& offsetFrom)
+void OSXFileStream::seek(const uint32& offset, const SeekType& offsetFrom)
 {
 	int seekType = translateSeekTypeToMoveType( offsetFrom );
 
@@ -107,9 +107,9 @@ void OSXFileStream::seek(const unsigned long& offset, const SeekType& offsetFrom
 	}
 }
 
-unsigned long OSXFileStream::getSize()
+uint32 OSXFileStream::getSize()
 {
-	unsigned long result = 0;
+	uint32 result = 0;
 	
 	struct stat st = {0};
 	if ( -1 != fstat( fileHandle_, &st ) ) {
@@ -119,7 +119,7 @@ unsigned long OSXFileStream::getSize()
 	return result;
 }
 
-unsigned long OSXFileStream::read( unsigned char* bytesToRead, unsigned long sizeOfBytes )
+uint32 OSXFileStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
 {
 	size_t bytesRead = 0;
 	size_t err = ::read( fileHandle_, bytesToRead, sizeOfBytes );
@@ -142,7 +142,7 @@ unsigned long OSXFileStream::read( unsigned char* bytesToRead, unsigned long siz
 	return bytesRead;
 }
 
-unsigned long OSXFileStream::write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes )
+uint32 OSXFileStream::write( const unsigned char* bytesToWrite, uint32 sizeOfBytes )
 {
 	int bytesWritten = 0;
 	size_t err = ::write( fileHandle_, bytesToWrite, sizeOfBytes );

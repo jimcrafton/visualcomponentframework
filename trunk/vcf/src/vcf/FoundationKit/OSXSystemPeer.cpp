@@ -34,7 +34,7 @@ OSXSystemPeer::~OSXSystemPeer()
 
 }
 
-unsigned long OSXSystemPeer::getTickCount()
+uint32 OSXSystemPeer::getTickCount()
 {
 
 	struct timeval now = {0};
@@ -49,7 +49,7 @@ unsigned long OSXSystemPeer::getTickCount()
 	t2 =  (double)(now.tv_sec * 1000) + (double)now.tv_usec/(1000); //convert to Milliseconds
 
 
-	unsigned long result = (unsigned long)(t2 - t1);
+	uint32 result = (uint32)(t2 - t1);
 
 	return result;
 }
@@ -256,13 +256,13 @@ DateTime OSXSystemPeer::convertUTCTimeToLocalTime( const DateTime& date )
 	CFRefObject<CFTimeZoneRef> tz = CFTimeZoneCopySystem();
 	CFGregorianDate cfDate;
 	
-	unsigned long year;
-	unsigned long month;
-	unsigned long day;
-	unsigned long hour;
-	unsigned long minute;
-	unsigned long second;
-	unsigned long millisecond;	
+	uint32 year;
+	uint32 month;
+	uint32 day;
+	uint32 hour;
+	uint32 minute;
+	uint32 second;
+	uint32 millisecond;	
 	date.get( &year, &month, &day, &hour, &minute, &second, &millisecond );
 	
 	cfDate.year = year;
@@ -281,7 +281,7 @@ DateTime OSXSystemPeer::convertUTCTimeToLocalTime( const DateTime& date )
 	cfDate = CFAbsoluteTimeGetGregorianDate( utcTime, tz );
 	
 	double dsecs = floor(cfDate.second);
-	second = (unsigned long) dsecs;
+	second = (uint32) dsecs;
 	
 	double milliseconds = (cfDate.second - dsecs) * 1000.0;
 	
@@ -301,13 +301,13 @@ DateTime OSXSystemPeer::convertLocalTimeToUTCTime( const DateTime& date )
 	CFRefObject<CFTimeZoneRef> tz = CFTimeZoneCopySystem();
 	CFGregorianDate cfDate;
 	
-	unsigned long year;
-	unsigned long month;
-	unsigned long day;
-	unsigned long hour;
-	unsigned long minute;
-	unsigned long second;
-	unsigned long millisecond;	
+	uint32 year;
+	uint32 month;
+	uint32 day;
+	uint32 hour;
+	uint32 minute;
+	uint32 second;
+	uint32 millisecond;	
 	date.get( &year, &month, &day, &hour, &minute, &second, &millisecond );
 	
 	cfDate.year = year;
@@ -345,7 +345,7 @@ String OSXSystemPeer::getOSName()
 
 String OSXSystemPeer::getOSVersion()
 {
-	long response = 0;
+	int32 response = 0;
 	Gestalt( gestaltSystemVersion, &response );
 	int bug = (0x0000000F) & response;
 	int minor = ((0x000000F0) & response) >> 4;

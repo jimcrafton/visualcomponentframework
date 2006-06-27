@@ -16,7 +16,7 @@ ThreadEvent::ThreadEvent( Object* source ):
 
 }
 
-ThreadEvent::ThreadEvent( Object* source, const ulong32& eventType ):
+ThreadEvent::ThreadEvent( Object* source, const uint32& eventType ):
 	Event( source, eventType )
 {
 

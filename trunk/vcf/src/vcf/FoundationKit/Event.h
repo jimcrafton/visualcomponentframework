@@ -41,7 +41,7 @@ class FOUNDATIONKIT_API Event : public Object {
 public:
 
     Event( Object * source);
-	Event( Object* source, const unsigned long& eventType );
+	Event( Object* source, const uint32& eventType );
 
 	Event( const Event& rhs ): Object(rhs) {
 		init();
@@ -91,9 +91,9 @@ public:
 	*definitely store a flag here. See the specific event class for the exact event types
 	*the event types can be set to
 	*/
-    unsigned long getType();
+    uint32 getType();
 
-	void setType( const unsigned long& type );
+	void setType( const uint32& type );
 
 	/**
 	*gets the time the event was created.
@@ -115,7 +115,7 @@ public:
 private:
     Object* source_;
 	void* userData_;
-    unsigned long eventType_;
+    uint32 eventType_;
     time_t time_;
 };
 

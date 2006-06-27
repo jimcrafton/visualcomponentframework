@@ -21,7 +21,7 @@ Event::Event( Object * source)
 	init();
 }
 
-Event::Event( Object* source, const unsigned long& eventType )
+Event::Event( Object* source, const uint32& eventType )
 {
 	source_ = source;
 	userData_ = NULL;
@@ -40,12 +40,12 @@ Object* Event::getSource()
 	return source_;
 }
 
-unsigned long Event::getType()
+uint32 Event::getType()
 {
 	return eventType_;
 }
 
-void Event::setType( const unsigned long& type )
+void Event::setType( const uint32& type )
 {
 	eventType_ = type;
 }

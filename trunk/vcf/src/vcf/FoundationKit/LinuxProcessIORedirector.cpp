@@ -25,7 +25,7 @@ bool LinuxProcessIORedirector::createProcess( const String& processName,
 	return result;
 }
 
-ulong32 LinuxProcessIORedirector::terminate()
+uint32 LinuxProcessIORedirector::terminate()
 {
 	return 0;
 }

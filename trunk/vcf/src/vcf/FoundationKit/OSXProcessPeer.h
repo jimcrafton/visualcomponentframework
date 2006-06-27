@@ -47,7 +47,7 @@ public:
 		return (OSHandleID)&processHandle_;
 	}
 
-    virtual ulong32 terminate();
+    virtual uint32 terminate();
 	
 	virtual Waitable::WaitResult wait( uint32 milliseconds );
 

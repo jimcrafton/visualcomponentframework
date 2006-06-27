@@ -28,14 +28,14 @@ class FOUNDATIONKIT_API SystemPeer {
 public:
 	virtual ~SystemPeer(){};
 	/**
-	*tries to return a long representing the current tick count of the system
+	*tries to return a uint32 representing the current tick count of the system
 	*/
-	virtual unsigned long getTickCount()=0;
+	virtual uint32 getTickCount()=0;
 
 	/**
 	*causes the calling thread to pause for the
 	*specified number of milliseconds
-	*@param unsigned int the number of milliseconds to pause the thread
+	*@param uint32 the number of milliseconds to pause the thread
 	*/
 	virtual void sleep( const uint32& milliseconds ) = 0;
 

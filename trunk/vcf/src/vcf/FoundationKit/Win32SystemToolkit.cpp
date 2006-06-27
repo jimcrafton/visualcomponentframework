@@ -73,7 +73,7 @@ SystemPeer* Win32SystemToolkit::internal_createSystemPeer()
 	return new Win32SystemPeer();
 }
 
-SemaphorePeer* Win32SystemToolkit::internal_createSemaphorePeer( long initialCount, long maxCount )
+SemaphorePeer* Win32SystemToolkit::internal_createSemaphorePeer( int32 initialCount, int32 maxCount )
 {
 	return new Win32SemaphorePeer( initialCount, maxCount );
 }

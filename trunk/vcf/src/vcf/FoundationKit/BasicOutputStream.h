@@ -34,15 +34,15 @@ public:
 
 	virtual ~BasicOutputStream();
 
-	virtual void seek(const unsigned long& offset, const SeekType& offsetFrom);
+	virtual void seek(const uint32& offset, const SeekType& offsetFrom);
 
-	virtual unsigned long getSize();
+	virtual uint32 getSize();
 
 	virtual char* getBuffer();
 
-	virtual ulong32 getCurrentSeekPos();
+	virtual uint32 getCurrentSeekPos();
 
-	virtual unsigned long write( const unsigned char* bytesToRead, unsigned long sizeOfBytes );
+	virtual uint32 write( const unsigned char* bytesToRead, uint32 sizeOfBytes );
 
 	void init();
 private:

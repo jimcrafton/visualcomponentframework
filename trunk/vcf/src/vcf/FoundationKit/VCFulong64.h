@@ -23,7 +23,7 @@ Unsigned 64 bit integer type
 #if defined(VCF_MSC) || ( defined(VCF_BCC) && !defined(VCF_BCC8)) || defined(VCF_ICL)
 	typedef unsigned __int64 ulong64;
 #else
-	typedef unsigned long long ulong64;
+	typedef uint32 long ulong64;
 #endif
 
 
@@ -58,32 +58,32 @@ ulong64 x = VCF_LIT64(0xffffffffffffffff);
 /**
 This returns the top 32 bits of the number
 */
-inline ulong32 getHi32(ulong64 val){
-	return (ulong32)(val>>32);
+inline uint32 getHi32(ulong64 val){
+	return (uint32)(val>>32);
 }
 
 
 /**
 This returns the top 32 bits of the number
 */
-inline long32 getHi32(long64 val){
-	return (long32)(val>>32);
+inline int32 getHi32(long64 val){
+	return (int32)(val>>32);
 }
 
 
 /**
 This returns the low 32 bits of the number
 */
-inline ulong32 getLo32(ulong64 val){
-	return (ulong32)val;
+inline uint32 getLo32(ulong64 val){
+	return (uint32)val;
 }
 
 
 /**
 This returns the low 32 bits of the number
 */
-inline ulong32 getLo32(long64 val){
-	return (ulong32)val;
+inline uint32 getLo32(long64 val){
+	return (uint32)val;
 }
 
 
@@ -94,7 +94,7 @@ inline ulong32 getLo32(long64 val){
 This sets the top 32 bits of the number to the specified
 value.
 */
-inline void setHi32(ulong64& val,ulong32 hi){
+inline void setHi32(ulong64& val,uint32 hi){
 	val = (val & 0xffffffff) | (((ulong64)hi)<<32);
 }
 
@@ -103,7 +103,7 @@ inline void setHi32(ulong64& val,ulong32 hi){
 This sets the top 32 bits of the number to the specified
 value.
 */
-inline void setHi32(long64& val,long32 hi){
+inline void setHi32(long64& val,int32 hi){
 	val = (val & 0xffffffff) | (((long64)hi)<<32);
 }
 
@@ -113,7 +113,7 @@ inline void setHi32(long64& val,long32 hi){
 This sets the low 32 bits of the number to the specified
 value.
 */
-inline void setLo32(ulong64& val,ulong32 lo){
+inline void setLo32(ulong64& val,uint32 lo){
 	val = (val & VCF_LIT64(0xffffffff00000000)) | lo;
 }
 
@@ -121,7 +121,7 @@ inline void setLo32(ulong64& val,ulong32 lo){
 This sets the low 32 bits of the number to the specified
 value.
 */
-inline void setLo32(long64& val,ulong32 lo){
+inline void setLo32(long64& val,uint32 lo){
 	val = (val & VCF_LIT64(0xffffffff00000000)) | lo;
 }
 
@@ -130,7 +130,7 @@ inline void setLo32(long64& val,ulong32 lo){
 /**
 Creates an unsigned 64 bit integer from the
 high and low 32 bit.*/
-inline ulong64 makeULong64(ulong32 hi,ulong32 lo){
+inline ulong64 makeULong64(uint32 hi,uint32 lo){
 	return (((ulong64)hi)<<32) | lo;
 }
 
@@ -138,7 +138,7 @@ inline ulong64 makeULong64(ulong32 hi,ulong32 lo){
 /**
 Creates a signed 64 bit integer from the
 high and low 32 bit.*/
-inline long64 makeLong64(long32 hi,ulong32 lo){
+inline long64 makeLong64(int32 hi,uint32 lo){
 	return (((long64)hi)<<32) | lo;
 }
 

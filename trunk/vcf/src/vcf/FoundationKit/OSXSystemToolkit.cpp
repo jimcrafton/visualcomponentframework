@@ -63,7 +63,7 @@ SystemPeer* OSXSystemToolkit::internal_createSystemPeer()
 	return new OSXSystemPeer();
 }
 
-SemaphorePeer* OSXSystemToolkit::internal_createSemaphorePeer( long initialCount, long maxCount )
+SemaphorePeer* OSXSystemToolkit::internal_createSemaphorePeer( int32 initialCount, int32 maxCount )
 {
 	return new OSXSemaphore( initialCount, maxCount );
 }

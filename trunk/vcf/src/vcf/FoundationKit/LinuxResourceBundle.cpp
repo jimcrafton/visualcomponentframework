@@ -74,7 +74,7 @@ Resource* LinuxResourceBundle::getResource( const String& resourceName )
     Resource* result = NULL;
     if(File::exists(filePath)) {
         FileInputStream fs(filePath);
-        ulong32 size = fs.getSize();
+        uint32 size = fs.getSize();
         char* buf = new char[size];
         fs.read( (unsigned char*)buf, size );
     

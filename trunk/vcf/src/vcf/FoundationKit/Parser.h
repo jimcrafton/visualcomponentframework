@@ -51,19 +51,19 @@ public:
 
 	VCFChar nextToken();
 
-	long sourcePos();
+	int32 sourcePos();
 
 	String tokenComponentIdent();
 
 	double tokenFloat();
 
-	long tokenInt();
+	int32 tokenInt();
 
 	String tokenString();
 
 	bool tokenSymbolIs(const String& s);
 
-    long getSourceLine() {
+    int32 getSourceLine() {
 		return sourceLine_;
 	}
 
@@ -75,7 +75,7 @@ public:
 
 protected:
 	InputStream* stream_;
-	long origin_;
+	int32 origin_;
 	VCFChar* buffer_;
 	VCFChar* bufPtr_;
 	VCFChar* bufEnd_;
@@ -83,7 +83,7 @@ protected:
 	VCFChar* sourceEnd_;
 	VCFChar* tokenPtr_;
 	VCFChar* stringPtr_;
-	long sourceLine_;
+	int32 sourceLine_;
 	VCFChar saveChar_;
 	VCFChar token_;
 

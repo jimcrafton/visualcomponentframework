@@ -17,7 +17,7 @@ namespace VCF  {
 class OSXSemaphore : public SemaphorePeer {
 public:
 
-    OSXSemaphore( long initialCount, long maxCount );
+    OSXSemaphore( int32 initialCount, int32 maxCount );
 	virtual ~OSXSemaphore();
 
 	virtual bool lock();

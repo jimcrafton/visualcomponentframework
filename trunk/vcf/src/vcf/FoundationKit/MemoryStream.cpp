@@ -47,7 +47,7 @@ void MemoryStream::init()
 	currentSeekPos_ = 0;
 }
 
-void MemoryStream::seek(const unsigned long& offset, const SeekType& offsetFrom)
+void MemoryStream::seek(const uint32& offset, const SeekType& offsetFrom)
 {
 	switch ( offsetFrom ) {
 		case stSeekFromStart: {
@@ -67,7 +67,7 @@ void MemoryStream::seek(const unsigned long& offset, const SeekType& offsetFrom)
 	}
 }
 
-unsigned long MemoryStream::getSize()
+uint32 MemoryStream::getSize()
 {
 	return size_;
 }
@@ -82,9 +82,9 @@ void MemoryStream::write( Persistable* persistableObject )
 	}
 }
 
-unsigned long MemoryStream::write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes )
+uint32 MemoryStream::write( const unsigned char* bytesToWrite, uint32 sizeOfBytes )
 {
-	unsigned long result = 0;
+	uint32 result = 0;
 
 	if ( NULL != this->outputStream_ ){
 		result = outputStream_->write( bytesToWrite, sizeOfBytes );
@@ -99,9 +99,9 @@ unsigned long MemoryStream::write( const unsigned char* bytesToWrite, unsigned l
 	return result;
 }
 
-unsigned long MemoryStream::read( unsigned char* bytesToRead, unsigned long sizeOfBytes )
+uint32 MemoryStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
 {
-	unsigned long result = 0;
+	uint32 result = 0;
 	if ( NULL != this->inputStream_ ){
 		result = inputStream_->read( bytesToRead, sizeOfBytes );
 	}
@@ -113,7 +113,7 @@ unsigned long MemoryStream::read( unsigned char* bytesToRead, unsigned long size
 	return result;
 }
 
-ulong32 MemoryStream::getCurrentSeekPos()
+uint32 MemoryStream::getCurrentSeekPos()
 {
 	if ( NULL != inputStream_ ) {
 		return inputStream_->getCurrentSeekPos();

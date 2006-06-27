@@ -269,7 +269,7 @@ public:
 	GetTickCount() API. Should be millisecond resolution, but this is not by any means 
 	guaranteed.
 	*/
-	static unsigned long getTickCount();
+	static uint32 getTickCount();
 
 	/**
 	Causes the calling thread/process to sleep for a specified number of milliseconds.

@@ -61,7 +61,7 @@ String ProcessWithRedirectedIO::getName()
 	return processPeer_->getProcessFileName();
 }
 
-ulong32 ProcessWithRedirectedIO::terminate()
+uint32 ProcessWithRedirectedIO::terminate()
 {
 	return processPeer_->terminate();
 }

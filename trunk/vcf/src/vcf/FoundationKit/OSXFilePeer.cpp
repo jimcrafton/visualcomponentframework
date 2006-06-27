@@ -36,9 +36,9 @@ FSCatalogInfoBitmap defaultSearchFlags = kFSCatInfoCreateDate | kFSCatInfoConten
 									kFSCatInfoDataSizes | kFSCatInfoNodeFlags ;
 									
 
-ulong32 OSX_convertAttributesFromSystemSpecific( FSCatalogInfo* catInfo )
+uint32 OSX_convertAttributesFromSystemSpecific( FSCatalogInfo* catInfo )
 {
-	ulong32 fileAttributes = File::faNone;
+	uint32 fileAttributes = File::faNone;
 	
 	FSPermissionInfo* permissions = (FSPermissionInfo*)catInfo->permissions;
 	
@@ -119,7 +119,7 @@ void OSXFilePeer::updateStat( File::StatMask statMask )
 		
 		if ( noErr == FSGetCatalogInfo( &fileFS, kFSCatInfoPermissions | kFSCatInfoNodeFlags, &info, NULL, NULL, NULL ) ) {
 			if ( statMask & File::smAttributes ) {
-				ulong32 fileAttrs = 0;
+				uint32 fileAttrs = 0;
 				fileAttrs = OSX_convertAttributesFromSystemSpecific( &info );
 				file_->internal_setFileAttributes( fileAttrs );
 			}
@@ -250,7 +250,7 @@ DateTime OSXFilePeer::getDateAccessed()
 	return result;
 }
 
-void OSXFilePeer::open( const String& fileName, ulong32 openFlags, File::ShareFlags shareFlags)
+void OSXFilePeer::open( const String& fileName, uint32 openFlags, File::ShareFlags shareFlags)
 {
 	close();
 	VCF_ASSERT( !fileName.empty() );
@@ -284,7 +284,7 @@ void OSXFilePeer::close()
 	}
 }
 
-void OSXFilePeer::create( ulong32 openFlags )
+void OSXFilePeer::create( uint32 openFlags )
 {
 	close();
 	String fname = file_->getName();
@@ -413,7 +413,7 @@ File* OSXFilePeer::findNextFileInSearch( Directory::Finder* finder )
 	
 	bool isDir = false;
 	bool ok = false;
-	ulong32 fileAttribs;
+	uint32 fileAttribs;
 	
 	
 	while ( true ) {
