@@ -112,13 +112,13 @@ all: ..\..\lib\$(OBJDIR)\utilities\Xmake
 
 ### Targets: ###
 
-all: ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\bin\xmake.exe
+all: ..\..\lib\Xmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\bin\xmake.exe
 
 clean: 
 	-if exist ..\..\lib\$(OBJDIR)\utilities\Xmake\*.obj del ..\..\lib\$(OBJDIR)\utilities\Xmake\*.obj
 	-if exist ..\..\lib\$(OBJDIR)\utilities\Xmake\*.res del ..\..\lib\$(OBJDIR)\utilities\Xmake\*.res
 	-if exist ..\..\lib\$(OBJDIR)\utilities\Xmake\*.csm del ..\..\lib\$(OBJDIR)\utilities\Xmake\*.csm
-	-if exist ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+	-if exist ..\..\lib\Xmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\Xmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\bin\xmake.exe del ..\..\bin\xmake.exe
 	-if exist ..\..\bin\xmake.tds del ..\..\bin\xmake.tds
 	-if exist ..\..\bin\xmake.ilc del ..\..\bin\xmake.ilc
@@ -126,15 +126,15 @@ clean:
 	-if exist ..\..\bin\xmake.ilf del ..\..\bin\xmake.ilf
 	-if exist ..\..\bin\xmake.ils del ..\..\bin\xmake.ils
 
-..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(XMAKE_LIB_OBJECTS)
+..\..\lib\Xmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(XMAKE_LIB_OBJECTS)
 	if exist $@ del $@
 	tlib /a /p4096 $@ @&&|
 	$(XMAKE_LIB_OBJECTS)
 |
 
-..\..\bin\xmake.exe: $(XMAKE_OBJECTS) ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+..\..\bin\xmake.exe: $(XMAKE_OBJECTS) ..\..\lib\Xmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	ilink32 -Tpe -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib -ap @&&|
-	c0x32.obj $(XMAKE_OBJECTS),$@,, ole2w32.lib oleacc.lib urlmon.lib $(____xmake_FOUNDATIONKIT_p) ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib import32.lib cw32mt$(__RUNTIME_LIBS_16).lib,,
+	c0x32.obj $(XMAKE_OBJECTS),$@,, ole2w32.lib oleacc.lib urlmon.lib $(____xmake_FOUNDATIONKIT_p) ..\..\lib\Xmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib import32.lib cw32mt$(__RUNTIME_LIBS_16).lib,,
 |
 
 ..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_CmdLine.obj: .\CmdLine.cpp

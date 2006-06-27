@@ -86,21 +86,21 @@ all: ..\..\lib\$(OBJDIR)\utilities\Xmake
 
 ### Targets: ###
 
-all: ..\..\lib\liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ..\..\bin\xmake.exe
+all: ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ..\..\bin\xmake.exe
 
 clean: 
 	-if exist ..\..\lib\$(OBJDIR)\utilities\Xmake\*.o del ..\..\lib\$(OBJDIR)\utilities\Xmake\*.o
 	-if exist ..\..\lib\$(OBJDIR)\utilities\Xmake\*.d del ..\..\lib\$(OBJDIR)\utilities\Xmake\*.d
-	-if exist ..\..\lib\liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a del ..\..\lib\liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+	-if exist ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a del ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	-if exist ..\..\bin\xmake.exe del ..\..\bin\xmake.exe
 
-..\..\lib\liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(XMAKE_LIB_OBJECTS)
+..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(XMAKE_LIB_OBJECTS)
 	if exist $@ del $@
 	ar rcu $@ $(XMAKE_LIB_OBJECTS)
 	ranlib $@
 
-..\..\bin\xmake.exe: $(XMAKE_OBJECTS) ..\..\lib\liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
-	$(CXX) -o $@ $(XMAKE_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib  $(____xmake_FOUNDATIONKIT_p)  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 ..\..\lib\liblibXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+..\..\bin\xmake.exe: $(XMAKE_OBJECTS) ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+	$(CXX) -o $@ $(XMAKE_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib  $(____xmake_FOUNDATIONKIT_p)  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 ..\..\lib\libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 
 ..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_CmdLine.o: ./CmdLine.cpp
 	$(CXX) -c -o $@ $(XMAKE_LIB_CXXFLAGS) $(CPPDEPS) $<

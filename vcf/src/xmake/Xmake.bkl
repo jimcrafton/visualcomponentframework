@@ -3,7 +3,7 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
-    <set var="LIBRARY_NAME">libXmake</set>
+    <set var="LIBRARY_NAME">Xmake</set>
 
     <lib id="xmake_lib" template="vcf_lib">
         <if cond="FORMAT=='gnu'">
