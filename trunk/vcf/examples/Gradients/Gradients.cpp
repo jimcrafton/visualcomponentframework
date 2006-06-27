@@ -57,9 +57,12 @@ public:
 
 		fill2.addColor( Color("blue"), 0.67 );
 
+		fill2.setStart( 50 );
+		fill2.setEnd( 250 );
+
 
 		curve.clear();
-		curve.rectangle( Rect(0,250,200,340) );
+		curve.rectangle( Rect(50,250,250,340) );
 		ctx->draw( &curve );
 
 
@@ -221,8 +224,86 @@ public:
 		ctx->setCurrentFill( NULL );
 		ctx->setCompositingMode( GraphicsContext::cmSource );
 
+	
 
-		//Image* logo = 
+
+
+		Rect logoRect(300,100,385,184);
+
+		BasicFill logoBack;
+		logoBack.setColor( &Color(0.019,0.141,0.262) );
+		ctx->setCurrentFill( &logoBack );
+
+
+		circ.circle( logoRect.getCenter(), 42 );
+		ctx->draw(&circ);		
+		
+		VerticalGradientFill logoGrad;
+		logoGrad.setColorValue( 0, Color(0.568, 0.6196, 0.6745, 1.0 ) );
+		logoGrad.setColorValue( 1, Color(0.0392, 0.1529, 0.2867, 1.0 ) );		
+		logoGrad.setColorLocation( 1, 0.26 );
+		logoGrad.setMidPoint( 0, 0.55 );
+
+		logoGrad.addColor( Color(0.0941, 0.2235, 0.4235, 1.0 ), 0.67 );
+		logoGrad.addColor( Color(0.2941, 0.6588, 0.8078, 1.0 ), 0.95 );
+
+		logoGrad.setStart( logoRect.top_ );
+		logoGrad.setEnd( logoRect.bottom_ );
+
+		ctx->setCurrentFill( &logoGrad );
+		circ.circle( logoRect.getCenter(), 41 );
+		ctx->draw(&circ);		
+
+
+		
+
+
+
+		Image* logo = GraphicsToolkit::createImage( "logo.png" );
+
+		ctx->drawImage( logoRect.getTopLeft(), logo, false );
+		ctx->renderImages();
+
+		ShadowFill logoDropShad;		
+		logoDropShad.setAlpha( 1 );
+		logoDropShad.setRadius( 1 );
+		//logoDropShad.setColor( &Color("black") );
+
+		ctx->setCurrentFill( &logoDropShad );
+
+
+		
+		curve.clear();		
+		curve.curve( 25.5, 17.5, 54,8.5, 47.25,32.5, 71.5,22 );
+		curve.lineTo( 59.5, 64.5 );
+		curve.curve( 59.5,64.5, 34,75.25, 38.25,51.75, 13.5,59 );
+		curve.close();
+		ctx->draw(&curve);
+
+
+		logoRect.offset( 0, -logoRect.top_ );
+
+
+		BasicFill bf2;		
+		bf2.setColor( &Color("black") );
+
+		ctx->setCurrentFill( &bf2 );
+		curve.clear();		
+		curve.curve( logoRect.left_+25.5, logoRect.top_+17.5, 
+						logoRect.left_+54,logoRect.top_+8.5, 
+						logoRect.left_+47.25,logoRect.top_+32.5, 
+						logoRect.left_+71.5,logoRect.top_+22 );
+		curve.lineTo( logoRect.left_+59.5, logoRect.top_+64.5 );
+		curve.curve( logoRect.left_+59.5,logoRect.top_+64.5, 
+						logoRect.left_+34,logoRect.top_+75.25, 
+						logoRect.left_+38.25,logoRect.top_+51.75, 
+						logoRect.left_+13.5,logoRect.top_+59 );
+		curve.close();
+		ctx->draw(&curve);
+
+
+
+		ctx->setCurrentFill( NULL );
 
 	}
 
