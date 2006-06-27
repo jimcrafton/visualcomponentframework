@@ -475,7 +475,7 @@ void Win32Context::bitBlit( const double& x, const double& y, Rect* imageBounds,
 		::RealizePalette( dc_ );
 	}
 
-	SetDIBitsToDevice( dc_,
+	int res = SetDIBitsToDevice( dc_,
 							(int32)x,
 							(int32)y,
 							(int32)imageBounds->getWidth(),
@@ -1233,10 +1233,10 @@ void Win32Context::curve(const double & x1, const double & y1, const double & x2
 	bezPts[3].y = (int32)y4;
 
 	if ( inFillPath_ ){
-		::BeginPath( dc_ );
+		//::BeginPath( dc_ );
 		::PolyBezier( dc_, bezPts, 4 );
-		::EndPath( dc_ );
-		::FillPath( dc_ );
+		//::EndPath( dc_ );
+		//::FillPath( dc_ );
 	}
 	else {
 		::PolyBezier( dc_, bezPts, 4 );
@@ -4805,6 +4805,8 @@ bool Win32Context::prepareForDrawing( int32 drawingOperation )
 				currentHPen_ = ::CreatePen( PS_NULL, 0, 0 );
 
 				inFillPath_ = true;
+
+				::BeginPath( dc_ );
 			}
 			break;
 
@@ -4864,6 +4866,31 @@ void Win32Context::finishedDrawing( int32 drawingOperation )
 {
 
 	if ( NULL != dc_ ){
+
+		switch ( drawingOperation ) {
+			case GraphicsContext::doStroke : {
+			}
+			break;
+
+			case GraphicsContext::doFill : {
+
+				::EndPath( dc_ );
+
+				FillPath( dc_ );
+			}
+			break;
+
+			case GraphicsContext::doText : {
+
+			}
+			break;
+
+			case GraphicsContext::doImage : {
+
+			}
+			break;
+		}
+
 		RestoreDC( dc_, currentDCState_ );
 
 		if ( NULL != currentHPen_ ) {

@@ -348,6 +348,7 @@ public:
 					break;
 
 					case PathPoint::ptClose: {
+						fillPath.line_to( pt.point_.x_, pt.point_.y_ );
 						fillPath.close_polygon();
 					}
 					break;
@@ -396,6 +397,10 @@ public:
 
 				ictx->setCurrentFill( &fill );
 
+
+				//ictx->setRenderArea( Rect(0,0,maskImage->getWidth(), maskImage->getHeight()) );
+
+
 				Matrix2D m;
 				m *= Matrix2D::translation( -(pathBounds.left_  /*+ maskImage->getWidth()/2.0*/ ), 
 											-(pathBounds.top_ /*+ maskImage->getHeight()/2.0*/ ) );
@@ -426,6 +431,8 @@ public:
 
 
 				ictx->setCurrentFill( NULL );
+
+				//ictx->flushRenderArea();
 			}
 
 

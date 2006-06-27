@@ -22,6 +22,12 @@ where you installed the VCF.
 #include "thirdparty/common/agg/include/agg_scanline_u.h"
 #endif
 
+#ifndef AGG_PIXFMT_GRAY_INCLUDED
+#include "thirdparty/common/agg/include/agg_pixfmt_gray.h"
+#endif
+
+
+
 
 namespace VCF{
 
@@ -361,7 +367,7 @@ public:
 
 	void renderAreaAlphaOverwritten();
 
-	void setRenderAreaAlphaSize( bool usingNonDefaultAlpha );
+	void setRenderAreaAlphaSize( bool usingNonDefaultAlpha );	
 
 	Image* getRenderArea();
 
@@ -1057,7 +1063,7 @@ void renderScanlines( GraphicsContext& gc,
 										agg::rasterizer_scanline_aa<>& rasterizer,
 										SpanAllocT& spanAllocater,
 										SpanGenT& spanGenerator )
-{
+{	
 	typedef agg::renderer_base<pixfmt> RendererBase;
 
 	typedef agg::comp_op_adaptor_rgba<color_type, component_order> blender_type;
@@ -1078,41 +1084,41 @@ void renderScanlines( GraphicsContext& gc,
 
 		comp_renderer_type crb(pix);
 		agg::render_scanlines_aa( rasterizer, scanline, crb, spanAllocater, spanGenerator );
-	}
+	}	
 }
 
 inline void renderScanlinesSolid( GraphicsContext& gc,
 										agg::rasterizer_scanline_aa<>& rasterizer,
 										const agg::rgba& color )
-{
+{	
 	typedef agg::renderer_base<pixfmt> RendererBase;
 	typedef agg::renderer_scanline_aa_solid<RendererBase> RendererSolid;
-
+	
 	typedef agg::comp_op_adaptor_rgba<color_type, component_order> blender_type;
 	typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
 	typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
-
+	
 	agg::rendering_buffer& renderingBuffer = *gc.getRenderingBuffer();
-
+	
 	agg::scanline_u8& scanline = gc.internal_getRenderAreaScanline();
-
+	
 	if ( GraphicsContext::cmSource == gc.getCompositingMode() ) {
 		pixfmt pixf(renderingBuffer);
 		RendererBase renb(pixf);
 		RendererSolid renderer( renb );
-
+		
 		renderer.color(color);
-
-
+		
+		
 		agg::render_scanlines(rasterizer, scanline, renderer);
 	}
 	else {
 		pixfmt_type pixf(renderingBuffer);
 		pixf.comp_op( gc.getCompositingMode() );
 		comp_renderer_type renb(pixf);
-
+		
 		agg::render_scanlines_aa_solid(rasterizer, scanline, renb, color);
-	}
+	}	
 }
 
 

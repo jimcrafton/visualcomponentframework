@@ -69,11 +69,11 @@ public:
 	virtual ~PathPoint(){};
 
 	PathPoint& operator=( const PathPoint& pt ){
-		if (this != &pt) {
-			point_.x_ = pt.point_.x_;
-			point_.y_ = pt.point_.y_;
-			type_ = pt.type_;
-		}
+		
+		point_.x_ = pt.point_.x_;
+		point_.y_ = pt.point_.y_;
+		type_ = pt.type_;
+		
 		return *this;
 	};
 
