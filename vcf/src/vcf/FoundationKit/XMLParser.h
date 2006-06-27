@@ -142,7 +142,7 @@ public:
 
 	XMLAttr* getAttrByName( const String& name );
 
-	XMLAttr* getAttrByIndex( const ulong32& index );
+	XMLAttr* getAttrByIndex( const uint32& index );
 
 	/**
 	*adds a new attribute to the node. Generally called by
@@ -198,7 +198,7 @@ public:
 
 	XMLNode* getNodeByName( const String& name );
 
-	XMLNode* getNodeByIndex( const ulong32& index );
+	XMLNode* getNodeByIndex( const uint32& index );
 
 	inline Enumerator<XMLNode*>* getChildNodes() {
 		return 	childNodesContainer_.getEnumerator();
@@ -217,7 +217,7 @@ protected:
 
 	std::vector<XMLAttr> attrs_;
 	EnumeratorContainer<std::vector<XMLAttr>,XMLAttr> attrsContainer_;
-	long getDepth();
+	int32 getDepth();
 };
 
 
@@ -345,7 +345,7 @@ protected:
 	const VCFChar* tokenPtr_;
 	const VCFChar* sourcePtr_;
 	const VCFChar* xmlBufferStart_;
-	long sourceSize_;
+	int32 sourceSize_;
 	String tokenString_;
 	bool dtdStarted_;
 	std::map<String,String> entityMap_;

@@ -288,10 +288,10 @@ UnicodeString LinuxLocalePeer::getCurrencyNegativeSign()
 	return result;
 }
 
-bool LinuxLocalePeer::isCharA( const long& charTypeMask, const VCFChar& c )
+bool LinuxLocalePeer::isCharA( const int32& charTypeMask, const VCFChar& c )
 {
     LocaleChanger loc(locale_);
-    long mask = 0;
+    int32 mask = 0;
 	if ( charTypeMask & ctSpace ) {
 		if ( ::isspace( c ) ) {
 			mask |= ctSpace;
@@ -453,12 +453,12 @@ namespace
     }
 }
 
-ulong32 LinuxLocalePeer::getLanguageCode()
+uint32 LinuxLocalePeer::getLanguageCode()
 {
     return Locale::stringToLanguageCode(GetLanguageName(locale_));
 }
 
-ulong32 LinuxLocalePeer::getCountryCode()
+uint32 LinuxLocalePeer::getCountryCode()
 {
     return Locale::stringToCountryCode(GetCountryName(locale_));
 }

@@ -23,7 +23,7 @@ class FOUNDATIONKIT_API ThreadEvent : public Event{
 public:
 	ThreadEvent( Object* source );
 
-	ThreadEvent( Object* source, const ulong32& eventType );
+	ThreadEvent( Object* source, const uint32& eventType );
 
 	virtual ~ThreadEvent();
 

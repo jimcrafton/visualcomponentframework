@@ -28,7 +28,7 @@ public:
 	Win32SystemPeer();
 	virtual ~Win32SystemPeer();
 
-	virtual unsigned long getTickCount();
+	virtual uint32 getTickCount();
 
 	virtual void sleep( const uint32& milliseconds );
 

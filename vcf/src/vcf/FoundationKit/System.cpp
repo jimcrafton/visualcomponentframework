@@ -166,7 +166,7 @@ String System::findResourceDirectoryForExecutable( const String& fileName )
 	return System::findResourceDirectory( fileName, System::getCurrentThreadLocale() );
 }
 
-unsigned long System::getTickCount()
+uint32 System::getTickCount()
 {
 	if ( NULL != System::systemInstance->systemPeer_ ) {
 		return System::systemInstance->systemPeer_->getTickCount();

@@ -27,7 +27,7 @@ public:
 
 	BasicInputStream( const String& textBuffer );
 
-	BasicInputStream( const char* dataBuffer, const unsigned long& dataBufferSize );
+	BasicInputStream( const char* dataBuffer, const uint32& dataBufferSize );
 
 	/**
 	*This constructor is used in stream chaining.
@@ -39,15 +39,15 @@ public:
 
 	virtual ~BasicInputStream();
 
-	virtual void seek(const unsigned long& offset, const SeekType& offsetFrom);
+	virtual void seek(const uint32& offset, const SeekType& offsetFrom);
 
-	virtual unsigned long getSize();
+	virtual uint32 getSize();
 
 	virtual char* getBuffer();
 
-	virtual ulong32 getCurrentSeekPos() ;
+	virtual uint32 getCurrentSeekPos() ;
 
-	virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes );
+	virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes );
 
 	virtual bool isEOS();
 
@@ -55,7 +55,7 @@ public:
 private:
 	CharMemStream inStream_;
 	InputStream* inputStream_;
-	ulong32 totalStreamSize_;
+	uint32 totalStreamSize_;
 };
 
 };

@@ -96,9 +96,9 @@ public:
 	*increments the reference count of the object
 	@param Object* the optional owner of the new referenced object
 	for use in future, more sophisticated refcounting schemes
-	@return unsigned long the current reference count of the object
+	@return uint32 the current reference count of the object
 	*/
-	virtual unsigned long addRef(Object* owner=NULL);
+	virtual uint32 addRef(Object* owner=NULL);
 
 	/**
 	decrements the reference count of the object
@@ -106,12 +106,12 @@ public:
 	for use in future, more sophisticated refcounting schemes
 	when the refCount_ drops to 0 the object is destroyed
 	*/
-	virtual unsigned long release(Object* owner=NULL);
+	virtual uint32 release(Object* owner=NULL);
 
 	/**
 	returns the number of outstanding references for this object
 	*/
-	unsigned long getRefCount(){
+	uint32 getRefCount(){
 		return refCount_;
 	}
 
@@ -173,7 +173,7 @@ public:
 	/**
 	returns a hash value that represents the object instance
 	*/
-	virtual unsigned long hash();
+	virtual uint32 hash();
 
 	/**
 	Ptr is a smart pointer class for use with refcounted objects.
@@ -276,12 +276,12 @@ public:
 	/**
 	returns the total number of objects currently allocated. Only
 	meaningful for _DEBUG builds with memory tracking turned on.
-	@return ulong32 if debug memory tracking is turned on, and the
+	@return uint32 if debug memory tracking is turned on, and the
 	_DEBUG symbol is defined, then this value will be the total count
 	of object instances that are currently allocated. For any other
 	conditions it will return 0.
 	*/
-	static ulong32 objectAllocationCount();
+	static uint32 objectAllocationCount();
 #ifdef _VCF_DEBUG_NEW
 	public:
 
@@ -314,10 +314,10 @@ public:
 
 		}
 		size_t objectAllocationSize_;
-		unsigned long objAddress_;
+		uint32 objAddress_;
 	};
 
-	static std::map<unsigned long,DebugInfo> debugAllocationMap;
+	static std::map<uint32,DebugInfo> debugAllocationMap;
 	static bool trackingDebugMemory;
 
 #endif //_VCF_DEBUG_NEW
@@ -329,7 +329,7 @@ protected:
 	*/
 	virtual void destroy();
 
-	unsigned long refCount_;
+	uint32 refCount_;
 private:
 
 };

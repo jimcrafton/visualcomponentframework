@@ -1158,7 +1158,7 @@ UnicodeString Locale::getCurrencyNegativeSign()
 	return peer_->getCurrencyNegativeSign();
 }
 
-bool Locale::isCharA( const long& charTypeMask, const VCFChar& c )
+bool Locale::isCharA( const int32& charTypeMask, const VCFChar& c )
 {
 	return peer_->isCharA( charTypeMask, c );
 }

@@ -367,7 +367,7 @@ Enumerator<RegistryValueInfo*>* Win32Registry::getValues()
 				break;
 
 				case REG_DWORD:{
-					ulong32* intVal = (ulong32*)buffer;
+					uint32* intVal = (uint32*)buffer;
 					data = *intVal;
 					regVal = new RegistryValueInfo( &data, RDT_INTEGER, tmp );
 				}
@@ -414,7 +414,7 @@ Enumerator<RegistryValueInfo*>* Win32Registry::getValues()
 				break;
 
 				case REG_DWORD:{
-					ulong32* intVal = (ulong32*)buffer;
+					uint32* intVal = (uint32*)buffer;
 					data = *intVal;
 					regVal = new RegistryValueInfo( &data, RDT_INTEGER, tmp );
 				}

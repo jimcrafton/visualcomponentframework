@@ -111,7 +111,7 @@ DateTime LinuxFilePeer::getDateAccessed()
 	return result;
 }
 
-void LinuxFilePeer::open( const String& fileName, ulong32 openFlags, File::ShareFlags shareFlags )
+void LinuxFilePeer::open( const String& fileName, uint32 openFlags, File::ShareFlags shareFlags )
 {
 	this->close();
 
@@ -145,7 +145,7 @@ void LinuxFilePeer::close()
 	}
 }
 
-void LinuxFilePeer::create( ulong32 openFlags )
+void LinuxFilePeer::create( uint32 openFlags )
 {
 	this->close();
 	String fileName = file_->getName();
@@ -242,13 +242,13 @@ public:
 	}
 
     DIR *searchDir_;
-    long int location_;
+    int32 location_;
     String   currentDir_;
 };
 
-ulong32 LinuxFilePeer::convertAttributesFromSystemSpecific( const struct stat& st, const String& fileName )
+uint32 LinuxFilePeer::convertAttributesFromSystemSpecific( const struct stat& st, const String& fileName )
 {
-    ulong32 fileAttributes = File::faNone;
+    uint32 fileAttributes = File::faNone;
 
     if( !(st.st_mode & (S_IWUSR | S_IWGRP | S_IWOTH)) ) {
         fileAttributes += File::faReadOnly;
@@ -298,7 +298,7 @@ File* LinuxFilePeer::findNextFileInSearch( Directory::Finder* finder )
 	File* result = NULL;
     bool isDir = false;
     bool ok = false;
-    ulong32 fileAttribs;
+    uint32 fileAttribs;
 
     while ( true ) {
         result = NULL;

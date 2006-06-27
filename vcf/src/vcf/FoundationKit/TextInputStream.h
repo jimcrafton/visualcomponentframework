@@ -33,13 +33,13 @@ public:
 
 	virtual ~TextInputStream();
 
-	virtual void seek(const unsigned long& offset, const SeekType& offsetFrom);
+	virtual void seek(const uint32& offset, const SeekType& offsetFrom);
 
-	virtual unsigned long getSize();
+	virtual uint32 getSize();
 
 	virtual char* getBuffer();
 
-	virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes );
+	virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes );
 
 	/**
 	*all numbers are written out as the number converted to text, followed by a
@@ -69,11 +69,11 @@ public:
 		return totCharRead_ >= size_? true:false;
 	}
 
-	virtual ulong32 getCurrentSeekPos() ;
+	virtual uint32 getCurrentSeekPos() ;
 private:
 	InputStream* inStream_;
-	unsigned long size_;
-	unsigned long totCharRead_;
+	uint32 size_;
+	uint32 totCharRead_;
 	String readTillWhiteSpace();
 
 	/**

@@ -31,7 +31,7 @@ void Parser::resetStream()
 		delete [] buffer_;
 	}
 
-	ulong32 strSize = stream_->getSize();
+	uint32 strSize = stream_->getSize();
 	buffer_ =  new VCFChar[ strSize+1 ];
 	memset( buffer_, 0, (strSize+1) * sizeof(VCFChar) );
 
@@ -141,7 +141,7 @@ void Parser::errorStr( const String& Message)
 VCFChar Parser::nextToken()
 {
 	VCFChar result = '\0';
-	long I = 0;
+	int32 I = 0;
 	VCFChar* P = NULL;
 	VCFChar* S = NULL;
 
@@ -264,7 +264,7 @@ VCFChar Parser::nextToken()
 	return result;
 }
 
-long Parser::sourcePos()
+int32 Parser::sourcePos()
 {
 	return origin_ + (tokenPtr_ - buffer_);
 }
@@ -300,17 +300,17 @@ double Parser::tokenFloat()
 	return result;
 }
 
-long Parser::tokenInt()
+int32 Parser::tokenInt()
 {
 	String s = tokenString();
-	long result = StringUtils::fromStringAsInt( s );
+	int32 result = StringUtils::fromStringAsInt( s );
 	return result;
 }
 
 String Parser::tokenString()
 {
 	String result;
-	long length = 0;
+	int32 length = 0;
 	if ( token_ == TO_STRING) {
 		length = (stringPtr_ - tokenPtr_) - 1;
 	}

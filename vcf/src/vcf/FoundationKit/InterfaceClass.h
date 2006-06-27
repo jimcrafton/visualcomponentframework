@@ -65,7 +65,7 @@ public:
 	/**
 	*the number of methods the Class has
 	*/
-	unsigned long getMethodCount();
+	uint32 getMethodCount();
 
 	/**
 	*gets the method specified by methodName, if the class

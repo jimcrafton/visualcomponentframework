@@ -80,7 +80,7 @@ String Process::getName()
 	return processPeer_->getProcessFileName();
 }
 
-ulong32 Process::terminate()
+uint32 Process::terminate()
 {
 	return processPeer_->terminate();
 }

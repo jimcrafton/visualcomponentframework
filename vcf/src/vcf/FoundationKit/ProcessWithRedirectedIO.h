@@ -122,7 +122,7 @@ namespace VCF {
 			OutputReady -= eventHandler;
 		}
 
-		ulong32 terminate();
+		uint32 terminate();
 	protected:
 		ProcessIORedirectionPeer* processPeer_;
 	};

@@ -304,16 +304,19 @@ Setup VCF_ miscellaneous macros
 
 namespace VCF {
 
-	typedef char           int8;
-	typedef short          int16;
-	typedef int            int32;
-	typedef long           long32;
 	typedef unsigned char  uchar;
 	typedef unsigned short ushort;
+	typedef unsigned int   uint;
+	typedef unsigned long  ulong;
+
+	typedef signed char    int8;
 	typedef unsigned char  uint8;
+	
+	typedef short          int16;
 	typedef unsigned short uint16;
+
+	typedef int            int32;
 	typedef unsigned int   uint32;
-	typedef unsigned long  ulong32;
 
 	/**
 	This is used as a wrapper around some platform
@@ -322,7 +325,6 @@ namespace VCF {
 	typedef void*			OSHandleID;
 
 	
-	
 	template<typename T> inline const T& minVal(const T& x, const T& y) {
 		return x < y ? x : y;
 	};
@@ -330,6 +332,130 @@ namespace VCF {
 	template<typename T> inline const T& maxVal(const T& x, const T& y) {
 		return x > y ? x : y;
 	};
+
+
+	/**
+	\typedef ulong64 FrameworkConfig.h "vcf/FoundationKit/FrameworkConfig.h"
+	Unsigned 64 bit integer type
+	*/
+	#if defined(VCF_MSC) || defined(VCF_BCC) || defined(VCF_ICL)
+		typedef unsigned __int64 ulong64;
+	#else
+		typedef unsigned long long ulong64;
+	#endif
+
+
+	/**
+	\typedef long64 FrameworkConfig.h "vcf/FoundationKit/FrameworkConfig.h"
+	Signed 64 bit integer type
+	*/
+	#if defined(VCF_MSC) || defined(VCF_BCC) || defined(VCF_ICL)
+		typedef __int64 long64;
+	#else
+		typedef long long long64;
+	#endif
+
+
+	/**
+	\def VCF_LIT64 FrameworkConfig.h "vcf/FoundationKit/FrameworkConfig.h"
+	Macro to include a 64 bit integer literal in the code.
+	The macro will append the correct suffix that the compiler
+	may need for 64 bit integer literals (for example LL for gcc).
+	Usage example:
+	\code
+	ulong64 x = VCF_LIT64(0xffffffffffffffff);
+	\endcode
+	*/
+	#if defined(VCF_MSC) || defined(VCF_BCC) || defined(VCF_ICL)
+		#define VCF_LIT64(x) (x)	// not suffix needed
+	#else
+		#define VCF_LIT64(x) (x##LL)
+	#endif
+
+
+	/**
+	This returns the top 32 bits of the number
+	*/
+	inline uint32 getHi32(ulong64 val){
+		return (uint32)(val>>32);
+	}
+
+
+	/**
+	This returns the top 32 bits of the number
+	*/
+	inline int32 getHi32(long64 val){
+		return (int32)(val>>32);
+	}
+
+
+	/**
+	This returns the low 32 bits of the number
+	*/
+	inline uint32 getLo32(ulong64 val){
+		return (uint32)val;
+	}
+
+
+	/**
+	This returns the low 32 bits of the number
+	*/
+	inline uint32 getLo32(long64 val){
+		return (uint32)val;
+	}
+
+
+	/**
+	This sets the top 32 bits of the number to the specified
+	value.
+	*/
+	inline void setHi32(ulong64& val,uint32 hi){
+		val = (val & 0xffffffff) | (((ulong64)hi)<<32);
+	}
+
+
+	/**
+	This sets the top 32 bits of the number to the specified
+	value.
+	*/
+	inline void setHi32(long64& val,int32 hi){
+		val = (val & 0xffffffff) | (((long64)hi)<<32);
+	}
+
+
+	/**
+	This sets the low 32 bits of the number to the specified
+	value.
+	*/
+	inline void setLo32(ulong64& val,uint32 lo){
+		val = (val & VCF_LIT64(0xffffffff00000000)) | lo;
+	}
+
+	/**
+	This sets the low 32 bits of the number to the specified
+	value.
+	*/
+	inline void setLo32(long64& val,uint32 lo){
+		val = (val & VCF_LIT64(0xffffffff00000000)) | lo;
+	}
+
+
+
+	/**
+	Creates an unsigned 64 bit integer from the
+	high and low 32 bit.*/
+	inline ulong64 makeULong64(uint32 hi,uint32 lo){
+		return (((ulong64)hi)<<32) | lo;
+	}
+
+
+	/**
+	Creates a signed 64 bit integer from the
+	high and low 32 bit.*/
+	inline long64 makeLong64(int32 hi,uint32 lo){
+		return (((long64)hi)<<32) | lo;
+	}
+	
 
 };
 
@@ -432,7 +558,7 @@ special macro for handling multi-character constants like 'abcd' which GCC is un
 The same is with BCC.
 */
 #if defined(VCF_GCC) || defined(VCF_BCC)
-	#define CHAR_CONST(x) (unsigned long) x
+	#define CHAR_CONST(x) (uint32) x
 #else
 	#define CHAR_CONST(x) x
 #endif

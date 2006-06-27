@@ -28,7 +28,7 @@ Class Semaphore
 class FOUNDATIONKIT_API Semaphore : public Object, public VCF::SynchObject
 {
 public:
-	Semaphore(long initialCount = 1, long maxCount = 1);
+	Semaphore(int32 initialCount = 1, int32 maxCount = 1);
 
 	virtual ~Semaphore();
 

@@ -93,7 +93,7 @@ void FileInputStream::open( const String& filename )
 }
 
 
-void FileInputStream::seek(const unsigned long& offset, const SeekType& offsetFrom )
+void FileInputStream::seek(const uint32& offset, const SeekType& offsetFrom )
 {
 	fsPeer_->seek( offset, offsetFrom );
 
@@ -115,7 +115,7 @@ void FileInputStream::seek(const unsigned long& offset, const SeekType& offsetFr
 	}
 }
 
-unsigned long FileInputStream::getSize()
+uint32 FileInputStream::getSize()
 {
 	return fsPeer_->getSize();
 }
@@ -125,9 +125,9 @@ char* FileInputStream::getBuffer()
 	return fsPeer_->getBuffer();
 }
 
-unsigned long FileInputStream::read( unsigned char* bytesToRead, unsigned long sizeOfBytes )
+uint32 FileInputStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
 {
-	unsigned long result = fsPeer_->read( bytesToRead, sizeOfBytes );
+	uint32 result = fsPeer_->read( bytesToRead, sizeOfBytes );
 
 	currentSeekPos_ += result;
 
@@ -135,7 +135,7 @@ unsigned long FileInputStream::read( unsigned char* bytesToRead, unsigned long s
 }
 
 
-ulong32 FileInputStream::getCurrentSeekPos()
+uint32 FileInputStream::getCurrentSeekPos()
 {
 	return currentSeekPos_;
 }
@@ -196,7 +196,7 @@ void FileOutputStream::open( const String& filename, const bool & append/*=false
 }
 
 
-void FileOutputStream::seek(const unsigned long& offset, const SeekType& offsetFrom )
+void FileOutputStream::seek(const uint32& offset, const SeekType& offsetFrom )
 {
 	if ( NULL == fsPeer_ ){
 		throw InvalidPeer( MAKE_ERROR_MSG_2(NO_PEER) );
@@ -224,7 +224,7 @@ void FileOutputStream::seek(const unsigned long& offset, const SeekType& offsetF
 
 
 
-unsigned long FileOutputStream::getSize()
+uint32 FileOutputStream::getSize()
 {
 	return fsPeer_->getSize();
 }
@@ -234,9 +234,9 @@ char* FileOutputStream::getBuffer()
 	return fsPeer_->getBuffer();
 }
 
-unsigned long FileOutputStream::write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes )
+uint32 FileOutputStream::write( const unsigned char* bytesToWrite, uint32 sizeOfBytes )
 {
-	unsigned long result = fsPeer_->write( bytesToWrite, sizeOfBytes );
+	uint32 result = fsPeer_->write( bytesToWrite, sizeOfBytes );
 
 	currentSeekPos_ += result;
 
@@ -244,7 +244,7 @@ unsigned long FileOutputStream::write( const unsigned char* bytesToWrite, unsign
 }
 
 
-ulong32 FileOutputStream::getCurrentSeekPos()
+uint32 FileOutputStream::getCurrentSeekPos()
 {
 	return currentSeekPos_;
 }

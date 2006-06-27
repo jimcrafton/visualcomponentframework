@@ -141,7 +141,7 @@ Resource* OSXResourceBundle::getResource( const String& resourceName )
 		
 		if ( File::exists( fileName ) ) {
 			FileInputStream fs(fileName);
-			ulong32 size = fs.getSize();
+			uint32 size = fs.getSize();
 			char* buf = new char[size];
 			fs.read( (unsigned char*)buf, size );
 			

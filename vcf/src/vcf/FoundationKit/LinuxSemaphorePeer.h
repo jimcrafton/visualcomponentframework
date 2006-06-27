@@ -28,7 +28,7 @@ resources
 class LinuxSemaphorePeer : public VCF::Object, public VCF::SemaphorePeer
 {
 public:
-	LinuxSemaphorePeer( long initialCount , long maxCount );
+	LinuxSemaphorePeer( int32 initialCount , int32 maxCount );
 
 	virtual ~LinuxSemaphorePeer();
 

@@ -27,13 +27,11 @@ namespace VCF {
 	typedef char           int8;
 	typedef short          int16;
 	typedef int            int32;
-	typedef long           long32;
 	typedef unsigned char  uchar;
 	typedef unsigned short ushort;
 	typedef unsigned char  uint8;
 	typedef unsigned short uint16;
 	typedef unsigned int   uint32;
-	typedef unsigned long  ulong32;
 
 	/**
 	This is used as a wrapper around some platform

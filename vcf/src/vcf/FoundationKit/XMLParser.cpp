@@ -98,7 +98,7 @@ XMLAttr* XMLNode::getAttrByName( const String& name )
 	return result;
 }
 
-XMLAttr* XMLNode::getAttrByIndex( const ulong32& index )
+XMLAttr* XMLNode::getAttrByIndex( const uint32& index )
 {
 	XMLAttr* result = NULL;
 	if ( index < attrs_.size() ) {
@@ -132,7 +132,7 @@ XMLNode* XMLNode::getNodeByName( const String& name )
 	return result;
 }
 
-XMLNode* XMLNode::getNodeByIndex( const ulong32& index )
+XMLNode* XMLNode::getNodeByIndex( const uint32& index )
 {
 	XMLNode* result = NULL;
 	if ( (index >= 0) && (index < childNodes_.size()) ) {
@@ -154,9 +154,9 @@ void XMLNode::clearChildNodes()
 	childNodes_.clear();
 }
 
-long XMLNode::getDepth()
+int32 XMLNode::getDepth()
 {
-	long result = 0;
+	int32 result = 0;
 
 	XMLNode* parent = getParentNode();
 	while ( NULL != parent ) {

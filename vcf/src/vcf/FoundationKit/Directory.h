@@ -332,11 +332,11 @@ public:
 		performance will end up to be worse.
 		@param StatMask the mask
 		*/
-		inline void setStatMask( ulong32 statMask ) {
+		inline void setStatMask( uint32 statMask ) {
 			statMask_ = statMask;
 			if ( recurse_ ) {
 				// we make sure we have directory informations
-				//if ( (ulong32&)statMask_ |= File::smAttributes ) {
+				//if ( (uint32&)statMask_ |= File::smAttributes ) {
 				if ( statMask_ |= File::smAttributes ) {
 				}
 			}
@@ -355,8 +355,8 @@ public:
 		@param StatMask the mask of infos we want to ignore
 		@see setStatMask
 		*/
-		inline void ignoreStat( ulong32 ignoreMask ) {
-			ulong32 statMask = File::smMaskAll & ~ignoreMask;
+		inline void ignoreStat( uint32 ignoreMask ) {
+			uint32 statMask = File::smMaskAll & ~ignoreMask;
 			setStatMask( statMask );
 		}
 

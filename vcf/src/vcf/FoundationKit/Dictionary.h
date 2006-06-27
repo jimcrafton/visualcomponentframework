@@ -169,7 +169,7 @@ public:
     typedef VariantData Value;
 
 	typedef std::pair<const String,VariantData> pair;
-    typedef ulong32 size_type;
+    typedef uint32 size_type;
 
 
 	typedef Enumerator<pair> Enumerator;

@@ -48,14 +48,14 @@ void Object::free()
 	delete this;
 }
 
-unsigned long Object::addRef(Object* owner)
+uint32 Object::addRef(Object* owner)
 {
 	refCount_ ++;
 
 	return refCount_;
 }
 
-unsigned long Object::release(Object* owner)
+uint32 Object::release(Object* owner)
 {
 	if ( refCount_ > 0 ) {
 		refCount_ --;
@@ -117,9 +117,9 @@ String Object::toString()
 	return result;
 }
 
-unsigned long Object::hash()
+uint32 Object::hash()
 {
-	return (unsigned long)this;
+	return (uint32)this;
 }
 
 
@@ -147,7 +147,7 @@ Mutex* Object::accessMutex_ = NULL;
 
 bool Object::trackingDebugMemory = true;
 
-std::map<unsigned long,Object::DebugInfo> Object::debugAllocationMap;
+std::map<uint32,Object::DebugInfo> Object::debugAllocationMap;
 
 
 
@@ -162,7 +162,7 @@ void * Object::operator new( size_t allocationSize )
 			}
 
 			DebugInfo info;
-			info.objAddress_ = (unsigned long)newPtr;
+			info.objAddress_ = (uint32)newPtr;
 			info.objectAllocationSize_ = allocationSize;
 			Object::debugAllocationMap[info.objAddress_] = info;
 
@@ -182,8 +182,8 @@ void Object::operator delete( void *objectPointer )
 			Object::accessMutex_->lock();
 		}
 
-		std::map<unsigned long,Object::DebugInfo>::iterator found;
-		found = Object::debugAllocationMap.find( (unsigned long)objectPointer );
+		std::map<uint32,Object::DebugInfo>::iterator found;
+		found = Object::debugAllocationMap.find( (uint32)objectPointer );
 		if ( found != Object::debugAllocationMap.end() ) {
 
 			Object::debugAllocationMap.erase( found );
@@ -208,7 +208,7 @@ void Object::dumpDebugInfo()
 
 			int totalAllocationSize = 0;
 
-			std::map<unsigned long,Object::DebugInfo>::const_iterator it = Object::debugAllocationMap.begin();
+			std::map<uint32,Object::DebugInfo>::const_iterator it = Object::debugAllocationMap.begin();
 			while ( it != Object::debugAllocationMap.end ()  ) {
 				const DebugInfo& info = it->second;
 				String className = "unknown";
@@ -244,11 +244,11 @@ void Object::dumpDebugInfo()
 
 #endif //_VCF_DEBUG_NEW
 
-ulong32 Object::objectAllocationCount()
+uint32 Object::objectAllocationCount()
 {
 #ifdef _VCF_DEBUG_NEW
-	std::map<unsigned long,Object::DebugInfo>::const_iterator it = Object::debugAllocationMap.begin();
-	ulong32 totmem = 0;
+	std::map<uint32,Object::DebugInfo>::const_iterator it = Object::debugAllocationMap.begin();
+	uint32 totmem = 0;
 	while ( it != Object::debugAllocationMap.end ()  ) {
 		const DebugInfo& info = it->second;
 

@@ -140,7 +140,7 @@ uint32 LinuxRunLoopPeer::addTimer( const String& mode, Object* source, EventHand
 	ev.sigev_value.sival_ptr = info;
 
 
-	long err = timer_create(CLOCK_REALTIME, &ev, &info->timer);
+	int32 err = timer_create(CLOCK_REALTIME, &ev, &info->timer);
 	VCF_ASSERT(err == 0);
 	uint32 timerID = (uint32)info->timer;
     

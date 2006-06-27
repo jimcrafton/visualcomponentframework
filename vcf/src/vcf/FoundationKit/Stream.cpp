@@ -54,15 +54,15 @@ void InputStream::read( double& val )
 
 void InputStream::read( String& val )
 {
-	const ulong32 BUFFER_SIZE = 4096;
+	const uint32 BUFFER_SIZE = 4096;
 	AnsiString tmpStr;
 
 	val = "";
-	ulong32 size = getSize();
+	uint32 size = getSize();
 
-	ulong32 seekPos = getCurrentSeekPos();
+	uint32 seekPos = getCurrentSeekPos();
 
-	ulong32 totalBytesRead = 0;
+	uint32 totalBytesRead = 0;
 	/*
 	JC
 	WARNING!!!
@@ -82,7 +82,7 @@ void InputStream::read( String& val )
 	*/
 
 	char buffer[BUFFER_SIZE];
-	unsigned long bufferRead = minVal<ulong32>( BUFFER_SIZE * sizeof(char), size-seekPos );
+	uint32 bufferRead = minVal<uint32>( BUFFER_SIZE * sizeof(char), size-seekPos );
 
 	read( (unsigned char*) buffer, bufferRead );
 
@@ -184,7 +184,7 @@ void InputStream::read( String& val )
 		}
 
 		if ( !done ) {
-			bufferRead = VCF::minVal<ulong32>( BUFFER_SIZE * sizeof(char), size );
+			bufferRead = VCF::minVal<uint32>( BUFFER_SIZE * sizeof(char), size );
 			read( (unsigned char*)buffer, bufferRead );
 			tmp = buffer;
 			start = tmp;

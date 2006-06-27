@@ -45,7 +45,7 @@ bool InterfaceClass::hasMethod( const String& methodName )
 	return found != methods_.end();
 }
 
-unsigned long InterfaceClass::getMethodCount()
+uint32 InterfaceClass::getMethodCount()
 {
 	return methods_.size();
 }

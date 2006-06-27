@@ -423,7 +423,7 @@ bool Win32ProcessIORedirector::createProcess( const String& processName, const S
 }
 
 
-ulong32 Win32ProcessIORedirector::terminate()
+uint32 Win32ProcessIORedirector::terminate()
 {
 	TerminateProcess( processInfo_.hProcess, -1 );
 	return -1;

@@ -12,7 +12,7 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKit.h"
 using namespace VCF;
 
-Semaphore::Semaphore(long initialCount /*= 1*/, long maxCount /*= 1*/):
+Semaphore::Semaphore(int32 initialCount /*= 1*/, int32 maxCount /*= 1*/):
 	peer_( NULL )
 {
 	peer_ = SystemToolkit::createSemaphorePeer( initialCount, maxCount );

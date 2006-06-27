@@ -1290,9 +1290,9 @@ UnicodeString Win32LocalePeer::getCurrencyNegativeSign()
 	return result;
 }
 
-bool Win32LocalePeer::isCharA( const long& charTypeMask, const VCFChar& c )
+bool Win32LocalePeer::isCharA( const int32& charTypeMask, const VCFChar& c )
 {
-	long mask = 0;
+	int32 mask = 0;
 
 	UnicodeString oldLocaleStr;
 
@@ -1480,7 +1480,7 @@ UnicodeString Win32LocalePeer::toStringFromDate( const DateTime& val, const Unic
 {
 	UnicodeString result;
 
-	unsigned long y = val.getYear();
+	uint32 y = val.getYear();
 	if ( ( y < 1601 ) || ( 30827 < y ) ) {
 		throw RuntimeException( "The SYSTEMTIME structure doesn't allow dates outside the range [1601,30827]" );
 	}
@@ -1541,7 +1541,7 @@ UnicodeString Win32LocalePeer::toStringFromTime( const DateTime& val, const Unic
 	SYSTEMTIME timeVal;
 	memset(&timeVal,0,sizeof(timeVal));
 
-	unsigned long y, m, d, h, min, s, ms;
+	uint32 y, m, d, h, min, s, ms;
 	val.get( &y, &m, &d, &h, &min, &s, &ms );
 
 	if ( ( y < 1601 ) || ( 30827 < y ) ) {
@@ -1599,7 +1599,7 @@ UnicodeString Win32LocalePeer::toStringFromTime( const DateTime& val, const Unic
 	return result;
 }
 
-ulong32 Win32LocalePeer::getLanguageCode()
+uint32 Win32LocalePeer::getLanguageCode()
 {
 	UINT languageID = PRIMARYLANGID(LANGIDFROMLCID(lcid_));
 	UINT subLangID = SUBLANGID(LANGIDFROMLCID(lcid_));
@@ -2012,7 +2012,7 @@ String Win32LocalePeer::getLanguage()
 	return result;
 }
 
-ulong32 Win32LocalePeer::getCountryCode()
+uint32 Win32LocalePeer::getCountryCode()
 {
 
 	UINT languageID = PRIMARYLANGID(LANGIDFROMLCID(lcid_));

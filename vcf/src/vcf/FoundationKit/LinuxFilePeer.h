@@ -64,7 +64,7 @@ public:
 	*@param openFlags
 	*@param shareFlags
 	*/
-	virtual void open( const String& fileName, ulong32 openFlags = File::ofRead,
+	virtual void open( const String& fileName, uint32 openFlags = File::ofRead,
 	                   File::ShareFlags shareFlags = File::shMaskAny );
 
 	/**
@@ -80,7 +80,7 @@ public:
 	instead of a file. The file name is omitted here as this is stored in the
 	File instance kept by the peer.
 	*/
-	virtual void create( ulong32 openFlags );
+	virtual void create( uint32 openFlags );
 
 	/**
 	*deletes the file from the file system
@@ -101,7 +101,7 @@ public:
 	*/
 	virtual void copyTo( const String& copyFileName );
 
-    ulong32 convertAttributesFromSystemSpecific( const struct stat& st, const String& fileName );
+    uint32 convertAttributesFromSystemSpecific( const struct stat& st, const String& fileName );
 
 	/* Directory::Finder support functions */
 

@@ -75,7 +75,7 @@ LinuxFileStream::~LinuxFileStream()
 	}
 }
 
-void LinuxFileStream::seek( const unsigned long& offset,
+void LinuxFileStream::seek( const uint32& offset,
                             const SeekType& offsetFrom )
 {
 	if ( fileHandle_ < 0 ) {
@@ -89,7 +89,7 @@ void LinuxFileStream::seek( const unsigned long& offset,
 	}
 }
 
-unsigned long LinuxFileStream::getSize()
+uint32 LinuxFileStream::getSize()
 {
 	if ( fileHandle_ < 0 ) {
 		return 0;
@@ -102,7 +102,7 @@ unsigned long LinuxFileStream::getSize()
 	return 0;
 }
 
-unsigned long LinuxFileStream::read( unsigned char* bytesToRead, unsigned long sizeOfBytes )
+uint32 LinuxFileStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
 {
 	if ( fileHandle_ < 0 ) {
 		return 0;
@@ -121,7 +121,7 @@ unsigned long LinuxFileStream::read( unsigned char* bytesToRead, unsigned long s
     return bytesRead;
 }
 
-unsigned long LinuxFileStream::write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes )
+uint32 LinuxFileStream::write( const unsigned char* bytesToWrite, uint32 sizeOfBytes )
 {
 	if ( fileHandle_ < 0 ) {
 		return 0;

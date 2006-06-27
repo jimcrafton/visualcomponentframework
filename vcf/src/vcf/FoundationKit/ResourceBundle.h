@@ -31,7 +31,7 @@ public:
 
 	virtual ~ResourceBundle();
 
-	String getString( const ulong32& resourceID );
+	String getString( const uint32& resourceID );
 
 	String getString( const String& resourceName );
 

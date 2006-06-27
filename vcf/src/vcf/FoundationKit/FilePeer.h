@@ -99,7 +99,7 @@ public:
 	*@param openFlags
 	*@param shareFlags
 	*/
-	virtual void open( const String& fileName, ulong32 openFlags = File::ofRead, File::ShareFlags shareFlags = File::shMaskAny ) = 0;
+	virtual void open( const String& fileName, uint32 openFlags = File::ofRead, File::ShareFlags shareFlags = File::shMaskAny ) = 0;
 
 	/**
 	* closes the file if open
@@ -114,7 +114,7 @@ public:
 	instead of a file. The file name is omitted here as this is stored in the 
 	File instance kept by the peer.
 	*/
-	virtual void create( ulong32 openFlags ) = 0;
+	virtual void create( uint32 openFlags ) = 0;
 
 	/**
 	*deletes the file from the file system

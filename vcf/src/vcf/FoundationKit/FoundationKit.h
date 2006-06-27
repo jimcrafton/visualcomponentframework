@@ -92,7 +92,6 @@ where you installed the VCF.
 #include "vcf/FoundationKit/VCFString.h"
 #include "vcf/FoundationKit/CommonDefines.h"
 #include "vcf/FoundationKit/VCFMath.h"
-#include "vcf/FoundationKit/VCFulong64.h"
 #include "vcf/FoundationKit/Enumerator.h"
 #include "vcf/FoundationKit/Interface.h"
 #include "vcf/FoundationKit/Object.h"

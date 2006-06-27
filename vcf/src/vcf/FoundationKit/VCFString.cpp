@@ -22,7 +22,7 @@ int UnicodeString::adjustForBOMMarker( UnicodeString::AnsiChar*& stringPtr, uint
 	//for now only handle UTF16 Little endian - bail on anything else!
 	int result = 0;
 
-	ulong32 bom = 0;
+	uint32 bom = 0;
 	if ( len > UnicodeString::UTF16BOMSize ) {
 		bom  = ((stringPtr[0] << 8) | stringPtr[1]) & 0x0000FFFF;
 		if ( UnicodeString::UTF16LittleEndianBOM == bom ) {
@@ -435,7 +435,7 @@ void UnicodeString::decode_ansi( TextCodec* codec, UnicodeString::AnsiChar* str,
 {
 	VCF_ASSERT ( str != NULL );
 
-	ulong32 size = codec->convertToAnsiString( *this, str, strSize );	
+	uint32 size = codec->convertToAnsiString( *this, str, strSize );	
 	
 	if ( size < strSize ) {
 		str[size] = 0;

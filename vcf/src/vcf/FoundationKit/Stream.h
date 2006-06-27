@@ -70,13 +70,13 @@ public:
 
     virtual ~Stream(){};
 
-	virtual void seek(const unsigned long& offset, const SeekType& offsetFrom)=0;
+	virtual void seek(const uint32& offset, const SeekType& offsetFrom)=0;
 
 	/**
 	returns the size of the stream. The size represents the
 	number of bytes that have been \b written, or \b read to/from the stream
 	*/
-    virtual unsigned long getSize() =0;
+    virtual uint32 getSize() =0;
 
 	/**
 	returns a pointer to the buffer that holds the stream memory
@@ -86,7 +86,7 @@ public:
 	/**
 	this is a global offset from the beggining of the stream
 	*/
-	virtual ulong32 getCurrentSeekPos() = 0;
+	virtual uint32 getCurrentSeekPos() = 0;
 };
 
 /**
@@ -105,7 +105,7 @@ public:
 	// new introduced by tiziano
 	virtual bool isEOS() = 0;
 
-	virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes ) = 0;
+	virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes ) = 0;
 
 	virtual void read( Persistable* persistableObject ) ;
 
@@ -156,7 +156,7 @@ class FOUNDATIONKIT_API OutputStream : public Stream {
 public:
 	virtual ~OutputStream(){};
 
-	virtual unsigned long write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes )=0;
+	virtual uint32 write( const unsigned char* bytesToWrite, uint32 sizeOfBytes )=0;
 
 	virtual void write( Persistable* persistableObject );
 

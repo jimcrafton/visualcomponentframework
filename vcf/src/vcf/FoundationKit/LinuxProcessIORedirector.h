@@ -77,14 +77,14 @@ public:
 		process_ = process;
 	}
 
-	virtual ulong32 terminate();
+	virtual uint32 terminate();
 	
 	virtual Waitable::WaitResult wait( uint32 milliseconds );
 
 	virtual Waitable::WaitResult wait();
 protected:
 	//this is the handle to the child process that gets started
-	ulong32 childProcess_;
+	uint32 childProcess_;
 	ProcessWithRedirectedIO* process_;
 	int processID_;
 	int processThreadID_;

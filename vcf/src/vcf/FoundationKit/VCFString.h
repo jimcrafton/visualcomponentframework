@@ -85,7 +85,7 @@ public:
 		npos = (unsigned int)-1,
 		UTF8BOMSize = sizeof(uchar) * 3,
 		UTF16BOMSize = sizeof(ushort),
-		UTF32BOMSize = sizeof(ulong32),
+		UTF32BOMSize = sizeof(uint32),
 		UTF8BOM = 0xEFBBBF,
 		UTF16LittleEndianBOM = 0xFFFE,
 		UTF16BigEndianBOM = 0xFEFF,

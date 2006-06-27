@@ -30,14 +30,14 @@ public:
 
 	virtual ~VariantDataInputStream(){};
 
-	virtual void seek(const unsigned long& offset, const SeekType& offsetFrom)	{
+	virtual void seek(const uint32& offset, const SeekType& offsetFrom)	{
 		if ( NULL == inStream_ ) {
 			throw InvalidPointerException();
 		}
 		inStream_->seek( offset, offsetFrom );
 	}
 
-	virtual unsigned long getSize() {
+	virtual uint32 getSize() {
 		if ( NULL == inStream_ ) {
 			throw InvalidPointerException();
 		}
@@ -51,14 +51,14 @@ public:
 		return inStream_->getBuffer();
 	}
 
-	virtual ulong32 getCurrentSeekPos() {
+	virtual uint32 getCurrentSeekPos() {
 		if ( NULL == inStream_ ) {
 			throw InvalidPointerException();
 		}
 		return inStream_->getCurrentSeekPos();
 	}
 
-	virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes ) {
+	virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes ) {
 		if ( NULL == inStream_ ) {
 			throw InvalidPointerException();
 		}
@@ -85,7 +85,7 @@ public:
 		else if ( type == "+l" ) {
 			long val = 0;
 			inStream_->read( val );
-			*data = (unsigned long)val;
+			*data = (uint32)val;
 		}
 		else if ( type == "h" ) {
 			short val = 0;
@@ -172,14 +172,14 @@ public:
 
 	virtual ~VariantDataOutputStream(){};
 
-	virtual void seek(const unsigned long& offset, const SeekType& offsetFrom)	{
+	virtual void seek(const uint32& offset, const SeekType& offsetFrom)	{
 		if ( NULL == outStream_ ) {
 			throw InvalidPointerException();
 		}
 		outStream_->seek( offset, offsetFrom );
 	}
 
-	virtual unsigned long getSize() {
+	virtual uint32 getSize() {
 		if ( NULL == outStream_ ) {
 			throw InvalidPointerException();
 		}
@@ -193,14 +193,14 @@ public:
 		return outStream_->getBuffer();
 	}
 
-	virtual ulong32 getCurrentSeekPos() {
+	virtual uint32 getCurrentSeekPos() {
 		if ( NULL == outStream_ ) {
 			throw InvalidPointerException();
 		}
 		return outStream_->getCurrentSeekPos();
 	}
 
-	virtual unsigned long write( const unsigned char* bytesToWrite, unsigned long sizeOfBytes ) {
+	virtual uint32 write( const unsigned char* bytesToWrite, uint32 sizeOfBytes ) {
 		if ( NULL == outStream_ ) {
 			throw InvalidPointerException();
 		}

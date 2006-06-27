@@ -139,7 +139,7 @@ public:
 	virtual String getTypeClassName() = 0;
 	/**
 	*returns the type of the Property. These are the same types as VariantData::type.
-	*They can be int, long, unsigned long, short, float, double, char, bool,
+	*They can be int, long, uint32, short, float, double, char, bool,
 	*string, enums or Object*.
 	*/
 	PropertyDescriptorType getType() const{
@@ -295,11 +295,11 @@ public:
 		//no-op
 	};
 
-	virtual void insert( Object* source, const unsigned long& index, VariantData* value ){
+	virtual void insert( Object* source, const uint32& index, VariantData* value ){
 		//no-op
 	};
 
-	void insert( const unsigned long& index, VariantData* value ){
+	void insert( const uint32& index, VariantData* value ){
 		if ( NULL != source_ ){
 			insert( source_, index, value );
 		}
@@ -315,11 +315,11 @@ public:
 		}
 	};
 
-	virtual void remove( Object* source, const unsigned long& index ){
+	virtual void remove( Object* source, const uint32& index ){
 		//no-op
 	}
 
-	void remove( const unsigned long& index ){
+	void remove( const uint32& index ){
 		if ( NULL != source_ ){
 			remove( source_, index );
 		}

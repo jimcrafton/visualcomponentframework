@@ -21,7 +21,7 @@ public:
 	LinuxSystemPeer();
 	virtual ~LinuxSystemPeer();
 
-	virtual unsigned long getTickCount();
+	virtual uint32 getTickCount();
 
 	virtual void sleep( const uint32& milliseconds );
 

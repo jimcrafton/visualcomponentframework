@@ -24,7 +24,7 @@ LinuxSystemPeer::LinuxSystemPeer()
 LinuxSystemPeer::~LinuxSystemPeer()
 {}
 
-unsigned long LinuxSystemPeer::getTickCount()
+uint32 LinuxSystemPeer::getTickCount()
 {
 	struct timeval now;
 	struct timezone timeZone;
@@ -36,7 +36,7 @@ unsigned long LinuxSystemPeer::getTickCount()
 	double t2 = double( now.tv_sec * 1000 ) +
 	            double( now.tv_usec / ( 1000 ) ); //convert to Milliseconds
 
-	return ( unsigned long ) ( t2 - t1 );
+	return ( uint32 ) ( t2 - t1 );
 }
 
 void LinuxSystemPeer::sleep( const uint32& milliseconds )

@@ -19,7 +19,7 @@ File::File( const String& fileName ):
 	setName( fileName );
 }
 
-File::File( const String& fileName, ulong32 openFlags, ShareFlags shareFlags ):
+File::File( const String& fileName, uint32 openFlags, ShareFlags shareFlags ):
 	filePeer_(NULL),
 	openAccess_(File::ofNone)
 {
@@ -88,7 +88,7 @@ bool File::exists( const String& filename )
 	return System::doesFileExist( filename );
 }
 
-void File::create( const String& newFileName, ulong32 openFlags )
+void File::create( const String& newFileName, uint32 openFlags )
 {
 	try {
 		fileName_ = newFileName;
@@ -150,7 +150,7 @@ void File::openWithFileName( const String& fileName )
 	openAccess_ = File::ofStat;
 }
 
-void File::openWithRights( const String& fileName, ulong32 openFlags, ShareFlags shareFlags )
+void File::openWithRights( const String& fileName, uint32 openFlags, ShareFlags shareFlags )
 {
 	fileName_ = fileName;
 	filePeer_->open( fileName, openFlags, shareFlags );

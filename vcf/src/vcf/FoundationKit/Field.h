@@ -47,7 +47,7 @@ public:
 
 	virtual Field* clone()  = 0;
 
-	virtual ulong32 getFieldSize()  = 0;
+	virtual uint32 getFieldSize()  = 0;
 
 	virtual String getFieldTypeName() = 0;
 
