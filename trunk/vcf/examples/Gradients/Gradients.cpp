@@ -3,6 +3,8 @@
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/GraphicsKit/GradientFills.h"
+#include "vcf/GraphicsKit/ShadowFill.h"
+
 
 
 
@@ -153,7 +155,7 @@ public:
 
 		ctx->setCurrentFill(NULL);
 
-		ctx->setCompositingMode( GraphicsContext::cmMultiply );
+		ctx->setCompositingMode( GraphicsContext::cmOverlay );
 
 		BasicStroke stroke;
 
@@ -163,6 +165,10 @@ public:
 		stroke.setColor( &Color("purple") );
 		
 		curve.clear();
+
+		ctx->setMiterLimit( 1.2 );
+		ctx->setLineCapStyle( GraphicsContext::lcsSquareCap );
+		ctx->setLineJoinStyle( GraphicsContext::ljsMiterJoin );
 
 		curve.moveTo( 400, 400 );
 		curve.lineTo( 500, 400 );
@@ -174,7 +180,7 @@ public:
 		ctx->setCompositingMode( GraphicsContext::cmSource );
 
 
-		ctx->setCompositingMode( GraphicsContext::cmOverlay );
+		ctx->setCompositingMode( GraphicsContext::cmColorDodge );
 
 		BasicFill bf;
 
@@ -184,15 +190,68 @@ public:
 		
 		curve.clear();
 
+		
 		curve.rectangle( Rect(500,400,600,500) );
 
 		ctx->draw( &curve );
 
 		ctx->setCurrentFill( NULL );
+		ctx->setCompositingMode( GraphicsContext::cmSource );	
+
+
+		//ctx->setRotation( 10 );
+
+		ShadowFill shadow;
+		ctx->setCurrentFill( &shadow );
+		shadow.setAlpha( 0.9863 );
+		shadow.setRadius( 16 );
+
+		curve.clear();
+
+		Rect rect(mousePt.x_ - 100,mousePt.y_ - 50,mousePt.x_ + 100,mousePt.y_ + 50);
+		curve.rectangle( rect );
+		ctx->draw( &curve );
+
+		rect.offset( -3, -3 );
+
+		ctx->setColor( &Color("blue") );
+		ctx->rectangle( &rect );
+		ctx->fillPath();
+
+		ctx->setCurrentFill( NULL );
 		ctx->setCompositingMode( GraphicsContext::cmSource );
+
+
+		//Image* logo = 
 
 	}
 
+
+	virtual void mouseMove( MouseEvent* e ) {
+		Window::mouseMove(e);
+		if ( e->hasLeftButton() ) {
+			mousePt = *e->getPoint();
+			repaint();
+		}
+	}
+
+	virtual void mouseDown( MouseEvent* e ) {
+		Window::mouseDown(e);
+		if ( e->hasLeftButton() ) {
+			mousePt = *e->getPoint();
+			repaint();
+		}
+	}
+
+	virtual void mouseUp( MouseEvent* e ) {
+		Window::mouseUp(e);
+		if ( e->hasLeftButton() ) {
+			mousePt = *e->getPoint();
+			repaint();
+		}
+	}
+
+	Point mousePt;
 };
 
 
