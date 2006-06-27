@@ -22,6 +22,7 @@
         vcf/GraphicsKit/GraphicsContext.h
         vcf/GraphicsKit/GraphicsKit.h
         vcf/GraphicsKit/GraphicsKitPrivate.h
+        vcf/GraphicsKit/GraphicsKitRTTI.inl
         vcf/GraphicsKit/GraphicsKitSelectLib.h
         vcf/GraphicsKit/GraphicsResourceBundle.h
         vcf/GraphicsKit/GraphicsResourceBundlePeer.h
@@ -50,11 +51,11 @@
         vcf/GraphicsKit/PrintSession.h
         vcf/GraphicsKit/PrintSessionPeer.h
         vcf/GraphicsKit/Rect.h
+        vcf/GraphicsKit/ShadowFill.h
         vcf/GraphicsKit/Size.h
         vcf/GraphicsKit/Stroke.h
         vcf/GraphicsKit/TileManager.h
         vcf/GraphicsKit/UVMap.h
-        vcf/GraphicsKit/GraphicsKitRTTI.inl
     </set>
 
     <set var="GRAPHICSKIT_SRC" hints="files">

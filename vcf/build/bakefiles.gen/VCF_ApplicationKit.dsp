@@ -1499,7 +1499,7 @@ SOURCE=..\..\src\vcf\ApplicationKit\ApplicationKitPrivate.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\ApplicationKitRTTI.inl
+SOURCE=..\..\src\vcf\ApplicationKit\ApplicationKitRTTI.inl
 # End Source File
 # Begin Source File
 

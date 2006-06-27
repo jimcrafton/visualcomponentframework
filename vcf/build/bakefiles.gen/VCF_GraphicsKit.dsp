@@ -1066,6 +1066,10 @@ SOURCE=..\..\src\vcf\GraphicsKit\Rect.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\vcf\GraphicsKit\ShadowFill.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\vcf\GraphicsKit\Size.h
 # End Source File
 # Begin Source File

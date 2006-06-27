@@ -274,10 +274,10 @@ FOUNDATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxProcessPeer.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxRegistry.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxResourceBundle.o \
+	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxRunLoopPeer.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxSemaphorePeer.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxSystemPeer.o \
-	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxSystemToolkit.o \
-	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxRunLoopPeer.o
+	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxSystemToolkit.o
 FOUNDATIONKIT_DLL_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE \
 	-pthread $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
 	-I../../src -DFOUNDATIONKIT_DLL -DFOUNDATIONKIT_EXPORTS -fPIC -DPIC \
@@ -347,10 +347,10 @@ FOUNDATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxProcessPeer.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxRegistry.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxResourceBundle.o \
+	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxRunLoopPeer.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxSemaphorePeer.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxSystemPeer.o \
-	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxSystemToolkit.o \
-	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxRunLoopPeer.o
+	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxSystemToolkit.o
 GRAPHICSKIT_LIB_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	$(__OPTIMIZE) -D_THREAD_SAFE -pthread $(____OPTION_DEBUG) \
 	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src $(CPPFLAGS) \
@@ -1107,10 +1107,10 @@ ____Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_LinuxProcessPeer.o \
 	../../lib/$(OBJDIR)/Allin1_lib_LinuxRegistry.o \
 	../../lib/$(OBJDIR)/Allin1_lib_LinuxResourceBundle.o \
+	../../lib/$(OBJDIR)/Allin1_lib_LinuxRunLoopPeer.o \
 	../../lib/$(OBJDIR)/Allin1_lib_LinuxSemaphorePeer.o \
 	../../lib/$(OBJDIR)/Allin1_lib_LinuxSystemPeer.o \
-	../../lib/$(OBJDIR)/Allin1_lib_LinuxSystemToolkit.o \
-	../../lib/$(OBJDIR)/Allin1_lib_LinuxRunLoopPeer.o
+	../../lib/$(OBJDIR)/Allin1_lib_LinuxSystemToolkit.o
 endif
 ifeq ($(OPTION_GRAPHICSKIT),1)
 ____Allin1_lib_ALLIN1_GRAPHICSKIT_SRC_OBJECTS =  \
@@ -1366,10 +1366,10 @@ ____Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_LinuxProcessPeer.o \
 	../../lib/$(OBJDIR)/Allin1_dll_LinuxRegistry.o \
 	../../lib/$(OBJDIR)/Allin1_dll_LinuxResourceBundle.o \
+	../../lib/$(OBJDIR)/Allin1_dll_LinuxRunLoopPeer.o \
 	../../lib/$(OBJDIR)/Allin1_dll_LinuxSemaphorePeer.o \
 	../../lib/$(OBJDIR)/Allin1_dll_LinuxSystemPeer.o \
-	../../lib/$(OBJDIR)/Allin1_dll_LinuxSystemToolkit.o \
-	../../lib/$(OBJDIR)/Allin1_dll_LinuxRunLoopPeer.o
+	../../lib/$(OBJDIR)/Allin1_dll_LinuxSystemToolkit.o
 endif
 ifeq ($(OPTION_GRAPHICSKIT),1)
 ____Allin1_dll_ALLIN1_GRAPHICSKIT_SRC_OBJECTS =  \
@@ -2655,6 +2655,9 @@ xmake_:
 ../../lib/$(OBJDIR)/FoundationKit_lib_LinuxResourceBundle.o: ../../src/vcf/FoundationKit/LinuxResourceBundle.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/FoundationKit_lib_LinuxRunLoopPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopPeer.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/FoundationKit_lib_LinuxSemaphorePeer.o: ../../src/vcf/FoundationKit/LinuxSemaphorePeer.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -2662,9 +2665,6 @@ xmake_:
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_lib_LinuxSystemToolkit.o: ../../src/vcf/FoundationKit/LinuxSystemToolkit.cpp
-	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/FoundationKit_lib_LinuxRunLoopPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopPeer.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_dll_BasicException.o: ../../src/vcf/FoundationKit/BasicException.cpp
@@ -2859,6 +2859,9 @@ xmake_:
 ../../lib/$(OBJDIR)/FoundationKit_dll_LinuxResourceBundle.o: ../../src/vcf/FoundationKit/LinuxResourceBundle.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/FoundationKit_dll_LinuxRunLoopPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopPeer.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/FoundationKit_dll_LinuxSemaphorePeer.o: ../../src/vcf/FoundationKit/LinuxSemaphorePeer.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -2866,9 +2869,6 @@ xmake_:
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_dll_LinuxSystemToolkit.o: ../../src/vcf/FoundationKit/LinuxSystemToolkit.cpp
-	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/FoundationKit_dll_LinuxRunLoopPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopPeer.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/GraphicsKit_lib_AbstractImage.o: ../../src/vcf/GraphicsKit/AbstractImage.cpp
@@ -4029,6 +4029,9 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_lib_LinuxResourceBundle.o: ../../src/vcf/FoundationKit/LinuxResourceBundle.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/Allin1_lib_LinuxRunLoopPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopPeer.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/Allin1_lib_LinuxSemaphorePeer.o: ../../src/vcf/FoundationKit/LinuxSemaphorePeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -4036,9 +4039,6 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_LinuxSystemToolkit.o: ../../src/vcf/FoundationKit/LinuxSystemToolkit.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_lib_LinuxRunLoopPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_AbstractImage.o: ../../src/vcf/GraphicsKit/AbstractImage.cpp
@@ -4716,6 +4716,9 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_LinuxResourceBundle.o: ../../src/vcf/FoundationKit/LinuxResourceBundle.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/Allin1_dll_LinuxRunLoopPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopPeer.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/Allin1_dll_LinuxSemaphorePeer.o: ../../src/vcf/FoundationKit/LinuxSemaphorePeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -4723,9 +4726,6 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_LinuxSystemToolkit.o: ../../src/vcf/FoundationKit/LinuxSystemToolkit.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_dll_LinuxRunLoopPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_AbstractImage.o: ../../src/vcf/GraphicsKit/AbstractImage.cpp
