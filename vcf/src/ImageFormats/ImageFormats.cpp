@@ -20,8 +20,8 @@ Image* loadImageFromFile( const String& fileName )
 		
 	Decoder.MakeBmpFromFile (fileName.ansi_c_str(), &dib);		
 		
-	ulong32 width  = dib.GetWidth();
-	ulong32 height = dib.GetHeight();
+	uint32 width  = dib.GetWidth();
+	uint32 height = dib.GetHeight();
 
 	uchar* bits = NULL;
 	unsigned bpp = dib.GetBitsPerPixel();
@@ -74,8 +74,8 @@ Image* TIFFLoader::loadImageFromFile( const String& fileName )
 	
 void TIFFLoader::saveImageToFile( const String& fileName, Image* image )
 {
-	ulong32 width = image->getWidth();
-	ulong32 height = image->getHeight();
+	uint32 width = image->getWidth();
+	uint32 height = image->getHeight();
 //	uchar* imageBits = (uchar*)image->getImageBits()->pixels_;
 }
 
