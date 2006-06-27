@@ -213,7 +213,7 @@ void TreeListControl::recalcScrollable()
 			scrollable->setVerticalPosition( 0.0 );
 		}
 		else if ( oldVisibleHeight > visibleItemsHeight_ ) {
-			double newPos = minVal<double>( abs((long)(visibleItemsHeight_ - getHeight()))+1.0, scrollable->getVerticalPosition() );
+			double newPos = minVal<double>( abs((int32)(visibleItemsHeight_ - getHeight()))+1.0, scrollable->getVerticalPosition() );
 			
 			scrollable->setVerticalPosition( newPos );
 			
@@ -343,18 +343,18 @@ void TreeListControl::paintItem( TreeItem* item, GraphicsContext* context, Rect*
 	}
 
 	if ( true == stateNeedsDrawing ) {
-		paintItemState( item, context, paintRect, (long)indent );
+		paintItemState( item, context, paintRect, (int32)indent );
 	}
 
 	if ( true == imageNeedsDrawing ) {
-		paintItemImage( item, context, paintRect, (long)indent );
+		paintItemImage( item, context, paintRect, (int32)indent );
 	}
 
 	if ( false == isALeaf ) {
 		paintExpander( item, context, paintRect );
 	}
 
-	long drawOptions = GraphicsContext::tdoNone;
+	int32 drawOptions = GraphicsContext::tdoNone;
 	drawOptions |= GraphicsContext::tdoLeftAlign;
 
 	Color oldColor = *(context->getCurrentFont()->getColor());
@@ -402,7 +402,7 @@ void TreeListControl::paintItem( TreeItem* item, GraphicsContext* context, Rect*
 
 }
 
-void TreeListControl::paintSubItem( TreeItem* item, GraphicsContext* context, const ulong32& subItemIndex, Rect* paintRect )
+void TreeListControl::paintSubItem( TreeItem* item, GraphicsContext* context, const uint32& subItemIndex, Rect* paintRect )
 {
 	if ( displayOptions_ & TreeListControl::tdoShowColumnLines ) {
 
@@ -433,7 +433,7 @@ void TreeListControl::paintSubItem( TreeItem* item, GraphicsContext* context, co
 		TreeItem::SubItem* subItem = item->getSubItem( subItemIndex-1 );
 		if ( NULL != subItem ) {
 
-			long drawOptions = GraphicsContext::tdoNone;
+			int32 drawOptions = GraphicsContext::tdoNone;
 			drawOptions |= GraphicsContext::tdoLeftAlign;
 			Rect captionRect = *paintRect;
 			captionRect.left_ += 5;
@@ -579,7 +579,7 @@ void TreeListControl::paintExpander( TreeItem* item, GraphicsContext* context, R
 #endif
 }
 
-void TreeListControl::paintItemState( TreeItem* item, GraphicsContext* context, Rect* paintRect, const long& currentIndent )
+void TreeListControl::paintItemState( TreeItem* item, GraphicsContext* context, Rect* paintRect, const int32& currentIndent )
 {
 	Rect stateRect = getStateRect( item, currentIndent );
 
@@ -590,7 +590,7 @@ void TreeListControl::paintItemState( TreeItem* item, GraphicsContext* context, 
 	}
 	else {
 		stateRect.inflate( -1, -1 );
-		long state = item->getState();
+		int32 state = item->getState();
 
 		ButtonState buttonState;
 		buttonState.setActive( true );
@@ -617,13 +617,13 @@ void TreeListControl::paintItemState( TreeItem* item, GraphicsContext* context, 
 	}
 }
 
-void TreeListControl::paintItemImage( TreeItem* item, GraphicsContext* context, Rect* paintRect, const long& currentIndent )
+void TreeListControl::paintItemImage( TreeItem* item, GraphicsContext* context, Rect* paintRect, const int32& currentIndent )
 {
 	Rect imageRect;
 	imageRect.left_ += currentIndent;
 	imageRect.right_ = imageRect.left_ + imageList_->getImageWidth();
 
-	ulong32 index = item->getImageIndex();
+	uint32 index = item->getImageIndex();
 	if ( (true == item->isExpanded()) && (item->getExpandedImageIndex() < imageList_->getImageCount()) ) {
 		index = item->getExpandedImageIndex();
 	}
@@ -712,7 +712,7 @@ void TreeListControl::addItem( TreeItem* item, TreeItem* parent )
 	repaint();
 }
 
-TreeItem* TreeListControl::addItem( TreeItem* parent, const String& caption, const ulong32 imageIndex )
+TreeItem* TreeListControl::addItem( TreeItem* parent, const String& caption, const uint32 imageIndex )
 {
 	DefaultTreeItem* result = new DefaultTreeItem( caption, this, treeModel_ );
 	result->setImageIndex( imageIndex );
@@ -791,7 +791,7 @@ bool TreeListControl::stateHitTest( Point* pt, TreeItem* itemToTest )
 	return result;
 }
 
-void TreeListControl::setItemIndent( const ulong32& itemIndent )
+void TreeListControl::setItemIndent( const uint32& itemIndent )
 {
 	itemIndent_ = itemIndent;
 	repaint();
@@ -812,7 +812,7 @@ bool TreeListControl::multiSelectionChange( MouseEvent* event )
 		if ( NULL != foundItem ) {
 			Rect expanderRect;
 
-			ulong32 level = foundItem->getLevel();
+			uint32 level = foundItem->getLevel();
 			expanderRect = *foundItem->getBounds();
 			expanderRect.left_ += (level * itemIndent_);
 			expanderRect.right_ = expanderRect.left_ + itemIndent_;
@@ -825,7 +825,7 @@ bool TreeListControl::multiSelectionChange( MouseEvent* event )
 				ItemExpanded.fireEvent( &event );
 			}
 			else if ( true == stateHitTest( event->getPoint(), foundItem ) ) {
-				long state = foundItem->getState();
+				int32 state = foundItem->getState();
 				//probably need to come up with better id's
 				//for enum values so that we can mask together
 				//as opposed to doing a direct
@@ -923,7 +923,7 @@ void TreeListControl::mouseDblClick(  MouseEvent* event )
 		
 		Rect expanderRect;
 		
-		ulong32 level = item->getLevel();
+		uint32 level = item->getLevel();
 		expanderRect = *item->getBounds();
 		expanderRect.left_ += (level * itemIndent_);
 		expanderRect.right_ = expanderRect.left_ + itemIndent_;	
@@ -945,7 +945,7 @@ Rect TreeListControl::getExpanderRect( TreeItem* item )
 {
 	Rect result;
 
-	ulong32 level = item->getLevel();
+	uint32 level = item->getLevel();
 	result = *item->getBounds();
 	result.left_ += (level * itemIndent_);
 	result.right_ = result.left_ + itemIndent_;
@@ -968,7 +968,7 @@ bool TreeListControl::singleSelectionChange( MouseEvent* event )
 
 			Rect expanderRect;
 
-			ulong32 level = foundItem->getLevel();
+			uint32 level = foundItem->getLevel();
 			expanderRect = *foundItem->getBounds();
 			expanderRect.left_ += (level * itemIndent_);
 			expanderRect.right_ = expanderRect.left_ + itemIndent_;
@@ -994,7 +994,7 @@ bool TreeListControl::singleSelectionChange( MouseEvent* event )
 				}
 			}
 			else if ( stateHitTest( event->getPoint(), foundItem ) ) {
-				long state = foundItem->getState();
+				int32 state = foundItem->getState();
 				//probably need to come up with better id's
 				//for enum values so that we can mask together
 				//as opposed to doing a direct
@@ -1590,12 +1590,12 @@ void TreeListControl::setStateImageList( ImageList* imageList )
 	}
 }
 
-long TreeListControl::getDisplayOptions()
+int32 TreeListControl::getDisplayOptions()
 {
 	return displayOptions_;
 }
 
-void TreeListControl::setDisplayOptions( const long& displayOptions )
+void TreeListControl::setDisplayOptions( const int32& displayOptions )
 {
 	displayOptions_ = displayOptions;
 
@@ -1932,7 +1932,7 @@ ColumnModel* TreeListControl::getColumnModel()
 	return header_->getColumnModel();
 }
 
-double TreeListControl::getColumnWidth( const unsigned long& index )
+double TreeListControl::getColumnWidth( const uint32& index )
 {
 	double result = -1;
 	ColumnModel* model = header_->getColumnModel();
@@ -1944,7 +1944,7 @@ double TreeListControl::getColumnWidth( const unsigned long& index )
 	return result;
 }
 
-void TreeListControl::setColumnWidth( const unsigned long& index, const double& width )
+void TreeListControl::setColumnWidth( const uint32& index, const double& width )
 {
 	ColumnModel* model = header_->getColumnModel();
 	ColumnItem* item = model->getItemFromIndex( index );

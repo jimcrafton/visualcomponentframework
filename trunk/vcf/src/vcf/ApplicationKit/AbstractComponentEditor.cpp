@@ -34,7 +34,7 @@ void AbstractComponentEditor::initialize()
 }
 
 
-Command* AbstractComponentEditor::createCommand( const ulong32& index )
+Command* AbstractComponentEditor::createCommand( const uint32& index )
 {
 	return NULL;
 }
@@ -49,12 +49,12 @@ void AbstractComponentEditor::copy()
 	
 }
 
-ulong32 AbstractComponentEditor::getCommandCount()
+uint32 AbstractComponentEditor::getCommandCount()
 {
 	return attributes_.size();
 }
 
-void AbstractComponentEditor::setCommandCount( ulong32 val )
+void AbstractComponentEditor::setCommandCount( uint32 val )
 {
 	attributes_.clear();
 	attributes_.resize( val, ComponentEditor::caUsesModalDialogForEditing );
@@ -63,22 +63,22 @@ void AbstractComponentEditor::setCommandCount( ulong32 val )
 	parentIndices_.resize( val, -1 );	
 }
 
-int AbstractComponentEditor::getCommandParentIndex( const ulong32& index )
+int AbstractComponentEditor::getCommandParentIndex( const uint32& index )
 {
 	return parentIndices_[index];
 }
 
-void AbstractComponentEditor::setParentIndex( const ulong32& index, const int& parentIndex )
+void AbstractComponentEditor::setParentIndex( const uint32& index, const int& parentIndex )
 {
 	parentIndices_[index] = parentIndex;
 }
 
-int AbstractComponentEditor::getAttributes( const ulong32& index )
+int AbstractComponentEditor::getAttributes( const uint32& index )
 {
 	return attributes_[index];
 }
 
-void AbstractComponentEditor::setAttributes( const ulong32& index, const int& attribute )
+void AbstractComponentEditor::setAttributes( const uint32& index, const int& attribute )
 {
 	attributes_[index] = attribute;
 }

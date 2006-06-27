@@ -37,7 +37,7 @@ class APPLICATIONKIT_API TabModelEvent : public Event{
 public:
 	TabModelEvent( Object * source, TabPage* page ): Event(source), page_(page) {}
 
-	TabModelEvent( Object* source, const unsigned long& eventType, TabPage* page )
+	TabModelEvent( Object* source, const uint32& eventType, TabPage* page )
 		: Event(source,eventType), page_(page) {}
 
 	TabModelEvent( const TabModelEvent& rhs ):Event(rhs) {

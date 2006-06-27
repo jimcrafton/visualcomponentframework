@@ -25,10 +25,10 @@ class TreeItem;
 class APPLICATIONKIT_API TreeModelEvent : public Event
 {
 public:
-	TreeModelEvent( Object* source, const ulong32& type ) : 
+	TreeModelEvent( Object* source, const uint32& type ) : 
 	  Event(source,type){}
 
-	TreeModelEvent( Object* source, TreeItem* item, const ulong32& type ) : 
+	TreeModelEvent( Object* source, TreeItem* item, const uint32& type ) : 
 	  Event(source,type), item_(item){}
 		
 

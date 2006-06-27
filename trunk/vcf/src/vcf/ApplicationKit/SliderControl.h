@@ -105,7 +105,7 @@ public:
 	void setHasTickMarks( const bool& val );
 
 
-	long getTickMarkStyle() {
+	int32 getTickMarkStyle() {
 		return tickMarkStyle_;
 	}
 
@@ -113,13 +113,13 @@ public:
 	bool hasTickMarksOnTopLeft();
 	bool hasTickMarksOnBottomRight();
 
-	void setTickMarkStyle( const long& val );
+	void setTickMarkStyle( const int32& val );
 
-	long getTickFrequency() {
+	int32 getTickFrequency() {
 		return tickFrequency_;
 	}
 
-	void setTickFrequency( const long& val );
+	void setTickFrequency( const int32& val );
 
 	double getStepIncrement() {
 		return stepIncrement_;
@@ -141,8 +141,8 @@ protected:
 	double maxVal_;
 	double position_;
 	bool hasTickMarks_;
-	long tickMarkStyle_;
-	long tickFrequency_;
+	int32 tickMarkStyle_;
+	int32 tickFrequency_;
 	Point dragPosStart_;
 	bool pressed_;
 	double stepIncrement_;

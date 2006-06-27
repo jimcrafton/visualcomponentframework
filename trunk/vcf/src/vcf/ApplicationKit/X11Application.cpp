@@ -71,12 +71,12 @@ void X11Application::setCurrentDirectory( const String& currentDirectory )
 
 }
 
-long X11Application::getHandleID()
+int32 X11Application::getHandleID()
 {
 	return handleID_;
 }
 
-void X11Application::setHandleID( const long& handleID )
+void X11Application::setHandleID( const int32& handleID )
 {
 	handleID_ = handleID;
 }

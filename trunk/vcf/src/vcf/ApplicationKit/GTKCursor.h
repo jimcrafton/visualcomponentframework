@@ -31,12 +31,12 @@ public:
 
 	virtual void createSystemCursor( const Cursor::SystemCursorType& systemCursor );
 
-	virtual long getCursorID()
+	virtual int32 getCursorID()
 	{
 		return cursorID_;
 	}
 
-	virtual void setCursorID( const long& cursorID )
+	virtual void setCursorID( const int32& cursorID )
 	{
 		cursorID_ = cursorID;
 	}
@@ -56,7 +56,7 @@ public:
 
 protected:
 
-	long cursorID_;
+	int32 cursorID_;
 	Cursor* cursor_;
 	GdkCursor* gtkCursor_;
 };

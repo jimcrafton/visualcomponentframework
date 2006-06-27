@@ -33,7 +33,7 @@ public:
 		Event( source ),childComponent_(NULL){
 	};
 
-	ComponentEvent( Object* source, const unsigned long& eventType ):
+	ComponentEvent( Object* source, const uint32& eventType ):
 		Event( source, eventType ),childComponent_(NULL){
 	};
 

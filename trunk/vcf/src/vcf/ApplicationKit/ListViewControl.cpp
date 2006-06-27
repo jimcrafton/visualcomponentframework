@@ -230,12 +230,12 @@ void ListViewControl::addHeaderColumn( ColumnItem* column )
 	columnModel_->addItem( column );
 }
 
-void ListViewControl::insertHeaderColumn( const unsigned long& index, ColumnItem* column )
+void ListViewControl::insertHeaderColumn( const uint32& index, ColumnItem* column )
 {
 	columnModel_->insertItem( index, column );
 }
 
-ColumnItem* ListViewControl::insertHeaderColumn( const unsigned long& index, const String& columnName, const double& width )
+ColumnItem* ListViewControl::insertHeaderColumn( const uint32& index, const String& columnName, const double& width )
 {
 	ColumnItem* result = NULL;
 	result = new DefaultColumnItem();
@@ -246,29 +246,29 @@ ColumnItem* ListViewControl::insertHeaderColumn( const unsigned long& index, con
 	return result;
 }
 
-void ListViewControl::deleteHeaderColumn( const unsigned long& index )
+void ListViewControl::deleteHeaderColumn( const uint32& index )
 {
 	columnModel_->deleteItem( index );
 }
 
-String ListViewControl::getColumnName( const unsigned long& index )
+String ListViewControl::getColumnName( const uint32& index )
 {
 	ColumnItem* item = columnModel_->getItemFromIndex( index );
 	return item->getCaption();
 }
 
-void ListViewControl::setColumnName( const unsigned long& index, const String& columnName )
+void ListViewControl::setColumnName( const uint32& index, const String& columnName )
 {
 	ColumnItem* item = columnModel_->getItemFromIndex( index );
 	item->setCaption( columnName );
 }
 
-double ListViewControl::getColumnWidth( const unsigned long& index )
+double ListViewControl::getColumnWidth( const uint32& index )
 {
 	return listviewPeer_->getColumnWidth( index );
 }
 
-void ListViewControl::setColumnWidth( const unsigned long& index, const double& width, ListViewControl::AutoSizeType type )
+void ListViewControl::setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type )
 {
 	listviewPeer_->setColumnWidth( index, width, type );
 }
@@ -359,7 +359,7 @@ void ListViewControl::onColumnItemChanged( ItemEvent* event )
 {
 	ColumnItem* item = (ColumnItem*)event->getSource();
 
-	unsigned long index = item->getIndex();
+	uint32 index = item->getIndex();
 	listviewPeer_->setColumnName( index, item->getCaption() );
 	listviewPeer_->setColumnWidth( index, item->getWidth() );
 }
@@ -394,7 +394,7 @@ void ListViewControl::rangeSelect( Rect* selectionRect )
 	listviewPeer_->rangeSelect( selectionRect );
 }
 
-ListItem* ListViewControl::addItem( const String& caption, const ulong32 imageIndex )
+ListItem* ListViewControl::addItem( const String& caption, const uint32 imageIndex )
 {
 	ListItem* result = NULL;
 
@@ -411,7 +411,7 @@ void ListViewControl::addItem( ListItem* item )
 	listModel_->addItem( item );
 }
 
-ListItem* ListViewControl::insertItem( const ulong32& index, const String& caption, const ulong32 imageIndex )
+ListItem* ListViewControl::insertItem( const uint32& index, const String& caption, const uint32 imageIndex )
 {
 	ListItem* result = NULL;
 
@@ -423,7 +423,7 @@ ListItem* ListViewControl::insertItem( const ulong32& index, const String& capti
 	return result;
 }
 
-void ListViewControl::insertItem( const ulong32& index, ListItem* item )
+void ListViewControl::insertItem( const uint32& index, ListItem* item )
 {
 	listModel_->insertItem( index, item );
 }
@@ -468,7 +468,7 @@ Rect ListViewControl::getItemImageRect( ListItem* item )
 	return listviewPeer_->getItemImageRect( item );
 }
 
-long ListViewControl::getDisplayOptions()
+int32 ListViewControl::getDisplayOptions()
 {
 	if ( NULL == this->listviewPeer_ ){
 		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
@@ -477,7 +477,7 @@ long ListViewControl::getDisplayOptions()
 	return listviewPeer_->getDisplayOptions();
 }
 
-void ListViewControl::setDisplayOptions( const long& displayOptions )
+void ListViewControl::setDisplayOptions( const int32& displayOptions )
 {
 	if ( NULL == this->listviewPeer_ ){
 		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);

@@ -199,20 +199,20 @@ public:
 	represents. This image is frequently used to represent check marks
 	for things like tree or list controls.
 	*/
-	virtual long getStateImageIndex() = 0;
+	virtual int32 getStateImageIndex() = 0;
 
-	virtual void setStateImageIndex( const long& index ) = 0;
+	virtual void setStateImageIndex( const int32& index ) = 0;
 
 	/**
 	Returns the index of the item within it's model.
 	*/
-    virtual ulong32 getIndex() = 0;
+    virtual uint32 getIndex() = 0;
 
-	virtual long getImageIndex() = 0;
+	virtual int32 getImageIndex() = 0;
 
-	virtual void setImageIndex( const long& imageIndex ) = 0;
+	virtual void setImageIndex( const int32& imageIndex ) = 0;
 
-	virtual void setIndex( const unsigned long& index ) = 0;
+	virtual void setIndex( const uint32& index ) = 0;
 
 	/**
 	Returns some application defined data. This can be anything 
@@ -247,7 +247,7 @@ public:
 	the item(s). Some controls will completely 
 	ignore this value.
 	*/
-	long getState(){
+	int32 getState(){
 		return itemState_;
 	}
 
@@ -255,7 +255,7 @@ public:
 	Sets the state for the item. This is made virtual to
 	allow subclasses to customize the behaviour. 
 	*/
-	virtual void setState( const long& state ){
+	virtual void setState( const int32& state ){
 		itemState_ = state;
 	}
 
@@ -294,7 +294,7 @@ public:
 		owningControl_ = control;
 	}
 protected:
-	long itemState_;
+	int32 itemState_;
 	Model* model_;
 	Control* owningControl_;
 };

@@ -64,7 +64,7 @@ ButtonState GTKCommandButton::getState()
 	return state_;
 }
 
-void GTKCommandButton::setState( const ulong32& state )
+void GTKCommandButton::setState( const uint32& state )
 {
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }

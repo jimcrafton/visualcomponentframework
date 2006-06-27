@@ -140,7 +140,7 @@ public:
 	*modified accordingly. If the index specified is not within the container list's
 	*bounds then the child is added at the <b><i>end</i></b> of the list
 	*/
-	virtual void insertAtIndex( Control * child, const AlignmentType& alignment, const ulong32& index ) = 0;
+	virtual void insertAtIndex( Control * child, const AlignmentType& alignment, const uint32& index ) = 0;
 
 	/**
 	*Sends the specified child to the first position in containers list
@@ -182,7 +182,7 @@ public:
 	*returns the numer of child controls that
 	*this container has.
 	*/
-	virtual unsigned long getChildCount() = 0;
+	virtual uint32 getChildCount() = 0;
 
 	/**
 	*searches through all the child controls of this
@@ -208,11 +208,11 @@ public:
 	*/
 	virtual void resizeChildren( Control* control ) = 0;
 
-	virtual Control* getControlAtIndex( const ulong32& index ) = 0;
+	virtual Control* getControlAtIndex( const uint32& index ) = 0;
 
-	virtual long getControlIndex( Control* control ) = 0;
+	virtual int32 getControlIndex( Control* control ) = 0;
 
-	virtual void updateTabOrder( Control* child, ulong32& newTabOrder ) = 0;
+	virtual void updateTabOrder( Control* child, uint32& newTabOrder ) = 0;
 
 	virtual void getTabList( std::vector<Control*>& tabList ) = 0;
 
@@ -276,7 +276,7 @@ public:
 		container->insertBeforeControl( child, alignment, beforeControl );
 	}
 
-	void insertAtIndex( Control * child, const AlignmentType& alignment, const ulong32& index ) {
+	void insertAtIndex( Control * child, const AlignmentType& alignment, const uint32& index ) {
 		Container* container = delegate_->getContainer();
 		if ( NULL == container ) {
 			return;
@@ -316,7 +316,7 @@ public:
 		return container->getChildren();
 	};
 
-	unsigned long getChildCount() {
+	uint32 getChildCount() {
 		Container* container = delegate_->getContainer();
 		if ( NULL == container ) {
 			return 0;
@@ -340,7 +340,7 @@ public:
 		container->resizeChildren( control );
 	}
 
-	Control* getControlAtIndex( const ulong32& index ){
+	Control* getControlAtIndex( const uint32& index ){
 		Container* container = delegate_->getContainer();
 		if ( NULL == container ) {
 			return NULL;
@@ -348,7 +348,7 @@ public:
 		return container->getControlAtIndex(index);
 	}
 
-	long getControlIndex( Control* control ) {
+	int32 getControlIndex( Control* control ) {
 		Container* container = delegate_->getContainer();
 		if ( NULL == container ) {
 			return -1;
@@ -356,7 +356,7 @@ public:
 		return container->getControlIndex(control);
 	}
 
-	void updateTabOrder( Control* child, ulong32& newTabOrder ) {
+	void updateTabOrder( Control* child, uint32& newTabOrder ) {
 		Container* container = delegate_->getContainer();
 		if ( NULL == container ) {
 			return;

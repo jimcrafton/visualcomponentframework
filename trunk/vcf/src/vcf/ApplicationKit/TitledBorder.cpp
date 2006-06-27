@@ -27,14 +27,14 @@ TitledBorder::TitledBorder(const String& title):
 	font_ = UIToolkit::getUIMetricsManager()->getDefaultFontFor(UIMetricsManager::ftControlFont);
 }
 
-TitledBorder::TitledBorder(const String& title, long sidesToPaint):
+TitledBorder::TitledBorder(const String& title, int32 sidesToPaint):
 	caption_(title),
 	sidesToPaint_(sidesToPaint)
 {
 	font_ = UIToolkit::getUIMetricsManager()->getDefaultFontFor(UIMetricsManager::ftControlFont);
 }
 
-TitledBorder::TitledBorder(const String& title, long sidesToPaint, const Font& font):
+TitledBorder::TitledBorder(const String& title, int32 sidesToPaint, const Font& font):
 	caption_(title),
 	sidesToPaint_(sidesToPaint),
 	font_(font)

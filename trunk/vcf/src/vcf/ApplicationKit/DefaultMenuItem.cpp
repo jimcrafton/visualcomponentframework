@@ -100,7 +100,7 @@ bool DefaultMenuItem::containsPoint( Point * pt )
 	return true;
 }
 
-unsigned long DefaultMenuItem::getIndex()
+uint32 DefaultMenuItem::getIndex()
 {
 	Menu* owner = getMenuOwner();
 	if ( NULL == owner ) {
@@ -109,7 +109,7 @@ unsigned long DefaultMenuItem::getIndex()
 	return owner->getItemIndex( this );
 }
 
-void DefaultMenuItem::setIndex( const unsigned long& index ){}
+void DefaultMenuItem::setIndex( const uint32& index ){}
 //{
 //	index_ = index;
 //}
@@ -224,7 +224,7 @@ void DefaultMenuItem::addChild( MenuItem* child )
 	}
 }
 
-void DefaultMenuItem::insertChild( const unsigned long& index, MenuItem* child )
+void DefaultMenuItem::insertChild( const uint32& index, MenuItem* child )
 {
 	menuItems_.insert( menuItems_.begin() + index, child );
 
@@ -234,7 +234,7 @@ void DefaultMenuItem::insertChild( const unsigned long& index, MenuItem* child )
 
 	/*
 	std::vector<MenuItem*>::iterator it = menuItems_.begin() + index;
-	unsigned long newIndex = index;
+	uint32 newIndex = index;
 	while ( it != menuItems_.end() ) {
 		(*it)->setIndex( newIndex );		
 		it ++;
@@ -260,7 +260,7 @@ void DefaultMenuItem::deleteChild( MenuItem* child )
 {
 	std::vector<MenuItem*>::iterator found = std::find( menuItems_.begin(), menuItems_.end(), child );
 	if ( found != menuItems_.end() ){
-		unsigned long index = found - menuItems_.begin();
+		uint32 index = found - menuItems_.begin();
 	
 		itemState_ &= ~MenuItem::mdsBoundToMenuPeer;
 
@@ -277,7 +277,7 @@ void DefaultMenuItem::deleteChild( MenuItem* child )
 	}
 }
 
-void DefaultMenuItem::deleteChild( const unsigned long& index )
+void DefaultMenuItem::deleteChild( const uint32& index )
 {
 	//peer_->deleteChild( index );
 
@@ -350,7 +350,7 @@ void DefaultMenuItem::setParent( MenuItem* parent )
 	parent_ = parent;
 }
 
-MenuItem* DefaultMenuItem::getChildAt( const unsigned long& index )
+MenuItem* DefaultMenuItem::getChildAt( const uint32& index )
 {
 	if ( index >= menuItems_.size() ) {
 		throw OutOfBoundsException(MAKE_ERROR_MSG(OUT_OF_BOUNDS_EXCEPTION), __LINE__);
@@ -566,7 +566,7 @@ void DefaultMenuItem::setSeparator( const bool& separator )
 	}
 }
 
-void DefaultMenuItem::setImageIndex( const long& imageIndex )
+void DefaultMenuItem::setImageIndex( const int32& imageIndex )
 {
 	imageIndex_ = imageIndex;
 	Menu* owner = getMenuOwner();
@@ -597,7 +597,7 @@ AcceleratorKey* DefaultMenuItem::getAccelerator()
 	return result;
 }
 
-void DefaultMenuItem::setAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask )
+void DefaultMenuItem::setAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask )
 {
 	EventHandler* eventHandler = this->getEventHandler( "DefaultMenuItem::onAccelerator" );
 	if ( NULL == eventHandler ) {
@@ -656,7 +656,7 @@ Object* DefaultMenuItem::clone(bool deep)
 				getEventHandler( "DefaultMenuItem::onAccelerator" ) ) {
 
 			VirtualKeyCode keyCode = (VirtualKeyCode)accel->getKeyCode();
-			ulong32 mask = accel->getModifierMask();
+			uint32 mask = accel->getModifierMask();
 			//remove the old one!
 			UIToolkit::removeAccelerator( keyCode, mask, this );
 			currentAccelerator_ = NULL;
@@ -670,7 +670,7 @@ Object* DefaultMenuItem::clone(bool deep)
 	return result;
 }
 
-unsigned long DefaultMenuItem::getChildCount()
+uint32 DefaultMenuItem::getChildCount()
 {
 	return menuItems_.size();
 }

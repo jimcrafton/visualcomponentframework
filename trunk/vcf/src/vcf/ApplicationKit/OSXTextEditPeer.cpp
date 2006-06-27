@@ -290,7 +290,7 @@ void OSXTextEditPeer::setLeftMargin( const double & leftMargin )
 	editState_ &= ~esStyleChanging;
 }
 
-unsigned long OSXTextEditPeer::getLineCount()
+uint32 OSXTextEditPeer::getLineCount()
 {
 	return 0;
 }
@@ -300,9 +300,9 @@ VCF::Rect OSXTextEditPeer::getContentBoundsForWidth(const double& width)
 	return OSXTextPeer::getContentBoundsForWidth(width);
 }
 
-unsigned long OSXTextEditPeer::getCurrentLinePosition()
+uint32 OSXTextEditPeer::getCurrentLinePosition()
 {
-	unsigned long result = 0;
+	uint32 result = 0;
 
 	return result;
 }
@@ -420,25 +420,25 @@ void OSXTextEditPeer::setDefaultStyle( Dictionary& styles )
 
 
 
-VCF::Point* OSXTextEditPeer::getPositionFromCharIndex( const unsigned long& index )
+VCF::Point* OSXTextEditPeer::getPositionFromCharIndex( const uint32& index )
 {
 	
 	return &ptAtCharPos_;
 }
 
-unsigned long OSXTextEditPeer::getCharIndexFromPosition( VCF::Point* point )
+uint32 OSXTextEditPeer::getCharIndexFromPosition( VCF::Point* point )
 {
-	unsigned long result = 0;
+	uint32 result = 0;
 
 	return result;
 }
 
-unsigned long OSXTextEditPeer::getCaretPosition()
+uint32 OSXTextEditPeer::getCaretPosition()
 {
 	return getSelectionStart();
 }
 
-void OSXTextEditPeer::setCaretPosition( const unsigned long& caretPos )
+void OSXTextEditPeer::setCaretPosition( const uint32& caretPos )
 {
 
 }
@@ -856,9 +856,9 @@ void OSXTextEditPeer::setText( const VCF::String& text )
 	editState_ &= ~esPeerTextChanging;
 }
 
-unsigned long OSXTextEditPeer::getSelectionStart()
+uint32 OSXTextEditPeer::getSelectionStart()
 {
-	unsigned long start = 0;
+	uint32 start = 0;
 	
 	TXNOffset s, e;
 	
@@ -869,7 +869,7 @@ unsigned long OSXTextEditPeer::getSelectionStart()
 	return start;
 }
 
-unsigned long OSXTextEditPeer::getSelectionCount()
+uint32 OSXTextEditPeer::getSelectionCount()
 {
 	TXNOffset s, e;
 	
@@ -879,7 +879,7 @@ unsigned long OSXTextEditPeer::getSelectionCount()
 }
 
 /*
-void OSXTextEditPeer::getSelectionMark( unsigned long & start, unsigned long & end )
+void OSXTextEditPeer::getSelectionMark( uint32 & start, uint32 & end )
 {
 	
 }
@@ -891,13 +891,13 @@ void OSXTextEditPeer::clearSelection()
 	TXNClear( txnObject_ );
 }
 
-void OSXTextEditPeer::setSelectionMark( const unsigned long& start, const unsigned long& count )
+void OSXTextEditPeer::setSelectionMark( const uint32& start, const uint32& count )
 {
 	TXNSetSelection( txnObject_, start, start + count );
 }
 
 
-void OSXTextEditPeer::scrollToLine( const ulong32& lineIndex )
+void OSXTextEditPeer::scrollToLine( const uint32& lineIndex )
 {
 	
 }
@@ -926,14 +926,14 @@ void OSXTextEditPeer::setReadOnly( const bool& readonly )
 	TXNSetTXNObjectControls( txnObject_, false, 1, iControlTags, iControlData ); 
 }
 
-ulong32 OSXTextEditPeer::getTotalPrintablePageCount( PrintContext* context )
+uint32 OSXTextEditPeer::getTotalPrintablePageCount( PrintContext* context )
 {
-	ulong32 result = 0;
+	uint32 result = 0;
 
 	return result;
 }
 
-void OSXTextEditPeer::print( PrintContext* context, const long& page )
+void OSXTextEditPeer::print( PrintContext* context, const int32& page )
 {
 	
 }

@@ -93,7 +93,7 @@ public:
 
 	virtual void setCursor( Cursor* cursor );
 
-	virtual bool beginSetBounds( const ulong32& numberOfChildren );
+	virtual bool beginSetBounds( const uint32& numberOfChildren );
 
 	virtual void endSetBounds();
 

@@ -16,7 +16,7 @@ using namespace VCF;
 
 
 AcceleratorKey::AcceleratorKey( Control* associatedControl, const VirtualKeyCode& keyCode,
-								const ulong32& modifierMask, EventHandler* eventHandler,
+								const uint32& modifierMask, EventHandler* eventHandler,
 								const bool& isMnemonic ):
 	keyCode_(keyCode),
 	modifierMask_(modifierMask),
@@ -31,7 +31,7 @@ AcceleratorKey::AcceleratorKey( Control* associatedControl, const VirtualKeyCode
 }
 
 AcceleratorKey::AcceleratorKey( MenuItem* associatedMenuItem, const VirtualKeyCode& keyCode,
-					const ulong32& modifierMask, EventHandler* eventHandler,
+					const uint32& modifierMask, EventHandler* eventHandler,
 					const bool& isMnemonic ):
 	keyCode_(keyCode),
 	modifierMask_(modifierMask),
@@ -46,7 +46,7 @@ AcceleratorKey::AcceleratorKey( MenuItem* associatedMenuItem, const VirtualKeyCo
 }
 
 AcceleratorKey::AcceleratorKey( Object* associatedObject, const VirtualKeyCode& keyCode,
-					const ulong32& modifierMask, EventHandler* eventHandler,
+					const uint32& modifierMask, EventHandler* eventHandler,
 					const bool& isMnemonic ):
 	keyCode_(keyCode),
 	modifierMask_(modifierMask),

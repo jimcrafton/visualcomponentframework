@@ -17,7 +17,7 @@ ImageList::ImageList()
 }
 
 /*
-ImageList::ImageList( Image* listOfImages, const unsigned long& imageWidth, const unsigned long& imageHeight )
+ImageList::ImageList( Image* listOfImages, const uint32& imageWidth, const uint32& imageHeight )
 {
 	init();
 }
@@ -63,17 +63,17 @@ void ImageList::init()
 	changed();
 }
 
-unsigned long ImageList::getImageWidth()
+uint32 ImageList::getImageWidth()
 {
 	return imageWidth_;
 }
 
-unsigned long ImageList::getImageHeight()
+uint32 ImageList::getImageHeight()
 {
 	return imageHeight_;
 }
 
-void ImageList::setImageWidth( const unsigned long& width )
+void ImageList::setImageWidth( const uint32& width )
 {
 	imageWidth_ = 	width;
 	changed();
@@ -81,7 +81,7 @@ void ImageList::setImageWidth( const unsigned long& width )
 	SizeChanged.fireEvent( &event );
 }
 
-void ImageList::setImageHeight( const unsigned long& height )
+void ImageList::setImageHeight( const uint32& height )
 {
 	imageHeight_ = height;
 	changed();
@@ -130,7 +130,7 @@ void ImageList::addImage( Image* newImage )
 	SysPixelType* newImgBits = newPix;
 	int scanlineWidthToCopy = newImage->getWidth();
 	int scanlineWidthOfMasterImage = masterImage_->getWidth();//scanlineToCopy * imageCount_;
-	for (ulong32 i=0;i<imageHeight_;i++) {
+	for (uint32 i=0;i<imageHeight_;i++) {
 		memcpy( bits, newImgBits, scanlineWidthToCopy*sizeof(SysPixelType) );
 
 		bits += scanlineWidthOfMasterImage;
@@ -142,7 +142,7 @@ void ImageList::addImage( Image* newImage )
 	ImageAdded.fireEvent( &event );
 }
 
-void ImageList::insertImage( const unsigned long & index, Image* newImage )
+void ImageList::insertImage( const uint32 & index, Image* newImage )
 {
 	if ( newImage->getHeight() != imageHeight_ ) {
 		//throw exception
@@ -166,7 +166,7 @@ void ImageList::insertImage( const unsigned long & index, Image* newImage )
 	unsigned char* tmpBitsPtr = tmpBits;
 	unsigned char* oldBits = (unsigned char*)masterImage_->getData();
 	oldBits += incr;
-	ulong32 y = 0;
+	uint32 y = 0;
 	for ( y=0;y<imageHeight_;y++) {
 		memcpy( tmpBitsPtr, oldBits, tmpLineIncr );
 		tmpBitsPtr += tmpLineIncr;
@@ -209,7 +209,7 @@ void ImageList::insertImage( const unsigned long & index, Image* newImage )
 	ImageAdded.fireEvent( &event );
 }
 
-void ImageList::deleteImage( const unsigned long & index )
+void ImageList::deleteImage( const uint32 & index )
 {
 	int incr  = (imageHeight_ * imageWidth_ * sizeof(SysPixelType)) * index;
 
@@ -242,7 +242,7 @@ void ImageList::deleteImage( const unsigned long & index )
 	ImageAdded.fireEvent( &event );
 }
 
-void ImageList::draw( GraphicsContext* context, const unsigned long& index, Point* pt )
+void ImageList::draw( GraphicsContext* context, const uint32& index, Point* pt )
 {
 	if ( index >= totalImageCount_ ) {
 		return;
@@ -254,7 +254,7 @@ void ImageList::draw( GraphicsContext* context, const unsigned long& index, Poin
 	context->drawPartialImage( pt->x_, pt->y_, &bounds, masterImage_ );
 }
 
-void ImageList::draw( GraphicsContext* context, const unsigned long& index, Rect* bounds )
+void ImageList::draw( GraphicsContext* context, const uint32& index, Rect* bounds )
 {
 	if ( index >= totalImageCount_ ) {
 		return;
@@ -269,7 +269,7 @@ void ImageList::draw( GraphicsContext* context, const unsigned long& index, Rect
 	context->drawPartialImage( bounds->left_, bounds->top_, &tmpBounds, masterImage_ );
 }
 
-void ImageList::copyImage( Image* imageToCopyTo, const unsigned long& index )
+void ImageList::copyImage( Image* imageToCopyTo, const uint32& index )
 {
 	int incr  = (imageHeight_ * imageWidth_ * sizeof(SysPixelType)) * index;
 	unsigned char* buf = (unsigned char*)masterImage_->getData();
@@ -291,16 +291,16 @@ void ImageList::changed()
 	if ( NULL != oldImage ) {
 		ColorPixels oldPix(oldImage);
 		SysPixelType* oldBits = oldPix;
-		long oldWidth = oldImage->getWidth();
-		long oldHeight = oldImage->getHeight();
+		int32 oldWidth = oldImage->getWidth();
+		int32 oldHeight = oldImage->getHeight();
 
 		ColorPixels masterPix(masterImage_);
 		SysPixelType* newBits = masterPix;
-		long newWidth = masterImage_->getWidth();
+		int32 newWidth = masterImage_->getWidth();
 
 		uint32 size = minVal<uint32>( oldWidth,newWidth );
 
-		for ( ulong32 i=0;i<imageHeight_;i++ ){
+		for ( uint32 i=0;i<imageHeight_;i++ ){
 			if ( i < oldHeight ) {
 				memcpy( newBits, oldBits, size * sizeof(SysPixelType) );
 				oldBits +=  oldWidth;

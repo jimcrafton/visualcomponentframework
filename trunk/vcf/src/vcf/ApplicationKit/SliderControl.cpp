@@ -79,13 +79,13 @@ bool SliderControl::hasTickMarksOnBottomRight()
 	return (SliderControl::tmsBottomRight & tickMarkStyle_) ? true : false;
 }
 
-void SliderControl::setTickMarkStyle( const long& val )
+void SliderControl::setTickMarkStyle( const int32& val )
 {
 	tickMarkStyle_ = val;
 	repaint();
 }
 
-void SliderControl::setTickFrequency( const long& val )
+void SliderControl::setTickFrequency( const int32& val )
 {
 	tickFrequency_ = val;
 	repaint();

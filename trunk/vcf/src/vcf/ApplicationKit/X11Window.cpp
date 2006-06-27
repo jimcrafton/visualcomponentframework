@@ -69,7 +69,7 @@ X11Window::X11Window( Control* control, Control* owner ):
 
 		XSelectInput( display, wndHandle_, eventMask );
 
-		control_->getContext()->getPeer()->setContextID( (ulong32)wndHandle_ );
+		control_->getContext()->getPeer()->setContextID( (uint32)wndHandle_ );
 
 		toolkit->postToolkitMessage( toolkit->getVCFCreateWindowMsg(), (void*)control_ );
 	}

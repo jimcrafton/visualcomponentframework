@@ -24,7 +24,7 @@ public:
 	virtual void showMessage( const String& message, const String& caption ) = 0;
 
 	virtual UIToolkit::ModalReturnType showMessage( const String& message, const String& caption,
-													const long& messageButtons,	const Dialog::MessageStyle& messageStyle ) = 0;													
+													const int32& messageButtons,	const Dialog::MessageStyle& messageStyle ) = 0;													
 													
 };
 

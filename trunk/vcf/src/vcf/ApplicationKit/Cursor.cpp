@@ -61,12 +61,12 @@ Cursor::~Cursor()
 	delete peer_;
 }
 
-long Cursor::getCursorID()
+int32 Cursor::getCursorID()
 {
 	return peer_->getCursorID();
 }
 
-void Cursor::setCursorFromID( const long& cursorID )
+void Cursor::setCursorFromID( const int32& cursorID )
 {
 
 }

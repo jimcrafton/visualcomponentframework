@@ -47,7 +47,7 @@ public:
 
 	virtual bool containsPoint( Point * pt );
 
-	virtual unsigned long getIndex();
+	virtual uint32 getIndex();
 
 	virtual void* getData();
 
@@ -97,15 +97,15 @@ public:
 
 	virtual void addChild( TreeItem* child );
 
-	virtual void insertChild( const unsigned long& index, TreeItem* child );
+	virtual void insertChild( const uint32& index, TreeItem* child );
 
 	virtual void deleteChild( TreeItem* child );
 
-	virtual void deleteChildAtIndex( const unsigned long& index );
+	virtual void deleteChildAtIndex( const uint32& index );
 
 	virtual void clearChildren();
 
-	virtual void setIndex( const unsigned long& index );
+	virtual void setIndex( const uint32& index );
 
 	virtual void paint( GraphicsContext* context, Rect* paintRect );
 
@@ -125,29 +125,29 @@ public:
 
 	virtual void expandAllChildren( const bool& isExpanded );
 
-	virtual ulong32 getLevel();
+	virtual uint32 getLevel();
 
 	virtual Rect* getBounds() {
 		return &bounds_;
 	}
 
-	virtual long getImageIndex() {
+	virtual int32 getImageIndex() {
 		return imageIndex_;
 	}
 
-	virtual void setImageIndex( const long& imageIndex );	
+	virtual void setImageIndex( const int32& imageIndex );	
 
-	virtual long getSelectedImageIndex() {
+	virtual int32 getSelectedImageIndex() {
 		return selectedImageIndex_;
 	}
 
-	virtual void setSelectedImageIndex( const long& selectedImageIndex );
+	virtual void setSelectedImageIndex( const int32& selectedImageIndex );
 
-	virtual long getExpandedImageIndex() {
+	virtual int32 getExpandedImageIndex() {
 		return expandedImageIndex_;
 	}
 
-	virtual void setExpandedImageIndex( const long& expandedImageIndex );
+	virtual void setExpandedImageIndex( const int32& expandedImageIndex );
 
 	virtual bool canPaint() {
 		return true;
@@ -158,32 +158,32 @@ public:
 	/**
 	*not supported
 	*/
-	virtual long getStateImageIndex(){
+	virtual int32 getStateImageIndex(){
 		return stateImageIndex_;
 	};
 
-	virtual void setStateImageIndex( const long& index );
+	virtual void setStateImageIndex( const int32& index );
 
 	virtual void addSubItem( const String& caption, void* data );
 
 	virtual void addSubItem( SubItem* subItem );
 
-	virtual void removeSubItem( const ulong32& index );
+	virtual void removeSubItem( const uint32& index );
 
 	virtual Enumerator<SubItem*>* getSubItems() {
 		return enumSubItemsContainer_.getEnumerator();
 	}
 
-	virtual SubItem* getSubItem( const ulong32& index );
+	virtual SubItem* getSubItem( const uint32& index );
 
-	virtual ulong32 getSubItemCount() {
+	virtual uint32 getSubItemCount() {
 		return subItems_.size();
 	}
 
 	virtual void subItemChanged( SubItem* item );
 
 protected:
-	virtual void changed( const ulong32& eventType=ITEM_EVENT_CHANGED  );
+	virtual void changed( const uint32& eventType=ITEM_EVENT_CHANGED  );
 
 protected:
 	bool textBold_;
@@ -191,7 +191,7 @@ protected:
 	String caption_;
 	TreeItem* parent_;
 	void* userData_;	
-	unsigned long index_;
+	uint32 index_;
 	EnumeratorContainer<std::vector<TreeItem*>,TreeItem*> enumContainer_;
 	std::vector<TreeItem*> childNodeItems_;
 
@@ -201,10 +201,10 @@ protected:
 	bool selected_;
 	bool isExpanded_;
 	Rect bounds_;	
-	long imageIndex_;
-	long selectedImageIndex_;
-	long expandedImageIndex_;
-	long stateImageIndex_;
+	int32 imageIndex_;
+	int32 selectedImageIndex_;
+	int32 expandedImageIndex_;
+	int32 stateImageIndex_;
 };
 
 

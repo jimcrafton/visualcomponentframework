@@ -277,7 +277,7 @@ HRESULT Win32DropTargetPeer::Drop( LPDATAOBJECT dataObject, DWORD keyState, POIN
 		dataObject_->AddRef();
 
 		VCF::DropTarget* target = getDropTarget();
-		unsigned long size = 0;
+		uint32 size = 0;
 
 
 		IEnumFORMATETC* enumFMT = NULL;

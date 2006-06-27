@@ -38,7 +38,7 @@ void DefaultTabModel::addTabPage( TabPage* page )
 	page->addItemChangedHandler( ev );
 }
 
-void DefaultTabModel::insertTabPage( const ulong32& index, TabPage* page )
+void DefaultTabModel::insertTabPage( const uint32& index, TabPage* page )
 {
 	TabModelEvent event( this, TAB_MODEL_EVENT_ITEM_ADDED, page );
 	TabPageAdded.fireEvent( &event );
@@ -58,7 +58,7 @@ void DefaultTabModel::deleteTabPage( TabPage* page )
 	}
 }
 
-void DefaultTabModel::deleteTabPage( const ulong32& index )
+void DefaultTabModel::deleteTabPage( const uint32& index )
 {
 	std::vector<TabPage*>::iterator found = pages_.begin() + index;
 	if ( found != pages_.end() ){
@@ -83,7 +83,7 @@ void DefaultTabModel::clearTabPages()
 	pages_.clear();
 }
 
-TabPage* DefaultTabModel::getPageAt( const ulong32& index )
+TabPage* DefaultTabModel::getPageAt( const uint32& index )
 {
 	TabPage* result = NULL;
 	std::vector<TabPage*>::iterator it = pages_.begin() + index;
@@ -108,7 +108,7 @@ TabPage* DefaultTabModel::getPageFromPageName( const String& pageName )
 	return result;
 }
 
-ulong32 DefaultTabModel::getItemIndex( TabPage* item )
+uint32 DefaultTabModel::getItemIndex( TabPage* item )
 {
 	std::vector<TabPage*>::iterator found = std::find ( pages_.begin(), pages_.end(), item );
 	if ( found != pages_.end() ) {
@@ -152,7 +152,7 @@ void DefaultTabModel::setSelectedPage( TabPage* page )
 	TabPageSelected.fireEvent( &event );
 }
 
-void DefaultTabModel::setSelectedPage( const ulong32& index )
+void DefaultTabModel::setSelectedPage( const uint32& index )
 {
 	std::vector<TabPage*>::iterator it = pages_.begin() + index;
 	if ( it != pages_.end() ){

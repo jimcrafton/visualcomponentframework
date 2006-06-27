@@ -103,7 +103,7 @@ Enumerator<Component*>* Action::getTargets()
 	return targetsContainer_.getEnumerator();
 }
 
-unsigned long Action::getTargetCount()
+uint32 Action::getTargetCount()
 {
 	return targets_.size();
 }
@@ -120,7 +120,7 @@ EventHandler* Action::getAcceleratorEventHandler()
 }
 
 
-void Action::setAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask )
+void Action::setAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask )
 {
 	
 	EventHandler* eventHandler = getAcceleratorEventHandler();

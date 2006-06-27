@@ -33,9 +33,9 @@ public:
 
 	virtual bool containsPoint( Point * pt );
 
-    virtual unsigned long getIndex();
+    virtual uint32 getIndex();
 
-	virtual void setIndex( const unsigned long& index );
+	virtual void setIndex( const uint32& index );
 
     virtual void* getData();
 
@@ -55,7 +55,7 @@ public:
 
 	virtual void paint( GraphicsContext* context, Rect* paintRect );
 
-	virtual ulong32 getPreferredHeight();
+	virtual uint32 getPreferredHeight();
 
 	virtual Rect* getBounds() {
 		return &bounds_;
@@ -70,11 +70,11 @@ public:
 		owningControl_ = control;
 	}
 
-	virtual long getImageIndex() {
+	virtual int32 getImageIndex() {
 		return imageIndex_;
 	}
 
-	virtual void setImageIndex( const long& imageIndex );
+	virtual void setImageIndex( const int32& imageIndex );
 
 	virtual bool canPaint() {
 		return true;
@@ -85,23 +85,23 @@ public:
 	/**
 	*not supported
 	*/
-	virtual long getStateImageIndex(){
+	virtual int32 getStateImageIndex(){
 		return -1;
 	};
 
 	/**
 	*not supported
 	*/
-	virtual void setStateImageIndex( const long& index ){}
+	virtual void setStateImageIndex( const int32& index ){}
 
 private:
-	ulong32 index_;
+	uint32 index_;
 	String pageName_;
 	Control* component_;
 	bool selected_;
-	ulong32 preferredHeight_;
+	uint32 preferredHeight_;
 	Rect bounds_;
-	long imageIndex_;
+	int32 imageIndex_;
 	void* data_;
 };
 

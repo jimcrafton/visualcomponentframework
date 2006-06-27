@@ -253,12 +253,12 @@ void Win32MenuItem::addChild( MenuItem* child )
 	insertSimpleMenuItem( child, (HMENU)getMenuID() );	
 
 	//mark the child as being bound to the peer
-	long state = child->getState();
+	int32 state = child->getState();
 	state |= MenuItem::mdsBoundToMenuPeer;
 	child->setState( state );
 }
 
-void Win32MenuItem::insertChild( const unsigned long& index, MenuItem* child )
+void Win32MenuItem::insertChild( const uint32& index, MenuItem* child )
 {
 	child->setIndex( index );
 	insertSimpleMenuItem( child, itemHandle_ );
@@ -273,7 +273,7 @@ void Win32MenuItem::deleteChild( MenuItem* child )
 	DeleteMenu( (HMENU)getMenuID(), peer->itemId_, MF_BYCOMMAND );
 }
 
-void Win32MenuItem::deleteChild( const unsigned long& index )
+void Win32MenuItem::deleteChild( const uint32& index )
 {
 	MenuItem* child = menuItem_->getChildAt(index);
 	Win32MenuItem* peer = (Win32MenuItem*)child->getPeer();
@@ -364,7 +364,7 @@ MenuItem* Win32MenuItem::getParent()
 	return menuItem_->getParent();
 }
 
-MenuItem* Win32MenuItem::getChildAt( const unsigned long& index )
+MenuItem* Win32MenuItem::getChildAt( const uint32& index )
 {
 	return NULL;
 }

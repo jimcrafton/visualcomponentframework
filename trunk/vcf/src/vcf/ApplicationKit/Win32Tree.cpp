@@ -566,7 +566,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				}
 
 				SHORT keyState = GetKeyState( VK_SHIFT );
-				ulong32 keyMask = kmUndefined;
+				uint32 keyMask = kmUndefined;
 				if ( (keyState >> 15) ) {
 					keyMask |= kmShift;
 				}
@@ -618,7 +618,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				}
 
 				SHORT keyState = GetKeyState( VK_SHIFT );
-				ulong32 keyMask = kmUndefined;
+				uint32 keyMask = kmUndefined;
 				if ( (keyState >> 15) ) {
 					keyMask |= kmShift;
 				}
@@ -1223,7 +1223,7 @@ void Win32Tree::onItemDeleted( ItemEvent* event )
 
 void Win32Tree::onImageListImageChanged( ImageListEvent* event )
 {
-	ulong32 index = event->getIndexOfImage();
+	uint32 index = event->getIndexOfImage();
 	ImageList* imageList = (ImageList*)event->getSource();
 	setImageList( imageList );
 

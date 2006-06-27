@@ -93,7 +93,7 @@ public:
 
 	void addItem( TreeItem* parent, TreeItem* item );
 
-	TreeItem* addItem( TreeItem* parent, const String& caption=L"", const ulong32 imageIndex=0 );
+	TreeItem* addItem( TreeItem* parent, const String& caption=L"", const uint32 imageIndex=0 );
 
 	void removeItem( TreeItem* item );
 

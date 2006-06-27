@@ -21,8 +21,8 @@ public:
 
 	virtual ~OSXAbstractControl();
 
-	virtual long getHandleID() {
-		return (long)controlRef_;
+	virtual int32 getHandleID() {
+		return (int32)controlRef_;
 	}
 
 	virtual void create( Control* owningControl );
@@ -35,7 +35,7 @@ public:
 
 	virtual void setBounds( Rect* rect );
 
-	virtual bool beginSetBounds( const ulong32& numberOfChildren );
+	virtual bool beginSetBounds( const uint32& numberOfChildren );
 
 	virtual void endSetBounds();
 

@@ -99,11 +99,11 @@ public:
 
 	virtual void addChild( MenuItem* child ) = 0;
 
-	virtual void insertChild( const unsigned long& index, MenuItem* child ) = 0;
+	virtual void insertChild( const uint32& index, MenuItem* child ) = 0;
 
 	virtual void deleteChild( MenuItem* child ) = 0;
 
-	virtual void deleteChild( const unsigned long& index ) = 0;
+	virtual void deleteChild( const uint32& index ) = 0;
 
 	virtual void clearChildren() = 0;
 
@@ -117,7 +117,7 @@ public:
 
 	virtual bool hasChildren() = 0;
 
-	virtual unsigned long getChildCount() = 0;
+	virtual uint32 getChildCount() = 0;
 
 
 	/**
@@ -153,7 +153,7 @@ public:
 
 	virtual void setParent( MenuItem* parent ) = 0;
 
-	virtual MenuItem* getChildAt( const unsigned long& index ) = 0;
+	virtual MenuItem* getChildAt( const uint32& index ) = 0;
 
 	virtual bool isEnabled() = 0;
 
@@ -194,7 +194,7 @@ public:
 	\p
 	A menu item may have only one accelerator associated with it at any given time.
 	*/
-	virtual void setAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask ) = 0;
+	virtual void setAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask ) = 0;
 
 	/**
 	Sets the acclerator object for this menu item. If one already exists then it is removed.

@@ -36,7 +36,7 @@ public:
 
 	ImageListEvent( Object * source): Event(source), image_(NULL), imageIndex_(0) {}
 
-	ImageListEvent( Object* source, const unsigned long& eventType, Image* image=NULL )
+	ImageListEvent( Object* source, const uint32& eventType, Image* image=NULL )
 		: Event(source,eventType), image_(image), imageIndex_(0) {}
 
 	ImageListEvent( const ImageListEvent& rhs ):Event(rhs) {
@@ -59,11 +59,11 @@ public:
 		return image_;
 	}
 
-	ulong32 getIndexOfImage() {
+	uint32 getIndexOfImage() {
 		return imageIndex_;
 	}
 
-	void setIndexOfImage( const ulong32& indexOfImage ) {
+	void setIndexOfImage( const uint32& indexOfImage ) {
 		imageIndex_ = indexOfImage;
 	}
 
@@ -72,7 +72,7 @@ public:
 	}
 protected:
 	Image* image_;
-	ulong32 imageIndex_;
+	uint32 imageIndex_;
 };
 
 

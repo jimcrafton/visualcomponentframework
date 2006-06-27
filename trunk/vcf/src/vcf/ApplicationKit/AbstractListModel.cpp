@@ -36,7 +36,7 @@ void AbstractListModel::addItem( ListItem* item )
 	ItemAdded.fireEvent( &event );
 }
 
-void AbstractListModel::deleteItemAtIndex( const unsigned long& index )
+void AbstractListModel::deleteItemAtIndex( const uint32& index )
 {
 	ListItem* item = listItems_[index];
 	item->setIndex( index );
@@ -79,7 +79,7 @@ void AbstractListModel::empty()
 	ContentsChanged.fireEvent( &event );
 }
 
-void AbstractListModel::insertItem( const unsigned long& index, ListItem* item )
+void AbstractListModel::insertItem( const uint32& index, ListItem* item )
 {
 	listItems_.insert( listItems_.begin() + index, item );
 	item->setIndex( index );
@@ -88,7 +88,7 @@ void AbstractListModel::insertItem( const unsigned long& index, ListItem* item )
 }
 
 
-ListItem* AbstractListModel::getItemFromIndex( const unsigned long& index )
+ListItem* AbstractListModel::getItemFromIndex( const uint32& index )
 {
 	ListItem* result = NULL;
 	if ( index < listItems_.size() ){
@@ -97,7 +97,7 @@ ListItem* AbstractListModel::getItemFromIndex( const unsigned long& index )
 	return result;
 }
 
-ulong32 AbstractListModel::getItemIndex( ListItem* item )
+uint32 AbstractListModel::getItemIndex( ListItem* item )
 {
 	std::vector<ListItem*>::iterator found = std::find( listItems_.begin(), listItems_.end(), item );
 	if ( found != listItems_.end() ) {
@@ -111,7 +111,7 @@ Enumerator<ListItem*>* AbstractListModel::getItems()
 	return listContainer_.getEnumerator();
 }
 
-unsigned long AbstractListModel::getCount()
+uint32 AbstractListModel::getCount()
 {
 	return this->listItems_.size();
 }
@@ -119,7 +119,7 @@ unsigned long AbstractListModel::getCount()
 void AbstractListModel::saveToStream( OutputStream * stream )
 {
 	Enumerator<ListItem*>* items = this->getItems();
-	long count = this->getCount();
+	int32 count = this->getCount();
 	stream->write( count );
 	while ( items->hasMoreElements() ){
 		ListItem* item = items->nextElement();
@@ -138,7 +138,7 @@ void AbstractListModel::saveToStream( OutputStream * stream )
 
 void AbstractListModel::loadFromStream( InputStream * stream )
 {
-	long count = 0;
+	int32 count = 0;
 	stream->read( count );
 	for (int i=0;i<count;i++){
 		String s = "";

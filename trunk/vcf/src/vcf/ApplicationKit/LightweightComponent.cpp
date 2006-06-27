@@ -249,7 +249,7 @@ void LightweightComponent::setCursor( Cursor* cursor )
 	}
 }
 
-bool LightweightComponent::beginSetBounds( const ulong32& numberOfChildren )
+bool LightweightComponent::beginSetBounds( const uint32& numberOfChildren )
 {
 	return true;
 }

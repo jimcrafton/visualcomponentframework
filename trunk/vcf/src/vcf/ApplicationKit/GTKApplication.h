@@ -39,7 +39,7 @@ public:
 	
 protected:
 	VCF::AbstractApplication* app_;
-	long handleID_;
+	int32 handleID_;
 };
 
 }; //end of namespace VCF

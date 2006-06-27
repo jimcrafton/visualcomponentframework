@@ -33,12 +33,12 @@ CursorManager* CursorManager::getCursorManager()
 
 CursorManager::CursorManager()
 {
-	cursorIDCount_ = (long)(Cursor::SCT_WAIT) + 1;
+	cursorIDCount_ = (int32)(Cursor::SCT_WAIT) + 1;
 }
 
 CursorManager::~CursorManager()
 {
-	std::map<long,Cursor*>::iterator it = cursorMap_.begin();
+	std::map<int32,Cursor*>::iterator it = cursorMap_.begin();
 	while ( it != cursorMap_.end() ) {
 		Cursor* cursor = it->second;
 		delete cursor;
@@ -48,16 +48,16 @@ CursorManager::~CursorManager()
 	cursorMap_.clear();
 }
 
-Cursor* CursorManager::getCursor( const long& cursorID )
+Cursor* CursorManager::getCursor( const int32& cursorID )
 {
 	Cursor* result = NULL;
-	std::map<long,Cursor*>::iterator found = cursorMap_.find( cursorID );
+	std::map<int32,Cursor*>::iterator found = cursorMap_.find( cursorID );
 	if ( found != cursorMap_.end() ) {
 		result = found->second;
 	}
 	else {
 
-		if ( (cursorID >= (long)Cursor::SCT_DEFAULT) && (cursorID <= (long)Cursor::SCT_WAIT) ) {
+		if ( (cursorID >= (int32)Cursor::SCT_DEFAULT) && (cursorID <= (int32)Cursor::SCT_WAIT) ) {
 			result = new Cursor( (Cursor::SystemCursorType)cursorID );
 		}
 	}
@@ -67,8 +67,8 @@ Cursor* CursorManager::getCursor( const long& cursorID )
 
 void CursorManager::registerCursor( Cursor* cursor )
 {
-	long cursorID = cursor->getCursorID();
-	std::map<long,Cursor*>::iterator found = cursorMap_.find( cursorID );
+	int32 cursorID = cursor->getCursorID();
+	std::map<int32,Cursor*>::iterator found = cursorMap_.find( cursorID );
 	if ( found == cursorMap_.end() ) {
 		//only add the cursor to the map if it isn't already there
 		if ( (cursorID == CursorManager::UNREGISTERED_ID) ||

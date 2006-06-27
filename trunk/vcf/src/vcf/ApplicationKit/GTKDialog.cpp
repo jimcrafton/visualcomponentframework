@@ -51,7 +51,7 @@ void GTKDialog::showMessage( const String& message, const String& caption )
 
 UIToolkit::ModalReturnType GTKDialog::showMessage( const String& message,
                                                    const String& caption,
-                                                   const long& messageButtons,
+                                                   const int32& messageButtons,
                                                    const Dialog::MessageStyle& messageStyle )
 {
 	int gtkButtons = 0;

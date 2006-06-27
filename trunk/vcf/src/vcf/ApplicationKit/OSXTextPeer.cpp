@@ -207,9 +207,9 @@ double OSXTextPeer::getBottomMargin()
 	return margins_.bottom_;
 }
 
-unsigned long OSXTextPeer::getLineCount()
+uint32 OSXTextPeer::getLineCount()
 {
-	unsigned long result = 0;
+	uint32 result = 0;
 
 	
 	TXNGetLineCount( txnObject_, (ItemCount*)&result );

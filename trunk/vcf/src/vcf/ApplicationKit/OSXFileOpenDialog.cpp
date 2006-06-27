@@ -210,7 +210,7 @@ bool OSXFileOpenDialog::execute()
 	NavReplyRecord reply;
 	err = NavDialogGetReply(openDlg, &reply);
 	if ( err == noErr ) {
-		long numItems;
+		int32 numItems;
 		err = AECountItems((const AEDescList *)&reply.selection, &numItems);
 		int i = 1;
 		for (i=1;i<=numItems;i++ ) {

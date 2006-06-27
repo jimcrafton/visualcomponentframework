@@ -45,14 +45,14 @@ public:
 		changeLength_(0) {}
 
 
-	TextEvent( Object * source, int selectionStart, ulong32 selectionLength ):
+	TextEvent( Object * source, int selectionStart, uint32 selectionLength ):
 		ModelEvent(source,0),
 		selectionStart_(selectionStart),
 		selectionLength_(selectionLength),
 		changeStart_(0),
 		changeLength_(0){}
 
-	TextEvent( Object * source, ulong32 type, const String& changedText, ulong32 changeStart, ulong32 changeLength ):
+	TextEvent( Object * source, uint32 type, const String& changedText, uint32 changeStart, uint32 changeLength ):
 		ModelEvent(source, type),
 		selectionStart_(-1),
 		selectionLength_(0),
@@ -62,8 +62,8 @@ public:
 		changeText_ = changedText;
 	}
 
-	TextEvent( Object * source, ulong32 type, const String& replacedText, 
-				const String& changedText, ulong32 replaceStart, ulong32 replaceLength ):
+	TextEvent( Object * source, uint32 type, const String& replacedText, 
+				const String& changedText, uint32 replaceStart, uint32 replaceLength ):
 		ModelEvent(source, type),
 		changeText_(changedText),
 		originalText_(replacedText),
@@ -129,21 +129,21 @@ public:
 	/**
 	Returns the number of characters in the selection
 	*/
-	ulong32 getSelectionLength() const {
+	uint32 getSelectionLength() const {
 		return selectionLength_;
 	}
 
 	/**
 	returns the start of the change
 	*/
-	ulong32 getChangeStart() const {
+	uint32 getChangeStart() const {
 		return changeStart_;
 	}
 
 	/**
 	returns the length of the change
 	*/
-	ulong32 getChangeLength() const {
+	uint32 getChangeLength() const {
 		return changeLength_;
 	}
 
@@ -152,10 +152,10 @@ private:
 	String changeText_;
 	String originalText_;
 	int selectionStart_;
-	ulong32 selectionLength_;
+	uint32 selectionLength_;
 
-	ulong32 changeStart_;
-	ulong32 changeLength_;
+	uint32 changeStart_;
+	uint32 changeLength_;
 };
 
 

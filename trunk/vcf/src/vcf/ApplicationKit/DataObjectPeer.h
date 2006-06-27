@@ -32,14 +32,14 @@ public:
     /**
     * Adds a new data type that the dataobject supports.
 	*/
-    virtual void addSupportedData( const unsigned long & dataType, DataObject* data )=0;
+    virtual void addSupportedData( const uint32 & dataType, DataObject* data )=0;
 
-	virtual DataObject* getSupportedData( const unsigned long & dataType )=0;
+	virtual DataObject* getSupportedData( const uint32 & dataType )=0;
 
     /**
      * is the data type passed in supported by the data object ?
      */
-    virtual bool isTypeSupported( const unsigned long & dataType )=0;
+    virtual bool isTypeSupported( const uint32 & dataType )=0;
 
 
 };

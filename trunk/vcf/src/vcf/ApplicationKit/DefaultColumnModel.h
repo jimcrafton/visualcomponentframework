@@ -127,17 +127,17 @@ public:
 
     virtual void deleteItem( ColumnItem* item);
 
-    virtual void deleteItem(const unsigned long & index);
+    virtual void deleteItem(const uint32 & index);
 
-    virtual void insertItem(const unsigned long & index, ColumnItem * item);
+    virtual void insertItem(const uint32 & index, ColumnItem * item);
 
     virtual void addItem( ColumnItem* item);
 
-	virtual ColumnItem* getItemFromIndex( const unsigned long& index );
+	virtual ColumnItem* getItemFromIndex( const uint32& index );
 
 	virtual Enumerator<ColumnItem*>* getItems();
 
-	virtual unsigned long getCount();
+	virtual uint32 getCount();
 
 	/**
 	*Write the object to the specified output stream

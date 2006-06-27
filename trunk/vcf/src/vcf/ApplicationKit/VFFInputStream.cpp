@@ -652,8 +652,8 @@ Component* VFFInputStream::readNewComponent()
 
 void VFFInputStream::hexToBin( const String& hexString, Persistable* persistableObject )
 {
-	long hexSize = hexString.size();
-	long binSize = hexSize / 2;
+	int32 hexSize = hexString.size();
+	int32 binSize = hexSize / 2;
 	VCFChar* binBuffer = new VCFChar[binSize];
 
 	const VCFChar* hexStringBuf = hexString.c_str();

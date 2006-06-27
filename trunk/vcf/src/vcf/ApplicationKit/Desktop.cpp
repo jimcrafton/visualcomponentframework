@@ -84,12 +84,12 @@ String Desktop::getDirectory()
 	return peer_->desktopGetDirectory();
 }
 
-ulong32 Desktop::getWidth()
+uint32 Desktop::getWidth()
 {
 	return peer_->desktopGetWidth();
 }
 
-ulong32 Desktop::getHeight()
+uint32 Desktop::getHeight()
 {
 	return peer_->desktopGetHeight();
 }

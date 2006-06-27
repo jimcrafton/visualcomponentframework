@@ -36,7 +36,7 @@ void X11Cursor::createFromImage( Image* cursorImage, Point* hotSpot )
 void X11Cursor::createSystemCursor( const Cursor::SystemCursorType& systemCursor )
 {
 	unsigned int xCursorID = 0;
-	cursorID_ = (long)systemCursor;
+	cursorID_ = (int32)systemCursor;
 	switch ( systemCursor ) {
 		case Cursor::SCT_DEFAULT : {
 			xCursorID = XC_left_ptr;
@@ -113,7 +113,7 @@ void X11Cursor::createSystemCursor( const Cursor::SystemCursorType& systemCursor
 	xCursor_ = XCreateFontCursor( toolkit->getX11Display(), xCursorID );
 }
 
-void X11Cursor::createFromResourceName( const String& cursorName, const ulong32& instanceHandle )
+void X11Cursor::createFromResourceName( const String& cursorName, const uint32& instanceHandle )
 {
 
 }

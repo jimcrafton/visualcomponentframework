@@ -54,7 +54,7 @@ public:
 
 	virtual double getBottomMargin();	
 
-	virtual unsigned long getLineCount();	
+	virtual uint32 getLineCount();	
 
 	virtual Rect getContentBoundsForWidth(const double& width);
 

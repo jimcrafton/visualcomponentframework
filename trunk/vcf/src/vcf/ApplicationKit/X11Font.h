@@ -73,7 +73,7 @@ public:
 	*What this actually is depends on the Windowing system implementation.
 	*Under Win32 this represents a pointer to a LOGFONT structure.
 	*/
-	virtual ulong32 getFontHandleID() ;
+	virtual uint32 getFontHandleID() ;
 
 	virtual String getName() ;
 

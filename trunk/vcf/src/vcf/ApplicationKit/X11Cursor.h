@@ -26,21 +26,21 @@ public:
 
 	virtual ~X11Cursor();
 
-	virtual ulong32 getCursorHandleID(){
-		return (ulong32)xCursor_;
+	virtual uint32 getCursorHandleID(){
+		return (uint32)xCursor_;
 	}
 
 	virtual void createFromImage( Image* cursorImage, Point* hotSpot );
 
 	virtual void createSystemCursor( const Cursor::SystemCursorType& systemCursor );
 
-	virtual void createFromResourceName( const String& cursorName, const ulong32& instanceHandle=0 );
+	virtual void createFromResourceName( const String& cursorName, const uint32& instanceHandle=0 );
 
-	virtual long getCursorID() {
+	virtual int32 getCursorID() {
 		return cursorID_;
 	}
 
-	virtual void setCursorID( const long& cursorID ) {
+	virtual void setCursorID( const int32& cursorID ) {
 		cursorID_ = cursorID;
 	}
 
@@ -55,7 +55,7 @@ protected:
 
 	bool isSharedCursor_;
 
-	long cursorID_;
+	int32 cursorID_;
 	Cursor* cursor_;
 	xLib::Cursor xCursor_;
 };

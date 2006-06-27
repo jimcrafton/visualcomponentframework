@@ -29,8 +29,8 @@ namespace VCF {
 		TitledBorder();
 		
 		TitledBorder(const String& title);
-		TitledBorder(const String& title, long sidesToPaint);
-		TitledBorder(const String& title, long sidesToPaint, const Font& font);
+		TitledBorder(const String& title, int32 sidesToPaint);
+		TitledBorder(const String& title, int32 sidesToPaint, const Font& font);
 
 		TitledBorder( Component* owner );
 
@@ -60,16 +60,16 @@ namespace VCF {
 			}
 		}
 
-		void setSidesToPaint( const long& sidesToPaint ) {
+		void setSidesToPaint( const int32& sidesToPaint ) {
 			sidesToPaint_ = sidesToPaint;
 		}
 
-		long getSidesToPaint() {
+		int32 getSidesToPaint() {
 			return sidesToPaint_;
 		}
 	protected:
 		String caption_;
-		long sidesToPaint_;
+		int32 sidesToPaint_;
 		Font font_;		
 	};
 };

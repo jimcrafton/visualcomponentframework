@@ -770,9 +770,9 @@ double Win32TextPeer::getBottomMargin()
 	return margins_.bottom_;
 }
 
-unsigned long Win32TextPeer::getLineCount()
+uint32 Win32TextPeer::getLineCount()
 {
-	unsigned long result = 0;
+	uint32 result = 0;
 	ITextRange* range = NULL;
 	textDocument_->Range( 0, 0, &range );
 	if ( NULL != range ) {

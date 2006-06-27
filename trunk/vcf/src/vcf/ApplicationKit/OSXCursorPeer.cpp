@@ -38,7 +38,7 @@ void OSXCursorPeer::createFromImage( Image* cursorImage, Point* hotSpot )
 void OSXCursorPeer::createSystemCursor( const Cursor::SystemCursorType& systemCursor )
 {
 
-	cursorID_ = (long)systemCursor;
+	cursorID_ = (int32)systemCursor;
 	isSystemCursor_ = true;
 
 	switch ( systemCursor ) {

@@ -241,7 +241,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 				if ( SendMessage( hwnd_, TB_GETBUTTONINFOW, tbn->iItem, (LPARAM)&info ) >= 0 ) {
 
 					ToolbarItem* item = (ToolbarItem*)info.lParam;
-					long state = item->getState();
+					int32 state = item->getState();
 
 					if ( (TBSTATE_CHECKED  & info.fsState) && ( state & ToolbarItem::tisChecked ) ) {
 						state |= ToolbarItem::tisPressed;
@@ -265,7 +265,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 				if ( SendMessage( hwnd_, TB_GETBUTTONINFOA, tbn->iItem, (LPARAM)&info ) >= 0 ) {
 
 					ToolbarItem* item = (ToolbarItem*)info.lParam;
-					long state = item->getState();
+					int32 state = item->getState();
 
 					if ( (TBSTATE_CHECKED  & info.fsState) && ( state & ToolbarItem::tisChecked ) ) {
 						state |= ToolbarItem::tisPressed;
@@ -296,7 +296,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 				if ( NULL != item ) {
 
 
-					long state = item->getState();
+					int32 state = item->getState();
 
 					if ( (TBSTATE_CHECKED  & info.fsState) && ( state & ToolbarItem::tisChecked ) ) {
 						state |= ToolbarItem::tisPressed;
@@ -323,7 +323,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 				if ( NULL != item ) {
 
 
-					long state = item->getState();
+					int32 state = item->getState();
 
 					if ( (TBSTATE_CHECKED  & info.fsState) && ( state & ToolbarItem::tisChecked ) ) {
 						state |= ToolbarItem::tisPressed;
@@ -367,7 +367,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 						info.cbSize = sizeof(info);
 						info.dwMask |= TBIF_STATE;
 						if ( SendMessage( hwnd_, TB_GETBUTTONINFOW, lpNMCustomDraw->nmcd.dwItemSpec, (LPARAM)&info ) >= 0 ) {
-							long state = item->getState();
+							int32 state = item->getState();
 							if ( (TBSTATE_CHECKED  & info.fsState) && ( state & ToolbarItem::tisChecked ) ) {
 								state |= ToolbarItem::tisPressed;
 							}
@@ -387,7 +387,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 						info.cbSize = sizeof(info);
 						info.dwMask |= TBIF_STATE;
 						if ( SendMessage( hwnd_, TB_GETBUTTONINFOA, lpNMCustomDraw->nmcd.dwItemSpec, (LPARAM)&info ) >= 0 ) {
-							long state = item->getState();
+							int32 state = item->getState();
 							if ( (TBSTATE_CHECKED  & info.fsState) && ( state & ToolbarItem::tisChecked ) ) {
 								state |= ToolbarItem::tisPressed;
 							}
@@ -743,7 +743,7 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 
 		case ToolbarItem::tbStateChanged : {
 			ToolbarModelEvent* tme = (ToolbarModelEvent*)e;
-			long state = tme->getItem()->getState();
+			int32 state = tme->getItem()->getState();
 
 			if ( System::isUnicodeEnabled() ) {
 				TBBUTTONINFOW info;
@@ -866,7 +866,7 @@ void Win32Toolbar::resizeToolbarItems( int startAt )
 
 
 
-void Win32Toolbar::insertToolbarButton( const ulong32& index, ToolbarItem* item, bool showCaption )
+void Win32Toolbar::insertToolbarButton( const uint32& index, ToolbarItem* item, bool showCaption )
 {
 	currentlyModifyingItem_ = true;
 
@@ -923,7 +923,7 @@ void Win32Toolbar::insertToolbarButton( const ulong32& index, ToolbarItem* item,
 		info.dwMask |= TBIF_LPARAM;
 		info.lParam = (LPARAM)item;
 
-		long state = item->getState();
+		int32 state = item->getState();
 
 		if ( state == ToolbarItem::tisSeparator ) {
 			info.dwMask = TBIF_STYLE | TBIF_SIZE;
@@ -1020,7 +1020,7 @@ void Win32Toolbar::insertToolbarButton( const ulong32& index, ToolbarItem* item,
 		info.dwMask |= TBIF_LPARAM;
 		info.lParam = (LPARAM)item;
 
-		long state = item->getState();
+		int32 state = item->getState();
 
 		if ( state == ToolbarItem::tisSeparator ) {
 			info.dwMask = TBIF_STYLE | TBIF_SIZE;
@@ -1091,7 +1091,7 @@ void Win32Toolbar::resetItems( std::vector<ToolbarItem*>& items )
 
 	bool unicodeEnabled = System::isUnicodeEnabled() ;
 
-	long state = 0;
+	int32 state = 0;
 
 	ToolbarItem* item = NULL;
 

@@ -206,7 +206,7 @@ void OSXLightweightControl::setCursor( Cursor* cursor )
 	}
 }
 
-bool OSXLightweightControl::beginSetBounds( const ulong32& numberOfChildren )
+bool OSXLightweightControl::beginSetBounds( const uint32& numberOfChildren )
 {
 	return true;
 }

@@ -40,7 +40,7 @@ public:
 	virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc = NULL);
 
 
-	void insertToolbarButton( const ulong32& index, ToolbarItem* item, bool showCaption=false );
+	void insertToolbarButton( const uint32& index, ToolbarItem* item, bool showCaption=false );
 	void removeToolbarButton( ToolbarItem* item );
 
 	virtual void setImageList( ImageList* imageList );

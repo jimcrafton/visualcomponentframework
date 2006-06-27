@@ -34,13 +34,13 @@ public:
 
 	virtual void initialize();
 
-	virtual int getAttributes( const ulong32& index );
+	virtual int getAttributes( const uint32& index );
 
-	virtual int getCommandParentIndex( const ulong32& index );
+	virtual int getCommandParentIndex( const uint32& index );
 
-	virtual Command* createCommand( const ulong32& index );
+	virtual Command* createCommand( const uint32& index );
 
-	virtual ulong32 getCommandCount();
+	virtual uint32 getCommandCount();
 
 	virtual int getDefaultCommandIndex() {
 		return defaultCommandIndex_;
@@ -54,11 +54,11 @@ public:
 
 	virtual void copy();
 
-	void setCommandCount( ulong32 val );
+	void setCommandCount( uint32 val );
 
-	void setAttributes( const ulong32& index, const int& attribute );
+	void setAttributes( const uint32& index, const int& attribute );
 
-	void setParentIndex( const ulong32& index, const int& parentIndex );
+	void setParentIndex( const uint32& index, const int& parentIndex );
 protected:
 	int defaultCommandIndex_;
 	std::vector<int> attributes_;

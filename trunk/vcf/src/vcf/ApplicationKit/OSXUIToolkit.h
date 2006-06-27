@@ -21,9 +21,9 @@ where you installed the VCF.
 
 class OSXUIUtils {
 public:
-static VCF::ulong32 translateButtonMask( EventMouseButton button );
+static VCF::uint32 translateButtonMask( EventMouseButton button );
 
-static VCF::ulong32 translateKeyMask( UInt32 keyMod );
+static VCF::uint32 translateKeyMask( UInt32 keyMod );
 
 };
 
@@ -213,7 +213,7 @@ public:
 
 	virtual void internal_postEvent( VCF::EventHandler* eventHandler, Event* event, const bool& deleteHandler );
 
-	virtual void internal_registerTimerHandler( Object* source, VCF::EventHandler* handler, const ulong32& timeoutInMilliSeconds );
+	virtual void internal_registerTimerHandler( Object* source, VCF::EventHandler* handler, const uint32& timeoutInMilliSeconds );
 
 	virtual void internal_unregisterTimerHandler( VCF::EventHandler* handler );
 
@@ -243,8 +243,8 @@ public:
 	static EventRef createUserCarbonEvent( UInt32 eventType );
 protected:
 	//VirtualKeyCode translateKeyCode( guint code );
-	//ulong32 translateKeyMask( GdkModifierType keyState );
-	//ulong32 translateButtonMask( GdkModifierType buttonState );
+	//uint32 translateKeyMask( GdkModifierType keyState );
+	//uint32 translateButtonMask( GdkModifierType buttonState );
 
 	static OSStatus handleOSXApplicationEvents( EventHandlerCallRef nextHandler,
                                                 EventRef osxEvent, void* userData );

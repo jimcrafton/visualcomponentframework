@@ -24,7 +24,7 @@ namespace VCF{
 */
 class APPLICATIONKIT_API ScrollEvent : public VCF::Event {
 public:
-    ScrollEvent( Object* source, const unsigned long& eventType ) : Event(source,eventType) {}
+    ScrollEvent( Object* source, const uint32& eventType ) : Event(source,eventType) {}
 
 	ScrollEvent( const ScrollEvent& rhs ):Event(rhs) {
 		*this = rhs;

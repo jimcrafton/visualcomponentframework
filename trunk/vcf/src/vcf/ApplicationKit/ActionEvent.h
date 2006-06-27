@@ -27,7 +27,7 @@ the state is read and applied to the target however it makes the most sense.
 class APPLICATIONKIT_API ActionEvent : public Event {
 public:
 
-	ActionEvent( Object* source, const ulong32& eventType ):
+	ActionEvent( Object* source, const uint32& eventType ):
 	  Event(source,eventType),enabled_(true), state_(0),modified_(false),
 	  checked_(false),exlusiveChecked_(false){}
 
@@ -76,7 +76,7 @@ public:
 	whether the ToolbarItem::tisPressed bits are set. A MenuItem might
 	look at this value entirely differently (or even ignore it).
 	*/
-	void setState( const long& val ) {
+	void setState( const int32& val ) {
 		modified_ = true;
 		state_ = val;
 	}
@@ -127,7 +127,7 @@ public:
 	/**
 	returns the user defined state of the event
 	*/
-	long getState() {
+	int32 getState() {
 		return state_;
 	}
 
@@ -166,7 +166,7 @@ public:
 protected:
 	String text_;
 	bool enabled_;
-	long state_;
+	int32 state_;
 	bool modified_;
 	bool checked_;
 	bool exlusiveChecked_;

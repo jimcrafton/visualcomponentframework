@@ -11,7 +11,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/VFFInputStream.h"
 #include "vcf/FoundationKit/Dictionary.h"
 
-static long ComponentTagID = 0;
+static int ComponentTagID = 0;
 
 using namespace VCF;
 
@@ -120,7 +120,7 @@ void Component::setName( const String& name )
 void Component::handleEvent( Event* event )
 {
 	if ( NULL != event ){
-		unsigned long eventType = event->getType();
+		uint32 eventType = event->getType();
 
 		switch ( eventType ){
 
@@ -155,12 +155,12 @@ void Component::beforeDestroy( ComponentEvent* event )
 }
 
 
-ulong32 Component::getComponentState()
+uint32 Component::getComponentState()
 {
 	return componentState_;
 }
 
-void Component::setComponentState( const ulong32& componentState )
+void Component::setComponentState( const uint32& componentState )
 {
 	//check for design mode here since we have async creation handling 
 	//at the moment
@@ -231,7 +231,7 @@ Enumerator<Component*>* Component::getComponents()
 	return componentContainer_.getEnumerator();
 }
 
-unsigned long Component::getComponentCount()
+uint32 Component::getComponentCount()
 {
 	return components_.size();
 }

@@ -43,21 +43,21 @@ struct KeyboardData {
 
 class APPLICATIONKIT_API Win32UIUtils {
 public:
-	static unsigned long translateKeyMask( UINT win32KeyMask );
+	static VCF::uint32 translateKeyMask( UINT win32KeyMask );
 
-	static unsigned long translateButtonMask( UINT win32ButtonMask );
+	static VCF::uint32 translateButtonMask( UINT win32ButtonMask );
 
 	static KeyboardData translateKeyData( HWND wndHandle, LPARAM keyData );
 
-	static DWORD translateStyle( unsigned long style );
+	static DWORD translateStyle( VCF::uint32 style );
 
-	static DWORD translateExStyle( unsigned long style );
+	static DWORD translateExStyle( VCF::uint32 style );
 
 	static int getXFromLParam( LPARAM lParam );
 
 	static int getYFromLParam( LPARAM lParam );
 
-	static VCF::ulong32 translateVKCode( UINT vkCode );
+	static VCF::uint32 translateVKCode( UINT vkCode );
 
 	static VCF::uint32 convertCharToVKCode( VCF::VCFChar ch );
 };
@@ -185,7 +185,7 @@ public:
 
 	virtual void internal_postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler );
 
-	virtual void internal_registerTimerHandler( Object* source, EventHandler* handler, const ulong32& timeoutInMilliSeconds );
+	virtual void internal_registerTimerHandler( Object* source, EventHandler* handler, const uint32& timeoutInMilliSeconds );
 
 	virtual void internal_unregisterTimerHandler( EventHandler* handler );
 

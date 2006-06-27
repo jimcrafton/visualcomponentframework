@@ -49,7 +49,7 @@ public:
 	This method returns a mask of potential attributes
 	for the command at the given index.
 	*/
-	virtual int getAttributes( const ulong32& index ) = 0;
+	virtual int getAttributes( const uint32& index ) = 0;
 
 	/**
 	Returns the index value of the command's parent
@@ -58,11 +58,11 @@ public:
 	parent. However this is used if you have a complex
 	set of commands that make sense to nest in a heirarchy.
 	*/
-	virtual int getCommandParentIndex( const ulong32& index ) = 0;
+	virtual int getCommandParentIndex( const uint32& index ) = 0;
 
 	/**
 	Retreives a new command instance associated with this index
-	@param ulong32 index of the command to retrieve
+	@param uint32 index of the command to retrieve
 	@return Command* returns a \em NEW instance of the 
 	Command object to be associated with the given index. 
 	
@@ -70,14 +70,14 @@ public:
 	to clean up memory and the caller owns the command 
 	after this call.
 	*/
-	virtual Command* createCommand( const ulong32& index ) = 0;
+	virtual Command* createCommand( const uint32& index ) = 0;
 
 	/**
 	Returns the number of unique commands associated with this
 	component editor
-	@return ulong32 the number of commands for the editor
+	@return uint32 the number of commands for the editor
 	*/
-	virtual ulong32 getCommandCount() = 0;
+	virtual uint32 getCommandCount() = 0;
 
 	/**
 	Returns the editors default command index. This is
@@ -102,15 +102,15 @@ public:
 
 	//attributes 
 
-	bool isSeparator( const ulong32& index ) {
+	bool isSeparator( const uint32& index ) {
 		return (getAttributes( index ) & ComponentEditor::caSeparator) ? true : false;
 	}
 
-	bool hasParentIndex( const ulong32& index ) {
+	bool hasParentIndex( const uint32& index ) {
 		return (getAttributes( index ) & ComponentEditor::caHasParentIndex) ? true : false;
 	}
 
-	bool usesModalDialogForEditing( const ulong32& index ) {
+	bool usesModalDialogForEditing( const uint32& index ) {
 		return (getAttributes( index ) & ComponentEditor::caUsesModalDialogForEditing) ? true : false;
 	}
 

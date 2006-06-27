@@ -132,25 +132,25 @@ public:
 
 	virtual void addTabPage( TabPage* page );
 
-	virtual void insertTabPage( const ulong32& index, TabPage* page );
+	virtual void insertTabPage( const uint32& index, TabPage* page );
 
 	virtual void deleteTabPage( TabPage* page );
 
-	virtual void deleteTabPage( const ulong32& index );
+	virtual void deleteTabPage( const uint32& index );
 
 	virtual void clearTabPages();
 
-	virtual TabPage* getPageAt( const ulong32& index );
+	virtual TabPage* getPageAt( const uint32& index );
 
 	virtual TabPage* getPageFromPageName( const String& pageName );
 
-	virtual ulong32 getItemIndex( TabPage* item );
+	virtual uint32 getItemIndex( TabPage* item );
 
 	virtual TabPage* getSelectedPage();
 
 	virtual void setSelectedPage( TabPage* page );
 
-	virtual void setSelectedPage( const ulong32& index );
+	virtual void setSelectedPage( const uint32& index );
 
 	virtual Enumerator<TabPage*>* getPages();
 

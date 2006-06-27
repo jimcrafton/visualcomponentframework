@@ -83,7 +83,7 @@ public:
 	advanced function for changing the size of multiple child windows.
 	This may have no implementation on some windowing systems
 	*/
-	virtual bool beginSetBounds( const ulong32& numberOfChildren ) = 0;
+	virtual bool beginSetBounds( const uint32& numberOfChildren ) = 0;
 
 	virtual void endSetBounds() = 0;
 

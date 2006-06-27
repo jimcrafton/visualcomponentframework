@@ -39,7 +39,7 @@ public:
 
 	virtual UIToolkit::ModalReturnType showMessage( const String& message,
 	                                                const String& caption,
-	                                                const long& messageButtons,
+	                                                const int32& messageButtons,
 	                                                const Dialog::MessageStyle& messageStyle );
 
 	virtual void setBorder( Border* border );

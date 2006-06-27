@@ -89,7 +89,7 @@ public:
 	virtual void ensureVisible( ListItem* item, const bool& partialOK ) {
 		// makes sure that item will be visible through scrolling
 		DefaultListModel* listModel = (DefaultListModel*)comboBoxControl_->getListModel();
-		ulong32 index = listModel->getItemIndex( item );
+		uint32 index = listModel->getItemIndex( item );
 		double verticalPosition = index * getDefaultItemHeight();
 		getScrollable()->setVerticalPosition( verticalPosition );
 		// Note: in the future we should call then
@@ -140,8 +140,8 @@ public:
 		Rect itemRect = comboBoxControl_->getBounds();
 		comboBoxControl_->getParent()->translateToScreenCoords( &itemRect );
 
-		ulong32 desktopH = Desktop::getDesktop()->getHeight();
-		ulong32 desktopW = Desktop::getDesktop()->getWidth();
+		uint32 desktopH = Desktop::getDesktop()->getHeight();
+		uint32 desktopW = Desktop::getDesktop()->getWidth();
 
 		int count = minVal<>( listBox_->getListModel()->getCount(), comboBoxControl_->getDropDownCount() );
 		
@@ -635,7 +635,7 @@ void ComboBoxControl::keyPressed( KeyboardEvent* event )
 
 	switch ( event->getVirtualCode() ){
 		case vkUpArrow :{
-			ulong32 index = selectedIndex_ + 1;
+			uint32 index = selectedIndex_ + 1;
 
 			if ( index >=	this->listModel_->getCount() ){
 				index = 0;
@@ -648,9 +648,9 @@ void ComboBoxControl::keyPressed( KeyboardEvent* event )
 		break;
 
 		case vkDownArrow :{
-			ulong32 index = selectedIndex_ - 1;
+			uint32 index = selectedIndex_ - 1;
 			/**
-			* this is done this way because we have an UNSIGNED long so we
+			* this is done this way because we have an uint32 so we
 			*won't get negative numbers, anything over the count needs to be wrapped
 			*/
 			if ( index > this->listModel_->getCount() ){
@@ -743,7 +743,7 @@ void ComboBoxControl::setSelectedItem( ListItem* selectedItem )
 	repaint();
 }
 
-void ComboBoxControl::setSelectedItemIndex( const ulong32& selectedIndex )
+void ComboBoxControl::setSelectedItemIndex( const uint32& selectedIndex )
 {
 	selectedIndex_ = selectedIndex;
 	if ( NULL != listModel_ ){
@@ -928,12 +928,12 @@ ListItem* ComboBoxControl::lookupItem( const String& text, const bool& ignoreCas
 	return found;
 }
 
-void ComboBoxControl::setDropDownCount( const ulong32& dropDownCount )
+void ComboBoxControl::setDropDownCount( const uint32& dropDownCount )
 {
 	dropDownCount_ = dropDownCount;
 }
 
-void ComboBoxControl::setDropDownWidth( const ulong32& dropDownWidth )
+void ComboBoxControl::setDropDownWidth( const uint32& dropDownWidth )
 {
 	dropDownWidth_ = dropDownWidth;
 }
@@ -963,7 +963,7 @@ void ComboBoxControl::setAutoLookupIgnoreCase( const bool& ignoreCase )
 	autoLookupIgnoreCase_ = ignoreCase;
 }
 
-ListItem* ComboBoxControl::addItem( const String& caption, const ulong32 imageIndex )
+ListItem* ComboBoxControl::addItem( const String& caption, const uint32 imageIndex )
 {
 	ListItem* result = new DefaultListItem();
 	result->setCaption( caption );

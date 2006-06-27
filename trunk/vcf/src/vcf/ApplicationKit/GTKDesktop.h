@@ -57,9 +57,9 @@ public:
 
 	virtual void desktopSetDesktop( Desktop* desktop );
 
-	virtual ulong32 desktopGetWidth();
+	virtual uint32 desktopGetWidth();
 
-	virtual ulong32 desktopGetHeight();
+	virtual uint32 desktopGetHeight();
 
 	virtual Rect desktopGetUsableBounds();
 

@@ -36,7 +36,7 @@ void Win32Desktop::desktopBeginPainting( Rect* clippingRect )
 	DWORD flags = DCX_WINDOW|DCX_CACHE;
 
 	if ( NULL != clippingRect ) {
-		hClipRgn_ = ::CreateRectRgn( (long)clippingRect->left_, (long)clippingRect->top_, (long)clippingRect->right_, (long)clippingRect->bottom_ );
+		hClipRgn_ = ::CreateRectRgn( (int32)clippingRect->left_, (int32)clippingRect->top_, (int32)clippingRect->right_, (int32)clippingRect->bottom_ );
 		flags |= DCX_INTERSECTRGN;
 	}
 
@@ -140,7 +140,7 @@ void Win32Desktop::desktopSetDesktop( Desktop* desktop )
 
 void Win32Desktop::desktopTranslateToScreenCoords( Control* control, Point* pt )
 {
-	POINT win32Point = { (long)pt->x_, (long)pt->y_ };
+	POINT win32Point = { (int32)pt->x_, (int32)pt->y_ };
 	::ClientToScreen( (HWND)control->getPeer()->getHandleID(), &win32Point );
 	pt->x_ = win32Point.x;
 	pt->y_ = win32Point.y;
@@ -148,20 +148,20 @@ void Win32Desktop::desktopTranslateToScreenCoords( Control* control, Point* pt )
 
 void Win32Desktop::desktopTranslateFromScreenCoords( Control* control, Point* pt )
 {
-	POINT win32Point = { (long)pt->x_, (long)pt->y_ };
+	POINT win32Point = { (int32)pt->x_, (int32)pt->y_ };
 	::ScreenToClient( (HWND)control->getPeer()->getHandleID(), &win32Point );
 	pt->x_ = win32Point.x;
 	pt->y_ = win32Point.y;
 }
 
-ulong32 Win32Desktop::desktopGetWidth()
+uint32 Win32Desktop::desktopGetWidth()
 {
-	return (ulong32)GetSystemMetrics( SM_CXSCREEN );
+	return (uint32)GetSystemMetrics( SM_CXSCREEN );
 }
 
-ulong32 Win32Desktop::desktopGetHeight()
+uint32 Win32Desktop::desktopGetHeight()
 {
-	return (ulong32)GetSystemMetrics( SM_CYSCREEN );
+	return (uint32)GetSystemMetrics( SM_CYSCREEN );
 }
 
 Rect Win32Desktop::desktopGetUsableBounds()

@@ -296,7 +296,7 @@ void TreeControl::addItem( TreeItem* parent, TreeItem* item )
 	treeModel_->addNodeItem( item, parent );
 }
 
-TreeItem* TreeControl::addItem( TreeItem* parent, const String& caption, const ulong32 imageIndex )
+TreeItem* TreeControl::addItem( TreeItem* parent, const String& caption, const uint32 imageIndex )
 {
 	TreeItem* result = NULL;
 	result = new DefaultTreeItem( caption, this, treeModel_ );

@@ -51,9 +51,9 @@ public:
 	virtual String desktopGetDirectory();
 
 
-	virtual ulong32 desktopGetHandleID();
+	virtual uint32 desktopGetHandleID();
 
-	virtual ulong32 desktopGetGraphicsContextHandleID();
+	virtual uint32 desktopGetGraphicsContextHandleID();
 
 	virtual void desktopSetDesktop( Desktop* desktop );
 
@@ -61,9 +61,9 @@ public:
 
 	virtual void desktopTranslateFromScreenCoords( Control* control, Point* pt );
 
-	virtual ulong32 desktopGetWidth();
+	virtual uint32 desktopGetWidth();
 
-	virtual ulong32 desktopGetHeight();
+	virtual uint32 desktopGetHeight();
 
 	virtual Rect desktopGetUsableBounds();
 protected:

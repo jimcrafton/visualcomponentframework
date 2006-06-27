@@ -97,7 +97,7 @@ protected:
 
 	virtual void internal_postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler=true );
 
-	virtual void internal_registerTimerHandler( Object* source, EventHandler* handler, const ulong32& timeoutInMilliSeconds );
+	virtual void internal_registerTimerHandler( Object* source, EventHandler* handler, const uint32& timeoutInMilliSeconds );
 
 	virtual void internal_unregisterTimerHandler( EventHandler* handler );
 

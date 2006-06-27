@@ -35,7 +35,7 @@ public:
 
     virtual ButtonState getState();
 
-    virtual void setState( const ulong32& state );
+    virtual void setState( const uint32& state );
 
 	virtual String getText();
 

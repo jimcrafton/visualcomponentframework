@@ -31,11 +31,11 @@ public:
 
 	virtual void createFromResourceName( const String& cursorName, OSHandleID instanceHandle );
 
-	virtual long getCursorID() {
+	virtual int32 getCursorID() {
 		return cursorID_;
 	}
 
-	virtual void setCursorID( const long& cursorID ) {
+	virtual void setCursorID( const int32& cursorID ) {
 		cursorID_ = cursorID;
 	}
 

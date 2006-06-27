@@ -78,7 +78,7 @@ fileOperationStatus_ value and return it. See comment for setFileOperationStatus
 */
 class APPLICATIONKIT_API DocManagerEvent : public Event {
 public:
-	DocManagerEvent( Object* source, ulong32 type ): Event( source, type ),
+	DocManagerEvent( Object* source, uint32 type ): Event( source, type ),
 			allowFileOp_(true), fileOperationStatus_(false) {
 
 	}
@@ -526,7 +526,7 @@ public:
 	*@return Action*, the pointer to the associated action.
 	*@see Action
 	*/
-	Action* getAction( ulong32 tag );
+	Action* getAction( uint32 tag );
 
 	/**
 	* performs a cut operation on the document,
@@ -643,7 +643,7 @@ protected:
 	virtual UIToolkit::ModalReturnType saveChanges( Document* document );
 
 	/** add an action to the internal action map */
-	void addAction( ulong32 tag, Action* action );
+	void addAction( uint32 tag, Action* action );
 
 	/** called to add a document to the document based application */
 	void addDocument( Document* document );
@@ -654,7 +654,7 @@ protected:
 
 	typedef std::map<String,DocumentInfo> DocumentInfoMap;
 	typedef std::map<Document*,UndoRedoStack*> DocumentUndoRedoMap;
-	typedef std::map< ulong32, Action* > ActionMap;
+	typedef std::map< uint32, Action* > ActionMap;
 
 	/** 
 	the only document manager instance for the application 

@@ -25,7 +25,7 @@ class APPLICATIONKIT_API FocusEvent : public Event {
 public:
 	FocusEvent( Object* source ): Event(source){}
 
-	FocusEvent( Object* source, const ulong32& eventType ): Event(source,eventType){}
+	FocusEvent( Object* source, const uint32& eventType ): Event(source,eventType){}
 
 	virtual ~FocusEvent(){}
 

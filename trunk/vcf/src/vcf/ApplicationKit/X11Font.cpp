@@ -74,9 +74,9 @@ void X11Font::updateFont()
 	}
 }
 
-ulong32 X11Font::getFontHandleID()
+uint32 X11Font::getFontHandleID()
 {
-	return (ulong32)imFont_;
+	return (uint32)imFont_;
 }
 
 bool X11Font::isTrueType()

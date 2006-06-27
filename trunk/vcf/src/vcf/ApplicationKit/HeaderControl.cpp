@@ -64,7 +64,7 @@ void HeaderControl::addColumn( ColumnItem* column )
 	columnModel_->addItem( column );
 }
 
-ColumnItem* HeaderControl::insertColumn( const unsigned long& index, const String& columnName, const double& width )
+ColumnItem* HeaderControl::insertColumn( const uint32& index, const String& columnName, const double& width )
 {
 	ColumnItem* result = NULL;
 	result = new DefaultColumnItem();
@@ -75,35 +75,35 @@ ColumnItem* HeaderControl::insertColumn( const unsigned long& index, const Strin
 	return result;
 }
 
-void HeaderControl::insertColumn( const unsigned long& index, ColumnItem* column )
+void HeaderControl::insertColumn( const uint32& index, ColumnItem* column )
 {
 	columnModel_->insertItem( index, column );
 }
 
-void HeaderControl::deleteColumn( const unsigned long& index )
+void HeaderControl::deleteColumn( const uint32& index )
 {
 	columnModel_->deleteItem( index );
 }
 
-String HeaderControl::getColumnName( const unsigned long& index )
+String HeaderControl::getColumnName( const uint32& index )
 {
 	ColumnItem* item = columnModel_->getItemFromIndex( index );
 	return item->getCaption();
 }
 
-void HeaderControl::setColumnName( const unsigned long& index, const String& columnName )
+void HeaderControl::setColumnName( const uint32& index, const String& columnName )
 {
 	ColumnItem* item = columnModel_->getItemFromIndex( index );
 	item->setCaption( columnName );
 }
 
-double HeaderControl::getColumnWidth( const unsigned long& index )
+double HeaderControl::getColumnWidth( const uint32& index )
 {
 	ColumnItem* item = columnModel_->getItemFromIndex( index );
 	return item->getWidth();
 }
 
-void HeaderControl::setColumnWidth( const unsigned long& index, const double& width )
+void HeaderControl::setColumnWidth( const uint32& index, const double& width )
 {
 	ColumnItem* item = columnModel_->getItemFromIndex( index );
 	item->setWidth( width );
@@ -145,10 +145,10 @@ void HeaderControl::paint( GraphicsContext * context )
 
 
 	Enumerator<ColumnItem*>* columns = columnModel_->getItems();
-	ulong32 colCount = columnModel_->getCount();
+	uint32 colCount = columnModel_->getCount();
 
 
-	ulong32 index = 0;
+	uint32 index = 0;
 	while ( columns->hasMoreElements() ) {
 		ColumnItem* item = columns->nextElement();
 		r.right_ += item->getWidth();
@@ -286,9 +286,9 @@ void HeaderControl::handleEvent( Event* event )
 	}
 }
 
-void HeaderControl::paintColumn( GraphicsContext* context, Rect* paintRect, const ulong32& index, ColumnItem* item )
+void HeaderControl::paintColumn( GraphicsContext* context, Rect* paintRect, const uint32& index, ColumnItem* item )
 {
-	long drawOptions = GraphicsContext::tdoNone;
+	int32 drawOptions = GraphicsContext::tdoNone;
 
 	switch ( textAlignment_ ) {
 		case taTextLeft : {

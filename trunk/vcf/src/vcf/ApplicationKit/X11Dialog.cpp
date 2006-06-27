@@ -26,7 +26,7 @@ class X11MessageBox : public Dialog {
 public:
 
 	void init( const String& message, const String& caption,
-				const long& messageButtons, const Dialog::MessageStyle& messageStyle ) {
+				const int32& messageButtons, const Dialog::MessageStyle& messageStyle ) {
 
 		X11UIToolkit* toolkit = reinterpret_cast<X11UIToolkit*>(UIToolkit::getDefaultUIToolkit());
 
@@ -274,7 +274,7 @@ X11Dialog::X11Dialog( Control* owner, Dialog* component ) :
 
 		XSelectInput( display, wndHandle_, eventMask );
 
-		control_->getContext()->getPeer()->setContextID( (ulong32)wndHandle_ );
+		control_->getContext()->getPeer()->setContextID( (uint32)wndHandle_ );
 
 		toolkit->postToolkitMessage( toolkit->getVCFCreateWindowMsg(), (void*)control_ );
 
@@ -405,7 +405,7 @@ void X11Dialog::showMessage( const String& message, const String& caption )
 }
 
 UIToolkit::ModalReturnType X11Dialog::showMessage( const String& message, const String& caption,
-												const long& messageButtons,	const Dialog::MessageStyle& messageStyle )
+												const int32& messageButtons,	const Dialog::MessageStyle& messageStyle )
 {
 	UIToolkit::ModalReturnType result;
 	X11MessageBox dlg;

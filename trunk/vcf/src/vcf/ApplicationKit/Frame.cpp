@@ -65,7 +65,7 @@ void Frame::State::loadFromStream( InputStream* stream )
 {
 	stream->read( static_cast<Persistable*>(&bounds_) );
 	stream->read( visible_ );
-	long state;
+	int32 state;
 	stream->read( state );
 	displayState_ = (Frame::State::FrameDisplayState)state;
 }

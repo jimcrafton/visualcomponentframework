@@ -38,11 +38,11 @@ public:
 
 	virtual bool containsPoint( Point * pt );
 
-    virtual unsigned long getIndex() {
+    virtual uint32 getIndex() {
 		return -1;
 	}
 
-	virtual void setIndex( const unsigned long& index ) {}
+	virtual void setIndex( const uint32& index ) {}
 
     virtual void* getData();
 
@@ -95,11 +95,11 @@ public:
 		return &bounds_;
 	}
 
-	virtual long getImageIndex() {
+	virtual int32 getImageIndex() {
 		return imageIndex_;
 	}
 
-	virtual void setImageIndex( const long& imageIndex );
+	virtual void setImageIndex( const int32& imageIndex );
 
 	virtual bool canPaint() {
 		return true;
@@ -110,7 +110,7 @@ public:
 	/**
 	*not supported
 	*/
-	virtual long getStateImageIndex(){
+	virtual int32 getStateImageIndex(){
 		return -1;
 	};
 
@@ -119,7 +119,7 @@ public:
 	/**
 	*not supported
 	*/
-	virtual void setStateImageIndex( const long& index ){}
+	virtual void setStateImageIndex( const int32& index ){}
 
 	virtual double getTextCellWidth( GraphicsContext* context );
 
@@ -137,7 +137,7 @@ private:
 	Rect bounds_;
 	void* data_;
 	String caption_;
-	long imageIndex_;
+	int32 imageIndex_;
 
 	TableModel* tableModel_;
 	Color* color_;

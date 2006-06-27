@@ -446,7 +446,7 @@ void X11UIToolkit::postEvent( EventHandler* eventHandler, Event* event, const bo
 
 }
 
-void X11UIToolkit::registerTimerHandler( Object* source, EventHandler* handler, const ulong32& timeoutInMilliSeconds )
+void X11UIToolkit::registerTimerHandler( Object* source, EventHandler* handler, const uint32& timeoutInMilliSeconds )
 {
 
 }
@@ -868,7 +868,7 @@ VCF::Event* X11UIToolkit::createEventFromNativeOSEventData( void* eventData )
 
 			int count = XLookupString( &xkey, keyBuffer, X_KEYBUFFER_SIZE-1, &keySym, 0 );
 
-			ulong32 eventType = (x11Event->type == KeyPress) ? Control::KEYBOARD_DOWN : Control::KEYBOARD_UP;
+			uint32 eventType = (x11Event->type == KeyPress) ? Control::KEYBOARD_DOWN : Control::KEYBOARD_UP;
 
 			result = new VCF::KeyboardEvent( eventMsg->control_,
 											eventType,
@@ -882,7 +882,7 @@ VCF::Event* X11UIToolkit::createEventFromNativeOSEventData( void* eventData )
 		case ButtonPress : case ButtonRelease : {
 
 			VCF::Point pt( x11Event->xbutton.x, x11Event->xbutton.y );
-			ulong32 eventType = (x11Event->type == ButtonPress) ? Control::MOUSE_DOWN : Control::MOUSE_UP;
+			uint32 eventType = (x11Event->type == ButtonPress) ? Control::MOUSE_DOWN : Control::MOUSE_UP;
 			result = new VCF::MouseEvent ( eventMsg->control_, eventType,
 											translateButtonMask( x11Event->xbutton.button ),
 											translateKeyMask( x11Event->xbutton.state ), &pt );
@@ -901,7 +901,7 @@ VCF::Event* X11UIToolkit::createEventFromNativeOSEventData( void* eventData )
 
 		case LeaveNotify : case EnterNotify :  {
 			VCF::Point pt( x11Event->xcrossing.x, x11Event->xcrossing.y );
-			ulong32 eventType = (x11Event->type == EnterNotify) ? Control::MOUSE_ENTERED : Control::MOUSE_LEAVE;
+			uint32 eventType = (x11Event->type == EnterNotify) ? Control::MOUSE_ENTERED : Control::MOUSE_LEAVE;
 			//the peer will fill out the button and key masks
 			result = new VCF::MouseEvent ( eventMsg->control_, eventType,
 											0,	0, &pt );
@@ -1537,9 +1537,9 @@ VirtualKeyCode X11UIToolkit::translateKeyCode( KeySym code )
 	return result;
 }
 
-ulong32 X11UIToolkit::translateButtonMask( ulong32 xButtonState )
+uint32 X11UIToolkit::translateButtonMask( uint32 xButtonState )
 {
-	ulong32 result = 0;
+	uint32 result = 0;
 
 	if ( xButtonState & Button1 ) {
 		result |= VCF::mbmLeftButton;
@@ -1554,9 +1554,9 @@ ulong32 X11UIToolkit::translateButtonMask( ulong32 xButtonState )
 	return result;
 }
 
-ulong32 X11UIToolkit::translateKeyMask( ulong32 xKeyState )
+uint32 X11UIToolkit::translateKeyMask( uint32 xKeyState )
 {
-	ulong32 result = VCF::kmUndefined;
+	uint32 result = VCF::kmUndefined;
 
 	if ( xKeyState & ShiftMask ) {
 		result |= VCF::kmShift;

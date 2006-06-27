@@ -100,7 +100,7 @@ HRESULT COMUtils::BSTRtoString( const BSTR src, String& dest )
 	result = VectorFromBstr(src, &safeArray );
 	if ( SUCCEEDED(result) ){
 		wchar_t *buf = NULL;
-		ulong32 bstrSize = SysStringLen( src );
+		uint32 bstrSize = SysStringLen( src );
 		result = SafeArrayAccessData(safeArray, (void**)&buf );
 		if ( SUCCEEDED(result) ) {
 			char* tmp = new char[bstrSize+1];
@@ -526,7 +526,7 @@ VCF::DataObject* COMUtils_createFromHGlobal( STGMEDIUM& stg, const VCF::String& 
 	VCF::DataObject* result = NULL;
 
 	char* rawGlobalMem = (char*)::GlobalLock( stg.hGlobal );
-	ulong32 memSize = GlobalSize( stg.hGlobal );
+	uint32 memSize = GlobalSize( stg.hGlobal );
 
 	if ( dataType == STRING_DATA_TYPE ) {
 		AnsiString tmp;
@@ -551,7 +551,7 @@ VCF::DataObject* COMUtils_createFromHGlobal( STGMEDIUM& stg, const VCF::String& 
 	else if ( dataType == FILE_DATA_TYPE ) {
 
 
-		ulong32 count = DragQueryFile((HDROP)stg.hGlobal, (UINT)-1, NULL, 0);
+		uint32 count = DragQueryFile((HDROP)stg.hGlobal, (UINT)-1, NULL, 0);
 		if ( count > 0 ) {
 			String data;
 			FilePath fp;
@@ -597,7 +597,7 @@ VCF::Persistable* COMUtils_createPersistableFromHGlobal( STGMEDIUM& stg, const V
 	VCF::Persistable* result = NULL;
 
 	char* rawGlobalMem = (char*)::GlobalLock( stg.hGlobal );
-	ulong32 memSize = GlobalSize( stg.hGlobal );
+	uint32 memSize = GlobalSize( stg.hGlobal );
 
 	if ( (dataType == L"image/bmp" ) || (dataType == IMAGE_DATA_TYPE) ) {
 		BasicInputStream bis( rawGlobalMem, memSize );
@@ -610,7 +610,7 @@ VCF::Persistable* COMUtils_createPersistableFromHGlobal( STGMEDIUM& stg, const V
 	}
 	else if ( dataType == FILE_DATA_TYPE ) {
 
-		ulong32 count = DragQueryFile((HDROP)stg.hGlobal, (UINT)-1, NULL, 0);
+		uint32 count = DragQueryFile((HDROP)stg.hGlobal, (UINT)-1, NULL, 0);
 		if ( count > 0 ) {
 			String data;
 			FilePath fp;

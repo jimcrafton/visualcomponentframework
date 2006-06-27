@@ -33,7 +33,7 @@ class APPLICATIONKIT_API WindowEvent : public VCF::Event {
 public:
 	WindowEvent( Object* source ): Event(source) {}
 
-	WindowEvent( Object* source, const unsigned long& eventType ):
+	WindowEvent( Object* source, const uint32& eventType ):
 		Event(source,eventType) {}
 
 	virtual ~WindowEvent(){};

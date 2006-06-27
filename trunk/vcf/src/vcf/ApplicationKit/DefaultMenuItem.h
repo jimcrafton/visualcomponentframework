@@ -37,9 +37,9 @@ public:
 
 	virtual bool containsPoint( Point * pt );
 
-    virtual unsigned long getIndex();
+    virtual uint32 getIndex();
 
-	virtual void setIndex( const unsigned long& index );
+	virtual void setIndex( const uint32& index );
 
     virtual void* getData();
 
@@ -55,11 +55,11 @@ public:
 
 	virtual void addChild( MenuItem* child );
 
-	virtual void insertChild( const unsigned long& index, MenuItem* child );
+	virtual void insertChild( const uint32& index, MenuItem* child );
 
 	virtual void deleteChild( MenuItem* child );
 
-	virtual void deleteChild( const unsigned long& index );
+	virtual void deleteChild( const uint32& index );
 
 	virtual void clearChildren();
 
@@ -71,7 +71,7 @@ public:
 
 	virtual bool hasChildren();
 
-	virtual unsigned long getChildCount();
+	virtual uint32 getChildCount();
 
 	virtual Menu* getMenuOwner();
 
@@ -81,7 +81,7 @@ public:
 
 	virtual void setParent( MenuItem* parent );
 
-	virtual MenuItem* getChildAt( const unsigned long& index );
+	virtual MenuItem* getChildAt( const uint32& index );
 
 	virtual MenuItem* findChildNamedSimilarTo( const String& name );
 
@@ -121,11 +121,11 @@ public:
 		return &bounds_;
 	}
 
-	virtual long getImageIndex() {
+	virtual int32 getImageIndex() {
 		return imageIndex_;
 	}
 
-	virtual void setImageIndex( const long& imageIndex );
+	virtual void setImageIndex( const int32& imageIndex );
 
 	virtual bool canPaint();
 	
@@ -136,16 +136,16 @@ public:
 	/**
 	*not supported
 	*/
-	virtual long getStateImageIndex(){
+	virtual int32 getStateImageIndex(){
 		return -1;
 	};
 
 	/**
 	*not supported
 	*/
-	virtual void setStateImageIndex( const long& index ){}
+	virtual void setStateImageIndex( const int32& index ){}
 
-	virtual void setAcceleratorKey( const VirtualKeyCode& keyCode, const ulong32& modifierMask );
+	virtual void setAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask );
 
 	virtual void setAcceleratorKey( AcceleratorKey* accelerator );
 
@@ -166,7 +166,7 @@ protected:
 	void* data_;
 	Menu* menuOwner_;
 	MenuItem* parent_;
-	long imageIndex_;
+	int32 imageIndex_;
 	Rect bounds_;
 	AcceleratorKey* currentAccelerator_;
 };

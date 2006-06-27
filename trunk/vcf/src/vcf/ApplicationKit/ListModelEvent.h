@@ -35,12 +35,12 @@ class APPLICATIONKIT_API ListModelEvent : public Event
 public:
 	ListModelEvent( Object* source ):Event(source),listItem_(NULL){}
 
-	ListModelEvent( Object* source, const unsigned long& eventType ):Event(source,eventType),
+	ListModelEvent( Object* source, const uint32& eventType ):Event(source,eventType),
 		listItem_(NULL){}
 
 	ListModelEvent( Object* source, ListItem* item ):Event(source),listItem_(item){}
 
-	ListModelEvent( Object* source, const unsigned long& eventType, ListItem* item ):Event(source,eventType),
+	ListModelEvent( Object* source, const uint32& eventType, ListItem* item ):Event(source,eventType),
 		listItem_(item){}
 
 	ListModelEvent( const ListModelEvent& rhs ):Event(rhs),listItem_(NULL) {

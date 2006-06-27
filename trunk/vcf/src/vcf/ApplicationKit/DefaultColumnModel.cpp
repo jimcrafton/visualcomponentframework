@@ -76,7 +76,7 @@ void DefaultColumnModel::deleteItem( ColumnItem* item)
 	}
 }
 
-void DefaultColumnModel::deleteItem(const unsigned long & index)
+void DefaultColumnModel::deleteItem(const uint32 & index)
 {
 	if ( index < columnItems_.size() ) {
 		std::vector<ColumnItem*>::iterator found = columnItems_.begin() + index;
@@ -101,7 +101,7 @@ void DefaultColumnModel::deleteItem(const unsigned long & index)
 	}
 }
 
-void DefaultColumnModel::insertItem(const unsigned long & index, ColumnItem * item)
+void DefaultColumnModel::insertItem(const uint32 & index, ColumnItem * item)
 {
 	columnItems_.insert( columnItems_.begin() + index, item );
 	item->setIndex( index );
@@ -120,7 +120,7 @@ void DefaultColumnModel::addItem( ColumnItem* item)
 	ItemAdded.fireEvent( &event );
 }
 
-ColumnItem* DefaultColumnModel::getItemFromIndex( const unsigned long& index )
+ColumnItem* DefaultColumnModel::getItemFromIndex( const uint32& index )
 {
 	ColumnItem* result = NULL;
 	if ( index < columnItems_.size() ) {
@@ -134,7 +134,7 @@ Enumerator<ColumnItem*>* DefaultColumnModel::getItems()
 	return columnContainer_.getEnumerator();
 }
 
-unsigned long DefaultColumnModel::getCount()
+uint32 DefaultColumnModel::getCount()
 {
 	return columnItems_.size();
 }
@@ -142,7 +142,7 @@ unsigned long DefaultColumnModel::getCount()
 void DefaultColumnModel::saveToStream( OutputStream * stream )
 {
 	Enumerator<ColumnItem*>* items = this->getItems();
-	long count = this->getCount();
+	int32 count = this->getCount();
 	stream->write( count );
 	while ( items->hasMoreElements() ){
 		ColumnItem* item = items->nextElement();
@@ -162,7 +162,7 @@ void DefaultColumnModel::saveToStream( OutputStream * stream )
 
 void DefaultColumnModel::loadFromStream( InputStream * stream )
 {
-	long count = 0;
+	int32 count = 0;
 	stream->read( count );
 	for (int i=0;i<count;i++){
 		bool isPersistentItem = false;

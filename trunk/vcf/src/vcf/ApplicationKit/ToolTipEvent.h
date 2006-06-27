@@ -30,7 +30,7 @@ handler to customize the tooltip's data or presentation.
 */
 class APPLICATIONKIT_API ToolTipEvent : public Event {
 public:
-	ToolTipEvent( Object* source, const ulong32& type ):
+	ToolTipEvent( Object* source, const uint32& type ):
 	  Event( source, type ),
 		  customToolTipGraphicsCtx_(NULL),
 		  embeddedControl_(NULL),

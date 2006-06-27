@@ -59,9 +59,9 @@ where you installed the VCF.
 
 
 
-VCF::ulong32 OSXUIUtils::translateButtonMask( EventMouseButton button )
+VCF::uint32 OSXUIUtils::translateButtonMask( EventMouseButton button )
 {
-	VCF::ulong32 result = 0;
+	VCF::uint32 result = 0;
 	
 	if ( button == kEventMouseButtonPrimary ) {
 		result = VCF::mbmLeftButton;
@@ -76,9 +76,9 @@ VCF::ulong32 OSXUIUtils::translateButtonMask( EventMouseButton button )
 	return result;
 }
 
-VCF::ulong32 OSXUIUtils::translateKeyMask( UInt32 keyMod )
+VCF::uint32 OSXUIUtils::translateKeyMask( UInt32 keyMod )
 {
-    VCF::ulong32 result = 0;
+    VCF::uint32 result = 0;
 	
     if ( keyMod & shiftKey ) {
         result |= VCF::kmShift;
@@ -1374,7 +1374,7 @@ void OSXUIToolkit::handleTimerEvent( EventLoopTimerRef inTimer, void * inUserDat
 }
 
 
-void OSXUIToolkit::internal_registerTimerHandler( Object* source, VCF::EventHandler* handler, const ulong32& timeoutInMilliSeconds )
+void OSXUIToolkit::internal_registerTimerHandler( Object* source, VCF::EventHandler* handler, const uint32& timeoutInMilliSeconds )
 {
 
     TimeOutHandler toh;
@@ -1751,7 +1751,7 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
 
 
 					VirtualKeyCode virtKeyValue = translateOSXKeyToVirtKeyCode( c, keyCode, keyMods );
-					unsigned long keyMask = 0;
+					uint32 keyMask = 0;
 
 					if ( keyMods & cmdKey ) {
 						keyMask |= kmAlt;
@@ -1803,7 +1803,7 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
 
 
 					VirtualKeyCode virtKeyValue = translateOSXKeyToVirtKeyCode( c, keyCode, keyMods );
-					unsigned long keyMask = 0;
+					uint32 keyMask = 0;
 
 					if ( keyMods & cmdKey ) {
 						keyMask |= kmAlt;

@@ -199,15 +199,15 @@ TextModel* TextControl::getTextModel()
 	return model_;
 }
 
-unsigned long TextControl::getCaretPosition()
+uint32 TextControl::getCaretPosition()
 {
-	unsigned long result = 0;
+	uint32 result = 0;
 	result = textPeer_->getCaretPosition();
 	return result;
 
 }
 
-void TextControl::setCaretPosition( const unsigned long& caretPos )
+void TextControl::setCaretPosition( const uint32& caretPos )
 {
 
 	textPeer_->setCaretPosition( caretPos );
@@ -223,12 +223,12 @@ void TextControl::setLeftMargin( const double & leftMargin )
 	textPeer_->setLeftMargin( leftMargin );
 }
 
-unsigned long TextControl::getLineCount()
+uint32 TextControl::getLineCount()
 {
 	return textPeer_->getLineCount();
 }
 
-unsigned long TextControl::getCurrentLinePosition()
+uint32 TextControl::getCurrentLinePosition()
 {
 	return textPeer_->getCurrentLinePosition();
 }
@@ -243,27 +243,27 @@ double TextControl::getRightMargin()
 	return textPeer_->getRightMargin();
 }
 
-Point* TextControl::getPositionFromCharIndex( const unsigned long& index )
+Point* TextControl::getPositionFromCharIndex( const uint32& index )
 {
 	return textPeer_->getPositionFromCharIndex( index );
 }
 
-unsigned long TextControl::getCharIndexFromPosition( Point* point )
+uint32 TextControl::getCharIndexFromPosition( Point* point )
 {
 	return textPeer_->getCharIndexFromPosition( point );
 }
 
-unsigned long TextControl::getSelectionStart()
+uint32 TextControl::getSelectionStart()
 {
 	return textPeer_->getSelectionStart();
 }
 
-unsigned long TextControl::getSelectionCount()
+uint32 TextControl::getSelectionCount()
 {
 	return textPeer_->getSelectionCount();
 }
 
-void TextControl::setSelectionMark( const unsigned long& start, const unsigned long& count )
+void TextControl::setSelectionMark( const uint32& start, const uint32& count )
 {
 	textPeer_->setSelectionMark( start, count );
 }
@@ -303,7 +303,7 @@ String TextControl::getSelectedText()
 {
 	String result;
 
-	unsigned long selectionCount = getSelectionCount();
+	uint32 selectionCount = getSelectionCount();
 
 	if ( selectionCount > 0 ) {
 		result = model_->getText();
@@ -315,8 +315,8 @@ String TextControl::getSelectedText()
 
 void TextControl::replaceSelectedText( const String& text )
 {
-	unsigned long selectionStart = getSelectionStart();
-	unsigned long selectionCount = getSelectionCount();
+	uint32 selectionStart = getSelectionStart();
+	uint32 selectionCount = getSelectionCount();
 
 	if ( selectionCount == 0 ) {
 		throw RuntimeException( "No characters currently selected. Invalid selection count." );
@@ -391,16 +391,16 @@ void TextControl::handleEvent( Event* event )
 				if ( event->getType() == Control::KEYBOARD_DOWN ) {
 					switch ( ke->getVirtualCode() ) {
 						case vkDelete : {
-							ulong32 pos =  textPeer_->getSelectionStart();
+							uint32 pos =  textPeer_->getSelectionStart();
 
 							//Thanks to Marcello to fixing this!!!
-							ulong32 size = model->getSize();
+							uint32 size = model->getSize();
 							if ( ( 0 < size ) && pos <= (size-1) ) {
-								ulong32 length = maxVal<ulong32>( 1, textPeer_->getSelectionCount() );
+								uint32 length = maxVal<uint32>( 1, textPeer_->getSelectionCount() );
 
 								// workaround for a '\r\n' sequence: we need to
 								// delete '\n' too at the end of the selection
-								ulong32 pos2 = pos+length-1;
+								uint32 pos2 = pos+length-1;
 								if ( pos2 < (size-1)  ) {
 									String text = model->getText();
 									const VCFChar* textBuffer = text.c_str();
@@ -430,8 +430,8 @@ void TextControl::handleEvent( Event* event )
 						break;
 
 						case vkBackSpace : {
-							ulong32 length = textPeer_->getSelectionCount();
-							ulong32 pos =  minVal<ulong32>( model->getSize(), textPeer_->getSelectionStart() );
+							uint32 length = textPeer_->getSelectionCount();
+							uint32 pos =  minVal<uint32>( model->getSize(), textPeer_->getSelectionStart() );
 
 							// if the selection is not empty we delete it, but the cursor doesn't move.
 							if ( 0 == length ) {
@@ -521,7 +521,7 @@ void TextControl::handleEvent( Event* event )
 								if ( !ke->hasShiftKey() && !ke->hasAltKey() && !ke->hasControlKey() ) {
 									// we add the 'tab' text in place of the selection
 
-									ulong32 pos =  textPeer_->getCaretPosition();
+									uint32 pos =  textPeer_->getCaretPosition();
 									String text;
 									text += ke->getKeyValue();
 
@@ -529,7 +529,7 @@ void TextControl::handleEvent( Event* event )
 									//have, then delete the selection and *then*
 									//add in the new character(s)
 
-									ulong32 length = textPeer_->getSelectionCount();
+									uint32 length = textPeer_->getSelectionCount();
 									if ( length > 0 ) {
 										model->deleteText( pos, length );
 									}
@@ -545,10 +545,10 @@ void TextControl::handleEvent( Event* event )
 						case vkEnter : {
 							if ( !ke->hasAltKey() && !ke->hasControlKey() ) {
 								if ( supportsMultiLinedText() ) {
-									ulong32 pos =  textPeer_->getCaretPosition();
+									uint32 pos =  textPeer_->getCaretPosition();
 									String text = "\n";
 
-									ulong32 length = textPeer_->getSelectionCount();
+									uint32 length = textPeer_->getSelectionCount();
 									if ( length > 0 ) {
 										model->deleteText( pos, length );
 									}
@@ -607,7 +607,7 @@ void TextControl::handleEvent( Event* event )
 							// control + characters need not to be treated as inserted characters
 							if ( !ke->hasAltKey() && !ke->hasControlKey() ) {
 
-								ulong32 pos =  textPeer_->getCaretPosition();
+								uint32 pos =  textPeer_->getCaretPosition();
 
 								String text;
 								text += ke->getKeyValue();
@@ -621,7 +621,7 @@ void TextControl::handleEvent( Event* event )
 									//have, then delete the selection ant *then*
 									//add in the new character(s)
 
-									ulong32 length = textPeer_->getSelectionCount();
+									uint32 length = textPeer_->getSelectionCount();
 									if ( length > 0 ) {
 										model->deleteText( pos, length );
 									}

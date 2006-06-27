@@ -62,19 +62,19 @@ public:
 	}
 
 
-    unsigned long getButtonMask() {
+    uint32 getButtonMask() {
 		return buttonMask_;
 	}
 
-	void setButtonMask( const unsigned long& buttonMask ) {
+	void setButtonMask( const uint32& buttonMask ) {
 		buttonMask_ = buttonMask;
 	}
 
-    unsigned long getKeyMask() {
+    uint32 getKeyMask() {
 		return keyMask_;
 	}
 
-	void setKeyMask( const unsigned long& keyMask ) {
+	void setKeyMask( const uint32& keyMask ) {
 		keyMask_ = keyMask;
 	}
 
@@ -101,8 +101,8 @@ public:
 		return action_;
 	}
 protected:
-    unsigned long keyMask_;
-    unsigned long buttonMask_;
+    uint32 keyMask_;
+    uint32 buttonMask_;
     DataObject * data_;
     Point dropPoint_;
 	DragActionType action_;

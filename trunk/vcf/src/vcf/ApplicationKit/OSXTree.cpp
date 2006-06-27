@@ -253,7 +253,7 @@ void OSXTree::clear()
 
 void OSXTree::onImageListImageChanged( ImageListEvent* event )
 {
-	ulong32 index = event->getIndexOfImage();
+	uint32 index = event->getIndexOfImage();
 	ImageList* imageList = (ImageList*)event->getSource();
 	setImageList( imageList );
 }

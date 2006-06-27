@@ -84,12 +84,12 @@ bool DefaultTreeItem::containsPoint( Point * pt )
 }
 
 
-unsigned long DefaultTreeItem::getIndex()
+uint32 DefaultTreeItem::getIndex()
 {
 	return index_;
 }
 
-void DefaultTreeItem::setIndex( const unsigned long& index )
+void DefaultTreeItem::setIndex( const uint32& index )
 {
 	index_ = index;
 }
@@ -224,7 +224,7 @@ void DefaultTreeItem::addChild( TreeItem* child )
 	ItemAdded.fireEvent( &event );
 }
 
-void DefaultTreeItem::insertChild( const unsigned long& index, TreeItem* child )
+void DefaultTreeItem::insertChild( const uint32& index, TreeItem* child )
 {
 	std::vector<TreeItem*>::iterator it = childNodeItems_.begin();
 	childNodeItems_.insert( it + index, child );
@@ -263,7 +263,7 @@ void DefaultTreeItem::deleteChild( TreeItem* child )
 	}
 }
 
-void DefaultTreeItem::deleteChildAtIndex( const unsigned long& index )
+void DefaultTreeItem::deleteChildAtIndex( const uint32& index )
 {
 	std::vector<TreeItem*>::iterator found =  childNodeItems_.begin() + index;
 	if ( found != childNodeItems_.end() ) {
@@ -346,9 +346,9 @@ void DefaultTreeItem::expandAllChildren( const bool& isExpanded )
 	}
 }
 
-ulong32 DefaultTreeItem::getLevel()
+uint32 DefaultTreeItem::getLevel()
 {
-	ulong32 result = 0;
+	uint32 result = 0;
 
 	if ( false == isRoot() ) {
 		TreeItem* parent = getParent();
@@ -372,18 +372,18 @@ void DefaultTreeItem::setControl( Control* control )
 	}
 }
 
-void DefaultTreeItem::setImageIndex( const long& imageIndex )
+void DefaultTreeItem::setImageIndex( const int32& imageIndex )
 {
 	imageIndex_ = imageIndex;
 }
 
-void DefaultTreeItem::setSelectedImageIndex( const long& selectedImageIndex )
+void DefaultTreeItem::setSelectedImageIndex( const int32& selectedImageIndex )
 {
 	selectedImageIndex_ = selectedImageIndex;
 	changed( ITEM_EVENT_CHANGED );
 }
 
-void DefaultTreeItem::setExpandedImageIndex( const long& expandedImageIndex )
+void DefaultTreeItem::setExpandedImageIndex( const int32& expandedImageIndex )
 {
 	expandedImageIndex_ = expandedImageIndex;
 	changed( ITEM_EVENT_CHANGED );
@@ -395,7 +395,7 @@ void DefaultTreeItem::setBounds( Rect* bounds )
 	bounds_ = *bounds;
 }
 
-void DefaultTreeItem::setStateImageIndex( const long& index )
+void DefaultTreeItem::setStateImageIndex( const int32& index )
 {
 	stateImageIndex_ = index;
 	changed( ITEM_EVENT_CHANGED );
@@ -418,7 +418,7 @@ void DefaultTreeItem::addSubItem( TreeItem::SubItem* subItem )
 	changed( ITEM_EVENT_CHANGED );
 }
 
-void DefaultTreeItem::removeSubItem( const ulong32& index )
+void DefaultTreeItem::removeSubItem( const uint32& index )
 {
 	std::vector<SubItem*>::iterator found = subItems_.begin() + index;
 	if ( found != subItems_.end() ) {
@@ -428,7 +428,7 @@ void DefaultTreeItem::removeSubItem( const ulong32& index )
 	}
 }
 
-TreeItem::SubItem* DefaultTreeItem::getSubItem( const ulong32& index )
+TreeItem::SubItem* DefaultTreeItem::getSubItem( const uint32& index )
 {
 	SubItem* result = NULL;
 	if ( index < subItems_.size() ) {
@@ -442,7 +442,7 @@ void DefaultTreeItem::subItemChanged( TreeItem::SubItem* item )
 
 }
 
-void DefaultTreeItem::changed( const ulong32& eventType )
+void DefaultTreeItem::changed( const uint32& eventType )
 {
 	if ( NULL != getModel() ) {
 		getModel()->updateAllViews();

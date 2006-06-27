@@ -55,9 +55,9 @@ public:
 
 	void setFixedRadioButtonHeight( const double& fixedRadioButtonHeight );
 
-	void setGroupID( const long& groupID );
+	void setGroupID( const int32& groupID );
 
-	long getGroupID(){
+	int32 getGroupID(){
 		return groupID_;
 	}
 
@@ -76,7 +76,7 @@ protected:
 	}
 	bool useFixedRadioButtonSize_;
 	double fixedRadioButtonHeight_;
-    long groupID_;
+    int32 groupID_;
 
 
 };

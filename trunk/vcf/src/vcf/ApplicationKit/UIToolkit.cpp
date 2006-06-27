@@ -51,7 +51,7 @@ UIToolkit::UIToolkit():
 
 UIToolkit::~UIToolkit()
 {
-	std::multimap<ulong32,AcceleratorKey*>::iterator it = acceleratorMap_.begin();
+	std::multimap<uint32,AcceleratorKey*>::iterator it = acceleratorMap_.begin();
 	while ( it != acceleratorMap_.end() ) {
 		delete it->second;
 		it ++;
@@ -237,7 +237,7 @@ ContextPeer* UIToolkit::createContextPeer( OSHandleID contextID )
 	return UIToolkit::toolKitInstance->internal_createContextPeer( contextID );
 }
 
-ContextPeer* UIToolkit::createContextPeer( const unsigned long& width, const unsigned long& height )
+ContextPeer* UIToolkit::createContextPeer( const uint32& width, const uint32& height )
 {
 	return UIToolkit::toolKitInstance->internal_createContextPeer( width, height );
 }
@@ -418,7 +418,7 @@ void UIToolkit::postEvent( EventHandler* eventHandler, Event* event, const bool&
 	UIToolkit::toolKitInstance->internal_postEvent( eventHandler, event, deleteHandler );
 }
 
-void UIToolkit::registerTimerHandler( Object* source, EventHandler* handler, const ulong32& timeoutInMilliSeconds )
+void UIToolkit::registerTimerHandler( Object* source, EventHandler* handler, const uint32& timeoutInMilliSeconds )
 {
 	UIToolkit::toolKitInstance->internal_registerTimerHandler( source, handler, timeoutInMilliSeconds );
 }
@@ -489,7 +489,7 @@ void UIToolkit::registerAccelerator( AcceleratorKey* accelerator )
 	UIToolkit::toolKitInstance->internal_registerAccelerator( accelerator );
 }
 
-void UIToolkit::removeAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src )
+void UIToolkit::removeAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src )
 {
 	UIToolkit::toolKitInstance->internal_removeAccelerator( keyCode, modifierMask, src );
 }
@@ -509,7 +509,7 @@ void UIToolkit::removeDefaultButton( Button* defaultButton )
 	UIToolkit::toolKitInstance->internal_removeDefaultButton( defaultButton );
 }
 
-AcceleratorKey* UIToolkit::getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src )
+AcceleratorKey* UIToolkit::getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src )
 {
 	return UIToolkit::toolKitInstance->internal_getAccelerator( keyCode, modifierMask, src );
 }
@@ -755,7 +755,7 @@ ContextPeer* UIToolkit::internal_createContextPeer( Control* component )
 	return NULL;//graphicsToolKit_->createContextPeer( component );
 }
 
-ContextPeer* UIToolkit::internal_createContextPeer( const unsigned long& width, const unsigned long& height )
+ContextPeer* UIToolkit::internal_createContextPeer( const uint32& width, const uint32& height )
 {
 	if ( NULL == graphicsToolKit_ ){
 		//throw exception
@@ -804,10 +804,10 @@ void UIToolkit::internal_registerAccelerator( AcceleratorKey* accelerator )
 	key = accelerator;	
 
 
-	typedef std::multimap<ulong32,AcceleratorKey*>::iterator AccelMapIter;
+	typedef std::multimap<uint32,AcceleratorKey*>::iterator AccelMapIter;
 	std::pair<AccelMapIter, AccelMapIter> range = acceleratorMap_.equal_range( key );
 
-	std::multimap<ulong32,AcceleratorKey*>::iterator it = range.first;
+	std::multimap<uint32,AcceleratorKey*>::iterator it = range.first;
 	while ( it != range.second ) {
 		AcceleratorKey* accel = it->second;
 
@@ -824,7 +824,7 @@ void UIToolkit::internal_registerAccelerator( AcceleratorKey* accelerator )
 		it ++;
 	}
 
-	std::pair<ulong32,AcceleratorKey*> item(key,accelerator);
+	std::pair<uint32,AcceleratorKey*> item(key,accelerator);
 	acceleratorMap_.insert( item );
 }
 
@@ -835,10 +835,10 @@ bool UIToolkit::internal_findMatchingAccelerators( AcceleratorKey* key, std::vec
 	AcceleratorKey::Value keyVal;
 	keyVal = key;
 
-	typedef std::multimap<ulong32,AcceleratorKey*>::iterator AccelMapIter;
+	typedef std::multimap<uint32,AcceleratorKey*>::iterator AccelMapIter;
 	std::pair<AccelMapIter, AccelMapIter> range = acceleratorMap_.equal_range( keyVal );
 
-	std::multimap<ulong32,AcceleratorKey*>::iterator it = range.first;
+	std::multimap<uint32,AcceleratorKey*>::iterator it = range.first;
 	while ( it != range.second ) {
 		AcceleratorKey* accel = it->second;
 
@@ -854,17 +854,17 @@ bool UIToolkit::internal_findMatchingAccelerators( AcceleratorKey* key, std::vec
 	return !matchingAccelerators.empty();
 }
 
-AcceleratorKey* UIToolkit::internal_getAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src )
+AcceleratorKey* UIToolkit::internal_getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src )
 {
 	AcceleratorKey* result = NULL;
 
 	AcceleratorKey::Value key( modifierMask, keyCode );
 
 
-	typedef std::multimap<ulong32,AcceleratorKey*>::iterator AccelMapIter;
+	typedef std::multimap<uint32,AcceleratorKey*>::iterator AccelMapIter;
 	std::pair<AccelMapIter, AccelMapIter> range = acceleratorMap_.equal_range( key );
 
-	std::multimap<ulong32,AcceleratorKey*>::iterator it = range.first;
+	std::multimap<uint32,AcceleratorKey*>::iterator it = range.first;
 	while ( it != range.second ) {
 		AcceleratorKey* accel = it->second;
 
@@ -909,7 +909,7 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 
 	AcceleratorKey::Value key( event->getKeyMask(), event->getVirtualCode() );
 
-	typedef std::multimap<ulong32,AcceleratorKey*>::iterator AccelMapIter;
+	typedef std::multimap<uint32,AcceleratorKey*>::iterator AccelMapIter;
 	std::pair<AccelMapIter, AccelMapIter> range = acceleratorMap_.equal_range( key );
 
 	//look for accelerator in control then app
@@ -1069,7 +1069,7 @@ void UIToolkit::handleTabKeyboardEvent( KeyboardEvent* event )
 
 		Control* newFocusedControl = NULL;
 		std::vector<Control*>::iterator found = std::find( tabList.begin(), tabList.end(), currentFocused );
-		long index = -1;
+		int32 index = -1;
 		if ( found != tabList.end() ) {
 			index = found - tabList.begin();
 		}
@@ -1240,12 +1240,12 @@ void UIToolkit::internal_removeDefaultButton( Button* defaultButton )
 	}
 }
 
-void UIToolkit::internal_removeAccelerator( const VirtualKeyCode& keyCode, const ulong32& modifierMask, Object* src )
+void UIToolkit::internal_removeAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src )
 {
 
 	AcceleratorKey::Value key( modifierMask, keyCode );
 
-	typedef std::multimap<ulong32,AcceleratorKey*>::iterator AccelMapIter;
+	typedef std::multimap<uint32,AcceleratorKey*>::iterator AccelMapIter;
 
 	std::pair<AccelMapIter, AccelMapIter> range = acceleratorMap_.equal_range( key );	
 
@@ -1273,7 +1273,7 @@ void UIToolkit::internal_removeAccelerator( const VirtualKeyCode& keyCode, const
 
 void UIToolkit::internal_removeAcceleratorKeysForControl( Control* control )
 {
-	typedef std::multimap<ulong32,AcceleratorKey*>::iterator accel_iter;
+	typedef std::multimap<uint32,AcceleratorKey*>::iterator accel_iter;
 
 	std::vector<accel_iter> removeAccels;
 
@@ -1298,7 +1298,7 @@ void UIToolkit::internal_removeAcceleratorKeysForControl( Control* control )
 
 void UIToolkit::internal_removeAcceleratorKeysForMenuItem( MenuItem* menuItem )
 {
-	typedef std::multimap<ulong32,AcceleratorKey*>::iterator accel_iter;
+	typedef std::multimap<uint32,AcceleratorKey*>::iterator accel_iter;
 
 	std::vector<accel_iter> removeAccels;
 
@@ -1322,7 +1322,7 @@ void UIToolkit::internal_removeAcceleratorKeysForMenuItem( MenuItem* menuItem )
 
 void UIToolkit::internal_removeAcceleratorKeysForObject( Object* src )
 {
-	typedef std::multimap<ulong32,AcceleratorKey*>::iterator accel_iter;
+	typedef std::multimap<uint32,AcceleratorKey*>::iterator accel_iter;
 
 	std::vector<accel_iter> removeAccels;
 
@@ -1355,7 +1355,7 @@ void UIToolkit::removeFromUpdateList( Component* component )
 	UIToolkit::toolKitInstance->internal_removeFromUpdateList( component );
 }
 
-void UIToolkit::setUpdateTimerSpeed( const unsigned long& milliseconds )
+void UIToolkit::setUpdateTimerSpeed( const uint32& milliseconds )
 {
 	UIToolkit::toolKitInstance->internal_setUpdateTimerSpeed( milliseconds );
 }
@@ -1376,7 +1376,7 @@ void UIToolkit::internal_removeFromUpdateList( Component* component )
 	}
 }
 
-void UIToolkit::internal_setUpdateTimerSpeed( const unsigned long& milliseconds )
+void UIToolkit::internal_setUpdateTimerSpeed( const uint32& milliseconds )
 {
 	EventHandler* ev = getEventHandler( "UIToolkit::onUpdateComponentsTimer" );
 	if ( NULL != ev ) {

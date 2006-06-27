@@ -111,13 +111,13 @@ X11GraphicsToolkit::~X11GraphicsToolkit()
 	systemFont_->free();
 
 	if ( !colorLookupMap_.empty() ) {
-		unsigned long*  pixels = new unsigned long[colorLookupMap_.size()+1];
-		memset( pixels, 0, (colorLookupMap_.size()+1) * sizeof(unsigned long) );
+		uint32*  pixels = new uint32[colorLookupMap_.size()+1];
+		memset( pixels, 0, (colorLookupMap_.size()+1) * sizeof(uint32) );
 
 		Colormap colorMap = DefaultColormap( X11Display_, X11ScreenID_ );
 
 		//get rid of all the colors
-		std::map<ulong32,ulong32>::iterator it = colorLookupMap_.begin();
+		std::map<uint32,uint32>::iterator it = colorLookupMap_.begin();
 		int index = 0;
 		while ( it != colorLookupMap_.end() ) {
 
@@ -152,7 +152,7 @@ void X11GraphicsToolkit::initSystemFont()
 	*/
 }
 
-ContextPeer* X11GraphicsToolkit::createContextPeer( const long& contextID )
+ContextPeer* X11GraphicsToolkit::createContextPeer( const int32& contextID )
 {
 	ContextPeer* result = NULL;
 
@@ -161,7 +161,7 @@ ContextPeer* X11GraphicsToolkit::createContextPeer( const long& contextID )
 	return result;
 }
 
-ContextPeer* X11GraphicsToolkit::createContextPeer( const unsigned long& width, const unsigned long& height )
+ContextPeer* X11GraphicsToolkit::createContextPeer( const uint32& width, const uint32& height )
 {
 	return new X11Context( width, height );
 }
@@ -185,7 +185,7 @@ OpenGLPeer* X11GraphicsToolkit::createOpenGLPeer( GraphicsContext* glContext )
 #endif
 }
 
-Image* X11GraphicsToolkit::createImage( const unsigned long& width, const unsigned long& height )
+Image* X11GraphicsToolkit::createImage( const uint32& width, const uint32& height )
 {
 	return new X11Image( width, height );
 }
@@ -303,22 +303,22 @@ void X11GraphicsToolkit::initSystemFontNames()
 
 }
 
-ulong32 X11GraphicsToolkit::getPixelForColor( Color* color )
+uint32 X11GraphicsToolkit::getPixelForColor( Color* color )
 {
-	ulong32 result = 0;
+	uint32 result = 0;
 
 	uint8 red, green, blue;
 	color->getRGB8( red, green, blue );
 	//in the future we can get an alpha value
 
-	ulong32 key = red;
+	uint32 key = red;
 	key << 8;
 	key += green;
 
 	key << 8;
 	key += blue;
 
-	std::map<ulong32,ulong32>::iterator found = colorLookupMap_.find( key );
+	std::map<uint32,uint32>::iterator found = colorLookupMap_.find( key );
 	if ( found != colorLookupMap_.end() ) {
 		result = found->second;
 	}

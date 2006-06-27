@@ -71,9 +71,9 @@ public:
 		return Desktop::desktopInstance;
 	}
 
-	ulong32 getWidth();
+	uint32 getWidth();
 
-	ulong32 getHeight();
+	uint32 getHeight();
 
 	Rect getUsableBounds();
 

@@ -27,7 +27,7 @@ namespace VCF {
 
 		virtual void setBounds( Rect* rect );
 
-		virtual bool beginSetBounds( const ulong32& numberOfChildren );
+		virtual bool beginSetBounds( const uint32& numberOfChildren );
 
 		virtual void endSetBounds();
 

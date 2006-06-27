@@ -49,7 +49,7 @@ static String AnchorTypeNames[] = { "AnchorNone",
 										 
 										 
 
-static unsigned long AnchorTypeValues[] = { AnchorNone,
+static uint32 AnchorTypeValues[] = { AnchorNone,
                                          AnchorTop,
 										 AnchorLeft,
 										 AnchorBottom,
@@ -82,8 +82,8 @@ _class_rtti_end_
 
 
 _class_rtti_(EtchedBorder, "VCF::Border", ETCHEDBORDER_CLASSID)
-_property_( long, "sidesToPaint", getSidesToPaint, setSidesToPaint, "" );
-_property_( long, "edgeStyle", getEdgeStyle, setEdgeStyle, "" );
+_property_( int32, "sidesToPaint", getSidesToPaint, setSidesToPaint, "" );
+_property_( int32, "edgeStyle", getEdgeStyle, setEdgeStyle, "" );
 _class_rtti_end_
 
 
@@ -99,7 +99,7 @@ _property_( bool, "inverted", isInverted, setInverted, "" );
 _class_rtti_end_
 
 _class_rtti_(TitledBorder, "VCF::Border", TITLEDBORDER_CLASSID)
-_property_( long, "sidesToPaint", getSidesToPaint, setSidesToPaint, "" );
+_property_( int32, "sidesToPaint", getSidesToPaint, setSidesToPaint, "" );
 _property_object_( Font, "font", getFont, setFont, "" );
 _property_( String, "caption", getCaption, setCaption, "" );
 _class_rtti_end_
@@ -161,7 +161,7 @@ _abstract_event_( "VCF::ColumnModelEventHandler", VCF::ColumnModelEvent, ItemDel
 _class_rtti_end_
 
 _class_abstract_rtti_(Component, "VCF::Object", COMPONENT_CLASSID)
-_property_( long, "tag", getTag, setTag, "" );
+_property_( int32, "tag", getTag, setTag, "" );
 _property_( String, "name", getName, setName, "" );
 _event_("VCF::ComponentEventHandler", VCF::ComponentEvent, ComponentCreated );
 _event_("VCF::ComponentEventHandler", VCF::ComponentEvent, ComponentDestroyed );
@@ -181,7 +181,7 @@ _property_( bool, "doubleBuffered", isDoubleBuffered, setDoubleBuffered, "" );
 _property_( bool, "useParentFont", useParentFont, setUseParentFont, "" );
 _property_( bool, "autoStartDragDrop", getAutoStartDragDrop, setAutoStartDragDrop, "" );
 _property_( bool, "tabStop", getTabStop, setTabStop, "" );
-_property_( long, "tabOrder", getTabOrder, setTabOrder, "" );
+_property_( int32, "tabOrder", getTabOrder, setTabOrder, "" );
 _property_( String, "whatThisHelpString", getWhatThisHelpString, setWhatThisHelpString, "" );
 _property_( String, "toolTipText", getToolTipText, setToolTipText, "" );
 _property_object_( Border, "border", getBorder, setBorder, "" );
@@ -194,7 +194,7 @@ _property_enum_labeled_( AlignmentType, "alignment", getAlignment, setAlignment,
 
 _property_enumset_( VCF::AnchorTypes, "anchor", getAnchor, setAnchor, 5, AnchorTypeValues, AnchorTypeNames, ""  );
 
-_property_typedef_( long, "cursor", getCursorID, setCursorID, "VCF::Cursor::SystemCursorType", "" );
+_property_typedef_( int32, "cursor", getCursorID, setCursorID, "VCF::Cursor::SystemCursorType", "" );
 
 _event_("VCF::ControlEventHandler",  VCF::ControlEvent, ControlSized );
 _event_("VCF::ControlEventHandler", VCF::ControlEvent, ControlPositioned );
@@ -572,7 +572,7 @@ _class_rtti_end_
 
 
 _class_rtti_(RadioButtonControl, "VCF::ToggledButton", RADIOBUTTONCONTROL_CLASSID )
-_property_( long, "groupID", getGroupID, setGroupID, "" );
+_property_( int32, "groupID", getGroupID, setGroupID, "" );
 _class_rtti_end_
 
 
@@ -618,7 +618,7 @@ _class_rtti_end_
 
 _class_rtti_(TimerComponent, "VCF::Component", TIMERCOMPONENT_CLASSID)
 _property_( bool, "active",isActive, setActivated, "" );
-_property_( long, "timeoutInterval", getTimeoutInterval, setTimeoutInterval, "" );
+_property_( int32, "timeoutInterval", getTimeoutInterval, setTimeoutInterval, "" );
 _event_("VCF::TimerEventHandler", VCF::TimerEvent, TimerActivated );
 _event_("VCF::TimerEventHandler", VCF::TimerEvent, TimerDeactivated );
 _event_("VCF::TimerEventHandler", VCF::TimerEvent, TimerPulse );
@@ -700,7 +700,7 @@ _property_( double, "minValue", getMinValue, setMinValue, "" );
 _property_( double, "maxValue", getMaxValue, setMaxValue, "" );
 _property_( double, "position", getPosition, setPosition, "" );
 _property_( bool, "tickMarks", hasTickMarks, setHasTickMarks, "" );
-_property_( long, "tickFrequency", getTickFrequency, setTickFrequency, "" );
+_property_( int32, "tickFrequency", getTickFrequency, setTickFrequency, "" );
 _property_( double, "stepIncrement", getStepIncrement, setStepIncrement, "" );
 _property_( double, "stepIncrement", getPageIncrement, setPageIncrement, "" );
 _class_rtti_end_

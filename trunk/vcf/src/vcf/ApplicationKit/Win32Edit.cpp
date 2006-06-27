@@ -275,7 +275,7 @@ void Win32Edit::setRightMargin( const double & rightMargin )
 {
 	editState_ |= esStyleChanging;
 
-	::SendMessage( hwnd_, EM_SETMARGINS, EC_RIGHTMARGIN, (long)rightMargin );
+	::SendMessage( hwnd_, EM_SETMARGINS, EC_RIGHTMARGIN, (LPARAM)rightMargin );
 
 	editState_ &= ~esStyleChanging;
 }
@@ -284,12 +284,12 @@ void Win32Edit::setLeftMargin( const double & leftMargin )
 {
 	editState_ |= esStyleChanging;
 
-	::SendMessage( hwnd_, EM_SETMARGINS, EC_LEFTMARGIN, (long)leftMargin );
+	::SendMessage( hwnd_, EM_SETMARGINS, EC_LEFTMARGIN, (LPARAM)leftMargin );
 
 	editState_ &= ~esStyleChanging;
 }
 
-unsigned long Win32Edit::getLineCount()
+uint32 Win32Edit::getLineCount()
 {
 	return ::SendMessage( hwnd_, EM_GETLINECOUNT, 0, 0 );
 }
@@ -299,11 +299,11 @@ Rect Win32Edit::getContentBoundsForWidth(const double& width)
 	return Win32TextPeer::getContentBoundsForWidth(width);
 }
 
-unsigned long Win32Edit::getCurrentLinePosition()
+uint32 Win32Edit::getCurrentLinePosition()
 {
 	DWORD pos = getSelectionStart();
 
-	ulong32 result = ::SendMessage( hwnd_, EM_LINEFROMCHAR, pos, 0 );
+	uint32 result = ::SendMessage( hwnd_, EM_LINEFROMCHAR, pos, 0 );
 
 
 	return result;
@@ -450,7 +450,7 @@ void Win32Edit::setDefaultStyle( Dictionary& styles )
 
 
 
-VCF::Point* Win32Edit::getPositionFromCharIndex( const unsigned long& index )
+VCF::Point* Win32Edit::getPositionFromCharIndex( const uint32& index )
 {
 	DWORD pos = ::SendMessage( hwnd_, EM_POSFROMCHAR, index, 0 );
 	posAtChar_.x_ = LOWORD(pos);
@@ -458,24 +458,24 @@ VCF::Point* Win32Edit::getPositionFromCharIndex( const unsigned long& index )
 	return &posAtChar_;
 }
 
-unsigned long Win32Edit::getCharIndexFromPosition( VCF::Point* point )
+uint32 Win32Edit::getCharIndexFromPosition( VCF::Point* point )
 {
 	DWORD pos = 0;
 
-	pos = MAKEWORD( (long)point->x_, (long)point->y_ );
+	pos = MAKELONG( (WORD)point->x_, (WORD)point->y_ );
 
-	unsigned long result = ::SendMessage( hwnd_, EM_CHARFROMPOS, 0, pos );
+	uint32 result = ::SendMessage( hwnd_, EM_CHARFROMPOS, 0, pos );
 
 	return result;
 }
 
-unsigned long Win32Edit::getCaretPosition()
+uint32 Win32Edit::getCaretPosition()
 {
 
 	return getSelectionStart();
 }
 
-void Win32Edit::setCaretPosition( const unsigned long& caretPos )
+void Win32Edit::setCaretPosition( const uint32& caretPos )
 {
 
 }
@@ -514,8 +514,8 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 
-			ulong32 start = 0;
-			ulong32 end = 0;
+			long start = 0;
+			long end = 0;
 
 			getSelectionMark( start, end );
 			currentSelLength_ = end - start;
@@ -573,8 +573,8 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 			AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 
-			ulong32 start = 0;
-			ulong32 end = 0;
+			long start = 0;
+			long end = 0;
 
 			getSelectionMark( start, end );
 
@@ -600,7 +600,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 				editState_ |= esKeyEvent;
 
-				ulong32 virtKeyCode = Win32UIUtils::translateVKCode( wParam );
+				uint32 virtKeyCode = Win32UIUtils::translateVKCode( wParam );
 
 				switch ( virtKeyCode ) {
 					case vkLeftArrow : 
@@ -611,8 +611,8 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					case vkEnd : 
 					case vkDownArrow :
 					case vkUpArrow : {
-						ulong32 start = 0;
-						ulong32 end = 0;
+						long start = 0;
+						long end = 0;
 
 						getSelectionMark( start, end );
 						currentSelLength_ = end - start;
@@ -625,10 +625,10 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				if ( (peerControl_->getComponentState() != Component::csDestroying) ) {
 
 					KeyboardData keyData = Win32UIUtils::translateKeyData( hwnd_, lParam );
-					unsigned long eventType = Control::KEYBOARD_DOWN;
+					uint32 eventType = Control::KEYBOARD_DOWN;
 
 
-					unsigned long keyMask = Win32UIUtils::translateKeyMask( keyData.keyMask );
+					uint32 keyMask = Win32UIUtils::translateKeyMask( keyData.keyMask );
 
 					//virtKeyCode = Win32UIUtils::translateVKCode( keyData.VKeyCode );
 
@@ -650,8 +650,8 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 						case vkUpArrow : {
 
 
-							ulong32 start = 0;
-							ulong32 end = 0;
+							long start = 0;
+							long end = 0;
 
 							getSelectionMark( start, end );
 
@@ -702,9 +702,9 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				if ( !peerControl_->isDestroying() && !peerControl_->isDesigning() ) {
 
 					KeyboardData keyData = Win32UIUtils::translateKeyData( hwnd_, lParam );
-					ulong32 virtKeyCode = Win32UIUtils::translateVKCode( keyData.VKeyCode );
+					uint32 virtKeyCode = Win32UIUtils::translateVKCode( keyData.VKeyCode );
 
-					unsigned long eventType = 0;
+					uint32 eventType = 0;
 					switch ( message ){
 						case WM_CHAR: {
 							/**
@@ -737,7 +737,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 						break;
 					}
 
-					unsigned long keyMask = Win32UIUtils::translateKeyMask( keyData.keyMask );
+					uint32 keyMask = Win32UIUtils::translateKeyMask( keyData.keyMask );
 
 					VCF::KeyboardEvent event( peerControl_, eventType, keyData.repeatCount,
 						keyMask, (VCF::VCFChar)keyData.character, (VirtualKeyCode)virtKeyCode );
@@ -1010,7 +1010,7 @@ void Win32Edit::onTextModelTextChanged( TextEvent* event )
 
 
 
-int Win32Edit::getCRCount( const unsigned long& begin, const unsigned long& end, const bool& limitCountsAreExact )
+int Win32Edit::getCRCount( const uint32& begin, const uint32& end, const bool& limitCountsAreExact )
 {
 	// Fixes a Microsoft bug:
 	//	EM_GETSEL doesn't count the '\r' characters: so the '\r' counts must be added to (begin,end) afterword
@@ -1028,9 +1028,9 @@ int Win32Edit::getCRCount( const unsigned long& begin, const unsigned long& end,
 
 	String text = tc->getTextModel()->getText();
 
-	unsigned long size = text.size();
-	unsigned long b = VCF::minVal<>( begin, size );
-	unsigned long e = VCF::minVal<>( end, size );
+	uint32 size = text.size();
+	uint32 b = VCF::minVal<>( begin, size );
+	uint32 e = VCF::minVal<>( end, size );
 
 	int foundCRTot = 0;
 	int foundCR = 0;
@@ -1113,27 +1113,27 @@ void Win32Edit::setText( const VCF::String& text )
 	editState_ &= ~esPeerTextChanging;
 }
 
-unsigned long Win32Edit::getSelectionStart()
+uint32 Win32Edit::getSelectionStart()
 {
-	unsigned long start = 0;
-	unsigned long end = -1;
+	long start = 0;
+	long end = -1;
 
 	getSelectionMark( start, end );
 
 	return ( start );
 }
 
-unsigned long Win32Edit::getSelectionCount()
+uint32 Win32Edit::getSelectionCount()
 {
-	unsigned long start = 0;
-	unsigned long end = 0;
+	long start = 0;
+	long end = 0;
 
 	getSelectionMark( start, end );
 
 	return ( end - start );
 }
 
-void Win32Edit::getSelectionMark( unsigned long & start, unsigned long & end )
+void Win32Edit::getSelectionMark( long & start, long & end )
 {
 	ITextSelection* selection = NULL;
 	textDocument_->GetSelection( &selection );
@@ -1149,15 +1149,15 @@ void Win32Edit::clearSelection()
 
 }
 
-void Win32Edit::setSelectionMark( const unsigned long& start, const unsigned long& count )
+void Win32Edit::setSelectionMark( const uint32& start, const uint32& count )
 {
-	unsigned long end = start + count;
+	uint32 end = start + count;
 	
 	::SendMessage( hwnd_, EM_SETSEL, (WPARAM)start, (LPARAM)end );	
 }
 
 
-void Win32Edit::scrollToLine( const ulong32& lineIndex )
+void Win32Edit::scrollToLine( const uint32& lineIndex )
 {
 	::SendMessage( hwnd_, EM_LINESCROLL, 0, lineIndex );
 }
@@ -1203,11 +1203,11 @@ void Win32Edit::setReadOnly( const bool& readonly )
 	}
 }
 
-ulong32 Win32Edit::getTotalPrintablePageCount( PrintContext* context )
+uint32 Win32Edit::getTotalPrintablePageCount( PrintContext* context )
 {
 	printPageMap_.clear();
 
-	ulong32 result = 1;
+	uint32 result = 1;
 
 	FORMATRANGE formatRange;
 	memset(&formatRange,0,sizeof(formatRange));
@@ -1251,11 +1251,11 @@ ulong32 Win32Edit::getTotalPrintablePageCount( PrintContext* context )
 
 	TextControl* tc = (TextControl*)this->getControl();
 	String text = tc->getTextModel()->getText();
-	ulong32 textSize = text.size();
+	uint32 textSize = text.size();
 
 	SendMessage( hwnd_, EM_FORMATRANGE, 0, 0 );
 
-	printPageMap_[result] = (ulong32)-1;
+	printPageMap_[result] = (uint32)-1;
 
 	DWORD index = SendMessage( hwnd_, EM_FORMATRANGE, 0, (LPARAM)&formatRange );
 	while ( (index <= textSize) && (formatRange.chrg.cpMin != index) ) {
@@ -1272,7 +1272,7 @@ ulong32 Win32Edit::getTotalPrintablePageCount( PrintContext* context )
 	return result;
 }
 
-void Win32Edit::print( PrintContext* context, const long& page )
+void Win32Edit::print( PrintContext* context, const int32& page )
 {
 	VCF_ASSERT( !printPageMap_.empty() );
 
@@ -1281,7 +1281,7 @@ void Win32Edit::print( PrintContext* context, const long& page )
 		return;
 	}
 
-	std::map<ulong32,ulong32>::iterator found = printPageMap_.find( page );
+	std::map<uint32,uint32>::iterator found = printPageMap_.find( page );
 	if ( found == printPageMap_.end() ) {
 		//clear out of dodge! We are done printing
 		printPageMap_.clear();

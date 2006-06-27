@@ -28,7 +28,7 @@ namespace VCF{
 */
 class APPLICATIONKIT_API ButtonEvent : public Event {
 public:
-	ButtonEvent( Object * source, const unsigned long& stateMask ):
+	ButtonEvent( Object * source, const uint32& stateMask ):
 	  Event( source )  {
 		  stateMask_ = stateMask;
 	}
@@ -45,7 +45,7 @@ public:
 
 	virtual ~ButtonEvent(){};
 
-    unsigned long getStateMask() {
+    uint32 getStateMask() {
 		return stateMask_;
 	}
 
@@ -54,7 +54,7 @@ public:
 		return new ButtonEvent(*this);
 	}
 private:
-    unsigned long stateMask_;
+    uint32 stateMask_;
 };
 
 /**

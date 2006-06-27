@@ -67,7 +67,7 @@ public:
 
 	/**
 	*inserts text into the model at the given index
-	*@param long the starting point to begin inserting the text. This number represents
+	*@param uint32 the starting point to begin inserting the text. This number represents
 	*a zero based index.
 	*@param String the text to insert
 	*/
@@ -83,8 +83,8 @@ public:
 	/**
 	*deletes text from the model, starting at index, and continuing for count characters,
 	*or until the text data is empty.
-	*@param long the starting point. The index is zero based.
-	*@param long the number of characters to delete
+	*@param uint32 the starting point. The index is zero based.
+	*@param uint32 the number of characters to delete
 	*/
 	virtual void deleteText( const uint32& index, const uint32& count ) = 0;
 	

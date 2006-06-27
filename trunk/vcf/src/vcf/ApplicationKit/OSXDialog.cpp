@@ -357,7 +357,7 @@ void OSXDialog::showMessage( const String& message, const String& caption )
 }
 
 UIToolkit::ModalReturnType OSXDialog::showMessage( const String& message, const String& caption,
-												const long& messageButtons,	const Dialog::MessageStyle& messageStyle )
+												const int32& messageButtons,	const Dialog::MessageStyle& messageStyle )
 {
 	UIToolkit::ModalReturnType result = UIToolkit::mrNone;
 	DialogItemIndex itemIndex;

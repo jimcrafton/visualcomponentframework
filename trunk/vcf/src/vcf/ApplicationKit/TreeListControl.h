@@ -83,9 +83,9 @@ public:
 
 	ColumnModel* getColumnModel();
 
-	double getColumnWidth( const unsigned long& index );
+	double getColumnWidth( const uint32& index );
 
-	void setColumnWidth( const unsigned long& index, const double& width );
+	void setColumnWidth( const uint32& index, const double& width );
 
 
 	virtual void paint( GraphicsContext * context );
@@ -93,13 +93,13 @@ public:
 
 	void addItem( TreeItem* item, TreeItem* parent = NULL );
 
-	TreeItem* addItem( TreeItem* parent=NULL, const String& caption="", const ulong32 imageIndex=0 );
+	TreeItem* addItem( TreeItem* parent=NULL, const String& caption="", const uint32 imageIndex=0 );
 
-	ulong32 getItemIndent() {
+	uint32 getItemIndent() {
 		return itemIndent_;
 	}
 
-	void setItemIndent( const ulong32& itemIndent );
+	void setItemIndent( const uint32& itemIndent );
 
 	virtual void mouseDown( MouseEvent* event );
 
@@ -121,9 +121,9 @@ public:
 
 	ImageList* getStateImageList();
 
-	long getDisplayOptions();
+	int32 getDisplayOptions();
 
-	void setDisplayOptions( const long& displayOptions );
+	void setDisplayOptions( const int32& displayOptions );
 
 	TreeItem* isPtOverItem( Point* point );
 
@@ -192,9 +192,9 @@ protected:
 
 	double itemHeight_;
 	double columnHeight_;
-	ulong32 itemIndent_;
+	uint32 itemIndent_;
 
-	long displayOptions_;
+	int32 displayOptions_;
 	bool allowLabelEditing_;
 	bool allowMultipleSelection_;
 
@@ -203,7 +203,7 @@ protected:
 	std::vector<TreeItem*> selectedItems_;
 	EnumeratorContainer<std::vector<TreeItem*>,TreeItem*> selectedItemContainer_;
 
-	long stateItemIndent_;
+	int32 stateItemIndent_;
 
 	Color rowLineColor_;
 	Color columnLineColor_;
@@ -225,13 +225,13 @@ protected:
 
 	virtual void paintItem( TreeItem* item, GraphicsContext* context, Rect* paintRect );
 
-	virtual void paintSubItem( TreeItem* item, GraphicsContext* context, const ulong32& subItemIndex, Rect* paintRect );
+	virtual void paintSubItem( TreeItem* item, GraphicsContext* context, const uint32& subItemIndex, Rect* paintRect );
 
 	virtual void paintExpander( TreeItem* item, GraphicsContext* context, Rect* paintRect );
 
-	virtual void paintItemState( TreeItem* item, GraphicsContext* context, Rect* paintRect, const long& currentIndent );
+	virtual void paintItemState( TreeItem* item, GraphicsContext* context, Rect* paintRect, const int32& currentIndent );
 
-	virtual void paintItemImage( TreeItem* item, GraphicsContext* context, Rect* paintRect, const long& currentIndent );
+	virtual void paintItemImage( TreeItem* item, GraphicsContext* context, Rect* paintRect, const int32& currentIndent );
 
 	void onColumnWidthChanged( ItemEvent* event );
 

@@ -36,11 +36,11 @@ public:
 
 	virtual void createFromResourceName( const String& cursorName, OSHandleID instanceHandle=0 );
 
-	virtual long getCursorID() {
+	virtual int32 getCursorID() {
 		return cursorID_;
 	}
 
-	virtual void setCursorID( const long& cursorID ) {
+	virtual void setCursorID( const int32& cursorID ) {
 		cursorID_ = cursorID;
 	}
 
@@ -58,7 +58,7 @@ protected:
 
 	bool isSharedCursor_;
 	HCURSOR hCursor_;
-	long cursorID_;
+	int32 cursorID_;
 	Cursor* cursor_;
 
 };

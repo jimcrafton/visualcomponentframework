@@ -29,7 +29,7 @@ X11Context::X11Context():
 	init();
 }
 
-X11Context::X11Context( const unsigned long& width, const unsigned long& height ):
+X11Context::X11Context( const uint32& width, const uint32& height ):
 	X11Display_(NULL),
 	x11GC_(0),
 	x11Drawable_(0),
@@ -62,7 +62,7 @@ X11Context::X11Context( const unsigned long& width, const unsigned long& height 
 	isMemoryCtx_ = true;
 }
 
-X11Context::X11Context( const long& contextID ):
+X11Context::X11Context( const int32& contextID ):
 	x11GC_(0),
 	x11Drawable_(0),
 	parentImage_(NULL),
@@ -222,7 +222,7 @@ void X11Context::drawImage( const double & x, const double & y, Image* image )
 	releaseHandle();
 }
 
-void X11Context::textAt(const double & x, const double & y, const String & text, const long& drawOptions)
+void X11Context::textAt(const double & x, const double & y, const String & text, const int32& drawOptions)
 {
 	if ( text.empty() ) {
 		return;
@@ -322,7 +322,7 @@ void X11Context::textAt(const double & x, const double & y, const String & text,
 	releaseHandle();
 }
 
-void X11Context::textBoundedBy( Rect* bounds, const String& text, const long& drawOptions )
+void X11Context::textBoundedBy( Rect* bounds, const String& text, const int32& drawOptions )
 {
 	textAt( bounds->left_, bounds->top_, text, drawOptions );
 }
@@ -532,7 +532,7 @@ void X11Context::fillPath()
 
 	X11GraphicsToolkit* toolkit = (X11GraphicsToolkit*)GraphicsToolkit::getDefaultGraphicsToolkit();
 
-	ulong32 pixel =  toolkit->getPixelForColor( &currentFill_.Color_ );
+	uint32 pixel =  toolkit->getPixelForColor( &currentFill_.Color_ );
 
 	XSetForeground ( X11Display_, x11GC_, pixel );
 	XSetBackground ( X11Display_, x11GC_, pixel );
@@ -556,7 +556,7 @@ void X11Context::strokePath()
 
 	X11GraphicsToolkit* toolkit = (X11GraphicsToolkit*)GraphicsToolkit::getDefaultGraphicsToolkit();
 
-	ulong32 pixel =  toolkit->getPixelForColor( &currentStroke_.Color_ );
+	uint32 pixel =  toolkit->getPixelForColor( &currentStroke_.Color_ );
 
 	XSetForeground ( X11Display_, x11GC_, pixel );
 
@@ -597,16 +597,16 @@ void X11Context::clearTextBuffer()
 
 }
 
-long X11Context::translateFillStyle( const FillStyle& fillState )
+int32 X11Context::translateFillStyle( const FillStyle& fillState )
 {
-	long result = 0;
+	int32 result = 0;
 
 	return result;
 }
 
-long X11Context::translateHatch( const FillStyle& fillState )
+int32 X11Context::translateHatch( const FillStyle& fillState )
 {
-	long result = 0;
+	int32 result = 0;
 
 	return result;
 }
@@ -614,7 +614,7 @@ long X11Context::translateHatch( const FillStyle& fillState )
 void X11Context::execPathOperations()
 {
 	std::vector<PointOperation*>::iterator pts = pathOperations_.begin();
-	long remaingOps = pathOperations_.size();
+	int32 remaingOps = pathOperations_.size();
 
 	PointOperation* prevPointOp = NULL;
 
@@ -682,20 +682,20 @@ void X11Context::execPathOperations()
 
 					int degree = 3; //3rd degree bezier poly - needs 4 controls
 					Mgc::Vector2* bezPts = new Mgc::Vector2[4];
-					bezPts[0][0] = (long)(pointOp->x + origin_.x_);
-					bezPts[0][1] = (long)(pointOp->y + origin_.y_);
+					bezPts[0][0] = (int32)(pointOp->x + origin_.x_);
+					bezPts[0][1] = (int32)(pointOp->y + origin_.y_);
 					pts++;
 					pointOp = *pts;
-					bezPts[1][0] = (long)(pointOp->x + origin_.x_);
-					bezPts[1][1] = (long)(pointOp->y + origin_.y_);
+					bezPts[1][0] = (int32)(pointOp->x + origin_.x_);
+					bezPts[1][1] = (int32)(pointOp->y + origin_.y_);
 					pts++;
 					pointOp = *pts;
-					bezPts[2][0] = (long)(pointOp->x + origin_.x_);
-					bezPts[2][1] = (long)(pointOp->y + origin_.y_);
+					bezPts[2][0] = (int32)(pointOp->x + origin_.x_);
+					bezPts[2][1] = (int32)(pointOp->y + origin_.y_);
 					pts++;
 					pointOp = *pts;
-					bezPts[3][0] = (long)(pointOp->x + origin_.x_);
-					bezPts[3][1] = (long)(pointOp->y + origin_.y_);
+					bezPts[3][0] = (int32)(pointOp->x + origin_.x_);
+					bezPts[3][1] = (int32)(pointOp->y + origin_.y_);
 
 
 					Mgc::BezierCurve2 bezCurve( degree, bezPts );
@@ -739,13 +739,13 @@ void X11Context::execPathOperations()
 					}
 
 					Rect r;
-					r.left_ = (long)(pointOp->x);
-					r.top_ = (long)(pointOp->y);
+					r.left_ = (int32)(pointOp->x);
+					r.top_ = (int32)(pointOp->y);
 					pts++;
 					pointOp = *pts;
 
-					r.right_ = (long)(pointOp->x);
-					r.bottom_ = (long)(pointOp->y);
+					r.right_ = (int32)(pointOp->x);
+					r.bottom_ = (int32)(pointOp->y);
 
 					r.offset( origin_.x_, origin_.y_ );
 
@@ -761,13 +761,13 @@ void X11Context::execPathOperations()
 					}
 
 					Rect r;
-					r.left_ = (long)(pointOp->x + origin_.x_);
-					r.top_ = (long)(pointOp->y + origin_.y_);
+					r.left_ = (int32)(pointOp->x + origin_.x_);
+					r.top_ = (int32)(pointOp->y + origin_.y_);
 					pts++;
 					pointOp = *pts;
 
-					r.right_ = (long)(pointOp->x + origin_.x_);
-					r.bottom_ = (long)(pointOp->y + origin_.y_);
+					r.right_ = (int32)(pointOp->x + origin_.x_);
+					r.bottom_ = (int32)(pointOp->y + origin_.y_);
 					xDrawEllipse( r.left_, r.top_, r.right_, r.bottom_, 0 );
 
 					remaingOps -= 1;
@@ -796,9 +796,9 @@ void X11Context::execPathOperations()
 	}
 }
 
-long X11Context::translateStrokeStyle( const StrokeStyle& strokeStyle )
+int32 X11Context::translateStrokeStyle( const StrokeStyle& strokeStyle )
 {
-	long result = LineSolid;
+	int32 result = LineSolid;
 	switch( strokeStyle ) {
 		//need to implement some more styles
 	}
@@ -815,9 +815,9 @@ FillState* X11Context::getCurrentFillState()
 	return &currentFill_;
 }
 
-long X11Context::getContextID()
+int32 X11Context::getContextID()
 {
-	return (long)x11Drawable_;//xgm__isMemoryCtxd.getGC();
+	return (int32)x11Drawable_;//xgm__isMemoryCtxd.getGC();
 }
 
 
@@ -910,7 +910,7 @@ void X11Context::createDefaultGC()
 	}
 }
 
-void X11Context::setContextID( const long& handle )
+void X11Context::setContextID( const int32& handle )
 {
 	//xgd_ = *( (X11GraphicsDevice*)handle );
 	x11Drawable_ = handle;
@@ -1037,8 +1037,8 @@ bool X11Context::isTextAlignedToBaseline()
 }
 
 
-void X11Context::drawTransparentBitmap(int hdc, int hBitmap, long xStart,
-                           long yStart, ulong32 cTransparentColor)
+void X11Context::drawTransparentBitmap(int hdc, int hBitmap, int32 xStart,
+                           int32 yStart, uint32 cTransparentColor)
 {
 
 }
@@ -1056,7 +1056,7 @@ void X11Context::drawSelectionRect( Rect* rect )
 
 	Color* selectColor = toolkit->getSystemColor( SYSCOLOR_WINDOW_TEXT );
 
-	ulong32 pixel =  toolkit->getPixelForColor( selectColor );
+	uint32 pixel =  toolkit->getPixelForColor( selectColor );
 
 	XSetForeground ( X11Display_, x11GC_, pixel );
 
@@ -1350,7 +1350,7 @@ void X11Context::setClippingPath( Path* clippingPath )
 }
 
 
-void X11Context::drawDisclosureButton( Rect* rect, const long& state )
+void X11Context::drawDisclosureButton( Rect* rect, const int32& state )
 {
 
 }
@@ -1385,7 +1385,7 @@ void X11Context::drawHeader( Rect* rect )
 
 }
 
-void X11Context::drawEdge( Rect* rect, const long& edgeSides, const long& edgeStyle )
+void X11Context::drawEdge( Rect* rect, const int32& edgeSides, const int32& edgeStyle )
 {
 
 }

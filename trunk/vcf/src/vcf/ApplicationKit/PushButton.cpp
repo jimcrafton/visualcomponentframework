@@ -147,7 +147,7 @@ void PushButton::drawImage( const Rect& rect, const ButtonState& state, const Re
 			}
 		}
 
-		long btnImageIndex = getBtnImageIndex( imageState );
+		int32 btnImageIndex = getBtnImageIndex( imageState );
 		if ( 0 <= btnImageIndex ) {
 			Rect imgRect = *imageRect;
 			//imgRect.inflate( -2, -2 );
@@ -615,10 +615,10 @@ void PushButton::setShowCaption( const bool& showCaption )
 	repaint();
 }
 
-long PushButton::getBtnImageIndex( const ImageState& imgState )
+int32 PushButton::getBtnImageIndex( const ImageState& imgState )
 {
-	long index = -1;
-	std::map< long, ulong32 >::iterator found = imageIndexes_.find( imgState );
+	int32 index = -1;
+	std::map< int32, uint32 >::iterator found = imageIndexes_.find( imgState );
 	if ( found != imageIndexes_.end() ) {
 		index = found->second;
 	}
@@ -626,7 +626,7 @@ long PushButton::getBtnImageIndex( const ImageState& imgState )
 	return index;
 }
 
-void PushButton::setBtnImageIndex( const long& btnImageIndex, ImageState imgStates, const bool& redraw )
+void PushButton::setBtnImageIndex( const int32& btnImageIndex, ImageState imgStates, const bool& redraw )
 {
 	if ( NULL == imageList_ ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2( "No image list specified yet" ) );
@@ -638,7 +638,7 @@ void PushButton::setBtnImageIndex( const long& btnImageIndex, ImageState imgStat
 		imgStates = (PushButton::ImageState)( imgStates & bisAll );
 	}
 
-	long imageCount = imageList_->getImageCount();
+	int32 imageCount = imageList_->getImageCount();
 	if ( ( btnImageIndex < 0 ) || ( imageCount <= btnImageIndex ) ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2( Format("PushButton request to set an image index [%d] outside range [0,%d]") % btnImageIndex % imageCount ) );
 	}
@@ -736,7 +736,7 @@ void PushButton::setBtnImageIndex( const long& btnImageIndex, ImageState imgStat
 	}
 }
 
-void PushButton::setBtnImageIndex( ImageList* imageList, const long& btnImageIndex, const CaptionAlignment& captionAlignment, const double& separationImageCaption ) {
+void PushButton::setBtnImageIndex( ImageList* imageList, const int32& btnImageIndex, const CaptionAlignment& captionAlignment, const double& separationImageCaption ) {
 	setImageList( imageList );
 	setBtnImageIndex( btnImageIndex, bisNormal );
 	setCaptionAlignment( captionAlignment );

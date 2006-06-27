@@ -24,7 +24,7 @@ public:
 
 	X11Image( const String& fileName );
 
-	X11Image( const unsigned long& width, const unsigned long& height );
+	X11Image( const uint32& width, const uint32& height );
 
 	X11Image( GraphicsContext* context, Rect* rect );
 
@@ -33,9 +33,9 @@ public:
 
 	void init();
 
-	virtual void setWidth( const unsigned long & width );
+	virtual void setWidth( const uint32 & width );
 
-	virtual void setHeight( const unsigned long & height );
+	virtual void setHeight( const uint32 & height );
 
 	Imlib_Image getXImage() {
 		return ximage_;
