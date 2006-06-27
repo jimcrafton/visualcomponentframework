@@ -39,7 +39,7 @@ public:
 
 
 	bool atEnd_;
-	VCF::ulong32 position_;
+	VCF::uint32 position_;
 	bool caseSensitive_;
 	bool matchWordOnly_;
 	bool searchAllOpenDocs_;
@@ -64,9 +64,9 @@ public:
 
 	}
 
-	VCF::ulong32 position_;
-	VCF::ulong32 line_;
-	VCF::ulong32 column_;
+	VCF::uint32 position_;
+	VCF::uint32 line_;
+	VCF::uint32 column_;
 	VCF::Document* document_;
 	VCF::String fileName_;	
 };
@@ -222,15 +222,15 @@ public:
 	/**
 	sets the selection range 
 	@param pos - if pos is -1 then everything is selected
-	@param ulong32 length of the selection
+	@param uint32 length of the selection
 	*/
-	void setSelectionRange( const long pos, const VCF::ulong32 length  );
+	void setSelectionRange( const long pos, const VCF::uint32 length  );
 
 	long getSelectionStart() {
 		return selectionStart_;
 	}
 
-	VCF::ulong32 getSelectionLength() {
+	VCF::uint32 getSelectionLength() {
 		return selectionLength_;
 	}
 
@@ -268,7 +268,7 @@ protected:
 
 	class AddText : public VCF::AbstractCommand {
 	public:
-		AddText(TextEditDocument* doc, VCF::ulong32 pos, 
+		AddText(TextEditDocument* doc, VCF::uint32 pos, 
 					const VCF::String& text );
 
 		virtual void undo();
@@ -278,16 +278,16 @@ protected:
 		virtual void execute();
 		
 		TextEditDocument* doc_;
-		VCF::ulong32 pos_;
+		VCF::uint32 pos_;
 		VCF::String text_;
-		VCF::ulong32 selStart_;
-		VCF::ulong32 selLength_;
+		VCF::uint32 selStart_;
+		VCF::uint32 selLength_;
 	};
 
 	class ReplaceText : public VCF::AbstractCommand {
 	public:
-		ReplaceText(TextEditDocument* doc, VCF::ulong32 pos,
-					VCF::ulong32 length, const VCF::String& originalText,
+		ReplaceText(TextEditDocument* doc, VCF::uint32 pos,
+					VCF::uint32 length, const VCF::String& originalText,
 					const VCF::String& text );
 
 		virtual void undo();
@@ -297,17 +297,17 @@ protected:
 		virtual void execute();
 		
 		TextEditDocument* doc_;
-		VCF::ulong32 pos_;
-		VCF::ulong32 length_;
+		VCF::uint32 pos_;
+		VCF::uint32 length_;
 		VCF::String text_;
 		VCF::String originalText_;
-		VCF::ulong32 selStart_;
-		VCF::ulong32 selLength_;
+		VCF::uint32 selStart_;
+		VCF::uint32 selLength_;
 	};
 
 	class RemoveText : public VCF::AbstractCommand {
 	public:
-		RemoveText( TextEditDocument* doc, VCF::ulong32 pos, const VCF::String& text ) ;
+		RemoveText( TextEditDocument* doc, VCF::uint32 pos, const VCF::String& text ) ;
 
 		virtual void undo();
 
@@ -316,7 +316,7 @@ protected:
 		virtual void execute();
 
 		TextEditDocument* doc_;
-		VCF::ulong32 pos_;
+		VCF::uint32 pos_;
 		VCF::String text_;
 	};
 
@@ -327,13 +327,13 @@ protected:
 	VCF::String textData_;
 
 	long selectionStart_;
-	VCF::ulong32 selectionLength_;
+	VCF::uint32 selectionLength_;
 
-	void internal_insertText( const VCF::ulong32& pos, const VCF::String& text );
+	void internal_insertText( const VCF::uint32& pos, const VCF::String& text );
 
-	void internal_replaceText( const VCF::ulong32& pos, const VCF::ulong32& length, const VCF::String& text );
+	void internal_replaceText( const VCF::uint32& pos, const VCF::uint32& length, const VCF::String& text );
 
-	void internal_removeText( const VCF::ulong32& pos, const VCF::ulong32& length );
+	void internal_removeText( const VCF::uint32& pos, const VCF::uint32& length );
 };
 
 

@@ -18,7 +18,7 @@ using namespace VCF;
 
 
 TextEditDocument::AddText::AddText( TextEditDocument* doc, 
-												VCF::ulong32 pos, 
+												VCF::uint32 pos, 
 												const VCF::String& text ):
 			doc_(doc), pos_(pos), text_(text) 
 {
@@ -47,8 +47,8 @@ void TextEditDocument::AddText::execute()
 
 
 TextEditDocument::ReplaceText::ReplaceText( TextEditDocument* doc, 
-												VCF::ulong32 pos, 
-												VCF::ulong32 length,
+												VCF::uint32 pos, 
+												VCF::uint32 length,
 												const VCF::String& originalText, 
 												const VCF::String& text ):
 			doc_(doc), pos_(pos), length_(length), text_(text), originalText_(originalText)
@@ -78,7 +78,7 @@ void TextEditDocument::ReplaceText::execute()
 
 
 TextEditDocument::RemoveText::RemoveText( TextEditDocument* doc, 
-												VCF::ulong32 pos, 
+												VCF::uint32 pos, 
 												const VCF::String& text ):
 	doc_(doc), pos_(pos), text_(text) 
 {
@@ -108,7 +108,7 @@ void TextEditDocument::RemoveText::execute()
 
 
 
-VCF::ulong32 findString( const FindInfo& findInfo, const String& inText )
+VCF::uint32 findString( const FindInfo& findInfo, const String& inText )
 {
 	int start = findInfo.position_ == 0 ? 0 : findInfo.position_ + 1;
 
@@ -266,7 +266,7 @@ bool TextEditDocument::find( FindInfo& findInfo )
 {
 	int start = findInfo.position_ == 0 ? 0 : findInfo.position_ + 1;
 
-	VCF::ulong32 pos = findString( findInfo, textData_ );
+	VCF::uint32 pos = findString( findInfo, textData_ );
 	
 	findInfo.position_ = pos;
 
@@ -372,7 +372,7 @@ void TextEditDocument::replaceText( const uint32& index, const uint32& length, c
 	DocumentManager::getDocumentManager()->getUndoRedoStack(this).addCommand( new ReplaceText( this, index, length, originalText, text ) );
 }
 
-void TextEditDocument::setSelectionRange( const long pos, const VCF::ulong32 length  )
+void TextEditDocument::setSelectionRange( const long pos, const VCF::uint32 length  )
 {	
 	
 	selectionStart_ = pos;
@@ -466,7 +466,7 @@ bool TextEditDocument::paste( DataObject* data )
 	return true;
 }
 
-void TextEditDocument::internal_insertText( const VCF::ulong32& pos, const VCF::String& text )
+void TextEditDocument::internal_insertText( const VCF::uint32& pos, const VCF::String& text )
 {
 	textData_.insert( pos, text );
 
@@ -486,7 +486,7 @@ void TextEditDocument::internal_insertText( const VCF::ulong32& pos, const VCF::
 	updateAllViews();
 }
 
-void TextEditDocument::internal_removeText( const VCF::ulong32& pos, const VCF::ulong32& length )
+void TextEditDocument::internal_removeText( const VCF::uint32& pos, const VCF::uint32& length )
 {
 	TextEditDocumentEvent e( this, TextEditDocument::teTextRemoved );
 
@@ -506,7 +506,7 @@ void TextEditDocument::internal_removeText( const VCF::ulong32& pos, const VCF::
 	updateAllViews();
 }
 
-void TextEditDocument::internal_replaceText( const VCF::ulong32& pos, const VCF::ulong32& length, const VCF::String& text )
+void TextEditDocument::internal_replaceText( const VCF::uint32& pos, const VCF::uint32& length, const VCF::String& text )
 {
 	TextEditDocumentEvent e( this, TextEditDocument::teTextAdded );
 

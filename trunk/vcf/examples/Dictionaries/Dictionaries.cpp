@@ -17,13 +17,13 @@ using namespace VCF;
 class Base64Data {
 public:
 	
-	static void encode( const unsigned char* buffer, ulong32 bufferSize, AnsiString& output, bool addLineBreak ) { 
-		ulong32 count = 0;
-		ulong32 o = 0;
+	static void encode( const unsigned char* buffer, uint32 bufferSize, AnsiString& output, bool addLineBreak ) { 
+		uint32 count = 0;
+		uint32 o = 0;
 		
 		output = "";
 		while (count < bufferSize) {
-			ulong32 remainingBytes = bufferSize - count;
+			uint32 remainingBytes = bufferSize - count;
 			if ( addLineBreak && o && (o % 76 == 0) ) {
 				output += "\n";
 			}
@@ -56,10 +56,10 @@ public:
 	}
 
 	//calling this with a NULL buffer means that the buffer size will be returned
-	static void decode(const AnsiString& input, unsigned char *buffer, ulong32& bufferSize )	{
-		ulong32 index = 0;
-		ulong32 count = input.size();
-		ulong32 bufferIndex = 0;
+	static void decode(const AnsiString& input, unsigned char *buffer, uint32& bufferSize )	{
+		uint32 index = 0;
+		uint32 count = input.size();
+		uint32 bufferIndex = 0;
 		
 		
 
@@ -150,7 +150,7 @@ public:
 		return outStream_->getBuffer();
 	}
 
-	virtual ulong32 getCurrentSeekPos() {
+	virtual uint32 getCurrentSeekPos() {
 		return outStream_->getCurrentSeekPos();
 	}
 
@@ -223,7 +223,7 @@ public:
 		write( (const unsigned char*)tmp.c_str(), tmp.length() );
 	}
 
-	void writeData( const unsigned char* buffer, ulong32 bufferSize ) {
+	void writeData( const unsigned char* buffer, uint32 bufferSize ) {
 		AnsiString output;
 		Base64Data::encode( buffer, bufferSize, output, true );
 		AnsiString tmp;
@@ -433,7 +433,7 @@ public:
 			}
 			else if ( name == "data" ) {
 				AnsiString s;
-				ulong32 bufferSize = 0;
+				uint32 bufferSize = 0;
 				Base64Data::decode( s, NULL, bufferSize );
 				if ( bufferSize > 0 ) {
 					unsigned char* buffer = new unsigned char[bufferSize];
@@ -449,7 +449,7 @@ public:
 					public:
 					protected:
 						unsigned char* buffer_;
-						ulong32 bufSize_;
+						uint32 bufSize_;
 					};
 
 					then we could do something like 
@@ -475,7 +475,7 @@ public:
 		}	
 	}
 
-	virtual ulong32 getCurrentSeekPos() {
+	virtual uint32 getCurrentSeekPos() {
 		return inStream_->getCurrentSeekPos();
 	}
 protected:

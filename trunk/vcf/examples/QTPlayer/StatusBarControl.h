@@ -19,11 +19,11 @@ public:
 
 	void addStatusPane( const double& width=-1.0, const String& text=""  );
 
-	void removeStatusPane( ulong32 index );
+	void removeStatusPane( uint32 index );
 
 	void setStatusText( int index, const String& text );
 
-	Control* getStatusPaneControl( ulong32 index );
+	Control* getStatusPaneControl( uint32 index );
 
 	virtual void paint( GraphicsContext* ctx );
 };

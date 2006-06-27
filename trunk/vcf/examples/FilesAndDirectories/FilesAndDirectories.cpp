@@ -93,7 +93,7 @@ int main( int argc, char** argv ){
 		File file( fileName );		
 		System::println( Format("The file %s's size: %d") 
 						% fileName.getFileName()
-						% (ulong32)file.getSize() );
+						% (uint32)file.getSize() );
 
 
 		/**

@@ -202,8 +202,8 @@ public:
 	These are the 4 methods you have to implement
 	*/
 
-	virtual ulong32 convertToAnsiString( const UnicodeString& str, UnicodeString::AnsiChar* ansiStrBuffer,
-										const ulong32& ansiStrBufferLength );
+	virtual uint32 convertToAnsiString( const UnicodeString& str, UnicodeString::AnsiChar* ansiStrBuffer,
+										const uint32& ansiStrBufferLength );
 
 	virtual UnicodeString::AnsiChar convertToAnsiChar( const UnicodeString::UniChar& c );
 
@@ -239,8 +239,8 @@ unsigned char MyTextCodec::bytesFromUTF8[256] = {
 unsigned long MyTextCodec::offsetsFromUTF8[6] = {0x00000000, 0x00003080, 0x000E2080, 0x03C82080, 0xFA082080, 0x82082080};
 
 
-ulong32 MyTextCodec::convertToAnsiString( const UnicodeString& str, UnicodeString::AnsiChar* ansiStrBuffer,
-									const ulong32& ansiStrBufferLength )
+uint32 MyTextCodec::convertToAnsiString( const UnicodeString& str, UnicodeString::AnsiChar* ansiStrBuffer,
+									const uint32& ansiStrBufferLength )
 {
 	long ch;
 	short T = 0;

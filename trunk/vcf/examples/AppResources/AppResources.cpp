@@ -41,8 +41,8 @@ public:
 		Window::paint( ctx );
 
 		if ( NULL != background_ ) {
-			ulong32 w = background_->getWidth();
-			ulong32 h = background_->getHeight();
+			uint32 w = background_->getWidth();
+			uint32 h = background_->getHeight();
 			Rect imgRect(0,0,w,h);
 			int colCount = getWidth()/w + 1;
 
