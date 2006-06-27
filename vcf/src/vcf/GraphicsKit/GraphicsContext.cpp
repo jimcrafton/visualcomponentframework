@@ -251,7 +251,7 @@ GraphicsContext::GraphicsContext():
 	init();
 }
 
-GraphicsContext::GraphicsContext( const unsigned long& width, const unsigned long& height ):
+GraphicsContext::GraphicsContext( const uint32& width, const uint32& height ):
 	contextPeer_(NULL),
 	renderArea_(NULL),
 	currentDrawingState_(GraphicsContext::gsNone),		
@@ -850,7 +850,7 @@ void GraphicsContext::textAt(const double & x, const double & y, const String & 
 	}
 }
 
-void GraphicsContext::textAt( const double & x, const double & y, const String& text, const long drawOptions )
+void GraphicsContext::textAt( const double & x, const double & y, const String& text, const int32 drawOptions )
 {
 	Rect bounds( x, y, x + getTextWidth(text), y + getTextHeight(text) );
 
@@ -1122,7 +1122,7 @@ Color* GraphicsContext::getColor()
 
 void GraphicsContext::textBoundedBy( Rect* bounds, const String& text, const bool& wordWrap )
 {
-	long drawOptions = wordWrap ? GraphicsContext::tdoWordWrap : GraphicsContext::tdoNone;
+	int32 drawOptions = wordWrap ? GraphicsContext::tdoWordWrap : GraphicsContext::tdoNone;
 
 	Rect tmp = *bounds;
 	double xx = tmp.left_;
@@ -1138,7 +1138,7 @@ void GraphicsContext::textBoundedBy( Rect* bounds, const String& text, const boo
 	}
 }
 
-void GraphicsContext::textBoundedBy( Rect* bounds, const String& text, const long drawOptions )
+void GraphicsContext::textBoundedBy( Rect* bounds, const String& text, const int32 drawOptions )
 {
 	Rect tmp = *bounds;
 	double xx = tmp.left_;
@@ -1337,7 +1337,7 @@ void GraphicsContext::drawThemeHeader( Rect* rect, ButtonState& state )
 	contextPeer_->drawThemeHeader( rect, state );
 }
 
-void GraphicsContext::drawThemeEdge( Rect* rect, DrawUIState& state, const long& edgeSides, const long& edgeStyle )
+void GraphicsContext::drawThemeEdge( Rect* rect, DrawUIState& state, const int32& edgeSides, const int32& edgeStyle )
 {
 	contextPeer_->drawThemeEdge( rect, state, edgeSides, edgeStyle );
 }
@@ -1852,7 +1852,7 @@ void GraphicsContext::buildEllipse( double x1, double y1, double x2, double y2,
 {
 	agg::path_storage path;
 	agg::ellipse ellipseShape( x1 + ((x2-x1)/2.0), y1 + ((y2-y1)/2.0),
-								abs(static_cast<long>(x2-x1)), abs(static_cast<long>(y2-y1)), 100 );
+								abs(static_cast<int32>(x2-x1)), abs(static_cast<int32>(y2-y1)), 100 );
 	path.concat_path( ellipseShape );
 
 	for (size_t i=0;i<path.total_vertices();i++ ) {

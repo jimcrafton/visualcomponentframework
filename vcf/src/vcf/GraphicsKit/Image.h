@@ -177,7 +177,7 @@ public:
 	};
 
 
-	typedef unsigned long ImageDescriptor;
+	typedef uint32 ImageDescriptor;
 
 	virtual ~Image(){};
 
@@ -242,7 +242,7 @@ public:
 		by Green, Blue and finally Alpha values. In code it might
 		look like this for an Image with integer based 8 bit color channels
 		\code
-			ulong32 pixelColor = (redVal &lt;&lt; 24) | (greenVal &lt;&lt; 16) | (blueVal &lt;&lt; 8) | (alphaVal);
+			uint32 pixelColor = (redVal &lt;&lt; 24) | (greenVal &lt;&lt; 16) | (blueVal &lt;&lt; 8) | (alphaVal);
 		\endcode
 		Extracting the values from a single pixel color would be:
 		\code
@@ -257,7 +257,7 @@ public:
 		by Green, Red and finally Alpha values. In code it might look like this for an
 		Image with integer based 8 bit color channels
 		\code
-			ulong32 pixelColor = (blueVal &lt;&lt; 24) | (greenVal &lt;&lt; 16) | (redVal &lt;&lt; 8) | (alphaVal);
+			uint32 pixelColor = (blueVal &lt;&lt; 24) | (greenVal &lt;&lt; 16) | (redVal &lt;&lt; 8) | (alphaVal);
 		\endcode
 		Extracting the values from a single pixel color would be:
 		\code
@@ -272,7 +272,7 @@ public:
 		by Red, Green and finally Blue values. In code it might look like this for an
 		Image with integer based 8 bit color channels
 		\code
-			ulong32 pixelColor = (alphaVal &lt;&lt; 24) | (redVal &lt;&lt; 16) | (greenVal &lt;&lt; 8) | (blueVal);
+			uint32 pixelColor = (alphaVal &lt;&lt; 24) | (redVal &lt;&lt; 16) | (greenVal &lt;&lt; 8) | (blueVal);
 		\endcode
 		Extracting the values from a single pixel color would be:
 		\code
@@ -289,7 +289,7 @@ public:
 		by Blue, Green and finally Red values. In code it might look like this for an
 		Image with integer based 8 bit color channels
 		\code
-			ulong32 pixelColor = (alphaVal &lt;&lt; 24) | (blueVal &lt;&lt; 16) | (greenVal &lt;&lt; 8) | (redVal);
+			uint32 pixelColor = (alphaVal &lt;&lt; 24) | (blueVal &lt;&lt; 16) | (greenVal &lt;&lt; 8) | (redVal);
 		\endcode
 		Extracting the values from a single pixel color would be:
 		\code
@@ -305,11 +305,11 @@ public:
 	*/
 	virtual PixelLayoutOrder getPixelLayoutOrder() const = 0;
 
-    virtual void setSize( const unsigned long & width, const unsigned long & height )=0;
+    virtual void setSize( const uint32 & width, const uint32 & height )=0;
 
-    virtual unsigned long getWidth()=0;
+    virtual uint32 getWidth()=0;
 
-    virtual unsigned long getHeight()=0;
+    virtual uint32 getHeight()=0;
 
     virtual void addImageSizeChangedHandler( EventHandler* handler ) = 0;
 

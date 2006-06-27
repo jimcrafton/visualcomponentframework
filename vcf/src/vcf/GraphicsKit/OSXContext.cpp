@@ -34,7 +34,7 @@ OSXContext::OSXContext():
 	init();
 }
 
-OSXContext::OSXContext( const unsigned long& width, const unsigned long& height ):
+OSXContext::OSXContext( const uint32& width, const uint32& height ):
 	contextID_(nil),
     grafPort_(0),
 	inMemoryImage_(nil),
@@ -298,7 +298,7 @@ void OSXContext::init()
 
 }
 
-void OSXContext::textAt( const VCF::Rect& bounds, const String & text, const long& drawOptions )
+void OSXContext::textAt( const VCF::Rect& bounds, const String & text, const int32& drawOptions )
 {
     VCF::Rect offsetBounds = bounds;
     offsetBounds.offset( origin_ );
@@ -683,7 +683,7 @@ bool OSXContext::isMemoryContext()
 	return (NULL != inMemoryImage_) ? true : false;
 }
 
-bool OSXContext::prepareForDrawing( long drawingOperation )
+bool OSXContext::prepareForDrawing( int32 drawingOperation )
 {
 	currentDrawingOperation_ = drawingOperation;
 
@@ -768,7 +768,7 @@ bool OSXContext::prepareForDrawing( long drawingOperation )
 	return true;
 }
 
-void OSXContext::finishedDrawing( long drawingOperation )
+void OSXContext::finishedDrawing( int32 drawingOperation )
 {
 	endLastPrimitive();
 
@@ -860,8 +860,8 @@ void OSXContext::drawImage( const double& x, const double& y, Rect* imageBounds,
 	}
 
     OSXImage* osXimage = (OSXImage*)(image);
-    ulong32 imgBoundsWidth = (ulong32)imageBounds->getWidth();
-    ulong32 imgBoundsHeight = (ulong32)imageBounds->getHeight();
+    uint32 imgBoundsWidth = (uint32)imageBounds->getWidth();
+    uint32 imgBoundsHeight = (uint32)imageBounds->getHeight();
 
     if ( (imgBoundsWidth == image->getWidth()) && (imgBoundsHeight == image->getHeight()) ) {
         CGImageRef imgRef = osXimage->getCGImage();
@@ -883,7 +883,7 @@ void OSXContext::drawImage( const double& x, const double& y, Rect* imageBounds,
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         SysPixelType* data = new SysPixelType[imgBoundsWidth*imgBoundsHeight];
 
-        ulong32 imgSize = imgBoundsWidth * imgBoundsHeight * componentCount;
+        uint32 imgSize = imgBoundsWidth * imgBoundsHeight * componentCount;
         CGDataProviderRef provider = CGDataProviderCreateWithData( NULL,
                                                                     (char*)data,
                                                                     imgSize,
@@ -907,9 +907,9 @@ void OSXContext::drawImage( const double& x, const double& y, Rect* imageBounds,
         SysPixelType* imageBuf = pix;
         SysPixelType* tmpBmpBuf = data;
 
-        ulong32 incr = (ulong32)((imageBounds->top_ * image->getWidth()) + imageBounds->left_);
+        uint32 incr = (uint32)((imageBounds->top_ * image->getWidth()) + imageBounds->left_);
         imageBuf += incr;
-        ulong32 imgWidth = image->getWidth();
+        uint32 imgWidth = image->getWidth();
 
         int s = (int)imageBounds->top_;
         int e = (int)imageBounds->bottom_;
@@ -986,7 +986,7 @@ double OSXContext::getLayoutWidth( ATSUTextLayout layout )
 	return -1.0;
 }
 
-void OSXContext::atsuDrawTextInBox(	const VCF::Rect& rect, const long& drawOptions )
+void OSXContext::atsuDrawTextInBox(	const VCF::Rect& rect, const int32& drawOptions )
 {
 	OSStatus 			err = noErr;
 	UniCharArrayOffset	textOffset = 0;
@@ -1015,7 +1015,7 @@ void OSXContext::atsuDrawTextInBox(	const VCF::Rect& rect, const long& drawOptio
 		ItemCount lineCount = 0;
 		ItemCount softBreakCount = 0;
 		ATSUTextMeasurement	maxAscent = 0, maxDescent = 0;
-		ulong32 ln = 0;
+		uint32 ln = 0;
 
 
 		// check for linewidth set as a layout control
@@ -1802,8 +1802,8 @@ void OSXContext::drawThemeImage( Rect* rect, Image* image, DrawUIState& state )
 	}
 
     OSXImage* osXimage = (OSXImage*)(image);
-    ulong32 imgBoundsWidth = (ulong32)rect->getWidth();
-    ulong32 imgBoundsHeight = (ulong32)rect->getHeight();
+    uint32 imgBoundsWidth = (uint32)rect->getWidth();
+    uint32 imgBoundsHeight = (uint32)rect->getHeight();
 
     if ( (imgBoundsWidth == image->getWidth()) && (imgBoundsHeight == image->getHeight()) ) {
         CGImageRef imgRef = osXimage->getCGImage();
@@ -1825,7 +1825,7 @@ void OSXContext::drawThemeImage( Rect* rect, Image* image, DrawUIState& state )
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         SysPixelType* data = new SysPixelType[imgBoundsWidth*imgBoundsHeight];
 
-        ulong32 imgSize = imgBoundsWidth * imgBoundsHeight * componentCount;
+        uint32 imgSize = imgBoundsWidth * imgBoundsHeight * componentCount;
         CGDataProviderRef provider = CGDataProviderCreateWithData( NULL,
                                                                     (char*)data,
                                                                     imgSize,
@@ -1849,9 +1849,9 @@ void OSXContext::drawThemeImage( Rect* rect, Image* image, DrawUIState& state )
         SysPixelType* imageBuf = pix;
         SysPixelType* tmpBmpBuf = data;
 
-        ulong32 incr = (ulong32)((rect->top_ * image->getWidth()) + rect->left_);
+        uint32 incr = (uint32)((rect->top_ * image->getWidth()) + rect->left_);
         imageBuf += incr;
-        ulong32 imgWidth = image->getWidth();
+        uint32 imgWidth = image->getWidth();
 
         int s = (int)rect->top_;
         int e = (int)rect->bottom_;
@@ -1906,7 +1906,7 @@ void OSXContext::drawThemeHeader( Rect* rect, ButtonState& state )
     DrawThemeButton( r, kThemeListHeaderButton, &btnInfo, NULL, NULL, NULL, 0 );
 }
 
-void OSXContext::drawThemeEdge( Rect* rect, DrawUIState& state, const long& edgeSides, const long& edgeStyle )
+void OSXContext::drawThemeEdge( Rect* rect, DrawUIState& state, const int32& edgeSides, const int32& edgeStyle )
 {
 	Rect modRect = *rect;
 	modRect.offset( origin_.x_, origin_.y_ );

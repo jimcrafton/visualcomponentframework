@@ -32,7 +32,7 @@ AbstractImage::~AbstractImage()
 	//delete imageBits_;
 }
 
-void AbstractImage::setSize(const unsigned long & width, const unsigned long & height )
+void AbstractImage::setSize(const uint32 & width, const uint32 & height )
 {
 	width_ = width;
 	height_ = height;
@@ -51,13 +51,13 @@ void AbstractImage::setSize(const unsigned long & width, const unsigned long & h
 	}
 }
 
-unsigned long AbstractImage::getWidth()
+uint32 AbstractImage::getWidth()
 {
 	return width_;
 }
 
 
-unsigned long AbstractImage::getHeight(){
+uint32 AbstractImage::getHeight(){
 	return height_;
 }
 
@@ -74,13 +74,13 @@ ImageBits* AbstractImage::getImageBits()
 
 void AbstractImage::saveToStream( OutputStream * stream )
 {
-	long bitDepth = getType() * getChannelSize();
+	int32 bitDepth = getType() * getChannelSize();
 
 	stream->write( bitDepth );
 
 
-	stream->write( (long)height_ );
-	stream->write( (long)width_ );
+	stream->write( (int32)height_ );
+	stream->write( (int32)width_ );
 
 	const unsigned char* buffer = (const unsigned char*)getData();
 	stream->write( buffer, height_ * width_ * getType() );
@@ -90,11 +90,11 @@ void AbstractImage::saveToStream( OutputStream * stream )
 void AbstractImage::loadFromStream( InputStream * stream )
 {
 
-	long bitDepth;
+	int32 bitDepth;
 	stream->read( bitDepth );
 
-	long height = 0;
-	long width = 0;
+	int32 height = 0;
+	int32 width = 0;
 	stream->read( height );
 	stream->read( width );
 	setSize( width, height );

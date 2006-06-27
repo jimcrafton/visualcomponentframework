@@ -36,7 +36,7 @@ GTKContext::GTKContext()
 	this->init();
 }
 
-GTKContext::GTKContext( const unsigned long& width, const unsigned long& height )
+GTKContext::GTKContext( const uint32& width, const uint32& height )
 		: drawable_( 0 )
 		, gdkGC_( 0 )
 		, pangoCtx_( 0 )
@@ -201,8 +201,8 @@ void GTKContext::drawImage( const double& x,
 	GTKImage * gtkImg = reinterpret_cast<GTKImage*>( image );
 	GdkPixbuf* pb = gtkImg->getPixbuf();
 
-	if ( ulong32( imageBounds->getWidth() ) > image->getWidth()
-	        or ulong32( imageBounds->getHeight() ) > image->getHeight() ) {
+	if ( uint32( imageBounds->getWidth() ) > image->getWidth()
+	        or uint32( imageBounds->getHeight() ) > image->getHeight() ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2(
 		                            "Dimensions of image bounds exceed the "
 		                            "image itself" ) );
@@ -224,7 +224,7 @@ void GTKContext::drawImage( const double& x,
 
 void GTKContext::textAt( const Rect& bounds,
                          const String & text,
-                         const long& drawOptions )
+                         const int32& drawOptions )
 {
 	pango_layout_set_text( pangoLayout_, text.ansi_c_str(), text.size() );
 
@@ -380,14 +380,14 @@ void GTKContext::curve( const double & x1,
 {
 	// 	int degree = 3; //3rd degree bezier poly - needs 4 controls
 	// 	Mgc::Vector2* bezPts = new Mgc::Vector2[ 4 ];
-	// 	bezPts[ 0 ][ 0 ] = long( x1 + origin_.x_ );
-	// 	bezPts[ 0 ][ 1 ] = long( y1 + origin_.y_ );
-	// 	bezPts[ 1 ][ 0 ] = long( x2 + origin_.x_ );
-	// 	bezPts[ 1 ][ 1 ] = long( y2 + origin_.y_ );
-	// 	bezPts[ 2 ][ 0 ] = long( x3 + origin_.x_ );
-	// 	bezPts[ 2 ][ 1 ] = long( y3 + origin_.y_ );
-	// 	bezPts[ 3 ][ 0 ] = long( x4 + origin_.x_ );
-	// 	bezPts[ 3 ][ 1 ] = long( y4 + origin_.y_ );
+	// 	bezPts[ 0 ][ 0 ] = int32( x1 + origin_.x_ );
+	// 	bezPts[ 0 ][ 1 ] = int32( y1 + origin_.y_ );
+	// 	bezPts[ 1 ][ 0 ] = int32( x2 + origin_.x_ );
+	// 	bezPts[ 1 ][ 1 ] = int32( y2 + origin_.y_ );
+	// 	bezPts[ 2 ][ 0 ] = int32( x3 + origin_.x_ );
+	// 	bezPts[ 2 ][ 1 ] = int32( y3 + origin_.y_ );
+	// 	bezPts[ 3 ][ 0 ] = int32( x4 + origin_.x_ );
+	// 	bezPts[ 3 ][ 1 ] = int32( y4 + origin_.y_ );
 	//
 	// 	Mgc::BezierCurve2 bezCurve( degree, bezPts );
 	//
@@ -635,7 +635,7 @@ void GTKContext::drawThemeProgress( Rect* rect, ProgressState& state )
 //                                                const bool& isPressed )
 // {}
 
-// void GTKContext::drawDisclosureButton( Rect* rect, const long& state )
+// void GTKContext::drawDisclosureButton( Rect* rect, const int32& state )
 // {}
 
 // void GTKContext::drawHorizontalScrollButtonRect( Rect* rect,
@@ -661,7 +661,7 @@ void GTKContext::drawThemeProgress( Rect* rect, ProgressState& state )
 // void GTKContext::drawHeader( Rect* rect )
 // {}
 
-// void GTKContext::drawEdge( Rect* rect, const long& edgeSides, const long& edgeStyle )
+// void GTKContext::drawEdge( Rect* rect, const int32& edgeSides, const int32& edgeStyle )
 // {
 // 	GdkRectangle r = { gint( rect->left_ ),
 // 	                   gint( rect->top_ ),
@@ -807,7 +807,7 @@ void GTKContext::drawThemeMenuItem( Rect* rect, MenuState& state )
 	                                    r.height );
 }
 
-bool GTKContext::prepareForDrawing( long drawingOperation )
+bool GTKContext::prepareForDrawing( int32 drawingOperation )
 {
 	this->checkHandle();
 	inFillPath_ = false;
@@ -865,7 +865,7 @@ bool GTKContext::prepareForDrawing( long drawingOperation )
 	return false;
 }
 
-void GTKContext::finishedDrawing( long drawingOperation )
+void GTKContext::finishedDrawing( int32 drawingOperation )
 {
 	if ( ! gdkGC_ ) {
 		throw InvalidPointerException( MAKE_ERROR_MSG_2(
@@ -963,8 +963,8 @@ void GTKContext::drawThemeHeader( Rect* rect, ButtonState& state )
 }
 
 void GTKContext::drawThemeEdge( Rect* rect, DrawUIState& state,
-                                const long& edgeSides,
-                                const long& edgeStyle )
+                                const int32& edgeSides,
+                                const int32& edgeStyle )
 {
 	StringUtils::trace(String(__FUNCTION__)+" is not implemented\n");
 }

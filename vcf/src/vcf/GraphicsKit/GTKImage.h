@@ -24,7 +24,7 @@ public:
 
 	GTKImage( const String& fileName );
 
-	GTKImage( const unsigned long& width, const unsigned long& height );
+	GTKImage( const uint32& width, const uint32& height );
 
 	GTKImage( GraphicsContext* context, Rect* rect );
 
@@ -36,9 +36,9 @@ public:
 
 	virtual void finishedDrawing();
 
-	virtual void setWidth( const unsigned long & width );
+	virtual void setWidth( const uint32 & width );
 
-	virtual void setHeight( const unsigned long & height );
+	virtual void setHeight( const uint32 & height );
 
 	GdkDrawable* getDrawable() {
 		return pixmap_;
@@ -52,7 +52,7 @@ public:
 
 	void updateImageBitsFromPixmap();
 protected:
-	void createImage( const unsigned long & width, const unsigned long & height );
+	void createImage( const uint32 & width, const uint32 & height );
 	GdkDrawable* pixmap_;
 	GdkPixbuf* pixBuf_;
 	GdkBitmap* bitmap_;

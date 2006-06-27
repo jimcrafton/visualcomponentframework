@@ -21,7 +21,7 @@ Win32Image::Win32Image():
 	init();
 }
 
-Win32Image::Win32Image( const unsigned long& width, const unsigned long& height ):
+Win32Image::Win32Image( const uint32& width, const uint32& height ):
 	AbstractImage(false),
 	flipBits_(false),
 	ownDC_(true)
@@ -154,7 +154,7 @@ void Win32Image::init()
 	context_ = new GraphicsContext( (OSHandleID)hbmp_.dc() );
 }
 
-void Win32Image::setSize( const unsigned long & width, const unsigned long & height )
+void Win32Image::setSize( const uint32 & width, const uint32 & height )
 {
 	if ( (!ownDC_) && (hbmp_ != NULL) ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2("Cannot set size for non modifiable image") );
@@ -328,14 +328,14 @@ void Win32Image::internal_saveToFile( const String& fileName )
 	ColorPixels pix(this);
 	SysPixelType* bits = pix;
 	unsigned char* row = new unsigned char[width];
-	unsigned long imgWidth = getWidth();
+	uint32 imgWidth = getWidth();
 
 	// write the bitmap data
 
 	unsigned char* tmpRow = row;
 	for ( int y=height-1;y>=0;y-- ) {		
 		tmpRow = row;
-		for (unsigned long x=0;x<imgWidth;x++ ) {		
+		for (uint32 x=0;x<imgWidth;x++ ) {		
 			SysPixelType& pix = bits[y*imgWidth + x];
 			
 			*tmpRow = pix.b;
@@ -522,7 +522,7 @@ HICON Win32Image::convertToIcon()
 					if ( (maskColor.b != bits[index].b) ||
 						(maskColor.g != bits[index].g) ||
 						(maskColor.r != bits[index].r) ) {
-						long bitmaskIndex = 8 - index % 8 - 1;
+						int32 bitmaskIndex = 8 - index % 8 - 1;
 
 						andIndex = isWindowsXP ? index : index/8;
 						
@@ -587,7 +587,7 @@ Win32GrayScaleImage::Win32GrayScaleImage( const String& fileName ):
 	init();
 }
 
-Win32GrayScaleImage::Win32GrayScaleImage( const unsigned long& width, const unsigned long& height ):
+Win32GrayScaleImage::Win32GrayScaleImage( const uint32& width, const uint32& height ):
 	GrayScaleImage(false),	
 	flipBits_(false),
 	ownDC_(true)
@@ -693,7 +693,7 @@ void Win32GrayScaleImage::init()
 	context_ = new GraphicsContext( (OSHandleID)hbmp_.dc() );
 }
 
-void Win32GrayScaleImage::setSize( const unsigned long & width, const unsigned long & height )
+void Win32GrayScaleImage::setSize( const uint32 & width, const uint32 & height )
 {
 	if ( (!ownDC_) && (hbmp_ != NULL) ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2("Cannot set size for non modifiable image") );

@@ -55,7 +55,7 @@ public:
 	/**
 	* creates a new HDC from scratch
 	*/
-	Win32Context( const unsigned long& width, const unsigned long& height );
+	Win32Context( const uint32& width, const uint32& height );
 
 	Win32Context( OSHandleID contextID );
 
@@ -123,13 +123,13 @@ public:
 	*
 	*
 	*/
-	virtual bool prepareForDrawing( long drawingOperation );
+	virtual bool prepareForDrawing( int32 drawingOperation );
 
 	/**
 	*
 	*
 	*/
-	virtual void finishedDrawing( long drawingOperation );
+	virtual void finishedDrawing( int32 drawingOperation );
 
 	/**
 	*
@@ -149,7 +149,7 @@ public:
 	*
 	*
 	*/
-	virtual void textAt( const Rect& bounds, const String & text, const long& drawOptions=0 );
+	virtual void textAt( const Rect& bounds, const String & text, const int32& drawOptions=0 );
 
 	/**
 	*
@@ -380,7 +380,7 @@ public:
 	* use a mask or 1 or more values of type ContextPeer::EdgeType
 	* to indicate which sides of the rect to draw an edge on
 	*/
-	virtual void drawThemeEdge( Rect* rect, DrawUIState& state, const long& edgeSides, const long& edgeStyle );
+	virtual void drawThemeEdge( Rect* rect, DrawUIState& state, const int32& edgeSides, const int32& edgeStyle );
 
 	/**
 	* Draws a size gripper for resizing a control/window that is compliant
@@ -430,8 +430,8 @@ protected:
 	/**
 	* Utility function to draw a transparent bitmap
 	*/
-	static void drawTransparentBitmap( HDC hdc, HBITMAP hBitmap, long xStart,
-	                                   long yStart, COLORREF cTransparentColor );
+	static void drawTransparentBitmap( HDC hdc, HBITMAP hBitmap, int32 xStart,
+	                                   int32 yStart, COLORREF cTransparentColor );
 
 	
 

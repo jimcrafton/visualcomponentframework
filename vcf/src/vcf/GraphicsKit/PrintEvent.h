@@ -11,7 +11,7 @@ namespace VCF {
 	*/
 	class GRAPHICSKIT_API PrintEvent : public Event{
 	public: 		
-		PrintEvent( Object* source, PrintContext* ctx, int currentPage, ulong32 type ): Event(source,type),
+		PrintEvent( Object* source, PrintContext* ctx, int currentPage, uint32 type ): Event(source,type),
 			currentPage_(currentPage), context_(ctx){
 			
 			if ( NULL != ctx ) {

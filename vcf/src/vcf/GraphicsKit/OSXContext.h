@@ -29,7 +29,7 @@ public:
 	/**
 	*Creates a new HDC from scratch
 	*/
-	OSXContext( const unsigned long& width, const unsigned long& height );
+	OSXContext( const uint32& width, const uint32& height );
 
 	OSXContext( OSHandleID contextID );
 
@@ -43,7 +43,7 @@ public:
 
 	virtual void setContextID( OSHandleID handle );
 
-	virtual void textAt( const Rect& bounds, const String & text, const long& drawOptions=0 );
+	virtual void textAt( const Rect& bounds, const String & text, const int32& drawOptions=0 );
 
 	virtual double getTextWidth( const String& text );
 
@@ -80,9 +80,9 @@ public:
 
 	virtual bool isMemoryContext();
 
-	virtual bool prepareForDrawing( long drawingOperation );
+	virtual bool prepareForDrawing( int32 drawingOperation );
 
-	virtual void finishedDrawing( long drawingOperation );
+	virtual void finishedDrawing( int32 drawingOperation );
 
 	virtual void drawImage( const double& x, const double& y, Rect* imageBounds, Image* image, int compositeMode );
 	
@@ -146,7 +146,7 @@ public:
 
 	virtual void drawThemeHeader( Rect* rect, ButtonState& state );
 
-	virtual void drawThemeEdge( Rect* rect, DrawUIState& state, const long& edgeSides, const long& edgeStyle );
+	virtual void drawThemeEdge( Rect* rect, DrawUIState& state, const int32& edgeSides, const int32& edgeStyle );
 
 	virtual void drawThemeSizeGripper( Rect* rect, DrawUIState& state );
 
@@ -175,10 +175,10 @@ protected:
 	CGContextRef contextID_;
     GrafPtr grafPort_;
 	unsigned char* inMemoryImage_;
-    ulong32 imgWidth_;
-    ulong32 imgHeight_;
+    uint32 imgWidth_;
+    uint32 imgHeight_;
 	GraphicsContext* context_;
-	long currentDrawingOperation_;
+	int32 currentDrawingOperation_;
 	ATSUTextLayout textLayout_;
 	VCF::Point origin_;
     bool xorModeOn_;
@@ -191,7 +191,7 @@ protected:
 
 
 
-	void atsuDrawTextInBox(	const VCF::Rect& rect, const long& drawOptions );
+	void atsuDrawTextInBox(	const VCF::Rect& rect, const int32& drawOptions );
 
 	double getLayoutWidth( ATSUTextLayout layout );
 

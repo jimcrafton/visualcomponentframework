@@ -54,7 +54,7 @@ Image* GraphicsResourceBundle::getImage( const String& resourceName )
 	return result;
 }
 
-Image* GraphicsResourceBundle::getImage( const ulong32& resourceID )
+Image* GraphicsResourceBundle::getImage( const uint32& resourceID )
 {
 	return getImage( StringUtils::toString(resourceID) );
 }

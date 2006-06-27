@@ -21,7 +21,7 @@ GTKImage::GTKImage( const String& fileName ) :
 	init();
 }
 
-GTKImage::GTKImage( const unsigned long& width, const unsigned long& height ) :
+GTKImage::GTKImage( const uint32& width, const uint32& height ) :
 		AbstractImage( false ),
 		pixmap_( NULL ),
 		pixBuf_( NULL ),
@@ -63,7 +63,7 @@ void GTKImage::init()
 	gtkCtx->setParentImage( this );
 }
 
-void GTKImage::setWidth( const unsigned long & width )
+void GTKImage::setWidth( const uint32 & width )
 {
 	if ( width > 0 && getHeight() > 0 ) {
 		createImage( width, getHeight() );
@@ -71,7 +71,7 @@ void GTKImage::setWidth( const unsigned long & width )
 	}
 }
 
-void GTKImage::setHeight( const unsigned long & height )
+void GTKImage::setHeight( const uint32 & height )
 {
 	if ( getWidth() > 0 && height > 0 ) {
 		createImage( getWidth(), height );
@@ -79,7 +79,7 @@ void GTKImage::setHeight( const unsigned long & height )
 	}
 }
 
-void GTKImage::createImage( const unsigned long & width, const unsigned long & height )
+void GTKImage::createImage( const uint32 & width, const uint32 & height )
 {
 	if ( NULL != pixmap_ ) {
 		g_object_unref( pixmap_ );

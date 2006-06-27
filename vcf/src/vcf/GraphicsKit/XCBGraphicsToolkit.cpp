@@ -60,7 +60,7 @@ XCBSCREEN*     XCBGraphicsToolkit::getScreen()
 	return screen;
 }
 
-ContextPeer* XCBGraphicsToolkit::internal_createContextPeer( const unsigned long& width, const unsigned long& height )
+ContextPeer* XCBGraphicsToolkit::internal_createContextPeer( const uint32& width, const uint32& height )
 {
 	return new XCBContextPeer( width, height );
 }
@@ -81,7 +81,7 @@ FontPeer* XCBGraphicsToolkit::internal_createFontPeer( const String& fontName, c
 	return NULL;
 }
 
-Image* XCBGraphicsToolkit::internal_createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType )
+Image* XCBGraphicsToolkit::internal_createImage( const uint32& width, const uint32& height, const Image::ImageType& imageType )
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 	return NULL;

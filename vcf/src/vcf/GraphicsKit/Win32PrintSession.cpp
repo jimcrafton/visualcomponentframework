@@ -178,22 +178,22 @@ void Win32PrintSession::setStandardPageSize( const PrintSession::PageSize& pageS
 
 }
 
-void Win32PrintSession::setStartPage( const ulong32& startPage )
+void Win32PrintSession::setStartPage( const uint32& startPage )
 {	
 	printInfo_.setStartPage( startPage );
 }
 
-ulong32 Win32PrintSession::getStartPage()
+uint32 Win32PrintSession::getStartPage()
 {	
 	return printInfo_.getStartPage();
 }
 
-void Win32PrintSession::setEndPage( const ulong32& endPage )
+void Win32PrintSession::setEndPage( const uint32& endPage )
 {
 	printInfo_.setEndPage( endPage );
 }
 
-ulong32 Win32PrintSession::getEndPage()
+uint32 Win32PrintSession::getEndPage()
 {
 	return printInfo_.getEndPage();
 
@@ -288,12 +288,12 @@ void Win32PrintSession::endPage( PrintContext* context )
 	}
 }
 
-std::vector<ulong32> Win32PrintSession::getPrintablePages()
+std::vector<uint32> Win32PrintSession::getPrintablePages()
 {
 	return printInfo_.pages_;
 }
 
-void Win32PrintSession::setPrintablePages( const std::vector<ulong32>& printablePages )
+void Win32PrintSession::setPrintablePages( const std::vector<uint32>& printablePages )
 {
 	printInfo_.pages_ = printablePages;
 }

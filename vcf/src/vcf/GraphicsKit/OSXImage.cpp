@@ -20,7 +20,7 @@ OSXImage::OSXImage():
     init();
 }
 
-OSXImage::OSXImage( const unsigned long& width, const unsigned long& height ):
+OSXImage::OSXImage( const uint32& width, const uint32& height ):
     AbstractImage(true),//note: we allocate the memory for the ImageBits pixels
     grafPort_(0),
     imageRef_(0)
@@ -35,7 +35,7 @@ OSXImage::OSXImage( GraphicsContext* context, Rect* rect ):
     imageRef_(0)
 {
     init();
-    setSize( (ulong32)rect->getWidth(), (ulong32)rect->getHeight() );
+    setSize( (uint32)rect->getWidth(), (uint32)rect->getHeight() );
     context_->copyContext( Rect(0,0,getWidth(),getHeight()), *rect, context );
 }
 
@@ -106,8 +106,8 @@ void OSXImage::createBMP()
     int bitsPerPix = getChannelSize() * componentCount;
 
     int bytesPerRow = (getWidth() * (bitsPerPix/componentCount) * componentCount) / 8;
-    ulong32 width = getWidth();
-    ulong32 height = getHeight();
+    uint32 width = getWidth();
+    uint32 height = getHeight();
 
     ::Rect boundsRect;
     boundsRect.left = boundsRect.top = 0;
@@ -132,7 +132,7 @@ void OSXImage::createBMP()
 
 
         grafPort_ = newGWorld;
-        ulong32 imgSize = width * height * componentCount;
+        uint32 imgSize = width * height * componentCount;
         CGDataProviderRef provider = CGDataProviderCreateWithData( NULL,
                                                                     dataBuffer_,
                                                                     imgSize,
@@ -161,7 +161,7 @@ void OSXImage::createBMP()
         CGColorSpaceRelease(colorSpace);
         CGDataProviderRelease(provider);		
 		
-        //context_->getPeer()->setContextID( (ulong32)grafPort_ );
+        //context_->getPeer()->setContextID( (uint32)grafPort_ );
 		OSXContext* peerCtx = (OSXContext*)context_->getPeer();
 		peerCtx->setPortFromImage( grafPort_, width, height );
 		//CGContextScaleCTM(contextID_, 1, -1);
@@ -172,7 +172,7 @@ void OSXImage::createBMP()
     }
 }
 
-void OSXImage::setSize( const unsigned long & width, const unsigned long & height )
+void OSXImage::setSize( const uint32 & width, const uint32 & height )
 {
     AbstractImage::setSize( width, height );
 	createBMP();

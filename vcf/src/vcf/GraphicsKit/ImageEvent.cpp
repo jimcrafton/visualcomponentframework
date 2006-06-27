@@ -30,22 +30,22 @@ void ImageEvent::init()
 	this->newHeight_ = 0;
 }
 
-unsigned long ImageEvent::getNewWidth()
+uint32 ImageEvent::getNewWidth()
 {
 	return this->newWidth_;
 }
 
-void ImageEvent::setNewWidth( const unsigned long& newWidth )
+void ImageEvent::setNewWidth( const uint32& newWidth )
 {
 	this->newWidth_ = newWidth;
 }
 
-unsigned long ImageEvent::getNewHeight()
+uint32 ImageEvent::getNewHeight()
 {
 	return this->newHeight_;
 }
 
-void ImageEvent::setNewHeight( const unsigned long& newHeight )
+void ImageEvent::setNewHeight( const uint32& newHeight )
 {
 	this->newHeight_ = newHeight;
 }

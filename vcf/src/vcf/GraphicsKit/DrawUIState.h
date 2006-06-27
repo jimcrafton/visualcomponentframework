@@ -256,7 +256,7 @@ public:
 	
 	
 protected:
-	long state_;
+	int32 state_;
 };
 
 /**
@@ -411,7 +411,7 @@ public:
 	}
 
 	VirtualKeyCode keyCode_;
-	ulong32 modifierMask_;
+	uint32 modifierMask_;
 	String menuCaption_;
 
 	/**
@@ -782,7 +782,7 @@ public:
 	}
 	
 	void setTabOnTop() {
-		long val = DrawStates::dsTabOnBottom | DrawStates::dsTabOnLeft | DrawStates::dsTabOnRight;
+		int32 val = DrawStates::dsTabOnBottom | DrawStates::dsTabOnLeft | DrawStates::dsTabOnRight;
 
 		state_&= ~val;
 		
@@ -790,7 +790,7 @@ public:
 	}
 	
 	void setTabOnBottom() {
-		long val = DrawStates::dsTabOnTop | DrawStates::dsTabOnLeft | DrawStates::dsTabOnRight;
+		int32 val = DrawStates::dsTabOnTop | DrawStates::dsTabOnLeft | DrawStates::dsTabOnRight;
 
 		state_&= ~val;
 		
@@ -798,7 +798,7 @@ public:
 	}
 	
 	void setTabOnLeft() {
-		long val = DrawStates::dsTabOnBottom | DrawStates::dsTabOnTop | DrawStates::dsTabOnRight;
+		int32 val = DrawStates::dsTabOnBottom | DrawStates::dsTabOnTop | DrawStates::dsTabOnRight;
 
 		state_&= ~val;
 		
@@ -806,7 +806,7 @@ public:
 	}
 	
 	void setTabOnRight() {
-		long val = DrawStates::dsTabOnBottom | DrawStates::dsTabOnTop | DrawStates::dsTabOnLeft;
+		int32 val = DrawStates::dsTabOnBottom | DrawStates::dsTabOnTop | DrawStates::dsTabOnLeft;
 
 		state_&= ~val;
 		

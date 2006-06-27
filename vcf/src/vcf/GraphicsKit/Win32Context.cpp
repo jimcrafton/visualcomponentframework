@@ -40,7 +40,7 @@ Win32Context::Win32Context()
 	init();
 }
 
-Win32Context::Win32Context( const unsigned long& width, const unsigned long& height )
+Win32Context::Win32Context( const uint32& width, const uint32& height )
 {
 	init();
 
@@ -278,8 +278,8 @@ void Win32Context::drawGrayScaleImage( const double& x, const double& y, Rect* i
 		agg::conv_transform< agg::path_storage > xfrmedImgPath2(imagePath,pathMat2);
 
 
-		bmpInfo.bmiHeader.biWidth = (long)xfrmedImageRect.getWidth();
-		bmpInfo.bmiHeader.biHeight = (long)-xfrmedImageRect.getHeight(); // Win32 DIB are upside down - do this to filp it over
+		bmpInfo.bmiHeader.biWidth = (int32)xfrmedImageRect.getWidth();
+		bmpInfo.bmiHeader.biHeight = (int32)-xfrmedImageRect.getHeight(); // Win32 DIB are upside down - do this to filp it over
 		bmpInfo.bmiHeader.biSizeImage = (-bmpInfo.bmiHeader.biHeight) * bmpInfo.bmiHeader.biWidth * 4;
 
 		hbmp = CreateDIBSection ( memDC, &bmpInfo, DIB_RGB_COLORS, (void**)&bmpBuf, NULL, NULL );
@@ -348,8 +348,8 @@ void Win32Context::drawGrayScaleImage( const double& x, const double& y, Rect* i
 
 		xfrmedImageRect.offset( x, y );
 
-		bmpInfo.bmiHeader.biWidth = (long)xfrmedImageRect.getWidth();
-		bmpInfo.bmiHeader.biHeight = (long)-xfrmedImageRect.getHeight(); // Win32 DIB are upside down - do this to filp it over
+		bmpInfo.bmiHeader.biWidth = (int32)xfrmedImageRect.getWidth();
+		bmpInfo.bmiHeader.biHeight = (int32)-xfrmedImageRect.getHeight(); // Win32 DIB are upside down - do this to filp it over
 		bmpInfo.bmiHeader.biSizeImage = (-bmpInfo.bmiHeader.biHeight) * bmpInfo.bmiHeader.biWidth * 4;
 
 		hbmp = CreateDIBSection ( memDC, &bmpInfo, DIB_RGB_COLORS, (void**)&bmpBuf, NULL, NULL );
@@ -367,13 +367,13 @@ void Win32Context::drawGrayScaleImage( const double& x, const double& y, Rect* i
 
 
 			SysPixelType* pixels = (SysPixelType*)bmpBuf;
-			int incr = (long)((imageBounds->top_ * xfrmedImageRect.getWidth()) + imageBounds->left_);
+			int incr = (int32)((imageBounds->top_ * xfrmedImageRect.getWidth()) + imageBounds->left_);
 			pixels += incr;
 
 			int s = (int)imageBounds->top_;
 			int e = (int)imageBounds->bottom_;
-			int boundsWidth = (long)imageBounds->getWidth();
-			int imgWidth = (long)image->getWidth();
+			int boundsWidth = (int32)imageBounds->getWidth();
+			int imgWidth = (int32)image->getWidth();
 			int xIndex = 0;
 
 			unsigned char* grayPix = (unsigned char*)image->getData();
@@ -430,14 +430,14 @@ void Win32Context::drawGrayScaleImage( const double& x, const double& y, Rect* i
 
 	if ( safeToRender ) {
 		SetDIBitsToDevice( dc_,
-								(long)xfrmedImageRect.left_,
-								(long)xfrmedImageRect.top_,
-								(long)xfrmedImageRect.getWidth(),
-								(long)xfrmedImageRect.getHeight(),
+								(int32)xfrmedImageRect.left_,
+								(int32)xfrmedImageRect.top_,
+								(int32)xfrmedImageRect.getWidth(),
+								(int32)xfrmedImageRect.getHeight(),
 								0,
 								0,
 								0,
-								(long)xfrmedImageRect.getHeight(),
+								(int32)xfrmedImageRect.getHeight(),
 								bmpBuf,
 								&bmpInfo,
 								DIB_RGB_COLORS );
@@ -476,14 +476,14 @@ void Win32Context::bitBlit( const double& x, const double& y, Rect* imageBounds,
 	}
 
 	SetDIBitsToDevice( dc_,
-							(long)x,
-							(long)y,
-							(long)imageBounds->getWidth(),
-							(long)imageBounds->getHeight(),
+							(int32)x,
+							(int32)y,
+							(int32)imageBounds->getWidth(),
+							(int32)imageBounds->getHeight(),
 							imageBounds->left_,
 							imageBounds->top_,
 							0,
-							(long)image->getHeight(),
+							(int32)image->getHeight(),
 							imageBuf,
 							bmpInfo,
 							DIB_RGB_COLORS );
@@ -701,14 +701,14 @@ void Win32Context::drawImage( const double& x, const double& y, Rect* imageBound
 
 
 			SetDIBitsToDevice( dc_,
-								(long)xfrmedImageRect.left_,
-								(long)xfrmedImageRect.top_,
-								(long)xfrmedImageRect.getWidth(),
-								(long)xfrmedImageRect.getHeight(),
+								(int32)xfrmedImageRect.left_,
+								(int32)xfrmedImageRect.top_,
+								(int32)xfrmedImageRect.getWidth(),
+								(int32)xfrmedImageRect.getHeight(),
 								0,
 								0,
 								0,
-								(long)xfrmedImageRect.getHeight(),
+								(int32)xfrmedImageRect.getHeight(),
 								bmpBuf,
 								hbmp.bmpInfo(),
 								DIB_RGB_COLORS );
@@ -730,8 +730,8 @@ void Win32Context::drawImage( const double& x, const double& y, Rect* imageBound
 			memset( &bmpInfo, 0, sizeof(BITMAPINFO) );
 			//memset( &bmpInfo.bmiHeader, 0, sizeof (BITMAPINFOHEADER) );
 			bmpInfo.bmiHeader.biSize = sizeof (BITMAPINFOHEADER);
-			bmpInfo.bmiHeader.biWidth = (long)imageBounds->getWidth();
-			bmpInfo.bmiHeader.biHeight = (long)-imageBounds->getHeight(); // Win32 DIB are upside down - do this to filp it over
+			bmpInfo.bmiHeader.biWidth = (int32)imageBounds->getWidth();
+			bmpInfo.bmiHeader.biHeight = (int32)-imageBounds->getHeight(); // Win32 DIB are upside down - do this to filp it over
 			bmpInfo.bmiHeader.biPlanes = 1;
 			bmpInfo.bmiHeader.biBitCount = 32;
 			bmpInfo.bmiHeader.biCompression = BI_RGB;
@@ -752,11 +752,11 @@ void Win32Context::drawImage( const double& x, const double& y, Rect* imageBound
 
 			if ( NULL != hbmp ) {
 
-				int incr = (long)((imageBounds->top_ * image->getWidth()) + imageBounds->left_);
+				int incr = (int32)((imageBounds->top_ * image->getWidth()) + imageBounds->left_);
 				imageBuf += incr;
 				tmpBmpBuf = bmpBuf;
 				int imgWidth = image->getWidth();
-				int wIncr = (long)imageBounds->getWidth();
+				int wIncr = (int32)imageBounds->getWidth();
 				int s = (int)imageBounds->top_;
 				int e = (int)imageBounds->bottom_;
 
@@ -791,14 +791,14 @@ void Win32Context::drawImage( const double& x, const double& y, Rect* imageBound
 				}
 				else {
 					SetDIBitsToDevice( dc_,
-										(long)x,
-										(long)y,
-										(long)imageBounds->getWidth(),
-										(long)imageBounds->getHeight(),
+										(int32)x,
+										(int32)y,
+										(int32)imageBounds->getWidth(),
+										(int32)imageBounds->getHeight(),
 										0,
 										0,
 										0,
-										(long)imageBounds->getHeight(),
+										(int32)imageBounds->getHeight(),
 										bmpBuf,
 										&bmpInfo,
 										DIB_RGB_COLORS );
@@ -966,8 +966,8 @@ void Win32Context::drawImageAGG(  const double& x, const double& y, Rect* imageB
 		agg::conv_transform< agg::path_storage > xfrmedImgPath2(imagePath,pathMat2);
 
 
-		bmpInfo.bmiHeader.biWidth = (long)xfrmedImageRect.getWidth();
-		bmpInfo.bmiHeader.biHeight = (long)-xfrmedImageRect.getHeight(); // Win32 DIB are upside down - do this to filp it over
+		bmpInfo.bmiHeader.biWidth = (int32)xfrmedImageRect.getWidth();
+		bmpInfo.bmiHeader.biHeight = (int32)-xfrmedImageRect.getHeight(); // Win32 DIB are upside down - do this to filp it over
 		bmpInfo.bmiHeader.biSizeImage = (-bmpInfo.bmiHeader.biHeight) * bmpInfo.bmiHeader.biWidth * 4;
 
 		hbmp.setSize( bmpInfo.bmiHeader.biWidth, -bmpInfo.bmiHeader.biHeight );
@@ -1035,8 +1035,8 @@ void Win32Context::drawImageAGG(  const double& x, const double& y, Rect* imageB
 		}
 	}
 	else {
-		bmpInfo.bmiHeader.biWidth = (long)xfrmedImageRect.getWidth();
-		bmpInfo.bmiHeader.biHeight = (long)-xfrmedImageRect.getHeight(); // Win32 DIB are upside down - do this to filp it over
+		bmpInfo.bmiHeader.biWidth = (int32)xfrmedImageRect.getWidth();
+		bmpInfo.bmiHeader.biHeight = (int32)-xfrmedImageRect.getHeight(); // Win32 DIB are upside down - do this to filp it over
 		bmpInfo.bmiHeader.biSizeImage = (-bmpInfo.bmiHeader.biHeight) * bmpInfo.bmiHeader.biWidth * 4;
 
 		hbmp.setSize( bmpInfo.bmiHeader.biWidth, -bmpInfo.bmiHeader.biHeight ); // = CreateDIBSection ( memDC, &bmpInfo, DIB_RGB_COLORS, (void**)&bmpBuf, NULL, NULL );
@@ -1093,14 +1093,14 @@ void Win32Context::drawImageAGG(  const double& x, const double& y, Rect* imageB
 
 	if ( safeToRender ) {
 		SetDIBitsToDevice( dc_,
-								(long)xfrmedImageRect.left_,
-								(long)xfrmedImageRect.top_,
-								(long)xfrmedImageRect.getWidth(),
-								(long)xfrmedImageRect.getHeight(),
+								(int32)xfrmedImageRect.left_,
+								(int32)xfrmedImageRect.top_,
+								(int32)xfrmedImageRect.getWidth(),
+								(int32)xfrmedImageRect.getHeight(),
 								0,
 								0,
 								0,
-								(long)xfrmedImageRect.getHeight(),
+								(int32)xfrmedImageRect.getHeight(),
 								bmpBuf,
 								&bmpInfo,
 								DIB_RGB_COLORS );
@@ -1116,7 +1116,7 @@ void Win32Context::rectangle(const double & x1, const double & y1, const double 
 	if ( true == inFillPath_ ){
 		fixVal = 1;
 	}
-	::Rectangle( dc_, (long)x1, (long)y1, (long)(x2 + fixVal), (long)(y2 + fixVal) );
+	::Rectangle( dc_, (int32)x1, (int32)y1, (int32)(x2 + fixVal), (int32)(y2 + fixVal) );
 }
 
 void Win32Context::roundRect(const double & x1, const double & y1, const double & x2, const double & y2,
@@ -1127,7 +1127,7 @@ void Win32Context::roundRect(const double & x1, const double & y1, const double 
 		fixVal = 1;
 	}
 
-	::RoundRect( dc_, (long)x1, (long)y1, (long)x2 + fixVal, (long)y2 + fixVal, (long)xc, (long)yc );
+	::RoundRect( dc_, (int32)x1, (int32)y1, (int32)x2 + fixVal, (int32)y2 + fixVal, (int32)xc, (int32)yc );
 }
 
 void Win32Context::ellipse(const double & x1, const double & y1, const double & x2, const double & y2)
@@ -1156,7 +1156,7 @@ void Win32Context::ellipse(const double & x1, const double & y1, const double & 
 		fixVal = 1;
 	}
 
-	::Ellipse( dc_, (long)ax1, (long)ay1, (long)(ax2 + fixVal), (long)(ay2 + fixVal) );
+	::Ellipse( dc_, (int32)ax1, (int32)ay1, (int32)(ax2 + fixVal), (int32)(ay2 + fixVal) );
 }
 
 void Win32Context::arc(const double & x1, const double & y1, const double & x2, const double & y2, const double & x3,
@@ -1186,8 +1186,8 @@ void Win32Context::arc(const double & x1, const double & y1, const double & x2, 
 		fixVal = 1;
 	}
 
-	::Arc( dc_, (long)ax1, (long)ay1, (long)ax2 + fixVal, (long)ay2 + fixVal,
-				(long)x3, (long)y3, (long)x4, (long)y4 );
+	::Arc( dc_, (int32)ax1, (int32)ay1, (int32)ax2 + fixVal, (int32)ay2 + fixVal,
+				(int32)x3, (int32)y3, (int32)x4, (int32)y4 );
 }
 
 
@@ -1199,8 +1199,8 @@ void Win32Context::polyline( const std::vector<Point>& pts)
 	while ( it != pts.end() ) {
 		const Point& pt = *it;
 
-		polyPts[i].x = (long)pt.x_;
-		polyPts[i].y = (long)pt.y_;
+		polyPts[i].x = (int32)pt.x_;
+		polyPts[i].y = (int32)pt.y_;
 		it++;
 		i++;
 	}
@@ -1220,17 +1220,17 @@ void Win32Context::curve(const double & x1, const double & y1, const double & x2
 	POINT bezPts[4];
 	memset( &bezPts[0], 0, sizeof(bezPts[0]) * 4 );
 
-	bezPts[0].x = (long)x1;
-	bezPts[0].y = (long)y1;
+	bezPts[0].x = (int32)x1;
+	bezPts[0].y = (int32)y1;
 
-	bezPts[1].x = (long)x2;
-	bezPts[1].y = (long)y2;
+	bezPts[1].x = (int32)x2;
+	bezPts[1].y = (int32)y2;
 
-	bezPts[2].x = (long)x3;
-	bezPts[2].y = (long)y3;
+	bezPts[2].x = (int32)x3;
+	bezPts[2].y = (int32)y3;
 
-	bezPts[3].x = (long)x4;
-	bezPts[3].y = (long)y4;
+	bezPts[3].x = (int32)x4;
+	bezPts[3].y = (int32)y4;
 
 	if ( inFillPath_ ){
 		::BeginPath( dc_ );
@@ -1245,12 +1245,12 @@ void Win32Context::curve(const double & x1, const double & y1, const double & x2
 
 void Win32Context::lineTo(const double & x, const double & y)
 {
-	::LineTo( dc_, (long)x, (long)y );
+	::LineTo( dc_, (int32)x, (int32)y );
 }
 
 void Win32Context::moveTo(const double & x, const double & y)
 {
-	::MoveToEx( dc_, (long)x, (long)y, NULL );
+	::MoveToEx( dc_, (int32)x, (int32)y, NULL );
 }
 
 
@@ -1265,7 +1265,7 @@ void Win32Context::setOrigin( const double& x, const double& y )
 	checkHandle();
 
 	POINT pt = {0,0};
-	int err = ::SetViewportOrgEx( dc_, (long)x, (long)y, &pt );
+	int err = ::SetViewportOrgEx( dc_, (int32)x, (int32)y, &pt );
 	if ( !err ) {
 		err = GetLastError();
 	}
@@ -1303,7 +1303,7 @@ void Win32Context::copyContext( const Rect& sourceRect,
 
 
 
-		::BitBlt( dc_, (long)destRect.left_, (long)destRect.top_,
+		::BitBlt( dc_, (int32)destRect.left_, (int32)destRect.top_,
 					destRect.getWidth(), destRect.getHeight(),
 					dc, sourceRect.left_, sourceRect.top_, SRCCOPY );
 
@@ -1345,7 +1345,7 @@ void Win32Context::setContextID( OSHandleID handle )
 }
 
 
-void Win32Context::textAt( const Rect& bounds, const String& text, const long& drawOptions )
+void Win32Context::textAt( const Rect& bounds, const String& text, const int32& drawOptions )
 {
 	//checkHandle();
 	if ( NULL == context_ ){
@@ -1359,10 +1359,10 @@ void Win32Context::textAt( const Rect& bounds, const String& text, const long& d
 
 
 	RECT r = {0,0,0,0};
-	r.left = (long)bounds.left_;
-	r.right = (long)bounds.right_;
-	r.top = (long)bounds.top_;
-	r.bottom = (long)bounds.bottom_;
+	r.left = (int32)bounds.left_;
+	r.right = (int32)bounds.right_;
+	r.top = (int32)bounds.top_;
+	r.bottom = (int32)bounds.bottom_;
 
 
 	if ( r.left > r.right ) {
@@ -1653,8 +1653,8 @@ bool Win32Context::isTextAlignedToBaseline()
 *JC: This is an awfult lot of shit to just draw a transparent bmp.
 *Maybe this will be revisited ???
 */
-void Win32Context::drawTransparentBitmap(HDC hdc, HBITMAP hBitmap, long xStart,
-                           long yStart, COLORREF cTransparentColor)
+void Win32Context::drawTransparentBitmap(HDC hdc, HBITMAP hBitmap, int32 xStart,
+                           int32 yStart, COLORREF cTransparentColor)
 {
 
 	BITMAP     bm;
@@ -1768,10 +1768,10 @@ void Win32Context::setClippingRect( Rect* clipRect )
 
 	if ( NULL != clipRect ) {
 		if ( !clipRect->isNull() ) {
-			clipRGN_ = CreateRectRgn( (long)clipRect->left_ + origin_.x_,
-										(long)clipRect->top_ + origin_.y_,
-										(long)clipRect->right_ + origin_.x_,
-										(long)clipRect->bottom_  + origin_.y_);
+			clipRGN_ = CreateRectRgn( (int32)clipRect->left_ + origin_.x_,
+										(int32)clipRect->top_ + origin_.y_,
+										(int32)clipRect->right_ + origin_.x_,
+										(int32)clipRect->bottom_  + origin_.y_);
 		}
 		else {
 			clipRGN_ = NULL;
@@ -1811,12 +1811,12 @@ void Win32Context::setClippingPath( Path* clippingPath )
 
 			switch ( pt.type_ ){
 				case PathPoint::ptMoveTo: {
-					MoveToEx( dc_, (long)pt.point_.x_ + origin_.x_, (long)pt.point_.y_ + origin_.y_, NULL );
+					MoveToEx( dc_, (int32)pt.point_.x_ + origin_.x_, (int32)pt.point_.y_ + origin_.y_, NULL );
 				}
 				break;
 
 				case PathPoint::ptLineTo: {
-					LineTo( dc_, (long)pt.point_.x_ + origin_.x_, (long)pt.point_.y_ + origin_.y_ );
+					LineTo( dc_, (int32)pt.point_.x_ + origin_.x_, (int32)pt.point_.y_ + origin_.y_ );
 				}
 				break;
 
@@ -1831,7 +1831,7 @@ void Win32Context::setClippingPath( Path* clippingPath )
 				break;
 
 				case PathPoint::ptClose: {
-					LineTo( dc_, (long)pt.point_.x_ + origin_.x_, (long)pt.point_.y_ + origin_.y_ );
+					LineTo( dc_, (int32)pt.point_.x_ + origin_.x_, (int32)pt.point_.y_ + origin_.y_ );
 				}
 				break;
 			}
@@ -1857,10 +1857,10 @@ void Win32Context::drawThemeSelectionRect( Rect* rect, DrawUIState& state )
 	checkHandle();
 
 	RECT r = {0,0,0,0};
-	r.left = (long)rect->left_;
-	r.top = (long)rect->top_;
-	r.right = (long)rect->right_;
-	r.bottom = (long)rect->bottom_;
+	r.left = (int32)rect->left_;
+	r.top = (int32)rect->top_;
+	r.right = (int32)rect->right_;
+	r.bottom = (int32)rect->bottom_;
 
 	int err = ::DrawFocusRect( dc_, &r );
 
@@ -1872,10 +1872,10 @@ void Win32Context::drawThemeFocusRect( Rect* rect, DrawUIState& state )
 	checkHandle();
 
 	RECT r = {0,0,0,0};
-	r.left = (long)rect->left_;
-	r.top = (long)rect->top_;
-	r.right = (long)rect->right_;
-	r.bottom = (long)rect->bottom_;
+	r.left = (int32)rect->left_;
+	r.top = (int32)rect->top_;
+	r.right = (int32)rect->right_;
+	r.bottom = (int32)rect->bottom_;
 
 	int err = ::DrawFocusRect( dc_, &r );
 
@@ -2256,10 +2256,10 @@ void Win32Context::drawThemeCheckboxRect( Rect* rect, ButtonState& state )
 
 
 		RECT r = {0,0,0,0};
-		r.left = (long)tmp.left_;
-		r.top = (long)tmp.top_;
-		r.right = (long)tmp.right_;
-		r.bottom = (long)tmp.bottom_;
+		r.left = (int32)tmp.left_;
+		r.top = (int32)tmp.top_;
+		r.right = (int32)tmp.right_;
+		r.bottom = (int32)tmp.bottom_;
 		UINT chkState =  (state.isToggled() || state.isPressed()) ?  DFCS_BUTTONCHECK | DFCS_CHECKED : DFCS_BUTTONCHECK;
 
 		int err = ::DrawFrameControl( dc_, &r, DFC_BUTTON, chkState );
@@ -2279,7 +2279,7 @@ void Win32Context::drawThemeCheckboxRect( Rect* rect, ButtonState& state )
 
 		releaseHandle();
 
-		long flags = GraphicsContext::tdoCenterVertAlign;
+		int32 flags = GraphicsContext::tdoCenterVertAlign;
 		context_->textBoundedBy( &tmp, state.buttonCaption_, flags );
 	}
 }
@@ -2392,10 +2392,10 @@ void Win32Context::drawThemeRadioButtonRect( Rect* rect, ButtonState& state )
 
 
 		RECT r = {0,0,0,0};
-		r.left = (long)tmp.left_;
-		r.top = (long)tmp.top_;
-		r.right = (long)tmp.right_;
-		r.bottom = (long)tmp.bottom_;
+		r.left = (int32)tmp.left_;
+		r.top = (int32)tmp.top_;
+		r.right = (int32)tmp.right_;
+		r.bottom = (int32)tmp.bottom_;
 
 		UINT btnState =  state.isToggled() ?  DFCS_BUTTONRADIO | DFCS_CHECKED : DFCS_BUTTONRADIO;
 
@@ -2416,7 +2416,7 @@ void Win32Context::drawThemeRadioButtonRect( Rect* rect, ButtonState& state )
 		releaseHandle();
 
 
-		long flags = GraphicsContext::tdoCenterVertAlign;
+		int32 flags = GraphicsContext::tdoCenterVertAlign;
 		context_->textBoundedBy( &tmp, state.buttonCaption_, flags );
 	}
 }
@@ -2630,10 +2630,10 @@ void Win32Context::drawThemeScrollButtonRect( Rect* rect, ScrollBarState& state 
 	checkHandle();
 
 	RECT r = {0,0,0,0};
-	r.left = (long)rect->left_;
-	r.top = (long)rect->top_;
-	r.right = (long)rect->right_;
-	r.bottom = (long)rect->bottom_;
+	r.left = (int32)rect->left_;
+	r.top = (int32)rect->top_;
+	r.right = (int32)rect->right_;
+	r.bottom = (int32)rect->bottom_;
 
 
 	HTHEME theme = NULL;
@@ -2726,10 +2726,10 @@ void Win32Context::drawThemeDisclosureButton( Rect* rect, DisclosureButtonState&
 	HTHEME theme = NULL;
 
 	RECT r = {0,0,0,0};
-	r.left = (long)rect->left_;
-	r.top = (long)rect->top_;
-	r.right = (long)rect->right_;
-	r.bottom = (long)rect->bottom_;
+	r.left = (int32)rect->left_;
+	r.top = (int32)rect->top_;
+	r.right = (int32)rect->right_;
+	r.bottom = (int32)rect->bottom_;
 
 
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
@@ -2768,10 +2768,10 @@ void Win32Context::drawThemeTab( Rect* rect, TabState& state )
 	HTHEME theme = NULL;
 
 	RECT r = {0,0,0,0};
-	r.left = (long)rect->left_;
-	r.top = (long)rect->top_;
-	r.right = (long)rect->right_;
-	r.bottom = (long)rect->bottom_;
+	r.left = (int32)rect->left_;
+	r.top = (int32)rect->top_;
+	r.right = (int32)rect->right_;
+	r.bottom = (int32)rect->bottom_;
 
 
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
@@ -2890,7 +2890,7 @@ void Win32Context::drawThemeTab( Rect* rect, TabState& state )
 		
 		tmpR.inflate( -4, 0 );
 		tmpR.normalize();
-		long flags = GraphicsContext::tdoCenterHorzAlign | GraphicsContext::tdoCenterVertAlign;
+		int32 flags = GraphicsContext::tdoCenterHorzAlign | GraphicsContext::tdoCenterVertAlign;
 		context_->textBoundedBy( &tmpR, state.tabCaption_, flags );
 		
 		context_->getCurrentFont()->setColor( &oldFontColor );
@@ -2904,10 +2904,10 @@ void Win32Context::drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& 
 	HTHEME theme = NULL;
 
 	RECT r = {0,0,0,0};
-	r.left = (long)rect->left_;
-	r.top = (long)rect->top_;
-	r.right = (long)rect->right_;
-	r.bottom = (long)rect->bottom_;
+	r.left = (int32)rect->left_;
+	r.top = (int32)rect->top_;
+	r.right = (int32)rect->right_;
+	r.bottom = (int32)rect->bottom_;
 
 
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
@@ -3116,10 +3116,10 @@ void Win32Context::drawThemeTabPage( Rect* rect, DrawUIState& state )
 	HTHEME theme = NULL;
 
 	RECT r = {0,0,0,0};
-	r.left = (long)rect->left_;
-	r.top = (long)rect->top_;
-	r.right = (long)rect->right_;
-	r.bottom = (long)rect->bottom_;
+	r.left = (int32)rect->left_;
+	r.top = (int32)rect->top_;
+	r.right = (int32)rect->right_;
+	r.bottom = (int32)rect->bottom_;
 
 
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
@@ -3160,10 +3160,10 @@ void Win32Context::drawThemeTabContent( Rect* rect, DrawUIState& state )
 	HTHEME theme = NULL;
 
 	RECT r = {0,0,0,0};
-	r.left = (long)rect->left_;
-	r.top = (long)rect->top_;
-	r.right = (long)rect->right_;
-	r.bottom = (long)rect->bottom_;
+	r.left = (int32)rect->left_;
+	r.top = (int32)rect->top_;
+	r.right = (int32)rect->right_;
+	r.bottom = (int32)rect->bottom_;
 
 
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
@@ -3204,10 +3204,10 @@ void Win32Context::drawThemeTickMarks( Rect* rect, SliderState& state )
 	HTHEME theme = NULL;
 
 	RECT r = {0,0,0,0};
-	r.left = (long)rect->left_;
-	r.top = (long)rect->top_;
-	r.right = (long)rect->right_;
-	r.bottom = (long)rect->bottom_;
+	r.left = (int32)rect->left_;
+	r.top = (int32)rect->top_;
+	r.right = (int32)rect->right_;
+	r.bottom = (int32)rect->bottom_;
 
 
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
@@ -3322,7 +3322,7 @@ void Win32Context::drawThemeTickMarks( Rect* rect, SliderState& state )
 		incr = length/state.tickMarkFrequency_;
 
 		int count = state.tickMarkFrequency_;
-		for (long i=0;i<=count;i++ ) {
+		for (int32 i=0;i<=count;i++ ) {
 			if ( state.isVertical() ) {
 				tick2.top = tick1.top = tickVal;
 				tick1.bottom = tick1.top + val.cy;
@@ -3361,7 +3361,7 @@ void Win32Context::drawThemeTickMarks( Rect* rect, SliderState& state )
 		double y = rect->top_;
 		double x = rect->left_;
 
-		for (long i=0;i<=state.tickMarkFrequency_;i++ ) {
+		for (int32 i=0;i<=state.tickMarkFrequency_;i++ ) {
 			if ( state.isVertical() ) {
 
 
@@ -3419,10 +3419,10 @@ void Win32Context::drawThemeSlider( Rect* rect, SliderState& state )
 	HTHEME theme = NULL;
 
 	RECT r = {0,0,0,0};
-	r.left = (long)rect->left_;
-	r.top = (long)rect->top_;
-	r.right = (long)rect->right_;
-	r.bottom = (long)rect->bottom_;
+	r.left = (int32)rect->left_;
+	r.top = (int32)rect->top_;
+	r.right = (int32)rect->right_;
+	r.bottom = (int32)rect->bottom_;
 
 
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
@@ -3837,10 +3837,10 @@ void Win32Context::drawThemeProgress( Rect* rect, ProgressState& state )
 	HTHEME theme = NULL;
 
 	RECT r = {0,0,0,0};
-	r.left = (long)rect->left_;
-	r.top = (long)rect->top_;
-	r.right = (long)rect->right_;
-	r.bottom = (long)rect->bottom_;
+	r.left = (int32)rect->left_;
+	r.top = (int32)rect->top_;
+	r.right = (int32)rect->right_;
+	r.bottom = (int32)rect->bottom_;
 
 
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
@@ -4010,7 +4010,7 @@ void Win32Context::drawThemeProgress( Rect* rect, ProgressState& state )
 				textBounds.right_ = textBounds.left_ + w;
 			}
 
-			long drawOptions = GraphicsContext::tdoNone;
+			int32 drawOptions = GraphicsContext::tdoNone;
 			drawOptions |= GraphicsContext::tdoCenterHorzAlign;
 			drawOptions |= GraphicsContext::tdoCenterVertAlign;
 
@@ -4043,10 +4043,10 @@ void Win32Context::drawThemeHeader( Rect* rect, ButtonState& state )
 	checkHandle();
 
 	RECT r = {0,0,0,0};
-	r.left = (long)rect->left_;
-	r.top = (long)rect->top_;
-	r.right = (long)rect->right_;
-	r.bottom = (long)rect->bottom_;
+	r.left = (int32)rect->left_;
+	r.top = (int32)rect->top_;
+	r.right = (int32)rect->right_;
+	r.bottom = (int32)rect->bottom_;
 
 	HTHEME theme = NULL;
 
@@ -4119,15 +4119,15 @@ with the native windowing systems default look and feel.
 use a mask or 1 or more values of type ContextPeer::EdgeType
 to indicate which sides of the rect to draw an edge on
 */
-void Win32Context::drawThemeEdge( Rect* rect, DrawUIState& state, const long& edgeSides, const long& edgeStyle )
+void Win32Context::drawThemeEdge( Rect* rect, DrawUIState& state, const int32& edgeSides, const int32& edgeStyle )
 {
 	checkHandle();
 
 	RECT r = {0,0,0,0};
-	r.left = (long)rect->left_;
-	r.top = (long)rect->top_;
-	r.right = (long)rect->right_;
-	r.bottom = (long)rect->bottom_;
+	r.left = (int32)rect->left_;
+	r.top = (int32)rect->top_;
+	r.right = (int32)rect->right_;
+	r.bottom = (int32)rect->bottom_;
 
 	HTHEME theme = NULL;
 
@@ -4306,10 +4306,10 @@ void Win32Context::drawThemeMenuItem( Rect* rect, MenuState& state )
 	RECT menuRect;
 	memset(&menuRect,0,sizeof(menuRect));
 
-	menuRect.left = (long)rect->left_;
-	menuRect.top = (long)rect->top_;
-	menuRect.right = (long)rect->right_;
-	menuRect.bottom = (long)rect->bottom_;
+	menuRect.left = (int32)rect->left_;
+	menuRect.top = (int32)rect->top_;
+	menuRect.right = (int32)rect->right_;
+	menuRect.bottom = (int32)rect->bottom_;
 
 
 	HTHEME theme = NULL;
@@ -4422,10 +4422,10 @@ void Win32Context::drawThemeMenuItemText( Rect* rect, MenuState& state )
 	RECT rcText;
 	memset(&rcText,0,sizeof(rcText));
 
-	rcText.left = (long)rect->left_;
-	rcText.top = (long)rect->top_;
-	rcText.right = (long)rect->right_;
-	rcText.bottom = (long)rect->bottom_;
+	rcText.left = (int32)rect->left_;
+	rcText.top = (int32)rect->top_;
+	rcText.right = (int32)rect->right_;
+	rcText.bottom = (int32)rect->bottom_;
 
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"MENU" );
@@ -4711,7 +4711,7 @@ void Win32Context::prepareDCWithContextFont( HFONT& fontHandle )
 	}
 }
 
-bool Win32Context::prepareForDrawing( long drawingOperation )
+bool Win32Context::prepareForDrawing( int32 drawingOperation )
 {
 	bool result = false;
 
@@ -4860,7 +4860,7 @@ bool Win32Context::prepareForDrawing( long drawingOperation )
 	return result;
 }
 
-void Win32Context::finishedDrawing( long drawingOperation )
+void Win32Context::finishedDrawing( int32 drawingOperation )
 {
 
 	if ( NULL != dc_ ){

@@ -121,7 +121,7 @@ public:
 	void clear();
 protected:
 	Path::WindingRule windingRule_;
-	long currentMoveToIndex_;
+	int32 currentMoveToIndex_;
 	std::vector<PathPoint> points_;
 
 };

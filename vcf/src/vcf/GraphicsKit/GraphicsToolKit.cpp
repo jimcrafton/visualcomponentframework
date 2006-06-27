@@ -34,7 +34,7 @@ GraphicsToolkit::~GraphicsToolkit()
 {
 	destroySystemColorNameMap();
 
-	std::map<unsigned long,Color*>::iterator it = systemColors_.begin();
+	std::map<uint32,Color*>::iterator it = systemColors_.begin();
 	while ( it != systemColors_.end() ){
 		delete it->second;
 		it++;
@@ -56,7 +56,7 @@ GraphicsToolkit::~GraphicsToolkit()
 
 
 
-ContextPeer* GraphicsToolkit::createContextPeer( const unsigned long& width, const unsigned long& height )
+ContextPeer* GraphicsToolkit::createContextPeer( const uint32& width, const uint32& height )
 {
 	return GraphicsToolkit::graphicsToolkitInstance->internal_createContextPeer( width, height );
 }
@@ -77,7 +77,7 @@ FontPeer* GraphicsToolkit::createFontPeer( const String& fontName, const double&
 }
 
 
-Image* GraphicsToolkit::createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType )
+Image* GraphicsToolkit::createImage( const uint32& width, const uint32& height, const Image::ImageType& imageType )
 {
 	return GraphicsToolkit::graphicsToolkitInstance->internal_createImage( width, height, imageType );
 }
@@ -124,7 +124,7 @@ ImageLoader* GraphicsToolkit::getImageLoaderForFileName( const String& fileName 
 	return GraphicsToolkit::graphicsToolkitInstance->internal_getImageLoaderForFileName( fileName );
 }
 
-Color* GraphicsToolkit::getSystemColor( const unsigned long& systemColor )
+Color* GraphicsToolkit::getSystemColor( const uint32& systemColor )
 {
 	return GraphicsToolkit::graphicsToolkitInstance->internal_getSystemColor( systemColor );
 }
@@ -337,10 +337,10 @@ ImageLoader* GraphicsToolkit::internal_getImageLoaderForFileName( const String& 
 	return result;
 }
 
-Color* GraphicsToolkit::internal_getSystemColor( const unsigned long& systemColor )
+Color* GraphicsToolkit::internal_getSystemColor( const uint32& systemColor )
 {
 	Color* result = NULL;
-	std::map<unsigned long,Color*>::iterator found = this->systemColors_.find( systemColor );
+	std::map<uint32,Color*>::iterator found = this->systemColors_.find( systemColor );
 	if ( found != systemColors_.end() ){
 		result = found->second;
 	}

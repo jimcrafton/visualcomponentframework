@@ -17,7 +17,7 @@ class OSXImage : public AbstractImage
 public:
 	OSXImage();
 
-	OSXImage( const unsigned long& width, const unsigned long& height );
+	OSXImage( const uint32& width, const uint32& height );
 
 	OSXImage( GraphicsContext* context, Rect* rect );
 
@@ -27,7 +27,7 @@ public:
 
 	void init();
 
-	virtual void setSize( const unsigned long & width, const unsigned long & height );
+	virtual void setSize( const uint32 & width, const uint32 & height );
 
 	virtual void beginDrawing();
 

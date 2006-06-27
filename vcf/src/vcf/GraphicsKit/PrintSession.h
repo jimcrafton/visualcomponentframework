@@ -202,22 +202,22 @@ namespace VCF {
 		/**
 		Sets the page number to start printing with
 		*/
-		void setStartPage( const ulong32& startPage );
+		void setStartPage( const uint32& startPage );
 
 		/**
 		returns the page this session wil use to start printing
 		*/
-		ulong32 getStartPage();
+		uint32 getStartPage();
 
 		/**
 		Sets the last page to print.
 		*/
-		void setEndPage( const ulong32& endPage );
+		void setEndPage( const uint32& endPage );
 
 		/**
 		Returns the last page to print for this session.
 		*/
-		ulong32 getEndPage();
+		uint32 getEndPage();
 
 		/**
 		Returns a vector of printable pages. The default, assuming the 
@@ -244,9 +244,9 @@ namespace VCF {
 			3		9
 		\endcode
 		*/
-		std::vector<ulong32> getPrintablePages();
+		std::vector<uint32> getPrintablePages();
 
-		void setPrintablePages( const std::vector<ulong32>& printablePages );
+		void setPrintablePages( const std::vector<uint32>& printablePages );
 
 		/**
 		Returns the page rect in pixel units.

@@ -115,8 +115,8 @@ void GTKGraphicsToolkit::initSystemFont()
 
 
 ContextPeer*
-GTKGraphicsToolkit::internal_createContextPeer( const unsigned long& width,
-                                                const unsigned long& height )
+GTKGraphicsToolkit::internal_createContextPeer( const uint32& width,
+                                                const uint32& height )
 {
 	return new GTKContext( width, height );
 }
@@ -138,7 +138,7 @@ FontPeer* GTKGraphicsToolkit::internal_createFontPeer( const String& fontName,
 }
 
 
-Image* GTKGraphicsToolkit::internal_createImage( const unsigned long& width, const unsigned long& height, const Image::ImageType& imageType )
+Image* GTKGraphicsToolkit::internal_createImage( const uint32& width, const uint32& height, const Image::ImageType& imageType )
 {
 	return new GTKImage( width, height );
 }

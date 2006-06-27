@@ -23,7 +23,7 @@ GrayScaleImage::~GrayScaleImage()
 
 }
 
-void GrayScaleImage::setSize( const unsigned long & width, const unsigned long & height )
+void GrayScaleImage::setSize( const uint32 & width, const uint32 & height )
 {
 	AbstractImage::setSize( width, height );
 }

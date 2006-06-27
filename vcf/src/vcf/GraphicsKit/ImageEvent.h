@@ -43,13 +43,13 @@ public:
 		return *this;
 	}
 
-	unsigned long getNewWidth();
+	uint32 getNewWidth();
 
-	void setNewWidth( const unsigned long& newWidth );
+	void setNewWidth( const uint32& newWidth );
 
-	unsigned long getNewHeight();
+	uint32 getNewHeight();
 
-	void setNewHeight( const unsigned long& newHeight );
+	void setNewHeight( const uint32& newHeight );
 
 	void init();
 
@@ -58,8 +58,8 @@ public:
 	}
 
 private:
-	unsigned long newWidth_;
-	unsigned long newHeight_;
+	uint32 newWidth_;
+	uint32 newHeight_;
 };
 
 

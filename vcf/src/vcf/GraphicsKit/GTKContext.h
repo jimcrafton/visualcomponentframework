@@ -22,7 +22,7 @@ public:
 
 	GTKContext();
 
-	GTKContext( const unsigned long& width, const unsigned long& height );
+	GTKContext( const uint32& width, const uint32& height );
 
 	GTKContext( OSHandleID contextID );
 
@@ -38,9 +38,9 @@ public:
 
 	virtual void setContextID( OSHandleID contextID );
 
-	virtual bool prepareForDrawing( long drawingOperation );
+	virtual bool prepareForDrawing( int32 drawingOperation );
 
-	virtual void finishedDrawing( long drawingOperation );
+	virtual void finishedDrawing( int32 drawingOperation );
 
 	virtual void setClippingPath( Path* clippingPath );
 
@@ -52,7 +52,7 @@ public:
 
 	virtual void textAt( const Rect& bounds,
 	                     const String & text,
-	                     const long& drawOptions = 0 );
+	                     const int32& drawOptions = 0 );
 
 	virtual double getTextWidth( const String& text );
 
@@ -163,8 +163,8 @@ public:
 	virtual void drawThemeHeader( Rect* rect, ButtonState& state );
 
 	virtual void drawThemeEdge( Rect* rect, DrawUIState& state,
-	                            const long& edgeSides,
-	                            const long& edgeStyle );
+	                            const int32& edgeSides,
+	                            const int32& edgeStyle );
 
 	virtual void drawThemeSizeGripper( Rect* rect, DrawUIState& state );
 
@@ -193,7 +193,7 @@ public:
 	                                           const bool& topButton,
 	                                           const bool& isPressed );
 
-	virtual void drawDisclosureButton( Rect* rect, const long& state );
+	virtual void drawDisclosureButton( Rect* rect, const int32& state );
 
 	virtual void drawHorizontalScrollButtonRect( Rect* rect,
 	                                             const bool& leftButton,
@@ -212,8 +212,8 @@ public:
 	virtual void drawHeader( Rect* rect );
 
 	virtual void drawEdge( Rect* rect,
-	                       const long& edgeSides,
-	                       const long& edgeStyle );
+	                       const int32& edgeSides,
+	                       const int32& edgeStyle );
 
 	virtual void drawSizeGripper( Rect* rect );
 
@@ -245,8 +245,8 @@ protected:
 	PangoContext* pangoCtx_;
 	PangoLayout* pangoLayout_;
 
-	unsigned long pixmapWidth_;
-	unsigned long pixmapHeight_;
+	uint32 pixmapWidth_;
+	uint32 pixmapHeight_;
 
 	//std::vector<PointOperation*> pathOperations_;
 	//std::vector<TextOperation*> textOperations_;
