@@ -125,14 +125,7 @@ void BasicStroke::render( Path * path )
 				pathIt++;
 			}
 
-			Matrix2D& currentXFrm = *context_->getCurrentTransform();
-
-			agg::trans_affine mat( currentXFrm[Matrix2D::mei00],
-									currentXFrm[Matrix2D::mei01],
-									currentXFrm[Matrix2D::mei10],
-									currentXFrm[Matrix2D::mei11],
-									currentXFrm[Matrix2D::mei20],
-									currentXFrm[Matrix2D::mei21] );
+			agg::trans_affine mat= *context_->getCurrentTransform();
 			
 
 			//JC

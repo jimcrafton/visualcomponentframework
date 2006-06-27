@@ -36,6 +36,7 @@ public:
 	}
 
 	~RenderArea() {
+		
 		if ( NULL != renderBuffer ) {
 			renderBuffer->attach( NULL, 0, 0, 0 );
 			delete renderBuffer;
@@ -1679,6 +1680,11 @@ void GraphicsContext::resetRenderAreaAlpha()
 Image* GraphicsContext::getRenderArea()
 {
 	return renderArea_->renderArea;
+}
+
+bool GraphicsContext::hasRenderArea()
+{
+	return NULL != renderArea_->renderArea;
 }
 
 agg::rendering_buffer* GraphicsContext::getRenderingBuffer()
