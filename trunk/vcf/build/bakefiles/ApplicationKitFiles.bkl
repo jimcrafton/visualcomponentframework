@@ -23,6 +23,7 @@
         vcf/ApplicationKit/ApplicationException.h
         vcf/ApplicationKit/ApplicationKit.h
         vcf/ApplicationKit/ApplicationKitPrivate.h
+        vcf/ApplicationKit/ApplicationKitRTTI.inl
         vcf/ApplicationKit/ApplicationKitSelectLib.h
         vcf/ApplicationKit/ApplicationPeer.h
         vcf/ApplicationKit/ApplicationResourceBundle.h
@@ -203,7 +204,6 @@
         vcf/ApplicationKit/WindowEvent.h
         vcf/ApplicationKit/WindowPeer.h
         vcf/ApplicationKit/Wizard.h
-        ApplicationKitRTTI.inl
     </set>
 
     <set var="APPLICATIONKIT_SRC" hints="files">

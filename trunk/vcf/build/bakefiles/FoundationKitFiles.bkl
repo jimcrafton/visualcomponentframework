@@ -248,10 +248,10 @@
         vcf/FoundationKit/LinuxProcessPeer.h
         vcf/FoundationKit/LinuxRegistry.h
         vcf/FoundationKit/LinuxResourceBundle.h
+        vcf/FoundationKit/LinuxRunLoopPeer.h
         vcf/FoundationKit/LinuxSemaphorePeer.h
         vcf/FoundationKit/LinuxSystemPeer.h
         vcf/FoundationKit/LinuxSystemToolkit.h
-	vcf/FoundationKit/LinuxRunLoopPeer.h
     </set>
 
     <set var="FOUNDATIONKIT_LINUX_SRC" hints="files">
@@ -265,10 +265,10 @@
         vcf/FoundationKit/LinuxProcessPeer.cpp
         vcf/FoundationKit/LinuxRegistry.cpp
         vcf/FoundationKit/LinuxResourceBundle.cpp
+        vcf/FoundationKit/LinuxRunLoopPeer.cpp
         vcf/FoundationKit/LinuxSemaphorePeer.cpp
         vcf/FoundationKit/LinuxSystemPeer.cpp
         vcf/FoundationKit/LinuxSystemToolkit.cpp
-	vcf/FoundationKit/LinuxRunLoopPeer.cpp
     </set>
 
     <set var="FOUNDATIONKIT_OSX_HDR" hints="files">
