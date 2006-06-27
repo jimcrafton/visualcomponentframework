@@ -1677,6 +1677,7 @@ void GraphicsContext::resetRenderAreaAlpha()
 	}
 }
 
+
 Image* GraphicsContext::getRenderArea()
 {
 	return renderArea_->renderArea;
@@ -1747,7 +1748,7 @@ void GraphicsContext::deleteRenderArea()
 void GraphicsContext::flushRenderArea()
 {
 	if ( viewableBounds_.isNull() ) {
-		drawImage( renderArea_->renderAreaRect.getTopLeft(), renderArea_->renderArea );
+		bitBlit( renderArea_->renderAreaRect.getTopLeft(), renderArea_->renderArea );
 	}
 	else {
 

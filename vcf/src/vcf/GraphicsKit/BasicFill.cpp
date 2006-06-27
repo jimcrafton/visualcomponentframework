@@ -105,6 +105,7 @@ void BasicFill::render( Path* path )
 					break;
 
 					case PathPoint::ptClose: {
+						fillPath.line_to( pt.point_.x_, pt.point_.y_ );
 						fillPath.close_polygon();
 					}
 					break;
