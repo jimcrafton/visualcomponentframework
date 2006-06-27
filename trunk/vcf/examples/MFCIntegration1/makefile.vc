@@ -20,9 +20,7 @@ MFCINTEGRATION1_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) \
 	/Fd.\MFCIntegration1$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb \
 	$(____DEBUG_RUNTIME_LIBS_2_p) $(__OPTIMIZE_4) $(____OPTION_DEBUG_12_p) \
 	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_WINDOWS \
-	$(__FOUNDATIONKIT_DLL_p) /D_AFXDLL /GR /EHsc /YX"StdAfx.h" \
-	/Fp"..\..\lib\$(OBJDIR)\examples\MFCIntegration1\MFCIntegration1$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pch" \
-	$(CPPFLAGS) $(CXXFLAGS)
+	$(__FOUNDATIONKIT_DLL_p) /D_AFXDLL /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
 MFCINTEGRATION1_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\examples\MFCIntegration1\MFCIntegration1_ChildView.obj \
 	..\..\lib\$(OBJDIR)\examples\MFCIntegration1\MFCIntegration1_MainFrm.obj \
