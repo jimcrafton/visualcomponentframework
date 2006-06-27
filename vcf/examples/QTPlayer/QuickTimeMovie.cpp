@@ -415,10 +415,10 @@ double QuickTimeMovie::getCurrentTimeValue()
 
 bool QuickTimeMovie::hasMovieTrack()
 {
-	ulong32 count = GetMovieTrackCount( qtMovie_ );
+	uint32 count = GetMovieTrackCount( qtMovie_ );
 
 
-	for (ulong32 index = 1; index <= count; index++) {
+	for (uint32 index = 1; index <= count; index++) {
 		Track track = GetMovieIndTrack(qtMovie_, index);
 
 		OSType dwType = 0;

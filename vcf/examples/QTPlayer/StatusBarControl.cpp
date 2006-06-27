@@ -90,7 +90,7 @@ void StatusBarControl::addStatusPane( const double& width , const VCF::String& t
 	statusPane->setVerticalAlignment( tvaTextCenter );
 }
 
-void StatusBarControl::removeStatusPane( VCF::ulong32 index )
+void StatusBarControl::removeStatusPane( VCF::uint32 index )
 {
 	Control* child = getContainer()->getControlAtIndex(index+1);
 	getContainer()->remove( child );
@@ -109,7 +109,7 @@ void StatusBarControl::setStatusText( int index, const VCF::String& text )
 	}
 }
 
-Control* StatusBarControl::getStatusPaneControl( VCF::ulong32 index )
+Control* StatusBarControl::getStatusPaneControl( VCF::uint32 index )
 {
 	return getContainer()->getControlAtIndex(index+1);
 }

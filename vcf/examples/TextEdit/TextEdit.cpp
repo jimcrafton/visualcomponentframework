@@ -59,8 +59,8 @@ void TextEdit::onPrint( VCF::Event* e )
 
 		Control* textControl = (Control*)currentDoc->getWindow()->findComponent( "EditControl" );
 		TextEditPeer* textPeer = dynamic_cast<TextEditPeer*>(textControl->getPeer());
-		ulong32 pageCount = textPeer->getTotalPrintablePageCount( pc );
-		ulong32 page = printSession.getStartPage();
+		uint32 pageCount = textPeer->getTotalPrintablePageCount( pc );
+		uint32 page = printSession.getStartPage();
 		while ( page <= pageCount ) {
 
 			printSession.beginPage( pc );
@@ -193,7 +193,7 @@ bool TextEdit::initRunningApplication()
 		
 		MenuItem* root = MenuManager::getMainMenu()->getRootMenuItem();
 		MenuItem* edit = root->findChildNamedSimilarTo( "edit" );
-		ulong32 editCount = edit->getChildCount();
+		uint32 editCount = edit->getChildCount();
 		
 		
 		MenuItem* find = new DefaultMenuItem( "&Find..." );	
