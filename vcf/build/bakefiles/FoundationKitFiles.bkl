@@ -116,13 +116,11 @@
         vcf/FoundationKit/TypeCastException.h
         vcf/FoundationKit/VariantData.h
         vcf/FoundationKit/VariantDataStream.h
-        vcf/FoundationKit/VCF.h
         vcf/FoundationKit/VCFChar.h
         vcf/FoundationKit/VCFMath.h
         vcf/FoundationKit/VCFProcess.h
         vcf/FoundationKit/VCFRTTIImpl.h
         vcf/FoundationKit/VCFString.h
-        vcf/FoundationKit/VCFulong64.h
         vcf/FoundationKit/Waitable.h
         vcf/FoundationKit/WarningsOffVc.h
         vcf/FoundationKit/XMLParser.h
