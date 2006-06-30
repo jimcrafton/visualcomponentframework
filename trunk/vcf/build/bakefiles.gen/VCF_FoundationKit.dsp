@@ -1490,10 +1490,6 @@ SOURCE=..\..\src\vcf\FoundationKit\TypeCastException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VCF.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\vcf\FoundationKit\VCFChar.h
 # End Source File
 # Begin Source File
@@ -1511,10 +1507,6 @@ SOURCE=..\..\src\vcf\FoundationKit\VCFRTTIImpl.h
 # Begin Source File
 
 SOURCE=..\..\src\vcf\FoundationKit\VCFString.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\vcf\FoundationKit\VCFulong64.h
 # End Source File
 # Begin Source File
 
