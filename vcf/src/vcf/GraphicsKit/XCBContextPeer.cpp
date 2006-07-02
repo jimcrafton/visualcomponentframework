@@ -10,6 +10,7 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/XCBContextPeer.h"
 #include "vcf/GraphicsKit/XCBFontPeer.h"
 #include "vcf/GraphicsKit/DrawUIState.h"
+#include "vcf/GraphicsKit/XCBImagePeer.h"
 
 #include "thirdparty/common/agg/include/agg_font_freetype.h"
 #include "thirdparty/common/agg/include/agg_conv_dash.h"
@@ -812,7 +813,15 @@ void XCBContextPeer::setAntiAliasingOn( bool antiAliasingOn )
 
 void XCBContextPeer::drawImage( const double& x, const double& y, Rect* imageBounds, Image* image, int compositeMode )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	XCBImagePeer *srcImagePeer = dynamic_cast<XCBImagePeer*>(image);
+	if(srcImagePeer != NULL) {
+		for(int32 srcY = 0; srcY<imageBounds->getHeight(); ++srcY) {
+			for(int32 srcX = 0; srcX<imageBounds->getWidth(); ++srcX) {
+				CARD32 pixel = XCBImageGetPixel(const_cast<XCBImage*>(srcImagePeer->getImageData()), srcX, srcY);
+				XCBImagePutPixel(drawingSurface_->drawableImage, x+srcX, y+srcY, pixel);
+			}
+		}
+	}
 }
 
 void XCBContextPeer::bitBlit( const double& x, const double& y, Rect* imageBounds, Image* image )

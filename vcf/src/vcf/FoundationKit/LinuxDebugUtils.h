@@ -9,6 +9,11 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
+#define VCF_DEBUG_CODE(statement) \
+{ \
+	statement \
+} 
+
 namespace VCF
 {
 	namespace LinuxDebugUtils

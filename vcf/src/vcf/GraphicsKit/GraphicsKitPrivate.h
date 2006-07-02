@@ -50,7 +50,7 @@ extern "C"
 	#include <X11/XCB/xcb_aux.h>
 }
 
-#include <fontconfig/fontconfig.h>
+#	include <fontconfig/fontconfig.h>
 #	include "vcf/GraphicsKit/XCBGraphicsToolkit.h"
 #endif
 
