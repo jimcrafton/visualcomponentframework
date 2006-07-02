@@ -1253,6 +1253,10 @@ void Win32Context::moveTo(const double & x, const double & y)
 	::MoveToEx( dc_, (int32)x, (int32)y, NULL );
 }
 
+void Win32Context::closePath()
+{
+	
+}
 
 
 OSHandleID Win32Context::getContextID()

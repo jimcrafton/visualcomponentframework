@@ -699,6 +699,9 @@ public:
 
 	void moveTo( const double& x, const double& y );
 	void moveTo( const Point & pt );
+	
+	void closePath( const double& x, const double& y );
+	void closePath( const Point & pt );
 
 	void roundRect( const double & x1, const double & y1, const double & x2, const double & y2, const double & xc, const double & yc );
 	void roundRect( const Rect & rc, const Point & ptc );
@@ -1051,6 +1054,12 @@ inline void GraphicsContext::moveTo( const Point & pt)
 {
 	moveTo( pt.x_, pt.y_ );
 }
+
+inline void GraphicsContext::closePath( const Point & pt)
+{
+	closePath( pt.x_, pt.y_ );
+}
+
 
 inline void GraphicsContext::setOrigin( const Point & pt ) {
 	setOrigin( pt.x_, pt.y_ );

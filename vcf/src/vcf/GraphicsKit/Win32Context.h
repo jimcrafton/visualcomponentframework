@@ -171,6 +171,8 @@ public:
 	*
 	*/
 	virtual void moveTo( const double & x, const double & y );
+	
+	virtual void closePath();
 
 	/**
 	*

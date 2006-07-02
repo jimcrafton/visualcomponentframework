@@ -145,6 +145,7 @@ public:
 
 	virtual void lineTo( const double & x, const double & y ) = 0;
 
+	virtual void closePath() = 0;
 
 	virtual void setOrigin( const double& x, const double& y ) = 0;
 
