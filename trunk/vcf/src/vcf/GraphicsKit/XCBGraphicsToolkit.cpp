@@ -1,3 +1,4 @@
+
 /*
 Copyright 2000-2006 The VCF Project, Orhun Birsoy.
 Please see License.txt in the top level directory
@@ -10,6 +11,7 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/XCBFontPeer.h"
 #include "vcf/GraphicsKit/XCBContextPeer.h"
 #include "vcf/GraphicsKit/XCBGraphicsResourceBundlePeer.h"
+#include "vcf/GraphicsKit/XCBImagePeer.h"
 
 #include "thirdparty/common/agg/include/agg_font_freetype.h"
 
@@ -111,8 +113,7 @@ FontPeer* XCBGraphicsToolkit::internal_createFontPeer( const String& fontName, c
 
 Image* XCBGraphicsToolkit::internal_createImage( const uint32& width, const uint32& height, const Image::ImageType& imageType )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return NULL;
+	return new XCBImagePeer(width, height);
 }
 
 Image* XCBGraphicsToolkit::internal_createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType )
