@@ -14,6 +14,8 @@ class XCBFontPeer : public FontPeer {
 public:
 	XCBFontPeer( const String& fontName );
 
+	XCBFontPeer( const String& fontName, const double& pointSize );
+
 	virtual OSHandleID getFontHandleID();
 
 	virtual String getName();
@@ -58,6 +60,22 @@ public:
 	virtual void setFont( Font* font );
 
 	String getHashcode();
+	
+	void internal_setIsTrueTypeFont(bool val) {
+		trueTypeFont_ = val;
+	}
+	
+	void internal_setIsFixedPitchFont(bool val) {
+		fixedPitchFont_ = val;
+	}
+	
+	void internal_setAscent(double val) {
+		ascent_ = val;
+	}
+	
+	void internal_setDescent(double val) {
+		descent_ = val;
+	}
 protected:
 	String fontName_;
 	bool bold_;
@@ -65,7 +83,12 @@ protected:
 	bool italic_;
 	bool strikeOut_;
 	double pointSize_;
+	bool trueTypeFont_;
+	bool fixedPitchFont_;
+	double ascent_;
+	double descent_;
 	
+	void settingsChanged();
 
 };
 

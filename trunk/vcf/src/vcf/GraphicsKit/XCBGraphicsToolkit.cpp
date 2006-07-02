@@ -1,4 +1,3 @@
-
 /*
 Copyright 2000-2006 The VCF Project, Orhun Birsoy.
 Please see License.txt in the top level directory
@@ -12,35 +11,66 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/XCBContextPeer.h"
 #include "vcf/GraphicsKit/XCBGraphicsResourceBundlePeer.h"
 
+#include "thirdparty/common/agg/include/agg_font_freetype.h"
+
+
+
+typedef agg::font_engine_freetype_int32 XCBFontEngineType;
+typedef agg::font_cache_manager<XCBFontEngineType> XCBFontManagerType;
+
+namespace VCF {
+struct XCBFontEngine {
+	XCBFontEngine(): engine(), mgr(engine){}
+
+	XCBFontEngineType engine;
+	XCBFontManagerType mgr;
+	String prevFontHash;
+};
+
+};
+
 using namespace VCF;
 
-XCBGraphicsToolkit::XCBGraphicsToolkit() : 
+
+static XCBGraphicsToolkit* xcbGraphicsToolkit = NULL;
+
+
+
+XCBGraphicsToolkit::XCBGraphicsToolkit() :
 connection_(NULL),
-screen_(NULL)
+screen_(NULL),
+fontEngine_(NULL)
 {
 	connection_ = XCBConnect (NULL, NULL);
 	if(connection_ != NULL)
 	{
 		screen_ = XCBSetupRootsIter(XCBGetSetup(connection_)).data;
 	}
+
+	fontEngine_ = new XCBFontEngine();
+
+	loadSystemColors();
+
+	xcbGraphicsToolkit = this;
 }
 
 XCBGraphicsToolkit::~XCBGraphicsToolkit()
 {
     XCBDisconnect(connection_);
-    
+
     std::map<String,FcPattern*>::iterator it = fontPatternCache_.begin();
 	while (  it != fontPatternCache_.end() ) {
 		FcPatternDestroy( it->second );
 		++it;
 	}
+
+	delete fontEngine_;
 }
 
 XCBConnection* XCBGraphicsToolkit::getConnection()
 {
 	XCBConnection* connection = NULL;
-	GraphicsToolkit* graphicsToolkit = GraphicsToolkit::internal_getDefaultGraphicsToolkit();
-	XCBGraphicsToolkit* xcbGraphicsToolkit = dynamic_cast<XCBGraphicsToolkit*>(graphicsToolkit);
+
 	if(xcbGraphicsToolkit != NULL)
 	{
 		connection = xcbGraphicsToolkit->connection_;
@@ -51,8 +81,7 @@ XCBConnection* XCBGraphicsToolkit::getConnection()
 XCBSCREEN*     XCBGraphicsToolkit::getScreen()
 {
 	XCBSCREEN* screen = NULL;
-	GraphicsToolkit* graphicsToolkit = GraphicsToolkit::internal_getDefaultGraphicsToolkit();
-	XCBGraphicsToolkit* xcbGraphicsToolkit = dynamic_cast<XCBGraphicsToolkit*>(graphicsToolkit);
+
 	if(xcbGraphicsToolkit != NULL)
 	{
 		screen = xcbGraphicsToolkit->screen_;
@@ -77,8 +106,7 @@ FontPeer* XCBGraphicsToolkit::internal_createFontPeer( const String& fontName )
 
 FontPeer* XCBGraphicsToolkit::internal_createFontPeer( const String& fontName, const double& pointSize )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return NULL;
+	return new XCBFontPeer( fontName, pointSize );
 }
 
 Image* XCBGraphicsToolkit::internal_createImage( const uint32& width, const uint32& height, const Image::ImageType& imageType )
@@ -106,23 +134,21 @@ GraphicsResourceBundlePeer* XCBGraphicsToolkit::internal_createGraphicsResourceB
 
 double XCBGraphicsToolkit::internal_getDPI( GraphicsContext* context )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return 0.0;
+	double result = (double)screen_->height_in_pixels / (screen_->height_in_millimeters / 25.4);
+
+	return result;
 }
 
 void XCBGraphicsToolkit::internal_systemSettingsChanged()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	loadSystemColors();
 }
 
 
 FcPattern* XCBGraphicsToolkit::getFontPatternForFont( XCBFontPeer* fontPeer )
-{	
+{
 	FcPattern* result = NULL;
-	GraphicsToolkit* graphicsToolkit = GraphicsToolkit::internal_getDefaultGraphicsToolkit();
-	XCBGraphicsToolkit* xcbGraphicsToolkit = dynamic_cast<XCBGraphicsToolkit*>(graphicsToolkit);
-	
-	
+
 	String hash = fontPeer->getHashcode();
 	std::map<String,FcPattern*>::iterator found = xcbGraphicsToolkit->fontPatternCache_.find( hash );
 	if (  found != xcbGraphicsToolkit->fontPatternCache_.end() ) {
@@ -134,40 +160,367 @@ FcPattern* XCBGraphicsToolkit::getFontPatternForFont( XCBFontPeer* fontPeer )
 		name.type = FcTypeString;
 		name.u.s = (const FcChar8*)fontPeer->getName().ansi_c_str();
 		FcPatternAdd (pattern, FC_FAMILY, name, true);
-		
-		
+
+
 		FcValue bold;
 		bold.type = FcTypeInteger;
 		bold.u.i =  fontPeer->getBold() ? FC_WEIGHT_BOLD : FC_WEIGHT_NORMAL;
 		FcPatternAdd (pattern, FC_WEIGHT, bold, true);
-		
+
 		FcValue italic;
 		italic.type = FcTypeInteger;
 		italic.u.i = fontPeer->getItalic() ? FC_SLANT_ITALIC : FC_SLANT_ROMAN;
 		FcPatternAdd (pattern, FC_SLANT, italic, true);
-		
+
 		FcValue trueTypeOnly;
 		trueTypeOnly.type = FcTypeString;
 		trueTypeOnly.u.s = (const FcChar8*)"TrueType";
 		FcPatternAdd (pattern, FC_FONTFORMAT, trueTypeOnly, true);
-			
+
 		if ( FcConfigSubstitute (0, pattern, FcMatchPattern) ) {
 
-			FcDefaultSubstitute (pattern); 
-			FcResult rlt = FcResultMatch;    
+			FcDefaultSubstitute (pattern);
+			FcResult rlt = FcResultMatch;
 			FcPattern* matchPattern = FcFontMatch (0, pattern, &rlt);
 			if ( NULL != matchPattern ) {
 				result = matchPattern;
 				xcbGraphicsToolkit->fontPatternCache_[hash] = result;
 			}
 		}
-		
+
 		FcPatternDestroy( pattern );
 	}
-	
+
 	return result;
 }
 
+
+void XCBGraphicsToolkit::updateFontAttributes( XCBFontPeer* fontPeer )
+{
+
+	String hash = fontPeer->getHashcode();
+	if ( xcbGraphicsToolkit->fontEngine_->prevFontHash != hash ) {
+		FcPattern* pattern = XCBGraphicsToolkit::getFontPatternForFont( fontPeer );
+		VCF_ASSERT( NULL != pattern );
+		FcChar8 * filename = NULL;
+		FcPatternGetString( pattern, FC_FILE, 0, &filename ); //do we need to release this???
+
+
+		if ( xcbGraphicsToolkit->fontEngine_->engine.load_font( (const char*)filename, 0, agg::glyph_ren_agg_gray8 ) ) {
+			xcbGraphicsToolkit->fontEngine_->prevFontHash = hash;
+			xcbGraphicsToolkit->fontEngine_->engine.hinting( false );
+			xcbGraphicsToolkit->fontEngine_->engine.height( fontPeer->getPixelSize() );
+			xcbGraphicsToolkit->fontEngine_->engine.width( fontPeer->getPixelSize() );
+			xcbGraphicsToolkit->fontEngine_->engine.flip_y( true );
+
+
+			fontPeer->internal_setAscent( fabs( xcbGraphicsToolkit->fontEngine_->engine.ascender() ) );
+			fontPeer->internal_setDescent( fabs( xcbGraphicsToolkit->fontEngine_->engine.descender() ) );
+		}
+		else {
+			printf( "Failed to load font \"%s\" in file \"%s\"\n",
+					fontPeer->getName().ansi_c_str(), (const char*)filename	);
+		}
+	}
+}
+
+void XCBGraphicsToolkit::loadSystemColors()
+{
+	printf( "Warning - system colors are hard-coded till GTK theme support is added." );
+	Color* sysColor = NULL;
+	sysColor = new Color( (unsigned int)0xFF9d9dA1, Color::cpsABGR );
+	systemColors_[SYSCOLOR_SHADOW] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_SHADOW";
+
+	sysColor = new Color( (unsigned int)0xeFF0dfe3, Color::cpsABGR );
+	systemColors_[SYSCOLOR_FACE] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_FACE";
+
+	sysColor = new Color( (unsigned int)0xFFffffff, Color::cpsABGR );
+	systemColors_[SYSCOLOR_HIGHLIGHT] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_HIGHLIGHT";
+
+	sysColor = new Color( (unsigned int)0xFFc0c0c0, Color::cpsABGR );
+	systemColors_[SYSCOLOR_ACTIVE_CAPTION] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_ACTIVE_CAPTION";
+
+	sysColor = new Color( (unsigned int)0xFFd4d0c8, Color::cpsABGR );
+	systemColors_[SYSCOLOR_ACTIVE_BORDER] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_ACTIVE_BORDER";
+
+	sysColor = new Color( (unsigned int)0xFF585768, Color::cpsABGR );
+	systemColors_[SYSCOLOR_DESKTOP] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_DESKTOP";
+
+	sysColor = new Color( (unsigned int)0xFF0e1010, Color::cpsABGR );
+	systemColors_[SYSCOLOR_CAPTION_TEXT] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_CAPTION_TEXT";
+
+	sysColor = new Color( (unsigned int)0xFFb2b4bf, Color::cpsABGR );
+	systemColors_[SYSCOLOR_SELECTION] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_SELECTION";
+
+	sysColor = new Color( (unsigned int)0xFF000000, Color::cpsABGR );
+	systemColors_[SYSCOLOR_SELECTION_TEXT] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_SELECTION_TEXT";
+
+	sysColor = new Color( (unsigned int)0xFFd4d0c8, Color::cpsABGR );
+	systemColors_[SYSCOLOR_INACTIVE_BORDER] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_INACTIVE_BORDER";
+
+	sysColor = new Color( (unsigned int)0xFFffffff, Color::cpsABGR );
+	systemColors_[SYSCOLOR_INACTIVE_CAPTION] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_INACTIVE_CAPTION";
+
+	sysColor = new Color( (unsigned int)0xFFffffe1, Color::cpsABGR );
+	systemColors_[SYSCOLOR_TOOLTIP] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_TOOLTIP";
+
+	sysColor = new Color( (unsigned int)0xFF000000, Color::cpsABGR );
+	systemColors_[SYSCOLOR_TOOLTIP_TEXT] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_TOOLTIP_TEXT";
+
+	sysColor = new Color( (unsigned int)0xFFFFFFFF, Color::cpsABGR );
+	systemColors_[SYSCOLOR_MENU] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_MENU";
+
+	sysColor = new Color( (unsigned int)0xFF000000, Color::cpsABGR );
+	systemColors_[SYSCOLOR_MENU_TEXT] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_MENU_TEXT";
+
+	sysColor = new Color( (unsigned int)0xFFFFFFFF, Color::cpsABGR );
+	systemColors_[SYSCOLOR_WINDOW] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_WINDOW";
+
+	sysColor = new Color( (unsigned int)0xFF000000, Color::cpsABGR );
+	systemColors_[SYSCOLOR_WINDOW_TEXT] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_WINDOW_TEXT";
+
+	sysColor = new Color( (unsigned int)0xFF000000, Color::cpsABGR );
+	systemColors_[SYSCOLOR_WINDOW_FRAME] = sysColor;
+	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_WINDOW_FRAME";
+}
+
+
+VCF::Font XCBGraphicsToolkit::getDefaultFontFor( const int& type )
+{
+	VCF::Font result("Arial",9);
+	switch ( type ) {
+		case MENUITEMFONT : {
+
+		}
+		break;
+
+		case SELECTEDMENUITEMFONT : {
+
+		}
+		break;
+
+		case SYSTEMFONT : {
+
+		}
+		break;
+
+		case CONTROLFONT : {
+
+		}
+		break;
+
+		case MESSAGEFONT : {
+
+		}
+		break;
+
+		case TOOLTIPFONT : {
+
+		}
+		break;
+	}
+
+	return result;
+}
+
+double XCBGraphicsToolkit::getValue( const int& type, const String& text, Font* alternateFont )
+{
+	double result = 0;
+	switch ( type ) {
+		case LABELHEIGHT : {
+			Size sz;
+			if ( NULL != alternateFont ) {
+				sz = XCBGraphicsToolkit::DLUToPixel( Size(0,8), *alternateFont );
+			}
+			else {
+				VCF::Font f = XCBGraphicsToolkit::getDefaultFontFor( CONTROLFONT );
+				sz = XCBGraphicsToolkit::DLUToPixel( Size(0,8), f );
+			}
+			result = sz.height_;
+		}
+		break;
+
+		case BUTTONHEIGHT : {
+			Size sz;
+			if ( NULL != alternateFont ) {
+				sz = XCBGraphicsToolkit::DLUToPixel( Size(0,14), *alternateFont );
+			}
+			else {
+				VCF::Font f = XCBGraphicsToolkit::getDefaultFontFor( CONTROLFONT );
+				sz = XCBGraphicsToolkit::DLUToPixel( Size(0,14), f );
+			}
+			result = sz.height_;
+		}
+		break;
+
+		case CHECKBOXHEIGHT : {
+			Size sz;
+			if ( NULL != alternateFont ) {
+				sz = XCBGraphicsToolkit::DLUToPixel( Size(0,10), *alternateFont );
+			}
+			else {
+				VCF::Font f = XCBGraphicsToolkit::getDefaultFontFor( CONTROLFONT );
+				sz = XCBGraphicsToolkit::DLUToPixel( Size(0,10), f );
+			}
+			result = sz.height_;
+		}
+		break;
+
+	}
+	return result;
+}
+
+Size XCBGraphicsToolkit::getSize( const int& type, const String& text, Font* alternateFont )
+{
+	Size result;
+
+	switch ( type ) {
+		case TABSIZE : {
+			Size sz;
+			if ( NULL != alternateFont ) {
+				sz = XCBGraphicsToolkit::DLUToPixel( Size(0,14), *alternateFont );
+
+				result.width_ = xcbGraphicsToolkit->getTextSize( text, alternateFont ).width_ + 10;
+			}
+			else {
+				VCF::Font f = XCBGraphicsToolkit::getDefaultFontFor( CONTROLFONT );
+				sz = XCBGraphicsToolkit::DLUToPixel( Size(0,14), f );
+
+				result.width_ = xcbGraphicsToolkit->getTextSize( text, &f ).width_ + 10;
+			}
+
+
+
+
+			result.height_ = sz.height_;
+		}
+		break;
+	}
+
+	return result;
+}
+
+Rect XCBGraphicsToolkit::getRect( const int& type, Rect* rect, Font* alternateFont )
+{
+	Rect result;
+	return result;
+}
+
+
+Size XCBGraphicsToolkit::getTextSize( const String& text, Font* font )
+{
+	Size result;
+
+	XCBFontPeer* fontPeer = (XCBFontPeer*)font->getFontPeer();
+
+	FcPattern* pattern = XCBGraphicsToolkit::getFontPatternForFont( fontPeer );
+
+	VCF_ASSERT( NULL != pattern );
+
+	FcChar8 * filename;
+	FcPatternGetString( pattern, FC_FILE, 0, &filename ); //do we need to release this???
+
+	if ( fontEngine_->engine.load_font( (const char*)filename, 0, agg::glyph_ren_agg_gray8 ) ) {
+		fontEngine_->engine.hinting( false );
+		fontEngine_->engine.height( fontPeer->getPixelSize() );
+		fontEngine_->engine.width( fontPeer->getPixelSize() );
+		fontEngine_->engine.flip_y( true );
+
+		agg::trans_affine mtx;
+		fontEngine_->engine.transform(mtx);
+
+		double x1 = 0; //need to convert appropriately
+		double y1 = 0;
+
+		agg::rect_d bounds;
+		bounds.x1 = 0;
+		bounds.y1 = 0;
+		bounds.x2 = 0;
+		bounds.y2 = 0;
+
+		int character = 0;
+		const agg::glyph_cache* glyphPtr = NULL;
+
+		size_t sz = text.size();
+		const VCFChar* textPtr = text.c_str();
+
+		for ( size_t i=0;i<sz;i++ ) {
+			character = textPtr[i];
+
+			glyphPtr = fontEngine_->mgr.glyph(character);
+
+			if ( NULL != glyphPtr ) {
+				fontEngine_->mgr.add_kerning(&x1, &y1);
+
+				fontEngine_->mgr.init_embedded_adaptors(glyphPtr, x1, y1);
+
+				if ( glyphPtr->bounds.is_valid() ) {
+
+					agg::rect_d adjustedGlyphBounds;
+					adjustedGlyphBounds.x1 = glyphPtr->bounds.x1 + x1;
+					adjustedGlyphBounds.x2 = glyphPtr->bounds.x2 + x1;
+
+					adjustedGlyphBounds.y1 = glyphPtr->bounds.y1 + y1;
+					adjustedGlyphBounds.y2 = glyphPtr->bounds.y2 + y1;
+
+					bounds.x1 = (bounds.x1 < adjustedGlyphBounds.x1) ? bounds.x1 : adjustedGlyphBounds.x1;
+					bounds.y1 = (bounds.y1 < adjustedGlyphBounds.y1) ? bounds.y1 : adjustedGlyphBounds.y1;
+
+					bounds.x2 = (bounds.x2 > adjustedGlyphBounds.x2) ? bounds.x2 : adjustedGlyphBounds.x2;
+					bounds.y2 = (bounds.y2 > adjustedGlyphBounds.y2) ? bounds.y2 : adjustedGlyphBounds.y2;
+
+				}
+
+				x1 += glyphPtr->advance_x;
+				y1 += glyphPtr->advance_y;
+			}
+		}
+
+		bounds.normalize();
+		result.width_ = bounds.x2 - bounds.x1;
+		result.height_ = bounds.y2 - bounds.y1;
+	}
+
+	return result;
+}
+
+
+Size XCBGraphicsToolkit::DLUToPixel( const Size& dlu, VCF::Font& font )
+{
+	Size result;
+
+	int baseUnitY = font.getAscent() + font.getDescent();
+
+	int cx = 0;
+	Size sz = xcbGraphicsToolkit->getTextSize( "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", &font );
+
+
+	cx = sz.width_;
+
+	int baseUnitX = (cx / 26 + 1) / 2;
+
+	result.width_ = (dlu.width_ * baseUnitX) / 4;
+	result.height_ = (dlu.height_ * baseUnitY) / 8;
+
+	return result;
+}
 
 /**
 $Id$

@@ -14,13 +14,13 @@ where you installed the VCF.
 
 namespace VCF  {
 
-	
-	
-	
+
+
+
 /**
-This represents the struct that we need to build a VCF graphics context 
+This represents the struct that we need to build a VCF graphics context
 peer. We will need the xcb image, almost certainly the window/drawable,
-and probably the GC. We also define a specific type of pixel format for 
+and probably the GC. We also define a specific type of pixel format for
 this surface - all we care about is the RGB components, we don't need the
 alpha channel for this level.
 */
@@ -29,24 +29,24 @@ struct XCBSurface {
     XCBDRAWABLE* drawable;
     XCBImage* drawableImage;
 
-	typedef agg::pixfmt_argb32 PixFmt;
-	typedef agg::pixfmt_argb32_pre PixFmtPre;
+	typedef agg::pixfmt_bgra32 PixFmt;
+	typedef agg::pixfmt_bgra32_pre PixFmtPre;
 	typedef agg::rgba8 ColorType;
-	typedef agg::order_argb ComponentOrder;
+	typedef agg::order_bgra ComponentOrder;
 };
 
 
 struct FontStruct;
 struct CachedGlyph;
-	
+
 class XCBContextPeer : public ContextPeer {
 public:
-	
+
 
 
 	XCBContextPeer();
 
-	XCBContextPeer( const uint32& width, const uint32& height );
+	XCBContextPeer( const unsigned long& width, const unsigned long& height );
 
     /**
     In this case the OSHandleID will be a vaild pointer to a XCBSurface
@@ -113,6 +113,7 @@ public:
 
 	virtual void lineTo( const double & x, const double & y );
 
+	void closePath();
 
 	virtual void setOrigin( const double& x, const double& y );
 
@@ -123,7 +124,7 @@ public:
 							  ContextPeer* sourceContext );
 
 	virtual bool isMemoryContext();
-	
+
 	virtual bool isAntiAliasingOn();
 
 	virtual void setAntiAliasingOn( bool antiAliasingOn );
@@ -182,6 +183,8 @@ public:
 
 	////////////////////////////////////
 	void internal_setImage(XCBImage *image);
+	
+	void internal_setGamma( double gamma );
 protected:
 	GraphicsContext *context_;
 	XCBImage        *image_;
@@ -189,6 +192,7 @@ protected:
     XCBSurface* drawingSurface_;
 
 
+	bool antiAliasing_;
     agg::rendering_buffer renderBuffer_;
     agg::scanline_u8 scanline_;
 
@@ -197,12 +201,16 @@ protected:
     FontStruct* fonts_;
 	std::vector<CachedGlyph*> cachedFontGlyphs_;
 	String prevFontHash_;
-    
+
+
+	Point origin_;
+
     void resetPath();
 	void renderScanlinesSolid( agg::rasterizer_scanline_aa<>& rasterizer, const agg::rgba& color  );
 	void clearGlyphs();
 
 	const agg::glyph_cache* glyph( int character, double& x, double& y );
+	Size getTextSize( const String& text );
 };
 
 }; //end of namespace VCF

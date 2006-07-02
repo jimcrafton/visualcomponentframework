@@ -17,14 +17,38 @@ XCBFontPeer::XCBFontPeer( const String& fontName ):
 	underlined_(false),
 	italic_(false),
 	strikeOut_(false),
-	pointSize_(12.0)
+	pointSize_(12.0),
+	trueTypeFont_(true),
+	fixedPitchFont_(false),
+	ascent_(0.0),
+	descent_(0.0)
 {
+	if ( fontName_.empty() ) {
+		fontName_ = "Arial";
+	}
+	settingsChanged();
+}
 
+XCBFontPeer::XCBFontPeer( const String& fontName, const double& pointSize ):
+	fontName_(fontName),
+	bold_(false),
+	underlined_(false),
+	italic_(false),
+	strikeOut_(false),
+	pointSize_(pointSize),
+	trueTypeFont_(true),
+	fixedPitchFont_(false),
+	ascent_(0.0),
+	descent_(0.0)
+{
+	if ( fontName_.empty() ) {
+		fontName_ = "Arial";
+	}
+	settingsChanged();
 }
 
 OSHandleID XCBFontPeer::getFontHandleID()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 	return 0;
 }
 
@@ -36,12 +60,12 @@ String XCBFontPeer::getName()
 void XCBFontPeer::setName( const String& name )
 {
 	fontName_ = name;
+	settingsChanged();
 }
 
 bool XCBFontPeer::isTrueType()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return false;
+	return trueTypeFont_;
 }
 
 double XCBFontPeer::getPointSize()
@@ -52,22 +76,29 @@ double XCBFontPeer::getPointSize()
 void XCBFontPeer::setPointSize( const double pointSize )
 {
 	pointSize_ = pointSize;
+	settingsChanged();
 }
 
 double XCBFontPeer::getPixelSize()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return 0.0;
+	double dpi = GraphicsToolkit::getDPI();
+	
+	return (pointSize_ / 72.0) * dpi;
 }
 
 void XCBFontPeer::setPixelSize( const double pixelSize )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	double dpi = GraphicsToolkit::getDPI();
+	
+	pointSize_ = (pixelSize * 72.0) / dpi;
+	
+	settingsChanged();
 }
 
 void XCBFontPeer::setBold( const bool& bold )
 {
 	bold_ = bold;
+	settingsChanged();
 }
 
 bool XCBFontPeer::getBold()
@@ -83,6 +114,7 @@ bool XCBFontPeer::getItalic()
 void XCBFontPeer::setItalic( const bool& italic )
 {
 	italic_ = italic;
+	settingsChanged();
 }
 
 bool XCBFontPeer::getUnderlined()
@@ -93,6 +125,7 @@ bool XCBFontPeer::getUnderlined()
 void XCBFontPeer::setUnderlined( const bool& underlined )
 {
 	underlined_ = underlined;
+	settingsChanged();
 }
 
 bool XCBFontPeer::getStrikeOut()
@@ -103,30 +136,37 @@ bool XCBFontPeer::getStrikeOut()
 void XCBFontPeer::setStrikeOut( const bool& strikeout )
 {
 	strikeOut_ = strikeout;
+	settingsChanged();
 }
 
 void XCBFontPeer::setAttributes( const double& pointSize, const bool& bold, const bool& italic,
 							const bool& underlined, const bool& struckOut, const String& name )
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	
+	pointSize_ = pointSize;
+	bold_ = bold;
+	underlined_ = underlined;
+	italic_ = italic;
+	strikeOut_ = struckOut;
+	fontName_ = name;
+	
+	settingsChanged();
 }
 
 double XCBFontPeer::getAscent()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return 0.0;
+	return ascent_;
 }
 
 double XCBFontPeer::getDescent()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return 0.0;
+	return descent_;
 }
 
 bool XCBFontPeer::isFixedPitch()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return false;
+	return fixedPitchFont_;
 }
 
 void XCBFontPeer::setFont( Font* font )
@@ -138,6 +178,8 @@ String XCBFontPeer::getHashcode()
 {
 	String result;
 	
+	VCF_ASSERT( !fontName_.empty() );
+	
 	result = fontName_;
 	result += Format("%.3f") % pointSize_;
 	result += Format("%d") % bold_;
@@ -148,6 +190,13 @@ String XCBFontPeer::getHashcode()
 	
 	return result;
 }
+
+
+void XCBFontPeer::settingsChanged()
+{
+	XCBGraphicsToolkit::updateFontAttributes( this );
+}
+
 
 /**
 $Id$

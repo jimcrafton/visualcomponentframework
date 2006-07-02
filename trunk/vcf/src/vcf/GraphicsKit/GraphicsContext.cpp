@@ -978,6 +978,14 @@ void GraphicsContext::moveTo(const double & x, const double & y)
 	pathOperations_.push_back( PointOperation(x,y,PointOperation::ptMoveTo) );
 }
 
+void GraphicsContext::closePath( const double& x, const double& y )
+{
+	checkPathOperations();
+	currentDrawingState_ = GraphicsContext::gsAddingGraphicsOps;
+
+	pathOperations_.push_back( PointOperation(x,y,PointOperation::ptClose) );
+}
+
 void GraphicsContext::fillPath()
 {
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doFill ) ) {
@@ -1591,6 +1599,8 @@ void GraphicsContext::execPathOperations()
 			case PointOperation::ptClose : {
 				PointOperation& pt = *it;
 				contextPeer_->lineTo( pt.x, pt.y );
+				contextPeer_->closePath();
+				
 				++it;
 			}
 			break;
