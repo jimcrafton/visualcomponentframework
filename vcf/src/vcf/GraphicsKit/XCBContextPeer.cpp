@@ -14,6 +14,7 @@ where you installed the VCF.
 
 #include "thirdparty/common/agg/include/agg_font_freetype.h"
 #include "thirdparty/common/agg/include/agg_conv_dash.h"
+#include "thirdparty/common/agg/include/agg_renderer_mclip.h"
 
 
 typedef agg::font_engine_freetype_int32 XCBFontEngineType;
@@ -419,7 +420,9 @@ void XCBContextPeer::finishedDrawing( int32 drawingOperation )
 
 void XCBContextPeer::renderScanlinesSolid( agg::rasterizer_scanline_aa<>& rasterizer, const agg::rgba& color )
 {
-	typedef agg::renderer_base<XCBSurface::PixFmt> RendererBase;
+	
+	
+	typedef agg::renderer_mclip<XCBSurface::PixFmt> RendererBase;
 	typedef agg::renderer_scanline_aa_solid<RendererBase> RendererSolidAA;
 	typedef agg::renderer_scanline_bin_solid<RendererBase> RendererSolidBin;
 
@@ -434,6 +437,19 @@ void XCBContextPeer::renderScanlinesSolid( agg::rasterizer_scanline_aa<>& raster
 	if ( GraphicsContext::cmSource == context_->getCompositingMode() ) {
 		XCBSurface::PixFmt pixf( renderBuffer_ );		
 		RendererBase renb(pixf);
+		
+		
+		if ( !currentClipRect_.isNull() && !currentClipRect_.isEmpty() ) {
+			renb.reset_clipping(false);
+			renb.add_clip_box( currentClipRect_.left_, currentClipRect_.top_,
+							currentClipRect_.right_, currentClipRect_.bottom_ );
+		}
+		else {
+			renb.reset_clipping(true);
+		}
+		
+		
+		
 		
 		if ( antiAliasing_ ) {
 			RendererSolidAA renderer( renb );
@@ -450,6 +466,17 @@ void XCBContextPeer::renderScanlinesSolid( agg::rasterizer_scanline_aa<>& raster
 		pixfmt_type pixf( renderBuffer_ );
 		pixf.comp_op( context_->getCompositingMode() );
 		comp_renderer_type renb(pixf);
+		/*
+		How do we do this????
+		if ( !currentClipRect_.isNull() && !currentClipRect_.isEmpty() ) {
+			renb.reset_clipping(false);
+			renb.add_clip_box( currentClipRect_.left_, currentClipRect_.top_,
+							currentClipRect_.right_, currentClipRect_.bottom_ );
+		}
+		else {
+			renb.reset_clipping(true);
+		}
+		*/
 
 		agg::render_scanlines_aa_solid(rasterizer, scanline_, renb, color);
 	}
@@ -462,7 +489,12 @@ void XCBContextPeer::setClippingPath( Path* clippingPath )
 
 void XCBContextPeer::setClippingRect( Rect* clipRect )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	if ( NULL == clipRect ) {
+		currentClipRect_.setNull();
+	}
+	else {
+		currentClipRect_ = *clipRect;		
+	}
 }
 
 void XCBContextPeer::setTextAlignment( const bool& alignTobaseline )
@@ -486,8 +518,7 @@ void XCBContextPeer::textAt( const Rect& bounds, const String & text, const int3
 
 	double dpi = GraphicsToolkit::getDPI();
 	
-	double x1 = bounds.left_;
-	double y1 = bounds.bottom_; //renderBuffer_.height() - bounds.bottom_;
+	
 
 	agg::rect_d charBounds;
 	charBounds.x1 = 0;
@@ -502,12 +533,12 @@ void XCBContextPeer::textAt( const Rect& bounds, const String & text, const int3
 
 	bool crlfChar = false;
 
-	typedef agg::renderer_base<XCBSurface::PixFmt> RendererBase;
+	typedef agg::renderer_mclip<XCBSurface::PixFmt> RendererBase;
 	typedef agg::renderer_scanline_aa_solid<RendererBase> RendererSolid;
 
 	typedef agg::comp_op_adaptor_rgba<XCBSurface::ColorType, XCBSurface::ComponentOrder> blender_type;
 	typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
-	typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
+	typedef agg::renderer_mclip<pixfmt_type> comp_renderer_type;
 
 	XCBSurface::PixFmt pixfSrc( renderBuffer_ );
 	RendererBase renbSrc(pixfSrc);
@@ -518,10 +549,22 @@ void XCBContextPeer::textAt( const Rect& bounds, const String & text, const int3
 	pixf.comp_op( context_->getCompositingMode() );
 	comp_renderer_type renb(pixf);
 
+
+	renbSrc.reset_clipping( false );
+	renbSrc.add_clip_box( (int)bounds.left_, (int)bounds.top_,
+							(int)bounds.right_, (int)bounds.bottom_ );
+							
+	renb.reset_clipping( false );
+	renb.add_clip_box( (int)bounds.left_, (int)bounds.top_,
+							(int)bounds.right_, (int)bounds.bottom_ );
+
 	bool doSrcRender = (GraphicsContext::cmSource == context_->getCompositingMode()) ? true : false;
 
 	double fontHeight = (fonts_->currentPointSize / 72.0) * dpi;
 
+	double x1 = bounds.left_;
+	double y1 = bounds.top_ + fontHeight;
+	
 	//internal_setGamma( 0.1 );
 
 	for ( size_t i=0;i<size;i++ ) {
