@@ -37,7 +37,7 @@ void LinuxFilePeer::setFile( File* file )
 	file_ = file;
 }
 
-ulong64 LinuxFilePeer::getSize()
+uint64 LinuxFilePeer::getSize()
 {
 	if ( -1 == fileHandle_ ) {
 		return 0;

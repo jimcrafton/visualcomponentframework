@@ -138,11 +138,11 @@ public:
 
 	}
 
-	virtual void seek(const unsigned long& offset, const SeekType& offsetFrom){
+	virtual void seek(const uint64& offset, const SeekType& offsetFrom){
 		outStream_->seek( offset, offsetFrom );
 	}
 
-	virtual unsigned long getSize(){
+	virtual uint64 getSize(){
 		return outStream_->getSize();
 	}
 
@@ -150,11 +150,11 @@ public:
 		return outStream_->getBuffer();
 	}
 
-	virtual uint32 getCurrentSeekPos() {
+	virtual uint64 getCurrentSeekPos() {
 		return outStream_->getCurrentSeekPos();
 	}
 
-	virtual unsigned long write( const unsigned char* bytesToRead, unsigned long sizeOfBytes ) {
+	virtual uint32 write( const unsigned char* bytesToRead, uint32 sizeOfBytes ) {
 		return outStream_->write( bytesToRead, sizeOfBytes );
 	}
 
@@ -337,11 +337,11 @@ public:
 
 	}
 
-	virtual void seek(const unsigned long& offset, const SeekType& offsetFrom) {
+	virtual void seek(const uint64& offset, const SeekType& offsetFrom) {
 		inStream_->seek( offset, offsetFrom );
 	}
 
-	virtual unsigned long getSize() {
+	virtual uint64 getSize() {
 		return inStream_->getSize();
 	}
 
@@ -349,7 +349,7 @@ public:
 		return inStream_->getBuffer();
 	}
 
-	virtual unsigned long read( unsigned char* bytesToRead, unsigned long sizeOfBytes ) {
+	virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes ) {
 		return inStream_->read( bytesToRead, sizeOfBytes );
 	}
 
@@ -475,7 +475,7 @@ public:
 		}	
 	}
 
-	virtual uint32 getCurrentSeekPos() {
+	virtual uint64 getCurrentSeekPos() {
 		return inStream_->getCurrentSeekPos();
 	}
 protected:

@@ -47,7 +47,7 @@ void MemoryStream::init()
 	currentSeekPos_ = 0;
 }
 
-void MemoryStream::seek(const uint32& offset, const SeekType& offsetFrom)
+void MemoryStream::seek(const uint64& offset, const SeekType& offsetFrom)
 {
 	switch ( offsetFrom ) {
 		case stSeekFromStart: {
@@ -67,7 +67,7 @@ void MemoryStream::seek(const uint32& offset, const SeekType& offsetFrom)
 	}
 }
 
-uint32 MemoryStream::getSize()
+uint64 MemoryStream::getSize()
 {
 	return size_;
 }
@@ -113,7 +113,7 @@ uint32 MemoryStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
 	return result;
 }
 
-uint32 MemoryStream::getCurrentSeekPos()
+uint64 MemoryStream::getCurrentSeekPos()
 {
 	if ( NULL != inputStream_ ) {
 		return inputStream_->getCurrentSeekPos();

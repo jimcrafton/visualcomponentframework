@@ -35,16 +35,16 @@ void TextOutputStream::init()
 	outStream_ = NULL;
 }
 
-void TextOutputStream::seek(const uint32& offset, const SeekType& offsetFrom )
+void TextOutputStream::seek(const uint64& offset, const SeekType& offsetFrom )
 {
 	if ( NULL != outStream_ ){
 		outStream_->seek( offset, offsetFrom );
 	}
 }
 
-uint32 TextOutputStream::getSize()
+uint64 TextOutputStream::getSize()
 {
-	uint32 result = 0;
+	uint64 result = 0;
 	if ( NULL != outStream_ ){
 		result = outStream_->getSize();
 	}
@@ -157,7 +157,7 @@ String TextOutputStream::toString()
 	return textBuffer_;
 }
 
-uint32 TextOutputStream::getCurrentSeekPos()
+uint64 TextOutputStream::getCurrentSeekPos()
 {
 	if ( NULL != outStream_ ) {
 		return outStream_->getCurrentSeekPos();

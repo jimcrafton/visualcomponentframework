@@ -51,11 +51,11 @@ public:
 		return NULL;
 	};
 
-	virtual void seek(const uint32& offset, const SeekType& offsetFrom);
+	virtual void seek(const uint64& offset, const SeekType& offsetFrom);
 
-    virtual uint32 getSize();
+    virtual uint64 getSize();
 
-	virtual uint32 getCurrentSeekPos() ;
+	virtual uint64 getCurrentSeekPos() ;
 
 	virtual void write( Persistable* persistableObject );
 
@@ -74,8 +74,8 @@ private:
 	CharMemStream stream_;
 	OutputStream* outputStream_;
 	InputStream* inputStream_;
-	uint32 size_;
-	uint32 currentSeekPos_;
+	uint64 size_;
+	uint64 currentSeekPos_;
 };
 
 };

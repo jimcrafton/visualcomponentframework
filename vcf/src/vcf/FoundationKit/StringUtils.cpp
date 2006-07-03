@@ -462,7 +462,7 @@ VCF::String StringUtils::toString( const unsigned long& value )
 
 }
 
-VCF::String StringUtils::toString( const VCF::long64& value )
+VCF::String StringUtils::toString( const VCF::int64& value )
 {
 #ifdef VCF_OSX
 	CFTextString cfTmp;
@@ -489,7 +489,7 @@ VCF::String StringUtils::toString( const VCF::long64& value )
 #endif
 }
 
-VCF::String StringUtils::toString( const VCF::ulong64& value )
+VCF::String StringUtils::toString( const VCF::uint64& value )
 {
 #ifdef VCF_OSX
 	CFTextString cfTmp;
@@ -1042,9 +1042,9 @@ unsigned long StringUtils::fromStringAsULong( const VCF::String& value )
 	return result;
 }
 
-VCF::long64 StringUtils::fromStringAsLong64( const VCF::String& value )
+VCF::int64 StringUtils::fromStringAsLong64( const VCF::String& value )
 {
-	long64 result = 0;
+	int64 result = 0;
 	#ifdef VCF_OSX
 		CFTextString tmp;
 		tmp = value;
@@ -1059,7 +1059,7 @@ VCF::long64 StringUtils::fromStringAsLong64( const VCF::String& value )
 	#else
 		#ifdef VCF_MSC
 			result = _wtoi64( value.c_str() );
-			if ( (long64)0 == result && ( value[0] != '0' ) &&
+			if ( (int64)0 == result && ( value[0] != '0' ) &&
 					( -1 != swscanf( value.c_str(), L"%I64d", &result ) ) ) {
 				throw BasicException( L"StringUtils::fromStringAsLong64() Unable to convert: " + value );
 			}
@@ -1073,9 +1073,9 @@ VCF::long64 StringUtils::fromStringAsLong64( const VCF::String& value )
 	return result;
 }
 
-VCF::ulong64 StringUtils::fromStringAsULong64( const VCF::String& value )
+VCF::uint64 StringUtils::fromStringAsULong64( const VCF::String& value )
 {
-	ulong64 result = 0;
+	uint64 result = 0;
 	#ifdef VCF_OSX
 		CFTextString tmp;
 		tmp = value;
@@ -1094,7 +1094,7 @@ VCF::ulong64 StringUtils::fromStringAsULong64( const VCF::String& value )
 				if reported problems we need to use swscanf */
 				result = _wtoi64( value.c_str() );
 			#endif
-			if ( (ulong64)0 == result && ( value[0] != '0' ) &&
+			if ( (uint64)0 == result && ( value[0] != '0' ) &&
 					( -1 != swscanf( value.c_str(), L"%I64u", &result ) ) ) {
 				throw BasicException( L"StringUtils::fromStringAsULong64() Unable to convert: " + value );
 			}

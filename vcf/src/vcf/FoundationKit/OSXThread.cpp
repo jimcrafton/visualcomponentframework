@@ -137,12 +137,12 @@ void OSXThread::sleep( uint32 milliseconds )
     }
     else {
         //uint64_t ullWakeUpTime = force_cast<uint64_t>(*pWakeUpTime);
-        ulong64 wakeUpTime = timeout;
+        uint64 wakeUpTime = timeout;
         wakeUpTime.lo( absTimeout.lo );
         wakeUpTime.hi( absTimeout.hi );
 
         AbsoluteTime tmp = UpTime();
-        ulong64 upTime;
+        uint64 upTime;
         upTime.lo( tmp.lo );
         upTime.hi( tmp.hi );
 
@@ -239,7 +239,7 @@ int OSXThread::wait( uint32 milliseconds )
     else   {
         OSStatus lStatus;
         AbsoluteTime expiration = AddDurationToAbsolute( timeout, UpTime());
-        ulong64 wakeUpTime;
+        uint64 wakeUpTime;
         wakeUpTime.lo( expiration.lo );
         wakeUpTime.hi( expiration.hi );
 

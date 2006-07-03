@@ -105,7 +105,7 @@ String VariantData::toString() const
 
 #ifdef VCF_VARIANT64
 		case pdLong64:{
-			long64::int64_t value = this->Long64Val;
+			int64::int64_t value = this->Long64Val;
 			VCFChar tmp[VariantData::DefaultPropertyValLength];
 			memset(tmp, 0, VariantData::DefaultPropertyValLength);
 			swprintf( tmp, L"%I64d", (__int64)value );
@@ -114,7 +114,7 @@ String VariantData::toString() const
 		break;
 
 		case pdULong64:{
-			ulong64::u64_t value = this->ULong64Val;
+			uint64::u64_t value = this->ULong64Val;
 			VCFChar tmp[VariantData::DefaultPropertyValLength];
 			memset(tmp, 0, VariantData::DefaultPropertyValLength);
 			swprintf( tmp, L"%I64u", (unsigned __int64)value );
@@ -123,14 +123,14 @@ String VariantData::toString() const
 		break;
 
 		case pdDateTime:{
-			DateTime dt = (long64)this->Long64Val;
+			DateTime dt = (int64)this->Long64Val;
 			result += StringUtils::format( dt, L"%Y-%m-%d %H:%M:%S.%s (%w)%a" );
 			//result += StringUtils::lowerCase( StringUtils::format( dt, L"%a" ) );
 		}
 		break;
 
 		case pdDateTimeSpan:{
-			DateTimeSpan dts = (long64)this->Long64Val;
+			DateTimeSpan dts = (int64)this->Long64Val;
 			result += StringUtils::format( dts, L"%y-%m-%d %h:%m:%s" );
 		}
 		break;
@@ -267,7 +267,7 @@ void VariantData::setFromString( const String& value )
 
 #ifdef VCF_VARIANT64
 		case pdLong64:{
-			ulong64::int64_t result = 0;
+			uint64::int64_t result = 0;
 			int ret = swscanf( value.c_str(), L"%I64", &result );
 			if ( ret != 1 ) {
 				throw BasicException( L"Unable to convert: " + value );
@@ -277,7 +277,7 @@ void VariantData::setFromString( const String& value )
 		break;
 
 		case pdULong64:{
-			ulong64::u64_t result = 0;
+			uint64::u64_t result = 0;
 			int ret = swscanf( value.c_str(), L"%I64u", &result );
 			if ( ret != 1 ) {
 				throw BasicException( L"Unable to convert: " + value );

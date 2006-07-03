@@ -335,24 +335,24 @@ namespace VCF {
 
 
 	/**
-	\typedef ulong64 FrameworkConfig.h "vcf/FoundationKit/FrameworkConfig.h"
+	\typedef uint64 FrameworkConfig.h "vcf/FoundationKit/FrameworkConfig.h"
 	Unsigned 64 bit integer type
 	*/
 	#if defined(VCF_MSC) || defined(VCF_BCC) || defined(VCF_ICL)
-		typedef unsigned __int64 ulong64;
+		typedef unsigned __int64 uint64;
 	#else
-		typedef unsigned long long ulong64;
+		typedef unsigned long long uint64;
 	#endif
 
 
 	/**
-	\typedef long64 FrameworkConfig.h "vcf/FoundationKit/FrameworkConfig.h"
+	\typedef int64 FrameworkConfig.h "vcf/FoundationKit/FrameworkConfig.h"
 	Signed 64 bit integer type
 	*/
 	#if defined(VCF_MSC) || defined(VCF_BCC) || defined(VCF_ICL)
-		typedef __int64 long64;
+		typedef __int64 int64;
 	#else
-		typedef long long long64;
+		typedef long long int64;
 	#endif
 
 
@@ -363,7 +363,7 @@ namespace VCF {
 	may need for 64 bit integer literals (for example LL for gcc).
 	Usage example:
 	\code
-	ulong64 x = VCF_LIT64(0xffffffffffffffff);
+	uint64 x = VCF_LIT64(0xffffffffffffffff);
 	\endcode
 	*/
 	#if defined(VCF_MSC) || defined(VCF_BCC) || defined(VCF_ICL)
@@ -376,7 +376,7 @@ namespace VCF {
 	/**
 	This returns the top 32 bits of the number
 	*/
-	inline uint32 getHi32(ulong64 val){
+	inline uint32 getHi32(uint64 val){
 		return (uint32)(val>>32);
 	}
 
@@ -384,7 +384,7 @@ namespace VCF {
 	/**
 	This returns the top 32 bits of the number
 	*/
-	inline int32 getHi32(long64 val){
+	inline int32 getHi32(int64 val){
 		return (int32)(val>>32);
 	}
 
@@ -392,7 +392,7 @@ namespace VCF {
 	/**
 	This returns the low 32 bits of the number
 	*/
-	inline uint32 getLo32(ulong64 val){
+	inline uint32 getLo32(uint64 val){
 		return (uint32)val;
 	}
 
@@ -400,7 +400,7 @@ namespace VCF {
 	/**
 	This returns the low 32 bits of the number
 	*/
-	inline uint32 getLo32(long64 val){
+	inline uint32 getLo32(int64 val){
 		return (uint32)val;
 	}
 
@@ -409,8 +409,8 @@ namespace VCF {
 	This sets the top 32 bits of the number to the specified
 	value.
 	*/
-	inline void setHi32(ulong64& val,uint32 hi){
-		val = (val & 0xffffffff) | (((ulong64)hi)<<32);
+	inline void setHi32(uint64& val,uint32 hi){
+		val = (val & 0xffffffff) | (((uint64)hi)<<32);
 	}
 
 
@@ -418,8 +418,8 @@ namespace VCF {
 	This sets the top 32 bits of the number to the specified
 	value.
 	*/
-	inline void setHi32(long64& val,int32 hi){
-		val = (val & 0xffffffff) | (((long64)hi)<<32);
+	inline void setHi32(int64& val,int32 hi){
+		val = (val & 0xffffffff) | (((int64)hi)<<32);
 	}
 
 
@@ -427,7 +427,7 @@ namespace VCF {
 	This sets the low 32 bits of the number to the specified
 	value.
 	*/
-	inline void setLo32(ulong64& val,uint32 lo){
+	inline void setLo32(uint64& val,uint32 lo){
 		val = (val & VCF_LIT64(0xffffffff00000000)) | lo;
 	}
 
@@ -435,7 +435,7 @@ namespace VCF {
 	This sets the low 32 bits of the number to the specified
 	value.
 	*/
-	inline void setLo32(long64& val,uint32 lo){
+	inline void setLo32(int64& val,uint32 lo){
 		val = (val & VCF_LIT64(0xffffffff00000000)) | lo;
 	}
 
@@ -444,16 +444,16 @@ namespace VCF {
 	/**
 	Creates an unsigned 64 bit integer from the
 	high and low 32 bit.*/
-	inline ulong64 makeULong64(uint32 hi,uint32 lo){
-		return (((ulong64)hi)<<32) | lo;
+	inline uint64 makeULong64(uint32 hi,uint32 lo){
+		return (((uint64)hi)<<32) | lo;
 	}
 
 
 	/**
 	Creates a signed 64 bit integer from the
 	high and low 32 bit.*/
-	inline long64 makeLong64(int32 hi,uint32 lo){
-		return (((long64)hi)<<32) | lo;
+	inline int64 makeLong64(int32 hi,uint32 lo){
+		return (((int64)hi)<<32) | lo;
 	}
 	
 

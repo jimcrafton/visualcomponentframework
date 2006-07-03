@@ -32,7 +32,7 @@ void BasicOutputStream::init()
 	outputStream_ = NULL;
 }
 
-void BasicOutputStream::seek(const uint32& offset, const SeekType& offsetFrom)
+void BasicOutputStream::seek(const uint64& offset, const SeekType& offsetFrom)
 {
 	if ( NULL != outputStream_ ) {
 		outputStream_->seek( offset, offsetFrom );
@@ -56,7 +56,7 @@ void BasicOutputStream::seek(const uint32& offset, const SeekType& offsetFrom)
 	}
 }
 
-uint32 BasicOutputStream::getSize()
+uint64 BasicOutputStream::getSize()
 {
 	return outStream_.getSize();
 }
@@ -82,7 +82,7 @@ uint32 BasicOutputStream::write( const unsigned char* bytesToRead, uint32 sizeOf
 }
 
 
-uint32 BasicOutputStream::getCurrentSeekPos()
+uint64 BasicOutputStream::getCurrentSeekPos()
 {
 	if ( NULL != outputStream_ ) {
 		return outputStream_->getCurrentSeekPos();

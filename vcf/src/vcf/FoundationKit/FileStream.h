@@ -57,7 +57,7 @@ protected:
 	FileStreamPeer* fsPeer_;
 	String filename_;
 	FileStreamAccessType access_;
-	uint32 currentSeekPos_;
+	uint64 currentSeekPos_;
 };
 
 /**
@@ -71,13 +71,13 @@ public:
 
 	virtual ~FileInputStream();
 
-	virtual void seek(const uint32& offset, const SeekType& offsetFrom);
+	virtual void seek(const uint64& offset, const SeekType& offsetFrom);
 
 	/**
 	returns the size of the stream. The size represents the
 	number of bytes that have been <b>read</b> from the stream
 	*/
-    virtual uint32 getSize();
+    virtual uint64 getSize();
 
 
 	/**
@@ -85,7 +85,7 @@ public:
 	*/
 	virtual char* getBuffer();
 
-	virtual uint32 getCurrentSeekPos() ;
+	virtual uint64 getCurrentSeekPos() ;
 
 	/**
 	input
@@ -117,13 +117,13 @@ public:
 
 	virtual ~FileOutputStream();
 
-	virtual void seek(const uint32& offset, const SeekType& offsetFrom);
+	virtual void seek(const uint64& offset, const SeekType& offsetFrom);
 
 	/**
 	*returns the size of the stream. The size represents the
 	*number of bytes that have been <b>written</b>, or <b>read</b> to/from the stream
 	*/
-    virtual uint32 getSize();
+    virtual uint64 getSize();
 
 
 	/**
@@ -131,7 +131,7 @@ public:
 	*/
 	virtual char* getBuffer();
 
-	virtual uint32 getCurrentSeekPos() ;
+	virtual uint64 getCurrentSeekPos() ;
 
 	//output
 	virtual uint32 write( const unsigned char* bytesToWrite, uint32 sizeOfBytes );

@@ -187,7 +187,7 @@ void LinuxSystemPeer::setDateToLocalTime( DateTime* date )
 {
 	::timeval tmv;
 	::gettimeofday(&tmv, NULL);
-	ulong64 millisecs = ulong64(tmv.tv_sec)*1000+ulong64(tmv.tv_usec)/1000;
+	uint64 millisecs = uint64(tmv.tv_sec)*1000+uint64(tmv.tv_usec)/1000;
 	DateTime tmp(1970, 1, 1);
 	millisecs += tmp.getMilliseconds();
 	date->setMilliseconds( millisecs );

@@ -191,9 +191,9 @@ public:
 
 	/**
 	* gets the size of the file in bytes
-	*@param ulong64 the size
+	*@param uint64 the size
 	*/
-	VCF::ulong64 getSize();
+	VCF::uint64 getSize();
 
 	/**
 	* gets the file attributes of the file
