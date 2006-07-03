@@ -33,9 +33,9 @@ public:
 
 	virtual ~TextInputStream();
 
-	virtual void seek(const uint32& offset, const SeekType& offsetFrom);
+	virtual void seek(const uint64& offset, const SeekType& offsetFrom);
 
-	virtual uint32 getSize();
+	virtual uint64 getSize();
 
 	virtual char* getBuffer();
 
@@ -69,11 +69,11 @@ public:
 		return totCharRead_ >= size_? true:false;
 	}
 
-	virtual uint32 getCurrentSeekPos() ;
+	virtual uint64 getCurrentSeekPos() ;
 private:
 	InputStream* inStream_;
-	uint32 size_;
-	uint32 totCharRead_;
+	uint64 size_;
+	uint64 totCharRead_;
 	String readTillWhiteSpace();
 
 	/**

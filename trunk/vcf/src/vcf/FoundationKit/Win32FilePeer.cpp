@@ -152,9 +152,9 @@ void Win32FilePeer::create(  uint32 openFlags  )
 }
 
 
-ulong64 Win32FilePeer::getSize()
+uint64 Win32FilePeer::getSize()
 {
-	ulong64 result = 0;
+	uint64 result = 0;
 
 	if ( NULL != fileHandle_ ) {
 		uint32 resultLow = 0;

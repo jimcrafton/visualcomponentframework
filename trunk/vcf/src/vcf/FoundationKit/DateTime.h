@@ -222,12 +222,12 @@ public:
 	Returns a 64 bit unsigned integer that contains the total number
 	of milliseconds in this object.
 	*/
-	ulong64 getMilliseconds() const;
+	uint64 getMilliseconds() const;
 
 	/**
 	Sets the total number of milliseconds
 	*/
-	void setMilliseconds( const ulong64& milliseconds );
+	void setMilliseconds( const uint64& milliseconds );
 
 	/**
 	Allows you to modify the date/time of this object.
@@ -356,9 +356,9 @@ public:
 	}
 
 	/**
-	allows conversion to a ulong64 ( POD ) data type
+	allows conversion to a uint64 ( POD ) data type
 	*/
-	operator ulong64() const {
+	operator uint64() const {
 		return time_;
 	}
 
@@ -687,7 +687,7 @@ protected:
 	1 January 4713 BC. This is also known as the Julian Day
 	used by astronomers
 	*/
-	ulong64 time_;
+	uint64 time_;
 };
 
 
@@ -866,9 +866,9 @@ public:
 	}
 
 	/**
-	allows conversion to a ulong64 ( POD ) data type
+	allows conversion to a uint64 ( POD ) data type
 	*/
-	operator ulong64() const {
+	operator uint64() const {
 		return delta_;
 	}
 
@@ -942,21 +942,21 @@ public:
 	returns the total number of whole milliseconds if this span of time
 	is evaluated in milliseconds as the unit of measurement
 	*/
-	ulong64 getTotalMilliseconds() const ;
+	uint64 getTotalMilliseconds() const ;
 
 	friend class DateTime;
 protected:
 
 	void subtract( const DateTime& lhs, const DateTime& rhs );
 
-	DateTimeSpan& operator=( const ulong64& rhs ) {
+	DateTimeSpan& operator=( const uint64& rhs ) {
 		delta_ = rhs;
 		return *this;
 	}
-	ulong64 delta_;
+	uint64 delta_;
 
-	ulong64 start_;
-	ulong64 end_;
+	uint64 start_;
+	uint64 end_;
 	uint32 years_;
 	uint32 months_;
 	uint32 days_;

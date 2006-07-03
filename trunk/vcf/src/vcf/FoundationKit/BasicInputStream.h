@@ -39,13 +39,13 @@ public:
 
 	virtual ~BasicInputStream();
 
-	virtual void seek(const uint32& offset, const SeekType& offsetFrom);
+	virtual void seek(const uint64& offset, const SeekType& offsetFrom);
 
-	virtual uint32 getSize();
+	virtual uint64 getSize();
 
 	virtual char* getBuffer();
 
-	virtual uint32 getCurrentSeekPos() ;
+	virtual uint64 getCurrentSeekPos() ;
 
 	virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes );
 
@@ -55,7 +55,7 @@ public:
 private:
 	CharMemStream inStream_;
 	InputStream* inputStream_;
-	uint32 totalStreamSize_;
+	uint64 totalStreamSize_;
 };
 
 };

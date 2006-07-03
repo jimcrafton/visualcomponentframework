@@ -223,17 +223,17 @@ public:
 
 	/**
 	converts the value to a string
-	@param VCF::long64 the value to convert
-	@return String the string representation of the VCF::long64 value
+	@param VCF::int64 the value to convert
+	@return String the string representation of the VCF::int64 value
 	*/
-	static VCF::String toString( const VCF::long64& value );
+	static VCF::String toString( const VCF::int64& value );
 
 	/**
 	converts the value to a string
-	@param VCF::ulong64 the value to convert
-	@return String the string representation of the VCF::ulong64 value
+	@param VCF::uint64 the value to convert
+	@return String the string representation of the VCF::uint64 value
 	*/
-	static VCF::String toString( const VCF::ulong64& value );
+	static VCF::String toString( const VCF::uint64& value );
 
 	/**
 	converts the value to a string
@@ -310,16 +310,16 @@ public:
 	/**
 	converts the value to a 64 bit signed integer 
 	@param String the value to convert
-	@return long64 the 64 bit signed integer representation of the String value
+	@return int64 the 64 bit signed integer representation of the String value
 	*/
-	static VCF::long64 fromStringAsLong64( const VCF::String& value );
+	static VCF::int64 fromStringAsLong64( const VCF::String& value );
 
 	/**
 	converts the value to a 64 bit unsigned integer 
 	@param String the value to convert
-	@return ulong64 the 64 bit unsigned integer representation of the String value
+	@return uint64 the 64 bit unsigned integer representation of the String value
 	*/
-	static VCF::ulong64 fromStringAsULong64( const VCF::String& value );
+	static VCF::uint64 fromStringAsULong64( const VCF::String& value );
 
 
 
@@ -588,13 +588,13 @@ String operator+ ( const String& lhs, const bool& val );
 
 String& operator+= ( String& lhs, const bool& val );
 
-String operator+ ( const String& lhs, const ulong64& val );
+String operator+ ( const String& lhs, const uint64& val );
 
-String& operator+= ( String& lhs, const ulong64& val );
+String& operator+= ( String& lhs, const uint64& val );
 
-String operator+ ( const String& lhs, const long64& val );
+String operator+ ( const String& lhs, const int64& val );
 
-String& operator+= ( String& lhs, const long64& val );
+String& operator+= ( String& lhs, const int64& val );
 
 /*
 void pointers!
@@ -728,22 +728,22 @@ inline String& operator+= ( String& lhs, const bool& val )
 	return lhs += StringUtils::toString(val);
 }
 
-inline String operator+ ( const String& lhs, const ulong64& val )
+inline String operator+ ( const String& lhs, const uint64& val )
 {
 	return lhs + StringUtils::toString(val);
 }
 
-inline String& operator+= ( String& lhs, const ulong64& val )
+inline String& operator+= ( String& lhs, const uint64& val )
 {
 	return lhs += StringUtils::toString(val);
 }
 
-inline String operator+ ( const String& lhs, const long64& val )
+inline String operator+ ( const String& lhs, const int64& val )
 {
 	return lhs + StringUtils::toString(val); 
 }
 
-inline String& operator+= ( String& lhs, const long64& val )
+inline String& operator+= ( String& lhs, const int64& val )
 {
 	return lhs += StringUtils::toString(val);
 }

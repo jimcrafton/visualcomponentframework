@@ -30,14 +30,14 @@ public:
 
 	virtual ~VariantDataInputStream(){};
 
-	virtual void seek(const uint32& offset, const SeekType& offsetFrom)	{
+	virtual void seek(const uint64& offset, const SeekType& offsetFrom)	{
 		if ( NULL == inStream_ ) {
 			throw InvalidPointerException();
 		}
 		inStream_->seek( offset, offsetFrom );
 	}
 
-	virtual uint32 getSize() {
+	virtual uint64 getSize() {
 		if ( NULL == inStream_ ) {
 			throw InvalidPointerException();
 		}
@@ -51,7 +51,7 @@ public:
 		return inStream_->getBuffer();
 	}
 
-	virtual uint32 getCurrentSeekPos() {
+	virtual uint64 getCurrentSeekPos() {
 		if ( NULL == inStream_ ) {
 			throw InvalidPointerException();
 		}
@@ -172,14 +172,14 @@ public:
 
 	virtual ~VariantDataOutputStream(){};
 
-	virtual void seek(const uint32& offset, const SeekType& offsetFrom)	{
+	virtual void seek(const uint64& offset, const SeekType& offsetFrom)	{
 		if ( NULL == outStream_ ) {
 			throw InvalidPointerException();
 		}
 		outStream_->seek( offset, offsetFrom );
 	}
 
-	virtual uint32 getSize() {
+	virtual uint64 getSize() {
 		if ( NULL == outStream_ ) {
 			throw InvalidPointerException();
 		}
@@ -193,7 +193,7 @@ public:
 		return outStream_->getBuffer();
 	}
 
-	virtual uint32 getCurrentSeekPos() {
+	virtual uint64 getCurrentSeekPos() {
 		if ( NULL == outStream_ ) {
 			throw InvalidPointerException();
 		}

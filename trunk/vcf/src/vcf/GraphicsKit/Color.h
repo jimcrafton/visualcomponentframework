@@ -483,13 +483,13 @@ public:
 	Color( const unsigned long& color, const ColorPackScheme& cps=cpsRGB );
 
 	/**
-	this is a constructor halping us in the conversion from an ulong64 ( similarly as in COLORREF)
+	this is a constructor halping us in the conversion from an uint64 ( similarly as in COLORREF)
 	into which the color components have been packed (4 x 16bits).
 	Under Win32 it is necessary to specify the cpsABGR parameter.
 	@param the system used to pack the color components.
 	@see ColorFormat
 	*/
-	Color( const ulong64& color, const ColorPackScheme& cps=cpsRGB );
+	Color( const uint64& color, const ColorPackScheme& cps=cpsRGB );
 
 	/**
 	extract a color from its color name. An internal map is used for this.
@@ -535,9 +535,9 @@ public:
 	uint32 getRGBPack8( const ColorPackScheme& cps=cpsRGB ) const;
 
 	/**
-	packs into a ulong64 integer the color components using 16bits for each component.
+	packs into a uint64 integer the color components using 16bits for each component.
 	*/
-	ulong64 getRGBPack16( const ColorPackScheme& cps=cpsRGB ) const;
+	uint64 getRGBPack16( const ColorPackScheme& cps=cpsRGB ) const;
 
 	/**
 	same as getRGBPack8, but with the parameter cpsABGR specified.
@@ -549,7 +549,7 @@ public:
 	same as getRGBPack16, but with the parameter cpsABGR specified.
 	introduced to make life easier to win32 users and less confusing.
 	*/
-	ulong64 getColorRef64() const;
+	uint64 getColorRef64() const;
 
 	/**
 	sets the color starting from the known color components.
@@ -570,9 +570,9 @@ public:
 
 	/**
 	sets the color starting from the known color components
-	that have been packed into a single ulong64 integer (4 x 16bits).
+	that have been packed into a single uint64 integer (4 x 16bits).
 	*/
-	Color& setRGBPack16( const ulong64& rgb, const ColorPackScheme& cps=cpsRGB );
+	Color& setRGBPack16( const uint64& rgb, const ColorPackScheme& cps=cpsRGB );
 
 	/**
 	same as setRGBPack8, but with the parameter cpsABGR specified.
@@ -584,7 +584,7 @@ public:
 	same as setRGBPack16, but with the parameter cpsABGR specified.
 	Introduced to make life easier to win32 users and less confusing.
 	*/
-	Color& setColorRef64( const ulong64& rgb );
+	Color& setColorRef64( const uint64& rgb );
 
 	void getHSV(double& h, double& s, double& v) const;
 	void setHSV( const double& h, const double& s, const double& v);
@@ -1167,7 +1167,7 @@ inline Color::Color(const unsigned long& rgb, const ColorPackScheme& cps ): Obje
 }
 
 
-inline Color::Color(const ulong64& rgb, const ColorPackScheme& cps ): Object() {
+inline Color::Color(const uint64& rgb, const ColorPackScheme& cps ): Object() {
 	a_ = 1.0;
 	setRGBPack16( rgb, cps );
 }
@@ -1282,8 +1282,8 @@ inline uint32 Color::getRGBPack8( const ColorPackScheme& cps ) const {
 	return rgba;
 }
 
-inline ulong64 Color::getRGBPack16( const ColorPackScheme& cps ) const {
-	ulong64 rgb;
+inline uint64 Color::getRGBPack16( const ColorPackScheme& cps ) const {
+	uint64 rgb;
 
 	switch ( cps ) {
 		case cpsARGB : {
@@ -1324,7 +1324,7 @@ inline uint32 Color::getColorRef32() const {
 	return getRGBPack8( cpsBGR );
 }
 
-inline ulong64 Color::getColorRef64() const {
+inline uint64 Color::getColorRef64() const {
 	return getRGBPack16( cpsBGR );
 }
 
@@ -1405,7 +1405,7 @@ inline Color& Color::setRGBPack8( const uint32& rgb, const ColorPackScheme& cps 
 	return *this;
 }
 
-inline Color& Color::setRGBPack16( const ulong64& rgb, const ColorPackScheme& cps ) {
+inline Color& Color::setRGBPack16( const uint64& rgb, const ColorPackScheme& cps ) {
 	switch ( cps ) {
 		case cpsRGB : {
 			r_ = (double)((uint16*)&rgb)[2] / xFFFF;
@@ -1447,7 +1447,7 @@ inline Color& Color::setColorRef32( const uint32& rgb ) {
 	return setRGBPack8( rgb, cpsBGR );
 }
 
-inline Color& Color::setColorRef64( const ulong64& rgb ) {
+inline Color& Color::setColorRef64( const uint64& rgb ) {
 	return setRGBPack16( rgb, cpsBGR );
 }
 

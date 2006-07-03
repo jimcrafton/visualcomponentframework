@@ -221,17 +221,17 @@ public:
 
 #ifdef VCF_VARIANT64
 	/**
-	creates a Variant initialized by a long64 value
+	creates a Variant initialized by a int64 value
 	*/
-	VariantData( const VCF::long64& val ) {
+	VariantData( const VCF::int64& val ) {
 		Long64Val = val;
 		type = pdLong64;
 	};
 
 	/**
-	creates a Variant initialized by a ulong64 value
+	creates a Variant initialized by a uint64 value
 	*/
-	VariantData( const VCF::ulong64& val ) {
+	VariantData( const VCF::uint64& val ) {
 		ULong64Val = val;
 		type  = pdULong64;
 	};
@@ -240,7 +240,7 @@ public:
 	creates a Variant initialized by a DateTime value
 	*/
 	VariantData( const DateTime& val ) {
-		Long64Val = ( val.operator long64() ).data_; // (ulong64::u64_t) (VCF::ulong64&) val;
+		Long64Val = ( val.operator int64() ).data_; // (uint64::u64_t) (VCF::uint64&) val;
 		type  = pdDateTime;
 	};
 
@@ -248,7 +248,7 @@ public:
 	creates a Variant initialized by a DateTimeSpan value
 	*/
 	VariantData( const DateTimeSpan& val ) {
-		Long64Val = ( val.operator long64() ).data_; // (ulong64::u64_t) (VCF::ulong64&) val;
+		Long64Val = ( val.operator int64() ).data_; // (uint64::u64_t) (VCF::uint64&) val;
 		type  = pdDateTimeSpan;
 	};
 
@@ -256,7 +256,7 @@ public:
 	//creates a Variant initialized by a Color value
 	//*/
 	//VariantData( const Color& val ) {
-	//	Long64Val = ( val.operator long64() ).data_; // (ulong64::u64_t) (VCF::ulong64&) val;
+	//	Long64Val = ( val.operator int64() ).data_; // (uint64::u64_t) (VCF::uint64&) val;
 	//	type  = pdDateTimeSpan;
 	//};
 
@@ -417,16 +417,16 @@ public:
 
 #ifdef VCF_VARIANT64
 	/**
-	converts the Variant to a long64
+	converts the Variant to a int64
 	*/
-	operator VCF::long64 () const {
+	operator VCF::int64 () const {
 		return Long64Val;
 	};
 
 	/**
-	converts the Variant to an ulong64
+	converts the Variant to an uint64
 	*/
-	operator VCF::ulong64 () const {
+	operator VCF::uint64 () const {
 		return ULong64Val;
 	};
 
@@ -434,14 +434,14 @@ public:
 	converts the Variant to a DateTime
 	*/
 	operator VCF::DateTime () const {
-		return (long64) Long64Val; // uses the conversion DateTime::operator long64()
+		return (int64) Long64Val; // uses the conversion DateTime::operator int64()
 	};
 
 	/**
 	converts the Variant to a DateTimeSpan
 	*/
 	operator VCF::DateTimeSpan () const {
-		return (long64) Long64Val; // uses the conversion DateTimeSpan::operator long64()
+		return (int64) Long64Val; // uses the conversion DateTimeSpan::operator int64()
 	};
 
 	///**
@@ -630,18 +630,18 @@ public:
 
 #ifdef VCF_VARIANT64
 	/**
-	Assigns a long64 value to the Variant
+	Assigns a int64 value to the Variant
 	*/
-	VariantData& operator= ( const long64& newValue ){
+	VariantData& operator= ( const int64& newValue ){
 		Long64Val = newValue;
 		type = pdLong64;
 		return *this;
 	};
 
 	/**
-	Assigns an ulong64 value to the Variant
+	Assigns an uint64 value to the Variant
 	*/
-	VariantData& operator= ( const ulong64& newValue ){
+	VariantData& operator= ( const uint64& newValue ){
 		ULong64Val = newValue;
 		type = pdULong64;
 		return *this;
@@ -651,7 +651,7 @@ public:
 	Assigns a DateTime value to the Variant
 	*/
 	VariantData& operator= ( const DateTime& newValue ){
-		Long64Val = ( newValue.operator long64() ).data_;
+		Long64Val = ( newValue.operator int64() ).data_;
 		type = pdDateTime;
 		return *this;
 	};
@@ -660,7 +660,7 @@ public:
 	Assigns a DateTimeSpan value to the Variant
 	*/
 	VariantData& operator= ( const DateTimeSpan& newValue ){
-		Long64Val = ( newValue.operator long64() ).data_;
+		Long64Val = ( newValue.operator int64() ).data_;
 		type = pdDateTimeSpan;
 		return *this;
 	};
@@ -702,8 +702,8 @@ public:
 			EnumValue EnumVal;
 			Interface* InterfaceVal;
 #ifdef VCF_VARIANT64
-			VCF::ulong64::int64_t Long64Val;
-			VCF::ulong64::u64_t   ULong64Val;
+			VCF::uint64::int64_t Long64Val;
+			VCF::uint64::u64_t   ULong64Val;
 #endif // VCF_VARIANT64
 	};
 

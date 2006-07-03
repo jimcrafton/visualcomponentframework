@@ -166,11 +166,11 @@ public:
 
 	virtual ~VFFOutputStream(){};
 
-	virtual void seek(const uint32& offset, const SeekType& offsetFrom) {
+	virtual void seek(const uint64& offset, const SeekType& offsetFrom) {
 		stream_->seek( offset, offsetFrom );
 	}
 
-	virtual uint32 getSize() {
+	virtual uint64 getSize() {
 		return stream_->getSize();
 	}
 
@@ -178,7 +178,7 @@ public:
 		return stream_->getBuffer();
 	}
 
-	virtual uint32 getCurrentSeekPos() {
+	virtual uint64 getCurrentSeekPos() {
 		return stream_->getCurrentSeekPos();
 	}
 

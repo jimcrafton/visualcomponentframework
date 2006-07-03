@@ -51,7 +51,7 @@ bool DateTime::isGregorianCalendarDate( const DateTime& dt )
 {
 	bool result = false;
 
-	ulong64 gd = BASIC_GREGORIAN_TIME_IN_MS + (DateTime::ONEDAY-1);
+	uint64 gd = BASIC_GREGORIAN_TIME_IN_MS + (DateTime::ONEDAY-1);
 
 	result = gd < dt.time_;
 
@@ -567,7 +567,7 @@ uint32 DateTime::getDayOfYear() const
 	DateTime startOfYear;
 	startOfYear.set( getYear(), 1, 1, getHour(), getMinute(), getSecond(), getMillisecond() );
 
-	ulong64 diff = time_ - startOfYear.time_;
+	uint64 diff = time_ - startOfYear.time_;
 	//+1 is added so we get a 1 based result - otherwise it'd be zero based
 	result = (diff / DateTime::ONEDAY) + 1;
 
@@ -717,13 +717,13 @@ DateTimeSpan DateTime::operator-( const DateTime& rhs ) const
 	return result;
 }
 
-ulong64 DateTime::getMilliseconds() const
+uint64 DateTime::getMilliseconds() const
 {
 	return time_;
 }
 
 
-void DateTime::setMilliseconds( const ulong64& milliseconds )
+void DateTime::setMilliseconds( const uint64& milliseconds )
 {
 	time_ = milliseconds;
 }
@@ -865,7 +865,7 @@ void ByHour::decr( DateTime& dt, uint32 offset )
 
 void ByDay::incr( DateTime& dt, uint32 offset )
 {
-	ulong64 offset64 = offset * DateTime::ONEDAY;
+	uint64 offset64 = offset * DateTime::ONEDAY;
 	dt.setMilliseconds( dt.getMilliseconds() + offset64 );
 }
 
@@ -1130,7 +1130,7 @@ uint32 DateTimeSpan::getTotalSeconds() const
 	return delta_ / DateTime::ONESECOND;
 }
 
-ulong64 DateTimeSpan::getTotalMilliseconds() const
+uint64 DateTimeSpan::getTotalMilliseconds() const
 {
 	return delta_;
 }

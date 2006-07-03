@@ -95,9 +95,9 @@ void OSXFilePeer::setFile( File* file )
 }
 
 
-ulong64 OSXFilePeer::getSize()
+uint64 OSXFilePeer::getSize()
 {
-	ulong64 result ;
+	uint64 result ;
 	struct stat st = {0};
 	if ( -1 != fstat( fileHandle_, &st ) ) {
 		result = st.st_size;

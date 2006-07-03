@@ -115,7 +115,7 @@ DateTime File::getDateAccess()
 	return filePeer_->getDateAccessed();
 }
 
-VCF::ulong64 File::getSize()
+VCF::uint64 File::getSize()
 {
 	return filePeer_->getSize();
 }

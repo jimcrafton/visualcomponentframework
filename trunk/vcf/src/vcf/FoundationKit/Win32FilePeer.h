@@ -70,7 +70,7 @@ public:
 	/**
 	*returns the size of the file in bytes
 	*/
-	virtual ulong64 getSize();
+	virtual uint64 getSize();
 
 	virtual DateTime getDateModified();
 

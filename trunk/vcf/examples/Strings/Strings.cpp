@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
 		System::println( "ptr is a " + typeid(ptr) + " type" );
 		System::println( "dt is a " + typeid(dt) + " type" );
 
-		long64 m = 0xffffffff;
+		int64 m = 0xffffffff;
 		System::println( String("m: ") + m );
 
 		m *= -0xfff;

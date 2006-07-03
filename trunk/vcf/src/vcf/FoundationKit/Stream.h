@@ -70,13 +70,13 @@ public:
 
     virtual ~Stream(){};
 
-	virtual void seek(const uint32& offset, const SeekType& offsetFrom)=0;
+	virtual void seek(const uint64& offset, const SeekType& offsetFrom)=0;
 
 	/**
 	returns the size of the stream. The size represents the
 	number of bytes that have been \b written, or \b read to/from the stream
 	*/
-    virtual uint32 getSize() =0;
+    virtual uint64 getSize() =0;
 
 	/**
 	returns a pointer to the buffer that holds the stream memory
@@ -86,7 +86,7 @@ public:
 	/**
 	this is a global offset from the beggining of the stream
 	*/
-	virtual uint32 getCurrentSeekPos() = 0;
+	virtual uint64 getCurrentSeekPos() = 0;
 };
 
 /**

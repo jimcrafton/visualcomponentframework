@@ -39,9 +39,9 @@ public:
 
 	/**
 	* gets the size of the file in bytes
-	*@param ulong64 the size
+	*@param uint64 the size
 	*/
-	virtual ulong64 getSize();
+	virtual uint64 getSize();
 
 	/**
 	* updates the informations about the file from the file system
