@@ -374,12 +374,11 @@ GRAPHICSKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/GraphicsKit_lib_Point.o \
 	../../lib/$(OBJDIR)/GraphicsKit_lib_PrintSession.o \
 	../../lib/$(OBJDIR)/GraphicsKit_lib_Rect.o \
-	../../lib/$(OBJDIR)/GraphicsKit_lib_GTKContext.o \
-	../../lib/$(OBJDIR)/GraphicsKit_lib_GTKFont.o \
-	../../lib/$(OBJDIR)/GraphicsKit_lib_GTKGraphicsResourceBundle.o \
-	../../lib/$(OBJDIR)/GraphicsKit_lib_GTKGraphicsToolkit.o \
-	../../lib/$(OBJDIR)/GraphicsKit_lib_GTKImage.o \
-	../../lib/$(OBJDIR)/GraphicsKit_lib_GTKPrintSession.o
+	../../lib/$(OBJDIR)/GraphicsKit_lib_XCBContextPeer.o \
+	../../lib/$(OBJDIR)/GraphicsKit_lib_XCBFontPeer.o \
+	../../lib/$(OBJDIR)/GraphicsKit_lib_XCBGraphicsResourceBundlePeer.o \
+	../../lib/$(OBJDIR)/GraphicsKit_lib_XCBGraphicsToolkit.o \
+	../../lib/$(OBJDIR)/GraphicsKit_lib_XCBImagePeer.o
 GRAPHICSKIT_DLL_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	$(__OPTIMIZE) -D_THREAD_SAFE -pthread $(____OPTION_DEBUG) \
 	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src -DGRAPHICSKIT_DLL \
@@ -403,12 +402,11 @@ GRAPHICSKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/GraphicsKit_dll_Point.o \
 	../../lib/$(OBJDIR)/GraphicsKit_dll_PrintSession.o \
 	../../lib/$(OBJDIR)/GraphicsKit_dll_Rect.o \
-	../../lib/$(OBJDIR)/GraphicsKit_dll_GTKContext.o \
-	../../lib/$(OBJDIR)/GraphicsKit_dll_GTKFont.o \
-	../../lib/$(OBJDIR)/GraphicsKit_dll_GTKGraphicsResourceBundle.o \
-	../../lib/$(OBJDIR)/GraphicsKit_dll_GTKGraphicsToolkit.o \
-	../../lib/$(OBJDIR)/GraphicsKit_dll_GTKImage.o \
-	../../lib/$(OBJDIR)/GraphicsKit_dll_GTKPrintSession.o
+	../../lib/$(OBJDIR)/GraphicsKit_dll_XCBContextPeer.o \
+	../../lib/$(OBJDIR)/GraphicsKit_dll_XCBFontPeer.o \
+	../../lib/$(OBJDIR)/GraphicsKit_dll_XCBGraphicsResourceBundlePeer.o \
+	../../lib/$(OBJDIR)/GraphicsKit_dll_XCBGraphicsToolkit.o \
+	../../lib/$(OBJDIR)/GraphicsKit_dll_XCBImagePeer.o
 APPLICATIONKIT_LIB_CXXFLAGS = -I../../src\thirdparty/common/ZLib \
 	-I../../src\thirdparty/common/LibPNG \
 	-I../../src\thirdparty/common/LibJPEG \
@@ -518,19 +516,17 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_VFFInputStream.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_VFFOutputStream.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_Window.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractGTKControl.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_GTKApplication.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_GTKCommandButton.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_GTKControl.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_GTKControlContext.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_GTKCursor.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_GTKDesktop.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_GTKDialog.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_GTKFileOpenDialog.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_GTKTextControl.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_GTKToolbar.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_GTKUIToolkit.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_GTKWindow.o
+	../../lib/$(OBJDIR)/ApplicationKit_lib_XCBAbstractControl.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_XCBApplicationPeer.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_XCBApplicationResourceBundlePeer.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_XCBControlContextPeer.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_XCBCursorPeer.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_XCBDesktopPeer.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_XCBMenuBarPeer.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_XCBMenuManagerPeer.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_XCBUIMetricsManager.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_XCBUIToolkit.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_XCBWindowPeer.o
 APPLICATIONKIT_DLL_CXXFLAGS = -I../../src\thirdparty/common/ZLib \
 	-I../../src\thirdparty/common/LibPNG \
 	-I../../src\thirdparty/common/LibJPEG \
@@ -641,19 +637,17 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_VFFInputStream.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_VFFOutputStream.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_Window.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractGTKControl.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_GTKApplication.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_GTKCommandButton.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_GTKControl.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_GTKControlContext.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_GTKCursor.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_GTKDesktop.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_GTKDialog.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_GTKFileOpenDialog.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_GTKTextControl.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_GTKToolbar.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_GTKUIToolkit.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_GTKWindow.o
+	../../lib/$(OBJDIR)/ApplicationKit_dll_XCBAbstractControl.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_XCBApplicationPeer.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_XCBApplicationResourceBundlePeer.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_XCBControlContextPeer.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_XCBCursorPeer.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_XCBDesktopPeer.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_XCBMenuBarPeer.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_XCBMenuManagerPeer.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_XCBUIMetricsManager.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_XCBUIToolkit.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_XCBWindowPeer.o
 HTMLKIT_LIB_CXXFLAGS = -I../../src\thirdparty/common/ZLib \
 	-I../../src\thirdparty/common/LibPNG \
 	-I../../src\thirdparty/common/LibJPEG \
@@ -1132,12 +1126,11 @@ ____Allin1_lib_ALLIN1_GRAPHICSKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_Point.o \
 	../../lib/$(OBJDIR)/Allin1_lib_PrintSession.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Rect.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKContext.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKFont.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKGraphicsResourceBundle.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKGraphicsToolkit.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKImage.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKPrintSession.o
+	../../lib/$(OBJDIR)/Allin1_lib_XCBContextPeer.o \
+	../../lib/$(OBJDIR)/Allin1_lib_XCBFontPeer.o \
+	../../lib/$(OBJDIR)/Allin1_lib_XCBGraphicsResourceBundlePeer.o \
+	../../lib/$(OBJDIR)/Allin1_lib_XCBGraphicsToolkit.o \
+	../../lib/$(OBJDIR)/Allin1_lib_XCBImagePeer.o
 endif
 ifeq ($(OPTION_APPLICATIONKIT),1)
 ____Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
@@ -1242,19 +1235,17 @@ ____Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_VFFInputStream.o \
 	../../lib/$(OBJDIR)/Allin1_lib_VFFOutputStream.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Window.o \
-	../../lib/$(OBJDIR)/Allin1_lib_AbstractGTKControl.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKApplication.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKCommandButton.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKControl.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKControlContext.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKCursor.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKDesktop.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKDialog.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKFileOpenDialog.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKTextControl.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKToolbar.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKUIToolkit.o \
-	../../lib/$(OBJDIR)/Allin1_lib_GTKWindow.o
+	../../lib/$(OBJDIR)/Allin1_lib_XCBAbstractControl.o \
+	../../lib/$(OBJDIR)/Allin1_lib_XCBApplicationPeer.o \
+	../../lib/$(OBJDIR)/Allin1_lib_XCBApplicationResourceBundlePeer.o \
+	../../lib/$(OBJDIR)/Allin1_lib_XCBControlContextPeer.o \
+	../../lib/$(OBJDIR)/Allin1_lib_XCBCursorPeer.o \
+	../../lib/$(OBJDIR)/Allin1_lib_XCBDesktopPeer.o \
+	../../lib/$(OBJDIR)/Allin1_lib_XCBMenuBarPeer.o \
+	../../lib/$(OBJDIR)/Allin1_lib_XCBMenuManagerPeer.o \
+	../../lib/$(OBJDIR)/Allin1_lib_XCBUIMetricsManager.o \
+	../../lib/$(OBJDIR)/Allin1_lib_XCBUIToolkit.o \
+	../../lib/$(OBJDIR)/Allin1_lib_XCBWindowPeer.o
 endif
 ifeq ($(OPTION_HTMLKIT),1)
 ____Allin1_lib_ALLIN1_HTMLKIT_SRC_OBJECTS =  \
@@ -1391,12 +1382,11 @@ ____Allin1_dll_ALLIN1_GRAPHICSKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_Point.o \
 	../../lib/$(OBJDIR)/Allin1_dll_PrintSession.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Rect.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKContext.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKFont.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKGraphicsResourceBundle.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKGraphicsToolkit.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKImage.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKPrintSession.o
+	../../lib/$(OBJDIR)/Allin1_dll_XCBContextPeer.o \
+	../../lib/$(OBJDIR)/Allin1_dll_XCBFontPeer.o \
+	../../lib/$(OBJDIR)/Allin1_dll_XCBGraphicsResourceBundlePeer.o \
+	../../lib/$(OBJDIR)/Allin1_dll_XCBGraphicsToolkit.o \
+	../../lib/$(OBJDIR)/Allin1_dll_XCBImagePeer.o
 endif
 ifeq ($(OPTION_APPLICATIONKIT),1)
 ____Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
@@ -1501,19 +1491,17 @@ ____Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_VFFInputStream.o \
 	../../lib/$(OBJDIR)/Allin1_dll_VFFOutputStream.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Window.o \
-	../../lib/$(OBJDIR)/Allin1_dll_AbstractGTKControl.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKApplication.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKCommandButton.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKControl.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKControlContext.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKCursor.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKDesktop.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKDialog.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKFileOpenDialog.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKTextControl.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKToolbar.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKUIToolkit.o \
-	../../lib/$(OBJDIR)/Allin1_dll_GTKWindow.o
+	../../lib/$(OBJDIR)/Allin1_dll_XCBAbstractControl.o \
+	../../lib/$(OBJDIR)/Allin1_dll_XCBApplicationPeer.o \
+	../../lib/$(OBJDIR)/Allin1_dll_XCBApplicationResourceBundlePeer.o \
+	../../lib/$(OBJDIR)/Allin1_dll_XCBControlContextPeer.o \
+	../../lib/$(OBJDIR)/Allin1_dll_XCBCursorPeer.o \
+	../../lib/$(OBJDIR)/Allin1_dll_XCBDesktopPeer.o \
+	../../lib/$(OBJDIR)/Allin1_dll_XCBMenuBarPeer.o \
+	../../lib/$(OBJDIR)/Allin1_dll_XCBMenuManagerPeer.o \
+	../../lib/$(OBJDIR)/Allin1_dll_XCBUIMetricsManager.o \
+	../../lib/$(OBJDIR)/Allin1_dll_XCBUIToolkit.o \
+	../../lib/$(OBJDIR)/Allin1_dll_XCBWindowPeer.o
 endif
 ifeq ($(OPTION_HTMLKIT),1)
 ____Allin1_dll_ALLIN1_HTMLKIT_SRC_OBJECTS =  \
@@ -2925,22 +2913,19 @@ xmake_:
 ../../lib/$(OBJDIR)/GraphicsKit_lib_Rect.o: ../../src/vcf/GraphicsKit/Rect.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/GraphicsKit_lib_GTKContext.o: ../../src/vcf/GraphicsKit/GTKContext.cpp
+../../lib/$(OBJDIR)/GraphicsKit_lib_XCBContextPeer.o: ../../src/vcf/GraphicsKit/XCBContextPeer.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/GraphicsKit_lib_GTKFont.o: ../../src/vcf/GraphicsKit/GTKFont.cpp
+../../lib/$(OBJDIR)/GraphicsKit_lib_XCBFontPeer.o: ../../src/vcf/GraphicsKit/XCBFontPeer.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/GraphicsKit_lib_GTKGraphicsResourceBundle.o: ../../src/vcf/GraphicsKit/GTKGraphicsResourceBundle.cpp
+../../lib/$(OBJDIR)/GraphicsKit_lib_XCBGraphicsResourceBundlePeer.o: ../../src/vcf/GraphicsKit/XCBGraphicsResourceBundlePeer.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/GraphicsKit_lib_GTKGraphicsToolkit.o: ../../src/vcf/GraphicsKit/GTKGraphicsToolkit.cpp
+../../lib/$(OBJDIR)/GraphicsKit_lib_XCBGraphicsToolkit.o: ../../src/vcf/GraphicsKit/XCBGraphicsToolkit.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/GraphicsKit_lib_GTKImage.o: ../../src/vcf/GraphicsKit/GTKImage.cpp
-	$(CXX) -c -o $@ $(GRAPHICSKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/GraphicsKit_lib_GTKPrintSession.o: ../../src/vcf/GraphicsKit/GTKPrintSession.cpp
+../../lib/$(OBJDIR)/GraphicsKit_lib_XCBImagePeer.o: ../../src/vcf/GraphicsKit/XCBImagePeer.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/GraphicsKit_dll_AbstractImage.o: ../../src/vcf/GraphicsKit/AbstractImage.cpp
@@ -2997,22 +2982,19 @@ xmake_:
 ../../lib/$(OBJDIR)/GraphicsKit_dll_Rect.o: ../../src/vcf/GraphicsKit/Rect.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/GraphicsKit_dll_GTKContext.o: ../../src/vcf/GraphicsKit/GTKContext.cpp
+../../lib/$(OBJDIR)/GraphicsKit_dll_XCBContextPeer.o: ../../src/vcf/GraphicsKit/XCBContextPeer.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/GraphicsKit_dll_GTKFont.o: ../../src/vcf/GraphicsKit/GTKFont.cpp
+../../lib/$(OBJDIR)/GraphicsKit_dll_XCBFontPeer.o: ../../src/vcf/GraphicsKit/XCBFontPeer.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/GraphicsKit_dll_GTKGraphicsResourceBundle.o: ../../src/vcf/GraphicsKit/GTKGraphicsResourceBundle.cpp
+../../lib/$(OBJDIR)/GraphicsKit_dll_XCBGraphicsResourceBundlePeer.o: ../../src/vcf/GraphicsKit/XCBGraphicsResourceBundlePeer.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/GraphicsKit_dll_GTKGraphicsToolkit.o: ../../src/vcf/GraphicsKit/GTKGraphicsToolkit.cpp
+../../lib/$(OBJDIR)/GraphicsKit_dll_XCBGraphicsToolkit.o: ../../src/vcf/GraphicsKit/XCBGraphicsToolkit.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/GraphicsKit_dll_GTKImage.o: ../../src/vcf/GraphicsKit/GTKImage.cpp
-	$(CXX) -c -o $@ $(GRAPHICSKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/GraphicsKit_dll_GTKPrintSession.o: ../../src/vcf/GraphicsKit/GTKPrintSession.cpp
+../../lib/$(OBJDIR)/GraphicsKit_dll_XCBImagePeer.o: ../../src/vcf/GraphicsKit/XCBImagePeer.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractApplication.o: ../../src/vcf/ApplicationKit/AbstractApplication.cpp
@@ -3318,43 +3300,37 @@ xmake_:
 ../../lib/$(OBJDIR)/ApplicationKit_lib_Window.o: ../../src/vcf/ApplicationKit/Window.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractGTKControl.o: ../../src/vcf/ApplicationKit/AbstractGTKControl.cpp
+../../lib/$(OBJDIR)/ApplicationKit_lib_XCBAbstractControl.o: ../../src/vcf/ApplicationKit/XCBAbstractControl.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_lib_GTKApplication.o: ../../src/vcf/ApplicationKit/GTKApplication.cpp
+../../lib/$(OBJDIR)/ApplicationKit_lib_XCBApplicationPeer.o: ../../src/vcf/ApplicationKit/XCBApplicationPeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_lib_GTKCommandButton.o: ../../src/vcf/ApplicationKit/GTKCommandButton.cpp
+../../lib/$(OBJDIR)/ApplicationKit_lib_XCBApplicationResourceBundlePeer.o: ../../src/vcf/ApplicationKit/XCBApplicationResourceBundlePeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_lib_GTKControl.o: ../../src/vcf/ApplicationKit/GTKControl.cpp
+../../lib/$(OBJDIR)/ApplicationKit_lib_XCBControlContextPeer.o: ../../src/vcf/ApplicationKit/XCBControlContextPeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_lib_GTKControlContext.o: ../../src/vcf/ApplicationKit/GTKControlContext.cpp
+../../lib/$(OBJDIR)/ApplicationKit_lib_XCBCursorPeer.o: ../../src/vcf/ApplicationKit/XCBCursorPeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_lib_GTKCursor.o: ../../src/vcf/ApplicationKit/GTKCursor.cpp
+../../lib/$(OBJDIR)/ApplicationKit_lib_XCBDesktopPeer.o: ../../src/vcf/ApplicationKit/XCBDesktopPeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_lib_GTKDesktop.o: ../../src/vcf/ApplicationKit/GTKDesktop.cpp
+../../lib/$(OBJDIR)/ApplicationKit_lib_XCBMenuBarPeer.o: ../../src/vcf/ApplicationKit/XCBMenuBarPeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_lib_GTKDialog.o: ../../src/vcf/ApplicationKit/GTKDialog.cpp
+../../lib/$(OBJDIR)/ApplicationKit_lib_XCBMenuManagerPeer.o: ../../src/vcf/ApplicationKit/XCBMenuManagerPeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_lib_GTKFileOpenDialog.o: ../../src/vcf/ApplicationKit/GTKFileOpenDialog.cpp
+../../lib/$(OBJDIR)/ApplicationKit_lib_XCBUIMetricsManager.o: ../../src/vcf/ApplicationKit/XCBUIMetricsManager.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_lib_GTKTextControl.o: ../../src/vcf/ApplicationKit/GTKTextControl.cpp
+../../lib/$(OBJDIR)/ApplicationKit_lib_XCBUIToolkit.o: ../../src/vcf/ApplicationKit/XCBUIToolkit.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_lib_GTKToolbar.o: ../../src/vcf/ApplicationKit/GTKToolbar.cpp
-	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/ApplicationKit_lib_GTKUIToolkit.o: ../../src/vcf/ApplicationKit/GTKUIToolkit.cpp
-	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/ApplicationKit_lib_GTKWindow.o: ../../src/vcf/ApplicationKit/GTKWindow.cpp
+../../lib/$(OBJDIR)/ApplicationKit_lib_XCBWindowPeer.o: ../../src/vcf/ApplicationKit/XCBWindowPeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractApplication.o: ../../src/vcf/ApplicationKit/AbstractApplication.cpp
@@ -3660,43 +3636,37 @@ xmake_:
 ../../lib/$(OBJDIR)/ApplicationKit_dll_Window.o: ../../src/vcf/ApplicationKit/Window.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractGTKControl.o: ../../src/vcf/ApplicationKit/AbstractGTKControl.cpp
+../../lib/$(OBJDIR)/ApplicationKit_dll_XCBAbstractControl.o: ../../src/vcf/ApplicationKit/XCBAbstractControl.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_dll_GTKApplication.o: ../../src/vcf/ApplicationKit/GTKApplication.cpp
+../../lib/$(OBJDIR)/ApplicationKit_dll_XCBApplicationPeer.o: ../../src/vcf/ApplicationKit/XCBApplicationPeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_dll_GTKCommandButton.o: ../../src/vcf/ApplicationKit/GTKCommandButton.cpp
+../../lib/$(OBJDIR)/ApplicationKit_dll_XCBApplicationResourceBundlePeer.o: ../../src/vcf/ApplicationKit/XCBApplicationResourceBundlePeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_dll_GTKControl.o: ../../src/vcf/ApplicationKit/GTKControl.cpp
+../../lib/$(OBJDIR)/ApplicationKit_dll_XCBControlContextPeer.o: ../../src/vcf/ApplicationKit/XCBControlContextPeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_dll_GTKControlContext.o: ../../src/vcf/ApplicationKit/GTKControlContext.cpp
+../../lib/$(OBJDIR)/ApplicationKit_dll_XCBCursorPeer.o: ../../src/vcf/ApplicationKit/XCBCursorPeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_dll_GTKCursor.o: ../../src/vcf/ApplicationKit/GTKCursor.cpp
+../../lib/$(OBJDIR)/ApplicationKit_dll_XCBDesktopPeer.o: ../../src/vcf/ApplicationKit/XCBDesktopPeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_dll_GTKDesktop.o: ../../src/vcf/ApplicationKit/GTKDesktop.cpp
+../../lib/$(OBJDIR)/ApplicationKit_dll_XCBMenuBarPeer.o: ../../src/vcf/ApplicationKit/XCBMenuBarPeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_dll_GTKDialog.o: ../../src/vcf/ApplicationKit/GTKDialog.cpp
+../../lib/$(OBJDIR)/ApplicationKit_dll_XCBMenuManagerPeer.o: ../../src/vcf/ApplicationKit/XCBMenuManagerPeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_dll_GTKFileOpenDialog.o: ../../src/vcf/ApplicationKit/GTKFileOpenDialog.cpp
+../../lib/$(OBJDIR)/ApplicationKit_dll_XCBUIMetricsManager.o: ../../src/vcf/ApplicationKit/XCBUIMetricsManager.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_dll_GTKTextControl.o: ../../src/vcf/ApplicationKit/GTKTextControl.cpp
+../../lib/$(OBJDIR)/ApplicationKit_dll_XCBUIToolkit.o: ../../src/vcf/ApplicationKit/XCBUIToolkit.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_dll_GTKToolbar.o: ../../src/vcf/ApplicationKit/GTKToolbar.cpp
-	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/ApplicationKit_dll_GTKUIToolkit.o: ../../src/vcf/ApplicationKit/GTKUIToolkit.cpp
-	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/ApplicationKit_dll_GTKWindow.o: ../../src/vcf/ApplicationKit/GTKWindow.cpp
+../../lib/$(OBJDIR)/ApplicationKit_dll_XCBWindowPeer.o: ../../src/vcf/ApplicationKit/XCBWindowPeer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/HTMLKit_lib_HTMLBrowserControl.o: ../../src/vcf/HTMLKit/HTMLBrowserControl.cpp
@@ -4095,22 +4065,19 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_lib_Rect.o: ../../src/vcf/GraphicsKit/Rect.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_GTKContext.o: ../../src/vcf/GraphicsKit/GTKContext.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBContextPeer.o: ../../src/vcf/GraphicsKit/XCBContextPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_GTKFont.o: ../../src/vcf/GraphicsKit/GTKFont.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBFontPeer.o: ../../src/vcf/GraphicsKit/XCBFontPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_GTKGraphicsResourceBundle.o: ../../src/vcf/GraphicsKit/GTKGraphicsResourceBundle.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBGraphicsResourceBundlePeer.o: ../../src/vcf/GraphicsKit/XCBGraphicsResourceBundlePeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_GTKGraphicsToolkit.o: ../../src/vcf/GraphicsKit/GTKGraphicsToolkit.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBGraphicsToolkit.o: ../../src/vcf/GraphicsKit/XCBGraphicsToolkit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_GTKImage.o: ../../src/vcf/GraphicsKit/GTKImage.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_lib_GTKPrintSession.o: ../../src/vcf/GraphicsKit/GTKPrintSession.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBImagePeer.o: ../../src/vcf/GraphicsKit/XCBImagePeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_AbstractApplication.o: ../../src/vcf/ApplicationKit/AbstractApplication.cpp
@@ -4416,43 +4383,37 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_lib_Window.o: ../../src/vcf/ApplicationKit/Window.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_AbstractGTKControl.o: ../../src/vcf/ApplicationKit/AbstractGTKControl.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBAbstractControl.o: ../../src/vcf/ApplicationKit/XCBAbstractControl.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_GTKApplication.o: ../../src/vcf/ApplicationKit/GTKApplication.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBApplicationPeer.o: ../../src/vcf/ApplicationKit/XCBApplicationPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_GTKCommandButton.o: ../../src/vcf/ApplicationKit/GTKCommandButton.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBApplicationResourceBundlePeer.o: ../../src/vcf/ApplicationKit/XCBApplicationResourceBundlePeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_GTKControl.o: ../../src/vcf/ApplicationKit/GTKControl.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBControlContextPeer.o: ../../src/vcf/ApplicationKit/XCBControlContextPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_GTKControlContext.o: ../../src/vcf/ApplicationKit/GTKControlContext.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBCursorPeer.o: ../../src/vcf/ApplicationKit/XCBCursorPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_GTKCursor.o: ../../src/vcf/ApplicationKit/GTKCursor.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBDesktopPeer.o: ../../src/vcf/ApplicationKit/XCBDesktopPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_GTKDesktop.o: ../../src/vcf/ApplicationKit/GTKDesktop.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBMenuBarPeer.o: ../../src/vcf/ApplicationKit/XCBMenuBarPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_GTKDialog.o: ../../src/vcf/ApplicationKit/GTKDialog.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBMenuManagerPeer.o: ../../src/vcf/ApplicationKit/XCBMenuManagerPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_GTKFileOpenDialog.o: ../../src/vcf/ApplicationKit/GTKFileOpenDialog.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBUIMetricsManager.o: ../../src/vcf/ApplicationKit/XCBUIMetricsManager.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_GTKTextControl.o: ../../src/vcf/ApplicationKit/GTKTextControl.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBUIToolkit.o: ../../src/vcf/ApplicationKit/XCBUIToolkit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_GTKToolbar.o: ../../src/vcf/ApplicationKit/GTKToolbar.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_lib_GTKUIToolkit.o: ../../src/vcf/ApplicationKit/GTKUIToolkit.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_lib_GTKWindow.o: ../../src/vcf/ApplicationKit/GTKWindow.cpp
+../../lib/$(OBJDIR)/Allin1_lib_XCBWindowPeer.o: ../../src/vcf/ApplicationKit/XCBWindowPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_HTMLBrowserControl.o: ../../src/vcf/HTMLKit/HTMLBrowserControl.cpp
@@ -4782,22 +4743,19 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_Rect.o: ../../src/vcf/GraphicsKit/Rect.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_GTKContext.o: ../../src/vcf/GraphicsKit/GTKContext.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBContextPeer.o: ../../src/vcf/GraphicsKit/XCBContextPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_GTKFont.o: ../../src/vcf/GraphicsKit/GTKFont.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBFontPeer.o: ../../src/vcf/GraphicsKit/XCBFontPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_GTKGraphicsResourceBundle.o: ../../src/vcf/GraphicsKit/GTKGraphicsResourceBundle.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBGraphicsResourceBundlePeer.o: ../../src/vcf/GraphicsKit/XCBGraphicsResourceBundlePeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_GTKGraphicsToolkit.o: ../../src/vcf/GraphicsKit/GTKGraphicsToolkit.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBGraphicsToolkit.o: ../../src/vcf/GraphicsKit/XCBGraphicsToolkit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_GTKImage.o: ../../src/vcf/GraphicsKit/GTKImage.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_dll_GTKPrintSession.o: ../../src/vcf/GraphicsKit/GTKPrintSession.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBImagePeer.o: ../../src/vcf/GraphicsKit/XCBImagePeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_AbstractApplication.o: ../../src/vcf/ApplicationKit/AbstractApplication.cpp
@@ -5103,43 +5061,37 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_Window.o: ../../src/vcf/ApplicationKit/Window.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_AbstractGTKControl.o: ../../src/vcf/ApplicationKit/AbstractGTKControl.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBAbstractControl.o: ../../src/vcf/ApplicationKit/XCBAbstractControl.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_GTKApplication.o: ../../src/vcf/ApplicationKit/GTKApplication.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBApplicationPeer.o: ../../src/vcf/ApplicationKit/XCBApplicationPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_GTKCommandButton.o: ../../src/vcf/ApplicationKit/GTKCommandButton.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBApplicationResourceBundlePeer.o: ../../src/vcf/ApplicationKit/XCBApplicationResourceBundlePeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_GTKControl.o: ../../src/vcf/ApplicationKit/GTKControl.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBControlContextPeer.o: ../../src/vcf/ApplicationKit/XCBControlContextPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_GTKControlContext.o: ../../src/vcf/ApplicationKit/GTKControlContext.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBCursorPeer.o: ../../src/vcf/ApplicationKit/XCBCursorPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_GTKCursor.o: ../../src/vcf/ApplicationKit/GTKCursor.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBDesktopPeer.o: ../../src/vcf/ApplicationKit/XCBDesktopPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_GTKDesktop.o: ../../src/vcf/ApplicationKit/GTKDesktop.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBMenuBarPeer.o: ../../src/vcf/ApplicationKit/XCBMenuBarPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_GTKDialog.o: ../../src/vcf/ApplicationKit/GTKDialog.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBMenuManagerPeer.o: ../../src/vcf/ApplicationKit/XCBMenuManagerPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_GTKFileOpenDialog.o: ../../src/vcf/ApplicationKit/GTKFileOpenDialog.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBUIMetricsManager.o: ../../src/vcf/ApplicationKit/XCBUIMetricsManager.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_GTKTextControl.o: ../../src/vcf/ApplicationKit/GTKTextControl.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBUIToolkit.o: ../../src/vcf/ApplicationKit/XCBUIToolkit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_GTKToolbar.o: ../../src/vcf/ApplicationKit/GTKToolbar.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_dll_GTKUIToolkit.o: ../../src/vcf/ApplicationKit/GTKUIToolkit.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_dll_GTKWindow.o: ../../src/vcf/ApplicationKit/GTKWindow.cpp
+../../lib/$(OBJDIR)/Allin1_dll_XCBWindowPeer.o: ../../src/vcf/ApplicationKit/XCBWindowPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_HTMLBrowserControl.o: ../../src/vcf/HTMLKit/HTMLBrowserControl.cpp
