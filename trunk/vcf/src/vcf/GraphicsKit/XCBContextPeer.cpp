@@ -53,7 +53,7 @@ fonts_(NULL)
 	init();
 }
 
-XCBContextPeer::XCBContextPeer( const unsigned long& width, const unsigned long& height ) :
+XCBContextPeer::XCBContextPeer( const uint32& width, const uint32& height ) :
 context_(NULL),
 image_(NULL),
 drawingSurface_(NULL),

@@ -46,7 +46,7 @@ public:
 
 	XCBContextPeer();
 
-	XCBContextPeer( const unsigned long& width, const unsigned long& height );
+	XCBContextPeer( const uint32& width, const uint32& height );
 
     /**
     In this case the OSHandleID will be a vaild pointer to a XCBSurface
