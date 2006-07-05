@@ -444,7 +444,7 @@ namespace VCF {
 	/**
 	Creates an unsigned 64 bit integer from the
 	high and low 32 bit.*/
-	inline uint64 makeULong64(uint32 hi,uint32 lo){
+	inline uint64 makeUInt64(uint32 hi,uint32 lo){
 		return (((uint64)hi)<<32) | lo;
 	}
 
@@ -452,7 +452,7 @@ namespace VCF {
 	/**
 	Creates a signed 64 bit integer from the
 	high and low 32 bit.*/
-	inline int64 makeLong64(int32 hi,uint32 lo){
+	inline int64 makeInt64(int32 hi,uint32 lo){
 		return (((int64)hi)<<32) | lo;
 	}
 	

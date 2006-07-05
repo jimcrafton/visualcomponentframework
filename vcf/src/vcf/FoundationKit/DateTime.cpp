@@ -809,7 +809,7 @@ void DateTime::loadFromStream( InputStream* stream )
 	stream->read( hi );
 	stream->read( lo );
 
-	time_ = makeULong64(hi,lo);
+	time_ = makeUInt64(hi,lo);
 }
 
 void DateTime::saveToStream( OutputStream* stream )
