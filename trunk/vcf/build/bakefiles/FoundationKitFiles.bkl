@@ -37,6 +37,7 @@
         vcf/FoundationKit/Format.h
         vcf/FoundationKit/FoundationKit.h
         vcf/FoundationKit/FoundationKitPrivate.h
+        vcf/FoundationKit/FoundationKitRTTI.inl
         vcf/FoundationKit/FoundationKitSelectLib.h
         vcf/FoundationKit/FrameworkConfig.h
         vcf/FoundationKit/Interface.h
@@ -124,7 +125,6 @@
         vcf/FoundationKit/Waitable.h
         vcf/FoundationKit/WarningsOffVc.h
         vcf/FoundationKit/XMLParser.h
-        vcf/FoundationKit/FoundationKitRTTI.inl
     </set>
 
     <set var="FOUNDATIONKIT_SRC" hints="files">
