@@ -141,6 +141,7 @@ clean:
 	-if exist .\VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\VisualFormFiles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(VISUALFORMFILES_OBJECTS)

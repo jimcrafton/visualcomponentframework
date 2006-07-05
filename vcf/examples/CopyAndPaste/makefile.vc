@@ -141,6 +141,7 @@ clean:
 	-if exist .\CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\CopyAndPaste$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(COPYANDPASTE_OBJECTS)

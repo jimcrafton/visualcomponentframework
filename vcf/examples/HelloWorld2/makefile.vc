@@ -141,6 +141,7 @@ clean:
 	-if exist .\HelloWorld2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\HelloWorld2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\HelloWorld2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\HelloWorld2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\HelloWorld2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\HelloWorld2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\HelloWorld2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\HelloWorld2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\HelloWorld2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(HELLOWORLD2_OBJECTS)

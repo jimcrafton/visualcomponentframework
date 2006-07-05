@@ -119,6 +119,7 @@ clean:
 	-if exist .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(WORKINGWITHENUMERATORS_OBJECTS)

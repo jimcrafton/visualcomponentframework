@@ -139,6 +139,7 @@ clean:
 	-if exist .\Tooltips$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Tooltips$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Tooltips$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Tooltips$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Tooltips$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Tooltips$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Tooltips$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Tooltips$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Tooltips$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(TOOLTIPS_OBJECTS)

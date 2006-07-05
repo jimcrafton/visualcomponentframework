@@ -141,6 +141,7 @@ clean:
 	-if exist .\Accelerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Accelerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Accelerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Accelerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Accelerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Accelerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Accelerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Accelerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Accelerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(ACCELERATORS_OBJECTS)

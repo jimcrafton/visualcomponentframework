@@ -139,6 +139,7 @@ clean:
 	-if exist .\Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Sliders$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(SLIDERS_OBJECTS)

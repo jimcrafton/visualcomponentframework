@@ -141,6 +141,7 @@ clean:
 	-if exist .\ImageBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\ImageBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\ImageBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\ImageBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\ImageBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\ImageBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\ImageBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\ImageBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\ImageBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(IMAGEBASICS_OBJECTS)

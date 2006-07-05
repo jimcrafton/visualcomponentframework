@@ -139,6 +139,7 @@ clean:
 	-if exist .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Dialogs$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(DIALOGS_OBJECTS)

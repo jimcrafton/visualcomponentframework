@@ -141,6 +141,7 @@ clean:
 	-if exist .\DragAndDrop$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\DragAndDrop$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\DragAndDrop$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\DragAndDrop$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\DragAndDrop$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\DragAndDrop$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\DragAndDrop$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\DragAndDrop$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\DragAndDrop$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(DRAGANDDROP_OBJECTS)

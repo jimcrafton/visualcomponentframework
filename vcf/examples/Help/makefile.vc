@@ -145,6 +145,7 @@ clean:
 	-if exist .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Help$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 	-if exist "Help\Help*.chm" del "Help\Help*.chm"
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"

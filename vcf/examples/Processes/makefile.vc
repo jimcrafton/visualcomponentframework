@@ -117,6 +117,7 @@ clean:
 	-if exist .\Processes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Processes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Processes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Processes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Processes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Processes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Processes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Processes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\Processes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(PROCESSES_OBJECTS)

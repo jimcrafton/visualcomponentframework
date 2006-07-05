@@ -151,6 +151,7 @@ clean:
 	-if exist .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_OPENGLKIT)" == "1"
 .\ParticleEditor$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(PARTICLEEDITOR_OBJECTS)

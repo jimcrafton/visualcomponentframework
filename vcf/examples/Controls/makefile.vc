@@ -155,6 +155,7 @@ clean:
 	-if exist .\Controls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Controls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Controls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Controls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Controls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Controls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Controls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Controls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Controls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(CONTROLS_OBJECTS) ..\..\lib\$(OBJDIR)\examples\Controls\Controls_Controls.res

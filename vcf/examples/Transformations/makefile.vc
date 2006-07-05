@@ -141,6 +141,7 @@ clean:
 	-if exist .\Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Transformations$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(TRANSFORMATIONS_OBJECTS)

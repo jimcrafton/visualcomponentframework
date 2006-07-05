@@ -141,6 +141,7 @@ clean:
 	-if exist .\GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\GraphicsAndMouseMoves$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(GRAPHICSANDMOUSEMOVES_OBJECTS)

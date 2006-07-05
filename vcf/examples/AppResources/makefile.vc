@@ -141,6 +141,7 @@ clean:
 	-if exist .\AppResources$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\AppResources$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\AppResources$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\AppResources$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\AppResources$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\AppResources$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\AppResources$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\AppResources$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\AppResources$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(APPRESOURCES_OBJECTS)

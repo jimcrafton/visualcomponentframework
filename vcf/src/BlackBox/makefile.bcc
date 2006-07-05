@@ -127,7 +127,7 @@ clean:
 	-if exist ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ilf del ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ilf
 	-if exist ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ils del ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ils
 	-if exist ..\..\lib\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
-	-if exist ..\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).map del ..\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).map
+	-if exist ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).map del ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).map
 
 ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(BLACKBOX_DLL_OBJECTS)  ..\..\lib\$(OBJDIR)\utilities\BlackBox\BlackBox_dll_BlackBox.res
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib -Llib @&&|

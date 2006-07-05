@@ -130,6 +130,7 @@ clean:
 	-if exist .\Resources.exe del .\Resources.exe
 	-if exist .\Resources.ilk del .\Resources.ilk
 	-if exist .\Resources.pdb del .\Resources.pdb
+	-if exist .\Resources.exe.manifest del .\Resources.exe.manifest
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\Resources.exe: $(RESOURCES_OBJECTS) ..\..\lib\$(OBJDIR)\examples\Resources\Resources_Resources.res

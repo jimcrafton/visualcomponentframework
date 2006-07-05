@@ -154,6 +154,7 @@ clean:
 	-if exist .\ApplicationIcons$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\ApplicationIcons$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\ApplicationIcons$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\ApplicationIcons$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\ApplicationIcons$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\ApplicationIcons$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\ApplicationIcons$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\ApplicationIcons$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\ApplicationIcons$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(APPLICATIONICONS_OBJECTS) ..\..\lib\$(OBJDIR)\examples\ApplicationIcons\ApplicationIcons_ApplicationIcons.res

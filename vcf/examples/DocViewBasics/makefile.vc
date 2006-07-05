@@ -141,6 +141,7 @@ clean:
 	-if exist .\DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(DOCVIEWBASICS_OBJECTS)

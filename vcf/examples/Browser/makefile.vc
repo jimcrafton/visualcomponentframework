@@ -146,6 +146,7 @@ clean:
 	-if exist .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_HTMLKIT)" == "1"
 .\Browser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(BROWSER_OBJECTS)

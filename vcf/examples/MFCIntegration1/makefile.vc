@@ -135,6 +135,7 @@ clean:
 	-if exist .\MFCIntegration1$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\MFCIntegration1$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\MFCIntegration1$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\MFCIntegration1$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\MFCIntegration1$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\MFCIntegration1$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\MFCIntegration1$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\MFCIntegration1$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\MFCIntegration1$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(MFCINTEGRATION1_OBJECTS) ..\..\lib\$(OBJDIR)\examples\MFCIntegration1\MFCIntegration1_MFCIntegration1.res

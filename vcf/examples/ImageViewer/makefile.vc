@@ -141,6 +141,7 @@ clean:
 	-if exist .\ImageViewer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\ImageViewer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\ImageViewer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\ImageViewer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\ImageViewer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\ImageViewer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\ImageViewer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\ImageViewer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\ImageViewer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(IMAGEVIEWER_OBJECTS)

@@ -139,6 +139,7 @@ clean:
 	-if exist .\Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Colors$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(COLORS_OBJECTS)

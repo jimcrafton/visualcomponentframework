@@ -140,6 +140,7 @@ clean:
 	-if exist .\AdvancedUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\AdvancedUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\AdvancedUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\AdvancedUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\AdvancedUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\AdvancedUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\AdvancedUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\AdvancedUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\AdvancedUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(ADVANCEDUI_OBJECTS)

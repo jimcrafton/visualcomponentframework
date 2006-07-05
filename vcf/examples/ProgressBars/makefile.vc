@@ -141,6 +141,7 @@ clean:
 	-if exist .\ProgressBars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\ProgressBars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\ProgressBars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\ProgressBars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\ProgressBars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\ProgressBars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\ProgressBars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\ProgressBars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\ProgressBars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(PROGRESSBARS_OBJECTS)

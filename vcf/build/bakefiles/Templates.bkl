@@ -106,12 +106,45 @@
     </template>
 
 
+    <template id="vcf_lib_clean">
+        <if cond="FORMAT=='msvc'">
+            <clean-files>
+                $(ref('__targetdir',id))$(ref('__libname',id)).pdb
+            </clean-files>
+        </if>
+    </template>
+
+
+    <template id="vcf_dll_clean">
+        <if cond="FORMAT=='msvc'">
+            <clean-files>
+                $(ref('__targetdir',id))$(ref('__libname',id)).exp
+                $(ref('__targetdir',id))$(ref('__targetname',id)).manifest
+            </clean-files>
+        </if>
+        <if cond="FORMAT=='borland'">
+            <clean-files>
+                $(ref('__targetdir',id))$(ref('__dllname',id)).map
+            </clean-files>
+        </if>
+    </template>
+
+
+    <template id="vcf_exe_clean">
+        <if cond="FORMAT=='msvc'">
+            <clean-files>
+                $(ref('__targetdir',id))$(ref('__targetname',id)).manifest
+            </clean-files>
+        </if>
+    </template>
+
+
     <template id="vcf_base" template="base">
         <dirname>$(VCF_LIB)</dirname>
     </template>
 
 
-    <template id="vcf_lib" template="vcf_base">
+    <template id="vcf_lib" template="vcf_base,vcf_lib_clean">
         <set var="LIBRARY_FILENAME">
             $(vcf.getLibFilename( LIBRARY_NAME ))
         </set>
@@ -125,19 +158,10 @@
            <define>_MBCS</define>
            <define>NO_MFC</define>
         </if>
-
-        <!--
-        Add an appropriate .pdb file to the "clean" target.
-        -->
-        <if cond="FORMAT=='msvc'">
-            <clean-files>
-                $(vcf.joinPaths( VCF_LIB, LIBRARY_FILENAME + ".pdb" ))
-            </clean-files>
-        </if>
     </template>
 
 
-    <template id="vcf_dll" template="vcf_base">
+    <template id="vcf_dll" template="vcf_base,vcf_dll_clean">
         <set var="LIBRARY_FILENAME">
             $(vcf.getDllFilename( LIBRARY_NAME ))
         </set>
@@ -148,24 +172,10 @@
         <if cond="PLATFORM_WIN32=='1'">
             <define>_USRDLL</define>
         </if>
-
-        <!--
-        Add an appropriate .exp file to the "clean" target.
-        -->
-        <if cond="FORMAT=='msvc'">
-            <clean-files>
-                $(vcf.joinPaths( VCF_LIB, LIBRARY_FILENAME + ".exp" ))
-            </clean-files>
-        </if>
-        <if cond="FORMAT=='borland'">
-            <clean-files>
-                $(vcf.joinPaths( VCF_BIN, LIBRARY_FILENAME + ".map" ))
-            </clean-files>
-        </if>
     </template>
 
 
-    <template id="vcf_exe" template="base">
+    <template id="vcf_exe" template="base,vcf_exe_clean">
         <set var="EXE_FILENAME">
             $(vcf.getFilename( id ))
         </set>

@@ -119,6 +119,7 @@ clean:
 	-if exist .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\EventBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(EVENTBASICS_OBJECTS)

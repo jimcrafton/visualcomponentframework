@@ -149,6 +149,7 @@ clean:
 	-if exist .\MFCIntegration2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\MFCIntegration2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\MFCIntegration2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\MFCIntegration2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\MFCIntegration2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\MFCIntegration2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\MFCIntegration2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\MFCIntegration2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_GRAPHICSKIT)" == "1"
 .\MFCIntegration2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(MFCINTEGRATION2_OBJECTS) ..\..\lib\$(OBJDIR)\examples\MFCIntegration2\MFCIntegration2_MFCIntegration2.res

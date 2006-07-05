@@ -152,6 +152,7 @@ clean:
 	-if exist .\Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(ACTIONS_OBJECTS) ..\..\lib\$(OBJDIR)\examples\Actions\Actions_Actions.res

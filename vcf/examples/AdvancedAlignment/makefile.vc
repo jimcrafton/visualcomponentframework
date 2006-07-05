@@ -141,6 +141,7 @@ clean:
 	-if exist .\AdvancedAlignment$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\AdvancedAlignment$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\AdvancedAlignment$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\AdvancedAlignment$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\AdvancedAlignment$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\AdvancedAlignment$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\AdvancedAlignment$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\AdvancedAlignment$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\AdvancedAlignment$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(ADVANCEDALIGNMENT_OBJECTS)

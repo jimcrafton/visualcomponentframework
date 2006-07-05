@@ -141,6 +141,7 @@ clean:
 	-if exist .\HeavyAndLight$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\HeavyAndLight$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\HeavyAndLight$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\HeavyAndLight$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\HeavyAndLight$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\HeavyAndLight$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\HeavyAndLight$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\HeavyAndLight$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\HeavyAndLight$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(HEAVYANDLIGHT_OBJECTS)

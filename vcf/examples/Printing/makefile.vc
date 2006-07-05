@@ -139,6 +139,7 @@ clean:
 	-if exist .\Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Printing$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(PRINTING_OBJECTS)

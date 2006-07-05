@@ -139,6 +139,7 @@ clean:
 	-if exist .\Gradients$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Gradients$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Gradients$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Gradients$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Gradients$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Gradients$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Gradients$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Gradients$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Gradients$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(GRADIENTS_OBJECTS)

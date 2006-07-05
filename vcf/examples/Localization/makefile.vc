@@ -117,6 +117,7 @@ clean:
 	-if exist .\Localization.exe del .\Localization.exe
 	-if exist .\Localization.ilk del .\Localization.ilk
 	-if exist .\Localization.pdb del .\Localization.pdb
+	-if exist .\Localization.exe.manifest del .\Localization.exe.manifest
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\Localization.exe: $(LOCALIZATION_OBJECTS)
