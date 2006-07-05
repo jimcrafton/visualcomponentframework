@@ -119,6 +119,7 @@ clean:
 	-if exist .\Dictionaries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Dictionaries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Dictionaries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Dictionaries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Dictionaries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Dictionaries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Dictionaries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Dictionaries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\Dictionaries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(DICTIONARIES_OBJECTS)

@@ -134,6 +134,7 @@ clean:
 	-if exist ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb del ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb
 	-if exist ..\..\lib\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 	-if exist ..\..\lib\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp del ..\..\lib\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp
+	-if exist ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest del ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest
 
 ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(BLACKBOX_DLL_OBJECTS) ..\..\lib\$(OBJDIR)\utilities\BlackBox\BlackBox_dll_BlackBox.res
 	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_2)  /LIBPATH:..\..\lib /LIBPATH:lib @<<

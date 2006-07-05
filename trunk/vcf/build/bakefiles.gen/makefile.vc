@@ -1920,6 +1920,7 @@ clean:
 	-if exist ..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb del ..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb
 	-if exist ..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 	-if exist ..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp del ..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp
+	-if exist ..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest del ..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest
 	-if exist ..\..\lib\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
 	-if exist ..\..\lib\..\bin\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll del ..\..\lib\..\bin\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
@@ -1927,6 +1928,7 @@ clean:
 	-if exist ..\..\lib\..\bin\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb del ..\..\lib\..\bin\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb
 	-if exist ..\..\lib\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 	-if exist ..\..\lib\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp del ..\..\lib\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp
+	-if exist ..\..\lib\..\bin\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest del ..\..\lib\..\bin\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest
 	-if exist ..\..\lib\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
 	-if exist ..\..\lib\..\bin\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll del ..\..\lib\..\bin\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
@@ -1934,6 +1936,7 @@ clean:
 	-if exist ..\..\lib\..\bin\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb del ..\..\lib\..\bin\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb
 	-if exist ..\..\lib\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 	-if exist ..\..\lib\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp del ..\..\lib\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp
+	-if exist ..\..\lib\..\bin\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest del ..\..\lib\..\bin\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest
 	-if exist ..\..\lib\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
 	-if exist ..\..\lib\..\bin\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll del ..\..\lib\..\bin\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
@@ -1941,6 +1944,7 @@ clean:
 	-if exist ..\..\lib\..\bin\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb del ..\..\lib\..\bin\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb
 	-if exist ..\..\lib\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 	-if exist ..\..\lib\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp del ..\..\lib\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp
+	-if exist ..\..\lib\..\bin\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest del ..\..\lib\..\bin\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest
 	-if exist ..\..\lib\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
 	-if exist ..\..\lib\..\bin\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll del ..\..\lib\..\bin\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
@@ -1948,6 +1952,7 @@ clean:
 	-if exist ..\..\lib\..\bin\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb del ..\..\lib\..\bin\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb
 	-if exist ..\..\lib\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 	-if exist ..\..\lib\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp del ..\..\lib\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp
+	-if exist ..\..\lib\..\bin\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest del ..\..\lib\..\bin\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest
 	-if exist ..\..\lib\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
 	-if exist ..\..\lib\..\bin\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll del ..\..\lib\..\bin\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
@@ -1955,6 +1960,7 @@ clean:
 	-if exist ..\..\lib\..\bin\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb del ..\..\lib\..\bin\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb
 	-if exist ..\..\lib\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 	-if exist ..\..\lib\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp del ..\..\lib\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp
+	-if exist ..\..\lib\..\bin\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest del ..\..\lib\..\bin\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest
 	-if exist ..\..\lib\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
 	-if exist ..\..\lib\..\bin\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll del ..\..\lib\..\bin\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
@@ -1962,6 +1968,7 @@ clean:
 	-if exist ..\..\lib\..\bin\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb del ..\..\lib\..\bin\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb
 	-if exist ..\..\lib\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 	-if exist ..\..\lib\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp del ..\..\lib\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp
+	-if exist ..\..\lib\..\bin\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest del ..\..\lib\..\bin\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest
 	-if exist ..\..\lib\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
 	-if exist ..\..\lib\..\bin\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll del ..\..\lib\..\bin\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
@@ -1969,6 +1976,7 @@ clean:
 	-if exist ..\..\lib\..\bin\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb del ..\..\lib\..\bin\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb
 	-if exist ..\..\lib\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 	-if exist ..\..\lib\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp del ..\..\lib\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp
+	-if exist ..\..\lib\..\bin\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest del ..\..\lib\..\bin\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest
 	-if exist ..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
 	-if exist ..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll del ..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
@@ -1976,6 +1984,7 @@ clean:
 	-if exist ..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb del ..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb
 	-if exist ..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 	-if exist ..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp del ..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp
+	-if exist ..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest del ..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest
 	-if exist ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb del ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb
 	-if exist ..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
@@ -1985,6 +1994,7 @@ clean:
 	-if exist ..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb del ..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb
 	-if exist ..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 	-if exist ..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp del ..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).exp
+	-if exist ..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest del ..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll.manifest
 	cd ..\..\src\createinfo
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"

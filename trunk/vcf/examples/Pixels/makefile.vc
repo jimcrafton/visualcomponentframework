@@ -139,6 +139,7 @@ clean:
 	-if exist .\Pixels$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Pixels$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Pixels$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Pixels$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Pixels$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Pixels$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Pixels$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Pixels$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Pixels$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(PIXELS_OBJECTS)

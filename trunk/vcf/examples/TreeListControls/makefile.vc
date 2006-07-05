@@ -154,6 +154,7 @@ clean:
 	-if exist .\TreeListControls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\TreeListControls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\TreeListControls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\TreeListControls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\TreeListControls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\TreeListControls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\TreeListControls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\TreeListControls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\TreeListControls$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(TREELISTCONTROLS_OBJECTS) ..\..\lib\$(OBJDIR)\examples\TreeListControls\TreeListControls_treelist.res

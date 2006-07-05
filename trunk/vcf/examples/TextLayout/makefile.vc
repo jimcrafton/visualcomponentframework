@@ -140,6 +140,7 @@ clean:
 	-if exist .\TextLayout$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\TextLayout$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\TextLayout$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\TextLayout$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\TextLayout$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\TextLayout$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\TextLayout$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\TextLayout$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\TextLayout$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(TEXTLAYOUT_OBJECTS)

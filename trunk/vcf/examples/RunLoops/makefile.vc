@@ -117,6 +117,7 @@ clean:
 	-if exist .\RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\RunLoops$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(RUNLOOPS_OBJECTS)

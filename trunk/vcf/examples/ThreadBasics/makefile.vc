@@ -119,6 +119,7 @@ clean:
 	-if exist .\ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\ThreadBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(THREADBASICS_OBJECTS)

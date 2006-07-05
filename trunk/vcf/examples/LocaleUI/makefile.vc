@@ -139,6 +139,7 @@ clean:
 	-if exist .\LocaleUI.exe del .\LocaleUI.exe
 	-if exist .\LocaleUI.ilk del .\LocaleUI.ilk
 	-if exist .\LocaleUI.pdb del .\LocaleUI.pdb
+	-if exist .\LocaleUI.exe.manifest del .\LocaleUI.exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\LocaleUI.exe: $(LOCALEUI_OBJECTS)

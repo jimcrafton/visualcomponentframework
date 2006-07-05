@@ -117,6 +117,7 @@ clean:
 	-if exist .\Variants$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Variants$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Variants$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Variants$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Variants$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Variants$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Variants$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Variants$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\Variants$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(VARIANTS_OBJECTS)

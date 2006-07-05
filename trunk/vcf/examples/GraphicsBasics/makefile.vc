@@ -141,6 +141,7 @@ clean:
 	-if exist .\GraphicsBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\GraphicsBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\GraphicsBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\GraphicsBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\GraphicsBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\GraphicsBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\GraphicsBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\GraphicsBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\GraphicsBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(GRAPHICSBASICS_OBJECTS)

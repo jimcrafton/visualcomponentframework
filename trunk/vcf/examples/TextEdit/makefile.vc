@@ -143,6 +143,7 @@ clean:
 	-if exist .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\TextEdit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(TEXTEDIT_OBJECTS)

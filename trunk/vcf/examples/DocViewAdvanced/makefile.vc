@@ -141,6 +141,7 @@ clean:
 	-if exist .\DocViewAdvanced$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\DocViewAdvanced$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\DocViewAdvanced$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\DocViewAdvanced$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\DocViewAdvanced$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\DocViewAdvanced$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\DocViewAdvanced$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\DocViewAdvanced$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\DocViewAdvanced$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(DOCVIEWADVANCED_OBJECTS)

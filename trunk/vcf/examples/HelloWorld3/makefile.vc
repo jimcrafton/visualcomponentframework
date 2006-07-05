@@ -141,6 +141,7 @@ clean:
 	-if exist .\HelloWorld3$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\HelloWorld3$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\HelloWorld3$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\HelloWorld3$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\HelloWorld3$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\HelloWorld3$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\HelloWorld3$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\HelloWorld3$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\HelloWorld3$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(HELLOWORLD3_OBJECTS)

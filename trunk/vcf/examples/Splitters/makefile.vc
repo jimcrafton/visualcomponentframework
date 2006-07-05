@@ -139,6 +139,7 @@ clean:
 	-if exist .\Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Splitters$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(SPLITTERS_OBJECTS)

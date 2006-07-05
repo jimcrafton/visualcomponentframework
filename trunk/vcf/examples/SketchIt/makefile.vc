@@ -143,6 +143,7 @@ clean:
 	-if exist .\SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(SKETCHIT_OBJECTS)

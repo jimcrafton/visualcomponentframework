@@ -114,6 +114,7 @@ clean:
 	-if exist ..\..\bin\createinfo.exe del ..\..\bin\createinfo.exe
 	-if exist ..\..\bin\createinfo.ilk del ..\..\bin\createinfo.ilk
 	-if exist ..\..\bin\createinfo.pdb del ..\..\bin\createinfo.pdb
+	-if exist ..\..\bin\createinfo.exe.manifest del ..\..\bin\createinfo.exe.manifest
 
 ..\..\bin\createinfo.exe: $(CREATEINFO_OBJECTS)
 	link /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_1)  /LIBPATH:..\..\lib /SUBSYSTEM:CONSOLE @<<

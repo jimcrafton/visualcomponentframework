@@ -141,6 +141,7 @@ clean:
 	-if exist .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\StrokesAndFills$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(STROKESANDFILLS_OBJECTS)

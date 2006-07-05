@@ -119,6 +119,7 @@ clean:
 	-if exist .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\Directories$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(DIRECTORIES_OBJECTS)

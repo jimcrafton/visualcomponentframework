@@ -148,6 +148,7 @@ clean:
 	-if exist .\OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_OPENGLKIT)" == "1"
 .\OpenGLShapes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(OPENGLSHAPES_OBJECTS)

@@ -127,6 +127,7 @@ clean:
 	-if exist ..\..\bin\xmake.exe del ..\..\bin\xmake.exe
 	-if exist ..\..\bin\xmake.ilk del ..\..\bin\xmake.ilk
 	-if exist ..\..\bin\xmake.pdb del ..\..\bin\xmake.pdb
+	-if exist ..\..\bin\xmake.exe.manifest del ..\..\bin\xmake.exe.manifest
 
 ..\..\lib\Xmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(XMAKE_LIB_OBJECTS)
 	if exist $@ del $@

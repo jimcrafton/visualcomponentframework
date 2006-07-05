@@ -119,6 +119,7 @@ clean:
 	-if exist .\DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\DatesAndTime$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(DATESANDTIME_OBJECTS)

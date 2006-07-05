@@ -140,6 +140,7 @@ clean:
 	-if exist .\Scrolling2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Scrolling2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Scrolling2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Scrolling2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Scrolling2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Scrolling2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Scrolling2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Scrolling2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Scrolling2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(SCROLLING2_OBJECTS)

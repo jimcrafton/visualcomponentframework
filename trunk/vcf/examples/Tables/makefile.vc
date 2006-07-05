@@ -139,6 +139,7 @@ clean:
 	-if exist .\Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Tables$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(TABLES_OBJECTS)

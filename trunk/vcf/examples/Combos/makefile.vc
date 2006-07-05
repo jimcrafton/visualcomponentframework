@@ -139,6 +139,7 @@ clean:
 	-if exist .\Combos$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Combos$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Combos$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Combos$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Combos$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Combos$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Combos$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Combos$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Combos$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(COMBOS_OBJECTS)

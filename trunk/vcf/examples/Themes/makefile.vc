@@ -139,6 +139,7 @@ clean:
 	-if exist .\Themes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Themes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Themes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Themes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Themes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Themes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Themes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Themes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Themes$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(THEMES_OBJECTS)

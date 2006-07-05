@@ -141,6 +141,7 @@ clean:
 	-if exist .\FrameStyles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\FrameStyles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\FrameStyles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\FrameStyles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\FrameStyles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\FrameStyles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\FrameStyles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\FrameStyles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\FrameStyles$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(FRAMESTYLES_OBJECTS)

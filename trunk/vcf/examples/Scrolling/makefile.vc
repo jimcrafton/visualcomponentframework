@@ -139,6 +139,7 @@ clean:
 	-if exist .\Scrolling$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Scrolling$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Scrolling$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Scrolling$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Scrolling$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Scrolling$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Scrolling$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Scrolling$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Scrolling$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(SCROLLING_OBJECTS)

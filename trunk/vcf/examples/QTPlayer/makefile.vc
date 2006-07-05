@@ -158,6 +158,7 @@ clean:
 	-if exist .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\QTPlayer$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(QTPLAYER_OBJECTS) ..\..\lib\$(OBJDIR)\examples\QTPlayer\QTPlayer_QTResFile.res

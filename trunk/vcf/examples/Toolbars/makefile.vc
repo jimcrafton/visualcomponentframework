@@ -152,6 +152,7 @@ clean:
 	-if exist .\Toolbars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Toolbars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\Toolbars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Toolbars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\Toolbars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Toolbars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Toolbars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Toolbars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
 .\Toolbars$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(TOOLBARS_OBJECTS) ..\..\lib\$(OBJDIR)\examples\Toolbars\Toolbars_tb.res
