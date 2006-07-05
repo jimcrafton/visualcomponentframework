@@ -161,7 +161,7 @@ uint64 Win32FilePeer::getSize()
 		uint32 resultHigh = 0;
 		if ( NULL != fileHandle_ ){
 			resultLow = ::GetFileSize( fileHandle_, (DWORD*)&resultHigh );
-			result = makeULong64( resultHigh, resultLow );
+			result = makeUInt64( resultHigh, resultLow );
 		}
 	}
 	else {
@@ -175,7 +175,7 @@ uint64 Win32FilePeer::getSize()
 			res = ::GetFileAttributesExA( getName().ansi_c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
 		}
 
-		result = result = makeULong64( fileAttribData.nFileSizeHigh, fileAttribData.nFileSizeLow );
+		result = result = makeUInt64( fileAttribData.nFileSizeHigh, fileAttribData.nFileSizeLow );
 	}
 
 	return result;
