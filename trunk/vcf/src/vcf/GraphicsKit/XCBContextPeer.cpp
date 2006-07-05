@@ -159,8 +159,10 @@ const agg::glyph_cache* XCBContextPeer::glyph( int character, double& x, double&
 {
 	CachedGlyph* cg = NULL;
 
+	VCF_ASSERT( character >= 0 );
+	
 	//check to see if we need to resize over 256
-	if ( character > cachedFontGlyphs_.size()-1 ) {
+	if ( (size_t)character > cachedFontGlyphs_.size()-1 ) {
 		cachedFontGlyphs_.resize( cachedFontGlyphs_.size() + (character - (cachedFontGlyphs_.size()-1)), 0 );
 	}
 
@@ -441,8 +443,10 @@ void XCBContextPeer::renderScanlinesSolid( agg::rasterizer_scanline_aa<>& raster
 		
 		if ( !currentClipRect_.isNull() && !currentClipRect_.isEmpty() ) {
 			renb.reset_clipping(false);
-			renb.add_clip_box( currentClipRect_.left_, currentClipRect_.top_,
-							currentClipRect_.right_, currentClipRect_.bottom_ );
+			renb.add_clip_box( (int)currentClipRect_.left_, 
+								(int)currentClipRect_.top_,
+								(int)currentClipRect_.right_, 
+								(int)currentClipRect_.bottom_ );
 		}
 		else {
 			renb.reset_clipping(true);
@@ -512,6 +516,89 @@ void XCBContextPeer::internal_setGamma( double gamma )
 	fonts_->engine.gamma( agg::gamma_power(gamma) );
 }
 
+
+
+void XCBContextPeer::renderLine( const std::vector<GlyphInfo>& glyphs, size_t lastGlyphPos, const Size& currentLineSz,
+								const Rect& bounds, const int32& drawOptions )
+{
+	if ( lastGlyphPos > 0 ) {
+		bool doSrcRender = (GraphicsContext::cmSource == context_->getCompositingMode()) ? true : false;
+		typedef agg::renderer_mclip<XCBSurface::PixFmt> RendererBase;
+		typedef agg::renderer_scanline_aa_solid<RendererBase> RendererSolid;
+
+		typedef agg::comp_op_adaptor_rgba<XCBSurface::ColorType, XCBSurface::ComponentOrder> blender_type;
+		typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
+		typedef agg::renderer_mclip<pixfmt_type> comp_renderer_type;
+
+		XCBSurface::PixFmt pixfSrc( renderBuffer_ );
+		RendererBase renbSrc(pixfSrc);
+		RendererSolid rendererSrc( renbSrc );
+		rendererSrc.color(fonts_->color);
+
+		pixfmt_type pixf( renderBuffer_ );
+		pixf.comp_op( context_->getCompositingMode() );
+		comp_renderer_type renb(pixf);
+
+
+		renbSrc.reset_clipping( false );
+		renbSrc.add_clip_box( (int)bounds.left_, (int)bounds.top_,
+								(int)bounds.right_, (int)bounds.bottom_ );
+								
+		renb.reset_clipping( false );
+		renb.add_clip_box( (int)bounds.left_, (int)bounds.top_,
+								(int)bounds.right_, (int)bounds.bottom_ );
+
+		double rightDX = bounds.getWidth() - currentLineSz.width_;
+		double centerDX = bounds.getWidth()/2.0 - currentLineSz.width_/2.0;
+		
+		for ( size_t i=0;i<=lastGlyphPos;i++ ) {
+			const GlyphInfo& glyphInfo = glyphs[i];
+			double gx = glyphInfo.x;
+			double gy = glyphInfo.y;
+			
+			if ( drawOptions & GraphicsContext::tdoRightAlign ) {
+				gx = glyphInfo.x + rightDX;
+			}
+			else if ( drawOptions & GraphicsContext::tdoCenterHorzAlign ) {
+				gx = glyphInfo.x + centerDX;
+			}
+			
+			if ( glyphInfo.visible ) {
+				fonts_->mgr.init_embedded_adaptors( glyphInfo.glyph, gx, gy );
+				switch( glyphInfo.glyph->data_type ) {
+					case agg::glyph_data_mono: {
+//						agg::render_scanlines(aggFontManager_.mono_adaptor(),
+//												aggFontManager_.mono_scanline(),
+//												renderBin);
+
+						LinuxDebugUtils::FunctionNotImplemented( "Not painting glyph_data_mono" );
+					}
+					break;
+
+					case agg::glyph_data_gray8: {
+						if ( doSrcRender ) {
+							agg::render_scanlines(fonts_->mgr.gray8_adaptor(), fonts_->mgr.gray8_scanline(), rendererSrc);
+						}
+						else {
+							agg::render_scanlines_aa_solid(fonts_->mgr.gray8_adaptor(), fonts_->mgr.gray8_scanline(),
+															renb, fonts_->color);
+						}
+					}
+					break;
+
+					case agg::glyph_data_outline: {
+						LinuxDebugUtils::FunctionNotImplemented( "Not painting glyph_data_outline" );
+						//rasterizer.reset();
+						//rasterizer.add_path(contour);
+						//agg::render_scanlines(rasterizer, scanLine, renderSolid);
+					}
+					break;
+				}
+			}
+		}
+	}
+}
+
 void XCBContextPeer::textAt( const Rect& bounds, const String & text, const int32& drawOptions )
 {
 	VCF_ASSERT( fonts_->fontLoaded );
@@ -519,79 +606,75 @@ void XCBContextPeer::textAt( const Rect& bounds, const String & text, const int3
 	double dpi = GraphicsToolkit::getDPI();
 	
 	
-
+/*
 	agg::rect_d charBounds;
 	charBounds.x1 = 0;
 	charBounds.y1 = 0;
 	charBounds.x2 = 0;
 	charBounds.y2 = 0;
-
+*/
 	int character = 0;
-	const agg::glyph_cache* glyphPtr = NULL;
 	size_t size = text.size();
 	const VCFChar* textPtr = text.c_str();
 
 	bool crlfChar = false;
 
-	typedef agg::renderer_mclip<XCBSurface::PixFmt> RendererBase;
-	typedef agg::renderer_scanline_aa_solid<RendererBase> RendererSolid;
+	
 
-	typedef agg::comp_op_adaptor_rgba<XCBSurface::ColorType, XCBSurface::ComponentOrder> blender_type;
-	typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
-	typedef agg::renderer_mclip<pixfmt_type> comp_renderer_type;
-
-	XCBSurface::PixFmt pixfSrc( renderBuffer_ );
-	RendererBase renbSrc(pixfSrc);
-	RendererSolid rendererSrc( renbSrc );
-	rendererSrc.color(fonts_->color);
-
-	pixfmt_type pixf( renderBuffer_ );
-	pixf.comp_op( context_->getCompositingMode() );
-	comp_renderer_type renb(pixf);
-
-
-	renbSrc.reset_clipping( false );
-	renbSrc.add_clip_box( (int)bounds.left_, (int)bounds.top_,
-							(int)bounds.right_, (int)bounds.bottom_ );
-							
-	renb.reset_clipping( false );
-	renb.add_clip_box( (int)bounds.left_, (int)bounds.top_,
-							(int)bounds.right_, (int)bounds.bottom_ );
-
-	bool doSrcRender = (GraphicsContext::cmSource == context_->getCompositingMode()) ? true : false;
+	
 
 	double fontHeight = (fonts_->currentPointSize / 72.0) * dpi;
 
-	double x1 = bounds.left_;
+	double x1 = bounds.left_;	
 	double y1 = bounds.top_ + fontHeight;
 	
-	//internal_setGamma( 0.1 );
+	Size currentLineSz;
+	currentLineSz.height_ = fontHeight;
+	
+	const size_t GLYPHS_INCREMENT = 256;	
+	std::vector<GlyphInfo> currentLine(GLYPHS_INCREMENT);	
+	size_t lastGlyphPos = 0;
 
 	for ( size_t i=0;i<size;i++ ) {
 		character = textPtr[i];
 
 		crlfChar = (character == '\n') || (character == '\r');
 
+		if ( lastGlyphPos >= currentLine.size() ) {
+			currentLine.resize( currentLine.size() + GLYPHS_INCREMENT );
+		}
+		
+		GlyphInfo& glyphInfo = currentLine[lastGlyphPos];
+		
+		glyphInfo.glyph = glyph(character, x1, y1 );
+		glyphInfo.x = x1;
+		glyphInfo.y = y1;
+		glyphInfo.visible = !crlfChar;
+		
 		if ( crlfChar ) {
-			glyphPtr = glyph(character, x1, y1 );
-			if ( NULL != glyphPtr ) {
+			
+			if ( NULL != glyphInfo.glyph ) {		
 				
-				fonts_->mgr.init_embedded_adaptors(glyphPtr, x1, y1);
 				
-				if ( drawOptions & GraphicsContext::tdoWordWrap ) {
+				if ( drawOptions & GraphicsContext::tdoWordWrap ) {					
+					renderLine( currentLine, lastGlyphPos, currentLineSz, bounds, drawOptions );
+					
 					x1 = bounds.left_;
 					y1 += fontHeight;
+					
+					lastGlyphPos = 0;
+					currentLineSz.width_ = 0;
 				}
 				else {
-					x1 += glyphPtr->advance_x;
-					y1 += glyphPtr->advance_y;
+					currentLineSz.width_ += glyphInfo.glyph->advance_x;
+					x1 += glyphInfo.glyph->advance_x;
+					y1 += glyphInfo.glyph->advance_y;
+					lastGlyphPos ++;
 				}
 			}
 		}
-		else {
-			glyphPtr = glyph(character, x1, y1 );
-			fonts_->mgr.init_embedded_adaptors(glyphPtr, x1, y1);
-
+		else {			
+/*
 			if ( glyphPtr->bounds.is_valid() ) {
 
 				agg::rect_d adjustedGlyphBounds;
@@ -608,41 +691,16 @@ void XCBContextPeer::textAt( const Rect& bounds, const String & text, const int3
 				charBounds.y2 = (charBounds.y2 > adjustedGlyphBounds.y2) ? charBounds.y2 : adjustedGlyphBounds.y2;
 
 			}
-
-			switch( glyphPtr->data_type ) {
-				case agg::glyph_data_mono: {
-//						agg::render_scanlines(aggFontManager_.mono_adaptor(),
-//												aggFontManager_.mono_scanline(),
-//												renderBin);
-
-					LinuxDebugUtils::FunctionNotImplemented( "Not painting glyph_data_mono" );
-				}
-				break;
-
-				case agg::glyph_data_gray8: {
-					if ( doSrcRender ) {
-						agg::render_scanlines(fonts_->mgr.gray8_adaptor(), fonts_->mgr.gray8_scanline(), rendererSrc);
-					}
-					else {
-						agg::render_scanlines_aa_solid(fonts_->mgr.gray8_adaptor(), fonts_->mgr.gray8_scanline(),
-														renb, fonts_->color);
-					}
-				}
-				break;
-
-				case agg::glyph_data_outline: {
-					LinuxDebugUtils::FunctionNotImplemented( "Not painting glyph_data_outline" );
-					//rasterizer.reset();
-					//rasterizer.add_path(contour);
-					//agg::render_scanlines(rasterizer, scanLine, renderSolid);
-				}
-				break;
-			}
-
-			x1 += glyphPtr->advance_x;
-			y1 += glyphPtr->advance_y;
+*/
+			
+			currentLineSz.width_ += glyphInfo.glyph->advance_x;
+			x1 += glyphInfo.glyph->advance_x;
+			y1 += glyphInfo.glyph->advance_y;
+			lastGlyphPos ++;
 		}
 	}
+	
+	renderLine( currentLine, lastGlyphPos, currentLineSz, bounds, drawOptions );	
 }
 
 Size XCBContextPeer::getTextSize( const String& text )
@@ -1489,7 +1547,7 @@ void XCBContextPeer::drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState
 		tabRect.right_ = tabRect.left_ + w;
 		tabRect.bottom_ = tabRect.top_ + sz.height_;
 
-		if ( selectedTabIndex == i ) {
+		if ( selectedTabIndex == (int)i ) {
 			selectedTabRect = tabRect;
 			selectedTabText = tab;
 		}
@@ -1764,7 +1822,7 @@ void XCBContextPeer::drawThemeEdge( Rect* rect, DrawUIState& state, const int32&
 	Color shadow1 = *GraphicsToolkit::getSystemColor( SYSCOLOR_SHADOW );
 	Color shadow2 = shadow1;
 	int l = shadow2.getLuminosity();
-	shadow2.setLuminosity( l * 0.5 );
+	shadow2.setLuminosity( int(l * 0.5) );
 
 	Color* face = GraphicsToolkit::getSystemColor( SYSCOLOR_FACE );
 

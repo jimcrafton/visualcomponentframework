@@ -186,6 +186,14 @@ public:
 	
 	void internal_setGamma( double gamma );
 protected:
+	struct GlyphInfo {
+		double x;
+		double y;
+		const agg::glyph_cache* glyph;
+		bool visible;
+	};
+
+
 	GraphicsContext *context_;
 	XCBImage        *image_;
 
@@ -211,6 +219,8 @@ protected:
 
 	const agg::glyph_cache* glyph( int character, double& x, double& y );
 	Size getTextSize( const String& text );
+	void renderLine( const std::vector<GlyphInfo>& glyphs, size_t lastGlyphPos, const Size& currentLineSz,
+						const Rect& bounds, const int32& drawOptions );
 };
 
 }; //end of namespace VCF
