@@ -390,73 +390,32 @@
         vcf/ApplicationKit/Win32Window.cpp
     </set>
 
-    <set var="APPLICATIONKIT_GTK_HDR" hints="files">
-        vcf/ApplicationKit/AbstractGTKControl.h
-        vcf/ApplicationKit/GTKApplication.h
-        vcf/ApplicationKit/GTKCommandButton.h
-        vcf/ApplicationKit/GTKControl.h
-        vcf/ApplicationKit/GTKControlContext.h
-        vcf/ApplicationKit/GTKCursor.h
-        vcf/ApplicationKit/GTKDesktop.h
-        vcf/ApplicationKit/GTKDialog.h
-        vcf/ApplicationKit/GTKFileOpenDialog.h
-        vcf/ApplicationKit/GTKPeer.h
-        vcf/ApplicationKit/GTKTextControl.h
-        vcf/ApplicationKit/GTKToolbar.h
-        vcf/ApplicationKit/GTKUIToolkit.h
-        vcf/ApplicationKit/GTKWindow.h
+    <set var="APPLICATIONKIT_XCB_HDR" hints="files">
+        vcf/ApplicationKit/XCBAbstractControl.h
+        vcf/ApplicationKit/XCBApplicationPeer.h
+        vcf/ApplicationKit/XCBApplicationResourceBundlePeer.h
+        vcf/ApplicationKit/XCBControlContextPeer.h
+        vcf/ApplicationKit/XCBCursorPeer.h
+        vcf/ApplicationKit/XCBDesktopPeer.h
+        vcf/ApplicationKit/XCBMenuBarPeer.h
+        vcf/ApplicationKit/XCBMenuManagerPeer.h
+        vcf/ApplicationKit/XCBUIMetricsManager.h
+        vcf/ApplicationKit/XCBUIToolkit.h
+        vcf/ApplicationKit/XCBWindowPeer.h
     </set>
 
-    <set var="APPLICATIONKIT_GTK_SRC" hints="files">
-        vcf/ApplicationKit/AbstractGTKControl.cpp
-        vcf/ApplicationKit/GTKApplication.cpp
-        vcf/ApplicationKit/GTKCommandButton.cpp
-        vcf/ApplicationKit/GTKControl.cpp
-        vcf/ApplicationKit/GTKControlContext.cpp
-        vcf/ApplicationKit/GTKCursor.cpp
-        vcf/ApplicationKit/GTKDesktop.cpp
-        vcf/ApplicationKit/GTKDialog.cpp
-        vcf/ApplicationKit/GTKFileOpenDialog.cpp
-        vcf/ApplicationKit/GTKTextControl.cpp
-        vcf/ApplicationKit/GTKToolbar.cpp
-        vcf/ApplicationKit/GTKUIToolkit.cpp
-        vcf/ApplicationKit/GTKWindow.cpp
-    </set>
-
-    <set var="APPLICATIONKIT_X11_HDR" hints="files">
-        vcf/ApplicationKit/AbstractX11Control.h
-        vcf/ApplicationKit/X11Application.h
-        vcf/ApplicationKit/X11Context.h
-        vcf/ApplicationKit/X11Control.h
-        vcf/ApplicationKit/X11ControlContext.h
-        vcf/ApplicationKit/X11Cursor.h
-        vcf/ApplicationKit/X11Desktop.h
-        vcf/ApplicationKit/X11Dialog.h
-        vcf/ApplicationKit/X11Font.h
-        vcf/ApplicationKit/X11GraphicsToolkit.h
-        vcf/ApplicationKit/X11Image.h
-        vcf/ApplicationKit/X11Peer.h
-        vcf/ApplicationKit/X11SimpleTextControl.h
-        vcf/ApplicationKit/X11UIToolkit.h
-        vcf/ApplicationKit/X11VCFUtils.h
-        vcf/ApplicationKit/X11Window.h
-    </set>
-
-    <set var="APPLICATIONKIT_X11_SRC" hints="files">
-        vcf/ApplicationKit/AbstractX11Control.cpp
-        vcf/ApplicationKit/X11Application.cpp
-        vcf/ApplicationKit/X11Context.cpp
-        vcf/ApplicationKit/X11Control.cpp
-        vcf/ApplicationKit/X11ControlContext.cpp
-        vcf/ApplicationKit/X11Cursor.cpp
-        vcf/ApplicationKit/X11Desktop.cpp
-        vcf/ApplicationKit/X11Dialog.cpp
-        vcf/ApplicationKit/X11Font.cpp
-        vcf/ApplicationKit/X11GraphicsToolkit.cpp
-        vcf/ApplicationKit/X11Image.cpp
-        vcf/ApplicationKit/X11SimpleTextControl.cpp
-        vcf/ApplicationKit/X11UIToolkit.cpp
-        vcf/ApplicationKit/X11Window.cpp
+    <set var="APPLICATIONKIT_XCB_SRC" hints="files">
+        vcf/ApplicationKit/XCBAbstractControl.cpp
+        vcf/ApplicationKit/XCBApplicationPeer.cpp
+        vcf/ApplicationKit/XCBApplicationResourceBundlePeer.cpp
+        vcf/ApplicationKit/XCBControlContextPeer.cpp
+        vcf/ApplicationKit/XCBCursorPeer.cpp
+        vcf/ApplicationKit/XCBDesktopPeer.cpp
+        vcf/ApplicationKit/XCBMenuBarPeer.cpp
+        vcf/ApplicationKit/XCBMenuManagerPeer.cpp
+        vcf/ApplicationKit/XCBUIMetricsManager.cpp
+        vcf/ApplicationKit/XCBUIToolkit.cpp
+        vcf/ApplicationKit/XCBWindowPeer.cpp
     </set>
 
     <set var="APPLICATIONKIT_OSX_HDR" hints="files">
@@ -502,13 +461,13 @@
     </set>
 
     <set var="APPLICATIONKIT_HDR" append="1" hints="files">
-        <if cond="PLATFORM_UNIX=='1'">$(APPLICATIONKIT_GTK_HDR)</if>
+        <if cond="PLATFORM_UNIX=='1'">$(APPLICATIONKIT_XCB_HDR)</if>
         <if cond="PLATFORM_WIN32=='1'">$(APPLICATIONKIT_WIN_HDR)</if>
         <if cond="PLATFORM_MACOSX=='1'">$(APPLICATIONKIT_OSX_HDR)</if>
     </set>
 
     <set var="APPLICATIONKIT_SRC" append="1" hints="files">
-        <if cond="PLATFORM_UNIX=='1'">$(APPLICATIONKIT_GTK_SRC)</if>
+        <if cond="PLATFORM_UNIX=='1'">$(APPLICATIONKIT_XCB_SRC)</if>
         <if cond="PLATFORM_WIN32=='1'">$(APPLICATIONKIT_WIN_SRC)</if>
         <if cond="PLATFORM_MACOSX=='1'">$(APPLICATIONKIT_OSX_SRC)</if>
     </set>

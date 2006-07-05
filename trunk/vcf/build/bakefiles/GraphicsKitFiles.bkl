@@ -100,22 +100,20 @@
         vcf/GraphicsKit/Win32PrintSession.cpp
     </set>
 
-    <set var="GRAPHICSKIT_GTK_HDR" hints="files">
-        vcf/GraphicsKit/GTKContext.h
-        vcf/GraphicsKit/GTKFont.h
-        vcf/GraphicsKit/GTKGraphicsResourceBundle.h
-        vcf/GraphicsKit/GTKGraphicsToolkit.h
-        vcf/GraphicsKit/GTKImage.h
-        vcf/GraphicsKit/GTKPrintSession.h
+    <set var="GRAPHICSKIT_XCB_HDR" hints="files">
+        vcf/GraphicsKit/XCBContextPeer.h
+        vcf/GraphicsKit/XCBFontPeer.h
+        vcf/GraphicsKit/XCBGraphicsResourceBundlePeer.h
+        vcf/GraphicsKit/XCBGraphicsToolkit.h
+        vcf/GraphicsKit/XCBImagePeer.h
     </set>
 
-    <set var="GRAPHICSKIT_GTK_SRC" hints="files">
-        vcf/GraphicsKit/GTKContext.cpp
-        vcf/GraphicsKit/GTKFont.cpp
-        vcf/GraphicsKit/GTKGraphicsResourceBundle.cpp
-        vcf/GraphicsKit/GTKGraphicsToolkit.cpp
-        vcf/GraphicsKit/GTKImage.cpp
-        vcf/GraphicsKit/GTKPrintSession.cpp
+    <set var="GRAPHICSKIT_XCB_SRC" hints="files">
+        vcf/GraphicsKit/XCBContextPeer.cpp
+        vcf/GraphicsKit/XCBFontPeer.cpp
+        vcf/GraphicsKit/XCBGraphicsResourceBundlePeer.cpp
+        vcf/GraphicsKit/XCBGraphicsToolkit.cpp
+        vcf/GraphicsKit/XCBImagePeer.cpp
     </set>
 
     <set var="GRAPHICSKIT_OSX_HDR" hints="files">
@@ -133,13 +131,13 @@
     </set>
 
     <set var="GRAPHICSKIT_HDR" append="1" hints="files">
-        <if cond="PLATFORM_UNIX=='1'">$(GRAPHICSKIT_GTK_HDR)</if>
+        <if cond="PLATFORM_UNIX=='1'">$(GRAPHICSKIT_XCB_HDR)</if>
         <if cond="PLATFORM_WIN32=='1'">$(GRAPHICSKIT_WIN_HDR)</if>
         <if cond="PLATFORM_MACOSX=='1'">$(GRAPHICSKIT_OSX_HDR)</if>
     </set>
 
     <set var="GRAPHICSKIT_SRC" append="1" hints="files">
-        <if cond="PLATFORM_UNIX=='1'">$(GRAPHICSKIT_GTK_SRC)</if>
+        <if cond="PLATFORM_UNIX=='1'">$(GRAPHICSKIT_XCB_SRC)</if>
         <if cond="PLATFORM_WIN32=='1'">$(GRAPHICSKIT_WIN_SRC)</if>
         <if cond="PLATFORM_MACOSX=='1'">$(GRAPHICSKIT_OSX_SRC)</if>
     </set>
