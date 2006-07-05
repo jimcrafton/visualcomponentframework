@@ -63,16 +63,16 @@ OPTION_DEBUG = 1
 OPTION_ALLIN1 = 0
 
 # Compile the Zip library: [0,1]
-OPTION_ZLIB = 0
+OPTION_ZLIB = 1
 
 # Compile the AGG library: [0,1]
-OPTION_AGG = 0
+OPTION_AGG = 1
 
 # Compile the JPEG library: [0,1]
-OPTION_LIBJPEG = 0
+OPTION_LIBJPEG = 1
 
 # Compile the PNG library: [0,1]
-OPTION_LIBPNG = 0
+OPTION_LIBPNG = 1
 
 # Compile the MNG library: [0,1]
 OPTION_LIBMNG = 0
@@ -95,12 +95,12 @@ OPTION_FOUNDATIONKIT = 1
 #     OPTION_AGG
 #     OPTION_ZLIB
 # Compile GraphicsKit: [0,1]
-OPTION_GRAPHICSKIT = 0
+OPTION_GRAPHICSKIT = 1
 
 # Depends on:
 #     OPTION_GRAPHICSKIT
 # Compile ApplicationKit: [0,1]
-OPTION_APPLICATIONKIT = 0
+OPTION_APPLICATIONKIT = 1
 
 # Depends on:
 #     OPTION_APPLICATIONKIT
