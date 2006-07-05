@@ -166,11 +166,11 @@
 				</Compiler>
 				<Linker>
 					<Add option="-Wl" />
-					<Add library="LibPNG_$(COMPILER)$(COMPILER_VER)_sd" />
-					<Add library="LibJPEG_$(COMPILER)$(COMPILER_VER)_sd" />
-					<Add library="ZLib_$(COMPILER)$(COMPILER_VER)_sd" />
-					<Add library="AGG_$(COMPILER)$(COMPILER_VER)_sd" />
-					<Add library="FoundationKit_$(COMPILER)$(COMPILER_VER)_d" />
+					<Add library="LibPNG_sd" />
+					<Add library="LibJPEG_sd" />
+					<Add library="ZLib_sd" />
+					<Add library="AGG_sd" />
+					<Add library="FoundationKit_d" />
 					<Add library="freetype" />
 					<Add library="fontconfig" />
 				</Linker>
@@ -202,15 +202,16 @@
 					<Add option="-D_NDEBUG" />
 					<Add option="-DVCF_XCB" />
 					<Add directory="/usr/local/include/X11/XCB" />
+					<Add directory="/usr/include/freetype2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add option="-Wl" />
-					<Add library="LibPNG_$(COMPILER)$(COMPILER_VER)_s" />
-					<Add library="LibJPEG_$(COMPILER)$(COMPILER_VER)_s" />
-					<Add library="ZLib_$(COMPILER)$(COMPILER_VER)_s" />
-					<Add library="AGG_$(COMPILER)$(COMPILER_VER)_s" />
-					<Add library="FoundationKit_$(COMPILER)$(COMPILER_VER)" />
+					<Add library="LibPNG_s" />
+					<Add library="LibJPEG_s" />
+					<Add library="ZLib_s" />
+					<Add library="AGG_s" />
+					<Add library="FoundationKit" />
 					<Add library="freetype" />
 					<Add library="fontconfig" />
 				</Linker>
@@ -871,6 +872,11 @@
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
+		</Unit>
+		<Unit filename="../../../src/vcf/GraphicsKit/XCBImagePeer.cpp">
+			<Option compilerVar="CPP" />
 			<Option target="linux_Debug" />
 			<Option target="linux_Release" />
 		</Unit>
