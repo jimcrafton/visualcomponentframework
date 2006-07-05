@@ -73,56 +73,40 @@ The type of runtime libraries.
     Libraries.
     -->
 
-    <set var="OPTION_ZLIB_DEFAULT">
-        <if cond="FORMAT=='gnu'">0</if>
-        <if cond="FORMAT!='gnu'">1</if>
-    </set>
     <option name="OPTION_ZLIB">
         <values>0,1</values>
         <default-value>
-            $(vcf.getOptionValue( 'OPTION_ZLIB', OPTION_ZLIB_DEFAULT ))
+            $(vcf.getOptionValue( 'OPTION_ZLIB', 1 ))
         </default-value>
         <description>
             Compile the Zip library:
         </description>
     </option>
 
-    <set var="OPTION_AGG_DEFAULT">
-        <if cond="FORMAT=='gnu'">0</if>
-        <if cond="FORMAT!='gnu'">1</if>
-    </set>
     <option name="OPTION_AGG">
         <values>0,1</values>
         <default-value>
-            $(vcf.getOptionValue( 'OPTION_AGG', OPTION_AGG_DEFAULT ))
+            $(vcf.getOptionValue( 'OPTION_AGG', 1 ))
         </default-value>
         <description>
             Compile the AGG library:
         </description>
     </option>
 
-    <set var="OPTION_LIBJPEG_DEFAULT">
-        <if cond="FORMAT=='gnu'">0</if>
-        <if cond="FORMAT!='gnu'">1</if>
-    </set>
     <option name="OPTION_LIBJPEG">
         <values>0,1</values>
         <default-value>
-            $(vcf.getOptionValue( 'OPTION_LIBJPEG', OPTION_LIBJPEG_DEFAULT ))
+            $(vcf.getOptionValue( 'OPTION_LIBJPEG', 1 ))
         </default-value>
         <description>
             Compile the JPEG library:
         </description>
     </option>
 
-    <set var="OPTION_LIBPNG_DEFAULT">
-        <if cond="FORMAT=='gnu'">0</if>
-        <if cond="FORMAT!='gnu'">1</if>
-    </set>
     <option name="OPTION_LIBPNG">
         <values>0,1</values>
         <default-value>
-            $(vcf.getOptionValue( 'OPTION_LIBPNG', OPTION_LIBPNG_DEFAULT ))
+            $(vcf.getOptionValue( 'OPTION_LIBPNG', 1 ))
         </default-value>
         <description>
             Compile the PNG library:
@@ -178,14 +162,10 @@ Compile the paintlib library:
         </description>
     </option>
 
-    <set var="OPTION_GRAPHICSKIT_DEFAULT">
-        <if cond="FORMAT=='gnu'">0</if>
-        <if cond="FORMAT!='gnu'">1</if>
-    </set>
     <option name="OPTION_GRAPHICSKIT">
         <values>0,1</values>
         <default-value>
-            $(vcf.getOptionValue( 'OPTION_GRAPHICSKIT', OPTION_GRAPHICSKIT_DEFAULT ))
+            $(vcf.getOptionValue( 'OPTION_GRAPHICSKIT', 1 ))
         </default-value>
         <description>
 Depends on:
@@ -196,14 +176,10 @@ Compile GraphicsKit:
         </description>
     </option>
 
-    <set var="OPTION_APPLICATIONKIT_DEFAULT">
-        <if cond="FORMAT=='gnu'">0</if>
-        <if cond="FORMAT!='gnu'">1</if>
-    </set>
     <option name="OPTION_APPLICATIONKIT">
         <values>0,1</values>
         <default-value>
-            $(vcf.getOptionValue( 'OPTION_APPLICATIONKIT', OPTION_APPLICATIONKIT_DEFAULT ))
+            $(vcf.getOptionValue( 'OPTION_APPLICATIONKIT', 1 ))
         </default-value>
         <description>
 Depends on:
