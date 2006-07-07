@@ -137,7 +137,7 @@ int main(int argc, char** argv)
 
     Application::main();
   }
-  catch( const VCF::BasicException& ) {
+  catch(VCF::BasicException&) {
     return -1;
   } 
   return 0;
