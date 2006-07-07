@@ -366,7 +366,7 @@ namespace VCF {
 	uint64 x = VCF_LIT64(0xffffffffffffffff);
 	\endcode
 	*/
-	#if defined(VCF_MSC) || defined(VCF_BCC) || defined(VCF_ICL)
+	#if defined(VCF_MSC) || (defined(VCF_BCC) && !defined(VCF_BCC8))|| defined(VCF_ICL)
 		#define VCF_LIT64(x) (x)	// not suffix needed
 	#else
 		#define VCF_LIT64(x) (x##LL)
