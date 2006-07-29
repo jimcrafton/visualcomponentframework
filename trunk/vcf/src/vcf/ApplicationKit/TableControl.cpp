@@ -103,17 +103,17 @@ void TableControl::paint( GraphicsContext * context )
 
 
 
-		int fixedRowHeight = getFixedRowHeight();
-		int fixedColWidth  = getFixedColumnWidth();
+		int fixedRowHeight = (int)getFixedRowHeight();
+		int fixedColWidth  = (int)getFixedColumnWidth();
 
 		CellID topLeft = getTopLeftNonFixedCell();
-		int minVisibleRow = topLeft.row;
-		int minVisibleCol = topLeft.column;
+		uint32 minVisibleRow = topLeft.row;
+		uint32 minVisibleCol = topLeft.column;
 
 		Rect visibleRect;
 		CellRange visibleCellRange = getVisibleNonFixedCellRange(&visibleRect);
-		int maxVisibleRow = visibleCellRange.getMaxRow();
-		int maxVisibleCol = visibleCellRange.getMaxCol();
+		uint32 maxVisibleRow = visibleCellRange.getMaxRow();
+		uint32 maxVisibleCol = visibleCellRange.getMaxCol();
 
 		Rect rect;
 		rect.bottom_ = -1;
@@ -274,6 +274,7 @@ void TableControl::paint( GraphicsContext * context )
 			//context->setClippingRect( &tmp );
 		}
 
+		
 
 		rect.bottom_ = fixedRowHeight-1;
 		for (row = minVisibleRow; row <= maxVisibleRow; row++)  {
@@ -410,7 +411,7 @@ void TableControl::init()
 
 
 	defaultColumnWidth_ = DEFAULT_COLUMN_WIDTH;
-	defaultRowHeight_ = 
+	defaultRowHeight_ = (uint32)
 		UIToolkit::getUIMetricValue( UIMetricsManager::mtLabelHeight );
 
 	mouseState_ = msNone;
@@ -549,7 +550,7 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 			for (int row=start;row<event->getNumberOfRowsAffected()+start;row++ ) {
 				rowHeights_.insert( rowHeights_.begin() + row, defaultRowHeight_ );
 
-				for (int col=0;col<colCount;col++ ) {
+				for (uint32 col=0;col<colCount;col++ ) {
 
 					TableCellItem* item = tm->getItem( row, col );
 					if ( NULL != item ){
@@ -915,7 +916,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 				}
 			}
 
-			int maxCellHeight = clientRect.getHeight()-getFixedRowHeight();
+			uint32 maxCellHeight = clientRect.getHeight()-getFixedRowHeight();
 			clientRect.top_ = start.y_ + 1;
 			clientRect.bottom_ = clientRect.top_ + maxCellHeight;
 

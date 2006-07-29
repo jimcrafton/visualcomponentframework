@@ -279,7 +279,7 @@ bool XCBContextPeer::prepareForDrawing( int32 drawingOperation )
 				clearGlyphs();
 				FcChar8 * filename;
 				FcPatternGetString( pattern, FC_FILE, 0, &filename ); //do we need to release this???
-				fonts_->glyphRendering = agg::glyph_ren_agg_gray8;
+				fonts_->glyphRendering = agg::glyph_ren_native_gray8;
 				fonts_->fontLoaded = fonts_->engine.load_font( (const char*)filename, 0, fonts_->glyphRendering );			
 			}
 
@@ -299,10 +299,18 @@ bool XCBContextPeer::prepareForDrawing( int32 drawingOperation )
 			fonts_->color = agg::rgba(c.getRed(),c.getGreen(),c.getBlue(),c.getAlpha());
 			
 			if ( fonts_->fontLoaded ) {
+				
+				//printf( "Font %s loaded!\n",
+					//		fontHash.ansi_c_str() );
 				fonts_->engine.hinting( false );
 				fonts_->engine.height( fontPeer->getPixelSize() );
 				fonts_->engine.width( fontPeer->getPixelSize() );
+				
 				fonts_->engine.flip_y( true );
+				
+				
+				
+				//fonts_->engine.gamma( agg::gamma_threshold(2.50) );
 
 				fonts_->currentPointSize = fontPeer->getPointSize();
 
@@ -540,13 +548,13 @@ void XCBContextPeer::renderLine( const std::vector<GlyphInfo>& glyphs, size_t la
 		comp_renderer_type renb(pixf);
 
 
-		renbSrc.reset_clipping( false );
-		renbSrc.add_clip_box( (int)bounds.left_, (int)bounds.top_,
-								(int)bounds.right_, (int)bounds.bottom_ );
+		//renbSrc.reset_clipping( false );
+		//renbSrc.add_clip_box( (int)bounds.left_, (int)bounds.top_,
+		//						(int)bounds.right_, (int)bounds.bottom_ );
 								
-		renb.reset_clipping( false );
-		renb.add_clip_box( (int)bounds.left_, (int)bounds.top_,
-								(int)bounds.right_, (int)bounds.bottom_ );
+		//renb.reset_clipping( false );
+		//renb.add_clip_box( (int)bounds.left_, (int)bounds.top_,
+			//					(int)bounds.right_, (int)bounds.bottom_ );
 
 		double rightDX = bounds.getWidth() - currentLineSz.width_;
 		double centerDX = bounds.getWidth()/2.0 - currentLineSz.width_/2.0;
@@ -617,13 +625,9 @@ void XCBContextPeer::textAt( const Rect& bounds, const String & text, const int3
 	size_t size = text.size();
 	const VCFChar* textPtr = text.c_str();
 
-	bool crlfChar = false;
+	bool crlfChar = false;	
 
-	
-
-	
-
-	double fontHeight = (fonts_->currentPointSize / 72.0) * dpi;
+	double fontHeight =  getTextHeight("EM");  //(fonts_->currentPointSize / 72.0) * dpi;
 
 	double x1 = bounds.left_;	
 	double y1 = bounds.top_ + fontHeight;
@@ -722,7 +726,7 @@ Size XCBContextPeer::getTextSize( const String& text )
 		FcChar8 * filename;
 		FcPatternGetString( pattern, FC_FILE, 0, &filename ); //do we need to release this???
 
-		fonts_->fontLoaded = fonts_->engine.load_font( (const char*)filename, 0, agg::glyph_ren_agg_gray8 );
+		fonts_->fontLoaded = fonts_->engine.load_font( (const char*)filename, 0, agg::glyph_ren_native_gray8 );
 		
 		VCF_ASSERT( fonts_->fontLoaded );
 		

@@ -157,9 +157,10 @@ FcPattern* XCBGraphicsToolkit::getFontPatternForFont( XCBFontPeer* fontPeer )
 	}
 	else {
 		FcPattern* pattern = FcPatternCreate();
+		AnsiString fontName = fontPeer->getName();
 		FcValue name;
 		name.type = FcTypeString;
-		name.u.s = (const FcChar8*)fontPeer->getName().ansi_c_str();
+		name.u.s = (const FcChar8*)fontName.c_str();
 		FcPatternAdd (pattern, FC_FAMILY, name, true);
 
 
@@ -180,13 +181,81 @@ FcPattern* XCBGraphicsToolkit::getFontPatternForFont( XCBFontPeer* fontPeer )
 
 		if ( FcConfigSubstitute (0, pattern, FcMatchPattern) ) {
 
+			FcChar8 * family=NULL;
+			if ( FcResultMatch == FcPatternGetString( pattern, FC_FAMILY, 0, &family ) ) {
+				#ifdef _DEBUG
+				printf( "FcConfigSubstitute succeeded for %s !!!\n", (NULL != family) ? (const char*)family : "NULL" ) ;
+				#endif
+			}
+			else {
+				#ifdef _DEBUG
+				printf( "FcConfigSubstitute succeeded but FcPatternGetString() didn't for some reason!!!!!!!\n" );
+				#endif
+			}
+			
+			
 			FcDefaultSubstitute (pattern);
 			FcResult rlt = FcResultMatch;
 			FcPattern* matchPattern = FcFontMatch (0, pattern, &rlt);
 			if ( NULL != matchPattern ) {
 				result = matchPattern;
 				xcbGraphicsToolkit->fontPatternCache_[hash] = result;
+				
+				#ifdef _DEBUG
+				printf( "FcFontMatch succeeded for %s !!!\n", fontPeer->getName().ansi_c_str() ) ;
+				
+				
+				switch( rlt ) {
+					case FcResultMatch : {
+						printf( "FcResultMatch - Object exists with the specified ID\n" );
+					}
+					break;
+					
+					case FcResultNoMatch : {
+						printf( "FcResultNoMatch - Object doesn't exist at all\n" );
+					}
+					break;
+					
+					case FcResultTypeMismatch : {
+						printf( "FcResultTypeMismatch - Object exists, but the type doesn't match\n" );
+					}
+					break;
+					
+					case FcResultNoId : {
+						printf( "FcResultNoId - Object exists, but has fewer values than specified\n" );
+					}
+					break;
+					
+					case FcResultOutOfMemory : {
+						printf( "FcResultOutOfMemory - Malloc failed\n" );
+					}
+					break;
+				}
+				
+				
+				FcChar8 * filename;
+				FcChar8 * foundry;
+				
+				FcPatternGetString( result, FC_FILE, 0, &filename );
+				FcPatternGetString( result, FC_FOUNDRY, 0, &foundry );
+				FcPatternGetString( result, FC_FAMILY, 0, &family );
+				
+				printf( "Font Info:\n\tfilename : %s\n", filename );
+				printf( "\tfoundry : %s\n", foundry );
+				printf( "\tfamily : %s\n", family );
+				
+				#endif
 			}
+			else {
+				#ifdef _DEBUG
+				printf( "FcFontMatch returned NULL pattern for %s !!!\n", fontPeer->getName().ansi_c_str() ) ;
+				#endif
+			}
+		}
+		else {
+			#ifdef _DEBUG
+			printf( "FcConfigSubstitute failed for %s !!!\n", fontPeer->getName().ansi_c_str() ) ;
+			#endif
 		}
 
 		FcPatternDestroy( pattern );
@@ -208,10 +277,10 @@ void XCBGraphicsToolkit::updateFontAttributes( XCBFontPeer* fontPeer )
 
 
 		if ( xcbGraphicsToolkit->fontEngine_->engine.load_font( (const char*)filename, 0, agg::glyph_ren_agg_gray8 ) ) {
-			xcbGraphicsToolkit->fontEngine_->prevFontHash = hash;
-			xcbGraphicsToolkit->fontEngine_->engine.hinting( false );
+			xcbGraphicsToolkit->fontEngine_->prevFontHash = hash;			
 			xcbGraphicsToolkit->fontEngine_->engine.height( fontPeer->getPixelSize() );
 			xcbGraphicsToolkit->fontEngine_->engine.width( fontPeer->getPixelSize() );
+			xcbGraphicsToolkit->fontEngine_->engine.hinting( true );
 			xcbGraphicsToolkit->fontEngine_->engine.flip_y( true );
 
 
@@ -438,10 +507,10 @@ Size XCBGraphicsToolkit::getTextSize( const String& text, Font* font )
 	FcChar8 * filename;
 	FcPatternGetString( pattern, FC_FILE, 0, &filename ); //do we need to release this???
 
-	if ( fontEngine_->engine.load_font( (const char*)filename, 0, agg::glyph_ren_agg_gray8 ) ) {
-		fontEngine_->engine.hinting( false );
+	if ( fontEngine_->engine.load_font( (const char*)filename, 0, agg::glyph_ren_agg_gray8 ) ) {		
 		fontEngine_->engine.height( fontPeer->getPixelSize() );
 		fontEngine_->engine.width( fontPeer->getPixelSize() );
+		fontEngine_->engine.hinting( true );
 		fontEngine_->engine.flip_y( true );
 
 		agg::trans_affine mtx;
@@ -507,15 +576,15 @@ Size XCBGraphicsToolkit::DLUToPixel( const Size& dlu, VCF::Font& font )
 {
 	Size result;
 
-	int baseUnitY = font.getAscent() + font.getDescent();
+	int baseUnitY = (int)(font.getAscent() + font.getDescent());
 
 	int cx = 0;
 	Size sz = xcbGraphicsToolkit->getTextSize( "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", &font );
 
 
-	cx = sz.width_;
+	cx = (int)sz.width_;
 
-	int baseUnitX = (cx / 26 + 1) / 2;
+	int baseUnitX = (int) ((cx / 26 + 1) / 2);
 
 	result.width_ = (dlu.width_ * baseUnitX) / 4;
 	result.height_ = (dlu.height_ * baseUnitY) / 8;
