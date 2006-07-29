@@ -19,7 +19,13 @@ XCBGraphicsResourceBundlePeer::~XCBGraphicsResourceBundlePeer()
 
 Image* XCBGraphicsResourceBundlePeer::getImage( const String& resourceName )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	//LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	
+	/**
+	This function will return NULL - this will let the VCF's default, file based
+	resource management routines to be used instead.
+	*/
+	
 	return NULL;
 }
 /**

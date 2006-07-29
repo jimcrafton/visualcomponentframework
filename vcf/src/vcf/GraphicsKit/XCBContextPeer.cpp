@@ -505,7 +505,7 @@ void XCBContextPeer::setClippingRect( Rect* clipRect )
 		currentClipRect_.setNull();
 	}
 	else {
-		currentClipRect_ = *clipRect;		
+		currentClipRect_ = *clipRect;
 	}
 }
 
@@ -826,12 +826,14 @@ void XCBContextPeer::roundRect( const double & x1, const double & y1,
 								const double & xc, const double & yc )
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	//Not needed - implemented in GraphicsContext
 }
 
 void XCBContextPeer::ellipse( const double & x1, const double & y1,
 							  const double & x2, const double & y2 )
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	//Not needed - implemented in GraphicsContext
 }
 
 void XCBContextPeer::arc( const double & x1, const double & y1,
@@ -840,6 +842,7 @@ void XCBContextPeer::arc( const double & x1, const double & y1,
 						  const double & x4, const double & y4 )
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	//Not needed - implemented in GraphicsContext
 }
 
 void XCBContextPeer::polyline( const std::vector<Point>& pts )
