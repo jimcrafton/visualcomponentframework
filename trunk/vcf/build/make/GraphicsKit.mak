@@ -17,10 +17,8 @@ Matrix2D.cpp \
 Point.cpp \
 PrintSession.cpp \
 Rect.cpp \
-GTKContext.cpp \
-GTKFont.cpp \
-GTKGraphicsToolkit.cpp \
-GTKImage.cpp \
-GTKPrintSession.cpp \
-GTKGraphicsResourceBundle.cpp
+XCBContext.cpp \
+XCBFont.cpp \
+XCBGraphicsToolkit.cpp \
+XCBGraphicsResourceBundle.cpp
 

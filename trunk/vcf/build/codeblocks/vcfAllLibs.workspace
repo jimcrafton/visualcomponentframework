@@ -2,14 +2,14 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="vcfAllLibs workspace">
 		<Project filename="FoundationKit/FoundationKitDLL.cbp" />
-		<Project filename="GraphicsKit/GraphicsKitDLL.cbp" active="1">
+		<Project filename="GraphicsKit/GraphicsKitDLL.cbp">
 			<Depends filename="FoundationKit/FoundationKitDLL.cbp" />
 			<Depends filename="GraphicsKit/libAGG.cbp" />
 			<Depends filename="../../src/thirdparty/common/ZLib/ZLib.cbp" />
 			<Depends filename="../../src/thirdparty/common/LibJPEG/LibJPEG.cbp" />
 			<Depends filename="../../src/thirdparty/common/LibPNG/LibPNG.cbp" />
 		</Project>
-		<Project filename="ApplicationKit/ApplicationKitDLL.cbp">
+		<Project filename="ApplicationKit/ApplicationKitDLL.cbp" active="1">
 			<Depends filename="GraphicsKit/GraphicsKitDLL.cbp" />
 		</Project>
 		<Project filename="OpenGLKit/OpenGLKitDLL.cbp">

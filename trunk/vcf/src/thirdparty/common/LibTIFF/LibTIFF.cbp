@@ -8,9 +8,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\..\..\lib\libLibTIFF_$(COMPILER)$(COMPILER_VER)_s.a" />
+				<Option output="../../../../lib/libLibTIFF_$(COMPILER)$(COMPILER_VER)_s.a" />
 				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)\Release\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)/Release/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option includeInTargetAll="1" />
@@ -44,9 +44,9 @@
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\..\..\lib\libLibTIFF_$(COMPILER)$(COMPILER_VER)_sd.a" />
+				<Option output="../../../../lib/libLibTIFF_$(COMPILER)$(COMPILER_VER)_sd.a" />
 				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)\Debug\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)/Debug/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option includeInTargetAll="1" />
@@ -78,8 +78,8 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
-			<Add directory="..\ZLib" />
+			<Add directory='&quot;$(VCF_ROOT)/src&quot;' />
+			<Add directory="../ZLib" />
 		</Compiler>
 		<Unit filename="t4.h">
 			<Option compilerVar="CPP" />

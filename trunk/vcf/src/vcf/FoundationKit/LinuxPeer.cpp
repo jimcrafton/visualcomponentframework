@@ -17,9 +17,9 @@ using namespace VCFLinux;
 
 namespace
 {
-    String ErrorStrings[] = 
+    const char* ErrorStrings[] =
     {
-        "No error.",                            // 0 
+        "No error.",                            // 0
         "Operation not permitted.",             // EPERM		 1
         "No such file or directory.",           // ENOENT		 2
         "No such process.",                     // ESRCH		 3
@@ -56,7 +56,7 @@ namespace
         "Math result not representable."        // ERANGE		34
     };
 
-    const int ErrorStringCount = sizeof(ErrorStrings)/sizeof(String);
+    const int ErrorStringCount = sizeof(ErrorStrings)/sizeof(const char*);
 }
 
 
