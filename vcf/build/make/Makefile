@@ -1,5 +1,5 @@
 LIB = ../../lib
-COMPILER=gcc4
+BIN = ../../bin
 
 target:
 	@echo Please choose either debug, release or all '(for both debug and release)'
@@ -24,121 +24,121 @@ release: FoundationKit-release \
 ## FoundationKit
 FoundationKit-debug: BUILD      = Debug
 FoundationKit-debug: KIT        = FoundationKit
-FoundationKit-debug: TARGET     = libFoundationKit_$(COMPILER)_d.so
+FoundationKit-debug: TARGET     = libFoundationKit_d.so
 FoundationKit-debug: FoundationKit/Debug/Makefile FK-make-debug
 clean-FoundationKit-debug:
 	 -rm FoundationKit/Debug/*
-	 -rm $(LIB)/libFoundationKit_$(COMPILER)_d.so
+	 -rm $(BIN)/libFoundationKit_d.so
 
 FoundationKit-release: BUILD    = Release
 FoundationKit-release: KIT      = FoundationKit
-FoundationKit-release: TARGET   = libFoundationKit_$(COMPILER).so
+FoundationKit-release: TARGET   = libFoundationKit.so
 FoundationKit-release: FoundationKit/Release/Makefile FK-make-release
 clean-FoundationKit-release:
 	 -rm FoundationKit/Release/*
-	 -rm $(LIB)/libFoundationKit_$(COMPILER).so
+	 -rm $(BIN)/libFoundationKit.so
 
 ## GraphicsKit
 GraphicsKit-debug: BUILD        = Debug
 GraphicsKit-debug: KIT          = GraphicsKit
-GraphicsKit-debug: TARGET       = libGraphicsKit_$(COMPILER)_d.so
+GraphicsKit-debug: TARGET       = libGraphicsKit_d.so
 GraphicsKit-debug: GraphicsKit/Debug/Makefile LibAGG-debug GK-make-debug
 clean-GraphicsKit-debug:
 	 -rm GraphicsKit/Debug/*
-	 -rm $(LIB)/libGraphicsKit_$(COMPILER)_d.so
+	 -rm $(BIN)/libGraphicsKit_d.so
 
 GraphicsKit-release: BUILD      = Release
 GraphicsKit-release: KIT        = GraphicsKit
-GraphicsKit-release: TARGET     = libGraphicsKit_$(COMPILER).so
+GraphicsKit-release: TARGET     = libGraphicsKit.so
 GraphicsKit-release: GraphicsKit/Release/Makefile LibAGG-release GK-make-release
 clean-GraphicsKit-release:
 	 -rm GraphicsKit/Release/*
-	 -rm $(LIB)/libGraphicsKit_$(COMPILER).so
+	 -rm $(BIN)/libGraphicsKit.so
 
 ## ApplicationKit
 ApplicationKit-debug: BUILD     = Debug
 ApplicationKit-debug: KIT       = ApplicationKit
-ApplicationKit-debug: TARGET    = libApplicationKit_$(COMPILER)_d.so
+ApplicationKit-debug: TARGET    = libApplicationKit_d.so
 ApplicationKit-debug: ApplicationKit/Debug/Makefile AK-make-debug
 clean-ApplicationKit-debug:
 	 -rm ApplicationKit/Debug/*
-	 -rm $(LIB)/libApplicationKit_$(COMPILER)_d.so
+	 -rm $(BIN)/libApplicationKit_d.so
 
 ApplicationKit-release: BUILD   = Release
 ApplicationKit-release: KIT     = ApplicationKit
-ApplicationKit-release: TARGET  = libApplicationKit_$(COMPILER).so
+ApplicationKit-release: TARGET  = libApplicationKit.so
 ApplicationKit-release: ApplicationKit/Release/Makefile AK-make-release
 clean-ApplicationKit-release:
 	 -rm ApplicationKit/Release/*
-	 -rm $(LIB)/libApplicationKit_$(COMPILER).so
+	 -rm $(BIN)/libApplicationKit.so
 
 ## NetworkKit
 NetworkKit-debug: BUILD         = Debug
 NetworkKit-debug: KIT           = NetworkKit
-NetworkKit-debug: TARGET        = libNetworkKit_$(COMPILER)_d.so
+NetworkKit-debug: TARGET        = libNetworkKit_d.so
 NetworkKit-debug: NetworkKit/Debug/Makefile NK-make-debug
 clean-NetworkKit-debug:
 	 -rm NetworkKit/Debug/*
-	 -rm $(LIB)/libNetworkKit_$(COMPILER)_d.so
+	 -rm $(BIN)/libNetworkKit_d.so
 
 NetworkKit-release: BUILD       = Release
 NetworkKit-release: KIT         = NetworkKit
-NetworkKit-release: TARGET      = libNetworkKit_$(COMPILER).so
+NetworkKit-release: TARGET      = libNetworkKit.so
 NetworkKit-release: NetworkKit/Release/Makefile NK-make-release
 clean-NetworkKit-release:
 	 -rm NetworkKit/Release/*
-	 -rm $(LIB)/libNetworkKit_$(COMPILER).so
+	 -rm $(BIN)/libNetworkKit.so
 
 ## OpenGLKit
 OpenGLKit-debug: BUILD          = Debug
 OpenGLKit-debug: KIT            = OpenGLKit
-OpenGLKit-debug: TARGET         = libOpenGLKit_$(COMPILER)_d.so
+OpenGLKit-debug: TARGET         = libOpenGLKit_d.so
 OpenGLKit-debug: OpenGLKit/Debug/Makefile OK-make-debug
 clean-OpenGLKit-debug:
 	 -rm OpenGLKit/Debug/*
-	 -rm $(LIB)/libOpenGLKit_$(COMPILER)_d.so
+	 -rm $(BIN)/libOpenGLKit_d.so
 
 OpenGLKit-release: BUILD        = Release
 OpenGLKit-release: KIT          = OpenGLKit
-OpenGLKit-release: TARGET       = libOpenGLKit_$(COMPILER).so
+OpenGLKit-release: TARGET       = libOpenGLKit.so
 OpenGLKit-release: OpenGLKit/Release/Makefile OK-make-release
 clean-OpenGLKit-release:
 	 -rm OpenGLKit/Release/*
-	 -rm $(LIB)/libOpenGLKit_$(COMPILER).so
+	 -rm $(BIN)/libOpenGLKit.so
 
 ## RemoteObjectKit
 RemoteObjectKit-debug: BUILD    = Debug
 RemoteObjectKit-debug: KIT      = RemoteObjectKit
-RemoteObjectKit-debug: TARGET   = libRemoteObjectKit_$(COMPILER)_d.so
+RemoteObjectKit-debug: TARGET   = libRemoteObjectKit_d.so
 RemoteObjectKit-debug: RemoteObjectKit/Debug/Makefile RK-make-debug
 clean-RemoteObjectKit-debug:
 	-rm RemoteObjectKit/Debug/*
-	-rm $(LIB)/libRemoteObjectKit_$(COMPILER)_d.so
+	-rm $(BIN)/libRemoteObjectKit_d.so
 
 RemoteObjectKit-release: BUILD  = Release
 RemoteObjectKit-release: KIT    = RemoteObjectKit
-RemoteObjectKit-release: TARGET = libRemoteObjectKit_$(COMPILER).so
+RemoteObjectKit-release: TARGET = libRemoteObjectKit.so
 RemoteObjectKit-release: RemoteObjectKit/Release/Makefile RK-make-release
 clean-RemoteObjectKit-release:
 	-rm RemoteObjectKit/Release/*
-	-rm $(LIB)/libRemoteObjectKit_$(COMPILER).so
+	-rm $(BIN)/libRemoteObjectKit.so
 
 ## LibAGG
 LibAGG-debug: BUILD    = Debug
 LibAGG-debug: KIT      = LibAGG
-LibAGG-debug: TARGET   = libAGG_$(COMPILER)_sd.a
+LibAGG-debug: TARGET   = libAGG_sd.a
 LibAGG-debug: LibAGG/Debug/Makefile AGG-make-debug
 clean-LibAGG-debug:
 	-rm LibAGG/Debug/*
-	-rm $(LIB)/libAGG_$(COMPILER)_sd.a
+	-rm $(LIB)/libAGG_sd.a
 
 LibAGG-release: BUILD  = Release
 LibAGG-release: KIT    = LibAGG
-LibAGG-release: TARGET = libAGG_$(COMPILER)_s.a
+LibAGG-release: TARGET = libAGG_s.a
 LibAGG-release: LibAGG/Release/Makefile AGG-make-release
 clean-LibAGG-release:
 	-rm LibAGG/Release/*
-	-rm $(LIB)/libAGG_$(COMPILER)_s.a
+	-rm $(LIB)/libAGG_s.a
 
 clean-release: clean-FoundationKit-release \
 	clean-GraphicsKit-release \
@@ -169,6 +169,7 @@ distclean: clean
 
 %Makefile:
 	@[ -d $(LIB) ] || mkdir $(LIB); \
+	@[ -d $(BIN) ] || mkdir $(BIN); \
 	[ -d $(KIT)/$(BUILD) ] || mkdir -p $(KIT)/$(BUILD); \
 	\
 	echo "BUILD  = $(BUILD)"                > ./$(KIT)/$(BUILD)/Makefile; \

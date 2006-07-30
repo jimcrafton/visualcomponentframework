@@ -2,17 +2,17 @@
 
 SRC=../../../../src
 LIB=../../../../lib
+BIN=../../../../bin
 
 
 
 OBJECTS  := $(SOURCES:.cpp=.o) 
 
-CXXFLAGS  = -DVCF_POSIX -Wno-multichar -I$(SRC) 
-#CXXFLAGS += -DVCF_GTK $(shell pkg-config gtk+-2.0 --cflags)
+CXXFLAGS  = -Wno-multichar -pipe -frtti -fexceptions -I$(SRC) 
 
-LDFLAGS   = -L$(LIB)
-#LDFLAGS  +=  $(shell pkg-config gtk+-2.0 --libs)
-LDFLAGS  += -lpthread -lrt -ldl -shared
+
+LDFLAGS   = -L$(LIB) -L$(BIN)
+LDFLAGS  += -Wl -lpthread -lrt -ldl -luuid -shared
 
 ARFLAGS   = -cru
 
@@ -20,9 +20,9 @@ ARFLAGS   = -cru
 ## GraphicsKit
 ifeq ($(KIT), GraphicsKit)
    ifeq ($(BUILD), Debug)
-      OBJECTS += $(LIB)/libAGG_$(COMPILER)_d.a
+      OBJECTS += $(LIB)/libAGG_sd.a
    else
-      OBJECTS += $(LIB)/libAGG_$(COMPILER).a
+      OBJECTS += $(LIB)/libAGG_s.a
    endif
    LDFLAGS += -lFoundationKit
 endif
@@ -68,17 +68,17 @@ all: debug release
 
 debug:   CXXFLAGS += -ggdb -D_DEBUG
 debug:   LDFLAGS  += -ggdb
-debug:   LDFLAGS  := $(LDFLAGS:Kit=Kit_$(COMPILER)_d)
+debug:   LDFLAGS  := $(LDFLAGS:Kit=Kit_d)
 debug:   $(TARGET)
 
 release: CXXFLAGS += -DNDEBUG -Os
-release:   LDFLAGS  := $(LDFLAGS:Kit=Kit_$(COMPILER))
+release:   LDFLAGS  := $(LDFLAGS:Kit=Kit)
 release: $(TARGET)
 
 $(TARGET): $(OBJECTS)
 ifeq ($(KIT), LibAGG)
 	$(AR) $(ARFLAGS) $(LIB)/$@ $^
 else
-	$(CXX) $(LDFLAGS) -o $(LIB)/$@ $^
+	$(CXX) $(LDFLAGS) -o $(BIN)/$@ $^
 endif
 
