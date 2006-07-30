@@ -32,6 +32,8 @@ LinuxSemaphorePeer.cpp \
 LinuxSystemPeer.cpp \
 LinuxSystemToolkit.cpp \
 LinuxResourceBundle.cpp \
+LinuxRunLoopPeer.cpp \
+LinuxDebugUtils.cpp \
 Locales.cpp \
 MIMEType.cpp \
 MemoryStream.cpp \
@@ -44,10 +46,13 @@ Parser.cpp \
 PosixCondition.cpp \
 PosixMutex.cpp \
 PosixThread.cpp \
+PosixThreadManagerPeer.cpp \
 ProcessWithRedirectedIO.cpp \
 PropertyChangeEvent.cpp \
 Registry.cpp \
+Resource.cpp \
 ResourceBundle.cpp \
+RunLoop.cpp \
 Semaphore.cpp \
 Stream.cpp \
 StringUtils.cpp \
@@ -59,6 +64,7 @@ TextInputStream.cpp \
 TextOutputStream.cpp \
 Thread.cpp \
 ThreadEvent.cpp \
+ThreadManager.cpp \
 VCFMath.cpp \
 VCFProcess.cpp \
 VCFString.cpp \

@@ -10,12 +10,25 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/XCBWindowPeer.h"
 #include "vcf/ApplicationKit/XCBControlContextPeer.h"
 
+#include <sys/ipc.h>
 #include <sys/shm.h>
 
-extern "C"
-{
-	#include <X11/XCB/xcb_icccm.h>
+
+#define X_H
+#include <X11/XCB/xcb.h>
+
+
+
+
+extern "C" {
+
+#include <X11/XCB/shm.h>
+#include <X11/XCB/xcb_aux.h>
+#include <X11/XCB/xcb_image.h>
+#include <X11/XCB/xcb_icccm.h>
+
 }
+
 
 using namespace VCF;
 
