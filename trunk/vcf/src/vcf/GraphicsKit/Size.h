@@ -63,6 +63,10 @@ public:
 		return result;
 	}
 
+	bool operator!= ( const Size& sizeToCompare ) const {
+		return !operator==(sizeToCompare);
+	}
+
 public:
 	double width_;
     double height_;
