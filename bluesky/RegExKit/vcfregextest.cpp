@@ -9,9 +9,9 @@ int main(int argc, char *argv[])
     String target="This is a test. Do not panic. I repeat: DO NOT PANIC!";
     String exp="tes";
 
-    Regex engine(exp, target.ansi_c_str(), target.ansi_c_str()+target.length()-1);
-    System::println("Test string: %s" % target);
-    System::println("Match found at position %d" % *(engine.find(0))->getPos());
+    Regex::Host engine(exp, target);//(unsigned char*)(target.ansi_c_str()), (unsigned char*)(target.ansi_c_str())+target.length()-1);
+    System::println(Format("Test string: %s") % target);
+    System::println(Format("Match found for '%s' at position %d") % exp % engine.begin()->getPos());
 
 	FoundationKit::terminate();
 
