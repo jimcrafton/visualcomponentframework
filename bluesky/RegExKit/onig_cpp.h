@@ -7,29 +7,38 @@ namespace Regex{
 
     class Host;
 
-    class Match {
+    class Match: public VCF::Object {
         public:
-            Match(ptrdiff_t pos, String text, Host* const env): pos_(pos), matchText_(text), env_(env){};
-            Match(const Match& rhs): pos_(rhs.pos_), matchText_(rhs.matchText_), env_(rhs.env_){}
-            Match operator=(const Match& rhs){
-                return Match(rhs);
+            Match(ptrdiff_t pos, String text, Host* const env): pos_(pos), matchText_(text), env_(env){}
+            Match(const Match& rhs): Object(rhs), pos_(rhs.pos_), matchText_(rhs.matchText_), env_(rhs.env_){}
+            Match& operator=(const Match& rhs){
+                pos_=rhs.pos_;
+                matchText_=rhs.matchText_;
+                env_=rhs.env_;
+                return *this;
             }
 
-            const ptrdiff_t& getPos(){
+//            virtual ~Match(){}
+
+            bool operator==(const Match& rhs){
+                return (pos_==rhs.pos_ && matchText_==rhs.matchText_ && env_==rhs.env_);
+            }
+
+            const ptrdiff_t& getPos() const {
                 return pos_;
             }
 
-            const String& getText(){
+            const String& getText() const {
                 return matchText_;
             }
 
-            Host* const getEnv(){
+            Host* const getEnv() const {
                 return env_;
             }
         private:
             ptrdiff_t pos_;
             String matchText_;
-            Host* const env_;
+            Host* env_;
     };
 
     typedef std::vector<Match> MatchList;
@@ -37,9 +46,28 @@ namespace Regex{
     class Iterator: public std::iterator<std::bidirectional_iterator_tag, Match> {
         public:
             // trivial
-            Iterator(Match* data): data_(data) {}
+            Iterator(Match* data=NULL): data_(data){}
             ~Iterator(){
-                delete data_;
+                data_->release();
+            }
+
+            Iterator(const Iterator& rhs): data_(rhs.data_){
+                data_->addRef();
+            }
+
+            Iterator& operator=(const Iterator& rhs){
+                data_->release();
+                data_=rhs.data_;
+                data_->addRef();
+                return (*this);
+            }
+
+            bool operator==(const Iterator& rhs) const {
+                return *data_==*(rhs.data_);
+            }
+
+            bool operator!=(const Iterator& rhs) const {
+                return !(*data_==*(rhs.data_));
             }
 
             Match& operator*(){
@@ -64,33 +92,34 @@ namespace Regex{
 
     class Host {
         public:
-            Host(const String& expression, unsigned char* first, unsigned char* last);
-            Host(const String& expression, const String& source);
+            Host(const String& expression, unsigned char* first, unsigned char* last, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
+            Host(const String& expression, const String& source, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
             Iterator find(ptrdiff_t pos);
             Iterator find(Iterator it) {
-                return find(it->getPos());
+                return find(it->getPos()+1);
             }
             Iterator rfind(ptrdiff_t pos);
             Iterator rfind(Iterator it) {
-                return rfind(it->getPos());
+                return rfind(it->getPos()-1);
             }
             MatchList findAll();
             Iterator begin(){
                 return find(0);
             }
             Iterator end(){
-                return Iterator(NULL);
+                return Iterator(new Match(-1,"",this));
             }
             ReverseIterator rbegin(){
-                return ReverseIterator(rfind(Iterator(new Match(last_-first_, "", this))));
+                return ReverseIterator(end());
             }
             ReverseIterator rend(){
-                return ReverseIterator(Iterator(NULL));
+                return ReverseIterator(begin());
             }
         private:
             int init();
 
             const String expression_;
+            OnigSyntaxType* syntax_;
             unsigned char* first_;
             unsigned char* last_;
             regex_t* reg_;
