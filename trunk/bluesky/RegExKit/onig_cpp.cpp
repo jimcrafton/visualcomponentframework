@@ -6,73 +6,72 @@ namespace VCF {
 // Regex::Iterator
 
     Regex::Iterator& Regex::Iterator::operator++() {
-        return *this=data_->getEnv()->find(data_->getPos());
+        return *this=data_->getEnv()->find(*this);
     }
 
     Regex::Iterator Regex::Iterator::operator++(int) {
-        Iterator result=*this;
+        Iterator result(*this);
         ++(*this);
         return result;
     }
 
     Regex::Iterator& Regex::Iterator::operator--() {
-        return *this=data_->getEnv()->rfind(data_->getPos());
+        return *this=data_->getEnv()->rfind(*this);
     }
 
     Regex::Iterator Regex::Iterator::operator--(int) {
-        Iterator result=*this;
+        Iterator result(*this);
         --(*this);
         return result;
     }
 
 // Regex::Host
 
-    Regex::Host::Host(const String& exp, unsigned char* f, unsigned char* l): expression_(exp), first_(f), last_(l) {
+    Regex::Host::Host(const String& exp, unsigned char* f, unsigned char* l, OnigSyntaxType* syntax):
+        expression_(exp), first_(f), last_(l), syntax_(syntax) {
         if (init()!=ONIG_NORMAL) System::println("Some sort of error");
     }
 
-    Regex::Host::Host(const String& expression, const String& source): expression_(expression) {
+    Regex::Host::Host(const String& expression, const String& source, OnigSyntaxType* syntax):
+        expression_(expression), syntax_(syntax) {
         first_=(unsigned char*)source.ansi_c_str();
-        last_=(unsigned char*)(source.ansi_c_str()+source.length()-1);
+        last_=(unsigned char*)(source.ansi_c_str()+source.length());
         if (init()!=ONIG_NORMAL) System::println("Some sort of error");
     }
 
     int Regex::Host::init() {
-        return onig_new(&reg_, (unsigned char*)expression_.ansi_c_str(), (unsigned char*)expression_.ansi_c_str() + expression_.length() - 1,
-            ONIG_OPTION_DEFAULT, ONIG_ENCODING_ASCII, ONIG_SYNTAX_PERL, &error_);
+        return onig_new(&reg_, (unsigned char*)expression_.ansi_c_str(), (unsigned char*)expression_.ansi_c_str() + expression_.length(),
+            ONIG_OPTION_DEFAULT, ONIG_ENCODING_ASCII, syntax_, &error_);
     }
 
-    Regex::Iterator Regex::Host::find(ptrdiff_t pos) {
-        OnigRegion* region;
-        String matchtext;
-        ptrdiff_t status;
+/*    int Regex::Host::init() {
+        return onig_new(&reg_, (unsigned char*)expression_.c_str(), (unsigned char*)expression_.c_str() + expression_.size_in_bytes() - 2,
+            ONIG_OPTION_DEFAULT, ONIG_ENCODING_UTF16_LE, syntax_, &error_);
+    }*/
 
-        region = onig_region_new();
-        status = onig_search(reg_, first_, last_, first_+pos, last_, region, ONIG_OPTION_NONE);
+    Regex::Iterator Regex::Host::find(ptrdiff_t pos) {
+        if (pos<0){
+            pos=0;
+        }
+        ptrdiff_t status = onig_search(reg_, first_, last_, first_+pos, last_, NULL, ONIG_OPTION_NONE);
         if (status>=0) {
-            matchtext=String((char*)region->beg,(region->end-region->beg)/sizeof(char));
-            onig_region_free(region,1);
-            return Iterator(new Match(status, matchtext, this));
+            return Iterator(new Match(status, String((char*)(first_+status), onig_match(reg_,
+                first_, last_, first_+status, NULL, ONIG_OPTION_NONE)), this));
         } else {
-            onig_region_free(region,1);
-            return Iterator(new Match(-1, "No match found", this));
+            return Iterator(new Match(-1, "", this));
         }
     }
 
     Regex::Iterator Regex::Host::rfind(ptrdiff_t pos){
-        OnigRegion* region;
-        String matchtext;
-        ptrdiff_t status;
-
-        region = onig_region_new();
-        status = onig_search(reg_, first_, last_, first_+pos, first_, region, ONIG_OPTION_NONE);
+        if (pos<0){
+            pos=last_-first_-1;
+        }
+        ptrdiff_t status = onig_search(reg_, first_, last_, first_+pos, first_, NULL, ONIG_OPTION_NONE);
         if (status>=0) {
-            matchtext=String((WideChar*)region->beg, (region->end-region->beg)/sizeof(WideChar));
-            onig_region_free(region,1);
-            return Iterator(new Match(status, matchtext, this));
+            return Iterator(new Match(status, String((char*)(first_+status), onig_match(reg_,
+                first_, last_, first_+status, NULL, ONIG_OPTION_NONE)), this));
         } else {
-            onig_region_free(region,1);
-            return Iterator(new Match(-1, "No match found", this));
+            return Iterator(new Match(-1, "", this));
         }
     }
 
