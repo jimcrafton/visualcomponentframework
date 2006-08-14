@@ -15,7 +15,6 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-pipe" />
-					<Add option="-frtti" />
 					<Add option="-fexceptions" />
 					<Add option="-mthreads" />
 					<Add option="-fmessage-length=0" />
@@ -23,9 +22,6 @@
 					<Add option="-Wno-multichar" />
 					<Add option="-DBUILD_DLL" />
 					<Add option="-DNOT_RUBY" />
-					<Add option="-DUSE_FOUNDATIONKIT_DLL" />
-					<Add option="-DVCF_MINGW" />
-					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -42,15 +38,12 @@
 					<Add option="-W" />
 					<Add option="-g" />
 					<Add option="-pipe" />
-					<Add option="-frtti" />
 					<Add option="-fexceptions" />
 					<Add option="-mthreads" />
 					<Add option="-fmessage-length=0" />
 					<Add option="-Winvalid-pch" />
 					<Add option="-Wno-multichar" />
 					<Add option="-DNOT_RUBY" />
-					<Add option="-DUSE_FOUNDATIONKIT_LIB" />
-					<Add option="-D_DEBUG" />
 				</Compiler>
 				<Linker>
 					<Add library="libFoundationKit_mgcc_sd.a" />
@@ -58,6 +51,7 @@
 			</Target>
 			<Target title="Test">
 				<Option output="Oniguruma_cb.exe" />
+				<Option external_deps="libOnig_mgcc.a;..\..\Dev\lib\libFoundationKit_mgcc_d.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -65,20 +59,11 @@
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
 					<Add option="-DNOT_RUBY" />
-					<Add option="-DUSE_FOUNDATIONKIT_LIB" />
+					<Add option="-DUSE_FOUNDATIONKIT_DLL" />
 				</Compiler>
 				<Linker>
-					<Add library="libOnig_mgcc_s.a" />
-					<Add library="libFoundationKit_mgcc_sd.a" />
-					<Add library="rpcrt4" />
-					<Add library="uuid" />
-					<Add library="winspool" />
-					<Add library="oleaut32" />
-					<Add library="ole32" />
-					<Add library="shell32" />
-					<Add library="user32" />
-					<Add library="kernel32" />
-					<Add library="version" />
+					<Add library="libOnig_mgcc.a" />
+					<Add library="libFoundationKit_mgcc_d.a" />
 					<Add directory="." />
 					<Add directory="..\..\Dev\lib" />
 				</Linker>
@@ -246,15 +231,13 @@
 		</Unit>
 		<Unit filename="onig_cpp.cpp">
 			<Option compilerVar="CPP" />
-			<Option target="Dynamic Library" />
-			<Option target="Static Library" />
+			<Option target="Test" />
 		</Unit>
 		<Unit filename="onig_cpp.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="Dynamic Library" />
-			<Option target="Static Library" />
+			<Option target="Test" />
 		</Unit>
 		<Unit filename="oniggnu.h">
 			<Option compilerVar="CPP" />
