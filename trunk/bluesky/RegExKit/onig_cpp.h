@@ -108,16 +108,15 @@ namespace Regex{
     class Host {
 		friend class Iterator;
         public:
-            Host(const String& expression, unsigned char* first, unsigned char* last, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
-            Host(const String& expression, const String& source, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
+			virtual ~Host(){}
 
             Iterator find(ptrdiff_t pos);
             Iterator find(Iterator& it) {
-                return find(it->pos_+1);
+                return find(++it);
             }
             Iterator rfind(ptrdiff_t pos);
             Iterator rfind(Iterator& it) {
-                return rfind(it->pos_-1);
+                return rfind(--it);
             }
             MatchList findAll();
             Iterator begin(){
@@ -132,8 +131,10 @@ namespace Regex{
             ReverseIterator rend(){
                 return ReverseIterator(begin());
             }
-        private:
-            int init();
+        protected:
+            Host(const String& expression, unsigned char* first, unsigned char* last, unsigned int charWidth=0, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
+			Host(const String& expression, unsigned int charWidth=0, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
+			virtual int init();
 			Iterator next(Iterator current) const;
 			Iterator prev(Iterator current) const;
 
@@ -148,7 +149,23 @@ namespace Regex{
 			regex_t* reg_;
 			OnigSyntaxType* syntax_;
             OnigErrorInfo error_;
+			unsigned int fixedCharacterWidth_;
     };
 
+	class Ascii: public Host {
+		public:
+            Ascii(const String& expression, unsigned char* first, unsigned char* last, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
+            Ascii(const String& expression, const String& source, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
+
+			virtual int init();
+	};
+
+	class UTF_16LE: public Host {
+		public:
+            UTF_16LE(const String& expression, unsigned char* first, unsigned char* last, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
+            UTF_16LE(const String& expression, const String& source, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
+
+			virtual int init();
+	};
 }
 }

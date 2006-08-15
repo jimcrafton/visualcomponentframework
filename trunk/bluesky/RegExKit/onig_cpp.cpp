@@ -18,7 +18,11 @@ namespace VCF {
 		if (data_->linkedNext_==true) {
 			return *this=data_->env_->next(*this);
 		}
-		Iterator temp=data_->env_->find(*this);
+		unsigned int offset=data_->env_->fixedCharacterWidth_;
+		if (!offset) {
+//			need to do something here to determine where the next character starts
+		}
+		Iterator temp=data_->env_->find(data_->pos_+offset);
 		data_->linkedNext_=true;
 		temp->linkedPrev_=true;
         return *this=temp;
@@ -34,7 +38,7 @@ namespace VCF {
 		if (data_->linkedPrev_==true) {
 			return *this=data_->env_->prev(*this);
 		}
-		Iterator temp=data_->env_->rfind(*this);
+		Iterator temp=data_->env_->rfind(data_->pos_-1);
         data_->linkedPrev_=true;
 		temp->linkedNext_=true;
 		return *this=temp;
@@ -48,26 +52,29 @@ namespace VCF {
 
 // Regex::Host
 
-    Regex::Host::Host(const String& exp, unsigned char* f, unsigned char* l, OnigSyntaxType* syntax):
-        expression_(exp), first_(f), last_(l), syntax_(syntax) {
+
+	Regex::Host::Host(const String& exp, unsigned char* f, unsigned char* l, unsigned int width, OnigSyntaxType* syntax):
+        expression_(exp), first_(f), last_(l), syntax_(syntax), fixedCharacterWidth_(width) {
         if (init()!=ONIG_NORMAL) System::println("Some sort of error");
     }
 
-    Regex::Host::Host(const String& expression, const String& source, OnigSyntaxType* syntax):
-        expression_(expression), syntax_(syntax) {
-        first_=(unsigned char*)source.ansi_c_str();
-        last_=(unsigned char*)(source.ansi_c_str()+source.length());
-        if (init()!=ONIG_NORMAL) System::println("Some sort of error");
-    }
+	Regex::Host::Host(const String &exp, unsigned int width, OnigSyntaxType *syntax): expression_(exp), 
+		syntax_(syntax), fixedCharacterWidth_(width) {}
 
-    int Regex::Host::init() {
+	int Regex::Host::init() {
+		pastTheEnd_=Match(-1, "", this);
+		return 0;
+	}
+
+/*    int Regex::Host::init() {
 		pastTheEnd_=Match(-1, "", this);
         return onig_new(&reg_, (unsigned char*)expression_.ansi_c_str(), (unsigned char*)expression_.ansi_c_str() + expression_.length(),
             ONIG_OPTION_DEFAULT, ONIG_ENCODING_ASCII, syntax_, &error_);
-    }
+    }*/
 
 /*  int Regex::Host::init() {
-        return onig_new(&reg_, (unsigned char*)expression_.c_str(), (unsigned char*)expression_.c_str() + expression_.size_in_bytes() - 2,
+		pastTheEnd_=Match(-1, "", this);
+        return onig_new(&reg_, (unsigned char*)expression_.c_str(), (unsigned char*)expression_.c_str() + expression_.size_in_bytes(),
             ONIG_OPTION_DEFAULT, ONIG_ENCODING_UTF16_LE, syntax_, &error_);
     }*/
 
@@ -171,4 +178,46 @@ namespace VCF {
         }
         return cache_;
     }
+
+	Regex::Ascii::Ascii(const String &exp, unsigned char *first, unsigned char *last, OnigSyntaxType *syntax):
+			Host(exp, first, last, 1, syntax) {
+		if (this->init()!=ONIG_NORMAL) {
+			StringUtils::trace("Regex compile error");
+		}
+	}
+
+	Regex::Ascii::Ascii(const String &exp, const String &source, OnigSyntaxType *syntax): Host(exp, 1, syntax) {
+		first_=(unsigned char*)source.ansi_c_str();
+		last_=(unsigned char*)(source.ansi_c_str()+source.length());
+		if (this->init()!=ONIG_NORMAL) {
+			StringUtils::trace("Regex compile error");
+		}
+	}
+
+	int Regex::Ascii::init() {
+		Host::init();
+        return onig_new(&reg_, (unsigned char*)expression_.ansi_c_str(), (unsigned char*)expression_.ansi_c_str() + expression_.length(),
+            ONIG_OPTION_DEFAULT, ONIG_ENCODING_ASCII, syntax_, &error_);
+	}
+
+	Regex::UTF_16LE::UTF_16LE(const String &exp, unsigned char *first, unsigned char *last, OnigSyntaxType *syntax):
+			Host(exp, first, last, 2, syntax) {
+		if (this->init()!=ONIG_NORMAL) {
+			StringUtils::trace("Regex compile error");
+		}
+	}
+
+	Regex::UTF_16LE::UTF_16LE(const String &exp, const String &source, OnigSyntaxType *syntax): Host(exp, 2, syntax) {
+        first_=(unsigned char*)source.c_str();
+        last_=(unsigned char*)(source.c_str()+source.size_in_bytes());
+		if (this->init()!=ONIG_NORMAL) {
+			StringUtils::trace("Regex compile error");
+		}		
+	}
+
+	int Regex::UTF_16LE::init() {
+		Host::init();
+        return onig_new(&reg_, (unsigned char*)expression_.c_str(), (unsigned char*)expression_.c_str() + expression_.size_in_bytes(),
+            ONIG_OPTION_DEFAULT, ONIG_ENCODING_UTF16_LE, syntax_, &error_);
+	}
 }
