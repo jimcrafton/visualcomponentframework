@@ -2,47 +2,63 @@
 
 using namespace VCF;
 
+void report(const Regex::Match& result) {
+	System::println(Format("Match found for '%s' at position %d") % result.getText() % result.getPosAsOffset());
+}
+
+void report_wide(const Regex::Match& result) {
+	System::println(Format("Match found for '%ls' at position %d") % result.getText() % result.getPosAsOffset());
+}
+
 int main(int argc, char *argv[])
 {
 	FoundationKit::init( argc, argv );
 
-    String target="This is a test. Do not panic. I repeat: DO NOT PANIC!";
+    String target=L"This is a test. Do not panic. I repeat: DO NOT PANIC!";
+	int pos=8;
+	System::println(Format("Character at position %d is '%lc'") % pos % target.at(pos));
     String exp="is";
 
     Regex::Ascii engine(exp, target);
+	engine.compile();
     System::println(Format("Test string: %s") % target);
     Regex::Iterator it=engine.begin();
     while(it!=(engine.end())){
-        System::println(Format("Match found for '%s' at position %d") % it->getText() % it->getPos());
-        ++it;
+        report(*it++);
     }
     System::println("Now going the other way...");
     do {
         --it;
-       System::println(Format("Match found for '%s' at position %d") % it->getText() % it->getPos());
+       report(*it);
     } while(it!=(engine.begin()));
 
     System::println("How about reverse iterators?...");
 	Regex::ReverseIterator rit=engine.rbegin();
     while(rit!=(engine.rend())){
-        System::println(Format("Match found for '%s' at position %d") % rit->getText() % rit->getPos());
-        ++rit;
+        report(*rit++);
     }
     System::println("and back again...");
     do {
         --rit;
-        System::println(Format("Match found for '%s' at position %d") % rit->getText() % rit->getPos());
+        report(*rit);
     }
     while(rit!=(engine.rbegin()));
 
 	System::println("Starting again, from the back, in Unicode");
 	exp="t";
 	Regex::UTF_16LE engine2(exp, target);
-	it=--(engine2.end());
-	System::println(Format("Found '%ls' at position %d") % it->getText() % it->getPos());
-	--it;
-	System::println(Format("and again at position %d") % it->getPos());
-	System::println("and I can't be bothered to look anymore");
+	engine2.compile();
+	it=engine2.end();
+	do {
+        report_wide(*--it);
+	} while (it!=engine2.begin());
+	System::println("Starting again, from the beginning, still in Unicode");
+	engine2.clearCache();
+	it=engine2.begin();
+	while (it!=engine2.end()) {
+        report_wide(*it++);
+	}
+	System::println("all done");
 
 	FoundationKit::terminate();
 
