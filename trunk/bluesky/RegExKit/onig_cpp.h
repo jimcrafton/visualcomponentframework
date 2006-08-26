@@ -43,7 +43,8 @@ namespace Regex{
 				if (env_==rhs.env_) {
 					if (pos_<rhs.pos_) {
 						return true;
-					} else if (pos_==rhs.pos_) {
+					}
+					else if (pos_==rhs.pos_) {
 						if (matchText_<rhs.matchText_) {
 							return true;
 						}
