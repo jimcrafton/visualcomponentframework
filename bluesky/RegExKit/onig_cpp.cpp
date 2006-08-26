@@ -41,7 +41,8 @@ namespace VCF {
 		Iterator temp;
 		if (data_==&(data_->env_->pastTheEnd_)) {
 			temp=data_->env_->rfind(data_->env_->last_);
-		} else {
+		}
+		else {
 			temp=data_->env_->rfind(data_->pos_-1);
 		}
         data_->linkedPrev_=true;
@@ -105,9 +106,11 @@ namespace VCF {
 				}
 				return Iterator(&*(cache_.insert(it, temp)));
 /* Search result has been found before */
-			} else if (*it==temp){
+			}
+			else if (*it==temp){
 				return Iterator(&*it);
-			} else {
+			}
+			else {
 				if (it!=cache_.begin()) {
 					if ((--it)->pos_>=pos) {
 					temp.linkedPrev_=true;
@@ -115,11 +118,13 @@ namespace VCF {
 				}
 				return Iterator(&*(cache_.insert(it, temp)));
 			}
-        } else {
+        }
+		else {
 			onig_region_free(region, 1);
 			if (status!=ONIG_MISMATCH) {
 				// some error handling here
-			} else if (pos==first_) { // There are no matches
+			}
+			else if (pos==first_) { // There are no matches
 				pastTheEnd_.linkedNext_=true;
 			}
             return Iterator(&pastTheEnd_);
@@ -148,18 +153,22 @@ namespace VCF {
 			if (it==cache_.end()) {
 				return Iterator(&*(cache_.insert(it, temp)));
 /* Search result has been found before */
-			} else if (*it==temp){
+			}
+			else if (*it==temp){
 				return Iterator(&*it);
-			} else {
+			}
+			else {
 				if (it->pos_<=pos) {
 					temp.linkedNext_=true;
 				}
 				return Iterator(&*(cache_.insert(it, temp)));
 			}
-        } else {
+        }
+		else {
 			if (status !=ONIG_MISMATCH) {
 				// some error handling here
-			} else if (pos==last_) { // There are no matches
+			}
+			else if (pos==last_) { // There are no matches
 				pastTheEnd_.linkedNext_=true;
 			}
             return Iterator(&pastTheEnd_);
@@ -178,7 +187,8 @@ namespace VCF {
 		InternalIterator it=cache_.begin();
 		if (it!=cache_.end() && it->linkedPrev_) {
 			return Iterator(&*it);
-		} else {
+		}
+		else {
 			return find(0);
 		}
 	}
@@ -192,7 +202,8 @@ namespace VCF {
 			if (it!=cache_.end()) {
 				it->linkedPrev_=false;
 			}
-		} else {
+		}
+		else {
 			while (it!=cache_.end() && it->pos_<first_) {
 				cache_.erase(it++);
 			}
@@ -213,13 +224,17 @@ namespace VCF {
 			if (!cache_.empty()) {
 				(--it)->linkedNext_=false;
 			}
-		} else {
+		}
+		else {
 			if (!cache_.empty()) {
 				--it;
 				while (it!=cache_.begin()) {
 					if (it->pos_>last_) {
 						cache_.erase(it--);
-					} else break;
+					}
+					else {
+						break;
+					}
 				}
 			}
 		}
@@ -265,7 +280,8 @@ namespace VCF {
 		InternalConstIterator it;
 		if (&*current==&pastTheEnd_) {
 			it=cache_.end();
-		} else {
+		}
+		else {
 			it=cache_.lower_bound(*current);
 		}
 		if (it != cache_.begin()) {
