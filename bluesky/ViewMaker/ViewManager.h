@@ -6,7 +6,7 @@
 #include "vcf/ApplicationKit/Splitter.h"
 
 namespace VCF {
-	
+
 
 	enum ViewManagerArea{
 		vmLeft = AlignLeft,
@@ -22,7 +22,7 @@ namespace VCF {
 		dcsToLeft,
 		dcsToTop,
 		dcsToRight,
-		dcsToBottom,		
+		dcsToBottom,
 	};
 
 
@@ -37,8 +37,8 @@ namespace VCF {
 	public:
 
 		static double getTabBarHeight() {
-			 
-			return UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::htButtonHeight ) * 0.85;
+
+			return (( UIToolkit::getUIMetricsManager()->getDefaultFontFor(UIMetricsManager::ftControlFont).getHeight() * 1.75 ) + 2.50) * 0.85;//UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::mtButtonHeight ) * 0.85;
 		}
 
 		DockBarHitTest hitTestDockBar( Point pt ) {
@@ -157,7 +157,7 @@ namespace VCF {
 			StandardContainer::insertBeforeControl( child, alignment, beforeControl );
 		}
 
-		virtual void insertAtIndex( Control * child, const AlignmentType& alignment, const ulong32& index ) {
+		virtual void insertAtIndex( Control * child, const AlignmentType& alignment, const uint32& index ) {
 			if ( !isDockablePanel(child) ) {
 				throw RuntimeException( "Invalid Control - this container only accepts DockablePanel instances." );
 			}
@@ -175,8 +175,8 @@ namespace VCF {
 			setAlignment( AlignClient );
 			setContainer( new ViewManagerContainer() );
 
-			ControlSized += 
-				new GenericEventHandler<ViewManagerPanel>( this, &ViewManagerPanel::sizeOrPosChanged, "ViewManagerPanel::sizeOrPosChanged" );			
+			ControlSized +=
+				new GenericEventHandler<ViewManagerPanel>( this, &ViewManagerPanel::sizeOrPosChanged, "ViewManagerPanel::sizeOrPosChanged" );
 
 			ControlPositioned += getEventHandler( "ViewManagerPanel::sizeOrPosChanged" );
 			ControlParentChanged += getEventHandler( "ViewManagerPanel::sizeOrPosChanged" );
@@ -198,7 +198,7 @@ namespace VCF {
 	class DockableBorder : public Border {
 	public:
 
-		
+
 		virtual void paint( Control* control, GraphicsContext* context ) {
 			Rect bounds = control->getClientBounds(false);
 			if ( !bounds.isEmpty() ){
@@ -210,12 +210,12 @@ namespace VCF {
 			if ( NULL != bounds ){
 				Color* face = NULL;
 				face = GraphicsToolkit::getSystemColor( SYSCOLOR_FACE );
-				
+
 				context->rectangle( bounds );
 				context->setColor( face );
 				context->fillPath();
 
-				Color* color = GraphicsToolkit::getSystemColor( SYSCOLOR_SHADOW );				
+				Color* color = GraphicsToolkit::getSystemColor( SYSCOLOR_SHADOW );
 				context->setColor( color );
 
 				Rect tmp = *bounds;
@@ -223,14 +223,14 @@ namespace VCF {
 
 				double arcAmt = 7;
 				context->arc( tmp.left_ + arcAmt, tmp.top_ + arcAmt,
-								arcAmt, arcAmt, 
+								arcAmt, arcAmt,
 								180, 270 );
 
 				context->moveTo( tmp.left_ + arcAmt-1, tmp.top_ );
 				context->lineTo( tmp.right_ - arcAmt - 1, tmp.top_ );
 
 				context->arc( tmp.right_ - arcAmt-1, tmp.top_ + arcAmt,
-								arcAmt, arcAmt, 
+								arcAmt, arcAmt,
 								270, 0 );
 
 				context->moveTo( tmp.right_-1, tmp.top_ + arcAmt-1 );
@@ -238,7 +238,7 @@ namespace VCF {
 				context->lineTo( tmp.left_, tmp.bottom_-1 );
 				context->lineTo( tmp.left_, tmp.top_ + arcAmt );
 
-				
+
 
 				Rect bar = tmp;
 				bar.bottom_ = bar.top_ + DockContainer::getTabBarHeight();
@@ -253,7 +253,7 @@ namespace VCF {
 				btn.left_ = btn.right_ - btn.getHeight();
 
 				context->rectangle( &btn );
-				
+
 
 				btn.offset( -(btn.getWidth() + 2), 0 );
 				context->rectangle( &btn );
@@ -293,7 +293,7 @@ namespace VCF {
 
 	};
 
-	
+
 
 	class DockablePanel : public Panel {
 	public:
@@ -302,15 +302,15 @@ namespace VCF {
 			setBorder( new DockableBorder() );
 
 
-			ControlSized += 
-				new GenericEventHandler<DockablePanel>( this, &DockablePanel::sizeOrPosChanged, "DockablePanel::sizeOrPosChanged" );			
+			ControlSized +=
+				new GenericEventHandler<DockablePanel>( this, &DockablePanel::sizeOrPosChanged, "DockablePanel::sizeOrPosChanged" );
 
 			ControlPositioned += getEventHandler( "DockablePanel::sizeOrPosChanged" );
 			ControlParentChanged += getEventHandler( "DockablePanel::sizeOrPosChanged" );
 		}
 
 		void sizeOrPosChanged( Event* e ) {
-			
+
 
 			if ( getViewManager() == NULL ) {
 				throw RuntimeException( "You must add a view manager to this control before adding to another." );
@@ -334,7 +334,7 @@ namespace VCF {
 
 			Enumerator<Control*>* controls = getContainer()->getChildren();
 
-			
+
 			Rect tab = tabRect;
 			while ( controls->hasMoreElements() ) {
 				Control* child = controls->nextElement();
@@ -348,14 +348,14 @@ namespace VCF {
 
 
 		void paintControlTab( Rect& tabRect, Rect& tab, Control* child, GraphicsContext* ctx ) {
-			tab.right_ = tab.left_ + 
-							ctx->getTextWidth( getControlName(child) ) + 5.0 + 
+			tab.right_ = tab.left_ +
+							ctx->getTextWidth( getControlName(child) ) + 5.0 +
 							tabRect.getHeight();
-			
+
 			ctx->setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_ACTIVE_CAPTION ) );
 			ctx->rectangle( &tab );
 			ctx->fillPath();
-			
+
 			ctx->setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_ACTIVE_BORDER ) );
 			ctx->rectangle( &tab );
 			ctx->strokePath();
@@ -375,7 +375,7 @@ namespace VCF {
 		}
 
 		void reattachToDockParent() {
-			
+
 		}
 
 
