@@ -129,8 +129,8 @@ public:
 		scrollBarMgr->setHasHorizontalScrollbar( true );
 		scrollBarMgr->setHasVerticalScrollbar( true );
 		scrollBarMgr->setKeepScrollbarsVisible( true, true );
-		
-		ToolTipRequested += 
+
+		ToolTipRequested +=
 			new ToolTipEventHandler<StandardColorsPanel>(this,&StandardColorsPanel::onToolTipRequested, "StandardColorsPanel::onToolTipRequested" );
 
 	}
@@ -140,23 +140,23 @@ public:
 
 		Rect r = getClientBounds();
 
-		int cols = NumColorColumns;	
+		int cols = NumColorColumns;
 		int width = r.getWidth();
 		Rect colorCell;
-		colorCell.setRect( r.left_, r.top_, 
+		colorCell.setRect( r.left_, r.top_,
 							r.left_ + (width/cols),
 							r.top_ + (width/cols) );
 
 		for (int i=ColorNames::uniqueColorFirst;i<=ColorNames::numUniqueColorNames;i++ ) {
 			Color* color = Color::getColor( ColorNames::at( (ColorNames::ColorID) i ) );
-			
+
 
 			ctx->rectangle( &colorCell );
 			ctx->setColor( color );
 			ctx->fillPath();
 
 			if ( ((i+1) % cols == 0) ) {
-				colorCell.setRect( r.left_, colorCell.bottom_, 
+				colorCell.setRect( r.left_, colorCell.bottom_,
 							r.left_ + (width/cols),
 							colorCell.bottom_ + (width/cols) );
 
@@ -170,27 +170,27 @@ public:
 	}
 
 	virtual void sizeChange( ControlEvent* event ) {
-		
+
 		Rect r = getBounds();
 
-		int cols = NumColorColumns;	
+		int cols = NumColorColumns;
 		int width = r.getWidth();
 		Rect colorCell;
-		colorCell.setRect( r.left_, r.top_, 
+		colorCell.setRect( r.left_, r.top_,
 							r.left_ + (width/cols),
 							r.top_ + (width/cols) );
 
-		double totalVirtHeight  =  
+		double totalVirtHeight  =
 			((ColorNames::numUniqueColorNames+2) / cols) *  colorCell.getHeight();
 
-		scrollBarMgr->setVirtualViewSize(  colorCell.getWidth() * cols, totalVirtHeight ); 
-		
+		scrollBarMgr->setVirtualViewSize(  colorCell.getWidth() * cols, totalVirtHeight );
+
 	}
 
 	void onToolTipRequested( ToolTipEvent* e ) {
 		e->setToolTipString( "Unknown color" );
 		Point pt = Desktop::getDesktop()->getCurrentMousePosition();
-		
+
 		translateFromScreenCoords( &pt );
 
 
@@ -199,15 +199,15 @@ public:
 
 		Rect r = getClientBounds();
 
-		int cols = NumColorColumns;	
+		int cols = NumColorColumns;
 		int width = r.getWidth();
 		Rect colorCell;
-		colorCell.setRect( r.left_, r.top_, 
+		colorCell.setRect( r.left_, r.top_,
 							r.left_ + (width/cols),
 							r.top_ + (width/cols) );
 
 		for (int i=ColorNames::uniqueColorFirst;i<=ColorNames::numUniqueColorNames;i++ ) {
-			
+
 
 			if ( colorCell.containsPt( &pt ) ) {
 				String colorName = ColorNames::at( (ColorNames::ColorID) i );
@@ -216,13 +216,13 @@ public:
 				int g = color->getGreen() * 255.0;
 				int b = color->getBlue() * 255.0;
 
-				e->setToolTipString( Format("Color name: %s, #%02X%02X%02X") % 
+				e->setToolTipString( Format("Color name: %s, #%02X%02X%02X") %
 										colorName % r % g % b ) ;
 				break;
 			}
 
 			if ( ((i+1) % cols == 0) && (i > ColorNames::uniqueColorFirst) ) {
-				colorCell.setRect( r.left_, colorCell.bottom_, 
+				colorCell.setRect( r.left_, colorCell.bottom_,
 							r.left_ + (width/cols),
 							colorCell.bottom_ + (width/cols) );
 			}
@@ -257,10 +257,10 @@ public:
 		Light3DBorder bdr;
 
 		uint32 colorIdx =  SYSCOLOR_SHADOW ;
-		int cols = 4;	
+		int cols = 4;
 		int width = r.getWidth() - (cols * 5);
 		Rect colorCell;
-		colorCell.setRect( r.left_, r.top_, 
+		colorCell.setRect( r.left_, r.top_,
 							r.left_ + (width/cols),
 							r.top_ + (width/cols) );
 
@@ -281,7 +281,7 @@ public:
 
 			textRect = colorCell;
 			textRect.inflate(-5, -5 );
-			long options = GraphicsContext::tdoCenterHorzAlign | 
+			int32 options = GraphicsContext::tdoCenterHorzAlign |
 							GraphicsContext::tdoCenterVertAlign;
 
 			tmp = tmp.invert();
@@ -292,7 +292,7 @@ public:
 			ctx->textBoundedBy( &textRect, SysColorToString(colorIdx), options );
 
 			if ( i % cols == 0 ) {
-				colorCell.setRect( r.left_, colorCell.bottom_, 
+				colorCell.setRect( r.left_, colorCell.bottom_,
 							r.left_ + (width/cols),
 							colorCell.bottom_ + (width/cols) );
 
@@ -308,21 +308,21 @@ public:
 	}
 
 	virtual void sizeChange( ControlEvent* event ) {
-		
+
 		Rect r = getBounds();
 
-		int cols = 4;	
+		int cols = 4;
 		int width = r.getWidth();
 		Rect colorCell;
-		colorCell.setRect( r.left_, r.top_, 
+		colorCell.setRect( r.left_, r.top_,
 							r.left_ + (width/cols),
 							r.top_ + (width/cols) );
 
-		double totalVirtHeight  =  
+		double totalVirtHeight  =
 			(20 / cols) *  (colorCell.getHeight() + 5);
 
-		scrollBarMgr->setVirtualViewSize(  (colorCell.getWidth() + 5) * cols, totalVirtHeight ); 
-		
+		scrollBarMgr->setVirtualViewSize(  (colorCell.getWidth() + 5) * cols, totalVirtHeight );
+
 	}
 };
 
@@ -338,7 +338,7 @@ public:
 	RGBPanel() {
 		setBorder( NULL );
 
-		HorizontalLayoutContainer* hc = new HorizontalLayoutContainer();	
+		HorizontalLayoutContainer* hc = new HorizontalLayoutContainer();
 		hc->setNumberOfColumns( 3 );
 		hc->setColumnWidth( 0, 100 );
 		hc->setColumnWidth( 1, 100 );
@@ -357,7 +357,7 @@ public:
 		label->setCaption( "Red:" );
 		add( label );
 
-		SliderControl* slider = new SliderControl();			
+		SliderControl* slider = new SliderControl();
 		slider->setPosition( colorWell->getColor()->getRed() * 100.0 );
 		slider->PositionChanged +=
 			new GenericEventHandler<RGBPanel>( this, &RGBPanel::onRedChanged, "RGBPanel::onRedChanged" );
@@ -374,7 +374,7 @@ public:
 		label->setCaption( "Green:" );
 		add( label );
 
-		slider = new SliderControl();	
+		slider = new SliderControl();
 		slider->setPosition( colorWell->getColor()->getGreen() * 100.0 );
 		slider->PositionChanged +=
 			new GenericEventHandler<RGBPanel>( this, &RGBPanel::onGreenChanged, "RGBPanel::onGreenChanged" );
@@ -390,7 +390,7 @@ public:
 		label->setCaption( "Blue:" );
 		add( label );
 
-		slider = new SliderControl();	
+		slider = new SliderControl();
 		slider->setPosition( colorWell->getColor()->getBlue() * 100.0 );
 		slider->PositionChanged +=
 			new GenericEventHandler<RGBPanel>( this, &RGBPanel::onBlueChanged, "RGBPanel::onBlueChanged" );
@@ -402,7 +402,7 @@ public:
 		blueVal->setCaption( "???" );
 		add( blueVal );
 
-		
+
 
 		add( colorWell );
 	}
@@ -462,7 +462,7 @@ public:
 	HSLPanel() {
 		setBorder( NULL );
 
-		HorizontalLayoutContainer* hc = new HorizontalLayoutContainer();	
+		HorizontalLayoutContainer* hc = new HorizontalLayoutContainer();
 		hc->setNumberOfColumns( 3 );
 		hc->setColumnWidth( 0, 100 );
 		hc->setColumnWidth( 1, 100 );
@@ -484,7 +484,7 @@ public:
 
 		colorWell->getColor()->getHSL( hue,saturation,luminance );
 
-		SliderControl* slider = new SliderControl();			
+		SliderControl* slider = new SliderControl();
 		slider->setPosition( hue * 100.0 );
 		slider->PositionChanged +=
 			new GenericEventHandler<HSLPanel>( this, &HSLPanel::onRedChanged, "HSLPanel::onRedChanged" );
@@ -501,7 +501,7 @@ public:
 		label->setCaption( "Saturation:" );
 		add( label );
 
-		slider = new SliderControl();	
+		slider = new SliderControl();
 		slider->setPosition( saturation * 100.0 );
 		slider->setTickFrequency(0);
 		slider->PositionChanged +=
@@ -517,7 +517,7 @@ public:
 		label->setCaption( "Luminance:" );
 		add( label );
 
-		slider = new SliderControl();	
+		slider = new SliderControl();
 		slider->setPosition( luminance * 100.0 );
 		slider->setTickFrequency(0);
 		slider->PositionChanged +=
@@ -529,7 +529,7 @@ public:
 		luminanceVal->setCaption( "???" );
 		add( luminanceVal );
 
-		
+
 
 		add( colorWell );
 	}
@@ -538,9 +538,9 @@ public:
 		SliderControl* slider = (SliderControl*)e->getSource();
 		hue = (slider->getPosition() / 100.0) * 6.0;
 
-		Color color( hue,saturation,luminance, Color::ctHSV );		
+		Color color( hue,saturation,luminance, Color::ctHSV );
 
-		colorWell->setColor( &color );		
+		colorWell->setColor( &color );
 
 		hueVal->setCaption( Format("%.3f") % hue  );
 	}
@@ -549,20 +549,20 @@ public:
 		SliderControl* slider = (SliderControl*)e->getSource();
 		saturation = slider->getPosition() / 100.0;
 
-		Color color( hue,saturation,luminance, Color::ctHSV );		
+		Color color( hue,saturation,luminance, Color::ctHSV );
 
-		colorWell->setColor( &color );		
+		colorWell->setColor( &color );
 
 		saturationVal->setCaption( Format("%.3f") % saturation  );
 	}
 
-	void onBlueChanged( Event* e ) {		
+	void onBlueChanged( Event* e ) {
 		SliderControl* slider = (SliderControl*)e->getSource();
 		luminance = slider->getPosition() / 100.0;
 
-		Color color( hue,saturation,luminance, Color::ctHSV );		
+		Color color( hue,saturation,luminance, Color::ctHSV );
 
-		colorWell->setColor( &color );		
+		colorWell->setColor( &color );
 
 		luminanceVal->setCaption( Format("%.3f") % luminance  );
 	}
@@ -590,8 +590,8 @@ public:
 		tabs->addNewPage( "RGB Colors" )->getPageComponent()->getContainer()->add( new RGBPanel(), AlignClient );
 		tabs->addNewPage( "HSL Colors" )->getPageComponent()->getContainer()->add( new HSLPanel(), AlignClient );
 
-		
-		
+
+
 		mainWindow->add( tabs, AlignClient );
 
 

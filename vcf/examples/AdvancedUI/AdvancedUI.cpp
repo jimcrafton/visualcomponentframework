@@ -67,7 +67,7 @@ public:
 		context->fillPath();
 
 		titleRect.left_ += 10;
-		long options = GraphicsContext::tdoCenterVertAlign;
+		int32 options = GraphicsContext::tdoCenterVertAlign;
 		context->textBoundedBy( &titleRect, title_, options );
 		context->restoreState( gcs );
 	}
@@ -151,7 +151,7 @@ public:
 		ctx->setColor( &col );
 		ctx->rectangle( &r );
 		ctx->fillPath();
-		long options = GraphicsContext::tdoCenterVertAlign;
+		int32 options = GraphicsContext::tdoCenterVertAlign;
 		ctx->textBoundedBy( paintRect, this->getCaption(), options );
 
 		if ( this->isSelected() ) {
@@ -234,7 +234,7 @@ public:
 
 			title.bottom_ = title.top_ + (ctx->getTextHeight("EM") * 1.75);
 
-			long options = GraphicsContext::tdoCenterVertAlign | GraphicsContext::tdoCenterHorzAlign;
+			int32 options = GraphicsContext::tdoCenterVertAlign | GraphicsContext::tdoCenterHorzAlign;
 			ctx->textBoundedBy( &title, selectedItem_->getCaption(), options );
 
 			commentsRect.top_ = title.bottom_;
@@ -297,9 +297,9 @@ public:
 		CategoryItem* selectedCat = NULL;
 		TemplateItem* selectedTempl = NULL;
 
-		CategoryItem* item = new CategoryItem();		
+		CategoryItem* item = new CategoryItem();
 		categories_->getTreeModel()->addNodeItem( item );
-		item->setCaption( "Block Diagrams" );		
+		item->setCaption( "Block Diagrams" );
 
 		item = new CategoryItem();
 		categories_->getTreeModel()->addNodeItem( item );
@@ -337,13 +337,13 @@ public:
 		templateItem->setCaption( "Oggle Boggle" );
 		templateItem->setImageIndex( 0 );
 		templateItem->setComments( "Creates structures relevant to value-add propositions within the relevant vertical Oggle markets." );
-		
+
 		templates_->addItem( templateItem );
 
 		templateItem = new TemplateItem();
 		templateItem->setCaption( "Sub Tactical Design" );
 		templateItem->setImageIndex( 1 );
-		templateItem->setComments( "A refreshing look at non capital markets in Design fetish UML." );		
+		templateItem->setComments( "A refreshing look at non capital markets in Design fetish UML." );
 
 		selectedTempl = templateItem;
 		templates_->addItem( templateItem );
@@ -367,10 +367,10 @@ public:
 
 		il->setImageHeight( 93 );
 		il->setImageWidth( 93 );
-		
+
 		GraphicsResourceBundle* resBundle = Application::getRunningInstance()->getResourceBundle();
 
-		Image* img =  resBundle->getImage("template1.bmp"); 
+		Image* img =  resBundle->getImage("template1.bmp");
 		if ( NULL != img ) {
 			il->addImage( img );
 			delete img;
@@ -387,7 +387,7 @@ public:
 			il->addImage( img );
 			delete img;
 		}
-		
+
 
 		templates_->setLargeImageList( il );
 
@@ -428,7 +428,7 @@ public:
 
 		Rect itemRect;
 
-		if ( NULL != categories_->getSelectedItem() ) {			
+		if ( NULL != categories_->getSelectedItem() ) {
 			itemRect = categories_->getItemRect( categories_->getSelectedItem() );
 		}
 

@@ -23,14 +23,14 @@ public:
 
 		timer = new TimerComponent(this);
 		timer->setTimeoutInterval ( 1000 );
-		timer->TimerPulse += 
+		timer->TimerPulse +=
 			new GenericEventHandler<DateTimeLabel>(this, &DateTimeLabel::onTimer, "DateTimeLabel::onTimer" );
 	}
 
 	virtual ~DateTimeLabel() {
 		delete locale;
 	}
-	
+
 	void setLocale( Locale* loc ) {
 		if ( NULL != locale ) {
 			delete locale;
@@ -58,20 +58,20 @@ public:
 	void start() {
 		timer->setActivated ( true );
 	}
-	
+
 	void stop() {
 		timer->setActivated ( false );
 	}
-	
+
 	void setExtraTxt( const String& val ) {
 		extraTxt = val;
 		repaint();
 	}
-	
+
 	String getExtraTxt() {
 		return extraTxt;
 	}
-	
+
 	virtual void paint( GraphicsContext* ctx ) {
 		CustomControl::paint( ctx );
 
@@ -80,18 +80,18 @@ public:
 
 		if ( NULL != locale ) {
 			currentLocale = locale;
-		}	
+		}
 
 
-		
+
 		String localizedExtra = extraTxt;
 
 		ctx->getCurrentFont()->setName( "Times New Roman" );
 		ctx->getCurrentFont()->setPointSize( 16 );
 
-		
-		
-		
+
+
+
 		//check if we can localize the string
 		if ( getUseLocaleStrings() ) {
 			//Yep! Let's get the localized version. Worst case scenario is that
@@ -99,19 +99,19 @@ public:
 			//as extraTxt
 			localizedExtra =   currentLocale->translate( extraTxt );
 		}
-		
+
 		DateTime dt = DateTime::now();
 		//localize the date/time value into a string
 		String dateStr = currentLocale->toStringFromDate( dt, "dddd, MMM d yyyy" );
 		String timeStr = currentLocale->toStringFromTime ( dt );
-		
+
 		Rect r = getClientBounds();
-		
+
 		Rect xtraRect = r;
 		xtraRect.bottom_ = xtraRect.top_ + ctx->getTextHeight( localizedExtra );
-		
-		long textDrawOptions = GraphicsContext::tdoCenterHorzAlign;
-		
+
+		int32 textDrawOptions = GraphicsContext::tdoCenterHorzAlign;
+
 		ctx->textBoundedBy( &xtraRect, localizedExtra, textDrawOptions );
 
 		Rect textRect = r;
@@ -119,7 +119,7 @@ public:
 		textRect.inflate( -10, -10 );
 		textRect.top_ = xtraRect.bottom_;
 
-		
+
 		ctx->getCurrentFont()->setBold( true );
 
 		textDrawOptions = GraphicsContext::tdoWordWrap | GraphicsContext::tdoCenterHorzAlign;
@@ -131,9 +131,9 @@ class LocaleUIWindow : public Window {
 public:
 	LocaleUIWindow() {
 		setCaption( "LocaleUI" );
-		
+
 		DateTimeLabel* label;
-		
+
 		label = new DateTimeLabel();
 
 		label->setLocale( "en", "US" );
@@ -229,12 +229,12 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new LocaleUIWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( 100.0, 100.0, 350.0, 620.0 );
 		mainWindow->show();
-		
+
 		return result;
 	}
 
@@ -246,7 +246,7 @@ int main(int argc, char *argv[])
 	Application* app = new LocaleUIApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
 

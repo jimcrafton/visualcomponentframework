@@ -44,7 +44,7 @@ void Pair::paint(VCF::GraphicsContext *ctx, VCF::Rect& bounds, VCF::Font *f)
 void TexString::paint(VCF::GraphicsContext *ctx, VCF::Rect& bounds, VCF::Font *)
 {
 	ctx->textBoundedBy(&bounds, value_,
-		(long)(VCF::GraphicsContext::tdoLeftAlign | VCF::GraphicsContext::tdoBottomAlign));
+		(int)(VCF::GraphicsContext::tdoLeftAlign | VCF::GraphicsContext::tdoBottomAlign));
 	bounds.setLeft(bounds.getLeft() + ctx->getTextWidth(value_));
 }
 

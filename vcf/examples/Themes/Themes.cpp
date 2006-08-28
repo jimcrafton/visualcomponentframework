@@ -121,10 +121,10 @@ public:
 		Light3DBorder bdr;
 
 		uint32 colorIdx =  SYSCOLOR_SHADOW ;
-		int cols = 4;	
+		int cols = 4;
 		int width = r.getWidth() - (cols * 5);
 		Rect colorCell;
-		colorCell.setRect( r.left_, r.top_, 
+		colorCell.setRect( r.left_, r.top_,
 							r.left_ + (width/cols),
 							r.top_ + (width/cols) );
 
@@ -145,7 +145,7 @@ public:
 
 			textRect = colorCell;
 			textRect.inflate(-5, -5 );
-			long options = GraphicsContext::tdoCenterHorzAlign | 
+			int32 options = GraphicsContext::tdoCenterHorzAlign |
 							GraphicsContext::tdoCenterVertAlign;
 
 			tmp = tmp.invert();
@@ -156,7 +156,7 @@ public:
 			ctx->textBoundedBy( &textRect, SysColorToString(colorIdx), options );
 
 			if ( i % cols == 0 ) {
-				colorCell.setRect( r.left_, colorCell.bottom_, 
+				colorCell.setRect( r.left_, colorCell.bottom_,
 							r.left_ + (width/cols),
 							colorCell.bottom_ + (width/cols) );
 
@@ -170,7 +170,7 @@ public:
 		}
 
 	}
-};	
+};
 
 class ButtonsPanel : public Panel {
 public:
@@ -192,12 +192,12 @@ public:
 		textR.left_ = btn.right_;
 		textR.bottom_ = btn.bottom_;
 
-		long options = GraphicsContext::tdoCenterHorzAlign | 
+		int32 options = GraphicsContext::tdoCenterHorzAlign |
 							GraphicsContext::tdoCenterVertAlign;
 
 		ctx->textBoundedBy( &textR, "Button Focus Rect", options );
 
-		
+
 		ctx->drawThemeButtonFocusRect( &btn );
 
 		btn.offset( 0, 40 );
@@ -218,8 +218,8 @@ public:
 		textR.offset( 0, 40 );
 
 		ctx->textBoundedBy( &textR, "Button Rect Pressed", options );
-		
-		state.setPressed(true);		
+
+		state.setPressed(true);
 		ctx->drawThemeButtonRect( &btn, state, &btn );
 
 
@@ -227,8 +227,8 @@ public:
 		textR.offset( 0, 40 );
 
 		ctx->textBoundedBy( &textR, "Button Rect Disabled", options );
-		
-		state.setPressed(false);		
+
+		state.setPressed(false);
 		state.setEnabled( false );
 		ctx->drawThemeButtonRect( &btn, state, &btn );
 
@@ -237,7 +237,7 @@ public:
 		textR.offset( 0, 40 );
 
 		ctx->textBoundedBy( &textR, "Check box Rect", options );
-		
+
 		ButtonState cbState;
 		cbState.setEnabled( true );
 		cbState.setFocused( false );
@@ -328,7 +328,7 @@ public:
 		ScrollBarState scrollState;
 		scrollState.setEnabled( true );
 		scrollState.setFocused( false );
-		scrollState.setActive( true );		
+		scrollState.setActive( true );
 		scrollState.setButtonType( ScrollBarState::sbUpOrLeftBtn );
 
 		ctx->textBoundedBy( &textR, "Scroll bar btn Rect", options );
@@ -370,7 +370,7 @@ public:
 		ctx->textBoundedBy( &textR, "Disclosure btn Rect - open", options );
 		ctx->drawThemeDisclosureButton( &btn, disclState );
 	}
-};	
+};
 
 
 
@@ -396,12 +396,12 @@ public:
 		textR.left_ = edgeR.right_;
 		textR.bottom_ = edgeR.bottom_;
 
-		long options = GraphicsContext::tdoCenterHorzAlign | 
+		int32 options = GraphicsContext::tdoCenterHorzAlign |
 							GraphicsContext::tdoCenterVertAlign;
 
 		ctx->textBoundedBy( &textR, "Button Focus Rect", options );
 
-		
+
 		ctx->drawThemeButtonFocusRect( &edgeR );
 
 		edgeR.offset( 0, height + 10 );
@@ -424,7 +424,7 @@ public:
 
 		edgeR.offset( 0, height + 10 );
 		textR.offset( 0, height + 10 );
-		
+
 		long sides = GraphicsContext::etAllSides;
 		long style = GraphicsContext::etRecessed;
 		ctx->textBoundedBy( &textR, "Edge Rect - Recessed", options );
@@ -450,10 +450,10 @@ public:
 		style = GraphicsContext::etSunken;
 		ctx->textBoundedBy( &textR, "Edge Rect - Sunken", options );
 		ctx->drawThemeEdge( &edgeR, state, sides, style );
-		
+
 
 	}
-};	
+};
 
 
 class TabsPanel : public Panel {
@@ -478,7 +478,7 @@ public:
 		textR.left_ = tabsR.right_;
 		textR.bottom_ = tabsR.bottom_;
 
-		long options = GraphicsContext::tdoCenterHorzAlign | 
+		int32 options = GraphicsContext::tdoCenterHorzAlign |
 							GraphicsContext::tdoCenterVertAlign;
 
 		ctx->textBoundedBy( &textR, "Tab Rect", options );
@@ -488,7 +488,7 @@ public:
 
 		tabsR.offset( 0, tabsR.getHeight() + 10 );
 		textR.offset( 0, textR.getHeight() + 10 );
-		
+
 		tabsR.bottom_ += 100;
 		textR.bottom_ = tabsR.bottom_;
 
@@ -511,12 +511,12 @@ public:
 
 		ctx->textBoundedBy( &textR, "Complete Tabs Rect disabled", options );
 
-		state.setEnabled(false);			
+		state.setEnabled(false);
 
 		ctx->drawThemeTabs( &tabsR, state, selectedTab, tab, tabs, 1 );
 
 	}
-};	
+};
 
 
 
@@ -542,7 +542,7 @@ public:
 		textR.left_ = sliderR.right_;
 		textR.bottom_ = sliderR.bottom_;
 
-		long options = GraphicsContext::tdoCenterHorzAlign | 
+		int32 options = GraphicsContext::tdoCenterHorzAlign |
 							GraphicsContext::tdoCenterVertAlign;
 
 		ctx->textBoundedBy( &textR, "Horizontal Slider Rect", options );
@@ -555,9 +555,9 @@ public:
 		horzState.min_ = 0;
 		horzState.max_ = 100;
 		horzState.position_ = 23;
-		
+
 		ctx->drawThemeSlider( &sliderR, horzState );
-		
+
 
 		sliderR.offset( 0, height + 10 );
 		textR.offset( 0, height + 10 );
@@ -567,7 +567,7 @@ public:
 		horzState.position_ = 65;
 		horzState.setTickMarkingOnBottomRight(true);
 		horzState.setTickMarkingOnTopLeft( false );
-		
+
 
 		ctx->textBoundedBy( &textR, "Horizontal Slider disabled Rect", options );
 		ctx->drawThemeSlider( &sliderR, horzState );
@@ -602,7 +602,7 @@ public:
 		vertState.min_ = 0;
 		vertState.max_ = 100;
 		vertState.position_ = 23;
-		
+
 		ctx->drawThemeSlider( &sliderR, vertState );
 
 		sliderR.offset( 0, sliderR.getHeight() + 10 );
@@ -628,7 +628,7 @@ public:
 		ctx->textBoundedBy( &textR, "Vertical Slider pressed Rect", options );
 		ctx->drawThemeSlider( &sliderR, vertState );
 	}
-};	
+};
 
 
 class ProgressPanel : public Panel {
@@ -653,7 +653,7 @@ public:
 		textR.left_ = progressR.right_;
 		textR.bottom_ = progressR.bottom_;
 
-		long options = GraphicsContext::tdoCenterHorzAlign | 
+		int32 options = GraphicsContext::tdoCenterHorzAlign |
 							GraphicsContext::tdoCenterVertAlign;
 
 		ctx->textBoundedBy( &textR, "Horizontal Progress bar Rect", options );
@@ -664,9 +664,9 @@ public:
 		horzState.min_ = 0;
 		horzState.max_ = 100;
 		horzState.position_ = 23;
-		
+
 		ctx->drawThemeProgress( &progressR, horzState );
-		
+
 
 		progressR.offset( 0, height + 10 );
 		textR.offset( 0, height + 10 );
@@ -674,7 +674,7 @@ public:
 
 		horzState.setEnabled( false );
 		horzState.position_ = 65;
-		
+
 
 		ctx->textBoundedBy( &textR, "Horizontal Progress bar disabled Rect", options );
 		ctx->drawThemeProgress( &progressR, horzState );
@@ -705,7 +705,7 @@ public:
 		vertState.min_ = 0;
 		vertState.max_ = 100;
 		vertState.position_ = 23;
-		
+
 		ctx->drawThemeProgress( &progressR, vertState );
 
 		progressR.offset( 0, progressR.getHeight() + 10 );
@@ -727,7 +727,7 @@ public:
 		ctx->textBoundedBy( &textR, "Vertical Progress bar pressed Rect", options );
 		ctx->drawThemeProgress( &progressR, vertState );
 	}
-};	
+};
 
 
 
@@ -782,7 +782,7 @@ public:
 		metricsToStringMap[UIMetricsManager::mtComboBoxDropBtnSize] = "UIMetricsManager::mtComboBoxDropBtnSize";
 		metricsToStringMap[UIMetricsManager::mtDisclosureButtonSize] = "UIMetricsManager::mtDisclosureButtonSize";
 
-		
+
 	}
 	virtual void paint( GraphicsContext* ctx ) {
 		Panel::paint( ctx );
@@ -791,7 +791,7 @@ public:
 
 		r.inflate( -10, -10 );
 
-		
+
 		double height = 40;
 
 		Rect metricsR = r;
@@ -804,7 +804,7 @@ public:
 
 		Rect valRect;
 
-		long options = GraphicsContext::tdoCenterHorzAlign | 
+		int32 options = GraphicsContext::tdoCenterHorzAlign |
 							GraphicsContext::tdoCenterVertAlign;
 
 		double value = 0;
@@ -818,20 +818,20 @@ public:
 
 		for ( int i=UIMetricsManager::mtLabelHeight;i<UIMetricsManager::mtMenuItemSize;i++ ) {
 			value = UIToolkit::getUIMetricValue( (UIMetricsManager::MetricType) i, "Test" );
-			
+
 			ctx->textBoundedBy( &textR, (Format("%s: %.2f pixels") % metricsToStringMap[i] % value), options );
-			
+
 			valRect.left_ = metricsR.left_ + (metricsR.getWidth()/2) - (defWidth/2);
 			valRect.right_ = valRect.left_ + defWidth;
 			valRect.top_ = metricsR.top_ + (metricsR.getHeight()/2) - (value/2);
 			valRect.bottom_ = valRect.top_ + value;
-			
+
 			ctx->setColor( Color::getColor("black") );
 			ctx->rectangle( &valRect );
 			ctx->strokePath();
-			
+
 			totalVirtHeight += metricsR.getHeight() + 10;
-			
+
 			metricsR.offset( 0, metricsR.getHeight() + 10 );
 			textR.offset( 0, textR.getHeight() + 10 );
 		}
@@ -839,42 +839,42 @@ public:
 
 		for ( int ii=UIMetricsManager::mtMenuItemSize;ii<=UIMetricsManager::mtDisclosureButtonSize;ii++ ) {
 			size = UIToolkit::getUIMetricSize( (UIMetricsManager::MetricType) ii, "Test" );
-			
+
 			metricsR.bottom_ = metricsR.top_ + maxVal<>( size.height_ + 10, metricsR.getHeight() );
 			textR.bottom_  = metricsR.bottom_;
 
 			ctx->textBoundedBy( &textR, (Format("%s: %.2f X %.2f pixels") % metricsToStringMap[ii] % size.width_ % size.height_), options );
-			
-			
+
+
 
 			valRect.left_ = metricsR.left_ + (metricsR.getWidth()/2) - (size.width_/2);
 			valRect.right_ = valRect.left_ + size.width_;
 			valRect.top_ = metricsR.top_ + (metricsR.getHeight()/2) - (size.height_/2);
 			valRect.bottom_ = valRect.top_ + size.height_;
-			
+
 			ctx->setColor( Color::getColor("black") );
 			ctx->rectangle( &valRect );
 			ctx->strokePath();
-			
+
 			totalVirtHeight += metricsR.getHeight() + 10;
-			
+
 			metricsR.offset( 0, metricsR.getHeight() + 10 );
 			textR.offset( 0, textR.getHeight() + 10 );
 		}
- 
+
 		if ( setVirtHeight ) {
-			scrollBarMgr->setVirtualViewSize(  r.getWidth(), totalVirtHeight ); 
+			scrollBarMgr->setVirtualViewSize(  r.getWidth(), totalVirtHeight );
 		}
 
 		setVirtHeight = false;
 	}
-};	
+};
 
 class ThemesWindow : public Window {
 public:
 	ThemesWindow() {
-		setCaption( "Themes" );	
-		
+		setCaption( "Themes" );
+
 
 		TabbedPages* pages = new TabbedPages();
 		add( pages, AlignClient );
@@ -889,13 +889,13 @@ public:
 
 		pages->addNewPage( "Sliders" )->getPageComponent()->getContainer()->add( new SlidersPanel(), AlignClient );
 
-		pages->addNewPage( "Progress Bars" )->getPageComponent()->getContainer()->add( new ProgressPanel(), AlignClient );		
+		pages->addNewPage( "Progress Bars" )->getPageComponent()->getContainer()->add( new ProgressPanel(), AlignClient );
 
 		pages->addNewPage( "Theme Metrics" )->getPageComponent()->getContainer()->add( new ThemeSizesPanel(), AlignClient );
 	}
 
 	virtual ~ThemesWindow(){
-		
+
 	};
 };
 
@@ -911,13 +911,13 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		
+
 		Window* mainWindow = new ThemesWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( 100.0, 100.0, 500.0, 500.0 );
 		mainWindow->show();
 
-		
+
 		return result;
 	}
 
@@ -929,7 +929,7 @@ int main(int argc, char *argv[])
 	Application* app = new ThemesApplication( argc, argv );
 
 	Application::main();
-	
+
 	return 0;
 }
 

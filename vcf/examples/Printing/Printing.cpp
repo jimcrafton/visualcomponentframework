@@ -147,7 +147,7 @@ public:
 
 	void doDrawing( GraphicsContext* context, const Rect& bounds ) {
 
-		long drawingOptions = GraphicsContext::tdoCenterHorzAlign;
+		int32 drawingOptions = GraphicsContext::tdoCenterHorzAlign;
 
 		double y = bounds.top_;
 
