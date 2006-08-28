@@ -171,7 +171,7 @@ public:
 		*/
 		ctx->textBoundedBy( &textBounds, text );
 
-		long drawingOptions = GraphicsContext::tdoCenterHorzAlign;
+		int32 drawingOptions = GraphicsContext::tdoCenterHorzAlign;
 
 		ctx->setCurrentFont( &font2 );
 		textBounds.offset( 350, -100 );

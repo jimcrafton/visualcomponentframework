@@ -86,7 +86,6 @@ public:
 		s += "\nTo increment/decrement the Day use the up/down arrow keys with Ctrl+Shift held down.";
 		s += "\nTo increment/decrement the Month use the up/down arrow keys with Ctrl held down.";
 		s += "\nTo increment/decrement the Year use the up/down arrow keys.";
-		
 
 		ctx->textBoundedBy( &textRect, s );
 
@@ -277,7 +276,7 @@ public:
 		String s = StringUtils::format( current, "%#I:%M:%S");
 		s += current.isAM() ? " AM" : " PM";
 
-		long options = GraphicsContext::tdoCenterVertAlign | GraphicsContext::tdoCenterHorzAlign;
+		int32 options = GraphicsContext::tdoCenterVertAlign | GraphicsContext::tdoCenterHorzAlign;
 		ctx->textBoundedBy( &rect, s, options );
 
 	}
@@ -360,7 +359,7 @@ public:
 		}
 		ctx->setColor( Color::getColor("gray128") );
 		ctx->strokePath();
-		
+
 		ctx->setColor( Color::getColor("black") );
 
 		double hourLength = radius * 0.40;
@@ -440,7 +439,7 @@ public:
 		clock2->setWidth( 200 );
 		panel->add( clock2, AlignLeft );
 
-		Calendar* calendar = new Calendar();		
+		Calendar* calendar = new Calendar();
 		add( calendar, AlignClient );
 	}
 
