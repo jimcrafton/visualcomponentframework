@@ -38,7 +38,7 @@ namespace VCF {
 
 		static double getTabBarHeight() {
 
-			return (( UIToolkit::getUIMetricsManager()->getDefaultFontFor(UIMetricsManager::ftControlFont).getHeight() * 1.75 ) + 2.50) * 0.85;//UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::mtButtonHeight ) * 0.85;
+			return UIToolkit::getUIMetricValue(UIMetricsManager::mtButtonHeight) * 0.85;//UIToolkit::getUIMetricsManager()->getDefaultHeightFor( UIMetricsManager::mtButtonHeight ) * 0.85;
 		}
 
 		DockBarHitTest hitTestDockBar( Point pt ) {
