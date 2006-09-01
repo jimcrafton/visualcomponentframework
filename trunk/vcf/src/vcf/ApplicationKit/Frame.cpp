@@ -298,6 +298,58 @@ Window* Frame::createWindow( Class* windowClazz, ResourceBundle* resBundle )
 	return result;
 }
 
+void Frame::center(uint32 direction)
+{
+    Window* owner;
+
+    if(!(direction & fcdOnDesktop))
+    {
+        owner = static_cast<Window*>(getParent());
+
+        if(!owner)
+        {
+            // We have to center on the desktop
+            direction |= fcdOnDesktop;
+        }
+    }
+
+    double ownerWidth, ownerHeight;
+    double ownerX = 0, ownerY = 0;
+    if(direction & fcdOnDesktop)
+    {
+        ownerWidth = Desktop::getDesktop()->getWidth();
+        ownerHeight = Desktop::getDesktop()->getHeight();
+    }
+    else
+    {
+        ownerWidth = owner->getWidth();
+        ownerHeight = owner->getHeight();
+        ownerX = owner->getLeft();
+        ownerY = owner->getTop();
+    }
+
+    // set the current size
+    double width, height;
+    width = getWidth();
+    height = getHeight();
+
+    // set the current position
+    double newX, newY;
+    newX = getLeft();
+    newY = getTop();
+
+    // Set the new position
+    if(direction & fcdHorizontal)
+        newX = (ownerWidth - width) / 2;
+    if(direction & fcdVertical)
+        newY = (ownerHeight - height) / 2;
+
+    newX += ownerX;
+    newY += ownerY;
+
+    setLeft(newX);
+    setTop(newY);
+}
 
 /**
 $Id$
