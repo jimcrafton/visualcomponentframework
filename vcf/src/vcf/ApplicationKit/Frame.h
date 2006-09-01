@@ -78,6 +78,32 @@ static String FrameStyleTypeNames[] = { "fstSizeable",
 										 "fstNoBorderFixed",
 										"fstToolbarBorder",
 										"fstToolbarBorderFixed"		 };
+										
+/**
+These are the enumeration of the center directions.
+*/
+enum FrameCenterDirection {
+	/**
+	This marks that a frame is centered on another frame (the owner)
+	*/
+    fcdOnFrame = 0x0000,
+    /**
+    This marks that the frame is centered on the desktop
+    */
+    fcdOnDesktop = 0x0002,
+    /**
+    A frame could be centered Horizontaly, ...
+    */
+	fcdHorizontal = 0x0004,
+	/**
+	A frame could be centered verticaly
+	*/
+	fcdVertical = 0x0008,
+	/**
+	A frame could also be centered Horizontaly and Verticaly
+	*/
+	fcdBoth = fcdHorizontal | fcdVertical
+};
 
 /**
 \class Frame Frame.h "vcf/ApplicationKit/Frame.h"
@@ -337,6 +363,17 @@ public:
 	/**
 	*/
 	static Window* createWindow( Class* windowClazz, ResourceBundle* resBundle=NULL );
+	
+	/**
+	 * The generic center function. Centers the frame on owner by default or on screen
+	 * when there is no owner.
+	 */
+	void center(uint32 direction = fcdBoth);
+	
+	/**
+	 * Center the frame on the desktop
+	 */
+	void centerOnDesktop(uint32 direction = fcdBoth) { center(direction | fcdOnDesktop); }
 protected:
 	static Frame* currentActiveFrame;
 	String caption_;
