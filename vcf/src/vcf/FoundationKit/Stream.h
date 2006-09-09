@@ -111,13 +111,25 @@ public:
 
 	virtual void read( short& val ) ;
 
+	virtual void read( unsigned short& val ) ;
+
 	virtual void read( long& val ) ;
 
+	virtual void read( unsigned long& val ) ;
+
 	virtual void read( int& val ) ;
+
+	virtual void read( unsigned int& val ) ;
 
 	virtual void read( bool& val ) ;
 
 	virtual void read( char& val ) ;
+
+	virtual void read( unsigned char& val ) ;
+
+	virtual void read( int64& val ) ;
+
+	virtual void read( uint64& val ) ;
 
 	virtual void read( float& val ) ;
 
@@ -125,15 +137,27 @@ public:
 
 	virtual void read( String& val ) ;
 
+	InputStream& operator>>( unsigned short& val );
+
 	InputStream& operator>>( short& val );
 
 	InputStream& operator>>( long& val );
 
+	InputStream& operator>>( unsigned long& val );
+
 	InputStream& operator>>( int& val );
+
+	InputStream& operator>>( unsigned int& val );
 
 	InputStream& operator>>( bool& val );
 
 	InputStream& operator>>( char& val );
+
+	InputStream& operator>>( unsigned char& val );
+
+	InputStream& operator>>( int64& val );
+
+	InputStream& operator>>( uint64& val );
 
 	InputStream& operator>>( float& val );
 
@@ -162,13 +186,25 @@ public:
 
 	virtual void write( const short& val );
 
+	virtual void write( const unsigned short& val );
+
 	virtual void write( const long& val );
 
+	virtual void write( const unsigned long& val );
+
 	virtual void write( const int& val );
+
+	virtual void write( const unsigned int& val );
 
 	virtual void write( const bool& val );
 
 	virtual void write( const char& val );
+
+	virtual void write( const unsigned char& val );
+
+	virtual void write( const int64& val );
+
+	virtual void write( const uint64& val );
 
 	virtual void write( const float& val );
 
@@ -178,13 +214,25 @@ public:
 
 	OutputStream& operator<<( const short& val );
 
+	OutputStream& operator<<( const unsigned short& val );
+
 	OutputStream& operator<<( const long& val );
 
+	OutputStream& operator<<( const unsigned long& val );
+
 	OutputStream& operator<<( const int& val );
+
+	OutputStream& operator<<( const unsigned int& val );
 
 	OutputStream& operator<<( const bool& val );
 
 	OutputStream& operator<<( const char& val );
+
+	OutputStream& operator<<( const unsigned char& val );
+
+	OutputStream& operator<<( const int64& val );
+
+	OutputStream& operator<<( const uint64& val );
 
 	OutputStream& operator<<( const float& val );
 

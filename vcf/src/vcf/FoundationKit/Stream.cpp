@@ -22,12 +22,27 @@ void InputStream::read( short& val )
 	read( (unsigned char*)&val, sizeof(val) );
 }
 
+void InputStream::read( unsigned short& val )
+{
+	read( (unsigned char*)&val, sizeof(val) );
+}
+
 void InputStream::read( long& val )
 {
 	read( (unsigned char*)&val, sizeof(val) );
 }
 
+void InputStream::read( unsigned long& val )
+{
+	read( (unsigned char*)&val, sizeof(val) );
+}
+
 void InputStream::read( int& val )
+{
+	read( (unsigned char*)&val, sizeof(val) );
+}
+
+void InputStream::read( unsigned int& val )
 {
 	read( (unsigned char*)&val, sizeof(val) );
 }
@@ -38,6 +53,21 @@ void InputStream::read( bool& val )
 }
 
 void InputStream::read( char& val )
+{
+	read( (unsigned char*)&val, sizeof(val) );
+}
+
+void InputStream::read( unsigned char& val )
+{
+	read( (unsigned char*)&val, sizeof(val) );
+}
+
+void InputStream::read( int64& val )
+{
+	read( (unsigned char*)&val, sizeof(val) );
+}
+
+void InputStream::read( uint64& val )
 {
 	read( (unsigned char*)&val, sizeof(val) );
 }
@@ -210,12 +240,27 @@ InputStream& InputStream::operator>>( short& val ){
 	return *this;
 }
 
+InputStream& InputStream::operator>>( unsigned short& val ){
+	read( val );
+	return *this;
+}
+
 InputStream& InputStream::operator>>( long& val ){
 	read( val );
 	return *this;
 }
 
+InputStream& InputStream::operator>>( unsigned long& val ){
+	read( val );
+	return *this;
+}
+
 InputStream& InputStream::operator>>( int& val ){
+	read( val );
+	return *this;
+}
+
+InputStream& InputStream::operator>>( unsigned int& val ){
 	read( val );
 	return *this;
 }
@@ -226,6 +271,21 @@ InputStream& InputStream::operator>>( bool& val ){
 }
 
 InputStream& InputStream::operator>>( char& val ){
+	read( val );
+	return *this;
+}
+
+InputStream& InputStream::operator>>( unsigned char& val ){
+	read( val );
+	return *this;
+}
+
+InputStream& InputStream::operator>>( int64& val ){
+	read( val );
+	return *this;
+}
+
+InputStream& InputStream::operator>>( uint64& val ){
 	read( val );
 	return *this;
 }
@@ -263,12 +323,27 @@ OutputStream& OutputStream::operator<<( const short& val ){
 	return *this;
 }
 
+OutputStream& OutputStream::operator<<( const unsigned short& val ){
+	write( val );
+	return *this;
+}
+
 OutputStream& OutputStream::operator<<( const long& val ){
 	write( val );
 	return *this;
 }
 
+OutputStream& OutputStream::operator<<( const unsigned long& val ){
+	write( val );
+	return *this;
+}
+
 OutputStream& OutputStream::operator<<( const int& val ){
+	write( val );
+	return *this;
+}
+
+OutputStream& OutputStream::operator<<( const unsigned int& val ){
 	write( val );
 	return *this;
 }
@@ -279,6 +354,21 @@ OutputStream& OutputStream::operator<<( const bool& val ){
 }
 
 OutputStream& OutputStream::operator<<( const char& val ){
+	write( val );
+	return *this;
+}
+
+OutputStream& OutputStream::operator<<( const unsigned char& val ){
+	write( val );
+	return *this;
+}
+
+OutputStream& OutputStream::operator<<( const int64& val ){
+	write( val );
+	return *this;
+}
+
+OutputStream& OutputStream::operator<<( const uint64& val ){
 	write( val );
 	return *this;
 }
@@ -309,12 +399,27 @@ void OutputStream::write( const short& val )
 	write( (const unsigned char*)&val, sizeof(val) );
 }
 
+void OutputStream::write( const unsigned short& val )
+{
+	write( (const unsigned char*)&val, sizeof(val) );
+}
+
 void OutputStream::write( const long& val )
 {
 	write( (const unsigned char*)&val, sizeof(val) );
 }
 
+void OutputStream::write( const unsigned long& val )
+{
+	write( (const unsigned char*)&val, sizeof(val) );
+}
+
 void OutputStream::write( const int& val )
+{
+	write( (const unsigned char*)&val, sizeof(val) );
+}
+
+void OutputStream::write( const unsigned int& val )
 {
 	write( (const unsigned char*)&val, sizeof(val) );
 }
@@ -325,6 +430,21 @@ void OutputStream::write( const bool& val )
 }
 
 void OutputStream::write( const char& val )
+{
+	write( (const unsigned char*)&val, sizeof(val) );
+}
+
+void OutputStream::write( const unsigned char& val )
+{
+	write( (const unsigned char*)&val, sizeof(val) );
+}
+
+void OutputStream::write( const int64& val )
+{
+	write( (const unsigned char*)&val, sizeof(val) );
+}
+
+void OutputStream::write( const uint64& val )
 {
 	write( (const unsigned char*)&val, sizeof(val) );
 }
