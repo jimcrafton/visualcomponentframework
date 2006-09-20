@@ -636,6 +636,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Gradients"=.\Gradients\Gradients.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "GraphicsAndMouseMoves"=.\GraphicsAndMouseMoves\GraphicsAndMouseMoves.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1438,6 +1450,18 @@ Package=<4>
 ###############################################################################
 
 Project: "VisualFormFiles"=.\VisualFormFiles\VisualFormFiles.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Win32Integration"=.\Win32Integration\Win32Integration.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
