@@ -3,6 +3,10 @@
 #include "vcf/FoundationKit/FoundationKit.h"
 #include <set>
 
+#ifdef VCF_VC6
+#define VCF_REGEX_ITERATOR_SUBTRACTION_OPERATOR
+#endif
+
 namespace VCF{
 namespace Regex{
 
@@ -125,6 +129,14 @@ namespace Regex{
             // bidirectional
             Iterator& operator--();
             Iterator operator--(int);
+#ifdef VCF_REGEX_ITERATOR_SUBTRACTION_OPERATOR
+			// this is used by VC6 to dereference reverse_iterators, strangely...
+			Iterator operator-(const int& count) {
+				for (int i=0; i < count; i++) {
+					*this--;
+				}
+			}
+#endif
         private:
             const Match* data_;
     };
