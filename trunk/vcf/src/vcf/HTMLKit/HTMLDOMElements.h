@@ -30,10 +30,12 @@ and WebBrowser modules.
 namespace VCF {
 
 class HTMLElement;
+class HTMLInputElement;
 class HTMLDocument;
 
 class HTMLElementCollectionPeer;
 class HTMLElementPeer;
+class HTMLInputElementPeer;
 class HTMLDocumentPeer;
 
 /**
@@ -97,7 +99,7 @@ public:
 
 	HTMLElement( HTMLElementPeer* element );
 
-	~HTMLElement();
+	virtual ~HTMLElement();
 
 	HTMLElement& operator= ( const HTMLElement& rhs );
 
@@ -190,7 +192,7 @@ public:
 
 	HTMLElementCollection getAll() ;	
 	 
-private:
+protected:
 	HTMLElementPeer* peer_;
 	/*	
             
@@ -389,7 +391,67 @@ private:
 	HTMLDocumentPeer* peer_;
 };
 
+class HTMLKIT_API HTMLInputElement : public HTMLElement {
+public:
 
+	HTMLInputElement();
+
+	HTMLInputElement( const HTMLInputElement& rhs );
+
+	HTMLInputElement( HTMLInputElementPeer* element );
+
+	~HTMLInputElement();
+
+	HTMLInputElement& operator= ( const HTMLInputElement& rhs );
+
+	HTMLInputElement& operator= ( const HTMLElement& rhs );
+
+	void setInputPeer( HTMLInputElementPeer* element );
+
+	HTMLInputElementPeer* getInputPeer() const{
+		return inputPeer_;
+	}
+
+	Delegate OnChange;
+
+	bool getChecked() const;
+
+	void setChecked( bool val );
+	
+	bool getDefaultChecked() const;
+
+	void setDefaultChecked( bool val );
+
+	String getDefaultValue() const ;
+
+	void setDefaultValue( const String& val );
+
+	bool getDisabled() const ;
+
+	void setDisabled( bool val ) ;
+
+	int getMaxLength() const;
+
+	void setMaxLength( int val ) ;
+
+	String getName() const ;
+
+	void setName( const String& val );
+
+	bool getReadOnly() const ;
+
+	void setReadOnly( bool val ) ;
+	
+	String getValue() const ;	
+
+	void setValue( const String& val );
+	
+
+	void select();
+
+protected:
+	HTMLInputElementPeer* inputPeer_;
+};
 
 };
 
