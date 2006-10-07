@@ -92,6 +92,8 @@ public:
 	
 	File( const String& fileName, uint32 openFlags, ShareFlags shareFlags = File::shMaskAny );
 
+	File();
+
 	virtual ~File();
 
 

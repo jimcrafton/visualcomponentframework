@@ -27,6 +27,19 @@ File::File( const String& fileName, uint32 openFlags, ShareFlags shareFlags ):
 	openWithRights( fileName, openFlags, shareFlags );	
 }
 
+File::File():
+	filePeer_(NULL),
+	openAccess_(File::ofNone)	
+{
+	/*filePeer_ = SystemToolkit::createFilePeer( this );
+	if ( NULL == filePeer_ ) {
+		throw NoPeerFoundException();
+	}
+
+	resetStats();
+	*/
+	setName( "" );
+}
 
 File::~File()
 {
@@ -93,6 +106,7 @@ void File::create( const String& newFileName, uint32 openFlags )
 	try {
 		fileName_ = newFileName;
 		filePeer_->create(openFlags);
+		openAccess_ = openFlags;
 	}
 	catch ( ... ) {
 		fileName_ = "";
