@@ -1033,6 +1033,171 @@ void VCF::HTMLDocument::clearSelection ()
 }
 
 
+
+
+
+VCF::HTMLInputElement::HTMLInputElement():
+	VCF::HTMLElement(),
+	inputPeer_(NULL)
+{
+	
+	inputPeer_ = new HTMLInputElementPeer(com_cast( *peer_ ));
+	//peer_ = new VCF::HTMLElementPeer( com_cast( *inputPeer_ ) );
+}
+
+VCF::HTMLInputElement::HTMLInputElement( const VCF::HTMLInputElement& rhs ):
+	VCF::HTMLElement(rhs),
+	inputPeer_(NULL)
+{
+	inputPeer_ = new HTMLInputElementPeer(com_cast( *peer_ ));
+}
+
+VCF::HTMLInputElement::HTMLInputElement( HTMLInputElementPeer* element ):
+	VCF::HTMLElement(),
+	inputPeer_(NULL)
+{
+	inputPeer_ = new HTMLInputElementPeer();
+	*inputPeer_ = *element;
+
+	*peer_ = com_cast(*inputPeer_);
+}
+
+VCF::HTMLInputElement::~HTMLInputElement()
+{
+	delete inputPeer_;
+}
+
+VCF::HTMLInputElement& VCF::HTMLInputElement::operator= ( const VCF::HTMLInputElement& rhs )
+{
+	
+	*inputPeer_ = *rhs.inputPeer_;
+
+	*peer_ = com_cast(*inputPeer_);
+
+	return *this;
+}
+
+VCF::HTMLInputElement& VCF::HTMLInputElement::operator= ( const VCF::HTMLElement& rhs )
+{
+	*peer_ = *rhs.getPeer();
+
+	*inputPeer_ = com_cast(*peer_);
+
+	if ( inputPeer_->is_null() ) {
+		throw VCF::RuntimeException( "HTMLElement instance is not a valid HTMLInputElement instance." );
+	}
+
+	return *this;
+}
+
+void VCF::HTMLInputElement::setInputPeer( HTMLInputElementPeer* element )
+{
+	*inputPeer_ = *element;
+	*peer_ = com_cast(*inputPeer_);
+}
+
+bool VCF::HTMLInputElement::getChecked() const
+{
+	VARIANT_BOOL result = FALSE;
+	(*inputPeer_)->get_checked( &result );
+	return result ? true : false;
+}
+
+void VCF::HTMLInputElement::setChecked( bool val )
+{
+
+}
+
+bool VCF::HTMLInputElement::getDefaultChecked() const
+{
+	VARIANT_BOOL result = FALSE;
+	(*inputPeer_)->get_checked( &result );
+	return result ? true : false;
+}
+
+void VCF::HTMLInputElement::setDefaultChecked( bool val )
+{
+	(*inputPeer_)->put_defaultChecked( val ? TRUE : FALSE );
+}
+
+VCF::String VCF::HTMLInputElement::getDefaultValue() const 
+{
+	bstr_t tmp;
+	(*inputPeer_)->get_defaultValue( tmp.out() );
+	return VCF::String(tmp.c_str());
+}
+
+void VCF::HTMLInputElement::setDefaultValue( const VCF::String& val )
+{
+	(*inputPeer_)->put_defaultValue( bstr_t(val.c_str()).in() );
+}
+
+bool VCF::HTMLInputElement::getDisabled() const 
+{
+	VARIANT_BOOL result = FALSE;
+	(*inputPeer_)->get_disabled( &result );
+	return result ? true : false;
+}
+
+void VCF::HTMLInputElement::setDisabled( bool val ) 
+{
+	(*inputPeer_)->put_disabled( val ? TRUE : FALSE );
+}
+
+int VCF::HTMLInputElement::getMaxLength() const
+{
+	long result = 0;
+	(*inputPeer_)->get_maxLength( &result );
+	return (int) result;
+}
+
+void VCF::HTMLInputElement::setMaxLength( int val ) 
+{
+	(*inputPeer_)->put_maxLength( (long)val );
+}
+
+VCF::String VCF::HTMLInputElement::getName() const 
+{
+	bstr_t tmp;
+	(*inputPeer_)->get_name( tmp.out() );
+	return VCF::String(tmp.c_str());
+}
+
+void VCF::HTMLInputElement::setName( const VCF::String& val )
+{
+	(*inputPeer_)->put_name( bstr_t(val.c_str()).in() );
+}
+
+bool VCF::HTMLInputElement::getReadOnly() const 
+{
+	VARIANT_BOOL result = FALSE;
+	(*inputPeer_)->get_readOnly( &result );
+	return result ? true : false;
+}
+
+void VCF::HTMLInputElement::setReadOnly( bool val ) 
+{
+	(*inputPeer_)->put_readOnly( val ? TRUE : FALSE );
+}
+
+VCF::String VCF::HTMLInputElement::getValue() const
+{
+	bstr_t tmp;
+	(*inputPeer_)->get_value( tmp.out() );
+	return VCF::String(tmp.c_str());
+}
+
+void VCF::HTMLInputElement::setValue( const VCF::String& val )
+{
+	(*inputPeer_)->put_value( bstr_t(val.c_str()).in() );
+}
+
+void VCF::HTMLInputElement::select()
+{
+
+}
+
+
 /**
 $Id$
 */

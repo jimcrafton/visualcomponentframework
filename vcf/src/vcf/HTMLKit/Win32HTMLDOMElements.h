@@ -34,6 +34,7 @@ typedef comet::com_ptr<ifc> ifc##Ptr;\
 
 COM_PTR(IHTMLDocument2)
 COM_PTR(IHTMLElement)
+COM_PTR(IHTMLInputElement)
 COM_PTR(IHTMLElementCollection)
 COM_PTR(IWebBrowser2)
 
@@ -72,6 +73,14 @@ namespace VCF {
 		HTMLDocumentPeer( const impl::com_cast_t<Itf>& x ) throw () : IHTMLDocument2Ptr(x) {}
 	};
 	
+
+	class HTMLInputElementPeer : public IHTMLInputElementPtr {
+	public:
+		HTMLInputElementPeer():IHTMLInputElementPtr(){}
+
+		template<typename Itf>
+		HTMLInputElementPeer( const impl::com_cast_t<Itf>& x ) throw () : IHTMLInputElementPtr(x) {}
+	};
 };
 
 
