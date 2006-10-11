@@ -20,6 +20,20 @@ namespace VCF  {
         typedef boost::shared_ptr<T> Shared;
         typedef boost::scoped_ptr<T> Scoped;
         typedef boost::weak_ptr<T>   Weak;
+
+        static void Deleter(T* obj) {
+            obj->free();
+        }
+
+        static
+        Shared New() {
+            return Shared(new T, &SmartPtr::Deleter);
+        }
+
+        static
+        Shared New(T *obj) {
+            return Shared(obj, &SmartPtr::Deleter);
+        }
     };
 
     using boost::static_pointer_cast;
