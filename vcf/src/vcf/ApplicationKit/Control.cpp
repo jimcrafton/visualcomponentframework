@@ -178,11 +178,25 @@ Rect Control::getBounds()/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 		Rect tmpBounds = *bounds_;
 
+		//this is here to determine the difference
+		//between the border sides, one bounds with out
+		//and one with borders taken into consideration
+		Rect r = getClientBounds(false);
+		Rect r2 = getClientBounds(true);
+
+
+
 		tmpBounds.offset( -tmpBounds.left_, -tmpBounds.top_ );
 
 		translateToScreenCoords( &tmpBounds );
 
 		parent->translateFromScreenCoords( &tmpBounds );
+
+		//offset the bounds here so that we take into account 
+		//the border offsets for the top and left.
+		tmpBounds.offset( -(r2.left_ - r.left_),
+							-(r2.top_ - r.top_) );
+		
 
 		*bounds_ =  tmpBounds;
 	}

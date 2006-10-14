@@ -387,12 +387,12 @@ void StandardContainer::doAnchors( Control* initialControl, const bool& controlJ
 			float* anchorDeltas = child->getAnchorDeltas();
 
 			if ( (anchorType & AnchorRight) != 0 ) {
-				if ( anchorBounds.left_ < tmpBounds.right_ ) {
-					anchorBounds.right_ = tmpBounds.getWidth() - anchorDeltas[Control::ANCHOR_DRIGHT];
-				}
-				else {
-					anchorBounds.right_ = tmpBounds.getWidth() - anchorDeltas[Control::ANCHOR_DRIGHT];
-				}
+
+				//the right can't go negative here anymore
+				//which prevents us from seeing a weird "mirror"
+				//effect when resizing the parent 
+
+				anchorBounds.right_ = maxVal<>(0.0,tmpBounds.getWidth() - anchorDeltas[Control::ANCHOR_DRIGHT]);
 
 				anchorBounds.left_ = anchorBounds.right_ - w;
 			}
@@ -402,12 +402,10 @@ void StandardContainer::doAnchors( Control* initialControl, const bool& controlJ
 			}
 
 			if ( (anchorType & AnchorBottom) != 0 ) {
-				if ( anchorBounds.top_ < tmpBounds.bottom_ ) {
-					anchorBounds.bottom_ = tmpBounds.getHeight() - anchorDeltas[Control::ANCHOR_DBOTTOM];
-				}
-				else {
-					anchorBounds.bottom_ = tmpBounds.getHeight() - anchorDeltas[Control::ANCHOR_DBOTTOM];
-				}
+				//the bottom can't go negative here anymore
+				//which prevents us from seeing a weird "mirror"
+				//effect when resizing the parent 
+				anchorBounds.bottom_ = maxVal<>( 0.0, tmpBounds.getHeight() - anchorDeltas[Control::ANCHOR_DBOTTOM] );
 
 				anchorBounds.top_ = anchorBounds.bottom_ - h;
 			}
