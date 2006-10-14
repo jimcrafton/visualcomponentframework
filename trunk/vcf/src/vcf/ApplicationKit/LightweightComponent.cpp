@@ -331,13 +331,14 @@ void LightweightComponent::translateFromScreenCoords( Point* pt )
 
 		if ( NULL != parent ) {
 			Point tmpPt = *pt;
-
+			
 			parent->translateFromScreenCoords( &tmpPt );
 
 			tmpPt.x_ -= offset.width_;
 			tmpPt.y_ -= offset.height_;
 
-			*pt = tmpPt;
+			*pt = tmpPt;		
+
 		}
 	}
 }
