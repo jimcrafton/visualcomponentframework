@@ -153,7 +153,7 @@
 				Name="VCLibrarianTool"
 				AdditionalDependencies="winmm.lib"
 				OutputFile="..\..\..\..\..\..\lib\paintlib_vc80_s.lib"
-				AdditionalLibraryDirectories=".\&quot;$(VCF_LIB)&quot;\"
+				AdditionalLibraryDirectories=""
 				SuppressStartupBanner="true"
 			/>
 			<Tool
