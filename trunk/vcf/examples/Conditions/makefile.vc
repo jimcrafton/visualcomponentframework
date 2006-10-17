@@ -15,11 +15,13 @@
 OBJDIR = msvc$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-CONDITIONS_CXXFLAGS = /M$(__RUNTIME_LIBS_8)$(__DEBUG_RUNTIME_LIBS_3) /DWIN32 \
-	$(__DEBUG_INFO_0) /Fd.\Conditions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb \
-	$(____DEBUG_RUNTIME_LIBS_2_p) $(__OPTIMIZE_4) $(____OPTION_DEBUG_12_p) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_CONSOLE \
-	$(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
+CONDITIONS_CXXFLAGS = /M$(__OPTION_RUNTIME_10)$(__DEBUG_RUNTIME_LIBS_5) \
+	/DWIN32 $(__DEBUG_INFO_2) \
+	/Fd.\Conditions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb \
+	$(____DEBUG_RUNTIME_LIBS_4_p) $(__OPTIMIZE_6) $(__OPTION_WARNINGS_13) \
+	$(____OPTION_DEBUG_14_p) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_CONSOLE $(__FOUNDATIONKIT_DLL_p) $(____OPTION_CPP_RTTI_0_11) \
+	$(____OPTION_CPP_EXCEPTIONS_1_12) $(CPPFLAGS) $(CXXFLAGS)
 CONDITIONS_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\examples\Conditions\Conditions_Conditions.obj
 
@@ -48,49 +50,85 @@ __Conditions___depname = \
 	.\Conditions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 !endif
 !if "$(OPTION_DEBUG)" == "0"
-__DEBUG_INFO_0 = 
+__DEBUG_INFO_2 = 
 !endif
 !if "$(OPTION_DEBUG)" == "1"
-__DEBUG_INFO_0 = /Zi
+__DEBUG_INFO_2 = /Zi
 !endif
 !if "$(OPTION_DEBUG)" == "0"
-__DEBUG_INFO_1 = 
+__DEBUG_INFO_3 = 
 !endif
 !if "$(OPTION_DEBUG)" == "1"
-__DEBUG_INFO_1 = /DEBUG
+__DEBUG_INFO_3 = /DEBUG
+!endif
+!if "$(OPTION_DEBUG)" == "0" && "$(OPTION_DEBUG_RUNTIME)" == "default"
+____DEBUG_RUNTIME_LIBS_4_p = 
+!endif
+!if "$(OPTION_DEBUG)" == "1" && "$(OPTION_DEBUG_RUNTIME)" == "default"
+____DEBUG_RUNTIME_LIBS_4_p = /D_DEBUG
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "0"
+____DEBUG_RUNTIME_LIBS_4_p = 
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "1"
+____DEBUG_RUNTIME_LIBS_4_p = /D_DEBUG
+!endif
+!if "$(OPTION_DEBUG)" == "0" && "$(OPTION_DEBUG_RUNTIME)" == "default"
+__DEBUG_RUNTIME_LIBS_5 = 
+!endif
+!if "$(OPTION_DEBUG)" == "1" && "$(OPTION_DEBUG_RUNTIME)" == "default"
+__DEBUG_RUNTIME_LIBS_5 = d
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "0"
+__DEBUG_RUNTIME_LIBS_5 = 
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "1"
+__DEBUG_RUNTIME_LIBS_5 = d
 !endif
 !if "$(OPTION_DEBUG)" == "0"
-____DEBUG_RUNTIME_LIBS_2_p = 
+__OPTIMIZE_6 = /O2
 !endif
 !if "$(OPTION_DEBUG)" == "1"
-____DEBUG_RUNTIME_LIBS_2_p = /D_DEBUG
+__OPTIMIZE_6 = /Od
+!endif
+!if "$(OPTION_THREADING)" == "multi"
+__OPTION_THREADING_9 = T
+!endif
+!if "$(OPTION_THREADING)" == "single"
+__OPTION_THREADING_9 = L
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_10 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_10 = $(__OPTION_THREADING_9)
+!endif
+!if "$(OPTION_CPP_RTTI)" == "0"
+____OPTION_CPP_RTTI_0_11 = 
+!endif
+!if "$(OPTION_CPP_RTTI)" == "1"
+____OPTION_CPP_RTTI_0_11 = /GR
+!endif
+!if "$(OPTION_CPP_EXCEPTIONS)" == "0"
+____OPTION_CPP_EXCEPTIONS_1_12 = 
+!endif
+!if "$(OPTION_CPP_EXCEPTIONS)" == "1"
+____OPTION_CPP_EXCEPTIONS_1_12 = /EHsc
+!endif
+!if "$(OPTION_WARNINGS)" == "no"
+__OPTION_WARNINGS_13 = /w
+!endif
+!if "$(OPTION_WARNINGS)" == "default"
+__OPTION_WARNINGS_13 = 
+!endif
+!if "$(OPTION_WARNINGS)" == "max"
+__OPTION_WARNINGS_13 = /W4
 !endif
 !if "$(OPTION_DEBUG)" == "0"
-__DEBUG_RUNTIME_LIBS_3 = 
+____OPTION_DEBUG_14_p = /DNDEBUG
 !endif
 !if "$(OPTION_DEBUG)" == "1"
-__DEBUG_RUNTIME_LIBS_3 = d
-!endif
-!if "$(OPTION_DEBUG)" == "0"
-__OPTIMIZE_4 = /O2
-!endif
-!if "$(OPTION_DEBUG)" == "1"
-__OPTIMIZE_4 = /Od
-!endif
-!if "$(OPTION_SHARED_RUNTIME)" == "default"
-__RUNTIME_LIBS_8 = D
-!endif
-!if "$(OPTION_SHARED_RUNTIME)" == "1"
-__RUNTIME_LIBS_8 = D
-!endif
-!if "$(OPTION_SHARED_RUNTIME)" == "0"
-__RUNTIME_LIBS_8 = T
-!endif
-!if "$(OPTION_DEBUG)" == "0"
-____OPTION_DEBUG_12_p = /DNDEBUG
-!endif
-!if "$(OPTION_DEBUG)" == "1"
-____OPTION_DEBUG_12_p = /D_DEBUG
+____OPTION_DEBUG_14_p = /D_DEBUG
 !endif
 !if "$(OPTION_ALLIN1)" == "0"
 ____Conditions_FOUNDATIONKIT_p = $(FOUNDATIONKIT_FILENAME).lib
@@ -122,7 +160,7 @@ clean:
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\Conditions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(CONDITIONS_OBJECTS)
-	link /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_1)  /LIBPATH:..\..\lib /SUBSYSTEM:CONSOLE @<<
+	link /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_3)  /LIBPATH:..\..\lib /SUBSYSTEM:CONSOLE @<<
 	$(CONDITIONS_OBJECTS)  rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib $(____Conditions_FOUNDATIONKIT_p)
 <<
 !endif

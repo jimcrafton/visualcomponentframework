@@ -5,7 +5,7 @@
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 
-CFG=RemoteObjectKit - Win32 Release
+CFG=RemoteObjectKit - Win32 LIB Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -14,38 +14,38 @@ CFG=RemoteObjectKit - Win32 Release
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "VCF_RemoteObjectKit.mak" CFG="RemoteObjectKit - Win32 Release"
+!MESSAGE NMAKE /f "VCF_RemoteObjectKit.mak" CFG="RemoteObjectKit - Win32 LIB Release"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
 !MESSAGE "RemoteObjectKit - Win32 vc80 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "RemoteObjectKit - Win32 vc80 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "RemoteObjectKit - Win32 vc80 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "RemoteObjectKit - Win32 vc80 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "RemoteObjectKit - Win32 vc80 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "RemoteObjectKit - Win32 vc80 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "RemoteObjectKit - Win32 vc71 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "RemoteObjectKit - Win32 vc71 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "RemoteObjectKit - Win32 vc71 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "RemoteObjectKit - Win32 vc71 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "RemoteObjectKit - Win32 vc71 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "RemoteObjectKit - Win32 vc71 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "RemoteObjectKit - Win32 vc70 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "RemoteObjectKit - Win32 vc70 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "RemoteObjectKit - Win32 vc70 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "RemoteObjectKit - Win32 vc70 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "RemoteObjectKit - Win32 vc70 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "RemoteObjectKit - Win32 vc70 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "RemoteObjectKit - Win32 vc6 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "RemoteObjectKit - Win32 vc6 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "RemoteObjectKit - Win32 vc6 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "RemoteObjectKit - Win32 vc6 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "RemoteObjectKit - Win32 vc6 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "RemoteObjectKit - Win32 vc6 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "RemoteObjectKit - Win32 icl7 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "RemoteObjectKit - Win32 icl7 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "RemoteObjectKit - Win32 icl7 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "RemoteObjectKit - Win32 icl7 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "RemoteObjectKit - Win32 icl7 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "RemoteObjectKit - Win32 icl7 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "RemoteObjectKit - Win32 icl6 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "RemoteObjectKit - Win32 icl6 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "RemoteObjectKit - Win32 icl6 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "RemoteObjectKit - Win32 icl6 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "RemoteObjectKit - Win32 icl6 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "RemoteObjectKit - Win32 icl6 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "RemoteObjectKit - Win32 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "RemoteObjectKit - Win32 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "RemoteObjectKit - Win32 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "RemoteObjectKit - Win32 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "RemoteObjectKit - Win32 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "RemoteObjectKit - Win32 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project
@@ -105,7 +105,7 @@ LINK32=link.exe
 # ADD BASE LINK32 FoundationKit_vc80.lib FoundationKit_vc80.lib NetworkKit_vc80.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\RemoteObjectKit_vc80.dll" /libpath:"..\..\lib" /implib:"..\..\lib\RemoteObjectKit_vc80.lib"
 # ADD LINK32 FoundationKit_vc80.lib FoundationKit_vc80.lib NetworkKit_vc80.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\RemoteObjectKit_vc80.dll" /libpath:"..\..\lib" /implib:"..\..\lib\RemoteObjectKit_vc80.lib"
 
-!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc80 Debug"
+!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc80 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -128,7 +128,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\RemoteObjectKit_vc80_sd.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\RemoteObjectKit_vc80_sd.lib"
 
-!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc80 Release"
+!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc80 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -201,7 +201,7 @@ LINK32=link.exe
 # ADD BASE LINK32 FoundationKit_vc71.lib FoundationKit_vc71.lib NetworkKit_vc71.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\RemoteObjectKit_vc71.dll" /libpath:"..\..\lib" /implib:"..\..\lib\RemoteObjectKit_vc71.lib"
 # ADD LINK32 FoundationKit_vc71.lib FoundationKit_vc71.lib NetworkKit_vc71.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\RemoteObjectKit_vc71.dll" /libpath:"..\..\lib" /implib:"..\..\lib\RemoteObjectKit_vc71.lib"
 
-!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc71 Debug"
+!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc71 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -224,7 +224,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\RemoteObjectKit_vc71_sd.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\RemoteObjectKit_vc71_sd.lib"
 
-!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc71 Release"
+!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc71 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -297,7 +297,7 @@ LINK32=link.exe
 # ADD BASE LINK32 FoundationKit_vc70.lib FoundationKit_vc70.lib NetworkKit_vc70.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\RemoteObjectKit_vc70.dll" /libpath:"..\..\lib" /implib:"..\..\lib\RemoteObjectKit_vc70.lib"
 # ADD LINK32 FoundationKit_vc70.lib FoundationKit_vc70.lib NetworkKit_vc70.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\RemoteObjectKit_vc70.dll" /libpath:"..\..\lib" /implib:"..\..\lib\RemoteObjectKit_vc70.lib"
 
-!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc70 Debug"
+!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc70 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -320,7 +320,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\RemoteObjectKit_vc70_sd.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\RemoteObjectKit_vc70_sd.lib"
 
-!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc70 Release"
+!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc70 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -393,7 +393,7 @@ LINK32=link.exe
 # ADD BASE LINK32 FoundationKit_vc6.lib FoundationKit_vc6.lib NetworkKit_vc6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\RemoteObjectKit_vc6.dll" /libpath:"..\..\lib" /implib:"..\..\lib\RemoteObjectKit_vc6.lib"
 # ADD LINK32 FoundationKit_vc6.lib FoundationKit_vc6.lib NetworkKit_vc6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\RemoteObjectKit_vc6.dll" /libpath:"..\..\lib" /implib:"..\..\lib\RemoteObjectKit_vc6.lib"
 
-!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc6 Debug"
+!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc6 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -416,7 +416,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\RemoteObjectKit_vc6_sd.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\RemoteObjectKit_vc6_sd.lib"
 
-!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc6 Release"
+!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 vc6 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -489,7 +489,7 @@ LINK32=link.exe
 # ADD BASE LINK32 FoundationKit_icl7.lib FoundationKit_icl7.lib NetworkKit_icl7.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\RemoteObjectKit_icl7.dll" /libpath:"..\..\lib" /implib:"..\..\lib\RemoteObjectKit_icl7.lib"
 # ADD LINK32 FoundationKit_icl7.lib FoundationKit_icl7.lib NetworkKit_icl7.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\RemoteObjectKit_icl7.dll" /libpath:"..\..\lib" /implib:"..\..\lib\RemoteObjectKit_icl7.lib"
 
-!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 icl7 Debug"
+!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 icl7 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -512,7 +512,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\RemoteObjectKit_icl7_sd.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\RemoteObjectKit_icl7_sd.lib"
 
-!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 icl7 Release"
+!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 icl7 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -585,7 +585,7 @@ LINK32=link.exe
 # ADD BASE LINK32 FoundationKit_icl6.lib FoundationKit_icl6.lib NetworkKit_icl6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\RemoteObjectKit_icl6.dll" /libpath:"..\..\lib" /implib:"..\..\lib\RemoteObjectKit_icl6.lib"
 # ADD LINK32 FoundationKit_icl6.lib FoundationKit_icl6.lib NetworkKit_icl6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\RemoteObjectKit_icl6.dll" /libpath:"..\..\lib" /implib:"..\..\lib\RemoteObjectKit_icl6.lib"
 
-!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 icl6 Debug"
+!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 icl6 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -608,7 +608,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\RemoteObjectKit_icl6_sd.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\RemoteObjectKit_icl6_sd.lib"
 
-!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 icl6 Release"
+!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 icl6 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -681,7 +681,7 @@ LINK32=link.exe
 # ADD BASE LINK32 FoundationKit.lib FoundationKit.lib NetworkKit.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\RemoteObjectKit.dll" /libpath:"..\..\lib" /implib:"..\..\lib\RemoteObjectKit.lib"
 # ADD LINK32 FoundationKit.lib FoundationKit.lib NetworkKit.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\RemoteObjectKit.dll" /libpath:"..\..\lib" /implib:"..\..\lib\RemoteObjectKit.lib"
 
-!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 Debug"
+!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -704,7 +704,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\RemoteObjectKit_sd.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\RemoteObjectKit_sd.lib"
 
-!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 Release"
+!ELSEIF  "$(CFG)" == "RemoteObjectKit - Win32 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -733,32 +733,32 @@ LIB32=link.exe -lib
 
 # Name "RemoteObjectKit - Win32 vc80 DLL Debug"
 # Name "RemoteObjectKit - Win32 vc80 DLL Release"
-# Name "RemoteObjectKit - Win32 vc80 Debug"
-# Name "RemoteObjectKit - Win32 vc80 Release"
+# Name "RemoteObjectKit - Win32 vc80 LIB Debug"
+# Name "RemoteObjectKit - Win32 vc80 LIB Release"
 # Name "RemoteObjectKit - Win32 vc71 DLL Debug"
 # Name "RemoteObjectKit - Win32 vc71 DLL Release"
-# Name "RemoteObjectKit - Win32 vc71 Debug"
-# Name "RemoteObjectKit - Win32 vc71 Release"
+# Name "RemoteObjectKit - Win32 vc71 LIB Debug"
+# Name "RemoteObjectKit - Win32 vc71 LIB Release"
 # Name "RemoteObjectKit - Win32 vc70 DLL Debug"
 # Name "RemoteObjectKit - Win32 vc70 DLL Release"
-# Name "RemoteObjectKit - Win32 vc70 Debug"
-# Name "RemoteObjectKit - Win32 vc70 Release"
+# Name "RemoteObjectKit - Win32 vc70 LIB Debug"
+# Name "RemoteObjectKit - Win32 vc70 LIB Release"
 # Name "RemoteObjectKit - Win32 vc6 DLL Debug"
 # Name "RemoteObjectKit - Win32 vc6 DLL Release"
-# Name "RemoteObjectKit - Win32 vc6 Debug"
-# Name "RemoteObjectKit - Win32 vc6 Release"
+# Name "RemoteObjectKit - Win32 vc6 LIB Debug"
+# Name "RemoteObjectKit - Win32 vc6 LIB Release"
 # Name "RemoteObjectKit - Win32 icl7 DLL Debug"
 # Name "RemoteObjectKit - Win32 icl7 DLL Release"
-# Name "RemoteObjectKit - Win32 icl7 Debug"
-# Name "RemoteObjectKit - Win32 icl7 Release"
+# Name "RemoteObjectKit - Win32 icl7 LIB Debug"
+# Name "RemoteObjectKit - Win32 icl7 LIB Release"
 # Name "RemoteObjectKit - Win32 icl6 DLL Debug"
 # Name "RemoteObjectKit - Win32 icl6 DLL Release"
-# Name "RemoteObjectKit - Win32 icl6 Debug"
-# Name "RemoteObjectKit - Win32 icl6 Release"
+# Name "RemoteObjectKit - Win32 icl6 LIB Debug"
+# Name "RemoteObjectKit - Win32 icl6 LIB Release"
 # Name "RemoteObjectKit - Win32 DLL Debug"
 # Name "RemoteObjectKit - Win32 DLL Release"
-# Name "RemoteObjectKit - Win32 Debug"
-# Name "RemoteObjectKit - Win32 Release"
+# Name "RemoteObjectKit - Win32 LIB Debug"
+# Name "RemoteObjectKit - Win32 LIB Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ""

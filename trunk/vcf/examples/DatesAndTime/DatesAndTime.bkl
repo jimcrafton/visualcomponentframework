@@ -8,6 +8,9 @@
         <dirname>.</dirname>
         <sources>DatesAndTime.cpp</sources>
         <vcf-use-FoundationKit/>
+        <clean-files>
+            datetime.out
+        </clean-files>
     </exe>
 </makefile>
 

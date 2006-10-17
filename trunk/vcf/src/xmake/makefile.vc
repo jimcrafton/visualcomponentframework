@@ -15,22 +15,24 @@
 OBJDIR = msvc$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-XMAKE_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+XMAKE_LIB_CXXFLAGS = /M$(__OPTION_RUNTIME_10)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	$(__DEBUG_INFO) /Fd..\..\lib\Xmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 XMAKE_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_CmdLine.obj \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_FilePath.obj \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_xmake.obj \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_xmakeUtils.obj \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_XMLParser.obj
-XMAKE_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+XMAKE_CXXFLAGS = /M$(__OPTION_RUNTIME_23)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	$(__DEBUG_INFO) /Fd..\..\bin\xmake.pdb $(____DEBUG_RUNTIME_LIBS) \
-	$(__OPTIMIZE) $(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 \
-	/DWIN32 /I..\..\src /D_CONSOLE $(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) \
-	$(CXXFLAGS)
+	$(__OPTIMIZE) $(__OPTION_WARNINGS) $(____OPTION_DEBUG) \
+	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_CONSOLE \
+	$(__FOUNDATIONKIT_DLL_p) $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 XMAKE_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_main.obj
 
@@ -54,11 +56,23 @@ SUFFIX_LIBRARY = $(SUFFIX_STATIC)
 !if "$(OPTION_SHARED)" == "1"
 SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 !endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_10 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_10 = $(__OPTION_THREADING)
+!endif
 !if "$(OPTION_DEBUG)" == "0"
-__DEBUG_INFO_14 = 
+__DEBUG_INFO_16 = 
 !endif
 !if "$(OPTION_DEBUG)" == "1"
-__DEBUG_INFO_14 = /DEBUG
+__DEBUG_INFO_16 = /DEBUG
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_23 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_23 = $(__OPTION_THREADING)
 !endif
 !if "$(OPTION_ALLIN1)" == "0"
 ____xmake_FOUNDATIONKIT_p = $(FOUNDATIONKIT_FILENAME).lib
@@ -75,16 +89,28 @@ __DEBUG_INFO =
 !if "$(OPTION_DEBUG)" == "1"
 __DEBUG_INFO = /Zi
 !endif
-!if "$(OPTION_DEBUG)" == "0"
+!if "$(OPTION_DEBUG)" == "0" && "$(OPTION_DEBUG_RUNTIME)" == "default"
 ____DEBUG_RUNTIME_LIBS = 
 !endif
-!if "$(OPTION_DEBUG)" == "1"
+!if "$(OPTION_DEBUG)" == "1" && "$(OPTION_DEBUG_RUNTIME)" == "default"
 ____DEBUG_RUNTIME_LIBS = /D_DEBUG
 !endif
-!if "$(OPTION_DEBUG)" == "0"
+!if "$(OPTION_DEBUG_RUNTIME)" == "0"
+____DEBUG_RUNTIME_LIBS = 
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "1"
+____DEBUG_RUNTIME_LIBS = /D_DEBUG
+!endif
+!if "$(OPTION_DEBUG)" == "0" && "$(OPTION_DEBUG_RUNTIME)" == "default"
 __DEBUG_RUNTIME_LIBS = 
 !endif
-!if "$(OPTION_DEBUG)" == "1"
+!if "$(OPTION_DEBUG)" == "1" && "$(OPTION_DEBUG_RUNTIME)" == "default"
+__DEBUG_RUNTIME_LIBS = d
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "0"
+__DEBUG_RUNTIME_LIBS = 
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "1"
 __DEBUG_RUNTIME_LIBS = d
 !endif
 !if "$(OPTION_DEBUG)" == "0"
@@ -93,14 +119,32 @@ __OPTIMIZE = /O2
 !if "$(OPTION_DEBUG)" == "1"
 __OPTIMIZE = /Od
 !endif
-!if "$(OPTION_SHARED_RUNTIME)" == "0"
-__RUNTIME_LIBS = T
+!if "$(OPTION_THREADING)" == "multi"
+__OPTION_THREADING = T
 !endif
-!if "$(OPTION_SHARED_RUNTIME)" == "1"
-__RUNTIME_LIBS = D
+!if "$(OPTION_THREADING)" == "single"
+__OPTION_THREADING = L
 !endif
-!if "$(OPTION_SHARED_RUNTIME)" == "default"
-__RUNTIME_LIBS = D
+!if "$(OPTION_CPP_RTTI)" == "0"
+____OPTION_CPP_RTTI_0 = 
+!endif
+!if "$(OPTION_CPP_RTTI)" == "1"
+____OPTION_CPP_RTTI_0 = /GR
+!endif
+!if "$(OPTION_CPP_EXCEPTIONS)" == "0"
+____OPTION_CPP_EXCEPTIONS_1 = 
+!endif
+!if "$(OPTION_CPP_EXCEPTIONS)" == "1"
+____OPTION_CPP_EXCEPTIONS_1 = /EHsc
+!endif
+!if "$(OPTION_WARNINGS)" == "default"
+__OPTION_WARNINGS = 
+!endif
+!if "$(OPTION_WARNINGS)" == "max"
+__OPTION_WARNINGS = /W4
+!endif
+!if "$(OPTION_WARNINGS)" == "no"
+__OPTION_WARNINGS = /w
 !endif
 !if "$(OPTION_DEBUG)" == "0"
 ____OPTION_DEBUG = /DNDEBUG
@@ -136,7 +180,7 @@ clean:
 <<
 
 ..\..\bin\xmake.exe: $(XMAKE_OBJECTS) ..\..\lib\Xmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
-	link /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_14)  /LIBPATH:..\..\lib /SUBSYSTEM:CONSOLE @<<
+	link /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_16)  /LIBPATH:..\..\lib /SUBSYSTEM:CONSOLE @<<
 	$(XMAKE_OBJECTS)  rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib $(____xmake_FOUNDATIONKIT_p) ..\..\lib\Xmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 <<
 

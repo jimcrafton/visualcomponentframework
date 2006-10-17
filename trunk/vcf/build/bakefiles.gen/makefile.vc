@@ -15,8 +15,12 @@
 MAKEARGS = CC="$(CC)" CXX="$(CXX)" CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
 	CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)" \
 	OPTION_SELECTLIB="$(OPTION_SELECTLIB)" OPTION_SHARED="$(OPTION_SHARED)" \
-	OPTION_SHARED_RUNTIME="$(OPTION_SHARED_RUNTIME)" \
-	OPTION_DEBUG="$(OPTION_DEBUG)" OPTION_ALLIN1="$(OPTION_ALLIN1)" \
+	OPTION_RUNTIME="$(OPTION_RUNTIME)" OPTION_DEBUG="$(OPTION_DEBUG)" \
+	OPTION_DEBUG_RUNTIME="$(OPTION_DEBUG_RUNTIME)" \
+	OPTION_THREADING="$(OPTION_THREADING)" \
+	OPTION_CPP_RTTI="$(OPTION_CPP_RTTI)" \
+	OPTION_CPP_EXCEPTIONS="$(OPTION_CPP_EXCEPTIONS)" \
+	OPTION_WARNINGS="$(OPTION_WARNINGS)" OPTION_ALLIN1="$(OPTION_ALLIN1)" \
 	OPTION_ZLIB="$(OPTION_ZLIB)" OPTION_AGG="$(OPTION_AGG)" \
 	OPTION_LIBJPEG="$(OPTION_LIBJPEG)" OPTION_LIBPNG="$(OPTION_LIBPNG)" \
 	OPTION_LIBMNG="$(OPTION_LIBMNG)" OPTION_LIBTIFF="$(OPTION_LIBTIFF)" \
@@ -39,12 +43,13 @@ GRAPHICSKIT_FILENAME = GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 NETWORKKIT_FILENAME = NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-AGG_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+AGG_LIB_CXXFLAGS = /M$(__OPTION_RUNTIME_10)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/I..\..\src\thirdparty\common\agg\include $(__DEBUG_INFO) \
 	/Fd..\..\lib\AGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 AGG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\AGG_lib_agg_arc.obj \
 	..\..\lib\$(OBJDIR)\AGG_lib_agg_arrowhead.obj \
@@ -70,11 +75,11 @@ AGG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\AGG_lib_agg_vcgen_stroke.obj \
 	..\..\lib\$(OBJDIR)\AGG_lib_agg_vpgen_clip_polygon.obj \
 	..\..\lib\$(OBJDIR)\AGG_lib_agg_vpgen_segmentator.obj
-ZLIB_LIB_CFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+ZLIB_LIB_CFLAGS = /M$(__OPTION_RUNTIME_23)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	$(__DEBUG_INFO) /Fd..\..\lib\ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC $(CPPFLAGS) $(CFLAGS)
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(CPPFLAGS) $(CFLAGS)
 ZLIB_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ZLib_lib_adler32.obj \
 	..\..\lib\$(OBJDIR)\ZLib_lib_compress.obj \
@@ -88,12 +93,12 @@ ZLIB_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ZLib_lib_trees.obj \
 	..\..\lib\$(OBJDIR)\ZLib_lib_uncompr.obj \
 	..\..\lib\$(OBJDIR)\ZLib_lib_zutil.obj
-LIBJPEG_LIB_CFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+LIBJPEG_LIB_CFLAGS = /M$(__OPTION_RUNTIME_36)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	$(__DEBUG_INFO) \
 	/Fd..\..\lib\LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC $(CPPFLAGS) $(CFLAGS)
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(CPPFLAGS) $(CFLAGS)
 LIBJPEG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibJPEG_lib_jcapimin.obj \
 	..\..\lib\$(OBJDIR)\LibJPEG_lib_jcapistd.obj \
@@ -141,12 +146,12 @@ LIBJPEG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibJPEG_lib_jquant1.obj \
 	..\..\lib\$(OBJDIR)\LibJPEG_lib_jquant2.obj \
 	..\..\lib\$(OBJDIR)\LibJPEG_lib_jutils.obj
-LIBMNG_LIB_CFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+LIBMNG_LIB_CFLAGS = /M$(__OPTION_RUNTIME_49)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	$(__DEBUG_INFO) \
 	/Fd..\..\lib\LibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC $(CPPFLAGS) $(CFLAGS)
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(CPPFLAGS) $(CFLAGS)
 LIBMNG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibMNG_lib_libmng_callback_xs.obj \
 	..\..\lib\$(OBJDIR)\LibMNG_lib_libmng_chunk_io.obj \
@@ -166,12 +171,12 @@ LIBMNG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibMNG_lib_libmng_trace.obj \
 	..\..\lib\$(OBJDIR)\LibMNG_lib_libmng_write.obj \
 	..\..\lib\$(OBJDIR)\LibMNG_lib_libmng_zlib.obj
-LIBPNG_LIB_CFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+LIBPNG_LIB_CFLAGS = /M$(__OPTION_RUNTIME_62)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	$(__DEBUG_INFO) \
 	/Fd..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC $(CPPFLAGS) $(CFLAGS)
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(CPPFLAGS) $(CFLAGS)
 LIBPNG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibPNG_lib_png.obj \
 	..\..\lib\$(OBJDIR)\LibPNG_lib_pngerror.obj \
@@ -191,18 +196,19 @@ LIBPNG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibPNG_lib_pngwrite.obj \
 	..\..\lib\$(OBJDIR)\LibPNG_lib_pngwtran.obj \
 	..\..\lib\$(OBJDIR)\LibPNG_lib_pngwutil.obj
-LIBTIFF_LIB_CFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+LIBTIFF_LIB_CFLAGS = /M$(__OPTION_RUNTIME_75)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/DUSE_WIN32_FILEIO $(__DEBUG_INFO) \
 	/Fd..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC $(CPPFLAGS) $(CFLAGS)
-LIBTIFF_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	/DUSE_WIN32_FILEIO $(__DEBUG_INFO) \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(CPPFLAGS) $(CFLAGS)
+LIBTIFF_LIB_CXXFLAGS = /M$(__OPTION_RUNTIME_75)$(__DEBUG_RUNTIME_LIBS) \
+	/DWIN32 /DUSE_WIN32_FILEIO $(__DEBUG_INFO) \
 	/Fd..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 LIBTIFF_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibTIFF_lib_tif_aux.obj \
 	..\..\lib\$(OBJDIR)\LibTIFF_lib_tif_close.obj \
@@ -241,12 +247,13 @@ LIBTIFF_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\LibTIFF_lib_tif_write.obj \
 	..\..\lib\$(OBJDIR)\LibTIFF_lib_tif_zip.obj \
 	..\..\lib\$(OBJDIR)\LibTIFF_lib_tif_win32.obj
-FOUNDATIONKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
+FOUNDATIONKIT_LIB_CXXFLAGS = /M$(__OPTION_RUNTIME_88)$(__DEBUG_RUNTIME_LIBS) \
 	/DWIN32 $(__DEBUG_INFO) \
 	/Fd..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC /GR /EHsc /Yu"vcf\FoundationKit\FoundationKit.h" \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) /Yu"vcf\FoundationKit\FoundationKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
 FOUNDATIONKIT_LIB_OBJECTS =  \
@@ -318,12 +325,13 @@ FOUNDATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_Win32SystemToolkit.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_Win32Thread.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_Win32ThreadManagerPeer.obj
-FOUNDATIONKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
-	/DWIN32 $(__DEBUG_INFO) \
+FOUNDATIONKIT_DLL_CXXFLAGS = \
+	/M$(__OPTION_RUNTIME_103)$(__DEBUG_RUNTIME_LIBS) /DWIN32 $(__DEBUG_INFO) \
 	/Fd..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_USRDLL \
-	/DFOUNDATIONKIT_DLL /DFOUNDATIONKIT_EXPORTS /GR /EHsc \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_USRDLL /DFOUNDATIONKIT_DLL /DFOUNDATIONKIT_EXPORTS \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) \
 	/Yu"vcf\FoundationKit\FoundationKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
@@ -396,12 +404,13 @@ FOUNDATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_Win32SystemToolkit.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_Win32Thread.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_Win32ThreadManagerPeer.obj
-GRAPHICSKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	$(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
+GRAPHICSKIT_LIB_CXXFLAGS = /M$(__OPTION_RUNTIME_117)$(__DEBUG_RUNTIME_LIBS) \
+	/DWIN32 $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC /GR /EHsc /Yu"vcf\GraphicsKit\GraphicsKit.h" \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) /Yu"vcf\GraphicsKit\GraphicsKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
 GRAPHICSKIT_LIB_OBJECTS =  \
@@ -430,12 +439,13 @@ GRAPHICSKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\GraphicsKit_lib_Win32GraphicsToolkit.obj \
 	..\..\lib\$(OBJDIR)\GraphicsKit_lib_Win32Image.obj \
 	..\..\lib\$(OBJDIR)\GraphicsKit_lib_Win32PrintSession.obj
-GRAPHICSKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	$(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
+GRAPHICSKIT_DLL_CXXFLAGS = /M$(__OPTION_RUNTIME_132)$(__DEBUG_RUNTIME_LIBS) \
+	/DWIN32 $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\..\bin\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_USRDLL \
-	/DGRAPHICSKIT_DLL /DGRAPHICSKIT_EXPORTS /GR /EHsc \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_USRDLL /DGRAPHICSKIT_DLL /DGRAPHICSKIT_EXPORTS \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) \
 	/Yu"vcf\GraphicsKit\GraphicsKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
@@ -465,16 +475,18 @@ GRAPHICSKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\GraphicsKit_dll_Win32GraphicsToolkit.obj \
 	..\..\lib\$(OBJDIR)\GraphicsKit_dll_Win32Image.obj \
 	..\..\lib\$(OBJDIR)\GraphicsKit_dll_Win32PrintSession.obj
-APPLICATIONKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
-	/DWIN32 /I..\..\src\thirdparty\win32 /I..\..\src\thirdparty\common\ZLib \
+APPLICATIONKIT_LIB_CXXFLAGS = \
+	/M$(__OPTION_RUNTIME_146)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+	/I..\..\src\thirdparty\win32 /I..\..\src\thirdparty\common\ZLib \
 	/I..\..\src\thirdparty\common\LibPNG \
 	/I..\..\src\thirdparty\common\LibJPEG \
 	/I..\..\src\thirdparty\common\agg\include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC /GR /EHsc /Yu"vcf\ApplicationKit\ApplicationKit.h" \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) /Yu"vcf\ApplicationKit\ApplicationKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
 APPLICATIONKIT_LIB_OBJECTS =  \
@@ -613,16 +625,18 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Win32ToolKit.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Win32Tree.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Win32Window.obj
-APPLICATIONKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
-	/DWIN32 /I..\..\src\thirdparty\win32 /I..\..\src\thirdparty\common\ZLib \
+APPLICATIONKIT_DLL_CXXFLAGS = \
+	/M$(__OPTION_RUNTIME_161)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+	/I..\..\src\thirdparty\win32 /I..\..\src\thirdparty\common\ZLib \
 	/I..\..\src\thirdparty\common\LibPNG \
 	/I..\..\src\thirdparty\common\LibJPEG \
 	/I..\..\src\thirdparty\common\agg\include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\..\bin\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_USRDLL \
-	/DAPPLICATIONKIT_DLL /DAPPLICATIONKIT_EXPORTS /GR /EHsc \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_USRDLL /DAPPLICATIONKIT_DLL /DAPPLICATIONKIT_EXPORTS \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) \
 	/Yu"vcf\ApplicationKit\ApplicationKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
@@ -763,16 +777,17 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Win32Tree.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Win32Window.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_ApplicationKit.res
-HTMLKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	/I..\..\src\thirdparty\win32 /I..\..\src\thirdparty\common\ZLib \
+HTMLKIT_LIB_CXXFLAGS = /M$(__OPTION_RUNTIME_175)$(__DEBUG_RUNTIME_LIBS) \
+	/DWIN32 /I..\..\src\thirdparty\win32 /I..\..\src\thirdparty\common\ZLib \
 	/I..\..\src\thirdparty\common\LibPNG \
 	/I..\..\src\thirdparty\common\LibJPEG \
 	/I..\..\src\thirdparty\common\agg\include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC /GR /EHsc /Yu"vcf\HTMLKit\HTMLKit.h" \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) /Yu"vcf\HTMLKit\HTMLKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
 HTMLKIT_LIB_OBJECTS =  \
@@ -782,16 +797,18 @@ HTMLKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\HTMLKit_lib_Win32HTMLBrowser.obj \
 	..\..\lib\$(OBJDIR)\HTMLKit_lib_Win32HTMLDOMElements.obj \
 	..\..\lib\$(OBJDIR)\HTMLKit_lib_Win32HTMLToolkit.obj
-HTMLKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	/I..\..\src\thirdparty\win32 /I..\..\src\thirdparty\common\ZLib \
+HTMLKIT_DLL_CXXFLAGS = /M$(__OPTION_RUNTIME_190)$(__DEBUG_RUNTIME_LIBS) \
+	/DWIN32 /I..\..\src\thirdparty\win32 /I..\..\src\thirdparty\common\ZLib \
 	/I..\..\src\thirdparty\common\LibPNG \
 	/I..\..\src\thirdparty\common\LibJPEG \
 	/I..\..\src\thirdparty\common\agg\include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\..\bin\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_USRDLL \
-	/DHTMLKIT_DLL /DHTMLKIT_EXPORTS /GR /EHsc /Yu"vcf\HTMLKit\HTMLKit.h" \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_USRDLL /DHTMLKIT_DLL /DHTMLKIT_EXPORTS \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) \
+	/Yu"vcf\HTMLKit\HTMLKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
 HTMLKIT_DLL_OBJECTS =  \
@@ -801,15 +818,17 @@ HTMLKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\HTMLKit_dll_Win32HTMLBrowser.obj \
 	..\..\lib\$(OBJDIR)\HTMLKit_dll_Win32HTMLDOMElements.obj \
 	..\..\lib\$(OBJDIR)\HTMLKit_dll_Win32HTMLToolkit.obj
-OPENGLKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	/I..\..\src\thirdparty\common\ZLib /I..\..\src\thirdparty\common\LibPNG \
+OPENGLKIT_LIB_CXXFLAGS = /M$(__OPTION_RUNTIME_204)$(__DEBUG_RUNTIME_LIBS) \
+	/DWIN32 /I..\..\src\thirdparty\common\ZLib \
+	/I..\..\src\thirdparty\common\LibPNG \
 	/I..\..\src\thirdparty\common\LibJPEG \
 	/I..\..\src\thirdparty\common\agg\include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC /GR /EHsc /Yu"vcf\OpenGLKit\OpenGLKit.h" \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) /Yu"vcf\OpenGLKit\OpenGLKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
 OPENGLKIT_LIB_OBJECTS =  \
@@ -817,15 +836,18 @@ OPENGLKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\OpenGLKit_lib_OpenGLControlContext.obj \
 	..\..\lib\$(OBJDIR)\OpenGLKit_lib_OpenGLToolkit.obj \
 	..\..\lib\$(OBJDIR)\OpenGLKit_lib_Win32OpenGLPeer.obj
-OPENGLKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	/I..\..\src\thirdparty\common\ZLib /I..\..\src\thirdparty\common\LibPNG \
+OPENGLKIT_DLL_CXXFLAGS = /M$(__OPTION_RUNTIME_219)$(__DEBUG_RUNTIME_LIBS) \
+	/DWIN32 /I..\..\src\thirdparty\common\ZLib \
+	/I..\..\src\thirdparty\common\LibPNG \
 	/I..\..\src\thirdparty\common\LibJPEG \
 	/I..\..\src\thirdparty\common\agg\include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\..\bin\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_USRDLL \
-	/DOPENGLKIT_DLL /DOPENGLKIT_EXPORTS /GR /EHsc /Yu"vcf\OpenGLKit\OpenGLKit.h" \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_USRDLL /DOPENGLKIT_DLL /DOPENGLKIT_EXPORTS \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) \
+	/Yu"vcf\OpenGLKit\OpenGLKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
 OPENGLKIT_DLL_OBJECTS =  \
@@ -833,12 +855,13 @@ OPENGLKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\OpenGLKit_dll_OpenGLControlContext.obj \
 	..\..\lib\$(OBJDIR)\OpenGLKit_dll_OpenGLToolkit.obj \
 	..\..\lib\$(OBJDIR)\OpenGLKit_dll_Win32OpenGLPeer.obj
-NETWORKKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	$(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
+NETWORKKIT_LIB_CXXFLAGS = /M$(__OPTION_RUNTIME_233)$(__DEBUG_RUNTIME_LIBS) \
+	/DWIN32 $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC /GR /EHsc /Yu"vcf\NetworkKit\NetworkKit.h" \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) /Yu"vcf\NetworkKit\NetworkKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
 NETWORKKIT_LIB_OBJECTS =  \
@@ -851,12 +874,13 @@ NETWORKKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\NetworkKit_lib_URL.obj \
 	..\..\lib\$(OBJDIR)\NetworkKit_lib_Win32DatagramSocketPeer.obj \
 	..\..\lib\$(OBJDIR)\NetworkKit_lib_Win32SocketPeer.obj
-NETWORKKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	$(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
+NETWORKKIT_DLL_CXXFLAGS = /M$(__OPTION_RUNTIME_248)$(__DEBUG_RUNTIME_LIBS) \
+	/DWIN32 $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\..\bin\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_USRDLL \
-	/DNETKIT_DLL /DNETKIT_EXPORTS /GR /EHsc /Yu"vcf\NetworkKit\NetworkKit.h" \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_USRDLL /DNETKIT_DLL /DNETKIT_EXPORTS $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) /Yu"vcf\NetworkKit\NetworkKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
 NETWORKKIT_DLL_OBJECTS =  \
@@ -869,13 +893,15 @@ NETWORKKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\NetworkKit_dll_URL.obj \
 	..\..\lib\$(OBJDIR)\NetworkKit_dll_Win32DatagramSocketPeer.obj \
 	..\..\lib\$(OBJDIR)\NetworkKit_dll_Win32SocketPeer.obj
-REMOTEOBJECTKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
-	/DWIN32 $(__FOUNDATIONKIT_DLL_p) $(__FOUNDATIONKIT_DLL_p) \
-	$(__NETWORKKIT_DLL_p) $(__DEBUG_INFO) \
+REMOTEOBJECTKIT_LIB_CXXFLAGS = \
+	/M$(__OPTION_RUNTIME_262)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+	$(__FOUNDATIONKIT_DLL_p) $(__FOUNDATIONKIT_DLL_p) $(__NETWORKKIT_DLL_p) \
+	$(__DEBUG_INFO) \
 	/Fd..\..\lib\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC /GR /EHsc /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) /Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
 REMOTEOBJECTKIT_LIB_OBJECTS =  \
@@ -887,13 +913,15 @@ REMOTEOBJECTKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\RemoteObjectKit_lib_InstanceID.obj \
 	..\..\lib\$(OBJDIR)\RemoteObjectKit_lib_Proxy.obj \
 	..\..\lib\$(OBJDIR)\RemoteObjectKit_lib_RemoteObjectKit.obj
-REMOTEOBJECTKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
-	/DWIN32 $(__FOUNDATIONKIT_DLL_p) $(__FOUNDATIONKIT_DLL_p) \
-	$(__NETWORKKIT_DLL_p) $(__DEBUG_INFO) \
+REMOTEOBJECTKIT_DLL_CXXFLAGS = \
+	/M$(__OPTION_RUNTIME_277)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+	$(__FOUNDATIONKIT_DLL_p) $(__FOUNDATIONKIT_DLL_p) $(__NETWORKKIT_DLL_p) \
+	$(__DEBUG_INFO) \
 	/Fd..\..\lib\..\bin\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_USRDLL \
-	/DREMOTEKIT_DLL /DREMOTEKIT_EXPORTS /GR /EHsc \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_USRDLL /DREMOTEKIT_DLL /DREMOTEKIT_EXPORTS \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) \
 	/Yu"vcf\RemoteObjectKit\RemoteObjectKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
@@ -906,24 +934,26 @@ REMOTEOBJECTKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\RemoteObjectKit_dll_InstanceID.obj \
 	..\..\lib\$(OBJDIR)\RemoteObjectKit_dll_Proxy.obj \
 	..\..\lib\$(OBJDIR)\RemoteObjectKit_dll_RemoteObjectKit.obj
-INTERNETKIT_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	$(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
+INTERNETKIT_LIB_CXXFLAGS = /M$(__OPTION_RUNTIME_291)$(__DEBUG_RUNTIME_LIBS) \
+	/DWIN32 $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC /GR /EHsc /Yu"vcf\InternetKit\InternetKit.h" \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) /Yu"vcf\InternetKit\InternetKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
 INTERNETKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\InternetKit_lib_InternetKit.obj \
 	..\..\lib\$(OBJDIR)\InternetKit_lib_InternetToolkit.obj \
 	..\..\lib\$(OBJDIR)\InternetKit_lib_Win32InternetToolkit.obj
-INTERNETKIT_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	$(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
+INTERNETKIT_DLL_CXXFLAGS = /M$(__OPTION_RUNTIME_306)$(__DEBUG_RUNTIME_LIBS) \
+	/DWIN32 $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\..\bin\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_USRDLL \
-	/DINTERNETKIT_DLL /DINTERNETKIT_EXPORTS /GR /EHsc \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_USRDLL /DINTERNETKIT_DLL /DINTERNETKIT_EXPORTS \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) \
 	/Yu"vcf\InternetKit\InternetKit.h" \
 	/Fp"..\..\lib\$(OBJDIR)\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pch" \
 	$(CPPFLAGS) $(CXXFLAGS)
@@ -931,12 +961,13 @@ INTERNETKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\InternetKit_dll_InternetKit.obj \
 	..\..\lib\$(OBJDIR)\InternetKit_dll_InternetToolkit.obj \
 	..\..\lib\$(OBJDIR)\InternetKit_dll_Win32InternetToolkit.obj
-ALLIN1_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	/I..\..\src\thirdparty\win32 $(__DEBUG_INFO) \
+ALLIN1_LIB_CXXFLAGS = /M$(__OPTION_RUNTIME_320)$(__DEBUG_RUNTIME_LIBS) \
+	/DWIN32 /I..\..\src\thirdparty\win32 $(__DEBUG_INFO) \
 	/Fd..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 ALLIN1_LIB_OBJECTS =  \
 	$(______Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_FILENAMES_OBJECTS) \
 	$(______Allin1_lib_ALLIN1_GRAPHICSKIT_SRC_FILENAMES_OBJECTS) \
@@ -946,16 +977,18 @@ ALLIN1_LIB_OBJECTS =  \
 	$(______Allin1_lib_ALLIN1_NETWORKKIT_SRC_FILENAMES_OBJECTS) \
 	$(______Allin1_lib_ALLIN1_REMOTEOBJECTKIT_SRC_FILENAMES_OBJECTS) \
 	$(______Allin1_lib_ALLIN1_INTERNETKIT_SRC_FILENAMES_OBJECTS)
-ALLIN1_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	/I..\..\src\thirdparty\win32 $(__DEBUG_INFO) \
+ALLIN1_DLL_CXXFLAGS = /M$(__OPTION_RUNTIME_334)$(__DEBUG_RUNTIME_LIBS) \
+	/DWIN32 /I..\..\src\thirdparty\win32 $(__DEBUG_INFO) \
 	/Fd..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_USRDLL \
-	/DFOUNDATIONKIT_DLL /DFOUNDATIONKIT_EXPORTS /DGRAPHICSKIT_DLL \
-	/DGRAPHICSKIT_EXPORTS /DAPPLICATIONKIT_DLL /DAPPLICATIONKIT_EXPORTS \
-	/DHTMLKIT_DLL /DHTMLKIT_EXPORTS /DOPENGLKIT_DLL /DOPENGLKIT_EXPORTS \
-	/DNETKIT_DLL /DNETKIT_EXPORTS /DREMOTEKIT_DLL /DREMOTEKIT_EXPORTS \
-	/DINTERNETKIT_DLL /DINTERNETKIT_EXPORTS /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_USRDLL /DFOUNDATIONKIT_DLL /DFOUNDATIONKIT_EXPORTS \
+	/DGRAPHICSKIT_DLL /DGRAPHICSKIT_EXPORTS /DAPPLICATIONKIT_DLL \
+	/DAPPLICATIONKIT_EXPORTS /DHTMLKIT_DLL /DHTMLKIT_EXPORTS /DOPENGLKIT_DLL \
+	/DOPENGLKIT_EXPORTS /DNETKIT_DLL /DNETKIT_EXPORTS /DREMOTEKIT_DLL \
+	/DREMOTEKIT_EXPORTS /DINTERNETKIT_DLL /DINTERNETKIT_EXPORTS \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
+	$(CXXFLAGS)
 ALLIN1_DLL_OBJECTS =  \
 	$(______Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_FILENAMES_OBJECTS) \
 	$(______Allin1_dll_ALLIN1_GRAPHICSKIT_SRC_FILENAMES_OBJECTS) \
@@ -966,28 +999,29 @@ ALLIN1_DLL_OBJECTS =  \
 	$(______Allin1_dll_ALLIN1_REMOTEOBJECTKIT_SRC_FILENAMES_OBJECTS) \
 	$(______Allin1_dll_ALLIN1_INTERNETKIT_SRC_FILENAMES_OBJECTS) \
 	..\..\lib\$(OBJDIR)\Allin1_dll_ApplicationKit.res
-PAINTLIB_LIB_CFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	/I..\..\src\thirdparty\common\paintlib\common\Filter \
+PAINTLIB_LIB_CFLAGS = /M$(__OPTION_RUNTIME_347)$(__DEBUG_RUNTIME_LIBS) \
+	/DWIN32 /I..\..\src\thirdparty\common\paintlib\common\Filter \
 	/I..\..\src\thirdparty\common\paintlib\common \
 	/I..\..\src\thirdparty\common\paintlib\win\paintlib \
 	/I..\..\src\thirdparty\common\LibJPEG \
 	/I..\..\src\thirdparty\common\LibTIFF \
 	/I..\..\src\thirdparty\common\LibPNG $(__DEBUG_INFO) \
 	/Fd..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC $(CPPFLAGS) $(CFLAGS)
-PAINTLIB_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
-	/I..\..\src\thirdparty\common\paintlib\common\Filter \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(CPPFLAGS) $(CFLAGS)
+PAINTLIB_LIB_CXXFLAGS = /M$(__OPTION_RUNTIME_347)$(__DEBUG_RUNTIME_LIBS) \
+	/DWIN32 /I..\..\src\thirdparty\common\paintlib\common\Filter \
 	/I..\..\src\thirdparty\common\paintlib\common \
 	/I..\..\src\thirdparty\common\paintlib\win\paintlib \
 	/I..\..\src\thirdparty\common\LibJPEG \
 	/I..\..\src\thirdparty\common\LibTIFF \
 	/I..\..\src\thirdparty\common\LibPNG $(__DEBUG_INFO) \
 	/Fd..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 PAINTLIB_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\paintlib_lib_plfilter.obj \
 	..\..\lib\$(OBJDIR)\paintlib_lib_plinplacefilter.obj \
@@ -1054,28 +1088,31 @@ PAINTLIB_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\paintlib_lib_plStreamSink.obj \
 	..\..\lib\$(OBJDIR)\paintlib_lib_plwemfdec.obj \
 	..\..\lib\$(OBJDIR)\paintlib_lib_plwinbmp.obj
-IMAGEFORMATS_LIB_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
+IMAGEFORMATS_LIB_CXXFLAGS = /M$(__OPTION_RUNTIME_360)$(__DEBUG_RUNTIME_LIBS) \
 	/DWIN32 /I..\..\src\thirdparty\common\ZLib \
 	/I..\..\src\thirdparty\common\LibPNG \
 	/I..\..\src\thirdparty\common\LibJPEG \
 	/I..\..\src\thirdparty\common\agg\include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_LIB /D_MBCS \
-	/DNO_MFC /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_LIB /D_MBCS /DNO_MFC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 IMAGEFORMATS_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ImageFormats_lib_ImageFormats.obj
-IMAGEFORMATS_DLL_CXXFLAGS = /M$(__RUNTIME_LIBS)$(__DEBUG_RUNTIME_LIBS) \
+IMAGEFORMATS_DLL_CXXFLAGS = /M$(__OPTION_RUNTIME_374)$(__DEBUG_RUNTIME_LIBS) \
 	/DWIN32 /I..\..\src\thirdparty\common\ZLib \
 	/I..\..\src\thirdparty\common\LibPNG \
 	/I..\..\src\thirdparty\common\LibJPEG \
 	/I..\..\src\thirdparty\common\agg\include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	/Fd..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).pdb \
-	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(____OPTION_DEBUG) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_USRDLL \
-	/DIMAGEFORMATS_DLL /DIMAGEFORMATS_EXPORTS /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_USRDLL /DIMAGEFORMATS_DLL /DIMAGEFORMATS_EXPORTS \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
+	$(CXXFLAGS)
 IMAGEFORMATS_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ImageFormats_dll_ImageFormats.obj
 
@@ -1099,25 +1136,91 @@ SUFFIX_LIBRARY = $(SUFFIX_STATIC)
 !if "$(OPTION_SHARED)" == "1"
 SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 !endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_10 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_10 = $(__OPTION_THREADING)
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_23 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_23 = $(__OPTION_THREADING)
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_36 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_36 = $(__OPTION_THREADING)
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_49 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_49 = $(__OPTION_THREADING)
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_62 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_62 = $(__OPTION_THREADING)
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_75 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_75 = $(__OPTION_THREADING)
+!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_FOUNDATIONKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __FoundationKit_lib___depname = \
 	..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_88 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_88 = $(__OPTION_THREADING)
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_FOUNDATIONKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __FoundationKit_dll___depname = \
 	..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_103 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_103 = $(__OPTION_THREADING)
+!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_GRAPHICSKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __GraphicsKit_lib___depname = \
 	..\..\lib\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_117 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_117 = $(__OPTION_THREADING)
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_GRAPHICSKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __GraphicsKit_dll___depname = \
 	..\..\lib\..\bin\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_132 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_132 = $(__OPTION_THREADING)
+!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_APPLICATIONKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __ApplicationKit_lib___depname = \
 	..\..\lib\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_146 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_146 = $(__OPTION_THREADING)
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_APPLICATIONKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __ApplicationKit_dll___depname = \
@@ -1129,40 +1232,88 @@ __FOUNDATIONKIT_DLL_p_5 = /d FOUNDATIONKIT_DLL
 !if "$(OPTION_SHARED)" == "1"
 __GRAPHICSKIT_DLL_p_2 = /d GRAPHICSKIT_DLL
 !endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_161 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_161 = $(__OPTION_THREADING)
+!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_HTMLKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __HTMLKit_lib___depname = \
 	..\..\lib\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_175 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_175 = $(__OPTION_THREADING)
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_HTMLKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __HTMLKit_dll___depname = \
 	..\..\lib\..\bin\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_190 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_190 = $(__OPTION_THREADING)
+!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_OPENGLKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __OpenGLKit_lib___depname = \
 	..\..\lib\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_204 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_204 = $(__OPTION_THREADING)
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_OPENGLKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __OpenGLKit_dll___depname = \
 	..\..\lib\..\bin\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_219 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_219 = $(__OPTION_THREADING)
+!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_NETWORKKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __NetworkKit_lib___depname = \
 	..\..\lib\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_233 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_233 = $(__OPTION_THREADING)
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_NETWORKKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __NetworkKit_dll___depname = \
 	..\..\lib\..\bin\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_248 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_248 = $(__OPTION_THREADING)
+!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_REMOTEOBJECTKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __RemoteObjectKit_lib___depname = \
 	..\..\lib\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_262 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_262 = $(__OPTION_THREADING)
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_REMOTEOBJECTKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __RemoteObjectKit_dll___depname = \
 	..\..\lib\..\bin\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
-!if "$(OPTION_ALLIN1)" == "1"
-____RemoteObjectKit_dll_FOUNDATIONKIT_p_1 = $(ALLIN1_FILENAME).lib
+!if "$(OPTION_ALLIN1)" == "0"
+____RemoteObjectKit_dll_FOUNDATIONKIT_p_1 = $(FOUNDATIONKIT_FILENAME).lib
 !endif
 !if "$(OPTION_ALLIN1)" == "0"
 ____RemoteObjectKit_dll_FOUNDATIONKIT_p_1 = $(FOUNDATIONKIT_FILENAME).lib
@@ -1170,19 +1321,37 @@ ____RemoteObjectKit_dll_FOUNDATIONKIT_p_1 = $(FOUNDATIONKIT_FILENAME).lib
 !if "$(OPTION_ALLIN1)" == "1"
 ____RemoteObjectKit_dll_FOUNDATIONKIT_p_1 = $(ALLIN1_FILENAME).lib
 !endif
-!if "$(OPTION_ALLIN1)" == "0"
-____RemoteObjectKit_dll_FOUNDATIONKIT_p_1 = $(FOUNDATIONKIT_FILENAME).lib
+!if "$(OPTION_ALLIN1)" == "1"
+____RemoteObjectKit_dll_FOUNDATIONKIT_p_1 = $(ALLIN1_FILENAME).lib
 !endif
 !if "$(OPTION_ALLIN1)" == "0"
 ____RemoteObjectKit_dll_NETWORKKIT_p = $(NETWORKKIT_FILENAME).lib
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_277 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_277 = $(__OPTION_THREADING)
 !endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_INTERNETKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __InternetKit_lib___depname = \
 	..\..\lib\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_291 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_291 = $(__OPTION_THREADING)
+!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_INTERNETKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 __InternetKit_dll___depname = \
 	..\..\lib\..\bin\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_306 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_306 = $(__OPTION_THREADING)
 !endif
 !if "$(OPTION_ALLIN1)" == "1" && "$(OPTION_SHARED)" == "0"
 __Allin1_lib___depname = \
@@ -1470,6 +1639,12 @@ ______Allin1_lib_ALLIN1_INTERNETKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_InternetToolkit.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Win32InternetToolkit.obj
 !endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_320 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_320 = $(__OPTION_THREADING)
+!endif
 !if "$(OPTION_ALLIN1)" == "1" && "$(OPTION_SHARED)" == "1"
 __Allin1_dll___depname = \
 	..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
@@ -1756,13 +1931,37 @@ ______Allin1_dll_ALLIN1_INTERNETKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_InternetToolkit.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Win32InternetToolkit.obj
 !endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_334 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_334 = $(__OPTION_THREADING)
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_347 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_347 = $(__OPTION_THREADING)
+!endif
 !if "$(OPTION_IMAGEFORMATS)" == "1" && "$(OPTION_SHARED)" == "0"
 __ImageFormats_lib___depname = \
 	..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_360 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_360 = $(__OPTION_THREADING)
+!endif
 !if "$(OPTION_IMAGEFORMATS)" == "1" && "$(OPTION_SHARED)" == "1"
 __ImageFormats_dll___depname = \
 	..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_374 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_374 = $(__OPTION_THREADING)
 !endif
 !if "$(OPTION_AGG)" == "1"
 A = ..\..\lib\AGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
@@ -1782,10 +1981,16 @@ VAR_2 = ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !if "$(OPTION_LIBTIFF)" == "1"
 VAR_3 = ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
-!if "$(OPTION_DEBUG)" == "0"
+!if "$(OPTION_DEBUG)" == "0" && "$(OPTION_DEBUG_RUNTIME)" == "default"
 ____DEBUG_RUNTIME_LIBS_0 = 
 !endif
-!if "$(OPTION_DEBUG)" == "1"
+!if "$(OPTION_DEBUG)" == "1" && "$(OPTION_DEBUG_RUNTIME)" == "default"
+____DEBUG_RUNTIME_LIBS_0 = /d _DEBUG
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "0"
+____DEBUG_RUNTIME_LIBS_0 = 
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "1"
 ____DEBUG_RUNTIME_LIBS_0 = /d _DEBUG
 !endif
 !if "$(OPTION_DEBUG)" == "0"
@@ -1834,10 +2039,10 @@ ____Allin1_5 = $(VAR)
 VAR_4 = ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
 !if "$(OPTION_DEBUG)" == "0"
-__DEBUG_INFO_3 = 
+__DEBUG_INFO_8 = 
 !endif
 !if "$(OPTION_DEBUG)" == "1"
-__DEBUG_INFO_3 = /DEBUG
+__DEBUG_INFO_8 = /DEBUG
 !endif
 !if "$(OPTION_SHARED)" == "1"
 __FOUNDATIONKIT_DLL_p = /DFOUNDATIONKIT_DLL
@@ -1854,16 +2059,28 @@ __DEBUG_INFO =
 !if "$(OPTION_DEBUG)" == "1"
 __DEBUG_INFO = /Zi
 !endif
-!if "$(OPTION_DEBUG)" == "0"
+!if "$(OPTION_DEBUG)" == "0" && "$(OPTION_DEBUG_RUNTIME)" == "default"
 ____DEBUG_RUNTIME_LIBS = 
 !endif
-!if "$(OPTION_DEBUG)" == "1"
+!if "$(OPTION_DEBUG)" == "1" && "$(OPTION_DEBUG_RUNTIME)" == "default"
 ____DEBUG_RUNTIME_LIBS = /D_DEBUG
 !endif
-!if "$(OPTION_DEBUG)" == "0"
+!if "$(OPTION_DEBUG_RUNTIME)" == "0"
+____DEBUG_RUNTIME_LIBS = 
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "1"
+____DEBUG_RUNTIME_LIBS = /D_DEBUG
+!endif
+!if "$(OPTION_DEBUG)" == "0" && "$(OPTION_DEBUG_RUNTIME)" == "default"
 __DEBUG_RUNTIME_LIBS = 
 !endif
-!if "$(OPTION_DEBUG)" == "1"
+!if "$(OPTION_DEBUG)" == "1" && "$(OPTION_DEBUG_RUNTIME)" == "default"
+__DEBUG_RUNTIME_LIBS = d
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "0"
+__DEBUG_RUNTIME_LIBS = 
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "1"
 __DEBUG_RUNTIME_LIBS = d
 !endif
 !if "$(OPTION_DEBUG)" == "0"
@@ -1872,14 +2089,32 @@ __OPTIMIZE = /O2
 !if "$(OPTION_DEBUG)" == "1"
 __OPTIMIZE = /Od
 !endif
-!if "$(OPTION_SHARED_RUNTIME)" == "0"
-__RUNTIME_LIBS = T
+!if "$(OPTION_THREADING)" == "multi"
+__OPTION_THREADING = T
 !endif
-!if "$(OPTION_SHARED_RUNTIME)" == "1"
-__RUNTIME_LIBS = D
+!if "$(OPTION_THREADING)" == "single"
+__OPTION_THREADING = L
 !endif
-!if "$(OPTION_SHARED_RUNTIME)" == "default"
-__RUNTIME_LIBS = D
+!if "$(OPTION_CPP_RTTI)" == "0"
+____OPTION_CPP_RTTI_0 = 
+!endif
+!if "$(OPTION_CPP_RTTI)" == "1"
+____OPTION_CPP_RTTI_0 = /GR
+!endif
+!if "$(OPTION_CPP_EXCEPTIONS)" == "0"
+____OPTION_CPP_EXCEPTIONS_1 = 
+!endif
+!if "$(OPTION_CPP_EXCEPTIONS)" == "1"
+____OPTION_CPP_EXCEPTIONS_1 = /EHsc
+!endif
+!if "$(OPTION_WARNINGS)" == "default"
+__OPTION_WARNINGS = 
+!endif
+!if "$(OPTION_WARNINGS)" == "max"
+__OPTION_WARNINGS = /W4
+!endif
+!if "$(OPTION_WARNINGS)" == "no"
+__OPTION_WARNINGS = /w
 !endif
 !if "$(OPTION_DEBUG)" == "0"
 ____OPTION_DEBUG = /DNDEBUG
@@ -2069,7 +2304,7 @@ clean:
 
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_FOUNDATIONKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: ..\..\lib\$(OBJDIR)\FoundationKit_dll_FoundationKit.obj  $(FOUNDATIONKIT_DLL_OBJECTS)
-	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_3)  /LIBPATH:..\..\lib @<<
+	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_8)  /LIBPATH:..\..\lib @<<
 	$(FOUNDATIONKIT_DLL_OBJECTS)  rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /IMPLIB:..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 <<
 !endif
@@ -2084,7 +2319,7 @@ clean:
 
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_GRAPHICSKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: ..\..\lib\$(OBJDIR)\GraphicsKit_dll_GraphicsKit.obj  $(GRAPHICSKIT_DLL_OBJECTS) $(A) $(VAR_0) $(VAR_2) $(VAR) $(__FoundationKit_dll___depname)
-	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_3)  /LIBPATH:..\..\lib @<<
+	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_8)  /LIBPATH:..\..\lib @<<
 	$(GRAPHICSKIT_DLL_OBJECTS)  $(dll_FOUNDATIONKIT_p) ..\..\lib\AGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /IMPLIB:..\..\lib\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 <<
 !endif
@@ -2099,7 +2334,7 @@ clean:
 
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_APPLICATIONKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: ..\..\lib\$(OBJDIR)\ApplicationKit_dll_ApplicationKit.obj  $(APPLICATIONKIT_DLL_OBJECTS) ..\..\lib\$(OBJDIR)\ApplicationKit_dll_ApplicationKit.res $(__GraphicsKit_dll___depname)
-	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_3)  /LIBPATH:..\..\lib @<<
+	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_8)  /LIBPATH:..\..\lib @<<
 	$(APPLICATIONKIT_DLL_OBJECTS)  $(ZLIB_FILENAME).lib $(LIBPNG_FILENAME).lib $(LIBJPEG_FILENAME).lib $(AGG_FILENAME).lib $(dll_FOUNDATIONKIT_p) $(dll_GRAPHICSKIT_p) rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /IMPLIB:..\..\lib\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 <<
 !endif
@@ -2114,7 +2349,7 @@ clean:
 
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_HTMLKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: ..\..\lib\$(OBJDIR)\HTMLKit_dll_HTMLToolkit.obj  $(HTMLKIT_DLL_OBJECTS) $(__ApplicationKit_dll___depname)
-	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_3)  /LIBPATH:..\..\lib @<<
+	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_8)  /LIBPATH:..\..\lib @<<
 	$(HTMLKIT_DLL_OBJECTS)  $(ZLIB_FILENAME).lib $(LIBPNG_FILENAME).lib $(LIBJPEG_FILENAME).lib $(AGG_FILENAME).lib $(dll_FOUNDATIONKIT_p) $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /IMPLIB:..\..\lib\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 <<
 !endif
@@ -2129,7 +2364,7 @@ clean:
 
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_OPENGLKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: ..\..\lib\$(OBJDIR)\OpenGLKit_dll_OpenGLToolkit.obj  $(OPENGLKIT_DLL_OBJECTS) $(__ApplicationKit_dll___depname)
-	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_3)  /LIBPATH:..\..\lib @<<
+	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_8)  /LIBPATH:..\..\lib @<<
 	$(OPENGLKIT_DLL_OBJECTS)  $(ZLIB_FILENAME).lib $(LIBPNG_FILENAME).lib $(LIBJPEG_FILENAME).lib $(AGG_FILENAME).lib $(dll_FOUNDATIONKIT_p) $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /IMPLIB:..\..\lib\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 <<
 !endif
@@ -2144,7 +2379,7 @@ clean:
 
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_NETWORKKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: ..\..\lib\$(OBJDIR)\NetworkKit_dll_NetToolkit.obj  $(NETWORKKIT_DLL_OBJECTS) $(__FoundationKit_dll___depname)
-	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_3)  /LIBPATH:..\..\lib @<<
+	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_8)  /LIBPATH:..\..\lib @<<
 	$(NETWORKKIT_DLL_OBJECTS)  $(dll_FOUNDATIONKIT_p) rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /IMPLIB:..\..\lib\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 <<
 !endif
@@ -2159,7 +2394,7 @@ clean:
 
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_REMOTEOBJECTKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: ..\..\lib\$(OBJDIR)\RemoteObjectKit_dll_RemoteObjectKit.obj  $(REMOTEOBJECTKIT_DLL_OBJECTS) $(__FoundationKit_dll___depname) $(__NetworkKit_dll___depname)
-	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_3)  /LIBPATH:..\..\lib @<<
+	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_8)  /LIBPATH:..\..\lib @<<
 	$(REMOTEOBJECTKIT_DLL_OBJECTS)  $(dll_FOUNDATIONKIT_p) $(____RemoteObjectKit_dll_FOUNDATIONKIT_p_1) $(____RemoteObjectKit_dll_NETWORKKIT_p) rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /IMPLIB:..\..\lib\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 <<
 !endif
@@ -2174,7 +2409,7 @@ clean:
 
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_INTERNETKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: ..\..\lib\$(OBJDIR)\InternetKit_dll_InternetKit.obj  $(INTERNETKIT_DLL_OBJECTS) $(__FoundationKit_dll___depname)
-	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_3)  /LIBPATH:..\..\lib @<<
+	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_8)  /LIBPATH:..\..\lib @<<
 	$(INTERNETKIT_DLL_OBJECTS)  $(dll_FOUNDATIONKIT_p) rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /IMPLIB:..\..\lib\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 <<
 !endif
@@ -2189,7 +2424,7 @@ clean:
 
 !if "$(OPTION_ALLIN1)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) ..\..\lib\$(OBJDIR)\Allin1_dll_ApplicationKit.res
-	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) /INCREMENTAL:NO $(__DEBUG_INFO_3)  /LIBPATH:..\..\lib @<<
+	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) /INCREMENTAL:NO $(__DEBUG_INFO_8)  /LIBPATH:..\..\lib @<<
 	$(ALLIN1_DLL_OBJECTS)  $(A) $(VAR_0) $(VAR_2) $(VAR_1) $(VAR_3) $(VAR_4) $(VAR) rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /IMPLIB:..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 <<
 !endif
@@ -2212,7 +2447,7 @@ clean:
 
 !if "$(OPTION_IMAGEFORMATS)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(IMAGEFORMATS_DLL_OBJECTS) $(A) $(VAR) $(VAR_0) $(VAR_2) $(VAR_1) $(VAR_3) $(VAR_4) $(__Allin1_dll___depname) $(__ApplicationKit_dll___depname)
-	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_3)  /LIBPATH:..\..\lib @<<
+	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_8)  /LIBPATH:..\..\lib @<<
 	$(IMAGEFORMATS_DLL_OBJECTS)  $(ZLIB_FILENAME).lib $(LIBPNG_FILENAME).lib $(LIBJPEG_FILENAME).lib $(AGG_FILENAME).lib $(dll_FOUNDATIONKIT_p) $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ..\..\lib\AGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /IMPLIB:..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 <<
 !endif

@@ -14,11 +14,12 @@ include ../../build/bakefiles.gen/config.gcc
 
 CPPDEPS = -MT$@ -MF$@.d -MD
 OBJDIR = mingw$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-BLACKBOX_DLL_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_3) -mthreads \
-	$(____OPTION_DEBUG_9_p) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
-	-Wno-multichar -I..\..\src -D_USRDLL -Iinclude -DBLACKBOX_DLL \
-	-DBLACKBOX_EXPORTS -DSTRICT -DWORK_AROUND_SRCLINE_BUG $(CPPFLAGS) \
-	$(CXXFLAGS)
+BLACKBOX_DLL_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_5) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS_10) $(____OPTION_DEBUG_11_p) \
+	-DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 -Wno-multichar -I..\..\src \
+	-D_USRDLL -Iinclude -DBLACKBOX_DLL -DBLACKBOX_EXPORTS -DSTRICT \
+	-DWORK_AROUND_SRCLINE_BUG $(____OPTION_CPP_RTTI_0_8) \
+	$(____OPTION_CPP_EXCEPTIONS_1_9) $(CPPFLAGS) $(CXXFLAGS)
 BLACKBOX_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\utilities\BlackBox\BlackBox_dll_AllocAndFillProcessModuleList.o \
 	..\..\lib\$(OBJDIR)\utilities\BlackBox\BlackBox_dll_BlackBox.o \
@@ -58,28 +59,55 @@ ifeq ($(OPTION_SHARED),1)
 SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 endif
 ifeq ($(OPTION_DEBUG),0)
-__OPTIMIZE_3 = -O2
+__OPTIMIZE_5 = -O2
 endif
 ifeq ($(OPTION_DEBUG),1)
-__OPTIMIZE_3 = -O0
+__OPTIMIZE_5 = -O0
+endif
+ifeq ($(OPTION_CPP_RTTI),0)
+____OPTION_CPP_RTTI_0_8 = -fno-rtti
+endif
+ifeq ($(OPTION_CPP_RTTI),1)
+____OPTION_CPP_RTTI_0_8 = 
+endif
+ifeq ($(OPTION_CPP_EXCEPTIONS),0)
+____OPTION_CPP_EXCEPTIONS_1_9 = -fno-exceptions
+endif
+ifeq ($(OPTION_CPP_EXCEPTIONS),1)
+____OPTION_CPP_EXCEPTIONS_1_9 = 
+endif
+ifeq ($(OPTION_WARNINGS),no)
+__OPTION_WARNINGS_10 = 
+endif
+ifeq ($(OPTION_WARNINGS),default)
+__OPTION_WARNINGS_10 = 
+endif
+ifeq ($(OPTION_WARNINGS),max)
+__OPTION_WARNINGS_10 = -W -Wall
 endif
 ifeq ($(OPTION_DEBUG),0)
-____OPTION_DEBUG_9_p = -DNDEBUG
+____OPTION_DEBUG_11_p = -DNDEBUG
 endif
 ifeq ($(OPTION_DEBUG),1)
-____OPTION_DEBUG_9_p = -D_DEBUG
+____OPTION_DEBUG_11_p = -D_DEBUG
 endif
 ifeq ($(OPTION_DEBUG),0)
-____OPTION_DEBUG_9_p_1 = --define NDEBUG
+____OPTION_DEBUG_11_p_1 = --define NDEBUG
 endif
 ifeq ($(OPTION_DEBUG),1)
-____OPTION_DEBUG_9_p_1 = --define _DEBUG
+____OPTION_DEBUG_11_p_1 = --define _DEBUG
 endif
 ifeq ($(OPTION_DEBUG),0)
 __DEBUG_INFO = 
 endif
 ifeq ($(OPTION_DEBUG),1)
 __DEBUG_INFO = -g
+endif
+ifeq ($(OPTION_THREADING),multi)
+__OPTION_THREADING = -mthreads
+endif
+ifeq ($(OPTION_THREADING),single)
+__OPTION_THREADING = 
 endif
 
 
@@ -98,7 +126,7 @@ clean:
 	-if exist ..\..\lib\libBlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).a del ..\..\lib\libBlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).a
 
 ..\..\lib\..\bin\BlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(BLACKBOX_DLL_OBJECTS) ..\..\lib\$(OBJDIR)\utilities\BlackBox\BlackBox_dll_BlackBox_rc.o
-	$(CXX) -shared -fPIC -o $@ $(BLACKBOX_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--out-implib,..\..\lib\libBlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).a -Llib  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 -lDbgHelp -lPsapi
+	$(CXX) -shared -fPIC -o $@ $(BLACKBOX_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING) -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--out-implib,..\..\lib\libBlackBox$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).a -Llib  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32 -lDbgHelp -lPsapi
 
 ..\..\lib\$(OBJDIR)\utilities\BlackBox\BlackBox_dll_AllocAndFillProcessModuleList.o: ./AllocAndFillProcessModuleList.cpp
 	$(CXX) -c -o $@ $(BLACKBOX_DLL_CXXFLAGS) $(CPPDEPS) $<
@@ -146,7 +174,7 @@ clean:
 	$(CXX) -c -o $@ $(BLACKBOX_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ..\..\lib\$(OBJDIR)\utilities\BlackBox\BlackBox_dll_BlackBox_rc.o: ./BlackBox.rc
-	windres --use-temp-file -i$< -o$@ $(____OPTION_DEBUG_9_p_1) --define VCF_DISABLE_PRAGMA_LINKING --define _WIN32 --define WIN32 --include-dir ..\..\src --define _USRDLL --include-dir include --define BLACKBOX_DLL --define BLACKBOX_EXPORTS --define STRICT --define WORK_AROUND_SRCLINE_BUG
+	windres --use-temp-file -i$< -o$@ $(____OPTION_DEBUG_11_p_1) --define VCF_DISABLE_PRAGMA_LINKING --define _WIN32 --define WIN32 --include-dir ..\..\src --define _USRDLL --include-dir include --define BLACKBOX_DLL --define BLACKBOX_EXPORTS --define STRICT --define WORK_AROUND_SRCLINE_BUG
 
 .PHONY: all clean
 

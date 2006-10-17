@@ -18,12 +18,13 @@ ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 SIMPLEDLL_CXXFLAGS =  /MD /DWIN32  /GR /EHsc  $(CPPFLAGS) $(CXXFLAGS)
 SIMPLEDLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\examples\SharedLibraries\SimpleDLL_SimpleDLL.obj
-SHAREDLIBRARIES_CXXFLAGS = /M$(__RUNTIME_LIBS_11)$(__DEBUG_RUNTIME_LIBS_6) \
-	/DWIN32 $(__DEBUG_INFO_3) \
+SHAREDLIBRARIES_CXXFLAGS = /M$(__OPTION_RUNTIME_13)$(__DEBUG_RUNTIME_LIBS_8) \
+	/DWIN32 $(__DEBUG_INFO_5) \
 	/Fd.\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb \
-	$(____DEBUG_RUNTIME_LIBS_5_p) $(__OPTIMIZE_7) $(____OPTION_DEBUG_15_p) \
-	/DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 /I..\..\src /D_CONSOLE \
-	$(__FOUNDATIONKIT_DLL_p) /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
+	$(____DEBUG_RUNTIME_LIBS_7_p) $(__OPTIMIZE_9) $(__OPTION_WARNINGS_16) \
+	$(____OPTION_DEBUG_17_p) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I..\..\src /D_CONSOLE $(__FOUNDATIONKIT_DLL_p) $(____OPTION_CPP_RTTI_0_14) \
+	$(____OPTION_CPP_EXCEPTIONS_1_15) $(CPPFLAGS) $(CXXFLAGS)
 SHAREDLIBRARIES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\examples\SharedLibraries\SharedLibraries_SharedLibraries.obj
 
@@ -55,49 +56,85 @@ __SharedLibraries___depname = \
 	.\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 !endif
 !if "$(OPTION_DEBUG)" == "0"
-__DEBUG_INFO_3 = 
+__DEBUG_INFO_5 = 
 !endif
 !if "$(OPTION_DEBUG)" == "1"
-__DEBUG_INFO_3 = /Zi
+__DEBUG_INFO_5 = /Zi
 !endif
 !if "$(OPTION_DEBUG)" == "0"
-__DEBUG_INFO_4 = 
+__DEBUG_INFO_6 = 
 !endif
 !if "$(OPTION_DEBUG)" == "1"
-__DEBUG_INFO_4 = /DEBUG
+__DEBUG_INFO_6 = /DEBUG
+!endif
+!if "$(OPTION_DEBUG)" == "0" && "$(OPTION_DEBUG_RUNTIME)" == "default"
+____DEBUG_RUNTIME_LIBS_7_p = 
+!endif
+!if "$(OPTION_DEBUG)" == "1" && "$(OPTION_DEBUG_RUNTIME)" == "default"
+____DEBUG_RUNTIME_LIBS_7_p = /D_DEBUG
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "0"
+____DEBUG_RUNTIME_LIBS_7_p = 
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "1"
+____DEBUG_RUNTIME_LIBS_7_p = /D_DEBUG
+!endif
+!if "$(OPTION_DEBUG)" == "0" && "$(OPTION_DEBUG_RUNTIME)" == "default"
+__DEBUG_RUNTIME_LIBS_8 = 
+!endif
+!if "$(OPTION_DEBUG)" == "1" && "$(OPTION_DEBUG_RUNTIME)" == "default"
+__DEBUG_RUNTIME_LIBS_8 = d
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "0"
+__DEBUG_RUNTIME_LIBS_8 = 
+!endif
+!if "$(OPTION_DEBUG_RUNTIME)" == "1"
+__DEBUG_RUNTIME_LIBS_8 = d
 !endif
 !if "$(OPTION_DEBUG)" == "0"
-____DEBUG_RUNTIME_LIBS_5_p = 
+__OPTIMIZE_9 = /O2
 !endif
 !if "$(OPTION_DEBUG)" == "1"
-____DEBUG_RUNTIME_LIBS_5_p = /D_DEBUG
+__OPTIMIZE_9 = /Od
+!endif
+!if "$(OPTION_THREADING)" == "multi"
+__OPTION_THREADING_12 = T
+!endif
+!if "$(OPTION_THREADING)" == "single"
+__OPTION_THREADING_12 = L
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_13 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_13 = $(__OPTION_THREADING_12)
+!endif
+!if "$(OPTION_CPP_RTTI)" == "0"
+____OPTION_CPP_RTTI_0_14 = 
+!endif
+!if "$(OPTION_CPP_RTTI)" == "1"
+____OPTION_CPP_RTTI_0_14 = /GR
+!endif
+!if "$(OPTION_CPP_EXCEPTIONS)" == "0"
+____OPTION_CPP_EXCEPTIONS_1_15 = 
+!endif
+!if "$(OPTION_CPP_EXCEPTIONS)" == "1"
+____OPTION_CPP_EXCEPTIONS_1_15 = /EHsc
+!endif
+!if "$(OPTION_WARNINGS)" == "no"
+__OPTION_WARNINGS_16 = /w
+!endif
+!if "$(OPTION_WARNINGS)" == "default"
+__OPTION_WARNINGS_16 = 
+!endif
+!if "$(OPTION_WARNINGS)" == "max"
+__OPTION_WARNINGS_16 = /W4
 !endif
 !if "$(OPTION_DEBUG)" == "0"
-__DEBUG_RUNTIME_LIBS_6 = 
+____OPTION_DEBUG_17_p = /DNDEBUG
 !endif
 !if "$(OPTION_DEBUG)" == "1"
-__DEBUG_RUNTIME_LIBS_6 = d
-!endif
-!if "$(OPTION_DEBUG)" == "0"
-__OPTIMIZE_7 = /O2
-!endif
-!if "$(OPTION_DEBUG)" == "1"
-__OPTIMIZE_7 = /Od
-!endif
-!if "$(OPTION_SHARED_RUNTIME)" == "default"
-__RUNTIME_LIBS_11 = D
-!endif
-!if "$(OPTION_SHARED_RUNTIME)" == "1"
-__RUNTIME_LIBS_11 = D
-!endif
-!if "$(OPTION_SHARED_RUNTIME)" == "0"
-__RUNTIME_LIBS_11 = T
-!endif
-!if "$(OPTION_DEBUG)" == "0"
-____OPTION_DEBUG_15_p = /DNDEBUG
-!endif
-!if "$(OPTION_DEBUG)" == "1"
-____OPTION_DEBUG_15_p = /D_DEBUG
+____OPTION_DEBUG_17_p = /D_DEBUG
 !endif
 !if "$(OPTION_ALLIN1)" == "0"
 ____SharedLibraries_FOUNDATIONKIT_p = $(FOUNDATIONKIT_FILENAME).lib
@@ -126,6 +163,7 @@ clean:
 	-if exist .\SimpleDLL.ilk del .\SimpleDLL.ilk
 	-if exist .\SimpleDLL.pdb del .\SimpleDLL.pdb
 	-if exist .\SimpleDLL.lib del .\SimpleDLL.lib
+	-if exist SimpleDLL.so.manifest del SimpleDLL.so.manifest
 	-if exist .\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 	-if exist .\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
@@ -141,7 +179,7 @@ clean:
 
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 .\SharedLibraries$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(SHAREDLIBRARIES_OBJECTS) $(__SimpleDLL___depname)
-	link /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_4)  /LIBPATH:..\..\lib /SUBSYSTEM:CONSOLE @<<
+	link /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_6)  /LIBPATH:..\..\lib /SUBSYSTEM:CONSOLE @<<
 	$(SHAREDLIBRARIES_OBJECTS)  rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib $(____SharedLibraries_FOUNDATIONKIT_p)
 <<
 !endif

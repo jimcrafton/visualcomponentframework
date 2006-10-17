@@ -24,18 +24,20 @@ BCCDIR = $(MAKEDIR)\..
 OBJDIR = borland$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-XMAKE_LIB_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 \
-	-DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) $(CXXFLAGS)
+XMAKE_LIB_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include $(__DEBUG_INFO) \
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(____OPTION_DEBUG) \
+	-DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 -I..\..\src -D_LIB $(CPPFLAGS) \
+	$(CXXFLAGS)
 XMAKE_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_CmdLine.obj \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_FilePath.obj \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_xmake.obj \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_xmakeUtils.obj \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_XMLParser.obj
-XMAKE_CXXFLAGS = $(__RUNTIME_LIBS) -I$(BCCDIR)\include $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -tWM $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 \
-	-DWIN32 -I..\..\src $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
+XMAKE_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include $(__DEBUG_INFO) \
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(____OPTION_DEBUG) \
+	-DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 -I..\..\src \
+	$(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 XMAKE_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_main.obj
 
@@ -59,14 +61,17 @@ SUFFIX_LIBRARY = $(SUFFIX_STATIC)
 !if "$(OPTION_SHARED)" == "1"
 SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 !endif
-!if "$(OPTION_SHARED_RUNTIME)" == "0"
-__RUNTIME_LIBS_16 = 
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_18 = i
 !endif
-!if "$(OPTION_SHARED_RUNTIME)" == "1"
-__RUNTIME_LIBS_16 = i
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_18 = 
 !endif
-!if "$(OPTION_SHARED_RUNTIME)" == "default"
-__RUNTIME_LIBS_16 = i
+!if "$(OPTION_THREADING)" == "multi"
+__OPTION_THREADING_22 = mt
+!endif
+!if "$(OPTION_THREADING)" == "single"
+__OPTION_THREADING_22 = 
 !endif
 !if "$(OPTION_ALLIN1)" == "0"
 ____xmake_FOUNDATIONKIT_p = $(FOUNDATIONKIT_FILENAME).lib
@@ -77,20 +82,23 @@ ____xmake_FOUNDATIONKIT_p = $(ALLIN1_FILENAME).lib
 !if "$(OPTION_SHARED)" == "1"
 __FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
 !endif
-!if "$(OPTION_SHARED_RUNTIME)" == "0"
-__RUNTIME_LIBS = 
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME = -tWR
 !endif
-!if "$(OPTION_SHARED_RUNTIME)" == "1"
-__RUNTIME_LIBS = -tWR
-!endif
-!if "$(OPTION_SHARED_RUNTIME)" == "default"
-__RUNTIME_LIBS = -tWR
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME = 
 !endif
 !if "$(OPTION_DEBUG)" == "0"
 __OPTIMIZE = -O2
 !endif
 !if "$(OPTION_DEBUG)" == "1"
 __OPTIMIZE = -Od
+!endif
+!if "$(OPTION_THREADING)" == "multi"
+__OPTION_THREADING = -tWM
+!endif
+!if "$(OPTION_THREADING)" == "single"
+__OPTION_THREADING = 
 !endif
 !if "$(OPTION_DEBUG)" == "0"
 ____OPTION_DEBUG = -DNDEBUG
@@ -134,7 +142,7 @@ clean:
 
 ..\..\bin\xmake.exe: $(XMAKE_OBJECTS) ..\..\lib\Xmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	ilink32 -Tpe -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib -ap @&&|
-	c0x32.obj $(XMAKE_OBJECTS),$@,, ole2w32.lib oleacc.lib urlmon.lib $(____xmake_FOUNDATIONKIT_p) ..\..\lib\Xmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib import32.lib cw32mt$(__RUNTIME_LIBS_16).lib,,
+	c0x32.obj $(XMAKE_OBJECTS),$@,, ole2w32.lib oleacc.lib urlmon.lib $(____xmake_FOUNDATIONKIT_p) ..\..\lib\Xmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib import32.lib cw32$(__OPTION_THREADING_22)$(__OPTION_RUNTIME_18).lib,,
 |
 
 ..\..\lib\$(OBJDIR)\utilities\Xmake\xmake_lib_CmdLine.obj: .\CmdLine.cpp
