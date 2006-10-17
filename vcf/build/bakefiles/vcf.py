@@ -3,7 +3,7 @@ import mk
 
 # Here we try to read preferred option values from ~/.vcf/config.<ext>,
 # where <ext> is an extension peculiar to the current format.
-# This is an experimental feature, may be eliminate.
+# This is an experimental feature, may be eliminated.
 opts = {}
 if mk.vars['FORMAT_SUPPORTS_CONDITIONS'] == '1':
     config = os.path.join( os.path.expanduser( '~' ), '.vcf' + os.path.sep + 'config' )
@@ -61,6 +61,14 @@ def getUnquoted( text ):
 # quoted or not depends on a value of the VCF_INTERNAL variable.
 def joinPaths( firstPart, secondPart ):
     result = os.path.join( getUnquoted( firstPart ), getUnquoted( secondPart ) )
+    # The directory separator must be compatible with the target tool set.
+    if mk.vars['TOOLSET'] == 'win32':
+        result = result.replace( '/', '\\')
+    else:
+        result = result.replace( '\\', '/')
+    # We need to quote the result, if VCF_INTERNAL is 0 (that is, an external
+    # project is using the bakefiles), since all the paths are absolute
+    # in this case.
     if mk.vars['VCF_INTERNAL'] == '0':
         return getQuoted( result )
     else:
