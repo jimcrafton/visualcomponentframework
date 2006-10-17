@@ -16,10 +16,11 @@ CPPDEPS = -MT$@ -MF`echo $@ | sed -e 's,\.o$$,.d,'` -MD
 OBJDIR = gnu$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-WORKINGWITHENUMERATORS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) \
-	-D_THREAD_SAFE -pthread $(____OPTION_DEBUG_8_p) \
+WORKINGWITHENUMERATORS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) \
+	$(__OPTION_THREADING_6) $(__OPTION_WARNINGS_9) $(____OPTION_DEBUG_10_p) \
 	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
-	$(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
+	$(__FOUNDATIONKIT_DLL_p) $(____OPTION_CPP_RTTI_0_7) \
+	$(____OPTION_CPP_EXCEPTIONS_1_8) $(CPPFLAGS) $(CXXFLAGS)
 WORKINGWITHENUMERATORS_OBJECTS =  \
 	../../lib/$(OBJDIR)/examples/WorkingWithEnumerators/WorkingWithEnumerators_WorkingWithEnumerators.o
 
@@ -48,16 +49,49 @@ __WorkingWithEnumerators___depname = \
 	./WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 endif
 ifeq ($(OPTION_DEBUG),0)
-__OPTIMIZE_2 = -O2
+__OPTIMIZE_4 = -O2
 endif
 ifeq ($(OPTION_DEBUG),1)
-__OPTIMIZE_2 = -O0
+__OPTIMIZE_4 = -O0
+endif
+ifeq ($(OPTION_THREADING),multi)
+__OPTION_THREADING_5 = -pthread
+endif
+ifeq ($(OPTION_THREADING),single)
+__OPTION_THREADING_5 = 
+endif
+ifeq ($(OPTION_THREADING),multi)
+__OPTION_THREADING_6 = -D_THREAD_SAFE -pthread
+endif
+ifeq ($(OPTION_THREADING),single)
+__OPTION_THREADING_6 = 
+endif
+ifeq ($(OPTION_CPP_RTTI),0)
+____OPTION_CPP_RTTI_0_7 = -fno-rtti
+endif
+ifeq ($(OPTION_CPP_RTTI),1)
+____OPTION_CPP_RTTI_0_7 = 
+endif
+ifeq ($(OPTION_CPP_EXCEPTIONS),0)
+____OPTION_CPP_EXCEPTIONS_1_8 = -fno-exceptions
+endif
+ifeq ($(OPTION_CPP_EXCEPTIONS),1)
+____OPTION_CPP_EXCEPTIONS_1_8 = 
+endif
+ifeq ($(OPTION_WARNINGS),no)
+__OPTION_WARNINGS_9 = 
+endif
+ifeq ($(OPTION_WARNINGS),default)
+__OPTION_WARNINGS_9 = 
+endif
+ifeq ($(OPTION_WARNINGS),max)
+__OPTION_WARNINGS_9 = -W -Wall
 endif
 ifeq ($(OPTION_DEBUG),0)
-____OPTION_DEBUG_8_p = -DNDEBUG
+____OPTION_DEBUG_10_p = -DNDEBUG
 endif
 ifeq ($(OPTION_DEBUG),1)
-____OPTION_DEBUG_8_p = -D_DEBUG
+____OPTION_DEBUG_10_p = -D_DEBUG
 endif
 ifeq ($(OPTION_ALLIN1),0)
 ____WorkingWithEnumerators_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
@@ -95,7 +129,7 @@ clean:
 
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ./WorkingWithEnumerators$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(WORKINGWITHENUMERATORS_OBJECTS)
-	$(CXX) -o $@ $(WORKINGWITHENUMERATORS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____WorkingWithEnumerators_FOUNDATIONKIT_p)  -ldl -luuid -lrt
+	$(CXX) -o $@ $(WORKINGWITHENUMERATORS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_5) -L../../lib  $(____WorkingWithEnumerators_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 
 ../../lib/$(OBJDIR)/examples/WorkingWithEnumerators/WorkingWithEnumerators_WorkingWithEnumerators.o: ./WorkingWithEnumerators.cpp

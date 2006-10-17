@@ -23,9 +23,10 @@ GRAPHICSKIT_FILENAME = GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 NETWORKKIT_FILENAME = NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-AGG_LIB_CXXFLAGS = -I../../src\thirdparty/common/agg/include $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -D_THREAD_SAFE -pthread $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src $(CPPFLAGS) \
+AGG_LIB_CXXFLAGS = -I../../src/thirdparty/common/agg/include $(__DEBUG_INFO) \
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
 	$(CXXFLAGS)
 AGG_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/AGG_lib_agg_arc.o \
@@ -52,9 +53,9 @@ AGG_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/AGG_lib_agg_vcgen_stroke.o \
 	../../lib/$(OBJDIR)/AGG_lib_agg_vpgen_clip_polygon.o \
 	../../lib/$(OBJDIR)/AGG_lib_agg_vpgen_segmentator.o
-ZLIB_LIB_CFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
-	$(CPPFLAGS) $(CFLAGS)
+ZLIB_LIB_CFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
+	-Wno-multichar -I../../src $(CPPFLAGS) $(CFLAGS)
 ZLIB_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/ZLib_lib_adler32.o \
 	../../lib/$(OBJDIR)/ZLib_lib_compress.o \
@@ -68,9 +69,9 @@ ZLIB_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/ZLib_lib_trees.o \
 	../../lib/$(OBJDIR)/ZLib_lib_uncompr.o \
 	../../lib/$(OBJDIR)/ZLib_lib_zutil.o
-LIBJPEG_LIB_CFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
-	$(CPPFLAGS) $(CFLAGS)
+LIBJPEG_LIB_CFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
+	-Wno-multichar -I../../src $(CPPFLAGS) $(CFLAGS)
 LIBJPEG_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/LibJPEG_lib_jcapimin.o \
 	../../lib/$(OBJDIR)/LibJPEG_lib_jcapistd.o \
@@ -118,9 +119,9 @@ LIBJPEG_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/LibJPEG_lib_jquant1.o \
 	../../lib/$(OBJDIR)/LibJPEG_lib_jquant2.o \
 	../../lib/$(OBJDIR)/LibJPEG_lib_jutils.o
-LIBMNG_LIB_CFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
-	$(CPPFLAGS) $(CFLAGS)
+LIBMNG_LIB_CFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
+	-Wno-multichar -I../../src $(CPPFLAGS) $(CFLAGS)
 LIBMNG_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/LibMNG_lib_libmng_callback_xs.o \
 	../../lib/$(OBJDIR)/LibMNG_lib_libmng_chunk_io.o \
@@ -140,9 +141,9 @@ LIBMNG_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/LibMNG_lib_libmng_trace.o \
 	../../lib/$(OBJDIR)/LibMNG_lib_libmng_write.o \
 	../../lib/$(OBJDIR)/LibMNG_lib_libmng_zlib.o
-LIBPNG_LIB_CFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
-	$(CPPFLAGS) $(CFLAGS)
+LIBPNG_LIB_CFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
+	-Wno-multichar -I../../src $(CPPFLAGS) $(CFLAGS)
 LIBPNG_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/LibPNG_lib_png.o \
 	../../lib/$(OBJDIR)/LibPNG_lib_pngerror.o \
@@ -162,12 +163,13 @@ LIBPNG_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/LibPNG_lib_pngwrite.o \
 	../../lib/$(OBJDIR)/LibPNG_lib_pngwtran.o \
 	../../lib/$(OBJDIR)/LibPNG_lib_pngwutil.o
-LIBTIFF_LIB_CFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
-	$(CPPFLAGS) $(CFLAGS)
-LIBTIFF_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
-	$(CPPFLAGS) $(CXXFLAGS)
+LIBTIFF_LIB_CFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
+	-Wno-multichar -I../../src $(CPPFLAGS) $(CFLAGS)
+LIBTIFF_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
+	-Wno-multichar -I../../src $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 LIBTIFF_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/LibTIFF_lib_tif_aux.o \
 	../../lib/$(OBJDIR)/LibTIFF_lib_tif_close.o \
@@ -206,9 +208,11 @@ LIBTIFF_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/LibTIFF_lib_tif_write.o \
 	../../lib/$(OBJDIR)/LibTIFF_lib_tif_zip.o \
 	../../lib/$(OBJDIR)/LibTIFF_lib_tif_unix.o
-FOUNDATIONKIT_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE \
-	-pthread $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
-	-I../../src $(CPPFLAGS) $(CXXFLAGS)
+FOUNDATIONKIT_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) \
+	$(__OPTION_THREADING) $(__OPTION_WARNINGS) $(____OPTION_DEBUG) \
+	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
+	$(CXXFLAGS)
 FOUNDATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_lib_BasicException.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_BasicInputStream.o \
@@ -278,10 +282,11 @@ FOUNDATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxSemaphorePeer.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxSystemPeer.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxSystemToolkit.o
-FOUNDATIONKIT_DLL_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE \
-	-pthread $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
-	-I../../src -DFOUNDATIONKIT_DLL -DFOUNDATIONKIT_EXPORTS -fPIC -DPIC \
-	$(CPPFLAGS) $(CXXFLAGS)
+FOUNDATIONKIT_DLL_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) \
+	$(__OPTION_THREADING) $(__OPTION_WARNINGS) $(____OPTION_DEBUG) \
+	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src -DFOUNDATIONKIT_DLL \
+	-DFOUNDATIONKIT_EXPORTS -fPIC -DPIC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 FOUNDATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_dll_BasicException.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_BasicInputStream.o \
@@ -352,8 +357,9 @@ FOUNDATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxSystemPeer.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxSystemToolkit.o
 GRAPHICSKIT_LIB_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -D_THREAD_SAFE -pthread $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src $(CPPFLAGS) \
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
 	$(CXXFLAGS)
 GRAPHICSKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/GraphicsKit_lib_AbstractImage.o \
@@ -380,9 +386,10 @@ GRAPHICSKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/GraphicsKit_lib_XCBGraphicsToolkit.o \
 	../../lib/$(OBJDIR)/GraphicsKit_lib_XCBImagePeer.o
 GRAPHICSKIT_DLL_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -D_THREAD_SAFE -pthread $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src -DGRAPHICSKIT_DLL \
-	-DGRAPHICSKIT_EXPORTS -fPIC -DPIC $(CPPFLAGS) $(CXXFLAGS)
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	-DGRAPHICSKIT_DLL -DGRAPHICSKIT_EXPORTS -fPIC -DPIC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 GRAPHICSKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/GraphicsKit_dll_AbstractImage.o \
 	../../lib/$(OBJDIR)/GraphicsKit_dll_BasicFill.o \
@@ -407,13 +414,14 @@ GRAPHICSKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/GraphicsKit_dll_XCBGraphicsResourceBundlePeer.o \
 	../../lib/$(OBJDIR)/GraphicsKit_dll_XCBGraphicsToolkit.o \
 	../../lib/$(OBJDIR)/GraphicsKit_dll_XCBImagePeer.o
-APPLICATIONKIT_LIB_CXXFLAGS = -I../../src\thirdparty/common/ZLib \
-	-I../../src\thirdparty/common/LibPNG \
-	-I../../src\thirdparty/common/LibJPEG \
-	-I../../src\thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
-	$(__GRAPHICSKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
-	$(CPPFLAGS) $(CXXFLAGS)
+APPLICATIONKIT_LIB_CXXFLAGS = -I../../src/thirdparty/common/ZLib \
+	-I../../src/thirdparty/common/LibPNG \
+	-I../../src/thirdparty/common/LibJPEG \
+	-I../../src/thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
+	$(__GRAPHICSKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
+	-Wno-multichar -I../../src $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 APPLICATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractApplication.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractCommand.o \
@@ -527,14 +535,15 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_XCBUIMetricsManager.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_XCBUIToolkit.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_XCBWindowPeer.o
-APPLICATIONKIT_DLL_CXXFLAGS = -I../../src\thirdparty/common/ZLib \
-	-I../../src\thirdparty/common/LibPNG \
-	-I../../src\thirdparty/common/LibJPEG \
-	-I../../src\thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
-	$(__GRAPHICSKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
-	-DAPPLICATIONKIT_DLL -DAPPLICATIONKIT_EXPORTS -fPIC -DPIC $(CPPFLAGS) \
-	$(CXXFLAGS)
+APPLICATIONKIT_DLL_CXXFLAGS = -I../../src/thirdparty/common/ZLib \
+	-I../../src/thirdparty/common/LibPNG \
+	-I../../src/thirdparty/common/LibJPEG \
+	-I../../src/thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
+	$(__GRAPHICSKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
+	-Wno-multichar -I../../src -DAPPLICATIONKIT_DLL -DAPPLICATIONKIT_EXPORTS \
+	-fPIC -DPIC $(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) \
+	$(CPPFLAGS) $(CXXFLAGS)
 APPLICATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractApplication.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractCommand.o \
@@ -648,57 +657,62 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_XCBUIMetricsManager.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_XCBUIToolkit.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_XCBWindowPeer.o
-HTMLKIT_LIB_CXXFLAGS = -I../../src\thirdparty/common/ZLib \
-	-I../../src\thirdparty/common/LibPNG \
-	-I../../src\thirdparty/common/LibJPEG \
-	-I../../src\thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
+HTMLKIT_LIB_CXXFLAGS = -I../../src/thirdparty/common/ZLib \
+	-I../../src/thirdparty/common/LibPNG \
+	-I../../src/thirdparty/common/LibJPEG \
+	-I../../src/thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -D_THREAD_SAFE -pthread $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src $(CPPFLAGS) \
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
 	$(CXXFLAGS)
 HTMLKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/HTMLKit_lib_HTMLBrowserControl.o \
 	../../lib/$(OBJDIR)/HTMLKit_lib_HTMLKit.o \
 	../../lib/$(OBJDIR)/HTMLKit_lib_HTMLToolkit.o
-HTMLKIT_DLL_CXXFLAGS = -I../../src\thirdparty/common/ZLib \
-	-I../../src\thirdparty/common/LibPNG \
-	-I../../src\thirdparty/common/LibJPEG \
-	-I../../src\thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
+HTMLKIT_DLL_CXXFLAGS = -I../../src/thirdparty/common/ZLib \
+	-I../../src/thirdparty/common/LibPNG \
+	-I../../src/thirdparty/common/LibJPEG \
+	-I../../src/thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -D_THREAD_SAFE -pthread $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src -DHTMLKIT_DLL \
-	-DHTMLKIT_EXPORTS -fPIC -DPIC $(CPPFLAGS) $(CXXFLAGS)
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	-DHTMLKIT_DLL -DHTMLKIT_EXPORTS -fPIC -DPIC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 HTMLKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/HTMLKit_dll_HTMLBrowserControl.o \
 	../../lib/$(OBJDIR)/HTMLKit_dll_HTMLKit.o \
 	../../lib/$(OBJDIR)/HTMLKit_dll_HTMLToolkit.o
-OPENGLKIT_LIB_CXXFLAGS = -I../../src\thirdparty/common/ZLib \
-	-I../../src\thirdparty/common/LibPNG \
-	-I../../src\thirdparty/common/LibJPEG \
-	-I../../src\thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
+OPENGLKIT_LIB_CXXFLAGS = -I../../src/thirdparty/common/ZLib \
+	-I../../src/thirdparty/common/LibPNG \
+	-I../../src/thirdparty/common/LibJPEG \
+	-I../../src/thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -D_THREAD_SAFE -pthread $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src $(CPPFLAGS) \
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
 	$(CXXFLAGS)
 OPENGLKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/OpenGLKit_lib_OpenGLControl.o \
 	../../lib/$(OBJDIR)/OpenGLKit_lib_OpenGLControlContext.o \
 	../../lib/$(OBJDIR)/OpenGLKit_lib_OpenGLToolkit.o
-OPENGLKIT_DLL_CXXFLAGS = -I../../src\thirdparty/common/ZLib \
-	-I../../src\thirdparty/common/LibPNG \
-	-I../../src\thirdparty/common/LibJPEG \
-	-I../../src\thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
+OPENGLKIT_DLL_CXXFLAGS = -I../../src/thirdparty/common/ZLib \
+	-I../../src/thirdparty/common/LibPNG \
+	-I../../src/thirdparty/common/LibJPEG \
+	-I../../src/thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -D_THREAD_SAFE -pthread $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src -DOPENGLKIT_DLL \
-	-DOPENGLKIT_EXPORTS -fPIC -DPIC $(CPPFLAGS) $(CXXFLAGS)
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	-DOPENGLKIT_DLL -DOPENGLKIT_EXPORTS -fPIC -DPIC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 OPENGLKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/OpenGLKit_dll_OpenGLControl.o \
 	../../lib/$(OBJDIR)/OpenGLKit_dll_OpenGLControlContext.o \
 	../../lib/$(OBJDIR)/OpenGLKit_dll_OpenGLToolkit.o
 NETWORKKIT_LIB_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -D_THREAD_SAFE -pthread $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src $(CPPFLAGS) \
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
 	$(CXXFLAGS)
 NETWORKKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/NetworkKit_lib_DatagramSocket.o \
@@ -709,9 +723,10 @@ NETWORKKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/NetworkKit_lib_SocketListeningLoop.o \
 	../../lib/$(OBJDIR)/NetworkKit_lib_URL.o
 NETWORKKIT_DLL_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -D_THREAD_SAFE -pthread $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src -DNETKIT_DLL \
-	-DNETKIT_EXPORTS -fPIC -DPIC $(CPPFLAGS) $(CXXFLAGS)
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	-DNETKIT_DLL -DNETKIT_EXPORTS -fPIC -DPIC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 NETWORKKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/NetworkKit_dll_DatagramSocket.o \
 	../../lib/$(OBJDIR)/NetworkKit_dll_NetToolkit.o \
@@ -722,8 +737,9 @@ NETWORKKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/NetworkKit_dll_URL.o
 REMOTEOBJECTKIT_LIB_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) \
 	$(__FOUNDATIONKIT_DLL_p) $(__NETWORKKIT_DLL_p) $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -D_THREAD_SAFE -pthread $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src $(CPPFLAGS) \
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
 	$(CXXFLAGS)
 REMOTEOBJECTKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/RemoteObjectKit_lib_AbstractDistributedApplication.o \
@@ -736,9 +752,10 @@ REMOTEOBJECTKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/RemoteObjectKit_lib_RemoteObjectKit.o
 REMOTEOBJECTKIT_DLL_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) \
 	$(__FOUNDATIONKIT_DLL_p) $(__NETWORKKIT_DLL_p) $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -D_THREAD_SAFE -pthread $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src -DREMOTEKIT_DLL \
-	-DREMOTEKIT_EXPORTS -fPIC -DPIC $(CPPFLAGS) $(CXXFLAGS)
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	-DREMOTEKIT_DLL -DREMOTEKIT_EXPORTS -fPIC -DPIC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 REMOTEOBJECTKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/RemoteObjectKit_dll_AbstractDistributedApplication.o \
 	../../lib/$(OBJDIR)/RemoteObjectKit_dll_ClassRegistryEntry.o \
@@ -749,22 +766,25 @@ REMOTEOBJECTKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/RemoteObjectKit_dll_Proxy.o \
 	../../lib/$(OBJDIR)/RemoteObjectKit_dll_RemoteObjectKit.o
 INTERNETKIT_LIB_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -D_THREAD_SAFE -pthread $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src $(CPPFLAGS) \
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
 	$(CXXFLAGS)
 INTERNETKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/InternetKit_lib_InternetKit.o \
 	../../lib/$(OBJDIR)/InternetKit_lib_InternetToolkit.o
 INTERNETKIT_DLL_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
-	$(__OPTIMIZE) -D_THREAD_SAFE -pthread $(____OPTION_DEBUG) \
-	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src -DINTERNETKIT_DLL \
-	-DINTERNETKIT_EXPORTS -fPIC -DPIC $(CPPFLAGS) $(CXXFLAGS)
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	-DINTERNETKIT_DLL -DINTERNETKIT_EXPORTS -fPIC -DPIC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 INTERNETKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/InternetKit_dll_InternetKit.o \
 	../../lib/$(OBJDIR)/InternetKit_dll_InternetToolkit.o
-ALLIN1_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
-	$(CPPFLAGS) $(CXXFLAGS)
+ALLIN1_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
+	-Wno-multichar -I../../src $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 ALLIN1_LIB_OBJECTS =  \
 	$(____Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS) \
 	$(____Allin1_lib_ALLIN1_GRAPHICSKIT_SRC_OBJECTS) \
@@ -774,13 +794,15 @@ ALLIN1_LIB_OBJECTS =  \
 	$(____Allin1_lib_ALLIN1_NETWORKKIT_SRC_OBJECTS) \
 	$(____Allin1_lib_ALLIN1_REMOTEOBJECTKIT_SRC_OBJECTS) \
 	$(____Allin1_lib_ALLIN1_INTERNETKIT_SRC_OBJECTS)
-ALLIN1_DLL_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
-	-DFOUNDATIONKIT_DLL -DFOUNDATIONKIT_EXPORTS -DGRAPHICSKIT_DLL \
-	-DGRAPHICSKIT_EXPORTS -DAPPLICATIONKIT_DLL -DAPPLICATIONKIT_EXPORTS \
-	-DHTMLKIT_DLL -DHTMLKIT_EXPORTS -DOPENGLKIT_DLL -DOPENGLKIT_EXPORTS \
-	-DNETKIT_DLL -DNETKIT_EXPORTS -DREMOTEKIT_DLL -DREMOTEKIT_EXPORTS \
-	-DINTERNETKIT_DLL -DINTERNETKIT_EXPORTS -fPIC -DPIC $(CPPFLAGS) $(CXXFLAGS)
+ALLIN1_DLL_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
+	-Wno-multichar -I../../src -DFOUNDATIONKIT_DLL -DFOUNDATIONKIT_EXPORTS \
+	-DGRAPHICSKIT_DLL -DGRAPHICSKIT_EXPORTS -DAPPLICATIONKIT_DLL \
+	-DAPPLICATIONKIT_EXPORTS -DHTMLKIT_DLL -DHTMLKIT_EXPORTS -DOPENGLKIT_DLL \
+	-DOPENGLKIT_EXPORTS -DNETKIT_DLL -DNETKIT_EXPORTS -DREMOTEKIT_DLL \
+	-DREMOTEKIT_EXPORTS -DINTERNETKIT_DLL -DINTERNETKIT_EXPORTS -fPIC -DPIC \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
+	$(CXXFLAGS)
 ALLIN1_DLL_OBJECTS =  \
 	$(____Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS) \
 	$(____Allin1_dll_ALLIN1_GRAPHICSKIT_SRC_OBJECTS) \
@@ -790,20 +812,23 @@ ALLIN1_DLL_OBJECTS =  \
 	$(____Allin1_dll_ALLIN1_NETWORKKIT_SRC_OBJECTS) \
 	$(____Allin1_dll_ALLIN1_REMOTEOBJECTKIT_SRC_OBJECTS) \
 	$(____Allin1_dll_ALLIN1_INTERNETKIT_SRC_OBJECTS)
-PAINTLIB_LIB_CFLAGS = -I../../src\thirdparty/common/paintlib/common/Filter \
-	-I../../src\thirdparty/common/paintlib/common \
-	-I../../src\thirdparty/common/LibJPEG \
-	-I../../src\thirdparty/common/LibTIFF \
-	-I../../src\thirdparty/common/LibPNG $(__DEBUG_INFO) $(__OPTIMIZE) \
-	-D_THREAD_SAFE -pthread $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
-	-Wno-multichar -I../../src $(CPPFLAGS) $(CFLAGS)
-PAINTLIB_LIB_CXXFLAGS = -I../../src\thirdparty/common/paintlib/common/Filter \
-	-I../../src\thirdparty/common/paintlib/common \
-	-I../../src\thirdparty/common/LibJPEG \
-	-I../../src\thirdparty/common/LibTIFF \
-	-I../../src\thirdparty/common/LibPNG $(__DEBUG_INFO) $(__OPTIMIZE) \
-	-D_THREAD_SAFE -pthread $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
-	-Wno-multichar -I../../src $(CPPFLAGS) $(CXXFLAGS)
+PAINTLIB_LIB_CFLAGS = -I../../src/thirdparty/common/paintlib/common/Filter \
+	-I../../src/thirdparty/common/paintlib/common \
+	-I../../src/thirdparty/common/LibJPEG \
+	-I../../src/thirdparty/common/LibTIFF \
+	-I../../src/thirdparty/common/LibPNG $(__DEBUG_INFO) $(__OPTIMIZE) \
+	$(__OPTION_THREADING) $(__OPTION_WARNINGS) $(____OPTION_DEBUG) \
+	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src $(CPPFLAGS) \
+	$(CFLAGS)
+PAINTLIB_LIB_CXXFLAGS = -I../../src/thirdparty/common/paintlib/common/Filter \
+	-I../../src/thirdparty/common/paintlib/common \
+	-I../../src/thirdparty/common/LibJPEG \
+	-I../../src/thirdparty/common/LibTIFF \
+	-I../../src/thirdparty/common/LibPNG $(__DEBUG_INFO) $(__OPTIMIZE) \
+	$(__OPTION_THREADING) $(__OPTION_WARNINGS) $(____OPTION_DEBUG) \
+	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
+	$(CXXFLAGS)
 PAINTLIB_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/paintlib_lib_plfilter.o \
 	../../lib/$(OBJDIR)/paintlib_lib_plinplacefilter.o \
@@ -1583,6 +1608,12 @@ endif
 ifeq ($(OPTION_SHARED),1)
 __FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
 endif
+ifeq ($(OPTION_THREADING),multi)
+__OPTION_THREADING_2 = -pthread
+endif
+ifeq ($(OPTION_THREADING),single)
+__OPTION_THREADING_2 = 
+endif
 ifeq ($(OPTION_AGG),1)
 ____Allin1 = $(A)
 endif
@@ -1618,6 +1649,33 @@ __OPTIMIZE = -O2
 endif
 ifeq ($(OPTION_DEBUG),1)
 __OPTIMIZE = -O0
+endif
+ifeq ($(OPTION_THREADING),multi)
+__OPTION_THREADING = -D_THREAD_SAFE -pthread
+endif
+ifeq ($(OPTION_THREADING),single)
+__OPTION_THREADING = 
+endif
+ifeq ($(OPTION_CPP_RTTI),0)
+____OPTION_CPP_RTTI_0 = -fno-rtti
+endif
+ifeq ($(OPTION_CPP_RTTI),1)
+____OPTION_CPP_RTTI_0 = 
+endif
+ifeq ($(OPTION_CPP_EXCEPTIONS),0)
+____OPTION_CPP_EXCEPTIONS_1 = -fno-exceptions
+endif
+ifeq ($(OPTION_CPP_EXCEPTIONS),1)
+____OPTION_CPP_EXCEPTIONS_1 = 
+endif
+ifeq ($(OPTION_WARNINGS),default)
+__OPTION_WARNINGS = 
+endif
+ifeq ($(OPTION_WARNINGS),max)
+__OPTION_WARNINGS = -W -Wall
+endif
+ifeq ($(OPTION_WARNINGS),no)
+__OPTION_WARNINGS = 
 endif
 ifeq ($(OPTION_DEBUG),0)
 ____OPTION_DEBUG = -DNDEBUG
@@ -1743,7 +1801,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libFoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(FOUNDATIONKIT_DLL_OBJECTS)
-	$(CXX) -shared -fPIC -o $@ $(FOUNDATIONKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(FOUNDATIONKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib  -ldl -luuid -lrt
 endif
 endif
 endif
@@ -1763,7 +1821,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_GRAPHICSKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libGraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(GRAPHICSKIT_DLL_OBJECTS) $(A) $(VAR_0) $(VAR_2) $(VAR) $(__FoundationKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(GRAPHICSKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  ../../lib/libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/libLibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/libZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(GRAPHICSKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  ../../lib/libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/libLibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/libZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a -ldl -luuid -lrt
 endif
 endif
 endif
@@ -1783,7 +1841,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_APPLICATIONKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(APPLICATIONKIT_DLL_OBJECTS) $(__GraphicsKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(APPLICATIONKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib $(Kit_dll_GRAPHICSKIT_p) $(Kit_dll_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(APPLICATIONKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(Kit_dll_GRAPHICSKIT_p) $(Kit_dll_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
 endif
 endif
 endif
@@ -1803,7 +1861,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_HTMLKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libHTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(HTMLKIT_DLL_OBJECTS) $(__ApplicationKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(HTMLKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib $(LKit_dll_APPLICATIONKIT_p) $(Kit_dll_GRAPHICSKIT_p) $(Kit_dll_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(HTMLKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(LKit_dll_APPLICATIONKIT_p) $(Kit_dll_GRAPHICSKIT_p) $(Kit_dll_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
 endif
 endif
 endif
@@ -1823,7 +1881,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_OPENGLKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libOpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(OPENGLKIT_DLL_OBJECTS) $(__ApplicationKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(OPENGLKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib $(LKit_dll_APPLICATIONKIT_p) $(Kit_dll_GRAPHICSKIT_p) $(Kit_dll_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(OPENGLKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(LKit_dll_APPLICATIONKIT_p) $(Kit_dll_GRAPHICSKIT_p) $(Kit_dll_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
 endif
 endif
 endif
@@ -1843,7 +1901,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_NETWORKKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libNetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(NETWORKKIT_DLL_OBJECTS) $(__FoundationKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(NETWORKKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(NETWORKKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 endif
 endif
@@ -1863,7 +1921,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_REMOTEOBJECTKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libRemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(REMOTEOBJECTKIT_DLL_OBJECTS) $(__FoundationKit_dll___depname) $(__NetworkKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(REMOTEOBJECTKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib $(____RemoteObjectKit_dll_NETWORKKIT_p) $(____RemoteObjectKit_dll_FOUNDATIONKIT_p_1) $(Kit_dll_FOUNDATIONKIT_p)  -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(REMOTEOBJECTKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(____RemoteObjectKit_dll_NETWORKKIT_p) $(____RemoteObjectKit_dll_FOUNDATIONKIT_p_1) $(Kit_dll_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 endif
 endif
@@ -1883,7 +1941,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_INTERNETKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libInternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(INTERNETKIT_DLL_OBJECTS) $(__FoundationKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(INTERNETKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(INTERNETKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 endif
 endif
@@ -1900,7 +1958,7 @@ endif
 ifeq ($(OPTION_ALLIN1),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5)
-	$(CXX) -shared -fPIC -o $@ $(ALLIN1_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(A) $(VAR_0) $(VAR_2) $(VAR_1) $(VAR_3) $(VAR_4) $(VAR) -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(ALLIN1_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib  $(A) $(VAR_0) $(VAR_2) $(VAR_1) $(VAR_3) $(VAR_4) $(VAR) -ldl -luuid -lrt
 endif
 endif
 

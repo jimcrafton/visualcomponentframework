@@ -4,7 +4,7 @@
 
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
 
-CFG=AGG_lib - Win32 Release
+CFG=AGG_lib - Win32 LIB Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,38 +13,38 @@ CFG=AGG_lib - Win32 Release
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "VCF_AGG_lib.mak" CFG="AGG_lib - Win32 Release"
+!MESSAGE NMAKE /f "VCF_AGG_lib.mak" CFG="AGG_lib - Win32 LIB Release"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
 !MESSAGE "AGG_lib - Win32 vc80 DLL Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "AGG_lib - Win32 vc80 DLL Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "AGG_lib - Win32 vc80 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "AGG_lib - Win32 vc80 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "AGG_lib - Win32 vc80 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "AGG_lib - Win32 vc80 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "AGG_lib - Win32 vc71 DLL Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "AGG_lib - Win32 vc71 DLL Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "AGG_lib - Win32 vc71 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "AGG_lib - Win32 vc71 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "AGG_lib - Win32 vc71 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "AGG_lib - Win32 vc71 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "AGG_lib - Win32 vc70 DLL Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "AGG_lib - Win32 vc70 DLL Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "AGG_lib - Win32 vc70 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "AGG_lib - Win32 vc70 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "AGG_lib - Win32 vc70 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "AGG_lib - Win32 vc70 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "AGG_lib - Win32 vc6 DLL Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "AGG_lib - Win32 vc6 DLL Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "AGG_lib - Win32 vc6 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "AGG_lib - Win32 vc6 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "AGG_lib - Win32 vc6 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "AGG_lib - Win32 vc6 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "AGG_lib - Win32 icl7 DLL Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "AGG_lib - Win32 icl7 DLL Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "AGG_lib - Win32 icl7 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "AGG_lib - Win32 icl7 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "AGG_lib - Win32 icl7 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "AGG_lib - Win32 icl7 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "AGG_lib - Win32 icl6 DLL Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "AGG_lib - Win32 icl6 DLL Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "AGG_lib - Win32 icl6 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "AGG_lib - Win32 icl6 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "AGG_lib - Win32 icl6 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "AGG_lib - Win32 icl6 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "AGG_lib - Win32 DLL Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "AGG_lib - Win32 DLL Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "AGG_lib - Win32 Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "AGG_lib - Win32 Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "AGG_lib - Win32 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "AGG_lib - Win32 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE 
 
 # Begin Project
@@ -100,7 +100,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\AGG_vc80_s.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\AGG_vc80_s.lib"
 
-!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc80 Debug"
+!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc80 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -123,7 +123,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\AGG_vc80_sd.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\AGG_vc80_sd.lib"
 
-!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc80 Release"
+!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc80 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -192,7 +192,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\AGG_vc71_s.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\AGG_vc71_s.lib"
 
-!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc71 Debug"
+!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc71 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -215,7 +215,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\AGG_vc71_sd.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\AGG_vc71_sd.lib"
 
-!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc71 Release"
+!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc71 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -284,7 +284,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\AGG_vc70_s.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\AGG_vc70_s.lib"
 
-!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc70 Debug"
+!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc70 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -307,7 +307,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\AGG_vc70_sd.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\AGG_vc70_sd.lib"
 
-!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc70 Release"
+!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc70 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -376,7 +376,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\AGG_vc6_s.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\AGG_vc6_s.lib"
 
-!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc6 Debug"
+!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc6 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -399,7 +399,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\AGG_vc6_sd.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\AGG_vc6_sd.lib"
 
-!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc6 Release"
+!ELSEIF  "$(CFG)" == "AGG_lib - Win32 vc6 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -468,7 +468,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\AGG_icl7_s.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\AGG_icl7_s.lib"
 
-!ELSEIF  "$(CFG)" == "AGG_lib - Win32 icl7 Debug"
+!ELSEIF  "$(CFG)" == "AGG_lib - Win32 icl7 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -491,7 +491,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\AGG_icl7_sd.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\AGG_icl7_sd.lib"
 
-!ELSEIF  "$(CFG)" == "AGG_lib - Win32 icl7 Release"
+!ELSEIF  "$(CFG)" == "AGG_lib - Win32 icl7 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -560,7 +560,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\AGG_icl6_s.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\AGG_icl6_s.lib"
 
-!ELSEIF  "$(CFG)" == "AGG_lib - Win32 icl6 Debug"
+!ELSEIF  "$(CFG)" == "AGG_lib - Win32 icl6 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -583,7 +583,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\AGG_icl6_sd.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\AGG_icl6_sd.lib"
 
-!ELSEIF  "$(CFG)" == "AGG_lib - Win32 icl6 Release"
+!ELSEIF  "$(CFG)" == "AGG_lib - Win32 icl6 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -652,7 +652,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\AGG_s.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\AGG_s.lib"
 
-!ELSEIF  "$(CFG)" == "AGG_lib - Win32 Debug"
+!ELSEIF  "$(CFG)" == "AGG_lib - Win32 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -675,7 +675,7 @@ LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo /out:"..\..\lib\AGG_sd.lib"
 # ADD LIB32 /nologo /out:"..\..\lib\AGG_sd.lib"
 
-!ELSEIF  "$(CFG)" == "AGG_lib - Win32 Release"
+!ELSEIF  "$(CFG)" == "AGG_lib - Win32 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -704,32 +704,32 @@ LIB32=link.exe -lib
 
 # Name "AGG_lib - Win32 vc80 DLL Debug"
 # Name "AGG_lib - Win32 vc80 DLL Release"
-# Name "AGG_lib - Win32 vc80 Debug"
-# Name "AGG_lib - Win32 vc80 Release"
+# Name "AGG_lib - Win32 vc80 LIB Debug"
+# Name "AGG_lib - Win32 vc80 LIB Release"
 # Name "AGG_lib - Win32 vc71 DLL Debug"
 # Name "AGG_lib - Win32 vc71 DLL Release"
-# Name "AGG_lib - Win32 vc71 Debug"
-# Name "AGG_lib - Win32 vc71 Release"
+# Name "AGG_lib - Win32 vc71 LIB Debug"
+# Name "AGG_lib - Win32 vc71 LIB Release"
 # Name "AGG_lib - Win32 vc70 DLL Debug"
 # Name "AGG_lib - Win32 vc70 DLL Release"
-# Name "AGG_lib - Win32 vc70 Debug"
-# Name "AGG_lib - Win32 vc70 Release"
+# Name "AGG_lib - Win32 vc70 LIB Debug"
+# Name "AGG_lib - Win32 vc70 LIB Release"
 # Name "AGG_lib - Win32 vc6 DLL Debug"
 # Name "AGG_lib - Win32 vc6 DLL Release"
-# Name "AGG_lib - Win32 vc6 Debug"
-# Name "AGG_lib - Win32 vc6 Release"
+# Name "AGG_lib - Win32 vc6 LIB Debug"
+# Name "AGG_lib - Win32 vc6 LIB Release"
 # Name "AGG_lib - Win32 icl7 DLL Debug"
 # Name "AGG_lib - Win32 icl7 DLL Release"
-# Name "AGG_lib - Win32 icl7 Debug"
-# Name "AGG_lib - Win32 icl7 Release"
+# Name "AGG_lib - Win32 icl7 LIB Debug"
+# Name "AGG_lib - Win32 icl7 LIB Release"
 # Name "AGG_lib - Win32 icl6 DLL Debug"
 # Name "AGG_lib - Win32 icl6 DLL Release"
-# Name "AGG_lib - Win32 icl6 Debug"
-# Name "AGG_lib - Win32 icl6 Release"
+# Name "AGG_lib - Win32 icl6 LIB Debug"
+# Name "AGG_lib - Win32 icl6 LIB Release"
 # Name "AGG_lib - Win32 DLL Debug"
 # Name "AGG_lib - Win32 DLL Release"
-# Name "AGG_lib - Win32 Debug"
-# Name "AGG_lib - Win32 Release"
+# Name "AGG_lib - Win32 LIB Debug"
+# Name "AGG_lib - Win32 LIB Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ""

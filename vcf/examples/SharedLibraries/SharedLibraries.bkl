@@ -7,6 +7,9 @@
         <set var="DLLEXT">.so</set>
         <dirname>.</dirname>
         <sources>SimpleDLL.cpp</sources>
+        <clean-files cond="FORMAT=='msvc'">
+            SimpleDLL.so.manifest
+        </clean-files>
     </dll>
 
     <exe id="SharedLibraries" template="vcf_exe_console"

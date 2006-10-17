@@ -52,12 +52,23 @@ OPTION_SELECTLIB =
 # The type of libraries: [0,1]
 OPTION_SHARED = 1
 
-# The type of runtime libraries.
-# "default" means the same value as OPTION_SHARED: [default,0,1]
-OPTION_SHARED_RUNTIME = default
+# The type of the runtime libraries: [static,dynamic]
+OPTION_RUNTIME = dynamic
 
 # The build configuration: [0,1]
 OPTION_DEBUG = 1
+
+# Threading: [single,multi]
+OPTION_THREADING = multi
+
+# Enable or disable RTTI: [0,1]
+OPTION_CPP_RTTI = 1
+
+# Enable or disable C++ exceptions: [0,1]
+OPTION_CPP_EXCEPTIONS = 1
+
+# Warnings level: [no,default,max]
+OPTION_WARNINGS = default
 
 # Make the all-in-1 library: [0,1]
 OPTION_ALLIN1 = 0

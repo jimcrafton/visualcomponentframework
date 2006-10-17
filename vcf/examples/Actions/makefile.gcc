@@ -22,13 +22,15 @@ FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 GRAPHICSKIT_FILENAME = GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-ACTIONS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_2) -mthreads \
-	$(____OPTION_DEBUG_8_p) -DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 \
-	-Wno-multichar -I..\..\src -I..\..\src\thirdparty\common\ZLib \
-	-I..\..\src\thirdparty\common\LibPNG \
+ACTIONS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS_9) $(____OPTION_DEBUG_10_p) \
+	-DVCF_DISABLE_PRAGMA_LINKING -D_WIN32 -DWIN32 -Wno-multichar -I..\..\src \
+	-I..\..\src\thirdparty\common\ZLib -I..\..\src\thirdparty\common\LibPNG \
 	-I..\..\src\thirdparty\common\LibJPEG \
 	-I..\..\src\thirdparty\common\agg\include $(__FOUNDATIONKIT_DLL_p) \
-	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
+	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) \
+	$(____OPTION_CPP_RTTI_0_7) $(____OPTION_CPP_EXCEPTIONS_1_8) $(CPPFLAGS) \
+	$(CXXFLAGS)
 ACTIONS_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\examples\Actions\Actions_Actions.o \
 	..\..\lib\$(OBJDIR)\examples\Actions\Actions_Actions_rc.o
@@ -57,22 +59,43 @@ ifeq ($(OPTION_APPLICATIONKIT),1)
 __Actions___depname = .\Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 endif
 ifeq ($(OPTION_DEBUG),0)
-__OPTIMIZE_2 = -O2
+__OPTIMIZE_4 = -O2
 endif
 ifeq ($(OPTION_DEBUG),1)
-__OPTIMIZE_2 = -O0
+__OPTIMIZE_4 = -O0
+endif
+ifeq ($(OPTION_CPP_RTTI),0)
+____OPTION_CPP_RTTI_0_7 = -fno-rtti
+endif
+ifeq ($(OPTION_CPP_RTTI),1)
+____OPTION_CPP_RTTI_0_7 = 
+endif
+ifeq ($(OPTION_CPP_EXCEPTIONS),0)
+____OPTION_CPP_EXCEPTIONS_1_8 = -fno-exceptions
+endif
+ifeq ($(OPTION_CPP_EXCEPTIONS),1)
+____OPTION_CPP_EXCEPTIONS_1_8 = 
+endif
+ifeq ($(OPTION_WARNINGS),no)
+__OPTION_WARNINGS_9 = 
+endif
+ifeq ($(OPTION_WARNINGS),default)
+__OPTION_WARNINGS_9 = 
+endif
+ifeq ($(OPTION_WARNINGS),max)
+__OPTION_WARNINGS_9 = -W -Wall
 endif
 ifeq ($(OPTION_DEBUG),0)
-____OPTION_DEBUG_8_p = -DNDEBUG
+____OPTION_DEBUG_10_p = -DNDEBUG
 endif
 ifeq ($(OPTION_DEBUG),1)
-____OPTION_DEBUG_8_p = -D_DEBUG
+____OPTION_DEBUG_10_p = -D_DEBUG
 endif
 ifeq ($(OPTION_DEBUG),0)
-____OPTION_DEBUG_8_p_1 = --define NDEBUG
+____OPTION_DEBUG_10_p_1 = --define NDEBUG
 endif
 ifeq ($(OPTION_DEBUG),1)
-____OPTION_DEBUG_8_p_1 = --define _DEBUG
+____OPTION_DEBUG_10_p_1 = --define _DEBUG
 endif
 ifeq ($(OPTION_ALLIN1),0)
 ____Actions_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
@@ -101,6 +124,12 @@ endif
 ifeq ($(OPTION_DEBUG),1)
 __DEBUG_INFO = -g
 endif
+ifeq ($(OPTION_THREADING),multi)
+__OPTION_THREADING = -mthreads
+endif
+ifeq ($(OPTION_THREADING),single)
+__OPTION_THREADING = 
+endif
 
 
 all: ..\..\lib\$(OBJDIR)\examples\Actions
@@ -118,14 +147,14 @@ clean:
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
 .\Actions$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(ACTIONS_OBJECTS) ..\..\lib\$(OBJDIR)\examples\Actions\Actions_Actions_rc.o
-	$(CXX) -o $@ $(ACTIONS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -mthreads -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--subsystem,windows -mwindows $(____Actions_APPLICATIONKIT_p) $(____Actions_GRAPHICSKIT_p) $(____Actions_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32
+	$(CXX) -o $@ $(ACTIONS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING) -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--subsystem,windows -mwindows $(____Actions_APPLICATIONKIT_p) $(____Actions_GRAPHICSKIT_p) $(____Actions_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32
 endif
 
 ..\..\lib\$(OBJDIR)\examples\Actions\Actions_Actions.o: ./Actions.cpp
 	$(CXX) -c -o $@ $(ACTIONS_CXXFLAGS) $(CPPDEPS) $<
 
 ..\..\lib\$(OBJDIR)\examples\Actions\Actions_Actions_rc.o: ./Actions.rc
-	windres --use-temp-file -i$< -o$@ $(____OPTION_DEBUG_8_p_1) --define VCF_DISABLE_PRAGMA_LINKING --define _WIN32 --define WIN32 --include-dir ..\..\src
+	windres --use-temp-file -i$< -o$@ $(____OPTION_DEBUG_10_p_1) --define VCF_DISABLE_PRAGMA_LINKING --define _WIN32 --define WIN32 --include-dir ..\..\src
 
 .PHONY: all clean
 

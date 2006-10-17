@@ -16,18 +16,21 @@ CPPDEPS = -MT$@ -MF`echo $@ | sed -e 's,\.o$$,.d,'` -MD
 OBJDIR = gnu$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-XMAKE_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
-	-DGCC $(CPPFLAGS) $(CXXFLAGS)
+XMAKE_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS) $(____OPTION_DEBUG_1) -DVCF_DISABLE_PRAGMA_LINKING \
+	-Wno-multichar -I../../src -DGCC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 XMAKE_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_CmdLine.o \
 	../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_FilePath.o \
 	../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_xmake.o \
 	../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_xmakeUtils.o \
 	../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_XMLParser.o
-XMAKE_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) -D_THREAD_SAFE -pthread \
-	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
-	-DGCC $(__FOUNDATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
+XMAKE_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS) $(____OPTION_DEBUG_1) -DVCF_DISABLE_PRAGMA_LINKING \
+	-Wno-multichar -I../../src -DGCC $(__FOUNDATIONKIT_DLL_p) \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
+	$(CXXFLAGS)
 XMAKE_OBJECTS =  \
 	../../lib/$(OBJDIR)/utilities/Xmake/xmake_main.o
 
@@ -51,6 +54,12 @@ endif
 ifeq ($(OPTION_SHARED),1)
 SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 endif
+ifeq ($(OPTION_THREADING),multi)
+__OPTION_THREADING_14 = -pthread
+endif
+ifeq ($(OPTION_THREADING),single)
+__OPTION_THREADING_14 = 
+endif
 ifeq ($(OPTION_ALLIN1),0)
 ____xmake_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
 endif
@@ -66,11 +75,38 @@ endif
 ifeq ($(OPTION_DEBUG),1)
 __OPTIMIZE = -O0
 endif
+ifeq ($(OPTION_THREADING),multi)
+__OPTION_THREADING = -D_THREAD_SAFE -pthread
+endif
+ifeq ($(OPTION_THREADING),single)
+__OPTION_THREADING = 
+endif
+ifeq ($(OPTION_CPP_RTTI),0)
+____OPTION_CPP_RTTI_0 = -fno-rtti
+endif
+ifeq ($(OPTION_CPP_RTTI),1)
+____OPTION_CPP_RTTI_0 = 
+endif
+ifeq ($(OPTION_CPP_EXCEPTIONS),0)
+____OPTION_CPP_EXCEPTIONS_1 = -fno-exceptions
+endif
+ifeq ($(OPTION_CPP_EXCEPTIONS),1)
+____OPTION_CPP_EXCEPTIONS_1 = 
+endif
+ifeq ($(OPTION_WARNINGS),default)
+__OPTION_WARNINGS = 
+endif
+ifeq ($(OPTION_WARNINGS),max)
+__OPTION_WARNINGS = -W -Wall
+endif
+ifeq ($(OPTION_WARNINGS),no)
+__OPTION_WARNINGS = 
+endif
 ifeq ($(OPTION_DEBUG),0)
-____OPTION_DEBUG = -DNDEBUG
+____OPTION_DEBUG_1 = -DNDEBUG
 endif
 ifeq ($(OPTION_DEBUG),1)
-____OPTION_DEBUG = -D_DEBUG
+____OPTION_DEBUG_1 = -D_DEBUG
 endif
 ifeq ($(OPTION_DEBUG),0)
 __DEBUG_INFO = 
@@ -104,7 +140,7 @@ clean:
 	$(RANLIB) $@
 
 ../../bin/xmake: $(XMAKE_OBJECTS) ../../lib/libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
-	$(CXX) -o $@ $(XMAKE_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) -pthread -L../../lib  $(____xmake_FOUNDATIONKIT_p)  -ldl -luuid -lrt ../../lib/libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+	$(CXX) -o $@ $(XMAKE_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_14) -L../../lib  $(____xmake_FOUNDATIONKIT_p)  -ldl -luuid -lrt ../../lib/libXmake$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 
 ../../lib/$(OBJDIR)/utilities/Xmake/xmake_lib_CmdLine.o: ./CmdLine.cpp
 	$(CXX) -c -o $@ $(XMAKE_LIB_CXXFLAGS) $(CPPDEPS) $<
