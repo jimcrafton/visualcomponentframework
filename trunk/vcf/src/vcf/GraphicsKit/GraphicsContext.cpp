@@ -1862,8 +1862,9 @@ void GraphicsContext::buildEllipse( double x1, double y1, double x2, double y2,
 							std::vector<Point>& pts, const Matrix2D& transform )
 {
 	agg::path_storage path;
-	agg::ellipse ellipseShape( x1 + ((x2-x1)/2.0), y1 + ((y2-y1)/2.0),
-								abs(static_cast<int32>(x2-x1)), abs(static_cast<int32>(y2-y1)), 100 );
+    agg::ellipse ellipseShape( x1 + ((x2-x1)/2.0), y1 + ((y2-y1)/2.0),
+        abs(static_cast<int32>(x2-x1))/2.0, abs(static_cast<int32>(y2-y1))/2.0, 100 );
+
 	path.concat_path( ellipseShape );
 
 	for (size_t i=0;i<path.total_vertices();i++ ) {
