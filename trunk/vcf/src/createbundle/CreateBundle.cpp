@@ -270,7 +270,7 @@ int main( int argc, char** argv ){
 
 					dest.erase( dest.size()-1, 1 );
 				}
-				proc.createProcess( "attrib", "+s " + FilePath::transformToOSSpecific(dest) );
+				proc.createProcess( "attrib", "+s " + String("\""+FilePath::transformToOSSpecific(dest)+"\"") );
 
 			}
 			catch ( BasicException& e ) {

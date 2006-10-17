@@ -47,7 +47,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
+				AdditionalIncludeDirectories="$(VCF_ROOT)\src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;USE_FOUNDATIONKIT_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -78,7 +78,7 @@
 				OutputFile="..\..\bin\createinfo.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="$(VCF_LIB)"
+				AdditionalLibraryDirectories="$(VCF_ROOT)\lib"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\..\..\bin/createinfo.pdb"
 				SubSystem="1"
