@@ -92,6 +92,7 @@
 
     <subproject id="MFCIntegration1" template="example"/>
     <subproject id="MFCIntegration2" template="example"/>
+    <subproject id="Win32Integration" template="example"/>
     <subproject id="QTPlayer" template="example"/>
     -->
 
