@@ -17,10 +17,10 @@
         <debug-runtime-libs>$(DEBUG_RUNTIME_LIBS)</debug-runtime-libs>
         <runtime-libs>$(RUNTIME_LIBS)</runtime-libs>
         <optimize>$(OPTIMIZE)</optimize>
-        <threading>multi</threading>
-        <cxx-rtti>on</cxx-rtti>
-        <cxx-exceptions>on</cxx-exceptions>
-        <warnings>default</warnings>
+        <threading>$(THREADING)</threading>
+        <cxx-rtti>$(CPP_RTTI)</cxx-rtti>
+        <cxx-exceptions>$(CPP_EXCEPTIONS)</cxx-exceptions>
+        <warnings>$(WARNINGS)</warnings>
 
         <define>$(substituteFromDict( OPTION_DEBUG, {'0':'NDEBUG', '1':'_DEBUG'} ))</define>
 
