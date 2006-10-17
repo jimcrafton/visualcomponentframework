@@ -254,10 +254,10 @@ void test( FinderTest& finderTest, const String& name, const bool& recurse = fal
 {
 	System::println( "\nTesting: " + name );
 
-	String vcfIncludes = System::getEnvironmentVariable( "VCF_INCLUDE" );
+	String vcfRoot = System::getEnvironmentVariable( "VCF_ROOT" );
 
-	if ( vcfIncludes.empty() ) {
-		printf( "No \"VCF_INCLUDE\" environment variable found!\n" );
+	if ( vcfRoot.empty() ) {
+		printf( "No \"VCF_ROOT\" environment variable found!\n" );
 		return;
 	}
 
@@ -265,7 +265,7 @@ void test( FinderTest& finderTest, const String& name, const bool& recurse = fal
 
 	int countTot = 0;
 
-	finderTest.loopTest( vcfIncludes, recurse );
+	finderTest.loopTest( vcfRoot + L"/src", recurse );
 
 	DateTime stopTime = DateTime::now();
 	DateTimeSpan deltaTime = stopTime - startTime;
