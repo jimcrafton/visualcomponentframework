@@ -52,7 +52,7 @@ public:
 
 void StaticTalkingCallBack( Event* e ) {
 	System::println( Format("StaticTalkingCallBack called by object: %s")
-					% e->getSource()->toString().c_str() );
+					% e->getSource()->toString() );
 }
 
 /**
@@ -158,7 +158,7 @@ public:
 	*/
 	void onTalking( Event* e ) {
 		System::println( Format("We got a talking event! Event source: %s")
-						% e->getSource()->toString().c_str() );
+						% e->getSource()->toString() );
 	}
 };
 
