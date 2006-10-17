@@ -27,7 +27,7 @@ Backward compatibility:
 
     <option name="OPTION_SHARED">
         <values>0,1</values>
-        <values-description>,DLL</values-description>
+        <values-description>LIB,DLL</values-description>
         <default-value>
             $(vcf.getOptionValue( 'OPTION_SHARED', '1' ))
         </default-value>
@@ -36,14 +36,13 @@ Backward compatibility:
         </description>
     </option>
 
-    <option name="OPTION_SHARED_RUNTIME">
-        <values>default,0,1</values>
+    <option name="OPTION_RUNTIME">
+        <values>static,dynamic</values>
         <default-value>
-            $(vcf.getOptionValue( 'OPTION_SHARED_RUNTIME', 'default' ))
+            $(vcf.getOptionValue( 'OPTION_RUNTIME', 'dynamic' ))
         </default-value>
         <description>
-The type of runtime libraries.
-"default" means the same value as OPTION_SHARED:
+            The type of the runtime libraries:
         </description>
     </option>
 
@@ -57,6 +56,63 @@ The type of runtime libraries.
             The build configuration:
         </description>
     </option>
+
+    <if cond="COMPILER not in ['vc','evc']">
+        <set var="OPTION_DEBUG_RUNTIME">default</set>
+    </if>
+    <if cond="COMPILER in ['vc','evc']">
+        <option name="OPTION_DEBUG_RUNTIME">
+            <values>default,0,1</values>
+            <default-value>
+                $(vcf.getOptionValue( 'OPTION_DEBUG_RUNTIME', 'default' ))
+            </default-value>
+            <description>
+The runtime libraries configuration.
+'default' means the same as OPTION_DEBUG:
+            </description>
+        </option>
+    </if>
+
+    <option name="OPTION_THREADING">
+        <values>single,multi</values>
+        <default-value>
+            $(vcf.getOptionValue( 'OPTION_THREADING', 'multi' ))
+        </default-value>
+        <description>
+            Threading:
+        </description>
+    </option>
+
+    <option name="OPTION_CPP_RTTI">
+        <values>0,1</values>
+        <default-value>
+            $(vcf.getOptionValue( 'OPTION_CPP_RTTI', '1' ))
+        </default-value>
+        <description>
+            Enable or disable RTTI:
+        </description>
+    </option>
+
+    <option name="OPTION_CPP_EXCEPTIONS">
+        <values>0,1</values>
+        <default-value>
+            $(vcf.getOptionValue( 'OPTION_CPP_EXCEPTIONS', '1' ))
+        </default-value>
+        <description>
+            Enable or disable C++ exceptions:
+        </description>
+    </option>
+
+    <option name="OPTION_WARNINGS">
+        <values>no,default,max</values>
+        <default-value>
+            $(vcf.getOptionValue( 'OPTION_WARNINGS', 'default' ))
+        </default-value>
+        <description>
+            Warnings level:
+        </description>
+    </option>
+
 
     <option name="OPTION_ALLIN1">
         <values>0,1</values>
