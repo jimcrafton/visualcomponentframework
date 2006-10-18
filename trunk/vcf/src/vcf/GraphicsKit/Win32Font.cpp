@@ -97,7 +97,10 @@ void Win32Font::init()
 	
 
 	if ( VER_PLATFORM_WIN32_NT == osVersion.dwPlatformId ) {
-		if ( (osVersion.dwMinorVersion >= 1) && (osVersion.dwMinorVersion != 51) ) { //Windows XP or better
+		if ( osVersion.dwMajorVersion >= 6 ) { //Windows Vista or better!!!
+			defFont = (HFONT)GetStockObject( DEFAULT_GUI_FONT );
+		}
+		else if ( (osVersion.dwMinorVersion >= 1) && (osVersion.dwMinorVersion != 51) ) { //Windows XP or better
 			/*****************************************************
 			*
 			*
