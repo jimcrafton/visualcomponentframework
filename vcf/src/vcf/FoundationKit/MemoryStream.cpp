@@ -60,10 +60,14 @@ void MemoryStream::seek(const uint64& offset, const SeekType& offsetFrom)
 		}
 		break;
 
-		case stSeekFromRelative: {
+		case stSeekForwards: {
 			stream_.setSeekPos( stream_.getSeekPos() + offset );
 		}
 		break;
+
+		case stSeekBackwards: {
+			stream_.setSeekPos( stream_.getSeekPos() - offset );
+		}
 	}
 }
 

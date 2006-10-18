@@ -178,7 +178,7 @@ DWORD Win32FileStream::translateSeekTypeToMoveType( const SeekType& offsetFrom )
 		}
 		break;
 
-		case stSeekFromRelative : {
+		case stSeekForwards : {
 			result = FILE_CURRENT;
 		}
 		break;
