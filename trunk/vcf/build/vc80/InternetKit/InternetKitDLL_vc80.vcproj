@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="InternetKitDLL"
-	ProjectGUID="{298C4E5D-293B-43FC-A61F-BF33596B5637}"
+	ProjectGUID="{7D0B5CCD-1884-4B07-8EED-79A61C2CFA99}"
 	>
 	<Platforms>
 		<Platform
@@ -74,6 +74,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="urlmon.lib"
 				OutputFile="..\..\..\bin\InternetKit_vc80_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -171,7 +172,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib"
+				AdditionalDependencies="urlmon.lib"
 				OutputFile="..\..\..\bin\InternetKit_vc80.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
