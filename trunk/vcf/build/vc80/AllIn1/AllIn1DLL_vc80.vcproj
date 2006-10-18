@@ -79,7 +79,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib odbc32.lib odbccp32.lib"
 				OutputFile="..\..\..\bin\vcf_vc80_d.dll"
-				LinkIncremental="1"
+				LinkIncremental="0"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="..\..\..\lib"
 				GenerateDebugInformation="true"
@@ -4479,6 +4479,22 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsToolKit.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h"
 				>
 			</File>
 			<File
