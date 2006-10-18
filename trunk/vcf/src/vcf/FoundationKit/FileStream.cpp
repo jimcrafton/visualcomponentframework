@@ -95,23 +95,33 @@ void FileInputStream::open( const String& filename )
 
 void FileInputStream::seek(const uint64& offset, const SeekType& offsetFrom )
 {
-	fsPeer_->seek( offset, offsetFrom );
+	/*
+	Wrap stSeekBackwards to hide it from the peers.  Not all platforms support
+	reverse seeking.
+	*/
+	if (offsetFrom == stSeekBackwards) {
+		fsPeer_->seek( currentSeekPos_ -= offset, stSeekFromStart );
+		return;
+	}
+	else {
+		fsPeer_->seek( offset, offsetFrom );
 
-	switch ( offsetFrom ) {
-		case stSeekFromStart: {
-			currentSeekPos_ = offset;
-		}
-		break;
+		switch ( offsetFrom ) {
+			case stSeekFromStart: {
+				currentSeekPos_ = offset;
+			}
+			break;
 
-		case stSeekFromEnd: {
-			currentSeekPos_ = fsPeer_->getSize() - offset;
-		}
-		break;
+			case stSeekFromEnd: {
+				currentSeekPos_ = fsPeer_->getSize() - offset;
+			}
+			break;
 
-		case stSeekFromRelative: {
-			currentSeekPos_ += offset;
+			case stSeekForwards: {
+				currentSeekPos_ += offset;
+			}
+			break;
 		}
-		break;
 	}
 }
 
@@ -215,8 +225,13 @@ void FileOutputStream::seek(const uint64& offset, const SeekType& offsetFrom )
 		}
 		break;
 
-		case stSeekFromRelative: {
+		case stSeekForwards: {
 			currentSeekPos_ += offset;
+		}
+		break;
+
+		case stSeekBackwards: {
+			currentSeekPos_ -= offset;
 		}
 		break;
 	}

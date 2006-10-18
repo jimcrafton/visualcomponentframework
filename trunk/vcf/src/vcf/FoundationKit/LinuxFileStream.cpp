@@ -158,7 +158,7 @@ int LinuxFileStream::translateSeekTypeToMoveType( const SeekType& offsetFrom )
 			}
 			break;
 
-		case stSeekFromRelative : {
+		case stSeekForwards : {
 				result = SEEK_CUR;
 			}
 			break;

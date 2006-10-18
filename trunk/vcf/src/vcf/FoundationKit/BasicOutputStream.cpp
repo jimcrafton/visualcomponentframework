@@ -49,8 +49,13 @@ void BasicOutputStream::seek(const uint64& offset, const SeekType& offsetFrom)
 		}
 		break;
 
-		case stSeekFromRelative: {
+		case stSeekForwards: {
 			outStream_.setSeekPos( outStream_.getSeekPos() + offset );
+		}
+		break;
+
+		case stSeekBackwards: {
+			outStream_.setSeekPos( outStream_.getSeekPos() - offset );
 		}
 		break;
 	}

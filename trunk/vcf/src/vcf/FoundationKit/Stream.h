@@ -25,7 +25,8 @@ namespace VCF{
 */
 enum SeekType{
 	stSeekFromStart=0,
-	stSeekFromRelative,
+	stSeekForwards,
+	stSeekBackwards,
 	stSeekFromEnd
 };
 
