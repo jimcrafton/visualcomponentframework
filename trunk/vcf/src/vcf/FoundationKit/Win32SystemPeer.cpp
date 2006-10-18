@@ -355,7 +355,12 @@ String Win32SystemPeer::getOSName()
 	::GetVersionEx( &osVersion );
 	//need a way to tell WinCE???
 	if ( VER_PLATFORM_WIN32_NT == osVersion.dwPlatformId ) {
-		result = "WindowsNT";
+		if ( osVersion.dwMajorVersion >= 6 ) {
+			result = "WindowsVista";
+		}
+		else {
+			result = "WindowsNT";
+		}
 	}
 	else {
 		result = "Windows";
