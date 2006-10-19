@@ -58,7 +58,7 @@ public:
 		return inStream_->getCurrentSeekPos();
 	}
 
-	virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes ) {
+	virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes ) {
 		if ( NULL == inStream_ ) {
 			throw InvalidPointerException();
 		}
@@ -200,7 +200,7 @@ public:
 		return outStream_->getCurrentSeekPos();
 	}
 
-	virtual uint32 write( const unsigned char* bytesToWrite, uint32 sizeOfBytes ) {
+	virtual uint64 write( const unsigned char* bytesToWrite, uint64 sizeOfBytes ) {
 		if ( NULL == outStream_ ) {
 			throw InvalidPointerException();
 		}

@@ -41,9 +41,9 @@ char* TextInputStream::getBuffer()
 	return NULL;
 }
 
-uint32 TextInputStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
+uint64 TextInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 {
-	uint32 result = 0;
+	uint64 result = 0;
 	if ( NULL != inStream_ ){
 		result = inStream_->read( bytesToRead, sizeOfBytes );
 	}

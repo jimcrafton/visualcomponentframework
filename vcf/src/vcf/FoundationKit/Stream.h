@@ -106,7 +106,7 @@ public:
 	// new introduced by tiziano
 	virtual bool isEOS() = 0;
 
-	virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes ) = 0;
+	virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes ) = 0;
 
 	virtual void read( Persistable* persistableObject ) ;
 
@@ -181,7 +181,7 @@ class FOUNDATIONKIT_API OutputStream : public Stream {
 public:
 	virtual ~OutputStream(){};
 
-	virtual uint32 write( const unsigned char* bytesToWrite, uint32 sizeOfBytes )=0;
+	virtual uint64 write( const unsigned char* bytesToWrite, uint64 sizeOfBytes )=0;
 
 	virtual void write( Persistable* persistableObject );
 

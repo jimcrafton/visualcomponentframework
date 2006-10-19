@@ -75,9 +75,9 @@ char* BasicOutputStream::getBuffer()
 	return outStream_.getBuffer();
 }
 
-uint32 BasicOutputStream::write( const unsigned char* bytesToRead, uint32 sizeOfBytes )
+uint64 BasicOutputStream::write( const unsigned char* bytesToRead, uint64 sizeOfBytes )
 {
-	uint32 result = 0;
+	uint64 result = 0;
 	result = outStream_.write( bytesToRead, sizeOfBytes );
 	if ( NULL != outputStream_ ){
 		result = outputStream_->write( bytesToRead, sizeOfBytes );

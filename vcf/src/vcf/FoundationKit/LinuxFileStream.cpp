@@ -75,9 +75,15 @@ LinuxFileStream::~LinuxFileStream()
 	}
 }
 
-void LinuxFileStream::seek( const uint32& offset,
+void LinuxFileStream::seek( const uint64& offset,
                             const SeekType& offsetFrom )
 {
+	// Check that offset is representable in this system's off_t type
+	off_t target = static_cast<off_t>( offset );
+	if ( ( target < 0 ) || ( offset != static_cast<uint64>( target ) ) {
+		throw FileIOError( MAKE_ERROR_MSG_2(
+								"Offset value is too large for this system." );
+	}
 	if ( fileHandle_ < 0 ) {
 		return;
 	}
@@ -89,7 +95,7 @@ void LinuxFileStream::seek( const uint32& offset,
 	}
 }
 
-uint32 LinuxFileStream::getSize()
+uint64 LinuxFileStream::getSize()
 {
 	if ( fileHandle_ < 0 ) {
 		return 0;
@@ -102,31 +108,43 @@ uint32 LinuxFileStream::getSize()
 	return 0;
 }
 
-uint32 LinuxFileStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
+uint64 LinuxFileStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 {
+	// Check that offset is representable in this system's off_t type
+	off_t length = static_cast<off_t>( sizeOfBytes );
+	if ( ( length < 0 ) || ( sizeOfBytes != static_cast<uint64>( length ) ) {
+		throw FileIOError( MAKE_ERROR_MSG_2(
+								"Read byte count is too large for this system." );
+	}
 	if ( fileHandle_ < 0 ) {
 		return 0;
 	}
-	int bytesRead =::read( fileHandle_, bytesToRead, sizeOfBytes );
+	int64 bytesRead =::read( fileHandle_, bytesToRead, length );
 	if ( bytesRead < 0 ) {
 		throw FileIOError( MAKE_ERROR_MSG_2(
 		                       "Error reading data from file stream.\n"
 		                       + LinuxUtils::getErrorString( errno ) ) );
 	}
 	//error if we are not reading/writing asynchronously !
-	if ( bytesRead != static_cast<int>(sizeOfBytes) ) {
+	if ( bytesRead != static_cast<int64>(length) ) {
 		//throw exception ?
 	}
 
     return bytesRead;
 }
 
-uint32 LinuxFileStream::write( const unsigned char* bytesToWrite, uint32 sizeOfBytes )
+uint642 LinuxFileStream::write( const unsigned char* bytesToWrite, uint64 sizeOfBytes )
 {
+	// Check that offset is representable in this system's off_t type
+	off_t length = static_cast<off_t>( sizeOfBytes );
+	if ( ( length < 0 ) || ( sizeOfBytes != static_cast<uint64>( length ) ) {
+		throw FileIOError( MAKE_ERROR_MSG_2(
+								"Write byte count is too large for this system." );
+	}
 	if ( fileHandle_ < 0 ) {
 		return 0;
 	}	
-	int bytesWritten = ::write( fileHandle_, bytesToWrite, sizeOfBytes );
+	int64 bytesWritten = ::write( fileHandle_, bytesToWrite, length );
 	if ( bytesWritten < 0 ) {
         wprintf(L"%i\n", errno);
 		throw FileIOError( MAKE_ERROR_MSG_2(
@@ -134,7 +152,7 @@ uint32 LinuxFileStream::write( const unsigned char* bytesToWrite, uint32 sizeOfB
 		                       + LinuxUtils::getErrorString( errno ) ) );
 	}
 	//error if we are not reading/writing asynchronously !
-	if ( bytesWritten != static_cast<int>(sizeOfBytes) ) {
+	if ( bytesWritten != static_cast<int64>(length) ) {
 		//throw exception ?
 		//throw FileIOError( CANT_WRITE_TO_FILE + filename_ );
 	}

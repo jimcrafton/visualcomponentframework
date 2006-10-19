@@ -41,12 +41,12 @@ public:
 	*SEEK_FROM_RELATIVE - offsets relative to the current seek position <br>
 	*SEEK_FROM_END - offsets backwards, starting at the end of the file <br>
 	*/
-	virtual void seek(const uint32& offset, const SeekType& offsetFrom) = 0;
+	virtual void seek(const uint64& offset, const SeekType& offsetFrom) = 0;
 
 	/**
 	*returns the size of the file stream in bytes
 	*/
-	virtual uint32 getSize() = 0;
+	virtual uint64 getSize() = 0;
 
 	/**
 	*reads sizeOfBytes bytes from the stream into the buffer bytesToRead
@@ -55,7 +55,7 @@ public:
 	*@param uint32 the number of bytes to read from the file, starting
 	*at the current seek position.
 	*/
-	virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes ) = 0;
+	virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes ) = 0;
 
 	/**
 	*writes sizeOfBytes bytes to the file stream from the buffer bytesToWrite.
@@ -63,7 +63,7 @@ public:
 	*the data that will written out to the file stream
 	*@param @ uint32 the number of bytes to write
 	*/
-	virtual uint32 write( const unsigned char* bytesToWrite, uint32 sizeOfBytes ) = 0;
+	virtual uint64 write( const unsigned char* bytesToWrite, uint64 sizeOfBytes ) = 0;
 
 	/**
 	*returns a pointer to the buffer that represents the file contents

@@ -88,11 +88,11 @@ void InputStream::read( String& val )
 	AnsiString tmpStr;
 
 	val = "";
-	uint32 size = getSize();
+	uint64 size = getSize();
 
-	uint32 seekPos = getCurrentSeekPos();
+	uint64 seekPos = getCurrentSeekPos();
 
-	uint32 totalBytesRead = 0;
+	uint64 totalBytesRead = 0;
 	/*
 	JC
 	WARNING!!!
@@ -112,7 +112,7 @@ void InputStream::read( String& val )
 	*/
 
 	char buffer[BUFFER_SIZE];
-	uint32 bufferRead = minVal<uint32>( BUFFER_SIZE * sizeof(char), size-seekPos );
+	uint64 bufferRead = minVal<uint64>( BUFFER_SIZE * sizeof(char), size-seekPos );
 
 	read( (unsigned char*) buffer, bufferRead );
 
@@ -214,7 +214,7 @@ void InputStream::read( String& val )
 		}
 
 		if ( !done ) {
-			bufferRead = VCF::minVal<uint32>( BUFFER_SIZE * sizeof(char), size );
+			bufferRead = VCF::minVal<uint64>( BUFFER_SIZE * sizeof(char), size );
 			read( (unsigned char*)buffer, bufferRead );
 			tmp = buffer;
 			start = tmp;

@@ -28,13 +28,13 @@ public:
 
 	virtual ~LinuxFileStream();
 
-	virtual void seek( const uint32& offset, const SeekType& offsetFrom );
+	virtual void seek( const uint64& offset, const SeekType& offsetFrom );
 
-	virtual uint32 getSize();
+	virtual uint64 getSize();
 
-    virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes );
+    virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes );
 
-    virtual uint32 write( const unsigned char* bytesToWrite, uint32 sizeOfBytes );
+    virtual uint64 write( const unsigned char* bytesToWrite, uint64 sizeOfBytes );
 
 	virtual char* getBuffer();
 
