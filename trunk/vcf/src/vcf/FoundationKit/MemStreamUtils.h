@@ -26,7 +26,7 @@ GenericMemoryBuffer
 template <class DATA_TYPE>
 class GenericMemoryBuffer {
 public:
-	GenericMemoryBuffer( const uint32 allocationSize = 65536) :
+	GenericMemoryBuffer( const uint64 allocationSize = 65536) :
 			allocationSize_(allocationSize),
 			currentBuffer_(NULL),
 			currentAllocationSize_(0),
@@ -45,11 +45,11 @@ public:
 		return currentBuffer_;
 	}
 
-	inline uint32 getSize()  {
+	inline uint64 getSize()  {
 		return currentSize_;
 	}
 
-	inline uint32 write( const unsigned char* buffer, const uint32& sizeOfBuffer ) {
+	inline uint64 write( const unsigned char* buffer, const uint64& sizeOfBuffer ) {
 		if ( currentAllocationSize_ < (seekPos_ + sizeOfBuffer) ) {
 			allocate( sizeOfBuffer );
 		}
@@ -68,7 +68,7 @@ public:
 		return sizeOfBuffer;
 	}
 
-	inline uint32 read( unsigned char* buffer, const uint32& sizeOfBuffer ) {
+	inline uint64 read( unsigned char* buffer, const uint64& sizeOfBuffer ) {
 		if ( currentAllocationSize_ < (seekPos_ + sizeOfBuffer) ) {
 			throw NoFreeMemException("No longer have enough memory in this buffer to read from.");
 		}
@@ -83,11 +83,11 @@ public:
 		return sizeOfBuffer;
 	}
 
-	inline void setSeekPos( uint32 pos ) {
+	inline void setSeekPos( uint64 pos ) {
 		seekPos_ = pos;
 	}
 
-	inline uint32 getSeekPos() {
+	inline uint64 getSeekPos() {
 		return seekPos_;
 	}
 
@@ -100,8 +100,8 @@ public:
 		allocate(allocationSize_);
 	}
 protected:
-	inline void allocate( uint32 sizeToAllocate ) {
-		uint32 oldSize = currentAllocationSize_;
+	inline void allocate( uint64 sizeToAllocate ) {
+		uint64 oldSize = currentAllocationSize_;
 
 		sizeToAllocate = (sizeToAllocate - oldSize);
 
@@ -123,11 +123,11 @@ protected:
 		currentBuffer_ = tmp;
 	}
 private:
-	uint32 allocationSize_;
+	uint64 allocationSize_;
 	DATA_TYPE* currentBuffer_;
-	uint32 currentAllocationSize_;
-	uint32 seekPos_;
-	uint32 currentSize_;
+	uint64 currentAllocationSize_;
+	uint64 seekPos_;
+	uint64 currentSize_;
 };
 
 
@@ -138,7 +138,7 @@ private:
 */
 class FOUNDATIONKIT_API CharMemStream : public GenericMemoryBuffer<char> {
 public:
-	CharMemStream( const uint32& allocationSize = 65536 ) :
+	CharMemStream( const uint64& allocationSize = 65536 ) :
 		GenericMemoryBuffer<char> ( allocationSize ) {
 	}
 

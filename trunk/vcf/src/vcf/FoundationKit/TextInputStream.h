@@ -39,7 +39,7 @@ public:
 
 	virtual char* getBuffer();
 
-	virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes );
+	virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes );
 
 	/**
 	*all numbers are written out as the number converted to text, followed by a

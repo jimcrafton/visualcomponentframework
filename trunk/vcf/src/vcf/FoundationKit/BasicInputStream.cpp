@@ -93,9 +93,9 @@ char* BasicInputStream::getBuffer()
 	return inStream_.getBuffer();
 }
 
-uint32 BasicInputStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
+uint64 BasicInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 {
-	uint32 result = 0;
+	uint64 result = 0;
 	if ( NULL != inputStream_ ){
 		result = inputStream_->read( bytesToRead, sizeOfBytes );
 		inStream_.write( bytesToRead, sizeOfBytes );

@@ -75,25 +75,47 @@ Win32FileStream::~Win32FileStream()
 	}
 }
 
-void Win32FileStream::seek(const uint32& offset, const SeekType& offsetFrom)
+void Win32FileStream::seek(const uint64& offset, const SeekType& offsetFrom)
 {
-	DWORD err = SetFilePointer( fileHandle_, offset, NULL, translateSeekTypeToMoveType( offsetFrom ) );
+	// Check that offset is within the positive range of an int64
+	int64 target = static_cast<int64>( offset );
+	if ( target < 0 ) {
+		throw FileIOError( MAKE_ERROR_MSG_2(
+								"Offset value is too large for this system." ) );
+	}
+	LONG low32 = (target << 32) >> 32;
+	LONG high32 = target >> 32;
+	DWORD err = SetFilePointer( fileHandle_, low32, &high32, translateSeekTypeToMoveType( offsetFrom ) );
 	if ( 0xFFFFFFFF == err ) {
 		throw FileIOError( "Error attempting to seek in stream.\nPeer error string: " + Win32Utils::getErrorString(GetLastError()) );
 	}
 }
 
-uint32 Win32FileStream::getSize()
+uint64 Win32FileStream::getSize()
 {
-	return GetFileSize( fileHandle_, NULL );
+	DWORD high32 = 0;
+	DWORD low32 = GetFileSize( fileHandle_, &high32 );
+	uint64 size = (static_cast<uint64>(high32) << 32) + low32;
+	return size;
 }
 
-uint32 Win32FileStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
+uint64 Win32FileStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 {
+	uint64 totalRead = 0;
 	DWORD bytesRead = 0;
-	BOOL result = ReadFile( fileHandle_, bytesToRead, sizeOfBytes, &bytesRead, NULL );
+	DWORD toRead;
+	if (sizeOfBytes > 0xFFFFFFFF) {
+		toRead = 0xFFFFFFFF;
+		sizeOfBytes -= 0xFFFFFFFF;
+	}
+	else {
+		toRead = static_cast<DWORD>(sizeOfBytes);
+		sizeOfBytes = 0;
+	}
+	BOOL result = ReadFile( fileHandle_, bytesToRead, toRead, &bytesRead, NULL );
+	totalRead += bytesRead;
 
-	if ( bytesRead != sizeOfBytes ){ //error if we are not read /writing asynchronously !
+	if ( bytesRead != toRead ){ //error if we are not read /writing asynchronously !
 		//throw exception ?
 	}
 
@@ -101,13 +123,29 @@ uint32 Win32FileStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
 		throw FileIOError( "Error reading data from file stream.\nPeer error string: " + Win32Utils::getErrorString(GetLastError()) );
 	}
 
-	return bytesRead;
+	if (sizeOfBytes && (toRead == bytesRead)) {
+		totalRead += read( bytesToRead + totalRead, sizeOfBytes );
+	}
+
+	return totalRead;
 }
 
-uint32 Win32FileStream::write( const unsigned char* bytesToWrite, uint32 sizeOfBytes )
+uint64 Win32FileStream::write( const unsigned char* bytesToWrite, uint64 sizeOfBytes )
 {
+	uint64 totalWritten = 0;
 	DWORD bytesWritten = 0;
-	BOOL result = WriteFile( fileHandle_, bytesToWrite, sizeOfBytes, &bytesWritten, NULL );
+	DWORD toWrite;
+	if (sizeOfBytes > 0xFFFFFFFF) {
+		toWrite = 0xFFFFFFFF;
+		sizeOfBytes -= 0xFFFFFFFF;
+	}
+	else {
+		toWrite = static_cast<DWORD>(sizeOfBytes);
+		sizeOfBytes = 0;
+	}
+	BOOL result = WriteFile( fileHandle_, bytesToWrite, toWrite, &bytesWritten, NULL );
+	totalWritten += bytesWritten;
+
 	if ( bytesWritten != sizeOfBytes ){//error if we are not read /writing asynchronously !
 		//throw exception ?
 		//throw FileIOError( CANT_WRITE_TO_FILE + filename_ );
@@ -117,7 +155,11 @@ uint32 Win32FileStream::write( const unsigned char* bytesToWrite, uint32 sizeOfB
 		throw FileIOError( CANT_WRITE_TO_FILE + filename_ + "\nPeer error string: " + Win32Utils::getErrorString(GetLastError()) );
 	}
 
-	return bytesWritten;
+	if (sizeOfBytes && (toWrite == bytesWritten)) {
+		totalWritten += write( bytesToWrite + totalWritten, sizeOfBytes );
+	}
+
+	return totalWritten;
 }
 
 char* Win32FileStream::getBuffer()

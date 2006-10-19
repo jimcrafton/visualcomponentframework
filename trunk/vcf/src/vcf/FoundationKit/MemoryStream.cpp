@@ -86,9 +86,9 @@ void MemoryStream::write( Persistable* persistableObject )
 	}
 }
 
-uint32 MemoryStream::write( const unsigned char* bytesToWrite, uint32 sizeOfBytes )
+uint64 MemoryStream::write( const unsigned char* bytesToWrite, uint64 sizeOfBytes )
 {
-	uint32 result = 0;
+	uint64 result = 0;
 
 	if ( NULL != this->outputStream_ ){
 		result = outputStream_->write( bytesToWrite, sizeOfBytes );
@@ -103,9 +103,9 @@ uint32 MemoryStream::write( const unsigned char* bytesToWrite, uint32 sizeOfByte
 	return result;
 }
 
-uint32 MemoryStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
+uint64 MemoryStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 {
-	uint32 result = 0;
+	uint64 result = 0;
 	if ( NULL != this->inputStream_ ){
 		result = inputStream_->read( bytesToRead, sizeOfBytes );
 	}

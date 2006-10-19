@@ -59,9 +59,9 @@ public:
 
 	virtual void write( Persistable* persistableObject );
 
-	virtual uint32 write( const unsigned char* bytesToWrite, uint32 sizeOfBytes );
+	virtual uint64 write( const unsigned char* bytesToWrite, uint64 sizeOfBytes );
 
-	virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes );
+	virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes );
 
 	void init();
 

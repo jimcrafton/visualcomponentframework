@@ -63,9 +63,9 @@ char* TextOutputStream::getBuffer()
 	return buffer;
 }
 
-uint32 TextOutputStream::write( const unsigned char* bytesToRead, uint32 sizeOfBytes )
+uint64 TextOutputStream::write( const unsigned char* bytesToRead, uint64 sizeOfBytes )
 {
-	uint32 result = 0;
+	uint64 result = 0;
 
 	textBuffer_.append( (const char*)bytesToRead, sizeOfBytes );
 

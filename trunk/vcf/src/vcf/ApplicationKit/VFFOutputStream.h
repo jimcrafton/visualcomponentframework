@@ -182,7 +182,7 @@ public:
 		return stream_->getCurrentSeekPos();
 	}
 
-	virtual uint32 write( const unsigned char* bytesToWrite, uint32 sizeOfBytes ) {
+	virtual uint64 write( const unsigned char* bytesToWrite, uint64 sizeOfBytes ) {
 		return stream_->write( bytesToWrite, sizeOfBytes );
 	}
 

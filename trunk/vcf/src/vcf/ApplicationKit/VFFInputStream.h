@@ -51,7 +51,7 @@ public:
 		return stream_->getCurrentSeekPos();
 	}
 
-	virtual uint32 read( unsigned char* bytesToRead, uint32 sizeOfBytes ) {
+	virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes ) {
 		return stream_->read( bytesToRead, sizeOfBytes );
 	}
 

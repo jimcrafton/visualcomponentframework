@@ -40,7 +40,7 @@ public:
 
 	virtual uint64 getCurrentSeekPos() ;
 
-	virtual uint32 write( const unsigned char* bytesToRead, uint32 sizeOfBytes );
+	virtual uint64 write( const unsigned char* bytesToRead, uint64 sizeOfBytes );
 
 	/**
 	*all numbers are written out as the number converted to text, followed by a

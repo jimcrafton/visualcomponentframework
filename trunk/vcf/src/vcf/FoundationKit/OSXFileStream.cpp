@@ -94,11 +94,17 @@ OSXFileStream::~OSXFileStream()
 	}
 }
 
-void OSXFileStream::seek(const uint32& offset, const SeekType& offsetFrom)
+void OSXFileStream::seek(const uint64& offset, const SeekType& offsetFrom)
 {
+	// Check that offset is representable in this system's off_t type
+	off_t target = static_cast<off_t>( offset );
+	if ( ( target < 0 ) || ( offset != static_cast<uint64>( target ) ) {
+		throw FileIOError( MAKE_ERROR_MSG_2(
+								"Read byte count is too large for this system." );
+	}
 	int seekType = translateSeekTypeToMoveType( offsetFrom );
 
-	int err = ::lseek( fileHandle_, offset, seekType );
+	int err = ::lseek( fileHandle_, target, seekType );
 
 	if (err < 0 ) {
 		int errorCode = errno;
@@ -107,9 +113,9 @@ void OSXFileStream::seek(const uint32& offset, const SeekType& offsetFrom)
 	}
 }
 
-uint32 OSXFileStream::getSize()
+uint64 OSXFileStream::getSize()
 {
-	uint32 result = 0;
+	uint64 result = 0;
 	
 	struct stat st = {0};
 	if ( -1 != fstat( fileHandle_, &st ) ) {
@@ -119,10 +125,16 @@ uint32 OSXFileStream::getSize()
 	return result;
 }
 
-uint32 OSXFileStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
+uint64 OSXFileStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 {
+	// Check that offset is representable in this system's off_t type
+	off_t length = static_cast<off_t>( sizeOfBytes );
+	if ( ( length < 0 ) || ( sizeOfBytes != static_cast<uint64>( length ) ) {
+		throw FileIOError( MAKE_ERROR_MSG_2(
+								"Read byte count is too large for this system." );
+	}
 	size_t bytesRead = 0;
-	size_t err = ::read( fileHandle_, bytesToRead, sizeOfBytes );
+	size_t err = ::read( fileHandle_, bytesToRead, length );
 
 	if (err < 0)	{
 		// TODO: peer error string
@@ -135,7 +147,7 @@ uint32 OSXFileStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
 		bytesRead = err;
 	}
 
-	if ( bytesRead != sizeOfBytes ){ //error if we are not read /writing asynchronously !
+	if ( bytesRead != length ){ //error if we are not read /writing asynchronously !
 								  //throw exception ?
 	}
 	
@@ -144,8 +156,14 @@ uint32 OSXFileStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
 
 uint32 OSXFileStream::write( const unsigned char* bytesToWrite, uint32 sizeOfBytes )
 {
+	// Check that offset is representable in this system's off_t type
+	off_t length = static_cast<off_t>( sizeOfBytes );
+	if ( ( length < 0 ) || ( sizeOfBytes != static_cast<uint64>( length ) ) {
+		throw FileIOError( MAKE_ERROR_MSG_2(
+								"Write byte count is too large for this system." );
+	}
 	int bytesWritten = 0;
-	size_t err = ::write( fileHandle_, bytesToWrite, sizeOfBytes );
+	size_t err = ::write( fileHandle_, bytesToWrite, length );
 
 	if (err < 0)
 	{
@@ -159,7 +177,7 @@ uint32 OSXFileStream::write( const unsigned char* bytesToWrite, uint32 sizeOfByt
 		bytesWritten = err;
 	}
 
-	if ( bytesWritten != sizeOfBytes ){//error if we are not read /writing asynchronously !
+	if ( bytesWritten != length ){//error if we are not read /writing asynchronously !
 									//throw exception ?
 		 //throw FileIOError( CANT_WRITE_TO_FILE + filename_ );
 	}

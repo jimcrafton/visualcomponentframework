@@ -135,9 +135,9 @@ char* FileInputStream::getBuffer()
 	return fsPeer_->getBuffer();
 }
 
-uint32 FileInputStream::read( unsigned char* bytesToRead, uint32 sizeOfBytes )
+uint64 FileInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 {
-	uint32 result = fsPeer_->read( bytesToRead, sizeOfBytes );
+	uint64 result = fsPeer_->read( bytesToRead, sizeOfBytes );
 
 	currentSeekPos_ += result;
 
@@ -249,9 +249,9 @@ char* FileOutputStream::getBuffer()
 	return fsPeer_->getBuffer();
 }
 
-uint32 FileOutputStream::write( const unsigned char* bytesToWrite, uint32 sizeOfBytes )
+uint64 FileOutputStream::write( const unsigned char* bytesToWrite, uint64 sizeOfBytes )
 {
-	uint32 result = fsPeer_->write( bytesToWrite, sizeOfBytes );
+	uint64 result = fsPeer_->write( bytesToWrite, sizeOfBytes );
 
 	currentSeekPos_ += result;
 
