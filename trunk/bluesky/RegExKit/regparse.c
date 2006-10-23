@@ -56,7 +56,7 @@ OnigSyntaxType OnigSyntaxRuby = {
   , ONIG_OPTION_NONE
 };
 
-OnigSyntaxType*  OnigDefaultSyntax = ONIG_SYNTAX_RUBY;
+ONIG_EXTERN OnigSyntaxType*  OnigDefaultSyntax = ONIG_SYNTAX_RUBY;
 
 extern void onig_null_warn(const char* s) { }
 
