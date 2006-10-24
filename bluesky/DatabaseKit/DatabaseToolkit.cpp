@@ -1,4 +1,7 @@
 #include "DatabaseKit.h"
+#include "SQLiteDatabase.h"
+
+
 
 using namespace VCF;
 
@@ -16,19 +19,23 @@ void DatabaseToolkit::destroy()
     delete DatabaseToolkit::Instance;
 }
 
-Database* DatabaseToolkit::createDatabase( DatabaseType type )
+Database* DatabaseToolkit::createDatabase( const String& type )
 {
-    if ( type == dtFirebird ) {
-        return new FBDatabase();
+	VCF_ASSERT( !type.empty() );
+
+    if ( type == SQLITETYPE ) {
+        return new SQLiteDatabase();
     }
 
     return NULL;
 }
 
-DataSet* DatabaseToolkit::createDataSet( DatabaseType type )
+DataSet* DatabaseToolkit::createDataSet( const String& type )
 {
-    if ( type == dtFirebird ) {
-        return new FBDataSet();
+	VCF_ASSERT( !type.empty() );
+
+    if ( type == "" ) {
+        return NULL;//new FBDataSet();
     }
 
     return NULL;

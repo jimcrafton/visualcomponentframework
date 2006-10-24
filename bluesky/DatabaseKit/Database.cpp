@@ -44,9 +44,9 @@ void Database::setConnected( bool connected )
     if (connected != getConnected()) {
 
         if (connected) {
-            internalConnect();
+            internal_connect();
         } else {
-            internalDisconnect();
+            internal_disconnect();
         }
 
     }

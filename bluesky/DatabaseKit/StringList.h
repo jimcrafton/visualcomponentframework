@@ -1,11 +1,22 @@
 #ifndef _VCF_STRINGLIST_H__
 #define _VCF_STRINGLIST_H__
 
-#include <vector>
+
+/**
+Copyright 2000-2006 The VCF Project
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
+
+#if _MSC_VER > 1000
+#   pragma once
+#endif
+
 
 namespace VCF {
 
-    class StringList {
+    class DATABASEKIT_API StringList {
     public:
         StringList();
 
@@ -29,7 +40,7 @@ namespace VCF {
 
         int getCount();
     private:
-        vector<String> strings_;
+		std::vector<String> strings_;
     };
 
 };
