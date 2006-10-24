@@ -1,5 +1,6 @@
-#include "vcf/FoundationKit/FoundationKit.h"
 #include "DatabaseKit.h"
+#include "vcf/FoundationKit/StringTokenizer.h"
+
 
 using namespace VCF;
 
@@ -39,7 +40,7 @@ String StringList::getCommaText()
 {
     String result = "";
 
-    typedef vector<String>::iterator strIt;
+    typedef std::vector<String>::iterator strIt;
 
     for ( strIt it=strings_.begin();it!=strings_.end();++it ) {
         result+=*it + ", ";
@@ -65,7 +66,7 @@ String StringList::getText()
 {
     String result = "";
 
-    typedef vector<String>::iterator strIt;
+    typedef std::vector<String>::iterator strIt;
 
     for ( strIt it=strings_.begin();it!=strings_.end();++it ) {
         result+=*it + "\r\n";

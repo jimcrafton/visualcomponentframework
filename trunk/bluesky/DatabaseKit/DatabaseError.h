@@ -16,7 +16,7 @@
 namespace VCF
 {
 
-    class DatabaseError : public BasicException{
+    class DATABASEKIT_API DatabaseError : public BasicException {
     public:
 
         DatabaseError( const String &message ) :

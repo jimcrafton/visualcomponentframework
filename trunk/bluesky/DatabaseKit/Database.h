@@ -1,16 +1,24 @@
 #ifndef _VCF_DATABASE_H__
 #define _VCF_DATABASE_H__
 
-#include "vcf/FoundationKit/FoundationKit.h"
-#include <map>
 
-using namespace std;
+/**
+Copyright 2000-2006 The VCF Project
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
+
+#if _MSC_VER > 1000
+#   pragma once
+#endif
+
 
 namespace VCF {
 
     class Transaction;
 
-    class Database : public Object {
+    class DATABASEKIT_API Database : public Object {
     public:
 
         Database();
@@ -34,13 +42,13 @@ namespace VCF {
         virtual OSHandleID getHandle() = 0;
     protected:
 
-        virtual void internalConnect() = 0;
+        virtual void internal_connect() = 0;
 
-        virtual void internalDisconnect() = 0;
+        virtual void internal_disconnect() = 0;
 
         virtual int collateParams() = 0;
 
-        map<String, VariantData> params_;
+		std::map<String, VariantData> params_;
         bool connected_;
         String databaseName_;
         Transaction* tr_;

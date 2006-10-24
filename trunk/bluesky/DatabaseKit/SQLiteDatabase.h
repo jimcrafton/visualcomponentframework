@@ -1,7 +1,10 @@
 #ifndef _VCF_SQLITEDB_H__
 #define _VCF_SQLITEDB_H__
 
-//#include "sqlite3.h"
+#include "sqliteInt.h"
+
+
+#define SQLITETYPE	"SQLiteType"
 
 namespace VCF {
 
@@ -12,13 +15,19 @@ namespace VCF {
 
         virtual ~SQLiteDatabase();
 
+		virtual OSHandleID getHandle();
+
+		static String errorMessageFromHandle( sqlite3* dbHandle );
+		String getErrorMessage() const;
     protected:
 
-        virtual void internalConnect();
+        virtual void internal_connect();
 
-    private:
+		virtual void internal_disconnect();
 
-        //sqlite3* db_;
+        virtual int collateParams();
+
+		sqlite3* dbHandle_;
 
     };
 
