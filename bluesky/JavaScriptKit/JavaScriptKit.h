@@ -227,16 +227,11 @@ namespace VCF {
 			return *singleton;
 		}
 
-		
-
-		static void invokeEventhandler( Event* e, JSFunction* function, const VCF::String& functionName );
-	protected:
-
-		friend class JavaScriptKit;
 		static void initialize();
 		static void terminate();
 
-
+		static void invokeEventhandler( Event* e, JSFunction* function, const VCF::String& functionName );
+	protected:
 
 		typedef std::map<String,ClassEntry> ClassMap;
 		typedef std::map<JSObject*,ObjectInstanceEntry> InstanceMap;
