@@ -15,12 +15,12 @@ using namespace VCF;
 
 void JavaScriptKit::init( int argc, char **argv )
 {
-	JavaScriptEngine::initialize();
+	
 }
 
 void JavaScriptKit::terminate()
 {
-	JavaScriptEngine::terminate();
+	
 }
 
 
