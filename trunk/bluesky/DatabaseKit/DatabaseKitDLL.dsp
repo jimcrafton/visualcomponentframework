@@ -68,7 +68,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DATABASEKITDLL_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "./" /I "./DBProviders/sqlite-3.3.6" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DATABASEKIT_EXPORTS" /D "DATABASEKIT_DLL" /D "USE_FOUNDATIONKIT_DLL" /D "NO_TCL" /D "OS_WIN" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "./" /I "./DBProviders/sqlite" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DATABASEKIT_EXPORTS" /D "DATABASEKIT_DLL" /D "USE_FOUNDATIONKIT_DLL" /D "NO_TCL" /D "OS_WIN" /YX /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -159,111 +159,111 @@ SOURCE=.\Transaction.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\alter.c"
+SOURCE=".\DBProviders\sqlite\alter.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\analyze.c"
+SOURCE=".\DBProviders\sqlite\analyze.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\attach.c"
+SOURCE=".\DBProviders\sqlite\attach.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\auth.c"
+SOURCE=".\DBProviders\sqlite\auth.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\btree.c"
+SOURCE=".\DBProviders\sqlite\btree.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\build.c"
+SOURCE=".\DBProviders\sqlite\build.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\callback.c"
+SOURCE=".\DBProviders\sqlite\callback.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\complete.c"
+SOURCE=".\DBProviders\sqlite\complete.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\date.c"
+SOURCE=".\DBProviders\sqlite\date.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\delete.c"
+SOURCE=".\DBProviders\sqlite\delete.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\expr.c"
+SOURCE=".\DBProviders\sqlite\expr.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\func.c"
+SOURCE=".\DBProviders\sqlite\func.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\hash.c"
+SOURCE=".\DBProviders\sqlite\hash.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\insert.c"
+SOURCE=".\DBProviders\sqlite\insert.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\legacy.c"
+SOURCE=".\DBProviders\sqlite\legacy.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\main.c"
+SOURCE=".\DBProviders\sqlite\main.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\opcodes.c"
+SOURCE=".\DBProviders\sqlite\opcodes.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\os.c"
+SOURCE=".\DBProviders\sqlite\os.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\os_win.c"
+SOURCE=".\DBProviders\sqlite\os_win.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\pager.c"
+SOURCE=".\DBProviders\sqlite\pager.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\parse.c"
+SOURCE=".\DBProviders\sqlite\parse.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\pragma.c"
+SOURCE=".\DBProviders\sqlite\pragma.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\prepare.c"
+SOURCE=".\DBProviders\sqlite\prepare.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\printf.c"
+SOURCE=".\DBProviders\sqlite\printf.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\random.c"
+SOURCE=".\DBProviders\sqlite\random.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\select.c"
+SOURCE=".\DBProviders\sqlite\select.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\shell.c"
+SOURCE=".\DBProviders\sqlite\shell.c"
 # End Source File
 # Begin Source File
 
@@ -275,59 +275,59 @@ SOURCE=.\SQLiteDatabase.h
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\table.c"
+SOURCE=".\DBProviders\sqlite\table.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\tclsqlite.c"
+SOURCE=".\DBProviders\sqlite\tclsqlite.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\tokenize.c"
+SOURCE=".\DBProviders\sqlite\tokenize.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\trigger.c"
+SOURCE=".\DBProviders\sqlite\trigger.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\update.c"
+SOURCE=".\DBProviders\sqlite\update.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\utf.c"
+SOURCE=".\DBProviders\sqlite\utf.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\util.c"
+SOURCE=".\DBProviders\sqlite\util.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\vacuum.c"
+SOURCE=".\DBProviders\sqlite\vacuum.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\vdbe.c"
+SOURCE=".\DBProviders\sqlite\vdbe.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\vdbeapi.c"
+SOURCE=".\DBProviders\sqlite\vdbeapi.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\vdbeaux.c"
+SOURCE=".\DBProviders\sqlite\vdbeaux.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\vdbefifo.c"
+SOURCE=".\DBProviders\sqlite\vdbefifo.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\vdbemem.c"
+SOURCE=".\DBProviders\sqlite\vdbemem.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite-3.3.6\where.c"
+SOURCE=".\DBProviders\sqlite\where.c"
 # End Source File
 # End Group
 # End Group
