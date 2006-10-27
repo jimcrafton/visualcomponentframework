@@ -3,14 +3,17 @@
 using namespace VCF;
 
 DataSet::DataSet()
-    : Object(), columnCount(0)
+    : Object(), columnCount(0),
+	fieldDefs_(0)
 {
- selectSQL_ = new StringList();
+	selectSQL_ = new StringList();
+	fieldDefs_ = new FieldDefinitions(); 
 }
 
 DataSet::~DataSet()
 {
- delete selectSQL_;
+	delete selectSQL_;
+	delete fieldDefs_;
 }
 
 void DataSet::setDatabase( Database* db )
@@ -48,5 +51,20 @@ void DataSet::close()
 
 StringList* DataSet::getSelectSQL()
 {
- return selectSQL_;
+	return selectSQL_;
+}
+
+void DataSet::updateFieldDefs()
+{
+	if ( !fieldDefs_->isUpdated() ) {
+		
+
+
+		fieldDefs_->setUpdated( true );
+	}
+}
+
+void DataSet::initFieldDefs()
+{
+	internal_initFieldDefs();
 }
