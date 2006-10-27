@@ -108,6 +108,10 @@ SOURCE=.\DataSet.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\FieldDefinitions.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StringList.cpp
 # End Source File
 # Begin Source File
@@ -137,6 +141,10 @@ SOURCE=.\DatabaseToolkit.h
 # Begin Source File
 
 SOURCE=.\DataSet.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FieldDefinitions.h
 # End Source File
 # Begin Source File
 
@@ -260,10 +268,6 @@ SOURCE=".\DBProviders\sqlite\random.c"
 # Begin Source File
 
 SOURCE=".\DBProviders\sqlite\select.c"
-# End Source File
-# Begin Source File
-
-SOURCE=".\DBProviders\sqlite\shell.c"
 # End Source File
 # Begin Source File
 

@@ -21,6 +21,7 @@ namespace VCF {
     class Database;
     class Transaction;
     class StringList;
+	class FieldDefinitions;
 
     class DATABASEKIT_API DataSet : public Object {
     public:
@@ -38,16 +39,25 @@ namespace VCF {
         void close();
 
         StringList* getSelectSQL();
+
+		void updateFieldDefs();
+
+		virtual void initFieldDefs();
     protected:
         virtual void internalOpen() = 0;
 
         virtual void internalClose() = 0;
+
+		virtual void internal_initFieldDefs() = 0;
 
         Database* db_;
         Transaction* tr_;
         StringList* selectSQL_;
         int columnCount;
         std::map<String, VariantData> params_;
+
+		FieldDefinitions* fieldDefs_;
+
     private:
         void setActive( bool active );
     };

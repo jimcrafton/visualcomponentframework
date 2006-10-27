@@ -113,6 +113,7 @@ Handle the extension based on the compiler
 #include "DataSet.h"
 #include "Transaction.h"
 #include "StringList.h"
+#include "FieldDefinitions.h"
 
 
 //DB providers...

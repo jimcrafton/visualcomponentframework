@@ -65,11 +65,11 @@ void SQLiteDatabase::setHandle( OSHandleID handle )
 void SQLiteDatabase::rollback()
 {
 	if ( !transactionStarted_ ) {
-		//throw DBException("Are you sure you set up this correctly? It appears that either a call to beginTransation() was never made, or it failed.");
+		throw DatabaseError("Are you sure you set up this correctly? It appears that either a call to beginTransation() was never made, or it failed.");
 	}
 	
 	if ( SQLITE_OK != sqlite3_exec( dbHandle_, "rollback transaction;", NULL,0,NULL ) ) {
-		//return false;
+		throw DatabaseError( getErrorMessage() );
 	}
 
 	transactionStarted_ = false;
@@ -87,11 +87,11 @@ void SQLiteDatabase::startTransaction()
 void SQLiteDatabase::commit()
 {
 	if ( !transactionStarted_ ) {
-		//throw DBException("Are you sure you set up this correctly? It appears that either a call to beginTransation() was never made, or it failed.");
+		throw DatabaseError("Are you sure you set up this correctly? It appears that either a call to beginTransation() was never made, or it failed.");
 	}
 	
 	if ( SQLITE_OK != sqlite3_exec( dbHandle_, "commit transaction;", NULL,0,NULL ) ) {
-		//return false;
+		throw DatabaseError( getErrorMessage() );
 	}
 
 	transactionStarted_ = false;
