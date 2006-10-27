@@ -8,6 +8,7 @@ SQLiteDatabase::SQLiteDatabase()
     : Database(),
 	dbHandle_(NULL)
 {
+	sqlBased_ = true;
 }
 
 SQLiteDatabase::~SQLiteDatabase()
@@ -50,4 +51,48 @@ String SQLiteDatabase::errorMessageFromHandle( sqlite3* dbHandle )
 String SQLiteDatabase::getErrorMessage() const
 {
 	return SQLiteDatabase::errorMessageFromHandle( dbHandle_ );
+}
+
+void SQLiteDatabase::flushSchemaCache( const String& tableName )
+{
+
+}
+
+void SQLiteDatabase::setHandle( OSHandleID handle )
+{
+}
+
+void SQLiteDatabase::rollback()
+{
+	if ( !transactionStarted_ ) {
+		//throw DBException("Are you sure you set up this correctly? It appears that either a call to beginTransation() was never made, or it failed.");
+	}
+	
+	if ( SQLITE_OK != sqlite3_exec( dbHandle_, "rollback transaction;", NULL,0,NULL ) ) {
+		//return false;
+	}
+
+	transactionStarted_ = false;
+}
+
+void SQLiteDatabase::startTransaction()
+{
+	transactionStarted_ = false;
+
+	if ( SQLITE_OK == sqlite3_exec( dbHandle_, "begin transaction;", NULL,0,NULL ) ) {
+		transactionStarted_ = true;
+	}
+}
+
+void SQLiteDatabase::commit()
+{
+	if ( !transactionStarted_ ) {
+		//throw DBException("Are you sure you set up this correctly? It appears that either a call to beginTransation() was never made, or it failed.");
+	}
+	
+	if ( SQLITE_OK != sqlite3_exec( dbHandle_, "commit transaction;", NULL,0,NULL ) ) {
+		//return false;
+	}
+
+	transactionStarted_ = false;
 }
