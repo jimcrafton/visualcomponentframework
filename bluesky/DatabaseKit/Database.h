@@ -21,6 +21,8 @@ namespace VCF {
     class DATABASEKIT_API Database : public Object {
     public:
 
+		DELEGATE(LoggedIn);
+
         Database();
 
         virtual ~Database();
@@ -29,17 +31,49 @@ namespace VCF {
 
         void disconnect();
 
-        void setParam( String param, VariantData value );
+        void setParam( const String& param, VariantData value );
 
-        VariantData getParam ( String param );
+        VariantData getParam ( const String& );
 
         bool getConnected();
 
         void setConnected( bool connected );
 
-        void setDatabaseName( String databaseName );
+        void setDatabaseName( const String& databaseName );
 
-        virtual OSHandleID getHandle() = 0;
+		String getDatabaseName();        
+
+		bool isSQLBased();
+
+		uint32 getDataSetCount();
+
+		bool getKeepsConnection();
+
+		void setKeepsConnection( bool val );
+
+		bool getNeedsLoginPrompt();
+
+		void setNeedsLoginPrompt( bool val );
+
+		bool isTransactionStarted();
+
+		void closeDatasets();
+
+		Locale* getLocale();
+
+		void setLocale( Locale* val );
+
+		virtual void flushSchemaCache( const String& tableName ) = 0;
+
+		virtual OSHandleID getHandle() = 0;
+
+		virtual void setHandle( OSHandleID handle ) = 0;
+
+		virtual void rollback() = 0;
+
+		virtual void startTransaction() = 0;
+
+		virtual void commit() = 0;
     protected:
 
         virtual void internal_connect() = 0;
@@ -50,9 +84,13 @@ namespace VCF {
 
 		std::map<String, VariantData> params_;
         bool connected_;
+		bool sqlBased_;
+		bool keepsConnection_;
+		bool needsLoginPrompt_;
+		bool transactionStarted_;
         String databaseName_;
         Transaction* tr_;
-
+		Locale locale_;
     };
 
 };

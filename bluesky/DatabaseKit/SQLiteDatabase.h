@@ -15,7 +15,17 @@ namespace VCF {
 
         virtual ~SQLiteDatabase();
 
+		virtual void flushSchemaCache( const String& tableName );
+
 		virtual OSHandleID getHandle();
+
+		virtual void setHandle( OSHandleID handle );
+
+		virtual void rollback();
+
+		virtual void startTransaction();
+
+		virtual void commit();
 
 		static String errorMessageFromHandle( sqlite3* dbHandle );
 		String getErrorMessage() const;
