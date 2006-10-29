@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="VCFHelper.bkl"/>
+
+    <include file="fdlibm.bkl"/>
+
+    <include file="JavaScriptKitFiles.bkl"/>
+
+    <template id="JavaScriptKit_base">
+        <include>../js-impl</include>
+
+        <define>$(substituteFromDict( TOOLSET, {'win32':'XP_WIN', 'unix':'XP_UNIX'} ))</define>
+
+        <vcf-use-FoundationKit/>
+
+        <dirname>.</dirname>
+    </template>
+
+    <dll id="JavaScriptKit_dll" template="JavaScriptKit_base,base,vcf_dll_clean"
+            cond="OPTION_SHARED=='1'">
+        <dllname>$(vcf.getDllFilename( 'JavaScriptKit' ))</dllname>
+
+        <headers>$(JAVASCRIPTKIT_HDR)</headers>
+        <sources>$(JAVASCRIPTKIT_SRC)</sources>
+
+        <define>JAVASCRIPTKIT_DLL</define>
+        <define>JAVASCRIPTKIT_EXPORTS</define>
+
+        <define>EXPORT_JS_API</define>
+
+        <library>fdlibm_lib</library>
+    </dll>
+
+    <exe id="jstest" template="JavaScriptKit_base,vcf_exe_console"
+            cond="OPTION_SHARED=='1'">
+        <include>..</include>
+
+        <sources>jstest.cpp</sources>
+
+        <library>JavaScriptKit_dll</library>
+    </exe>
+
+</makefile>

@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="fdlibmFiles.bkl"/>
+
+    <template id="fdlibm_base">
+        <libname>$(vcf.getLibFilename( 'fdlibm' ))</libname>
+
+        <headers>$(FDLIBM_HDR)</headers>
+        <sources>$(FDLIBM_SRC)</sources>
+
+        <define>_IEEE_LIBM</define>
+    </template>
+
+    <lib id="fdlibm_lib" template="fdlibm_base,base,vcf_lib_clean">
+    </lib>
+</makefile>
