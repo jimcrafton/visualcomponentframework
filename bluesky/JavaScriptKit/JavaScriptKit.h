@@ -223,9 +223,7 @@ namespace VCF {
 		*/
 		void defineGlobalObject( Object* object );
 
-		static JavaScriptEngine& engine() {
-			return *singleton;
-		}
+		static JavaScriptEngine& engine();
 
 		static void initialize();
 		static void terminate();

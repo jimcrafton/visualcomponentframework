@@ -955,6 +955,10 @@ void JavaScriptEngine::finalize(JSContext *cx, JSObject *obj)
 }
 
 
+JavaScriptEngine& JavaScriptEngine::engine() {
+	return *singleton;
+}
+
 void JavaScriptEngine::initialize()
 {
 	JavaScriptEngine::singleton = new JavaScriptEngine();
