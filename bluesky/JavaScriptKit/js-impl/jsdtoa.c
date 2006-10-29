@@ -1,36 +1,41 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  *
- * The contents of this file are subject to the Netscape Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/NPL/
+ * ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express oqr
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
  *
  * The Original Code is Mozilla Communicator client code, released
  * March 31, 1998.
  *
- * The Initial Developer of the Original Code is Netscape
- * Communications Corporation.  Portions created by Netscape are
- * Copyright (C) 1998 Netscape Communications Corporation. All
- * Rights Reserved.
+ * The Initial Developer of the Original Code is
+ * Netscape Communications Corporation.
+ * Portions created by the Initial Developer are Copyright (C) 1998
+ * the Initial Developer. All Rights Reserved.
  *
- * Contributor(s): 
+ * Contributor(s):
  *
- * Alternatively, the contents of this file may be used under the
- * terms of the GNU Public License (the "GPL"), in which case the
- * provisions of the GPL are applicable instead of those above.
- * If you wish to allow use of your version of this file only
- * under the terms of the GPL and not to allow others to use your
- * version of this file under the NPL, indicate your decision by
- * deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL.  If you do not delete
- * the provisions above, a recipient may use your version of this
- * file under either the NPL or the GPL.
- */
+ * Alternatively, the contents of this file may be used under the terms of
+ * either of the GNU General Public License Version 2 or later (the "GPL"),
+ * or the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
 
 /*
  * Portable double to alphanumeric string and back converters.
@@ -41,6 +46,8 @@
 #include "jsdtoa.h"
 #include "jsprf.h"
 #include "jsutil.h" /* Added by JSIFY */
+#include "jspubtd.h"
+#include "jsnum.h"
 
 #ifdef JS_THREADSAFE
 #include "prlock.h"
@@ -88,9 +95,9 @@
 /* strtod for IEEE-arithmetic machines.
  *
  * This strtod returns a nearest machine number to the input decimal
- * string (or sets err to ERANGE).  With IEEE arithmetic, ties are
- * broken by the IEEE round-even rule.  Otherwise ties are broken by
- * biased rounding (add half and chop).
+ * string (or sets err to JS_DTOA_ERANGE or JS_DTOA_ENOMEM).  With IEEE
+ * arithmetic, ties are broken by the IEEE round-even rule.  Otherwise
+ * ties are broken by biased rounding (add half and chop).
  *
  * Inspired loosely by William D. Clinger's paper "How to Read Floating
  * Point Numbers Accurately" [Proc. ACM SIGPLAN '90, pp. 92-101].
@@ -124,7 +131,7 @@
  * #define Sudden_Underflow for IEEE-format machines without gradual
  *  underflow (i.e., that flush to zero on underflow).
  * #define No_leftright to omit left-right logic in fast floating-point
- *  computation of JS_dtoa.
+ *  computation of js_dtoa.
  * #define Check_FLT_ROUNDS if FLT_ROUNDS can assume the values 2 or 3.
  * #define RND_PRODQUOT to use rnd_prod and rnd_quot (assembly routines
  *  that use extended-precision instructions to compute rounded
@@ -158,8 +165,8 @@
  *  (On HP Series 700/800 machines, -DNAN_WORD0=0x7ff40000 works.)
  * #define MULTIPLE_THREADS if the system offers preemptively scheduled
  *  multiple threads.  In this case, you must provide (or suitably
- *  #define) two locks, acquired by ACQUIRE_DTOA_LOCK(n) and freed
- *  by FREE_DTOA_LOCK(n) for n = 0 or 1.  (The second lock, accessed
+ *  #define) two locks, acquired by ACQUIRE_DTOA_LOCK() and released
+ *  by RELEASE_DTOA_LOCK().  (The second lock, accessed
  *  in pow5mult, ensures lazy evaluation of only one copy of high
  *  powers of 5; omitting this lock would introduce a small
  *  probability of wasting memory, but would otherwise be harmless.)
@@ -203,7 +210,6 @@ extern void *MALLOC(size_t);
 static double private_mem[PRIVATE_mem], *pmem_next = private_mem;
 #endif
 
-#include "errno.h"
 #ifdef Bad_float_h
 #undef __STDC__
 
@@ -236,30 +242,12 @@ static double private_mem[PRIVATE_mem], *pmem_next = private_mem;
 Exactly one of IEEE_8087 or IEEE_MC68k should be defined.
 #endif
 
-/* Stefan Hanske <sh990154@mail.uni-greifswald.de> reports:
- *  ARM is a little endian architecture but 64 bit double words are stored
- * differently: the 32 bit words are in little endian byte order, the two words
- * are stored in big endian`s way.
- */
-#if defined (IEEE_8087) && !defined(__arm) && !defined(__arm32__) && !defined(__arm26__)
-#define word0(x) ((ULong *)&x)[1]
-#define word1(x) ((ULong *)&x)[0]
-#else
-#define word0(x) ((ULong *)&x)[0]
-#define word1(x) ((ULong *)&x)[1]
-#endif
+#define word0(x)        JSDOUBLE_HI32(x)
+#define set_word0(x, y) JSDOUBLE_SET_HI32(x, y)
+#define word1(x)        JSDOUBLE_LO32(x)
+#define set_word1(x, y) JSDOUBLE_SET_LO32(x, y)
 
-/* The following definition of Storeinc is appropriate for MIPS processors.
- * An alternative that might be better on some machines is
- * #define Storeinc(a,b,c) (*a++ = b << 16 | c & 0xffff)
- */
-#if defined(IEEE_8087)
-#define Storeinc(a,b,c) (((unsigned short *)a)[1] = (unsigned short)b, \
-((unsigned short *)a)[0] = (unsigned short)c, a++)
-#else
-#define Storeinc(a,b,c) (((unsigned short *)a)[0] = (unsigned short)b, \
-((unsigned short *)a)[1] = (unsigned short)c, a++)
-#endif
+#define Storeinc(a,b,c) (*(a)++ = (b) << 16 | (c) & 0xffff)
 
 /* #define P DBL_MANT_DIG */
 /* Ten_pmax = floor(P*log(2)/log(5)) */
@@ -324,12 +312,17 @@ extern double rnd_prod(double, double), rnd_quot(double, double);
 #ifdef JS_THREADSAFE
 #define MULTIPLE_THREADS
 static PRLock *freelist_lock;
-#define ACQUIRE_DTOA_LOCK(n) PR_Lock(freelist_lock)
-#define FREE_DTOA_LOCK(n) PR_Unlock(freelist_lock)
+#define ACQUIRE_DTOA_LOCK()                                                   \
+    JS_BEGIN_MACRO                                                            \
+        if (!initialized)                                                     \
+            InitDtoa();                                                       \
+        PR_Lock(freelist_lock);                                               \
+    JS_END_MACRO
+#define RELEASE_DTOA_LOCK() PR_Unlock(freelist_lock)
 #else
 #undef MULTIPLE_THREADS
-#define ACQUIRE_DTOA_LOCK(n)    /*nothing*/
-#define FREE_DTOA_LOCK(n)   /*nothing*/
+#define ACQUIRE_DTOA_LOCK()   /*nothing*/
+#define RELEASE_DTOA_LOCK()   /*nothing*/
 #endif
 
 #define Kmax 15
@@ -343,11 +336,60 @@ struct Bigint {
     ULong x[1];           /* wds words of number in little endian order */
 };
 
+#ifdef ENABLE_OOM_TESTING
+/* Out-of-memory testing.  Use a good testcase (over and over) and then use
+ * these routines to cause a memory failure on every possible Balloc allocation,
+ * to make sure that all out-of-memory paths can be followed.  See bug 14044.
+ */
+
+static int allocationNum;               /* which allocation is next? */
+static int desiredFailure;              /* which allocation should fail? */
+
+/**
+ * js_BigintTestingReset
+ *
+ * Call at the beginning of a test run to set the allocation failure position.
+ * (Set to 0 to just have the engine count allocations without failing.)
+ */
+JS_PUBLIC_API(void)
+js_BigintTestingReset(int newFailure)
+{
+    allocationNum = 0;
+    desiredFailure = newFailure;
+}
+
+/**
+ * js_BigintTestingWhere
+ *
+ * Report the current allocation position.  This is really only useful when you
+ * want to learn how many allocations a test run has.
+ */
+JS_PUBLIC_API(int)
+js_BigintTestingWhere()
+{
+    return allocationNum;
+}
+
+
+/*
+ * So here's what you do: Set up a fantastic test case that exercises the
+ * elements of the code you wish.  Set the failure point at 0 and run the test,
+ * then get the allocation position.  This number is the number of allocations
+ * your test makes.  Now loop from 1 to that number, setting the failure point
+ * at each loop count, and run the test over and over, causing failures at each
+ * step.  Any memory failure *should* cause a Out-Of-Memory exception; if it
+ * doesn't, then there's still an error here.
+ */
+#endif
+
 typedef struct Bigint Bigint;
 
 static Bigint *freelist[Kmax+1];
 
-/* Allocate a Bigint with 2^k words. */
+/*
+ * Allocate a Bigint with 2^k words.
+ * This is not threadsafe. The caller must use thread locks
+ */
 static Bigint *Balloc(int32 k)
 {
     int32 x;
@@ -356,10 +398,15 @@ static Bigint *Balloc(int32 k)
     uint32 len;
 #endif
 
-    ACQUIRE_DTOA_LOCK(0);
+#ifdef ENABLE_OOM_TESTING
+    if (++allocationNum == desiredFailure) {
+        printf("Forced Failing Allocation number %d\n", allocationNum);
+        return NULL;
+    }
+#endif
+
     if ((rv = freelist[k]) != NULL)
         freelist[k] = rv->next;
-    FREE_DTOA_LOCK(0);
     if (rv == NULL) {
         x = 1 << k;
 #ifdef Omit_Private_Memory
@@ -374,6 +421,8 @@ static Bigint *Balloc(int32 k)
         else
             rv = (Bigint*)MALLOC(len*sizeof(double));
 #endif
+        if (!rv)
+            return NULL;
         rv->k = k;
         rv->maxwds = x;
     }
@@ -384,17 +433,17 @@ static Bigint *Balloc(int32 k)
 static void Bfree(Bigint *v)
 {
     if (v) {
-        ACQUIRE_DTOA_LOCK(0);
         v->next = freelist[v->k];
         freelist[v->k] = v;
-        FREE_DTOA_LOCK(0);
     }
 }
 
 #define Bcopy(x,y) memcpy((char *)&x->sign, (char *)&y->sign, \
                           y->wds*sizeof(Long) + 2*sizeof(int32))
 
-/* Return b*m + a.  Deallocate the old b.  Both a and m must be between 0 and 65535 inclusive. */
+/* Return b*m + a.  Deallocate the old b.  Both a and m must be between 0 and
+ * 65535 inclusive.  NOTE: old b is deallocated on memory failure.
+ */
 static Bigint *multadd(Bigint *b, int32 m, int32 a)
 {
     int32 i, wds;
@@ -406,6 +455,17 @@ static Bigint *multadd(Bigint *b, int32 m, int32 a)
     ULong xi, z;
 #endif
     Bigint *b1;
+
+#ifdef ENABLE_OOM_TESTING
+    if (++allocationNum == desiredFailure) {
+        /* Faux allocation, because I'm not getting all of the failure paths
+         * without it.
+         */
+        printf("Forced Failing Allocation number %d\n", allocationNum);
+        Bfree(b);
+        return NULL;
+    }
+#endif
 
     wds = b->wds;
     x = b->x;
@@ -428,6 +488,10 @@ static Bigint *multadd(Bigint *b, int32 m, int32 a)
     if (carry) {
         if (wds >= b->maxwds) {
             b1 = Balloc(b->k+1);
+            if (!b1) {
+                Bfree(b);
+                return NULL;
+            }
             Bcopy(b1, b);
             Bfree(b);
             b = b1;
@@ -447,20 +511,28 @@ static Bigint *s2b(CONST char *s, int32 nd0, int32 nd, ULong y9)
     x = (nd + 8) / 9;
     for(k = 0, y = 1; x > y; y <<= 1, k++) ;
     b = Balloc(k);
+    if (!b)
+        return NULL;
     b->x[0] = y9;
     b->wds = 1;
 
     i = 9;
     if (9 < nd0) {
         s += 9;
-        do b = multadd(b, 10, *s++ - '0');
-        while(++i < nd0);
+        do {
+            b = multadd(b, 10, *s++ - '0');
+            if (!b)
+                return NULL;
+        } while(++i < nd0);
         s++;
     }
     else
         s += 10;
-    for(; i < nd; i++)
+    for(; i < nd; i++) {
         b = multadd(b, 10, *s++ - '0');
+        if (!b)
+            return NULL;
+    }
     return b;
 }
 
@@ -546,6 +618,8 @@ static Bigint *i2b(int32 i)
     Bigint *b;
 
     b = Balloc(1);
+    if (!b)
+        return NULL;
     b->x[0] = i;
     b->wds = 1;
     return b;
@@ -579,6 +653,8 @@ static Bigint *mult(CONST Bigint *a, CONST Bigint *b)
     if (wc > a->maxwds)
         k++;
     c = Balloc(k);
+    if (!c)
+        return NULL;
     for(xc = c->x, xce = xc + wc; xc < xce; xc++)
         *xc = 0;
     xa = a->x;
@@ -656,14 +732,18 @@ static PRLock *p5s_lock;
 #endif
 
 /* Return b * 5^k.  Deallocate the old b.  k must be nonnegative. */
+/* NOTE: old b is deallocated on memory failure. */
 static Bigint *pow5mult(Bigint *b, int32 k)
 {
     Bigint *b1, *p5, *p51;
     int32 i;
     static CONST int32 p05[3] = { 5, 25, 125 };
 
-    if ((i = k & 3) != 0)
+    if ((i = k & 3) != 0) {
         b = multadd(b, p05[i-1], 0);
+        if (!b)
+            return NULL;
+    }
 
     if (!(k >>= 2))
         return b;
@@ -675,6 +755,10 @@ static Bigint *pow5mult(Bigint *b, int32 k)
          */
         Bigint *wasted_effort = NULL;
         p5 = i2b(625);
+        if (!p5) {
+            Bfree(b);
+            return NULL;
+        }
         /* lock and check again */
         PR_Lock(p5s_lock);
         if (!p5s) {
@@ -693,6 +777,10 @@ static Bigint *pow5mult(Bigint *b, int32 k)
 #else
         /* first time */
         p5 = p5s = i2b(625);
+        if (!p5) {
+            Bfree(b);
+            return NULL;
+        }
         p5->next = 0;
 #endif
     }
@@ -700,6 +788,8 @@ static Bigint *pow5mult(Bigint *b, int32 k)
         if (k & 1) {
             b1 = mult(b, p5);
             Bfree(b);
+            if (!b1)
+                return NULL;
             b = b1;
         }
         if (!(k >>= 1))
@@ -708,6 +798,10 @@ static Bigint *pow5mult(Bigint *b, int32 k)
 #ifdef JS_THREADSAFE
             Bigint *wasted_effort = NULL;
             p51 = mult(p5, p5);
+            if (!p51) {
+                Bfree(b);
+                return NULL;
+            }
             PR_Lock(p5s_lock);
             if (!p5->next) {
                 p5->next = p51;
@@ -721,8 +815,13 @@ static Bigint *pow5mult(Bigint *b, int32 k)
                 Bfree(wasted_effort);
             }
 #else
-            p51 = p5->next = mult(p5,p5);
+            p51 = mult(p5,p5);
+            if (!p51) {
+                Bfree(b);
+                return NULL;
+            }
             p51->next = 0;
+            p5->next = p51;
 #endif
         }
         p5 = p51;
@@ -730,7 +829,8 @@ static Bigint *pow5mult(Bigint *b, int32 k)
     return b;
 }
 
-/* Return b * 2^k.  Deallocate the old b.  k must be nonnegative. */
+/* Return b * 2^k.  Deallocate the old b.  k must be nonnegative.
+ * NOTE: on memory failure, old b is deallocated. */
 static Bigint *lshift(Bigint *b, int32 k)
 {
     int32 i, k1, n, n1;
@@ -743,6 +843,8 @@ static Bigint *lshift(Bigint *b, int32 k)
     for(i = b->maxwds; n1 > i; i <<= 1)
         k1++;
     b1 = Balloc(k1);
+    if (!b1)
+        goto done;
     x1 = b1->x;
     for(i = 0; i < n; i++)
         *x1++ = 0;
@@ -763,6 +865,7 @@ static Bigint *lshift(Bigint *b, int32 k)
         *x1++ = *x++;
          while(x < xe);
     b1->wds = n1 - 1;
+done:
     Bfree(b);
     return b1;
 }
@@ -811,6 +914,8 @@ static Bigint *diff(Bigint *a, Bigint *b)
     i = cmp(a,b);
     if (!i) {
         c = Balloc(0);
+        if (!c)
+            return NULL;
         c->wds = 1;
         c->x[0] = 0;
         return c;
@@ -824,6 +929,8 @@ static Bigint *diff(Bigint *a, Bigint *b)
     else
         i = 0;
     c = Balloc(a->k);
+    if (!c)
+        return NULL;
     c->sign = i;
     wa = a->wds;
     xa = a->x;
@@ -872,26 +979,26 @@ static Bigint *diff(Bigint *a, Bigint *b)
 static double ulp(double x)
 {
     register Long L;
-    double a;
+    double a = 0;
 
     L = (word0(x) & Exp_mask) - (P-1)*Exp_msk1;
 #ifndef Sudden_Underflow
     if (L > 0) {
 #endif
-        word0(a) = L;
-        word1(a) = 0;
+        set_word0(a, L);
+        set_word1(a, 0);
 #ifndef Sudden_Underflow
     }
     else {
         L = -L >> Exp_shift;
         if (L < Exp_shift) {
-            word0(a) = 0x80000 >> L;
-            word1(a) = 0;
+            set_word0(a, 0x80000 >> L);
+            set_word1(a, 0);
         }
         else {
-            word0(a) = 0;
+            set_word0(a, 0);
             L -= Exp_shift;
-            word1(a) = L >= 31 ? 1 : 1 << (31 - L);
+            set_word1(a, L >= 31 ? 1 : 1 << (31 - L));
         }
     }
 #endif
@@ -903,9 +1010,11 @@ static double b2d(Bigint *a, int32 *e)
 {
     ULong *xa, *xa0, w, y, z;
     int32 k;
-    double d;
+    double d = 0;
 #define d0 word0(d)
 #define d1 word1(d)
+#define set_d0(x) set_word0(d, x)
+#define set_d1(x) set_word1(d, x)
 
     xa0 = a->x;
     xa = xa0 + a->wds;
@@ -916,24 +1025,26 @@ static double b2d(Bigint *a, int32 *e)
     k = hi0bits(y);
     *e = 32 - k;
     if (k < Ebits) {
-        d0 = Exp_1 | y >> (Ebits - k);
+        set_d0(Exp_1 | y >> (Ebits - k));
         w = xa > xa0 ? *--xa : 0;
-        d1 = y << (32-Ebits + k) | w >> (Ebits - k);
+        set_d1(y << (32-Ebits + k) | w >> (Ebits - k));
         goto ret_d;
     }
     z = xa > xa0 ? *--xa : 0;
     if (k -= Ebits) {
-        d0 = Exp_1 | y << k | z >> (32 - k);
+        set_d0(Exp_1 | y << k | z >> (32 - k));
         y = xa > xa0 ? *--xa : 0;
-        d1 = z << k | y >> (32 - k);
+        set_d1(z << k | y >> (32 - k));
     }
     else {
-        d0 = Exp_1 | y;
-        d1 = z;
+        set_d0(Exp_1 | y);
+        set_d1(z);
     }
   ret_d:
 #undef d0
 #undef d1
+#undef set_d0
+#undef set_d1
     return d;
 }
 
@@ -948,12 +1059,16 @@ static Bigint *d2b(double d, int32 *e, int32 *bits)
     ULong *x, y, z;
 #define d0 word0(d)
 #define d1 word1(d)
+#define set_d0(x) set_word0(d, x)
+#define set_d1(x) set_word1(d, x)
 
     b = Balloc(1);
+    if (!b)
+        return NULL;
     x = b->x;
 
     z = d0 & Frac_mask;
-    d0 &= 0x7fffffff;   /* clear sign bit, which we ignore */
+    set_d0(d0 & 0x7fffffff);  /* clear sign bit, which we ignore */
 #ifdef Sudden_Underflow
     de = (int32)(d0 >> Exp_shift);
     z |= Exp_msk11;
@@ -993,6 +1108,8 @@ static Bigint *d2b(double d, int32 *e, int32 *bits)
 }
 #undef d0
 #undef d1
+#undef set_d0
+#undef set_d1
 
 
 static double ratio(Bigint *a, Bigint *b)
@@ -1004,10 +1121,10 @@ static double ratio(Bigint *a, Bigint *b)
     db = b2d(b, &kb);
     k = ka - kb + 32*(a->wds - b->wds);
     if (k > 0)
-        word0(da) += k*Exp_msk1;
+        set_word0(da, word0(da) + k*Exp_msk1);
     else {
         k = -k;
-        word0(db) += k*Exp_msk1;
+        set_word0(db, word0(db) + k*Exp_msk1);
     }
     return da / db;
 }
@@ -1074,14 +1191,35 @@ static void InitDtoa(void)
 
 void js_FinishDtoa(void)
 {
+    int count;
+    Bigint *temp;
+
 #ifdef JS_THREADSAFE
-    if (initialized == JS_TRUE) 
-    {
+    if (initialized == JS_TRUE) {
         PR_DestroyLock(freelist_lock);
         PR_DestroyLock(p5s_lock);
         initialized = JS_FALSE;
     }
 #endif
+
+    /* clear down the freelist array and p5s */
+
+    /* static Bigint *freelist[Kmax+1]; */
+    for (count = 0; count <= Kmax; count++) {
+        Bigint **listp = &freelist[count];
+        while ((temp = *listp) != NULL) {
+            *listp = temp->next;
+            free(temp);
+        }
+        freelist[count] = NULL;
+    }
+
+    /* static Bigint *p5s; */
+    while (p5s) {
+        temp = p5s;
+        p5s = p5s->next;
+        free(temp);
+    }
 }
 
 /* nspr2 watcom bug ifdef omitted */
@@ -1098,15 +1236,15 @@ JS_strtod(CONST char *s00, char **se, int *err)
     ULong y, z;
     Bigint *bb, *bb1, *bd, *bd0, *bs, *delta;
 
-#ifdef JS_THREADSAFE
-    if (!initialized) InitDtoa();
-#endif
-
     *err = 0;
 
-	bb = bd = bs = delta = NULL;
+    bb = bd = bs = delta = NULL;
     sign = nz0 = nz = 0;
     rv = 0.;
+
+    /* Locking for Balloc's shared buffers that will be used in this block */
+    ACQUIRE_DTOA_LOCK();
+
     for(s = s00;;s++) switch(*s) {
     case '-':
         sign = 1;
@@ -1129,6 +1267,7 @@ JS_strtod(CONST char *s00, char **se, int *err)
         goto break2;
     }
 break2:
+
     if (*s == '0') {
         nz0 = 1;
         while(*++s == '0') ;
@@ -1295,7 +1434,7 @@ dig_done:
         if (e1 &= ~15) {
             if (e1 > DBL_MAX_10_EXP) {
             ovfl:
-                *err = ERANGE;
+                *err = JS_DTOA_ERANGE;
 #ifdef __STDC__
                 rv = HUGE_VAL;
 #else
@@ -1312,18 +1451,18 @@ dig_done:
                 if (e1 & 1)
                     rv *= bigtens[j];
             /* The last multiplication could overflow. */
-            word0(rv) -= P*Exp_msk1;
+            set_word0(rv, word0(rv) - P*Exp_msk1);
             rv *= bigtens[j];
             if ((z = word0(rv) & Exp_mask) > Exp_msk1*(DBL_MAX_EXP+Bias-P))
                 goto ovfl;
             if (z > Exp_msk1*(DBL_MAX_EXP+Bias-1-P)) {
                 /* set to largest number */
                 /* (Can't trust DBL_MAX) */
-                word0(rv) = Big0;
-                word1(rv) = Big1;
+                set_word0(rv, Big0);
+                set_word1(rv, Big1);
                 }
             else
-                word0(rv) += P*Exp_msk1;
+                set_word0(rv, word0(rv) + P*Exp_msk1);
             }
     }
     else if (e1 < 0) {
@@ -1344,13 +1483,13 @@ dig_done:
                         >> Exp_shift)) > 0) {
                 /* scaled rv is denormal; zap j low bits */
                 if (j >= 32) {
-                    word1(rv) = 0;
-                    word0(rv) &= 0xffffffff << (j-32);
+                    set_word1(rv, 0);
+                    set_word0(rv, word0(rv) & (0xffffffff << (j-32)));
                     if (!word0(rv))
-                        word0(rv) = 1;
+                        set_word0(rv, 1);
                     }
                 else
-                    word1(rv) &= 0xffffffff << j;
+                    set_word1(rv, word1(rv) & (0xffffffff << j));
                 }
 #else
             for(j = 0; e1 > 1; j++, e1 >>= 1)
@@ -1366,14 +1505,14 @@ dig_done:
                 if (!rv) {
                 undfl:
                     rv = 0.;
-                    *err = ERANGE;
+                    *err = JS_DTOA_ERANGE;
                     if (bd0)
                         goto retfree;
                     goto ret;
                 }
 #ifndef Avoid_Underflow
-                word0(rv) = Tiny0;
-                word1(rv) = Tiny1;
+                set_word0(rv, Tiny0);
+                set_word1(rv, Tiny1);
                 /* The refinement below will clean
                  * this approximation up.
                  */
@@ -1387,12 +1526,20 @@ dig_done:
     /* Put digits into bd: true value = bd * 10^e */
 
     bd0 = s2b(s0, nd0, nd, y);
+    if (!bd0)
+        goto nomem;
 
     for(;;) {
         bd = Balloc(bd0->k);
+        if (!bd)
+            goto nomem;
         Bcopy(bd, bd0);
         bb = d2b(rv, &bbe, &bbbits);    /* rv = bb * 2^bbe */
+        if (!bb)
+            goto nomem;
         bs = i2b(1);
+        if (!bs)
+            goto nomem;
 
         if (e >= 0) {
             bb2 = bb5 = 0;
@@ -1436,19 +1583,37 @@ dig_done:
         }
         if (bb5 > 0) {
             bs = pow5mult(bs, bb5);
+            if (!bs)
+                goto nomem;
             bb1 = mult(bs, bb);
+            if (!bb1)
+                goto nomem;
             Bfree(bb);
             bb = bb1;
         }
-        if (bb2 > 0)
+        if (bb2 > 0) {
             bb = lshift(bb, bb2);
-        if (bd5 > 0)
+            if (!bb)
+                goto nomem;
+        }
+        if (bd5 > 0) {
             bd = pow5mult(bd, bd5);
-        if (bd2 > 0)
+            if (!bd)
+                goto nomem;
+        }
+        if (bd2 > 0) {
             bd = lshift(bd, bd2);
-        if (bs2 > 0)
+            if (!bd)
+                goto nomem;
+        }
+        if (bs2 > 0) {
             bs = lshift(bs, bs2);
+            if (!bs)
+                goto nomem;
+        }
         delta = diff(bb, bd);
+        if (!delta)
+            goto nomem;
         dsign = delta->sign;
         delta->sign = 0;
         i = cmp(delta, bs);
@@ -1470,6 +1635,8 @@ dig_done:
                 break;
                 }
             delta = lshift(delta,Log2P);
+            if (!delta)
+                goto nomem;
             if (cmp(delta, bs) > 0)
                 goto drop_down;
             break;
@@ -1480,8 +1647,8 @@ dig_done:
                 if ((word0(rv) & Bndry_mask1) == Bndry_mask1
                     &&  word1(rv) == 0xffffffff) {
                     /*boundary case -- increment exponent*/
-                    word0(rv) = (word0(rv) & Exp_mask) + Exp_msk1;
-                    word1(rv) = 0;
+                    set_word0(rv, (word0(rv) & Exp_mask) + Exp_msk1);
+                    set_word1(rv, 0);
 #ifdef Avoid_Underflow
                     dsign = 0;
 #endif
@@ -1502,8 +1669,8 @@ dig_done:
 #else
                 L = (word0(rv) & Exp_mask) - Exp_msk1;
 #endif
-                word0(rv) = L | Bndry_mask1;
-                word1(rv) = 0xffffffff;
+                set_word0(rv, L | Bndry_mask1);
+                set_word1(rv, 0xffffffff);
                 break;
             }
 #ifndef ROUND_BIASED
@@ -1571,25 +1738,25 @@ dig_done:
 
         if (y == Exp_msk1*(DBL_MAX_EXP+Bias-1)) {
             rv0 = rv;
-            word0(rv) -= P*Exp_msk1;
+            set_word0(rv, word0(rv) - P*Exp_msk1);
             adj = aadj1 * ulp(rv);
             rv += adj;
             if ((word0(rv) & Exp_mask) >=
                 Exp_msk1*(DBL_MAX_EXP+Bias-P)) {
                 if (word0(rv0) == Big0 && word1(rv0) == Big1)
                     goto ovfl;
-                word0(rv) = Big0;
-                word1(rv) = Big1;
+                set_word0(rv, Big0);
+                set_word1(rv, Big1);
                 goto cont;
             }
             else
-                word0(rv) += P*Exp_msk1;
+                set_word0(rv, word0(rv) + P*Exp_msk1);
         }
         else {
 #ifdef Sudden_Underflow
             if ((word0(rv) & Exp_mask) <= P*Exp_msk1) {
                 rv0 = rv;
-                word0(rv) += P*Exp_msk1;
+                set_word0(rv, word0(rv) + P*Exp_msk1);
                 adj = aadj1 * ulp(rv);
                 rv += adj;
                     if ((word0(rv) & Exp_mask) <= P*Exp_msk1)
@@ -1597,12 +1764,12 @@ dig_done:
                             if (word0(rv0) == Tiny0
                                 && word1(rv0) == Tiny1)
                                 goto undfl;
-                            word0(rv) = Tiny0;
-                            word1(rv) = Tiny1;
+                            set_word0(rv, Tiny0);
+                            set_word1(rv, Tiny1);
                             goto cont;
                         }
                     else
-                        word0(rv) -= P*Exp_msk1;
+                        set_word0(rv, word0(rv) - P*Exp_msk1);
             }
             else {
                 adj = aadj1 * ulp(rv);
@@ -1628,7 +1795,7 @@ dig_done:
             }
 #ifdef Avoid_Underflow
             if (scale && y <= P*Exp_msk1)
-                word0(aadj1) += (P+1)*Exp_msk1 - y;
+                set_word0(aadj1, word0(aadj1) + (P+1)*Exp_msk1 - y);
 #endif
             adj = aadj1 * ulp(rv);
             rv += adj;
@@ -1655,11 +1822,13 @@ dig_done:
         Bfree(bd);
         Bfree(bs);
         Bfree(delta);
+        bb = bd = bs = delta = NULL;
     }
 #ifdef Avoid_Underflow
     if (scale) {
-        word0(rv0) = Exp_1 - P*Exp_msk1;
-        word1(rv0) = 0;
+        rv0 = 0.;
+        set_word0(rv0, Exp_1 - P*Exp_msk1);
+        set_word1(rv0, 0);
         if ((word0(rv) & Exp_mask) <= P*Exp_msk1
               && word1(rv) & 1
               && dsign != 2) {
@@ -1667,13 +1836,13 @@ dig_done:
 #ifdef Sudden_Underflow
                 /* rv will be 0, but this would give the  */
                 /* right result if only rv *= rv0 worked. */
-                word0(rv) += P*Exp_msk1;
-                word0(rv0) = Exp_1 - 2*P*Exp_msk1;
+                set_word0(rv, word0(rv) + P*Exp_msk1);
+                set_word0(rv0, Exp_1 - 2*P*Exp_msk1);
 #endif
                 rv += ulp(rv);
                 }
             else
-                word1(rv) &= ~1;
+                set_word1(rv, word1(rv) & ~1);
         }
         rv *= rv0;
     }
@@ -1685,9 +1854,19 @@ retfree:
     Bfree(bd0);
     Bfree(delta);
 ret:
+    RELEASE_DTOA_LOCK();
     if (se)
         *se = (char *)s;
     return sign ? -rv : rv;
+
+nomem:
+    Bfree(bb);
+    Bfree(bd);
+    Bfree(bs);
+    Bfree(bd0);
+    Bfree(delta);
+    *err = JS_DTOA_ENOMEM;
+    return 0;
 }
 
 
@@ -1851,13 +2030,13 @@ static int32 quorem(Bigint *b, Bigint *S)
 
 /* Always emits at least one digit. */
 /* If biasUp is set, then rounding in modes 2 and 3 will round away from zero
- * when the number is exactly halfway between two representable values.  For example, 
+ * when the number is exactly halfway between two representable values.  For example,
  * rounding 2.5 to zero digits after the decimal point will return 3 and not 2.
  * 2.49 will still round to 2, and 2.51 will still round to 3. */
 /* bufsize should be at least 20 for modes 0 and 1.  For the other modes,
  * bufsize should be two greater than the maximum number of output characters expected. */
 static JSBool
-JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
+js_dtoa(double d, int mode, JSBool biasUp, int ndigits,
     int *decpt, int *sign, char **rve, char *buf, size_t bufsize)
 {
     /*  Arguments ndigits, decpt, sign are similar to those
@@ -1906,14 +2085,10 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
     double d2, ds, eps;
     char *s;
 
-#ifdef JS_THREADSAFE
-    if (!initialized) InitDtoa();
-#endif
-
     if (word0(d) & Sign_bit) {
         /* set sign for everything, including 0's and NaNs */
         *sign = 1;
-        word0(d) &= ~Sign_bit;  /* clear sign bit */
+        set_word0(d, word0(d) & ~Sign_bit);  /* clear sign bit */
     }
     else
         *sign = 0;
@@ -1934,6 +2109,11 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
         }
         return JS_TRUE;
     }
+
+    b = NULL;                           /* initialize for abort protection */
+    S = NULL;
+    mlo = mhi = NULL;
+
     if (!d) {
       no_digits:
         *decpt = 1;
@@ -1945,18 +2125,28 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
         buf[0] = '0'; buf[1] = '\0';  /* copy "0" to buffer */
         if (rve)
             *rve = buf + 1;
+        /* We might have jumped to "no_digits" from below, so we need
+         * to be sure to free the potentially allocated Bigints to avoid
+         * memory leaks. */
+        Bfree(b);
+        Bfree(S);
+        if (mlo != mhi)
+            Bfree(mlo);
+        Bfree(mhi);
         return JS_TRUE;
     }
 
     b = d2b(d, &be, &bbits);
+    if (!b)
+        goto nomem;
 #ifdef Sudden_Underflow
     i = (int32)(word0(d) >> Exp_shift1 & (Exp_mask>>Exp_shift1));
 #else
     if ((i = (int32)(word0(d) >> Exp_shift1 & (Exp_mask>>Exp_shift1))) != 0) {
 #endif
         d2 = d;
-        word0(d2) &= Frac_mask1;
-        word0(d2) |= Exp_11;
+        set_word0(d2, word0(d2) & Frac_mask1);
+        set_word0(d2, word0(d2) | Exp_11);
 
         /* log(x)   ~=~ log(1.5) + (x-1.5)/1.5
          * log10(x)  =  log(x) / log(10)
@@ -1990,7 +2180,7 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
         i = bbits + be + (Bias + (P-1) - 1);
         x = i > 32 ? word0(d) << (64 - i) | word1(d) >> (i - 32) : word1(d) << (32 - i);
         d2 = x;
-        word0(d2) -= 31*Exp_msk1; /* adjust exponent */
+        set_word0(d2, word0(d2) - 31*Exp_msk1); /* adjust exponent */
         i -= (Bias + (P-1) - 1) + 1;
         denorm = 1;
     }
@@ -2121,7 +2311,7 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
         }
         /* eps bounds the cumulative error. */
         eps = ieps*d + 7.;
-        word0(eps) -= (P-1)*Exp_msk1;
+        set_word0(eps, word0(eps) - (P-1)*Exp_msk1);
         if (ilim == 0) {
             S = mhi = 0;
             d -= 5.;
@@ -2224,7 +2414,6 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
 
     m2 = b2;
     m5 = b5;
-    mhi = mlo = 0;
     if (leftright) {
         if (mode < 2) {
             i =
@@ -2253,6 +2442,8 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
         b2 += i;
         s2 += i;
         mhi = i2b(1);
+        if (!mhi)
+            goto nomem;
         /* (mhi * 2^m2 * 5^m5) / (2^s2 * 5^s5) = one-half of last printed (when mode >= 2) or
            input (when mode < 2) significant digit, divided by 10^k. */
     }
@@ -2270,22 +2461,37 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
         if (leftright) {
             if (m5 > 0) {
                 mhi = pow5mult(mhi, m5);
+                if (!mhi)
+                    goto nomem;
                 b1 = mult(mhi, b);
+                if (!b1)
+                    goto nomem;
                 Bfree(b);
                 b = b1;
             }
-            if ((j = b5 - m5) != 0)
+            if ((j = b5 - m5) != 0) {
                 b = pow5mult(b, j);
+                if (!b)
+                    goto nomem;
+            }
         }
-        else
+        else {
             b = pow5mult(b, b5);
+            if (!b)
+                goto nomem;
+        }
     }
     /* Now we have d/10^k = (b * 2^b2) / (2^s2 * 5^s5) and
        (mhi * 2^m2) / (2^s2 * 5^s5) = one-half of last printed or input significant digit, divided by 10^k. */
 
     S = i2b(1);
-    if (s5 > 0)
+    if (!S)
+        goto nomem;
+    if (s5 > 0) {
         S = pow5mult(S, s5);
+        if (!S)
+            goto nomem;
+    }
     /* Now we have d/10^k = (b * 2^b2) / (S * 2^s2) and
        (mhi * 2^m2) / (S * 2^s2) = one-half of last printed or input significant digit, divided by 10^k. */
 
@@ -2328,18 +2534,29 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
         s2 += i;
     }
     /* Now S*2^s2 has exactly four leading zero bits in its most significant word. */
-    if (b2 > 0)
+    if (b2 > 0) {
         b = lshift(b, b2);
-    if (s2 > 0)
+        if (!b)
+            goto nomem;
+    }
+    if (s2 > 0) {
         S = lshift(S, s2);
+        if (!S)
+            goto nomem;
+    }
     /* Now we have d/10^k = b/S and
        (mhi * 2^m2) / S = maximum acceptable error, divided by 10^k. */
     if (k_check) {
         if (cmp(b,S) < 0) {
             k--;
             b = multadd(b, 10, 0);  /* we botched the k estimate */
-            if (leftright)
+            if (!b)
+                goto nomem;
+            if (leftright) {
                 mhi = multadd(mhi, 10, 0);
+                if (!mhi)
+                    goto nomem;
+            }
             ilim = ilim1;
         }
     }
@@ -2348,7 +2565,13 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
     if (ilim <= 0 && mode > 2) {
         /* We're doing fixed-mode output and d is less than the minimum nonzero output in this mode.
            Output either zero or the minimum nonzero output depending on which is closer to d. */
-        if (ilim < 0 || (i = cmp(b,S = multadd(S,5,0))) < 0 || (i == 0 && !biasUp)) {
+        if (ilim < 0)
+            goto no_digits;
+        S = multadd(S,5,0);
+        if (!S)
+            goto nomem;
+        i = cmp(b,S);
+        if (i < 0 || (i == 0 && !biasUp)) {
         /* Always emit at least one digit.  If the number appears to be zero
            using the current mode, then emit one '0' digit and set decpt to 1. */
         /*no_digits:
@@ -2362,8 +2585,11 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
         goto ret;
     }
     if (leftright) {
-        if (m2 > 0)
+        if (m2 > 0) {
             mhi = lshift(mhi, m2);
+            if (!mhi)
+                goto nomem;
+        }
 
         /* Compute mlo -- check for special case
          * that d is a normalized power of 2.
@@ -2372,8 +2598,12 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
         mlo = mhi;
         if (spec_case) {
             mhi = Balloc(mhi->k);
+            if (!mhi)
+                goto nomem;
             Bcopy(mhi, mlo);
             mhi = lshift(mhi, Log2P);
+            if (!mhi)
+                goto nomem;
         }
         /* mlo/S = maximum acceptable error, divided by 10^k, if the output is less than d. */
         /* mhi/S = maximum acceptable error, divided by 10^k, if the output is greater than d. */
@@ -2386,6 +2616,8 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
             j = cmp(b, mlo);
             /* j is b/S compared with mlo/S. */
             delta = diff(S, mhi);
+            if (!delta)
+                goto nomem;
             j1 = delta->sign ? 1 : cmp(b, delta);
             Bfree(delta);
             /* j1 is b/S compared with 1 - mhi/S. */
@@ -2408,6 +2640,8 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
                     /* Either dig or dig+1 would work here as the least significant decimal digit.
                        Use whichever would produce a decimal value closer to d. */
                     b = lshift(b, 1);
+                    if (!b)
+                        goto nomem;
                     j1 = cmp(b, S);
                     if (((j1 > 0) || (j1 == 0 && (dig & 1 || biasUp)))
                         && (dig++ == '9'))
@@ -2422,18 +2656,27 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
                     *s++ = '9';
                     goto roundoff;
                 }
-                *s++ = dig + 1;
+                *s++ = (char)dig + 1;
                 goto ret;
             }
             *s++ = (char)dig;
             if (i == ilim)
                 break;
             b = multadd(b, 10, 0);
-            if (mlo == mhi)
+            if (!b)
+                goto nomem;
+            if (mlo == mhi) {
                 mlo = mhi = multadd(mhi, 10, 0);
+                if (!mhi)
+                    goto nomem;
+            }
             else {
                 mlo = multadd(mlo, 10, 0);
+                if (!mlo)
+                    goto nomem;
                 mhi = multadd(mhi, 10, 0);
+                if (!mhi)
+                    goto nomem;
             }
         }
     }
@@ -2443,11 +2686,15 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
             if (i >= ilim)
                 break;
             b = multadd(b, 10, 0);
+            if (!b)
+                goto nomem;
         }
 
     /* Round off last digit */
 
     b = lshift(b, 1);
+    if (!b)
+        goto nomem;
     j = cmp(b, S);
     if ((j > 0) || (j == 0 && (dig & 1 || biasUp))) {
     roundoff:
@@ -2479,10 +2726,20 @@ JS_dtoa(double d, int mode, JSBool biasUp, int ndigits,
         *rve = s;
     *decpt = k + 1;
     return JS_TRUE;
+
+nomem:
+    Bfree(S);
+    if (mhi) {
+        if (mlo && mlo != mhi)
+            Bfree(mlo);
+        Bfree(mhi);
+    }
+    Bfree(b);
+    return JS_FALSE;
 }
 
 
-/* Mapping of JSDToStrMode -> JS_dtoa mode */
+/* Mapping of JSDToStrMode -> js_dtoa mode */
 static const int dtoaModes[] = {
     0,   /* DTOSTR_STANDARD */
     0,   /* DTOSTR_STANDARD_EXPONENTIAL, */
@@ -2493,12 +2750,13 @@ static const int dtoaModes[] = {
 JS_FRIEND_API(char *)
 JS_dtostr(char *buffer, size_t bufferSize, JSDToStrMode mode, int precision, double d)
 {
-    int decPt;                  /* Position of decimal point relative to first digit returned by JS_dtoa */
+    int decPt;                  /* Position of decimal point relative to first digit returned by js_dtoa */
     int sign;                   /* Nonzero if the sign bit was set in d */
-    int nDigits;                /* Number of significand digits returned by JS_dtoa */
-    char *numBegin = buffer+2;  /* Pointer to the digits returned by JS_dtoa; the +2 leaves space for */
+    int nDigits;                /* Number of significand digits returned by js_dtoa */
+    char *numBegin = buffer+2;  /* Pointer to the digits returned by js_dtoa; the +2 leaves space for */
                                 /* the sign and/or decimal point */
-    char *numEnd;               /* Pointer past the digits returned by JS_dtoa */
+    char *numEnd;               /* Pointer past the digits returned by js_dtoa */
+    JSBool dtoaRet;
 
     JS_ASSERT(bufferSize >= (size_t)(mode <= DTOSTR_STANDARD_EXPONENTIAL ? DTOSTR_STANDARD_BUFFER_SIZE :
             DTOSTR_VARIABLE_BUFFER_SIZE(precision)));
@@ -2506,7 +2764,11 @@ JS_dtostr(char *buffer, size_t bufferSize, JSDToStrMode mode, int precision, dou
     if (mode == DTOSTR_FIXED && (d >= 1e21 || d <= -1e21))
         mode = DTOSTR_STANDARD; /* Change mode here rather than below because the buffer may not be large enough to hold a large integer. */
 
-    if (!JS_dtoa(d, dtoaModes[mode], mode >= DTOSTR_FIXED, precision, &decPt, &sign, &numEnd, numBegin, bufferSize-2))
+    /* Locking for Balloc's shared buffers */
+    ACQUIRE_DTOA_LOCK();
+    dtoaRet = js_dtoa(d, dtoaModes[mode], mode >= DTOSTR_FIXED, precision, &decPt, &sign, &numEnd, numBegin, bufferSize-2);
+    RELEASE_DTOA_LOCK();
+    if (!dtoaRet)
         return 0;
 
     nDigits = numEnd - numBegin;
@@ -2558,7 +2820,7 @@ JS_dtostr(char *buffer, size_t bufferSize, JSDToStrMode mode, int precision, dou
             } while (numEnd != p);
             *numEnd = '\0';
         }
-        
+
         if (exponentialNotation) {
             /* Insert a decimal point if more than one significand digit */
             if (nDigits != 1) {
@@ -2628,7 +2890,7 @@ divrem(Bigint *b, uint32 divisor)
         ULong dividend = remainder << 16 | a >> 16;
         ULong quotientHi = dividend / divisor;
         ULong quotientLo;
-        
+
         remainder = dividend - quotientHi*divisor;
         JS_ASSERT(quotientHi <= 0xFFFF && remainder < divisor);
         dividend = remainder << 16 | (a & 0xFFFF);
@@ -2667,7 +2929,7 @@ JS_dtobasestr(int base, double d)
     if (buffer) {
         p = buffer;
         if (d < 0.0
-#ifdef XP_PC
+#if defined(XP_WIN) || defined(XP_OS2)
             && !((word0(d) & Exp_mask) == Exp_mask && ((word0(d) & Frac_mask) || word1(d))) /* Visual C++ doesn't know how to compare against NaN */
 #endif
            ) {
@@ -2680,6 +2942,9 @@ JS_dtobasestr(int base, double d)
             strcpy(p, !word1(d) && !(word0(d) & Frac_mask) ? "Infinity" : "NaN");
             return buffer;
         }
+
+        /* Locking for Balloc's shared buffers */
+        ACQUIRE_DTOA_LOCK();
 
         /* Output the integer part of d with the digits in reverse order. */
         pInt = p;
@@ -2696,12 +2961,17 @@ JS_dtobasestr(int base, double d)
                 } while (n);
             else *p++ = '0';
         } else {
-            /* XXX We really should check for null here, but none of the routines we call is out-of-memory-safe,
-             * so this change would need to be made pervasively in this file. */
             int32 e;
             int32 bits;  /* Number of significant bits in di; not used. */
             Bigint *b = d2b(di, &e, &bits);
+            if (!b)
+                goto nomem1;
             b = lshift(b, e);
+            if (!b) {
+              nomem1:
+                Bfree(b);
+                return NULL;
+            }
             do {
                 digit = divrem(b, base);
                 JS_ASSERT(digit < (uint32)base);
@@ -2716,18 +2986,29 @@ JS_dtobasestr(int base, double d)
             *pInt++ = *q;
             *q-- = ch;
         }
-        
+
         df = d - di;
         if (df != 0.0) {
             /* We have a fraction. */
             int32 e, bbits, s2, done;
             Bigint *b, *s, *mlo, *mhi;
-            
+
+            b = s = mlo = mhi = NULL;
+
             *p++ = '.';
             b = d2b(df, &e, &bbits);
+            if (!b) {
+              nomem2:
+                Bfree(b);
+                Bfree(s);
+                if (mlo != mhi)
+                    Bfree(mlo);
+                Bfree(mhi);
+                return NULL;
+            }
             JS_ASSERT(e < 0);
             /* At this point df = b * 2^e.  e must be less than zero because 0 < df < 1. */
-            
+
             s2 = -(int32)(word0(d) >> Exp_shift1 & Exp_mask>>Exp_shift1);
 #ifndef Sudden_Underflow
             if (!s2)
@@ -2737,6 +3018,8 @@ JS_dtobasestr(int base, double d)
             /* 1/2^s2 = (nextDouble(d) - d)/2 */
             JS_ASSERT(-s2 < e);
             mlo = i2b(1);
+            if (!mlo)
+                goto nomem2;
             mhi = mlo;
             if (!word1(d) && !(word0(d) & Bndry_mask)
 #ifndef Sudden_Underflow
@@ -2747,10 +3030,18 @@ JS_dtobasestr(int base, double d)
                    significant digit instead of one half of it when the output string's value is less than d.  */
                 s2 += Log2P;
                 mhi = i2b(1<<Log2P);
+                if (!mhi)
+                    goto nomem2;
             }
             b = lshift(b, e + s2);
+            if (!b)
+                goto nomem2;
             s = i2b(1);
+            if (!s)
+                goto nomem2;
             s = lshift(s, s2);
+            if (!s)
+                goto nomem2;
             /* At this point we have the following:
              *   s = 2^s2;
              *   1 > df = b/2^s2 > 0;
@@ -2763,18 +3054,29 @@ JS_dtobasestr(int base, double d)
                 Bigint *delta;
 
                 b = multadd(b, base, 0);
+                if (!b)
+                    goto nomem2;
                 digit = quorem2(b, s2);
-                if (mlo == mhi)
+                if (mlo == mhi) {
                     mlo = mhi = multadd(mlo, base, 0);
+                    if (!mhi)
+                        goto nomem2;
+                }
                 else {
                     mlo = multadd(mlo, base, 0);
+                    if (!mlo)
+                        goto nomem2;
                     mhi = multadd(mhi, base, 0);
+                    if (!mhi)
+                        goto nomem2;
                 }
 
                 /* Do we yet have the shortest string that will round to d? */
                 j = cmp(b, mlo);
                 /* j is b/2^s2 compared with mlo/2^s2. */
                 delta = diff(s, mhi);
+                if (!delta)
+                    goto nomem2;
                 j1 = delta->sign ? 1 : cmp(b, delta);
                 Bfree(delta);
                 /* j1 is b/2^s2 compared with 1 - mhi/2^s2. */
@@ -2795,6 +3097,8 @@ JS_dtobasestr(int base, double d)
                         /* Either dig or dig+1 would work here as the least significant digit.
                            Use whichever would produce an output value closer to d. */
                         b = lshift(b, 1);
+                        if (!b)
+                            goto nomem2;
                         j1 = cmp(b, s);
                         if (j1 > 0) /* The even test (|| (j1 == 0 && (digit & 1))) is not here because it messes up odd base output
                                      * such as 3.5 in base 3.  */
@@ -2816,6 +3120,7 @@ JS_dtobasestr(int base, double d)
         }
         JS_ASSERT(p < buffer + DTOBASESTR_BUFFER_SIZE);
         *p = '\0';
+        RELEASE_DTOA_LOCK();
     }
     return buffer;
 }
