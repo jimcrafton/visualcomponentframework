@@ -1,0 +1,92 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="FDLIBM_HDR" hints="files">
+        ../js-impl/fdlibm/fdlibm.h
+    </set>
+
+    <set var="FDLIBM_SRC" hints="files">
+        ../js-impl/fdlibm/e_acos.c
+        ../js-impl/fdlibm/e_acosh.c
+        ../js-impl/fdlibm/e_asin.c
+        ../js-impl/fdlibm/e_atan2.c
+        ../js-impl/fdlibm/e_atanh.c
+        ../js-impl/fdlibm/e_cosh.c
+        ../js-impl/fdlibm/e_exp.c
+        ../js-impl/fdlibm/e_fmod.c
+        ../js-impl/fdlibm/e_gamma.c
+        ../js-impl/fdlibm/e_gamma_r.c
+        ../js-impl/fdlibm/e_hypot.c
+        ../js-impl/fdlibm/e_j0.c
+        ../js-impl/fdlibm/e_j1.c
+        ../js-impl/fdlibm/e_jn.c
+        ../js-impl/fdlibm/e_lgamma.c
+        ../js-impl/fdlibm/e_lgamma_r.c
+        ../js-impl/fdlibm/e_log.c
+        ../js-impl/fdlibm/e_log10.c
+        ../js-impl/fdlibm/e_pow.c
+        ../js-impl/fdlibm/e_rem_pio2.c
+        ../js-impl/fdlibm/e_remainder.c
+        ../js-impl/fdlibm/e_scalb.c
+        ../js-impl/fdlibm/e_sinh.c
+        ../js-impl/fdlibm/e_sqrt.c
+        ../js-impl/fdlibm/k_cos.c
+        ../js-impl/fdlibm/k_rem_pio2.c
+        ../js-impl/fdlibm/k_sin.c
+        ../js-impl/fdlibm/k_standard.c
+        ../js-impl/fdlibm/k_tan.c
+        ../js-impl/fdlibm/s_asinh.c
+        ../js-impl/fdlibm/s_atan.c
+        ../js-impl/fdlibm/s_cbrt.c
+        ../js-impl/fdlibm/s_ceil.c
+        ../js-impl/fdlibm/s_copysign.c
+        ../js-impl/fdlibm/s_cos.c
+        ../js-impl/fdlibm/s_erf.c
+        ../js-impl/fdlibm/s_expm1.c
+        ../js-impl/fdlibm/s_fabs.c
+        ../js-impl/fdlibm/s_finite.c
+        ../js-impl/fdlibm/s_floor.c
+        ../js-impl/fdlibm/s_frexp.c
+        ../js-impl/fdlibm/s_ilogb.c
+        ../js-impl/fdlibm/s_isnan.c
+        ../js-impl/fdlibm/s_ldexp.c
+        ../js-impl/fdlibm/s_lib_version.c
+        ../js-impl/fdlibm/s_log1p.c
+        ../js-impl/fdlibm/s_logb.c
+        ../js-impl/fdlibm/s_matherr.c
+        ../js-impl/fdlibm/s_modf.c
+        ../js-impl/fdlibm/s_nextafter.c
+        ../js-impl/fdlibm/s_rint.c
+        ../js-impl/fdlibm/s_scalbn.c
+        ../js-impl/fdlibm/s_signgam.c
+        ../js-impl/fdlibm/s_significand.c
+        ../js-impl/fdlibm/s_sin.c
+        ../js-impl/fdlibm/s_tan.c
+        ../js-impl/fdlibm/s_tanh.c
+        ../js-impl/fdlibm/w_acos.c
+        ../js-impl/fdlibm/w_acosh.c
+        ../js-impl/fdlibm/w_asin.c
+        ../js-impl/fdlibm/w_atan2.c
+        ../js-impl/fdlibm/w_atanh.c
+        ../js-impl/fdlibm/w_cosh.c
+        ../js-impl/fdlibm/w_exp.c
+        ../js-impl/fdlibm/w_fmod.c
+        ../js-impl/fdlibm/w_gamma.c
+        ../js-impl/fdlibm/w_gamma_r.c
+        ../js-impl/fdlibm/w_hypot.c
+        ../js-impl/fdlibm/w_j0.c
+        ../js-impl/fdlibm/w_j1.c
+        ../js-impl/fdlibm/w_jn.c
+        ../js-impl/fdlibm/w_lgamma.c
+        ../js-impl/fdlibm/w_lgamma_r.c
+        ../js-impl/fdlibm/w_log.c
+        ../js-impl/fdlibm/w_log10.c
+        ../js-impl/fdlibm/w_pow.c
+        ../js-impl/fdlibm/w_remainder.c
+        ../js-impl/fdlibm/w_scalb.c
+        ../js-impl/fdlibm/w_sinh.c
+        ../js-impl/fdlibm/w_sqrt.c
+    </set>
+
+</makefile>
