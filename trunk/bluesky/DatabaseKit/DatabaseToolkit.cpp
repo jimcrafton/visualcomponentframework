@@ -1,5 +1,6 @@
 #include "DatabaseKit.h"
 #include "SQLiteDatabase.h"
+#include "SQLiteDataSet.h"
 
 
 
@@ -34,8 +35,8 @@ DataSet* DatabaseToolkit::createDataSet( const String& type )
 {
 	VCF_ASSERT( !type.empty() );
 
-    if ( type == "" ) {
-        return NULL;//new FBDataSet();
+    if ( type == SQLITETYPE ) {
+        return new SQLiteDataSet();
     }
 
     return NULL;

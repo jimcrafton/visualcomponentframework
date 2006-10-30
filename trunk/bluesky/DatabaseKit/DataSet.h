@@ -22,6 +22,19 @@ namespace VCF {
     class Transaction;
     class StringList;
 	class FieldDefinitions;
+	class DataSource;
+
+	enum DataSetState {
+		dssInactive = 0, 
+		dssBrowse, 
+		dssEdit, 
+		dssInsert, 
+		dssSetKey, 
+		dssCalcFields,
+		dssUpdateNew,
+		dssUpdateOld,
+		dssFilter
+	};
 
     class DATABASEKIT_API DataSet : public Object {
     public:
@@ -29,6 +42,34 @@ namespace VCF {
         DataSet();
 
         virtual ~DataSet();
+
+
+		DELEGATE(AfterCancel);
+		DELEGATE(AfterClose);
+		DELEGATE(AfterDelete);
+		DELEGATE(AfterEdit);
+		DELEGATE(AfterInsert);
+		DELEGATE(AfterOpen);
+		DELEGATE(AfterPost);
+		DELEGATE(AfterScroll);
+
+		DELEGATE(BeforeCancel);
+		DELEGATE(BeforeClose);
+		DELEGATE(BeforeDelete);
+		DELEGATE(BeforeEdit);
+		DELEGATE(BeforeInsert);
+		DELEGATE(BeforeOpen);
+		DELEGATE(BeforePost);
+		DELEGATE(BeforeScroll);
+
+		DELEGATE(CalcFields);
+		DELEGATE(DeleteError);
+		DELEGATE(EditError);
+		DELEGATE(NewRecord);
+		DELEGATE(PostError);
+
+
+
 
         void setDatabase( Database* database );
 
@@ -38,30 +79,53 @@ namespace VCF {
 
         void close();
 
+		void setActive( bool active );
+
+		bool isActive();
+
+		DataSetState getState() {
+			return state_;
+		}
+
+		void setState( DataSetState val );
+
         StringList* getSelectSQL();
 
 		void updateFieldDefs();
 
-		virtual void initFieldDefs();
+		Class* getFieldClass( int fieldType );
+
+		void createFields();
+
+		virtual void initFieldDefinitions();
+
+		void addDataSource( DataSource* source );
+
+		void removeDataSource( DataSource* source );
+
+		void edit();
     protected:
         virtual void internalOpen() = 0;
 
         virtual void internalClose() = 0;
 
-		virtual void internal_initFieldDefs() = 0;
+		virtual void internal_initFieldDefinitions() = 0;
 
+		bool active_;
         Database* db_;
         Transaction* tr_;
         StringList* selectSQL_;
         int columnCount;
+		DataSetState state_;
         std::map<String, VariantData> params_;
 
-		FieldDefinitions* fieldDefs_;
+		typedef std::vector<DataSource*> DataSourceArray;
+		DataSourceArray dataSources_;
 
-    private:
-        void setActive( bool active );
+		FieldDefinitions* fieldDefs_;
+        
     };
 
 };
 
-#endif
+#endif  //_VCF_DATASET_H__

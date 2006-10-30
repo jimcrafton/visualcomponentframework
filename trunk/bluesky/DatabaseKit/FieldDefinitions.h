@@ -18,29 +18,44 @@ where you installed the VCF.
 
 namespace VCF {
 
-	enum FieldType {
-		ftNone = 0
+	enum DataFieldType {
+		ftUnknown = 0
 	};
 
 	class FieldDefinitions;
+	class DataField;
+
 
 	class FieldDefinition {
 	public:
 		int fieldNumber;
-		FieldType dataType;
+		DataFieldType dataType;
 		bool internalCalcField;
 		String name;
 		int precision;
 		bool required;
 		size_t size;
+		FieldDefinitions* owner;
+		
 
-		FieldDefinition():fieldNumber(0), dataType(ftNone),internalCalcField(false),precision(0),required(false), size(0) {
+		FieldDefinition():fieldNumber(0), dataType(ftUnknown),internalCalcField(false),precision(0),required(false), size(0),owner(NULL),fieldClass_(NULL) {
 
 		}
+
+		
+		DataField* createField(); 
+
+		Class* getFieldClass();
+
+
+		friend class FieldDefinitions;
+	protected:
+		Class* fieldClass_;
 	};
 
 
 	class DataSet;
+	
 
 	class FieldDefinitions {
 	public:
@@ -52,7 +67,7 @@ namespace VCF {
 			fields_.size();
 		}
 
-		void add( const String& name, FieldType dataType, size_t size, bool required );
+		void add( const String& name, DataFieldType dataType, size_t size, bool required );
 
 		FieldDefinition* find( const String& name );
 
@@ -84,6 +99,7 @@ namespace VCF {
 		void setUpdated( bool val ) {
 			updated_ = val;
 		}
+
 	protected:
 		std::vector<FieldDefinition> fields_;
 		DataSet* dataSet_;
