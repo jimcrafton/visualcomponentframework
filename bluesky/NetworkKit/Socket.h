@@ -1,0 +1,594 @@
+#ifndef _VCF_SOCKET_H__
+#define _VCF_SOCKET_H__
+
+//Socket.h
+
+/*
+Copyright 2000-2004 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
+
+#if _MSC_VER > 1000
+#   pragma once
+#endif
+
+
+namespace VCF {
+
+	class Socket;
+	class SocketPeer;
+
+	class IPAddressPeer;
+	
+
+
+
+	class NETWORKKIT_API SocketEvent : public Event {
+	public:
+		SocketEvent( Object* source, const unsigned long& eventType ) : 
+		  Event(source,eventType),socket(NULL){
+
+		}
+
+		virtual Object* clone( bool deep=false ) {
+			return new SocketEvent(*this);
+		}
+
+		Socket* socket;
+	};
+
+
+
+
+
+	typedef  std::vector<Socket*> SocketArray;
+
+	class NETWORKKIT_API Socket : public Object {
+	public:
+		enum SocketType{
+			stStream,
+			stDatagram
+		};
+
+		enum {
+			/**
+			Select should check and then return immediately
+			*/
+			SelectNoWait = (uint32)0,
+
+			/**
+			Select will wait indefinitely, until one of the 
+			sockets passed in is flagged with data.
+			*/
+			SelectWaitForever = (uint32)-1
+		};
+		
+		enum SocketState{
+			ssError	=		0x0001,
+			ssReadable	=	0x0002,
+			ssWriteable	=	0x0004,
+			ssConnected =	0x0010,
+			ssListening	=	0x0020,
+			ssOpen =		0x0100,
+			ssClosed =		0x0000,
+		};
+
+		enum SocketEvents {			
+			seClientConnected = 112491,
+			seClientDisconnected,
+			seReadyToRead,
+			seReadyToWrite,
+		};
+		//socket options
+		/**
+		This key indicates whether or not the 
+		socket is blocking or not. It's value 
+		type is a bool.
+		*/
+		static const String soBlocking;
+
+		/**
+		Bool value
+		*/
+		static const String soBroadcast;
+
+		/**
+		Bool value
+		*/
+		static const String soDontLinger;
+
+		/**
+		Bool value
+		*/
+		static const String soDontRoute;
+
+		/**
+		Bool value
+		*/
+		static const String soKeepAlive;		
+
+		/**
+		int value
+		*/
+		static const String soRecvBuffer;
+
+		/**
+		Bool value
+		*/
+		static const String soReuseAddress;
+
+		/**
+		int value
+		*/
+		static const String soSendBuffer;
+		
+		/**
+		\par
+		A static utility function to verify that the 
+		socket options have valid key-value pairings.
+		The function iterates through the options
+		until it finds the first invalid key-value 
+		pairing.
+		\par
+		For example, if you used the key Socket::soBlocking
+		with a int type, then the function would return a 
+		false value.
+		@return bool returns true if the options are valid,
+		otherwise it returns false at the first key-value
+		pair that is invalid.
+		*/
+		static bool validateOptions( Dictionary& options );
+
+		/**
+		Creates an unconnected socket 
+		in stStream mode.
+		*/
+		Socket();
+
+		/**
+		Creates a bound and listening socket 
+		in stStream mode.
+		*/
+		Socket( unsigned short port );
+
+		/**
+		Creates a connected socket 
+		in stStream mode. A connection is made to 
+		the specified host and port
+		*/
+		Socket( const String& host, unsigned short port );
+
+
+		virtual ~Socket();
+
+
+		//only applicable if the socket is 
+		//listening.
+		DELEGATE( ClientConnected );
+		DELEGATE( ClientDisconnected );
+
+		DELEGATE( ReadyToRead );
+		DELEGATE( ReadyToWrite );
+
+
+		void open();
+
+		void close();
+
+		void connect( const String& host, unsigned short port );
+
+		void listen( unsigned short port );
+
+		Socket* accept();
+
+		void setOptions( Dictionary& options );
+
+		Dictionary getOptions();
+
+		String getHostName();
+
+		String getHostIPAddress();
+
+		unsigned short getPort();
+
+		SocketPeer* getPeer() {
+			return peer_;
+		}	
+
+		SocketType getSocketType() {
+			return type_;
+		}
+
+		bool isReadable() const {
+			return (state_ & Socket::ssReadable) ? true : false;
+		}
+
+		bool hasError() const {
+			return (state_ & Socket::ssError) ? true : false;
+		}
+
+		bool isWriteable() const {
+			return (state_ & Socket::ssWriteable) ? true : false;
+		}
+
+		bool isConnected() const {
+			return (state_ & Socket::ssConnected) ? true : false;
+		}
+
+		bool isListening() const {
+			return (state_ & Socket::ssListening) ? true : false;
+		}
+
+		bool isOpen() const {
+			return (state_ & Socket::ssOpen) ? true : false;
+		}
+
+		bool isClosed() const {
+			return (state_ == Socket::ssClosed) ? true : false;
+		}
+
+		bool pending() const;
+
+		/**
+		Do not call this method - for internal use 
+		only.
+		*/
+		void internal_setErrorState( bool val ) {
+			if ( val ) {
+				state_ |= Socket::ssError;
+			}
+			else {
+				state_ &= ~Socket::ssError;
+			}
+		}
+
+		/**
+		Do not call this method - for internal use 
+		only.
+		*/
+		void internal_setReadable( bool val ) {
+			if ( val ) {
+				state_ |= Socket::ssReadable;
+			}
+			else {
+				state_ &= ~Socket::ssReadable;
+			}
+		}
+
+		/**
+		Do not call this method - for internal use 
+		only.
+		*/
+		void internal_setWriteable( bool val ) {
+			if ( val ) {
+				state_ |= Socket::ssWriteable;
+			}
+			else {
+				state_ &= ~Socket::ssWriteable;
+			}
+		}
+
+		/**
+		Indicates whether the current operation would block.
+		Assumes a non blocking socket. This is roughly equivalent
+		to getting a an EWOULDBLOCK or WSAEWOULDBLOCK error number.
+
+		@return bool True if the operation would block, otherwise
+		false if it would not. 
+		*/
+		bool wouldOperationBlock();
+	protected:
+		/**
+		Creates a socket from an existing peer
+		intance. This is used primarily by the accept()
+		method.
+		*/
+		Socket( SocketPeer* peer );
+
+
+		SocketPeer* peer_;
+		SocketType type_;
+
+		int state_;
+	};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	class NETWORKKIT_API SocketPeer {
+	public:
+		
+		virtual ~SocketPeer(){};
+
+		virtual void setPeerOwner( Socket* socket ) = 0;
+		/**
+		\par
+		Creates a new OS specific socket handle. In the 
+		simplest case, this would be implemented with the
+		BSD socket() function.
+
+		\par
+		The caller specifies the socket type, which can
+		be either a streaming type (i.e. a socket appropriate
+		for TCP/IP streaming communication), or a datagram
+		type (i.e. a socket appropriate
+		for UPD communication )
+		@return int Returns a 0 for success, otherwise 
+		a negative number to indicate an error.
+		*/
+		virtual int create( Socket::SocketType type ) = 0;
+
+		/**
+		Closes the OS specific socket handle and releases any resources
+		associated with it.
+		@return int Returns a 0 for success, otherwise 
+		a negative number to indicate an error.
+		*/
+		virtual int close() = 0;
+
+		/**
+		@return int Returns a 0 for success, otherwise 
+		a negative number to indicate an error.
+		*/
+		virtual int connect( const String& host, const unsigned short port ) = 0;
+
+		/**
+		\par
+		Note: bind is implicitly done here.
+		@return int Returns a 0 for success, otherwise 
+		a negative number to indicate an error.
+		*/
+		virtual int listen( unsigned short port ) = 0;
+
+		/**
+		Accepts a new connection and returns a new socket peer
+		instance. Assumes the listen() call has already occurred.
+		If it has not then an exception is thrown.
+		*/
+		virtual SocketPeer* accept() = 0;
+
+		//IO
+		/**
+		@return int Returns a 0 for success, otherwise 
+		a negative number to indicate an error.
+		*/
+		virtual int recv( unsigned char* bytes, size_t bytesLength ) = 0;
+
+		/**
+		@return int Returns a 0 for success, otherwise 
+		a negative number to indicate an error.
+		*/
+		virtual int send( const unsigned char* bytes, size_t bytesLength ) = 0;
+
+		/**
+		Returns a handle for the OS specific socket resource. This 
+		is typically a socket handle or descriptor, depending on the 
+		OS and the underlying implementation.
+		*/
+		virtual OSHandleID getHandleID() = 0;
+
+		/**
+		Returns the host name that this instance represents.
+		This is a potentially blocking call, and may take a while to 
+		complete if the host name cannot be resolved by the underlying
+		OS network stack.
+		*/
+		virtual String getHostName() = 0;
+
+		/**
+		Returns the IP address of the host as a string
+		formatted (for IPV4 at least) as 4 "octets", 
+		each separated by the "." character. Each
+		octet is a number string in the range from 0 to 255.
+		*/
+		virtual String getHostIPAddress() = 0;
+
+		/**
+		Returns the port number for this socket instance.
+		*/
+		virtual unsigned short getPort() = 0;
+
+		/**
+		Sets the options for a socket. The options are stored as a 
+		dictionary of items, with the keys being 1 or more values 
+		represented by the Socket::soXXX const string variables.
+		*/
+		virtual void setOptions( Dictionary& options ) = 0;
+
+		/**
+		Returns a dictionary containing the options for the
+		socket.
+		*/
+		virtual Dictionary getOptions() = 0;
+
+		/**
+		Indicates whether the current operation would block.
+		Assumes a non blocking socket. This is roughly equivalent
+		to getting a an EWOULDBLOCK or WSAEWOULDBLOCK error number.
+
+		@return bool True if the operation would block, otherwise
+		false if it would not. 
+		*/
+		virtual bool wouldOperationBlock() = 0;
+
+		/**
+		performs a select, using the various read, write, and/or error socket 
+		lists. Will block for a maximum of timeout milliseconds. If the all
+		the read, write, and error socket arrays are NULL, then the 
+		select is performed only on the socket instance itself.
+		@param uint32 the maximum number of milliseconds to wait for. 
+			@see Socket::SelectNoWait,
+			@see Socket::SelectWaitForever
+		@param SocketArray a pointer to a vector of Socket instances to test
+		whether or not they can be read from. This may vector
+		may be null if the	caller is not interested in read notifications. 
+		Note that the contents of the vector may change. You may pass in 10 
+		sockets to test, and only get back 3 that are actually ready to be 
+		read from.
+
+		@param SocketArray a pointer to a vector of Socket instances to test
+		whether or not they may be written to. This may vector
+		may be null if the	caller is not interested in write notifications. 
+		Note that the contents of the vector may change. You may pass in 10 
+		sockets to test, and only get back 3 that are actually ready to be 
+		written to.
+
+		@param SocketArray a pointer to a vector of Socket instances to test
+		whether or not they have errors. This may vector
+		may be null if the	caller is not interested in write notifications. 
+		Note that the contents of the vector may change. You may pass in 10 
+		sockets to test, and only get back 3 that are actually in an error 
+		state.
+		*/
+		virtual void select( uint32 timeout, SocketArray* readSockets, SocketArray* writeSockets,
+						SocketArray* errorSockets ) = 0;
+	};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	class NETWORKKIT_API SocketInputStream  : public InputStream {
+	public:
+
+		SocketInputStream( Socket& socket );
+
+		/**
+		Seeking is not permitted!
+		*/
+		virtual void seek(const uint64& offset, const SeekType& offsetFrom) {
+			//no-op
+			throw NetworkException( "You cannot seek in a Socket Input stream" );
+		}
+
+		virtual uint64 getSize() {
+			return totalBytesRecvd_;
+		}
+
+		/**
+		Returns NULL - this is not permitted
+		*/
+		virtual char* getBuffer() {
+			throw NetworkException( "You cannot access the buffer pointer in a Socket Input stream" );
+			return NULL;
+		}
+
+		
+		virtual uint64 getCurrentSeekPos() {
+			throw NetworkException( "You cannot access the seek position in a Socket Input stream" );
+			return 0;	
+		}
+
+		virtual bool isEOS() {
+			return false;
+		}
+
+		/**
+		Attempts to read sizeOfBytes from the socket associated 
+		with this stream. The method will return the number of bytes
+		read from the socket. The return may be the following:
+		\li A number greater than 0 but less than sizeOfBytes that 
+		indicates the number of bytes successfully read from
+		the socket
+		\li 0 which may indicate a disconnect has happened and 
+		no bytes were read. If the socket is marked as non-blocking 
+		then the method will return 0 bytes, but the sockets 
+		Socket::wouldOperationBlock() method will return true. This 
+		indicates that the read operation will be completable
+		in the future.
+		If the socket is a blocking socket, then this is probably
+		a disconnect.
+		\li If the socket's peer reports an error in reading  
+		from the socket, then the method will throw a NetworkException.
+		*/
+		virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes );
+
+	protected:
+		uint64 totalBytesRecvd_;
+		Socket* socket_;
+	};
+
+
+
+	class NETWORKKIT_API SocketOutputStream  : public OutputStream {
+	public:
+
+		SocketOutputStream( Socket& socket );
+
+		/**
+		Seeking is not permitted!
+		*/
+		virtual void seek(const uint64& offset, const SeekType& offsetFrom) {
+			//no-op
+			throw NetworkException( "You cannot seek in a Socket Output stream" );
+		}
+
+		virtual uint64 getSize() {
+			return totalBytesWritten_;
+		}
+
+		/**
+		Returns NULL - this is not permitted
+		*/
+		virtual char* getBuffer() {
+			throw NetworkException( "You cannot access the buffer pointer in a Socket Output stream" );
+			return NULL;
+		}
+
+		
+		virtual uint64 getCurrentSeekPos() {
+			throw NetworkException( "You cannot access the seek position in a Socket Output stream" );
+			return 0;	
+		}
+
+		/**
+		Attempts to write sizeOfBytes to the socket associated 
+		with this stream. The method will return the number of bytes
+		written to the socket. The return value may be the following:
+		\li A number greater than 0 but less than sizeOfBytes that 
+		indicates the number of bytes successfully written to
+		the socket
+		\li 0 which may indicate a disconnect has happened and 
+		no bytes were written. If the socket is marked as non-blocking 
+		then the method will return 0 bytes, but the sockets 
+		Socket::wouldOperationBlock() method will return true. 
+		If the socket is a blocking socket, then this is probably
+		an error.
+		\li If the socket's peer reports an error in writing to 
+		the socket, then the method will throw a NetworkException.
+		*/
+		virtual uint64 write( const unsigned char* bytesToWrite, uint64 sizeOfBytes );
+
+	protected:
+		uint64 totalBytesWritten_;
+		Socket* socket_;
+	};
+};
+
+
+
+#endif //_VCF_SOCKET_H__
