@@ -36,6 +36,18 @@ namespace VCF {
 		dssFilter
 	};
 
+	enum DataEventType {
+		deUnknown = 0
+	};
+
+
+	enum GetResultType {
+		grFailed = 0,
+		grOK,
+		grBOF,
+		grEOF,
+	};
+
     class DATABASEKIT_API DataSet : public Object {
     public:
 
@@ -89,6 +101,26 @@ namespace VCF {
 
 		void setState( DataSetState val );
 
+		bool canModify() {
+			return canModify_;
+		}
+
+		bool isBOF() {
+			return bof_;
+		}
+
+		bool isEOF() {
+			return eof_;
+		}
+
+		bool isModified() {
+			return modified_;
+		}
+
+		bool getDefaulFields() {
+			return defaultFields_;
+		}
+
         StringList* getSelectSQL();
 
 		void updateFieldDefs();
@@ -103,13 +135,45 @@ namespace VCF {
 
 		void removeDataSource( DataSource* source );
 
-		void edit();
-    protected:
-        virtual void internalOpen() = 0;
+		
 
-        virtual void internalClose() = 0;
+		//navigation functions...
+
+		void first();
+
+		void next();
+
+		void refresh();
+
+		//modification functions...
+		void edit();
+
+		void appendRecord();
+
+		void deleteRecord();
+
+		void post();
+
+		void cancel();
+
+
+
+
+    protected:
+        virtual void internal_open() = 0;
+
+        virtual void internal_close() = 0;
 
 		virtual void internal_initFieldDefinitions() = 0;
+
+		virtual void internal_first() = 0;
+		
+		virtual void internal_next() = 0;
+
+		virtual GetResultType getRecord() = 0;
+
+		virtual void clearRecordData() = 0;
+		
 
 		bool active_;
         Database* db_;
@@ -117,6 +181,15 @@ namespace VCF {
         StringList* selectSQL_;
         int columnCount;
 		DataSetState state_;
+		bool canModify_;
+		bool bof_;
+		bool eof_;
+		bool modified_;
+		bool defaultFields_;
+
+
+
+
         std::map<String, VariantData> params_;
 
 		typedef std::vector<DataSource*> DataSourceArray;

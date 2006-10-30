@@ -6,7 +6,12 @@ DataSet::DataSet()
     : Object(), columnCount(0),
 	fieldDefs_(NULL),
 	active_(false),
-	state_(dssInactive)
+	state_(dssInactive),
+	canModify_(false),
+	bof_(false),
+	eof_(false),
+	modified_(false),
+	defaultFields_(true)
 {
 	selectSQL_ = new StringList();
 	fieldDefs_ = new FieldDefinitions(); 
@@ -36,9 +41,10 @@ void DataSet::setActive( bool active )
 {
 	active_ = active;
     if ( active ) {
-        internalOpen();
-    } else {
-        internalClose();
+        internal_open();
+    } 
+	else {
+        internal_close();
     }
 }
 
@@ -120,12 +126,48 @@ void DataSet::removeDataSource( DataSource* source )
 }
 
 
+void DataSet::setState( DataSetState val )
+{
+	state_ = val;
+}
+
+
+void DataSet::first()
+{
+
+}
+
+void DataSet::next()
+{
+
+}
+
+void DataSet::refresh()
+{
+
+}
+
 void DataSet::edit()
 {
 
 }
 
-void DataSet::setState( DataSetState val )
+void DataSet::appendRecord()
 {
-	state_ = val;
+
+}
+
+void DataSet::deleteRecord()
+{
+
+}
+
+void DataSet::post()
+{
+
+}
+
+void DataSet::cancel()
+{
+
 }
