@@ -8,12 +8,12 @@
 using namespace VCF;
 
 
-void SQLiteDataSet::internalOpen()
+void SQLiteDataSet::internal_open()
 {
 
 }
 
-void SQLiteDataSet::internalClose()
+void SQLiteDataSet::internal_close()
 {
 
 }
@@ -25,4 +25,26 @@ void SQLiteDataSet::internal_initFieldDefinitions()
 	sqlite3* dbHandle = (sqlite3*) db->getHandle();
 
 	//size_t colCount = 
+}
+
+void SQLiteDataSet::internal_first()
+{
+
+}
+		
+GetResultType SQLiteDataSet::getRecord()
+{
+	GetResultType result = grFailed;
+
+	return result;
+}
+
+void SQLiteDataSet::internal_next()
+{
+
+}
+
+void SQLiteDataSet::clearRecordData()
+{
+
 }

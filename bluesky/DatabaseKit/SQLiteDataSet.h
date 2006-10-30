@@ -23,11 +23,19 @@ namespace VCF {
 	public:
 
 	protected:
-        virtual void internalOpen();
+        virtual void internal_open();
 
-        virtual void internalClose();
+        virtual void internal_close();
 
 		virtual void internal_initFieldDefinitions();
+
+		virtual void internal_first();
+		
+		virtual GetResultType getRecord();
+
+		virtual void internal_next();
+
+		virtual void clearRecordData();
 	};
 };
 
