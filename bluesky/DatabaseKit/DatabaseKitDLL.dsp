@@ -104,11 +104,23 @@ SOURCE=.\DatabaseToolkit.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DataField.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DataSet.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DataSource.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\FieldDefinitions.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SQLiteDataSet.cpp
 # End Source File
 # Begin Source File
 
@@ -140,11 +152,23 @@ SOURCE=.\DatabaseToolkit.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DataField.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DataSet.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DataSource.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\FieldDefinitions.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SQLiteDataSet.h
 # End Source File
 # Begin Source File
 

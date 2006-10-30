@@ -114,6 +114,8 @@ Handle the extension based on the compiler
 #include "Transaction.h"
 #include "StringList.h"
 #include "FieldDefinitions.h"
+#include "DataField.h"
+#include "DataSource.h"
 
 
 //DB providers...
