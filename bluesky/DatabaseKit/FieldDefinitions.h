@@ -19,7 +19,42 @@ where you installed the VCF.
 namespace VCF {
 
 	enum DataFieldType {
-		ftUnknown = 0
+		dftUnknown = 0,
+		dftString, 
+		dftSmallint, 
+		dftInteger, 
+		dftWord, 
+		dftBoolean, 
+		dftFloat, 
+		dftCurrency, 
+		dftBCD, 
+		dftDate, 
+		dftTime, 
+		dftDateTime, 
+		dftBytes, 
+		dftVarBytes, 
+		dftAutoInc, 
+		dftBlob, 
+		dftMemo, 
+		dftGraphic, 
+		dftFmtMemo, 
+		dftParadoxOle, 
+		dftDBaseOle, 
+		dftTypedBinary, 
+		dftCursor, 
+		dftFixedChar, 
+		dftUnicodeString, 
+		dftLargeint, 		
+		dftADT, 
+		dftArray, 
+		dftReference, 
+		dftDataSet, 
+		dftOraBlob, 
+		dftOraClob, 
+		dftVariant, 
+		dftInterface, 
+		dftIDispatch, 
+		dftGuid
 	};
 
 	class FieldDefinitions;
@@ -38,7 +73,7 @@ namespace VCF {
 		FieldDefinitions* owner;
 		
 
-		FieldDefinition():fieldNumber(0), dataType(ftUnknown),internalCalcField(false),precision(0),required(false), size(0),owner(NULL),fieldClass_(NULL) {
+		FieldDefinition():fieldNumber(0), dataType(dftUnknown),internalCalcField(false),precision(0),required(false), size(0),owner(NULL),fieldClass_(NULL) {
 
 		}
 
@@ -68,6 +103,8 @@ namespace VCF {
 		}
 
 		void add( const String& name, DataFieldType dataType, size_t size, bool required );
+
+		void add( FieldDefinition& val );
 
 		FieldDefinition* find( const String& name );
 

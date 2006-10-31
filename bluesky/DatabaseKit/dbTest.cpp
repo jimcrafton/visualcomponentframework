@@ -13,6 +13,11 @@ int main( int argc, char** argv ){
 
 	DataSet* dataSet = DatabaseToolkit::createDataSet( "SQLiteType" );
 
+	dataSet->setParam( "databasename", "test.db3" );
+	dataSet->setParam( "tablename", "Person" );
+
+
+
 	DataSource* dbSrc = new DataSource();
 
 
