@@ -62,18 +62,24 @@ void FieldDefinitions::add( const String& name, DataFieldType dataType, size_t s
 
 	FieldDefinition fieldDef;
 
-	fieldDef.owner = this;
 	fieldDef.dataType = dataType;
 	fieldDef.name = name;
 	fieldDef.size = size;
 	fieldDef.required = required;
 
+	add( fieldDef );
+}
+
+void FieldDefinitions::add( FieldDefinition& val )
+{
+	val.owner = this;
+	
 	if ( NULL != dataSet_ ) {
-		fieldDef.fieldClass_ = dataSet_->getFieldClass( dataType );
+		val.fieldClass_ = dataSet_->getFieldClass( val.dataType );
 	}
 
 
-	fields_.push_back( fieldDef );
+	fields_.push_back( val );
 
 	updated_ = false;
 }

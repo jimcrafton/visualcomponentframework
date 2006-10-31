@@ -18,8 +18,45 @@ where you installed the VCF.
 
 namespace VCF {
 
+#define DATAFIELD_CLASSID	"48e34264-750f-4fc9-a28f-4e91c2690809"
+
+	enum FieldKindType {
+		fkUnknown = 0,
+		fkData
+	};
 
 	class DATABASEKIT_API DataField : public Object {
+	public:
+
+		DataField();
+
+
+		void bind( bool bindField );
+
+		virtual VariantData getCurrentValue();
+
+		virtual bool getAsBoolean();
+		virtual DateTime getAsDateTime();
+		virtual String getAsString();
+		virtual double getAsFloat();
+		virtual int getAsInteger();
+
+
+
+	protected:
+		DataSet* dataSet_;
+		DataFieldType dataType_;
+		String displayName_;
+		int displayWidth_;
+		String name_;
+		int	fieldNumber_;
+		FieldKindType kind_;
+		bool visible_;
+		bool readOnly_;
+		bool required_;
+		int size_;
+
+
 
 	};
 

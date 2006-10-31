@@ -15,6 +15,7 @@ DataSet::DataSet()
 {
 	selectSQL_ = new StringList();
 	fieldDefs_ = new FieldDefinitions(); 
+	fieldDefs_->setDataSet( this );
 }
 
 DataSet::~DataSet()
@@ -62,6 +63,8 @@ void DataSet::setActive( bool active )
 
 			Event e3(this,0);
 			AfterScroll.fireEvent(&e3);
+
+			active_ = active;
 		}
 		else {
 			Event e(this,0);
@@ -73,17 +76,10 @@ void DataSet::setActive( bool active )
 
 			Event e2(this,0);
 			AfterClose.fireEvent(&e2);
+
+			active_ = active;
 		}
 	}
-    /*
-	if ( active ) {
-        internal_open();
-    } 
-	else {
-        internal_close();
-    }
-	*/
-
 }
 
 bool DataSet::isActive()
@@ -148,7 +144,7 @@ void DataSet::createFields()
 {
 	std::vector<FieldDefinition>& defs = fieldDefs_->fields();
 	for ( size_t i=0;i<defs.size();i++ ) {
-		if ( defs[i].dataType != ftUnknown ) {
+		if ( defs[i].dataType != dftUnknown ) {
 			DataField* field = defs[i].createField();
 
 			if ( NULL != field ) {
@@ -263,4 +259,15 @@ void DataSet::openData()
 	internal_open();
 
 	bof_ = true;
+}
+
+
+void DataSet::setParam( const String& param, VariantData value )
+{
+    params_[param] = value;
+}
+
+VariantData DataSet::getParam ( const String& param )
+{
+    return params_[param];
 }

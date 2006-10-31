@@ -99,6 +99,10 @@ namespace VCF {
 
         void setTransaction( Transaction* transaction );
 
+		void setParam( const String& param, VariantData value );
+
+        VariantData getParam ( const String& );
+
         void open();
 
         void close();
@@ -169,7 +173,7 @@ namespace VCF {
 		void cancel();
 
 
-
+		
 
     protected:
         virtual void internal_open() = 0;

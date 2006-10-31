@@ -16,11 +16,23 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+#include "sqliteInt.h"
+
 
 
 namespace VCF {
 	class SQLiteDataSet : public DataSet {
 	public:
+
+		SQLiteDataSet();
+
+		String getTableName();
+
+		void setTableName( const String& val );
+
+		String getDatabaseName();
+
+		void setDatabaseName( const String& val );
 
 	protected:
         virtual void internal_open();
@@ -36,6 +48,15 @@ namespace VCF {
 		virtual void internal_next();
 
 		virtual void clearRecordData();
+
+		sqlite3* getHandle();
+		void closeHandle();
+
+		bool verifyTableColums(sqlite3_stmt* stmt);
+
+		void addFieldDef( sqlite3_stmt* stmt, size_t fieldIndex );
+	private:
+		sqlite3* dbHandle_;
 	};
 };
 
