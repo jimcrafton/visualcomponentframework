@@ -21,11 +21,13 @@ void DataSource::destroy()
 void DataSource::setDataSet( DataSet* val )
 {
 	if ( dataSet_ != val ) {
-		if ( dataSet_ != NULL ) {
-			dataSet_->removeDataSource( this );
-		}
-		
+
+		DataSet* old = dataSet_;
 		dataSet_ = val;
+
+		if ( old != NULL ) {
+			old->removeDataSource( this );
+		}		
 
 		if ( NULL != dataSet_ ) {
 			dataSet_->addDataSource(this);

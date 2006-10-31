@@ -23,7 +23,7 @@ namespace VCF {
 
 	class DataLink;
 
-	class DataSource : public Object {
+	class DATABASEKIT_API DataSource : public Object {
 	public:
 
 		DELEGATE(StateChanged);

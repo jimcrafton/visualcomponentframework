@@ -26,7 +26,7 @@ namespace VCF {
 	class DataField;
 
 
-	class FieldDefinition {
+	class DATABASEKIT_API FieldDefinition {
 	public:
 		int fieldNumber;
 		DataFieldType dataType;
@@ -57,14 +57,14 @@ namespace VCF {
 	class DataSet;
 	
 
-	class FieldDefinitions {
+	class DATABASEKIT_API FieldDefinitions {
 	public:
 		FieldDefinitions();
 
 		void clear();
 
 		size_t size() const {
-			fields_.size();
+			return fields_.size();
 		}
 
 		void add( const String& name, DataFieldType dataType, size_t size, bool required );

@@ -19,7 +19,7 @@ where you installed the VCF.
 namespace VCF {
 
 
-	class DataField : public Object {
+	class DATABASEKIT_API DataField : public Object {
 
 	};
 
