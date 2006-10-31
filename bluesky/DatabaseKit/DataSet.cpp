@@ -39,13 +39,51 @@ void DataSet::setTransaction( Transaction* tr )
 
 void DataSet::setActive( bool active )
 {
-	active_ = active;
-    if ( active ) {
+	if ( active != active_ ) {
+		if ( active ) {
+			Event e(this,0);
+			BeforeOpen.fireEvent(&e);
+
+			try {
+				openCursor( false );
+
+				setState( dssBrowse );
+			}
+			catch ( BasicException& ) {
+				setState( dssInactive );
+
+				closeCursor();
+
+				throw;
+			}
+
+			Event e2(this,0);
+			AfterOpen.fireEvent(&e2);
+
+			Event e3(this,0);
+			AfterScroll.fireEvent(&e3);
+		}
+		else {
+			Event e(this,0);
+			BeforeClose.fireEvent(&e);
+
+			setState( dssInactive );
+
+			closeCursor();
+
+			Event e2(this,0);
+			AfterClose.fireEvent(&e2);
+		}
+	}
+    /*
+	if ( active ) {
         internal_open();
     } 
 	else {
         internal_close();
     }
+	*/
+
 }
 
 bool DataSet::isActive()
@@ -92,12 +130,30 @@ Class* DataSet::getFieldClass( int fieldType )
 	return result;
 }
 
+void DataSet::deleteFields()
+{
+	DataFieldArray::iterator it = fields_.begin();
+	while ( it != fields_.end() ) {
+		DataField* field = *it;
+		field->free();
+
+		++it;
+	}
+
+	fields_.clear();
+}
+
+
 void DataSet::createFields()
 {
 	std::vector<FieldDefinition>& defs = fieldDefs_->fields();
 	for ( size_t i=0;i<defs.size();i++ ) {
 		if ( defs[i].dataType != ftUnknown ) {
 			DataField* field = defs[i].createField();
+
+			if ( NULL != field ) {
+				fields_.push_back( field );
+			}
 		}
 	}
 }
@@ -125,10 +181,23 @@ void DataSet::removeDataSource( DataSource* source )
 	}
 }
 
+void DataSet::handleDataEvent( Event* e )
+{
+	switch ( e->getType() ) {
+
+	}
+}
 
 void DataSet::setState( DataSetState val )
 {
-	state_ = val;
+	if ( val != state_ ) {
+		state_ = val;
+
+		modified_ = false;
+
+		Event e(this,deUpdateState);
+		handleDataEvent(&e);
+	}	
 }
 
 
@@ -170,4 +239,28 @@ void DataSet::post()
 void DataSet::cancel()
 {
 
+}
+
+void DataSet::openCursor( bool query )
+{
+	if ( query ) {
+		internal_initFieldDefinitions();
+	}
+	else {
+		openData();
+	}
+}
+
+void DataSet::closeCursor()
+{
+
+}
+
+void DataSet::openData()
+{
+	defaultFields_ = fields_.empty();
+
+	internal_open();
+
+	bof_ = true;
 }

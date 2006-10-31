@@ -23,6 +23,7 @@ namespace VCF {
     class StringList;
 	class FieldDefinitions;
 	class DataSource;
+	class DataField;
 
 	enum DataSetState {
 		dssInactive = 0, 
@@ -37,7 +38,18 @@ namespace VCF {
 	};
 
 	enum DataEventType {
-		deUnknown = 0
+		deUnknown = 0,
+		deFieldChange = 'data', 
+		deRecordChange, 
+		deDataSetChange,
+		deDataSetScroll, 
+		deLayoutChange, 
+		deUpdateRecord, 
+		deUpdateState,
+		deCheckBrowseMode,
+		dePropertyChange, 
+		deFieldListChange, 
+		deFocusControl
 	};
 
 
@@ -175,6 +187,19 @@ namespace VCF {
 		virtual void clearRecordData() = 0;
 		
 
+		virtual void handleDataEvent( Event* e );
+
+
+
+		virtual void openCursor( bool query );
+
+		virtual void closeCursor();
+
+
+		void openData();
+
+		void deleteFields();
+
 		bool active_;
         Database* db_;
         Transaction* tr_;
@@ -193,9 +218,12 @@ namespace VCF {
         std::map<String, VariantData> params_;
 
 		typedef std::vector<DataSource*> DataSourceArray;
+		typedef std::vector<DataField*> DataFieldArray;
+
 		DataSourceArray dataSources_;
 
 		FieldDefinitions* fieldDefs_;
+		DataFieldArray fields_;
         
     };
 
