@@ -39,11 +39,14 @@ void SQLiteDataSet::internal_open()
 {
 	internal_initFieldDefinitions();
 
-	if ( this->getDefaulFields() ) {
-		createFields();
+	try {
+		if ( getDefaulFields() ) {
+			createFields();
+		}	
 	}
-
-	
+	catch ( BasicException& ) {
+		
+	}
 }
 
 void SQLiteDataSet::closeHandle()

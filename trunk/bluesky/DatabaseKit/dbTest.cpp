@@ -14,7 +14,7 @@ int main( int argc, char** argv ){
 	DataSet* dataSet = DatabaseToolkit::createDataSet( "SQLiteType" );
 
 	dataSet->setParam( "databasename", "test.db3" );
-	dataSet->setParam( "tablename", "Person" );
+	dataSet->setParam( "tablename", "Simple" );
 
 
 
@@ -26,6 +26,15 @@ int main( int argc, char** argv ){
 
 	dataSet->setActive(true);
 
+
+	if ( dataSet->isActive() ) {
+
+		Enumerator<DataField*>* fields = dataSet->getFields();
+		while ( fields->hasMoreElements() ) {
+			DataField* field = fields->nextElement();
+			System::println( "Field name: " + field->getName() );
+		}
+	}
 
 
 	dbSrc->free();

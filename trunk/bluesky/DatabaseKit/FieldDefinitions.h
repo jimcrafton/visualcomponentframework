@@ -73,7 +73,7 @@ namespace VCF {
 		FieldDefinitions* owner;
 		
 
-		FieldDefinition():fieldNumber(0), dataType(dftUnknown),internalCalcField(false),precision(0),required(false), size(0),owner(NULL),fieldClass_(NULL) {
+		FieldDefinition():fieldNumber(0), dataType(dftUnknown),internalCalcField(false),precision(0),required(false), size(0),owner(NULL) {
 
 		}
 
@@ -85,7 +85,6 @@ namespace VCF {
 
 		friend class FieldDefinitions;
 	protected:
-		Class* fieldClass_;
 	};
 
 

@@ -20,6 +20,15 @@ DataSet::DataSet()
 
 DataSet::~DataSet()
 {
+	close();
+
+	
+	while ( !dataSources_.empty() ) {
+		removeDataSource( dataSources_.front() );
+	}
+
+	deleteFields();
+
 	delete selectSQL_;
 	delete fieldDefs_;
 }
@@ -123,20 +132,27 @@ Class* DataSet::getFieldClass( int fieldType )
 {
 	Class* result = NULL;
 
+	switch ( fieldType ) {
+		case dftString : {
+			result = classid(VCF::StringField);
+		}
+		break;
+	}
+
 	return result;
 }
 
 void DataSet::deleteFields()
 {
-	DataFieldArray::iterator it = fields_.begin();
-	while ( it != fields_.end() ) {
+	DataFieldArray::Vector::iterator it = fields_().begin();
+	while ( it != fields_().end() ) {
 		DataField* field = *it;
 		field->free();
 
 		++it;
 	}
 
-	fields_.clear();
+	fields_().clear();
 }
 
 
@@ -148,7 +164,7 @@ void DataSet::createFields()
 			DataField* field = defs[i].createField();
 
 			if ( NULL != field ) {
-				fields_.push_back( field );
+				fields_().push_back( field );
 			}
 		}
 	}
@@ -254,7 +270,7 @@ void DataSet::closeCursor()
 
 void DataSet::openData()
 {
-	defaultFields_ = fields_.empty();
+	defaultFields_ = fields_().empty();
 
 	internal_open();
 
@@ -270,4 +286,9 @@ void DataSet::setParam( const String& param, VariantData value )
 VariantData DataSet::getParam ( const String& param )
 {
     return params_[param];
+}
+
+Enumerator<DataField*>* DataSet::getFields()
+{
+	return fields_.getEnumerator();
 }

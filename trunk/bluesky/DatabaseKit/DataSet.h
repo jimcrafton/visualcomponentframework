@@ -137,6 +137,10 @@ namespace VCF {
 			return defaultFields_;
 		}
 
+		
+		Enumerator<DataField*>* getFields();
+
+
         StringList* getSelectSQL();
 
 		void updateFieldDefs();
@@ -222,7 +226,7 @@ namespace VCF {
         std::map<String, VariantData> params_;
 
 		typedef std::vector<DataSource*> DataSourceArray;
-		typedef std::vector<DataField*> DataFieldArray;
+		typedef VectorEnum<DataField*> DataFieldArray;
 
 		DataSourceArray dataSources_;
 
