@@ -30,6 +30,7 @@ namespace VCF {
 
 		DataField();
 
+		void initField( const FieldDefinition& val );
 
 		void bind( bool bindField );
 
@@ -41,7 +42,49 @@ namespace VCF {
 		virtual double getAsFloat();
 		virtual int getAsInteger();
 
+		DataSet* getDataSet() {
+			return dataSet_;
+		}
 
+		DataFieldType getDataType() {
+			return dataType_;
+		}
+
+		String getDisplayName() {
+			return displayName_;
+		}
+
+		int getDisplayWidth() {
+			return displayWidth_;
+		}
+
+		String getName() {
+			return name_;
+		}
+
+		int getFieldNumber() {
+			return fieldNumber_;
+		}
+
+		FieldKindType getKind() {
+			return kind_;
+		}
+
+		bool isVisible() {
+			return visible_;
+		}
+
+		bool isReadOnly() {
+			return readOnly_;
+		}
+
+		bool isRequired() {
+			return required_;
+		}
+
+		int getSize() {
+			return size_;
+		}
 
 	protected:
 		DataSet* dataSet_;
@@ -55,12 +98,27 @@ namespace VCF {
 		bool readOnly_;
 		bool required_;
 		int size_;
-
-
-
 	};
 
 
+
+#define STRINGFIELD_CLASSID	"5361c68c-0f88-40a0-847f-c99c5ed916b4"
+
+	class DATABASEKIT_API StringField: public DataField {
+	public:
+		StringField();
+
+		virtual VariantData getCurrentValue();
+
+		virtual bool getAsBoolean();
+		virtual DateTime getAsDateTime();
+		virtual String getAsString();
+		virtual double getAsFloat();
+		virtual int getAsInteger();
+	protected:
+
+
+	};
 };
 
 #endif //_VCF_DATAFIELD_H__

@@ -10,9 +10,16 @@ DataField* FieldDefinition::createField()
 
 	Class* fieldClass = getFieldClass();
 
+	VCF_ASSERT( NULL != fieldClass );
+
+	if ( NULL == fieldClass ) {
+		throw DatabaseError("Unknown Field Class - unable to create new field instance.");
+	}
+
+
 	Object* obj = fieldClass->createInstance();
 
-	if ( NULL != obj ) {
+	if ( NULL == obj ) {
 		throw DatabaseError("Unable to create field instance.");
 	}
 
@@ -24,6 +31,7 @@ DataField* FieldDefinition::createField()
 	}
 	
 
+	result->initField( *this );
 
 
 
@@ -32,7 +40,15 @@ DataField* FieldDefinition::createField()
 
 Class* FieldDefinition::getFieldClass()
 {
-	return fieldClass_;
+	Class* result = NULL;
+
+	if ( NULL != owner ) {
+		VCF_ASSERT( NULL != owner->getDataSet() );
+
+		result = owner->getDataSet()->getFieldClass( dataType );
+	}
+
+	return result;
 }
 
 
@@ -72,13 +88,8 @@ void FieldDefinitions::add( const String& name, DataFieldType dataType, size_t s
 
 void FieldDefinitions::add( FieldDefinition& val )
 {
-	val.owner = this;
+	val.owner = this;	
 	
-	if ( NULL != dataSet_ ) {
-		val.fieldClass_ = dataSet_->getFieldClass( val.dataType );
-	}
-
-
 	fields_.push_back( val );
 
 	updated_ = false;

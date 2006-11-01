@@ -107,6 +107,47 @@ Handle the extension based on the compiler
 
 #include "vcf/FoundationKit/FoundationKit.h"
 
+
+namespace VCF {
+
+	template <typename ContainerT, typename ValueT>
+	class EnumImpl : public EnumeratorContainer< ContainerT,ValueT > {
+	public:
+		typedef ContainerT Container;
+		
+		inline EnumImpl(){
+			initContainer( container );
+		}
+		
+		inline operator Container& () {
+			return container;
+		}
+
+		inline operator const Container& () const {
+			return container;
+		}
+
+		inline Container& operator () () {
+			return container;
+		}
+
+		inline const Container& operator () () const {
+			return container;
+		}
+
+		Container container;
+	};
+
+	template <typename ValueT>
+	class VectorEnum : public EnumImpl< std::vector<ValueT>,ValueT > {
+	public:
+		typedef Container Vector;		
+	};
+
+};
+
+
+
 #include "DatabaseToolkit.h"
 #include "Database.h"
 #include "DatabaseError.h"
