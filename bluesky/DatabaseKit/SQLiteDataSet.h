@@ -49,7 +49,7 @@ namespace VCF {
 
 		virtual void clearRecordData();
 
-		virtual RecordDataHandle allocateRecordData();
+		virtual Record* allocateRecordData();
 
 		sqlite3* getHandle();
 		void closeHandle();
@@ -57,8 +57,12 @@ namespace VCF {
 		bool verifyTableColums(sqlite3_stmt* stmt);
 
 		void addFieldDef( sqlite3_stmt* stmt, size_t fieldIndex );
+
+		AnsiString generateSQL();
+
 	private:
 		sqlite3* dbHandle_;
+		sqlite3_stmt* currentStmt_;
 	};
 };
 
