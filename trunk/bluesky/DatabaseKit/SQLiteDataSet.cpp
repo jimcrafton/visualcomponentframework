@@ -23,7 +23,8 @@ static std::map<String, DataFieldType> colTypeMap;
 
 SQLiteDataSet::SQLiteDataSet():
 	DataSet(),
-	dbHandle_(NULL)
+	dbHandle_(NULL),
+	currentStmt_(NULL)
 {
 	if ( colTypeMap.empty() ) {
 		colTypeMap["varchar"] = dftString;
@@ -224,9 +225,9 @@ void SQLiteDataSet::internal_next()
 
 }
 
-DataSet::RecordDataHandle SQLiteDataSet::allocateRecordData()
+DataSet::Record* SQLiteDataSet::allocateRecordData()
 {
-	DataSet::RecordDataHandle result = NULL;
+	DataSet::Record* result = NULL;
 
 	return result;
 }
@@ -272,4 +273,40 @@ sqlite3* SQLiteDataSet::getHandle()
 	}
 
 	return dbHandle_;
+}
+
+AnsiString SQLiteDataSet::generateSQL()
+{
+	AnsiString result;
+
+	String tableName = getTableName();
+
+	if ( tableName.empty() ) {
+		throw DatabaseError("No Table Name specified, unable to generate SQL statement!");
+	}
+
+	if ( fields_().empty() ) {
+		throw DatabaseError("No Fields in data set, unable to generate SQL statement!");
+	}
+
+	sqlite3* dbHandle = getHandle();
+
+	result += "select ";
+	for ( size_t i=0;i<fields_().size();i++ ) {
+		DataField* field = fields_()[i];
+		if ( i > 0 ) {
+			result += ", ";
+		}
+		result += field->getName();
+	}
+
+	result += " from ";
+
+	result += tableName;
+
+
+	result += ";";
+
+
+	return result;
 }

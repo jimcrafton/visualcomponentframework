@@ -293,7 +293,7 @@ Enumerator<DataField*>* DataSet::getFields()
 	return fields_.getEnumerator();
 }
 
-void DataSet::setRecordsArraySize( size_t numberOfRecords )
+void DataSet::setRecordsSize( size_t numberOfRecords )
 {
 	if ( numberOfRecords == records_.size() ) {
 		return;
@@ -301,10 +301,9 @@ void DataSet::setRecordsArraySize( size_t numberOfRecords )
 
 	if ( numberOfRecords < records_.size() ) {
 		for ( size_t i=numberOfRecords;i<records_.size();i++ ) {
-			RecordDataHandle recordHandle =  records_[i];
-
-			char* tmp = (char*)recordHandle;
-			delete [] tmp;
+			Record* record =  records_[i];
+			
+			delete record;
 		}
 		RecordsArray::iterator it = records_.begin() + numberOfRecords;
 		records_.erase( it, records_.end() );

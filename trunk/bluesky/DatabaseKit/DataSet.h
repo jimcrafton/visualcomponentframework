@@ -64,7 +64,22 @@ namespace VCF {
     public:
 
 
-		typedef void* RecordDataHandle;
+		struct Record {
+			Record(): buffer(NULL), size(0){}
+
+			Record( size_t val ): buffer(NULL), size(val) {
+				buffer = new unsigned char[size];
+			}
+
+			~Record() {
+				delete [] buffer;
+				buffer = NULL;
+				size = 0;
+			}
+
+			unsigned char* buffer;
+			size_t size;
+		};
 
 
         DataSet();
@@ -198,7 +213,7 @@ namespace VCF {
 
 		virtual void clearRecordData() = 0;
 
-		virtual RecordDataHandle allocateRecordData() = 0;
+		virtual Record* allocateRecordData() = 0;
 		
 
 		virtual void handleDataEvent( Event* e );
@@ -215,7 +230,7 @@ namespace VCF {
 		void deleteFields();
 
 		
-		void setRecordsArraySize( size_t numberOfRecords );
+		void setRecordsSize( size_t numberOfRecords );
 
 		bool active_;
         Database* db_;
@@ -236,7 +251,7 @@ namespace VCF {
 
 		typedef std::vector<DataSource*> DataSourceArray;
 		typedef VectorEnum<DataField*> DataFieldArray;
-		typedef std::vector<RecordDataHandle> RecordsArray;
+		typedef std::vector<Record*> RecordsArray;
 
 
 		DataSourceArray dataSources_;
