@@ -292,3 +292,37 @@ Enumerator<DataField*>* DataSet::getFields()
 {
 	return fields_.getEnumerator();
 }
+
+void DataSet::setRecordsArraySize( size_t numberOfRecords )
+{
+	if ( numberOfRecords == records_.size() ) {
+		return;
+	}
+
+	if ( numberOfRecords < records_.size() ) {
+		for ( size_t i=numberOfRecords;i<records_.size();i++ ) {
+			RecordDataHandle recordHandle =  records_[i];
+
+			char* tmp = (char*)recordHandle;
+			delete [] tmp;
+		}
+		RecordsArray::iterator it = records_.begin() + numberOfRecords;
+		records_.erase( it, records_.end() );
+	}
+	else {
+		try {
+			size_t oldSize = records_.size();
+
+			records_.resize(numberOfRecords);
+
+			for ( size_t i=oldSize-1;i<records_.size();i++ ) {
+				records_[i] = allocateRecordData();
+			}
+		}
+		catch ( BasicException& ) {
+			throw;
+		}
+	}
+
+	VCF_ASSERT( numberOfRecords == records_.size() );
+}

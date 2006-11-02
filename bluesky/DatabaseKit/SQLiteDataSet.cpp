@@ -224,6 +224,13 @@ void SQLiteDataSet::internal_next()
 
 }
 
+DataSet::RecordDataHandle SQLiteDataSet::allocateRecordData()
+{
+	DataSet::RecordDataHandle result = NULL;
+
+	return result;
+}
+
 void SQLiteDataSet::clearRecordData()
 {
 
