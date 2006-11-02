@@ -63,6 +63,10 @@ namespace VCF {
     class DATABASEKIT_API DataSet : public Object {
     public:
 
+
+		typedef void* RecordDataHandle;
+
+
         DataSet();
 
         virtual ~DataSet();
@@ -193,6 +197,8 @@ namespace VCF {
 		virtual GetResultType getRecord() = 0;
 
 		virtual void clearRecordData() = 0;
+
+		virtual RecordDataHandle allocateRecordData() = 0;
 		
 
 		virtual void handleDataEvent( Event* e );
@@ -207,6 +213,9 @@ namespace VCF {
 		void openData();
 
 		void deleteFields();
+
+		
+		void setRecordsArraySize( size_t numberOfRecords );
 
 		bool active_;
         Database* db_;
@@ -227,11 +236,16 @@ namespace VCF {
 
 		typedef std::vector<DataSource*> DataSourceArray;
 		typedef VectorEnum<DataField*> DataFieldArray;
+		typedef std::vector<RecordDataHandle> RecordsArray;
+
 
 		DataSourceArray dataSources_;
 
 		FieldDefinitions* fieldDefs_;
 		DataFieldArray fields_;
+
+		size_t recordSize_;
+		RecordsArray records_;
         
     };
 

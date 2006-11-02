@@ -49,6 +49,8 @@ namespace VCF {
 
 		virtual void clearRecordData();
 
+		virtual RecordDataHandle allocateRecordData();
+
 		sqlite3* getHandle();
 		void closeHandle();
 
