@@ -144,15 +144,15 @@ Class* DataSet::getFieldClass( int fieldType )
 
 void DataSet::deleteFields()
 {
-	DataFieldArray::Vector::iterator it = fields_().begin();
-	while ( it != fields_().end() ) {
+	DataFieldArray::Vector::iterator it = fields_->begin();
+	while ( it != fields_->end() ) {
 		DataField* field = *it;
 		field->free();
 
 		++it;
 	}
 
-	fields_().clear();
+	fields_->clear();
 }
 
 
@@ -164,7 +164,7 @@ void DataSet::createFields()
 			DataField* field = defs[i].createField();
 
 			if ( NULL != field ) {
-				fields_().push_back( field );
+				fields_->push_back( field );
 			}
 		}
 	}
@@ -270,7 +270,7 @@ void DataSet::closeCursor()
 
 void DataSet::openData()
 {
-	defaultFields_ = fields_().empty();
+	defaultFields_ = fields_->empty();
 
 	internal_open();
 

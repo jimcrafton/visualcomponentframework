@@ -62,7 +62,7 @@ namespace VCF {
 
     class DATABASEKIT_API DataSet : public Object {
     public:
-
+		
 
 		struct Record {
 			Record(): buffer(NULL), size(0){}
@@ -261,6 +261,7 @@ namespace VCF {
 
 		size_t recordSize_;
 		RecordsArray records_;
+		size_t currentRecordIndex_;
         
     };
 
