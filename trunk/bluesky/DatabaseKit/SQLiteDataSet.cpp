@@ -36,9 +36,9 @@ SQLiteDataSet::SQLiteDataSet():
 	}
 }
 
-size_t SQLiteDataSet::calculateRecordSize()
+void SQLiteDataSet::calculateRecordSize()
 {
-	size_t result = 0;
+	recordSize_ = 0;
 
 	VCF_ASSERT( NULL != currentStmt_ );
 
@@ -47,19 +47,23 @@ size_t SQLiteDataSet::calculateRecordSize()
 
 		switch ( field->getDataType() ) {
 			case dftString : {
-				result += sqlite3_column_bytes( currentStmt_, i ) + 1; //adds 1 for trailing \0
+				recordSize_ += sqlite3_column_bytes( currentStmt_, i ) + 1; //adds 1 for trailing \0
+			}
+			break;
+
+			case dftUnicodeString : {
+				recordSize_ += sqlite3_column_bytes16( currentStmt_, i ) + 1; //adds 1 for trailing \0
 			}
 			break;
 
 			default : {
-				result += field->getSize();
+				recordSize_ += field->getSize();
 			}
 			break;
 
 		}
 	}
 
-	return result;
 }
 
 void SQLiteDataSet::internal_open()
@@ -262,9 +266,53 @@ void SQLiteDataSet::internal_first()
 
 }
 		
-GetResultType SQLiteDataSet::getRecord()
+GetResultType SQLiteDataSet::getRecord( DataSet::Record* record )
 {
-	GetResultType result = grFailed;
+	GetResultType result = grFailed;	
+
+	VCF_ASSERT( NULL != currentStmt_ );
+
+	size_t bufferOffset = 0;
+
+	for ( size_t i=0;i<fields_->size();i++ ) {
+		DataField* field = fields_()[i];
+
+		switch ( field->getDataType() ) {
+			case dftString : {
+				const char* text = (const char*)sqlite3_column_text(currentStmt_,i);
+
+				memcpy( &record->buffer[bufferOffset], text, field->getSize() );
+
+				bufferOffset += field->getSize();
+			}
+			break;
+
+			case dftUnicodeString : {
+				
+			}
+			break;
+
+			case dftFloat : {
+				double res = sqlite3_column_double(currentStmt_,i);
+
+				memcpy( &record->buffer[bufferOffset], &res, sizeof(res) );
+
+				bufferOffset += field->getSize();
+			}
+			break;
+			
+			case dftWord : case dftSmallint : case dftInteger : {
+				int res = sqlite3_column_int( currentStmt_, i );
+
+				memcpy( &record->buffer[bufferOffset], &res, sizeof(res) );
+
+				bufferOffset += field->getSize();
+			}
+			break;
+		}
+	}
+
+	VCF_ASSERT( bufferOffset == record->size );
 
 	return result;
 }
@@ -278,7 +326,9 @@ DataSet::Record* SQLiteDataSet::allocateRecordData()
 {
 	DataSet::Record* result = NULL;
 
-	result = new DataSet::Record();
+	calculateRecordSize();
+
+	result = new DataSet::Record( recordSize_ );
 
 
 	return result;
@@ -361,4 +411,9 @@ AnsiString SQLiteDataSet::generateSQL()
 
 
 	return result;
+}
+
+bool SQLiteDataSet::isCursorOpen()
+{
+	return currentStmt_ != NULL;	
 }
