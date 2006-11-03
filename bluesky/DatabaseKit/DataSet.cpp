@@ -274,6 +274,8 @@ void DataSet::openData()
 
 	internal_open();
 
+	updateRecordSize();
+
 	bof_ = true;
 }
 
@@ -324,4 +326,11 @@ void DataSet::setRecordsSize( size_t numberOfRecords )
 	}
 
 	VCF_ASSERT( numberOfRecords == records_.size() );
+}
+
+void DataSet::updateRecordSize()
+{
+	if ( isCursorOpen() ) {
+
+	}
 }

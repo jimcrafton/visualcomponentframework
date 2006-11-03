@@ -154,8 +154,7 @@ namespace VCF {
 
 		bool getDefaulFields() {
 			return defaultFields_;
-		}
-
+		}		
 		
 		Enumerator<DataField*>* getFields();
 
@@ -209,11 +208,13 @@ namespace VCF {
 		
 		virtual void internal_next() = 0;
 
-		virtual GetResultType getRecord() = 0;
+		virtual GetResultType getRecord( Record* record ) = 0;
 
 		virtual void clearRecordData() = 0;
 
 		virtual Record* allocateRecordData() = 0;
+
+		virtual bool isCursorOpen() = 0;
 		
 
 		virtual void handleDataEvent( Event* e );
@@ -229,7 +230,8 @@ namespace VCF {
 
 		void deleteFields();
 
-		
+		void updateRecordSize();
+
 		void setRecordsSize( size_t numberOfRecords );
 
 		bool active_;

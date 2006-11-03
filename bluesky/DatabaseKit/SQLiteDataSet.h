@@ -33,7 +33,7 @@ namespace VCF {
 		String getDatabaseName();
 
 		void setDatabaseName( const String& val );
-
+		
 	protected:
         virtual void internal_open();
 
@@ -43,13 +43,15 @@ namespace VCF {
 
 		virtual void internal_first();
 		
-		virtual GetResultType getRecord();
+		virtual GetResultType getRecord( Record* record );
 
 		virtual void internal_next();
 
 		virtual void clearRecordData();
 
 		virtual Record* allocateRecordData();
+
+		virtual bool isCursorOpen();
 
 		sqlite3* getHandle();
 		void closeHandle();
@@ -60,7 +62,7 @@ namespace VCF {
 
 		AnsiString generateSQL();
 		
-		size_t calculateRecordSize();
+		void calculateRecordSize();
 
 	private:
 		sqlite3* dbHandle_;
