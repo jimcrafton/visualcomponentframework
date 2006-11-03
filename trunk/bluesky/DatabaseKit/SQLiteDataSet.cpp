@@ -36,6 +36,32 @@ SQLiteDataSet::SQLiteDataSet():
 	}
 }
 
+size_t SQLiteDataSet::calculateRecordSize()
+{
+	size_t result = 0;
+
+	VCF_ASSERT( NULL != currentStmt_ );
+
+	for ( size_t i=0;i<fields_->size();i++ ) {
+		DataField* field = fields_()[i];
+
+		switch ( field->getDataType() ) {
+			case dftString : {
+				result += sqlite3_column_bytes( currentStmt_, i ) + 1; //adds 1 for trailing \0
+			}
+			break;
+
+			default : {
+				result += field->getSize();
+			}
+			break;
+
+		}
+	}
+
+	return result;
+}
+
 void SQLiteDataSet::internal_open()
 {
 	internal_initFieldDefinitions();
@@ -43,7 +69,27 @@ void SQLiteDataSet::internal_open()
 	try {
 		if ( getDefaulFields() ) {
 			createFields();
-		}	
+		}
+
+		AnsiString sql = generateSQL();
+		const char* tail=0;
+		sqlite3* dbHandle = getHandle();
+		int res = sqlite3_prepare(dbHandle, sql.c_str(), sql.size(), &currentStmt_, &tail );
+
+		if ( res != SQLITE_OK ) {
+			sqlite3_finalize(currentStmt_);
+			throw DatabaseError(SQLiteDatabase::errorMessageFromHandle(dbHandle));
+		}
+		
+		res = sqlite3_step(currentStmt_);
+		if ( (res != SQLITE_DONE) && (res != SQLITE_ROW) ) {
+			sqlite3_finalize(currentStmt_);
+			throw DatabaseError(SQLiteDatabase::errorMessageFromHandle(dbHandle));
+		}
+
+		sqlite3_finalize(currentStmt_);
+
+
 	}
 	catch ( BasicException& ) {
 		
@@ -63,6 +109,9 @@ void SQLiteDataSet::closeHandle()
 
 void SQLiteDataSet::internal_close()
 {
+	sqlite3_finalize(currentStmt_);
+	currentStmt_ = NULL;
+
 	closeHandle();
 }
 
@@ -188,12 +237,12 @@ void SQLiteDataSet::addFieldDef( sqlite3_stmt* stmt, size_t fieldIndex )
 			break;
 
 			case dftInteger : {
-				fieldDef.size = 0;
+				fieldDef.size = sizeof(int);
 			}
 			break;
 
 			case dftFloat : {
-				fieldDef.size = 0;
+				fieldDef.size = sizeof(double);
 			}
 			break;
 
@@ -228,6 +277,9 @@ void SQLiteDataSet::internal_next()
 DataSet::Record* SQLiteDataSet::allocateRecordData()
 {
 	DataSet::Record* result = NULL;
+
+	result = new DataSet::Record();
+
 
 	return result;
 }
@@ -285,14 +337,14 @@ AnsiString SQLiteDataSet::generateSQL()
 		throw DatabaseError("No Table Name specified, unable to generate SQL statement!");
 	}
 
-	if ( fields_().empty() ) {
+	if ( fields_->empty() ) {
 		throw DatabaseError("No Fields in data set, unable to generate SQL statement!");
 	}
 
 	sqlite3* dbHandle = getHandle();
 
 	result += "select ";
-	for ( size_t i=0;i<fields_().size();i++ ) {
+	for ( size_t i=0;i<fields_->size();i++ ) {
 		DataField* field = fields_()[i];
 		if ( i > 0 ) {
 			result += ", ";

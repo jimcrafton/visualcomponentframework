@@ -135,6 +135,10 @@ namespace VCF {
 			return container;
 		}
 
+		Container* operator->() {
+			return &container;
+		}
+
 		Container container;
 	};
 

@@ -59,6 +59,8 @@ namespace VCF {
 		void addFieldDef( sqlite3_stmt* stmt, size_t fieldIndex );
 
 		AnsiString generateSQL();
+		
+		size_t calculateRecordSize();
 
 	private:
 		sqlite3* dbHandle_;
