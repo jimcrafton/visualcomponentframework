@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="HelloWorld2"
-	ProjectGUID="{829ACA53-592A-4C94-A409-EF041417FCBB}"
+	ProjectGUID="{D51A53FE-81C0-4615-ACA2-AFBA2687E651}"
 	>
 	<Platforms>
 		<Platform

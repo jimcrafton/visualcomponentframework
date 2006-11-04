@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="ListBox"
-	ProjectGUID="{0FE5A2D2-58BD-48B0-A823-C49837FFB9D3}"
+	ProjectGUID="{5629470C-BB30-4D55-BBA7-62EA2EB1191D}"
 	>
 	<Platforms>
 		<Platform

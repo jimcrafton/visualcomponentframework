@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="TextEdit"
-	ProjectGUID="{3AAEDCEF-C614-40CA-AABB-69231E916F78}"
+	ProjectGUID="{45EEEC3E-9566-4EF7-A043-FAD88B9B5567}"
 	>
 	<Platforms>
 		<Platform

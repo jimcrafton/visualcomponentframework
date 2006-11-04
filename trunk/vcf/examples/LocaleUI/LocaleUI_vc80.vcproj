@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="LocaleUI"
-	ProjectGUID="{4263ADDC-3F63-4DE8-B43E-CBEDFC4C003F}"
+	ProjectGUID="{F7805A0E-D8F4-4B76-8569-70383CC6F85C}"
 	>
 	<Platforms>
 		<Platform

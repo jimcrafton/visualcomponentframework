@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="MVCBasics"
-	ProjectGUID="{CCF6BCA5-B25B-4430-AAA3-4D9B66C0B700}"
+	ProjectGUID="{BE9000B0-02E5-4768-8ADD-4B2177CC7988}"
 	>
 	<Platforms>
 		<Platform
