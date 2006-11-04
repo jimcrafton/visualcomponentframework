@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="vcfAllStaticLibs"
-	ProjectGUID="{36FF2EFF-C5A3-4BD0-BF77-BD9D4975209B}"
+	ProjectGUID="{BA3C4D90-190E-463B-9C0F-DC898B1433ED}"
 	Keyword="MakeFileProj"
 	>
 	<Platforms>

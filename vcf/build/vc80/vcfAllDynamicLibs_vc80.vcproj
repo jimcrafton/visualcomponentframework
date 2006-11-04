@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="vcfAllDynamicLibs"
-	ProjectGUID="{8D5D13C9-0835-4A0F-985E-93F4279C5C40}"
+	ProjectGUID="{8D0B1CCA-1C9E-4113-ACB5-67D0C8EB9FFC}"
 	Keyword="MakeFileProj"
 	>
 	<Platforms>
