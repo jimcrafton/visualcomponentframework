@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="Reflection"
-	ProjectGUID="{AE4CB92C-5FE7-4DD7-BA5D-96A16DBFD0A9}"
+	ProjectGUID="{332FC043-62D6-42D0-8AB9-BFC087DD9E39}"
 	>
 	<Platforms>
 		<Platform

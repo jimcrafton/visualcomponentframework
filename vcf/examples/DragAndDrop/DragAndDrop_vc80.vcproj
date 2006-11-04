@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="DragAndDrop"
-	ProjectGUID="{1F2B8F91-64D2-4290-A30B-63112CF19A13}"
+	ProjectGUID="{C4327FCE-220F-44CE-913F-94976F67D54C}"
 	>
 	<Platforms>
 		<Platform

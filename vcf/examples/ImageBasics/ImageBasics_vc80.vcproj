@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="ImageBasics"
-	ProjectGUID="{926FB216-C8F0-423C-8C1C-91301C7D7398}"
+	ProjectGUID="{1209F0D2-B233-4E65-8AF7-2C181C9B843B}"
 	>
 	<Platforms>
 		<Platform

@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="RunLoops"
-	ProjectGUID="{D1241896-6009-431E-9141-638299320082}"
+	ProjectGUID="{355E743B-E4B1-4530-99D3-E93AB85060D9}"
 	>
 	<Platforms>
 		<Platform

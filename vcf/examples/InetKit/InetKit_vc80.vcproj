@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="InetKit"
-	ProjectGUID="{3432A108-8E39-4DA3-A146-36D3A9D8707E}"
+	ProjectGUID="{2E3FB6D7-F10E-4B17-A11C-6FC6378D1C97}"
 	>
 	<Platforms>
 		<Platform

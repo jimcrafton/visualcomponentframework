@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="Localization"
-	ProjectGUID="{CBA9CF0F-76B6-4486-A339-0835AC963461}"
+	ProjectGUID="{98C21396-FBC9-40BA-A847-E26BCBE79994}"
 	>
 	<Platforms>
 		<Platform

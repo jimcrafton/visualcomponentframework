@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="MinMax"
-	ProjectGUID="{9B24AA0B-5CF4-4B26-81E8-F9768EA3E5A0}"
+	ProjectGUID="{8F6CF3DB-FC3A-4936-8E6B-A7C6AB78423D}"
 	>
 	<Platforms>
 		<Platform

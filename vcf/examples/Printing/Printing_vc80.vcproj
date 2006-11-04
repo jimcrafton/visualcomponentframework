@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="Printing"
-	ProjectGUID="{55A7CA42-68D1-482B-B95A-70E01C5E5647}"
+	ProjectGUID="{1B4E9CD1-3F83-48BE-834C-F198B268CC0E}"
 	>
 	<Platforms>
 		<Platform

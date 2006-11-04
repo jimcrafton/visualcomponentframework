@@ -15,9 +15,11 @@ int main( int argc, char** argv ){
 
 	String dir;
 
-	System::println( Format("Get information for User: %ls on computer: %ls\n") 
+	System::println( Format("Get information for User: %ls on computer: %ls running OS: %ls Version: %ls\n") 
 						% System::getUserName().c_str() 
-						% System::getComputerName().c_str() );
+						% System::getComputerName().c_str()
+						% System::getOSName().c_str()
+						% System::getOSVersion().c_str());
 
 	dir = System::getCommonDirectory( System::cdUserHome );	
 	System::println( Format("System::cdUserHome: %ls\n") % dir.c_str() );

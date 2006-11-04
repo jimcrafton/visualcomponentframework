@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="ProgressBars"
-	ProjectGUID="{A65811A8-7084-40FF-96CA-BCD3597C0ECC}"
+	ProjectGUID="{189E3581-6C65-4F92-A529-ACB38C354FB1}"
 	>
 	<Platforms>
 		<Platform
