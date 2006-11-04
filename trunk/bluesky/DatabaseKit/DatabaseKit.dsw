@@ -15,6 +15,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "FoundationKitDLL"=..\..\vcf\build\vc60\FoundationKit\FoundationKitDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "dbTest"=.\dbTest.dsp - Package Owner=<4>
 
 Package=<5>

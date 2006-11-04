@@ -33,6 +33,9 @@ int main( int argc, char** argv ){
 		while ( fields->hasMoreElements() ) {
 			DataField* field = fields->nextElement();
 			System::println( "Field name: " + field->getName() );
+
+			field->getAsString();
+
 		}
 	}
 

@@ -46,7 +46,7 @@ void SQLiteDataSet::calculateRecordSize()
 		DataField* field = fields_()[i];
 
 		switch ( field->getDataType() ) {
-			case dftString : {
+			case dftString : {				
 				recordSize_ += sqlite3_column_bytes( currentStmt_, i ) + 1; //adds 1 for trailing \0
 			}
 			break;
@@ -90,9 +90,6 @@ void SQLiteDataSet::internal_open()
 			sqlite3_finalize(currentStmt_);
 			throw DatabaseError(SQLiteDatabase::errorMessageFromHandle(dbHandle));
 		}
-
-		sqlite3_finalize(currentStmt_);
-
 
 	}
 	catch ( BasicException& ) {
@@ -266,7 +263,7 @@ void SQLiteDataSet::internal_first()
 
 }
 		
-GetResultType SQLiteDataSet::getRecord( DataSet::Record* record )
+GetResultType SQLiteDataSet::getRecord( DataSet::Record* record, GetRecordMode mode )
 {
 	GetResultType result = grFailed;	
 
@@ -274,14 +271,20 @@ GetResultType SQLiteDataSet::getRecord( DataSet::Record* record )
 
 	size_t bufferOffset = 0;
 
+	int res = 0;
+	
 	for ( size_t i=0;i<fields_->size();i++ ) {
 		DataField* field = fields_()[i];
 
 		switch ( field->getDataType() ) {
 			case dftString : {
 				const char* text = (const char*)sqlite3_column_text(currentStmt_,i);
+				int txtSz = sqlite3_column_bytes( currentStmt_, i );
+				memcpy( &record->buffer[bufferOffset], text, txtSz );
 
-				memcpy( &record->buffer[bufferOffset], text, field->getSize() );
+				record->buffer[bufferOffset+txtSz] = 0;
+
+				field->setSize( txtSz + 1 );
 
 				bufferOffset += field->getSize();
 			}
@@ -313,6 +316,46 @@ GetResultType SQLiteDataSet::getRecord( DataSet::Record* record )
 	}
 
 	VCF_ASSERT( bufferOffset == record->size );
+
+	switch ( mode ) {
+		case grmCurrent : {
+
+		}
+		break;
+
+		case grmNext : {
+			res = sqlite3_step(currentStmt_);
+
+			switch ( res ) {
+				case SQLITE_ROW : {
+					result = grOK;
+				}
+				break;
+
+				case SQLITE_DONE : {
+					result = grEOF;
+				}
+				break;
+
+				case SQLITE_ERROR : {
+					result = grFailed;
+				}
+				break;
+
+				case SQLITE_BUSY : {
+					result = grFailed;
+				}
+				break;
+
+				case SQLITE_MISUSE : {
+					result = grFailed;
+				}
+				break;
+			}			
+		}
+		break;
+	}
+
 
 	return result;
 }
@@ -370,6 +413,7 @@ sqlite3* SQLiteDataSet::getHandle()
 
 		int res = ::sqlite3_open( dbName.ansi_c_str(), &dbHandle_ );
 		if ( res == SQLITE_ERROR ) {
+			dbHandle_ = NULL;
 			throw DatabaseError( SQLiteDatabase::errorMessageFromHandle(dbHandle_) );
 		}	
 	}
@@ -416,4 +460,33 @@ AnsiString SQLiteDataSet::generateSQL()
 bool SQLiteDataSet::isCursorOpen()
 {
 	return currentStmt_ != NULL;	
+}
+
+bool SQLiteDataSet::getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize )
+{
+	bool result = false;
+
+	size_t bufferOffset = 0;
+
+	for ( size_t i=0;i<fields_->size();i++ ) {
+		DataField* aField = fields_()[i];		
+
+		if ( field->getFieldNumber() == i ) {
+			DataSet::Record* record = records_[ currentRecordIndex_ ];
+
+			size_t len = minVal<>( bufferSize, (size_t)field->getSize() );
+			memcpy( buffer, &record->buffer[bufferOffset], len );
+
+			if ( dftString == field->getDataType() ) {
+				buffer[len-1] = 0;
+			}
+			result = true;
+			
+			break;
+		}
+		
+		bufferOffset += aField->getSize();
+	}
+
+	return result;
 }

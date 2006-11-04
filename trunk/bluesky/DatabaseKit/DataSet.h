@@ -52,6 +52,10 @@ namespace VCF {
 		deFocusControl
 	};
 
+	enum GetRecordMode {
+		grmNext = 1,
+		grmCurrent
+	};
 
 	enum GetResultType {
 		grFailed = 0,
@@ -81,6 +85,9 @@ namespace VCF {
 			size_t size;
 		};
 
+		enum {
+			NoRecPos = (size_t)-1	
+		};
 
         DataSet();
 
@@ -115,8 +122,6 @@ namespace VCF {
 
 
         void setDatabase( Database* database );
-
-        void setTransaction( Transaction* transaction );
 
 		void setParam( const String& param, VariantData value );
 
@@ -158,9 +163,6 @@ namespace VCF {
 		
 		Enumerator<DataField*>* getFields();
 
-
-        StringList* getSelectSQL();
-
 		void updateFieldDefs();
 
 		Class* getFieldClass( int fieldType );
@@ -195,7 +197,7 @@ namespace VCF {
 		void cancel();
 
 
-		
+		virtual bool getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize ) = 0;
 
     protected:
         virtual void internal_open() = 0;
@@ -208,7 +210,7 @@ namespace VCF {
 		
 		virtual void internal_next() = 0;
 
-		virtual GetResultType getRecord( Record* record ) = 0;
+		virtual GetResultType getRecord( Record* record, GetRecordMode mode ) = 0;
 
 		virtual void clearRecordData() = 0;
 
@@ -234,20 +236,18 @@ namespace VCF {
 
 		void setRecordsSize( size_t numberOfRecords );
 
+		size_t getNextRecords();
+
+		bool getNextRecord();
+
 		bool active_;
         Database* db_;
-        Transaction* tr_;
-        StringList* selectSQL_;
-        int columnCount;
 		DataSetState state_;
 		bool canModify_;
 		bool bof_;
 		bool eof_;
 		bool modified_;
 		bool defaultFields_;
-
-
-
 
         std::map<String, VariantData> params_;
 
