@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="AllIn1DLL"
-	ProjectGUID="{9E408A22-9C1F-433D-B04F-7DDEE0F3441B}"
+	ProjectGUID="{93943EDE-A510-43E5-97FB-AA269E4F0C0B}"
 	>
 	<Platforms>
 		<Platform
