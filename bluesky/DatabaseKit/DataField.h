@@ -86,6 +86,11 @@ namespace VCF {
 			return size_;
 		}
 
+		void setSize( int val ) {
+			size_  = val;
+		}
+
+		bool getData( unsigned char* buffer, size_t bufferSize );
 	protected:
 		DataSet* dataSet_;
 		DataFieldType dataType_;

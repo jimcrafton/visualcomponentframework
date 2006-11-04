@@ -3,7 +3,7 @@
 using namespace VCF;
 
 DataSet::DataSet()
-    : Object(), columnCount(0),
+    : Object(),
 	fieldDefs_(NULL),
 	active_(false),
 	state_(dssInactive),
@@ -11,9 +11,10 @@ DataSet::DataSet()
 	bof_(false),
 	eof_(false),
 	modified_(false),
-	defaultFields_(true)
+	defaultFields_(true),
+	recordSize_(0),
+	currentRecordIndex_(DataSet::NoRecPos)
 {
-	selectSQL_ = new StringList();
 	fieldDefs_ = new FieldDefinitions(); 
 	fieldDefs_->setDataSet( this );
 }
@@ -21,7 +22,6 @@ DataSet::DataSet()
 DataSet::~DataSet()
 {
 	close();
-
 	
 	while ( !dataSources_.empty() ) {
 		removeDataSource( dataSources_.front() );
@@ -29,22 +29,12 @@ DataSet::~DataSet()
 
 	deleteFields();
 
-	delete selectSQL_;
 	delete fieldDefs_;
 }
 
 void DataSet::setDatabase( Database* db )
 {
     db_ = db;
-
-    if ( tr_ == NULL ) {
-        //transaction_ = database_->getTransaction();
-    }
-}
-
-void DataSet::setTransaction( Transaction* tr )
-{
-    tr_ = tr;
 }
 
 void DataSet::setActive( bool active )
@@ -104,11 +94,6 @@ void DataSet::open()
 void DataSet::close()
 {
     setActive( false );
-}
-
-StringList* DataSet::getSelectSQL()
-{
-	return selectSQL_;
 }
 
 void DataSet::updateFieldDefs()
@@ -272,6 +257,8 @@ void DataSet::openData()
 {
 	defaultFields_ = fields_->empty();
 
+	currentRecordIndex_ = 0;
+
 	internal_open();
 
 	updateRecordSize();
@@ -315,10 +302,15 @@ void DataSet::setRecordsSize( size_t numberOfRecords )
 			size_t oldSize = records_.size();
 
 			records_.resize(numberOfRecords);
+			
+			if ( oldSize == 0 ) {
+				oldSize = 1;
+			}
 
 			for ( size_t i=oldSize-1;i<records_.size();i++ ) {
 				records_[i] = allocateRecordData();
 			}
+
 		}
 		catch ( BasicException& ) {
 			throw;
@@ -326,11 +318,56 @@ void DataSet::setRecordsSize( size_t numberOfRecords )
 	}
 
 	VCF_ASSERT( numberOfRecords == records_.size() );
+
+	getNextRecords();
 }
+
+size_t DataSet::getNextRecords()
+{
+	size_t result = 0;
+	while ( (currentRecordIndex_ < records_.size()) && getNextRecord() ) {		
+		result ++;		
+	}
+
+	return result;
+}
+
+bool DataSet::getNextRecord()
+{
+	bool result = false;
+
+	GetRecordMode mode = grmNext;
+
+	if ( records_.size() > 0 ) {
+		//currentRecordIndex_ = records_.size() - 1; 
+	}	
+
+	if ( grFailed != getRecord( records_[ currentRecordIndex_ ], mode ) ) {
+		result = true;
+	}
+
+	if ( result ) {
+		if ( currentRecordIndex_ < records_.size() ) {
+			currentRecordIndex_ ++;
+		}
+	}
+	else {
+		currentRecordIndex_ = NoRecPos;
+	}
+
+	return result;
+}
+
 
 void DataSet::updateRecordSize()
 {
 	if ( isCursorOpen() ) {
+		size_t maxRecCount = 1;
 
+		for (size_t i=0;i<dataSources_.size();i++ ) {
+			//possibly modify the maxRecCount from data source links in the future...
+		}
+
+		setRecordsSize( maxRecCount );
 	}
 }

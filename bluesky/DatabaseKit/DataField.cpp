@@ -83,6 +83,18 @@ int DataField::getAsInteger()
 	return result;
 }
 
+bool DataField::getData( unsigned char* buffer, size_t bufferSize )
+{
+	bool result = false;
+
+	if ( NULL == dataSet_ ) {
+		throw DatabaseError("Dataset not set for this field!");
+	}
+
+	result = dataSet_->getFieldData( this, buffer, bufferSize );
+	
+	return result;
+}
 
 
 
@@ -117,7 +129,12 @@ DateTime StringField::getAsDateTime()
 String StringField::getAsString()
 {
 	String result;
-	
+	char tmp[256];
+
+	if ( getData( (unsigned char*)tmp, sizeof(tmp) ) ) {
+		result = tmp;
+	}
+
 	return result;
 }
 
