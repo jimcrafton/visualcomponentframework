@@ -52,7 +52,7 @@ public:
 													const int32& messageButtons,	const Dialog::MessageStyle& messageStyle );
 
 protected:
-	virtual DWORD generateStyleForSetParent(VCF::Control* parent);
+	virtual LONG_PTR generateStyleForSetParent(VCF::Control* parent);
 
 	Control* owner_;
 	Dialog* dialogComponent_;

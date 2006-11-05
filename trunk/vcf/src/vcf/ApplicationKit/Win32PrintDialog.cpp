@@ -66,7 +66,7 @@ bool Win32PrintDialog::execute()
 		printDlg.Flags |= PD_ENABLEPRINTHOOK | PD_RETURNDC;
 		
 		printDlg.hDC = NULL;
-		printDlg.lCustData = (DWORD) this;
+		printDlg.lCustData = (LPARAM) this;
 		if ( NULL != owner_ ) {
 			printDlg.hwndOwner = (HWND)owner_->getPeer()->getHandleID();
 		}
@@ -105,7 +105,7 @@ bool Win32PrintDialog::execute()
 		printDlg.Flags |= PD_ENABLEPRINTHOOK | PD_RETURNDC;
 		
 		printDlg.hDC = NULL;
-		printDlg.lCustData = (DWORD) this;
+		printDlg.lCustData = (LPARAM) this;
 		if ( NULL != owner_ ) {
 			printDlg.hwndOwner = (HWND)owner_->getPeer()->getHandleID();
 		}

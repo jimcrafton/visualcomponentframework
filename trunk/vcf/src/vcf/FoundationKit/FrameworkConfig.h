@@ -45,6 +45,12 @@ Toolkits:
 		the GTK2 libraries. Typically this is for linux(or *nix) platforms
 
 
+Compilation environment:
+
+	VCF_64 - the 64-bit compilation environment
+	VCF_32 - the 32-bit compilation environment
+
+
 Compilers:
 
 	VCF_ICL - compiling with Intel's C++ compiler
@@ -126,6 +132,38 @@ Setup VCF_ operating system
 
 #ifdef __linux__
     #define VCF_POSIX
+#endif
+
+
+/**
+Setup the 64-bit compilation environment macro.
+
+We do not support LP32 and ILP64, since we assume that int is 32-bit always.
+ ====================================================================
+                      char   short  int   long   long long   pointer
+ ====================================================================
+  LP32: Win16         8      16     16    32                 32
+ ILP64: Cray, ETA     8      16     64    64                 64
+ --------------------------------------------------------------------
+
+ ILP32: Win32,Linux,  8      16     32    32                 32
+        Solaris, HP,
+        MacOS
+
+ LLP64: Win64         8      16     32    32                 64
+
+  LP64: most UNIXes:  8      16     32    64     64          64
+        Solaris, AIX,
+        HP, Linux,
+        MacOS
+ ====================================================================
+*/
+#if defined(VCF_WIN64) || defined(__LP64__) || defined(_LP64) || defined(__WATCOM_INT64__)
+    // LLP64 or LP64
+    #define VCF_64
+#else
+    // ILP32
+    #define VCF_32
 #endif
 
 
@@ -301,6 +339,17 @@ Setup VCF_ miscellaneous macros
 #endif
 
 
+// We need to specify the __w64 modifier on those typedefs
+// that change their size between 32-bit and 64-bit Windows platforms.
+// This is required by MSVC, once we are going to use /Wp64.
+#if !defined(_W64)
+	#if defined(VCF_MSC) && _MSC_VER >= 1300
+		#define _W64 __w64
+	#else
+		#define _W64
+	#endif
+#endif
+
 
 namespace VCF {
 
@@ -354,6 +403,40 @@ namespace VCF {
 	#else
 		typedef long long int64;
 	#endif
+
+
+	/**
+	\typedef intptr FrameworkConfig.h "vcf/FoundationKit/FrameworkConfig.h"
+	Signed integer type for casting a pointer to an integer.
+	\typedef uintptr FrameworkConfig.h "vcf/FoundationKit/FrameworkConfig.h"
+	Unsigned integer type for casting a pointer to an unsigned integer.
+	*/
+	#if defined(VCF_64)
+		typedef int64 intptr;
+		typedef uint64 uintptr;
+	#else
+		// The 32-bit definition of the typedefs should include _W64.
+		typedef _W64 int32 intptr;
+		typedef _W64 uint32 uintptr;
+	#endif
+
+
+	/**
+	Truncates the given pointer to a 32-bit value.
+	Returns a signed 32-bit integer.
+	*/
+	inline int32 PtrToInt32(const void* val) {
+		return (int32)(intptr)val;
+	}
+
+
+	/**
+	Truncates the given pointer to a 32-bit value.
+	Returns an unsigned 32-bit integer.
+	*/
+	inline uint32 PtrToUInt32(const void* val) {
+		return (uint32)(uintptr)val;
+	}
 
 
 	/**

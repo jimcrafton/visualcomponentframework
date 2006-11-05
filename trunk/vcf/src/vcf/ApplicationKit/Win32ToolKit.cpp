@@ -2713,11 +2713,11 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 
 			if ( changeStyle ) {
 				
-				int32 style = ::GetWindowLong( toolkit->dummyParentWnd_, GWL_STYLE );
+				LONG_PTR style = ::GetWindowLongPtr( toolkit->dummyParentWnd_, GWL_STYLE );
 				if ( style & WS_POPUP ) {
 					style &= ~WS_POPUP;
 					style |= WS_CHILD;
-					::SetWindowLong( toolkit->dummyParentWnd_, GWL_STYLE, style );
+					::SetWindowLongPtr( toolkit->dummyParentWnd_, GWL_STYLE, style );
 					::SetWindowPos( toolkit->dummyParentWnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
 				}
 			}
@@ -3404,7 +3404,7 @@ void Win32ToolKit::internal_registerTimerHandler( Object* source, EventHandler* 
 		found ++;
 	}
 
-	UINT id = ::SetTimer( dummyParentWnd_, (UINT)handler, timeoutInMilliSeconds, NULL );
+	UINT id = ::SetTimer( dummyParentWnd_, (UINT_PTR)handler, timeoutInMilliSeconds, NULL );
 
 	if ( id == 0 ) {
 		//throw exception
@@ -4112,7 +4112,7 @@ bool Win32ToolKit::internal_displayContextHelpForControl( Control* control, cons
 		popup.clrBackground = -1;
 		memset( &popup.rcMargins, -1, sizeof(popup.rcMargins) );
 
-		LastHTMLHelpWnd = HtmlHelp_A( (HWND)control->getPeer()->getHandleID(), NULL, HH_DISPLAY_TEXT_POPUP, (DWORD) &popup );
+		LastHTMLHelpWnd = HtmlHelp_A( (HWND)control->getPeer()->getHandleID(), NULL, HH_DISPLAY_TEXT_POPUP, (ULONG_PTR) &popup);
 		result =true;
 	}
 

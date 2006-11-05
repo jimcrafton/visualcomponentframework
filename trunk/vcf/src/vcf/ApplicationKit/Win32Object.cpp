@@ -80,10 +80,10 @@ void Win32Object::destroyWindowHandle()
 void Win32Object::subclassWindow()
 {
 	if ( System::isUnicodeEnabled() ) {
-		defaultWndProc_ = (WNDPROC)::SetWindowLongW( hwnd_, GWL_WNDPROC, (LONG)wndProc_ );
+		defaultWndProc_ = (WNDPROC)(LONG_PTR)::SetWindowLongPtrW( hwnd_, GWLP_WNDPROC, (LONG_PTR)wndProc_ );
 	}
 	else {
-		defaultWndProc_ = (WNDPROC)::SetWindowLongA( hwnd_, GWL_WNDPROC, (LONG)wndProc_ );
+		defaultWndProc_ = (WNDPROC)(LONG_PTR)::SetWindowLongPtrA( hwnd_, GWLP_WNDPROC, (LONG_PTR)wndProc_ );
 	}
 }
 
@@ -196,7 +196,7 @@ Win32Object* Win32Object::getWin32ObjectFromHWND( HWND hwnd )
 			result = found->second;
 		}
 	}
-	//result = (Win32Object*)::GetWindowLong( hwnd, GWL_USERDATA );
+	//result = (Win32Object*)::GetWindowLongPtr( hwnd, GWLP_USERDATA );
 
 	return 	result;
 }
@@ -209,7 +209,7 @@ HWND Win32Object::getHwnd()
 void Win32Object::registerWin32Object( Win32Object* wndObj )
 {
 	Win32Object::windowMap_[ wndObj->getHwnd() ] = wndObj;
-	//::SetWindowLong( wndObj->getHwnd(), GWL_USERDATA, (LPARAM)wndObj );
+	//::SetWindowLongPtr( wndObj->getHwnd(), GWLP_USERDATA, (LONG_PTR)wndObj );
 
 	::PostMessage( wndObj->getHwnd(), VCF_CONTROL_CREATE, 0, 0 );
 }

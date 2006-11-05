@@ -117,9 +117,9 @@ String Object::toString()
 	return result;
 }
 
-uint32 Object::hash()
+uintptr Object::hash()
 {
-	return (uint32)this;
+	return (uintptr)this;
 }
 
 
@@ -162,7 +162,7 @@ void * Object::operator new( size_t allocationSize )
 			}
 
 			DebugInfo info;
-			info.objAddress_ = (uint32)newPtr;
+			info.objAddress_ = (uintptr)newPtr;
 			info.objectAllocationSize_ = allocationSize;
 			Object::debugAllocationMap[info.objAddress_] = info;
 
@@ -183,7 +183,7 @@ void Object::operator delete( void *objectPointer )
 		}
 
 		std::map<uint32,Object::DebugInfo>::iterator found;
-		found = Object::debugAllocationMap.find( (uint32)objectPointer );
+		found = Object::debugAllocationMap.find( (uintptr)objectPointer );
 		if ( found != Object::debugAllocationMap.end() ) {
 
 			Object::debugAllocationMap.erase( found );
@@ -222,7 +222,7 @@ void Object::dumpDebugInfo()
 				}
 
 				StringUtils::traceWithArgs( Format("\tObject (type: %ls) @ %p, allocated size of %d bytes\n") %
-												className.c_str() % info.objAddress_ % info.objectAllocationSize_ );
+												className.c_str() % (void*)info.objAddress_ % info.objectAllocationSize_ );
 
 				totalAllocationSize += info.objectAllocationSize_;
 				it ++;

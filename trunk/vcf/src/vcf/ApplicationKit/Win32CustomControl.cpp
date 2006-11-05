@@ -76,10 +76,10 @@ void Win32CustomControl::registerWndClass()
 	}
 }
 
-int32 Win32CustomControl::getHandleID()
+OSHandleID Win32CustomControl::getHandleID()
 {
-	int32 result = 0;
-	result = (int32)this->wndHandle_;
+	OSHandleID result = 0;
+	result = (OSHandleID)this->wndHandle_;
 	return result;
 }
 
@@ -144,7 +144,7 @@ void Win32CustomControl::setVisible( const bool& visible )
 bool Win32CustomControl::getVisible()
 {
 	bool result = false;
-	DWORD style = GetWindowLong( this->wndHandle_, GWL_STYLE );
+	LONG_PTR style = GetWindowLongPtr( this->wndHandle_, GWL_STYLE );
 	result =  (style & WS_VISIBLE ) != 0;
 	return result;
 }
@@ -152,7 +152,7 @@ bool Win32CustomControl::getVisible()
 uint32 Win32CustomControl::getStyleMask()
 {
 	uint32 result = 0;
-	result = GetWindowLong( this->wndHandle_, GWL_STYLE );
+	result = (uint32) GetWindowLongPtr( this->wndHandle_, GWL_STYLE );
 	return result;
 }
 

@@ -51,6 +51,7 @@ namespace VCF {
 
 		class TimerInfo {
 		public:
+			HANDLE timer;
 			Object* source;
 			EventHandler* handler;
 			String mode;
@@ -61,7 +62,7 @@ namespace VCF {
 
 		void handleTimers( const String& mode );
 
-		std::map<HANDLE,TimerInfo*> activeTimers_;
+		std::map<uint32,TimerInfo*> activeTimers_;
 
 		void removeAll();
 	};

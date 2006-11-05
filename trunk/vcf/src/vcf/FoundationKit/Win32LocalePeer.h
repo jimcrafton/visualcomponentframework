@@ -69,7 +69,7 @@ public:
 	virtual UnicodeString translate( const UnicodeString& id );
 
 	virtual OSHandleID getHandleID() {
-		return (OSHandleID)lcid_;
+		return (OSHandleID)UIntToPtr( (uintptr)lcid_ );
 	}
 protected:
 	UnicodeString changeToGenericNumberString( const UnicodeString& str );

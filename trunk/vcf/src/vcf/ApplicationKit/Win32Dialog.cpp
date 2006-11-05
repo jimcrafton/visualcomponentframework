@@ -120,7 +120,7 @@ and forces us to have a system menu!!!
 		*/
 
 /*
-		DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
+		LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 
 
 			if ( style & WS_MINIMIZEBOX ) {
@@ -130,7 +130,7 @@ and forces us to have a system menu!!!
 			if ( style & WS_MAXIMIZEBOX ) {
 				style &= ~WS_MAXIMIZEBOX;
 			}
-			::SetWindowLong( hwnd_, GWL_STYLE, style );
+			::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
 			::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
 			*/
 
@@ -167,8 +167,8 @@ bool Win32Dialog::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 
 			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 
-			DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
-			DWORD tmp = style;
+			LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
+			LONG_PTR tmp = style;
 			if ( style & WS_MINIMIZEBOX ) {
 				style &= ~WS_MINIMIZEBOX;
 			}
@@ -178,7 +178,7 @@ bool Win32Dialog::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 			}
 
 			if ( tmp != style ) {
-				::SetWindowLong( hwnd_, GWL_STYLE, style );
+				::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
 				::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
 			}
 		}
@@ -426,9 +426,9 @@ UIToolkit::ModalReturnType Win32Dialog::showMessage( const String& message, cons
 	return result;
 }
 
-DWORD Win32Dialog::generateStyleForSetParent(VCF::Control* parent)
+LONG_PTR Win32Dialog::generateStyleForSetParent(VCF::Control* parent)
 {
-	DWORD result = ::GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR result = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 
 	if ( NULL == parent ) {
 		if ( !peerControl_->isDesigning() ) {

@@ -173,7 +173,7 @@ public:
 	/**
 	returns a hash value that represents the object instance
 	*/
-	virtual uint32 hash();
+	virtual uintptr hash();
 	
 
 	/**
@@ -238,7 +238,7 @@ public:
 
 		}
 		size_t objectAllocationSize_;
-		uint32 objAddress_;
+		uintptr objAddress_;
 	};
 
 	static std::map<uint32,DebugInfo> debugAllocationMap;

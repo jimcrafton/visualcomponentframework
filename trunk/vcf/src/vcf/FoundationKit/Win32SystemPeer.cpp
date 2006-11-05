@@ -210,7 +210,7 @@ void Win32SystemPeer::setCurrentWorkingDirectory( const String& currentDirectory
 void Win32SystemPeer::setCurrentThreadLocale( Locale* locale )
 {
 
-	SetThreadLocale( (LCID) locale->getPeer()->getHandleID() );
+	SetThreadLocale( (LCID)PtrToUlong( locale->getPeer()->getHandleID() ));
 }
 
 bool Win32SystemPeer::isUnicodeEnabled()

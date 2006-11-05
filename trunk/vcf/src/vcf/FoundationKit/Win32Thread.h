@@ -59,7 +59,7 @@ private:
 	unsigned initFlags_;
 	void* security_;
 	unsigned stackSize_;
-	uint32 threadHandle_;
+	uintptr threadHandle_;
 	Thread* thread_;
 	bool active_;
 	bool mainThread_;
