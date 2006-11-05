@@ -4603,7 +4603,7 @@ void Win32Context::prepareDCWithContextFont( HFONT& fontHandle )
 	}
 	else {
 
-		LCID lcid = (LCID)fontLocale->getPeer()->getHandleID();
+		LCID lcid = (LCID)PtrToUlong( fontLocale->getPeer()->getHandleID() );
 		WORD langID = LANGIDFROMLCID( lcid );
 
 		WORD primaryLangID = PRIMARYLANGID(langID);

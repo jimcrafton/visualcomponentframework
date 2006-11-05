@@ -94,7 +94,7 @@ Win32SystemTrayPeer::Win32SystemTrayPeer():
 
 		notifyIconData.cbSize = sizeof(NOTIFYICONDATAW);
 		notifyIconData.hWnd = trayWnd_;
-		notifyIconData.uID = (UINT)this;
+		notifyIconData.uID = (UINT)(UINT_PTR)this;
 		notifyIconData.uCallbackMessage = WM_WIN32SYTEMTRAY;
 		notifyIconData.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
 
@@ -111,7 +111,7 @@ Win32SystemTrayPeer::Win32SystemTrayPeer():
 
 		notifyIconData.cbSize = sizeof(NOTIFYICONDATAA);
 		notifyIconData.hWnd = trayWnd_;
-		notifyIconData.uID = (UINT)this;
+		notifyIconData.uID = (UINT)(UINT_PTR)this;
 		notifyIconData.uCallbackMessage = WM_WIN32SYTEMTRAY;
 		notifyIconData.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
 	}

@@ -199,7 +199,7 @@ VCF::Rect AbstractWin32Component::getBounds()
 	RECT r;
  	::GetWindowRect( hwnd_, &r );
 
-	DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 
 	HWND parent = ::GetParent( hwnd_ );
 
@@ -244,7 +244,7 @@ void AbstractWin32Component::setVisible( const bool& visible )
 bool AbstractWin32Component::getVisible()
 {
 	bool result = false;
-	DWORD style = GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = GetWindowLongPtr( hwnd_, GWL_STYLE );
 	result =  (style & WS_VISIBLE ) != 0;
 	return result;
 }
@@ -1554,7 +1554,7 @@ LRESULT AbstractWin32Component::handleNCPaint( WPARAM wParam, LPARAM lParam )
 		clientRect = clipR;
 	}
 
-	int style = GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = GetWindowLongPtr( hwnd_, GWL_STYLE );
 	if ( style & WS_VSCROLL ) {
 		NONCLIENTMETRICS ncm;
 		memset( &ncm, 0, sizeof(NONCLIENTMETRICS) );

@@ -1358,19 +1358,19 @@ void Win32Tree::setStateImageList( ImageList* imageList )
 
 bool Win32Tree::getAllowLabelEditing()
 {
-	return ( TVS_EDITLABELS & GetWindowLong( hwnd_, GWL_STYLE ) ) ? true : false;
+	return ( TVS_EDITLABELS & ::GetWindowLongPtr( hwnd_, GWL_STYLE ) ) ? true : false;
 }
 
 void Win32Tree::setAllowLabelEditing( const bool& allowLabelEditing )
 {
-	int style = GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 	if ( allowLabelEditing ) {
 		style |= TVS_EDITLABELS;
 	}
 	else {
 		style &= ~TVS_EDITLABELS;
 	}
-	SetWindowLong( hwnd_, GWL_STYLE, style );
+	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
 
 	::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
 

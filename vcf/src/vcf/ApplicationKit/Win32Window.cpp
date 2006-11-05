@@ -138,8 +138,8 @@ Rect Win32Window::getClientBounds()
 
 void  Win32Window::setClientBounds( Rect* bounds )
 {
-	DWORD style = (DWORD)::GetWindowLong( hwnd_, GWL_STYLE );
-	DWORD exStyle = (DWORD)::GetWindowLong( hwnd_, GWL_EXSTYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
+	LONG_PTR exStyle = ::GetWindowLongPtr( hwnd_, GWL_EXSTYLE );
 
 	RECT r = {0,0,0,0};
 
@@ -619,8 +619,8 @@ void Win32Window::close()
 
 void Win32Window::setFrameStyle( const FrameStyleType& frameStyle )
 {
-	int32 style = ::GetWindowLong( hwnd_, GWL_STYLE );
-	int32 exStyle = ::GetWindowLong( hwnd_, GWL_EXSTYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
+	LONG_PTR exStyle = ::GetWindowLongPtr( hwnd_, GWL_EXSTYLE );
 	bool needsParent = false;
 	switch ( frameStyle ){
 		case fstSizeable :{
@@ -674,8 +674,8 @@ void Win32Window::setFrameStyle( const FrameStyleType& frameStyle )
 
 	}
 
-	::SetWindowLong( hwnd_, GWL_STYLE, style );
-	::SetWindowLong( hwnd_, GWL_EXSTYLE, exStyle );
+	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
+	::SetWindowLongPtr( hwnd_, GWL_EXSTYLE, exStyle );
 
 	::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
 
@@ -692,9 +692,9 @@ void Win32Window::setFrameTopmost( const bool& isTopmost )
 	}
 }
 
-DWORD Win32Window::generateStyleForSetParent(VCF::Control* parent)
+LONG_PTR Win32Window::generateStyleForSetParent(VCF::Control* parent)
 {
-	DWORD result = ::GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR result = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 
 	if ( NULL == parent ) {
 		if ( !peerControl_->isDesigning() ) {
@@ -717,8 +717,8 @@ void Win32Window::setParent( VCF::Control* parent )
 {
 	bool showWindow = false;
 
-	DWORD oldStyle = ::GetWindowLong( hwnd_, GWL_STYLE );
-	DWORD style = generateStyleForSetParent(parent);
+	LONG_PTR oldStyle = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
+	LONG_PTR style = generateStyleForSetParent(parent);
 
 	if ( NULL == parent ) {
 		if ( !peerControl_->isDesigning() ) {
@@ -736,7 +736,7 @@ void Win32Window::setParent( VCF::Control* parent )
 	}
 
 	if ( oldStyle != style ) {
-		::SetWindowLong( hwnd_, GWL_STYLE, style );
+		::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
 		::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED );
 	}
 
@@ -819,7 +819,7 @@ void Win32Window::setIconImage( Image* icon )
 
 	//JC - I got rid of this - I don't know why it was 
 	//here????
-	//SetClassLong (hwnd_, GCL_HICON, (LONG)winIcon);
+	//::SetClassLongPtr (hwnd_, GCL_HICON, (LONG_PTR)winIcon);
 	
 	SendMessage( hwnd_, WM_SETICON, ICON_BIG, (LPARAM)winIcon );
 

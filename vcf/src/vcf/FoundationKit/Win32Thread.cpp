@@ -75,7 +75,7 @@ Win32Thread::Win32Thread( Thread* thread, bool mainThread ):
 	//threadCollection[thread_] = this;
 
 	if ( mainThread_ ) {
-		threadHandle_ = (unsigned int)::GetCurrentThread();
+		threadHandle_ = (uintptr)::GetCurrentThread();
 		threadID_ = ::GetCurrentThreadId();
 		owningProcessID_ = GetCurrentProcessId();
 	}

@@ -28,7 +28,7 @@ public:
 	/**
 	* returns a ID that identifies this control. On Win32 this corresponds to an HWND.
 	*/
-	virtual int32 getHandleID();
+	virtual VCF::OSHandleID getHandleID();
 
 	/**
 	* returns a text associated with the component. This usually gets used in the Component::getCaption() method.

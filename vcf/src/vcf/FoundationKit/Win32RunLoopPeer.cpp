@@ -104,10 +104,10 @@ void Win32RunLoopPeer::handleTimers( const String& mode )
 	HANDLE* timerHandles = new HANDLE[activeTimers_.size()];
 	int actualCount = 0;
 
-	std::map<HANDLE,TimerInfo*>::iterator it = activeTimers_.begin();
+	std::map<uint32,TimerInfo*>::iterator it = activeTimers_.begin();
 	while ( it != activeTimers_.end() ) {
 		TimerInfo* info = it->second;		
-		timerHandles[actualCount] = it->first;
+		timerHandles[actualCount] = info->timer;
 		actualCount ++;
 		
 		it ++;
@@ -120,13 +120,14 @@ void Win32RunLoopPeer::handleTimers( const String& mode )
 
 			HANDLE signaledTimer = timerHandles[res-WAIT_OBJECT_0];
 
-			it = activeTimers_.find( signaledTimer );
-			if ( it != activeTimers_.end() ) {
+			for (it = activeTimers_.begin(); it != activeTimers_.end(); it++) {
 				TimerInfo* info = it->second;
-				DateTime dt = DateTime::now();
-				DateTimeSpan s = dt - info->startedAt;
+				if ( info->timer == signaledTimer ) {
+					DateTime dt = DateTime::now();
+					DateTimeSpan s = dt - info->startedAt;
 
-				runLoop_->internal_processTimer( info->mode, info->source, info->handler );
+					runLoop_->internal_processTimer( info->mode, info->source, info->handler );
+				}
 			}
 		}
 	}
@@ -140,16 +141,15 @@ uint32 Win32RunLoopPeer::addTimer( const String& mode,
 								  EventHandler* handler, 
 								  uint32 timeoutInMilliSeconds )
 {
-	uint32 result = 0;
-
-	HANDLE timer = ::CreateWaitableTimer( NULL, FALSE, NULL );
-
 	TimerInfo* info = new TimerInfo();
 	info->source = source;
 	info->handler = handler;
 	info->mode = mode;	
 
-	activeTimers_[timer] = info;
+	info->timer = ::CreateWaitableTimer( NULL, FALSE, NULL );
+	uint32 timerID = PtrToUInt32( info->timer );
+
+	activeTimers_[timerID] = info;
 
 	LARGE_INTEGER timeOut;
 	memset(&timeOut,0,sizeof(timeOut));
@@ -173,36 +173,36 @@ uint32 Win32RunLoopPeer::addTimer( const String& mode,
 	SystemTimeToFileTime( &st, (FILETIME*)&timeOut );
 	
 
-	SetWaitableTimer( timer, &timeOut, timeoutInMilliSeconds, NULL, NULL, FALSE );
+	SetWaitableTimer( info->timer, &timeOut, timeoutInMilliSeconds, NULL, NULL, FALSE );
 
 	info->startedAt = DateTime::now();
 
-	result = (LOWORD((DWORD)timer) << 16) | HIWORD((DWORD)timer);
-	return result;
+	return timerID;
 }
 
 void Win32RunLoopPeer::removeTimer( uint32 timerID )
 {
-	HANDLE timer = HANDLE( LOWORD(timerID) << 16 | HIWORD(timerID) );
-	std::map<HANDLE,TimerInfo*>::iterator found = activeTimers_.find( timer );
+	std::map<uint32,TimerInfo*>::iterator found = activeTimers_.find( timerID );
 	VCF_ASSERT( found != activeTimers_.end() );
 
 	if ( found != activeTimers_.end() ) {
-		CancelWaitableTimer( found->first );
-		CloseHandle( found->first );
-		delete found->second;
+		TimerInfo* info = found->second;
+		CancelWaitableTimer( info->timer );
+		CloseHandle( info->timer );
+		delete info;
 		activeTimers_.erase( found );
 	}
 }
 
 void Win32RunLoopPeer::removeAll()
 {
-	std::map<HANDLE,TimerInfo*>::iterator it = activeTimers_.begin();
+	std::map<uint32,TimerInfo*>::iterator it = activeTimers_.begin();
 	while ( it != activeTimers_.end() ) {
-		CancelWaitableTimer( it->first );
-		CloseHandle( it->first );
+		TimerInfo* info = it->second;
+		CancelWaitableTimer( info->timer );
+		CloseHandle( info->timer );
 
-		delete it->second;
+		delete info;
 
 		it ++;
 	}

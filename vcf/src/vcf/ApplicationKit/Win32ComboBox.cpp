@@ -38,7 +38,7 @@ Win32ComboBox::Win32ComboBox( ComboBoxControl* component ):
 
 	if ( NULL != this->hwnd_ ){
 		Win32Object::registerWin32Object( this );
-		oldComboBoxWndProc_ = (WNDPROC)::SetWindowLong( this->hwnd_, GWL_WNDPROC, (LONG)wndProc_ );
+		oldComboBoxWndProc_ = (WNDPROC)::SetWindowLongPtr( this->hwnd_, GWLP_WNDPROC, (LONG_PTR)wndProc_ );
 		this->defaultWndProc_ = NULL;
 
 	}

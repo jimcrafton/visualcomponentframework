@@ -49,7 +49,7 @@ Win32SocketPeer::~Win32SocketPeer(){
 	std::vector<Socket*>::iterator it = connectedClients_.begin();
 	while ( it != connectedClients_.end() ) {
 		Socket* so = *it;
-		printf( "deleting %x\n", so );
+		printf( "deleting %p\n", so );
 		delete so;
 		it++;
 	}

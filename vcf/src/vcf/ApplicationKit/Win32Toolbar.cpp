@@ -105,7 +105,7 @@ void Win32Toolbar::create( Control* control )
 
 void Win32Toolbar::setEnableAutoResize( const bool& val )
 {
-	int style = GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 
 	if( val ) {
 		style &= ~CCS_NORESIZE;
@@ -113,14 +113,14 @@ void Win32Toolbar::setEnableAutoResize( const bool& val )
 	else {
 		style |= CCS_NORESIZE;
 	}
-	SetWindowLong( hwnd_, GWL_STYLE, style );
+	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
 	::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
 	::UpdateWindow( hwnd_ );
 }
 
 bool Win32Toolbar::isAutoResizeEnabled()
 {
-	int style = GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 
 	return (style & CCS_NORESIZE) ? false : true;
 }
@@ -188,7 +188,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 
 			AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 
-			DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
+			LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 
 			resizeToolbarItems();
 		}
@@ -876,7 +876,7 @@ void Win32Toolbar::insertToolbarButton( const uint32& index, ToolbarItem* item, 
 
 	if ( System::isUnicodeEnabled() ) {
 
-		btn.dwData = (DWORD)item;
+		btn.dwData = (DWORD_PTR)item;
 		btn.iBitmap = item->getImageIndex();
 
 		String caption = item->getCaption();
@@ -972,7 +972,7 @@ void Win32Toolbar::insertToolbarButton( const uint32& index, ToolbarItem* item, 
 		delete [] tmp;
 	}
 	else {
-		btn.dwData = (DWORD)item;
+		btn.dwData = (DWORD_PTR)item;
 		btn.iBitmap = item->getImageIndex();
 
 
@@ -1183,7 +1183,7 @@ void Win32Toolbar::setButtonCaptionPlacementHorizontal( const bool& val )
 
 	resetItems( items );
 
-	DWORD style = GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 
 	if ( val ) {
 		style |= TBSTYLE_LIST;
@@ -1192,7 +1192,7 @@ void Win32Toolbar::setButtonCaptionPlacementHorizontal( const bool& val )
 		style &= ~TBSTYLE_LIST;
 	}
 
-	SetWindowLong( hwnd_, GWL_STYLE, style );
+	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
 
 	::SetWindowPos(hwnd_, NULL, 0, 0, 0, 0,
 			SWP_NOSIZE | SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
@@ -1231,10 +1231,10 @@ void Win32Toolbar::setButtonSize( const Size& buttonSize )
 
 	SendMessage( hwnd_, TB_SETIMAGELIST, 0, 0 );
 
-	DWORD style = GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 
 
-	SetWindowLong( hwnd_, GWL_STYLE, style|TBSTYLE_TRANSPARENT|TBSTYLE_FLAT );
+	::SetWindowLongPtr( hwnd_, GWL_STYLE, style|TBSTYLE_TRANSPARENT|TBSTYLE_FLAT );
 
 	::SetWindowPos(hwnd_, NULL, 0, 0, 0, 0,
 			SWP_NOSIZE | SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
@@ -1242,7 +1242,7 @@ void Win32Toolbar::setButtonSize( const Size& buttonSize )
 	SendMessage( hwnd_, TB_SETBUTTONSIZE, 0, (LPARAM) MAKELONG((short)buttonSize.width_, (short)buttonSize.height_) );
 
 
-	SetWindowLong( hwnd_, GWL_STYLE, style );
+	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
 
 
 	SendMessage( hwnd_, TB_SETIMAGELIST, 0, (LPARAM)imageListCtrl_ );
@@ -1255,7 +1255,7 @@ void Win32Toolbar::setButtonSize( const Size& buttonSize )
 		insertToolbarButton( index, items[index], val );
 	}
 
-	SetWindowLong( hwnd_, GWL_STYLE, style );
+	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
 
 	SendMessage(hwnd_, TB_AUTOSIZE, 0, 0 );
 

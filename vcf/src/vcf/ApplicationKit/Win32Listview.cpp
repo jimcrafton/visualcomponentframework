@@ -391,8 +391,8 @@ void Win32Listview::registerHeaderWndProc()
 	if ( NULL == oldHeaderWndProc_ ) {
 		HWND headerWnd = ListView_GetHeader( hwnd_ );
 		if ( NULL != headerWnd ) {
-			SetWindowLong( headerWnd, GWL_USERDATA, (LONG)(LPARAM)this );
-			oldHeaderWndProc_ = (WNDPROC) SetWindowLong( headerWnd, GWL_WNDPROC, (LONG)Win32Listview::Header_WndProc );
+			::SetWindowLongPtr( headerWnd, GWLP_USERDATA, (LONG_PTR)this );
+			oldHeaderWndProc_ = (WNDPROC)(LONG_PTR) ::SetWindowLongPtr( headerWnd, GWLP_WNDPROC, (LONG_PTR)Win32Listview::Header_WndProc );
 		}
 	}
 }
@@ -411,7 +411,7 @@ Win32Object::CreateParams Win32Listview::createParams()
 LRESULT CALLBACK Win32Listview::Header_WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	LRESULT result = 0;
-	Win32Listview* win32ListView = (Win32Listview*) GetWindowLong( hWnd, GWL_USERDATA );
+	Win32Listview* win32ListView = (Win32Listview*)(LONG_PTR) ::GetWindowLongPtr( hWnd, GWLP_USERDATA );
 
 	switch ( message ) {
 		case WM_ERASEBKGND : {
@@ -505,7 +505,7 @@ void Win32Listview::postPaintItem( NMLVCUSTOMDRAW* drawItem )
 
 			item->paint( ctx, &itemRect );
 
-			DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
+			LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 			if ( style & LVS_REPORT ) {
 				ColumnModel* colModel = listviewControl_->getColumnModel();
 				if ( NULL != colModel ) {
@@ -1722,13 +1722,13 @@ void Win32Listview::deleteHeaderColumn( const uint32& index )
 
 IconStyleType Win32Listview::getIconStyle()
 {
-	DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 	return translateStyleToIconStyle( style );
 }
 
 void Win32Listview::setIconStyle( const IconStyleType& iconStyle )
 {
-	DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 
 	style &= ~LVS_ICON;
 	style &= ~LVS_SMALLICON;
@@ -1737,57 +1737,57 @@ void Win32Listview::setIconStyle( const IconStyleType& iconStyle )
 
 	style |= translateIconStyleToStyleBit( iconStyle );
 
-	::SetWindowLong( hwnd_, GWL_STYLE, style );
+	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
 	::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED );
 }
 
 bool Win32Listview::getAllowsMultiSelect()
 {
-	DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 	return ((style & LVS_SINGLESEL) == 0);
 }
 
 void Win32Listview::setAllowsMultiSelect( const bool& allowsMultiSelect )
 {
-	DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 	if ( true == allowsMultiSelect ){
 		style &= ~LVS_SINGLESEL;
 	}
 	else {
 		style |= LVS_SINGLESEL;
 	}
-	::SetWindowLong( hwnd_, GWL_STYLE, style );
+	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
 }
 
 IconAlignType Win32Listview::getIconAlignment()
 {
-	DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 	return translateStyleToIconAlignment( style );
 }
 
 void Win32Listview::setIconAlignment( const IconAlignType& iconAlignType )
 {
-	DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 	style |= translateIconAlignmentToStyleBit( iconAlignType );
-	::SetWindowLong( hwnd_, GWL_STYLE, style );
+	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
 }
 
 bool Win32Listview::getAllowLabelEditing()
 {
-	DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 	return ((style & LVS_EDITLABELS) == 0);
 }
 
 void Win32Listview::setAllowLabelEditing( const bool& allowLabelEditing )
 {
-	DWORD style = ::GetWindowLong( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 	if ( true == allowLabelEditing ){
 		style |= LVS_EDITLABELS;
 	}
 	else {
 		style &= ~LVS_EDITLABELS;
 	}
-	::SetWindowLong( hwnd_, GWL_STYLE, style );
+	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
 }
 
 IconStyleType Win32Listview::translateStyleToIconStyle( const DWORD& wsStyle )

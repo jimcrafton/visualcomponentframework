@@ -227,13 +227,13 @@ HRESULT COMUtils::getPidlsFromHGlobal(const HGLOBAL HGlob, std::vector<String>& 
 	for (int i=0;i < count; i++){
 		 // [0]: folder IDList, [1] to [cidl]: item IDList
 		LPCITEMIDLIST pidlf = NULL;
-		pidlf = (LPCITEMIDLIST)( ((UINT)pCIDA) + pCIDA->aoffset[0]);
+		pidlf = (LPCITEMIDLIST)( ((UINT_PTR)pCIDA) + pCIDA->aoffset[0] );
 
 		String fixedPath;
 		String pidlPath;
 
 		LPCITEMIDLIST pidl = NULL;
-		pidl = (LPCITEMIDLIST)( ((UINT)pCIDA) + pCIDA->aoffset[i+1]);
+		pidl = (LPCITEMIDLIST)( ((UINT_PTR)pCIDA) + pCIDA->aoffset[i+1] );
 
 		if ( System::isUnicodeEnabled() ) {
 			WideChar pathf[MAX_PATH] = L"";

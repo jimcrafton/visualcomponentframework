@@ -27,7 +27,7 @@ public:
 	/**
 	* returns a ID that identifies this control. On Win32 this corresponds to an HWND.
 	*/
-	virtual int32 getHandleID(){
+	virtual OSHandleID getHandleID(){
 		return AbstractWin32Component::getHandleID();
 	};
 

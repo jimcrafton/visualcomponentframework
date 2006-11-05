@@ -73,7 +73,7 @@ protected:
 
 	void handleActivate();
 
-	virtual DWORD generateStyleForSetParent(VCF::Control* parent);
+	virtual LONG_PTR generateStyleForSetParent(VCF::Control* parent);
 };
 
 
