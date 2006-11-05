@@ -80,9 +80,9 @@ void LinuxFileStream::seek( const uint64& offset,
 {
 	// Check that offset is representable in this system's off_t type
 	off_t target = static_cast<off_t>( offset );
-	if ( ( target < 0 ) || ( offset != static_cast<uint64>( target ) ) {
+	if ( ( target < 0 ) || ( offset != static_cast<uint64>( target ) ) ) {
 		throw FileIOError( MAKE_ERROR_MSG_2(
-								"Offset value is too large for this system." );
+								"Offset value is too large for this system." ));
 	}
 	if ( fileHandle_ < 0 ) {
 		return;
@@ -112,9 +112,9 @@ uint64 LinuxFileStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 {
 	// Check that offset is representable in this system's off_t type
 	off_t length = static_cast<off_t>( sizeOfBytes );
-	if ( ( length < 0 ) || ( sizeOfBytes != static_cast<uint64>( length ) ) {
+	if ( ( length < 0 ) || ( sizeOfBytes != static_cast<uint64>( length ) ) ) {
 		throw FileIOError( MAKE_ERROR_MSG_2(
-								"Read byte count is too large for this system." );
+								"Read byte count is too large for this system." ));
 	}
 	if ( fileHandle_ < 0 ) {
 		return 0;
@@ -133,13 +133,13 @@ uint64 LinuxFileStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
     return bytesRead;
 }
 
-uint642 LinuxFileStream::write( const unsigned char* bytesToWrite, uint64 sizeOfBytes )
+uint64 LinuxFileStream::write( const unsigned char* bytesToWrite, uint64 sizeOfBytes )
 {
 	// Check that offset is representable in this system's off_t type
 	off_t length = static_cast<off_t>( sizeOfBytes );
-	if ( ( length < 0 ) || ( sizeOfBytes != static_cast<uint64>( length ) ) {
+	if ( ( length < 0 ) || ( sizeOfBytes != static_cast<uint64>( length ) ) ) {
 		throw FileIOError( MAKE_ERROR_MSG_2(
-								"Write byte count is too large for this system." );
+								"Write byte count is too large for this system." ));
 	}
 	if ( fileHandle_ < 0 ) {
 		return 0;
