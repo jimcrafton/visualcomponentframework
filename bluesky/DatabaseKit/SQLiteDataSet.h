@@ -48,8 +48,6 @@ namespace VCF {
 
 		virtual void internal_next();
 
-		virtual void clearRecordData();
-
 		virtual Record* allocateRecordData();
 
 		virtual bool isCursorOpen();
@@ -63,7 +61,7 @@ namespace VCF {
 
 		AnsiString generateSQL();
 		
-		void calculateRecordSize();
+		size_t calculateRecordSize();
 
 	private:
 		sqlite3* dbHandle_;

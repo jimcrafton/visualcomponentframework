@@ -36,8 +36,9 @@ SQLiteDataSet::SQLiteDataSet():
 	}
 }
 
-void SQLiteDataSet::calculateRecordSize()
+size_t SQLiteDataSet::calculateRecordSize()
 {
+	size_t result = 0;
 	recordSize_ = 0;
 
 	VCF_ASSERT( NULL != currentStmt_ );
@@ -47,23 +48,26 @@ void SQLiteDataSet::calculateRecordSize()
 
 		switch ( field->getDataType() ) {
 			case dftString : {				
-				recordSize_ += sqlite3_column_bytes( currentStmt_, i ) + 1; //adds 1 for trailing \0
+				result += sqlite3_column_bytes( currentStmt_, i ) + 1; //adds 1 for trailing \0
 			}
 			break;
 
 			case dftUnicodeString : {
-				recordSize_ += sqlite3_column_bytes16( currentStmt_, i ) + 1; //adds 1 for trailing \0
+				result += sqlite3_column_bytes16( currentStmt_, i ) + 1; //adds 1 for trailing \0
 			}
 			break;
 
 			default : {
-				recordSize_ += field->getSize();
+				result += field->getSize();
 			}
 			break;
 
 		}
 	}
 
+	recordSize_ = result;
+
+	return result;
 }
 
 void SQLiteDataSet::internal_open()
@@ -260,19 +264,28 @@ void SQLiteDataSet::addFieldDef( sqlite3_stmt* stmt, size_t fieldIndex )
 
 void SQLiteDataSet::internal_first()
 {
+	VCF_ASSERT( NULL != dbHandle_ );
+	VCF_ASSERT( NULL != currentStmt_ );
 
+	int res = sqlite3_reset(currentStmt_);
+
+	res = sqlite3_step(currentStmt_);
 }
 		
 GetResultType SQLiteDataSet::getRecord( DataSet::Record* record, GetRecordMode mode )
 {
-	GetResultType result = grFailed;	
+	GetResultType result = grFailed;
 
 	VCF_ASSERT( NULL != currentStmt_ );
 
 	size_t bufferOffset = 0;
 
-	int res = 0;
-	
+	int res = 0;	
+
+	size_t currentSz = calculateRecordSize();
+
+	record->setSize( currentSz );
+
 	for ( size_t i=0;i<fields_->size();i++ ) {
 		DataField* field = fields_()[i];
 
@@ -324,38 +337,37 @@ GetResultType SQLiteDataSet::getRecord( DataSet::Record* record, GetRecordMode m
 		break;
 
 		case grmNext : {
-			res = sqlite3_step(currentStmt_);
-
-			switch ( res ) {
-				case SQLITE_ROW : {
-					result = grOK;
-				}
-				break;
-
-				case SQLITE_DONE : {
-					result = grEOF;
-				}
-				break;
-
-				case SQLITE_ERROR : {
-					result = grFailed;
-				}
-				break;
-
-				case SQLITE_BUSY : {
-					result = grFailed;
-				}
-				break;
-
-				case SQLITE_MISUSE : {
-					result = grFailed;
-				}
-				break;
-			}			
+			res = sqlite3_step(currentStmt_);				
 		}
 		break;
 	}
 
+	switch ( res ) {
+		case SQLITE_ROW : {
+			result = grOK;
+		}
+		break;
+
+		case SQLITE_DONE : {
+			result = grEOF;
+		}
+		break;
+
+		case SQLITE_ERROR : {
+			result = grFailed;
+		}
+		break;
+
+		case SQLITE_BUSY : {
+			result = grFailed;
+		}
+		break;
+
+		case SQLITE_MISUSE : {
+			result = grFailed;
+		}
+		break;
+	}	
 
 	return result;
 }
@@ -371,16 +383,12 @@ DataSet::Record* SQLiteDataSet::allocateRecordData()
 
 	calculateRecordSize();
 
-	result = new DataSet::Record( recordSize_ );
+	result = new DataSet::Record();
 
 
 	return result;
 }
 
-void SQLiteDataSet::clearRecordData()
-{
-
-}
 
 String SQLiteDataSet::getTableName()
 {
@@ -472,7 +480,7 @@ bool SQLiteDataSet::getFieldData( DataField* field, unsigned char* buffer, size_
 		DataField* aField = fields_()[i];		
 
 		if ( field->getFieldNumber() == i ) {
-			DataSet::Record* record = records_[ currentRecordIndex_ ];
+			DataSet::Record* record = records_[ activeRecordIndex_ ];
 
 			size_t len = minVal<>( bufferSize, (size_t)field->getSize() );
 			memcpy( buffer, &record->buffer[bufferOffset], len );

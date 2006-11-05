@@ -37,6 +37,12 @@ namespace VCF {
 		dssFilter
 	};
 
+	enum CheckModeState {
+		cmsBrowse = 1,
+		cmsActive,
+		cmsInactive
+	};
+
 	enum DataEventType {
 		deUnknown = 0,
 		deFieldChange = 'data', 
@@ -69,16 +75,27 @@ namespace VCF {
 		
 
 		struct Record {
-			Record(): buffer(NULL), size(0){}
-
-			Record( size_t val ): buffer(NULL), size(val) {
-				buffer = new unsigned char[size];
-			}
+			Record(): buffer(NULL), size(0){}			
 
 			~Record() {
 				delete [] buffer;
 				buffer = NULL;
 				size = 0;
+			}
+
+			void setSize( size_t val ) {
+				if ( val != size ) {
+					
+					if ( NULL != buffer ) {
+						delete [] buffer;
+					}
+					
+					size = val;
+					
+					if ( size > 0 ) {
+						buffer = new unsigned char[size];
+					}
+				}
 			}
 
 			unsigned char* buffer;
@@ -210,9 +227,7 @@ namespace VCF {
 		
 		virtual void internal_next() = 0;
 
-		virtual GetResultType getRecord( Record* record, GetRecordMode mode ) = 0;
-
-		virtual void clearRecordData() = 0;
+		virtual GetResultType getRecord( Record* record, GetRecordMode mode ) = 0;		
 
 		virtual Record* allocateRecordData() = 0;
 
@@ -234,11 +249,16 @@ namespace VCF {
 
 		void updateRecordSize();
 
+		void clearRecords();
+		void activateRecords();
+
 		void setRecordsSize( size_t numberOfRecords );
 
 		size_t getNextRecords();
 
 		bool getNextRecord();
+
+		void checkMode( CheckModeState mode );
 
 		bool active_;
         Database* db_;
@@ -263,6 +283,7 @@ namespace VCF {
 
 		size_t recordSize_;
 		RecordsArray records_;
+		size_t activeRecordIndex_; //we may not need this...
 		size_t currentRecordIndex_;
         
     };

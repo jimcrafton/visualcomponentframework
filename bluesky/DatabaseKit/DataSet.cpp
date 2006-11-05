@@ -13,6 +13,7 @@ DataSet::DataSet()
 	modified_(false),
 	defaultFields_(true),
 	recordSize_(0),
+	activeRecordIndex_(DataSet::NoRecPos),
 	currentRecordIndex_(DataSet::NoRecPos)
 {
 	fieldDefs_ = new FieldDefinitions(); 
@@ -197,15 +198,118 @@ void DataSet::setState( DataSetState val )
 	}	
 }
 
+void DataSet::checkMode( CheckModeState mode )
+{
+	switch ( mode ) {
+		case cmsBrowse : {
+			checkMode( cmsActive );
+
+			Event e(this,deCheckBrowseMode);
+			handleDataEvent(&e);
+
+			switch ( getState() )  {
+				case dssEdit : case dssInsert : {
+					//update the record???
+				}
+				break;
+
+				case dssSetKey : {
+					post();
+				}
+				break;
+			}
+		}
+		break;
+
+		case cmsActive : {
+			if ( dssInactive == state_ ) {
+				throw DatabaseError( "Dataset is inactive!" );
+			}
+		}
+		break;
+
+		case cmsInactive : {
+
+		}
+		break;
+	}
+}
+
+void DataSet::clearRecords()
+{
+	bof_ = true;
+	eof_ = true;
+	currentRecordIndex_ = 0;
+	activeRecordIndex_ = 0;	
+}
+
+void DataSet::activateRecords()
+{
+	bof_ = false;
+	eof_ = false;
+	currentRecordIndex_ = 0;
+	activeRecordIndex_ = 0;
+}
 
 void DataSet::first()
 {
+	checkMode( cmsBrowse );
 
+	Event e1(this,0);
+	BeforeScroll.fireEvent(&e1);
+
+	clearRecords();
+
+
+	try {
+		internal_first();
+
+		getNextRecord();
+
+		getNextRecords();
+	}
+	catch ( BasicException& ) {
+
+	}
+	catch ( ... ) {
+
+	}
+
+	bof_ = true;
+	Event e2(this,deDataSetChange);
+	handleDataEvent(&e2);
+
+	Event e3(this,0);
+	AfterScroll.fireEvent(&e3);
 }
 
 void DataSet::next()
 {
+	checkMode( cmsBrowse );
+	Event e1(this,0);
+	BeforeScroll.fireEvent(&e1);
 
+	if ( !isEOF() ) {
+		bof_ = false;
+		eof_ = false;
+
+		if ( activeRecordIndex_ < (records_.size() - 1) ) {
+			activeRecordIndex_ ++;
+		}
+		else {			
+			if ( getNextRecord() ) {
+				if ( activeRecordIndex_ < (records_.size() - 1) ) {
+					activeRecordIndex_ ++;
+				}
+			}
+			else {
+				eof_ = true;
+			}
+		}
+
+		Event e2(this,0);
+		AfterScroll.fireEvent(&e2);
+	}
 }
 
 void DataSet::refresh()
@@ -325,7 +429,7 @@ void DataSet::setRecordsSize( size_t numberOfRecords )
 size_t DataSet::getNextRecords()
 {
 	size_t result = 0;
-	while ( (currentRecordIndex_ < records_.size()) && getNextRecord() ) {		
+	while ( (result < records_.size()) && getNextRecord() ) {		
 		result ++;		
 	}
 
@@ -341,18 +445,22 @@ bool DataSet::getNextRecord()
 	if ( records_.size() > 0 ) {
 		//currentRecordIndex_ = records_.size() - 1; 
 	}	
-
-	if ( grFailed != getRecord( records_[ currentRecordIndex_ ], mode ) ) {
-		result = true;
+	
+	GetResultType res = getRecord( records_[ currentRecordIndex_ ], mode );
+	if ( grFailed != res ) {
+		result = true;		
 	}
 
 	if ( result ) {
-		if ( currentRecordIndex_ < records_.size() ) {
-			currentRecordIndex_ ++;
+		if ( records_.size() - 1 == 0 ) {
+			activateRecords();
 		}
-	}
-	else {
-		currentRecordIndex_ = NoRecPos;
+
+		if ( grEOF == res ) {
+			eof_ = true;
+		}
+
+		currentRecordIndex_ = records_.size() - 1; 		
 	}
 
 	return result;
