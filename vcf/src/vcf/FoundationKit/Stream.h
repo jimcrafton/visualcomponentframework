@@ -98,7 +98,7 @@ primitive types is done through the extraction operator( >> ),
 as well as providing support for the Persistable interface,
 and reading in an arbitrary chunk of memory
 */
-class FOUNDATIONKIT_API InputStream : public Stream {
+class FOUNDATIONKIT_API InputStream : public virtual Stream {
 public:
 
 	virtual ~InputStream(){};
@@ -177,7 +177,7 @@ primitive types is done through the insertion operator( << ),
 as well as providing support for the Persistable interface,
 and writing out an arbitrary chunk of memory
 */
-class FOUNDATIONKIT_API OutputStream : public Stream {
+class FOUNDATIONKIT_API OutputStream : public virtual Stream {
 public:
 	virtual ~OutputStream(){};
 
