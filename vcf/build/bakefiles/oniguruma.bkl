@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="onigurumaFiles.bkl"/>
+
+    <template id="oniguruma_base">
+        <set var="LIBRARY_NAME">$(ONIGURUMA_NAME)</set>
+
+        <headers>$(ONIGURUMA_HDR)</headers>
+        <sources>$(ONIGURUMA_SRC)</sources>
+
+        <vcf-include-oniguruma/>
+
+        <define>NOT_RUBY</define>
+        <define>ONIG_EXTERN=extern</define>
+    </template>
+
+    <lib id="oniguruma_lib" template="oniguruma_base,vcf_lib"
+            cond="OPTION_ONIGURUMA=='1'">
+    </lib>
+</makefile>
+
+<!--
+$Id$
+-->

@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<makefile>
+
+    <set var="REGEXKIT_HDR" hints="files">
+        vcf/RegExKit/RegExKit.h
+    </set>
+
+    <set var="REGEXKIT_SRC" hints="files">
+        vcf/RegExKit/RegExKit.cpp
+    </set>
+
+</makefile>
+
+<!--
+$Id$
+-->

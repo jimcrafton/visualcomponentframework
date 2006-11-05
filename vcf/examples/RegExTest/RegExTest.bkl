@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="RegExTest" template="vcf_exe_console" cond="OPTION_REGEXKIT=='1'">
+        <dirname>.</dirname>
+        <sources>RegExTest.cpp</sources>
+        <vcf-use-RegExKit/>
+    </exe>
+</makefile>
+
+<!--
+$Id$
+-->

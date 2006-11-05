@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="RegExKitFiles.bkl"/>
+
+    <template id="RegExKit_base">
+        <set var="LIBRARY_NAME">$(REGEXKIT_NAME)</set>
+
+        <headers>$(REGEXKIT_HDR)</headers>
+        <sources>$(REGEXKIT_SRC)</sources>
+
+        <vcf-use-FoundationKit/>
+
+        <library>oniguruma_lib</library>
+        <define>ONIG_EXTERN=extern</define>
+    </template>
+
+    <lib id="RegExKit_lib" template="RegExKit_base,vcf_lib"
+            cond="OPTION_SHARED=='0' and OPTION_REGEXKIT=='1' and OPTION_ALLIN1=='0'">
+        <depends>FoundationKit_lib</depends>
+    </lib>
+
+    <dll id="RegExKit_dll" template="RegExKit_base,vcf_dll"
+            cond="OPTION_SHARED=='1' and OPTION_REGEXKIT=='1' and OPTION_ALLIN1=='0'">
+        <define>REGEXKIT_DLL</define>
+        <define>REGEXKIT_EXPORTS</define>
+        <depends>FoundationKit_dll</depends>
+    </dll>
+
+    <set var="MSVC6PRJ_MERGED_TARGETS" append="1"
+            cond="OPTION_REGEXKIT=='1' and OPTION_ALLIN1=='0'">
+        RegExKit=RegExKit_lib+RegExKit_dll
+    </set>
+</makefile>
+
+<!--
+$Id$
+-->

@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="ONIGURUMA_HDR" hints="files">
+        thirdparty/common/oniguruma/config.h
+        thirdparty/common/oniguruma/oniggnu.h
+        thirdparty/common/oniguruma/onigposix.h
+        thirdparty/common/oniguruma/oniguruma.h
+        thirdparty/common/oniguruma/regenc.h
+        thirdparty/common/oniguruma/regint.h
+        thirdparty/common/oniguruma/regparse.h
+        thirdparty/common/oniguruma/st.h
+    </set>
+
+    <set var="ONIGURUMA_SRC" hints="files">
+        thirdparty/common/oniguruma/regcomp.c
+        thirdparty/common/oniguruma/regenc.c
+        thirdparty/common/oniguruma/regerror.c
+        thirdparty/common/oniguruma/regexec.c
+        thirdparty/common/oniguruma/regext.c
+        thirdparty/common/oniguruma/reggnu.c
+        thirdparty/common/oniguruma/regparse.c
+        thirdparty/common/oniguruma/regposerr.c
+        thirdparty/common/oniguruma/regposix.c
+        thirdparty/common/oniguruma/regsyntax.c
+        thirdparty/common/oniguruma/regtrav.c
+        thirdparty/common/oniguruma/regversion.c
+        thirdparty/common/oniguruma/st.c
+        thirdparty/common/oniguruma/enc/ascii.c
+        thirdparty/common/oniguruma/enc/big5.c
+        thirdparty/common/oniguruma/enc/euc_jp.c
+        thirdparty/common/oniguruma/enc/euc_kr.c
+        thirdparty/common/oniguruma/enc/euc_tw.c
+        thirdparty/common/oniguruma/enc/gb18030.c
+        thirdparty/common/oniguruma/enc/iso8859_1.c
+        thirdparty/common/oniguruma/enc/iso8859_10.c
+        thirdparty/common/oniguruma/enc/iso8859_11.c
+        thirdparty/common/oniguruma/enc/iso8859_13.c
+        thirdparty/common/oniguruma/enc/iso8859_14.c
+        thirdparty/common/oniguruma/enc/iso8859_15.c
+        thirdparty/common/oniguruma/enc/iso8859_16.c
+        thirdparty/common/oniguruma/enc/iso8859_2.c
+        thirdparty/common/oniguruma/enc/iso8859_3.c
+        thirdparty/common/oniguruma/enc/iso8859_4.c
+        thirdparty/common/oniguruma/enc/iso8859_5.c
+        thirdparty/common/oniguruma/enc/iso8859_6.c
+        thirdparty/common/oniguruma/enc/iso8859_7.c
+        thirdparty/common/oniguruma/enc/iso8859_8.c
+        thirdparty/common/oniguruma/enc/iso8859_9.c
+        thirdparty/common/oniguruma/enc/koi8.c
+        thirdparty/common/oniguruma/enc/koi8_r.c
+        thirdparty/common/oniguruma/enc/sjis.c
+        thirdparty/common/oniguruma/enc/unicode.c
+        thirdparty/common/oniguruma/enc/utf16_be.c
+        thirdparty/common/oniguruma/enc/utf16_le.c
+        thirdparty/common/oniguruma/enc/utf32_be.c
+        thirdparty/common/oniguruma/enc/utf32_le.c
+        thirdparty/common/oniguruma/enc/utf8.c
+    </set>
+
+</makefile>
+
+<!--
+$Id$
+-->

@@ -86,6 +86,9 @@ OPTION_LIBTIFF = 0
 # Compile the paintlib library: [0,1]
 OPTION_PAINTLIB = 0
 
+# Compile the oniguruma library: [0,1]
+OPTION_ONIGURUMA = 1
+
 # Compile FoundationKit: [0,1]
 OPTION_FOUNDATIONKIT = 1
 
@@ -125,6 +128,12 @@ OPTION_REMOTEOBJECTKIT = 0
 #     OPTION_FOUNDATIONKIT
 # Compile InternetKit: [0,1]
 OPTION_INTERNETKIT = 0
+
+# Depends on:
+#     OPTION_FOUNDATIONKIT
+#     OPTION_ONIGURUMA
+# Compile RegExKit: [0,1]
+OPTION_REGEXKIT = 1
 
 # Depends on:
 #     OPTION_PAINTLIB

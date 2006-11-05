@@ -70,6 +70,14 @@
         </set>
 
         
+        <set var="ALLIN1_REGEXKIT_HDR" hints="files">
+            <if cond="OPTION_REGEXKIT=='1'">$(REGEXKIT_HDR)</if>
+        </set>
+        <set var="ALLIN1_REGEXKIT_SRC" hints="files">
+            <if cond="OPTION_REGEXKIT=='1'">$(REGEXKIT_SRC)</if>
+        </set>
+
+        
         <headers>
             $(ALLIN1_FOUNDATIONKIT_HDR)
             $(ALLIN1_GRAPHICSKIT_HDR)
@@ -79,6 +87,7 @@
             $(ALLIN1_NETWORKKIT_HDR)
             $(ALLIN1_REMOTEOBJECTKIT_HDR)
             $(ALLIN1_INTERNETKIT_HDR)
+            $(ALLIN1_REGEXKIT_HDR)
         </headers>
         <sources>
             $(ALLIN1_FOUNDATIONKIT_SRC)
@@ -89,6 +98,7 @@
             $(ALLIN1_NETWORKKIT_SRC)
             $(ALLIN1_REMOTEOBJECTKIT_SRC)
             $(ALLIN1_INTERNETKIT_SRC)
+            $(ALLIN1_REGEXKIT_SRC)
         </sources>
 
         
@@ -132,6 +142,11 @@
         </set>
         <library>$(ALLIN1_ZLIB_LIB)</library>
 
+        <set var="ALLIN1_ONIGURUMA_LIB">
+            <if cond="OPTION_ONIGURUMA=='1'">oniguruma_lib</if>
+        </set>
+        <library>$(ALLIN1_ONIGURUMA_LIB)</library>
+
 
         <vcf-include-thirdparty/>
     </template>
@@ -158,6 +173,8 @@
         <define>REMOTEKIT_EXPORTS</define>
         <define>INTERNETKIT_DLL</define>
         <define>INTERNETKIT_EXPORTS</define>
+        <define>REGEXKIT_DLL</define>
+        <define>REGEXKIT_EXPORTS</define>
 
         <res-include>../../build/resources/win32</res-include>
         <win32-res>../build/resources/win32/ApplicationKit.rc</win32-res>
