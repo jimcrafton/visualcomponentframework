@@ -95,6 +95,12 @@
         </include>
     </define-tag>
 
+    <define-tag name="vcf-include-oniguruma" rules="dll,lib,exe,module">
+        <include>
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/oniguruma' ))
+        </include>
+    </define-tag>
+
 
     <!--
     Using libraries.
@@ -135,6 +141,12 @@
         <vcf-use-LibTIFF/>
         <vcf-use-LibPNG/>
         <vcf-lib>$(PAINTLIB_FILENAME)</vcf-lib>
+    </define-tag>
+
+    <define-tag name="vcf-use-oniguruma" rules="dll,lib,exe,module">
+        <vcf-include-oniguruma/>
+        <vcf-lib>$(ONIGURUMA_FILENAME)</vcf-lib>
+        <define>ONIG_EXTERN=extern</define>
     </define-tag>
 
 
@@ -239,6 +251,19 @@
         </set>
         <vcf-lib>$(INTERNETKIT)</vcf-lib>
         <define>$(INTERNETKIT_DLL)</define>
+    </define-tag>
+
+    <set var="REGEXKIT_DLL">
+        <if cond="OPTION_SHARED=='1'">REGEXKIT_DLL</if>
+    </set>
+    <define-tag name="vcf-use-RegExKit" rules="dll,lib,exe,module">
+        <vcf-use-oniguruma/>
+        <vcf-use-FoundationKit/>
+        <set var="REGEXKIT">
+            <if cond="OPTION_ALLIN1=='0'">$(REGEXKIT_FILENAME)</if>
+        </set>
+        <vcf-lib>$(REGEXKIT)</vcf-lib>
+        <define>$(REGEXKIT_DLL)</define>
     </define-tag>
 
     <set var="IMAGEFORMATS_DLL">

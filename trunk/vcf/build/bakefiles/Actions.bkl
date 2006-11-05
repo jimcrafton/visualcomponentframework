@@ -52,6 +52,12 @@
             <depends>InternetKit_dll</depends>
         </action>
         
+        <action id="RegExKit" cond="OPTION_REGEXKIT=='1'">
+            <is-phony>1</is-phony>
+            <depends>RegExKit_lib</depends>
+            <depends>RegExKit_dll</depends>
+        </action>
+        
         <action id="ImageFormats" cond="OPTION_IMAGEFORMATS=='1' and PLATFORM_WIN32=='1'">
             <is-phony>1</is-phony>
             <depends>ImageFormats_lib</depends>
@@ -91,6 +97,11 @@
         <action id="paintlib" cond="OPTION_PAINTLIB=='1'">
             <is-phony>1</is-phony>
             <depends>paintlib_lib</depends>
+        </action>
+
+        <action id="oniguruma" cond="OPTION_ONIGURUMA=='1'">
+            <is-phony>1</is-phony>
+            <depends>oniguruma_lib</depends>
         </action>
 
     </if>

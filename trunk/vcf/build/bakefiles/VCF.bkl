@@ -25,6 +25,7 @@
     <include file="LibMNG.bkl"/>
     <include file="LibPNG.bkl"/>
     <include file="LibTIFF.bkl"/>
+    <include file="oniguruma.bkl"/>
 
     <include file="FoundationKit.bkl"/>
     <include file="GraphicsKit.bkl"/>
@@ -34,6 +35,7 @@
     <include file="NetworkKit.bkl"/>
     <include file="RemoteObjectKit.bkl"/>
     <include file="InternetKit.bkl"/>
+    <include file="RegExKit.bkl"/>
 
     <include file="Allin1.bkl"/>
 

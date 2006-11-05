@@ -208,6 +208,54 @@ LIBTIFF_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/LibTIFF_lib_tif_write.o \
 	../../lib/$(OBJDIR)/LibTIFF_lib_tif_zip.o \
 	../../lib/$(OBJDIR)/LibTIFF_lib_tif_unix.o
+ONIGURUMA_LIB_CFLAGS = -I../../src/thirdparty/common/oniguruma -DNOT_RUBY \
+	-DONIG_EXTERN=extern $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
+	-Wno-multichar -I../../src $(CPPFLAGS) $(CFLAGS)
+ONIGURUMA_LIB_OBJECTS =  \
+	../../lib/$(OBJDIR)/oniguruma_lib_regcomp.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_regenc.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_regerror.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_regexec.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_regext.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_reggnu.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_regparse.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_regposerr.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_regposix.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_regsyntax.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_regtrav.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_regversion.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_st.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_ascii.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_big5.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_euc_jp.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_euc_kr.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_euc_tw.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_gb18030.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_iso8859_1.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_iso8859_10.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_iso8859_11.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_iso8859_13.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_iso8859_14.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_iso8859_15.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_iso8859_16.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_iso8859_2.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_iso8859_3.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_iso8859_4.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_iso8859_5.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_iso8859_6.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_iso8859_7.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_iso8859_8.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_iso8859_9.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_koi8.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_koi8_r.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_sjis.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_unicode.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_utf16_be.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_utf16_le.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_utf32_be.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_utf32_le.o \
+	../../lib/$(OBJDIR)/oniguruma_lib_utf8.o
 FOUNDATIONKIT_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) \
 	$(__OPTION_THREADING) $(__OPTION_WARNINGS) $(____OPTION_DEBUG) \
 	-DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
@@ -781,6 +829,20 @@ INTERNETKIT_DLL_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
 INTERNETKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/InternetKit_dll_InternetKit.o \
 	../../lib/$(OBJDIR)/InternetKit_dll_InternetToolkit.o
+REGEXKIT_LIB_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) -DONIG_EXTERN=extern \
+	$(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
+	$(CXXFLAGS)
+REGEXKIT_LIB_OBJECTS =  \
+	../../lib/$(OBJDIR)/RegExKit_lib_RegExKit.o
+REGEXKIT_DLL_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) -DONIG_EXTERN=extern \
+	$(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar -I../../src \
+	-DREGEXKIT_DLL -DREGEXKIT_EXPORTS -fPIC -DPIC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
+REGEXKIT_DLL_OBJECTS =  \
+	../../lib/$(OBJDIR)/RegExKit_dll_RegExKit.o
 ALLIN1_LIB_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
 	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
 	-Wno-multichar -I../../src $(____OPTION_CPP_RTTI_0) \
@@ -793,16 +855,17 @@ ALLIN1_LIB_OBJECTS =  \
 	$(____Allin1_lib_ALLIN1_OPENGLKIT_SRC_OBJECTS) \
 	$(____Allin1_lib_ALLIN1_NETWORKKIT_SRC_OBJECTS) \
 	$(____Allin1_lib_ALLIN1_REMOTEOBJECTKIT_SRC_OBJECTS) \
-	$(____Allin1_lib_ALLIN1_INTERNETKIT_SRC_OBJECTS)
+	$(____Allin1_lib_ALLIN1_INTERNETKIT_SRC_OBJECTS) \
+	$(____Allin1_lib_ALLIN1_REGEXKIT_SRC_OBJECTS)
 ALLIN1_DLL_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
 	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
 	-Wno-multichar -I../../src -DFOUNDATIONKIT_DLL -DFOUNDATIONKIT_EXPORTS \
 	-DGRAPHICSKIT_DLL -DGRAPHICSKIT_EXPORTS -DAPPLICATIONKIT_DLL \
 	-DAPPLICATIONKIT_EXPORTS -DHTMLKIT_DLL -DHTMLKIT_EXPORTS -DOPENGLKIT_DLL \
 	-DOPENGLKIT_EXPORTS -DNETKIT_DLL -DNETKIT_EXPORTS -DREMOTEKIT_DLL \
-	-DREMOTEKIT_EXPORTS -DINTERNETKIT_DLL -DINTERNETKIT_EXPORTS -fPIC -DPIC \
-	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
-	$(CXXFLAGS)
+	-DREMOTEKIT_EXPORTS -DINTERNETKIT_DLL -DINTERNETKIT_EXPORTS -DREGEXKIT_DLL \
+	-DREGEXKIT_EXPORTS -fPIC -DPIC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 ALLIN1_DLL_OBJECTS =  \
 	$(____Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS) \
 	$(____Allin1_dll_ALLIN1_GRAPHICSKIT_SRC_OBJECTS) \
@@ -811,7 +874,8 @@ ALLIN1_DLL_OBJECTS =  \
 	$(____Allin1_dll_ALLIN1_OPENGLKIT_SRC_OBJECTS) \
 	$(____Allin1_dll_ALLIN1_NETWORKKIT_SRC_OBJECTS) \
 	$(____Allin1_dll_ALLIN1_REMOTEOBJECTKIT_SRC_OBJECTS) \
-	$(____Allin1_dll_ALLIN1_INTERNETKIT_SRC_OBJECTS)
+	$(____Allin1_dll_ALLIN1_INTERNETKIT_SRC_OBJECTS) \
+	$(____Allin1_dll_ALLIN1_REGEXKIT_SRC_OBJECTS)
 PAINTLIB_LIB_CFLAGS = -I../../src/thirdparty/common/paintlib/common/Filter \
 	-I../../src/thirdparty/common/paintlib/common \
 	-I../../src/thirdparty/common/LibJPEG \
@@ -1051,6 +1115,22 @@ ifeq ($(OPTION_INTERNETKIT),1)
 ifeq ($(OPTION_SHARED),1)
 __InternetKit_dll___depname = \
 	../../lib/libInternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
+endif
+endif
+endif
+ifeq ($(OPTION_ALLIN1),0)
+ifeq ($(OPTION_REGEXKIT),1)
+ifeq ($(OPTION_SHARED),0)
+__RegExKit_lib___depname = \
+	../../lib/libRegExKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+endif
+endif
+endif
+ifeq ($(OPTION_ALLIN1),0)
+ifeq ($(OPTION_REGEXKIT),1)
+ifeq ($(OPTION_SHARED),1)
+__RegExKit_dll___depname = \
+	../../lib/libRegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
 endif
 endif
 endif
@@ -1310,6 +1390,10 @@ ____Allin1_lib_ALLIN1_INTERNETKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_InternetKit.o \
 	../../lib/$(OBJDIR)/Allin1_lib_InternetToolkit.o
 endif
+ifeq ($(OPTION_REGEXKIT),1)
+____Allin1_lib_ALLIN1_REGEXKIT_SRC_OBJECTS =  \
+	../../lib/$(OBJDIR)/Allin1_lib_RegExKit.o
+endif
 ifeq ($(OPTION_ALLIN1),1)
 ifeq ($(OPTION_SHARED),1)
 __Allin1_dll___depname = \
@@ -1566,6 +1650,10 @@ ____Allin1_dll_ALLIN1_INTERNETKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_InternetKit.o \
 	../../lib/$(OBJDIR)/Allin1_dll_InternetToolkit.o
 endif
+ifeq ($(OPTION_REGEXKIT),1)
+____Allin1_dll_ALLIN1_REGEXKIT_SRC_OBJECTS =  \
+	../../lib/$(OBJDIR)/Allin1_dll_RegExKit.o
+endif
 ifeq ($(OPTION_AGG),1)
 A = ../../lib/libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
@@ -1583,6 +1671,9 @@ VAR_2 = ../../lib/libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
 ifeq ($(OPTION_LIBTIFF),1)
 VAR_3 = ../../lib/libLibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+endif
+ifeq ($(OPTION_ONIGURUMA),1)
+VAR_4 = ../../lib/liboniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
 ifeq ($(OPTION_ALLIN1),0)
 Kit_dll_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
@@ -1630,13 +1721,16 @@ ifeq ($(OPTION_LIBTIFF),1)
 ____Allin1_3 = $(VAR_3)
 endif
 ifeq ($(OPTION_PAINTLIB),1)
-____Allin1_4 = $(VAR_4)
+____Allin1_4 = $(VAR_5)
 endif
 ifeq ($(OPTION_ZLIB),1)
 ____Allin1_5 = $(VAR)
 endif
+ifeq ($(OPTION_ONIGURUMA),1)
+____Allin1_6 = $(VAR_4)
+endif
 ifeq ($(OPTION_PAINTLIB),1)
-VAR_4 = ../../lib/libpaintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+VAR_5 = ../../lib/libpaintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
 ifeq ($(OPTION_DEBUG),0)
 __DEBUG_INFO = 
@@ -1691,7 +1785,7 @@ all: ../../lib/$(OBJDIR)
 
 ### Targets: ###
 
-all: ../../bin ../../lib $(A) $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_4) createinfo_ CreateBundle_ xmake_
+all: ../../bin ../../lib $(A) $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(VAR_4) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__RegExKit_lib___depname) $(__RegExKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_5) createinfo_ CreateBundle_ xmake_
 
 install: all
 
@@ -1706,6 +1800,7 @@ clean:
 	rm -f ../../lib/libLibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libLibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+	rm -f ../../lib/liboniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libFoundationKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libFoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
 	rm -f ../../lib/libFoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
@@ -1730,6 +1825,9 @@ clean:
 	rm -f ../../lib/libInternetKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libInternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
 	rm -f ../../lib/libInternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
+	rm -f ../../lib/libRegExKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+	rm -f ../../lib/libRegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
+	rm -f ../../lib/libRegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
 	rm -f ../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
 	rm -f ../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
@@ -1783,6 +1881,13 @@ ifeq ($(OPTION_LIBTIFF),1)
 ../../lib/libLibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(LIBTIFF_LIB_OBJECTS)
 	rm -f $@
 	$(AR) rcu $@ $(LIBTIFF_LIB_OBJECTS)
+	$(RANLIB) $@
+endif
+
+ifeq ($(OPTION_ONIGURUMA),1)
+../../lib/liboniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(ONIGURUMA_LIB_OBJECTS)
+	rm -f $@
+	$(AR) rcu $@ $(ONIGURUMA_LIB_OBJECTS)
 	$(RANLIB) $@
 endif
 
@@ -1946,9 +2051,29 @@ endif
 endif
 endif
 
+ifeq ($(OPTION_ALLIN1),0)
+ifeq ($(OPTION_REGEXKIT),1)
+ifeq ($(OPTION_SHARED),0)
+../../lib/libRegExKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(REGEXKIT_LIB_OBJECTS) $(VAR_4) $(__FoundationKit_lib___depname)
+	rm -f $@
+	$(AR) rcu $@ $(REGEXKIT_LIB_OBJECTS)
+	$(RANLIB) $@
+endif
+endif
+endif
+
+ifeq ($(OPTION_ALLIN1),0)
+ifeq ($(OPTION_REGEXKIT),1)
+ifeq ($(OPTION_SHARED),1)
+../../lib/libRegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(REGEXKIT_DLL_OBJECTS) $(VAR_4) $(__FoundationKit_dll___depname)
+	$(CXX) -shared -fPIC -o $@ $(REGEXKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  ../../lib/liboniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a -ldl -luuid -lrt
+endif
+endif
+endif
+
 ifeq ($(OPTION_ALLIN1),1)
 ifeq ($(OPTION_SHARED),0)
-../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5)
+../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6)
 	rm -f $@
 	$(AR) rcu $@ $(ALLIN1_LIB_OBJECTS)
 	$(RANLIB) $@
@@ -1957,8 +2082,8 @@ endif
 
 ifeq ($(OPTION_ALLIN1),1)
 ifeq ($(OPTION_SHARED),1)
-../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5)
-	$(CXX) -shared -fPIC -o $@ $(ALLIN1_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib  $(A) $(VAR_0) $(VAR_2) $(VAR_1) $(VAR_3) $(VAR_4) $(VAR) -ldl -luuid -lrt
+../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6)
+	$(CXX) -shared -fPIC -o $@ $(ALLIN1_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib  $(A) $(VAR_0) $(VAR_2) $(VAR_1) $(VAR_3) $(VAR_5) $(VAR) $(VAR_4) -ldl -luuid -lrt
 endif
 endif
 
@@ -2001,6 +2126,10 @@ ifeq ($(OPTION_INTERNETKIT),1)
 InternetKit: $(__InternetKit_lib___depname) $(__InternetKit_dll___depname)
 endif
 
+ifeq ($(OPTION_REGEXKIT),1)
+RegExKit: $(__RegExKit_lib___depname) $(__RegExKit_dll___depname)
+endif
+
 ifeq ($(OPTION_ZLIB),1)
 ZLib: $(VAR)
 endif
@@ -2026,7 +2155,11 @@ LibTIFF: $(VAR_3)
 endif
 
 ifeq ($(OPTION_PAINTLIB),1)
-paintlib: $(VAR_4)
+paintlib: $(VAR_5)
+endif
+
+ifeq ($(OPTION_ONIGURUMA),1)
+oniguruma: $(VAR_4)
 endif
 
 createinfo: createinfo_
@@ -2508,6 +2641,135 @@ xmake_:
 
 ../../lib/$(OBJDIR)/LibTIFF_lib_tif_unix.o: ../../src/thirdparty/common/LibTIFF/tif_unix.c
 	$(CC) -c -o $@ $(LIBTIFF_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_regcomp.o: ../../src/thirdparty/common/oniguruma/regcomp.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_regenc.o: ../../src/thirdparty/common/oniguruma/regenc.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_regerror.o: ../../src/thirdparty/common/oniguruma/regerror.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_regexec.o: ../../src/thirdparty/common/oniguruma/regexec.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_regext.o: ../../src/thirdparty/common/oniguruma/regext.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_reggnu.o: ../../src/thirdparty/common/oniguruma/reggnu.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_regparse.o: ../../src/thirdparty/common/oniguruma/regparse.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_regposerr.o: ../../src/thirdparty/common/oniguruma/regposerr.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_regposix.o: ../../src/thirdparty/common/oniguruma/regposix.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_regsyntax.o: ../../src/thirdparty/common/oniguruma/regsyntax.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_regtrav.o: ../../src/thirdparty/common/oniguruma/regtrav.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_regversion.o: ../../src/thirdparty/common/oniguruma/regversion.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_st.o: ../../src/thirdparty/common/oniguruma/st.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_ascii.o: ../../src/thirdparty/common/oniguruma/enc/ascii.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_big5.o: ../../src/thirdparty/common/oniguruma/enc/big5.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_euc_jp.o: ../../src/thirdparty/common/oniguruma/enc/euc_jp.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_euc_kr.o: ../../src/thirdparty/common/oniguruma/enc/euc_kr.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_euc_tw.o: ../../src/thirdparty/common/oniguruma/enc/euc_tw.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_gb18030.o: ../../src/thirdparty/common/oniguruma/enc/gb18030.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_iso8859_1.o: ../../src/thirdparty/common/oniguruma/enc/iso8859_1.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_iso8859_10.o: ../../src/thirdparty/common/oniguruma/enc/iso8859_10.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_iso8859_11.o: ../../src/thirdparty/common/oniguruma/enc/iso8859_11.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_iso8859_13.o: ../../src/thirdparty/common/oniguruma/enc/iso8859_13.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_iso8859_14.o: ../../src/thirdparty/common/oniguruma/enc/iso8859_14.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_iso8859_15.o: ../../src/thirdparty/common/oniguruma/enc/iso8859_15.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_iso8859_16.o: ../../src/thirdparty/common/oniguruma/enc/iso8859_16.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_iso8859_2.o: ../../src/thirdparty/common/oniguruma/enc/iso8859_2.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_iso8859_3.o: ../../src/thirdparty/common/oniguruma/enc/iso8859_3.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_iso8859_4.o: ../../src/thirdparty/common/oniguruma/enc/iso8859_4.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_iso8859_5.o: ../../src/thirdparty/common/oniguruma/enc/iso8859_5.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_iso8859_6.o: ../../src/thirdparty/common/oniguruma/enc/iso8859_6.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_iso8859_7.o: ../../src/thirdparty/common/oniguruma/enc/iso8859_7.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_iso8859_8.o: ../../src/thirdparty/common/oniguruma/enc/iso8859_8.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_iso8859_9.o: ../../src/thirdparty/common/oniguruma/enc/iso8859_9.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_koi8.o: ../../src/thirdparty/common/oniguruma/enc/koi8.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_koi8_r.o: ../../src/thirdparty/common/oniguruma/enc/koi8_r.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_sjis.o: ../../src/thirdparty/common/oniguruma/enc/sjis.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_unicode.o: ../../src/thirdparty/common/oniguruma/enc/unicode.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_utf16_be.o: ../../src/thirdparty/common/oniguruma/enc/utf16_be.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_utf16_le.o: ../../src/thirdparty/common/oniguruma/enc/utf16_le.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_utf32_be.o: ../../src/thirdparty/common/oniguruma/enc/utf32_be.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_utf32_le.o: ../../src/thirdparty/common/oniguruma/enc/utf32_le.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/oniguruma_lib_utf8.o: ../../src/thirdparty/common/oniguruma/enc/utf8.c
+	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_lib_BasicException.o: ../../src/vcf/FoundationKit/BasicException.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
@@ -3865,6 +4127,12 @@ xmake_:
 ../../lib/$(OBJDIR)/InternetKit_dll_InternetToolkit.o: ../../src/vcf/InternetKit/InternetToolkit.cpp
 	$(CXX) -c -o $@ $(INTERNETKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/RegExKit_lib_RegExKit.o: ../../src/vcf/RegExKit/RegExKit.cpp
+	$(CXX) -c -o $@ $(REGEXKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/RegExKit_dll_RegExKit.o: ../../src/vcf/RegExKit/RegExKit.cpp
+	$(CXX) -c -o $@ $(REGEXKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/Allin1_lib_BasicException.o: ../../src/vcf/FoundationKit/BasicException.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -4541,6 +4809,9 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_InternetToolkit.o: ../../src/vcf/InternetKit/InternetToolkit.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_lib_RegExKit.o: ../../src/vcf/RegExKit/RegExKit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_BasicException.o: ../../src/vcf/FoundationKit/BasicException.cpp
@@ -5221,6 +5492,9 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_InternetToolkit.o: ../../src/vcf/InternetKit/InternetToolkit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/Allin1_dll_RegExKit.o: ../../src/vcf/RegExKit/RegExKit.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/paintlib_lib_plfilter.o: ../../src/thirdparty/common/paintlib/common/Filter/plfilter.cpp
 	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -5401,7 +5675,7 @@ xmake_:
 ../../lib/$(OBJDIR)/paintlib_lib_jmemsrc.o: ../../src/thirdparty/common/paintlib/common/jmemsrc.cpp
 	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-.PHONY: all install uninstall clean FoundationKit GraphicsKit ApplicationKit HTMLKit OpenGLKit NetworkKit RemoteObjectKit InternetKit ZLib AGG LibJPEG LibPNG LibMNG LibTIFF paintlib createinfo createinfo_ CreateBundle CreateBundle_ xmake xmake_
+.PHONY: all install uninstall clean FoundationKit GraphicsKit ApplicationKit HTMLKit OpenGLKit NetworkKit RemoteObjectKit InternetKit RegExKit ZLib AGG LibJPEG LibPNG LibMNG LibTIFF paintlib oniguruma createinfo createinfo_ CreateBundle CreateBundle_ xmake xmake_
 
 
 # Dependencies tracking:

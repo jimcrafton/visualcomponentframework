@@ -203,6 +203,16 @@ Compile the paintlib library:
         </description>
     </option>
 
+    <option name="OPTION_ONIGURUMA">
+        <values>0,1</values>
+        <default-value>
+            $(vcf.getOptionValue( 'OPTION_ONIGURUMA', '1' ))
+        </default-value>
+        <description>
+            Compile the oniguruma library:
+        </description>
+    </option>
+
 
     <!--
     Kits.
@@ -309,6 +319,19 @@ Compile RemoteObjectKit:
 Depends on:
     OPTION_FOUNDATIONKIT
 Compile InternetKit:
+        </description>
+    </option>
+
+    <option name="OPTION_REGEXKIT">
+        <values>0,1</values>
+        <default-value>
+            $(vcf.getOptionValue( 'OPTION_REGEXKIT', 1 ))
+        </default-value>
+        <description>
+Depends on:
+    OPTION_FOUNDATIONKIT
+    OPTION_ONIGURUMA
+Compile RegExKit:
         </description>
     </option>
 

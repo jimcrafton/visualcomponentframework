@@ -18,6 +18,7 @@
         <set var="OPTION_NETWORKKIT">1</set>
         <set var="OPTION_REMOTEOBJECTKIT">1</set>
         <set var="OPTION_INTERNETKIT">1</set>
+        <set var="OPTION_REGEXKIT">1</set>
         <set var="OPTION_ZLIB">1</set>
         <set var="OPTION_AGG">1</set>
         <set var="OPTION_LIBJPEG">1</set>
@@ -26,6 +27,7 @@
         <set var="OPTION_LIBTIFF">1</set>
         <set var="OPTION_PAINTLIB">1</set>
         <set var="OPTION_IMAGEFORMATS">1</set>
+        <set var="OPTION_ONIGURUMA">1</set>
     </if>
 
     

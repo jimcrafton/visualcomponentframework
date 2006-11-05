@@ -37,6 +37,11 @@
         $(vcf.getLibFilename( PAINTLIB_NAME ))
     </set>
     
+    <set var="ONIGURUMA_NAME">oniguruma</set>
+    <set var="ONIGURUMA_FILENAME" make_var="1">
+        $(vcf.getLibFilename( ONIGURUMA_NAME ))
+    </set>
+
     <set var="FOUNDATIONKIT_NAME">FoundationKit</set>
     <set var="FOUNDATIONKIT_FILENAME" make_var="1">
         $(vcf.getFilename( FOUNDATIONKIT_NAME ))
@@ -75,6 +80,11 @@
     <set var="INTERNETKIT_NAME">InternetKit</set>
     <set var="INTERNETKIT_FILENAME" make_var="1">
         $(vcf.getFilename( INTERNETKIT_NAME ))
+    </set>
+    
+    <set var="REGEXKIT_NAME">RegExKit</set>
+    <set var="REGEXKIT_FILENAME" make_var="1">
+        $(vcf.getFilename( REGEXKIT_NAME ))
     </set>
     
     <set var="ALLIN1_NAME">VCF</set>
