@@ -32,10 +32,17 @@ int main( int argc, char** argv ){
 		Enumerator<DataField*>* fields = dataSet->getFields();
 		while ( fields->hasMoreElements() ) {
 			DataField* field = fields->nextElement();
-			System::println( "Field name: " + field->getName() );
+			System::println( "Field name: " + field->getName() + " value: " + field->getAsString() );
+		}
 
-			field->getAsString();
-
+		while ( !dataSet->isEOF() ) {
+			dataSet->next();
+			
+			fields->reset();
+			while ( fields->hasMoreElements() ) {
+				DataField* field = fields->nextElement();
+				System::println( "Field name: " + field->getName() + " value: " + field->getAsString() );
+			}
 		}
 	}
 
