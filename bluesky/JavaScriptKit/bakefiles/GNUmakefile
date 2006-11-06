@@ -218,6 +218,13 @@ JSTEST_CXXFLAGS = -I../js-impl -DXP_UNIX $(__FOUNDATIONKIT_DLL_p) \
 	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 JSTEST_OBJECTS =  \
 	$(OBJDIR)/jstest_jstest.o
+JSTEST2_CXXFLAGS = -I../js-impl -DXP_UNIX $(__FOUNDATIONKIT_DLL_p) \
+	$(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING -Wno-multichar \
+	-I"$(VCF_ROOT)/src" -I.. $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
+JSTEST2_OBJECTS =  \
+	$(OBJDIR)/jstest2_jstest.o
 
 ### Conditionally set variables: ###
 
@@ -245,6 +252,9 @@ endif
 ifeq ($(OPTION_SHARED),1)
 __jstest___depname = ./jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 endif
+ifeq ($(OPTION_SHARED),1)
+__jstest2___depname = ./jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+endif
 ifeq ($(OPTION_ALLIN1),0)
 FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
 endif
@@ -261,10 +271,10 @@ ifeq ($(OPTION_DEBUG),1)
 __OPTIMIZE = -O0
 endif
 ifeq ($(OPTION_THREADING),multi)
-__OPTION_THREADING_0 = -pthread
+__OPTION_THREADING_1 = -pthread
 endif
 ifeq ($(OPTION_THREADING),single)
-__OPTION_THREADING_0 = 
+__OPTION_THREADING_1 = 
 endif
 ifeq ($(OPTION_THREADING),multi)
 __OPTION_THREADING = -D_THREAD_SAFE -pthread
@@ -313,7 +323,7 @@ $(OBJDIR):
 
 ### Targets: ###
 
-all: $(OBJDIR)/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a $(__JavaScriptKit_dll___depname) $(__jstest___depname)
+all: $(OBJDIR)/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a $(__JavaScriptKit_dll___depname) $(__jstest___depname) $(__jstest2___depname)
 
 install: all
 
@@ -326,6 +336,7 @@ clean:
 	rm -f ./libJavaScriptKit_dll.so
 	rm -f ./libJavaScriptKit_dll.so
 	rm -f ./jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+	rm -f ./jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 $(OBJDIR)/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(FDLIBM_LIB_OBJECTS)
 	rm -f $@
@@ -334,12 +345,17 @@ $(OBJDIR)/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(FDLIBM_LIB_OBJECTS)
 
 ifeq ($(OPTION_SHARED),1)
 ./libJavaScriptKit_dll.so: $(JAVASCRIPTKIT_DLL_OBJECTS) $(OBJDIR)/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
-	$(CXX) -shared -fPIC -o $@ $(JAVASCRIPTKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_0) -L"$(VCF_ROOT)/lib" $(FOUNDATIONKIT_p)  -ldl -luuid -lrt $(OBJDIR)/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+	$(CXX) -shared -fPIC -o $@ $(JAVASCRIPTKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_1) -L"$(VCF_ROOT)/lib" $(FOUNDATIONKIT_p)  -ldl -luuid -lrt $(OBJDIR)/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
 
 ifeq ($(OPTION_SHARED),1)
 ./jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(JSTEST_OBJECTS) $(__JavaScriptKit_dll___depname)
-	$(CXX) -o $@ $(JSTEST_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_0) -L"$(VCF_ROOT)/lib"  $(FOUNDATIONKIT_p)  -ldl -luuid -lrt ./libJavaScriptKit_dll.so
+	$(CXX) -o $@ $(JSTEST_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_1) -L"$(VCF_ROOT)/lib"  $(FOUNDATIONKIT_p)  -ldl -luuid -lrt ./libJavaScriptKit_dll.so
+endif
+
+ifeq ($(OPTION_SHARED),1)
+./jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(JSTEST2_OBJECTS) $(__JavaScriptKit_dll___depname)
+	$(CXX) -o $@ $(JSTEST2_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_1) -L"$(VCF_ROOT)/lib"  $(FOUNDATIONKIT_p)  -ldl -luuid -lrt ./libJavaScriptKit_dll.so
 endif
 
 $(OBJDIR)/fdlibm_lib_e_acos.o: ./../js-impl/fdlibm/e_acos.c
@@ -698,6 +714,9 @@ $(OBJDIR)/JavaScriptKit_dll_prmjtime.o: ./../js-impl/prmjtime.c
 
 $(OBJDIR)/jstest_jstest.o: ./jstest.cpp
 	$(CXX) -c -o $@ $(JSTEST_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/jstest2_jstest.o: ./../jstest.cpp
+	$(CXX) -c -o $@ $(JSTEST2_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 

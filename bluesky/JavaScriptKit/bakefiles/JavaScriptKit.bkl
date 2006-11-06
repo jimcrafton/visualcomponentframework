@@ -41,4 +41,13 @@
         <library>JavaScriptKit_dll</library>
     </exe>
 
+    <exe id="jstest2" template="JavaScriptKit_base,vcf_exe_console"
+            cond="OPTION_SHARED=='1'">
+        <include>..</include>
+
+        <sources>../jstest.cpp</sources>
+
+        <library>JavaScriptKit_dll</library>
+    </exe>
+
 </makefile>

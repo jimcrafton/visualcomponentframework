@@ -44,3 +44,18 @@ End Project Dependency
 
 ###############################################################################
 
+Project: "jstest2"=JavaScriptKit_jstest2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name JavaScriptKit_dll
+End Project Dependency
+}}}
+
+###############################################################################
+
