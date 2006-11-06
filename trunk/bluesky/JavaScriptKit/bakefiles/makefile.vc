@@ -236,6 +236,15 @@ JSTEST_CXXFLAGS = /M$(__OPTION_RUNTIME_39)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 JSTEST_OBJECTS =  \
 	$(OBJDIR)\jstest_jstest.obj
+JSTEST2_CXXFLAGS = /M$(__OPTION_RUNTIME_55)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
+	/I..\js-impl /DXP_WIN $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
+	/Fd.\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb \
+	$(____DEBUG_RUNTIME_LIBS) $(__OPTIMIZE) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) /DVCF_DISABLE_PRAGMA_LINKING /D_WIN32 /DWIN32 \
+	/I"$(VCF_ROOT)\src" /D_CONSOLE /I.. $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
+JSTEST2_OBJECTS =  \
+	$(OBJDIR)\jstest2_jstest.obj
 
 ### Conditionally set variables: ###
 
@@ -282,6 +291,15 @@ __OPTION_RUNTIME_39 = D
 !if "$(OPTION_RUNTIME)" == "static"
 __OPTION_RUNTIME_39 = $(__OPTION_THREADING)
 !endif
+!if "$(OPTION_SHARED)" == "1"
+__jstest2___depname = .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
+!endif
+!if "$(OPTION_RUNTIME)" == "dynamic"
+__OPTION_RUNTIME_55 = D
+!endif
+!if "$(OPTION_RUNTIME)" == "static"
+__OPTION_RUNTIME_55 = $(__OPTION_THREADING)
+!endif
 !if "$(OPTION_ALLIN1)" == "0"
 FOUNDATIONKIT_p = $(FOUNDATIONKIT_FILENAME).lib
 !endif
@@ -298,10 +316,10 @@ __DEBUG_INFO =
 __DEBUG_INFO = /Zi
 !endif
 !if "$(OPTION_DEBUG)" == "0"
-__DEBUG_INFO_0 = 
+__DEBUG_INFO_1 = 
 !endif
 !if "$(OPTION_DEBUG)" == "1"
-__DEBUG_INFO_0 = /DEBUG
+__DEBUG_INFO_1 = /DEBUG
 !endif
 !if "$(OPTION_DEBUG)" == "0" && "$(OPTION_DEBUG_RUNTIME)" == "default"
 ____DEBUG_RUNTIME_LIBS = 
@@ -374,7 +392,7 @@ $(OBJDIR):
 
 ### Targets: ###
 
-all: $(OBJDIR)\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib $(__JavaScriptKit_dll___depname) $(__jstest___depname)
+all: $(OBJDIR)\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib $(__JavaScriptKit_dll___depname) $(__jstest___depname) $(__jstest2___depname)
 
 clean: 
 	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
@@ -392,6 +410,10 @@ clean:
 	-if exist .\jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
 	-if exist .\jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
 	-if exist .\jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
+	-if exist .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
+	-if exist .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
+	-if exist .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 $(OBJDIR)\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(FDLIBM_LIB_OBJECTS)
 	if exist $@ del $@
@@ -401,15 +423,22 @@ $(OBJDIR)\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(FDLIBM_LIB_OBJECTS)
 
 !if "$(OPTION_SHARED)" == "1"
 .\JavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(JAVASCRIPTKIT_DLL_OBJECTS) $(OBJDIR)\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
-	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_0)  /LIBPATH:"$(VCF_ROOT)\lib" @<<
+	link /DLL /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_1)  /LIBPATH:"$(VCF_ROOT)\lib" @<<
 	$(JAVASCRIPTKIT_DLL_OBJECTS)  $(FOUNDATIONKIT_p) rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib $(OBJDIR)\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib /IMPLIB:.\JavaScriptKit_dll.lib
 <<
 !endif
 
 !if "$(OPTION_SHARED)" == "1"
 .\jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(JSTEST_OBJECTS) $(__JavaScriptKit_dll___depname)
-	link /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_0)  /LIBPATH:"$(VCF_ROOT)\lib" /SUBSYSTEM:CONSOLE @<<
+	link /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_1)  /LIBPATH:"$(VCF_ROOT)\lib" /SUBSYSTEM:CONSOLE @<<
 	$(JSTEST_OBJECTS)  $(FOUNDATIONKIT_p) rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib .\JavaScriptKit_dll.lib
+<<
+!endif
+
+!if "$(OPTION_SHARED)" == "1"
+.\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(JSTEST2_OBJECTS) $(__JavaScriptKit_dll___depname)
+	link /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_1)  /LIBPATH:"$(VCF_ROOT)\lib" /SUBSYSTEM:CONSOLE @<<
+	$(JSTEST2_OBJECTS)  $(FOUNDATIONKIT_p) rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib .\JavaScriptKit_dll.lib
 <<
 !endif
 
@@ -769,4 +798,7 @@ $(OBJDIR)\JavaScriptKit_dll_prmjtime.obj: .\..\js-impl\prmjtime.c
 
 $(OBJDIR)\jstest_jstest.obj: .\jstest.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(JSTEST_CXXFLAGS) $**
+
+$(OBJDIR)\jstest2_jstest.obj: .\..\jstest.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(JSTEST2_CXXFLAGS) $**
 

@@ -251,6 +251,12 @@ JSTEST_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include -I..\js-impl -DXP_WIN 
 	-D_WIN32 -DWIN32 -I"$(VCF_ROOT)\src" -I.. $(CPPFLAGS) $(CXXFLAGS)
 JSTEST_OBJECTS =  \
 	$(OBJDIR)\jstest_jstest.obj
+JSTEST2_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include -I..\js-impl \
+	-DXP_WIN $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) \
+	$(__OPTION_THREADING) $(____OPTION_DEBUG) -DVCF_DISABLE_PRAGMA_LINKING \
+	-D_WIN32 -DWIN32 -I"$(VCF_ROOT)\src" -I.. $(CPPFLAGS) $(CXXFLAGS)
+JSTEST2_OBJECTS =  \
+	$(OBJDIR)\jstest2_jstest.obj
 
 ### Conditionally set variables: ###
 
@@ -279,6 +285,9 @@ __JavaScriptKit_dll___depname = \
 !if "$(OPTION_SHARED)" == "1"
 __jstest___depname = .\jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 !endif
+!if "$(OPTION_SHARED)" == "1"
+__jstest2___depname = .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
+!endif
 !if "$(OPTION_ALLIN1)" == "0"
 FOUNDATIONKIT_p = $(FOUNDATIONKIT_FILENAME).lib
 !endif
@@ -295,10 +304,10 @@ __OPTION_RUNTIME = -tWR
 __OPTION_RUNTIME = 
 !endif
 !if "$(OPTION_RUNTIME)" == "dynamic"
-__OPTION_RUNTIME_0 = i
+__OPTION_RUNTIME_1 = i
 !endif
 !if "$(OPTION_RUNTIME)" == "static"
-__OPTION_RUNTIME_0 = 
+__OPTION_RUNTIME_1 = 
 !endif
 !if "$(OPTION_DEBUG)" == "0"
 __OPTIMIZE = -O2
@@ -307,10 +316,10 @@ __OPTIMIZE = -O2
 __OPTIMIZE = -Od
 !endif
 !if "$(OPTION_THREADING)" == "multi"
-__OPTION_THREADING_0 = mt
+__OPTION_THREADING_1 = mt
 !endif
 !if "$(OPTION_THREADING)" == "single"
-__OPTION_THREADING_0 = 
+__OPTION_THREADING_1 = 
 !endif
 !if "$(OPTION_THREADING)" == "multi"
 __OPTION_THREADING = -tWM
@@ -338,7 +347,7 @@ $(OBJDIR):
 
 ### Targets: ###
 
-all: $(OBJDIR)\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib $(__JavaScriptKit_dll___depname) $(__jstest___depname)
+all: $(OBJDIR)\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib $(__JavaScriptKit_dll___depname) $(__jstest___depname) $(__jstest2___depname)
 
 clean: 
 	-if exist $(OBJDIR)\*.obj del $(OBJDIR)\*.obj
@@ -359,6 +368,12 @@ clean:
 	-if exist .\jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ild del .\jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ild
 	-if exist .\jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilf del .\jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilf
 	-if exist .\jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ils del .\jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ils
+	-if exist .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
+	-if exist .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds del .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).tds
+	-if exist .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc del .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilc
+	-if exist .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ild del .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ild
+	-if exist .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilf del .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilf
+	-if exist .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ils del .\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ils
 
 $(OBJDIR)\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(FDLIBM_LIB_OBJECTS)
 	if exist $@ del $@
@@ -369,7 +384,7 @@ $(OBJDIR)\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(FDLIBM_LIB_OBJECTS)
 !if "$(OPTION_SHARED)" == "1"
 .\JavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(JAVASCRIPTKIT_DLL_OBJECTS) $(OBJDIR)\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L"$(VCF_ROOT)\lib" @&&|
-	c0d32.obj $(JAVASCRIPTKIT_DLL_OBJECTS),$@,, $(FOUNDATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib $(OBJDIR)\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib import32.lib cw32$(__OPTION_THREADING_0)$(__OPTION_RUNTIME_0).lib,,
+	c0d32.obj $(JAVASCRIPTKIT_DLL_OBJECTS),$@,, $(FOUNDATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib $(OBJDIR)\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib import32.lib cw32$(__OPTION_THREADING_1)$(__OPTION_RUNTIME_1).lib,,
 |
 	implib -f .\JavaScriptKit_dll $@
 !endif
@@ -377,7 +392,14 @@ $(OBJDIR)\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(FDLIBM_LIB_OBJECTS)
 !if "$(OPTION_SHARED)" == "1"
 .\jstest$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(JSTEST_OBJECTS) $(__JavaScriptKit_dll___depname)
 	ilink32 -Tpe -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L"$(VCF_ROOT)\lib" -ap @&&|
-	c0x32.obj $(JSTEST_OBJECTS),$@,, $(FOUNDATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib .\JavaScriptKit_dll.lib import32.lib cw32$(__OPTION_THREADING_0)$(__OPTION_RUNTIME_0).lib,,
+	c0x32.obj $(JSTEST_OBJECTS),$@,, $(FOUNDATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib .\JavaScriptKit_dll.lib import32.lib cw32$(__OPTION_THREADING_1)$(__OPTION_RUNTIME_1).lib,,
+|
+!endif
+
+!if "$(OPTION_SHARED)" == "1"
+.\jstest2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(JSTEST2_OBJECTS) $(__JavaScriptKit_dll___depname)
+	ilink32 -Tpe -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L"$(VCF_ROOT)\lib" -ap @&&|
+	c0x32.obj $(JSTEST2_OBJECTS),$@,, $(FOUNDATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib .\JavaScriptKit_dll.lib import32.lib cw32$(__OPTION_THREADING_1)$(__OPTION_RUNTIME_1).lib,,
 |
 !endif
 
@@ -737,4 +759,7 @@ $(OBJDIR)\JavaScriptKit_dll_prmjtime.obj: .\..\js-impl\prmjtime.c
 
 $(OBJDIR)\jstest_jstest.obj: .\jstest.cpp
 	$(CXX) -q -c -P -o$@ $(JSTEST_CXXFLAGS) $**
+
+$(OBJDIR)\jstest2_jstest.obj: .\..\jstest.cpp
+	$(CXX) -q -c -P -o$@ $(JSTEST2_CXXFLAGS) $**
 
