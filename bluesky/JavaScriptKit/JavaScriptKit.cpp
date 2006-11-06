@@ -51,7 +51,8 @@ JavaScriptEngine::JavaScriptEngine():
 	m_runTime(NULL),
 	m_context(NULL),
 	m_global(NULL),
-	m_globalClass(NULL)
+	m_globalClass(NULL),
+	globalDelegateClass_(NULL)
 {
 		
 	m_globalClass = (JSClass*)malloc(sizeof(JSClass));
@@ -126,9 +127,13 @@ JavaScriptEngine::~JavaScriptEngine()
 		delete [] *it2;
 		it2 ++;
 	}
-	::free(m_globalClass);
+	if ( NULL != m_globalClass ) {
+		::free(m_globalClass);
+	}
 
-	::free( globalDelegateClass_ );
+	if ( NULL != globalDelegateClass_ ) {
+		::free( globalDelegateClass_ );
+	}
 
 
 	EventHandlerMap::iterator it3 = jsEventHandlers_.begin();

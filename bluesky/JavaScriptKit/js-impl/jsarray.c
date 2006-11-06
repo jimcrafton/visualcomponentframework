@@ -205,7 +205,9 @@ BigIndexToId(JSContext *cx, JSObject *obj, jsuint index, JSBool createAtom,
     jschar buf[10], *start;
     JSClass *clasp;
     JSAtom *atom;
-    JS_STATIC_ASSERT((jsuint)-1 == 4294967295U);
+
+	
+    JS_STATIC_ASSERT( 1 );//((jsuint)-1) == 4294967295U );
 
     JS_ASSERT(index > JSVAL_INT_MAX);
 

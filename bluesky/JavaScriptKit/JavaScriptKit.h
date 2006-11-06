@@ -9,6 +9,44 @@ where you installed the VCF.
 */
 
 
+/**
+Notes for mozilla based JS Engine
+
+The newer version of the JSAPI engine from mozilla 
+had some changes that intially would not compile 
+on VC6. The VC6 compiler apparently is being dropped
+due to the addition of cairo support (supposedly cairo
+won't compile on VC6, which makes little sense but oh 
+well, that's life with OSS projects) so the author
+of the new change probably never bothered to compile
+under VC6. The changes below should fix the problem,
+unless new code later on introduces something else.
+
+I'm including this here so that if someon at a later
+dat jsu tblindly overwrite the JSAPI code to update 
+it, we know what to fix.
+
+fix in jsutils.h, line 72
+
+#if _MSC_VER <= 1200 
+//Jim C - added this to allow for compiling with VC6
+#define JS_STATIC_ASSERT(condition)                                           \
+    typedef int js_static_assert_line_##__LINE__ [(condition) ? 1 : -1]
+#else
+#define JS_STATIC_ASSERT(condition)                                           \
+    JS_STATIC_ASSERT_IMPL(condition, __LINE__)
+#define JS_STATIC_ASSERT_IMPL(condition, line)                                \
+    JS_STATIC_ASSERT_IMPL2(condition, line)
+#define JS_STATIC_ASSERT_IMPL2(condition, line)                               \
+    typedef int js_static_assert_line_##line [(condition) ? 1 : -1]
+#endif
+
+
+*/
+
+
+
+
 #if _MSC_VER > 1000
 #   pragma once
 #endif
@@ -106,6 +144,15 @@ Handle the extension based on the compiler
 
 
 #include "vcf/FoundationKit/FoundationKit.h"
+
+
+#if defined(VCF_WIN)
+	#ifndef XP_WIN
+		#define XP_WIN
+	#endif
+#elif defined(VCF_POSIX)
+	#define XP_UNIX
+#endif
 
 
 
