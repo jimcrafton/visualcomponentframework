@@ -68,12 +68,20 @@ JS_Assert(const char *s, const char *file, JSIntn ln);
  * The macro should be used only once per source line in places where
  * a "typedef" declaration is allowed.
  */
+
+#if _MSC_VER <= 1200 
+//Jim C - added this to allow for compiling with VC6
+#define JS_STATIC_ASSERT(condition)                                           \
+    typedef int js_static_assert_line_##__LINE__ [(condition) ? 1 : -1]
+#else
 #define JS_STATIC_ASSERT(condition)                                           \
     JS_STATIC_ASSERT_IMPL(condition, __LINE__)
 #define JS_STATIC_ASSERT_IMPL(condition, line)                                \
     JS_STATIC_ASSERT_IMPL2(condition, line)
 #define JS_STATIC_ASSERT_IMPL2(condition, line)                               \
-    typedef int js_static_assert_line_##line[(condition) ? 1 : -1]
+    typedef int js_static_assert_line_##line [(condition) ? 1 : -1]
+#endif
+
 
 /*
 ** Abort the process in a non-graceful manner. This will cause a core file,

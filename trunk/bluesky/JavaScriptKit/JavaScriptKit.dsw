@@ -3,30 +3,6 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "DatabaseKitDLL"=..\DatabaseKit\DatabaseKitDLL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "JavaScriptKit"=.\JavaScriptKit.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "JavaScriptKitDLL"=.\JavaScriptKitDLL.dsp - Package Owner=<4>
 
 Package=<5>
@@ -35,6 +11,21 @@ Package=<5>
 
 Package=<4>
 {{{
+}}}
+
+###############################################################################
+
+Project: "jstest"=.\jstest.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name JavaScriptKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
