@@ -47,10 +47,10 @@ Menu::~Menu()
 
 void Menu::destroy()
 {
-	if ( NULL != rootMenuItem_ ){
-		rootMenuItem_->release();
-		rootMenuItem_ = NULL;
-	}
+	//if ( NULL != rootMenuItem_ ){
+	//	rootMenuItem_->release();
+	//	rootMenuItem_ = NULL;
+	//}
 
 	Component::destroy();
 }
@@ -62,9 +62,13 @@ MenuItem* Menu::getRootMenuItem()
 
 void Menu::setRootMenuItem( MenuItem* item )
 {
+	if ( NULL != rootMenuItem_ ) {
+		rootMenuItem_->getOwner()->removeComponent( rootMenuItem_ );
+	}
 	rootMenuItem_ = item;
 	if ( NULL != rootMenuItem_ ){
 		rootMenuItem_->setMenuOwner( this );
+		addComponent( rootMenuItem_ );
 	}
 }
 

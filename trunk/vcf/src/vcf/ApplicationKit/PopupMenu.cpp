@@ -95,6 +95,7 @@ void PopupMenu::init()
 	MenuManager::registerPopupMenu( this );
 
 	setRootMenuItem( new DefaultMenuItem() );
+	
 	MenuItem* item = getRootMenuItem();
 
 	item->setMenuOwner( this );
