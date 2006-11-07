@@ -61,7 +61,7 @@ Win32MenuItem::~Win32MenuItem()
 	else if ( NULL != itemHandle_ ){
 		if ( ! DestroyMenu( itemHandle_ ) ) {
 			int err = GetLastError();
-			//StringUtils::traceWithArgs( "Menu Item handle leak for handle %p with id of: %d, GetLastError(): %d\n", itemHandle_, itemId_, err );
+			StringUtils::trace( Format("Menu Item handle leak for handle %p with id of: %d, GetLastError(): %d\n") % itemHandle_ % itemId_ % err );
 		}
 	}
 }

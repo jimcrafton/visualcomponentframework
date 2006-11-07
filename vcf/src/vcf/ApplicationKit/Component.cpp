@@ -84,7 +84,8 @@ Component::~Component()
 void Component::destroy()
 {
 	if ( !(Component::csDestroying & componentState_) ) {
-		VCF::ComponentEvent e( this, Component::COMPONENT_DESTROYED );
+		VCF::ComponentEvent e( this, Component::COMPONENT_DESTROYED );	
+
 		handleEvent( &e );
 	}
 
@@ -135,7 +136,17 @@ void Component::handleEvent( Event* event )
 			break;
 
 			case Component::COMPONENT_DESTROYED:{
-				ComponentEvent* componentEvent = (ComponentEvent*)event;
+				ComponentEvent* componentEvent = (ComponentEvent*)event;				
+
+				//notify all the child component of the component destroy
+				std::vector<Component*>::iterator it = components_.begin();
+				while ( it != components_.end() ){
+					Component* child = *it;
+					VCF::ComponentEvent e( child, Component::COMPONENT_DESTROYED );
+					child->handleEvent( &e );
+					it ++;
+				}
+
 				beforeDestroy( componentEvent );
 				ComponentDestroyed.fireEvent( componentEvent );
 			}
