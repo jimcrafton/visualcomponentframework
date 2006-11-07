@@ -41,7 +41,7 @@ MAKEARGS = CC="$(CC)" CXX="$(CXX)" CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit Labels ListBox LocaleUI Localization MinMax MVCBasics OpenGLShapes ParticleEditor Pixels Printing Processes ProgressBars Reflection Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Variants VisualFormFiles WorkingWithEnumerators
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit Labels ListBox LocaleUI Localization MinMax MVCBasics OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Variants VisualFormFiles WorkingWithEnumerators
 
 clean: 
 	-if exist .\*.o del .\*.o
@@ -93,6 +93,7 @@ clean:
 	$(MAKE) -C OpenGLShapes -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C ParticleEditor -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Pixels -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C PopupMenus -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Printing -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Processes -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C ProgressBars -f makefile.gcc $(MAKEARGS) clean
@@ -264,6 +265,9 @@ ParticleEditor:
 Pixels: 
 	$(MAKE) -C Pixels -f makefile.gcc $(MAKEARGS) all
 
+PopupMenus: 
+	$(MAKE) -C PopupMenus -f makefile.gcc $(MAKEARGS) all
+
 Printing: 
 	$(MAKE) -C Printing -f makefile.gcc $(MAKEARGS) all
 
@@ -351,7 +355,7 @@ VisualFormFiles:
 WorkingWithEnumerators: 
 	$(MAKE) -C WorkingWithEnumerators -f makefile.gcc $(MAKEARGS) all
 
-.PHONY: all clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit Labels ListBox LocaleUI Localization MinMax MVCBasics OpenGLShapes ParticleEditor Pixels Printing Processes ProgressBars Reflection Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Variants VisualFormFiles WorkingWithEnumerators
+.PHONY: all clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit Labels ListBox LocaleUI Localization MinMax MVCBasics OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Variants VisualFormFiles WorkingWithEnumerators
 
 
 # Dependencies tracking:
