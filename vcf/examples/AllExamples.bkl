@@ -55,6 +55,7 @@
     <subproject id="OpenGLShapes" template="example"/>
     <subproject id="ParticleEditor" template="example"/>
     <subproject id="Pixels" template="example"/>
+    <subproject id="PopupMenus" template="example"/>
     <subproject id="Printing" template="example"/>
     <subproject id="Processes" template="example"/>
     <subproject id="ProgressBars" template="example"/>
