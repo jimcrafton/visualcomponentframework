@@ -233,6 +233,10 @@ _property_enum_labeled_( FrameStyleType, "frameStyle", getFrameStyle, setFrameSt
 _event_("VCF::FrameEventHandler", FrameEvent, FrameClosing)
 _event_("VCF::WindowEventHandler", WindowEvent, FrameClose )
 _event_("VCF::WindowEventHandler", WindowEvent, FrameActivation )
+
+_procedure_(show)
+_procedure_(hide)
+_procedure_(close)
 _class_rtti_end_
 
 
