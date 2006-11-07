@@ -216,7 +216,7 @@ _event_("VCF::FocusEventHandler", VCF::FocusEvent, FocusGained );
 
 _event_("VCF::ToolTipEventHandler", VCF::ToolTipEvent, ToolTipRequested  );
 _event_("VCF::ToolTipEventHandler", VCF::ToolTipEvent, ToolTip  );
-
+_procedure4_(setBounds,const double&,const double&,const double&,const double&,"");
 _class_rtti_end_
 
 
