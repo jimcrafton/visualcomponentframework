@@ -65,4 +65,20 @@ _class_rtti_(StringField, "VCF::DataField", STRINGFIELD_CLASSID )
 _class_rtti_end_
 
 
+_class_rtti_(BooleanField, "VCF::DataField", BOOLEANFIELD_CLASSID )
+_class_rtti_end_
+
+
+_class_rtti_(DateTimeField, "VCF::DataField", DATETIMEFIELD_CLASSID )
+_class_rtti_end_
+
+
+_class_rtti_(DoubleField, "VCF::DataField", DOUBLEFIELD_CLASSID )
+_class_rtti_end_
+
+
+_class_rtti_(IntegerField, "VCF::DataField", INTEGERFIELD_CLASSID )
+_class_rtti_end_
+
+
 };

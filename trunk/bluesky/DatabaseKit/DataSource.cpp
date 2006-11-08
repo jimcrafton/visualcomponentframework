@@ -1,6 +1,8 @@
 //DataSource.cpp
 
 #include "DatabaseKit.h"
+#include "DataLink.h"
+
 
 using namespace VCF;
 
@@ -73,5 +75,41 @@ void DataSource::edit()
 {
 	if ( dssBrowse == state_ && (NULL != dataSet_) ) {
 		dataSet_->edit();
+	}
+}
+
+void DataSource::handleDataEvent( Event* e )
+{
+	
+}
+
+void DataSource::addDataLink( DataLink* val )
+{	
+	if ( std::find( dataLinks_.begin(), dataLinks_.end(), val ) == dataLinks_.end() ) {
+		dataLinks_.push_back( val );
+
+		val->dataSource_ = this;
+
+		if ( NULL != dataSet_ ) {
+			//dataSet_->updateRecordSize
+		}
+
+		val->updateState();
+	}
+}
+
+void DataSource::removeDataLink( DataLink* val )
+{
+	val->dataSource_ = NULL;
+
+	DataLinkArray::iterator found = std::find( dataLinks_.begin(), dataLinks_.end(), val );
+	if ( found != dataLinks_.end() ) {
+		dataLinks_.erase( found );
+	}
+
+	val->updateState();
+
+	if ( NULL != dataSet_ ) {
+		//dataSet_->updateRecordSize
 	}
 }

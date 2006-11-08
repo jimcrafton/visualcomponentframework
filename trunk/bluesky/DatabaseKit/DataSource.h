@@ -53,11 +53,20 @@ namespace VCF {
 		void updateState();
 
 		void edit();
+
+		void addDataLink( DataLink* val );
+
+		void removeDataLink( DataLink* val );
+
+		void handleDataEvent( Event* e );
 	protected:
 		DataSet* dataSet_;
 		bool enabled_;
 		DataSetState state_;
 
+		typedef std::vector<DataLink*> DataLinkArray;
+
+		DataLinkArray dataLinks_;
 
 
 		virtual void destroy();		
