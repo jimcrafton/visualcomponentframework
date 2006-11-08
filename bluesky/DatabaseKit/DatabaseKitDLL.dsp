@@ -100,11 +100,19 @@ SOURCE=.\DatabaseKit.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DataBaseKitRTTI.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\DatabaseToolkit.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\DataField.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DataLink.cpp
 # End Source File
 # Begin Source File
 
@@ -153,6 +161,10 @@ SOURCE=.\DatabaseToolkit.h
 # Begin Source File
 
 SOURCE=.\DataField.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DataLink.h
 # End Source File
 # Begin Source File
 

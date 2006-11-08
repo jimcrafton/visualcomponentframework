@@ -151,3 +151,244 @@ int StringField::getAsInteger()
 	
 	return result;
 }
+
+
+
+
+
+
+
+BooleanField::BooleanField()
+{
+
+}
+
+
+
+VariantData BooleanField::getCurrentValue()
+{
+	VariantData result;
+	
+	return result;
+}
+
+bool BooleanField::getAsBoolean()
+{
+	bool result;
+	
+	return result;
+}
+
+DateTime BooleanField::getAsDateTime()
+{
+	DateTime result;
+	
+	return result;
+}
+
+String BooleanField::getAsString()
+{
+	String result;
+	char tmp[256];
+
+	if ( getData( (unsigned char*)tmp, sizeof(tmp) ) ) {
+		result = tmp;
+	}
+
+	return result;
+}
+
+double BooleanField::getAsFloat()
+{
+	double result;
+	
+	return result;
+}
+
+int BooleanField::getAsInteger()
+{
+	int result;
+	
+	return result;
+}
+
+
+
+
+
+
+
+DateTimeField::DateTimeField()
+{
+
+}
+
+
+
+VariantData DateTimeField::getCurrentValue()
+{
+	VariantData result;
+	
+	return result;
+}
+
+bool DateTimeField::getAsBoolean()
+{
+	bool result;
+	
+	return result;
+}
+
+DateTime DateTimeField::getAsDateTime()
+{
+	DateTime result;
+	
+	return result;
+}
+
+String DateTimeField::getAsString()
+{
+	String result;
+	char tmp[256];
+
+	if ( getData( (unsigned char*)tmp, sizeof(tmp) ) ) {
+		result = tmp;
+	}
+
+	return result;
+}
+
+double DateTimeField::getAsFloat()
+{
+	double result;
+	
+	return result;
+}
+
+int DateTimeField::getAsInteger()
+{
+	int result;
+	
+	return result;
+}
+
+
+
+
+
+
+
+
+DoubleField::DoubleField()
+{
+
+}
+
+
+
+VariantData DoubleField::getCurrentValue()
+{
+	VariantData result;
+	
+	return result;
+}
+
+bool DoubleField::getAsBoolean()
+{
+	bool result;
+	
+	return result;
+}
+
+DateTime DoubleField::getAsDateTime()
+{
+	DateTime result;
+	
+	return result;
+}
+
+String DoubleField::getAsString()
+{
+	String result;
+	char tmp[256];
+
+	if ( getData( (unsigned char*)tmp, sizeof(tmp) ) ) {
+		result = tmp;
+	}
+
+	return result;
+}
+
+double DoubleField::getAsFloat()
+{
+	double result;
+	
+	return result;
+}
+
+int DoubleField::getAsInteger()
+{
+	int result;
+	
+	return result;
+}
+
+
+
+
+
+
+
+IntegerField::IntegerField()
+{
+
+}
+
+
+
+VariantData IntegerField::getCurrentValue()
+{
+	VariantData result;
+	
+	return result;
+}
+
+bool IntegerField::getAsBoolean()
+{
+	bool result;
+	
+	return result;
+}
+
+DateTime IntegerField::getAsDateTime()
+{
+	DateTime result;
+	
+	return result;
+}
+
+String IntegerField::getAsString()
+{
+	String result;
+	char tmp[256];
+
+	if ( getData( (unsigned char*)tmp, sizeof(tmp) ) ) {
+		result = tmp;
+	}
+
+	return result;
+}
+
+double IntegerField::getAsFloat()
+{
+	double result;
+	
+	return result;
+}
+
+int IntegerField::getAsInteger()
+{
+	int result;
+	
+	return result;
+}

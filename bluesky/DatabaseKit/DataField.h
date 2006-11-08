@@ -124,7 +124,95 @@ namespace VCF {
 
 
 	};
+
+
+
+
+#define BOOLEANFIELD_CLASSID	"79b2b987-1fac-4e2d-b4c5-1295ccc478ce"
+
+	class DATABASEKIT_API BooleanField: public DataField {
+	public:
+		BooleanField();
+
+		virtual VariantData getCurrentValue();
+
+		virtual bool getAsBoolean();
+		virtual DateTime getAsDateTime();
+		virtual String getAsString();
+		virtual double getAsFloat();
+		virtual int getAsInteger();
+	protected:
+		
+
+	};
+
+
+
+#define DATETIMEFIELD_CLASSID	"35fa49d4-3cfc-402e-9ec9-72d93863171f"
+
+	class DATABASEKIT_API DateTimeField: public DataField {
+	public:
+		DateTimeField();
+
+		virtual VariantData getCurrentValue();
+
+		virtual bool getAsBoolean();
+		virtual DateTime getAsDateTime();
+		virtual String getAsString();
+		virtual double getAsFloat();
+		virtual int getAsInteger();
+	protected:
+		
+
+	};
+
+
+
+
+
+#define DOUBLEFIELD_CLASSID	"5a4e2ca6-dbc8-47f7-a5ed-536cc1eb6b56"
+
+	class DATABASEKIT_API DoubleField: public DataField {
+	public:
+		DoubleField();
+
+		virtual VariantData getCurrentValue();
+
+		virtual bool getAsBoolean();
+		virtual DateTime getAsDateTime();
+		virtual String getAsString();
+		virtual double getAsFloat();
+		virtual int getAsInteger();
+	protected:
+		
+
+	};
+
+
+
+
+#define INTEGERFIELD_CLASSID	"9d9e4968-ff20-4825-8301-791c520fa0ef"
+
+	class DATABASEKIT_API IntegerField: public DataField {
+	public:
+		IntegerField();
+
+		virtual VariantData getCurrentValue();
+
+		virtual bool getAsBoolean();
+		virtual DateTime getAsDateTime();
+		virtual String getAsString();
+		virtual double getAsFloat();
+		virtual int getAsInteger();
+	protected:
+		
+
+	};
+
 };
+
+
+
 
 #endif //_VCF_DATAFIELD_H__
 
