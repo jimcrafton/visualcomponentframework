@@ -12,7 +12,8 @@ DataLink::DataLink():
 	dataSrcFixed_(false),
 	active_(false),
 	editing_(false),
-	readOnly_(false)
+	readOnly_(false),
+	updating_(false)
 {
 
 }
@@ -21,14 +22,15 @@ DataLink::DataLink():
 
 size_t DataLink::getRecordCount()
 {
+	size_t result = 0;
 
 	if ( NULL != dataSource_ ) {
 		if ( dssSetKey == dataSource_->getState() ) {
-			//dataSource_->getDataSet()->getR
+			result = dataSource_->getDataSet()->getRecordCount();
 		}
 	}
 
-	return 0;
+	return result;
 }
 
 void DataLink::setDataSource( DataSource* val )
@@ -55,17 +57,32 @@ void DataLink::setDataSourceFixed( bool val )
 
 void DataLink::setReadOnly( bool val )
 {
-	readOnly_ = val;
+	if ( val != readOnly_ ) {
+		readOnly_ = val;
+		updateState();
+	}
 }
 
 void DataLink::setEditing( bool val )
 {
-	editing_ = val;
+	if ( val != editing_ ) {
+		editing_ = val;		
+		
+		editingStateChanged();
+	}
 }
 
 void DataLink::updateRecord()
 {
+	updating_ = true;
+	try {
+		updateData();
+	}
+	catch (...){
 
+	}
+
+	updating_ = false;
 }
 
 DataSet* DataLink::getDataSet()
@@ -86,5 +103,60 @@ void DataLink::handleDataEvent( Event* e )
 
 void DataLink::updateState()
 {
+	bool active = false;
+	bool editing = false;
 
+
+	if ( NULL != dataSource_ ) {
+		if ( dataSource_->getState() != dssInactive ) {
+			active = true;
+		}
+	}
+	
+	setActive( active );
+
+	if ( NULL != dataSource_ ) {
+		if ( (dataSource_->getState() & dssEdit) ||
+				(dataSource_->getState() & dssInsert) ||
+				(dataSource_->getState() & dssSetKey) ) {
+			if ( !readOnly_ ) {
+				editing = true;
+			}
+		}
+	}
+
+	setActive( editing );
+}
+
+void DataLink::setActive( bool val )
+{
+	if ( active_ != val ) {
+		active_ = val;
+
+		activeStateChanged();
+	}
+}
+
+void DataLink::dataSetChanged()
+{
+	recordChanged(NULL);
+}
+
+void DataLink::dataSetScrolled( int distance )
+{
+	dataSetChanged();
+}
+
+void DataLink::layoutChanged()
+{
+	dataSetChanged();
+}
+
+bool DataLink::edit()
+{
+	if ( !readOnly_ && (NULL != dataSource_ ) ) {
+		dataSource_->edit();
+	}
+
+	return editing_;
 }

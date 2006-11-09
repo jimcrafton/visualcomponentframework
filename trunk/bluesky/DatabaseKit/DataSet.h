@@ -144,6 +144,10 @@ namespace VCF {
 
         VariantData getParam ( const String& );
 
+		Locale* getLocale();
+
+		void setLocale( Locale* val );
+
         void open();
 
         void close();
@@ -192,7 +196,7 @@ namespace VCF {
 
 		void removeDataSource( DataSource* source );
 
-		
+		size_t getRecordCount();
 
 		//navigation functions...
 
@@ -252,7 +256,7 @@ namespace VCF {
 		void clearRecords();
 		void activateRecords();
 
-		void setRecordsSize( size_t numberOfRecords );
+		void setRecordCount( size_t numberOfRecords );
 
 		size_t getNextRecords();
 
@@ -286,6 +290,7 @@ namespace VCF {
 		size_t activeRecordIndex_; //we may not need this...
 		size_t currentRecordIndex_;
         
+		Locale locale_;
     };
 
 };

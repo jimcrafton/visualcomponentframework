@@ -27,22 +27,16 @@ int main( int argc, char** argv ){
 	dataSet->setActive(true);
 
 
-	if ( dataSet->isActive() ) {
+	if ( dataSet->isActive() ) {		
+		
+		while ( !dataSet->isEOF() ) {			
+			Enumerator<DataField*>* fields = dataSet->getFields();
 
-		Enumerator<DataField*>* fields = dataSet->getFields();
-		while ( fields->hasMoreElements() ) {
-			DataField* field = fields->nextElement();
-			System::println( "Field name: " + field->getName() + " value: " + field->getAsString() );
-		}
-
-		while ( !dataSet->isEOF() ) {
-			dataSet->next();
-			
-			fields->reset();
 			while ( fields->hasMoreElements() ) {
 				DataField* field = fields->nextElement();
 				System::println( "Field name: " + field->getName() + " value: " + field->getAsString() );
 			}
+			dataSet->next();
 		}
 	}
 

@@ -107,14 +107,17 @@ StringField::StringField()
 
 VariantData StringField::getCurrentValue()
 {
-	VariantData result;
+	VariantData result = getAsString();
 	
 	return result;
 }
 
 bool StringField::getAsBoolean()
 {
-	bool result;
+	bool result = false;
+
+	String s = getAsString();
+	result = StringUtils::fromStringAsBool(s);
 	
 	return result;
 }
@@ -123,6 +126,7 @@ DateTime StringField::getAsDateTime()
 {
 	DateTime result;
 	
+
 	return result;
 }
 
@@ -140,15 +144,32 @@ String StringField::getAsString()
 
 double StringField::getAsFloat()
 {
-	double result;
-	
+	double result = 0;
+
+	String s = getAsString();
+
+	if ( NULL != dataSet_ ) {
+		result = dataSet_->getLocale()->toDouble( s );
+	}
+	else {
+		result = StringUtils::fromStringAsDouble(s);
+	}
+
 	return result;
 }
 
 int StringField::getAsInteger()
 {
-	int result;
-	
+	int result = 0;
+	String s = getAsString();
+
+	if ( NULL != dataSet_ ) {
+		result = dataSet_->getLocale()->toInt( s );
+	}
+	else {
+		result = StringUtils::fromStringAsInt(s);
+	}
+
 	return result;
 }
 
