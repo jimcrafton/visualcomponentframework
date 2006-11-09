@@ -14,10 +14,13 @@ DataSet::DataSet()
 	defaultFields_(true),
 	recordSize_(0),
 	activeRecordIndex_(DataSet::NoRecPos),
-	currentRecordIndex_(DataSet::NoRecPos)
+	currentRecordIndex_(DataSet::NoRecPos),
+	locale_("en", "US")
 {
 	fieldDefs_ = new FieldDefinitions(); 
 	fieldDefs_->setDataSet( this );
+
+	setLocale( System::getCurrentThreadLocale() );
 }
 
 DataSet::~DataSet()
@@ -386,7 +389,7 @@ Enumerator<DataField*>* DataSet::getFields()
 	return fields_.getEnumerator();
 }
 
-void DataSet::setRecordsSize( size_t numberOfRecords )
+void DataSet::setRecordCount( size_t numberOfRecords )
 {
 	if ( numberOfRecords == records_.size() ) {
 		return;
@@ -456,10 +459,6 @@ bool DataSet::getNextRecord()
 			activateRecords();
 		}
 
-		if ( grEOF == res ) {
-			eof_ = true;
-		}
-
 		currentRecordIndex_ = records_.size() - 1; 		
 	}
 
@@ -476,6 +475,21 @@ void DataSet::updateRecordSize()
 			//possibly modify the maxRecCount from data source links in the future...
 		}
 
-		setRecordsSize( maxRecCount );
+		setRecordCount( maxRecCount );
 	}
+}
+
+Locale* DataSet::getLocale()
+{
+	return &locale_;
+}
+
+void DataSet::setLocale( Locale* val )
+{
+	locale_ = *val;
+}
+
+size_t DataSet::getRecordCount()
+{
+	return records_.size();	
 }

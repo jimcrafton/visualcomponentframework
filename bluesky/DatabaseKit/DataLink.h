@@ -63,7 +63,27 @@ namespace VCF {
 
 		void updateState();
 
+		void setActive( bool val );
+
+		bool edit();
+
 		virtual void handleDataEvent( Event* e );
+
+		virtual void activeStateChanged(){};
+
+		virtual void editingStateChanged(){};
+
+		virtual void checkBrowseMode(){};
+
+		virtual void dataSetChanged();
+
+		virtual void recordChanged( DataField* field ){};
+
+		virtual void dataSetScrolled( int distance );
+
+		virtual void layoutChanged();
+
+		virtual void updateData(){};
 
 		friend class DataSource;
 	protected:
@@ -72,6 +92,7 @@ namespace VCF {
 		bool active_;
 		bool editing_;
 		bool readOnly_;
+		bool updating_;
 
 	};
 
