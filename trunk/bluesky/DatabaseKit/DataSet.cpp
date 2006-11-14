@@ -185,7 +185,36 @@ void DataSet::removeDataSource( DataSource* source )
 void DataSet::handleDataEvent( Event* e )
 {
 	switch ( e->getType() ) {
+		case deFieldChange : {
+			DataField* field = (DataField*)e->getSource();
+			if ( field->getKind() & fkData ) { //add fkInternalCalc later
+				modified_ = true;	
+			}
 
+			if ( this->state_ != dssSetKey ) {
+				if ( field->getKind() == fkData ) {
+					//if we internally calc fields, then recalc them now...
+				}
+				//else see if we need to auto calc field sizes???
+
+				field->change();
+			}
+		}
+		break;
+
+		case dePropertyChange : {
+			this->fieldDefs_->setUpdated(false);
+		}
+		break;
+	}
+
+	//deal with disable counts here??
+
+	DataSourceArray::iterator it = dataSources_.begin();
+	while ( it != dataSources_.end() ) {
+		DataSource* dataSrc = *it;
+		dataSrc->handleDataEvent( e );
+		++it;
 	}
 }
 
@@ -470,10 +499,18 @@ void DataSet::updateRecordSize()
 {
 	if ( isCursorOpen() ) {
 		size_t maxRecCount = 1;
-
-		for (size_t i=0;i<dataSources_.size();i++ ) {
+		
+		for (size_t i=dataSources_.size()-1;(i>=0) && (i<dataSources_.size());i-- ) {
 			//possibly modify the maxRecCount from data source links in the future...
+			DataSource* dataSrc = dataSources_[i];
+			size_t dlCount = dataSrc->getDataLinkCount();
+
+			for (size_t j=dlCount-1;(j>=0) && (j<dlCount);j-- ) {
+				DataLink* dataLink =  dataSrc->getDataLink(j);
+				//compare the dl's record count to maxRecCount if it's bigger then use it!
+			}
 		}
+		
 
 		setRecordCount( maxRecCount );
 	}

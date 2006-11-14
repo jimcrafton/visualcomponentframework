@@ -28,6 +28,8 @@ namespace VCF {
 	class DATABASEKIT_API DataField : public Object {
 	public:
 
+		DELEGATE(Changed);
+
 		DataField();
 
 		void initField( const FieldDefinition& val );
@@ -91,6 +93,8 @@ namespace VCF {
 		}
 
 		bool getData( unsigned char* buffer, size_t bufferSize );
+
+		void change();
 	protected:
 		DataSet* dataSet_;
 		DataFieldType dataType_;

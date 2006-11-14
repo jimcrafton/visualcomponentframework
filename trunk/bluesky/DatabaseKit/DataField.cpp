@@ -41,6 +41,14 @@ void DataField::bind( bool bindField )
 
 }
 
+void DataField::change()
+{
+	Event e(this,0);
+
+	Changed.fireEvent(&e);
+}
+
+
 VariantData DataField::getCurrentValue()
 {
 	VariantData result;

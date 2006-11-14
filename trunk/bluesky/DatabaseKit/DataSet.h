@@ -24,6 +24,7 @@ namespace VCF {
 	class FieldDefinitions;
 	class DataSource;
 	class DataField;
+	class DataLink;
 
 	enum DataSetState {
 		dssInactive = 0, 
@@ -278,7 +279,7 @@ namespace VCF {
 		typedef std::vector<DataSource*> DataSourceArray;
 		typedef VectorEnum<DataField*> DataFieldArray;
 		typedef std::vector<Record*> RecordsArray;
-
+		typedef std::vector<DataLink*> DataLinkArray;
 
 		DataSourceArray dataSources_;
 
@@ -290,7 +291,9 @@ namespace VCF {
 		size_t activeRecordIndex_; //we may not need this...
 		size_t currentRecordIndex_;
         
-		Locale locale_;
+		Locale locale_;		
+
+		DataLinkArray dataLinks_;
     };
 
 };
