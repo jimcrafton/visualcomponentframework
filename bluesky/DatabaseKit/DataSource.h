@@ -26,6 +26,8 @@ namespace VCF {
 	class DATABASEKIT_API DataSource : public Object {
 	public:
 
+		typedef std::vector<DataLink*> DataLinkArray;
+
 		DELEGATE(StateChanged);
 		DELEGATE(DataChanged);
 		DELEGATE(UpdatedData);
@@ -59,15 +61,28 @@ namespace VCF {
 		void removeDataLink( DataLink* val );
 
 		void handleDataEvent( Event* e );
+
+		size_t getDataLinkCount() {
+			return dataLinks_.size();
+		}
+
+		DataLink* getDataLink( size_t pos ) {
+			DataLink* result = NULL;
+			if ( pos < dataLinks_.size() ) {
+				result = dataLinks_[pos];
+			}
+			return result;
+		}
 	protected:
 		DataSet* dataSet_;
 		bool enabled_;
 		DataSetState state_;
 
-		typedef std::vector<DataLink*> DataLinkArray;
+		
 
 		DataLinkArray dataLinks_;
 
+		void notifyDataLinks( Event* e );
 
 		virtual void destroy();		
 		

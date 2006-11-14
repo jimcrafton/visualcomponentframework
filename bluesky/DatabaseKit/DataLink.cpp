@@ -98,7 +98,65 @@ DataSet* DataLink::getDataSet()
 
 void DataLink::handleDataEvent( Event* e )
 {
-	
+	switch ( e->getType() ) {
+		case deUpdateState : {
+			updateState();
+		}
+		break;
+
+		default : {
+			if ( active_ ) {
+				switch ( e->getType() ) {
+					case deFieldChange: case deRecordChange : {
+						if ( !updating_ ) {
+							recordChanged( (DataField*)e->getSource() );
+						}
+					}
+					break;
+
+					case deDataSetChange: case deDataSetScroll: case deLayoutChange: {
+						int count = 0;
+						if ( NULL != this->dataSource_ ) {
+							if ( dataSource_->getState() != dssSetKey ) { 
+								
+								//figure out what the first record is - ignored for now...
+							}
+						}
+						switch ( e->getType() ) {
+							case deDataSetChange: {
+								dataSetChanged();
+							}
+							break;
+
+							case deDataSetScroll: {
+								dataSetScrolled(count);
+							}
+							break;
+
+							case deLayoutChange: {
+								layoutChanged();
+							}
+							break;
+						}
+					}
+					break;
+
+					case deUpdateRecord: {
+						updateRecord();
+					}
+					break;
+
+
+					case deCheckBrowseMode: {
+						checkBrowseMode();
+					}
+					break;
+					
+				}
+			}
+		}
+		break;
+	}
 }
 
 void DataLink::updateState()

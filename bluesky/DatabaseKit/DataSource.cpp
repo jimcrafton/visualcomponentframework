@@ -50,8 +50,11 @@ void DataSource::setState( DataSetState val )
 
 		state_ = val;
 
-		Event e(this,0);
-		StateChanged.fireEvent( &e );
+		Event e(this,deUpdateState);
+		notifyDataLinks(&e);
+
+		Event e1(this,0);
+		StateChanged.fireEvent( &e1 );
 
 		if ( dssInactive == oldVal ) {
 			Event e2(this,0);
@@ -80,8 +83,57 @@ void DataSource::edit()
 
 void DataSource::handleDataEvent( Event* e )
 {
-	
+	if ( e->getType() == deUpdateState ) {
+		updateState();
+	}
+	else if ( this->state_ != dssInactive ) {
+		notifyDataLinks( e );
+		switch ( e->getType() ) {
+			case deFieldChange : {
+				Event e2( this, e->getType() );
+				//source should be a DataField instance???
+				e2.setUserData( e->getSource() );
+				DataChanged.fireEvent( &e2 );
+			}
+			break;
+
+			case deRecordChange : case deDataSetChange : case deDataSetScroll : case deLayoutChange :{
+				Event e2( this, e->getType() );
+				DataChanged.fireEvent( &e2 );
+			}
+			break;
+
+			case deUpdateRecord : {
+				Event e2( this, e->getType() );
+				UpdatedData.fireEvent( &e2 );
+			}
+			break;
+		}
+	}
 }
+
+void DataSource::notifyDataLinks( Event* e )
+{		
+	DataLinkArray::iterator it = dataLinks_.begin();
+	while ( it != dataLinks_.end() ) {
+		DataLink* dataLink = *it;
+		//if buffer/record count == 1
+
+		dataLink->handleDataEvent( e );
+
+		++ it;
+	}
+
+	it = dataLinks_.begin();
+	while ( it != dataLinks_.end() ) {
+		DataLink* dataLink = *it;
+		//if buffer/record count > 1
+
+		dataLink->handleDataEvent( e );
+
+		++ it;
+	}
+}	
 
 void DataSource::addDataLink( DataLink* val )
 {	
