@@ -73,8 +73,6 @@ namespace VCF {
 
     class DATABASEKIT_API DataSet : public Object {
     public:
-		
-
 		struct Record {
 			Record(): buffer(NULL), size(0){}			
 
@@ -104,8 +102,18 @@ namespace VCF {
 		};
 
 		enum {
-			NoRecPos = (size_t)-1	
+			NoRecPos = (size_t)-1,
+			NoFieldPos = (size_t)-1,
 		};
+
+		typedef std::vector<DataSource*> DataSourceArray;
+		typedef VectorEnum<DataField*> DataFieldArray;
+		typedef std::vector<Record*> RecordsArray;
+		typedef std::vector<DataLink*> DataLinkArray;
+
+
+
+
 
         DataSet();
 
@@ -185,6 +193,10 @@ namespace VCF {
 		
 		Enumerator<DataField*>* getFields();
 
+		std::vector<DataField*>& getFieldsArray() {
+			return fields_;
+		}
+
 		void updateFieldDefs();
 
 		Class* getFieldClass( int fieldType );
@@ -192,6 +204,14 @@ namespace VCF {
 		void createFields();
 
 		virtual void initFieldDefinitions();
+
+		void checkFieldName( const String& fieldName );
+
+		DataField* findField( const String& fieldName );
+
+		size_t indexOfField( DataField* field );
+		
+
 
 		void addDataSource( DataSource* source );
 
@@ -217,10 +237,11 @@ namespace VCF {
 		void post();
 
 		void cancel();
-
+	
 
 		virtual bool getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize ) = 0;
 
+		virtual void handleDataEvent( Event* e );
     protected:
         virtual void internal_open() = 0;
 
@@ -237,11 +258,6 @@ namespace VCF {
 		virtual Record* allocateRecordData() = 0;
 
 		virtual bool isCursorOpen() = 0;
-		
-
-		virtual void handleDataEvent( Event* e );
-
-
 
 		virtual void openCursor( bool query );
 
@@ -276,10 +292,7 @@ namespace VCF {
 
         std::map<String, VariantData> params_;
 
-		typedef std::vector<DataSource*> DataSourceArray;
-		typedef VectorEnum<DataField*> DataFieldArray;
-		typedef std::vector<Record*> RecordsArray;
-		typedef std::vector<DataLink*> DataLinkArray;
+		
 
 		DataSourceArray dataSources_;
 
@@ -291,7 +304,7 @@ namespace VCF {
 		size_t activeRecordIndex_; //we may not need this...
 		size_t currentRecordIndex_;
         
-		Locale locale_;		
+		Locale* locale_;
 
 		DataLinkArray dataLinks_;
     };

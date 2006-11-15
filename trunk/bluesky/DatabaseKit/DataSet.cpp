@@ -15,7 +15,7 @@ DataSet::DataSet()
 	recordSize_(0),
 	activeRecordIndex_(DataSet::NoRecPos),
 	currentRecordIndex_(DataSet::NoRecPos),
-	locale_("en", "US")
+	locale_(NULL)
 {
 	fieldDefs_ = new FieldDefinitions(); 
 	fieldDefs_->setDataSet( this );
@@ -34,6 +34,8 @@ DataSet::~DataSet()
 	deleteFields();
 
 	delete fieldDefs_;
+
+	delete locale_;
 }
 
 void DataSet::setDatabase( Database* db )
@@ -518,15 +520,56 @@ void DataSet::updateRecordSize()
 
 Locale* DataSet::getLocale()
 {
-	return &locale_;
+	return locale_;
 }
 
 void DataSet::setLocale( Locale* val )
 {
-	locale_ = *val;
+	delete locale_;
+	locale_ = new Locale( val->getLanguageCode(), val->getCountryCode() );
 }
 
 size_t DataSet::getRecordCount()
 {
 	return records_.size();	
+}
+
+void DataSet::checkFieldName( const String& fieldName )
+{
+	if ( fieldName.empty() ) {
+		throw DatabaseError( "Invalid Field name. Field name is empty/blank." );
+	}
+
+	if ( findField( fieldName ) != NULL ) {
+		throw DatabaseError( "Invalid Field name. Field name already exists." );
+	}
+}
+
+DataField* DataSet::findField( const String& fieldName )
+{
+	DataField* result = NULL;
+
+	DataFieldArray::Vector::iterator it = fields_->begin();
+	while ( it != fields_->end() ) {
+		DataField* field = *it;
+		if ( fieldName == field->getName() ) {
+			result = field;
+			break;
+		}
+		++it;
+	}
+
+	return result;
+}
+
+size_t DataSet::indexOfField( DataField* field )
+{
+	size_t result = NoFieldPos;
+
+	DataFieldArray::Vector::iterator found = std::find( fields_->begin(), fields_->end(), field );
+	if ( found != fields_->end() ) {
+		result = found - fields_->begin();
+	}
+
+	return result;
 }
