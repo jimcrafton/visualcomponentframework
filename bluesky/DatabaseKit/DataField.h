@@ -52,17 +52,21 @@ namespace VCF {
 			return dataType_;
 		}
 
-		String getDisplayName() {
-			return displayName_;
-		}
+		String getDisplayName();
+
+		void setDisplayName( const String& val );
 
 		int getDisplayWidth() {
 			return displayWidth_;
 		}
 
+		void setDisplayWidth( int val );
+
 		String getName() {
 			return name_;
 		}
+
+		void setName( const String& val );
 
 		int getFieldNumber() {
 			return fieldNumber_;
@@ -92,9 +96,17 @@ namespace VCF {
 			size_  = val;
 		}
 
+		size_t getIndex();
+
+		void setIndex( size_t val );
+
 		bool getData( unsigned char* buffer, size_t bufferSize );
 
 		void change();
+
+		void dataChanged();
+
+		void propertyChanged( bool layoutAffected );
 	protected:
 		DataSet* dataSet_;
 		DataFieldType dataType_;

@@ -48,6 +48,114 @@ void DataField::change()
 	Changed.fireEvent(&e);
 }
 
+void DataField::dataChanged()
+{
+	VCF_ASSERT( NULL != this->dataSet_ );
+
+	Event e(this, deFieldChange );
+	dataSet_->handleDataEvent( &e );
+}
+
+void DataField::propertyChanged( bool layoutAffected )
+{
+	if ( NULL != dataSet_ ) {
+		if ( dataSet_->isActive() ) {
+			Event e(this, layoutAffected ? deDataSetChange : deLayoutChange );
+			dataSet_->handleDataEvent( &e );
+		}
+	}
+}
+
+void DataField::setName( const String& val )
+{
+	if ( NULL != dataSet_ ) {
+		dataSet_->checkFieldName( val );
+	}
+
+	name_ = val;
+
+	if ( displayName_ == val ) {
+		displayName_ = "";
+	}
+
+	if ( NULL != dataSet_ ) {
+		Event e(this, deFieldListChange );
+		dataSet_->handleDataEvent( &e );
+	}
+}
+
+void DataField::setDisplayName( const String& val )
+{
+	String s;
+
+	if ( s != this->name_ ) {
+		s = val;
+	}
+
+	if ( s != this->displayName_ ) {
+		displayName_ = s;
+		propertyChanged( true );
+	}
+}
+
+String DataField::getDisplayName()
+{
+	String result;
+
+	if ( !displayName_.empty() ) {
+		result = displayName_;
+	}
+	else {
+		result = name_;
+	}
+
+	return result;
+}
+
+void DataField::setDisplayWidth( int val )
+{
+	if ( val != this->displayWidth_ ) {
+		displayWidth_ = val;
+
+		propertyChanged( true );
+	}
+}
+
+size_t DataField::getIndex()
+{
+	size_t result = DataSet::NoFieldPos;
+
+	if ( NULL != dataSet_ ) {
+		result = dataSet_->indexOfField( this );
+	}
+
+	return result;
+}
+
+void DataField::setIndex( size_t val )
+{
+	size_t currentIdx = getIndex();
+	if ( currentIdx != DataSet::NoFieldPos ) {
+		
+		std::vector<DataField*>& fields = dataSet_->getFieldsArray();
+	
+		if ( val == DataSet::NoFieldPos ) {
+			val = 0;
+		}
+
+		val = minVal( val, fields.size()-1 );
+
+		if ( val != currentIdx ) {
+			fields.erase( fields.begin() + currentIdx );
+			fields.insert( fields.begin() + val, this );
+
+			propertyChanged( true );
+
+			Event e(NULL, deFieldListChange );
+			dataSet_->handleDataEvent( &e );
+		}
+	}
+}
 
 VariantData DataField::getCurrentValue()
 {
@@ -134,6 +242,10 @@ DateTime StringField::getAsDateTime()
 {
 	DateTime result;
 	
+	if ( NULL != dataSet_ ) {
+		String s = getAsString();
+		result = dataSet_->getLocale()->toDateTime( s );
+	}
 
 	return result;
 }
