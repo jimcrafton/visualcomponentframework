@@ -308,47 +308,33 @@ BooleanField::BooleanField()
 
 VariantData BooleanField::getCurrentValue()
 {
-	VariantData result;
+	VariantData result = getAsBoolean();
 	
 	return result;
 }
 
 bool BooleanField::getAsBoolean()
 {
-	bool result;
+	bool result = false;
+	
+	if ( !getData( (unsigned char*)&result, sizeof(result) ) ) {
+		throw DatabaseError( Format("Unable to retrieve data for field \"%s\"") % name_ );
+	}
 	
 	return result;
 }
 
-DateTime BooleanField::getAsDateTime()
-{
-	DateTime result;
-	
-	return result;
-}
 
 String BooleanField::getAsString()
 {
-	String result;
-	char tmp[256];
+	String result = StringUtils::toString(getAsBoolean());
 
-	if ( getData( (unsigned char*)tmp, sizeof(tmp) ) ) {
-		result = tmp;
-	}
-
-	return result;
-}
-
-double BooleanField::getAsFloat()
-{
-	double result;
-	
 	return result;
 }
 
 int BooleanField::getAsInteger()
 {
-	int result;
+	int result = getAsBoolean() ? 0 : 1;
 	
 	return result;
 }
@@ -368,14 +354,7 @@ DateTimeField::DateTimeField()
 
 VariantData DateTimeField::getCurrentValue()
 {
-	VariantData result;
-	
-	return result;
-}
-
-bool DateTimeField::getAsBoolean()
-{
-	bool result;
+	VariantData result = getAsDateTime();
 	
 	return result;
 }
@@ -384,13 +363,7 @@ DateTime DateTimeField::getAsDateTime()
 {
 	DateTime result;
 	
-	return result;
-}
-
-String DateTimeField::getAsString()
-{
-	String result;
-	char tmp[256];
+	uint64 tmp = 0;
 
 	if ( getData( (unsigned char*)tmp, sizeof(tmp) ) ) {
 		result = tmp;
@@ -399,10 +372,17 @@ String DateTimeField::getAsString()
 	return result;
 }
 
-double DateTimeField::getAsFloat()
+String DateTimeField::getAsString()
 {
-	double result;
-	
+	String result;
+
+	if ( NULL != dataSet_ ) {
+		result = dataSet_->getLocale()->toStringFromDate( getAsDateTime() );
+	}
+	else {
+		result = StringUtils::format( getAsDateTime(), "%d-%m-%Y %H:%M:%S" );
+	}
+
 	return result;
 }
 
@@ -410,6 +390,8 @@ int DateTimeField::getAsInteger()
 {
 	int result;
 	
+	result = (int) getAsDateTime().getCTime();
+
 	return result;
 }
 
@@ -429,32 +411,21 @@ DoubleField::DoubleField()
 
 VariantData DoubleField::getCurrentValue()
 {
-	VariantData result;
+	VariantData result = getAsFloat();
 	
 	return result;
 }
 
-bool DoubleField::getAsBoolean()
-{
-	bool result;
-	
-	return result;
-}
-
-DateTime DoubleField::getAsDateTime()
-{
-	DateTime result;
-	
-	return result;
-}
 
 String DoubleField::getAsString()
 {
 	String result;
-	char tmp[256];
-
-	if ( getData( (unsigned char*)tmp, sizeof(tmp) ) ) {
-		result = tmp;
+	
+	if ( NULL != dataSet_ ) {
+		result = dataSet_->getLocale()->toString( getAsFloat() );
+	}
+	else {
+		result = StringUtils::toString( getAsFloat() );
 	}
 
 	return result;
@@ -462,14 +433,18 @@ String DoubleField::getAsString()
 
 double DoubleField::getAsFloat()
 {
-	double result;
+	double result = 0.0;
 	
+	if ( !getData( (unsigned char*)&result, sizeof(result) ) ) {
+		throw DatabaseError( Format("Unable to retrieve data for field \"%s\"") % name_ );
+	}
+
 	return result;
 }
 
 int DoubleField::getAsInteger()
 {
-	int result;
+	int result = (int) getAsFloat();
 	
 	return result;
 }
@@ -489,21 +464,21 @@ IntegerField::IntegerField()
 
 VariantData IntegerField::getCurrentValue()
 {
-	VariantData result;
+	VariantData result = getAsInteger();
 	
 	return result;
 }
 
 bool IntegerField::getAsBoolean()
 {
-	bool result;
+	bool result = getAsInteger() ? true : false;
 	
 	return result;
 }
 
 DateTime IntegerField::getAsDateTime()
 {
-	DateTime result;
+	DateTime result ( (time_t) getAsInteger() );
 	
 	return result;
 }
@@ -511,10 +486,12 @@ DateTime IntegerField::getAsDateTime()
 String IntegerField::getAsString()
 {
 	String result;
-	char tmp[256];
-
-	if ( getData( (unsigned char*)tmp, sizeof(tmp) ) ) {
-		result = tmp;
+	
+	if ( NULL != dataSet_ ) {
+		result = dataSet_->getLocale()->toString( getAsInteger() );
+	}
+	else {
+		result = StringUtils::toString( getAsInteger() );
 	}
 
 	return result;
@@ -522,14 +499,18 @@ String IntegerField::getAsString()
 
 double IntegerField::getAsFloat()
 {
-	double result;
+	double result = (double) getAsInteger();
 	
 	return result;
 }
 
 int IntegerField::getAsInteger()
 {
-	int result;
+	int result = 0;
 	
+	if ( !getData( (unsigned char*)&result, sizeof(result) ) ) {
+		throw DatabaseError( Format("Unable to retrieve data for field \"%s\"") % name_ );
+	}
+
 	return result;
 }

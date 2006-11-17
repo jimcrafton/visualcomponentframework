@@ -246,6 +246,36 @@ void SQLiteDataSet::addFieldDef( sqlite3_stmt* stmt, size_t fieldIndex )
 			}
 			break;
 
+			case dftWord : {
+				fieldDef.size = sizeof(int);
+			}
+			break;
+
+			case dftSmallint : {
+				fieldDef.size = sizeof(int);
+			}
+			break;
+
+			case dftBoolean : {
+				fieldDef.size = sizeof(bool);
+			}
+			break;
+
+			case dftDate : {
+				fieldDef.size = sizeof(VCF::uint64);
+			}
+			break;
+
+			case dftTime : {
+				fieldDef.size = sizeof(VCF::uint64);
+			}
+			break;
+
+			case dftDateTime : {
+				fieldDef.size = sizeof(VCF::uint64);
+			}
+			break;
+
 			case dftFloat : {
 				fieldDef.size = sizeof(double);
 			}

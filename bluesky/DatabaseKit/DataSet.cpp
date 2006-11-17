@@ -128,6 +128,26 @@ Class* DataSet::getFieldClass( int fieldType )
 			result = classid(VCF::StringField);
 		}
 		break;
+
+		case dftBoolean : {
+			result = classid(VCF::BooleanField);
+		}
+		break;
+
+		case dftDate : case dftTime : case dftDateTime :{
+			result = classid(VCF::DateTimeField);
+		}
+		break;
+
+		case dftFloat : {
+			result = classid(VCF::DoubleField);
+		}
+		break;
+
+		case dftSmallint : case dftInteger : case dftWord : {
+			result = classid(VCF::IntegerField);
+		}
+		break;
 	}
 
 	return result;
