@@ -50,6 +50,7 @@ public:
 	virtual double toDouble( const UnicodeString& str );
 	virtual float toFloat( const UnicodeString& str );
 	virtual double toDoubleAsCurrency( const UnicodeString& str );
+	virtual DateTime toDateTime( const UnicodeString& str );
 
 	virtual UnicodeString toLowerCase( const UnicodeString& s );
 	virtual UnicodeString toUpperCase( const UnicodeString& s );

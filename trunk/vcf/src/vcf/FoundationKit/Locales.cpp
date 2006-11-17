@@ -1102,6 +1102,10 @@ double Locale::toDoubleAsCurrency( const UnicodeString& str )
 	return peer_->toDoubleAsCurrency( str );
 }
 
+DateTime Locale::toDateTime( const UnicodeString& str )
+{
+	return peer_->toDateTime( str );
+}
 
 UnicodeString Locale::toLowerCase( const UnicodeString& s )
 {

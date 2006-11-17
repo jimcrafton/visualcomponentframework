@@ -88,6 +88,8 @@ bool Win32RunLoopPeer::handleMessageAndContinue( MSG& msg )
 			PostedEvent* pe = (PostedEvent*)msg.lParam;
 			
 			runLoop_->internal_processReceivedEvent( pe );
+
+			delete pe;
 		}
 		break;		
 	}

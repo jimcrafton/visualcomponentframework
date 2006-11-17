@@ -75,6 +75,7 @@ public:
 	virtual double toDouble( const UnicodeString& str ) = 0;
 	virtual float toFloat( const UnicodeString& str ) = 0;
 	virtual double toDoubleAsCurrency( const UnicodeString& str ) = 0;
+	virtual DateTime toDateTime( const UnicodeString& str ) = 0;
 
 	virtual UnicodeString toLowerCase( const UnicodeString& s ) = 0;
 	virtual UnicodeString toUpperCase( const UnicodeString& s ) = 0;
