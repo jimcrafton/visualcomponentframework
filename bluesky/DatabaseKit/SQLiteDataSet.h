@@ -35,6 +35,8 @@ namespace VCF {
 		void setDatabaseName( const String& val );
 		
 		virtual bool getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize );
+
+		virtual void setFieldData( DataField* field, const unsigned char* buffer, size_t bufferSize );
 	protected:
         virtual void internal_open();
 
@@ -43,6 +45,10 @@ namespace VCF {
 		virtual void internal_initFieldDefinitions();
 
 		virtual void internal_first();
+
+		virtual void internal_post();
+
+		virtual void internal_refresh();
 		
 		virtual GetResultType getRecord( Record* record, GetRecordMode mode );
 

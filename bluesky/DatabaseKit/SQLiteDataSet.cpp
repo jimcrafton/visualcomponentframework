@@ -528,3 +528,45 @@ bool SQLiteDataSet::getFieldData( DataField* field, unsigned char* buffer, size_
 
 	return result;
 }
+
+void SQLiteDataSet::setFieldData( DataField* field, const unsigned char* buffer, size_t bufferSize )
+{
+	VCF_ASSERT( NULL != field );
+
+
+
+	if ( !(state_ & dssEdit) ) {
+		throw DatabaseError( "This data set is not in editing mode." );
+	}
+
+	
+	if ( NULL != field ) {
+		if ( (state_ & dssSetKey) && ((field->getFieldNumber() < 0) /*add index checks here|| ()*/) ) {
+			throw DatabaseError( "This field is not editable." );
+		}		
+
+		DataSet::Record* record = records_[ activeRecordIndex_ ];
+		
+		VCF_ASSERT( bufferSize == record->size );
+
+		field->validate( buffer, bufferSize );
+		
+		memcpy( record->buffer, buffer, bufferSize );
+
+		if ( !( (state_ & dssCalcFields) || (state_ & dssFilter) /*|| (state_ & dssNewValue)*/ ) ) {
+			Event e(this,deFieldChange);
+			e.setUserData(field);
+			handleDataEvent(&e);
+		}
+	}
+}
+
+void SQLiteDataSet::internal_post()
+{
+	
+}
+
+void SQLiteDataSet::internal_refresh()
+{
+
+}

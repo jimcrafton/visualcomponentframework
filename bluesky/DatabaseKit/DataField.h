@@ -25,10 +25,31 @@ namespace VCF {
 		fkData
 	};
 
+	
+	class DATABASEKIT_API ValidateFieldEvent : public Event {
+	public:
+		ValidateFieldEvent( Object* source ) : Event(source,0),buffer(NULL),bufferSize(0){}
+
+		ValidateFieldEvent( const ValidateFieldEvent& rhs ):Event(rhs),buffer(NULL),bufferSize(0){
+			buffer = rhs.buffer;
+			bufferSize = rhs.bufferSize;
+		}
+
+		virtual Object* clone( bool deep = false ) {
+			return new ValidateFieldEvent(*this);
+		}
+
+		const unsigned char* buffer;
+		size_t bufferSize;
+	};
+
+
+
 	class DATABASEKIT_API DataField : public Object {
 	public:
 
 		DELEGATE(Changed);
+		DELEGATE(Validate);
 
 		DataField();
 
@@ -43,6 +64,16 @@ namespace VCF {
 		virtual String getAsString();
 		virtual double getAsFloat();
 		virtual int getAsInteger();
+
+
+		virtual void setAsBoolean( bool val );
+		virtual void setAsDateTime( const DateTime& val );
+		virtual void setAsString( const String& val );
+		virtual void setAsFloat( const double& val );
+		virtual void setAsInteger( const int& val );
+
+
+		virtual void freeBuffers(){}
 
 		DataSet* getDataSet() {
 			return dataSet_;
@@ -88,6 +119,10 @@ namespace VCF {
 			return required_;
 		}
 
+		bool isValidating() {
+			return validating_;
+		}
+
 		int getSize() {
 			return size_;
 		}
@@ -102,11 +137,15 @@ namespace VCF {
 
 		bool getData( unsigned char* buffer, size_t bufferSize );
 
+		void setData( const unsigned char* buffer, size_t bufferSize ) ;
+
 		void change();
 
 		void dataChanged();
 
 		void propertyChanged( bool layoutAffected );
+
+		void validate( const unsigned char* buffer, size_t bufferSize );
 	protected:
 		DataSet* dataSet_;
 		DataFieldType dataType_;
@@ -119,6 +158,7 @@ namespace VCF {
 		bool readOnly_;
 		bool required_;
 		int size_;
+		bool validating_;
 	};
 
 
