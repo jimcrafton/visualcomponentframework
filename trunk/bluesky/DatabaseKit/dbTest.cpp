@@ -14,32 +14,38 @@ int main( int argc, char** argv ){
 	DataSet* dataSet = DatabaseToolkit::createDataSet( "SQLiteType" );
 
 	dataSet->setParam( "databasename", "test.db3" );
-	dataSet->setParam( "tablename", "Simple" );
+	dataSet->setParam( "tablename", "Person" );
 
 
 
 	DataSource* dbSrc = new DataSource();
 
-
-	dbSrc->setDataSet( dataSet );
-
-
-	dataSet->setActive(true);
-
-
-	if ( dataSet->isActive() ) {		
+	try {
 		
-		while ( !dataSet->isEOF() ) {			
-			Enumerator<DataField*>* fields = dataSet->getFields();
-
-			while ( fields->hasMoreElements() ) {
-				DataField* field = fields->nextElement();
-				System::println( "Field name: " + field->getName() + " value: " + field->getAsString() );
+		dbSrc->setDataSet( dataSet );
+		
+		
+		dataSet->setActive(true);
+		
+		
+		
+		if ( dataSet->isActive() ) {		
+			
+			while ( !dataSet->isEOF() ) {			
+				Enumerator<DataField*>* fields = dataSet->getFields();
+				
+				while ( fields->hasMoreElements() ) {
+					DataField* field = fields->nextElement();
+					System::println( "Field name: " + field->getName() + " value: " + field->getAsString() );
+				}
+				dataSet->next();
 			}
-			dataSet->next();
 		}
+		
 	}
-
+	catch ( BasicException& e ) {
+		System::println( "Exception: " + e.getMessage() );
+	}
 
 	dbSrc->free();
 

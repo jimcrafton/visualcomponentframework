@@ -12,7 +12,10 @@ void DatabaseKit::init( int argc, char **argv )
 
 	REGISTER_CLASSINFO_EXTERNAL(DataField);
 	REGISTER_CLASSINFO_EXTERNAL(StringField);
-	
+	REGISTER_CLASSINFO_EXTERNAL(BooleanField);
+	REGISTER_CLASSINFO_EXTERNAL(DateTimeField);
+	REGISTER_CLASSINFO_EXTERNAL(DoubleField);
+	REGISTER_CLASSINFO_EXTERNAL(IntegerField);
 }
 
 void DatabaseKit::terminate()

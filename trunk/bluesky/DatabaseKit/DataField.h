@@ -152,13 +152,10 @@ namespace VCF {
 
 		virtual VariantData getCurrentValue();
 
-		virtual bool getAsBoolean();
-		virtual DateTime getAsDateTime();
+		virtual bool getAsBoolean();		
 		virtual String getAsString();
-		virtual double getAsFloat();
 		virtual int getAsInteger();
-	protected:
-		
+	protected:		
 
 	};
 
@@ -172,10 +169,8 @@ namespace VCF {
 
 		virtual VariantData getCurrentValue();
 
-		virtual bool getAsBoolean();
 		virtual DateTime getAsDateTime();
-		virtual String getAsString();
-		virtual double getAsFloat();
+		virtual String getAsString();		
 		virtual int getAsInteger();
 	protected:
 		
@@ -193,9 +188,6 @@ namespace VCF {
 		DoubleField();
 
 		virtual VariantData getCurrentValue();
-
-		virtual bool getAsBoolean();
-		virtual DateTime getAsDateTime();
 		virtual String getAsString();
 		virtual double getAsFloat();
 		virtual int getAsInteger();
