@@ -25,6 +25,8 @@ namespace VCF {
 	class DataSource;
 	class DataField;
 	class DataLink;
+	class DataSet;
+
 
 	enum DataSetState {
 		dssInactive = 0, 
@@ -70,6 +72,37 @@ namespace VCF {
 		grBOF,
 		grEOF,
 	};
+
+	enum ResyncMode {
+		rmNone = 0,
+		rmExact = 0x01, 
+		rmCenter = 0x02
+	};
+
+
+	enum FilterOptions {
+		foNoOptions = 0,
+		foCaseInsensitive = 0x01,
+		foNoPartialCompare = 0x02
+	};
+
+
+	class DATABASEKIT_API FilterRecordEvent : public Event {
+	public:
+		FilterRecordEvent( Object* source ) : Event(source,0),accept(false){}
+
+		FilterRecordEvent( const FilterRecordEvent& rhs ):Event(rhs),accept(false){
+			accept = rhs.accept;
+		}
+
+		virtual Object* clone( bool deep = false ) {
+			return new FilterRecordEvent(*this);
+		}
+
+		bool accept;
+	};
+
+
 
     class DATABASEKIT_API DataSet : public Object {
     public:
@@ -145,6 +178,7 @@ namespace VCF {
 		DELEGATE(PostError);
 
 
+		DELEGATE(FilterRecord);		
 
 
         void setDatabase( Database* database );
@@ -189,8 +223,28 @@ namespace VCF {
 
 		bool getDefaulFields() {
 			return defaultFields_;
-		}		
+		}
 		
+		bool isFiltered() {
+			return filtered_;
+		}
+		
+		void setFiltered( bool val );
+
+
+		String getFilter() {
+			return filter_;
+		}
+
+		void setFilter( const String& val );
+
+		FilterOptions getFilterOptions() {
+			return filterOptions_;
+		}
+
+		void setFilterOptions( int val );
+
+		//fields
 		Enumerator<DataField*>* getFields();
 
 		std::vector<DataField*>& getFieldsArray() {
@@ -209,9 +263,14 @@ namespace VCF {
 
 		DataField* findField( const String& fieldName );
 
+		DataField* fieldByName( const String& fieldName );
+
+
 		size_t indexOfField( DataField* field );
 		
 
+		VariantData getFieldValue( const String& fieldName );
+		void setFieldValue( const String& fieldName, VariantData& val );
 
 		void addDataSource( DataSource* source );
 
@@ -236,10 +295,12 @@ namespace VCF {
 
 		void post();
 
-		void cancel();
-	
+		void cancel();	
+		
 
 		virtual bool getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize ) = 0;
+
+		virtual void setFieldData( DataField* field, const unsigned char* buffer, size_t bufferSize ) = 0;
 
 		virtual void handleDataEvent( Event* e );
     protected:
@@ -253,6 +314,10 @@ namespace VCF {
 		
 		virtual void internal_next() = 0;
 
+		virtual void internal_post() = 0;
+
+		virtual void internal_refresh() = 0;
+
 		virtual GetResultType getRecord( Record* record, GetRecordMode mode ) = 0;		
 
 		virtual Record* allocateRecordData() = 0;
@@ -263,6 +328,7 @@ namespace VCF {
 
 		virtual void closeCursor();
 
+		virtual void resync( int mode );
 
 		void openData();
 
@@ -279,7 +345,14 @@ namespace VCF {
 
 		bool getNextRecord();
 
-		void checkMode( CheckModeState mode );
+		void checkMode( CheckModeState mode );		
+
+		void updateRecord();
+
+		void freeFieldBuffers();
+
+		void cursorPositionChanged();
+			
 
 		bool active_;
         Database* db_;
@@ -289,6 +362,10 @@ namespace VCF {
 		bool eof_;
 		bool modified_;
 		bool defaultFields_;
+		bool filtered_;
+		String filter_;
+		FilterOptions filterOptions_;		
+
 
         std::map<String, VariantData> params_;
 

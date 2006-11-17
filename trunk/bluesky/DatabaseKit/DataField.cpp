@@ -14,7 +14,8 @@ DataField::DataField():
 	visible_(true),
 	readOnly_(true),
 	required_(false),
-	size_(0)
+	size_(0),
+	validating_(false)
 
 {
 
@@ -46,6 +47,25 @@ void DataField::change()
 	Event e(this,0);
 
 	Changed.fireEvent(&e);
+}
+
+
+void DataField::validate( const unsigned char* buffer, size_t bufferSize )
+{
+	ValidateFieldEvent e(this);
+	e.buffer = buffer;
+	e.bufferSize = bufferSize;
+
+	validating_ = true;
+
+	try {
+		Validate.fireEvent( &e );
+	}
+	catch (...) {
+		
+	}
+
+	validating_ = false;
 }
 
 void DataField::dataChanged()
@@ -199,6 +219,33 @@ int DataField::getAsInteger()
 	return result;
 }
 
+void DataField::setAsBoolean( bool val )
+{
+	throw DatabaseError("Not implemented for abstract class!");
+}
+
+void DataField::setAsDateTime( const DateTime& val )
+{
+	throw DatabaseError("Not implemented for abstract class!");
+}
+
+void DataField::setAsString( const String& val )
+{
+	throw DatabaseError("Not implemented for abstract class!");
+}
+
+void DataField::setAsFloat( const double& val )
+{
+	throw DatabaseError("Not implemented for abstract class!");
+}
+
+void DataField::setAsInteger( const int& val )
+{
+	throw DatabaseError("Not implemented for abstract class!");
+}
+
+
+
 bool DataField::getData( unsigned char* buffer, size_t bufferSize )
 {
 	bool result = false;
@@ -211,6 +258,21 @@ bool DataField::getData( unsigned char* buffer, size_t bufferSize )
 	
 	return result;
 }
+
+void DataField::setData( const unsigned char* buffer, size_t bufferSize )
+{
+	if ( NULL == dataSet_ ) {
+		throw DatabaseError("Dataset not set for this field!");
+	}
+
+
+	dataSet_->setFieldData( this, buffer, bufferSize );
+}
+
+
+
+
+
 
 
 

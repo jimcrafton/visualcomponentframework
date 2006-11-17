@@ -12,6 +12,8 @@ DataSet::DataSet()
 	eof_(false),
 	modified_(false),
 	defaultFields_(true),
+	filtered_(false),
+	filterOptions_(foNoOptions),
 	recordSize_(0),
 	activeRecordIndex_(DataSet::NoRecPos),
 	currentRecordIndex_(DataSet::NoRecPos),
@@ -368,7 +370,11 @@ void DataSet::next()
 
 void DataSet::refresh()
 {
+	checkMode( cmsBrowse );
+	
+	this->internal_refresh();
 
+	resync(0);
 }
 
 void DataSet::edit()
@@ -388,7 +394,36 @@ void DataSet::deleteRecord()
 
 void DataSet::post()
 {
+	updateRecord();
 
+	switch ( state_ ) {
+		case dssEdit : case dssInsert : {
+			Event e(this,deCheckBrowseMode);
+			handleDataEvent(&e);
+
+			Event e2(this,0);
+			BeforePost.fireEvent(&e2);
+
+			try {
+				internal_post();
+			}
+			catch (...) {
+				Event e3(this,0);
+				PostError.fireEvent( &e3 );
+			}
+
+
+			freeFieldBuffers();
+
+			setState( dssBrowse );
+
+			resync( 0 );
+
+			Event e4(this,0);
+			AfterPost.fireEvent(&e4);
+		}
+		break;
+	}
 }
 
 void DataSet::cancel()
@@ -582,6 +617,17 @@ DataField* DataSet::findField( const String& fieldName )
 	return result;
 }
 
+DataField* DataSet::fieldByName( const String& fieldName )
+{
+	DataField* result = findField( fieldName );
+
+	if ( NULL == result ) {
+		throw DatabaseError("No Field found that's named \"" + fieldName + "\"." );
+	}
+
+	return result;
+}
+
 size_t DataSet::indexOfField( DataField* field )
 {
 	size_t result = NoFieldPos;
@@ -592,4 +638,88 @@ size_t DataSet::indexOfField( DataField* field )
 	}
 
 	return result;
+}
+
+void DataSet::setFiltered( bool val )
+{
+	filtered_ = val;
+}
+
+void DataSet::setFilter( const String& val )
+{
+	filter_ = val;
+}
+
+void DataSet::setFilterOptions( int val )
+{
+	filterOptions_ = (FilterOptions)val;
+}
+
+void DataSet::updateRecord()
+{
+	if ( !((state_ & dssEdit) || (state_ & dssInsert)) ) {
+		throw DatabaseError("Data set not in editing mode.");
+	}
+
+	Event e(this,deUpdateRecord);
+	handleDataEvent( &e );
+}
+
+void DataSet::freeFieldBuffers()
+{
+	DataFieldArray::Vector::iterator it = fields_->begin();
+	while ( it != fields_->end() ) {
+		DataField* field = *it;
+		
+		field->freeBuffers();
+
+		++it;
+	}	
+}
+
+void DataSet::cursorPositionChanged()
+{
+	currentRecordIndex_ = DataSet::NoRecPos;	
+}
+
+void DataSet::resync( int mode )
+{
+	if ( mode & rmExact ) {
+		cursorPositionChanged();
+
+		GetResultType res = getRecord( records_[ records_.size()-1 ], grmCurrent );
+
+		if ( res != grOK ) {
+			throw DatabaseError("Data set unable to modify the record. The record was not found.");
+		}
+	}
+	else {
+
+		if ( (getRecord( records_[ records_.size()-1 ], grmCurrent ) != grOK) &&
+			(getRecord( records_[ records_.size()-1 ], grmNext ) != grOK) ) {
+
+			clearRecords();
+			Event e(this,deDataSetChange);
+			return;
+		}
+
+		if ( mode & rmCenter ) {
+
+		}
+		else {
+
+		}
+
+		activateRecords();
+
+		try {
+			getNextRecords();
+		}
+		catch (...){
+
+		}
+	}
+
+	Event e(this,deDataSetChange);
+	handleDataEvent( &e );
 }
