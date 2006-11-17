@@ -1476,6 +1476,176 @@ UnicodeString Win32LocalePeer::translate( const UnicodeString& id )
 	return "";
 }
 
+
+
+//shamelessly ripped off from MFC
+
+#define MIN_DATE                (-657434L)  // about year 100
+#define MAX_DATE                2958465L    // about year 9999
+#define HALF_SECOND  (1.0/172800.0)
+
+int monthDays[13] =
+	{0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365};
+
+bool DateTimeFromOleDate(DATE src, DateTime& dest )
+{
+	struct tm tmDest;
+
+	// The legal range does not actually span year 0 to 9999.
+	if (src > MAX_DATE || src < MIN_DATE) // about year 100 to about 9999
+		return false;
+
+	long nDays;             // Number of days since Dec. 30, 1899
+	long nDaysAbsolute;     // Number of days since 1/1/0
+	long nSecsInDay;        // Time in seconds since midnight
+	long nMinutesInDay;     // Minutes in day
+
+	long n400Years;         // Number of 400 year increments since 1/1/0
+	long n400Century;       // Century within 400 year block (0,1,2 or 3)
+	long n4Years;           // Number of 4 year increments since 1/1/0
+	long n4Day;             // Day within 4 year block
+							//  (0 is 1/1/yr1, 1460 is 12/31/yr4)
+	long n4Yr;              // Year within 4 year block (0,1,2 or 3)
+	BOOL bLeap4 = TRUE;     // TRUE if 4 year block includes leap year
+
+	double dblDate = src; // tempory serial date
+
+	// If a valid date, then this conversion should not overflow
+	nDays = (long)dblDate;
+
+	// Round to the second
+	dblDate += ((src > 0.0) ? HALF_SECOND : -HALF_SECOND);
+
+	nDaysAbsolute = (long)dblDate + 693959L; // Add days from 1/1/0 to 12/30/1899
+
+	dblDate = fabs(dblDate);
+	nSecsInDay = (long)((dblDate - floor(dblDate)) * 86400.);
+
+	// Calculate the day of week (sun=1, mon=2...)
+	//   -1 because 1/1/0 is Sat.  +1 because we want 1-based
+	tmDest.tm_wday = (int)((nDaysAbsolute - 1) % 7L) + 1;
+
+	// Leap years every 4 yrs except centuries not multiples of 400.
+	n400Years = (long)(nDaysAbsolute / 146097L);
+
+	// Set nDaysAbsolute to day within 400-year block
+	nDaysAbsolute %= 146097L;
+
+	// -1 because first century has extra day
+	n400Century = (long)((nDaysAbsolute - 1) / 36524L);
+
+	// Non-leap century
+	if (n400Century != 0)
+	{
+		// Set nDaysAbsolute to day within century
+		nDaysAbsolute = (nDaysAbsolute - 1) % 36524L;
+
+		// +1 because 1st 4 year increment has 1460 days
+		n4Years = (long)((nDaysAbsolute + 1) / 1461L);
+
+		if (n4Years != 0)
+			n4Day = (long)((nDaysAbsolute + 1) % 1461L);
+		else
+		{
+			bLeap4 = FALSE;
+			n4Day = (long)nDaysAbsolute;
+		}
+	}
+	else
+	{
+		// Leap century - not special case!
+		n4Years = (long)(nDaysAbsolute / 1461L);
+		n4Day = (long)(nDaysAbsolute % 1461L);
+	}
+
+	if (bLeap4)
+	{
+		// -1 because first year has 366 days
+		n4Yr = (n4Day - 1) / 365;
+
+		if (n4Yr != 0)
+			n4Day = (n4Day - 1) % 365;
+	}
+	else
+	{
+		n4Yr = n4Day / 365;
+		n4Day %= 365;
+	}
+
+	// n4Day is now 0-based day of year. Save 1-based day of year, year number
+	tmDest.tm_yday = (int)n4Day + 1;
+	tmDest.tm_year = n400Years * 400 + n400Century * 100 + n4Years * 4 + n4Yr;
+
+	// Handle leap year: before, on, and after Feb. 29.
+	if (n4Yr == 0 && bLeap4)
+	{
+		// Leap Year
+		if (n4Day == 59)
+		{
+			/* Feb. 29 */
+			tmDest.tm_mon = 2;
+			tmDest.tm_mday = 29;
+			goto DoTime;
+		}
+
+		// Pretend it's not a leap year for month/day comp.
+		if (n4Day >= 60)
+			--n4Day;
+	}
+
+	// Make n4DaY a 1-based day of non-leap year and compute
+	//  month/day for everything but Feb. 29.
+	++n4Day;
+
+	// Month number always >= n/32, so save some loop time */
+	for (tmDest.tm_mon = (n4Day >> 5) + 1;
+		n4Day > monthDays[tmDest.tm_mon]; tmDest.tm_mon++);
+
+	tmDest.tm_mday = (int)(n4Day - monthDays[tmDest.tm_mon-1]);
+
+DoTime:
+	if (nSecsInDay == 0)
+		tmDest.tm_hour = tmDest.tm_min = tmDest.tm_sec = 0;
+	else
+	{
+		tmDest.tm_sec = (int)nSecsInDay % 60L;
+		nMinutesInDay = nSecsInDay / 60L;
+		tmDest.tm_min = (int)nMinutesInDay % 60;
+		tmDest.tm_hour = (int)nMinutesInDay / 60;
+	}
+
+
+
+	dest.set( tmDest.tm_year, tmDest.tm_mon+1, tmDest.tm_mday, 
+				tmDest.tm_hour, tmDest.tm_min, tmDest.tm_sec );
+
+
+	return true;
+}
+
+
+
+
+DateTime Win32LocalePeer::toDateTime( const UnicodeString& str )
+{
+	DateTime result;
+
+	OLECHAR* tmp = new OLECHAR[str.size()+1];
+	memset( tmp, 0, sizeof(OLECHAR) * str.size()+1 );
+
+	str.copy( tmp, str.size() );
+
+	DATE d;
+	VarDateFromStr( tmp, lcid_, 0, &d );
+
+	delete [] tmp;
+
+
+	DateTimeFromOleDate( d, result );
+
+	return result;
+}
+
 UnicodeString Win32LocalePeer::toStringFromDate( const DateTime& val, const UnicodeString& format )
 {
 	UnicodeString result;
