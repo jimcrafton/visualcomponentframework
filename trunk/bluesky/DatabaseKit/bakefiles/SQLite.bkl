@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <include file="SQLiteFiles.bkl"/>
+
+    <template id="SQLite_base">
+        <libname>$(vcf.getLibFilename( 'sqlite' ))</libname>
+
+        <headers>$(SQLITE_HDR)</headers>
+        <sources>$(SQLITE_SRC)</sources>
+
+        <define>OS_WIN</define>
+        <define>NO_TCL</define>
+        <define>SQLITE_ENABLE_COLUMN_METADATA</define>
+    </template>
+
+    <lib id="SQLite_lib" template="SQLite_base,base,vcf_lib_clean">
+    </lib>
+
+</makefile>

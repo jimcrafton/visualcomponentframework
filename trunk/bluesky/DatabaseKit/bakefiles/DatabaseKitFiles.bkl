@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <set var="DATABASEKIT_HDR" hints="files">
+        ../Database.h
+        ../DatabaseError.h
+        ../DatabaseKit.h
+        ../DataBaseKitRTTI.inl
+        ../DatabaseToolkit.h
+        ../DataField.h
+        ../DataLink.h
+        ../DataSet.h
+        ../DataSource.h
+        ../FieldDefinitions.h
+        ../SQLite3Kit.h
+        ../SQLiteDatabase.h
+        ../SQLiteDataSet.h
+        ../StringList.h
+        ../Transaction.h
+    </set>
+
+    <set var="DATABASEKIT_SRC" hints="files">
+        ../Database.cpp
+        ../DatabaseKit.cpp
+        ../DatabaseToolkit.cpp
+        ../DataField.cpp
+        ../DataLink.cpp
+        ../DataSet.cpp
+        ../DataSource.cpp
+        ../FieldDefinitions.cpp
+        ../SQLiteDatabase.cpp
+        ../SQLiteDataSet.cpp
+        ../StringList.cpp
+        ../Transaction.cpp
+    </set>
+
+</makefile>
