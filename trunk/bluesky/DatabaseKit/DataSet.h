@@ -245,6 +245,13 @@ namespace VCF {
 		void setFilterOptions( int val );
 
 		//fields
+
+		bool getFieldNames( std::vector<String>& fieldNames );
+
+		const FieldDefinitions& getFieldDefinitions() {
+			return *fieldDefs_;
+		}
+
 		Enumerator<DataField*>* getFields();
 
 		std::vector<DataField*>& getFieldsArray() {
@@ -352,7 +359,8 @@ namespace VCF {
 		void freeFieldBuffers();
 
 		void cursorPositionChanged();
-			
+
+		void checkRequiredFields();
 
 		bool active_;
         Database* db_;

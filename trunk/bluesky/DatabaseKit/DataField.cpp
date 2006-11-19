@@ -269,7 +269,10 @@ void DataField::setData( const unsigned char* buffer, size_t bufferSize )
 	dataSet_->setFieldData( this, buffer, bufferSize );
 }
 
-
+bool DataField::isNull()
+{
+	return !getData( NULL, 0 );
+}
 
 
 
