@@ -512,13 +512,26 @@ bool SQLiteDataSet::getFieldData( DataField* field, unsigned char* buffer, size_
 		if ( field->getFieldNumber() == i ) {
 			DataSet::Record* record = records_[ activeRecordIndex_ ];
 
-			size_t len = minVal<>( bufferSize, (size_t)field->getSize() );
-			memcpy( buffer, &record->buffer[bufferOffset], len );
-
-			if ( dftString == field->getDataType() ) {
-				buffer[len-1] = 0;
+			if ( (NULL != buffer) && (bufferSize > 0 ) ) {
+				size_t len = minVal<>( bufferSize, (size_t)field->getSize() );
+				memcpy( buffer, &record->buffer[bufferOffset], len );
+				
+				if ( dftString == field->getDataType() ) {
+					buffer[len-1] = 0;
+				}
 			}
-			result = true;
+
+			//we need to determine if the data actually has any "content",
+			//in other words is it NULL. For the moment we'll loop
+			//through all the bytes and see if they are all zeroed out.
+			//this is potentiall kind of stupid, so maybe there is a better
+			//way???
+			for (int i=0;i<field->getSize();i++ ) {
+				if ( record->buffer[bufferOffset+i] > 0 ) {
+					result = true;
+					break;
+				}
+			}
 			
 			break;
 		}

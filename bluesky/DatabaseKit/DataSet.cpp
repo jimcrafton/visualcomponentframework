@@ -104,6 +104,32 @@ void DataSet::close()
     setActive( false );
 }
 
+bool DataSet::getFieldNames( std::vector<String>& fieldNames )
+{
+	fieldNames.clear();
+
+	if ( fields_->empty() ) {
+		updateFieldDefs();
+
+		std::vector<FieldDefinition>& defs = fieldDefs_->fields();
+		for ( size_t i=0;i<defs.size();i++ ) {			 
+			fieldNames.push_back( defs[i].name );
+		}
+	}
+	else {
+		DataFieldArray::Vector::iterator it = fields_->begin();
+		while ( it != fields_->end() ) {
+			DataField* field = *it;
+			
+			fieldNames.push_back( field->getName() );
+			
+			++it;
+		}
+	}
+
+	return !fieldNames.empty();
+}
+
 void DataSet::updateFieldDefs()
 {
 	if ( !fieldDefs_->isUpdated() ) {
@@ -392,6 +418,25 @@ void DataSet::deleteRecord()
 
 }
 
+void DataSet::checkRequiredFields()
+{
+	DataFieldArray::Vector::iterator it = fields_->begin();
+	while ( it != fields_->end() ) {
+		DataField* field = *it;
+
+		if ( field->isRequired() && 
+				(!field->isReadOnly()) && 
+				(field->getKind() == fkData) &&
+				field->isNull() ) {
+
+			//focus control here somehow...
+			throw DatabaseError( Format("Field \"%s\" is a required field and needs data.") % field->getDisplayName() );
+		}
+
+		++it;
+	}
+}
+
 void DataSet::post()
 {
 	updateRecord();
@@ -400,6 +445,8 @@ void DataSet::post()
 		case dssEdit : case dssInsert : {
 			Event e(this,deCheckBrowseMode);
 			handleDataEvent(&e);
+
+			checkRequiredFields();
 
 			Event e2(this,0);
 			BeforePost.fireEvent(&e2);
@@ -463,6 +510,9 @@ void DataSet::openData()
 void DataSet::setParam( const String& param, VariantData value )
 {
     params_[param] = value;
+
+	Event e(this,dePropertyChange);
+	handleDataEvent( &e );
 }
 
 VariantData DataSet::getParam ( const String& param )

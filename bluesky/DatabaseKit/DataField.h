@@ -135,6 +135,8 @@ namespace VCF {
 
 		void setIndex( size_t val );
 
+		bool isNull();
+
 		bool getData( unsigned char* buffer, size_t bufferSize );
 
 		void setData( const unsigned char* buffer, size_t bufferSize ) ;
