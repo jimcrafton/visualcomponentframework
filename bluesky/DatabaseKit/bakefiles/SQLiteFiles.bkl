@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="SQLITE_HDR" hints="files">
+        ../DBProviders/sqlite/btree.h
+        ../DBProviders/sqlite/hash.h
+        ../DBProviders/sqlite/keywordhash.h
+        ../DBProviders/sqlite/opcodes.h
+        ../DBProviders/sqlite/os.h
+        ../DBProviders/sqlite/os_common.h
+        ../DBProviders/sqlite/pager.h
+        ../DBProviders/sqlite/parse.h
+        ../DBProviders/sqlite/sqlite3.h
+        ../DBProviders/sqlite/sqliteInt.h
+        ../DBProviders/sqlite/vdbe.h
+        ../DBProviders/sqlite/vdbeInt.h
+    </set>
+
+    <set var="SQLITE_SRC" hints="files">
+        ../DBProviders/sqlite/alter.c
+        ../DBProviders/sqlite/analyze.c
+        ../DBProviders/sqlite/attach.c
+        ../DBProviders/sqlite/auth.c
+        ../DBProviders/sqlite/btree.c
+        ../DBProviders/sqlite/build.c
+        ../DBProviders/sqlite/callback.c
+        ../DBProviders/sqlite/complete.c
+        ../DBProviders/sqlite/date.c
+        ../DBProviders/sqlite/delete.c
+        ../DBProviders/sqlite/expr.c
+        ../DBProviders/sqlite/func.c
+        ../DBProviders/sqlite/hash.c
+        ../DBProviders/sqlite/insert.c
+        ../DBProviders/sqlite/legacy.c
+        ../DBProviders/sqlite/main.c
+        ../DBProviders/sqlite/opcodes.c
+        ../DBProviders/sqlite/os.c
+        ../DBProviders/sqlite/os_os2.c
+        ../DBProviders/sqlite/os_unix.c
+        ../DBProviders/sqlite/os_win.c
+        ../DBProviders/sqlite/pager.c
+        ../DBProviders/sqlite/parse.c
+        ../DBProviders/sqlite/pragma.c
+        ../DBProviders/sqlite/prepare.c
+        ../DBProviders/sqlite/printf.c
+        ../DBProviders/sqlite/random.c
+        ../DBProviders/sqlite/select.c
+        ../DBProviders/sqlite/shell.c
+        ../DBProviders/sqlite/table.c
+        ../DBProviders/sqlite/tclsqlite.c
+        ../DBProviders/sqlite/tokenize.c
+        ../DBProviders/sqlite/trigger.c
+        ../DBProviders/sqlite/update.c
+        ../DBProviders/sqlite/utf.c
+        ../DBProviders/sqlite/util.c
+        ../DBProviders/sqlite/vacuum.c
+        ../DBProviders/sqlite/vdbe.c
+        ../DBProviders/sqlite/vdbeapi.c
+        ../DBProviders/sqlite/vdbeaux.c
+        ../DBProviders/sqlite/vdbefifo.c
+        ../DBProviders/sqlite/vdbemem.c
+        ../DBProviders/sqlite/where.c
+    </set>
+
+</makefile>
