@@ -325,6 +325,8 @@ namespace VCF {
 
 		virtual void internal_refresh() = 0;
 
+		virtual void internal_edit() = 0;
+
 		virtual GetResultType getRecord( Record* record, GetRecordMode mode ) = 0;		
 
 		virtual Record* allocateRecordData() = 0;

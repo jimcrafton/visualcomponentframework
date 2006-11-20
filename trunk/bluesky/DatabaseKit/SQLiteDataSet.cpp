@@ -298,8 +298,6 @@ void SQLiteDataSet::internal_first()
 	VCF_ASSERT( NULL != currentStmt_ );
 
 	int res = sqlite3_reset(currentStmt_);
-
-	res = sqlite3_step(currentStmt_);
 }
 		
 GetResultType SQLiteDataSet::getRecord( DataSet::Record* record, GetRecordMode mode )
@@ -576,10 +574,55 @@ void SQLiteDataSet::setFieldData( DataField* field, const unsigned char* buffer,
 
 void SQLiteDataSet::internal_post()
 {
-	
+	DataSet::Record* record = records_[ activeRecordIndex_ ];
+
+	size_t bufferOffset = 0;
+
+	int res = 0;
+	for ( size_t i=0;i<fields_->size();i++ ) {
+		DataField* field = fields_()[i];
+		switch ( field->getDataType() ) {
+			case dftString : {
+				const char* text = (const char*)&record->buffer[bufferOffset];
+
+				//Note - it might be more efficient at some point to see if there
+				//is a way to use SQLITE_STATIC here...
+				res = sqlite3_bind_text( currentStmt_, i, text, field->getSize(), SQLITE_TRANSIENT );
+			}
+			break;
+
+			case dftFloat : {
+				double val = 0;
+				memcpy( &val, &record->buffer[bufferOffset], field->getSize() );
+				res = sqlite3_bind_double( currentStmt_, i, val );
+			}
+			break;
+
+			case dftWord : case dftSmallint : case dftInteger : {
+				int val = 0;
+				memcpy( &val, &record->buffer[bufferOffset], field->getSize() );
+				res = sqlite3_bind_int( currentStmt_, i, val );
+			}
+			break;
+		}
+
+		if ( res != SQLITE_OK ) {
+			throw DatabaseError( Format("Error writing to field \"%s\". Error returned was %s.") % 
+									field->getName() % 
+									SQLiteDatabase::errorMessageFromHandle(dbHandle_) );
+		}
+		bufferOffset += field->getSize();
+	}
+
+	VCF_ASSERT( bufferOffset == record->size );
 }
 
 void SQLiteDataSet::internal_refresh()
+{
+
+}
+
+void SQLiteDataSet::internal_edit()
 {
 
 }

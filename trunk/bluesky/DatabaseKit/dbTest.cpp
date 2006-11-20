@@ -77,9 +77,21 @@ private:
 Current test results (Nov 18 2006) with release build
 Iterating through a table with 2715 rows, 4 colums
 
-Simple C++ layer:	0.00265996 seconds
-DatabaseKit layer:	0.00615197 seconds
+Simple C++ layer:			0.00265996 seconds
+DatabaseKit layer:			0.00615197 seconds
 
+
+To compare to a Delphi 3 project
+that does basically the same thing, only with 639 rows (4 columns).
+The only difference in databases, was the Delphi project
+used a Paradox 5 database file, and the C++ project used a 
+SQLite database file.
+
+Simple C++ layer:			0.00103552 seconds
+DatabaseKit layer:			0.00148251 seconds
+Delphi 3 BDE based layer:	0.00223283 seconds
+
+Time was determined using the Win32 QueryPerformanceXXX API's
 */
 
 
@@ -157,7 +169,8 @@ int main( int argc, char** argv ){
 			
 			System::println( "------------------------------------------------------------------------------" );
 			
-			if ( dataSet->isActive() ) {		
+			if ( dataSet->isActive() ) {
+				size_t rowCount = 0;
 			
 				clock.start();
 
@@ -169,11 +182,70 @@ int main( int argc, char** argv ){
 						//System::println( "Field name: " + field->getName() + " value: " + field->getAsString() );
 					}
 					dataSet->next();
+					rowCount ++;
 				}
 
 				clock.stop();
-				System::println( Format("Iteration took %0.8f seconds.") % clock.duration() );
+				System::println( Format("Iteration took %0.8f seconds for %d rows.") % clock.duration() % rowCount );
 			}			
+
+
+			System::println( "------------------------------------------------------------------------------" );
+			System::println( "Going to first record..." );
+
+			dataSet->first();
+			Enumerator<DataField*>* fields = dataSet->getFields();
+					
+			while ( fields->hasMoreElements() ) {
+				DataField* field = fields->nextElement();
+				System::println( "Field name: " + field->getName() + " value: " + field->getAsString() );
+			}
+
+			System::println( "------------------------------------------------------------------------------" );
+			System::println( "Field access" );
+
+			try {
+				dataSet->fieldByName("Foofer");
+			}
+			catch (BasicException& e ) {
+				System::println( "Error: " + e.getMessage() );
+			}
+
+			try {
+				System::println( "Val: " + dataSet->fieldByName("LastName")->getAsString() );
+			}
+			catch (BasicException& e ) {
+				System::println( "Error: " + e.getMessage() );
+			}
+
+			System::println( "------------------------------------------------------------------------------" );
+
+			System::println( "Editing data." );
+
+			System::println( "Test edit - this should error out because we are not in edit mode." );
+
+			try {
+				dataSet->fieldByName("LastName")->setAsString("Laczinski");
+			}
+			catch (BasicException& e ) {
+				System::println( "Error: " + e.getMessage() );
+			}
+
+
+			try {
+				dataSet->edit();
+
+				dataSet->fieldByName("LastName")->setAsString("Laczinski");
+
+				
+			}
+			catch (BasicException& e ) {
+				System::println( "Error: " + e.getMessage() );
+			}
+
+
+			System::println( "------------------------------------------------------------------------------" );
+
 		}
 		catch ( BasicException& e ) {
 			System::println( "Exception: " + e.getMessage() );

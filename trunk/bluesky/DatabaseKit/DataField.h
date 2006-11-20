@@ -178,6 +178,12 @@ namespace VCF {
 		virtual String getAsString();
 		virtual double getAsFloat();
 		virtual int getAsInteger();
+
+		virtual void setAsBoolean( bool val );
+		virtual void setAsDateTime( const DateTime& val );
+		virtual void setAsString( const String& val );
+		virtual void setAsFloat( const double& val );
+		virtual void setAsInteger( const int& val );
 	protected:
 
 
@@ -254,6 +260,12 @@ namespace VCF {
 		virtual String getAsString();
 		virtual double getAsFloat();
 		virtual int getAsInteger();
+
+		virtual void setAsBoolean( bool val );
+		virtual void setAsDateTime( const DateTime& val );
+		virtual void setAsString( const String& val );
+		virtual void setAsFloat( const double& val );
+		virtual void setAsInteger( const int& val );
 	protected:
 		
 
