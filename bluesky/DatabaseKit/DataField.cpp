@@ -359,6 +359,41 @@ int StringField::getAsInteger()
 }
 
 
+void StringField::setAsBoolean( bool val )
+{
+	setAsString( StringUtils::toString(val) );
+}
+
+void StringField::setAsDateTime( const DateTime& val )
+{
+	
+}
+
+void StringField::setAsString( const String& val )
+{
+	AnsiString s = val;
+	setData( (const unsigned char*)s.c_str(), s.size() );
+}
+
+void StringField::setAsFloat( const double& val )
+{
+	if ( NULL != dataSet_ ) {
+		setAsString( dataSet_->getLocale()->toString( val ) );
+	}
+	else {
+		setAsString( StringUtils::toString(val) );
+	}
+}
+
+void StringField::setAsInteger( const int& val )
+{
+	if ( NULL != dataSet_ ) {
+		setAsString( dataSet_->getLocale()->toString( val ) );
+	}
+	else {
+		setAsString( StringUtils::toString(val) );
+	}
+}
 
 
 
@@ -579,3 +614,37 @@ int IntegerField::getAsInteger()
 
 	return result;
 }
+
+
+void IntegerField::setAsBoolean( bool val )
+{
+	setAsInteger( (int) val );
+}
+
+void IntegerField::setAsDateTime( const DateTime& val )
+{
+	setAsInteger( (int) val.getCTime() );
+}
+
+void IntegerField::setAsString( const String& val )
+{
+	if ( NULL != dataSet_ ) {
+		setAsInteger( dataSet_->getLocale()->toInt( val ) );
+	}
+	else {
+		setAsInteger( StringUtils::fromStringAsInt( val ) );
+	}	
+}
+
+void IntegerField::setAsFloat( const double& val )
+{
+	setAsInteger( (int)val );
+}
+
+void IntegerField::setAsInteger( const int& val )
+{
+	int tmp = val;
+
+	setData( (const unsigned char*)&tmp, sizeof(tmp) );
+}
+

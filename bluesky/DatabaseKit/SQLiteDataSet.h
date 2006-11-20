@@ -49,6 +49,8 @@ namespace VCF {
 		virtual void internal_post();
 
 		virtual void internal_refresh();
+
+		virtual void internal_edit();
 		
 		virtual GetResultType getRecord( Record* record, GetRecordMode mode );
 

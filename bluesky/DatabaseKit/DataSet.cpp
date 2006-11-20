@@ -405,7 +405,33 @@ void DataSet::refresh()
 
 void DataSet::edit()
 {
+	if ( !((state_ & dssEdit) || (state_ & dssInsert)) ) {
+		//no insert yet...
+		checkMode( cmsBrowse );
 
+		if ( !canModify_ ) {
+			throw DatabaseError( "Can't modify, the Dataset is in read-only mode." );
+		}
+
+		Event e1(this,0);
+		BeforeEdit.fireEvent(&e1);
+
+		try {
+			internal_edit();
+		}
+		catch ( ... ) {
+			Event e2(this,0);
+			EditError.fireEvent(&e2);
+		}
+
+		setState( dssEdit );
+
+		Event e3(this,deRecordChange);
+		handleDataEvent( &e3 );
+
+		Event e4(this,0);
+		AfterEdit.fireEvent(&e4);
+	}
 }
 
 void DataSet::appendRecord()
