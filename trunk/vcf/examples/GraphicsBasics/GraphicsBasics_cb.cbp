@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="4" />
+	<FileVersion major="1" minor="5" />
 	<Project>
 		<Option title="GraphicsBasics" />
+		<Option default_target="" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="mgcc\Release\GraphicsBasics_mgcc.exe" />
+				<Option output="mgcc\Release\GraphicsBasics_mgcc.exe" prefix_auto="0" extension_auto="0" />
 				<Option object_output="mgcc\Release\" />
-				<Option external_deps="$(VCF_LIB)\libFoundationKit_mgcc.a;$(VCF_LIB)\libGraphicsKit_mgcc.a;$(VCF_LIB)\libApplicationKit_mgcc.a;" />
+				<Option external_deps="$(VCF_ROOT)\lib\libFoundationKit_mgcc.a;$(VCF_ROOT)\lib\libGraphicsKit_mgcc.a;$(VCF_ROOT)\lib\libApplicationKit_mgcc.a;" />
 				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option includeInTargetAll="1" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Option projectIncludeDirsRelation="2" />
 				<Option projectResourceIncludeDirsRelation="2" />
@@ -59,12 +60,11 @@
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="mgcc\Debug\GraphicsBasics_mgcc_d.exe" />
+				<Option output="mgcc\Debug\GraphicsBasics_mgcc_d.exe" prefix_auto="0" extension_auto="0" />
 				<Option object_output="mgcc\Debug\" />
-				<Option external_deps="$(VCF_LIB)\libFoundationKit_mgcc_d.a;$(VCF_LIB)\libGraphicsKit_mgcc_d.a;$(VCF_LIB)\libApplicationKit_mgcc_d.a;" />
+				<Option external_deps="$(VCF_ROOT)\lib\libFoundationKit_mgcc_d.a;$(VCF_ROOT)\lib\libGraphicsKit_mgcc_d.a;$(VCF_ROOT)\lib\libApplicationKit_mgcc_d.a;" />
 				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option includeInTargetAll="1" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Option projectIncludeDirsRelation="2" />
 				<Option projectResourceIncludeDirsRelation="2" />
@@ -112,6 +112,9 @@
 				</Environment>
 			</Target>
 		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="mingw_Release;mingw_Debug;" />
+		</VirtualTargets>
 		<Compiler>
 			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
 			<Add directory='&quot;$(VCF_ROOT)\src\thirdparty\common\agg\include&quot;' />

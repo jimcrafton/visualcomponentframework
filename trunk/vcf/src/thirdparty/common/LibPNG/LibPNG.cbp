@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="4" />
+	<FileVersion major="1" minor="5" />
 	<Project>
 		<Option title="LibPNG" />
-		<Option default_target="-1" />
+		<Option default_target="" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="../../../../lib/libLibPNG_$(COMPILER)$(COMPILER_VER)_s.a" />
+				<Option output="..\..\..\..\lib\libLibPNG_$(COMPILER)$(COMPILER_VER)_s.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)/Release/" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\Release\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
-				<Option includeInTargetAll="1" />
 				<Option createDefFile="1" />
 				<Option projectCompilerOptionsRelation="2" />
 				<Option projectIncludeDirsRelation="2" />
@@ -44,12 +44,11 @@
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="../../../../lib/libLibPNG_$(COMPILER)$(COMPILER_VER)_sd.a" />
+				<Option output="..\..\..\..\lib\libLibPNG_$(COMPILER)$(COMPILER_VER)_sd.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)/Debug/" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\Debug\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
-				<Option includeInTargetAll="1" />
 				<Option createDefFile="1" />
 				<Option projectIncludeDirsRelation="2" />
 				<Option projectResourceIncludeDirsRelation="2" />
@@ -77,9 +76,9 @@
 				</Environment>
 			</Target>
 			<Target title="linux_Debug">
-				<Option output="../../../../lib/libLibPNG_sd.a" />
+				<Option output="..\..\..\..\lib\libLibPNG_sd.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="linux/Debug/" />
+				<Option object_output="linux\Debug\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option projectIncludeDirsRelation="2" />
@@ -101,9 +100,9 @@
 				</Environment>
 			</Target>
 			<Target title="linux_Release">
-				<Option output="../../../../lib/libLibPNG_s.a" />
+				<Option output="..\..\..\..\lib\libLibPNG_s.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="linux/Release/" />
+				<Option object_output="linux\Release\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option projectIncludeDirsRelation="2" />
@@ -128,9 +127,12 @@
 				</Environment>
 			</Target>
 		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="mingw_Release;mingw_Debug;" />
+		</VirtualTargets>
 		<Compiler>
-			<Add directory="../ZLib" />
-			<Add directory="../../../../src" />
+			<Add directory="..\ZLib" />
+			<Add directory="..\..\..\..\src" />
 		</Compiler>
 		<Unit filename="png.c">
 			<Option compilerVar="CC" />

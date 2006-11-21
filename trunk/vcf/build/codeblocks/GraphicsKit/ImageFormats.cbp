@@ -47,8 +47,8 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="FreeImage_$(COMPILER)$(COMPILER_VER)_s.a" />
-					<Add directory="$(VCF_BIN)" />
-					<Add directory="$(VCF_LIB)" />
+					<Add directory="$(VCF_ROOT)/bin" />
+					<Add directory="$(VCF_ROOT)/lib" />
 				</Linker>
 				<Environment>
 					<Variable name="COMPILER" value="_mgcc" />
@@ -96,8 +96,8 @@
 				</ResourceCompiler>
 				<Linker>
 					<Add library="FreeImage_$(COMPILER)$(COMPILER_VER)_sd.a" />
-					<Add directory="$(VCF_BIN)" />
-					<Add directory="$(VCF_LIB)" />
+					<Add directory="$(VCF_ROOT)/bin" />
+					<Add directory="$(VCF_ROOT)/lib" />
 				</Linker>
 				<Environment>
 					<Variable name="COMPILER" value="_mgcc" />
