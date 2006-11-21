@@ -364,7 +364,7 @@ namespace VCF {
 
 		void checkRequiredFields();
 
-		void setRecordData( Record* record, size_t offset, const unsigned char* buffer, size_t bufferSize );
+		void setRecordData( Record* record, size_t offset, size_t column, const unsigned char* buffer, size_t bufferSize );
 
 		bool active_;
         Database* db_;
