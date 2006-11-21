@@ -241,7 +241,16 @@ int main( int argc, char** argv ){
 			System::println( "Test edit - this should NOT error out because we are in edit mode." );
 			try {
 				dataSet->edit();
-				dataSet->fieldByName("LastName")->setAsString("Laczinski");				
+
+				System::println( "LastName: " + dataSet->fieldByName("LastName")->getAsString() );
+
+				dataSet->fieldByName("LastName")->setAsString("Laczinski");
+
+				dataSet->post();
+
+				dataSet->first();
+
+				System::println( "After the post(), the first record's LastName: " + dataSet->fieldByName("LastName")->getAsString() );
 			}
 			catch (BasicException& e ) {
 				System::println( "Error: " + e.getMessage() );

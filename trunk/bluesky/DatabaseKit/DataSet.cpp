@@ -801,7 +801,65 @@ void DataSet::resync( int mode )
 }
 
 
-void DataSet::setRecordData( Record* record, size_t offset, const unsigned char* buffer, size_t bufferSize )
+void DataSet::setRecordData( Record* record, size_t offset, size_t column, const unsigned char* buffer, size_t bufferSize )
 {
+	size_t newRecordSize = 0;
+	size_t col = 0;	
 	
+
+	std::vector<DataField*>::iterator it = fields_->begin();
+	while ( it != fields_->end() ) {
+		DataField* field = *it;
+		if ( col == column ) {
+			newRecordSize += bufferSize;
+		}
+		else {
+			newRecordSize += field->getSize();
+		}
+		
+		++it;
+		col++;
+	}
+
+	if ( newRecordSize != record->size ) {
+		//need to resize the memory :(
+		unsigned char* tmp = new unsigned char[newRecordSize];
+
+		size_t newOffset = 0;
+		size_t oldOffset = 0;
+		col = 0;
+		it = fields_->begin();
+
+		while ( it != fields_->end() ) {
+			DataField* field = *it;
+			if ( col == column ) {
+
+				memcpy( &tmp[newOffset], buffer, bufferSize );
+
+				oldOffset += field->getSize();
+
+				field->setSize( bufferSize );
+				
+				newOffset += bufferSize;
+			}
+			else {
+				memcpy( &tmp[newOffset], &record->buffer[oldOffset], field->getSize() );
+
+				oldOffset += field->getSize();
+				newOffset += field->getSize();
+			}
+			
+			++it;
+			col ++;
+		}
+
+		delete [] record->buffer;
+
+		record->size = newRecordSize;
+		record->buffer = tmp;
+	}
+	else { //Yeah, we get to do a straight memcpy
+		memcpy( &record->buffer[offset], buffer, bufferSize );
+	}
+
 }

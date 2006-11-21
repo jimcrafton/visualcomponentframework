@@ -281,7 +281,7 @@ bool DataField::isNull()
 
 StringField::StringField()
 {
-
+	kind_ = fkData;
 }
 
 
@@ -372,7 +372,11 @@ void StringField::setAsDateTime( const DateTime& val )
 void StringField::setAsString( const String& val )
 {
 	AnsiString s = val;
-	setData( (const unsigned char*)s.c_str(), s.size() );
+	char* tmp = new char[s.size()+1];
+	s.copy(tmp,s.size());
+	tmp[s.size()] = 0;
+
+	setData( (const unsigned char*)tmp, s.size()+1 );
 }
 
 void StringField::setAsFloat( const double& val )
@@ -401,7 +405,7 @@ void StringField::setAsInteger( const int& val )
 
 BooleanField::BooleanField()
 {
-
+	kind_ = fkData;
 }
 
 
@@ -447,7 +451,7 @@ int BooleanField::getAsInteger()
 
 DateTimeField::DateTimeField()
 {
-
+	kind_ = fkData;
 }
 
 
@@ -504,7 +508,7 @@ int DateTimeField::getAsInteger()
 
 DoubleField::DoubleField()
 {
-
+	kind_ = fkData;
 }
 
 
@@ -557,7 +561,7 @@ int DoubleField::getAsInteger()
 
 IntegerField::IntegerField()
 {
-
+	kind_ = fkData;
 }
 
 

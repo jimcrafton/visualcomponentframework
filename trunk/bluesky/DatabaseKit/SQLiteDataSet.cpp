@@ -558,8 +558,6 @@ void SQLiteDataSet::setFieldData( DataField* field, const unsigned char* buffer,
 
 		DataSet::Record* record = records_[ activeRecordIndex_ ];
 
-		VCF_ASSERT( bufferSize <= record->size );
-
 		size_t bufferOffset = 0;
 		for ( size_t i=0;i<fields_->size();i++ ) {
 			DataField* aField = fields_()[i];
@@ -568,19 +566,15 @@ void SQLiteDataSet::setFieldData( DataField* field, const unsigned char* buffer,
 
 				field->validate( buffer, bufferSize );
 		
-				setRecordData( record, bufferOffset, buffer, bufferSize );
-
-				//memcpy( &record->buffer[bufferOffset], buffer, bufferSize );
+				setRecordData( record, bufferOffset, i, buffer, bufferSize );
 
 				if ( !( (state_ & dssCalcFields) || (state_ & dssFilter) /*|| (state_ & dssNewValue)*/ ) ) {
-					Event e(this,deFieldChange);
-					e.setUserData(field);
+					Event e(field,deFieldChange);
+					e.setUserData(this);
 					handleDataEvent(&e);
 				}
 				break;
 			}
-
-			bufferOffset += aField->getSize();
 		}
 	}
 }
