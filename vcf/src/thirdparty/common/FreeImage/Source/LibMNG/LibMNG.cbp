@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="4" />
+	<FileVersion major="1" minor="5" />
 	<Project>
 		<Option title="LibMNG" />
 		<Option pch_mode="0" />
-		<Option default_target="-1" />
+		<Option default_target="" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\..\..\..\..\lib\libLibMNG_$(COMPILER)$(COMPILER_VER)_s.a" />
+				<Option output="..\..\..\..\..\..\lib\libLibMNG_$(COMPILER)$(COMPILER_VER)_s.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
 				<Option object_output="$(COMPILER)$(COMPILER_VER)\Release\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
-				<Option includeInTargetAll="1" />
 				<Option createDefFile="1" />
 				<Option projectIncludeDirsRelation="2" />
 				<Option projectResourceIncludeDirsRelation="2" />
@@ -44,12 +44,11 @@
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\..\..\..\..\lib\libLibMNG_$(COMPILER)$(COMPILER_VER)_sd.a" />
+				<Option output="..\..\..\..\..\..\lib\libLibMNG_$(COMPILER)$(COMPILER_VER)_sd.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
 				<Option object_output="$(COMPILER)$(COMPILER_VER)\Debug\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
-				<Option includeInTargetAll="1" />
 				<Option createDefFile="1" />
 				<Option projectIncludeDirsRelation="2" />
 				<Option projectResourceIncludeDirsRelation="2" />
@@ -77,6 +76,9 @@
 				</Environment>
 			</Target>
 		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="mingw_Release;mingw_Debug;" />
+		</VirtualTargets>
 		<Compiler>
 			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
 			<Add directory="..\..\..\ZLib" />

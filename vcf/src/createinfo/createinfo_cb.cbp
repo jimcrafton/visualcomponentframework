@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="4" />
+	<FileVersion major="1" minor="5" />
 	<Project>
 		<Option title="createinfo" />
+		<Option default_target="" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\bin\createinfo.exe" />
+				<Option output="..\..\bin\createinfo.exe" prefix_auto="0" extension_auto="0" />
 				<Option object_output="mgcc\Release\" />
 				<Option external_deps="..\..\lib\libFoundationKit_mgcc.a;" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
-				<Option includeInTargetAll="1" />
 				<Option projectResourceIncludeDirsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
@@ -24,7 +25,7 @@
 				</Linker>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\bin\createinfo.exe" />
+				<Option output="..\..\bin\createinfo.exe" prefix_auto="0" extension_auto="0" />
 				<Option object_output="mgcc\Debug\" />
 				<Option external_deps="..\..\lib\libFoundationKit_mgcc_d.a;" />
 				<Option type="1" />
@@ -41,6 +42,9 @@
 				</Linker>
 			</Target>
 		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="mingw_Release;" />
+		</VirtualTargets>
 		<Compiler>
 			<Add option="-pipe" />
 			<Add option="-frtti" />

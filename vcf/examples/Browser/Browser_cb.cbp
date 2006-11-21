@@ -9,7 +9,7 @@
 			<Target title="mingw_Release">
 				<Option output="mgcc\Release\Browser_mgcc.exe" />
 				<Option object_output="mgcc\Release\" />
-				<Option external_deps="$(VCF_BIN)\FoundationKit_mgcc;$(VCF_BIN)\GraphicsKit_mgcc;$(VCF_BIN)\ApplicationKit_mgcc;" />
+				<Option external_deps="$(VCF_ROOT)/bin\FoundationKit_mgcc;$(VCF_ROOT)/bin\GraphicsKit_mgcc;$(VCF_ROOT)/bin\ApplicationKit_mgcc;" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option includeInTargetAll="1" />
@@ -63,7 +63,7 @@
 			<Target title="mingw_Debug">
 				<Option output="mgcc\Debug\Browser_mgcc_d.exe" />
 				<Option object_output="mgcc\Debug\" />
-				<Option external_deps="$(VCF_BIN)\FoundationKit_mgcc_d;$(VCF_BIN)\GraphicsKit_mgcc_d;$(VCF_BIN)\ApplicationKit_mgcc_d;" />
+				<Option external_deps="$(VCF_ROOT)/bin\FoundationKit_mgcc_d;$(VCF_ROOT)/bin\GraphicsKit_mgcc_d;$(VCF_ROOT)/bin\ApplicationKit_mgcc_d;" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option includeInTargetAll="1" />
@@ -120,7 +120,7 @@
 			<Add directory='&quot;$(VCF_INCLUDE)\thirdparty\common\agg\include&quot;' />
 		</Compiler>
 		<Linker>
-			<Add directory='&quot;$(VCF_LIB)&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)/lib&quot;' />
 		</Linker>
 		<Unit filename="Browser.cpp">
 			<Option compilerVar="CPP" />

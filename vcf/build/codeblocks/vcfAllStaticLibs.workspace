@@ -23,6 +23,7 @@
 		<Project filename="OpenGLKit\OpenGLKit.cbp">
 			<Depends filename="ApplicationKit\ApplicationKit.cbp" />
 		</Project>
+		<Project filename="RegExKit\RegExKit.cbp" />
 		<Project filename="NetworkKit\NetworkKit.cbp">
 			<Depends filename="FoundationKit\FoundationKit.cbp" />
 		</Project>

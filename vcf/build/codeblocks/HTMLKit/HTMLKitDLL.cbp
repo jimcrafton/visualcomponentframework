@@ -9,7 +9,7 @@
 			<Target title="mingw_Release">
 				<Option output="..\..\..\bin\HTMLKit_mgcc.dll" />
 				<Option object_output="mgcc\ReleaseDLL\" />
-				<Option external_deps="$(VCF_LIB)\libApplicationKit_mgcc.a;" />
+				<Option external_deps="$(VCF_ROOT)/lib\libApplicationKit_mgcc.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option includeInTargetAll="1" />
@@ -82,7 +82,7 @@
 			<Target title="mingw_Debug">
 				<Option output="..\..\..\bin\HTMLKit_mgcc_d.dll" />
 				<Option object_output="mgcc\DebugDLL\" />
-				<Option external_deps="$(VCF_LIB)\libApplicationKit_mgcc_d.a;" />
+				<Option external_deps="$(VCF_ROOT)/lib\libApplicationKit_mgcc_d.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option includeInTargetAll="1" />
@@ -165,7 +165,7 @@
 			<Add directory="..\..\resources\win32" />
 		</ResourceCompiler>
 		<Linker>
-			<Add directory='&quot;$(VCF_LIB)&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)/lib&quot;' />
 		</Linker>
 		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLBrowserControl.cpp">
 			<Option compilerVar="CPP" />

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="4" />
+	<FileVersion major="1" minor="5" />
 	<Project>
 		<Option title="paintlib" />
-		<Option default_target="-1" />
+		<Option default_target="" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="" />
 		<Build>
 			<Target title="mingw_Debug">
-				<Option output="../../../../../../lib/libpaintlib_mgcc_sd.a" />
+				<Option output="..\..\..\..\..\..\lib\libpaintlib_mgcc_sd.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="mgcc/Debug/" />
+				<Option object_output="mgcc\Debug\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -34,26 +35,26 @@
 					<Add option="-DUSE_LIBJPEG_LIB" />
 					<Add option="-DUSE_LIBPNG_LIB" />
 					<Add option="-DUSE_ZLIB_LIB" />
-					<Add directory="$(VCF_ROOT)/src" />
+					<Add directory="$(VCF_ROOT)\src" />
 					<Add directory="." />
-					<Add directory="../../common" />
-					<Add directory="../../common/filter" />
-					<Add directory="../../../LibTIFF" />
-					<Add directory="../../../LibJPEG" />
-					<Add directory="../../../LibPNG" />
-					<Add directory="../../../ZLib" />
-					<Add directory="../../../Libungif/lib" />
-					<Add directory="../../../Libcurl/include/" />
+					<Add directory="..\..\common" />
+					<Add directory="..\..\common\filter" />
+					<Add directory="..\..\..\LibTIFF" />
+					<Add directory="..\..\..\LibJPEG" />
+					<Add directory="..\..\..\LibPNG" />
+					<Add directory="..\..\..\ZLib" />
+					<Add directory="..\..\..\Libungif\lib" />
+					<Add directory="..\..\..\Libcurl\include\" />
 				</Compiler>
 				<Linker>
 					<Add library="winmm" />
-					<Add directory="$(VCF_LIB)/" />
+					<Add directory="$(VCF_ROOT)\lib\" />
 				</Linker>
 			</Target>
 			<Target title="mingw_Release">
-				<Option output="../../../../../../lib/libpaintlib_mgcc_s.a" />
+				<Option output="..\..\..\..\..\..\lib\libpaintlib_mgcc_s.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="mgcc/Release/" />
+				<Option object_output="mgcc\Release\" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -78,20 +79,20 @@
 					<Add option="-DUSE_LIBJPEG_LIB" />
 					<Add option="-DUSE_LIBPNG_LIB" />
 					<Add option="-DUSE_ZLIB_LIB" />
-					<Add directory="$(VCF_ROOT)/src" />
+					<Add directory="$(VCF_ROOT)\src" />
 					<Add directory="." />
-					<Add directory="../../common" />
-					<Add directory="../../common/filter" />
-					<Add directory="../../../LibTIFF" />
-					<Add directory="../../../LibJPEG" />
-					<Add directory="../../../LibPNG" />
-					<Add directory="../../../ZLib" />
-					<Add directory="../../../Libungif/lib" />
-					<Add directory="../../../Libcurl/include/" />
+					<Add directory="..\..\common" />
+					<Add directory="..\..\common\filter" />
+					<Add directory="..\..\..\LibTIFF" />
+					<Add directory="..\..\..\LibJPEG" />
+					<Add directory="..\..\..\LibPNG" />
+					<Add directory="..\..\..\ZLib" />
+					<Add directory="..\..\..\Libungif\lib" />
+					<Add directory="..\..\..\Libcurl\include\" />
 				</Compiler>
 				<Linker>
 					<Add library="winmm" />
-					<Add directory="$(VCF_LIB)/" />
+					<Add directory="$(VCF_ROOT)\lib\" />
 				</Linker>
 			</Target>
 			<Environment>
@@ -99,1068 +100,44 @@
 				<Variable name="COMPILER_VER" value="" />
 			</Environment>
 		</Build>
-		<Unit filename="../../Common/config.h">
+		<Unit filename="..\..\Common\config.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="mingw_Debug" />
 			<Option target="mingw_Release" />
 		</Unit>
-		<Unit filename="../../Common/jmemsrc.h">
+		<Unit filename="..\..\Common\jmemsrc.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="mingw_Debug" />
 			<Option target="mingw_Release" />
 		</Unit>
-		<Unit filename="../../Common/tif_msrc.c">
+		<Unit filename="..\..\Common\tif_msrc.c">
 			<Option compilerVar="CC" />
 			<Option target="mingw_Debug" />
 			<Option target="mingw_Release" />
 		</Unit>
-		<Unit filename="../../Common/tif_msrc.h">
+		<Unit filename="..\..\Common\tif_msrc.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="mingw_Debug" />
 			<Option target="mingw_Release" />
 		</Unit>
-		<Unit filename="../../common/Filter/PLFilter.cpp">
+		<Unit filename="..\..\common\Filter\PLFilter.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Debug" />
 			<Option target="mingw_Release" />
 		</Unit>
-		<Unit filename="../../common/Filter/PLFilter.h">
+		<Unit filename="..\..\common\Filter\PLFilter.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
 			<Option target="mingw_Debug" />
 			<Option target="mingw_Release" />
 		</Unit>
-		<Unit filename="../../common/Filter/PLFilterContrast.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterContrast.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterCrop.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterCrop.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterFill.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterFillRect.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterFlip.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterFlip.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterGetAlpha.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterGetAlpha.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterGrayscale.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterGrayscale.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterIntensity.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterIntensity.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterLightness.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterLightness.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterMirror.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterMirror.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterQuantize.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterQuantize.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterResize.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterResize.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterResizeBilinear.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterResizeBilinear.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterResizeBox.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterResizeBox.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterResizeGaussian.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterResizeGaussian.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterResizeHamming.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterResizeHamming.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterThreshold.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterThreshold.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/PLFilterVideoInvert.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/pl2PassScale.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/plcontribdefs.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/plfiltercolorize.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/plfiltercolorize.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/plfilterfliprgb.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/plfilterfliprgb.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/plfilterpixel.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/plfilterrotate.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/plfilterrotate.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/plfiltervideoinvert.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/plhsvconvert.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/plhsvconvert.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/plinplacefilter.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/Filter/plinplacefilter.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/PLObject.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/PLObject.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/config.vc">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/jmemdest.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/jmemdest.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/jmemsrc.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/planybmp.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/planybmp.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/planydec.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/planydec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plbitmap.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plbitmap.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plbmpbase.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plbmpbase.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plbmpdec.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plbmpdec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plbmpenc.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plbmpenc.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plbmpinfo.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plbmpinfo.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plcountedpointer.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pldatasink.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pldatasink.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pldatasrc.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pldatasrc.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pldebug.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pldecoderfactory.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plexcept.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plexcept.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plexif.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plfilesink.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plfilesink.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plfilesrc.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plfilesrc.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plgifdec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pliff85.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pliff85dec.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pliff85dec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pljpegdec.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pljpegdec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pljpegenc.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pljpegenc.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plmemsink.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plmemsink.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plmemsrc.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plmemsrc.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpaintlibdefs.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpcx.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpcxdec.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpcxdec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpgm.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpgmdec.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpgmdec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpicdec.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpicdec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpicenc.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpicenc.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpictdec.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpictdec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpixel24.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpixel32.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpixel8.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpixeldefs.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpixelformat.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpixelformat.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpngdec.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpngdec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpngenc.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpngenc.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpoint.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plppm.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plppmdec.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plppmdec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plprognot.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpsddec.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plpsddec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plrect.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plsgidec.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plsgidec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plstdpch.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plsubbmp.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plsubbmp.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pltga.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pltgadec.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pltgadec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pltiffdec.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pltiffdec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pltiffenc.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pltiffenc.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pltiffencex.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/pltiffencex.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="../../common/plwindefs.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="plStreamSink.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="plStreamSink.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="pldibsect.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="pldibsect.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="plressrc.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="plressrc.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="plwemfdec.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="plwemfdec.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="plwinbmp.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="plwinbmp.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-	</Project>
-=======
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<CodeBlocks_project_file>
-	<FileVersion major="1" minor="4" />
-	<Project>
-		<Option title="paintlib" />
-		<Option default_target="-1" />
-		<Option compiler="gcc" />
-		<Build>
-			<Target title="mingw_Debug">
-				<Option output="..\..\..\..\..\..\lib\libpaintlib_$(COMPILER)$(COMPILER_VER)_sd.a" />
-				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)\Debug\" />
-				<Option type="2" />
-				<Option compiler="gcc" />
-				<Option createDefFile="1" />
-				<Option projectResourceIncludeDirsRelation="0" />
-				<Compiler>
-					<Add option="-W" />
-					<Add option="-g" />
-					<Add option="-frtti" />
-					<Add option="-pipe" />
-					<Add option="-fexceptions" />
-					<Add option="-mthreads" />
-					<Add option="-fmessage-length=0" />
-					<Add option="-Wno-multichar" />
-					<Add option="-D_DEBUG" />
-					<Add option="-D_LIB" />
-					<Add option="-DWIN32" />
-					<Add option="-D_WIN32" />
-					<Add option="-D_WINDOWS" />
-					<Add option="-DVCF_MINGW" />
-					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
-					<Add option="-DUSE_LIBTIFF_LIB" />
-					<Add option="-DUSE_LIBJPEG_LIB" />
-					<Add option="-DUSE_LIBPNG_LIB" />
-					<Add option="-DUSE_ZLIB_LIB" />
-					<Add directory="$(VCF_ROOT)\src" />
-					<Add directory="." />
-					<Add directory="..\..\common" />
-					<Add directory="..\..\common\filter" />
-					<Add directory="..\..\..\LibTIFF" />
-					<Add directory="..\..\..\LibJPEG" />
-					<Add directory="..\..\..\LibPNG" />
-					<Add directory="..\..\..\ZLib" />
-					<Add directory="..\..\..\Libungif\lib" />
-					<Add directory="..\..\..\Libcurl\include\" />
-				</Compiler>
-				<Linker>
-					<Add library="winmm" />
-					<Add directory="$(VCF_LIB)\" />
-				</Linker>
-				<Environment>
-					<Variable name="COMPILER" value="mgcc" />
-					<Variable name="COMPILER_VER" value="" />
-				</Environment>
-			</Target>
-			<Target title="mingw_Release">
-				<Option output="..\..\..\..\..\..\lib\libpaintlib_$(COMPILER)$(COMPILER_VER)_s.a" />
-				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)\Release\" />
-				<Option type="2" />
-				<Option compiler="gcc" />
-				<Option createDefFile="1" />
-				<Option projectResourceIncludeDirsRelation="0" />
-				<Compiler>
-					<Add option="-O2" />
-					<Add option="-W" />
-					<Add option="-frtti" />
-					<Add option="-pipe" />
-					<Add option="-fexceptions" />
-					<Add option="-mthreads" />
-					<Add option="-fmessage-length=0" />
-					<Add option="-Wno-multichar" />
-					<Add option="-DNDEBUG" />
-					<Add option="-D_LIB" />
-					<Add option="-DWIN32" />
-					<Add option="-D_WIN32" />
-					<Add option="-D_WINDOWS" />
-					<Add option="-DVCF_MINGW" />
-					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
-					<Add option="-DUSE_LIBTIFF_LIB" />
-					<Add option="-DUSE_LIBJPEG_LIB" />
-					<Add option="-DUSE_LIBPNG_LIB" />
-					<Add option="-DUSE_ZLIB_LIB" />
-					<Add directory="$(VCF_ROOT)\src" />
-					<Add directory="." />
-					<Add directory="..\..\common" />
-					<Add directory="..\..\common\filter" />
-					<Add directory="..\..\..\LibTIFF" />
-					<Add directory="..\..\..\LibJPEG" />
-					<Add directory="..\..\..\LibPNG" />
-					<Add directory="..\..\..\ZLib" />
-					<Add directory="..\..\..\Libungif\lib" />
-					<Add directory="..\..\..\Libcurl\include\" />
-				</Compiler>
-				<Linker>
-					<Add library="winmm" />
-					<Add directory="$(VCF_LIB)\" />
-				</Linker>
-				<Environment>
-					<Variable name="COMPILER" value="mgcc" />
-					<Variable name="COMPILER_VER" value="" />
-				</Environment>
-			</Target>
-		</Build>
 		<Unit filename="..\..\common\Filter\PLFilterContrast.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Debug" />
@@ -1376,18 +353,6 @@
 			<Option target="mingw_Debug" />
 			<Option target="mingw_Release" />
 		</Unit>
-		<Unit filename="..\..\common\Filter\PLFilter.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="..\..\common\Filter\PLFilter.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
 		<Unit filename="..\..\common\Filter\plfiltercolorize.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="mingw_Debug" />
@@ -1460,7 +425,12 @@
 			<Option target="mingw_Debug" />
 			<Option target="mingw_Release" />
 		</Unit>
-		<Unit filename="..\..\Common\config.h">
+		<Unit filename="..\..\common\PLObject.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="mingw_Debug" />
+			<Option target="mingw_Release" />
+		</Unit>
+		<Unit filename="..\..\common\PLObject.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
@@ -1488,13 +458,6 @@
 		</Unit>
 		<Unit filename="..\..\common\jmemsrc.cpp">
 			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="..\..\Common\jmemsrc.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
 			<Option target="mingw_Debug" />
 			<Option target="mingw_Release" />
 		</Unit>
@@ -1736,18 +699,6 @@
 			<Option target="mingw_Release" />
 		</Unit>
 		<Unit filename="..\..\common\plmemsrc.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="..\..\common\PLObject.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="..\..\common\PLObject.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
@@ -2038,18 +989,6 @@
 			<Option target="mingw_Release" />
 		</Unit>
 		<Unit filename="..\..\common\plwindefs.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="..\..\Common\tif_msrc.c">
-			<Option compilerVar="CC" />
-			<Option target="mingw_Debug" />
-			<Option target="mingw_Release" />
-		</Unit>
-		<Unit filename="..\..\Common\tif_msrc.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="4" />
+	<FileVersion major="1" minor="5" />
 	<Project>
 		<Option title="xmake" />
+		<Option default_target="" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\bin\xmake.exe" />
+				<Option output="..\..\bin\xmake.exe" prefix_auto="0" extension_auto="0" />
 				<Option object_output="mgcc\Release\" />
 				<Option external_deps="..\..\lib\liblibXmake_mgcc_s.a;" />
 				<Option type="1" />
@@ -21,11 +23,11 @@
 				</Compiler>
 				<Linker>
 					<Add library="liblibXmake_mgcc_s.a" />
-					<Add directory="$(VCF_LIB)" />
+					<Add directory="$(VCF_ROOT)\lib" />
 				</Linker>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\bin\xmake.exe" />
+				<Option output="..\..\bin\xmake.exe" prefix_auto="0" extension_auto="0" />
 				<Option object_output="mgcc\Debug\" />
 				<Option external_deps="..\..\lib\liblibXmake_mgcc_s_d.a;" />
 				<Option type="1" />
@@ -40,7 +42,7 @@
 				</Compiler>
 				<Linker>
 					<Add library="liblibXmake_mgcc_sd.a" />
-					<Add directory="$(VCF_LIB)" />
+					<Add directory="$(VCF_ROOT)\lib" />
 				</Linker>
 			</Target>
 		</Build>

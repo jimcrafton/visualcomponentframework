@@ -12,6 +12,9 @@
 		<Project filename="ApplicationKit\ApplicationKitDLL.cbp">
 			<Depends filename="GraphicsKit\GraphicsKitDLL.cbp" />
 		</Project>
+		<Project filename="RegExKit\RegExKitDLL.cbp">
+			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
+		</Project>
 		<Project filename="OpenGLKit\OpenGLKitDLL.cbp">
 			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
 		</Project>
@@ -31,6 +34,9 @@
 		</Project>
 		<Project filename="ApplicationKit\ApplicationKit.cbp">
 			<Depends filename="GraphicsKit\GraphicsKit.cbp" />
+		</Project>
+		<Project filename="RegExKit\RegExKit.cbp">
+			<Depends filename="FoundationKit\FoundationKit.cbp" />
 		</Project>
 		<Project filename="OpenGLKit\OpenGLKit.cbp">
 			<Depends filename="ApplicationKit\ApplicationKit.cbp" />
@@ -139,6 +145,7 @@
 		<Project filename="..\..\examples\FrameStyles\FrameStyles_cb.cbp">
 			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
 		</Project>
+		<Project filename="..\..\examples\Gradients\Gradients_cb.cbp" />
 		<Project filename="..\..\examples\GraphicsAndMouseMoves\GraphicsAndMouseMoves_cb.cbp">
 			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
 		</Project>
@@ -272,16 +279,13 @@
 		<Project filename="..\..\examples\Variants\Variants_cb.cbp">
 			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
 		</Project>
-		<Project filename="..\..\examples\VisualFormFiles\VisualFormFiles_cb.cbp">
-			<Depends filename="ApplicationKit\ApplicationKitDLL.cbp" />
-		</Project>
+		<Project filename="..\..\examples\VisualFormFiles\VisualFormFiles_cb.cbp" />
 		<Project filename="..\..\examples\WorkingWithEnumerators\WorkingWithEnumerators_cb.cbp">
 			<Depends filename="FoundationKit\FoundationKitDLL.cbp" />
 		</Project>
 		<Project filename="..\..\src\createbundle\CreateBundle_cb.cbp" />
 		<Project filename="..\..\src\createinfo\createinfo_cb.cbp" />
 		<Project filename="..\..\src\xmake\libXmake_cb.cbp" />
-		<Project filename="..\..\examples\Gradients\Gradients_cb.cbp" />
 		<Project filename="..\..\src\xmake\xmake_cb.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

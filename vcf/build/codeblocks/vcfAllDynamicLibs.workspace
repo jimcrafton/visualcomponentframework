@@ -29,5 +29,6 @@
 		<Project filename="RemoteObjectKit\RemoteObjectKit.cbp">
 			<Depends filename="NetworkKit\NetworkKitDLL.cbp" />
 		</Project>
+		<Project filename="RegExKit\RegExKitDLL.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

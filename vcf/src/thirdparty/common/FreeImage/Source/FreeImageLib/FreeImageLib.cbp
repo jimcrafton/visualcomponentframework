@@ -10,7 +10,7 @@
 				<Option output="..\..\..\..\..\..\lib\libFreeImage_mingw_gcc344_s.a" />
 				<Option working_dir="" />
 				<Option object_output="mgcc\Release\" />
-				<Option external_deps="$(VCF_LIB)\libLibJPEG_mgcc_s.a;$(VCF_LIB)\libLibMNG_mgcc_s.a;$(VCF_LIB)\libLibPNG_mgcc_s.a;$(VCF_LIB)\libLibTIFF_mgcc_s.a;$(VCF_LIB)\libZLib_mgcc_s.a;" />
+				<Option external_deps="$(VCF_ROOT)/lib\libLibJPEG_mgcc_s.a;$(VCF_ROOT)/lib\libLibMNG_mgcc_s.a;$(VCF_ROOT)/lib\libLibPNG_mgcc_s.a;$(VCF_ROOT)/lib\libLibTIFF_mgcc_s.a;$(VCF_ROOT)/lib\libZLib_mgcc_s.a;" />
 				<Option type="2" />
 				<Option compiler="0" />
 				<Option createDefFile="1" />
@@ -51,14 +51,14 @@
 					<Add library="LibPNG_mingw_gcc344_s" />
 					<Add library="LibTIFF_mingw_gcc344_s" />
 					<Add library="ZLib_mingw_gcc344_s" />
-					<Add directory="$(VCF_LIB)" />
+					<Add directory="$(VCF_ROOT)/lib" />
 				</Linker>
 			</Target>
 			<Target title="mingw_gcc344_Debug">
 				<Option output="..\..\..\..\..\..\lib\libFreeImage_mgcc_sd.a" />
 				<Option working_dir="" />
 				<Option object_output="mgcc\Debug\" />
-				<Option external_deps="$(VCF_LIB)\libLibJPEG_mgcc_sd.a;$(VCF_LIB)\libLibMNG_mgcc_sd.a;$(VCF_LIB)\libLibPNG_mgcc_sd.a;$(VCF_LIB)\libLibTIFF_mgcc_sd.a;$(VCF_LIB)\libZLib_mgcc_sd.a;" />
+				<Option external_deps="$(VCF_ROOT)/lib\libLibJPEG_mgcc_sd.a;$(VCF_ROOT)/lib\libLibMNG_mgcc_sd.a;$(VCF_ROOT)/lib\libLibPNG_mgcc_sd.a;$(VCF_ROOT)/lib\libLibTIFF_mgcc_sd.a;$(VCF_ROOT)/lib\libZLib_mgcc_sd.a;" />
 				<Option type="2" />
 				<Option compiler="0" />
 				<Option createDefFile="1" />
@@ -98,7 +98,7 @@
 					<Add library="LibPNG_mingw_gcc344_sd" />
 					<Add library="LibTIFF_mingw_gcc344_sd" />
 					<Add library="ZLib_mingw_gcc344_sd" />
-					<Add directory="$(VCF_LIB)" />
+					<Add directory="$(VCF_ROOT)/lib" />
 				</Linker>
 			</Target>
 			<Environment>
