@@ -7,7 +7,7 @@ DataSet::DataSet()
 	fieldDefs_(NULL),
 	active_(false),
 	state_(dssInactive),
-	canModify_(false),
+	canModify_(true),
 	bof_(false),
 	eof_(false),
 	modified_(false),
@@ -405,7 +405,7 @@ void DataSet::refresh()
 
 void DataSet::edit()
 {
-	if ( !((state_ & dssEdit) || (state_ & dssInsert)) ) {
+	if ( (state_ != dssEdit) && (state_ != dssInsert) ) {
 		//no insert yet...
 		checkMode( cmsBrowse );
 
@@ -798,4 +798,10 @@ void DataSet::resync( int mode )
 
 	Event e(this,deDataSetChange);
 	handleDataEvent( &e );
+}
+
+
+void DataSet::setRecordData( Record* record, size_t offset, const unsigned char* buffer, size_t bufferSize )
+{
+	
 }

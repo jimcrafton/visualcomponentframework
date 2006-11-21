@@ -2,7 +2,7 @@
 
 #include "DatabaseKit.h"
 
-
+/*
 #include "SQLite3Kit.h"
 
 
@@ -64,7 +64,7 @@ private:
 };
 
 
-
+*/
 
 
 
@@ -103,7 +103,7 @@ int main( int argc, char** argv ){
 	FoundationKit::init( argc, argv );
 
 	DatabaseKit::init( argc, argv );
-
+/*
 	{
 		//test simple calls of SQLite to compare the performance 
 		//to our more complex API
@@ -127,11 +127,11 @@ int main( int argc, char** argv ){
 		clock.stop();
 		System::println( Format("Iteration took %0.8f seconds.") % clock.duration() );
 	}
-
+*/
 
 	{
 
-		HiResClock clock;
+		//HiResClock clock;
 
 
 		DataSet* dataSet = DatabaseToolkit::createDataSet( "SQLiteType" );
@@ -147,6 +147,8 @@ int main( int argc, char** argv ){
 			
 			dbSrc->setDataSet( dataSet );
 			
+			
+
 
 			std::vector<String> fieldNames;
 			
@@ -161,10 +163,12 @@ int main( int argc, char** argv ){
 			}
 
 
+
+
 			System::println( "------------------------------------------------------------------------------" );
 			
 			System::println( "Activating data set..." );
-
+			
 			dataSet->setActive(true);
 			
 			System::println( "------------------------------------------------------------------------------" );
@@ -172,7 +176,7 @@ int main( int argc, char** argv ){
 			if ( dataSet->isActive() ) {
 				size_t rowCount = 0;
 			
-				clock.start();
+				//clock.start();
 
 				while ( !dataSet->isEOF() ) {			
 					Enumerator<DataField*>* fields = dataSet->getFields();
@@ -185,8 +189,8 @@ int main( int argc, char** argv ){
 					rowCount ++;
 				}
 
-				clock.stop();
-				System::println( Format("Iteration took %0.8f seconds for %d rows.") % clock.duration() % rowCount );
+				//clock.stop();
+				System::println( Format("%d rows.") % rowCount );
 			}			
 
 
@@ -204,12 +208,14 @@ int main( int argc, char** argv ){
 			System::println( "------------------------------------------------------------------------------" );
 			System::println( "Field access" );
 
+			
 			try {
 				dataSet->fieldByName("Foofer");
 			}
-			catch (BasicException& e ) {
+			catch ( BasicException& e ) {
 				System::println( "Error: " + e.getMessage() );
 			}
+  
 
 			try {
 				System::println( "Val: " + dataSet->fieldByName("LastName")->getAsString() );
@@ -232,12 +238,10 @@ int main( int argc, char** argv ){
 			}
 
 
+			System::println( "Test edit - this should NOT error out because we are in edit mode." );
 			try {
 				dataSet->edit();
-
-				dataSet->fieldByName("LastName")->setAsString("Laczinski");
-
-				
+				dataSet->fieldByName("LastName")->setAsString("Laczinski");				
 			}
 			catch (BasicException& e ) {
 				System::println( "Error: " + e.getMessage() );
@@ -246,10 +250,12 @@ int main( int argc, char** argv ){
 
 			System::println( "------------------------------------------------------------------------------" );
 
+
 		}
 		catch ( BasicException& e ) {
 			System::println( "Exception: " + e.getMessage() );
 		}
+
 
 		dbSrc->free();
 
@@ -261,6 +267,7 @@ int main( int argc, char** argv ){
 	DatabaseKit::terminate();
 
 	FoundationKit::terminate();
+
 	return 0;
 }
 

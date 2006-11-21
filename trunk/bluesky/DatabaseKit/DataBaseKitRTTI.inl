@@ -15,7 +15,7 @@ This was created to improved compile times
 
 
 namespace VCF {
-
+/*
 static String DataFieldTypeNames[] = { "dftUnknown",
 										"dftString", 
 										"dftSmallint", 
@@ -52,7 +52,7 @@ static String DataFieldTypeNames[] = { "dftUnknown",
 										"dftInterface", 
 										"dftIDispatch", 
 										"dftGuid" };
-
+*/
 
 
 
