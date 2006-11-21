@@ -132,7 +132,7 @@ char Base64Data::base64DecodingTable[] = {
 
 
 
-class XMLDictOutputStream : public OutputStream {
+class XMLDictOutputStream : public BasicOutputStream {
 public:
 	XMLDictOutputStream( OutputStream* outStream ): outStream_(outStream) {
 
@@ -331,7 +331,7 @@ public:
 
 
 
-class XMLDictInputStream : public InputStream {
+class XMLDictInputStream : public BasicInputStream {
 public:
 	XMLDictInputStream( InputStream* stream ): inStream_(stream) {
 
