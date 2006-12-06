@@ -244,6 +244,7 @@ int main( int argc, char** argv ){
 
 				System::println( "LastName: " + dataSet->fieldByName("LastName")->getAsString() );
 
+				System::println( "Changing LastName field to \"Laczinski\"..." ); 
 				dataSet->fieldByName("LastName")->setAsString("Laczinski");
 
 				dataSet->post();
@@ -272,6 +273,46 @@ int main( int argc, char** argv ){
 		delete dataSet;
 
 	}
+
+
+
+
+
+	//ADO----
+	{
+
+		DataSet* dataSet = dataSet = DatabaseToolkit::createDataSet( "ADOType" );
+		
+		try {
+			dataSet->setParam( "databasename", "test.mdb" );
+			dataSet->setParam( "tablename", "Person" );
+
+
+			std::vector<String> fieldNames;
+			
+			if ( dataSet->getFieldNames( fieldNames ) ) {
+
+				for (int i=0;i<fieldNames.size();i++ ) {
+					System::println( "Field name: " + fieldNames[i] );
+				}
+			}
+			else {
+				System::println( "No field names available." );
+			}
+
+
+
+		}
+		catch ( BasicException& e ) {
+			System::println( "Exception: " + e.getMessage() );
+		}
+
+		
+		delete dataSet;
+	}
+
+
+
 
 	DatabaseKit::terminate();
 

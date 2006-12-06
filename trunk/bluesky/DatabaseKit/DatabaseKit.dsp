@@ -63,8 +63,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir "DatabaseKit___Win32_Debug"
 # PROP Intermediate_Dir "DatabaseKit___Win32_Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "./" /I "./DBProviders/sqlite" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "DATABASEKIT_LIB" /D "USE_FOUNDATIONKIT_LIB" /D "NO_TCL" /D "OS_WIN" /D "SQLITE_ENABLE_COLUMN_METADATA" /YX /FD /GZ  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/win32" /I "./" /I "./DBProviders/sqlite" /I "./DBProviders/ms-ado" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "DATABASEKIT_LIB" /D "USE_FOUNDATIONKIT_LIB" /D "NO_TCL" /D "OS_WIN" /D "SQLITE_ENABLE_COLUMN_METADATA" /YX /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -253,6 +253,18 @@ SOURCE=.\DBProviders\sqlite\vdbemem.c
 # Begin Source File
 
 SOURCE=.\DBProviders\sqlite\where.c
+# End Source File
+# End Group
+# Begin Group "MS-ADO"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\ADODataSet.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=".\DBProviders\ms-ado\ADODB.h"
 # End Source File
 # End Group
 # End Group
