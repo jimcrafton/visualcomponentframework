@@ -51,6 +51,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "HTMLKitDll"=..\..\vcf\build\vc60\HTMLKit\HTMLKitDll.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "dbTest"=.\dbTest.dsp - Package Owner=<4>
 
 Package=<5>
