@@ -1,7 +1,7 @@
 //ADODataSet.cpp
 #include "DatabaseKit.h"
 #include "ADODataSet.h"
-
+#include "vcf/ApplicationKit/Win32HResult.h"
 
 
 
@@ -36,7 +36,7 @@ ADODataSet::ADODataSet():
 		throw DatabaseError("Unable to initialize COM for ADO data set");
 	}
 
-	
+	setProvider( "Microsoft.Jet.OLEDB.4.0" );
 }
 
 ADODataSet::~ADODataSet()
@@ -61,6 +61,7 @@ void ADODataSet::internal_open()
 	}
 }
 
+
 comet::ADODB::_ConnectionPtr ADODataSet::getConnection()
 {
 	if ( dbConnection_.is_null() ) {
@@ -72,13 +73,23 @@ comet::ADODB::_ConnectionPtr ADODataSet::getConnection()
 			throw DatabaseError("No Database Name specified!");
 		}
 
+		String provider = getProvider();
+		
+		if ( provider.empty() ) {
+			throw DatabaseError("No Provider specified!");
+		}
+
+		
+
 		bstr_t connectionStr;
-		connectionStr += "Provider=Microsoft.Jet.OLEDB.4.0;";
+		connectionStr += "Provider=";
+		connectionStr += provider;
+		connectionStr += ";";
+
 		connectionStr += "Data Source=";
 		connectionStr += dbName;
 		connectionStr += ";";
 		connectionStr += "Persist Security Info=False";
-			//Data Source=E:\IssueTracker\htdocs\tracker2.mdb;
 
 		dbConnection_->Open( connectionStr.in() );
 	}
@@ -93,6 +104,68 @@ void ADODataSet::internal_close()
 	connect->Close();
 }
 
+void ADODataSet::addFieldDef( FieldPtr& field, size_t fieldIndex )
+{
+	String colName = AnsiString(field->GetName());
+	String fieldName = colName;
+	String name = fieldName;
+	int i = 1;
+	while ( fieldDefs_->indexOf( name ) >= 0 ) {
+		name = Format("%s%d") % fieldName % i;
+		i++;
+	}
+
+	fieldName = name;
+
+	
+
+
+	DataFieldType dataType = dftUnknown;
+	DataTypeEnum type = field->GetType();
+	switch ( type ) {
+		case adInteger : {
+			dataType = dftInteger;
+		}
+		break;
+
+		case adChar : {
+			dataType = dftString;
+		}
+		break;
+
+		case adBSTR : {
+			dataType = dftString;
+		}
+		break;
+
+		case adWChar : case adVarWChar : {
+			dataType = dftString;
+		}
+		break;
+	}
+
+
+	if ( dataType != dftUnknown ) {
+		FieldDefinition fieldDef;
+		fieldDef.name = fieldName;
+		fieldDef.dataType = dataType;
+		fieldDef.fieldNumber = fieldIndex;
+
+		fieldDef.size = field->GetDefinedSize();
+
+
+		switch ( fieldDef.dataType ) {
+			case dftString : {
+				fieldDef.size = 0;
+			}
+			break;
+		}
+
+		fieldDefs_->add( fieldDef );
+	}
+
+}
+
 void ADODataSet::internal_initFieldDefinitions()
 {
 	String tableName = getTableName();
@@ -100,10 +173,35 @@ void ADODataSet::internal_initFieldDefinitions()
 	if ( tableName.empty() ) {
 		throw DatabaseError("No Table Name specified!");
 	}
-
+	
 	_ConnectionPtr connect = getConnection();
 
+	fieldDefs_->clear();
 
+
+	_RecordsetPtr rs = Recordset::create();
+
+	bstr_t tn = tableName.c_str();
+	variant_t cnVar = connect;
+
+	try {
+		rs->Open( tn.in(), cnVar, adOpenForwardOnly, adLockReadOnly, adCmdTable );
+
+		FieldsPtr fields = rs->GetFields();
+
+		if ( !fields.is_null() ) {
+			variant_t index;
+			for (int i = 0; i < (int)fields->GetCount(); i++) {
+				index = i;
+				addFieldDef( fields->GetItem( index ), (size_t)i );
+			}
+		}
+
+		rs->Close();
+	}
+	catch ( std::exception& e ) {
+		throw DatabaseError(Format("Error initializing fields from ADO database!\nError: %s") % e.what() );
+	}	
 }
 
 void ADODataSet::internal_first()
@@ -257,6 +355,15 @@ void ADODataSet::setDatabaseName( const String& val )
 	setParam( "databasename", val );
 }
 
+String ADODataSet::getProvider()
+{
+	return getParam( "provider" );
+}
+
+void ADODataSet::setProvider( const String& val )
+{
+	setParam( "provider", val );
+}
 
 
 bool ADODataSet::isCursorOpen()

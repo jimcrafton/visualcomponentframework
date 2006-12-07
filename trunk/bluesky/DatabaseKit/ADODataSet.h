@@ -37,6 +37,10 @@ namespace VCF {
 		String getDatabaseName();
 
 		void setDatabaseName( const String& val );
+
+		String getProvider();
+
+		void setProvider( const String& val );
 		
 		virtual bool getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize );
 
@@ -66,6 +70,7 @@ namespace VCF {
 
 		comet::ADODB::_ConnectionPtr getConnection();
 		
+		void addFieldDef( comet::ADODB::FieldPtr& field, size_t fieldIndex );
 	private:
 		comet::ADODB::_ConnectionPtr dbConnection_;
 	};
