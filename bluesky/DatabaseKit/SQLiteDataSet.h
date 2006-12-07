@@ -74,6 +74,7 @@ namespace VCF {
 	private:
 		sqlite3* dbHandle_;
 		sqlite3_stmt* currentStmt_;
+		String  updateWhereClause_;
 	};
 };
 

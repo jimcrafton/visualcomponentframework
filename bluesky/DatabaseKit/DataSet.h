@@ -103,6 +103,21 @@ namespace VCF {
 	};
 
 
+	class DATABASEKIT_API DataErrorEvent : public Event {
+	public:
+		DataErrorEvent( Object* source ) : Event(source,0){}
+
+		DataErrorEvent( const DataErrorEvent& rhs ):Event(rhs){
+			reason = rhs.reason;
+		}
+
+		virtual Object* clone( bool deep = false ) {
+			return new DataErrorEvent(*this);
+		}
+
+		String reason;
+	};
+
 
     class DATABASEKIT_API DataSet : public Object {
     public:
@@ -278,6 +293,10 @@ namespace VCF {
 
 		VariantData getFieldValue( const String& fieldName );
 		void setFieldValue( const String& fieldName, VariantData& val );
+
+		void addField( const String& fieldName );
+		void removeField( const String& fieldName );
+
 
 		void addDataSource( DataSource* source );
 
