@@ -291,7 +291,14 @@ void DataSet::checkMode( CheckModeState mode )
 
 			switch ( getState() )  {
 				case dssEdit : case dssInsert : {
-					//update the record???
+					updateRecord();
+
+					if ( isModified() ) {
+						this->post();
+					}
+					else {
+						cancel();
+					}
 				}
 				break;
 
@@ -480,8 +487,16 @@ void DataSet::post()
 			try {
 				internal_post();
 			}
+			catch (BasicException& e) {
+				DataErrorEvent e3(this);
+				e3.reason = e.getMessage();
+
+				PostError.fireEvent( &e3 );
+			}
 			catch (...) {
-				Event e3(this,0);
+				DataErrorEvent e3(this);
+				e3.reason = "Unknown error.";
+
 				PostError.fireEvent( &e3 );
 			}
 
@@ -861,5 +876,28 @@ void DataSet::setRecordData( Record* record, size_t offset, size_t column, const
 	else { //Yeah, we get to do a straight memcpy
 		memcpy( &record->buffer[offset], buffer, bufferSize );
 	}
+
+}
+
+VariantData DataSet::getFieldValue( const String& fieldName )
+{
+	DataField* field = fieldByName( fieldName );
+
+	return field->getValue();
+}
+
+void DataSet::setFieldValue( const String& fieldName, VariantData& val )
+{
+	DataField* field = fieldByName( fieldName );
+	field->setValue( val );
+}
+
+void DataSet::addField( const String& fieldName )
+{
+
+}
+
+void DataSet::removeField( const String& fieldName )
+{
 
 }

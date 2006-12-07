@@ -57,7 +57,7 @@ namespace VCF {
 
 		void bind( bool bindField );
 
-		virtual VariantData getCurrentValue();
+		virtual VariantData getValue();
 
 		virtual bool getAsBoolean();
 		virtual DateTime getAsDateTime();
@@ -65,6 +65,7 @@ namespace VCF {
 		virtual double getAsFloat();
 		virtual int getAsInteger();
 
+		virtual void setValue( const VariantData& val );
 
 		virtual void setAsBoolean( bool val );
 		virtual void setAsDateTime( const DateTime& val );
@@ -81,6 +82,21 @@ namespace VCF {
 
 		DataFieldType getDataType() {
 			return dataType_;
+		}
+
+
+		bool isStringType() {
+			return (dataType_ == dftString) ||  (dataType_ == dftUnicodeString);
+		}
+
+		bool isBlobType() {
+			return (dataType_ == dftOraBlob) ||  (dataType_ == dftBlob);
+		}
+
+		bool isBinaryType() {
+			return (isBlobType()) ||  (dataType_ == dftBytes) ||  (dataType_ == dftVarBytes) ||  (dataType_ == dftGraphic) ||
+						 (dataType_ == dftParadoxOle) || (dataType_ == dftDBaseOle) || (dataType_ == dftTypedBinary) ||
+						  (dataType_ == dftVariant);
 		}
 
 		String getDisplayName();
@@ -171,7 +187,8 @@ namespace VCF {
 	public:
 		StringField();
 
-		virtual VariantData getCurrentValue();
+		virtual VariantData getValue();
+		virtual void setValue( const VariantData& val );
 
 		virtual bool getAsBoolean();
 		virtual DateTime getAsDateTime();
@@ -198,11 +215,16 @@ namespace VCF {
 	public:
 		BooleanField();
 
-		virtual VariantData getCurrentValue();
+		virtual VariantData getValue();
+		virtual void setValue( const VariantData& val );
 
 		virtual bool getAsBoolean();		
 		virtual String getAsString();
 		virtual int getAsInteger();
+
+		virtual void setAsBoolean( bool val );
+		virtual void setAsString( const String& val );		
+		virtual void setAsInteger( const int& val );
 	protected:		
 
 	};
@@ -215,11 +237,16 @@ namespace VCF {
 	public:
 		DateTimeField();
 
-		virtual VariantData getCurrentValue();
+		virtual VariantData getValue();
+		virtual void setValue( const VariantData& val );
 
 		virtual DateTime getAsDateTime();
 		virtual String getAsString();		
 		virtual int getAsInteger();
+
+		virtual void setAsDateTime( const DateTime& val );
+		virtual void setAsString( const String& val );
+		virtual void setAsInteger( const int& val );
 	protected:
 		
 
@@ -235,10 +262,18 @@ namespace VCF {
 	public:
 		DoubleField();
 
-		virtual VariantData getCurrentValue();
+		virtual VariantData getValue();
+		virtual void setValue( const VariantData& val );
+
 		virtual String getAsString();
 		virtual double getAsFloat();
 		virtual int getAsInteger();
+
+		
+		
+		virtual void setAsString( const String& val );
+		virtual void setAsFloat( const double& val );
+		virtual void setAsInteger( const int& val );
 	protected:
 		
 
@@ -253,7 +288,8 @@ namespace VCF {
 	public:
 		IntegerField();
 
-		virtual VariantData getCurrentValue();
+		virtual VariantData getValue();
+		virtual void setValue( const VariantData& val );
 
 		virtual bool getAsBoolean();
 		virtual DateTime getAsDateTime();

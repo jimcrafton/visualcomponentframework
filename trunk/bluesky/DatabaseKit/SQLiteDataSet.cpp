@@ -586,42 +586,107 @@ void SQLiteDataSet::internal_post()
 	size_t bufferOffset = 0;
 
 	int res = 0;
-	for ( size_t i=0;i<fields_->size();i++ ) {
-		DataField* field = fields_()[i];
+	size_t colIndex = 1;
+
+	String updateSQL;
+
+	String tableName = getTableName();
+
+	if ( tableName.empty() ) {
+		throw DatabaseError("No Table Name specified, unable to generate SQL statement!");
+	}
+
+	if ( fields_->empty() ) {
+		throw DatabaseError("No Fields in data set, unable to generate SQL statement!");
+	}
+
+	updateSQL = "update ";
+	updateSQL += tableName + " set ";
+
+
+
+	std::vector<DataField*>::iterator it = fields_->begin();
+	while ( it != fields_->end() ) {
+		DataField* field = *it;
+
+		if ( it != fields_->begin() ) {
+			updateSQL += ", ";
+		}	
+
+		updateSQL += field->getName() + " = ? ";
+
+		++it;
+	}
+
+	updateSQL += this->updateWhereClause_;
+	updateSQL += ";";
+
+
+	AnsiString sql = updateSQL;
+
+	const char* tail=0;
+	sqlite3* dbHandle = getHandle();
+
+	sqlite3_stmt *updateStmt = NULL;
+	res = sqlite3_prepare( dbHandle, sql.c_str(), sql.length(), &updateStmt, &tail );
+
+	if ( res != SQLITE_OK ) {
+		sqlite3_finalize(updateStmt);
+		throw DatabaseError(SQLiteDatabase::errorMessageFromHandle(dbHandle));
+	}
+
+	it = fields_->begin();
+
+	while ( it != fields_->end() ) {
+		DataField* field = *it;
 		switch ( field->getDataType() ) {
 			case dftString : {
 				const char* text = (const char*)&record->buffer[bufferOffset];
 
 				//Note - it might be more efficient at some point to see if there
 				//is a way to use SQLITE_STATIC here...
-				res = sqlite3_bind_text( currentStmt_, i, text, field->getSize(), SQLITE_TRANSIENT );
+				res = sqlite3_bind_text( updateStmt, colIndex, text, field->getSize(), SQLITE_TRANSIENT );
 			}
 			break;
 
 			case dftFloat : {
 				double val = 0;
 				memcpy( &val, &record->buffer[bufferOffset], field->getSize() );
-				res = sqlite3_bind_double( currentStmt_, i, val );
+				res = sqlite3_bind_double( updateStmt, colIndex, val );
 			}
 			break;
 
 			case dftWord : case dftSmallint : case dftInteger : {
 				int val = 0;
 				memcpy( &val, &record->buffer[bufferOffset], field->getSize() );
-				res = sqlite3_bind_int( currentStmt_, i, val );
+				res = sqlite3_bind_int( updateStmt, colIndex, val );
 			}
 			break;
 		}
 
 		if ( res != SQLITE_OK ) {
-			throw DatabaseError( Format("Error writing to field \"%s\". Error returned was %s.") % 
+			throw DatabaseError( Format("Error binding field \"%s\" data to sql statement. Error returned was %s.") % 
 									field->getName() % 
-									SQLiteDatabase::errorMessageFromHandle(dbHandle_) );
+									SQLiteDatabase::errorMessageFromHandle(dbHandle) );
 		}
 		bufferOffset += field->getSize();
+		colIndex++;
+		++it;
 	}
 
 	VCF_ASSERT( bufferOffset == record->size );
+
+	res = sqlite3_step( updateStmt );
+
+	sqlite3_finalize( updateStmt );
+
+	switch ( res ) {
+		case SQLITE_MISUSE : case SQLITE_ERROR : {
+			throw DatabaseError( Format("Error executing SQL. Error returned was %s.") % 
+									SQLiteDatabase::errorMessageFromHandle(dbHandle) );
+		}
+		break;
+	}
 }
 
 void SQLiteDataSet::internal_refresh()
@@ -631,5 +696,31 @@ void SQLiteDataSet::internal_refresh()
 
 void SQLiteDataSet::internal_edit()
 {
+	updateWhereClause_ = "where ";
+	std::vector<DataField*>::iterator it = fields_->begin();
+	while ( it != fields_->end() ) {
+		DataField* field = *it;
 
+		if ( !field->isBinaryType() ) {
+
+			if ( it != fields_->begin() ) {
+				updateWhereClause_ += " and ";
+			}	
+			
+			
+			updateWhereClause_ += field->getName() + " = ";
+			
+			if ( field->isStringType() ) {
+				updateWhereClause_ += "'";
+			}
+
+			updateWhereClause_ += field->getAsString();
+
+			if ( field->isStringType() ) {
+				updateWhereClause_ += "'";
+			}
+		}
+
+		++it;
+	}
 }

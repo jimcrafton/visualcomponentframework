@@ -177,12 +177,18 @@ void DataField::setIndex( size_t val )
 	}
 }
 
-VariantData DataField::getCurrentValue()
+VariantData DataField::getValue()
 {
 	VariantData result;
 	throw DatabaseError("Not implemented for abstract class!");
 	return result;
 }
+
+void DataField::setValue( const VariantData& val )
+{
+	throw DatabaseError("Not implemented for abstract class!");
+}
+
 
 bool DataField::getAsBoolean()
 {
@@ -286,12 +292,19 @@ StringField::StringField()
 
 
 
-VariantData StringField::getCurrentValue()
+VariantData StringField::getValue()
 {
 	VariantData result = getAsString();
 	
 	return result;
 }
+
+void StringField::setValue( const VariantData& val )
+{
+	String s = val;
+	setAsString( s );
+}
+
 
 bool StringField::getAsBoolean()
 {
@@ -410,11 +423,34 @@ BooleanField::BooleanField()
 
 
 
-VariantData BooleanField::getCurrentValue()
+VariantData BooleanField::getValue()
 {
 	VariantData result = getAsBoolean();
 	
 	return result;
+}
+
+void BooleanField::setValue( const VariantData& val )
+{
+	bool b = val;
+	setAsBoolean( b );
+}
+
+void BooleanField::setAsBoolean( bool val )
+{
+	bool tmp = val;
+
+	setData( (const unsigned char*)&tmp, sizeof(tmp) );
+}
+
+void BooleanField::setAsString( const String& val )
+{
+	setAsBoolean( StringUtils::fromStringAsBool( val ) );
+}
+
+void BooleanField::setAsInteger( const int& val )
+{
+	setAsBoolean( val ? true : false );
 }
 
 bool BooleanField::getAsBoolean()
@@ -456,7 +492,7 @@ DateTimeField::DateTimeField()
 
 
 
-VariantData DateTimeField::getCurrentValue()
+VariantData DateTimeField::getValue()
 {
 	VariantData result = getAsDateTime();
 	
@@ -499,6 +535,33 @@ int DateTimeField::getAsInteger()
 	return result;
 }
 
+void DateTimeField::setValue( const VariantData& val )
+{
+	DateTime d = val;
+
+	setAsDateTime( d );
+}
+
+void DateTimeField::setAsDateTime( const DateTime& val )
+{
+
+}
+
+void DateTimeField::setAsString( const String& val )
+{
+	if ( NULL != dataSet_ ) {
+		setAsDateTime( dataSet_->getLocale()->toDateTime( val ) );
+	}
+}
+
+void DateTimeField::setAsInteger( const int& val )
+{
+	DateTime d;
+	d = (time_t)val;
+
+	setAsDateTime( d );
+}
+
 
 
 
@@ -513,7 +576,7 @@ DoubleField::DoubleField()
 
 
 
-VariantData DoubleField::getCurrentValue()
+VariantData DoubleField::getValue()
 {
 	VariantData result = getAsFloat();
 	
@@ -553,6 +616,32 @@ int DoubleField::getAsInteger()
 	return result;
 }
 
+void DoubleField::setValue( const VariantData& val )
+{
+	setAsFloat( (double) val );
+}
+
+void DoubleField::setAsString( const String& val )
+{
+	if ( NULL != dataSet_ ) {
+		setAsFloat( dataSet_->getLocale()->toDouble( val ) );
+	}
+	else {
+		setAsFloat( StringUtils::fromStringAsDouble( val ) );
+	}
+}
+
+void DoubleField::setAsFloat( const double& val )
+{
+	double tmp = val;
+
+	setData( (const unsigned char*)&tmp, sizeof(tmp) );
+}
+
+void DoubleField::setAsInteger( const int& val )
+{
+	setAsFloat( val );
+}
 
 
 
@@ -566,7 +655,7 @@ IntegerField::IntegerField()
 
 
 
-VariantData IntegerField::getCurrentValue()
+VariantData IntegerField::getValue()
 {
 	VariantData result = getAsInteger();
 	
@@ -652,3 +741,7 @@ void IntegerField::setAsInteger( const int& val )
 	setData( (const unsigned char*)&tmp, sizeof(tmp) );
 }
 
+void IntegerField::setValue( const VariantData& val )
+{
+	setAsInteger( (int) val );
+}
