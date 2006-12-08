@@ -31,7 +31,7 @@ namespace VCF {
 class RenderArea {
 public:
 	RenderArea():renderArea(NULL),renderBuffer(NULL),renderAreaAlphaVal(NULL),renderAreaAlphaSize(1),
-					renderAreaAlphaState(GraphicsContext::rasDefault),scanline(NULL){
+					renderAreaAlphaState(GraphicsContext::rasDefault),scanline(NULL),oldContextID(0){
 
 	}
 
@@ -52,6 +52,7 @@ public:
 	GraphicsContext::RenderAreaAlphaState renderAreaAlphaState;
 	Rect viewableBounds;
 	agg::scanline_u8* scanline;
+	OSHandleID oldContextID;
 };
 
 
@@ -1166,12 +1167,12 @@ void GraphicsContext::textBoundedBy( Rect* bounds, const String& text, const int
 
 bool GraphicsContext::isXORModeOn()
 {
-	return false;//contextPeer_->isXORModeOn();
+	return getCompositingMode() == GraphicsContext::cmXOR;
 }
 
 void GraphicsContext::setXORModeOn( const bool& XORModeOn )
 {
-	//contextPeer_->setXORModeOn( XORModeOn );
+	setCompositingMode( GraphicsContext::cmXOR );
 }
 
 double GraphicsContext::getTextWidth( const String& text )
@@ -1736,6 +1737,7 @@ void GraphicsContext::setRenderArea( Rect bounds )
 
 
 	renderArea_->renderArea->getImageContext()->setOrigin( -bounds.left_, -bounds.top_ );
+	renderArea_->oldContextID = getPeer()->getContextID();
 	getPeer()->setContextID( renderArea_->renderArea->getImageContext()->getPeer()->getContextID() );	
 }
 
@@ -1757,6 +1759,8 @@ void GraphicsContext::deleteRenderArea()
 
 void GraphicsContext::flushRenderArea()
 {
+	getPeer()->setContextID( renderArea_->oldContextID );	
+
 	if ( viewableBounds_.isNull() ) {
 		bitBlit( renderArea_->renderAreaRect.getTopLeft(), renderArea_->renderArea );
 	}
