@@ -61,6 +61,8 @@ void BasicFill::render( Path* path )
 
 		if ( (NULL != context_->getRenderingBuffer()) && antiAlias_ ){
 
+			StringUtils::trace( "BasicFill::render() Base path: \n" );
+
 			agg::rendering_buffer& renderingBuffer = *context_->getRenderingBuffer();
 			agg::path_storage fillPath;
 			agg::rasterizer_scanline_aa<> rasterizer;
@@ -68,6 +70,8 @@ void BasicFill::render( Path* path )
 
 			while ( pathIt != points.end() ) {
 				pt = *pathIt;
+
+				StringUtils::trace( Format("\tpt: %.2f, %.2f type: %d \n") % pt.point_.x_ % pt.point_.y_ % pt.type_ );
 
 				switch ( pt.type_ ){
 					case PathPoint::ptMoveTo: {
@@ -87,12 +91,18 @@ void BasicFill::render( Path* path )
 						pathIt++;
 						c1 = *pathIt;
 
+						StringUtils::trace( Format("\tc1: %.2f, %.2f type: %d \n") % c1.point_.x_ % c1.point_.y_ % c1.type_ );
+
 						pathIt++;
 						c2 = *pathIt;
+
+						StringUtils::trace( Format("\tc2: %.2f, %.2f type: %d \n") % c2.point_.x_ % c2.point_.y_ % c2.type_ );
 
 						pathIt++;
 						p2 = *pathIt;
 						
+						StringUtils::trace( Format("\tp2: %.2f, %.2f type: %d \n") % p2.point_.x_ % p2.point_.y_ % p2.type_ );
+
 						fillPath.curve4( c1.point_.x_, c1.point_.y_,
 										c2.point_.x_, c2.point_.y_,
 										p2.point_.x_, p2.point_.y_ );
@@ -120,12 +130,13 @@ void BasicFill::render( Path* path )
 
 			Matrix2D& currentXFrm = *context_->getCurrentTransform();
 
-			agg::trans_affine mat( currentXFrm[Matrix2D::mei00],
-									currentXFrm[Matrix2D::mei01],
-									currentXFrm[Matrix2D::mei10],
-									currentXFrm[Matrix2D::mei11],
-									currentXFrm[Matrix2D::mei20],
-									currentXFrm[Matrix2D::mei21] );
+			agg::trans_affine mat = currentXFrm;
+			///agg::trans_affine mat( currentXFrm[Matrix2D::mei00],
+			//						currentXFrm[Matrix2D::mei01],
+			//						currentXFrm[Matrix2D::mei10],
+			//						currentXFrm[Matrix2D::mei11],
+			//						currentXFrm[Matrix2D::mei20],
+			//						currentXFrm[Matrix2D::mei21] );
 
 			Point org = context_->getOrigin();
 			mat *= agg::trans_affine_translation( org.x_, org.y_  );
@@ -146,22 +157,25 @@ void BasicFill::render( Path* path )
 			renderScanlinesSolid( *context_, rasterizer, agg::rgba(color_.getRed(),color_.getGreen(),color_.getBlue(),color_.getAlpha()) );
 		}
 		else {
+
 			while ( pathIt != points.end() ) {
 				pt = *pathIt;
+				
 
 				switch ( pt.type_ ){
 					case PathPoint::ptMoveTo: {
-						if ( !pts.empty() ) {
-							context_->polyline( pts );
-						}
-						pts.clear();
-						pts.push_back( pt.point_ );
+						//if ( !pts.empty() ) {
+						//	context_->polyline( pts );
+						//}
+						//pts.clear();
+						//pts.push_back( pt.point_ );
+						context_->moveTo( pt.point_.x_, pt.point_.y_ );
 					}
 					break;
 
 					case PathPoint::ptLineTo: {
-						//context_->lineTo( pt.point_.x_, pt.point_.y_ );
-						pts.push_back( pt.point_ );
+						context_->lineTo( pt.point_.x_, pt.point_.y_ );
+						//pts.push_back( pt.point_ );
 					}
 					break;
 
@@ -188,22 +202,27 @@ void BasicFill::render( Path* path )
 					break;
 
 					case PathPoint::ptClose: {
-						pts.push_back( pt.point_ );
-						context_->polyline( pts );
+						//pts.push_back( pt.point_ );
+						//context_->polyline( pts );
 
-						pts.clear();
+						context_->closePath(pt.point_);
+						//pts.clear();
 					}
 					break;
 				}
 				
 				pathIt ++;
 			}
-
+/*
 			if ( !pts.empty() ) {
 				context_->polyline( pts );
 				pts.clear();
 			}
+			*/
 
+			
+
+			
 			context_->fillPath();			
 		}
 	}

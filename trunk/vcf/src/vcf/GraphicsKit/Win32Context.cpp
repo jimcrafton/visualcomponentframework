@@ -457,16 +457,20 @@ void Win32Context::bitBlit( const double& x, const double& y, Rect* imageBounds,
 	void* imageBuf = image->getData();
 	
 
+	HDC srcDC = NULL;
+
 	if ( image->getType() == Image::itColor ) {
 		Win32Image* win32image = (Win32Image*)(image);
 
 		pal = win32image->palette_;
 		bmpInfo = &win32image->getBMPInfo();
+		srcDC = win32image->getDC();
 	}
 	else if ( image->getType() == Image::itGrayscale ) { 
 		Win32GrayScaleImage* win32image = (Win32GrayScaleImage*)(image);
 		pal = win32image->palette_;
 		bmpInfo = &win32image->getBMPInfo();
+		srcDC = win32image->getDC();
 	}	
 
 
@@ -475,18 +479,29 @@ void Win32Context::bitBlit( const double& x, const double& y, Rect* imageBounds,
 		::RealizePalette( dc_ );
 	}
 
-	int res = SetDIBitsToDevice( dc_,
-							(int32)x,
+	int res = ::BitBlt( dc_, (int32)x,
 							(int32)y,
 							(int32)imageBounds->getWidth(),
 							(int32)imageBounds->getHeight(),
+							srcDC,
 							imageBounds->left_,
 							imageBounds->top_,
-							0,
-							(int32)image->getHeight(),
-							imageBuf,
-							bmpInfo,
-							DIB_RGB_COLORS );
+							SRCCOPY );
+
+	//int res = SetDIBitsToDevice( dc_,
+	//						(int32)x,
+	//						(int32)y,
+	//						(int32)imageBounds->getWidth(),
+	//						(int32)imageBounds->getHeight(),
+	//						imageBounds->left_,
+	//						imageBounds->top_,
+	//						0,
+	//						(int32)image->getHeight(),
+	//						imageBuf,
+	//						bmpInfo,
+	//						DIB_RGB_COLORS );
+
+	
 
 	if ( NULL != oldPalette ){
 		::SelectPalette( dc_, oldPalette, FALSE );
@@ -790,18 +805,25 @@ void Win32Context::drawImage( const double& x, const double& y, Rect* imageBound
 
 				}
 				else {
-					SetDIBitsToDevice( dc_,
-										(int32)x,
-										(int32)y,
-										(int32)imageBounds->getWidth(),
-										(int32)imageBounds->getHeight(),
-										0,
-										0,
-										0,
-										(int32)imageBounds->getHeight(),
-										bmpBuf,
-										&bmpInfo,
-										DIB_RGB_COLORS );
+					HDC tdc = CreateCompatibleDC(NULL);
+					SelectObject( tdc, hbmp );
+
+					//SetDIBitsToDevice( dc_,
+					//					(int32)x,
+					//					(int32)y,
+					//					(int32)imageBounds->getWidth(),
+					//					(int32)imageBounds->getHeight(),
+					//					0,
+					//					0,
+					//					0,
+					//					(int32)imageBounds->getHeight(),
+					//					bmpBuf,
+					//					&bmpInfo,
+					//					DIB_RGB_COLORS );
+
+					BitBlt( dc_, (int32)x, (int32)y, imageBounds->getWidth(),
+							imageBounds->getHeight(),tdc,0,0, SRCCOPY );
+					DeleteDC(tdc);
 				}
 
 				DeleteObject( hbmp );
@@ -1234,7 +1256,8 @@ void Win32Context::curve(const double & x1, const double & y1, const double & x2
 
 	if ( inFillPath_ ){
 		//::BeginPath( dc_ );
-		::PolyBezier( dc_, bezPts, 4 );
+		::MoveToEx( dc_, bezPts[0].x, bezPts[0].y, NULL );
+		::PolyBezierTo( dc_, &bezPts[1], 3 );
 		//::EndPath( dc_ );
 		//::FillPath( dc_ );
 	}
@@ -1255,7 +1278,7 @@ void Win32Context::moveTo(const double & x, const double & y)
 
 void Win32Context::closePath()
 {
-	
+	::CloseFigure(dc_);
 }
 
 
@@ -4809,6 +4832,10 @@ bool Win32Context::prepareForDrawing( int32 drawingOperation )
 				currentHPen_ = ::CreatePen( PS_NULL, 0, 0 );
 
 				inFillPath_ = true;
+
+				//JC: this is new (9/19/2006), I put this in as the default
+				//winding rule for fills. Do we want to leave this as the default....?
+				SetPolyFillMode( dc_, WINDING );
 
 				::BeginPath( dc_ );
 			}

@@ -307,11 +307,11 @@ public:
 
 			agg::path_storage fillPath;
 
-			StringUtils::trace( "Base path: \n" );
+			StringUtils::trace( "ShadowFill::render() Base path: \n" );
 			while ( pathIt != points.end() ) {
 				PathPoint& pt = *pathIt;
 
-				StringUtils::trace( Format("\tpt: %.2f, %.2f \n") % pt.point_.x_ % pt.point_.y_ );
+				StringUtils::trace( Format("\tpt: %.2f, %.2f type: %d \n") % pt.point_.x_ % pt.point_.y_ % pt.type_ );
 
 				switch ( pt.type_ ){
 					case PathPoint::ptMoveTo: {
@@ -330,12 +330,20 @@ public:
 						pathIt++;
 						PathPoint& c1 = *pathIt;
 
+						StringUtils::trace( Format("\tc1: %.2f, %.2f type: %d \n") % c1.point_.x_ % c1.point_.y_ % c1.type_ );
+
+
 						pathIt++;
 						PathPoint& c2 = *pathIt;
+
+						StringUtils::trace( Format("\tc2: %.2f, %.2f type: %d \n") % c2.point_.x_ % c2.point_.y_ % c2.type_ );
+
 
 						pathIt++;
 						PathPoint& p2 = *pathIt;
 						
+						StringUtils::trace( Format("\tp2: %.2f, %.2f type: %d \n") % p2.point_.x_ % p2.point_.y_ % p2.type_ );
+
 						fillPath.curve4( c1.point_.x_, c1.point_.y_,
 										c2.point_.x_, c2.point_.y_,
 										p2.point_.x_, p2.point_.y_ );
@@ -380,8 +388,8 @@ public:
 				
 				ImageContext ictx = img;
 				ictx->setColor( &color_ );
-				ictx->rectangle( 0, 0, img->getWidth(), img->getHeight() );
-				ictx->fillPath();
+				//ictx->rectangle( 0, 0, img->getWidth(), img->getHeight() );
+				//ictx->fillPath();
 				
 			}
 			
@@ -411,7 +419,7 @@ public:
 				//m *= Matrix2D::translation( (pathBounds.left_  /*+ maskImage->getWidth()/2.0*/ ), 
 				//							(pathBounds.top_ /*+ maskImage->getHeight()/2.0*/ ) );
 				
-
+/*
 				std::vector<PathPoint> pts;
 				path->getPoints( pts, &m );
 				std::vector<PathPoint>::iterator pit = pts.begin();
@@ -422,7 +430,7 @@ public:
 
 					pit ++;
 				}
-
+*/
 
 
 				ictx->setCurrentTransform( m );
@@ -444,8 +452,8 @@ public:
 
 			agg::pixfmt_gray8 pixf(maskRb);
 
-			stack_blur_x_gray8(pixf, radius_);
-			stack_blur_y_gray8(pixf, radius_);			
+			//stack_blur_x_gray8(pixf, radius_);
+			//stack_blur_y_gray8(pixf, radius_);			
 
 			mask.updateFromImage( maskImage );
 
