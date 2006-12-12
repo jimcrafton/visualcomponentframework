@@ -133,6 +133,9 @@ int main( int argc, char** argv ){
 
 		//HiResClock clock;
 
+		System::println( "------------------------------------------------------------------------------" );
+		System::println( "SQLite testing" );
+		System::println( "------------------------------------------------------------------------------" );
 
 		DataSet* dataSet = DatabaseToolkit::createDataSet( "SQLiteType" );
 
@@ -173,6 +176,8 @@ int main( int argc, char** argv ){
 			
 			System::println( "------------------------------------------------------------------------------" );
 			
+			DateTime start = DateTime::now();
+
 			if ( dataSet->isActive() ) {
 				size_t rowCount = 0;
 			
@@ -190,7 +195,12 @@ int main( int argc, char** argv ){
 				}
 
 				//clock.stop();
-				System::println( Format("%d rows.") % rowCount );
+
+				DateTime end = DateTime::now();
+
+				DateTimeSpan sp = end - start;
+
+				System::println( Format("%d rows took %u milliseconds.") % rowCount % sp.getTotalMilliseconds() );
 			}			
 
 
@@ -226,7 +236,11 @@ int main( int argc, char** argv ){
 
 			System::println( "------------------------------------------------------------------------------" );
 
+			dataSet->first();
+
 			System::println( "Editing data." );
+
+			System::println( "First item LastName: " + dataSet->fieldByName("LastName")->getAsString() );
 
 			System::println( "Test edit - this should error out because we are not in edit mode." );
 
@@ -237,19 +251,17 @@ int main( int argc, char** argv ){
 				System::println( "Error: " + e.getMessage() );
 			}
 
-
 			System::println( "Test edit - this should NOT error out because we are in edit mode." );
-			try {
-				dataSet->edit();
+			try {			
 
-				System::println( "LastName: " + dataSet->fieldByName("LastName")->getAsString() );
+				dataSet->edit();				
 
 				System::println( "Changing LastName field to \"Laczinski\"..." ); 
 				dataSet->fieldByName("LastName")->setAsString("Laczinski");
 
 				dataSet->post();
 
-				dataSet->first();
+//		dataSet->first();
 
 				System::println( "After the post(), the first record's LastName: " + dataSet->fieldByName("LastName")->getAsString() );
 			}
@@ -279,7 +291,12 @@ int main( int argc, char** argv ){
 
 
 	//ADO----
+	
 	{
+		System::println( "------------------------------------------------------------------------------" );
+		System::println( "ADO testing" );
+		System::println( "------------------------------------------------------------------------------" );
+
 
 		DataSet* dataSet = dataSet = DatabaseToolkit::createDataSet( "ADOType" );
 		
@@ -301,6 +318,24 @@ int main( int argc, char** argv ){
 			}
 
 
+			System::println( "------------------------------------------------------------------------------" );
+			
+			System::println( "Activating data set..." );
+			
+			dataSet->setActive(true);
+			
+			System::println( "------------------------------------------------------------------------------" );
+			
+
+			while ( !dataSet->isEOF() ) {			
+				Enumerator<DataField*>* fields = dataSet->getFields();
+				
+				while ( fields->hasMoreElements() ) {
+					DataField* field = fields->nextElement();
+					System::println( "\tField name: " + field->getName() + " value: " + field->getAsString() );
+				}
+				dataSet->next();
+			}
 
 		}
 		catch ( BasicException& e ) {
@@ -310,7 +345,6 @@ int main( int argc, char** argv ){
 		
 		delete dataSet;
 	}
-
 
 
 

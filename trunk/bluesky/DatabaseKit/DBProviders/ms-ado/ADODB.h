@@ -3515,7 +3515,7 @@ inline bool wrap_t<ADODB::_Recordset15>::GetEOF()
     VARIANT_BOOL _result_;
     HRESULT _hr_ = reinterpret_cast<ADODB::_Recordset15*>(this)->get_EOF(&_result_);
     if (FAILED(_hr_)) throw_com_error(reinterpret_cast<ADODB::_Recordset15*>(this), _hr_);
-    return _result_ != COMET_VARIANT_FALSE;
+    return _result_ ? true : false;
 }
 
 inline com_ptr<ADODB::Fields> wrap_t<ADODB::_Recordset15>::GetFields()
