@@ -71,8 +71,13 @@ namespace VCF {
 		comet::ADODB::_ConnectionPtr getConnection();
 		
 		void addFieldDef( comet::ADODB::FieldPtr& field, size_t fieldIndex );
+
+		AnsiString generateSQL();
+
+		size_t calculateRecordSize();
 	private:
 		comet::ADODB::_ConnectionPtr dbConnection_;
+		comet::ADODB::_RecordsetPtr currentRecordSet_;
 	};
 };
 

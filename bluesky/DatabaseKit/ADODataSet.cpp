@@ -32,7 +32,12 @@ using namespace comet::ADODB;
 ADODataSet::ADODataSet():
 	DataSet()
 {
-	if( FAILED(::CoInitialize(NULL)) ) {
+
+	//Note that we are initializing COM with the 
+	//COINIT_APARTMENTTHREADED flag here. This may
+	//make multi-threaded support problematic. See
+	//the MSDN docs for CoInitializeEx
+	if( FAILED(::CoInitializeEx(0,COINIT_APARTMENTTHREADED)) ) {  
 		throw DatabaseError("Unable to initialize COM for ADO data set");
 	}
 
@@ -46,6 +51,41 @@ ADODataSet::~ADODataSet()
 	::CoUninitialize();
 }
 
+
+AnsiString ADODataSet::generateSQL()
+{
+	AnsiString result;
+
+	String tableName = getTableName();
+
+	if ( tableName.empty() ) {
+		throw DatabaseError("No Table Name specified, unable to generate SQL statement!");
+	}
+
+	if ( fields_->empty() ) {
+		throw DatabaseError("No Fields in data set, unable to generate SQL statement!");
+	}	
+
+	result += "select ";
+	for ( size_t i=0;i<fields_->size();i++ ) {
+		DataField* field = fields_()[i];
+		if ( i > 0 ) {
+			result += ", ";
+		}
+		result += field->getName();
+	}
+
+	result += " from ";
+
+	result += tableName;
+
+
+	result += ";";
+
+
+	return result;
+}
+
 void ADODataSet::internal_open()
 {
 	internal_initFieldDefinitions();
@@ -54,7 +94,22 @@ void ADODataSet::internal_open()
 		if ( getDefaulFields() ) {
 			createFields();
 		}
+
+		_ConnectionPtr connection = getConnection();
+
+		AnsiString sql = generateSQL();
 		
+		currentRecordSet_ = NULL; //pitch the old record set...
+
+		_CommandPtr cmd = Command::create();
+
+		cmd->PutActiveConnection( connection );
+		cmd->PutCommandText( sql.c_str() );
+
+		variant_t recordsAffected;
+		currentRecordSet_ = cmd->Execute( recordsAffected, variant_t::missing(), adCmdText);
+
+		currentRecordSet_->MoveFirst();
 	}
 	catch ( BasicException& ) {
 		
@@ -91,7 +146,7 @@ comet::ADODB::_ConnectionPtr ADODataSet::getConnection()
 		connectionStr += ";";
 		connectionStr += "Persist Security Info=False";
 
-		dbConnection_->Open( connectionStr.in() );
+		dbConnection_->Open( connectionStr.in() );		
 	}
 
 	return dbConnection_;
@@ -100,6 +155,8 @@ comet::ADODB::_ConnectionPtr ADODataSet::getConnection()
 void ADODataSet::internal_close()
 {
 	_ConnectionPtr connect = getConnection();
+
+	currentRecordSet_ = NULL; //pitch the old record set...
 
 	connect->Close();
 }
@@ -115,9 +172,7 @@ void ADODataSet::addFieldDef( FieldPtr& field, size_t fieldIndex )
 		i++;
 	}
 
-	fieldName = name;
-
-	
+	fieldName = name;	
 
 
 	DataFieldType dataType = dftUnknown;
@@ -206,113 +261,129 @@ void ADODataSet::internal_initFieldDefinitions()
 
 void ADODataSet::internal_first()
 {
-
+	currentRecordSet_->MoveFirst();
 	
 }
+	
+size_t ADODataSet::calculateRecordSize() 
+{
+	size_t result = 0;
+
+	try {
+		FieldsPtr fields = currentRecordSet_->GetFields();
+
+		if ( !fields.is_null() ) {
+			variant_t index;
+			for (int i = 0; i < (int)fields->GetCount(); i++) {
+				index = i;
+				FieldPtr field = fields->GetItem( index );
+
+				result += field->GetActualSize();
+			}
+		}
+	}
+	catch ( std::exception& ) {
 		
+	}
+
+	return result;
+}
+
 GetResultType ADODataSet::getRecord( DataSet::Record* record, GetRecordMode mode )
 {
-	GetResultType result = grFailed;
+	GetResultType result = grFailed;	
 
-	
 
-	size_t bufferOffset = 0;
+	if ( currentRecordSet_->GetEOF() ) {
+		eof_ = true;
+		result = grEOF;
+	}
+	else {
+		size_t bufferOffset = 0;
 
-	int res = 0;	
+		int res = 0;	
 
-//	size_t currentSz = calculateRecordSize();
+		size_t currentSz = calculateRecordSize();
 
-//	record->setSize( currentSz );
+		record->setSize( currentSz );
 
-	for ( size_t i=0;i<fields_->size();i++ ) {
-		DataField* field = fields_()[i];
+		FieldsPtr rsFields = currentRecordSet_->GetFields();
 
-		switch ( field->getDataType() ) {
-			case dftString : {
-				/*
-				const char* text = (const char*)sqlite3_column_text(currentStmt_,i);
-				int txtSz = sqlite3_column_bytes( currentStmt_, i );
-				memcpy( &record->buffer[bufferOffset], text, txtSz );
+		variant_t fldIndex;
 
-				record->buffer[bufferOffset+txtSz] = 0;
+		for ( size_t i=0;i<fields_->size();i++ ) {
+			DataField* field = fields_()[i];
 
-				field->setSize( txtSz + 1 );
-				*/
+			fldIndex = (int)i;
+			FieldPtr adoField = rsFields->GetItem( fldIndex );
 
-				bufferOffset += field->getSize();
-			}
-			break;
+			variant_t fieldVal = adoField->GetValue();
 
-			case dftUnicodeString : {
+
+			size_t as = adoField->GetActualSize();
+
+			switch ( field->getDataType() ) {
+				case dftString : {
+					bstr_t s = fieldVal;
+					AnsiString as = s.s_str();
+					const char* text = as.c_str();
+					int txtSz = as.size();
+					memcpy( &record->buffer[bufferOffset], text, txtSz );				
+
+					field->setSize( adoField->GetActualSize() );
+
+					bufferOffset += field->getSize();
+				}
+				break;
+
+				case dftUnicodeString : {
+					
+				}
+				break;
+
+				case dftFloat : {
+					double res = fieldVal;
+					memcpy( &record->buffer[bufferOffset], &res, sizeof(res) );
+
+					bufferOffset += field->getSize();
+				}
+				break;
 				
+				case dftWord : case dftSmallint : case dftInteger : {
+					int res = fieldVal;
+
+					memcpy( &record->buffer[bufferOffset], &res, sizeof(res) );
+
+					bufferOffset += field->getSize();
+				}
+				break;
+			}
+		}
+
+		VCF_ASSERT( bufferOffset == record->size );
+
+		switch ( mode ) {
+			case grmCurrent : {
+
 			}
 			break;
 
-			case dftFloat : {
-				/*
-				double res = sqlite3_column_double(currentStmt_,i);
-
-				memcpy( &record->buffer[bufferOffset], &res, sizeof(res) );
-				*/
-
-				bufferOffset += field->getSize();
-			}
-			break;
-			
-			case dftWord : case dftSmallint : case dftInteger : {
-				/*
-				int res = sqlite3_column_int( currentStmt_, i );
-
-				memcpy( &record->buffer[bufferOffset], &res, sizeof(res) );
-				*/
-
-				bufferOffset += field->getSize();
+			case grmNext : {
+				try {
+					currentRecordSet_->MoveNext();
+					result = grOK;
+					bool eof = currentRecordSet_->GetEOF();
+					if ( eof ) {
+						result = grEOF;
+					}
+				}
+				catch ( std::exception& e ) {
+					result = grFailed;
+				}
 			}
 			break;
 		}
 	}
-
-	VCF_ASSERT( bufferOffset == record->size );
-
-	switch ( mode ) {
-		case grmCurrent : {
-
-		}
-		break;
-
-		case grmNext : {
-			//res = sqlite3_step(currentStmt_);				
-		}
-		break;
-	}
-/*
-	switch ( res ) {
-		case SQLITE_ROW : {
-			result = grOK;
-		}
-		break;
-
-		case SQLITE_DONE : {
-			result = grEOF;
-		}
-		break;
-
-		case SQLITE_ERROR : {
-			result = grFailed;
-		}
-		break;
-
-		case SQLITE_BUSY : {
-			result = grFailed;
-		}
-		break;
-
-		case SQLITE_MISUSE : {
-			result = grFailed;
-		}
-		break;
-	}	
-*/
 
 	return result;
 }
@@ -326,10 +397,7 @@ DataSet::Record* ADODataSet::allocateRecordData()
 {
 	DataSet::Record* result = NULL;
 
-	//calculateRecordSize();
-
 	result = new DataSet::Record();
-
 
 	return result;
 }
@@ -368,7 +436,7 @@ void ADODataSet::setProvider( const String& val )
 
 bool ADODataSet::isCursorOpen()
 {
-	return false;	
+	return !currentRecordSet_.is_null();
 }
 
 bool ADODataSet::getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize )
@@ -465,8 +533,6 @@ void ADODataSet::internal_post()
 			case dftString : {
 				const char* text = (const char*)&record->buffer[bufferOffset];
 
-				//Note - it might be more efficient at some point to see if there
-				//is a way to use SQLITE_STATIC here...
 				
 			}
 			break;

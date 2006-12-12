@@ -24,7 +24,8 @@ static std::map<String, DataFieldType> colTypeMap;
 SQLiteDataSet::SQLiteDataSet():
 	DataSet(),
 	dbHandle_(NULL),
-	currentStmt_(NULL)
+	currentStmt_(NULL),
+	currentRow_(0)
 {
 	if ( colTypeMap.empty() ) {
 		colTypeMap["varchar"] = dftString;
@@ -47,13 +48,20 @@ size_t SQLiteDataSet::calculateRecordSize()
 		DataField* field = fields_()[i];
 
 		switch ( field->getDataType() ) {
-			case dftString : {				
-				result += sqlite3_column_bytes( currentStmt_, i ) + 1; //adds 1 for trailing \0
+			case dftString : {	
+				int colBytes = sqlite3_column_bytes( currentStmt_, i ); //adds 1 for trailing \0
+				if ( colBytes < 0 ) {
+					String s = SQLiteDatabase::errorMessageFromHandle( dbHandle_ );
+				}
+				VCF_ASSERT( colBytes >= 0 );
+				result += colBytes + 1;
 			}
 			break;
 
 			case dftUnicodeString : {
-				result += sqlite3_column_bytes16( currentStmt_, i ) + 1; //adds 1 for trailing \0
+				int colBytes = sqlite3_column_bytes16( currentStmt_, i ); //adds 1 for trailing \0
+				VCF_ASSERT( colBytes >= 0 );
+				result += colBytes + 1;
 			}
 			break;
 
@@ -73,6 +81,8 @@ size_t SQLiteDataSet::calculateRecordSize()
 void SQLiteDataSet::internal_open()
 {
 	internal_initFieldDefinitions();
+
+	currentRow_ = 0;
 
 	try {
 		if ( getDefaulFields() ) {
@@ -297,7 +307,21 @@ void SQLiteDataSet::internal_first()
 	VCF_ASSERT( NULL != dbHandle_ );
 	VCF_ASSERT( NULL != currentStmt_ );
 
-	int res = sqlite3_reset(currentStmt_);
+	sqlite3_finalize(currentStmt_);
+
+	currentRow_ = 0;
+
+	AnsiString sql = generateSQL();
+	const char* tail=0;
+	sqlite3* dbHandle = getHandle();
+	int res = sqlite3_prepare(dbHandle, sql.c_str(), sql.size(), &currentStmt_, &tail );
+
+	if ( res != SQLITE_OK ) {
+		sqlite3_finalize(currentStmt_);
+		throw DatabaseError(SQLiteDatabase::errorMessageFromHandle(dbHandle));
+	}
+
+	//int res = sqlite3_reset(currentStmt_);
 }
 		
 GetResultType SQLiteDataSet::getRecord( DataSet::Record* record, GetRecordMode mode )
@@ -365,7 +389,8 @@ GetResultType SQLiteDataSet::getRecord( DataSet::Record* record, GetRecordMode m
 		break;
 
 		case grmNext : {
-			res = sqlite3_step(currentStmt_);				
+			res = sqlite3_step(currentStmt_);	
+			currentRow_ ++;
 		}
 		break;
 	}
