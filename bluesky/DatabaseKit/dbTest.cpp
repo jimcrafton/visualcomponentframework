@@ -175,7 +175,7 @@ int main( int argc, char** argv ){
 			dataSet->setActive(true);
 			
 			System::println( "------------------------------------------------------------------------------" );
-			
+			/*
 			DateTime start = DateTime::now();
 
 			if ( dataSet->isActive() ) {
@@ -202,7 +202,7 @@ int main( int argc, char** argv ){
 
 				System::println( Format("%d rows took %u milliseconds.") % rowCount % sp.getTotalMilliseconds() );
 			}			
-
+*/
 
 			System::println( "------------------------------------------------------------------------------" );
 			System::println( "Going to first record..." );
@@ -256,12 +256,12 @@ int main( int argc, char** argv ){
 
 				dataSet->edit();				
 
-				System::println( "Changing LastName field to \"Laczinski\"..." ); 
-				dataSet->fieldByName("LastName")->setAsString("Laczinski");
+				System::println( "Changing LastName field to \"ddggf\"..." ); 
+				dataSet->fieldByName("LastName")->setAsString("ddggf");
 
 				dataSet->post();
 
-//		dataSet->first();
+				dataSet->first();
 
 				System::println( "After the post(), the first record's LastName: " + dataSet->fieldByName("LastName")->getAsString() );
 			}

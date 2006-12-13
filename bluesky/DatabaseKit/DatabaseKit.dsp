@@ -148,6 +148,10 @@ SOURCE=.\DBProviders\sqlite\legacy.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\DBProviders\sqlite\loadext.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\DBProviders\sqlite\main.c
 # End Source File
 # Begin Source File
@@ -249,6 +253,10 @@ SOURCE=.\DBProviders\sqlite\vdbefifo.c
 # Begin Source File
 
 SOURCE=.\DBProviders\sqlite\vdbemem.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\DBProviders\sqlite\vtab.c
 # End Source File
 # Begin Source File
 

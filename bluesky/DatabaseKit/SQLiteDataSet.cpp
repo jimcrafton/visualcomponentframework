@@ -48,20 +48,17 @@ size_t SQLiteDataSet::calculateRecordSize()
 		DataField* field = fields_()[i];
 
 		switch ( field->getDataType() ) {
-			case dftString : {	
-				int colBytes = sqlite3_column_bytes( currentStmt_, i ); //adds 1 for trailing \0
-				if ( colBytes < 0 ) {
-					String s = SQLiteDatabase::errorMessageFromHandle( dbHandle_ );
-				}
-				VCF_ASSERT( colBytes >= 0 );
-				result += colBytes + 1;
+			case dftString : {				
+				int res = sqlite3_column_bytes( currentStmt_, i ) + 1; //adds 1 for trailing \0
+				VCF_ASSERT( res >= 0 );
+				result += res;
 			}
 			break;
 
 			case dftUnicodeString : {
-				int colBytes = sqlite3_column_bytes16( currentStmt_, i ); //adds 1 for trailing \0
-				VCF_ASSERT( colBytes >= 0 );
-				result += colBytes + 1;
+				int res = sqlite3_column_bytes16( currentStmt_, i ) + 1; //adds 1 for trailing \0
+				VCF_ASSERT( res >= 0 );
+				result += res;
 			}
 			break;
 
@@ -336,6 +333,9 @@ GetResultType SQLiteDataSet::getRecord( DataSet::Record* record, GetRecordMode m
 
 	size_t currentSz = calculateRecordSize();
 
+	VCF_ASSERT( currentSz > 0 ) ;
+
+
 	record->setSize( currentSz );
 
 	for ( size_t i=0;i<fields_->size();i++ ) {
@@ -534,6 +534,8 @@ bool SQLiteDataSet::getFieldData( DataField* field, unsigned char* buffer, size_
 
 		if ( field->getFieldNumber() == i ) {
 			DataSet::Record* record = records_[ activeRecordIndex_ ];
+
+			VCF_ASSERT( NULL != record->buffer );
 
 			if ( (NULL != buffer) && (bufferSize > 0 ) ) {
 				size_t len = minVal<>( bufferSize, (size_t)field->getSize() );
