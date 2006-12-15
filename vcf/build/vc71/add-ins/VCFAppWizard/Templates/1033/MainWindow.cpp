@@ -79,7 +79,7 @@ MainWindow::~MainWindow()
 [!if FILE_MENU]
 void MainWindow::onFileOpenProject( MenuItemEvent* e )
 {
-	CommonFileOpen openDlg;	
+	CommonFileOpenDialog openDlg;	
 
 	openDlg.addFilter( "All Files", "*.*" );
 	
@@ -91,7 +91,7 @@ void MainWindow::onFileOpenProject( MenuItemEvent* e )
 
 void MainWindow::onFileSaveProject( MenuItemEvent* e )
 {
-	CommonFileSave saveDlg;
+	CommonFileSaveDialog saveDlg;
 
 	if ( true == saveDlg.execute() ) {
 		
