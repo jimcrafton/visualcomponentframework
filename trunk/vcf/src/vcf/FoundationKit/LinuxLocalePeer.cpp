@@ -44,7 +44,7 @@ locale_(NULL)
 
 LinuxLocalePeer::~LinuxLocalePeer()
 {
-	if(locale_ != NULL && 
+	if(locale_ != NULL &&
 	   locale_ != LC_GLOBAL_LOCALE)
 	{
 		freelocale(locale_);
@@ -84,7 +84,7 @@ UnicodeString LinuxLocalePeer::toString( const int& val )
     LocaleChanger loc(locale_);
     const int bufsize = 100;
     wchar_t buf[bufsize] = {0};
-    swprintf(buf, sizeof(buf), L"%'i", val); 
+    swprintf(buf, sizeof(buf), L"%'i", val);
     UnicodeString result = buf;
     return result;
 }
@@ -94,7 +94,7 @@ UnicodeString LinuxLocalePeer::toString( const unsigned int& val )
     LocaleChanger loc(locale_);
     const int bufsize = 100;
     wchar_t buf[bufsize] = {0};
-    swprintf(buf, sizeof(buf), L"%'u", val); 
+    swprintf(buf, sizeof(buf), L"%'u", val);
     UnicodeString result = buf;
     return result;
 }
@@ -104,7 +104,7 @@ UnicodeString LinuxLocalePeer::toString( const long& val )
     LocaleChanger loc(locale_);
     const int bufsize = 100;
     wchar_t buf[bufsize] = {0};
-    swprintf(buf, sizeof(buf), L"%'li", val); 
+    swprintf(buf, sizeof(buf), L"%'li", val);
     UnicodeString result = buf;
     return result;
 }
@@ -114,7 +114,7 @@ UnicodeString LinuxLocalePeer::toString( const unsigned long& val )
     LocaleChanger loc(locale_);
     const int bufsize = 100;
     wchar_t buf[bufsize] = {0};
-    swprintf(buf, sizeof(buf), L"%'lu", val); 
+    swprintf(buf, sizeof(buf), L"%'lu", val);
     UnicodeString result = buf;
     return result;
 }
@@ -124,7 +124,7 @@ UnicodeString LinuxLocalePeer::toString( const double& val )
     LocaleChanger loc(locale_);
     const int bufsize = 100;
     wchar_t buf[bufsize] = {0};
-    swprintf(buf, sizeof(buf), L"%'f", val); 
+    swprintf(buf, sizeof(buf), L"%'f", val);
     UnicodeString result = buf;
     return result;
 }
@@ -134,7 +134,7 @@ UnicodeString LinuxLocalePeer::toString( const float& val )
     LocaleChanger loc(locale_);
     const int bufsize = 100;
     wchar_t buf[bufsize] = {0};
-    swprintf(buf, sizeof(buf), L"%'f", val); 
+    swprintf(buf, sizeof(buf), L"%'f", val);
     UnicodeString result = buf;
     return result;
 }
@@ -144,7 +144,7 @@ UnicodeString LinuxLocalePeer::toStringFromCurrency( const double& val )
     LocaleChanger loc(locale_);
     const int bufsize = 100;
     char buf[bufsize] = {0};
-    strfmon(buf, sizeof(buf), "%n", val); 
+    strfmon(buf, sizeof(buf), "%n", val);
 	UnicodeString result = buf;
 	return result;
 }
@@ -186,6 +186,13 @@ double LinuxLocalePeer::toDoubleAsCurrency( const UnicodeString& str )
     LocaleChanger loc(locale_);
     float result;
     swscanf(str.c_str(), L"%'f", &result);
+    return result;
+}
+
+DateTime LinuxLocalePeer::toDateTime( const UnicodeString& str )
+{
+    DateTime result;
+
     return result;
 }
 
@@ -407,7 +414,7 @@ UnicodeString LinuxLocalePeer::toStringFromTime( const DateTime& val, const Unic
     return result;
 }
 
-namespace 
+namespace
 {
     const char* GetLocaleName(locale_t loc)
     {
@@ -428,7 +435,7 @@ namespace
             {
                 if(lORc == 0)
                 {
-                    result = language;    
+                    result = language;
                 }
                 else if(lORc == 1)
                 {
@@ -465,9 +472,9 @@ uint32 LinuxLocalePeer::getCountryCode()
 
 String LinuxLocalePeer::getLanguage()
 {
-	//JC - I added this, it's blank for now - 
+	//JC - I added this, it's blank for now -
 	//the Locale class will simply return an english
-	//version of the name. Ideally we'd like to see the 
+	//version of the name. Ideally we'd like to see the
 	//localized version of the language name here
 	String result;
 	return result;

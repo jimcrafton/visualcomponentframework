@@ -74,8 +74,8 @@ public:
 	XCBGraphicsToolkit();
 	virtual ~XCBGraphicsToolkit();
 
-	static XCBConnection* getConnection();
-	static XCBSCREEN*     getScreen();
+	static xcb_connection_t* getConnection();
+	static xcb_screen_t*     getScreen();
 	static FcPattern* getFontPatternForFont( XCBFontPeer* fontPeer );
 	static String getFontFileNameForFont( XCBFontPeer* fontPeer );
 	static void updateFontAttributes( XCBFontPeer* fontPeer );
@@ -111,8 +111,8 @@ protected:
 	virtual void internal_systemSettingsChanged();
 
 private:
-	XCBConnection *connection_;
-	XCBSCREEN     *screen_;
+	xcb_connection_t *connection_;
+	xcb_screen_t     *screen_;
 	std::map<String,FcPattern*> fontPatternCache_;
 	XCBFontEngine* fontEngine_;
 	void loadSystemColors();

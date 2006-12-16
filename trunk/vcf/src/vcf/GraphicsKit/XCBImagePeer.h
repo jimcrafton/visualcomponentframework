@@ -22,7 +22,7 @@ public:
 
 	virtual void finishedDrawing();
 
-	const XCBImage* getImageData() const;
+	const xcb_image_t* getImageData() const;
 
 private:
 	void init();
@@ -30,7 +30,7 @@ private:
 	void createImage();
 	void destroyImage();
 
-	XCBImage *image_;
+	xcb_image_t *image_;
 
 };
 

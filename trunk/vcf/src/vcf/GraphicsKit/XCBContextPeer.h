@@ -25,9 +25,9 @@ this surface - all we care about is the RGB components, we don't need the
 alpha channel for this level.
 */
 struct XCBSurface {
-    XCBGCONTEXT* context;
-    XCBDRAWABLE* drawable;
-    XCBImage* drawableImage;
+    xcb_gcontext_t* context;
+    xcb_drawable_t* drawable;
+    xcb_image_t* drawableImage;
 
 	typedef agg::pixfmt_bgra32 PixFmt;
 	typedef agg::pixfmt_bgra32_pre PixFmtPre;
@@ -182,8 +182,8 @@ public:
 	virtual void drawThemeText( Rect* rect, TextState& state );
 
 	////////////////////////////////////
-	void internal_setImage(XCBImage *image);
-	
+	void internal_setImage(xcb_image_t *image);
+
 	void internal_setGamma( double gamma );
 protected:
 	struct GlyphInfo {
@@ -195,7 +195,7 @@ protected:
 
 
 	GraphicsContext *context_;
-	XCBImage        *image_;
+	xcb_image_t        *image_;
 
     XCBSurface* drawingSurface_;
 

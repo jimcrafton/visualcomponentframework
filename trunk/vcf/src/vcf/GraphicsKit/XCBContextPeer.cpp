@@ -160,7 +160,7 @@ const agg::glyph_cache* XCBContextPeer::glyph( int character, double& x, double&
 	CachedGlyph* cg = NULL;
 
 	VCF_ASSERT( character >= 0 );
-	
+
 	//check to see if we need to resize over 256
 	if ( (size_t)character > cachedFontGlyphs_.size()-1 ) {
 		cachedFontGlyphs_.resize( cachedFontGlyphs_.size() + (character - (cachedFontGlyphs_.size()-1)), 0 );
@@ -280,36 +280,36 @@ bool XCBContextPeer::prepareForDrawing( int32 drawingOperation )
 				FcChar8 * filename;
 				FcPatternGetString( pattern, FC_FILE, 0, &filename ); //do we need to release this???
 				fonts_->glyphRendering = agg::glyph_ren_native_gray8;
-				fonts_->fontLoaded = fonts_->engine.load_font( (const char*)filename, 0, fonts_->glyphRendering );			
+				fonts_->fontLoaded = fonts_->engine.load_font( (const char*)filename, 0, fonts_->glyphRendering );
 			}
 
-			
+
 			if ( !fonts_->fontLoaded ) {
-				printf( "Error: fonts_->fontLoaded = false, loading hash: %s (prev hash: %s)\n", 
+				printf( "Error: fonts_->fontLoaded = false, loading hash: %s (prev hash: %s)\n",
 							fontHash.ansi_c_str(), prevFontHash_.ansi_c_str() );
 			}
-			
+
 			prevFontHash_ = fontHash;
-			
+
 			VCF_ASSERT( fonts_->fontLoaded );
-			
-				
+
+
 
 			Color c = *context_->getCurrentFont()->getColor();
 			fonts_->color = agg::rgba(c.getRed(),c.getGreen(),c.getBlue(),c.getAlpha());
-			
+
 			if ( fonts_->fontLoaded ) {
-				
+
 				//printf( "Font %s loaded!\n",
 					//		fontHash.ansi_c_str() );
 				fonts_->engine.hinting( false );
 				fonts_->engine.height( fontPeer->getPixelSize() );
 				fonts_->engine.width( fontPeer->getPixelSize() );
-				
+
 				fonts_->engine.flip_y( true );
-				
-				
-				
+
+
+
 				//fonts_->engine.gamma( agg::gamma_threshold(2.50) );
 
 				fonts_->currentPointSize = fontPeer->getPointSize();
@@ -430,39 +430,39 @@ void XCBContextPeer::finishedDrawing( int32 drawingOperation )
 
 void XCBContextPeer::renderScanlinesSolid( agg::rasterizer_scanline_aa<>& rasterizer, const agg::rgba& color )
 {
-	
-	
+
+
 	typedef agg::renderer_mclip<XCBSurface::PixFmt> RendererBase;
 	typedef agg::renderer_scanline_aa_solid<RendererBase> RendererSolidAA;
 	typedef agg::renderer_scanline_bin_solid<RendererBase> RendererSolidBin;
 
-	
-	
-	
+
+
+
 	typedef agg::comp_op_adaptor_rgba<XCBSurface::ColorType, XCBSurface::ComponentOrder> blender_type;
 	typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
 	typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
 
 	//agg::scanline_u8 scanline;
 	if ( GraphicsContext::cmSource == context_->getCompositingMode() ) {
-		XCBSurface::PixFmt pixf( renderBuffer_ );		
+		XCBSurface::PixFmt pixf( renderBuffer_ );
 		RendererBase renb(pixf);
-		
-		
+
+
 		if ( !currentClipRect_.isNull() && !currentClipRect_.isEmpty() ) {
 			renb.reset_clipping(false);
-			renb.add_clip_box( (int)currentClipRect_.left_, 
+			renb.add_clip_box( (int)currentClipRect_.left_,
 								(int)currentClipRect_.top_,
-								(int)currentClipRect_.right_, 
+								(int)currentClipRect_.right_,
 								(int)currentClipRect_.bottom_ );
 		}
 		else {
 			renb.reset_clipping(true);
 		}
-		
-		
-		
-		
+
+
+
+
 		if ( antiAliasing_ ) {
 			RendererSolidAA renderer( renb );
 			renderer.color(color);
@@ -471,7 +471,7 @@ void XCBContextPeer::renderScanlinesSolid( agg::rasterizer_scanline_aa<>& raster
 		else {
 			RendererSolidBin renderer( renb );
 			renderer.color(color);
-			agg::render_scanlines(rasterizer, scanline_, renderer);			
+			agg::render_scanlines(rasterizer, scanline_, renderer);
 		}
 	}
 	else {
@@ -551,26 +551,26 @@ void XCBContextPeer::renderLine( const std::vector<GlyphInfo>& glyphs, size_t la
 		//renbSrc.reset_clipping( false );
 		//renbSrc.add_clip_box( (int)bounds.left_, (int)bounds.top_,
 		//						(int)bounds.right_, (int)bounds.bottom_ );
-								
+
 		//renb.reset_clipping( false );
 		//renb.add_clip_box( (int)bounds.left_, (int)bounds.top_,
 			//					(int)bounds.right_, (int)bounds.bottom_ );
 
 		double rightDX = bounds.getWidth() - currentLineSz.width_;
 		double centerDX = bounds.getWidth()/2.0 - currentLineSz.width_/2.0;
-		
+
 		for ( size_t i=0;i<=lastGlyphPos;i++ ) {
 			const GlyphInfo& glyphInfo = glyphs[i];
 			double gx = glyphInfo.x;
 			double gy = glyphInfo.y;
-			
+
 			if ( drawOptions & GraphicsContext::tdoRightAlign ) {
 				gx = glyphInfo.x + rightDX;
 			}
 			else if ( drawOptions & GraphicsContext::tdoCenterHorzAlign ) {
 				gx = glyphInfo.x + centerDX;
 			}
-			
+
 			if ( glyphInfo.visible ) {
 				fonts_->mgr.init_embedded_adaptors( glyphInfo.glyph, gx, gy );
 				switch( glyphInfo.glyph->data_type ) {
@@ -612,8 +612,8 @@ void XCBContextPeer::textAt( const Rect& bounds, const String & text, const int3
 	VCF_ASSERT( fonts_->fontLoaded );
 
 	double dpi = GraphicsToolkit::getDPI();
-	
-	
+
+
 /*
 	agg::rect_d charBounds;
 	charBounds.x1 = 0;
@@ -625,18 +625,18 @@ void XCBContextPeer::textAt( const Rect& bounds, const String & text, const int3
 	size_t size = text.size();
 	const VCFChar* textPtr = text.c_str();
 
-	bool crlfChar = false;	
+	bool crlfChar = false;
 
 	double fontHeight =  getTextHeight("EM");  //(fonts_->currentPointSize / 72.0) * dpi;
 
-	double x1 = bounds.left_;	
+	double x1 = bounds.left_;
 	double y1 = bounds.top_ + fontHeight;
-	
+
 	Size currentLineSz;
 	currentLineSz.height_ = fontHeight;
-	
-	const size_t GLYPHS_INCREMENT = 256;	
-	std::vector<GlyphInfo> currentLine(GLYPHS_INCREMENT);	
+
+	const size_t GLYPHS_INCREMENT = 256;
+	std::vector<GlyphInfo> currentLine(GLYPHS_INCREMENT);
 	size_t lastGlyphPos = 0;
 
 	for ( size_t i=0;i<size;i++ ) {
@@ -647,25 +647,25 @@ void XCBContextPeer::textAt( const Rect& bounds, const String & text, const int3
 		if ( lastGlyphPos >= currentLine.size() ) {
 			currentLine.resize( currentLine.size() + GLYPHS_INCREMENT );
 		}
-		
+
 		GlyphInfo& glyphInfo = currentLine[lastGlyphPos];
-		
+
 		glyphInfo.glyph = glyph(character, x1, y1 );
 		glyphInfo.x = x1;
 		glyphInfo.y = y1;
 		glyphInfo.visible = !crlfChar;
-		
+
 		if ( crlfChar ) {
-			
-			if ( NULL != glyphInfo.glyph ) {		
-				
-				
-				if ( drawOptions & GraphicsContext::tdoWordWrap ) {					
+
+			if ( NULL != glyphInfo.glyph ) {
+
+
+				if ( drawOptions & GraphicsContext::tdoWordWrap ) {
 					renderLine( currentLine, lastGlyphPos, currentLineSz, bounds, drawOptions );
-					
+
 					x1 = bounds.left_;
 					y1 += fontHeight;
-					
+
 					lastGlyphPos = 0;
 					currentLineSz.width_ = 0;
 				}
@@ -677,7 +677,7 @@ void XCBContextPeer::textAt( const Rect& bounds, const String & text, const int3
 				}
 			}
 		}
-		else {			
+		else {
 /*
 			if ( glyphPtr->bounds.is_valid() ) {
 
@@ -696,15 +696,15 @@ void XCBContextPeer::textAt( const Rect& bounds, const String & text, const int3
 
 			}
 */
-			
+
 			currentLineSz.width_ += glyphInfo.glyph->advance_x;
 			x1 += glyphInfo.glyph->advance_x;
 			y1 += glyphInfo.glyph->advance_y;
 			lastGlyphPos ++;
 		}
 	}
-	
-	renderLine( currentLine, lastGlyphPos, currentLineSz, bounds, drawOptions );	
+
+	renderLine( currentLine, lastGlyphPos, currentLineSz, bounds, drawOptions );
 }
 
 Size XCBContextPeer::getTextSize( const String& text )
@@ -715,21 +715,21 @@ Size XCBContextPeer::getTextSize( const String& text )
 	XCBFontPeer* fontPeer = (XCBFontPeer*)font->getFontPeer();
 
 	String fontHash = fontPeer->getHashcode();
-	
+
 	if ( prevFontHash_ != fontHash ) {
 		FcPattern* pattern = XCBGraphicsToolkit::getFontPatternForFont( fontPeer );
-		
+
 		VCF_ASSERT( NULL != pattern );
 
-		clearGlyphs();		
+		clearGlyphs();
 
 		FcChar8 * filename;
 		FcPatternGetString( pattern, FC_FILE, 0, &filename ); //do we need to release this???
 
 		fonts_->fontLoaded = fonts_->engine.load_font( (const char*)filename, 0, agg::glyph_ren_native_gray8 );
-		
+
 		VCF_ASSERT( fonts_->fontLoaded );
-		
+
 		if ( fonts_->fontLoaded ) {
 			fonts_->engine.hinting( false );
 			fonts_->engine.height( fontPeer->getPixelSize() );
@@ -925,8 +925,8 @@ void XCBContextPeer::drawImage( const double& x, const double& y, Rect* imageBou
 	if(srcImagePeer != NULL) {
 		for(int32 srcY = 0; srcY<imageBounds->getHeight(); ++srcY) {
 			for(int32 srcX = 0; srcX<imageBounds->getWidth(); ++srcX) {
-				CARD32 pixel = XCBImageGetPixel(const_cast<XCBImage*>(srcImagePeer->getImageData()), srcX, srcY);
-				XCBImagePutPixel(drawingSurface_->drawableImage, x+srcX, y+srcY, pixel);
+				uint32_t pixel = xcb_image_get_pixel(const_cast<xcb_image_t*>(srcImagePeer->getImageData()), srcX, srcY);
+				xcb_image_put_pixel(drawingSurface_->drawableImage, x+srcX, y+srcY, pixel);
 			}
 		}
 	}
@@ -1077,7 +1077,7 @@ void XCBContextPeer::drawThemeButtonFocusRect( Rect* rect )
 
 	stroke.width( 1 );
 	agg::rasterizer_scanline_aa<> rasterizer;
-	
+
 	rasterizer.add_path( stroke );
 
 	Color c("black");
@@ -1438,7 +1438,7 @@ void XCBContextPeer::drawThemeDisclosureButton( Rect* rect, DisclosureButtonStat
 void XCBContextPeer::drawThemeTab( Rect* rect, TabState& state )
 {
 	context_->setStrokeWidth(0.5);
-	
+
 	int gcs = context_->saveState();
 
 	Color* hilite = GraphicsToolkit::getSystemColor(SYSCOLOR_HIGHLIGHT);
@@ -1584,7 +1584,7 @@ void XCBContextPeer::drawThemeTickMarks( Rect* rect, SliderState& state )
 	int gcs = context_->saveState();
 
 	context_->setStrokeWidth(0.5);
-	
+
 	context_->setColor( Color::getColor( "black" ) );
 
 	double incr = 0;
@@ -1769,7 +1769,7 @@ void XCBContextPeer::drawThemeHeader( Rect* rect, ButtonState& state )
 	int gcs = context_->saveState();
 
 	context_->setStrokeWidth(0.5);
-	
+
 	context_->setColor( &face );
 	context_->rectangle( rect );
 	context_->fillPath();
@@ -1834,15 +1834,15 @@ void XCBContextPeer::drawThemeEdge( Rect* rect, DrawUIState& state, const int32&
 	Color* face = GraphicsToolkit::getSystemColor( SYSCOLOR_FACE );
 
 	context_->setStrokeWidth(1);
-		
-	
+
+
 	if ( edgeSides & GraphicsContext::etAllSides ) {
-		
+
 		context_->setColor( face );
 		context_->rectangle( rect );
 		context_->fillPath();
-		
-		
+
+
 		switch ( edgeStyle ) {
 			case GraphicsContext::etRecessed : {
 				context_->setColor( hilight );
@@ -1852,20 +1852,20 @@ void XCBContextPeer::drawThemeEdge( Rect* rect, DrawUIState& state, const int32&
 				context_->lineTo( rect->left_, rect->bottom_-1 );
 				context_->lineTo( rect->left_, rect->top_ );
 				context_->strokePath();
-				
+
 				context_->setColor( &shadow1 );
 				context_->moveTo( rect->left_+1, rect->bottom_-2 );
 				context_->lineTo( rect->left_+1, rect->top_+1 );
 				context_->lineTo( rect->right_-2, rect->top_+1 );
-				
+
 				context_->moveTo( rect->right_, rect->top_ );
 				context_->lineTo( rect->right_, rect->bottom_ );
 				context_->lineTo( rect->left_, rect->bottom_ );
-				
+
 				context_->strokePath();
-			}				
+			}
 			break;
-			
+
 			case GraphicsContext::etEtched : {
 				context_->setColor( &shadow1 );
 				context_->moveTo( rect->left_, rect->top_ );
@@ -1874,72 +1874,72 @@ void XCBContextPeer::drawThemeEdge( Rect* rect, DrawUIState& state, const int32&
 				context_->lineTo( rect->left_, rect->bottom_-1 );
 				context_->lineTo( rect->left_, rect->top_ );
 				context_->strokePath();
-				
+
 				context_->setColor( hilight );
 				context_->moveTo( rect->left_+1, rect->bottom_-2 );
 				context_->lineTo( rect->left_+1, rect->top_+1 );
 				context_->lineTo( rect->right_-2, rect->top_+1 );
-				
+
 				context_->moveTo( rect->right_, rect->top_ );
 				context_->lineTo( rect->right_, rect->bottom_ );
 				context_->lineTo( rect->left_, rect->bottom_ );
-				
+
 				context_->strokePath();
-			}				
+			}
 			break;
-			
+
 			case GraphicsContext::etRaised : {
 				context_->setColor( face );
 				context_->moveTo( rect->left_, rect->bottom_-1 );
 				context_->lineTo( rect->left_, rect->top_ );
 				context_->lineTo( rect->right_-1, rect->top_ );
 				context_->strokePath();
-				
+
 				context_->setColor( &shadow2 );
 				context_->moveTo( rect->right_, rect->top_ );
 				context_->lineTo( rect->right_, rect->bottom_ );
 				context_->lineTo( rect->left_+1, rect->bottom_ );
 				context_->strokePath();
-				
+
 				context_->setColor( hilight );
 				context_->moveTo( rect->left_+1, rect->bottom_-2 );
 				context_->lineTo( rect->left_+1, rect->top_+1 );
 				context_->lineTo( rect->right_-2, rect->top_+1 );
 				context_->strokePath();
-				
+
 				context_->setColor( &shadow1 );
 				context_->moveTo( rect->right_-1, rect->top_+1 );
 				context_->lineTo( rect->right_-1, rect->bottom_-1 );
 				context_->lineTo( rect->left_+1, rect->bottom_-1 );
 				context_->strokePath();
-			}				
+			}
 			break;
-			
+
 			case GraphicsContext::etSunken : {
 				context_->setColor( &shadow1 );
 				context_->moveTo( rect->left_, rect->bottom_-1 );
 				context_->lineTo( rect->left_, rect->top_ );
 				context_->lineTo( rect->right_-1, rect->top_ );
 				context_->strokePath();
-				
+
 				context_->setColor( hilight );
 				context_->moveTo( rect->right_, rect->top_ );
 				context_->lineTo( rect->right_, rect->bottom_ );
 				context_->lineTo( rect->left_+1, rect->bottom_ );
 				context_->strokePath();
-				
+
 				context_->setColor( &shadow2 );
 				context_->moveTo( rect->left_+1, rect->bottom_-2 );
 				context_->lineTo( rect->left_+1, rect->top_+1 );
 				context_->lineTo( rect->right_-2, rect->top_+1 );
 				context_->strokePath();
-				
+
 				context_->setColor( face );
 				context_->moveTo( rect->right_-1, rect->top_+1 );
 				context_->lineTo( rect->right_-1, rect->bottom_-1 );
 				context_->lineTo( rect->left_+1, rect->bottom_-1 );
 				context_->strokePath();
-			}				
+			}
 			break;
 		}
 	}
@@ -1955,7 +1955,7 @@ void XCBContextPeer::drawThemeEdge( Rect* rect, DrawUIState& state, const int32&
 					context_->lineTo( rect->left_, rect->top_ );
 					context_->strokePath();
 				}
-				
+
 				if ( edgeSides & GraphicsContext::etTopSide ) {
 					context_->setColor( hilight );
 					context_->moveTo( rect->left_, rect->top_ );
@@ -1965,20 +1965,20 @@ void XCBContextPeer::drawThemeEdge( Rect* rect, DrawUIState& state, const int32&
 					context_->lineTo( rect->left_, rect->top_ );
 					context_->strokePath();
 				}
-				
+
 				context_->setColor( &shadow1 );
 				context_->moveTo( rect->left_+1, rect->bottom_-2 );
 				context_->lineTo( rect->left_+1, rect->top_+1 );
 				context_->lineTo( rect->right_-2, rect->top_+1 );
-				
+
 				context_->moveTo( rect->right_, rect->top_ );
 				context_->lineTo( rect->right_, rect->bottom_ );
 				context_->lineTo( rect->left_, rect->bottom_ );
-				
+
 				context_->strokePath();
-			}				
+			}
 			break;
-			
+
 			case GraphicsContext::etEtched : {
 				context_->setColor( &shadow1 );
 				context_->moveTo( rect->left_, rect->top_ );
@@ -1987,72 +1987,72 @@ void XCBContextPeer::drawThemeEdge( Rect* rect, DrawUIState& state, const int32&
 				context_->lineTo( rect->left_, rect->bottom_-1 );
 				context_->lineTo( rect->left_, rect->top_ );
 				context_->strokePath();
-				
+
 				context_->setColor( hilight );
 				context_->moveTo( rect->left_+1, rect->bottom_-2 );
 				context_->lineTo( rect->left_+1, rect->top_+1 );
 				context_->lineTo( rect->right_-2, rect->top_+1 );
-				
+
 				context_->moveTo( rect->right_, rect->top_ );
 				context_->lineTo( rect->right_, rect->bottom_ );
 				context_->lineTo( rect->left_, rect->bottom_ );
-				
+
 				context_->strokePath();
-			}				
+			}
 			break;
-			
+
 			case GraphicsContext::etRaised : {
 				context_->setColor( face );
 				context_->moveTo( rect->left_, rect->bottom_-1 );
 				context_->lineTo( rect->left_, rect->top_ );
 				context_->lineTo( rect->right_-1, rect->top_ );
 				context_->strokePath();
-				
+
 				context_->setColor( &shadow2 );
 				context_->moveTo( rect->right_, rect->top_ );
 				context_->lineTo( rect->right_, rect->bottom_ );
 				context_->lineTo( rect->left_+1, rect->bottom_ );
 				context_->strokePath();
-				
+
 				context_->setColor( hilight );
 				context_->moveTo( rect->left_+1, rect->bottom_-2 );
 				context_->lineTo( rect->left_+1, rect->top_+1 );
 				context_->lineTo( rect->right_-2, rect->top_+1 );
 				context_->strokePath();
-				
+
 				context_->setColor( &shadow1 );
 				context_->moveTo( rect->right_-1, rect->top_+1 );
 				context_->lineTo( rect->right_-1, rect->bottom_-1 );
 				context_->lineTo( rect->left_+1, rect->bottom_-1 );
 				context_->strokePath();
-			}				
+			}
 			break;
-			
+
 			case GraphicsContext::etSunken : {
 				context_->setColor( &shadow1 );
 				context_->moveTo( rect->left_, rect->bottom_-1 );
 				context_->lineTo( rect->left_, rect->top_ );
 				context_->lineTo( rect->right_-1, rect->top_ );
 				context_->strokePath();
-				
+
 				context_->setColor( hilight );
 				context_->moveTo( rect->right_, rect->top_ );
 				context_->lineTo( rect->right_, rect->bottom_ );
 				context_->lineTo( rect->left_+1, rect->bottom_ );
 				context_->strokePath();
-				
+
 				context_->setColor( &shadow2 );
 				context_->moveTo( rect->left_+1, rect->bottom_-2 );
 				context_->lineTo( rect->left_+1, rect->top_+1 );
 				context_->lineTo( rect->right_-2, rect->top_+1 );
 				context_->strokePath();
-				
+
 				context_->setColor( face );
 				context_->moveTo( rect->right_-1, rect->top_+1 );
 				context_->lineTo( rect->right_-1, rect->bottom_-1 );
 				context_->lineTo( rect->left_+1, rect->bottom_-1 );
 				context_->strokePath();
-			}				
+			}
 			break;
 		}
 	}
@@ -2185,7 +2185,7 @@ void XCBContextPeer::drawThemeText( Rect* rect, TextState& state )
 	context_->restoreState( gcs );
 }
 
-void XCBContextPeer::internal_setImage(XCBImage *image)
+void XCBContextPeer::internal_setImage(xcb_image_t *image)
 {
 	image_ = image;
 }

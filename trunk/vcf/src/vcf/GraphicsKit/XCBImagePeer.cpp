@@ -67,13 +67,13 @@ void XCBImagePeer::createBMP()
 void XCBImagePeer::createImage()
 {
 	if(image_ != NULL) {
-		destroyImage();	
+		destroyImage();
 	}
 
-	XCBConnection *connection = XCBGraphicsToolkit::getConnection();
-	XCBSCREEN *screen = XCBGraphicsToolkit::getScreen();
+	xcb_connection_t *connection = XCBGraphicsToolkit::getConnection();
+	xcb_screen_t *screen = XCBGraphicsToolkit::getScreen();
 
-	CARD8 depth = XCBAuxGetDepth (connection, screen);
+	unsigned char depth = xcb_aux_get_depth (connection, screen);
 
 	int componentCount = getType();
 	int bpp = getChannelSize() * componentCount;
@@ -85,13 +85,13 @@ void XCBImagePeer::createImage()
 	dataBuffer_ = new unsigned char[width * height * (bpp / 8)];
 	//memset(dataBuffer_, 0, width * height * (bpp / 8));
 
-	image_ = XCBImageCreate(connection, depth, XCBImageFormatZPixmap, 0, dataBuffer_, width, height, bpp, bytesPerRow);
+	image_ = xcb_image_create(connection, depth, XCB_IMAGE_FORMAT_Z_PIXMAP, 0, dataBuffer_, width, height, bpp, bytesPerRow);
 
 	Color c = Color(1.0, 1.0, 0.0);
-	CARD32 pixel = c.getRGBPack8();
+	unsigned int pixel = c.getRGBPack8();
 	for(uint32 srcY = 0; srcY<height; ++srcY) {
 		for(uint32 srcX = 0; srcX<width; ++srcX) {
-			XCBImagePutPixel(image_, srcX, srcY, pixel);
+			xcb_image_put_pixel(image_, srcX, srcY, pixel);
 		}
 	}
 }
@@ -100,11 +100,11 @@ void XCBImagePeer::destroyImage()
 {
 	delete [] dataBuffer_;
 	image_->data = NULL;
-	XCBImageDestroy(image_);
+	xcb_image_destroy(image_);
 	image_ = NULL;
 }
 
-const XCBImage* XCBImagePeer::getImageData() const
+const xcb_image_t* XCBImagePeer::getImageData() const
 {
 	return image_;
 }
