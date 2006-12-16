@@ -43,10 +43,10 @@ connection_(NULL),
 screen_(NULL),
 fontEngine_(NULL)
 {
-	connection_ = XCBConnect (NULL, NULL);
+	connection_ = xcb_connect (NULL, NULL);
 	if(connection_ != NULL)
 	{
-		screen_ = XCBSetupRootsIter(XCBGetSetup(connection_)).data;
+		screen_ = xcb_setup_roots_iterator(xcb_get_setup(connection_)).data;
 	}
 
 	fontEngine_ = new XCBFontEngine();
@@ -58,7 +58,7 @@ fontEngine_(NULL)
 
 XCBGraphicsToolkit::~XCBGraphicsToolkit()
 {
-    XCBDisconnect(connection_);
+    xcb_disconnect(connection_);
 
     std::map<String,FcPattern*>::iterator it = fontPatternCache_.begin();
 	while (  it != fontPatternCache_.end() ) {
@@ -69,9 +69,9 @@ XCBGraphicsToolkit::~XCBGraphicsToolkit()
 	delete fontEngine_;
 }
 
-XCBConnection* XCBGraphicsToolkit::getConnection()
+xcb_connection_t* XCBGraphicsToolkit::getConnection()
 {
-	XCBConnection* connection = NULL;
+	xcb_connection_t* connection = NULL;
 
 	if(xcbGraphicsToolkit != NULL)
 	{
@@ -80,9 +80,9 @@ XCBConnection* XCBGraphicsToolkit::getConnection()
 	return connection;
 }
 
-XCBSCREEN*     XCBGraphicsToolkit::getScreen()
+xcb_screen_t*     XCBGraphicsToolkit::getScreen()
 {
-	XCBSCREEN* screen = NULL;
+	xcb_screen_t* screen = NULL;
 
 	if(xcbGraphicsToolkit != NULL)
 	{
@@ -192,58 +192,58 @@ FcPattern* XCBGraphicsToolkit::getFontPatternForFont( XCBFontPeer* fontPeer )
 				printf( "FcConfigSubstitute succeeded but FcPatternGetString() didn't for some reason!!!!!!!\n" );
 				#endif
 			}
-			
-			
+
+
 			FcDefaultSubstitute (pattern);
 			FcResult rlt = FcResultMatch;
 			FcPattern* matchPattern = FcFontMatch (0, pattern, &rlt);
 			if ( NULL != matchPattern ) {
 				result = matchPattern;
 				xcbGraphicsToolkit->fontPatternCache_[hash] = result;
-				
+
 				#ifdef _DEBUG
 				printf( "FcFontMatch succeeded for %s !!!\n", fontPeer->getName().ansi_c_str() ) ;
-				
-				
+
+
 				switch( rlt ) {
 					case FcResultMatch : {
 						printf( "FcResultMatch - Object exists with the specified ID\n" );
 					}
 					break;
-					
+
 					case FcResultNoMatch : {
 						printf( "FcResultNoMatch - Object doesn't exist at all\n" );
 					}
 					break;
-					
+
 					case FcResultTypeMismatch : {
 						printf( "FcResultTypeMismatch - Object exists, but the type doesn't match\n" );
 					}
 					break;
-					
+
 					case FcResultNoId : {
 						printf( "FcResultNoId - Object exists, but has fewer values than specified\n" );
 					}
 					break;
-					
+
 					case FcResultOutOfMemory : {
 						printf( "FcResultOutOfMemory - Malloc failed\n" );
 					}
 					break;
 				}
-				
-				
+
+
 				FcChar8 * filename;
 				FcChar8 * foundry;
-				
+
 				FcPatternGetString( result, FC_FILE, 0, &filename );
 				FcPatternGetString( result, FC_FOUNDRY, 0, &foundry );
 				FcPatternGetString( result, FC_FAMILY, 0, &family );
-				
+
 				printf( "Font Info:\n\tfilename : %s\n", filename );
 				printf( "\tfoundry : %s\n", foundry );
 				printf( "\tfamily : %s\n", family );
-				
+
 				#endif
 			}
 			else {
@@ -277,7 +277,7 @@ void XCBGraphicsToolkit::updateFontAttributes( XCBFontPeer* fontPeer )
 
 
 		if ( xcbGraphicsToolkit->fontEngine_->engine.load_font( (const char*)filename, 0, agg::glyph_ren_agg_gray8 ) ) {
-			xcbGraphicsToolkit->fontEngine_->prevFontHash = hash;			
+			xcbGraphicsToolkit->fontEngine_->prevFontHash = hash;
 			xcbGraphicsToolkit->fontEngine_->engine.height( fontPeer->getPixelSize() );
 			xcbGraphicsToolkit->fontEngine_->engine.width( fontPeer->getPixelSize() );
 			xcbGraphicsToolkit->fontEngine_->engine.hinting( true );
@@ -507,7 +507,7 @@ Size XCBGraphicsToolkit::getTextSize( const String& text, Font* font )
 	FcChar8 * filename;
 	FcPatternGetString( pattern, FC_FILE, 0, &filename ); //do we need to release this???
 
-	if ( fontEngine_->engine.load_font( (const char*)filename, 0, agg::glyph_ren_agg_gray8 ) ) {		
+	if ( fontEngine_->engine.load_font( (const char*)filename, 0, agg::glyph_ren_agg_gray8 ) ) {
 		fontEngine_->engine.height( fontPeer->getPixelSize() );
 		fontEngine_->engine.width( fontPeer->getPixelSize() );
 		fontEngine_->engine.hinting( true );

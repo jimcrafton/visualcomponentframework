@@ -42,12 +42,12 @@ where you installed the VCF.
 #endif
 
 #ifdef VCF_XCB
-#	include <X11/XCB/xcb.h>
-#	include <X11/XCB/xcb_atom.h>
+#	include <xcb/xcb.h>
+#	include <xcb/xcb_atom.h>
 extern "C"
 {
-	#include <X11/XCB/xcb_image.h>
-	#include <X11/XCB/xcb_aux.h>
+	#include <xcb/xcb_image.h>
+	#include <xcb/xcb_aux.h>
 }
 
 #	include <fontconfig/fontconfig.h>
