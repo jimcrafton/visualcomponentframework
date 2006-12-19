@@ -36,9 +36,9 @@ TARGET = LIB
 !endif
 
 !if $(FREECOMP) == TRUE
-all: FoundationKit GraphicsKit ImageFormats NetworkKit InternetKit RemoteObjectKit ApplicationKit OpenGLKit
+all: FoundationKit GraphicsKit ImageFormats NetworkKit InternetKit RemoteObjectKit ApplicationKit OpenGLKit RegExKit
 !else
-all: FoundationKit GraphicsKit ImageFormats NetworkKit InternetKit RemoteObjectKit ApplicationKit HTMLKit OpenGLKit
+all: FoundationKit GraphicsKit ImageFormats NetworkKit InternetKit RemoteObjectKit ApplicationKit HTMLKit OpenGLKit RegExKit
 !endif
 
 clean::
@@ -58,6 +58,8 @@ clean::
 	-@$(MK) -fHTMLKit.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) -DTARGET=$(TARGET) clean
 	-@cd $(VCFBUILDROOT)\OpenGLKit
 	-@$(MK) -fOpenGLKit.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) -DTARGET=$(TARGET) clean	
+	-@cd $(VCFBUILDROOT)\RegExKit
+	-@$(MK) -fRegExKit.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) -DTARGET=$(TARGET) clean	
 	-@cd $(VCFBUILDROOT)\InternetKit
 	-@$(MK) -fInternetKit.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) -DTARGET=$(TARGET) clean		
 	-@cd $(VCFBIN)\..\src\thirdparty\common\FreeImage\Source\FreeImageLib
@@ -120,6 +122,11 @@ GraphicsKit_dll:: FoundationKit_dll libAGG thirdparty
 OpenGLKit:: GraphicsKit ApplicationKit 
 	@cd $(VCFBUILDROOT)\OpenGLKit
 	@$(MK) -fOpenGLKit.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) -DTARGET=$(TARGET)
+	@cd $(VCFBUILDROOT)
+
+RegExKit:: FoundationKit
+	@cd $(VCFBUILDROOT)\RegExKit
+	@$(MK) -fRegExKit.mak -DFREECOMP=$(FREECOMP) -DBMODE=$(BMODE) -DTARGET=$(TARGET)
 	@cd $(VCFBUILDROOT)
 
 InternetKit:: FoundationKit 
