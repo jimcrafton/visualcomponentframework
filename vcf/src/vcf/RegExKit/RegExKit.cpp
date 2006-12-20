@@ -18,7 +18,7 @@ namespace VCF {
 
 
 
-
+namespace Regex { //Borland compiler requires explicitly namespace declaration
 // Regex:: Match
 
 	ptrdiff_t Regex::Match::getPosAsOffset() const {
@@ -343,4 +343,5 @@ namespace VCF {
 	bool Regex::UTF_16LE::isSurrogate(VCFChar octet) const {
 		return (0xD800 <= octet && octet <= 0xDBFF);
 	}
-}
+ } //namespace Regex
+} //namespace VCF
