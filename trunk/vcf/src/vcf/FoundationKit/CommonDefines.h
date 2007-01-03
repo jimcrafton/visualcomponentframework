@@ -22,6 +22,7 @@ namespace VCF
 *property data
 */
 enum PropertyDescriptorType{
+	pdNull = -1,
 	pdUndefined = 0,
 	pdInt,
 	pdLong,
