@@ -667,6 +667,32 @@ public:
 #endif // VCF_VARIANT64
 
 
+	/**
+	Returns true or false depending on whether the variant is considered 
+	"null". If the type value is equal to pdNull, then the variant is 
+	considered null	and any values it may or may not contain should be 
+	ignored.
+	*/
+	bool isNull() const {
+		return pdNull == type;
+	}
+
+	/**
+	Mark the variant as "null" and set it's internal
+	values to NULL (or 0).
+	*/
+	void setNull() {
+		type = pdNull;
+
+		IntVal = 0; 
+		StringVal = "";
+	}
+
+	static VariantData null() {
+		VariantData result;
+		result.setNull();
+		return result;
+	}
 
 	/**
 	converts the VariantData to a string, no matter

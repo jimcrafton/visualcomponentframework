@@ -1299,15 +1299,13 @@ public:
 	}
 
 	TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>& operator=( const TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>& rhs ) {
-		TypedMethod<SOURCE_TYPE>::operator =(rhs);
-		returnVal_ = rhs.returnVal_;
+		TypedMethod<SOURCE_TYPE>::operator =(rhs);		
 		return *this;
 	}
 
 	virtual ~TypedMethodReturn(){}
 
 protected:
-	VariantData returnVal_;
 };
 
 
@@ -1347,7 +1345,7 @@ public:
 
 	virtual ~TypedMethodArg0(){	}
 
-	virtual VariantData* invoke( VariantData** arguments,
+	virtual VariantData invoke( VariantData** arguments,
 								 Object* source=NULL ){
 
 		if ( NULL != source ) {
@@ -1360,7 +1358,7 @@ public:
 			}
 		}
 
-		return NULL;
+		return VariantData::null();
 	}
 
 	virtual Method* clone() {
@@ -1414,7 +1412,7 @@ public:
 
 	virtual ~TypedMethodArg1(){	}
 
-	virtual VariantData* invoke( VariantData** arguments,
+	virtual VariantData invoke( VariantData** arguments,
 								 Object* source=NULL ){
 
 		if ( NULL != source ) {
@@ -1427,7 +1425,7 @@ public:
 			}
 		}
 
-		return NULL;
+		return VariantData::null();
 	}
 protected:
 	MemberFunc methodPtr_;
@@ -1478,7 +1476,7 @@ public:
 
 	virtual ~TypedMethodArg2(){	}
 
-	virtual VariantData* invoke( VariantData** arguments,
+	virtual VariantData invoke( VariantData** arguments,
 								 Object* source=NULL ){
 
 		if ( NULL != source ) {
@@ -1492,7 +1490,7 @@ public:
 			}
 		}
 
-		return NULL;
+		return VariantData::null();
 	}
 protected:
 	MemberFunc methodPtr_;
@@ -1545,7 +1543,7 @@ public:
 
 	virtual ~TypedMethodArg3(){	}
 
-	virtual VariantData* invoke( VariantData** arguments,
+	virtual VariantData invoke( VariantData** arguments,
 								 Object* source=NULL ){
 
 		if ( NULL != source ) {
@@ -1560,7 +1558,7 @@ public:
 			}
 		}
 
-		return NULL;
+		return VariantData::null();
 	}
 protected:
 	MemberFunc methodPtr_;
@@ -1619,7 +1617,7 @@ public:
 
 	virtual ~TypedMethodArg4(){	}
 
-	virtual VariantData* invoke( VariantData** arguments,
+	virtual VariantData invoke( VariantData** arguments,
 								 Object* source=NULL ){
 
 		if ( NULL != source ) {
@@ -1635,7 +1633,7 @@ public:
 			}
 		}
 
-		return NULL;
+		return VariantData::null();
 	}
 protected:
 	MemberFunc methodPtr_;
@@ -1694,7 +1692,7 @@ public:
 
 	virtual ~TypedMethodArg5(){	}
 
-	virtual VariantData* invoke( VariantData** arguments,
+	virtual VariantData invoke( VariantData** arguments,
 								 Object* source=NULL ){
 
 		if ( NULL != source ) {
@@ -1711,7 +1709,7 @@ public:
 			}
 		}
 
-		return NULL;
+		return VariantData::null();
 	}
 protected:
 	MemberFunc methodPtr_;
@@ -1770,7 +1768,7 @@ public:
 
 	virtual ~TypedMethodArg6(){	}
 
-	virtual VariantData* invoke( VariantData** arguments,
+	virtual VariantData invoke( VariantData** arguments,
 								 Object* source=NULL ){
 
 		if ( NULL != source ) {
@@ -1788,7 +1786,7 @@ public:
 			}
 		}
 
-		return NULL;
+		return VariantData::null();
 	}
 protected:
 	MemberFunc methodPtr_;
@@ -1838,20 +1836,21 @@ public:
 
 	virtual ~TypedMethodArg0Return(){	}
 
-	virtual VariantData* invoke( VariantData** arguments,
+	virtual VariantData invoke( VariantData** arguments,
 								 Object* source=NULL ){
 
+		VariantData returnVal;
 		if ( NULL != source ) {
 			source_ = dynamic_cast<SOURCE_TYPE*>( source );
 		}
 
 		if ( (NULL != source_) && (NULL != methodPtr_) ){
 			if  ( 0 == argCount_ ) {
-				returnVal_ = (source_->*methodPtr_)();
+				returnVal = (source_->*methodPtr_)();
 			}
 		}
 
-		return &returnVal_;
+		return returnVal;
 	}
 protected:
 	MemberFunc methodPtr_;
@@ -1905,8 +1904,10 @@ public:
 
 	virtual ~TypedMethodArg1Return(){	}
 
-	virtual VariantData* invoke( VariantData** arguments,
+	virtual VariantData invoke( VariantData** arguments,
 								 Object* source=NULL ){
+
+		VariantData returnVal;
 
 		if ( NULL != source ) {
 			source_ = dynamic_cast<SOURCE_TYPE*>( source );
@@ -1914,11 +1915,11 @@ public:
 
 		if ( (NULL != source_) && (NULL != methodPtr_) ){
 			if  ( 1 == argCount_ ) {
-				returnVal_ = (source_->*methodPtr_)((Argument1)*(arguments[0]));
+				returnVal = (source_->*methodPtr_)((Argument1)*(arguments[0]));
 			}
 		}
 
-		return &returnVal_;
+		return returnVal;
 	}
 protected:
 	MemberFunc methodPtr_;
@@ -1973,21 +1974,22 @@ public:
 
 	virtual ~TypedMethodArg2Return(){	}
 
-	virtual VariantData* invoke( VariantData** arguments,
+	virtual VariantData invoke( VariantData** arguments,
 								 Object* source=NULL ){
 
+		VariantData returnVal;
 		if ( NULL != source ) {
 			source_ = dynamic_cast<SOURCE_TYPE*>( source );
 		}
 
 		if ( (NULL != source_) && (NULL != methodPtr_) ){
 			if  ( 2 == argCount_ ) {
-				returnVal_ = (source_->*methodPtr_)(	(Argument1)*(arguments[0]),
+				returnVal = (source_->*methodPtr_)(	(Argument1)*(arguments[0]),
 														(Argument2)*(arguments[1]) );
 			}
 		}
 
-		return &returnVal_;
+		return returnVal;
 	}
 protected:
 	MemberFunc methodPtr_;
@@ -2042,8 +2044,10 @@ public:
 
 	virtual ~TypedMethodArg3Return(){	}
 
-	virtual VariantData* invoke( VariantData** arguments,
+	virtual VariantData invoke( VariantData** arguments,
 								 Object* source=NULL ){
+
+		VariantData returnVal;
 
 		if ( NULL != source ) {
 			source_ = dynamic_cast<SOURCE_TYPE*>( source );
@@ -2051,13 +2055,13 @@ public:
 
 		if ( (NULL != source_) && (NULL != methodPtr_) ){
 			if  ( 3 == argCount_ ) {
-				returnVal_ = (source_->*methodPtr_)(	(Argument1)*(arguments[0]),
+				returnVal = (source_->*methodPtr_)(	(Argument1)*(arguments[0]),
 														(Argument2)*(arguments[1]),
 														(Argument3)*(arguments[2]) );
 			}
 		}
 
-		return &returnVal_;
+		return returnVal;
 	}
 protected:
 	MemberFunc methodPtr_;
@@ -2115,8 +2119,10 @@ public:
 
 	virtual ~TypedMethodArg4Return(){	}
 
-	virtual VariantData* invoke( VariantData** arguments,
+	virtual VariantData invoke( VariantData** arguments,
 								 Object* source=NULL ){
+
+		VariantData returnVal;
 
 		if ( NULL != source ) {
 			source_ = dynamic_cast<SOURCE_TYPE*>( source );
@@ -2124,14 +2130,14 @@ public:
 
 		if ( (NULL != source_) && (NULL != methodPtr_) ){
 			if  ( 4 == argCount_ ) {
-				returnVal_ = (source_->*methodPtr_)(	(Argument1)*(arguments[0]),
+				returnVal = (source_->*methodPtr_)(	(Argument1)*(arguments[0]),
 														(Argument2)*(arguments[1]),
 														(Argument3)*(arguments[2]),
 														(Argument4)*(arguments[3]) );
 			}
 		}
 
-		return &returnVal_;
+		return returnVal;
 	}
 protected:
 	MemberFunc methodPtr_;
@@ -2191,8 +2197,10 @@ public:
 
 	virtual ~TypedMethodArg5Return(){	}
 
-	virtual VariantData* invoke( VariantData** arguments,
+	virtual VariantData invoke( VariantData** arguments,
 								 Object* source=NULL ){
+
+		VariantData returnVal;
 
 		if ( NULL != source ) {
 			source_ = dynamic_cast<SOURCE_TYPE*>( source );
@@ -2200,7 +2208,7 @@ public:
 
 		if ( (NULL != source_) && (NULL != methodPtr_) ){
 			if  ( 5 == argCount_ ) {
-				returnVal_ = (source_->*methodPtr_)(	(Argument1)*(arguments[0]),
+				returnVal = (source_->*methodPtr_)(	(Argument1)*(arguments[0]),
 														(Argument2)*(arguments[1]),
 														(Argument3)*(arguments[2]),
 														(Argument4)*(arguments[3]),
@@ -2208,7 +2216,7 @@ public:
 			}
 		}
 
-		return &returnVal_;
+		return returnVal;
 	}
 protected:
 	MemberFunc methodPtr_;
@@ -2268,8 +2276,10 @@ public:
 
 	virtual ~TypedMethodArg6Return(){	}
 
-	virtual VariantData* invoke( VariantData** arguments,
+	virtual VariantData invoke( VariantData** arguments,
 								 Object* source=NULL ){
+
+		VariantData returnVal;
 
 		if ( NULL != source ) {
 			source_ = dynamic_cast<SOURCE_TYPE*>( source );
@@ -2277,7 +2287,7 @@ public:
 
 		if ( (NULL != source_) && (NULL != methodPtr_) ){
 			if  ( 6 == argCount_ ) {
-				returnVal_ = (source_->*methodPtr_)(	(Argument1)*(arguments[0]),
+				returnVal = (source_->*methodPtr_)(	(Argument1)*(arguments[0]),
 														(Argument2)*(arguments[1]),
 														(Argument3)*(arguments[2]),
 														(Argument4)*(arguments[3]),
@@ -2286,7 +2296,7 @@ public:
 			}
 		}
 
-		return &returnVal_;
+		return returnVal;
 	}
 protected:
 	MemberFunc methodPtr_;

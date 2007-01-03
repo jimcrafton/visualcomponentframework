@@ -73,7 +73,7 @@ public:
 	this would have gotten set when the class or interface
 	the method belonged to was retreived from the Object in question
 	*/
-	virtual VariantData* invoke( VariantData** arguments,
+	virtual VariantData invoke( VariantData** arguments,
 								 Object* source=NULL ) = 0;
 
 	/**
