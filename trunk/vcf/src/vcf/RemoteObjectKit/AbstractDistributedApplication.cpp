@@ -242,7 +242,7 @@ void AbstractDistributedApplication::onDataReceived( VCFNet::SocketEvent* event 
 				Method* method = clazz->getMethod( methodName );
 				if ( NULL != method ) {
 					//System::print( "Client App found requested method, preparing to invoke...\n" );
-					VariantData* result = method->invoke( methodArgs );
+					VariantData result = method->invoke( methodArgs );
 
 					Socket* sock = event->getSender();
 					BasicOutputStream bos;
@@ -251,8 +251,8 @@ void AbstractDistributedApplication::onDataReceived( VCFNet::SocketEvent* event 
 					vdos << msg;
 					vdos << &dummyProxy;
 					vdos << methodName;
-					if ( NULL != result ) {
-						vdos.writeVariantData( result );
+					if ( !result.isNull() ) {
+						vdos.writeVariantData( &result );
 					}
 					else {
 						vdos << String("NULL");

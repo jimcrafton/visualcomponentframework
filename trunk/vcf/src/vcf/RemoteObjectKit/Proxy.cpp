@@ -133,9 +133,9 @@ void Proxy::marshallArguments( const VCF::uint32& argCount,
 	}
 }
 
-VariantData* Proxy::invoke( const VCF::String& methodName, const uint32& argCount, VariantData** arguments )
+VariantData Proxy::invoke( const VCF::String& methodName, const uint32& argCount, VariantData** arguments )
 {
- 	VariantData* result = NULL;
+ 	VariantData result;
 
 	if ( NULL != localObjectInstance_ ) {
 		Class* clazz = localObjectInstance_->getClass();
