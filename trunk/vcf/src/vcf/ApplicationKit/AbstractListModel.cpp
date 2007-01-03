@@ -32,6 +32,8 @@ void AbstractListModel::addItem( ListItem* item )
 {
 	this->listItems_.push_back( item );
 	item->setIndex( listItems_.size() - 1 );
+	item->setModel( dynamic_cast<Model*>(this) );
+
 	ListModelEvent event( dynamic_cast<Object*>(this), item );
 	ItemAdded.fireEvent( &event );
 }
@@ -83,6 +85,7 @@ void AbstractListModel::insertItem( const uint32& index, ListItem* item )
 {
 	listItems_.insert( listItems_.begin() + index, item );
 	item->setIndex( index );
+	item->setModel( dynamic_cast<Model*>(this) );
 	ListModelEvent event( dynamic_cast<Object*>(this), item );
 	ItemAdded.fireEvent( &event );
 }

@@ -318,6 +318,11 @@ void Win32Listview::updateItemSubItems( ListItem* item )
 	}
 
 	Enumerator<ListItem::SubItem*>* subItems = item->getSubItems();
+
+	if ( NULL == subItems ) {
+		return;
+	}
+
 	int index = item->getIndex();
 	int subItemIndex = 1;
 	while ( true == subItems->hasMoreElements() ) {

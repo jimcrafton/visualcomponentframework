@@ -100,9 +100,12 @@ void Menu::handleEvent( Event* event )
 			Component* child = ev->getChildComponent();
 			MenuItem* item = dynamic_cast<MenuItem*>(child);
 			if ( NULL != item ) {
-				getRootMenuItem()->addChild( item );
-				if ( !(MenuItem::mdsBoundToMenuPeer & item->getState()) ) {
-					getRootMenuItem()->getPeer()->addChild( item );
+				MenuItem* root = getRootMenuItem();
+				if ( root != item ) {
+					root->addChild( item );
+					if ( !(MenuItem::mdsBoundToMenuPeer & item->getState()) ) {
+						root->getPeer()->addChild( item );
+					}
 				}
 			}
 		}
