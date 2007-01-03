@@ -61,6 +61,7 @@ public:
 	*/
 	VariantData(){
 		ObjVal = NULL;
+		StringVal = NULL;
 		this->type = pdUndefined;
 	};
 
@@ -68,6 +69,7 @@ public:
 	creates a VariantData initialized by an int value
 	*/
 	VariantData( const int& val ) {
+		StringVal = NULL;
 		IntVal = val;
 		type = pdInt;
 	};
@@ -76,6 +78,7 @@ public:
 	creates a VariantData initialized by an unsigned int value
 	*/
 	VariantData( const unsigned int& val ) {
+		StringVal = NULL;
 		UIntVal = val;
 		type = pdUInt;
 	};
@@ -84,6 +87,7 @@ public:
 	creates a VariantData initialized by a long value
 	*/
 	VariantData( const long& val ) {
+		StringVal = NULL;
 		LongVal = val;
 		type = pdLong;
 	};
@@ -92,6 +96,7 @@ public:
 	creates a VariantData initialized by an unsigned long value
 	*/
 	VariantData( const unsigned long& val ) {
+		StringVal = NULL;
 		ULongVal = val;
 		type = pdULong;
 	};
@@ -100,6 +105,7 @@ public:
 	creates a VariantData initialized by a float value
 	*/
 	VariantData( const float& val ) {
+		StringVal = NULL;
 		FloatVal = val;
 		type = pdFloat;
 	};
@@ -108,6 +114,7 @@ public:
 	creates a VariantData initialized by a double value
 	*/
 	VariantData( const double& val ) {
+		StringVal = NULL;
 		DblVal = val;
 		type = pdDouble;
 	};
@@ -116,6 +123,7 @@ public:
 	creates a VariantData initialized by a char value
 	*/
 	VariantData( const char& val ) {
+		StringVal = NULL;
 		CharVal = val;
 		type = pdChar;
 	};
@@ -124,6 +132,7 @@ public:
 	creates a VariantData initialized by a bool value
 	*/
 	VariantData( const bool& val ) {
+		StringVal = NULL;
 		BoolVal = val;
 		type = pdBool;
 	};
@@ -132,6 +141,7 @@ public:
 	creates a VariantData initialized by a short value
 	*/
 	VariantData( const short& val ) {
+		StringVal = NULL;
 		ShortVal = val;
 		type = pdShort;
 	};
@@ -140,6 +150,7 @@ public:
 	creates a VariantData initialized by a short value
 	*/
 	VariantData( const ushort& val ) {
+		StringVal = NULL;
 		UShortVal = val;
 		type = pdUShort;
 	};
@@ -149,17 +160,26 @@ public:
 	creates a VariantData initialized by a String value
 	*/
 	VariantData( const String& val ) {
-		StringVal = val;
+		StringVal = NULL;
+		checkStringVal();
+
+		*StringVal = val;
 		type = pdString;
 	};
 
 	VariantData( const char* val ) {
-		StringVal = val;
+		StringVal = NULL;
+		checkStringVal();
+
+		*StringVal = val;
 		type = pdString;
 	};
 
 	VariantData( const WideChar* val ) {
-		StringVal = val;
+		StringVal = NULL;
+		checkStringVal();
+
+		*StringVal = val;
 		type = pdString;
 	};
 
@@ -167,6 +187,8 @@ public:
 	creates a VariantData initialized by a Enum value
 	*/
 	VariantData( const Enum& val ) {
+		StringVal = NULL;
+
 		EnumVal.set( const_cast<Enum*>(&val) );
 		type = pdEnum;
 	};
@@ -175,6 +197,8 @@ public:
 	creates a VariantData initialized by a Enum value
 	*/
 	VariantData( Enum& val ) {
+		StringVal = NULL;
+
 		EnumVal.set( &val );
 		type = pdEnum;
 	};
@@ -183,6 +207,8 @@ public:
 	creates a VariantData initialized by a Enum* value
 	*/
 	VariantData( Enum* val ) {
+		StringVal = NULL;
+
 		EnumVal.set( val );
 		type = pdEnum;
 	};
@@ -191,6 +217,8 @@ public:
 	creates a VariantData initialized by a Object* value
 	*/
 	VariantData( Object* val ) {
+		StringVal = NULL;
+
 		ObjVal = val;
 		type = pdObject;
 	}
@@ -199,6 +227,8 @@ public:
 	creates a VariantData initialized by a Object& value
 	*/
 	VariantData( Object& val ) {
+		StringVal = NULL;
+
 		ObjVal = &val;
 		type = pdObject;
 	}
@@ -207,6 +237,8 @@ public:
 	creates a VariantData initialized by a const Object& value
 	*/
 	VariantData( const Object& val ){
+		StringVal = NULL;
+
 		ObjVal = const_cast<Object*>(&val);
 		type = pdObject;
 	}
@@ -215,6 +247,8 @@ public:
 	creates a VariantData initialized by a Interface* value
 	*/
 	VariantData( Interface* val ){
+		StringVal = NULL;
+
 		InterfaceVal = val;
 		type = pdInterface;
 	}
@@ -224,6 +258,8 @@ public:
 	creates a Variant initialized by a int64 value
 	*/
 	VariantData( const VCF::int64& val ) {
+		StringVal = NULL;
+
 		Long64Val = val;
 		type = pdLong64;
 	};
@@ -232,6 +268,8 @@ public:
 	creates a Variant initialized by a uint64 value
 	*/
 	VariantData( const VCF::uint64& val ) {
+		StringVal = NULL;
+
 		ULong64Val = val;
 		type  = pdULong64;
 	};
@@ -240,6 +278,8 @@ public:
 	creates a Variant initialized by a DateTime value
 	*/
 	VariantData( const DateTime& val ) {
+		StringVal = NULL;
+
 		Long64Val = ( val.operator int64() ).data_; // (uint64::u64_t) (VCF::uint64&) val;
 		type  = pdDateTime;
 	};
@@ -248,6 +288,8 @@ public:
 	creates a Variant initialized by a DateTimeSpan value
 	*/
 	VariantData( const DateTimeSpan& val ) {
+		StringVal = NULL;
+
 		Long64Val = ( val.operator int64() ).data_; // (uint64::u64_t) (VCF::uint64&) val;
 		type  = pdDateTimeSpan;
 	};
@@ -266,6 +308,8 @@ public:
 	copy constructor
 	*/
 	VariantData( const VariantData& value ){
+		StringVal = NULL;
+
 		this->type = value.type;
 		this->setValue( value );
 	};
@@ -273,7 +317,11 @@ public:
 	/**
 	destructor
 	*/
-	virtual ~VariantData(){};
+	virtual ~VariantData(){
+		if ( NULL != StringVal ) {
+			delete StringVal;
+		}
+	};
 
 public:
 
@@ -283,7 +331,7 @@ public:
 	*/
 	bool operator == ( const VariantData& v ) const {
 		return (	type == v.type &&
-		          ( ( type == pdString && StringVal == v.StringVal ) ||
+		          ( ( type == pdString && (*StringVal) == (*v.StringVal) ) ||
 		            ( type != pdString && ObjVal == v.ObjVal ) )
 		          );
 	}
@@ -391,7 +439,10 @@ public:
 	converts the VariantData to an String
 	*/
 	operator String () const {
-		return StringVal;
+		if ( NULL != StringVal ) {
+			return *StringVal;
+		}
+		return "";
 	};
 
 	/**
@@ -565,7 +616,8 @@ public:
 	Assigns an string (as an array of char's) to the VariantData
 	*/
 	VariantData& operator=( const char* newValue ){
-		StringVal = newValue;
+		checkStringVal();
+		*StringVal = newValue;
 		type = pdString;
 		return *this;
 	};
@@ -603,8 +655,10 @@ public:
 	/**
 	Assigns an string (as an String) to the VariantData
 	*/
-	VariantData& operator=( const String& newValue ){
-		StringVal = newValue;
+	VariantData& operator=( const String& newValue ){	
+		checkStringVal();
+
+		*StringVal = newValue;
 		type = pdString;
 		return *this;
 	};
@@ -685,7 +739,7 @@ public:
 		type = pdNull;
 
 		IntVal = 0; 
-		StringVal = "";
+		StringVal = NULL;
 	}
 
 	static VariantData null() {
@@ -726,7 +780,7 @@ public:
 			bool BoolVal;
 			Object* ObjVal;
 			EnumValue EnumVal;
-			Interface* InterfaceVal;
+			Interface* InterfaceVal;			
 #ifdef VCF_VARIANT64
 			VCF::uint64::int64_t Long64Val;
 			VCF::uint64::u64_t   ULong64Val;
@@ -734,9 +788,15 @@ public:
 	};
 
 	/**
-	string are a special case, not allowed in unions
+	string are a special case
 	*/
-	String StringVal;
+	String* StringVal;
+	
+	void checkStringVal() {
+		if ( NULL == StringVal ) {
+			StringVal = new String();
+		}
+	}
 
 	/**
 	defines the data type of the VariantData, where type can represent

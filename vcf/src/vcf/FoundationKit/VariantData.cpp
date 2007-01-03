@@ -181,7 +181,9 @@ String VariantData::toString() const
 		break;
 
 		case pdString:{
-			result = StringVal;
+			if ( NULL != StringVal ) {
+				result = *StringVal;
+			}
 		}
 		break;
 
@@ -331,7 +333,10 @@ void VariantData::setFromString( const String& value )
 		break;
 
 		case pdString:{
-			StringVal = value;
+
+			checkStringVal();
+
+			*StringVal = value;
 		}
 		break;
 
@@ -379,7 +384,15 @@ void VariantData::setValue( const VariantData& value )
 		break;
 
 		case pdString:{
-			StringVal = value.StringVal;
+			if ( NULL == value.StringVal ) {
+				if ( NULL != StringVal ) {
+					*StringVal = "";
+				}
+			}
+			else{
+				checkStringVal();
+				*StringVal = *value.StringVal;
+			}
 		}
 		break;
 
@@ -446,6 +459,11 @@ void VariantData::setValue( const VariantData& value )
 
 		case pdUndefined : {
 
+		}
+		break;
+
+		case pdNull : {
+			setNull();
 		}
 		break;
 
