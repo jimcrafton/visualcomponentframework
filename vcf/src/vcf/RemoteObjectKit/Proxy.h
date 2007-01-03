@@ -24,7 +24,7 @@ public:
 
 	virtual ~Proxy();
 
-	virtual VCF::VariantData* invoke( const VCF::String& methodName,
+	virtual VCF::VariantData invoke( const VCF::String& methodName,
 		                              const VCF::uint32& argCount,
 									  VCF::VariantData** arguments );
     virtual bool isRemote() {
