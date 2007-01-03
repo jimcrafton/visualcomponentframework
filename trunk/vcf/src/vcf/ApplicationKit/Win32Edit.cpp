@@ -34,8 +34,9 @@ where you installed the VCF.
                 = { l, w1, w2, { b1, b2,  b3,  b4,  b5,  b6,  b7,  b8 } }
 
 /* Values taken from uuid.c in mingw w32api-3.6  */
-DEFINE_GUID(IID_IRichEditOle,0x20d00,0,0,0xc0,0,0,0,0,0,0,0x46);
-DEFINE_GUID(IID_IRichEditOleCallback,0x20d03,0,0,0xc0,0,0,0,0,0,0,0x46);
+DEFINE_GUIDXXX(IID_IRichEditOle,0x20d00,0,0,0xc0,0,0,0,0,0,0,0x46);
+DEFINE_GUIDXXX(IID_IRichEditOleCallback,0x20d03,0,0,0xc0,0,0,0,0,0,0,0x46);
+
 
 #endif
 
