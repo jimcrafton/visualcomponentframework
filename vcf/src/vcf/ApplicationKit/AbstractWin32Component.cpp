@@ -1595,6 +1595,9 @@ LRESULT AbstractWin32Component::handleNCCalcSize( WPARAM wParam, LPARAM lParam )
 	VCF_ASSERT(NULL != hwnd_);
 	RECT* rectToModify = NULL;
 
+	RECT currentWndRect = {0};
+	GetWindowRect(hwnd_, &currentWndRect);
+
 	if ( !wParam ) {
 		RECT* rect = (RECT*)lParam;
 		GetWindowRect(hwnd_, rect);

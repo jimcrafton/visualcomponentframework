@@ -202,6 +202,8 @@ Enumerator<MenuItem*>* DefaultMenuItem::getChildren()
 
 void DefaultMenuItem::addChild( MenuItem* child )
 {
+	VCF_ASSERT( child != this );
+
 	menuItems_.push_back( child );
 
 	child->setParent( this );
@@ -347,6 +349,8 @@ MenuItem* DefaultMenuItem::getParent()
 
 void DefaultMenuItem::setParent( MenuItem* parent )
 {
+	VCF_ASSERT( parent != this );
+
 	parent_ = parent;
 }
 
