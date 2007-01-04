@@ -483,7 +483,7 @@ VCF::String StringUtils::toString( const VCF::int64& value )
 		// would be a wrong implementation
 		swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, W_STR_ULONG_CONVERSION, (int)getLo32(value) );
 	#else
-		swprintf( tmp, L"%I64d", (__int64)value );
+		swprintf( tmp, L"%I64d", (int64)value );
 	#endif
 	return String( tmp );
 #endif
@@ -510,7 +510,7 @@ VCF::String StringUtils::toString( const VCF::uint64& value )
 		// would be a wrong implementation
 		swprintf( tmp, sizeof(tmp)/sizeof(VCFChar)-1, W_STR_ULONG_CONVERSION, (int)getLo32(value) );
 	#else
-		swprintf( tmp, L"%I64u", (unsigned __int64)value );
+		swprintf( tmp, L"%I64u", (uint64)value );
 	#endif
 	return String( tmp );
 #endif
@@ -1042,7 +1042,7 @@ unsigned long StringUtils::fromStringAsULong( const VCF::String& value )
 	return result;
 }
 
-VCF::int64 StringUtils::fromStringAsLong64( const VCF::String& value )
+VCF::int64 StringUtils::fromStringAsInt64( const VCF::String& value )
 {
 	int64 result = 0;
 	#ifdef VCF_OSX
@@ -1054,26 +1054,26 @@ VCF::int64 StringUtils::fromStringAsLong64( const VCF::String& value )
 		}
 		else */
 		if ( (INT_MIN == (int)result) || (INT_MAX == (int)result) ) {
-			throw BasicException( L"StringUtils::fromStringAsLong64() Overflow - Unable to convert: " + value );
+			throw BasicException( L"StringUtils::fromStringAsInt64() Overflow - Unable to convert: " + value );
 		}
 	#else
 		#ifdef VCF_MSC
 			result = _wtoi64( value.c_str() );
 			if ( (int64)0 == result && ( value[0] != '0' ) &&
 					( -1 != swscanf( value.c_str(), L"%I64d", &result ) ) ) {
-				throw BasicException( L"StringUtils::fromStringAsLong64() Unable to convert: " + value );
+				throw BasicException( L"StringUtils::fromStringAsInt64() Unable to convert: " + value );
 			}
 		#else
 			int ret = swscanf( value.c_str(), L"%I64d", &result );
 			if ( ret != 1 ) {
-				throw BasicException( L"StringUtils::fromStringAsLong64() Unable to convert: " + value );
+				throw BasicException( L"StringUtils::fromStringAsInt64() Unable to convert: " + value );
 			}
 		#endif
 	#endif
 	return result;
 }
 
-VCF::uint64 StringUtils::fromStringAsULong64( const VCF::String& value )
+VCF::uint64 StringUtils::fromStringAsUInt64( const VCF::String& value )
 {
 	uint64 result = 0;
 	#ifdef VCF_OSX
@@ -1083,7 +1083,7 @@ VCF::uint64 StringUtils::fromStringAsULong64( const VCF::String& value )
 		if ( 0 == (int)result ) {
 			//check_true_error( tmp );
 		} else if ( (INT_MIN == (int)result) || (INT_MAX == (int)result) ) {
-			throw BasicException( L"StringUtils::fromStringAsULong64() Overflow - Unable to convert: " + value );
+			throw BasicException( L"StringUtils::fromStringAsUInt64() Overflow - Unable to convert: " + value );
 		}
 	#else
 		#ifdef VCF_MSC
@@ -1096,12 +1096,12 @@ VCF::uint64 StringUtils::fromStringAsULong64( const VCF::String& value )
 			#endif
 			if ( (uint64)0 == result && ( value[0] != '0' ) &&
 					( -1 != swscanf( value.c_str(), L"%I64u", &result ) ) ) {
-				throw BasicException( L"StringUtils::fromStringAsULong64() Unable to convert: " + value );
+				throw BasicException( L"StringUtils::fromStringAsUInt64() Unable to convert: " + value );
 			}
 		#else
 			int ret = swscanf( value.c_str(), L"%I64u", &result );
 			if ( ret != 1 ) {
-				throw BasicException( L"StringUtils::fromStringAsULong64() Unable to convert: " + value );
+				throw BasicException( L"StringUtils::fromStringAsUInt64() Unable to convert: " + value );
 			}
 		#endif
 	#endif

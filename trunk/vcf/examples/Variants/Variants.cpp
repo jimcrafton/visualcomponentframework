@@ -56,6 +56,28 @@ void testConstructors()
 	VariantData v11 = true;
 	VCF_ASSERT( v11.type == pdBool );
 	printVariant(v11);
+
+	VariantData v12 = (int64)8797852412;
+	VCF_ASSERT( v12.type == pdInt64 );
+	printVariant(v12);
+
+	VariantData v13 = (uint64)8797852413;
+	VCF_ASSERT( v13.type == pdUInt64 );
+	printVariant(v13);
+
+	VariantData v14 = DateTime::now();
+	VCF_ASSERT( v14.type == pdDateTime );
+	printVariant(v14);
+
+	DateTime dt( 1998, 8, 1, 16, 30, 0 );
+	VariantData v15 = DateTime::now() - dt;
+	VCF_ASSERT( v15.type == pdDateTimeSpan );
+	printVariant(v15);
+
+	dt.setMilliseconds( 0 );
+	VariantData v16 = dt;
+	VCF_ASSERT( v16.type == pdDateTime );
+	printVariant(v16);
 }
 
 

@@ -312,14 +312,14 @@ public:
 	@param String the value to convert
 	@return int64 the 64 bit signed integer representation of the String value
 	*/
-	static VCF::int64 fromStringAsLong64( const VCF::String& value );
+	static VCF::int64 fromStringAsInt64( const VCF::String& value );
 
 	/**
 	converts the value to a 64 bit unsigned integer 
 	@param String the value to convert
 	@return uint64 the 64 bit unsigned integer representation of the String value
 	*/
-	static VCF::uint64 fromStringAsULong64( const VCF::String& value );
+	static VCF::uint64 fromStringAsUInt64( const VCF::String& value );
 
 
 

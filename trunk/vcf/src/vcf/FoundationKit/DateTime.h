@@ -829,7 +829,7 @@ public :
 The DateTimeSpan represents an absolute delta value between two date time
 values. You can get the individual components of the span by calling the various
 getYears(), getMonths(), etc methods, or you can get the total amount of time
-this span covers in a praticular format, such the total minutes, or the total
+this span covers in a particular format, such the total minutes, or the total
 seconds. An example of this might look like so:
 \code
 DateTime dt1(2003,2,10); //2003, Feb 10th
@@ -848,6 +848,20 @@ class FOUNDATIONKIT_API DateTimeSpan {
 public:
 	DateTimeSpan() :years_(0), months_(0), days_(0) {
 
+	}
+
+	/**
+	Constructs a new time span that begins from now. 
+	The given delta determines how long should be the constructed span.
+	@param uint64 the milliseconds.
+    */
+	DateTimeSpan( uint64 delta ) {
+		DateTime now = DateTime::now();
+
+		DateTime lhs = now;
+		lhs.setMilliseconds( lhs.getMilliseconds() + delta );
+
+		subtract( lhs, now );
 	}
 
 	DateTimeSpan( const DateTimeSpan& rhs ) {

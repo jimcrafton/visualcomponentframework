@@ -253,15 +253,14 @@ public:
 		type = pdInterface;
 	}
 
-#ifdef VCF_VARIANT64
 	/**
 	creates a Variant initialized by a int64 value
 	*/
 	VariantData( const VCF::int64& val ) {
 		StringVal = NULL;
 
-		Long64Val = val;
-		type = pdLong64;
+		Int64Val = val;
+		type = pdInt64;
 	};
 
 	/**
@@ -270,8 +269,8 @@ public:
 	VariantData( const VCF::uint64& val ) {
 		StringVal = NULL;
 
-		ULong64Val = val;
-		type  = pdULong64;
+		UInt64Val = val;
+		type  = pdUInt64;
 	};
 
 	/**
@@ -280,7 +279,7 @@ public:
 	VariantData( const DateTime& val ) {
 		StringVal = NULL;
 
-		Long64Val = ( val.operator int64() ).data_; // (uint64::u64_t) (VCF::uint64&) val;
+		UInt64Val = val.getMilliseconds();
 		type  = pdDateTime;
 	};
 
@@ -290,19 +289,9 @@ public:
 	VariantData( const DateTimeSpan& val ) {
 		StringVal = NULL;
 
-		Long64Val = ( val.operator int64() ).data_; // (uint64::u64_t) (VCF::uint64&) val;
+		UInt64Val = val;
 		type  = pdDateTimeSpan;
 	};
-
-	///**
-	//creates a Variant initialized by a Color value
-	//*/
-	//VariantData( const Color& val ) {
-	//	Long64Val = ( val.operator int64() ).data_; // (uint64::u64_t) (VCF::uint64&) val;
-	//	type  = pdDateTimeSpan;
-	//};
-
-#endif // VCF_VARIANT64
 
 	/**
 	copy constructor
@@ -466,43 +455,35 @@ public:
 		return *EnumVal.getEnum();
 	};
 
-#ifdef VCF_VARIANT64
 	/**
 	converts the Variant to a int64
 	*/
 	operator VCF::int64 () const {
-		return Long64Val;
+		return Int64Val;
 	};
 
 	/**
 	converts the Variant to an uint64
 	*/
 	operator VCF::uint64 () const {
-		return ULong64Val;
+		return UInt64Val;
 	};
 
 	/**
 	converts the Variant to a DateTime
 	*/
 	operator VCF::DateTime () const {
-		return (int64) Long64Val; // uses the conversion DateTime::operator int64()
+		DateTime dt;
+		dt.setMilliseconds( UInt64Val );
+		return dt;
 	};
 
 	/**
 	converts the Variant to a DateTimeSpan
 	*/
 	operator VCF::DateTimeSpan () const {
-		return (int64) Long64Val; // uses the conversion DateTimeSpan::operator int64()
+		return UInt64Val;
 	};
-
-	///**
-	//converts the Variant to a Color
-	//*/
-	//operator VCF::Color () const {
-	//	return Color(ULong64Val);
-	//};
-#endif // VCF_VARIANT64
-
 
 
 	/*
@@ -681,14 +662,12 @@ public:
 		return *this;
 	};
 
-
-#ifdef VCF_VARIANT64
 	/**
 	Assigns a int64 value to the Variant
 	*/
 	VariantData& operator= ( const int64& newValue ){
-		Long64Val = newValue;
-		type = pdLong64;
+		Int64Val = newValue;
+		type = pdInt64;
 		return *this;
 	};
 
@@ -696,8 +675,8 @@ public:
 	Assigns an uint64 value to the Variant
 	*/
 	VariantData& operator= ( const uint64& newValue ){
-		ULong64Val = newValue;
-		type = pdULong64;
+		UInt64Val = newValue;
+		type = pdUInt64;
 		return *this;
 	};
 
@@ -705,7 +684,7 @@ public:
 	Assigns a DateTime value to the Variant
 	*/
 	VariantData& operator= ( const DateTime& newValue ){
-		Long64Val = ( newValue.operator int64() ).data_;
+		UInt64Val = newValue.getMilliseconds();
 		type = pdDateTime;
 		return *this;
 	};
@@ -714,12 +693,10 @@ public:
 	Assigns a DateTimeSpan value to the Variant
 	*/
 	VariantData& operator= ( const DateTimeSpan& newValue ){
-		Long64Val = ( newValue.operator int64() ).data_;
+		UInt64Val = newValue;
 		type = pdDateTimeSpan;
 		return *this;
 	};
-#endif // VCF_VARIANT64
-
 
 	/**
 	Returns true or false depending on whether the variant is considered 
@@ -781,10 +758,8 @@ public:
 			Object* ObjVal;
 			EnumValue EnumVal;
 			Interface* InterfaceVal;			
-#ifdef VCF_VARIANT64
-			VCF::uint64::int64_t Long64Val;
-			VCF::uint64::u64_t   ULong64Val;
-#endif // VCF_VARIANT64
+			int64 Int64Val;
+			uint64 UInt64Val;
 	};
 
 	/**
@@ -801,7 +776,8 @@ public:
 	/**
 	defines the data type of the VariantData, where type can represent
 	an int, unsigned int, long, unsigned long, short, char, 
-	double, float, bool, string, Enum pointer, or Object pointer.
+	double, float, bool, string, Enum pointer, Object pointer,
+	int64, uint64, DateTime or DateTimeSpan.
 	*/
 	PropertyDescriptorType type;
 
