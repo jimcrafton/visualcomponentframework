@@ -103,39 +103,30 @@ String VariantData::toString() const
 		}
 		break;
 
-#ifdef VCF_VARIANT64
-		case pdLong64:{
-			int64::int64_t value = this->Long64Val;
-			VCFChar tmp[VariantData::DefaultPropertyValLength];
-			memset(tmp, 0, VariantData::DefaultPropertyValLength);
-			swprintf( tmp, L"%I64d", (__int64)value );
-			result += tmp;
+		case pdInt64:{
+			int64 value = this->Int64Val;
+			result += StringUtils::toString( value );
 		}
 		break;
 
-		case pdULong64:{
-			uint64::u64_t value = this->ULong64Val;
-			VCFChar tmp[VariantData::DefaultPropertyValLength];
-			memset(tmp, 0, VariantData::DefaultPropertyValLength);
-			swprintf( tmp, L"%I64u", (unsigned __int64)value );
-			result += tmp;
+		case pdUInt64:{
+			uint64 value = this->UInt64Val;
+			result += StringUtils::toString( value );
 		}
 		break;
 
 		case pdDateTime:{
-			DateTime dt = (int64)this->Long64Val;
+			DateTime dt;
+			dt.setMilliseconds( this->UInt64Val );
 			result += StringUtils::format( dt, L"%Y-%m-%d %H:%M:%S.%s (%w)%a" );
-			//result += StringUtils::lowerCase( StringUtils::format( dt, L"%a" ) );
 		}
 		break;
 
 		case pdDateTimeSpan:{
-			DateTimeSpan dts = (int64)this->Long64Val;
-			result += StringUtils::format( dts, L"%y-%m-%d %h:%m:%s" );
+			DateTimeSpan dts = this->UInt64Val;
+			result += StringUtils::toString( dts.getTotalMilliseconds() );
 		}
 		break;
-
-#endif // VCF_VARIANT64
 
 		case pdObject:{
 			Object* object = *this;
@@ -267,24 +258,23 @@ void VariantData::setFromString( const String& value )
 		}
 		break;
 
-#ifdef VCF_VARIANT64
-		case pdLong64:{
-			uint64::int64_t result = 0;
+		case pdInt64:{
+			int64 result = 0;
 			int ret = swscanf( value.c_str(), L"%I64", &result );
 			if ( ret != 1 ) {
 				throw BasicException( L"Unable to convert: " + value );
 			}
-			Long64Val = result;
+			Int64Val = result;
 		}
 		break;
 
-		case pdULong64:{
-			uint64::u64_t result = 0;
+		case pdUInt64:{
+			uint64 result = 0;
 			int ret = swscanf( value.c_str(), L"%I64u", &result );
 			if ( ret != 1 ) {
 				throw BasicException( L"Unable to convert: " + value );
 			}
-			ULong64Val = result;
+			UInt64Val = result;
 		}
 		break;
 
@@ -297,8 +287,6 @@ void VariantData::setFromString( const String& value )
 			throw NotImplementedException();
 		}
 		break;
-
-#endif // VCF_VARIANT64
 
 		case pdObject:{
 			if ( NULL != ObjVal ){
@@ -434,28 +422,25 @@ void VariantData::setValue( const VariantData& value )
 		}
 		break;
 
-#ifdef VCF_VARIANT64
-		case pdLong64 : {
-			Long64Val = value.Long64Val;
+		case pdInt64 : {
+			Int64Val = value.Int64Val;
 		}
 		break;
 
-		case pdULong64 : {
-			ULong64Val = value.ULong64Val;
+		case pdUInt64 : {
+			UInt64Val = value.UInt64Val;
 		}
 		break;
 
 		case pdDateTime : {
-			Long64Val = value.Long64Val;
+			UInt64Val = value.UInt64Val;
 		}
 		break;
 
 		case pdDateTimeSpan : {
-			Long64Val = value.Long64Val;
+			UInt64Val = value.UInt64Val;
 		}
 		break;
-
-#endif // VCF_VARIANT64
 
 		case pdUndefined : {
 
@@ -471,10 +456,8 @@ void VariantData::setValue( const VariantData& value )
 			type = pdUndefined;
 			// this let this class to work with types not considered in this implementation.
 			ObjVal = value.ObjVal;
-#ifdef VCF_VARIANT64
-			Long64Val = value.Long64Val;
+			Int64Val = value.Int64Val;
 			StringVal = value.StringVal;
-#endif // VCF_VARIANT64
 			type = value.type;
 	}
 }

@@ -135,18 +135,51 @@ int main( int argc, char** argv ){
 	}
 
 	DateTime dt3(1998, 8, 1, 16, 30, 0 );
-	DateTime dt4 = DateTime::now();
+	DateTime now = DateTime::now();
 
-	DateTimeSpan howLong = dt3 - dt4;
+	DateTimeSpan howLong = dt3 - now;
 
 
-	System::println( Format("Holy cow! I've been married for: \n\t%d years, %d months, %d days, %d hours, and %d minutes,\n or for a total of: \n\t %s seconds!")
+	System::println( Format("Holy cow! I've been married for:\n\t%d years, %d months, %d days, %d hours, and %d minutes,\n\tor for a total of %s seconds!")
 					%	howLong.getYears()
 					%	howLong.getMonths()
 					%	howLong.getDays()
 					%	howLong.getHours()
 					%	howLong.getMinutes()
                     %	System::getCurrentThreadLocale()->toString( howLong.getTotalSeconds() ) );
+
+
+	dt3.setMilliseconds( 0 );
+	howLong = now - dt3;
+	System::println( Format("now() - 0:\n\t%d years, %d months, %d days, %d hours, and %d minutes,\n\tor for a total of %s seconds!")
+					%	howLong.getYears()
+					%	howLong.getMonths()
+					%	howLong.getDays()
+					%	howLong.getHours()
+					%	howLong.getMinutes()
+					%	System::getCurrentThreadLocale()->toString( howLong.getTotalSeconds() ) );
+
+	DateTimeSpan period1( 0 );
+	System::print( Format("period1( %d ): " ) % period1.getTotalMilliseconds() );
+	howLong = period1;
+	System::println( Format("\n\t%d years, %d months, %d days, %d hours, and %d minutes,\n\tor for a total of %s seconds!")
+					%	howLong.getYears()
+					%	howLong.getMonths()
+					%	howLong.getDays()
+					%	howLong.getHours()
+					%	howLong.getMinutes()
+					%	System::getCurrentThreadLocale()->toString( howLong.getTotalSeconds() ) );
+	
+	DateTimeSpan period2( 1000000 );
+	System::print( Format("period2( %d ): " ) % period2.getTotalMilliseconds() );
+	howLong = period2;
+	System::println( Format("\n\t%d years, %d months, %d days, %d hours, and %d minutes,\n\tor for a total of %s seconds!")
+					%	howLong.getYears()
+					%	howLong.getMonths()
+					%	howLong.getDays()
+					%	howLong.getHours()
+					%	howLong.getMinutes()
+					%	System::getCurrentThreadLocale()->toString( howLong.getTotalSeconds() ) );
 
 
 	/**
