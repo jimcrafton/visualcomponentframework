@@ -15,6 +15,7 @@
 #include "vcf/ApplicationKit/TextEvent.h"
 #include "vcf/ApplicationKit/SliderControl.h"
 #include "vcf/ApplicationKit/CheckBoxControl.h"
+#include "vcf/ApplicationKit/HorizontalLayoutContainer.h"
 
 using namespace VCF;
 
@@ -97,9 +98,37 @@ ParticleEditor::ParticleEditor():Window(){
 	}
 
 	Panel *bottom=new Panel();
-	bottom->setBorder(0);
-	bottom->setHeight(120);
+	bottom->setBorder(0);	;
+	bottom->setHeight(180);
+	add(bottom,AlignBottom);
 
+	HorizontalLayoutContainer *bottomContainer = new HorizontalLayoutContainer();
+	bottomContainer->setNumberOfColumns(3);
+	bottomContainer->setColumnWidth( 0, 200 );
+	bottomContainer->setColumnWidth( 1, 200 );
+	bottomContainer->setColumnWidth( 2, 200 );
+	bottomContainer->setColumnTweenWidth( 0, 20 );
+	bottomContainer->setColumnTweenWidth( 1, 20 );
+	bottomContainer->setMaximizeLastRow(true);
+	bottom->setContainer( bottomContainer );
+
+	Panel *bottomLeft=new Panel();
+	bottomLeft->setBorder(0);	
+
+	Panel *bottomCenter=new Panel();
+	bottomCenter->setBorder(0);	
+
+	Panel *bottomRight=new Panel();
+	bottomRight->setBorder(0);	
+
+	bottom->add(bottomLeft,AlignLeft);
+	bottom->add(bottomCenter,AlignLeft);
+	bottom->add(bottomRight,AlignClient);
+
+	
+	double ctrlHeight = 22;
+	double ctrlSpace = 6;
+	
 	{
 		Panel *gradualStartPanel=new Panel();
 		gradualStartPanel->setBorder(0);
@@ -116,8 +145,9 @@ ParticleEditor::ParticleEditor():Window(){
 		mGradualStart->getButtonClicked().addHandler(new ButtonEventHandler<ParticleEditor>(this,&ParticleEditor::onGradualStart));
 		gradualStartPanel->add(mGradualStart,AlignRight);
 
-		gradualStartPanel->setBounds(0,0,200,20);
-		bottom->add(gradualStartPanel);
+		gradualStartPanel->setBounds(0,0,200,ctrlHeight);
+
+		bottomLeft->add(gradualStartPanel);
 	}
 
 	{
@@ -137,8 +167,9 @@ ParticleEditor::ParticleEditor():Window(){
 		mNumParticles->getSpinnerChanged().addHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onNumParticles));
 		numParticlePanel->add(mNumParticles,AlignClient);
 
-		numParticlePanel->setBounds(0,20,200,20);
-		bottom->add(numParticlePanel);
+		numParticlePanel->setBounds(0, 1*ctrlHeight + 1*ctrlSpace ,200,ctrlHeight);
+
+		bottomLeft->add(numParticlePanel);
 	}
 
 	{
@@ -158,12 +189,14 @@ ParticleEditor::ParticleEditor():Window(){
 		mSystemLife->getSpinnerChanged().addHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onSystemLife));
 		systemLifePanel->add(mSystemLife,AlignClient);
 
-		systemLifePanel->setBounds(0,40,200,20);
-		bottom->add(systemLifePanel);
+		systemLifePanel->setBounds(0,2*ctrlHeight + 2*ctrlSpace,200,ctrlHeight);
+
+		bottomLeft->add(systemLifePanel);
 	}
 
 	{
 		Panel *partLifePanel=new Panel();
+
 		partLifePanel->setBorder(0);
 
 		Label *label=new Label();
@@ -179,8 +212,9 @@ ParticleEditor::ParticleEditor():Window(){
 		mPartLife->getSpinnerChanged().addHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onParticleLife));
 		partLifePanel->add(mPartLife,AlignClient);
 
-		partLifePanel->setBounds(0,60,200,20);
-		bottom->add(partLifePanel);
+		partLifePanel->setBounds(0,3*ctrlHeight + 3*ctrlSpace,200,ctrlHeight);
+
+		bottomLeft->add(partLifePanel);
 	}
 
 	{
@@ -206,8 +240,9 @@ ParticleEditor::ParticleEditor():Window(){
 		mInitialVariance->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onInitialVariance));
 		speedPanel->add(mInitialVariance,AlignClient);
 
-		speedPanel->setBounds(0,80,200,20);
-		bottom->add(speedPanel);
+		speedPanel->setBounds(0,4*ctrlHeight + 4*ctrlSpace,200,ctrlHeight);
+
+		bottomLeft->add(speedPanel);
 	}
 
 	{
@@ -233,8 +268,9 @@ ParticleEditor::ParticleEditor():Window(){
 		mGravityVariance->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onGravityVariance));
 		gravityPanel->add(mGravityVariance,AlignClient);
 
-		gravityPanel->setBounds(0,100,200,20);
-		bottom->add(gravityPanel);
+		gravityPanel->setBounds(0,5*ctrlHeight + 5*ctrlSpace,200,ctrlHeight);
+
+		bottomLeft->add(gravityPanel);
 	}
 
 	{
@@ -254,8 +290,8 @@ ParticleEditor::ParticleEditor():Window(){
 		mParticleType->getSelectionChanged().addHandler(new ItemEventHandler<ParticleEditor>(this,&ParticleEditor::onParticleType));
 		typePanel->add(mParticleType,AlignClient);
 
-		typePanel->setBounds(210,0,200,20);
-		bottom->add(typePanel);
+		typePanel->setBounds(0,0,200,ctrlHeight);
+		bottomCenter->add(typePanel);
 	}
 
 	{
@@ -273,8 +309,8 @@ ParticleEditor::ParticleEditor():Window(){
 		mAlignment->getSelectionChanged().addHandler(new ItemEventHandler<ParticleEditor>(this,&ParticleEditor::onAlignment));
 		alignmentPanel->add(mAlignment,AlignClient);
 
-		alignmentPanel->setBounds(210,20,200,20);
-		bottom->add(alignmentPanel);
+		alignmentPanel->setBounds(0,1*ctrlHeight + 1*ctrlSpace,200,ctrlHeight);
+		bottomCenter->add(alignmentPanel);
 	}
 
 	{
@@ -295,8 +331,8 @@ ParticleEditor::ParticleEditor():Window(){
 		mBlending->getSelectionChanged().addHandler(new ItemEventHandler<ParticleEditor>(this,&ParticleEditor::onBlending));
 		blendPanel->add(mBlending,AlignClient);
 
-		blendPanel->setBounds(210,40,200,20);
-		bottom->add(blendPanel);
+		blendPanel->setBounds(0,2*ctrlHeight + 2*ctrlSpace,200,ctrlHeight);
+		bottomCenter->add(blendPanel);
 	}
 
 	{
@@ -308,8 +344,8 @@ ParticleEditor::ParticleEditor():Window(){
 		mDepthTest->getButtonClicked().addHandler(new ButtonEventHandler<ParticleEditor>(this,&ParticleEditor::onDepthTest));
 		depthTestPanel->add(mDepthTest,AlignClient);
 
-		depthTestPanel->setBounds(210,60,200,20);
-		bottom->add(depthTestPanel);
+		depthTestPanel->setBounds(0,3*ctrlHeight + 3*ctrlSpace,200,ctrlHeight);
+		bottomCenter->add(depthTestPanel);
 	}
 
 	{
@@ -328,7 +364,7 @@ ParticleEditor::ParticleEditor():Window(){
 		mStartColor->getColorChanged().addHandler(new ButtonEventHandler<ParticleEditor>(this,&ParticleEditor::onStartColor));
 		p->add(mStartColor,AlignClient);
 
-		p->setHeight(20);
+		p->setHeight(ctrlHeight);
 
 		colorPanel->add(p,AlignTop);
 
@@ -344,12 +380,12 @@ ParticleEditor::ParticleEditor():Window(){
 		mEndColor->getColorChanged().addHandler(new ButtonEventHandler<ParticleEditor>(this,&ParticleEditor::onEndColor));
 		p->add(mEndColor,AlignClient);
 
-		p->setHeight(20);
+		p->setHeight(ctrlHeight);
 
 		colorPanel->add(p,AlignBottom);
 
-		colorPanel->setBounds(210,80,200,40);
-		bottom->add(colorPanel);
+		colorPanel->setBounds(0,4*ctrlHeight + 4*ctrlSpace,200,ctrlHeight*2);
+		bottomCenter->add(colorPanel);
 	}
 
 
@@ -366,8 +402,8 @@ ParticleEditor::ParticleEditor():Window(){
 		mTrailingSystem->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onTrailingSystem));
 		trailingPanel->add(mTrailingSystem,AlignClient);
 
-		trailingPanel->setBounds(420,0,210,20);
-		bottom->add(trailingPanel);
+		trailingPanel->setBounds(0,0,210,ctrlHeight);
+		bottomRight->add(trailingPanel);
 	}
 
 	{
@@ -383,8 +419,8 @@ ParticleEditor::ParticleEditor():Window(){
 		mEndingSystem->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onEndingSystem));
 		endingPanel->add(mEndingSystem,AlignClient);
 
-		endingPanel->setBounds(420,20,210,20);
-		bottom->add(endingPanel);
+		endingPanel->setBounds(0,ctrlHeight+ctrlSpace,210,ctrlHeight);
+		bottomRight->add(endingPanel);
 	}
 
 	{
@@ -406,14 +442,14 @@ ParticleEditor::ParticleEditor():Window(){
 		mTextureList=new ComboBoxControl();
 		mTexturePanel->add(mTextureList,AlignClient);
 
-		mTexturePanel->setBounds(420,40,210,20);
+		mTexturePanel->setBounds(0,40,210,20);
 		// Textures not functional yet :(
-//		bottom->add(mTexturePanel);
+//		bottomRight->add(mTexturePanel);
 
 		mTexturePanel->setVisible(false);
 	}
 
-	add(bottom,AlignBottom);
+
 
 	// Setup particle system components
 	mParticleSystem=new ParticleSystem();
