@@ -7,18 +7,20 @@
 
 namespace VCF{
 
-class Spinner:public ControlContainer{
+class Spinner:public Panel {
 public:
 	DELEGATE(SpinnerChanged);
 
-	Spinner():ControlContainer(){
+	Spinner():Panel() {
 		setBorder(0);
+		setHeight(22);
+		setWidth(120);
 
 		mValue=new TextControl();
 		mValue->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<Spinner>(this,&Spinner::onTextChanged));
 		add(mValue,AlignClient);
 
-		ControlContainer *updown=new ControlContainer();
+		Panel *updown=new Panel();
 		updown->setBorder(0);
 
 		PushButton *down=new PushButton();
