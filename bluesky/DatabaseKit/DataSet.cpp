@@ -786,12 +786,12 @@ void DataSet::resync( int mode )
 	}
 	else {
 
-		if ( (getRecord( records_[ records_.size()-1 ], grmCurrent ) != grOK) &&
-			(getRecord( records_[ records_.size()-1 ], grmNext ) != grOK) ) {
-
-			clearRecords();
-			Event e(this,deDataSetChange);
-			return;
+		if ( getRecord( records_[ records_.size()-1 ], grmCurrent ) != grOK ) {
+			if ( getRecord( records_[ records_.size()-1 ], grmNext ) != grOK ) {
+				clearRecords();
+				Event e(this,deDataSetChange);
+				return;
+			}
 		}
 
 		if ( mode & rmCenter ) {
