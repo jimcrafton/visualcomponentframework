@@ -309,6 +309,11 @@ void SQLiteDataSet::internal_first()
 	currentRow_ = 0;
 
 	AnsiString sql = generateSQL();
+
+	VCF_ASSERT( !sql.empty() );
+
+	VCF_ASSERT( sql[sql.size()-1] == ';' );
+
 	const char* tail=0;
 	sqlite3* dbHandle = getHandle();
 	int res = sqlite3_prepare(dbHandle, sql.c_str(), sql.size(), &currentStmt_, &tail );

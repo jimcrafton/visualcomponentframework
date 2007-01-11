@@ -140,7 +140,7 @@ int main( int argc, char** argv ){
 		DataSet* dataSet = DatabaseToolkit::createDataSet( "SQLiteType" );
 
 		dataSet->setParam( "databasename", "test.db3" );
-		dataSet->setParam( "tablename", "Person" );
+		dataSet->setParam( "tablename", "Person2" );
 
 
 
@@ -175,7 +175,7 @@ int main( int argc, char** argv ){
 			dataSet->setActive(true);
 			
 			System::println( "------------------------------------------------------------------------------" );
-			/*
+			
 			DateTime start = DateTime::now();
 
 			if ( dataSet->isActive() ) {
@@ -202,7 +202,7 @@ int main( int argc, char** argv ){
 
 				System::println( Format("%d rows took %u milliseconds.") % rowCount % sp.getTotalMilliseconds() );
 			}			
-*/
+
 
 			System::println( "------------------------------------------------------------------------------" );
 			System::println( "Going to first record..." );
@@ -256,8 +256,9 @@ int main( int argc, char** argv ){
 
 				dataSet->edit();				
 
-				System::println( "Changing LastName field to \"ddggf\"..." ); 
-				dataSet->fieldByName("LastName")->setAsString("ddggf");
+				String lastName = "Woofer";
+				System::println( "Changing LastName field to \"" + lastName + "\"..." ); 
+				dataSet->fieldByName("LastName")->setAsString(lastName);
 
 				dataSet->post();
 
@@ -291,7 +292,7 @@ int main( int argc, char** argv ){
 
 
 	//ADO----
-	
+	/*
 	{
 		System::println( "------------------------------------------------------------------------------" );
 		System::println( "ADO testing" );
@@ -345,7 +346,7 @@ int main( int argc, char** argv ){
 		
 		delete dataSet;
 	}
-
+*/
 
 
 	DatabaseKit::terminate();
