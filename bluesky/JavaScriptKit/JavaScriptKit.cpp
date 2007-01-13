@@ -409,7 +409,7 @@ void JavaScriptEngine::updateFromClassRegistry()
 	}
 }
 
-void JavaScriptEngine::executeScript( const String& script, const String& fileName )
+void JavaScriptEngine::internal_executeScript( const String& script, const String& fileName )
 {
 	String version = JS_GetImplementationVersion();
 
@@ -423,8 +423,22 @@ void JavaScriptEngine::executeScript( const String& script, const String& fileNa
 	JS_EvaluateScript(m_context, m_global, ansiScript.c_str(), ansiScript.size(), 
 						fileName.empty() ? NULL : fileName.ansi_c_str(), 
 						lineno, 
-						&rval); 	
-	
+						&rval); 
+}
+
+void JavaScriptEngine::executeScript( const String& script )
+{
+	internal_executeScript( script, "" );
+}
+
+
+void JavaScriptEngine::executeScriptFromFile( const String& fileName )
+{
+	String script;
+	FileInputStream fis(fileName);
+	fis >> script;
+
+	internal_executeScript( script, fileName );
 }
 
 

@@ -214,12 +214,7 @@ int main( int argc, char** argv ){
 		JavaScriptEngine::engine().executeScript( script );
 
 
-
-		String jsfile;
-		FileInputStream fis("test1.js");
-		fis >> jsfile;
-
-		JavaScriptEngine::engine().executeScript( jsfile );
+		JavaScriptEngine::engine().executeScriptFromFile( "test1.js" );
 
 
 		JavaScriptEngine::engine().ErrorOccurred -= errHandler;
