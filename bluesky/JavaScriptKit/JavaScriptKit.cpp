@@ -464,19 +464,19 @@ JSBool JavaScriptEngine::methodCall(JSContext *cx, JSObject *obj, uintN argc, js
 					}
 				}
 
-				VariantData* retVal = NULL;
+				VariantData retVal = VariantData::null();
 				try {
 					retVal = method->invoke( args, ie.instance_ );
 					result = JS_TRUE;
 				}
 				catch ( BasicException& e ) {
-					retVal = NULL;
+					retVal = VariantData::null();
 					result = JS_FALSE;
 
 					JS_ReportError( eng->m_context, "VCF Exception thrown: %s", e.getMessage().c_str() );
 				}
 				
-				eng->assignVariantToJSVal( retVal, rval );
+				eng->assignVariantToJSVal( &retVal, rval );
 				
 
 				for (int i=0;i<argc;i++ ) {
