@@ -215,6 +215,11 @@ int main( int argc, char** argv ){
 
 
 
+		String jsfile;
+		FileInputStream fis("test1.js");
+		fis >> jsfile;
+
+		JavaScriptEngine::engine().executeScript( jsfile );
 
 
 		JavaScriptEngine::engine().ErrorOccurred -= errHandler;
