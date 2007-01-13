@@ -261,7 +261,9 @@ namespace VCF {
 		DELEGATE(ErrorOccurred);
 
 
-		void executeScript( const String& script, const String& fileName="" );
+		void executeScript( const String& script );
+
+		void executeScriptFromFile( const String& fileName );
 
 		void updateFromClassRegistry();
 
@@ -277,6 +279,8 @@ namespace VCF {
 
 		static void invokeEventhandler( Event* e, JSFunction* function, const VCF::String& functionName );
 	protected:
+
+		void internal_executeScript( const String& script, const String& fileName );
 
 		typedef std::map<String,ClassEntry> ClassMap;
 		typedef std::map<JSObject*,ObjectInstanceEntry> InstanceMap;
