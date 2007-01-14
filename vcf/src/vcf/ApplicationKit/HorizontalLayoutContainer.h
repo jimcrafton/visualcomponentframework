@@ -74,7 +74,7 @@ public:
 	}
 
 
-	void setNumberOfColumns( int numColumns ) {
+	void setNumberOfColumns( const int32& numColumns ) {
 		columns_.clear();
 		columnTweens_.clear();
 
@@ -87,23 +87,23 @@ public:
 		return columns_.size();
 	}
 
-	void setColumnWidth( int index, double width ) {
+	void setColumnWidth( const int32& index, const double& width ) {
 		columns_[index] = width;
 	}
 
-	int getColumnWidth( int index ) const {
+	int getColumnWidth( const int32& index ) const {
 		return columns_[index];
 	}
 
-	void setColumnTweenWidth( int index, double width ) {
+	void setColumnTweenWidth( const int32& index, const double& width ) {
 		columnTweens_[index] = width;
 	}
 
-	int getColumnTweenWidth( int index ) const {
+	int getColumnTweenWidth( const int32& index ) const {
 		return columnTweens_[index];
 	}
 
-	void setMaxRowHeight( double val ) {
+	void setMaxRowHeight( const double& val ) {
 		maxRowHeight_ = val;
 	}
 
@@ -112,7 +112,7 @@ public:
 	as the hightest one. The default is false;
 	This flag excludes setEqualizeHeights().
 	*/
-	void setEqualizeHeights( bool equalize ) {
+	void setEqualizeHeights( const bool& equalize ) {
 		equalizeHeights_ = equalize;
 	}
 
@@ -124,7 +124,7 @@ public:
 	Set if we want all the row heights to be the same
 	as the average height that fills the parent control. The default is false;
 	*/
-	void setAverageHeights( bool average ) {
+	void setAverageHeights( const bool& average ) {
 		averageHeights_ = average;
 	}
 
@@ -137,7 +137,7 @@ public:
 	as it is by default, resize their width to the one of
 	the column where they are located.
 	*/
-	void setKeepControlsWidth( bool keep ) {
+	void setKeepControlsWidth( const bool& keep ) {
 		keepControlsWidth_ = keep;
 	}
 
@@ -312,11 +312,11 @@ public:
 		return maximizeLastRow_;
 	}
 
-	void setMaximizeLastRow( bool val ) {
+	void setMaximizeLastRow( const bool& val ) {
 		maximizeLastRow_ = val;
 	}
 
-	void setRowSpacerHeight( double val ) {
+	void setRowSpacerHeight( const double& val ) {
 		rowSpacerHeight_ = val;
 	}
 
