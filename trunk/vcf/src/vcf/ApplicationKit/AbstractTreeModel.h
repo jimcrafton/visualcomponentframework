@@ -79,7 +79,7 @@ public:
     /**
      * clears out the model's data
      */
-    void empty();
+    virtual void empty();
 
 	virtual Enumerator<TreeItem*>* getRootItems();
 
