@@ -39,6 +39,7 @@ public:
 		TREEITEM_DELETED
 	};
 
+    virtual void empty() = 0;
 
 	virtual Enumerator<TreeItem*>* getRootItems() = 0;
 
