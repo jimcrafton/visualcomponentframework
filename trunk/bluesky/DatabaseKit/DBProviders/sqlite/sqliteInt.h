@@ -463,7 +463,7 @@ struct sqlite3 {
     u8 busy;                    /* TRUE if currently initializing */
   } init;
   int nExtension;               /* Number of loaded extensions */
-  void *aExtension;             /* Array of shared libraray handles */
+  void **aExtension;            /* Array of shared libraray handles */
   struct Vdbe *pVdbe;           /* List of active virtual machines */
   int activeVdbeCnt;            /* Number of vdbes currently executing */
   void (*xTrace)(void*,const char*);        /* Trace function */
@@ -1091,6 +1091,11 @@ typedef unsigned int Bitmask;
 ** is modified by an INSERT, DELETE, or UPDATE statement.  In standard SQL,
 ** such a table must be a simple name: ID.  But in SQLite, the table can
 ** now be identified by a database name, a dot, then the table name: ID.ID.
+**
+** The jointype starts out showing the join type between the current table
+** and the next table on the list.  The parser builds the list this way.
+** But sqlite3SrcListShiftJoinType() later shifts the jointypes so that each
+** jointype expresses the join between the table and the previous table.
 */
 struct SrcList {
   i16 nSrc;        /* Number of tables or subqueries in the FROM clause */
@@ -1102,7 +1107,7 @@ struct SrcList {
     Table *pTab;      /* An SQL table corresponding to zName */
     Select *pSelect;  /* A SELECT statement used in place of a table name */
     u8 isPopulated;   /* Temporary table associated with SELECT is populated */
-    u8 jointype;      /* Type of join between this table and the next */
+    u8 jointype;      /* Type of join between this able and the previous */
     i16 iCursor;      /* The VDBE cursor number used to access this table */
     Expr *pOn;        /* The ON clause of a join */
     IdList *pUsing;   /* The USING clause of a join */
@@ -1617,7 +1622,9 @@ int sqlite3ArrayAllocate(void**,int,int);
 IdList *sqlite3IdListAppend(IdList*, Token*);
 int sqlite3IdListIndex(IdList*,const char*);
 SrcList *sqlite3SrcListAppend(SrcList*, Token*, Token*);
-void sqlite3SrcListAddAlias(SrcList*, Token*);
+SrcList *sqlite3SrcListAppendFromTerm(SrcList*, Token*, Token*, Token*,
+                                      Select*, Expr*, IdList*);
+void sqlite3SrcListShiftJoinType(SrcList*);
 void sqlite3SrcListAssignCursors(Parse*, SrcList*);
 void sqlite3IdListDelete(IdList*);
 void sqlite3SrcListDelete(SrcList*);
@@ -1876,6 +1883,7 @@ int sqlite3VtabCallDestroy(sqlite3*, int, const char *);
 int sqlite3VtabBegin(sqlite3 *, sqlite3_vtab *);
 FuncDef *sqlite3VtabOverloadFunction(FuncDef*, int nArg, Expr*);
 void sqlite3InvalidFunction(sqlite3_context*,int,sqlite3_value**);
+int sqlite3Reprepare(Vdbe*);
 
 #ifdef SQLITE_SSE
 #include "sseInt.h"
