@@ -306,7 +306,7 @@ public:
 	/**
 	destructor
 	*/
-	virtual ~VariantData(){
+	~VariantData(){
 		if ( NULL != StringVal ) {
 			delete StringVal;
 		}
@@ -731,7 +731,7 @@ public:
 	if they support Persistable, otherwise the Object's toString()
 	method is invoked.
 	*/
-	virtual String toString() const;
+	String toString() const;
 
 	/**
 	Assigns the VariantData's data from a string. The conversion
