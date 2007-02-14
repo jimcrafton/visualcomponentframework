@@ -188,7 +188,7 @@ int main( int argc, char** argv ){
 					
 					while ( fields->hasMoreElements() ) {
 						DataField* field = fields->nextElement();
-						//System::println( "Field name: " + field->getName() + " value: " + field->getAsString() );
+						System::println( "Field name: " + field->getName() + " value: " + field->getAsString() );
 					}
 					dataSet->next();
 					rowCount ++;

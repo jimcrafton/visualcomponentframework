@@ -407,7 +407,7 @@ namespace VCF {
 		FieldDefinitions* fieldDefs_;
 		DataFieldArray fields_;
 
-		size_t recordSize_;
+		size_t recordCount_;
 		RecordsArray records_;
 		size_t activeRecordIndex_; //we may not need this...
 		size_t currentRecordIndex_;
