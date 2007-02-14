@@ -675,6 +675,12 @@ void SQLiteDataSet::internal_post()
 	const char* tail=0;
 	sqlite3* dbHandle = getHandle();
 
+
+	//if ( SQLITE_OK != sqlite3_exec( dbHandle, "begin transaction;", NULL,0,NULL ) ) {
+	//	throw DatabaseError(SQLiteDatabase::errorMessageFromHandle(dbHandle));
+	//}
+
+
 	sqlite3_stmt *updateStmt = NULL;
 	res = sqlite3_prepare( dbHandle, sql.c_str(), sql.length(), &updateStmt, &tail );
 
@@ -727,6 +733,12 @@ void SQLiteDataSet::internal_post()
 	res = sqlite3_step( updateStmt );
 
 	sqlite3_finalize( updateStmt );
+	
+
+	//if ( SQLITE_OK != sqlite3_exec( dbHandle, "commit transaction;", NULL,0,NULL ) ) {
+	//	throw DatabaseError(SQLiteDatabase::errorMessageFromHandle(dbHandle));
+	//}
+	
 
 	switch ( res ) {
 		case SQLITE_MISUSE : case SQLITE_ERROR : {
@@ -758,7 +770,7 @@ void SQLiteDataSet::internal_edit()
 			}	
 			
 			
-			updateWhereClause_ += field->getName() + " = ";
+			updateWhereClause_ += field->getName() + " like ";
 			
 			if ( field->isStringType() ) {
 				updateWhereClause_ += "'";
