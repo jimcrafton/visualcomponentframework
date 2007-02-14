@@ -14,7 +14,7 @@ DataSet::DataSet()
 	defaultFields_(true),
 	filtered_(false),
 	filterOptions_(foNoOptions),
-	recordSize_(0),
+	recordCount_(0),
 	activeRecordIndex_(DataSet::NoRecPos),
 	currentRecordIndex_(DataSet::NoRecPos),
 	locale_(NULL)
@@ -330,6 +330,7 @@ void DataSet::clearRecords()
 	eof_ = true;
 	currentRecordIndex_ = 0;
 	activeRecordIndex_ = 0;	
+	recordCount_ = 0;
 }
 
 void DataSet::activateRecords()
@@ -338,6 +339,7 @@ void DataSet::activateRecords()
 	eof_ = false;
 	currentRecordIndex_ = 0;
 	activeRecordIndex_ = 0;
+	recordCount_ = 1;
 }
 
 void DataSet::first()
@@ -609,8 +611,11 @@ void DataSet::setRecordCount( size_t numberOfRecords )
 size_t DataSet::getNextRecords()
 {
 	size_t result = 0;
-	while ( (result < records_.size()) && getNextRecord() ) {		
-		result ++;		
+	while ( recordCount_ < records_.size() ) {
+		if ( !getNextRecord() ) {
+			break;
+		}
+		result ++;
 	}
 
 	return result;
@@ -622,8 +627,8 @@ bool DataSet::getNextRecord()
 
 	GetRecordMode mode = grmNext;
 
-	if ( records_.size() > 0 ) {
-		//currentRecordIndex_ = records_.size() - 1; 
+	if ( recordCount_ > 0 ) {
+		currentRecordIndex_ = recordCount_ - 1; 
 	}	
 	
 	GetResultType res = getRecord( records_[ currentRecordIndex_ ], mode );
@@ -632,11 +637,16 @@ bool DataSet::getNextRecord()
 	}
 
 	if ( result ) {
-		if ( records_.size() - 1 == 0 ) {
+		if ( recordCount_ == 0 ) {
 			activateRecords();
 		}
+		else {
+			if ( recordCount_ < records_.size() ) {
+				recordCount_ ++;
+			}
+		}
 
-		currentRecordIndex_ = records_.size() - 1; 		
+		currentRecordIndex_ = recordCount_ - 1; 		
 	}
 
 	return result;

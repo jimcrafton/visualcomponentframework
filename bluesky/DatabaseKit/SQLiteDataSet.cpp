@@ -40,7 +40,7 @@ SQLiteDataSet::SQLiteDataSet():
 size_t SQLiteDataSet::calculateRecordSize()
 {
 	size_t result = 0;
-	recordSize_ = 0;
+	//recordSize_ = 0;
 
 	VCF_ASSERT( NULL != currentStmt_ );
 
@@ -70,7 +70,9 @@ size_t SQLiteDataSet::calculateRecordSize()
 		}
 	}
 
-	recordSize_ = result;
+	printf( "calculateRecordSize() returned %u\n", result );
+
+	//recordSize_ = result;
 
 	return result;
 }
@@ -80,6 +82,7 @@ void SQLiteDataSet::internal_open()
 	internal_initFieldDefinitions();
 
 	currentRow_ = 0;
+	currentStmt_ = NULL;
 
 	try {
 		if ( getDefaulFields() ) {
@@ -305,6 +308,7 @@ void SQLiteDataSet::internal_first()
 	VCF_ASSERT( NULL != currentStmt_ );
 
 	sqlite3_finalize(currentStmt_);
+	currentStmt_ = NULL;
 
 	currentRow_ = 0;
 
@@ -323,7 +327,11 @@ void SQLiteDataSet::internal_first()
 		throw DatabaseError(SQLiteDatabase::errorMessageFromHandle(dbHandle));
 	}
 
-	//int res = sqlite3_reset(currentStmt_);
+	res = sqlite3_step(currentStmt_);
+	if ( (res != SQLITE_DONE) && (res != SQLITE_ROW) ) {
+		sqlite3_finalize(currentStmt_);
+		throw DatabaseError(SQLiteDatabase::errorMessageFromHandle(dbHandle));
+	}
 }
 		
 GetResultType SQLiteDataSet::getRecord( DataSet::Record* record, GetRecordMode mode )
@@ -530,6 +538,8 @@ bool SQLiteDataSet::isCursorOpen()
 
 bool SQLiteDataSet::getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize )
 {
+	VCF_ASSERT( activeRecordIndex_ != DataSet::NoRecPos );
+
 	bool result = false;
 
 	size_t bufferOffset = 0;
@@ -575,7 +585,7 @@ bool SQLiteDataSet::getFieldData( DataField* field, unsigned char* buffer, size_
 void SQLiteDataSet::setFieldData( DataField* field, const unsigned char* buffer, size_t bufferSize )
 {
 	VCF_ASSERT( NULL != field );
-
+	VCF_ASSERT( activeRecordIndex_ != DataSet::NoRecPos );
 
 
 	if ( !(state_ & dssEdit) ) {
@@ -613,6 +623,8 @@ void SQLiteDataSet::setFieldData( DataField* field, const unsigned char* buffer,
 
 void SQLiteDataSet::internal_post()
 {
+	VCF_ASSERT( activeRecordIndex_ != DataSet::NoRecPos );
+
 	DataSet::Record* record = records_[ activeRecordIndex_ ];
 
 	size_t bufferOffset = 0;
@@ -649,6 +661,10 @@ void SQLiteDataSet::internal_post()
 
 		++it;
 	}
+
+	
+	sqlite3_reset( currentStmt_ );
+
 
 	updateSQL += this->updateWhereClause_;
 	updateSQL += ";";
@@ -719,6 +735,8 @@ void SQLiteDataSet::internal_post()
 		}
 		break;
 	}
+
+	
 }
 
 void SQLiteDataSet::internal_refresh()
