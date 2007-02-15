@@ -47,7 +47,8 @@ public:
 	}
 
 	Column& operator= ( const std::string& rhs ) {
-		sqlite3_bind_text( stmt_, index_, rhs.c_str(), rhs.size(), SQLITE_TRANSIENT );
+		int res = sqlite3_bind_text( stmt_, index_, rhs.c_str(), rhs.size(), SQLITE_TRANSIENT );
+
 		return *this;
 	}
 

@@ -111,7 +111,83 @@ void SQLiteDataSet::internal_open()
 
 void SQLiteDataSet::internal_initNewRecord( Record* record )
 {
-	
+	size_t currentSz = 0;
+
+	for ( size_t j=0;j<fields_->size();j++ ) {
+		DataField* field = fields_()[j];
+
+		switch ( field->getDataType() ) {
+			case dftString : {
+				currentSz += 1;
+			}
+			break;
+
+			case dftUnicodeString : {
+				currentSz += 1;
+			}
+			break;
+
+			case dftFloat : {
+				currentSz += field->getSize();
+			}
+			break;
+			
+			case dftWord : case dftSmallint : case dftInteger : {
+				currentSz += field->getSize();
+			}
+			break;
+		}
+	}
+
+	VCF_ASSERT( currentSz > 0 ) ;
+
+
+	record->setSize( currentSz );
+	memset( record->buffer, 0, record->size );
+
+	size_t bufferOffset = 0;
+
+	for ( size_t i=0;i<fields_->size();i++ ) {
+		DataField* field = fields_()[i];
+		
+		switch ( field->getDataType() ) {
+			case dftString : {
+				const char* text = "";
+				int txtSz = 0;
+				memcpy( &record->buffer[bufferOffset], text, txtSz );
+
+				record->buffer[bufferOffset+txtSz] = 0;
+
+				field->setSize( txtSz + 1 );
+
+				bufferOffset += field->getSize();
+			}
+			break;
+
+			case dftUnicodeString : {
+				
+			}
+			break;
+
+			case dftFloat : {
+				double res = 0.0;
+
+				memcpy( &record->buffer[bufferOffset], &res, sizeof(res) );
+
+				bufferOffset += field->getSize();
+			}
+			break;
+			
+			case dftWord : case dftSmallint : case dftInteger : {
+				int res = 0;
+
+				memcpy( &record->buffer[bufferOffset], &res, sizeof(res) );
+
+				bufferOffset += field->getSize();
+			}
+			break;
+		}
+	}
 }
 
 void SQLiteDataSet::closeHandle()
@@ -569,11 +645,16 @@ bool SQLiteDataSet::getFieldData( DataField* field, unsigned char* buffer, size_
 			//through all the bytes and see if they are all zeroed out.
 			//this is potentiall kind of stupid, so maybe there is a better
 			//way???
-			for (int i=0;i<field->getSize();i++ ) {
-				if ( record->buffer[bufferOffset+i] > 0 ) {
-					result = true;
-					break;
+			if ( dftString == field->getDataType() ) {
+				for (int i=0;i<field->getSize();i++ ) {
+					if ( record->buffer[bufferOffset+i] > 0 ) {
+						result = true;
+						break;
+					}
 				}
+			}
+			else {
+				result = true;
 			}
 			
 			break;
@@ -613,12 +694,15 @@ void SQLiteDataSet::setFieldData( DataField* field, const unsigned char* buffer,
 		
 				setRecordData( record, bufferOffset, i, buffer, bufferSize );
 
-				if ( !( (state_ & dssCalcFields) || (state_ & dssFilter) /*|| (state_ & dssNewValue)*/ ) ) {
+				if ( !( (state_ == dssCalcFields) || (state_ == dssFilter) /*|| (state_ & dssNewValue)*/ ) ) {
 					Event e(field,deFieldChange);
 					e.setUserData(this);
 					handleDataEvent(&e);
 				}
 				break;
+			}
+			else {
+				bufferOffset += aField->getSize();
 			}
 		}
 	}
@@ -681,11 +765,6 @@ void SQLiteDataSet::internal_post()
 		sqlite3* dbHandle = getHandle();
 
 
-		//if ( SQLITE_OK != sqlite3_exec( dbHandle, "begin transaction;", NULL,0,NULL ) ) {
-		//	throw DatabaseError(SQLiteDatabase::errorMessageFromHandle(dbHandle));
-		//}
-
-
 		sqlite3_stmt *updateStmt = NULL;
 		res = sqlite3_prepare( dbHandle, sql.c_str(), sql.length(), &updateStmt, &tail );
 
@@ -738,12 +817,6 @@ void SQLiteDataSet::internal_post()
 		res = sqlite3_step( updateStmt );
 
 		sqlite3_finalize( updateStmt );
-		
-
-		//if ( SQLITE_OK != sqlite3_exec( dbHandle, "commit transaction;", NULL,0,NULL ) ) {
-		//	throw DatabaseError(SQLiteDatabase::errorMessageFromHandle(dbHandle));
-		//}
-		
 
 		switch ( res ) {
 			case SQLITE_MISUSE : case SQLITE_ERROR : {
@@ -756,6 +829,81 @@ void SQLiteDataSet::internal_post()
 	}
 	else if ( dssInsert == state_ ) {
 		//add a new rec here!
+
+		String insertSQL = "insert into " + tableName + " ";		
+
+		if ( !fields_->empty() ) {
+			insertSQL += "( ";
+		}
+		std::vector<DataField*>::iterator it = fields_->begin();
+		while ( it != fields_->end() ) {
+			DataField* field = *it;
+
+			if ( it != fields_->begin() ) {
+				insertSQL += ", ";
+			}	
+
+			insertSQL += field->getName();
+
+			++it;
+		}
+
+		if ( !fields_->empty() ) {
+			insertSQL += " ) ";
+		}
+
+		insertSQL += "values (";
+
+		it = fields_->begin();
+		while ( it != fields_->end() ) {
+			DataField* field = *it;
+
+			if ( it != fields_->begin() ) {
+				insertSQL += ", ";
+			}	
+
+			if ( field->isStringType() ) {
+				insertSQL += "'";
+				insertSQL += field->getAsString();
+				insertSQL += "'";
+			}
+			else {
+				insertSQL += field->getAsString();
+			}
+
+			++it;
+		}
+
+		insertSQL += " );";
+
+
+		int res = 0;
+		AnsiString sql = insertSQL;
+		const char* tail=0;
+		sqlite3* dbHandle = getHandle();
+
+
+		sqlite3_stmt *insertStmt = NULL;
+		res = sqlite3_prepare( dbHandle, sql.c_str(), sql.length(), &insertStmt, &tail );
+
+		if ( res != SQLITE_OK ) {
+			sqlite3_finalize(insertStmt);
+			throw DatabaseError(SQLiteDatabase::errorMessageFromHandle(dbHandle));
+		}
+
+
+
+		res = sqlite3_step( insertStmt );
+
+		sqlite3_finalize( insertStmt );
+
+		switch ( res ) {
+			case SQLITE_MISUSE : case SQLITE_ERROR : {
+				throw DatabaseError( Format("Error executing SQL. Error returned was %s.") % 
+										SQLiteDatabase::errorMessageFromHandle(dbHandle) );
+			}
+			break;
+		}
 	}
 	else {
 		throw DatabaseError("Dataset not in edit or insert mode!");
@@ -774,6 +922,8 @@ void SQLiteDataSet::internal_refresh()
 
 void SQLiteDataSet::internal_edit()
 {
+	if ( dssEdit == state_ ) {
+
 	updateWhereClause_ = "where ";
 	std::vector<DataField*>::iterator it = fields_->begin();
 	while ( it != fields_->end() ) {
@@ -800,5 +950,9 @@ void SQLiteDataSet::internal_edit()
 		}
 
 		++it;
+	}
+	}
+	else if ( dssInsert == state_ ) {
+
 	}
 }
