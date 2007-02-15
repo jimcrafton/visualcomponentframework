@@ -64,6 +64,8 @@ namespace VCF {
 
 		virtual void internal_next();
 
+		virtual void internal_initNewRecord( Record* record );
+
 		virtual Record* allocateRecordData();
 
 		virtual bool isCursorOpen();

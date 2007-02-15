@@ -256,11 +256,11 @@ int main( int argc, char** argv ){
 
 				dataSet->edit();				
 
-				String lastName = "Woofer";
+				String lastName = "Teledildonics";
 				System::println( "Changing LastName field to \"" + lastName + "\"..." ); 
 				dataSet->fieldByName("LastName")->setAsString(lastName);
 
-				dataSet->post();
+				//dataSet->post();
 
 				dataSet->first();
 
@@ -270,6 +270,18 @@ int main( int argc, char** argv ){
 				System::println( "Error: " + e.getMessage() );
 			}
 
+			System::println( "------------------------------------------------------------------------------" );
+
+			System::println( "Test insert." );
+			try {			
+
+				dataSet->appendRecord();
+
+				dataSet->refresh();
+			}
+			catch (BasicException& e ) {
+				System::println( "Error: " + e.getMessage() );
+			}
 
 			System::println( "------------------------------------------------------------------------------" );
 

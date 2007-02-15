@@ -346,6 +346,8 @@ namespace VCF {
 
 		virtual void internal_edit() = 0;
 
+		virtual void internal_initNewRecord( Record* record ) = 0;
+
 		virtual GetResultType getRecord( Record* record, GetRecordMode mode ) = 0;		
 
 		virtual Record* allocateRecordData() = 0;
@@ -357,6 +359,10 @@ namespace VCF {
 		virtual void closeCursor();
 
 		virtual void resync( int mode );
+
+		virtual void handleNewRecord();
+
+		virtual void initNewRecord( Record* record );
 
 		void openData();
 
@@ -384,6 +390,12 @@ namespace VCF {
 		void checkRequiredFields();
 
 		void setRecordData( Record* record, size_t offset, size_t column, const unsigned char* buffer, size_t bufferSize );
+
+		void beginNewRecord();
+
+		void endNewRecord();
+
+		
 
 		bool active_;
         Database* db_;
@@ -420,3 +432,4 @@ namespace VCF {
 };
 
 #endif  //_VCF_DATASET_H__
+

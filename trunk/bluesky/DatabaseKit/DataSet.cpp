@@ -241,7 +241,7 @@ void DataSet::handleDataEvent( Event* e )
 				modified_ = true;	
 			}
 
-			if ( this->state_ != dssSetKey ) {
+			if ( state_ != dssSetKey ) {
 				if ( field->getKind() == fkData ) {
 					//if we internally calc fields, then recalc them now...
 				}
@@ -253,7 +253,7 @@ void DataSet::handleDataEvent( Event* e )
 		break;
 
 		case dePropertyChange : {
-			this->fieldDefs_->setUpdated(false);
+			fieldDefs_->setUpdated(false);
 		}
 		break;
 	}
@@ -294,7 +294,7 @@ void DataSet::checkMode( CheckModeState mode )
 					updateRecord();
 
 					if ( isModified() ) {
-						this->post();
+						post();
 					}
 					else {
 						cancel();
@@ -407,7 +407,7 @@ void DataSet::refresh()
 {
 	checkMode( cmsBrowse );
 	
-	this->internal_refresh();
+	internal_refresh();
 
 	resync(0);
 }
@@ -443,9 +443,88 @@ void DataSet::edit()
 	}
 }
 
+void DataSet::beginNewRecord()
+{
+	checkMode( cmsBrowse );
+
+	if ( !canModify_ ) {
+		throw DatabaseError( "Can't modify, the Dataset is in read-only mode." );
+	}
+
+	Event e1(this,0);
+	BeforeInsert.fireEvent(&e1);
+
+	Event e2(this,0);
+	BeforeScroll.fireEvent(&e2);
+}
+
+void DataSet::endNewRecord()
+{
+	setState( dssInsert );
+
+	try {
+		handleNewRecord();
+	}
+	catch (...) {
+		//update cursor pos???
+		freeFieldBuffers();
+
+		setState( dssBrowse );
+
+		resync(0);
+		throw;
+	}
+
+	modified_ = false;
+
+	Event e1(this,deDataSetChange);
+	handleDataEvent( &e1 );
+
+	Event e2(this,0);
+	AfterInsert.fireEvent(&e2);
+
+	Event e3(this,0);
+	AfterScroll.fireEvent(&e3);
+}
+
+void DataSet::handleNewRecord()
+{
+	Event e1(this,0);
+	NewRecord.fireEvent(&e1);	
+}
+
+void DataSet::initNewRecord( Record* record )
+{
+	VCF_ASSERT( NULL != record );
+	
+	internal_initNewRecord( record );
+
+	//clear calc fields
+	//bookmark this inserted rec!
+}
+
 void DataSet::appendRecord()
 {
+	beginNewRecord();
 
+	VCF_ASSERT( activeRecordIndex_ != DataSet::NoRecPos );
+
+	Record* record = records_[ activeRecordIndex_ ];
+
+	initNewRecord( record );	
+
+	if ( this->recordCount_ == 0 ) {
+
+	}
+	else {
+
+	}
+
+	if ( this->recordCount_ < this->records_.size() ) {
+		this->recordCount_ ++;
+	}
+
+	endNewRecord();
 }
 
 void DataSet::deleteRecord()
