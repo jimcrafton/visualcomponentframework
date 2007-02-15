@@ -2,9 +2,10 @@
 
 #include "DatabaseKit.h"
 
-/*
+
 #include "SQLite3Kit.h"
 
+/*
 
 
 
@@ -257,6 +258,7 @@ int main( int argc, char** argv ){
 				dataSet->edit();				
 
 				String lastName = "Teledildonics";
+
 				System::println( "Changing LastName field to \"" + lastName + "\"..." ); 
 				dataSet->fieldByName("LastName")->setAsString(lastName);
 
@@ -276,6 +278,10 @@ int main( int argc, char** argv ){
 			try {			
 
 				dataSet->appendRecord();
+				dataSet->fieldByName("LastName")->setAsString("AAA");
+				dataSet->fieldByName("FirstName")->setAsString("BBB");
+				dataSet->fieldByName("Address")->setAsString("CCC");
+				dataSet->fieldByName("Age")->setAsInteger(66);
 
 				dataSet->refresh();
 			}
@@ -298,6 +304,24 @@ int main( int argc, char** argv ){
 		delete dataSet;
 
 	}
+
+
+/*
+	{
+		try {
+		Test::DB db;
+		db.open("test.db3");
+		
+		Test::ResultSet rs = db.execSQLWithResults("update Person2 set LastName = ?, FirstName = ?, Address = ?, Age = ? where LastName like 'ddggf' and FirstName like 'Jones' and Address like '2012 fillibuster ave' and Age like 40;");
+		rs[1] = "Spaz";
+		rs.next();
+		}
+		catch (	std::exception& e ) {
+			printf( "Err: %s\n", e.what() ) ;
+		}
+	}
+*/
+
 
 
 

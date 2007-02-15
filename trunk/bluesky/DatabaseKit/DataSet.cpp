@@ -475,7 +475,7 @@ void DataSet::endNewRecord()
 		throw;
 	}
 
-	modified_ = false;
+	modified_ = false; //??? which is right???
 
 	Event e1(this,deDataSetChange);
 	handleDataEvent( &e1 );

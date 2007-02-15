@@ -509,7 +509,7 @@ void ADODataSet::setFieldData( DataField* field, const unsigned char* buffer, si
 		
 				setRecordData( record, bufferOffset, i, buffer, bufferSize );
 
-				if ( !( (state_ & dssCalcFields) || (state_ & dssFilter) /*|| (state_ & dssNewValue)*/ ) ) {
+				if ( !( (state_ == dssCalcFields) || (state_ == dssFilter) /*|| (state_ & dssNewValue)*/ ) ) {
 					Event e(field,deFieldChange);
 					e.setUserData(this);
 					handleDataEvent(&e);
