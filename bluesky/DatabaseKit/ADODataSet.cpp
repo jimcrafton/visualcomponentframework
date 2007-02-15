@@ -570,3 +570,8 @@ void ADODataSet::internal_edit()
 {
 
 }
+
+void ADODataSet::internal_initNewRecord( Record* record )
+{
+
+}
