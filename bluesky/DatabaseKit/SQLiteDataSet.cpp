@@ -90,7 +90,10 @@ void SQLiteDataSet::internal_open()
 		AnsiString sql = generateSQL();
 		const char* tail=0;
 		sqlite3* dbHandle = getHandle();
-		int res = sqlite3_prepare(dbHandle, sql.c_str(), sql.size(), &currentStmt_, &tail );
+
+		printf( "Executing sql: \n\t\"%s\"\n", sql.c_str() );
+
+		int res = sqlite3_prepare_v2(dbHandle, sql.c_str(), sql.size(), &currentStmt_, &tail );
 
 		if ( res != SQLITE_OK ) {
 			sqlite3_finalize(currentStmt_);
@@ -241,7 +244,8 @@ void SQLiteDataSet::internal_initFieldDefinitions()
 
 	sqlite3_stmt* stmt;
 	const char* tail=0;
-	int res = sqlite3_prepare(dbHandle, sql.c_str(), sql.size(), &stmt, &tail );
+	printf( "Executing sql: \n\t\"%s\"\n", sql.c_str() );
+	int res = sqlite3_prepare_v2(dbHandle, sql.c_str(), sql.size(), &stmt, &tail );
 
 	if ( res != SQLITE_OK ) {
 		sqlite3_finalize(stmt);
@@ -399,7 +403,8 @@ void SQLiteDataSet::internal_first()
 
 	const char* tail=0;
 	sqlite3* dbHandle = getHandle();
-	int res = sqlite3_prepare(dbHandle, sql.c_str(), sql.size(), &currentStmt_, &tail );
+	printf( "Executing sql: \n\t\"%s\"\n", sql.c_str() );
+	int res = sqlite3_prepare_v2(dbHandle, sql.c_str(), sql.size(), &currentStmt_, &tail );
 
 	if ( res != SQLITE_OK ) {
 		sqlite3_finalize(currentStmt_);
@@ -742,17 +747,26 @@ void SQLiteDataSet::internal_post()
 		while ( it != fields_->end() ) {
 			DataField* field = *it;
 
+			//note the sqlite3_bind API's don't seem to work right
+
 			if ( it != fields_->begin() ) {
 				updateSQL += ", ";
 			}	
 
-			updateSQL += field->getName() + " = ? ";
+			updateSQL += field->getName() + " = ";
+
+			if ( field->isStringType() ){
+				updateSQL += "'" + field->getAsString() + "' ";
+			}
+			else {
+				updateSQL += field->getAsString() + " ";
+			}
 
 			++it;
 		}
 
 		
-		sqlite3_reset( currentStmt_ );
+		
 
 
 		updateSQL += updateWhereClause_;
@@ -766,54 +780,15 @@ void SQLiteDataSet::internal_post()
 
 
 		sqlite3_stmt *updateStmt = NULL;
-		res = sqlite3_prepare( dbHandle, sql.c_str(), sql.length(), &updateStmt, &tail );
+		printf( "Executing sql: \n\t\"%s\"\n", sql.c_str() );
+		res = sqlite3_prepare_v2( dbHandle, sql.c_str(), sql.length(), &updateStmt, &tail );
 
 		if ( res != SQLITE_OK ) {
 			sqlite3_finalize(updateStmt);
 			throw DatabaseError(SQLiteDatabase::errorMessageFromHandle(dbHandle));
 		}
 
-		it = fields_->begin();
-
-		while ( it != fields_->end() ) {
-			DataField* field = *it;
-			switch ( field->getDataType() ) {
-				case dftString : {
-					const char* text = (const char*)&record->buffer[bufferOffset];
-
-					//Note - it might be more efficient at some point to see if there
-					//is a way to use SQLITE_STATIC here...
-					res = sqlite3_bind_text( updateStmt, colIndex, text, field->getSize(), SQLITE_TRANSIENT );
-				}
-				break;
-
-				case dftFloat : {
-					double val = 0;
-					memcpy( &val, &record->buffer[bufferOffset], field->getSize() );
-					res = sqlite3_bind_double( updateStmt, colIndex, val );
-				}
-				break;
-
-				case dftWord : case dftSmallint : case dftInteger : {
-					int val = 0;
-					memcpy( &val, &record->buffer[bufferOffset], field->getSize() );
-					res = sqlite3_bind_int( updateStmt, colIndex, val );
-				}
-				break;
-			}
-
-			if ( res != SQLITE_OK ) {
-				throw DatabaseError( Format("Error binding field \"%s\" data to sql statement. Error returned was %s.") % 
-										field->getName() % 
-										SQLiteDatabase::errorMessageFromHandle(dbHandle) );
-			}
-			bufferOffset += field->getSize();
-			colIndex++;
-			++it;
-		}
-
-		VCF_ASSERT( bufferOffset == record->size );
-
+	
 		res = sqlite3_step( updateStmt );
 
 		sqlite3_finalize( updateStmt );
@@ -826,6 +801,7 @@ void SQLiteDataSet::internal_post()
 			break;
 		}
 
+		internal_first();
 	}
 	else if ( dssInsert == state_ ) {
 		//add a new rec here!
@@ -874,7 +850,7 @@ void SQLiteDataSet::internal_post()
 			++it;
 		}
 
-		insertSQL += " );";
+		insertSQL += " );";		
 
 
 		int res = 0;
@@ -884,7 +860,8 @@ void SQLiteDataSet::internal_post()
 
 
 		sqlite3_stmt *insertStmt = NULL;
-		res = sqlite3_prepare( dbHandle, sql.c_str(), sql.length(), &insertStmt, &tail );
+		printf( "Executing sql: \n\t\"%s\"\n", sql.c_str() );
+		res = sqlite3_prepare_v2( dbHandle, sql.c_str(), sql.length(), &insertStmt, &tail );
 
 		if ( res != SQLITE_OK ) {
 			sqlite3_finalize(insertStmt);
@@ -904,6 +881,8 @@ void SQLiteDataSet::internal_post()
 			}
 			break;
 		}
+
+		internal_first();
 	}
 	else {
 		throw DatabaseError("Dataset not in edit or insert mode!");
@@ -921,9 +900,7 @@ void SQLiteDataSet::internal_refresh()
 }
 
 void SQLiteDataSet::internal_edit()
-{
-	if ( dssEdit == state_ ) {
-
+{	
 	updateWhereClause_ = "where ";
 	std::vector<DataField*>::iterator it = fields_->begin();
 	while ( it != fields_->end() ) {
@@ -936,7 +913,7 @@ void SQLiteDataSet::internal_edit()
 			}	
 			
 			
-			updateWhereClause_ += field->getName() + " like ";
+			updateWhereClause_ += field->getName() + " = ";
 			
 			if ( field->isStringType() ) {
 				updateWhereClause_ += "'";
@@ -950,9 +927,5 @@ void SQLiteDataSet::internal_edit()
 		}
 
 		++it;
-	}
-	}
-	else if ( dssInsert == state_ ) {
-
-	}
+	}	
 }
