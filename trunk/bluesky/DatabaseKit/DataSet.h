@@ -395,7 +395,7 @@ namespace VCF {
 
 		void endNewRecord();
 
-		
+		virtual void destroy();
 
 		bool active_;
         Database* db_;

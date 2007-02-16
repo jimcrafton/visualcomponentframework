@@ -17,7 +17,8 @@ DataSet::DataSet()
 	recordCount_(0),
 	activeRecordIndex_(DataSet::NoRecPos),
 	currentRecordIndex_(DataSet::NoRecPos),
-	locale_(NULL)
+	locale_(NULL),
+	db_(NULL)
 {
 	fieldDefs_ = new FieldDefinitions(); 
 	fieldDefs_->setDataSet( this );
@@ -26,6 +27,14 @@ DataSet::DataSet()
 }
 
 DataSet::~DataSet()
+{
+	VCF_ASSERT( dataSources_.empty() );
+	VCF_ASSERT( NULL == locale_ );
+	VCF_ASSERT( NULL == fieldDefs_ );
+	VCF_ASSERT( dssInactive == state_ );	
+}
+
+void DataSet::destroy()
 {
 	close();
 	
@@ -36,8 +45,13 @@ DataSet::~DataSet()
 	deleteFields();
 
 	delete fieldDefs_;
+	fieldDefs_ = NULL;
+
 
 	delete locale_;
+	locale_ = NULL;	
+
+	state_ = dssInactive;
 }
 
 void DataSet::setDatabase( Database* db )
@@ -612,7 +626,7 @@ void DataSet::openCursor( bool query )
 
 void DataSet::closeCursor()
 {
-
+	internal_close();
 }
 
 void DataSet::openData()

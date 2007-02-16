@@ -257,14 +257,12 @@ int main( int argc, char** argv ){
 
 				dataSet->edit();				
 
-				String lastName = "Teledildonics";
+				String lastName = "Phelps";
 
 				System::println( "Changing LastName field to \"" + lastName + "\"..." ); 
 				dataSet->fieldByName("LastName")->setAsString(lastName);
 
-				//dataSet->post();
-
-				dataSet->first();
+				dataSet->refresh();
 
 				System::println( "After the post(), the first record's LastName: " + dataSet->fieldByName("LastName")->getAsString() );
 			}
@@ -278,10 +276,10 @@ int main( int argc, char** argv ){
 			try {			
 
 				dataSet->appendRecord();
-				dataSet->fieldByName("LastName")->setAsString("AAA");
-				dataSet->fieldByName("FirstName")->setAsString("BBB");
-				dataSet->fieldByName("Address")->setAsString("CCC");
-				dataSet->fieldByName("Age")->setAsInteger(66);
+				dataSet->fieldByName("LastName")->setAsString("fff");
+				dataSet->fieldByName("FirstName")->setAsString("234324");
+				dataSet->fieldByName("Address")->setAsString("dsww");
+				dataSet->fieldByName("Age")->setAsInteger(88);
 
 				dataSet->refresh();
 			}
@@ -301,7 +299,7 @@ int main( int argc, char** argv ){
 		dbSrc->free();
 
 
-		delete dataSet;
+		dataSet->free();
 
 	}
 
