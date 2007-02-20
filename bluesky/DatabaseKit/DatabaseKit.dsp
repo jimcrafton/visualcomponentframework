@@ -204,6 +204,14 @@ SOURCE=.\SQLiteDatabase.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\SQLiteDataSet.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SQLiteDataSet.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DBProviders\sqlite\table.c
 # End Source File
 # Begin Source File
@@ -317,10 +325,6 @@ SOURCE=.\FieldDefinitions.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\SQLiteDataSet.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\StringList.h
 # End Source File
 # Begin Source File
@@ -366,10 +370,6 @@ SOURCE=.\DataSource.cpp
 # Begin Source File
 
 SOURCE=.\FieldDefinitions.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SQLiteDataSet.cpp
 # End Source File
 # Begin Source File
 

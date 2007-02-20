@@ -93,6 +93,8 @@ DatabaseKit layer:			0.00148251 seconds
 Delphi 3 BDE based layer:	0.00223283 seconds
 
 Time was determined using the Win32 QueryPerformanceXXX API's
+
+
 */
 
 
@@ -141,7 +143,7 @@ int main( int argc, char** argv ){
 		DataSet* dataSet = DatabaseToolkit::createDataSet( "SQLiteType" );
 
 		dataSet->setParam( "databasename", "test.db3" );
-		dataSet->setParam( "tablename", "Person2" );
+		dataSet->setParam( "tablename", "Person" );
 
 
 
@@ -189,6 +191,7 @@ int main( int argc, char** argv ){
 					
 					while ( fields->hasMoreElements() ) {
 						DataField* field = fields->nextElement();
+						//String s = "Field name: " + field->getName() + " value: " + field->getAsString();
 						System::println( "Field name: " + field->getName() + " value: " + field->getAsString() );
 					}
 					dataSet->next();
@@ -251,18 +254,18 @@ int main( int argc, char** argv ){
 			catch (BasicException& e ) {
 				System::println( "Error: " + e.getMessage() );
 			}
-
+/*
 			System::println( "Test edit - this should NOT error out because we are in edit mode." );
 			try {			
 
 				dataSet->edit();				
 
-				String lastName = "Phelps";
+				String lastName = "Sombrerovich";
 
 				System::println( "Changing LastName field to \"" + lastName + "\"..." ); 
 				dataSet->fieldByName("LastName")->setAsString(lastName);
 
-				dataSet->refresh();
+				dataSet->first();
 
 				System::println( "After the post(), the first record's LastName: " + dataSet->fieldByName("LastName")->getAsString() );
 			}
@@ -287,9 +290,22 @@ int main( int argc, char** argv ){
 				System::println( "Error: " + e.getMessage() );
 			}
 
+
+			System::println( "Test delete." );
+			try {			
+
+				dataSet->first();
+				dataSet->deleteRecord();
+
+				dataSet->refresh();
+			}
+			catch (BasicException& e ) {
+				System::println( "Error: " + e.getMessage() );
+			}
+
 			System::println( "------------------------------------------------------------------------------" );
 
-
+*/
 		}
 		catch ( BasicException& e ) {
 			System::println( "Exception: " + e.getMessage() );

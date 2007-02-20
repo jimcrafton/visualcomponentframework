@@ -489,7 +489,7 @@ void DataSet::endNewRecord()
 		throw;
 	}
 
-	modified_ = false; //??? which is right???
+	modified_ = false;
 
 	Event e1(this,deDataSetChange);
 	handleDataEvent( &e1 );
@@ -527,15 +527,15 @@ void DataSet::appendRecord()
 
 	initNewRecord( record );	
 
-	if ( this->recordCount_ == 0 ) {
+	if ( recordCount_ == 0 ) {
 
 	}
 	else {
 
 	}
 
-	if ( this->recordCount_ < this->records_.size() ) {
-		this->recordCount_ ++;
+	if ( recordCount_ < records_.size() ) {
+		recordCount_ ++;
 	}
 
 	endNewRecord();
@@ -543,7 +543,38 @@ void DataSet::appendRecord()
 
 void DataSet::deleteRecord()
 {
+	checkMode( cmsActive );
 
+	if ( (state_ == dssSetKey) || (state_ == dssInsert) ) {
+		cancel();
+	}
+	else {
+		if ( 0 == recordCount_ ) {
+			throw DatabaseError( "Can't delete from an empty dataset." );
+		}
+
+		Event e(this,deCheckBrowseMode);
+		handleDataEvent(&e);
+
+		Event e1(this,0);
+		BeforeDelete.fireEvent( &e1 );
+
+		Event e2(this,0);
+		BeforeScroll.fireEvent( &e2 );
+
+		internal_delete();
+
+		freeFieldBuffers();
+		setState( dssBrowse );
+		resync( 0 );
+
+		Event e3(this,0);
+		AfterDelete.fireEvent( &e3 );
+
+		Event e4(this,0);
+		AfterScroll.fireEvent( &e4 );
+
+	}
 }
 
 void DataSet::checkRequiredFields()
@@ -611,7 +642,27 @@ void DataSet::post()
 
 void DataSet::cancel()
 {
+	if ( (state_ == dssEdit) || (state_ == dssInsert) ) {
+		Event e(this,deCheckBrowseMode);
+		handleDataEvent(&e);
 
+		Event e1(this,0);
+		BeforeCancel.fireEvent( &e1 );
+
+		//update cursor pos/????
+		
+		if ( state_ == dssEdit ) {
+			internal_cancel();
+		}
+
+		freeFieldBuffers();
+		setState( dssBrowse );
+		resync(0);
+
+
+		Event e2(this,0);
+		AfterCancel.fireEvent( &e2 );
+	}
 }
 
 void DataSet::openCursor( bool query )

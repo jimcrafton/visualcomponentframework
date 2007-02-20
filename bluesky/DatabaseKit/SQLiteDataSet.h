@@ -52,6 +52,10 @@ namespace VCF {
 
 		virtual void internal_edit();
 
+		virtual void internal_delete();
+
+		virtual void internal_cancel();
+
 		virtual void internal_initNewRecord( Record* record );
 		
 		virtual GetResultType getRecord( Record* record, GetRecordMode mode );

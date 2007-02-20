@@ -575,3 +575,13 @@ void ADODataSet::internal_initNewRecord( Record* record )
 {
 
 }
+
+void ADODataSet::internal_delete()
+{
+
+}
+
+void ADODataSet::internal_cancel()
+{
+
+}
