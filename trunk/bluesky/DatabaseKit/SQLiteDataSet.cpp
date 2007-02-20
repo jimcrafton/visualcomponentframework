@@ -91,8 +91,7 @@ void SQLiteDataSet::internal_open()
 		const char* tail=0;
 		sqlite3* dbHandle = getHandle();
 
-		printf( "Executing sql: \n\t\"%s\"\n", sql.c_str() );
-
+		
 		int res = sqlite3_prepare_v2(dbHandle, sql.c_str(), sql.size(), &currentStmt_, &tail );
 
 		if ( res != SQLITE_OK ) {
@@ -235,7 +234,7 @@ void SQLiteDataSet::internal_initFieldDefinitions()
 	----------------------------------------------------
 	*/
 
-	AnsiString sql = (String)(Format("pragma table_info(%s);") % tableName);
+	AnsiString sql = (String)(Format("PRAGMA TABLE_INFO(%s);") % tableName);
 
 	size_t colCount = 0;
 
@@ -244,7 +243,7 @@ void SQLiteDataSet::internal_initFieldDefinitions()
 
 	sqlite3_stmt* stmt;
 	const char* tail=0;
-	printf( "Executing sql: \n\t\"%s\"\n", sql.c_str() );
+	
 	int res = sqlite3_prepare_v2(dbHandle, sql.c_str(), sql.size(), &stmt, &tail );
 
 	if ( res != SQLITE_OK ) {
@@ -403,7 +402,7 @@ void SQLiteDataSet::internal_first()
 
 	const char* tail=0;
 	sqlite3* dbHandle = getHandle();
-	printf( "Executing sql: \n\t\"%s\"\n", sql.c_str() );
+	
 	int res = sqlite3_prepare_v2(dbHandle, sql.c_str(), sql.size(), &currentStmt_, &tail );
 
 	if ( res != SQLITE_OK ) {
@@ -595,7 +594,7 @@ AnsiString SQLiteDataSet::generateSQL()
 
 	sqlite3* dbHandle = getHandle();
 
-	result += "select ";
+	result += "SELECT ";
 	for ( size_t i=0;i<fields_->size();i++ ) {
 		DataField* field = fields_()[i];
 		if ( i > 0 ) {
@@ -604,7 +603,7 @@ AnsiString SQLiteDataSet::generateSQL()
 		result += field->getName();
 	}
 
-	result += " from ";
+	result += " FROM ";
 
 	result += tableName;
 
@@ -740,8 +739,8 @@ void SQLiteDataSet::internal_post()
 		String updateSQL;
 
 		
-		updateSQL = "update ";
-		updateSQL += tableName + " set ";
+		updateSQL = "UPDATE ";
+		updateSQL += tableName + " SET ";
 
 		std::vector<DataField*>::iterator it = fields_->begin();
 		while ( it != fields_->end() ) {
@@ -780,7 +779,7 @@ void SQLiteDataSet::internal_post()
 
 
 		sqlite3_stmt *updateStmt = NULL;
-		printf( "Executing sql: \n\t\"%s\"\n", sql.c_str() );
+		
 		res = sqlite3_prepare_v2( dbHandle, sql.c_str(), sql.length(), &updateStmt, &tail );
 
 		if ( res != SQLITE_OK ) {
@@ -806,7 +805,7 @@ void SQLiteDataSet::internal_post()
 	else if ( dssInsert == state_ ) {
 		//add a new rec here!
 
-		String insertSQL = "insert into " + tableName + " ";		
+		String insertSQL = "INSERT INTO " + tableName + " ";		
 
 		if ( !fields_->empty() ) {
 			insertSQL += "( ";
@@ -828,7 +827,7 @@ void SQLiteDataSet::internal_post()
 			insertSQL += " ) ";
 		}
 
-		insertSQL += "values (";
+		insertSQL += "VALUES (";
 
 		it = fields_->begin();
 		while ( it != fields_->end() ) {
@@ -860,7 +859,7 @@ void SQLiteDataSet::internal_post()
 
 
 		sqlite3_stmt *insertStmt = NULL;
-		printf( "Executing sql: \n\t\"%s\"\n", sql.c_str() );
+		
 		res = sqlite3_prepare_v2( dbHandle, sql.c_str(), sql.length(), &insertStmt, &tail );
 
 		if ( res != SQLITE_OK ) {
@@ -901,7 +900,7 @@ void SQLiteDataSet::internal_refresh()
 
 void SQLiteDataSet::internal_edit()
 {	
-	updateWhereClause_ = "where ";
+	updateWhereClause_ = "WHERE ";
 	std::vector<DataField*>::iterator it = fields_->begin();
 	while ( it != fields_->end() ) {
 		DataField* field = *it;
@@ -909,7 +908,7 @@ void SQLiteDataSet::internal_edit()
 		if ( !field->isBinaryType() ) {
 
 			if ( it != fields_->begin() ) {
-				updateWhereClause_ += " and ";
+				updateWhereClause_ += " AND ";
 			}	
 			
 			
@@ -928,4 +927,77 @@ void SQLiteDataSet::internal_edit()
 
 		++it;
 	}	
+}
+
+void SQLiteDataSet::internal_delete()
+{
+	String tableName = getTableName();
+
+	if ( tableName.empty() ) {
+		throw DatabaseError("No Table Name specified, unable to generate SQL statement!");
+	}
+
+
+	String deleteSql = "DELETE FROM " + tableName + " WHERE ";		
+
+	std::vector<DataField*>::iterator it = fields_->begin();
+	while ( it != fields_->end() ) {
+		DataField* field = *it;
+
+		if ( !field->isBinaryType() ) {
+
+			if ( it != fields_->begin() ) {
+				deleteSql += " AND ";
+			}	
+			
+			
+			deleteSql += field->getName() + " = ";
+			
+			if ( field->isStringType() ) {
+				deleteSql += "'";
+			}
+
+			deleteSql += field->getAsString();
+
+			if ( field->isStringType() ) {
+				deleteSql += "'";
+			}
+		}
+
+		++it;
+	}
+
+	int res = 0;
+	AnsiString sql = deleteSql;
+	const char* tail=0;
+	sqlite3* dbHandle = getHandle();
+
+
+	sqlite3_stmt *deleteStmt = NULL;
+	
+	res = sqlite3_prepare_v2( dbHandle, sql.c_str(), sql.length(), &deleteStmt, &tail );
+
+	if ( res != SQLITE_OK ) {
+		sqlite3_finalize(deleteStmt);
+		throw DatabaseError(SQLiteDatabase::errorMessageFromHandle(dbHandle));
+	}
+
+
+
+	res = sqlite3_step( deleteStmt );
+
+	sqlite3_finalize( deleteStmt );
+
+	switch ( res ) {
+		case SQLITE_MISUSE : case SQLITE_ERROR : {
+			throw DatabaseError( Format("Error executing SQL. Error returned was %s.") % 
+									SQLiteDatabase::errorMessageFromHandle(dbHandle) );
+		}
+		break;
+	}
+}
+
+void SQLiteDataSet::internal_cancel()
+{
+		
 }
