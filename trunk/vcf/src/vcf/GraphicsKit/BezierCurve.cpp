@@ -31,7 +31,7 @@ void BezierCurve::applyTransform( const Matrix2D& transform )
 	while ( it != points_.end() ) {
 		PathPoint& pt = *it;
 
-		transform.apply( &pt.point_ );
+		transform.apply( pt.point_.x_, pt.point_.y_ );
 
 		it ++;
 	}
