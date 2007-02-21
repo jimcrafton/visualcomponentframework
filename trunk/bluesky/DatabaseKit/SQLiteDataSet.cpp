@@ -938,7 +938,8 @@ void SQLiteDataSet::internal_delete()
 	}
 
 
-	String deleteSql = "DELETE FROM " + tableName + " WHERE ";		
+	String deleteSql = "DELETE FROM " + tableName + " WHERE oid = (SELECT oid FROM " + 
+						tableName + " WHERE ";		
 
 	std::vector<DataField*>::iterator it = fields_->begin();
 	while ( it != fields_->end() ) {
@@ -966,6 +967,8 @@ void SQLiteDataSet::internal_delete()
 
 		++it;
 	}
+
+	deleteSql += "LIMIT 1);";
 
 	int res = 0;
 	AnsiString sql = deleteSql;
