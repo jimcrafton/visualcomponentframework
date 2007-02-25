@@ -50,6 +50,8 @@ namespace VCF {
 
 		size_t getRecordCount();
 
+		void setRecordCount( size_t val );
+
 
 		void setDataSource( DataSource* val );
 
@@ -87,12 +89,16 @@ namespace VCF {
 
 		friend class DataSource;
 	protected:
+
+		virtual void destroy();
+
 		DataSource* dataSource_;
 		bool dataSrcFixed_;
 		bool active_;
 		bool editing_;
 		bool readOnly_;
 		bool updating_;
+		size_t recordCount_;
 
 	};
 
@@ -102,6 +108,36 @@ namespace VCF {
 	public:
 		FieldDataLink();
 
+		DELEGATE(DataChange);
+		DELEGATE(EditingChange);
+		DELEGATE(UpdatedData);
+		DELEGATE(ActiveChange);
+
+		virtual void recordChanged( DataField* field );
+
+		virtual void updateData();
+
+		virtual void activeStateChanged();
+
+		virtual void editingStateChanged();
+
+		DataField* getField();
+
+		void setField( DataField* val );
+
+		bool isModifiable();
+
+		String getFieldName() {
+			return fieldName_;
+		}
+
+		void setFieldName( const String& val );
+	protected:
+		bool modified_;
+		DataField* field_;
+		String fieldName_;
+
+		void updateField();
 	};
 
 };

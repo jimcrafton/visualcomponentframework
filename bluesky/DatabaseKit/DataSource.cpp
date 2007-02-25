@@ -119,7 +119,9 @@ void DataSource::notifyDataLinks( Event* e )
 		DataLink* dataLink = *it;
 		//if buffer/record count == 1
 
-		dataLink->handleDataEvent( e );
+		if ( dataLink->recordCount_ == 1 ) {
+			dataLink->handleDataEvent( e );
+		}
 
 		++ it;
 	}
@@ -129,7 +131,9 @@ void DataSource::notifyDataLinks( Event* e )
 		DataLink* dataLink = *it;
 		//if buffer/record count > 1
 
-		dataLink->handleDataEvent( e );
+		if ( dataLink->recordCount_ > 1 ) {
+			dataLink->handleDataEvent( e );
+		}
 
 		++ it;
 	}

@@ -330,6 +330,9 @@ namespace VCF {
 
 		virtual void handleDataEvent( Event* e );
     protected:
+
+		friend class DataLink;
+
         virtual void internal_open() = 0;
 
         virtual void internal_close() = 0;
