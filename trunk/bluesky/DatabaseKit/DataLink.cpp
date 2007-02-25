@@ -13,11 +13,22 @@ DataLink::DataLink():
 	active_(false),
 	editing_(false),
 	readOnly_(false),
-	updating_(false)
+	updating_(false),
+	recordCount_(1)
 {
 
 }
 
+void DataLink::destroy()
+{
+	active_ = false;
+	editing_ = false;
+	dataSrcFixed_ = false;
+	
+	setDataSource( NULL );
+
+	Object::destroy();
+}
 
 
 size_t DataLink::getRecordCount()
@@ -26,11 +37,27 @@ size_t DataLink::getRecordCount()
 
 	if ( NULL != dataSource_ ) {
 		if ( dssSetKey == dataSource_->getState() ) {
+			result = 1;
+		}
+		else {
 			result = dataSource_->getDataSet()->getRecordCount();
+			if ( result > recordCount_ ) {
+				result = recordCount_;
+			}
 		}
 	}
 
 	return result;
+}
+
+void DataLink::setRecordCount( size_t val )
+{
+	if ( val != recordCount_ ) {
+		recordCount_ = val;
+		if ( isActive() ) {
+			this->getDataSet()->updateRecordSize();
+		}
+	}
 }
 
 void DataLink::setDataSource( DataSource* val )
@@ -217,4 +244,93 @@ bool DataLink::edit()
 	}
 
 	return editing_;
+}
+
+
+
+
+FieldDataLink::FieldDataLink():
+	DataLink(),
+	modified_(false),
+	field_(NULL)
+{
+
+}
+
+void FieldDataLink::recordChanged( DataField* field )
+{
+	if ( NULL == field || (field == field_) ) {
+		Event e(this,0);
+		DataChange.fireEvent( &e );
+		
+		modified_ = false;
+	}
+}
+
+void FieldDataLink::updateData()
+{
+	if ( modified_ ) {
+		if ( NULL != field_ ) {
+			Event e(this,0);
+			UpdatedData.fireEvent( &e );
+		}
+
+		modified_ = false;
+	}
+}
+
+void FieldDataLink::activeStateChanged()
+{
+	updateField();
+
+	Event e(this,0);
+	ActiveChange.fireEvent( &e );
+}
+
+void FieldDataLink::updateField()
+{
+	setField( NULL );
+
+	if ( isActive() && !fieldName_.empty() ) {
+
+		VCF_ASSERT( NULL != getDataSource() );
+		VCF_ASSERT( NULL != getDataSource()->getDataSet() );
+
+		DataField* field = getDataSource()->getDataSet()->fieldByName( fieldName_ );
+
+		setField( field );
+	}
+}
+
+DataField* FieldDataLink::getField()
+{
+	return field_;
+}
+
+void FieldDataLink::setField( DataField* val )
+{
+	if ( field_ != val ) {
+		field_ = val;
+
+		editingStateChanged();
+		recordChanged( NULL );
+	}
+}
+
+void FieldDataLink::editingStateChanged()
+{
+	setEditing( DataLink::isEditing() && isModifiable() );
+}
+
+bool FieldDataLink::isModifiable()
+{
+	return false;
+}
+
+void FieldDataLink::setFieldName( const String& val )
+{
+	if ( val != fieldName_ ) {
+		fieldName_ = val;
+		updateField();
+	}
 }

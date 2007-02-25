@@ -5,6 +5,8 @@
 
 #include "SQLite3Kit.h"
 
+#include "DataLink.h"
+
 /*
 
 
@@ -101,6 +103,32 @@ Time was determined using the Win32 QueryPerformanceXXX API's
 
 using namespace VCF;
 
+
+void onDataChanged( Event* e )
+{
+	System::println( "onDataChanged" );
+
+	FieldDataLink* dl = (FieldDataLink*)e->getSource();
+	DataField* field = dl->getField();
+	System::println( "\tField name: " + field->getName() + " value: " + field->getAsString() );
+}
+
+void onEditingChanged( Event* e )
+{
+	System::println( "onEditingChanged" );
+}
+
+void onUpdatedData( Event* e )
+{
+	System::println( "onUpdatedData" );
+}
+
+void onActiveChanged( Event* e )
+{
+	System::println( "onActiveChanged" );
+}
+
+
 int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
@@ -148,6 +176,7 @@ int main( int argc, char** argv ){
 
 
 		DataSource* dbSrc = new DataSource();
+		dbSrc->setEnabled( true );
 
 		try {
 			
@@ -192,7 +221,7 @@ int main( int argc, char** argv ){
 					while ( fields->hasMoreElements() ) {
 						DataField* field = fields->nextElement();
 						//String s = "Field name: " + field->getName() + " value: " + field->getAsString();
-						System::println( "Field name: " + field->getName() + " value: " + field->getAsString() );
+						//System::println( "Field name: " + field->getName() + " value: " + field->getAsString() );
 					}
 					dataSet->next();
 					rowCount ++;
@@ -306,6 +335,32 @@ int main( int argc, char** argv ){
 			System::println( "------------------------------------------------------------------------------" );
 
 */
+
+
+
+			FieldDataLink* fdl = new FieldDataLink();
+
+			fdl->setDataSource( dbSrc );
+
+			StaticEventHandlerInstance<Event> ev1(onDataChanged);
+			StaticEventHandlerInstance<Event> ev2(onEditingChanged);
+			StaticEventHandlerInstance<Event> ev3(onUpdatedData);
+			StaticEventHandlerInstance<Event> ev4(onActiveChanged);
+
+			fdl->DataChange += &ev1;
+			fdl->EditingChange += &ev2;
+			fdl->UpdatedData += &ev3;
+			fdl->ActiveChange += &ev4;
+			fdl->setFieldName( "LastName" );
+
+
+			dataSet->first();
+			dataSet->next();
+
+
+			fdl->free();
+
+
 		}
 		catch ( BasicException& e ) {
 			System::println( "Exception: " + e.getMessage() );

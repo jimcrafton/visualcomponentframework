@@ -397,6 +397,8 @@ void DataSet::next()
 	if ( !isEOF() ) {
 		bof_ = false;
 		eof_ = false;
+		size_t oldRecCount = recordCount_;
+
 
 		if ( activeRecordIndex_ < (records_.size() - 1) ) {
 			activeRecordIndex_ ++;
@@ -410,6 +412,16 @@ void DataSet::next()
 			else {
 				eof_ = true;
 			}
+		}
+
+
+		if ( oldRecCount != recordCount_ ) {
+			Event e(this,deDataSetChange);
+			handleDataEvent( &e );
+		}
+		else {
+			Event e(this,deDataSetScroll);
+			handleDataEvent( &e );
 		}
 
 		Event e2(this,0);
@@ -677,7 +689,14 @@ void DataSet::openCursor( bool query )
 
 void DataSet::closeCursor()
 {
+	freeFieldBuffers();
+
+	clearRecords();
+
 	internal_close();
+
+	defaultFields_ = false;
+
 }
 
 void DataSet::openData()
