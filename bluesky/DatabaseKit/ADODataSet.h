@@ -82,6 +82,7 @@ namespace VCF {
 
 		size_t calculateRecordSize();
 	private:
+		String updateWhereClause_;		
 		comet::ADODB::_ConnectionPtr dbConnection_;
 		comet::ADODB::_RecordsetPtr currentRecordSet_;
 	};

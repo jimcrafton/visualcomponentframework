@@ -141,6 +141,7 @@ namespace VCF {
 					
 					if ( size > 0 ) {
 						buffer = new unsigned char[size];
+						memset( buffer, 0, size );
 					}
 				}
 			}
