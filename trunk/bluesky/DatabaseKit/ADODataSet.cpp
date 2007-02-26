@@ -240,7 +240,9 @@ void ADODataSet::internal_initFieldDefinitions()
 	variant_t cnVar = connect;
 
 	try {
-		rs->Open( tn.in(), cnVar, adOpenForwardOnly, adLockReadOnly, adCmdTable );
+		//rs->CacheSize = 100;
+
+		rs->Open( tn.in(), cnVar, adOpenForwardOnly, adLockReadOnly, adCmdTable );		
 
 		FieldsPtr fields = rs->GetFields();
 
@@ -465,11 +467,16 @@ bool ADODataSet::getFieldData( DataField* field, unsigned char* buffer, size_t b
 			//through all the bytes and see if they are all zeroed out.
 			//this is potentiall kind of stupid, so maybe there is a better
 			//way???
-			for (int i=0;i<field->getSize();i++ ) {
-				if ( record->buffer[bufferOffset+i] > 0 ) {
-					result = true;
-					break;
+			if ( dftString == field->getDataType() ) {
+				for (int i=0;i<field->getSize();i++ ) {
+					if ( record->buffer[bufferOffset+i] > 0 ) {
+						result = true;
+						break;
+					}
 				}
+			}
+			else {
+				result= true;
 			}
 			
 			break;
@@ -509,7 +516,7 @@ void ADODataSet::setFieldData( DataField* field, const unsigned char* buffer, si
 		
 				setRecordData( record, bufferOffset, i, buffer, bufferSize );
 
-				if ( !( (state_ == dssCalcFields) || (state_ == dssFilter) /*|| (state_ & dssNewValue)*/ ) ) {
+				if ( !( (state_ == dssCalcFields) || (state_ == dssFilter) ) ) {
 					Event e(field,deFieldChange);
 					e.setUserData(this);
 					handleDataEvent(&e);
@@ -522,43 +529,54 @@ void ADODataSet::setFieldData( DataField* field, const unsigned char* buffer, si
 
 void ADODataSet::internal_post()
 {
-	DataSet::Record* record = records_[ activeRecordIndex_ ];
+	if ( dssEdit == state_ ) {
 
-	size_t bufferOffset = 0;
+		DataSet::Record* record = records_[ activeRecordIndex_ ];
 
-	int res = 0;
-	for ( size_t i=0;i<fields_->size();i++ ) {
-		DataField* field = fields_()[i];
-		switch ( field->getDataType() ) {
-			case dftString : {
-				const char* text = (const char*)&record->buffer[bufferOffset];
+		size_t bufferOffset = 0;
 
-				
+		int res = 0;
+
+		FieldsPtr rsFields = currentRecordSet_->GetFields();
+		variant_t fldIndex;
+
+		for ( size_t i=0;i<fields_->size();i++ ) {
+			DataField* field = fields_()[i];
+			fldIndex = (int)i;
+			FieldPtr adoField = rsFields->GetItem( fldIndex );
+
+
+			switch ( field->getDataType() ) {
+				case dftString : {
+					const char* text = (const char*)&record->buffer[bufferOffset];
+
+					
+				}
+				break;
+
+				case dftFloat : {
+					double val = 0;
+					memcpy( &val, &record->buffer[bufferOffset], field->getSize() );
+					
+				}
+				break;
+
+				case dftWord : case dftSmallint : case dftInteger : {
+					int val = 0;
+					memcpy( &val, &record->buffer[bufferOffset], field->getSize() );
+					
+				}
+				break;
 			}
-			break;
 
-			case dftFloat : {
-				double val = 0;
-				memcpy( &val, &record->buffer[bufferOffset], field->getSize() );
-				
-			}
-			break;
-
-			case dftWord : case dftSmallint : case dftInteger : {
-				int val = 0;
-				memcpy( &val, &record->buffer[bufferOffset], field->getSize() );
-				
-			}
-			break;
+	//		if ( res != SQLITE_OK ) {
+	//			throw DatabaseError( Format("Error writing to field \"%s\". Error returned was %s.") );
+	//		}
+			bufferOffset += field->getSize();
 		}
 
-//		if ( res != SQLITE_OK ) {
-//			throw DatabaseError( Format("Error writing to field \"%s\". Error returned was %s.") );
-//		}
-		bufferOffset += field->getSize();
+		VCF_ASSERT( bufferOffset == record->size );
 	}
-
-	VCF_ASSERT( bufferOffset == record->size );
 }
 
 void ADODataSet::internal_refresh()
@@ -568,7 +586,33 @@ void ADODataSet::internal_refresh()
 
 void ADODataSet::internal_edit()
 {
+	updateWhereClause_ = "WHERE ";
+	std::vector<DataField*>::iterator it = fields_->begin();
+	while ( it != fields_->end() ) {
+		DataField* field = *it;
 
+		if ( !field->isBinaryType() ) {
+
+			if ( it != fields_->begin() ) {
+				updateWhereClause_ += " AND ";
+			}	
+			
+			
+			updateWhereClause_ += field->getName() + " = ";
+			
+			if ( field->isStringType() ) {
+				updateWhereClause_ += "'";
+			}
+
+			updateWhereClause_ += field->getAsString();
+
+			if ( field->isStringType() ) {
+				updateWhereClause_ += "'";
+			}
+		}
+
+		++it;
+	}
 }
 
 void ADODataSet::internal_initNewRecord( Record* record )

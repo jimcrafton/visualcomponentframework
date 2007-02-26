@@ -397,7 +397,7 @@ int main( int argc, char** argv ){
 
 
 	//ADO----
-	/*
+	
 	{
 		System::println( "------------------------------------------------------------------------------" );
 		System::println( "ADO testing" );
@@ -432,16 +432,42 @@ int main( int argc, char** argv ){
 			
 			System::println( "------------------------------------------------------------------------------" );
 			
-
+			DateTime start = DateTime::now();
+			size_t rowCount = 0;
 			while ( !dataSet->isEOF() ) {			
 				Enumerator<DataField*>* fields = dataSet->getFields();
 				
 				while ( fields->hasMoreElements() ) {
 					DataField* field = fields->nextElement();
-					System::println( "\tField name: " + field->getName() + " value: " + field->getAsString() );
+					//System::println( "\tField name: " + field->getName() + " value: " + field->getAsString() );
 				}
 				dataSet->next();
+				rowCount ++;
 			}
+
+			DateTime end = DateTime::now();
+
+			DateTimeSpan sp = end - start;
+
+			System::println( Format("%d rows took %u milliseconds.") % rowCount % sp.getTotalMilliseconds() );
+
+
+			dataSet->first();
+
+			System::println( "Before the edit the first record's LastName: " + dataSet->fieldByName("LastName")->getAsString() );
+
+			dataSet->edit();				
+
+			String lastName = "Sombrerovich";
+
+			System::println( "Changing LastName field to \"" + lastName + "\"..." ); 
+			dataSet->fieldByName("LastName")->setAsString(lastName);
+
+			dataSet->first();
+
+			System::println( "After the post(), the first record's LastName: " + dataSet->fieldByName("LastName")->getAsString() );
+
+
 
 		}
 		catch ( BasicException& e ) {
@@ -449,9 +475,8 @@ int main( int argc, char** argv ){
 		}
 
 		
-		delete dataSet;
+		dataSet->free();
 	}
-*/
 
 
 	DatabaseKit::terminate();
