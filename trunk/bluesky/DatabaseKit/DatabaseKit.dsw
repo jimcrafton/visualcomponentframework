@@ -3,6 +3,21 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "ApplicationKitDLL"=..\..\vcf\build\vc60\ApplicationKit\ApplicationKitDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name GraphicsKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "DTL"=..\..\..\..\dtl\lib\DTL.dsp - Package Owner=<4>
 
 Package=<5>
@@ -35,6 +50,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -63,6 +81,24 @@ Package=<4>
 
 ###############################################################################
 
+Project: "GraphicsKitDLL"=..\..\vcf\build\vc60\GraphicsKit\GraphicsKitDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libAGG
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "HTMLKitDll"=..\..\vcf\build\vc60\HTMLKit\HTMLKitDll.dsp - Package Owner=<4>
 
 Package=<5>
@@ -86,6 +122,36 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name DatabaseKit
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "dbtest2"=.\dbtest2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name DatabaseKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "libAGG"=..\..\vcf\build\vc60\GraphicsKit\libAGG.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################

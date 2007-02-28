@@ -203,107 +203,111 @@ SOURCE=.\Transaction.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\alter.c"
+SOURCE=.\DBProviders\sqlite\alter.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\analyze.c"
+SOURCE=.\DBProviders\sqlite\analyze.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\attach.c"
+SOURCE=.\DBProviders\sqlite\attach.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\auth.c"
+SOURCE=.\DBProviders\sqlite\auth.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\btree.c"
+SOURCE=.\DBProviders\sqlite\btree.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\build.c"
+SOURCE=.\DBProviders\sqlite\build.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\callback.c"
+SOURCE=.\DBProviders\sqlite\callback.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\complete.c"
+SOURCE=.\DBProviders\sqlite\complete.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\date.c"
+SOURCE=.\DBProviders\sqlite\date.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\delete.c"
+SOURCE=.\DBProviders\sqlite\delete.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\expr.c"
+SOURCE=.\DBProviders\sqlite\expr.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\func.c"
+SOURCE=.\DBProviders\sqlite\func.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\hash.c"
+SOURCE=.\DBProviders\sqlite\hash.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\insert.c"
+SOURCE=.\DBProviders\sqlite\insert.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\legacy.c"
+SOURCE=.\DBProviders\sqlite\legacy.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\main.c"
+SOURCE=.\DBProviders\sqlite\loadext.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\opcodes.c"
+SOURCE=.\DBProviders\sqlite\main.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\os.c"
+SOURCE=.\DBProviders\sqlite\opcodes.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\os_win.c"
+SOURCE=.\DBProviders\sqlite\os.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\pager.c"
+SOURCE=.\DBProviders\sqlite\os_win.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\parse.c"
+SOURCE=.\DBProviders\sqlite\pager.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\pragma.c"
+SOURCE=.\DBProviders\sqlite\parse.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\prepare.c"
+SOURCE=.\DBProviders\sqlite\pragma.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\printf.c"
+SOURCE=.\DBProviders\sqlite\prepare.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\random.c"
+SOURCE=.\DBProviders\sqlite\printf.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\select.c"
+SOURCE=.\DBProviders\sqlite\random.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\DBProviders\sqlite\select.c
 # End Source File
 # Begin Source File
 
@@ -315,59 +319,75 @@ SOURCE=.\SQLiteDatabase.h
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\table.c"
+SOURCE=.\DBProviders\sqlite\table.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\tclsqlite.c"
+SOURCE=.\DBProviders\sqlite\tclsqlite.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\tokenize.c"
+SOURCE=.\DBProviders\sqlite\tokenize.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\trigger.c"
+SOURCE=.\DBProviders\sqlite\trigger.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\update.c"
+SOURCE=.\DBProviders\sqlite\update.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\utf.c"
+SOURCE=.\DBProviders\sqlite\utf.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\util.c"
+SOURCE=.\DBProviders\sqlite\util.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\vacuum.c"
+SOURCE=.\DBProviders\sqlite\vacuum.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\vdbe.c"
+SOURCE=.\DBProviders\sqlite\vdbe.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\vdbeapi.c"
+SOURCE=.\DBProviders\sqlite\vdbeapi.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\vdbeaux.c"
+SOURCE=.\DBProviders\sqlite\vdbeaux.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\vdbefifo.c"
+SOURCE=.\DBProviders\sqlite\vdbefifo.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\vdbemem.c"
+SOURCE=.\DBProviders\sqlite\vdbemem.c
 # End Source File
 # Begin Source File
 
-SOURCE=".\DBProviders\sqlite\where.c"
+SOURCE=.\DBProviders\sqlite\vtab.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\DBProviders\sqlite\where.c
+# End Source File
+# End Group
+# Begin Group "MS-ADO"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\ADODataSet.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=".\DBProviders\ms-ado\ADODB.h"
 # End Source File
 # End Group
 # End Group
