@@ -361,6 +361,11 @@ int main( int argc, char** argv ){
 			fdl->free();
 
 
+			dataSet->setRecordCount( 10 );
+
+			dataSet->first();
+
+
 		}
 		catch ( BasicException& e ) {
 			System::println( "Exception: " + e.getMessage() );
