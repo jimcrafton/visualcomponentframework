@@ -215,6 +215,8 @@ namespace VCF {
 
 		bool isActive();
 
+		void checkInactive();
+
 		DataSetState getState() {
 			return state_;
 		}
@@ -295,8 +297,8 @@ namespace VCF {
 		VariantData getFieldValue( const String& fieldName );
 		void setFieldValue( const String& fieldName, VariantData& val );
 
-		void addField( const String& fieldName );
-		void removeField( const String& fieldName );
+		void addField( DataField* field );
+		void removeField( DataField* field );
 
 
 		void addDataSource( DataSource* source );
@@ -330,6 +332,8 @@ namespace VCF {
 		virtual void setFieldData( DataField* field, const unsigned char* buffer, size_t bufferSize ) = 0;
 
 		virtual void handleDataEvent( Event* e );
+
+		void setRecordCount( size_t numberOfRecords );
     protected:
 
 		friend class DataLink;
@@ -381,7 +385,7 @@ namespace VCF {
 		void clearRecords();
 		void activateRecords();
 
-		void setRecordCount( size_t numberOfRecords );
+		
 
 		size_t getNextRecords();
 
@@ -390,6 +394,8 @@ namespace VCF {
 		void checkMode( CheckModeState mode );		
 
 		void updateRecord();
+
+		void swapRecord( size_t fromIndex, size_t toIndex );
 
 		void freeFieldBuffers();
 
@@ -428,6 +434,7 @@ namespace VCF {
 		DataFieldArray fields_;
 
 		size_t recordCount_;
+		size_t usableRecordCount_; //number of slots in the records_ vector that we actually use
 		RecordsArray records_;
 		size_t activeRecordIndex_; //we may not need this...
 		size_t currentRecordIndex_;

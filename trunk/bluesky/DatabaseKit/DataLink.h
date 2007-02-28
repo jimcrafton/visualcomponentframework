@@ -52,6 +52,9 @@ namespace VCF {
 
 		void setRecordCount( size_t val );
 
+		size_t getActiveRecord();
+
+		void setActiveRecord( size_t val );
 
 		void setDataSource( DataSource* val );
 
@@ -88,6 +91,7 @@ namespace VCF {
 		virtual void updateData(){};
 
 		friend class DataSource;
+		friend class DataSet;
 	protected:
 
 		virtual void destroy();
@@ -99,7 +103,7 @@ namespace VCF {
 		bool readOnly_;
 		bool updating_;
 		size_t recordCount_;
-
+		size_t firstRecord_;
 	};
 
 

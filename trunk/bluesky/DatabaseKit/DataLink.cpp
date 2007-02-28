@@ -14,7 +14,8 @@ DataLink::DataLink():
 	editing_(false),
 	readOnly_(false),
 	updating_(false),
-	recordCount_(1)
+	recordCount_(1),
+	firstRecord_(0)
 {
 
 }
@@ -30,6 +31,34 @@ void DataLink::destroy()
 	Object::destroy();
 }
 
+size_t DataLink::getActiveRecord()
+{
+	size_t result = DataSet::NoRecPos;
+
+	DataSource* src = this->getDataSource();
+	if ( NULL != src ) {
+		if ( src->getState() == dssSetKey ) {
+			result = 0;
+		}
+		else {
+			if ( firstRecord_ < src->getDataSet()->activeRecordIndex_ ) {
+				result = src->getDataSet()->activeRecordIndex_ - firstRecord_;
+			}			
+		}
+	}
+
+	return result;
+}
+
+void DataLink::setActiveRecord( size_t val )
+{
+	DataSource* src = this->getDataSource();
+	if ( NULL != src ) {
+		if ( src->getState() != dssSetKey ) {
+			src->getDataSet()->activeRecordIndex_ = val + firstRecord_;
+		}
+	}
+}
 
 size_t DataLink::getRecordCount()
 {
@@ -142,10 +171,23 @@ void DataLink::handleDataEvent( Event* e )
 					break;
 
 					case deDataSetChange: case deDataSetScroll: case deLayoutChange: {
-						int count = 0;
+						int count = 0;						
 						if ( NULL != this->dataSource_ ) {
 							if ( dataSource_->getState() != dssSetKey ) { 
 								
+								
+								int active = dataSource_->getDataSet()->activeRecordIndex_;
+								int first = firstRecord_ + 1; //this is hard coded to 1 for now
+								int last = first + this->recordCount_ - 1;
+								if ( active > last ) {
+									count = active - last;
+								}
+								else if ( active < first ) {
+									count = active - first;
+								}
+
+								firstRecord_ = first + count;
+
 								//figure out what the first record is - ignored for now...
 							}
 						}
@@ -217,6 +259,13 @@ void DataLink::setActive( bool val )
 {
 	if ( active_ != val ) {
 		active_ = val;
+
+		if ( val ) {
+
+		}
+		else {
+			firstRecord_ = 0;
+		}
 
 		activeStateChanged();
 	}

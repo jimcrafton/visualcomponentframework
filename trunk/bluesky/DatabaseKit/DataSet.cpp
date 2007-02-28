@@ -1,4 +1,6 @@
 #include "DatabaseKit.h"
+#include "DataLink.h"
+
 
 using namespace VCF;
 
@@ -15,6 +17,7 @@ DataSet::DataSet()
 	filtered_(false),
 	filterOptions_(foNoOptions),
 	recordCount_(0),
+	usableRecordCount_(0),
 	activeRecordIndex_(DataSet::NoRecPos),
 	currentRecordIndex_(DataSet::NoRecPos),
 	locale_(NULL),
@@ -400,12 +403,12 @@ void DataSet::next()
 		size_t oldRecCount = recordCount_;
 
 
-		if ( activeRecordIndex_ < (records_.size() - 1) ) {
+		if ( activeRecordIndex_ < recordCount_- 1 ) {
 			activeRecordIndex_ ++;
 		}
 		else {			
 			if ( getNextRecord() ) {
-				if ( activeRecordIndex_ < (records_.size() - 1) ) {
+				if ( activeRecordIndex_ < (recordCount_ - 1) ) {
 					activeRecordIndex_ ++;
 				}
 			}
@@ -546,7 +549,7 @@ void DataSet::appendRecord()
 
 	}
 
-	if ( recordCount_ < records_.size() ) {
+	if ( recordCount_ < this->usableRecordCount_ ) {
 		recordCount_ ++;
 	}
 
@@ -733,13 +736,28 @@ Enumerator<DataField*>* DataSet::getFields()
 
 void DataSet::setRecordCount( size_t numberOfRecords )
 {
-	if ( numberOfRecords == records_.size() ) {
+	if ( numberOfRecords == usableRecordCount_ ) {
 		return;
 	}
 
-	if ( numberOfRecords < records_.size() ) {
-		for ( size_t i=numberOfRecords;i<records_.size();i++ ) {
-			Record* record =  records_[i];
+	if ( this->usableRecordCount_ > numberOfRecords  && recordCount_ > 0 ) {
+
+		int delta = 0;
+		for (size_t i=dataSources_.size()-1;(i>=0) && (i<dataSources_.size());i-- ) {
+			
+			DataSource* dataSrc = dataSources_[i];
+			size_t dlCount = dataSrc->getDataLinkCount();
+
+			for (size_t j=dlCount-1;(j>=0) && (j<dlCount);j-- ) {
+				DataLink* dataLink =  dataSrc->getDataLink(j);
+				if ( dataLink->isActive() && (dataLink->firstRecord_ < delta) ) {
+					delta = dataLink->firstRecord_;
+				}
+			}
+		}
+
+		for ( size_t k=numberOfRecords;k<records_.size();k++ ) {
+			Record* record =  records_[k];
 			
 			delete record;
 		}
@@ -750,7 +768,7 @@ void DataSet::setRecordCount( size_t numberOfRecords )
 		try {
 			size_t oldSize = records_.size();
 
-			records_.resize(numberOfRecords);
+			records_.resize(numberOfRecords+1);
 			
 			if ( oldSize == 0 ) {
 				oldSize = 1;
@@ -766,7 +784,9 @@ void DataSet::setRecordCount( size_t numberOfRecords )
 		}
 	}
 
-	VCF_ASSERT( numberOfRecords == records_.size() );
+	usableRecordCount_ = numberOfRecords;
+
+	VCF_ASSERT( numberOfRecords == records_.size()-1 );
 
 	getNextRecords();
 }
@@ -774,7 +794,7 @@ void DataSet::setRecordCount( size_t numberOfRecords )
 size_t DataSet::getNextRecords()
 {
 	size_t result = 0;
-	while ( recordCount_ < records_.size() ) {
+	while ( recordCount_ < usableRecordCount_ ) {
 		if ( !getNextRecord() ) {
 			break;
 		}
@@ -794,7 +814,7 @@ bool DataSet::getNextRecord()
 		currentRecordIndex_ = recordCount_ - 1; 
 	}	
 	
-	GetResultType res = getRecord( records_[ currentRecordIndex_ ], mode );
+	GetResultType res = getRecord( records_[ recordCount_ ], mode );
 	if ( grFailed != res ) {
 		result = true;		
 	}
@@ -804,12 +824,18 @@ bool DataSet::getNextRecord()
 			activateRecords();
 		}
 		else {
-			if ( recordCount_ < records_.size() ) {
+			if ( recordCount_ < usableRecordCount_ ) {
 				recordCount_ ++;
+			}
+			else {
+				swapRecord( 0, recordCount_ );
 			}
 		}
 
 		currentRecordIndex_ = recordCount_ - 1; 		
+	}
+	else {
+		cursorPositionChanged();
 	}
 
 	return result;
@@ -850,7 +876,7 @@ void DataSet::setLocale( Locale* val )
 
 size_t DataSet::getRecordCount()
 {
-	return records_.size();	
+	return usableRecordCount_;	
 }
 
 void DataSet::checkFieldName( const String& fieldName )
@@ -951,7 +977,7 @@ void DataSet::resync( int mode )
 	if ( mode & rmExact ) {
 		cursorPositionChanged();
 
-		GetResultType res = getRecord( records_[ records_.size()-1 ], grmCurrent );
+		GetResultType res = getRecord( records_[ recordCount_ ], grmCurrent );
 
 		if ( res != grOK ) {
 			throw DatabaseError("Data set unable to modify the record. The record was not found.");
@@ -959,8 +985,8 @@ void DataSet::resync( int mode )
 	}
 	else {
 
-		if ( getRecord( records_[ records_.size()-1 ], grmCurrent ) != grOK ) {
-			if ( getRecord( records_[ records_.size()-1 ], grmNext ) != grOK ) {
+		if ( getRecord( records_[ recordCount_ ], grmCurrent ) != grOK ) {
+			if ( getRecord( records_[ recordCount_ ], grmNext ) != grOK ) {
 				clearRecords();
 				Event e(this,deDataSetChange);
 				return;
@@ -1065,12 +1091,51 @@ void DataSet::setFieldValue( const String& fieldName, VariantData& val )
 	field->setValue( val );
 }
 
-void DataSet::addField( const String& fieldName )
+void DataSet::addField( DataField* field )
 {
+	fields_->push_back( field );
+	field->dataSet_ = this;
 
+	Event e(this,deFieldListChange);
+	handleDataEvent(&e);
 }
 
-void DataSet::removeField( const String& fieldName )
+void DataSet::removeField( DataField* field )
 {
+	field->dataSet_ = NULL;
 
+	DataFieldArray::Vector::iterator found = 
+		std::find( fields_->begin(), fields_->end(), field );
+
+	if ( found != fields_->end() ) {
+		fields_->erase( found );
+	}
+
+
+	Event e(this,deFieldListChange);
+	handleDataEvent(&e);
+}
+
+void DataSet::checkInactive()
+{
+	
+}
+
+void DataSet::swapRecord( size_t fromIndex, size_t toIndex )
+{
+	if ( fromIndex != toIndex ) {
+		DataSet::Record* tmp = records_[fromIndex];
+
+		if ( fromIndex < toIndex ) {
+			for (size_t i=0;i<toIndex-fromIndex;i++ ) {				
+				records_[fromIndex+i] = records_[fromIndex+i+1];
+			}			
+		}
+		else {
+			for (size_t i=0;i<fromIndex-toIndex;i++ ) {				
+				records_[toIndex+i+1] = records_[toIndex+i];
+			}
+		}
+		records_[toIndex] = tmp;
+	}
 }

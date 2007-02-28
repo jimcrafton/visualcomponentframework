@@ -80,6 +80,8 @@ namespace VCF {
 			return dataSet_;
 		}
 
+		void setDataSet( DataSet* val );
+
 		DataFieldType getDataType() {
 			return dataType_;
 		}
@@ -165,6 +167,7 @@ namespace VCF {
 
 		void validate( const unsigned char* buffer, size_t bufferSize );
 	protected:
+		friend class DataSet;
 		DataSet* dataSet_;
 		DataFieldType dataType_;
 		String displayName_;

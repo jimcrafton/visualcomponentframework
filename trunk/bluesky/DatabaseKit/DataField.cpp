@@ -49,6 +49,27 @@ void DataField::change()
 	Changed.fireEvent(&e);
 }
 
+void DataField::setDataSet( DataSet* val )
+{
+	if ( val != dataSet_ ) {
+		if ( NULL != dataSet_ ) {
+			dataSet_->checkInactive();
+		}
+
+		if ( NULL != val ) {
+			val->checkInactive();
+			val->checkFieldName( this->name_ );
+		}
+
+		if ( NULL != dataSet_ ) {
+			dataSet_->removeField( this );
+		}
+
+		if ( NULL != val ) {
+			val->addField( this );
+		}
+	}
+}
 
 void DataField::validate( const unsigned char* buffer, size_t bufferSize )
 {
