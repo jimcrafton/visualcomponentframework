@@ -91,7 +91,7 @@ void ADODataSet::internal_open()
 	internal_initFieldDefinitions();
 
 	try {
-		if ( getDefaulFields() ) {
+		if ( getDefaultFields() ) {
 			createFields();
 		}
 

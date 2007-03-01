@@ -72,24 +72,26 @@ Handle the extension based on the compiler
 
 
 //this sets up a "dependencies" set of defines
-//if you are using the regex kit, then it only makes 
-//sense that you are ALSO using the FoundationKit.
-//the following takes care of defining these for you.
 
 #ifdef USE_DATABASEKIT_DLL
 # 	ifndef DATABASEKIT_DLL
 #		define DATABASEKIT_DLL
 # 	endif
+#elif defined (USE_DATABASEKIT_LIB)
+# 	ifndef DATABASEKIT_LIB
+#		define DATABASEKIT_LIB
+# 	endif
+#endif
+
+#ifdef DATABASEKIT_DLL
 # 	ifndef USE_FOUNDATIONKIT_DLL
 #		define USE_FOUNDATIONKIT_DLL
 # 	endif
-#elif defined (USE_DATABASEKIT_LIB)
-//#		define ONIG_EXTERN extern
+#elif defined (DATABASEKIT_LIB)
 # 	ifndef USE_FOUNDATIONKIT_LIB
 #		define USE_FOUNDATIONKIT_LIB
 # 	endif
 #endif
-
 
 
 //export crap

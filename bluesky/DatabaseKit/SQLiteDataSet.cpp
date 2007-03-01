@@ -83,7 +83,7 @@ void SQLiteDataSet::internal_open()
 	currentStmt_ = NULL;
 
 	try {
-		if ( getDefaulFields() ) {
+		if ( getDefaultFields() ) {
 			createFields();
 		}
 

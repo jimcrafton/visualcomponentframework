@@ -239,7 +239,7 @@ namespace VCF {
 			return modified_;
 		}
 
-		bool getDefaulFields() {
+		bool getDefaultFields() {
 			return defaultFields_;
 		}
 		
