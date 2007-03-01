@@ -1,50 +1,17 @@
 //dbtest2.cpp
 
 
-#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "DatabaseUIKit.h"
+
 #include "vcf/ApplicationKit/Label.h"
 #include "vcf/ApplicationKit/CommandButton.h"
 
-#include "DatabaseKit.h"
+#include "DataLabel.h"
 #include "DataLink.h"
 
 using namespace VCF;
 
 
-
-
-class DataLabel : public Label {
-public:
-	DataLabel(): Label(), dataLink_(NULL) {
-		dataLink_ = new FieldDataLink();
-
-		dataLink_->DataChange +=
-			new GenericEventHandler<DataLabel>(this,&DataLabel::onDataLinkDataChanged,"DataLabel::onDataLinkDataChanged");
-	}
-
-	virtual ~DataLabel() {
-		dataLink_->free();
-	}
-
-	void setDataSource( DataSource* val ) {
-		dataLink_->setDataSource( val );
-	}
-
-	void setFieldName( const String& name ) {
-		dataLink_->setFieldName( name );
-	}
-
-	DataField* getField() {
-		return dataLink_->getField();
-	}
-
-protected:
-	FieldDataLink* dataLink_;
-
-	void onDataLinkDataChanged( Event* e ) {
-		setCaption( getField()->getAsString() );
-	}
-};
 
 
 
@@ -130,7 +97,7 @@ class dbtest2Application : public Application {
 public:
 
 	dbtest2Application( int argc, char** argv ) : Application(argc, argv) {
-		DatabaseKit::init( argc, argv );
+		DatabaseUIKit::init( argc, argv );
 	}
 
 	virtual bool initRunningApplication(){
@@ -145,7 +112,7 @@ public:
 	}
 
 	virtual void terminateRunningApplication() {
-		DatabaseKit::terminate();
+		DatabaseUIKit::terminate();
 
 		Application::terminateRunningApplication();
 	}
