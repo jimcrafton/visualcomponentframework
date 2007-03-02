@@ -76,8 +76,8 @@ class Control;
 class CommonFolderBrowseDialogPeer;
 class CommonFontDialogPeer;
 
-class DesktopPeer;
-class Desktop;
+class UIShellPeer;
+class UIShell;
 
 class ComponentInfo;
 class ScrollPeer;
@@ -89,6 +89,9 @@ class TimerEvent;
 class SystemTrayPeer;
 
 class MenuManagerPeer;
+
+class PopupWindowPeer;
+class TransparentWindowPeer;
 
 
 
@@ -216,6 +219,10 @@ public:
 
     static WindowPeer* createWindowPeer( Control* component, Control* owner );
 
+	static PopupWindowPeer* createPopupWindowPeer( Window* window, Window* owner );
+
+	static TransparentWindowPeer* createTransparentWindowPeer( Window* window );
+
 
 	static ToolbarPeer* createToolbarPeer( Toolbar* toolbar );
 
@@ -250,7 +257,7 @@ public:
 	static CommonPrintDialogPeer* createCommonPrintDialogPeer( Control* owner );
 	
 
-	static DesktopPeer* createDesktopPeer( Desktop* desktop );
+	static UIShellPeer* createUIShellPeer( UIShell* shell );
 
 	static ScrollPeer* createScrollPeer( Control* control );
 
@@ -610,6 +617,10 @@ protected:
 
     virtual WindowPeer* internal_createWindowPeer( Control* component, Control* owner) = 0;
 
+	virtual PopupWindowPeer* internal_createPopupWindowPeer( Window* window, Window* owner ) = 0;
+
+	virtual TransparentWindowPeer* internal_createTransparentWindowPeer( Window* window ) = 0;
+
 
 	virtual ToolbarPeer* internal_createToolbarPeer( Toolbar* toolbar ) = 0;
 
@@ -643,7 +654,7 @@ protected:
 
 	virtual CommonPrintDialogPeer* internal_createCommonPrintDialogPeer( Control* owner ) = 0;
 
-	virtual DesktopPeer* internal_createDesktopPeer( Desktop* desktop ) = 0;
+	virtual UIShellPeer* internal_createUIShellPeer( UIShell* shell ) = 0;
 
 	virtual ScrollPeer* internal_createScrollPeer( Control* control ) = 0;
 

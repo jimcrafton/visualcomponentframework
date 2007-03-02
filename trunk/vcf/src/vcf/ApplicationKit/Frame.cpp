@@ -317,8 +317,8 @@ void Frame::center(uint32 direction)
     double ownerX = 0, ownerY = 0;
     if(direction & fcdOnDesktop)
     {
-        ownerWidth = Desktop::getDesktop()->getWidth();
-        ownerHeight = Desktop::getDesktop()->getHeight();
+        ownerWidth = UIShell::getUIShell()->getWidth();
+        ownerHeight = UIShell::getUIShell()->getHeight();
     }
     else
     {

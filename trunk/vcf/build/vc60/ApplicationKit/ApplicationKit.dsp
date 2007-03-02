@@ -23,6 +23,8 @@ CFG=ApplicationKit - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -62,10 +64,8 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "vc6\DebugS\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/win32" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "USE_GRAPHICSKIT_LIB" /Fd"..\..\..\Lib\ApplicationKit_vc6_sd.pdb" /Yu"vcf/ApplicationKit/ApplicationKit.h" /FD /GZ /Zm150 /c
-# SUBTRACT CPP /FR
-
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/win32" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "USE_GRAPHICSKIT_LIB" /Yu"vcf/ApplicationKit/ApplicationKit.h" /Fd"..\..\..\Lib\ApplicationKit_vc6_sd.pdb" /FD /GZ /Zm150 /c
+# SUBTRACT CPP /Fr
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -130,7 +130,35 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\PopupWindowPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\TransparentWindowPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\UIShell.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\UIShellPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32HTMLDOMElements.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32PopupWindowPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32TransparentWindowPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32UIShell.h
 # End Source File
 # End Group
 # Begin Group "Res"
@@ -435,14 +463,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultPropertyEditors.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\Desktop.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Desktop.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\Dialog.cpp
 # End Source File
 # Begin Source File
@@ -603,6 +623,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\UIPolicyManager.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\UIShell.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\UIToolkit.cpp
 # End Source File
 # Begin Source File
@@ -636,6 +660,18 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\VFFOutputStream.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\View.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32PopupWindowPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32TransparentWindowPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32UIShell.cpp
 # End Source File
 # Begin Source File
 
@@ -764,14 +800,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Win32CursorPeer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32CursorPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Win32Desktop.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Win32Desktop.h
 # End Source File
 # Begin Source File
 
@@ -1544,10 +1572,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\CursorPeer.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\DataObjectPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DesktopPeer.h
 # End Source File
 # Begin Source File
 

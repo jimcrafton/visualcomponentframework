@@ -28,7 +28,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/Win32Clipboard.h"
 #include "vcf/ApplicationKit/Win32PopupMenu.h"
 #include "vcf/ApplicationKit/Win32FontDialog.h"
-#include "vcf/ApplicationKit/Win32Desktop.h"
+#include "vcf/ApplicationKit/Win32UIShell.h"
 #include "vcf/ApplicationKit/Win32ScrollPeer.h"
 #include "vcf/ApplicationKit/Win32CursorPeer.h"
 #include "vcf/ApplicationKit/LightweightComponent.h"
@@ -64,6 +64,15 @@ where you installed the VCF.
 #include "thirdparty/win32/Microsoft/htmlhelp.h"
 
 #include "vcf/GraphicsKit/Win32VisualStylesWrapper.h"
+
+#include "vcf/ApplicationKit/PopupWindowPeer.h"
+#include "vcf/ApplicationKit/Win32PopupWindowPeer.h"
+
+#include "vcf/ApplicationKit/TransparentWindowPeer.h"
+#include "vcf/ApplicationKit/Win32TransparentWindowPeer.h"
+
+
+
 
 
 
@@ -2655,7 +2664,7 @@ LRESULT CALLBACK ToolKitHookWndProc( int nCode, WPARAM wParam, LPARAM lParam );
 
 /**
 *this is a weird case that Win32 gives us, so here's the deal:
-*A hidden dummy window, whose parent is the Desktop, is created and made
+*A hidden dummy window, whose parent is the UIShell, is created and made
 *available as a temporary parent to Peers before the created window is actually
 *hooked into into the real parent. What seems to happen with the common controls
 *is the first parent hwnd sent in to the control when it is first created is the
@@ -3298,9 +3307,9 @@ CommonPrintDialogPeer* Win32ToolKit::internal_createCommonPrintDialogPeer( Contr
 }
 
 
-DesktopPeer* Win32ToolKit::internal_createDesktopPeer( Desktop* desktop )
+UIShellPeer* Win32ToolKit::internal_createUIShellPeer( UIShell* shell )
 {
-	return new Win32Desktop( desktop );
+	return new Win32UIShell( shell );
 }
 
 ScrollPeer* Win32ToolKit::internal_createScrollPeer( Control* control )
@@ -3335,6 +3344,22 @@ ControlPeer* Win32ToolKit::internal_createControlPeer( Control* component, Compo
 WindowPeer* Win32ToolKit::internal_createWindowPeer( Control* component, Control* owner)
 {
 	return new Win32Window( component, owner );
+}
+
+PopupWindowPeer* Win32ToolKit::internal_createPopupWindowPeer( Window* window, Window* owner )
+{
+	VCF_ASSERT( window != owner );
+
+	if ( window == owner ) {
+		return NULL;
+	}
+
+	return new Win32PopupWindowPeer( window, owner );
+}
+
+TransparentWindowPeer* Win32ToolKit::internal_createTransparentWindowPeer( Window* window )
+{
+	return new Win32TransparentWindowPeer( window );
 }
 
 ToolbarPeer* Win32ToolKit::internal_createToolbarPeer( Toolbar* toolbar )

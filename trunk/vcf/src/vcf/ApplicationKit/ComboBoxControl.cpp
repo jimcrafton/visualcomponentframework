@@ -140,8 +140,8 @@ public:
 		Rect itemRect = comboBoxControl_->getBounds();
 		comboBoxControl_->getParent()->translateToScreenCoords( &itemRect );
 
-		uint32 desktopH = Desktop::getDesktop()->getHeight();
-		uint32 desktopW = Desktop::getDesktop()->getWidth();
+		uint32 desktopH = UIShell::getUIShell()->getHeight();
+		uint32 desktopW = UIShell::getUIShell()->getWidth();
 
 		int count = minVal<>( listBox_->getListModel()->getCount(), comboBoxControl_->getDropDownCount() );
 		

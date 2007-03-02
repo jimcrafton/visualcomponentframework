@@ -189,7 +189,7 @@ Action classes
 /**
 *Desktop class
 */
-#include "vcf/ApplicationKit/Desktop.h"
+#include "vcf/ApplicationKit/UIShell.h"
 
 
 
