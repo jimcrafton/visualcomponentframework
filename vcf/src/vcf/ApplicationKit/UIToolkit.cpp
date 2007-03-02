@@ -172,7 +172,7 @@ void UIToolkit::init()
 	//internal_setUpdateTimerSpeed( UIToolkit::defaultUpdateSpeed );
 
 	MenuManager::create();
-	//Desktop::getDesktop()->init();
+	//UIShell::getUIShell()->init();
 }
 
 void UIToolkit::initToolKit()
@@ -283,6 +283,16 @@ WindowPeer* UIToolkit::createWindowPeer( Control* component, Control* owner)
 	return UIToolkit::toolKitInstance->internal_createWindowPeer( component, owner );
 }
 
+PopupWindowPeer* UIToolkit::createPopupWindowPeer( Window* window, Window* owner )
+{
+	return UIToolkit::toolKitInstance->internal_createPopupWindowPeer( window, owner );
+}
+
+TransparentWindowPeer* UIToolkit::createTransparentWindowPeer( Window* window )
+{
+	return UIToolkit::toolKitInstance->internal_createTransparentWindowPeer( window );
+}
+
 ToolbarPeer* UIToolkit::createToolbarPeer( Toolbar* toolbar )
 {
 	return UIToolkit::toolKitInstance->internal_createToolbarPeer( toolbar );
@@ -363,9 +373,9 @@ CommonPrintDialogPeer* UIToolkit::createCommonPrintDialogPeer( Control* owner )
 	return UIToolkit::toolKitInstance->internal_createCommonPrintDialogPeer( owner );
 }
 
-DesktopPeer* UIToolkit::createDesktopPeer( Desktop* desktop )
+UIShellPeer* UIToolkit::createUIShellPeer( UIShell* shell )
 {
-	return UIToolkit::toolKitInstance->internal_createDesktopPeer( desktop );
+	return UIToolkit::toolKitInstance->internal_createUIShellPeer( shell );
 }
 
 ScrollPeer* UIToolkit::createScrollPeer( Control* control )

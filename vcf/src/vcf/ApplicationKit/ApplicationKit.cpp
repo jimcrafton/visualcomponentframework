@@ -48,7 +48,7 @@ EnumeratorMapContainer<std::map<String,VCF::LibraryApplication*>, VCF::LibraryAp
 
 CursorManager* CursorManager::cursorMgrInstance = NULL;
 
-Desktop* Desktop::desktopInstance = NULL;
+UIShell* UIShell::shellInstance = NULL;
 
 DockManager* DockManager::dockManagerInstance = NULL;
 
@@ -170,7 +170,7 @@ void ApplicationKit::init( int argc, char** argv )
 
 		DockManager::create();
 
-		Desktop::create();
+		UIShell::create();
 
 		CursorManager::create();
 
@@ -195,7 +195,7 @@ void ApplicationKit::terminate()
 
 		DockManager::getDockManager()->free();
 
-		Desktop::getDesktop()->free();
+		UIShell::getUIShell()->free();
 
 		CursorManager::getCursorManager()->free();
 

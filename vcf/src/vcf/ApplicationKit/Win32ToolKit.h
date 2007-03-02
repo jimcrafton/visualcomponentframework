@@ -129,6 +129,10 @@ public:
 
 	virtual WindowPeer* internal_createWindowPeer( Control* component, Control* owner);
 
+	virtual PopupWindowPeer* internal_createPopupWindowPeer( Window* window, Window* owner );
+
+	virtual TransparentWindowPeer* internal_createTransparentWindowPeer( Window* window );
+
 	virtual ToolbarPeer* internal_createToolbarPeer( Toolbar* toolbar );
 
 	HWND getDummyParent();
@@ -161,7 +165,7 @@ public:
 
 	virtual DropTargetPeer* internal_createDropTargetPeer();
 
-	virtual DesktopPeer* internal_createDesktopPeer( Desktop* desktop );
+	virtual UIShellPeer* internal_createUIShellPeer( UIShell* shell );
 
 	virtual ScrollPeer* internal_createScrollPeer( Control* control );
 
