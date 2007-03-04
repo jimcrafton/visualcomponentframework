@@ -1126,32 +1126,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Desktop.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Desktop.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Dialog.cpp"
 				>
 				<FileConfiguration
@@ -1579,6 +1553,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\UIPolicyManager.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\UIShell.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\UIShell.h"
 				>
 			</File>
 			<File
@@ -2053,32 +2035,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Desktop.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Desktop.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Dialog.cpp"
 				>
 				<FileConfiguration
@@ -2443,6 +2399,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PopupWindowPeer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PopupWindowPeer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PrintDialog.cpp"
 				>
 				<FileConfiguration
@@ -2599,6 +2563,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32TransparentWindowPeer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32TransparentWindowPeer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Tree.cpp"
 				>
 				<FileConfiguration
@@ -2622,6 +2594,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Tree.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32UIShell.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32UIShell.h"
 				>
 			</File>
 			<File
@@ -4079,10 +4059,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DesktopPeer.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DialogPeer.h"
 				>
 			</File>
@@ -4115,6 +4091,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\PopupWindowPeer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ScrollPeer.h"
 				>
 			</File>
@@ -4127,7 +4107,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\TransparentWindowPeer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TreePeer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\UIShellPeer.h"
 				>
 			</File>
 			<File
