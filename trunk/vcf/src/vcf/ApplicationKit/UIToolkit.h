@@ -219,9 +219,9 @@ public:
 
     static WindowPeer* createWindowPeer( Control* component, Control* owner );
 
-	static PopupWindowPeer* createPopupWindowPeer( Window* window, Window* owner );
+	static PopupWindowPeer* createPopupWindowPeer( Frame* frame, Window* owner );
 
-	static TransparentWindowPeer* createTransparentWindowPeer( Window* window );
+	static TransparentWindowPeer* createTransparentWindowPeer( Frame* frame );
 
 
 	static ToolbarPeer* createToolbarPeer( Toolbar* toolbar );
@@ -617,9 +617,9 @@ protected:
 
     virtual WindowPeer* internal_createWindowPeer( Control* component, Control* owner) = 0;
 
-	virtual PopupWindowPeer* internal_createPopupWindowPeer( Window* window, Window* owner ) = 0;
+	virtual PopupWindowPeer* internal_createPopupWindowPeer( Frame* frame, Window* owner ) = 0;
 
-	virtual TransparentWindowPeer* internal_createTransparentWindowPeer( Window* window ) = 0;
+	virtual TransparentWindowPeer* internal_createTransparentWindowPeer( Frame* frame ) = 0;
 
 
 	virtual ToolbarPeer* internal_createToolbarPeer( Toolbar* toolbar ) = 0;

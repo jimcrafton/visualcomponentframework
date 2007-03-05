@@ -283,14 +283,14 @@ WindowPeer* UIToolkit::createWindowPeer( Control* component, Control* owner)
 	return UIToolkit::toolKitInstance->internal_createWindowPeer( component, owner );
 }
 
-PopupWindowPeer* UIToolkit::createPopupWindowPeer( Window* window, Window* owner )
+PopupWindowPeer* UIToolkit::createPopupWindowPeer( Frame* frame, Window* owner )
 {
-	return UIToolkit::toolKitInstance->internal_createPopupWindowPeer( window, owner );
+	return UIToolkit::toolKitInstance->internal_createPopupWindowPeer( frame, owner );
 }
 
-TransparentWindowPeer* UIToolkit::createTransparentWindowPeer( Window* window )
+TransparentWindowPeer* UIToolkit::createTransparentWindowPeer( Frame* frame )
 {
-	return UIToolkit::toolKitInstance->internal_createTransparentWindowPeer( window );
+	return UIToolkit::toolKitInstance->internal_createTransparentWindowPeer( frame );
 }
 
 ToolbarPeer* UIToolkit::createToolbarPeer( Toolbar* toolbar )

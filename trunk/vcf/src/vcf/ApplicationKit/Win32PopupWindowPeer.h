@@ -20,7 +20,7 @@ namespace VCF {
 
 class APPLICATIONKIT_API Win32PopupWindowPeer : public Win32Window, public PopupWindowPeer {
 public:
-	Win32PopupWindowPeer( Window* window, Window* owner );
+	Win32PopupWindowPeer( Frame* frame, Window* owner );
 
 	virtual ~Win32PopupWindowPeer();
 
@@ -58,11 +58,11 @@ public:
 
 	virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc = NULL);
 
-	virtual void displayModal();
+	virtual void showModal();
 
-	virtual void displayAsSheet( Window* owningWindow );
+	virtual void showAsSheet( Window* owningWindow );
 
-	virtual void display();	
+	virtual void show();	
 };
 
 

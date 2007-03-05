@@ -22,11 +22,11 @@ class APPLICATIONKIT_API PopupWindowPeer : public VCF::Interface {
 public:
 	virtual ~PopupWindowPeer(){};
 
-	virtual void displayModal() = 0;
+	virtual void showModal() = 0;
 
-	virtual void displayAsSheet( Window* owningWindow ) = 0;
+	virtual void showAsSheet( Window* owningWindow ) = 0;
 
-	virtual void display() = 0;	
+	virtual void show() = 0;
 };
 
 

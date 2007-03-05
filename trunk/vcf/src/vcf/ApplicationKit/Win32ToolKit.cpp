@@ -3346,20 +3346,20 @@ WindowPeer* Win32ToolKit::internal_createWindowPeer( Control* component, Control
 	return new Win32Window( component, owner );
 }
 
-PopupWindowPeer* Win32ToolKit::internal_createPopupWindowPeer( Window* window, Window* owner )
+PopupWindowPeer* Win32ToolKit::internal_createPopupWindowPeer( Frame* frame, Window* owner )
 {
-	VCF_ASSERT( window != owner );
+	VCF_ASSERT( frame != owner );
 
-	if ( window == owner ) {
+	if ( frame == owner ) {
 		return NULL;
 	}
 
-	return new Win32PopupWindowPeer( window, owner );
+	return new Win32PopupWindowPeer( frame, owner );
 }
 
-TransparentWindowPeer* Win32ToolKit::internal_createTransparentWindowPeer( Window* window )
+TransparentWindowPeer* Win32ToolKit::internal_createTransparentWindowPeer( Frame* frame )
 {
-	return new Win32TransparentWindowPeer( window );
+	return new Win32TransparentWindowPeer( frame );
 }
 
 ToolbarPeer* Win32ToolKit::internal_createToolbarPeer( Toolbar* toolbar )
