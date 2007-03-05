@@ -9,7 +9,7 @@
 using namespace VCF;
 
 
-Win32TransparentWindowPeer::Win32TransparentWindowPeer( Window* window )
+Win32TransparentWindowPeer::Win32TransparentWindowPeer( Frame* frame )
 {
 	
 }

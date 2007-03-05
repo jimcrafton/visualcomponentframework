@@ -129,9 +129,9 @@ public:
 
 	virtual WindowPeer* internal_createWindowPeer( Control* component, Control* owner);
 
-	virtual PopupWindowPeer* internal_createPopupWindowPeer( Window* window, Window* owner );
+	virtual PopupWindowPeer* internal_createPopupWindowPeer( Frame* frame, Window* owner );
 
-	virtual TransparentWindowPeer* internal_createTransparentWindowPeer( Window* window );
+	virtual TransparentWindowPeer* internal_createTransparentWindowPeer( Frame* frame );
 
 	virtual ToolbarPeer* internal_createToolbarPeer( Toolbar* toolbar );
 

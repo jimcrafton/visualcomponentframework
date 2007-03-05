@@ -21,7 +21,7 @@ namespace VCF {
 class APPLICATIONKIT_API Win32TransparentWindowPeer : public Win32Window, public TransparentWindowPeer {
 public:
 
-	Win32TransparentWindowPeer( Window* window );
+	Win32TransparentWindowPeer( Frame* window );
 
 	virtual ~Win32TransparentWindowPeer();
 
