@@ -38,6 +38,25 @@ Socket::Socket():
 	}
 }
 
+
+Socket::Socket(const SocketType& socketType):
+	peer_(NULL),
+	type_(socketType),
+	state_(0)
+{
+	peer_ = NetworkToolkit::createSocketPeer();
+
+	if ( NULL == peer_ ) {
+		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create socket peer.") );
+	}
+
+	peer_->setPeerOwner( this );
+
+	if ( 0 != peer_->create( type_ ) ) {
+		throw RuntimeException( MAKE_ERROR_MSG_2("Peer failed to create socket instance.") );
+	}
+}
+
 Socket::Socket( unsigned short port ):
 	peer_(NULL),
 	type_(Socket::stStream),

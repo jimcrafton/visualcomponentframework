@@ -47,9 +47,54 @@ namespace VCF {
 
 	class NETWORKKIT_API Socket : public Object {
 	public:
+
+
 		enum SocketType{
+			/**
+			Creates a standard stream based 
+			socket peer used for TCP connections.
+			*/
 			stStream,
-			stDatagram
+
+			/**
+			Creates a stream based socket peer 
+			used for TCP connections. This is different
+			than the the stStream type in that it
+			is specifically designed to support
+			asynchronous IO. The implementation
+			of this is platform dependant, assuming the 
+			platform supports it at all. On Win32 systems
+			this uses IO Completion ports under the hood
+			to allow this to occur. This means that, at a 
+			minimum, the application will have at 
+			\em least one more thread running, and 
+			possibly more than that depending on 
+			the number of CPUs available.
+			*/
+			stStreamAsync,
+
+			/**
+			Creates a standard socket used for
+			UDP connections.
+			*/
+			stDatagram,
+
+			/**
+			Creates a standard socket used for
+			UDP connections. This is different
+			than the the stDatagram type in that it
+			is specifically designed to support
+			asynchronous IO. The implementation
+			of this is platform dependant, assuming the 
+			platform supports it at all. On Win32 systems
+			this uses IO Completion ports under the hood
+			to allow this to occur. This means that, at a 
+			minimum, the application will have at 
+			\em least one more thread running, and 
+			possibly more than that depending on 
+			the number of CPUs available.
+			*/
+			stDatagramAsync
 		};
 
 		enum {
@@ -146,6 +191,21 @@ namespace VCF {
 		in stStream mode.
 		*/
 		Socket();
+
+		/**
+		Creates an unconnected socket of the 
+		requested type.
+		@param SocketType indicates the type of 
+		socket to create. If the host operating 
+		doesn't support the requested type, the 
+		underlying peer instance will be 
+		NULL and an exception will be thrown
+		by the constructor.
+
+		@see SocketType
+		*/
+		Socket( const SocketType& socketType );
+		
 
 		/**
 		Creates a bound and listening socket 
