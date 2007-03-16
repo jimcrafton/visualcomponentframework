@@ -307,12 +307,10 @@ public:
 
 			agg::path_storage fillPath;
 
-			StringUtils::trace( "ShadowFill::render() Base path: \n" );
 			while ( pathIt != points.end() ) {
 				PathPoint& pt = *pathIt;
 
-				StringUtils::trace( Format("\tpt: %.2f, %.2f type: %d \n") % pt.point_.x_ % pt.point_.y_ % pt.type_ );
-
+				
 				switch ( pt.type_ ){
 					case PathPoint::ptMoveTo: {
 						fillPath.move_to( pt.point_.x_, pt.point_.y_ );
@@ -330,20 +328,14 @@ public:
 						pathIt++;
 						PathPoint& c1 = *pathIt;
 
-						StringUtils::trace( Format("\tc1: %.2f, %.2f type: %d \n") % c1.point_.x_ % c1.point_.y_ % c1.type_ );
-
-
+						
 						pathIt++;
 						PathPoint& c2 = *pathIt;
-
-						StringUtils::trace( Format("\tc2: %.2f, %.2f type: %d \n") % c2.point_.x_ % c2.point_.y_ % c2.type_ );
-
 
 						pathIt++;
 						PathPoint& p2 = *pathIt;
 						
-						StringUtils::trace( Format("\tp2: %.2f, %.2f type: %d \n") % p2.point_.x_ % p2.point_.y_ % p2.type_ );
-
+						
 						fillPath.curve4( c1.point_.x_, c1.point_.y_,
 										c2.point_.x_, c2.point_.y_,
 										p2.point_.x_, p2.point_.y_ );
@@ -394,7 +386,7 @@ public:
 			}
 			
 			ColorPixels pix = img;
-			AlphaChannel mask(pix);
+			RedChannel mask(pix);
 			mask.fill(0);//clear out alpha
 			Image* maskImage = mask.createImage();
 
@@ -403,10 +395,11 @@ public:
 				BasicFill fill;
 				fill.setColor( &Color(alpha_,alpha_,alpha_,alpha_) );
 
+
 				ictx->setCurrentFill( &fill );
 
 
-				//ictx->setRenderArea( Rect(0,0,maskImage->getWidth(), maskImage->getHeight()) );
+				ictx->setRenderArea( Rect(0,0,maskImage->getWidth(), maskImage->getHeight()) );
 
 
 				Matrix2D m;
@@ -438,9 +431,15 @@ public:
 				ictx->draw( path );
 
 
-				ictx->setCurrentFill( NULL );
+				ictx->setCurrentFill( NULL );				
 
-				//ictx->flushRenderArea();
+
+				//ictx->setColor( &Color(alpha_,alpha_,alpha_,alpha_) );
+				//ictx->rectangle( 10, 10, 30, 30 );
+				//ictx->fillPath();
+
+
+				ictx->flushRenderArea();
 			}
 
 
@@ -453,9 +452,49 @@ public:
 			agg::pixfmt_gray8 pixf(maskRb);
 
 			//stack_blur_x_gray8(pixf, radius_);
-			//stack_blur_y_gray8(pixf, radius_);			
+			//stack_blur_y_gray8(pixf, radius_);
 
-			mask.updateFromImage( maskImage );
+			//mask.updateFromImage( maskImage );
+
+			{
+#if 0 
+				ImageContext ictx = img;
+
+				ictx->bitBlit( 0, 0, maskImage );
+
+#else
+				ColorPixels pix = img;
+				ColorPixels::Type* bits = pix;
+				GrayPixels grPix = maskImage;
+				GrayPixels::Type* grBits = grPix;
+				
+
+				uint32 sz =  grPix.width() * grPix.height();
+				uint32 i = 0;
+
+				for (int y=0;y<pix.height();y++ ) {
+					for (int x=0;x<pix.width();x++ ) {
+						if ( grPix.at(x,y).value >= 250 ) {
+							
+						//pix.at(x,y).r = 255;
+						//pix.at(x,y).g = 0;
+						pix.at(x,y).b = grPix.at(x,y).value;
+						}
+						else{
+							pix.at(x,y).a = 0;
+						}
+					}
+
+				}
+
+				//while ( i < sz ) {
+				//	bits[i].r = grBits[i].value;
+				//	bits[i].g = grBits[i].value;
+				//	bits[i].b = grBits[i].value;
+				//	i++;
+				//}
+#endif				
+			}
 
 			delete maskImage;
 
@@ -469,12 +508,31 @@ public:
 
 			context_->setCurrentTransform( m );
 
-			context_->drawImage( pathBounds.left_, pathBounds.top_, img, false );
+			context_->drawImage( pathBounds.left_, pathBounds.top_, img, false );			
 			context_->renderImages();
 
 			context_->restoreState( gcs );
+/*
+
+			agg::rendering_buffer& renderingBuffer = *context_->getRenderingBuffer();
+			agg::rasterizer_scanline_aa<> rasterizer;
+			
 
 			
+			agg::conv_curve<agg::path_storage> smooth(fillPath);
+			
+			agg::conv_transform< agg::conv_curve< agg::path_storage > > xfrmedPath2(smooth,mat);
+
+
+			
+			rasterizer.add_path( xfrmedPath2 );
+
+			
+
+			context_->resetRenderAreaAlpha();
+
+			renderScanlinesSolid( *context_, rasterizer, agg::rgba(color_.getRed(),color_.getGreen(),color_.getBlue(),color_.getAlpha()) );
+			*/
 		}
 
 	}
