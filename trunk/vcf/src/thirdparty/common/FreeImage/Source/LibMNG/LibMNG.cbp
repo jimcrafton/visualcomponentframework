@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="5" />
+	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="LibMNG" />
 		<Option pch_mode="0" />
-		<Option default_target="" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\..\..\..\..\lib\libLibMNG_$(COMPILER)$(COMPILER_VER)_s.a" prefix_auto="0" extension_auto="0" />
+				<Option output="../../../../../../lib/libLibMNG_$(COMPILER)$(COMPILER_VER)_s.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)\Release\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)/Release/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -39,14 +37,14 @@
 					<Add option="-s" />
 				</Linker>
 				<Environment>
-					<Variable name="COMPILER" value="mgcc" />
 					<Variable name="COMPILER_VER" value="" />
+					<Variable name="COMPILER" value="mgcc" />
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\..\..\..\..\lib\libLibMNG_$(COMPILER)$(COMPILER_VER)_sd.a" prefix_auto="0" extension_auto="0" />
+				<Option output="../../../../../../lib/libLibMNG_$(COMPILER)$(COMPILER_VER)_sd.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)\Debug\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)/Debug/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -71,8 +69,8 @@
 					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
 				</Compiler>
 				<Environment>
-					<Variable name="COMPILER" value="mgcc" />
 					<Variable name="COMPILER_VER" value="" />
+					<Variable name="COMPILER" value="mgcc" />
 				</Environment>
 			</Target>
 		</Build>
@@ -80,246 +78,87 @@
 			<Add alias="All" targets="mingw_Release;mingw_Debug;" />
 		</VirtualTargets>
 		<Compiler>
-			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
-			<Add directory="..\..\..\ZLib" />
-			<Add directory="..\..\..\LibJPEG" />
+			<Add directory='&quot;$(VCF_ROOT)/src&quot;' />
+			<Add directory="../../../ZLib" />
+			<Add directory="../../../LibJPEG" />
 		</Compiler>
-		<Unit filename="libmng.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng.h" />
 		<Unit filename="libmng_callback_xs.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="libmng_chunk_io.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="libmng_chunk_io.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng_chunk_io.h" />
 		<Unit filename="libmng_chunk_prc.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="libmng_chunk_prc.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng_chunk_prc.h" />
 		<Unit filename="libmng_chunk_xs.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="libmng_chunks.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng_chunks.h" />
 		<Unit filename="libmng_cms.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="libmng_cms.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="libmng_conf.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="libmng_data.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng_cms.h" />
+		<Unit filename="libmng_conf.h" />
+		<Unit filename="libmng_data.h" />
 		<Unit filename="libmng_display.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="libmng_display.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng_display.h" />
 		<Unit filename="libmng_dither.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="libmng_dither.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng_dither.h" />
 		<Unit filename="libmng_error.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="libmng_error.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng_error.h" />
 		<Unit filename="libmng_filter.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="libmng_filter.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng_filter.h" />
 		<Unit filename="libmng_hlapi.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="libmng_jpeg.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="libmng_jpeg.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="libmng_memory.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng_jpeg.h" />
+		<Unit filename="libmng_memory.h" />
 		<Unit filename="libmng_object_prc.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="libmng_object_prc.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="libmng_objects.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng_object_prc.h" />
+		<Unit filename="libmng_objects.h" />
 		<Unit filename="libmng_pixels.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="libmng_pixels.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng_pixels.h" />
 		<Unit filename="libmng_prop_xs.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="libmng_read.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="libmng_read.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng_read.h" />
 		<Unit filename="libmng_trace.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="libmng_trace.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="libmng_types.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng_trace.h" />
+		<Unit filename="libmng_types.h" />
 		<Unit filename="libmng_write.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="libmng_write.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng_write.h" />
 		<Unit filename="libmng_zlib.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="libmng_zlib.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="libmng_zlib.h" />
+		<Extensions>
+			<code_completion />
+		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

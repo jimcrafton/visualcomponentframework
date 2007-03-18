@@ -1,5 +1,5 @@
 #ifndef _VCF_XCBUITOOLKIT_H__
-#define _VCF_XCBUITOOLKIT_H__ 
+#define _VCF_XCBUITOOLKIT_H__
 
 /*
 Copyright 2000-2006 The VCF Project, Orhun Birsoy.
@@ -11,6 +11,8 @@ namespace VCF
 {
 
 class XCBWindowPeer;
+
+typedef void* XCBVoidCookie;
 
 class XCBUIToolkit : public UIToolkit
 {
@@ -75,7 +77,7 @@ protected:
 
 	virtual CommonPrintDialogPeer* internal_createCommonPrintDialogPeer( Control* owner );
 
-	virtual DesktopPeer* internal_createDesktopPeer( Desktop* desktop );
+	virtual UIShellPeer* internal_createDesktopPeer( UIShell* shell );
 
 	virtual ScrollPeer* internal_createScrollPeer( Control* control );
 

@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="5" />
+	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="RegExKitDLL" />
 		<Option default_target="linux_Debug" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\..\bin\RegExKit_$(COMPILER)$(COMPILER_VER).dll" prefix_auto="0" extension_auto="0" />
-				<Option object_output="mgcc\ReleaseDLL\" />
-				<Option external_deps="$(VCF_ROOT)\lib\libFoundationKit_mgcc.a;" />
+				<Option output="../../../bin/RegExKit_$(COMPILER)$(COMPILER_VER).dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="mgcc/ReleaseDLL/" />
+				<Option external_deps="$(VCF_ROOT)/lib/libFoundationKit_mgcc.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createStaticLib="1" />
@@ -41,7 +40,7 @@
 					<Add option="-DRegExKit_DLL" />
 					<Add option="-DRegExKit_EXPORTS" />
 					<Add option="-DNOT_RUBY" />
-					<Add directory="$(VCF_ROOT)\src\thirdparty\common\oniguruma" />
+					<Add directory="$(VCF_ROOT)/src/thirdparty/common/oniguruma" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -66,15 +65,15 @@
 					<Add after="cmd /c move ..\..\..\bin\libRegExKit_$(COMPILER)$(COMPILER_VER).a ..\..\..\lib\libRegExKit_$(COMPILER)$(COMPILER_VER).a" />
 				</ExtraCommands>
 				<Environment>
-					<Variable name="COMPILER" value="mgcc" />
-					<Variable name="GCH_DIR" value="..\RegExKit\$(COMPILER)$(COMPILER_VER)\ReleaseDLL\src" />
 					<Variable name="COMPILER_VER" value="" />
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="GCH_DIR" value="../RegExKit/$(COMPILER)$(COMPILER_VER)/ReleaseDLL/src" />
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\..\bin\RegExKit_$(COMPILER)$(COMPILER_VER)_d.dll" prefix_auto="0" extension_auto="0" />
-				<Option object_output="mgcc\DebugDLL\" />
-				<Option external_deps="$(VCF_ROOT)\lib\libFoundationKit_mgcc_d.a;" />
+				<Option output="../../../bin/RegExKit_$(COMPILER)$(COMPILER_VER)_d.dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="mgcc/DebugDLL/" />
+				<Option external_deps="$(VCF_ROOT)/lib/libFoundationKit_mgcc_d.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createStaticLib="1" />
@@ -103,7 +102,7 @@
 					<Add option="-DRegExKit_DLL" />
 					<Add option="-DRegExKit_EXPORTS" />
 					<Add option="-DNOT_RUBY" />
-					<Add directory="$(VCF_ROOT)\src\thirdparty\common\oniguruma" />
+					<Add directory="$(VCF_ROOT)/src/thirdparty/common/oniguruma" />
 				</Compiler>
 				<Linker>
 					<Add option="-Wl,--enable-runtime-pseudo-reloc" />
@@ -127,15 +126,15 @@
 					<Add after="cmd /c move ..\..\..\bin\libRegExKit_$(COMPILER)$(COMPILER_VER)_d.a ..\..\..\lib\libRegExKit_$(COMPILER)$(COMPILER_VER)_d.a" />
 				</ExtraCommands>
 				<Environment>
-					<Variable name="COMPILER" value="mgcc" />
-					<Variable name="GCH_DIR" value="..\RegExKit\$(COMPILER)$(COMPILER_VER)\DebugDLL\src" />
 					<Variable name="COMPILER_VER" value="" />
+					<Variable name="COMPILER" value="mgcc" />
+					<Variable name="GCH_DIR" value="../RegExKit/$(COMPILER)$(COMPILER_VER)/DebugDLL/src" />
 				</Environment>
 			</Target>
 			<Target title="linux_Debug">
-				<Option output="..\..\..\bin\libRegExKit_d.so" prefix_auto="0" extension_auto="0" />
-				<Option object_output="linux\DebugDLL\" />
-				<Option external_deps="$(VCF_ROOT)\lib\libFoundationKit_d.so;" />
+				<Option output="../../../bin/libRegExKit_d.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="linux/DebugDLL/" />
+				<Option external_deps="$(VCF_ROOT)/lib/libFoundationKit_d.so;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="2" />
@@ -154,9 +153,9 @@
 					<Add option="-D_DEBUG" />
 					<Add option="-DVCF_XCB" />
 					<Add option="-DNOT_RUBY" />
-					<Add directory="\usr\local\include\X11\XCB" />
-					<Add directory="\usr\include\freetype2" />
-					<Add directory="$(VCF_ROOT)\src\thirdparty\common\oniguruma" />
+					<Add directory="/usr/local/include/X11/XCB" />
+					<Add directory="/usr/include/freetype2" />
+					<Add directory="$(VCF_ROOT)/src/thirdparty/common/oniguruma" />
 				</Compiler>
 				<Linker>
 					<Add option="-Wl" />
@@ -165,15 +164,15 @@
 					<Add library="fontconfig" />
 				</Linker>
 				<Environment>
-					<Variable name="COMPILER" value="gcc" />
-					<Variable name="GCH_DIR" value="..\RegExKit\$(COMPILER)$(COMPILER_VER)\DebugDLL\src" />
 					<Variable name="COMPILER_VER" value="4" />
+					<Variable name="COMPILER" value="gcc" />
+					<Variable name="GCH_DIR" value="../RegExKit/$(COMPILER)$(COMPILER_VER)/DebugDLL/src" />
 				</Environment>
 			</Target>
 			<Target title="linux_Release">
-				<Option output="..\..\..\bin\libRegExKit.so" prefix_auto="0" extension_auto="0" />
-				<Option object_output="linux\ReleaseDLL\" />
-				<Option external_deps="$(VCF_ROOT)\lib\libFoundationKit.so;" />
+				<Option output="../../../bin/libRegExKit.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="linux/ReleaseDLL/" />
+				<Option external_deps="$(VCF_ROOT)/lib/libFoundationKit.so;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="2" />
@@ -192,9 +191,9 @@
 					<Add option="-D_NDEBUG" />
 					<Add option="-DVCF_XCB" />
 					<Add option="-DNOT_RUBY" />
-					<Add directory="\usr\local\include\X11\XCB" />
-					<Add directory="\usr\include\freetype2" />
-					<Add directory="$(VCF_ROOT)\src\thirdparty\common\oniguruma" />
+					<Add directory="/usr/local/include/X11/XCB" />
+					<Add directory="/usr/include/freetype2" />
+					<Add directory="$(VCF_ROOT)/src/thirdparty/common/oniguruma" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -204,9 +203,9 @@
 					<Add library="fontconfig" />
 				</Linker>
 				<Environment>
-					<Variable name="COMPILER" value="gcc" />
-					<Variable name="GCH_DIR" value="..\RegExKit\$(COMPILER)$(COMPILER_VER)\DebugDLL\src" />
 					<Variable name="COMPILER_VER" value="4" />
+					<Variable name="COMPILER" value="gcc" />
+					<Variable name="GCH_DIR" value="../RegExKit/$(COMPILER)$(COMPILER_VER)/DebugDLL/src" />
 				</Environment>
 			</Target>
 		</Build>
@@ -215,434 +214,162 @@
 		</VirtualTargets>
 		<Compiler>
 			<Add directory="$(GCH_DIR)" />
-			<Add directory="..\..\..\src" />
+			<Add directory="../../../src" />
 		</Compiler>
 		<Linker>
-			<Add directory="..\..\..\lib" />
-			<Add directory="..\..\..\bin" />
+			<Add directory="../../../lib" />
+			<Add directory="../../../bin" />
 		</Linker>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\config.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\ascii.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/config.h" />
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/ascii.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\big5.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/big5.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\euc_jp.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/euc_jp.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\euc_kr.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/euc_kr.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\euc_tw.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/euc_tw.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\gb18030.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/gb18030.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\iso8859_1.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/iso8859_1.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\iso8859_10.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/iso8859_10.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\iso8859_11.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/iso8859_11.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\iso8859_13.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/iso8859_13.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\iso8859_14.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/iso8859_14.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\iso8859_15.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/iso8859_15.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\iso8859_16.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/iso8859_16.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\iso8859_2.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/iso8859_2.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\iso8859_3.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/iso8859_3.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\iso8859_4.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/iso8859_4.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\iso8859_5.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/iso8859_5.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\iso8859_6.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/iso8859_6.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\iso8859_7.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/iso8859_7.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\iso8859_8.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/iso8859_8.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\iso8859_9.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/iso8859_9.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\koi8.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/koi8.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\koi8_r.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/koi8_r.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\mktable.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/mktable.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\sjis.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/sjis.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\unicode.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/unicode.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\utf16_be.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/utf16_be.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\utf16_le.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/utf16_le.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\utf32_be.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/utf32_be.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\utf32_le.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/utf32_le.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\enc\utf8.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/enc/utf8.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\onig_cpp.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\oniggnu.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\onigposix.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\oniguruma.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\regcomp.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/onig_cpp.h" />
+		<Unit filename="../../../src/thirdparty/common/oniguruma/oniggnu.h" />
+		<Unit filename="../../../src/thirdparty/common/oniguruma/onigposix.h" />
+		<Unit filename="../../../src/thirdparty/common/oniguruma/oniguruma.h" />
+		<Unit filename="../../../src/thirdparty/common/oniguruma/regcomp.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\regenc.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/regenc.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\regenc.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\regerror.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/regenc.h" />
+		<Unit filename="../../../src/thirdparty/common/oniguruma/regerror.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\regexec.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/regexec.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\regext.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/regext.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\reggnu.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/reggnu.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\regint.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\regparse.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/regint.h" />
+		<Unit filename="../../../src/thirdparty/common/oniguruma/regparse.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\regparse.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\regposerr.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/regparse.h" />
+		<Unit filename="../../../src/thirdparty/common/oniguruma/regposerr.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\regposix.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/regposix.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\regsyntax.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/regsyntax.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\regtrav.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/regtrav.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\regversion.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/regversion.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\st.c">
+		<Unit filename="../../../src/thirdparty/common/oniguruma/st.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\thirdparty\common\oniguruma\st.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\RegExKit\RegExKit.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\RegExKit\RegExKit.h">
-			<Option compilerVar="CPP" />
-			<Option link="0" />
+		<Unit filename="../../../src/thirdparty/common/oniguruma/st.h" />
+		<Unit filename="../../../src/vcf/RegExKit/RegExKit.cpp" />
+		<Unit filename="../../../src/vcf/RegExKit/RegExKit.h">
+			<Option compile="1" />
 			<Option weight="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="..\..\..\src\vcf\RegExKit\RegExKitRTTI.inl">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\RegExKit\RegExKitSelectLib.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
+		<Unit filename="../../../src/vcf/RegExKit/RegExKitRTTI.inl" />
+		<Unit filename="../../../src/vcf/RegExKit/RegExKitSelectLib.h" />
+		<Extensions>
+			<code_completion />
+		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

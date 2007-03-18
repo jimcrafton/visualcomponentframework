@@ -174,9 +174,9 @@ CommonPrintDialogPeer* XCBUIToolkit::internal_createCommonPrintDialogPeer( Contr
 	return NULL;
 }
 
-DesktopPeer* XCBUIToolkit::internal_createDesktopPeer( Desktop* desktop )
+UIShellPeer* XCBUIToolkit::internal_createDesktopPeer( UIShell* shell )
 {
-	return new XCBDesktopPeer( desktop );
+	return new XCBUIShellPeer( shell );
 }
 
 ScrollPeer* XCBUIToolkit::internal_createScrollPeer( Control* control )
@@ -332,7 +332,7 @@ Event* XCBUIToolkit::internal_createEventFromNativeOSEventData( void* eventData 
 Size XCBUIToolkit::internal_getDragDropDelta()
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return Size();	
+	return Size();
 }
 
 void XCBUIToolkit::internal_displayHelpContents( const String& helpBookName, const String& helpDirectory )
@@ -365,7 +365,7 @@ void XCBUIToolkit::consoleQuitHandler( int sig )
 {
 	signal(sig, SIG_IGN);
 	UIToolkit* toolkit = UIToolkit::internal_getDefaultUIToolkit();
-	
+
 	XCBUIToolkit* xcbUIToolkit = dynamic_cast<XCBUIToolkit*>(toolkit);
 	if(xcbUIToolkit != NULL)
 	{
