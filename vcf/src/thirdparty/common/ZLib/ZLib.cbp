@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="5" />
+	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="ZLib" />
-		<Option default_target="" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\..\..\lib\libZLib_$(COMPILER)$(COMPILER_VER)_s.a" prefix_auto="0" extension_auto="0" />
+				<Option output="../../../../lib/libZLib_$(COMPILER)$(COMPILER_VER)_s.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)\Release\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)/Release/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option projectIncludeDirsRelation="2" />
@@ -37,14 +35,14 @@
 					<Add option="-s" />
 				</Linker>
 				<Environment>
-					<Variable name="COMPILER" value="mgcc" />
 					<Variable name="COMPILER_VER" value="" />
+					<Variable name="COMPILER" value="mgcc" />
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\..\..\lib\libZLib_$(COMPILER)$(COMPILER_VER)_sd.a" prefix_auto="0" extension_auto="0" />
+				<Option output="../../../../lib/libZLib_$(COMPILER)$(COMPILER_VER)_sd.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)\Debug\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)/Debug/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option projectIncludeDirsRelation="2" />
@@ -68,14 +66,14 @@
 					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
 				</Compiler>
 				<Environment>
-					<Variable name="COMPILER" value="mgcc" />
 					<Variable name="COMPILER_VER" value="" />
+					<Variable name="COMPILER" value="mgcc" />
 				</Environment>
 			</Target>
 			<Target title="linux_Debug">
-				<Option output="..\..\..\..\lib\libZLib_sd.a" prefix_auto="0" extension_auto="0" />
+				<Option output="../../../../lib/libZLib_sd.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="linux\Debug\" />
+				<Option object_output="linux/Debug/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option projectIncludeDirsRelation="2" />
@@ -92,14 +90,14 @@
 					<Add option="-D_DEBUG" />
 				</Compiler>
 				<Environment>
-					<Variable name="COMPILER" value="gcc" />
 					<Variable name="COMPILER_VER" value="4" />
+					<Variable name="COMPILER" value="gcc" />
 				</Environment>
 			</Target>
 			<Target title="linux_Release">
-				<Option output="..\..\..\..\lib\libZLib_s.a" prefix_auto="0" extension_auto="0" />
+				<Option output="../../../../lib/libZLib_s.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="linux\Release\" />
+				<Option object_output="linux/Release/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option projectIncludeDirsRelation="2" />
@@ -119,8 +117,8 @@
 					<Add option="-s" />
 				</Linker>
 				<Environment>
-					<Variable name="COMPILER" value="gcc" />
 					<Variable name="COMPILER_VER" value="4" />
+					<Variable name="COMPILER" value="gcc" />
 				</Environment>
 			</Target>
 		</Build>
@@ -128,181 +126,56 @@
 			<Add alias="All" targets="mingw_Release;mingw_Debug;linux_Debug;linux_Release;" />
 		</VirtualTargets>
 		<Compiler>
-			<Add directory="..\ZLib" />
+			<Add directory="../ZLib" />
 		</Compiler>
 		<Unit filename="adler32.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="compress.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="crc32.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="crc32.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
+		<Unit filename="crc32.h" />
 		<Unit filename="deflate.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="deflate.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
+		<Unit filename="deflate.h" />
 		<Unit filename="gzio.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="infback.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
 		<Unit filename="inffast.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="inffast.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
-		<Unit filename="inffixed.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
+		<Unit filename="inffast.h" />
+		<Unit filename="inffixed.h" />
 		<Unit filename="inflate.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="inflate.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
+		<Unit filename="inflate.h" />
 		<Unit filename="inftrees.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="inftrees.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
+		<Unit filename="inftrees.h" />
 		<Unit filename="trees.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="trees.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
+		<Unit filename="trees.h" />
 		<Unit filename="uncompr.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="zconf.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
-		<Unit filename="zlib.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
+		<Unit filename="zconf.h" />
+		<Unit filename="zlib.h" />
 		<Unit filename="zutil.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
 		</Unit>
-		<Unit filename="zutil.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-			<Option target="linux_Debug" />
-			<Option target="linux_Release" />
-		</Unit>
+		<Unit filename="zutil.h" />
+		<Extensions>
+			<code_completion />
+		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

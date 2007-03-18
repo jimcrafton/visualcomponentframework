@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="5" />
+	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="OpenGLKit" />
-		<Option default_target="" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\..\lib\libOpenGLKit_$(COMPILER)$(COMPILER_VER)_s.a" prefix_auto="0" extension_auto="0" />
+				<Option output="../../../lib/libOpenGLKit_$(COMPILER)$(COMPILER_VER)_s.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)\ReleaseS\" />
-				<Option external_deps="$(VCF_ROOT)\lib\libApplicationKit_mgcc_s.a;" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)/ReleaseS/" />
+				<Option external_deps="$(VCF_ROOT)/lib/libApplicationKit_mgcc_s.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -41,15 +39,15 @@
 					<Add library="ApplicationKit_$(COMPILER)$(COMPILER_VER)_s" />
 				</Linker>
 				<Environment>
-					<Variable name="COMPILER" value="mgcc" />
 					<Variable name="COMPILER_VER" value="" />
+					<Variable name="COMPILER" value="mgcc" />
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\..\lib\libOpenGLKit_$(COMPILER)$(COMPILER_VER)_sd.a" prefix_auto="0" extension_auto="0" />
+				<Option output="../../../lib/libOpenGLKit_$(COMPILER)$(COMPILER_VER)_sd.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)DebugS\" />
-				<Option external_deps="$(VCF_ROOT)\lib\libApplicationKit_mgcc_sd.a;" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)DebugS/" />
+				<Option external_deps="$(VCF_ROOT)/lib/libApplicationKit_mgcc_sd.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -78,8 +76,8 @@
 					<Add library="ApplicationKit_$(COMPILER)$(COMPILER_VER)_sd" />
 				</Linker>
 				<Environment>
-					<Variable name="COMPILER" value="mgcc" />
 					<Variable name="COMPILER_VER" value="" />
+					<Variable name="COMPILER" value="mgcc" />
 				</Environment>
 			</Target>
 		</Build>
@@ -87,73 +85,24 @@
 			<Add alias="All" targets="mingw_Release;mingw_Debug;" />
 		</VirtualTargets>
 		<Compiler>
-			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
-			<Add directory='&quot;$(VCF_ROOT)\src\thirdparty\common\agg\include&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)/src&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)/src/thirdparty/common/agg/include&quot;' />
 		</Compiler>
 		<Linker>
-			<Add directory='&quot;$(VCF_ROOT)\lib&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)/lib&quot;' />
 		</Linker>
-		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLControl.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLControl.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLControlContext.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLKit.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLPeer.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLToolkit.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\OpenGLKit\VCFOpenGL.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\OpenGLKit\Win32OpenGLPeer.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLControl.cpp" />
+		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLControl.h" />
+		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLControlContext.cpp" />
+		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLControlContext.h" />
+		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLKit.h" />
+		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLPeer.h" />
+		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLToolkit.cpp" />
+		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLToolkit.h" />
+		<Unit filename="../../../src/vcf/OpenGLKit/VCFOpenGL.h" />
+		<Unit filename="../../../src/vcf/OpenGLKit/Win32OpenGLPeer.cpp" />
+		<Extensions>
+			<code_completion />
+		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

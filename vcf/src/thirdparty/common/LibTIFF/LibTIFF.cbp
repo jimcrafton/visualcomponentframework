@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="5" />
+	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="LibTIFF" />
 		<Option pch_mode="0" />
-		<Option default_target="" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\..\..\lib\libLibTIFF_$(COMPILER)$(COMPILER_VER)_s.a" prefix_auto="0" extension_auto="0" />
+				<Option output="../../../../lib/libLibTIFF_$(COMPILER)$(COMPILER_VER)_s.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)\Release\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)/Release/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -39,14 +37,14 @@
 					<Add option="-s" />
 				</Linker>
 				<Environment>
-					<Variable name="COMPILER" value="mgcc" />
 					<Variable name="COMPILER_VER" value="" />
+					<Variable name="COMPILER" value="mgcc" />
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\..\..\lib\libLibTIFF_$(COMPILER)$(COMPILER_VER)_sd.a" prefix_auto="0" extension_auto="0" />
+				<Option output="../../../../lib/libLibTIFF_$(COMPILER)$(COMPILER_VER)_sd.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)\Debug\" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)/Debug/" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -71,8 +69,8 @@
 					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
 				</Compiler>
 				<Environment>
-					<Variable name="COMPILER" value="mgcc" />
 					<Variable name="COMPILER_VER" value="" />
+					<Variable name="COMPILER" value="mgcc" />
 				</Environment>
 			</Target>
 		</Build>
@@ -80,272 +78,129 @@
 			<Add alias="All" targets="mingw_Release;mingw_Debug;" />
 		</VirtualTargets>
 		<Compiler>
-			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
-			<Add directory="..\ZLib" />
+			<Add directory='&quot;$(VCF_ROOT)/src&quot;' />
+			<Add directory="../ZLib" />
 		</Compiler>
-		<Unit filename="t4.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="t4.h" />
 		<Unit filename="tif_aux.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_close.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_codec.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_color.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_compress.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="tif_config.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="tif_config.h" />
 		<Unit filename="tif_dir.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="tif_dir.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="tif_dir.h" />
 		<Unit filename="tif_dirinfo.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_dirread.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_dirwrite.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_dumpmode.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_error.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_extension.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_fax3.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="tif_fax3.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="tif_fax3.h" />
 		<Unit filename="tif_fax3sm.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_flush.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_getimage.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_jpeg.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_luv.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_lzw.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_next.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_ojpeg.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_open.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_packbits.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_pixarlog.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_predict.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="tif_predict.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="tif_predict.h" />
 		<Unit filename="tif_print.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_read.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="tif_stream.cxx">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="tif_stream.cxx" />
 		<Unit filename="tif_strip.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_swab.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_thunder.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_tile.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_version.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_warning.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_write.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Unit filename="tif_zip.c">
 			<Option compilerVar="CC" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
-		<Unit filename="tiff.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="tiffconf.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="tiffio.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="tiffio.hxx">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="tiffiop.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="tiffvers.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="uvcode.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="tiff.h" />
+		<Unit filename="tiffconf.h" />
+		<Unit filename="tiffio.h" />
+		<Unit filename="tiffio.hxx" />
+		<Unit filename="tiffiop.h" />
+		<Unit filename="tiffvers.h" />
+		<Unit filename="uvcode.h" />
+		<Extensions>
+			<code_completion />
+		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

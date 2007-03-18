@@ -1299,7 +1299,7 @@ public:
 	}
 
 	TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>& operator=( const TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>& rhs ) {
-		TypedMethod<SOURCE_TYPE>::operator =(rhs);		
+		TypedMethod<SOURCE_TYPE>::operator =(rhs);
 		return *this;
 	}
 
@@ -1395,7 +1395,8 @@ public:
 		methodPtr_ = methodPtr;
 	}
 
-	TypedMethodArg1( const TypedMethodArg1<SOURCE_TYPE,ARG1_TYPE>& method )  {
+	TypedMethodArg1( const TypedMethodArg1<SOURCE_TYPE,ARG1_TYPE>& method ) :
+        TypedMethod<SOURCE_TYPE>( method ) {
 		*this = method;
 	}
 
@@ -1524,7 +1525,8 @@ public:
 		methodPtr_ = methodPtr;
 	}
 
-	TypedMethodArg3( const TypedMethodArg3<SOURCE_TYPE,ARG1_TYPE,ARG2_TYPE,ARG3_TYPE>& method )  {
+	TypedMethodArg3( const TypedMethodArg3<SOURCE_TYPE,ARG1_TYPE,ARG2_TYPE,ARG3_TYPE>& method ):
+        TypedMethod<SOURCE_TYPE>( method )  {
 		*this = method;
 	}
 
@@ -1596,7 +1598,8 @@ public:
 		methodPtr_ = methodPtr;
 	}
 
-	TypedMethodArg4( const TypedMethodArg4Type& method )  {
+	TypedMethodArg4( const TypedMethodArg4Type& method ) :
+        TypedMethod<SOURCE_TYPE>( method ){
 		*this = method;
 	}
 
@@ -1672,7 +1675,8 @@ public:
 		methodPtr_ = methodPtr;
 	}
 
-	TypedMethodArg5( const TypedMethodArg5Type& method )  {
+	TypedMethodArg5( const TypedMethodArg5Type& method ) :
+        TypedMethod<SOURCE_TYPE>( method ) {
 
 		*this = method;
 	}
@@ -1750,7 +1754,8 @@ public:
 		methodPtr_ = methodPtr;
 	}
 
-	TypedMethodArg6( const TypedMethodArg6Type& method )  {
+	TypedMethodArg6( const TypedMethodArg6Type& method ) :
+        TypedMethod<SOURCE_TYPE>( method ) {
 		TypedMethod<SOURCE_TYPE>::operator =( method ); /* was rhs instead of method (why??) */
 
 		methodPtr_ = method.methodPtr_; /* was rhs instead of method (why??) */
@@ -1820,7 +1825,8 @@ public:
 		methodPtr_ = methodPtr;
 	}
 
-	TypedMethodArg0Return( const TypedMethodArg0ReturnType& method )  {
+	TypedMethodArg0Return( const TypedMethodArg0ReturnType& method ):
+        TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>( method ) {
 		*this = method;
 	}
 
@@ -1886,7 +1892,8 @@ public:
 		methodPtr_ = methodPtr;
 	}
 
-	TypedMethodArg1Return( const TypedMethodArg1ReturnType& method )  {
+	TypedMethodArg1Return( const TypedMethodArg1ReturnType& method ) :
+        TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>( method ) {
 		*this = method;
 	}
 
@@ -1957,7 +1964,8 @@ public:
 		methodPtr_ = methodPtr;
 	}
 
-	TypedMethodArg2Return( const TypedMethodArg2ReturnType& method )  {
+	TypedMethodArg2Return( const TypedMethodArg2ReturnType& method ) :
+        TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>( method ) {
 		*this = method;
 	}
 
@@ -2026,11 +2034,12 @@ public:
 		methodPtr_ = methodPtr;
 	}
 
-	TypedMethodArg3Return( const TypedMethodArg3ReturnType& rhs )  {
-		*this = rhs;
+	TypedMethodArg3Return( const TypedMethodArg3ReturnType& method )  :
+        TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>( method ) {
+		*this = method;
 	}
 
-	TypedMethodArg3ReturnType& operator=( const TypedMethodArg3ReturnType& rhs ) {
+	TypedMethodArg3ReturnType& operator=( const TypedMethodArg3ReturnType& rhs )  {
 		TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>::operator =( rhs );
 		methodPtr_ = rhs.methodPtr_;
 
@@ -2101,7 +2110,8 @@ public:
 		methodPtr_ = methodPtr;
 	}
 
-	TypedMethodArg4Return( const TypedMethodArg4ReturnType& method )  {
+	TypedMethodArg4Return( const TypedMethodArg4ReturnType& method ) :
+        TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>( method )  {
 		*this = method;
 	}
 
@@ -2179,7 +2189,8 @@ public:
 		methodPtr_ = methodPtr;
 	}
 
-	TypedMethodArg5Return( const TypedMethodArg5ReturnType& method )  {
+	TypedMethodArg5Return( const TypedMethodArg5ReturnType& method ) :
+        TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>( method )  {
 		*this = method;
 	}
 
@@ -2259,7 +2270,8 @@ public:
 		methodPtr_ = methodPtr;
 	}
 
-	TypedMethodArg6Return( const TypedMethodArg6ReturnType& method )  {
+	TypedMethodArg6Return( const TypedMethodArg6ReturnType& method ) :
+        TypedMethodReturn<SOURCE_TYPE,RETURN_TYPE>( method )  {
 		*this = method;
 	}
 
