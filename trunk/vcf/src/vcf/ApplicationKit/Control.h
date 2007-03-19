@@ -240,7 +240,9 @@ public:
 		csAllowPaintNotification	= 0x00000100,
 		csHasMouseCapture			= 0x00000200,
 		csUseRenderBuffer			= 0x00000400,
-		csDefaultControlState = csEnabled | csTabStop | csDoubleBuffered
+		csAllowMouseFocus			= 0x00000800,
+		csAllowFocus				= 0x00001000,
+		csDefaultControlState = csEnabled | csTabStop | csDoubleBuffered | csAllowMouseFocus | csAllowFocus
 	};
 
 	enum MinMaxSizeDefaults{
@@ -747,6 +749,14 @@ public:
 	FocusLost event).
 	*/
 	Control* setFocused();
+
+	bool getAllowsFocus();
+
+	void setAllowsFocus( const bool& val );
+
+	bool getAllowsMouseFocus();
+
+	void setAllowsMouseFocus( const bool& val );
 
 	/**
 	*returns whether the control is enabled or not. A control that is

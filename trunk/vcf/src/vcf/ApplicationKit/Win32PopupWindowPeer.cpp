@@ -6,6 +6,8 @@
 #include "vcf/ApplicationKit/PopupWindowPeer.h"
 #include "vcf/ApplicationKit/Win32Window.h"
 #include "vcf/ApplicationKit/Win32PopupWindowPeer.h"
+#include "vcf/ApplicationKit/PopupWindow.h"
+
 
 using namespace VCF;
 
@@ -37,6 +39,10 @@ public:
 
 		return Win32PopupHook::hookInstance;
 	}
+
+	void setCurrentPopupHwnd( HWND val ) {
+		currentPopupHwnd_ = val;
+	}
 protected:
 	static Win32PopupHook* hookInstance;
 	static LRESULT CALLBACK MouseProc( int nCode, WPARAM wParam, LPARAM lParam );
@@ -46,15 +52,18 @@ protected:
 	HHOOK keyboardHook_;
 	HHOOK activateAndKBHook_;
 	int refs_;
+	HWND currentPopupHwnd_;
 private:
 
-	Win32PopupHook():refs_(0),mouseHook_(NULL),activateAndKBHook_(NULL){
+	Win32PopupHook():refs_(0),mouseHook_(NULL),activateAndKBHook_(NULL),currentPopupHwnd_(NULL){
 		mouseHook_ = SetWindowsHookEx( WH_MOUSE, Win32PopupHook::MouseProc, NULL, GetCurrentThreadId() );
 		activateAndKBHook_ = SetWindowsHookEx( WH_CALLWNDPROC, Win32PopupHook::ActivateAndKBProc, NULL, GetCurrentThreadId() );
 	}
 
 	~Win32PopupHook(){
-		UnhookWindowsHookEx( mouseHook_ );
+		if ( !UnhookWindowsHookEx( mouseHook_ ) ) {
+			int err = GetLastError();
+		}
 		UnhookWindowsHookEx( activateAndKBHook_ );
 		mouseHook_ = NULL;
 		activateAndKBHook_ = NULL;
@@ -63,41 +72,69 @@ private:
 
 Win32PopupHook* Win32PopupHook::hookInstance = NULL;
 
+
+
 LRESULT CALLBACK Win32PopupHook::MouseProc( int nCode, WPARAM wParam, LPARAM lParam )
 {
-	Win32PopupHook* hookInst = Win32PopupHook::instance();
+	if ( NULL != Win32PopupHook::hookInstance ) {
+		if ( (WM_LBUTTONDOWN == wParam) || (WM_MBUTTONDOWN == wParam) || (WM_RBUTTONDOWN == wParam) ) {
+			//close the popup!!!
+			MOUSEHOOKSTRUCT* mh = (MOUSEHOOKSTRUCT*)lParam;
+			BOOL isChild = IsChild( Win32PopupHook::hookInstance->currentPopupHwnd_, mh->hwnd );
+			StringUtils::trace( Format("IsChild %d hwnd %p, popup hwnd %p\n") % isChild % 
+									mh->hwnd % Win32PopupHook::hookInstance->currentPopupHwnd_ );
+			if ( !isChild ) {
+				StringUtils::trace( "Win32PopupHook::MouseProc posting WM_CLOSE\n" );
+				PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+			}
+		}
+		else if ( (wParam == WM_NCLBUTTONDOWN) ||
+					(wParam == WM_NCMBUTTONDOWN) ||
+					(wParam == WM_NCRBUTTONDOWN) ) {
 
-	if ( (WM_LBUTTONDOWN == wParam) || (WM_MBUTTONDOWN == wParam) || (WM_RBUTTONDOWN == wParam) ) {
-		//close the popup!!!
-		MOUSEHOOKSTRUCT* mh = (MOUSEHOOKSTRUCT*)lParam;
-
-		PostMessage( mh->hwnd, WM_CLOSE, 0, 0 );
+			StringUtils::trace( "Win32PopupHook::MouseProc/WM_NCXBUTTONDOWN posting WM_CLOSE\n" );
+			PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+		}
+		return CallNextHookEx( Win32PopupHook::hookInstance->mouseHook_, nCode, wParam, lParam );
 	}
-	return CallNextHookEx( hookInst->mouseHook_, nCode, wParam, lParam );
+	return 1;
 }
 
 LRESULT CALLBACK Win32PopupHook::ActivateAndKBProc( int nCode, WPARAM wParam, LPARAM lParam )
 {
-	Win32PopupHook* hookInst = Win32PopupHook::instance();
-	CWPSTRUCT* cwp = (CWPSTRUCT*)lParam;
-	if ( cwp->message == WM_ACTIVATE ) {
-		if ( WA_INACTIVE == LOWORD(cwp->wParam) ) {
-			//close the popup!!!
-
-			PostMessage( cwp->hwnd, WM_CLOSE, 0, 0 );
-		}
-	}
-	else if ( cwp->message == WM_KEYUP ) {
-		switch ( wParam ) {
-			case VK_ESCAPE : {
-				PostMessage( cwp->hwnd, WM_CLOSE, 0, 0 );
+	if ( NULL != Win32PopupHook::hookInstance ) {
+		CWPSTRUCT* cwp = (CWPSTRUCT*)lParam;
+		if ( cwp->message == WM_ACTIVATE ) {
+			if ( WA_INACTIVE == LOWORD(cwp->wParam) ) {
+				//close the popup!!!
+				StringUtils::trace( "Win32PopupHook::ActivateAndKBProc/WM_ACTIVATE posting WM_CLOSE\n" );
+				PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
 			}
-			break;
 		}
+		else if ( cwp->message == WM_KEYUP ) {
+			switch ( wParam ) {
+				case VK_ESCAPE : {
+					StringUtils::trace( "Win32PopupHook::ActivateAndKBProc/VK_ESCAPE posting WM_CLOSE\n" );
+					PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+				}
+				break;
+			}
+		}
+		else if ( (cwp->message == WM_NCLBUTTONDOWN) ||
+					(cwp->message == WM_NCMBUTTONDOWN) ||
+					(cwp->message == WM_NCRBUTTONDOWN) ) {
+
+			StringUtils::trace( "Win32PopupHook::ActivateAndKBProc/WM_NCXBUTTONDOWN posting WM_CLOSE\n" );
+			PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+		}
+
+		return CallNextHookEx( Win32PopupHook::hookInstance->activateAndKBHook_, nCode, wParam, lParam );
 	}
 
-	return CallNextHookEx( hookInst->activateAndKBHook_, nCode, wParam, lParam );
+	return 1;	
 }
+
+
 
 
 
@@ -106,6 +143,9 @@ LRESULT CALLBACK Win32PopupHook::ActivateAndKBProc( int nCode, WPARAM wParam, LP
 Win32PopupWindowPeer::Win32PopupWindowPeer( Frame* frame, Window* owner )
 {
 	Win32PopupHook::instance()->inc();
+
+	owner_ = owner;
+	peerControl_ = frame;
 }
 
 
@@ -134,8 +174,14 @@ void Win32PopupWindowPeer::create( Control* owningControl )
 
 		parent = (HWND)owner_->getPeer()->getHandleID();
 	}
+	else {
+		Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
+		parent = toolkit->getDummyParent();	
+	}
 
 
+	// parent can't be NULL otherwise we end up with a "button" in the task bar
+	VCF_ASSERT( NULL != parent );
 
 
 	if ( System::isUnicodeEnabled() ) {
@@ -276,6 +322,12 @@ bool Win32PopupWindowPeer::isActiveWindow()
 	return false;
 }
 
+void Win32PopupWindowPeer::setBorder( Border* border )
+{	
+	VCF_ASSERT(NULL != hwnd_);
+	SetWindowPos(hwnd_, NULL,0,0,0,0, SWP_FRAMECHANGED|SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE);
+}
+
 bool Win32PopupWindowPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc )
 {
 	bool result = false;
@@ -283,55 +335,58 @@ bool Win32PopupWindowPeer::handleEventMessages( UINT message, WPARAM wParam, LPA
 
 	switch ( message ) {
 		case WM_CLOSE:{
-			/*
-			Dialog* dlg = (Dialog*)peerControl_;
+			
+			PopupWindow* popup = (PopupWindow*)peerControl_;
 
-			if ( dlg->allowClose() ) {
+			VCF::WindowEvent event( popup, WINDOW_EVENT_CLOSE );
 
-				VCF::WindowEvent event( dlg, WINDOW_EVENT_CLOSE );
-
-
-				dlg->FrameClose.fireEvent( &event );
-
-				if ( dlg->isModal() ) {
-					if ( NULL != dlg->getOwner() ) {
-						dlg->getOwner()->setEnabled( true );
-					}
-					else if ( NULL != Application::getRunningInstance() ){
-						Application::getRunningInstance()->getMainWindow()->setEnabled( true );
-					}
-					else {
-						//thorw exception????
-					}
-				}
-
-				result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
-			}
-			else {
-				//result = true, don't handle further
-				wndProcResult = 0;
-				result = true;
-			}
-			*/
+			popup->FrameClose.fireEvent( &event );
+			
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 		}
 		break;
 
 		case WM_DESTROY:{
-			/*
+			
 			Win32Window::handleEventMessages( message, wParam, lParam, wndProcResult );
-			Dialog* dlg = (Dialog*)peerControl_;
-			if ( NULL != dlg ) {
-				if ( true == dlg->isModal() ) {
+			PopupWindow* popup = (PopupWindow*)peerControl_;
+			if ( NULL != popup ) {
+				if ( popup->isModal() ) {
 					PostQuitMessage(0);
 				}
 			}
-			*/
 		}
 		break;
 
 		case WM_MOUSEACTIVATE : {
 			wndProcResult = MA_NOACTIVATE;
 			result = true;
+		}
+		break;
+
+		case WM_SETFOCUS : {
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+		}
+		break;
+
+		
+		case WM_ACTIVATE : {
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+		}
+		break;
+
+		case WM_LBUTTONDOWN : {
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+		}
+		break;
+
+		case WM_NCACTIVATE : {
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+		}
+		break;
+
+		case WM_NCLBUTTONDOWN : {
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 		}
 		break;
 
@@ -342,22 +397,39 @@ bool Win32PopupWindowPeer::handleEventMessages( UINT message, WPARAM wParam, LPA
 		}
 		break;
 
-		default: result = Win32Window::handleEventMessages( message, wParam, lParam, wndProcResult );
+		default: {
+			result = Win32Window::handleEventMessages( message, wParam, lParam, wndProcResult );
+		}
+		break;
 	}
 	return result;
 }
 
 void Win32PopupWindowPeer::showModal()
 {
+	VCF_ASSERT( NULL != hwnd_ );
+	
 	::ShowWindow( hwnd_, SW_SHOWNOACTIVATE );
+
+	Win32PopupHook::instance()->setCurrentPopupHwnd( hwnd_ );
+
+	UIToolkit::runModalEventLoopFor( peerControl_ );
+
+	StringUtils::trace( "Win32PopupWindowPeer::showModal() done\n" );
 }
 
 void Win32PopupWindowPeer::showAsSheet( Window* owningWindow )
 {
+	VCF_ASSERT( NULL != hwnd_ );
+
+	Win32PopupHook::instance()->setCurrentPopupHwnd( hwnd_ );
+
 	::ShowWindow( hwnd_, SW_SHOWNOACTIVATE );
 }
 
 void Win32PopupWindowPeer::show()
 {
+	VCF_ASSERT( NULL != hwnd_ );
+
 	::ShowWindow( hwnd_, SW_SHOWNOACTIVATE );
 }

@@ -163,6 +163,8 @@ public:
 	
 	virtual bool isActiveFrame();
 
+	virtual void setBorderPath( Path* path );
+
 	void handleEvent( Event* event );
 protected:
 	void postClose( Event* event );

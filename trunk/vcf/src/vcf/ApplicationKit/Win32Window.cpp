@@ -850,6 +850,10 @@ void Win32Window::setText( const VCF::String& text )
 
 }
 
+void Win32Window::setBorderPath( Path* path )
+{
+
+}
 
 /**
 $Id$

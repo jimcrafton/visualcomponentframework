@@ -302,20 +302,20 @@ void Frame::center(uint32 direction)
 {
     Window* owner;
 
-    if(!(direction & fcdOnDesktop))
+    if(!(direction & fcdOnShell))
     {
         owner = static_cast<Window*>(getParent());
 
         if(!owner)
         {
             // We have to center on the desktop
-            direction |= fcdOnDesktop;
+            direction |= fcdOnShell;
         }
     }
 
     double ownerWidth, ownerHeight;
     double ownerX = 0, ownerY = 0;
-    if(direction & fcdOnDesktop)
+    if(direction & fcdOnShell)
     {
         ownerWidth = UIShell::getUIShell()->getWidth();
         ownerHeight = UIShell::getUIShell()->getHeight();

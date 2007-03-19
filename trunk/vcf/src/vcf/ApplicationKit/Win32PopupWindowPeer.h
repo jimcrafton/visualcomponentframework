@@ -28,6 +28,8 @@ public:
 
 	virtual Win32Object::CreateParams createParams();
 
+	virtual void setBorder( Border* border );
+
 	virtual void setText( const String& text );
 
 	virtual void setBounds( VCF::Rect* rect );

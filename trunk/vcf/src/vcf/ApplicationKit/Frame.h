@@ -90,7 +90,7 @@ enum FrameCenterDirection {
     /**
     This marks that the frame is centered on the desktop
     */
-    fcdOnDesktop = 0x0002,
+    fcdOnShell = 0x0002,
     /**
     A frame could be centered Horizontaly, ...
     */
@@ -294,6 +294,12 @@ public:
 	virtual bool allowsActivation() = 0;
 
 	/**
+	modifies the border of the frame to follow the 
+	series of points contained in the path. 
+	*/
+	virtual void setBorderPath( Path* path ){};
+
+	/**
 	Sets the icon image. The behaviour of this is partially windowing system dependent,
 	and some systems (Mac OSX, for example, or some X11 window managers) may choose to
 	ignore this. However, typically the icon is displayed in the top left corner of the
@@ -308,6 +314,8 @@ public:
 	virtual Image* getIconImage() = 0;
 	
 	virtual bool isActiveFrame() = 0;
+
+	
 
 	/**
 	A static method uses to determine the current active frame.
@@ -371,9 +379,13 @@ public:
 	void center(uint32 direction = fcdBoth);
 	
 	/**
-	 * Center the frame on the desktop
+	 * Center the frame on the shell/desktop
 	 */
-	void centerOnDesktop(uint32 direction = fcdBoth) { center(direction | fcdOnDesktop); }
+	void centerOnShell(uint32 direction = fcdBoth) { 
+		center(direction | fcdOnShell); 
+	}
+
+	
 protected:
 	static Frame* currentActiveFrame;
 	String caption_;
