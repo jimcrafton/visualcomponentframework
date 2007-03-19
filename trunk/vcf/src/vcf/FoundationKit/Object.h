@@ -51,8 +51,8 @@ and if made then the behaviour is undefined).
 Classes which are heap based (such as all of the UI classes that derive from Component) should
 define their destructor as having protected access. In addition the majority of the cleanup code
 should be placed in the overridden Object::destroy() method as opposed to the class destructor.
-Anything that requires method calls to other object or the class itself (particularly if the method
-is a virtual one) should be moved to the
+Anything that requires method calls to other objects or to the class itself (particularly if the method
+is a virtual one) should be moved to the destroy() method instead of the destructor.
 
 Semantics of the addRef/release usage are as follows:
 An object's refcount indicates "ownership " of the object. In other words, the "owner" of the

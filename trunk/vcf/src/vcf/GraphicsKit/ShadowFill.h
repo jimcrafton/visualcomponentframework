@@ -374,19 +374,9 @@ public:
 			pathBounds.inflate( 2*radius_, 2*radius_ );
 
 			Image* img = GraphicsToolkit::createImage( pathBounds.getWidth(), pathBounds.getHeight() );
-
-			{
-
-				
-				ImageContext ictx = img;
-				ictx->setColor( &color_ );
-				//ictx->rectangle( 0, 0, img->getWidth(), img->getHeight() );
-				//ictx->fillPath();
-				
-			}
 			
 			ColorPixels pix = img;
-			RedChannel mask(pix);
+			AlphaChannel mask(pix);
 			mask.fill(0);//clear out alpha
 			Image* maskImage = mask.createImage();
 
@@ -412,31 +402,12 @@ public:
 				//m *= Matrix2D::translation( (pathBounds.left_  /*+ maskImage->getWidth()/2.0*/ ), 
 				//							(pathBounds.top_ /*+ maskImage->getHeight()/2.0*/ ) );
 				
-/*
-				std::vector<PathPoint> pts;
-				path->getPoints( pts, &m );
-				std::vector<PathPoint>::iterator pit = pts.begin();
-				StringUtils::trace( "xfrmed path: \n" );
-				while ( pit != pts.end() ) {
-					PathPoint& pt = *pit;
-					StringUtils::trace( Format("\tpt: %.2f, %.2f \n") % pt.point_.x_ % pt.point_.y_ );
-
-					pit ++;
-				}
-*/
-
 
 				ictx->setCurrentTransform( m );
 
 				ictx->draw( path );
 
-
-				ictx->setCurrentFill( NULL );				
-
-
-				//ictx->setColor( &Color(alpha_,alpha_,alpha_,alpha_) );
-				//ictx->rectangle( 10, 10, 30, 30 );
-				//ictx->fillPath();
+				ictx->setCurrentFill( NULL );
 
 
 				ictx->flushRenderArea();
@@ -451,50 +422,11 @@ public:
 
 			agg::pixfmt_gray8 pixf(maskRb);
 
-			//stack_blur_x_gray8(pixf, radius_);
-			//stack_blur_y_gray8(pixf, radius_);
+			stack_blur_x_gray8(pixf, radius_);
+			stack_blur_y_gray8(pixf, radius_);
 
-			//mask.updateFromImage( maskImage );
-
-			{
-#if 0 
-				ImageContext ictx = img;
-
-				ictx->bitBlit( 0, 0, maskImage );
-
-#else
-				ColorPixels pix = img;
-				ColorPixels::Type* bits = pix;
-				GrayPixels grPix = maskImage;
-				GrayPixels::Type* grBits = grPix;
+			mask.updateFromImage( maskImage );
 				
-
-				uint32 sz =  grPix.width() * grPix.height();
-				uint32 i = 0;
-
-				for (int y=0;y<pix.height();y++ ) {
-					for (int x=0;x<pix.width();x++ ) {
-						if ( grPix.at(x,y).value >= 250 ) {
-							
-						//pix.at(x,y).r = 255;
-						//pix.at(x,y).g = 0;
-						pix.at(x,y).b = grPix.at(x,y).value;
-						}
-						else{
-							pix.at(x,y).a = 0;
-						}
-					}
-
-				}
-
-				//while ( i < sz ) {
-				//	bits[i].r = grBits[i].value;
-				//	bits[i].g = grBits[i].value;
-				//	bits[i].b = grBits[i].value;
-				//	i++;
-				//}
-#endif				
-			}
 
 			delete maskImage;
 

@@ -61,8 +61,6 @@ void BasicFill::render( Path* path )
 
 		if ( (NULL != context_->getRenderingBuffer()) && antiAlias_ ){
 
-			StringUtils::trace( "BasicFill::render() Base path: \n" );
-
 			agg::rendering_buffer& renderingBuffer = *context_->getRenderingBuffer();
 			agg::path_storage fillPath;
 			agg::rasterizer_scanline_aa<> rasterizer;
@@ -70,8 +68,6 @@ void BasicFill::render( Path* path )
 
 			while ( pathIt != points.end() ) {
 				pt = *pathIt;
-
-				StringUtils::trace( Format("\tpt: %.2f, %.2f type: %d \n") % pt.point_.x_ % pt.point_.y_ % pt.type_ );
 
 				switch ( pt.type_ ){
 					case PathPoint::ptMoveTo: {
@@ -91,18 +87,12 @@ void BasicFill::render( Path* path )
 						pathIt++;
 						c1 = *pathIt;
 
-						StringUtils::trace( Format("\tc1: %.2f, %.2f type: %d \n") % c1.point_.x_ % c1.point_.y_ % c1.type_ );
-
 						pathIt++;
 						c2 = *pathIt;
-
-						StringUtils::trace( Format("\tc2: %.2f, %.2f type: %d \n") % c2.point_.x_ % c2.point_.y_ % c2.type_ );
 
 						pathIt++;
 						p2 = *pathIt;
 						
-						StringUtils::trace( Format("\tp2: %.2f, %.2f type: %d \n") % p2.point_.x_ % p2.point_.y_ % p2.type_ );
-
 						fillPath.curve4( c1.point_.x_, c1.point_.y_,
 										c2.point_.x_, c2.point_.y_,
 										p2.point_.x_, p2.point_.y_ );

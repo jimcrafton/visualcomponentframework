@@ -159,16 +159,14 @@ public:
 		bmpInfo->bmiHeader.biPlanes = 1;
 		bmpInfo->bmiHeader.biBitCount = 8;
 		bmpInfo->bmiHeader.biCompression = BI_RGB;
-		bmpInfo->bmiHeader.biSizeImage = 
-			((width * bmpInfo->bmiHeader.biBitCount + 31) & (~31)) / 8 * height;
+		bmpInfo->bmiHeader.biSizeImage = 0;//width * height;
+			//((width * bmpInfo->bmiHeader.biBitCount + 31) & (~31)) / 8 * height;
 
-		int clrUsed = 0;
-		int c = 1 << bmpInfo->bmiHeader.biBitCount;
-		bmpInfo->bmiHeader.biClrUsed = ((c <= 256) && (c > 1)) ? c : 0;
+		bmpInfo->bmiHeader.biClrUsed = 256;
 		
 		RGBQUAD* colors = &bmpInfo->bmiColors[0];
 		
-		for ( int i=0;i<256;i++ ) {
+		for ( int i=0;i<bmpInfo->bmiHeader.biClrUsed;i++ ) {
 			colors->rgbBlue = i;
 			colors->rgbGreen = i;
 			colors->rgbRed = i;
