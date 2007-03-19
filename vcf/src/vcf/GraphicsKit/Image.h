@@ -209,10 +209,10 @@ public:
 		\li Image::ics8Bit - each channel component is 8 bits in sizem, thus the numerical
 		value of this enum is 8.
 
-		\li Image::ics16Bit - each channel component is 8 bits in sizem, thus the numerical
+		\li Image::ics16Bit - each channel component is 16 bits in sizem, thus the numerical
 		value of this enum is 16.
 
-		\li Image::ics32Bit - each channel component is 8 bits in sizem, thus the numerical
+		\li Image::ics32Bit - each channel component is 32 bits in sizem, thus the numerical
 		value of this enum is 32.
 	
 	The last two types (Image::ics16Bit and Image::ics32Bit) are typically used for high end imaging.

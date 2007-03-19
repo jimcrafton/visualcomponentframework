@@ -456,8 +456,9 @@ void Win32Context::bitBlit( const double& x, const double& y, Rect* imageBounds,
 	BITMAPINFO* bmpInfo = NULL;
 	void* imageBuf = image->getData();
 	
-
 	HDC srcDC = NULL;
+
+	HPALETTE p = (HPALETTE) GetCurrentObject( dc_, OBJ_PAL );
 
 	if ( image->getType() == Image::itColor ) {
 		Win32Image* win32image = (Win32Image*)(image);

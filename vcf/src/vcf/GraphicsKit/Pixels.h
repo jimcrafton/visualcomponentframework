@@ -50,7 +50,6 @@ struct PixelTraits {
 		return GrayScale ? Image::itGrayscale : Image::itColor;
 	}
 
-
 	static Image::ImageChannelSize getChannelSize( Image::ImageDescriptor val ) {
 
 		return (Image::ImageChannelSize)(((val & 0xFFFF) ^ (val & 0xFF)) >> 8);
@@ -451,12 +450,16 @@ namespace VCF {
 	public:
 		typedef PixelType Type;
 
-        Pixels():buffer_(NULL),currentImage_(NULL),width_(0),height_(0) {
+		enum {
+			PixBitsSize = sizeof(Type)
+		};
+
+        Pixels():buffer_(NULL),currentImage_(NULL),width_(0),stride_(0),height_(0) {
 
         }
 
 
-        Pixels( Image* img ):buffer_(NULL),currentImage_(NULL),width_(0),height_(0) {
+        Pixels( Image* img ):buffer_(NULL),currentImage_(NULL),width_(0),stride_(0),height_(0) {
 			assign( img );
 		}
 
@@ -481,13 +484,12 @@ namespace VCF {
 		}
 
 		Type& at( uint32 x, uint32 y ) {
-
-			return ((Type*)buffer_)[(y*width_)+x];
+			return ((Type*)buffer_)[(y*(stride_/PixBitsSize))+x];
 		}
 
 		Type at( uint32 x, uint32 y ) const {
 
-			return ((Type*)buffer_)[(y*width_)+x];
+			return ((Type*)buffer_)[(y*(stride_/PixBitsSize))+x];
 		}
 
 
@@ -507,6 +509,14 @@ namespace VCF {
 				throw PixelException( "You've modified an image's width, potentially while it's locked! Any pixel access may be bogus!" );
 			}
 			return currentImage_->getHeight();
+		}
+
+		uint32 stride() {
+			return stride_;
+		}
+
+		uint32 sizeInBytes() {
+			return height_ * stride_;
 		}
 	protected:
 
@@ -531,6 +541,12 @@ namespace VCF {
 
 			buffer_ = currentImage_->getData();
 
+			if ( img->getType() == Image::itGrayscale ) {
+				stride_ = ((width_ * img->getChannelSize() + 31) & (~31)) / 8;
+			}
+			else {
+				stride_ = width_ * (Type::Traits::getTraitsImageType());
+			}
 			renderBuffer_.attach( (unsigned char*)buffer_, width_, height_,
 								width_ * (Type::Traits::getTraitsImageType()) );
 		}
@@ -554,6 +570,7 @@ namespace VCF {
 		void* buffer_;
 		Image* currentImage_;
 		uint32 width_;
+		uint32 stride_;
 		uint32 height_;
 		agg::rendering_buffer renderBuffer_;
 	public:
@@ -601,13 +618,15 @@ namespace VCF {
 		typedef ChannelIterator<PixelType,ColorChannelVal> Iterator;
 
 		enum ChannelField {
-			Field = ColorChannelVal
+			Field = ColorChannelVal,
+			PixBitsSize = ColorPixels::PixBitsSize,
 		};
 
 
-		Channel( ColorPixels& colorPixels ): ptr_(NULL), endPtr_(NULL), pixels_(colorPixels),width_(0),height_(0){
+		Channel( ColorPixels& colorPixels ): ptr_(NULL), endPtr_(NULL), pixels_(colorPixels),width_(0),height_(0),stride_(0){
 			width_ = pixels_.width();
 			height_ = pixels_.height();
+			stride_ = ((width_ * SysGrayscalePixelType::Traits::getTraitsChannelSize() + 31) & (~31)) / 8;
 
 			ptr_ = pixels_;
 			endPtr_ = ptr_ + (width_ * height_) + 1;
@@ -622,71 +641,88 @@ namespace VCF {
 		uint32 copyTo( Type* channelData, const uint32& dataLength ) const {
 			uint32 result = 0;
 
-			VCF_ASSERT( dataLength <= width_ * height_ );
+			VCF_ASSERT( dataLength <= stride_ * height_ );
 
+			uint32 incr = stride_;
+			uint32 y = 0;
+			uint32 x = 0;
+			Type* rowPtr = channelData;
+			while ( y < height_ ) {
+				rowPtr += incr;
+				x = 0;
+				Type* tmp = rowPtr;
+				while ( x < width_ ) {
+					switch ( Field ) {
+						case ccRed : {
+							tmp[x] = ptr_[result].r;
+						}
+						break;
 
-			Type* tmp = channelData;
-			while ( result < dataLength ) {
-				switch ( Field ) {
-					case ccRed : {
-						*tmp = ptr_[result].r;
+						case ccGreen : {
+							tmp[x] = ptr_[result].g;
+						}
+						break;
+
+						case ccBlue : {
+							tmp[x] = ptr_[result].b;
+						}
+						break;
+
+						case ccAlpha : {
+							tmp[x] = ptr_[result].a;
+						}
+						break;
 					}
-					break;
 
-					case ccGreen : {
-						*tmp = ptr_[result].g;
-					}
-					break;
-
-					case ccBlue : {
-						*tmp = ptr_[result].b;
-					}
-					break;
-
-					case ccAlpha : {
-						*tmp = ptr_[result].a;
-					}
-					break;
+					result ++;
+					x++;
 				}
-
-				tmp++;
-				result ++;
+				y++;
 			}
+
 			return result;
 		}
 
 		uint32 copyFrom( const Type* channelData, const uint32& dataLength ) {
 			uint32 result = 0;
 
-			VCF_ASSERT( dataLength <= width_ * height_ );
+			VCF_ASSERT( dataLength <= stride_ * height_ );
 
+			uint32 incr = stride_;
+			uint32 y = 0;
+			uint32 x = 0;
+			const Type* rowPtr = channelData;
+			while ( y < height_ ) {
+				rowPtr += incr;
+				x = 0;
+				const Type* tmp = rowPtr;
+				while ( x < width_ ) {
+					switch ( Field ) {
+						case ccRed : {
+							ptr_[result].r = tmp[x];
+						}
+						break;
 
-			const Type* tmp = channelData;
-			while ( result < dataLength ) {
-				switch ( Field ) {
-					case ccRed : {
-						ptr_[result].r = *tmp;
+						case ccGreen : {
+							ptr_[result].g = tmp[x];
+						}
+						break;
+
+						case ccBlue : {
+							ptr_[result].b = tmp[x];
+						}
+						break;
+
+						case ccAlpha : {
+							ptr_[result].a = tmp[x];
+						}
+						break;
 					}
-					break;
 
-					case ccGreen : {
-						ptr_[result].g = *tmp;
-					}
-					break;
-
-					case ccBlue : {
-						ptr_[result].b = *tmp;
-					}
-					break;
-
-					case ccAlpha : {
-						ptr_[result].a = *tmp;
-					}
-					break;
+					result ++;
+					x++;
 				}
-
-				tmp++;
-				result ++;
+				y++;
 			}
 			return result;
 		}
@@ -779,7 +815,7 @@ namespace VCF {
 
 			Type* data = (Type*)result->getData();
 
-			copyTo( data, height_ * width_ );
+			copyTo( data, stride_ * height_ );
 
 			return result;
 		}
@@ -791,7 +827,7 @@ namespace VCF {
 
 			Type* data = (Type*)image->getData();
 
-			copyFrom( data, width_ * height_ );
+			copyFrom( data, stride_ * height_ );
 		}
 
 		friend class ChannelIterator<PixelType,ColorChannelVal>;
@@ -801,6 +837,7 @@ namespace VCF {
 		ColorPixels& pixels_;
 		uint32 width_;
 		uint32 height_;
+		uint32 stride_;
 	};
 
 
