@@ -16,6 +16,9 @@ where you installed the VCF.
 
 namespace VCF{
 
+class Path;
+
+
 /**
 \class WindowPeer WindowPeer.h "vcf/ApplicationKit/WindowPeer.h"  
 */
@@ -47,6 +50,8 @@ public:
 	virtual void setIconImage( Image* icon ) = 0;
 	
 	virtual bool isActiveWindow() = 0;
+
+	virtual void setBorderPath( Path* path ) = 0;
 };
 
 };

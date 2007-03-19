@@ -303,6 +303,10 @@ bool Window::isActiveFrame()
 	return windowPeer_->isActiveWindow();
 }
 
+void Window::setBorderPath( Path* path )
+{
+
+}
 
 /**
 $Id$

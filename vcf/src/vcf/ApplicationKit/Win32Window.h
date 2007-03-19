@@ -66,6 +66,8 @@ public:
 	virtual void setIconImage( Image* icon );
 
 	virtual bool isActiveWindow();
+
+	virtual void setBorderPath( Path* path );
 protected:
 	bool activatesPending_;
 	bool internalClose_;

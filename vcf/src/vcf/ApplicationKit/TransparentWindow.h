@@ -1,6 +1,6 @@
-#ifndef _VCF_POPUPWINDOW_H__
-#define _VCF_POPUPWINDOW_H__
-//PopupWindow.h
+#ifndef _VCF_TRANSPARENTWINDOW_H__
+#define _VCF_TRANSPARENTWINDOW_H__
+//PopupWindowPeer.h
 
 /*
 Copyright 2000-2007 The VCF Project.
@@ -17,27 +17,17 @@ where you installed the VCF.
 
 namespace VCF {
 
-class PopupWindowPeer;
 
-
-class APPLICATIONKIT_API PopupWindow : public Frame {
+class APPLICATIONKIT_API TransparentWindow : public Frame {
 public:
-	PopupWindow( Window* owningWindow );
+	TransparentWindow( Frame* frame );
 
-	virtual ~PopupWindow();
-
-	void showModal();
-
-	void showAsSheet( Window* owningWindow );
-
-	void show();
-
-	bool isModal() {
-		return modal_;
-	}
-
+	virtual ~TransparentWindow();
+	
 	virtual void  setClientBounds( Rect* bounds );
+	
 	virtual void close();
+
 	virtual void setFrameStyle( const FrameStyleType& frameStyle ){};
 
 	virtual bool allowsActivation() {
@@ -53,18 +43,17 @@ public:
 	virtual bool isActiveFrame() {
 		return false;
 	}
+	
+	virtual void setBorderPath( Path* path );	
 
+	void setAlpha( const double& alphaValue );
 
-	virtual void paint( GraphicsContext * context );
+	double getAlpha();
 
-	virtual void mouseDown( MouseEvent* event );
-
-	virtual void setBorderPath( Path* path );
+	void setAlphaImage( Image* img );
 protected:
-	PopupWindowPeer * popupPeer_;
+	TransparentWindowPeer* transparentWndPeer_;
 	WindowPeer * windowPeer_;
-	bool modal_;
-	Window* owningWindow_;
 
 	void onClose( WindowEvent* e );
 	void postClose( Event* event );
@@ -75,4 +64,4 @@ protected:
 
 
 
-#endif //_VCF_POPUPWINDOW_H__
+#endif //_VCF_TRANSPARENTWINDOW_H__

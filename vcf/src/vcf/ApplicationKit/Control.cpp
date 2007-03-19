@@ -900,29 +900,61 @@ bool Control::isFocused()
 	return result;//peer_->isFocused();
 }
 
+bool Control::getAllowsFocus()
+{
+	return (controlState_ & Control::csAllowFocus) ? true : false;
+}
+
+void Control::setAllowsFocus( const bool& val )
+{
+	if ( val ) {
+		controlState_  |= Control::csAllowFocus;
+	}
+	else {
+		controlState_  &= ~Control::csAllowFocus;
+	}
+}
+
+bool Control::getAllowsMouseFocus()
+{
+	return (controlState_ & Control::csAllowMouseFocus) ? true : false;
+}
+
+void Control::setAllowsMouseFocus( const bool& val )
+{
+	if ( val ) {
+		controlState_  |= Control::csAllowMouseFocus;
+	}
+	else {
+		controlState_  &= ~Control::csAllowMouseFocus;
+	}
+}
+
 Control* Control::setFocused()
 {
 	Control* result = NULL;
 
-	if ( isNormal() || isCreated() || isDesigning() ) {	//JC added this so that a control recv's focus
-														//only under these conditions
-
+	if ( getAllowsFocus() ) {
+		if ( isNormal() || isCreated() || isDesigning() ) {	//JC added this so that a control recv's focus
+			//only under these conditions
+			
 			if ( NULL != currentFocusedControl ) {
 				if ( this != currentFocusedControl ) {
 					//currentFocusedControl->setFocus( false ); //is this neccessary ?
-
+					
 					// do this to get the non focused control to repaint it's state
 					currentFocusedControl->repaint();
 				}
 			}
-
-		result = currentFocusedControl;
-		currentFocusedControl = this;
-
-		peer_->setFocused();
+			
+			result = currentFocusedControl;
+			currentFocusedControl = this;
+			
+			peer_->setFocused();
+		}
+		
+		repaint();
 	}
-
-	repaint();
 
 	return result;
 }
@@ -972,7 +1004,9 @@ void Control::mouseEnter( MouseEvent* event )
 
 void Control::mouseDown( MouseEvent* event )
 {
-	setFocused();
+	if ( getAllowsMouseFocus() ) {
+		setFocused();
+	}
 }
 
 void Control::mouseMove( MouseEvent* event )

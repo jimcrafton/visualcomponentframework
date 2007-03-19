@@ -3963,21 +3963,7 @@ UIToolkit::ModalReturnType Win32ToolKit::internal_runModalEventLoopFor( Control*
 					done = true;
 					break;
 				}
-				/*
-				if ( doTranslateAndDispatch ) {
-					// show the window when certain special messages rec'd
 
-					if ((msg.message == 0x118) || (msg.message == WM_SYSKEYDOWN) ) {
-						//err = ::ShowWindow( controlHwnd, SW_SHOWNORMAL );
-						//err = ::UpdateWindow( controlHwnd );
-
-						//this is rather crufty and I'm a bit dubious about it's necessity??
-						if ( (NULL != frame) && (msg.message == WM_SYSKEYDOWN) ) {
-							//frame->activate();
-						}
-					}
-				}
-				*/
 				switch ( msg.message ){
 					case WM_KEYDOWN : {
 						if ( ESCkeyPressed ) {
@@ -4013,9 +3999,6 @@ UIToolkit::ModalReturnType Win32ToolKit::internal_runModalEventLoopFor( Control*
 		//display error ?
 		result = mrFalse;
 	}
-
-	//EnumThreadWindows( GetCurrentThreadId(), EnumThreadWndProc, (LPARAM)this );
-
 
 
 	return result;
