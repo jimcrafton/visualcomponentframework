@@ -14,20 +14,21 @@ where you installed the VCF.
 #include <sys/shm.h>
 
 
-#define X_H
-#include <X11/XCB/xcb.h>
 
 
 
 
 extern "C" {
 
-#include <X11/XCB/shm.h>
-#include <X11/XCB/xcb_aux.h>
-#include <X11/XCB/xcb_image.h>
-#include <X11/XCB/xcb_icccm.h>
+#include <xcb/xcb.h>
+#include <xcb/shm.h>
+#include <xcb/xcb_aux.h>
+#include <xcb/xcb_image.h>
+#include <xcb/xcb_icccm.h>
 
 }
+
+
 
 
 using namespace VCF;
@@ -50,22 +51,22 @@ void  XCBWindowPeer::setClientBounds( Rect* bounds )
 {
 	clientBounds_ = *bounds;
 
-	XCBConnection* connection = XCBGraphicsToolkit::getConnection();
+	xcb_connection_t* connection = XCBGraphicsToolkit::getConnection();
 	destroyImage(*connection);
-	createImage(*connection, (CARD32)clientBounds_.getWidth(), (CARD32)clientBounds_.getHeight());
+	createImage(*connection, (uint32)clientBounds_.getWidth(), (uint32)clientBounds_.getHeight());
 }
 
 void XCBWindowPeer::close()
 {
-	XIDWindowPeerMap_.erase(drawable_.window.xid);
-	XCBConnection* connection = XCBGraphicsToolkit::getConnection();
+	XIDWindowPeerMap_.erase(drawable_);
+	xcb_connection_t* connection = XCBGraphicsToolkit::getConnection();
 	destroyImage(*connection);
 
-	XCBVoidCookie voidCookie = XCBDestroyWindow(connection, drawable_.window);
+	xcb_void_cookie_t voidCookie = xcb_destroy_window(connection, drawable_);
 	VCF_DEBUG_CODE(XCBUIToolkit *uiToolkit = (XCBUIToolkit*)UIToolkit::internal_getDefaultUIToolkit();
-				   uiToolkit->internal_addVoidCookie(voidCookie, "XCBDestroyWindow");)
+				   uiToolkit->internal_addVoidCookie(voidCookie, "xcb_destroy_window");)
 
-	XCBFlush(connection);
+	xcb_flush(connection);
 }
 
 void XCBWindowPeer::setFrameStyle( const FrameStyleType& frameStyle )
@@ -119,20 +120,20 @@ bool XCBWindowPeer::isActiveWindow()
 /////////////////////////////////////////////////////////////////////////////
 void XCBWindowPeer::create( Control* owningControl )
 {
-	XCBConnection* connection = XCBGraphicsToolkit::getConnection();
-	XCBSCREEN*     screen     = XCBGraphicsToolkit::getScreen();
+	xcb_connection_t* connection = XCBGraphicsToolkit::getConnection();
+	xcb_screen_t*     screen     = XCBGraphicsToolkit::getScreen();
 
 	if(connection != NULL)
 	{
-		drawable_.window = XCBWINDOWNew(connection);
-		CARD32           mask = 0;
-		CARD32           values[1];
+		drawable_ = xcb_generate_id(connection);
+		uint32           mask = 0;
+		uint32           values[1];
 
-		mask = XCBCWEventMask ;
-		values[0] = XCBEventMaskExposure | 
-					XCBEventMaskStructureNotify;
+		mask = XCB_CW_EVENT_MASK ;
+		values[0] = XCB_EVENT_MASK_EXPOSURE |
+					XCB_EVENT_MASK_STRUCTURE_NOTIFY;
 
-		XCBWINDOW parentWindow = screen->root;
+		xcb_window_t parentWindow = screen->root;
 /*		if ( NULL != owner_ ) {
 			XCBDRAWABLE* parentDrawable = reinterpret_cast<XCBDRAWABLE*>(owner_->getPeer()->getHandleID());
 			if(parentDrawable != NULL)
@@ -141,42 +142,42 @@ void XCBWindowPeer::create( Control* owningControl )
 			}
 		}
 */
-		XCBVoidCookie voidCookie = 
-		XCBCreateWindow (connection,       		// Connection          
-						 0,                     // depth               
-						 drawable_.window,      // window Id           
-						 parentWindow,          // parent window       
-						 0, 0,                  // x, y                
-						 150, 150,              // width, height       
-						 10,                    // border_width        
-						 InputOutput,           // class               
-						 screen->root_visual,   // visual              
+		xcb_void_cookie_t voidCookie =
+		xcb_create_window (connection,       		// Connection
+						 0,                     // depth
+						 drawable_,      // window Id
+						 parentWindow,          // parent window
+						 0, 0,                  // x, y
+						 150, 150,              // width, height
+						 10,                    // border_width
+						 XCB_WINDOW_CLASS_INPUT_OUTPUT,           // class
+						 screen->root_visual,   // visual
 						 mask,                  // values' masks
-						 values);               // values 
+						 values);               // values
 		// For debug purposes.
 		VCF_DEBUG_CODE(XCBUIToolkit *uiToolkit = (XCBUIToolkit*)UIToolkit::internal_getDefaultUIToolkit();
 					   uiToolkit->internal_addVoidCookie(voidCookie, "XCBCreateWindow");)
 
-		XIDWindowPeerMap_[drawable_.window.xid] = this;
+		XIDWindowPeerMap_[drawable_] = this;
 
 		{
-			context_ = XCBGCONTEXTNew( connection );
-			CARD32 mask = XCBGCForeground | XCBGCGraphicsExposures;
-			CARD32 values[2];
+			context_ = xcb_generate_id( connection );
+			uint32 mask = XCB_GC_FOREGROUND | XCB_GC_GRAPHICS_EXPOSURES;
+			uint32 values[2];
 			values[0] = screen->black_pixel;
 			values[1] = 0;
-			voidCookie = XCBCreateGC( connection, context_, drawable_, mask, values );
+			voidCookie = xcb_create_gc( connection, context_, drawable_, mask, values );
 			VCF_DEBUG_CODE(XCBUIToolkit *uiToolkit = (XCBUIToolkit*)UIToolkit::internal_getDefaultUIToolkit();
 						   uiToolkit->internal_addVoidCookie(voidCookie, "XCBCreateGC");)
 		}
 
 
-		XCBInternAtomCookie atom  = XCBInternAtom(connection, 0, sizeof("WM_DELETE_WINDOW")-1, "WM_DELETE_WINDOW");
-		XCBInternAtomRep* atomrep = XCBInternAtomReply(connection, atom, 0);
+		xcb_intern_atom_cookie_t atom  = xcb_intern_atom(connection, 0, sizeof("WM_DELETE_WINDOW")-1, "WM_DELETE_WINDOW");
+		xcb_intern_atom_reply_t* atomrep = xcb_intern_atom_reply(connection, atom, 0);
 		if(atomrep != NULL)
 		{
 			deleteWindowAtom_ = atomrep->atom;
-			SetWMProtocols(connection, drawable_.window, 1, &deleteWindowAtom_);
+			set_wm_protocols(connection, drawable_, 1, &deleteWindowAtom_);
 		}
 		::free(atomrep);
 	}
@@ -200,17 +201,17 @@ String XCBWindowPeer::getText()
 
 void XCBWindowPeer::setText( const String& text )
 {
-	XCBConnection* connection = XCBGraphicsToolkit::getConnection();
+	xcb_connection_t* connection = XCBGraphicsToolkit::getConnection();
 
 	if(connection != NULL)
 	{
-		XCBVoidCookie voidCookie = XCBChangeProperty(connection, PropModeReplace, drawable_.window,
+		xcb_void_cookie_t voidCookie = xcb_change_property(connection, XCB_PROP_MODE_REPLACE, drawable_,
 				  WM_NAME, STRING, 8,
 				  text.length(), text.ansi_c_str());
 		VCF_DEBUG_CODE(XCBUIToolkit *uiToolkit = (XCBUIToolkit*)UIToolkit::internal_getDefaultUIToolkit();
 					   uiToolkit->internal_addVoidCookie(voidCookie, "XCBChangeProperty:WM_NAME");)
 
-		voidCookie = XCBChangeProperty(connection, PropModeReplace, drawable_.window,
+		voidCookie = xcb_change_property(connection, XCB_PROP_MODE_REPLACE, drawable_,
 				  WM_ICON_NAME, STRING, 8,
 				  text.length(), text.ansi_c_str());
 		VCF_DEBUG_CODE(XCBUIToolkit *uiToolkit = (XCBUIToolkit*)UIToolkit::internal_getDefaultUIToolkit();
@@ -222,15 +223,15 @@ void XCBWindowPeer::setBounds( Rect* rect )
 {
 	VCF_ASSERT(rect != NULL);
 
-	XCBConnection* connection = XCBGraphicsToolkit::getConnection();
+	xcb_connection_t* connection = XCBGraphicsToolkit::getConnection();
 	if(connection != NULL)
 	{
 		if(clientBounds_.getWidth() != rect->getWidth() ||
 		   clientBounds_.getHeight() != rect->getHeight() ) {
-			CARD32 values[] = { (CARD32)rect->getLeft(), 
-				                      (CARD32)rect->getTop(), 
-									  (CARD32)rect->getWidth(), 
-									  (CARD32)rect->getHeight() 
+			uint32 values[] = { (uint32)rect->getLeft(),
+				                      (uint32)rect->getTop(),
+									  (uint32)rect->getWidth(),
+									  (uint32)rect->getHeight()
 									};
 			if(values[2] <=1 ) {
 				values[2] = 1;
@@ -239,12 +240,13 @@ void XCBWindowPeer::setBounds( Rect* rect )
 				values[3] = 1;
 			}
 
-			XCBVoidCookie voidCookie = XCBConfigureWindow(connection, 
-														  drawable_.window, 
-														  CWX | CWY | CWWidth | CWHeight, 
+			xcb_void_cookie_t voidCookie = xcb_configure_window(connection,
+														  drawable_,
+														  XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y |
+														  XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT,
 														  values);
 			VCF_DEBUG_CODE(XCBUIToolkit *uiToolkit = (XCBUIToolkit*)UIToolkit::internal_getDefaultUIToolkit();
-				           uiToolkit->internal_addVoidCookie(voidCookie, 
+				           uiToolkit->internal_addVoidCookie(voidCookie,
 															 Format("XCBConfigureWindow %i, %i, %i, %i") % values[0] %
 																									       values[1] %
 																										   values[2] %
@@ -272,15 +274,15 @@ Rect XCBWindowPeer::getBounds()
 
 void XCBWindowPeer::setVisible( const bool& visible )
 {
-	XCBConnection* connection = XCBGraphicsToolkit::getConnection();
+	xcb_connection_t* connection = XCBGraphicsToolkit::getConnection();
 	if(connection != NULL) {
 		if(visible) {
-			XCBVoidCookie voidCookie = XCBMapWindow(connection, drawable_.window);
+			xcb_void_cookie_t voidCookie = xcb_map_window(connection, drawable_);
 			VCF_DEBUG_CODE(XCBUIToolkit *uiToolkit = (XCBUIToolkit*)UIToolkit::internal_getDefaultUIToolkit();
 				           uiToolkit->internal_addVoidCookie(voidCookie, Format("XCBMapWindow"));)
 		}
 		else {
-			XCBVoidCookie voidCookie = XCBUnmapWindow(connection, drawable_.window);
+			xcb_void_cookie_t voidCookie = xcb_unmap_window(connection, drawable_);
 			VCF_DEBUG_CODE(XCBUIToolkit *uiToolkit = (XCBUIToolkit*)UIToolkit::internal_getDefaultUIToolkit();
 						   uiToolkit->internal_addVoidCookie(voidCookie, Format("XCBUnmapWindow"));)
 		}
@@ -388,12 +390,12 @@ void XCBWindowPeer::postChildPaint( GraphicsContext* graphicsContext, Control* c
 }
 
 ////
-void XCBWindowPeer::internal_handleClientMessageEvent(XCBConnection &connection, const XCBClientMessageEvent& event)
+void XCBWindowPeer::internal_handleClientMessageEvent(xcb_connection_t &connection, const xcb_client_message_event_t& event)
 {
-	XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(event.window.xid);
+	XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(event.window);
 	if(it != XIDWindowPeerMap_.end()) {
 		XCBWindowPeer *peer = it->second;
-		if(event.data.data32[0] == peer->deleteWindowAtom_.xid) {
+		if(event.data.data32[0] == peer->deleteWindowAtom_) {
 			Window *window = dynamic_cast<Window*>(peer->control_);
 			if(window != NULL)
 			{
@@ -403,9 +405,9 @@ void XCBWindowPeer::internal_handleClientMessageEvent(XCBConnection &connection,
 	}
 }
 
-void XCBWindowPeer::internal_handleConfigureNotifyEvent(XCBConnection &connection, const XCBConfigureNotifyEvent& event)
+void XCBWindowPeer::internal_handleConfigureNotifyEvent(xcb_connection_t &connection, const xcb_configure_notify_event_t& event)
 {
-	XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(event.window.xid);
+	XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(event.window);
 	if(it != XIDWindowPeerMap_.end()) {
 		XCBWindowPeer *peer = it->second;
 		Rect oldClientBounds = peer->getClientBounds();
@@ -416,97 +418,115 @@ void XCBWindowPeer::internal_handleConfigureNotifyEvent(XCBConnection &connectio
 	}
 }
 
-void XCBWindowPeer::internal_handleExposeEvent(XCBConnection &connection, const XCBExposeEvent& event)
+void XCBWindowPeer::internal_handleExposeEvent(xcb_connection_t &connection, const xcb_expose_event_t& event)
 {
-	XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(event.window.xid);
+	XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(event.window);
 	if(it != XIDWindowPeerMap_.end()) {
 		XCBWindowPeer *peer = it->second;
 		peer->paint(connection);
 	}
 }
 
-void XCBWindowPeer::internal_handleDestroyNotify(XCBConnection &connection, const XCBDestroyNotifyEvent& event)
+void XCBWindowPeer::internal_handleDestroyNotify(xcb_connection_t &connection, const xcb_destroy_notify_event_t& event)
 {
 }
 
-void XCBWindowPeer::createImage (XCBConnection &connection, int width, int height)
+void XCBWindowPeer::createImage (xcb_connection_t &connection, int width, int height)
 {
 	image_ = NULL;
 	if(width >0 && height > 0)
 	{
         //! \note perhaps screen should be passed to this function as well?
-		XCBSCREEN* screen = XCBGraphicsToolkit::getScreen();
+		xcb_screen_t* screen = XCBGraphicsToolkit::getScreen();
 
-		XCBFlush(&connection);
+		xcb_flush(&connection);
 
-		CARD8 depth = XCBAuxGetDepth( &connection, screen );
-		image_ = XCBImageSHMCreate( &connection, depth, XCBImageFormatZPixmap, NULL, width, height );
-		shminfo_.shmseg = XCBShmSEGNew( &connection );
+        static unsigned char format = 0;
+        if ( format == 0 ) {
+            xcb_shm_query_version_reply_t *rep;
+            rep = xcb_shm_query_version_reply( &connection, xcb_shm_query_version (&connection), NULL );
+            if ( NULL == rep ) {
+                format = XCB_IMAGE_FORMAT_Z_PIXMAP;
+            }
+            else {
+                if ( rep->shared_pixmaps && (rep->major_version > 1 || rep->minor_version > 0) ) {
+                    format = rep->pixmap_format;
+                }
+                else {
+                    format = XCB_IMAGE_FORMAT_Z_PIXMAP;
+                }
+            }
+        }
+
+		unsigned char depth = xcb_aux_get_depth( &connection, screen );
+		image_ = xcb_image_shm_create( &connection, depth, format, NULL, width, height );
+		shminfo_.shmseg = xcb_generate_id( &connection );
 		shminfo_.shmid = shmget(IPC_PRIVATE, image_->bytes_per_line * image_->height, IPC_CREAT | 0777);
-		shminfo_.shmaddr = (BYTE*)shmat(shminfo_.shmid, 0, 0);
-		image_->data = (BYTE*) shminfo_.shmaddr;
-		XCBVoidCookie voidCookie = XCBShmAttach(&connection, shminfo_.shmseg, shminfo_.shmid, 0);
+		shminfo_.shmaddr = (unsigned char*)shmat(shminfo_.shmid, 0, 0);
+		image_->data = (unsigned char*) shminfo_.shmaddr;
+		xcb_void_cookie_t voidCookie = xcb_shm_attach(&connection, shminfo_.shmseg, shminfo_.shmid, 0);
 		VCF_DEBUG_CODE(XCBUIToolkit *uiToolkit = (XCBUIToolkit*)UIToolkit::internal_getDefaultUIToolkit();
-					   uiToolkit->internal_addVoidCookie(voidCookie, 
+					   uiToolkit->internal_addVoidCookie(voidCookie,
 														 Format("XCBShmAttach %i, %i") % width % height);)
-		XCBFlush(&connection);
+		xcb_flush(&connection);
 	}
 }
 
-void XCBWindowPeer::destroyImage(XCBConnection &connection)
+void XCBWindowPeer::destroyImage(xcb_connection_t &connection)
 {
 	if(image_ != NULL) {
-		XCBVoidCookie voidCookie = XCBShmDetach(&connection, shminfo_.shmseg);
+		xcb_void_cookie_t voidCookie = xcb_shm_detach(&connection, shminfo_.shmseg);
 		VCF_DEBUG_CODE(XCBUIToolkit *uiToolkit = (XCBUIToolkit*)UIToolkit::internal_getDefaultUIToolkit();
 			           uiToolkit->internal_addVoidCookie(voidCookie, "XCBShmDetach");)
 
-		XCBImageSHMDestroy(image_);
+		xcb_image_shm_destroy(image_);
 
 		shmctl(shminfo_.shmid, IPC_RMID, 0);
 		shmdt(shminfo_.shmaddr);
-		XCBFlush(&connection);
+		xcb_flush(&connection);
 		image_ = NULL;
 	}
 }
 
-void XCBWindowPeer::paint(XCBConnection &connection)
+void XCBWindowPeer::paint(xcb_connection_t &connection)
 {
+    printf( "paint called!\n" );
 	GraphicsContext* gc = control_->getContext();
 	XCBContextPeer *contextPeer = dynamic_cast<XCBContextPeer*>(gc->getPeer());
 	if(contextPeer != NULL) {
-		memset(image_->data, 127, image_->bytes_per_line * image_->height);
+		memset(image_->data, 255, image_->bytes_per_line * image_->height);
 
 		contextPeer->internal_setImage(image_);
 		control_->paint(gc);
 	}
 
 	/////////////////////////////////////////////////////////////////////
-    agg::rendering_buffer rbuf(image_->data, 
-                               image_->width, 
-                               image_->height, 
+    agg::rendering_buffer rbuf(image_->data,
+                               image_->width,
+                               image_->height,
                                image_->bytes_per_line);
     pixfmt pixf(rbuf);
     unsigned i;
     for(i = 0; i < pixf.height()/2; ++i)
     {
-        pixf.copy_pixel(i, i, agg::rgba8(127, 200, 98));
+        //pixf.copy_pixel(i, i, agg::rgba8(127, 200, 98));
     }
 	/////////////////////////////////////////////////////////////////////
 
-	XCBImageSHMPut( &connection, 
-					drawable_, 
-					context_, 
-					image_, 
-					shminfo_, 
-					0, 
-					0, 
-					0, 
-					0, 
-					image_->width, 
-					image_->height, 
+	xcb_image_shm_put( &connection,
+					drawable_,
+					context_,
+					image_,
+					shminfo_,
+					0,
+					0,
+					0,
+					0,
+					image_->width,
+					image_->height,
 					0 );
 
-	XCBFlush(&connection);
+	xcb_flush(&connection);
 }
 
 /**

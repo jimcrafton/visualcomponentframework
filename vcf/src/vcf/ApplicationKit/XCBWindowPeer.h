@@ -100,26 +100,26 @@ namespace VCF {
 		virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
 
 		/////////////////////////////////////////////////////////////////////
-		static void internal_handleClientMessageEvent(XCBConnection &connection, const XCBClientMessageEvent& event);
-		static void internal_handleConfigureNotifyEvent(XCBConnection &connection, const XCBConfigureNotifyEvent& event);
-		static void internal_handleExposeEvent(XCBConnection &connection, const XCBExposeEvent& event);
-		static void internal_handleDestroyNotify(XCBConnection &connection, const XCBDestroyNotifyEvent& event);
+		static void internal_handleClientMessageEvent(xcb_connection_t &connection, const xcb_client_message_event_t& event);
+		static void internal_handleConfigureNotifyEvent(xcb_connection_t &connection, const xcb_configure_notify_event_t& event);
+		static void internal_handleExposeEvent(xcb_connection_t &connection, const xcb_expose_event_t& event);
+		static void internal_handleDestroyNotify(xcb_connection_t &connection, const xcb_destroy_notify_event_t& event);
 
 	private:
-		void paint(XCBConnection &connection);
-		void destroyImage(XCBConnection &connection);
-		void createImage(XCBConnection &connection, int width, int height);
+		void paint(xcb_connection_t &connection);
+		void destroyImage(xcb_connection_t &connection);
+		void createImage(xcb_connection_t &connection, int width, int height);
 
 	private:
-		XCBDRAWABLE	      drawable_;
-		XCBGCONTEXT       context_;
-		XCBImage         *image_;
-		XCBShmSegmentInfo shminfo_;
-        XCBATOM           deleteWindowAtom_;
+		xcb_drawable_t	      drawable_;
+		xcb_gcontext_t       context_;
+		xcb_image_t         *image_;
+		xcb_shm_segment_info_t shminfo_;
+        xcb_atom_t           deleteWindowAtom_;
 		Rect 	 	      clientBounds_;
 		Control*          control_;
 
-		typedef std::map<CARD32, XCBWindowPeer*> XIDWindowPeerMap;
+		typedef std::map<uint32, XCBWindowPeer*> XIDWindowPeerMap;
 		static XIDWindowPeerMap XIDWindowPeerMap_;
 	};
 };
