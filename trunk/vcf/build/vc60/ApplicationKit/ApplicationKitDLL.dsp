@@ -558,6 +558,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\PopupMenu.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\PopupWindow.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\PropertyEditor.h
 # End Source File
 # Begin Source File
