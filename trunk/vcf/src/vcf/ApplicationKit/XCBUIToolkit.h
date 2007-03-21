@@ -21,10 +21,10 @@ public:
 
 	struct XCBCookieInfo
 	{
-		XCBVoidCookie cookie;
+		xcb_void_cookie_t cookie;
 		String        extraInfo;
 	};
-	void internal_addVoidCookie( const XCBVoidCookie &cookie, const String &extraInfo );
+	void internal_addVoidCookie( const xcb_void_cookie_t &cookie, const String &extraInfo );
 
 protected:
 	virtual ControlPeer* internal_createControlPeer( Control* component, ComponentType componentType=CT_DEFAULT );
@@ -77,7 +77,11 @@ protected:
 
 	virtual CommonPrintDialogPeer* internal_createCommonPrintDialogPeer( Control* owner );
 
-	virtual UIShellPeer* internal_createDesktopPeer( UIShell* shell );
+    virtual PopupWindowPeer* internal_createPopupWindowPeer( Frame* frame, Window* owner );
+
+	virtual TransparentWindowPeer* internal_createTransparentWindowPeer( Frame* frame );
+
+	virtual UIShellPeer* internal_createUIShellPeer( UIShell* shell );
 
 	virtual ScrollPeer* internal_createScrollPeer( Control* control );
 
@@ -129,21 +133,21 @@ private:
     /**
      * returns whether event loop should exit.
     */
-	bool handleError( const XCBGenericError& err );
-	void handleClientMessage( XCBConnection* connection, const XCBClientMessageEvent& event );
-	void handleConfigureNotify( XCBConnection* connection, const XCBConfigureNotifyEvent& event );
-	void handleExpose( const XCBExposeEvent& event );
-	void handleDestroyNotify( XCBConnection* connection, const XCBDestroyNotifyEvent& event );
-	void handleDefault( const XCBGenericEvent& event );
+	bool handleError( const xcb_generic_error_t& err );
+	void handleClientMessage( xcb_connection_t* connection, const xcb_client_message_event_t& event );
+	void handleConfigureNotify( xcb_connection_t* connection, const xcb_configure_notify_event_t& event );
+	void handleExpose( const xcb_expose_event_t& event );
+	void handleDestroyNotify( xcb_connection_t* connection, const xcb_destroy_notify_event_t& event );
+	void handleDefault( const xcb_generic_event_t& event );
 
 	/**
 	 * returns whether event loop should exit.
 	*/
 	bool handlePollForEventError();
-	void handleExposes(XCBConnection* connection);
+	void handleExposes(xcb_connection_t* connection);
 
 private:
-	typedef std::map<CARD32, XCBExposeEvent> ExposeEventXIDMap;
+	typedef std::map<uint32, xcb_expose_event_t> ExposeEventXIDMap;
 	ExposeEventXIDMap exposeEvents_;
 
 	bool consoleQuitHandlerCalled_;

@@ -10,7 +10,7 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/XCBMenuManagerPeer.h"
 #include "vcf/ApplicationKit/XCBMenuBarPeer.h"
-#include "vcf/ApplicationKit/XCBDesktopPeer.h"
+#include "vcf/ApplicationKit/XCBUIShellPeer.h"
 #include "vcf/ApplicationKit/XCBApplicationPeer.h"
 #include "vcf/ApplicationKit/XCBApplicationResourceBundlePeer.h"
 #include "vcf/ApplicationKit/XCBCursorPeer.h"
@@ -174,7 +174,7 @@ CommonPrintDialogPeer* XCBUIToolkit::internal_createCommonPrintDialogPeer( Contr
 	return NULL;
 }
 
-UIShellPeer* XCBUIToolkit::internal_createDesktopPeer( UIShell* shell )
+UIShellPeer* XCBUIToolkit::internal_createUIShellPeer( UIShell* shell )
 {
 	return new XCBUIShellPeer( shell );
 }
@@ -249,7 +249,7 @@ void XCBUIToolkit::internal_runEventLoop()
 	XCBGraphicsToolkit* xcbGraphicsToolkit = dynamic_cast<XCBGraphicsToolkit*>(graphicsToolkit);
 	if(xcbGraphicsToolkit != NULL)
 	{
-		XCBConnection* connection = xcbGraphicsToolkit->getConnection();
+		xcb_connection_t* connection = xcbGraphicsToolkit->getConnection();
 
 		bool done = false;
 		while(!done) {
@@ -259,37 +259,38 @@ void XCBUIToolkit::internal_runEventLoop()
 				break;
 			}
 
-			if(XCBFlush(connection) == 0) {
+			if(xcb_flush(connection) == 0) {
 				done = true;
 				break;
 			}
 
-			XCBGenericEvent *event = NULL;
+			xcb_generic_event_t *event = NULL;
 			int pollForEventError = 0;
-			while( (event = XCBPollForEvent( connection, &pollForEventError )) != NULL ) {
+			event = xcb_poll_for_event( connection );
+			while( NULL != event ) {
 
                 event->response_type &= ~0x80;
 				switch (event->response_type)
 				{
 
 				case 0:
-					done = handleError( *(XCBGenericError*)event );
+					done = handleError( *(xcb_generic_error_t*)event );
 					break;
 
-				case XCBClientMessage:
-					handleClientMessage( connection, *(XCBClientMessageEvent*)event );
+				case XCB_CLIENT_MESSAGE:
+					handleClientMessage( connection, *(xcb_client_message_event_t*)event );
 					break;
 
-				case XCBConfigureNotify:
-					handleConfigureNotify( connection, *(XCBConfigureNotifyEvent*)event );
+				case XCB_CONFIGURE_NOTIFY:
+					handleConfigureNotify( connection, *(xcb_configure_notify_event_t*)event );
 					break;
 
-				case XCBExpose:
-					handleExpose( *(XCBExposeEvent*)event );
+				case XCB_EXPOSE:
+					handleExpose( *(xcb_expose_event_t*)event );
 					break;
 
-				case XCBDestroyNotify:
-					handleDestroyNotify( connection, *(XCBDestroyNotifyEvent*)event);
+				case XCB_DESTROY_NOTIFY:
+					handleDestroyNotify( connection, *(xcb_destroy_notify_event_t*)event);
 					done = true;
 					break;
 
@@ -299,14 +300,18 @@ void XCBUIToolkit::internal_runEventLoop()
 				}
 
 				::free (event);
-				event = NULL;
+				event = xcb_poll_for_event( connection );
 			}
 
-			if(pollForEventError != 0) {
+			if(xcb_connection_has_error(connection)) {
 				done = handlePollForEventError();
 			}
+
 			if(!done) {
+			    static unsigned int count = 0;
 				handleExposes(connection);
+				printf( "handleExposes called %u times!\n", count );
+				count ++;
 			}
 		}
 	}
@@ -377,17 +382,17 @@ namespace
 {
 	struct SequenceFind
 	{
-		explicit SequenceFind(CARD16 sq) : sequence_(sq) {}
+		explicit SequenceFind(uint16 sq) : sequence_(sq) {}
 		bool operator()(const XCBUIToolkit::XCBCookieInfo &info) const
 		{
 			return info.cookie.sequence == sequence_;
 		}
 
-		CARD16 sequence_;
+		uint16 sequence_;
 	};
 }
 
-bool XCBUIToolkit::handleError( const XCBGenericError& err )
+bool XCBUIToolkit::handleError( const xcb_generic_error_t& err )
 {
 	XCBCookieInfoVector::iterator it = std::find_if(cookieInfos_.begin(), cookieInfos_.end(), SequenceFind(err.sequence));
 	if(it != cookieInfos_.end()) {
@@ -404,22 +409,22 @@ bool XCBUIToolkit::handleError( const XCBGenericError& err )
 	return false;
 }
 
-void XCBUIToolkit::handleClientMessage( XCBConnection* connection, const XCBClientMessageEvent& event )
+void XCBUIToolkit::handleClientMessage( xcb_connection_t* connection, const xcb_client_message_event_t& event )
 {
 	XCBWindowPeer::internal_handleClientMessageEvent(*connection, event);
 }
 
-void XCBUIToolkit::handleConfigureNotify( XCBConnection* connection, const XCBConfigureNotifyEvent& event )
+void XCBUIToolkit::handleConfigureNotify( xcb_connection_t* connection, const xcb_configure_notify_event_t& event )
 {
 	XCBWindowPeer::internal_handleConfigureNotifyEvent(*connection, event);
 }
 
-void XCBUIToolkit::handleExpose( const XCBExposeEvent& event )
+void XCBUIToolkit::handleExpose( const xcb_expose_event_t& event )
 {
-	exposeEvents_[event.window.xid] = event;
+	exposeEvents_[event.window] = event;
 }
 
-void XCBUIToolkit::handleExposes(XCBConnection* connection)
+void XCBUIToolkit::handleExposes(xcb_connection_t* connection)
 {
 	ExposeEventXIDMap::iterator it =  exposeEvents_.begin();
 	while ( it != exposeEvents_.end() ) {
@@ -429,12 +434,12 @@ void XCBUIToolkit::handleExposes(XCBConnection* connection)
 	exposeEvents_.clear();
 }
 
-void XCBUIToolkit::handleDestroyNotify( XCBConnection* connection, const XCBDestroyNotifyEvent& event )
+void XCBUIToolkit::handleDestroyNotify( xcb_connection_t* connection, const xcb_destroy_notify_event_t& event )
 {
 	XCBWindowPeer::internal_handleDestroyNotify(*connection, event);
 }
 
-void XCBUIToolkit::handleDefault( const XCBGenericEvent& event )
+void XCBUIToolkit::handleDefault( const xcb_generic_event_t& event )
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }
@@ -445,10 +450,20 @@ bool XCBUIToolkit::handlePollForEventError()
 	return true;
 }
 
-void XCBUIToolkit::internal_addVoidCookie( const XCBVoidCookie &cookie, const String &extraInfo )
+void XCBUIToolkit::internal_addVoidCookie( const xcb_void_cookie_t &cookie, const String &extraInfo )
 {
 	XCBCookieInfo info = { cookie, extraInfo };
 	cookieInfos_.push_back(info);
+}
+
+PopupWindowPeer* XCBUIToolkit::internal_createPopupWindowPeer( Frame* frame, Window* owner )
+{
+    return NULL;
+}
+
+TransparentWindowPeer* XCBUIToolkit::internal_createTransparentWindowPeer( Frame* frame )
+{
+    return NULL;
 }
 
 /**
