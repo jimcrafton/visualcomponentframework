@@ -259,59 +259,68 @@ void XCBUIToolkit::internal_runEventLoop()
 				break;
 			}
 
-			if(xcb_flush(connection) == 0) {
-				done = true;
-				break;
-			}
-
 			xcb_generic_event_t *event = NULL;
-			int pollForEventError = 0;
-			event = xcb_poll_for_event( connection );
-			while( NULL != event ) {
-
+			
+			
+			bool moreEvents = true;
+			int exposeCount = 0;
+			
+			while( moreEvents ) {	
+				if ( NULL == event ) {			
+					event = xcb_wait_for_event( connection );
+				}
+				
                 event->response_type &= ~0x80;
-				switch (event->response_type)
-				{
+				switch (event->response_type) {
 
-				case 0:
-					done = handleError( *(xcb_generic_error_t*)event );
+					case 0: {
+						done = handleError( *(xcb_generic_error_t*)event );
+					}
 					break;
 
-				case XCB_CLIENT_MESSAGE:
-					handleClientMessage( connection, *(xcb_client_message_event_t*)event );
+					case XCB_CLIENT_MESSAGE: {
+						handleClientMessage( connection, *(xcb_client_message_event_t*)event );
+					}
 					break;
 
-				case XCB_CONFIGURE_NOTIFY:
-					handleConfigureNotify( connection, *(xcb_configure_notify_event_t*)event );
+					case XCB_CONFIGURE_NOTIFY: {
+						handleConfigureNotify( connection, *(xcb_configure_notify_event_t*)event );
+					}
 					break;
 
-				case XCB_EXPOSE:
-					handleExpose( *(xcb_expose_event_t*)event );
+					case XCB_EXPOSE: {
+						handleExpose( *(xcb_expose_event_t*)event );
+						exposeCount ++;
+					}
 					break;
 
-				case XCB_DESTROY_NOTIFY:
-					handleDestroyNotify( connection, *(xcb_destroy_notify_event_t*)event);
-					done = true;
+					case XCB_DESTROY_NOTIFY: {
+						handleDestroyNotify( connection, *(xcb_destroy_notify_event_t*)event);
+						done = true;
+					}
 					break;
 
-				default:
-					handleDefault(*event);
+					default: {
+						handleDefault(*event);
+					}
 					break;
 				}
 
 				::free (event);
 				event = xcb_poll_for_event( connection );
+				moreEvents = (NULL != event) ? true : false;
 			}
 
 			if(xcb_connection_has_error(connection)) {
 				done = handlePollForEventError();
 			}
 
-			if(!done) {
+			if( !done && (exposeCount > 0) ) {
 			    static unsigned int count = 0;
 				handleExposes(connection);
 				printf( "handleExposes called %u times!\n", count );
 				count ++;
+				exposeCount = 0;
 			}
 		}
 	}
