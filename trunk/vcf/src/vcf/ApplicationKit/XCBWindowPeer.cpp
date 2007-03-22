@@ -488,16 +488,24 @@ void XCBWindowPeer::destroyImage(xcb_connection_t &connection)
 	}
 }
 
+void XCBWindowPeer::setBorderPath( Path* path )
+{
+	
+}
+
 void XCBWindowPeer::paint(xcb_connection_t &connection)
 {
-    printf( "paint called!\n" );
-	GraphicsContext* gc = control_->getContext();
+    GraphicsContext* gc = control_->getContext();
 	XCBContextPeer *contextPeer = dynamic_cast<XCBContextPeer*>(gc->getPeer());
 	if(contextPeer != NULL) {
-		memset(image_->data, 255, image_->bytes_per_line * image_->height);
-
-		contextPeer->internal_setImage(image_);
-		control_->paint(gc);
+		VCF::XCBSurface surf;
+		surf.context = &context_;
+		surf.drawable = &drawable_;
+		surf.drawableImage = image_;
+		
+		contextPeer->setContextID( (VCF::OSHandleID)&surf );
+		
+		control_->paint(gc);		
 	}
 
 	/////////////////////////////////////////////////////////////////////

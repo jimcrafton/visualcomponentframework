@@ -39,6 +39,8 @@ namespace VCF {
 		virtual void setIconImage( Image* icon );
 
 		virtual bool isActiveWindow();
+		
+		virtual void setBorderPath( Path* path ) ;
 
 		////////////////////////////////////////////////////////
 		virtual void create( Control* owningControl );
