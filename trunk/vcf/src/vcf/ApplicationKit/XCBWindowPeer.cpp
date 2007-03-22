@@ -508,19 +508,7 @@ void XCBWindowPeer::paint(xcb_connection_t &connection)
 		control_->paint(gc);		
 	}
 
-	/////////////////////////////////////////////////////////////////////
-    agg::rendering_buffer rbuf(image_->data,
-                               image_->width,
-                               image_->height,
-                               image_->bytes_per_line);
-    pixfmt pixf(rbuf);
-    unsigned i;
-    for(i = 0; i < pixf.height()/2; ++i)
-    {
-        //pixf.copy_pixel(i, i, agg::rgba8(127, 200, 98));
-    }
-	/////////////////////////////////////////////////////////////////////
-
+	
 	xcb_image_shm_put( &connection,
 					drawable_,
 					context_,
