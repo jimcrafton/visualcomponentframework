@@ -293,6 +293,18 @@ void XCBUIToolkit::internal_runEventLoop()
 						exposeCount ++;
 					}
 					break;
+					
+					case XCB_BUTTON_RELEASE: case XCB_BUTTON_PRESS: case XCB_MOTION_NOTIFY: 
+						case XCB_ENTER_NOTIFY: case XCB_LEAVE_NOTIFY: {
+						XCBWindowPeer::internal_handleMouseEvents( connection, *event );
+					}
+					break;
+					
+					
+					case XCB_KEY_PRESS:  case XCB_KEY_RELEASE:  {
+						XCBWindowPeer::internal_handleKeyboardEvents( connection, *event );
+					}
+					break;
 
 					case XCB_DESTROY_NOTIFY: {
 						handleDestroyNotify( connection, *(xcb_destroy_notify_event_t*)event);

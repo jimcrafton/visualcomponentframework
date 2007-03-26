@@ -375,21 +375,29 @@ public:
 
 			Image* img = GraphicsToolkit::createImage( pathBounds.getWidth(), pathBounds.getHeight() );
 			
+			{	
+				ImageContext imgCtx = img;
+
+				imgCtx->setColor( &getColor() );
+				imgCtx->rectangle( 0, 0, img->getWidth(), img->getHeight() );
+				imgCtx->fillPath();
+			}
+
 			ColorPixels pix = img;
 			AlphaChannel mask(pix);
 			mask.fill(0);//clear out alpha
 			Image* maskImage = mask.createImage();
 
 			{
-				ImageContext ictx = maskImage;
+				ImageContext maskCtx = maskImage;
 				BasicFill fill;
 				fill.setColor( &Color(alpha_,alpha_,alpha_,alpha_) );
 
 
-				ictx->setCurrentFill( &fill );
+				maskCtx->setCurrentFill( &fill );
 
 
-				ictx->setRenderArea( Rect(0,0,maskImage->getWidth(), maskImage->getHeight()) );
+				maskCtx->setRenderArea( Rect(0,0,maskImage->getWidth(), maskImage->getHeight()) );
 
 
 				Matrix2D m;
@@ -403,14 +411,14 @@ public:
 				//							(pathBounds.top_ /*+ maskImage->getHeight()/2.0*/ ) );
 				
 
-				ictx->setCurrentTransform( m );
+				maskCtx->setCurrentTransform( m );
 
-				ictx->draw( path );
+				maskCtx->draw( path );
 
-				ictx->setCurrentFill( NULL );
+				maskCtx->setCurrentFill( NULL );
 
 
-				ictx->flushRenderArea();
+				maskCtx->flushRenderArea();
 			}
 
 
