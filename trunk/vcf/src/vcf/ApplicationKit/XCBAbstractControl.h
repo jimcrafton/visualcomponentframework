@@ -10,11 +10,14 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ControlPeer.h"
 
 namespace VCF {
+    class XCBAbstractControl;
+    typedef std::vector<XCBAbstractControl*> XCBControlArray;
+
 
 	class XCBAbstractControl : public ControlPeer {
 	public:
 		virtual ~XCBAbstractControl();
-		
+
 		virtual void create( Control* owningControl );
 
 		virtual void destroyControl();
@@ -73,11 +76,41 @@ namespace VCF {
 
 		virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
 
+        XCBWindowPeer* getOwnerWindow() {
+            return owningWindow_;
+        }
+
+        void setOwnerWindow( XCBWindowPeer* val ) {
+            owningWindow_ = val;
+        }
+
+        bool mouseEventsCaptured() {
+            return mouseEventsCaptured_;
+        }
+
+        XCBControlArray getXCBChildControls() {
+            return childControls_;
+        }
+
+        void paintChildren(
 	protected:
 		XCBAbstractControl( Control* control );
 
 		Control* control_;
         Rect 	 bounds_;
+        XCBWindowPeer* owningWindow_;
+        bool enabled_;
+        bool visible_;
+        bool focused_;
+        XCBAbstractControl* parent_;
+        bool mouseEventsCaptured_;
+
+        XCBControlArray childControls_;
+
+
+        void addChild( XCBAbstractControl* child );
+        void removeChild( XCBAbstractControl* child );
+
 	private:
 	};
 };

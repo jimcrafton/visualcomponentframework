@@ -10,10 +10,14 @@ where you installed the VCF.
 
 using namespace VCF;
 
-	
+
 void LinuxDebugUtils::FunctionNotImplemented(const String& funcName)
 {
-	StringUtils::trace(funcName + " is not implemented.\n");
+	//StringUtils:: //JC -  I commented this out because I want to see all the un-inplemented functions for now.
+	#ifdef _DEBUG
+	AnsiString s = funcName + " is not implemented.\n";
+	printf(s.c_str());
+	#endif
 }
 
 /**
