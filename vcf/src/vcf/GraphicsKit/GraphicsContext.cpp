@@ -36,7 +36,7 @@ public:
 	}
 
 	~RenderArea() {
-		
+
 		if ( NULL != renderBuffer ) {
 			renderBuffer->attach( NULL, 0, 0, 0 );
 			delete renderBuffer;
@@ -81,9 +81,9 @@ public:
 	Stroke* stroke_;
 	Path* clippingPath_;
 	GraphicsContext* owningContext_;
-	
+
 	double strokeWidth_;
-	
+
 	Font font_;
 	Matrix2D transformMatrix_;
 	Point currentMoveTo_;
@@ -95,7 +95,7 @@ public:
 	double translateX_;
 	double translateY_;
 	double scaleX_;
-	double scaleY_;	
+	double scaleY_;
 	GraphicsContext::CompositingMode compositeMode_;
 	double alpha_;
 	GraphicsContext::LineCapStyle lineCap_;
@@ -196,9 +196,9 @@ GraphicsState& GraphicsState::operator=( const GraphicsState& rhs )
 	translateY_ = rhs.translateY_;
 	scaleX_ = rhs.scaleX_;
 	scaleY_ = rhs.scaleY_;
-	
+
 	alpha_ = rhs.alpha_;
-	
+
 	lineCap_ = rhs.lineCap_;
 	lineJoin_ = rhs.lineJoin_;
 	miterLimit_ = rhs.miterLimit_;
@@ -226,7 +226,7 @@ void GraphicsState::compositeMatrix()
 	transformMatrix_.multiply( scale );
 	transformMatrix_.multiply( rotate );
 	transformMatrix_.multiply( shear );
-	transformMatrix_.multiply( translation );	
+	transformMatrix_.multiply( translation );
 }
 
 
@@ -234,10 +234,10 @@ void GraphicsState::compositeMatrix()
 GraphicsContext::GraphicsContext():
 	contextPeer_(NULL),
 	renderArea_(NULL),
-	currentDrawingState_(GraphicsContext::gsNone),		
+	currentDrawingState_(GraphicsContext::gsNone),
 	graphicsStateIndex_(0),
 	currentGraphicsState_(NULL)
-	
+
 {
 	GraphicsState* newState = new GraphicsState();
 	newState->owningContext_ = this;
@@ -255,7 +255,7 @@ GraphicsContext::GraphicsContext():
 GraphicsContext::GraphicsContext( const uint32& width, const uint32& height ):
 	contextPeer_(NULL),
 	renderArea_(NULL),
-	currentDrawingState_(GraphicsContext::gsNone),		
+	currentDrawingState_(GraphicsContext::gsNone),
 	graphicsStateIndex_(0),
 	currentGraphicsState_(NULL)
 {
@@ -270,7 +270,7 @@ GraphicsContext::GraphicsContext( const uint32& width, const uint32& height ):
 	}
 
 	contextPeer_->setContext( this );
-	
+
 	renderArea_ = new RenderArea();
 
 	init();
@@ -279,13 +279,13 @@ GraphicsContext::GraphicsContext( const uint32& width, const uint32& height ):
 
 	font.setPointSize( font.getPointSize() );
 
-	
+
 }
 
-GraphicsContext::GraphicsContext( OSHandleID contextID ):	
+GraphicsContext::GraphicsContext( OSHandleID contextID ):
 	contextPeer_(NULL),
 	currentDrawingState_(GraphicsContext::gsNone),
-	renderArea_(NULL),	
+	renderArea_(NULL),
 	graphicsStateIndex_(0),
 	currentGraphicsState_(NULL)
 {
@@ -324,7 +324,7 @@ GraphicsContext::~GraphicsContext()
 	}
 	stateCollection_.clear();
 
-	delete renderArea_;	
+	delete renderArea_;
 }
 
 void GraphicsContext::init()
@@ -381,7 +381,7 @@ void GraphicsContext::setCompositingMode( GraphicsContext::CompositingMode compo
 {
 	currentGraphicsState_->compositeMode_ = compositeMode;
 }
-	
+
 GraphicsContext::CompositingMode GraphicsContext::getCompositingMode()
 {
 	return currentGraphicsState_->compositeMode_;
@@ -487,9 +487,9 @@ void GraphicsContext::drawPartialImage( const double& x, const double& y, Rect* 
 
 	if ( renderImmediately ) {
 		if ( contextPeer_->prepareForDrawing( GraphicsContext::doImage ) ) {
-			
+
 			contextPeer_->drawImage( x, y, imageBounds, image, getCompositingMode() );
-			
+
 			contextPeer_->finishedDrawing( 	GraphicsContext::doImage );
 		}
 	}
@@ -509,7 +509,7 @@ void GraphicsContext::drawPartialImage( const double& x, const double& y, Rect* 
 
 		imgOp.imgSrcRect = *imageBounds;
 		imgOp.imgXfrmdRect = imgOp.imgSrcRect;
-		
+
 		imgOp.pt.x_ = x;
 		imgOp.pt.y_ = y;
 
@@ -532,7 +532,7 @@ typedef agg::order_bgra order;
 typedef agg::comp_op_adaptor_rgba<color, order> blender_type;
 typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
 
-typedef agg::blender_rgba<color, order> prim_blender_type; 
+typedef agg::blender_rgba<color, order> prim_blender_type;
 typedef agg::pixfmt_alpha_blend_rgba<prim_blender_type, agg::rendering_buffer> prim_pixfmt_type;
 typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
 
@@ -556,7 +556,7 @@ struct ImageAlpha {
 			}
 			while(--len);
 		}
-		else {			
+		else {
 			do
 			{
 				span->a = span->a * alpha;
@@ -574,7 +574,7 @@ typedef agg::span_converter<SpanGenerator,ImageAlpha> SpanConv;
 void GraphicsContext::renderImage( agg::rendering_buffer& destBuffer, Rect& destRect, ImageOperation& imgOp )
 {
 	//determine if we have a default transform
-	
+
 	agg::path_storage imagePath;
 	imagePath.move_to( imgOp.imgSrcRect.left_, imgOp.imgSrcRect.top_ );
 	imagePath.line_to( imgOp.imgSrcRect.right_, imgOp.imgSrcRect.top_ );
@@ -585,15 +585,15 @@ void GraphicsContext::renderImage( agg::rendering_buffer& destBuffer, Rect& dest
 	agg::trans_affine pathMat;
 
 	if ( imgOp.matrix.isIdentity() ) {
-		
+
 		imageMat *= agg::trans_affine_translation( -destRect.left_, -destRect.top_ );
-		
+
 
 		imageMat *= agg::trans_affine_translation( imgOp.pt.x_ ,
-													imgOp.pt.y_  );		
+													imgOp.pt.y_  );
 
 
-		
+
 		pathMat *= agg::trans_affine_translation( -destRect.left_, -destRect.top_ );
 
 		pathMat *= agg::trans_affine_translation( imgOp.pt.x_,
@@ -606,15 +606,15 @@ void GraphicsContext::renderImage( agg::rendering_buffer& destBuffer, Rect& dest
 		imageMat *= imgOp.matrix;
 
 		imageMat *= agg::trans_affine_translation( -destRect.left_, -destRect.top_ );
-		
-		
+
+
 		pathMat *= agg::trans_affine_translation( imgOp.pt.x_,
 													imgOp.pt.y_ );
 
 		pathMat *= imgOp.matrix;
 
 		pathMat *= agg::trans_affine_translation( -destRect.left_, -destRect.top_ );
-		
+
 	}
 
 	imageMat.invert();
@@ -624,33 +624,33 @@ void GraphicsContext::renderImage( agg::rendering_buffer& destBuffer, Rect& dest
 
 	SpanInterpolator interpolator(imageMat);
 	ColorPixels imgPix(imgOp.image);
-	
+
 	pixfmt imgPixf(imgPix);
-	
+
 	SpanGenerator spanGen(imgPixf,
 		agg::rgba(1, 0, 1,0),
 		interpolator);
-	
+
 	SpanConv sc(spanGen, imgA);
-	
+
 	SpanAllocator spanAllocator;
 	agg::rasterizer_scanline_aa<> rasterizer;
 	agg::scanline_u8 scanLine;
-	
+
 	rasterizer.add_path(xfrmdImgPath);
 
-	if ( GraphicsContext::cmSource == imgOp.compositeMode ) {		
+	if ( GraphicsContext::cmSource == imgOp.compositeMode ) {
 		pixfmt pixf(destBuffer);
 		RendererBase rb(pixf);
-		
+
 		agg::render_scanlines_aa(rasterizer, scanLine, rb, spanAllocator, sc );
 	}
-	else if ( GraphicsContext::cmCustom != imgOp.compositeMode && GraphicsContext::cmNone != imgOp.compositeMode ){		
+	else if ( GraphicsContext::cmCustom != imgOp.compositeMode && GraphicsContext::cmNone != imgOp.compositeMode ){
 		pixfmt_type pixf2(destBuffer);
 		pixf2.comp_op( imgOp.compositeMode );
 
 		comp_renderer_type crb(pixf2);
-		
+
 		agg::render_scanlines_aa(rasterizer, scanLine, crb, spanAllocator, sc );
 	}
 }
@@ -658,22 +658,22 @@ void GraphicsContext::renderImage( agg::rendering_buffer& destBuffer, Rect& dest
 Rect GraphicsContext::getTransformedImageRect( ImageOperation& imgOp )
 {
 	Rect result = imgOp.imgSrcRect;
-		
+
 	uint32 pid[1] = {0};
-	agg::trans_affine pathMat;		
-	agg::path_storage path;		
+	agg::trans_affine pathMat;
+	agg::path_storage path;
 
 	pathMat *= agg::trans_affine_translation( imgOp.pt.x_, imgOp.pt.y_ );
 	pathMat *= imgOp.matrix;
-	
-	
+
+
 	path.move_to( imgOp.imgSrcRect.left_, imgOp.imgSrcRect.top_ );
 	path.line_to( imgOp.imgSrcRect.right_, imgOp.imgSrcRect.top_ );
 	path.line_to( imgOp.imgSrcRect.right_, imgOp.imgSrcRect.bottom_ );
 	path.line_to( imgOp.imgSrcRect.left_, imgOp.imgSrcRect.bottom_ );
 	path.close_polygon();
-	
-	
+
+
 	agg::conv_transform< agg::path_storage > xfrmPath(path,pathMat);
 	agg::bounding_rect( xfrmPath, pid, 0, 1,
 						&result.left_, &result.top_,
@@ -681,7 +681,7 @@ Rect GraphicsContext::getTransformedImageRect( ImageOperation& imgOp )
 
 
 	return result;
-}	
+}
 
 Point GraphicsContext::getTransformedImagePoint( ImageOperation& imgOp )
 {
@@ -695,7 +695,7 @@ Point GraphicsContext::getTransformedImagePoint( ImageOperation& imgOp )
 Rect GraphicsContext::getRenderDestRect()
 {
 	Rect result;
-	
+
 	if ( !imageOperations_.empty() ) {
 		ImageOperation& firstImgOp = imageOperations_[0];
 
@@ -712,32 +712,32 @@ Rect GraphicsContext::getRenderDestRect()
 		std::vector<ImageOperation>::iterator it = imageOperations_.begin();
 
 		it ++;
-		
+
 		//determine the max bounds rect
-		//this becomes the rect that we will use to 
+		//this becomes the rect that we will use to
 		//copy the current gc contents into our "dest"
 		//image
 		while ( it != imageOperations_.end() ) {
-			ImageOperation& imgOp = *it;			
-			
+			ImageOperation& imgOp = *it;
+
 			pt = getTransformedImagePoint( imgOp );
 
 			imgOp.imgXfrmdRect = getTransformedImageRect( imgOp );
-			
+
 			if ( result.left_ > imgOp.imgXfrmdRect.left_ ) {
 				result.left_ = imgOp.imgXfrmdRect.left_ ;
 			}
 			if ( result.top_ > imgOp.imgXfrmdRect.top_ ) {
 				result.top_ = imgOp.imgXfrmdRect.top_ ;
 			}
-			
+
 			if ( result.right_ < imgOp.imgXfrmdRect.right_ ) {
 				result.right_ = imgOp.imgXfrmdRect.right_ ;
 			}
 			if ( result.bottom_ < imgOp.imgXfrmdRect.bottom_ ) {
 				result.bottom_ = imgOp.imgXfrmdRect.bottom_ ;
 			}
-			
+
 			it ++;
 		}
 
@@ -756,15 +756,16 @@ void GraphicsContext::renderImages( bool freeImages )
 
 	std::vector<Image*> imagesToDelete;
 	std::vector<ImageOperation>::iterator it = imageOperations_.begin();
-	
+
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doImage ) ) {
-		
-		
+
+
 
 		Rect gcRect = getRenderDestRect();
 
 		//create the dest image - this is what we'll render into...
 		Image* destImg = GraphicsToolkit::createImage( this, &gcRect );
+		VCF_ASSERT( NULL != destImg );
 		ColorPixels pix(destImg);
 		agg::rendering_buffer& destBuffer = pix;
 
@@ -773,7 +774,7 @@ void GraphicsContext::renderImages( bool freeImages )
 
 		while ( it != imageOperations_.end() ) {
 			ImageOperation& imgOp = *it;
-			
+
 
 			renderImage( destBuffer, gcRect, imgOp );
 
@@ -783,7 +784,7 @@ void GraphicsContext::renderImages( bool freeImages )
 					imagesToDelete.push_back( imgOp.image );
 				}
 			}
-			
+
 			it ++;
 		}
 
@@ -793,16 +794,16 @@ void GraphicsContext::renderImages( bool freeImages )
 		delete destImg;
 
 
-		//cleanup...		
+		//cleanup...
 		std::vector<Image*>::iterator it2 = imagesToDelete.begin();
-		
+
 		while ( it2 != imagesToDelete.end() ) {
 			delete *it2;
 			it2 ++;
 		}
-		
+
 		imageOperations_.clear();
-		
+
 		contextPeer_->finishedDrawing( 	GraphicsContext::doImage );
 	}
 }
@@ -1081,7 +1082,7 @@ void GraphicsContext::concatTranslation( const double transX, const double& tran
 	currentGraphicsState_->translateY_  += transY;
 	Matrix2D translation;
 	translation.translate( currentGraphicsState_->translateX_, currentGraphicsState_->translateY_);
-	
+
 	currentGraphicsState_->transformMatrix_.multiply( translation );
 }
 
@@ -1100,7 +1101,7 @@ void GraphicsContext::concatScale( const double& scaleX, const double& scaleY )
 	currentGraphicsState_->scaleY_  += scaleY;
 	Matrix2D scale;
 	scale.scale( currentGraphicsState_->scaleX_, currentGraphicsState_->scaleY_ );
-	
+
 	currentGraphicsState_->transformMatrix_.multiply( scale );
 }
 
@@ -1434,7 +1435,7 @@ void GraphicsContext::execPathOperations()
 					type = pt.primitive;
 					tmpX = pt.x;
 					tmpY = pt.y;
-					transform.apply( tmpX, tmpY );					
+					transform.apply( tmpX, tmpY );
 
 					tmpPts.push_back( Point(tmpX,tmpY) );
 					++it;
@@ -1601,7 +1602,7 @@ void GraphicsContext::execPathOperations()
 				PointOperation& pt = *it;
 				contextPeer_->lineTo( pt.x, pt.y );
 				contextPeer_->closePath();
-				
+
 				++it;
 			}
 			break;
@@ -1681,10 +1682,10 @@ void GraphicsContext::resetRenderAreaAlpha()
 
 			renderArea_->renderAreaAlphaState = rasNonDefaultAlphaVals;
 		}
-		
+
 
 		delete [] renderArea_->renderAreaAlphaVal;
-		renderArea_->renderAreaAlphaVal = NULL;		
+		renderArea_->renderAreaAlphaVal = NULL;
 	}
 }
 
@@ -1727,18 +1728,18 @@ void GraphicsContext::setRenderArea( Rect bounds )
 		renderArea_->renderArea->setSize( (uint32)bounds.getWidth(), (uint32)bounds.getHeight() );
 	}
 
-	renderArea_->renderBuffer->attach( (unsigned char*)renderArea_->renderArea->getData(), 
-							renderArea_->renderArea->getWidth(), 
+	renderArea_->renderBuffer->attach( (unsigned char*)renderArea_->renderArea->getData(),
+							renderArea_->renderArea->getWidth(),
 							renderArea_->renderArea->getHeight(),
 							renderArea_->renderArea->getWidth() * renderArea_->renderArea->getType() );
 
-	
+
 	renderArea_->scanline = new agg::scanline_u8();
 
 
 	renderArea_->renderArea->getImageContext()->setOrigin( -bounds.left_, -bounds.top_ );
 	renderArea_->oldContextID = getPeer()->getContextID();
-	getPeer()->setContextID( renderArea_->renderArea->getImageContext()->getPeer()->getContextID() );	
+	getPeer()->setContextID( renderArea_->renderArea->getImageContext()->getPeer()->getContextID() );
 }
 
 void GraphicsContext::deleteRenderArea()
@@ -1749,7 +1750,7 @@ void GraphicsContext::deleteRenderArea()
 	delete renderArea_->renderArea;
 
 	delete renderArea_->scanline;
-	
+
 	renderArea_->renderBuffer = NULL;
 	renderArea_->scanline = NULL;
 	renderArea_->renderArea = NULL;
@@ -1759,7 +1760,7 @@ void GraphicsContext::deleteRenderArea()
 
 void GraphicsContext::flushRenderArea()
 {
-	getPeer()->setContextID( renderArea_->oldContextID );	
+	getPeer()->setContextID( renderArea_->oldContextID );
 
 	if ( viewableBounds_.isNull() ) {
 		bitBlit( renderArea_->renderAreaRect.getTopLeft(), renderArea_->renderArea );
@@ -1778,7 +1779,7 @@ void GraphicsContext::flushRenderArea()
 
 		//drawPartialImage(  viewableBounds_.getTopLeft(), &tmp, renderArea_ );
 		bitBlit( viewableBounds_.getTopLeft(), renderArea_->renderArea );
-	}	
+	}
 }
 
 void GraphicsContext::buildArc( double centerX,  double centerY,
@@ -1796,7 +1797,7 @@ void GraphicsContext::buildArc( double centerX,  double centerY,
 
 	for ( size_t i=0;i<path.total_vertices();i++ ) {
 		Point pt;
-		path.vertex(i,&pt.x_, &pt.y_);	
+		path.vertex(i,&pt.x_, &pt.y_);
 		transform.apply( pt.x_, pt.y_ );
 		pts.push_back( pt );
 	}
@@ -1851,7 +1852,7 @@ void GraphicsContext::buildRoundRect( double x1, double y1, double x2, double y2
 
 
 	//agg::path_storage::const_iterator it = path.begin();
-	for (size_t i=0;i<path.total_vertices();i++ ) {	
+	for (size_t i=0;i<path.total_vertices();i++ ) {
 		Point pt;
 
 		path.vertex( i, &pt.x_, &pt.y_ );

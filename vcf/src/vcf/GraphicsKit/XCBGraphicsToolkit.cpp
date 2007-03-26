@@ -113,12 +113,26 @@ FontPeer* XCBGraphicsToolkit::internal_createFontPeer( const String& fontName, c
 
 Image* XCBGraphicsToolkit::internal_createImage( const uint32& width, const uint32& height, const Image::ImageType& imageType )
 {
-	return new XCBImagePeer(width, height);
+	if ( Image::itColor == imageType ) {
+		return new XCBImagePeer( width, height );
+    }
+    else if ( Image::itGrayscale == imageType ) {
+        return new XCBGrayscaleImagePeer( width, height );
+    }
+
+    return NULL;
 }
 
 Image* XCBGraphicsToolkit::internal_createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	if ( NULL != context ){
+		if ( Image::itColor == imageType ) {
+			return new XCBImagePeer( context, rect );
+		}
+		else if ( Image::itGrayscale == imageType ) {
+			return new XCBGrayscaleImagePeer( context, rect );
+		}
+	}
 	return NULL;
 }
 

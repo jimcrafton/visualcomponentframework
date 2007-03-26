@@ -8,33 +8,61 @@ where you installed the VCF.
 */
 
 namespace VCF {
-class XCBImagePeer : public AbstractImage {
-public:
-	XCBImagePeer();
-	XCBImagePeer( const uint32& width, const uint32& height );
-	XCBImagePeer( GraphicsContext* context, Rect* rect );
+    class XCBImagePeer : public AbstractImage {
+    public:
+        XCBImagePeer();
+        XCBImagePeer( const uint32& width, const uint32& height );
+        XCBImagePeer( GraphicsContext* context, Rect* rect );
 
-	virtual ~XCBImagePeer();
+        virtual ~XCBImagePeer();
 
-	virtual void setSize( const unsigned long & width, const unsigned long & height );
+        virtual void setSize( const unsigned long & width, const unsigned long & height );
 
-	virtual void beginDrawing();
+        virtual void beginDrawing();
 
-	virtual void finishedDrawing();
+        virtual void finishedDrawing();
 
-	const xcb_image_t* getImageData() const;
+        const xcb_image_t* getImageData() const;
 
-private:
-	void init();
-	void createBMP();
-	void createImage();
-	void destroyImage();
+    private:
+        void init();
+        void createBMP();
+        void createImage();
+        void destroyImage();
 
-	xcb_image_t *image_;
+        xcb_image_t *image_;
 
+    };
+
+
+
+
+    class XCBGrayscaleImagePeer : public AbstractImage {
+    public:
+        XCBGrayscaleImagePeer();
+        XCBGrayscaleImagePeer( const uint32& width, const uint32& height );
+        XCBGrayscaleImagePeer( GraphicsContext* context, Rect* rect );
+
+        virtual ~XCBGrayscaleImagePeer();
+
+        virtual void setSize( const unsigned long & width, const unsigned long & height );
+
+        virtual void beginDrawing();
+
+        virtual void finishedDrawing();
+
+        const xcb_image_t* getImageData() const;
+
+    private:
+        void init();
+        void createBMP();
+        void createImage();
+        void destroyImage();
+
+        xcb_image_t *image_;
+
+    };
 };
-
-}
 
 
 #endif

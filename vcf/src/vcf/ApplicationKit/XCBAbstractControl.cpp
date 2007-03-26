@@ -33,7 +33,7 @@ public:
 		XCBAbstractControl* control = NULL;
 		XCBDrawableControlMap::iterator it = map_.find(window.xid);
 		if( it != map_.end() ) {
-			control = it->second;	
+			control = it->second;
 		}
 		return control;
 	}
@@ -46,41 +46,46 @@ VCF::SmartPtr<XCBAbstractControl::XCBControlMapImpl>::Scoped XCBAbstractControl:
 */
 
 XCBAbstractControl::XCBAbstractControl( Control* control ) :
-control_(control)
+control_(control),
+owningWindow_(NULL),
+enabled_(false),
+visible_(false),
+focused_(false),
+parent_(NULL),
+mouseEventsCaptured_(false)
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+
 }
 
 XCBAbstractControl::~XCBAbstractControl()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+
 }
 
 void XCBAbstractControl::create( Control* owningControl )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+
 }
 
 void XCBAbstractControl::destroyControl()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+
 }
 
 OSHandleID XCBAbstractControl::getHandleID()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return 0;
+
+	return (OSHandleID) this;
 }
 
 String XCBAbstractControl::getText()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 	return "";
 }
 
 void XCBAbstractControl::setText( const String& text )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+
 }
 
 void XCBAbstractControl::setBounds( Rect* rect )
@@ -90,13 +95,12 @@ void XCBAbstractControl::setBounds( Rect* rect )
 
 bool XCBAbstractControl::beginSetBounds( const uint32& numberOfChildren )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 	return true;
 }
 
 void XCBAbstractControl::endSetBounds()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+
 }
 
 Rect XCBAbstractControl::getBounds()
@@ -106,24 +110,23 @@ Rect XCBAbstractControl::getBounds()
 
 void XCBAbstractControl::setVisible( const bool& visible )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+    visible_ = visible;
 }
 
 bool XCBAbstractControl::getVisible()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return false;
+
+	return visible_;
 }
 
 Control* XCBAbstractControl::getControl()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return NULL;
+	return control_;
 }
 
-void XCBAbstractControl::setControl( Control* component )
+void XCBAbstractControl::setControl( Control* control )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	control_ = control;
 }
 
 void XCBAbstractControl::setCursor( Cursor* cursor )
@@ -133,35 +136,72 @@ void XCBAbstractControl::setCursor( Cursor* cursor )
 
 void XCBAbstractControl::setParent( Control* parent )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+    if ( NULL == parent ) {
+        parent_ = NULL;
+    }
+    else {
+        XCBAbstractControl* parentPeer = (XCBAbstractControl*)parent->getPeer();
+        if ( parent_ != parentPeer ) {
+            if ( NULL != parent_ ) {
+                parent_->removeChild( this );
+            }
+
+            parent_ = parentPeer;
+
+            Frame* frame = parent->getParentFrame ();
+            owningWindow_ = (XCBWindowPeer*) frame->getPeer();
+
+            parent_->addChild( this );
+        }
+    }
+}
+
+
+void XCBAbstractControl::addChild( XCBAbstractControl* child )
+{
+    XCBControlArray::iterator found =
+        std::find( childControls_.begin(), childControls_.end(), child );
+    if ( found == childControls_.end() ) {
+        childControls_.push_back( child );
+    }
+}
+
+void XCBAbstractControl::removeChild( XCBAbstractControl* child )
+{
+    XCBControlArray::iterator found =
+        std::find( childControls_.begin(), childControls_.end(), child );
+    if ( found != childControls_.end() ) {
+        childControls_.erase( found );
+    }
 }
 
 Control* XCBAbstractControl::getParent()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return NULL;
+    Control* result = NULL;
+    if ( NULL != parent_ ) {
+        result = parent_->getControl();
+    }
+	return result;
 }
 
 bool XCBAbstractControl::isFocused()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return false;
+	return focused_;
 }
 
 void XCBAbstractControl::setFocused()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	focused_ = true;
 }
 
 bool XCBAbstractControl::isEnabled()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return false;
+	return enabled_;
 }
 
 void XCBAbstractControl::setEnabled( const bool& enabled )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	enabled_ = enabled;
 }
 
 void XCBAbstractControl::setFont( Font* font )
@@ -176,12 +216,12 @@ void XCBAbstractControl::repaint( Rect* repaintRect, const bool& immediately )
 
 void XCBAbstractControl::keepMouseEvents()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	mouseEventsCaptured_ = true;
 }
 
 void XCBAbstractControl::releaseMouseEvents()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	mouseEventsCaptured_ = false;
 }
 
 void XCBAbstractControl::translateToScreenCoords( Point* pt )
@@ -196,17 +236,17 @@ void XCBAbstractControl::translateFromScreenCoords( Point* pt )
 
 void XCBAbstractControl::setBorder( Border* border )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	repaint(NULL,true);
 }
 
 void XCBAbstractControl::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	//graphicsContext->setClippingRect( childClipRect );
 }
 
 void XCBAbstractControl::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	//graphicsContext->setClippingRect( oldClipRect );
 }
 
 /**

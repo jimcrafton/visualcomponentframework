@@ -12,7 +12,7 @@ where you installed the VCF.
 
 namespace VCF {
 
-	class XCBWindowPeer : public WindowPeer, public ControlPeer {
+	class XCBWindowPeer : public WindowPeer, public XCBAbstractControl {
 	public:
         XCBWindowPeer( Control* component, Control* owner );
 
@@ -39,7 +39,7 @@ namespace VCF {
 		virtual void setIconImage( Image* icon );
 
 		virtual bool isActiveWindow();
-		
+
 		virtual void setBorderPath( Path* path ) ;
 
 		////////////////////////////////////////////////////////
@@ -108,7 +108,7 @@ namespace VCF {
 		static void internal_handleDestroyNotify(xcb_connection_t &connection, const xcb_destroy_notify_event_t& event);
 
 	private:
-		void paint(xcb_connection_t &connection);
+		void paint(xcb_connection_t &connection, const xcb_expose_event_t& event );
 		void destroyImage(xcb_connection_t &connection);
 		void createImage(xcb_connection_t &connection, int width, int height);
 
@@ -119,7 +119,6 @@ namespace VCF {
 		xcb_shm_segment_info_t shminfo_;
         xcb_atom_t           deleteWindowAtom_;
 		Rect 	 	      clientBounds_;
-		Control*          control_;
 
 		typedef std::map<uint32, XCBWindowPeer*> XIDWindowPeerMap;
 		static XIDWindowPeerMap XIDWindowPeerMap_;

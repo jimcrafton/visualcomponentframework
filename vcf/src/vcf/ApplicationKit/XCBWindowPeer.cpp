@@ -35,11 +35,11 @@ using namespace VCF;
 
 XCBWindowPeer::XIDWindowPeerMap XCBWindowPeer::XIDWindowPeerMap_;
 
-XCBWindowPeer::XCBWindowPeer( Control* component, Control* owner ) :
-image_(NULL),
-control_(component)
+XCBWindowPeer::XCBWindowPeer( Control* control, Control* owner ) :
+    XCBAbstractControl(control),
+    image_(NULL)
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+
 }
 
 Rect XCBWindowPeer::getClientBounds()
@@ -381,12 +381,12 @@ void XCBWindowPeer::setBorder( Border* border )
 
 void XCBWindowPeer::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+
 }
 
 void XCBWindowPeer::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+
 }
 
 ////
@@ -423,7 +423,7 @@ void XCBWindowPeer::internal_handleExposeEvent(xcb_connection_t &connection, con
 	XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(event.window);
 	if(it != XIDWindowPeerMap_.end()) {
 		XCBWindowPeer *peer = it->second;
-		peer->paint(connection);
+		peer->paint(connection,event);
 	}
 }
 
@@ -490,10 +490,10 @@ void XCBWindowPeer::destroyImage(xcb_connection_t &connection)
 
 void XCBWindowPeer::setBorderPath( Path* path )
 {
-	
+
 }
 
-void XCBWindowPeer::paint(xcb_connection_t &connection)
+void XCBWindowPeer::paint(xcb_connection_t &connection, const xcb_expose_event_t& event )
 {
     GraphicsContext* gc = control_->getContext();
 	XCBContextPeer *contextPeer = dynamic_cast<XCBContextPeer*>(gc->getPeer());
@@ -502,13 +502,15 @@ void XCBWindowPeer::paint(xcb_connection_t &connection)
 		surf.context = &context_;
 		surf.drawable = &drawable_;
 		surf.drawableImage = image_;
-		
+
 		contextPeer->setContextID( (VCF::OSHandleID)&surf );
-		
-		control_->paint(gc);		
+
+
+
+		control_->paint(gc);
 	}
 
-	
+
 	xcb_image_shm_put( &connection,
 					drawable_,
 					context_,
