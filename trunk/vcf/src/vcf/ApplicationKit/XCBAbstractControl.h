@@ -92,7 +92,9 @@ namespace VCF {
             return childControls_;
         }
 
-        void paintChildren(
+        void paintChildren( xcb_connection_t &connection, const xcb_expose_event_t& event, GraphicsContext* sharedCtx );
+		
+		void handleMouseEvents(xcb_connection_t &connection, const xcb_generic_event_t& event);
 	protected:
 		XCBAbstractControl( Control* control );
 
@@ -111,6 +113,7 @@ namespace VCF {
         void addChild( XCBAbstractControl* child );
         void removeChild( XCBAbstractControl* child );
 
+		XCBAbstractControl* findControlForMouseEvent( Point pt ); 
 	private:
 	};
 };

@@ -249,6 +249,84 @@ void XCBAbstractControl::postChildPaint( GraphicsContext* graphicsContext, Contr
 	//graphicsContext->setClippingRect( oldClipRect );
 }
 
+void XCBAbstractControl::paintChildren( xcb_connection_t &connection, const xcb_expose_event_t& event, GraphicsContext* sharedCtx )
+{
+	XCBControlArray::iterator it = childControls_.begin();
+	while ( it != childControls_.end() ) {
+		XCBAbstractControl* child = *it;
+		if ( child->getVisible() && (NULL != child->getOwnerWindow()) ) {
+			Control* childControl =  child->getControl();
+			childControl->paint( sharedCtx );
+			
+			paintChildren( connection, event, sharedCtx );			
+		}
+		++it;
+	}
+}
+
+void XCBAbstractControl::handleMouseEvents(xcb_connection_t &connection, const xcb_generic_event_t& event)
+{
+	switch ( event.response_type ) {
+		case XCB_BUTTON_PRESS : {
+			const xcb_button_press_event_t* ev = (const xcb_button_press_event_t*)&event;
+		}
+		break;
+		
+		case XCB_BUTTON_RELEASE : {
+			const xcb_button_release_event_t* ev = (const xcb_button_release_event_t*)&event;
+		}
+		break;
+		
+		case XCB_MOTION_NOTIFY : {
+			const xcb_motion_notify_event_t* ev = (const xcb_motion_notify_event_t*)&event;
+		}
+		break;
+		
+		case XCB_ENTER_NOTIFY : {
+			const xcb_enter_notify_event_t* ev = (const xcb_enter_notify_event_t*)&event;
+		}
+		break;
+		
+		case XCB_LEAVE_NOTIFY : {
+			const xcb_leave_notify_event_t* ev = (const xcb_leave_notify_event_t*)&event;
+		}
+		break;
+	}	
+}
+
+XCBAbstractControl* XCBAbstractControl::findControlForMouseEvent( Point pt )
+{
+	XCBAbstractControl* result = NULL;
+	
+	if ( mouseEventsCaptured() ) {
+		result = this;
+	}
+	
+	if ( NULL == result ) {
+		XCBControlArray::iterator it = childControls_.begin();
+		while ( it != childControls_.end() ) {
+			XCBAbstractControl* child = *it;
+			
+			result = child->findControlForMouseEvent(pt);
+			if ( NULL != result ) {
+				break;
+			}
+			
+			++it;
+		}
+		
+		if ( NULL == result ) {
+			if ( getVisible() && (NULL != getOwnerWindow()) && isEnabled() ) {
+				
+				if ( bounds_.containsPt( &pt ) ) {
+					result = this;
+				}
+			}
+		}
+	}
+	
+	return result;
+}
 /**
 $Id$
 */
