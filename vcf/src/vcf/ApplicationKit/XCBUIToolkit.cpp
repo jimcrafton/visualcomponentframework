@@ -260,16 +260,16 @@ void XCBUIToolkit::internal_runEventLoop()
 			}
 
 			xcb_generic_event_t *event = NULL;
-			
-			
+
+
 			bool moreEvents = true;
 			int exposeCount = 0;
-			
-			while( moreEvents ) {	
-				if ( NULL == event ) {			
+
+			while( moreEvents ) {
+				if ( NULL == event ) {
 					event = xcb_wait_for_event( connection );
 				}
-				
+
                 event->response_type &= ~0x80;
 				switch (event->response_type) {
 
@@ -293,16 +293,16 @@ void XCBUIToolkit::internal_runEventLoop()
 						exposeCount ++;
 					}
 					break;
-					
-					case XCB_BUTTON_RELEASE: case XCB_BUTTON_PRESS: case XCB_MOTION_NOTIFY: 
+
+					case XCB_BUTTON_RELEASE: case XCB_BUTTON_PRESS: case XCB_MOTION_NOTIFY:
 						case XCB_ENTER_NOTIFY: case XCB_LEAVE_NOTIFY: {
-						XCBWindowPeer::internal_handleMouseEvents( connection, *event );
+						XCBWindowPeer::internal_handleMouseEvents( *connection, *event );
 					}
 					break;
-					
-					
+
+
 					case XCB_KEY_PRESS:  case XCB_KEY_RELEASE:  {
-						XCBWindowPeer::internal_handleKeyboardEvents( connection, *event );
+						XCBWindowPeer::internal_handleKeyboardEvents( *connection, *event );
 					}
 					break;
 

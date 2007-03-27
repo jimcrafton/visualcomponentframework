@@ -131,15 +131,15 @@ void XCBWindowPeer::create( Control* owningControl )
 
 		mask = XCB_CW_EVENT_MASK ;
 		values[0] = XCB_EVENT_MASK_EXPOSURE |
-					XCB_EVENT_MASK_STRUCTURE_NOTIFY | 
+					XCB_EVENT_MASK_STRUCTURE_NOTIFY |
 					XCB_EVENT_MASK_BUTTON_PRESS   |
-					XCB_EVENT_MASK_BUTTON_RELEASE | 
+					XCB_EVENT_MASK_BUTTON_RELEASE |
 					XCB_EVENT_MASK_POINTER_MOTION |
-					XCB_EVENT_MASK_ENTER_WINDOW   | 
+					XCB_EVENT_MASK_ENTER_WINDOW   |
 					XCB_EVENT_MASK_LEAVE_WINDOW   |
-					XCB_EVENT_MASK_KEY_PRESS | 
+					XCB_EVENT_MASK_KEY_PRESS |
 					XCB_EVENT_MASK_KEY_RELEASE;
-		
+
 		xcb_window_t parentWindow = screen->root;
 /*		if ( NULL != owner_ ) {
 			XCBDRAWABLE* parentDrawable = reinterpret_cast<XCBDRAWABLE*>(owner_->getPeer()->getHandleID());
@@ -537,74 +537,96 @@ void XCBWindowPeer::paint(xcb_connection_t &connection, const xcb_expose_event_t
 
 void XCBWindowPeer::internal_handleMouseEvents(xcb_connection_t &connection, const xcb_generic_event_t& event)
 {
-	XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(event.window);
-	if(it != XIDWindowPeerMap_.end()) {
-		XCBWindowPeer *peer = it->second;
-		Point pt;
-		
-		switch ( event.response_type ) {
+    XCBWindowPeer* peer = NULL;
+    Point pt;
+
+    switch ( event.response_type ) {
 		case XCB_BUTTON_PRESS : {
 			const xcb_button_press_event_t* ev = (const xcb_button_press_event_t*)&event;
+			XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(ev->event);
+			if(it != XIDWindowPeerMap_.end()) {
+                peer = it->second;
+			}
 			pt.x_ = ev->event_x;
 			pt.y_ = ev->event_y;
 		}
 		break;
-		
+
 		case XCB_BUTTON_RELEASE : {
 			const xcb_button_release_event_t* ev = (const xcb_button_release_event_t*)&event;
+			XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(ev->event);
+			if(it != XIDWindowPeerMap_.end()) {
+                peer = it->second;
+			}
 			pt.x_ = ev->event_x;
 			pt.y_ = ev->event_y;
 		}
 		break;
-		
+
 		case XCB_MOTION_NOTIFY : {
 			const xcb_motion_notify_event_t* ev = (const xcb_motion_notify_event_t*)&event;
+			XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(ev->event);
+			if(it != XIDWindowPeerMap_.end()) {
+                peer = it->second;
+			}
 			pt.x_ = ev->event_x;
 			pt.y_ = ev->event_y;
 		}
 		break;
-		
+
 		case XCB_ENTER_NOTIFY : {
 			const xcb_enter_notify_event_t* ev = (const xcb_enter_notify_event_t*)&event;
+			XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(ev->event);
+			if(it != XIDWindowPeerMap_.end()) {
+                peer = it->second;
+			}
 			pt.x_ = ev->event_x;
 			pt.y_ = ev->event_y;
 		}
 		break;
-		
+
 		case XCB_LEAVE_NOTIFY : {
 			const xcb_leave_notify_event_t* ev = (const xcb_leave_notify_event_t*)&event;
+			XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(ev->event);
+			if(it != XIDWindowPeerMap_.end()) {
+                peer = it->second;
+			}
 			pt.x_ = ev->event_x;
 			pt.y_ = ev->event_y;
 		}
 		break;
 	}
-		
-		XCBAbstractControl* xcbCtrl = findControlForMouseEvent( pt );
-		if ( NULL != xcbCtrl ) {
-			xcbCtrl->handleMouseEvents( connection, event );
-		}
+
+	XCBAbstractControl* xcbCtrl = peer->findControlForMouseEvent( pt );
+	if ( NULL != xcbCtrl ) {
+		xcbCtrl->handleMouseEvents( connection, event );
 	}
 }
 
 void XCBWindowPeer::internal_handleKeyboardEvents(xcb_connection_t &connection, const xcb_generic_event_t& event)
 {
-	XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(event.window);
-	if(it != XIDWindowPeerMap_.end()) {
-		XCBWindowPeer *peer = it->second;
-		
-		switch ( event.response_type ) {
-			case XCB_KEY_PRESS : {
-				const xcb_key_press_event_t* ev = (const xcb_key_press_event_t*)&event;
-								
-			}
-			break;
-			
-			case XCB_KEY_RELEASE : {
-				const xcb_key_release_event_t* ev = (const xcb_key_release_event_t*)&event;
-			}
-			break;
-		}		
-	}
+
+	XCBWindowPeer* peer = NULL;
+
+	switch ( event.response_type ) {
+		case XCB_KEY_PRESS : {
+            const xcb_key_press_event_t* ev = (const xcb_key_press_event_t*)&event;
+            XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(ev->event);
+            if(it != XIDWindowPeerMap_.end()) {
+                peer = it->second;
+            }
+        }
+        break;
+
+        case XCB_KEY_RELEASE : {
+            const xcb_key_release_event_t* ev = (const xcb_key_release_event_t*)&event;
+            XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(ev->event);
+            if(it != XIDWindowPeerMap_.end()) {
+                peer = it->second;
+            }
+        }
+        break;
+    }
 }
 
 /**
