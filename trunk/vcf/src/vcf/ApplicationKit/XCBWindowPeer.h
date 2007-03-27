@@ -103,10 +103,10 @@ namespace VCF {
 
 		/////////////////////////////////////////////////////////////////////
 		static void internal_handleClientMessageEvent(xcb_connection_t &connection, const xcb_client_message_event_t& event);
-		
-		static void internal_handleMouseEvents(xcb_connection_t &connection, const xcb_generic_event_t& event);
+
+		static void internal_handleMouseEvents(xcb_connection_t& connection, const xcb_generic_event_t& event);
 		static void internal_handleKeyboardEvents(xcb_connection_t &connection, const xcb_generic_event_t& event);
-		
+
 		static void internal_handleConfigureNotifyEvent(xcb_connection_t &connection, const xcb_configure_notify_event_t& event);
 		static void internal_handleExposeEvent(xcb_connection_t &connection, const xcb_expose_event_t& event);
 		static void internal_handleDestroyNotify(xcb_connection_t &connection, const xcb_destroy_notify_event_t& event);
