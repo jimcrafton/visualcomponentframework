@@ -14,6 +14,14 @@ class XCBWindowPeer;
 
 typedef void* XCBVoidCookie;
 
+class XCBEventMessage {
+public:
+	XCBEventMessage():control(NULL),event(NULL){}
+		
+	Control* control;
+	xcb_generic_event_t* event;
+};
+
 class XCBUIToolkit : public UIToolkit
 {
 public:

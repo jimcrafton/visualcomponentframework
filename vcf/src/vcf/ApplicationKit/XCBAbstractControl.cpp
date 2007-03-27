@@ -46,13 +46,13 @@ VCF::SmartPtr<XCBAbstractControl::XCBControlMapImpl>::Scoped XCBAbstractControl:
 */
 
 XCBAbstractControl::XCBAbstractControl( Control* control ) :
-control_(control),
-owningWindow_(NULL),
-enabled_(false),
-visible_(false),
-focused_(false),
-parent_(NULL),
-mouseEventsCaptured_(false)
+	control_(control),
+	owningWindow_(NULL),
+	enabled_(false),
+	visible_(false),
+	focused_(false),
+	parent_(NULL),
+	mouseEventsCaptured_(false)
 {
 
 }
