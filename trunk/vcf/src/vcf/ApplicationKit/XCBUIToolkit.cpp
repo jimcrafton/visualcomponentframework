@@ -349,16 +349,183 @@ void XCBUIToolkit::internal_quitCurrentEventLoop()
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }
 
+
+uint32 translateButtonMask( uint32 state )
+{
+	uint32 result = 0;
+
+	if ( state & XCB_BUTTON_MASK_1 ) {
+		result |= VCF::mbmLeftButton;
+	}
+	if ( state & XCB_BUTTON_MASK_2 ) {
+		result |= VCF::mbmMiddleButton;
+	}
+	if ( state & XCB_BUTTON_MASK_3 ) {
+		result |= VCF::mbmRightButton;
+	}
+
+	return result;
+}
+
+uint32 translateKeyMask( uint32 state )
+{
+	uint32 result = VCF::kmUndefined;
+
+	if ( state & XCB_MOD_MASK_SHIFT ) {
+		result |= VCF::kmShift;
+	}
+	if ( state & XCB_MOD_MASK_CONTROL ) {
+		result |= VCF::kmCtrl;
+	}
+
+	if ( state & XCB_MOD_MASK_1 ) {
+		result |= VCF::kmAlt;
+	}
+
+	//need to figure out the Alt key.....
+
+	return result;
+}
+
+
 Event* XCBUIToolkit::internal_createEventFromNativeOSEventData( void* eventData )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return NULL;
+	Event* result = NULL;
+	XCBEventMessage* message = (XCBEventMessage*)eventData;
+	
+	VCF_ASSERT(NULL != message);
+	VCF_ASSERT(NULL != message->event);
+	VCF_ASSERT(NULL != message->control);
+	
+	switch ( message->event->response_type ) {
+		case XCB_CONFIGURE_NOTIFY: {
+			//VCF::Size sz( message->event->width, message->event->height );
+			//result = new ControlEvent( message->control, sz );
+			//not handled here....
+		}
+		break;
+		
+		case XCB_DESTROY_NOTIFY: {
+			result = new VCF::ComponentEvent( message->control, Component::COMPONENT_DESTROYED );	
+		}
+		break;
+					
+		case XCB_BUTTON_PRESS : {
+			xcb_button_press_event_t* ev = (xcb_button_press_event_t*)message->event;
+			VCF::Point pt( ev->event_x, ev->event_y );
+
+			Scrollable* scrollable = message->control->getScrollable();
+			if ( NULL != scrollable ) {
+				pt.x_ += scrollable->getHorizontalPosition();
+				pt.y_ += scrollable->getVerticalPosition();
+			}
+
+			result = new VCF::MouseEvent ( message->control, 
+											Control::MOUSE_DOWN,
+											translateButtonMask( message->event->state ),
+											translateKeyMask( message->event->state ), 
+											&pt );
+		}
+		break;
+		
+		case XCB_BUTTON_RELEASE : {
+			xcb_button_release_event_t* ev = (xcb_button_release_event_t*)message->event;
+
+			VCF::Point pt( ev->event_x, ev->event_y );
+
+			Scrollable* scrollable = message->control->getScrollable();
+			if ( NULL != scrollable ) {
+				pt.x_ += scrollable->getHorizontalPosition();
+				pt.y_ += scrollable->getVerticalPosition();
+			}
+
+			result = new VCF::MouseEvent ( message->control, 
+											Control::MOUSE_UP,
+											translateButtonMask( message->event->state ),
+											translateKeyMask( message->event->state ), 
+											&pt );
+		}
+		break;
+		
+		case XCB_MOTION_NOTIFY : {
+			xcb_motion_notify_event_t* ev = (xcb_motion_notify_event_t*)message->event;
+
+			VCF::Point pt( ev->event_x, ev->event_y );
+
+			Scrollable* scrollable = message->control->getScrollable();
+			if ( NULL != scrollable ) {
+				pt.x_ += scrollable->getHorizontalPosition();
+				pt.y_ += scrollable->getVerticalPosition();
+			}
+
+
+			result = new VCF::MouseEvent( message->control, 
+											Control::MOUSE_MOVE,
+											translateButtonMask( message->event->state ),
+											translateButtonMask( message->event->state ),
+											&pt );
+		}
+		break;
+		
+		case XCB_ENTER_NOTIFY : {
+			xcb_enter_notify_event_t* ev = (xcb_enter_notify_event_t*)message->event;
+
+			VCF::Point pt( ev->event_x, ev->event_y );
+
+			Scrollable* scrollable = message->control->getScrollable();
+			if ( NULL != scrollable ) {
+				pt.x_ += scrollable->getHorizontalPosition();
+				pt.y_ += scrollable->getVerticalPosition();
+			}
+
+			result = new VCF::MouseEvent( message->control, 
+											Control::MOUSE_ENTERED,
+											translateButtonMask( message->event->state ),
+											translateButtonMask( message->event->state ),
+											&pt );
+		}
+		break;
+		
+		case XCB_LEAVE_NOTIFY : {
+			xcb_leave_notify_event_t* ev = (xcb_leave_notify_event_t*)message->event;
+
+			VCF::Point pt( ev->event_x, ev->event_y );
+
+			Scrollable* scrollable = message->control->getScrollable();
+			if ( NULL != scrollable ) {
+				pt.x_ += scrollable->getHorizontalPosition();
+				pt.y_ += scrollable->getVerticalPosition();
+			}
+
+
+			result = new VCF::MouseEvent( message->control, 
+											Control::MOUSE_LEAVE,
+											translateButtonMask( message->event->state ),
+											translateButtonMask( message->event->state ),
+											&pt );
+		}
+		break;
+		
+		case XCB_KEY_PRESS : {
+			
+		}
+		break;
+		
+		case XCB_KEY_RELEASE : {
+			
+		}
+		break;
+	}
+	
+	return result;
 }
 
 Size XCBUIToolkit::internal_getDragDropDelta()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return Size();
+	//this is completely arbitrary - need to read this from a file
+	Size result(4,4);
+
+	return result;
 }
 
 void XCBUIToolkit::internal_displayHelpContents( const String& helpBookName, const String& helpDirectory )
