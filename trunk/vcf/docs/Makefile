@@ -496,14 +496,14 @@ dist_online : coredocs_online
 	find *.html > files.out
 	find gfx/ -type f -name '*' > images.out
 	cat files.out images.out > all.out
-	echo Creating tar file...
-	tar -cf $(HTML_ONLINE_TAR_FILENAME) vcf.css -T all.out
-	rm -f $(HTML_ONLINE_TAR_FILENAME).gz
+	@echo Creating tar file...
+	tar -cf $(HTML_ONLINE_TAR_FILENAME) -T all.out vcf.css 
+	-rm -f $(HTML_ONLINE_TAR_FILENAME).gz
 	gzip $(HTML_ONLINE_TAR_FILENAME)
-	echo HTML files tarred and compressed as $(HTML_ONLINE_TAR_FILENAME).gz		
-	rm all.out
-	rm files.out
-	rm images.out
+	@echo HTML files tarred and compressed as $(HTML_ONLINE_TAR_FILENAME).gz		
+	-rm all.out
+	-rm files.out
+	-rm images.out
 
 
 dist_doxy_online : online_doxy  	
