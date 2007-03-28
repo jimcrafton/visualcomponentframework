@@ -14,6 +14,9 @@
 	<!ENTITY coreLibInternetKit SYSTEM "corelib_internetKit.xml">
 	<!ENTITY coreLibOpenGLKit SYSTEM "corelib_openGLKit.xml">
 	<!ENTITY coreLibNetworkKit SYSTEM "corelib_networkKit.xml">
+	<!ENTITY coreLibDatabaseKit SYSTEM "corelib_databaseKit.xml">
+	<!ENTITY coreLibJavaScriptKit SYSTEM "corelib_javascriptKit.xml">
+	<!ENTITY coreLibRegExKit SYSTEM "corelib_regexKit.xml">
 	<!ENTITY coreLibRemoteObjectKit SYSTEM "corelib_remoteObjectKit.xml">
 	<!ENTITY faqs SYSTEM "faqs.xml">
 

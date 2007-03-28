@@ -90,6 +90,8 @@ NB: This software will not save the world.
 			<year>2003</year>
 			<year>2004</year>
 			<year>2005</year>
+			<year>2006</year>
+			<year>2007</year>
 			<holder>Jim Crafton, VCF Project</holder>
 		</copyright>
 
@@ -151,6 +153,13 @@ NB: This software will not save the world.
 			  <revremark>Added further documentation, plus new sections for the HTMLKit, InternetKit and OpenGLKit</revremark>
 			</revision>
 			
+			
+			<revision>
+			  <revnumber>0.9.8</revnumber>
+			  <date>March 28 2007</date>
+			  <authorinitials>JC</authorinitials>
+			  <revremark>Added further documentation, plus new sections for the DatabaseKit, RegExKit and JavaScriptKit</revremark>
+			</revision>
 		</revhistory>
 	</bookinfo>
 
@@ -177,6 +186,12 @@ NB: This software will not save the world.
 		
 		&coreLibNetworkKit;
 
+		&coreLibDatabaseKit;
+		
+		&coreLibJavaScriptKit;
+		
+		&coreLibRegExKit;
+		
 		&coreLibRemoteObjectKit;
 	</chapter>
 
