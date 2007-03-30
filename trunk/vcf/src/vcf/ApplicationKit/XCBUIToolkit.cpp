@@ -392,11 +392,11 @@ Event* XCBUIToolkit::internal_createEventFromNativeOSEventData( void* eventData 
 {
 	Event* result = NULL;
 	XCBEventMessage* message = (XCBEventMessage*)eventData;
-	
+
 	VCF_ASSERT(NULL != message);
 	VCF_ASSERT(NULL != message->event);
 	VCF_ASSERT(NULL != message->control);
-	
+
 	switch ( message->event->response_type ) {
 		case XCB_CONFIGURE_NOTIFY: {
 			//VCF::Size sz( message->event->width, message->event->height );
@@ -404,12 +404,12 @@ Event* XCBUIToolkit::internal_createEventFromNativeOSEventData( void* eventData 
 			//not handled here....
 		}
 		break;
-		
+
 		case XCB_DESTROY_NOTIFY: {
-			result = new VCF::ComponentEvent( message->control, Component::COMPONENT_DESTROYED );	
+			result = new VCF::ComponentEvent( message->control, Component::COMPONENT_DESTROYED );
 		}
 		break;
-					
+
 		case XCB_BUTTON_PRESS : {
 			xcb_button_press_event_t* ev = (xcb_button_press_event_t*)message->event;
 			VCF::Point pt( ev->event_x, ev->event_y );
@@ -420,14 +420,14 @@ Event* XCBUIToolkit::internal_createEventFromNativeOSEventData( void* eventData 
 				pt.y_ += scrollable->getVerticalPosition();
 			}
 
-			result = new VCF::MouseEvent ( message->control, 
+			result = new VCF::MouseEvent ( message->control,
 											Control::MOUSE_DOWN,
-											translateButtonMask( message->event->state ),
-											translateKeyMask( message->event->state ), 
+											translateButtonMask( ev->state ),
+											translateKeyMask( ev->state ),
 											&pt );
 		}
 		break;
-		
+
 		case XCB_BUTTON_RELEASE : {
 			xcb_button_release_event_t* ev = (xcb_button_release_event_t*)message->event;
 
@@ -439,14 +439,14 @@ Event* XCBUIToolkit::internal_createEventFromNativeOSEventData( void* eventData 
 				pt.y_ += scrollable->getVerticalPosition();
 			}
 
-			result = new VCF::MouseEvent ( message->control, 
+			result = new VCF::MouseEvent ( message->control,
 											Control::MOUSE_UP,
-											translateButtonMask( message->event->state ),
-											translateKeyMask( message->event->state ), 
+											translateButtonMask( ev->state ),
+											translateKeyMask( ev->state ),
 											&pt );
 		}
 		break;
-		
+
 		case XCB_MOTION_NOTIFY : {
 			xcb_motion_notify_event_t* ev = (xcb_motion_notify_event_t*)message->event;
 
@@ -459,14 +459,14 @@ Event* XCBUIToolkit::internal_createEventFromNativeOSEventData( void* eventData 
 			}
 
 
-			result = new VCF::MouseEvent( message->control, 
+			result = new VCF::MouseEvent( message->control,
 											Control::MOUSE_MOVE,
-											translateButtonMask( message->event->state ),
-											translateButtonMask( message->event->state ),
+											translateButtonMask( ev->state ),
+											translateButtonMask( ev->state ),
 											&pt );
 		}
 		break;
-		
+
 		case XCB_ENTER_NOTIFY : {
 			xcb_enter_notify_event_t* ev = (xcb_enter_notify_event_t*)message->event;
 
@@ -478,14 +478,14 @@ Event* XCBUIToolkit::internal_createEventFromNativeOSEventData( void* eventData 
 				pt.y_ += scrollable->getVerticalPosition();
 			}
 
-			result = new VCF::MouseEvent( message->control, 
+			result = new VCF::MouseEvent( message->control,
 											Control::MOUSE_ENTERED,
-											translateButtonMask( message->event->state ),
-											translateButtonMask( message->event->state ),
+											translateButtonMask( ev->state ),
+											translateButtonMask( ev->state ),
 											&pt );
 		}
 		break;
-		
+
 		case XCB_LEAVE_NOTIFY : {
 			xcb_leave_notify_event_t* ev = (xcb_leave_notify_event_t*)message->event;
 
@@ -498,25 +498,25 @@ Event* XCBUIToolkit::internal_createEventFromNativeOSEventData( void* eventData 
 			}
 
 
-			result = new VCF::MouseEvent( message->control, 
+			result = new VCF::MouseEvent( message->control,
 											Control::MOUSE_LEAVE,
-											translateButtonMask( message->event->state ),
-											translateButtonMask( message->event->state ),
+											translateButtonMask( ev->state ),
+											translateButtonMask( ev->state ),
 											&pt );
 		}
 		break;
-		
+
 		case XCB_KEY_PRESS : {
-			
+
 		}
 		break;
-		
+
 		case XCB_KEY_RELEASE : {
-			
+
 		}
 		break;
 	}
-	
+
 	return result;
 }
 
