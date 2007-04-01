@@ -14,36 +14,6 @@ where you installed the VCF.
 //#include <sys/shm.h>
 
 using namespace VCF;
-/*
-class XCBAbstractControl::XCBControlMapImpl
-{
-public:
-	typedef std::map<CARD32, XCBAbstractControl*> XCBDrawableControlMap;
-
-	void registerControl( XCBWINDOW& window, XCBAbstractControl* control ) {
-		map_[window.xid] = control;
-	}
-	void unRegisterControl( XCBWINDOW& window )
-	{
-		XCBDrawableControlMap::iterator it = map_.find(window.xid);
-		map_.erase(it);
-	}
-	XCBAbstractControl* getControl(XCBWINDOW& window)
-	{
-		XCBAbstractControl* control = NULL;
-		XCBDrawableControlMap::iterator it = map_.find(window.xid);
-		if( it != map_.end() ) {
-			control = it->second;
-		}
-		return control;
-	}
-
-protected:
-	XCBDrawableControlMap map_;
-};
-
-VCF::SmartPtr<XCBAbstractControl::XCBControlMapImpl>::Scoped XCBAbstractControl::controlMap_;
-*/
 
 XCBAbstractControl::XCBAbstractControl( Control* control ) :
 	control_(control),
@@ -64,7 +34,7 @@ XCBAbstractControl::~XCBAbstractControl()
 
 void XCBAbstractControl::create( Control* owningControl )
 {
-
+     control_ = owningControl;
 }
 
 void XCBAbstractControl::destroyControl()
@@ -255,13 +225,19 @@ void XCBAbstractControl::paintChildren( xcb_connection_t &connection, const xcb_
 	while ( it != childControls_.end() ) {
 		XCBAbstractControl* child = *it;
 		if ( child->getVisible() && (NULL != child->getOwnerWindow()) ) {
-			Control* childControl =  child->getControl();
-			childControl->paint( sharedCtx );
-			
-			paintChildren( connection, event, sharedCtx );			
+		    child->paintPeer( connection, event, sharedCtx );
 		}
 		++it;
 	}
+}
+
+void XCBAbstractControl::paintPeer( xcb_connection_t &connection, const xcb_expose_event_t& event, GraphicsContext* sharedCtx )
+{
+    Control* control =  getControl();
+
+    control->paint( sharedCtx );
+
+    paintChildren( connection, event, sharedCtx );
 }
 
 void XCBAbstractControl::handleMouseEvents(xcb_connection_t &connection, const xcb_generic_event_t& event)
@@ -271,60 +247,60 @@ void XCBAbstractControl::handleMouseEvents(xcb_connection_t &connection, const x
 			const xcb_button_press_event_t* ev = (const xcb_button_press_event_t*)&event;
 		}
 		break;
-		
+
 		case XCB_BUTTON_RELEASE : {
 			const xcb_button_release_event_t* ev = (const xcb_button_release_event_t*)&event;
 		}
 		break;
-		
+
 		case XCB_MOTION_NOTIFY : {
 			const xcb_motion_notify_event_t* ev = (const xcb_motion_notify_event_t*)&event;
 		}
 		break;
-		
+
 		case XCB_ENTER_NOTIFY : {
 			const xcb_enter_notify_event_t* ev = (const xcb_enter_notify_event_t*)&event;
 		}
 		break;
-		
+
 		case XCB_LEAVE_NOTIFY : {
 			const xcb_leave_notify_event_t* ev = (const xcb_leave_notify_event_t*)&event;
 		}
 		break;
-	}	
+	}
 }
 
 XCBAbstractControl* XCBAbstractControl::findControlForMouseEvent( Point pt )
 {
 	XCBAbstractControl* result = NULL;
-	
+
 	if ( mouseEventsCaptured() ) {
 		result = this;
 	}
-	
+
 	if ( NULL == result ) {
 		XCBControlArray::iterator it = childControls_.begin();
 		while ( it != childControls_.end() ) {
 			XCBAbstractControl* child = *it;
-			
+
 			result = child->findControlForMouseEvent(pt);
 			if ( NULL != result ) {
 				break;
 			}
-			
+
 			++it;
 		}
-		
+
 		if ( NULL == result ) {
 			if ( getVisible() && (NULL != getOwnerWindow()) && isEnabled() ) {
-				
+
 				if ( bounds_.containsPt( &pt ) ) {
 					result = this;
 				}
 			}
 		}
 	}
-	
+
 	return result;
 }
 /**

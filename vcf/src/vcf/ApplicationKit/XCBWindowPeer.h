@@ -65,15 +65,7 @@ namespace VCF {
 
 		virtual bool getVisible();
 
-		virtual Control* getControl();
-
-		virtual void setControl( Control* component );
-
 		virtual void setCursor( Cursor* cursor );
-
-		virtual void setParent( Control* parent );
-
-		virtual Control* getParent();
 
 		virtual bool isFocused();
 
@@ -111,13 +103,8 @@ namespace VCF {
 		static void internal_handleExposeEvent(xcb_connection_t &connection, const xcb_expose_event_t& event);
 		static void internal_handleDestroyNotify(xcb_connection_t &connection, const xcb_destroy_notify_event_t& event);
 
-	private:
-		void paint(xcb_connection_t &connection, const xcb_expose_event_t& event );
-		void destroyImage(xcb_connection_t &connection);
-		void createImage(xcb_connection_t &connection, int width, int height);
-
-	private:
-		xcb_drawable_t	      drawable_;
+	protected:
+        xcb_drawable_t	      drawable_;
 		xcb_gcontext_t       context_;
 		xcb_image_t         *image_;
 		xcb_shm_segment_info_t shminfo_;
@@ -126,6 +113,10 @@ namespace VCF {
 
 		typedef std::map<uint32, XCBWindowPeer*> XIDWindowPeerMap;
 		static XIDWindowPeerMap XIDWindowPeerMap_;
+
+
+		void destroyImage(xcb_connection_t &connection);
+		void createImage(xcb_connection_t &connection, int width, int height);
 	};
 };
 

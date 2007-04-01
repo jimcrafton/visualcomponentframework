@@ -12,6 +12,8 @@ namespace VCF
 
 class XCBApplicationPeer : public ApplicationPeer {
 public:
+    XCBApplicationPeer();
+    virtual ~XCBApplicationPeer();
 
 	virtual bool initApp();
 
@@ -27,6 +29,8 @@ public:
 
 	virtual void setHandleID( OSHandleID handleID );
 
+protected:
+    AbstractApplication* app_;
 };
 
 };

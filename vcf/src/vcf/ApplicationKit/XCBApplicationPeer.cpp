@@ -12,43 +12,53 @@ where you installed the VCF.
 
 using namespace VCF;
 
+XCBApplicationPeer::XCBApplicationPeer():
+    app_(NULL)
+{
+
+}
+
+XCBApplicationPeer::~XCBApplicationPeer()
+{
+
+}
+
 bool XCBApplicationPeer::initApp()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+
 	return true;
 }
 
 void XCBApplicationPeer::terminateApp()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+
 }
 
 AbstractApplication* XCBApplicationPeer::getApplication()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return NULL;
+	return app_;
 }
 
 void XCBApplicationPeer::setApplication( AbstractApplication* application )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	app_ = application;
 }
 
 String XCBApplicationPeer::getFileName()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return "";
+	const CommandLine& cmdLine = FoundationKit::getCommandLine();
+
+	return cmdLine.getArgument(0);
 }
 
 OSHandleID XCBApplicationPeer::getHandleID()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 	return 0;
 }
 
 void XCBApplicationPeer::setHandleID( OSHandleID handleID )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+
 }
 
 /**
