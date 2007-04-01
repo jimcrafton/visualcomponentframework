@@ -302,32 +302,12 @@ bool XCBWindowPeer::getVisible()
 	return false;
 }
 
-Control* XCBWindowPeer::getControl()
-{
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return NULL;
-}
-
-void XCBWindowPeer::setControl( Control* component )
-{
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-}
 
 void XCBWindowPeer::setCursor( Cursor* cursor )
 {
 	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 }
 
-void XCBWindowPeer::setParent( Control* parent )
-{
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-}
-
-Control* XCBWindowPeer::getParent()
-{
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return NULL;
-}
 
 bool XCBWindowPeer::isFocused()
 {
@@ -430,7 +410,36 @@ void XCBWindowPeer::internal_handleExposeEvent(xcb_connection_t &connection, con
 	XIDWindowPeerMap::iterator it = XIDWindowPeerMap_.find(event.window);
 	if(it != XIDWindowPeerMap_.end()) {
 		XCBWindowPeer *peer = it->second;
-		peer->paint(connection,event);
+
+		GraphicsContext* gc = peer->control_->getContext();
+
+        XCBContextPeer *contextPeer = dynamic_cast<XCBContextPeer*>(gc->getPeer());
+        if(contextPeer != NULL) {
+            VCF::XCBSurface surf;
+            surf.context = & peer->context_;
+            surf.drawable = & peer->drawable_;
+            surf.drawableImage =  peer->image_;
+
+            contextPeer->setContextID( (VCF::OSHandleID)&surf );
+
+            peer->paintPeer( connection, event, gc );
+        }
+
+
+        xcb_image_shm_put( &connection,
+                         peer->drawable_,
+                         peer->context_,
+                         peer->image_,
+                         peer->shminfo_,
+                        0,
+                        0,
+                        0,
+                        0,
+                         peer->image_->width,
+                         peer->image_->height,
+                        0 );
+
+        xcb_flush(&connection);
 	}
 }
 
@@ -499,41 +508,6 @@ void XCBWindowPeer::setBorderPath( Path* path )
 {
 
 }
-
-void XCBWindowPeer::paint(xcb_connection_t &connection, const xcb_expose_event_t& event )
-{
-    GraphicsContext* gc = control_->getContext();
-	XCBContextPeer *contextPeer = dynamic_cast<XCBContextPeer*>(gc->getPeer());
-	if(contextPeer != NULL) {
-		VCF::XCBSurface surf;
-		surf.context = &context_;
-		surf.drawable = &drawable_;
-		surf.drawableImage = image_;
-
-		contextPeer->setContextID( (VCF::OSHandleID)&surf );
-
-		paintChildren( connection, event, gc );
-
-		control_->paint(gc);
-	}
-
-
-	xcb_image_shm_put( &connection,
-					drawable_,
-					context_,
-					image_,
-					shminfo_,
-					0,
-					0,
-					0,
-					0,
-					image_->width,
-					image_->height,
-					0 );
-
-	xcb_flush(&connection);
-}
-
 
 void XCBWindowPeer::internal_handleMouseEvents(xcb_connection_t &connection, const xcb_generic_event_t& event)
 {

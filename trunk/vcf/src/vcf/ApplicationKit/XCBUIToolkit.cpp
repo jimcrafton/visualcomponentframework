@@ -18,6 +18,9 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/XCBControlContextPeer.h"
 
 #include "vcf/ApplicationKit/XCBUIMetricsManager.h"
+#include "vcf/ApplicationKit/XCBButton.h"
+
+
 
 using namespace VCF;
 
@@ -63,10 +66,9 @@ TextEditPeer* XCBUIToolkit::internal_createTextEditPeer( TextControl* component,
 	return NULL;
 }
 
-ButtonPeer* XCBUIToolkit::internal_createButtonPeer( CommandButton* component )
+ButtonPeer* XCBUIToolkit::internal_createButtonPeer( CommandButton* button )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return NULL;
+	return new XCBButton(button);
 }
 
 DialogPeer* XCBUIToolkit::internal_createDialogPeer( Control* owner, Dialog* component )
