@@ -181,10 +181,10 @@
 					<Add option="-Wl" />
 					<Add library="GraphicsKit_d" />
 					<Add library="FoundationKit_d" />
-					<Add library="XCBImage" />
-					<Add library="XCBshm" />
-					<Add library="XCB" />
-					<Add library="XCBICCCM" />
+					<Add library="xcb-image" />
+					<Add library="xcb-shm" />
+					<Add library="xcb" />
+					<Add library="xcb-icccm" />
 					<Add directory="../../../bin" />
 				</Linker>
 				<Environment>
@@ -361,8 +361,6 @@
 		<Unit filename="../../../src/vcf/ApplicationKit/DefaultTreeItem.h" />
 		<Unit filename="../../../src/vcf/ApplicationKit/DefaultTreeModel.cpp" />
 		<Unit filename="../../../src/vcf/ApplicationKit/DefaultTreeModel.h" />
-		<Unit filename="../../../src/vcf/ApplicationKit/Desktop.h" />
-		<Unit filename="../../../src/vcf/ApplicationKit/DesktopPeer.h" />
 		<Unit filename="../../../src/vcf/ApplicationKit/Dialog.cpp" />
 		<Unit filename="../../../src/vcf/ApplicationKit/Dialog.h" />
 		<Unit filename="../../../src/vcf/ApplicationKit/DialogPeer.h" />
@@ -815,6 +813,12 @@
 		<Unit filename="../../../src/vcf/ApplicationKit/XCBApplicationResourceBundlePeer.h">
 			<Option target="linux_Debug" />
 		</Unit>
+		<Unit filename="../../../src/vcf/ApplicationKit/XCBButton.cpp">
+			<Option target="linux_Debug" />
+		</Unit>
+		<Unit filename="../../../src/vcf/ApplicationKit/XCBButton.h">
+			<Option target="linux_Debug" />
+		</Unit>
 		<Unit filename="../../../src/vcf/ApplicationKit/XCBControlContextPeer.cpp">
 			<Option target="linux_Debug" />
 		</Unit>
@@ -862,10 +866,6 @@
 		</Unit>
 		<Unit filename="../../../src/vcf/ApplicationKit/XCBWindowPeer.h">
 			<Option target="linux_Debug" />
-		</Unit>
-		<Unit filename="../../../src/vcf/FoundationKit/ResourceBundlePeer.h">
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
 		</Unit>
 		<Extensions>
 			<code_completion />
