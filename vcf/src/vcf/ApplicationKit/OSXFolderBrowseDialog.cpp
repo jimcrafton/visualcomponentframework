@@ -96,7 +96,7 @@ void OSXFolderBrowseDialog::BrowseDlgCallbackProc( NavEventCallbackMessage callB
 				DescType type;
 				FSRef folder;
 				::Size size;
-				int32 count;
+				long count;
 	
                 OSStatus err = NavDialogGetReply(dialog, &reply);
                 

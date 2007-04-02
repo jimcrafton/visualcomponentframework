@@ -555,6 +555,11 @@ double OSXLocalePeer::toDoubleAsCurrency( const UnicodeString& str )
 	return result;
 }
 
+DateTime OSXLocalePeer::toDateTime( const UnicodeString& str )
+{
+    DateTime result;
+    return result;
+}
 
 
 UnicodeString OSXLocalePeer::toLowerCase( const UnicodeString& s )

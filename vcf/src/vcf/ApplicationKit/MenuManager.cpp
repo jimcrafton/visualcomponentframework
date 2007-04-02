@@ -18,8 +18,8 @@ MenuManager* MenuManager::menuManager = NULL;
 
 
 MenuManager::MenuManager():
-	peer_(NULL),
-	mainMenu_(NULL)
+	mainMenu_(NULL),
+	peer_(NULL)
 {
 	peer_ = UIToolkit::createMenuManagerPeer();
 

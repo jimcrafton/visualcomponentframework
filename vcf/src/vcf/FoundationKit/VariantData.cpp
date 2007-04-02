@@ -259,22 +259,12 @@ void VariantData::setFromString( const String& value )
 		break;
 
 		case pdInt64:{
-			int64 result = 0;
-			int ret = swscanf( value.c_str(), L"%I64", &result );
-			if ( ret != 1 ) {
-				throw BasicException( L"Unable to convert: " + value );
-			}
-			Int64Val = result;
+			Int64Val = StringUtils::fromStringAsInt64( value );
 		}
 		break;
 
 		case pdUInt64:{
-			uint64 result = 0;
-			int ret = swscanf( value.c_str(), L"%I64u", &result );
-			if ( ret != 1 ) {
-				throw BasicException( L"Unable to convert: " + value );
-			}
-			UInt64Val = result;
+			UInt64Val = StringUtils::fromStringAsUInt64( value );
 		}
 		break;
 

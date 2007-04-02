@@ -345,7 +345,7 @@ String OSXSystemPeer::getOSName()
 
 String OSXSystemPeer::getOSVersion()
 {
-	int32 response = 0;
+	long response = 0;
 	Gestalt( gestaltSystemVersion, &response );
 	int bug = (0x0000000F) & response;
 	int minor = ((0x000000F0) & response) >> 4;

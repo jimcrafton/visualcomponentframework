@@ -138,20 +138,19 @@ void OSXThread::sleep( uint32 milliseconds )
     else {
         //uint64_t ullWakeUpTime = force_cast<uint64_t>(*pWakeUpTime);
         uint64 wakeUpTime = timeout;
-        wakeUpTime.lo( absTimeout.lo );
-        wakeUpTime.hi( absTimeout.hi );
-
+        setLo32( wakeUpTime, absTimeout.lo );
+        setHi32( wakeUpTime, absTimeout.hi );
         AbsoluteTime tmp = UpTime();
         uint64 upTime;
-        upTime.lo( tmp.lo );
-        upTime.hi( tmp.hi );
+        setLo32( upTime, tmp.lo );
+        setHi32( upTime, tmp.hi );
 
         while( upTime < wakeUpTime) {
             EventRecord event;
             WaitNextEvent(0U, &event, 0UL, NULL);
             tmp = UpTime();
-            upTime.lo( tmp.lo );
-            upTime.hi( tmp.hi );
+            setLo32( upTime, tmp.lo );
+            setHi32( upTime, tmp.hi );
         }
     }
 }
@@ -240,8 +239,8 @@ int OSXThread::wait( uint32 milliseconds )
         OSStatus lStatus;
         AbsoluteTime expiration = AddDurationToAbsolute( timeout, UpTime());
         uint64 wakeUpTime;
-        wakeUpTime.lo( expiration.lo );
-        wakeUpTime.hi( expiration.hi );
+        setLo32( wakeUpTime, expiration.lo );
+        setHi32( wakeUpTime, expiration.hi );
 
         bool expired = false;
         do {
