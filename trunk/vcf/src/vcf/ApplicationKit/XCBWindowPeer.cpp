@@ -188,6 +188,8 @@ void XCBWindowPeer::create( Control* owningControl )
 		}
 		::free(atomrep);
 	}
+
+	owningWindow_ = this;
 }
 
 void XCBWindowPeer::destroyControl()
@@ -294,12 +296,14 @@ void XCBWindowPeer::setVisible( const bool& visible )
 						   uiToolkit->internal_addVoidCookie(voidCookie, Format("XCBUnmapWindow"));)
 		}
     }
+
+    XCBAbstractControl::setVisible( visible );
 }
 
 bool XCBWindowPeer::getVisible()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return false;
+
+	return XCBAbstractControl::getVisible();
 }
 
 
@@ -311,29 +315,27 @@ void XCBWindowPeer::setCursor( Cursor* cursor )
 
 bool XCBWindowPeer::isFocused()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return false;
+	return XCBAbstractControl::isFocused();
 }
 
 void XCBWindowPeer::setFocused()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	XCBAbstractControl::setFocused();
 }
 
 bool XCBWindowPeer::isEnabled()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
-	return false;
+	return XCBAbstractControl::isEnabled();
 }
 
 void XCBWindowPeer::setEnabled( const bool& enabled )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	XCBAbstractControl::setEnabled( enabled );
 }
 
 void XCBWindowPeer::setFont( Font* font )
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	XCBAbstractControl::setFont( font );
 }
 
 void XCBWindowPeer::repaint( Rect* repaintRect, const bool& immediately )
@@ -343,12 +345,12 @@ void XCBWindowPeer::repaint( Rect* repaintRect, const bool& immediately )
 
 void XCBWindowPeer::keepMouseEvents()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	XCBAbstractControl::keepMouseEvents();
 }
 
 void XCBWindowPeer::releaseMouseEvents()
 {
-	LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
+	XCBAbstractControl::releaseMouseEvents();
 }
 
 void XCBWindowPeer::translateToScreenCoords( Point* pt )
@@ -514,6 +516,8 @@ void XCBWindowPeer::internal_handleMouseEvents(xcb_connection_t &connection, con
     XCBWindowPeer* peer = NULL;
     Point pt;
 
+    printf( "internal_handleMouseEvents\n" );
+
     switch ( event.response_type ) {
 		case XCB_BUTTON_PRESS : {
 			const xcb_button_press_event_t* ev = (const xcb_button_press_event_t*)&event;
@@ -572,6 +576,9 @@ void XCBWindowPeer::internal_handleMouseEvents(xcb_connection_t &connection, con
 	}
 
 	XCBAbstractControl* xcbCtrl = peer->findControlForMouseEvent( pt );
+
+	printf( "peer %p, findControlForMouseEvent() returned %p for pt %d, %d\n", peer, xcbCtrl, (int)pt.x_, (int)pt.y_ );
+
 	if ( NULL != xcbCtrl ) {
 		xcbCtrl->handleMouseEvents( connection, event );
 	}

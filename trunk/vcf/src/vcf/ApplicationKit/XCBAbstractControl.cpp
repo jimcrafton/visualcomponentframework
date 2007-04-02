@@ -18,7 +18,7 @@ using namespace VCF;
 XCBAbstractControl::XCBAbstractControl( Control* control ) :
 	control_(control),
 	owningWindow_(NULL),
-	enabled_(false),
+	enabled_(true),
 	visible_(false),
 	focused_(false),
 	parent_(NULL),
@@ -221,11 +221,64 @@ void XCBAbstractControl::postChildPaint( GraphicsContext* graphicsContext, Contr
 
 void XCBAbstractControl::paintChildren( xcb_connection_t &connection, const xcb_expose_event_t& event, GraphicsContext* sharedCtx )
 {
+    if ( childControls_.empty() ) {
+        return;
+    }
+
+
+    //Control* control =  getControl();
+
+    VCF_ASSERT( NULL != control_  );
+
+    Scrollable* scrollable = control_->getScrollable();
+
+    Rect mainBounds;
+
+    if ( control_->getParent() ) {
+		mainBounds = control_->getBounds();
+		mainBounds.offset( -control_->getLeft(), -control_->getTop() );
+	}
+	else {
+		mainBounds = control_->getClientBounds();
+	}
+
+    Rect childClipRect;
+	Rect bounds;
+
+    double originX = 0.0;
+	double originY = 0.0;
+
 	XCBControlArray::iterator it = childControls_.begin();
 	while ( it != childControls_.end() ) {
 		XCBAbstractControl* child = *it;
 		if ( child->getVisible() && (NULL != child->getOwnerWindow()) ) {
+		    bounds = child->getBounds();
+		    childClipRect.left_ = maxVal<>(bounds.left_,mainBounds.left_);
+			childClipRect.top_ = maxVal<>(bounds.top_,mainBounds.top_);
+			childClipRect.right_ = minVal<>(bounds.right_,mainBounds.right_);
+			childClipRect.bottom_ = minVal<>(bounds.bottom_,mainBounds.bottom_);
+
+			childClipRect.offset( -bounds.left_, -bounds.top_ );
+
+            Point oldOrigin = sharedCtx->getOrigin();
+			originX = bounds.left_ + oldOrigin.x_;
+			originY = bounds.top_ + oldOrigin.y_;
+			if ( NULL != scrollable ) {
+				originX += 	scrollable->getHorizontalPosition();
+				originY += 	scrollable->getVerticalPosition();
+			}
+
+			sharedCtx->setOrigin( originX, originY );
+
+            Matrix2D xfrm;
+			int gcs = sharedCtx->saveState();
+			sharedCtx->setCurrentTransform( xfrm );
+
+
 		    child->paintPeer( connection, event, sharedCtx );
+
+		    sharedCtx->restoreState( gcs );
+			sharedCtx->setOrigin( oldOrigin.x_, oldOrigin.y_ );
 		}
 		++it;
 	}
@@ -235,10 +288,24 @@ void XCBAbstractControl::paintPeer( xcb_connection_t &connection, const xcb_expo
 {
     Control* control =  getControl();
 
+
+    paintPeerControl( connection, event, sharedCtx );
+
+    control->paintBorder( sharedCtx );
+
     control->paint( sharedCtx );
 
     paintChildren( connection, event, sharedCtx );
+
+
 }
+
+
+void XCBAbstractControl::paintPeerControl( xcb_connection_t &connection, const xcb_expose_event_t& event, GraphicsContext* sharedCtx )
+{
+
+}
+
 
 void XCBAbstractControl::handleMouseEvents(xcb_connection_t &connection, const xcb_generic_event_t& event)
 {
@@ -273,6 +340,7 @@ void XCBAbstractControl::handleMouseEvents(xcb_connection_t &connection, const x
 XCBAbstractControl* XCBAbstractControl::findControlForMouseEvent( Point pt )
 {
 	XCBAbstractControl* result = NULL;
+    printf( "XCBAbstractControl::findControlForMouseEvent() %p\n", this );
 
 	if ( mouseEventsCaptured() ) {
 		result = this;
@@ -292,6 +360,9 @@ XCBAbstractControl* XCBAbstractControl::findControlForMouseEvent( Point pt )
 		}
 
 		if ( NULL == result ) {
+		    printf( "visible: %d, owner window: %p, enabled: %d\n",
+                        getVisible(), getOwnerWindow(), isEnabled() );
+
 			if ( getVisible() && (NULL != getOwnerWindow()) && isEnabled() ) {
 
 				if ( bounds_.containsPt( &pt ) ) {

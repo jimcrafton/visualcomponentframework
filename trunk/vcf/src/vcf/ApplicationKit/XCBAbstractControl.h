@@ -96,6 +96,8 @@ namespace VCF {
 
 		virtual void paintPeer( xcb_connection_t &connection, const xcb_expose_event_t& event, GraphicsContext* sharedCtx );
 
+		virtual void paintPeerControl( xcb_connection_t &connection, const xcb_expose_event_t& event, GraphicsContext* sharedCtx );
+
 		virtual void handleMouseEvents(xcb_connection_t &connection, const xcb_generic_event_t& event);
 	protected:
 		XCBAbstractControl( Control* control );
