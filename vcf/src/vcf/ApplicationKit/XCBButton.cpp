@@ -56,15 +56,17 @@ void XCBButton::handleMouseEvents(xcb_connection_t &connection, const xcb_generi
     switch ( event.response_type ) {
 		case XCB_BUTTON_PRESS : {
 			const xcb_button_press_event_t* ev = (const xcb_button_press_event_t*)&event;
-
+printf( "XCB_BUTTON_PRESS\n" );
 			btnState_.setPressed( true );
 		}
 		break;
 
 		case XCB_BUTTON_RELEASE : {
 			const xcb_button_release_event_t* ev = (const xcb_button_release_event_t*)&event;
+printf( "XCB_BUTTON_RELEASE\n" );
+			//btnState_.setPressed( false );
 
-			btnState_.setPressed( false );
+
 		}
 		break;
 
