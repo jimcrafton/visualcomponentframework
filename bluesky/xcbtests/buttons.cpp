@@ -19,6 +19,14 @@ public:
 		mainWindow->add( btn );
 		
 		btn->setBounds( 10, 10, 100, 35 );
+		btn->setCaption( "Click me!" );
+
+
+		btn = new CommandButton();		
+		mainWindow->add( btn );		
+		btn->setBounds( 10, 100, 200, 35 );
+		btn->setCaption( "Don't click me!" );
+
 
 		Rect mainWindowBounds( 100.0, 100.0, 500.0, 500.0 );
 		mainWindow->setBounds( &mainWindowBounds );
