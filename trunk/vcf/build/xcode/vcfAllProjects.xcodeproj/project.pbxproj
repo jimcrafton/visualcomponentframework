@@ -457,8 +457,6 @@
 		5E7341C4082E76C300CDD184 /* DefaultTextModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF1E0648693C00A8020D /* DefaultTextModel.h */; };
 		5E7341C5082E76C300CDD184 /* DefaultTreeItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF200648693C00A8020D /* DefaultTreeItem.h */; };
 		5E7341C6082E76C300CDD184 /* DefaultTreeModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF220648693C00A8020D /* DefaultTreeModel.h */; };
-		5E7341C7082E76C300CDD184 /* Desktop.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF240648693C00A8020D /* Desktop.h */; };
-		5E7341C8082E76C300CDD184 /* DesktopPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF250648693C00A8020D /* DesktopPeer.h */; };
 		5E7341C9082E76C300CDD184 /* Dialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF270648693C00A8020D /* Dialog.h */; };
 		5E7341CA082E76C300CDD184 /* DialogPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF280648693C00A8020D /* DialogPeer.h */; };
 		5E7341CB082E76C300CDD184 /* DocManagerPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF290648693C00A8020D /* DocManagerPolicy.h */; };
@@ -512,7 +510,6 @@
 		5E7341FD082E76C300CDD184 /* OSXControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF960648693C00A8020D /* OSXControl.h */; };
 		5E7341FE082E76C300CDD184 /* OSXControlContextPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF980648693C00A8020D /* OSXControlContextPeer.h */; };
 		5E7341FF082E76C300CDD184 /* OSXCursorPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF9A0648693C00A8020D /* OSXCursorPeer.h */; };
-		5E734200082E76C300CDD184 /* OSXDesktopPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF9C0648693C00A8020D /* OSXDesktopPeer.h */; };
 		5E734201082E76C300CDD184 /* OSXDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF9E0648693C00A8020D /* OSXDialog.h */; };
 		5E734202082E76C300CDD184 /* OSXUIToolkit.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDFA00648693C00A8020D /* OSXUIToolkit.h */; };
 		5E734203082E76C300CDD184 /* OSXWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDFA20648693C00A8020D /* OSXWindow.h */; };
@@ -634,7 +631,6 @@
 		5E734287082E76C300CDD184 /* DefaultTextModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDF1D0648693C00A8020D /* DefaultTextModel.cpp */; };
 		5E734288082E76C300CDD184 /* DefaultTreeItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDF1F0648693C00A8020D /* DefaultTreeItem.cpp */; };
 		5E734289082E76C300CDD184 /* DefaultTreeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDF210648693C00A8020D /* DefaultTreeModel.cpp */; };
-		5E73428A082E76C300CDD184 /* Desktop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDF230648693C00A8020D /* Desktop.cpp */; };
 		5E73428B082E76C300CDD184 /* Dialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDF260648693C00A8020D /* Dialog.cpp */; };
 		5E73428C082E76C300CDD184 /* DocumentManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDF2C0648693C00A8020D /* DocumentManager.cpp */; };
 		5E73428D082E76C300CDD184 /* DragSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDF310648693C00A8020D /* DragSource.cpp */; };
@@ -720,10 +716,6 @@
 		5E8EEA36086F919D005C8304 /* OSXControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8EEA32086F919D005C8304 /* OSXControl.cpp */; };
 		5E8EEA37086F919D005C8304 /* OSXControlContextPeer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8EEA33086F919D005C8304 /* OSXControlContextPeer.cpp */; };
 		5E8EEA38086F919D005C8304 /* OSXCursorPeer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8EEA34086F919D005C8304 /* OSXCursorPeer.cpp */; };
-		5E8EEA39086F919D005C8304 /* OSXDesktopPeer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8EEA35086F919D005C8304 /* OSXDesktopPeer.cpp */; };
-		5E8EF5DD0857DCC30030F875 /* MenuManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8EF5DA0857DCC30030F875 /* MenuManager.cpp */; };
-		5E8EF5DE0857DCC30030F875 /* MenuManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E8EF5DB0857DCC30030F875 /* MenuManager.h */; };
-		5E8EF5DF0857DCC30030F875 /* MenuManagerPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E8EF5DC0857DCC30030F875 /* MenuManagerPeer.h */; };
 		5E8EF5F80857DE000030F875 /* OSXMenuManagerPeer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8EF5F70857DE000030F875 /* OSXMenuManagerPeer.cpp */; };
 		5E9407EC08610AF4001790A9 /* OSXClipboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E9407EA08610AF4001790A9 /* OSXClipboard.cpp */; };
 		5E9407ED08610AF4001790A9 /* OSXClipboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9407EB08610AF4001790A9 /* OSXClipboard.h */; };
@@ -1147,9 +1139,6 @@
 		5EC1A8180941F53F001EA41D /* DefaultTreeItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF200648693C00A8020D /* DefaultTreeItem.h */; };
 		5EC1A8190941F53F001EA41D /* DefaultTreeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDF210648693C00A8020D /* DefaultTreeModel.cpp */; };
 		5EC1A81A0941F53F001EA41D /* DefaultTreeModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF220648693C00A8020D /* DefaultTreeModel.h */; };
-		5EC1A81B0941F53F001EA41D /* Desktop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDF230648693C00A8020D /* Desktop.cpp */; };
-		5EC1A81C0941F53F001EA41D /* Desktop.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF240648693C00A8020D /* Desktop.h */; };
-		5EC1A81D0941F53F001EA41D /* DesktopPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF250648693C00A8020D /* DesktopPeer.h */; };
 		5EC1A81E0941F53F001EA41D /* Dialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDF260648693C00A8020D /* Dialog.cpp */; };
 		5EC1A81F0941F53F001EA41D /* Dialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF270648693C00A8020D /* Dialog.h */; };
 		5EC1A8200941F53F001EA41D /* DialogPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF280648693C00A8020D /* DialogPeer.h */; };
@@ -1210,9 +1199,6 @@
 		5EC1A8600941F53F001EA41D /* MenuItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF810648693C00A8020D /* MenuItem.h */; };
 		5EC1A8610941F53F001EA41D /* MenuItemEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF830648693C00A8020D /* MenuItemEvent.h */; };
 		5EC1A8620941F53F001EA41D /* MenuItemPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF840648693C00A8020D /* MenuItemPeer.h */; };
-		5EC1A8630941F53F001EA41D /* MenuManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8EF5DA0857DCC30030F875 /* MenuManager.cpp */; };
-		5EC1A8640941F53F001EA41D /* MenuManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E8EF5DB0857DCC30030F875 /* MenuManager.h */; };
-		5EC1A8650941F53F001EA41D /* MenuManagerPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E8EF5DC0857DCC30030F875 /* MenuManagerPeer.h */; };
 		5EC1A8660941F53F001EA41D /* MessageDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDF870648693C00A8020D /* MessageDialog.cpp */; };
 		5EC1A8670941F53F001EA41D /* MessageDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF880648693C00A8020D /* MessageDialog.h */; };
 		5EC1A8680941F53F001EA41D /* Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDF890648693C00A8020D /* Model.cpp */; };
@@ -1238,8 +1224,6 @@
 		5EC1A87D0941F53F001EA41D /* OSXControlContextPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF980648693C00A8020D /* OSXControlContextPeer.h */; };
 		5EC1A87E0941F53F001EA41D /* OSXCursorPeer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8EEA34086F919D005C8304 /* OSXCursorPeer.cpp */; };
 		5EC1A87F0941F53F001EA41D /* OSXCursorPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF9A0648693C00A8020D /* OSXCursorPeer.h */; };
-		5EC1A8800941F53F001EA41D /* OSXDesktopPeer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8EEA35086F919D005C8304 /* OSXDesktopPeer.cpp */; };
-		5EC1A8810941F53F001EA41D /* OSXDesktopPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF9C0648693C00A8020D /* OSXDesktopPeer.h */; };
 		5EC1A8820941F53F001EA41D /* OSXDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E60084F071F430C0036F6CF /* OSXDialog.cpp */; };
 		5EC1A8830941F53F001EA41D /* OSXDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDF9E0648693C00A8020D /* OSXDialog.h */; };
 		5EC1A8840941F53F001EA41D /* OSXDragDropPeer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E834887086A3D78007C5678 /* OSXDragDropPeer.cpp */; };
@@ -1379,33 +1363,23 @@
 		5ED387370A3B8DB400CAB24A /* GrayScaleImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ED387330A3B8DB400CAB24A /* GrayScaleImage.h */; };
 		5ED387380A3B8DB400CAB24A /* Pixels.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ED387340A3B8DB400CAB24A /* Pixels.h */; };
 		5ED3873A0A3B8DDC00CAB24A /* GrayScaleImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5ED387390A3B8DDC00CAB24A /* GrayScaleImage.cpp */; };
+		EA6FE8720BC0BB5100B2CD1C /* OSXUIShellPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = EA6FE8710BC0BB5100B2CD1C /* OSXUIShellPeer.h */; };
+		EA6FE8730BC0BB5100B2CD1C /* OSXUIShellPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = EA6FE8710BC0BB5100B2CD1C /* OSXUIShellPeer.h */; };
+		EA6FE8750BC0BB6F00B2CD1C /* OSXUIShellPeer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA6FE8740BC0BB6F00B2CD1C /* OSXUIShellPeer.cpp */; };
+		EA6FE8760BC0BB6F00B2CD1C /* OSXUIShellPeer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA6FE8740BC0BB6F00B2CD1C /* OSXUIShellPeer.cpp */; };
+		EACECC6D0BC04C51001CA2BC /* UIShell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EACECC6A0BC04C51001CA2BC /* UIShell.cpp */; };
+		EACECC6E0BC04C51001CA2BC /* UIShell.h in Headers */ = {isa = PBXBuildFile; fileRef = EACECC6B0BC04C51001CA2BC /* UIShell.h */; };
+		EACECC6F0BC04C51001CA2BC /* UIShellPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = EACECC6C0BC04C51001CA2BC /* UIShellPeer.h */; };
+		EACECC700BC04C51001CA2BC /* UIShell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EACECC6A0BC04C51001CA2BC /* UIShell.cpp */; };
+		EACECC710BC04C51001CA2BC /* UIShell.h in Headers */ = {isa = PBXBuildFile; fileRef = EACECC6B0BC04C51001CA2BC /* UIShell.h */; };
+		EACECC720BC04C51001CA2BC /* UIShellPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = EACECC6C0BC04C51001CA2BC /* UIShellPeer.h */; };
+		EACECC780BC04C81001CA2BC /* MenuManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EACECC750BC04C81001CA2BC /* MenuManager.cpp */; };
+		EACECC790BC04C81001CA2BC /* MenuManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EACECC760BC04C81001CA2BC /* MenuManager.h */; };
+		EACECC7A0BC04C81001CA2BC /* MenuManagerPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = EACECC770BC04C81001CA2BC /* MenuManagerPeer.h */; };
+		EACECC7B0BC04C81001CA2BC /* MenuManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EACECC750BC04C81001CA2BC /* MenuManager.cpp */; };
+		EACECC7C0BC04C81001CA2BC /* MenuManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EACECC760BC04C81001CA2BC /* MenuManager.h */; };
+		EACECC7D0BC04C81001CA2BC /* MenuManagerPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = EACECC770BC04C81001CA2BC /* MenuManagerPeer.h */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXBuildStyle section */
-		4F0BB7EC011F40E904CA0E50 /* Development */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				OPTIMIZATION_CFLAGS = "-O0";
-				PREBINDING = NO;
-				ZERO_LINK = NO;
-			};
-			name = Development;
-		};
-		4F0BB7ED011F40E904CA0E50 /* Deployment */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				ZERO_LINK = NO;
-			};
-			name = Deployment;
-		};
-/* End PBXBuildStyle section */
 
 /* Begin PBXContainerItemProxy section */
 		5E4FADBF09217A9800E53A8F /* PBXContainerItemProxy */ = {
@@ -1803,9 +1777,6 @@
 		5E2CDF200648693C00A8020D /* DefaultTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DefaultTreeItem.h; path = ../../src/vcf/ApplicationKit/DefaultTreeItem.h; sourceTree = SOURCE_ROOT; };
 		5E2CDF210648693C00A8020D /* DefaultTreeModel.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = DefaultTreeModel.cpp; path = ../../src/vcf/ApplicationKit/DefaultTreeModel.cpp; sourceTree = SOURCE_ROOT; };
 		5E2CDF220648693C00A8020D /* DefaultTreeModel.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DefaultTreeModel.h; path = ../../src/vcf/ApplicationKit/DefaultTreeModel.h; sourceTree = SOURCE_ROOT; };
-		5E2CDF230648693C00A8020D /* Desktop.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Desktop.cpp; path = ../../src/vcf/ApplicationKit/Desktop.cpp; sourceTree = SOURCE_ROOT; };
-		5E2CDF240648693C00A8020D /* Desktop.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Desktop.h; path = ../../src/vcf/ApplicationKit/Desktop.h; sourceTree = SOURCE_ROOT; };
-		5E2CDF250648693C00A8020D /* DesktopPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DesktopPeer.h; path = ../../src/vcf/ApplicationKit/DesktopPeer.h; sourceTree = SOURCE_ROOT; };
 		5E2CDF260648693C00A8020D /* Dialog.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Dialog.cpp; path = ../../src/vcf/ApplicationKit/Dialog.cpp; sourceTree = SOURCE_ROOT; };
 		5E2CDF270648693C00A8020D /* Dialog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Dialog.h; path = ../../src/vcf/ApplicationKit/Dialog.h; sourceTree = SOURCE_ROOT; };
 		5E2CDF280648693C00A8020D /* DialogPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DialogPeer.h; path = ../../src/vcf/ApplicationKit/DialogPeer.h; sourceTree = SOURCE_ROOT; };
@@ -1880,7 +1851,6 @@
 		5E2CDF960648693C00A8020D /* OSXControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXControl.h; path = ../../src/vcf/ApplicationKit/OSXControl.h; sourceTree = SOURCE_ROOT; };
 		5E2CDF980648693C00A8020D /* OSXControlContextPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXControlContextPeer.h; path = ../../src/vcf/ApplicationKit/OSXControlContextPeer.h; sourceTree = SOURCE_ROOT; };
 		5E2CDF9A0648693C00A8020D /* OSXCursorPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXCursorPeer.h; path = ../../src/vcf/ApplicationKit/OSXCursorPeer.h; sourceTree = SOURCE_ROOT; };
-		5E2CDF9C0648693C00A8020D /* OSXDesktopPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXDesktopPeer.h; path = ../../src/vcf/ApplicationKit/OSXDesktopPeer.h; sourceTree = SOURCE_ROOT; };
 		5E2CDF9E0648693C00A8020D /* OSXDialog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXDialog.h; path = ../../src/vcf/ApplicationKit/OSXDialog.h; sourceTree = SOURCE_ROOT; };
 		5E2CDFA00648693C00A8020D /* OSXUIToolkit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXUIToolkit.h; path = ../../src/vcf/ApplicationKit/OSXUIToolkit.h; sourceTree = SOURCE_ROOT; };
 		5E2CDFA20648693C00A8020D /* OSXWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXWindow.h; path = ../../src/vcf/ApplicationKit/OSXWindow.h; sourceTree = SOURCE_ROOT; };
@@ -2137,18 +2107,14 @@
 		5E834892086A3D78007C5678 /* OSXToolbar.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXToolbar.h; path = ../../src/vcf/ApplicationKit/OSXToolbar.h; sourceTree = SOURCE_ROOT; };
 		5E834893086A3D78007C5678 /* OSXTree.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXTree.cpp; path = ../../src/vcf/ApplicationKit/OSXTree.cpp; sourceTree = SOURCE_ROOT; };
 		5E834894086A3D78007C5678 /* OSXTree.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXTree.h; path = ../../src/vcf/ApplicationKit/OSXTree.h; sourceTree = SOURCE_ROOT; };
-		5E863E360859162E00DB8D8C /* OSXGraphicsResourceBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXGraphicsResourceBundle.cpp; path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/OSXGraphicsResourceBundle.cpp; sourceTree = "<absolute>"; };
-		5E863E370859162E00DB8D8C /* OSXGraphicsResourceBundle.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXGraphicsResourceBundle.h; path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/GraphicsKit/OSXGraphicsResourceBundle.h; sourceTree = "<absolute>"; };
+		5E863E360859162E00DB8D8C /* OSXGraphicsResourceBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXGraphicsResourceBundle.cpp; path = ../../src/vcf/GraphicsKit/OSXGraphicsResourceBundle.cpp; sourceTree = SOURCE_ROOT; };
+		5E863E370859162E00DB8D8C /* OSXGraphicsResourceBundle.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXGraphicsResourceBundle.h; path = ../../src/vcf/GraphicsKit/OSXGraphicsResourceBundle.h; sourceTree = SOURCE_ROOT; };
 		5E888AD20710EC28006110CF /* OSXUIToolkit.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXUIToolkit.cpp; path = ../../src/vcf/ApplicationKit/OSXUIToolkit.cpp; sourceTree = SOURCE_ROOT; };
 		5E8EE9DD086F9039005C8304 /* OSXTextEditPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXTextEditPeer.cpp; path = ../../src/vcf/ApplicationKit/OSXTextEditPeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E8EE9DE086F9039005C8304 /* OSXTextEditPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXTextEditPeer.h; path = ../../src/vcf/ApplicationKit/OSXTextEditPeer.h; sourceTree = SOURCE_ROOT; };
 		5E8EEA32086F919D005C8304 /* OSXControl.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXControl.cpp; path = ../../src/vcf/ApplicationKit/OSXControl.cpp; sourceTree = SOURCE_ROOT; };
 		5E8EEA33086F919D005C8304 /* OSXControlContextPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXControlContextPeer.cpp; path = ../../src/vcf/ApplicationKit/OSXControlContextPeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E8EEA34086F919D005C8304 /* OSXCursorPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXCursorPeer.cpp; path = ../../src/vcf/ApplicationKit/OSXCursorPeer.cpp; sourceTree = SOURCE_ROOT; };
-		5E8EEA35086F919D005C8304 /* OSXDesktopPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXDesktopPeer.cpp; path = ../../src/vcf/ApplicationKit/OSXDesktopPeer.cpp; sourceTree = SOURCE_ROOT; };
-		5E8EF5DA0857DCC30030F875 /* MenuManager.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = MenuManager.cpp; path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/MenuManager.cpp; sourceTree = "<absolute>"; };
-		5E8EF5DB0857DCC30030F875 /* MenuManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuManager.h; path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/MenuManager.h; sourceTree = "<absolute>"; };
-		5E8EF5DC0857DCC30030F875 /* MenuManagerPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuManagerPeer.h; path = /Users/jimcrafton/code/vcfdev/dev/vcf/src/vcf/ApplicationKit/MenuManagerPeer.h; sourceTree = "<absolute>"; };
 		5E8EF5F70857DE000030F875 /* OSXMenuManagerPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXMenuManagerPeer.cpp; path = ../../src/vcf/ApplicationKit/OSXMenuManagerPeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E9060E9070CFC4B00B184D4 /* OSXResourceBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXResourceBundle.cpp; path = ../../src/vcf/FoundationKit/OSXResourceBundle.cpp; sourceTree = SOURCE_ROOT; };
 		5E9407EA08610AF4001790A9 /* OSXClipboard.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXClipboard.cpp; path = ../../src/vcf/ApplicationKit/OSXClipboard.cpp; sourceTree = SOURCE_ROOT; };
@@ -2256,6 +2222,15 @@
 		5ED387340A3B8DB400CAB24A /* Pixels.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Pixels.h; path = ../../src/vcf/GraphicsKit/Pixels.h; sourceTree = SOURCE_ROOT; };
 		5ED387390A3B8DDC00CAB24A /* GrayScaleImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = GrayScaleImage.cpp; path = ../../src/vcf/GraphicsKit/GrayScaleImage.cpp; sourceTree = SOURCE_ROOT; };
 		5ED9B8C2070358F1008EB3D3 /* OSXResourceBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSXResourceBundle.h; path = ../../src/vcf/FoundationKit/OSXResourceBundle.h; sourceTree = SOURCE_ROOT; };
+		EA676F7D0BC036AD00330747 /* VCF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; path = VCF.xcconfig; sourceTree = "<group>"; };
+		EA6FE8710BC0BB5100B2CD1C /* OSXUIShellPeer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSXUIShellPeer.h; path = ../../src/vcf/ApplicationKit/OSXUIShellPeer.h; sourceTree = SOURCE_ROOT; };
+		EA6FE8740BC0BB6F00B2CD1C /* OSXUIShellPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OSXUIShellPeer.cpp; path = ../../src/vcf/ApplicationKit/OSXUIShellPeer.cpp; sourceTree = SOURCE_ROOT; };
+		EACECC6A0BC04C51001CA2BC /* UIShell.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = UIShell.cpp; path = ../../src/vcf/ApplicationKit/UIShell.cpp; sourceTree = SOURCE_ROOT; };
+		EACECC6B0BC04C51001CA2BC /* UIShell.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = UIShell.h; path = ../../src/vcf/ApplicationKit/UIShell.h; sourceTree = SOURCE_ROOT; };
+		EACECC6C0BC04C51001CA2BC /* UIShellPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = UIShellPeer.h; path = ../../src/vcf/ApplicationKit/UIShellPeer.h; sourceTree = SOURCE_ROOT; };
+		EACECC750BC04C81001CA2BC /* MenuManager.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = MenuManager.cpp; path = ../../src/vcf/ApplicationKit/MenuManager.cpp; sourceTree = SOURCE_ROOT; };
+		EACECC760BC04C81001CA2BC /* MenuManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuManager.h; path = ../../src/vcf/ApplicationKit/MenuManager.h; sourceTree = SOURCE_ROOT; };
+		EACECC770BC04C81001CA2BC /* MenuManagerPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MenuManagerPeer.h; path = ../../src/vcf/ApplicationKit/MenuManagerPeer.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2359,6 +2334,7 @@
 		0867D691FE84028FC02AAC07 /* vcfAllProjects */ = {
 			isa = PBXGroup;
 			children = (
+				EA676F7D0BC036AD00330747 /* VCF.xcconfig */,
 				5E548F4E0920485B001BA393 /* libJPEG */,
 				5E548F4D09204855001BA393 /* libPNG */,
 				5E548F4C0920484D001BA393 /* ZLib */,
@@ -2716,8 +2692,6 @@
 				5E2CDF070648693C00A8020D /* DataObjectPeer.h */,
 				5E2CDF080648693C00A8020D /* DataTypeNotSupportedException.h */,
 				5E2CDF140648693C00A8020D /* DefaultPropertyEditors.h */,
-				5E2CDF240648693C00A8020D /* Desktop.h */,
-				5E2CDF250648693C00A8020D /* DesktopPeer.h */,
 				5E2CDF270648693C00A8020D /* Dialog.h */,
 				5E2CDF280648693C00A8020D /* DialogPeer.h */,
 				5E2CDF2E0648693C00A8020D /* DragDropPeer.h */,
@@ -2794,15 +2768,18 @@
 		5E2CDE71064868C800A8020D /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				EACECC750BC04C81001CA2BC /* MenuManager.cpp */,
+				EACECC760BC04C81001CA2BC /* MenuManager.h */,
+				EACECC770BC04C81001CA2BC /* MenuManagerPeer.h */,
+				EACECC6A0BC04C51001CA2BC /* UIShell.cpp */,
+				EACECC6B0BC04C51001CA2BC /* UIShell.h */,
+				EACECC6C0BC04C51001CA2BC /* UIShellPeer.h */,
 				5E4EBF9F0922E6B300203611 /* CommonColorDialog.cpp */,
 				5E4EBFA00922E6B300203611 /* CommonFileBrowseDialog.cpp */,
 				5E4EBFA10922E6B300203611 /* CommonFileOpenDialog.cpp */,
 				5E4EBFA20922E6B300203611 /* CommonFileSaveDialog.cpp */,
 				5E4EBFA30922E6B300203611 /* CommonFontDialog.cpp */,
 				5E4EBFA40922E6B300203611 /* CommonPrintDialog.cpp */,
-				5E8EF5DA0857DCC30030F875 /* MenuManager.cpp */,
-				5E8EF5DB0857DCC30030F875 /* MenuManager.h */,
-				5E8EF5DC0857DCC30030F875 /* MenuManagerPeer.h */,
 				5EA23224082E9C5B009E9B28 /* SystemTray.cpp */,
 				5EA23225082E9C5B009E9B28 /* SystemTray.h */,
 				5EA23226082E9C5B009E9B28 /* SystemTrayPeer.h */,
@@ -2833,7 +2810,6 @@
 				5E2CDEFB0648693C00A8020D /* CursorManager.cpp */,
 				5E2CDF050648693C00A8020D /* DataObject.cpp */,
 				5E2CDF130648693C00A8020D /* DefaultPropertyEditors.cpp */,
-				5E2CDF230648693C00A8020D /* Desktop.cpp */,
 				5E2CDF260648693C00A8020D /* Dialog.cpp */,
 				5E2CDF310648693C00A8020D /* DragSource.cpp */,
 				5E2CDF340648693C00A8020D /* DropTarget.cpp */,
@@ -2880,8 +2856,6 @@
 				5E2CDF980648693C00A8020D /* OSXControlContextPeer.h */,
 				5E8EEA34086F919D005C8304 /* OSXCursorPeer.cpp */,
 				5E2CDF9A0648693C00A8020D /* OSXCursorPeer.h */,
-				5E8EEA35086F919D005C8304 /* OSXDesktopPeer.cpp */,
-				5E2CDF9C0648693C00A8020D /* OSXDesktopPeer.h */,
 				5E60084F071F430C0036F6CF /* OSXDialog.cpp */,
 				5E2CDF9E0648693C00A8020D /* OSXDialog.h */,
 				5E834887086A3D78007C5678 /* OSXDragDropPeer.cpp */,
@@ -2920,6 +2894,8 @@
 				5E2CDFA00648693C00A8020D /* OSXUIToolkit.h */,
 				5E7A6E8907446B5000906508 /* OSXWindow.cpp */,
 				5E2CDFA20648693C00A8020D /* OSXWindow.h */,
+				EA6FE8710BC0BB5100B2CD1C /* OSXUIShellPeer.h */,
+				EA6FE8740BC0BB6F00B2CD1C /* OSXUIShellPeer.cpp */,
 			);
 			name = Peers;
 			sourceTree = "<group>";
@@ -3628,8 +3604,6 @@
 				5E7341C4082E76C300CDD184 /* DefaultTextModel.h in Headers */,
 				5E7341C5082E76C300CDD184 /* DefaultTreeItem.h in Headers */,
 				5E7341C6082E76C300CDD184 /* DefaultTreeModel.h in Headers */,
-				5E7341C7082E76C300CDD184 /* Desktop.h in Headers */,
-				5E7341C8082E76C300CDD184 /* DesktopPeer.h in Headers */,
 				5E7341C9082E76C300CDD184 /* Dialog.h in Headers */,
 				5E7341CA082E76C300CDD184 /* DialogPeer.h in Headers */,
 				5E7341CB082E76C300CDD184 /* DocManagerPolicy.h in Headers */,
@@ -3683,7 +3657,6 @@
 				5E7341FD082E76C300CDD184 /* OSXControl.h in Headers */,
 				5E7341FE082E76C300CDD184 /* OSXControlContextPeer.h in Headers */,
 				5E7341FF082E76C300CDD184 /* OSXCursorPeer.h in Headers */,
-				5E734200082E76C300CDD184 /* OSXDesktopPeer.h in Headers */,
 				5E734201082E76C300CDD184 /* OSXDialog.h in Headers */,
 				5E734202082E76C300CDD184 /* OSXUIToolkit.h in Headers */,
 				5E734203082E76C300CDD184 /* OSXWindow.h in Headers */,
@@ -3762,8 +3735,6 @@
 				5EA2321F082E9C08009E9B28 /* ApplicationResourceBundle.h in Headers */,
 				5EA2322B082E9C5B009E9B28 /* SystemTray.h in Headers */,
 				5EA2322C082E9C5B009E9B28 /* SystemTrayPeer.h in Headers */,
-				5E8EF5DE0857DCC30030F875 /* MenuManager.h in Headers */,
-				5E8EF5DF0857DCC30030F875 /* MenuManagerPeer.h in Headers */,
 				5E9407ED08610AF4001790A9 /* OSXClipboard.h in Headers */,
 				5E9409C408611482001790A9 /* OSXMenuManagerPeer.h in Headers */,
 				5E9409C608611482001790A9 /* OSXTextPeer.h in Headers */,
@@ -3782,6 +3753,11 @@
 				5E4EBFC00922E6E800203611 /* CommonFileSaveDialog.h in Headers */,
 				5E4EBFC10922E6E800203611 /* CommonFontDialog.h in Headers */,
 				5E4EBFC20922E6E800203611 /* CommonPrintDialog.h in Headers */,
+				EACECC6E0BC04C51001CA2BC /* UIShell.h in Headers */,
+				EACECC6F0BC04C51001CA2BC /* UIShellPeer.h in Headers */,
+				EACECC790BC04C81001CA2BC /* MenuManager.h in Headers */,
+				EACECC7A0BC04C81001CA2BC /* MenuManagerPeer.h in Headers */,
+				EA6FE8730BC0BB5100B2CD1C /* OSXUIShellPeer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4069,8 +4045,6 @@
 				5EC1A8160941F53F001EA41D /* DefaultTextModel.h in Headers */,
 				5EC1A8180941F53F001EA41D /* DefaultTreeItem.h in Headers */,
 				5EC1A81A0941F53F001EA41D /* DefaultTreeModel.h in Headers */,
-				5EC1A81C0941F53F001EA41D /* Desktop.h in Headers */,
-				5EC1A81D0941F53F001EA41D /* DesktopPeer.h in Headers */,
 				5EC1A81F0941F53F001EA41D /* Dialog.h in Headers */,
 				5EC1A8200941F53F001EA41D /* DialogPeer.h in Headers */,
 				5EC1A8210941F53F001EA41D /* DocManagerPolicy.h in Headers */,
@@ -4114,8 +4088,6 @@
 				5EC1A8600941F53F001EA41D /* MenuItem.h in Headers */,
 				5EC1A8610941F53F001EA41D /* MenuItemEvent.h in Headers */,
 				5EC1A8620941F53F001EA41D /* MenuItemPeer.h in Headers */,
-				5EC1A8640941F53F001EA41D /* MenuManager.h in Headers */,
-				5EC1A8650941F53F001EA41D /* MenuManagerPeer.h in Headers */,
 				5EC1A8670941F53F001EA41D /* MessageDialog.h in Headers */,
 				5EC1A8690941F53F001EA41D /* Model.h in Headers */,
 				5EC1A86A0941F53F001EA41D /* ModelEvent.h in Headers */,
@@ -4130,7 +4102,6 @@
 				5EC1A87B0941F53F001EA41D /* OSXControl.h in Headers */,
 				5EC1A87D0941F53F001EA41D /* OSXControlContextPeer.h in Headers */,
 				5EC1A87F0941F53F001EA41D /* OSXCursorPeer.h in Headers */,
-				5EC1A8810941F53F001EA41D /* OSXDesktopPeer.h in Headers */,
 				5EC1A8830941F53F001EA41D /* OSXDialog.h in Headers */,
 				5EC1A8850941F53F001EA41D /* OSXDragDropPeer.h in Headers */,
 				5EC1A8870941F53F001EA41D /* OSXDropTargetPeer.h in Headers */,
@@ -4216,6 +4187,11 @@
 				5EC1A90E0941F53F001EA41D /* WindowEvent.h in Headers */,
 				5EC1A90F0941F53F001EA41D /* WindowPeer.h in Headers */,
 				5EC1A9100941F53F001EA41D /* Wizard.h in Headers */,
+				EACECC710BC04C51001CA2BC /* UIShell.h in Headers */,
+				EACECC720BC04C51001CA2BC /* UIShellPeer.h in Headers */,
+				EACECC7C0BC04C81001CA2BC /* MenuManager.h in Headers */,
+				EACECC7D0BC04C81001CA2BC /* MenuManagerPeer.h in Headers */,
+				EA6FE8720BC0BB5100B2CD1C /* OSXUIShellPeer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4232,27 +4208,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				BUILD_DIR = "$(VCF_ROOT)/lib";
-				HEADER_SEARCH_PATHS = (
-					"$(VCF_ROOT)/src",
-					"$(VCF_ROOT)/src/thirdparty/common/LibPNG",
-				);
-				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\"";
-				LIBRARY_STYLE = STATIC;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
-				PRODUCT_NAME = png_d;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
 			dependencies = (
 			);
 			name = libpng;
@@ -4270,29 +4225,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				BUILD_DIR = "$(VCF_ROOT)/lib";
-				HEADER_SEARCH_PATHS = (
-					"$(VCF_ROOT)/src",
-					"$(VCF_ROOT)/src/thirdparty/common/LibJPEG",
-				);
-				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_ROOT)/lib",
-					/Users/jimcrafton/code/vcfdev/dev/vcf/lib,
-				);
-				LIBRARY_STYLE = STATIC;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = jpeg_d;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
 			dependencies = (
 			);
 			name = libJPEG;
@@ -4312,42 +4244,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				BUILD_DIR = "$(HOME)/Library/Frameworks";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "\"$(VCF_ROOT)/bin\"";
-				FRAMEWORK_VERSION = A;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/FoundationKit/FoundationKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					VCF_GCC,
-					VCF_OSX,
-					_DEBUG,
-				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
-				INFOPLIST_FILE = "Info-FoundationKit_debug.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_ROOT)/lib",
-					/usr/lib/gcc/darwin/3.3,
-				);
-				OTHER_CFLAGS = "-Wno-multichar";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOL_FLAGS = "";
-				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
-				PRINCIPAL_CLASS = "";
-				PRODUCT_NAME = "FoundationKit-debug";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-					"-Wno-switch",
-				);
-				WRAPPER_EXTENSION = framework;
-			};
 			dependencies = (
 			);
 			name = FoundationKit;
@@ -4367,38 +4263,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				BUILD_DIR = "$(VCF_ROOT)/lib";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					VCF_GCC,
-					VCF_OSX,
-					_DEBUG,
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(VCF_ROOT)/src",
-					"$(VCF_ROOT)/src/thirdparty/common/agg/include",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_ROOT)/lib",
-					/Users/jimcrafton/code/vcfdev/dev/vcf/lib,
-				);
-				LIBRARY_STYLE = STATIC;
-				OTHER_CFLAGS = "-Wno-multichar";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOL_FLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Agg_d;
-				REZ_EXECUTABLE = YES;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
 			dependencies = (
 			);
 			name = libAgg;
@@ -4418,41 +4282,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				BUILD_DIR = "$(HOME)/Library/Frameworks";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(VCF_ROOT)/bin",
-					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
-				);
-				FRAMEWORK_VERSION = A;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/GraphicsKit/GraphicsKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					VCF_GCC,
-					VCF_OSX,
-					_DEBUG,
-				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
-				INFOPLIST_FILE = "Info-GraphicsKit_debug.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\" ";
-				OTHER_CFLAGS = "-Wno-multichar";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOL_FLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRINCIPAL_CLASS = "";
-				PRODUCT_NAME = "GraphicsKit-debug";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-					"-Wno-switch",
-				);
-				WRAPPER_EXTENSION = framework;
-			};
 			dependencies = (
 				5E7340E5082E73CC00CDD184 /* PBXTargetDependency */,
 				5E7340E6082E73CC00CDD184 /* PBXTargetDependency */,
@@ -4477,41 +4306,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				BUILD_DIR = "$(HOME)/Library/Frameworks";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\"";
-				FRAMEWORK_VERSION = A;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/ApplicationKit/ApplicationKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					VCF_GCC,
-					VCF_OSX,
-					_DEBUG,
-				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
-				INFOPLIST_FILE = "Info-ApplicationKit_debug.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_ROOT)/lib",
-					/usr/lib/gcc/darwin/3.3,
-				);
-				OTHER_CFLAGS = "-Wno-multichar";
-				OTHER_LIBTOOL_FLAGS = "";
-				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
-				PRINCIPAL_CLASS = "";
-				PRODUCT_NAME = "ApplicationKit-debug";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-					"-Wno-switch",
-				);
-				WRAPPER_EXTENSION = framework;
-			};
 			dependencies = (
 				5EC1A5B909416A25001EA41D /* PBXTargetDependency */,
 			);
@@ -4531,20 +4325,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
-				INSTALL_PATH = /usr/local/lib;
-				OTHER_LDFLAGS = (
-					"-framework",
-					Carbon,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = libFoundationKit;
-				ZERO_LINK = YES;
-			};
 			dependencies = (
 			);
 			name = libFoundationKit;
@@ -4562,20 +4342,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
-				INSTALL_PATH = /usr/local/lib;
-				OTHER_LDFLAGS = (
-					"-framework",
-					Carbon,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = libGraphicsKit;
-				ZERO_LINK = YES;
-			};
 			dependencies = (
 				5EC1A7290941F210001EA41D /* PBXTargetDependency */,
 				5EC1A72B0941F214001EA41D /* PBXTargetDependency */,
@@ -4597,20 +4363,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
-				INSTALL_PATH = /usr/local/lib;
-				OTHER_LDFLAGS = (
-					"-framework",
-					Carbon,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = libApplicationKit;
-				ZERO_LINK = YES;
-			};
 			dependencies = (
 				5EC1A9330941FA5E001EA41D /* PBXTargetDependency */,
 			);
@@ -4625,12 +4377,6 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 5E53A070093A2576007B8C80 /* Build configuration list for PBXProject "vcfAllProjects" */;
-			buildSettings = {
-			};
-			buildStyles = (
-				4F0BB7EC011F40E904CA0E50 /* Development */,
-				4F0BB7ED011F40E904CA0E50 /* Deployment */,
-			);
 			hasScannedForEncodings = 1;
 			mainGroup = 0867D691FE84028FC02AAC07 /* vcfAllProjects */;
 			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
@@ -4953,7 +4699,6 @@
 				5E734287082E76C300CDD184 /* DefaultTextModel.cpp in Sources */,
 				5E734288082E76C300CDD184 /* DefaultTreeItem.cpp in Sources */,
 				5E734289082E76C300CDD184 /* DefaultTreeModel.cpp in Sources */,
-				5E73428A082E76C300CDD184 /* Desktop.cpp in Sources */,
 				5E73428B082E76C300CDD184 /* Dialog.cpp in Sources */,
 				5E73428C082E76C300CDD184 /* DocumentManager.cpp in Sources */,
 				5E73428D082E76C300CDD184 /* DragSource.cpp in Sources */,
@@ -5017,7 +4762,6 @@
 				5E7342DE082E76C300CDD184 /* OSXWindow.cpp in Sources */,
 				5EA2321E082E9C08009E9B28 /* ApplicationResourceBundle.cpp in Sources */,
 				5EA2322A082E9C5B009E9B28 /* SystemTray.cpp in Sources */,
-				5E8EF5DD0857DCC30030F875 /* MenuManager.cpp in Sources */,
 				5E8EF5F80857DE000030F875 /* OSXMenuManagerPeer.cpp in Sources */,
 				5E9407EC08610AF4001790A9 /* OSXClipboard.cpp in Sources */,
 				5E9409C508611482001790A9 /* OSXTextPeer.cpp in Sources */,
@@ -5033,13 +4777,15 @@
 				5E8EEA36086F919D005C8304 /* OSXControl.cpp in Sources */,
 				5E8EEA37086F919D005C8304 /* OSXControlContextPeer.cpp in Sources */,
 				5E8EEA38086F919D005C8304 /* OSXCursorPeer.cpp in Sources */,
-				5E8EEA39086F919D005C8304 /* OSXDesktopPeer.cpp in Sources */,
 				5E4EBFAB0922E6B300203611 /* CommonColorDialog.cpp in Sources */,
 				5E4EBFAC0922E6B300203611 /* CommonFileBrowseDialog.cpp in Sources */,
 				5E4EBFAD0922E6B300203611 /* CommonFileOpenDialog.cpp in Sources */,
 				5E4EBFAE0922E6B300203611 /* CommonFileSaveDialog.cpp in Sources */,
 				5E4EBFAF0922E6B300203611 /* CommonFontDialog.cpp in Sources */,
 				5E4EBFB00922E6B300203611 /* CommonPrintDialog.cpp in Sources */,
+				EACECC6D0BC04C51001CA2BC /* UIShell.cpp in Sources */,
+				EACECC780BC04C81001CA2BC /* MenuManager.cpp in Sources */,
+				EA6FE8760BC0BB6F00B2CD1C /* OSXUIShellPeer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5203,7 +4949,6 @@
 				5EC1A8150941F53F001EA41D /* DefaultTextModel.cpp in Sources */,
 				5EC1A8170941F53F001EA41D /* DefaultTreeItem.cpp in Sources */,
 				5EC1A8190941F53F001EA41D /* DefaultTreeModel.cpp in Sources */,
-				5EC1A81B0941F53F001EA41D /* Desktop.cpp in Sources */,
 				5EC1A81E0941F53F001EA41D /* Dialog.cpp in Sources */,
 				5EC1A8240941F53F001EA41D /* DocumentManager.cpp in Sources */,
 				5EC1A8290941F53F001EA41D /* DragSource.cpp in Sources */,
@@ -5221,7 +4966,6 @@
 				5EC1A8580941F53F001EA41D /* ListViewControl.cpp in Sources */,
 				5EC1A85B0941F53F001EA41D /* Menu.cpp in Sources */,
 				5EC1A85D0941F53F001EA41D /* MenuBar.cpp in Sources */,
-				5EC1A8630941F53F001EA41D /* MenuManager.cpp in Sources */,
 				5EC1A8660941F53F001EA41D /* MessageDialog.cpp in Sources */,
 				5EC1A8680941F53F001EA41D /* Model.cpp in Sources */,
 				5EC1A86E0941F53F001EA41D /* MultilineTextControl.cpp in Sources */,
@@ -5233,7 +4977,6 @@
 				5EC1A87A0941F53F001EA41D /* OSXControl.cpp in Sources */,
 				5EC1A87C0941F53F001EA41D /* OSXControlContextPeer.cpp in Sources */,
 				5EC1A87E0941F53F001EA41D /* OSXCursorPeer.cpp in Sources */,
-				5EC1A8800941F53F001EA41D /* OSXDesktopPeer.cpp in Sources */,
 				5EC1A8820941F53F001EA41D /* OSXDialog.cpp in Sources */,
 				5EC1A8840941F53F001EA41D /* OSXDragDropPeer.cpp in Sources */,
 				5EC1A8860941F53F001EA41D /* OSXDropTargetPeer.cpp in Sources */,
@@ -5283,6 +5026,9 @@
 				5EC1A9050941F53F001EA41D /* VFFInputStream.cpp in Sources */,
 				5EC1A9070941F53F001EA41D /* VFFOutputStream.cpp in Sources */,
 				5EC1A90B0941F53F001EA41D /* Window.cpp in Sources */,
+				EACECC700BC04C51001CA2BC /* UIShell.cpp in Sources */,
+				EACECC7B0BC04C81001CA2BC /* MenuManager.cpp in Sources */,
+				EA6FE8750BC0BB6F00B2CD1C /* OSXUIShellPeer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5365,7 +5111,8 @@
 				);
 				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-FoundationKit.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\" ";
+				LIBRARY_SEARCH_PATHS = "$(LIBRARY_SEARCH_PATHS_QUOTED_1)";
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_ROOT)/lib\"";
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-Wno-multichar";
 				OTHER_LDFLAGS = "";
@@ -5408,7 +5155,8 @@
 				);
 				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-FoundationKit.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\" ";
+				LIBRARY_SEARCH_PATHS = "$(LIBRARY_SEARCH_PATHS_QUOTED_1)";
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_ROOT)/lib\"";
 				OTHER_CFLAGS = "-Wno-multichar";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOL_FLAGS = "";
@@ -5449,7 +5197,8 @@
 				);
 				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-FoundationKit_debug.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\" ";
+				LIBRARY_SEARCH_PATHS = "$(LIBRARY_SEARCH_PATHS_QUOTED_1)";
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_ROOT)/lib\"";
 				OTHER_CFLAGS = "-Wno-multichar";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOL_FLAGS = "";
@@ -5789,7 +5538,8 @@
 				);
 				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-GraphicsKit_d.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\" ";
+				LIBRARY_SEARCH_PATHS = "$(LIBRARY_SEARCH_PATHS_QUOTED_1)";
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_ROOT)/lib\"";
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_CFLAGS = "-Wno-multichar";
 				OTHER_LDFLAGS = "";
@@ -5832,7 +5582,8 @@
 				);
 				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-GraphicsKit.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\" ";
+				LIBRARY_SEARCH_PATHS = "$(LIBRARY_SEARCH_PATHS_QUOTED_1)";
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_ROOT)/lib\"";
 				OTHER_CFLAGS = "-Wno-multichar";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOL_FLAGS = "";
@@ -5872,7 +5623,8 @@
 				);
 				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-GraphicsKit_debug.plist";
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\" ";
+				LIBRARY_SEARCH_PATHS = "$(LIBRARY_SEARCH_PATHS_QUOTED_1)";
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_ROOT)/lib\"";
 				OTHER_CFLAGS = "-Wno-multichar";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOL_FLAGS = "";
@@ -6015,6 +5767,7 @@
 		};
 		5E53A071093A2576007B8C80 /* Development */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA676F7D0BC036AD00330747 /* VCF.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/Frameworks";

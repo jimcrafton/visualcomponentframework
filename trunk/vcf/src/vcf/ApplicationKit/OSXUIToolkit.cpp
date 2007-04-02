@@ -6,10 +6,8 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ApplicationKitPrivate.h"
-#include "vcf/ApplicationKit/OSXDesktopPeer.h"
 #include "vcf/ApplicationKit/OSXApplicationPeer.h"
 #include "vcf/ApplicationKit/OSXControlContextPeer.h"
 #include "vcf/ApplicationKit/OSXCursorPeer.h"
@@ -26,6 +24,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/OSXMenuItem.h"
 #include "vcf/ApplicationKit/OSXDropTargetPeer.h"
 #include "vcf/ApplicationKit/OSXDragDropPeer.h"
+#include "vcf/ApplicationKit/OSXUIShellPeer.h"
 
 #include "vcf/ApplicationKit/ListViewControl.h"
 #include "vcf/ApplicationKit/OSXListview.h"
@@ -38,7 +37,6 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/OSXTextPeer.h"
 #include "vcf/ApplicationKit/OSXTextEditPeer.h"
 
-
 #include "vcf/ApplicationKit/Toolbar.h"
 #include "vcf/ApplicationKit/OSXToolbar.h"
 #include "vcf/ApplicationKit/OSXScrollPeer.h"
@@ -47,17 +45,11 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/GraphicsResourceBundlePeer.h"
 #include "vcf/ApplicationKit/OSXAppResourceBundle.h"
 
-
-
-
 #include "vcf/FoundationKit/ResourceBundlePeer.h"
 #include "vcf/GraphicsKit/GraphicsResourceBundlePeer.h"
 #include "vcf/ApplicationKit/OSXAppResourceBundle.h"
 
-
 #define kSleepTime	32767
-
-
 
 VCF::uint32 OSXUIUtils::translateButtonMask( EventMouseButton button )
 {
@@ -906,13 +898,13 @@ public:
 		else {
 			//get the horizontal center of screen, and the vertical position
 			//about 1/3 of the way from the top
-			double w = Desktop::getDesktop()->getWidth();
-			double h = Desktop::getDesktop()->getHeight();
-			
-			result.left_ = result.right_ = w / 2.0;
-			result.top_ = result.bottom_ = h / 3.0;
-			
-			result.inflate( dialog->getWidth()/2.0, dialog->getHeight()/2.0 );
+//			double w = Desktop::getDesktop()->getWidth();
+//			double h = Desktop::getDesktop()->getHeight();
+//			
+//			result.left_ = result.right_ = w / 2.0;
+//			result.top_ = result.bottom_ = h / 3.0;
+//			
+//			result.inflate( dialog->getWidth()/2.0, dialog->getHeight()/2.0 );
 			
 		}
 		
@@ -1168,6 +1160,16 @@ WindowPeer* OSXUIToolkit::internal_createWindowPeer( Control* control, Control* 
     return new OSXWindow( control, owner );
 }
 
+PopupWindowPeer* OSXUIToolkit::internal_createPopupWindowPeer( Frame* frame, Window* owner )
+{
+    return NULL;
+}
+
+TransparentWindowPeer* OSXUIToolkit::internal_createTransparentWindowPeer( Frame* frame )
+{
+    return NULL;
+}
+
 ToolbarPeer* OSXUIToolkit::internal_createToolbarPeer( Toolbar* toolbar )
 {
     return new OSXToolbar(toolbar);
@@ -1238,10 +1240,10 @@ DropTargetPeer* OSXUIToolkit::internal_createDropTargetPeer()
     return new OSXDropTargetPeer();
 }
 
-DesktopPeer* OSXUIToolkit::internal_createDesktopPeer( Desktop* desktop )
-{
-    return new OSXDesktopPeer(desktop);
-}
+//DesktopPeer* OSXUIToolkit::internal_createDesktopPeer( Desktop* desktop )
+//{
+//    return new OSXDesktopPeer(desktop);
+//}
 
 ScrollPeer* OSXUIToolkit::internal_createScrollPeer( Control* control )
 {
@@ -1266,6 +1268,11 @@ MenuManagerPeer* OSXUIToolkit::internal_createMenuManagerPeer()
 CommonPrintDialogPeer* OSXUIToolkit::internal_createCommonPrintDialogPeer( Control* owner )
 {
 	return NULL;
+}
+
+UIShellPeer* OSXUIToolkit::internal_createUIShellPeer( UIShell* shell )
+{
+    return new OSXUIShellPeer( shell );
 }
 
 CursorPeer* OSXUIToolkit::internal_createCursorPeer( Cursor* cursor )

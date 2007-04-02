@@ -65,6 +65,8 @@ public:
                          const double & x3, const double & y3, const double & x4, const double & y4);
 
     virtual void lineTo(const double & x, const double & y);
+    
+  	virtual void closePath();
 
     virtual void moveTo(const double & x, const double & y);
 

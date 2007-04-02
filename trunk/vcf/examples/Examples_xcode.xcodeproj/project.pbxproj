@@ -1,0 +1,3313 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5E006DD3068FD74700D3415B /* Alignment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E006DD2068FD74700D3415B /* Alignment.cpp */; };
+		5E6B1D3D09279AD700C3EAFA /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E6B1D3C09279AD700C3EAFA /* CoreFoundation.framework */; };
+		5E8E2CB406BDEEA1007602E7 /* DateTimeUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8E2CB306BDEEA1007602E7 /* DateTimeUI.cpp */; };
+		5E8E2D2A06BDF1C6007602E7 /* GraphicsBasics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8E2D2906BDF1C6007602E7 /* GraphicsBasics.cpp */; };
+		5E8E2D6406BDF3DC007602E7 /* TextLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8E2D6306BDF3DC007602E7 /* TextLayout.cpp */; };
+		5E8E2D8706BDF4C1007602E7 /* ProgressBars.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8E2D8606BDF4C1007602E7 /* ProgressBars.cpp */; };
+		5E8E2DAE06BDF592007602E7 /* Labels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8E2DAD06BDF592007602E7 /* Labels.cpp */; };
+		5EA829F0064539F000A8020D /* ThreadBasics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EA829EF064539F000A8020D /* ThreadBasics.cpp */; };
+		5EA829F206453A0200A8020D /* WorkingWithEnumerators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EA829F106453A0200A8020D /* WorkingWithEnumerators.cpp */; };
+		5EA829F406453A1200A8020D /* Strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EA829F306453A1200A8020D /* Strings.cpp */; };
+		5EA829F606453A2100A8020D /* SharedLibraries.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EA829F506453A2100A8020D /* SharedLibraries.cpp */; };
+		5EA829F806453A3100A8020D /* Reflection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EA829F706453A3100A8020D /* Reflection.cpp */; };
+		5EA829FA06453A4100A8020D /* Processes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EA829F906453A4100A8020D /* Processes.cpp */; };
+		5EA829FC06453A4E00A8020D /* Localization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EA829FB06453A4E00A8020D /* Localization.cpp */; };
+		5EA829FE06453A7B00A8020D /* FilesAndDirectories.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EA829FD06453A7B00A8020D /* FilesAndDirectories.cpp */; };
+		5EA82A0006453A8A00A8020D /* EventBasics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EA829FF06453A8A00A8020D /* EventBasics.cpp */; };
+		5EA82A0206453A9B00A8020D /* DatesAndTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EA82A0106453A9B00A8020D /* DatesAndTime.cpp */; };
+		5EA82A0406453AAA00A8020D /* Conditions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EA82A0306453AAA00A8020D /* Conditions.cpp */; };
+		5EA82A0606453AB800A8020D /* Dictionaries.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EA82A0506453AB800A8020D /* Dictionaries.cpp */; };
+		EA6FE82D0BC0AB8600B2CD1C /* ApplicationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD90BC052EA001CA2BC /* ApplicationKit_d.framework */; };
+		EA6FE8330BC0AB9600B2CD1C /* GraphicsKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD80BC052D7001CA2BC /* GraphicsKit_d.framework */; };
+		EA6FE8340BC0AB9A00B2CD1C /* FoundationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD70BC052CA001CA2BC /* FoundationKit_d.framework */; };
+		EA6FE8CB0BC0C28100B2CD1C /* ApplicationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD90BC052EA001CA2BC /* ApplicationKit_d.framework */; };
+		EA6FE8CD0BC0C28C00B2CD1C /* GraphicsKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD80BC052D7001CA2BC /* GraphicsKit_d.framework */; };
+		EA6FE8CE0BC0C28F00B2CD1C /* FoundationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD70BC052CA001CA2BC /* FoundationKit_d.framework */; };
+		EACECDDB0BC052F3001CA2BC /* FoundationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD70BC052CA001CA2BC /* FoundationKit_d.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5E006DBF068FD70300D3415B /* Alignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Alignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E006DC1068FD70300D3415B /* Alignment-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Alignment-Info.plist"; path = "Alignment/Alignment-Info.plist"; sourceTree = SOURCE_ROOT; };
+		5E006DD2068FD74700D3415B /* Alignment.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Alignment.cpp; path = Alignment/Alignment.cpp; sourceTree = SOURCE_ROOT; };
+		5E6B1D3C09279AD700C3EAFA /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		5E8E2C8B06BDED9C007602E7 /* DateTimeUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DateTimeUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E8E2C8D06BDED9C007602E7 /* DateTimeUI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "DateTimeUI-Info.plist"; path = "DateTimeUI/DateTimeUI-Info.plist"; sourceTree = SOURCE_ROOT; };
+		5E8E2CB306BDEEA1007602E7 /* DateTimeUI.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = DateTimeUI.cpp; path = DateTimeUI/DateTimeUI.cpp; sourceTree = "<group>"; };
+		5E8E2D0906BDF135007602E7 /* GraphicsBasics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraphicsBasics.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E8E2D0B06BDF135007602E7 /* GraphicsBasics-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "GraphicsBasics-Info.plist"; path = "GraphicsBasics/GraphicsBasics-Info.plist"; sourceTree = SOURCE_ROOT; };
+		5E8E2D2906BDF1C6007602E7 /* GraphicsBasics.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicsBasics.cpp; path = GraphicsBasics/GraphicsBasics.cpp; sourceTree = "<group>"; };
+		5E8E2D4606BDF35B007602E7 /* TextLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E8E2D4806BDF35B007602E7 /* TextLayout-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "TextLayout-Info.plist"; path = "TextLayout/TextLayout-Info.plist"; sourceTree = SOURCE_ROOT; };
+		5E8E2D6306BDF3DC007602E7 /* TextLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = TextLayout.cpp; path = TextLayout/TextLayout.cpp; sourceTree = "<group>"; };
+		5E8E2D6F06BDF457007602E7 /* ProgressBars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProgressBars.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E8E2D7106BDF457007602E7 /* ProgressBars-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "ProgressBars-Info.plist"; path = "ProgressBars/ProgressBars-Info.plist"; sourceTree = SOURCE_ROOT; };
+		5E8E2D8606BDF4C1007602E7 /* ProgressBars.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ProgressBars.cpp; path = ProgressBars/ProgressBars.cpp; sourceTree = "<group>"; };
+		5E8E2D9D06BDF539007602E7 /* Labels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Labels.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E8E2D9F06BDF539007602E7 /* Labels-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Labels-Info.plist"; path = "Labels/Labels-Info.plist"; sourceTree = SOURCE_ROOT; };
+		5E8E2DAD06BDF592007602E7 /* Labels.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Labels.cpp; path = Labels/Labels.cpp; sourceTree = "<group>"; };
+		5EA82992064537F700A8020D /* FilesAndDirectories */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = FilesAndDirectories; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EA829A70645391500A8020D /* ThreadBasics */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = ThreadBasics; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EA829AE0645392800A8020D /* WorkingWithEnumerators */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = WorkingWithEnumerators; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EA829B50645393F00A8020D /* Strings */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = Strings; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EA829BC0645395200A8020D /* SharedLibraries */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = SharedLibraries; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EA829C30645396900A8020D /* Reflection */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = Reflection; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EA829CA0645397600A8020D /* Processes */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = Processes; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EA829D10645398900A8020D /* Localization */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = Localization; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EA829D80645399800A8020D /* EventBasics */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = EventBasics; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EA829DF064539B000A8020D /* DatesAndTime */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = DatesAndTime; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EA829E6064539C100A8020D /* Dictionaries */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = Dictionaries; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EA829ED064539D800A8020D /* Conditions */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = Conditions; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EA829EF064539F000A8020D /* ThreadBasics.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ThreadBasics.cpp; path = ThreadBasics/ThreadBasics.cpp; sourceTree = "<group>"; };
+		5EA829F106453A0200A8020D /* WorkingWithEnumerators.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = WorkingWithEnumerators.cpp; path = WorkingWithEnumerators/WorkingWithEnumerators.cpp; sourceTree = "<group>"; };
+		5EA829F306453A1200A8020D /* Strings.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Strings.cpp; path = Strings/Strings.cpp; sourceTree = "<group>"; };
+		5EA829F506453A2100A8020D /* SharedLibraries.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = SharedLibraries.cpp; path = SharedLibraries/SharedLibraries.cpp; sourceTree = "<group>"; };
+		5EA829F706453A3100A8020D /* Reflection.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Reflection.cpp; path = Reflection/Reflection.cpp; sourceTree = "<group>"; };
+		5EA829F906453A4100A8020D /* Processes.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Processes.cpp; path = Processes/Processes.cpp; sourceTree = "<group>"; };
+		5EA829FB06453A4E00A8020D /* Localization.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Localization.cpp; path = Localization/Localization.cpp; sourceTree = "<group>"; };
+		5EA829FD06453A7B00A8020D /* FilesAndDirectories.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = FilesAndDirectories.cpp; path = FilesAndDirectories/FilesAndDirectories.cpp; sourceTree = "<group>"; };
+		5EA829FF06453A8A00A8020D /* EventBasics.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = EventBasics.cpp; path = EventBasics/EventBasics.cpp; sourceTree = "<group>"; };
+		5EA82A0106453A9B00A8020D /* DatesAndTime.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = DatesAndTime.cpp; path = DatesAndTime/DatesAndTime.cpp; sourceTree = "<group>"; };
+		5EA82A0306453AAA00A8020D /* Conditions.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Conditions.cpp; path = Conditions/Conditions.cpp; sourceTree = "<group>"; };
+		5EA82A0506453AB800A8020D /* Dictionaries.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Dictionaries.cpp; path = Dictionaries/Dictionaries.cpp; sourceTree = "<group>"; };
+		EACECD050BC04EF2001CA2BC /* VCF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = VCF.xcconfig; sourceTree = "<group>"; };
+		EACECDD70BC052CA001CA2BC /* FoundationKit_d.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FoundationKit_d.framework; path = ../../../Library/Frameworks/FoundationKit_d.framework; sourceTree = SOURCE_ROOT; };
+		EACECDD80BC052D7001CA2BC /* GraphicsKit_d.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GraphicsKit_d.framework; path = ../../../Library/Frameworks/GraphicsKit_d.framework; sourceTree = SOURCE_ROOT; };
+		EACECDD90BC052EA001CA2BC /* ApplicationKit_d.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = ApplicationKit_d.framework; path = ../../../Library/Frameworks/ApplicationKit_d.framework; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5E006DBD068FD70300D3415B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA6FE8340BC0AB9A00B2CD1C /* FoundationKit_d.framework in Frameworks */,
+				EA6FE8330BC0AB9600B2CD1C /* GraphicsKit_d.framework in Frameworks */,
+				EA6FE82D0BC0AB8600B2CD1C /* ApplicationKit_d.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2C8906BDED9C007602E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA6FE8CE0BC0C28F00B2CD1C /* FoundationKit_d.framework in Frameworks */,
+				EA6FE8CD0BC0C28C00B2CD1C /* GraphicsKit_d.framework in Frameworks */,
+				EA6FE8CB0BC0C28100B2CD1C /* ApplicationKit_d.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D0706BDF135007602E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D4406BDF35B007602E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D6D06BDF457007602E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D9B06BDF539007602E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA8298F064537F700A8020D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EACECDDB0BC052F3001CA2BC /* FoundationKit_d.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829A40645391500A8020D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829AB0645392800A8020D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829B20645393F00A8020D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829B90645395200A8020D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829C00645396900A8020D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829C70645397600A8020D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829CE0645398900A8020D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E6B1D3D09279AD700C3EAFA /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829D50645399800A8020D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829DC064539B000A8020D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829E3064539C100A8020D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829EA064539D800A8020D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5E006DCA068FD71500D3415B /* ApplicationKit Examples */ = {
+			isa = PBXGroup;
+			children = (
+				5E8E2D9106BDF529007602E7 /* Labels */,
+				5E8E2D7F06BDF4AA007602E7 /* ProgressBars */,
+				5E8E2D5D06BDF3C1007602E7 /* TextLayout */,
+				5E8E2D2506BDF1B0007602E7 /* GraphicsBasics */,
+				5E8E2C7E06BDED54007602E7 /* DateTimeUI */,
+				5E006DCE068FD72300D3415B /* Alignment */,
+			);
+			name = "ApplicationKit Examples";
+			sourceTree = "<group>";
+		};
+		5E006DCE068FD72300D3415B /* Alignment */ = {
+			isa = PBXGroup;
+			children = (
+				5E006DC1068FD70300D3415B /* Alignment-Info.plist */,
+				5E006DD2068FD74700D3415B /* Alignment.cpp */,
+			);
+			name = Alignment;
+			sourceTree = "<group>";
+		};
+		5E2C820B06420A1E00A8020D = {
+			isa = PBXGroup;
+			children = (
+				5E006DCA068FD71500D3415B /* ApplicationKit Examples */,
+				5EA82A1406453B8500A8020D /* External Frameworks and Libraries */,
+				5EA829A0064538E000A8020D /* FoundationKit Examples */,
+				5EA82993064537F700A8020D /* Products */,
+				EACECD050BC04EF2001CA2BC /* VCF.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		5E8E2C7E06BDED54007602E7 /* DateTimeUI */ = {
+			isa = PBXGroup;
+			children = (
+				5E8E2C8D06BDED9C007602E7 /* DateTimeUI-Info.plist */,
+				5E8E2CB306BDEEA1007602E7 /* DateTimeUI.cpp */,
+			);
+			name = DateTimeUI;
+			sourceTree = "<group>";
+		};
+		5E8E2D2506BDF1B0007602E7 /* GraphicsBasics */ = {
+			isa = PBXGroup;
+			children = (
+				5E8E2D0B06BDF135007602E7 /* GraphicsBasics-Info.plist */,
+				5E8E2D2906BDF1C6007602E7 /* GraphicsBasics.cpp */,
+			);
+			name = GraphicsBasics;
+			sourceTree = "<group>";
+		};
+		5E8E2D5D06BDF3C1007602E7 /* TextLayout */ = {
+			isa = PBXGroup;
+			children = (
+				5E8E2D4806BDF35B007602E7 /* TextLayout-Info.plist */,
+				5E8E2D6306BDF3DC007602E7 /* TextLayout.cpp */,
+			);
+			name = TextLayout;
+			sourceTree = "<group>";
+		};
+		5E8E2D7F06BDF4AA007602E7 /* ProgressBars */ = {
+			isa = PBXGroup;
+			children = (
+				5E8E2D7106BDF457007602E7 /* ProgressBars-Info.plist */,
+				5E8E2D8606BDF4C1007602E7 /* ProgressBars.cpp */,
+			);
+			name = ProgressBars;
+			sourceTree = "<group>";
+		};
+		5E8E2D9106BDF529007602E7 /* Labels */ = {
+			isa = PBXGroup;
+			children = (
+				5E8E2D9F06BDF539007602E7 /* Labels-Info.plist */,
+				5E8E2DAD06BDF592007602E7 /* Labels.cpp */,
+			);
+			name = Labels;
+			sourceTree = "<group>";
+		};
+		5EA82993064537F700A8020D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5EA82992064537F700A8020D /* FilesAndDirectories */,
+				5EA829A70645391500A8020D /* ThreadBasics */,
+				5EA829AE0645392800A8020D /* WorkingWithEnumerators */,
+				5EA829B50645393F00A8020D /* Strings */,
+				5EA829BC0645395200A8020D /* SharedLibraries */,
+				5EA829C30645396900A8020D /* Reflection */,
+				5EA829CA0645397600A8020D /* Processes */,
+				5EA829D10645398900A8020D /* Localization */,
+				5EA829D80645399800A8020D /* EventBasics */,
+				5EA829DF064539B000A8020D /* DatesAndTime */,
+				5EA829E6064539C100A8020D /* Dictionaries */,
+				5EA829ED064539D800A8020D /* Conditions */,
+				5E006DBF068FD70300D3415B /* Alignment.app */,
+				5E8E2C8B06BDED9C007602E7 /* DateTimeUI.app */,
+				5E8E2D0906BDF135007602E7 /* GraphicsBasics.app */,
+				5E8E2D4606BDF35B007602E7 /* TextLayout.app */,
+				5E8E2D6F06BDF457007602E7 /* ProgressBars.app */,
+				5E8E2D9D06BDF539007602E7 /* Labels.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5EA829950645381100A8020D /* FilesAndDirectories */ = {
+			isa = PBXGroup;
+			children = (
+				5EA829FD06453A7B00A8020D /* FilesAndDirectories.cpp */,
+			);
+			name = FilesAndDirectories;
+			sourceTree = "<group>";
+		};
+		5EA829960645381700A8020D /* Conditions */ = {
+			isa = PBXGroup;
+			children = (
+				5EA82A0306453AAA00A8020D /* Conditions.cpp */,
+			);
+			name = Conditions;
+			sourceTree = "<group>";
+		};
+		5EA829970645384A00A8020D /* Dictionaries */ = {
+			isa = PBXGroup;
+			children = (
+				5EA82A0506453AB800A8020D /* Dictionaries.cpp */,
+			);
+			name = Dictionaries;
+			sourceTree = "<group>";
+		};
+		5EA829980645385600A8020D /* DatesAndTime */ = {
+			isa = PBXGroup;
+			children = (
+				5EA82A0106453A9B00A8020D /* DatesAndTime.cpp */,
+			);
+			name = DatesAndTime;
+			sourceTree = "<group>";
+		};
+		5EA829990645387200A8020D /* EventBasics */ = {
+			isa = PBXGroup;
+			children = (
+				5EA829FF06453A8A00A8020D /* EventBasics.cpp */,
+			);
+			name = EventBasics;
+			sourceTree = "<group>";
+		};
+		5EA8299A0645388300A8020D /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				5EA829FB06453A4E00A8020D /* Localization.cpp */,
+			);
+			name = Localization;
+			sourceTree = "<group>";
+		};
+		5EA8299B0645389600A8020D /* Processes */ = {
+			isa = PBXGroup;
+			children = (
+				5EA829F906453A4100A8020D /* Processes.cpp */,
+			);
+			name = Processes;
+			sourceTree = "<group>";
+		};
+		5EA8299C064538A300A8020D /* Reflection */ = {
+			isa = PBXGroup;
+			children = (
+				5EA829F706453A3100A8020D /* Reflection.cpp */,
+			);
+			name = Reflection;
+			sourceTree = "<group>";
+		};
+		5EA8299D064538AF00A8020D /* SharedLibraries */ = {
+			isa = PBXGroup;
+			children = (
+				5EA829F506453A2100A8020D /* SharedLibraries.cpp */,
+			);
+			name = SharedLibraries;
+			sourceTree = "<group>";
+		};
+		5EA8299E064538BD00A8020D /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				5EA829F306453A1200A8020D /* Strings.cpp */,
+			);
+			name = Strings;
+			sourceTree = "<group>";
+		};
+		5EA8299F064538D900A8020D /* WorkingWithEnumerators */ = {
+			isa = PBXGroup;
+			children = (
+				5EA829F106453A0200A8020D /* WorkingWithEnumerators.cpp */,
+			);
+			name = WorkingWithEnumerators;
+			sourceTree = "<group>";
+		};
+		5EA829A0064538E000A8020D /* FoundationKit Examples */ = {
+			isa = PBXGroup;
+			children = (
+				5EA829A1064538FD00A8020D /* ThreadBasics */,
+				5EA8299F064538D900A8020D /* WorkingWithEnumerators */,
+				5EA8299E064538BD00A8020D /* Strings */,
+				5EA8299D064538AF00A8020D /* SharedLibraries */,
+				5EA8299C064538A300A8020D /* Reflection */,
+				5EA8299B0645389600A8020D /* Processes */,
+				5EA8299A0645388300A8020D /* Localization */,
+				5EA829990645387200A8020D /* EventBasics */,
+				5EA829980645385600A8020D /* DatesAndTime */,
+				5EA829970645384A00A8020D /* Dictionaries */,
+				5EA829960645381700A8020D /* Conditions */,
+				5EA829950645381100A8020D /* FilesAndDirectories */,
+			);
+			name = "FoundationKit Examples";
+			sourceTree = "<group>";
+		};
+		5EA829A1064538FD00A8020D /* ThreadBasics */ = {
+			isa = PBXGroup;
+			children = (
+				5EA829EF064539F000A8020D /* ThreadBasics.cpp */,
+			);
+			name = ThreadBasics;
+			sourceTree = "<group>";
+		};
+		5EA82A1406453B8500A8020D /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				EACECDD90BC052EA001CA2BC /* ApplicationKit_d.framework */,
+				EACECDD70BC052CA001CA2BC /* FoundationKit_d.framework */,
+				EACECDD80BC052D7001CA2BC /* GraphicsKit_d.framework */,
+				5E6B1D3C09279AD700C3EAFA /* CoreFoundation.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		5E006DB9068FD70300D3415B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2C8606BDED9C007602E7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D0306BDF135007602E7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D4006BDF35B007602E7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D6906BDF457007602E7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D9706BDF539007602E7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA8298D064537F700A8020D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829A20645391500A8020D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829A90645392800A8020D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829B00645393F00A8020D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829B70645395200A8020D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829BE0645396900A8020D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829C50645397600A8020D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829CC0645398900A8020D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829D30645399800A8020D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829DA064539B000A8020D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829E1064539C100A8020D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829E8064539D800A8020D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		5E006DBE068FD70300D3415B /* Alignment */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EACECCD90BC04E31001CA2BC /* Build configuration list for PBXNativeTarget "Alignment" */;
+			buildPhases = (
+				5E006DB9068FD70300D3415B /* Headers */,
+				5E006DBA068FD70300D3415B /* Resources */,
+				5E006DBB068FD70300D3415B /* Sources */,
+				5E006DBC068FD70300D3415B /* Rez */,
+				5E006DBD068FD70300D3415B /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Alignment;
+			productName = Alignment;
+			productReference = 5E006DBF068FD70300D3415B /* Alignment.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5E8E2C8A06BDED9C007602E7 /* DateTimeUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EACECCDD0BC04E31001CA2BC /* Build configuration list for PBXNativeTarget "DateTimeUI" */;
+			buildPhases = (
+				5E8E2C8606BDED9C007602E7 /* Headers */,
+				5E8E2C8706BDED9C007602E7 /* Resources */,
+				5E8E2C8806BDED9C007602E7 /* Sources */,
+				5E8E2C8906BDED9C007602E7 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DateTimeUI;
+			productName = DateTimeUI;
+			productReference = 5E8E2C8B06BDED9C007602E7 /* DateTimeUI.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5E8E2D0806BDF135007602E7 /* GraphicsBasics */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EACECCE10BC04E31001CA2BC /* Build configuration list for PBXNativeTarget "GraphicsBasics" */;
+			buildPhases = (
+				5E8E2D0306BDF135007602E7 /* Headers */,
+				5E8E2D0406BDF135007602E7 /* Resources */,
+				5E8E2D0506BDF135007602E7 /* Sources */,
+				5E8E2D0606BDF135007602E7 /* Rez */,
+				5E8E2D0706BDF135007602E7 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GraphicsBasics;
+			productName = GraphicsBasics;
+			productReference = 5E8E2D0906BDF135007602E7 /* GraphicsBasics.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5E8E2D4506BDF35B007602E7 /* TextLayout */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EACECCE50BC04E31001CA2BC /* Build configuration list for PBXNativeTarget "TextLayout" */;
+			buildPhases = (
+				5E8E2D4006BDF35B007602E7 /* Headers */,
+				5E8E2D4106BDF35B007602E7 /* Resources */,
+				5E8E2D4206BDF35B007602E7 /* Sources */,
+				5E8E2D4306BDF35B007602E7 /* Rez */,
+				5E8E2D4406BDF35B007602E7 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TextLayout;
+			productName = TextLayout;
+			productReference = 5E8E2D4606BDF35B007602E7 /* TextLayout.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5E8E2D6E06BDF457007602E7 /* ProgressBars */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EACECCE90BC04E31001CA2BC /* Build configuration list for PBXNativeTarget "ProgressBars" */;
+			buildPhases = (
+				5E8E2D6906BDF457007602E7 /* Headers */,
+				5E8E2D6A06BDF457007602E7 /* Resources */,
+				5E8E2D6B06BDF457007602E7 /* Sources */,
+				5E8E2D6C06BDF457007602E7 /* Rez */,
+				5E8E2D6D06BDF457007602E7 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ProgressBars;
+			productName = ProgressBars;
+			productReference = 5E8E2D6F06BDF457007602E7 /* ProgressBars.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5E8E2D9C06BDF539007602E7 /* Labels */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EACECCED0BC04E31001CA2BC /* Build configuration list for PBXNativeTarget "Labels" */;
+			buildPhases = (
+				5E8E2D9706BDF539007602E7 /* Headers */,
+				5E8E2D9806BDF539007602E7 /* Resources */,
+				5E8E2D9906BDF539007602E7 /* Sources */,
+				5E8E2D9A06BDF539007602E7 /* Rez */,
+				5E8E2D9B06BDF539007602E7 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Labels;
+			productName = Labels;
+			productReference = 5E8E2D9D06BDF539007602E7 /* Labels.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5E2C820F06420A1E00A8020D /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = EACECCF10BC04E31001CA2BC /* Build configuration list for PBXProject "Examples_xcode" */;
+			hasScannedForEncodings = 1;
+			mainGroup = 5E2C820B06420A1E00A8020D;
+			productRefGroup = 5EA82993064537F700A8020D /* Products */;
+			projectDirPath = "";
+			targets = (
+				5EA82991064537F700A8020D /* FilesAndDirectories */,
+				5EA829A60645391500A8020D /* ThreadBasics */,
+				5EA829AD0645392800A8020D /* WorkingWithEnumerators */,
+				5EA829B40645393F00A8020D /* Strings */,
+				5EA829BB0645395200A8020D /* SharedLibraries */,
+				5EA829C20645396900A8020D /* Reflection */,
+				5EA829C90645397600A8020D /* Processes */,
+				5EA829D00645398900A8020D /* Localization */,
+				5EA829D70645399800A8020D /* EventBasics */,
+				5EA829DE064539B000A8020D /* DatesAndTime */,
+				5EA829E5064539C100A8020D /* Dictionaries */,
+				5EA829EC064539D800A8020D /* Conditions */,
+				5E006DBE068FD70300D3415B /* Alignment */,
+				5E8E2C8A06BDED9C007602E7 /* DateTimeUI */,
+				5E8E2D0806BDF135007602E7 /* GraphicsBasics */,
+				5E8E2D4506BDF35B007602E7 /* TextLayout */,
+				5E8E2D6E06BDF457007602E7 /* ProgressBars */,
+				5E8E2D9C06BDF539007602E7 /* Labels */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5E006DBA068FD70300D3415B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2C8706BDED9C007602E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D0406BDF135007602E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D4106BDF35B007602E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D6A06BDF457007602E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D9806BDF539007602E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		5E006DBC068FD70300D3415B /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D0606BDF135007602E7 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D4306BDF35B007602E7 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D6C06BDF457007602E7 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D9A06BDF539007602E7 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA82990064537F700A8020D /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829A50645391500A8020D /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829AC0645392800A8020D /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829B30645393F00A8020D /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829BA0645395200A8020D /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829C10645396900A8020D /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829C80645397600A8020D /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829CF0645398900A8020D /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829D60645399800A8020D /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829DD064539B000A8020D /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829E4064539C100A8020D /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829EB064539D800A8020D /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5E006DBB068FD70300D3415B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E006DD3068FD74700D3415B /* Alignment.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2C8806BDED9C007602E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E8E2CB406BDEEA1007602E7 /* DateTimeUI.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D0506BDF135007602E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E8E2D2A06BDF1C6007602E7 /* GraphicsBasics.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D4206BDF35B007602E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E8E2D6406BDF3DC007602E7 /* TextLayout.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D6B06BDF457007602E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E8E2D8706BDF4C1007602E7 /* ProgressBars.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E8E2D9906BDF539007602E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E8E2DAE06BDF592007602E7 /* Labels.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA8298E064537F700A8020D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EA829FE06453A7B00A8020D /* FilesAndDirectories.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829A30645391500A8020D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EA829F0064539F000A8020D /* ThreadBasics.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829AA0645392800A8020D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EA829F206453A0200A8020D /* WorkingWithEnumerators.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829B10645393F00A8020D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EA829F406453A1200A8020D /* Strings.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829B80645395200A8020D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EA829F606453A2100A8020D /* SharedLibraries.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829BF0645396900A8020D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EA829F806453A3100A8020D /* Reflection.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829C60645397600A8020D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EA829FA06453A4100A8020D /* Processes.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829CD0645398900A8020D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EA829FC06453A4E00A8020D /* Localization.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829D40645399800A8020D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EA82A0006453A8A00A8020D /* EventBasics.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829DB064539B000A8020D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EA82A0206453A9B00A8020D /* DatesAndTime.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829E2064539C100A8020D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EA82A0606453AB800A8020D /* Dictionaries.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EA829E9064539D800A8020D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EA82A0406453AAA00A8020D /* Conditions.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXToolTarget section */
+		5EA82991064537F700A8020D /* FilesAndDirectories */ = {
+			isa = PBXToolTarget;
+			buildConfigurationList = EACECCA90BC04E31001CA2BC /* Build configuration list for PBXToolTarget "FilesAndDirectories" */;
+			buildPhases = (
+				5EA8298D064537F700A8020D /* Headers */,
+				5EA8298E064537F700A8020D /* Sources */,
+				5EA8298F064537F700A8020D /* Frameworks */,
+				5EA82990064537F700A8020D /* Rez */,
+			);
+			dependencies = (
+			);
+			name = FilesAndDirectories;
+			productInstallPath = /usr/local/bin;
+			productName = FilesAndDirectories;
+			productReference = 5EA82992064537F700A8020D /* FilesAndDirectories */;
+		};
+		5EA829A60645391500A8020D /* ThreadBasics */ = {
+			isa = PBXToolTarget;
+			buildConfigurationList = EACECCAD0BC04E31001CA2BC /* Build configuration list for PBXToolTarget "ThreadBasics" */;
+			buildPhases = (
+				5EA829A20645391500A8020D /* Headers */,
+				5EA829A30645391500A8020D /* Sources */,
+				5EA829A40645391500A8020D /* Frameworks */,
+				5EA829A50645391500A8020D /* Rez */,
+			);
+			dependencies = (
+			);
+			name = ThreadBasics;
+			productInstallPath = /usr/local/bin;
+			productName = ThreadBasics;
+			productReference = 5EA829A70645391500A8020D /* ThreadBasics */;
+		};
+		5EA829AD0645392800A8020D /* WorkingWithEnumerators */ = {
+			isa = PBXToolTarget;
+			buildConfigurationList = EACECCB10BC04E31001CA2BC /* Build configuration list for PBXToolTarget "WorkingWithEnumerators" */;
+			buildPhases = (
+				5EA829A90645392800A8020D /* Headers */,
+				5EA829AA0645392800A8020D /* Sources */,
+				5EA829AB0645392800A8020D /* Frameworks */,
+				5EA829AC0645392800A8020D /* Rez */,
+			);
+			dependencies = (
+			);
+			name = WorkingWithEnumerators;
+			productInstallPath = /usr/local/bin;
+			productName = WorkingWithEnumerators;
+			productReference = 5EA829AE0645392800A8020D /* WorkingWithEnumerators */;
+		};
+		5EA829B40645393F00A8020D /* Strings */ = {
+			isa = PBXToolTarget;
+			buildConfigurationList = EACECCB50BC04E31001CA2BC /* Build configuration list for PBXToolTarget "Strings" */;
+			buildPhases = (
+				5EA829B00645393F00A8020D /* Headers */,
+				5EA829B10645393F00A8020D /* Sources */,
+				5EA829B20645393F00A8020D /* Frameworks */,
+				5EA829B30645393F00A8020D /* Rez */,
+			);
+			dependencies = (
+			);
+			name = Strings;
+			productInstallPath = /usr/local/bin;
+			productName = Strings;
+			productReference = 5EA829B50645393F00A8020D /* Strings */;
+		};
+		5EA829BB0645395200A8020D /* SharedLibraries */ = {
+			isa = PBXToolTarget;
+			buildConfigurationList = EACECCB90BC04E31001CA2BC /* Build configuration list for PBXToolTarget "SharedLibraries" */;
+			buildPhases = (
+				5EA829B70645395200A8020D /* Headers */,
+				5EA829B80645395200A8020D /* Sources */,
+				5EA829B90645395200A8020D /* Frameworks */,
+				5EA829BA0645395200A8020D /* Rez */,
+			);
+			dependencies = (
+			);
+			name = SharedLibraries;
+			productInstallPath = /usr/local/bin;
+			productName = SharedLibraries;
+			productReference = 5EA829BC0645395200A8020D /* SharedLibraries */;
+		};
+		5EA829C20645396900A8020D /* Reflection */ = {
+			isa = PBXToolTarget;
+			buildConfigurationList = EACECCBD0BC04E31001CA2BC /* Build configuration list for PBXToolTarget "Reflection" */;
+			buildPhases = (
+				5EA829BE0645396900A8020D /* Headers */,
+				5EA829BF0645396900A8020D /* Sources */,
+				5EA829C00645396900A8020D /* Frameworks */,
+				5EA829C10645396900A8020D /* Rez */,
+			);
+			dependencies = (
+			);
+			name = Reflection;
+			productInstallPath = /usr/local/bin;
+			productName = Reflection;
+			productReference = 5EA829C30645396900A8020D /* Reflection */;
+		};
+		5EA829C90645397600A8020D /* Processes */ = {
+			isa = PBXToolTarget;
+			buildConfigurationList = EACECCC10BC04E31001CA2BC /* Build configuration list for PBXToolTarget "Processes" */;
+			buildPhases = (
+				5EA829C50645397600A8020D /* Headers */,
+				5EA829C60645397600A8020D /* Sources */,
+				5EA829C70645397600A8020D /* Frameworks */,
+				5EA829C80645397600A8020D /* Rez */,
+			);
+			dependencies = (
+			);
+			name = Processes;
+			productInstallPath = /usr/local/bin;
+			productName = Processes;
+			productReference = 5EA829CA0645397600A8020D /* Processes */;
+		};
+		5EA829D00645398900A8020D /* Localization */ = {
+			isa = PBXToolTarget;
+			buildConfigurationList = EACECCC50BC04E31001CA2BC /* Build configuration list for PBXToolTarget "Localization" */;
+			buildPhases = (
+				5EA829CC0645398900A8020D /* Headers */,
+				5EA829CD0645398900A8020D /* Sources */,
+				5EA829CE0645398900A8020D /* Frameworks */,
+				5EA829CF0645398900A8020D /* Rez */,
+			);
+			dependencies = (
+			);
+			name = Localization;
+			productInstallPath = /usr/local/bin;
+			productName = Localization;
+			productReference = 5EA829D10645398900A8020D /* Localization */;
+		};
+		5EA829D70645399800A8020D /* EventBasics */ = {
+			isa = PBXToolTarget;
+			buildConfigurationList = EACECCC90BC04E31001CA2BC /* Build configuration list for PBXToolTarget "EventBasics" */;
+			buildPhases = (
+				5EA829D30645399800A8020D /* Headers */,
+				5EA829D40645399800A8020D /* Sources */,
+				5EA829D50645399800A8020D /* Frameworks */,
+				5EA829D60645399800A8020D /* Rez */,
+			);
+			dependencies = (
+			);
+			name = EventBasics;
+			productInstallPath = /usr/local/bin;
+			productName = EventBasics;
+			productReference = 5EA829D80645399800A8020D /* EventBasics */;
+		};
+		5EA829DE064539B000A8020D /* DatesAndTime */ = {
+			isa = PBXToolTarget;
+			buildConfigurationList = EACECCCD0BC04E31001CA2BC /* Build configuration list for PBXToolTarget "DatesAndTime" */;
+			buildPhases = (
+				5EA829DA064539B000A8020D /* Headers */,
+				5EA829DB064539B000A8020D /* Sources */,
+				5EA829DC064539B000A8020D /* Frameworks */,
+				5EA829DD064539B000A8020D /* Rez */,
+			);
+			dependencies = (
+			);
+			name = DatesAndTime;
+			productInstallPath = /usr/local/bin;
+			productName = DatesAndTime;
+			productReference = 5EA829DF064539B000A8020D /* DatesAndTime */;
+		};
+		5EA829E5064539C100A8020D /* Dictionaries */ = {
+			isa = PBXToolTarget;
+			buildConfigurationList = EACECCD10BC04E31001CA2BC /* Build configuration list for PBXToolTarget "Dictionaries" */;
+			buildPhases = (
+				5EA829E1064539C100A8020D /* Headers */,
+				5EA829E2064539C100A8020D /* Sources */,
+				5EA829E3064539C100A8020D /* Frameworks */,
+				5EA829E4064539C100A8020D /* Rez */,
+			);
+			dependencies = (
+			);
+			name = Dictionaries;
+			productName = Dictionaries;
+			productReference = 5EA829E6064539C100A8020D /* Dictionaries */;
+		};
+		5EA829EC064539D800A8020D /* Conditions */ = {
+			isa = PBXToolTarget;
+			buildConfigurationList = EACECCD50BC04E31001CA2BC /* Build configuration list for PBXToolTarget "Conditions" */;
+			buildPhases = (
+				5EA829E8064539D800A8020D /* Headers */,
+				5EA829E9064539D800A8020D /* Sources */,
+				5EA829EA064539D800A8020D /* Frameworks */,
+				5EA829EB064539D800A8020D /* Rez */,
+			);
+			dependencies = (
+			);
+			name = Conditions;
+			productInstallPath = /usr/local/bin;
+			productName = Conditions;
+			productReference = 5EA829ED064539D800A8020D /* Conditions */;
+		};
+/* End PBXToolTarget section */
+
+/* Begin XCBuildConfiguration section */
+		EACECCAA0BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = FilesAndDirectories;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCAB0BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = FilesAndDirectories;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCAC0BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\"";
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = FilesAndDirectories;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
+		EACECCAE0BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ThreadBasics;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCAF0BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ThreadBasics;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCB00BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ThreadBasics;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
+		EACECCB20BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = WorkingWithEnumerators;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCB30BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = WorkingWithEnumerators;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCB40BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = WorkingWithEnumerators;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
+		EACECCB60BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Strings;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCB70BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Strings;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCB80BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Strings;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
+		EACECCBA0BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = SharedLibraries;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCBB0BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = SharedLibraries;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCBC0BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = SharedLibraries;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
+		EACECCBE0BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = (
+					/usr/lib/gcc/darwin/3.3,
+					"$(VCF_ROOT)/lib",
+				);
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Reflection;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCBF0BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUGGING_SYMBOLS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = (
+					/usr/lib/gcc/darwin/3.3,
+					"$(VCF_ROOT)/lib",
+				);
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Reflection;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCC00BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUGGING_SYMBOLS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = (
+					/usr/lib/gcc/darwin/3.3,
+					"$(VCF_ROOT)/lib",
+				);
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Reflection;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
+		EACECCC20BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.1;
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Processes;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCC30BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.1;
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Processes;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCC40BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.1;
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Processes;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
+		EACECCC60BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.1;
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Localization;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCC70BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.1;
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Localization;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCC80BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.1;
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Localization;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
+		EACECCCA0BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = EventBasics;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCCB0BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = EventBasics;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCCC0BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = EventBasics;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
+		EACECCCE0BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = DatesAndTime;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCCF0BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = DatesAndTime;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCD00BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = DatesAndTime;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
+		EACECCD20BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Dictionaries;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCD30BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Dictionaries;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCD40BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Dictionaries;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
+		EACECCD60BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Conditions;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCD70BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Conditions;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCD80BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(HOME)/Library/Frameworks",
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
+				LIBRARY_SEARCH_PATHS = /usr/lib/gcc/darwin/3.3;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-DVCF_GCC",
+					"-DVCF_OSX",
+					"-D_DEBUG",
+					"-Wno-multichar",
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Conditions;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Default;
+		};
+		EACECCDA0BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/Frameworks";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "Alignment/Alignment-Info.plist";
+				INSTALL_PATH = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Alignment;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCDB0BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/Library/Frameworks,
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/../../../Library/Frameworks\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "Alignment/Alignment-Info.plist";
+				INSTALL_PATH = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Alignment;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCDC0BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/Library/Frameworks,
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/../../../Library/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "Alignment/Alignment-Info.plist";
+				INSTALL_PATH = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Alignment;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+			};
+			name = Default;
+		};
+		EACECCDE0BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/Frameworks";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "DateTimeUI/DateTimeUI-Info.plist";
+				INSTALL_PATH = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = DateTimeUI;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCDF0BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+					/Users/jimcrafton/Library/Frameworks,
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/../../../Library/Frameworks\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "DateTimeUI/DateTimeUI-Info.plist";
+				INSTALL_PATH = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+					"-framework",
+					"FoundationKit-debug",
+					"-framework",
+					"GraphicsKit-debug",
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = DateTimeUI;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCE00BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+					/Users/jimcrafton/Library/Frameworks,
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/../../../Library/Frameworks\"";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "DateTimeUI/DateTimeUI-Info.plist";
+				INSTALL_PATH = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+					"-framework",
+					"FoundationKit-debug",
+					"-framework",
+					"GraphicsKit-debug",
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = DateTimeUI;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+			};
+			name = Default;
+		};
+		EACECCE20BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "GraphicsBasics/GraphicsBasics-Info.plist";
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = GraphicsBasics;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCE30BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "GraphicsBasics/GraphicsBasics-Info.plist";
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = GraphicsBasics;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCE40BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "GraphicsBasics/GraphicsBasics-Info.plist";
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = GraphicsBasics;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+			};
+			name = Default;
+		};
+		EACECCE60BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "TextLayout/TextLayout-Info.plist";
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = TextLayout;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCE70BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "TextLayout/TextLayout-Info.plist";
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = TextLayout;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCE80BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "TextLayout/TextLayout-Info.plist";
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = TextLayout;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+			};
+			name = Default;
+		};
+		EACECCEA0BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "ProgressBars/ProgressBars-Info.plist";
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ProgressBars;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCEB0BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "ProgressBars/ProgressBars-Info.plist";
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ProgressBars;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCEC0BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+					/Users/jimcrafton/Library/Frameworks,
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "ProgressBars/ProgressBars-Info.plist";
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ProgressBars;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+			};
+			name = Default;
+		};
+		EACECCEE0BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "Labels/Labels-Info.plist";
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Labels;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Development;
+		};
+		EACECCEF0BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "Labels/Labels-Info.plist";
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Labels;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EACECCF00BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					VCF_GCC,
+					_DEBUG,
+				);
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				INFOPLIST_FILE = "Labels/Labels-Info.plist";
+				INSTALL_PATH = "$(USER_APPS_DIR)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Labels;
+				REZ_EXECUTABLE = NO;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-multichar",
+				);
+			};
+			name = Default;
+		};
+		EACECCF20BC04E31001CA2BC /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EACECD050BC04EF2001CA2BC /* VCF.xcconfig */;
+			buildSettings = {
+			};
+			name = Development;
+		};
+		EACECCF30BC04E31001CA2BC /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Deployment;
+		};
+		EACECCF40BC04E31001CA2BC /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EACECCA90BC04E31001CA2BC /* Build configuration list for PBXToolTarget "FilesAndDirectories" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCAA0BC04E31001CA2BC /* Development */,
+				EACECCAB0BC04E31001CA2BC /* Deployment */,
+				EACECCAC0BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCAD0BC04E31001CA2BC /* Build configuration list for PBXToolTarget "ThreadBasics" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCAE0BC04E31001CA2BC /* Development */,
+				EACECCAF0BC04E31001CA2BC /* Deployment */,
+				EACECCB00BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCB10BC04E31001CA2BC /* Build configuration list for PBXToolTarget "WorkingWithEnumerators" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCB20BC04E31001CA2BC /* Development */,
+				EACECCB30BC04E31001CA2BC /* Deployment */,
+				EACECCB40BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCB50BC04E31001CA2BC /* Build configuration list for PBXToolTarget "Strings" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCB60BC04E31001CA2BC /* Development */,
+				EACECCB70BC04E31001CA2BC /* Deployment */,
+				EACECCB80BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCB90BC04E31001CA2BC /* Build configuration list for PBXToolTarget "SharedLibraries" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCBA0BC04E31001CA2BC /* Development */,
+				EACECCBB0BC04E31001CA2BC /* Deployment */,
+				EACECCBC0BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCBD0BC04E31001CA2BC /* Build configuration list for PBXToolTarget "Reflection" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCBE0BC04E31001CA2BC /* Development */,
+				EACECCBF0BC04E31001CA2BC /* Deployment */,
+				EACECCC00BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCC10BC04E31001CA2BC /* Build configuration list for PBXToolTarget "Processes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCC20BC04E31001CA2BC /* Development */,
+				EACECCC30BC04E31001CA2BC /* Deployment */,
+				EACECCC40BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCC50BC04E31001CA2BC /* Build configuration list for PBXToolTarget "Localization" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCC60BC04E31001CA2BC /* Development */,
+				EACECCC70BC04E31001CA2BC /* Deployment */,
+				EACECCC80BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCC90BC04E31001CA2BC /* Build configuration list for PBXToolTarget "EventBasics" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCCA0BC04E31001CA2BC /* Development */,
+				EACECCCB0BC04E31001CA2BC /* Deployment */,
+				EACECCCC0BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCCD0BC04E31001CA2BC /* Build configuration list for PBXToolTarget "DatesAndTime" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCCE0BC04E31001CA2BC /* Development */,
+				EACECCCF0BC04E31001CA2BC /* Deployment */,
+				EACECCD00BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCD10BC04E31001CA2BC /* Build configuration list for PBXToolTarget "Dictionaries" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCD20BC04E31001CA2BC /* Development */,
+				EACECCD30BC04E31001CA2BC /* Deployment */,
+				EACECCD40BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCD50BC04E31001CA2BC /* Build configuration list for PBXToolTarget "Conditions" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCD60BC04E31001CA2BC /* Development */,
+				EACECCD70BC04E31001CA2BC /* Deployment */,
+				EACECCD80BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCD90BC04E31001CA2BC /* Build configuration list for PBXNativeTarget "Alignment" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCDA0BC04E31001CA2BC /* Development */,
+				EACECCDB0BC04E31001CA2BC /* Deployment */,
+				EACECCDC0BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCDD0BC04E31001CA2BC /* Build configuration list for PBXNativeTarget "DateTimeUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCDE0BC04E31001CA2BC /* Development */,
+				EACECCDF0BC04E31001CA2BC /* Deployment */,
+				EACECCE00BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCE10BC04E31001CA2BC /* Build configuration list for PBXNativeTarget "GraphicsBasics" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCE20BC04E31001CA2BC /* Development */,
+				EACECCE30BC04E31001CA2BC /* Deployment */,
+				EACECCE40BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCE50BC04E31001CA2BC /* Build configuration list for PBXNativeTarget "TextLayout" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCE60BC04E31001CA2BC /* Development */,
+				EACECCE70BC04E31001CA2BC /* Deployment */,
+				EACECCE80BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCE90BC04E31001CA2BC /* Build configuration list for PBXNativeTarget "ProgressBars" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCEA0BC04E31001CA2BC /* Development */,
+				EACECCEB0BC04E31001CA2BC /* Deployment */,
+				EACECCEC0BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCED0BC04E31001CA2BC /* Build configuration list for PBXNativeTarget "Labels" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCEE0BC04E31001CA2BC /* Development */,
+				EACECCEF0BC04E31001CA2BC /* Deployment */,
+				EACECCF00BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EACECCF10BC04E31001CA2BC /* Build configuration list for PBXProject "Examples_xcode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EACECCF20BC04E31001CA2BC /* Development */,
+				EACECCF30BC04E31001CA2BC /* Deployment */,
+				EACECCF40BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5E2C820F06420A1E00A8020D /* Project object */;
+}

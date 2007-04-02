@@ -124,6 +124,8 @@ public:
 	virtual void setIconImage( Image* icon );
 	
 	virtual bool isActiveWindow();
+    
+   	virtual void setBorderPath( Path* path );
 
 	virtual OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
 

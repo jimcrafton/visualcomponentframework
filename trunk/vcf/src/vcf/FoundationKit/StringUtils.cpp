@@ -470,7 +470,7 @@ VCF::String StringUtils::toString( const VCF::int64& value )
 	// if ( 0 != valHi )
 	// s = CFStringCreateWithFormat( NULL, NULL, CFSTR( "%ld%ld" ), value.hi(), value.lo() );
 	// would be a wrong implementation
-	s = CFStringCreateWithFormat( NULL, NULL, CFSTR( STR_ULONG_CONVERSION ), value.lo() );
+	s = CFStringCreateWithFormat( NULL, NULL, CFSTR( STR_ULONG_CONVERSION ), getLo32( value ) );
 	cfTmp = s;
 	CFRelease( s );
 	return String( cfTmp );
@@ -497,7 +497,7 @@ VCF::String StringUtils::toString( const VCF::uint64& value )
 	// if ( 0 != valHi )
 	// s = CFStringCreateWithFormat( NULL, NULL, CFSTR( "%lu%lu" ), value.hi(), value.lo() );
 	// would be a wrong implementation
-	s = CFStringCreateWithFormat( NULL, NULL, CFSTR( STR_ULONG_CONVERSION ), value.lo() );
+	s = CFStringCreateWithFormat( NULL, NULL, CFSTR( STR_ULONG_CONVERSION ), getLo32( value ) );
 	cfTmp = s;
 	CFRelease( s );
 	return String( cfTmp );

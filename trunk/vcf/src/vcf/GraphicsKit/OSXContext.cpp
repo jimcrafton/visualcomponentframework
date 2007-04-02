@@ -621,6 +621,11 @@ void OSXContext::lineTo(const double & x, const double & y)
 	CGContextAddLineToPoint( contextID_, x + origin_.x_ + ndx + .5, y + origin_.y_ +ndy + .5);	
 }
 
+void OSXContext::closePath()
+{
+    
+}
+
 void OSXContext::moveTo(const double & x, const double & y)
 {
 

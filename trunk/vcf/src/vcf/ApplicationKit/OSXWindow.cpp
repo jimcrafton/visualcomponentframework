@@ -985,6 +985,11 @@ bool OSXWindow::isActiveWindow()
 	return active ? true : false;
 }
 
+void OSXWindow::setBorderPath( Path* path )
+{
+    
+}
+
 OSStatus OSXWindow::wndContentViewHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData)
 {
 	OSXWindow* thisPtr = (OSXWindow*)userData;

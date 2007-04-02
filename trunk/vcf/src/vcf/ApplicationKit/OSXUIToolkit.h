@@ -158,6 +158,10 @@ public:
 	virtual ControlPeer* internal_createControlPeer( Control* component, ComponentType componentType);
 
 	virtual WindowPeer* internal_createWindowPeer( Control* component, Control* owner );
+    
+    virtual PopupWindowPeer* internal_createPopupWindowPeer( Frame* frame, Window* owner );
+    
+	virtual TransparentWindowPeer* internal_createTransparentWindowPeer( Frame* frame );
 
 	virtual ToolbarPeer* internal_createToolbarPeer( Toolbar* toolbar );
 
@@ -182,14 +186,14 @@ public:
 	virtual CommonFontDialogPeer* internal_createCommonFontDialogPeer( Control* owner );
 
 	virtual CommonPrintDialogPeer* internal_createCommonPrintDialogPeer( Control* owner );
+    
+   	virtual UIShellPeer* internal_createUIShellPeer( UIShell* shell );
 
 	virtual DragDropPeer* internal_createDragDropPeer();
 
 	virtual DataObjectPeer* internal_createDataObjectPeer();
 
 	virtual DropTargetPeer* internal_createDropTargetPeer();
-
-	virtual DesktopPeer* internal_createDesktopPeer( Desktop* desktop );
 
 	virtual ScrollPeer* internal_createScrollPeer( Control* control );
 
