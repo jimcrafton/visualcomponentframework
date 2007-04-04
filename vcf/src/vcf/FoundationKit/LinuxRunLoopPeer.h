@@ -15,6 +15,8 @@ where you installed the VCF.
 
 #include "vcf/FoundationKit/RunLoopPeer.h"
 #include "vcf/FoundationKit/RunLoop.h"
+#include "vcf/FoundationKit/AtomicCount.h"
+
 #include <queue>
 
 namespace VCF {
@@ -45,40 +47,39 @@ namespace VCF {
 
 	protected:
 		void handleTimers( const String& mode );
+		static void TimerNotifyHandler(sigval_t sigval);
 
-		static void TimerSignalHandler(int sig, siginfo_t *extra, void*);
-		class TimerSignalInstaller;
-		friend class TimerSignalInstaller;
 	protected:
 		RunLoop* runLoop_;
 
 		class PostedEvents {
 		public:
-			Mutex                     mutex;
-			std::queue<PostedEvent*>  events;
+			Mutex                     mutex_;
+			std::queue<PostedEvent*>  events_;
 		} postedEvents_;
 
 		class StopEvent {
 		public:
-			Mutex mutex;
-			bool  stop;
+			Mutex mutex_;
+			bool  stop_;
 		} stopEvent_;
 
 		class TimerInfo {
 		public:
-			timer_t       timer;
-			Object*       source;
-			EventHandler* handler;
-			String        mode;
-			DateTime      startedAt;
-			bool          fired;
+			TimerInfo(Object *source, EventHandler *handler, const String &mode);
+			timer_t       timer_;
+			Object*       source_;
+			EventHandler* handler_;
+			String        mode_;
+			DateTime      startedAt_;
+			AtomicCount   fired_;
 		};
 
 		class TimerMap {
 		public:
 			typedef std::map<uint32, TimerInfo*>::iterator iterator;
-			std::map<uint32, TimerInfo*> timers;
-			Mutex                        mutex;
+			std::map<uint32, TimerInfo*> timers_;
+			Mutex                        mutex_;
 		} activeTimers_;
 
 	};
@@ -89,3 +90,4 @@ namespace VCF {
 /**
 $Id$
 */
+

@@ -1,10 +1,10 @@
 //LinuxRunLoopPeer.cpp
+
 /*
 Copyright 2000-2004 The VCF Project.
 Please see License.txt in the top level directory
 where you installed the VCF.
 */
-
 
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
@@ -13,54 +13,43 @@ where you installed the VCF.
 
 using namespace VCF;
 
-void LinuxRunLoopPeer::TimerSignalHandler(int sig, siginfo_t *extra, void*)
+void LinuxRunLoopPeer::TimerNotifyHandler( sigval_t sigval )
 {
-	VCF_ASSERT(sig == SIGRTMIN);
-	VCF_ASSERT(extra->si_code == SI_TIMER);
-
-	TimerInfo* info = (TimerInfo*)extra->si_value.sival_ptr;
-	info->fired = true;
+	// System::println(Format("TimerHandler ThreadID RunLoop %lu") % pthread_self());
+	TimerInfo* info = reinterpret_cast<TimerInfo*>( sigval.sival_ptr );
+	++info->fired_;
 }
 
-class LinuxRunLoopPeer::TimerSignalInstaller
+LinuxRunLoopPeer::TimerInfo::TimerInfo( Object *source, EventHandler *handler, const String &mode ) :
+	source_(source),
+	handler_(handler),
+	mode_(mode),
+	fired_(0)
 {
-public:
-	TimerSignalInstaller(){
-		struct sigaction act;
-		sigemptyset(&act.sa_mask);
-		act.sa_flags = SA_SIGINFO;
-		act.sa_sigaction = &LinuxRunLoopPeer::TimerSignalHandler;
-		int err = sigaction(SIGRTMIN, &act, NULL);
-		VCF_ASSERT(err == 0);
-	}
-};
+}
 
-LinuxRunLoopPeer::LinuxRunLoopPeer( RunLoop* runLoop ):
-	runLoop_(runLoop)
+LinuxRunLoopPeer::LinuxRunLoopPeer( RunLoop* runLoop ) :
+	runLoop_( runLoop )
 {
-	static TimerSignalInstaller installSignal;
-
-	stopEvent_.stop = false;
+	stopEvent_.stop_ = false;
 }
 
 LinuxRunLoopPeer::~LinuxRunLoopPeer()
 {
-	Lock lock(activeTimers_.mutex);
-	for(TimerMap::iterator it = activeTimers_.timers.begin();
-		                   it != activeTimers_.timers.end(); 
+	Lock lock( activeTimers_.mutex_ );
+	for(TimerMap::iterator it = activeTimers_.timers_.begin();
+		                   it != activeTimers_.timers_.end(); 
 						   ++it) {
 		TimerInfo* info  = it->second;
-		int r = timer_delete(info->timer);
+		int r = timer_delete( info->timer_ );
 		VCF_ASSERT(r == 0);
 		delete info;
 	}
 }
+
 void LinuxRunLoopPeer::run( const String& mode, const DateTime* duration )
 {
-	{
-		Lock lock(stopEvent_.mutex);
-		stopEvent_.stop = false;
-	}
+	stopEvent_.stop_ = false;
 
 	DateTime current = DateTime::now();
 
@@ -75,23 +64,20 @@ void LinuxRunLoopPeer::run( const String& mode, const DateTime* duration )
 	while ( true ) {
 		PostedEvent* pe = NULL;
 		{
-			Lock lock(postedEvents_.mutex);
-			if(!postedEvents_.events.empty()) {
-				pe = postedEvents_.events.front();
-				postedEvents_.events.pop();
+			Lock lock( postedEvents_.mutex_ );
+			if ( !postedEvents_.events_.empty() ) {
+				pe = postedEvents_.events_.front();
+				postedEvents_.events_.pop();
 			}
 		}
-		if(pe != NULL) {
+		if ( NULL != pe ) {
 			runLoop_->internal_processReceivedEvent( pe );
+			delete pe;
 		}
-		delete pe;
 
-		{
-			Lock lock(stopEvent_.mutex);
-			if(stopEvent_.stop) {
-				runLoop_->internal_cancelled( mode );
-				break;
-			}
+		if ( stopEvent_.stop_ ) {
+			runLoop_->internal_cancelled( mode );
+			break;
 		}
 
 		if ( current > end ) {
@@ -107,42 +93,35 @@ void LinuxRunLoopPeer::run( const String& mode, const DateTime* duration )
 		if ( NULL == duration ) {
 			end = current;
 		}
-
-		System::sleep(1);
 	}
 }
 
 void LinuxRunLoopPeer::stop()
 {
-	Lock lock(stopEvent_.mutex);
-	stopEvent_.stop = true;
+	stopEvent_.stop_ = true;
 }
 
 void LinuxRunLoopPeer::postEvent( Event* event, EventHandler* handler, bool deleteHandler )
 {
 	PostedEvent* pe = new PostedEvent( event, handler, deleteHandler );
-	Lock lock(postedEvents_.mutex);
-	postedEvents_.events.push(pe);
+	Lock lock( postedEvents_.mutex_ );
+	postedEvents_.events_.push(pe);
 }
 
 uint32 LinuxRunLoopPeer::addTimer( const String& mode, Object* source, EventHandler* handler, uint32 timeoutInMilliSeconds )
 {
-	TimerInfo* info = new TimerInfo();
-	info->source = source;
-	info->handler = handler;
-	info->mode = mode;
-	info->fired = false;
+	TimerInfo* info = new TimerInfo( source, handler, mode );
 
-    struct sigevent ev;
-	ev.sigev_notify = SIGEV_SIGNAL;
-    ev.sigev_signo = SIGRTMIN;
-	ev.sigev_value.sival_int = 0;
+    sigevent ev;
+	ev.sigev_notify = SIGEV_THREAD;
+    ev.sigev_signo = 0;
+	ev.sigev_notify_function = &LinuxRunLoopPeer::TimerNotifyHandler;
+	ev.sigev_notify_attributes = NULL;
 	ev.sigev_value.sival_ptr = info;
 
-
-	int32 err = timer_create(CLOCK_REALTIME, &ev, &info->timer);
+	int32 err = timer_create( CLOCK_REALTIME, &ev, &info->timer_ );
 	VCF_ASSERT(err == 0);
-	uint32 timerID = (uint32)info->timer;
+	uint32 timerID = (uint32)info->timer_;
     
     itimerspec itime;
 	itime.it_value.tv_sec  = timeoutInMilliSeconds / 1000;
@@ -150,13 +129,13 @@ uint32 LinuxRunLoopPeer::addTimer( const String& mode, Object* source, EventHand
 	itime.it_interval.tv_sec  = itime.it_value.tv_sec;
 	itime.it_interval.tv_nsec = itime.it_value.tv_nsec; 
 
-	err = timer_settime(info->timer, 0, &itime, NULL);
+	err = timer_settime( info->timer_, 0, &itime, NULL );
 	VCF_ASSERT(err == 0);
 
-	info->startedAt = DateTime::now();
+	info->startedAt_ = DateTime::now();
 	{
-		Lock lock(activeTimers_.mutex);
-		activeTimers_.timers[timerID] = info;
+		Lock lock( activeTimers_.mutex_ );
+		activeTimers_.timers_[timerID] = info;
 	}
     
     return timerID;
@@ -164,28 +143,28 @@ uint32 LinuxRunLoopPeer::addTimer( const String& mode, Object* source, EventHand
 
 void LinuxRunLoopPeer::removeTimer( uint32 timerID )
 {
-	Lock lock(activeTimers_.mutex);
-	TimerMap::iterator it = activeTimers_.timers.find(timerID);
-	if(it != activeTimers_.timers.end()) {
+	Lock lock( activeTimers_.mutex_ );
+	TimerMap::iterator it = activeTimers_.timers_.find( timerID );
+	if ( it != activeTimers_.timers_.end() ) {
 		TimerInfo* info = it->second;
-		int r = timer_delete(info->timer);
+		int r = timer_delete( info->timer_ );
 		VCF_ASSERT(r == 0);
 		delete info;
-		activeTimers_.timers.erase(it);
+		activeTimers_.timers_.erase( it );
 	}
 }
 
 void LinuxRunLoopPeer::handleTimers( const String& mode )
 {
-	Lock lock(activeTimers_.mutex);
+	Lock lock( activeTimers_.mutex_ );
 
-	for(TimerMap::iterator it = activeTimers_.timers.begin();
-		                   it != activeTimers_.timers.end(); 
+	for(TimerMap::iterator it = activeTimers_.timers_.begin();
+		                   it != activeTimers_.timers_.end(); 
 						   ++it) {
 		TimerInfo& info  = *(it->second);
-		if(info.fired) {
-			info.fired = false;
-			runLoop_->internal_processTimer( info.mode, info.source, info.handler );
+		if ( info.fired_ > 0 ) {
+			--info.fired_;
+			runLoop_->internal_processTimer( info.mode_, info.source_, info.handler_ );
 		}
 	}
 }
