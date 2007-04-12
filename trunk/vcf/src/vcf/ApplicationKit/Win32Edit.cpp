@@ -1205,16 +1205,17 @@ void Win32Edit::repaint( Rect* repaintRect )
 
 void Win32Edit::setReadOnly( const bool& readonly )
 {
-	//SendMessage( hwnd_, EM_SETREADONLY, readonly ? TRUE : FALSE, 0 );
-	if ( NULL != richEditCallback_ ) {
-		SendMessage( hwnd_, EM_SETOLECALLBACK, 0, (LPARAM)0 );
-		delete richEditCallback_;		
+	LRESULT options = SendMessage( hwnd_, EM_GETOPTIONS, 0, 0 ) ;
+	bool xorIt = !readonly ;
+	if( !readonly ) {
+		xorIt = (options & ECO_READONLY) == ECO_READONLY ;
 	}
-
-	if ( readonly ) {
-		richEditCallback_ = new Win32RichEditOleCallback();
-		SendMessage( hwnd_, EM_SETOLECALLBACK, 0, (LPARAM)richEditCallback_ );
+	if( xorIt ) {
+		options ^= ECO_READONLY ;
+	} else {
+		options |= ECO_READONLY ;
 	}
+	SendMessage( hwnd_, EM_SETOPTIONS, options, ECOOP_SET ) ;
 }
 
 uint32 Win32Edit::getTotalPrintablePageCount( PrintContext* context )
