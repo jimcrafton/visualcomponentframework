@@ -113,7 +113,7 @@ EventHandler* Action::getAcceleratorEventHandler()
 	EventHandler* result = getEventHandler( "Action::onAccelerator" );
 	if ( NULL == result ) {
 		result = 
-			new KeyboardEventHandler<Action>( this, &Action::onAccelerator, "Action::onAccelerator" );
+			new GenericEventHandler<Action>( this, &Action::onAccelerator, "Action::onAccelerator" );
 	}
 
 	return result;
@@ -159,7 +159,7 @@ AcceleratorKey* Action::getAccelerator()
 	return currentAccelerator_;
 }
 
-void Action::onAccelerator( KeyboardEvent* e )
+void Action::onAccelerator( Event* e )
 {
 	perform();
 }
