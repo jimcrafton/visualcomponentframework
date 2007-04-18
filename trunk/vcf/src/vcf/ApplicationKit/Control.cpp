@@ -164,6 +164,77 @@ void Control::setBorder( Border* border )
 	peer_->setBorder( border_ );
 }
 
+Component* Control::findComponent( const String& componentName, const bool& recursive )
+{
+	Component* result = NULL;
+
+	Container* container = getContainer();
+	if ( NULL != container ) {
+		result = container->findControl( componentName );
+	}
+
+	if ( NULL == result ) {
+		result = Component::findComponent( componentName, recursive );
+	}
+
+	return result;
+}
+
+void Control::addNewComponent( Component* component )
+{
+	Control* newControl = dynamic_cast<Control*>(component);
+	Container* container = getContainer();
+
+	if ( (NULL != newControl) && (NULL != container) ) {
+		container->add( newControl, newControl->getAlignment() );
+	}
+	else {
+		addComponent( component );
+	}
+}
+
+void Control::preLoading()
+{
+	setVisible( false );
+}
+
+void Control::postLoaded( const bool& visible )
+{
+	setVisible( visible );
+}
+
+bool Control::bindVariable( Component** variablePtr, const String& variableName )
+{
+	bool result = Component::bindVariable( variablePtr, variableName );
+
+	if ( false == result ) {
+		Control* control = dynamic_cast<Control*>(this);
+		if ( NULL != control ) {
+			Container* container = control->getContainer();
+			if ( NULL != container ){
+				//need to do a recursive search until we find a match or run out of
+				//components to look for
+				Enumerator<Control*>* controls = container->getChildren();
+				while ( true == controls->hasMoreElements() ) {
+					Control* control = controls->nextElement();
+					if ( variableName == control->getName() ) {
+						result = true;
+						*variablePtr = control;
+					}
+					else {
+						result = control->bindVariable( variablePtr, variableName );
+					}
+					if ( true == result ) {
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	return result;
+}
+
 Rect Control::getBounds()/**throw( InvalidPeer ); -JEC - FIXME later*/
 {	
 
@@ -1766,6 +1837,44 @@ void Control::postChildPaint( GraphicsContext* graphicsContext, Control* child, 
 	peer_->postChildPaint( graphicsContext, child, oldClipRect );
 }
 
+void Control::getAppNameAndKey( String& appName, String& key )
+{
+	const CommandLine& cmdLine = FoundationKit::getCommandLine();
+	
+	FilePath programName = cmdLine.getArgument(0);
+	
+	appName = programName.getBaseName();
+	
+	key = "Software\\";
+	
+	if ( Application::getRunningInstance() != NULL ) {
+		appName = Application::getRunningInstance()->getName();
+	}
+	else {
+		ResourceBundle* bundle = System::getResourceBundle();
+		if ( NULL != bundle ) {
+			ProgramInfo* info = bundle->getProgramInfo(); 
+			if ( NULL != info ) {
+				String s = info->getProgramName();
+				if ( !s.empty() ) {
+					appName = s;
+				}
+				
+				s = info->getCompany();
+				if ( !s.empty() ) {
+					key += s + "\\";
+				}
+				
+				delete info;
+			}
+		}
+	}
+	
+	//need a way to generate platform 
+	//neutral reg keys!!!!! 
+	//These are window specific for now!
+	key += appName + "\\";
+}
 
 /**
 $Id$

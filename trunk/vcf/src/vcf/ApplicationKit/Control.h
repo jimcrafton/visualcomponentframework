@@ -519,6 +519,17 @@ public:
 	*/
 	void handleEventAndForwardToChildren( Event* event );
 
+
+	virtual Component* findComponent( const String& componentName, const bool& recursive=false );
+
+	virtual void addNewComponent( Component* component );
+
+	virtual void preLoading();
+
+	virtual void postLoaded( const bool& visible );
+
+	virtual bool bindVariable( Component** variablePtr, const String& variableName );
+
 	/**
 	*Returns the control's current border object, if any
 	*/
@@ -1730,6 +1741,8 @@ public:
 	void internal_afterPaint( GraphicsContext* context );
 protected:
 	void updateAnchorDeltas();
+
+	virtual void getAppNameAndKey( String& appName, String& key );
 
 	virtual void destroy();
 
