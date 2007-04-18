@@ -209,22 +209,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractScrollable.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\AcceleratorKey.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\AcceleratorKey.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Action.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Action.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\Application.cpp
 # End Source File
 # Begin Source File
@@ -346,14 +330,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\Component.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Component.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentEditor.h
 # End Source File
 # Begin Source File
@@ -363,14 +339,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentEditorManager.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentEditorManager.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentInfo.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentInfo.h
 # End Source File
 # Begin Source File
 
@@ -623,22 +591,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\UndoRedoStack.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\UndoRedoStack.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\VFFInputStream.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\VFFInputStream.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\VFFOutputStream.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\VFFOutputStream.h
 # End Source File
 # Begin Source File
 

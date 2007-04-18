@@ -9,8 +9,8 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/MenuItemPeer.h"
-#include "vcf/ApplicationKit/Action.h"
-#include "vcf/ApplicationKit/ActionEvent.h"
+#include "vcf/FoundationKit/Action.h"
+#include "vcf/FoundationKit/ActionEvent.h"
 #include "vcf/ApplicationKit/MenuManager.h"
 #include "vcf/GraphicsKit/DrawUIState.h"
 
@@ -607,7 +607,7 @@ void DefaultMenuItem::setAcceleratorKey( const VirtualKeyCode& keyCode, const ui
 	if ( NULL == eventHandler ) {
 		eventHandler = new KeyboardEventHandler<DefaultMenuItem>( this, &DefaultMenuItem::onAccelerator, "DefaultMenuItem::onAccelerator" );
 	}
-	AcceleratorKey* newAccelKey = new AcceleratorKey( this, keyCode, modifierMask, eventHandler );
+	AcceleratorKey* newAccelKey = new AcceleratorKey( this, AcceleratorKey::aotMenuItem, keyCode, modifierMask, eventHandler );
 
 	setAcceleratorKey( newAccelKey );
 }
