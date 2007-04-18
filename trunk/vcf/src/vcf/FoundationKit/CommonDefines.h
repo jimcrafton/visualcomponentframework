@@ -49,6 +49,17 @@ enum PropertyDescriptorType{
 
 
 /**
+Keyboard masks
+*/
+enum KeyboardMasks{
+	kmUndefined = 0,
+	kmAlt = 1,
+	kmShift = 2,
+	kmCtrl = 4
+};
+
+
+/**
 This enum is a mapping of virtual keys on a keyboard 
 to a standard value.
 */

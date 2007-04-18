@@ -30,6 +30,18 @@ System* System::systemInstance = NULL;
 
 ClassRegistry* ClassRegistry::registryInstance_ = NULL;
 
+
+std::map<String,std::vector<Class*>*>* Component::registeredComponentMap = NULL;
+
+EnumeratorContainer<std::vector<Class*>,Class*>* Component::registeredCompContainer = NULL;
+
+EnumeratorContainer<std::vector<String>,String>* Component::registeredCategoryContainer = NULL;
+
+std::vector<String>* Component::registeredCategory = NULL;
+
+
+
+
 static CommandLine foundationKitCommandLine;
 
 void FoundationKit::init( int argc, char** argv )
@@ -71,6 +83,7 @@ void FoundationKit::init( int argc, char** argv )
 	{
 		try {
 			REGISTER_CLASSINFO_EXTERNAL( ObjectWithEvents );
+			REGISTER_CLASSINFO_EXTERNAL( Component );
 		}
 		catch ( BasicException& e ) {
 			StringUtils::trace( "exception attempting to register basic objects, error: " +
