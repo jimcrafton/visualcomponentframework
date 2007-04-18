@@ -32,13 +32,6 @@ static int ApplicationKitRefCount = 0;
 
 
 
-std::map<String,std::vector<Class*>*>* Component::registeredComponentMap = NULL;
-
-EnumeratorContainer<std::vector<Class*>,Class*>* Component::registeredCompContainer = NULL;
-
-EnumeratorContainer<std::vector<String>,String>* Component::registeredCategoryContainer = NULL;
-
-std::vector<String>* Component::registeredCategory = NULL;
 
 PropertyEditorManager* PropertyEditorManager::propertyEditorMgr = NULL;
 
@@ -96,7 +89,7 @@ void ApplicationKit::init( int argc, char** argv )
 //		REGISTER_CLASSINFO_EXTERNAL( AbstractListModel );
 //		REGISTER_CLASSINFO_EXTERNAL( AbstractTextModel );
 //		REGISTER_CLASSINFO_EXTERNAL( AbstractTreeModel );
-		REGISTER_CLASSINFO_EXTERNAL( Component );
+		
 		
 		REGISTER_CLASSINFO_EXTERNAL( Border );
 		REGISTER_CLASSINFO_EXTERNAL( Basic3DBorder );

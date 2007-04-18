@@ -22,15 +22,6 @@ where you installed the VCF.
 namespace VCF
 {
 
-/**
-Keyboard masks
-*/
-enum KeyboardMasks{
-	kmUndefined = 0,
-	kmAlt = 1,
-	kmShift = 2,
-	kmCtrl = 4
-};
 
 
 

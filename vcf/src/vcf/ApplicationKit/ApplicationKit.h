@@ -25,20 +25,13 @@ where you installed the VCF.
 
 #include "vcf/FoundationKit/InvalidStateException.h"
 #include "vcf/ApplicationKit/ApplicationException.h"
-#include "vcf/ApplicationKit/BadComponentStateException.h"
 #include "vcf/ApplicationKit/BadModelStateException.h"
 
 #include "vcf/ApplicationKit/ItemEditorEvent.h"
 
 
-#include "vcf/ApplicationKit/ComponentEvent.h"
-#include "vcf/ApplicationKit/Component.h"
 
-/**
-Action classes
-*/
-#include "vcf/ApplicationKit/Action.h"
-#include "vcf/ApplicationKit/ActionEvent.h"
+
 
 
 /**
@@ -118,10 +111,6 @@ Action classes
 #include "vcf/ApplicationKit/View.h"
 #include "vcf/ApplicationKit/AbstractView.h"
 
-/**
-*Keyboard accelerators
-*/
-#include "vcf/ApplicationKit/AcceleratorKey.h"
 
 /**
 *Toolkit stuff
@@ -208,9 +197,6 @@ Action classes
 */
 #include "vcf/ApplicationKit/AbstractScrollable.h"
 #include "vcf/ApplicationKit/ScrollbarManager.h"
-
-#include "vcf/ApplicationKit/ComponentInfo.h"
-
 
 /**
 *Timers
