@@ -10,8 +10,8 @@ where you installed the VCF.
 //AbstractApplication.h
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ApplicationPeer.h"
-#include "vcf/ApplicationKit/VFFInputStream.h"
-#include "vcf/ApplicationKit/VFFOutputStream.h"
+#include "vcf/FoundationKit/VFFInputStream.h"
+#include "vcf/FoundationKit/VFFOutputStream.h"
 
 using namespace VCF;
 
@@ -91,7 +91,7 @@ void AbstractApplication::addAcceleratorKey( const VirtualKeyCode& keyCode, cons
 		throw InvalidPointerException( MAKE_ERROR_MSG_2("The Event handler passed in is NULL!") );
 	}
 
-	AcceleratorKey* accelerator = new AcceleratorKey( this, keyCode, modifierMask, eventHandler );
+	AcceleratorKey* accelerator = new AcceleratorKey( this, AcceleratorKey::aotObject, keyCode, modifierMask, eventHandler );
 	addAcceleratorKey( accelerator );
 }
 

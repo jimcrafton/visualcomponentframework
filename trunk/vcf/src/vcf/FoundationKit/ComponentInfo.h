@@ -23,7 +23,7 @@ class Image;
 *This information is generally used by development tools to aid in things
 *like autogenerating code, for example.
 */
-class APPLICATIONKIT_API ComponentInfo : public Object {
+class FOUNDATIONKIT_API ComponentInfo : public Object {
 public :
 	ComponentInfo( const String& componentUUID, const String& author="", const String& company="",
 					const String& copyright="", const String& additionalInfo="",

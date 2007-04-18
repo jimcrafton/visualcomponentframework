@@ -7,7 +7,7 @@ where you installed the VCF.
 */
 
 
-#include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/FoundationKit/FoundationKit.h"
 
 
 using namespace VCF;

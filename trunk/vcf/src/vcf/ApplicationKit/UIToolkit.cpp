@@ -957,7 +957,7 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 				accelerator = accel;
 				//check to make sure the menu item's frame is enabled!
 				if ( NULL != accel ) {
-					MenuItem* mi = accel->getAssociatedMenuItem();
+					MenuItem* mi = (MenuItem*) accel->getAssociatedMenuItem();
 					mi->update();
 				}
 				break;
@@ -1163,7 +1163,7 @@ void UIToolkit::onAcceleratorMnemonic( KeyboardEvent* event )
 {
 	 AcceleratorKey* accelerator = (AcceleratorKey*)event->getSource();
 	 if ( NULL != accelerator ) {
-		Control* control = accelerator->getAssociatedControl();
+		Control* control = (Control*) accelerator->getAssociatedControl();
 		if ( NULL != control ) {
 			control->mnemonicActivate();
 		}

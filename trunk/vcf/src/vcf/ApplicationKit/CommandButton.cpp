@@ -11,7 +11,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/CommandButton.h"
 #include "vcf/GraphicsKit/DrawUIState.h"
 #include "vcf/ApplicationKit/ButtonPeer.h"
-#include "vcf/ApplicationKit/Action.h"
+#include "vcf/FoundationKit/Action.h"
 
 using namespace VCF;
 
@@ -73,7 +73,7 @@ void CommandButton::setCaption( const String& caption )
 	VirtualKeyCode keyCode = UIToolkit::findMnemonic( caption );
 
 	if ( keyCode != vkUndefined ) {
-		AcceleratorKey* newAccelKey = new AcceleratorKey( this, keyCode, kmAlt, NULL, true );
+		AcceleratorKey* newAccelKey = new AcceleratorKey( this, AcceleratorKey::aotControl, keyCode, kmAlt, NULL, true );
 		addAcceleratorKey( newAccelKey );
 	}
 

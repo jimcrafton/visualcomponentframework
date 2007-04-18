@@ -10,8 +10,8 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/Toolbar.h"
 #include "vcf/ApplicationKit/ToolbarPeer.h"
-#include "vcf/ApplicationKit/Action.h"
-#include "vcf/ApplicationKit/ActionEvent.h"
+#include "vcf/FoundationKit/Action.h"
+#include "vcf/FoundationKit/ActionEvent.h"
 #include "vcf/GraphicsKit/DrawUIState.h"
 
 using namespace VCF;
