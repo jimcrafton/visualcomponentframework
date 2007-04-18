@@ -179,7 +179,7 @@ protected:
 	/**
 	* the default event handler for the accelerator associated to this action.
 	*/
-	void onAccelerator( KeyboardEvent* e );
+	void onAccelerator( Event* e );
 
 protected:
 	AcceleratorKey* currentAccelerator_;
