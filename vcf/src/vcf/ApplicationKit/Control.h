@@ -218,7 +218,7 @@ to prevent flicker, though this can be turned off and on at will.
 	@del Control::BeforeControlPainted
 	@del Control::AfterControlPainted
  */
-class APPLICATIONKIT_API Control : public Component, public AbstractView {
+class APPLICATIONKIT_API Control : public UIComponent, public AbstractView {
 public:
 	//Anchor delta enums
 	enum {

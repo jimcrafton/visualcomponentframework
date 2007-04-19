@@ -11,7 +11,7 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/PushButton.h"
-#include "vcf/FoundationKit/Action.h"
+#include "vcf/ApplicationKit/Action.h"
 #include "vcf/GraphicsKit/DrawUIState.h"
 
 using namespace VCF;

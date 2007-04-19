@@ -19,6 +19,10 @@ _property_( int32, "tag", getTag, setTag, "" );
 _property_( String, "name", getName, setName, "" );
 _event_("VCF::ComponentEventHandler", VCF::ComponentEvent, ComponentCreated );
 _event_("VCF::ComponentEventHandler", VCF::ComponentEvent, ComponentDestroyed );
+_event_("VCF::ComponentEventHandler", VCF::ComponentEvent, ComponentAdded );
+_event_("VCF::ComponentEventHandler", VCF::ComponentEvent, ComponentRemoved );
+_event_("VCF::ComponentEventHandler", VCF::ComponentEvent, ComponentLoaded );
+_event_("VCF::ComponentEventHandler", VCF::ComponentEvent, ComponentSaved );
 _class_rtti_end_
 
 

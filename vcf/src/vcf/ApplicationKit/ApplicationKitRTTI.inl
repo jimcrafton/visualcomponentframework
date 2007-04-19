@@ -161,8 +161,12 @@ _abstract_event_( "VCF::ColumnModelEventHandler", VCF::ColumnModelEvent, ItemDel
 _class_rtti_end_
 
 
+_class_abstract_rtti_(UIComponent, "VCF::Component", UICOMPONENT_CLASSID)
+_class_rtti_end_
 
-_class_abstract_rtti_(Control,  "VCF::Component", CONTROL_CLASSID);
+
+
+_class_abstract_rtti_(Control,  "VCF::UIComponent", CONTROL_CLASSID);
 _property_( double, "left", getLeft, setLeft, "" );
 _property_( double, "top", getTop, setTop, "" );
 _property_( double, "right", getRight, setRight, "" );
@@ -236,7 +240,7 @@ _class_rtti_end_
 
 
 
-_class_abstract_rtti_(Item, "VCF::Object", ITEM_CLASSID)
+_class_abstract_rtti_(Item, "VCF::UIComponent", ITEM_CLASSID)
 _abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemPaint );
 _abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemChanged );
 _abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );

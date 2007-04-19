@@ -22,7 +22,6 @@ namespace VCF {
 
 
 class InvalidPeer;
-class Action;
 class Dictionary;
 
 
@@ -460,49 +459,7 @@ public:
 	*/
 	Component* getOwner() {
 		return owner_;
-	}
-
-
-	/**
-	Returns the Action associated with this component. Any component
-	can have an action associated with it. This allows multiple component
-	components (like a menu item, and a push button) to share the same action
-	and to respond in a coordinated manner to changes in state.
-	*/
-	Action* getAction() {
-		return action_;
-	}
-
-	/**
-	Set's the action for the component.
-	*/
-	void setAction( Action* action );
-
-	/**
-	Calling this triggers an update event to be fired.
-	The default behaviour is to see if the component has an action 
-	associated with it, and then calls the action's update()
-	method. 
-	@return bool the method returns true if the component has an
-	action and the action's update() method is called. Otherwise 
-	it returns false.
-	@see Action::update()
-	*/
-	virtual bool updateAction();
-
-	/**
-	Adds the component to the framework's update list. This list
-	will be traversed periodically, during idle time, and the 
-	framework will create a COMPONENT_NEEDS_UPDATING
-	event and pass it to the component. The component can specialize this
-	functionality by customizing the behaviour of the handleEvent() method.
-	*/
-	void addToUpdateList();
-
-	/**
-	Removes the component from the framework's update list.
-	*/
-	void removeFromUpdateList();
+	}	
 
 	/**
 	Allows the user to control whether or not the component should 
@@ -646,8 +603,7 @@ protected:
 	Component* owner_;
 	uint32 componentState_;
 	String name_;
-	int32 tag_;
-	Action* action_;
+	int32 tag_;	
 	std::vector<Component*> components_;
 	EnumeratorContainer<std::vector<Component*>, Component*> componentContainer_;
 

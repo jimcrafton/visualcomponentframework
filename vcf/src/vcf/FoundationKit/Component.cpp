@@ -19,7 +19,7 @@ Component::Component():
 	owner_(NULL),
 	componentState_(Component::csUnknown | Component::csUsesLocaleStrings),
 	tag_(ComponentTagID),
-	action_(NULL),
+	//action_(NULL),
 	settings_(NULL)
 {
 	ComponentTagID++;
@@ -32,7 +32,7 @@ Component::Component( Component* owner ):
 	owner_(NULL),
 	componentState_(Component::csUnknown | Component::csUsesLocaleStrings),
 	tag_(ComponentTagID),
-	action_(NULL),
+	//action_(NULL),
 	settings_(NULL)
 {
 	ComponentTagID++;
@@ -47,7 +47,7 @@ Component::Component( const String& name, Component* owner ):
 	owner_(NULL),
 	componentState_(Component::csUnknown | Component::csUsesLocaleStrings),
 	tag_(ComponentTagID),
-	action_(NULL),
+	//action_(NULL),
 	settings_(NULL)
 {
 	ComponentTagID++;
@@ -63,7 +63,7 @@ Component::Component( const String& name ):
 	owner_(NULL),
 	componentState_(Component::csUnknown | Component::csUsesLocaleStrings),
 	tag_(ComponentTagID),
-	action_(NULL),
+	//action_(NULL),
 	settings_(NULL)
 {
 	ComponentTagID++;
@@ -87,13 +87,6 @@ void Component::destroy()
 		VCF::ComponentEvent e( this, Component::COMPONENT_DESTROYED );	
 
 		handleEvent( &e );
-	}
-
-	Action* action = getAction();
-	if ( NULL != action ) {
-		action->removeTarget( this );
-	
-		removeFromUpdateList();	
 	}
 
 	std::vector<Component*>::iterator componentIter = components_.begin();
@@ -152,10 +145,10 @@ void Component::handleEvent( Event* event )
 			}
 			break;
 
-			case Component::COMPONENT_NEEDS_UPDATING : {
-				updateAction();
-			}
-			break;				
+			//case Component::COMPONENT_NEEDS_UPDATING : {
+			//	updateAction();
+			//}
+			//break;				
 		}
 	}
 }
@@ -397,39 +390,6 @@ void Component::clearRegistedComponents()
 
 	delete registeredCategory;
 	registeredCategory = NULL;
-}
-
-void Component::setAction( Action* action )
-{
-	action_ = action;
-
-	if ( NULL == action_ ) {
-		removeFromUpdateList();
-	}
-	else {
-		addToUpdateList();
-	}
-}
-
-bool Component::updateAction()
-{
-	Action* action = getAction();
-	if ( NULL != action ) {
-		action->update();
-		return true;
-	}
-
-	return false;
-}
-
-void Component::addToUpdateList()
-{
-	//UIToolkit::addToUpdateList( this );
-}
-
-void Component::removeFromUpdateList()
-{
-	//UIToolkit::removeFromUpdateList( this );
 }
 
 void Component::loading()

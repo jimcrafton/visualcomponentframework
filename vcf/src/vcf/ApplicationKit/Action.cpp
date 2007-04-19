@@ -7,7 +7,7 @@ where you installed the VCF.
 */
 
 
-#include "vcf/FoundationKit/FoundationKit.h"
+#include "vcf/ApplicationKit/ApplicationKit.h"
 
 
 using namespace VCF;
@@ -54,7 +54,7 @@ void Action::update()
 	Update.fireEvent( &event );
 
 
-	std::vector<Component*>::iterator it = targets_.begin();
+	std::vector<UIComponent*>::iterator it = targets_.begin();
 
 	while ( it != targets_.end() ) {
 		(*it)->handleEvent( &event );
@@ -77,9 +77,9 @@ void Action::perform( Event* event )
 	}
 }
 
-void Action::addTarget( Component* target )
+void Action::addTarget( UIComponent* target )
 {
-	std::vector<Component*>::iterator found = std::find( targets_.begin(), targets_.end(), target );
+	std::vector<UIComponent*>::iterator found = std::find( targets_.begin(), targets_.end(), target );
 	//don't allow duplicate entries
 	if ( found == targets_.end() ) {
 		targets_.push_back( target );
@@ -87,16 +87,16 @@ void Action::addTarget( Component* target )
 	}
 }
 
-void Action::removeTarget( Component* target )
+void Action::removeTarget( UIComponent* target )
 {
-	std::vector<Component*>::iterator found = std::find( targets_.begin(), targets_.end(), target );
+	std::vector<UIComponent*>::iterator found = std::find( targets_.begin(), targets_.end(), target );
 
 	if ( found != targets_.end() ) {
 		targets_.erase( found );
 	}
 }
 
-Enumerator<Component*>* Action::getTargets()
+Enumerator<UIComponent*>* Action::getTargets()
 {
 	return targetsContainer_.getEnumerator();
 }
@@ -123,7 +123,7 @@ void Action::setAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& mod
 	
 	EventHandler* eventHandler = getAcceleratorEventHandler();
 
-	AcceleratorKey* newAccelKey = new AcceleratorKey( this, AcceleratorKey::aotObject, keyCode, modifierMask, eventHandler );
+	AcceleratorKey* newAccelKey = new AcceleratorKey( this, keyCode, modifierMask, eventHandler );
 
 	setAcceleratorKey( newAccelKey );
 }
@@ -132,17 +132,17 @@ void Action::setAcceleratorKey( AcceleratorKey* accelerator )
 {
 	//remove the old if present
 	if ( NULL != currentAccelerator_ ) {
-//		UIToolkit::removeAccelerator( (VirtualKeyCode)currentAccelerator_->getKeyCode(),
-//																currentAccelerator_->getModifierMask(), this );
+		UIToolkit::removeAccelerator( (VirtualKeyCode)currentAccelerator_->getKeyCode(),
+																currentAccelerator_->getModifierMask(), this );
 	}
 
 	currentAccelerator_ = accelerator;
 
 	if ( NULL != currentAccelerator_ ) {
-		//UIToolkit::registerAccelerator( currentAccelerator_ );
+		UIToolkit::registerAccelerator( currentAccelerator_ );
 	}
 
-	std::vector<Component*>::iterator it = targets_.begin();
+	std::vector<UIComponent*>::iterator it = targets_.begin();
 
 	Event event(this, Action::AcceleratorChanged );
 

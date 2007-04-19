@@ -11,7 +11,7 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ToggledButton.h"
-#include "vcf/FoundationKit/Action.h"
+#include "vcf/ApplicationKit/Action.h"
 
 using namespace VCF;
 

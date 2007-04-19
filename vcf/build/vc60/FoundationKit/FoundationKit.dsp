@@ -628,14 +628,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\XMLParser.h
 # PROP Default_Filter "*.h"
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\AcceleratorKey.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\Action.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\CommonDefines.h
 # End Source File
 # Begin Source File

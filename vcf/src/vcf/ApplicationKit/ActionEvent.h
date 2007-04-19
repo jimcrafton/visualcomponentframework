@@ -18,14 +18,14 @@ namespace VCF {
 
 
 /**
-\class ActionEvent ActionEvent.h "vcf/FoundationKit/ActionEvent.h"
+\class ActionEvent ActionEvent.h "vcf/ApplicationKit/ActionEvent.h"
 The ActionEvent is used to store and read the state about a particular action.
 With the ActionEvent you can store the text, enabled, checked, or user defined
 state of a particular actions. This ActionEvent is then handled (if appropriate)
 by the rtegistered component target in the target's handleEvent function, where
 the state is read and applied to the target however it makes the most sense.
 */
-class FOUNDATIONKIT_API ActionEvent : public Event {
+class APPLICATIONKIT_API ActionEvent : public Event {
 public:
 
 	ActionEvent( Object* source, const uint32& eventType ):

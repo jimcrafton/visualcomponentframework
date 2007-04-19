@@ -68,7 +68,7 @@ may simply carry around a member variable that stores the index.
 An alternate approach would be to query the model the item
 is attached to and ask the model for the item's index position.
 */
-class APPLICATIONKIT_API Item : public Component {
+class APPLICATIONKIT_API Item : public UIComponent {
 public:
 	/**
 	*these are a general set of enumeration masks that can be used
