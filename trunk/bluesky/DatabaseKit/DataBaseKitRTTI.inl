@@ -56,7 +56,7 @@ static String DataFieldTypeNames[] = { "dftUnknown",
 
 
 
-_class_abstract_rtti_(DataField, "VCF::Object", DATAFIELD_CLASSID )
+_class_abstract_rtti_(DataField, "VCF::Component", DATAFIELD_CLASSID )
 _class_rtti_end_
 
 

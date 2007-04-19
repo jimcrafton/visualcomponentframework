@@ -173,12 +173,64 @@ namespace VCF {
 #include "FBDatabase.h"
 */
 
+
+
+
+/**
+\dir
+The Database Kit is the VCF's library for accessing data, be it
+a formal database like MS Sql Server, MySQL, or SQLite, or 
+some other record based format. 
+
+Most of the core ideas and design
+for the Database Kit were inspired by studying the Delphi VCL's 
+database classes.
+
+The Database Kit uses some terms that may throw people off. The 
+reason for this is that the Database Kit wraps any kind of record 
+based data, not \em just SQL databases. For example, a file that
+consists of an array of structs might have a wrapper that allows
+access to it though the Database Kit. Let's quickly define the
+terms we use here:
+
+||Term || Definition
+|Field | equivalent to a column in a table. 
+|Record | equivalent to a row. A record is made of 1 
+or more fields
+
+*/
+
+
 namespace VCF {
 
+	/**
+	\class DatabaseKit DatabaseKit.h "vcf/DatabaseKit/DatabaseKit.h"
+	This is the toolkit for the DatabaseKit library. You'll need to 
+	initialize it \em before using any classes from the DatabaseKit
+	library, and terminate it when you're done. For example:
+	\code
+	int main( int argc, char** argv )
+	{
+		DatabaseKit::init( argc, argv );
+		
+		//rest of your code goes here....
+	
+		DatabaseKit::terminate();
+		return 0;
+	}
+	\endcode
+	*/
     class DATABASEKIT_API DatabaseKit {
     public:
+		/**
+		Called to initialize the DatabaseKit library.
+		*/
         static void init( int argc, char **argv );
 
+		/**
+		Called to terminate the DatabaseKit library and 
+		destroy/release any global resources used by the kit.
+		*/
         static void terminate();
     };
 

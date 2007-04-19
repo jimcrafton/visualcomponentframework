@@ -28,39 +28,136 @@ namespace VCF {
 	class DataSet;
 
 
+	/**
+	This enumeration describes the possible
+	states a DataSet instance can be in, at 
+	any given moment.
+	*/
 	enum DataSetState {
+		/**
+		The dataset is not active, and it 
+		will not be connected to the actual data
+		base (if one is being used). 
+		*/
 		dssInactive = 0, 
+		
+		/**
+		The dataset is in a browse state. This will allow the
+		dataset to iterate through items/records in the dataset.
+		*/
 		dssBrowse, 
+		
+		/**
+		The dataset is in an edit state. This allows the dataset
+		to attempt to modify the fields of a specific row (or record), 
+		or executing some command that will modify many rows of the
+		dataset.
+		*/
 		dssEdit, 
+		
+		/**
+		The dataset is in an insert state. This happens when the dataset
+		attempts to add or insert a record.
+		*/
 		dssInsert, 
+		
+		/**
+		*/
 		dssSetKey, 
+		
+		/**
+		*/
 		dssCalcFields,
+		
+		/**
+		*/
 		dssUpdateNew,
+		
+		/**
+		*/
 		dssUpdateOld,
+		
+		/**
+		*/
 		dssFilter
 	};
 
+	/**
+	This enumeration indicates what kind of 
+	state to check for. 
+	*/
 	enum CheckModeState {
 		cmsBrowse = 1,
 		cmsActive,
 		cmsInactive
 	};
 
+	/**
+	This enumeration is used to describe the type of 
+	data event that is fired during certain operations 
+	on a dataset.
+	*/
 	enum DataEventType {
 		deUnknown = 0,
+		
+		/**
+		An event that indicates a field's value 
+		was changed.
+		*/
 		deFieldChange = 'data', 
+		
+		/**
+		An event to indicate that a complete record was changed.
+		*/
 		deRecordChange, 
+		
+		/**
+		An event indicating that some property or state of the 
+		dataset changed.
+		*/
 		deDataSetChange,
+		
+		/**
+		An event that indicates the dataset has successfully iterated 
+		to the next record in the dataset.
+		*/
 		deDataSetScroll, 
+		
+		/**
+		*/
 		deLayoutChange, 
+		
+		/**
+		An event that indicates the record was updated
+		*/
 		deUpdateRecord, 
+		
+		/**
+		An event that indicates that the dataset's state changed.
+		*/
 		deUpdateState,
+		
+		/**
+		*/
 		deCheckBrowseMode,
+		
+		/**
+		*/
 		dePropertyChange, 
+		
+		/**
+		*/
 		deFieldListChange, 
+		
+		/**
+		*/
 		deFocusControl
 	};
 
+	/**
+	An enumeration that indicates how to retrieve a record. Either 
+	the next record is retrieved or the current record is retreived.
+	*/
 	enum GetRecordMode {
 		grmNext = 1,
 		grmCurrent
@@ -119,7 +216,10 @@ namespace VCF {
 	};
 
 
-    class DATABASEKIT_API DataSet : public Object {
+
+	#define DATASET_CLASSID	"76ab89f0-66d1-4ba3-998e-4ec874faa6e1"
+
+    class DATABASEKIT_API DataSet : public Component {
     public:
 		struct Record {
 			Record(): buffer(NULL), size(0){}			

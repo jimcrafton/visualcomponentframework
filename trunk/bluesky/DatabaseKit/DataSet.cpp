@@ -5,7 +5,7 @@
 using namespace VCF;
 
 DataSet::DataSet()
-    : Object(),
+    : Component(),
 	fieldDefs_(NULL),
 	active_(false),
 	state_(dssInactive),
@@ -55,6 +55,8 @@ void DataSet::destroy()
 	locale_ = NULL;	
 
 	state_ = dssInactive;
+
+	Component::destroy();
 }
 
 void DataSet::setDatabase( Database* db )

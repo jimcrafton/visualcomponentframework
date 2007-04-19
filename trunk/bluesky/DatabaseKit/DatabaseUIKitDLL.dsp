@@ -68,8 +68,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DatabaseUIKitDLL___Win32_Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DATABASEUIKITDLL_EXPORTS" /YX /FD /GZ  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DATABASEUIKIT_EXPORTS" /D "DATABASEUIKIT_DLL" /YX /FD /GZ  /c
+# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DATABASEUIKITDLL_EXPORTS" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "DATABASEUIKIT_EXPORTS" /D "DATABASEUIKIT_DLL" /YX /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -98,10 +98,6 @@ SOURCE=.\DatabaseUIKit.cpp
 
 SOURCE=.\DataLabel.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=.\DataTable.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -117,10 +113,6 @@ SOURCE=.\DatabaseUIKitRTTI.inl
 # Begin Source File
 
 SOURCE=.\DataLabel.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DataTable.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

@@ -98,16 +98,15 @@ void ADODataSet::internal_open()
 		_ConnectionPtr connection = getConnection();
 
 		AnsiString sql = generateSQL();
-		
+		bstr_t bstrSql = sql.c_str();
+		variant_t cnVar = connection;
+
+
 		currentRecordSet_ = NULL; //pitch the old record set...
 
-		_CommandPtr cmd = Command::create();
-
-		cmd->PutActiveConnection( connection );
-		cmd->PutCommandText( sql.c_str() );
-
-		variant_t recordsAffected;
-		currentRecordSet_ = cmd->Execute( recordsAffected, variant_t::missing(), adCmdText);
+		currentRecordSet_ = Recordset::create();
+		
+		currentRecordSet_->Open( bstrSql.in(), cnVar, adOpenStatic, adLockReadOnly, adCmdText );
 
 		currentRecordSet_->MoveFirst();
 	}
@@ -537,45 +536,62 @@ void ADODataSet::internal_post()
 
 		int res = 0;
 
-		FieldsPtr rsFields = currentRecordSet_->GetFields();
+		FieldsPtr rsFields = updateRecordSet_->GetFields();
 		variant_t fldIndex;
 
-		for ( size_t i=0;i<fields_->size();i++ ) {
-			DataField* field = fields_()[i];
-			fldIndex = (int)i;
-			FieldPtr adoField = rsFields->GetItem( fldIndex );
+		try {
+
+			for ( size_t i=0;i<fields_->size();i++ ) {
+				DataField* field = fields_()[i];
+				fldIndex = (int)i;
+				FieldPtr adoField = rsFields->GetItem( fldIndex );
 
 
-			switch ( field->getDataType() ) {
-				case dftString : {
-					const char* text = (const char*)&record->buffer[bufferOffset];
+				switch ( field->getDataType() ) {
+					case dftString : {
+						const char* text = (const char*)&record->buffer[bufferOffset];
 
-					
+						bstr_t bstrTxt = text;
+						variant_t fieldVal = bstrTxt;
+
+						adoField->PutValue( fieldVal );
+
+					}
+					break;
+
+					case dftFloat : {
+						double val = 0;
+						memcpy( &val, &record->buffer[bufferOffset], field->getSize() );
+						
+					}
+					break;
+
+					case dftWord : case dftSmallint : case dftInteger : {
+						int val = 0;
+						memcpy( &val, &record->buffer[bufferOffset], field->getSize() );
+						
+					}
+					break;
 				}
-				break;
 
-				case dftFloat : {
-					double val = 0;
-					memcpy( &val, &record->buffer[bufferOffset], field->getSize() );
-					
-				}
-				break;
-
-				case dftWord : case dftSmallint : case dftInteger : {
-					int val = 0;
-					memcpy( &val, &record->buffer[bufferOffset], field->getSize() );
-					
-				}
-				break;
+		//		if ( res != SQLITE_OK ) {
+		//			throw DatabaseError( Format("Error writing to field \"%s\". Error returned was %s.") );
+		//		}
+				bufferOffset += field->getSize();
 			}
 
-	//		if ( res != SQLITE_OK ) {
-	//			throw DatabaseError( Format("Error writing to field \"%s\". Error returned was %s.") );
-	//		}
-			bufferOffset += field->getSize();
+			VCF_ASSERT( bufferOffset == record->size );
+
+		
+			updateRecordSet_->Update();
+
+			updateRecordSet_->Close();
+			updateRecordSet_ = NULL;
+		}
+		catch ( const com_error& e ) {
+			StringUtils::trace(Format("COM error: %s\n") % e.what() );
 		}
 
-		VCF_ASSERT( bufferOffset == record->size );
 	}
 }
 
@@ -586,6 +602,28 @@ void ADODataSet::internal_refresh()
 
 void ADODataSet::internal_edit()
 {
+
+	comet::ADODB::_ConnectionPtr connection = getConnection();
+
+	AnsiString sql = generateSQL();
+		
+	updateRecordSet_ = Recordset::create(); //pitch the old record set...
+
+	variant_t cnVar = connection;
+	bstr_t bstrSql = sql.c_str();
+
+	try {
+		long currentPos = currentRecordSet_->GetAbsolutePosition();
+
+		updateRecordSet_->Open( bstrSql.in(), cnVar, adOpenStatic, adLockBatchOptimistic, adCmdText );
+	
+		updateRecordSet_->Move( currentPos );
+	}
+	catch ( std::exception& e ) {
+		throw DatabaseError(Format("Error initializing update recordset from ADO database!\nError: %s") % e.what() );
+	}
+	
+
 	updateWhereClause_ = "WHERE ";
 	std::vector<DataField*>::iterator it = fields_->begin();
 	while ( it != fields_->end() ) {
