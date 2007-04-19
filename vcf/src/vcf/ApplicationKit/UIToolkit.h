@@ -389,16 +389,6 @@ public:
 
 	static void removeDefaultButton( Button* defaultButton );
 
-	static AcceleratorKey* getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src );
-
-	/**
-	Finds all the matching accelerators and store them in a list.
-	A matching accelerator is defined as an accelerator that has the same key code, 
-	modifier mask, and event handler. This let the synchronize the state of all
-	the matching accelerators when one of them has its changed enabled/disabled state.
-	*/
-	static bool findMatchingAccelerators( AcceleratorKey* key, std::vector<AcceleratorKey*>& matchingAccelerators );
-
 	static void removeAcceleratorKeysForControl( Control* control );
 
 	static void removeAcceleratorKeysForMenuItem( MenuItem* item );
@@ -557,8 +547,6 @@ public:
 	*/
 	static UIToolkit* internal_getDefaultUIToolkit();
 
-	static void addToUpdateList( Component* component );
-	static void removeFromUpdateList( Component* component );
 	static void setUpdateTimerSpeed( const uint32& milliseconds );
 
 	static void systemSettingsChanged();
@@ -566,7 +554,7 @@ protected:
 	static UIToolkit* toolKitInstance;
 
 	std::map<String,ComponentInfo*> componentInfoMap_;
-	std::multimap<uint32,AcceleratorKey*> acceleratorMap_;
+	
 	std::vector<Control*> visitedContainers_;
 	Clipboard* systemClipboard_;
     GraphicsToolkit * graphicsToolKit_;
@@ -578,9 +566,7 @@ protected:
 	EventHandler* defaultButtonHandler_;
 	UIMetricsManager* metricsMgr_;
 	UIPolicyManager* policyMgr_;
-	std::vector<Button*> defaultButtonList_;
-
-	std::vector<Component*> componentsToUpdate_;
+	std::vector<Button*> defaultButtonList_;	
 
 
 
@@ -743,27 +729,13 @@ protected:
 
 	void internal_registerComponentInfo( const String& componentUUID, ComponentInfo* info );
 
-	void internal_removeComponentInfo( ComponentInfo* info );
-
-	void internal_registerAccelerator( AcceleratorKey* accelerator );
-
-	void internal_removeAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src );
-
+	void internal_removeComponentInfo( ComponentInfo* info );	
+	
 	Button* internal_getDefaultButton();
 
 	void internal_setDefaultButton( Button* defaultButton );
 
 	void internal_removeDefaultButton( Button* defaultButton );
-
-	AcceleratorKey* internal_getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src );
-
-	void internal_removeAcceleratorKeysForControl( Control* control );
-
-	void internal_removeAcceleratorKeysForMenuItem( MenuItem* menuItem );
-
-	void internal_removeAcceleratorKeysForObject( Object* src );
-
-	bool internal_findMatchingAccelerators( AcceleratorKey* key, std::vector<AcceleratorKey*>& matchingAccelerators );
 
 	virtual void internal_idleTime();
 
@@ -780,8 +752,6 @@ protected:
 		return policyMgr_;
 	}
 
-	void internal_addToUpdateList( Component* component );
-	void internal_removeFromUpdateList( Component* component );
 	void internal_setUpdateTimerSpeed( const uint32& milliseconds );
 
 	void onUpdateComponentsTimer( TimerEvent* e );

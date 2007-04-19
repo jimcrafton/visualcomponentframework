@@ -1406,7 +1406,7 @@ void Control::updateAnchorDeltas() {
 
 AcceleratorKey* Control::getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask )
 {
-	return UIToolkit::getAccelerator( keyCode, modifierMask, this );
+	return SystemToolkit::getAccelerator( keyCode, modifierMask, this );
 }
 
 void Control::addAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask, EventHandler* eventHandler )

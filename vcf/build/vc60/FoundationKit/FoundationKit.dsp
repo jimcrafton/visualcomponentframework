@@ -107,32 +107,12 @@ SOURCE=..\..\..\src\vcf\FoundationKit\FrameworkConfig.h
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\AcceleratorKey.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\Action.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\Component.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKit.cpp
 # ADD CPP /Yc"vcf/FoundationKit/FoundationKit.h"
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\VFFOutputStream.cpp
 # End Source File
 # End Group
 # Begin Group "Peers"
@@ -514,6 +494,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\TextOutputStream.h
 
 SOURCE=..\..\..\src\vcf\FoundationKit\VariantDataStream.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFOutputStream.cpp
+# End Source File
 # End Group
 # Begin Group "Utils"
 
@@ -640,7 +628,23 @@ SOURCE=..\..\..\src\vcf\FoundationKit\XMLParser.h
 # PROP Default_Filter "*.h"
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\AcceleratorKey.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Action.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\CommonDefines.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\ComponentInfo.cpp
 # End Source File
 # Begin Source File
 
