@@ -31,6 +31,9 @@ class ResourceBundlePeer;
 class RunLoop;
 class RunLoopPeer;
 class ThreadManagerPeer;
+class AcceleratorKey;
+class Component;
+
 
 /**
 \class SystemToolkit SystemToolkit.h "vcf/FoundationKit/SystemToolkit.h"
@@ -99,6 +102,32 @@ public:
 	static LocalePeer* createLocalePeer();
 
 	static ResourceBundlePeer* createResourceBundlePeer();
+
+	static AcceleratorKey* getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src );
+
+	/**
+	Finds all the matching accelerators and store them in a list.
+	A matching accelerator is defined as an accelerator that has the same key code, 
+	modifier mask, and event handler. This let the synchronize the state of all
+	the matching accelerators when one of them has its changed enabled/disabled state.
+	*/
+	static bool findMatchingAccelerators( AcceleratorKey* key, std::vector<AcceleratorKey*>& matchingAccelerators );
+
+	static void registerAccelerator( AcceleratorKey* accelerator );
+
+	static void removeAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src );	
+
+	static void addToUpdateList( Component* component );
+	
+	static void removeFromUpdateList( Component* component );
+
+	static void updateComponents();
+
+	static void removeAcceleratorKeysForControl( Object* control );
+
+	static void removeAcceleratorKeysForMenuItem( Object* menuItem );
+
+	static void removeAcceleratorKeysForObject( Object* src );
 protected:
 	SystemToolkit();
 
@@ -199,7 +228,31 @@ protected:
 	static SystemToolkit* getSystemToolkit() {
 		return systemToolkitInstance;
 	}
+	
+	AcceleratorKey* internal_getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src );
+
+	bool internal_findMatchingAccelerators( AcceleratorKey* key, std::vector<AcceleratorKey*>& matchingAccelerators );
+
+	void internal_removeAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src );
+	
+	void internal_registerAccelerator( AcceleratorKey* accelerator );
+
+	void internal_addToUpdateList( Component* component );
+	
+	void internal_removeFromUpdateList( Component* component );	
+
+	void internal_updateComponents();
+	
+	void internal_removeAcceleratorKeysForControl( Object* control );
+
+	void internal_removeAcceleratorKeysForMenuItem( Object* menuItem );
+
+	void internal_removeAcceleratorKeysForObject( Object* src );
+
 	static SystemToolkit* systemToolkitInstance;
+
+	std::multimap<uint32,AcceleratorKey*> acceleratorMap_;	
+	std::vector<Component*> componentsToUpdate_;
 };
 
 }; //end of namespace VCF

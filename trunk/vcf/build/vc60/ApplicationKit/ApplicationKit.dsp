@@ -134,6 +134,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\PopupWindowPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\TransparentWindow.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\TransparentWindowPeer.h
 # End Source File
 # Begin Source File
@@ -231,22 +235,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractScrollable.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractScrollable.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\AcceleratorKey.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\AcceleratorKey.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Action.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Action.h
 # End Source File
 # Begin Source File
 
@@ -371,14 +359,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\Component.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Component.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentEditor.h
 # End Source File
 # Begin Source File
@@ -388,14 +368,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentEditorManager.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentEditorManager.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentInfo.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentInfo.h
 # End Source File
 # Begin Source File
 
@@ -583,6 +555,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\PopupMenu.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\PopupWindow.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\PropertyEditor.h
 # End Source File
 # Begin Source File
@@ -612,6 +588,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TitledBorder.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\TitledBorder.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\TransparentWindow.cpp
 # End Source File
 # Begin Source File
 
