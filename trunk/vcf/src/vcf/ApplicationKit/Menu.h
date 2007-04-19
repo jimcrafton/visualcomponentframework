@@ -26,7 +26,7 @@ class ComponentEvent;
 /**
 \class Menu Menu.h "vcf/ApplicationKit/Menu.h"
 */
-class APPLICATIONKIT_API Menu : public Component {
+class APPLICATIONKIT_API Menu : public UIComponent {
 public:
 
 	DELEGATE(MenuItemChanged);

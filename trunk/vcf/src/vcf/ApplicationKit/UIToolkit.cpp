@@ -51,6 +51,13 @@ UIToolkit::UIToolkit():
 
 UIToolkit::~UIToolkit()
 {
+	std::multimap<uint32,AcceleratorKey*>::iterator it = acceleratorMap_.begin();
+	while ( it != acceleratorMap_.end() ) {
+		delete it->second;
+		it ++;
+	}
+	acceleratorMap_.clear();
+
 	std::map<String,ComponentInfo*>::iterator it2 = componentInfoMap_.begin();
 	while( it2 != componentInfoMap_.end() ) {
 		ComponentInfo* info = it2->second;
@@ -487,6 +494,16 @@ void UIToolkit::removeComponentInfo( ComponentInfo* info )
 	UIToolkit::toolKitInstance->internal_removeComponentInfo( info );
 }
 
+void UIToolkit::registerAccelerator( AcceleratorKey* accelerator )
+{
+	UIToolkit::toolKitInstance->internal_registerAccelerator( accelerator );
+}
+
+void UIToolkit::removeAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src )
+{
+	UIToolkit::toolKitInstance->internal_removeAccelerator( keyCode, modifierMask, src );
+}
+
 VCF::Button* UIToolkit::getDefaultButton()
 {
 	return UIToolkit::toolKitInstance->internal_getDefaultButton();
@@ -502,19 +519,29 @@ void UIToolkit::removeDefaultButton( Button* defaultButton )
 	UIToolkit::toolKitInstance->internal_removeDefaultButton( defaultButton );
 }
 
+AcceleratorKey* UIToolkit::getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src )
+{
+	return UIToolkit::toolKitInstance->internal_getAccelerator( keyCode, modifierMask, src );
+}
+
+bool UIToolkit::findMatchingAccelerators( AcceleratorKey* key, std::vector<AcceleratorKey*>& matchingAccelerators )
+{
+	return UIToolkit::toolKitInstance->internal_findMatchingAccelerators( key, matchingAccelerators );
+}
+
 void UIToolkit::removeAcceleratorKeysForControl( Control* control )
 {
-	SystemToolkit::removeAcceleratorKeysForControl( control );
+	UIToolkit::toolKitInstance->internal_removeAcceleratorKeysForControl( control );
 }
 
 void UIToolkit::removeAcceleratorKeysForMenuItem( MenuItem* item )
 {
-	SystemToolkit::removeAcceleratorKeysForMenuItem( item );
+	UIToolkit::toolKitInstance->internal_removeAcceleratorKeysForMenuItem( item );
 }
 
 void UIToolkit::removeAcceleratorKeysForObject( Object* src )
 {
-	SystemToolkit::removeAcceleratorKeysForObject( src );
+	UIToolkit::toolKitInstance->internal_removeAcceleratorKeysForObject( src );
 }
 
 
@@ -781,6 +808,90 @@ void UIToolkit::internal_removeComponentInfo( ComponentInfo* info )
 	}
 }
 
+void UIToolkit::internal_registerAccelerator( AcceleratorKey* accelerator )
+{
+	AcceleratorKey::Value key;
+	key = accelerator;	
+
+
+	typedef std::multimap<uint32,AcceleratorKey*>::iterator AccelMapIter;
+	std::pair<AccelMapIter, AccelMapIter> range = acceleratorMap_.equal_range( key );
+
+	std::multimap<uint32,AcceleratorKey*>::iterator it = range.first;
+	while ( it != range.second ) {
+		AcceleratorKey* accel = it->second;
+
+		if ( (accelerator->getAssociatedControl() == accel->getAssociatedControl()) && 
+				(accelerator->getAssociatedMenuItem() == accel->getAssociatedMenuItem()) && 
+				(accelerator->getAssociatedObject() == accel->getAssociatedObject()) ) {
+
+			accel->free();
+			//remove old entry!
+			acceleratorMap_.erase( it );
+			break;
+		}
+
+		it ++;
+	}
+
+	std::pair<uint32,AcceleratorKey*> item(key,accelerator);
+	acceleratorMap_.insert( item );
+}
+
+bool UIToolkit::internal_findMatchingAccelerators( AcceleratorKey* key, std::vector<AcceleratorKey*>& matchingAccelerators )
+{
+	matchingAccelerators.clear();
+
+	AcceleratorKey::Value keyVal;
+	keyVal = key;
+
+	typedef std::multimap<uint32,AcceleratorKey*>::iterator AccelMapIter;
+	std::pair<AccelMapIter, AccelMapIter> range = acceleratorMap_.equal_range( keyVal );
+
+	std::multimap<uint32,AcceleratorKey*>::iterator it = range.first;
+	while ( it != range.second ) {
+		AcceleratorKey* accel = it->second;
+
+		// we don't need to put in the list the accelerator (key) to which all the others are matching.
+		if ( (accel->getEventHandler() == key->getEventHandler()) && 
+				(accel != key) ) {
+			matchingAccelerators.push_back( accel );
+		}
+
+		it ++;
+	}
+
+	return !matchingAccelerators.empty();
+}
+
+AcceleratorKey* UIToolkit::internal_getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src )
+{
+	AcceleratorKey* result = NULL;
+
+	AcceleratorKey::Value key( modifierMask, keyCode );
+
+
+	typedef std::multimap<uint32,AcceleratorKey*>::iterator AccelMapIter;
+	std::pair<AccelMapIter, AccelMapIter> range = acceleratorMap_.equal_range( key );
+
+	std::multimap<uint32,AcceleratorKey*>::iterator it = range.first;
+	while ( it != range.second ) {
+		AcceleratorKey* accel = it->second;
+
+		if ( (src == accel->getAssociatedControl()) || 
+				(src == accel->getAssociatedMenuItem()) || 
+				(src == accel->getAssociatedObject()) ) {
+
+			result = accel;
+			break;
+		}
+
+		it ++;
+	}
+
+	return result;
+}
+
 void internal_handleKeyboardButtonEvent ( Event* e )
 {
 	VCF::Button* button = (VCF::Button*)e->getUserData();
@@ -846,7 +957,7 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 				accelerator = accel;
 				//check to make sure the menu item's frame is enabled!
 				if ( NULL != accel ) {
-					MenuItem* mi = (MenuItem*) accel->getAssociatedMenuItem();
+					MenuItem* mi = accel->getAssociatedMenuItem();
 					mi->update();
 				}
 				break;
@@ -1052,7 +1163,7 @@ void UIToolkit::onAcceleratorMnemonic( KeyboardEvent* event )
 {
 	 AcceleratorKey* accelerator = (AcceleratorKey*)event->getSource();
 	 if ( NULL != accelerator ) {
-		Control* control = (Control*) accelerator->getAssociatedControl();
+		Control* control = accelerator->getAssociatedControl();
 		if ( NULL != control ) {
 			control->mnemonicActivate();
 		}
@@ -1139,13 +1250,141 @@ void UIToolkit::internal_removeDefaultButton( Button* defaultButton )
 	}
 }
 
+void UIToolkit::internal_removeAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src )
+{
 
+	AcceleratorKey::Value key( modifierMask, keyCode );
+
+	typedef std::multimap<uint32,AcceleratorKey*>::iterator AccelMapIter;
+
+	std::pair<AccelMapIter, AccelMapIter> range = acceleratorMap_.equal_range( key );	
+
+	std::vector<AccelMapIter> removeAccels;
+
+	AccelMapIter it = range.first;
+	while ( it != range.second ) {
+		AcceleratorKey* accel = it->second;
+		if ( (accel->getAssociatedControl() == src) || 
+			(accel->getAssociatedMenuItem() == src) ||
+			(accel->getAssociatedObject() == src) ) {
+			accel->release();
+			removeAccels.push_back( it );
+		}
+
+		it ++;
+	}
+
+	std::vector<AccelMapIter>::iterator it2 = removeAccels.begin();
+	while ( it2 != removeAccels.end() ) {
+		acceleratorMap_.erase( *it2 );
+		it2 ++;
+	}
+}
+
+void UIToolkit::internal_removeAcceleratorKeysForControl( Control* control )
+{
+	typedef std::multimap<uint32,AcceleratorKey*>::iterator accel_iter;
+
+	std::vector<accel_iter> removeAccels;
+
+	accel_iter it = acceleratorMap_.begin();
+
+	while ( it != acceleratorMap_.end() ) {
+		AcceleratorKey* accel = it->second;
+		if ( accel->getAssociatedControl() == control ) {
+			accel->release();
+			removeAccels.push_back( it );
+		}
+		it ++;
+	}
+
+	std::vector<accel_iter>::iterator it2 = removeAccels.begin();
+	while ( it2 != removeAccels.end() ) {
+		acceleratorMap_.erase( *it2 );
+		it2 ++;
+	}
+
+}
+
+void UIToolkit::internal_removeAcceleratorKeysForMenuItem( MenuItem* menuItem )
+{
+	typedef std::multimap<uint32,AcceleratorKey*>::iterator accel_iter;
+
+	std::vector<accel_iter> removeAccels;
+
+	accel_iter it = acceleratorMap_.begin();
+
+	while ( it != acceleratorMap_.end() ) {
+		AcceleratorKey* accel = it->second;
+		if ( accel->getAssociatedMenuItem() == menuItem ) {
+			accel->release();
+			removeAccels.push_back( it );
+		}
+		it ++;
+	}
+
+	std::vector<accel_iter>::iterator it2 = removeAccels.begin();
+	while ( it2 != removeAccels.end() ) {
+		acceleratorMap_.erase( *it2 );
+		it2 ++;
+	}
+}
+
+void UIToolkit::internal_removeAcceleratorKeysForObject( Object* src )
+{
+	typedef std::multimap<uint32,AcceleratorKey*>::iterator accel_iter;
+
+	std::vector<accel_iter> removeAccels;
+
+	accel_iter it = acceleratorMap_.begin();
+
+	while ( it != acceleratorMap_.end() ) {
+		AcceleratorKey* accel = it->second;
+		if ( accel->getAssociatedObject() == src ) {
+			accel->release();
+			removeAccels.push_back( it );
+		}
+		it ++;
+	}
+
+	std::vector<accel_iter>::iterator it2 = removeAccels.begin();
+	while ( it2 != removeAccels.end() ) {
+		acceleratorMap_.erase( *it2 );
+		it2 ++;
+	}
+}
+
+
+void UIToolkit::addToUpdateList( Component* component )
+{
+	UIToolkit::toolKitInstance->internal_addToUpdateList( component );
+}
+
+void UIToolkit::removeFromUpdateList( Component* component )
+{
+	UIToolkit::toolKitInstance->internal_removeFromUpdateList( component );
+}
 
 void UIToolkit::setUpdateTimerSpeed( const uint32& milliseconds )
 {
 	UIToolkit::toolKitInstance->internal_setUpdateTimerSpeed( milliseconds );
 }
 
+void UIToolkit::internal_addToUpdateList( Component* component )
+{
+	std::vector<Component*>::iterator found = std::find( componentsToUpdate_.begin(), componentsToUpdate_.end(), component );
+	if ( found == componentsToUpdate_.end() ) {
+		componentsToUpdate_.push_back( component );
+	}
+}
+
+void UIToolkit::internal_removeFromUpdateList( Component* component )
+{
+	std::vector<Component*>::iterator found = std::find( componentsToUpdate_.begin(), componentsToUpdate_.end(), component );
+	if ( found != componentsToUpdate_.end() ) {
+		componentsToUpdate_.erase( found );
+	}
+}
 
 void UIToolkit::internal_setUpdateTimerSpeed( const uint32& milliseconds )
 {
@@ -1163,7 +1402,13 @@ void UIToolkit::internal_setUpdateTimerSpeed( const uint32& milliseconds )
 
 void UIToolkit::onUpdateComponentsTimer( TimerEvent* e )
 {
-	SystemToolkit::updateComponents();
+	std::vector<Component*>::iterator it = componentsToUpdate_.begin();
+	while ( it != componentsToUpdate_.end() ) {
+		Component* component = *it;
+		Event updateEvent( this, Component::COMPONENT_NEEDS_UPDATING );
+		component->handleEvent( &updateEvent );
+		it ++;
+	}
 }
 
 void UIToolkit::internal_idleTime()
@@ -1171,7 +1416,13 @@ void UIToolkit::internal_idleTime()
 	Frame* frm = Frame::getActiveFrame();
 	if ( NULL != frm ) {
 		if ( frm->getVisible() ) {
-			SystemToolkit::updateComponents();
+			std::vector<Component*>::iterator it = componentsToUpdate_.begin();
+			while ( it != componentsToUpdate_.end() ) {
+				Component* component = *it;
+				Event updateEvent( this, Component::COMPONENT_NEEDS_UPDATING );
+				component->handleEvent( &updateEvent );
+				it ++;
+			}
 		}
 	}
 }

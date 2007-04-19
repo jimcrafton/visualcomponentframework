@@ -213,6 +213,22 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractScrollable.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\AcceleratorKey.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\AcceleratorKey.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Action.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Action.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\Application.cpp
 # End Source File
 # Begin Source File
@@ -567,6 +583,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TitledBorder.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\TransparentWindow.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\UIComponent.cpp
 # End Source File
 # Begin Source File
 

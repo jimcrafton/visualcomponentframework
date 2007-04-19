@@ -336,9 +336,6 @@ Components...
 #include "vcf/FoundationKit/ComponentEvent.h"
 #include "vcf/FoundationKit/Component.h"
 #include "vcf/FoundationKit/ComponentInfo.h"
-#include "vcf/FoundationKit/Action.h"
-#include "vcf/FoundationKit/ActionEvent.h"
-#include "vcf/FoundationKit/AcceleratorKey.h"
 
 
 /**

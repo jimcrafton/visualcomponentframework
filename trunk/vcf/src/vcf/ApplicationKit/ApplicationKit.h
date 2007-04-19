@@ -30,8 +30,15 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ItemEditorEvent.h"
 
 
+//UI components
+#include "vcf/ApplicationKit/UIComponent.h"
 
 
+/**
+Action classes
+*/
+#include "vcf/ApplicationKit/Action.h"
+#include "vcf/ApplicationKit/ActionEvent.h"
 
 
 /**
@@ -110,6 +117,11 @@ where you installed the VCF.
 */
 #include "vcf/ApplicationKit/View.h"
 #include "vcf/ApplicationKit/AbstractView.h"
+
+/**
+*Keyboard accelerators
+*/
+#include "vcf/ApplicationKit/AcceleratorKey.h"
 
 
 /**

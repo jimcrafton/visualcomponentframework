@@ -20,21 +20,21 @@ Menu::Menu():
 }
 
 Menu::Menu( Component* owner ):
-	Component( owner ),
+	UIComponent( owner ),
 	rootMenuItem_(NULL)
 {
 
 }
 
 Menu::Menu( const String& name, Component* owner ):
-	Component( name, owner ),
+	UIComponent( name, owner ),
 	rootMenuItem_(NULL)
 {
 
 }
 
 Menu::Menu( const String& name ):
-	Component( name ),
+	UIComponent( name ),
 	rootMenuItem_(NULL)
 {
 
@@ -52,7 +52,7 @@ void Menu::destroy()
 	//	rootMenuItem_ = NULL;
 	//}
 
-	Component::destroy();
+	UIComponent::destroy();
 }
 
 MenuItem* Menu::getRootMenuItem()
@@ -93,7 +93,7 @@ uint32 Menu::getItemIndex( MenuItem* item )
 
 void Menu::handleEvent( Event* event )
 {
-	Component::handleEvent( event );
+	UIComponent::handleEvent( event );
 	switch ( event->getType() ){
 		case Component::COMPONENT_ADDED : {
 			ComponentEvent* ev = (ComponentEvent*)event;

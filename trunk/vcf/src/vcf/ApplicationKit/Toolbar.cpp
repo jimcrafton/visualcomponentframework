@@ -10,8 +10,8 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/Toolbar.h"
 #include "vcf/ApplicationKit/ToolbarPeer.h"
-#include "vcf/FoundationKit/Action.h"
-#include "vcf/FoundationKit/ActionEvent.h"
+#include "vcf/ApplicationKit/Action.h"
+#include "vcf/ApplicationKit/ActionEvent.h"
 #include "vcf/GraphicsKit/DrawUIState.h"
 
 using namespace VCF;
@@ -47,7 +47,7 @@ void ToolbarItem::click()
 
 bool ToolbarItem::updateAction()
 {
-	if ( !Component::updateAction() ) {
+	if ( !UIComponent::updateAction() ) {
 		Event event( this, ToolbarItem::tbItemUpdate );
 		ItemUpdate.fireEvent( &event );
 		return true;
@@ -58,7 +58,7 @@ bool ToolbarItem::updateAction()
 
 void ToolbarItem::handleEvent( Event* event )
 {
-	Component::handleEvent( event );
+	UIComponent::handleEvent( event );
 	switch ( event->getType() ){
 		case Action::UpdateEvent : {
 			ActionEvent* actionEvent = (ActionEvent*)event;

@@ -19,7 +19,7 @@ namespace VCF  {
 class Control;
 
 /**
-\class AcceleratorKey AcceleratorKey.h "vcf/FoundationKit/AcceleratorKey.h"
+\class AcceleratorKey AcceleratorKey.h "vcf/ApplicationKit/AcceleratorKey.h"
 An AcceleratorKey represents a link between a specific
 keyboard keystroke combination and an event handler to
 be invoked when the combination takes place. There
@@ -100,7 +100,7 @@ instead of the menu item directly.
 @see Action::setAcceleratorKey
 @see UIToolkit::addAcceleratorKey()
 */
-class FOUNDATIONKIT_API AcceleratorKey : public VCF::Object {
+class APPLICATIONKIT_API AcceleratorKey : public VCF::Object {
 public:
 
 	/**
@@ -191,14 +191,16 @@ public:
 	};
 
 
-	enum AcceleratorObjectType {
-		aotObject = 0,
-		aotControl,
-		aotMenuItem
-	};
 
-	AcceleratorKey( Object* object, AcceleratorObjectType type, 
-					const VirtualKeyCode& keyCode,
+	AcceleratorKey( Control* associatedControl, const VirtualKeyCode& keyCode,
+					const uint32& modifierMask, EventHandler* eventHandler,
+					const bool& isMnemonic=false );
+
+	AcceleratorKey( MenuItem* associatedMenuItem, const VirtualKeyCode& keyCode,
+					const uint32& modifierMask, EventHandler* eventHandler,
+					const bool& isMnemonic=false );
+
+	AcceleratorKey( Object* associatedObject, const VirtualKeyCode& keyCode,
 					const uint32& modifierMask, EventHandler* eventHandler,
 					const bool& isMnemonic=false );
 
@@ -248,7 +250,7 @@ public:
 	*can have a control instance associated with it.
 	*@return Control the associated control
 	*/
-	Object* getAssociatedControl() {
+	Control* getAssociatedControl() {
 		return associatedControl_;
 	}
 
@@ -257,7 +259,7 @@ public:
 	*can have a menu item instance associated with it.
 	*@return MenuItem the associated menu item
 	*/
-	Object* getAssociatedMenuItem() {
+	MenuItem* getAssociatedMenuItem() {
 		return associatedMenuItem_;
 	}
 
@@ -317,8 +319,8 @@ public:
 protected:
 	VirtualKeyCode keyCode_;
 	uint32 modifierMask_;
-	Object* associatedControl_;
-	Object* associatedMenuItem_;
+	Control* associatedControl_;
+	MenuItem* associatedMenuItem_;
 	Object* associatedObject_;
 	EventHandler* eventHandler_;
 	bool isMnemonic_;

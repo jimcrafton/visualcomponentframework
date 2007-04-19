@@ -20,7 +20,7 @@ namespace VCF {
 class AcceleratorKey;
 
 /**
-\class Action Action.h "vcf/FoundationKit/Action.h"
+\class Action Action.h "vcf/ApplicationKit/Action.h"
 The Action class is used to represent an "action" that gets performed because of
 some event from the UI, such as clicking a menu item or button. An Action also
 allows you to consolidate multiple event handlers for menu items, buttons, etc,
@@ -47,7 +47,7 @@ action's Update delegate.
 	@del Update
 	@del Performed
 */
-class FOUNDATIONKIT_API Action : public Component {
+class APPLICATIONKIT_API Action : public Component {
 public:
 	Action();
 
@@ -116,18 +116,18 @@ public:
 	/**
 	adds a target to the action
 	*/
-	void addTarget( Component* target );
+	void addTarget( UIComponent* target );
 
 	/**
 	removes a target from the action.
 	*/
-	void removeTarget( Component* target );
+	void removeTarget( UIComponent* target );
 
 	/**
 	returns an enumerator of all the targets currently attached to this
 	action.
 	*/
-	Enumerator<Component*>* getTargets();
+	Enumerator<UIComponent*>* getTargets();
 
 	/**
 	returns a count of the number of targets attached to this action.
@@ -183,8 +183,8 @@ protected:
 
 protected:
 	AcceleratorKey* currentAccelerator_;
-	std::vector<Component*> targets_;
-	EnumeratorContainer<std::vector<Component*>,Component*> targetsContainer_;
+	std::vector<UIComponent*> targets_;
+	EnumeratorContainer<std::vector<UIComponent*>,UIComponent*> targetsContainer_;
 
 };
 
