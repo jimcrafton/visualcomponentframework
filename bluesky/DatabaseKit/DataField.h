@@ -18,7 +18,7 @@ where you installed the VCF.
 
 namespace VCF {
 
-#define DATAFIELD_CLASSID	"48e34264-750f-4fc9-a28f-4e91c2690809"
+
 
 	enum FieldKindType {
 		fkUnknown = 0,
@@ -45,7 +45,9 @@ namespace VCF {
 
 
 
-	class DATABASEKIT_API DataField : public Object {
+	#define DATAFIELD_CLASSID	"48e34264-750f-4fc9-a28f-4e91c2690809"
+
+	class DATABASEKIT_API DataField : public Component {
 	public:
 
 		DELEGATE(Changed);

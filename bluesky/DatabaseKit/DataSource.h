@@ -23,7 +23,7 @@ namespace VCF {
 
 	class DataLink;
 
-	class DATABASEKIT_API DataSource : public Object {
+	class DATABASEKIT_API DataSource : public Component {
 	public:
 
 		typedef std::vector<DataLink*> DataLinkArray;

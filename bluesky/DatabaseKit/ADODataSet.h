@@ -85,6 +85,7 @@ namespace VCF {
 		String updateWhereClause_;		
 		comet::ADODB::_ConnectionPtr dbConnection_;
 		comet::ADODB::_RecordsetPtr currentRecordSet_;
+		comet::ADODB::_RecordsetPtr updateRecordSet_;
 	};
 };
 
