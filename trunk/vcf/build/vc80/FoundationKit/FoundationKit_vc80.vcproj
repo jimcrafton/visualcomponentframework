@@ -1186,6 +1186,22 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\VariantDataStream.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VFFInputStream.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VFFOutputStream.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VFFOutputStream.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Utils"
@@ -1565,7 +1581,35 @@
 			Filter="*.h"
 			>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\AtomicCount.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\BadComponentStateException.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\CommonDefines.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Component.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Component.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ComponentEvent.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ComponentInfo.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ComponentInfo.h"
 				>
 			</File>
 			<File
