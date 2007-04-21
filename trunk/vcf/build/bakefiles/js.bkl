@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="jsFiles.bkl"/>
+
+    <template id="js_base">
+        <set var="LIBRARY_NAME">$(JS_NAME)</set>
+
+        <headers>$(JS_HDR)</headers>
+        <sources>$(JS_SRC)</sources>
+
+        <library>fdlibm_lib</library>
+        <define>$(substituteFromDict( TOOLSET, {'win32':'XP_WIN', 'unix':'XP_UNIX'} ))</define>
+    </template>
+
+    <dll id="js_dll" template="js_base,vcf_dll"
+            cond="OPTION_JS=='1'">
+        <define>EXPORT_JS_API</define>
+    </dll>
+</makefile>

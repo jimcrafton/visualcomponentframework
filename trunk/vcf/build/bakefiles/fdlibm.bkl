@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="fdlibmFiles.bkl"/>
+
+    <template id="fdlibm_base">
+        <set var="LIBRARY_NAME">$(FDLIBM_NAME)</set>
+
+        <headers>$(FDLIBM_HDR)</headers>
+        <sources>$(FDLIBM_SRC)</sources>
+
+        <define>_IEEE_LIBM</define>
+    </template>
+
+    <lib id="fdlibm_lib" template="fdlibm_base,vcf_lib"
+            cond="OPTION_FDLIBM=='1'">
+    </lib>
+</makefile>

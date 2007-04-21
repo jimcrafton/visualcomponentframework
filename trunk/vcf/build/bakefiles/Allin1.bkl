@@ -78,6 +78,14 @@
         </set>
 
         
+        <set var="ALLIN1_JAVASCRIPTKIT_HDR" hints="files">
+            <if cond="OPTION_JAVASCRIPTKIT=='1'">$(JAVASCRIPTKIT_HDR)</if>
+        </set>
+        <set var="ALLIN1_JAVASCRIPTKIT_SRC" hints="files">
+            <if cond="OPTION_JAVASCRIPTKIT=='1'">$(JAVASCRIPTKIT_SRC)</if>
+        </set>
+
+        
         <headers>
             $(ALLIN1_FOUNDATIONKIT_HDR)
             $(ALLIN1_GRAPHICSKIT_HDR)
@@ -88,6 +96,7 @@
             $(ALLIN1_REMOTEOBJECTKIT_HDR)
             $(ALLIN1_INTERNETKIT_HDR)
             $(ALLIN1_REGEXKIT_HDR)
+            $(ALLIN1_JAVASCRIPTKIT_HDR)
         </headers>
         <sources>
             $(ALLIN1_FOUNDATIONKIT_SRC)
@@ -99,6 +108,7 @@
             $(ALLIN1_REMOTEOBJECTKIT_SRC)
             $(ALLIN1_INTERNETKIT_SRC)
             $(ALLIN1_REGEXKIT_SRC)
+            $(ALLIN1_JAVASCRIPTKIT_SRC)
         </sources>
 
         
@@ -146,7 +156,18 @@
             <if cond="OPTION_ONIGURUMA=='1'">oniguruma_lib</if>
         </set>
         <library>$(ALLIN1_ONIGURUMA_LIB)</library>
+        <define>ONIG_EXTERN=extern</define>
 
+        <set var="ALLIN1_FDLIBM_LIB">
+            <if cond="OPTION_FDLIBM=='1'">fdlibm_lib</if>
+        </set>
+        <library>$(ALLIN1_FDLIBM_LIB)</library>
+
+        <set var="ALLIN1_JS_DLL">
+            <if cond="OPTION_JS=='1'">js_dll</if>
+        </set>
+        <library>$(ALLIN1_JS_DLL)</library>
+        <define>$(substituteFromDict( TOOLSET, {'win32':'XP_WIN', 'unix':'XP_UNIX'} ))</define>
 
         <vcf-include-thirdparty/>
     </template>
@@ -175,6 +196,8 @@
         <define>INTERNETKIT_EXPORTS</define>
         <define>REGEXKIT_DLL</define>
         <define>REGEXKIT_EXPORTS</define>
+        <define>JAVASCRIPTKIT_DLL</define>
+        <define>JAVASCRIPTKIT_EXPORTS</define>
 
         <res-include>../../build/resources/win32</res-include>
         <win32-res>../build/resources/win32/ApplicationKit.rc</win32-res>

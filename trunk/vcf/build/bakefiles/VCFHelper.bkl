@@ -1,6 +1,8 @@
 <?xml version="1.0" ?>
 
 <makefile>
+    <set var="VCF_INTERNAL">0</set>
+
     <!-- This is a workaround of the path vars usage in msvc and msvc6prj  -->
     <set var="Q">
         <if cond="FORMAT=='msvc6prj'"></if>
@@ -23,11 +25,8 @@
         $(Q)$(DOLLAR)(VCF_ROOT)$(DIRSEP)lib$(Q)
     </set>
 
-    <set var="VCF_INTERNAL">0</set>
-
     <include file="Templates.bkl"/>
 
-    
 </makefile>
 
 <!--

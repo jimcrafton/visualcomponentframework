@@ -51,7 +51,6 @@ protected:
 		psEscapeSequence
 	};
 
-	typedef std::pair<UnicodeString,UnicodeString> KeyValPair;
 	typedef std::map<UnicodeString,UnicodeString> KeyValMap;
 
 	typedef std::map<UnicodeString,KeyValMap*> TranslationMap;

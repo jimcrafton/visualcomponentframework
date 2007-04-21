@@ -46,6 +46,7 @@
     <subproject id="ImageBasics" template="example"/>
     <subproject id="ImageViewer" template="example"/>
     <subproject id="InetKit" template="example"/>
+    <subproject id="JavaScriptTest" template="example"/>
     <subproject id="Labels" template="example"/>
     <subproject id="ListBox" template="example"/>
     <subproject id="LocaleUI" template="example"/>
@@ -60,6 +61,7 @@
     <subproject id="Processes" template="example"/>
     <subproject id="ProgressBars" template="example"/>
     <subproject id="Reflection" template="example"/>
+    <subproject id="RegExTest" template="example"/>
     <subproject id="Resources" template="example"/>
     <subproject id="RunLoops" template="example"/>
     <subproject id="Scrolling" template="example"/>

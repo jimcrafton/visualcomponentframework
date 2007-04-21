@@ -12,6 +12,10 @@
     <include file="Defines.bkl"/>
 
 
+    <!--
+    Helper templates.
+    -->
+
     <template id="base">
         <debug-info>$(DEBUG_INFO)</debug-info>
         <debug-runtime-libs>$(DEBUG_RUNTIME_LIBS)</debug-runtime-libs>
@@ -23,11 +27,6 @@
         <warnings>$(WARNINGS)</warnings>
 
         <define>$(substituteFromDict( OPTION_DEBUG, {'0':'NDEBUG', '1':'_DEBUG'} ))</define>
-
-        <!--
-        We disable the "#pragma comment" linking.
-        -->
-        <define>VCF_DISABLE_PRAGMA_LINKING</define>
 
         <if cond="PLATFORM_WIN32=='1'">
             <define>_WIN32</define>
@@ -81,11 +80,63 @@
             <sys-lib>uuid</sys-lib>
             <sys-lib>rt</sys-lib>
         </if>
-
-        <include>$(VCF_INCLUDE)</include>
-        <lib-path>$(VCF_LIB)</lib-path>
     </template>
 
+
+    <template id="lib_clean">
+        <if cond="FORMAT=='msvc'">
+            <clean-files>
+                $(ref('__targetdir',id))$(ref('__libname',id)).pdb
+            </clean-files>
+        </if>
+    </template>
+
+
+    <template id="dll_clean">
+        <if cond="FORMAT=='msvc'">
+            <clean-files>
+                $(ref('__targetdir',id))$(ref('__libname',id)).exp
+                $(ref('__targetdir',id))$(ref('__targetname',id)).manifest
+            </clean-files>
+        </if>
+        <if cond="FORMAT=='borland'">
+            <clean-files>
+                $(ref('__targetdir',id))$(ref('__dllname',id)).map
+            </clean-files>
+        </if>
+    </template>
+
+
+    <template id="exe_clean">
+        <if cond="FORMAT=='msvc'">
+            <clean-files>
+                $(ref('__targetdir',id))$(ref('__targetname',id)).manifest
+            </clean-files>
+        </if>
+    </template>
+
+
+    <template id="lib" template="base,lib_clean">
+        <if cond="PLATFORM_WIN32=='1'">
+           <define>_LIB</define>
+        </if>
+    </template>
+
+
+    <template id="dll" template="base,dll_clean">
+        <if cond="PLATFORM_WIN32=='1'">
+            <define>_USRDLL</define>
+        </if>
+    </template>
+
+
+    <template id="exe" template="base,exe_clean">
+    </template>
+
+    
+    <!--
+    VCF specific templates.
+    -->
 
     <template id="precomp">
         <if cond="PRECOMPILED=='1'">
@@ -106,76 +157,40 @@
     </template>
 
 
-    <template id="vcf_lib_clean">
-        <if cond="FORMAT=='msvc'">
-            <clean-files>
-                $(ref('__targetdir',id))$(ref('__libname',id)).pdb
-            </clean-files>
-        </if>
+    <template id="vcf_base">
+        <!--
+        We disable the "#pragma comment" linking.
+        -->
+        <define>VCF_DISABLE_PRAGMA_LINKING</define>
+
+        <include>$(VCF_INCLUDE)</include>
+        <lib-path>$(VCF_LIB)</lib-path>
     </template>
 
 
-    <template id="vcf_dll_clean">
-        <if cond="FORMAT=='msvc'">
-            <clean-files>
-                $(ref('__targetdir',id))$(ref('__libname',id)).exp
-                $(ref('__targetdir',id))$(ref('__targetname',id)).manifest
-            </clean-files>
-        </if>
-        <if cond="FORMAT=='borland'">
-            <clean-files>
-                $(ref('__targetdir',id))$(ref('__dllname',id)).map
-            </clean-files>
-        </if>
-    </template>
-
-
-    <template id="vcf_exe_clean">
-        <if cond="FORMAT=='msvc'">
-            <clean-files>
-                $(ref('__targetdir',id))$(ref('__targetname',id)).manifest
-            </clean-files>
-        </if>
-    </template>
-
-
-    <template id="vcf_base" template="base">
+    <template id="vcf_lib" template="lib,vcf_base">
         <dirname>$(VCF_LIB)</dirname>
-    </template>
 
-
-    <template id="vcf_lib" template="vcf_base,vcf_lib_clean">
         <set var="LIBRARY_FILENAME">
             $(vcf.getLibFilename( LIBRARY_NAME ))
         </set>
         <libname>$(LIBRARY_FILENAME)</libname>
-
-        <if cond="PLATFORM_WIN32=='1'">
-           <define>_LIB</define>
-        </if>
-
-        <if cond="FORMAT in ['msvc','msvc6prj']">
-           <define>_MBCS</define>
-           <define>NO_MFC</define>
-        </if>
     </template>
 
 
-    <template id="vcf_dll" template="vcf_base,vcf_dll_clean">
+    <template id="vcf_dll" template="dll,vcf_base">
+        <dirname>$(VCF_LIB)</dirname>
+
         <set var="LIBRARY_FILENAME">
             $(vcf.getDllFilename( LIBRARY_NAME ))
         </set>
 
         <libname>$(LIBRARY_FILENAME)</libname>
         <dllname>..$(DIRSEP)bin$(DIRSEP)$(LIBRARY_FILENAME)</dllname>
-
-        <if cond="PLATFORM_WIN32=='1'">
-            <define>_USRDLL</define>
-        </if>
     </template>
 
 
-    <template id="vcf_exe" template="base,vcf_exe_clean">
+    <template id="vcf_exe" template="exe,vcf_base">
         <set var="EXE_FILENAME">
             $(vcf.getFilename( id ))
         </set>

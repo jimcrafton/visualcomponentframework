@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="jstest" template="vcf_exe_console" cond="OPTION_JAVASCRIPTKIT=='1'">
+        <dirname>.</dirname>
+        <sources>jstest.cpp</sources>
+        <vcf-use-JavaScriptKit/>
+    </exe>
+</makefile>
+
+<!--
+$Id$
+-->

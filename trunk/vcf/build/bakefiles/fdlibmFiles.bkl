@@ -1,0 +1,92 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="FDLIBM_HDR" hints="files">
+        vcf/JavaScriptKit/js-impl/fdlibm/fdlibm.h
+    </set>
+
+    <set var="FDLIBM_SRC" hints="files">
+        vcf/JavaScriptKit/js-impl/fdlibm/e_acos.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_acosh.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_asin.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_atan2.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_atanh.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_cosh.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_exp.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_fmod.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_gamma.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_gamma_r.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_hypot.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_j0.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_j1.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_jn.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_lgamma.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_lgamma_r.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_log.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_log10.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_pow.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_rem_pio2.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_remainder.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_scalb.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_sinh.c
+        vcf/JavaScriptKit/js-impl/fdlibm/e_sqrt.c
+        vcf/JavaScriptKit/js-impl/fdlibm/k_cos.c
+        vcf/JavaScriptKit/js-impl/fdlibm/k_rem_pio2.c
+        vcf/JavaScriptKit/js-impl/fdlibm/k_sin.c
+        vcf/JavaScriptKit/js-impl/fdlibm/k_standard.c
+        vcf/JavaScriptKit/js-impl/fdlibm/k_tan.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_asinh.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_atan.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_cbrt.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_ceil.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_copysign.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_cos.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_erf.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_expm1.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_fabs.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_finite.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_floor.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_frexp.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_ilogb.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_isnan.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_ldexp.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_lib_version.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_log1p.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_logb.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_matherr.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_modf.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_nextafter.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_rint.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_scalbn.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_signgam.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_significand.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_sin.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_tan.c
+        vcf/JavaScriptKit/js-impl/fdlibm/s_tanh.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_acos.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_acosh.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_asin.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_atan2.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_atanh.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_cosh.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_exp.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_fmod.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_gamma.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_gamma_r.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_hypot.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_j0.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_j1.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_jn.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_lgamma.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_lgamma_r.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_log.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_log10.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_pow.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_remainder.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_scalb.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_sinh.c
+        vcf/JavaScriptKit/js-impl/fdlibm/w_sqrt.c
+    </set>
+
+</makefile>

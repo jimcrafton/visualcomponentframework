@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="JavaScriptKitFiles.bkl"/>
+
+    <template id="JavaScriptKit_base">
+        <set var="LIBRARY_NAME">$(JAVASCRIPTKIT_NAME)</set>
+
+        <headers>$(JAVASCRIPTKIT_HDR)</headers>
+        <sources>$(JAVASCRIPTKIT_SRC)</sources>
+
+        <vcf-use-FoundationKit/>
+
+        <library>js_dll</library>
+    </template>
+
+    <lib id="JavaScriptKit_lib" template="JavaScriptKit_base,vcf_lib"
+            cond="OPTION_SHARED=='0' and OPTION_JAVASCRIPTKIT=='1' and OPTION_ALLIN1=='0'">
+        <depends>FoundationKit_lib</depends>
+    </lib>
+
+    <dll id="JavaScriptKit_dll" template="JavaScriptKit_base,vcf_dll"
+            cond="OPTION_SHARED=='1' and OPTION_JAVASCRIPTKIT=='1' and OPTION_ALLIN1=='0'">
+        <define>JAVASCRIPTKIT_DLL</define>
+        <define>JAVASCRIPTKIT_EXPORTS</define>
+        <depends>FoundationKit_dll</depends>
+    </dll>
+
+    <set var="MSVC6PRJ_MERGED_TARGETS" append="1"
+            cond="OPTION_JAVASCRIPTKIT=='1' and OPTION_ALLIN1=='0'">
+        JavaScriptKit=JavaScriptKit_lib+JavaScriptKit_dll
+    </set>
+</makefile>
