@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 
 <makefile>
+    <set var="VCF_INTERNAL">1</set>
 
     <set var="VCF_DIR">
         $(nativePaths(VCF_ROOT_BKGEN))
@@ -18,10 +19,7 @@
         $(VCF_DIR)$(DIRSEP)lib
     </set>
 
-    <set var="VCF_INTERNAL">1</set>
-
     <include file="Templates.bkl"/>
-
 
 </makefile>
 

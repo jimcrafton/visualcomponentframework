@@ -82,6 +82,7 @@ where you installed the VCF.
 	//#include "Rpcdce.h" //make sure to link with Rpcrt4.lib
 	#include <commctrl.h> //make sure to link with comctl32.lib
 	#include <shlobj.h>
+	#include <shobjidl.h> // some interfaces were moved from shlobj.h in Vista
 #endif //VCF_WIN
 
 

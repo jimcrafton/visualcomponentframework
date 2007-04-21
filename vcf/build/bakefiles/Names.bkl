@@ -42,6 +42,16 @@
         $(vcf.getLibFilename( ONIGURUMA_NAME ))
     </set>
 
+    <set var="FDLIBM_NAME">fdlibm</set>
+    <set var="FDLIBM_FILENAME" make_var="1">
+        $(vcf.getLibFilename( FDLIBM_NAME ))
+    </set>
+
+    <set var="JS_NAME">js</set>
+    <set var="JS_FILENAME" make_var="1">
+        $(vcf.getDllFilename( JS_NAME ))
+    </set>
+
     <set var="FOUNDATIONKIT_NAME">FoundationKit</set>
     <set var="FOUNDATIONKIT_FILENAME" make_var="1">
         $(vcf.getFilename( FOUNDATIONKIT_NAME ))
@@ -85,6 +95,11 @@
     <set var="REGEXKIT_NAME">RegExKit</set>
     <set var="REGEXKIT_FILENAME" make_var="1">
         $(vcf.getFilename( REGEXKIT_NAME ))
+    </set>
+    
+    <set var="JAVASCRIPTKIT_NAME">JavaScriptKit</set>
+    <set var="JAVASCRIPTKIT_FILENAME" make_var="1">
+        $(vcf.getFilename( JAVASCRIPTKIT_NAME ))
     </set>
     
     <set var="ALLIN1_NAME">VCF</set>

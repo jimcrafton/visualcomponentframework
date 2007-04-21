@@ -3,16 +3,6 @@
 <makefile>
 
     <!--
-    The <header> tag can be used to define header files in ms projects.
-    -->
-    <define-tag name="headers" rules="dll,lib,exe,module">
-        <if cond="FORMAT in ['msvc6prj']">
-            <msvc-project-files>$(value)</msvc-project-files>
-        </if>
-    </define-tag>
-
-
-    <!--
     It is the same as <sys-lib> except this one prepends the given value.
     Prepending allows us to pass libraries to mingw in the correct order.
     This trick makes mingw happy when it links the static libraries,
@@ -101,6 +91,18 @@
         </include>
     </define-tag>
 
+    <define-tag name="vcf-include-fdlibm" rules="dll,lib,exe,module">
+        <include>
+            $(vcf.joinPaths( VCF_INCLUDE, 'vcf/JavaScriptKit/js-impl/fdlibm' ))
+        </include>
+    </define-tag>
+
+    <define-tag name="vcf-include-js" rules="dll,lib,exe,module">
+        <include>
+            $(vcf.joinPaths( VCF_INCLUDE, 'vcf/JavaScriptKit/js-impl' ))
+        </include>
+    </define-tag>
+
 
     <!--
     Using libraries.
@@ -147,6 +149,18 @@
         <vcf-include-oniguruma/>
         <vcf-lib>$(ONIGURUMA_FILENAME)</vcf-lib>
         <define>ONIG_EXTERN=extern</define>
+    </define-tag>
+
+    <define-tag name="vcf-use-fdlibm" rules="dll,lib,exe,module">
+        <vcf-include-fdlibm/>
+        <vcf-lib>$(FDLIBM_FILENAME)</vcf-lib>
+    </define-tag>
+
+    <define-tag name="vcf-use-js" rules="dll,lib,exe,module">
+        <vcf-include-js/>
+        <vcf-use-fdlibm/>
+        <vcf-lib>$(JS_FILENAME)</vcf-lib>
+        <define>EXPORT_JS_API</define>
     </define-tag>
 
 
@@ -264,6 +278,19 @@
         </set>
         <vcf-lib>$(REGEXKIT)</vcf-lib>
         <define>$(REGEXKIT_DLL)</define>
+    </define-tag>
+
+    <set var="JAVASCRIPTKIT_DLL">
+        <if cond="OPTION_SHARED=='1'">JAVASCRIPTKIT_DLL</if>
+    </set>
+    <define-tag name="vcf-use-JavaScriptKit" rules="dll,lib,exe,module">
+        <vcf-use-js/>
+        <vcf-use-FoundationKit/>
+        <set var="JAVASCRIPTKIT">
+            <if cond="OPTION_ALLIN1=='0'">$(JAVASCRIPTKIT_FILENAME)</if>
+        </set>
+        <vcf-lib>$(JAVASCRIPTKIT)</vcf-lib>
+        <define>$(JAVASCRIPTKIT_DLL)</define>
     </define-tag>
 
     <set var="IMAGEFORMATS_DLL">

@@ -3,6 +3,8 @@
 <makefile>
 
     <set var="FOUNDATIONKIT_HDR" hints="files">
+        vcf/FoundationKit/AtomicCount.h
+        vcf/FoundationKit/BadComponentStateException.h
         vcf/FoundationKit/BasicException.h
         vcf/FoundationKit/BasicFileError.h
         vcf/FoundationKit/BasicInputStream.h
@@ -14,6 +16,9 @@
         vcf/FoundationKit/ClassRegistry.h
         vcf/FoundationKit/CommandLine.h
         vcf/FoundationKit/CommonDefines.h
+        vcf/FoundationKit/Component.h
+        vcf/FoundationKit/ComponentEvent.h
+        vcf/FoundationKit/ComponentInfo.h
         vcf/FoundationKit/Condition.h
         vcf/FoundationKit/ConditionPeer.h
         vcf/FoundationKit/DateTime.h
@@ -122,6 +127,8 @@
         vcf/FoundationKit/VCFProcess.h
         vcf/FoundationKit/VCFRTTIImpl.h
         vcf/FoundationKit/VCFString.h
+        vcf/FoundationKit/VFFInputStream.h
+        vcf/FoundationKit/VFFOutputStream.h
         vcf/FoundationKit/Waitable.h
         vcf/FoundationKit/WarningsOffVc.h
         vcf/FoundationKit/XMLParser.h
@@ -134,6 +141,8 @@
         vcf/FoundationKit/Class.cpp
         vcf/FoundationKit/ClassRegistry.cpp
         vcf/FoundationKit/CommandLine.cpp
+        vcf/FoundationKit/Component.cpp
+        vcf/FoundationKit/ComponentInfo.cpp
         vcf/FoundationKit/Condition.cpp
         vcf/FoundationKit/DateTime.cpp
         vcf/FoundationKit/Dictionary.cpp
@@ -178,6 +187,8 @@
         vcf/FoundationKit/VCFMath.cpp
         vcf/FoundationKit/VCFProcess.cpp
         vcf/FoundationKit/VCFString.cpp
+        vcf/FoundationKit/VFFInputStream.cpp
+        vcf/FoundationKit/VFFOutputStream.cpp
         vcf/FoundationKit/XMLParser.cpp
     </set>
 

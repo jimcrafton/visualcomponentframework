@@ -217,7 +217,7 @@ public:
 	void onContextHelp( Event* e ) {
 		HelpEvent* he = (HelpEvent*)e;
 
-		Point pt = Desktop::getDesktop()->getCurrentMousePosition();
+		Point pt = UIShell::getUIShell()->getCurrentMousePosition();
 
 		Rect r = l1->getBounds();
 		l1->getParent()->translateToScreenCoords(&r);

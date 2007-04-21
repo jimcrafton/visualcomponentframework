@@ -5,12 +5,13 @@
 
     <set var="OPTION_SELECTLIB_DEFAULT"/>
     <set var="OPTION_SELECTLIB_DEFAULT">
-        <if cond="FORMAT in ['msvc','msvc6prj']">,_icl6,_icl7,_vc6,_vc70,_vc71,_vc80</if>
-        <if cond="FORMAT=='borland'">,_bcc</if>
+        <if cond="COMPILER=='vc'">,_vc6,_vc70,_vc71,_vc80</if>
+        <if cond="COMPILER=='evc'">,_evc</if>
+        <if cond="COMPILER=='bcc'">,_bcc</if>
     </set>
     <option name="OPTION_SELECTLIB">
         <values>$(OPTION_SELECTLIB_DEFAULT)</values>
-        <values-description>,icl6,icl7,vc6,vc70,vc71,vc80</values-description>
+        <values-description>,vc6,vc70,vc71,vc80</values-description>
         <default-value>
             $(vcf.getOptionValue( 'OPTION_SELECTLIB', '' ))
         </default-value>
@@ -113,7 +114,6 @@ The runtime libraries configuration.
         </description>
     </option>
 
-
     <option name="OPTION_ALLIN1">
         <values>0,1</values>
         <default-value>
@@ -213,6 +213,26 @@ Compile the paintlib library:
         </description>
     </option>
 
+    <option name="OPTION_FDLIBM">
+        <values>0,1</values>
+        <default-value>
+            $(vcf.getOptionValue( 'OPTION_FDLIBM', '1' ))
+        </default-value>
+        <description>
+            Compile the fdlibm library:
+        </description>
+    </option>
+
+    <option name="OPTION_JS">
+        <values>0,1</values>
+        <default-value>
+            $(vcf.getOptionValue( 'OPTION_JS', '1' ))
+        </default-value>
+        <description>
+            Compile the javascript library:
+        </description>
+    </option>
+
 
     <!--
     Kits.
@@ -255,8 +275,8 @@ Compile ApplicationKit:
     </option>
 
     <set var="OPTION_HTMLKIT_DEFAULT">
-        <if cond="FORMAT!='msvc'">0</if>
-        <if cond="FORMAT=='msvc'">1</if>
+        <if cond="COMPILER not in ['vc','evc']">0</if>
+        <if cond="COMPILER in ['vc','evc']">1</if>
     </set>
     <option name="OPTION_HTMLKIT">
         <values>0,1</values>
@@ -307,8 +327,8 @@ Compile RemoteObjectKit:
     </option>
 
     <set var="OPTION_INTERNETKIT_DEFAULT">
-        <if cond="FORMAT not in ['msvc','msvc6prj','borland']">0</if>
-        <if cond="FORMAT in ['msvc','msvc6prj','borland']">1</if>
+        <if cond="COMPILER not in ['vc','evc','bcc']">0</if>
+        <if cond="COMPILER in ['vc','evc','bcc']">1</if>
     </set>
     <option name="OPTION_INTERNETKIT">
         <values>0,1</values>
@@ -332,6 +352,19 @@ Depends on:
     OPTION_FOUNDATIONKIT
     OPTION_ONIGURUMA
 Compile RegExKit:
+        </description>
+    </option>
+
+    <option name="OPTION_JAVASCRIPTKIT">
+        <values>0,1</values>
+        <default-value>
+            $(vcf.getOptionValue( 'OPTION_JAVASCRIPTKIT', 1 ))
+        </default-value>
+        <description>
+Depends on:
+    OPTION_FOUNDATIONKIT
+    OPTION_FDLIBM
+Compile JavaScriptKit:
         </description>
     </option>
 

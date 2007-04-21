@@ -189,7 +189,7 @@ public:
 
 	void onToolTipRequested( ToolTipEvent* e ) {
 		e->setToolTipString( "Unknown color" );
-		Point pt = Desktop::getDesktop()->getCurrentMousePosition();
+		Point pt = UIShell::getUIShell()->getCurrentMousePosition();
 
 		translateFromScreenCoords( &pt );
 

@@ -58,6 +58,12 @@
             <depends>RegExKit_dll</depends>
         </action>
         
+        <action id="JavaScriptKit" cond="OPTION_JAVASCRIPTKIT=='1'">
+            <is-phony>1</is-phony>
+            <depends>JavaScriptKit_lib</depends>
+            <depends>JavaScriptKit_dll</depends>
+        </action>
+        
         <action id="ImageFormats" cond="OPTION_IMAGEFORMATS=='1' and PLATFORM_WIN32=='1'">
             <is-phony>1</is-phony>
             <depends>ImageFormats_lib</depends>
@@ -102,6 +108,16 @@
         <action id="oniguruma" cond="OPTION_ONIGURUMA=='1'">
             <is-phony>1</is-phony>
             <depends>oniguruma_lib</depends>
+        </action>
+
+        <action id="fdlibm" cond="OPTION_FDLIBM=='1'">
+            <is-phony>1</is-phony>
+            <depends>fdlibm_lib</depends>
+        </action>
+
+        <action id="js" cond="OPTION_JS=='1'">
+            <is-phony>1</is-phony>
+            <depends>js_dll</depends>
         </action>
 
     </if>

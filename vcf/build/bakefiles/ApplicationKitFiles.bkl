@@ -59,11 +59,8 @@
         vcf/ApplicationKit/CommonFileSaveDialog.h
         vcf/ApplicationKit/CommonFontDialog.h
         vcf/ApplicationKit/CommonPrintDialog.h
-        vcf/ApplicationKit/Component.h
         vcf/ApplicationKit/ComponentEditor.h
         vcf/ApplicationKit/ComponentEditorManager.h
-        vcf/ApplicationKit/ComponentEvent.h
-        vcf/ApplicationKit/ComponentInfo.h
         vcf/ApplicationKit/Container.h
         vcf/ApplicationKit/Containers.h
         vcf/ApplicationKit/Control.h
@@ -92,8 +89,6 @@
         vcf/ApplicationKit/DefaultTextModel.h
         vcf/ApplicationKit/DefaultTreeItem.h
         vcf/ApplicationKit/DefaultTreeModel.h
-        vcf/ApplicationKit/Desktop.h
-        vcf/ApplicationKit/DesktopPeer.h
         vcf/ApplicationKit/Dialog.h
         vcf/ApplicationKit/DialogPeer.h
         vcf/ApplicationKit/DocManagerPolicy.h
@@ -148,6 +143,8 @@
         vcf/ApplicationKit/Panel.h
         vcf/ApplicationKit/PopupMenu.h
         vcf/ApplicationKit/PopupMenuPeer.h
+        vcf/ApplicationKit/PopupWindow.h
+        vcf/ApplicationKit/PopupWindowPeer.h
         vcf/ApplicationKit/ProgressControl.h
         vcf/ApplicationKit/PropertyEditor.h
         vcf/ApplicationKit/PropertyEditorManager.h
@@ -184,20 +181,23 @@
         vcf/ApplicationKit/ToolbarDock.h
         vcf/ApplicationKit/ToolbarPeer.h
         vcf/ApplicationKit/ToolTipEvent.h
+        vcf/ApplicationKit/TransparentWindow.h
+        vcf/ApplicationKit/TransparentWindowPeer.h
         vcf/ApplicationKit/TreeControl.h
         vcf/ApplicationKit/TreeItem.h
         vcf/ApplicationKit/TreeListControl.h
         vcf/ApplicationKit/TreeModel.h
         vcf/ApplicationKit/TreeModelEvent.h
         vcf/ApplicationKit/TreePeer.h
+        vcf/ApplicationKit/UIComponent.h
         vcf/ApplicationKit/UIMetricsManager.h
         vcf/ApplicationKit/UIPolicyManager.h
+        vcf/ApplicationKit/UIShell.h
+        vcf/ApplicationKit/UIShellPeer.h
         vcf/ApplicationKit/UIToolkit.h
         vcf/ApplicationKit/UndoRedoEvent.h
         vcf/ApplicationKit/UndoRedoStack.h
         vcf/ApplicationKit/ValidationEvent.h
-        vcf/ApplicationKit/VFFInputStream.h
-        vcf/ApplicationKit/VFFOutputStream.h
         vcf/ApplicationKit/View.h
         vcf/ApplicationKit/WhatsThisHelpEvent.h
         vcf/ApplicationKit/Window.h
@@ -236,9 +236,7 @@
         vcf/ApplicationKit/CommonFileSaveDialog.cpp
         vcf/ApplicationKit/CommonFontDialog.cpp
         vcf/ApplicationKit/CommonPrintDialog.cpp
-        vcf/ApplicationKit/Component.cpp
         vcf/ApplicationKit/ComponentEditorManager.cpp
-        vcf/ApplicationKit/ComponentInfo.cpp
         vcf/ApplicationKit/Containers.cpp
         vcf/ApplicationKit/Control.cpp
         vcf/ApplicationKit/ControlContainer.cpp
@@ -260,7 +258,6 @@
         vcf/ApplicationKit/DefaultTextModel.cpp
         vcf/ApplicationKit/DefaultTreeItem.cpp
         vcf/ApplicationKit/DefaultTreeModel.cpp
-        vcf/ApplicationKit/Desktop.cpp
         vcf/ApplicationKit/Dialog.cpp
         vcf/ApplicationKit/DocumentManager.cpp
         vcf/ApplicationKit/DragSource.cpp
@@ -284,6 +281,7 @@
         vcf/ApplicationKit/MultilineTextControl.cpp
         vcf/ApplicationKit/Panel.cpp
         vcf/ApplicationKit/PopupMenu.cpp
+        vcf/ApplicationKit/PopupWindow.cpp
         vcf/ApplicationKit/ProgressControl.cpp
         vcf/ApplicationKit/PropertyEditorManager.cpp
         vcf/ApplicationKit/PushButton.cpp
@@ -301,12 +299,13 @@
         vcf/ApplicationKit/ToggledButton.cpp
         vcf/ApplicationKit/Toolbar.cpp
         vcf/ApplicationKit/ToolbarDock.cpp
+        vcf/ApplicationKit/TransparentWindow.cpp
         vcf/ApplicationKit/TreeControl.cpp
         vcf/ApplicationKit/TreeListControl.cpp
+        vcf/ApplicationKit/UIComponent.cpp
+        vcf/ApplicationKit/UIShell.cpp
         vcf/ApplicationKit/UIToolkit.cpp
         vcf/ApplicationKit/UndoRedoStack.cpp
-        vcf/ApplicationKit/VFFInputStream.cpp
-        vcf/ApplicationKit/VFFOutputStream.cpp
         vcf/ApplicationKit/Window.cpp
     </set>
 
@@ -326,7 +325,6 @@
         vcf/ApplicationKit/Win32COMUtils.h
         vcf/ApplicationKit/Win32ControlContext.h
         vcf/ApplicationKit/Win32CursorPeer.h
-        vcf/ApplicationKit/Win32Desktop.h
         vcf/ApplicationKit/Win32Dialog.h
         vcf/ApplicationKit/Win32DragDropPeer.h
         vcf/ApplicationKit/Win32DropTargetPeer.h
@@ -343,13 +341,16 @@
         vcf/ApplicationKit/Win32MenuManagerPeer.h
         vcf/ApplicationKit/Win32Object.h
         vcf/ApplicationKit/Win32PopupMenu.h
+        vcf/ApplicationKit/Win32PopupWindowPeer.h
         vcf/ApplicationKit/Win32PrintDialog.h
         vcf/ApplicationKit/Win32ScrollPeer.h
         vcf/ApplicationKit/Win32SystemTrayPeer.h
         vcf/ApplicationKit/Win32TextPeer.h
         vcf/ApplicationKit/Win32Toolbar.h
         vcf/ApplicationKit/Win32ToolKit.h
+        vcf/ApplicationKit/Win32TransparentWindowPeer.h
         vcf/ApplicationKit/Win32Tree.h
+        vcf/ApplicationKit/Win32UIShell.h
         vcf/ApplicationKit/Win32Window.h
     </set>
 
@@ -365,7 +366,6 @@
         vcf/ApplicationKit/Win32COMUtils.cpp
         vcf/ApplicationKit/Win32ControlContext.cpp
         vcf/ApplicationKit/Win32CursorPeer.cpp
-        vcf/ApplicationKit/Win32Desktop.cpp
         vcf/ApplicationKit/Win32Dialog.cpp
         vcf/ApplicationKit/Win32DragDropPeer.cpp
         vcf/ApplicationKit/Win32DropTargetPeer.cpp
@@ -380,13 +380,16 @@
         vcf/ApplicationKit/Win32MenuManagerPeer.cpp
         vcf/ApplicationKit/Win32Object.cpp
         vcf/ApplicationKit/Win32PopupMenu.cpp
+        vcf/ApplicationKit/Win32PopupWindowPeer.cpp
         vcf/ApplicationKit/Win32PrintDialog.cpp
         vcf/ApplicationKit/Win32ScrollPeer.cpp
         vcf/ApplicationKit/Win32SystemTrayPeer.cpp
         vcf/ApplicationKit/Win32TextPeer.cpp
         vcf/ApplicationKit/Win32Toolbar.cpp
         vcf/ApplicationKit/Win32ToolKit.cpp
+        vcf/ApplicationKit/Win32TransparentWindowPeer.cpp
         vcf/ApplicationKit/Win32Tree.cpp
+        vcf/ApplicationKit/Win32UIShell.cpp
         vcf/ApplicationKit/Win32Window.cpp
     </set>
 
@@ -394,12 +397,14 @@
         vcf/ApplicationKit/XCBAbstractControl.h
         vcf/ApplicationKit/XCBApplicationPeer.h
         vcf/ApplicationKit/XCBApplicationResourceBundlePeer.h
+        vcf/ApplicationKit/XCBButton.h
         vcf/ApplicationKit/XCBControlContextPeer.h
         vcf/ApplicationKit/XCBCursorPeer.h
         vcf/ApplicationKit/XCBDesktopPeer.h
         vcf/ApplicationKit/XCBMenuBarPeer.h
         vcf/ApplicationKit/XCBMenuManagerPeer.h
         vcf/ApplicationKit/XCBUIMetricsManager.h
+        vcf/ApplicationKit/XCBUIShellPeer.h
         vcf/ApplicationKit/XCBUIToolkit.h
         vcf/ApplicationKit/XCBWindowPeer.h
     </set>
@@ -408,12 +413,14 @@
         vcf/ApplicationKit/XCBAbstractControl.cpp
         vcf/ApplicationKit/XCBApplicationPeer.cpp
         vcf/ApplicationKit/XCBApplicationResourceBundlePeer.cpp
+        vcf/ApplicationKit/XCBButton.cpp
         vcf/ApplicationKit/XCBControlContextPeer.cpp
         vcf/ApplicationKit/XCBCursorPeer.cpp
         vcf/ApplicationKit/XCBDesktopPeer.cpp
         vcf/ApplicationKit/XCBMenuBarPeer.cpp
         vcf/ApplicationKit/XCBMenuManagerPeer.cpp
         vcf/ApplicationKit/XCBUIMetricsManager.cpp
+        vcf/ApplicationKit/XCBUIShellPeer.cpp
         vcf/ApplicationKit/XCBUIToolkit.cpp
         vcf/ApplicationKit/XCBWindowPeer.cpp
     </set>
@@ -435,6 +442,7 @@
         vcf/ApplicationKit/OSXMenuBar.h
         vcf/ApplicationKit/OSXMenuItem.h
         vcf/ApplicationKit/OSXMenuManagerPeer.h
+        vcf/ApplicationKit/OSXUIShellPeer.h
         vcf/ApplicationKit/OSXUIToolkit.h
         vcf/ApplicationKit/OSXWindow.h
     </set>
@@ -456,6 +464,7 @@
         vcf/ApplicationKit/OSXMenuBar.cpp
         vcf/ApplicationKit/OSXMenuItem.cpp
         vcf/ApplicationKit/OSXMenuManagerPeer.cpp
+        vcf/ApplicationKit/OSXUIShellPeer.cpp
         vcf/ApplicationKit/OSXUIToolkit.cpp
         vcf/ApplicationKit/OSXWindow.cpp
     </set>
