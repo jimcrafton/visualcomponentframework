@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <set var="DATABASEUIKIT_HDR" hints="files">
+        ../DatabaseUIKit.h
+        ../DataBaseUIKitRTTI.inl
+        ../DataLabel.h
+    </set>
+
+    <set var="DATABASEUIKIT_SRC" hints="files">
+        ../DatabaseUIKit.cpp
+        ../DataLabel.cpp
+    </set>
+
+</makefile>

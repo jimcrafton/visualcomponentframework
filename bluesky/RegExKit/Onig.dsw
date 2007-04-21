@@ -2,20 +2,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 # WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
 
 ###############################################################################
-
-Project: "InternetKitDLL"=..\..\vcf\build\vc60\InternetKit\InternetKitDLL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Onig_dll"=.\Onig_Onig_dll.dsp - Package Owner=<4>
+Project: "Onig_lib"=Onig_Onig_lib.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -27,7 +14,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Onig_lib"=.\Onig_Onig_lib.dsp - Package Owner=<4>
+Project: "Onig_dll"=Onig_Onig_dll.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -39,7 +26,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RegExKitDLL"=.\RegExKitDLL.dsp - Package Owner=<4>
+Project: "sample_lib_testc"=Onig_sample_lib_testc.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -47,11 +34,14 @@ Package=<5>
 
 Package=<4>
 {{{
+Begin Project Dependency
+Project_Dep_Name Onig_lib
+End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "RegExTest"=.\RegExTest.dsp - Package Owner=<4>
+Project: "sample_lib_encode"=Onig_sample_lib_encode.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -59,11 +49,14 @@ Package=<5>
 
 Package=<4>
 {{{
+Begin Project Dependency
+Project_Dep_Name Onig_lib
+End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "sdfsdf"=..\..\..\..\junk\sdfsdf\sdfsdf.dsp - Package Owner=<4>
+Project: "sample_lib_listcap"=Onig_sample_lib_listcap.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -71,18 +64,204 @@ Package=<5>
 
 Package=<4>
 {{{
+Begin Project Dependency
+Project_Dep_Name Onig_lib
+End Project Dependency
 }}}
 
 ###############################################################################
 
-Global:
+Project: "sample_lib_names"=Onig_sample_lib_names.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
 }}}
 
-Package=<3>
+Package=<4>
 {{{
+Begin Project Dependency
+Project_Dep_Name Onig_lib
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sample_lib_posix"=Onig_sample_lib_posix.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name Onig_lib
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sample_lib_simple"=Onig_sample_lib_simple.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name Onig_lib
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sample_lib_sql"=Onig_sample_lib_sql.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name Onig_lib
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sample_lib_syntax"=Onig_sample_lib_syntax.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name Onig_lib
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sample_dll_testc"=Onig_sample_dll_testc.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name Onig_dll
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sample_dll_encode"=Onig_sample_dll_encode.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name Onig_dll
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sample_dll_listcap"=Onig_sample_dll_listcap.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name Onig_dll
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sample_dll_names"=Onig_sample_dll_names.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name Onig_dll
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sample_dll_posix"=Onig_sample_dll_posix.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name Onig_dll
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sample_dll_simple"=Onig_sample_dll_simple.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name Onig_dll
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sample_dll_sql"=Onig_sample_dll_sql.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name Onig_dll
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "sample_dll_syntax"=Onig_sample_dll_syntax.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name Onig_dll
+End Project Dependency
 }}}
 
 ###############################################################################

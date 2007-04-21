@@ -53,14 +53,9 @@ int main( int argc, char** argv )
         js->updateFromClassRegistry();
         js->defineGlobalObject( clazz );
 
-        String fname = "jstest.js";
-        FileInputStream fs( fname );
-
-        String script;
-        fs >> script;
 
         // Execute a script.
-        js->executeScript( script, fname );
+        js->executeScriptFromFile( "jstest.js" );
 
 
         // Remove the handler.

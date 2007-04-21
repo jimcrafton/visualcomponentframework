@@ -1,23 +1,21 @@
 <?xml version="1.0" ?>
 
 <makefile>
-    <using module="datafiles"/>
-
-    <include file="VCFHelper.bkl"/>
-
     <include file="SQLite.bkl"/>
 
     <include file="DatabaseKitFiles.bkl"/>
 
     <template id="DatabaseKit_base">
         <include>../DBProviders/sqlite</include>
+        <include>../DBProviders/ms-ado</include>
 
+        <vcf-include-thirdparty/>
         <vcf-use-FoundationKit/>
 
         <dirname>.</dirname>
     </template>
 
-    <dll id="DatabaseKit_dll" template="DatabaseKit_base,base,vcf_dll_clean"
+    <dll id="DatabaseKit_dll" template="DatabaseKit_base,base,vcf_base,dll_clean"
             cond="OPTION_SHARED=='1'">
         <dllname>$(vcf.getDllFilename( 'DatabaseKit' ))</dllname>
 
@@ -36,19 +34,23 @@
 
         <sources>../dbTest.cpp</sources>
 
-        <if cond="FORMAT!='msvc6prj'">
+        <if cond="FORMAT not in ['msvc6prj','msvs2005prj']">
             <clean-files>test.db3</clean-files>
+            <clean-files>test.mdb</clean-files>
         </if>
 
         <library>SQLite_lib</library>
         <library>DatabaseKit_dll</library>
     </exe>
     
-    <copy-files id="db3">
+    <copy-files id="db">
         <dependency-of>dbTest</dependency-of>
         <srcdir>..</srcdir>
         <dstdir>.</dstdir>
-        <files>test.db3</files>
+        <files>
+            test.db3
+            test.mdb
+        </files>
     </copy-files>
 
 </makefile>

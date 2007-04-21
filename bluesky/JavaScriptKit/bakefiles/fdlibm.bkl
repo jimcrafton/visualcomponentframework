@@ -12,6 +12,6 @@
         <define>_IEEE_LIBM</define>
     </template>
 
-    <lib id="fdlibm_lib" template="fdlibm_base,base,vcf_lib_clean">
+    <lib id="fdlibm_lib" template="fdlibm_base,lib,vcf_base">
     </lib>
 </makefile>

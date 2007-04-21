@@ -17,7 +17,7 @@
         <dirname>.</dirname>
     </template>
 
-    <dll id="JavaScriptKit_dll" template="JavaScriptKit_base,base,vcf_dll_clean"
+    <dll id="JavaScriptKit_dll" template="JavaScriptKit_base,dll,vcf_base"
             cond="OPTION_SHARED=='1'">
         <dllname>$(vcf.getDllFilename( 'JavaScriptKit' ))</dllname>
 

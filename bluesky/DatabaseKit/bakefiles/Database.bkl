@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <using module="datafiles"/>
+
+    <include file="VCFHelper.bkl"/>
+
+    <include file="DatabaseKit.bkl"/>
+    <include file="DatabaseUIKit.bkl"/>
+</makefile>

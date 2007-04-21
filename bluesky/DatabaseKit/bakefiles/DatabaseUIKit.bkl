@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="DatabaseUIKitFiles.bkl"/>
+
+    <template id="DatabaseUIKit_base">
+        <include>..</include>
+
+        <vcf-include-thirdparty/>
+        <vcf-use-ApplicationKit/>
+
+        <dirname>.</dirname>
+    </template>
+
+    <dll id="DatabaseUIKit_dll" template="DatabaseUIKit_base,base,vcf_base,dll_clean"
+            cond="OPTION_SHARED=='1'">
+        <dllname>$(vcf.getDllFilename( 'DatabaseUIKit' ))</dllname>
+
+        <headers>$(DATABASEUIKIT_HDR)</headers>
+        <sources>$(DATABASEUIKIT_SRC)</sources>
+
+        <define>DATABASEUIKIT_DLL</define>
+        <define>DATABASEUIKIT_EXPORTS</define>
+
+        <library>DatabaseKit_dll</library>
+    </dll>
+
+    <exe id="dbTest2" template="DatabaseUIKit_base,vcf_exe"
+            cond="OPTION_SHARED=='1'">
+        <include>..</include>
+
+        <sources>../dbTest2.cpp</sources>
+
+        <if cond="FORMAT!='msvc6prj'">
+            <clean-files>test.db3</clean-files>
+            <clean-files>test.mdb</clean-files>
+        </if>
+
+        <library>DatabaseKit_dll</library>
+        <library>DatabaseUIKit_dll</library>
+    </exe>
+    
+    <copy-files id="db2">
+        <dependency-of>dbTest2</dependency-of>
+        <srcdir>..</srcdir>
+        <dstdir>.</dstdir>
+        <files>
+            test.db3
+            test.mdb
+        </files>
+    </copy-files>
+
+</makefile>
