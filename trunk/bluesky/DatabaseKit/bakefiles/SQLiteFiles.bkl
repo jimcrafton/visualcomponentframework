@@ -5,6 +5,9 @@
     <set var="SQLITE_HDR" hints="files">
         ../DBProviders/sqlite/btree.h
         ../DBProviders/sqlite/hash.h
+        ../DBProviders/sqlite/fts1.h
+        ../DBProviders/sqlite/fts1_hash.h
+        ../DBProviders/sqlite/fts1_tokenizer.h
         ../DBProviders/sqlite/keywordhash.h
         ../DBProviders/sqlite/opcodes.h
         ../DBProviders/sqlite/os.h
@@ -12,6 +15,7 @@
         ../DBProviders/sqlite/pager.h
         ../DBProviders/sqlite/parse.h
         ../DBProviders/sqlite/sqlite3.h
+        ../DBProviders/sqlite/sqlite3ext.h
         ../DBProviders/sqlite/sqliteInt.h
         ../DBProviders/sqlite/vdbe.h
         ../DBProviders/sqlite/vdbeInt.h
@@ -29,10 +33,15 @@
         ../DBProviders/sqlite/date.c
         ../DBProviders/sqlite/delete.c
         ../DBProviders/sqlite/expr.c
+        ../DBProviders/sqlite/fts1.c
+        ../DBProviders/sqlite/fts1_hash.c
+        ../DBProviders/sqlite/fts1_porter.c
+        ../DBProviders/sqlite/fts1_tokenizer1.c
         ../DBProviders/sqlite/func.c
         ../DBProviders/sqlite/hash.c
         ../DBProviders/sqlite/insert.c
         ../DBProviders/sqlite/legacy.c
+        ../DBProviders/sqlite/loadext.c
         ../DBProviders/sqlite/main.c
         ../DBProviders/sqlite/opcodes.c
         ../DBProviders/sqlite/os.c
@@ -60,6 +69,7 @@
         ../DBProviders/sqlite/vdbeaux.c
         ../DBProviders/sqlite/vdbefifo.c
         ../DBProviders/sqlite/vdbemem.c
+        ../DBProviders/sqlite/vtab.c
         ../DBProviders/sqlite/where.c
     </set>
 

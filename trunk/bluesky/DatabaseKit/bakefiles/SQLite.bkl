@@ -13,9 +13,12 @@
         <define>OS_WIN</define>
         <define>NO_TCL</define>
         <define>SQLITE_ENABLE_COLUMN_METADATA</define>
+        <define>SQLITE_ENABLE_FTS1</define>
+
+        <dirname>.</dirname>
     </template>
 
-    <lib id="SQLite_lib" template="SQLite_base,base,vcf_lib_clean">
+    <lib id="SQLite_lib" template="SQLite_base,base,vcf_base,lib_clean">
     </lib>
 
 </makefile>

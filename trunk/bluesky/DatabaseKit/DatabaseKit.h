@@ -12,6 +12,8 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+// We don't need any of this if we've disabled pragma linking
+#ifndef VCF_DISABLE_PRAGMA_LINKING
 
 /**
 Handle the extension based on the compiler
@@ -93,6 +95,8 @@ Handle the extension based on the compiler
 # 	endif
 #endif
 
+
+#endif // VCF_DISABLE_PRAGMA_LINKING
 
 //export crap
 #ifdef DATABASEKIT_DLL
