@@ -790,6 +790,10 @@
 			Filter="*.h"
 			>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ComponentEvent.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Delegate.h"
 				>
 			</File>
@@ -1601,15 +1605,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\ComponentEvent.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ComponentInfo.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\ComponentInfo.h"
 				>
 			</File>
 			<File
