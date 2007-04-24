@@ -23,7 +23,8 @@ static std::map<String, DataFieldType> colTypeMap;
 SQLiteDataSetPeer::SQLiteDataSetPeer():
 	dbHandle_(NULL),
 	currentStmt_(NULL),
-	currentRow_(0)
+	currentRow_(0),
+	dataSet_(NULL)
 {
 	if ( colTypeMap.empty() ) {
 		colTypeMap["varchar"] = dftString;
@@ -41,6 +42,7 @@ size_t SQLiteDataSetPeer::calculateRecordSize()
 	//recordSize_ = 0;
 
 	VCF_ASSERT( NULL != currentStmt_ );
+	VCF_ASSERT( NULL != dataSet_ );
 
 	std::vector<DataField*>& fields = dataSet_->getFieldsArray();
 	for ( size_t i=0;i<fields.size();i++ ) {
@@ -76,6 +78,8 @@ size_t SQLiteDataSetPeer::calculateRecordSize()
 
 void SQLiteDataSetPeer::open()
 {
+	VCF_ASSERT( NULL != dataSet_ );
+
 	initFieldDefinitions();
 
 	currentRow_ = 0;
@@ -112,6 +116,8 @@ void SQLiteDataSetPeer::open()
 
 void SQLiteDataSetPeer::initNewRecord( DataSet::Record* record )
 {
+	VCF_ASSERT( NULL != dataSet_ );
+
 	size_t currentSz = 0;
 
 	std::vector<DataField*>& fields = dataSet_->getFieldsArray();
@@ -214,6 +220,8 @@ void SQLiteDataSetPeer::close()
 
 void SQLiteDataSetPeer::initFieldDefinitions()
 {
+	VCF_ASSERT( NULL != dataSet_ );
+
 	String tableName = getTableName();
 
 	if ( tableName.empty() ) {
@@ -283,6 +291,8 @@ bool SQLiteDataSetPeer::verifyTableColums(sqlite3_stmt* stmt)
 
 void SQLiteDataSetPeer::addFieldDef( sqlite3_stmt* stmt, size_t fieldIndex )
 {
+	VCF_ASSERT( NULL != dataSet_ );
+
 	String colName = (const char*)sqlite3_column_text( stmt, SQLITE_TABLEINFO_NAME );
 	String fieldName = colName;
 	String name = fieldName;
@@ -392,6 +402,7 @@ void SQLiteDataSetPeer::first()
 {
 	VCF_ASSERT( NULL != dbHandle_ );
 	VCF_ASSERT( NULL != currentStmt_ );
+	VCF_ASSERT( NULL != dataSet_ );
 
 	sqlite3_finalize(currentStmt_);
 	currentStmt_ = NULL;
@@ -423,6 +434,8 @@ void SQLiteDataSetPeer::first()
 		
 GetResultType SQLiteDataSetPeer::getRecord( DataSet::Record* record, GetRecordMode mode )
 {
+	VCF_ASSERT( NULL != dataSet_ );
+
 	GetResultType result = grFailed;
 
 	VCF_ASSERT( NULL != currentStmt_ );
@@ -547,11 +560,15 @@ DataSet::Record* SQLiteDataSetPeer::allocateRecordData()
 
 String SQLiteDataSetPeer::getTableName()
 {
+	VCF_ASSERT( NULL != dataSet_ );
+
 	return dataSet_->getParam( "tablename" );
 }
 
 void SQLiteDataSetPeer::setTableName( const String& val )
 {
+	VCF_ASSERT( NULL != dataSet_ );
+
 	dataSet_->setParam( "tablename", val );
 }
 
@@ -562,6 +579,8 @@ String SQLiteDataSetPeer::getDatabaseName()
 
 void SQLiteDataSetPeer::setDatabaseName( const String& val )
 {
+	VCF_ASSERT( NULL != dataSet_ );
+
 	dataSet_->setParam( "databasename", val );
 }
 
@@ -586,6 +605,8 @@ sqlite3* SQLiteDataSetPeer::getHandle()
 
 AnsiString SQLiteDataSetPeer::generateSQL()
 {
+	VCF_ASSERT( NULL != dataSet_ );
+
 	AnsiString result;
 
 	String tableName = getTableName();
@@ -629,6 +650,8 @@ bool SQLiteDataSetPeer::isCursorOpen()
 
 bool SQLiteDataSetPeer::getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize )
 {
+	VCF_ASSERT( NULL != dataSet_ );
+
 	size_t activeRecordIndex = dataSet_->getActiveRecordIndex();
 	VCF_ASSERT( activeRecordIndex != DataSet::NoRecPos );
 
@@ -685,6 +708,7 @@ bool SQLiteDataSetPeer::getFieldData( DataField* field, unsigned char* buffer, s
 
 void SQLiteDataSetPeer::setFieldData( DataField* field, const unsigned char* buffer, size_t bufferSize )
 {
+	VCF_ASSERT( NULL != dataSet_ );
 	VCF_ASSERT( NULL != field );
 
 	size_t activeRecordIndex = dataSet_->getActiveRecordIndex();
@@ -734,6 +758,8 @@ void SQLiteDataSetPeer::setFieldData( DataField* field, const unsigned char* buf
 
 void SQLiteDataSetPeer::post()
 {
+	VCF_ASSERT( NULL != dataSet_ );
+
 	size_t activeRecordIndex = dataSet_->getActiveRecordIndex();
 	DataSetState state = dataSet_->getState();
 
@@ -928,6 +954,8 @@ void SQLiteDataSetPeer::refresh()
 
 void SQLiteDataSetPeer::edit()
 {	
+	VCF_ASSERT( NULL != dataSet_ );
+
 	updateWhereClause_ = "WHERE ";
 	std::vector<DataField*>& fields = dataSet_->getFieldsArray();
 
@@ -961,6 +989,8 @@ void SQLiteDataSetPeer::edit()
 
 void SQLiteDataSetPeer::deleteRecord()
 {
+	VCF_ASSERT( NULL != dataSet_ );
+
 	String tableName = getTableName();
 
 	if ( tableName.empty() ) {
