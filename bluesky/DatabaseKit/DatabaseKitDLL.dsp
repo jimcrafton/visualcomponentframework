@@ -132,6 +132,10 @@ SOURCE=.\SQLiteDataSet.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SQLiteDataSetPeer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StringList.cpp
 # End Source File
 # Begin Source File

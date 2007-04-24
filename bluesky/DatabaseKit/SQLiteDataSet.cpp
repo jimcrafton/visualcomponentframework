@@ -696,7 +696,7 @@ void SQLiteDataSet::setFieldData( DataField* field, const unsigned char* buffer,
 
 				field->validate( buffer, bufferSize );
 		
-				setRecordData( record, bufferOffset, i, buffer, bufferSize );
+//				setRecordData( record, bufferOffset, i, buffer, bufferSize );
 
 				if ( !( (state_ == dssCalcFields) || (state_ == dssFilter) /*|| (state_ & dssNewValue)*/ ) ) {
 					Event e(field,deFieldChange);

@@ -21,7 +21,10 @@ class dbtest2Window : public Window {
 public:
 	dbtest2Window() {
 		setCaption( "dbtest2" );
-		dataSet = DatabaseToolkit::createDataSet( "SQLiteType" );
+		dataSet = new DataSet();
+		dataSet->setPeerType( "SQLiteType" );
+
+		//DatabaseToolkit::createDataSet( "SQLiteType" );
 
 		dataSet->setParam( "databasename", "test.db3" );
 		dataSet->setParam( "tablename", "Person" );
