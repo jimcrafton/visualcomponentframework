@@ -128,10 +128,6 @@ SOURCE=.\FieldDefinitions.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\SQLiteDataSet.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\SQLiteDataSetPeer.cpp
 # End Source File
 # Begin Source File
@@ -181,10 +177,6 @@ SOURCE=.\DataSource.h
 # Begin Source File
 
 SOURCE=.\FieldDefinitions.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SQLiteDataSet.h
 # End Source File
 # Begin Source File
 
