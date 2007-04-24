@@ -26,6 +26,7 @@ namespace VCF {
 	class DataField;
 	class DataLink;
 	class DataSet;
+	class DataSetPeer;
 
 
 	/**
@@ -217,6 +218,7 @@ namespace VCF {
 
 
 
+
 	#define DATASET_CLASSID	"76ab89f0-66d1-4ba3-998e-4ec874faa6e1"
 
     class DATABASEKIT_API DataSet : public Component {
@@ -296,6 +298,11 @@ namespace VCF {
 
 		DELEGATE(FilterRecord);		
 
+		String getPeerType() {
+			return peerType_;
+		}
+
+		void setPeerType( const String& val );
 
         void setDatabase( Database* database );
 
@@ -366,7 +373,11 @@ namespace VCF {
 
 		bool getFieldNames( std::vector<String>& fieldNames );
 
-		const FieldDefinitions& getFieldDefinitions() {
+		const FieldDefinitions& getFieldDefinitions() const {
+			return *fieldDefs_;
+		}
+
+		FieldDefinitions& getFieldDefinitions() {
 			return *fieldDefs_;
 		}
 
@@ -427,18 +438,33 @@ namespace VCF {
 		void cancel();	
 		
 
-		virtual bool getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize ) = 0;
+		bool getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize );
 
-		virtual void setFieldData( DataField* field, const unsigned char* buffer, size_t bufferSize ) = 0;
+		void setFieldData( DataField* field, const unsigned char* buffer, size_t bufferSize );
 
 		virtual void handleDataEvent( Event* e );
 
 		void setRecordCount( size_t numberOfRecords );
+
+		size_t getActiveRecordIndex() const {
+			return activeRecordIndex_;
+		}
+
+		const RecordsArray& getRecords() const {
+			return records_;
+		}
+
+		RecordsArray& getRecords() {
+			return records_;
+		}
+
+		void internal_setRecordData( Record* record, size_t offset, size_t column, const unsigned char* buffer, size_t bufferSize );
+
     protected:
 
 		friend class DataLink;
 
-        virtual void internal_open() = 0;
+/*        virtual void internal_open() = 0;
 
         virtual void internal_close() = 0;
 
@@ -465,6 +491,7 @@ namespace VCF {
 		virtual Record* allocateRecordData() = 0;
 
 		virtual bool isCursorOpen() = 0;
+		*/
 
 		virtual void openCursor( bool query );
 
@@ -501,9 +528,7 @@ namespace VCF {
 
 		void cursorPositionChanged();
 
-		void checkRequiredFields();
-
-		void setRecordData( Record* record, size_t offset, size_t column, const unsigned char* buffer, size_t bufferSize );
+		void checkRequiredFields();		
 
 		void beginNewRecord();
 
@@ -542,7 +567,53 @@ namespace VCF {
 		Locale* locale_;
 
 		DataLinkArray dataLinks_;
+
+		DataSetPeer* peer_;
+		String peerType_;
     };
+
+
+
+
+
+	class DATABASEKIT_API DataSetPeer  {
+	public:
+		virtual ~DataSetPeer(){}
+
+		virtual void setDataSet( DataSet* dataSet ) = 0;
+
+		virtual void open() = 0;
+
+        virtual void close() = 0;
+
+		virtual void initFieldDefinitions() = 0;
+
+		virtual void first() = 0;
+		
+		virtual void next() = 0;
+
+		virtual void post() = 0;
+
+		virtual void refresh() = 0;
+
+		virtual void edit() = 0;
+
+		virtual void deleteRecord() = 0;
+
+		virtual void cancel() = 0;
+
+		virtual void initNewRecord( DataSet::Record* record ) = 0;
+
+		virtual GetResultType getRecord( DataSet::Record* record, GetRecordMode mode ) = 0;		
+
+		virtual DataSet::Record* allocateRecordData() = 0;
+
+		virtual bool isCursorOpen() = 0;
+
+		virtual bool getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize ) = 0;
+
+		virtual void setFieldData( DataField* field, const unsigned char* buffer, size_t bufferSize ) = 0;
+	};
 
 };
 

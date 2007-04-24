@@ -513,7 +513,7 @@ void ADODataSet::setFieldData( DataField* field, const unsigned char* buffer, si
 
 				field->validate( buffer, bufferSize );
 		
-				setRecordData( record, bufferOffset, i, buffer, bufferSize );
+//				setRecordData( record, bufferOffset, i, buffer, bufferSize );
 
 				if ( !( (state_ == dssCalcFields) || (state_ == dssFilter) ) ) {
 					Event e(field,deFieldChange);

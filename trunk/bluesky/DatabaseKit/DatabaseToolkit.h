@@ -23,6 +23,7 @@ namespace VCF {
 
     class Database;
     class DataSet;
+	class DataSetPeer;
 
     enum DatabaseType {
         dtFirebird
@@ -35,7 +36,7 @@ namespace VCF {
 
         static Database* createDatabase( const String& type );
 
-        static DataSet* createDataSet( const String& type );
+		static DataSetPeer* createDataSetPeer( const String& type );
     protected:
         DatabaseToolkit(){};
         virtual ~DatabaseToolkit(){};

@@ -380,5 +380,9 @@ SOURCE=.\StringList.cpp
 SOURCE=.\Transaction.cpp
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=.\SQLiteDataSetPeer.cpp
+# End Source File
 # End Target
 # End Project

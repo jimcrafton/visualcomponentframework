@@ -21,7 +21,8 @@ DataSet::DataSet()
 	activeRecordIndex_(DataSet::NoRecPos),
 	currentRecordIndex_(DataSet::NoRecPos),
 	locale_(NULL),
-	db_(NULL)
+	db_(NULL),
+	peer_(NULL)
 {
 	fieldDefs_ = new FieldDefinitions(); 
 	fieldDefs_->setDataSet( this );
@@ -34,7 +35,9 @@ DataSet::~DataSet()
 	VCF_ASSERT( dataSources_.empty() );
 	VCF_ASSERT( NULL == locale_ );
 	VCF_ASSERT( NULL == fieldDefs_ );
-	VCF_ASSERT( dssInactive == state_ );	
+	VCF_ASSERT( dssInactive == state_ );
+	
+
 }
 
 void DataSet::destroy()
@@ -55,6 +58,8 @@ void DataSet::destroy()
 	locale_ = NULL;	
 
 	state_ = dssInactive;
+
+	delete peer_;
 
 	Component::destroy();
 }
@@ -162,7 +167,7 @@ void DataSet::updateFieldDefs()
 void DataSet::initFieldDefinitions()
 {
 	if ( !isActive() ) {
-		internal_initFieldDefinitions();
+		peer_->initFieldDefinitions();
 	}
 }
 
@@ -372,7 +377,7 @@ void DataSet::first()
 
 
 	try {
-		internal_first();
+		this->peer_->first();
 
 		getNextRecord();
 
@@ -438,7 +443,7 @@ void DataSet::refresh()
 {
 	checkMode( cmsBrowse );
 	
-	internal_refresh();
+	this->peer_->refresh();
 
 	resync(0);
 }
@@ -457,7 +462,7 @@ void DataSet::edit()
 		BeforeEdit.fireEvent(&e1);
 
 		try {
-			internal_edit();
+			this->peer_->edit();
 		}
 		catch ( ... ) {
 			Event e2(this,0);
@@ -528,7 +533,7 @@ void DataSet::initNewRecord( Record* record )
 {
 	VCF_ASSERT( NULL != record );
 	
-	internal_initNewRecord( record );
+	this->peer_->initNewRecord( record );
 
 	//clear calc fields
 	//bookmark this inserted rec!
@@ -579,7 +584,7 @@ void DataSet::deleteRecord()
 		Event e2(this,0);
 		BeforeScroll.fireEvent( &e2 );
 
-		internal_delete();
+		this->peer_->deleteRecord();
 
 		freeFieldBuffers();
 		setState( dssBrowse );
@@ -628,7 +633,7 @@ void DataSet::post()
 			BeforePost.fireEvent(&e2);
 
 			try {
-				internal_post();
+				this->peer_->post();
 			}
 			catch (BasicException& e) {
 				DataErrorEvent e3(this);
@@ -669,7 +674,7 @@ void DataSet::cancel()
 		//update cursor pos/????
 		
 		if ( state_ == dssEdit ) {
-			internal_cancel();
+			this->peer_->cancel();
 		}
 
 		freeFieldBuffers();
@@ -685,7 +690,7 @@ void DataSet::cancel()
 void DataSet::openCursor( bool query )
 {
 	if ( query ) {
-		internal_initFieldDefinitions();
+		this->peer_->initFieldDefinitions();
 	}
 	else {
 		openData();
@@ -698,7 +703,7 @@ void DataSet::closeCursor()
 
 	clearRecords();
 
-	internal_close();
+	this->peer_->close();
 
 	defaultFields_ = false;
 
@@ -710,7 +715,7 @@ void DataSet::openData()
 
 	currentRecordIndex_ = 0;
 
-	internal_open();
+	this->peer_->open();
 
 	updateRecordSize();
 
@@ -777,7 +782,7 @@ void DataSet::setRecordCount( size_t numberOfRecords )
 			}
 
 			for ( size_t i=oldSize-1;i<records_.size();i++ ) {
-				records_[i] = allocateRecordData();
+				records_[i] = this->peer_->allocateRecordData();
 			}
 
 		}
@@ -816,7 +821,7 @@ bool DataSet::getNextRecord()
 		currentRecordIndex_ = recordCount_ - 1; 
 	}	
 	
-	GetResultType res = getRecord( records_[ recordCount_ ], mode );
+	GetResultType res = this->peer_->getRecord( records_[ recordCount_ ], mode );
 	if ( grFailed != res ) {
 		result = true;		
 	}
@@ -846,7 +851,7 @@ bool DataSet::getNextRecord()
 
 void DataSet::updateRecordSize()
 {
-	if ( isCursorOpen() ) {
+	if ( this->peer_->isCursorOpen() ) {
 		size_t maxRecCount = 1;
 		
 		for (size_t i=dataSources_.size()-1;(i>=0) && (i<dataSources_.size());i-- ) {
@@ -979,7 +984,7 @@ void DataSet::resync( int mode )
 	if ( mode & rmExact ) {
 		cursorPositionChanged();
 
-		GetResultType res = getRecord( records_[ recordCount_ ], grmCurrent );
+		GetResultType res = this->peer_->getRecord( records_[ recordCount_ ], grmCurrent );
 
 		if ( res != grOK ) {
 			throw DatabaseError("Data set unable to modify the record. The record was not found.");
@@ -987,8 +992,8 @@ void DataSet::resync( int mode )
 	}
 	else {
 
-		if ( getRecord( records_[ recordCount_ ], grmCurrent ) != grOK ) {
-			if ( getRecord( records_[ recordCount_ ], grmNext ) != grOK ) {
+		if ( this->peer_->getRecord( records_[ recordCount_ ], grmCurrent ) != grOK ) {
+			if ( this->peer_->getRecord( records_[ recordCount_ ], grmNext ) != grOK ) {
 				clearRecords();
 				Event e(this,deDataSetChange);
 				return;
@@ -1017,7 +1022,7 @@ void DataSet::resync( int mode )
 }
 
 
-void DataSet::setRecordData( Record* record, size_t offset, size_t column, const unsigned char* buffer, size_t bufferSize )
+void DataSet::internal_setRecordData( Record* record, size_t offset, size_t column, const unsigned char* buffer, size_t bufferSize )
 {
 	size_t newRecordSize = 0;
 	size_t col = 0;	
@@ -1140,4 +1145,32 @@ void DataSet::swapRecord( size_t fromIndex, size_t toIndex )
 		}
 		records_[toIndex] = tmp;
 	}
+}
+
+void DataSet::setPeerType( const String& val )
+{
+	if ( peerType_ != val ) {
+		
+		peerType_ = "";
+		
+		if ( NULL != peer_ ) {
+			delete peer_;
+		}
+		
+		peer_ = DatabaseToolkit::createDataSetPeer( val );
+		if ( NULL != peer_ ) {
+			peerType_ = val;
+			peer_->setDataSet( this );
+		}
+	}
+}
+
+bool DataSet::getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize )
+{
+	return peer_->getFieldData( field, buffer, bufferSize );
+}
+
+void DataSet::setFieldData( DataField* field, const unsigned char* buffer, size_t bufferSize )
+{
+	peer_->setFieldData( field, buffer, bufferSize );
 }

@@ -1,6 +1,6 @@
 #include "DatabaseKit.h"
 #include "SQLiteDatabase.h"
-#include "SQLiteDataSet.h"
+#include "SQLiteDataSetPeer.h"
 #include "ADODataSet.h"
 
 
@@ -32,16 +32,12 @@ Database* DatabaseToolkit::createDatabase( const String& type )
     return NULL;
 }
 
-DataSet* DatabaseToolkit::createDataSet( const String& type )
+DataSetPeer* DatabaseToolkit::createDataSetPeer( const String& type )
 {
 	VCF_ASSERT( !type.empty() );
 
     if ( type == SQLITETYPE ) {
-        return new SQLiteDataSet();
+        return new SQLiteDataSetPeer();
     }
-	else if ( type == ADOTYPE ) {
-		return new ADODataSet();
-	}
-
-    return NULL;
+	return NULL;
 }
