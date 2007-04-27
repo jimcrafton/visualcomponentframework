@@ -379,7 +379,11 @@ SOURCE=.\DBProviders\sqlite\where.c
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\ADODataSet.cpp
+SOURCE=.\ADODataSetPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ADODataSetPeer.h
 # End Source File
 # Begin Source File
 

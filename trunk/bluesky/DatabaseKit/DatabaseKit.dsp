@@ -204,14 +204,6 @@ SOURCE=.\SQLiteDatabase.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\SQLiteDataSet.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SQLiteDataSet.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\DBProviders\sqlite\table.c
 # End Source File
 # Begin Source File
@@ -377,6 +369,10 @@ SOURCE=.\FieldDefinitions.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SQLiteDataSetPeer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StringList.cpp
 # End Source File
 # Begin Source File
@@ -384,9 +380,5 @@ SOURCE=.\StringList.cpp
 SOURCE=.\Transaction.cpp
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=.\SQLiteDataSetPeer.cpp
-# End Source File
 # End Target
 # End Project
