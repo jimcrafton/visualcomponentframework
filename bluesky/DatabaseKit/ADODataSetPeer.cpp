@@ -1,6 +1,6 @@
-//ADODataSet.cpp
+//ADODataSetPeer.cpp
 #include "DatabaseKit.h"
-#include "ADODataSet.h"
+#include "ADODataSetPeer.h"
 #include "vcf/ApplicationKit/Win32HResult.h"
 
 
@@ -29,8 +29,8 @@ using namespace comet::ADODB;
 
 
 
-ADODataSet::ADODataSet():
-	DataSet()
+ADODataSetPeer::ADODataSetPeer():
+	dataSet_(NULL)
 {
 
 	//Note that we are initializing COM with the 
@@ -44,7 +44,7 @@ ADODataSet::ADODataSet():
 	setProvider( "Microsoft.Jet.OLEDB.4.0" );
 }
 
-ADODataSet::~ADODataSet()
+ADODataSetPeer::~ADODataSetPeer()
 {
 	dbConnection_ = NULL;
 
@@ -52,8 +52,10 @@ ADODataSet::~ADODataSet()
 }
 
 
-AnsiString ADODataSet::generateSQL()
+AnsiString ADODataSetPeer::generateSQL()
 {
+	VCF_ASSERT( NULL != dataSet_ );
+
 	AnsiString result;
 
 	String tableName = getTableName();
@@ -62,13 +64,15 @@ AnsiString ADODataSet::generateSQL()
 		throw DatabaseError("No Table Name specified, unable to generate SQL statement!");
 	}
 
-	if ( fields_->empty() ) {
+	std::vector<DataField*>& fields = dataSet_->getFieldsArray();
+
+	if ( fields.empty() ) {
 		throw DatabaseError("No Fields in data set, unable to generate SQL statement!");
 	}	
 
 	result += "select ";
-	for ( size_t i=0;i<fields_->size();i++ ) {
-		DataField* field = fields_()[i];
+	for ( size_t i=0;i<fields.size();i++ ) {
+		DataField* field = fields[i];
 		if ( i > 0 ) {
 			result += ", ";
 		}
@@ -86,13 +90,15 @@ AnsiString ADODataSet::generateSQL()
 	return result;
 }
 
-void ADODataSet::internal_open()
+void ADODataSetPeer::open()
 {
-	internal_initFieldDefinitions();
+	VCF_ASSERT( NULL != dataSet_ );
+
+	initFieldDefinitions();
 
 	try {
-		if ( getDefaultFields() ) {
-			createFields();
+		if ( dataSet_->getDefaultFields() ) {
+			dataSet_->createFields();
 		}
 
 		_ConnectionPtr connection = getConnection();
@@ -116,7 +122,7 @@ void ADODataSet::internal_open()
 }
 
 
-comet::ADODB::_ConnectionPtr ADODataSet::getConnection()
+comet::ADODB::_ConnectionPtr ADODataSetPeer::getConnection()
 {
 	if ( dbConnection_.is_null() ) {
 		dbConnection_ = Connection::create();
@@ -151,7 +157,7 @@ comet::ADODB::_ConnectionPtr ADODataSet::getConnection()
 	return dbConnection_;
 }
 
-void ADODataSet::internal_close()
+void ADODataSetPeer::close()
 {
 	_ConnectionPtr connect = getConnection();
 
@@ -160,13 +166,17 @@ void ADODataSet::internal_close()
 	connect->Close();
 }
 
-void ADODataSet::addFieldDef( FieldPtr& field, size_t fieldIndex )
+void ADODataSetPeer::addFieldDef( FieldPtr& field, size_t fieldIndex )
 {
+	VCF_ASSERT( NULL != dataSet_ );
+
+	FieldDefinitions& fieldDefs = dataSet_->getFieldDefinitions();
+
 	String colName = AnsiString(field->GetName());
 	String fieldName = colName;
 	String name = fieldName;
 	int i = 1;
-	while ( fieldDefs_->indexOf( name ) >= 0 ) {
+	while ( fieldDefs.indexOf( name ) >= 0 ) {
 		name = Format("%s%d") % fieldName % i;
 		i++;
 	}
@@ -215,12 +225,12 @@ void ADODataSet::addFieldDef( FieldPtr& field, size_t fieldIndex )
 			break;
 		}
 
-		fieldDefs_->add( fieldDef );
+		fieldDefs.add( fieldDef );
 	}
 
 }
 
-void ADODataSet::internal_initFieldDefinitions()
+void ADODataSetPeer::initFieldDefinitions()
 {
 	String tableName = getTableName();
 
@@ -230,7 +240,11 @@ void ADODataSet::internal_initFieldDefinitions()
 	
 	_ConnectionPtr connect = getConnection();
 
-	fieldDefs_->clear();
+	VCF_ASSERT( NULL != dataSet_ );
+
+	FieldDefinitions& fieldDefs = dataSet_->getFieldDefinitions();
+
+	fieldDefs.clear();
 
 
 	_RecordsetPtr rs = Recordset::create();
@@ -260,13 +274,13 @@ void ADODataSet::internal_initFieldDefinitions()
 	}	
 }
 
-void ADODataSet::internal_first()
+void ADODataSetPeer::first()
 {
 	currentRecordSet_->MoveFirst();
 	
 }
 	
-size_t ADODataSet::calculateRecordSize() 
+size_t ADODataSetPeer::calculateRecordSize() 
 {
 	size_t result = 0;
 
@@ -290,13 +304,16 @@ size_t ADODataSet::calculateRecordSize()
 	return result;
 }
 
-GetResultType ADODataSet::getRecord( DataSet::Record* record, GetRecordMode mode )
+GetResultType ADODataSetPeer::getRecord( DataSet::Record* record, GetRecordMode mode )
 {
 	GetResultType result = grFailed;	
 
+	VCF_ASSERT( NULL != dataSet_ );
+
 
 	if ( currentRecordSet_->GetEOF() ) {
-		eof_ = true;
+		
+		//eof_ = true;
 		result = grEOF;
 	}
 	else {
@@ -312,8 +329,10 @@ GetResultType ADODataSet::getRecord( DataSet::Record* record, GetRecordMode mode
 
 		variant_t fldIndex;
 
-		for ( size_t i=0;i<fields_->size();i++ ) {
-			DataField* field = fields_()[i];
+		std::vector<DataField*>& fields = dataSet_->getFieldsArray();
+
+		for ( size_t i=0;i<fields.size();i++ ) {
+			DataField* field = fields[i];
 
 			fldIndex = (int)i;
 			FieldPtr adoField = rsFields->GetItem( fldIndex );
@@ -389,12 +408,12 @@ GetResultType ADODataSet::getRecord( DataSet::Record* record, GetRecordMode mode
 	return result;
 }
 
-void ADODataSet::internal_next()
+void ADODataSetPeer::next()
 {
 
 }
 
-DataSet::Record* ADODataSet::allocateRecordData()
+DataSet::Record* ADODataSetPeer::allocateRecordData()
 {
 	DataSet::Record* result = NULL;
 
@@ -404,53 +423,69 @@ DataSet::Record* ADODataSet::allocateRecordData()
 }
 
 
-String ADODataSet::getTableName()
+String ADODataSetPeer::getTableName()
 {
-	return getParam( "tablename" );
+	VCF_ASSERT( NULL != dataSet_ );
+	return dataSet_->getParam( "tablename" );
 }
 
-void ADODataSet::setTableName( const String& val )
+void ADODataSetPeer::setTableName( const String& val )
 {
-	setParam( "tablename", val );
+	VCF_ASSERT( NULL != dataSet_ );
+	dataSet_->setParam( "tablename", val );
 }
 
-String ADODataSet::getDatabaseName()
+String ADODataSetPeer::getDatabaseName()
 {
-	return getParam( "databasename" );
+	VCF_ASSERT( NULL != dataSet_ );
+	return dataSet_->getParam( "databasename" );
 }
 
-void ADODataSet::setDatabaseName( const String& val )
+void ADODataSetPeer::setDatabaseName( const String& val )
 {
-	setParam( "databasename", val );
+	VCF_ASSERT( NULL != dataSet_ );
+	dataSet_->setParam( "databasename", val );
 }
 
-String ADODataSet::getProvider()
+String ADODataSetPeer::getProvider()
 {
-	return getParam( "provider" );
+	VCF_ASSERT( NULL != dataSet_ );
+	return dataSet_->getParam( "provider" );
 }
 
-void ADODataSet::setProvider( const String& val )
+void ADODataSetPeer::setProvider( const String& val )
 {
-	setParam( "provider", val );
+	VCF_ASSERT( NULL != dataSet_ );
+	dataSet_->setParam( "provider", val );
 }
 
 
-bool ADODataSet::isCursorOpen()
+bool ADODataSetPeer::isCursorOpen()
 {
 	return !currentRecordSet_.is_null();
 }
 
-bool ADODataSet::getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize )
+bool ADODataSetPeer::getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize )
 {
+	VCF_ASSERT( NULL != dataSet_ );
+
+	size_t activeRecordIndex = dataSet_->getActiveRecordIndex();
+	VCF_ASSERT( activeRecordIndex != DataSet::NoRecPos );
+
+
 	bool result = false;
 
 	size_t bufferOffset = 0;
 
-	for ( size_t i=0;i<fields_->size();i++ ) {
-		DataField* aField = fields_()[i];		
+	std::vector<DataField*>& fields = dataSet_->getFieldsArray();
+	DataSet::RecordsArray& records = dataSet_->getRecords();
+
+
+	for ( size_t i=0;i<fields.size();i++ ) {
+		DataField* aField = fields[i];		
 
 		if ( field->getFieldNumber() == i ) {
-			DataSet::Record* record = records_[ activeRecordIndex_ ];
+			DataSet::Record* record = records[ activeRecordIndex ];
 
 			if ( (NULL != buffer) && (bufferSize > 0 ) ) {
 				size_t len = minVal<>( bufferSize, (size_t)field->getSize() );
@@ -487,38 +522,42 @@ bool ADODataSet::getFieldData( DataField* field, unsigned char* buffer, size_t b
 	return result;
 }
 
-void ADODataSet::setFieldData( DataField* field, const unsigned char* buffer, size_t bufferSize )
+void ADODataSetPeer::setFieldData( DataField* field, const unsigned char* buffer, size_t bufferSize )
 {
 	VCF_ASSERT( NULL != field );
+	VCF_ASSERT( NULL != dataSet_ );
 
+	size_t activeRecordIndex = dataSet_->getActiveRecordIndex();
 
-
-	if ( !(state_ & dssEdit) ) {
+	DataSetState state = dataSet_->getState();
+	
+	if ( !(state & dssEdit) ) {
 		throw DatabaseError( "This data set is not in editing mode." );
 	}
 
 	
 	if ( NULL != field ) {
-		if ( (state_ & dssSetKey) && ((field->getFieldNumber() < 0) /*add index checks here|| ()*/) ) {
+		if ( (state & dssSetKey) && ((field->getFieldNumber() < 0) /*add index checks here|| ()*/) ) {
 			throw DatabaseError( "This field is not editable." );
 		}		
 
-		DataSet::Record* record = records_[ activeRecordIndex_ ];
+		std::vector<DataField*>& fields = dataSet_->getFieldsArray();
+		DataSet::RecordsArray& records = dataSet_->getRecords();
+
+		DataSet::Record* record = records[ activeRecordIndex ];
 
 		size_t bufferOffset = 0;
-		for ( size_t i=0;i<fields_->size();i++ ) {
-			DataField* aField = fields_()[i];
+		for ( size_t i=0;i<fields.size();i++ ) {
+			DataField* aField = fields[i];
 
 			if ( aField == field ) {
 
 				field->validate( buffer, bufferSize );
-		
-//				setRecordData( record, bufferOffset, i, buffer, bufferSize );
 
-				if ( !( (state_ == dssCalcFields) || (state_ == dssFilter) ) ) {
+				if ( !( (state == dssCalcFields) || (state == dssFilter) ) ) {
 					Event e(field,deFieldChange);
 					e.setUserData(this);
-					handleDataEvent(&e);
+					dataSet_->handleDataEvent(&e);
 				}
 				break;
 			}
@@ -526,11 +565,19 @@ void ADODataSet::setFieldData( DataField* field, const unsigned char* buffer, si
 	}
 }
 
-void ADODataSet::internal_post()
+void ADODataSetPeer::post()
 {
-	if ( dssEdit == state_ ) {
+	VCF_ASSERT( NULL != dataSet_ );
 
-		DataSet::Record* record = records_[ activeRecordIndex_ ];
+	DataSetState state = dataSet_->getState();
+	if ( dssEdit == state ) {
+
+		size_t activeRecordIndex = dataSet_->getActiveRecordIndex();
+		std::vector<DataField*>& fields = dataSet_->getFieldsArray();
+		
+		DataSet::RecordsArray& records = dataSet_->getRecords();
+
+		DataSet::Record* record = records[ activeRecordIndex ];
 
 		size_t bufferOffset = 0;
 
@@ -541,8 +588,8 @@ void ADODataSet::internal_post()
 
 		try {
 
-			for ( size_t i=0;i<fields_->size();i++ ) {
-				DataField* field = fields_()[i];
+			for ( size_t i=0;i<fields.size();i++ ) {
+				DataField* field = fields[i];
 				fldIndex = (int)i;
 				FieldPtr adoField = rsFields->GetItem( fldIndex );
 
@@ -595,13 +642,14 @@ void ADODataSet::internal_post()
 	}
 }
 
-void ADODataSet::internal_refresh()
+void ADODataSetPeer::refresh()
 {
 
 }
 
-void ADODataSet::internal_edit()
+void ADODataSetPeer::edit()
 {
+	VCF_ASSERT( NULL != dataSet_ );
 
 	comet::ADODB::_ConnectionPtr connection = getConnection();
 
@@ -625,13 +673,15 @@ void ADODataSet::internal_edit()
 	
 
 	updateWhereClause_ = "WHERE ";
-	std::vector<DataField*>::iterator it = fields_->begin();
-	while ( it != fields_->end() ) {
+	std::vector<DataField*>& fields = dataSet_->getFieldsArray();
+
+	std::vector<DataField*>::iterator it = fields.begin();
+	while ( it != fields.end() ) {
 		DataField* field = *it;
 
 		if ( !field->isBinaryType() ) {
 
-			if ( it != fields_->begin() ) {
+			if ( it != fields.begin() ) {
 				updateWhereClause_ += " AND ";
 			}	
 			
@@ -653,17 +703,22 @@ void ADODataSet::internal_edit()
 	}
 }
 
-void ADODataSet::internal_initNewRecord( Record* record )
+void ADODataSetPeer::initNewRecord( DataSet::Record* record )
 {
 
 }
 
-void ADODataSet::internal_delete()
+void ADODataSetPeer::deleteRecord()
 {
 
 }
 
-void ADODataSet::internal_cancel()
+void ADODataSetPeer::cancel()
 {
 
+}
+
+void ADODataSetPeer::setDataSet( DataSet* dataSet )
+{
+	dataSet_ = dataSet;
 }

@@ -464,35 +464,6 @@ namespace VCF {
 
 		friend class DataLink;
 
-/*        virtual void internal_open() = 0;
-
-        virtual void internal_close() = 0;
-
-		virtual void internal_initFieldDefinitions() = 0;
-
-		virtual void internal_first() = 0;
-		
-		virtual void internal_next() = 0;
-
-		virtual void internal_post() = 0;
-
-		virtual void internal_refresh() = 0;
-
-		virtual void internal_edit() = 0;
-
-		virtual void internal_delete() = 0;
-
-		virtual void internal_cancel() = 0;
-
-		virtual void internal_initNewRecord( Record* record ) = 0;
-
-		virtual GetResultType getRecord( Record* record, GetRecordMode mode ) = 0;		
-
-		virtual Record* allocateRecordData() = 0;
-
-		virtual bool isCursorOpen() = 0;
-		*/
-
 		virtual void openCursor( bool query );
 
 		virtual void closeCursor();

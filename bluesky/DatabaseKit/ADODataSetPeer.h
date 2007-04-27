@@ -1,7 +1,7 @@
-//ADODataSet.h
+//ADODataSetPeer.h
 
-#ifndef _VCF_ADODATASET_H__
-#define _VCF_ADODATASET_H__
+#ifndef _VCF_ADODATASETPEER_H__
+#define _VCF_ADODATASETPEER_H__
 
 
 
@@ -23,12 +23,12 @@ where you installed the VCF.
 
 
 namespace VCF {
-	class ADODataSet : public DataSet {
+	class ADODataSetPeer : public DataSetPeer {
 	public:
 
-		ADODataSet();
+		ADODataSetPeer();
 
-		virtual ~ADODataSet();
+		virtual ~ADODataSetPeer();
 
 		String getTableName();
 
@@ -42,35 +42,37 @@ namespace VCF {
 
 		void setProvider( const String& val );
 		
+		virtual void setDataSet( DataSet* dataSet );
+
 		virtual bool getFieldData( DataField* field, unsigned char* buffer, size_t bufferSize );
 
 		virtual void setFieldData( DataField* field, const unsigned char* buffer, size_t bufferSize );
 	protected:
-        virtual void internal_open();
+        virtual void open();
 
-        virtual void internal_close();
+        virtual void close();
 
-		virtual void internal_initFieldDefinitions();
+		virtual void initFieldDefinitions();
 
-		virtual void internal_first();
+		virtual void first();
 
-		virtual void internal_post();
+		virtual void post();
 
-		virtual void internal_refresh();
+		virtual void refresh();
 
-		virtual void internal_edit();
+		virtual void edit();
 
-		virtual void internal_delete();
+		virtual void deleteRecord();
 
-		virtual void internal_cancel();
+		virtual void cancel();
 		
-		virtual GetResultType getRecord( Record* record, GetRecordMode mode );
+		virtual GetResultType getRecord( DataSet::Record* record, GetRecordMode mode );
 
-		virtual void internal_next();
+		virtual void next();
 
-		virtual void internal_initNewRecord( Record* record );
+		virtual void initNewRecord( DataSet::Record* record );
 
-		virtual Record* allocateRecordData();
+		virtual DataSet::Record* allocateRecordData();
 
 		virtual bool isCursorOpen();
 
@@ -82,6 +84,7 @@ namespace VCF {
 
 		size_t calculateRecordSize();
 	private:
+		DataSet* dataSet_;
 		String updateWhereClause_;		
 		comet::ADODB::_ConnectionPtr dbConnection_;
 		comet::ADODB::_RecordsetPtr currentRecordSet_;
@@ -89,5 +92,5 @@ namespace VCF {
 	};
 };
 
-#endif //_VCF_ADODATASET_H__
+#endif //_VCF_ADODATASETPEER_H__
 
