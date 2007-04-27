@@ -1,7 +1,7 @@
 #include "DatabaseKit.h"
 #include "SQLiteDatabase.h"
 #include "SQLiteDataSetPeer.h"
-#include "ADODataSet.h"
+#include "ADODataSetPeer.h"
 
 
 
@@ -39,5 +39,8 @@ DataSetPeer* DatabaseToolkit::createDataSetPeer( const String& type )
     if ( type == SQLITETYPE ) {
         return new SQLiteDataSetPeer();
     }
+	else if ( type == ADOTYPE ) {
+		return new ADODataSetPeer();		
+	}
 	return NULL;
 }
