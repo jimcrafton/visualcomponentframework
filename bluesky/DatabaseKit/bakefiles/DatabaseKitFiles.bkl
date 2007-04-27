@@ -15,7 +15,7 @@
         ../FieldDefinitions.h
         ../SQLite3Kit.h
         ../SQLiteDatabase.h
-        ../SQLiteDataSet.h
+        ../SQLiteDataSetPeer.h
         ../StringList.h
         ../Transaction.h
     </set>
@@ -31,7 +31,7 @@
         ../DataSource.cpp
         ../FieldDefinitions.cpp
         ../SQLiteDatabase.cpp
-        ../SQLiteDataSet.cpp
+        ../SQLiteDataSetPeer.cpp
         ../StringList.cpp
         ../Transaction.cpp
     </set>

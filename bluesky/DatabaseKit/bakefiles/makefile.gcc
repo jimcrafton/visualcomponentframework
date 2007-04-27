@@ -148,7 +148,7 @@ DATABASEKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\DatabaseKit_dll_DataSource.o \
 	$(OBJDIR)\DatabaseKit_dll_FieldDefinitions.o \
 	$(OBJDIR)\DatabaseKit_dll_SQLiteDatabase.o \
-	$(OBJDIR)\DatabaseKit_dll_SQLiteDataSet.o \
+	$(OBJDIR)\DatabaseKit_dll_SQLiteDataSetPeer.o \
 	$(OBJDIR)\DatabaseKit_dll_StringList.o \
 	$(OBJDIR)\DatabaseKit_dll_Transaction.o
 DBTEST_CXXFLAGS = -I..\DBProviders\sqlite -I..\DBProviders\ms-ado \
@@ -523,7 +523,7 @@ $(OBJDIR)\DatabaseKit_dll_FieldDefinitions.o: ./../FieldDefinitions.cpp
 $(OBJDIR)\DatabaseKit_dll_SQLiteDatabase.o: ./../SQLiteDatabase.cpp
 	$(CXX) -c -o $@ $(DATABASEKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)\DatabaseKit_dll_SQLiteDataSet.o: ./../SQLiteDataSet.cpp
+$(OBJDIR)\DatabaseKit_dll_SQLiteDataSetPeer.o: ./../SQLiteDataSetPeer.cpp
 	$(CXX) -c -o $@ $(DATABASEKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 $(OBJDIR)\DatabaseKit_dll_StringList.o: ./../StringList.cpp

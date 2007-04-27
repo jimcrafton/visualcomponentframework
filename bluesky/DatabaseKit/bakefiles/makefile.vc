@@ -166,7 +166,7 @@ DATABASEKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\DatabaseKit_dll_DataSource.obj \
 	$(OBJDIR)\DatabaseKit_dll_FieldDefinitions.obj \
 	$(OBJDIR)\DatabaseKit_dll_SQLiteDatabase.obj \
-	$(OBJDIR)\DatabaseKit_dll_SQLiteDataSet.obj \
+	$(OBJDIR)\DatabaseKit_dll_SQLiteDataSetPeer.obj \
 	$(OBJDIR)\DatabaseKit_dll_StringList.obj \
 	$(OBJDIR)\DatabaseKit_dll_Transaction.obj
 DBTEST_CXXFLAGS = /M$(__OPTION_RUNTIME_37)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
@@ -631,7 +631,7 @@ $(OBJDIR)\DatabaseKit_dll_FieldDefinitions.obj: .\..\FieldDefinitions.cpp
 $(OBJDIR)\DatabaseKit_dll_SQLiteDatabase.obj: .\..\SQLiteDatabase.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(DATABASEKIT_DLL_CXXFLAGS) $**
 
-$(OBJDIR)\DatabaseKit_dll_SQLiteDataSet.obj: .\..\SQLiteDataSet.cpp
+$(OBJDIR)\DatabaseKit_dll_SQLiteDataSetPeer.obj: .\..\SQLiteDataSetPeer.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(DATABASEKIT_DLL_CXXFLAGS) $**
 
 $(OBJDIR)\DatabaseKit_dll_StringList.obj: .\..\StringList.cpp
