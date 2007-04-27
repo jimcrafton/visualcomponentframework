@@ -19,5 +19,9 @@ namespace VCF {
 _class_rtti_(DataLabel, "VCF::Label", DATALABEL_CLASSID )
 _class_rtti_end_
 
+_class_rtti_(DataCheckBox, "VCF::CheckBoxControl", DATACHECKBOX_CLASSID )
+_class_rtti_end_
+
+
 
 };

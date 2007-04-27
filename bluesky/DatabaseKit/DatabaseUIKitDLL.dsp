@@ -96,6 +96,10 @@ SOURCE=.\DatabaseUIKit.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DataCheckBox.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DataLabel.cpp
 # End Source File
 # End Group
@@ -109,6 +113,10 @@ SOURCE=.\DatabaseUIKit.h
 # Begin Source File
 
 SOURCE=.\DatabaseUIKitRTTI.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\DataCheckBox.h
 # End Source File
 # Begin Source File
 
