@@ -29,9 +29,9 @@ namespace VCF {
 
 
 
-	class ActionManager : public Component {
+	class ActionManager : public UIComponent {
 	public:
-		ActionManager( Component* owner ) : Component(owner){}
+		ActionManager( UIComponent* owner ) : UIComponent(owner){}
 		ActionManager(){}
 		virtual ~ActionManager(){}
 
@@ -41,7 +41,7 @@ namespace VCF {
 			return action;
 		}
 
-		void addTarget( const String& actionName, Component* component ) {
+		void addTarget( const String& actionName, UIComponent* component ) {
 			Action* action = (Action*) findComponent( actionName );
 			if ( NULL == action ) {
 				action = addAction( actionName );
