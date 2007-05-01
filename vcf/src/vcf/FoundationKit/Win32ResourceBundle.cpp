@@ -232,7 +232,8 @@ Resource* Win32ResourceBundle::getResource( const String& resourceName )
 BOOL CALLBACK Win32ResourceBundle::EnumResTypeProcA( HMODULE hModule, char* lpszType, LPARAM lParam )
 {
 #if !defined(VCF_CW) && !defined(VCF_UNICODE)
-	if ( (RT_CURSOR == lpszType) || (RT_ICON == lpszType) || (RT_BITMAP == lpszType) || (RT_STRING == lpszType) || (RT_VERSION == lpszType) || (RT_VXD == lpszType) ) {
+	if ( (RT_CURSOR == lpszType) || (RT_ICON == lpszType) || (RT_BITMAP == lpszType)
+		|| (RT_STRING == lpszType) || (RT_VERSION == lpszType) || (RT_VXD == lpszType) || (RT_MANIFEST == lpszType) ) {
 		return TRUE;
 	}
 	return ::EnumResourceNamesA( hModule,
