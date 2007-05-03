@@ -9,8 +9,21 @@ where you installed the VCF.
 
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/VFFInputStream.h"
+#include "vcf/FoundationKit/Dictionary.h"
 
 using namespace VCF;
+
+
+
+static Dictionary componentConstants;
+
+class FuncPtrHolder : public Object {
+public:
+	FuncPtrHolder(VFFInputStream::ComponentConstantFunc fp): funcPtr(fp){}
+
+	VFFInputStream::ComponentConstantFunc funcPtr;
+};
+
 
 
 VFFInputStream::VFFInputStream( InputStream* stream ):
@@ -173,6 +186,11 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 							}
 						}
 						else {
+							String newVal;							
+							if ( VFFInputStream::getComponentConstant( value, newVal ) ) {
+								value = newVal;
+							}
+							
 							prop->set( value );
 
 							if ( 0 == componentInputLevel_ ) {
@@ -713,6 +731,49 @@ void VFFInputStream::hexToBin( const String& hexString, Persistable* persistable
 }
 
 
+void VFFInputStream::registerComponentConstant( const String& name, const String& data )
+{
+	VCF_ASSERT( !name.empty() );
+
+	componentConstants.setOwnsObjectValues( true );
+	componentConstants[name] = data;
+}
+
+void VFFInputStream::registerComponentConstant( const String& name, ComponentConstantFunc funcPtr )
+{
+	VCF_ASSERT( !name.empty() );
+	VCF_ASSERT( NULL != funcPtr );
+
+	componentConstants.setOwnsObjectValues( true );
+
+	FuncPtrHolder* holder = new FuncPtrHolder(funcPtr);	
+	componentConstants[name] = holder;
+}
+
+bool VFFInputStream::getComponentConstant( const String& name, String& value )
+{	
+	bool result = false;
+
+	VariantData tmp = componentConstants[name];
+	if ( !tmp.isNull() && tmp.type != pdUndefined ) {
+
+		if ( tmp.type == pdObject ) {
+			FuncPtrHolder* holder = (FuncPtrHolder*)((Object*)tmp);
+
+			value = (*holder->funcPtr)( name );
+			result = true;
+		}
+		else {
+			value = (String)tmp;
+			result = true;
+		}
+	}
+
+	return result;
+}
+
+
 /**
 $Id$
 */
+
