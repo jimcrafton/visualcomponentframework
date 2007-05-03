@@ -55,6 +55,33 @@ public:
 		return stream_->read( bytesToRead, sizeOfBytes );
 	}
 
+
+
+	typedef String (*ComponentConstantFunc)(const String&);
+
+	/**
+	Register a constant value to be used. This can only hold basic types
+	like an int, double, string, or bool. The symbolic name of the 
+	@param String the name of the constant.
+	@param String the value of the constant.
+	*/
+	static void registerComponentConstant( const String& name, const String& data );
+	
+	/**
+	Register a constant value to be used. This can only hold basic types
+	like an int, double, string, or bool. The symbolic name of the 
+	@param String the name of the constant.
+	@param ComponentConstantFunc a function pointer that is used to retrieve the 
+	value of the constant name.
+	*/
+	static void registerComponentConstant( const String& name, ComponentConstantFunc funcPtr );
+
+	/**
+	Returns a value for a specific constant name.
+	*/
+	static bool getComponentConstant( const String& name, String& value );
+
+
 	/**
 	*retreives the outer most class/UUID that contains all other obejcts
 	*in this VFF stream
