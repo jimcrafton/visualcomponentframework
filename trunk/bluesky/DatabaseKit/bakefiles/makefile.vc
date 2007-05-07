@@ -156,7 +156,7 @@ DATABASEKIT_DLL_CXXFLAGS = /M$(__OPTION_RUNTIME_24)$(__DEBUG_RUNTIME_LIBS) \
 	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
 	$(CXXFLAGS)
 DATABASEKIT_DLL_OBJECTS =  \
-	$(OBJDIR)\DatabaseKit_dll_ADODataSet.obj \
+	$(OBJDIR)\DatabaseKit_dll_ADODataSetPeer.obj \
 	$(OBJDIR)\DatabaseKit_dll_Database.obj \
 	$(OBJDIR)\DatabaseKit_dll_DatabaseKit.obj \
 	$(OBJDIR)\DatabaseKit_dll_DatabaseToolkit.obj \
@@ -195,6 +195,7 @@ DATABASEUIKIT_DLL_CXXFLAGS = /M$(__OPTION_RUNTIME_53)$(__DEBUG_RUNTIME_LIBS) \
 	$(CXXFLAGS)
 DATABASEUIKIT_DLL_OBJECTS =  \
 	$(OBJDIR)\DatabaseUIKit_dll_DatabaseUIKit.obj \
+	$(OBJDIR)\DatabaseUIKit_dll_DataCheckBox.obj \
 	$(OBJDIR)\DatabaseUIKit_dll_DataLabel.obj
 DBTEST2_CXXFLAGS = /M$(__OPTION_RUNTIME_66)$(__DEBUG_RUNTIME_LIBS) /DWIN32 \
 	/I.. /I"$(VCF_ROOT)\src\thirdparty\win32" \
@@ -601,7 +602,7 @@ $(OBJDIR)\SQLite_lib_vtab.obj: .\..\DBProviders\sqlite\vtab.c
 $(OBJDIR)\SQLite_lib_where.obj: .\..\DBProviders\sqlite\where.c
 	$(CC) /c /nologo /TC /Fo$@ $(SQLITE_LIB_CFLAGS) $**
 
-$(OBJDIR)\DatabaseKit_dll_ADODataSet.obj: .\..\ADODataSet.cpp
+$(OBJDIR)\DatabaseKit_dll_ADODataSetPeer.obj: .\..\ADODataSetPeer.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(DATABASEKIT_DLL_CXXFLAGS) $**
 
 $(OBJDIR)\DatabaseKit_dll_Database.obj: .\..\Database.cpp
@@ -644,6 +645,9 @@ $(OBJDIR)\dbTest_dbTest.obj: .\..\dbTest.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(DBTEST_CXXFLAGS) $**
 
 $(OBJDIR)\DatabaseUIKit_dll_DatabaseUIKit.obj: .\..\DatabaseUIKit.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(DATABASEUIKIT_DLL_CXXFLAGS) $**
+
+$(OBJDIR)\DatabaseUIKit_dll_DataCheckBox.obj: .\..\DataCheckBox.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(DATABASEUIKIT_DLL_CXXFLAGS) $**
 
 $(OBJDIR)\DatabaseUIKit_dll_DataLabel.obj: .\..\DataLabel.cpp
