@@ -2,7 +2,7 @@
 
 <makefile>
     <set var="DATABASEKIT_HDR" hints="files">
-        ../ADODataSet.h
+        ../ADODataSetPeer.h
         ../Database.h
         ../DatabaseError.h
         ../DatabaseKit.h
@@ -21,7 +21,7 @@
     </set>
 
     <set var="DATABASEKIT_SRC" hints="files">
-        ../ADODataSet.cpp
+        ../ADODataSetPeer.cpp
         ../Database.cpp
         ../DatabaseKit.cpp
         ../DatabaseToolkit.cpp

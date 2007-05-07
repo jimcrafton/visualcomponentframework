@@ -4,11 +4,13 @@
     <set var="DATABASEUIKIT_HDR" hints="files">
         ../DatabaseUIKit.h
         ../DataBaseUIKitRTTI.inl
+        ../DataCheckBox.h
         ../DataLabel.h
     </set>
 
     <set var="DATABASEUIKIT_SRC" hints="files">
         ../DatabaseUIKit.cpp
+        ../DataCheckBox.cpp
         ../DataLabel.cpp
     </set>
 

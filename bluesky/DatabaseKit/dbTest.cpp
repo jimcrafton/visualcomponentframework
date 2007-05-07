@@ -168,7 +168,8 @@ int main( int argc, char** argv ){
 		System::println( "SQLite testing" );
 		System::println( "------------------------------------------------------------------------------" );
 
-		DataSet* dataSet = DatabaseToolkit::createDataSet( "SQLiteType" );
+		DataSet* dataSet = new DataSet();
+		dataSet->setPeerType( "SQLiteType" );
 
 		dataSet->setParam( "databasename", "test.db3" );
 		dataSet->setParam( "tablename", "Person" );
@@ -409,7 +410,8 @@ int main( int argc, char** argv ){
 		System::println( "------------------------------------------------------------------------------" );
 
 
-		DataSet* dataSet = dataSet = DatabaseToolkit::createDataSet( "ADOType" );
+		DataSet* dataSet = new DataSet();
+		dataSet->setPeerType( "ADOType" );
 		
 		try {
 			dataSet->setParam( "databasename", "test.mdb" );

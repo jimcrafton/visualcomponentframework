@@ -143,7 +143,7 @@ DATABASEKIT_DLL_CXXFLAGS = -I../DBProviders/sqlite -I../DBProviders/ms-ado \
 	-DDATABASEKIT_DLL -DDATABASEKIT_EXPORTS -fPIC -DPIC $(____OPTION_CPP_RTTI_0) \
 	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 DATABASEKIT_DLL_OBJECTS =  \
-	$(OBJDIR)/DatabaseKit_dll_ADODataSet.o \
+	$(OBJDIR)/DatabaseKit_dll_ADODataSetPeer.o \
 	$(OBJDIR)/DatabaseKit_dll_Database.o \
 	$(OBJDIR)/DatabaseKit_dll_DatabaseKit.o \
 	$(OBJDIR)/DatabaseKit_dll_DatabaseToolkit.o \
@@ -176,6 +176,7 @@ DATABASEUIKIT_DLL_CXXFLAGS = -I.. -I"$(VCF_ROOT)/src/thirdparty/common/ZLib" \
 	$(CXXFLAGS)
 DATABASEUIKIT_DLL_OBJECTS =  \
 	$(OBJDIR)/DatabaseUIKit_dll_DatabaseUIKit.o \
+	$(OBJDIR)/DatabaseUIKit_dll_DataCheckBox.o \
 	$(OBJDIR)/DatabaseUIKit_dll_DataLabel.o
 DBTEST2_CXXFLAGS = -I.. -I"$(VCF_ROOT)/src/thirdparty/common/ZLib" \
 	-I"$(VCF_ROOT)/src/thirdparty/common/LibPNG" \
@@ -518,7 +519,7 @@ $(OBJDIR)/SQLite_lib_vtab.o: ./../DBProviders/sqlite/vtab.c
 $(OBJDIR)/SQLite_lib_where.o: ./../DBProviders/sqlite/where.c
 	$(CC) -c -o $@ $(SQLITE_LIB_CFLAGS) $(CPPDEPS) $<
 
-$(OBJDIR)/DatabaseKit_dll_ADODataSet.o: ./../ADODataSet.cpp
+$(OBJDIR)/DatabaseKit_dll_ADODataSetPeer.o: ./../ADODataSetPeer.cpp
 	$(CXX) -c -o $@ $(DATABASEKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 $(OBJDIR)/DatabaseKit_dll_Database.o: ./../Database.cpp
@@ -561,6 +562,9 @@ $(OBJDIR)/dbTest_dbTest.o: ./../dbTest.cpp
 	$(CXX) -c -o $@ $(DBTEST_CXXFLAGS) $(CPPDEPS) $<
 
 $(OBJDIR)/DatabaseUIKit_dll_DatabaseUIKit.o: ./../DatabaseUIKit.cpp
+	$(CXX) -c -o $@ $(DATABASEUIKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+$(OBJDIR)/DatabaseUIKit_dll_DataCheckBox.o: ./../DataCheckBox.cpp
 	$(CXX) -c -o $@ $(DATABASEUIKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 $(OBJDIR)/DatabaseUIKit_dll_DataLabel.o: ./../DataLabel.cpp
