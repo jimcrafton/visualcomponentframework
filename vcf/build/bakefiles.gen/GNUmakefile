@@ -418,7 +418,6 @@ FOUNDATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_lib_Object.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_ObjectWithEvents.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_PackageInfo.o \
-	../../lib/$(OBJDIR)/FoundationKit_lib_Parser.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_ProcessWithRedirectedIO.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_PropertyChangeEvent.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_Registry.o \
@@ -443,6 +442,7 @@ FOUNDATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_lib_VCFString.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_VFFInputStream.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_VFFOutputStream.o \
+	../../lib/$(OBJDIR)/FoundationKit_lib_VFFParser.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_XMLParser.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_PosixCondition.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_PosixMutex.o \
@@ -496,7 +496,6 @@ FOUNDATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_dll_Object.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_ObjectWithEvents.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_PackageInfo.o \
-	../../lib/$(OBJDIR)/FoundationKit_dll_Parser.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_ProcessWithRedirectedIO.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_PropertyChangeEvent.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_Registry.o \
@@ -521,6 +520,7 @@ FOUNDATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_dll_VCFString.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_VFFInputStream.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_VFFOutputStream.o \
+	../../lib/$(OBJDIR)/FoundationKit_dll_VFFParser.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_XMLParser.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_PosixCondition.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_PosixMutex.o \
@@ -1344,7 +1344,6 @@ ____Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_Object.o \
 	../../lib/$(OBJDIR)/Allin1_lib_ObjectWithEvents.o \
 	../../lib/$(OBJDIR)/Allin1_lib_PackageInfo.o \
-	../../lib/$(OBJDIR)/Allin1_lib_Parser.o \
 	../../lib/$(OBJDIR)/Allin1_lib_ProcessWithRedirectedIO.o \
 	../../lib/$(OBJDIR)/Allin1_lib_PropertyChangeEvent.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Registry.o \
@@ -1369,6 +1368,7 @@ ____Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_VCFString.o \
 	../../lib/$(OBJDIR)/Allin1_lib_VFFInputStream.o \
 	../../lib/$(OBJDIR)/Allin1_lib_VFFOutputStream.o \
+	../../lib/$(OBJDIR)/Allin1_lib_VFFParser.o \
 	../../lib/$(OBJDIR)/Allin1_lib_XMLParser.o \
 	../../lib/$(OBJDIR)/Allin1_lib_PosixCondition.o \
 	../../lib/$(OBJDIR)/Allin1_lib_PosixMutex.o \
@@ -1613,7 +1613,6 @@ ____Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_Object.o \
 	../../lib/$(OBJDIR)/Allin1_dll_ObjectWithEvents.o \
 	../../lib/$(OBJDIR)/Allin1_dll_PackageInfo.o \
-	../../lib/$(OBJDIR)/Allin1_dll_Parser.o \
 	../../lib/$(OBJDIR)/Allin1_dll_ProcessWithRedirectedIO.o \
 	../../lib/$(OBJDIR)/Allin1_dll_PropertyChangeEvent.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Registry.o \
@@ -1638,6 +1637,7 @@ ____Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_VCFString.o \
 	../../lib/$(OBJDIR)/Allin1_dll_VFFInputStream.o \
 	../../lib/$(OBJDIR)/Allin1_dll_VFFOutputStream.o \
+	../../lib/$(OBJDIR)/Allin1_dll_VFFParser.o \
 	../../lib/$(OBJDIR)/Allin1_dll_XMLParser.o \
 	../../lib/$(OBJDIR)/Allin1_dll_PosixCondition.o \
 	../../lib/$(OBJDIR)/Allin1_dll_PosixMutex.o \
@@ -3462,9 +3462,6 @@ xmake_:
 ../../lib/$(OBJDIR)/FoundationKit_lib_PackageInfo.o: ../../src/vcf/FoundationKit/PackageInfo.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/FoundationKit_lib_Parser.o: ../../src/vcf/FoundationKit/Parser.cpp
-	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/FoundationKit_lib_ProcessWithRedirectedIO.o: ../../src/vcf/FoundationKit/ProcessWithRedirectedIO.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -3535,6 +3532,9 @@ xmake_:
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_lib_VFFOutputStream.o: ../../src/vcf/FoundationKit/VFFOutputStream.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/FoundationKit_lib_VFFParser.o: ../../src/vcf/FoundationKit/VFFParser.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_lib_XMLParser.o: ../../src/vcf/FoundationKit/XMLParser.cpp
@@ -3678,9 +3678,6 @@ xmake_:
 ../../lib/$(OBJDIR)/FoundationKit_dll_PackageInfo.o: ../../src/vcf/FoundationKit/PackageInfo.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/FoundationKit_dll_Parser.o: ../../src/vcf/FoundationKit/Parser.cpp
-	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/FoundationKit_dll_ProcessWithRedirectedIO.o: ../../src/vcf/FoundationKit/ProcessWithRedirectedIO.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -3751,6 +3748,9 @@ xmake_:
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_dll_VFFOutputStream.o: ../../src/vcf/FoundationKit/VFFOutputStream.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/FoundationKit_dll_VFFParser.o: ../../src/vcf/FoundationKit/VFFParser.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_dll_XMLParser.o: ../../src/vcf/FoundationKit/XMLParser.cpp
@@ -4860,9 +4860,6 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_lib_PackageInfo.o: ../../src/vcf/FoundationKit/PackageInfo.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_Parser.o: ../../src/vcf/FoundationKit/Parser.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/Allin1_lib_ProcessWithRedirectedIO.o: ../../src/vcf/FoundationKit/ProcessWithRedirectedIO.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -4933,6 +4930,9 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_VFFOutputStream.o: ../../src/vcf/FoundationKit/VFFOutputStream.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_lib_VFFParser.o: ../../src/vcf/FoundationKit/VFFParser.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_XMLParser.o: ../../src/vcf/FoundationKit/XMLParser.cpp
@@ -5559,9 +5559,6 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_PackageInfo.o: ../../src/vcf/FoundationKit/PackageInfo.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_Parser.o: ../../src/vcf/FoundationKit/Parser.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/Allin1_dll_ProcessWithRedirectedIO.o: ../../src/vcf/FoundationKit/ProcessWithRedirectedIO.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -5632,6 +5629,9 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_VFFOutputStream.o: ../../src/vcf/FoundationKit/VFFOutputStream.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_dll_VFFParser.o: ../../src/vcf/FoundationKit/VFFParser.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_XMLParser.o: ../../src/vcf/FoundationKit/XMLParser.cpp

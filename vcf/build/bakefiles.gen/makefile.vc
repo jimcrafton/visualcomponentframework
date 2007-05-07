@@ -471,7 +471,6 @@ FOUNDATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_Object.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_ObjectWithEvents.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_PackageInfo.obj \
-	..\..\lib\$(OBJDIR)\FoundationKit_lib_Parser.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_ProcessWithRedirectedIO.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_PropertyChangeEvent.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_Registry.obj \
@@ -496,6 +495,7 @@ FOUNDATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_VCFString.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_VFFInputStream.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_VFFOutputStream.obj \
+	..\..\lib\$(OBJDIR)\FoundationKit_lib_VFFParser.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_XMLParser.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_Win32Condition.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_Win32FilePeer.obj \
@@ -554,7 +554,6 @@ FOUNDATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_Object.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_ObjectWithEvents.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_PackageInfo.obj \
-	..\..\lib\$(OBJDIR)\FoundationKit_dll_Parser.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_ProcessWithRedirectedIO.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_PropertyChangeEvent.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_Registry.obj \
@@ -579,6 +578,7 @@ FOUNDATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_VCFString.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_VFFInputStream.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_VFFOutputStream.obj \
+	..\..\lib\$(OBJDIR)\FoundationKit_dll_VFFParser.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_XMLParser.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_Win32Condition.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_Win32FilePeer.obj \
@@ -1686,7 +1686,6 @@ ______Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Object.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_ObjectWithEvents.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_PackageInfo.obj \
-	..\..\lib\$(OBJDIR)\Allin1_lib_Parser.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_ProcessWithRedirectedIO.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_PropertyChangeEvent.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Registry.obj \
@@ -1711,6 +1710,7 @@ ______Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_VCFString.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_VFFInputStream.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_VFFOutputStream.obj \
+	..\..\lib\$(OBJDIR)\Allin1_lib_VFFParser.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_XMLParser.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Win32Condition.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Win32FilePeer.obj \
@@ -1991,7 +1991,6 @@ ______Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Object.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_ObjectWithEvents.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_PackageInfo.obj \
-	..\..\lib\$(OBJDIR)\Allin1_dll_Parser.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_ProcessWithRedirectedIO.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_PropertyChangeEvent.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Registry.obj \
@@ -2016,6 +2015,7 @@ ______Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_VCFString.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_VFFInputStream.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_VFFOutputStream.obj \
+	..\..\lib\$(OBJDIR)\Allin1_dll_VFFParser.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_XMLParser.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Win32Condition.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Win32FilePeer.obj \
@@ -4011,9 +4011,6 @@ sub_xmake_:
 ..\..\lib\$(OBJDIR)\FoundationKit_lib_PackageInfo.obj: ..\..\src\vcf\FoundationKit\PackageInfo.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $**
 
-..\..\lib\$(OBJDIR)\FoundationKit_lib_Parser.obj: ..\..\src\vcf\FoundationKit\Parser.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $**
-
 ..\..\lib\$(OBJDIR)\FoundationKit_lib_ProcessWithRedirectedIO.obj: ..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $**
 
@@ -4084,6 +4081,9 @@ sub_xmake_:
 	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\FoundationKit_lib_VFFOutputStream.obj: ..\..\src\vcf\FoundationKit\VFFOutputStream.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\FoundationKit_lib_VFFParser.obj: ..\..\src\vcf\FoundationKit\VFFParser.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\FoundationKit_lib_XMLParser.obj: ..\..\src\vcf\FoundationKit\XMLParser.cpp
@@ -4227,9 +4227,6 @@ sub_xmake_:
 ..\..\lib\$(OBJDIR)\FoundationKit_dll_PackageInfo.obj: ..\..\src\vcf\FoundationKit\PackageInfo.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $**
 
-..\..\lib\$(OBJDIR)\FoundationKit_dll_Parser.obj: ..\..\src\vcf\FoundationKit\Parser.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $**
-
 ..\..\lib\$(OBJDIR)\FoundationKit_dll_ProcessWithRedirectedIO.obj: ..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $**
 
@@ -4300,6 +4297,9 @@ sub_xmake_:
 	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\FoundationKit_dll_VFFOutputStream.obj: ..\..\src\vcf\FoundationKit\VFFOutputStream.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\FoundationKit_dll_VFFParser.obj: ..\..\src\vcf\FoundationKit\VFFParser.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\FoundationKit_dll_XMLParser.obj: ..\..\src\vcf\FoundationKit\XMLParser.cpp
@@ -5604,9 +5604,6 @@ sub_xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_lib_PackageInfo.obj: ..\..\src\vcf\FoundationKit\PackageInfo.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
-..\..\lib\$(OBJDIR)\Allin1_lib_Parser.obj: ..\..\src\vcf\FoundationKit\Parser.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_LIB_CXXFLAGS) $**
-
 ..\..\lib\$(OBJDIR)\Allin1_lib_ProcessWithRedirectedIO.obj: ..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
@@ -5677,6 +5674,9 @@ sub_xmake_:
 	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_VFFOutputStream.obj: ..\..\src\vcf\FoundationKit\VFFOutputStream.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_LIB_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\Allin1_lib_VFFParser.obj: ..\..\src\vcf\FoundationKit\VFFParser.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_XMLParser.obj: ..\..\src\vcf\FoundationKit\XMLParser.cpp
@@ -6399,9 +6399,6 @@ sub_xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_dll_PackageInfo.obj: ..\..\src\vcf\FoundationKit\PackageInfo.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
-..\..\lib\$(OBJDIR)\Allin1_dll_Parser.obj: ..\..\src\vcf\FoundationKit\Parser.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_DLL_CXXFLAGS) $**
-
 ..\..\lib\$(OBJDIR)\Allin1_dll_ProcessWithRedirectedIO.obj: ..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
@@ -6472,6 +6469,9 @@ sub_xmake_:
 	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_VFFOutputStream.obj: ..\..\src\vcf\FoundationKit\VFFOutputStream.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_DLL_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\Allin1_dll_VFFParser.obj: ..\..\src\vcf\FoundationKit\VFFParser.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_XMLParser.obj: ..\..\src\vcf\FoundationKit\XMLParser.cpp

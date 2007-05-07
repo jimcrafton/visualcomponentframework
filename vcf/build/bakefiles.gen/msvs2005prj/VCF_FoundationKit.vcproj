@@ -389,7 +389,6 @@
 			<File RelativePath="..\..\src\vcf\FoundationKit\Object.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\PackageInfo.cpp"/>
-			<File RelativePath="..\..\src\vcf\FoundationKit\Parser.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\PropertyChangeEvent.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Registry.cpp"/>
@@ -413,6 +412,7 @@
 			<File RelativePath="..\..\src\vcf\FoundationKit\VCFString.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\VFFInputStream.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\VFFOutputStream.cpp"/>
+			<File RelativePath="..\..\src\vcf\FoundationKit\VFFParser.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\VariantData.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Win32Condition.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Win32FilePeer.cpp"/>
