@@ -72,10 +72,10 @@
         vcf/FoundationKit/NoToolKitFoundException.h
         vcf/FoundationKit/Object.h
         vcf/FoundationKit/ObjectWithEvents.h
+        vcf/FoundationKit/OSHandlePeer.h
         vcf/FoundationKit/OutOfBoundsException.h
         vcf/FoundationKit/OutputReadyEvent.h
         vcf/FoundationKit/PackageInfo.h
-        vcf/FoundationKit/Parser.h
         vcf/FoundationKit/Persistable.h
         vcf/FoundationKit/ProcessException.h
         vcf/FoundationKit/ProcessIORedirectionPeer.h
@@ -129,6 +129,7 @@
         vcf/FoundationKit/VCFString.h
         vcf/FoundationKit/VFFInputStream.h
         vcf/FoundationKit/VFFOutputStream.h
+        vcf/FoundationKit/VFFParser.h
         vcf/FoundationKit/Waitable.h
         vcf/FoundationKit/WarningsOffVc.h
         vcf/FoundationKit/XMLParser.h
@@ -164,7 +165,6 @@
         vcf/FoundationKit/Object.cpp
         vcf/FoundationKit/ObjectWithEvents.cpp
         vcf/FoundationKit/PackageInfo.cpp
-        vcf/FoundationKit/Parser.cpp
         vcf/FoundationKit/ProcessWithRedirectedIO.cpp
         vcf/FoundationKit/PropertyChangeEvent.cpp
         vcf/FoundationKit/Registry.cpp
@@ -189,6 +189,7 @@
         vcf/FoundationKit/VCFString.cpp
         vcf/FoundationKit/VFFInputStream.cpp
         vcf/FoundationKit/VFFOutputStream.cpp
+        vcf/FoundationKit/VFFParser.cpp
         vcf/FoundationKit/XMLParser.cpp
     </set>
 

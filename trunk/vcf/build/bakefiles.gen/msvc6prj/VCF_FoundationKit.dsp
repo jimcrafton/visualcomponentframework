@@ -674,10 +674,6 @@ SOURCE=..\..\src\vcf\FoundationKit\PackageInfo.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Parser.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.cpp
 # End Source File
 # Begin Source File
@@ -767,6 +763,10 @@ SOURCE=..\..\src\vcf\FoundationKit\VFFInputStream.cpp
 # Begin Source File
 
 SOURCE=..\..\src\vcf\FoundationKit\VFFOutputStream.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\vcf\FoundationKit\VFFParser.cpp
 # End Source File
 # Begin Source File
 
@@ -1118,6 +1118,10 @@ SOURCE=..\..\src\vcf\FoundationKit\NotifyEvent.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\vcf\FoundationKit\OSHandlePeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\vcf\FoundationKit\Object.h
 # End Source File
 # Begin Source File
@@ -1135,10 +1139,6 @@ SOURCE=..\..\src\vcf\FoundationKit\OutputReadyEvent.h
 # Begin Source File
 
 SOURCE=..\..\src\vcf\FoundationKit\PackageInfo.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\vcf\FoundationKit\Parser.h
 # End Source File
 # Begin Source File
 
@@ -1343,6 +1343,10 @@ SOURCE=..\..\src\vcf\FoundationKit\VFFInputStream.h
 # Begin Source File
 
 SOURCE=..\..\src\vcf\FoundationKit\VFFOutputStream.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\vcf\FoundationKit\VFFParser.h
 # End Source File
 # Begin Source File
 
