@@ -17,7 +17,7 @@ where you installed the VCF.
 namespace VCF {
 
 class InputStream;
-class Parser;
+class VFFParser;
 /**
 \class VFFInputStream VFFInputStream.h "vcf/ApplicationKit/VFFInputStream.h"  
 */
@@ -32,6 +32,8 @@ public:
 	};
 
 	VFFInputStream( VCF::InputStream* stream );
+
+	VFFInputStream( const VCF::String& vffString );
 
 	virtual ~VFFInputStream();
 
@@ -138,7 +140,9 @@ protected:
 	};
 
 	VCF::InputStream* stream_;
-	VCF::Parser* parser_;
+	VCF::VFFParser* parser_;
+	bool deleteStream_;
+
 	void hexToBin( const VCF::String& hexString, VCF::Persistable* persistableObject );
 
 	void processAsignmentTokens( const VCF::VCFChar& token, const VCF::String& currentSymbol, VCF::Class* clazz );

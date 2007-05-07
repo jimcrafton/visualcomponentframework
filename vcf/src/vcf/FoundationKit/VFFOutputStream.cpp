@@ -12,6 +12,16 @@ where you installed the VCF.
 
 using namespace VCF;
 
+
+VFFOutputStream::VFFOutputStream( OutputStream* stream ) :
+	stream_(stream),
+	tabLevel_(0),
+	saveUnNamedComponents_(false),
+	writeComponentClassID_(true)
+{
+		
+}
+
 String VFFOutputStream::getTabString()
 {
 	String result = "";
@@ -115,10 +125,11 @@ void VFFOutputStream::getComponentHeader( Component* component, String& classNam
 	fallBackClassName = "";
 }
 
-void VFFOutputStream::writeProperty( Property* property )
+void VFFOutputStream::writeProperty( Component* component, Property* property )
 {
 	String tabString = getTabString();
 	String s;
+	String propertyStrValue;
 
 
 	VariantData* value = property->get();
@@ -152,19 +163,32 @@ void VFFOutputStream::writeProperty( Property* property )
 		break;
 
 		case pdString : {
-			s = tabString + property->getName() + " = '" + value->toString() + "'\n";
+			if ( !component->generatePropertyValue( property, value, propertyStrValue ) ) {
+				propertyStrValue = value->toString();
+			}
+			
+			s = tabString + property->getName() + " = '" + propertyStrValue + "'\n";
 			stream_->write( s );
 		}
 		break;
 
 		case pdEnumMask : {
-			s = tabString + property->getName() + " = [" + property->toString() + "]\n";
+			if ( !component->generatePropertyValue( property, value, propertyStrValue ) ) {
+				propertyStrValue = property->toString();
+			}
+
+			s = tabString + property->getName() + " = [" + propertyStrValue + "]\n";
 			stream_->write( s );
 		}
 		break;
 
 		default : {
-			s = tabString + property->getName() + " = " + value->toString() + "\n";
+			
+			if ( !component->generatePropertyValue( property, value, propertyStrValue ) ) {
+				propertyStrValue = value->toString();
+			}
+
+			s = tabString + property->getName() + " = " + propertyStrValue + "\n";
 			stream_->write( s );
 		}
 		break;
@@ -186,10 +210,15 @@ void VFFOutputStream::writeComponent( Component* component )
 
 		getComponentHeader( component, className, classID, fallBackClassName );
 
-		String s = tabString + "object " + component->getName() + " : " + className + ", \'" + classID + "\'";
+		String s = tabString + "object " + component->getName() + " : " + className;
+		if ( writeComponentClassID_ ) {
+			s += ", \'" + classID + "\'";
+		}
+
 		if ( !fallBackClassName.empty() ) {
 			s += ", " + fallBackClassName;
 		}
+
 		s += "\n";
 
 		stream_->write( s );
@@ -199,7 +228,7 @@ void VFFOutputStream::writeComponent( Component* component )
 			while ( true == props->hasMoreElements() ) {
 				Property* prop = props->nextElement();
 				if ( NULL != prop ) {
-					writeProperty( prop );
+					writeProperty( component, prop );
 				}
 			}
 			tabLevel_ --;
