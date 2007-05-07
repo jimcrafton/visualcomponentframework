@@ -909,6 +909,11 @@ void Component::storeSettings( const bool& recursive )
 	}
 }
 
+bool Component::generatePropertyValue( Property* property, VariantData* value, String& strValue )
+{
+	return false;
+}
+
 /**
 $Id$
 */

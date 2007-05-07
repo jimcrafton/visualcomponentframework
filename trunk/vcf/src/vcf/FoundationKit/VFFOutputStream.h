@@ -158,11 +158,7 @@ source is the component named "sdasd.vff".
 */
 class FOUNDATIONKIT_API VFFOutputStream : public Object, public OutputStream {
 public:
-	VFFOutputStream( OutputStream* stream ) {
-		stream_ = stream;
-		tabLevel_ = 0;
-		saveUnNamedComponents_ = false;
-	}
+	VFFOutputStream( OutputStream* stream );
 
 	virtual ~VFFOutputStream(){};
 
@@ -193,10 +189,15 @@ public:
 	void setSaveUnNamedComponents( const bool& val ) {
 		saveUnNamedComponents_ = val;
 	}
+
+	void setWriteComponentClassID( const bool& val ) {
+		writeComponentClassID_ = val;
+	}
 protected:
 	OutputStream* stream_;
 	int32 tabLevel_;
 	bool saveUnNamedComponents_;
+	bool writeComponentClassID_;
 
 	String binToHex( Persistable* persistableObject );
 
@@ -211,7 +212,7 @@ protected:
 
 	void writeObject( Object* object, const String& objectPropertyName );
 
-	void writeProperty( Property* property );
+	void writeProperty( Component* component, Property* property );
 
 	void writeEvents( Component* component );
 

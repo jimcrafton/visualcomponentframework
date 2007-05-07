@@ -1,4 +1,4 @@
-//Parser.cpp
+//VFFParser.cpp
 
 /*
 Copyright 2000-2004 The VCF Project.
@@ -8,10 +8,12 @@ where you installed the VCF.
 
 
 #include "vcf/FoundationKit/FoundationKit.h"
+#include "vcf/FoundationKit/VFFParser.h"
+
 using namespace VCF;
 
 
-Parser::Parser( InputStream* is )
+VFFParser::VFFParser( InputStream* is )
 {
 	stream_ = is;
 
@@ -20,12 +22,12 @@ Parser::Parser( InputStream* is )
 	resetStream();
 }
 
-Parser::~Parser()
+VFFParser::~VFFParser()
 {
 	delete [] buffer_;
 }
 
-void Parser::resetStream()
+void VFFParser::resetStream()
 {
 	if ( NULL != buffer_ ) {
 		delete [] buffer_;
@@ -60,7 +62,7 @@ void Parser::resetStream()
 	this->nextToken();
 }
 
-void Parser::skipBlanks()
+void VFFParser::skipBlanks()
 {
 	while (true) {
 		if ( *sourcePtr_ == 10 ) {
@@ -73,7 +75,7 @@ void Parser::skipBlanks()
 	}
 }
 
-void Parser::checkToken( const VCFChar& T )
+void VFFParser::checkToken( const VCFChar& T )
 {
 	if ( token_ != T ) {
 		switch ( T ) {
@@ -100,7 +102,7 @@ void Parser::checkToken( const VCFChar& T )
 	}
 }
 
-String Parser::binHexToString()
+String VFFParser::binHexToString()
 {
 	String result;
 
@@ -120,7 +122,7 @@ String Parser::binHexToString()
 	return result;
 }
 
-void Parser::checkTokenSymbol( const String& s )
+void VFFParser::checkTokenSymbol( const String& s )
 {
 	bool tki = tokenSymbolIs( s );
 	if ( false == tki ) {
@@ -128,17 +130,17 @@ void Parser::checkTokenSymbol( const String& s )
 	}
 }
 
-void Parser::error( const String& Ident )
+void VFFParser::error( const String& Ident )
 {
 	errorStr(Ident);
 }
 
-void Parser::errorStr( const String& Message)
+void VFFParser::errorStr( const String& Message)
 {
 	throw RuntimeException( MAKE_ERROR_MSG_2(StringUtils::format( Format("Parse Error, message: %s") % Message )) );
 }
 
-VCFChar Parser::nextToken()
+VCFChar VFFParser::nextToken()
 {
 	VCFChar result = '\0';
 	int32 I = 0;
@@ -264,12 +266,12 @@ VCFChar Parser::nextToken()
 	return result;
 }
 
-int32 Parser::sourcePos()
+int32 VFFParser::sourcePos()
 {
 	return origin_ + (tokenPtr_ - buffer_);
 }
 
-String Parser::tokenComponentIdent()
+String VFFParser::tokenComponentIdent()
 {
 
 	checkToken( TO_SYMBOL );
@@ -293,21 +295,21 @@ String Parser::tokenComponentIdent()
 	return tokenString();
 }
 
-double Parser::tokenFloat()
+double VFFParser::tokenFloat()
 {
 	String s = tokenString();
 	double result = StringUtils::fromStringAsFloat( s );
 	return result;
 }
 
-int32 Parser::tokenInt()
+int32 VFFParser::tokenInt()
 {
 	String s = tokenString();
 	int32 result = StringUtils::fromStringAsInt( s );
 	return result;
 }
 
-String Parser::tokenString()
+String VFFParser::tokenString()
 {
 	String result;
 	int32 length = 0;
@@ -322,7 +324,7 @@ String Parser::tokenString()
 	return result;
 }
 
-bool Parser::tokenSymbolIs(const String& s)
+bool VFFParser::tokenSymbolIs(const String& s)
 {
 	return (token_ == TO_SYMBOL) && (StringUtils::noCaseCompare( s, tokenString() ) == 0);
 }

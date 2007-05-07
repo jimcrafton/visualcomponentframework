@@ -297,7 +297,6 @@ namespace VCF{
 #include "vcf/FoundationKit/SemaphorePeer.h"
 #include "vcf/FoundationKit/Semaphore.h"
 #include "vcf/FoundationKit/Lock.h"
-#include "vcf/FoundationKit/Parser.h"
 #include "vcf/FoundationKit/SystemToolkit.h"
 #include "vcf/FoundationKit/FilePeer.h"
 #include "vcf/FoundationKit/ErrorLog.h"

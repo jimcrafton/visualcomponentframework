@@ -10,6 +10,7 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/VFFInputStream.h"
 #include "vcf/FoundationKit/Dictionary.h"
+#include "vcf/FoundationKit/VFFParser.h"
 
 using namespace VCF;
 
@@ -30,19 +31,38 @@ VFFInputStream::VFFInputStream( InputStream* stream ):
 	componentInputLevel_(-1),
 	parser_(NULL),
 	stream_(stream),
+	deleteStream_(false),
 	atTopLevel_(true),
 	topLevelComponent_(NULL),
 	topLevelControlVisibility_(false),
-	setDesignMode_(false)
+	setDesignMode_(false)	
 {
-	parser_ = new VCF::Parser( this );
+	parser_ = new VCF::VFFParser( this );
 }
 
+VFFInputStream::VFFInputStream( const VCF::String& vffString ):
+	componentInputLevel_(-1),
+	parser_(NULL),
+	stream_(NULL),
+	deleteStream_(true),
+	atTopLevel_(true),
+	topLevelComponent_(NULL),
+	topLevelControlVisibility_(false),
+	setDesignMode_(false)	
+{
+	stream_ = new BasicInputStream( vffString );
+
+	parser_ = new VCF::VFFParser( this );	
+}
 
 VFFInputStream::~VFFInputStream()
 {
 	delete parser_;
 	parser_ = NULL;
+
+	if ( deleteStream_ ) {
+		delete stream_;
+	}
 }
 
 void VFFInputStream::getOuterClassNameAndUUID( String& className, String& UUID, String& fallbackClassName )
@@ -64,9 +84,10 @@ void VFFInputStream::getOuterClassNameAndUUID( String& className, String& UUID, 
 						parser_->nextToken();
 						className = parser_->tokenString();
 						parser_->nextToken();
-						parser_->checkToken( ',' );
-						parser_->nextToken();
-						UUID = parser_->tokenString();
+						if ( parser_->getToken() == ',' ) {						
+							parser_->nextToken();
+							UUID = parser_->tokenString();
+						}
 
 						parser_->nextToken();
 						if ( parser_->getToken() == ',' ) {
@@ -394,15 +415,18 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 			
 			
 			String className = parser_->tokenString();
+			String classID;
 			parser_->nextToken();
-			parser_->checkToken( ',' );
-			parser_->nextToken();
-			String classID = parser_->tokenString();
+			if ( parser_->getToken() == ',' ) {
+				parser_->nextToken();
+				classID = parser_->tokenString();
+				parser_->nextToken();
+			}
 
 			String fallbackClassName;
 			
 			bool skipNextToken = false;
-			parser_->nextToken();
+			
 			if ( parser_->getToken() == ',' ) {
 				parser_->nextToken();
 				fallbackClassName = parser_->tokenString();
@@ -602,18 +626,6 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 							}
 							
 							result->addNewComponent( newComponent );
-
-							/*						
-
-							//see if we need to add it as a control or component
-							Control* newControl = dynamic_cast<Control*>(newComponent);
-							if ( (NULL != newControl) && (NULL != controlContainer) ) {
-								controlContainer->add( newControl, newControl->getAlignment() );
-							}
-							else {
-								result->addComponent( newComponent );
-							}
-							*/
 						}
 					}
 					
@@ -642,12 +654,6 @@ void VFFInputStream::readComponentInstance( Component* component )
 	componentInputLevel_ = -1;
 	if ( NULL == topLevelComponent_ ) {
 		topLevelComponent_ = component;	
-/*
-		Control* control = dynamic_cast<Control*>(component);
-		if ( NULL != control ) {
-			control->setVisible( false );
-		}
-*/
 
 		component->preLoading();
 		component->loading();
@@ -662,12 +668,6 @@ void VFFInputStream::readComponentInstance( Component* component )
 	component->loaded();
 
 	component->postLoaded( topLevelControlVisibility_ );
-/*
-	Control* control = dynamic_cast<Control*>(component);
-	if ( NULL != control ) {
-		control->setVisible( topLevelControlVisibility_ );
-	}
-	*/
 }
 
 Component* VFFInputStream::readNewComponent()
@@ -683,14 +683,7 @@ Component* VFFInputStream::readNewComponent()
 		result->loaded();
 	}	
 
-	if ( -1 == componentInputLevel_ ) {		
-		/*
-		Control* control = dynamic_cast<Control*>(result);
-		if ( NULL != control ) {
-			control->setVisible( topLevelControlVisibility_ );
-		}
-		*/
-
+	if ( -1 == componentInputLevel_ ) {
 		result->postLoaded(topLevelControlVisibility_);
 	}
 
