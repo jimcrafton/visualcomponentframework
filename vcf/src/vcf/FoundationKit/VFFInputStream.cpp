@@ -747,7 +747,9 @@ bool VFFInputStream::getComponentConstant( const String& name, String& value )
 {	
 	bool result = false;
 
-	VariantData tmp = componentConstants[name];
+	const Dictionary& d = componentConstants;
+
+	VariantData tmp = d[name];
 	if ( !tmp.isNull() && tmp.type != pdUndefined ) {
 
 		if ( tmp.type == pdObject ) {
@@ -765,7 +767,10 @@ bool VFFInputStream::getComponentConstant( const String& name, String& value )
 	return result;
 }
 
-
+void VFFInputStream::internal_clearComponentConstants()
+{
+	componentConstants.clear();
+}
 /**
 $Id$
 */

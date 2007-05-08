@@ -414,7 +414,7 @@ public:
 	virtual Component* findComponent( const String& componentName, const bool& recursive=false );
 
 
-	virtual bool generatePropertyValue( Property* property, VariantData* value, String& strValue );
+	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
 
 	/**
 	Used to bind a variable to a component by attempting to bind the variable

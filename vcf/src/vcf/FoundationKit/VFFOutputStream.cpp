@@ -63,10 +63,12 @@ String VFFOutputStream::binToHex( Persistable* persistableObject )
 	return result;
 }
 
-void VFFOutputStream::writeObject( Object* object, const String& objectPropertyName )
+void VFFOutputStream::writeObject( Component* component, Object* object, const String& objectPropertyName )
 {
 	String s;
 	String tabString;
+	String propertyStrValue;
+	String propertyName;
 
 	Persistable* persistable = dynamic_cast<Persistable*>(object);
 	if ( NULL != persistable ) {
@@ -91,7 +93,7 @@ void VFFOutputStream::writeObject( Object* object, const String& objectPropertyN
 						if ( pdObject == value->type ) {
 							Object* obj = (Object*)(*value);
 							if ( NULL != obj ) {
-								writeObject( obj, objectPropertyName + "." + prop->getName() );
+								writeObject( component, obj, objectPropertyName + "." + prop->getName() );
 							}
 							else {
 								s = tabString + prop->getName() + " = null\n";
@@ -99,15 +101,31 @@ void VFFOutputStream::writeObject( Object* object, const String& objectPropertyN
 							}
 						}
 						else if ( pdString == value->type ) {
-							s = tabString + objectPropertyName + "." + prop->getName() + " = '" + value->toString() + "'\n";
+							propertyName = objectPropertyName + "." + prop->getName();
+							if ( !component->generatePropertyValue( propertyName, prop, value, propertyStrValue ) ) {
+								propertyStrValue = value->toString();
+							}
+							s = tabString + propertyName + " = '" + value->toString() + "'\n";
 							stream_->write( s );
 						}
 						else if ( pdEnumMask == value->type ) {
-							s = tabString + objectPropertyName + "." + prop->getName() + " = [" + prop->toString() + "]\n";
+							propertyName = objectPropertyName + "." + prop->getName();
+
+							if ( !component->generatePropertyValue( propertyName, prop, value, propertyStrValue ) ) {
+								propertyStrValue = prop->toString();
+							}
+
+							s = tabString + propertyName + " = [" + propertyStrValue + "]\n";
 							stream_->write( s );
 						}
 						else {
-							s = tabString + objectPropertyName + "." + prop->getName() + " = " + value->toString() + "\n";
+							propertyName = objectPropertyName + "." + prop->getName();
+
+							if ( !component->generatePropertyValue( propertyName, prop, value, propertyStrValue ) ) {
+								propertyStrValue = value->toString();
+							}
+
+							s = tabString + propertyName + " = " + propertyStrValue + "\n";
 							stream_->write( s );
 						}
 					}
@@ -131,6 +149,7 @@ void VFFOutputStream::writeProperty( Component* component, Property* property )
 	String s;
 	String propertyStrValue;
 
+	String propertyName = property->getName();
 
 	VariantData* value = property->get();
 	switch ( value->type ) {
@@ -144,51 +163,51 @@ void VFFOutputStream::writeProperty( Component* component, Property* property )
 					//it will be written out twice
 					if ( subComponent->getName().empty() ) {
 						StringUtils::trace( Format("Warning - property '%s' references an un-named component of type '%s'\n")
-							% property->getName() % subComponent->getClassName() );
+							% propertyName % subComponent->getClassName() );
 					}
 					else {
-						s  = tabString + property->getName() + " = @" + subComponent->getName() + "\n";
+						s  = tabString + propertyName + " = @" + subComponent->getName() + "\n";
 						stream_->write( s );
 					}
 				}
 				else {
-					writeObject( obj, property->getName() );
+					writeObject( component, obj, propertyName );
 				}
 			}
 			else {
-				s = tabString + property->getName() + " = null\n";
+				s = tabString + propertyName + " = null\n";
 				stream_->write( s );
 			}
 		}
 		break;
 
 		case pdString : {
-			if ( !component->generatePropertyValue( property, value, propertyStrValue ) ) {
+			if ( !component->generatePropertyValue( propertyName, property, value, propertyStrValue ) ) {
 				propertyStrValue = value->toString();
 			}
 			
-			s = tabString + property->getName() + " = '" + propertyStrValue + "'\n";
+			s = tabString + propertyName + " = '" + propertyStrValue + "'\n";
 			stream_->write( s );
 		}
 		break;
 
 		case pdEnumMask : {
-			if ( !component->generatePropertyValue( property, value, propertyStrValue ) ) {
+			if ( !component->generatePropertyValue( propertyName, property, value, propertyStrValue ) ) {
 				propertyStrValue = property->toString();
 			}
 
-			s = tabString + property->getName() + " = [" + propertyStrValue + "]\n";
+			s = tabString + propertyName + " = [" + propertyStrValue + "]\n";
 			stream_->write( s );
 		}
 		break;
 
 		default : {
 			
-			if ( !component->generatePropertyValue( property, value, propertyStrValue ) ) {
+			if ( !component->generatePropertyValue( propertyName, property, value, propertyStrValue ) ) {
 				propertyStrValue = value->toString();
 			}
 
-			s = tabString + property->getName() + " = " + propertyStrValue + "\n";
+			s = tabString + propertyName + " = " + propertyStrValue + "\n";
 			stream_->write( s );
 		}
 		break;
