@@ -909,7 +909,7 @@ void Component::storeSettings( const bool& recursive )
 	}
 }
 
-bool Component::generatePropertyValue( Property* property, VariantData* value, String& strValue )
+bool Component::generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue )
 {
 	return false;
 }

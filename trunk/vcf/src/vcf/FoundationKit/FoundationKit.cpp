@@ -12,6 +12,7 @@ where you installed the VCF.
 #include "vcf/FoundationKit/TextCodec.h"
 #include "vcf/FoundationKit/StringsMessageLoader.h"
 #include "vcf/FoundationKit/ThreadManager.h"
+#include "vcf/FoundationKit/VFFInputStream.h"
 
 
 #include "vcf/FoundationKit/RTTIMacros.h"
@@ -109,6 +110,8 @@ void FoundationKit::terminate()
 	ThreadManager::terminate();
 
 	PackageManager::terminate();
+
+	VFFInputStream::internal_clearComponentConstants();
 
 #ifdef _VCF_DEBUG_NEW
 	Mutex* mutex = Object::accessMutex_;

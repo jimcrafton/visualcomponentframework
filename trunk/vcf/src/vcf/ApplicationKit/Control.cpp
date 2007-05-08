@@ -39,8 +39,8 @@ Control::Control():
 	container_(NULL),
 	controlState_(Control::csDefaultControlState)
 {
-	//this (Font) cast is to avoid an internal compiler error on some vc6 versions
-	font_ = new Font( (Font) UIToolkit::getUIMetricsManager()->getDefaultFontFor( UIMetricsManager::ftControlFont ) );
+	font_ = new Font();
+	*font_  = UIToolkit::getUIMetricsManager()->getDefaultFontFor( UIMetricsManager::ftControlFont );
 
 	context_ = new ControlGraphicsContext( this );
 
@@ -233,6 +233,36 @@ bool Control::bindVariable( Component** variablePtr, const String& variableName 
 	}
 
 	return result;
+}
+
+bool Control::generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue )
+{
+	String lcPropName = StringUtils::lowerCase(fullPropertyName);
+	if ( lcPropName == CONTROL_HEIGHT ) {
+
+	}
+	else if ( lcPropName == CONTROL_WIDTH ) {
+
+	}
+	else if ( lcPropName == CONTROL_FONTNAME ) {		
+		Font f = UIToolkit::getUIMetricsManager()->getDefaultFontFor(UIMetricsManager::ftControlFont);
+		//we're using the default font name
+		if ( f.getName() == this->getFont()->getName() ) {
+			strValue = CC_FONTNAME;
+			return true;
+		}
+	}
+	else if ( lcPropName == CONTROL_FONTSIZE ) {
+		Font f = UIToolkit::getUIMetricsManager()->getDefaultFontFor(UIMetricsManager::ftControlFont);
+		//we're using the default font name
+		if ( f.getPointSize() == this->getFont()->getPointSize() ) {
+			strValue = CC_FONTSIZE;
+			return true;
+		}
+		return true;
+	}
+
+	return Component::generatePropertyValue( fullPropertyName, property, value, strValue );
 }
 
 Rect Control::getBounds()/**throw( InvalidPeer ); -JEC - FIXME later*/

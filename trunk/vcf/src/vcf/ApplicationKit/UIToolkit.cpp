@@ -15,8 +15,8 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ImageControl.h"
 #include "vcf/ApplicationKit/MenuManager.h"
 #include "vcf/ApplicationKit/PropertyEditorManager.h"
+#include "vcf/FoundationKit/VFFInputStream.h"
 
-//Peers
 
 using namespace VCF;
 
@@ -89,13 +89,35 @@ UIToolkit::~UIToolkit()
 	delete policyMgr_;	
 }
 
+
+String UIToolkit::getControlConstants( const String& name )
+{
+	String result;
+
+	if ( name == CC_FONTNAME ) {
+		Font f = UIToolkit::getUIMetricsManager()->getDefaultFontFor(UIMetricsManager::ftControlFont);
+		result = f.getName();
+	}
+	else if ( name == CC_FONTSIZE ) {
+		Font f = UIToolkit::getUIMetricsManager()->getDefaultFontFor(UIMetricsManager::ftControlFont);
+		result = StringUtils::toString(f.getPointSize());
+	}
+	else if ( name == CC_BUTTONHEIGHT ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtButtonHeight ) );
+	}
+
+	return result;
+}
+
 void UIToolkit::init()
 {
 
 
 	systemClipboard_ = new Clipboard();
 	/**
-	*register basic property editors
+	register basic property editors
+	One could argue that these don't belong here. Instead they 
+	belong in some form designer that someone else implements...
 	*/
 
 	PropertyEditorManager::registerPropertyEditor( "VCF::IntegerPropertyEditor", CLASS_INTEGER );
@@ -126,6 +148,7 @@ void UIToolkit::init()
 	register the components in categorys
 	It's entirely possible that this might ultimately make more sense moved to the 
 	VCF Builder at one point.
+
 	*/
 
 	Component::registerComponent( "VCF::TabbedPages", STANDARD_CATEGORY );
@@ -173,6 +196,21 @@ void UIToolkit::init()
 
 	MenuManager::create();
 	//UIShell::getUIShell()->init();
+
+
+	VFFInputStream::registerComponentConstant( CC_FONTNAME, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_FONTSIZE, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_BUTTONHEIGHT, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_LABELHEIGHT, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_CHECKBOXHEIGHT, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_COMBOBOXHEIGHT, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_HEADERHEIGHT, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_TEXTHEIGHT, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_VPROGRESSWIDTH, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_HPROGRESSHEIGHT, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_RADIOBOXHEIGHT, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_SEPARATORHEIGHT, UIToolkit::getControlConstants );
+
 }
 
 void UIToolkit::initToolKit()

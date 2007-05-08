@@ -14,6 +14,31 @@ where you installed the VCF.
 #endif
 
 
+//control properties
+//that may use component contants
+//when be written to a Visual Form file.
+#define CONTROL_HEIGHT			"height"
+#define CONTROL_WIDTH			"width"
+#define CONTROL_FONTNAME		"font.name"
+#define CONTROL_FONTSIZE		"font.pointsize"
+
+
+//control constant's
+#define CC_FONTNAME				"CONTROL_FONT"
+#define CC_FONTSIZE				"CONTROL_FONTSIZE"
+
+#define CC_BUTTONHEIGHT			"BUTTON_HEIGHT"
+#define CC_LABELHEIGHT			"LABEL_HEIGHT"
+#define CC_CHECKBOXHEIGHT		"CHECKBOX_HEIGHT"
+#define CC_COMBOBOXHEIGHT		"COMBOBOX_HEIGHT"
+#define CC_HEADERHEIGHT			"HEADER_HEIGHT"
+#define CC_TEXTHEIGHT			"TEXT_HEIGHT"
+#define CC_VPROGRESSWIDTH		"VPROGRESS_WIDTH"
+#define CC_HPROGRESSHEIGHT		"HPROGRESS_HEIGHT"
+#define CC_RADIOBOXHEIGHT		"RADIOBOX_HEIGHT"
+#define CC_SEPARATORHEIGHT		"SEPARATOR_HEIGHT"
+
+
 namespace VCF {
 
 
@@ -529,6 +554,8 @@ public:
 	virtual void postLoaded( const bool& visible );
 
 	virtual bool bindVariable( Component** variablePtr, const String& variableName );
+
+	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
 
 	/**
 	*Returns the control's current border object, if any

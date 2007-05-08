@@ -787,6 +787,8 @@ protected:
 	void onUpdateComponentsTimer( TimerEvent* e );
 
 	void handleTabKeyboardEvent( KeyboardEvent* event );
+
+	static String getControlConstants( const String& name );
 };
 
 };

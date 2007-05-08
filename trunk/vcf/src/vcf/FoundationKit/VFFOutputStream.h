@@ -210,7 +210,7 @@ protected:
 	*/
 	virtual void getComponentHeader( Component* component, String& className, String& classID, String& fallBackClassName );
 
-	void writeObject( Object* object, const String& objectPropertyName );
+	void writeObject( Component* component, Object* object, const String& objectPropertyName );
 
 	void writeProperty( Component* component, Property* property );
 

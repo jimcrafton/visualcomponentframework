@@ -78,6 +78,8 @@ public:
 	*/
 	static void registerComponentConstant( const String& name, ComponentConstantFunc funcPtr );
 
+	static void internal_clearComponentConstants();
+
 	/**
 	Returns a value for a specific constant name.
 	*/
