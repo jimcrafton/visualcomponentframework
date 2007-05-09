@@ -351,6 +351,18 @@ void HeaderControl::paintColumn( GraphicsContext* context, Rect* paintRect, cons
 	}
 }
 
+bool HeaderControl::generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue )
+{
+	String lcPropName = StringUtils::lowerCase(fullPropertyName);
+	if ( lcPropName == CONTROL_HEIGHT ) {
+		if ( getHeight() == UIToolkit::getUIMetricValue( UIMetricsManager::mtHeaderHeight ) ) {
+			strValue = CC_HEADERHEIGHT;
+			return true;
+		}
+	}
+
+	return Control::generatePropertyValue( fullPropertyName, property, value, strValue );
+}
 
 /**
 $Id$

@@ -133,6 +133,7 @@ public:
 
 	void setPageIncrement( const double& val );
 
+	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
 
 protected:
 

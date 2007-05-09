@@ -41,6 +41,8 @@ public:
 	virtual double getPreferredHeight();
 
 	virtual double getPreferredWidth();
+
+	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
 protected:
 
 

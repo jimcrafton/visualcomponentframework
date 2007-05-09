@@ -362,6 +362,7 @@ protected:
 	*/
 	virtual Rect calcImageRect( const Rect& rect, GraphicsContext* context );
 
+	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
 protected:
 	String caption_;
 	ButtonCommandType commandType_;

@@ -175,6 +175,29 @@ void ProgressControl::paint( GraphicsContext* ctx )
 	ctx->drawThemeProgress( &clientBounds, 	state );
 }
 
+bool ProgressControl::generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue )
+{
+	String lcPropName = StringUtils::lowerCase(fullPropertyName);
+	if ( lcPropName == CONTROL_HEIGHT ) {
+		if ( paHorizontal == displayAlignment_ ) {
+			if ( getHeight() == UIToolkit::getUIMetricValue( UIMetricsManager::mtHorizontalProgressHeight ) ) {
+				strValue = CC_HPROGRESSHEIGHT;
+				return true;
+			}
+		}		
+	}
+	else if ( lcPropName == CONTROL_WIDTH ) {
+		if ( paVertical == displayAlignment_ ) {
+			if ( getWidth() == UIToolkit::getUIMetricValue( UIMetricsManager::mtVerticalProgressWidth ) ) {
+				strValue = CC_VPROGRESSWIDTH;
+				return true;
+			}
+		}		
+	}
+
+	return CustomControl::generatePropertyValue( fullPropertyName, property, value, strValue );
+}
+
 
 /**
 $Id$

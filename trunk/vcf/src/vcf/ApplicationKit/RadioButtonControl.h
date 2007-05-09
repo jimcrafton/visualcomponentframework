@@ -65,6 +65,7 @@ public:
 
 	RadioButtonControl* getSelectedRadioButtonFromGroup();
 
+	bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
 protected:
 	/**
 	This is for internal use only - it simply calls the 

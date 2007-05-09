@@ -58,6 +58,19 @@ void CheckBoxControl::paint( GraphicsContext* context )
 }
 
 
+bool CheckBoxControl::generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue )
+{
+	String lcPropName = StringUtils::lowerCase(fullPropertyName);
+	if ( lcPropName == CONTROL_HEIGHT ) {
+		if ( getHeight() == UIToolkit::getUIMetricValue( UIMetricsManager::mtCheckBoxHeight ) ) {
+			strValue = CC_CHECKBOXHEIGHT;
+			return true;
+		}
+	}
+
+	return Control::generatePropertyValue( fullPropertyName, property, value, strValue );
+}
+
 /**
 $Id$
 */

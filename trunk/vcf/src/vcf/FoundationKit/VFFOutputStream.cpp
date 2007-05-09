@@ -105,7 +105,7 @@ void VFFOutputStream::writeObject( Component* component, Object* object, const S
 							if ( !component->generatePropertyValue( propertyName, prop, value, propertyStrValue ) ) {
 								propertyStrValue = value->toString();
 							}
-							s = tabString + propertyName + " = '" + value->toString() + "'\n";
+							s = tabString + propertyName + " = '" + propertyStrValue + "'\n";
 							stream_->write( s );
 						}
 						else if ( pdEnumMask == value->type ) {
