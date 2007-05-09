@@ -108,6 +108,8 @@ public:
 		return progressTextColor_;
 	}
 	void setProgressTextColor( Color* val );
+
+	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
 protected:
 	ProgressAlignment displayAlignment_;
 	double minVal_;

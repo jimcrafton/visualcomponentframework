@@ -24,19 +24,21 @@ where you installed the VCF.
 
 
 //control constant's
-#define CC_FONTNAME				"CONTROL_FONT"
-#define CC_FONTSIZE				"CONTROL_FONTSIZE"
+#define CC_FONTNAME				"ControlFont"
+#define CC_FONTSIZE				"ControlFontsize"
 
-#define CC_BUTTONHEIGHT			"BUTTON_HEIGHT"
-#define CC_LABELHEIGHT			"LABEL_HEIGHT"
-#define CC_CHECKBOXHEIGHT		"CHECKBOX_HEIGHT"
-#define CC_COMBOBOXHEIGHT		"COMBOBOX_HEIGHT"
-#define CC_HEADERHEIGHT			"HEADER_HEIGHT"
-#define CC_TEXTHEIGHT			"TEXT_HEIGHT"
-#define CC_VPROGRESSWIDTH		"VPROGRESS_WIDTH"
-#define CC_HPROGRESSHEIGHT		"HPROGRESS_HEIGHT"
-#define CC_RADIOBOXHEIGHT		"RADIOBOX_HEIGHT"
-#define CC_SEPARATORHEIGHT		"SEPARATOR_HEIGHT"
+#define CC_BUTTONHEIGHT			"ButtonHeight"
+#define CC_LABELHEIGHT			"LabelHeight"
+#define CC_CHECKBOXHEIGHT		"CheckboxHeight"
+#define CC_COMBOBOXHEIGHT		"ComboboxHeight"
+#define CC_HEADERHEIGHT			"HeaderHeight"
+#define CC_TEXTHEIGHT			"TextHeight"
+#define CC_VPROGRESSWIDTH		"VProgressWidth"
+#define CC_HPROGRESSHEIGHT		"HProgressHeight"
+#define CC_RADIOBOXHEIGHT		"RadioboxHeight"
+#define CC_SEPARATORHEIGHT		"SeparatorHeight"
+#define CC_VSLIDERWIDTH			"VSliderWidth"
+#define CC_HSLIDERHEIGHT		"HSliderHeight"
 
 
 namespace VCF {

@@ -220,6 +220,9 @@ public:
 	If you turn on word wrapping the scroll bars will disapear.
 	*/
 	void setTextWrapping( const bool& val );
+
+	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
+
 protected:
 	/**
 	handlers of some standard accelerator events.

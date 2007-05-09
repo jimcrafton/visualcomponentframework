@@ -319,6 +319,29 @@ void SliderControl::keyUp( KeyboardEvent* e )
 }
 
 
+bool SliderControl::generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue )
+{
+	String lcPropName = StringUtils::lowerCase(fullPropertyName);
+	if ( lcPropName == CONTROL_WIDTH ) {
+		if ( SliderControl::doVertical == orientation_ ) {
+			if ( getWidth() == UIToolkit::getUIMetricValue( UIMetricsManager::mtVerticalProgressWidth ) ) {
+				strValue = CC_VSLIDERWIDTH;
+				return true;
+			}
+		}
+	}
+	else if ( lcPropName == CONTROL_HEIGHT ) {
+		if ( SliderControl::doVertical != orientation_ ) {
+			if ( getHeight() == UIToolkit::getUIMetricValue( UIMetricsManager::mtHorizontalProgressHeight ) ) {
+				strValue = CC_HSLIDERHEIGHT;
+				return true;
+			}
+		}
+	}
+
+	return Control::generatePropertyValue( fullPropertyName, property, value, strValue );
+}
+
 /**
 $Id$
 */

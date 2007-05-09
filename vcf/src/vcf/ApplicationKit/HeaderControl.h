@@ -114,6 +114,9 @@ public:
 	virtual void mouseUp( MouseEvent* event );
 
 	virtual void handleEvent( Event* event );
+
+	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
+
 protected:
 	virtual void paintColumn( GraphicsContext* context, Rect* paintRect, const uint32& index, ColumnItem* item );
 	ColumnModel* columnModel_;

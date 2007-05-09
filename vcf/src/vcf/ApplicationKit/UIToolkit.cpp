@@ -105,6 +105,33 @@ String UIToolkit::getControlConstants( const String& name )
 	else if ( name == CC_BUTTONHEIGHT ) {
 		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtButtonHeight ) );
 	}
+	else if ( name == CC_LABELHEIGHT ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtLabelHeight ) );
+	}
+	else if ( name == CC_CHECKBOXHEIGHT ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtCheckBoxHeight ) );
+	}
+	else if ( name == CC_COMBOBOXHEIGHT ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtComboBoxHeight ) );
+	}
+	else if ( name == CC_HEADERHEIGHT ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtHeaderHeight ) );
+	}
+	else if ( name == CC_TEXTHEIGHT ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtTextControlHeight ) );
+	}
+	else if ( name == CC_VPROGRESSWIDTH ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtVerticalProgressWidth ) );
+	}
+	else if ( name == CC_HPROGRESSHEIGHT ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtHorizontalProgressHeight ) );
+	}
+	else if ( name == CC_RADIOBOXHEIGHT ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtRadioBoxHeight ) );
+	}
+	else if ( name == CC_SEPARATORHEIGHT ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtSeparatorHeight ) );
+	}
 
 	return result;
 }
