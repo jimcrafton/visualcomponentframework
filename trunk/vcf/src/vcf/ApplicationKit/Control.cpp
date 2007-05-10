@@ -1401,15 +1401,21 @@ void Control::setCursorID( const int32& cursorID )
 
 void Control::setAnchor( const uint32& anchor )
 {
-	anchor_ = anchor;
-	aligment_ = AlignNone;
-	updateAnchorDeltas();
+	if ( anchor_ != anchor ) {
+		anchor_ = anchor;
 
-	Control* parent = getParent();
-	if ( NULL != parent ){
-		Container* container = parent->getContainer();
-		if ( NULL != container ){
-			container->resizeChildren(NULL);//this);
+		if ( AnchorNone != anchor_ ) {
+			aligment_ = AlignNone;
+		}
+
+		updateAnchorDeltas();
+		
+		Control* parent = getParent();
+		if ( NULL != parent ){
+			Container* container = parent->getContainer();
+			if ( NULL != container ){
+				container->resizeChildren(NULL);//this);
+			}
 		}
 	}
 }
