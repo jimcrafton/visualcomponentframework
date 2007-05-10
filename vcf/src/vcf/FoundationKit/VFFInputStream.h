@@ -93,10 +93,8 @@ public:
 	void getOuterClassNameAndUUID( VCF::String& className, VCF::String& UUID, VCF::String& fallbackClassName );
 
 	/**
-	*reads in a new component, that is the caller passes in a pointer to
-	*a pointer of a Component, and the method creates a new instance for the caller.
-	*@param Component**  the derefenced component ptr should be NULL when invoking this
-	*method, usually this is a top level component like a Frame
+	*reads in a new component. The method creates a new instance for the caller.
+	*@return Component*  usually this is a top level component like a Frame
 	*/
 	VCF::Component* readNewComponent();
 

@@ -97,7 +97,7 @@ where you installed the VCF.
 #include "vcf/FoundationKit/Interface.h"
 #include "vcf/FoundationKit/Object.h"
 #include "vcf/FoundationKit/CommandLine.h"
-
+#include "vcf/FoundationKit/IniFini.h"
 
 
 
@@ -195,7 +195,8 @@ namespace VCF{
 		*/
 		static void assertCondition( bool condition, const String& failureMessage );
 
-
+		static void internal_addInitializer( InitializationFunc funcPtr );
+		static void internal_addFinalizer( FinalizationFunc funcPtr );
 	private :
 		FoundationKit();
 		FoundationKit( const FoundationKit& );
