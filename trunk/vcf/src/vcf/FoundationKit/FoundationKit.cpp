@@ -40,10 +40,41 @@ EnumeratorContainer<std::vector<String>,String>* Component::registeredCategoryCo
 
 std::vector<String>* Component::registeredCategory = NULL;
 
-
+std::vector<InitializationFunc>* initializerFunctions = NULL;
+std::vector<FinalizationFunc>* finalizerFunctions = NULL;
 
 
 static CommandLine foundationKitCommandLine;
+
+
+
+void FoundationKit::internal_addInitializer( InitializationFunc funcPtr )
+{
+	if ( NULL == initializerFunctions ) {
+		initializerFunctions = new std::vector<InitializationFunc>();
+	}
+
+	std::vector<InitializationFunc>::iterator found = 
+		std::find( initializerFunctions->begin(), initializerFunctions->end(), funcPtr );
+	if ( found == initializerFunctions->end() ) {
+		initializerFunctions->push_back( funcPtr );
+	}
+
+}
+
+void FoundationKit::internal_addFinalizer( FinalizationFunc funcPtr )
+{
+	if ( NULL == finalizerFunctions ) {
+		finalizerFunctions = new std::vector<FinalizationFunc>();
+	}
+
+	std::vector<FinalizationFunc>::iterator found = 
+		std::find( finalizerFunctions->begin(), finalizerFunctions->end(), funcPtr );
+	if ( found == finalizerFunctions->end() ) {
+		finalizerFunctions->push_back( funcPtr );
+	}
+}
+
 
 void FoundationKit::init( int argc, char** argv )
 {
@@ -93,10 +124,41 @@ void FoundationKit::init( int argc, char** argv )
 		}
 
 	}
+
+
+	//call initializers!
+
+	if ( NULL != initializerFunctions ) {
+		std::vector<InitializationFunc>::iterator it = initializerFunctions->begin();
+		while ( it != initializerFunctions->end() ) {
+			InitializationFunc funcPtr = *it;
+
+			(*funcPtr)();
+
+			it ++;
+		}
+	}
 }
 
 void FoundationKit::terminate()
 {
+	//call finalizers!
+
+	if ( NULL != finalizerFunctions ) {
+		std::vector<FinalizationFunc>::iterator it = finalizerFunctions->begin();
+		while ( it != finalizerFunctions->end() ) {
+			FinalizationFunc funcPtr = *it;
+
+			(*funcPtr)();
+
+			it ++;
+		}
+
+		delete finalizerFunctions;
+	}
+
+
+
 	TextCodec::internal_freeAllRegisteredCodecs();
 
 	MessageLoader::internal_freeAllRegisteredMessageLoaders();
