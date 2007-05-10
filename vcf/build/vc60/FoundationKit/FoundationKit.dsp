@@ -101,6 +101,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitSelectLib.h
 
 SOURCE=..\..\..\src\vcf\FoundationKit\FrameworkConfig.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\IniFini.h
+# End Source File
 # End Group
 # Begin Group "Source Files"
 
@@ -113,6 +117,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKit.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\IniFini.cpp
 # End Source File
 # End Group
 # Begin Group "Peers"
