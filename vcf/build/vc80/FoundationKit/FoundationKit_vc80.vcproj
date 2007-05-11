@@ -1290,6 +1290,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\IniFini.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\IniFini.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Library.cpp"
 				>
 				<FileConfiguration
@@ -1365,32 +1373,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\MIMEType.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Parser.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Parser.h"
 				>
 			</File>
 			<File
@@ -1551,6 +1533,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCFProcess.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VFFParser.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VFFParser.h"
 				>
 			</File>
 			<File
