@@ -122,6 +122,13 @@ _class_rtti_(ColumnLayoutContainer, "VCF::StandardContainer", COLUMNLAYOUTCONTAI
 _class_rtti_end_
 
 _class_rtti_(HorizontalLayoutContainer, "VCF::StandardContainer", HORIZONTALLAYOUTCONTAINER_CLASSID)
+_property_( int32, "numberOfColumns", getNumberOfColumns, setNumberOfColumns, "" );
+_property_( double, "maxRowHeight", getMaxRowHeight, setMaxRowHeight, "" );
+_property_( double, "rowSpacerHeight", getRowSpacerHeight, setRowSpacerHeight, "" );
+_property_( bool, "maximizeLastRow", getMaximizeLastRow, setMaximizeLastRow, "" );
+_property_( bool, "equalizeHeights", getEqualizeHeights, setEqualizeHeights, "" );
+_property_( bool, "averageHeights", getAverageHeights, setAverageHeights, "" );
+_property_( bool, "keepControlsWidth", getKeepControlsWidth, setKeepControlsWidth, "" );
 _class_rtti_end_
 /*
 _class_abstract_rtti_(AbstractListModel, "VCF::AbstractListModel", "VCF::ListModel", ABSTRACTLISTMODEL_CLASSID)

@@ -970,33 +970,6 @@ public:
 		//no-op
 	};
 
-	virtual bool hasMoreElements( Object* source ){
-		if ( NULL != enumeration_ ){
-			return enumeration_->hasMoreElements();
-		}
-		else {
-			return false;
-		}
-	};
-
-	virtual VariantData* nextElement( Object* source ){
-		VariantData* element = NULL;
-		if ( NULL != enumeration_ ){
-			if ( true == enumeration_->hasMoreElements() ){
-				value_ = enumeration_->nextElement();
-				element = &value_;
-			}
-		}
-		return element;
-	};
-
-	virtual void startCollection( Object* source ){
-		enumeration_ = NULL;
-		if ( NULL != source ){
-			enumeration_ = (source->*getFunction_)();
-		}
-	};
-
 	virtual Property* clone(){
 		return new TypedCollectionProperty<ITEM_TYPE>(*this);
 	};

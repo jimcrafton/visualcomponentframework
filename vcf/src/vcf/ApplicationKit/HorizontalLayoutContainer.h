@@ -17,6 +17,12 @@ where you installed the VCF.
 
 
 
+//container properties
+//that may use component contants
+//when be written to a Visual Form file.
+#define	CONTAINER_MAXROWHEIGHT		"maxrowheight"
+#define	CONTAINER_ROWSPACERHEIGHT	"rowspacerheight"
+
 
 
 namespace VCF {
@@ -75,12 +81,16 @@ public:
 
 
 	void setNumberOfColumns( const int32& numColumns ) {
-		columns_.clear();
-		columnTweens_.clear();
 
-		columns_.resize( numColumns, 0.0 );
+		if ( columns_.size() != numColumns ) {
 
-		columnTweens_.resize( numColumns-1, 0.0 );
+			columns_.clear();
+			columnTweens_.clear();
+
+			columns_.resize( numColumns, 0.0 );
+
+			columnTweens_.resize( numColumns-1, 0.0 );
+		}
 	}
 
 	int getNumberOfColumns() const {
@@ -105,6 +115,10 @@ public:
 
 	void setMaxRowHeight( const double& val ) {
 		maxRowHeight_ = val;
+	}
+
+	double getMaxRowHeight() {
+		return maxRowHeight_;
 	}
 
 	/**
@@ -319,6 +333,65 @@ public:
 	void setRowSpacerHeight( const double& val ) {
 		rowSpacerHeight_ = val;
 	}
+
+	double getRowSpacerHeight() {
+		return rowSpacerHeight_;
+	}
+
+
+
+		
+	bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue )	{
+		String lcPropName = StringUtils::lowerCase(fullPropertyName);
+		if ( lcPropName == CONTAINER_MAXROWHEIGHT ) {
+			if ( maxRowHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta ) ) {
+				strValue = CC_WINDOW_BORDER;
+				return true;
+			}
+			else if ( maxRowHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta ) ) {
+				strValue = CC_CONTAINER_BORDER;
+				return true;
+			}
+			else if ( maxRowHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing ) ) {
+				strValue = CC_CONTROL_VSPACE;
+				return true;
+			}
+			else if ( maxRowHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtInformationControlTopSpacer ) ) {
+				strValue = CC_INFO_TOPSPACE;
+				return true;
+			}
+			else if ( maxRowHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtInformationControlBottomSpacer ) ) {
+				strValue = CC_INFO_BOTTOMSPACE;
+				return true;
+			}		
+		}
+		else if ( lcPropName == CONTAINER_ROWSPACERHEIGHT ) {
+			if ( rowSpacerHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta ) ) {
+				strValue = CC_WINDOW_BORDER;
+				return true;
+			}
+			else if ( rowSpacerHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta ) ) {
+				strValue = CC_CONTAINER_BORDER;
+				return true;
+			}
+			else if ( rowSpacerHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing ) ) {
+				strValue = CC_CONTROL_VSPACE;
+				return true;
+			}
+			else if ( rowSpacerHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtInformationControlTopSpacer ) ) {
+				strValue = CC_INFO_TOPSPACE;
+				return true;
+			}
+			else if ( rowSpacerHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtInformationControlBottomSpacer ) ) {
+				strValue = CC_INFO_BOTTOMSPACE;
+				return true;
+			}		
+		}
+
+		return StandardContainer::generatePropertyValue( fullPropertyName, property, value, strValue );
+	}
+
+protected:
 
 	std::vector<double> columns_;
 	std::vector<double> columnTweens_;
