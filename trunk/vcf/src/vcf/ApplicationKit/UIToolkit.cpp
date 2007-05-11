@@ -132,6 +132,25 @@ String UIToolkit::getControlConstants( const String& name )
 	else if ( name == CC_SEPARATORHEIGHT ) {
 		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtSeparatorHeight ) );
 	}
+	else if ( name == CC_WINDOW_BORDER ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta ) );
+	}
+	else if ( name == CC_CONTAINER_BORDER ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta ) );
+	}
+	else if ( name == CC_CONTROL_VSPACE ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing ) );
+	}
+	else if ( name == CC_CONTROL_HSPACE ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing ) );
+	}
+	else if ( name == CC_INFO_TOPSPACE ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtInformationControlTopSpacer ) );
+	}
+	else if ( name == CC_INFO_BOTTOMSPACE ) {
+		result = StringUtils::toString( UIToolkit::getUIMetricValue( UIMetricsManager::mtInformationControlBottomSpacer ) );
+	}
+
 
 	return result;
 }
@@ -238,6 +257,12 @@ void UIToolkit::init()
 	VFFInputStream::registerComponentConstant( CC_RADIOBOXHEIGHT, UIToolkit::getControlConstants );
 	VFFInputStream::registerComponentConstant( CC_SEPARATORHEIGHT, UIToolkit::getControlConstants );
 
+	VFFInputStream::registerComponentConstant( CC_WINDOW_BORDER, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_CONTAINER_BORDER, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_CONTROL_VSPACE, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_CONTROL_HSPACE, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_INFO_TOPSPACE, UIToolkit::getControlConstants );
+	VFFInputStream::registerComponentConstant( CC_INFO_BOTTOMSPACE, UIToolkit::getControlConstants );
 }
 
 void UIToolkit::initToolKit()

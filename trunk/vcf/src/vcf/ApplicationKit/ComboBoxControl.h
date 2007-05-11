@@ -298,6 +298,7 @@ public:
 
 	virtual void selectItems( const bool& select );
 
+	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
 protected:
 	void onDropDownLostFocus( WindowEvent* event );
 	void closeDropDown( Event* event );

@@ -87,7 +87,10 @@ Frame::Frame():
 	allowFrameAsChildControl_(false)
 {
 	setContainerDelegate( this );
-	setContainer( new StandardContainer() );	
+
+	StandardContainer* container = new StandardContainer();
+	container->setBorderWidth( UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta ) );
+	setContainer( container );	
 }
 
 Frame::~Frame()

@@ -23,9 +23,11 @@ where you installed the VCF.
 #define CONTROL_FONTSIZE		"font.pointsize"
 
 
-//control constant's
+//control values
 #define CC_FONTNAME				"ControlFont"
 #define CC_FONTSIZE				"ControlFontsize"
+
+
 
 #define CC_BUTTONHEIGHT			"ButtonHeight"
 #define CC_LABELHEIGHT			"LabelHeight"
@@ -39,6 +41,9 @@ where you installed the VCF.
 #define CC_SEPARATORHEIGHT		"SeparatorHeight"
 #define CC_VSLIDERWIDTH			"VSliderWidth"
 #define CC_HSLIDERHEIGHT		"HSliderHeight"
+
+
+
 
 
 namespace VCF {

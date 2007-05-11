@@ -19,6 +19,22 @@ where you installed the VCF.
 #endif // _VCF_ABSTRACTCONTAINER_H__
 
 
+//container properties
+//that may use component contants
+//when be written to a Visual Form file.
+#define	CONTAINER_BOTTOMHEIGHT		"bottomborderheight"
+#define	CONTAINER_TOPHEIGHT			"topborderheight"
+#define	CONTAINER_LEFTWIDTH			"leftborderwidth"
+#define	CONTAINER_RIGHTWIDTH		"rightborderwidth"
+
+#define CC_WINDOW_BORDER			"WindowBorder"
+#define CC_CONTAINER_BORDER			"ContainerBorder"
+#define CC_CONTROL_VSPACE			"ControlVBorder"
+#define CC_CONTROL_HSPACE			"ControlHBorder"
+#define CC_INFO_TOPSPACE			"InfoTopBorder"
+#define CC_INFO_BOTTOMSPACE			"InfoBottomBorder"
+
+
 namespace VCF {
 
 
@@ -70,6 +86,8 @@ public:
 	void calcAlignmentList( const AlignmentType& alignment, std::vector< Control* >& alignmentList );
 	Control* getControlWithAlignment( const AlignmentType& alignment, const bool& first = true );
 	Control* getControlInAlignmentList( const AlignmentType& alignment, const bool& first = true );
+
+	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
 
 protected:
 	double bottomBorderHeight_;

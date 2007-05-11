@@ -242,48 +242,11 @@ public:
 		}
 	};
 
-	/**
-	*returns whether or not the property represents a collection
-	*if the result is true, then it is safe to call the hasMoreElements() and
-	*nextElement() methods.
-	*/
+
 	bool isCollection(){
 		return isCollection_;
 	};
 
-	/**
-	*returns whether or not the property collection has more elements
-	*/
-	virtual bool hasMoreElements( Object* source ){
-		return false;
-	};
-
-	/**
-	*returns the next element in the collection, currently only forward
-	*iterating. Also no support for getting an item from an index
-	*/
-	virtual VariantData* nextElement( Object* source ){
-		return NULL;
-	};
-
-	/**
-	*We can't call get() to grab the collection directly, since
-	*an Enumerator is a templated class, and this point we
-	*don't know the template type. So instead, we call startCollection()
-	*to invoke the some getXXX function that returns an enumerator.
-	*This will mean that derived classes will now have the enumerator
-	*and can start calling methods on it. The base class implementation
-	*does nothing.
-	*/
-	virtual void startCollection( Object* source ){
-		//no-op
-	};
-
-	void startCollection(){
-		if ( NULL != source_ ){
-			startCollection( source_ );
-		}
-	};
 
 	void add( VariantData* value ){
 		if ( NULL != source_ ){

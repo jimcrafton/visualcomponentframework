@@ -547,7 +547,84 @@ void StandardContainer::setBorderWidth ( const double& borderWidth )
 	}
 }
 
+bool StandardContainer::generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue )
+{
+	String lcPropName = StringUtils::lowerCase(fullPropertyName);
+	if ( lcPropName == CONTAINER_BOTTOMHEIGHT ) {
+		if ( bottomBorderHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta ) ) {
+			strValue = CC_WINDOW_BORDER;
+			return true;
+		}
+		else if ( bottomBorderHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta ) ) {
+			strValue = CC_CONTAINER_BORDER;
+			return true;
+		}
+		else if ( bottomBorderHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing ) ) {
+			strValue = CC_CONTROL_VSPACE;
+			return true;
+		}
+		else if ( bottomBorderHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtInformationControlTopSpacer ) ) {
+			strValue = CC_INFO_TOPSPACE;
+			return true;
+		}
+		else if ( bottomBorderHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtInformationControlBottomSpacer ) ) {
+			strValue = CC_INFO_BOTTOMSPACE;
+			return true;
+		}		
+	}
+	else if ( lcPropName == CONTAINER_TOPHEIGHT ) {
+		if ( topBorderHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta ) ) {
+			strValue = CC_WINDOW_BORDER;
+			return true;
+		}
+		else if ( topBorderHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta ) ) {
+			strValue = CC_CONTAINER_BORDER;
+			return true;
+		}
+		else if ( topBorderHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtControlVerticalSpacing ) ) {
+			strValue = CC_CONTROL_VSPACE;
+			return true;
+		}
+		else if ( topBorderHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtInformationControlTopSpacer ) ) {
+			strValue = CC_INFO_TOPSPACE;
+			return true;
+		}
+		else if ( topBorderHeight_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtInformationControlBottomSpacer ) ) {
+			strValue = CC_INFO_BOTTOMSPACE;
+			return true;
+		}		
+	}
+	else if ( lcPropName == CONTAINER_LEFTWIDTH ) {
+		if ( leftBorderWidth_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta ) ) {
+			strValue = CC_WINDOW_BORDER;
+			return true;
+		}
+		else if ( leftBorderWidth_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta ) ) {
+			strValue = CC_CONTAINER_BORDER;
+			return true;
+		}
+		else if ( leftBorderWidth_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing ) ) {
+			strValue = CC_CONTROL_HSPACE;
+			return true;
+		}		
+	}
+	else if ( lcPropName == CONTAINER_RIGHTWIDTH ) {
+		if ( rightBorderWidth_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta ) ) {
+			strValue = CC_WINDOW_BORDER;
+			return true;
+		}
+		else if ( rightBorderWidth_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta ) ) {
+			strValue = CC_CONTAINER_BORDER;
+			return true;
+		}
+		else if ( rightBorderWidth_ == UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing ) ) {
+			strValue = CC_CONTROL_HSPACE;
+			return true;
+		}		
+	}
 
+	return Component::generatePropertyValue( fullPropertyName, property, value, strValue );
+}
 
 
 
