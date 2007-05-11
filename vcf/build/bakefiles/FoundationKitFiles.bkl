@@ -45,6 +45,7 @@
         vcf/FoundationKit/FoundationKitRTTI.inl
         vcf/FoundationKit/FoundationKitSelectLib.h
         vcf/FoundationKit/FrameworkConfig.h
+        vcf/FoundationKit/IniFini.h
         vcf/FoundationKit/Interface.h
         vcf/FoundationKit/InterfaceClass.h
         vcf/FoundationKit/InvalidImplementer.h
@@ -155,6 +156,7 @@
         vcf/FoundationKit/FilePath.cpp
         vcf/FoundationKit/FileStream.cpp
         vcf/FoundationKit/FoundationKit.cpp
+        vcf/FoundationKit/IniFini.cpp
         vcf/FoundationKit/InterfaceClass.cpp
         vcf/FoundationKit/Library.cpp
         vcf/FoundationKit/Locales.cpp

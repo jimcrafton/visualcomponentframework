@@ -634,6 +634,10 @@ SOURCE=..\..\src\vcf\FoundationKit\FoundationKit.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\vcf\FoundationKit\IniFini.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\vcf\FoundationKit\InterfaceClass.cpp
 # End Source File
 # Begin Source File
@@ -1015,6 +1019,10 @@ SOURCE=..\..\src\vcf\FoundationKit\FoundationKitSelectLib.h
 # Begin Source File
 
 SOURCE=..\..\src\vcf\FoundationKit\FrameworkConfig.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\vcf\FoundationKit\IniFini.h
 # End Source File
 # Begin Source File
 

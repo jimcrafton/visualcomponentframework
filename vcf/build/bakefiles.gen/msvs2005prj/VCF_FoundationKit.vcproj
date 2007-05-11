@@ -379,6 +379,7 @@
 			<File RelativePath="..\..\src\vcf\FoundationKit\FilePath.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\FileStream.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\FoundationKit.cpp"/>
+			<File RelativePath="..\..\src\vcf\FoundationKit\IniFini.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\InterfaceClass.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Library.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Locales.cpp"/>
