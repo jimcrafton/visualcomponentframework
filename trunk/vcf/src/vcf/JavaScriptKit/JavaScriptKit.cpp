@@ -29,7 +29,7 @@ String convertClassNameToJSClassName( const String& className )
 	String result = className;
 
 	int pos = result.find( "::" );
-	if ( pos != String.npos ) {
+	if ( pos != String::npos ) {
 		String namespaceStr = result.substr( 0, pos );
 		if ( namespaceStr == "VCF" ) {
 			result.erase( 0, pos+1 );
