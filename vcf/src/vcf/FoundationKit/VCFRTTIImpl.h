@@ -910,25 +910,39 @@ protected:
 *TypedCollectionProperty represents a type safe wrapper around properties that
 *are enumerations of items.
 */
-template <class ITEM_TYPE>
+template <typename ITEM_TYPE>
 class TypedCollectionProperty : public Property {
 public:
-	typedef Enumerator<ITEM_TYPE>* (Object::*GetFunction)(void);
+	
 	typedef void (Object::*AddFunction)( ITEM_TYPE );
 	typedef void (Object::*InsertFunction)( const uint32&, ITEM_TYPE );
 	typedef void (Object::*DeleteFunction1)( ITEM_TYPE );
 	typedef void (Object::*DeleteFunction2)( const uint32& );
 
-	TypedCollectionProperty( GetFunction getFunc, AddFunction addFunc, InsertFunction insertFunc,
-		                     DeleteFunction1 deleteFunc1, DeleteFunction2 deleteFunc2,
-							 const PropertyDescriptorType& propertyType ){
+	typedef ITEM_TYPE (Object::*GetFunction)( const uint32& );
+	typedef void (Object::*SetFunction)( const uint32&, ITEM_TYPE );
+
+	TypedCollectionProperty( GetFunction getFunc, SetFunction setFunc, 
+							AddFunction addFunc, InsertFunction insertFunc,
+							DeleteFunction1 deleteFunc1, DeleteFunction2 deleteFunc2,
+							const PropertyDescriptorType& propertyType ){
 
 		init();
-		getFunction_ = getFunc;
+		getFunc_ = getFunc;
+		setFunc_ = setFunc;
 		addFunc_ = addFunc;
 		insertFunc_ = insertFunc;
 		deleteFunc1_ = deleteFunc1;
 		deleteFunc2_ = deleteFunc2;
+		setType( propertyType );
+	};
+
+	TypedCollectionProperty( GetFunction getFunc, SetFunction setFunc,
+							 const PropertyDescriptorType& propertyType ){
+
+		init();
+		getFunc_ = getFunc;
+		setFunc_ = setFunc;
 		setType( propertyType );
 	};
 
@@ -937,8 +951,8 @@ public:
 		Property( prop ){
 
 		init();
-		getFunction_ = prop.getFunction_;
-		enumeration_ = prop.enumeration_;
+		getFunc_ = prop.getFunc_;
+		setFunc_ = prop.setFunc_;
 		addFunc_ = prop.addFunc_;
 		insertFunc_ = prop.insertFunc_;
 		deleteFunc1_ = prop.deleteFunc1_;
@@ -946,9 +960,9 @@ public:
 	};
 
 	void init(){
-		getFunction_ = NULL;
+		getFunc_ = NULL;
+		setFunc_ = NULL;
 		isCollection_ = true;
-		enumeration_ = NULL;
 		isReadOnly_ = true;
 		addFunc_ = NULL;
 		insertFunc_ = NULL;
@@ -972,6 +986,21 @@ public:
 
 	virtual Property* clone(){
 		return new TypedCollectionProperty<ITEM_TYPE>(*this);
+	};
+
+	virtual VariantData* getAtIndex( const uint32& index, Object* source ){
+		if ( (NULL != source) && (NULL != getFunc_) ){
+			
+			value_ = (source->*getFunc_)( index );
+		}
+
+		return &value_;
+	};
+
+	virtual void setAtIndex( const uint32& index, Object* source, VariantData* value ){
+		if ( (NULL != value) && (NULL != source) && (NULL != setFunc_) ){			
+			(source->*setFunc_)( index, (ITEM_TYPE)(*value) );
+		}
 	};
 
 	virtual void add( Object* source, VariantData* value ){
@@ -1001,17 +1030,12 @@ public:
 		}
 	};
 
-	virtual bool collectionSupportsEditing(){
-		if ( NULL != enumeration_ ){
-			return enumeration_->supportsEditing();
-		}
-		else{
-			return false;
-		}
-	};
+	virtual bool collectionSupportsEditing() {
+		return addFunc_ == NULL;
+	}
 private:
-	GetFunction getFunction_;
-	Enumerator<ITEM_TYPE>* enumeration_;
+	GetFunction getFunc_;
+	SetFunction setFunc_;
 	AddFunction addFunc_;
 	InsertFunction insertFunc_;
 	DeleteFunction1 deleteFunc1_;
@@ -3113,68 +3137,6 @@ void registerEnumPropertyWithLabels( const String& className, const String& prop
 
 
 
-template <class PROPERTY_TYPE>
-void registerPrimitiveCollectionProperty( const String& className, const String& propertyName,
-												           _typename_ TypedCollectionProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
-												           const PropertyDescriptorType& propertyFieldDescriptor ){
-
-
-	Class* clazz = ClassRegistry::getClass( className );
-	if ( NULL != clazz ){
-		if ( false == clazz->hasProperty( propertyName ) ){
-			TypedCollectionProperty<PROPERTY_TYPE>* newProperty =
-							new TypedCollectionProperty<PROPERTY_TYPE>( propertyGetFunction,
-							                                       propertyFieldDescriptor );
-			newProperty->setName( propertyName );
-			clazz->addProperty( newProperty );
-		}
-	}
-};
-
-/**
-*this function registers a property with a class, where the PROPERTY_TYPE is defined as some
-*Object* derived type in a collection. In registering the collection, you must provide ways
-*to enumerate, add, insert, and delete from the collection.
-*
-*class PROPERTY_TYPE is the template type to base the function on
-*@param String className - the name of the class to associate the property with
-*@param String propertyName - the name of the property
-*@param TypedCollectionProperty<PROPERTY_TYPE>::GetFunction - the property's get function, allows for
-*retreiving values from the enum property
-*@param TypedCollectionProperty<PROPERTY_TYPE>::AddFunction the collection's add function. Takes an
-*item of PROPERTY_TYPE type
-*@param TypedCollectionProperty<PROPERTY_TYPE>::InsertFunction the collection's insert function. Takes an
-*item of PROPERTY_TYPE type and an index
-*@param TypedCollectionProperty<PROPERTY_TYPE>::DeleteFunction1 the collection's delete function. Takes an
-*item of PROPERTY_TYPE type
-*@param TypedCollectionProperty<PROPERTY_TYPE>::DeleteFunction2 the collection's delete function. Takes
-*an index
-*/
-template <class PROPERTY_TYPE>
-void registerObjectCollectionProperty( const String& className, const String& propertyName,
-												           _typename_ TypedObjectCollectionProperty<PROPERTY_TYPE>::GetFunction propertyGetFunction,
-														   _typename_ TypedObjectCollectionProperty<PROPERTY_TYPE>::AddFunction propertyAddFunction,
-														   _typename_ TypedObjectCollectionProperty<PROPERTY_TYPE>::InsertFunction propertyInsertFunction,
-														   _typename_ TypedObjectCollectionProperty<PROPERTY_TYPE>::DeleteFunction1 propertyDeleteFunction1,
-														   _typename_ TypedObjectCollectionProperty<PROPERTY_TYPE>::DeleteFunction2 propertyDeleteFunction2 ){
-
-
-	Class* clazz = ClassRegistry::getClass( className );
-	if ( NULL != clazz ){
-		if ( false == clazz->hasProperty( propertyName ) ){
-			TypedObjectCollectionProperty<PROPERTY_TYPE>* newProperty =
-							new TypedObjectCollectionProperty<PROPERTY_TYPE>( propertyGetFunction,
-							                                             propertyAddFunction,
-																		 propertyInsertFunction,
-																		 propertyDeleteFunction1,
-																		 propertyDeleteFunction2 );
-			newProperty->setName( propertyName );
-			clazz->addProperty( newProperty );
-		}
-	}
-};
-
-
 template <typename FieldType>
 void registerFieldType( const String& className, const String& fieldName, uint32 fieldOffset )
 {
@@ -3371,6 +3333,37 @@ bool registerEvent( SourceType* dummy1, EventType* dummy2,
 	}
 	return result;
 }
+
+
+
+template <typename ITEM_TYPE>
+void registerCollectionProperty( const String& className,
+								 const String& propertyName,
+								 _typename_ TypedCollectionProperty<ITEM_TYPE>::GetFunction getFunc,
+								 _typename_ TypedCollectionProperty<ITEM_TYPE>::SetFunction setFunc,
+								 _typename_ TypedCollectionProperty<ITEM_TYPE>::AddFunction addFunc,
+								 _typename_ TypedCollectionProperty<ITEM_TYPE>::InsertFunction insertFunc,
+								 _typename_ TypedCollectionProperty<ITEM_TYPE>::DeleteFunction1 delete1Func,
+								 _typename_ TypedCollectionProperty<ITEM_TYPE>::DeleteFunction2 delete2Func,
+								 const String& description ){
+
+	Class* clazz = ClassRegistry::getClass( className );
+	if ( NULL != clazz ){
+		if ( !clazz->hasProperty( propertyName ) ){
+			Property* newProperty = 
+				new TypedCollectionProperty<ITEM_TYPE>( getFunc,setFunc,
+														addFunc, insertFunc,
+														delete1Func, delete2Func,
+														getDescriptor(typeid(ITEM_TYPE)) );
+
+			newProperty->setDescription( description );
+			newProperty->setName( propertyName );
+			clazz->addProperty( newProperty );
+		}
+	}
+}
+
+
 
 /**
 *registers a new method with a Class

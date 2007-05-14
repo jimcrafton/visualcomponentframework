@@ -284,6 +284,17 @@ you are finished defining your RTTI.
 												             \
 
 
+#define _property_collection_( type, propName, getFunc, setFunc, addFunc, insertFunc, delete1Func, delete2Func, description ) \
+	VCF::registerCollectionProperty<type>( tmpClassName, VCF::String(propName), \
+		(VCF::TypedCollectionProperty<type>::GetFunction)&RttiClassType::getFunc, \
+		(VCF::TypedCollectionProperty<type>::SetFunction)&RttiClassType::setFunc, \
+		(VCF::TypedCollectionProperty<type>::AddFunction)&RttiClassType::addFunc, \
+		(VCF::TypedCollectionProperty<type>::InsertFunction)&RttiClassType::insertFunc, \
+		(VCF::TypedCollectionProperty<type>::DeleteFunction1)&RttiClassType::delete1Func, \
+		(VCF::TypedCollectionProperty<type>::DeleteFunction2)&RttiClassType::delete2Func, \
+		VCF::String(description) ); \
+	\
+
 
 #define _procedure_(method) \
 	{\
