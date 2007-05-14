@@ -96,8 +96,9 @@ public:
 	String getDisplayName() const{
 		if ( displayName_.size() > 0 ) {
 			return displayName_;
-		}else
-			return name_;
+		}
+		
+		return name_;
 	};
 
 	/**
@@ -243,51 +244,159 @@ public:
 	};
 
 
+	/**
+	Some properties may be a collection of some sort.
+	The following functions are designed to provide
+	indexed access to the collection and to allow 
+	for adding/removing entries to the collection
+	*/
+
+	/**
+	Indicates whether or not the property is a collection.
+	Most properties will obviously return false. If the 
+	property supports a collection, then it should return true.
+	*/
 	bool isCollection(){
 		return isCollection_;
 	};
 
 
+	/**
+	Returns the number of elements in the property's collection
+	*/
+	virtual uint32 getCollectionCount() {
+		return 0;
+	}
+
+	virtual VariantData* getAtIndex( const uint32& index ){
+		if ( NULL != source_ ){
+			return getAtIndex( index, source_ );
+		}
+		else {
+			return NULL;
+		}
+	};
+
+	/**
+	Returns the element of the collection at the specified index. If the
+	index is out of bounds (greater than or equal to the total number of 
+	elements in the collection) then an exception is thrown.
+	*/
+	virtual VariantData* getAtIndex( const uint32& index, Object* source ){
+		if ( index >= getCollectionCount() ) {
+			throw OutOfBoundsException();
+		}
+
+		return NULL;
+	};
+
+	/**
+	Sets the value of the element at the specified index. If the
+	index is out of bounds (greater than or equal to the total number of 
+	elements in the collection) then an exception is thrown. 
+	*/
+	virtual void setAtIndex( const uint32& index, VariantData* value ){
+		if ( NULL != source_ ){
+			setAtIndex( index, source_, value );
+		}
+	};
+
+	virtual void setAtIndex( const uint32& index, Object* source, VariantData* value ){
+		if ( index >= getCollectionCount() ) {
+			throw OutOfBoundsException();
+		}
+	};
+
+	/**
+	Adds an element to the property collection
+	*/
 	void add( VariantData* value ){
 		if ( NULL != source_ ){
 			add( source_, value );
 		}
 	};
 
+	/**
+	Adds an element to the property collection. Note that the
+	default implementation is to do nothing. Implementers
+	will need to reimplement this function to provide
+	for correct behavior.
+	*/
 	virtual void add( Object* source, VariantData* value ) {
 		//no-op
 	};
 
+	/**
+	Inserts an element into the property collection. Note that the
+	default implementation is to do nothing. Implementers
+	will need to reimplement this function to provide
+	for correct behavior.
+	*/
 	virtual void insert( Object* source, const uint32& index, VariantData* value ){
 		//no-op
 	};
 
+	/**
+	Inserts an element into the property collection. Note that the
+	default implementation is to do nothing. Implementers
+	will need to reimplement this function to provide
+	for correct behavior.
+	*/
 	void insert( const uint32& index, VariantData* value ){
 		if ( NULL != source_ ){
 			insert( source_, index, value );
 		}
 	};
 
+	/**
+	Removes an element from the property collection. Note that the
+	default implementation is to do nothing. Implementers
+	will need to reimplement this function to provide
+	for correct behavior.
+	*/
 	virtual void remove( Object* source, VariantData* value ){
 		//no-op
 	};
 
+	/**
+	Removes an element from the property collection. Note that the
+	default implementation is to do nothing. Implementers
+	will need to reimplement this function to provide
+	for correct behavior.
+	*/
 	void remove( VariantData* value ){
 		if ( NULL != source_ ){
 			remove( source_, value );
 		}
 	};
 
+	/**
+	Removes an element from the property collection at the
+	specified index. Note that the default implementation 
+	is to do nothing. Implementers will need to reimplement 
+	this function to provide for correct behavior.
+	*/
 	virtual void remove( Object* source, const uint32& index ){
 		//no-op
 	}
 
+	/**
+	Removes an element from the property collection at the
+	specified index. Note that the default implementation 
+	is to do nothing. Implementers will need to reimplement 
+	this function to provide for correct behavior.
+	*/
 	void remove( const uint32& index ){
 		if ( NULL != source_ ){
 			remove( source_, index );
 		}
 	};
 
+	/**
+	This indicates whether or not the property for the collection
+	will allow any modifications (add/insert/remove) to
+	take place. The default behavior is to disallow these functions.
+	*/
 	virtual bool collectionSupportsEditing(){
 		return false;
 	}
