@@ -344,6 +344,60 @@ void createAndInvoke()
 }
 
 
+class CollT1 : public Object {
+public:
+	_class_rtti_( CollT1, "VCF::Object", "093845lrotelrtkjl" )
+		_property_collection_( int, "items", getIt,setIt,add,insert,delete1,delete2, "" )
+	_class_rtti_end_
+
+
+
+	std::vector<int> items;
+
+	void add( int val ) {
+		items.push_back( val );
+	}
+
+	void insert( const uint32& i, int val ){
+		items.insert( items.begin() + i, val );
+	}
+
+	void delete1( int val ) {
+		std::vector<int>::iterator found = 
+			std::find( items.begin(), items.end(), val );
+		if ( found != items.end() ) {
+			items.erase( found );
+		}
+	}
+
+	void delete2( const uint32& i ) {
+		items.erase( items.begin() + i );
+	}
+
+	int getIt( const uint32& i ) {
+		return items[i];
+	}
+
+	void setIt( const uint32& i, int val ) {
+		items[i] = val;
+	}
+};
+
+
+void propertyCollections()
+{
+	CollT1 t1;
+
+	outputClassInfo( &t1 );
+
+	Class* c = t1.getClass();
+	Property* p = c->getProperty("items");
+	p->add( &VariantData(200) );
+
+	int val = *( p->getAtIndex( 0 ) );
+
+}
+
 int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
@@ -356,6 +410,8 @@ int main( int argc, char** argv ){
 	REGISTER_CLASSINFO(HelloWorld);
 	REGISTER_CLASSINFO(ClassWithMethods);
 
+	REGISTER_CLASSINFO(CollT1);
+	
 
 	createFromName();
 
@@ -375,7 +431,9 @@ int main( int argc, char** argv ){
 
 	createAndInvoke();
 
+	propertyCollections();
 
+	
 	FoundationKit::terminate();
 	return 0;
 }
