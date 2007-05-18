@@ -112,9 +112,11 @@ Handle the extension based on the compiler
 #pragma comment( lib, "ws2_32" )
 
 #include "vcf/FoundationKit/FoundationKit.h"
-#include "vcf/FoundationKit/Dictionary.h"
 
-#include "vcf/FoundationKit/StringTokenizer.h"
+
+
+
+
 
 
 namespace VCF {
