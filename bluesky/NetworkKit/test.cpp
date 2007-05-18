@@ -4,6 +4,8 @@
 #include "NetworkKit.h"
 #include "Socket.h"
 #include "IPAddress.h"
+#include "vcf/FoundationKit/Dictionary.h"
+#include "vcf/FoundationKit/StringTokenizer.h"
 
 
 
