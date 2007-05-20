@@ -114,7 +114,7 @@ class ThreadedProcedure<NullClassType0>: public Runnable {
 public:
 	typedef void (*ProcPtr0)();
 	typedef void (*ProcThreadPtr0)(Thread* thread);	
-
+	typedef NullClassType0 ClassType;	
 
 	ThreadedProcedure( ProcPtr0 procPtr ):
 		runningThread_(NULL),
@@ -1423,509 +1423,9 @@ protected:
 
 
 
+#include "ThreadPool.h"
 
-class PoolThread;
-
-class ThreadPool {
-public:
-	ThreadPool( size_t poolSize ): 
-		workAvailable_(&cdtnMtx_),
-		waitForWorkDone_(&waitForWorkDoneMtx_),
-		stopped_(true){
-
-		threads_.resize(poolSize);
-
-		initPool();		
-	}
-
-
-	void initPool();
-
-	void start();
-
-	void stop();
-
-	void wait();
-
-	void wait( uint32 timeoutInMilliseconds );
-
-	void postWork( Runnable* workToDo ) {		
-		{
-			Lock l(workMtx_);
-
-			work_.push_back( workToDo );
-		}
-
-		workAvailable_.signal();
-	}
-
-	Runnable* waitForWork() {
-		Runnable* result = NULL;
-
-		{
-			Lock l(workMtx_);
-
-			if ( stopped_ ) {
-				return result;
-			}
-
-			if ( !work_.empty() ) {
-				result = work_.front();
-				work_.pop_front();				
-			}
-
-			if ( work_.empty() ) {
-				waitForWorkDone_.broadcast();
-			}
-
-			if ( NULL != result ) {
-				return result;
-			}
-		}
-
-		workAvailable_.wait();
-
-		{
-			Lock l(workMtx_);
-
-			if ( !work_.empty() ) {
-				result = work_.front();
-				work_.pop_front();
-			}
-
-			if ( work_.empty() ) {
-				waitForWorkDone_.broadcast();
-			}
-		}
-		return result;
-	}
-
-	void workCompleted() {
-
-	}
-
-	std::vector<PoolThread*> threads_;
-	std::deque<Runnable*> work_;
-	Mutex workMtx_;
-	std::vector<PoolThread*> freeThreads_;
-	Condition workAvailable_;
-	Mutex cdtnMtx_;
-
-	Condition waitForWorkDone_;
-	Mutex waitForWorkDoneMtx_;
-
-	bool stopped_;
-};
-
-
-
-class PoolThread : public Thread {
-public:
-
-	PoolThread( ThreadPool* owningThreadPool, uint32 index ):
-		Thread(false),pool_(owningThreadPool),id_(index) {
-
-	}
-
-	virtual ~PoolThread() {
-		printf( "Deleting PoolThread %p id# %u\n", this, id_ );
-	}
-
-	virtual bool run() {
-		VCF_ASSERT( NULL != pool_ );
-
-		printf( "Starting PoolThread %p id# %u\n", this, id_ );
-
-		while ( canContinue() ) {
-			Runnable* work = pool_->waitForWork();
-
-			if ( NULL != work ) {
-				if ( canContinue() ) {
-					work->run();
-					delete work;
-				}
-				else {
-					delete work;
-					break;
-				}
-			}
-			else {
-				//error, possibly log error???
-			}
-		}
-
-		return true;
-	}
-
-	ThreadPool* pool_;
-	uint32 id_;
-};
-
-inline void ThreadPool::initPool() 
-{
-	for (uint32 i=0;i<threads_.size();i++ ) {
-		threads_[i] = new PoolThread(this,i);
-	}
-}
-
-inline void ThreadPool::start()
-{
-	stopped_ = false;
-
-	for (uint32 i=0;i<threads_.size();i++ ) {
-		threads_[i]->start();
-	}	
-}
-
-inline void ThreadPool::stop()
-{
-	printf( "ThreadPool::stop()\n" );
-
-	{
-		Lock l(workMtx_);
-
-		stopped_ = true;
-
-		if ( !work_.empty() ) {
-			//delete remaining runnables...
-
-			std::deque<Runnable*>::iterator it = work_.begin();
-			while ( it != work_.end() ) {
-				delete *it;
-				++it;
-			}
-			work_.clear();
-		}
-	}
-
-	workAvailable_.broadcast();
-
-	printf( "\tstopping threads...\n" );
-	for (uint32 j=0;j<threads_.size();j++ ) {
-		Thread* th = threads_[j];
-		th->stop();
-
-		delete th;
-
-		threads_[j] = NULL;
-	}
-	
-	waitForWorkDone_.broadcast();
-}
-
-inline void ThreadPool::wait() 
-{
-	{
-		Lock l(workMtx_);
-
-		printf( "ThreadPool::wait() work_.size() %u\n", work_.size() );
-
-		if ( stopped_ ) {
-			return;
-		}
-
-		if ( work_.empty() ) {
-			return;
-		}
-	}
-
-	waitForWorkDone_.wait();
-}
-
-
-inline void ThreadPool::wait( uint32 timeoutInMilliseconds )
-{
-	{
-		Lock l(workMtx_);
-
-		printf( "ThreadPool::wait( %u ) work_.size() %u\n", timeoutInMilliseconds, work_.size() );
-
-		if ( stopped_ ) {
-			return;
-		}
-
-		if ( work_.empty() ) {
-			return;
-		}
-	}
-
-	waitForWorkDone_.wait(timeoutInMilliseconds);
-}
-
-
-
-
-
-
-
-
-
-class CallBack {
-public:
-	virtual ~CallBack(){}
-
-	String name;
-};
-
-
-
-class delegate {
-public:
-
-	~delegate() {
-		clear();
-	}
-
-	bool empty() const {
-		return functions.empty();
-	}
-
-	size_t size() const {
-		return functions.size();
-	}
-
-
-	void clear() {
-		std::vector<CallBack*>::iterator it = functions.begin();
-		while ( it != functions.end() ) {
-			delete *it;
-			++it;
-		}
-
-		functions.clear();
-	}
-
-
-	void add( CallBack* callback ) {
-		std::vector<CallBack*>::iterator found = 
-			std::find( functions.begin(), functions.end(), callback );
-
-		if ( found == functions.end() ) {
-			functions.push_back( callback );
-		}
-	}
-
-	void remove( CallBack* callback ) {
-		std::vector<CallBack*>::iterator found = 
-			std::find( functions.begin(), functions.end(), callback );
-
-		if ( found != functions.end() ) {
-			functions.erase( found );
-		}
-	}
-
-	std::vector<CallBack*> functions;
-};
-
-
-template <typename P1>
-class Procedure1 : public CallBack {
-public:
-	typedef void (*FuncPtr)(P1);
-
-
-	Procedure1():staticFuncPtr(NULL){}
-
-	Procedure1(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
-
-
-
-	virtual void invoke( P1 p1 ) {
-		if ( NULL != staticFuncPtr ) {
-			(*staticFuncPtr)( p1 );
-		}
-	}
-
-	FuncPtr staticFuncPtr;
-};
-
-
-template <typename P1, typename ClassType=NullClassType1<P1> >
-class ClassProcedure1 : public Procedure1<P1> {
-public:
-	typedef void (ClassType::*ClassFuncPtr)(P1);
-
-
-	ClassProcedure1():Procedure1<P1>(),classFuncPtr(NULL),funcSrc(NULL){}
-	
-	ClassProcedure1(ClassType* src, ClassFuncPtr funcPtr):Procedure1<P1>(),classFuncPtr(funcPtr),funcSrc(src){}
-
-	ClassProcedure1(ClassType* src, ClassFuncPtr funcPtr, const String& s):
-		Procedure1<P1>(),classFuncPtr(funcPtr),funcSrc(src){
-		name = s;
-	}
-
-
-
-	virtual void invoke( P1 p1 ) {
-		if ( NULL != classFuncPtr && NULL != funcSrc ) {
-			(funcSrc->*classFuncPtr)( p1 );
-		}
-	}
-
-	ClassFuncPtr classFuncPtr;
-	ClassType* funcSrc;
-};
-
-
-
-
-
-template <typename P1>
-class Delagate1 : public delegate {
-public:
-	typedef void (*FuncPtr)(P1);	
-	typedef Procedure1<P1> CallbackType;
-
-	Delagate1<P1>& operator+= ( FuncPtr rhs ) {
-		CallbackType* cb = new CallbackType(rhs);
-		add( cb );
-		return *this;
-	}
-	
-	Delagate1<P1>& operator+= ( CallBack* rhs ) {		
-		add( rhs );
-		return *this;
-	}
-
-
-	void invoke( P1 p1 ) {
-		std::vector<CallBack*>::iterator it = functions.begin();
-		while ( it != functions.end() ) {
-			CallBack* cb = *it;
-			CallbackType* callBack = (CallbackType*)cb;
-
-			callBack->invoke( p1 );
-
-			++it;
-		}
-	}
-
-	
-};
-
-
-
-
-
-
-
-
-
-template <typename ReturnType, typename P1, typename P2>
-class NullReturnClassType2 {
-public:
-	ReturnType m(P1,P2){ return ReturnType(); }
-};
-
-template <typename ReturnType, typename P1, typename P2>
-class Function2 : public CallBack {
-public:
-	typedef ReturnType (*FuncPtr)(P1,P2);
-
-
-	Function2():staticFuncPtr(NULL){}
-
-	Function2(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
-
-	virtual ReturnType invoke( P1 p1, P2 p2 ) {
-		ReturnType result = ReturnType();
-		if ( NULL != staticFuncPtr ) {
-			result = (*staticFuncPtr)( p1, p2 );
-		}
-		return result;
-	}
-
-	FuncPtr staticFuncPtr;
-};
-
-
-template <typename ReturnType, 
-		typename P1, 
-		typename P2, 
-		typename ClassType=NullReturnClassType2<ReturnType,P1,P2> 
-		>
-class ClassFunction2 : public Function2<ReturnType,P1,P2> {
-public:
-	typedef ReturnType (ClassType::*ClassFuncPtr)(P1,P2);
-
-
-	ClassFunction2():Function2<ReturnType,P1,P2>(),classFuncPtr(NULL),funcSrc(NULL){}
-	
-	ClassFunction2(ClassType* src, ClassFuncPtr funcPtr):Function2<ReturnType,P1,P2>(),classFuncPtr(funcPtr),funcSrc(src){}
-
-	ClassFunction2(ClassType* src, ClassFuncPtr funcPtr, const String& s):
-		Function2<ReturnType,P1,P2>(),classFuncPtr(funcPtr),funcSrc(src){
-		name = s;
-	}
-
-
-
-	virtual ReturnType invoke( P1 p1, P2 p2 ) {
-		ReturnType result = ReturnType();
-
-		if ( NULL != classFuncPtr && NULL != funcSrc ) {
-			result = (funcSrc->*classFuncPtr)( p1, p2 );
-		}
-
-		return result;
-	}
-
-	ClassFuncPtr classFuncPtr;
-	ClassType* funcSrc;
-};
-
-
-template <typename ReturnType, typename P1, typename P2>
-class Delagate2R : public delegate {
-public:
-	typedef Function2<ReturnType,P1,P2> CallbackType;
-	typedef CallbackType::FuncPtr FuncPtr;
-
-	typedef std::vector<ReturnType> Results;
-
-	Delagate2R<ReturnType,P1,P2>& operator+= ( FuncPtr rhs ) {
-		CallbackType* cb = new CallbackType(rhs);
-		add( cb );
-		return *this;
-	}
-	
-	Delagate2R<ReturnType,P1,P2>& operator+= ( CallBack* rhs ) {		
-		add( rhs );
-		return *this;
-	}
-
-
-	ReturnType invoke( P1 p1, P2 p2 ) {
-		ReturnType result = ReturnType();
-
-		results.clear();
-
-		if ( !functions.empty() ) {
-			
-			size_t i = 0;
-			results.resize( functions.size() );
-			
-			std::vector<CallBack*>::iterator it = functions.begin();
-			while ( it != functions.end() ) {
-				CallBack* cb = *it;
-				CallbackType* callBack = (CallbackType*)cb;
-				
-				results[i] = callBack->invoke( p1, p2 );
-
-				++i;
-				++it;
-			}
-
-			result = results.back();
-		}
-
-		return result;
-	}
-
-
-	Results results;
-};
+#include "Delegates.h"
 
 
 
@@ -2037,7 +1537,7 @@ public:
 		Thread* th = ThreadManager::getCurrentThread();
 
 		printf( "RunThis %p on thread %p id 0x%04x\n", this, th, th->getThreadID() );
-		th->sleep(1000);
+		th->sleep(3000);
 		return true;
 	}
 
@@ -2051,8 +1551,9 @@ int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
 
-	
-/*
+	Snarfy sn;
+	/*
+
 	Thread* th = ThreadedProcedure1<int>(10,doit);
 
 	th->wait();
@@ -2062,7 +1563,7 @@ int main( int argc, char** argv ){
 	th->wait();
 	
 	
-	Snarfy sn;
+	
 
 	th = ThreadedProcedure1<int,Snarfy>(&sn,38112,&Snarfy::thisBlows);
 	th->wait();
@@ -2091,9 +1592,9 @@ int main( int argc, char** argv ){
 
 	ThreadedProcedure<>(abc3);
 
-*/
 
-	/*
+
+	
 	ThreadedProcedure<> g(abc3);
 
 
@@ -2103,32 +1604,39 @@ int main( int argc, char** argv ){
 
 
 	ThreadedFunction<int> h(abc4);
-	*/
+	
+*/
+
+	Delagate1<int> d2;
+	d2 += doit;
 
 
-	Delagate1<int> d;
-	d += doit;
+	
+	d2 += new ClassProcedure1<int,Snarfy>(&sn,&Snarfy::thisBlows,"Snarfy::thisBlows");
+
+	d2.invoke(10);
+
+	String s = d2.at( 0 ).getReturnType().name();
 
 
-	Snarfy sn;
-	d += new ClassProcedure1<int,Snarfy>(&sn,&Snarfy::thisBlows,"Snarfy::thisBlows");
+	Delagate2R<bool,const String&,double> d3;
 
-	d.invoke(10);
-
-
-	Delagate2R<bool,const String&,double> d2;
-
-	d2 += duhDoIt;
+	d3 += duhDoIt;
 
 
 	Blooper bl;
 
-	d2 += new ClassFunction2<bool,const String&,double,Blooper>(&bl,&Blooper::stuffIt);
+	d3 += new ClassFunction2<bool,const String&,double,Blooper>(&bl,&Blooper::stuffIt);
 
-	bool result = d2.invoke("Hola", 120.456);
+	s = d3.at( 1 ).getReturnType().name();
+	uint32 ac = d3.at( 1 ).getArgumentCount();
+	s = d3.at( 1 ).getArgumentTypeInfo(0).name();
+	s = d3.at( 1 ).getArgumentTypeInfo(1).name();
+
+	bool result = d3.invoke("Hola", 120.456);
 	printf( "d2 result: %d\n", result );
-	for ( int i=0;i<d2.results.size();i++ ) {
-		printf( "d2 results[%d]: %d\n", i, d2.results[i] );
+	for ( int i=0;i<d3.results.size();i++ ) {
+		printf( "d2 results[%d]: %d\n", i, (int)d3.results[i] );
 	}
 	
 	{
