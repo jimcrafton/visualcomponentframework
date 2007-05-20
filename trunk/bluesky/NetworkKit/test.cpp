@@ -9,14 +9,6 @@
 
 
 
-#if (_WIN32_WINNT >= 0x0400)
-#pragma message ("_WIN32_WINNT >= 0x0400")
-#endif
-
-#if (_WIN32_WINDOWS >= 0x0400)
-#pragma message ("_WIN32_WINDOWS >= 0x0400")
-#endif
-
 
 using namespace VCF;
 

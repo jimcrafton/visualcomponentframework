@@ -25,14 +25,13 @@ public:
 		return typeid(void);
 	}
 
-	template<typename T>
-	static void addArgumentTypeInfo( CallBack& cb ) {
-		cb.argumentTypes.push_back( &typeid(T) );
+	static void addArgumentTypeInfo( CallBack& cb, const std::type_info& ti ) {	
+		cb.argumentTypes.push_back( &ti );
 	}
+	
 protected:
 	std::vector<const std::type_info*> argumentTypes;
 };
-
 
 
 class delegate {
@@ -91,15 +90,18 @@ public:
 template <typename P1>
 class Procedure1 : public CallBack {
 public:
+
+	virtual ~Procedure1(){}
+
 	typedef void (*FuncPtr)(P1);
 
 
 	Procedure1():staticFuncPtr(NULL){
-		CallBack::addArgumentTypeInfo<P1>(*this);
+		CallBack::addArgumentTypeInfo(*this, typeid(P1) );
 	}
 
 	Procedure1(FuncPtr funcPtr):staticFuncPtr(funcPtr){
-		CallBack::addArgumentTypeInfo<P1>(*this);
+		CallBack::addArgumentTypeInfo(*this, typeid(P1) );
 	}
 
 
@@ -200,14 +202,16 @@ public:
 	typedef ReturnType (*FuncPtr)(P1,P2);
 
 
+	virtual ~Function2(){}
+
 	Function2():staticFuncPtr(NULL){
-		CallBack::addArgumentTypeInfo<P1>(*this);
-		CallBack::addArgumentTypeInfo<P2>(*this);
+		CallBack::addArgumentTypeInfo(*this, typeid(P1) );
+		CallBack::addArgumentTypeInfo(*this, typeid(P2) );
 	}
 
 	Function2(FuncPtr funcPtr):staticFuncPtr(funcPtr){
-		CallBack::addArgumentTypeInfo<P1>(*this);
-		CallBack::addArgumentTypeInfo<P2>(*this);
+		CallBack::addArgumentTypeInfo(*this, typeid(P1) );
+		CallBack::addArgumentTypeInfo(*this, typeid(P2) );
 	}
 
 	virtual const std::type_info& getReturnType() const {
