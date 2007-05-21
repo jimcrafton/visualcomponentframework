@@ -3,6 +3,7 @@
 
 
 
+namespace VCF {
 
 
 class CallBack {
@@ -187,15 +188,6 @@ public:
 
 
 
-
-
-
-template <typename ReturnType, typename P1, typename P2>
-class NullReturnClassType2 {
-public:
-	ReturnType m(P1,P2){ return ReturnType(); }
-};
-
 template <typename ReturnType, typename P1, typename P2>
 class Function2 : public CallBack {
 public:
@@ -320,6 +312,7 @@ public:
 };
 
 
+}; //namespace VCF
 
 #endif //_DELEGATES_H__
 

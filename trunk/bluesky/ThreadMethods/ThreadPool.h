@@ -1,6 +1,15 @@
 #ifndef _THREADPOOL_H__
 #define _THREADPOOL_H__
 
+#ifndef _VCF_THREADMANAGER_H__
+	#include "vcf/FoundationKit/ThreadManager.h"
+#endif
+
+#include <deque>
+
+
+namespace VCF {
+
 
 class PoolThread;
 
@@ -307,6 +316,10 @@ public:
 	sets it to "true".
 	*/
 	bool stopped_;
+
+	private:
+		ThreadPool(); //can't be created with specifying the number of threads
+		ThreadPool( const ThreadPool& ); //can't be copied
 };
 
 
@@ -333,6 +346,10 @@ public:
 
 	virtual ~PoolThread() {
 		printf( "Deleting PoolThread %p id# %u\n", this, id_ );
+	}
+
+	void cantContinue() {
+		canContinue_ = false;
 	}
 
 	/**
@@ -427,14 +444,18 @@ inline void ThreadPool::stop()
 
 	workAvailable_.broadcast();
 
-	printf( "\tstopping threads...\n" );
 	for (uint32 j=0;j<threads_.size();j++ ) {
-		Thread* th = threads_[j];
+		threads_[j]->cantContinue();
+	}
+	
+	printf( "\tstopping threads...\n" );
+	for (uint32 k=0;k<threads_.size();k++ ) {
+		Thread* th = threads_[k];
 		th->stop();
 
 		delete th;
 
-		threads_[j] = NULL;
+		threads_[k] = NULL;
 	}
 	
 	waitForWorkDone_.broadcast();
@@ -479,7 +500,7 @@ inline void ThreadPool::wait( uint32 timeoutInMilliseconds )
 	waitForWorkDone_.wait(timeoutInMilliseconds);
 }
 
-
+}; //namespace VCF
 
 #endif //_THREADPOOL_H__
 
