@@ -97,6 +97,14 @@ SOURCE=.\ThreadMethods.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\Delegates.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ThreadPool.h
+# End Source File
 # End Group
 # Begin Group "Resource Files"
 
