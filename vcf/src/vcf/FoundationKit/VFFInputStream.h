@@ -147,6 +147,8 @@ protected:
 
 	void processAsignmentTokens( const VCF::VCFChar& token, const VCF::String& currentSymbol, VCF::Class* clazz );
 
+	void processAsignmentTokens( const VCFChar& token, const String& currentSymbol, const VariantData& key, Class* clazz );
+
 	void processDelegateAsignment( const VCF::VCFChar& token, const VCF::String& currentSymbol, VCF::Class* clazz );
 	
 

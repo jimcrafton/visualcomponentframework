@@ -174,6 +174,169 @@ void VFFInputStream::processDelegateAsignment( const VCF::VCFChar& token, const 
 	}
 }
 
+void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String& currentSymbol, const VariantData& key, Class* clazz )
+{
+	switch ( token ) {
+		case '=' : {
+			VCFChar assignmentToken = parser_->nextToken();
+			String value = parser_->tokenString();
+			switch ( assignmentToken ) {
+				default : {
+					Property* prop = clazz->getProperty( currentSymbol );
+					if ( NULL != prop ) {
+						VCF_ASSERT( prop->isCollection() );
+
+						if ( prop->isCollection() ) {
+
+							if ( (pdObject == prop->getType()) && ('@' == value[0]) ) {
+								value.erase( 0, 1 );
+								if ( !value.empty() ) {
+									//need to adjust this for arrays/collections!
+									//deferredProperties_.push_back( new DeferredPropertySetter( value, prop->getName(), prop->getSource() ) );
+								}
+							}
+							else {
+								String newVal;							
+								if ( VFFInputStream::getComponentConstant( value, newVal ) ) {
+									value = newVal;
+								}
+								//note: need to be able to set value
+								//from a string!!
+								//also, we need to inform the 
+								//collection property that it
+								//needs to not only set the property
+								//to the specified key, but also 
+								//fill in any blank entries, if 
+								//neccessary.
+								//prop->setAtIndex( key, value );
+							}
+						}
+					}
+				}
+				break;
+				case '[': {
+					Property* prop = clazz->getProperty( currentSymbol );					
+					if ( NULL != prop ) {
+						VCF_ASSERT( prop->isCollection() );
+
+						if ( prop->isCollection() ) {
+							String value;
+							while ( ']' != parser_->nextToken() ) {
+								value += parser_->tokenString();
+							}
+							//prop->setAtIndex( key, value );
+						}
+					}
+				}
+				break;
+
+				case '{': {					
+					String binValue = parser_->binHexToString();
+					parser_->nextToken();
+					parser_->checkToken( '}' );
+					Property* prop = clazz->getProperty( currentSymbol );
+					if ( NULL != prop ) {
+						VCF_ASSERT( prop->isCollection() );
+
+						if ( prop->isCollection() ) {
+							VariantData* value = NULL;
+							//value = prop->getAtIndex( key );
+							if ( value->type == pdObject ) {
+								Object* obj = *value;
+								if ( NULL != obj ) {
+									Persistable* persistable = dynamic_cast<Persistable*>(obj);
+									if ( NULL != persistable ) {
+										hexToBin( binValue, persistable );
+									}
+								}
+							}
+						}
+					}
+				}
+				break;
+			}
+			parser_->nextToken();
+		}
+		break;
+
+		case '.' : {
+			//we are at the property name so currentSymbol
+			//will be the name of the proeprty we are examining
+			//calling nextToken will take us to the
+			parser_->nextToken();
+
+			String objPropName = parser_->tokenString();
+			VCFChar newToken = parser_->nextToken();
+
+			Property* prop = clazz->getProperty( currentSymbol );
+			
+			VCF_ASSERT( prop->isCollection() );
+			if ( prop->isCollection() ) {
+				VariantData* value = NULL;
+				value = prop->getAtIndex( key );
+				if ( value->type == pdObject ) {
+					Object* object = *value;
+					if ( NULL != object ) {
+						clazz = object->getClass();
+						
+						processAsignmentTokens( newToken, objPropName, clazz );
+					}
+				}
+				else {
+					processAsignmentTokens( newToken, objPropName, clazz );
+				}
+			}
+		}
+		break;
+
+		case '[' : {
+			parser_->nextToken();
+			String index = parser_->tokenString();
+			parser_->nextToken();
+			parser_->checkToken( ']' );		
+
+			VCFChar token = parser_->nextToken();
+			switch ( token ) {
+				//properties
+				case '=' : case '.' : case '[' : {
+					VariantData key;
+
+					try {
+						key = StringUtils::fromStringAsInt( index );
+					}
+					catch ( ... ) {
+						try {
+							key = StringUtils::fromStringAsDouble( index );
+						}
+						catch ( ... ) {
+							try {
+								key = StringUtils::fromStringAsBool( index );
+							}
+							catch ( ... ) {
+								key = index;
+							}
+						}
+					}
+
+					processAsignmentTokens( token, currentSymbol, key, clazz );
+				}
+				break;
+
+				default : {
+					parser_->errorStr( "Value expected for array item assignment" );
+				}
+				break;
+			}
+		}
+		break;
+
+		default : {
+			parser_->errorStr( "Object type expected" );
+		}
+		break;
+	}
+}
+
 void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String& currentSymbol, Class* clazz )
 {
 	switch ( token ) {
@@ -287,7 +450,44 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 		break;
 
 		case '[' : {
+			parser_->nextToken();
+			String index = parser_->tokenString();
+			parser_->nextToken();
+			parser_->checkToken( ']' );		
 
+			VCFChar token = parser_->nextToken();
+			switch ( token ) {
+				//properties
+				case '=' : case '.' : case '[' : {
+
+					VariantData key;
+
+					try {
+						key = StringUtils::fromStringAsInt( index );
+					}
+					catch ( ... ) {
+						try {
+							key = StringUtils::fromStringAsDouble( index );
+						}
+						catch ( ... ) {
+							try {
+								key = StringUtils::fromStringAsBool( index );
+							}
+							catch ( ... ) {
+								key = index;
+							}
+						}
+					}
+
+					processAsignmentTokens( token, currentSymbol, key, clazz );
+				}
+				break;
+
+				default : {
+					parser_->errorStr( "Value expected for array item assignment" );
+				}
+				break;
+			}
 		}
 		break;
 
