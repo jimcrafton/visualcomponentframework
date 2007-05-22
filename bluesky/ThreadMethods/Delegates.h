@@ -6,6 +6,8 @@
 namespace VCF {
 
 
+
+
 class CallBack {
 public:
 	virtual ~CallBack(){
@@ -85,6 +87,40 @@ public:
 	}
 
 	std::vector<CallBack*> functions;
+};
+
+
+
+class AsyncResult : public Object, public Waitable {
+public:
+
+	typedef void (*AsyncCallback)
+
+	AsyncResult(): completed_(false), resultWait_(&resultWaitMtx_){}
+
+	virtual ~AsyncResult(){}
+
+	virtual WaitResult wait() {
+		return resultWait_.wait();
+	}
+
+	virtual WaitResult wait( uint32 milliseconds ) {
+		return resultWait_.wait( milliseconds );
+	}
+
+	virtual OSHandleID getPeerHandleID() {
+		return resultWait_.getPeerHandleID();
+	}
+
+	bool isCompleted() const {
+		return completed_;
+	}
+
+	void* getUserData() const;
+protected:
+	bool completed_;
+	Condition resultWait_;
+	Mutex resultWaitMtx_;
 };
 
 
@@ -181,6 +217,17 @@ public:
 	}
 
 	
+	void beginInvoke( P1 p1 ) {
+		std::vector<CallBack*>::iterator it = functions.begin();
+		while ( it != functions.end() ) {
+			CallBack* cb = *it;
+			CallbackType* callBack = (CallbackType*)cb;
+
+			
+
+			++it;
+		}
+	}
 };
 
 
