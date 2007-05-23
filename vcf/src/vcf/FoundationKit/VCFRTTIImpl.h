@@ -910,21 +910,21 @@ protected:
 *TypedCollectionProperty represents a type safe wrapper around properties that
 *are enumerations of items.
 */
-template <typename ITEM_TYPE>
+template <typename ValueType,typename KeyType=uint32>
 class TypedCollectionProperty : public Property {
 public:
 	
-	typedef void (Object::*AddFunction)( ITEM_TYPE );
-	typedef void (Object::*InsertFunction)( const uint32&, ITEM_TYPE );
-	typedef void (Object::*DeleteFunction1)( ITEM_TYPE );
-	typedef void (Object::*DeleteFunction2)( const uint32& );
+	typedef void (Object::*AddFunction)( ValueType );
+	typedef void (Object::*InsertFunction)( const KeyType&, ValueType );
+	typedef void (Object::*DeleteFunction)( const KeyType& );
+	typedef uint32 (Object::*GetSizeFunction)();
 
-	typedef ITEM_TYPE (Object::*GetFunction)( const uint32& );
-	typedef void (Object::*SetFunction)( const uint32&, ITEM_TYPE );
+	typedef ValueType (Object::*GetFunction)( const KeyType& );
+	typedef void (Object::*SetFunction)( const KeyType&, ValueType, bool );
 
 	TypedCollectionProperty( GetFunction getFunc, SetFunction setFunc, 
 							AddFunction addFunc, InsertFunction insertFunc,
-							DeleteFunction1 deleteFunc1, DeleteFunction2 deleteFunc2,
+							DeleteFunction deleteFunc, GetSizeFunction getSizeFunc,
 							const PropertyDescriptorType& propertyType ){
 
 		init();
@@ -932,8 +932,8 @@ public:
 		setFunc_ = setFunc;
 		addFunc_ = addFunc;
 		insertFunc_ = insertFunc;
-		deleteFunc1_ = deleteFunc1;
-		deleteFunc2_ = deleteFunc2;
+		deleteFunc_ = deleteFunc;
+		getSizeFunc_ = getSizeFunc;
 		setType( propertyType );
 	};
 
@@ -947,7 +947,7 @@ public:
 	};
 
 
-	TypedCollectionProperty( const TypedCollectionProperty<ITEM_TYPE>& prop ):
+	TypedCollectionProperty( const TypedCollectionProperty<ValueType,KeyType>& prop ):
 		Property( prop ){
 
 		init();
@@ -955,8 +955,8 @@ public:
 		setFunc_ = prop.setFunc_;
 		addFunc_ = prop.addFunc_;
 		insertFunc_ = prop.insertFunc_;
-		deleteFunc1_ = prop.deleteFunc1_;
-		deleteFunc2_ = prop.deleteFunc2_;
+		deleteFunc_ = prop.deleteFunc_;
+		getSizeFunc_ = prop.getSizeFunc_;
 	};
 
 	void init(){
@@ -966,14 +966,14 @@ public:
 		isReadOnly_ = true;
 		addFunc_ = NULL;
 		insertFunc_ = NULL;
-		deleteFunc1_ = NULL;
-		deleteFunc2_ = NULL;
+		deleteFunc_ = NULL;
+		getSizeFunc_ = NULL;
 	};
 
 	virtual ~TypedCollectionProperty(){};
 
 	virtual String getTypeClassName() {
-		return StringUtils::getClassNameFromTypeInfo( typeid(ITEM_TYPE) );
+		return StringUtils::getClassNameFromTypeInfo( typeid(ValueType) );
 	}
 
 	virtual VariantData* get( Object* source ){
@@ -985,48 +985,61 @@ public:
 	};
 
 	virtual Property* clone(){
-		return new TypedCollectionProperty<ITEM_TYPE>(*this);
+		return new TypedCollectionProperty<ValueType,KeyType>(*this);
 	};
 
-	virtual VariantData* getAtIndex( const uint32& index, Object* source ){
-		if ( (NULL != source) && (NULL != getFunc_) ){
+	virtual uint32 getCollectionCount( Object* source ) {
+		uint32 result = 0;
+		if ( (NULL != source) && (NULL != getSizeFunc_) ){
 			
-			value_ = (source->*getFunc_)( index );
+			result = (source->*getSizeFunc_)();
 		}
 
-		return &value_;
+		return result;
+	}
+	
+	virtual VariantData* getAtKey( const VariantData& key, Object* source ){
+		VariantData* result = NULL;
+		if ( (NULL != source) && (NULL != getFunc_) ){
+			try {
+				value_.setNull();
+				value_ = (source->*getFunc_)( (KeyType)key );
+
+				if ( !value_.isNull() ) {
+					result = &value_;
+				}
+			}
+			catch ( BasicException& ) {
+				
+			}
+		}
+
+		return result;
 	};
 
-	virtual void setAtIndex( const uint32& index, Object* source, VariantData* value ){
+	virtual void setAtKey( const VariantData& key, VariantData* value, Object* source, bool addMissingValues ){
 		if ( (NULL != value) && (NULL != source) && (NULL != setFunc_) ){			
-			(source->*setFunc_)( index, (ITEM_TYPE)(*value) );
+			(source->*setFunc_)( (KeyType)key, (ValueType)(*value), addMissingValues );
 		}
 	};
 
 	virtual void add( Object* source, VariantData* value ){
 		if ( (NULL != value) && (NULL != addFunc_) ){
-			ITEM_TYPE valToAdd = (ITEM_TYPE)(*value);
+			ValueType valToAdd = (ValueType)(*value);
 			(source->*addFunc_)( valToAdd );
 		}
 	};
 
-	virtual void insert( Object* source, const uint32& index, VariantData* value ){
+	virtual void insert( const VariantData& key, VariantData* value, Object* source ){
 		if ( (NULL != value) && (NULL != source) && (NULL != insertFunc_) ){
-			ITEM_TYPE valToInsert = (ITEM_TYPE)(*value);
-			(source->*insertFunc_)( index, valToInsert );
+			ValueType valToInsert = (ValueType)(*value);
+			(source->*insertFunc_)( (KeyType)key, valToInsert );
 		}
 	};
-
-	virtual void remove( Object* source, VariantData* value ){
-		if ( (NULL != value) && (NULL != source) && (NULL != deleteFunc1_) ){
-			ITEM_TYPE valToRemove = (ITEM_TYPE)(*value);
-			(source->*deleteFunc1_)( valToRemove );
-		}
-	};
-
-	virtual void remove( Object* source, const uint32& index ){
-		if ( (NULL != source) && (NULL != deleteFunc2_) ){
-			(source->*deleteFunc2_)( index );
+	
+	virtual void remove( const VariantData& key, Object* source ){
+		if ( (NULL != source) && (NULL != deleteFunc_) ){
+			(source->*deleteFunc_)( (KeyType)key );
 		}
 	};
 
@@ -1038,8 +1051,8 @@ private:
 	SetFunction setFunc_;
 	AddFunction addFunc_;
 	InsertFunction insertFunc_;
-	DeleteFunction1 deleteFunc1_;
-	DeleteFunction2 deleteFunc2_;
+	DeleteFunction deleteFunc_;
+	GetSizeFunction getSizeFunc_;
 };
 
 /**
@@ -3336,25 +3349,25 @@ bool registerEvent( SourceType* dummy1, EventType* dummy2,
 
 
 
-template <typename ITEM_TYPE>
+template <typename ValueType, typename KeyType>
 void registerCollectionProperty( const String& className,
 								 const String& propertyName,
-								 _typename_ TypedCollectionProperty<ITEM_TYPE>::GetFunction getFunc,
-								 _typename_ TypedCollectionProperty<ITEM_TYPE>::SetFunction setFunc,
-								 _typename_ TypedCollectionProperty<ITEM_TYPE>::AddFunction addFunc,
-								 _typename_ TypedCollectionProperty<ITEM_TYPE>::InsertFunction insertFunc,
-								 _typename_ TypedCollectionProperty<ITEM_TYPE>::DeleteFunction1 delete1Func,
-								 _typename_ TypedCollectionProperty<ITEM_TYPE>::DeleteFunction2 delete2Func,
+								 _typename_ TypedCollectionProperty<ValueType,KeyType>::GetFunction getFunc,
+								 _typename_ TypedCollectionProperty<ValueType,KeyType>::SetFunction setFunc,
+								 _typename_ TypedCollectionProperty<ValueType,KeyType>::AddFunction addFunc,
+								 _typename_ TypedCollectionProperty<ValueType,KeyType>::InsertFunction insertFunc,
+								 _typename_ TypedCollectionProperty<ValueType,KeyType>::DeleteFunction deleteFunc,
+								 _typename_ TypedCollectionProperty<ValueType,KeyType>::GetSizeFunction getSizeFunc,
 								 const String& description ){
 
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
 		if ( !clazz->hasProperty( propertyName ) ){
 			Property* newProperty = 
-				new TypedCollectionProperty<ITEM_TYPE>( getFunc,setFunc,
+				new TypedCollectionProperty<ValueType,KeyType>( getFunc,setFunc,
 														addFunc, insertFunc,
-														delete1Func, delete2Func,
-														getDescriptor(typeid(ITEM_TYPE)) );
+														deleteFunc, getSizeFunc,
+														getDescriptor(typeid(ValueType)) );
 
 			newProperty->setDescription( description );
 			newProperty->setName( propertyName );
