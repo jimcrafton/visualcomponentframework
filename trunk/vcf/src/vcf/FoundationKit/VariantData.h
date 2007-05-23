@@ -715,8 +715,13 @@ public:
 	void setNull() {
 		type = pdNull;
 
-		IntVal = 0; 
+		if ( NULL != StringVal ) {
+			delete StringVal;
+		}
 		StringVal = NULL;
+
+		IntVal = 0; 
+		
 	}
 
 	static VariantData null() {

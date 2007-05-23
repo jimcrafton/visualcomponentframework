@@ -273,7 +273,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 			VCF_ASSERT( prop->isCollection() );
 			if ( prop->isCollection() ) {
 				VariantData* value = NULL;
-				value = prop->getAtIndex( key );
+				value = prop->getAtKey( key );
 				if ( value->type == pdObject ) {
 					Object* object = *value;
 					if ( NULL != object ) {

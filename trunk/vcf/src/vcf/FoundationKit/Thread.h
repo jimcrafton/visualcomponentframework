@@ -161,8 +161,9 @@ public:
 	gracefully stops the thread and shuts it down, releasing
 	any OS resources associated with the thread.
 	Once a thread is stopped that thread instance may NOT be
-	started again. If the thread is set of automatic deletion
-	this is where it will happen
+	started again. If the thread is set for automatic deletion
+	this is where it will happen. 
+	This method \em will block until the thread is stopped.
 	*/
 	virtual void stop();
 

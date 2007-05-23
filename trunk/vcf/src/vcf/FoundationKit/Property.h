@@ -265,12 +265,21 @@ public:
 	Returns the number of elements in the property's collection
 	*/
 	virtual uint32 getCollectionCount() {
+		return getCollectionCount( source_ );
+	}
+
+	virtual uint32 getCollectionCount( Object* source ) {
 		return 0;
 	}
 
-	virtual VariantData* getAtIndex( const uint32& index ){
+	/**
+	Returns the element at the specified key. Typically this is an
+	index into some array like container, but it's possibly it could be
+	a key into a container like a map or Dictionary.
+	*/
+	virtual VariantData* getAtKey( const VariantData& key ){
 		if ( NULL != source_ ){
-			return getAtIndex( index, source_ );
+			return getAtKey( key, source_ );
 		}
 		else {
 			return NULL;
@@ -282,11 +291,8 @@ public:
 	index is out of bounds (greater than or equal to the total number of 
 	elements in the collection) then an exception is thrown.
 	*/
-	virtual VariantData* getAtIndex( const uint32& index, Object* source ){
-		if ( index >= getCollectionCount() ) {
-			throw OutOfBoundsException();
-		}
-
+	virtual VariantData* getAtKey( const VariantData& key, Object* source ){
+		
 		return NULL;
 	};
 
@@ -294,17 +300,21 @@ public:
 	Sets the value of the element at the specified index. If the
 	index is out of bounds (greater than or equal to the total number of 
 	elements in the collection) then an exception is thrown. 
+	@param VariantData the key, frequently just an index
+	@param VariantData the value
+	@param bool whether or not the collection should add any entries if 
+	necessary. For example, if the key is 0, and the collection is empty,
+	if addMissingValues is true, then a new entry will be created first
+	before assign it the new value passed in.
 	*/
-	virtual void setAtIndex( const uint32& index, VariantData* value ){
+	virtual void setAtKey( const VariantData& key, VariantData* value, bool addMissingValues=false ){
 		if ( NULL != source_ ){
-			setAtIndex( index, source_, value );
+			setAtKey( key, value, source_, addMissingValues );
 		}
 	};
 
-	virtual void setAtIndex( const uint32& index, Object* source, VariantData* value ){
-		if ( index >= getCollectionCount() ) {
-			throw OutOfBoundsException();
-		}
+	virtual void setAtKey( const VariantData& key, VariantData* value, Object* source, bool addMissingValues=false ){
+		//no-op
 	};
 
 	/**
@@ -332,7 +342,7 @@ public:
 	will need to reimplement this function to provide
 	for correct behavior.
 	*/
-	virtual void insert( Object* source, const uint32& index, VariantData* value ){
+	virtual void insert( const VariantData& key, VariantData* value, Object* source ){
 		//no-op
 	};
 
@@ -342,31 +352,9 @@ public:
 	will need to reimplement this function to provide
 	for correct behavior.
 	*/
-	void insert( const uint32& index, VariantData* value ){
+	void insert( const VariantData& key, VariantData* value ){
 		if ( NULL != source_ ){
-			insert( source_, index, value );
-		}
-	};
-
-	/**
-	Removes an element from the property collection. Note that the
-	default implementation is to do nothing. Implementers
-	will need to reimplement this function to provide
-	for correct behavior.
-	*/
-	virtual void remove( Object* source, VariantData* value ){
-		//no-op
-	};
-
-	/**
-	Removes an element from the property collection. Note that the
-	default implementation is to do nothing. Implementers
-	will need to reimplement this function to provide
-	for correct behavior.
-	*/
-	void remove( VariantData* value ){
-		if ( NULL != source_ ){
-			remove( source_, value );
+			insert( key, value, source_ );
 		}
 	};
 
@@ -376,7 +364,7 @@ public:
 	is to do nothing. Implementers will need to reimplement 
 	this function to provide for correct behavior.
 	*/
-	virtual void remove( Object* source, const uint32& index ){
+	virtual void remove( const VariantData& key, Object* source ){
 		//no-op
 	}
 
@@ -386,9 +374,9 @@ public:
 	is to do nothing. Implementers will need to reimplement 
 	this function to provide for correct behavior.
 	*/
-	void remove( const uint32& index ){
+	void remove( const VariantData& key ){
 		if ( NULL != source_ ){
-			remove( source_, index );
+			remove( key, source_ );
 		}
 	};
 
