@@ -1,6 +1,9 @@
 #ifndef _DELEGATES_H__
 #define _DELEGATES_H__
 
+#ifndef _THREADPOOL_H__
+#include "ThreadPool.h"
+#endif
 
 
 namespace VCF {
@@ -37,8 +40,44 @@ protected:
 };
 
 
+
+
+
+
+
+
+
+
+
+
 class delegate {
 public:
+
+	static ThreadPool* delegateThreadPool;
+
+	static void initThreadPool() {
+		if ( NULL == delegateThreadPool ) {
+			delegateThreadPool = new ThreadPool(3);
+			delegateThreadPool->start();
+		}
+	}
+
+	static void terminateThreadPool() {
+		if ( NULL != delegateThreadPool ) {
+			delegateThreadPool->stop();
+
+			delete delegateThreadPool;
+		}
+	}
+
+
+	static ThreadPool* getThreadPool() {
+		if ( NULL == delegateThreadPool ) {
+			delegate::initThreadPool();
+		}
+		return delegateThreadPool;
+	}
+
 
 	~delegate() {
 		clear();
@@ -86,47 +125,21 @@ public:
 		return *functions.at( index );
 	}
 
+
 	std::vector<CallBack*> functions;
 };
 
 
 
-class AsyncResult : public Object, public Waitable {
-public:
 
-	typedef void (*AsyncCallback)
-
-	AsyncResult(): completed_(false), resultWait_(&resultWaitMtx_){}
-
-	virtual ~AsyncResult(){}
-
-	virtual WaitResult wait() {
-		return resultWait_.wait();
-	}
-
-	virtual WaitResult wait( uint32 milliseconds ) {
-		return resultWait_.wait( milliseconds );
-	}
-
-	virtual OSHandleID getPeerHandleID() {
-		return resultWait_.getPeerHandleID();
-	}
-
-	bool isCompleted() const {
-		return completed_;
-	}
-
-	void* getUserData() const;
-protected:
-	bool completed_;
-	Condition resultWait_;
-	Mutex resultWaitMtx_;
-};
+class AsyncResult;
 
 
 template <typename P1>
 class Procedure1 : public CallBack {
 public:
+
+	typedef Procedure1<AsyncResult*> AsyncCallback;
 
 	virtual ~Procedure1(){}
 
@@ -149,8 +162,100 @@ public:
 		}
 	}
 
+
+	virtual void beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback );
+
+	//no results return for this type of delegate
+	virtual void endInvoke( AsyncResult* ) {}
+
 	FuncPtr staticFuncPtr;
 };
+
+
+
+
+
+class AsyncResult : public Object, public Waitable {
+public:
+	typedef Procedure1<AsyncResult*> AsyncCallback;
+
+
+	AsyncResult(Runnable* internalRunnable, AsyncCallback* callback ): completed_(false), 
+					resultWait_(&resultWaitMtx_), 
+					callback_(callback){
+		internalRunnables_.push_back(internalRunnable);
+	}
+
+	AsyncResult(AsyncCallback* callback): completed_(false), 
+					resultWait_(&resultWaitMtx_), 
+					callback_(callback) {}
+
+
+	virtual ~AsyncResult(){}
+
+
+	class Task : public Runnable {
+	public:
+
+		Task( AsyncResult* res ):res_(res) {
+
+		}
+
+		virtual ~Task(){}
+
+		virtual bool run() {
+
+			res_->internal_run();
+
+			return true;
+		}
+		virtual void stop(){}
+
+		AsyncResult* res_;
+	};
+
+	friend class Task;
+
+
+	void doWork() {
+		delegate::getThreadPool()->postWork( new Task(this) );
+	}
+
+	virtual WaitResult wait() {
+		return resultWait_.wait();
+	}
+
+	virtual WaitResult wait( uint32 milliseconds ) {
+		return resultWait_.wait( milliseconds );
+	}
+
+	virtual OSHandleID getPeerHandleID() {
+		return resultWait_.getPeerHandleID();
+	}
+
+
+	void internal_run();
+
+	bool isCompleted() const {
+		return completed_;
+	}
+
+	void* getUserData() const;
+
+	void internal_addRunnable( Runnable* internalRunnable ) {
+		internalRunnables_.push_back(internalRunnable);
+	}
+protected:
+	bool completed_;
+	Condition resultWait_;
+	Mutex resultWaitMtx_;
+
+	std::vector<Runnable*> internalRunnables_;
+	AsyncCallback* callback_;
+};
+
+
+typedef Procedure1<AsyncResult*> AsyncCallback;
 
 
 template <typename P1, typename ClassType=NullClassType1<P1> >
@@ -177,6 +282,8 @@ public:
 			(funcSrc->*classFuncPtr)( p1 );
 		}
 	}
+
+	virtual void beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback );
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
@@ -217,16 +324,22 @@ public:
 	}
 
 	
-	void beginInvoke( P1 p1 ) {
+	AsyncResult* beginInvoke( P1 p1, AsyncCallback* callback ) {
+		AsyncResult* result = new AsyncResult(callback);
+
 		std::vector<CallBack*>::iterator it = functions.begin();
 		while ( it != functions.end() ) {
 			CallBack* cb = *it;
 			CallbackType* callBack = (CallbackType*)cb;
 
-			
+			callBack->beginInvoke( p1, result, callback );			
 
 			++it;
 		}
+
+		result->doWork();
+
+		return result;
 	}
 };
 
@@ -357,6 +470,51 @@ public:
 
 	Results results;
 };
+
+
+template <typename P1>
+inline void Procedure1<P1>::beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback )
+{
+	if ( NULL != staticFuncPtr ) {
+		ThreadedProcedure1<P1> proc(p1, staticFuncPtr);
+
+		
+		initialResult->internal_addRunnable( proc.getParams() );
+	}
+}
+
+template <typename P1, typename ClassType>
+inline void ClassProcedure1<P1,ClassType>::beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback )
+{
+	if ( NULL != classFuncPtr && NULL != funcSrc ) {
+		ThreadedProcedure1<P1,ClassType> proc(funcSrc, p1, classFuncPtr);
+	
+		initialResult->internal_addRunnable( proc.getParams() );	
+	}
+}
+
+inline void AsyncResult::internal_run()
+{
+
+	VCF_ASSERT( !internalRunnables_.empty() );
+
+	std::vector<Runnable*>::iterator it = internalRunnables_.begin();
+	while ( it != internalRunnables_.end() ) {
+		(*it)->run();
+		++it;
+	}
+
+
+	completed_ = true;
+	resultWait_.broadcast();
+
+
+	if ( NULL != callback_ ) {
+		callback_->invoke( this );
+	}
+}
+
+
 
 
 }; //namespace VCF

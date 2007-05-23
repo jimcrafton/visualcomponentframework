@@ -103,6 +103,10 @@ SOURCE=.\Delegates.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ThreadedFunctions.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ThreadPool.h
 # End Source File
 # End Group

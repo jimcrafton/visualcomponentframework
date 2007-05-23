@@ -291,7 +291,7 @@ public:
 			}
 			else {
 				return false;
-			}			
+			}
 		}
 		else {
 			if ( NULL != instancePtr_ ) {
