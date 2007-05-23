@@ -347,41 +347,82 @@ void createAndInvoke()
 class CollT1 : public Object {
 public:
 	_class_rtti_( CollT1, "VCF::Object", "093845lrotelrtkjl" )
-		_property_collection_( int, "items", getIt,setIt,add,insert,delete1,delete2, "" )
+		_property_array_( int, "items", getItem,setItem,addItem,insertItem,removeItem,getItemSize, "" )
+		_property_collection_( double, String, "stuff", getStuff,setStuff,addStuff,insertStuff,removeStuff,getStuffSize, "" )
 	_class_rtti_end_
 
 
 
 	std::vector<int> items;
 
-	void add( int val ) {
+	std::map<String,double> stuff;
+
+	void addItem( int val ) {
 		items.push_back( val );
 	}
 
-	void insert( const uint32& i, int val ){
+	void insertItem( const uint32& i, int val ){
 		items.insert( items.begin() + i, val );
 	}
 
-	void delete1( int val ) {
-		std::vector<int>::iterator found = 
-			std::find( items.begin(), items.end(), val );
-		if ( found != items.end() ) {
-			items.erase( found );
-		}
+	uint32 getItemSize() {
+		return items.size();
 	}
 
-	void delete2( const uint32& i ) {
+	void removeItem( const uint32& i ) {
 		items.erase( items.begin() + i );
 	}
 
-	int getIt( const uint32& i ) {
+	int getItem( const uint32& i ) {
 		return items[i];
 	}
 
-	void setIt( const uint32& i, int val ) {
+	void setItem( const uint32& i, int val, bool addMissingValues ) {
+
+		if ( addMissingValues ) {
+			size_t missing = (i+1) - items.size();
+			if ( missing > 0 ) {
+				items.resize( missing + items.size() );
+			}
+		}
+
 		items[i] = val;
 	}
+
+
+
+	void addStuff( double val ) {
+		
+	}
+
+	void insertStuff( const String& i, double val ){
+		stuff[i] = val;
+	}
+
+	uint32 getStuffSize() {
+		return stuff.size();
+	}
+
+	void removeStuff( const String& i ) {
+		stuff.erase( stuff.find(i) );
+	}
+
+	double getStuff( const String& i ) {
+		std::map<String,double>::const_iterator found = 
+			stuff.find(i);
+		if ( found == stuff.end() ) {
+			throw OutOfBoundsException();	
+		}
+
+		return found->second;
+	}
+
+	void setStuff( const String& i, double val ) {
+		stuff[i] = val;
+	}
 };
+
+
 
 
 void propertyCollections()
@@ -394,7 +435,41 @@ void propertyCollections()
 	Property* p = c->getProperty("items");
 	p->add( &VariantData(200) );
 
-	int val = *( p->getAtIndex( 0 ) );
+	int val = *( p->getAtKey( 0 ) );
+
+	size_t count = p->getCollectionCount();
+
+	p->setAtKey( 0, &VariantData(6461) );
+
+	val = *( p->getAtKey( 0 ) );
+
+	p->remove(0);
+
+	count = p->getCollectionCount();
+
+	p->setAtKey( 1, &VariantData(6461), true );
+
+	count = p->getCollectionCount();
+
+
+	p = c->getProperty("stuff");
+
+	p->insert( "Fluff", &VariantData(100.001) );
+	p->insert( "guff", &VariantData(9999.001) );
+
+	count = p->getCollectionCount();
+
+	double val2 = *( p->getAtKey( "guff" ) );
+	val2 = *( p->getAtKey( "Fluff" ) );
+
+	p->remove("Fluff");
+
+	count = p->getCollectionCount();
+
+	VariantData* v = p->getAtKey( "Fluff" );
+
+	count = p->getCollectionCount();
+
 
 }
 
