@@ -8,8 +8,17 @@
 
 using namespace VCF;
 
+
+
+
+ThreadPool* delegate::delegateThreadPool = NULL;
+
+
+
+
 void doit( int i ) {
 	printf( "Hello from doit! i: %d\n", i );
+	::Sleep( 3000 );
 }
 
 
@@ -162,6 +171,14 @@ double whatAmIb(int,bool,int*,char**, String,Object*)
 	return 9.0010;
 }
 
+
+void doneWithInvokes( AsyncResult* result ) 
+{
+	printf( "doneWithInvokes called! AsyncResult is completed? : %s\n", result->isCompleted() ? "Yes" : "No" );
+}
+
+
+
 int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
@@ -170,7 +187,7 @@ int main( int argc, char** argv ){
 	String s;
 	Swanky sk;
 	
-
+/*
 	Thread* th = ThreadedProcedure1<int>(10,doit).invoke();
 	
 	th->wait();
@@ -242,6 +259,7 @@ int main( int argc, char** argv ){
 	th = ThreadedFunction6<double,int,bool,int*,char**, String,Object*>(102,true,NULL,argv,"",NULL,whatAmIb).invoke();
 	th->wait();
 
+*/
 
 
 	Delagate1<int> d2;
@@ -251,7 +269,13 @@ int main( int argc, char** argv ){
 	
 	d2 += new ClassProcedure1<int,Snarfy>(&sn,&Snarfy::thisBlows,"Snarfy::thisBlows");
 
-	d2.invoke(10);
+	AsyncCallback acb(doneWithInvokes) ;
+	AsyncResult* ar = d2.beginInvoke( 10, &acb );
+
+	ar->wait();
+
+	ar->free();
+
 
 	s = d2.at( 0 ).getReturnType().name();
 
@@ -276,6 +300,7 @@ int main( int argc, char** argv ){
 		printf( "d2 results[%d]: %d\n", i, (int)d3.results[i] );
 	}
 	
+	/*
 	{
 		ThreadPool pool(3);
 		pool.start();
@@ -289,6 +314,15 @@ int main( int argc, char** argv ){
 		pool.wait(  );
 		pool.stop();
 	}
+	*/
+
+
+
+
+
+
+	delegate::terminateThreadPool();
+
 
 	FoundationKit::terminate();
 	return 0;
