@@ -939,6 +939,10 @@ int StringUtils::fromStringAsInt( const VCF::String& value )
 		}
 	#else
 		#ifdef VCF_MSC
+			if ( value.empty() ) {
+				throw BasicException( L"Unable to convert empty string" );
+			}
+
 			result = _wtoi( value.c_str() );
 			if ( 0 == result && ( value[0] != '0' ) &&
 					( -1 != swscanf( value.c_str(), W_STR_INT_CONVERSION, &result ) ) ) {
@@ -1209,6 +1213,9 @@ bool StringUtils::fromStringAsBool( const VCF::String& value )
 	}
 	else if ( value == W_STR_BOOL_CONVERSION_FALSE ){
 		result = false;
+	}
+	else {
+		throw BasicException( L"StringUtils::fromStringAsBool() Unable to convert: " + value );
 	}
 
 	return result;

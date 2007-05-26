@@ -313,8 +313,20 @@ public:
 		}
 	};
 
+	virtual void setAtKey( const VariantData& key, const String& value, bool addMissingValues=false ){
+		if ( NULL != source_ ){
+			setAtKey( key, value, source_, addMissingValues );
+		}
+	};
+
 	virtual void setAtKey( const VariantData& key, VariantData* value, Object* source, bool addMissingValues=false ){
 		//no-op
+	};
+
+	virtual void setAtKey( const VariantData& key, const String& value, Object* source, bool addMissingValues=false ){
+		value_.setFromString( value );
+
+		setAtKey( key, &value_, source_, addMissingValues );
 	};
 
 	/**
