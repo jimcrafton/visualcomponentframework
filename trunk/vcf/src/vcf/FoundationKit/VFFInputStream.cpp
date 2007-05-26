@@ -14,7 +14,7 @@ where you installed the VCF.
 
 using namespace VCF;
 
-
+VariantData getKeyFromIndex( const String& index ) ;
 
 static Dictionary componentConstants;
 
@@ -208,7 +208,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 								//to the specified key, but also 
 								//fill in any blank entries, if 
 								//neccessary.
-								//prop->setAtIndex( key, value );
+								prop->setAtKey( key, value, true );
 							}
 						}
 					}
@@ -224,7 +224,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 							while ( ']' != parser_->nextToken() ) {
 								value += parser_->tokenString();
 							}
-							//prop->setAtIndex( key, value );
+							prop->setAtKey( key, value, true );
 						}
 					}
 				}
@@ -239,8 +239,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 						VCF_ASSERT( prop->isCollection() );
 
 						if ( prop->isCollection() ) {
-							VariantData* value = NULL;
-							//value = prop->getAtIndex( key );
+							VariantData* value = prop->getAtKey( key );
 							if ( value->type == pdObject ) {
 								Object* obj = *value;
 								if ( NULL != obj ) {
@@ -272,8 +271,34 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 			
 			VCF_ASSERT( prop->isCollection() );
 			if ( prop->isCollection() ) {
+
+				if ( prop->getType() != pdObject ) {
+					throw RuntimeException("Attempting to assign values to a value that is not an object");
+				}
+
 				VariantData* value = NULL;
-				value = prop->getAtKey( key );
+				try {
+					value = prop->getAtKey( key );
+				}
+				catch(...) {
+					value = NULL;
+					//create a new instance.
+
+					String objClassName = prop->getTypeClassName();
+					Object* obj = ClassRegistry::createNewInstance( objClassName );
+					
+					VariantData tmp(obj);
+					prop->setAtKey( key, &tmp, true );
+
+					value = prop->getAtKey( key );
+				}
+
+				if ( NULL == value ) {
+					throw RuntimeException("No value is available for the collection \"" + currentSymbol + "\" at key [" + key + "]" );
+				}
+
+				VCF_ASSERT( value->type == pdObject );
+
 				if ( value->type == pdObject ) {
 					Object* object = *value;
 					if ( NULL != object ) {
@@ -281,9 +306,6 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 						
 						processAsignmentTokens( newToken, objPropName, clazz );
 					}
-				}
-				else {
-					processAsignmentTokens( newToken, objPropName, clazz );
 				}
 			}
 		}
@@ -299,24 +321,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 			switch ( token ) {
 				//properties
 				case '=' : case '.' : case '[' : {
-					VariantData key;
-
-					try {
-						key = StringUtils::fromStringAsInt( index );
-					}
-					catch ( ... ) {
-						try {
-							key = StringUtils::fromStringAsDouble( index );
-						}
-						catch ( ... ) {
-							try {
-								key = StringUtils::fromStringAsBool( index );
-							}
-							catch ( ... ) {
-								key = index;
-							}
-						}
-					}
+					VariantData key = getKeyFromIndex( index );
 
 					processAsignmentTokens( token, currentSymbol, key, clazz );
 				}
@@ -335,6 +340,50 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 		}
 		break;
 	}
+}
+
+VariantData getKeyFromIndex( const String& index ) 
+{
+	VariantData key;
+	bool failed = false;
+	String tmp = index;
+	
+
+	try {
+		int i = StringUtils::fromStringAsInt( index );
+		key = i;
+	}
+	catch ( BasicException& ) {
+		failed = true;
+	}
+	
+	if ( failed ) {
+		try {
+			double d = StringUtils::fromStringAsDouble( index );
+			key = d;
+			failed = false;
+		}
+		catch ( BasicException& ) {
+			failed = true;
+		}
+	}
+	
+	if ( failed ) {
+		try {
+			bool b = StringUtils::fromStringAsBool( index );
+			key  = b;
+			failed = false;
+		}
+		catch ( BasicException& ) {
+			failed = true;
+		}
+	}
+	
+	if ( failed ) {
+		key = index;
+	}
+
+	return key;
 }
 
 void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String& currentSymbol, Class* clazz )
@@ -460,24 +509,10 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 				//properties
 				case '=' : case '.' : case '[' : {
 
-					VariantData key;
+					//String s = currentSymbol;
+					//Class* cl = clazz;
 
-					try {
-						key = StringUtils::fromStringAsInt( index );
-					}
-					catch ( ... ) {
-						try {
-							key = StringUtils::fromStringAsDouble( index );
-						}
-						catch ( ... ) {
-							try {
-								key = StringUtils::fromStringAsBool( index );
-							}
-							catch ( ... ) {
-								key = index;
-							}
-						}
-					}
+					VariantData key = getKeyFromIndex(index);
 
 					processAsignmentTokens( token, currentSymbol, key, clazz );
 				}
@@ -577,11 +612,9 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 	VCF::Component* result = NULL;
 	
 	componentInputLevel_ ++;
-
-	String s;
-	//Control* control = NULL;
-	Class* clazz = NULL;
-	//Container* controlContainer = NULL;
+	
+	
+	Class* clazz = NULL;	
 	Component* childComponent = NULL;
 
 	

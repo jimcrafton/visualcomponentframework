@@ -312,14 +312,23 @@ int32 VFFParser::tokenInt()
 String VFFParser::tokenString()
 {
 	String result;
-	int32 length = 0;
+
+	uint32 length = 0;
+
 	if ( token_ == TO_STRING) {
-		length = (stringPtr_ - tokenPtr_) - 1;
+		if ( stringPtr_ > tokenPtr_ ) {
+			length = (stringPtr_ - tokenPtr_) - 1;
+		}
 	}
 	else {
-		length = sourcePtr_ - tokenPtr_;
+		if ( sourcePtr_ > tokenPtr_ ) {
+			length = sourcePtr_ - tokenPtr_;
+		}
 	}
-	result.append( tokenPtr_, length );
+
+	if ( length > 0 ) {
+		result.append( tokenPtr_, length );
+	}
 
 	return result;
 }
