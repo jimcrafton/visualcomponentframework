@@ -564,14 +564,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\Parser.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\Parser.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.cpp
 # End Source File
 # Begin Source File
@@ -621,6 +613,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\VCFProcess.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\VCFProcess.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFParser.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFParser.h
 # End Source File
 # Begin Source File
 
