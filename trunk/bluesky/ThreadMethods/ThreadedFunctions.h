@@ -1291,6 +1291,8 @@ public:
 
 	typedef ThreadedFunction<ReturnType,ClassType> BaseClass;
 
+	typedef NullReturnClassType0<ReturnType> NullClassType;
+
 	ThreadedFunction( FuncPtr funcPtr ): 
 		internalParams_(NULL),runningThread_(NULL),
 			funcPtr_(NULL),
@@ -1360,18 +1362,31 @@ public:
 		internalParams_ = params;
 	}
 	
-	virtual bool run() {		
-		if ( NULL != instancePtr_ ) {
-			if ( NULL != classThreadFuncPtr_ ) {
-				(instancePtr_->*classThreadFuncPtr_)( runningThread_ );
+	virtual bool run() {	
+		if ( typeid(ClassType) == typeid(NullClassType) ) {
+			if ( NULL != threadFuncPtr_ ) {
+				returnVal_ = (*threadFuncPtr_)( runningThread_, param1_ );
 			}
-			else if ( NULL != classFuncPtr_ ) {
-				(instancePtr_->*classFuncPtr_)();
+			else if ( NULL != funcPtr_ ) {
+				returnVal_ = (*funcPtr_)( param1_ );
 			}
 			else {
 				return false;
-			}	
-			
+			}			
+		}
+		else {
+			if ( NULL != instancePtr_ ) {
+				if ( NULL != classThreadFuncPtr_ ) {
+					returnVal_ = (instancePtr_->*classThreadFuncPtr_)( runningThread_ );
+				}
+				else if ( NULL != classFuncPtr_ ) {
+					returnVal_ = (instancePtr_->*classFuncPtr_)();
+				}
+				else {
+					return false;
+				}	
+				
+			}
 		}
 		return true;
 	}
@@ -1394,8 +1409,12 @@ public:
 		return runningThread_;
 	}
 
+	ReturnType returnValue() {
+		return returnVal_;
+	}
 protected:
 	ThreadedFunction(bool):
+			returnVal_(ReturnType()),
 			internalParams_(NULL),runningThread_(NULL),
 			funcPtr_(NULL),
 			threadFuncPtr_(NULL),
@@ -1404,6 +1423,7 @@ protected:
 			instancePtr_(NULL){
 	}
 
+	ReturnType returnVal_;
 	Runnable* internalParams_;
 	Thread* runningThread_;
 	FuncPtr funcPtr_;
@@ -1510,10 +1530,10 @@ public:
 	virtual bool run() {		
 		if ( typeid(ClassType) == typeid(NullClassType) ) {
 			if ( NULL != threadFuncPtr_ ) {
-				(*threadFuncPtr_)( runningThread_, param1_ );
+				returnVal_ = (*threadFuncPtr_)( runningThread_, param1_ );
 			}
 			else if ( NULL != funcPtr_ ) {
-				(*funcPtr_)( param1_ );
+				returnVal_ = (*funcPtr_)( param1_ );
 			}
 			else {
 				return false;
@@ -1522,10 +1542,10 @@ public:
 		else {
 			if ( NULL != instancePtr_ ) {
 				if ( NULL != classThreadFuncPtr_ ) {
-					(instancePtr_->*classThreadFuncPtr_)( runningThread_, param1_ );
+					returnVal_ = (instancePtr_->*classThreadFuncPtr_)( runningThread_, param1_ );
 				}
 				else if ( NULL != classFuncPtr_ ) {
-					(instancePtr_->*classFuncPtr_)( param1_ );
+					returnVal_ = (instancePtr_->*classFuncPtr_)( param1_ );
 				}
 				else {
 					return false;
@@ -1554,8 +1574,11 @@ public:
 		return runningThread_;
 	}
 
+	ReturnType returnValue() {
+		return returnVal_;
+	}
 protected:
-	ThreadedFunction1(ParamType1 p1):param1_(p1),
+	ThreadedFunction1(ParamType1 p1):returnVal_(ReturnType()),param1_(p1),
 			internalParams_(NULL),runningThread_(NULL),
 			funcPtr_(NULL),
 			threadFuncPtr_(NULL),
@@ -1564,6 +1587,7 @@ protected:
 			instancePtr_(NULL){
 	}
 
+	ReturnType returnVal_;
 	ParamType1 param1_;
 
 	Runnable* internalParams_;
@@ -1675,10 +1699,10 @@ public:
 	virtual bool run() {		
 		if ( typeid(ClassType) == typeid(NullClassType) ) {
 			if ( NULL != threadFuncPtr_ ) {
-				(*threadFuncPtr_)( runningThread_, param1_, param2_ );
+				returnVal_ = (*threadFuncPtr_)( runningThread_, param1_, param2_ );
 			}
 			else if ( NULL != funcPtr_ ) {
-				(*funcPtr_)( param1_, param2_ );
+				returnVal_ = (*funcPtr_)( param1_, param2_ );
 			}
 			else {
 				return false;
@@ -1687,10 +1711,10 @@ public:
 		else {
 			if ( NULL != instancePtr_ ) {
 				if ( NULL != classThreadFuncPtr_ ) {
-					(instancePtr_->*classThreadFuncPtr_)( runningThread_, param1_, param2_ );
+					returnVal_ = (instancePtr_->*classThreadFuncPtr_)( runningThread_, param1_, param2_ );
 				}
 				else if ( NULL != classFuncPtr_ ) {
-					(instancePtr_->*classFuncPtr_)( param1_, param2_ );
+					returnVal_ = (instancePtr_->*classFuncPtr_)( param1_, param2_ );
 				}
 				else {
 					return false;
@@ -1719,8 +1743,11 @@ public:
 		return runningThread_;
 	}
 
+	ReturnType returnValue() {
+		return returnVal_;
+	}
 protected:
-	ThreadedFunction2(ParamType1 p1,ParamType2 p2):param1_(p1),param2_(p2),
+	ThreadedFunction2(ParamType1 p1,ParamType2 p2):returnVal_(ReturnType()),param1_(p1),param2_(p2),
 			internalParams_(NULL),runningThread_(NULL),
 			funcPtr_(NULL),
 			threadFuncPtr_(NULL),
@@ -1729,6 +1756,7 @@ protected:
 			instancePtr_(NULL){
 	}
 
+	ReturnType returnVal_;
 	ParamType1 param1_;
 	ParamType2 param2_;
 
@@ -1844,10 +1872,10 @@ public:
 	virtual bool run() {		
 		if ( typeid(ClassType) == typeid(NullClassType) ) {
 			if ( NULL != threadFuncPtr_ ) {
-				(*threadFuncPtr_)( runningThread_, param1_, param2_, param3_ );
+				returnVal_ = (*threadFuncPtr_)( runningThread_, param1_, param2_, param3_ );
 			}
 			else if ( NULL != funcPtr_ ) {
-				(*funcPtr_)( param1_, param2_, param3_ );
+				returnVal_ = (*funcPtr_)( param1_, param2_, param3_ );
 			}
 			else {
 				return false;
@@ -1856,10 +1884,10 @@ public:
 		else {
 			if ( NULL != instancePtr_ ) {
 				if ( NULL != classThreadFuncPtr_ ) {
-					(instancePtr_->*classThreadFuncPtr_)( runningThread_, param1_, param2_, param3_ );
+					returnVal_ = (instancePtr_->*classThreadFuncPtr_)( runningThread_, param1_, param2_, param3_ );
 				}
 				else if ( NULL != classFuncPtr_ ) {
-					(instancePtr_->*classFuncPtr_)( param1_, param2_, param3_ );
+					returnVal_ = (instancePtr_->*classFuncPtr_)( param1_, param2_, param3_ );
 				}
 				else {
 					return false;
@@ -1888,8 +1916,12 @@ public:
 		return runningThread_;
 	}
 
+	ReturnType returnValue() {
+		return returnVal_;
+	}
+
 protected:
-	ThreadedFunction3(ParamType1 p1,ParamType2 p2,ParamType3 p3):param1_(p1),param2_(p2),param3_(p3),
+	ThreadedFunction3(ParamType1 p1,ParamType2 p2,ParamType3 p3):returnVal_(ReturnType()),param1_(p1),param2_(p2),param3_(p3),
 			internalParams_(NULL),runningThread_(NULL),
 			funcPtr_(NULL),
 			threadFuncPtr_(NULL),
@@ -1898,6 +1930,7 @@ protected:
 			instancePtr_(NULL){
 	}
 
+	ReturnType returnVal_;
 	ParamType1 param1_;
 	ParamType2 param2_;
 	ParamType3 param3_;
@@ -2017,10 +2050,10 @@ public:
 	virtual bool run() {		
 		if ( typeid(ClassType) == typeid(NullClassType) ) {
 			if ( NULL != threadFuncPtr_ ) {
-				(*threadFuncPtr_)( runningThread_, param1_, param2_, param3_, param4_ );
+				returnVal_ = (*threadFuncPtr_)( runningThread_, param1_, param2_, param3_, param4_ );
 			}
 			else if ( NULL != funcPtr_ ) {
-				(*funcPtr_)( param1_, param2_, param3_, param4_ );
+				returnVal_ = (*funcPtr_)( param1_, param2_, param3_, param4_ );
 			}
 			else {
 				return false;
@@ -2029,10 +2062,10 @@ public:
 		else {
 			if ( NULL != instancePtr_ ) {
 				if ( NULL != classThreadFuncPtr_ ) {
-					(instancePtr_->*classThreadFuncPtr_)( runningThread_, param1_, param2_, param3_, param4_ );
+					returnVal_ = (instancePtr_->*classThreadFuncPtr_)( runningThread_, param1_, param2_, param3_, param4_ );
 				}
 				else if ( NULL != classFuncPtr_ ) {
-					(instancePtr_->*classFuncPtr_)( param1_, param2_, param3_, param4_ );
+					returnVal_ = (instancePtr_->*classFuncPtr_)( param1_, param2_, param3_, param4_ );
 				}
 				else {
 					return false;
@@ -2061,8 +2094,12 @@ public:
 		return runningThread_;
 	}
 
+	ReturnType returnValue() {
+		return returnVal_;
+	}
+
 protected:
-	ThreadedFunction4(ParamType1 p1,ParamType2 p2,ParamType3 p3,ParamType4 p4):param1_(p1),param2_(p2),param3_(p3),param4_(p4),
+	ThreadedFunction4(ParamType1 p1,ParamType2 p2,ParamType3 p3,ParamType4 p4):returnVal_(ReturnType()),param1_(p1),param2_(p2),param3_(p3),param4_(p4),
 			internalParams_(NULL),runningThread_(NULL),
 			funcPtr_(NULL),
 			threadFuncPtr_(NULL),
@@ -2071,6 +2108,7 @@ protected:
 			instancePtr_(NULL){
 	}
 
+	ReturnType returnVal_;
 	ParamType1 param1_;
 	ParamType2 param2_;
 	ParamType3 param3_;
@@ -2194,10 +2232,10 @@ public:
 	virtual bool run() {		
 		if ( typeid(ClassType) == typeid(NullClassType) ) {
 			if ( NULL != threadFuncPtr_ ) {
-				(*threadFuncPtr_)( runningThread_, param1_, param2_, param3_, param4_, param5_ );
+				returnVal_ = (*threadFuncPtr_)( runningThread_, param1_, param2_, param3_, param4_, param5_ );
 			}
 			else if ( NULL != funcPtr_ ) {
-				(*funcPtr_)( param1_, param2_, param3_, param4_, param5_ );
+				returnVal_ = (*funcPtr_)( param1_, param2_, param3_, param4_, param5_ );
 			}
 			else {
 				return false;
@@ -2206,10 +2244,10 @@ public:
 		else {
 			if ( NULL != instancePtr_ ) {
 				if ( NULL != classThreadFuncPtr_ ) {
-					(instancePtr_->*classThreadFuncPtr_)( runningThread_, param1_, param2_, param3_, param4_, param5_ );
+					returnVal_ = (instancePtr_->*classThreadFuncPtr_)( runningThread_, param1_, param2_, param3_, param4_, param5_ );
 				}
 				else if ( NULL != classFuncPtr_ ) {
-					(instancePtr_->*classFuncPtr_)( param1_, param2_, param3_, param4_, param5_ );
+					returnVal_ = (instancePtr_->*classFuncPtr_)( param1_, param2_, param3_, param4_, param5_ );
 				}
 				else {
 					return false;
@@ -2238,8 +2276,11 @@ public:
 		return runningThread_;
 	}
 
+	ReturnType returnValue() {
+		return returnVal_;
+	}
 protected:
-	ThreadedFunction5(ParamType1 p1,ParamType2 p2,ParamType3 p3,ParamType4 p4,ParamType5 p5):param1_(p1),param2_(p2),param3_(p3),param4_(p4),param5_(p5),
+	ThreadedFunction5(ParamType1 p1,ParamType2 p2,ParamType3 p3,ParamType4 p4,ParamType5 p5):returnVal_(ReturnType()),param1_(p1),param2_(p2),param3_(p3),param4_(p4),param5_(p5),
 			internalParams_(NULL),runningThread_(NULL),
 			funcPtr_(NULL),
 			threadFuncPtr_(NULL),
@@ -2248,6 +2289,7 @@ protected:
 			instancePtr_(NULL){
 	}
 
+	ReturnType returnVal_;
 	ParamType1 param1_;
 	ParamType2 param2_;
 	ParamType3 param3_;
@@ -2374,22 +2416,22 @@ public:
 	virtual bool run() {		
 		if ( typeid(ClassType) == typeid(NullClassType) ) {
 			if ( NULL != threadFuncPtr_ ) {
-				(*threadFuncPtr_)( runningThread_, param1_, param2_, param3_, param4_, param5_, param6_ );
+				returnVal_ = (*threadFuncPtr_)( runningThread_, param1_, param2_, param3_, param4_, param5_, param6_ );
 			}
 			else if ( NULL != funcPtr_ ) {
-				(*funcPtr_)( param1_, param2_, param3_, param4_, param5_, param6_ );
+				returnVal_ = (*funcPtr_)( param1_, param2_, param3_, param4_, param5_, param6_ );
 			}
 			else {
 				return false;
-			}			
+			}
 		}
 		else {
 			if ( NULL != instancePtr_ ) {
 				if ( NULL != classThreadFuncPtr_ ) {
-					(instancePtr_->*classThreadFuncPtr_)( runningThread_, param1_, param2_, param3_, param4_, param5_, param6_ );
+					returnVal_ = (instancePtr_->*classThreadFuncPtr_)( runningThread_, param1_, param2_, param3_, param4_, param5_, param6_ );
 				}
 				else if ( NULL != classFuncPtr_ ) {
-					(instancePtr_->*classFuncPtr_)( param1_, param2_, param3_, param4_, param5_, param6_ );
+					returnVal_ = (instancePtr_->*classFuncPtr_)( param1_, param2_, param3_, param4_, param5_, param6_ );
 				}
 				else {
 					return false;
@@ -2418,8 +2460,12 @@ public:
 		return runningThread_;
 	}
 
+	ReturnType returnValue() {
+		return returnVal_;
+	}
+
 protected:
-	ThreadedFunction6(ParamType1 p1,ParamType2 p2,ParamType3 p3,ParamType4 p4,ParamType5 p5,ParamType6 p6):param1_(p1),param2_(p2),param3_(p3),param4_(p4),param5_(p5),param6_(p6),
+	ThreadedFunction6(ParamType1 p1,ParamType2 p2,ParamType3 p3,ParamType4 p4,ParamType5 p5,ParamType6 p6):returnVal_(ReturnType()),param1_(p1),param2_(p2),param3_(p3),param4_(p4),param5_(p5),param6_(p6),
 			internalParams_(NULL),runningThread_(NULL),
 			funcPtr_(NULL),
 			threadFuncPtr_(NULL),
@@ -2428,6 +2474,7 @@ protected:
 			instancePtr_(NULL){
 	}
 
+	ReturnType returnVal_;
 	ParamType1 param1_;
 	ParamType2 param2_;
 	ParamType3 param3_;

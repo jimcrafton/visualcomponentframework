@@ -300,6 +300,8 @@ int main( int argc, char** argv ){
 		printf( "d2 results[%d]: %d\n", i, (int)d3.results[i] );
 	}
 	
+	d3.beginInvoke( "Hola", 120.456, NULL );
+
 	/*
 	{
 		ThreadPool pool(3);
