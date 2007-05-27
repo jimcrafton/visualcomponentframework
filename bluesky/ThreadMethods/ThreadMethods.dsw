@@ -3,6 +3,18 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "FoundationKitDLL"=..\..\vcf\build\vc60\FoundationKit\FoundationKitDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "ThreadMeth"=.\ThreadMethods.dsp - Package Owner=<4>
 
 Package=<5>
@@ -11,6 +23,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################

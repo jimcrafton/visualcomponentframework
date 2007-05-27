@@ -135,6 +135,15 @@ public:
 class AsyncResult;
 
 
+class AsyncReturns {
+public:
+	virtual ~AsyncReturns(){};
+
+	virtual void functionFinished( AsyncResult*, Runnable* runnable ) = 0;
+};
+
+
+
 template <typename P1>
 class Procedure1 : public CallBack {
 public:
@@ -163,7 +172,7 @@ public:
 	}
 
 
-	virtual void beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback );
+	virtual void beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
 
 	//no results return for this type of delegate
 	virtual void endInvoke( AsyncResult* ) {}
@@ -173,26 +182,53 @@ public:
 
 
 
-
-
 class AsyncResult : public Object, public Waitable {
 public:
 	typedef Procedure1<AsyncResult*> AsyncCallback;
 
+	typedef std::pair<AsyncReturns*,Runnable*>  CallbackWork;
 
-	AsyncResult(Runnable* internalRunnable, AsyncCallback* callback ): completed_(false), 
-					resultWait_(&resultWaitMtx_), 
-					callback_(callback){
-		internalRunnables_.push_back(internalRunnable);
-	}
+	//AsyncResult(Runnable* internalRunnable, AsyncCallback* callback ): completed_(false), 
+	//				resultWait_(&resultWaitMtx_), 
+	//				callback_(callback),
+	//				runCallbacksAsync_(false){
+	//	internalRunnables_.push_back(internalRunnable);
+	//}
 
 	AsyncResult(AsyncCallback* callback): completed_(false), 
 					resultWait_(&resultWaitMtx_), 
-					callback_(callback) {}
+					callback_(callback),
+					runCallbacksAsync_(false) {}
 
 
 	virtual ~AsyncResult(){}
 
+
+	class AsyncTask : public Runnable {
+	public:
+
+		AsyncTask( AsyncResult* res, AsyncReturns* returnObject, Runnable* internalRunnable ):
+			res_(res),returnObject_(returnObject),internalRunnable_(internalRunnable) {	}
+
+
+		virtual ~AsyncTask(){}
+
+		virtual bool run() {
+
+			internalRunnable_->run();
+
+			returnObject_->functionFinished( res_, internalRunnable_ );
+
+			res_->internal_removeRunnable( this );
+			return true;
+		}
+
+		virtual void stop(){}
+
+		AsyncResult* res_;
+		AsyncReturns* returnObject_;
+		Runnable* internalRunnable_;
+	};
 
 	class Task : public Runnable {
 	public:
@@ -209,23 +245,47 @@ public:
 
 			return true;
 		}
+
 		virtual void stop(){}
 
 		AsyncResult* res_;
 	};
 
 	friend class Task;
+	friend class AsyncTask;
 
 
 	void doWork() {
-		delegate::getThreadPool()->postWork( new Task(this) );
+		if ( runCallbacksAsync_ ) {
+			std::vector<CallbackWork>::iterator it = internalRunnables_.begin();
+			while ( it != internalRunnables_.end() ) {
+				delegate::getThreadPool()->postWork( new AsyncTask(this,(*it).first, (*it).second) );
+				++it;
+			}
+		}
+		else {
+			delegate::getThreadPool()->postWork( new Task(this) );
+		}
 	}
 
 	virtual WaitResult wait() {
+		{
+			Lock l(runnableMtx_);
+			if ( completed_ || internalRunnables_.empty() ) {
+				return wrWaitFinished;
+			}
+		}
 		return resultWait_.wait();
 	}
 
 	virtual WaitResult wait( uint32 milliseconds ) {
+		{
+			Lock l(runnableMtx_);
+			if ( completed_ || internalRunnables_.empty() ) {
+				return wrWaitFinished;
+			}
+		}
+		
 		return resultWait_.wait( milliseconds );
 	}
 
@@ -242,16 +302,47 @@ public:
 
 	void* getUserData() const;
 
-	void internal_addRunnable( Runnable* internalRunnable ) {
-		internalRunnables_.push_back(internalRunnable);
+	void internal_addRunnable( AsyncReturns* returnObject, Runnable* internalRunnable ) {
+		internalRunnables_.push_back(CallbackWork(returnObject,internalRunnable));
+	}
+	
+	void setRunCallbacksAsynchronously( bool val ) {
+		runCallbacksAsync_ = val;
 	}
 protected:
 	bool completed_;
+	bool runCallbacksAsync_;
 	Condition resultWait_;
 	Mutex resultWaitMtx_;
 
-	std::vector<Runnable*> internalRunnables_;
+	Mutex runnableMtx_;
+
+	
+
+	std::vector<CallbackWork> internalRunnables_;
 	AsyncCallback* callback_;
+
+	void internal_removeRunnable( Runnable* val ) {
+		{
+			Lock l(runnableMtx_);
+			
+			std::vector<CallbackWork>::iterator found = 
+				internalRunnables_.begin();
+			while ( found != internalRunnables_.end() ) {
+				if ( found->second = val ) {
+					internalRunnables_.erase( found );
+					delete val;
+					break;
+				}
+				++ found;
+			}
+		}
+
+		if ( internalRunnables_.empty() ) {
+			completed_ = true;
+			resultWait_.broadcast();
+		}
+	}
 };
 
 
@@ -283,7 +374,7 @@ public:
 		}
 	}
 
-	virtual void beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback );
+	virtual void beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
@@ -294,7 +385,7 @@ public:
 
 
 template <typename P1>
-class Delagate1 : public delegate {
+class Delagate1 : public delegate, public AsyncReturns {
 public:
 	typedef void (*FuncPtr)(P1);	
 	typedef Procedure1<P1> CallbackType;
@@ -332,7 +423,7 @@ public:
 			CallBack* cb = *it;
 			CallbackType* callBack = (CallbackType*)cb;
 
-			callBack->beginInvoke( p1, result, callback );			
+			callBack->beginInvoke( p1, result, callback, this );
 
 			++it;
 		}
@@ -341,6 +432,8 @@ public:
 
 		return result;
 	}
+
+	virtual void functionFinished( AsyncResult*, Runnable* runnable );
 };
 
 
@@ -377,6 +470,8 @@ public:
 		}
 		return result;
 	}
+
+	virtual void beginInvoke( P1 p1, P2 p2, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
 
 	FuncPtr staticFuncPtr;
 };
@@ -415,18 +510,27 @@ public:
 		return result;
 	}
 
+	virtual void beginInvoke( P1 p1, P2 p2, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+	
+	
+
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
 };
 
 
 template <typename ReturnType, typename P1, typename P2>
-class Delagate2R : public delegate {
+class Delagate2R : public delegate, public AsyncReturns {
 public:
 	typedef Function2<ReturnType,P1,P2> CallbackType;
 	typedef _typename_ CallbackType::FuncPtr FuncPtr;
 
 	typedef std::vector<ReturnType> Results;
+	typedef std::map<AsyncResult*,Results*> ResultsCache;
+
+
+	Delagate2R():resultsCache_(NULL){}
+
 
 	Delagate2R<ReturnType,P1,P2>& operator+= ( FuncPtr rhs ) {
 		CallbackType* cb = new CallbackType(rhs);
@@ -468,28 +572,57 @@ public:
 	}
 
 
+	AsyncResult* beginInvoke( P1 p1, P2 p2, AsyncCallback* callback ) {
+		AsyncResult* result = new AsyncResult(callback);
+
+		std::vector<CallBack*>::iterator it = functions.begin();
+		while ( it != functions.end() ) {
+			CallBack* cb = *it;
+			CallbackType* callBack = (CallbackType*)cb;
+
+			callBack->beginInvoke( p1, p2, result, callback, this );			
+
+			++it;
+		}
+
+		result->doWork();
+
+		return result;
+	}
+
+
+	ReturnType endInvoke( AsyncResult* asyncResult );
+
+	Results endInvokeWithResults( AsyncResult* asyncResult );
+	
+
+	virtual void functionFinished( AsyncResult*, Runnable* runnable );
+
 	Results results;
+protected:
+	ResultsCache* resultsCache_;
+	Mutex asyncResultsMtx_;
 };
 
 
 template <typename P1>
-inline void Procedure1<P1>::beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback )
+inline void Procedure1<P1>::beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
 {
 	if ( NULL != staticFuncPtr ) {
 		ThreadedProcedure1<P1> proc(p1, staticFuncPtr);
 
 		
-		initialResult->internal_addRunnable( proc.getParams() );
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
 	}
 }
 
 template <typename P1, typename ClassType>
-inline void ClassProcedure1<P1,ClassType>::beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback )
+inline void ClassProcedure1<P1,ClassType>::beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
 {
 	if ( NULL != classFuncPtr && NULL != funcSrc ) {
 		ThreadedProcedure1<P1,ClassType> proc(funcSrc, p1, classFuncPtr);
 	
-		initialResult->internal_addRunnable( proc.getParams() );	
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
 	}
 }
 
@@ -498,9 +631,11 @@ inline void AsyncResult::internal_run()
 
 	VCF_ASSERT( !internalRunnables_.empty() );
 
-	std::vector<Runnable*>::iterator it = internalRunnables_.begin();
+	std::vector<CallbackWork>::iterator it = internalRunnables_.begin();
 	while ( it != internalRunnables_.end() ) {
-		(*it)->run();
+		CallbackWork& cw = *it;
+		cw.second->run();
+		cw.first->functionFinished( this, cw.second );
 		++it;
 	}
 
@@ -514,8 +649,60 @@ inline void AsyncResult::internal_run()
 	}
 }
 
+template <typename P1>
+inline void Delagate1<P1>::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	//no-op for procedures - they don't return values!
+}
 
 
+
+
+
+template <typename ReturnType, typename P1, typename P2>
+inline void Function2<ReturnType,P1,P2>::beginInvoke( P1 p1, P2 p2, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != staticFuncPtr ) {
+		ThreadedFunction2<ReturnType,P1,P2> proc(p1, p2, staticFuncPtr);
+
+		
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+
+template <typename ReturnType, typename P1, typename P2, typename ClassType>
+inline void ClassFunction2<ReturnType,P1,P2,ClassType>::beginInvoke( P1 p1, P2 p2, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != classFuncPtr && NULL != funcSrc ) {
+		ThreadedFunction2<ReturnType,P1,P2,ClassType> proc(funcSrc, p1, p2, classFuncPtr);
+	
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+template <typename ReturnType, typename P1, typename P2>
+inline void Delagate2R<ReturnType,P1,P2>::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	ThreadedFunction2<ReturnType,P1,P2>* funcParams = (ThreadedFunction2<ReturnType,P1,P2>*)runnable;
+
+	ReturnType ret = funcParams->returnValue();
+}
+
+template <typename ReturnType, typename P1, typename P2>
+inline ReturnType Delagate2R<ReturnType,P1,P2>::endInvoke( AsyncResult* asyncResult )
+{
+	
+}
+
+template <typename ReturnType, typename P1, typename P2>
+inline Delagate2R<ReturnType,P1,P2>::Results Delagate2R<ReturnType,P1,P2>::endInvokeWithResults( AsyncResult* asyncResult )
+{
+	Results result;
+
+	return result;
+}
+	
 
 }; //namespace VCF
 
