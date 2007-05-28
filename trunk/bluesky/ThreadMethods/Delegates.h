@@ -323,6 +323,7 @@ protected:
 	AsyncCallback* callback_;
 
 	void internal_removeRunnable( Runnable* val ) {
+		bool done = false;
 		{
 			Lock l(runnableMtx_);
 			
@@ -336,11 +337,17 @@ protected:
 				}
 				++ found;
 			}
+
+			done = internalRunnables_.empty();
 		}
 
-		if ( internalRunnables_.empty() ) {
+		if ( done ) {
 			completed_ = true;
 			resultWait_.broadcast();
+
+			if ( NULL != callback_ ) {
+				callback_->invoke( this );
+			}
 		}
 	}
 };
@@ -518,6 +525,83 @@ public:
 	ClassType* funcSrc;
 };
 
+template <typename ReturnType>
+class ResultsCache {
+public:
+	typedef std::vector<ReturnType> Results;
+	typedef std::map<AsyncResult*,Results*> CacheMap;
+
+	ResultsCache():cache_(NULL){}
+
+	~ResultsCache(){		
+		Lock l(asyncResultsMtx_);
+		if ( NULL != cache_ ) {				
+			CacheMap::iterator it = cache_->begin();
+			while ( it != cache_->end() ) {
+				delete it->second;
+				++it;
+			}
+			delete cache_;
+		}		
+	}
+	
+	void addResult( ReturnType result, AsyncResult* asyncRes ) {
+		
+		Lock l(asyncResultsMtx_);
+
+		if ( NULL == cache_ ) {
+			cache_ = new CacheMap();
+		}
+
+		Results* results = NULL;
+		CacheMap::iterator found = cache_->find( asyncRes );
+		if ( found == cache_->end() ) {
+			results = new Results();
+			cache_->insert( CacheMap::value_type(asyncRes,results) );
+		}
+		else {
+			results = found->second;
+		}
+		
+		results->push_back( result );	
+	}
+
+
+	ReturnType getLastResult( AsyncResult* asyncResult )  {
+		ReturnType result = ReturnType();
+
+		Results* results = getResults( asyncResult );
+		{
+			Lock l(asyncResultsMtx_);
+			if ( NULL != results ) {
+				if ( !results->empty() ) {
+					result = results->back();
+				}
+			}
+		}
+
+		return result;
+	}
+
+	Results* getResults( AsyncResult* asyncResult ) {
+		Results* result = NULL;
+
+		Lock l(asyncResultsMtx_);
+		
+		if ( NULL != cache_ ) {
+			
+			CacheMap::iterator found = cache_->find( asyncResult );
+			if ( found != cache_->end() ) {
+				result = found->second;
+			}
+		}
+
+		return result;
+	}
+protected:
+	Mutex asyncResultsMtx_;
+	CacheMap* cache_;
+};	
 
 template <typename ReturnType, typename P1, typename P2>
 class Delagate2R : public delegate, public AsyncReturns {
@@ -526,11 +610,11 @@ public:
 	typedef _typename_ CallbackType::FuncPtr FuncPtr;
 
 	typedef std::vector<ReturnType> Results;
-	typedef std::map<AsyncResult*,Results*> ResultsCache;
 
 
-	Delagate2R():resultsCache_(NULL){}
+	Delagate2R(){}
 
+	virtual ~Delagate2R(){}
 
 	Delagate2R<ReturnType,P1,P2>& operator+= ( FuncPtr rhs ) {
 		CallbackType* cb = new CallbackType(rhs);
@@ -600,8 +684,7 @@ public:
 
 	Results results;
 protected:
-	ResultsCache* resultsCache_;
-	Mutex asyncResultsMtx_;
+	ResultsCache<ReturnType> resultsCache_;
 };
 
 
@@ -687,18 +770,29 @@ inline void Delagate2R<ReturnType,P1,P2>::functionFinished( AsyncResult* res, Ru
 	ThreadedFunction2<ReturnType,P1,P2>* funcParams = (ThreadedFunction2<ReturnType,P1,P2>*)runnable;
 
 	ReturnType ret = funcParams->returnValue();
+
+	resultsCache_.addResult( ret, res );
 }
 
 template <typename ReturnType, typename P1, typename P2>
 inline ReturnType Delagate2R<ReturnType,P1,P2>::endInvoke( AsyncResult* asyncResult )
 {
-	
+	ReturnType result = resultsCache_.getLastResult( asyncResult );
+
+	return result;
 }
 
 template <typename ReturnType, typename P1, typename P2>
 inline Delagate2R<ReturnType,P1,P2>::Results Delagate2R<ReturnType,P1,P2>::endInvokeWithResults( AsyncResult* asyncResult )
 {
 	Results result;
+
+	Results* res = resultsCache_.getResults();
+	
+	if ( NULL != res ) {
+		result = *res;
+	}
+	
 
 	return result;
 }
