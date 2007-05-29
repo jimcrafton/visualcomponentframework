@@ -137,7 +137,7 @@ unsigned __stdcall Win32Thread::threadProc( void* param )
 		Thread* thread = peer->thread_;
 		bool autoDeleteThread = thread->canAutoDelete();		
 
-		if ( !thread->run() ) {
+		if ( !thread->internal_run() ) {
 			result = 1;
 		}
 

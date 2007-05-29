@@ -23,7 +23,8 @@ Thread::Thread():
 	autoDelete_(true),
 	autoDeleteRunnable_(false),
 	stopped_(false),
-	runLoop_(NULL)
+	runLoop_(NULL),
+	runWithExceptionBlock_(false)
 {
 	peer_ = SystemToolkit::createThreadPeer( this, false );
 	if ( NULL == peer_ ) {
@@ -38,7 +39,8 @@ Thread::Thread( Runnable* runnableObject ):
 	autoDelete_(true),
 	autoDeleteRunnable_(true),
 	stopped_(false),
-	runLoop_(NULL)
+	runLoop_(NULL),
+	runWithExceptionBlock_(false)
 {
 	peer_ = SystemToolkit::createThreadPeer( this, false );
 	if ( NULL == peer_ ) {
@@ -53,7 +55,8 @@ Thread::Thread( Runnable* runnableObject, const bool& autoDelete ):
 	autoDelete_(autoDelete),
 	autoDeleteRunnable_(false),
 	stopped_(false),
-	runLoop_(NULL)
+	runLoop_(NULL),
+	runWithExceptionBlock_(false)
 {
 	peer_ = SystemToolkit::createThreadPeer( this, false );
 	if ( NULL == peer_ ) {
@@ -68,7 +71,8 @@ Thread::Thread( const bool& autoDelete ):
 	autoDelete_(autoDelete),
 	autoDeleteRunnable_(false),
 	stopped_(false),
-	runLoop_(NULL)
+	runLoop_(NULL),
+	runWithExceptionBlock_(false)
 {
 	peer_ = SystemToolkit::createThreadPeer( this, false );
 	if ( NULL == peer_ ) {
@@ -84,7 +88,8 @@ Thread::Thread( Runnable* runnableObject, const bool& autoDeleteRunnable,
 	autoDelete_(autoDelete),
 	autoDeleteRunnable_(autoDeleteRunnable),
 	stopped_(false),
-	runLoop_(NULL)
+	runLoop_(NULL),
+	runWithExceptionBlock_(false)
 {
 	peer_ = SystemToolkit::createThreadPeer( this, false );
 	if ( NULL == peer_ ) {
@@ -100,7 +105,8 @@ Thread::Thread( bool mainThread, Runnable* runnableObject, const bool& autoDelet
 	autoDelete_(autoDelete),
 	autoDeleteRunnable_(autoDeleteRunnable),
 	stopped_(false),
-	runLoop_(NULL)
+	runLoop_(NULL),
+	runWithExceptionBlock_(false)
 {
 	peer_ = SystemToolkit::createThreadPeer( this, mainThread );
 	if ( NULL == peer_ ) {
@@ -129,6 +135,38 @@ Thread::~Thread()
 	}
 
 	delete runLoop_;
+}
+
+bool Thread::internal_run()
+{
+	if ( runWithExceptionBlock_ ) {
+		return internal_runWithExceptionBlock();
+	}
+	
+	return run();
+}
+
+bool Thread::internal_runWithExceptionBlock()
+{
+	bool result = false;
+
+	try {
+		result = run();
+	}
+	catch ( BasicException& e ) {
+		System::println( "VCF Exception caught in thread! Ex: " + e.getMessage() );
+		result = false;
+	}
+	catch ( std::exception& e ) {
+		System::println( String("C++ std::exception caught in thread! Ex: ") + e.what() );
+		result = false;
+	}
+	catch (...) {
+		System::println( "Unknown exception caught in thread!" );
+		result = false;
+	}
+
+	return result;
 }
 
 bool Thread::run()

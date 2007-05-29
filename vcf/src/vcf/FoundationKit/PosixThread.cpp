@@ -29,7 +29,7 @@ void* PosixThread::threadProc( void* arg )
 			bool autoDeleteThread = peer->thread_->canAutoDelete(); 
 		peer->threadSuspendMutex_.unlock();
 
-        if(!peer->thread_->run())
+        if(!peer->thread_->internal_run())
         {
             result = NULL;
         }
