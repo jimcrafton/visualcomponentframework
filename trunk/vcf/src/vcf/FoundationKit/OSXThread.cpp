@@ -72,7 +72,7 @@ OSStatus OSXThread::taskProc( void *parameter )
 		bool autoDeleteThread = thread->canAutoDelete();
 
 
-		if ( !thread->run() ) {
+		if ( !thread->internal_run() ) {
 			result = 1;
 		}
 

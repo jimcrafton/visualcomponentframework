@@ -168,7 +168,12 @@ public:
 	virtual void stop();
 
 	/**
-	Starts (or resumes) a thread running.
+	Starts (or resumes) a thread running. If you want to protect
+	the thread's execution within a try/catch block, make sure to 
+	call setRunsWithExceptionHandler(true), prior to calling this
+	method.
+
+	@see setRunsWithExceptionHandler
 	*/
 	bool start();
 
@@ -225,6 +230,32 @@ public:
 
 	RunLoop* getRunLoop();
 
+	/**
+	Returns whether or not the thread's run() method is wrapped with an 
+	try/catch block.
+	@return bool True if the thread's run() method is wrapped in an 
+	try/catch block. False if it's not.
+	*/
+	bool getRunsWithExceptionHandler() {
+		return runWithExceptionBlock_;
+	}
+
+	/**
+	Sets the variable that determines whether or not the thread's run() method 
+	is wrapped in an try/catch block. If this is set to true, then the run() method
+	will have a try/catch block around it, which will catch \em all exceptions thrown,
+	preventing exceptions from propagating outside the threads execution. If
+	this is set to false, the default value, then no try/catch block is used 
+	when the thread's run() method is invoked. This means that exceptions thrown 
+	will cause problems if not caught within the execution of the thread.
+
+	Note that this only makes sense to call \em before the thread's start() 
+	method is called. Once start() is called, the thread's run() will be executed 
+	and calling this method at that point will have no effect.
+	*/
+	void setRunsWithExceptionHandler( bool val ) {
+		runWithExceptionBlock_ = val;
+	}
 
 	static Thread* getMainThread();
 
@@ -245,6 +276,7 @@ public:
 	*/
 	void internal_initBeforeRun();
 
+	bool internal_run();
 protected:
 
 	bool canContinue_;
@@ -254,12 +286,16 @@ protected:
 	bool autoDeleteRunnable_;
 	bool stopped_;
 	RunLoop* runLoop_;
+	bool runWithExceptionBlock_;
 
 	static Thread* mainThread;
 private:
 	//this is used ONLY to create a wrapper around the main thread
 	Thread( bool mainThread, Runnable* runnableObject, const bool& autoDeleteRunnable,
 		const bool& autoDelete );
+
+
+	bool internal_runWithExceptionBlock();
 };
 
 
