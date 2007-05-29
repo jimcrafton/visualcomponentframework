@@ -187,7 +187,7 @@ int main( int argc, char** argv ){
 	String s;
 	Swanky sk;
 	
-/*
+
 	Thread* th = ThreadedProcedure1<int>(10,doit).invoke();
 	
 	th->wait();
@@ -259,7 +259,7 @@ int main( int argc, char** argv ){
 	th = ThreadedFunction6<double,int,bool,int*,char**, String,Object*>(102,true,NULL,argv,"",NULL,whatAmIb).invoke();
 	th->wait();
 
-*/
+
 
 
 	Delagate1<int> d2;

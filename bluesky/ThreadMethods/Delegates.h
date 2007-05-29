@@ -46,10 +46,6 @@ protected:
 
 
 
-
-
-
-
 class delegate {
 public:
 

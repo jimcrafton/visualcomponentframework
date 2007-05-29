@@ -1365,10 +1365,10 @@ public:
 	virtual bool run() {	
 		if ( typeid(ClassType) == typeid(NullClassType) ) {
 			if ( NULL != threadFuncPtr_ ) {
-				returnVal_ = (*threadFuncPtr_)( runningThread_, param1_ );
+				returnVal_ = (*threadFuncPtr_)( runningThread_ );
 			}
 			else if ( NULL != funcPtr_ ) {
-				returnVal_ = (*funcPtr_)( param1_ );
+				returnVal_ = (*funcPtr_)();
 			}
 			else {
 				return false;
