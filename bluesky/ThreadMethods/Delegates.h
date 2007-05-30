@@ -13,30 +13,32 @@ namespace VCF {
 
 class CallBack {
 public:
-	virtual ~CallBack(){
-		argumentTypes.clear();
-	}
+
+	typedef std::vector<const std::type_info*> TypeArray;
+
+	virtual ~CallBack(){}
 
 	String name;
 
 	uint32 getArgumentCount() const {
-		return argumentTypes.size();
+		return getArgumentTypes().size();
 	}
 
 	const std::type_info& getArgumentTypeInfo( const uint32& index ) const {
-		return *argumentTypes.at( index );
+		return *getArgumentTypes().at( index );
 	}
 
 	virtual const std::type_info& getReturnType() const {
 		return typeid(void);
 	}
 
-	static void addArgumentTypeInfo( CallBack& cb, const std::type_info& ti ) {	
-		cb.argumentTypes.push_back( &ti );
-	}
-	
-protected:
-	std::vector<const std::type_info*> argumentTypes;
+	virtual TypeArray getArgumentTypes() const {
+		return TypeArray();
+	};
+
+	static void addArgumentTypeInfo( TypeArray& types, const std::type_info& ti ) {	
+		types.push_back( &ti );
+	}	
 };
 
 
@@ -74,6 +76,8 @@ public:
 		return delegateThreadPool;
 	}
 
+
+	delegate(): runCallbacksAsync_(false) {}
 
 	~delegate() {
 		clear();
@@ -122,7 +126,14 @@ public:
 	}
 
 
+	void setRunCallbacksAsynchronously( bool val ) {
+		runCallbacksAsync_ = val;
+	}
+
 	std::vector<CallBack*> functions;
+
+protected:
+	bool runCallbacksAsync_;
 };
 
 
@@ -151,15 +162,18 @@ public:
 	typedef void (*FuncPtr)(P1);
 
 
-	Procedure1():staticFuncPtr(NULL){
-		CallBack::addArgumentTypeInfo(*this, typeid(P1) );
+	Procedure1():staticFuncPtr(NULL){}
+
+	Procedure1(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
+
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		CallBack::addArgumentTypeInfo( result, typeid(P1) );
+
+		return result;
 	}
-
-	Procedure1(FuncPtr funcPtr):staticFuncPtr(funcPtr){
-		CallBack::addArgumentTypeInfo(*this, typeid(P1) );
-	}
-
-
 
 	virtual void invoke( P1 p1 ) {
 		if ( NULL != staticFuncPtr ) {
@@ -181,20 +195,13 @@ public:
 class AsyncResult : public Object, public Waitable {
 public:
 	typedef Procedure1<AsyncResult*> AsyncCallback;
-
 	typedef std::pair<AsyncReturns*,Runnable*>  CallbackWork;
 
-	//AsyncResult(Runnable* internalRunnable, AsyncCallback* callback ): completed_(false), 
-	//				resultWait_(&resultWaitMtx_), 
-	//				callback_(callback),
-	//				runCallbacksAsync_(false){
-	//	internalRunnables_.push_back(internalRunnable);
-	//}
 
-	AsyncResult(AsyncCallback* callback): completed_(false), 
+	AsyncResult(AsyncCallback* callback, bool runCallbacksAsync): completed_(false), 
 					resultWait_(&resultWaitMtx_), 
 					callback_(callback),
-					runCallbacksAsync_(false) {}
+					runCallbacksAsync_(runCallbacksAsync) {}
 
 
 	virtual ~AsyncResult(){}
@@ -302,9 +309,7 @@ public:
 		internalRunnables_.push_back(CallbackWork(returnObject,internalRunnable));
 	}
 	
-	void setRunCallbacksAsynchronously( bool val ) {
-		runCallbacksAsync_ = val;
-	}
+	
 protected:
 	bool completed_;
 	bool runCallbacksAsync_;
@@ -328,7 +333,6 @@ protected:
 			while ( found != internalRunnables_.end() ) {
 				if ( found->second = val ) {
 					internalRunnables_.erase( found );
-					delete val;
 					break;
 				}
 				++ found;
@@ -393,6 +397,10 @@ public:
 	typedef void (*FuncPtr)(P1);	
 	typedef Procedure1<P1> CallbackType;
 
+	Delagate1(): delegate() {}
+
+	virtual ~Delagate1(){}
+
 	Delagate1<P1>& operator+= ( FuncPtr rhs ) {
 		CallbackType* cb = new CallbackType(rhs);
 		add( cb );
@@ -403,7 +411,6 @@ public:
 		add( rhs );
 		return *this;
 	}
-
 
 	void invoke( P1 p1 ) {
 		std::vector<CallBack*>::iterator it = functions.begin();
@@ -419,7 +426,7 @@ public:
 
 	
 	AsyncResult* beginInvoke( P1 p1, AsyncCallback* callback ) {
-		AsyncResult* result = new AsyncResult(callback);
+		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
 		std::vector<CallBack*>::iterator it = functions.begin();
 		while ( it != functions.end() ) {
@@ -437,6 +444,7 @@ public:
 	}
 
 	virtual void functionFinished( AsyncResult*, Runnable* runnable );
+
 };
 
 
@@ -452,14 +460,17 @@ public:
 
 	virtual ~Function2(){}
 
-	Function2():staticFuncPtr(NULL){
-		CallBack::addArgumentTypeInfo(*this, typeid(P1) );
-		CallBack::addArgumentTypeInfo(*this, typeid(P2) );
-	}
+	Function2():staticFuncPtr(NULL){}
 
-	Function2(FuncPtr funcPtr):staticFuncPtr(funcPtr){
-		CallBack::addArgumentTypeInfo(*this, typeid(P1) );
-		CallBack::addArgumentTypeInfo(*this, typeid(P2) );
+	Function2(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		CallBack::addArgumentTypeInfo( result, typeid(P1) );
+		CallBack::addArgumentTypeInfo( result, typeid(P2) );
+
+		return result;
 	}
 
 	virtual const std::type_info& getReturnType() const {
@@ -653,7 +664,7 @@ public:
 
 
 	AsyncResult* beginInvoke( P1 p1, P2 p2, AsyncCallback* callback ) {
-		AsyncResult* result = new AsyncResult(callback);
+		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
 		std::vector<CallBack*>::iterator it = functions.begin();
 		while ( it != functions.end() ) {
