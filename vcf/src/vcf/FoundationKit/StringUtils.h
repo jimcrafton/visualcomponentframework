@@ -820,6 +820,33 @@ inline String& operator+= ( String& lhs, const VariantData& rhs )
 }
 
 
+
+
+/**
+Exceptions
+*/
+
+inline String operator+ ( const String& lhs, const BasicException& rhs )
+{
+	return lhs + rhs.getMessage();
+}
+
+inline String& operator+= ( String& lhs, const BasicException& rhs )
+{
+	return lhs += rhs.getMessage();
+}
+
+
+inline String operator+ ( const String& lhs, const std::exception& rhs )
+{
+	return lhs + rhs.what();
+}
+
+inline String& operator+= ( String& lhs, const std::exception& rhs )
+{
+	return lhs += rhs.what();
+}
+
 };
 
 
