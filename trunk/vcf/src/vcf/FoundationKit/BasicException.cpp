@@ -36,7 +36,7 @@ BasicException::BasicException( const VCF::String & message, const int lineNumbe
 	
 }
 
-String BasicException::getMessage()
+String BasicException::getMessage() const
 {
 	return message_;
 }

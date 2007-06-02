@@ -43,7 +43,7 @@ public:
 	*returns the message text associated with the exception
 	*@return String - the error text
 	*/
-    VCF::String getMessage();
+    VCF::String getMessage() const;
 
 
 	/**

@@ -1,6 +1,6 @@
 #ifndef _VCF_THREADMANAGER_H__
 #define _VCF_THREADMANAGER_H__
-//Win32SystemToolkit.h
+
 
 /*
 Copyright 2000-2004 The VCF Project.

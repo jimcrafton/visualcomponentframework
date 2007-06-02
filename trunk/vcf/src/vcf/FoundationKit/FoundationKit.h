@@ -212,13 +212,13 @@ namespace VCF{
 
 
 
-
+#include "vcf/FoundationKit/BasicException.h"
 #include "vcf/FoundationKit/ErrorStrings.h"
 #include "vcf/FoundationKit/StringUtils.h"
 
 
 
-#include "vcf/FoundationKit/BasicException.h"
+
 #include "vcf/FoundationKit/BasicFileError.h"
 #include "vcf/FoundationKit/ClassNotFound.h"
 #include "vcf/FoundationKit/CantCreateObjectException.h"
