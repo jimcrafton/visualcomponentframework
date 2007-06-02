@@ -1,7 +1,7 @@
 #ifndef _DELEGATES_H__
 #define _DELEGATES_H__
 
-#ifndef _THREADPOOL_H__
+#ifndef _VCF_THREADPOOL_H__
 #include "vcf/FoundationKit/ThreadPool.h"
 #endif
 
@@ -9,17 +9,11 @@
 namespace VCF {
 
 
-
-
-class CallBack {
+ 
+class FunctionTypeInfo {
 public:
-
 	typedef std::vector<const std::type_info*> TypeArray;
 
-	virtual ~CallBack(){}
-
-	String name;
-	
 	virtual const std::type_info& getReturnType() const {
 		return typeid(void);
 	}
@@ -31,6 +25,40 @@ public:
 	static void addArgumentTypeInfo( TypeArray& types, const std::type_info& ti ) {	
 		types.push_back( &ti );
 	}
+
+
+	bool operator == ( const FunctionTypeInfo& rhs ) const {
+		bool result = false;
+
+		TypeArray types = getArgumentTypes();
+
+		TypeArray rhsTypes = rhs.getArgumentTypes();
+		
+		if ( types.size() == rhsTypes.size() ) {
+			for (size_t i=0;i<types.size();i++ ) {
+				result = (*(types[i]) == *(rhsTypes[i])) ? true : false;
+				if ( !result ) {
+					break;
+				}
+			}
+
+			if ( result ) {
+				result = getReturnType() == rhs.getReturnType() ? true : false;
+			}
+		}
+
+		return result;
+	}
+};
+
+
+class CallBack : public FunctionTypeInfo {
+public:
+
+	virtual ~CallBack(){}
+
+	String name;	
+	
 };
 
 
@@ -40,7 +68,7 @@ public:
 
 
 
-class delegate {
+class delegate : public FunctionTypeInfo {
 public:
 
 	static ThreadPool* delegateThreadPool;
@@ -100,7 +128,13 @@ public:
 			std::find( functions.begin(), functions.end(), callback );
 
 		if ( found == functions.end() ) {
-			functions.push_back( callback );
+			//verify signatures match
+			if ( *this == *callback ) {
+				functions.push_back( callback );
+			}
+			else {
+				throw RuntimeException( "Unable to add callback to delegate, function signatures do not match." );
+			}
 		}
 	}
 
@@ -162,7 +196,7 @@ public:
 	virtual TypeArray getArgumentTypes() const {
 		TypeArray result;
 
-		CallBack::addArgumentTypeInfo( result, typeid(P1) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
 
 		return result;
 	}
@@ -404,6 +438,17 @@ public:
 		return *this;
 	}
 
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+
+		return result;
+	}
+
+
+
 	void invoke( P1 p1 ) {
 		std::vector<CallBack*>::iterator it = functions.begin();
 		while ( it != functions.end() ) {
@@ -459,8 +504,8 @@ public:
 	virtual TypeArray getArgumentTypes() const {
 		TypeArray result;
 
-		CallBack::addArgumentTypeInfo( result, typeid(P1) );
-		CallBack::addArgumentTypeInfo( result, typeid(P2) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P2) );
 
 		return result;
 	}
@@ -624,6 +669,19 @@ public:
 	Delagate2R<ReturnType,P1,P2>& operator+= ( CallBack* rhs ) {		
 		add( rhs );
 		return *this;
+	}
+
+	virtual const std::type_info& getReturnType() const {
+		return typeid(ReturnType);
+	}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P2) );
+
+		return result;
 	}
 
 
