@@ -15,6 +15,10 @@ using namespace VCF;
 ThreadPool* delegate::delegateThreadPool = NULL;
 
 
+inline String operator+ ( const char* lhs, const BasicException& rhs )
+{
+	return String(lhs) + rhs.getMessage();
+}
 
 
 void doit( int i ) {
@@ -188,7 +192,7 @@ int main( int argc, char** argv ){
 	String s;
 	Swanky sk;
 	
-
+/*
 	Thread* th = ThreadedProcedure1<int>(10,doit).invoke();
 	
 	th->wait();
@@ -260,7 +264,7 @@ int main( int argc, char** argv ){
 	th = ThreadedFunction6<double,int,bool,int*,char**, String,Object*>(102,true,NULL,argv,"",NULL,whatAmIb).invoke();
 	th->wait();
 
-
+*/
 
 
 	Delagate1<int> d2;
@@ -304,9 +308,10 @@ int main( int argc, char** argv ){
 	}
 	
 
+	String h("hola!");
 	d3.setRunCallbacksAsynchronously(true);
 
-	ar = d3.beginInvoke( "Hola", 120.456, NULL );
+	ar = d3.beginInvoke( h, 120.456, NULL );
 
 	ar->wait();
 
@@ -314,25 +319,14 @@ int main( int argc, char** argv ){
 
 	ar->free();
 
-	/*
-	{
-		ThreadPool pool(3);
-		pool.start();
-		
-		pool.postWork( new RunThis() );
-		pool.postWork( new RunThis() );
-		pool.postWork( new RunThis() );
-		pool.postWork( new RunThis() );
-		
-		
-		pool.wait(  );
-		pool.stop();
+
+	//test adding bogus callback type
+	try {
+		d3 += new ClassProcedure1<int,Snarfy>(&sn,&Snarfy::thisBlows,"Snarfy::thisBlows");
 	}
-	*/
-
-
-
-
+	catch ( BasicException& e ) {
+		System::println( "Error: " + e );
+	}
 
 
 	delegate::terminateThreadPool();
