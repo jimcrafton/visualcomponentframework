@@ -1,8 +1,9 @@
 ////ThreadMeth.cpp
 
 #include "vcf/FoundationKit/FoundationKit.h"
-#include "ThreadedFunctions.h"
-#include "ThreadPool.h"
+#include "vcf/FoundationKit/ThreadPool.h"
+#include "vcf/FoundationKit/ThreadedFunctions.h"
+
 
 #include "Delegates.h"
 
@@ -290,9 +291,11 @@ int main( int argc, char** argv ){
 	d3 += new ClassFunction2<bool,const String&,double,Blooper>(&bl,&Blooper::stuffIt);
 
 	s = d3.at( 1 ).getReturnType().name();
-	uint32 ac = d3.at( 1 ).getArgumentCount();
-	s = d3.at( 1 ).getArgumentTypeInfo(0).name();
-	s = d3.at( 1 ).getArgumentTypeInfo(1).name();
+	CallBack::TypeArray types = d3.at( 1 ).getArgumentTypes();
+
+	uint32 ac = types.size();
+	s = types[0]->name();
+	s = types[1]->name();
 
 	bool result = d3.invoke("Hola", 120.456);
 	printf( "d2 result: %d\n", result );

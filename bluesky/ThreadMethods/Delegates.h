@@ -2,7 +2,7 @@
 #define _DELEGATES_H__
 
 #ifndef _THREADPOOL_H__
-#include "ThreadPool.h"
+#include "vcf/FoundationKit/ThreadPool.h"
 #endif
 
 
@@ -19,15 +19,7 @@ public:
 	virtual ~CallBack(){}
 
 	String name;
-
-	uint32 getArgumentCount() const {
-		return getArgumentTypes().size();
-	}
-
-	const std::type_info& getArgumentTypeInfo( const uint32& index ) const {
-		return *getArgumentTypes().at( index );
-	}
-
+	
 	virtual const std::type_info& getReturnType() const {
 		return typeid(void);
 	}
@@ -38,7 +30,7 @@ public:
 
 	static void addArgumentTypeInfo( TypeArray& types, const std::type_info& ti ) {	
 		types.push_back( &ti );
-	}	
+	}
 };
 
 
