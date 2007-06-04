@@ -51,14 +51,65 @@ public:
 	}
 };
 
+class CallBack;
 
-class CallBack : public FunctionTypeInfo {
+class ObjectWithCallbacks : public Object {
+public:
+	
+	ObjectWithCallbacks(){}	
+
+	virtual ~ObjectWithCallbacks();
+
+	void addCallback( CallBack* cb );
+
+	void removeCallback( CallBack* cb );
+
+	CallBack* getCallback( const String& name );
+
+protected:
+	std::map<String,CallBack*> callbacks_;
+};
+
+
+
+class delegate;
+
+class CallBack : public Object, public FunctionTypeInfo {
 public:
 
-	virtual ~CallBack(){}
+	CallBack():delegate_(NULL){}
+
+	CallBack( const String& str ): name(str),delegate_(NULL){}
+
+	CallBack( Object* source, const String& str ): name(str),delegate_(NULL){
+		addToSource( source );
+	}
+
 
 	String name;	
 	
+	//a callback may, or may not, have a 
+	//source. In addition, it's possible
+	//that the source is *not* an Object 
+	//based type.
+	virtual Object* getSource() {
+		return NULL;
+	}
+
+	void addToSource( Object* source );
+
+	friend class delegate;
+protected:
+
+	void setDelegate( delegate* val ) {
+		delegate_ = val;
+	}
+
+	delegate* delegate_;
+
+	virtual void destroy();
+
+	virtual ~CallBack(){}
 };
 
 
@@ -115,7 +166,8 @@ public:
 	void clear() {
 		std::vector<CallBack*>::iterator it = functions.begin();
 		while ( it != functions.end() ) {
-			delete *it;
+			CallBack* cb = *it;
+			cb->free();
 			++it;
 		}
 
@@ -130,6 +182,7 @@ public:
 		if ( found == functions.end() ) {
 			//verify signatures match
 			if ( *this == *callback ) {
+				callback->setDelegate( this );
 				functions.push_back( callback );
 			}
 			else {
@@ -155,7 +208,7 @@ public:
 	void setRunCallbacksAsynchronously( bool val ) {
 		runCallbacksAsync_ = val;
 	}
-
+	
 	std::vector<CallBack*> functions;
 
 protected:
@@ -191,6 +244,10 @@ public:
 	Procedure1():staticFuncPtr(NULL){}
 
 	Procedure1(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
+
+	Procedure1( const String& str ): CallBack(str),staticFuncPtr(NULL){}
+
+	Procedure1( Object* source, const String& str ): CallBack(source,str),staticFuncPtr(NULL){}
 
 
 	virtual TypeArray getArgumentTypes() const {
@@ -382,7 +439,7 @@ protected:
 typedef Procedure1<AsyncResult*> AsyncCallback;
 
 
-template <typename P1, typename ClassType=NullClassType1<P1> >
+template <typename P1, typename ClassType >
 class ClassProcedure1 : public Procedure1<P1> {
 public:
 	typedef void (ClassType::*ClassFuncPtr)(P1);
@@ -395,10 +452,19 @@ public:
 		Procedure1<P1>(),classFuncPtr(funcPtr),funcSrc(src){}
 
 	ClassProcedure1(ClassType* src, ClassFuncPtr funcPtr, const String& s):
-		Procedure1<P1>(),classFuncPtr(funcPtr),funcSrc(src){
-		name = s;
+		Procedure1<P1>(s), classFuncPtr(funcPtr),funcSrc(src){
+		
+		Object* obj = getSource();	
+		if ( NULL != obj ) {
+			addToSource( obj );
+		}
 	}
 
+	
+
+	virtual Object* getSource() {
+		return dynamic_cast<Object*>(funcSrc);
+	}
 
 
 	virtual void invoke( P1 p1 ) {
@@ -416,19 +482,18 @@ public:
 
 
 
-
-template <typename P1>
-class Delagate1 : public delegate, public AsyncReturns {
+template < typename P1>
+class Delagate1 : public delegate, AsyncReturns {
 public:
 	typedef void (*FuncPtr)(P1);	
-	typedef Procedure1<P1> CallbackType;
+	typedef Procedure1<P1> ProcedureType;
 
 	Delagate1(): delegate() {}
 
 	virtual ~Delagate1(){}
 
 	Delagate1<P1>& operator+= ( FuncPtr rhs ) {
-		CallbackType* cb = new CallbackType(rhs);
+		ProcedureType* cb = new ProcedureType(rhs);
 		add( cb );
 		return *this;
 	}
@@ -438,7 +503,6 @@ public:
 		return *this;
 	}
 
-
 	virtual TypeArray getArgumentTypes() const {
 		TypeArray result;
 
@@ -446,14 +510,15 @@ public:
 
 		return result;
 	}
-
-
+	
 
 	void invoke( P1 p1 ) {
-		std::vector<CallBack*>::iterator it = functions.begin();
-		while ( it != functions.end() ) {
+		std::vector<CallBack*> tmp = functions;
+
+		std::vector<CallBack*>::iterator it = tmp.begin();
+		while ( it != tmp.end() ) {
 			CallBack* cb = *it;
-			CallbackType* callBack = (CallbackType*)cb;
+			ProcedureType* callBack = (ProcedureType*)cb;
 
 			callBack->invoke( p1 );
 
@@ -465,10 +530,12 @@ public:
 	AsyncResult* beginInvoke( P1 p1, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
-		std::vector<CallBack*>::iterator it = functions.begin();
-		while ( it != functions.end() ) {
+		std::vector<CallBack*> tmp = functions;
+
+		std::vector<CallBack*>::iterator it = tmp.begin();
+		while ( it != tmp.end() ) {
 			CallBack* cb = *it;
-			CallbackType* callBack = (CallbackType*)cb;
+			ProcedureType* callBack = (ProcedureType*)cb;
 
 			callBack->beginInvoke( p1, result, callback, this );
 
@@ -480,6 +547,7 @@ public:
 		return result;
 	}
 
+protected:
 	virtual void functionFinished( AsyncResult*, Runnable* runnable );
 
 };
@@ -648,7 +716,7 @@ protected:
 };	
 
 template <typename ReturnType, typename P1, typename P2>
-class Delagate2R : public delegate, public AsyncReturns {
+class Delagate2R : public delegate, AsyncReturns {
 public:
 	typedef Function2<ReturnType,P1,P2> CallbackType;
 	typedef _typename_ CallbackType::FuncPtr FuncPtr;
@@ -734,14 +802,12 @@ public:
 
 	ReturnType endInvoke( AsyncResult* asyncResult );
 
-	Results endInvokeWithResults( AsyncResult* asyncResult );
-	
-
-	virtual void functionFinished( AsyncResult*, Runnable* runnable );
+	Results endInvokeWithResults( AsyncResult* asyncResult );	
 
 	Results results;
 protected:
 	ResultsCache<ReturnType> resultsCache_;
+	virtual void functionFinished( AsyncResult*, Runnable* runnable );
 };
 
 
@@ -794,8 +860,6 @@ inline void Delagate1<P1>::functionFinished( AsyncResult* res, Runnable* runnabl
 {
 	//no-op for procedures - they don't return values!
 }
-
-
 
 
 
@@ -853,7 +917,94 @@ inline Delagate2R<ReturnType,P1,P2>::Results Delagate2R<ReturnType,P1,P2>::endIn
 
 	return result;
 }
+
+
+
+
+inline void ObjectWithCallbacks::addCallback( CallBack* cb )
+ {
+	VCF_ASSERT( cb->getSource() == this );
+
+	if ( cb->getSource() != this ) {
+		throw RuntimeException( "callback cannot be added to this object because it's source is either not set or note set to this instance." );
+	}
+
+	std::map<String,CallBack*>::iterator found = 
+		callbacks_.find( cb->name );
+	if ( found == callbacks_.end() ) {
+		callbacks_[ cb->name ] = cb;
+	}
+	else {
+		throw RuntimeException( "Callback already exists with the name." + cb->name );
+	}
+}
+
+inline CallBack* ObjectWithCallbacks::getCallback( const String& name ) {
+	CallBack* result = NULL;
+	std::map<String,CallBack*>::iterator found = 
+		callbacks_.find( name );
+	if ( found != callbacks_.end() ) {
+		result = found->second;
+	}
+	return result;
+}
+
+inline void ObjectWithCallbacks::removeCallback( CallBack* cb )
+{
+	std::map<String,CallBack*>::iterator found = 
+		callbacks_.find( cb->name );
+	if ( found != callbacks_.end() ) {
+		if ( found->second == cb ) {
+			callbacks_.erase( found );
+		}
+	}
+}
+
+inline ObjectWithCallbacks::~ObjectWithCallbacks()
+{
+	size_t cbSize = callbacks_.size();
+	while ( cbSize > 0 ) {
+
+		std::map<String,CallBack*>::iterator it = 
+			callbacks_.begin();
+
+		CallBack* cb = it->second;
+		cb->free();
+
+		cbSize --;
+	}
+}
+
+inline void CallBack::addToSource( Object* source )
+{
+	VCF_ASSERT( NULL != source );
 	
+	if ( NULL != source ) {
+		ObjectWithCallbacks* objCB = dynamic_cast<ObjectWithCallbacks*>( source );
+		
+		if ( NULL != objCB ) {
+			objCB->addCallback( this );
+		}
+	}
+}
+
+void CallBack::destroy()
+{
+	delegate_->remove( this );
+
+	Object* src = getSource();
+
+	if ( NULL != src ) {
+		ObjectWithCallbacks* objCB = dynamic_cast<ObjectWithCallbacks*>( src );
+
+		
+		if ( NULL != objCB ) {
+			objCB->removeCallback( this );
+		}
+	}
+}
+
+
 
 }; //namespace VCF
 

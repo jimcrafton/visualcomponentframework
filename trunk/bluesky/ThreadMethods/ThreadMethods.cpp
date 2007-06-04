@@ -36,6 +36,8 @@ void doit2( Thread* th, int i ) {
 
 class Snarfy {
 public:
+	virtual ~Snarfy(){}
+
 	void thisBlows( int g ) {
 		printf( "Hello from thisBlows! i: %d, this ptr: %p\n", g, this );
 	}
@@ -184,6 +186,16 @@ void doneWithInvokes( AsyncResult* result )
 
 
 
+class Obj1 : public ObjectWithCallbacks {
+public:
+
+
+	void doIt(int i) {
+		System::println( "Obj1 returns " + StringUtils::toString(i) );
+	}
+};
+
+
 int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
@@ -274,6 +286,16 @@ int main( int argc, char** argv ){
 	
 	d2 += new ClassProcedure1<int,Snarfy>(&sn,&Snarfy::thisBlows,"Snarfy::thisBlows");
 
+
+	{
+		Obj1 obj;
+		d2 += new ClassProcedure1<int,Obj1>(&obj,&Obj1::doIt,"Obj1::doIt");
+	}
+	
+
+
+
+
 	AsyncCallback acb(doneWithInvokes) ;
 	AsyncResult* ar = d2.beginInvoke( 10, &acb );
 
@@ -307,6 +329,14 @@ int main( int argc, char** argv ){
 		printf( "d2 results[%d]: %d\n", i, (int)d3.results[i] );
 	}
 	
+
+
+
+
+	
+	
+
+
 
 	String h("hola!");
 	d3.setRunCallbacksAsynchronously(true);
