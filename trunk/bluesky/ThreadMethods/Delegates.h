@@ -6,10 +6,12 @@
 #endif
 
 
+
+//#define USE_VCF_OBJECT
+
 namespace VCF {
 
 
- 
 class FunctionTypeInfo {
 public:
 	typedef std::vector<const std::type_info*> TypeArray;
@@ -99,7 +101,7 @@ public:
 	void addToSource( Object* source );
 
 	friend class delegate;
-protected:
+protected:	
 
 	void setDelegate( delegate* val ) {
 		delegate_ = val;
@@ -110,6 +112,10 @@ protected:
 	virtual void destroy();
 
 	virtual ~CallBack(){}
+
+
+private:
+	CallBack( const CallBack& rhs ); //no copies for now
 };
 
 
@@ -247,8 +253,9 @@ public:
 
 	Procedure1( const String& str ): CallBack(str),staticFuncPtr(NULL){}
 
+#ifdef USE_VCF_OBJECT
 	Procedure1( Object* source, const String& str ): CallBack(source,str),staticFuncPtr(NULL){}
-
+#endif
 
 	virtual TypeArray getArgumentTypes() const {
 		TypeArray result;
@@ -263,7 +270,7 @@ public:
 			(*staticFuncPtr)( p1 );
 		}
 	}
-
+	
 
 	virtual void beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
 
@@ -271,6 +278,9 @@ public:
 	virtual void endInvoke( AsyncResult* ) {}
 
 	FuncPtr staticFuncPtr;
+
+private:
+	Procedure1( const Procedure1<P1>& rhs );
 };
 
 
@@ -451,20 +461,22 @@ public:
 	ClassProcedure1(ClassType* src, ClassFuncPtr funcPtr):
 		Procedure1<P1>(),classFuncPtr(funcPtr),funcSrc(src){}
 
+
 	ClassProcedure1(ClassType* src, ClassFuncPtr funcPtr, const String& s):
 		Procedure1<P1>(s), classFuncPtr(funcPtr),funcSrc(src){
-		
+
 		Object* obj = getSource();	
 		if ( NULL != obj ) {
 			addToSource( obj );
 		}
+
 	}
 
-	
-
+#ifdef USE_VCF_OBJECT
 	virtual Object* getSource() {
 		return dynamic_cast<Object*>(funcSrc);
 	}
+#endif 
 
 
 	virtual void invoke( P1 p1 ) {
@@ -477,6 +489,8 @@ public:
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
+private:
+	ClassProcedure1( const ClassProcedure1<P1, ClassType>& rhs );
 };
 
 
@@ -511,6 +525,11 @@ public:
 		return result;
 	}
 	
+
+
+	void operator() ( P1 p1 ) {
+		invoke( p1 );
+	}
 
 	void invoke( P1 p1 ) {
 		std::vector<CallBack*> tmp = functions;
@@ -549,8 +568,291 @@ public:
 
 protected:
 	virtual void functionFinished( AsyncResult*, Runnable* runnable );
-
 };
+
+
+
+
+
+
+
+class Procedure : public CallBack {
+public:
+
+	virtual ~Procedure(){}
+
+	typedef void (*FuncPtr)();
+
+
+	Procedure():staticFuncPtr(NULL){}
+
+	Procedure(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
+
+	Procedure( const String& str ): CallBack(str),staticFuncPtr(NULL){}
+
+	Procedure( Object* source, const String& str ): CallBack(source,str),staticFuncPtr(NULL){}
+
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+		return result;
+	}
+
+	virtual void invoke() {
+		if ( NULL != staticFuncPtr ) {
+			(*staticFuncPtr)();
+		}
+	}
+	
+
+	virtual void beginInvoke( AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+
+	//no results return for this type of delegate
+	virtual void endInvoke( AsyncResult* ) {}
+
+	FuncPtr staticFuncPtr;
+
+private:
+	Procedure( const Procedure& rhs );
+};
+
+
+
+template <typename ClassType >
+class ClassProcedure : public Procedure {
+public:
+	typedef void (ClassType::*ClassFuncPtr)();
+
+
+	ClassProcedure():
+		Procedure(),classFuncPtr(NULL),funcSrc(NULL){}
+	
+	ClassProcedure(ClassType* src, ClassFuncPtr funcPtr):
+		Procedure(),classFuncPtr(funcPtr),funcSrc(src){}
+
+	ClassProcedure(ClassType* src, ClassFuncPtr funcPtr, const String& s):
+		Procedure(s), classFuncPtr(funcPtr),funcSrc(src){
+		
+		Object* obj = getSource();	
+		if ( NULL != obj ) {
+			addToSource( obj );
+		}
+	}
+
+	virtual Object* getSource() {
+		return dynamic_cast<Object*>(funcSrc);
+	}
+
+
+	virtual void invoke() {
+		if ( NULL != classFuncPtr && NULL != funcSrc ) {
+			(funcSrc->*classFuncPtr)();
+		}
+	}
+
+	virtual void beginInvoke( AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+
+	ClassFuncPtr classFuncPtr;
+	ClassType* funcSrc;
+private:
+	ClassProcedure( const ClassProcedure<ClassType>& rhs );
+};
+
+
+
+
+class Delagate : public delegate, AsyncReturns {
+public:
+	typedef void (*FuncPtr)();	
+	typedef Procedure ProcedureType;
+
+	Delagate(): delegate() {}
+
+	virtual ~Delagate(){}
+
+	Delagate& operator+= ( FuncPtr rhs ) {
+		ProcedureType* cb = new ProcedureType(rhs);
+		add( cb );
+		return *this;
+	}
+	
+	Delagate& operator+= ( CallBack* rhs ) {		
+		add( rhs );
+		return *this;
+	}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+		return result;
+	}
+	
+
+
+	void operator() () {
+		invoke();
+	}
+
+	void invoke() {
+		std::vector<CallBack*> tmp = functions;
+
+		std::vector<CallBack*>::iterator it = tmp.begin();
+		while ( it != tmp.end() ) {
+			CallBack* cb = *it;
+			ProcedureType* callBack = (ProcedureType*)cb;
+
+			callBack->invoke();
+
+			++it;
+		}
+	}
+
+	
+	AsyncResult* beginInvoke( AsyncCallback* callback ) {
+		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
+
+		std::vector<CallBack*> tmp = functions;
+
+		std::vector<CallBack*>::iterator it = tmp.begin();
+		while ( it != tmp.end() ) {
+			CallBack* cb = *it;
+			ProcedureType* callBack = (ProcedureType*)cb;
+
+			callBack->beginInvoke( result, callback, this );
+
+			++it;
+		}
+
+		result->doWork();
+
+		return result;
+	}
+
+protected:
+	virtual void functionFinished( AsyncResult*, Runnable* runnable );
+};
+
+
+
+
+template <typename P1, typename P2>
+class Procedure2 : public CallBack {
+public:
+	virtual ~Procedure2(){}
+
+	typedef void (*FuncPtr)(P1,P2);
+
+
+	Procedure2():staticFuncPtr(NULL){}
+
+	Procedure2(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
+
+	Procedure2( const String& str ): CallBack(str),staticFuncPtr(NULL){}
+
+	Procedure2( Object* source, const String& str ): CallBack(source,str),staticFuncPtr(NULL){}
+
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P2) );
+
+		return result;
+	}
+
+	virtual void invoke( P1 p1, P2 p2 ) {
+		if ( NULL != staticFuncPtr ) {
+			(*staticFuncPtr)( p1, p2 );
+		}
+	}
+	
+
+	virtual void beginInvoke( P1 p1, P2 p2, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+
+	//no results return for this type of delegate
+	virtual void endInvoke( AsyncResult* ) {}
+
+	FuncPtr staticFuncPtr;
+
+private:
+	Procedure2( const Procedure2<P1,P2>& rhs );
+};
+
+
+template <typename P1, typename P2, typename ClassType >
+class ClassProcedure2 : public Procedure2<P1, P2> {
+public:
+	typedef void (ClassType::*ClassFuncPtr)(P1,P2);
+
+
+	ClassProcedure2():
+		Procedure2<P1, P2>(),classFuncPtr(NULL),funcSrc(NULL){}
+	
+	ClassProcedure2(ClassType* src, ClassFuncPtr funcPtr):
+		Procedure2<P1, P2>(),classFuncPtr(funcPtr),funcSrc(src){}
+
+	ClassProcedure2(ClassType* src, ClassFuncPtr funcPtr, const String& s):
+		Procedure2<P1, P2>(s), classFuncPtr(funcPtr),funcSrc(src){
+		
+		Object* obj = getSource();	
+		if ( NULL != obj ) {
+			addToSource( obj );
+		}
+	}
+
+	virtual Object* getSource() {
+		return dynamic_cast<Object*>(funcSrc);
+	}
+
+
+	virtual void invoke( P1 p1, P2 p2 ) {
+		if ( NULL != classFuncPtr && NULL != funcSrc ) {
+			(funcSrc->*classFuncPtr)( p1, p2 );
+		}
+	}
+
+	virtual void beginInvoke( P1 p1, P2 p2, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+
+	ClassFuncPtr classFuncPtr;
+	ClassType* funcSrc;
+private:
+	ClassProcedure2( const ClassProcedure2<P1, P2, ClassType>& rhs );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -596,10 +898,13 @@ public:
 };
 
 
+
+
+
 template <typename ReturnType, 
 		typename P1, 
 		typename P2, 
-		typename ClassType=NullReturnClassType2<ReturnType,P1,P2> 
+		typename ClassType 
 		>
 class ClassFunction2 : public Function2<ReturnType,P1,P2> {
 public:
