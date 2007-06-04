@@ -36,7 +36,7 @@ void doit2( Thread* th, int i ) {
 
 class Snarfy {
 public:
-	virtual ~Snarfy(){}
+//	virtual ~Snarfy(){}
 
 	void thisBlows( int g ) {
 		printf( "Hello from thisBlows! i: %d, this ptr: %p\n", g, this );
@@ -290,6 +290,8 @@ int main( int argc, char** argv ){
 	{
 		Obj1 obj;
 		d2 += new ClassProcedure1<int,Obj1>(&obj,&Obj1::doIt,"Obj1::doIt");
+
+		d2( 100 );
 	}
 	
 
