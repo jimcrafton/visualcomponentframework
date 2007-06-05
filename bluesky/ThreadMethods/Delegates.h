@@ -638,11 +638,13 @@ public:
 			addToSource( obj );
 		}
 	}
+	
 
+#ifdef USE_VCF_OBJECT
 	virtual Object* getSource() {
 		return dynamic_cast<Object*>(funcSrc);
 	}
-
+#endif 
 
 	virtual void invoke() {
 		if ( NULL != classFuncPtr && NULL != funcSrc ) {
@@ -800,9 +802,11 @@ public:
 		}
 	}
 
+#ifdef USE_VCF_OBJECT
 	virtual Object* getSource() {
 		return dynamic_cast<Object*>(funcSrc);
 	}
+#endif 
 
 
 	virtual void invoke( P1 p1, P2 p2 ) {
