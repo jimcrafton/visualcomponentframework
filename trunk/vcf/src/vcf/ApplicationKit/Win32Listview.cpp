@@ -676,31 +676,35 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 
 
 
-			HWND header = GetDlgItem( hwnd_, 0 );
-			RECT headerRect;
-			memset(&headerRect,0,sizeof(headerRect));
-			if ( NULL != header ) {
-				GetWindowRect( header, &headerRect );
-				POINT pt;
-				pt.x = headerRect.left;
-				pt.y = headerRect.top;
-
-				ScreenToClient( hwnd_, &pt );
-
-				headerRect.left = pt.x;
-				headerRect.top = pt.y;
-
-				pt.x = headerRect.right;
-				pt.y = headerRect.bottom;
-
-				ScreenToClient( hwnd_, &pt );
-
-				headerRect.right = pt.x;
-				headerRect.bottom = pt.y;
-
-				ExcludeClipRect( dc, headerRect.left, headerRect.top, headerRect.right, headerRect.bottom );
-
-				r.top = headerRect.bottom;
+			LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
+			if ( style & LVS_REPORT ) {
+				
+				HWND header = GetDlgItem( hwnd_, 0 );
+				RECT headerRect;
+				memset(&headerRect,0,sizeof(headerRect));
+				if ( NULL != header ) {
+					GetWindowRect( header, &headerRect );
+					POINT pt;
+					pt.x = headerRect.left;
+					pt.y = headerRect.top;
+					
+					ScreenToClient( hwnd_, &pt );
+					
+					headerRect.left = pt.x;
+					headerRect.top = pt.y;
+					
+					pt.x = headerRect.right;
+					pt.y = headerRect.bottom;
+					
+					ScreenToClient( hwnd_, &pt );
+					
+					headerRect.right = pt.x;
+					headerRect.bottom = pt.y;
+					
+					ExcludeClipRect( dc, headerRect.left, headerRect.top, headerRect.right, headerRect.bottom );
+					
+					r.top = headerRect.bottom;
+				}
 			}
 
 
@@ -1744,6 +1748,7 @@ void Win32Listview::setIconStyle( const IconStyleType& iconStyle )
 
 	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
 	::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED );
+	InvalidateRect( hwnd_, NULL, TRUE );
 }
 
 bool Win32Listview::getAllowsMultiSelect()
