@@ -200,6 +200,8 @@ int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
 
+	{
+
 	Snarfy sn;
 	String s;
 	Swanky sk;
@@ -279,7 +281,7 @@ int main( int argc, char** argv ){
 */
 
 
-	Delagate1<int> d2;
+	Delegate1<int> d2;
 	d2 += doit;
 
 
@@ -309,7 +311,7 @@ int main( int argc, char** argv ){
 	s = d2.at( 0 ).getReturnType().name();
 
 
-	Delagate2R<bool,const String&,double> d3;
+	Delegate2R<bool,const String&,double> d3;
 
 	d3 += duhDoIt;
 
@@ -360,6 +362,19 @@ int main( int argc, char** argv ){
 		System::println( "Error: " + e );
 	}
 
+
+
+	Delegate5R<int,bool,bool,int,long,String> d5;
+
+	ar = d5.beginInvoke( true, true, 10, 10, "Oops", NULL );
+
+	ar->wait();
+
+	ar->free();
+
+	d5(  true, true, 10, 10, "Oops" );
+
+}
 
 	delegate::terminateThreadPool();
 

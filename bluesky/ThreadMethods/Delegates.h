@@ -171,13 +171,11 @@ public:
 
 	void clear() {
 		std::vector<CallBack*>::iterator it = functions.begin();
-		while ( it != functions.end() ) {
+		while ( !functions.empty() ) {
 			CallBack* cb = *it;
 			cb->free();
-			++it;
+			it = functions.begin();
 		}
-
-		functions.clear();
 	}
 
 
@@ -352,6 +350,20 @@ public:
 
 
 	void doWork() {
+		{
+			Lock l(runnableMtx_);
+			if ( internalRunnables_.empty() ) {
+				completed_ = true;
+				resultWait_.broadcast();
+				return;
+			}
+		}
+
+		{
+			Lock l(runnableMtx_);
+			completed_ = false;
+		}
+
 		if ( runCallbacksAsync_ ) {
 			std::vector<CallbackWork>::iterator it = internalRunnables_.begin();
 			while ( it != internalRunnables_.end() ) {
@@ -497,22 +509,22 @@ private:
 
 
 template < typename P1>
-class Delagate1 : public delegate, AsyncReturns {
+class Delegate1 : public delegate, AsyncReturns {
 public:
 	typedef void (*FuncPtr)(P1);	
 	typedef Procedure1<P1> ProcedureType;
 
-	Delagate1(): delegate() {}
+	Delegate1(): delegate() {}
 
-	virtual ~Delagate1(){}
+	virtual ~Delegate1(){}
 
-	Delagate1<P1>& operator+= ( FuncPtr rhs ) {
+	Delegate1<P1>& operator+= ( FuncPtr rhs ) {
 		ProcedureType* cb = new ProcedureType(rhs);
 		add( cb );
 		return *this;
 	}
 	
-	Delagate1<P1>& operator+= ( CallBack* rhs ) {		
+	Delegate1<P1>& operator+= ( CallBack* rhs ) {		
 		add( rhs );
 		return *this;
 	}
@@ -663,22 +675,22 @@ private:
 
 
 
-class Delagate0 : public delegate, AsyncReturns {
+class Delegate0 : public delegate, AsyncReturns {
 public:
 	typedef void (*FuncPtr)();	
 	typedef Procedure ProcedureType;
 
-	Delagate0(): delegate() {}
+	Delegate0(): delegate() {}
 
-	virtual ~Delagate(){}
+	virtual ~Delegate0(){}
 
-	Delagate0& operator+= ( FuncPtr rhs ) {
+	Delegate0& operator+= ( FuncPtr rhs ) {
 		ProcedureType* cb = new ProcedureType(rhs);
 		add( cb );
 		return *this;
 	}
 	
-	Delagate0& operator+= ( CallBack* rhs ) {		
+	Delegate0& operator+= ( CallBack* rhs ) {		
 		add( rhs );
 		return *this;
 	}
@@ -828,22 +840,22 @@ private:
 
 
 template < typename P1, typename P2 >
-class Delagate2 : public delegate, AsyncReturns {
+class Delegate2 : public delegate, AsyncReturns {
 public:
 	typedef void (*FuncPtr)(P1,P2);	
 	typedef Procedure2<P1,P2> ProcedureType;
 
-	Delagate2(): delegate() {}
+	Delegate2(): delegate() {}
 
-	virtual ~Delagate2(){}
+	virtual ~Delegate2(){}
 
-	Delagate2<P1,P2>& operator+= ( FuncPtr rhs ) {
+	Delegate2<P1,P2>& operator+= ( FuncPtr rhs ) {
 		ProcedureType* cb = new ProcedureType(rhs);
 		add( cb );
 		return *this;
 	}
 	
-	Delagate2<P1,P2>& operator+= ( CallBack* rhs ) {		
+	Delegate2<P1,P2>& operator+= ( CallBack* rhs ) {		
 		add( rhs );
 		return *this;
 	}
@@ -1000,22 +1012,22 @@ private:
 
 
 template < typename P1, typename P2, typename P3 >
-class Delagate3 : public delegate, AsyncReturns {
+class Delegate3 : public delegate, AsyncReturns {
 public:
 	typedef void (*FuncPtr)(P1,P2,P3);	
 	typedef Procedure3<P1,P2,P3> ProcedureType;
 
-	Delagate3(): delegate() {}
+	Delegate3(): delegate() {}
 
-	virtual ~Delagate3(){}
+	virtual ~Delegate3(){}
 
-	Delagate3<P1,P2,P3>& operator+= ( FuncPtr rhs ) {
+	Delegate3<P1,P2,P3>& operator+= ( FuncPtr rhs ) {
 		ProcedureType* cb = new ProcedureType(rhs);
 		add( cb );
 		return *this;
 	}
 	
-	Delagate3<P1,P2,P3>& operator+= ( CallBack* rhs ) {		
+	Delegate3<P1,P2,P3>& operator+= ( CallBack* rhs ) {		
 		add( rhs );
 		return *this;
 	}
@@ -1177,22 +1189,22 @@ private:
 
 
 template < typename P1, typename P2, typename P3, typename P4>
-class Delagate4 : public delegate, AsyncReturns {
+class Delegate4 : public delegate, AsyncReturns {
 public:
 	typedef void (*FuncPtr)(P1,P2,P3,P4);	
 	typedef Procedure4<P1,P2,P3,P4> ProcedureType;
 
-	Delagate4(): delegate() {}
+	Delegate4(): delegate() {}
 
-	virtual ~Delagate4(){}
+	virtual ~Delegate4(){}
 
-	Delagate4<P1,P2,P3,P4>& operator+= ( FuncPtr rhs ) {
+	Delegate4<P1,P2,P3,P4>& operator+= ( FuncPtr rhs ) {
 		ProcedureType* cb = new ProcedureType(rhs);
 		add( cb );
 		return *this;
 	}
 	
-	Delagate4<P1,P2,P3,P4>& operator+= ( CallBack* rhs ) {		
+	Delegate4<P1,P2,P3,P4>& operator+= ( CallBack* rhs ) {		
 		add( rhs );
 		return *this;
 	}
@@ -1348,7 +1360,7 @@ public:
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
 private:
-	ClassProcedure5( const ClassProcedure4<P1, P2, P3, P4, P5, ClassType>& rhs );
+	ClassProcedure5( const ClassProcedure5<P1, P2, P3, P4, P5, ClassType>& rhs );
 };
 
 
@@ -1356,22 +1368,22 @@ private:
 
 
 template < typename P1, typename P2, typename P3, typename P4, typename P5>
-class Delagate5 : public delegate, AsyncReturns {
+class Delegate5 : public delegate, AsyncReturns {
 public:
 	typedef void (*FuncPtr)(P1,P2,P3,P4,P5);	
-	typedef Procedure4<P1,P2,P3,P4,P5> ProcedureType;
+	typedef Procedure5<P1,P2,P3,P4,P5> ProcedureType;
 
-	Delagate5(): delegate() {}
+	Delegate5(): delegate() {}
 
-	virtual ~Delagate5(){}
+	virtual ~Delegate5(){}
 
-	Delagate5<P1,P2,P3,P4,P5>& operator+= ( FuncPtr rhs ) {
+	Delegate5<P1,P2,P3,P4,P5>& operator+= ( FuncPtr rhs ) {
 		ProcedureType* cb = new ProcedureType(rhs);
 		add( cb );
 		return *this;
 	}
 	
-	Delagate5<P1,P2,P3,P4,P5>& operator+= ( CallBack* rhs ) {		
+	Delegate5<P1,P2,P3,P4,P5>& operator+= ( CallBack* rhs ) {		
 		add( rhs );
 		return *this;
 	}
@@ -1445,8 +1457,661 @@ protected:
 
 
 
+template <typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+class Procedure6 : public CallBack {
+public:
+	virtual ~Procedure6(){}
+
+	typedef void (*FuncPtr)(P1,P2,P3,P4,P5,P6);
 
 
+	Procedure6():staticFuncPtr(NULL){}
+
+	Procedure6(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
+
+	Procedure6( const String& str ): CallBack(str),staticFuncPtr(NULL){}
+
+	Procedure6( Object* source, const String& str ): CallBack(source,str),staticFuncPtr(NULL){}
+
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P2) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P3) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P4) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P5) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P6) );
+
+		return result;
+	}
+
+	virtual void invoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6 ) {
+		if ( NULL != staticFuncPtr ) {
+			(*staticFuncPtr)( p1, p2, p3, p4, p5, p6 );
+		}
+	}
+	
+
+	virtual void beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+
+	//no results return for this type of delegate
+	virtual void endInvoke( AsyncResult* ) {}
+
+	FuncPtr staticFuncPtr;
+
+private:
+	Procedure6( const Procedure6<P1,P2,P3,P4,P5,P6>& rhs );
+};
+
+
+template <typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename ClassType>
+class ClassProcedure6 : public Procedure6<P1, P2, P3, P4, P5, P6> {
+public:
+	typedef void (ClassType::*ClassFuncPtr)(P1,P2,P3,P4,P5,P6);
+
+
+	ClassProcedure6():
+		Procedure6<P1,P2,P3,P4,P5,P6>(),classFuncPtr(NULL),funcSrc(NULL){}
+	
+	ClassProcedure6(ClassType* src, ClassFuncPtr funcPtr):
+		Procedure6<P1,P2,P3,P4,P5,P6>(),classFuncPtr(funcPtr),funcSrc(src){}
+
+	ClassProcedure6(ClassType* src, ClassFuncPtr funcPtr, const String& s):
+		Procedure6<P1,P2,P3,P4,P5,P6>(s), classFuncPtr(funcPtr),funcSrc(src){
+		
+		Object* obj = getSource();	
+		if ( NULL != obj ) {
+			addToSource( obj );
+		}
+	}
+
+#ifdef USE_VCF_OBJECT
+	virtual Object* getSource() {
+		return dynamic_cast<Object*>(funcSrc);
+	}
+#endif 
+
+
+	virtual void invoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6 ) {
+		if ( NULL != classFuncPtr && NULL != funcSrc ) {
+			(funcSrc->*classFuncPtr)( p1, p2, p3, p4, p5, p6 );
+		}
+	}
+
+	virtual void beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+
+	ClassFuncPtr classFuncPtr;
+	ClassType* funcSrc;
+private:
+	ClassProcedure6( const ClassProcedure6<P1, P2, P3, P4, P5, P6, ClassType>& rhs );
+};
+
+
+
+
+
+template < typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+class Delegate6 : public delegate, AsyncReturns {
+public:
+	typedef void (*FuncPtr)(P1,P2,P3,P4,P5,P6);	
+	typedef Procedure6<P1,P2,P3,P4,P5,P6> ProcedureType;
+
+	Delegate6(): delegate() {}
+
+	virtual ~Delegate6(){}
+
+	Delegate6<P1,P2,P3,P4,P5,P6>& operator+= ( FuncPtr rhs ) {
+		ProcedureType* cb = new ProcedureType(rhs);
+		add( cb );
+		return *this;
+	}
+	
+	Delegate6<P1,P2,P3,P4,P5,P6>& operator+= ( CallBack* rhs ) {		
+		add( rhs );
+		return *this;
+	}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P2) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P3) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P4) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P5) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P6) );
+
+		return result;
+	}
+
+	void operator() ( P1 p1, P1 p2, P3 p3, P4 p4, P5 p5, P6 p6 ) {
+		invoke( p1, p2, p3, p4, p5, p6 );
+	}
+
+	void invoke( P1 p1, P1 p2, P3 p3, P4 p4, P5 p5, P6 p6 ) {
+		std::vector<CallBack*> tmp = functions;
+
+		std::vector<CallBack*>::iterator it = tmp.begin();
+		while ( it != tmp.end() ) {
+			CallBack* cb = *it;
+			ProcedureType* callBack = (ProcedureType*)cb;
+
+			callBack->invoke( p1, p2, p3, p4, p5, p6 );
+
+			++it;
+		}
+	}
+
+	
+	AsyncResult* beginInvoke( P1 p1, P1 p2, P3 p3, P4 p4, P5 p5, P6 p6, AsyncCallback* callback ) {
+		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
+
+		std::vector<CallBack*> tmp = functions;
+
+		std::vector<CallBack*>::iterator it = tmp.begin();
+		while ( it != tmp.end() ) {
+			CallBack* cb = *it;
+			ProcedureType* callBack = (ProcedureType*)cb;
+
+			callBack->beginInvoke( p1, p2, p3, p4, p5, p6, result, callback, this );
+
+			++it;
+		}
+
+		result->doWork();
+
+		return result;
+	}
+
+protected:
+	virtual void functionFinished( AsyncResult*, Runnable* runnable );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+template <typename ReturnType>
+class ResultsCache {
+public:
+	typedef std::vector<ReturnType> Results;
+	typedef std::map<AsyncResult*,Results*> CacheMap;
+
+	ResultsCache():cache_(NULL){}
+
+	~ResultsCache(){		
+		Lock l(asyncResultsMtx_);
+		if ( NULL != cache_ ) {				
+			CacheMap::iterator it = cache_->begin();
+			while ( it != cache_->end() ) {
+				delete it->second;
+				++it;
+			}
+			delete cache_;
+		}		
+	}
+	
+	void addResult( ReturnType result, AsyncResult* asyncRes ) {
+		
+		Lock l(asyncResultsMtx_);
+
+		if ( NULL == cache_ ) {
+			cache_ = new CacheMap();
+		}
+
+		Results* results = NULL;
+		CacheMap::iterator found = cache_->find( asyncRes );
+		if ( found == cache_->end() ) {
+			results = new Results();
+			cache_->insert( CacheMap::value_type(asyncRes,results) );
+		}
+		else {
+			results = found->second;
+		}
+		
+		results->push_back( result );	
+	}
+
+
+	ReturnType getLastResult( AsyncResult* asyncResult )  {
+		ReturnType result = ReturnType();
+
+		Results* results = getResults( asyncResult );
+		{
+			Lock l(asyncResultsMtx_);
+			if ( NULL != results ) {
+				if ( !results->empty() ) {
+					result = results->back();
+				}
+			}
+		}
+
+		return result;
+	}
+
+	Results* getResults( AsyncResult* asyncResult ) {
+		Results* result = NULL;
+
+		Lock l(asyncResultsMtx_);
+		
+		if ( NULL != cache_ ) {
+			
+			CacheMap::iterator found = cache_->find( asyncResult );
+			if ( found != cache_->end() ) {
+				result = found->second;
+			}
+		}
+
+		return result;
+	}
+protected:
+	Mutex asyncResultsMtx_;
+	CacheMap* cache_;
+};	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+template <typename ReturnType>
+class Function : public CallBack {
+public:
+	typedef ReturnType (*FuncPtr)();
+
+
+	virtual ~Function(){}
+
+	Function():staticFuncPtr(NULL){}
+
+	Function(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		return result;
+	}
+
+	virtual const std::type_info& getReturnType() const {
+		return typeid(ReturnType);
+	}
+
+	virtual ReturnType invoke() {
+		ReturnType result = ReturnType();
+		if ( NULL != staticFuncPtr ) {
+			result = (*staticFuncPtr)();
+		}
+		return result;
+	}
+
+	virtual void beginInvoke( AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+
+	FuncPtr staticFuncPtr;
+};
+
+
+
+
+
+template <typename ReturnType,
+		typename ClassType 
+		>
+class ClassFunction : public Function<ReturnType> {
+public:
+	typedef ReturnType (ClassType::*ClassFuncPtr)();
+
+
+	ClassFunction():
+		Function<ReturnType>(),classFuncPtr(NULL),funcSrc(NULL){}
+	
+	ClassFunction(ClassType* src, ClassFuncPtr funcPtr):
+		Function<ReturnType>(),classFuncPtr(funcPtr),funcSrc(src){}
+
+	ClassFunction(ClassType* src, ClassFuncPtr funcPtr, const String& s):
+		Function<ReturnType>(),classFuncPtr(funcPtr),funcSrc(src){
+		name = s;
+	}
+
+
+
+	virtual ReturnType invoke() {
+		ReturnType result = ReturnType();
+
+		if ( NULL != classFuncPtr && NULL != funcSrc ) {
+			result = (funcSrc->*classFuncPtr)();
+		}
+
+		return result;
+	}
+
+	virtual void beginInvoke( AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+	
+	
+
+	ClassFuncPtr classFuncPtr;
+	ClassType* funcSrc;
+};
+
+
+template <typename ReturnType>
+class DelegateR : public delegate, AsyncReturns {
+public:
+	typedef Function<ReturnType> CallbackType;
+	typedef _typename_ CallbackType::FuncPtr FuncPtr;
+
+	typedef std::vector<ReturnType> Results;
+
+
+	DelegateR(){}
+
+	virtual ~DelegateR(){}
+
+	DelegateR<ReturnType >& operator+= ( FuncPtr rhs ) {
+		CallbackType* cb = new CallbackType(rhs);
+		add( cb );
+		return *this;
+	}
+	
+	DelegateR<ReturnType>& operator+= ( CallBack* rhs ) {		
+		add( rhs );
+		return *this;
+	}
+
+	virtual const std::type_info& getReturnType() const {
+		return typeid(ReturnType);
+	}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+		return result;
+	}
+
+	ReturnType operator() () {
+		return invoke();
+	}
+
+	ReturnType invoke() {
+		ReturnType result = ReturnType();
+
+		results.clear();
+
+		if ( !functions.empty() ) {
+			
+			size_t i = 0;
+			results.resize( functions.size() );
+			
+			std::vector<CallBack*>::iterator it = functions.begin();
+			while ( it != functions.end() ) {
+				CallBack* cb = *it;
+				CallbackType* callBack = (CallbackType*)cb;
+				
+				results[i] = callBack->invoke();
+
+				++i;
+				++it;
+			}
+
+			result = results.back();
+		}
+
+		return result;
+	}
+
+
+	AsyncResult* beginInvoke( AsyncCallback* callback ) {
+		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
+
+		std::vector<CallBack*>::iterator it = functions.begin();
+		while ( it != functions.end() ) {
+			CallBack* cb = *it;
+			CallbackType* callBack = (CallbackType*)cb;
+
+			callBack->beginInvoke( result, callback, this );			
+
+			++it;
+		}
+
+		result->doWork();
+
+		return result;
+	}
+
+
+	ReturnType endInvoke( AsyncResult* asyncResult );
+
+	Results endInvokeWithResults( AsyncResult* asyncResult );	
+
+	Results results;
+protected:
+	ResultsCache<ReturnType> resultsCache_;
+	virtual void functionFinished( AsyncResult*, Runnable* runnable );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+template <typename ReturnType, typename P1>
+class Function1 : public CallBack {
+public:
+	typedef ReturnType (*FuncPtr)(P1);
+
+
+	virtual ~Function1(){}
+
+	Function1():staticFuncPtr(NULL){}
+
+	Function1(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+
+		return result;
+	}
+
+	virtual const std::type_info& getReturnType() const {
+		return typeid(ReturnType);
+	}
+
+	virtual ReturnType invoke( P1 p1 ) {
+		ReturnType result = ReturnType();
+		if ( NULL != staticFuncPtr ) {
+			result = (*staticFuncPtr)( p1 );
+		}
+		return result;
+	}
+
+	virtual void beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+
+	FuncPtr staticFuncPtr;
+};
+
+
+
+
+
+template <typename ReturnType, 
+		typename P1, 
+		typename ClassType 
+		>
+class ClassFunction1 : public Function1<ReturnType,P1> {
+public:
+	typedef ReturnType (ClassType::*ClassFuncPtr)(P1);
+
+
+	ClassFunction1():
+		Function2<ReturnType,P1,P2>(),classFuncPtr(NULL),funcSrc(NULL){}
+	
+	ClassFunction1(ClassType* src, ClassFuncPtr funcPtr):
+		Function2<ReturnType,P1,P2>(),classFuncPtr(funcPtr),funcSrc(src){}
+
+	ClassFunction1(ClassType* src, ClassFuncPtr funcPtr, const String& s):
+		Function2<ReturnType,P1,P2>(),classFuncPtr(funcPtr),funcSrc(src){
+		name = s;
+	}
+
+
+
+	virtual ReturnType invoke( P1 p1 ) {
+		ReturnType result = ReturnType();
+
+		if ( NULL != classFuncPtr && NULL != funcSrc ) {
+			result = (funcSrc->*classFuncPtr)( p1 );
+		}
+
+		return result;
+	}
+
+	virtual void beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+	
+	
+
+	ClassFuncPtr classFuncPtr;
+	ClassType* funcSrc;
+};
+
+
+template <typename ReturnType, typename P1>
+class Delegate1R : public delegate, AsyncReturns {
+public:
+	typedef Function1<ReturnType,P1> CallbackType;
+	typedef _typename_ CallbackType::FuncPtr FuncPtr;
+
+	typedef std::vector<ReturnType> Results;
+
+
+	Delegate1R(){}
+
+	virtual ~Delegate1R(){}
+
+	Delegate1R<ReturnType,P1>& operator+= ( FuncPtr rhs ) {
+		CallbackType* cb = new CallbackType(rhs);
+		add( cb );
+		return *this;
+	}
+	
+	Delegate1R<ReturnType,P1>& operator+= ( CallBack* rhs ) {		
+		add( rhs );
+		return *this;
+	}
+
+	virtual const std::type_info& getReturnType() const {
+		return typeid(ReturnType);
+	}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+
+		return result;
+	}
+
+
+	ReturnType operator() ( P1 p1 ) {
+		return invoke( p1 );
+	}
+
+	ReturnType invoke( P1 p1 ) {
+		ReturnType result = ReturnType();
+
+		results.clear();
+
+		if ( !functions.empty() ) {
+			
+			size_t i = 0;
+			results.resize( functions.size() );
+			
+			std::vector<CallBack*>::iterator it = functions.begin();
+			while ( it != functions.end() ) {
+				CallBack* cb = *it;
+				CallbackType* callBack = (CallbackType*)cb;
+				
+				results[i] = callBack->invoke( p1 );
+
+				++i;
+				++it;
+			}
+
+			result = results.back();
+		}
+
+		return result;
+	}
+
+
+	AsyncResult* beginInvoke( P1 p1, AsyncCallback* callback ) {
+		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
+
+		std::vector<CallBack*>::iterator it = functions.begin();
+		while ( it != functions.end() ) {
+			CallBack* cb = *it;
+			CallbackType* callBack = (CallbackType*)cb;
+
+			callBack->beginInvoke( p1, result, callback, this );			
+
+			++it;
+		}
+
+		result->doWork();
+
+		return result;
+	}
+
+
+	ReturnType endInvoke( AsyncResult* asyncResult );
+
+	Results endInvokeWithResults( AsyncResult* asyncResult );	
+
+	Results results;
+protected:
+	ResultsCache<ReturnType> resultsCache_;
+	virtual void functionFinished( AsyncResult*, Runnable* runnable );
+};
 
 
 
@@ -1540,86 +2205,9 @@ public:
 	ClassType* funcSrc;
 };
 
-template <typename ReturnType>
-class ResultsCache {
-public:
-	typedef std::vector<ReturnType> Results;
-	typedef std::map<AsyncResult*,Results*> CacheMap;
-
-	ResultsCache():cache_(NULL){}
-
-	~ResultsCache(){		
-		Lock l(asyncResultsMtx_);
-		if ( NULL != cache_ ) {				
-			CacheMap::iterator it = cache_->begin();
-			while ( it != cache_->end() ) {
-				delete it->second;
-				++it;
-			}
-			delete cache_;
-		}		
-	}
-	
-	void addResult( ReturnType result, AsyncResult* asyncRes ) {
-		
-		Lock l(asyncResultsMtx_);
-
-		if ( NULL == cache_ ) {
-			cache_ = new CacheMap();
-		}
-
-		Results* results = NULL;
-		CacheMap::iterator found = cache_->find( asyncRes );
-		if ( found == cache_->end() ) {
-			results = new Results();
-			cache_->insert( CacheMap::value_type(asyncRes,results) );
-		}
-		else {
-			results = found->second;
-		}
-		
-		results->push_back( result );	
-	}
-
-
-	ReturnType getLastResult( AsyncResult* asyncResult )  {
-		ReturnType result = ReturnType();
-
-		Results* results = getResults( asyncResult );
-		{
-			Lock l(asyncResultsMtx_);
-			if ( NULL != results ) {
-				if ( !results->empty() ) {
-					result = results->back();
-				}
-			}
-		}
-
-		return result;
-	}
-
-	Results* getResults( AsyncResult* asyncResult ) {
-		Results* result = NULL;
-
-		Lock l(asyncResultsMtx_);
-		
-		if ( NULL != cache_ ) {
-			
-			CacheMap::iterator found = cache_->find( asyncResult );
-			if ( found != cache_->end() ) {
-				result = found->second;
-			}
-		}
-
-		return result;
-	}
-protected:
-	Mutex asyncResultsMtx_;
-	CacheMap* cache_;
-};	
 
 template <typename ReturnType, typename P1, typename P2>
-class Delagate2R : public delegate, AsyncReturns {
+class Delegate2R : public delegate, AsyncReturns {
 public:
 	typedef Function2<ReturnType,P1,P2> CallbackType;
 	typedef _typename_ CallbackType::FuncPtr FuncPtr;
@@ -1627,17 +2215,17 @@ public:
 	typedef std::vector<ReturnType> Results;
 
 
-	Delagate2R(){}
+	Delegate2R(){}
 
-	virtual ~Delagate2R(){}
+	virtual ~Delegate2R(){}
 
-	Delagate2R<ReturnType,P1,P2>& operator+= ( FuncPtr rhs ) {
+	Delegate2R<ReturnType,P1,P2>& operator+= ( FuncPtr rhs ) {
 		CallbackType* cb = new CallbackType(rhs);
 		add( cb );
 		return *this;
 	}
 	
-	Delagate2R<ReturnType,P1,P2>& operator+= ( CallBack* rhs ) {		
+	Delegate2R<ReturnType,P1,P2>& operator+= ( CallBack* rhs ) {		
 		add( rhs );
 		return *this;
 	}
@@ -1714,6 +2302,884 @@ protected:
 };
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+template <typename ReturnType, typename P1, typename P2, typename P3>
+class Function3 : public CallBack {
+public:
+	typedef ReturnType (*FuncPtr)(P1,P2,P3);
+
+
+	virtual ~Function3(){}
+
+	Function3():staticFuncPtr(NULL){}
+
+	Function3(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P2) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P3) );
+
+		return result;
+	}
+
+	virtual const std::type_info& getReturnType() const {
+		return typeid(ReturnType);
+	}
+
+	virtual ReturnType invoke( P1 p1, P2 p2, P3 p3 ) {
+		ReturnType result = ReturnType();
+		if ( NULL != staticFuncPtr ) {
+			result = (*staticFuncPtr)( p1, p2, p3 );
+		}
+		return result;
+	}
+
+	virtual void beginInvoke( P1 p1, P2 p2, P3 p3, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+
+	FuncPtr staticFuncPtr;
+};
+
+
+
+
+
+template <typename ReturnType, 
+		typename P1, 
+		typename P2, 
+		typename P3, 
+		typename ClassType 
+		>
+class ClassFunction3 : public Function3<ReturnType,P1,P2,P3> {
+public:
+	typedef ReturnType (ClassType::*ClassFuncPtr)(P1,P2,P3);
+
+
+	ClassFunction3():
+		Function3<ReturnType,P1,P2,P3>(),classFuncPtr(NULL),funcSrc(NULL){}
+	
+	ClassFunction3(ClassType* src, ClassFuncPtr funcPtr):
+		Function3<ReturnType,P1,P2,P3>(),classFuncPtr(funcPtr),funcSrc(src){}
+
+	ClassFunction3(ClassType* src, ClassFuncPtr funcPtr, const String& s):
+		Function3<ReturnType,P1,P2,P3>(),classFuncPtr(funcPtr),funcSrc(src){
+		name = s;
+	}
+
+
+
+	virtual ReturnType invoke( P1 p1, P2 p2, P3 p3 ) {
+		ReturnType result = ReturnType();
+
+		if ( NULL != classFuncPtr && NULL != funcSrc ) {
+			result = (funcSrc->*classFuncPtr)( p1, p2, p3 );
+		}
+
+		return result;
+	}
+
+	virtual void beginInvoke( P1 p1, P2 p2, P3 p3, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+	
+	
+
+	ClassFuncPtr classFuncPtr;
+	ClassType* funcSrc;
+};
+
+
+template <typename ReturnType, typename P1, typename P2, typename P3>
+class Delegate3R : public delegate, AsyncReturns {
+public:
+	typedef Function3<ReturnType,P1,P2,P3> CallbackType;
+	typedef _typename_ CallbackType::FuncPtr FuncPtr;
+
+	typedef std::vector<ReturnType> Results;
+
+
+	Delegate3R(){}
+
+	virtual ~Delegate3R(){}
+
+	Delegate3R<ReturnType,P1,P2,P3>& operator+= ( FuncPtr rhs ) {
+		CallbackType* cb = new CallbackType(rhs);
+		add( cb );
+		return *this;
+	}
+	
+	Delegate3R<ReturnType,P1,P2,P3>& operator+= ( CallBack* rhs ) {		
+		add( rhs );
+		return *this;
+	}
+
+	virtual const std::type_info& getReturnType() const {
+		return typeid(ReturnType);
+	}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P2) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P3) );
+
+		return result;
+	}
+
+	ReturnType operator() ( P1 p1, P2 p2, P3 p3 ) {
+		return invoke(p1,p2,p3);
+	}
+
+	ReturnType invoke( P1 p1, P2 p2, P3 p3 ) {
+		ReturnType result = ReturnType();
+
+		results.clear();
+
+		if ( !functions.empty() ) {
+			
+			size_t i = 0;
+			results.resize( functions.size() );
+			
+			std::vector<CallBack*>::iterator it = functions.begin();
+			while ( it != functions.end() ) {
+				CallBack* cb = *it;
+				CallbackType* callBack = (CallbackType*)cb;
+				
+				results[i] = callBack->invoke( p1, p2, p3 );
+
+				++i;
+				++it;
+			}
+
+			result = results.back();
+		}
+
+		return result;
+	}
+
+
+	AsyncResult* beginInvoke( P1 p1, P2 p2, P3 p3, AsyncCallback* callback ) {
+		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
+
+		std::vector<CallBack*>::iterator it = functions.begin();
+		while ( it != functions.end() ) {
+			CallBack* cb = *it;
+			CallbackType* callBack = (CallbackType*)cb;
+
+			callBack->beginInvoke( p1, p2, p3, result, callback, this );			
+
+			++it;
+		}
+
+		result->doWork();
+
+		return result;
+	}
+
+
+	ReturnType endInvoke( AsyncResult* asyncResult );
+
+	Results endInvokeWithResults( AsyncResult* asyncResult );	
+
+	Results results;
+protected:
+	ResultsCache<ReturnType> resultsCache_;
+	virtual void functionFinished( AsyncResult*, Runnable* runnable );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+template <typename ReturnType, typename P1, typename P2, typename P3, typename P4>
+class Function4 : public CallBack {
+public:
+	typedef ReturnType (*FuncPtr)(P1,P2,P3,P4);
+
+
+	virtual ~Function4(){}
+
+	Function4():staticFuncPtr(NULL){}
+
+	Function4(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P2) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P3) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P4) );
+
+		return result;
+	}
+
+	virtual const std::type_info& getReturnType() const {
+		return typeid(ReturnType);
+	}
+
+	virtual ReturnType invoke( P1 p1, P2 p2, P3 p3, P4 p4 ) {
+		ReturnType result = ReturnType();
+		if ( NULL != staticFuncPtr ) {
+			result = (*staticFuncPtr)( p1, p2, p3, p4 );
+		}
+		return result;
+	}
+
+	virtual void beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+
+	FuncPtr staticFuncPtr;
+};
+
+
+
+
+
+template <typename ReturnType, 
+		typename P1, 
+		typename P2, 
+		typename P3, 
+		typename P4, 
+		typename ClassType 
+		>
+class ClassFunction4 : public Function4<ReturnType,P1,P2,P3,P4> {
+public:
+	typedef ReturnType (ClassType::*ClassFuncPtr)(P1,P2,P3,P4);
+
+
+	ClassFunction4():
+		Function4<ReturnType,P1,P2,P3,P4>(),classFuncPtr(NULL),funcSrc(NULL){}
+	
+	ClassFunction4(ClassType* src, ClassFuncPtr funcPtr):
+		Function4<ReturnType,P1,P2,P3,P4>(),classFuncPtr(funcPtr),funcSrc(src){}
+
+	ClassFunction4(ClassType* src, ClassFuncPtr funcPtr, const String& s):
+		Function4<ReturnType,P1,P2,P3,P4>(),classFuncPtr(funcPtr),funcSrc(src){
+		name = s;
+	}
+
+
+
+	virtual ReturnType invoke( P1 p1, P2 p2, P3 p3, P4 p4 ) {
+		ReturnType result = ReturnType();
+
+		if ( NULL != classFuncPtr && NULL != funcSrc ) {
+			result = (funcSrc->*classFuncPtr)( p1, p2, p3, p4 );
+		}
+
+		return result;
+	}
+
+	virtual void beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+	
+	
+
+	ClassFuncPtr classFuncPtr;
+	ClassType* funcSrc;
+};
+
+
+template <typename ReturnType, typename P1, typename P2, typename P3, typename P4>
+class Delegate4R : public delegate, AsyncReturns {
+public:
+	typedef Function4<ReturnType,P1,P2,P3,P4> CallbackType;
+	typedef _typename_ CallbackType::FuncPtr FuncPtr;
+
+	typedef std::vector<ReturnType> Results;
+
+
+	Delegate4R(){}
+
+	virtual ~Delegate4R(){}
+
+	Delegate4R<ReturnType,P1,P2,P3,P4>& operator+= ( FuncPtr rhs ) {
+		CallbackType* cb = new CallbackType(rhs);
+		add( cb );
+		return *this;
+	}
+	
+	Delegate4R<ReturnType,P1,P2,P3,P4>& operator+= ( CallBack* rhs ) {		
+		add( rhs );
+		return *this;
+	}
+
+	virtual const std::type_info& getReturnType() const {
+		return typeid(ReturnType);
+	}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P2) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P3) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P4) );
+
+		return result;
+	}
+
+	ReturnType operator() ( P1 p1, P2 p2, P3 p3, P4 p4 ) {
+		return invoke(p1,p2,p3,p4);
+	}
+
+	ReturnType invoke( P1 p1, P2 p2, P3 p3, P4 p4 ) {
+		ReturnType result = ReturnType();
+
+		results.clear();
+
+		if ( !functions.empty() ) {
+			
+			size_t i = 0;
+			results.resize( functions.size() );
+			
+			std::vector<CallBack*>::iterator it = functions.begin();
+			while ( it != functions.end() ) {
+				CallBack* cb = *it;
+				CallbackType* callBack = (CallbackType*)cb;
+				
+				results[i] = callBack->invoke( p1, p2, p3, p4 );
+
+				++i;
+				++it;
+			}
+
+			result = results.back();
+		}
+
+		return result;
+	}
+
+
+	AsyncResult* beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, AsyncCallback* callback ) {
+		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
+
+		std::vector<CallBack*>::iterator it = functions.begin();
+		while ( it != functions.end() ) {
+			CallBack* cb = *it;
+			CallbackType* callBack = (CallbackType*)cb;
+
+			callBack->beginInvoke( p1, p2, p3, p4, result, callback, this );			
+
+			++it;
+		}
+
+		result->doWork();
+
+		return result;
+	}
+
+
+	ReturnType endInvoke( AsyncResult* asyncResult );
+
+	Results endInvokeWithResults( AsyncResult* asyncResult );	
+
+	Results results;
+protected:
+	ResultsCache<ReturnType> resultsCache_;
+	virtual void functionFinished( AsyncResult*, Runnable* runnable );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+template <typename ReturnType, 
+			typename P1, 
+			typename P2, 
+			typename P3, 
+			typename P4,
+			typename P5>
+class Function5 : public CallBack {
+public:
+	typedef ReturnType (*FuncPtr)(P1,P2,P3,P4,P5);
+
+
+	virtual ~Function5(){}
+
+	Function5():staticFuncPtr(NULL){}
+
+	Function5(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P2) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P3) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P4) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P5) );
+
+		return result;
+	}
+
+	virtual const std::type_info& getReturnType() const {
+		return typeid(ReturnType);
+	}
+
+	virtual ReturnType invoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5 ) {
+		ReturnType result = ReturnType();
+		if ( NULL != staticFuncPtr ) {
+			result = (*staticFuncPtr)( p1, p2, p3, p4, p5 );
+		}
+		return result;
+	}
+
+	virtual void beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+
+	FuncPtr staticFuncPtr;
+};
+
+
+
+
+
+template <typename ReturnType, 
+		typename P1, 
+		typename P2, 
+		typename P3, 
+		typename P4, 
+		typename P5, 
+		typename ClassType 
+		>
+class ClassFunction5 : public Function5<ReturnType,P1,P2,P3,P4,P5> {
+public:
+	typedef ReturnType (ClassType::*ClassFuncPtr)(P1,P2,P3,P4,P5);
+
+
+	ClassFunction5():
+		Function5<ReturnType,P1,P2,P3,P4,P5>(),classFuncPtr(NULL),funcSrc(NULL){}
+	
+	ClassFunction5(ClassType* src, ClassFuncPtr funcPtr):
+		Function5<ReturnType,P1,P2,P3,P4,P5>(),classFuncPtr(funcPtr),funcSrc(src){}
+
+	ClassFunction5(ClassType* src, ClassFuncPtr funcPtr, const String& s):
+		Function5<ReturnType,P1,P2,P3,P4,P5>(),classFuncPtr(funcPtr),funcSrc(src){
+		name = s;
+	}
+
+
+
+	virtual ReturnType invoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5 ) {
+		ReturnType result = ReturnType();
+
+		if ( NULL != classFuncPtr && NULL != funcSrc ) {
+			result = (funcSrc->*classFuncPtr)( p1, p2, p3, p4, p5 );
+		}
+
+		return result;
+	}
+
+	virtual void beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+	
+	
+
+	ClassFuncPtr classFuncPtr;
+	ClassType* funcSrc;
+};
+
+
+template <typename ReturnType, 
+			typename P1, 
+			typename P2, 
+			typename P3, 
+			typename P4,
+			typename P5>
+class Delegate5R : public delegate, AsyncReturns {
+public:
+	typedef Function5<ReturnType,P1,P2,P3,P4,P5> CallbackType;
+	typedef _typename_ CallbackType::FuncPtr FuncPtr;
+
+	typedef std::vector<ReturnType> Results;
+
+
+	Delegate5R(){}
+
+	virtual ~Delegate5R(){}
+
+	Delegate5R<ReturnType,P1,P2,P3,P4,P5>& operator+= ( FuncPtr rhs ) {
+		CallbackType* cb = new CallbackType(rhs);
+		add( cb );
+		return *this;
+	}
+	
+	Delegate5R<ReturnType,P1,P2,P3,P4,P5>& operator+= ( CallBack* rhs ) {		
+		add( rhs );
+		return *this;
+	}
+
+	virtual const std::type_info& getReturnType() const {
+		return typeid(ReturnType);
+	}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P2) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P3) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P4) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P5) );
+
+		return result;
+	}
+
+	ReturnType operator() ( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5 ) {
+		return invoke(p1,p2,p3,p4,p5);
+	}
+
+	ReturnType invoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5 ) {
+		ReturnType result = ReturnType();
+
+		results.clear();
+
+		if ( !functions.empty() ) {
+			
+			size_t i = 0;
+			results.resize( functions.size() );
+			
+			std::vector<CallBack*>::iterator it = functions.begin();
+			while ( it != functions.end() ) {
+				CallBack* cb = *it;
+				CallbackType* callBack = (CallbackType*)cb;
+				
+				results[i] = callBack->invoke( p1, p2, p3, p4, p5 );
+
+				++i;
+				++it;
+			}
+
+			result = results.back();
+		}
+
+		return result;
+	}
+
+
+	AsyncResult* beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, AsyncCallback* callback ) {
+		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
+
+		std::vector<CallBack*>::iterator it = functions.begin();
+		while ( it != functions.end() ) {
+			CallBack* cb = *it;
+			CallbackType* callBack = (CallbackType*)cb;
+
+			callBack->beginInvoke( p1, p2, p3, p4, p5, result, callback, this );			
+
+			++it;
+		}
+
+		result->doWork();
+
+		return result;
+	}
+
+
+	ReturnType endInvoke( AsyncResult* asyncResult );
+
+	Results endInvokeWithResults( AsyncResult* asyncResult );	
+
+	Results results;
+protected:
+	ResultsCache<ReturnType> resultsCache_;
+	virtual void functionFinished( AsyncResult*, Runnable* runnable );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+template <typename ReturnType, 
+			typename P1, 
+			typename P2, 
+			typename P3, 
+			typename P4,
+			typename P5,
+			typename P6>
+class Function6 : public CallBack {
+public:
+	typedef ReturnType (*FuncPtr)(P1,P2,P3,P4,P5,P6);
+
+
+	virtual ~Function6(){}
+
+	Function6():staticFuncPtr(NULL){}
+
+	Function6(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P2) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P3) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P4) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P5) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P6) );
+
+		return result;
+	}
+
+	virtual const std::type_info& getReturnType() const {
+		return typeid(ReturnType);
+	}
+
+	virtual ReturnType invoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6 ) {
+		ReturnType result = ReturnType();
+		if ( NULL != staticFuncPtr ) {
+			result = (*staticFuncPtr)( p1, p2, p3, p4, p5, p6 );
+		}
+		return result;
+	}
+
+	virtual void beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+
+	FuncPtr staticFuncPtr;
+};
+
+
+
+
+
+template <typename ReturnType, 
+		typename P1, 
+		typename P2, 
+		typename P3, 
+		typename P4, 
+		typename P5, 
+		typename P6, 
+		typename ClassType 
+		>
+class ClassFunction6 : public Function6<ReturnType,P1,P2,P3,P4,P5,P6> {
+public:
+	typedef ReturnType (ClassType::*ClassFuncPtr)(P1,P2,P3,P4,P5,P6);
+
+
+	ClassFunction6():
+		Function6<ReturnType,P1,P2,P3,P4,P5,P6>(),classFuncPtr(NULL),funcSrc(NULL){}
+	
+	ClassFunction6(ClassType* src, ClassFuncPtr funcPtr):
+		Function6<ReturnType,P1,P2,P3,P4,P5,P6>(),classFuncPtr(funcPtr),funcSrc(src){}
+
+	ClassFunction6(ClassType* src, ClassFuncPtr funcPtr, const String& s):
+		Function6<ReturnType,P1,P2,P3,P4,P5,P6>(),classFuncPtr(funcPtr),funcSrc(src){
+		name = s;
+	}
+
+
+
+	virtual ReturnType invoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6 ) {
+		ReturnType result = ReturnType();
+
+		if ( NULL != classFuncPtr && NULL != funcSrc ) {
+			result = (funcSrc->*classFuncPtr)( p1, p2, p3, p4, p5, p6 );
+		}
+
+		return result;
+	}
+
+	virtual void beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
+	
+	
+
+	ClassFuncPtr classFuncPtr;
+	ClassType* funcSrc;
+};
+
+
+template <typename ReturnType, 
+			typename P1, 
+			typename P2, 
+			typename P3, 
+			typename P4,
+			typename P5,
+			typename P6>
+class Delegate6R : public delegate, AsyncReturns {
+public:
+	typedef Function6<ReturnType,P1,P2,P3,P4,P5,P6> CallbackType;
+	typedef _typename_ CallbackType::FuncPtr FuncPtr;
+
+	typedef std::vector<ReturnType> Results;
+
+
+	Delegate6R(){}
+
+	virtual ~Delegate6R(){}
+
+	Delegate6R<ReturnType,P1,P2,P3,P4,P5,P6>& operator+= ( FuncPtr rhs ) {
+		CallbackType* cb = new CallbackType(rhs);
+		add( cb );
+		return *this;
+	}
+	
+	Delegate6R<ReturnType,P1,P2,P3,P4,P5,P6>& operator+= ( CallBack* rhs ) {		
+		add( rhs );
+		return *this;
+	}
+
+	virtual const std::type_info& getReturnType() const {
+		return typeid(ReturnType);
+	}
+
+	virtual TypeArray getArgumentTypes() const {
+		TypeArray result;
+
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P1) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P2) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P3) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P4) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P5) );
+		FunctionTypeInfo::addArgumentTypeInfo( result, typeid(P6) );
+
+		return result;
+	}
+
+	ReturnType operator() ( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6 ) {
+		return invoke(p1,p2,p3,p4,p5,p6);
+	}
+
+	ReturnType invoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6 ) {
+		ReturnType result = ReturnType();
+
+		results.clear();
+
+		if ( !functions.empty() ) {
+			
+			size_t i = 0;
+			results.resize( functions.size() );
+			
+			std::vector<CallBack*>::iterator it = functions.begin();
+			while ( it != functions.end() ) {
+				CallBack* cb = *it;
+				CallbackType* callBack = (CallbackType*)cb;
+				
+				results[i] = callBack->invoke( p1, p2, p3, p4, p5, p6 );
+
+				++i;
+				++it;
+			}
+
+			result = results.back();
+		}
+
+		return result;
+	}
+
+
+	AsyncResult* beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, AsyncCallback* callback ) {
+		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
+
+		std::vector<CallBack*>::iterator it = functions.begin();
+		while ( it != functions.end() ) {
+			CallBack* cb = *it;
+			CallbackType* callBack = (CallbackType*)cb;
+
+			callBack->beginInvoke( p1, p2, p3, p4, p5, p6, result, callback, this );			
+
+			++it;
+		}
+
+		result->doWork();
+
+		return result;
+	}
+
+
+	ReturnType endInvoke( AsyncResult* asyncResult );
+
+	Results endInvokeWithResults( AsyncResult* asyncResult );	
+
+	Results results;
+protected:
+	ResultsCache<ReturnType> resultsCache_;
+	virtual void functionFinished( AsyncResult*, Runnable* runnable );
+};
+
+
+
+
+
+
+
+
+inline void Procedure::beginInvoke( AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != staticFuncPtr ) {
+		ThreadedProcedure<> proc(staticFuncPtr);
+
+		
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+template <typename ClassType>
+inline void ClassProcedure<ClassType>::beginInvoke( AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != classFuncPtr && NULL != funcSrc ) {
+		ThreadedProcedure<ClassType> proc(funcSrc, classFuncPtr);
+	
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+
 template <typename P1>
 inline void Procedure1<P1>::beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
 {
@@ -1734,6 +3200,361 @@ inline void ClassProcedure1<P1,ClassType>::beginInvoke( P1 p1, AsyncResult* init
 		initialResult->internal_addRunnable( returnObject, proc.getParams() );
 	}
 }
+
+
+
+template <typename P1,
+			typename P2 >
+inline void Procedure2<P1,P2>::beginInvoke( P1 p1, P2 p2, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != staticFuncPtr ) {
+		ThreadedProcedure2<P1,P2> proc(p1, p2, staticFuncPtr);		
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+template <typename P1, 
+			typename P2, 
+			typename ClassType>
+inline void ClassProcedure2<P1,P2,ClassType>::beginInvoke( P1 p1, P2 p2, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != classFuncPtr && NULL != funcSrc ) {
+		ThreadedProcedure2<P1,P2,ClassType> proc(funcSrc, p1, p2, classFuncPtr);	
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+
+
+
+
+template <typename P1,
+			typename P2,
+			typename P3 >
+inline void Procedure3<P1,P2,P3>::beginInvoke( P1 p1, P2 p2, P3 p3, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != staticFuncPtr ) {
+		ThreadedProcedure3<P1,P2,P3> proc(p1, p2, p3, staticFuncPtr);		
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+template <typename P1, 
+			typename P2, 
+			typename P3,
+			typename ClassType>
+inline void ClassProcedure3<P1,P2,P3,ClassType>::beginInvoke( P1 p1, P2 p2, P3 p3, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != classFuncPtr && NULL != funcSrc ) {
+		ThreadedProcedure3<P1,P2,P3,ClassType> proc(funcSrc, p1, p2, p3, classFuncPtr);	
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+
+
+template <typename P1,
+			typename P2,
+			typename P3,
+			typename P4>
+inline void Procedure4<P1,P2,P3,P4>::beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != staticFuncPtr ) {
+		ThreadedProcedure4<P1,P2,P3,P4> proc(p1, p2, p3, p4, staticFuncPtr);		
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+template <typename P1, 
+			typename P2, 
+			typename P3,
+			typename P4,
+			typename ClassType>
+inline void ClassProcedure4<P1,P2,P3,P4,ClassType>::beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != classFuncPtr && NULL != funcSrc ) {
+		ThreadedProcedure4<P1,P2,P3,P4,ClassType> proc(funcSrc, p1, p2, p3, p4, classFuncPtr);	
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+
+
+
+template <typename P1,
+			typename P2,
+			typename P3,
+			typename P4,
+			typename P5>
+inline void Procedure5<P1,P2,P3,P4,P5>::beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != staticFuncPtr ) {
+		ThreadedProcedure5<P1,P2,P3,P4,P5> proc(p1, p2, p3, p4, p5, staticFuncPtr);		
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+template <typename P1, 
+			typename P2, 
+			typename P3,
+			typename P4,
+			typename P5,
+			typename ClassType>
+inline void ClassProcedure5<P1,P2,P3,P4,P5,ClassType>::beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != classFuncPtr && NULL != funcSrc ) {
+		ThreadedProcedure5<P1,P2,P3,P4,P5,ClassType> proc(funcSrc, p1, p2, p3, p4, p5, classFuncPtr);	
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+
+
+
+
+template <typename P1,
+			typename P2,
+			typename P3,
+			typename P4,
+			typename P5,
+			typename P6>
+inline void Procedure6<P1,P2,P3,P4,P5,P6>::beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != staticFuncPtr ) {
+		ThreadedProcedure6<P1,P2,P3,P4,P5,P6> proc(p1, p2, p3, p4, p5, p6, staticFuncPtr);		
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+template <typename P1, 
+			typename P2, 
+			typename P3,
+			typename P4,
+			typename P5,
+			typename P6,
+			typename ClassType>
+inline void ClassProcedure6<P1,P2,P3,P4,P5,P6,ClassType>::beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != classFuncPtr && NULL != funcSrc ) {
+		ThreadedProcedure6<P1,P2,P3,P4,P5,P6,ClassType> proc(funcSrc, p1, p2, p3, p4, p5, p6, classFuncPtr);	
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+template <typename ReturnType>
+inline void Function<ReturnType>::beginInvoke( AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != staticFuncPtr ) {
+		ThreadedFunction<ReturnType> proc(staticFuncPtr);
+
+		
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+template <typename ReturnType,typename ClassType>
+inline void ClassFunction<ReturnType,ClassType>::beginInvoke( AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != classFuncPtr && NULL != funcSrc ) {
+		ThreadedFunction<ClassType> proc(funcSrc, classFuncPtr);
+	
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+
+template <typename ReturnType,typename P1>
+inline void Function1<ReturnType,P1>::beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != staticFuncPtr ) {
+		ThreadedFunction1<P1> proc(p1, staticFuncPtr);
+
+		
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+template <typename ReturnType,typename P1, typename ClassType>
+inline void ClassFunction1<ReturnType,P1,ClassType>::beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != classFuncPtr && NULL != funcSrc ) {
+		ThreadedFunction1<P1,ClassType> proc(funcSrc, p1, classFuncPtr);
+	
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+
+
+
+template <typename ReturnType,typename P1,
+			typename P2 >
+inline void Function2<ReturnType,P1,P2>::beginInvoke( P1 p1, P2 p2, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != staticFuncPtr ) {
+		ThreadedFunction2<ReturnType,P1,P2> proc(p1, p2, staticFuncPtr);		
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+template <typename ReturnType,typename P1, 
+			typename P2, 
+			typename ClassType>
+inline void ClassFunction2<ReturnType,P1,P2,ClassType>::beginInvoke( P1 p1, P2 p2, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != classFuncPtr && NULL != funcSrc ) {
+		ThreadedFunction2<ReturnType,P1,P2,ClassType> proc(funcSrc, p1, p2, classFuncPtr);	
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+
+
+
+
+template <typename ReturnType,typename P1,
+			typename P2,
+			typename P3 >
+inline void Function3<ReturnType,P1,P2,P3>::beginInvoke( P1 p1, P2 p2, P3 p3, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != staticFuncPtr ) {
+		ThreadedFunction3<ReturnType,P1,P2,P3> proc(p1, p2, p3, staticFuncPtr);		
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+template <typename ReturnType,typename P1, 
+			typename P2, 
+			typename P3,
+			typename ClassType>
+inline void ClassFunction3<ReturnType,P1,P2,P3,ClassType>::beginInvoke( P1 p1, P2 p2, P3 p3, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != classFuncPtr && NULL != funcSrc ) {
+		ThreadedFunction3<ReturnType,P1,P2,P3,ClassType> proc(funcSrc, p1, p2, p3, classFuncPtr);	
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+
+
+template <typename ReturnType,typename P1,
+			typename P2,
+			typename P3,
+			typename P4>
+inline void Function4<ReturnType,P1,P2,P3,P4>::beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != staticFuncPtr ) {
+		ThreadedFunction4<ReturnType,P1,P2,P3,P4> proc(p1, p2, p3, p4, staticFuncPtr);		
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+template <typename ReturnType,typename P1, 
+			typename P2, 
+			typename P3,
+			typename P4,
+			typename ClassType>
+inline void ClassFunction4<ReturnType,P1,P2,P3,P4,ClassType>::beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != classFuncPtr && NULL != funcSrc ) {
+		ThreadedFunction4<ReturnType,P1,P2,P3,P4,ClassType> proc(funcSrc, p1, p2, p3, p4, classFuncPtr);	
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+
+
+
+template <typename ReturnType,typename P1,
+			typename P2,
+			typename P3,
+			typename P4,
+			typename P5>
+inline void Function5<ReturnType,P1,P2,P3,P4,P5>::beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != staticFuncPtr ) {
+		ThreadedFunction5<ReturnType,P1,P2,P3,P4,P5> proc(p1, p2, p3, p4, p5, staticFuncPtr);		
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+template <typename ReturnType,typename P1, 
+			typename P2, 
+			typename P3,
+			typename P4,
+			typename P5,
+			typename ClassType>
+inline void ClassFunction5<ReturnType,P1,P2,P3,P4,P5,ClassType>::beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != classFuncPtr && NULL != funcSrc ) {
+		ThreadedFunction5<ReturnType,P1,P2,P3,P4,P5,ClassType> proc(funcSrc, p1, p2, p3, p4, p5, classFuncPtr);	
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+
+
+
+
+template <typename ReturnType,typename P1,
+			typename P2,
+			typename P3,
+			typename P4,
+			typename P5,
+			typename P6>
+inline void Function6<ReturnType,P1,P2,P3,P4,P5,P6>::beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != staticFuncPtr ) {
+		ThreadedFunction6<ReturnType,P1,P2,P3,P4,P5,P6> proc(p1, p2, p3, p4, p5, p6, staticFuncPtr);		
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+template <typename ReturnType,typename P1, 
+			typename P2, 
+			typename P3,
+			typename P4,
+			typename P5,
+			typename P6,
+			typename ClassType>
+inline void ClassFunction6<ReturnType,P1,P2,P3,P4,P5,P6,ClassType>::beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+{
+	if ( NULL != classFuncPtr && NULL != funcSrc ) {
+		ThreadedFunction6<ReturnType,P1,P2,P3,P4,P5,P6,ClassType> proc(funcSrc, p1, p2, p3, p4, p5, p6, classFuncPtr);	
+		initialResult->internal_addRunnable( returnObject, proc.getParams() );
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 inline void AsyncResult::internal_run()
 {
@@ -1758,38 +3579,136 @@ inline void AsyncResult::internal_run()
 	}
 }
 
+
+
+inline void Delegate0::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	//no-op for procedures - they don't return values!
+}
+
+
 template <typename P1>
-inline void Delagate1<P1>::functionFinished( AsyncResult* res, Runnable* runnable )
+inline void Delegate1<P1>::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	//no-op for procedures - they don't return values!
+}
+
+template <typename P1,typename P2>
+inline void Delegate2<P1,P2>::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	//no-op for procedures - they don't return values!
+}
+
+template <typename P1,typename P2,typename P3>
+inline void Delegate3<P1,P2,P3>::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	//no-op for procedures - they don't return values!
+}
+
+
+template <typename P1,typename P2,typename P3,typename P4>
+inline void Delegate4<P1,P2,P3,P4>::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	//no-op for procedures - they don't return values!
+}
+
+
+template <typename P1,typename P2,typename P3,typename P4,typename P5>
+inline void Delegate5<P1,P2,P3,P4,P5>::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	//no-op for procedures - they don't return values!
+}
+
+template <typename P1,typename P2,typename P3,typename P4,typename P5,typename P6>
+inline void Delegate6<P1,P2,P3,P4,P5,P6>::functionFinished( AsyncResult* res, Runnable* runnable )
 {
 	//no-op for procedures - they don't return values!
 }
 
 
 
-template <typename ReturnType, typename P1, typename P2>
-inline void Function2<ReturnType,P1,P2>::beginInvoke( P1 p1, P2 p2, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
-{
-	if ( NULL != staticFuncPtr ) {
-		ThreadedFunction2<ReturnType,P1,P2> proc(p1, p2, staticFuncPtr);
 
-		
-		initialResult->internal_addRunnable( returnObject, proc.getParams() );
-	}
+
+
+
+template <typename ReturnType>
+inline void DelegateR<ReturnType>::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	ThreadedFunction<ReturnType>* funcParams = (ThreadedFunction<ReturnType>*)runnable;
+
+	ReturnType ret = funcParams->returnValue();
+
+	resultsCache_.addResult( ret, res );
 }
 
-
-template <typename ReturnType, typename P1, typename P2, typename ClassType>
-inline void ClassFunction2<ReturnType,P1,P2,ClassType>::beginInvoke( P1 p1, P2 p2, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
+template <typename ReturnType>
+inline ReturnType 
+	DelegateR<ReturnType>::endInvoke( AsyncResult* asyncResult )
 {
-	if ( NULL != classFuncPtr && NULL != funcSrc ) {
-		ThreadedFunction2<ReturnType,P1,P2,ClassType> proc(funcSrc, p1, p2, classFuncPtr);
+	ReturnType result = resultsCache_.getLastResult( asyncResult );
+
+	return result;
+}
+
+template <typename ReturnType>
+inline DelegateR<ReturnType>::Results 
+	DelegateR<ReturnType>::endInvokeWithResults( AsyncResult* asyncResult )
+{
+	Results result;
+
+	Results* res = resultsCache_.getResults();
 	
-		initialResult->internal_addRunnable( returnObject, proc.getParams() );
-	}
+	if ( NULL != res ) {
+		result = *res;
+	}	
+
+	return result;
 }
 
+
+
+
+
+template <typename ReturnType, typename P1>
+inline void Delegate1R<ReturnType,P1>::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	ThreadedFunction1<ReturnType,P1>* funcParams = (ThreadedFunction1<ReturnType,P1>*)runnable;
+
+	ReturnType ret = funcParams->returnValue();
+
+	resultsCache_.addResult( ret, res );
+}
+
+template <typename ReturnType, 
+			typename P1>
+inline ReturnType 
+	Delegate1R<ReturnType,P1>::endInvoke( AsyncResult* asyncResult )
+{
+	ReturnType result = resultsCache_.getLastResult( asyncResult );
+
+	return result;
+}
+
+template <typename ReturnType, 
+			typename P1>
+inline Delegate1R<ReturnType,P1>::Results 
+	Delegate1R<ReturnType,P1>::endInvokeWithResults( AsyncResult* asyncResult )
+{
+	Results result;
+
+	Results* res = resultsCache_.getResults();
+	
+	if ( NULL != res ) {
+		result = *res;
+	}	
+
+	return result;
+}
+
+
+
 template <typename ReturnType, typename P1, typename P2>
-inline void Delagate2R<ReturnType,P1,P2>::functionFinished( AsyncResult* res, Runnable* runnable )
+inline void Delegate2R<ReturnType,P1,P2>::functionFinished( AsyncResult* res, Runnable* runnable )
 {
 	ThreadedFunction2<ReturnType,P1,P2>* funcParams = (ThreadedFunction2<ReturnType,P1,P2>*)runnable;
 
@@ -1799,7 +3718,7 @@ inline void Delagate2R<ReturnType,P1,P2>::functionFinished( AsyncResult* res, Ru
 }
 
 template <typename ReturnType, typename P1, typename P2>
-inline ReturnType Delagate2R<ReturnType,P1,P2>::endInvoke( AsyncResult* asyncResult )
+inline ReturnType Delegate2R<ReturnType,P1,P2>::endInvoke( AsyncResult* asyncResult )
 {
 	ReturnType result = resultsCache_.getLastResult( asyncResult );
 
@@ -1807,7 +3726,7 @@ inline ReturnType Delagate2R<ReturnType,P1,P2>::endInvoke( AsyncResult* asyncRes
 }
 
 template <typename ReturnType, typename P1, typename P2>
-inline Delagate2R<ReturnType,P1,P2>::Results Delagate2R<ReturnType,P1,P2>::endInvokeWithResults( AsyncResult* asyncResult )
+inline Delegate2R<ReturnType,P1,P2>::Results Delegate2R<ReturnType,P1,P2>::endInvokeWithResults( AsyncResult* asyncResult )
 {
 	Results result;
 
@@ -1820,6 +3739,230 @@ inline Delagate2R<ReturnType,P1,P2>::Results Delagate2R<ReturnType,P1,P2>::endIn
 
 	return result;
 }
+
+
+
+
+
+
+
+template <typename ReturnType, 
+			typename P1,
+			typename P2,
+			typename P3>
+inline void Delegate3R<ReturnType,P1,P2,P3>::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	ThreadedFunction3<ReturnType,P1,P2,P3>* funcParams = 
+		(ThreadedFunction3<ReturnType,P1,P2,P3>*)runnable;
+
+	ReturnType ret = funcParams->returnValue();
+
+	resultsCache_.addResult( ret, res );
+}
+
+template <typename ReturnType, 
+			typename P1,
+			typename P2,
+			typename P3>
+inline ReturnType 
+	Delegate3R<ReturnType,P1,P2,P3>::endInvoke( AsyncResult* asyncResult )
+{
+	ReturnType result = resultsCache_.getLastResult( asyncResult );
+
+	return result;
+}
+
+template <typename ReturnType, 
+			typename P1,
+			typename P2,
+			typename P3>
+inline Delegate3R<ReturnType,P1,P2,P3>::Results 
+	Delegate3R<ReturnType,P1,P2,P3>::endInvokeWithResults( AsyncResult* asyncResult )
+{
+	Results result;
+
+	Results* res = resultsCache_.getResults();
+	
+	if ( NULL != res ) {
+		result = *res;
+	}	
+
+	return result;
+}
+
+
+
+
+
+
+
+
+template <typename ReturnType, 
+			typename P1,
+			typename P2,
+			typename P3,
+			typename P4>
+inline void Delegate4R<ReturnType,P1,P2,P3,P4>::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	ThreadedFunction4<ReturnType,P1,P2,P3,P4>* funcParams = 
+		(ThreadedFunction4<ReturnType,P1,P2,P3,P4>*)runnable;
+
+	ReturnType ret = funcParams->returnValue();
+
+	resultsCache_.addResult( ret, res );
+}
+
+template <typename ReturnType, 
+			typename P1,
+			typename P2,
+			typename P3,
+			typename P4>
+inline ReturnType 
+	Delegate4R<ReturnType,P1,P2,P3,P4>::endInvoke( AsyncResult* asyncResult )
+{
+	ReturnType result = resultsCache_.getLastResult( asyncResult );
+
+	return result;
+}
+
+template <typename ReturnType, 
+			typename P1,
+			typename P2,
+			typename P3,
+			typename P4>
+inline Delegate4R<ReturnType,P1,P2,P3,P4>::Results 
+	Delegate4R<ReturnType,P1,P2,P3,P4>::endInvokeWithResults( AsyncResult* asyncResult )
+{
+	Results result;
+
+	Results* res = resultsCache_.getResults();
+	
+	if ( NULL != res ) {
+		result = *res;
+	}	
+
+	return result;
+}
+
+
+
+
+
+
+
+
+
+template <typename ReturnType, 
+			typename P1,
+			typename P2,
+			typename P3,
+			typename P4,
+			typename P5>
+inline void Delegate5R<ReturnType,P1,P2,P3,P4,P5>::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	ThreadedFunction5<ReturnType,P1,P2,P3,P4,P5>* funcParams = 
+		(ThreadedFunction5<ReturnType,P1,P2,P3,P4,P5>*)runnable;
+
+	ReturnType ret = funcParams->returnValue();
+
+	resultsCache_.addResult( ret, res );
+}
+
+template <typename ReturnType, 
+			typename P1,
+			typename P2,
+			typename P3,
+			typename P4,
+			typename P5>
+inline ReturnType 
+	Delegate5R<ReturnType,P1,P2,P3,P4,P5>::endInvoke( AsyncResult* asyncResult )
+{
+	ReturnType result = resultsCache_.getLastResult( asyncResult );
+
+	return result;
+}
+
+template <typename ReturnType, 
+			typename P1,
+			typename P2,
+			typename P3,
+			typename P4,
+			typename P5>
+inline Delegate5R<ReturnType,P1,P2,P3,P4,P5>::Results 
+	Delegate5R<ReturnType,P1,P2,P3,P4,P5>::endInvokeWithResults( AsyncResult* asyncResult )
+{
+	Results result;
+
+	Results* res = resultsCache_.getResults();
+	
+	if ( NULL != res ) {
+		result = *res;
+	}	
+
+	return result;
+}
+
+
+
+
+
+
+
+
+template <typename ReturnType, 
+			typename P1,
+			typename P2,
+			typename P3,
+			typename P4,
+			typename P5,
+			typename P6>
+inline void Delegate6R<ReturnType,P1,P2,P3,P4,P5,P6>::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	ThreadedFunction6<ReturnType,P1,P2,P3,P4,P5,P6>* funcParams = 
+		(ThreadedFunction6<ReturnType,P1,P2,P3,P4,P5,P6>*)runnable;
+
+	ReturnType ret = funcParams->returnValue();
+
+	resultsCache_.addResult( ret, res );
+}
+
+template <typename ReturnType, 
+			typename P1,
+			typename P2,
+			typename P3,
+			typename P4,
+			typename P5,
+			typename P6>
+inline ReturnType 
+	Delegate6R<ReturnType,P1,P2,P3,P4,P5,P6>::endInvoke( AsyncResult* asyncResult )
+{
+	ReturnType result = resultsCache_.getLastResult( asyncResult );
+
+	return result;
+}
+
+template <typename ReturnType, 
+			typename P1,
+			typename P2,
+			typename P3,
+			typename P4,
+			typename P5,
+			typename P6>
+inline Delegate6R<ReturnType,P1,P2,P3,P4,P5,P6>::Results 
+	Delegate6R<ReturnType,P1,P2,P3,P4,P5,P6>::endInvokeWithResults( AsyncResult* asyncResult )
+{
+	Results result;
+
+	Results* res = resultsCache_.getResults();
+	
+	if ( NULL != res ) {
+		result = *res;
+	}	
+
+	return result;
+}
+
+
 
 
 
