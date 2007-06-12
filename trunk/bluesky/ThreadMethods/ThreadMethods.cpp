@@ -202,179 +202,179 @@ int main( int argc, char** argv ){
 
 	{
 
-	Snarfy sn;
-	String s;
-	Swanky sk;
-	
-/*
-	Thread* th = ThreadedProcedure1<int>(10,doit).invoke();
-	
-	th->wait();
+		Snarfy sn;
+		String s;
+		Swanky sk;
+		
+	/*
+		Thread* th = ThreadedProcedure1<int>(10,doit).invoke();
+		
+		th->wait();
 
-	th = ThreadedProcedure1<int>(231,doit2).invoke();
+		th = ThreadedProcedure1<int>(231,doit2).invoke();
 
-	th->wait();
-	
-	
-	
+		th->wait();
+		
+		
+		
 
-	th = ThreadedProcedure1<int,Snarfy>(&sn,38112,&Snarfy::thisBlows).invoke();
-	th->wait();
-
-
-
-	s = "hello";
-	
-
-	double d = 0.0332;
-	
-	th = ThreadedProcedure2<double&,const String&,Swanky>(&sk,d,s,&Swanky::doit2).invoke();
-	th->wait();
-
-
-	printf( "Bye!\n");
-
-
-	ThreadedProcedure3<int,double,char>(10,200.0,'a',abc).invoke();
-
-	ThreadedProcedure4<int,char,double,String>(10,'a',200.0,"poop",HopAlong).invoke();
-
-	ThreadedProcedure5<int,char,double,String,bool>(10,'a',200.0,"poop",true,HopAlongA).invoke();
-
-	
-	ThreadedProcedure6<int, const String&,double,char,bool,Object*>(10,s,200.0,'a',true,th,abc2).invoke();
-	
-	ThreadedProcedure<Swanky>(&sk, &Swanky::doit3).invoke();
-
-	ThreadedProcedure<>(abc3).invoke();
+		th = ThreadedProcedure1<int,Snarfy>(&sn,38112,&Snarfy::thisBlows).invoke();
+		th->wait();
 
 
 
-	
-	ThreadedProcedure<> g(abc3);
-	g.invoke();
+		s = "hello";
+		
+
+		double d = 0.0332;
+		
+		th = ThreadedProcedure2<double&,const String&,Swanky>(&sk,d,s,&Swanky::doit2).invoke();
+		th->wait();
 
 
-	FooBar fb;
-	ThreadedFunction<int,FooBar>(&fb, &FooBar::duh).invoke();
+		printf( "Bye!\n");
+
+
+		ThreadedProcedure3<int,double,char>(10,200.0,'a',abc).invoke();
+
+		ThreadedProcedure4<int,char,double,String>(10,'a',200.0,"poop",HopAlong).invoke();
+
+		ThreadedProcedure5<int,char,double,String,bool>(10,'a',200.0,"poop",true,HopAlongA).invoke();
+
+		
+		ThreadedProcedure6<int, const String&,double,char,bool,Object*>(10,s,200.0,'a',true,th,abc2).invoke();
+		
+		ThreadedProcedure<Swanky>(&sk, &Swanky::doit3).invoke();
+
+		ThreadedProcedure<>(abc3).invoke();
 
 
 
-	ThreadedFunction<int> h(abc4);
-	h.invoke();
-	
+		
+		ThreadedProcedure<> g(abc3);
+		g.invoke();
+
+
+		FooBar fb;
+		ThreadedFunction<int,FooBar>(&fb, &FooBar::duh).invoke();
 
 
 
-	th = ThreadedFunction1<String,int>(56,whatAmI).invoke();
-	th->wait();
-
-	th = ThreadedFunction2<String,int,bool>(102,true,whatAmI2).invoke();
-	th->wait();
-
-	th = ThreadedFunction3<double,int,bool,String*>(102,true,NULL,whatAmI24).invoke();
-	th->wait();
-
-	th = ThreadedFunction6<double,int,bool,int*,char**, String,Object*>(102,true,NULL,argv,"",NULL,whatAmIb).invoke();
-	th->wait();
-
-*/
+		ThreadedFunction<int> h(abc4);
+		h.invoke();
+		
 
 
-	Delegate1<int> d2;
-	d2 += doit;
+
+		th = ThreadedFunction1<String,int>(56,whatAmI).invoke();
+		th->wait();
+
+		th = ThreadedFunction2<String,int,bool>(102,true,whatAmI2).invoke();
+		th->wait();
+
+		th = ThreadedFunction3<double,int,bool,String*>(102,true,NULL,whatAmI24).invoke();
+		th->wait();
+
+		th = ThreadedFunction6<double,int,bool,int*,char**, String,Object*>(102,true,NULL,argv,"",NULL,whatAmIb).invoke();
+		th->wait();
+
+	*/
 
 
-	
-	d2 += new ClassProcedure1<int,Snarfy>(&sn,&Snarfy::thisBlows,"Snarfy::thisBlows");
+		Delegate1<int> d2;
+		d2 += doit;
 
 
-	{
-		Obj1 obj;
-		d2 += new ClassProcedure1<int,Obj1>(&obj,&Obj1::doIt,"Obj1::doIt");
+		
+		d2 += new ClassProcedure1<int,Snarfy>(&sn,&Snarfy::thisBlows,"Snarfy::thisBlows");
 
-		d2( 100 );
+
+		{
+			Obj1 obj;
+			d2 += new ClassProcedure1<int,Obj1>(&obj,&Obj1::doIt,"Obj1::doIt");
+
+			d2( 100 );
+		}
+		
+
+
+
+
+		AsyncCallback acb(doneWithInvokes) ;
+		AsyncResult* ar = d2.beginInvoke( 10, &acb );
+
+		ar->wait();
+
+		ar->free();
+
+
+		s = d2.at( 0 ).getReturnType().name();
+
+
+		Delegate2R<bool,const String&,double> d3;
+
+		d3 += duhDoIt;
+
+
+		Blooper bl;
+
+		d3 += new ClassFunction2<bool,const String&,double,Blooper>(&bl,&Blooper::stuffIt);
+
+		s = d3.at( 1 ).getReturnType().name();
+		CallBack::TypeArray types = d3.at( 1 ).getArgumentTypes();
+
+		uint32 ac = types.size();
+		s = types[0]->name();
+		s = types[1]->name();
+
+		bool result = d3.invoke("Hola", 120.456);
+		printf( "d2 result: %d\n", result );
+		for ( int i=0;i<d3.results.size();i++ ) {
+			printf( "d2 results[%d]: %d\n", i, (int)d3.results[i] );
+		}
+		
+
+
+
+
+		
+		
+
+
+
+		String h("hola!");
+		d3.setRunCallbacksAsynchronously(true);
+
+		ar = d3.beginInvoke( h, 120.456, NULL );
+
+		ar->wait();
+
+		bool b = d3.endInvoke( ar );
+
+		ar->free();
+
+
+		//test adding bogus callback type
+		try {
+			d3 += new ClassProcedure1<int,Snarfy>(&sn,&Snarfy::thisBlows,"Snarfy::thisBlows");
+		}
+		catch ( BasicException& e ) {
+			System::println( "Error: " + e );
+		}
+
+
+
+		Delegate5R<int,bool,bool,int,long,String> d5;
+
+		ar = d5.beginInvoke( true, true, 10, 10, "Oops", NULL );
+
+		ar->wait();
+
+		ar->free();
+
+		d5(  true, true, 10, 10, "Oops" );
+
 	}
-	
-
-
-
-
-	AsyncCallback acb(doneWithInvokes) ;
-	AsyncResult* ar = d2.beginInvoke( 10, &acb );
-
-	ar->wait();
-
-	ar->free();
-
-
-	s = d2.at( 0 ).getReturnType().name();
-
-
-	Delegate2R<bool,const String&,double> d3;
-
-	d3 += duhDoIt;
-
-
-	Blooper bl;
-
-	d3 += new ClassFunction2<bool,const String&,double,Blooper>(&bl,&Blooper::stuffIt);
-
-	s = d3.at( 1 ).getReturnType().name();
-	CallBack::TypeArray types = d3.at( 1 ).getArgumentTypes();
-
-	uint32 ac = types.size();
-	s = types[0]->name();
-	s = types[1]->name();
-
-	bool result = d3.invoke("Hola", 120.456);
-	printf( "d2 result: %d\n", result );
-	for ( int i=0;i<d3.results.size();i++ ) {
-		printf( "d2 results[%d]: %d\n", i, (int)d3.results[i] );
-	}
-	
-
-
-
-
-	
-	
-
-
-
-	String h("hola!");
-	d3.setRunCallbacksAsynchronously(true);
-
-	ar = d3.beginInvoke( h, 120.456, NULL );
-
-	ar->wait();
-
-	bool b = d3.endInvoke( ar );
-
-	ar->free();
-
-
-	//test adding bogus callback type
-	try {
-		d3 += new ClassProcedure1<int,Snarfy>(&sn,&Snarfy::thisBlows,"Snarfy::thisBlows");
-	}
-	catch ( BasicException& e ) {
-		System::println( "Error: " + e );
-	}
-
-
-
-	Delegate5R<int,bool,bool,int,long,String> d5;
-
-	ar = d5.beginInvoke( true, true, 10, 10, "Oops", NULL );
-
-	ar->wait();
-
-	ar->free();
-
-	d5(  true, true, 10, 10, "Oops" );
-
-}
 
 	delegate::terminateThreadPool();
 
