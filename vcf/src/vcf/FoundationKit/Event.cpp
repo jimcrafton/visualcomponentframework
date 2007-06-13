@@ -13,59 +13,6 @@ where you installed the VCF.
 using namespace VCF;
 
 
-Event::Event( Object * source)
-{
-	source_ = source;
-	userData_ = NULL;
-	eventType_ = 0;
-	init();
-}
-
-Event::Event( Object* source, const uint32& eventType )
-{
-	source_ = source;
-	userData_ = NULL;
-	eventType_ = eventType;
-	init();
-}
-
-void Event::init()
-{
-	consumed_ = false;
-	time( &time_ );
-}
-
-Object* Event::getSource()
-{
-	return source_;
-}
-
-uint32 Event::getType()
-{
-	return eventType_;
-}
-
-void Event::setType( const uint32& type )
-{
-	eventType_ = type;
-}
-
-time_t Event::getTime()
-{
-	return time_;
-}
-
-void Event::setUserData( void* userData )
-{
-	userData_ = userData;
-}
-
-void* Event::getUserData()
-{
-	return userData_;
-}
-
-
 /**
 $Id$
 */
