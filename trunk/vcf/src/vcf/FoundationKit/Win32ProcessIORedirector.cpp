@@ -121,7 +121,7 @@ void Win32ProcessIORedirector::readPipe()
 		//notify folks of an OutputReady event
 		String outputData = readBuffer;
 		OutputReadyEvent event( process_, outputData );
-		process_->OutputReady.fireEvent( &event );
+		process_->OutputReady( &event );
 
 		Sleep(100);
 		int err = PeekNamedPipe( childStdoutRdHandle_, NULL, 0, NULL, &bytesLeftToRead, NULL);
@@ -152,7 +152,7 @@ void Win32ProcessIORedirector::readPipe()
 		//notify folks of an OutputReady event
 		String outputData = readBuffer;
 		OutputReadyEvent event( process_, outputData );
-		process_->OutputReady.fireEvent( &event );
+		process_->OutputReady( &event );
 	}
 
 	if ( !CloseHandle(childStdinRdHandle_) ) {

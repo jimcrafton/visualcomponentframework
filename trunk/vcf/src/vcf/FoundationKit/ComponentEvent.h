@@ -59,6 +59,7 @@ protected:
 /**
 \class ComponentEventHandler ComponentEvent.h "vcf/ApplicationKit/ComponentEvent.h"
 */
+/*
 template <class SOURCE_TYPE>
 class ComponentEventHandler : public EventHandlerInstance<SOURCE_TYPE,ComponentEvent> {
 public:
@@ -72,7 +73,9 @@ public:
 	virtual ~ComponentEventHandler(){};
 
 };
+*/
 
+typedef Delegate1<ComponentEvent*> ComponentDelegate;
 
 };
 

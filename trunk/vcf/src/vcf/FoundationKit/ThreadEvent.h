@@ -21,11 +21,11 @@ namespace VCF {
 */
 class FOUNDATIONKIT_API ThreadEvent : public Event{
 public:
-	ThreadEvent( Object* source );
+	ThreadEvent( Object* source ):Event( source ){};
 
-	ThreadEvent( Object* source, const uint32& eventType );
+	ThreadEvent( Object* source, const uint32& eventType ): Event( source, eventType ){};
 
-	virtual ~ThreadEvent();
+	virtual ~ThreadEvent(){};
 
 	virtual Object* clone( bool deep=false ) {
 		return new ThreadEvent(*this);

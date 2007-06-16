@@ -316,7 +316,7 @@ String VFFOutputStream::generateEventHandlerString( EventProperty* eventProperty
 		Component* componentSrc = dynamic_cast<Component*>( source );
 		if ( NULL != componentSrc ) {
 			String srcName = componentSrc->getName();
-			String handlerName = handler->getHandlerName();
+			String handlerName = handler->getName();
 			if ( !srcName.empty() && !handlerName.empty() ) {
 				result = srcName + "@" + handlerName;
 			}
@@ -358,7 +358,7 @@ void VFFOutputStream::writeEvents( Component* component )
 				EventHandler::Vector handlers;
 				String delegateStr;
 
-				if ( eventDelegate->getEventHandlers( handlers ) ) {
+				if ( eventDelegate->getCallbacks( handlers ) ) {
 					
 					EventHandler::Vector::iterator it = handlers.begin();
 					

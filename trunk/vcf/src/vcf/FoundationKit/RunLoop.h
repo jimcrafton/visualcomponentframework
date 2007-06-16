@@ -21,21 +21,29 @@ class RunLoopPeer;
 class RunLoopSource;
 class Thread;
 
+
+
+typedef Delegate1<Event*> RunLoopDelegate;
+typedef Procedure1<Event*> RunLoopCallback;
+
+
 /**
 \class PostedEvent RunLoop.h "vcf/FoundationKit/RunLoop.h"
 */
 class PostedEvent {
 public:
-	PostedEvent( Event* event, EventHandler* handler, bool deleteHandler ):
+	PostedEvent( Event* event, RunLoopCallback* handler, bool deleteHandler ):
 	  event_(event), handler_(handler), deleteHandler_(deleteHandler){}
 
 	PostedEvent( Event* event ):
 	  event_(event), handler_(NULL), deleteHandler_(false){}
 
 	Event* event_;
-	EventHandler* handler_;
+	RunLoopCallback* handler_;
 	bool deleteHandler_;
 };
+
+
 
 /**
 \class RunLoop RunLoop.h "vcf/FoundationKit/RunLoop.h"
@@ -49,9 +57,9 @@ public:
 
 	/**
 	*/
-	Delegate LoopEvents;
+	RunLoopDelegate LoopEvents;
 
-	Delegate TimerEvents;
+	RunLoopDelegate TimerEvents;
 
 
 
@@ -81,7 +89,7 @@ public:
 
 	/**
 	*/
-	uint32 addTimer( const String& mode, Object* source, EventHandler* handler, uint32 timeoutInMilliSeconds );
+	uint32 addTimer( const String& mode, Object* source, RunLoopCallback* handler, uint32 timeoutInMilliSeconds );
 
 	uint32 addTimer( const String& mode, uint32 timeoutInMilliSeconds );
 
@@ -93,7 +101,7 @@ public:
 
 	/**
 	*/
-	void postEvent( Event* event, EventHandler* handler, bool deleteHandler=true );
+	void postEvent( Event* event, RunLoopCallback* handler, bool deleteHandler=true );
 
 
 	Thread* getOwningThread() {
@@ -122,7 +130,7 @@ public:
 	/**
 	Called by the peer run loop when a timer elapses
 	*/
-	void internal_processTimer( const String& mode, Object* source, EventHandler* handler );
+	void internal_processTimer( const String& mode, Object* source, RunLoopCallback* handler );
 
 	friend class Thread;
 protected:

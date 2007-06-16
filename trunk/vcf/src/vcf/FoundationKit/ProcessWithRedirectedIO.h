@@ -69,7 +69,7 @@ namespace VCF {
 		@event OutputReadyEvent
 		@eventtype 
 		*/
-		DELEGATE(OutputReady);
+		DELEGATE(OutputReadyDelegate,OutputReady);
 
 		/**
 		Returns the ID of the process
@@ -119,7 +119,7 @@ namespace VCF {
 		@deprecated - use the OutputReady delegate directly.
 		*/
 		void removeOutputReadyHandler( EventHandler* eventHandler ) {
-			OutputReady -= eventHandler;
+			OutputReady.remove( eventHandler );
 		}
 
 		uint32 terminate();

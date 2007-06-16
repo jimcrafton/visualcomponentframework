@@ -157,6 +157,7 @@ void FoundationKit::terminate()
 		delete finalizerFunctions;
 	}
 
+	Delegate::terminateThreadPool();
 
 
 	TextCodec::internal_freeAllRegisteredCodecs();

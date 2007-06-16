@@ -250,8 +250,20 @@ namespace VCF{
 #include "vcf/FoundationKit/FilePath.h"
 
 #include "vcf/FoundationKit/Event.h"
-#include "vcf/FoundationKit/EventHandler.h"
-#include "vcf/FoundationKit/Delegate.h"
+//#include "vcf/FoundationKit/EventHandler.h"
+//#include "vcf/FoundationKit/Delegate.h"
+
+#include "vcf/FoundationKit/Runnable.h"
+#include "vcf/FoundationKit/Waitable.h"
+#include "vcf/FoundationKit/Thread.h"
+#include "vcf/FoundationKit/SynchObject.h"
+#include "vcf/FoundationKit/Mutex.h"
+#include "vcf/FoundationKit/Condition.h"
+#include "vcf/FoundationKit/SemaphorePeer.h"
+#include "vcf/FoundationKit/Semaphore.h"
+#include "vcf/FoundationKit/Lock.h"
+#include "vcf/FoundationKit/Delegates.h"
+
 
 #include "vcf/FoundationKit/NotifyEvent.h"
 
@@ -282,8 +294,7 @@ namespace VCF{
 //#include "vcf/FoundationKit/ClassInfo.h"
 
 
-#include "vcf/FoundationKit/Runnable.h"
-#include "vcf/FoundationKit/Waitable.h"
+
 
 #include "vcf/FoundationKit/File.h"
 #include "vcf/FoundationKit/Directory.h"
@@ -292,12 +303,6 @@ namespace VCF{
 #include "vcf/FoundationKit/FileStream.h"
 #include "vcf/FoundationKit/Registry.h"
 #include "vcf/FoundationKit/System.h"
-#include "vcf/FoundationKit/SynchObject.h"
-#include "vcf/FoundationKit/Mutex.h"
-#include "vcf/FoundationKit/Condition.h"
-#include "vcf/FoundationKit/SemaphorePeer.h"
-#include "vcf/FoundationKit/Semaphore.h"
-#include "vcf/FoundationKit/Lock.h"
 #include "vcf/FoundationKit/SystemToolkit.h"
 #include "vcf/FoundationKit/FilePeer.h"
 #include "vcf/FoundationKit/ErrorLog.h"
@@ -309,7 +314,6 @@ namespace VCF{
 #include "vcf/FoundationKit/ConditionPeer.h"
 #include "vcf/FoundationKit/SystemPeer.h"
 #include "vcf/FoundationKit/StringUtils.h"
-#include "vcf/FoundationKit/Thread.h"
 #include "vcf/FoundationKit/ThreadPeer.h"
 #include "vcf/FoundationKit/ThreadEvent.h"
 #include "vcf/FoundationKit/VCFProcess.h"

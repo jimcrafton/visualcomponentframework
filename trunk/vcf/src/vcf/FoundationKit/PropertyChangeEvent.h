@@ -70,6 +70,7 @@ private:
 *Classes implmenting this interface <b><i>MUST</i></b> throw PropertyChangeException
 *if they do not want the change to be processed.
 */
+/*
 template <class SOURCE_TYPE>
 class PropertyChangeEventHandler : public EventHandlerInstance<SOURCE_TYPE,PropertyChangeEvent> {
 public:
@@ -80,6 +81,38 @@ public:
 
 	}
 };
+*/
+
+typedef Delegate1<PropertyChangeEvent*> PropertyChangeDelegate;
+
+
+
+
+
+
+inline PropertyChangeEvent::PropertyChangeEvent( Object * source, VariantData* changeValue, VariantData* originalValue ):
+	Event( source )
+{
+	this->changeValue_ = changeValue;
+	this->originalValue_ = originalValue;
+}
+
+inline PropertyChangeEvent::~PropertyChangeEvent()
+{
+
+}
+
+inline VariantData* PropertyChangeEvent::getChangeValue()
+{
+	return this->changeValue_;
+}
+
+inline VariantData* PropertyChangeEvent::getOriginalValue()
+{
+	return this->originalValue_;
+}
+
+
 
 
 };

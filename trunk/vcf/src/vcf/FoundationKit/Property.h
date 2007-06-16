@@ -405,7 +405,7 @@ public:
 		return isReadOnly_;
 	}
 
-	DELEGATE( PropertyChanged )
+	DELEGATE( PropertyChangeDelegate, PropertyChanged )
 
 	/**
 	*returns whether or not the property is "bound" to an object.
