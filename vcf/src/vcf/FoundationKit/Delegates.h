@@ -3671,7 +3671,7 @@ inline ReturnType
 }
 
 template <typename ReturnType>
-inline DelegateR<ReturnType>::Results 
+inline typename DelegateR<ReturnType>::Results 
 	DelegateR<ReturnType>::endInvokeWithResults( AsyncResult* asyncResult )
 {
 	Results result;
@@ -3711,7 +3711,7 @@ inline ReturnType
 
 template <typename ReturnType, 
 			typename P1>
-inline Delegate1R<ReturnType,P1>::Results 
+inline typename Delegate1R<ReturnType,P1>::Results 
 	Delegate1R<ReturnType,P1>::endInvokeWithResults( AsyncResult* asyncResult )
 {
 	Results result;
@@ -3746,7 +3746,7 @@ inline ReturnType Delegate2R<ReturnType,P1,P2>::endInvoke( AsyncResult* asyncRes
 }
 
 template <typename ReturnType, typename P1, typename P2>
-inline Delegate2R<ReturnType,P1,P2>::Results Delegate2R<ReturnType,P1,P2>::endInvokeWithResults( AsyncResult* asyncResult )
+inline typename Delegate2R<ReturnType,P1,P2>::Results Delegate2R<ReturnType,P1,P2>::endInvokeWithResults( AsyncResult* asyncResult )
 {
 	Results result;
 
@@ -3796,7 +3796,7 @@ template <typename ReturnType,
 			typename P1,
 			typename P2,
 			typename P3>
-inline Delegate3R<ReturnType,P1,P2,P3>::Results 
+inline typename Delegate3R<ReturnType,P1,P2,P3>::Results 
 	Delegate3R<ReturnType,P1,P2,P3>::endInvokeWithResults( AsyncResult* asyncResult )
 {
 	Results result;
@@ -3850,7 +3850,7 @@ template <typename ReturnType,
 			typename P2,
 			typename P3,
 			typename P4>
-inline Delegate4R<ReturnType,P1,P2,P3,P4>::Results 
+inline typename Delegate4R<ReturnType,P1,P2,P3,P4>::Results 
 	Delegate4R<ReturnType,P1,P2,P3,P4>::endInvokeWithResults( AsyncResult* asyncResult )
 {
 	Results result;
@@ -3908,7 +3908,7 @@ template <typename ReturnType,
 			typename P3,
 			typename P4,
 			typename P5>
-inline Delegate5R<ReturnType,P1,P2,P3,P4,P5>::Results 
+inline typename Delegate5R<ReturnType,P1,P2,P3,P4,P5>::Results 
 	Delegate5R<ReturnType,P1,P2,P3,P4,P5>::endInvokeWithResults( AsyncResult* asyncResult )
 {
 	Results result;
@@ -3968,7 +3968,7 @@ template <typename ReturnType,
 			typename P4,
 			typename P5,
 			typename P6>
-inline Delegate6R<ReturnType,P1,P2,P3,P4,P5,P6>::Results 
+inline typename Delegate6R<ReturnType,P1,P2,P3,P4,P5,P6>::Results 
 	Delegate6R<ReturnType,P1,P2,P3,P4,P5,P6>::endInvokeWithResults( AsyncResult* asyncResult )
 {
 	Results result;
