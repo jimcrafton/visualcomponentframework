@@ -109,23 +109,7 @@ protected:
 };
 
 
-
-
-/**
-\class DropEventHandler DropEvent.h "vcf/ApplicationKit/DropEvent.h"
-*/
-template <class SOURCE_TYPE>
-class DropEventHandler : public EventHandlerInstance<SOURCE_TYPE,DropTargetEvent>  {
-public:
-	DropEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,DropTargetEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-				EventHandlerInstance<SOURCE_TYPE,DropTargetEvent>( source, handlerMethod, handlerName ) {
-
-	}
-};
-
-
+typedef Delegate1<DropTargetEvent*> DropTargetDelegate; 
 
 }
 
