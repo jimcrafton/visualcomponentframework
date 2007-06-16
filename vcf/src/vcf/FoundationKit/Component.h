@@ -184,7 +184,7 @@ public:
 	@event ComponentEvent
 	@eventtype Component::COMPONENT_CREATED
 	*/
-	DELEGATE(ComponentCreated)
+	DELEGATE(ComponentDelegate,ComponentCreated)
 
 	/**
 	@delegate ComponentDeleted this is fired when the component is being destroyed.
@@ -193,7 +193,7 @@ public:
 	@event ComponentEvent
 	@eventtype Component::COMPONENT_DESTROYED
 	*/
-	DELEGATE(ComponentDestroyed)
+	DELEGATE(ComponentDelegate,ComponentDestroyed)
 
 	/**
 	@delegate ComponentAdded this is fired when a new child component is added
@@ -201,7 +201,7 @@ public:
 	@event ComponentEvent
 	@eventtype Component::COMPONENT_ADDED
 	*/
-	DELEGATE(ComponentAdded)
+	DELEGATE(ComponentDelegate,ComponentAdded)
 
 	/**
 	@delegate ComponentRemoved this is fired when child component is removed
@@ -209,7 +209,7 @@ public:
 	@event ComponentEvent
 	@eventtype Component::COMPONENT_REMOVED
 	*/
-	DELEGATE(ComponentRemoved)
+	DELEGATE(ComponentDelegate,ComponentRemoved)
 
 	/**
 	@delegate ComponentLoaded this is fired when child component is done being
@@ -217,7 +217,7 @@ public:
 	@event ComponentEvent
 	@eventtype Component::COMPONENT_LOADED
 	*/
-	DELEGATE(ComponentLoaded)
+	DELEGATE(ComponentDelegate,ComponentLoaded)
 
 	/**
 	@delegate ComponentSaved this is fired when child component is removed
@@ -225,7 +225,7 @@ public:
 	@event ComponentEvent
 	@eventtype Component::COMPONENT_SAVED
 	*/
-	DELEGATE(ComponentSaved)
+	DELEGATE(ComponentDelegate,ComponentSaved)
 
 
 	/**

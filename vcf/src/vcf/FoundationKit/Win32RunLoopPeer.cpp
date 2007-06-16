@@ -140,7 +140,7 @@ void Win32RunLoopPeer::handleTimers( const String& mode )
 
 uint32 Win32RunLoopPeer::addTimer( const String& mode, 
 								  Object* source, 
-								  EventHandler* handler, 
+								  RunLoopCallback* handler, 
 								  uint32 timeoutInMilliSeconds )
 {
 	TimerInfo* info = new TimerInfo();
@@ -215,7 +215,7 @@ void Win32RunLoopPeer::stop()
 	PostThreadMessage( runLoop_->getOwningThread()->getThreadID(), WM_QUIT, 0, 0 );
 }
 
-void Win32RunLoopPeer::postEvent( Event* event, EventHandler* handler, bool deleteHandler )
+void Win32RunLoopPeer::postEvent( Event* event, RunLoopCallback* handler, bool deleteHandler )
 {
 	PostedEvent* pe = new PostedEvent( event, handler, deleteHandler );
 

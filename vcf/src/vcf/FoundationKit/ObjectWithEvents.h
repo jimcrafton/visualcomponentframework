@@ -105,7 +105,7 @@ public:
 	anything that takes place to the ObjectWithEvents instance.
 	@event NotifyEvent
 	*/
-	DELEGATE(Notified)
+	DELEGATE(NotifyDelegate,Notified)
 
 protected:
 	/**

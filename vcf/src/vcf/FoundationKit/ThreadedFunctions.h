@@ -17,7 +17,7 @@ where you installed the VCF.
 
 namespace VCF {
 
-
+class Thread;
 
 class NullClassType0 {
 	public:

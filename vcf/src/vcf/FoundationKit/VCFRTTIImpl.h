@@ -144,7 +144,7 @@ public:
 				VariantData* originalValue = get( source );
 				PropertyChangeEvent changeEvent( source, originalValue, value );
 				try {
-					PropertyChanged.fireEvent( &changeEvent );
+					PropertyChanged( &changeEvent );
 
 					(source->*setFunction_)( *value );
 				}
@@ -373,7 +373,9 @@ public:
 
 	virtual EventHandler* createEventHandler( Object* source, EventHandlerMethod method, const String& name ) {
 
-		return new EventHandlerInstance<Object,EventType>( source, (HandlerMethod)method, name );
+		//this needs to we tweaked - the EventType template type 
+		//needs to be the callback type
+		return NULL;//new EventHandlerInstance<Object,EventType>( source, (HandlerMethod)method, name );
 	}
 
 	virtual EventProperty* clone() {
@@ -534,7 +536,7 @@ public:
 				VariantData* originalValue = get( source );
 				PropertyChangeEvent changeEvent( source, originalValue, value );
 				try {
-					PropertyChanged.fireEvent( &changeEvent );
+					PropertyChanged( &changeEvent );
 
 					(source->*setFunction_)( *value );
 				}
@@ -670,7 +672,7 @@ public:
 				VariantData* originalValue = get( source );
 				PropertyChangeEvent changeEvent( source, originalValue, value );
 				try {
-					PropertyChanged.fireEvent( &changeEvent );
+					PropertyChanged( &changeEvent );
 					(source->*setFunction_)( propVal );
 				}
 				catch ( PropertyChangeException ){
@@ -756,7 +758,7 @@ public:
 				VariantData* originalValue = get( source );
 				PropertyChangeEvent changeEvent( source, originalValue, value );
 				try {
-					PropertyChanged.fireEvent( &changeEvent );
+					PropertyChanged( &changeEvent );
 					(source->*setFunction_)( (PROPERTY&)*object );
 				}
 				catch ( PropertyChangeException ){
@@ -881,7 +883,7 @@ public:
 				VariantData* originalValue = get( source );
 				PropertyChangeEvent changeEvent( source, originalValue, value );
 				try {
-					PropertyChanged.fireEvent( &changeEvent );
+					PropertyChanged( &changeEvent );
 					(source->*setFunction_)( enumVal );
 				}
 				catch ( PropertyChangeException ){

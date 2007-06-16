@@ -466,7 +466,7 @@ bool XMLParser::nextNode()
 					if ( NULL != currentNode_ ) {
 						currentNode_->setCDATA( currentNode_->getCDATA() + tokenString_ );
 							XMLParserEvent event( this, currentNode_ );
-							NodeCDATAFound.fireEvent( &event );
+							NodeCDATAFound( &event );
 					}
 
 					P+= 3;
@@ -529,7 +529,7 @@ bool XMLParser::nextNode()
 			if ( NULL != currentNode_ ) {
 				currentNode_->setCDATA( currentNode_->getCDATA() + decodeText( tokenString_ ) );
 				XMLParserEvent event( this, currentNode_ );
-				NodeCDATAFound.fireEvent( &event );
+				NodeCDATAFound( &event );
 			}
 		}
 		break;
@@ -599,7 +599,7 @@ const VCFChar* XMLParser::parseNode( const VCFChar* nodePtrStart, const VCFChar*
 	result = P;
 
 	XMLParserEvent event( this, currentNode_ );
-	NodeFound.fireEvent( &event );
+	NodeFound( &event );
 
 	return result;
 }

@@ -37,13 +37,13 @@ namespace VCF {
 		
 		virtual void stop();
 		
-		virtual void postEvent( Event* event, EventHandler* handler, bool deleteHandler );
+		virtual void postEvent( Event* event, RunLoopCallback* handler, bool deleteHandler );
 		
 		virtual OSHandleID getHandleID() {
 			return NULL;	
 		}
 
-		virtual uint32 addTimer( const String& mode, Object* source, EventHandler* handler, uint32 timeoutInMilliSeconds );
+		virtual uint32 addTimer( const String& mode, Object* source, RunLoopCallback* handler, uint32 timeoutInMilliSeconds );
 		
 		virtual void removeTimer( uint32 timerID );
 	protected:
@@ -53,7 +53,7 @@ namespace VCF {
 		public:
 			HANDLE timer;
 			Object* source;
-			EventHandler* handler;
+			RunLoopCallback* handler;
 			String mode;
 			DateTime startedAt;
 		};

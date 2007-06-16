@@ -45,6 +45,7 @@ public:
 /**
 \class NotifyEventHandler NotifyEvent.h "vcf/FoundationKit/NotifyEvent.h"
 */
+/*
 template <class SOURCE_TYPE>
 class NotifyEventHandler : public EventHandlerInstance<SOURCE_TYPE,NotifyEvent> {
 public:
@@ -56,6 +57,9 @@ public:
 	}
 
 };
+*/
+
+typedef Delegate1<NotifyEvent*> NotifyDelegate;
 
 
 }; //end of namespace VCF

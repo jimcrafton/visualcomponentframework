@@ -124,7 +124,7 @@ void Component::handleEvent( Event* event )
 				ComponentEvent* componentEvent = (ComponentEvent*)event;
 
 				afterCreate( componentEvent);
-				ComponentCreated.fireEvent( componentEvent );
+				ComponentCreated( componentEvent );
 			}
 			break;
 
@@ -141,7 +141,7 @@ void Component::handleEvent( Event* event )
 				}
 
 				beforeDestroy( componentEvent );
-				ComponentDestroyed.fireEvent( componentEvent );
+				ComponentDestroyed( componentEvent );
 			}
 			break;
 
@@ -202,7 +202,7 @@ void Component::addComponent( Component* component )
 
 		ComponentEvent e(this,Component::COMPONENT_ADDED);
 		e.setChildComponent( component );
-		ComponentAdded.fireEvent( &e );
+		ComponentAdded( &e );
 	}
 }
 
@@ -217,7 +217,7 @@ void Component::removeComponent( Component* component )
 	if ( found != components_.end() ){
 		ComponentEvent e(this,Component::COMPONENT_REMOVED);
 		e.setChildComponent( component );
-		ComponentRemoved.fireEvent( &e );
+		ComponentRemoved( &e );
 
 		(*found)->owner_ = NULL;
 		components_.erase( found );
@@ -407,7 +407,7 @@ void Component::loaded()
 	if ( componentState_ & Component::csLoading ) {
 		componentState_ &= ~Component::csLoading;
 		ComponentEvent e( this, Component::COMPONENT_LOADED );
-		ComponentLoaded.fireEvent( &e );
+		ComponentLoaded( &e );
 	}
 }
 
@@ -416,7 +416,7 @@ void Component::saved()
 	if ( componentState_ & Component::csSaving ) {
 		componentState_ &= ~Component::csSaving;
 		ComponentEvent e( this, Component::COMPONENT_SAVED );
-		ComponentSaved.fireEvent( &e );
+		ComponentSaved( &e );
 	}
 }
 

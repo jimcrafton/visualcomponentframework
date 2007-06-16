@@ -119,6 +119,79 @@ private:
     time_t time_;
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+inline Event::Event( Object * source)
+{
+	source_ = source;
+	userData_ = NULL;
+	eventType_ = 0;
+	init();
+}
+
+inline Event::Event( Object* source, const uint32& eventType )
+{
+	source_ = source;
+	userData_ = NULL;
+	eventType_ = eventType;
+	init();
+}
+
+inline void Event::init()
+{
+	consumed_ = false;
+	time( &time_ );
+}
+
+inline Object* Event::getSource()
+{
+	return source_;
+}
+
+inline uint32 Event::getType()
+{
+	return eventType_;
+}
+
+inline void Event::setType( const uint32& type )
+{
+	eventType_ = type;
+}
+
+inline time_t Event::getTime()
+{
+	return time_;
+}
+
+inline void Event::setUserData( void* userData )
+{
+	userData_ = userData;
+}
+
+inline void* Event::getUserData()
+{
+	return userData_;
+}
+
+
+
 };
 
 

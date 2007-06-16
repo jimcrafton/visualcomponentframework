@@ -46,7 +46,7 @@ protected:
 	String outputData_;
 };
 
-
+/*
 template <class SOURCE_TYPE> class OutputReadyEventHandler : public EventHandlerInstance<SOURCE_TYPE,OutputReadyEvent> {
 public:
 	OutputReadyEventHandler( SOURCE_TYPE* source,
@@ -57,6 +57,8 @@ public:
 															handlerName ) {};
 
 };
+*/
+typedef Delegate1<OutputReadyEvent*> OutputReadyDelegate;
 
 };
 

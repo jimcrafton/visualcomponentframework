@@ -358,7 +358,7 @@ public:
 	}
 
 	virtual ~PoolThread() {
-		printf( "Deleting PoolThread %p id# %u\n", this, id_ );
+		System::println( Format("Deleting PoolThread %p index# %u") % this % id_ );
 	}
 
 	void cantContinue() {
@@ -381,7 +381,7 @@ public:
 	virtual bool run() {
 		VCF_ASSERT( NULL != pool_ );
 
-		printf( "Starting PoolThread %p id# %u\n", this, id_ );
+		System::println( Format("Starting PoolThread %p index# %u") % this % id_ );
 
 		while ( canContinue() ) {
 			Runnable* work = pool_->waitForWork();
@@ -393,13 +393,13 @@ public:
 						work->run();
 					}
 					catch ( BasicException& e1 ) {
-
+						System::println( String("VCF Exception in PoolThread: ") + e1.getMessage() );
 					}
 					catch ( std::exception& e2 ) {
-
+						System::println( String("C++ Exception in PoolThread: ") + e2.what() );
 					}
 					catch ( ... ) {
-
+						System::println( String("Unknown Exception in PoolThread") );
 					}
 
 					delete work;

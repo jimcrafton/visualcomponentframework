@@ -16,6 +16,9 @@ where you installed the VCF.
 
 namespace VCF {
 
+typedef Delegate1<Event*> RunLoopDelegate;
+typedef Procedure1<Event*> RunLoopCallback;
+
 /**
 \class RunLoopPeer RunLoopPeer.h "vcf/FoundationKit/RunLoopPeer.h"
 */
@@ -31,9 +34,9 @@ public:
 
 	virtual void stop() = 0;
 
-	virtual void postEvent( Event* event, EventHandler* handler, bool deleteHandler ) = 0;
+	virtual void postEvent( Event* event, RunLoopCallback* handler, bool deleteHandler ) = 0;
 
-	virtual uint32 addTimer( const String& mode, Object* source, EventHandler* handler, uint32 timeoutInMilliSeconds ) = 0;
+	virtual uint32 addTimer( const String& mode, Object* source, RunLoopCallback* handler, uint32 timeoutInMilliSeconds ) = 0;
 
 	virtual void removeTimer( uint32 timerID ) = 0;
 

@@ -111,12 +111,12 @@ void RunLoop::postEvent( Event* event )
 	peer_->postEvent( event, NULL, false );
 }
 
-void RunLoop::postEvent( Event* event, EventHandler* handler, bool deleteHandler )
+void RunLoop::postEvent( Event* event, RunLoopCallback* handler, bool deleteHandler )
 {
 	peer_->postEvent( event, handler, deleteHandler );
 }
 
-uint32 RunLoop::addTimer( const String& mode, Object* source, EventHandler* handler, uint32 timeoutInMilliSeconds )
+uint32 RunLoop::addTimer( const String& mode, Object* source, RunLoopCallback* handler, uint32 timeoutInMilliSeconds )
 {
 	Lock l(mutex_);
 	return peer_->addTimer( mode, source, handler, timeoutInMilliSeconds );
@@ -137,7 +137,7 @@ void RunLoop::removeTimer( uint32 timerID )
 
 void RunLoop::internal_processTimer( const String& mode, 
 									Object* source, 
-									EventHandler* handler )
+									RunLoopCallback* handler )
 {
 	String currentMode = getCurrentRunMode();
 
@@ -148,7 +148,7 @@ void RunLoop::internal_processTimer( const String& mode,
 			handler->invoke( &e );
 		}
 		else {
-			TimerEvents.fireEvent( &e );
+			TimerEvents( &e );
 		}
 	}
 }
@@ -182,14 +182,14 @@ void RunLoop::doSources()
 void RunLoop::internal_processReceivedEvent( PostedEvent* postedEvent )
 {
 	if ( NULL == postedEvent->handler_ ) {
-		LoopEvents.fireEvent( postedEvent->event_ );
+		LoopEvents( postedEvent->event_ );
 	}
 	else {
 		postedEvent->handler_->invoke( postedEvent->event_ );
 	}
 
 	if ( postedEvent->deleteHandler_ ) {
-		delete postedEvent->handler_;
+		postedEvent->handler_->free();
 	}
 
 	delete postedEvent->event_;

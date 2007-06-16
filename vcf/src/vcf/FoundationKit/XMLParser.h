@@ -251,6 +251,7 @@ protected:
 \class XMLParserHandler XMLParser.h "vcf/FoundationKit/XMLParser.h"
 *Class XMLParserHandler documentation
 */
+/*
 template <class SOURCE_TYPE> class XMLParserHandler : public EventHandlerInstance<SOURCE_TYPE,XMLParserEvent> {
 public:
 	XMLParserHandler( SOURCE_TYPE* source,
@@ -263,6 +264,10 @@ public:
 	virtual ~XMLParserHandler(){};
 
 };
+*/
+
+typedef Delegate1<XMLParserEvent*> XMLParserDelegate;
+
 
 /**
 \class XMLNode XMLParser.h "vcf/FoundationKit/XMLParser.h"
@@ -315,14 +320,14 @@ public:
 	parsing of the xml data
 	@event XMLParserEvent
 	*/
-	DELEGATE(NodeFound)
+	DELEGATE(XMLParserDelegate,NodeFound)
 
 	/**
 	@delegate NodeCDATAFound this is fired whenever CDATA is encountered during the
 	parsing of the xml data.
 	@event XMLParserEvent
 	*/
-	DELEGATE(NodeCDATAFound)
+	DELEGATE(XMLParserDelegate,NodeCDATAFound)
 
 
 	/**
