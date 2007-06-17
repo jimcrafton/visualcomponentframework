@@ -63,6 +63,16 @@ RunLoopPeer* Win32SystemToolkit::internal_createRunLoopPeer( RunLoop* runLoop )
 	return new Win32RunLoopPeer( runLoop );
 }
 
+RunLoopTimerPeer* Win32SystemToolkit::internal_createRunLoopTimerPeer( RunLoopTimer* timer )
+{
+    return NULL;
+}
+
+RunLoopSourcePeer* Win32SystemToolkit::internal_createRunLoopSourcePeer( RunLoopSource* source )
+{
+    return NULL;
+}
+
 ThreadManagerPeer* Win32SystemToolkit::internal_createThreadManagerPeer()
 {
 	return new Win32ThreadManagerPeer();
