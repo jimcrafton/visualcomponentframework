@@ -1758,6 +1758,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopTimer.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\System.cpp"
 				>
 				<FileConfiguration
