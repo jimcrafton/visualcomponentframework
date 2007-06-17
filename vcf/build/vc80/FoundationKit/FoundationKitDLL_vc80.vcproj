@@ -839,52 +839,8 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Event.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Event.h"
 				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\EventHandler.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\EventHandler.h"
@@ -899,52 +855,8 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.h"
 				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadEvent.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadEvent.h"
@@ -1640,6 +1552,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Delegates.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Dictionary.cpp"
 				>
 				<FileConfiguration
@@ -1834,6 +1750,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopSource.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopSource.h"
 				>
 			</File>
@@ -2008,6 +1928,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\SystemPeer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadedFunctions.h"
 				>
 			</File>
 			<File

@@ -36,6 +36,9 @@ public:
 	virtual ThreadPeer* internal_createThreadPeer( Thread* thread, bool mainThread );
 
 	virtual RunLoopPeer* internal_createRunLoopPeer( RunLoop* runLoop );
+    virtual RunLoopTimerPeer* internal_createRunLoopTimerPeer( RunLoopTimer* timer );
+    virtual RunLoopSourcePeer* internal_createRunLoopSourcePeer( RunLoopSource* source );
+
 
 	virtual ThreadManagerPeer* internal_createThreadManagerPeer();
 

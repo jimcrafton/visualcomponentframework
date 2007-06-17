@@ -24,6 +24,22 @@ where you installed the VCF.
 
 
 namespace VCF {
+
+    class Win32RunLoopPeer : public RunLoopPeer {
+    public:
+        Win32RunLoopPeer( RunLoop* runLoop );
+
+        virtual void run();
+        virtual void stop();
+        virtual void addTimer( RunLoopTimerPtr::Shared timer );
+        virtual void addSource( RunLoopSourcePtr::Shared source );
+
+    private:
+        RunLoop*     runLoop_;
+    };
+}
+/*
+namespace VCF {
 	class RunLoop;
 	
 	class Win32RunLoopPeer : public RunLoopPeer {
@@ -69,7 +85,7 @@ namespace VCF {
 
 };
 
-
+*/
 #endif //_VCF_WIN32RUNLOOPPEER_H__
 
 /**

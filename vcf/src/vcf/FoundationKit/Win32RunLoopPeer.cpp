@@ -17,6 +17,32 @@ where you installed the VCF.
 using namespace VCF;
 
 Win32RunLoopPeer::Win32RunLoopPeer( RunLoop* runLoop ):
+    runLoop_(runLoop)
+{
+}
+
+void Win32RunLoopPeer::run()
+{
+
+}
+
+void Win32RunLoopPeer::stop()
+{
+
+}
+
+void Win32RunLoopPeer::addTimer( RunLoopTimerPtr::Shared timer )
+{
+
+}
+
+void Win32RunLoopPeer::addSource( RunLoopSourcePtr::Shared source )
+{
+
+}
+
+
+/*Win32RunLoopPeer::Win32RunLoopPeer( RunLoop* runLoop ):
 	runLoop_(runLoop)
 {
 
@@ -34,7 +60,6 @@ void Win32RunLoopPeer::run( const String& mode, const DateTime* duration )
 	Use GetMessage(), and is duration is non-null, then add a timer to 
 	fire after the requested elapsed amount of time. When this happens
 	quit the loop
-	*/
 	MSG msg;
 	memset(&msg,0,sizeof(msg));
 	
@@ -221,7 +246,7 @@ void Win32RunLoopPeer::postEvent( Event* event, RunLoopCallback* handler, bool d
 
 	PostThreadMessage( runLoop_->getOwningThread()->getThreadID(), VCF_POSTMSGTORUNLOOP, 0, (LPARAM)pe );
 }
-
+*/
 
 /**
 $Id$
