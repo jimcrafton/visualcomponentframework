@@ -24,10 +24,14 @@ public:
 
 		virtual ThreadPeer* internal_createThreadPeer( Thread* thread, bool mainThread );
 
-		virtual RunLoopPeer* internal_createRunLoopPeer( RunLoop* runLoop );
-
 		virtual ThreadManagerPeer* internal_createThreadManagerPeer();
-	
+
+        virtual RunLoopPeer* internal_createRunLoopPeer( RunLoop* runLoop );
+
+        virtual RunLoopTimerPeer* internal_createRunLoopTimerPeer( RunLoopTimer* timer );
+        
+        virtual RunLoopSourcePeer* internal_createRunLoopSourcePeer( RunLoopSource* source );
+        
 		virtual SystemPeer* internal_createSystemPeer();
 
 		virtual SemaphorePeer* internal_createSemaphorePeer( int32 initialCount, int32 maxCount );

@@ -13,154 +13,28 @@ where you installed the VCF.
 #   pragma once
 #endif
 
-#include <deque>
+#include <vcf/FoundationKit/RunLoopFwd.h>
 
 namespace VCF {
-
-class RunLoopPeer;
-class RunLoopSource;
-class Thread;
-
-
-
-typedef Delegate1<Event*> RunLoopDelegate;
-typedef Procedure1<Event*> RunLoopCallback;
-
-
-/**
-\class PostedEvent RunLoop.h "vcf/FoundationKit/RunLoop.h"
-*/
-class PostedEvent {
-public:
-	PostedEvent( Event* event, RunLoopCallback* handler, bool deleteHandler ):
-	  event_(event), handler_(handler), deleteHandler_(deleteHandler){}
-
-	PostedEvent( Event* event ):
-	  event_(event), handler_(NULL), deleteHandler_(false){}
-
-	Event* event_;
-	RunLoopCallback* handler_;
-	bool deleteHandler_;
-};
-
-
-
-/**
-\class RunLoop RunLoop.h "vcf/FoundationKit/RunLoop.h"
-*/
-class FOUNDATIONKIT_API RunLoop {
-public:
-	enum TimerEvents {
-		teTimedOut = CUSTOM_EVENT_TYPES + 5002
-	};
-
-
-	/**
-	*/
-	RunLoopDelegate LoopEvents;
-
-	RunLoopDelegate TimerEvents;
-
-
-
-	/**
-	*/
-	void run();
-
-	/**
-	*/
-	void run( const String& mode, const DateTime& duration );
-
-	/**
-	*/
-	void stop();
-
-	/**
-	*/
-	RunLoopPeer* getPeer();
-
-	/**
-	*/
-	void addSource( RunLoopSource* source );
-
-	/**
-	*/
-	void removeSource( RunLoopSource* source );
-
-	/**
-	*/
-	uint32 addTimer( const String& mode, Object* source, RunLoopCallback* handler, uint32 timeoutInMilliSeconds );
-
-	uint32 addTimer( const String& mode, uint32 timeoutInMilliSeconds );
-
-	void removeTimer( uint32 timerID );
-
-	/**
-	*/
-	void postEvent( Event* event );
-
-	/**
-	*/
-	void postEvent( Event* event, RunLoopCallback* handler, bool deleteHandler=true );
-
-
-	Thread* getOwningThread() {
-		return owningThread_;
-	}
-
-	bool isStopped() {
-		return stopped_;
-	}
-
-	String getCurrentRunMode();
-
-	/**
-	This is called repeatedly by the run loop peer in
-	it's internal loop code.
-	*/
-	void internal_executeOnce( const String& mode );
-
-	void internal_cancelled( const String& mode );
-
-	/**
-	Called when the peer run loop gets a posted event
-	*/
-	void internal_processReceivedEvent( PostedEvent* postedEvent );
-
-	/**
-	Called by the peer run loop when a timer elapses
-	*/
-	void internal_processTimer( const String& mode, Object* source, RunLoopCallback* handler );
-
-	friend class Thread;
-protected:
-	RunLoopPeer* peer_;
-	bool stopped_;
-	Thread* owningThread_;
-	std::vector<RunLoopSource*> sources_;
-	std::deque<String> modes_;
-	Mutex mutex_;
-
-
-
-	/**
-	called repeated for each loop iteration of the run loop.
-	Each call iterates through all of the sources and calls
-	RunLoopSource::perform() on the source instance
-	*/
-	void doSources();
-
-	void pushCurrentMode( const String& mode );
-	void popCurrentMode();
-
-	/**
-	*/
-	RunLoop( Thread* thread );
-
-	virtual ~RunLoop();
-};
-
-};
+        
+    class FOUNDATIONKIT_API RunLoop {
+    public:
+        ~RunLoop();
+        
+        void run();
+        void stop();
+        void addTimer( RunLoopTimerPtr::Shared timer );
+        void addSource( RunLoopSourcePtr::Shared source );
+        
+        class Creator;
+    protected:
+        RunLoop( Thread* thread );
+        
+    private:
+        RunLoopPeerPtr::Scoped peer_;
+        
+    };
+}
 
 #endif //_VCF_RUNLOOP_H__
 

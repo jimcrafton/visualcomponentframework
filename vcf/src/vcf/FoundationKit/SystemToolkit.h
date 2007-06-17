@@ -30,6 +30,10 @@ class LocalePeer;
 class ResourceBundlePeer;
 class RunLoop;
 class RunLoopPeer;
+class RunLoopTimer;
+class RunLoopTimerPeer;
+class RunLoopSource;
+class RunLoopSourcePeer;
 class ThreadManagerPeer;
 class Component;
 
@@ -71,10 +75,14 @@ public:
 	*/
 	static ThreadPeer* createThreadPeer( Thread* thread, bool mainThread );
 
-	static RunLoopPeer* createRunLoopPeer( RunLoop* runLoop );
-
 	static ThreadManagerPeer* createThreadManagerPeer();
 
+
+    static RunLoopPeer* createRunLoopPeer( RunLoop* runLoop );
+
+    static RunLoopTimerPeer* createRunLoopTimerPeer( RunLoopTimer* timer );
+    
+    static RunLoopSourcePeer* createRunLoopSourcePeer( RunLoopSource* source );
 	
 
 	/**
@@ -127,11 +135,11 @@ protected:
 	*/
 	virtual ThreadPeer* internal_createThreadPeer( Thread* thread, bool mainThread ) = 0;
 
-	virtual RunLoopPeer* internal_createRunLoopPeer( RunLoop* runLoop ) = 0;
-
 	virtual ThreadManagerPeer* internal_createThreadManagerPeer() = 0;
 
-	
+   	virtual RunLoopPeer* internal_createRunLoopPeer( RunLoop* runLoop ) = 0;
+    virtual RunLoopTimerPeer* internal_createRunLoopTimerPeer( RunLoopTimer* timer ) = 0;
+	virtual RunLoopSourcePeer* internal_createRunLoopSourcePeer( RunLoopSource* source ) = 0;
 	/**
 	*creates a new system peer
 	A port of the FoundationKit to a new platform requires a new class that derives from the 

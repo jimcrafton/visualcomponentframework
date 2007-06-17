@@ -13,37 +13,25 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+#include <vcf/FoundationKit/RunLoopFwd.h>
 
 namespace VCF {
-
-typedef Delegate1<Event*> RunLoopDelegate;
-typedef Procedure1<Event*> RunLoopCallback;
-
-/**
-\class RunLoopPeer RunLoopPeer.h "vcf/FoundationKit/RunLoopPeer.h"
-*/
-class FOUNDATIONKIT_API RunLoopPeer {
-public:
-	virtual ~RunLoopPeer(){}
-
-	/**
-	Run the run for some duration. If duration is NULL then
-	run forever	until a stop() is called.
-	*/
-	virtual void run( const String& mode, const DateTime* duration ) = 0;
-
-	virtual void stop() = 0;
-
-	virtual void postEvent( Event* event, RunLoopCallback* handler, bool deleteHandler ) = 0;
-
-	virtual uint32 addTimer( const String& mode, Object* source, RunLoopCallback* handler, uint32 timeoutInMilliSeconds ) = 0;
-
-	virtual void removeTimer( uint32 timerID ) = 0;
-
-	virtual OSHandleID getHandleID() = 0;
-};
-
-};
+    
+    class FOUNDATIONKIT_API RunLoopPeer {
+    public:
+        virtual ~RunLoopPeer();
+        
+        virtual void run() = 0;
+        virtual void stop() = 0;
+        virtual void addTimer( RunLoopTimerPtr::Shared timer ) = 0;
+        virtual void addSource( RunLoopSourcePtr::Shared source ) = 0;
+        
+    };
+    
+    inline RunLoopPeer::~RunLoopPeer()
+    {
+    }
+}
 
 #endif //_VCF_RUNLOOPPEER_H__
 

@@ -72,11 +72,20 @@ RunLoopPeer* SystemToolkit::createRunLoopPeer( RunLoop* runLoop )
 	return SystemToolkit::getSystemToolkit()->internal_createRunLoopPeer(runLoop);
 }
 
+RunLoopTimerPeer* SystemToolkit::createRunLoopTimerPeer( RunLoopTimer* timer )
+{
+    return SystemToolkit::getSystemToolkit()->internal_createRunLoopTimerPeer( timer );
+}
+
+RunLoopSourcePeer* SystemToolkit::createRunLoopSourcePeer( RunLoopSource* source )
+{
+    return SystemToolkit::getSystemToolkit()->internal_createRunLoopSourcePeer( source );
+}
+
 ThreadManagerPeer* SystemToolkit::createThreadManagerPeer()
 {
 	return SystemToolkit::getSystemToolkit()->internal_createThreadManagerPeer();
 }
-
 
 SystemPeer* SystemToolkit::createSystemPeer()
 {

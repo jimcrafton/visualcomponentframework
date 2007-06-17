@@ -14,25 +14,38 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+#include <vcf/FoundationKit/RunLoopFwd.h>
 
 namespace VCF {
 
-class RunLoop;
+    class FOUNDATIONKIT_API RunLoopSource {
+    public:
+        RunLoopSource();
+        virtual ~RunLoopSource(); 
+        
+        void setRunLoop( RunLoop* runLoop );
+        void fire();
+        
+        RunLoopSourcePeerPtr::Shared getPeer();
+        
+    protected:
+        friend class RunLoopSourcePeer;
+        void perform();
+        void cancel();
 
-class FOUNDATIONKIT_API RunLoopSource {
-public:
-	virtual ~RunLoopSource(){}
+        virtual void performImpl() = 0;
+        virtual void cancelImpl() = 0;
+        
+    private:
+        RunLoopSourcePeerPtr::Shared peer_;
+    };
+    
+    inline RunLoopSourcePeerPtr::Shared RunLoopSource::getPeer()
+    {
+        return peer_;
+    }
 
-	virtual void setRunLoop( RunLoop* runLoop ) = 0;
-
-	virtual void perform() = 0;
-
-	virtual void cancel() = 0;
-};
-
-
-};
-
+}
 
 #endif //_VCF_RUNLOOPSOURCE_H__
 

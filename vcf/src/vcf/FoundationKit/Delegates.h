@@ -499,7 +499,7 @@ public:
 
 		Object* obj = getSource();	
 		if ( NULL != obj ) {
-			addToSource( obj );
+			this->addToSource( obj );
 		}
 
 	}
@@ -830,7 +830,7 @@ public:
 		
 		Object* obj = getSource();	
 		if ( NULL != obj ) {
-			addToSource( obj );
+			this->addToSource( obj );
 		}
 	}
 
@@ -1002,7 +1002,7 @@ public:
 		
 		Object* obj = getSource();	
 		if ( NULL != obj ) {
-			addToSource( obj );
+			this->addToSource( obj );
 		}
 	}
 
@@ -1179,7 +1179,7 @@ public:
 		
 		Object* obj = getSource();	
 		if ( NULL != obj ) {
-			addToSource( obj );
+			this->addToSource( obj );
 		}
 	}
 
@@ -1358,7 +1358,7 @@ public:
 		
 		Object* obj = getSource();	
 		if ( NULL != obj ) {
-			addToSource( obj );
+			this->addToSource( obj );
 		}
 	}
 
@@ -1543,7 +1543,7 @@ public:
 		
 		Object* obj = getSource();	
 		if ( NULL != obj ) {
-			addToSource( obj );
+			this->addToSource( obj );
 		}
 	}
 
@@ -1682,7 +1682,7 @@ public:
 	~ResultsCache(){		
 		Lock l(asyncResultsMtx_);
 		if ( NULL != cache_ ) {				
-			CacheMap::iterator it = cache_->begin();
+			typename CacheMap::iterator it = cache_->begin();
 			while ( it != cache_->end() ) {
 				delete it->second;
 				++it;
@@ -1700,7 +1700,7 @@ public:
 		}
 
 		Results* results = NULL;
-		CacheMap::iterator found = cache_->find( asyncRes );
+		typename CacheMap::iterator found = cache_->find( asyncRes );
 		if ( found == cache_->end() ) {
 			results = new Results();
 			cache_->insert( CacheMap::value_type(asyncRes,results) );
@@ -1736,7 +1736,7 @@ public:
 		
 		if ( NULL != cache_ ) {
 			
-			CacheMap::iterator found = cache_->find( asyncResult );
+			typename CacheMap::iterator found = cache_->find( asyncResult );
 			if ( found != cache_->end() ) {
 				result = found->second;
 			}
@@ -1819,7 +1819,7 @@ public:
 
 	ClassFunction(ClassType* src, ClassFuncPtr funcPtr, const String& s):
 		Function<ReturnType>(),classFuncPtr(funcPtr),funcSrc(src){
-		name = s;
+		this->name = s;
 	}
 
 
@@ -2004,14 +2004,14 @@ public:
 
 
 	ClassFunction1():
-		Function2<ReturnType,P1,P2>(),classFuncPtr(NULL),funcSrc(NULL){}
+		Function1<ReturnType,P1>(),classFuncPtr(NULL),funcSrc(NULL){}
 	
 	ClassFunction1(ClassType* src, ClassFuncPtr funcPtr):
-		Function2<ReturnType,P1,P2>(),classFuncPtr(funcPtr),funcSrc(src){}
+		Function1<ReturnType,P1>(),classFuncPtr(funcPtr),funcSrc(src){}
 
 	ClassFunction1(ClassType* src, ClassFuncPtr funcPtr, const String& s):
-		Function2<ReturnType,P1,P2>(),classFuncPtr(funcPtr),funcSrc(src){
-		name = s;
+		Function1<ReturnType,P1>(),classFuncPtr(funcPtr),funcSrc(src){
+		this->name = s;
 	}
 
 
@@ -2202,7 +2202,7 @@ public:
 
 	ClassFunction2(ClassType* src, ClassFuncPtr funcPtr, const String& s):
 		Function2<ReturnType,P1,P2>(),classFuncPtr(funcPtr),funcSrc(src){
-		name = s;
+		this->name = s;
 	}
 
 
@@ -2399,7 +2399,7 @@ public:
 
 	ClassFunction3(ClassType* src, ClassFuncPtr funcPtr, const String& s):
 		Function3<ReturnType,P1,P2,P3>(),classFuncPtr(funcPtr),funcSrc(src){
-		name = s;
+		this->name = s;
 	}
 
 
@@ -2607,7 +2607,7 @@ public:
 
 	ClassFunction4(ClassType* src, ClassFuncPtr funcPtr, const String& s):
 		Function4<ReturnType,P1,P2,P3,P4>(),classFuncPtr(funcPtr),funcSrc(src){
-		name = s;
+		this->name = s;
 	}
 
 
@@ -2817,7 +2817,7 @@ public:
 
 	ClassFunction5(ClassType* src, ClassFuncPtr funcPtr, const String& s):
 		Function5<ReturnType,P1,P2,P3,P4,P5>(),classFuncPtr(funcPtr),funcSrc(src){
-		name = s;
+		this->name = s;
 	}
 
 
@@ -3040,7 +3040,7 @@ public:
 
 	ClassFunction6(ClassType* src, ClassFuncPtr funcPtr, const String& s):
 		Function6<ReturnType,P1,P2,P3,P4,P5,P6>(),classFuncPtr(funcPtr),funcSrc(src){
-		name = s;
+		this->name = s;
 	}
 
 
@@ -3400,7 +3400,7 @@ template <typename ReturnType,typename P1>
 inline void Function1<ReturnType,P1>::beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
 {
 	if ( NULL != staticFuncPtr ) {
-		ThreadedFunction1<P1> proc(p1, staticFuncPtr);
+		ThreadedFunction1<ReturnType, P1> proc(p1, staticFuncPtr);
 
 		
 		initialResult->internal_addRunnable( returnObject, proc.getParams() );
@@ -3411,7 +3411,7 @@ template <typename ReturnType,typename P1, typename ClassType>
 inline void ClassFunction1<ReturnType,P1,ClassType>::beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject )
 {
 	if ( NULL != classFuncPtr && NULL != funcSrc ) {
-		ThreadedFunction1<P1,ClassType> proc(funcSrc, p1, classFuncPtr);
+		ThreadedFunction1<ReturnType, P1,ClassType> proc(funcSrc, p1, classFuncPtr);
 	
 		initialResult->internal_addRunnable( returnObject, proc.getParams() );
 	}

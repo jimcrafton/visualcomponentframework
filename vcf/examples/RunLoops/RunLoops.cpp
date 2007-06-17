@@ -19,7 +19,7 @@ void Timer1( Event* e )
 	}
 
 	if ( c == 4 ) {
-		runLoop->postEvent( new Event(NULL,InnerLoopEv) );
+//		runLoop->postEvent( new Event(NULL,InnerLoopEv) );
 		
 	}
 }
@@ -54,7 +54,6 @@ void InnerLoop( Event* e )
 		System::println( Format("Run loop lasted for %d seconds, we requested: %d seconds") % 
 							len.getTotalSeconds() % 
 							numSecondsToRun );
-
 	}
 }
 

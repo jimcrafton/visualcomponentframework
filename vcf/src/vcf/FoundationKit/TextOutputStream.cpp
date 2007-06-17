@@ -88,7 +88,7 @@ void TextOutputStream::write( const long& val )
 {
 	char tmpText[NUMBER_TXT_SIZE];
 	memset( tmpText, 0, sizeof(tmpText) );
-	sprintf( tmpText, LONG_STR_CONVERSION, (int)val );
+	sprintf( tmpText, LONG_STR_CONVERSION, val );
 	this->write( (const unsigned char*)tmpText, strlen(tmpText) );
 }
 

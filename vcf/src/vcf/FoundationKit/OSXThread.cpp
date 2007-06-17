@@ -30,6 +30,10 @@ OSXThread::OSXThread( Thread* thread, bool mainThread ) :
     if ( err != noErr ) {
         throw ThreadException( MAKE_ERROR_MSG_2("MPCreateQueue failed!") );
     }
+    
+    if( mainThread ) {
+        taskID_ = MPCurrentTaskID();
+    }
 }
 
 OSXThread::~OSXThread()
