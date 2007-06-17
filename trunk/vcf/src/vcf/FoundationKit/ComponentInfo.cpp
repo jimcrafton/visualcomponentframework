@@ -12,6 +12,10 @@ where you installed the VCF.
 
 using namespace VCF;
 
+class VCF::Image
+{
+};
+
 
 ComponentInfo::ComponentInfo( const String& componentUUID, const String& author, const String& company,
 			  const String& copyright, const String& additionalInfo,

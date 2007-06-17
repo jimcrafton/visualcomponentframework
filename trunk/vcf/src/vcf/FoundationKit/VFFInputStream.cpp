@@ -28,12 +28,12 @@ public:
 
 
 VFFInputStream::VFFInputStream( InputStream* stream ):
-	componentInputLevel_(-1),
-	parser_(NULL),
-	stream_(stream),
+    stream_(stream),	
+    parser_(NULL),
+	topLevelComponent_(NULL),
 	deleteStream_(false),
 	atTopLevel_(true),
-	topLevelComponent_(NULL),
+    componentInputLevel_(-1),
 	topLevelControlVisibility_(false),
 	setDesignMode_(false)	
 {
@@ -854,7 +854,8 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 							if ( NULL != componentClass ) {
 								Field* field = componentClass->getField( newComponent->getName() );
 								if ( NULL != field ) {
-									field->set( &VariantData(newComponent) );
+                                    VariantData vd(newComponent);
+									field->set( &vd );
 								}
 							}
 							

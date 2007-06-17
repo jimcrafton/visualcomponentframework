@@ -33,6 +33,21 @@
 		EA6FE8CD0BC0C28C00B2CD1C /* GraphicsKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD80BC052D7001CA2BC /* GraphicsKit_d.framework */; };
 		EA6FE8CE0BC0C28F00B2CD1C /* FoundationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD70BC052CA001CA2BC /* FoundationKit_d.framework */; };
 		EACECDDB0BC052F3001CA2BC /* FoundationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD70BC052CA001CA2BC /* FoundationKit_d.framework */; };
+		EAD9636D0BC541020005C38D /* ApplicationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD90BC052EA001CA2BC /* ApplicationKit_d.framework */; };
+		EAD9636E0BC541020005C38D /* FoundationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD70BC052CA001CA2BC /* FoundationKit_d.framework */; };
+		EAD9636F0BC541020005C38D /* GraphicsKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD80BC052D7001CA2BC /* GraphicsKit_d.framework */; };
+		EAD9652E0BC557B00005C38D /* Controls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EAD9652D0BC557B00005C38D /* Controls.cpp */; };
+		EAD965360BC558630005C38D /* ApplicationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD90BC052EA001CA2BC /* ApplicationKit_d.framework */; };
+		EAD965390BC558820005C38D /* GraphicsKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD80BC052D7001CA2BC /* GraphicsKit_d.framework */; };
+		EAD9653A0BC558840005C38D /* FoundationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD70BC052CA001CA2BC /* FoundationKit_d.framework */; };
+		EAD965410BC559500005C38D /* ControlsAbout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EAD9653E0BC559500005C38D /* ControlsAbout.cpp */; };
+		EAD965420BC559500005C38D /* ControlsApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EAD9653F0BC559500005C38D /* ControlsApplication.cpp */; };
+		EAD965430BC559500005C38D /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EAD965400BC559500005C38D /* MainWindow.cpp */; };
+		EAD965690BC55ACC0005C38D /* ApplicationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD90BC052EA001CA2BC /* ApplicationKit_d.framework */; };
+		EAD9656A0BC55ACC0005C38D /* FoundationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD70BC052CA001CA2BC /* FoundationKit_d.framework */; };
+		EAD9656B0BC55ACC0005C38D /* GraphicsKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD80BC052D7001CA2BC /* GraphicsKit_d.framework */; };
+		EAEAA0F80BD0083E0096E750 /* RunLoops.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EAEAA0F70BD0083E0096E750 /* RunLoops.cpp */; };
+		EAEAA0F90BD008430096E750 /* FoundationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EACECDD70BC052CA001CA2BC /* FoundationKit_d.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +98,14 @@
 		EACECDD70BC052CA001CA2BC /* FoundationKit_d.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FoundationKit_d.framework; path = ../../../Library/Frameworks/FoundationKit_d.framework; sourceTree = SOURCE_ROOT; };
 		EACECDD80BC052D7001CA2BC /* GraphicsKit_d.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GraphicsKit_d.framework; path = ../../../Library/Frameworks/GraphicsKit_d.framework; sourceTree = SOURCE_ROOT; };
 		EACECDD90BC052EA001CA2BC /* ApplicationKit_d.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = ApplicationKit_d.framework; path = ../../../Library/Frameworks/ApplicationKit_d.framework; sourceTree = SOURCE_ROOT; };
+		EAD965250BC5577A0005C38D /* Controls.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Controls.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAD965270BC5577A0005C38D /* Controls-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Controls-Info.plist"; sourceTree = "<group>"; };
+		EAD9652D0BC557B00005C38D /* Controls.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Controls.cpp; path = Controls/Controls.cpp; sourceTree = "<group>"; };
+		EAD9653E0BC559500005C38D /* ControlsAbout.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ControlsAbout.cpp; path = Controls/ControlsAbout.cpp; sourceTree = "<group>"; };
+		EAD9653F0BC559500005C38D /* ControlsApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ControlsApplication.cpp; path = Controls/ControlsApplication.cpp; sourceTree = "<group>"; };
+		EAD965400BC559500005C38D /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = Controls/MainWindow.cpp; sourceTree = "<group>"; };
+		EAEAA0F10BD008130096E750 /* RunLoops */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RunLoops; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAEAA0F70BD0083E0096E750 /* RunLoops.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = RunLoops.cpp; path = RunLoops/RunLoops.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +140,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAD9636D0BC541020005C38D /* ApplicationKit_d.framework in Frameworks */,
+				EAD9636E0BC541020005C38D /* FoundationKit_d.framework in Frameworks */,
+				EAD9636F0BC541020005C38D /* GraphicsKit_d.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +157,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAD965690BC55ACC0005C38D /* ApplicationKit_d.framework in Frameworks */,
+				EAD9656A0BC55ACC0005C38D /* FoundationKit_d.framework in Frameworks */,
+				EAD9656B0BC55ACC0005C38D /* GraphicsKit_d.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,12 +249,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EAD965230BC5577A0005C38D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAD9653A0BC558840005C38D /* FoundationKit_d.framework in Frameworks */,
+				EAD965390BC558820005C38D /* GraphicsKit_d.framework in Frameworks */,
+				EAD965360BC558630005C38D /* ApplicationKit_d.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAEAA0EF0BD008130096E750 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAEAA0F90BD008430096E750 /* FoundationKit_d.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		5E006DCA068FD71500D3415B /* ApplicationKit Examples */ = {
 			isa = PBXGroup;
 			children = (
+				EAD9652C0BC557960005C38D /* Controls */,
 				5E8E2D9106BDF529007602E7 /* Labels */,
 				5E8E2D7F06BDF4AA007602E7 /* ProgressBars */,
 				5E8E2D5D06BDF3C1007602E7 /* TextLayout */,
@@ -322,6 +370,8 @@
 				5E8E2D4606BDF35B007602E7 /* TextLayout.app */,
 				5E8E2D6F06BDF457007602E7 /* ProgressBars.app */,
 				5E8E2D9D06BDF539007602E7 /* Labels.app */,
+				EAD965250BC5577A0005C38D /* Controls.app */,
+				EAEAA0F10BD008130096E750 /* RunLoops */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -417,6 +467,7 @@
 		5EA829A0064538E000A8020D /* FoundationKit Examples */ = {
 			isa = PBXGroup;
 			children = (
+				EA96DDF40C06002100B66658 /* RunLoops */,
 				5EA829A1064538FD00A8020D /* ThreadBasics */,
 				5EA8299F064538D900A8020D /* WorkingWithEnumerators */,
 				5EA8299E064538BD00A8020D /* Strings */,
@@ -450,6 +501,26 @@
 				5E6B1D3C09279AD700C3EAFA /* CoreFoundation.framework */,
 			);
 			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		EA96DDF40C06002100B66658 /* RunLoops */ = {
+			isa = PBXGroup;
+			children = (
+				EAEAA0F70BD0083E0096E750 /* RunLoops.cpp */,
+			);
+			name = RunLoops;
+			sourceTree = "<group>";
+		};
+		EAD9652C0BC557960005C38D /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				EAD9653E0BC559500005C38D /* ControlsAbout.cpp */,
+				EAD9653F0BC559500005C38D /* ControlsApplication.cpp */,
+				EAD965400BC559500005C38D /* MainWindow.cpp */,
+				EAD9652D0BC557B00005C38D /* Controls.cpp */,
+				EAD965270BC5577A0005C38D /* Controls-Info.plist */,
+			);
+			name = Controls;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -697,6 +768,39 @@
 			productReference = 5E8E2D9D06BDF539007602E7 /* Labels.app */;
 			productType = "com.apple.product-type.application";
 		};
+		EAD965240BC5577A0005C38D /* Controls */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EAD965280BC5577A0005C38D /* Build configuration list for PBXNativeTarget "Controls" */;
+			buildPhases = (
+				EAD965210BC5577A0005C38D /* Resources */,
+				EAD965220BC5577A0005C38D /* Sources */,
+				EAD965230BC5577A0005C38D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Controls;
+			productName = Controls;
+			productReference = EAD965250BC5577A0005C38D /* Controls.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EAEAA0F00BD008130096E750 /* RunLoops */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EAEAA0F30BD008310096E750 /* Build configuration list for PBXNativeTarget "RunLoops" */;
+			buildPhases = (
+				EAEAA0EE0BD008130096E750 /* Sources */,
+				EAEAA0EF0BD008130096E750 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RunLoops;
+			productName = RunLoops;
+			productReference = EAEAA0F10BD008130096E750 /* RunLoops */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -726,6 +830,8 @@
 				5E8E2D4506BDF35B007602E7 /* TextLayout */,
 				5E8E2D6E06BDF457007602E7 /* ProgressBars */,
 				5E8E2D9C06BDF539007602E7 /* Labels */,
+				EAD965240BC5577A0005C38D /* Controls */,
+				EAEAA0F00BD008130096E750 /* RunLoops */,
 			);
 		};
 /* End PBXProject section */
@@ -767,6 +873,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5E8E2D9806BDF539007602E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAD965210BC5577A0005C38D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1039,6 +1152,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				5EA82A0406453AAA00A8020D /* Conditions.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAD965220BC5577A0005C38D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAD9652E0BC557B00005C38D /* Controls.cpp in Sources */,
+				EAD965410BC559500005C38D /* ControlsAbout.cpp in Sources */,
+				EAD965420BC559500005C38D /* ControlsApplication.cpp in Sources */,
+				EAD965430BC559500005C38D /* MainWindow.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAEAA0EE0BD008130096E750 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAEAA0F80BD0083E0096E750 /* RunLoops.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2745,10 +2877,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
-					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/Frameworks";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -2790,8 +2919,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/../../../Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
@@ -2828,8 +2959,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/../../../Library/Frameworks\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2983,10 +3116,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
-					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+					"$(Inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/../../../Library/Frameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -3027,8 +3161,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/../../../Library/Frameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
@@ -3065,8 +3201,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					/Users/jimcrafton/code/vcfdev/dev/vcf/bin,
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_BIN)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/../../../Library/Frameworks\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3099,6 +3237,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EACECD050BC04EF2001CA2BC /* VCF.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/Frameworks";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					VCF_OSX,
+					_DEBUG,
+				);
+				HEADER_SEARCH_PATHS = "$(VCF_ROOT)/src";
+				WARNING_CFLAGS = "-Wno-multichar";
 			};
 			name = Development;
 		};
@@ -3111,6 +3256,142 @@
 		EACECCF40BC04E31001CA2BC /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+			};
+			name = Default;
+		};
+		EAD965290BC5577A0005C38D /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "Controls-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Controls;
+				WARNING_CFLAGS = "-Wno-multichar";
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		EAD9652A0BC5577A0005C38D /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/../../../Library/Frameworks\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				INFOPLIST_FILE = "Controls-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Controls;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EAD9652B0BC5577A0005C38D /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/../../../Library/Frameworks\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				INFOPLIST_FILE = "Controls-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Controls;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Default;
+		};
+		EAEAA0F40BD008310096E750 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/../../../Library/Frameworks\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "$(HOME)/bin";
+				PREBINDING = NO;
+				PRODUCT_NAME = RunLoops;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		EAEAA0F50BD008310096E750 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/../../../Library/Frameworks\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = "$(HOME)/bin";
+				PREBINDING = NO;
+				PRODUCT_NAME = RunLoops;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		EAEAA0F60BD008310096E750 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/../../../Library/Frameworks\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = "$(HOME)/bin";
+				PREBINDING = NO;
+				PRODUCT_NAME = RunLoops;
+				ZERO_LINK = YES;
 			};
 			name = Default;
 		};
@@ -3303,6 +3584,26 @@
 				EACECCF20BC04E31001CA2BC /* Development */,
 				EACECCF30BC04E31001CA2BC /* Deployment */,
 				EACECCF40BC04E31001CA2BC /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EAD965280BC5577A0005C38D /* Build configuration list for PBXNativeTarget "Controls" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EAD965290BC5577A0005C38D /* Development */,
+				EAD9652A0BC5577A0005C38D /* Deployment */,
+				EAD9652B0BC5577A0005C38D /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		EAEAA0F30BD008310096E750 /* Build configuration list for PBXNativeTarget "RunLoops" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EAEAA0F40BD008310096E750 /* Development */,
+				EAEAA0F50BD008310096E750 /* Deployment */,
+				EAEAA0F60BD008310096E750 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Default;

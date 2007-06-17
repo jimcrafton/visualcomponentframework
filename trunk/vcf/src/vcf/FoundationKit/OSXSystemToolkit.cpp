@@ -16,22 +16,19 @@ where you installed the VCF.
 #include "vcf/FoundationKit/OSXLibraryPeer.h"
 #include "vcf/FoundationKit/RunLoopPeer.h"
 #include "vcf/FoundationKit/OSXRunLoopPeer.h"
+#include "vcf/FoundationKit/OSXRunLoopTimerPeer.h"
+#include "vcf/FoundationKit/OSXRunLoopSourcePeer.h"
 #include "vcf/FoundationKit/ThreadManagerPeer.h"
 #include "vcf/FoundationKit/OSXThreadManagerPeer.h"
 
-
-
 using namespace VCF;
-
 
 OSXSystemToolkit::OSXSystemToolkit()
 {
-
 }
 
 OSXSystemToolkit::~OSXSystemToolkit()
 {
-
 }
 
 ProcessPeer* OSXSystemToolkit::internal_createProcessPeer( Process* process )
@@ -48,14 +45,24 @@ ThreadPeer* OSXSystemToolkit::internal_createThreadPeer( Thread* thread, bool ma
 	return new OSXThread( thread, mainThread );
 }
 
+ThreadManagerPeer* OSXSystemToolkit::internal_createThreadManagerPeer()
+{
+	return new OSXThreadManagerPeer();
+}
+
 RunLoopPeer* OSXSystemToolkit::internal_createRunLoopPeer( RunLoop* runLoop )
 {
 	return new OSXRunLoopPeer( runLoop );
 }
 
-ThreadManagerPeer* OSXSystemToolkit::internal_createThreadManagerPeer()
+RunLoopTimerPeer* OSXSystemToolkit::internal_createRunLoopTimerPeer( RunLoopTimer* timer )
 {
-	return new OSXThreadManagerPeer();
+    return new OSXRunLoopTimerPeer( timer );
+}
+
+RunLoopSourcePeer* OSXSystemToolkit::internal_createRunLoopSourcePeer( RunLoopSource* source )
+{
+    return new OSXRunLoopSourcePeer( source );
 }
 		
 SystemPeer* OSXSystemToolkit::internal_createSystemPeer()

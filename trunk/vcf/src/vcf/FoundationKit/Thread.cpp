@@ -9,6 +9,7 @@ where you installed the VCF.
 
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/RunLoop.h"
+#include "vcf/FoundationKit/RuntimeException.h"
 #include "vcf/FoundationKit/ThreadManager.h"
 
 using namespace VCF;
@@ -23,7 +24,6 @@ Thread::Thread():
 	autoDelete_(true),
 	autoDeleteRunnable_(false),
 	stopped_(false),
-	runLoop_(NULL),
 	runWithExceptionBlock_(false)
 {
 	peer_ = SystemToolkit::createThreadPeer( this, false );
@@ -39,7 +39,6 @@ Thread::Thread( Runnable* runnableObject ):
 	autoDelete_(true),
 	autoDeleteRunnable_(true),
 	stopped_(false),
-	runLoop_(NULL),
 	runWithExceptionBlock_(false)
 {
 	peer_ = SystemToolkit::createThreadPeer( this, false );
@@ -55,7 +54,6 @@ Thread::Thread( Runnable* runnableObject, const bool& autoDelete ):
 	autoDelete_(autoDelete),
 	autoDeleteRunnable_(false),
 	stopped_(false),
-	runLoop_(NULL),
 	runWithExceptionBlock_(false)
 {
 	peer_ = SystemToolkit::createThreadPeer( this, false );
@@ -71,7 +69,6 @@ Thread::Thread( const bool& autoDelete ):
 	autoDelete_(autoDelete),
 	autoDeleteRunnable_(false),
 	stopped_(false),
-	runLoop_(NULL),
 	runWithExceptionBlock_(false)
 {
 	peer_ = SystemToolkit::createThreadPeer( this, false );
@@ -88,7 +85,6 @@ Thread::Thread( Runnable* runnableObject, const bool& autoDeleteRunnable,
 	autoDelete_(autoDelete),
 	autoDeleteRunnable_(autoDeleteRunnable),
 	stopped_(false),
-	runLoop_(NULL),
 	runWithExceptionBlock_(false)
 {
 	peer_ = SystemToolkit::createThreadPeer( this, false );
@@ -105,7 +101,6 @@ Thread::Thread( bool mainThread, Runnable* runnableObject, const bool& autoDelet
 	autoDelete_(autoDelete),
 	autoDeleteRunnable_(autoDeleteRunnable),
 	stopped_(false),
-	runLoop_(NULL),
 	runWithExceptionBlock_(false)
 {
 	peer_ = SystemToolkit::createThreadPeer( this, mainThread );
@@ -134,7 +129,6 @@ Thread::~Thread()
 		delete runnableObject_;
 	}
 
-	delete runLoop_;
 }
 
 bool Thread::internal_run()
@@ -260,11 +254,25 @@ OSHandleID Thread::getPeerHandleID()
 	return peer_->getHandleID();
 }
 
+class RunLoop::Creator
+{
+public:
+    static RunLoopPtr::Shared Create( Thread* thread )
+    {
+        return RunLoopPtr::Shared( new RunLoop( thread ) );
+    }
+};
 
-RunLoop* Thread::getRunLoop()
+RunLoopPtr::Shared Thread::getRunLoop()
 {
 	if ( NULL == runLoop_ ) {
-		runLoop_ = new RunLoop( this );
+        if ( ThreadManager::getCurrentThread() == this ) {
+            runLoop_ = RunLoop::Creator::Create( this );            
+        }
+        else {
+            throw RuntimeException( "Can not construct a RunLoop." );
+        }
+
 	}
 
 	return runLoop_;

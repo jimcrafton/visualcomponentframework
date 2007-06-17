@@ -58,19 +58,22 @@ where you installed the VCF.
 #	include "vcf/FoundationKit/PosixCondition.h"
 #elif defined (VCF_OSX)
 //pull in the OSX Foundation headers here
-#include <Carbon/Carbon.h>
-#include "vcf/FoundationKit/OSXSystemToolkit.h"
-#include "vcf/FoundationKit/OSXPeer.h"
-#include "vcf/FoundationKit/OSXFilePeer.h"
-#include "vcf/FoundationKit/OSXFileStream.h"
-#include "vcf/FoundationKit/OSXSemaphorePeer.h"
-#include "vcf/FoundationKit/OSXLibraryPeer.h"
-#include "vcf/FoundationKit/OSXProcessPeer.h"
-#include "vcf/FoundationKit/OSXSystemPeer.h"
-#include "vcf/FoundationKit/OSXThread.h"
-#include "vcf/FoundationKit/OSXRegistry.h"
-#include "vcf/FoundationKit/OSXMutexPeer.h"
-#include "vcf/FoundationKit/OSXConditionPeer.h"
+#   include <Carbon/Carbon.h>
+#   include "vcf/FoundationKit/OSXSystemToolkit.h"
+#   include "vcf/FoundationKit/OSXPeer.h"
+#   include "vcf/FoundationKit/OSXFilePeer.h"
+#   include "vcf/FoundationKit/OSXFileStream.h"
+#   include "vcf/FoundationKit/OSXSemaphorePeer.h"
+#   include "vcf/FoundationKit/OSXLibraryPeer.h"
+#   include "vcf/FoundationKit/OSXProcessPeer.h"
+#   include "vcf/FoundationKit/OSXSystemPeer.h"
+#   include "vcf/FoundationKit/OSXThread.h"
+#   include "vcf/FoundationKit/OSXRegistry.h"
+#   include "vcf/FoundationKit/OSXMutexPeer.h"
+#   include "vcf/FoundationKit/OSXConditionPeer.h"
+#   include "vcf/FoundationKit/OSXRunLoopPeer.h"
+#   include "vcf/FoundationKit/OSXRunLoopTimerPeer.h"
+#   include "vcf/FoundationKit/OSXRunLoopSourcePeer.h"
 #endif
 
 

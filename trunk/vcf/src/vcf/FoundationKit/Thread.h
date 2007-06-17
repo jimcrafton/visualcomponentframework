@@ -13,12 +13,12 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+#include <vcf/FoundationKit/RunLoopFwd.h>
 
 namespace VCF
 {
 
 class ThreadPeer;
-class RunLoop;
 
 
 /**
@@ -228,7 +228,7 @@ public:
 
 	virtual OSHandleID getPeerHandleID();
 
-	RunLoop* getRunLoop();
+	RunLoopPtr::Shared getRunLoop();
 
 	/**
 	Returns whether or not the thread's run() method is wrapped with an 
@@ -259,7 +259,6 @@ public:
 
 	static Thread* getMainThread();
 
-
 	/**
 	for thread peer's usage only -
 	called to see if the thread is
@@ -285,7 +284,7 @@ protected:
 	bool autoDelete_;
 	bool autoDeleteRunnable_;
 	bool stopped_;
-	RunLoop* runLoop_;
+	RunLoopPtr::Shared runLoop_;
 	bool runWithExceptionBlock_;
 
 	static Thread* mainThread;

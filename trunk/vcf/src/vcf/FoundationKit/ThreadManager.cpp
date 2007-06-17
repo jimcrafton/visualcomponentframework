@@ -71,7 +71,7 @@ Thread* ThreadManager::getCurrentThread()
 
 }
 
-RunLoop* ThreadManager::getCurrentRunLoop()
+RunLoopPtr::Shared ThreadManager::getCurrentRunLoop()
 {
 	return ThreadManager::getCurrentThread()->getRunLoop();
 }

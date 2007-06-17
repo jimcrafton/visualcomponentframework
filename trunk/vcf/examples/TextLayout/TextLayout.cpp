@@ -369,7 +369,7 @@ public:
 
 		Window* mainWindow = new TextLayoutWindow();
 		setMainWindow(mainWindow);
-		mainWindow->setBounds( 0.0, 0.0, 925.0, 700.0 );
+		mainWindow->setBounds( 0.0, 10.0, 925.0, 700.0 );
 		mainWindow->show();
 
 		return result;

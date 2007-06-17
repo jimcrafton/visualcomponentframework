@@ -283,7 +283,7 @@ void OSXControl::setParent( Control* parent )
 {
 	Frame* windowParent = NULL;
 	
-	if ( parent->isLightWeight() ) {
+	if ( NULL != parent && parent->isLightWeight() ) {
 		OSXLightweightControl* lwPeer = dynamic_cast<OSXLightweightControl*>(parent->getPeer());
 		if ( NULL != lwPeer ) {
 			Control* lwParent = lwPeer->getHeavyWeightParent();
@@ -305,7 +305,7 @@ void OSXControl::setParent( Control* parent )
 					
 		OSStatus err = HIViewAddSubview( contentView, hiView_ );		
 	}
-	else {
+	else if ( parent != NULL ) {
 		ControlRef parentControlRef = (ControlRef)parent->getPeer()->getHandleID();
 		OSStatus err = HIViewAddSubview( parentControlRef, hiView_ );
 		if ( err != noErr ) {

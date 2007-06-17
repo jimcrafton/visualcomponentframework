@@ -53,7 +53,7 @@ public:
 	@return RunLoop - the run loop instance of the current thread.
 	@see Thread::getRunLoop
 	*/
-	static RunLoop* getCurrentRunLoop();
+	static RunLoopPtr::Shared getCurrentRunLoop();
 
 	/**	
 	Allows you to wait on 1 or more wait objects till one of them

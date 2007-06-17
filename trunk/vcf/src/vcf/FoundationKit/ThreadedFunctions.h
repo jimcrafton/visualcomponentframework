@@ -1183,7 +1183,7 @@ public:
 	}
 
 
-	ThreadedProcedure6( ClassType* src, ParamType1 p1, ParamType2 p2, ParamType3 p3, ParamType4 p4, ParamType5 p5, ClassThreadProcPtr procPtr ): param1_(p1),param2_(p2),param3_(p3),param4_(p4),param5_(p5),param6_(p6),
+	ThreadedProcedure6( ClassType* src, ParamType1 p1, ParamType2 p2, ParamType3 p3, ParamType4 p4, ParamType5 p5, ParamType6 p6, ClassThreadProcPtr procPtr ): param1_(p1),param2_(p2),param3_(p3),param4_(p4),param5_(p5),param6_(p6),
 			internalParams_(NULL),runningThread_(NULL),
 			procPtr_(NULL),
 			procThreadPtr_(NULL),
