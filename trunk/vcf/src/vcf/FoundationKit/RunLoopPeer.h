@@ -3,7 +3,7 @@
 
 
 /*
-Copyright 2000-2004 The VCF Project.
+Copyright 2000-2007 The VCF Project.
 Please see License.txt in the top level directory
 where you installed the VCF.
 */
@@ -23,9 +23,12 @@ namespace VCF {
         
         virtual void run() = 0;
         virtual void stop() = 0;
+
         virtual void addTimer( RunLoopTimerPtr::Shared timer ) = 0;
+        virtual void removeTimer( RunLoopTimerPtr::Shared timer ) = 0;
+
         virtual void addSource( RunLoopSourcePtr::Shared source ) = 0;
-        
+        virtual void removeSource( RunLoopSourcePtr::Shared source ) = 0;
     };
     
     inline RunLoopPeer::~RunLoopPeer()

@@ -10,25 +10,17 @@
 namespace VCF {
     class FOUNDATIONKIT_API RunLoopTimerPeer {
     public:
-        RunLoopTimerPeer( RunLoopTimer *timer );
         virtual ~RunLoopTimerPeer();
         
         virtual void create( const DateTime &fireDate ) = 0;
         virtual void create( const DateTimeSpan &interval ) = 0;
-        virtual void create( const DateTime &fireDate, const DateTimeSpan &interval ) = 0;
-        
-    protected:
-        RunLoopTimer *owner_;
+        virtual void create( const DateTime &fireDate, const DateTimeSpan &interval ) = 0;        
     };
-    
-    inline RunLoopTimerPeer::RunLoopTimerPeer( RunLoopTimer *timer )
-        : owner_( timer )
-    {
-    }
     
     inline RunLoopTimerPeer::~RunLoopTimerPeer()
     {
     }
 }
 
-#endif
+#endif // _VCF_RUNLOOPTIMERPEER_H__
+

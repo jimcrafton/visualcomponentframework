@@ -8,25 +8,23 @@
 #include <vcf/FoundationKit/RunLoopTimerPeer.h>
 #include <vcf/FoundationKit/RunLoopTimer.h>
 
-
 using namespace VCF;
 
-
 RunLoopTimer::RunLoopTimer( const DateTime &fireDate )
-    : peer_( SystemToolkit::createRunLoopTimerPeer( this ) )
 {
+    peer_.reset( SystemToolkit::createRunLoopTimerPeer( this ) );
     peer_->create( fireDate );
 }
 
 RunLoopTimer::RunLoopTimer( const DateTimeSpan &interval )
-    : peer_( SystemToolkit::createRunLoopTimerPeer( this ) )
 {
+    peer_.reset( SystemToolkit::createRunLoopTimerPeer( this ) );
     peer_->create( interval );
 }
 
 RunLoopTimer::RunLoopTimer( const DateTime &fireDate, const DateTimeSpan &interval )
-    : peer_( SystemToolkit::createRunLoopTimerPeer( this ) )
 {
+    peer_.reset( SystemToolkit::createRunLoopTimerPeer( this ) );
     peer_->create( fireDate, interval );
 }
 

@@ -585,6 +585,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32SemaphorePeer.cpp"
 				>
 				<FileConfiguration
@@ -1750,6 +1766,36 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoop.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoop.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopFwd.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopSource.cpp"
 				>
 			</File>
@@ -1759,6 +1805,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopTimer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopTimer.h"
 				>
 			</File>
 			<File
@@ -1924,6 +1974,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopPeer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopSourcePeer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopTimerPeer.h"
 				>
 			</File>
 			<File
@@ -2145,32 +2203,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Mutex.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoop.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoop.h"
 				>
 			</File>
 			<File

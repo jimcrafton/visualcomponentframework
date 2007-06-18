@@ -19,6 +19,8 @@ where you installed the VCF.
 #include "vcf/FoundationKit/Win32ResourceBundle.h"
 #include "vcf/FoundationKit/Win32RunLoopPeer.h"
 #include "vcf/FoundationKit/Win32ThreadManagerPeer.h"
+#include "vcf/FoundationKit/Win32RunLoopSourcePeer.h"
+#include "vcf/FoundationKit/Win32RunLoopTimerPeer.h"
 
 
 using namespace VCF;
@@ -65,12 +67,12 @@ RunLoopPeer* Win32SystemToolkit::internal_createRunLoopPeer( RunLoop* runLoop )
 
 RunLoopTimerPeer* Win32SystemToolkit::internal_createRunLoopTimerPeer( RunLoopTimer* timer )
 {
-    return NULL;
+    return new Win32RunLoopTimerPeer( timer );
 }
 
 RunLoopSourcePeer* Win32SystemToolkit::internal_createRunLoopSourcePeer( RunLoopSource* source )
 {
-    return NULL;
+    return new Win32RunLoopSourcePeer( source );
 }
 
 ThreadManagerPeer* Win32SystemToolkit::internal_createThreadManagerPeer()

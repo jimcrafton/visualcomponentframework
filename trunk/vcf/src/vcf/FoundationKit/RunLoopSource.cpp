@@ -12,8 +12,8 @@
 using namespace VCF;
 
 RunLoopSource::RunLoopSource()
-    : peer_( SystemToolkit::createRunLoopSourcePeer( this ) )
 {
+    peer_.reset( SystemToolkit::createRunLoopSourcePeer( this ) );
 }
 
 RunLoopSource::~RunLoopSource()
@@ -22,20 +22,14 @@ RunLoopSource::~RunLoopSource()
 
 void RunLoopSource::setRunLoop( RunLoop* runLoop )
 {
-    
 }
 
-void RunLoopSource::perform()
+void RunLoopSource::internal_perform()
 {
     performImpl();
 }
 
-void RunLoopSource::cancel()
+void RunLoopSource::internal_cancel()
 {
     cancelImpl();
-}
-
-void RunLoopSource::fire()
-{
-    peer_->fire();
 }

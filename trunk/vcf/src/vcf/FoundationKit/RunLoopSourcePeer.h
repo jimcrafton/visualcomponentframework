@@ -11,27 +11,16 @@
 namespace VCF {
     class FOUNDATIONKIT_API RunLoopSourcePeer {
     public:
-        RunLoopSourcePeer( RunLoopSource* source );
         virtual ~RunLoopSourcePeer();
         
         virtual void fire() = 0;
         
-    protected:
-        void doPerform();
-        void doCancel();
-        
-    protected:
-        RunLoopSource *owner_;
     };
-    
-    inline RunLoopSourcePeer::RunLoopSourcePeer( RunLoopSource* source )
-        : owner_( source )
-    {
-    }
-    
+        
     inline RunLoopSourcePeer::~RunLoopSourcePeer()
     {
     }
 }
 
-#endif
+#endif // _VCF_RUNLOOPSOURCEPEER_H__
+
