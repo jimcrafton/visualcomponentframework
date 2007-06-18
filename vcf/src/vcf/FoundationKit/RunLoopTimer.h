@@ -19,7 +19,7 @@ namespace VCF {
         
         ~RunLoopTimer();
         
-        Delegate1<Event*> TimerFired;
+        Delegate1<RunLoopTimer&> TimerFired;
         
         bool doesRepeat() const;
         DateTimeSpan getInterval() const;

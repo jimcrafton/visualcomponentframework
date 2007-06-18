@@ -12,12 +12,12 @@
 using namespace VCF;
 
 
-void RunLoopSourcePeer::doPerform()
-{
-    owner_->perform();
-}
-
-void RunLoopSourcePeer::doCancel()
-{
-    owner_->cancel();
-}
+// void RunLoopSourcePeer::doPerform()
+// {
+//     owner_->perform();
+// }
+// 
+// void RunLoopSourcePeer::doCancel()
+// {
+//     owner_->cancel();
+// }

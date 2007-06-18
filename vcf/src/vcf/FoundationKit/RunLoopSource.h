@@ -15,6 +15,7 @@ where you installed the VCF.
 #endif
 
 #include <vcf/FoundationKit/RunLoopFwd.h>
+#include <vcf/FoundationKit/RunLoopSourcePeer.h>
 
 namespace VCF {
 
@@ -27,11 +28,10 @@ namespace VCF {
         void fire();
         
         RunLoopSourcePeerPtr::Shared getPeer();
-        
+
+        void internal_perform();
+        void internal_cancel();
     protected:
-        friend class RunLoopSourcePeer;
-        void perform();
-        void cancel();
 
         virtual void performImpl() = 0;
         virtual void cancelImpl() = 0;
@@ -43,6 +43,11 @@ namespace VCF {
     inline RunLoopSourcePeerPtr::Shared RunLoopSource::getPeer()
     {
         return peer_;
+    }
+
+    inline void RunLoopSource::fire()
+    {
+        peer_->fire();
     }
 
 }

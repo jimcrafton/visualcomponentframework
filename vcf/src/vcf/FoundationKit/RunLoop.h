@@ -23,8 +23,12 @@ namespace VCF {
         
         void run();
         void stop();
+        
         void addTimer( RunLoopTimerPtr::Shared timer );
+        void removeTimer( RunLoopTimerPtr::Shared timer );
+
         void addSource( RunLoopSourcePtr::Shared source );
+        void removeSource( RunLoopSourcePtr::Shared source );
         
         class Creator;
     protected:
@@ -32,8 +36,13 @@ namespace VCF {
         
     private:
         RunLoopPeerPtr::Scoped peer_;
-        
+
+        // Keep a copy of the sources/timers so that they don't get delete prematurely.
+        std::vector<RunLoopTimerPtr::Shared>  timers_;
+        std::vector<RunLoopSourcePtr::Shared> sources_;
     };
+
+
 }
 
 #endif //_VCF_RUNLOOP_H__
