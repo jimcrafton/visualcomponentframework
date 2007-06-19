@@ -46,54 +46,6 @@ namespace VCF {
     };
 }
 
-/*
-namespace VCF {
-	class RunLoop;
-	
-	class Win32RunLoopPeer : public RunLoopPeer {
-	public:
-
-		Win32RunLoopPeer( RunLoop* runLoop );
-
-		virtual ~Win32RunLoopPeer();
-		
-		virtual void run( const String& mode, const DateTime* duration );
-		
-		virtual void stop();
-		
-		virtual void postEvent( Event* event, RunLoopCallback* handler, bool deleteHandler );
-		
-		virtual OSHandleID getHandleID() {
-			return NULL;	
-		}
-
-		virtual uint32 addTimer( const String& mode, Object* source, RunLoopCallback* handler, uint32 timeoutInMilliSeconds );
-		
-		virtual void removeTimer( uint32 timerID );
-	protected:
-		RunLoop* runLoop_;
-
-		class TimerInfo {
-		public:
-			HANDLE timer;
-			Object* source;
-			RunLoopCallback* handler;
-			String mode;
-			DateTime startedAt;
-		};
-
-		bool handleMessageAndContinue( MSG& msg );
-
-		void handleTimers( const String& mode );
-
-		std::map<uint32,TimerInfo*> activeTimers_;
-
-		void removeAll();
-	};
-
-};
-
-*/
 #endif //_VCF_WIN32RUNLOOPPEER_H__
 
 /**
