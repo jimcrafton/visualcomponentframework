@@ -15,17 +15,17 @@ using namespace VCF;
 void OSXRunLoopSourcePeer::CancelCallBack( void *info, CFRunLoopRef rl, CFStringRef mode )
 {
     OSXRunLoopSourcePeer *peer = static_cast<OSXRunLoopSourcePeer*>( info );
-    peer->doCancel();    
+    peer->owner_->internal_cancel();    
 }
 
 void OSXRunLoopSourcePeer::PerformCallBack( void *info )
 {
     OSXRunLoopSourcePeer *peer = static_cast<OSXRunLoopSourcePeer*>( info );
-    peer->doPerform();
+    peer->owner_->internal_perform();
 }
 
 OSXRunLoopSourcePeer::OSXRunLoopSourcePeer( RunLoopSource* source )
-    : RunLoopSourcePeer( source )
+    : owner_( source )
 {
     CFRunLoopSourceContext context = {
         0,                          // version

@@ -14,7 +14,7 @@
 using namespace VCF;
 
 OSXRunLoopTimerPeer::OSXRunLoopTimerPeer( RunLoopTimer* timer )
-    : RunLoopTimerPeer( timer )
+    : owner_( timer )
 {
 }
 
@@ -71,8 +71,7 @@ void
 OSXRunLoopTimerPeer::TimerCallback( CFRunLoopTimerRef timer, void *info )
 {
     OSXRunLoopTimerPeer *peer = (OSXRunLoopTimerPeer*)info;
-    Event event( NULL, 0 );
-    peer->owner_->TimerFired( &event );
+    peer->owner_->TimerFired( *peer->owner_ );
 }
 
 OSXRunLoopTimerPeer::~OSXRunLoopTimerPeer()

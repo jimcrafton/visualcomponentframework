@@ -25,6 +25,7 @@ namespace VCF {
         static void PerformCallBack( void *info );
         
     private:
+        RunLoopSource     *owner_;
         CFRunLoopSourceRef sourceRef_;
     };
     
