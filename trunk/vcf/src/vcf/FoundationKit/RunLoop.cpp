@@ -62,7 +62,6 @@ void RunLoop::removeSource( RunLoopSourcePtr::Shared source )
     std::vector<RunLoopSourcePtr::Shared>::iterator it = std::find(sources_.begin(), sources_.end(), source);
     if( it != sources_.end() ) {
         peer_->removeSource( source );
-        source->internal_cancel();
         sources_.erase(it);
     }
 }

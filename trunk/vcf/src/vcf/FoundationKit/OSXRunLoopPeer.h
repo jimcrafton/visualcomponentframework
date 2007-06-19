@@ -20,7 +20,9 @@ namespace VCF {
         virtual void run();
         virtual void stop();
         virtual void addTimer( RunLoopTimerPtr::Shared timer );
+        virtual void removeTimer( RunLoopTimerPtr::Shared timer );
         virtual void addSource( RunLoopSourcePtr::Shared source );
+        virtual void removeSource( RunLoopSourcePtr::Shared source );
         
     private:
         RunLoop*     runLoop_;

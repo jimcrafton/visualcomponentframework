@@ -26,6 +26,7 @@ namespace VCF {
         static void TimerCallback( CFRunLoopTimerRef timer, void *info );
         
     private:
+        RunLoopTimer     *owner_;
         CFRunLoopTimerRef timerRef_;
     };
     
