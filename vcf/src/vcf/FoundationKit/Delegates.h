@@ -32,6 +32,8 @@ namespace VCF {
 class FunctionTypeInfo {
 public:
 	typedef std::vector<const std::type_info*> TypeArray;
+	
+	virtual ~FunctionTypeInfo() {}
 
 	virtual const std::type_info& getReturnType() const {
 		return typeid(void);
@@ -309,9 +311,9 @@ public:
 
 
 	AsyncResult(AsyncCallback* callback, bool runCallbacksAsync): completed_(false), 
+					runCallbacksAsync_(runCallbacksAsync),
 					resultWait_(&resultWaitMtx_), 
-					callback_(callback),
-					runCallbacksAsync_(runCallbacksAsync) {}
+					callback_(callback) {}
 
 
 	virtual ~AsyncResult(){}
@@ -456,7 +458,7 @@ protected:
 			std::vector<CallbackWork>::iterator found = 
 				internalRunnables_.begin();
 			while ( found != internalRunnables_.end() ) {
-				if ( found->second = val ) {
+				if ( found->second == val ) {
 					internalRunnables_.erase( found );
 					break;
 				}
