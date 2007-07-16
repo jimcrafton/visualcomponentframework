@@ -41,17 +41,12 @@ private:
 };
 
 
-template <class SOURCE_TYPE>
-class TimerEventHandler : public EventHandlerInstance<SOURCE_TYPE,TimerEvent> {
-public:
-	TimerEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,TimerEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,TimerEvent>( source, handlerMethod, handlerName ) {
 
-	}
 
-};
+/**
+*/
+typedef Delegate1<TimerEvent*> TimerDelegate; 
+typedef TimerDelegate::ProcedureType TimerHandler;
 
 }; //end of namespace VCF
 

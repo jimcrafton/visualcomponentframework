@@ -53,7 +53,7 @@ public:
 	}
 
 	virtual void removeListModelHandler(EventHandler * handler) {
-		ModelChanged -= handler;
+		ModelChanged.remove(handler);
 	}
 };
 

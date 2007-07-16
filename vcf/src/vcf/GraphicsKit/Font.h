@@ -28,6 +28,12 @@ class FontPeer;
 class Locale;
 class GraphicsContext;
 
+
+
+
+typedef Delegate1<Event*> FontChangedDelegate;
+
+
 #define FONT_CLASSID	"C41B2C4C-C95F-4ba2-B844-185C3AFCEF35"
 /**
 \class Font Font.h "vcf/GraphicsKit/Font.h"
@@ -118,7 +124,7 @@ public:
 	@event	Event
 	@eventtype FontChangeEvent
 	*/
-	DELEGATE(FontChanged);
+	DELEGATE(FontChangedDelegate,FontChanged);
 
 	Font();
 

@@ -163,22 +163,12 @@ private:
 
 
 /**
-*TextModelEventHandler
-*handles the following:
-*onTextChanged
+TextModelEventHandler
+handles the following:
+\li onTextChanged
 */
-template <class SOURCE_TYPE>
-class TextModelEventHandler : public EventHandlerInstance<SOURCE_TYPE,TextEvent> {
-public:
-	TextModelEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,TextEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,TextEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-};
-
+typedef Delegate1<TextEvent*> TextModelDelegate; 
+typedef TextModelDelegate::ProcedureType TextModelHandler;
 
 };
 

@@ -51,7 +51,7 @@ void Action::update()
 	ActionEvent event( this, Action::UpdateEvent );
 
 	// let the application to set the desired state for the ActionEvent.
-	Update.fireEvent( &event );
+	Update( &event );
 
 
 	std::vector<UIComponent*>::iterator it = targets_.begin();
@@ -69,11 +69,11 @@ void Action::update()
 void Action::perform( Event* event )
 {
 	if ( NULL != event ) {
-		Performed.fireEvent( event );
+		Performed( (ActionEvent*)event );
 	}
 	else {
 		ActionEvent e( this, Action::ActionPerformedEvent );
-		Performed.fireEvent( &e );
+		Performed( &e );
 	}
 }
 
@@ -108,10 +108,10 @@ uint32 Action::getTargetCount()
 
 EventHandler* Action::getAcceleratorEventHandler()
 {
-	EventHandler* result = getEventHandler( "Action::onAccelerator" );
+	EventHandler* result = (EventHandler*)getEventHandler( "Action::onAccelerator" );
 	if ( NULL == result ) {
 		result = 
-			new GenericEventHandler<Action>( this, &Action::onAccelerator, "Action::onAccelerator" );
+			new ClassProcedure1<Event*,Action>( this, &Action::onAccelerator, "Action::onAccelerator" );
 	}
 
 	return result;

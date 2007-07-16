@@ -194,7 +194,7 @@ PrintContext* PrintSession::beginPrintingDocument()
 	result->setViewableBounds( getPageDrawingRect() );
 
 	PrintEvent event( this, result, PrintSession::UnknownPage, PrintingBegunEvent );
-	PrintingBegun.fireEvent( &event );
+	PrintingBegun( &event );
 
 	return result;
 }
@@ -205,7 +205,7 @@ void PrintSession::endPrintingDocument()
 		peer_->endPrintingDocument();
 
 		PrintEvent event( this, NULL, PrintSession::UnknownPage, PrintingFinishedEvent );
-		PrintingFinished.fireEvent( &event );
+		PrintingFinished( &event );
 	}
 	catch ( BasicException& ) {
 		errorDuringPrinting_ = true;
@@ -217,7 +217,7 @@ void PrintSession::beginPage( PrintContext* context )
 	try {
 		peer_->beginPage( context );
 		PrintEvent event( this, context, currentPage_, PageBegunEvent );
-		PageBegun.fireEvent( &event );
+		PageBegun( &event );
 	}
 	catch ( BasicException& ) {
 		errorDuringPrinting_ = true;
@@ -229,7 +229,7 @@ void PrintSession::endPage( PrintContext* context )
 	try {
 		peer_->endPage( context );
 		PrintEvent event( this, context, currentPage_, PageDoneEvent );
-		PageDone.fireEvent( &event );
+		PageDone( &event );
 	}
 	catch ( BasicException& ) {
 		errorDuringPrinting_ = true;

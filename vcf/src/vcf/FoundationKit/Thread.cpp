@@ -265,7 +265,7 @@ public:
 
 RunLoopPtr::Shared Thread::getRunLoop()
 {
-	if ( NULL == runLoop_ ) {
+	if ( NULL == runLoop_.get() ) {
         if ( ThreadManager::getCurrentThread() == this ) {
             runLoop_ = RunLoop::Creator::Create( this );            
         }

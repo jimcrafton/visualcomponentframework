@@ -40,23 +40,9 @@ public:
 
 
 /**
-\class HelpEventHandler HelpEvent.h "vcf/ApplicationKit/HelpEvent.h"
-*class HelpEventHandler documentation
 */
-template <class SOURCE_TYPE> class HelpEventHandler : public EventHandlerInstance<SOURCE_TYPE,HelpEvent> {
-public:
-
-
-	HelpEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,HelpEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,HelpEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-	virtual ~HelpEventHandler(){};
-};
-
+typedef Delegate1<HelpEvent*> HelpDelegate; 
+typedef HelpDelegate::ProcedureType HelpHandler;
 
 
 }; //end of namespace VCF

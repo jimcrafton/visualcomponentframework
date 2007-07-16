@@ -67,6 +67,10 @@ protected:
 	UIToolkit::ModalReturnType returnValue_;
 };
 
+
+typedef Delegate1<DialogEvent*> DialogDelegate;
+
+
 /**
 \class Dialog Dialog.h "vcf/ApplicationKit/Dialog.h"
 A Dialog is a popup frame that is generally used for user input. 
@@ -140,7 +144,7 @@ public:
 	@event DialogEvent
 	@eventtype Dialog::deSheetModalFinished
 	*/	
-	DELEGATE( SheetModalFinished );
+	DELEGATE( DialogDelegate, SheetModalFinished );
 	
 	/**
 	@delegate ModalFinished This delegate is called to fire an event when the dialog 
@@ -149,7 +153,7 @@ public:
 	@event DialogEvent
 	@eventtype Dialog::deModalFinished
 	*/	
-	DELEGATE( ModalFinished );
+	DELEGATE( DialogDelegate, ModalFinished );
 	
 
 	Dialog( Control* owner=NULL );

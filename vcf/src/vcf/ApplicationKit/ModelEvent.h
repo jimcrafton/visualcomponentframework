@@ -34,24 +34,8 @@ public:
 };
 
 
-
-/**
-*ModelEventHandler
-*handles the following:
-*onModelEmptied
-*/
-template <class SOURCE_TYPE>
-class ModelEventHandler : public EventHandlerInstance<SOURCE_TYPE,ModelEvent> {
-public:
-	ModelEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,ModelEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,ModelEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-};
-
+typedef Delegate1<ModelEvent*> ModelDelegate; 
+typedef ModelDelegate::ProcedureType ModelHandler;
 };
 
 

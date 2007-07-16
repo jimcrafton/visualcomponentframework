@@ -194,26 +194,16 @@ private:
 
 
 /**
-\class MouseEventHandler MouseEvent.h "vcf/ApplicationKit/MouseEvent.h"
-*MouseEventHandler
-*handles the following
-*onMouseDoubleClicked
-*onMouseClicked
-*onMouseMove
-*onMouseUp
-*onMouseDown
+MouseDelegate
+handles the following
+\li onMouseDoubleClicked
+\li onMouseClicked
+\li onMouseMove
+\li onMouseUp
+\li onMouseDown
 */
-template <class SOURCE_TYPE>
-class MouseEventHandler : public EventHandlerInstance<SOURCE_TYPE,MouseEvent> {
-public:
-	MouseEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,MouseEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,MouseEvent>( source, handlerMethod, handlerName ) {
-
-	}
-};
-
+typedef Delegate1<MouseEvent*> MouseDelegate; 
+typedef MouseDelegate::ProcedureType MouseHandler;
 
 
 };

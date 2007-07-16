@@ -231,6 +231,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "JavaScriptKit"=".\JavaScriptKit\JavaScriptKit_vc71.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "JavaScriptKitDLL"=".\JavaScriptKit\JavaScriptKitDLL_vc71.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "LibJPEG"="..\..\src\thirdparty\common\LibJPEG\LibJPEG_vc71.dsp" - Package Owner=<4>
 
 Package=<5>

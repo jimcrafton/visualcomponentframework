@@ -37,7 +37,7 @@ public:
 	* to add an event handler to this delegate, and setAllowsUndo(false)
 	* inside this handler.
 	*/
-	DELEGATE(UndoCommand);
+	DELEGATE(UndoRedoDelegate,UndoCommand);
 
 	/**
 	* Used if the user desires to bypass the default action of 
@@ -45,26 +45,26 @@ public:
 	* to add an event handler to this delegate, and setAllowsRedo(false)
 	* inside this handler.
 	*/
-	DELEGATE(RedoCommand);
+	DELEGATE(UndoRedoDelegate,RedoCommand);
 
 	/**
 	* to be notified that the stack is going to be be cleared.
 	* This is called foreward.
 	*/
-	DELEGATE(StackCleared);
+	DELEGATE(UndoRedoDelegate,StackCleared);
 
 	/**
 	* to be notified that the stack has been changed.
 	* This is called afterward.
 	*/
-	DELEGATE(StackChanged);
+	DELEGATE(UndoRedoDelegate,StackChanged);
 
 	/**
 	* to be notified that a command has been executed.
 	* This is called after the command has been added to the undo stack,
 	* and after the command has been executed
 	*/
-	DELEGATE(ExecuteCommand);
+	DELEGATE(UndoRedoDelegate,ExecuteCommand);
 
 public:
 	UndoRedoStack();

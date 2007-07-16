@@ -102,20 +102,10 @@ private:
 /**
 *TableModelEventHandler
 *handles the following:
-*onChange
+\li onChange
 */
-template <class SOURCE_TYPE>
-class TableModelEventHandler : public EventHandlerInstance<SOURCE_TYPE,TableModelEvent> {
-public:
-	TableModelEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,TableModelEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,TableModelEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-	virtual ~TableModelEventHandler(){};
-};
+typedef Delegate1<TableModelEvent*> TableModelDelegate; 
+typedef TableModelDelegate::ProcedureType TableModelHandler;
 
 }; //end of namespace VCF
 

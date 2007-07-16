@@ -80,29 +80,17 @@ protected:
 
 
 /**
-\class ImageListEventHandler ImageListEvent.h "vcf/ApplicationKit/ImageListEvent.h"
-*ImageListEventHandler
-*This handles the following Image List events:
-*ImageListSizeChanged
-*ImageAdded
-*ImageDeleted
-*ImageListCreated
-*ImageListDestroyed
-*ImageListSizeChanged
+*ImageListDelegate
+This handles the following Image List events:
+\li ImageListSizeChanged
+\li ImageAdded
+\li ImageDeleted
+\li ImageListCreated
+\li ImageListDestroyed
+\li ImageListSizeChanged
 */
-template <class SOURCE_TYPE> class ImageListEventHandler : public EventHandlerInstance<SOURCE_TYPE,ImageListEvent> {
-public:
-	ImageListEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,ImageListEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,ImageListEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-	virtual ~ImageListEventHandler(){};
-};
-
-
+typedef Delegate1<ImageListEvent*> ImageListDelegate; 
+typedef ImageListDelegate::ProcedureType ImageListHandler;
 
 };
 

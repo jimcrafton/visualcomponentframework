@@ -32,6 +32,92 @@ enum DragActionType {
 	daLink
 };
 
+
+class APPLICATIONKIT_API DragSourceEvent : public Event {
+public:
+	DragSourceEvent( Object* source, VCF::DataObject* data ):
+		Event( source ){
+		data_ = data;
+	}
+
+	DragSourceEvent( Object* source, VCF::DataObject* data,
+		       const uint32& keyMask, const uint32& buttonMask,
+			   const DragActionType& action ):
+		Event( source ){
+		data_ = data;
+		keyMask_ = keyMask;
+		buttonMask_ = buttonMask;
+		action_ = action;
+	}
+
+
+	DragSourceEvent( const DragSourceEvent& rhs ):Event(rhs) {
+		*this = rhs;
+	}
+
+	virtual ~DragSourceEvent(){};
+
+	DragSourceEvent& operator=( const DragSourceEvent& rhs ) {
+		Event::operator =( rhs );
+
+		data_ = rhs.data_;
+		keyMask_ = rhs.keyMask_;
+		buttonMask_ = rhs.buttonMask_;
+		action_ = rhs.action_;
+
+
+		return *this;
+	}
+
+	virtual Object* clone( bool deep=false ) {
+		return new DragSourceEvent(*this);
+	}
+
+
+	VCF::DataObject* getDataObject() {
+		return data_;
+	}
+
+	uint32 getButtonMask() {
+		return buttonMask_;
+	}
+
+	void setButtonMask( const uint32& buttonMask ) {
+		buttonMask_ = buttonMask;
+	}
+
+    uint32 getKeyMask() {
+		return keyMask_;
+	}
+
+	void setKeyMask( const uint32& keyMask ) {
+		keyMask_ = keyMask;
+	}
+
+	/**
+	*
+	*/
+	void setActionType( const DragActionType& action ) {
+		action_ = action;
+	}
+	/**
+	*get the type of action the event represents
+	*/
+	DragActionType getAction() {
+		return action_;
+	}
+
+private:
+    VCF::DataObject* data_;
+	uint32 keyMask_;
+    uint32 buttonMask_;
+	DragActionType action_;
+};
+
+typedef Delegate1<DragSourceEvent*> DragSourceDelegate; 
+
+
+
 /**
 \class DragSource DragSource.h "vcf/ApplicationKit/DragSource.h"
 The drag source represents the source, or beginning
@@ -71,14 +157,14 @@ public:
 	@event DragSourceEvent
 	@see startDragDrop()
 	*/
-	DELEGATE(SourceBegin)
+	DELEGATE(DragSourceDelegate,SourceBegin)
 
 	/**
 	@delegate SourceDropped this is fired if the drag-drop operation was successfully completed.
 	@event DragSourceEvent
 	@eventtype DragSource::DRAG_DROPPED
 	*/
-	DELEGATE(SourceDropped)
+	DELEGATE(DragSourceDelegate,SourceDropped)
 
 	/**
 	@delegate SourceEnd this is called when the drag-drop operation is completed.
@@ -86,7 +172,7 @@ public:
 	@event DragSourceEvent
 	@eventtype DragSource::DRAG_END
 	*/
-	DELEGATE(SourceEnd)
+	DELEGATE(DragSourceDelegate,SourceEnd)
 
 	/**
 	@delegate SourceGiveFeedback this is fired when the underlying windowing system
@@ -95,7 +181,7 @@ public:
 	@event DragSourceEvent
 	@eventtype DragSource::DRAG_GIVEFEEDBACK
 	*/
-	DELEGATE(SourceGiveFeedback)
+	DELEGATE(DragSourceDelegate,SourceGiveFeedback)
 
 	/**
 	@delegate SourceCanContinueDragOp this is fired whenever the underlying
@@ -104,7 +190,7 @@ public:
 	@event DragSourceEvent
 	@eventtype DragSource::DRAG_CANCONTINUE
 	*/
-	DELEGATE(SourceCanContinueDragOp)
+	DELEGATE(DragSourceDelegate,SourceCanContinueDragOp)
 
 
 protected:

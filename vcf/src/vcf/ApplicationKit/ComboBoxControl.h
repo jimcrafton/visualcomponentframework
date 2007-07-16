@@ -80,7 +80,7 @@ public:
 	@event ItemEvent
 	@eventtype ITEM_EVENT_SELECTED
 	*/
-	DELEGATE(SelectionChanged)
+	DELEGATE(ItemDelegate,SelectionChanged)
 
 	/**
 	*returns the ListModel currently associated with it.

@@ -58,7 +58,7 @@ public:
 	@event WindowEvent
 	@eventtype WINDOW_EVENT_RESTORE
 	*/
-	DELEGATE(WindowRestore)
+	DELEGATE(WindowDelegate,WindowRestore)
 
 	/**
 	@delegate WindowMaximize this is fired when the window is maximized.
@@ -66,7 +66,7 @@ public:
 	@event WindowEvent
 	@eventtype WINDOW_EVENT_MAXIMIZE
 	*/
-	DELEGATE(WindowMaximize)
+	DELEGATE(WindowDelegate,WindowMaximize)
 
 	/**
 	@delegate WindowMinimize this is fired when the window is minimized.
@@ -74,7 +74,7 @@ public:
 	@event WindowEvent
 	@eventtype WINDOW_EVENT_MINIMIZE
 	*/
-	DELEGATE(WindowMinimize)
+	DELEGATE(WindowDelegate,WindowMinimize)
 
 
 	virtual void setCaption( const String& caption );

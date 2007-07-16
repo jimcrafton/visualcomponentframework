@@ -65,7 +65,7 @@ public:
 	@see setImageWidth
 	@see setImageHeight
 	*/
-	DELEGATE(SizeChanged)
+	DELEGATE(ImageListDelegate,SizeChanged)
 
 	/**
 	@delegate ImageAdded this is fired when a new image is added.
@@ -74,7 +74,7 @@ public:
 	@see addImage
 	@see insertImage
 	*/
-	DELEGATE(ImageAdded)
+	DELEGATE(ImageListDelegate,ImageAdded)
 
 	/**
 	@delegate ImageDeleted this is fired after an image has been removed from the image list.
@@ -82,7 +82,7 @@ public:
 	@eventtype IMAGELIST_EVENT_ITEM_DELETED
 	@see deleteImage
 	*/
-	DELEGATE(ImageDeleted)
+	DELEGATE(ImageListDelegate,ImageDeleted)
 
 	/**
 	*returns the width of each image in the list, <b><i>NOT</i></b>

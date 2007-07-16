@@ -40,26 +40,26 @@ public:
 	@delegate RootNodeChanged
 	@event
 	*/
-	DELEGATE(RootNodeChanged)
+	DELEGATE(TreeModelDelegate,RootNodeChanged)
 
 	/**
 	@delegate NodeAdded
 	@event
 	*/
-	DELEGATE(NodeAdded)
+	DELEGATE(TreeModelDelegate,NodeAdded)
 
 	/**
 	@delegate NodeDeleted
 	@event
 	*/
-	DELEGATE(NodeDeleted)
+	DELEGATE(TreeModelDelegate,NodeDeleted)
 
 	virtual void addTreeRootNodeChangedHandler( EventHandler* handler ) {
 		RootNodeChanged += handler;
 	}
 
 	virtual void removeTreeRootNodeChangedHandler( EventHandler* handler ) {
-		RootNodeChanged -= handler;
+		RootNodeChanged.remove(handler);
 	}
 
 	virtual void addTreeNodeAddedHandler( EventHandler* handler ) {
@@ -67,7 +67,7 @@ public:
 	}
 
 	virtual void removeTreeNodeAddedHandler( EventHandler* handler ) {
-		NodeAdded -= handler;
+		NodeAdded.remove(handler);
 	}
 
 	virtual void addTreeNodeDeletedHandler( EventHandler* handler ) {
@@ -75,7 +75,7 @@ public:
 	}
 
 	virtual void removeTreeNodeDeletedHandler( EventHandler* handler ) {
-		NodeDeleted -= handler;
+		NodeDeleted.remove(handler);
 	}
 
 	DefaultTreeModel();

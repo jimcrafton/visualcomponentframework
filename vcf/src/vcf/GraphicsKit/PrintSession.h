@@ -29,28 +29,28 @@ namespace VCF {
 		@event PrintEvent
 		@eventtype PrintSession::PageBegunEvent
 		*/
-		DELEGATE(PageBegun);
+		DELEGATE(PrintDelegate,PageBegun);
 
 		/**
 		@delegate PageDone	fired when the endPage() method is called.
 		@event PrintEvent
 		@eventtype PrintSession::PageDoneEvent
 		*/
-		DELEGATE(PageDone);
+		DELEGATE(PrintDelegate,PageDone);
 
 		/**
 		@delegate PrintingBegun	fired when the beginPrintingDocument() method is called.
 		@event PrintEvent
 		@eventtype PrintSession::PrintingBegunEvent
 		*/
-		DELEGATE(PrintingBegun);
+		DELEGATE(PrintDelegate,PrintingBegun);
 
 		/**
 		@delegate PrintingFinished	fired when the endPrintingDocument() method is called.
 		@event PrintEvent
 		@eventtype PrintSession::PrintingFinishedEvent
 		*/
-		DELEGATE(PrintingFinished);
+		DELEGATE(PrintDelegate,PrintingFinished);
 
 		enum {
 			PageBegunEvent = 102231,

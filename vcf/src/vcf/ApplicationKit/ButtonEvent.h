@@ -57,22 +57,9 @@ private:
     uint32 stateMask_;
 };
 
-/**
-*ButtonEventHandler
-*handles the following:
-*onButtonClicked
-*/
-template <class SOURCE_TYPE> class ButtonEventHandler : public EventHandlerInstance<SOURCE_TYPE,ButtonEvent> {
-public:
-	ButtonEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,ButtonEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,ButtonEvent>( source, handlerMethod, handlerName ) {
 
-	}
-
-	virtual ~ButtonEventHandler(){};
-};
+typedef Delegate1<ButtonEvent*> ButtonDelegate; 
+typedef ButtonDelegate::ProcedureType ButtonHandler;
 
 }
 

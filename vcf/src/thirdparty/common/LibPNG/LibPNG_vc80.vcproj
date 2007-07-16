@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="LibPNG"
-	ProjectGUID="{B9237E8C-4A91-4C0E-A2E3-902A07B6EC54}"
+	ProjectGUID="{772555B9-BB1B-4D8F-8F95-E4ABE93F8300}"
 	RootNamespace="LibPNG"
 	>
 	<Platforms>

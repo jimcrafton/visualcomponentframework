@@ -73,9 +73,9 @@ public:
 		tdoShowColumnHeader = 16
 	};
 
-	DELEGATE(ItemSelected);
-	DELEGATE(ItemStateChangeRequested);
-	DELEGATE(ItemExpanded);
+	DELEGATE(ItemDelegate,ItemSelected);
+	DELEGATE(ItemDelegate,ItemStateChangeRequested);
+	DELEGATE(ItemDelegate,ItemExpanded);
 
 	void setTreeModel(TreeModel * model);
 

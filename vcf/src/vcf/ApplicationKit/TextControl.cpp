@@ -108,38 +108,38 @@ void TextControl::enableStandardAccelerators()
 
 	AcceleratorKey::Value val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditUndo);
 	if ( !val.isEmpty() ) {
-		ev = new GenericEventHandler<TextControl>(this, &TextControl::undoAccelerator, "TextControl::undoAccelerator" );
+		ev = new ClassProcedure1<Event*,TextControl>(this, &TextControl::undoAccelerator, "TextControl::undoAccelerator" );
 		addAcceleratorKey( val.getKeyCode(), val.getModifierMask(), ev );
 	}
 
 	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditRedo);
 	if ( !val.isEmpty() ) {
-		ev = new GenericEventHandler<TextControl>(this, &TextControl::redoAccelerator, "TextControl::redoAccelerator" );
+		ev = new ClassProcedure1<Event*,TextControl>(this, &TextControl::redoAccelerator, "TextControl::redoAccelerator" );
 		addAcceleratorKey( val.getKeyCode(), val.getModifierMask(), ev );
 	}
 
 
 	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditCut);
 	if ( !val.isEmpty() ) {
-		ev = new GenericEventHandler<TextControl>(this, &TextControl::cutAccelerator, "TextControl::cutAccelerator" );
+		ev = new ClassProcedure1<Event*,TextControl>(this, &TextControl::cutAccelerator, "TextControl::cutAccelerator" );
 		addAcceleratorKey( val.getKeyCode(), val.getModifierMask(), ev );
 	}
 
 	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditCopy);
 	if ( !val.isEmpty() ) {
-		ev = new GenericEventHandler<TextControl>(this, &TextControl::copyAccelerator, "TextControl::copyAccelerator" );
+		ev = new ClassProcedure1<Event*,TextControl>(this, &TextControl::copyAccelerator, "TextControl::copyAccelerator" );
 		addAcceleratorKey( val.getKeyCode(), val.getModifierMask(), ev );
 	}
 
 	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditPaste);
 	if ( !val.isEmpty() ) {
-		ev = new GenericEventHandler<TextControl>(this, &TextControl::pasteAccelerator, "TextControl::pasteAccelerator" );
+		ev = new ClassProcedure1<Event*,TextControl>(this, &TextControl::pasteAccelerator, "TextControl::pasteAccelerator" );
 		addAcceleratorKey( val.getKeyCode(), val.getModifierMask(), ev );
 	}
 
 	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditSelectAll);
 	if ( !val.isEmpty() ) {
-		ev = new GenericEventHandler<TextControl>(this, &TextControl::selectAllAccelerator, "TextControl::selectAllAccelerator" );
+		ev = new ClassProcedure1<Event*,TextControl>(this, &TextControl::selectAllAccelerator, "TextControl::selectAllAccelerator" );
 		addAcceleratorKey( val.getKeyCode(), val.getModifierMask(), ev );
 	}
 }

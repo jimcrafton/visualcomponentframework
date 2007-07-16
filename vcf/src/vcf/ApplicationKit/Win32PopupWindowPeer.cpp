@@ -47,17 +47,24 @@ protected:
 	static Win32PopupHook* hookInstance;
 	static LRESULT CALLBACK MouseProc( int nCode, WPARAM wParam, LPARAM lParam );
 	static LRESULT CALLBACK ActivateAndKBProc( int nCode, WPARAM wParam, LPARAM lParam );
+	static LRESULT CALLBACK KBProc( int nCode, WPARAM wParam, LPARAM lParam );
 
 	HHOOK mouseHook_;
 	HHOOK keyboardHook_;
 	HHOOK activateAndKBHook_;
 	int refs_;
 	HWND currentPopupHwnd_;
+	bool ignoreRemainingMessages_;
 private:
 
-	Win32PopupHook():refs_(0),mouseHook_(NULL),activateAndKBHook_(NULL),currentPopupHwnd_(NULL){
+	Win32PopupHook():refs_(0),
+			mouseHook_(NULL),
+			activateAndKBHook_(NULL),
+			currentPopupHwnd_(NULL),
+			ignoreRemainingMessages_(false){
 		mouseHook_ = SetWindowsHookEx( WH_MOUSE, Win32PopupHook::MouseProc, NULL, GetCurrentThreadId() );
 		activateAndKBHook_ = SetWindowsHookEx( WH_CALLWNDPROC, Win32PopupHook::ActivateAndKBProc, NULL, GetCurrentThreadId() );
+		keyboardHook_ = SetWindowsHookEx( WH_KEYBOARD, Win32PopupHook::KBProc, NULL, GetCurrentThreadId() );
 	}
 
 	~Win32PopupHook(){
@@ -65,35 +72,67 @@ private:
 			int err = GetLastError();
 		}
 		UnhookWindowsHookEx( activateAndKBHook_ );
+		UnhookWindowsHookEx( keyboardHook_ );
+		
 		mouseHook_ = NULL;
 		activateAndKBHook_ = NULL;
+		keyboardHook_ = NULL;
 	}	
 };
 
 Win32PopupHook* Win32PopupHook::hookInstance = NULL;
 
 
+LRESULT CALLBACK Win32PopupHook::KBProc( int nCode, WPARAM wParam, LPARAM lParam )
+{
+	if ( NULL != Win32PopupHook::hookInstance ) {
+
+		if ( !Win32PopupHook::hookInstance->ignoreRemainingMessages_ ) {
+			switch ( wParam ) {
+				case VK_ESCAPE : {
+					StringUtils::trace( "Win32PopupHook::KBProc/VK_ESCAPE posting WM_CLOSE\n" );
+					Win32PopupHook::hookInstance->ignoreRemainingMessages_ = true;
+					PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+				}
+				break;
+
+				case VK_RETURN : {
+					StringUtils::trace( "Win32PopupHook::KBProc/VK_ESCAPE posting VK_RETURN\n" );
+					Win32PopupHook::hookInstance->ignoreRemainingMessages_ = true;
+					PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+				}
+				break;
+			}
+		}
+		return CallNextHookEx( Win32PopupHook::hookInstance->keyboardHook_, nCode, wParam, lParam );
+	}
+	return 1;
+}
 
 LRESULT CALLBACK Win32PopupHook::MouseProc( int nCode, WPARAM wParam, LPARAM lParam )
 {
 	if ( NULL != Win32PopupHook::hookInstance ) {
-		if ( (WM_LBUTTONDOWN == wParam) || (WM_MBUTTONDOWN == wParam) || (WM_RBUTTONDOWN == wParam) ) {
-			//close the popup!!!
-			MOUSEHOOKSTRUCT* mh = (MOUSEHOOKSTRUCT*)lParam;
-			BOOL isChild = IsChild( Win32PopupHook::hookInstance->currentPopupHwnd_, mh->hwnd );
-			StringUtils::trace( Format("IsChild %d hwnd %p, popup hwnd %p\n") % isChild % 
-									mh->hwnd % Win32PopupHook::hookInstance->currentPopupHwnd_ );
-			if ( !isChild ) {
-				StringUtils::trace( "Win32PopupHook::MouseProc posting WM_CLOSE\n" );
-				PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+		if ( !Win32PopupHook::hookInstance->ignoreRemainingMessages_ ) {
+			if ( (WM_LBUTTONDOWN == wParam) || (WM_MBUTTONDOWN == wParam) || (WM_RBUTTONDOWN == wParam) ) {
+				//close the popup!!!
+				MOUSEHOOKSTRUCT* mh = (MOUSEHOOKSTRUCT*)lParam;
+				BOOL isChild = IsChild( Win32PopupHook::hookInstance->currentPopupHwnd_, mh->hwnd );
+				StringUtils::trace( Format("IsChild %d hwnd %p, popup hwnd %p\n") % isChild % 
+										mh->hwnd % Win32PopupHook::hookInstance->currentPopupHwnd_ );
+				if ( !isChild ) {
+					StringUtils::trace( "Win32PopupHook::MouseProc posting WM_CLOSE\n" );
+					Win32PopupHook::hookInstance->ignoreRemainingMessages_ = true;
+					SendMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+				}
 			}
-		}
-		else if ( (wParam == WM_NCLBUTTONDOWN) ||
-					(wParam == WM_NCMBUTTONDOWN) ||
-					(wParam == WM_NCRBUTTONDOWN) ) {
+			else if ( (wParam == WM_NCLBUTTONDOWN) ||
+						(wParam == WM_NCMBUTTONDOWN) ||
+						(wParam == WM_NCRBUTTONDOWN) ) {
 
-			StringUtils::trace( "Win32PopupHook::MouseProc/WM_NCXBUTTONDOWN posting WM_CLOSE\n" );
-			PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+				StringUtils::trace( "Win32PopupHook::MouseProc/WM_NCXBUTTONDOWN posting WM_CLOSE\n" );
+				Win32PopupHook::hookInstance->ignoreRemainingMessages_ = true;
+				SendMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+			}
 		}
 		return CallNextHookEx( Win32PopupHook::hookInstance->mouseHook_, nCode, wParam, lParam );
 	}
@@ -103,31 +142,36 @@ LRESULT CALLBACK Win32PopupHook::MouseProc( int nCode, WPARAM wParam, LPARAM lPa
 LRESULT CALLBACK Win32PopupHook::ActivateAndKBProc( int nCode, WPARAM wParam, LPARAM lParam )
 {
 	if ( NULL != Win32PopupHook::hookInstance ) {
-		CWPSTRUCT* cwp = (CWPSTRUCT*)lParam;
-		if ( cwp->message == WM_ACTIVATE ) {
-			if ( WA_INACTIVE == LOWORD(cwp->wParam) ) {
-				//close the popup!!!
-				StringUtils::trace( "Win32PopupHook::ActivateAndKBProc/WM_ACTIVATE posting WM_CLOSE\n" );
+		if ( !Win32PopupHook::hookInstance->ignoreRemainingMessages_ ) {
+			CWPSTRUCT* cwp = (CWPSTRUCT*)lParam;
+			if ( cwp->message == WM_ACTIVATE && cwp->hwnd == Win32PopupHook::hookInstance->currentPopupHwnd_ ) {
+				if ( WA_INACTIVE == LOWORD(cwp->wParam) ) {
+					//close the popup!!!
+					StringUtils::trace( Format("Win32PopupHook::ActivateAndKBProc/WM_ACTIVATE hwnd %p posting WM_CLOSE to %p\n") % 
+										cwp->hwnd % Win32PopupHook::hookInstance->currentPopupHwnd_ );
+					Win32PopupHook::hookInstance->ignoreRemainingMessages_ = true;
+					PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+				}
+			}
+			else if ( cwp->message == WM_KEYUP ) {
+				switch ( wParam ) {
+					case VK_ESCAPE : {
+						StringUtils::trace( "Win32PopupHook::ActivateAndKBProc/VK_ESCAPE posting WM_CLOSE\n" );
+						Win32PopupHook::hookInstance->ignoreRemainingMessages_ = true;
+						PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+					}
+					break;
+				}
+			}
+			else if ( (cwp->message == WM_NCLBUTTONDOWN) ||
+						(cwp->message == WM_NCMBUTTONDOWN) ||
+						(cwp->message == WM_NCRBUTTONDOWN) ) {
+
+				StringUtils::trace( "Win32PopupHook::ActivateAndKBProc/WM_NCXBUTTONDOWN posting WM_CLOSE\n" );
+				Win32PopupHook::hookInstance->ignoreRemainingMessages_ = true;
 				PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
 			}
 		}
-		else if ( cwp->message == WM_KEYUP ) {
-			switch ( wParam ) {
-				case VK_ESCAPE : {
-					StringUtils::trace( "Win32PopupHook::ActivateAndKBProc/VK_ESCAPE posting WM_CLOSE\n" );
-					PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
-				}
-				break;
-			}
-		}
-		else if ( (cwp->message == WM_NCLBUTTONDOWN) ||
-					(cwp->message == WM_NCMBUTTONDOWN) ||
-					(cwp->message == WM_NCRBUTTONDOWN) ) {
-
-			StringUtils::trace( "Win32PopupHook::ActivateAndKBProc/WM_NCXBUTTONDOWN posting WM_CLOSE\n" );
-			PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
-		}
-
 		return CallNextHookEx( Win32PopupHook::hookInstance->activateAndKBHook_, nCode, wParam, lParam );
 	}
 
@@ -409,11 +453,17 @@ void Win32PopupWindowPeer::showModal()
 {
 	VCF_ASSERT( NULL != hwnd_ );
 	
+	//(HWND)owner_->getPeer()->getHandleID()
+
 	::ShowWindow( hwnd_, SW_SHOWNOACTIVATE );
 
 	Win32PopupHook::instance()->setCurrentPopupHwnd( hwnd_ );
 
 	UIToolkit::runModalEventLoopFor( peerControl_ );
+
+	SendMessage( hwnd_, WM_CLOSE, 0, 0 );
+
+//	SetActiveWindow(  );
 
 	StringUtils::trace( "Win32PopupWindowPeer::showModal() done\n" );
 }

@@ -91,7 +91,7 @@ public:
 
 	virtual ~PushButton();
 
-	DELEGATE(ButtonClicked);
+	DELEGATE(ButtonDelegate,ButtonClicked);
 
 	virtual void setName( const String& name );
 	/**
@@ -105,7 +105,7 @@ public:
 	*This macro creates a method for removing a listener to the CommandButton's events
 	*/
 	virtual void removeButtonClickHandler( EventHandler* handler ) {
-		ButtonClicked -= handler;
+		ButtonClicked.remove(handler);
 	}
 
 	virtual void paint(GraphicsContext * context);

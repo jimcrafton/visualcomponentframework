@@ -83,19 +83,8 @@ handles the following:
 	\li onTabPageRemoved
 	\li onTabPageSelected
 */
-template <class SOURCE_TYPE>
-class TabModelEventHandler : public EventHandlerInstance<SOURCE_TYPE,TabModelEvent> {
-public:
-	TabModelEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,TabModelEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,TabModelEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-
-};
-
+typedef Delegate1<TabModelEvent*> TabModelDelegate; 
+typedef TabModelDelegate::ProcedureType TabModelHandler;
 
 }; // namespace VCF
 

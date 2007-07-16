@@ -42,13 +42,13 @@ void BasicTableItemEditor::updateItem()
 		event.setItemBeingEdited( editingItem_ );
 
 		try {
-			CellItemValidateChange.fireEvent( &event );
+			CellItemValidateChange( &event );
 
 			event.setType( ITEMEDITOR_CHANGED );
 			//if we got this far we are OK to send off a change notification !
 
 			editingItem_->setCaption( captionOfItem );
-			CellItemChanged.fireEvent( &event );
+			CellItemChanged( &event );
 		}
 		catch ( InvalidStateException& ){
 
@@ -66,14 +66,14 @@ Control* BasicTableItemEditor::getEditingControl()
 		tc->setBorder( NULL );
 		TextModel* tm = tc->getTextModel();
 		tm->setText( editingItem_->getCaption() );
-		EventHandler* ev = getEventHandler("BasicTableItemEditor::onEditorTextChanged");
+		CallBack* ev = getEventHandler("BasicTableItemEditor::onEditorTextChanged");
 		if ( NULL == ev ) {
-			ev = new TextModelEventHandler<BasicTableItemEditor>( this, &BasicTableItemEditor::onEditorTextChanged,"BasicTableItemEditor::onEditorTextChanged" );
+			ev = new ClassProcedure1<TextEvent*,BasicTableItemEditor>( this, &BasicTableItemEditor::onEditorTextChanged,"BasicTableItemEditor::onEditorTextChanged" );
 		}
 
 		tc->setSelectionMark( 0, editingItem_->getCaption().size() );
 
-		tm->addTextModelChangedHandler( ev );
+		tm->addTextModelChangedHandler( (EventHandler*)ev );
 
 		editingControl_ = tc;
 	}

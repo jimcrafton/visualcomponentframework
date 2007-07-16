@@ -86,18 +86,10 @@ private:
 };
 
 
-
-template <class SOURCE_TYPE>
-class ItemEventHandler : public EventHandlerInstance<SOURCE_TYPE,ItemEvent> {
-public:
-	ItemEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,ItemEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,ItemEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-};
+/**
+*/
+typedef Delegate1<ItemEvent*> ItemDelegate; 
+typedef ItemDelegate::ProcedureType ItemHandler;
 
 
 };

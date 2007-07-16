@@ -17,7 +17,8 @@ using namespace VCF;
 RunLoop::RunLoop( Thread* thread ) 
 {
     peer_.reset(SystemToolkit::createRunLoopPeer(this));
-    if ( peer_ == NULL ) {
+    if ( peer_.get() == NULL ) {
+
         throw NoPeerFoundException();
     }
 }

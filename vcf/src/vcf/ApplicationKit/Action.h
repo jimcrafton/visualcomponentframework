@@ -83,7 +83,7 @@ public:
 	@eventtype Action::UpdateEvent
 	@see update()
 	*/
-	DELEGATE(Update);
+	DELEGATE(ActionDelegate,Update);
 
 	/**
 	@delegate Performed this is fired when the action's perform()
@@ -92,7 +92,7 @@ public:
 	@eventtype Action::ActionPerformedEvent
 	@see perform()
 	*/
-	DELEGATE(Performed);
+	DELEGATE(ActionDelegate,Performed);
 
 	/**
 	This is called by a target (or the framework itself) to tell the action to fire off an

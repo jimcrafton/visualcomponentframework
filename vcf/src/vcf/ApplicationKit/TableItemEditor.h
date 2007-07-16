@@ -57,14 +57,14 @@ public:
 	@delegate CellItemChanged
 	@event ItemEditorEvent
 	*/
-	DELEGATE(CellItemChanged);
+	DELEGATE(ItemEditorDelegate,CellItemChanged);
 
 	/**
 	@delegate CellItemValidateChange
 	@event ItemEditorEvent
 	@eventtype ITEMEDITOR_CHANGED
 	*/
-	DELEGATE(CellItemValidateChange);
+	DELEGATE(ItemEditorDelegate,CellItemValidateChange);
 	
 
 	/**

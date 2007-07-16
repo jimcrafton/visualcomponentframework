@@ -43,7 +43,7 @@ namespace VCF {
 
 class TableCellItem;
 
-class TextModelHandler;
+
 
 class TextEvent;
 

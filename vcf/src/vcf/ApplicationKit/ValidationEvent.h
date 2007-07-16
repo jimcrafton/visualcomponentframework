@@ -60,23 +60,14 @@ private:
 
 
 /**
-*ModelValidationEventHandler
-*handles the following:
-*onModelValidate
+ModelValidationDelegate
+handles the following:
+\li onModelValidate
 */
-template <class SOURCE_TYPE>
-class ModelValidationEventHandler : public EventHandlerInstance<SOURCE_TYPE,ValidationEvent> {
-public:
-	ModelValidationEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,ValidationEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,ValidationEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-};
 
 
+typedef Delegate1<ValidationEvent*> ValidationDelegate; 
+typedef ValidationDelegate::ProcedureType ValidationHandler;
 
 };
 

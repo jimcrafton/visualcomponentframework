@@ -163,19 +163,19 @@ public:
 	virtual bool getDiscreteHorzScroll();
 	virtual bool getDiscreteVertScroll();
 
-	void setVerticalScrollingDelegate( Delegate* delegate ) {
+	void setVerticalScrollingDelegate( ScrollDelegate* delegate ) {
 		vertDelegate_ = delegate;
 	}
 
-	void setHorizontalScrollingDelegate( Delegate* delegate ) {
+	void setHorizontalScrollingDelegate( ScrollDelegate* delegate ) {
 		horzDelegate_ = delegate;
 	}
 
-	Delegate* getVerticalScrollingDelegate() {
+	ScrollDelegate* getVerticalScrollingDelegate() {
 		return vertDelegate_;
 	}
 
-	Delegate* getHorizontalScrollingDelegate() {
+	ScrollDelegate* getHorizontalScrollingDelegate() {
 		return horzDelegate_;
 	}
 protected:
@@ -202,8 +202,8 @@ protected:
 	bool keepVertScrollbarVisible_;
 	bool discreteHorzScroll_;
 	bool discreteVertScroll_;
-	Delegate* vertDelegate_;
-	Delegate* horzDelegate_;
+	ScrollDelegate* vertDelegate_;
+	ScrollDelegate* horzDelegate_;
 
 };
 

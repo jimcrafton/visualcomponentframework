@@ -50,7 +50,7 @@ public:
 	@event ButtonEvent
 	@see click()
 	*/
-	DELEGATE(ButtonClicked);
+	DELEGATE(ButtonDelegate,ButtonClicked);
 
 	/**
 	*This macro creates a method for adding a listener to the CommandButton's events
@@ -63,7 +63,7 @@ public:
 	*This macro creates a method for removing a listener to the CommandButton's events
 	*/
 	virtual void removeButtonClickHandler( EventHandler* handler ) {
-		ButtonClicked -= handler;
+		ButtonClicked.remove(handler);
 	}
 
 

@@ -65,21 +65,11 @@ namespace VCF {
 		bool okToClose_;
 	};
 
+	/**
 
-
-	template <class SOURCE_TYPE>
-	class FrameEventHandler : public EventHandlerInstance<SOURCE_TYPE,FrameEvent> {
-	public:
-		FrameEventHandler( SOURCE_TYPE* source,
-			_typename_ EventHandlerInstance<SOURCE_TYPE,FrameEvent>::OnEventHandlerMethod handlerMethod,
-			const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,FrameEvent>( source, handlerMethod, handlerName ) {
-
-		}
-
-		virtual ~FrameEventHandler(){};
-
-	};
+	*/
+	typedef Delegate1<FrameEvent*> FrameDelegate; 
+	typedef FrameDelegate::ProcedureType FrameHandler;
 };
 
 

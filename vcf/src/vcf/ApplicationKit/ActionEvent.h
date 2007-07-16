@@ -175,6 +175,7 @@ protected:
 };
 
 
+typedef Delegate1<ActionEvent*> ActionDelegate;
 
 
 };

@@ -60,7 +60,7 @@ public:
 */
 
 typedef Delegate1<NotifyEvent*> NotifyDelegate;
-
+typedef NotifyDelegate::ProcedureType NotifyHandler;
 
 }; //end of namespace VCF
 

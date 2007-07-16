@@ -63,9 +63,9 @@ public:
 		ITEM_STATECHANGE_REQUESTED = CUSTOM_EVENT_TYPES + ITEM_CONST + 10
 	};
 
-	DELEGATE(ItemSelected);
-	DELEGATE(ItemStateChangeRequested);
-	DELEGATE(ItemExpanded);
+	DELEGATE(ItemDelegate,ItemSelected);
+	DELEGATE(ItemDelegate,ItemStateChangeRequested);
+	DELEGATE(ItemDelegate,ItemExpanded);
 
 	virtual void handleEvent( Event* event );
 

@@ -51,6 +51,8 @@ there should only be one instance that is created on the stack.
 	@del Application::nativeOSEventReceived
  */
 
+typedef Delegate1<Event*> OSEventReceivedDelegate;
+
 class APPLICATIONKIT_API Application : public AbstractApplication {
 public:
 	/**
@@ -175,7 +177,7 @@ public:
 	@delegate ToolTip fires an ControlEvent.
 	@event Event
 	*/
-	Delegate nativeOSEventReceived;
+	OSEventReceivedDelegate nativeOSEventReceived;
 
 	/**
 	default implamentation simply passes the event to the Delegate to be passed off to
@@ -202,7 +204,7 @@ public:
 	\endcode
 	*/
 	virtual void onOSNativeEvent( Event* nativeOSEvent ) {
-		nativeOSEventReceived.fireEvent( nativeOSEvent );
+		nativeOSEventReceived( nativeOSEvent );
 	}
 protected:
 	static Application* appInstance_;

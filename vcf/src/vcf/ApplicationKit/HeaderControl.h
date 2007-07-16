@@ -59,8 +59,8 @@ public:
 		COLUMN_ITEM_WIDTHCHANGED
 	};
 
-	DELEGATE(ColumnItemClicked)
-	DELEGATE(ColumnWidthChanged)
+	DELEGATE(MouseDelegate,ColumnItemClicked)
+	DELEGATE(ItemDelegate,ColumnWidthChanged)
 
 
 	inline ColumnModel* getColumnModel() {

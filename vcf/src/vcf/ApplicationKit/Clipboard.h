@@ -67,21 +67,21 @@ public:
 	@delegate ClipboardContentsChanged is fired when the clipboard contents change
 	@event ClipboardEvent
 	*/
-	DELEGATE(ClipboardContentsChanged)
+	DELEGATE(ClipboardDelegate,ClipboardContentsChanged)
 
 	/**
 	@delegate ClipboardItemCopied
 	@event ClipboardEvent
 	@eventtype
 	*/
-	DELEGATE(ClipboardItemCopied)
+	DELEGATE(ClipboardDelegate,ClipboardItemCopied)
 
 	/**
 	@delegate ClipboardItemPasted
 	@event ClipboardEvent
 	@eventtype
 	*/
-	DELEGATE(ClipboardItemPasted)
+	DELEGATE(ClipboardDelegate,ClipboardItemPasted)
 
 	/**
 	does the Clipboard have a DataObject that

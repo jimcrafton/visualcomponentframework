@@ -55,7 +55,7 @@ public:
 
 	SliderControl();
 
-	DELEGATE(PositionChanged)
+	DELEGATE(EventDelegate,PositionChanged)
 
 	virtual double getPreferredWidth();
 

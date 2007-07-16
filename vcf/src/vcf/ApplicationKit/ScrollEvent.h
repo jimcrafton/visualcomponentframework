@@ -52,21 +52,10 @@ protected:
 };
 
 
-
-template <class SOURCE_TYPE>
-class ScrollEventHandler : public EventHandlerInstance<SOURCE_TYPE,ScrollEvent> {
-public:
-	ScrollEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,ScrollEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,ScrollEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-};
-
-
-
+/**
+*/
+typedef Delegate1<ScrollEvent*> ScrollDelegate; 
+typedef ScrollDelegate::ProcedureType ScrollHandler;
 
 
 

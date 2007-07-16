@@ -56,22 +56,16 @@ public:
 	@event ModelEvent
 	@see empty()
 	*/
-	DELEGATE(ModelEmptied)
+	DELEGATE(ModelDelegate,ModelEmptied)
 
-	/**
-	@delegate ModelValidate fired when the model's validate() method is called
-	@event ValidationEvent
-	@see validate()
-	*/
-	DELEGATE(ModelValidate)
-
+	
 
     virtual void addModelValidationHandler( EventHandler* handler ) {
 		ModelValidate += handler;
 	}
 
 	virtual void removeModelValidationHandler( EventHandler* handler ) {
-		ModelValidate -= handler;
+		ModelValidate.remove(handler);
 	}
 
 	virtual void addModelHandler( EventHandler* handler ) {
@@ -79,7 +73,7 @@ public:
 	}
 
 	virtual void removeModelHandler( EventHandler* handler ) {
-		ModelEmptied -= handler;
+		ModelEmptied.remove(handler);
 	}
 
 	/**
@@ -88,14 +82,14 @@ public:
 	@event TabModelEvent
 	@eventtype TAB_MODEL_EVENT_ITEM_ADDED
 	*/
-	DELEGATE(TabPageAdded)
+	DELEGATE(TabModelDelegate,TabPageAdded)
 
 	/**
 	@delegate
 	@event TabModelEvent
 	@eventtype TAB_MODEL_EVENT_ITEM_REMOVED
 	*/
-	DELEGATE(TabPageRemoved)
+	DELEGATE(TabModelDelegate,TabPageRemoved)
 
 	/**
 	@delegate TabModelEvent - this is fired when a tab page is selected by calling
@@ -104,14 +98,14 @@ public:
 	@eventtype TAB_MODEL_EVENT_ITEM_SELECTED
 	@see setSelectedPage()
 	*/
-	DELEGATE(TabPageSelected)
+	DELEGATE(TabModelDelegate,TabPageSelected)
 
 	virtual void addTabPageAddedHandler( EventHandler* handler ) {
 		TabPageAdded += handler;
 	}
 
 	virtual void removeTabPageAddedHandler( EventHandler* handler ) {
-		TabPageAdded -= handler;
+		TabPageAdded.remove(handler);
 	}
 
 	virtual void addTabPageRemovedHandler( EventHandler* handler ) {
@@ -119,7 +113,7 @@ public:
 	}
 
 	virtual void removeTabPageRemovedHandler( EventHandler* handler ) {
-		TabPageRemoved -= handler;
+		TabPageRemoved.remove(handler);
 	}
 
 	virtual void addTabPageSelectedHandler( EventHandler* handler ) {
@@ -127,7 +121,7 @@ public:
 	}
 
 	virtual void removeTabPageSelectedHandler( EventHandler* handler ) {
-		TabPageSelected -= handler;
+		TabPageSelected.remove(handler);
 	}
 
 	virtual void addTabPage( TabPage* page );

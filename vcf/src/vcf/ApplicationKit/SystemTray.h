@@ -47,7 +47,7 @@ namespace VCF {
 		@eventtype SystemTray::stRemovedFromTray
 		@eventtype SystemTray::stAddedToTray
 		*/
-		DELEGATE(TrayIconChanged);
+		DELEGATE(EventDelegate,TrayIconChanged);
 
 		/**
 		Sets the icon image for the system tray. 

@@ -47,7 +47,7 @@ Dialog::Dialog( Control* owner )
 	setFrameStyle( fstFixed );
 
 	//add a close handler to get notified of the closing window
-	FrameClose += new GenericEventHandler<Dialog>( this, &Dialog::onDialogClose, "Dialog::onDialogClose" );
+	FrameClose += new ClassProcedure1<Event*,Dialog>( this, &Dialog::onDialogClose, "Dialog::onDialogClose" );
 }
 
 
@@ -61,12 +61,12 @@ void Dialog::onDialogClose( Event* event )
 	if ( isModal() ) {
 		DialogEvent e(this,Dialog::deModalFinished);
 		e.setModalResult( getModalReturnValue() );
-		ModalFinished.fireEvent(&e);
+		ModalFinished(&e);
 	}
 	else if ( isSheetModal() ) {
 		DialogEvent e(this,Dialog::deSheetModalFinished);
 		e.setModalResult( getModalReturnValue() );
-		SheetModalFinished.fireEvent(&e);
+		SheetModalFinished(&e);
 	}
 	else if ( !isModal() ) {
 		EventHandler* ev = new GenericEventHandler<Dialog>( this, &Dialog::onPostClose );

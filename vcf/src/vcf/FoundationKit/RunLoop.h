@@ -32,6 +32,9 @@ namespace VCF {
         
         class Creator;
     protected:
+
+		friend class Creator;
+
         RunLoop( Thread* thread );
         
     private:
