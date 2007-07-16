@@ -24,7 +24,7 @@ class MouseEvent;
 
 class GraphicsContext;
 
-class MouseHandler;
+
 
 class Rect;
 
@@ -102,8 +102,8 @@ protected:
 	std::map<int32,Control*> tabOrderMap_;
 	int32 currentTabControlIndex_;
 	Control* controlContainer_;
-	EventHandler* controlHandler_;
-	EventHandler* mouseHandler_;
+	ControlHandler* controlHandler_;
+	MouseHandler* mouseHandler_;
 
 	void containerResized( ControlEvent* event );
 	void onMouseEvent( MouseEvent* event );

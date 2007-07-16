@@ -33,6 +33,10 @@ public:
 
 };
 
+
+typedef Delegate1<ThreadEvent*> ThreadDelegate;
+typedef ThreadDelegate::ProcedureType ThreadHandler;
+
 }; //end of namespace VCF
 
 

@@ -17,6 +17,7 @@ where you installed the VCF.
 namespace VCF  {
 
 class GraphicsContext;
+class Control;
 
 #define TOOLTIP_EVENT_TIP_REQESTED		CUSTOM_EVENT_TYPES + 3000
 
@@ -146,21 +147,11 @@ protected:
 /**
 *ToolTipEventHandler
 *handles the following:
-*onToolTipRequested
-*onToolTip
+\li onToolTipRequested
+\li onToolTip
 */
-template <class SOURCE_TYPE>
-class ToolTipEventHandler : public EventHandlerInstance<SOURCE_TYPE,ToolTipEvent> {
-public:
-	ToolTipEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,ToolTipEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,ToolTipEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-};
-
+typedef Delegate1<ToolTipEvent*> ToolTipDelegate; 
+typedef ToolTipDelegate::ProcedureType ToolTipHandler;
 
 }; //end of namespace VCF
 

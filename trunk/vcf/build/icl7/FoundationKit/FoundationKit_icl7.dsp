@@ -492,6 +492,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\TextOutputStream.h
 
 SOURCE=..\..\..\src\vcf\FoundationKit\VariantDataStream.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFOutputStream.cpp
+# End Source File
 # End Group
 # Begin Group "Utils"
 
@@ -622,6 +630,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\CommonDefines.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\Component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\ComponentInfo.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\Dictionary.cpp
 # End Source File
 # Begin Source File
@@ -710,10 +726,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\SystemToolkit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\VCF.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\VCFChar.h
 # End Source File
 # Begin Source File
@@ -731,10 +743,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\VCFString.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\VCFString.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\VCFulong64.h
 # End Source File
 # Begin Source File
 

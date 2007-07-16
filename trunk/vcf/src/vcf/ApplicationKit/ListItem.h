@@ -80,9 +80,9 @@ public:
 	};
 
 
-	DELEGATE(SubItemChanged);
-	DELEGATE(SubItemAdded);
-	DELEGATE(SubItemDeleted);
+	DELEGATE(ItemDelegate,SubItemChanged);
+	DELEGATE(ItemDelegate,SubItemAdded);
+	DELEGATE(ItemDelegate,SubItemDeleted);
 
 
 	ListItem(){
@@ -90,55 +90,7 @@ public:
 	};
 
 	virtual ~ListItem(){};
-
-	/**
-	@deprecated - these are here for backwards compatibility
-	purposes only - they'll be going away in the next release.
-	*/
-    void addSubItemAddedHandler( EventHandler* handler ){
-		SubItemAdded += handler;
-	}
-
-	/**
-	@deprecated - these are here for backwards compatibility
-	purposes only - they'll be going away in the next release.
-	*/
-	void addSubItemDeletedHandler( EventHandler* handler ){
-		SubItemDeleted += handler;
-	}
-
-	/**
-	@deprecated - these are here for backwards compatibility
-	purposes only - they'll be going away in the next release.
-	*/
-	void addSubItemChangedHandler( EventHandler* handler ){
-		SubItemChanged += handler;
-	}
-
-	/**
-	@deprecated - these are here for backwards compatibility
-	purposes only - they'll be going away in the next release.
-	*/
-	void removeSubItemAddedHandler( EventHandler* handler ){
-		SubItemAdded -= handler;
-	}
-
-	/**
-	@deprecated - these are here for backwards compatibility
-	purposes only - they'll be going away in the next release.
-	*/
-	void removeSubItemDeletedHandler( EventHandler* handler ){
-		ItemDeleted -= handler;
-	}
-
-	/**
-	@deprecated - these are here for backwards compatibility
-	purposes only - they'll be going away in the next release.
-	*/
-	void removeSubItemChangedHandler( EventHandler* handler ) {
-		SubItemChanged -= handler;
-	}
-
+	
 
 	virtual String getCaption() = 0;
 

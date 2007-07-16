@@ -162,27 +162,16 @@ private:
 
 
 /**
-*UndoRedoEventHandler
-*handles the following:
-*onUndoCommand
-*onRedoCommand
-*onStackCleared
-*onStackChanged
-*onExecuteCommand
+UndoRedoDelegate
+handles the following:
+\li onUndoCommand
+\li onRedoCommand
+\li onStackCleared
+\li onStackChanged
+\li onExecuteCommand
 */
-template <class SOURCE_TYPE>
-class UndoRedoEventHandler : public EventHandlerInstance<SOURCE_TYPE,UndoRedoEvent> {
-public:
-	UndoRedoEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,UndoRedoEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,UndoRedoEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-};
-
-
+typedef Delegate1<UndoRedoEvent*> UndoRedoDelegate; 
+typedef UndoRedoDelegate::ProcedureType UndoRedoHandler;
 
 }; //end of namespace VCF
 

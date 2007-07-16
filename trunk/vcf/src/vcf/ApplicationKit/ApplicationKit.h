@@ -37,8 +37,9 @@ where you installed the VCF.
 /**
 Action classes
 */
-#include "vcf/ApplicationKit/Action.h"
 #include "vcf/ApplicationKit/ActionEvent.h"
+#include "vcf/ApplicationKit/Action.h"
+
 
 
 /**
@@ -56,8 +57,8 @@ Action classes
 /**
 *Menus and menu items
 */
-#include "vcf/ApplicationKit/MenuItem.h"
 #include "vcf/ApplicationKit/MenuItemEvent.h"
+#include "vcf/ApplicationKit/MenuItem.h"
 #include "vcf/ApplicationKit/DefaultMenuItem.h"
 
 
@@ -78,13 +79,8 @@ Action classes
 /**
 *Drag Drop
 */
-#include "vcf/ApplicationKit/DragSource.h"
-#include "vcf/ApplicationKit/DragEvent.h"
 #include "vcf/ApplicationKit/DragScrollEvent.h"
-
-#include "vcf/ApplicationKit/DropEvent.h"
-
-
+#include "vcf/ApplicationKit/DragSource.h"
 #include "vcf/ApplicationKit/DropTarget.h"
 
 
@@ -135,7 +131,7 @@ Action classes
 
 
 #include "vcf/ApplicationKit/Control.h"
-#include "vcf/ApplicationKit/ControlEvent.h"
+
 
 
 #include "vcf/ApplicationKit/CustomControl.h"

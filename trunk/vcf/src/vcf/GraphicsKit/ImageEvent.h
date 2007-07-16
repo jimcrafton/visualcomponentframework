@@ -28,10 +28,11 @@ namespace VCF
 class ImageEvent : public Event
 {
 public:
-	ImageEvent( Object* source );
-	virtual ~ImageEvent();
+	ImageEvent( Object* source ): Event(source),newWidth_(0),newHeight_(0) {};
 
-	ImageEvent( const ImageEvent& rhs ):Event(rhs) {
+	virtual ~ImageEvent(){};
+
+	ImageEvent( const ImageEvent& rhs ):Event(rhs),newWidth_(0),newHeight_(0) {
 		*this = rhs;
 	}
 
@@ -43,15 +44,21 @@ public:
 		return *this;
 	}
 
-	uint32 getNewWidth();
+	uint32 getNewWidth() {
+		return newWidth_;
+	}
 
-	void setNewWidth( const uint32& newWidth );
+	void setNewWidth( const uint32& newWidth ) {
+		newWidth_ = newWidth;
+	}
 
-	uint32 getNewHeight();
+	uint32 getNewHeight() {
+		return newHeight_;
+	}
 
-	void setNewHeight( const uint32& newHeight );
-
-	void init();
+	void setNewHeight( const uint32& newHeight ) {
+		newWidth_ = newHeight;
+	}	
 
 	virtual Object* clone( bool deep=false ) {
 		return new ImageEvent(*this);
@@ -62,7 +69,7 @@ private:
 	uint32 newHeight_;
 };
 
-
+typedef Delegate1<ImageEvent*> ImageDelegate;
 };
 
 

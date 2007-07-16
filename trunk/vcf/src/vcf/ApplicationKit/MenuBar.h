@@ -19,7 +19,7 @@ where you installed the VCF.
 
 namespace VCF{
 
-class ItemHandler;
+
 class Frame;
 class MenuBarPeer;
 

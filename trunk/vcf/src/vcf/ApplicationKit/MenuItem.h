@@ -90,8 +90,8 @@ public:
 
 	virtual ~MenuItem(){};
 	
-	DELEGATE(MenuItemClicked);
-	DELEGATE(MenuItemUpdate);
+	DELEGATE(MenuItemDelegate,MenuItemClicked);
+	DELEGATE(MenuItemDelegate,MenuItemUpdate);
 
 
 

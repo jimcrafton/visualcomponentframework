@@ -49,14 +49,14 @@ public:
 	@delegate TextModelChanged fired when the model's text data is changed
 	@event TextModelEvent
 	*/
-	DELEGATE(TextModelChanged)
+	DELEGATE(TextModelDelegate,TextModelChanged)
 
 	virtual void addTextModelChangedHandler( EventHandler * handler ){
 		TextModelChanged += handler;
 	}
 
 	virtual void removeTextModelChangedHandler( EventHandler * handler ) {
-		TextModelChanged -= handler;
+		TextModelChanged.remove(handler);
 	}
 
     virtual void empty();

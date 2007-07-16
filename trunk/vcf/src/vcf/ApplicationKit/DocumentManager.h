@@ -129,6 +129,7 @@ protected:
 };
 
 
+typedef Delegate1<DocManagerEvent*> DocManagerDelegate;
 
 /**
 \class DocumentManager DocumentManager.h "vcf/ApplicationKit/DocumentManager.h"
@@ -191,7 +192,7 @@ public:
 	* @eventtype DocumentManager::dmSaveDocument
 	* @see saveFile()
 	*/
-	DELEGATE(SaveFile);
+	DELEGATE(DocManagerDelegate,SaveFile);
 
 	/**
 	* @delegate OpenFile this is called when the document manager's openFile()
@@ -203,7 +204,7 @@ public:
 	* @eventtype  DocumentManager::dmOpenDocument
 	* @see openFile()
 	*/
-	DELEGATE(OpenFile);
+	DELEGATE(DocManagerDelegate,OpenFile);
 
 	/**
 	* @delegate DocumentInitialized this is called after a newly created document has
@@ -214,7 +215,7 @@ public:
 	* @eventtype DocumentManager::dmDocumentInitialized
 	* @see Document::setWindow
 	*/
-	DELEGATE(DocumentInitialized)
+	DELEGATE(DocManagerDelegate,DocumentInitialized)
 
 	/**
 	* @delegate DocumentClosed this fires to notify the user it is the time to
@@ -223,7 +224,7 @@ public:
 	* @event VCF::Event
 	* @eventtype DocumentManager::dmCloseDocument
 	*/
-	DELEGATE(DocumentClosed)
+	DELEGATE(DocManagerDelegate,DocumentClosed)
 
 	/**
 	* @delegate CurrentDocumentChanged this is fired whenever the
@@ -236,7 +237,7 @@ public:
 	* @event VCF::Event
 	* @eventtype DocumentManager::dmCurrentDocumentChanged
 	*/
-	DELEGATE(CurrentDocumentChanged)
+	DELEGATE(DocManagerDelegate,CurrentDocumentChanged)
 
 public:
 	DocumentManager();
@@ -359,7 +360,7 @@ public:
 	*/
 	void currentDocumentChanged() {
 		DocManagerEvent event( getCurrentDocument(), DocumentManager::dmCurrentDocumentChanged );
-		CurrentDocumentChanged.fireEvent( &event );
+		CurrentDocumentChanged( &event );
 	}
 
 	/**

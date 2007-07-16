@@ -77,20 +77,9 @@ protected:
 	ColumnItem* columnItem_;
 };
 
-/**
-\class ColumnModelEventHandler ColumnModelEvent.h "vcf/ApplicationKit/ColumnModelEvent.h"
-*/
-template <class SOURCE_TYPE> class ColumnModelEventHandler : public EventHandlerInstance<SOURCE_TYPE,ColumnModelEvent> {
-public:
-	ColumnModelEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,ColumnModelEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,ColumnModelEvent>( source, handlerMethod, handlerName ) {
 
-	}
-
-	virtual ~ColumnModelEventHandler(){};
-};
+typedef Delegate1<ColumnModelEvent*> ColumnModelDelegate; 
+typedef ColumnModelDelegate::ProcedureType ColumnModelHandler;
 
 }; //end of namespace VCF
 

@@ -35,8 +35,11 @@ public:
 };
 
 
+
+
+
 /**
- The handler class for a FocusEvent.
+ The Delegate class for a FocusEvent.
  
  handles the following:
  
@@ -44,17 +47,8 @@ public:
  	\li FocusLost
  
 */
-template <class SOURCE_TYPE> class FocusEventHandler : public EventHandlerInstance<SOURCE_TYPE,FocusEvent> {
-public:
-	FocusEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,FocusEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,FocusEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-	virtual ~FocusEventHandler(){};
-};
+typedef Delegate1<FocusEvent*> FocusDelegate; 
+typedef FocusDelegate::ProcedureType FocusHandler;
 
 };
 

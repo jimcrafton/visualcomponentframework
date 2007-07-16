@@ -31,9 +31,9 @@ void DefaultTabModel::addTabPage( TabPage* page )
 	TabPageAdded.fireEvent( &event );
 	pages_.push_back( page );
 
-	EventHandler* ev = getEventHandler( "DefaultTabModel::tabPageChange" );
+	CallBack* ev = getEventHandler( "DefaultTabModel::tabPageChange" );
 	if ( NULL == ev ) {
-		ev = new ItemEventHandler<DefaultTabModel>(this, &DefaultTabModel::tabPageChange, "DefaultTabModel::tabPageChange" );
+		ev = new ClassProcedure1<ItemEvent*,DefaultTabModel>(this, &DefaultTabModel::tabPageChange, "DefaultTabModel::tabPageChange" );
 	}
 	page->addItemChangedHandler( ev );
 }

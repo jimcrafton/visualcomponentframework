@@ -67,11 +67,11 @@ class TableItemEditor;
 
 
 /**
-\class TableCellClickEvent TableControl.h "vcf/ApplicationKit/TableControl.h"
+\class TableCellEvent TableControl.h "vcf/ApplicationKit/TableControl.h"
 */
-class APPLICATIONKIT_API TableCellClickEvent : public Event {
+class APPLICATIONKIT_API TableCellEvent : public Event {
 public:
-	TableCellClickEvent( Object* source, const uint32& type, const CellID& cell ):
+	TableCellEvent( Object* source, const uint32& type, const CellID& cell ):
 		Event(source,type), cell_(cell) {
 
 	}
@@ -81,6 +81,10 @@ public:
 	}
 	CellID cell_;
 };
+
+
+typedef Delegate1<TableCellEvent*> TableCellDelegate; 
+
 
 /**
 \class CellRange TableControl.h "vcf/ApplicationKit/TableControl.h"
@@ -296,55 +300,55 @@ public:
 	@delegate TableCellClicked
 	@event TableCellClicked
 	*/
-	DELEGATE(TableCellClicked)
+	DELEGATE(TableCellDelegate,TableCellClicked)
 
 	/**
 	@delegate TableCellDblClicked
 	@event TableCellDblClicked
 	*/
-	DELEGATE(TableCellDblClicked)
+	DELEGATE(TableCellDelegate,TableCellDblClicked)
 
 	/**
 	@delegate TableCellDown
 	@event TableCellDown
 	*/
-	DELEGATE(TableCellDown)
+	DELEGATE(TableCellDelegate,TableCellDown)
 
 	/**
 	@delegate TableCellFinishedEditing
 	@event TableCellFinishedEditing
 	*/
-	DELEGATE(TableCellFinishedEditing)
+	DELEGATE(TableCellDelegate,TableCellFinishedEditing)
 
 	/**
 	@delegate FixedRowClicked
 	@event TableCellClicked
 	*/
-	DELEGATE(FixedRowClicked)
+	DELEGATE(TableCellDelegate,FixedRowClicked)
 
 	/**
 	@delegate FixedRowClicked
 	@event TableCellClicked
 	*/
-	DELEGATE(FixedColumnClicked)
+	DELEGATE(TableCellDelegate,FixedColumnClicked)
 
 	/**
 	@delegate TableSelecting
 	@event TableSelecting
 	*/
-	DELEGATE(TableSelecting)
+	DELEGATE(TableCellDelegate,TableSelecting)
 
 	/**
 	@delegate TableSelectionChanging
 	@event TableSelecting
 	*/
-	DELEGATE(TableSelectionChanging)
+	DELEGATE(TableCellDelegate,TableSelectionChanging)
 
 	/**
 	@delegate TableSelectionChanged
 	@event TableSelecting
 	*/
-	DELEGATE(TableSelectionChanged)
+	DELEGATE(TableCellDelegate,TableSelectionChanged)
 
 	virtual void handleEvent( Event* e );
 

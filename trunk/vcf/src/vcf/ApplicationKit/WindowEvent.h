@@ -49,24 +49,15 @@ private:
 
 
 /**
-*WindowEventHandler
+WindowDelegate
 handles the following:
-	onWindowClose
-	onWindowRestore
-	onWindowMaximize
-	onWindowMinimize
+\li onWindowClose
+\li onWindowRestore
+\li onWindowMaximize
+\li onWindowMinimize
 */
-template <class SOURCE_TYPE>
-class WindowEventHandler : public EventHandlerInstance<SOURCE_TYPE,WindowEvent>  {
-public:
-	WindowEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,WindowEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-				EventHandlerInstance<SOURCE_TYPE,WindowEvent>( source, handlerMethod, handlerName ) {
-
-	}
-};
-
+typedef Delegate1<WindowEvent*> WindowDelegate; 
+typedef WindowDelegate::ProcedureType WindowHandler;
 
 };
 

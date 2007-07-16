@@ -18,7 +18,7 @@ where you installed the VCF.
 
 
 
-namespace VCF{
+namespace VCF  {
 
 
 
@@ -85,22 +85,26 @@ public:
 	};
 
 
-	DELEGATE(ItemPaint);
-	DELEGATE(ItemChanged);
-	DELEGATE(ItemSelected);
-	DELEGATE(ItemAdded);
-	DELEGATE(ItemDeleted);
-
 	Item():itemState_(0),model_(NULL),owningControl_(NULL) {};
 
 	virtual ~Item(){};
 
+
+
+
+	DELEGATE( ItemDelegate, ItemPaint );
+	DELEGATE( ItemDelegate, ItemChanged );
+	DELEGATE( ItemDelegate, ItemSelected );
+	DELEGATE( ItemDelegate, ItemAdded );
+	DELEGATE( ItemDelegate, ItemDeleted );
+
+	
 	/**
 	@deprecated - these are here for backwards compatibility
 	purposes only - they'll be going away in the next release.
 	*/
 	void addItemPaintHandler( EventHandler* handler ){
-		ItemPaint += handler;
+		ItemPaint.add( handler );
 	}
 
 	/**
@@ -140,7 +144,7 @@ public:
 	purposes only - they'll be going away in the next release.
 	*/
 	void removeItemPaintHandler( EventHandler* handler ){
-		ItemPaint -= handler;
+		ItemPaint.remove( handler );
 	}
 
 	/**
@@ -148,7 +152,7 @@ public:
 	purposes only - they'll be going away in the next release.
 	*/
 	void removeItemChangedHandler( EventHandler* handler ){
-		ItemChanged -= handler;
+		ItemChanged.remove( handler );
 	}
 
 	/**
@@ -156,7 +160,7 @@ public:
 	purposes only - they'll be going away in the next release.
 	*/
 	void removeItemSelectedHandler( EventHandler* handler ){
-		ItemSelected -= handler;
+		ItemSelected.remove( handler );
 	}
 
 	/**
@@ -164,7 +168,7 @@ public:
 	purposes only - they'll be going away in the next release.
 	*/
 	void removeItemAddedHandler( EventHandler* handler ){
-		ItemAdded -= handler;
+		ItemAdded.remove( handler );
 	}
 
 	/**
@@ -172,7 +176,7 @@ public:
 	purposes only - they'll be going away in the next release.
 	*/
 	void removeItemDeletedHandler( EventHandler* handler ){
-		ItemDeleted -= handler;
+		ItemDeleted.remove( handler );
 	}
 
 	/**

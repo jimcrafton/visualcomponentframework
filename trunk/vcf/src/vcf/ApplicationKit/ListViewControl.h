@@ -112,8 +112,8 @@ class APPLICATIONKIT_API ListViewControl : public VCF::Control {
 public:
 
 
-	DELEGATE(ItemSelectionChanged);
-	DELEGATE(ColumnItemClicked);
+	DELEGATE(ItemDelegate,ItemSelectionChanged);
+	DELEGATE(MouseDelegate,ColumnItemClicked);
 
 	ListViewControl();
 

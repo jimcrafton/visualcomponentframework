@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="LibTIFF"
-	ProjectGUID="{F5AC3BF8-DE4D-4DEB-8A84-60FA55C28126}"
+	ProjectGUID="{1F5AEB6C-BF81-4664-8071-925A8D01C676}"
 	>
 	<Platforms>
 		<Platform

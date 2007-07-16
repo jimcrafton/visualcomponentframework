@@ -216,7 +216,7 @@ protected:
 
 	void writeEvents( Component* component );
 
-	String generateEventHandlerString( EventProperty* eventProperty, EventHandler* handler );
+	String generateEventHandlerString( EventProperty* eventProperty, CallBack* handler );
 };
 
 };

@@ -43,8 +43,8 @@ void Clipboard::copyTo( DataObject* dataObject )
 
 		clipboardPeer_->copy( dataObject );
 
-		ClipboardContentsChanged.fireEvent( &event );
-		ClipboardItemCopied.fireEvent( &event );
+		ClipboardContentsChanged( &event );
+		ClipboardItemCopied( &event );
 	}
 }
 
@@ -52,7 +52,7 @@ DataObject* Clipboard::pasteFrom( const String& dataType)
 {
 	DataObject* result = clipboardPeer_->paste( dataType );
 	ClipboardEvent event( this );
-	ClipboardItemPasted.fireEvent( &event );
+	ClipboardItemPasted( &event );
 	return result;
 }
 
@@ -60,7 +60,7 @@ void Clipboard::internal_deleteDataObject( DataObject* dataObject )
 {
 	ClipboardEvent event( this );
 	event.setType( CLIPBOARD_EVENT_ITEM_DELETED );
-	ClipboardContentsChanged.fireEvent( &event );
+	ClipboardContentsChanged( &event );
 }
 
 

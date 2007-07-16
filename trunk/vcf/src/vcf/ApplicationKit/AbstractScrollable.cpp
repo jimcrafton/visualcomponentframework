@@ -17,8 +17,8 @@ using namespace VCF;
 AbstractScrollable::ControlResizeHandler::ControlResizeHandler( AbstractScrollable* scrollable )
 {
 	scrollable_ = scrollable;
-	ControlEventHandler<ControlResizeHandler>* ch =
-		new ControlEventHandler<ControlResizeHandler>( this, &AbstractScrollable::ControlResizeHandler::controlResized, "ControlHandler" );
+	ControlHandler* ch =
+		new ClassProcedure1<ControlEvent*,ControlResizeHandler>( this, &AbstractScrollable::ControlResizeHandler::controlResized, "ControlHandler" );
 }
 
 AbstractScrollable::ControlResizeHandler::~ControlResizeHandler()
@@ -68,13 +68,13 @@ AbstractScrollable::~AbstractScrollable()
 
 void AbstractScrollable::setScrollableControl( Control* scrollableControl ) {
 
-	EventHandler* ch = resizeHandler_->getEventHandler( "ControlHandler" );
+	CallBack* ch = resizeHandler_->getEventHandler( "ControlHandler" );
 	if ( NULL != scrollableControl_ ) {
-		scrollableControl_->ControlSized.removeHandler( ch );
+		scrollableControl_->ControlSized.remove( ch );
 	}
 	scrollableControl_ = scrollableControl;
 	if ( NULL != scrollableControl_ ) {
-		scrollableControl_->ControlSized.addHandler( ch );
+		scrollableControl_->ControlSized.add( ch );
 	}
 	scrollPeer_->setScrollableControl( scrollableControl_ );
 }
@@ -152,7 +152,7 @@ void AbstractScrollable::setVerticalPosition( const double& vertPosition )
 		if ( NULL != vertDelegate_ ) {
 			ScrollEvent e(scrollableControl_,0);
 			e.setScrollPoint( Point(horzPosition_,vertPosition_) );
-			vertDelegate_->fireEvent( &e );
+			vertDelegate_->invoke( &e );
 		}
 	}
 }
@@ -168,7 +168,7 @@ void AbstractScrollable::setHorizontalPosition( const double& horzPosition ) {
 		if ( NULL != horzDelegate_ ) {
 			ScrollEvent e(scrollableControl_,0);
 			e.setScrollPoint( Point(horzPosition_,vertPosition_) );
-			horzDelegate_->fireEvent( &e );
+			horzDelegate_->invoke( &e );
 		}
 	}
 }

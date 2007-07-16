@@ -51,6 +51,9 @@ namespace VCF {
 	
 	
 	
+
+	typedef Delegate1<PrintEvent*> PrintDelegate;
+
 };
 
 

@@ -59,21 +59,12 @@ public:
 
 
 /**
-*WhatsThisHelpEventHandler
-*handles the following:
-*onControlHelpRequested
+WhatsThisHelpDelegate
+handles the following:
+\li onControlHelpRequested
 */
-template <class SOURCE_TYPE>
-class WhatsThisHelpEventHandler : public EventHandlerInstance<SOURCE_TYPE,WhatsThisHelpEvent>  {
-public:
-	WhatsThisHelpEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,WhatsThisHelpEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,WhatsThisHelpEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-};
+typedef Delegate1<WhatsThisHelpEvent*> WhatsThisHelpDelegate; 
+typedef WhatsThisHelpDelegate::ProcedureType WhatsThisHelpHandler;
 
 }; //end of namespace VCF
 

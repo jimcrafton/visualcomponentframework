@@ -56,7 +56,7 @@ public:
 	}
 
 	virtual void removeModelValidationHandler( EventHandler* handler ) {
-		ModelValidate -= handler;
+		ModelValidate.remove(handler);
 	}
 
 	virtual void addModelHandler( EventHandler* handler ) {
@@ -64,7 +64,7 @@ public:
 	}
 
 	virtual void removeModelHandler( EventHandler* handler ) {
-		ModelEmptied -= handler;
+		ModelEmptied.remove(handler);
 	}
 
     /**
@@ -83,7 +83,7 @@ public:
     virtual void empty();
 
 	virtual void removeListModelHandler(EventHandler * handler) {
-		ModelEmptied -= handler;
+		ModelEmptied.remove(handler);
 	}
 
 	virtual void addListModelHandler(EventHandler * handler) {
@@ -93,19 +93,19 @@ public:
 	/**
 	*ColumnModel Handlers
 	*/
-	DELEGATE(ContentsChanged)
-	DELEGATE(ItemAdded)
-	DELEGATE(ItemDeleted)
+	DELEGATE(ColumnModelDelegate,ContentsChanged)
+	DELEGATE(ColumnModelDelegate,ItemAdded)
+	DELEGATE(ColumnModelDelegate,ItemDeleted)
 
-	DELEGATE(ModelValidate)
-	DELEGATE(ModelEmptied)
+	
+	DELEGATE(ModelDelegate,ModelEmptied)
 
 	virtual void addContentsChangedHandler(EventHandler * handler) {
 		ContentsChanged += handler;
 	}
 
 	virtual void removeContentsChangedHandler(EventHandler * handler) {
-		ContentsChanged -= handler;
+		ContentsChanged.remove(handler);
 	}
 
 	virtual void addItemAddedHandler(EventHandler * handler) {
@@ -113,7 +113,7 @@ public:
 	}
 
 	virtual void removeItemAddedHandler(EventHandler * handler) {
-		ItemAdded -= handler;
+		ItemAdded.remove(handler);
 	}
 
 	virtual void addItemDeletedHandler(EventHandler * handler) {
@@ -121,7 +121,7 @@ public:
 	}
 
 	virtual void removeItemDeletedHandler(EventHandler * handler) {
-		ItemDeleted -= handler;
+		ItemDeleted.remove(handler);
 	}
 
 

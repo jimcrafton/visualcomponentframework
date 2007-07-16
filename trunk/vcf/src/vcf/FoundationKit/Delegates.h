@@ -2,6 +2,21 @@
 #define _VCF_DELEGATES_H__
 
 
+
+/*
+Copyright 2000-2007 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
+
+#if _MSC_VER > 1000
+#   pragma once
+#endif
+
+
+
+
 #ifndef _VCF_THREADED_FUNCTIONS_H__
 #include "vcf/FoundationKit/ThreadedFunctions.h"
 #endif 
@@ -144,7 +159,7 @@ private:
 };
 
 
-typedef CallBack EventHandler;
+
 
 
 class ThreadPool;
@@ -216,6 +231,13 @@ public:
 			functions.erase( found );
 		}
 	}
+
+
+	Delegate& operator -=( CallBack* callback ) {
+		remove( callback );
+		return *this;
+	}
+
 
 	const CallBack& at( const uint32& index ) const {
 		return *functions.at( index );

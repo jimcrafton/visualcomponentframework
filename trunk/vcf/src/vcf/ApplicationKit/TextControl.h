@@ -48,7 +48,7 @@ data.
 class APPLICATIONKIT_API TextControl : public Control {
 public:
 
-	DELEGATE(SelectionChanged);
+	DELEGATE(TextModelDelegate,SelectionChanged);
 
 	TextControl( const bool& multiLineControl=false );
 	virtual ~TextControl();

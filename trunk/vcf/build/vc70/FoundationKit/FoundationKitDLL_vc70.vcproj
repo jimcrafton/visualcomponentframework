@@ -21,7 +21,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_ROOT)/src"
+				AdditionalIncludeDirectories="$(VCF_ROOT)\src\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -81,7 +81,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_ROOT)/src"
+				AdditionalIncludeDirectories="$(VCF_ROOT)\src\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -1007,6 +1007,12 @@
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VariantDataStream.h">
 			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VFFOutputStream.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Utils"
@@ -1344,6 +1350,12 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\CommonDefines.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Component.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ComponentInfo.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Dictionary.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -1563,9 +1575,6 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\SystemToolkit.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\VCF.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCFChar.h">
 			</File>
 			<File
@@ -1613,9 +1622,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCFString.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\VCFulong64.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\WarningsOffVc.h">

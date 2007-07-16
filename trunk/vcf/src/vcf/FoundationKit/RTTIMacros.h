@@ -145,27 +145,19 @@ you are finished defining your RTTI.
 /**
 *Registers that the class fires an event. By declaring this it is expected that
 *there are methods for adding event handler of the specified type that fire
-*events of the specified event type.
-*@param handlerClassName the name of the EventHandler derived class. This class
-*will contain a method pointer to some source object that wants to get notified
-*for the event.
-*@param eventClassName the class name of the Event type that is fired
-*by this class.
-*@param eventMethod the method name that is used in the supporting
-*event methods. So you might pass in "StreamExhausted". You could then
-*expect to find methods as follows declared in the class:
-*<pre>
-*   void addStreamExhaustedHandler( EventHandler* handler ) ;
-*   void removeStreamExhaustedHandler( EventHandler* handler ) ;
-*   void fireOnStreamExhausted( eventClassName* event ) ;
-*</pre>
 */
 #define _event_(handlerClassName,EventType,DelegateID) \
+	\
+	/*
+Temporarily commented out until we find a better solution - the 
+new delegate implementation breaks this.
 		VCF::registerEvent<RttiClassType,EventType>( NULL, NULL, tmpClassName, \
 							VCF::String(handlerClassName), VCF::String(#EventType), \
 							VCF::String(#DelegateID), \
 							(VCF::EventProperty::DelegateMethod)&RttiClassType::get##DelegateID); \
 		\
+*/
+
 
 #define _abstract_event_(handlerClassName,EventType,DelegateID) \
 		VCF::registerEvent<RttiClassType,EventType>( NULL, NULL, tmpClassName, \

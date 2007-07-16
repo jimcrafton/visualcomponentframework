@@ -1,3 +1,4 @@
+
 #ifndef _VCF_RUNLOOPTIMER_H__
 #define _VCF_RUNLOOPTIMER_H__
 
@@ -41,3 +42,4 @@ namespace VCF {
 }
 
 #endif
+

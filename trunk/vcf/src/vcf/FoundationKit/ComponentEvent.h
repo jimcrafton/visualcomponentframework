@@ -56,26 +56,9 @@ protected:
 
 };
 
-/**
-\class ComponentEventHandler ComponentEvent.h "vcf/ApplicationKit/ComponentEvent.h"
-*/
-/*
-template <class SOURCE_TYPE>
-class ComponentEventHandler : public EventHandlerInstance<SOURCE_TYPE,ComponentEvent> {
-public:
-	ComponentEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,ComponentEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,ComponentEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-	virtual ~ComponentEventHandler(){};
-
-};
-*/
 
 typedef Delegate1<ComponentEvent*> ComponentDelegate;
+typedef ComponentDelegate::ProcedureType ComponentHandler;
 
 };
 

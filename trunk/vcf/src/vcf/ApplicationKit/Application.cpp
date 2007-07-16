@@ -56,8 +56,8 @@ Application::Application( int argc, char** argv ):
 	ApplicationKit::init( argc, argv );
 
 	//gets added automatically to the app list of event handlers
-	WindowEventHandler<Application>* wh =
-		new WindowEventHandler<Application>( this,&Application::onMainWindowClose, "AppWindowHandler" );
+	WindowHandler* wh =
+		new ClassProcedure1<WindowEvent*,Application>( this,&Application::onMainWindowClose, "AppWindowHandler" );
 
 	//install a new resource bundle
 	//this new resource bundle is aware of the 
@@ -289,13 +289,13 @@ Window* Application::getMainWindow()
 
 void Application::setMainWindow( Window* mainWindow )
 {
-	EventHandler* wl = getEventHandler("AppWindowHandler");
+	CallBack* wl = getEventHandler("AppWindowHandler");
 	if ( NULL != mainWindow_ ){
-		mainWindow_->FrameClose.removeHandler( wl );
+		mainWindow_->FrameClose.remove( wl );
 	}
 	mainWindow_ = mainWindow;
 	if ( NULL != mainWindow_ ) {
-		mainWindow_->FrameClose.addHandler( wl );
+		mainWindow_->FrameClose.add( wl );
 	}
 }
 

@@ -66,26 +66,26 @@ public:
 	@event ListModelEvent
 	@eventtype LIST_MODEL_CONTENTS_DELETED
 	*/
-	DELEGATE(ContentsChanged)
+	DELEGATE(ListModelDelegate,ContentsChanged)
 
 	/**
 	@delegate ItemAdded fired when an item is added to the list model
 	@event ListModelEvent
 	*/
-	DELEGATE(ItemAdded)
+	DELEGATE(ListModelDelegate,ItemAdded)
 
 	/**
 	@delegate ItemDeleted fired when an item is removed from the list model
 	@event ListModelEvent
 	*/
-	DELEGATE(ItemDeleted)
+	DELEGATE(ListModelDelegate,ItemDeleted)
 
 	virtual void addContentsChangedHandler(EventHandler * handler) {
 		ContentsChanged += handler;
 	}
 
 	virtual void removeContentsChangedHandler(EventHandler * handler) {
-		ContentsChanged -= handler;
+		ContentsChanged.remove(handler);
 	}
 
 	virtual void addItemAddedHandler(EventHandler * handler) {
@@ -93,7 +93,7 @@ public:
 	}
 
 	virtual void removeItemAddedHandler(EventHandler * handler) {
-		ItemAdded -= handler;
+		ItemAdded.remove(handler);
 	}
 
 	virtual void addItemDeletedHandler(EventHandler * handler) {
@@ -101,7 +101,7 @@ public:
 	}
 
 	virtual void removeItemDeletedHandler(EventHandler * handler) {
-		ItemDeleted -= handler;
+		ItemDeleted.remove(handler);
 	}
 
     virtual void deleteItem(ListItem * item);

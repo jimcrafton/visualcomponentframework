@@ -102,25 +102,14 @@ private:
 
 
 /**
-\class KeyboardEventHandler KeyboardEvent.h "vcf/ApplicationKit/KeyboardEvent.h"
-*KeyboardEventHandler
+*KeyboardDelegate
 *handles the following:
-*onKeyPressed
-*onKeyDown
-*onKeyUp
+\li onKeyPressed
+\li onKeyDown
+\li onKeyUp
 */
-template <class SOURCE_TYPE>
-class KeyboardEventHandler : public EventHandlerInstance<SOURCE_TYPE,KeyboardEvent> {
-public:
-	KeyboardEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,KeyboardEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,KeyboardEvent>( source, handlerMethod, handlerName ) {
-
-	}
-};
-
-
+typedef Delegate1<KeyboardEvent*> KeyboardDelegate; 
+typedef KeyboardDelegate::ProcedureType KeyboardHandler;
 
 };
 

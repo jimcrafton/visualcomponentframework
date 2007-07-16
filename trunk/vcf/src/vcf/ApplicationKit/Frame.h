@@ -164,7 +164,7 @@ public:
 	@eventtype Frame::CLOSE_EVENT
 	@see close()
 	*/
-	DELEGATE(FrameClose)
+	DELEGATE(FrameDelegate,FrameClose)
 
 	/**
 	@delegate FrameActivation this is called when the frame becomes activated. Typically
@@ -174,7 +174,7 @@ public:
 	@eventtype Frame::ACTIVATION_EVENT
 	@see activate()
 	*/
-	DELEGATE(FrameActivation)
+	DELEGATE(WindowDelegate,FrameActivation)
 
 	/**
 	@delegate FrameClosing this is fired just before the windowing system attempts to close
@@ -185,7 +185,7 @@ public:
 	@see FrameEvent::setOkToClose
 	@see allowClose()
 	*/
-	DELEGATE(FrameClosing)
+	DELEGATE(FrameDelegate,FrameClosing)
 
 
 	/**

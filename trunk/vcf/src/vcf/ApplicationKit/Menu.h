@@ -29,7 +29,7 @@ class ComponentEvent;
 class APPLICATIONKIT_API Menu : public UIComponent {
 public:
 
-	DELEGATE(MenuItemChanged);
+	DELEGATE(MenuItemDelegate,MenuItemChanged);
 
 	Menu();
 

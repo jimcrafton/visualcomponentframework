@@ -435,7 +435,7 @@ void TableControl::init()
 	model->TableRowsDeleted += tmh;
 	model->TableCellsSelected += tmh;
 
-	ModelEventHandler<TableControl>* modelHandler =
+	Ck* modelHandler =
 		new ModelEventHandler<TableControl>( this, &TableControl::onTableModelEmptied, "ModelHandler" );
 
 	getViewModel()->addModelHandler( modelHandler );
@@ -664,7 +664,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 
 		//end editing here
 
-		TableCellClickEvent clickEvent( this, TableControl::TableCellClickedEvent, clickCell_ );
+		TableCellEvent clickEvent( this, TableControl::TableCellClickedEvent, clickCell_ );
 		TableCellDown.fireEvent( &clickEvent );
 
 
@@ -948,7 +948,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 
 				fixedRowClicked( clickCell_ );
 
-				TableCellClickEvent event(this,FixedRowClickedEvent,clickCell_);
+				TableCellEvent event(this,FixedRowClickedEvent,clickCell_);
 
 				FixedRowClicked.fireEvent( &event );
 			}
@@ -956,7 +956,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 
 				fixedColumnClicked( clickCell_ );
 
-				TableCellClickEvent event(this,FixedColumnClickedEvent,clickCell_);
+				TableCellEvent event(this,FixedColumnClickedEvent,clickCell_);
 
 				FixedColumnClicked.fireEvent( &event );
 			}
@@ -965,7 +965,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 
 				doSelection( clickCell_ );
 
-				TableCellClickEvent event(this,SelectingEvent,clickCell_);
+				TableCellEvent event(this,SelectingEvent,clickCell_);
 
 				TableSelecting.fireEvent( &event );
 

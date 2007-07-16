@@ -30,7 +30,7 @@ class MouseEvent;
 
 class GraphicsContext;
 
-class MouseHandler;
+
 
 class Rect;
 

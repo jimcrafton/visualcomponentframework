@@ -54,7 +54,7 @@ public:
 	@eventtype IMAGE_EVENT_HEIGHT_CHANGED
 	@see setSize()
 	*/
-    DELEGATE(ImageSizeChanged);
+    DELEGATE(ImageDelegate,ImageSizeChanged);
 
 	/**
 	*This macro creates a method for adding a listener to the AbstractImage's ImageSizeChangedHandler events
@@ -67,7 +67,7 @@ public:
 	*This macro creates a method for removing a listener to the AbstractImage's ImageSizeChangedHandler events
 	*/
 	virtual void removeImageSizeChangedHandler( EventHandler* handler ) {
-		ImageSizeChanged -= handler;
+		ImageSizeChanged.remove( handler );
 	}
 
     virtual GraphicsContext* getImageContext();

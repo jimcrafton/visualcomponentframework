@@ -89,16 +89,17 @@ public:
 	callbacks set, otherwise nothing will happen. When the object is destroyed
 	all the event handlers in this list are also destroyed.
 	*/
-	void addEventHandler( const String& handlerName, EventHandler* handler );
+	void addEventHandler( const String& handlerName, CallBack* handler );
 
 	/**
-	Finds a EventHandler handler for a given name. If the object has that
+	Finds a CallBack for a given name. If the object has that
 	handler then a pointer to the is returned otherwise null
-	is returned
+	is returned.
+	@see CallBack
 	*/
-	EventHandler* getEventHandler( const String& handlerName );
+	CallBack* getEventHandler( const String& handlerName );
 
-	String getEventHandlerName( EventHandler* handler );
+	String getEventHandlerName( CallBack* handler );
 	
 	/**	
 	@delegate Notifier events are used as a generic signal mechanism and can signify 
@@ -109,10 +110,10 @@ public:
 
 protected:
 	/**
-	This map holds a list of EventHandlers that have been
+	This map holds a list of CallBack that have been
 	added to the object
 	*/
-	std::map<String,EventHandler*> eventHandlers_;
+	std::map<String,CallBack*> eventHandlers_;
 };
 
 

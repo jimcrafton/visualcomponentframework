@@ -193,15 +193,15 @@ public:
 
 
 	AcceleratorKey( Control* associatedControl, const VirtualKeyCode& keyCode,
-					const uint32& modifierMask, EventHandler* eventHandler,
+					const uint32& modifierMask, EventProcedure* eventHandler,
 					const bool& isMnemonic=false );
 
 	AcceleratorKey( MenuItem* associatedMenuItem, const VirtualKeyCode& keyCode,
-					const uint32& modifierMask, EventHandler* eventHandler,
+					const uint32& modifierMask, EventProcedure* eventHandler,
 					const bool& isMnemonic=false );
 
 	AcceleratorKey( Object* associatedObject, const VirtualKeyCode& keyCode,
-					const uint32& modifierMask, EventHandler* eventHandler,
+					const uint32& modifierMask, EventProcedure* eventHandler,
 					const bool& isMnemonic=false );
 
 	virtual ~AcceleratorKey();
@@ -322,7 +322,7 @@ protected:
 	Control* associatedControl_;
 	MenuItem* associatedMenuItem_;
 	Object* associatedObject_;
-	EventHandler* eventHandler_;
+	EventProcedure* eventHandler_;
 	bool isMnemonic_;
 	bool enabled_;
 

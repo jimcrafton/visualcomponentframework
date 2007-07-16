@@ -39,7 +39,7 @@ public:
 	}
 
 	virtual void removeModelValidationHandler( EventHandler* handler ) {
-		ModelValidate -=  handler;
+		ModelValidate.remove( handler );
 	}
 
 	virtual void addModelHandler( EventHandler* handler ) {
@@ -47,12 +47,12 @@ public:
 	}
 
 	virtual void removeModelHandler( EventHandler* handler ) {
-		ModelChanged -=  handler;
+		ModelChanged.remove( handler );
 	}
 
 	virtual void validate() {
 		ValidationEvent e( this );
-		ModelValidate.fireEvent( &e );
+		ModelValidate( &e );
 	}
 
 	virtual void empty() {

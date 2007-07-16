@@ -13,7 +13,7 @@ where you installed the VCF.
 #   pragma once
 #endif
 
-#include <vcf/FoundationKit/RunLoopFwd.h>
+#include "vcf/FoundationKit/RunLoopFwd.h"
 
 namespace VCF {
     

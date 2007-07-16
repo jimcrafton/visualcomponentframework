@@ -46,6 +46,10 @@ private:
 };
 
 
+typedef VCF::Delegate1<ColumnItemEvent*> ColumnItemDelegate;
+typedef ColumnItemDelegate::ProcedureType ColumnItemHandler;
+
+
 }; //end of namespace VCF
 
 

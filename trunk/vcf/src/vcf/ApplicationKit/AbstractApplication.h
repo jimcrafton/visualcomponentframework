@@ -161,7 +161,7 @@ public:
 
 	AcceleratorKey* getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src );
 
-	void addAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask, EventHandler* eventHandler );
+	void addAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask, EventProcedure* eventHandler );
 
 	void addAcceleratorKey( AcceleratorKey* accelerator );
 

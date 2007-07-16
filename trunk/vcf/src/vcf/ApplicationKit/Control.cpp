@@ -651,7 +651,7 @@ void Control::handleEvent( Event* event )
 
 				//bounds_->right_ = bounds_->left_ + controlEvent->getNewSize().width_;
 				//bounds_->bottom_ = bounds_->top_ + controlEvent->getNewSize().height_;
-				ControlSized.fireEvent( (ControlEvent*)event );
+				ControlSized( (ControlEvent*)event );
 
 				if (!event->isConsumed() && !isDesigning()) {
 					sizeChange( controlEvent );
@@ -674,7 +674,7 @@ void Control::handleEvent( Event* event )
 				//bounds_->right_ = bounds_->left_ + w;
 				//bounds_->bottom_ = bounds_->top_ + h;
 
-				ControlPositioned.fireEvent( controlEvent );
+				ControlPositioned( controlEvent );
 
 				if (!event->isConsumed() && !isDesigning()) {
 					positionChange( controlEvent );
@@ -683,7 +683,7 @@ void Control::handleEvent( Event* event )
 			break;
 
 			case CONTROL_PARENT_CHANGED:{
-				ControlParentChanged.fireEvent( (ControlEvent*)event );
+				ControlParentChanged( (ControlEvent*)event );
 
 				if (!event->isConsumed() && !isDesigning()) {
 					parentChange( (ControlEvent*)event );
@@ -695,7 +695,7 @@ void Control::handleEvent( Event* event )
 				MouseEvent* mouseEvent = (MouseEvent*)event;
 
 
-				MouseEnter.fireEvent( mouseEvent );
+				MouseEnter( mouseEvent );
 				if (!event->isConsumed() && !isDesigning()) {
 					mouseEnter( mouseEvent );
 				}
@@ -708,7 +708,7 @@ void Control::handleEvent( Event* event )
 				clickPt_ = *mouseEvent->getPoint();
 				
 
-				MouseDown.fireEvent( mouseEvent );
+				MouseDown( mouseEvent );
 
 				//turn off normal mouse behaviour in design mode
 				if ( !event->isConsumed() && !isDesigning() ) {
@@ -732,7 +732,7 @@ void Control::handleEvent( Event* event )
 				}
 				
 				peer_->setCursor( cursor_ );
-				MouseMove.fireEvent( mouseEvent );
+				MouseMove( mouseEvent );
 				if (!event->isConsumed() && !isDesigning()) {
 					mouseMove( mouseEvent );
 				}
@@ -748,7 +748,7 @@ void Control::handleEvent( Event* event )
 
 
 				bool rightBtn = mouseEvent->hasRightButton();
-				MouseUp.fireEvent( mouseEvent );
+				MouseUp( mouseEvent );
 				if (!mouseEvent->isConsumed() && !isDesigning()) {
 					mouseUp( mouseEvent );
 				}
@@ -757,7 +757,7 @@ void Control::handleEvent( Event* event )
 					ControlPopupMenuMenuEvent e(this,Control::BEFORE_POPUP_MENU);
 					e.popupMenu = popupMenu_;
 
-					BeforePopupMenu.fireEvent( &e );
+					BeforePopupMenu( &e );
 
 					if ( !e.cancelPopup && (NULL != e.popupMenu) ) {
 						Point tmpPt = *mouseEvent->getPoint();
@@ -791,7 +791,7 @@ void Control::handleEvent( Event* event )
 				MouseEvent*  mouseEvent = (MouseEvent*)event;
 
 
-				MouseLeave.fireEvent( mouseEvent );
+				MouseLeave( mouseEvent );
 				if (!mouseEvent->isConsumed() && !isDesigning()) {
 					mouseLeave( mouseEvent );
 				}
@@ -801,7 +801,7 @@ void Control::handleEvent( Event* event )
 			case MOUSE_CLICK:{
 				
 				MouseEvent*  mouseEvent = (MouseEvent*)event;
-				MouseClicked.fireEvent( mouseEvent );
+				MouseClicked( mouseEvent );
 				if (!mouseEvent->isConsumed() && !isDesigning() ) {
 					mouseClick( mouseEvent );
 				}
@@ -811,7 +811,7 @@ void Control::handleEvent( Event* event )
 			case MOUSE_DBLCLICK:{
 				MouseEvent*  mouseEvent = (MouseEvent*)event;
 
-				MouseDoubleClicked.fireEvent( mouseEvent );
+				MouseDoubleClicked( mouseEvent );
 				if (!mouseEvent->isConsumed() && !isDesigning() ) {
 					mouseDblClick( mouseEvent );
 				}
@@ -824,7 +824,7 @@ void Control::handleEvent( Event* event )
 				if ( !isDesigning() || (NULL != getContainer()) ) {
 					keyDown( kbEvent );					
 				}
-				KeyDown.fireEvent( kbEvent );
+				KeyDown( kbEvent );
 			}
 			break;
 
@@ -834,7 +834,7 @@ void Control::handleEvent( Event* event )
 					keyPressed( kbEvent );
 				}
 				
-				KeyPressed.fireEvent( kbEvent );
+				KeyPressed( kbEvent );
 			}
 			break;
 
@@ -843,7 +843,7 @@ void Control::handleEvent( Event* event )
 				if ( !isDesigning() || (NULL != getContainer()) ) {
 					keyUp ( kbEvent );
 				}
-				KeyUp.fireEvent( kbEvent );
+				KeyUp( kbEvent );
 			}
 			break;
 
@@ -853,7 +853,7 @@ void Control::handleEvent( Event* event )
 				//StringUtils::traceWithArgs( "Control::FOCUS_LOST, this[%s]@ %p\n",
 				//					getClassName().c_str(), this );
 
-				FocusLost.fireEvent( focusEvent );
+				FocusLost( focusEvent );
 
 				if (!event->isConsumed() && !isDesigning()) {
 					lostFocus( focusEvent );
@@ -867,7 +867,7 @@ void Control::handleEvent( Event* event )
 				//StringUtils::traceWithArgs( "Control::FOCUS_GAINED, this[%s]@ %p\n",
 				//					getClassName().c_str(), this );
 
-				FocusGained.fireEvent( focusEvent );
+				FocusGained( focusEvent );
 
 				if (!event->isConsumed() && !isDesigning()) {
 					gotFocus( focusEvent );
@@ -943,7 +943,7 @@ void Control::setParent( Control* parent ) /**throw( InvalidPeer ); -JEC - FIXME
 {
 	if ( parent != parent_ ) {
 		ControlEvent event( this, parent );
-		ControlParentChanged.fireEvent( &event );
+		ControlParentChanged( &event );
 	}
 
 	parent_ = parent;
@@ -1820,7 +1820,7 @@ void Control::setViewModel( Model* viewModel )
 	
 	if ( modelChanged ) {
 		ControlEvent event( this, Control::CONTROL_MODELCHANGED );
-		ControlModelChanged.fireEvent(&event);
+		ControlModelChanged(&event);
 	}
 }
 
@@ -1851,7 +1851,7 @@ void Control::internal_beforePaint( GraphicsContext* context )
 {
 	if ( getAllowPaintNotification() ) {
 		ControlEvent e(this,Control::BEFORE_CONTROL_PAINTED,context);
-		BeforeControlPainted.fireEvent( &e );
+		BeforeControlPainted( &e );
 	}	
 }
 
@@ -1859,7 +1859,7 @@ void Control::internal_afterPaint( GraphicsContext* context )
 {
 	if ( getAllowPaintNotification() ) {
 		ControlEvent e(this,Control::AFTER_CONTROL_PAINTED,context);
-		AfterControlPainted.fireEvent( &e );
+		AfterControlPainted( &e );
 	}
 }
 

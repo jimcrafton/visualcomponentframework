@@ -249,7 +249,7 @@ namespace VCF{
 
 #include "vcf/FoundationKit/FilePath.h"
 
-#include "vcf/FoundationKit/Event.h"
+
 //#include "vcf/FoundationKit/EventHandler.h"
 //#include "vcf/FoundationKit/Delegate.h"
 
@@ -263,6 +263,8 @@ namespace VCF{
 #include "vcf/FoundationKit/Semaphore.h"
 #include "vcf/FoundationKit/Lock.h"
 #include "vcf/FoundationKit/Delegates.h"
+
+#include "vcf/FoundationKit/Event.h"
 
 
 #include "vcf/FoundationKit/NotifyEvent.h"

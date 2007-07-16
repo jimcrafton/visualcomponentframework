@@ -43,9 +43,9 @@ public:
 
 	virtual ~TimerComponent();
 
-	DELEGATE(TimerActivated)
-	DELEGATE(TimerDeactivated)
-	DELEGATE(TimerPulse)
+	DELEGATE(TimerDelegate,TimerActivated)
+	DELEGATE(TimerDelegate,TimerDeactivated)
+	DELEGATE(TimerDelegate,TimerPulse)
 
 
 	virtual void afterCreate( ComponentEvent* event );

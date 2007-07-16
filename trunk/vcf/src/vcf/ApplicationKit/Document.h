@@ -148,7 +148,7 @@ public:
 		if ( result ) {
 			setModified( false );
 			ModelEvent e( this, Document::deSaved );
-			ModelChanged.fireEvent( &e );
+			ModelChanged( &e );
 		}
 		return result;
 	};
@@ -188,7 +188,7 @@ public:
 				updateAllViews();
 
 				ModelEvent e( this, Document::deOpened );
-				ModelChanged.fireEvent( &e );
+				ModelChanged( &e );
 			}
 		}
 		catch ( BasicException& be ) {

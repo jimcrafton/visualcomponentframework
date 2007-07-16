@@ -183,11 +183,11 @@ void AbstractContainer::init()
 
 
 	controlHandler_ =
-		new ControlEventHandler<AbstractContainer>( this, &AbstractContainer::containerResized,
+		new ClassProcedure1<ControlEvent*,AbstractContainer>( this, &AbstractContainer::containerResized,
 													"AbstractContainer::containerResized");
 
 	mouseHandler_ =
-		new MouseEventHandler<AbstractContainer>( this,&AbstractContainer::onMouseEvent,
+		new ClassProcedure1<MouseEvent*,AbstractContainer>( this,&AbstractContainer::onMouseEvent,
 													"AbstractContainer::onMouseEvent");
 
 	controlContainer_ = NULL;
@@ -560,23 +560,23 @@ void AbstractContainer::setContainerControl( Control* control )
 		controlContainer_->ControlSized -= controlHandler_;
 
 		controlContainer_->MouseDoubleClicked -= mouseHandler_;
-		controlContainer_->MouseClicked.removeHandler( mouseHandler_ );
-		controlContainer_->MouseMove.removeHandler( mouseHandler_ );
-		controlContainer_->MouseUp.removeHandler( mouseHandler_ );
-		controlContainer_->MouseDown.removeHandler( mouseHandler_ );
-		controlContainer_->MouseLeave.removeHandler( mouseHandler_ );
-		controlContainer_->MouseEnter.removeHandler( mouseHandler_ );
+		controlContainer_->MouseClicked.remove( mouseHandler_ );
+		controlContainer_->MouseMove.remove( mouseHandler_ );
+		controlContainer_->MouseUp.remove( mouseHandler_ );
+		controlContainer_->MouseDown.remove( mouseHandler_ );
+		controlContainer_->MouseLeave.remove( mouseHandler_ );
+		controlContainer_->MouseEnter.remove( mouseHandler_ );
 	}
 	controlContainer_ = control;
-	controlContainer_->ControlSized.addHandler( controlHandler_ );
+	controlContainer_->ControlSized.add( controlHandler_ );
 
-	controlContainer_->MouseDoubleClicked.addHandler( mouseHandler_ );
-	controlContainer_->MouseClicked.addHandler( mouseHandler_ );
-	controlContainer_->MouseMove.addHandler( mouseHandler_ );
-	controlContainer_->MouseUp.addHandler( mouseHandler_ );
-	controlContainer_->MouseDown.addHandler( mouseHandler_ );
-	controlContainer_->MouseLeave.addHandler( mouseHandler_ );
-	controlContainer_->MouseEnter.addHandler( mouseHandler_ );
+	controlContainer_->MouseDoubleClicked.add( mouseHandler_ );
+	controlContainer_->MouseClicked.add( mouseHandler_ );
+	controlContainer_->MouseMove.add( mouseHandler_ );
+	controlContainer_->MouseUp.add( mouseHandler_ );
+	controlContainer_->MouseDown.add( mouseHandler_ );
+	controlContainer_->MouseLeave.add( mouseHandler_ );
+	controlContainer_->MouseEnter.add( mouseHandler_ );
 }
 
 

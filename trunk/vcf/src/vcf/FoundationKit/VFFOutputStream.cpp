@@ -306,7 +306,7 @@ character, followed by the name of the event handler.
 If the name of the source can't be determined, then a 
 empty string is returned.
 */
-String VFFOutputStream::generateEventHandlerString( EventProperty* eventProperty, EventHandler* handler )
+String VFFOutputStream::generateEventHandlerString( EventProperty* eventProperty, CallBack* handler )
 {
 	String result;
 
@@ -363,7 +363,7 @@ void VFFOutputStream::writeEvents( Component* component )
 					EventHandler::Vector::iterator it = handlers.begin();
 					
 					while ( it != handlers.end() ) {
-						EventHandler* ev = *it;
+						CallBack* ev = *it;
 						String evStr = generateEventHandlerString( eventProp, ev );
 
 						if ( !evStr.empty() ) {

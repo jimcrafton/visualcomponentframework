@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="LibJPEG"
-	ProjectGUID="{B264CF26-2709-4B51-8055-CF1015A43EA0}"
+	ProjectGUID="{6EEE04E1-E1F4-4B72-B480-FEFEDA2E9017}"
 	RootNamespace="LibJPEG"
 	>
 	<Platforms>

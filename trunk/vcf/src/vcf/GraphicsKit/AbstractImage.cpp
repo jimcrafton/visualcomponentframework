@@ -42,12 +42,12 @@ void AbstractImage::setSize(const uint32 & width, const uint32 & height )
 		ImageEvent event(this);
 		event.setType( IMAGE_EVENT_WIDTH_CHANGED );
 		event.setNewWidth( width );
-		ImageSizeChanged.fireEvent( &event );
+		ImageSizeChanged( &event );
 
 		ImageEvent event2(this);
 		event2.setType( IMAGE_EVENT_HEIGHT_CHANGED );
 		event2.setNewHeight( height_ );
-		ImageSizeChanged.fireEvent( &event2 );
+		ImageSizeChanged( &event2 );
 	}
 }
 

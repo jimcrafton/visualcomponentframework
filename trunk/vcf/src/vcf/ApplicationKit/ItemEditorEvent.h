@@ -83,20 +83,12 @@ private:
 /**
 *ItemEditorEventHandler
 *handles:
-*onChange
-*onValidateChange
+\li onChange
+\li onValidateChange
 */
-template <class SOURCE_TYPE>
-class ItemEditorEventHandler : public EventHandlerInstance<SOURCE_TYPE,ItemEditorEvent> {
-public:
-	ItemEditorEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,ItemEditorEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,ItemEditorEvent>( source, handlerMethod, handlerName ) {
 
-	}
-
-};
+typedef Delegate1<ItemEditorEvent*> ItemEditorDelegate; 
+typedef ItemEditorDelegate::ProcedureType ItemEditorHandler;
 
 }; //end of namespace VCF
 

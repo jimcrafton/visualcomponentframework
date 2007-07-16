@@ -75,6 +75,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InternetKitDLL", ".\Interne
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JavaScriptKit", ".\JavaScriptKit\JavaScriptKit_vc71.vcproj", "{7db13e65-e710-4959-8823-e3631b0852e1}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JavaScriptKitDLL", ".\JavaScriptKit\JavaScriptKitDLL_vc71.vcproj", "{e4db29bb-5328-47d9-adfc-5c64cf8fb23f}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibJPEG", "..\..\src\thirdparty\common\LibJPEG\LibJPEG_vc71.vcproj", "{6EEE04E1-E1F4-4B72-B480-FEFEDA2E9017}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
@@ -198,6 +206,10 @@ Global
 		{177137B4-88BC-4398-ACC0-91DC097AA54D}.Release.ActiveCfg = Release|Win32
 		{298C4E5D-293B-43FC-A61F-BF33596B5637}.Debug.ActiveCfg = Debug|Win32
 		{298C4E5D-293B-43FC-A61F-BF33596B5637}.Release.ActiveCfg = Release|Win32
+		{7db13e65-e710-4959-8823-e3631b0852e1}.Debug.ActiveCfg = Debug|Win32
+		{7db13e65-e710-4959-8823-e3631b0852e1}.Release.ActiveCfg = Release|Win32
+		{e4db29bb-5328-47d9-adfc-5c64cf8fb23f}.Debug.ActiveCfg = Debug|Win32
+		{e4db29bb-5328-47d9-adfc-5c64cf8fb23f}.Release.ActiveCfg = Release|Win32
 		{6EEE04E1-E1F4-4B72-B480-FEFEDA2E9017}.Debug.ActiveCfg = Debug|Win32
 		{6EEE04E1-E1F4-4B72-B480-FEFEDA2E9017}.Release.ActiveCfg = Release|Win32
 		{D385A04C-F56B-4DC3-B898-23CC51C8DD62}.Debug.ActiveCfg = Debug|Win32

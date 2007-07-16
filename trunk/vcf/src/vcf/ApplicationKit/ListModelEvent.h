@@ -78,24 +78,14 @@ private:
 
 
 /**
-*ListModelEventHandler
-*handles the following:
-*onListModelContentsChanged
-*onItemAdded
-*onItemDeleted
+*ListModelDelegate
+handles the following:
+\li onListModelContentsChanged
+\li onItemAdded
+\li onItemDeleted
 */
-template <class SOURCE_TYPE>
-class ListModelEventHandler : public EventHandlerInstance<SOURCE_TYPE,ListModelEvent> {
-public:
-	ListModelEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,ListModelEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,ListModelEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-};
-
+typedef Delegate1<ListModelEvent*> ListModelDelegate; 
+typedef ListModelDelegate::ProcedureType ListModelHandler;
 
 };
 

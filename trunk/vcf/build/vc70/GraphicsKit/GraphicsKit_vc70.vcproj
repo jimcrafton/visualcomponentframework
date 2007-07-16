@@ -22,7 +22,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_ROOT)/src"
+				AdditionalIncludeDirectories="$(VCF_ROOT)\src\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;NO_MFC;USE_FOUNDATIONKIT_LIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -69,7 +69,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_ROOT)/src"
+				AdditionalIncludeDirectories="$(VCF_ROOT)\src\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;NO_MFC;USE_FOUNDATIONKIT_LIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -336,6 +336,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\FontPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\GradientFills.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsContext.cpp">

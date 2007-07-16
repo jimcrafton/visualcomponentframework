@@ -49,8 +49,8 @@ public:
 		lbeItemStateChangeRequested = CUSTOM_EVENT_TYPES + ITEM_CONST + 100
 	};
 
-	DELEGATE(SelectionChanged);
-	DELEGATE(ItemStateChangeRequested);
+	DELEGATE(ItemDelegate,SelectionChanged);
+	DELEGATE(ItemDelegate,ItemStateChangeRequested);
 
 	ListBoxControl();
 

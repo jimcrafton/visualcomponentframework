@@ -60,8 +60,9 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/GraphicsResourceBundle.h"
 
 //printing
-#include "vcf/GraphicsKit/PrintSession.h"
 #include "vcf/GraphicsKit/PrintEvent.h"
+#include "vcf/GraphicsKit/PrintSession.h"
+
 
 
 /**

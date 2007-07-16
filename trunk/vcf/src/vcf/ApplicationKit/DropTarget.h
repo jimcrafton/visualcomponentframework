@@ -27,6 +27,102 @@ class Control;
 
 class DropTargetPeer;
 
+
+/**
+\class DropTargetEvent DropTarget.h "vcf/ApplicationKit/DropTarget.h"
+Drop event are fired when an object is dropped during a drag drop operation.
+ */
+class APPLICATIONKIT_API DropTargetEvent : public Event {
+
+
+public:
+
+	DropTargetEvent( Object* source, DataObject* data ):
+		Event( source ),
+		keyMask_(0),
+		buttonMask_(0),
+		data_(data),
+		action_(daNone) {
+	 };
+
+	DropTargetEvent( const DropTargetEvent& rhs ):Event(rhs) {
+		*this = rhs;
+	}
+
+	virtual ~DropTargetEvent(){};
+
+
+	DropTargetEvent& operator=( const DropTargetEvent& rhs ) {
+		Event::operator =( rhs );
+
+		keyMask_ = rhs.keyMask_;
+		buttonMask_ = rhs.buttonMask_;
+		data_ = rhs.data_;
+		dropPoint_ = rhs.dropPoint_;
+		action_ = rhs.action_;
+
+		return *this;
+	}
+
+
+	virtual Object* clone( bool deep=false ) {
+		return new DropTargetEvent(*this);
+	}
+
+
+    uint32 getButtonMask() {
+		return buttonMask_;
+	}
+
+	void setButtonMask( const uint32& buttonMask ) {
+		buttonMask_ = buttonMask;
+	}
+
+    uint32 getKeyMask() {
+		return keyMask_;
+	}
+
+	void setKeyMask( const uint32& keyMask ) {
+		keyMask_ = keyMask;
+	}
+
+    DataObject* getDataObject() {
+		return data_;
+	}
+
+    Point getDropPoint() {
+		return dropPoint_;
+	}
+
+	void setDropPoint( const Point& point ) {
+		dropPoint_ = point;
+	}
+
+	void setActionType( const DragActionType& action ) {
+		action_ = action;
+	}
+
+	/**
+	*get the type of action the event represents
+	*/
+	DragActionType getAction() {
+		return action_;
+	}
+protected:
+    uint32 keyMask_;
+    uint32 buttonMask_;
+    DataObject * data_;
+    Point dropPoint_;
+	DragActionType action_;
+};
+
+
+typedef Delegate1<DropTargetEvent*> DropTargetDelegate; 
+
+
+
+
+
 /**
 The DropTarget class represents a way to control and be notified when a
 something is "dropped" ( or just "dragged over" ) as a result of 
@@ -82,7 +178,7 @@ public:
 	@event DropTargetEvent
 	@eventtype DropTarget::DRAGGING_OVER
 	*/
-	DELEGATE(DropTargetDraggingOver)
+	DELEGATE(DropTargetDelegate,DropTargetDraggingOver)
 
 	/**
 	@delegate DropTargetDropped this is fired by the windowing system when something
@@ -90,7 +186,7 @@ public:
 	@event DropTargetEvent
 	@eventtype
 	*/
-	DELEGATE(DropTargetDropped)
+	DELEGATE(DropTargetDelegate,DropTargetDropped)
 
 	/**
 	@delegate DropTargetLeft is fired by the underlying windowing system
@@ -99,7 +195,7 @@ public:
 	@event DropTargetEvent
 	@eventtype DropTarget::DRAG_LEFT
 	*/
-	DELEGATE(DropTargetLeft)
+	DELEGATE(DropTargetDelegate,DropTargetLeft)
 
 	/**
 	@delegate DropTargetEntered this is fired by the underlying windowing system
@@ -108,7 +204,7 @@ public:
 	@event DropTargetEvent
 	@eventtype DropTarget::DRAG_ENTERED
 	*/
-	DELEGATE(DropTargetEntered)
+	DELEGATE(DropTargetDelegate,DropTargetEntered)
 
 	virtual void handleEvent( Event* event );
 

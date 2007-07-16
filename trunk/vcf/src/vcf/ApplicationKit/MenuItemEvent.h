@@ -46,23 +46,11 @@ public:
 /**
 *MenuItemEventHandler
 *handles the following:
-*onMenuItemClicked
-*onMenuItemUpdate
+\li onMenuItemClicked
+\li onMenuItemUpdate
 */
-template <class SOURCE_TYPE>
-class MenuItemEventHandler : public EventHandlerInstance<SOURCE_TYPE,MenuItemEvent> {
-public:
-
-	MenuItemEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,MenuItemEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,MenuItemEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-	virtual ~MenuItemEventHandler(){};
-};
-
+typedef Delegate1<MenuItemEvent*> MenuItemDelegate; 
+typedef MenuItemDelegate::ProcedureType MenuItemHandler;
 };
 
 

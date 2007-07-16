@@ -22,9 +22,9 @@ ObjectWithEvents::~ObjectWithEvents()
 {
 	//destroy all the event handlers
 
-	std::map<String,EventHandler*>::iterator it = eventHandlers_.begin();
+	std::map<String,CallBack*>::iterator it = eventHandlers_.begin();
 	while ( it != eventHandlers_.end() ){
-		EventHandler* ev = it->second;
+		CallBack* ev = it->second;
 
 		ev->free();
 		//delete it->second;
@@ -33,9 +33,9 @@ ObjectWithEvents::~ObjectWithEvents()
 	}
 	eventHandlers_.clear();
 /*
-	std::vector<EventHandler::Vector*>::iterator handlerIt = masterHandlerList_.begin();
+	std::vector<CallBack::Vector*>::iterator handlerIt = masterHandlerList_.begin();
 	while ( handlerIt != masterHandlerList_.end() ) {
-		EventHandler::Vector* list = *handlerIt;
+		CallBack::Vector* list = *handlerIt;
 		delete list;
 		list = NULL;
 		handlerIt ++;
@@ -45,27 +45,27 @@ ObjectWithEvents::~ObjectWithEvents()
 
 }
 
-void ObjectWithEvents::addEventHandler( const String& handlerName, EventHandler* handler )
+void ObjectWithEvents::addEventHandler( const String& handlerName, CallBack* handler )
 {
 	eventHandlers_[handlerName] = handler;
 }
 
-EventHandler* ObjectWithEvents::getEventHandler( const String& handlerName )
+CallBack* ObjectWithEvents::getEventHandler( const String& handlerName )
 {
-	EventHandler* result = NULL;
+	CallBack* result = NULL;
 
-	std::map<String,EventHandler*>::iterator found = eventHandlers_.find( handlerName );
+	std::map<String,CallBack*>::iterator found = eventHandlers_.find( handlerName );
 	if ( found != eventHandlers_.end() ){
 		result = found->second;
 	}
 	return result;
 }
 
-String ObjectWithEvents::getEventHandlerName( EventHandler* handler )
+String ObjectWithEvents::getEventHandlerName( CallBack* handler )
 {
 	String result;
 
-	std::map<String,EventHandler*>::iterator found = eventHandlers_.begin();
+	std::map<String,CallBack*>::iterator found = eventHandlers_.begin();
 	while ( found != eventHandlers_.end() ){
 		if ( found->second == handler ) {
 			result = found->first;
@@ -78,7 +78,7 @@ String ObjectWithEvents::getEventHandlerName( EventHandler* handler )
 }
 
 /*
-void ObjectWithEvents::addEventHandlerList( EventHandler::Vector* eventHandlerList )
+void ObjectWithEvents::addEventHandlerList( CallBack::Vector* eventHandlerList )
 {
 	masterHandlerList_.push_back( eventHandlerList );
 }

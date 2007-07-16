@@ -66,23 +66,14 @@ private:
 
 
 /**
-*TreeModelEventHandler
-*handles the following:
-*onRootNodeChanged
-*onNodeAdded
-*onNodeDeleted
+TreeModelDelegate
+handles the following:
+\li onRootNodeChanged
+\li onNodeAdded
+\li onNodeDeleted
 */
-template <class SOURCE_TYPE>
-class TreeModelEventHandler : public EventHandlerInstance<SOURCE_TYPE,TreeModelEvent> {
-public:
-	TreeModelEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,TreeModelEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,TreeModelEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-};
+typedef Delegate1<TreeModelEvent*> TreeModelDelegate; 
+typedef TreeModelDelegate::ProcedureType TreeModelHandler;
 
 };
 

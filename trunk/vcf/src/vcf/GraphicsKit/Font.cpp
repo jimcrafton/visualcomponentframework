@@ -237,7 +237,7 @@ void Font::setAttributes( const double& pointSize, const bool& bold, const bool&
 void Font::changed( int eventType )
 {
 	Event e(this, eventType);
-	FontChanged.fireEvent( &e );
+	FontChanged( &e );
 }
 
 

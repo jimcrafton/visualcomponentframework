@@ -39,6 +39,9 @@ public:
 };
 
 
+
+typedef VCF::Delegate1<ClipboardEvent*> ClipboardDelegate;
+typedef ClipboardDelegate::ProcedureType ClipboardHandler;
 };
 
 

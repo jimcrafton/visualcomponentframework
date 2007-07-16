@@ -115,7 +115,7 @@ public:
 		
 		VCF::DocManagerEvent event( currentDocument_, VCF::DocumentManager::dmCloseDocument );
 		
-		VCF::DocumentManager::getDocumentManager()->DocumentClosed.fireEvent( &event );
+		VCF::DocumentManager::getDocumentManager()->DocumentClosed( &event );
 
 		currentDocument_ = NULL;
 		window->setView( NULL );
@@ -289,7 +289,7 @@ public:
 		
 			VCF::DocManagerEvent event( currentDoc, VCF::DocumentManager::dmCloseDocument );
 		
-			VCF::DocumentManager::getDocumentManager()->DocumentClosed.fireEvent( &event );
+			VCF::DocumentManager::getDocumentManager()->DocumentClosed( &event );
 
 			window->setView( NULL );
 			window->setViewModel( NULL );
@@ -339,8 +339,9 @@ public:
 	void lastDocumentClosed() {
 		//Buh bye!
 
-		UIToolkit::postEvent( new StaticEventHandlerInstance<Event>(MDIPolicy::postQuitEventLoop), new Event(NULL,0) );
-		//UIToolkit::quitCurrentEventLoop();
+//>>>>NEEDS FIXING!!
+		//UIToolkit::postEvent( new StaticEventHandlerInstance<Event>(MDIPolicy::postQuitEventLoop), new Event(NULL,0) );
+//>>>>
 	}
 
 	static void postQuitEventLoop( Event* e ) {

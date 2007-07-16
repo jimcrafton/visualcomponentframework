@@ -35,13 +35,13 @@ public:
 	@delegate VerticalScrolling
 	@event ScrollEvent
 	*/
-	DELEGATE(VerticalScrolling)
+	DELEGATE(ScrollDelegate,VerticalScrolling)
 
 	/**
 	@delegate HorizontalScrolling
 	@event ScrollEvent
 	*/
-	DELEGATE(HorizontalScrolling)
+	DELEGATE(ScrollDelegate,HorizontalScrolling)
 
 	ScrollbarManager();
 

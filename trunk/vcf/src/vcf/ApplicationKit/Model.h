@@ -51,14 +51,14 @@ public:
 	@eventtype Model::MODEL_EMPTIED
 	@see empty()
 	*/
-	DELEGATE(ModelChanged)
+	DELEGATE(ModelDelegate,ModelChanged)
 
 	/**
 	@delegate ModelValidate fired when the model's validate() method is called
 	@event ValidationEvent
 	@see validate()
 	*/
-	DELEGATE(ModelValidate)
+	DELEGATE(ValidationDelegate,ModelValidate)
 
     /**
      * Adds a validation listener to the model
@@ -117,7 +117,7 @@ public:
 	}
 
 	void changed( ModelEvent* event ) {
-		ModelChanged.fireEvent( event );
+		ModelChanged.invoke( event );
 		updateAllViews();
 	}
 protected:

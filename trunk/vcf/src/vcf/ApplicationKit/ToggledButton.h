@@ -32,14 +32,14 @@ public:
 	virtual ~ToggledButton();
 
 
-	DELEGATE(ButtonClicked);
+	DELEGATE(ButtonDelegate,ButtonClicked);
 
 	virtual void addButtonClickHandler( EventHandler* handler ) {
 		ButtonClicked += handler;
 	}
 
 	virtual void removeButtonClickHandler( EventHandler* handler ) {
-		ButtonClicked -= handler;
+		ButtonClicked.remove(handler);
 	}
 
     virtual void click();

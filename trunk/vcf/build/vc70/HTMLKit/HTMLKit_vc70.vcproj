@@ -21,7 +21,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_ROOT)/src,$(VCF_ROOT)/src\thirdparty\win32\"
+				AdditionalIncludeDirectories="$(VCF_ROOT)\src,$(VCF_ROOT)\src\thirdparty\win32\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;USE_APPLICATIONKIT_LIB"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -69,7 +69,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_ROOT)/src,$(VCF_ROOT)/src\thirdparty\win32\"
+				AdditionalIncludeDirectories="$(VCF_ROOT)\src,$(VCF_ROOT)\src\thirdparty\win32\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;USE_APPLICATIONKIT_LIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"

@@ -65,26 +65,9 @@ private:
 
 
 
-/**
-\class PropertyChangeEventHandler PropertyChangeEvent.h "vcf/FoundationKit/PropertyChangeEvent.h"
-*Classes implmenting this interface <b><i>MUST</i></b> throw PropertyChangeException
-*if they do not want the change to be processed.
-*/
-/*
-template <class SOURCE_TYPE>
-class PropertyChangeEventHandler : public EventHandlerInstance<SOURCE_TYPE,PropertyChangeEvent> {
-public:
-	PropertyChangeEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,PropertyChangeEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,PropertyChangeEvent>( source, handlerMethod, handlerName ) {
-
-	}
-};
-*/
 
 typedef Delegate1<PropertyChangeEvent*> PropertyChangeDelegate;
-
+typedef PropertyChangeDelegate::ProcedureType PropertyChangeHandler;
 
 
 

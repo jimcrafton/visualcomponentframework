@@ -27,6 +27,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InternetKit", ".\InternetKi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InternetKitDLL", ".\InternetKit\InternetKitDLL_vc70.vcproj", "{298c4e5d-293b-43fc-a61f-bf33596b5637}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JavaScriptKit", ".\JavaScriptKit\JavaScriptKit_vc70.vcproj", "{7db13e65-e710-4959-8823-e3631b0852e1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JavaScriptKitDLL", ".\JavaScriptKit\JavaScriptKitDLL_vc70.vcproj", "{e4db29bb-5328-47d9-adfc-5c64cf8fb23f}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibJPEG", "..\..\src\thirdparty\common\LibJPEG\LibJPEG_vc70.vcproj", "{6eee04e1-e1f4-4b72-b480-fefeda2e9017}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibMNG", "..\..\src\thirdparty\common\FreeImage\Source\LibMNG\LibMNG_vc70.vcproj", "{d385a04c-f56b-4dc3-b898-23cc51c8dd62}"
@@ -143,6 +147,10 @@ Global
 		{177137b4-88bc-4398-acc0-91dc097aa54d}.Release.ActiveCfg = Release|Win32
 		{298c4e5d-293b-43fc-a61f-bf33596b5637}.Debug.ActiveCfg = Debug|Win32
 		{298c4e5d-293b-43fc-a61f-bf33596b5637}.Release.ActiveCfg = Release|Win32
+		{7db13e65-e710-4959-8823-e3631b0852e1}.Debug.ActiveCfg = Debug|Win32
+		{7db13e65-e710-4959-8823-e3631b0852e1}.Release.ActiveCfg = Release|Win32
+		{e4db29bb-5328-47d9-adfc-5c64cf8fb23f}.Debug.ActiveCfg = Debug|Win32
+		{e4db29bb-5328-47d9-adfc-5c64cf8fb23f}.Release.ActiveCfg = Release|Win32
 		{6eee04e1-e1f4-4b72-b480-fefeda2e9017}.Debug.ActiveCfg = Debug|Win32
 		{6eee04e1-e1f4-4b72-b480-fefeda2e9017}.Release.ActiveCfg = Release|Win32
 		{d385a04c-f56b-4dc3-b898-23cc51c8dd62}.Debug.ActiveCfg = Debug|Win32
