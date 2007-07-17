@@ -88,43 +88,43 @@ public:
 	@delegate TableCellAdded
 	@event TableModelEvent
 	*/
-	DELEGATE(TableModelDelegate,TableCellAdded)
+	DELEGATE(TableModelDelegate,TableCellAdded);
 
 	/**
 	@delegate TableCellDeleted
 	@event TableModelEvent
 	*/
-	DELEGATE(TableModelDelegate,TableCellDeleted)
+	DELEGATE(TableModelDelegate,TableCellDeleted);
 
 	/**
 	@delegate TableCellsSelected
 	@event TableModelEvent
 	*/
-	DELEGATE(TableModelDelegate,TableCellsSelected)
+	DELEGATE(TableModelDelegate,TableCellsSelected);
 
 	/**
 	@delegate TableRowAdded
 	@event TableModelEvent
 	*/
-	DELEGATE(TableModelDelegate,TableRowsAdded)
+	DELEGATE(TableModelDelegate,TableRowsAdded);
 
 	/**
 	@delegate TableRowDeleted
 	@event TableModelEvent
 	*/
-	DELEGATE(TableModelDelegate,TableRowsDeleted)
+	DELEGATE(TableModelDelegate,TableRowsDeleted);
 
 	/**
 	@delegate TableColumnAdded
 	@event TableModelEvent
 	*/
-	DELEGATE(TableModelDelegate,TableColumnsAdded)
+	DELEGATE(TableModelDelegate,TableColumnsAdded);
 
 	/**
 	@delegate TableColumnDeleted
 	@event TableModelEvent
 	*/
-	DELEGATE(TableModelDelegate,TableColumnsDeleted)
+	DELEGATE(TableModelDelegate,TableColumnsDeleted);
 	
     virtual void empty() {;}
     virtual void addRow() = 0;

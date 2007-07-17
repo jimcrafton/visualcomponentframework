@@ -69,7 +69,7 @@ void Dialog::onDialogClose( Event* event )
 		SheetModalFinished(&e);
 	}
 	else if ( !isModal() ) {
-		EventHandler* ev = new GenericEventHandler<Dialog>( this, &Dialog::onPostClose );
+		EventHandler* ev = new ClassProcedure1<Event*,Dialog>( this, &Dialog::onPostClose );
 		UIToolkit::postEvent( ev, new Event( event->getSource() ) );
 	}
 }
@@ -143,9 +143,9 @@ public:
 
 	virtual ~ControlHolder() {
 		if ( NULL != control_ ) {
-			EventHandler* ev = getEventHandler( "onDestroy" );
-			if ( NULL != ev ) {
-				control_->ComponentDestroyed -= ev;
+			CallBack* cb = getEventHandler( "onDestroy" );
+			if ( NULL != cb ) {
+				control_->ComponentDestroyed -= cb;
 			}
 		}
 	}
@@ -176,9 +176,9 @@ public:
 protected:
 	void updateEventHandler() {
 		if ( NULL != control_ ) {
-			EventHandler* ev = getEventHandler( "onDestroy" );
+			CallBack* ev = getEventHandler( "onDestroy" );
 			if ( NULL == ev ) {
-				ev = new ComponentEventHandler<ControlHolder>(this, &ControlHolder::onDestroy, "onDestroy" );
+				ev = new ClassProcedure1<ComponentEvent*,ControlHolder>(this, &ControlHolder::onDestroy, "onDestroy" );
 			}
 			control_->ComponentDestroyed += ev;
 		}

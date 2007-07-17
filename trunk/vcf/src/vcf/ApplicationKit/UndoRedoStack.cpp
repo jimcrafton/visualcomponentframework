@@ -25,7 +25,7 @@ UndoRedoStack::~UndoRedoStack()
 void UndoRedoStack::clearCommands()
 {
 	UndoRedoEvent event( this, UNDOREDO_EVENT_STACK_CLEARED );
-	StackCleared.fireEvent( &event );
+	StackCleared( &event );
 
 	std::deque<Command*>::iterator it = undoStack_.begin();
 	while ( it != undoStack_.end() ) {
@@ -55,7 +55,7 @@ void UndoRedoStack::undo()
 	Command* firstCommand = undoStack_.back();
 
 	UndoRedoEvent event( this, UNDOREDO_EVENT_UNDO, firstCommand );
-	UndoCommand.fireEvent( &event );
+	UndoCommand( &event );
 
 	/* the default undo action of this class is bypassed if the user needs */
 	if ( true == event.getAllowsUndo() ) {
@@ -74,7 +74,7 @@ void UndoRedoStack::redo()
 	Command* firstCommand = redoStack_.front();
 
 	UndoRedoEvent event( this, UNDOREDO_EVENT_REDO,firstCommand );
-	RedoCommand.fireEvent( &event );
+	RedoCommand( &event );
 
 	/* the default redo action of this class is bypassed if the user needs */
 	if ( true == event.getAllowsRedo() ) {
@@ -110,11 +110,11 @@ void UndoRedoStack::addCommand( Command* command, const bool& autoExecute )
 	if ( true == autoExecute ) {
 		command->execute();
 		UndoRedoEvent event( this, UNDOREDO_EVENT_EXECUTE,command );
-		ExecuteCommand.fireEvent( &event );
+		ExecuteCommand( &event );
 	}
 
 	UndoRedoEvent event( this, UNDOREDO_EVENT_STACK_CHANGED, command );
-	StackChanged.fireEvent( &event );
+	StackChanged( &event );
 }
 
 void UndoRedoStack::movetToRedoStack( Command* command )

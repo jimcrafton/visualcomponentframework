@@ -76,7 +76,7 @@ void Menu::itemChanged( const int& eventType, MenuItem* item )
 {
 	MenuItemEvent event(item,eventType);
 
-	MenuItemChanged.fireEvent( &event );
+	MenuItemChanged( &event );
 }
 
 uint32 Menu::getItemIndex( MenuItem* item )

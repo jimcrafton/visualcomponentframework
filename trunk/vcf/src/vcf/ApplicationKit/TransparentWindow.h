@@ -55,7 +55,7 @@ protected:
 	TransparentWindowPeer* transparentWndPeer_;
 	WindowPeer * windowPeer_;
 
-	void onClose( WindowEvent* e );
+	void onClose( FrameEvent* e );
 	void postClose( Event* event );
 };
 

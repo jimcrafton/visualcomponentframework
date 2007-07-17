@@ -168,7 +168,7 @@ public:
 	void handleEvent( Event* event );
 protected:
 	void postClose( Event* event );
-	void onClose( WindowEvent* e );
+	void onClose( FrameEvent* e );
     WindowPeer * windowPeer_;
 	MenuBar* menuBar_;
 

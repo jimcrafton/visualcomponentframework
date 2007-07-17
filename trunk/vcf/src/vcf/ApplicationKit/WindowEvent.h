@@ -21,10 +21,9 @@ namespace VCF{
 
 #define WINDOW_CONST					600
 
-#define WINDOW_EVENT_CLOSE				CUSTOM_EVENT_TYPES + WINDOW_CONST + 1
-#define WINDOW_EVENT_RESTORE			CUSTOM_EVENT_TYPES + WINDOW_CONST + 2
-#define WINDOW_EVENT_MAXIMIZE			CUSTOM_EVENT_TYPES + WINDOW_CONST + 3
-#define WINDOW_EVENT_MINIMIZE			CUSTOM_EVENT_TYPES + WINDOW_CONST + 4
+#define WINDOW_EVENT_RESTORE			CUSTOM_EVENT_TYPES + WINDOW_CONST + 1
+#define WINDOW_EVENT_MAXIMIZE			CUSTOM_EVENT_TYPES + WINDOW_CONST + 2
+#define WINDOW_EVENT_MINIMIZE			CUSTOM_EVENT_TYPES + WINDOW_CONST + 3
 
 /**
 \class WindowEvent WindowEvent.h "vcf/ApplicationKit/WindowEvent.h"  
@@ -51,13 +50,13 @@ private:
 /**
 WindowDelegate
 handles the following:
-\li onWindowClose
 \li onWindowRestore
 \li onWindowMaximize
 \li onWindowMinimize
 */
 typedef Delegate1<WindowEvent*> WindowDelegate; 
 typedef WindowDelegate::ProcedureType WindowHandler;
+
 
 };
 

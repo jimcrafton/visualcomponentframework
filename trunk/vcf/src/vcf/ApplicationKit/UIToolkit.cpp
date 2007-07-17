@@ -41,10 +41,10 @@ UIToolkit::UIToolkit():
 	policyMgr_(NULL)
 {
 	acceleratorMnemonicHandler_ =
-		new KeyboardEventHandler<UIToolkit>( this, &UIToolkit::onAcceleratorMnemonic );
+		new ClassProcedure1<KeyboardEvent*,UIToolkit>( this, &UIToolkit::onAcceleratorMnemonic );
 
 	defaultButtonHandler_ =
-		new KeyboardEventHandler<UIToolkit>( this, &UIToolkit::onDefaultButton );
+		new ClassProcedure1<KeyboardEvent*,UIToolkit>( this, &UIToolkit::onDefaultButton );
 
 	Component::initComponentRegistrar();
 }
@@ -795,7 +795,7 @@ void UIToolkit::displayContextHelpForControl( Control* control )
 
 		HelpEvent event(control);
 		
-		control->HelpRequested.fireEvent( &event );
+		control->HelpRequested( &event );
 
 		String helpSection = event.helpSection;
 		String helpBook = event.helpBook;
@@ -805,7 +805,7 @@ void UIToolkit::displayContextHelpForControl( Control* control )
 			Control* parent = control->getParent();
 			while ( NULL != parent ) {
 				HelpEvent event2(parent);
-				parent->HelpRequested.fireEvent( &event2 );
+				parent->HelpRequested( &event2 );
 				
 				helpSection = event.helpSection;
 				helpBook = event.helpBook;
@@ -1075,7 +1075,7 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 
 	if ( NULL != accelerator ) {
 
-		EventHandler* ev = NULL;
+		CallBack* ev = NULL;
 
 		if ( accelerator->isMnemonic() ) {
 			ev = acceleratorMnemonicHandler_;
@@ -1092,7 +1092,7 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 																	event->getKeyValue(),
 																	event->getVirtualCode() );
 
-				postEvent( ev, acceleratorEvent, false );
+				postEvent( (EventHandler*)ev, acceleratorEvent, false );
 			}
 
 			//KeyboardEvent acceleratorEvent( accelerator, Control::KEYBOARD_ACCELERATOR,
@@ -1133,7 +1133,7 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 					Event* e = (Event*)event->clone();
 					e->setUserData( button );
 
-					postEvent( new StaticEventHandlerInstance<Event>(internal_handleKeyboardButtonEvent),
+					postEvent( new EventHandler(internal_handleKeyboardButtonEvent),
 								e );
 
 					/*
@@ -1478,16 +1478,16 @@ void UIToolkit::internal_removeFromUpdateList( Component* component )
 
 void UIToolkit::internal_setUpdateTimerSpeed( const uint32& milliseconds )
 {
-	EventHandler* ev = getEventHandler( "UIToolkit::onUpdateComponentsTimer" );
+	CallBack* ev = getEventHandler( "UIToolkit::onUpdateComponentsTimer" );
 	if ( NULL != ev ) {
-		internal_unregisterTimerHandler( ev );
+		internal_unregisterTimerHandler( (EventHandler*)ev );
 	}
 
 	if ( NULL == ev ) {
-		ev = new TimerEventHandler<UIToolkit>( this, &UIToolkit::onUpdateComponentsTimer, "UIToolkit::onUpdateComponentsTimer" );
+		ev = new ClassProcedure1<TimerEvent*,UIToolkit>( this, &UIToolkit::onUpdateComponentsTimer, "UIToolkit::onUpdateComponentsTimer" );
 	}
 
-	internal_registerTimerHandler( this, ev, milliseconds );
+	internal_registerTimerHandler( this, (EventHandler*)ev, milliseconds );
 }
 
 void UIToolkit::onUpdateComponentsTimer( TimerEvent* e )
