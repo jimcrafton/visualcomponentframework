@@ -62,16 +62,16 @@ void MenuManager::registerWindow( Window* window )
 {
 	VCF_ASSERT( NULL != window );
 
-	EventHandler* ev = MenuManager::menuManager->getEventHandler( "MenuManager::onWindowActivated" );
+	CallBack* ev = MenuManager::menuManager->getEventHandler( "MenuManager::onWindowActivated" );
 	if ( NULL == ev ) {
-		ev = new GenericEventHandler<MenuManager>( MenuManager::menuManager, &MenuManager::onWindowActivated, "MenuManager::onWindowActivated" );
+		ev = new ClassProcedure1<Event*,MenuManager>( MenuManager::menuManager, &MenuManager::onWindowActivated, "MenuManager::onWindowActivated" );
 	}
 
 	window->FrameActivation += ev;
 
 	ev = MenuManager::menuManager->getEventHandler( "MenuManager::onWindowClosed" );
 	if ( NULL == ev ) {
-		ev = new GenericEventHandler<MenuManager>( MenuManager::menuManager, &MenuManager::onWindowClosed, "MenuManager::onWindowClosed" );
+		ev = new ClassProcedure1<Event*,MenuManager>( MenuManager::menuManager, &MenuManager::onWindowClosed, "MenuManager::onWindowClosed" );
 	}
 	
 	window->FrameClose += ev;
@@ -82,9 +82,9 @@ void MenuManager::registerMenuBar( MenuBar* menuBar )
 {
 	VCF_ASSERT( NULL != menuBar );
 
-	EventHandler* ev = MenuManager::menuManager->getEventHandler( "MenuManager::onMenuItemChange" );
+	CallBack* ev = MenuManager::menuManager->getEventHandler( "MenuManager::onMenuItemChange" );
 	if ( NULL == ev ) {
-		ev = new GenericEventHandler<MenuManager>( MenuManager::menuManager, &MenuManager::onMenuItemChange, "MenuManager::onMenuItemChange" );
+		ev = new ClassProcedure1<Event*,MenuManager>( MenuManager::menuManager, &MenuManager::onMenuItemChange, "MenuManager::onMenuItemChange" );
 	}
 
 	menuBar->MenuItemChanged += ev;
@@ -94,9 +94,9 @@ void MenuManager::registerPopupMenu( PopupMenu* popupMenu )
 {
 	VCF_ASSERT( NULL != popupMenu );
 
-	EventHandler* ev = MenuManager::menuManager->getEventHandler( "MenuManager::onMenuItemChange" );
+	CallBack* ev = MenuManager::menuManager->getEventHandler( "MenuManager::onMenuItemChange" );
 	if ( NULL == ev ) {
-		ev = new GenericEventHandler<MenuManager>( MenuManager::menuManager, &MenuManager::onMenuItemChange, "MenuManager::onMenuItemChange" );
+		ev = new ClassProcedure1<Event*,MenuManager>( MenuManager::menuManager, &MenuManager::onMenuItemChange, "MenuManager::onMenuItemChange" );
 	}
 
 	popupMenu->MenuItemChanged += ev;

@@ -229,17 +229,17 @@ void Frame::activate()
 				
 				VCF::WindowEvent event( oldActiveFrame, Frame::ACTIVATION_EVENT );
 
-				//StringUtils::trace( Format( "oldActiveFrame->FrameActivation.fireEvent, this[%s]@ %s\n" ) %
+				//StringUtils::trace( Format( "oldActiveFrame->FrameActivation, this[%s]@ %s\n" ) %
 				//					oldActiveFrame->getClassName() % oldActiveFrame->toString() );
 
-				oldActiveFrame->FrameActivation.fireEvent( &event );
+				oldActiveFrame->FrameActivation( &event );
 			}
 		}
 
 		if ( getComponentState() == Component::csNormal ) {
 			
 			VCF::WindowEvent event( this, Frame::ACTIVATION_EVENT );
-			FrameActivation.fireEvent( &event );
+			FrameActivation( &event );
 		}
 	}
 }
@@ -277,7 +277,7 @@ bool Frame::allowClose()
 {
 	bool result = false;
 	FrameEvent event( this, CLOSING_EVENT );
-	FrameClosing.fireEvent( &event );
+	FrameClosing( &event );
 	result = event.isOkToClose();
 
 	return result;

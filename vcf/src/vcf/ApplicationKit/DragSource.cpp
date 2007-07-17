@@ -36,11 +36,11 @@ void DragSource::startDragDrop( DataObject* data )
 		clipboardDataObject_ = data;
 		//copyDataToClipboard(); ?
 
-		SourceBegin.fireEvent( &event );
+		SourceBegin( &event );
 
 		actionType_ = dragDropPeer_->startDragDrop( clipboardDataObject_ );
 		//notify the end of the darg drop op
-		SourceEnd.fireEvent( &event );
+		SourceEnd( &event );
 
 	}
 }

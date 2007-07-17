@@ -30,7 +30,7 @@ TransparentWindow::TransparentWindow( Frame* frame ):
 	peer_->setControl( this );
 
 	//add a close handler to get notified of the closing window
-	FrameClose.addHandler( new WindowEventHandler<TransparentWindow>( this, &TransparentWindow::onClose, "onClose" ) );
+	FrameClose.add( new ClassProcedure1<FrameEvent*,TransparentWindow>( this, &TransparentWindow::onClose, "onClose" ) );
 }
 
 TransparentWindow::~TransparentWindow()
@@ -45,8 +45,8 @@ void  TransparentWindow::setClientBounds( Rect* bounds )
 
 void TransparentWindow::close()
 {
-	WindowEvent event( this, WINDOW_EVENT_CLOSE );
-	FrameClose.fireEvent( &event );
+	FrameEvent event( this, Frame::CLOSE_EVENT );
+	FrameClose( &event );
 	
 	if ( NULL == windowPeer_ ){
 		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
@@ -74,9 +74,9 @@ void TransparentWindow::setAlphaImage( Image* img )
 	transparentWndPeer_->setAlphaImage( img );
 }
 
-void TransparentWindow::onClose( WindowEvent* e )
+void TransparentWindow::onClose( FrameEvent* e )
 {
-	EventHandler* ev = new GenericEventHandler<TransparentWindow>( this, &TransparentWindow::postClose );
+	EventHandler* ev = new ClassProcedure1<Event*,TransparentWindow>( this, &TransparentWindow::postClose );
 	UIToolkit::postEvent( ev, new Event( this ) );
 }
 

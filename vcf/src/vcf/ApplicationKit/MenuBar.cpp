@@ -78,20 +78,20 @@ void MenuBar::init()
 	item->setMenuOwner( this );
 	item->setName( "RootMenuItem" );
 
-	EventHandler* mih =
-		new MenuItemEventHandler<MenuBar>( this, &MenuBar::onMenutItemAdded, "MenuBar::onMenutItemAdded" );
+	CallBack* mih =
+		new ClassProcedure1<MenuItemEvent*,MenuBar>( this, &MenuBar::onMenutItemAdded, "MenuBar::onMenutItemAdded" );
 
 	MenuItemChanged += mih;
 	//item->addItemAddedHandler( mih );
 
 	mih =
-		new MenuItemEventHandler<MenuBar>( this, &MenuBar::onMenutItemDeleted, "MenuBar::onMenutItemDeleted" );
+		new ClassProcedure1<MenuItemEvent*,MenuBar>( this, &MenuBar::onMenutItemDeleted, "MenuBar::onMenutItemDeleted" );
 
 	MenuItemChanged += mih;
 
 	//item->addItemDeletedHandler( mih );
 
-	EventHandler* ev = new GenericEventHandler<MenuBar> ( this, &MenuBar::handleEvent, "MenuBar::handleEvent" );
+	CallBack* ev = new ClassProcedure1<Event*,MenuBar> ( this, &MenuBar::handleEvent, "MenuBar::handleEvent" );
 
 	ComponentAdded += ev;
 	ComponentRemoved += ev;

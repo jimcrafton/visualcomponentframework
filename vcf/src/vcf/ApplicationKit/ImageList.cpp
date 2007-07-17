@@ -78,7 +78,7 @@ void ImageList::setImageWidth( const uint32& width )
 	imageWidth_ = 	width;
 	changed();
 	ImageListEvent event( this, IMAGELIST_EVENT_WIDTH_CHANGED );
-	SizeChanged.fireEvent( &event );
+	SizeChanged( &event );
 }
 
 void ImageList::setImageHeight( const uint32& height )
@@ -86,7 +86,7 @@ void ImageList::setImageHeight( const uint32& height )
 	imageHeight_ = height;
 	changed();
 	ImageListEvent event( this, IMAGELIST_EVENT_HEIGHT_CHANGED );
-	SizeChanged.fireEvent( &event );
+	SizeChanged( &event );
 }
 
 void ImageList::setTransparentColor( Color* color )
@@ -139,7 +139,7 @@ void ImageList::addImage( Image* newImage )
 
 	ImageListEvent event( this, IMAGELIST_EVENT_ITEM_ADDED, newImage );
 	event.setIndexOfImage( totalImageCount_-1 );
-	ImageAdded.fireEvent( &event );
+	ImageAdded( &event );
 }
 
 void ImageList::insertImage( const uint32 & index, Image* newImage )
@@ -206,7 +206,7 @@ void ImageList::insertImage( const uint32 & index, Image* newImage )
 
 	ImageListEvent event( this, IMAGELIST_EVENT_ITEM_ADDED, newImage );
 	event.setIndexOfImage( index );
-	ImageAdded.fireEvent( &event );
+	ImageAdded( &event );
 }
 
 void ImageList::deleteImage( const uint32 & index )
@@ -239,7 +239,7 @@ void ImageList::deleteImage( const uint32 & index )
 
 	ImageListEvent event( this, IMAGELIST_EVENT_ITEM_DELETED );
 	event.setIndexOfImage( index );
-	ImageAdded.fireEvent( &event );
+	ImageAdded( &event );
 }
 
 void ImageList::draw( GraphicsContext* context, const uint32& index, Point* pt )

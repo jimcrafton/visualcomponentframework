@@ -574,8 +574,8 @@ protected:
 	Image* warningImage_;
 	Image* informationImage_;
 	Image* questionImage_;
-	EventHandler* acceleratorMnemonicHandler_;
-	EventHandler* defaultButtonHandler_;
+	KeyboardHandler* acceleratorMnemonicHandler_;
+	KeyboardHandler* defaultButtonHandler_;
 	UIMetricsManager* metricsMgr_;
 	UIPolicyManager* policyMgr_;
 	std::vector<Button*> defaultButtonList_;

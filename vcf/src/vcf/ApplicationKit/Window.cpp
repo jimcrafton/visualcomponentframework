@@ -42,11 +42,9 @@ Window::Window()
 	setWidth( getPreferredWidth() );
 
 	//add a close handler to get notified of the closing window
-	FrameClose.addHandler( new WindowEventHandler<Window>( this, &Window::onClose, "onClose" ) );
+	FrameClose += new ClassProcedure1<FrameEvent*,Window>( this, &Window::onClose, "onClose" );
 
-	EventHandler* ev = new GenericEventHandler<Frame> ( this, &Frame::handleEvent, "Frame::handleEvent" );
-
-	ComponentAdded += ev;
+	ComponentAdded += new ClassProcedure1<Event*,Frame> ( this, &Frame::handleEvent, "Frame::handleEvent" );
 
 	MenuManager::registerWindow( this );
 }
@@ -73,11 +71,9 @@ Window::Window( Control* control )
 	setWidth( getPreferredWidth() );
 
 	//add a close handler to get notified of the closing window
-	FrameClose.addHandler( new WindowEventHandler<Window>( this, &Window::onClose, "onClose" ) );
+	FrameClose += new ClassProcedure1<FrameEvent*,Window>( this, &Window::onClose, "onClose" );
 
-	EventHandler* ev = new GenericEventHandler<Window> ( this, &Window::handleEvent, "Window::handleEvent" );
-
-	ComponentAdded += ev;
+	ComponentAdded += new ClassProcedure1<Event*,Frame> ( this, &Frame::handleEvent, "Frame::handleEvent" );
 }
 
 Window::~Window()
@@ -168,7 +164,7 @@ void Window::setMenuBar( MenuBar* menuBar )
 void Window::close()
 {
 	if ( this->allowClose() ) {
-		WindowEvent event( this, WINDOW_EVENT_CLOSE );
+		FrameEvent event( this, Frame::CLOSE_EVENT );
 		FrameClose.fireEvent( &event );
 
 		if ( NULL == windowPeer_ ){
@@ -179,9 +175,9 @@ void Window::close()
 
 }
 
-void Window::onClose( WindowEvent* e )
+void Window::onClose( FrameEvent* e )
 {
-	EventHandler* ev = new GenericEventHandler<Window>( this, &Window::postClose );
+	EventHandler* ev = new ClassProcedure1<Event*,Window>( this, &Window::postClose );
 	UIToolkit::postEvent( ev, new Event( this ) );
 }
 

@@ -100,22 +100,22 @@ void DropTarget::handleEvent( Event* event )
 		uint32 eventType = event->getType();
 		switch ( eventType ){
 			case DropTarget::DRAG_ENTERED : {
-				DropTargetEntered.fireEvent( event );
+				DropTargetEntered( (DropTargetEvent*)event );
 			}
 			break;
 
 			case DropTarget::DRAG_LEFT : {
-				DropTargetLeft.fireEvent( event );
+				DropTargetLeft( (DropTargetEvent*)event );
 			}
 			break;
 
 			case DropTarget::DRAGGING_OVER : {
-				DropTargetDraggingOver.fireEvent( event );
+				DropTargetDraggingOver( (DropTargetEvent*)event );
 			}
 			break;
 
 			case DropTarget::DRAG_DROPPED : {
-				DropTargetDropped.fireEvent( event );
+				DropTargetDropped( (DropTargetEvent*)event );
 			}
 			break;
 

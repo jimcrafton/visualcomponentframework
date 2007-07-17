@@ -66,7 +66,7 @@ protected:
 	bool modal_;
 	Window* owningWindow_;
 
-	void onClose( WindowEvent* e );
+	void onClose( FrameEvent* e );
 	void postClose( Event* event );
 };
 

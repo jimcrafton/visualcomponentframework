@@ -34,7 +34,7 @@ PopupWindow::PopupWindow( Window* owningWindow ):
 	peer_->setControl( this );
 
 	//add a close handler to get notified of the closing window
-	FrameClose.addHandler( new WindowEventHandler<PopupWindow>( this, &PopupWindow::onClose, "onClose" ) );
+	FrameClose.add( new ClassProcedure1<FrameEvent*,PopupWindow>( this, &PopupWindow::onClose, "onClose" ) );
 }
 
 PopupWindow::~PopupWindow()
@@ -43,9 +43,9 @@ PopupWindow::~PopupWindow()
 }
 
 
-void PopupWindow::onClose( WindowEvent* e )
+void PopupWindow::onClose( FrameEvent* e )
 {
-	EventHandler* ev = new GenericEventHandler<PopupWindow>( this, &PopupWindow::postClose );
+	EventHandler* ev = new ClassProcedure1<Event*,PopupWindow>( this, &PopupWindow::postClose );
 	UIToolkit::postEvent( ev, new Event( this ) );
 }
 
@@ -132,8 +132,8 @@ void PopupWindow::setClientBounds( Rect* bounds )
 
 void PopupWindow::close()
 {
-	WindowEvent event( this, WINDOW_EVENT_CLOSE );
-	FrameClose.fireEvent( &event );
+	FrameEvent event( this, Frame::CLOSE_EVENT );
+	FrameClose( &event );
 	
 	if ( NULL == windowPeer_ ){
 		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);

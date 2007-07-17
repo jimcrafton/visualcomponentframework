@@ -101,7 +101,7 @@ void PopupMenu::init()
 	item->setMenuOwner( this );
 	item->setName( "RootMenuItem" );
 
-	EventHandler* ev = new GenericEventHandler<Menu> ( this, &Menu::handleEvent, "Menu::handleEvent" );
+	CallBack* ev = new ClassProcedure1<Event*,Menu> ( this, &Menu::handleEvent, "Menu::handleEvent" );
 
 	ComponentAdded += ev;
 	ComponentRemoved += ev;

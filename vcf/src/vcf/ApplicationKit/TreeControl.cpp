@@ -48,24 +48,24 @@ TreeControl::~TreeControl()
 void TreeControl::init()
 {
 
-	TreeModelEventHandler<TreeControl>* tmh =
-		new TreeModelEventHandler<TreeControl>( this,
+	CallBack* tmh =
+		new ClassProcedure1<TreeModelEvent*,TreeControl>( this,
 												&TreeControl::onTreeRootNodeChanged,
 												"TreeControl::onTreeRootNodeChanged" );
 
 
 
-	tmh = new TreeModelEventHandler<TreeControl>( this,
+	tmh = new ClassProcedure1<TreeModelEvent*,TreeControl>( this,
 													&TreeControl::onTreeNodeAdded,
 													"TreeControl::onTreeNodeAdded" );
 
-	tmh = new TreeModelEventHandler<TreeControl>( this,
+	tmh = new ClassProcedure1<TreeModelEvent*,TreeControl>( this,
 													&TreeControl::onTreeNodeDeleted,
 													"TreeControl::onTreeNodeDeleted" );
 
 	
 
-	ModelEventHandler<TreeControl>* mh = new ModelEventHandler<TreeControl>( this, &TreeControl::onModelEmptied, "ModelHandler" );
+	CallBack* mh = new ClassProcedure1<ModelEvent*,TreeControl>( this, &TreeControl::onModelEmptied, "ModelHandler" );
 
 
 	setTreeModel( new DefaultTreeModel() );
