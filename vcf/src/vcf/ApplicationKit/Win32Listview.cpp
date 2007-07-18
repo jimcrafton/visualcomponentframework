@@ -224,28 +224,28 @@ void Win32Listview::create( Control* owningControl )
 
 
 	itemAddedHandler_ =
-		new ItemEventHandler<Win32Listview>( this, &Win32Listview::onItemAdded, "Win32Listview::onItemAdded" );
+		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onItemAdded, "Win32Listview::onItemAdded" );
 
 	itemDeletedHandler_ =
-		new ItemEventHandler<Win32Listview>( this, &Win32Listview::onItemDeleted, "Win32Listview::onItemDeleted" );
+		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onItemDeleted, "Win32Listview::onItemDeleted" );
 
 	itemChangedHandler_ =
-		new ItemEventHandler<Win32Listview>( this, &Win32Listview::onItemChanged, "Win32Listview::onItemChanged" );
+		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onItemChanged, "Win32Listview::onItemChanged" );
 
 	itemSelectedHandler_ =
-		new ItemEventHandler<Win32Listview>( this, &Win32Listview::onItemSelected, "Win32Listview::onItemSelected" );
+		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onItemSelected, "Win32Listview::onItemSelected" );
 
 	itemPaintedHandler_ =
-		new ItemEventHandler<Win32Listview>( this, &Win32Listview::onItemPaint, "Win32Listview::onItemPaint" );
+		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onItemPaint, "Win32Listview::onItemPaint" );
 
 	subItemAddedHandler_ =
-		new ItemEventHandler<Win32Listview>( this, &Win32Listview::onSubItemAdded, "Win32Listview::onSubItemAdded" );
+		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onSubItemAdded, "Win32Listview::onSubItemAdded" );
 
 	subItemDeletedHandler_ =
-		new ItemEventHandler<Win32Listview>( this, &Win32Listview::onSubItemDeleted, "Win32Listview::onSubItemDeleted" );
+		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onSubItemDeleted, "Win32Listview::onSubItemDeleted" );
 
 	subItemChangedHandler_ =
-		new ItemEventHandler<Win32Listview>( this, &Win32Listview::onSubItemChanged, "Win32Listview::onSubItemChanged" );
+		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onSubItemChanged, "Win32Listview::onSubItemChanged" );
 
 
 	CreateParams params = createParams();
@@ -1062,7 +1062,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 							Point pt( tmpPt.x, tmpPt.y );
 							event.setPoint( &pt );
 
-							listviewControl_->ItemSelectionChanged.fireEvent( &event );
+							listviewControl_->ItemSelectionChanged( &event );
 						}
 						else {
 							item->setSelected( false );
@@ -1208,15 +1208,15 @@ void Win32Listview::insertItem( const uint32& index, ListItem * item )
 			//throw exception
 		}
 
-		item->addItemAddedHandler( itemAddedHandler_ );
-		item->addItemDeletedHandler( itemDeletedHandler_ );
-		item->addItemChangedHandler( itemChangedHandler_ );
-		item->addItemSelectedHandler( itemSelectedHandler_ );
-		item->addItemPaintHandler( itemPaintedHandler_ );
+		item->ItemAdded += itemAddedHandler_;
+		item->ItemDeleted += itemDeletedHandler_;
+		item->ItemChanged += itemChangedHandler_;
+		item->ItemSelected += itemSelectedHandler_;
+		item->ItemPaint += itemPaintedHandler_;
 
-		item->addSubItemAddedHandler( subItemAddedHandler_ );
-		item->addSubItemDeletedHandler( subItemDeletedHandler_ );
-		item->addSubItemChangedHandler( subItemChangedHandler_ );
+		item->SubItemAdded += subItemAddedHandler_;
+		item->SubItemDeleted += subItemDeletedHandler_;
+		item->SubItemChanged += subItemChangedHandler_;
 	}
 }
 
@@ -2321,16 +2321,16 @@ void Win32Listview::setLargeImageList( ImageList* imageList )
 
 		ListView_SetImageList( hwnd_, largeImageListCtrl_, LVSIL_NORMAL );
 
-		EventHandler* imgListHandler = getEventHandler( "LargeImageListHandler" );
+		CallBack* imgListHandler = getEventHandler( "LargeImageListHandler" );
 		if ( NULL == imgListHandler ) {
 			imgListHandler =
-				new ImageListEventHandler<Win32Listview>(this, &Win32Listview::onLargeImageListImageChanged, "LargeImageListHandler" );
+				new ClassProcedure1<ImageListEvent*,Win32Listview>(this, &Win32Listview::onLargeImageListImageChanged, "LargeImageListHandler" );
 
 		}
 
-		imageList->SizeChanged.addHandler( imgListHandler );
-		imageList->ImageAdded.addHandler( imgListHandler );
-		imageList->ImageDeleted.addHandler( imgListHandler );
+		imageList->SizeChanged +=  imgListHandler;
+		imageList->ImageAdded += imgListHandler;
+		imageList->ImageDeleted += imgListHandler;
 
 	}
 }
@@ -2388,14 +2388,14 @@ void Win32Listview::setSmallImageList( ImageList* imageList )
 
 		ListView_SetImageList( hwnd_, smallImageListCtrl_, LVSIL_SMALL );
 
-		EventHandler* imgListHandler = getEventHandler( "SmallImageListHandler" );
+		CallBack* imgListHandler = getEventHandler( "SmallImageListHandler" );
 		if ( NULL == imgListHandler ) {
 			imgListHandler =
-				new ImageListEventHandler<Win32Listview>(this, &Win32Listview::onSmallImageListImageChanged, "SmallImageListHandler" );
+				new ClassProcedure1<ImageListEvent*,Win32Listview>(this, &Win32Listview::onSmallImageListImageChanged, "SmallImageListHandler" );
 
 		}
 
-		imageList->SizeChanged.addHandler( imgListHandler );
+		imageList->SizeChanged+=  imgListHandler;
 	}
 }
 

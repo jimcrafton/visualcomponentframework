@@ -245,7 +245,7 @@ void Win32Edit::create( Control* owningControl )
 		
 
 		textControl_->ControlModelChanged +=
-			new GenericEventHandler<Win32Edit>( this, &Win32Edit::onControlModelChanged, "Win32Edit::onControlModelChanged" );
+			new ClassProcedure1<Event*,Win32Edit>( this, &Win32Edit::onControlModelChanged, "Win32Edit::onControlModelChanged" );
 
 		initFromRichEdit( hwnd_ );
 
@@ -596,7 +596,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				//selection changed
 				TextEvent event( textControl_, start, end - start );
 
-				textControl_->SelectionChanged.fireEvent( &event );
+				textControl_->SelectionChanged( &event );
 			}
 
 			currentSelLength_ = end - start;
@@ -673,7 +673,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 								//selection changed
 								TextEvent event( textControl_, start, end - start );
 
-								textControl_->SelectionChanged.fireEvent( &event );
+								textControl_->SelectionChanged( &event );
 							}
 
 							currentSelLength_ = end - start;
@@ -824,7 +824,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 				TextEvent event( textControl_, currentSelStart_, currentSelLength_ );
 
-				textControl_->SelectionChanged.fireEvent( &event );
+				textControl_->SelectionChanged( &event );
 			}
 
 			
@@ -1362,15 +1362,15 @@ void Win32Edit::finishPrinting()
 
 void Win32Edit::onControlModelChanged( Event* e )
 {
-	EventHandler* tml = getEventHandler( "Win32TextModelHandler" );
+	CallBack* tml = getEventHandler( "Win32TextModelHandler" );
 	if ( NULL == tml ) {
-		tml = new TextModelEventHandler<Win32Edit>( this, &Win32Edit::onTextModelTextChanged, "Win32TextModelHandler" );
+		tml = new ClassProcedure1<TextEvent*,Win32Edit>( this, &Win32Edit::onTextModelTextChanged, "Win32TextModelHandler" );
 	}
 
 
 
 	TextModel* tm = textControl_->getTextModel();
-	tm->addTextModelChangedHandler( tml );
+	tm->addTextModelChangedHandler( (EventHandler*)tml );
 
 
 	String text = tm->getText();

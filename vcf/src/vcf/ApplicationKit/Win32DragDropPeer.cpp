@@ -42,12 +42,12 @@ DragActionType Win32DragDropPeer::startDragDrop( DataObject* cdo )
     DragSourceEvent eventEnd(dragSrc_, clipDataObj_);
 	eventEnd.setType( DragSource::DRAG_END );
 
-	dragSrc_->SourceEnd.fireEvent( &eventEnd );
+	dragSrc_->SourceEnd( &eventEnd );
 
 	if (dragDropResult_ == DRAGDROP_S_DROP) {
 	    DragSourceEvent eventDropped(dragSrc_,  clipDataObj_);
 		eventDropped.setType( DragSource::DRAG_DROPPED );
-		dragSrc_->SourceDropped.fireEvent( &eventDropped );
+		dragSrc_->SourceDropped( &eventDropped );
 	}
 
 	return (DragActionType) dragDropResult_;
@@ -76,7 +76,7 @@ HRESULT Win32DragDropPeer::GiveFeedback( DWORD dwEffect )
 	DragSourceEvent event(dragSrc_, clipDataObj_);
 	event.setType( DragSource::DRAG_GIVEFEEDBACK );
 
-	dragSrc_->SourceGiveFeedback.fireEvent( &event );
+	dragSrc_->SourceGiveFeedback( &event );
 
 	/**
 	NOTE!!!
@@ -92,7 +92,7 @@ HRESULT Win32DragDropPeer::QueryContinueDrag( BOOL fEscapePressed, DWORD grfKeyS
 	DragSourceEvent event(dragSrc_, clipDataObj_);
 	event.setType( DragSource::DRAG_CANCONTINUE );
 
-    dragSrc_->SourceCanContinueDragOp.fireEvent( &event );
+    dragSrc_->SourceCanContinueDragOp( &event );
 
 	HRESULT result = NO_ERROR;
 	if ( true == ( 0 != fEscapePressed ) ){

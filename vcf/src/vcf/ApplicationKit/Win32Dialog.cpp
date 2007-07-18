@@ -217,10 +217,10 @@ bool Win32Dialog::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 
 			if ( dlg->allowClose() ) {
 
-				VCF::WindowEvent event( dlg, WINDOW_EVENT_CLOSE );
+				VCF::FrameEvent event( dlg, Frame::CLOSE_EVENT );
 
 
-				dlg->FrameClose.fireEvent( &event );
+				dlg->FrameClose( &event );
 
 				if ( dlg->isModal() ) {
 					if ( NULL != dlg->getOwner() ) {
