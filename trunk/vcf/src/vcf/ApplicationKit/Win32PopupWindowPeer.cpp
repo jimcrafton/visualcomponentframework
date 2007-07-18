@@ -382,9 +382,9 @@ bool Win32PopupWindowPeer::handleEventMessages( UINT message, WPARAM wParam, LPA
 			
 			PopupWindow* popup = (PopupWindow*)peerControl_;
 
-			VCF::WindowEvent event( popup, WINDOW_EVENT_CLOSE );
+			VCF::FrameEvent event( popup, Frame::CLOSE_EVENT );
 
-			popup->FrameClose.fireEvent( &event );
+			popup->FrameClose( &event );
 			
 			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 		}

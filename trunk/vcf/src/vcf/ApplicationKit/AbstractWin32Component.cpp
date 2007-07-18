@@ -1646,7 +1646,7 @@ void AbstractWin32Component::registerForFontChanges()
 	setFont( peerControl_->getFont() );
 
 	peerControl_->getFont()->FontChanged += 
-			new GenericEventHandler<AbstractWin32Component>( this, &AbstractWin32Component::onControlFontChanged, "AbstractWin32Component::onControlFontChanged" );
+			new ClassProcedure1<Event*,AbstractWin32Component>( this, &AbstractWin32Component::onControlFontChanged, "AbstractWin32Component::onControlFontChanged" );
 }
 
 void AbstractWin32Component::onControlFontChanged( Event* event )

@@ -128,15 +128,15 @@ private:
 
 
 
-	ItemEventHandler<Win32Listview>* itemAddedHandler_;
-	ItemEventHandler<Win32Listview>* itemDeletedHandler_;
-	ItemEventHandler<Win32Listview>* itemChangedHandler_;
-	ItemEventHandler<Win32Listview>* itemSelectedHandler_;
-	ItemEventHandler<Win32Listview>* itemPaintedHandler_;
+	ItemHandler* itemAddedHandler_;
+	ItemHandler* itemDeletedHandler_;
+	ItemHandler* itemChangedHandler_;
+	ItemHandler* itemSelectedHandler_;
+	ItemHandler* itemPaintedHandler_;
 
-	ItemEventHandler<Win32Listview>* subItemAddedHandler_;
-	ItemEventHandler<Win32Listview>* subItemDeletedHandler_;
-	ItemEventHandler<Win32Listview>* subItemChangedHandler_;
+	ItemHandler* subItemAddedHandler_;
+	ItemHandler* subItemDeletedHandler_;
+	ItemHandler* subItemChangedHandler_;
 
 	void onSubItemChanged( ItemEvent* event );
 

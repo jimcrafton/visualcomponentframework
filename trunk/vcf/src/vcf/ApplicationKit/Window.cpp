@@ -165,7 +165,7 @@ void Window::close()
 {
 	if ( this->allowClose() ) {
 		FrameEvent event( this, Frame::CLOSE_EVENT );
-		FrameClose.fireEvent( &event );
+		FrameClose( &event );
 
 		if ( NULL == windowPeer_ ){
 			throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
