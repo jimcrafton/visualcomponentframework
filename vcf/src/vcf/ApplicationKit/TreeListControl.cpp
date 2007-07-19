@@ -123,9 +123,10 @@ void TreeListControl::setTreeModel(TreeModel * model)
 
 		tm->addView( this );
 
-		EventHandler* handler = getEventHandler( "TreeListControl::onModelChanged" );
+		CallBack* handler = getEventHandler( "TreeListControl::onModelChanged" );
 		if ( NULL == handler ) {
-			handler = new TreeModelEventHandler<TreeListControl>( this, &TreeListControl::onModelChanged, "TreeListControl::onModelChanged" );
+			handler = 
+				new ClassProcedure1<TreeModelEvent*,TreeListControl>( this, &TreeListControl::onModelChanged, "TreeListControl::onModelChanged" );
 			
 			//JC - commented this out - this is unneccesary
 			//addEventHandler( "TreeListControl::onModelChanged", handler );

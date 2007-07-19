@@ -2466,9 +2466,10 @@ public:
 			toolTip_ = new Win32ToolTip();
 
 			//toolTip_->setVisible( false );
-			toolTip_->FrameActivation.addHandler( new WindowEventHandler<ToolTipWatcher>( this,
+			toolTip_->FrameActivation += 
+				new ClassProcedure1<WindowEvent*,ToolTipWatcher>( this,
 													&ToolTipWatcher::onToolTipLostFocus,
-													"toolTipWatcherHandler" ) );
+													"toolTipWatcherHandler" );
 
 			Frame* f = Window::getActiveFrame();
 			//toolTip_->setParent( f );
@@ -2563,7 +2564,7 @@ public:
 			//fire a tooltip requested
 			tooltipEvent.setType( TOOLTIP_EVENT_TIP_REQESTED );
 
-			actualToolTipControl->ToolTipRequested.fireEvent( &tooltipEvent );
+			actualToolTipControl->ToolTipRequested( &tooltipEvent );
 
 			tooltip = tooltipEvent.getToolTipString();
 
@@ -2574,7 +2575,7 @@ public:
 
 		if ( !tooltip.empty() ) {
 
-			actualToolTipControl->ToolTip.fireEvent( &tooltipEvent );
+			actualToolTipControl->ToolTip( &tooltipEvent );
 			tmpPt = *tooltipEvent.getToolTipLocation();
 
 
@@ -4102,7 +4103,7 @@ bool Win32ToolKit::internal_displayContextHelpForControl( Control* control, cons
 
 	WhatsThisHelpEvent event(control);
 
-	control->ControlHelpRequested.fireEvent( &event );
+	control->ControlHelpRequested( &event );
 
 	if ( !event.helpString.empty() ) {
 		whatsThis = event.helpString;

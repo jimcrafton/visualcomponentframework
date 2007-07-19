@@ -19,9 +19,6 @@ where you installed the VCF.
 
 
 
-#ifndef _VCF_ABSTRACTMODEL_H__
-#include "vcf/ApplicationKit/AbstractModel.h"
-#endif // _VCF_ABSTRACTMODEL_H__
 
 
 

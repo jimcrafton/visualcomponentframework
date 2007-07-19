@@ -113,7 +113,7 @@ protected:
 	This map holds a list of CallBack that have been
 	added to the object
 	*/
-	std::map<String,CallBack*> eventHandlers_;
+	std::map<String,CallBack*> callbacks_;
 };
 
 

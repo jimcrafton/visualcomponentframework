@@ -37,7 +37,7 @@ class TableCellItem;
 /**
 \class DefaultTableModel DefaultTableModel.h "vcf/ApplicationKit/DefaultTableModel.h"
 */
-class APPLICATIONKIT_API DefaultTableModel : public AbstractModel, public TableModel {
+class APPLICATIONKIT_API DefaultTableModel : public Model, public TableModel {
 public:
 	DefaultTableModel();
 

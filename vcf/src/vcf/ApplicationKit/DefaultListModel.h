@@ -21,9 +21,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/AbstractListModel.h"
 #endif // _VCF_ABSTRACTLISTMODEL_H__
 
-#ifndef _VCF_ABSTRACTMODEL_H__
-#	include "vcf/ApplicationKit/AbstractModel.h"
-#endif // _VCF_ABSTRACTMODEL_H__
 
 
 
@@ -35,7 +32,7 @@ namespace VCF{
 /**
 \class DefaultListModel DefaultListModel.h "vcf/ApplicationKit/DefaultListModel.h"
 */
-class APPLICATIONKIT_API DefaultListModel : public AbstractModel, public AbstractListModel {
+class APPLICATIONKIT_API DefaultListModel : public Model, public AbstractListModel {
 public:
 
 	DefaultListModel();
@@ -44,7 +41,7 @@ public:
 
 	virtual void empty() {
 		AbstractListModel::empty();
-		AbstractModel::empty();
+		Model::empty();
 	}
 
 

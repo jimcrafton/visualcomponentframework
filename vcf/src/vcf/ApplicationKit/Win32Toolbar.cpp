@@ -99,7 +99,7 @@ void Win32Toolbar::create( Control* control )
 	}
 
 	control->getViewModel()->addModelHandler(
-		new ModelEventHandler<Win32Toolbar>( this, &Win32Toolbar::onModelChanged, "Win32Toolbar::onModelChanged" ) );
+		new ClassProcedure1<ModelEvent*,Win32Toolbar>( this, &Win32Toolbar::onModelChanged, "Win32Toolbar::onModelChanged" ) );
 
 }
 
@@ -1399,7 +1399,7 @@ void Win32Toolbar::setImageList( ImageList* imageList )
 
 		SendMessage( hwnd_, TB_SETBITMAPSIZE, 0, (LPARAM) MAKELONG(imageList->getImageWidth(), imageList->getImageHeight()) );
 
-		EventHandler* imgListHandler = getEventHandler( "Win32Toolbar::onImageListImageChanged" );
+		CallBack* imgListHandler = getEventHandler( "Win32Toolbar::onImageListImageChanged" );
 
 		imageListCtrl_ = ImageList_Create( imageList->getImageWidth(), imageList->getImageHeight(),
 											ILC_COLOR24  | ILC_MASK, imageList->getImageCount(), 4 );
@@ -1440,12 +1440,12 @@ void Win32Toolbar::setImageList( ImageList* imageList )
 
 		if ( NULL == imgListHandler ) {
 			imgListHandler =
-				new ImageListEventHandler<Win32Toolbar>(this, &Win32Toolbar::onImageListImageChanged, "Win32Toolbar::onImageListImageChanged" );
+				new ClassProcedure1<ImageListEvent*,Win32Toolbar>(this, &Win32Toolbar::onImageListImageChanged, "Win32Toolbar::onImageListImageChanged" );
 		}
 
-		imageList->SizeChanged.addHandler( imgListHandler );
-		imageList->ImageAdded.addHandler( imgListHandler );
-		imageList->ImageDeleted.addHandler( imgListHandler );
+		imageList->SizeChanged += imgListHandler;
+		imageList->ImageAdded += imgListHandler;
+		imageList->ImageDeleted +=  imgListHandler;
 
 
 		bool val = ((Toolbar*)peerControl_)->getShowButtonCaptions();

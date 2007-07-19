@@ -145,9 +145,6 @@ _event_( "VCF::ModelEventHandler", VCF::ModelEvent, ModelChanged )
 _event_( "VCF::ModelValidationEventHandler", VCF::ValidationEvent, ModelValidate )
 _class_rtti_end_
 
-_class_abstract_rtti_(AbstractModel, "VCF::Model", ABSTRACTMODEL_CLASSID)
-
-_class_rtti_end_
 
 /*
 _class_abstract_rtti_(TextModel, "VCF::TextModel", "VCF::Model", TEXTMODEL_CLASSID)
@@ -225,7 +222,7 @@ _procedure4_(setBounds,const double&,const double&,const double&,const double&,"
 _class_rtti_end_
 
 
-_class_abstract_rtti_(Document, "VCF::AbstractModel", DOCUMENT_CLASSID)
+_class_abstract_rtti_(Document, "VCF::Model", DOCUMENT_CLASSID)
 _class_rtti_end_
 
 
@@ -422,11 +419,11 @@ _event_("VCF::ItemEventHandler", VCF::ItemEvent, SubItemDeleted );
 _class_rtti_end_
 
 
-_class_rtti_(DefaultListModel, "VCF::AbstractModel", DEFAULTLISTMODEL_CLASSID)
+_class_rtti_(DefaultListModel, "VCF::Model", DEFAULTLISTMODEL_CLASSID)
 _class_rtti_end_
 
 
-_class_rtti_(DefaultTabModel, "VCF::AbstractModel", DEFAULTTABMODEL_CLASSID )
+_class_rtti_(DefaultTabModel, "VCF::Model", DEFAULTTABMODEL_CLASSID )
 	_event_("VCF::TabModelEventHandler", VCF::TabModelEvent, TabPageAdded )
 	_event_("VCF::TabModelEventHandler", VCF::TabModelEvent, TabPageRemoved )
 	_event_("VCF::TabModelEventHandler", VCF::TabModelEvent, TabPageSelected )
@@ -455,7 +452,7 @@ _class_rtti_(DefaultTableCellItem, "VCF::TableCellItem", DEFAULTTABLECELLITEM_CL
 _class_rtti_end_
 
 
-_class_rtti_(DefaultTableModel, "VCF::AbstractModel", DEFAULTTABLEMODEL_CLASSID )
+_class_rtti_(DefaultTableModel, "VCF::Model", DEFAULTTABLEMODEL_CLASSID )
 	_event_( "VCF::TableModelEventHandler", VCF::TableModelEvent, TableCellAdded )
 	_event_( "VCF::TableModelEventHandler", VCF::TableModelEvent, TableCellDeleted )
 	_event_( "VCF::TableModelEventHandler", VCF::TableModelEvent, TableRowsAdded )
@@ -465,7 +462,7 @@ _class_rtti_(DefaultTableModel, "VCF::AbstractModel", DEFAULTTABLEMODEL_CLASSID 
 _class_rtti_end_
 
 
-_class_rtti_(DefaultTextModel, "VCF::AbstractModel", DEFAULTTEXTMODEL_CLASSID)
+_class_rtti_(DefaultTextModel, "VCF::Model", DEFAULTTEXTMODEL_CLASSID)
 	_event_("VCF::TextModelEventHandler", VCF::TextEvent, TextModelChanged )
 _class_rtti_end_
 
@@ -479,7 +476,7 @@ _class_rtti_(DefaultTreeItem, "VCF::TreeItem", DEFAULTTREEITEM_CLASSID)
 _class_rtti_end_
 
 
-_class_rtti_(DefaultTreeModel, "VCF::AbstractModel", DEFAULTTREEMODEL_CLASSID)
+_class_rtti_(DefaultTreeModel, "VCF::Model", DEFAULTTREEMODEL_CLASSID)
 	_event_( "VCF::TreeModelEventHandler", VCF::TreeModelEvent, RootNodeChanged )
 	_event_( "VCF::TreeModelEventHandler", VCF::TreeModelEvent, NodeAdded )
 	_event_( "VCF::TreeModelEventHandler", VCF::TreeModelEvent, NodeDeleted )

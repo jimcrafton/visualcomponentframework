@@ -63,12 +63,16 @@ public:
     /**
      * Adds a validation listener to the model
      */
-    virtual void addModelValidationHandler( EventHandler* handler ) = 0;
+    void addModelValidationHandler( EventHandler* handler ){
+		ModelValidate +=  handler;
+	}
 
     /**
      * removes a validation listener from the model
      */
-    virtual void removeModelValidationHandler( EventHandler* handler ) = 0;
+    void removeModelValidationHandler( EventHandler* handler ){
+		ModelValidate.remove( handler );
+	}
 
     /**
      * validate the model.
@@ -78,22 +82,36 @@ public:
      * still true at the end of the listener iterations, then it is safe to apply the changes to the
      * model, other wise the changes are removed.
      */
-    virtual void validate() = 0;
+    virtual void validate() {
+		ValidationEvent e( this );
+		ModelValidate( &e );
+	}
 
     /**
      * Adds a model listener to the model
      */
-    virtual void addModelHandler( EventHandler* handler ) = 0;
+    void addModelHandler( ModelHandler* handler ){
+		ModelChanged +=  handler;
+	}
 
     /**
      * removes a model listener from the model
      */
-    virtual void removeModelHandler( EventHandler* handler ) = 0;
+    void removeModelHandler( ModelHandler* handler ){
+		ModelChanged.remove( handler );
+	}
+
+	
+
+	
 
 	/**
      * clears out the model's data
      */
-    virtual void empty() = 0;
+	virtual void empty() {
+		ModelEvent e( this, Model::MODEL_EMPTIED );
+		changed( &e );
+	}
 
 	/**
 	*adds a new view to the model
