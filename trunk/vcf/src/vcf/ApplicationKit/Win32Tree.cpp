@@ -195,7 +195,7 @@ void Win32Tree::create( Control* owningControl )
 		registerForFontChanges();
 
 		peerControl_->ControlModelChanged +=
-			new GenericEventHandler<Win32Tree>( this, &Win32Tree::onControlModelChanged, "Win32Tree::onControlModelChanged" );
+			new ClassProcedure1<Event*,Win32Tree>( this, &Win32Tree::onControlModelChanged, "Win32Tree::onControlModelChanged" );
 
 		COLORREF backColor = backColor_.getColorRef32();
 
@@ -213,19 +213,19 @@ void Win32Tree::init()
 
 
 	itemAddedHandler_ =
-		new ItemEventHandler<Win32Tree>( this, &Win32Tree::onItemAdded, "Win32Tree::onItemAdded" );
+		new ClassProcedure1<ItemEvent*, Win32Tree>( this, &Win32Tree::onItemAdded, "Win32Tree::onItemAdded" );
 
 	itemDeletedHandler_ =
-		new ItemEventHandler<Win32Tree>( this, &Win32Tree::onItemDeleted, "Win32Tree::onItemDeleted" );
+		new ClassProcedure1<ItemEvent*, Win32Tree>( this, &Win32Tree::onItemDeleted, "Win32Tree::onItemDeleted" );
 
 	itemChangedHandler_ =
-		new ItemEventHandler<Win32Tree>( this, &Win32Tree::onItemChanged, "Win32Tree::onItemChanged" );
+		new ClassProcedure1<ItemEvent*, Win32Tree>( this, &Win32Tree::onItemChanged, "Win32Tree::onItemChanged" );
 
 	itemSelectedHandler_ =
-		new ItemEventHandler<Win32Tree>( this, &Win32Tree::onItemSelected, "Win32Tree::onItemSelected" );
+		new ClassProcedure1<ItemEvent*, Win32Tree>( this, &Win32Tree::onItemSelected, "Win32Tree::onItemSelected" );
 
 	itemPaintedHandler_ =
-		new ItemEventHandler<Win32Tree>( this, &Win32Tree::onItemPaint, "Win32Tree::onItemPaint" );
+		new ClassProcedure1<ItemEvent*, Win32Tree>( this, &Win32Tree::onItemPaint, "Win32Tree::onItemPaint" );
 
 }
 
@@ -341,15 +341,15 @@ void Win32Tree::setImageList( ImageList* imageList )
 		TreeView_SetImageList( hwnd_, imageListCtrl_, TVSIL_NORMAL );
 
 
-		EventHandler* imgListHandler = getEventHandler( "Win32Tree::onImageListImageChanged" );
+		CallBack* imgListHandler = getEventHandler( "Win32Tree::onImageListImageChanged" );
 		if ( NULL == imgListHandler ) {
 			imgListHandler =
-				new ImageListEventHandler<Win32Tree>(this, &Win32Tree::onImageListImageChanged, "Win32Tree::onImageListImageChanged" );
+				new ClassProcedure1<ImageListEvent*, Win32Tree>(this, &Win32Tree::onImageListImageChanged, "Win32Tree::onImageListImageChanged" );
 
 		}
-		imageList->SizeChanged.addHandler( imgListHandler );
-		imageList->ImageAdded.addHandler( imgListHandler );
-		imageList->ImageDeleted.addHandler( imgListHandler );
+		imageList->SizeChanged += imgListHandler;
+		imageList->ImageAdded += imgListHandler;
+		imageList->ImageDeleted += imgListHandler;
 	}
 }
 
@@ -1054,11 +1054,11 @@ void Win32Tree::addItem( TreeItem* item )
 
 	treeItems_[item] = addedItem;
 
-	item->addItemAddedHandler( itemAddedHandler_ );
-	item->addItemChangedHandler( itemChangedHandler_ );
-	item->addItemDeletedHandler( itemDeletedHandler_ );
-	item->addItemPaintHandler( itemPaintedHandler_ );
-	item->addItemSelectedHandler( itemSelectedHandler_ );
+	item->ItemAdded += itemAddedHandler_;
+	item->ItemChanged += itemChangedHandler_;
+	item->ItemDeleted += itemDeletedHandler_;
+	item->ItemPaint += itemPaintedHandler_;
+	item->ItemSelected += itemSelectedHandler_;
 
 	//now check the children
 
@@ -1344,15 +1344,15 @@ void Win32Tree::setStateImageList( ImageList* imageList )
 		TreeView_SetImageList( hwnd_, stateImageListCtrl_, TVSIL_STATE );
 
 
-		EventHandler* imgListHandler = getEventHandler( "Win32Tree::onStateImageListImageChanged" );
+		CallBack* imgListHandler = getEventHandler( "Win32Tree::onStateImageListImageChanged" );
 		if ( NULL == imgListHandler ) {
 			imgListHandler =
-				new ImageListEventHandler<Win32Tree>(this, &Win32Tree::onStateImageListImageChanged, "Win32Tree::onStateImageListImageChanged" );
+				new ClassProcedure1<ImageListEvent*,Win32Tree>(this, &Win32Tree::onStateImageListImageChanged, "Win32Tree::onStateImageListImageChanged" );
 
 		}
-		imageList->SizeChanged.addHandler( imgListHandler );
-		imageList->ImageAdded.addHandler( imgListHandler );
-		imageList->ImageDeleted.addHandler( imgListHandler );
+		imageList->SizeChanged += imgListHandler;
+		imageList->ImageAdded += imgListHandler;
+		imageList->ImageDeleted += imgListHandler;
 	}
 }
 

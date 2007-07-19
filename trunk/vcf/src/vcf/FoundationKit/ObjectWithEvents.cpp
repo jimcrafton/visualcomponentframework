@@ -22,8 +22,8 @@ ObjectWithEvents::~ObjectWithEvents()
 {
 	//destroy all the event handlers
 
-	std::map<String,CallBack*>::iterator it = eventHandlers_.begin();
-	while ( it != eventHandlers_.end() ){
+	std::map<String,CallBack*>::iterator it = callbacks_.begin();
+	while ( it != callbacks_.end() ){
 		CallBack* ev = it->second;
 
 		ev->free();
@@ -31,31 +31,20 @@ ObjectWithEvents::~ObjectWithEvents()
 
 		it++;
 	}
-	eventHandlers_.clear();
-/*
-	std::vector<CallBack::Vector*>::iterator handlerIt = masterHandlerList_.begin();
-	while ( handlerIt != masterHandlerList_.end() ) {
-		CallBack::Vector* list = *handlerIt;
-		delete list;
-		list = NULL;
-		handlerIt ++;
-	}
-	masterHandlerList_.clear();
-	*/
-
+	callbacks_.clear();
 }
 
 void ObjectWithEvents::addEventHandler( const String& handlerName, CallBack* handler )
 {
-	eventHandlers_[handlerName] = handler;
+	callbacks_[handlerName] = handler;
 }
 
 CallBack* ObjectWithEvents::getEventHandler( const String& handlerName )
 {
 	CallBack* result = NULL;
 
-	std::map<String,CallBack*>::iterator found = eventHandlers_.find( handlerName );
-	if ( found != eventHandlers_.end() ){
+	std::map<String,CallBack*>::iterator found = callbacks_.find( handlerName );
+	if ( found != callbacks_.end() ){
 		result = found->second;
 	}
 	return result;
@@ -65,8 +54,8 @@ String ObjectWithEvents::getEventHandlerName( CallBack* handler )
 {
 	String result;
 
-	std::map<String,CallBack*>::iterator found = eventHandlers_.begin();
-	while ( found != eventHandlers_.end() ){
+	std::map<String,CallBack*>::iterator found = callbacks_.begin();
+	while ( found != callbacks_.end() ){
 		if ( found->second == handler ) {
 			result = found->first;
 			break;
@@ -76,13 +65,6 @@ String ObjectWithEvents::getEventHandlerName( CallBack* handler )
 
 	return result;
 }
-
-/*
-void ObjectWithEvents::addEventHandlerList( CallBack::Vector* eventHandlerList )
-{
-	masterHandlerList_.push_back( eventHandlerList );
-}
-*/
 
 
 /**

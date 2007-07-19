@@ -15,12 +15,6 @@ where you installed the VCF.
 
 
 
-#ifndef _VCF_ABSTRACTMODEL_H__
-#	include "vcf/ApplicationKit/AbstractModel.h"
-#endif // _VCF_ABSTRACTMODEL_H__
-
-
-
 #ifndef _VCF_TEXTMODEL_H__
 #	include "vcf/ApplicationKit/TextModel.h"
 #endif // _VCF_TEXTMODEL_H__
@@ -37,7 +31,7 @@ namespace VCF{
 /**
 \class DefaultTextModel DefaultTextModel.h "vcf/ApplicationKit/DefaultTextModel.h"
 */
-class APPLICATIONKIT_API DefaultTextModel : public AbstractModel, public TextModel {
+class APPLICATIONKIT_API DefaultTextModel : public Model, public TextModel {
 public:
 
 

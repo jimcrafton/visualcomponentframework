@@ -75,7 +75,7 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( ListItem );
 		REGISTER_CLASSINFO_EXTERNAL( Model );
 
-		REGISTER_CLASSINFO_EXTERNAL(AbstractModel);
+
 		REGISTER_CLASSINFO_EXTERNAL(Document);
 
 //		REGISTER_CLASSINFO_EXTERNAL( ListModel );

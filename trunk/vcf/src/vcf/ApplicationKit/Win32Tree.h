@@ -76,11 +76,11 @@ public:
 	void onItemDeleted( ItemEvent* event );
 
 private:
-	ItemEventHandler<Win32Tree>* itemAddedHandler_;
-	ItemEventHandler<Win32Tree>* itemDeletedHandler_;
-	ItemEventHandler<Win32Tree>* itemChangedHandler_;
-	ItemEventHandler<Win32Tree>* itemSelectedHandler_;
-	ItemEventHandler<Win32Tree>* itemPaintedHandler_;
+	ItemHandler* itemAddedHandler_;
+	ItemHandler* itemDeletedHandler_;
+	ItemHandler* itemChangedHandler_;
+	ItemHandler* itemSelectedHandler_;
+	ItemHandler* itemPaintedHandler_;
 
 	TreeControl* treeControl_;
 	//WNDPROC oldTreeWndProc_;

@@ -23,7 +23,7 @@ namespace VCF {
 A document is a model has many extra features like saving, loading, cutting 
 and all that kind of stuff.
 */
-class APPLICATIONKIT_API Document : public AbstractModel {
+class APPLICATIONKIT_API Document : public Model {
 
 public:
 	enum DocumentEvents{
@@ -35,7 +35,7 @@ public:
 	/**
 	* the document's constructor
 	*/
-	Document():AbstractModel(), docWindow_(NULL),
+	Document():Model(), docWindow_(NULL),
 				fileName_(""),
 				modified_(false),
 				keepBackUpFile_(false) {
@@ -48,7 +48,7 @@ public:
 	virtual void empty() {
 		setModified( true );
 
-		AbstractModel::empty();
+		Model::empty();
 	}
 
 	/**

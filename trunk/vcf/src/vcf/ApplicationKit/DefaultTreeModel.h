@@ -16,10 +16,6 @@ where you installed the VCF.
 
 
 
-#ifndef _VCF_ABSTRACTMODEL_H__
-#	include "vcf/ApplicationKit/AbstractModel.h"
-#endif // _VCF_ABSTRACTMODEL_H__
-
 
 #ifndef _VCF_ABSTRACTTREEMODEL_H__
 #include "vcf/ApplicationKit/AbstractTreeModel.h"
@@ -34,7 +30,7 @@ namespace VCF{
 /**
 \class DefaultTreeModel DefaultTreeModel.h "vcf/ApplicationKit/DefaultTreeModel.h"
 */
-class APPLICATIONKIT_API DefaultTreeModel : public AbstractModel, public AbstractTreeModel {
+class APPLICATIONKIT_API DefaultTreeModel : public Model, public AbstractTreeModel {
 public:
 	/**
 	@delegate RootNodeChanged
@@ -87,7 +83,7 @@ public:
 	virtual void empty() {
 		AbstractTreeModel::empty();
 
-		AbstractModel::empty();
+		Model::empty();
 	}
 
     virtual void insertNodeItem(TreeItem * node, TreeItem * nodeToInsertAfter);

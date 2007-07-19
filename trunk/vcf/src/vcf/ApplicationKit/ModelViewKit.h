@@ -23,10 +23,6 @@ where you installed the VCF.
 *Use this header to add support for the various model/item/view implementation classes
 */
 
-#ifndef _VCF_ABSTRACTMODEL_H__
-#	include "vcf/ApplicationKit/AbstractModel.h"
-#endif // _VCF_ABSTRACTMODEL_H__
-
 #ifndef _VCF_DOCUMENT_H__
 #	include "vcf/ApplicationKit/Document.h"
 #endif // _VCF_DOCUMENT_H__
