@@ -1379,10 +1379,10 @@ void Win32Tree::setAllowLabelEditing( const bool& allowLabelEditing )
 
 void Win32Tree::onControlModelChanged( Event* e )
 {
-	EventHandler* ev = getEventHandler( "Win32Tree::onTreeNodeDeleted" );
+	CallBack* ev = getEventHandler( "Win32Tree::onTreeNodeDeleted" );
 
 	if ( NULL == ev ) {
-		ev = new TreeModelEventHandler<Win32Tree>( this,
+		ev = new ClassProcedure1<TreeModelEvent*,Win32Tree>( this,
 													&Win32Tree::onTreeNodeDeleted,
 													"Win32Tree::onTreeNodeDeleted" );
 	}

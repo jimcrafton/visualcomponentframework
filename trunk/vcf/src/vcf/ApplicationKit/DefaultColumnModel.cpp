@@ -53,7 +53,7 @@ void DefaultColumnModel::empty()
 	while ( it != columnItems_.rend() ) {
 		ColumnItem* item = *it;
 		event.setColumnItem( item );
-		ItemDeleted.fireEvent( &event );
+		ItemDeleted( &event );
 		delete item;
 		item = NULL;
 		it ++;
@@ -68,7 +68,7 @@ void DefaultColumnModel::deleteItem( ColumnItem* item)
 	if ( found != columnItems_.end() ) {
 
 		ColumnModelEvent event( this, COLUMN_MODEL_ITEM_DELETED, item );
-		ItemDeleted.fireEvent( &event );
+		ItemDeleted( &event );
 
 		columnItems_.erase( found );
 
@@ -93,7 +93,7 @@ void DefaultColumnModel::deleteItem(const uint32 & index)
 
 			ColumnItem* item = *found;
 			ColumnModelEvent event( this, COLUMN_MODEL_ITEM_DELETED, item );
-			ItemDeleted.fireEvent( &event );
+			ItemDeleted( &event );
 			columnItems_.erase( found );
 			delete item;
 			item = NULL;
@@ -108,7 +108,7 @@ void DefaultColumnModel::insertItem(const uint32 & index, ColumnItem * item)
 	item->setModel( this );
 
 	ColumnModelEvent event( this, COLUMN_MODEL_ITEM_ADDED, item );
-	ItemAdded.fireEvent( &event );
+	ItemAdded( &event );
 }
 
 void DefaultColumnModel::addItem( ColumnItem* item)
@@ -117,7 +117,7 @@ void DefaultColumnModel::addItem( ColumnItem* item)
 	item->setIndex( columnItems_.size() - 1 );
 	item->setModel( this );
 	ColumnModelEvent event( this, COLUMN_MODEL_ITEM_ADDED, item );
-	ItemAdded.fireEvent( &event );
+	ItemAdded( &event );
 }
 
 ColumnItem* DefaultColumnModel::getItemFromIndex( const uint32& index )

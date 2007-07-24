@@ -58,14 +58,14 @@ void DefaultColumnItem::setData( void* data )
 	data_ = data;
 
 	ItemEvent event( this, ITEM_EVENT_CHANGED );
-	ItemChanged.fireEvent( &event );
+	ItemChanged( &event );
 }
 
 void DefaultColumnItem::setCaption( const String& caption )
 {
 	caption_ = caption;
 	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
-	ItemChanged.fireEvent( &event );
+	ItemChanged( &event );
 }
 
 String DefaultColumnItem::getCaption()
@@ -82,7 +82,7 @@ void DefaultColumnItem::paint( GraphicsContext* context, Rect* paintRect )
 {
 	bounds_ = *paintRect;
 	ItemEvent event( this, context );
-	ItemPaint.fireEvent( &event );
+	ItemPaint( &event );
 }
 
 bool DefaultColumnItem::isSelected()
@@ -95,21 +95,21 @@ void DefaultColumnItem::setSelected( const bool& selected )
 	selected_ = selected;
 
 	ItemEvent event( this, ITEM_EVENT_SELECTED );
-	ItemChanged.fireEvent( &event );
+	ItemChanged( &event );
 }
 
 void DefaultColumnItem::setCaptionAlignment( const TextAlignmentType& alignment )
 {
 	textAlignment_ = alignment;
 	ItemEvent event( this, ITEM_EVENT_CHANGED );
-	ItemChanged.fireEvent( &event );
+	ItemChanged( &event );
 }
 
 void DefaultColumnItem::setWidth( const double& width )
 {
 	width_ = width;
 	ItemEvent event( this, ITEM_EVENT_CHANGED );
-	ItemChanged.fireEvent( &event );
+	ItemChanged( &event );
 }
 
 
