@@ -306,7 +306,7 @@ bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 					Window* window = dynamic_cast<Window*>(frame);
 					if ( NULL != window ) {
 						WindowEvent e(window,WINDOW_EVENT_MAXIMIZE);
-						window->WindowMaximize.fireEvent( &e );
+						window->WindowMaximize( &e );
 					}
 				}
 				break;
@@ -317,7 +317,7 @@ bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 					Window* window = dynamic_cast<Window*>(frame);
 					if ( NULL != window ) {
 						WindowEvent e(window,WINDOW_EVENT_MINIMIZE);
-						window->WindowMinimize.fireEvent( &e );
+						window->WindowMinimize( &e );
 					}
 				}
 				break;
@@ -329,7 +329,7 @@ bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 						Window* window = dynamic_cast<Window*>(frame);
 						if ( NULL != window ) {
 							WindowEvent e(window,WINDOW_EVENT_RESTORE);
-							window->WindowRestore.fireEvent( &e );
+							window->WindowRestore( &e );
 						}
 					}
 					windowRestoredAlready = true;
@@ -423,7 +423,7 @@ bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 							Frame::internal_setActiveFrame( NULL );
 							if ( frame->getComponentState() == Component::csNormal ) {
 								VCF::WindowEvent event( frame, Frame::ACTIVATION_EVENT );
-								frame->FrameActivation.fireEvent( &event );
+								frame->FrameActivation( &event );
 							}
 						}
 						break;
@@ -530,10 +530,10 @@ bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 				
 				if ( window->allowClose() ) {
 					
-					VCF::WindowEvent event( getControl(), WINDOW_EVENT_CLOSE );
+					VCF::FrameEvent event( getControl(), Frame::CLOSE_EVENT );
 					
 					
-					window->FrameClose.fireEvent( &event );
+					window->FrameClose( &event );
 					
 					if ( false == internalClose_ ){
 						//check if the main window is clossing - if it is

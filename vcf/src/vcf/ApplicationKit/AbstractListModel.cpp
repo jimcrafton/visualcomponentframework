@@ -35,7 +35,7 @@ void AbstractListModel::addItem( ListItem* item )
 	item->setModel( dynamic_cast<Model*>(this) );
 
 	ListModelEvent event( dynamic_cast<Object*>(this), item );
-	ItemAdded.fireEvent( &event );
+	ItemAdded( &event );
 }
 
 void AbstractListModel::deleteItemAtIndex( const uint32& index )
@@ -43,7 +43,7 @@ void AbstractListModel::deleteItemAtIndex( const uint32& index )
 	ListItem* item = listItems_[index];
 	item->setIndex( index );
 	ListModelEvent event( dynamic_cast<Object*>(this), item );
-	ItemDeleted.fireEvent( &event );
+	ItemDeleted( &event );
 
 	delete item;
 	listItems_.erase( listItems_.begin() + index );
@@ -57,7 +57,7 @@ void AbstractListModel::deleteItem( ListItem* item )
 		item->setIndex( listItems_.begin() - it );
 
 		ListModelEvent event( dynamic_cast<Object*>(this), item );
-		ItemDeleted.fireEvent( &event );
+		ItemDeleted( &event );
 		delete *it;
 		listItems_.erase( it );
 	}
@@ -71,14 +71,14 @@ void AbstractListModel::empty()
 	ListModelEvent itemEvent( source, LIST_MODEL_ITEM_DELETED );
 	while ( it != listItems_.end() ){
 		itemEvent.setListItem( *it );
-		ItemDeleted.fireEvent( &itemEvent );
+		ItemDeleted( &itemEvent );
 		delete *it;
 		it ++;
 	}
 	listItems_.clear();
 
 	ListModelEvent event( source, LIST_MODEL_CONTENTS_DELETED );
-	ContentsChanged.fireEvent( &event );
+	ContentsChanged( &event );
 }
 
 void AbstractListModel::insertItem( const uint32& index, ListItem* item )
@@ -87,7 +87,7 @@ void AbstractListModel::insertItem( const uint32& index, ListItem* item )
 	item->setIndex( index );
 	item->setModel( dynamic_cast<Model*>(this) );
 	ListModelEvent event( dynamic_cast<Object*>(this), item );
-	ItemAdded.fireEvent( &event );
+	ItemAdded( &event );
 }
 
 

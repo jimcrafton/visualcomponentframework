@@ -89,7 +89,7 @@ void DefaultMenuItem::init()
 
 	container_.initContainer( menuItems_ );
 
-	EventHandler* ev = new GenericEventHandler<DefaultMenuItem> ( this, &DefaultMenuItem::handleEvent, "DefaultMenuItem::handleEvent" );
+	EventHandler* ev = new ClassProcedure1<Event*,DefaultMenuItem> ( this, &DefaultMenuItem::handleEvent, "DefaultMenuItem::handleEvent" );
 
 	ComponentAdded += ev;
 	ComponentRemoved += ev;
@@ -169,7 +169,7 @@ void DefaultMenuItem::setSelected( const bool& selected )
 		itemState_ |= MenuItem::mdsSelected;
 
 		//ItemEvent event( this, ITEM_EVENT_SELECTED );
-		//ItemSelected.fireEvent( &event );
+		//ItemSelected( &event );
 
 		getMenuOwner()->itemChanged( MenuItem::miSelected, this );
 	}
@@ -219,7 +219,7 @@ void DefaultMenuItem::addChild( MenuItem* child )
 	//peer_->addChild( child );
 
 	//ItemEvent event( this, ITEM_EVENT_ADDED );
-	//ItemAdded.fireEvent( &event );
+	//ItemAdded( &event );
 	Menu* owner = getMenuOwner();
 	if ( NULL != owner ) {
 		owner->itemChanged( MenuItem::miAdded, child );
@@ -251,7 +251,7 @@ void DefaultMenuItem::insertChild( const uint32& index, MenuItem* child )
 	//peer_->insertChild( index, child );
 
 	//ItemEvent event( this, ITEM_EVENT_ADDED );
-	//ItemAdded.fireEvent( &event );
+	//ItemAdded( &event );
 	Menu* owner = getMenuOwner();
 	if ( NULL != owner ) {
 		owner->itemChanged( MenuItem::miAdded, child );
@@ -395,7 +395,7 @@ void DefaultMenuItem::setEnabled( const bool& enabled )
 	}
 
 	//ItemEvent event( this, ITEM_EVENT_CHANGED );
-	//ItemChanged.fireEvent( &event );
+	//ItemChanged( &event );
 	Menu* owner = getMenuOwner();
 	if ( NULL != owner ) {
 		owner->itemChanged( MenuItem::miEnabledStateChanged, this );
@@ -419,7 +419,7 @@ void DefaultMenuItem::setVisible( const bool& visible )
 	//peer_->setVisible( visible );
 
 	//ItemEvent event( this, ITEM_EVENT_CHANGED );
-	//ItemChanged.fireEvent( &event );
+	//ItemChanged( &event );
 	Menu* owner = getMenuOwner();
 	if ( NULL != owner ) {
 		owner->itemChanged( MenuItem::miVisibleStateChanged, this );
@@ -443,7 +443,7 @@ void DefaultMenuItem::setRadioItem( const bool& value )
 	//peer_->setRadioItem( value );
 
 	//ItemEvent event( this, ITEM_EVENT_CHANGED );
-	//ItemChanged.fireEvent( &event );
+	//ItemChanged( &event );
 	Menu* owner = getMenuOwner();
 	if ( NULL != owner ) {
 		owner->itemChanged( MenuItem::miRadioStateChanged, this );
@@ -457,7 +457,7 @@ void DefaultMenuItem::setCaption( const String& caption )
 	//peer_->setCaption( caption_ );
 
 	//ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
-	//ItemChanged.fireEvent( &event );
+	//ItemChanged( &event );
 	Menu* owner = getMenuOwner();
 	if ( NULL != owner ) {
 		owner->itemChanged( MenuItem::miCaptionChanged, this );
@@ -492,7 +492,7 @@ void DefaultMenuItem::click()
 		action->perform( &event );
 	}
 	else {		
-		MenuItemClicked.fireEvent( &event );
+		MenuItemClicked( &event );
 	}
 }
 
@@ -504,7 +504,7 @@ void DefaultMenuItem::update()
 	}
 	else {
 		MenuItemEvent event( this, MENU_ITEM_EVENT_UPDATED );
-		MenuItemUpdate.fireEvent( &event );
+		MenuItemUpdate( &event );
 	}
 }
 
@@ -603,9 +603,9 @@ AcceleratorKey* DefaultMenuItem::getAccelerator()
 
 void DefaultMenuItem::setAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask )
 {
-	EventHandler* eventHandler = this->getEventHandler( "DefaultMenuItem::onAccelerator" );
+	CallBack* eventHandler = this->getEventHandler( "DefaultMenuItem::onAccelerator" );
 	if ( NULL == eventHandler ) {
-		eventHandler = new KeyboardEventHandler<DefaultMenuItem>( this, &DefaultMenuItem::onAccelerator, "DefaultMenuItem::onAccelerator" );
+		eventHandler = new ClassProcedure1<KeyboardEvent*,DefaultMenuItem>( this, &DefaultMenuItem::onAccelerator, "DefaultMenuItem::onAccelerator" );
 	}
 	AcceleratorKey* newAccelKey = new AcceleratorKey( this, keyCode, modifierMask, eventHandler );
 

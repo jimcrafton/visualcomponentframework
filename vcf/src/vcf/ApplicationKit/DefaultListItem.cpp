@@ -104,7 +104,7 @@ void DefaultListItem::setCaption( const String& caption )
 {
 	caption_ = caption;
 	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
-	ItemChanged.fireEvent( &event );
+	ItemChanged( &event );
 }
 
 void DefaultListItem::paint( GraphicsContext* context, Rect* paintRect )
@@ -112,7 +112,7 @@ void DefaultListItem::paint( GraphicsContext* context, Rect* paintRect )
 	bounds_ = *paintRect;
 
 	ItemEvent event( this, context );
-	ItemPaint.fireEvent( &event );
+	ItemPaint( &event );
 }
 
 bool DefaultListItem::isSelected()
@@ -124,14 +124,14 @@ void DefaultListItem::setSelected( const bool& selected )
 {
 	selected_ = selected;
 	ItemEvent event( this, ITEM_EVENT_SELECTED );
-	ItemSelected.fireEvent( &event );
+	ItemSelected( &event );
 }
 
 void DefaultListItem::setImageIndex( const int32& imageIndex )
 {
 	imageIndex_ = imageIndex;
 	ItemEvent event( this, ITEM_EVENT_CHANGED );
-	ItemChanged.fireEvent( &event );
+	ItemChanged( &event );
 }
 
 void DefaultListItem::addSubItem( const String& caption, void* data )
@@ -147,7 +147,7 @@ void DefaultListItem::addSubItem( ListItem::SubItem* subItem )
 	subItems_.push_back( subItem );
 
 	ItemEvent event( this, LISTITEM_EVENT_SUBTITEM_ADDED );
-	SubItemAdded.fireEvent( &event );
+	SubItemAdded( &event );
 }
 
 void DefaultListItem::removeSubItem( const uint32& index )
@@ -156,7 +156,7 @@ void DefaultListItem::removeSubItem( const uint32& index )
 	if ( found != subItems_.end() ) {
 		SubItem* subItem = *found;
 		ItemEvent event( this, LISTITEM_EVENT_SUBTITEM_DELETED );
-		SubItemDeleted.fireEvent( &event );
+		SubItemDeleted( &event );
 
 		subItems_.erase( found );
 
@@ -188,7 +188,7 @@ uint32 DefaultListItem::getSubItemCount()
 void DefaultListItem::subItemChanged( ListItem::SubItem* item )
 {
 	ItemEvent event( this, LISTITEM_EVENT_SUBTITEM_CHANGED );
-	SubItemChanged.fireEvent( &event );
+	SubItemChanged( &event );
 }
 
 void DefaultListItem::setBounds( Rect* bounds )

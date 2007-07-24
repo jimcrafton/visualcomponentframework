@@ -435,17 +435,17 @@ void TableControl::init()
 	model->TableRowsDeleted += tmh;
 	model->TableCellsSelected += tmh;
 
-	Ck* modelHandler =
-		new ModelEventHandler<TableControl>( this, &TableControl::onTableModelEmptied, "ModelHandler" );
+	CallBack* modelHandler =
+		new ClassProcedure1<ModelEvent*,TableControl>( this, &TableControl::onTableModelEmptied, "ModelHandler" );
 
 	getViewModel()->addModelHandler( modelHandler );
 
-	KeyboardEventHandler<TableControl>* kh =
-		new KeyboardEventHandler<TableControl>( this, &TableControl::onEditingControlKeyPressed, TABLECONTROL_KBRD_HANDLER );
+	CallBack* kh =
+		new ClassProcedure1<KeyboardEvent*,TableControl>( this, &TableControl::onEditingControlKeyPressed, TABLECONTROL_KBRD_HANDLER );
 
 
-	EventHandler* focusLost =
-		new FocusEventHandler<TableControl>( this, &TableControl::onFocusLost, "TableControl::onFocusLost" );
+	CallBack* focusLost =
+		new ClassProcedure1<FocusEvent*,TableControl>( this, &TableControl::onFocusLost, "TableControl::onFocusLost" );
 
 
 	ScrollbarManager* scroller = new ScrollbarManager();
