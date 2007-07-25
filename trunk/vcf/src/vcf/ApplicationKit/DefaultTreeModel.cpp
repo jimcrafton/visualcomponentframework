@@ -59,7 +59,7 @@ void DefaultTreeModel::insertNodeItem(TreeItem * node, TreeItem * nodeToInsertAf
 	if ( NULL != parent ) {
 		parent->insertChild( nodeToInsertAfter->getIndex(), node );
 		TreeModelEvent event(dynamic_cast<Object*>(this), node, TreeModel::TREEITEM_ADDED );
-		NodeAdded.fireEvent( &event );
+		NodeAdded( &event );
 	}
 	else {
 		//bad call throw exception
@@ -71,7 +71,7 @@ void DefaultTreeModel::deleteNodeItem(TreeItem * nodeToDelete)
 	TreeItem* parent = nodeToDelete->getParent();
 
 	TreeModelEvent event(dynamic_cast<Object*>(this), nodeToDelete, TreeModel::TREEITEM_DELETED );
-	NodeDeleted.fireEvent( &event );
+	NodeDeleted( &event );
 
 	if ( NULL != parent ){
 		parent->deleteChild( nodeToDelete );
@@ -94,14 +94,14 @@ void DefaultTreeModel::addNodeItem( TreeItem * node, TreeItem * nodeParent )
 	if ( NULL == nodeParent ){
 		rootNodes_.push_back( node );
 		TreeModelEvent event(dynamic_cast<Object*>(this), node, TreeModel::TREEITEM_ADDED );
-		RootNodeChanged.fireEvent( &event );
+		RootNodeChanged( &event );
 	}
 	else {
 		nodeParent->addChild( node );
 	}
 
 	TreeModelEvent event(dynamic_cast<Object*>(this), node, TreeModel::TREEITEM_ADDED );
-	NodeAdded.fireEvent( &event );
+	NodeAdded( &event );
 }
 
 

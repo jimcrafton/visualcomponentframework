@@ -40,7 +40,7 @@ void ToolbarItem::click()
 		action->perform( &event );
 	}
 	else {
-		ItemClicked.fireEvent( &event );
+		ItemClicked( &event );
 	}
 
 }
@@ -49,7 +49,7 @@ bool ToolbarItem::updateAction()
 {
 	if ( !UIComponent::updateAction() ) {
 		Event event( this, ToolbarItem::tbItemUpdate );
-		ItemUpdate.fireEvent( &event );
+		ItemUpdate( &event );
 		return true;
 	}
 
@@ -358,7 +358,7 @@ void ToolbarModel::itemChanged( const uint32& eventType, ToolbarItem* item )
 	ToolbarModelEvent e(this, eventType);
 	e.setItem( item );
 
-	ModelChanged.fireEvent( &e );
+	ModelChanged( &e );
 }
 
 uint32 ToolbarModel::getItemIndex( ToolbarItem* item )

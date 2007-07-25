@@ -57,7 +57,7 @@ void DefaultTabPage::setPageName( const String& name )
 {
 	pageName_ = name;
 	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
-	ItemChanged.fireEvent( &event );
+	ItemChanged( &event );
 }
 
 String DefaultTabPage::getPageName()
@@ -89,7 +89,7 @@ void DefaultTabPage::setSelected( const bool& selected )
 {
 	selected_ = selected;
 	ItemEvent event( this, ITEM_EVENT_SELECTED );
-	ItemSelected.fireEvent( &event );
+	ItemSelected( &event );
 }
 
 void DefaultTabPage::paint( GraphicsContext* context, Rect* paintRect )

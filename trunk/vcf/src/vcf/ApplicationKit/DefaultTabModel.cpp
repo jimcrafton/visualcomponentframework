@@ -28,7 +28,7 @@ DefaultTabModel::~DefaultTabModel()
 void DefaultTabModel::addTabPage( TabPage* page )
 {
 	TabModelEvent event( this, TAB_MODEL_EVENT_ITEM_ADDED, page );
-	TabPageAdded.fireEvent( &event );
+	TabPageAdded( &event );
 	pages_.push_back( page );
 
 	CallBack* ev = getEventHandler( "DefaultTabModel::tabPageChange" );
@@ -41,14 +41,14 @@ void DefaultTabModel::addTabPage( TabPage* page )
 void DefaultTabModel::insertTabPage( const uint32& index, TabPage* page )
 {
 	TabModelEvent event( this, TAB_MODEL_EVENT_ITEM_ADDED, page );
-	TabPageAdded.fireEvent( &event );
+	TabPageAdded( &event );
 	pages_.insert( pages_.begin() + index, page );
 }
 
 void DefaultTabModel::deleteTabPage( TabPage* page )
 {
 	TabModelEvent event( this, TAB_MODEL_EVENT_ITEM_REMOVED, page );
-	TabPageRemoved.fireEvent( &event );
+	TabPageRemoved( &event );
 	std::vector<TabPage*>::iterator found = std::find( pages_.begin(), pages_.end(), page );
 	if ( found != pages_.end() ){
 		TabPage* page = *found;
@@ -63,7 +63,7 @@ void DefaultTabModel::deleteTabPage( const uint32& index )
 	std::vector<TabPage*>::iterator found = pages_.begin() + index;
 	if ( found != pages_.end() ){
 		TabModelEvent event( this, TAB_MODEL_EVENT_ITEM_REMOVED, *found );
-		TabPageRemoved.fireEvent( &event );
+		TabPageRemoved( &event );
 		TabPage* page = *found;
 		//clean up memory
 		page->free();
@@ -149,7 +149,7 @@ void DefaultTabModel::setSelectedPage( TabPage* page )
 	}
 	page->setSelected( true );
 	TabModelEvent event( this, TAB_MODEL_EVENT_ITEM_SELECTED, page );
-	TabPageSelected.fireEvent( &event );
+	TabPageSelected( &event );
 }
 
 void DefaultTabModel::setSelectedPage( const uint32& index )

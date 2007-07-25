@@ -108,7 +108,7 @@ void HeaderControl::setColumnWidth( const uint32& index, const double& width )
 	ColumnItem* item = columnModel_->getItemFromIndex( index );
 	item->setWidth( width );
 	ItemEvent event( this, ITEM_EVENT_CHANGED );
-	ColumnWidthChanged.fireEvent( &event );
+	ColumnWidthChanged( &event );
 }
 
 void HeaderControl::setImageList( ImageList* imageList )
@@ -275,12 +275,12 @@ void HeaderControl::handleEvent( Event* event )
 	CustomControl::handleEvent( event );
 	switch ( event->getType() ) {
 		case HeaderControl::COLUMN_ITEM_CLICKED : {
-			ColumnItemClicked.fireEvent( (MouseEvent*)event );
+			ColumnItemClicked( (MouseEvent*)event );
 		}
 		break;
 
 		case HeaderControl::COLUMN_ITEM_WIDTHCHANGED : {
-			ColumnWidthChanged.fireEvent( (ItemEvent*)event );
+			ColumnWidthChanged( (ItemEvent*)event );
 		}
 		break;
 	}

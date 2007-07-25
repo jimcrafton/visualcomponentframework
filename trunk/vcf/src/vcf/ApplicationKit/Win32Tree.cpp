@@ -1386,7 +1386,7 @@ void Win32Tree::onControlModelChanged( Event* e )
 													&Win32Tree::onTreeNodeDeleted,
 													"Win32Tree::onTreeNodeDeleted" );
 	}
-	treeControl_->getTreeModel()->addTreeNodeDeletedHandler( ev );
+	treeControl_->getTreeModel()->addTreeNodeDeletedHandler( (EventHandler*)ev );
 }
 
 void Win32Tree::onTreeNodeDeleted( TreeModelEvent* event )

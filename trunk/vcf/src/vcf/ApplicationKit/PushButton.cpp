@@ -437,7 +437,7 @@ void PushButton::click()
 		action->perform( &event );
 	}
 	else {
-		ButtonClicked.fireEvent( &event );
+		ButtonClicked( &event );
 	}
 
 	if ( BC_NONE != getCommandType() ) {

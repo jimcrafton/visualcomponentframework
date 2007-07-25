@@ -607,7 +607,7 @@ void DefaultMenuItem::setAcceleratorKey( const VirtualKeyCode& keyCode, const ui
 	if ( NULL == eventHandler ) {
 		eventHandler = new ClassProcedure1<KeyboardEvent*,DefaultMenuItem>( this, &DefaultMenuItem::onAccelerator, "DefaultMenuItem::onAccelerator" );
 	}
-	AcceleratorKey* newAccelKey = new AcceleratorKey( this, keyCode, modifierMask, eventHandler );
+	AcceleratorKey* newAccelKey = new AcceleratorKey( this, keyCode, modifierMask, (EventHandler*)eventHandler );
 
 	setAcceleratorKey( newAccelKey );
 }

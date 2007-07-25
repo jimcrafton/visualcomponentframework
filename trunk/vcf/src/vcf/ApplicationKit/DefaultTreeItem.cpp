@@ -103,7 +103,7 @@ void DefaultTreeItem::setData( void* data )
 {
 	userData_ = data;
 	ItemEvent event( this );
-	ItemChanged.fireEvent( &event );
+	ItemChanged( &event );
 }
 
 Color* DefaultTreeItem::getTextColor()
@@ -115,14 +115,14 @@ void DefaultTreeItem::setTextColor(Color* color)
 {
 	TextColor_ = *color;
 	ItemEvent event( this );
-	ItemChanged.fireEvent( &event );
+	ItemChanged( &event );
 }
 
 void DefaultTreeItem::setTextBold(const bool& bold)
 {
 	textBold_ = bold;
 	ItemEvent event( this );
-	ItemChanged.fireEvent( &event );
+	ItemChanged( &event );
 }
 
 bool DefaultTreeItem::getTextBold()
@@ -149,7 +149,7 @@ void DefaultTreeItem::setParent( TreeItem* parent )
 {
 	parent_ = parent;
 	ItemEvent event( this );
-	ItemChanged.fireEvent( &event );
+	ItemChanged( &event );
 }
 
 TreeItem* DefaultTreeItem::getNextChildNodeItem()
@@ -221,7 +221,7 @@ void DefaultTreeItem::addChild( TreeItem* child )
 	childNodeItems_.push_back( child );
 	child->setParent( this );
 	ItemEvent event( this, ITEM_EVENT_ADDED );
-	ItemAdded.fireEvent( &event );
+	ItemAdded( &event );
 }
 
 void DefaultTreeItem::insertChild( const uint32& index, TreeItem* child )
@@ -230,7 +230,7 @@ void DefaultTreeItem::insertChild( const uint32& index, TreeItem* child )
 	childNodeItems_.insert( it + index, child );
 	child->setParent( this );
 	ItemEvent event( this, ITEM_EVENT_ADDED );
-	ItemAdded.fireEvent( &event );
+	ItemAdded( &event );
 	it = childNodeItems_.begin() + index;
 	int i = index;
 	while ( it != childNodeItems_.end() ) {
@@ -248,7 +248,7 @@ void DefaultTreeItem::deleteChild( TreeItem* child )
 		int index = found - childNodeItems_.begin();
 		TreeItem* item = *found;
 		ItemEvent event( child, ITEM_EVENT_DELETED );
-		ItemDeleted.fireEvent( &event );
+		ItemDeleted( &event );
 		delete item;
 		item = NULL;
 		childNodeItems_.erase ( found );
@@ -269,7 +269,7 @@ void DefaultTreeItem::deleteChildAtIndex( const uint32& index )
 	if ( found != childNodeItems_.end() ) {
 		TreeItem* item = *found;
 		ItemEvent event( item, ITEM_EVENT_DELETED );
-		ItemDeleted.fireEvent( &event );
+		ItemDeleted( &event );
 		childNodeItems_.erase ( found );
 		delete item;
 		item = NULL;
@@ -290,13 +290,13 @@ void DefaultTreeItem::clearChildren()
 		TreeItem* item = *it;
 		item->clearChildren();
 		ItemEvent deleteEvent( item, ITEM_EVENT_DELETED );
-		ItemDeleted.fireEvent( &deleteEvent );
+		ItemDeleted( &deleteEvent );
 		delete item;
 	}
 	childNodeItems_.clear();
 
 	ItemEvent event( this );
-	ItemChanged.fireEvent( &event );
+	ItemChanged( &event );
 }
 
 
@@ -313,7 +313,7 @@ void DefaultTreeItem::paint( GraphicsContext* context, Rect* paintRect )
 	bounds_ = *paintRect;
 
 	ItemEvent event( this, context );
-	ItemPaint.fireEvent( &event );
+	ItemPaint( &event );
 }
 
 bool DefaultTreeItem::isSelected()
@@ -325,7 +325,7 @@ void DefaultTreeItem::setSelected( const bool& selected )
 {
 	selected_ = selected;
 	ItemEvent event( this, ITEM_EVENT_SELECTED );
-	ItemSelected.fireEvent( &event );
+	ItemSelected( &event );
 }
 
 void DefaultTreeItem::expand( const bool& isExpanded )
@@ -452,7 +452,7 @@ void DefaultTreeItem::changed( const uint32& eventType )
 		//throw InvalidPointerException( MAKE_ERROR_MSG_2("This tree item has no model!") );
 	}
 	ItemEvent event( this, eventType );
-	ItemChanged.fireEvent( &event );
+	ItemChanged( &event );
 }
 
 
