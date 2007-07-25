@@ -65,7 +65,7 @@ void SystemTray::addToTray()
 	peer_->addToTray();
 
 	Event e( this,SystemTray::stAddedToTray );
-	TrayIconChanged.fireEvent( &e );
+	TrayIconChanged( &e );
 }
 
 void SystemTray::removeFromTray()
@@ -73,21 +73,21 @@ void SystemTray::removeFromTray()
 	peer_->removeFromTray();
 
 	Event e( this,SystemTray::stRemovedFromTray );
-	TrayIconChanged.fireEvent( &e );
+	TrayIconChanged( &e );
 }
 
 void SystemTray::showInTray()
 {
 	peer_->showInTray();
 	Event e( this,SystemTray::stShown );
-	TrayIconChanged.fireEvent( &e );
+	TrayIconChanged( &e );
 }
 
 void SystemTray::hideFromTray()
 {
 	peer_->hideFromTray();
 	Event e( this,SystemTray::stHidden );
-	TrayIconChanged.fireEvent( &e );
+	TrayIconChanged( &e );
 }
 
 

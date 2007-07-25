@@ -112,7 +112,7 @@ void DefaultTableModel::insertRow( const uint32& afterRow )
 
 	tableData_.insert( tableData_.begin() + afterRow, newRow );
 	TableModelEvent event( this, ROWS_ADDED, afterRow, 1 );
-	TableRowsAdded.fireEvent( &event );
+	TableRowsAdded( &event );
 }
 
 void DefaultTableModel::addRows( const uint32& count )
@@ -143,7 +143,7 @@ void DefaultTableModel::addRows( const uint32& count )
 	}
 
 	TableModelEvent event( this, ROWS_ADDED, start, count );
-	TableRowsAdded.fireEvent( &event );
+	TableRowsAdded( &event );
 
 	/*
 	bool notifyFirstColumnAdded = false;
@@ -170,7 +170,7 @@ void DefaultTableModel::addRows( const uint32& count )
 	if ( notifyFirstColumnAdded ) {
 		TableModelEvent columnEvent( this, COLUMN_ADDED, NO_ROW_CHANGED, columnCount_-1 );
 
-		TableColumnAdded.fireEvent( &columnEvent );
+		TableColumnAdded( &columnEvent );
 	}
 
 
@@ -180,7 +180,7 @@ void DefaultTableModel::addRows( const uint32& count )
 void DefaultTableModel::deleteRow( const uint32& row )
 {
 	TableModelEvent event( this, ROWS_DELETED, row, 1 );
-	TableRowsDeleted.fireEvent( &event );
+	TableRowsDeleted( &event );
 
 	std::vector<TTableColumn*>::iterator found = tableData_.begin() + row;
 	if ( found != tableData_.end() ){
@@ -233,7 +233,7 @@ void DefaultTableModel::addColumns( const uint32& count )
 
 	}
 	TableModelEvent event( this, COLUMNS_ADDED, NO_ROW_CHANGED, 0, startCol, count );
-	TableColumnsAdded.fireEvent( &event );
+	TableColumnsAdded( &event );
 }
 
 void DefaultTableModel::insertColumn( const uint32& afterColumn )
@@ -261,14 +261,14 @@ void DefaultTableModel::insertColumn( const uint32& afterColumn )
 	}
 
 	TableModelEvent event( this, COLUMNS_ADDED, NO_ROW_CHANGED, 0, afterColumn, 1 );
-	TableColumnsAdded.fireEvent( &event );
+	TableColumnsAdded( &event );
 }
 
 void DefaultTableModel::deleteColumn( const uint32& column )
 {
 
 	TableModelEvent event( this, COLUMNS_DELETED, NO_ROW_CHANGED, 0, column, 1 );
-	TableColumnsDeleted.fireEvent( &event );
+	TableColumnsDeleted( &event );
 
 	std::vector<TTableColumn*>::iterator rowIter = tableData_.begin();
 	while ( rowIter != tableData_.end() ){
@@ -353,7 +353,7 @@ TableCellItem* DefaultTableModel::setSelectedCell( const bool& val, const uint32
 	}
 
 	TableModelEvent event( this, CELL_CHANGED, row, 1, column, 1 );
-	TableCellsSelected.fireEvent( &event );
+	TableCellsSelected( &event );
 
 	return selectedCell;
 }
@@ -386,7 +386,7 @@ void DefaultTableModel::setSelectedRange( const bool& val, const uint32& startRo
 	}
 
 	TableModelEvent event( this, CELL_CHANGED, startRow, endRow-startRow, startColumn, endColumn-startColumn );
-	TableCellsSelected.fireEvent( &event );
+	TableCellsSelected( &event );
 	//TableCellsSelected
 }
 
@@ -472,7 +472,7 @@ void DefaultTableModel::clearSelection()
 
 
 	TableModelEvent event( this, CELL_CHANGED );
-	TableCellsSelected.fireEvent( &event );
+	TableCellsSelected( &event );
 }
 
 CellID DefaultTableModel::getCellIDForItem( TableCellItem* item )

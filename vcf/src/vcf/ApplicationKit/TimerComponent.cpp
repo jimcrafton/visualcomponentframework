@@ -63,7 +63,7 @@ void TimerComponent::setActivated( const bool& isActive )
 
 	if ( true == isActive_ ) {
 		TimerEvent event( this, TIMER_EVENT_ACTIVATED );
-		TimerActivated.fireEvent( &event );
+		TimerActivated( &event );
 
 		UIToolkit::registerTimerHandler( this, handler, timeoutInterval_ );
 	}
@@ -71,7 +71,7 @@ void TimerComponent::setActivated( const bool& isActive )
 		UIToolkit::unregisterTimerHandler( handler );
 
 		TimerEvent event( this, TIMER_EVENT_DEACTIVATED );
-		TimerDeactivated.fireEvent( &event );
+		TimerDeactivated( &event );
 	}
 
 }
@@ -85,7 +85,7 @@ void TimerComponent::setTimeoutInterval( const int32& interval )
 
 void TimerComponent::onInternalTimerPulse( TimerEvent* event )
 {
-	TimerPulse.fireEvent( event );
+	TimerPulse( event );
 }
 
 EventHandler* TimerComponent::getTimerHandler()

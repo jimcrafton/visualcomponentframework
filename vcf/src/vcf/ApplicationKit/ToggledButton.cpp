@@ -98,7 +98,7 @@ void ToggledButton::click()
 		action->perform( &event );
 	}
 	else {
-		ButtonClicked.fireEvent( &event );
+		ButtonClicked( &event );
 	}
 }
 

@@ -55,7 +55,7 @@ void SliderControl::setPosition( const double& val )
 	position_ = minVal<>( maxVal_, maxVal<>( minVal_, val ) );
 	repaint();
 	Event e(this,SliderControl::PositionChangedEvent);
-	PositionChanged.fireEvent(&e);
+	PositionChanged(&e);
 }
 
 void SliderControl::setHasTickMarks( const bool& val )
