@@ -130,7 +130,7 @@ public:
 		listBox_ = new DropDownListBox( comboBoxControl );
 		add( listBox_, AlignClient );
 
-		listBox_->MouseUp.addHandler( new MouseEventHandler<ComboBoxDropDown>( this, &ComboBoxDropDown::onListboxMouseUp, "onListboxMouseUp" ) );
+		listBox_->MouseUp += new ClassProcedure1<MouseEvent*,ComboBoxDropDown>( this, &ComboBoxDropDown::onListboxMouseUp, "onListboxMouseUp" );
 
 		setColor( Color::getColor( "black" ) );
 		setUseColorForBackground( true );
@@ -331,12 +331,13 @@ void ComboBoxControl::init()
 
 	edit_->setKeepTabbingCharacters( true );
 
-	edit_->KeyPressed.addHandler(
-		new KeyboardEventHandler<ComboBoxControl>( this, &ComboBoxControl::onEditKeyPressed, "ComboBoxControl::onEditKeyPressed" ) );
+	edit_->KeyPressed += 
+		new ClassProcedure1<KeyboardEvent*,ComboBoxControl>( this, &ComboBoxControl::onEditKeyPressed, "ComboBoxControl::onEditKeyPressed" );
 
 	updateEditBounds();
 
-	FocusGained.addHandler( new FocusEventHandler<ComboBoxControl>( this, &ComboBoxControl::onFocusGained, "ComboBoxControl::onFocusGained" ) );
+	FocusGained += 
+		new ClassProcedure1<FocusEvent*,ComboBoxControl>( this, &ComboBoxControl::onFocusGained, "ComboBoxControl::onFocusGained" );
 
 	setUseColorForBackground( true );
 
@@ -377,26 +378,26 @@ ListModel* ComboBoxControl::getListModel()
 
 void ComboBoxControl::setListModel(ListModel * model)
 {
-	EventHandler* changed = getEventHandler( "ComboBox_onListModelContentsChanged" );
+	CallBack* changed = getEventHandler( "ComboBox_onListModelContentsChanged" );
 	if ( NULL == changed ) {
 		changed =
-			new ListModelEventHandler<ComboBoxControl>( this,
+			new ClassProcedure1<ListModelEvent*,ComboBoxControl>( this,
 														&ComboBoxControl::onListModelContentsChanged,
 														"ComboBox_onListModelContentsChanged" );
 	}
 
-	EventHandler* itemAdded = getEventHandler( "ComboBox_onItemAdded" );
+	CallBack* itemAdded = getEventHandler( "ComboBox_onItemAdded" );
 	if ( NULL == itemAdded ) {
 		itemAdded =
-			new ListModelEventHandler<ComboBoxControl>( this,
+			new ClassProcedure1<ListModelEvent*,ComboBoxControl>( this,
 														&ComboBoxControl::onItemAdded,
 														"ComboBox_onItemAdded" );
 	}
 
-	EventHandler* itemDeleted = getEventHandler( "ComboBox_onItemDeleted" );
+	CallBack* itemDeleted = getEventHandler( "ComboBox_onItemDeleted" );
 	if ( NULL == itemDeleted ) {
 		itemDeleted =
-			new ListModelEventHandler<ComboBoxControl>( this,
+			new ClassProcedure1<ListModelEvent*,ComboBoxControl>( this,
 														&ComboBoxControl::onItemDeleted,
 														"ComboBox_onItemDeleted" );
 	}
@@ -518,7 +519,7 @@ void ComboBoxControl::closeDropDown( Event* event )
 		ListItem* selectedItem = dropdown->getSelectedItem();
 
 		EventHandler* lostFocusHandler = getEventHandler( "ComboBoxControl::onDropDownLostFocus" );
-		dropDown_->FrameActivation.removeHandler( lostFocusHandler );
+		dropDown_->FrameActivation.remove( lostFocusHandler );
 
 		dropDown_->setVisible( false );
 		this->repaint();

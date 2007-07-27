@@ -14,18 +14,18 @@ where you installed the VCF.
 #endif
 
 
-#ifndef _VCF_TABLEMODEL_H__
-#include "vcf/ApplicationKit/TableModel.h"
-#endif // _VCF_TABLEMODEL_H__
 
+#ifndef _VCF_TABLEMODELEVENT_H__
+#	include "vcf/ApplicationKit/TableModelEvent.h"
+#endif // _VCF_TABLEMODELEVENT_H__
 
 #ifndef _VCF_TABLECELLITEM_H__
 #include "vcf/ApplicationKit/TableCellItem.h"
 #endif // _VCF_TABLECELLITEM_H__
 
-#ifndef _VCF_TABLEMODELEVENT_H__
-#	include "vcf/ApplicationKit/TableModelEvent.h"
-#endif // _VCF_TABLEMODELEVENT_H__
+#ifndef _VCF_TABLEMODEL_H__
+#include "vcf/ApplicationKit/TableModel.h"
+#endif // _VCF_TABLEMODEL_H__
 
 
 namespace VCF {
