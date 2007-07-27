@@ -26,7 +26,6 @@ namespace VCF{
 
 class TableCellItem;
 
-class TableModelListener;
 
 typedef Enumerator<TableCellItem*> TableRowItemEnumerator;
 

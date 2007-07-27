@@ -35,7 +35,7 @@ void DefaultTabModel::addTabPage( TabPage* page )
 	if ( NULL == ev ) {
 		ev = new ClassProcedure1<ItemEvent*,DefaultTabModel>(this, &DefaultTabModel::tabPageChange, "DefaultTabModel::tabPageChange" );
 	}
-	page->addItemChangedHandler( ev );
+	page->ItemChanged += ev;
 }
 
 void DefaultTabModel::insertTabPage( const uint32& index, TabPage* page )

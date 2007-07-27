@@ -10,6 +10,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/DefaultTableCellItem.h"
 #include "vcf/ApplicationKit/BasicTableItemEditor.h"
+#include "vcf/ApplicationKit/TableModelEvent.h"
 #include "vcf/ApplicationKit/TableModel.h"
 #include "vcf/GraphicsKit/DrawUIState.h"
 
@@ -250,7 +251,7 @@ void DefaultTableCellItem::setSelected( const bool& selected )
 
 	}
 	ItemEvent e( this, ITEM_EVENT_SELECTED );
-	ItemSelected.fireEvent( &e );
+	ItemSelected( &e );
 }
 */
 
@@ -288,7 +289,7 @@ void DefaultTableCellItem::setCaption( const String& caption )
 {
 	caption_ = caption;
 	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
-	ItemChanged.fireEvent( &event );
+	ItemChanged( &event );
 }
 
 void DefaultTableCellItem::setImageIndex( const int32& imageIndex )
@@ -391,10 +392,10 @@ const Font& DefaultTableCellItem::getFont()
 		if ( found != DefaultTableCellItem::tableCellsFontMap.end() ) {
 			font_ = &found->second;
 
-			EventHandler* ev = getEventHandler("DefaultTableCellItem::onFontChanged");
+			CallBack* ev = getEventHandler("DefaultTableCellItem::onFontChanged");
 
 			if ( NULL == ev ) {
-				ev = new GenericEventHandler<DefaultTableCellItem>(this,&DefaultTableCellItem::onFontChanged,"DefaultTableCellItem::onFontChanged");
+				ev = new ClassProcedure1<Event*,DefaultTableCellItem>(this,&DefaultTableCellItem::onFontChanged,"DefaultTableCellItem::onFontChanged");
 			}
 			font_->FontChanged += ev;			
 		}
@@ -410,10 +411,10 @@ const Font& DefaultTableCellItem::getFont()
 		if ( found != DefaultTableCellItem::tableCellsFontMap.end() ) {
 			font_ = &found->second;
 
-			EventHandler* ev = getEventHandler("DefaultTableCellItem::onFontChanged");
+			CallBack* ev = getEventHandler("DefaultTableCellItem::onFontChanged");
 
 			if ( NULL == ev ) {
-				ev = new GenericEventHandler<DefaultTableCellItem>(this,&DefaultTableCellItem::onFontChanged,"DefaultTableCellItem::onFontChanged");
+				ev = new ClassProcedure1<Event*,DefaultTableCellItem>(this,&DefaultTableCellItem::onFontChanged,"DefaultTableCellItem::onFontChanged");
 			}
 			font_->FontChanged += ev;
 		}

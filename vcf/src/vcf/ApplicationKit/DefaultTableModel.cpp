@@ -88,7 +88,7 @@ void DefaultTableModel::empty()
 
 	selectionMap_.clear();
 
-	AbstractModel::empty();
+	Model::empty();
 }
 
 void DefaultTableModel::addRow()
