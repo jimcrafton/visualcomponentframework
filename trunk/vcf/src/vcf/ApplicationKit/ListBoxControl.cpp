@@ -69,18 +69,18 @@ void ListBoxControl::init()
 	
 	defaultItemHeight_ = UIToolkit::getUIMetricValue( UIMetricsManager::mtListItemHeight );
 
-	EventHandler* lmh =
-		new ListModelEventHandler<ListBoxControl>( this, &ListBoxControl::onItemAdded, "ListBoxControl::onItemAdded" );
+	EventHandler* lmh = (EventHandler*)
+		new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onItemAdded, "ListBoxControl::onItemAdded" );
 
 	listModel_->addItemAddedHandler( lmh );
 
-	lmh =
-		new ListModelEventHandler<ListBoxControl>( this, &ListBoxControl::onItemDeleted, "ListBoxControl::onItemDeleted" );
+	lmh = (EventHandler*)
+		new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onItemDeleted, "ListBoxControl::onItemDeleted" );
 
 	listModel_->addItemDeletedHandler( lmh );
 
-	lmh =
-		new ListModelEventHandler<ListBoxControl>( this, &ListBoxControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
+	lmh = (EventHandler*)
+		new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
 
 	listModel_->addContentsChangedHandler( lmh );
 
@@ -99,21 +99,20 @@ ListBoxControl::~ListBoxControl()
 void ListBoxControl::destroy()
 {
 	if ( NULL != listModel_ ) {
-		EventHandler* ev = getEventHandler( "ListBoxControl::onItemAdded" );
+		EventHandler* ev = (EventHandler*)getEventHandler( "ListBoxControl::onItemAdded" );
 		if ( NULL != ev ) {
 			listModel_->removeItemAddedHandler( ev );
 		}
 
-		ev = getEventHandler( "ListBoxControl::onItemDeleted" );
+		ev = (EventHandler*)getEventHandler( "ListBoxControl::onItemDeleted" );
 		if ( NULL != ev ) {
 			listModel_->removeItemDeletedHandler( ev );
 		}
 
-		ev = getEventHandler( "ListBoxControl::onListModelContentsChanged" );
+		ev = (EventHandler*)getEventHandler( "ListBoxControl::onListModelContentsChanged" );
 		if ( NULL != ev ) {
 			listModel_->removeContentsChangedHandler( ev );
 		}
-		//listModel_->release();
 	}
 
 	CustomControl::destroy();
@@ -131,17 +130,17 @@ void ListBoxControl::setListModel( ListModel * model )
 	}
 
 	if ( NULL != listModel_ ) {
-		EventHandler* ev = getEventHandler( "ListBoxControl::onItemAdded" );
+		EventHandler* ev = (EventHandler*)getEventHandler( "ListBoxControl::onItemAdded" );
 		if ( NULL != ev ) {
 			listModel_->removeItemAddedHandler( ev );
 		}
 
-		ev = getEventHandler( "ListBoxControl::onItemDeleted" );
+		ev = (EventHandler*)getEventHandler( "ListBoxControl::onItemDeleted" );
 		if ( NULL != ev ) {
 			listModel_->removeItemDeletedHandler( ev );
 		}
 
-		ev = getEventHandler( "ListBoxControl::onListModelContentsChanged" );
+		ev = (EventHandler*)getEventHandler( "ListBoxControl::onListModelContentsChanged" );
 		if ( NULL != ev ) {
 			listModel_->removeContentsChangedHandler( ev );
 		}		
@@ -599,7 +598,7 @@ void ListBoxControl::mouseDown( MouseEvent* event )
 					foundItem->setState( state );
 
 					ItemEvent event( foundItem, ListBoxControl::lbeItemStateChangeRequested );
-					ItemStateChangeRequested.fireEvent( &event );
+					ItemStateChangeRequested( &event );
 
 					repaint();
 
@@ -800,7 +799,7 @@ void ListBoxControl::setAllowsMultiSelect( const bool& allowsMultiSelect )
 void ListBoxControl::selectionChanged( ListItem* item )
 {
 	ItemEvent event( item, ITEM_EVENT_SELECTED );
-	SelectionChanged.fireEvent( &event );
+	SelectionChanged( &event );
 }
 
 void ListBoxControl::setSelectedItem( ListItem* selectedItem )

@@ -186,36 +186,53 @@ public:
 
 	~Delegate() {
 		clear();
-	}
+
+		delete functions;
+	}	
+
 
 	bool empty() const {
-		return functions.empty();
+		bool result = true;
+		if ( NULL != functions ) {
+			result = functions->empty();
+		}
+		return result;
 	}
 
 	size_t size() const {
-		return functions.size();
+		size_t result = 0;
+		if ( NULL != functions ) {
+			result = functions->size();
+		}
+		return result;
 	}
 
 
 	void clear() {
-		CallBack::Vector::iterator it = functions.begin();
-		while ( !functions.empty() ) {
-			CallBack* cb = *it;
-			cb->free();
-			it = functions.begin();
+		if ( NULL != functions ) {
+			CallBack::Vector::iterator it = functions->begin();
+			while ( !functions->empty() ) {
+				CallBack* cb = *it;
+				cb->free(); //this indirectly removed the callback from this delegate
+				it = functions->begin();
+			}
 		}
 	}
 
 
 	void add( CallBack* callback ) {
-		CallBack::Vector::iterator found = 
-			std::find( functions.begin(), functions.end(), callback );
+		VCF_ASSERT( NULL != callback );
 
-		if ( found == functions.end() ) {
+		checkHandlers();
+
+		CallBack::Vector::iterator found = 
+			std::find( functions->begin(), functions->end(), callback );
+
+		if ( found == functions->end() ) {
 			//verify signatures match
 			if ( *this == *callback ) {
 				callback->setDelegate( this );
-				functions.push_back( callback );
+				functions->push_back( callback );
 			}
 			else {
 				throw RuntimeException( "Unable to add callback to Delegate, function signatures do not match." );
@@ -224,11 +241,15 @@ public:
 	}
 
 	void remove( CallBack* callback ) {
-		CallBack::Vector::iterator found = 
-			std::find( functions.begin(), functions.end(), callback );
+		VCF_ASSERT( NULL != callback );
 
-		if ( found != functions.end() ) {
-			functions.erase( found );
+		if ( NULL != functions ) {
+			CallBack::Vector::iterator found = 
+				std::find( functions->begin(), functions->end(), callback );
+			
+			if ( found != functions->end() ) {
+				functions->erase( found );
+			}
 		}
 	}
 
@@ -240,7 +261,10 @@ public:
 
 
 	const CallBack& at( const uint32& index ) const {
-		return *functions.at( index );
+		if ( NULL == functions ) {
+			throw RuntimeException( "No callbacks assigned to this delegate." );
+		}
+		return *functions->at( index );
 	}
 
 
@@ -249,15 +273,31 @@ public:
 	}
 	
 
+	/**
+	This allows you to retreive a copy of the callbacks registered with this 
+	delegate.
+	@param CallBack::Vector a reference to a std::vector<CallBack*>
+	that will be filled with the callbacks registered with this
+	delegate.
+	@return bool returns true if the callbacks were successfully copied over.
+	Otherwise returns false. A delegate with no callbacks will also return 
+	false.
+	*/
 	bool getCallbacks( CallBack::Vector& val ) {
-		val = functions;
+		if ( NULL != functions ) {
+			val = *functions;
+		}
 
 		return !val.empty();
 	}
-	
-
 protected:
-	CallBack::Vector functions;
+	CallBack::Vector* functions;
+
+	inline void checkHandlers() {
+		if ( NULL == functions ) {
+			functions = new CallBack::Vector();
+		}
+	}
 
 	bool runCallbacksAsync_;
 };
@@ -392,33 +432,7 @@ public:
 	friend class AsyncTask;
 
 
-	void doWork();/* {
-		{
-			Lock l(runnableMtx_);
-			if ( internalRunnables_.empty() ) {
-				completed_ = true;
-				resultWait_.broadcast();
-				return;
-			}
-		}
-
-		{
-			Lock l(runnableMtx_);
-			completed_ = false;
-		}
-
-		if ( runCallbacksAsync_ ) {
-			std::vector<CallbackWork>::iterator it = internalRunnables_.begin();
-			while ( it != internalRunnables_.end() ) {
-				Delegate::getThreadPool()->postWork( new AsyncTask(this,(*it).first, (*it).second) );
-				++it;
-			}
-		}
-		else {
-			Delegate::getThreadPool()->postWork( new Task(this) );
-		}
-	}
-	*/
+	void doWork();
 
 	virtual WaitResult wait() {
 		{
@@ -588,7 +602,8 @@ public:
 	}
 
 	void invoke( P1 p1 ) {
-		std::vector<CallBack*> tmp = functions;
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
 
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
@@ -605,7 +620,8 @@ public:
 	AsyncResult* beginInvoke( P1 p1, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
-		std::vector<CallBack*> tmp = functions;
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
 
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
@@ -751,7 +767,9 @@ public:
 	}
 
 	void invoke() {
-		std::vector<CallBack*> tmp = functions;
+		std::vector<CallBack*> tmp;
+
+		getCallbacks(tmp);
 
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
@@ -768,7 +786,8 @@ public:
 	AsyncResult* beginInvoke( AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
-		std::vector<CallBack*> tmp = functions;
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
 
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
@@ -918,7 +937,8 @@ public:
 	}
 
 	void invoke( P1 p1, P1 p2 ) {
-		std::vector<CallBack*> tmp = functions;
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
 
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
@@ -935,7 +955,8 @@ public:
 	AsyncResult* beginInvoke( P1 p1, P1 p2, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
-		std::vector<CallBack*> tmp = functions;
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
 
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
@@ -1091,7 +1112,8 @@ public:
 	}
 
 	void invoke( P1 p1, P1 p2, P3 p3 ) {
-		std::vector<CallBack*> tmp = functions;
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
 
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
@@ -1108,7 +1130,8 @@ public:
 	AsyncResult* beginInvoke( P1 p1, P1 p2, P3 p3, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
-		std::vector<CallBack*> tmp = functions;
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
 
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
@@ -1269,7 +1292,8 @@ public:
 	}
 
 	void invoke( P1 p1, P1 p2, P3 p3, P4 p4 ) {
-		std::vector<CallBack*> tmp = functions;
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
 
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
@@ -1286,7 +1310,8 @@ public:
 	AsyncResult* beginInvoke( P1 p1, P1 p2, P3 p3, P4 p4, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
-		std::vector<CallBack*> tmp = functions;
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
 
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
@@ -1449,7 +1474,8 @@ public:
 	}
 
 	void invoke( P1 p1, P1 p2, P3 p3, P4 p4, P5 p5 ) {
-		std::vector<CallBack*> tmp = functions;
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
 
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
@@ -1466,7 +1492,8 @@ public:
 	AsyncResult* beginInvoke( P1 p1, P1 p2, P3 p3, P4 p4, P5 p5, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
-		std::vector<CallBack*> tmp = functions;
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
 
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
@@ -1635,7 +1662,8 @@ public:
 	}
 
 	void invoke( P1 p1, P1 p2, P3 p3, P4 p4, P5 p5, P6 p6 ) {
-		std::vector<CallBack*> tmp = functions;
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
 
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
@@ -1652,7 +1680,8 @@ public:
 	AsyncResult* beginInvoke( P1 p1, P1 p2, P3 p3, P4 p4, P5 p5, P6 p6, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
-		std::vector<CallBack*> tmp = functions;
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
 
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
