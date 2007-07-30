@@ -17,19 +17,19 @@ SocketListeningLoop::SocketListeningLoop( Socket* socket )
 	socket_ = socket;
 
 	socketDataReceivedHandler_ =
-		new SocketEventHandler<SocketListeningLoop>( this, &SocketListeningLoop::onDataReceived );
+		new ClassProcedure1<SocketEvent*,SocketListeningLoop>( this, &SocketListeningLoop::onDataReceived );
 
 	socketClientConnectedHandler_ =
-		new SocketEventHandler<SocketListeningLoop>( this, &SocketListeningLoop::onClientConnected );
+		new ClassProcedure1<SocketEvent*,SocketListeningLoop>( this, &SocketListeningLoop::onClientConnected );
 
 	socketClientDisconnectedHandler_ =
-		new SocketEventHandler<SocketListeningLoop>( this, &SocketListeningLoop::onClientDisconnected );
+		new ClassProcedure1<SocketEvent*,SocketListeningLoop>( this, &SocketListeningLoop::onClientDisconnected );
 
 
 	if ( NULL != socket_ ) {
-		socket_->DataReceived.addHandler( socketDataReceivedHandler_ );
-		socket_->ClientConnected.addHandler( socketClientConnectedHandler_ );
-		socket_->ClientDisconnected.addHandler( socketClientDisconnectedHandler_ );
+		socket_->DataReceived.add( socketDataReceivedHandler_ );
+		socket_->ClientConnected.add( socketClientConnectedHandler_ );
+		socket_->ClientDisconnected.add( socketClientDisconnectedHandler_ );
 	}
 	socketIsServer_ = socket_->isServer();
 	serverClientConnected_ = false;
@@ -39,18 +39,18 @@ SocketListeningLoop::~SocketListeningLoop()
 {
 	this->canContinue_ = false;
 	if ( NULL != socket_ ) {
-		socket_->DataReceived.removeHandler( socketDataReceivedHandler_ );
-		socket_->ClientConnected.removeHandler( socketClientConnectedHandler_ );
-		socket_->ClientDisconnected.removeHandler( socketClientDisconnectedHandler_ );
+		socket_->DataReceived.remove( socketDataReceivedHandler_ );
+		socket_->ClientConnected.remove( socketClientConnectedHandler_ );
+		socket_->ClientDisconnected.remove( socketClientDisconnectedHandler_ );
 	}
 
-	delete socketDataReceivedHandler_;
+	
 	socketDataReceivedHandler_ = NULL;
 
-	delete socketClientConnectedHandler_;
+	
 	socketClientConnectedHandler_ = NULL;
 
-	delete socketClientDisconnectedHandler_;
+	
 	socketClientDisconnectedHandler_ = NULL;
 }
 
@@ -77,7 +77,7 @@ bool SocketListeningLoop::run()
 			Socket* clientSocket = socket_->getClient();
 			if ( NULL != clientSocket ) {
 				SocketEvent event( socket_, clientSocket );
-				socket_->ClientConnected.fireEvent( &event );
+				socket_->ClientConnected( &event );
 			}
 		}
 
@@ -92,7 +92,7 @@ bool SocketListeningLoop::run()
 			Socket* clientSocket = socket_->getClient();
 			if ( NULL != clientSocket ) {
 				SocketEvent event( socket_, clientSocket );
-				socket_->ClientConnected.fireEvent( &event );
+				socket_->ClientConnected( &event );
 			}
 		}
 

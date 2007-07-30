@@ -474,7 +474,7 @@ bool Win32HTMLBrowser::setElementClickedEventHandler( const String& elementName,
 				VCF::HTMLElement* f = coll2[i];
 				if ( NULL != f ) {
 					if ( elementName == f->getID() ) {
-						String name = handler->getHandlerName();
+						String name = handler->getName();
 
 						HTMLEventHandler* htmlHandler = getElementEventHandler(name);
 						if ( NULL == htmlHandler ) {
@@ -531,7 +531,7 @@ void Win32HTMLBrowser::onProgressChange( long x, long y )
 	e.value = x;
 
 	HTMLBrowserControl* browserCtrl = (HTMLBrowserControl*)peerControl_;
-	browserCtrl->URLLoading.fireEvent( &e );
+	browserCtrl->URLLoading( &e );
 }
 
 void Win32HTMLBrowser::onStatusTextChange( BSTR val )
@@ -541,14 +541,14 @@ void Win32HTMLBrowser::onStatusTextChange( BSTR val )
 	e.status = tmp.c_str();
 
 	HTMLBrowserControl* browserCtrl = (HTMLBrowserControl*)peerControl_;
-	browserCtrl->StatusChanged.fireEvent( &e );
+	browserCtrl->StatusChanged( &e );
 }
 
 void Win32HTMLBrowser::onDownloadBegin()
 {
 	HTMLEvent e(peerControl_,HTMLBrowserControl::heURLLoadingBegun);
 	HTMLBrowserControl* browserCtrl = (HTMLBrowserControl*)peerControl_;
-	browserCtrl->URLLoadingBegun.fireEvent( &e );
+	browserCtrl->URLLoadingBegun( &e );
 }
 
 void Win32HTMLBrowser::onTitleChange( BSTR Text)
@@ -557,7 +557,7 @@ void Win32HTMLBrowser::onTitleChange( BSTR Text)
 	bstr_t tmp(Text);
 	e.status = tmp.c_str();
 	HTMLBrowserControl* browserCtrl = (HTMLBrowserControl*)peerControl_;
-	browserCtrl->TitleChanged.fireEvent( &e );
+	browserCtrl->TitleChanged( &e );
 }
 
 void Win32HTMLBrowser::onBeforeNavigate2( LPDISPATCH pDisp, 
@@ -583,7 +583,7 @@ void Win32HTMLBrowser::onNewWindow2( LPDISPATCH* ppDisp, VARIANT_BOOL* Cancel)
 		HTMLEvent e(peerControl_,HTMLBrowserControl::heNewWindowDisplayed);
 		HTMLBrowserControl* browserCtrl = (HTMLBrowserControl*)peerControl_;
 		
-		browserCtrl->NewWindowDisplayed.fireEvent( &e );
+		browserCtrl->NewWindowDisplayed( &e );
 	}
 }
 
@@ -598,7 +598,7 @@ void Win32HTMLBrowser::onDocumentComplete( LPDISPATCH pDisp, VARIANT* URL)
 		e.url = tmp.c_str();
 	}
 
-	browserCtrl->URLLoaded.fireEvent( &e );
+	browserCtrl->URLLoaded( &e );
 }
 
 void Win32HTMLBrowser::onWindowClosing( VARIANT_BOOL IsChildWindow, VARIANT_BOOL* Cancel )
@@ -629,7 +629,7 @@ void Win32HTMLBrowser::onNavigateError( LPDISPATCH pDisp,
 	hresult hr = (HRESULT) StatusCode->lVal;
 	e.status = hr.toString();
 
-	browserCtrl->URLLoadError.fireEvent( &e );
+	browserCtrl->URLLoadError( &e );
 }
 
 STDMETHODIMP Win32HTMLBrowser::ShowContextMenu( DWORD hWndID, POINT *ppt, 
@@ -639,7 +639,7 @@ STDMETHODIMP Win32HTMLBrowser::ShowContextMenu( DWORD hWndID, POINT *ppt,
 
 	ControlPopupMenuMenuEvent e(this,Control::BEFORE_POPUP_MENU);
 	e.popupMenu = peerControl_->getPopupMenu();
-	peerControl_->BeforePopupMenu.fireEvent( &e );
+	peerControl_->BeforePopupMenu( &e );
 	if ( (NULL != e.popupMenu) && !e.cancelPopup ) {
 		//point is in screen coords
 		Point pt(ppt->x, ppt->y);
@@ -697,7 +697,7 @@ STDMETHODIMP Win32HTMLBrowser::Authenticate( HWND* phwnd, LPWSTR* pszUsername,
 	HTMLAuthenticationEvent e(peerControl_, loadingURL_ );
 
 	HTMLBrowserControl* browserCtrl = (HTMLBrowserControl*)peerControl_;
-	browserCtrl->AuthenticationRequested.fireEvent( &e );
+	browserCtrl->AuthenticationRequested( &e );
 
 	if ( e.authenticationCancelled ) {
 		return E_ACCESSDENIED;

@@ -415,7 +415,7 @@ void JavaScriptEngine::internal_executeScript( const String& script, const Strin
 
 	JavaScriptEvent event(this, 0, "JavaScript engine version: " + version );
 
-	ScriptExecuting.fireEvent( &event );
+	ScriptExecuting( &event );
 
 	jsval rval; 
 	int lineno = 0;
@@ -851,7 +851,7 @@ JSBool JavaScriptEngine::setObjProperty(JSContext *cx, JSObject *obj, jsval id, 
 								
 							}
 
-							delegateSrc->addHandler( eventHandler );
+							delegateSrc->add( eventHandler );
 
 							EventHandlerMap::value_type val(delegateSrc,eventHandler);
 							eng->jsEventHandlers_.insert( val );
@@ -951,7 +951,7 @@ void JavaScriptEngine::finalize(JSContext *cx, JSObject *obj)
 			EventHandlerMapRange range = eng->jsEventHandlers_.equal_range( delegate );
 			EventHandlerMap::iterator it = range.first;
 			while ( it != range.second ) {
-				delegate->removeHandler( it->second );
+				delegate->remove( it->second );
 				it ++;
 			}
 		}
@@ -1021,7 +1021,7 @@ void JavaScriptEngine::rawErrorReporter(JSContext* cx, const char* message, JSEr
 
 	JavaScriptEvent event(JavaScriptEngine::singleton, 0, errMessage );
 
-	JavaScriptEngine::singleton->ErrorOccurred.fireEvent( &event );
+	JavaScriptEngine::singleton->ErrorOccurred( &event );
 }
 
 

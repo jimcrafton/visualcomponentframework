@@ -15,7 +15,6 @@ where you installed the VCF.
 
 
 #include "vcf/NetworkKit/NetworkKitSelectLib.h"
-#include "vcf/NetworkKit/SocketListener.h"
 #include "vcf/NetworkKit/SocketEvent.h"
 
 
@@ -155,9 +154,9 @@ public:
 		isServer_ = isServer;
 	}
 
-	DELEGATE(DataReceived)
-	DELEGATE(ClientConnected)
-	DELEGATE(ClientDisconnected)
+	DELEGATE(SocketDelegate,DataReceived)
+	DELEGATE(SocketDelegate,ClientConnected)
+	DELEGATE(SocketDelegate,ClientDisconnected)
 
 	SocketPeer* getSocketPeer() {
 		return socketPeer_;

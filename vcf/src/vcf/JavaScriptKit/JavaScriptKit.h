@@ -190,6 +190,10 @@ namespace VCF {
 		String message;
 	};
 
+
+	typedef Delegate1<JavaScriptEvent*> JavaScriptDelegate; 
+
+
 	class JAVASCRIPTKIT_API JavaScriptEngine : public Object {
 	public:
 		class JAVASCRIPTKIT_API ObjectInstanceEntry {
@@ -256,9 +260,9 @@ namespace VCF {
 		virtual ~JavaScriptEngine();
 
 
-		DELEGATE(ScriptExecuting);
+		DELEGATE(JavaScriptDelegate,ScriptExecuting);
 
-		DELEGATE(ErrorOccurred);
+		DELEGATE(JavaScriptDelegate,ErrorOccurred);
 
 
 		void executeScript( const String& script );

@@ -17,8 +17,8 @@ ClassServerInstance::ClassServerInstance()
 {
 	newInstanceProxy_ = NULL;
 
-	EventHandler* sh =
-		new SocketEventHandler<ClassServerInstance>( this, &ClassServerInstance::onDataReceived, "SocketHandler" );
+	CallBack* sh =
+		new ClassProcedure1<SocketEvent*,ClassServerInstance>( this, &ClassServerInstance::onDataReceived, "SocketHandler" );
 
 }
 
@@ -49,8 +49,8 @@ Proxy* ClassServerInstance::createInstance( const VCF::String& className )
 	}
 	else { //we have to look elsewhere, first on this machine, then on the network
 		Socket sock( LOCAL_CLASS_SERVER, CLASS_SERVER_PORT );
-		EventHandler* socketHandler = getEventHandler( "SocketHandler" );
-		sock.DataReceived.addHandler( socketHandler );
+		CallBack* socketHandler = getEventHandler( "SocketHandler" );
+		sock.DataReceived.add( socketHandler );
 		try {
 			sock.setListeningLoop( new SocketListeningLoop(&sock) );
 
@@ -126,8 +126,8 @@ VCF::VariantData* ClassServerInstance::invoke( VCF::OutputStream* marshalledData
 	VCF::VariantData* result = NULL;
 
 	Socket sock( LOCAL_CLASS_SERVER, CLASS_SERVER_PORT );
-	EventHandler* socketHandler = getEventHandler( "SocketHandler" );
-	sock.DataReceived.addHandler( socketHandler );
+	CallBack* socketHandler = getEventHandler( "SocketHandler" );
+	sock.DataReceived.add( socketHandler );
 
 	try {
 		sock.startListening();

@@ -44,6 +44,9 @@ protected:
 	Socket* sender_;
 };
 
+
+typedef VCF::Delegate1<SocketEvent*> SocketDelegate;
+
 }; //end of namespace VCFNet
 
 

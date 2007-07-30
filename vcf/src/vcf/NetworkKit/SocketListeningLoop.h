@@ -40,9 +40,9 @@ private:
 	Socket* socket_;
 	bool socketIsServer_;
 	bool serverClientConnected_;
-	VCF::EventHandler* socketDataReceivedHandler_;
-	VCF::EventHandler* socketClientConnectedHandler_;
-	VCF::EventHandler* socketClientDisconnectedHandler_;
+	VCF::CallBack* socketDataReceivedHandler_;
+	VCF::CallBack* socketClientConnectedHandler_;
+	VCF::CallBack* socketClientDisconnectedHandler_;
 };
 
 }; //end of namespace VCFNet

@@ -43,7 +43,7 @@ public:
 		URLAuthenticationEvent e(url_);
 		
 
-		url_->AuthenticationRequested.fireEvent( &e );
+		url_->AuthenticationRequested( &e );
 
 		userName = e.getUserName();
 		password = e.getPassword();
@@ -143,7 +143,7 @@ public:
 					
 		e.setStatusText( s );
 
-		url_->StatusChanged.fireEvent( &e );
+		url_->StatusChanged( &e );
 
 		if ( e.shouldCancelDataTransfer() ) {
 			return E_ABORT;
@@ -160,7 +160,7 @@ public:
 		URLEvent e(url_, URL::evDataReceiving );
 		e.setBytesReceived( dwSize );
 
-		url_->DataReceiving.fireEvent( &e );
+		url_->DataReceiving( &e );
 
 		if ( e.shouldCancelDataTransfer() ) {
 			return E_ABORT;
@@ -184,7 +184,7 @@ public:
 					
 					e2.setBytesReceived( bytesRead );
 
-					url_->DataReceived.fireEvent( &e2 );
+					url_->DataReceived( &e2 );
 
 					if ( e.shouldCancelDataTransfer() ) {
 						return E_ABORT;
