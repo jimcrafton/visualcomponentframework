@@ -70,7 +70,6 @@
         vcf/GraphicsKit/GraphicsResourceBundle.cpp
         vcf/GraphicsKit/GraphicsToolKit.cpp
         vcf/GraphicsKit/GrayScaleImage.cpp
-        vcf/GraphicsKit/ImageEvent.cpp
         vcf/GraphicsKit/JPEGLoader.cpp
         vcf/GraphicsKit/Matrix2D.cpp
         vcf/GraphicsKit/PNGLoader.cpp

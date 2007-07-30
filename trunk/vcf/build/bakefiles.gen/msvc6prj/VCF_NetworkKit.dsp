@@ -634,10 +634,6 @@ SOURCE=..\..\src\vcf\NetworkKit\SocketException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\SocketListener.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\vcf\NetworkKit\SocketListeningLoop.h
 # End Source File
 # Begin Source File

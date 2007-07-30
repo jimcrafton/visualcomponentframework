@@ -12,7 +12,6 @@
         vcf/NetworkKit/Socket.h
         vcf/NetworkKit/SocketEvent.h
         vcf/NetworkKit/SocketException.h
-        vcf/NetworkKit/SocketListener.h
         vcf/NetworkKit/SocketListeningLoop.h
         vcf/NetworkKit/SocketPeer.h
         vcf/NetworkKit/URL.h

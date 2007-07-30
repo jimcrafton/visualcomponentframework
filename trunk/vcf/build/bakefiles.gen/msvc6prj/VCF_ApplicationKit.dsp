@@ -580,10 +580,6 @@ SOURCE=..\..\src\vcf\ApplicationKit\AbstractScrollable.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\ApplicationKit\AbstractTableModel.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\vcf\ApplicationKit\AbstractTreeModel.cpp
 # End Source File
 # Begin Source File
@@ -1203,19 +1199,11 @@ SOURCE=..\..\src\vcf\ApplicationKit\AbstractListModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\ApplicationKit\AbstractModel.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\vcf\ApplicationKit\AbstractPropertyEditor.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\vcf\ApplicationKit\AbstractScrollable.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\vcf\ApplicationKit\AbstractTableModel.h
 # End Source File
 # Begin Source File
 
@@ -1435,10 +1423,6 @@ SOURCE=..\..\src\vcf\ApplicationKit\ControlContainer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\ApplicationKit\ControlEvent.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\vcf\ApplicationKit\ControlGraphicsContext.h
 # End Source File
 # Begin Source File
@@ -1559,19 +1543,11 @@ SOURCE=..\..\src\vcf\ApplicationKit\DragDropPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\ApplicationKit\DragEvent.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\vcf\ApplicationKit\DragScrollEvent.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\vcf\ApplicationKit\DragSource.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\vcf\ApplicationKit\DropEvent.h
 # End Source File
 # Begin Source File
 
