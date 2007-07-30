@@ -602,10 +602,6 @@ SOURCE=..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\GraphicsKit\ImageEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\vcf\GraphicsKit\JPEGLoader.cpp
 # End Source File
 # Begin Source File

@@ -371,7 +371,6 @@
 			<File RelativePath="..\..\src\vcf\GraphicsKit\GraphicsResourceBundle.cpp"/>
 			<File RelativePath="..\..\src\vcf\GraphicsKit\GraphicsToolKit.cpp"/>
 			<File RelativePath="..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp"/>
-			<File RelativePath="..\..\src\vcf\GraphicsKit\ImageEvent.cpp"/>
 			<File RelativePath="..\..\src\vcf\GraphicsKit\JPEGLoader.cpp"/>
 			<File RelativePath="..\..\src\vcf\GraphicsKit\Matrix2D.cpp"/>
 			<File RelativePath="..\..\src\vcf\GraphicsKit\PNGLoader.cpp"/>

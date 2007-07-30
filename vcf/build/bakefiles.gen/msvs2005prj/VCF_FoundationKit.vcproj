@@ -370,11 +370,10 @@
 			<File RelativePath="..\..\src\vcf\FoundationKit\ComponentInfo.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Condition.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\DateTime.cpp"/>
+			<File RelativePath="..\..\src\vcf\FoundationKit\Delegates.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Dictionary.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Directory.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\ErrorLog.cpp"/>
-			<File RelativePath="..\..\src\vcf\FoundationKit\Event.cpp"/>
-			<File RelativePath="..\..\src\vcf\FoundationKit\EventHandler.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\File.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\FilePath.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\FileStream.cpp"/>
@@ -391,11 +390,13 @@
 			<File RelativePath="..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\PackageInfo.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.cpp"/>
-			<File RelativePath="..\..\src\vcf\FoundationKit\PropertyChangeEvent.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Registry.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Resource.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\ResourceBundle.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\RunLoop.cpp"/>
+			<File RelativePath="..\..\src\vcf\FoundationKit\RunLoopSource.cpp"/>
+			<File RelativePath="..\..\src\vcf\FoundationKit\RunLoopSourcePeer.cpp"/>
+			<File RelativePath="..\..\src\vcf\FoundationKit\RunLoopTimer.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Semaphore.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Stream.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\StringUtils.cpp"/>
@@ -406,7 +407,6 @@
 			<File RelativePath="..\..\src\vcf\FoundationKit\TextInputStream.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\TextOutputStream.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Thread.cpp"/>
-			<File RelativePath="..\..\src\vcf\FoundationKit\ThreadEvent.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\ThreadManager.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\VCFMath.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\VCFProcess.cpp"/>
@@ -427,6 +427,8 @@
 			<File RelativePath="..\..\src\vcf\FoundationKit\Win32Registry.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Win32ResourceBundle.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Win32RunLoopPeer.cpp"/>
+			<File RelativePath="..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.cpp"/>
+			<File RelativePath="..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Win32SemaphorePeer.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Win32SystemPeer.cpp"/>
 			<File RelativePath="..\..\src\vcf\FoundationKit\Win32SystemToolkit.cpp"/>

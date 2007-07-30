@@ -399,11 +399,10 @@ FOUNDATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_lib_ComponentInfo.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_Condition.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_DateTime.o \
+	../../lib/$(OBJDIR)/FoundationKit_lib_Delegates.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_Dictionary.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_Directory.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_ErrorLog.o \
-	../../lib/$(OBJDIR)/FoundationKit_lib_Event.o \
-	../../lib/$(OBJDIR)/FoundationKit_lib_EventHandler.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_File.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_FilePath.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_FileStream.o \
@@ -420,11 +419,13 @@ FOUNDATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_lib_ObjectWithEvents.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_PackageInfo.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_ProcessWithRedirectedIO.o \
-	../../lib/$(OBJDIR)/FoundationKit_lib_PropertyChangeEvent.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_Registry.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_Resource.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_ResourceBundle.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_RunLoop.o \
+	../../lib/$(OBJDIR)/FoundationKit_lib_RunLoopSource.o \
+	../../lib/$(OBJDIR)/FoundationKit_lib_RunLoopSourcePeer.o \
+	../../lib/$(OBJDIR)/FoundationKit_lib_RunLoopTimer.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_Semaphore.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_Stream.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_StringsMessageLoader.o \
@@ -435,7 +436,6 @@ FOUNDATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_lib_TextInputStream.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_TextOutputStream.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_Thread.o \
-	../../lib/$(OBJDIR)/FoundationKit_lib_ThreadEvent.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_ThreadManager.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_VariantData.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_VCFMath.o \
@@ -478,11 +478,10 @@ FOUNDATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_dll_ComponentInfo.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_Condition.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_DateTime.o \
+	../../lib/$(OBJDIR)/FoundationKit_dll_Delegates.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_Dictionary.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_Directory.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_ErrorLog.o \
-	../../lib/$(OBJDIR)/FoundationKit_dll_Event.o \
-	../../lib/$(OBJDIR)/FoundationKit_dll_EventHandler.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_File.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_FilePath.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_FileStream.o \
@@ -499,11 +498,13 @@ FOUNDATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_dll_ObjectWithEvents.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_PackageInfo.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_ProcessWithRedirectedIO.o \
-	../../lib/$(OBJDIR)/FoundationKit_dll_PropertyChangeEvent.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_Registry.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_Resource.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_ResourceBundle.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_RunLoop.o \
+	../../lib/$(OBJDIR)/FoundationKit_dll_RunLoopSource.o \
+	../../lib/$(OBJDIR)/FoundationKit_dll_RunLoopSourcePeer.o \
+	../../lib/$(OBJDIR)/FoundationKit_dll_RunLoopTimer.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_Semaphore.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_Stream.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_StringsMessageLoader.o \
@@ -514,7 +515,6 @@ FOUNDATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_dll_TextInputStream.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_TextOutputStream.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_Thread.o \
-	../../lib/$(OBJDIR)/FoundationKit_dll_ThreadEvent.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_ThreadManager.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_VariantData.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_VCFMath.o \
@@ -558,7 +558,6 @@ GRAPHICSKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/GraphicsKit_lib_GraphicsResourceBundle.o \
 	../../lib/$(OBJDIR)/GraphicsKit_lib_GraphicsToolKit.o \
 	../../lib/$(OBJDIR)/GraphicsKit_lib_GrayScaleImage.o \
-	../../lib/$(OBJDIR)/GraphicsKit_lib_ImageEvent.o \
 	../../lib/$(OBJDIR)/GraphicsKit_lib_JPEGLoader.o \
 	../../lib/$(OBJDIR)/GraphicsKit_lib_Matrix2D.o \
 	../../lib/$(OBJDIR)/GraphicsKit_lib_PNGLoader.o \
@@ -587,7 +586,6 @@ GRAPHICSKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/GraphicsKit_dll_GraphicsResourceBundle.o \
 	../../lib/$(OBJDIR)/GraphicsKit_dll_GraphicsToolKit.o \
 	../../lib/$(OBJDIR)/GraphicsKit_dll_GrayScaleImage.o \
-	../../lib/$(OBJDIR)/GraphicsKit_dll_ImageEvent.o \
 	../../lib/$(OBJDIR)/GraphicsKit_dll_JPEGLoader.o \
 	../../lib/$(OBJDIR)/GraphicsKit_dll_Matrix2D.o \
 	../../lib/$(OBJDIR)/GraphicsKit_dll_PNGLoader.o \
@@ -614,7 +612,6 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractContainer.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractListModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractScrollable.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractTableModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractTreeModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractView.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AcceleratorKey.o \
@@ -737,7 +734,6 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractContainer.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractListModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractScrollable.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractTableModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractTreeModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractView.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AcceleratorKey.o \
@@ -1327,11 +1323,10 @@ ____Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_ComponentInfo.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Condition.o \
 	../../lib/$(OBJDIR)/Allin1_lib_DateTime.o \
+	../../lib/$(OBJDIR)/Allin1_lib_Delegates.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Dictionary.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Directory.o \
 	../../lib/$(OBJDIR)/Allin1_lib_ErrorLog.o \
-	../../lib/$(OBJDIR)/Allin1_lib_Event.o \
-	../../lib/$(OBJDIR)/Allin1_lib_EventHandler.o \
 	../../lib/$(OBJDIR)/Allin1_lib_File.o \
 	../../lib/$(OBJDIR)/Allin1_lib_FilePath.o \
 	../../lib/$(OBJDIR)/Allin1_lib_FileStream.o \
@@ -1348,11 +1343,13 @@ ____Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_ObjectWithEvents.o \
 	../../lib/$(OBJDIR)/Allin1_lib_PackageInfo.o \
 	../../lib/$(OBJDIR)/Allin1_lib_ProcessWithRedirectedIO.o \
-	../../lib/$(OBJDIR)/Allin1_lib_PropertyChangeEvent.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Registry.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Resource.o \
 	../../lib/$(OBJDIR)/Allin1_lib_ResourceBundle.o \
 	../../lib/$(OBJDIR)/Allin1_lib_RunLoop.o \
+	../../lib/$(OBJDIR)/Allin1_lib_RunLoopSource.o \
+	../../lib/$(OBJDIR)/Allin1_lib_RunLoopSourcePeer.o \
+	../../lib/$(OBJDIR)/Allin1_lib_RunLoopTimer.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Semaphore.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Stream.o \
 	../../lib/$(OBJDIR)/Allin1_lib_StringsMessageLoader.o \
@@ -1363,7 +1360,6 @@ ____Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_TextInputStream.o \
 	../../lib/$(OBJDIR)/Allin1_lib_TextOutputStream.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Thread.o \
-	../../lib/$(OBJDIR)/Allin1_lib_ThreadEvent.o \
 	../../lib/$(OBJDIR)/Allin1_lib_ThreadManager.o \
 	../../lib/$(OBJDIR)/Allin1_lib_VariantData.o \
 	../../lib/$(OBJDIR)/Allin1_lib_VCFMath.o \
@@ -1404,7 +1400,6 @@ ____Allin1_lib_ALLIN1_GRAPHICSKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_GraphicsResourceBundle.o \
 	../../lib/$(OBJDIR)/Allin1_lib_GraphicsToolKit.o \
 	../../lib/$(OBJDIR)/Allin1_lib_GrayScaleImage.o \
-	../../lib/$(OBJDIR)/Allin1_lib_ImageEvent.o \
 	../../lib/$(OBJDIR)/Allin1_lib_JPEGLoader.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Matrix2D.o \
 	../../lib/$(OBJDIR)/Allin1_lib_PNGLoader.o \
@@ -1425,7 +1420,6 @@ ____Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_AbstractContainer.o \
 	../../lib/$(OBJDIR)/Allin1_lib_AbstractListModel.o \
 	../../lib/$(OBJDIR)/Allin1_lib_AbstractScrollable.o \
-	../../lib/$(OBJDIR)/Allin1_lib_AbstractTableModel.o \
 	../../lib/$(OBJDIR)/Allin1_lib_AbstractTreeModel.o \
 	../../lib/$(OBJDIR)/Allin1_lib_AbstractView.o \
 	../../lib/$(OBJDIR)/Allin1_lib_AcceleratorKey.o \
@@ -1597,11 +1591,10 @@ ____Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_ComponentInfo.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Condition.o \
 	../../lib/$(OBJDIR)/Allin1_dll_DateTime.o \
+	../../lib/$(OBJDIR)/Allin1_dll_Delegates.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Dictionary.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Directory.o \
 	../../lib/$(OBJDIR)/Allin1_dll_ErrorLog.o \
-	../../lib/$(OBJDIR)/Allin1_dll_Event.o \
-	../../lib/$(OBJDIR)/Allin1_dll_EventHandler.o \
 	../../lib/$(OBJDIR)/Allin1_dll_File.o \
 	../../lib/$(OBJDIR)/Allin1_dll_FilePath.o \
 	../../lib/$(OBJDIR)/Allin1_dll_FileStream.o \
@@ -1618,11 +1611,13 @@ ____Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_ObjectWithEvents.o \
 	../../lib/$(OBJDIR)/Allin1_dll_PackageInfo.o \
 	../../lib/$(OBJDIR)/Allin1_dll_ProcessWithRedirectedIO.o \
-	../../lib/$(OBJDIR)/Allin1_dll_PropertyChangeEvent.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Registry.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Resource.o \
 	../../lib/$(OBJDIR)/Allin1_dll_ResourceBundle.o \
 	../../lib/$(OBJDIR)/Allin1_dll_RunLoop.o \
+	../../lib/$(OBJDIR)/Allin1_dll_RunLoopSource.o \
+	../../lib/$(OBJDIR)/Allin1_dll_RunLoopSourcePeer.o \
+	../../lib/$(OBJDIR)/Allin1_dll_RunLoopTimer.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Semaphore.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Stream.o \
 	../../lib/$(OBJDIR)/Allin1_dll_StringsMessageLoader.o \
@@ -1633,7 +1628,6 @@ ____Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_TextInputStream.o \
 	../../lib/$(OBJDIR)/Allin1_dll_TextOutputStream.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Thread.o \
-	../../lib/$(OBJDIR)/Allin1_dll_ThreadEvent.o \
 	../../lib/$(OBJDIR)/Allin1_dll_ThreadManager.o \
 	../../lib/$(OBJDIR)/Allin1_dll_VariantData.o \
 	../../lib/$(OBJDIR)/Allin1_dll_VCFMath.o \
@@ -1674,7 +1668,6 @@ ____Allin1_dll_ALLIN1_GRAPHICSKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_GraphicsResourceBundle.o \
 	../../lib/$(OBJDIR)/Allin1_dll_GraphicsToolKit.o \
 	../../lib/$(OBJDIR)/Allin1_dll_GrayScaleImage.o \
-	../../lib/$(OBJDIR)/Allin1_dll_ImageEvent.o \
 	../../lib/$(OBJDIR)/Allin1_dll_JPEGLoader.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Matrix2D.o \
 	../../lib/$(OBJDIR)/Allin1_dll_PNGLoader.o \
@@ -1695,7 +1688,6 @@ ____Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_AbstractContainer.o \
 	../../lib/$(OBJDIR)/Allin1_dll_AbstractListModel.o \
 	../../lib/$(OBJDIR)/Allin1_dll_AbstractScrollable.o \
-	../../lib/$(OBJDIR)/Allin1_dll_AbstractTableModel.o \
 	../../lib/$(OBJDIR)/Allin1_dll_AbstractTreeModel.o \
 	../../lib/$(OBJDIR)/Allin1_dll_AbstractView.o \
 	../../lib/$(OBJDIR)/Allin1_dll_AcceleratorKey.o \
@@ -3409,6 +3401,9 @@ xmake_:
 ../../lib/$(OBJDIR)/FoundationKit_lib_DateTime.o: ../../src/vcf/FoundationKit/DateTime.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/FoundationKit_lib_Delegates.o: ../../src/vcf/FoundationKit/Delegates.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/FoundationKit_lib_Dictionary.o: ../../src/vcf/FoundationKit/Dictionary.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -3416,12 +3411,6 @@ xmake_:
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_lib_ErrorLog.o: ../../src/vcf/FoundationKit/ErrorLog.cpp
-	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/FoundationKit_lib_Event.o: ../../src/vcf/FoundationKit/Event.cpp
-	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/FoundationKit_lib_EventHandler.o: ../../src/vcf/FoundationKit/EventHandler.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_lib_File.o: ../../src/vcf/FoundationKit/File.cpp
@@ -3472,9 +3461,6 @@ xmake_:
 ../../lib/$(OBJDIR)/FoundationKit_lib_ProcessWithRedirectedIO.o: ../../src/vcf/FoundationKit/ProcessWithRedirectedIO.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/FoundationKit_lib_PropertyChangeEvent.o: ../../src/vcf/FoundationKit/PropertyChangeEvent.cpp
-	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/FoundationKit_lib_Registry.o: ../../src/vcf/FoundationKit/Registry.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -3485,6 +3471,15 @@ xmake_:
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_lib_RunLoop.o: ../../src/vcf/FoundationKit/RunLoop.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/FoundationKit_lib_RunLoopSource.o: ../../src/vcf/FoundationKit/RunLoopSource.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/FoundationKit_lib_RunLoopSourcePeer.o: ../../src/vcf/FoundationKit/RunLoopSourcePeer.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/FoundationKit_lib_RunLoopTimer.o: ../../src/vcf/FoundationKit/RunLoopTimer.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_lib_Semaphore.o: ../../src/vcf/FoundationKit/Semaphore.cpp
@@ -3515,9 +3510,6 @@ xmake_:
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_lib_Thread.o: ../../src/vcf/FoundationKit/Thread.cpp
-	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/FoundationKit_lib_ThreadEvent.o: ../../src/vcf/FoundationKit/ThreadEvent.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_lib_ThreadManager.o: ../../src/vcf/FoundationKit/ThreadManager.cpp
@@ -3628,6 +3620,9 @@ xmake_:
 ../../lib/$(OBJDIR)/FoundationKit_dll_DateTime.o: ../../src/vcf/FoundationKit/DateTime.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/FoundationKit_dll_Delegates.o: ../../src/vcf/FoundationKit/Delegates.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/FoundationKit_dll_Dictionary.o: ../../src/vcf/FoundationKit/Dictionary.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -3635,12 +3630,6 @@ xmake_:
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_dll_ErrorLog.o: ../../src/vcf/FoundationKit/ErrorLog.cpp
-	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/FoundationKit_dll_Event.o: ../../src/vcf/FoundationKit/Event.cpp
-	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/FoundationKit_dll_EventHandler.o: ../../src/vcf/FoundationKit/EventHandler.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_dll_File.o: ../../src/vcf/FoundationKit/File.cpp
@@ -3691,9 +3680,6 @@ xmake_:
 ../../lib/$(OBJDIR)/FoundationKit_dll_ProcessWithRedirectedIO.o: ../../src/vcf/FoundationKit/ProcessWithRedirectedIO.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/FoundationKit_dll_PropertyChangeEvent.o: ../../src/vcf/FoundationKit/PropertyChangeEvent.cpp
-	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/FoundationKit_dll_Registry.o: ../../src/vcf/FoundationKit/Registry.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -3704,6 +3690,15 @@ xmake_:
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_dll_RunLoop.o: ../../src/vcf/FoundationKit/RunLoop.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/FoundationKit_dll_RunLoopSource.o: ../../src/vcf/FoundationKit/RunLoopSource.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/FoundationKit_dll_RunLoopSourcePeer.o: ../../src/vcf/FoundationKit/RunLoopSourcePeer.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/FoundationKit_dll_RunLoopTimer.o: ../../src/vcf/FoundationKit/RunLoopTimer.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_dll_Semaphore.o: ../../src/vcf/FoundationKit/Semaphore.cpp
@@ -3734,9 +3729,6 @@ xmake_:
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_dll_Thread.o: ../../src/vcf/FoundationKit/Thread.cpp
-	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/FoundationKit_dll_ThreadEvent.o: ../../src/vcf/FoundationKit/ThreadEvent.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_dll_ThreadManager.o: ../../src/vcf/FoundationKit/ThreadManager.cpp
@@ -3850,9 +3842,6 @@ xmake_:
 ../../lib/$(OBJDIR)/GraphicsKit_lib_GrayScaleImage.o: ../../src/vcf/GraphicsKit/GrayScaleImage.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/GraphicsKit_lib_ImageEvent.o: ../../src/vcf/GraphicsKit/ImageEvent.cpp
-	$(CXX) -c -o $@ $(GRAPHICSKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/GraphicsKit_lib_JPEGLoader.o: ../../src/vcf/GraphicsKit/JPEGLoader.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -3919,9 +3908,6 @@ xmake_:
 ../../lib/$(OBJDIR)/GraphicsKit_dll_GrayScaleImage.o: ../../src/vcf/GraphicsKit/GrayScaleImage.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/GraphicsKit_dll_ImageEvent.o: ../../src/vcf/GraphicsKit/ImageEvent.cpp
-	$(CXX) -c -o $@ $(GRAPHICSKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/GraphicsKit_dll_JPEGLoader.o: ../../src/vcf/GraphicsKit/JPEGLoader.cpp
 	$(CXX) -c -o $@ $(GRAPHICSKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -3971,9 +3957,6 @@ xmake_:
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractScrollable.o: ../../src/vcf/ApplicationKit/AbstractScrollable.cpp
-	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractTableModel.o: ../../src/vcf/ApplicationKit/AbstractTableModel.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractTreeModel.o: ../../src/vcf/ApplicationKit/AbstractTreeModel.cpp
@@ -4310,9 +4293,6 @@ xmake_:
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractScrollable.o: ../../src/vcf/ApplicationKit/AbstractScrollable.cpp
-	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractTableModel.o: ../../src/vcf/ApplicationKit/AbstractTableModel.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractTreeModel.o: ../../src/vcf/ApplicationKit/AbstractTreeModel.cpp
@@ -4813,6 +4793,9 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_lib_DateTime.o: ../../src/vcf/FoundationKit/DateTime.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/Allin1_lib_Delegates.o: ../../src/vcf/FoundationKit/Delegates.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/Allin1_lib_Dictionary.o: ../../src/vcf/FoundationKit/Dictionary.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -4820,12 +4803,6 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_ErrorLog.o: ../../src/vcf/FoundationKit/ErrorLog.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_lib_Event.o: ../../src/vcf/FoundationKit/Event.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_lib_EventHandler.o: ../../src/vcf/FoundationKit/EventHandler.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_File.o: ../../src/vcf/FoundationKit/File.cpp
@@ -4876,9 +4853,6 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_lib_ProcessWithRedirectedIO.o: ../../src/vcf/FoundationKit/ProcessWithRedirectedIO.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_PropertyChangeEvent.o: ../../src/vcf/FoundationKit/PropertyChangeEvent.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/Allin1_lib_Registry.o: ../../src/vcf/FoundationKit/Registry.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -4889,6 +4863,15 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_RunLoop.o: ../../src/vcf/FoundationKit/RunLoop.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_lib_RunLoopSource.o: ../../src/vcf/FoundationKit/RunLoopSource.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_lib_RunLoopSourcePeer.o: ../../src/vcf/FoundationKit/RunLoopSourcePeer.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_lib_RunLoopTimer.o: ../../src/vcf/FoundationKit/RunLoopTimer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_Semaphore.o: ../../src/vcf/FoundationKit/Semaphore.cpp
@@ -4919,9 +4902,6 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_Thread.o: ../../src/vcf/FoundationKit/Thread.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_lib_ThreadEvent.o: ../../src/vcf/FoundationKit/ThreadEvent.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_ThreadManager.o: ../../src/vcf/FoundationKit/ThreadManager.cpp
@@ -5035,9 +5015,6 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_lib_GrayScaleImage.o: ../../src/vcf/GraphicsKit/GrayScaleImage.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_ImageEvent.o: ../../src/vcf/GraphicsKit/ImageEvent.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/Allin1_lib_JPEGLoader.o: ../../src/vcf/GraphicsKit/JPEGLoader.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -5087,9 +5064,6 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_AbstractScrollable.o: ../../src/vcf/ApplicationKit/AbstractScrollable.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_lib_AbstractTableModel.o: ../../src/vcf/ApplicationKit/AbstractTableModel.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_AbstractTreeModel.o: ../../src/vcf/ApplicationKit/AbstractTreeModel.cpp
@@ -5515,6 +5489,9 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_DateTime.o: ../../src/vcf/FoundationKit/DateTime.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/Allin1_dll_Delegates.o: ../../src/vcf/FoundationKit/Delegates.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/Allin1_dll_Dictionary.o: ../../src/vcf/FoundationKit/Dictionary.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -5522,12 +5499,6 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_ErrorLog.o: ../../src/vcf/FoundationKit/ErrorLog.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_dll_Event.o: ../../src/vcf/FoundationKit/Event.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_dll_EventHandler.o: ../../src/vcf/FoundationKit/EventHandler.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_File.o: ../../src/vcf/FoundationKit/File.cpp
@@ -5578,9 +5549,6 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_ProcessWithRedirectedIO.o: ../../src/vcf/FoundationKit/ProcessWithRedirectedIO.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_PropertyChangeEvent.o: ../../src/vcf/FoundationKit/PropertyChangeEvent.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/Allin1_dll_Registry.o: ../../src/vcf/FoundationKit/Registry.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -5591,6 +5559,15 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_RunLoop.o: ../../src/vcf/FoundationKit/RunLoop.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_dll_RunLoopSource.o: ../../src/vcf/FoundationKit/RunLoopSource.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_dll_RunLoopSourcePeer.o: ../../src/vcf/FoundationKit/RunLoopSourcePeer.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_dll_RunLoopTimer.o: ../../src/vcf/FoundationKit/RunLoopTimer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_Semaphore.o: ../../src/vcf/FoundationKit/Semaphore.cpp
@@ -5621,9 +5598,6 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_Thread.o: ../../src/vcf/FoundationKit/Thread.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_dll_ThreadEvent.o: ../../src/vcf/FoundationKit/ThreadEvent.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_ThreadManager.o: ../../src/vcf/FoundationKit/ThreadManager.cpp
@@ -5737,9 +5711,6 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_GrayScaleImage.o: ../../src/vcf/GraphicsKit/GrayScaleImage.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_ImageEvent.o: ../../src/vcf/GraphicsKit/ImageEvent.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/Allin1_dll_JPEGLoader.o: ../../src/vcf/GraphicsKit/JPEGLoader.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -5789,9 +5760,6 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_AbstractScrollable.o: ../../src/vcf/ApplicationKit/AbstractScrollable.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_dll_AbstractTableModel.o: ../../src/vcf/ApplicationKit/AbstractTableModel.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_AbstractTreeModel.o: ../../src/vcf/ApplicationKit/AbstractTreeModel.cpp

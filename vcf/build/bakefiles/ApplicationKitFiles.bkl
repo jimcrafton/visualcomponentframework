@@ -8,10 +8,8 @@
         vcf/ApplicationKit/AbstractComponentEditor.h
         vcf/ApplicationKit/AbstractContainer.h
         vcf/ApplicationKit/AbstractListModel.h
-        vcf/ApplicationKit/AbstractModel.h
         vcf/ApplicationKit/AbstractPropertyEditor.h
         vcf/ApplicationKit/AbstractScrollable.h
-        vcf/ApplicationKit/AbstractTableModel.h
         vcf/ApplicationKit/AbstractTreeModel.h
         vcf/ApplicationKit/AbstractView.h
         vcf/ApplicationKit/AcceleratorKey.h
@@ -65,7 +63,6 @@
         vcf/ApplicationKit/Containers.h
         vcf/ApplicationKit/Control.h
         vcf/ApplicationKit/ControlContainer.h
-        vcf/ApplicationKit/ControlEvent.h
         vcf/ApplicationKit/ControlGraphicsContext.h
         vcf/ApplicationKit/ControlPeer.h
         vcf/ApplicationKit/ControlsKit.h
@@ -96,10 +93,8 @@
         vcf/ApplicationKit/DocumentBasedApplication.h
         vcf/ApplicationKit/DocumentManager.h
         vcf/ApplicationKit/DragDropPeer.h
-        vcf/ApplicationKit/DragEvent.h
         vcf/ApplicationKit/DragScrollEvent.h
         vcf/ApplicationKit/DragSource.h
-        vcf/ApplicationKit/DropEvent.h
         vcf/ApplicationKit/DropTarget.h
         vcf/ApplicationKit/DropTargetPeer.h
         vcf/ApplicationKit/EtchedBorder.h
@@ -213,7 +208,6 @@
         vcf/ApplicationKit/AbstractContainer.cpp
         vcf/ApplicationKit/AbstractListModel.cpp
         vcf/ApplicationKit/AbstractScrollable.cpp
-        vcf/ApplicationKit/AbstractTableModel.cpp
         vcf/ApplicationKit/AbstractTreeModel.cpp
         vcf/ApplicationKit/AbstractView.cpp
         vcf/ApplicationKit/AcceleratorKey.cpp

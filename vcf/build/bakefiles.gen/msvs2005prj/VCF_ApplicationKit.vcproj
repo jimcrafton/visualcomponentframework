@@ -366,7 +366,6 @@
 			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractContainer.cpp"/>
 			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractListModel.cpp"/>
 			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractScrollable.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractTableModel.cpp"/>
 			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractTreeModel.cpp"/>
 			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractView.cpp"/>
 			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractWin32Component.cpp"/>

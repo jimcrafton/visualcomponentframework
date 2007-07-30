@@ -596,6 +596,10 @@ SOURCE=..\..\src\vcf\FoundationKit\DateTime.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\vcf\FoundationKit\Delegates.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\vcf\FoundationKit\Dictionary.cpp
 # End Source File
 # Begin Source File
@@ -605,14 +609,6 @@ SOURCE=..\..\src\vcf\FoundationKit\Directory.cpp
 # Begin Source File
 
 SOURCE=..\..\src\vcf\FoundationKit\ErrorLog.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\vcf\FoundationKit\Event.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\vcf\FoundationKit\EventHandler.cpp
 # End Source File
 # Begin Source File
 
@@ -682,10 +678,6 @@ SOURCE=..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\PropertyChangeEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\vcf\FoundationKit\Registry.cpp
 # End Source File
 # Begin Source File
@@ -699,6 +691,18 @@ SOURCE=..\..\src\vcf\FoundationKit\ResourceBundle.cpp
 # Begin Source File
 
 SOURCE=..\..\src\vcf\FoundationKit\RunLoop.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\vcf\FoundationKit\RunLoopSource.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\vcf\FoundationKit\RunLoopSourcePeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\vcf\FoundationKit\RunLoopTimer.cpp
 # End Source File
 # Begin Source File
 
@@ -739,10 +743,6 @@ SOURCE=..\..\src\vcf\FoundationKit\TextOutputStream.cpp
 # Begin Source File
 
 SOURCE=..\..\src\vcf\FoundationKit\Thread.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\vcf\FoundationKit\ThreadEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -823,6 +823,14 @@ SOURCE=..\..\src\vcf\FoundationKit\Win32ResourceBundle.cpp
 # Begin Source File
 
 SOURCE=..\..\src\vcf\FoundationKit\Win32RunLoopPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.cpp
 # End Source File
 # Begin Source File
 
@@ -930,7 +938,7 @@ SOURCE=..\..\src\vcf\FoundationKit\DateTime.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Delegate.h
+SOURCE=..\..\src\vcf\FoundationKit\Delegates.h
 # End Source File
 # Begin Source File
 
@@ -959,10 +967,6 @@ SOURCE=..\..\src\vcf\FoundationKit\ErrorStrings.h
 # Begin Source File
 
 SOURCE=..\..\src\vcf\FoundationKit\Event.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\vcf\FoundationKit\EventHandler.h
 # End Source File
 # Begin Source File
 
@@ -1222,11 +1226,27 @@ SOURCE=..\..\src\vcf\FoundationKit\RunLoop.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\vcf\FoundationKit\RunLoopFwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\vcf\FoundationKit\RunLoopPeer.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\vcf\FoundationKit\RunLoopSource.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\vcf\FoundationKit\RunLoopSourcePeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\vcf\FoundationKit\RunLoopTimer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\vcf\FoundationKit\RunLoopTimerPeer.h
 # End Source File
 # Begin Source File
 
@@ -1419,6 +1439,14 @@ SOURCE=..\..\src\vcf\FoundationKit\Win32ResourceBundle.h
 # Begin Source File
 
 SOURCE=..\..\src\vcf\FoundationKit\Win32RunLoopPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.h
 # End Source File
 # Begin Source File
 

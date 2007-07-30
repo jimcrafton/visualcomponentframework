@@ -22,7 +22,7 @@
         vcf/FoundationKit/Condition.h
         vcf/FoundationKit/ConditionPeer.h
         vcf/FoundationKit/DateTime.h
-        vcf/FoundationKit/Delegate.h
+        vcf/FoundationKit/Delegates.h
         vcf/FoundationKit/Dictionary.h
         vcf/FoundationKit/Directory.h
         vcf/FoundationKit/Enum.h
@@ -30,7 +30,6 @@
         vcf/FoundationKit/ErrorLog.h
         vcf/FoundationKit/ErrorStrings.h
         vcf/FoundationKit/Event.h
-        vcf/FoundationKit/EventHandler.h
         vcf/FoundationKit/Field.h
         vcf/FoundationKit/File.h
         vcf/FoundationKit/FileIOError.h
@@ -95,8 +94,12 @@
         vcf/FoundationKit/ResourceException.h
         vcf/FoundationKit/RTTIMacros.h
         vcf/FoundationKit/RunLoop.h
+        vcf/FoundationKit/RunLoopFwd.h
         vcf/FoundationKit/RunLoopPeer.h
         vcf/FoundationKit/RunLoopSource.h
+        vcf/FoundationKit/RunLoopSourcePeer.h
+        vcf/FoundationKit/RunLoopTimer.h
+        vcf/FoundationKit/RunLoopTimerPeer.h
         vcf/FoundationKit/Runnable.h
         vcf/FoundationKit/RuntimeException.h
         vcf/FoundationKit/Semaphore.h
@@ -147,11 +150,10 @@
         vcf/FoundationKit/ComponentInfo.cpp
         vcf/FoundationKit/Condition.cpp
         vcf/FoundationKit/DateTime.cpp
+        vcf/FoundationKit/Delegates.cpp
         vcf/FoundationKit/Dictionary.cpp
         vcf/FoundationKit/Directory.cpp
         vcf/FoundationKit/ErrorLog.cpp
-        vcf/FoundationKit/Event.cpp
-        vcf/FoundationKit/EventHandler.cpp
         vcf/FoundationKit/File.cpp
         vcf/FoundationKit/FilePath.cpp
         vcf/FoundationKit/FileStream.cpp
@@ -168,11 +170,13 @@
         vcf/FoundationKit/ObjectWithEvents.cpp
         vcf/FoundationKit/PackageInfo.cpp
         vcf/FoundationKit/ProcessWithRedirectedIO.cpp
-        vcf/FoundationKit/PropertyChangeEvent.cpp
         vcf/FoundationKit/Registry.cpp
         vcf/FoundationKit/Resource.cpp
         vcf/FoundationKit/ResourceBundle.cpp
         vcf/FoundationKit/RunLoop.cpp
+        vcf/FoundationKit/RunLoopSource.cpp
+        vcf/FoundationKit/RunLoopSourcePeer.cpp
+        vcf/FoundationKit/RunLoopTimer.cpp
         vcf/FoundationKit/Semaphore.cpp
         vcf/FoundationKit/Stream.cpp
         vcf/FoundationKit/StringsMessageLoader.cpp
@@ -183,7 +187,6 @@
         vcf/FoundationKit/TextInputStream.cpp
         vcf/FoundationKit/TextOutputStream.cpp
         vcf/FoundationKit/Thread.cpp
-        vcf/FoundationKit/ThreadEvent.cpp
         vcf/FoundationKit/ThreadManager.cpp
         vcf/FoundationKit/VariantData.cpp
         vcf/FoundationKit/VCFMath.cpp
@@ -208,6 +211,8 @@
         vcf/FoundationKit/Win32Registry.h
         vcf/FoundationKit/Win32ResourceBundle.h
         vcf/FoundationKit/Win32RunLoopPeer.h
+        vcf/FoundationKit/Win32RunLoopSourcePeer.h
+        vcf/FoundationKit/Win32RunLoopTimerPeer.h
         vcf/FoundationKit/Win32SemaphorePeer.h
         vcf/FoundationKit/Win32SystemPeer.h
         vcf/FoundationKit/Win32SystemToolkit.h
@@ -228,6 +233,8 @@
         vcf/FoundationKit/Win32Registry.cpp
         vcf/FoundationKit/Win32ResourceBundle.cpp
         vcf/FoundationKit/Win32RunLoopPeer.cpp
+        vcf/FoundationKit/Win32RunLoopSourcePeer.cpp
+        vcf/FoundationKit/Win32RunLoopTimerPeer.cpp
         vcf/FoundationKit/Win32SemaphorePeer.cpp
         vcf/FoundationKit/Win32SystemPeer.cpp
         vcf/FoundationKit/Win32SystemToolkit.cpp
