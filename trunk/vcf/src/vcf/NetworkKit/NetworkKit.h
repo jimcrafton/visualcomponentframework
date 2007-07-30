@@ -18,7 +18,6 @@ where you installed the VCF.
 
 #include "vcf/NetworkKit/NetworkKitSelectLib.h"
 #include "vcf/NetworkKit/NetToolkit.h"
-#include "vcf/NetworkKit/SocketListener.h"
 #include "vcf/NetworkKit/SocketEvent.h"
 #include "vcf/NetworkKit/Socket.h"
 #include "vcf/NetworkKit/SocketPeer.h"

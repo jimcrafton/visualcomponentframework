@@ -331,7 +331,7 @@ void Win32SocketPeer::readDataFromClient( Socket* client, fd_set* readfd )
 				//printf( "client closed connection - fire event\n" );
 				//client closed connection - fire event
 				SocketEvent event( socket_, client );
-				this->socket_->ClientDisconnected.fireEvent( &event );
+				this->socket_->ClientDisconnected( &event );
 				disconnectedClients_.push_back( client );
 			}
 			break;
@@ -344,7 +344,7 @@ void Win32SocketPeer::readDataFromClient( Socket* client, fd_set* readfd )
 					switch ( err ) {
 						case WSAECONNRESET : {
 							SocketEvent event( socket_, client );
-							this->socket_->ClientDisconnected.fireEvent( &event );
+							this->socket_->ClientDisconnected( &event );
 							disconnectedClients_.push_back( client );
 						}
 						break;
@@ -409,7 +409,7 @@ void Win32SocketPeer::readDataFromClient( Socket* client, fd_set* readfd )
 
 				//finished reading - fire event
 				SocketEvent event( socket_, client, totalDataBuf, totalSize );
-				this->socket_->DataReceived.fireEvent( &event );
+				this->socket_->DataReceived( &event );
 			}
 			break;
 		}

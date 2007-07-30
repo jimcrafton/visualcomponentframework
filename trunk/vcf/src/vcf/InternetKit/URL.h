@@ -15,6 +15,95 @@ where you installed the VCF.
 
 namespace VCF {
 
+	class URL;
+
+
+	class URLAuthenticationEvent : public Event {
+	public:
+		URLAuthenticationEvent( URL* source );
+
+		virtual Object* clone( bool deep=false ) {
+			return new URLAuthenticationEvent(*this);
+		}
+
+		String getUserName() {
+			return userName;
+		}
+
+		void setUserName( const String& val ) {
+			userName = val;
+		}
+
+		String getPassword() {
+			return password;
+		}
+
+		void setPassword( const String& val ) {
+			password = val;
+		}
+	protected:
+		String userName;
+		String password;
+
+	};
+
+	typedef Delegate1<URLAuthenticationEvent*> URLAuthenticationDelegate;
+
+	class URLEvent : public Event {
+	public:
+		URLEvent( URL* source, uint32 eventType );
+
+		URLEvent( const URLEvent& rhs );
+			
+		
+		virtual Object* clone( bool deep=false ) {
+			return new URLEvent(*this);
+		}
+
+		String getStatusText() {
+			return statusText_;
+		}
+
+		void setStatusText( const String& val ) {
+			statusText_ = val;
+		}
+
+		uint32 getBytesReceived() {
+			return bytesRecvd_;
+		}
+
+		void setBytesReceived( const uint32& val ) {
+			bytesRecvd_ = val;
+		}
+
+		bool shouldCancelDataTransfer() {
+			return cancelDataTransfer_;
+		}
+
+		void cancelDataTransfer() {
+			cancelDataTransfer_ = true;
+		}
+	protected:
+		String statusText_;
+		uint32 bytesRecvd_;
+		bool cancelDataTransfer_;
+	};
+
+	typedef Delegate1<URLEvent*> URLDelegate;
+	
+	class URLException : public BasicException{
+	public:
+		URLException( const String & message ):
+		  BasicException( message ){};
+		  
+		URLException( const String & message, const int lineNumber ):
+		  BasicException(message, lineNumber){};
+		  
+		  virtual ~URLException() throw() {};
+	};
+
+
+
 	/**
 	\class URL URL.h "vcf/InternetKit/URL.h"
 	The URL class wraps a string that points to 
@@ -120,10 +209,10 @@ namespace VCF {
 		};
 
 
-		DELEGATE( DataReceiving );
-		DELEGATE( DataReceived );
-		DELEGATE( StatusChanged );
-		DELEGATE( AuthenticationRequested );
+		DELEGATE( URLDelegate,DataReceiving );
+		DELEGATE( URLDelegate,DataReceived );
+		DELEGATE( URLDelegate,StatusChanged );
+		DELEGATE( URLAuthenticationDelegate,AuthenticationRequested );
 
 		URL(){}
 
@@ -353,95 +442,25 @@ namespace VCF {
 
 	
 
-	class URLAuthenticationEvent : public Event {
-	public:
-		URLAuthenticationEvent( URL* source ) : Event(source, URL::evAuthenticationRequested){}
+	inline URLAuthenticationEvent::URLAuthenticationEvent( URL* source ):
+		Event(source, URL::evAuthenticationRequested)
+	{
 
-		virtual Object* clone( bool deep=false ) {
-			return new URLAuthenticationEvent(*this);
-		}
+	}
+	
 
-		String getUserName() {
-			return userName;
-		}
-
-		void setUserName( const String& val ) {
-			userName = val;
-		}
-
-		String getPassword() {
-			return password;
-		}
-
-		void setPassword( const String& val ) {
-			password = val;
-		}
-	protected:
-		String userName;
-		String password;
-
-	};
-
-	class URLEvent : public Event {
-	public:
-		URLEvent( URL* source, uint32 eventType ): 
+	inline URLEvent::URLEvent( URL* source, uint32 eventType ): 
 		  Event(source,eventType),
 			  bytesRecvd_(0),
 			  cancelDataTransfer_(false){}
 
-		URLEvent( const URLEvent& rhs ):
+	inline URLEvent::URLEvent( const URLEvent& rhs ):
 			Event(rhs),
 			statusText_(rhs.statusText_), 
 			bytesRecvd_(rhs.bytesRecvd_), 
 			cancelDataTransfer_(rhs.cancelDataTransfer_){}
-			
-		
-		virtual Object* clone( bool deep=false ) {
-			return new URLEvent(*this);
-		}
-
-		String getStatusText() {
-			return statusText_;
-		}
-
-		void setStatusText( const String& val ) {
-			statusText_ = val;
-		}
-
-		uint32 getBytesReceived() {
-			return bytesRecvd_;
-		}
-
-		void setBytesReceived( const uint32& val ) {
-			bytesRecvd_ = val;
-		}
-
-		bool shouldCancelDataTransfer() {
-			return cancelDataTransfer_;
-		}
-
-		void cancelDataTransfer() {
-			cancelDataTransfer_ = true;
-		}
-	protected:
-		String statusText_;
-		uint32 bytesRecvd_;
-		bool cancelDataTransfer_;
-	};
 
 	
-	
-	class URLException : public BasicException{
-	public:
-		URLException( const String & message ):
-		  BasicException( message ){};
-		  
-		URLException( const String & message, const int lineNumber ):
-		  BasicException(message, lineNumber){};
-		  
-		  virtual ~URLException() throw() {};
-	};
-
 };
 
 #endif //_VCF_URL_H__

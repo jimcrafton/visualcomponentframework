@@ -83,18 +83,18 @@ AbstractDistributedApplication::AbstractDistributedApplication()
 	listener_ = new DistributedAppListener(this);
 
 	onDataReceivedHandler_ =
-		new SocketEventHandler<DistributedAppListener>( listener_, &DistributedAppListener::onDataReceived );
+		new ClassProcedure1<SocketEvent*,DistributedAppListener>( listener_, &DistributedAppListener::onDataReceived );
 
 	onClientConnectedHandler_ =
-		new SocketEventHandler<DistributedAppListener>( listener_, &DistributedAppListener::onClientConnected );
+		new ClassProcedure1<SocketEvent*,DistributedAppListener>( listener_, &DistributedAppListener::onClientConnected );
 
 	onClientDisconnectedHandler_ =
-		new SocketEventHandler<DistributedAppListener>( listener_, &DistributedAppListener::onClientDisconnected );
+		new ClassProcedure1<SocketEvent*,DistributedAppListener>( listener_, &DistributedAppListener::onClientDisconnected );
 
 
-	sock_.DataReceived.addHandler( onDataReceivedHandler_ );
-	sock_.ClientConnected.addHandler( onClientConnectedHandler_ );
-	sock_.ClientDisconnected.addHandler( onClientDisconnectedHandler_ );
+	sock_.DataReceived.add( onDataReceivedHandler_ );
+	sock_.ClientConnected.add( onClientConnectedHandler_ );
+	sock_.ClientDisconnected.add( onClientDisconnectedHandler_ );
 
 	sock_.setListeningLoop( new SocketListeningLoop(&sock_) );
 
@@ -105,9 +105,9 @@ AbstractDistributedApplication::~AbstractDistributedApplication()
 {
 	sock_.stopListening();
 
-	sock_.DataReceived.removeHandler( onDataReceivedHandler_ );
-	sock_.ClientConnected.removeHandler( onClientConnectedHandler_ );
-	sock_.ClientDisconnected.removeHandler( onClientDisconnectedHandler_ );
+	sock_.DataReceived.remove( onDataReceivedHandler_ );
+	sock_.ClientConnected.remove( onClientConnectedHandler_ );
+	sock_.ClientDisconnected.remove( onClientDisconnectedHandler_ );
 
 	delete listener_;
 

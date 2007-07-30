@@ -196,9 +196,9 @@ protected:
 	std::map<VCF::String,int> unMarshalledArgTypes_;
 	VCF::EnumeratorMapContainer<std::map<int,VCF::Object*>,VCF::Object*> instObjectContainer_;
 private:
-	VCF::EventHandler* onDataReceivedHandler_;
-	VCF::EventHandler* onClientConnectedHandler_;
-	VCF::EventHandler* onClientDisconnectedHandler_;
+	VCF::CallBack* onDataReceivedHandler_;
+	VCF::CallBack* onClientConnectedHandler_;
+	VCF::CallBack* onClientDisconnectedHandler_;
 	DistributedAppListener* listener_;
 };
 
