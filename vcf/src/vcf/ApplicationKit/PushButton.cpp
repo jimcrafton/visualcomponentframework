@@ -37,13 +37,13 @@ PushButton::PushButton():
 
 	commandType_ = BC_NONE;
 
-	FocusGained.addHandler( new FocusEventHandler<PushButton>( this,
+	FocusGained += new ClassProcedure1<FocusEvent*,PushButton>( this,
 																&PushButton::onFocusGained,
-																"PushButton::onFocusGained" ) );
+																"PushButton::onFocusGained" );
 
-	FocusLost.addHandler( new FocusEventHandler<PushButton>( this,
+	FocusLost += new ClassProcedure1<FocusEvent*,PushButton>( this,
 																&PushButton::onFocusLost,
-																"PushButton::onFocusLost" ) );
+																"PushButton::onFocusLost" );
 }
 
 PushButton::~PushButton()

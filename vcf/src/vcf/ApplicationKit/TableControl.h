@@ -348,7 +348,7 @@ public:
 	@delegate TableSelectionChanged
 	@event TableSelecting
 	*/
-	DELEGATE(TableCellDelegate,TableSelectionChanged)
+	DELEGATE(EventDelegate,TableSelectionChanged)
 
 	virtual void handleEvent( Event* e );
 

@@ -45,11 +45,11 @@ CommandButton::CommandButton()
 
 	setVisible( true );
 
-	FocusGained.addHandler( new FocusEventHandler<CommandButton>( this,
+	FocusGained.add( new ClassProcedure1<FocusEvent*,CommandButton>( this,
 																&CommandButton::onFocusGained,
 																"CommandButton::onFocusGained" ) );
 
-	FocusLost.addHandler( new FocusEventHandler<CommandButton>( this,
+	FocusLost.add( new ClassProcedure1<FocusEvent*,CommandButton>( this,
 																&CommandButton::onFocusLost,
 																"CommandButton::onFocusLost" ) );
 }

@@ -74,7 +74,7 @@ void TabbedPages::init()
 	tabViewOffset_ = 0.0;
 
 
-	EventHandler* ev = new ButtonEventHandler<TabbedPages>( this, &TabbedPages::onScrollButtonClicked, "onScrollButtonClicked" );
+	CallBack* ev = new ClassProcedure1<ButtonEvent*,TabbedPages>( this, &TabbedPages::onScrollButtonClicked, "onScrollButtonClicked" );
 	
 }
 
@@ -270,32 +270,30 @@ void TabbedPages::setTabModel( TabModel* model )
 
 	
 	if ( NULL != model_ ) {
-		//model_->addRef();
-		//model_->addView( this );
 		Model* mod = dynamic_cast<Model*>(model_);
 		if ( NULL != mod ) {
 			mod->addView( this ); //calls setViewModel() for us
 		}
 
 
-		EventHandler* ev = getEventHandler( "TabbedPages::onTabPageAdded" );
+		CallBack* ev = getEventHandler( "TabbedPages::onTabPageAdded" );
 		if ( NULL == ev ) {
-			ev = new TabModelEventHandler<TabbedPages>( this, &TabbedPages::onTabPageAdded, "TabbedPages::onTabPageAdded" );
+			ev = new ClassProcedure1<TabModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageAdded, "TabbedPages::onTabPageAdded" );
 		}
-		model_->addTabPageAddedHandler( ev );
+		model_->addTabPageAddedHandler( (EventHandler*)ev );
 
 		ev = getEventHandler( "TabbedPages::onTabPageRemoved" );
 		if ( NULL == ev ) {
-			ev = new TabModelEventHandler<TabbedPages>( this, &TabbedPages::onTabPageRemoved, "TabbedPages::onTabPageRemoved" );
+			ev = new ClassProcedure1<TabModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageRemoved, "TabbedPages::onTabPageRemoved" );
 		}
-		model_->addTabPageRemovedHandler( ev );
+		model_->addTabPageRemovedHandler( (EventHandler*)ev );
 
 
 		ev = getEventHandler( "TabbedPages::onTabPageSelected" );
 		if ( NULL == ev ) {
-			ev = new TabModelEventHandler<TabbedPages>( this, &TabbedPages::onTabPageSelected, "TabbedPages::onTabPageSelected" );
+			ev = new ClassProcedure1<TabModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageSelected, "TabbedPages::onTabPageSelected" );
 		}
-		model_->addTabPageSelectedHandler( ev );		
+		model_->addTabPageSelectedHandler( (EventHandler*)ev );		
 	}
 	else {
 		setViewModel( NULL );

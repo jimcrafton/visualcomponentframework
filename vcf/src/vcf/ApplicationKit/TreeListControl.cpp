@@ -89,26 +89,25 @@ void TreeListControl::init()
 
 	header_->setIgnoreForParentScrolling( true );
 
-	header_->ColumnWidthChanged.addHandler(
-							new ItemEventHandler<TreeListControl>( this,
+	header_->ColumnWidthChanged +=
+							new ClassProcedure1<ItemEvent*,TreeListControl>( this,
 																	&TreeListControl::onColumnWidthChanged,
-																	"TreeListControl::onColumnWidthChanged" ) );
+																	"TreeListControl::onColumnWidthChanged" );
 
 	setDisplayOptions( TreeListControl::tdoNone );
 
 	setUseColorForBackground( true );
 
-	EventHandler* ev = 
-			new GenericEventHandler<TreeListControl>( this, &TreeListControl::onEditorFocusLost, "TreeListControl::onEditorFocusLost" );
+	CallBack* ev = 
+			new ClassProcedure1<Event*,TreeListControl>( this, &TreeListControl::onEditorFocusLost, "TreeListControl::onEditorFocusLost" );
 
-		ev = 
-			new KeyboardEventHandler<TreeListControl>( this, &TreeListControl::onEditingControlKeyPressed, "TreeListControl::onEditingControlKeyPressed" );
+	ev = new ClassProcedure1<KeyboardEvent*,TreeListControl>( this, &TreeListControl::onEditingControlKeyPressed, "TreeListControl::onEditingControlKeyPressed" );
 }
 
 void TreeListControl::setTreeModel(TreeModel * model)
 {
 	if ( NULL != treeModel_ ) {
-		EventHandler* handler = getEventHandler( "TreeListControl::onModelChanged" );
+		EventHandler* handler = (EventHandler*)getEventHandler( "TreeListControl::onModelChanged" );
 		if ( NULL != handler ) {
 			treeModel_->removeTreeNodeAddedHandler( handler );
 			treeModel_->removeTreeNodeDeletedHandler( handler );
@@ -132,14 +131,14 @@ void TreeListControl::setTreeModel(TreeModel * model)
 			//addEventHandler( "TreeListControl::onModelChanged", handler );
 		}
 
-		treeModel_->addTreeNodeAddedHandler( handler );
-		treeModel_->addTreeNodeDeletedHandler( handler );	
+		treeModel_->addTreeNodeAddedHandler( (EventHandler*)handler );
+		treeModel_->addTreeNodeDeletedHandler( (EventHandler*)handler );	
 		
 		handler = getEventHandler( "TreeListControl::onModelEmptied" );
 		if ( NULL == handler ) {
-			handler = new GenericEventHandler<TreeListControl>( this, &TreeListControl::onModelEmptied, "TreeListControl::onModelEmptied" );
+			handler = new ClassProcedure1<Event*,TreeListControl>( this, &TreeListControl::onModelEmptied, "TreeListControl::onModelEmptied" );
 		}
-		tm->addModelHandler( handler );
+		tm->addModelHandler( (ModelHandler*)handler );
 	}
 	else {
 		setViewModel( NULL );
@@ -823,7 +822,7 @@ bool TreeListControl::multiSelectionChange( MouseEvent* event )
 			if ( true == expanderRect.containsPt( event->getPoint() ) ) {
 				foundItem->expand( !foundItem->isExpanded() );
 				ItemEvent event( this, ITEM_EVENT_CHANGED );
-				ItemExpanded.fireEvent( &event );
+				ItemExpanded( &event );
 			}
 			else if ( true == stateHitTest( event->getPoint(), foundItem ) ) {
 				int32 state = foundItem->getState();
@@ -840,7 +839,7 @@ bool TreeListControl::multiSelectionChange( MouseEvent* event )
 
 				foundItem->setState( state );
 				ItemEvent event( foundItem, TreeListControl::ITEM_STATECHANGE_REQUESTED );
-				ItemStateChangeRequested.fireEvent( &event );
+				ItemStateChangeRequested( &event );
 			}
 			else if ( (true == event->hasLeftButton()) && (true == event->hasShiftKey()) && NULL!=currentlySelectedItem ) {
 				rootChildren->reset();
@@ -900,7 +899,7 @@ void TreeListControl::clearSelectedItems()
 		item->setSelected( false );
 		ItemEvent event( this, ITEM_EVENT_UNSELECTED );
 		event.setUserData( (void*)item );
-		ItemSelected.fireEvent( &event );
+		ItemSelected( &event );
 		it ++;
 	}
 	selectedItems_.clear();
@@ -934,7 +933,7 @@ void TreeListControl::mouseDblClick(  MouseEvent* event )
 
 			item->expand( !item->isExpanded() );
 			ItemEvent event( this, ITEM_EVENT_CHANGED );
-			ItemExpanded.fireEvent( &event );
+			ItemExpanded( &event );
 			
 			recalcScrollable();
 		}
@@ -979,7 +978,7 @@ bool TreeListControl::singleSelectionChange( MouseEvent* event )
 			if ( expanderRect.containsPt( event->getPoint() ) ) {
 				foundItem->expand( !foundItem->isExpanded() );
 				ItemEvent event( this, ITEM_EVENT_CHANGED );
-				ItemExpanded.fireEvent( &event );
+				ItemExpanded( &event );
 
 				recalcScrollable();
 
@@ -1009,7 +1008,7 @@ bool TreeListControl::singleSelectionChange( MouseEvent* event )
 
 				foundItem->setState( state );
 				ItemEvent event( foundItem, TreeListControl::ITEM_STATECHANGE_REQUESTED );
-				ItemStateChangeRequested.fireEvent( &event );
+				ItemStateChangeRequested( &event );
 			}
 			else {
 
@@ -1494,7 +1493,7 @@ void TreeListControl::mouseMove( MouseEvent* event )
 				(*it)->setSelected( false );
 				ItemEvent event( this, ITEM_EVENT_UNSELECTED );
 				event.setUserData((void*)(*it));
-				ItemSelected.fireEvent( &event );
+				ItemSelected( &event );
 
 				std::vector<TreeItem*>::iterator found = std::find( selectedItems_.begin(), selectedItems_.end(), *it ) ;
 				if ( found != selectedItems_.end() ) {
@@ -1721,13 +1720,13 @@ void TreeListControl::setSelectedItem( TreeItem* item, const bool& isSelected )
 	if ( true == isSelected ) {
 		ItemEvent event( this, ITEM_EVENT_SELECTED );
 		event.setUserData( (void*)item );
-		ItemSelected.fireEvent( &event );
+		ItemSelected( &event );
 	}
 	else
 	{
 		ItemEvent event( this, ITEM_EVENT_UNSELECTED );
 		event.setUserData( (void*)item );
-		ItemSelected.fireEvent( &event );
+		ItemSelected( &event );
 	}
 }
 
@@ -2096,10 +2095,10 @@ void TreeListControl::finishEditing( bool applyEdit ) {
 		
 	}
 
-	EventHandler* ev = getEventHandler( "TreeListControl::postFinishedEditing" );
+	EventHandler* ev = (EventHandler*)getEventHandler( "TreeListControl::postFinishedEditing" );
 	if ( NULL == ev ) {
 		ev = 
-			new GenericEventHandler<TreeListControl>( this, &TreeListControl::postFinishedEditing, "TreeListControl::postFinishedEditing" );
+			new ClassProcedure1<Event*,TreeListControl>( this, &TreeListControl::postFinishedEditing, "TreeListControl::postFinishedEditing" );
 	}
 
 	Event* e = new Event( this );
@@ -2125,11 +2124,11 @@ void TreeListControl::editItem( TreeItem* item, Point* point ) {
 		
 		if ( NULL != editor ) {			
 			editor->setBounds( &bounds );
-			EventHandler* ev = getEventHandler( "TreeListControl::onEditorFocusLost" );
+			CallBack* ev = getEventHandler( "TreeListControl::onEditorFocusLost" );
 			editor->FocusLost += ev;
 
 			ev = getEventHandler( "TreeListControl::onEditingControlKeyPressed" );
-			editor->KeyDown.addHandler( ev );
+			editor->KeyDown += ev;
 			
 			add( editor );
 

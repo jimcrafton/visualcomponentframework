@@ -90,9 +90,9 @@ void TimerComponent::onInternalTimerPulse( TimerEvent* event )
 
 EventHandler* TimerComponent::getTimerHandler()
 {
-	EventHandler* result = getEventHandler( "TimerComponent::onInternalTimerPulse" );
+	EventHandler* result = (EventHandler*) getEventHandler( "TimerComponent::onInternalTimerPulse" );
 	if ( NULL == result ) {
-		result = 
+		result = (EventHandler*)
 			new ClassProcedure1<TimerEvent*,TimerComponent>( this, &TimerComponent::onInternalTimerPulse, "TimerComponent::onInternalTimerPulse" );
 		addEventHandler( "TimerComponent::onInternalTimerPulse", result );
 	}

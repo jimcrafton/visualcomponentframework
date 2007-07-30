@@ -41,17 +41,19 @@ ListViewControl::ListViewControl():
 
 	addComponent( columnModel_ );
 
-	EventHandler* cmh = new ColumnModelEventHandler<ListViewControl>( this, &ListViewControl::onColumnItemAdded, "ListViewControl::onColumnItemAdded" );
+	EventHandler* cmh = (EventHandler*)
+		new ClassProcedure1<ColumnModelEvent*,ListViewControl>( this, &ListViewControl::onColumnItemAdded, "ListViewControl::onColumnItemAdded" );
 	columnModel_->addItemAddedHandler( cmh );
 
-	cmh = new ColumnModelEventHandler<ListViewControl>( this, &ListViewControl::onColumnItemDeleted, "ListViewControl::onColumnItemDeleted" );
+	cmh = (EventHandler*)
+		new ClassProcedure1<ColumnModelEvent*,ListViewControl>( this, &ListViewControl::onColumnItemDeleted, "ListViewControl::onColumnItemDeleted" );
 	columnModel_->addItemDeletedHandler( cmh );
 
 
-	EventHandler* paintHandler = new ItemEventHandler<ListViewControl>( this, &ListViewControl::onItemPaint, "ListViewControl::onItemPaint" );
+	EventHandler* paintHandler = (EventHandler*)
+		new ClassProcedure1<ItemEvent*,ListViewControl>( this, &ListViewControl::onItemPaint, "ListViewControl::onItemPaint" );
 
-	ItemSelectionChanged +=
-		new ItemEventHandler<ListViewControl>( this, &ListViewControl::onItemSelected, "ListViewControl::onItemSelected" );
+	ItemSelectionChanged += new ClassProcedure1<ItemEvent*,ListViewControl>( this, &ListViewControl::onItemSelected, "ListViewControl::onItemSelected" );
 
 	init();
 
@@ -106,26 +108,26 @@ void ListViewControl::setListModel(ListModel * model)
 	if ( NULL != listModel_ ) {
 		//listModel_->addRef();
 
-		EventHandler* ev = getEventHandler( "ListBoxControl::onItemAdded" );
+		CallBack* ev = getEventHandler( "ListBoxControl::onItemAdded" );
 		if ( NULL == ev ) {
-			ev = new ListModelEventHandler<ListViewControl>( this, &ListViewControl::onItemAdded, "ListBoxControl::onItemAdded" );
+			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onItemAdded, "ListBoxControl::onItemAdded" );
 		}
 
-		listModel_->addItemAddedHandler( ev );
+		listModel_->addItemAddedHandler( (EventHandler*)ev );
 
 		ev = getEventHandler( "ListBoxControl::onItemDeleted" );
 		if ( NULL == ev ) {
-			ev = new ListModelEventHandler<ListViewControl>( this, &ListViewControl::onItemDeleted, "ListBoxControl::onItemDeleted" );
+			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onItemDeleted, "ListBoxControl::onItemDeleted" );
 		}
 
-		listModel_->addItemDeletedHandler( ev );
+		listModel_->addItemDeletedHandler( (EventHandler*)ev );
 
 		ev = getEventHandler( "ListBoxControl::onListModelContentsChanged" );
 		if ( NULL == ev ) {
-			ev = new ListModelEventHandler<ListViewControl>( this, &ListViewControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
+			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
 		}
 
-		listModel_->addContentsChangedHandler( ev );
+		listModel_->addContentsChangedHandler( (EventHandler*)ev );
 
 	}
 
@@ -200,10 +202,10 @@ void ListViewControl::onListModelContentsChanged( ListModelEvent* event )
 
 void ListViewControl::onItemAdded( ListModelEvent* event )
 {
-	EventHandler* paintHandler = this->getEventHandler( "ListViewControl::onItemPaint" );
+	CallBack* paintHandler = this->getEventHandler( "ListViewControl::onItemPaint" );
 	ListItem* item = event->getListItem();
 	if ( NULL != paintHandler ) {
-		item->addItemPaintHandler( paintHandler );
+		item->ItemPaint += paintHandler;
 	}
 
 	listviewPeer_->addItem( item );
@@ -337,14 +339,14 @@ void ListViewControl::onColumnItemAdded( ColumnModelEvent* event )
 
 	listviewPeer_->insertHeaderColumn( item->getIndex(), item->getCaption(), item->getWidth() );
 
-	EventHandler* columnItemChanged = getEventHandler( "ListViewControl::onColumnItemChanged" );
+	CallBack* columnItemChanged = getEventHandler( "ListViewControl::onColumnItemChanged" );
 	if ( NULL == columnItemChanged ) {
-		columnItemChanged = new ItemEventHandler<ListViewControl>( this,
+		columnItemChanged = new ClassProcedure1<ItemEvent*,ListViewControl>( this,
 																	&ListViewControl::onColumnItemChanged,
 																	"ListViewControl::onColumnItemChanged" );
 	}
 
-	item->addItemChangedHandler( columnItemChanged );
+	item->ItemChanged += columnItemChanged;
 
 }
 
@@ -500,7 +502,7 @@ void ListViewControl::handleEvent( Event* event )
 	Control::handleEvent( event );
 	switch ( event->getType() ) {
 		case ListViewControl::COLUMN_MOUSE_EVENT_CLICK : {
-			ColumnItemClicked.fireEvent( (MouseEvent*)event );
+			ColumnItemClicked( (MouseEvent*)event );
 		}
 		break;
 	}

@@ -422,8 +422,8 @@ void TableControl::init()
 		setTableModel( new DefaultTableModel() );
 		addComponent( getViewModel() );
 	}
-	EventHandler* tmh =
-		new TableModelEventHandler<TableControl>( this, &TableControl::onTableModelChanged, "TableModelHandler" );
+	CallBack* tmh =
+		new ClassProcedure1<TableModelEvent*,TableControl>( this, &TableControl::onTableModelChanged, "TableModelHandler" );
 
 	TableModel* model = getTableModel();
 
@@ -435,7 +435,7 @@ void TableControl::init()
 	model->TableRowsDeleted += tmh;
 	model->TableCellsSelected += tmh;
 
-	CallBack* modelHandler =
+	ModelHandler* modelHandler =
 		new ClassProcedure1<ModelEvent*,TableControl>( this, &TableControl::onTableModelEmptied, "ModelHandler" );
 
 	getViewModel()->addModelHandler( modelHandler );
@@ -454,10 +454,10 @@ void TableControl::init()
 	scroller->setHasVerticalScrollbar( true );
 	scroller->setTarget( this );
 
-	EventHandler* ev = new GenericEventHandler<TableControl>(this, &TableControl::onVerticalScrolling, "TableControl::onVerticalScrolling" );
+	EventHandler* ev = new ClassProcedure1<Event*,TableControl>(this, &TableControl::onVerticalScrolling, "TableControl::onVerticalScrolling" );
 	scroller->VerticalScrolling += ev;
 
-	ev = new GenericEventHandler<TableControl>(this, &TableControl::onHorizontalScrolling, "TableControl::onHorizontalScrolling" );
+	ev = new ClassProcedure1<Event*,TableControl>(this, &TableControl::onHorizontalScrolling, "TableControl::onHorizontalScrolling" );
 	scroller->HorizontalScrolling += ev;
 }
 
@@ -499,7 +499,7 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 
 	TableModel* tm = getTableModel();
 
-	EventHandler* itemHandler = getEventHandler(TABLECELL_HANDLER);
+	CallBack* itemHandler = getEventHandler(TABLECELL_HANDLER);
 	if ( NULL == itemHandler ) {
 		//itemHandler = new 
 	}
@@ -525,7 +525,7 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 					TableCellItem* item = tm->getItem( row, col );
 					if ( NULL != item ){
 						if ( NULL != itemHandler ) {
-							item->addItemSelectedHandler( itemHandler );
+							item->ItemSelected += itemHandler;
 						}
 						item->setControl( this );
 						item->setColor( getDefaultTableCellColor() );
@@ -555,7 +555,7 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 					TableCellItem* item = tm->getItem( row, col );
 					if ( NULL != item ){
 						if ( NULL != itemHandler ) {
-							item->addItemSelectedHandler( itemHandler );
+							item->ItemSelected += itemHandler;
 						}
 						item->setControl( this );
 						item->setColor( getDefaultTableCellColor() );
@@ -665,7 +665,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 		//end editing here
 
 		TableCellEvent clickEvent( this, TableControl::TableCellClickedEvent, clickCell_ );
-		TableCellDown.fireEvent( &clickEvent );
+		TableCellDown( &clickEvent );
 
 
 		TableCellItem* item = getItem( clickCell_ );
@@ -950,7 +950,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 
 				TableCellEvent event(this,FixedRowClickedEvent,clickCell_);
 
-				FixedRowClicked.fireEvent( &event );
+				FixedRowClicked( &event );
 			}
 			else if ( clickCell_.column < tm->getFixedColumnsCount() ) {
 
@@ -958,7 +958,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 
 				TableCellEvent event(this,FixedColumnClickedEvent,clickCell_);
 
-				FixedColumnClicked.fireEvent( &event );
+				FixedColumnClicked( &event );
 			}
 			else {
 				mouseState_ = listMode_ ? TableControl::msSelectRow : TableControl::msSelectCells;
@@ -967,7 +967,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 
 				TableCellEvent event(this,SelectingEvent,clickCell_);
 
-				TableSelecting.fireEvent( &event );
+				TableSelecting( &event );
 
 				//m_nTimerID = SetTimer(WM_LBUTTONDOWN, m_nTimerInterval, 0);
 			}
@@ -1171,7 +1171,7 @@ void TableControl::mouseUp( MouseEvent* event ){
 		clearSelectionRange();
 
 		Event event (this, TableSelectionChangedEvent );
-		TableSelectionChanged.fireEvent( &event );
+		TableSelectionChanged( &event );
 	}
 	else if ( msColResizing == mouseState_ ) {
 		//clean up sizing rect
@@ -1205,7 +1205,7 @@ void TableControl::mouseUp( MouseEvent* event ){
 	}
 	else {
 		Event event (this, TableSelectionChangedEvent );
-		TableSelectionChanged.fireEvent( &event );
+		TableSelectionChanged( &event );
 	}
 
 	setCursorID( Cursor::SCT_DEFAULT );
@@ -1342,7 +1342,7 @@ void TableControl::editCell( const CellID& cell, const Point& pt )
 				
 				editorControl->setBounds( &bounds );
 
-				EventHandler* ev = getEventHandler( "TableControl::onFocusLost" );
+				CallBack* ev = getEventHandler( "TableControl::onFocusLost" );
 				editorControl->FocusLost += ev;
 
 
@@ -1351,8 +1351,8 @@ void TableControl::editCell( const CellID& cell, const Point& pt )
 				editorControl->setVisible( true );
 				editorControl->setFocused();
 
-				EventHandler* kl = getEventHandler( TABLECONTROL_KBRD_HANDLER );
-				editorControl->KeyDown.addHandler( kl );
+				CallBack* kl = getEventHandler( TABLECONTROL_KBRD_HANDLER );
+				editorControl->KeyDown += kl;
 
 				currentEditingControl_ = editorControl;
 			}
@@ -1537,7 +1537,7 @@ void TableControl::onFinishEditing( Event* e )
 void TableControl::cancelEditing()
 {
 	EventHandler* ev =
-		new GenericEventHandler<TableControl>( this, &TableControl::onFinishEditing );
+		new ClassProcedure1<Event*,TableControl>( this, &TableControl::onFinishEditing );
 
 	Event* e = new FinishEditingEvent( currentEditingControl_, currentItemEditor_ );
 
@@ -1558,7 +1558,7 @@ void TableControl::finishEditing()
 	currentItemEditor_->updateItem();
 
 	EventHandler* ev =
-		new GenericEventHandler<TableControl>( this, &TableControl::onFinishEditing );
+		new ClassProcedure1<Event*,TableControl>( this, &TableControl::onFinishEditing );
 
 	Event* e = new FinishEditingEvent( currentEditingControl_, currentItemEditor_ );
 

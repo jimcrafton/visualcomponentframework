@@ -403,22 +403,22 @@ void ComboBoxControl::setListModel(ListModel * model)
 	}
 
 	if ( NULL != listModel_ ) {
-		listModel_->removeContentsChangedHandler( changed );
+		listModel_->removeContentsChangedHandler( (EventHandler*)changed );
 
-		listModel_->removeItemAddedHandler( itemAdded );
+		listModel_->removeItemAddedHandler( (EventHandler*)itemAdded );
 
-		listModel_->removeItemDeletedHandler( itemDeleted );
+		listModel_->removeItemDeletedHandler( (EventHandler*)itemDeleted );
 	}
 
 	listModel_ = model;
 
 	if ( NULL != listModel_ ) {		
 
-		listModel_->addContentsChangedHandler( changed );
+		listModel_->addContentsChangedHandler( (EventHandler*)changed );
 
-		listModel_->addItemAddedHandler( itemAdded );
+		listModel_->addItemAddedHandler( (EventHandler*)itemAdded );
 
-		listModel_->addItemDeletedHandler( itemDeleted );
+		listModel_->addItemDeletedHandler( (EventHandler*)itemDeleted );
 	}
 
 	setViewModel( dynamic_cast<Model*>(listModel_) );
@@ -518,7 +518,7 @@ void ComboBoxControl::closeDropDown( Event* event )
 		ComboBoxDropDown* dropdown = (ComboBoxDropDown*)dropDown_;
 		ListItem* selectedItem = dropdown->getSelectedItem();
 
-		EventHandler* lostFocusHandler = getEventHandler( "ComboBoxControl::onDropDownLostFocus" );
+		CallBack* lostFocusHandler = getEventHandler( "ComboBoxControl::onDropDownLostFocus" );
 		dropDown_->FrameActivation.remove( lostFocusHandler );
 
 		dropDown_->setVisible( false );
@@ -555,7 +555,7 @@ void ComboBoxControl::onDropDownLostFocus( WindowEvent* event )
 			dropDown_->setVisible( false );
 
 			Event* closeEvent = new Event( dropDown_, 888999 );
-			EventHandler* ev = new GenericEventHandler<ComboBoxControl>( this, &ComboBoxControl::closeDropDown );
+			EventHandler* ev = new ClassProcedure1<Event*,ComboBoxControl>( this, &ComboBoxControl::closeDropDown );
 			UIToolkit::postEvent( ev, closeEvent );
 		}
 	}
@@ -585,21 +585,21 @@ void ComboBoxControl::mouseDown( MouseEvent* event )
 
 		if ( NULL != model ) {
 			if ( model->getCount() > 0 ) {
-				EventHandler* closeHandler = getEventHandler( "ComboBoxControl::closeDropDown" );
+				CallBack* closeHandler = getEventHandler( "ComboBoxControl::closeDropDown" );
 				if ( NULL == closeHandler ) {
-					closeHandler = new GenericEventHandler<ComboBoxControl>( this, &ComboBoxControl::closeDropDown, "ComboBoxControl::closeDropDown" );
+					closeHandler = new ClassProcedure1<Event*,ComboBoxControl>( this, &ComboBoxControl::closeDropDown, "ComboBoxControl::closeDropDown" );
 				}
 
-				ComboBoxDropDown* dropDown = new ComboBoxDropDown( this, closeHandler );
+				ComboBoxDropDown* dropDown = new ComboBoxDropDown( this, (EventHandler*)closeHandler );
 
-				EventHandler* lostFocusHandler = getEventHandler( "ComboBoxControl::onDropDownLostFocus" );
+				CallBack* lostFocusHandler = getEventHandler( "ComboBoxControl::onDropDownLostFocus" );
 				if ( NULL == lostFocusHandler ) {
-					lostFocusHandler = new WindowEventHandler<ComboBoxControl>( this,
+					lostFocusHandler = new ClassProcedure1<WindowEvent*,ComboBoxControl>( this,
 																				&ComboBoxControl::onDropDownLostFocus,
 																				"ComboBoxControl::onDropDownLostFocus" );
 				}
 
-				dropDown->FrameActivation.addHandler( lostFocusHandler );
+				dropDown->FrameActivation += lostFocusHandler;
 				dropDown_ = dropDown;
 				dropDown_->show();
 			}
@@ -712,7 +712,7 @@ ListItem* ComboBoxControl::getSelectedItem()
 
 void ComboBoxControl::onPostSelect( ItemEvent* e )
 {
-	SelectionChanged.fireEvent( e );
+	SelectionChanged( e );
 }
 
 void ComboBoxControl::setSelectedItem( ListItem* selectedItem )
@@ -738,7 +738,7 @@ void ComboBoxControl::setSelectedItem( ListItem* selectedItem )
 		*/
  		ItemEvent event( this, ITEM_EVENT_SELECTED );
 		event.setUserData( (void*)selectedItem_ );
-		SelectionChanged.fireEvent( &event );
+		SelectionChanged( &event );
 	}
 
 	repaint();
@@ -823,8 +823,9 @@ void ComboBoxControl::onEditKeyPressed( KeyboardEvent* event )
 		KeyboardEvent* postedEvent = new KeyboardEvent( event->getSource(), event->getType(),
 														event->getRepeatCount(), event->getKeyMask(),
 														event->getKeyValue(), event->getVirtualCode() );
-		UIToolkit::postEvent(
-			new KeyboardEventHandler<ComboBoxControl>( this, &ComboBoxControl::onEditReturnKeyPressed ), postedEvent );
+		EventHandler* handler = 
+			(EventHandler*) new ClassProcedure1<KeyboardEvent*,ComboBoxControl>( this, &ComboBoxControl::onEditReturnKeyPressed );
+		UIToolkit::postEvent( handler, postedEvent );
 	//}
 	//VirtualKeyCode key = event->getVirtualCode();
 	//StringUtils::trace( Format( "Key: %d\r\n" ) % key );

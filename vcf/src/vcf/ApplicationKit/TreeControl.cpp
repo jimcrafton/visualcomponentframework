@@ -81,37 +81,37 @@ void TreeControl::setTreeModel( TreeModel * model )
 {
 	if ( NULL != treeModel_ ){
 
-		EventHandler* ev = getEventHandler( "TreeControl::onTreeRootNodeChanged" );
+		EventHandler* ev = (EventHandler*)getEventHandler( "TreeControl::onTreeRootNodeChanged" );
 		treeModel_->removeTreeRootNodeChangedHandler ( ev );
 
-		ev = getEventHandler( "TreeControl::onTreeNodeAdded" );
+		ev = (EventHandler*)getEventHandler( "TreeControl::onTreeNodeAdded" );
 		treeModel_->removeTreeNodeAddedHandler( ev );
 
-		ev = getEventHandler( "TreeControl::onTreeNodeDeleted" );
+		ev = (EventHandler*)getEventHandler( "TreeControl::onTreeNodeDeleted" );
 		treeModel_->removeTreeNodeDeletedHandler( ev );
 
-		ev = getEventHandler( "ModelHandler" );
-		getViewModel()->removeModelHandler( ev );
+		ev = (EventHandler*)getEventHandler( "ModelHandler" );
+		getViewModel()->removeModelHandler( (ModelHandler*)ev );
 	}
 
 	treeModel_ = model;
 
 	if ( NULL != treeModel_ ) {
 
-		EventHandler* tml = getEventHandler( "TreeControl::onTreeRootNodeChanged" );
+		EventHandler* tml = (EventHandler*)getEventHandler( "TreeControl::onTreeRootNodeChanged" );
 		treeModel_->addTreeRootNodeChangedHandler ( tml );
 
-		tml = getEventHandler( "TreeControl::onTreeNodeAdded" );
+		tml = (EventHandler*)getEventHandler( "TreeControl::onTreeNodeAdded" );
 		treeModel_->addTreeNodeAddedHandler( tml );
 
-		tml = getEventHandler( "TreeControl::onTreeNodeDeleted" );
+		tml = (EventHandler*)getEventHandler( "TreeControl::onTreeNodeDeleted" );
 		treeModel_->addTreeNodeDeletedHandler( tml );		
 	}
 
 	setViewModel( dynamic_cast<Model*>(treeModel_) );
 
 	if ( NULL != treeModel_ ) {
-		getViewModel()->addModelHandler( getEventHandler( "ModelHandler" ) );
+		getViewModel()->addModelHandler( (ModelHandler*)getEventHandler( "ModelHandler" ) );
 	}
 }
 
@@ -155,11 +155,11 @@ void TreeControl::onTreeNodeAdded( TreeModelEvent* event )
 	item->setControl( this );
 
 	treePeer_->addItem( item );
-	EventHandler* il = getEventHandler( "TreeItemListener" );
+	CallBack* il = getEventHandler( "TreeItemListener" );
 	if  ( il == NULL ) {
-		il = new ItemEventHandler<TreeControl>( this, &TreeControl::onTreeItemPaint, "TreeItemListener" );
+		il = new ClassProcedure1<ItemEvent*,TreeControl>( this, &TreeControl::onTreeItemPaint, "TreeItemListener" );
 	}
-	item->addItemPaintHandler( il );
+	item->ItemPaint += il;
 }
 
 void TreeControl::onTreeNodeDeleted( TreeModelEvent* event )
@@ -327,17 +327,17 @@ void TreeControl::handleEvent( Event* event )
 		case TREEITEM_SELECTED : {
 			currentSelectedItem_ = (TreeItem*)event->getUserData();
 
-			ItemSelected.fireEvent( (ItemEvent*)event );
+			ItemSelected( (ItemEvent*)event );
 		}
 		break;
 
 		case TREEITEM_EXPANDED : {
-			ItemExpanded.fireEvent( (ItemEvent*)event );
+			ItemExpanded( (ItemEvent*)event );
 		}
 		break;
 
 		case TreeControl::ITEM_STATECHANGE_REQUESTED : {
-			ItemStateChangeRequested.fireEvent( (ItemEvent*)event );
+			ItemStateChangeRequested( (ItemEvent*)event );
 		}
 		break;
 
