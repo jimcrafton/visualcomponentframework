@@ -44,7 +44,7 @@ called get<name>, which will return a reference to the delegate.
 namespace VCF {
 
 
-class FunctionTypeInfo {
+class FOUNDATIONKIT_API FunctionTypeInfo {
 public:
 	typedef std::vector<const std::type_info*> TypeArray;
 	
