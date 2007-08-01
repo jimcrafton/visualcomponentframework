@@ -473,6 +473,18 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopPeer.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32SemaphorePeer.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -679,53 +691,13 @@
 			Name="Events"
 			Filter="*.h">
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Delegate.h">
+				RelativePath="..\..\..\src\vcf\FoundationKit\Delegates.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Event.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS;$(NoInherit)"/>
-				</FileConfiguration>
+				RelativePath="..\..\..\src\vcf\FoundationKit\Delegates.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Event.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\EventHandler.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS;$(NoInherit)"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\EventHandler.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\NotifyEvent.h">
@@ -734,47 +706,7 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\OutputReadyEvent.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS;$(NoInherit)"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadEvent.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS;$(NoInherit)"/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadEvent.h">
@@ -1174,29 +1106,6 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\MIMEType.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Parser.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;FOUNDATIONKIT_DLL;FOUNDATIONKIT_EXPORTS;$(NoInherit)"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Parser.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -1336,6 +1245,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCFProcess.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VFFParser.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\XMLParser.cpp">
@@ -1679,6 +1591,12 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopPeer.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopSourcePeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopTimerPeer.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\SemaphorePeer.h">
 			</File>
 			<File
@@ -1887,6 +1805,18 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoop.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopFwd.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopSource.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopTimer.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopTimer.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Runnable.h">
 			</File>
 			<File
@@ -1939,6 +1869,9 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\Thread.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadedFunctions.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadKit.h">
 			</File>
 			<File
@@ -1963,6 +1896,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadManager.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadPool.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Waitable.h">
