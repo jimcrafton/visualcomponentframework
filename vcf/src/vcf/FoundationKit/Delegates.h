@@ -62,6 +62,7 @@ public:
 		types.push_back( &ti );
 	}
 
+	static bool typesMatch( const std::type_info& t1, const std::type_info& t2, bool matchExactly = false ); 
 
 	bool operator == ( const FunctionTypeInfo& rhs ) const {
 		bool result = false;
@@ -72,7 +73,7 @@ public:
 		
 		if ( types.size() == rhsTypes.size() ) {
 			for (size_t i=0;i<types.size();i++ ) {
-				result = (*(types[i]) == *(rhsTypes[i])) ? true : false;
+				result = FunctionTypeInfo::typesMatch( *(types[i]), *(rhsTypes[i]) );
 				if ( !result ) {
 					break;
 				}
@@ -182,7 +183,7 @@ public:
 	static ThreadPool* getThreadPool();
 
 
-	Delegate(): runCallbacksAsync_(false) {}
+	Delegate(): runCallbacksAsync_(false),functions(NULL) {}
 
 	~Delegate() {
 		clear();
