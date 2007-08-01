@@ -34,50 +34,6 @@ String StringUtils::abbrevMonths[] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun",
 
 
 
-/*
-void StringUtils::traceWithArgs( String text, ... )
-{
-	text = StringUtils::convertFormatString( text );
-
-//#ifdef _DEBUG
-	va_list argList;
-
-	va_start( argList, text );     // Initialize variable arguments.
-
-	VCFChar* buf = new VCFChar[MAX_TRACE_STRING];
-	memset( buf, 0, MAX_TRACE_STRING*sizeof(VCFChar) );
-
-#if defined(VCF_GCC) || defined(VCF_CW)
-    #ifdef VCF_OSX
-    CFMutableStringRef fmt = CFStringCreateMutable( NULL, 0 );
-
-	CFStringAppendCharacters( fmt, text.c_str(), text.size() );
-
-    CFStringRef res = CFStringCreateWithFormatAndArguments( NULL, NULL, fmt, argList );
-
-    int length = minVal<uint32>( MAX_TRACE_STRING-1, CFStringGetLength( res ) );
-
-    CFRange range = {0, length };
-    CFStringGetCharacters( res, range, buf );
-    CFRelease( res );
-    CFRelease( fmt );
-
-    #else
-      vswprintf( buf, MAX_TRACE_STRING, text.c_str(), argList );
-    #endif
-#else
-	_vsnwprintf( buf, MAX_TRACE_STRING, text.c_str(), argList );
-#endif
-
-	va_end( argList );              // Reset variable arguments.
-
-	//StringUtils::trace( String("WARNING: Using deprecated function!!! - StringUtils::traceWithArgs(...)\n") ); // MP-
-	StringUtils::trace( String(buf) );
-
-	delete [] buf;
-//#endif
-}
-*/
 void StringUtils::traceWithArgs( const Format& formatter )
 {
 	StringUtils::trace( formatter );

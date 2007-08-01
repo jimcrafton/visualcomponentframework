@@ -7,6 +7,42 @@ using namespace VCF;
 ThreadPool* Delegate::delegateThreadPool = NULL;
 
 
+bool FunctionTypeInfo::typesMatch( const std::type_info& t1, const std::type_info& t2, bool matchExactly )
+{
+	bool result = false;
+
+	if ( matchExactly ) {
+		result = (t1 == t2) ? true : false;
+	}
+	else {
+		/**
+		ultimately what we would like to happen
+		here is to match "loosely". In otehr words
+		if class B derives from class A, and t1 is of
+		type A and t2 is of type B, then the match
+		would succeed because of the inheritance
+		relationship. At the moment the only way to 
+		do this would be to look up the class name in
+		the ClassRegistry, but this could easily fail 
+		for classes that are not registered with the
+		VCF RTTI mechanisms. So for now, we just
+		do an "exact" match again :(
+		*/
+
+		result = (t1 == t2) ? true : false;
+
+
+		String n1 = StringUtils::toString( t1 );
+		String n2 = StringUtils::toString( t2 );
+
+		//static std::map<String> primitives;
+
+		
+	}
+
+	return result;
+}
+
 void Delegate::initThreadPool() 
 {
 	if ( NULL == delegateThreadPool ) {
