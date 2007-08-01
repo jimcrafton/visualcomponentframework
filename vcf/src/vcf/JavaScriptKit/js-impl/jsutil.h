@@ -69,7 +69,7 @@ JS_Assert(const char *s, const char *file, JSIntn ln);
  * a "typedef" declaration is allowed.
  */
 
-#if _MSC_VER <= 1200 
+#if _MSC_VER <= 1310 
 //Jim C - added this to allow for compiling with VC6
 #define JS_STATIC_ASSERT(condition)                                           \
     typedef int js_static_assert_line_##__LINE__ [(condition) ? 1 : -1]
