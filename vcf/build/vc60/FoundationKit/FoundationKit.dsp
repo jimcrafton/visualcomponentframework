@@ -360,23 +360,15 @@ SOURCE=..\..\..\src\vcf\FoundationKit\TypeCastException.h
 # PROP Default_Filter "*.h"
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\Delegate.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Delegates.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\Event.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Delegates.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\Event.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\EventHandler.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\EventHandler.h
 # End Source File
 # Begin Source File
 
@@ -388,15 +380,7 @@ SOURCE=..\..\..\src\vcf\FoundationKit\OutputReadyEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\ThreadEvent.cpp
 # End Source File
 # Begin Source File
 
