@@ -52,14 +52,14 @@
     <add-flags files="VCF.bkl" formats="mingw">
         -o../bakefiles.gen/makefile.gcc
     </add-flags>
+    <add-flags files="VCF.bkl" formats="gnu">
+        -o../bakefiles.gen/GNUmakefile
+    </add-flags>
     <add-flags files="VCF.bkl" formats="msvc">
         -o../bakefiles.gen/makefile.vc
     </add-flags>
     <add-flags files="VCF.bkl" formats="msvc6prj">
         -o..\bakefiles.gen\msvc6prj\VCF.dsw
-    </add-flags>
-    <add-flags files="VCF.bkl" formats="gnu">
-        -o../bakefiles.gen/GNUmakefile
     </add-flags>
     <add-flags files="VCF.bkl" formats="msvs2005prj">
         -o..\bakefiles.gen\msvs2005prj\VCF.sln
@@ -74,7 +74,8 @@
     </del-flags>
 
 
-    <add-flags files="*">-DVCF_ROOT_BKGEN=../..</add-flags>
+    <add-flags files="*" formats="borland,mingw,msvc,gnu">-DVCF_ROOT_BKGEN=../..</add-flags>
+    <add-flags files="*" formats="msvc6prj,msvs2005prj">-DVCF_ROOT_BKGEN=../../..</add-flags>
     <add-flags files="../../*/*">-DVCF_ROOT_BKGEN=..</add-flags>
     <add-flags files="../../*/*/*">-DVCF_ROOT_BKGEN=../..</add-flags>
 
@@ -85,11 +86,11 @@
     <add-flags files="VCF.bkl" formats="mingw">
         -DOPTIONS_FILE=config.gcc
     </add-flags>
-    <add-flags files="VCF.bkl" formats="msvc">
-        -DOPTIONS_FILE=config.vc
-    </add-flags>
     <add-flags files="VCF.bkl" formats="gnu">
         -DOPTIONS_FILE=config.gnu
+    </add-flags>
+    <add-flags files="VCF.bkl" formats="msvc">
+        -DOPTIONS_FILE=config.vc
     </add-flags>
 
 
@@ -99,11 +100,11 @@
     <add-flags files="../../*/*" formats="mingw">
         -DOPTIONS_FILE=../build/bakefiles.gen/config.gcc
     </add-flags>
-    <add-flags files="../../*/*" formats="msvc">
-        -DOPTIONS_FILE=../build/bakefiles.gen/config.vc
-    </add-flags>
     <add-flags files="../../*/*" formats="gnu">
         -DOPTIONS_FILE=../build/bakefiles.gen/config.gnu
+    </add-flags>
+    <add-flags files="../../*/*" formats="msvc">
+        -DOPTIONS_FILE=../build/bakefiles.gen/config.vc
     </add-flags>
 
 
@@ -113,11 +114,11 @@
     <add-flags files="../../*/*/*" formats="mingw">
         -DOPTIONS_FILE=../../build/bakefiles.gen/config.gcc
     </add-flags>
-    <add-flags files="../../*/*/*" formats="msvc">
-        -DOPTIONS_FILE=../../build/bakefiles.gen/config.vc
-    </add-flags>
     <add-flags files="../../*/*/*" formats="gnu">
         -DOPTIONS_FILE=../../build/bakefiles.gen/config.gnu
+    </add-flags>
+    <add-flags files="../../*/*/*" formats="msvc">
+        -DOPTIONS_FILE=../../build/bakefiles.gen/config.vc
     </add-flags>
 
 

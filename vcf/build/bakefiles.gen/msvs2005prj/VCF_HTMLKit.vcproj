@@ -14,343 +14,343 @@
 		
 	</ToolFiles>
 	<Configurations>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc80_d\HTMLKit" Name="vc80 DLL Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc80_d\HTMLKit" Name="vc80 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc80_d\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc80_d\HTMLKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\HTMLKit_vc80_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc80_d\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc80_d\HTMLKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\HTMLKit_vc80_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc80_sd.lib LibPNG_vc80_sd.lib LibJPEG_vc80_sd.lib AGG_vc80_sd.lib FoundationKit_vc80_d.lib GraphicsKit_vc80_d.lib ApplicationKit_vc80_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\lib\\HTMLKit_vc80_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\HTMLKit_vc80_d.dll" ProgramDatabaseFile="..\..\lib\..\bin\HTMLKit_vc80_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc80_sd.lib LibPNG_vc80_sd.lib LibJPEG_vc80_sd.lib AGG_vc80_sd.lib FoundationKit_vc80_d.lib GraphicsKit_vc80_d.lib ApplicationKit_vc80_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\HTMLKit_vc80_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\HTMLKit_vc80_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\HTMLKit_vc80_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc80\HTMLKit" Name="vc80 DLL Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc80\HTMLKit" Name="vc80 DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc80\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc80\HTMLKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\HTMLKit_vc80.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc80\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc80\HTMLKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\HTMLKit_vc80.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc80_s.lib LibPNG_vc80_s.lib LibJPEG_vc80_s.lib AGG_vc80_s.lib FoundationKit_vc80.lib GraphicsKit_vc80.lib ApplicationKit_vc80.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\lib\\HTMLKit_vc80.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\HTMLKit_vc80.dll" ProgramDatabaseFile="..\..\lib\..\bin\HTMLKit_vc80.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc80_s.lib LibPNG_vc80_s.lib LibJPEG_vc80_s.lib AGG_vc80_s.lib FoundationKit_vc80.lib GraphicsKit_vc80.lib ApplicationKit_vc80.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\HTMLKit_vc80.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\HTMLKit_vc80.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\HTMLKit_vc80.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc80_sd\HTMLKit" Name="vc80 LIB Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc80_sd\HTMLKit" Name="vc80 LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc80_sd\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc80_sd\HTMLKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\HTMLKit_vc80_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc80_sd\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc80_sd\HTMLKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\HTMLKit_vc80_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\HTMLKit_vc80_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\HTMLKit_vc80_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc80_s\HTMLKit" Name="vc80 LIB Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc80_s\HTMLKit" Name="vc80 LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc80_s\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc80_s\HTMLKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\HTMLKit_vc80_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc80_s\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc80_s\HTMLKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\HTMLKit_vc80_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\HTMLKit_vc80_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\HTMLKit_vc80_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc71_d\HTMLKit" Name="vc71 DLL Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc71_d\HTMLKit" Name="vc71 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc71_d\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc71_d\HTMLKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\HTMLKit_vc71_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc71_d\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc71_d\HTMLKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\HTMLKit_vc71_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc71_sd.lib LibPNG_vc71_sd.lib LibJPEG_vc71_sd.lib AGG_vc71_sd.lib FoundationKit_vc71_d.lib GraphicsKit_vc71_d.lib ApplicationKit_vc71_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\lib\\HTMLKit_vc71_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\HTMLKit_vc71_d.dll" ProgramDatabaseFile="..\..\lib\..\bin\HTMLKit_vc71_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc71_sd.lib LibPNG_vc71_sd.lib LibJPEG_vc71_sd.lib AGG_vc71_sd.lib FoundationKit_vc71_d.lib GraphicsKit_vc71_d.lib ApplicationKit_vc71_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\HTMLKit_vc71_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\HTMLKit_vc71_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\HTMLKit_vc71_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc71\HTMLKit" Name="vc71 DLL Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc71\HTMLKit" Name="vc71 DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc71\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc71\HTMLKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\HTMLKit_vc71.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc71\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc71\HTMLKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\HTMLKit_vc71.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc71_s.lib LibPNG_vc71_s.lib LibJPEG_vc71_s.lib AGG_vc71_s.lib FoundationKit_vc71.lib GraphicsKit_vc71.lib ApplicationKit_vc71.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\lib\\HTMLKit_vc71.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\HTMLKit_vc71.dll" ProgramDatabaseFile="..\..\lib\..\bin\HTMLKit_vc71.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc71_s.lib LibPNG_vc71_s.lib LibJPEG_vc71_s.lib AGG_vc71_s.lib FoundationKit_vc71.lib GraphicsKit_vc71.lib ApplicationKit_vc71.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\HTMLKit_vc71.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\HTMLKit_vc71.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\HTMLKit_vc71.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc71_sd\HTMLKit" Name="vc71 LIB Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc71_sd\HTMLKit" Name="vc71 LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc71_sd\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc71_sd\HTMLKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\HTMLKit_vc71_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc71_sd\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc71_sd\HTMLKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\HTMLKit_vc71_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\HTMLKit_vc71_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\HTMLKit_vc71_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc71_s\HTMLKit" Name="vc71 LIB Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc71_s\HTMLKit" Name="vc71 LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc71_s\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc71_s\HTMLKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\HTMLKit_vc71_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc71_s\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc71_s\HTMLKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\HTMLKit_vc71_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\HTMLKit_vc71_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\HTMLKit_vc71_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc70_d\HTMLKit" Name="vc70 DLL Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc70_d\HTMLKit" Name="vc70 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc70_d\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc70_d\HTMLKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\HTMLKit_vc70_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc70_d\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc70_d\HTMLKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\HTMLKit_vc70_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc70_sd.lib LibPNG_vc70_sd.lib LibJPEG_vc70_sd.lib AGG_vc70_sd.lib FoundationKit_vc70_d.lib GraphicsKit_vc70_d.lib ApplicationKit_vc70_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\lib\\HTMLKit_vc70_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\HTMLKit_vc70_d.dll" ProgramDatabaseFile="..\..\lib\..\bin\HTMLKit_vc70_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc70_sd.lib LibPNG_vc70_sd.lib LibJPEG_vc70_sd.lib AGG_vc70_sd.lib FoundationKit_vc70_d.lib GraphicsKit_vc70_d.lib ApplicationKit_vc70_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\HTMLKit_vc70_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\HTMLKit_vc70_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\HTMLKit_vc70_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc70\HTMLKit" Name="vc70 DLL Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc70\HTMLKit" Name="vc70 DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc70\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc70\HTMLKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\HTMLKit_vc70.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc70\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc70\HTMLKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\HTMLKit_vc70.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc70_s.lib LibPNG_vc70_s.lib LibJPEG_vc70_s.lib AGG_vc70_s.lib FoundationKit_vc70.lib GraphicsKit_vc70.lib ApplicationKit_vc70.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\lib\\HTMLKit_vc70.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\HTMLKit_vc70.dll" ProgramDatabaseFile="..\..\lib\..\bin\HTMLKit_vc70.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc70_s.lib LibPNG_vc70_s.lib LibJPEG_vc70_s.lib AGG_vc70_s.lib FoundationKit_vc70.lib GraphicsKit_vc70.lib ApplicationKit_vc70.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\HTMLKit_vc70.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\HTMLKit_vc70.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\HTMLKit_vc70.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc70_sd\HTMLKit" Name="vc70 LIB Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc70_sd\HTMLKit" Name="vc70 LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc70_sd\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc70_sd\HTMLKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\HTMLKit_vc70_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc70_sd\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc70_sd\HTMLKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\HTMLKit_vc70_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\HTMLKit_vc70_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\HTMLKit_vc70_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc70_s\HTMLKit" Name="vc70 LIB Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc70_s\HTMLKit" Name="vc70 LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc70_s\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc70_s\HTMLKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\HTMLKit_vc70_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc70_s\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc70_s\HTMLKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\HTMLKit_vc70_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\HTMLKit_vc70_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\HTMLKit_vc70_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc6_d\HTMLKit" Name="vc6 DLL Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc6_d\HTMLKit" Name="vc6 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc6_d\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc6_d\HTMLKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\HTMLKit_vc6_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc6_d\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc6_d\HTMLKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\HTMLKit_vc6_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc6_sd.lib LibPNG_vc6_sd.lib LibJPEG_vc6_sd.lib AGG_vc6_sd.lib FoundationKit_vc6_d.lib GraphicsKit_vc6_d.lib ApplicationKit_vc6_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\lib\\HTMLKit_vc6_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\HTMLKit_vc6_d.dll" ProgramDatabaseFile="..\..\lib\..\bin\HTMLKit_vc6_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc6_sd.lib LibPNG_vc6_sd.lib LibJPEG_vc6_sd.lib AGG_vc6_sd.lib FoundationKit_vc6_d.lib GraphicsKit_vc6_d.lib ApplicationKit_vc6_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\HTMLKit_vc6_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\HTMLKit_vc6_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\HTMLKit_vc6_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc6\HTMLKit" Name="vc6 DLL Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc6\HTMLKit" Name="vc6 DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc6\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc6\HTMLKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\HTMLKit_vc6.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc6\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc6\HTMLKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\HTMLKit_vc6.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc6_s.lib LibPNG_vc6_s.lib LibJPEG_vc6_s.lib AGG_vc6_s.lib FoundationKit_vc6.lib GraphicsKit_vc6.lib ApplicationKit_vc6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\lib\\HTMLKit_vc6.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\HTMLKit_vc6.dll" ProgramDatabaseFile="..\..\lib\..\bin\HTMLKit_vc6.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc6_s.lib LibPNG_vc6_s.lib LibJPEG_vc6_s.lib AGG_vc6_s.lib FoundationKit_vc6.lib GraphicsKit_vc6.lib ApplicationKit_vc6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\HTMLKit_vc6.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\HTMLKit_vc6.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\HTMLKit_vc6.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc6_sd\HTMLKit" Name="vc6 LIB Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc6_sd\HTMLKit" Name="vc6 LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc6_sd\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc6_sd\HTMLKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\HTMLKit_vc6_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc6_sd\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc6_sd\HTMLKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\HTMLKit_vc6_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\HTMLKit_vc6_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\HTMLKit_vc6_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc6_s\HTMLKit" Name="vc6 LIB Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc6_s\HTMLKit" Name="vc6 LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc6_s\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc6_s\HTMLKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\HTMLKit_vc6_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc6_s\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc6_s\HTMLKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\HTMLKit_vc6_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\HTMLKit_vc6_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\HTMLKit_vc6_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_d\HTMLKit" Name="DLL Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_d\HTMLKit" Name="DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_d\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_d\HTMLKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\HTMLKit_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_d\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_d\HTMLKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\HTMLKit_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_sd.lib LibPNG_sd.lib LibJPEG_sd.lib AGG_sd.lib FoundationKit_d.lib GraphicsKit_d.lib ApplicationKit_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\lib\\HTMLKit_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\HTMLKit_d.dll" ProgramDatabaseFile="..\..\lib\..\bin\HTMLKit_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_sd.lib LibPNG_sd.lib LibJPEG_sd.lib AGG_sd.lib FoundationKit_d.lib GraphicsKit_d.lib ApplicationKit_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\HTMLKit_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\HTMLKit_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\HTMLKit_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj\HTMLKit" Name="DLL Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj\HTMLKit" Name="DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj\HTMLKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\HTMLKit.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj\HTMLKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\HTMLKit.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;APPLICATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;HTMLKIT_DLL;HTMLKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_s.lib LibPNG_s.lib LibJPEG_s.lib AGG_s.lib FoundationKit.lib GraphicsKit.lib ApplicationKit.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\lib\\HTMLKit.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\HTMLKit.dll" ProgramDatabaseFile="..\..\lib\..\bin\HTMLKit.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_s.lib LibPNG_s.lib LibJPEG_s.lib AGG_s.lib FoundationKit.lib GraphicsKit.lib ApplicationKit.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\HTMLKit.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\HTMLKit.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\HTMLKit.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_sd\HTMLKit" Name="LIB Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_sd\HTMLKit" Name="LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_sd\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_sd\HTMLKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\HTMLKit_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_sd\HTMLKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_sd\HTMLKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\HTMLKit_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\HTMLKit_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\HTMLKit_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_s\HTMLKit" Name="LIB Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_s\HTMLKit" Name="LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_s\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_s\HTMLKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\HTMLKit_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_s\HTMLKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_s\HTMLKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\HTMLKit_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\HTMLKit_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\HTMLKit_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_HTMLKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
@@ -360,12 +360,12 @@
 	</References>
 	<Files>
 		<Filter Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx" Name="Source Files" UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
-			<File RelativePath="..\..\src\vcf\HTMLKit\HTMLBrowserControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\HTMLKit\HTMLKit.cpp"/>
-			<File RelativePath="..\..\src\vcf\HTMLKit\HTMLToolkit.cpp"/>
-			<File RelativePath="..\..\src\vcf\HTMLKit\Win32HTMLBrowser.cpp"/>
-			<File RelativePath="..\..\src\vcf\HTMLKit\Win32HTMLDOMElements.cpp"/>
-			<File RelativePath="..\..\src\vcf\HTMLKit\Win32HTMLToolkit.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\HTMLKit\HTMLBrowserControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\HTMLKit\HTMLKit.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\HTMLKit\HTMLToolkit.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\HTMLKit\Win32HTMLBrowser.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\HTMLKit\Win32HTMLDOMElements.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\HTMLKit\Win32HTMLToolkit.cpp"/>
 		</Filter>
 	</Files>
 	<Globals>

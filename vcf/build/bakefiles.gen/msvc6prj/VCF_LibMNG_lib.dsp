@@ -50,461 +50,461 @@ RSC=rc.exe
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_d\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_d\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_d\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_d\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc80_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc80_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc80_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc80_sd.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 vc80 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc80_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc80_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc80_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc80_s.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 vc80 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_sd\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_sd\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_sd\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_sd\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc80_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc80_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc80_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc80_sd.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 vc80 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_s\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_s\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_s\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_s\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc80_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc80_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc80_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc80_s.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 vc71 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_d\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_d\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_d\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_d\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc71_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc71_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc71_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc71_sd.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 vc71 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc71_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc71_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc71_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc71_s.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 vc71 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_sd\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_sd\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_sd\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_sd\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc71_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc71_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc71_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc71_sd.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 vc71 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_s\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_s\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_s\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_s\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc71_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc71_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc71_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc71_s.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 vc70 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_d\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_d\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_d\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_d\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc70_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc70_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc70_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc70_sd.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 vc70 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc70_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc70_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc70_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc70_s.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 vc70 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_sd\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_sd\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_sd\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_sd\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc70_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc70_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc70_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc70_sd.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 vc70 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_s\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_s\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_s\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_s\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc70_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc70_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc70_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc70_s.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 vc6 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_d\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_d\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_d\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_d\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc6_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc6_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc6_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc6_sd.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 vc6 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc6_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc6_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc6_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc6_s.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 vc6 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_sd\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_sd\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_sd\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_sd\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc6_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc6_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc6_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc6_sd.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 vc6 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_s\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_s\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_s\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_s\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_vc6_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_vc6_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc6_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_vc6_s.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_d\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_d\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_d\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_d\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_sd.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_s.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_sd\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_sd\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_sd\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_sd\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\LibMNG_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\LibMNG_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_sd.lib"
 
 !ELSEIF  "$(CFG)" == "LibMNG_lib - Win32 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_s\LibMNG_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_s\LibMNG_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_s\LibMNG_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_s\LibMNG_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\LibMNG_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\LibMNG_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\LibMNG_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\LibMNG_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\LibMNG_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\LibMNG_s.lib"
 
 !ENDIF
 
@@ -535,75 +535,75 @@ LIB32=link.exe -lib
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_callback_xs.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_callback_xs.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_chunk_io.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_chunk_io.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_chunk_prc.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_chunk_prc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_chunk_xs.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_chunk_xs.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_cms.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_cms.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_display.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_display.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_dither.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_dither.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_error.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_error.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_filter.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_filter.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_hlapi.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_hlapi.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_jpeg.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_jpeg.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_object_prc.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_object_prc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_pixels.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_pixels.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_prop_xs.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_prop_xs.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_read.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_read.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_trace.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_trace.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_write.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_write.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_zlib.c
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_zlib.c
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -611,87 +611,87 @@ SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_zlib.c
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_chunk_io.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_chunk_io.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_chunk_prc.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_chunk_prc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_chunks.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_chunks.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_cms.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_cms.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_conf.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_conf.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_data.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_data.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_display.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_display.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_dither.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_dither.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_error.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_error.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_filter.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_filter.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_jpeg.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_jpeg.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_memory.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_memory.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_object_prc.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_object_prc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_objects.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_objects.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_pixels.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_pixels.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_read.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_read.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_trace.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_trace.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_types.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_types.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_write.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_write.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_zlib.h
+SOURCE=..\..\..\src\thirdparty\common\FreeImage\Source\LibMNG\libmng_zlib.h
 # End Source File
 # End Group
 # End Target

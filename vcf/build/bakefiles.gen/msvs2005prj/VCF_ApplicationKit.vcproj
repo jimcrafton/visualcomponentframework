@@ -14,343 +14,343 @@
 		
 	</ToolFiles>
 	<Configurations>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc80_d\ApplicationKit" Name="vc80 DLL Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc80_d\ApplicationKit" Name="vc80 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc80_d\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc80_d\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\ApplicationKit_vc80_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc80_d\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc80_d\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\ApplicationKit_vc80_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc80_sd.lib LibPNG_vc80_sd.lib LibJPEG_vc80_sd.lib AGG_vc80_sd.lib FoundationKit_vc80_d.lib GraphicsKit_vc80_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\lib\\ApplicationKit_vc80_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\ApplicationKit_vc80_d.dll" ProgramDatabaseFile="..\..\lib\..\bin\ApplicationKit_vc80_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc80_sd.lib LibPNG_vc80_sd.lib LibJPEG_vc80_sd.lib AGG_vc80_sd.lib FoundationKit_vc80_d.lib GraphicsKit_vc80_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\ApplicationKit_vc80_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\ApplicationKit_vc80_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\ApplicationKit_vc80_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc80\ApplicationKit" Name="vc80 DLL Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc80\ApplicationKit" Name="vc80 DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc80\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc80\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\ApplicationKit_vc80.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc80\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc80\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\ApplicationKit_vc80.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc80_s.lib LibPNG_vc80_s.lib LibJPEG_vc80_s.lib AGG_vc80_s.lib FoundationKit_vc80.lib GraphicsKit_vc80.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\lib\\ApplicationKit_vc80.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\ApplicationKit_vc80.dll" ProgramDatabaseFile="..\..\lib\..\bin\ApplicationKit_vc80.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc80_s.lib LibPNG_vc80_s.lib LibJPEG_vc80_s.lib AGG_vc80_s.lib FoundationKit_vc80.lib GraphicsKit_vc80.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\ApplicationKit_vc80.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\ApplicationKit_vc80.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\ApplicationKit_vc80.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc80_sd\ApplicationKit" Name="vc80 LIB Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc80_sd\ApplicationKit" Name="vc80 LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc80_sd\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc80_sd\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\ApplicationKit_vc80_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc80_sd\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc80_sd\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\ApplicationKit_vc80_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\ApplicationKit_vc80_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\ApplicationKit_vc80_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc80_s\ApplicationKit" Name="vc80 LIB Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc80_s\ApplicationKit" Name="vc80 LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc80_s\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc80_s\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\ApplicationKit_vc80_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc80_s\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc80_s\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\ApplicationKit_vc80_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\ApplicationKit_vc80_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\ApplicationKit_vc80_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc71_d\ApplicationKit" Name="vc71 DLL Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc71_d\ApplicationKit" Name="vc71 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc71_d\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc71_d\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\ApplicationKit_vc71_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc71_d\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc71_d\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\ApplicationKit_vc71_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc71_sd.lib LibPNG_vc71_sd.lib LibJPEG_vc71_sd.lib AGG_vc71_sd.lib FoundationKit_vc71_d.lib GraphicsKit_vc71_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\lib\\ApplicationKit_vc71_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\ApplicationKit_vc71_d.dll" ProgramDatabaseFile="..\..\lib\..\bin\ApplicationKit_vc71_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc71_sd.lib LibPNG_vc71_sd.lib LibJPEG_vc71_sd.lib AGG_vc71_sd.lib FoundationKit_vc71_d.lib GraphicsKit_vc71_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\ApplicationKit_vc71_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\ApplicationKit_vc71_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\ApplicationKit_vc71_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc71\ApplicationKit" Name="vc71 DLL Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc71\ApplicationKit" Name="vc71 DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc71\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc71\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\ApplicationKit_vc71.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc71\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc71\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\ApplicationKit_vc71.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc71_s.lib LibPNG_vc71_s.lib LibJPEG_vc71_s.lib AGG_vc71_s.lib FoundationKit_vc71.lib GraphicsKit_vc71.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\lib\\ApplicationKit_vc71.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\ApplicationKit_vc71.dll" ProgramDatabaseFile="..\..\lib\..\bin\ApplicationKit_vc71.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc71_s.lib LibPNG_vc71_s.lib LibJPEG_vc71_s.lib AGG_vc71_s.lib FoundationKit_vc71.lib GraphicsKit_vc71.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\ApplicationKit_vc71.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\ApplicationKit_vc71.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\ApplicationKit_vc71.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc71_sd\ApplicationKit" Name="vc71 LIB Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc71_sd\ApplicationKit" Name="vc71 LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc71_sd\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc71_sd\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\ApplicationKit_vc71_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc71_sd\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc71_sd\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\ApplicationKit_vc71_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\ApplicationKit_vc71_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\ApplicationKit_vc71_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc71_s\ApplicationKit" Name="vc71 LIB Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc71_s\ApplicationKit" Name="vc71 LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc71_s\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc71_s\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\ApplicationKit_vc71_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc71_s\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc71_s\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\ApplicationKit_vc71_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\ApplicationKit_vc71_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\ApplicationKit_vc71_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc70_d\ApplicationKit" Name="vc70 DLL Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc70_d\ApplicationKit" Name="vc70 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc70_d\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc70_d\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\ApplicationKit_vc70_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc70_d\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc70_d\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\ApplicationKit_vc70_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc70_sd.lib LibPNG_vc70_sd.lib LibJPEG_vc70_sd.lib AGG_vc70_sd.lib FoundationKit_vc70_d.lib GraphicsKit_vc70_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\lib\\ApplicationKit_vc70_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\ApplicationKit_vc70_d.dll" ProgramDatabaseFile="..\..\lib\..\bin\ApplicationKit_vc70_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc70_sd.lib LibPNG_vc70_sd.lib LibJPEG_vc70_sd.lib AGG_vc70_sd.lib FoundationKit_vc70_d.lib GraphicsKit_vc70_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\ApplicationKit_vc70_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\ApplicationKit_vc70_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\ApplicationKit_vc70_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc70\ApplicationKit" Name="vc70 DLL Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc70\ApplicationKit" Name="vc70 DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc70\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc70\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\ApplicationKit_vc70.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc70\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc70\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\ApplicationKit_vc70.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc70_s.lib LibPNG_vc70_s.lib LibJPEG_vc70_s.lib AGG_vc70_s.lib FoundationKit_vc70.lib GraphicsKit_vc70.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\lib\\ApplicationKit_vc70.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\ApplicationKit_vc70.dll" ProgramDatabaseFile="..\..\lib\..\bin\ApplicationKit_vc70.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc70_s.lib LibPNG_vc70_s.lib LibJPEG_vc70_s.lib AGG_vc70_s.lib FoundationKit_vc70.lib GraphicsKit_vc70.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\ApplicationKit_vc70.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\ApplicationKit_vc70.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\ApplicationKit_vc70.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc70_sd\ApplicationKit" Name="vc70 LIB Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc70_sd\ApplicationKit" Name="vc70 LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc70_sd\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc70_sd\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\ApplicationKit_vc70_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc70_sd\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc70_sd\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\ApplicationKit_vc70_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\ApplicationKit_vc70_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\ApplicationKit_vc70_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc70_s\ApplicationKit" Name="vc70 LIB Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc70_s\ApplicationKit" Name="vc70 LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc70_s\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc70_s\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\ApplicationKit_vc70_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc70_s\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc70_s\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\ApplicationKit_vc70_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\ApplicationKit_vc70_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\ApplicationKit_vc70_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc6_d\ApplicationKit" Name="vc6 DLL Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc6_d\ApplicationKit" Name="vc6 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc6_d\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc6_d\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\ApplicationKit_vc6_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc6_d\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc6_d\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\ApplicationKit_vc6_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc6_sd.lib LibPNG_vc6_sd.lib LibJPEG_vc6_sd.lib AGG_vc6_sd.lib FoundationKit_vc6_d.lib GraphicsKit_vc6_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\lib\\ApplicationKit_vc6_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\ApplicationKit_vc6_d.dll" ProgramDatabaseFile="..\..\lib\..\bin\ApplicationKit_vc6_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc6_sd.lib LibPNG_vc6_sd.lib LibJPEG_vc6_sd.lib AGG_vc6_sd.lib FoundationKit_vc6_d.lib GraphicsKit_vc6_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\ApplicationKit_vc6_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\ApplicationKit_vc6_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\ApplicationKit_vc6_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc6\ApplicationKit" Name="vc6 DLL Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc6\ApplicationKit" Name="vc6 DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc6\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc6\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\ApplicationKit_vc6.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc6\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc6\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\ApplicationKit_vc6.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_vc6_s.lib LibPNG_vc6_s.lib LibJPEG_vc6_s.lib AGG_vc6_s.lib FoundationKit_vc6.lib GraphicsKit_vc6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\lib\\ApplicationKit_vc6.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\ApplicationKit_vc6.dll" ProgramDatabaseFile="..\..\lib\..\bin\ApplicationKit_vc6.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_vc6_s.lib LibPNG_vc6_s.lib LibJPEG_vc6_s.lib AGG_vc6_s.lib FoundationKit_vc6.lib GraphicsKit_vc6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\ApplicationKit_vc6.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\ApplicationKit_vc6.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\ApplicationKit_vc6.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc6_sd\ApplicationKit" Name="vc6 LIB Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc6_sd\ApplicationKit" Name="vc6 LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc6_sd\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc6_sd\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\ApplicationKit_vc6_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc6_sd\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc6_sd\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\ApplicationKit_vc6_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\ApplicationKit_vc6_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\ApplicationKit_vc6_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc6_s\ApplicationKit" Name="vc6 LIB Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc6_s\ApplicationKit" Name="vc6 LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc6_s\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc6_s\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\ApplicationKit_vc6_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc6_s\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc6_s\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\ApplicationKit_vc6_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\ApplicationKit_vc6_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\ApplicationKit_vc6_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj_d\ApplicationKit" Name="DLL Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_d\ApplicationKit" Name="DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_d\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_d\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\ApplicationKit_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_d\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_d\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\ApplicationKit_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_sd.lib LibPNG_sd.lib LibJPEG_sd.lib AGG_sd.lib FoundationKit_d.lib GraphicsKit_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\lib\\ApplicationKit_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\ApplicationKit_d.dll" ProgramDatabaseFile="..\..\lib\..\bin\ApplicationKit_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_sd.lib LibPNG_sd.lib LibJPEG_sd.lib AGG_sd.lib FoundationKit_d.lib GraphicsKit_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\ApplicationKit_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\ApplicationKit_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\ApplicationKit_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\lib\msvs2005prj\ApplicationKit" Name="DLL Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj\ApplicationKit" Name="DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\lib\..\bin\ApplicationKit.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\ApplicationKit.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src,..\..\build\resources\win32" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;GRAPHICSKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;APPLICATIONKIT_DLL;APPLICATIONKIT_EXPORTS"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="ZLib_s.lib LibPNG_s.lib LibJPEG_s.lib AGG_s.lib FoundationKit.lib GraphicsKit.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\lib\\ApplicationKit.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\lib\..\bin\ApplicationKit.dll" ProgramDatabaseFile="..\..\lib\..\bin\ApplicationKit.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="ZLib_s.lib LibPNG_s.lib LibJPEG_s.lib AGG_s.lib FoundationKit.lib GraphicsKit.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\ApplicationKit.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\ApplicationKit.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\ApplicationKit.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_sd\ApplicationKit" Name="LIB Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_sd\ApplicationKit" Name="LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_sd\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_sd\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\ApplicationKit_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_sd\ApplicationKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_sd\ApplicationKit\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\ApplicationKit_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\ApplicationKit_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\ApplicationKit_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_s\ApplicationKit" Name="LIB Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_s\ApplicationKit" Name="LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_s\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_s\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\ApplicationKit_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_s\ApplicationKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_s\ApplicationKit\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\ApplicationKit_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src\thirdparty\win32,..\..\src\thirdparty\common\ZLib,..\..\src\thirdparty\common\LibPNG,..\..\src\thirdparty\common\LibJPEG,..\..\src\thirdparty\common\agg\include,..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\win32,..\..\..\src\thirdparty\common\ZLib,..\..\..\src\thirdparty\common\LibPNG,..\..\..\src\thirdparty\common\LibJPEG,..\..\..\src\thirdparty\common\agg\include,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\ApplicationKit_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\ApplicationKit_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_ApplicationKit.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
@@ -360,144 +360,144 @@
 	</References>
 	<Files>
 		<Filter Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx" Name="Source Files" UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
-			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractApplication.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractCommand.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractComponentEditor.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractContainer.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractListModel.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractScrollable.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractTreeModel.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractView.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\AbstractWin32Component.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\AcceleratorKey.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Action.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Application.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\ApplicationKit.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\ApplicationResourceBundle.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Basic3DBorder.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\BasicTableItemEditor.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\CheckBoxControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Clipboard.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\ColorEtchedBorder.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\ComboBoxControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\CommandButton.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\CommandGroup.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\CommonColorDialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\CommonFileBrowseDialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\CommonFileDialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\CommonFileOpenDialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\CommonFileSaveDialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\CommonFontDialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\CommonPrintDialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\ComponentEditorManager.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Containers.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Control.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\ControlContainer.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\ControlGraphicsContext.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Cursor.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\CursorManager.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\CustomControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DataObject.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DefaultColumnItem.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DefaultColumnModel.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DefaultListItem.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DefaultListModel.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DefaultMenuItem.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DefaultPropertyEditors.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DefaultTabModel.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DefaultTabPage.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DefaultTableCellItem.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DefaultTableModel.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DefaultTextModel.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DefaultTreeItem.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DefaultTreeModel.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Dialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DocumentManager.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DragSource.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\DropTarget.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\EtchedBorder.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Frame.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\HeaderControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\ImageControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\ImageList.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Label.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\LibraryApplication.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Light3DBorder.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\LightweightComponent.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\ListBoxControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\ListViewControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Menu.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\MenuBar.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\MenuManager.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\MessageDialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Model.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\MultilineTextControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Panel.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\PopupMenu.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\PopupWindow.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\ProgressControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\PropertyEditorManager.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\PushButton.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\RadioButtonControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\ScrollbarManager.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\SliderControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Splitter.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\StatusBar.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\SystemTray.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\TabbedPages.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\TableControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\TextControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\TimerComponent.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\TitledBorder.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\ToggledButton.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Toolbar.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\ToolbarDock.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\TransparentWindow.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\TreeControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\TreeListControl.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\UIComponent.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\UIShell.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\UIToolkit.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\UndoRedoStack.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32AppResourceBundle.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32Application.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32Button.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32COMDataObject.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32COMUtils.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32Clipboard.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32ColorDialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32Component.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32ControlContext.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32CursorPeer.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32Dialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32DragDropPeer.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32Edit.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32FileOpenDialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32FileSaveDialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32FolderBrowseDialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32FontDialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32Listview.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32MenuBar.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32MenuItem.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32MenuManagerPeer.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32Object.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32PopupMenu.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32PopupWindowPeer.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32PrintDialog.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32ScrollPeer.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32SystemTrayPeer.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32TextPeer.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32ToolKit.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32Toolbar.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32TransparentWindowPeer.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32Tree.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32UIShell.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Win32Window.cpp"/>
-			<File RelativePath="..\..\src\vcf\ApplicationKit\Window.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractApplication.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractCommand.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractComponentEditor.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractContainer.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractListModel.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractScrollable.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractTreeModel.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractView.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractWin32Component.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AcceleratorKey.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Action.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Application.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationKit.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationResourceBundle.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Basic3DBorder.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\BasicTableItemEditor.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\CheckBoxControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Clipboard.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ColorEtchedBorder.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ComboBoxControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\CommandButton.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\CommandGroup.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\CommonColorDialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileBrowseDialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileDialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileOpenDialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileSaveDialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFontDialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentEditorManager.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Containers.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Control.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ControlContainer.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ControlGraphicsContext.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Cursor.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\CursorManager.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\CustomControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DataObject.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultColumnItem.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultColumnModel.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultListItem.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultListModel.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultMenuItem.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultPropertyEditors.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultTabModel.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultTabPage.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultTableCellItem.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultTableModel.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultTextModel.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultTreeItem.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultTreeModel.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Dialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DocumentManager.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DragSource.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\DropTarget.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\EtchedBorder.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Frame.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\HeaderControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ImageControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ImageList.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Label.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\LibraryApplication.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Light3DBorder.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\LightweightComponent.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ListBoxControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ListViewControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Menu.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\MenuBar.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\MenuManager.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\MessageDialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Model.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\MultilineTextControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Panel.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\PopupMenu.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\PopupWindow.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ProgressControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\PropertyEditorManager.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\PushButton.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\RadioButtonControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ScrollbarManager.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\SliderControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Splitter.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\StatusBar.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\SystemTray.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\TabbedPages.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\TableControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\TextControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\TimerComponent.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\TitledBorder.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ToggledButton.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Toolbar.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ToolbarDock.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\TransparentWindow.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\TreeControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\TreeListControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\UIComponent.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\UIShell.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\UIToolkit.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\UndoRedoStack.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32AppResourceBundle.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Application.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Button.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32COMDataObject.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32COMUtils.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Clipboard.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32ColorDialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Component.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32ControlContext.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32CursorPeer.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Dialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DragDropPeer.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Edit.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32FileOpenDialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32FileSaveDialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32FolderBrowseDialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32FontDialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Listview.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32MenuBar.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32MenuItem.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32MenuManagerPeer.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Object.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PopupMenu.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PopupWindowPeer.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PrintDialog.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32ScrollPeer.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32SystemTrayPeer.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32TextPeer.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32ToolKit.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Toolbar.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32TransparentWindowPeer.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Tree.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32UIShell.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Window.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Window.cpp"/>
 		</Filter>
 		<Filter Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav" Name="Resource Files" UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
-			<File RelativePath="..\..\src\..\build\resources\win32\ApplicationKit.rc">
+			<File RelativePath="..\..\..\src\..\build\resources\win32\ApplicationKit.rc">
 				<FileConfiguration ExcludedFromBuild="true" Name="vc80 LIB Debug|Win32"/>
 				<FileConfiguration ExcludedFromBuild="true" Name="vc80 LIB Release|Win32"/>
 				<FileConfiguration ExcludedFromBuild="true" Name="vc71 LIB Debug|Win32"/>

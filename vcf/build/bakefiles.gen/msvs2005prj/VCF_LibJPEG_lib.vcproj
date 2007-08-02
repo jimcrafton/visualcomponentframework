@@ -14,343 +14,343 @@
 		
 	</ToolFiles>
 	<Configurations>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc80_d\LibJPEG_lib" Name="vc80 DLL Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc80_d\LibJPEG_lib" Name="vc80 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc80_d\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc80_d\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc80_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc80_d\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc80_d\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc80_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc80_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc80_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc80\LibJPEG_lib" Name="vc80 DLL Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc80\LibJPEG_lib" Name="vc80 DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc80\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc80\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc80_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc80\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc80\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc80_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc80_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc80_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc80_sd\LibJPEG_lib" Name="vc80 LIB Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc80_sd\LibJPEG_lib" Name="vc80 LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc80_sd\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc80_sd\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc80_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc80_sd\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc80_sd\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc80_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc80_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc80_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc80_s\LibJPEG_lib" Name="vc80 LIB Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc80_s\LibJPEG_lib" Name="vc80 LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc80_s\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc80_s\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc80_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc80_s\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc80_s\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc80_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc80_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc80_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc71_d\LibJPEG_lib" Name="vc71 DLL Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc71_d\LibJPEG_lib" Name="vc71 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc71_d\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc71_d\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc71_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc71_d\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc71_d\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc71_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc71_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc71_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc71\LibJPEG_lib" Name="vc71 DLL Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc71\LibJPEG_lib" Name="vc71 DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc71\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc71\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc71_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc71\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc71\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc71_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc71_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc71_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc71_sd\LibJPEG_lib" Name="vc71 LIB Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc71_sd\LibJPEG_lib" Name="vc71 LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc71_sd\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc71_sd\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc71_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc71_sd\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc71_sd\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc71_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc71_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc71_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc71_s\LibJPEG_lib" Name="vc71 LIB Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc71_s\LibJPEG_lib" Name="vc71 LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc71_s\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc71_s\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc71_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc71_s\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc71_s\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc71_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc71_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc71_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc70_d\LibJPEG_lib" Name="vc70 DLL Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc70_d\LibJPEG_lib" Name="vc70 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc70_d\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc70_d\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc70_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc70_d\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc70_d\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc70_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc70_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc70_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc70\LibJPEG_lib" Name="vc70 DLL Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc70\LibJPEG_lib" Name="vc70 DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc70\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc70\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc70_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc70\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc70\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc70_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc70_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc70_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc70_sd\LibJPEG_lib" Name="vc70 LIB Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc70_sd\LibJPEG_lib" Name="vc70 LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc70_sd\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc70_sd\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc70_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc70_sd\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc70_sd\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc70_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc70_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc70_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc70_s\LibJPEG_lib" Name="vc70 LIB Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc70_s\LibJPEG_lib" Name="vc70 LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc70_s\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc70_s\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc70_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc70_s\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc70_s\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc70_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc70_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc70_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc6_d\LibJPEG_lib" Name="vc6 DLL Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc6_d\LibJPEG_lib" Name="vc6 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc6_d\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc6_d\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc6_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc6_d\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc6_d\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc6_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc6_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc6_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc6\LibJPEG_lib" Name="vc6 DLL Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc6\LibJPEG_lib" Name="vc6 DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc6\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc6\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc6_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc6\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc6\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc6_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc6_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc6_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc6_sd\LibJPEG_lib" Name="vc6 LIB Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc6_sd\LibJPEG_lib" Name="vc6 LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc6_sd\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc6_sd\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc6_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc6_sd\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc6_sd\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc6_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc6_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc6_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_vc6_s\LibJPEG_lib" Name="vc6 LIB Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc6_s\LibJPEG_lib" Name="vc6 LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_vc6_s\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_vc6_s\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_vc6_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc6_s\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc6_s\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_vc6_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_vc6_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_vc6_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_d\LibJPEG_lib" Name="DLL Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_d\LibJPEG_lib" Name="DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_d\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_d\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_d\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_d\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj\LibJPEG_lib" Name="DLL Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj\LibJPEG_lib" Name="DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_sd\LibJPEG_lib" Name="LIB Debug|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_sd\LibJPEG_lib" Name="LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\lib\msvs2005prj_sd\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_sd\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_sd\LibJPEG_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_sd\LibJPEG_lib\" Optimization="0" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_sd.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
-		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\lib\msvs2005prj_s\LibJPEG_lib" Name="LIB Release|Win32" OutputDirectory=".\..\..\lib" UseOfMFC="0">
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_s\LibJPEG_lib" Name="LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
 			<Tool Name="VCXMLDataGeneratorTool"/>
 			<Tool Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool Name="VCIDLTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\lib\msvs2005prj_s\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\lib\msvs2005prj_s\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\lib\LibJPEG_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_s\LibJPEG_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_s\LibJPEG_lib\" Optimization="2" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\LibJPEG_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
 			<Tool Name="VCManagedResourceCompilerTool"/>
-			<Tool AdditionalIncludeDirectories="..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool Name="VCLibrarianTool" OutputFile="..\..\lib\LibJPEG_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\LibJPEG_s.lib" SuppressStartupBanner="true"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
-			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_LibJPEG_lib.bsc" SuppressStartupBanner="true"/>
 			<Tool Name="VCFxCopTool"/>
 			<Tool Name="VCPostBuildEventTool"/>
 		</Configuration>
@@ -360,52 +360,52 @@
 	</References>
 	<Files>
 		<Filter Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx" Name="Source Files" UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jcapimin.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jcapistd.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jccoefct.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jccolor.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jcdctmgr.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jchuff.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jcinit.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jcmainct.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jcmarker.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jcmaster.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jcomapi.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jcparam.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jcphuff.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jcprepct.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jcsample.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jctrans.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdapimin.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdapistd.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdatadst.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdatasrc.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdcoefct.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdcolor.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jddctmgr.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdhuff.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdinput.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdmainct.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdmarker.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdmaster.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdmerge.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdphuff.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdpostct.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdsample.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jdtrans.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jerror.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jfdctflt.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jfdctfst.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jfdctint.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jidctflt.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jidctfst.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jidctint.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jidctred.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jmemmgr.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jmemnobs.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jquant1.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jquant2.c"/>
-			<File RelativePath="..\..\src\thirdparty\common\LibJPEG\jutils.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jcapimin.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jcapistd.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jccoefct.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jccolor.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jcdctmgr.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jchuff.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jcinit.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jcmainct.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jcmarker.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jcmaster.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jcomapi.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jcparam.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jcphuff.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jcprepct.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jcsample.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jctrans.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdapimin.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdapistd.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdatadst.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdatasrc.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdcoefct.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdcolor.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jddctmgr.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdhuff.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdinput.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdmainct.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdmarker.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdmaster.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdmerge.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdphuff.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdpostct.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdsample.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jdtrans.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jerror.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jfdctflt.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jfdctfst.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jfdctint.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jidctflt.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jidctfst.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jidctint.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jidctred.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jmemmgr.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jmemnobs.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jquant1.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jquant2.c"/>
+			<File RelativePath="..\..\..\src\thirdparty\common\LibJPEG\jutils.c"/>
 		</Filter>
 	</Files>
 	<Globals>

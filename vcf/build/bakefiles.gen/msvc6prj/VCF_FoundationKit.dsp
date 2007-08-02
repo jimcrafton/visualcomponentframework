@@ -51,481 +51,481 @@ RSC=rc.exe
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_d\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_d\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_d\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_d\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\FoundationKit_vc80_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc80_d\FoundationKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\FoundationKit_vc80_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc80_d\FoundationKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc80_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_d\FoundationKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc80_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_d\FoundationKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc80_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc80_d.lib" /debug
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc80_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc80_d.lib" /debug
+# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc80_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc80_d.lib" /debug
+# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc80_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc80_d.lib" /debug
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc80 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\FoundationKit_vc80.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc80\FoundationKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\FoundationKit_vc80.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc80\FoundationKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc80.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80\FoundationKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc80.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80\FoundationKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc80.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc80.lib"
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc80.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc80.lib"
+# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc80.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc80.lib"
+# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc80.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc80.lib"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc80 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_sd\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_sd\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_sd\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_sd\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\FoundationKit_vc80_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc80_sd\FoundationKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\FoundationKit_vc80_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc80_sd\FoundationKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc80_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_sd\FoundationKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc80_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_sd\FoundationKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\FoundationKit_vc80_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\FoundationKit_vc80_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc80_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc80_sd.lib"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc80 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_s\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_s\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_s\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_s\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\FoundationKit_vc80_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc80_s\FoundationKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\FoundationKit_vc80_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc80_s\FoundationKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc80_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_s\FoundationKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc80_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_s\FoundationKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\FoundationKit_vc80_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\FoundationKit_vc80_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc80_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc80_s.lib"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc71 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_d\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_d\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_d\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_d\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\FoundationKit_vc71_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc71_d\FoundationKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\FoundationKit_vc71_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc71_d\FoundationKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc71_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_d\FoundationKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc71_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_d\FoundationKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc71_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc71_d.lib" /debug
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc71_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc71_d.lib" /debug
+# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc71_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc71_d.lib" /debug
+# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc71_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc71_d.lib" /debug
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc71 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\FoundationKit_vc71.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc71\FoundationKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\FoundationKit_vc71.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc71\FoundationKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc71.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71\FoundationKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc71.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71\FoundationKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc71.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc71.lib"
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc71.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc71.lib"
+# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc71.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc71.lib"
+# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc71.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc71.lib"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc71 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_sd\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_sd\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_sd\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_sd\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\FoundationKit_vc71_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc71_sd\FoundationKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\FoundationKit_vc71_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc71_sd\FoundationKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc71_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_sd\FoundationKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc71_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_sd\FoundationKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\FoundationKit_vc71_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\FoundationKit_vc71_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc71_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc71_sd.lib"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc71 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_s\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_s\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_s\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_s\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\FoundationKit_vc71_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc71_s\FoundationKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\FoundationKit_vc71_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc71_s\FoundationKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc71_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_s\FoundationKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc71_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_s\FoundationKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\FoundationKit_vc71_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\FoundationKit_vc71_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc71_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc71_s.lib"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc70 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_d\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_d\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_d\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_d\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\FoundationKit_vc70_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc70_d\FoundationKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\FoundationKit_vc70_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc70_d\FoundationKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc70_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_d\FoundationKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc70_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_d\FoundationKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc70_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc70_d.lib" /debug
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc70_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc70_d.lib" /debug
+# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc70_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc70_d.lib" /debug
+# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc70_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc70_d.lib" /debug
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc70 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\FoundationKit_vc70.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc70\FoundationKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\FoundationKit_vc70.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc70\FoundationKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc70.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70\FoundationKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc70.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70\FoundationKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc70.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc70.lib"
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc70.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc70.lib"
+# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc70.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc70.lib"
+# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc70.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc70.lib"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc70 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_sd\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_sd\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_sd\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_sd\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\FoundationKit_vc70_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc70_sd\FoundationKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\FoundationKit_vc70_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc70_sd\FoundationKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc70_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_sd\FoundationKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc70_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_sd\FoundationKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\FoundationKit_vc70_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\FoundationKit_vc70_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc70_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc70_sd.lib"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc70 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_s\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_s\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_s\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_s\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\FoundationKit_vc70_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc70_s\FoundationKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\FoundationKit_vc70_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc70_s\FoundationKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc70_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_s\FoundationKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc70_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_s\FoundationKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\FoundationKit_vc70_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\FoundationKit_vc70_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc70_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc70_s.lib"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc6 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_d\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_d\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_d\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_d\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\FoundationKit_vc6_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc6_d\FoundationKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\FoundationKit_vc6_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc6_d\FoundationKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc6_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_d\FoundationKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc6_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_d\FoundationKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc6_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc6_d.lib" /debug
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc6_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc6_d.lib" /debug
+# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc6_d.lib" /debug
+# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc6_d.lib" /debug
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc6 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\FoundationKit_vc6.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc6\FoundationKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\FoundationKit_vc6.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc6\FoundationKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc6.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6\FoundationKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc6.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6\FoundationKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc6.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc6.lib"
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_vc6.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_vc6.lib"
+# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc6.lib"
+# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc6.lib"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc6 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_sd\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_sd\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_sd\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_sd\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\FoundationKit_vc6_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc6_sd\FoundationKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\FoundationKit_vc6_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc6_sd\FoundationKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc6_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_sd\FoundationKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc6_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_sd\FoundationKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\FoundationKit_vc6_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\FoundationKit_vc6_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc6_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc6_sd.lib"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc6 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_s\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_s\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_s\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_s\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\FoundationKit_vc6_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc6_s\FoundationKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\FoundationKit_vc6_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_vc6_s\FoundationKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc6_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_s\FoundationKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc6_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_s\FoundationKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\FoundationKit_vc6_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\FoundationKit_vc6_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc6_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc6_s.lib"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_d\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_d\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_d\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_d\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\FoundationKit_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_d\FoundationKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\FoundationKit_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_d\FoundationKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_d\FoundationKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_d\FoundationKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_d.lib" /debug
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit_d.lib" /debug
+# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_d.lib" /debug
+# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_d.lib" /debug
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\FoundationKit.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj\FoundationKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\FoundationKit.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj\FoundationKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj\FoundationKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj\FoundationKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
+# ADD RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit.lib"
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\FoundationKit.dll" /libpath:"..\..\lib" /implib:"..\..\lib\FoundationKit.lib"
+# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit.lib"
+# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit.lib"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_sd\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_sd\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_sd\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_sd\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\FoundationKit_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_sd\FoundationKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\FoundationKit_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_sd\FoundationKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_sd\FoundationKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_sd\FoundationKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\FoundationKit_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\FoundationKit_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_sd.lib"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_s\FoundationKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_s\FoundationKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_s\FoundationKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_s\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\FoundationKit_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_s\FoundationKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\FoundationKit_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\lib\msvc6prj_s\FoundationKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_s\FoundationKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_s\FoundationKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\FoundationKit_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\FoundationKit_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_s.lib"
 
 !ENDIF
 
@@ -556,305 +556,305 @@ LIB32=link.exe -lib
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\BasicException.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\BasicException.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\BasicInputStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\BasicInputStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\BasicOutputStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\BasicOutputStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Class.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Class.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ClassRegistry.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\ClassRegistry.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\CommandLine.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\CommandLine.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Component.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Component.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ComponentInfo.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\ComponentInfo.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Condition.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Condition.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\DateTime.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\DateTime.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Delegates.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Delegates.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Dictionary.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Dictionary.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Directory.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Directory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ErrorLog.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\ErrorLog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\File.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\File.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\FilePath.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\FilePath.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\FileStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\FileStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\FoundationKit.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKit.cpp
 # ADD BASE CPP /Yc"vcf\FoundationKit\FoundationKit.h"
 # ADD CPP /Yc"vcf\FoundationKit\FoundationKit.h"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\IniFini.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\IniFini.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\InterfaceClass.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\InterfaceClass.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Library.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Library.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Locales.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Locales.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\MIMEType.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\MemoryStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\MemoryStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\MessageLoader.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\MessageLoader.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Mutex.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Mutex.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Object.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Object.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\PackageInfo.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\PackageInfo.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Registry.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Registry.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Resource.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Resource.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ResourceBundle.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\ResourceBundle.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\RunLoop.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoop.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\RunLoopSource.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSource.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\RunLoopSourcePeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSourcePeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\RunLoopTimer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopTimer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Semaphore.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Semaphore.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Stream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Stream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\StringUtils.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\StringUtils.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\StringsMessageLoader.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\StringsMessageLoader.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\System.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\System.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\SystemToolkit.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\SystemToolkit.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\TextCodec.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\TextCodec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\TextInputStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\TextInputStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\TextOutputStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\TextOutputStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Thread.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Thread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ThreadManager.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\ThreadManager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VCFMath.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFMath.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VCFProcess.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFProcess.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VCFString.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFString.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VFFInputStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VFFOutputStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFOutputStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VFFParser.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFParser.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VariantData.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\VariantData.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32Condition.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Condition.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32FilePeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32FilePeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32FileStream.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32FileStream.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32LibraryPeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32LibraryPeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32LocalePeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32LocalePeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32Mutex.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Mutex.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32Peer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Peer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32ProcessIORedirector.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32ProcessIORedirector.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32ProcessPeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32ProcessPeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32Registry.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Registry.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32ResourceBundle.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32ResourceBundle.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32RunLoopPeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopPeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32SemaphorePeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32SemaphorePeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32SystemPeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32SystemPeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32SystemToolkit.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32SystemToolkit.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32Thread.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Thread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32ThreadManagerPeer.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32ThreadManagerPeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\XMLParser.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\XMLParser.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -862,615 +862,615 @@ SOURCE=..\..\src\vcf\FoundationKit\XMLParser.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\AtomicCount.h
+SOURCE=..\..\..\src\vcf\FoundationKit\AtomicCount.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\BadComponentStateException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\BadComponentStateException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\BasicException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\BasicException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\BasicFileError.h
+SOURCE=..\..\..\src\vcf\FoundationKit\BasicFileError.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\BasicInputStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\BasicInputStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\BasicOutputStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\BasicOutputStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\CantCreateObjectException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\CantCreateObjectException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Class.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Class.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ClassInfo.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ClassInfo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ClassNotFound.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ClassNotFound.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ClassRegistry.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ClassRegistry.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\CommandLine.h
+SOURCE=..\..\..\src\vcf\FoundationKit\CommandLine.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\CommonDefines.h
+SOURCE=..\..\..\src\vcf\FoundationKit\CommonDefines.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Component.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Component.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ComponentEvent.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ComponentEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ComponentInfo.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ComponentInfo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Condition.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Condition.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ConditionPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ConditionPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\DateTime.h
+SOURCE=..\..\..\src\vcf\FoundationKit\DateTime.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Delegates.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Delegates.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Dictionary.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Dictionary.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Directory.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Directory.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Enum.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Enum.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Enumerator.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Enumerator.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ErrorLog.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ErrorLog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ErrorStrings.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ErrorStrings.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Event.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Event.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Field.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Field.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\File.h
+SOURCE=..\..\..\src\vcf\FoundationKit\File.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\FileIOError.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FileIOError.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\FileNotFound.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FileNotFound.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\FilePath.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FilePath.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\FilePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FilePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\FileStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FileStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\FileStreamPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FileStreamPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Format.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Format.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\FoundationKit.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\FoundationKitPrivate.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitPrivate.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl
+SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\FoundationKitSelectLib.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitSelectLib.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\FrameworkConfig.h
+SOURCE=..\..\..\src\vcf\FoundationKit\FrameworkConfig.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\IniFini.h
+SOURCE=..\..\..\src\vcf\FoundationKit\IniFini.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Interface.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Interface.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\InterfaceClass.h
+SOURCE=..\..\..\src\vcf\FoundationKit\InterfaceClass.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\InvalidImplementer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\InvalidImplementer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\InvalidPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\InvalidPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\InvalidPointerException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\InvalidPointerException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\InvalidStateException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\InvalidStateException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Library.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Library.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\LibraryPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\LibraryPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\LocalePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\LocalePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Locales.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Locales.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Lock.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Lock.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\MIMEType.h
+SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\MemStreamUtils.h
+SOURCE=..\..\..\src\vcf\FoundationKit\MemStreamUtils.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\MemoryStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\MemoryStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\MessageLoader.h
+SOURCE=..\..\..\src\vcf\FoundationKit\MessageLoader.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Method.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Method.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Mutex.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Mutex.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\MutexPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\MutexPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\NoFreeMemException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\NoFreeMemException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\NoImplementerFoundException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\NoImplementerFoundException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\NoPeerFoundException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\NoPeerFoundException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\NoSuchElementException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\NoSuchElementException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\NoToolKitFoundException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\NoToolKitFoundException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\NotImplementedException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\NotImplementedException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\NotifyEvent.h
+SOURCE=..\..\..\src\vcf\FoundationKit\NotifyEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\OSHandlePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\OSHandlePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Object.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Object.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ObjectWithEvents.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ObjectWithEvents.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\OutOfBoundsException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\OutOfBoundsException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\OutputReadyEvent.h
+SOURCE=..\..\..\src\vcf\FoundationKit\OutputReadyEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\PackageInfo.h
+SOURCE=..\..\..\src\vcf\FoundationKit\PackageInfo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Persistable.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Persistable.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ProcessException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ProcessException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ProcessIORedirectionPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ProcessIORedirectionPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ProcessPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ProcessPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ProgramInfo.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ProgramInfo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Property.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Property.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\PropertyChangeEvent.h
+SOURCE=..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\PropertyChangeException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\PropertyChangeException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\RTTIMacros.h
+SOURCE=..\..\..\src\vcf\FoundationKit\RTTIMacros.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\References.h
+SOURCE=..\..\..\src\vcf\FoundationKit\References.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Registry.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Registry.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\RegistryPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\RegistryPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Resource.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Resource.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ResourceBundle.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ResourceBundle.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ResourceBundlePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ResourceBundlePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ResourceException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ResourceException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\RunLoop.h
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoop.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\RunLoopFwd.h
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopFwd.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\RunLoopPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\RunLoopSource.h
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSource.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\RunLoopSourcePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSourcePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\RunLoopTimer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopTimer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\RunLoopTimerPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopTimerPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Runnable.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Runnable.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\RuntimeException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\RuntimeException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Semaphore.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Semaphore.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\SemaphorePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\SemaphorePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\SmartPtr.h
+SOURCE=..\..\..\src\vcf\FoundationKit\SmartPtr.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Stream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Stream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\StringTokenizer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\StringTokenizer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\StringUtils.h
+SOURCE=..\..\..\src\vcf\FoundationKit\StringUtils.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\StringsMessageLoader.h
+SOURCE=..\..\..\src\vcf\FoundationKit\StringsMessageLoader.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\SynchObject.h
+SOURCE=..\..\..\src\vcf\FoundationKit\SynchObject.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\System.h
+SOURCE=..\..\..\src\vcf\FoundationKit\System.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\SystemPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\SystemPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\SystemToolkit.h
+SOURCE=..\..\..\src\vcf\FoundationKit\SystemToolkit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\TextCodec.h
+SOURCE=..\..\..\src\vcf\FoundationKit\TextCodec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\TextInputStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\TextInputStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\TextOutputStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\TextOutputStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Thread.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Thread.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ThreadEvent.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ThreadEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ThreadException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ThreadException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ThreadKit.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ThreadKit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ThreadManager.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ThreadManager.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ThreadManagerPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ThreadManagerPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\ThreadPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\ThreadPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\TypeCastException.h
+SOURCE=..\..\..\src\vcf\FoundationKit\TypeCastException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VCFChar.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFChar.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VCFMath.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFMath.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VCFProcess.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFProcess.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VCFRTTIImpl.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFRTTIImpl.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VCFString.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFString.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VFFInputStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFInputStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VFFOutputStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFOutputStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VFFParser.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFParser.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VariantData.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VariantData.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\VariantDataStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\VariantDataStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Waitable.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Waitable.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\WarningsOffVc.h
+SOURCE=..\..\..\src\vcf\FoundationKit\WarningsOffVc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32Condition.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Condition.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32FilePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32FilePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32FileStream.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32FileStream.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32LibraryPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32LibraryPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32LocalePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32LocalePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32Mutex.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Mutex.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32Peer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Peer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32ProcessIORedirector.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32ProcessIORedirector.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32ProcessPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32ProcessPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32Registry.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Registry.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32ResourceBundle.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32ResourceBundle.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32RunLoopPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32SemaphorePeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32SemaphorePeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32SystemPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32SystemPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32SystemToolkit.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32SystemToolkit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32Thread.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32Thread.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\Win32ThreadManagerPeer.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32ThreadManagerPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\FoundationKit\XMLParser.h
+SOURCE=..\..\..\src\vcf\FoundationKit\XMLParser.h
 # End Source File
 # End Group
 # End Target

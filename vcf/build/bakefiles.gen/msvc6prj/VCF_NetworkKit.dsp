@@ -51,481 +51,481 @@ RSC=rc.exe
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_d\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_d\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_d\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_d\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\NetworkKit_vc80_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc80_d\NetworkKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\NetworkKit_vc80_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc80_d\NetworkKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\NetworkKit_vc80_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_d\NetworkKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\NetworkKit_vc80_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_d\NetworkKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc80_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc80_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc80_d.lib" /debug
-# ADD LINK32 FoundationKit_vc80_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc80_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc80_d.lib" /debug
+# ADD BASE LINK32 FoundationKit_vc80_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc80_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc80_d.lib" /debug
+# ADD LINK32 FoundationKit_vc80_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc80_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc80_d.lib" /debug
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc80 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\NetworkKit_vc80.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc80\NetworkKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\NetworkKit_vc80.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc80\NetworkKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\NetworkKit_vc80.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc80\NetworkKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\NetworkKit_vc80.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc80\NetworkKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc80.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc80.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc80.lib"
-# ADD LINK32 FoundationKit_vc80.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc80.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc80.lib"
+# ADD BASE LINK32 FoundationKit_vc80.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc80.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc80.lib"
+# ADD LINK32 FoundationKit_vc80.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc80.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc80.lib"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc80 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_sd\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_sd\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_sd\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_sd\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\NetworkKit_vc80_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc80_sd\NetworkKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\NetworkKit_vc80_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc80_sd\NetworkKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\NetworkKit_vc80_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_sd\NetworkKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\NetworkKit_vc80_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_sd\NetworkKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\NetworkKit_vc80_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\NetworkKit_vc80_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc80_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc80_sd.lib"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc80 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_s\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_s\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_s\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_s\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\NetworkKit_vc80_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc80_s\NetworkKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\NetworkKit_vc80_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc80_s\NetworkKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\NetworkKit_vc80_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_s\NetworkKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\NetworkKit_vc80_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_s\NetworkKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\NetworkKit_vc80_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\NetworkKit_vc80_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc80_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc80_s.lib"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc71 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_d\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_d\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_d\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_d\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\NetworkKit_vc71_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc71_d\NetworkKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\NetworkKit_vc71_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc71_d\NetworkKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\NetworkKit_vc71_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_d\NetworkKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\NetworkKit_vc71_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_d\NetworkKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc71_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc71_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc71_d.lib" /debug
-# ADD LINK32 FoundationKit_vc71_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc71_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc71_d.lib" /debug
+# ADD BASE LINK32 FoundationKit_vc71_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc71_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc71_d.lib" /debug
+# ADD LINK32 FoundationKit_vc71_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc71_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc71_d.lib" /debug
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc71 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\NetworkKit_vc71.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc71\NetworkKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\NetworkKit_vc71.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc71\NetworkKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\NetworkKit_vc71.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc71\NetworkKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\NetworkKit_vc71.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc71\NetworkKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc71.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc71.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc71.lib"
-# ADD LINK32 FoundationKit_vc71.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc71.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc71.lib"
+# ADD BASE LINK32 FoundationKit_vc71.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc71.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc71.lib"
+# ADD LINK32 FoundationKit_vc71.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc71.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc71.lib"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc71 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_sd\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_sd\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_sd\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_sd\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\NetworkKit_vc71_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc71_sd\NetworkKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\NetworkKit_vc71_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc71_sd\NetworkKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\NetworkKit_vc71_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_sd\NetworkKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\NetworkKit_vc71_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_sd\NetworkKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\NetworkKit_vc71_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\NetworkKit_vc71_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc71_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc71_sd.lib"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc71 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_s\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_s\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_s\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_s\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\NetworkKit_vc71_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc71_s\NetworkKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\NetworkKit_vc71_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc71_s\NetworkKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\NetworkKit_vc71_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_s\NetworkKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\NetworkKit_vc71_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_s\NetworkKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\NetworkKit_vc71_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\NetworkKit_vc71_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc71_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc71_s.lib"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc70 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_d\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_d\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_d\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_d\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\NetworkKit_vc70_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc70_d\NetworkKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\NetworkKit_vc70_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc70_d\NetworkKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\NetworkKit_vc70_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_d\NetworkKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\NetworkKit_vc70_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_d\NetworkKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc70_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc70_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc70_d.lib" /debug
-# ADD LINK32 FoundationKit_vc70_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc70_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc70_d.lib" /debug
+# ADD BASE LINK32 FoundationKit_vc70_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc70_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc70_d.lib" /debug
+# ADD LINK32 FoundationKit_vc70_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc70_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc70_d.lib" /debug
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc70 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\NetworkKit_vc70.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc70\NetworkKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\NetworkKit_vc70.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc70\NetworkKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\NetworkKit_vc70.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc70\NetworkKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\NetworkKit_vc70.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc70\NetworkKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc70.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc70.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc70.lib"
-# ADD LINK32 FoundationKit_vc70.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc70.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc70.lib"
+# ADD BASE LINK32 FoundationKit_vc70.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc70.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc70.lib"
+# ADD LINK32 FoundationKit_vc70.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc70.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc70.lib"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc70 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_sd\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_sd\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_sd\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_sd\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\NetworkKit_vc70_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc70_sd\NetworkKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\NetworkKit_vc70_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc70_sd\NetworkKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\NetworkKit_vc70_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_sd\NetworkKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\NetworkKit_vc70_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_sd\NetworkKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\NetworkKit_vc70_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\NetworkKit_vc70_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc70_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc70_sd.lib"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc70 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_s\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_s\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_s\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_s\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\NetworkKit_vc70_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc70_s\NetworkKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\NetworkKit_vc70_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc70_s\NetworkKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\NetworkKit_vc70_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_s\NetworkKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\NetworkKit_vc70_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_s\NetworkKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\NetworkKit_vc70_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\NetworkKit_vc70_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc70_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc70_s.lib"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc6 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_d\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_d\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_d\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_d\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\NetworkKit_vc6_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc6_d\NetworkKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\NetworkKit_vc6_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc6_d\NetworkKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\NetworkKit_vc6_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_d\NetworkKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\NetworkKit_vc6_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_d\NetworkKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc6_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc6_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc6_d.lib" /debug
-# ADD LINK32 FoundationKit_vc6_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc6_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc6_d.lib" /debug
+# ADD BASE LINK32 FoundationKit_vc6_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc6_d.lib" /debug
+# ADD LINK32 FoundationKit_vc6_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc6_d.lib" /debug
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc6 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\NetworkKit_vc6.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc6\NetworkKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\NetworkKit_vc6.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc6\NetworkKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\NetworkKit_vc6.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc6\NetworkKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\NetworkKit_vc6.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc6\NetworkKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc6.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc6.lib"
-# ADD LINK32 FoundationKit_vc6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_vc6.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_vc6.lib"
+# ADD BASE LINK32 FoundationKit_vc6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc6.lib"
+# ADD LINK32 FoundationKit_vc6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc6.lib"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc6 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_sd\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_sd\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_sd\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_sd\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\NetworkKit_vc6_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc6_sd\NetworkKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\NetworkKit_vc6_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc6_sd\NetworkKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\NetworkKit_vc6_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_sd\NetworkKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\NetworkKit_vc6_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_sd\NetworkKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\NetworkKit_vc6_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\NetworkKit_vc6_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc6_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc6_sd.lib"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc6 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_s\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_s\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_s\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_s\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\NetworkKit_vc6_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc6_s\NetworkKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\NetworkKit_vc6_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_vc6_s\NetworkKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\NetworkKit_vc6_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_s\NetworkKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\NetworkKit_vc6_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_s\NetworkKit_vc6_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\NetworkKit_vc6_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\NetworkKit_vc6_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc6_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\NetworkKit_vc6_s.lib"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_d\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_d\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_d\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_d\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\NetworkKit_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_d\NetworkKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\..\bin\NetworkKit_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_d\NetworkKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\NetworkKit_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_d\NetworkKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\NetworkKit_d.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_d\NetworkKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_d.lib" /debug
-# ADD LINK32 FoundationKit_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit_d.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit_d.lib" /debug
+# ADD BASE LINK32 FoundationKit_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_d.lib" /debug
+# ADD LINK32 FoundationKit_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_d.lib" /debug
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\NetworkKit.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj\NetworkKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\..\bin\NetworkKit.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj\NetworkKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\NetworkKit.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj\NetworkKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\NetworkKit.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj\NetworkKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "NETKIT_DLL" /D "NETKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
+# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "NETKIT_DLL" /d NETKIT_EXPORTS
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit.lib"
-# ADD LINK32 FoundationKit.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\lib\..\bin\NetworkKit.dll" /libpath:"..\..\lib" /implib:"..\..\lib\NetworkKit.lib"
+# ADD BASE LINK32 FoundationKit.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit.lib"
+# ADD LINK32 FoundationKit.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit.lib"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_sd\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_sd\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_sd\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_sd\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\NetworkKit_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_sd\NetworkKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\NetworkKit_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_sd\NetworkKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\NetworkKit_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_sd\NetworkKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\NetworkKit_sd.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_sd\NetworkKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\NetworkKit_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\NetworkKit_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\NetworkKit_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\NetworkKit_sd.lib"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_s\NetworkKit"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_s\NetworkKit"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_s\NetworkKit"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_s\NetworkKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\NetworkKit_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_s\NetworkKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\NetworkKit_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\lib\msvc6prj_s\NetworkKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\NetworkKit_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_s\NetworkKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\NetworkKit_s.pdb /Yu"vcf\NetworkKit\NetworkKit.h" /Fp"..\..\..\lib\msvc6prj_s\NetworkKit_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\NetworkKit_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\NetworkKit_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\NetworkKit_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\NetworkKit_s.lib"
 
 !ENDIF
 
@@ -556,41 +556,41 @@ LIB32=link.exe -lib
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\DatagramSocket.cpp
+SOURCE=..\..\..\src\vcf\NetworkKit\DatagramSocket.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\NetToolkit.cpp
+SOURCE=..\..\..\src\vcf\NetworkKit\NetToolkit.cpp
 # ADD BASE CPP /Yc"vcf\NetworkKit\NetworkKit.h"
 # ADD CPP /Yc"vcf\NetworkKit\NetworkKit.h"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\ServerSocketEvent.cpp
+SOURCE=..\..\..\src\vcf\NetworkKit\ServerSocketEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\Socket.cpp
+SOURCE=..\..\..\src\vcf\NetworkKit\Socket.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\SocketEvent.cpp
+SOURCE=..\..\..\src\vcf\NetworkKit\SocketEvent.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\SocketListeningLoop.cpp
+SOURCE=..\..\..\src\vcf\NetworkKit\SocketListeningLoop.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\URL.cpp
+SOURCE=..\..\..\src\vcf\NetworkKit\URL.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\Win32DatagramSocketPeer.cpp
+SOURCE=..\..\..\src\vcf\NetworkKit\Win32DatagramSocketPeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\Win32SocketPeer.cpp
+SOURCE=..\..\..\src\vcf\NetworkKit\Win32SocketPeer.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -598,59 +598,59 @@ SOURCE=..\..\src\vcf\NetworkKit\Win32SocketPeer.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\DatagramSocket.h
+SOURCE=..\..\..\src\vcf\NetworkKit\DatagramSocket.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\NetToolkit.h
+SOURCE=..\..\..\src\vcf\NetworkKit\NetToolkit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\NetworkKit.h
+SOURCE=..\..\..\src\vcf\NetworkKit\NetworkKit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\NetworkKitPrivate.h
+SOURCE=..\..\..\src\vcf\NetworkKit\NetworkKitPrivate.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\NetworkKitSelectLib.h
+SOURCE=..\..\..\src\vcf\NetworkKit\NetworkKitSelectLib.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\ServerSocketEvent.h
+SOURCE=..\..\..\src\vcf\NetworkKit\ServerSocketEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\Socket.h
+SOURCE=..\..\..\src\vcf\NetworkKit\Socket.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\SocketEvent.h
+SOURCE=..\..\..\src\vcf\NetworkKit\SocketEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\SocketException.h
+SOURCE=..\..\..\src\vcf\NetworkKit\SocketException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\SocketListeningLoop.h
+SOURCE=..\..\..\src\vcf\NetworkKit\SocketListeningLoop.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\SocketPeer.h
+SOURCE=..\..\..\src\vcf\NetworkKit\SocketPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\URL.h
+SOURCE=..\..\..\src\vcf\NetworkKit\URL.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\Win32DatagramSocketPeer.h
+SOURCE=..\..\..\src\vcf\NetworkKit\Win32DatagramSocketPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\vcf\NetworkKit\Win32SocketPeer.h
+SOURCE=..\..\..\src\vcf\NetworkKit\Win32SocketPeer.h
 # End Source File
 # End Group
 # End Target
