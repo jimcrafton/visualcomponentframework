@@ -6,6 +6,30 @@ using namespace VCF;
 
 ThreadPool* Delegate::delegateThreadPool = NULL;
 
+struct TypeFind {
+	String find_;
+public:
+	TypeFind( String s):find_(s){}
+
+	bool operator() ( const String& s ) const {
+		
+		bool result = true;
+
+		if ( s != find_ ) {
+			if ( s != (find_ + " *") ) {
+				if ( s != (find_ + " &") ) {
+					if ( s != ("const " + find_ + " *") ) {
+						if ( s != ("const " + find_ + " &") ) {
+							result = false;
+						}
+					}
+				}
+			}
+		}
+
+		return result;
+	}
+};
 
 bool FunctionTypeInfo::typesMatch( const std::type_info& t1, const std::type_info& t2, bool matchExactly )
 {
@@ -27,16 +51,44 @@ bool FunctionTypeInfo::typesMatch( const std::type_info& t1, const std::type_inf
 		for classes that are not registered with the
 		VCF RTTI mechanisms. So for now, we just
 		do an "exact" match again :(
-		*/
-
-		result = (t1 == t2) ? true : false;
+		*/	
 
 
 		String n1 = StringUtils::toString( t1 );
 		String n2 = StringUtils::toString( t2 );
 
-		//static std::map<String> primitives;
+		static std::vector<String> primitives;
+		if ( primitives.empty() ) {
+			primitives.resize(19);
+			primitives[0] = "void";
+			primitives[1] = "wchar_t";
+			primitives[2] = "bool";
+			primitives[3] = "char";
+			primitives[4] = "signed char";
+			primitives[5] = "unsigned char";
+			primitives[6] = "short";
+			primitives[7] = "unsigned short";
+			primitives[8] = "int";
+			primitives[9] = "unsigned int";
+			primitives[10] = "long";
+			primitives[11] = "unsigned long";
+			primitives[12] = "long long";
+			primitives[13] = "unsigned long long";
+			primitives[14] = "float";
+			primitives[15] = "double";
+			primitives[16] = "long double";
+		}
 
+		if ( n1 != n2 ) {
+			if ( primitives.end() == std::find_if( primitives.begin(), primitives.end(), TypeFind(n1) ) &&
+				primitives.end() == std::find_if( primitives.begin(), primitives.end(), TypeFind(n2) ) ) {
+
+				result = true;
+			}
+		}
+		else {
+			result = true;
+		}
 		
 	}
 
