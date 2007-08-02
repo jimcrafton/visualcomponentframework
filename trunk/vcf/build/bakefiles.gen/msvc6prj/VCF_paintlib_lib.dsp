@@ -50,461 +50,461 @@ RSC=rc.exe
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_d\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_d\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_d\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_d\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc80_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc80_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc80_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc80_sd.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 vc80 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc80_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc80_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc80_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc80_s.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 vc80 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_sd\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_sd\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_sd\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_sd\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc80_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc80_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc80_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc80_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc80_sd.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 vc80 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc80_s\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_s\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc80_s\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_s\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc80_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc80_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc80_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc80_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc80_s.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 vc71 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_d\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_d\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_d\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_d\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc71_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc71_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc71_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc71_sd.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 vc71 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc71_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc71_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc71_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc71_s.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 vc71 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_sd\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_sd\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_sd\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_sd\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc71_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc71_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc71_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc71_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc71_sd.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 vc71 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc71_s\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_s\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc71_s\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_s\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc71_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc71_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc71_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc71_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc71_s.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 vc70 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_d\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_d\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_d\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_d\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc70_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc70_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc70_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc70_sd.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 vc70 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc70_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc70_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc70_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc70_s.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 vc70 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_sd\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_sd\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_sd\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_sd\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc70_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc70_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc70_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc70_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc70_sd.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 vc70 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc70_s\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_s\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc70_s\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_s\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc70_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc70_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc70_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc70_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc70_s.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 vc6 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_d\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_d\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_d\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_d\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc6_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc6_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc6_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc6_sd.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 vc6 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc6_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc6_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc6_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc6_s.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 vc6 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_sd\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_sd\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_sd\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_sd\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_vc6_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc6_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc6_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc6_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc6_sd.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 vc6 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_vc6_s\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_s\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_vc6_s\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_s\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_vc6_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_vc6_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_vc6_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_vc6_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_vc6_s.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_d\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_d\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_d\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_d\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_sd.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 DLL Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_s.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 LIB Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_sd\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_sd\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_sd\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_sd\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\src" /Zi /Gm /GZ /Fd..\..\lib\paintlib_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\paintlib_sd.pdb /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_sd.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_sd.lib"
 
 !ELSEIF  "$(CFG)" == "paintlib_lib - Win32 LIB Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\lib\msvc6prj_s\paintlib_lib"
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_s\paintlib_lib"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\lib"
-# PROP Intermediate_Dir "..\..\lib\msvc6prj_s\paintlib_lib"
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_s\paintlib_lib"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /I "..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\src\thirdparty\common\paintlib\common" /I "..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\src\thirdparty\common\LibJPEG" /I "..\..\src\thirdparty\common\LibTIFF" /I "..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\src" /Fd..\..\lib\paintlib_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\paintlib\common\Filter" /I "..\..\..\src\thirdparty\common\paintlib\common" /I "..\..\..\src\thirdparty\common\paintlib\win\paintlib" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\LibTIFF" /I "..\..\..\src\thirdparty\common\LibPNG" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\paintlib_s.pdb /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\lib\paintlib_s.lib"
-# ADD LIB32 /nologo /out:"..\..\lib\paintlib_s.lib"
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\paintlib_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\paintlib_s.lib"
 
 !ENDIF
 
@@ -535,263 +535,263 @@ LIB32=link.exe -lib
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\jmemdest.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\jmemdest.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\jmemsrc.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\jmemsrc.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\win\paintlib\plStreamSink.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\win\paintlib\plStreamSink.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\planybmp.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\planybmp.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\planydec.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\planydec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plbitmap.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plbitmap.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plbmpbase.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plbmpbase.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plbmpdec.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plbmpdec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plbmpenc.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plbmpenc.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plbmpinfo.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plbmpinfo.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pldatasink.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pldatasink.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pldatasrc.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pldatasrc.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\win\paintlib\pldibsect.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\win\paintlib\pldibsect.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plexcept.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plexcept.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plexif.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plexif.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plfilesink.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plfilesink.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plfilesrc.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plfilesrc.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilter.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilter.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfiltercolorize.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfiltercolorize.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfiltercontrast.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfiltercontrast.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfiltercrop.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfiltercrop.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterflip.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterflip.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterfliprgb.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterfliprgb.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfiltergetalpha.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfiltergetalpha.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfiltergrayscale.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfiltergrayscale.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterintensity.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterintensity.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterlightness.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterlightness.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfiltermirror.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfiltermirror.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterquantize.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterquantize.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresize.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresize.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizebilinear.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizebilinear.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizebox.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizebox.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizegaussian.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizegaussian.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizehamming.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizehamming.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterrotate.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterrotate.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterthreshold.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterthreshold.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfiltervideoinvert.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfiltervideoinvert.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plhsvconvert.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plhsvconvert.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pliff85dec.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pliff85dec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plinplacefilter.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plinplacefilter.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pljpegdec.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pljpegdec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pljpegenc.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pljpegenc.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plmemsink.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plmemsink.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plmemsrc.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plmemsrc.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plobject.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plobject.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpcxdec.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpcxdec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpgmdec.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpgmdec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpicdec.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpicdec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpicenc.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpicenc.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpictdec.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpictdec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpixelformat.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpixelformat.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpngdec.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpngdec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpngenc.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpngenc.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plppmdec.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plppmdec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpsddec.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpsddec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\win\paintlib\plressrc.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\win\paintlib\plressrc.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plsgidec.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plsgidec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plsubbmp.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plsubbmp.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pltgadec.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pltgadec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pltiffdec.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pltiffdec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pltiffenc.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pltiffenc.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pltiffencex.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pltiffencex.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\win\paintlib\plwemfdec.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\win\paintlib\plwemfdec.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\win\paintlib\plwinbmp.cpp
+SOURCE=..\..\..\src\thirdparty\common\paintlib\win\paintlib\plwinbmp.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\tif_msrc.c
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\tif_msrc.c
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -799,383 +799,383 @@ SOURCE=..\..\src\thirdparty\common\paintlib\common\tif_msrc.c
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\PaintLib.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\PaintLib.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\PaintLibSelectLib.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\PaintLibSelectLib.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\config.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\config.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\jmemdest.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\jmemdest.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\jmemsrc.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\jmemsrc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\pl2passscale.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\pl2passscale.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\win\paintlib\plStreamSink.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\win\paintlib\plStreamSink.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\planybmp.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\planybmp.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\planydec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\planydec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plbitmap.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plbitmap.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plbmpbase.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plbmpbase.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plbmpdec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plbmpdec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plbmpenc.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plbmpenc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plbmpinfo.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plbmpinfo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plcontribdefs.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plcontribdefs.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plcountedpointer.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plcountedpointer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pldatasink.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pldatasink.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pldatasrc.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pldatasrc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pldebug.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pldebug.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pldecoderfactory.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pldecoderfactory.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\win\paintlib\pldibsect.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\win\paintlib\pldibsect.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plexcept.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plexcept.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plexif.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plexif.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plfilesink.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plfilesink.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plfilesrc.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plfilesrc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilter.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilter.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfiltercolorize.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfiltercolorize.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfiltercontrast.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfiltercontrast.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfiltercrop.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfiltercrop.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterfill.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterfill.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterfillrect.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterfillrect.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterflip.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterflip.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterfliprgb.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterfliprgb.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfiltergetalpha.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfiltergetalpha.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfiltergrayscale.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfiltergrayscale.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterintensity.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterintensity.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterlightness.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterlightness.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfiltermirror.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfiltermirror.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterpixel.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterpixel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterquantize.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterquantize.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresize.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresize.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizebilinear.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizebilinear.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizebox.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizebox.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizegaussian.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizegaussian.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizehamming.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterresizehamming.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterrotate.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterrotate.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfilterthreshold.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfilterthreshold.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plfiltervideoinvert.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plfiltervideoinvert.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plgifdec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plgifdec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plhsvconvert.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plhsvconvert.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pliff85.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pliff85.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pliff85dec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pliff85dec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\Filter\plinplacefilter.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\Filter\plinplacefilter.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pljpegdec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pljpegdec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pljpegenc.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pljpegenc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plmemsink.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plmemsink.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plmemsrc.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plmemsrc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plobject.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plobject.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\ploptable.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\ploptable.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpaintlibdefs.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpaintlibdefs.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpcx.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpcx.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpcxdec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpcxdec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpgm.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpgm.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpgmdec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpgmdec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpicdec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpicdec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpicenc.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpicenc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpictdec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpictdec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpixel16.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpixel16.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpixel24.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpixel24.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpixel32.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpixel32.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpixel8.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpixel8.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpixeldefs.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpixeldefs.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpixelformat.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpixelformat.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpngdec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpngdec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpngenc.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpngenc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpoint.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpoint.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plppm.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plppm.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plppmdec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plppmdec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plprognot.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plprognot.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plpsddec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plpsddec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plrect.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plrect.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\win\paintlib\plressrc.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\win\paintlib\plressrc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plsgidec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plsgidec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plsubbmp.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plsubbmp.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pltga.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pltga.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pltgadec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pltgadec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pltiffdec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pltiffdec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pltiffenc.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pltiffenc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\pltiffencex.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\pltiffencex.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plurlsrc.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plurlsrc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\win\paintlib\plwemfdec.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\win\paintlib\plwemfdec.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\win\paintlib\plwinbmp.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\win\paintlib\plwinbmp.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\plwindefs.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\plwindefs.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\qdraw.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\qdraw.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\thirdparty\common\paintlib\common\tif_msrc.h
+SOURCE=..\..\..\src\thirdparty\common\paintlib\common\tif_msrc.h
 # End Source File
 # End Group
 # End Target
