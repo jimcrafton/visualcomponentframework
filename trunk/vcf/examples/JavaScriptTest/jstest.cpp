@@ -90,8 +90,8 @@ public:
 class HermesTheFleet : public Object {
 public:
 
-	DELEGATE(StateChanged);
-	DELEGATE(RunningLaps);
+	DELEGATE(EventDelegate,StateChanged);
+	DELEGATE(EventDelegate,RunningLaps);
 
 
 	HermesTheFleet():running_(false),numLaps_(1){}
@@ -104,12 +104,12 @@ public:
 		running_ = val;
 
 		Event e(this,0);
-		StateChanged.fireEvent(&e);
+		StateChanged(&e);
 
 		if ( running() ) {
 			for (int i=0;i<numLaps();i++ ) {
 				Event e2(this,0);
-				RunningLaps.fireEvent(&e2);
+				RunningLaps(&e2);
 				System::sleep(100);
 			}
 		}
@@ -123,7 +123,7 @@ public:
 		numLaps_ = val;
 
 		Event e(this,0);
-		StateChanged.fireEvent(&e);
+		StateChanged(&e);
 	}
 protected:
 	bool running_;
@@ -182,8 +182,8 @@ int main( int argc, char** argv ){
         JavaScriptEngine::initialize();
 
         // Add an event handler.
-        EventHandler* errHandler = new StaticEventHandlerInstance<Event>( &OnError );
-		EventHandler* scriptHandler = new StaticEventHandlerInstance<Event>( &OnScriptExec );
+        EventHandler* errHandler = new EventHandler( &OnError );
+		EventHandler* scriptHandler = new EventHandler( &OnScriptExec );
 
         JavaScriptEngine::engine().ErrorOccurred += errHandler;
 		JavaScriptEngine::engine().ScriptExecuting += scriptHandler;
