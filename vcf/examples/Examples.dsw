@@ -879,6 +879,33 @@ Package=<4>
 
 ###############################################################################
 
+Project: "JavaScriptKit"=..\build\vc60\JavaScriptKit\JavaScriptKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "JavaScriptKitDLL"=..\build\vc60\JavaScriptKit\JavaScriptKitDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Labels"=.\Labels\Labels.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1505,6 +1532,21 @@ Package=<5>
 
 Package=<4>
 {{{
+}}}
+
+###############################################################################
+
+Project: "jstest"=.\JavaScriptTest\jstest.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name JavaScriptKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
