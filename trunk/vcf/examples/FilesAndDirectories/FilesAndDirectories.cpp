@@ -74,16 +74,16 @@ int main( int argc, char** argv ){
 	}
 
 
-
+	{
 	/**
 	Create a file and write some text to it
-	*/
-	FileOutputStream fs(fileName);
-	String text = "here's some text to put in the file";
-	fs << text;
-	System::println( Format("FileOutputStream current size: %d") % fs.getSize() );
-	fs.close();
-
+		*/
+		FileOutputStream fs(fileName);
+		String text = "here's some text to put in the file";
+		fs << text;
+		System::println( Format("FileOutputStream current size: %d") % fs.getSize() );
+		fs.close();
+	}
 
 
 	/**
@@ -103,6 +103,17 @@ int main( int argc, char** argv ){
 			FilePath::getDirectorySeparator() +
 			fileName.getBaseName() + "-copy" + fileName.getExtension() );
 
+	}
+
+
+	{
+		File newFile;
+		newFile.create( "HelloWorld.txt", File::ofReadWrite );
+		//newFile.open( "HelloWorld.txt" );//, File::ofReadWrite );
+		//String text = "here's some text to put in the file";
+		//FileOutputStream* fos = newFile.getOutputStream();
+		//(*fos) << text;
+		//fos->free();
 	}
 
 

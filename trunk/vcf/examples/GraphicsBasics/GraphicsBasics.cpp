@@ -142,6 +142,28 @@ public:
 		y += 50;
 
 		ctx->textAt( x, y, "Here's some simple text" );
+
+
+		
+		BezierCurve path;
+		path.moveTo(50,50);
+		path.lineTo(50,100);
+		path.lineTo(100,100);
+		path.lineTo(100,50);
+		path.lineTo(50,50);
+		// the above produces a rectangle
+		// but i continue drawing over the rectangle:
+		path.lineTo(75,75);
+		path.lineTo(100,50);
+		// which should have no effect, but it does...
+
+		BasicFill fill;
+		Color color(0.0,0.0,0.0);
+		fill.setColor(&color);
+		// c is the current graphicsContext
+		ctx->setCurrentFill(&fill);
+		ctx->draw(&path);
+		ctx->setCurrentFill(NULL);
 	}
 };
 

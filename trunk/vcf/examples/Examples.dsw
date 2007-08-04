@@ -429,6 +429,9 @@ Package=<4>
     Project_Dep_Name FrameStyles
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Gradients
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name GraphicsAndMouseMoves
     End Project Dependency
     Begin Project Dependency
@@ -495,6 +498,12 @@ Package=<4>
     Project_Dep_Name Pixels
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name PopupMenus
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PopupWindows
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Printing
     End Project Dependency
     Begin Project Dependency
@@ -508,6 +517,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Reflection
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RegExTest
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Resources
@@ -582,7 +594,13 @@ Package=<4>
     Project_Dep_Name VisualFormFiles
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Win32Integration
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name WorkingWithEnumerators
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name jstest
     End Project Dependency
 }}}
 
@@ -1417,6 +1435,18 @@ Package=<4>
 ###############################################################################
 
 Project: "ThreadBasics"=.\ThreadBasics\ThreadBasics.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ThreadMeth"=.\ThreadMethods\ThreadMethods.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

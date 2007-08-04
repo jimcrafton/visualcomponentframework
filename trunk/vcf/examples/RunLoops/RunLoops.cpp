@@ -62,9 +62,9 @@ void example1()
 {
 	RunLoop* runLoop = ThreadManager::getCurrentRunLoop();
 	
-	StaticEventHandlerInstance<Event> ev(Timer1);
-	StaticEventHandlerInstance<Event> ev2(Timer2);
-	StaticEventHandlerInstance<Event> ev3(InnerLoop);
+	EventHandler ev(Timer1);
+	EventHandler ev2(Timer2);
+	EventHandler ev3(InnerLoop);
 
 	uint32 timerID = runLoop->addTimer( "", NULL, &ev, 1000 );
 	uint32 timerID2 = runLoop->addTimer( "", NULL, &ev2, 3000 );

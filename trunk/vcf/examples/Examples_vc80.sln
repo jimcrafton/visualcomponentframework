@@ -1,5 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+# Visual C++ Express 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Accelerators", "Accelerators\Accelerators_vc80.vcproj", "{B562B243-DE36-4AF0-98A1-C834F2460C30}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Actions", "Actions\Actions_vc80.vcproj", "{5FDE7645-18AB-4B91-A5A6-709E73B3D293}"
@@ -314,6 +314,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WorkingWithEnumerators", "W
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libAGG", "..\build\vc80\GraphicsKit\libAGG_vc80.vcproj", "{9C900D7C-DDE4-4E0F-B5DE-A326C39607DC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibJPEG", "..\src\thirdparty\common\LibJPEG\LibJPEG_vc80.vcproj", "{B264CF26-2709-4B51-8055-CF1015A43EA0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibPNG", "..\src\thirdparty\common\LibPNG\LibPNG_vc80.vcproj", "{B9237E8C-4A91-4C0E-A2E3-902A07B6EC54}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZLib", "..\src\thirdparty\common\ZLib\ZLib_vc80.vcproj", "{88528690-79C3-4094-96F6-0EEA195F0E56}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Pixels", "Pixels\Pixels_vc80.vcproj", "{F40BF1A2-1977-4DF8-8657-46E9A445DD94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -466,7 +474,6 @@ Global
 		{177137B4-88BC-4398-ACC0-91DC097AA54D}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
 		{177137B4-88BC-4398-ACC0-91DC097AA54D}.Release|Win32.ActiveCfg = Release|Win32
 		{298C4E5D-293B-43FC-A61F-BF33596B5637}.Debug|Win32.ActiveCfg = Debug|Win32
-		{298C4E5D-293B-43FC-A61F-BF33596B5637}.Debug|Win32.Build.0 = Debug|Win32
 		{298C4E5D-293B-43FC-A61F-BF33596B5637}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
 		{298C4E5D-293B-43FC-A61F-BF33596B5637}.Release|Win32.ActiveCfg = Release|Win32
 		{DDD77842-B01B-4154-9209-8F8432332466}.Debug|Win32.ActiveCfg = Debug|Win32
@@ -611,6 +618,30 @@ Global
 		{9C900D7C-DDE4-4E0F-B5DE-A326C39607DC}.Debug|Win32.Build.0 = Debug|Win32
 		{9C900D7C-DDE4-4E0F-B5DE-A326C39607DC}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
 		{9C900D7C-DDE4-4E0F-B5DE-A326C39607DC}.Release|Win32.ActiveCfg = Release|Win32
+		{B264CF26-2709-4B51-8055-CF1015A43EA0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B264CF26-2709-4B51-8055-CF1015A43EA0}.Debug|Win32.Build.0 = Debug|Win32
+		{B264CF26-2709-4B51-8055-CF1015A43EA0}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
+		{B264CF26-2709-4B51-8055-CF1015A43EA0}.Generate YY and LL files|Win32.Build.0 = Release|Win32
+		{B264CF26-2709-4B51-8055-CF1015A43EA0}.Release|Win32.ActiveCfg = Release|Win32
+		{B264CF26-2709-4B51-8055-CF1015A43EA0}.Release|Win32.Build.0 = Release|Win32
+		{B9237E8C-4A91-4C0E-A2E3-902A07B6EC54}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B9237E8C-4A91-4C0E-A2E3-902A07B6EC54}.Debug|Win32.Build.0 = Debug|Win32
+		{B9237E8C-4A91-4C0E-A2E3-902A07B6EC54}.Generate YY and LL files|Win32.ActiveCfg = Debug|Win32
+		{B9237E8C-4A91-4C0E-A2E3-902A07B6EC54}.Generate YY and LL files|Win32.Build.0 = Debug|Win32
+		{B9237E8C-4A91-4C0E-A2E3-902A07B6EC54}.Release|Win32.ActiveCfg = Release|Win32
+		{B9237E8C-4A91-4C0E-A2E3-902A07B6EC54}.Release|Win32.Build.0 = Release|Win32
+		{88528690-79C3-4094-96F6-0EEA195F0E56}.Debug|Win32.ActiveCfg = Debug|Win32
+		{88528690-79C3-4094-96F6-0EEA195F0E56}.Debug|Win32.Build.0 = Debug|Win32
+		{88528690-79C3-4094-96F6-0EEA195F0E56}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
+		{88528690-79C3-4094-96F6-0EEA195F0E56}.Generate YY and LL files|Win32.Build.0 = Release|Win32
+		{88528690-79C3-4094-96F6-0EEA195F0E56}.Release|Win32.ActiveCfg = Release|Win32
+		{88528690-79C3-4094-96F6-0EEA195F0E56}.Release|Win32.Build.0 = Release|Win32
+		{F40BF1A2-1977-4DF8-8657-46E9A445DD94}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F40BF1A2-1977-4DF8-8657-46E9A445DD94}.Debug|Win32.Build.0 = Debug|Win32
+		{F40BF1A2-1977-4DF8-8657-46E9A445DD94}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
+		{F40BF1A2-1977-4DF8-8657-46E9A445DD94}.Generate YY and LL files|Win32.Build.0 = Release|Win32
+		{F40BF1A2-1977-4DF8-8657-46E9A445DD94}.Release|Win32.ActiveCfg = Release|Win32
+		{F40BF1A2-1977-4DF8-8657-46E9A445DD94}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

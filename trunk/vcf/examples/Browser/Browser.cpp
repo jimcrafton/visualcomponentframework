@@ -178,9 +178,6 @@ public:
 		bool result = Application::initRunningApplication();
 		
 		
-
-
-
 		Window* mainWindow = new Window();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( 100.0, 100.0, 500.0, 500.0 );

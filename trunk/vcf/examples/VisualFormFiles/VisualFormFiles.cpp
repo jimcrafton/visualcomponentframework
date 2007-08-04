@@ -9,7 +9,7 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ControlsKit.h"
-#include "vcf/ApplicationKit/VFFInputStream.h"
+#include "vcf/FoundationKit/VFFInputStream.h"
 
 /**
 Include this file to access the various RTTI macros

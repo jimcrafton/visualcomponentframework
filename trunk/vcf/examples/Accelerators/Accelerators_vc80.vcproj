@@ -4,6 +4,7 @@
 	Version="8.00"
 	Name="Accelerators"
 	ProjectGUID="{B562B243-DE36-4AF0-98A1-C834F2460C30}"
+	RootNamespace="Accelerators"
 	>
 	<Platforms>
 		<Platform
