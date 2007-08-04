@@ -14,7 +14,7 @@
     
 
     <add-formats>
-        borland,mingw,msvc,msvc6prj,gnu,msvs2005prj
+        borland,mingw,gnu,msvc,msvc6prj,msvs2005prj
     </add-formats>
 
 

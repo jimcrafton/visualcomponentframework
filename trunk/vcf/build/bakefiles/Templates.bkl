@@ -69,7 +69,7 @@
                 <sys-lib>glu32</sys-lib>
             </if>
 
-            <if cond="FORMAT in ['msvc','msvc6prj','borland']">
+            <if cond="FORMAT in ['msvc','msvc6prj','msvs2005prj','borland']">
                 <sys-lib>oleacc</sys-lib>
                 <sys-lib>urlmon</sys-lib>
             </if>
@@ -200,7 +200,7 @@
 
     <template id="vcf_exe_gui" template="vcf_exe">
         <app-type>gui</app-type>
-        <if cond="FORMAT in ['msvc','msvc6prj']">
+        <if cond="FORMAT in ['msvc','msvc6prj','msvs2005prj']">
             <ldflags>/ENTRY:"mainCRTStartup"</ldflags>
         </if>
         <if cond="FORMAT=='borland'">
