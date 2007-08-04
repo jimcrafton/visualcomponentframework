@@ -24,7 +24,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc80_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc80_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc80_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc80_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc80_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc80_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc80_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc80_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -41,7 +41,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc80_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc80.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc80.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc80.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc80_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc80.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc80.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc80.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -58,7 +58,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc80_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc80_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc80_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc80_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc80_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc80_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc80_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc80_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -75,7 +75,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc80_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc80.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc80.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc80.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc80_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc80.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc80.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc80.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -92,7 +92,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc71_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc71_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc71_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc71_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc71_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc71_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc71_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc71_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -109,7 +109,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc71_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc71.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc71.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc71.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc71_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc71.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc71.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc71.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -126,7 +126,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc71_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc71_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc71_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc71_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc71_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc71_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc71_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc71_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -143,7 +143,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc71_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc71.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc71.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc71.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc71_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc71.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc71.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc71.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -160,7 +160,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc70_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc70_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc70_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc70_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc70_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc70_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc70_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc70_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -177,7 +177,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc70_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc70.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc70.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc70.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc70_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc70.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc70.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc70.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -194,7 +194,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc70_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc70_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc70_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc70_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc70_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc70_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc70_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc70_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -211,7 +211,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc70_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc70.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc70.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc70.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc70_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc70.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc70.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc70.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -228,7 +228,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc6_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc6_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc6_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc6_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc6_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc6_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -245,7 +245,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc6.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc6.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc6.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc6.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc6.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc6.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -262,7 +262,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc6_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc6_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc6_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc6_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc6_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc6_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -279,7 +279,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc6.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc6.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc6.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_vc6.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_vc6.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_vc6.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -296,7 +296,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -313,7 +313,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -330,7 +330,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>
@@ -347,7 +347,7 @@
 			<Tool Name="VCManagedResourceCompilerTool"/>
 			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="XP_WIN;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;EXPORT_JS_API"/>
 			<Tool Name="VCPreLinkEventTool"/>
-			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool AdditionalDependencies="..\..\..\lib\fdlibm_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\js.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\js.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\js.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
 			<Tool Name="VCALinkTool"/>
 			<Tool Name="VCXDCMakeTool"/>
 			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_js_dll.bsc" SuppressStartupBanner="true"/>

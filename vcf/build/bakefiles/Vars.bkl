@@ -97,7 +97,7 @@
     precompiled header file.
     -->
     <set var="PRECOMPILED">0</set>
-    <if cond="FORMAT in ['msvc','msvc6prj']">
+    <if cond="FORMAT in ['msvc','msvc6prj','msvs2005prj']">
         <set var="PRECOMPILED">1</set>
     </if>
 
