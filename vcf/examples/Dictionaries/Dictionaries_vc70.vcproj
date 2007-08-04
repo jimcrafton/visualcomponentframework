@@ -21,7 +21,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_ROOT)/src"
+				AdditionalIncludeDirectories="$(VCF_ROOT)\src\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;USE_FOUNDATIONKIT_DLL"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -42,7 +42,7 @@
 				OutputFile=".\vc70\Debug\Dictionaries_vc70.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(VCF_ROOT)/lib"
+				AdditionalLibraryDirectories="$(VCF_ROOT)\lib\"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\vc70\Debug\Dictionaries_vc70.pdb"
 				SubSystem="1"/>
@@ -80,7 +80,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_ROOT)/src"
+				AdditionalIncludeDirectories="$(VCF_ROOT)\src\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;USE_FOUNDATIONKIT_DLL"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -101,7 +101,7 @@
 				OutputFile=".\vc70\Release\Dictionaries_vc70.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(VCF_ROOT)/lib"
+				AdditionalLibraryDirectories="$(VCF_ROOT)\lib\"
 				ProgramDatabaseFile=".\vc70\Release\Dictionaries_vc70.pdb"
 				SubSystem="1"/>
 			<Tool

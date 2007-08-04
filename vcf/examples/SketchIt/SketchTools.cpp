@@ -273,18 +273,23 @@ void SelectTool::onMouseMove( VCF::MouseEvent* e )
 
 		if ( NULL != shape ) {
 
-
+			double x = dragPoint_.x_ - startDragPoint_.x_;
+			double y = dragPoint_.y_ - startDragPoint_.y_;
 			Matrix2D m1;
-			m1.translate( dragPoint_.x_ - startDragPoint_.x_,
-							dragPoint_.y_ - startDragPoint_.y_ );
+			m1.translate( x, y );			
 
 			m1.invert();
+
+			StringUtils::trace( Format( "translate %.4f, %.4f m.x %.3f m.y %.3f\n") % x % y % m1.getTranslateX() % m1.getTranslateY() );
 			shape->polygon_.applyTransform( m1 );
 
 
 			Matrix2D m2;
-			m2.translate( e->getPoint()->x_ - startDragPoint_.x_,
-							e->getPoint()->y_ - startDragPoint_.y_ );
+			x = e->getPoint()->x_ - startDragPoint_.x_;
+			y = e->getPoint()->y_ - startDragPoint_.y_;
+			m2.translate( x, y );
+
+			StringUtils::trace( Format( "translate %.4f, %.4f m.x %.3f m.y %.3f\n") % x % y % m2.getTranslateX() % m2.getTranslateY() );
 
 			shape->polygon_.applyTransform( m2 );
 			doc->updateAllViews();

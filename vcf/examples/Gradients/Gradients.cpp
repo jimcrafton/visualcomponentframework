@@ -283,9 +283,9 @@ public:
 
 		rect.offset( -3, -3 );
 
-		ctx->setColor( &Color("blue") );
-		ctx->rectangle( &rect );
-		ctx->fillPath();
+		//ctx->setColor( &Color("blue") );
+		//ctx->rectangle( &rect );
+		//ctx->fillPath();
 
 		ctx->setCurrentFill( NULL );
 		ctx->setCompositingMode( GraphicsContext::cmSource );
@@ -317,7 +317,109 @@ public:
 		
 		ctx->drawImage( logoRect.getTopLeft(), logo, false );
 		ctx->renderImages();
+/*
+<<<<<<< .mine
+		ShadowFill logoDropShad;		
+		logoDropShad.setAlpha( 1 );
+		logoDropShad.setRadius( 0 );
+		//logoDropShad.setColor( &Color("black") );
 
+		ctx->setCurrentFill( &logoDropShad );
+
+
+		logoRect.offset( -100, -logoRect.top_ );
+
+		
+		curve.clear();		
+		curve.curve( logoRect.left_+25.5, logoRect.top_+17.5, 
+						logoRect.left_+54,logoRect.top_+8.5, 
+						logoRect.left_+47.25,logoRect.top_+32.5, 
+						logoRect.left_+71.5,logoRect.top_+22 );
+		curve.lineTo( logoRect.left_+59.5, logoRect.top_+64.5 );
+		curve.curve( logoRect.left_+59.5,logoRect.top_+64.5, 
+						logoRect.left_+34,logoRect.top_+75.25, 
+						logoRect.left_+38.25,logoRect.top_+51.75, 
+						logoRect.left_+13.5,logoRect.top_+59 );
+		curve.close();
+		ctx->draw(&curve);
+*/
+
+		logoRect.offset( 100, 0 );
+
+		//logoRect.setRect(0,0,0,0);
+
+		//Matrix2D m;
+		//m *= Matrix2D::translation( -10, -40 );
+		//ctx->setCurrentTransform( m );
+
+		BasicFill bf2;		
+		bf2.setColor( &Color("black") );
+
+		ctx->setCurrentFill( &bf );
+		curve.clear();		
+		curve.curve( logoRect.left_+25.5, logoRect.top_+17.5, 
+						logoRect.left_+54,logoRect.top_+8.5, 
+						logoRect.left_+47.25,logoRect.top_+32.5, 
+						logoRect.left_+71.5,logoRect.top_+22 );
+		curve.lineTo( logoRect.left_+59.5, logoRect.top_+64.5 );
+		curve.curve( logoRect.left_+59.5,logoRect.top_+64.5, 
+						logoRect.left_+34,logoRect.top_+75.25, 
+						logoRect.left_+38.25,logoRect.top_+51.75, 
+						logoRect.left_+13.5,logoRect.top_+59 );
+		curve.close();
+		ctx->draw(&curve);
+
+
+		/*
+		Image* gri = GraphicsToolkit::createImage( 100, 100, Image::itGrayscale );
+		
+		{
+			ImageContext ictx = gri;
+
+			ictx->setColor(&Color("white"));
+			ictx->circle( 20, 20, 20 );
+			ictx->fillPath();
+
+			Image* im = GraphicsToolkit::createImage( 100, 100 );
+			{
+				ImageContext ictx2 = im;
+				ictx2->setRenderArea(Rect(0,0,100,100));
+				//ictx2->setViewableBounds( Rect(0,0,100,100) );
+
+				Circle c;
+				c.circle(Point(20,20),20);
+				BasicFill b;
+				b.setColor(&Color("blue"));
+				ictx2->setCurrentFill(&b);
+				ictx2->draw(&c);
+
+				//ictx2->bitBlit( 0, 0, ictx2->getRenderArea() );
+				//ctx->bitBlit( 500, 300, ictx2->getRenderArea() );
+				//ictx->bitBlit( 50, 50, ictx2->getRenderArea() );
+
+
+				ictx2->flushRenderArea();
+				
+			}
+
+			//ctx->bitBlit( 500, 300, im );
+			
+
+			ictx->bitBlit( 50, 50, im );
+
+			delete im;
+		}
+
+		ctx->drawImage( 300, 100, gri );
+
+		delete gri;
+		*/
+
+
+		ctx->setCurrentFill( NULL );
+
+=======
+>>>>>>> .r3047
 	}
 
 

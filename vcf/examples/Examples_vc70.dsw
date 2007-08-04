@@ -429,6 +429,9 @@ Package=<4>
     Project_Dep_Name FrameStyles
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Gradients
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name GraphicsAndMouseMoves
     End Project Dependency
     Begin Project Dependency
@@ -495,6 +498,12 @@ Package=<4>
     Project_Dep_Name Pixels
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name PopupMenus
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PopupWindows
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Printing
     End Project Dependency
     Begin Project Dependency
@@ -508,6 +517,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Reflection
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RegExTest
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Resources
@@ -582,7 +594,193 @@ Package=<4>
     Project_Dep_Name VisualFormFiles
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Win32Integration
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name WorkingWithEnumerators
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name aa_demo
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name aa_test
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name alpha_gradient
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name alpha_mask
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name alpha_mask2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name alpha_mask3
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name bezier_div
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name bspline
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name circles
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name component_rendering
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name compositing
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name compositing2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name conv_contour
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name conv_dash_marker
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name conv_stroke
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name distortions
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name flash_rasterizer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name flash_rasterizer2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name freetype_test
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name gamma_correction
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name gamma_ctrl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name gamma_tuner
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name gouraud
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name gouraud_mesh
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name gpc_test
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name graph_test
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name idea
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name image1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name image_alpha
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name image_filters
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name image_filters2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name image_fltr_graph
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name image_perspective
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name image_resample
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name image_transforms
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name jstest
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name line_patterns
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name line_patterns_clip
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name lion
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name lion_lens
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name lion_outline
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name mol_view
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name multi_clip
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name pattern_fill
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name pattern_perspective
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name pattern_resample
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name perspective
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name polymorphic_renderer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name pure_api
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name raster_text
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name rasterizers
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name rasterizers2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name rounded_rect
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name scanline_boolean
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name scanline_boolean2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name simple_blur
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name svg_test
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name trans_curve1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name trans_curve2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name trans_polar
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name truetype_test
     End Project Dependency
 }}}
 
@@ -625,6 +823,18 @@ Package=<4>
 ###############################################################################
 
 Project: "FrameStyles"=".\FrameStyles\FrameStyles_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Gradients"=".\Gradients\Gradients_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1071,6 +1281,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "PopupMenus"=".\PopupMenus\PopupMenus_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "PopupWindows"=".\PopupWindows\PopupWindows_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Printing"=".\Printing\Printing_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1120,6 +1354,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Reflection"=".\Reflection\Reflection_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RegExTest"=".\RegExTest\RegExTest_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1449,6 +1695,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Win32Integration"=".\Win32Integration\Win32Integration_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "WorkingWithEnumerators"=".\WorkingWithEnumerators\WorkingWithEnumerators_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1461,6 +1719,438 @@ Package=<4>
 
 ###############################################################################
 
+Project: "aa_demo"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\aa_demo\aa_demo_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "aa_test"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\aa_test\aa_test_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "alpha_gradient"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\alpha_gradient\alpha_gradient_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "alpha_mask"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\alpha_mask\alpha_mask_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "alpha_mask2"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\alpha_mask2\alpha_mask2_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "alpha_mask3"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\alpha_mask3\alpha_mask3_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "bezier_div"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\bezier_div\bezier_div_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "bspline"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\bspline\bspline_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "circles"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\circles\circles_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "component_rendering"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\component_rendering\component_rendering_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "compositing"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\compositing\compositing_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "compositing2"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\compositing2\compositing2_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "conv_contour"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\conv_contour\conv_contour_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "conv_dash_marker"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\conv_dash_marker\conv_dash_marker_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "conv_stroke"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\conv_stroke\conv_stroke_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "distortions"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\distortions\distortions_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "flash_rasterizer"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\flash_rasterizer\flash_rasterizer_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "flash_rasterizer2"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\flash_rasterizer2\flash_rasterizer2_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "freetype_test"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\freetype_test\freetype_test_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "gamma_correction"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\gamma_correction\gamma_correction_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "gamma_ctrl"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\gamma_ctrl\gamma_ctrl_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "gamma_tuner"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\gamma_tuner\gamma_tuner_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "gouraud"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\gouraud\gouraud_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "gouraud_mesh"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\gouraud_mesh\gouraud_mesh_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "gpc_test"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\gpc_test\gpc_test_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "graph_test"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\graph_test\graph_test_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "idea"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\idea\idea_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "image1"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\image1\image1_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "image_alpha"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\image_alpha\image_alpha_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "image_filters"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\image_filters\image_filters_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "image_filters2"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\image_filters2\image_filters2_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "image_fltr_graph"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\image_fltr_graph\image_fltr_graph_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "image_perspective"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\image_perspective\image_perspective_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "image_resample"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\image_resample\image_resample_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "image_transforms"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\image_transforms\image_transforms_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "jstest"=".\JavaScriptTest\jstest_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "libAGG"="..\build\vc70\GraphicsKit\libAGG_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1474,6 +2164,306 @@ Package=<4>
 ###############################################################################
 
 Project: "libAGG"="..\build\vc70\GraphicsKit\libAGG_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "line_patterns"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\line_patterns\line_patterns_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "line_patterns_clip"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\line_patterns_clip\line_patterns_clip_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "lion"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\lion\lion_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "lion_lens"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\lion_lens\lion_lens_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "lion_outline"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\lion_outline\lion_outline_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "mol_view"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\mol_view\mol_view_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "multi_clip"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\multi_clip\multi_clip_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "pattern_fill"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\pattern_fill\pattern_fill_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "pattern_perspective"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\pattern_perspective\pattern_perspective_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "pattern_resample"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\pattern_resample\pattern_resample_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "perspective"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\perspective\perspective_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "polymorphic_renderer"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\polymorphic_renderer\polymorphic_renderer_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "pure_api"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\pure_api\pure_api_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "raster_text"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\raster_text\raster_text_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "rasterizers"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\rasterizers\rasterizers_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "rasterizers2"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\rasterizers2\rasterizers2_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "rounded_rect"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\rounded_rect\rounded_rect_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "scanline_boolean"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\scanline_boolean\scanline_boolean_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "scanline_boolean2"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\scanline_boolean2\scanline_boolean2_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "simple_blur"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\simple_blur\simple_blur_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "svg_test"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\svg_test\svg_test_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "trans_curve1"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\trans_curve1\trans_curve1_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "trans_curve2"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\trans_curve2\trans_curve2_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "trans_polar"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\trans_polar\trans_polar_vc70.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "truetype_test"="..\src\thirdparty\common\agg\agg-2.4\examples\win32_api\truetype_test\truetype_test_vc70.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
