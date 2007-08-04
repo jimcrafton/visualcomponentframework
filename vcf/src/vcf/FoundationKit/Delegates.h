@@ -397,7 +397,7 @@ public:
 
 			returnObject_->functionFinished( res_, internalRunnable_ );
 
-			res_->internal_removeRunnable( this );
+			res_->internal_removeRunnable( internalRunnable_ );
 			return true;
 		}
 
@@ -1939,23 +1939,25 @@ public:
 
 		results.clear();
 
-		if ( !functions.empty() ) {
-			
-			size_t i = 0;
-			results.resize( functions.size() );
-			
-			std::vector<CallBack*>::iterator it = functions.begin();
-			while ( it != functions.end() ) {
-				CallBack* cb = *it;
-				CallbackType* callBack = (CallbackType*)cb;
+		if ( NULL != functions ) {
+			if ( !functions->empty() ) {
 				
-				results[i] = callBack->invoke();
+				size_t i = 0;
+				results.resize( functions->size() );
+				
+				std::vector<CallBack*>::iterator it = functions->begin();
+				while ( it != functions->end() ) {
+					CallBack* cb = *it;
+					CallbackType* callBack = (CallbackType*)cb;
+					
+					results[i] = callBack->invoke();
 
-				++i;
-				++it;
+					++i;
+					++it;
+				}
+
+				result = results.back();
 			}
-
-			result = results.back();
 		}
 
 		return result;
@@ -1965,8 +1967,11 @@ public:
 	AsyncResult* beginInvoke( AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
-		std::vector<CallBack*>::iterator it = functions.begin();
-		while ( it != functions.end() ) {
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
+
+		std::vector<CallBack*>::iterator it = tmp.begin();
+		while ( it != tmp.end() ) {
 			CallBack* cb = *it;
 			CallbackType* callBack = (CallbackType*)cb;
 
@@ -2135,23 +2140,25 @@ public:
 
 		results.clear();
 
-		if ( !functions.empty() ) {
-			
-			size_t i = 0;
-			results.resize( functions.size() );
-			
-			std::vector<CallBack*>::iterator it = functions.begin();
-			while ( it != functions.end() ) {
-				CallBack* cb = *it;
-				CallbackType* callBack = (CallbackType*)cb;
+		if ( NULL != functions ) {
+			if ( !functions->empty() ) {
 				
-				results[i] = callBack->invoke( p1 );
-
-				++i;
-				++it;
+				size_t i = 0;
+				results.resize( functions->size() );
+				
+				std::vector<CallBack*>::iterator it = functions->begin();
+				while ( it != functions->end() ) {
+					CallBack* cb = *it;
+					CallbackType* callBack = (CallbackType*)cb;
+					
+					results[i] = callBack->invoke( p1 );
+					
+					++i;
+					++it;
+				}
+				
+				result = results.back();
 			}
-
-			result = results.back();
 		}
 
 		return result;
@@ -2161,8 +2168,11 @@ public:
 	AsyncResult* beginInvoke( P1 p1, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
-		std::vector<CallBack*>::iterator it = functions.begin();
-		while ( it != functions.end() ) {
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
+
+		std::vector<CallBack*>::iterator it = tmp.begin();
+		while ( it != tmp.end() ) {		
 			CallBack* cb = *it;
 			CallbackType* callBack = (CallbackType*)cb;
 
@@ -2323,23 +2333,25 @@ public:
 
 		results.clear();
 
-		if ( !functions.empty() ) {
-			
-			size_t i = 0;
-			results.resize( functions.size() );
-			
-			std::vector<CallBack*>::iterator it = functions.begin();
-			while ( it != functions.end() ) {
-				CallBack* cb = *it;
-				CallbackType* callBack = (CallbackType*)cb;
+		if ( NULL != functions ) {
+			if ( !functions->empty() ) {
 				
-				results[i] = callBack->invoke( p1, p2 );
-
-				++i;
-				++it;
+				size_t i = 0;
+				results.resize( functions->size() );
+				
+				std::vector<CallBack*>::iterator it = functions->begin();
+				while ( it != functions->end() ) {
+					CallBack* cb = *it;
+					CallbackType* callBack = (CallbackType*)cb;
+					
+					results[i] = callBack->invoke( p1, p2 );
+					
+					++i;
+					++it;
+				}
+				
+				result = results.back();
 			}
-
-			result = results.back();
 		}
 
 		return result;
@@ -2349,8 +2361,11 @@ public:
 	AsyncResult* beginInvoke( P1 p1, P2 p2, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
-		std::vector<CallBack*>::iterator it = functions.begin();
-		while ( it != functions.end() ) {
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
+
+		std::vector<CallBack*>::iterator it = tmp.begin();
+		while ( it != tmp.end() ) {
 			CallBack* cb = *it;
 			CallbackType* callBack = (CallbackType*)cb;
 
@@ -2524,23 +2539,25 @@ public:
 
 		results.clear();
 
-		if ( !functions.empty() ) {
-			
-			size_t i = 0;
-			results.resize( functions.size() );
-			
-			std::vector<CallBack*>::iterator it = functions.begin();
-			while ( it != functions.end() ) {
-				CallBack* cb = *it;
-				CallbackType* callBack = (CallbackType*)cb;
+		if ( NULL != functions ) {
+			if ( !functions->empty() ) {
 				
-				results[i] = callBack->invoke( p1, p2, p3 );
-
-				++i;
-				++it;
+				size_t i = 0;
+				results.resize( functions->size() );
+				
+				std::vector<CallBack*>::iterator it = functions->begin();
+				while ( it != functions->end() ) {
+					CallBack* cb = *it;
+					CallbackType* callBack = (CallbackType*)cb;
+					
+					results[i] = callBack->invoke( p1, p2, p3 );
+					
+					++i;
+					++it;
+				}
+				
+				result = results.back();
 			}
-
-			result = results.back();
 		}
 
 		return result;
@@ -2550,8 +2567,11 @@ public:
 	AsyncResult* beginInvoke( P1 p1, P2 p2, P3 p3, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
-		std::vector<CallBack*>::iterator it = functions.begin();
-		while ( it != functions.end() ) {
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
+
+		std::vector<CallBack*>::iterator it = tmp.begin();
+		while ( it != tmp.end() ) {
 			CallBack* cb = *it;
 			CallbackType* callBack = (CallbackType*)cb;
 
@@ -2733,23 +2753,25 @@ public:
 
 		results.clear();
 
-		if ( !functions.empty() ) {
-			
-			size_t i = 0;
-			results.resize( functions.size() );
-			
-			std::vector<CallBack*>::iterator it = functions.begin();
-			while ( it != functions.end() ) {
-				CallBack* cb = *it;
-				CallbackType* callBack = (CallbackType*)cb;
+		if ( NULL != functions ) {
+			if ( !functions->empty() ) {
 				
-				results[i] = callBack->invoke( p1, p2, p3, p4 );
-
-				++i;
-				++it;
+				size_t i = 0;
+				results.resize( functions->size() );
+				
+				std::vector<CallBack*>::iterator it = functions->begin();
+				while ( it != functions->end() ) {
+					CallBack* cb = *it;
+					CallbackType* callBack = (CallbackType*)cb;
+					
+					results[i] = callBack->invoke( p1, p2, p3, p4 );
+					
+					++i;
+					++it;
+				}
+				
+				result = results.back();
 			}
-
-			result = results.back();
 		}
 
 		return result;
@@ -2759,8 +2781,11 @@ public:
 	AsyncResult* beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
-		std::vector<CallBack*>::iterator it = functions.begin();
-		while ( it != functions.end() ) {
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
+
+		std::vector<CallBack*>::iterator it = tmp.begin();
+		while ( it != tmp.end() ) {
 			CallBack* cb = *it;
 			CallbackType* callBack = (CallbackType*)cb;
 
@@ -2949,23 +2974,25 @@ public:
 
 		results.clear();
 
-		if ( !functions.empty() ) {
-			
-			size_t i = 0;
-			results.resize( functions.size() );
-			
-			std::vector<CallBack*>::iterator it = functions.begin();
-			while ( it != functions.end() ) {
-				CallBack* cb = *it;
-				CallbackType* callBack = (CallbackType*)cb;
+		if ( NULL != functions ) {
+			if ( !functions->empty() ) {
 				
-				results[i] = callBack->invoke( p1, p2, p3, p4, p5 );
-
-				++i;
-				++it;
+				size_t i = 0;
+				results.resize( functions->size() );
+				
+				std::vector<CallBack*>::iterator it = functions->begin();
+				while ( it != functions->end() ) {
+					CallBack* cb = *it;
+					CallbackType* callBack = (CallbackType*)cb;
+					
+					results[i] = callBack->invoke( p1, p2, p3, p4, p5 );
+					
+					++i;
+					++it;
+				}
+				
+				result = results.back();
 			}
-
-			result = results.back();
 		}
 
 		return result;
@@ -2973,10 +3000,16 @@ public:
 
 
 	AsyncResult* beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, AsyncCallback* callback ) {
-		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
+		AsyncResult* result = NULL;
 
-		std::vector<CallBack*>::iterator it = functions.begin();
-		while ( it != functions.end() ) {
+	
+		result = new AsyncResult(callback,runCallbacksAsync_);
+
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
+
+		std::vector<CallBack*>::iterator it = tmp.begin();
+		while ( it != tmp.end() ) {
 			CallBack* cb = *it;
 			CallbackType* callBack = (CallbackType*)cb;
 
@@ -2986,6 +3019,7 @@ public:
 		}
 
 		result->doWork();
+			
 
 		return result;
 	}
@@ -3174,23 +3208,25 @@ public:
 
 		results.clear();
 
-		if ( !functions.empty() ) {
-			
-			size_t i = 0;
-			results.resize( functions.size() );
-			
-			std::vector<CallBack*>::iterator it = functions.begin();
-			while ( it != functions.end() ) {
-				CallBack* cb = *it;
-				CallbackType* callBack = (CallbackType*)cb;
+		if ( NULL != functions ) {
+			if ( !functions->empty() ) {
 				
-				results[i] = callBack->invoke( p1, p2, p3, p4, p5, p6 );
-
-				++i;
-				++it;
+				size_t i = 0;
+				results.resize( functions->size() );
+				
+				std::vector<CallBack*>::iterator it = functions->begin();
+				while ( it != functions->end() ) {
+					CallBack* cb = *it;
+					CallbackType* callBack = (CallbackType*)cb;
+					
+					results[i] = callBack->invoke( p1, p2, p3, p4, p5, p6 );
+					
+					++i;
+					++it;
+				}
+				
+				result = results.back();
 			}
-
-			result = results.back();
 		}
 
 		return result;
@@ -3200,8 +3236,11 @@ public:
 	AsyncResult* beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
-		std::vector<CallBack*>::iterator it = functions.begin();
-		while ( it != functions.end() ) {
+		std::vector<CallBack*> tmp;
+		getCallbacks(tmp);
+
+		std::vector<CallBack*>::iterator it = tmp.begin();
+		while ( it != tmp.end() ) {
 			CallBack* cb = *it;
 			CallbackType* callBack = (CallbackType*)cb;
 
