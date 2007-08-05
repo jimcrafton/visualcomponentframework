@@ -183,7 +183,7 @@ public:
 	static ThreadPool* getThreadPool();
 
 
-	Delegate(): runCallbacksAsync_(false),functions(NULL) {}
+	Delegate(): functions(NULL), runCallbacksAsync_(false) {}
 
 	~Delegate() {
 		clear();

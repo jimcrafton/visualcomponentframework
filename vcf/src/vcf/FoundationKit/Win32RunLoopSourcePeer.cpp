@@ -8,7 +8,7 @@
 #include <vcf/FoundationKit/FoundationKit.h>
 #include <vcf/FoundationKit/FoundationKitPrivate.h>
 #include <vcf/FoundationKit/RunLoopSource.h>
-#include <vcf/FoundationKIt/Win32RunLoopSourcePeer.h>
+#include <vcf/FoundationKit/Win32RunLoopSourcePeer.h>
 
 using namespace VCF;
 
@@ -16,11 +16,11 @@ Win32RunLoopSourcePeer::Win32RunLoopSourcePeer( RunLoopSource* source )
     : source_( CreateEvent(NULL, TRUE, FALSE, NULL) )
     , owner_( source )
 {
-    
 }
 
 Win32RunLoopSourcePeer::~Win32RunLoopSourcePeer()
 {
+	::CloseEvent( source_ );
 }
 
 void Win32RunLoopSourcePeer::fire()

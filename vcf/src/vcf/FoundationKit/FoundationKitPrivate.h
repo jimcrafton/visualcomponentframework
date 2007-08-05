@@ -3,7 +3,7 @@
 //FoundationKitPrivate.h
 
 /*
-Copyright 2000-2004 The VCF Project.
+Copyright 2000-2007 The VCF Project.
 Please see License.txt in the top level directory
 where you installed the VCF.
 */
@@ -40,9 +40,10 @@ where you installed the VCF.
 #	include "vcf/FoundationKit/DotNetMutex.h"
 #elif defined (VCF_POSIX)
 	//pull in the linux headers here
-	#include <sys/stat.h>
-	#include <signal.h>
-	#include <semaphore.h>
+#	include <sys/stat.h>
+#	include <errno.h>
+#	include <signal.h>
+#	include <semaphore.h>
 #	include "vcf/FoundationKit/LinuxSystemToolkit.h"
 #	include "vcf/FoundationKit/LinuxPeer.h"
 #	include "vcf/FoundationKit/LinuxFilePeer.h"

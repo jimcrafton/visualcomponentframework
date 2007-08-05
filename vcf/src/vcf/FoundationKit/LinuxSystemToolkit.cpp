@@ -1,7 +1,7 @@
 //LinuxSystemToolkit.cpp
 
 /*
-Copyright 2000-2004 The VCF Project.
+Copyright 2000-2007 The VCF Project.
 Please see License.txt in the top level directory
 where you installed the VCF.
 */
@@ -16,7 +16,8 @@ where you installed the VCF.
 #include "vcf/FoundationKit/LinuxResourceBundle.h"
 #include "vcf/FoundationKit/PosixThreadManagerPeer.h"
 #include "vcf/FoundationKit/LinuxRunLoopPeer.h"
-
+#include "vcf/FoundationKit/LinuxRunLoopTimerPeer.h"
+#include "vcf/FoundationKit/LinuxRunLoopSourcePeer.h"
 
 using namespace VCF;
 
@@ -38,7 +39,17 @@ ThreadPeer* LinuxSystemToolkit::internal_createThreadPeer( Thread* thread, bool 
 
 RunLoopPeer* LinuxSystemToolkit::internal_createRunLoopPeer( RunLoop* runLoop )
 {
-    return new LinuxRunLoopPeer( runLoop );
+	return new LinuxRunLoopPeer( runLoop );
+}
+
+RunLoopTimerPeer* LinuxSystemToolkit::internal_createRunLoopTimerPeer( RunLoopTimer* timer )
+{
+	return new LinuxRunLoopTimerPeer( timer );
+}
+
+RunLoopSourcePeer* LinuxSystemToolkit::internal_createRunLoopSourcePeer( RunLoopSource* source )
+{
+	return new LinuxRunLoopSourcePeer( source );
 }
 
 ThreadManagerPeer* LinuxSystemToolkit::internal_createThreadManagerPeer()
@@ -67,8 +78,7 @@ MutexPeer* LinuxSystemToolkit::internal_createMutexPeer( Mutex* mutex )
 	return new PosixMutex();
 }
 
-ConditionPeer*
-LinuxSystemToolkit::internal_createConditionPeer( Condition* condition )
+ConditionPeer* LinuxSystemToolkit::internal_createConditionPeer( Condition* condition )
 {
 	return new PosixCondition( condition );
 }
@@ -83,8 +93,7 @@ FilePeer* LinuxSystemToolkit::internal_createFilePeer( File* file )
 	return new LinuxFilePeer( file );
 }
 
-FileStreamPeer*
-LinuxSystemToolkit::internal_createFileStreamPeer( const String& filename,
+FileStreamPeer* LinuxSystemToolkit::internal_createFileStreamPeer( const String& filename,
                                                    const FileStreamAccessType& accessType )
 {
 	return new LinuxFileStream( filename, accessType );

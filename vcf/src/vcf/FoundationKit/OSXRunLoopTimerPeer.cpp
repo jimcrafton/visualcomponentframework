@@ -8,7 +8,7 @@
 #include <vcf/FoundationKit/FoundationKit.h>
 #include <vcf/FoundationKit/FoundationKitPrivate.h>
 #include <vcf/FoundationKit/RunLoopTimer.h>
-#include <vcf/FoundationKIt/OSXRunLoopTimerPeer.h>
+#include <vcf/FoundationKit/OSXRunLoopTimerPeer.h>
 
 
 using namespace VCF;
