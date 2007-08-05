@@ -1,9 +1,9 @@
 #ifndef _VCF_LINUXPROCESSIOREDIRECTOR_H__
-#define _VCF_LINUXPROCESSIOREDIRECTOR_H__ 
+#define _VCF_LINUXPROCESSIOREDIRECTOR_H__
 //LinuxProcessIORedirector.h
 
 /*
-Copyright 2000-2004 The VCF Project.
+Copyright 2000-2007 The VCF Project.
 Please see License.txt in the top level directory
 where you installed the VCF.
 */
@@ -27,12 +27,12 @@ public:
 
 	virtual void addOutputReadyHandler( EventHandler* eventHandler )
 	{
-		outputReady_.addHandler( eventHandler );
+		outputReady_.add( eventHandler );
 	}
 
 	virtual void removeOutputReadyHandler( EventHandler* eventHandler )
 	{
-		outputReady_.removeHandler( eventHandler );
+		outputReady_.remove( eventHandler );
 	}
 
 	virtual int getProcessID()
@@ -78,7 +78,7 @@ public:
 	}
 
 	virtual uint32 terminate();
-	
+
 	virtual Waitable::WaitResult wait( uint32 milliseconds );
 
 	virtual Waitable::WaitResult wait();

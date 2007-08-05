@@ -1,7 +1,7 @@
 //LinuxRunLoopPeer.cpp
 
 /*
-Copyright 2000-2004 The VCF Project.
+Copyright 2000-2007 The VCF Project.
 Please see License.txt in the top level directory
 where you installed the VCF.
 */
@@ -9,166 +9,167 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include "vcf/FoundationKit/RunLoop.h"
+#include "vcf/FoundationKit/RunLoopTimer.h"
 #include "vcf/FoundationKit/LinuxRunLoopPeer.h"
+#include "vcf/FoundationKit/LinuxRunLoopTimerPeer.h"
+#include "vcf/FoundationKit/LinuxRunLoopSourcePeer.h"
+
+#include <sys/epoll.h>
+#include <sys/syscall.h>
 
 using namespace VCF;
 
-void LinuxRunLoopPeer::TimerNotifyHandler( sigval_t sigval )
+namespace
 {
-	// System::println(Format("TimerHandler ThreadID RunLoop %lu") % pthread_self());
-	TimerInfo* info = reinterpret_cast<TimerInfo*>( sigval.sival_ptr );
-	++info->fired_;
+	int gMaxNumOfEvents = 32;
 }
 
-LinuxRunLoopPeer::TimerInfo::TimerInfo( Object *source, EventHandler *handler, const String &mode ) :
-	source_(source),
-	handler_(handler),
-	mode_(mode),
-	fired_(0)
+LinuxRunLoopPeer::LinuxRunLoopPeer( RunLoop* runLoop )
+	: owner_( runLoop )
+	, epollfd_( ::epoll_create( gMaxNumOfEvents ) )
+	, done_( false ) 
 {
-}
+	if( epollfd_ == -1 ) {
+		throw RuntimeException( strerror( errno ) );
+	}
 
-LinuxRunLoopPeer::LinuxRunLoopPeer( RunLoop* runLoop ) :
-	runLoop_( runLoop )
-{
-	stopEvent_.stop_ = false;
+	wakeupEventfd_ = ::syscall( __NR_eventfd, 0 );
+	if( wakeupEventfd_ == -1 ) {
+		throw RuntimeException( strerror( errno ) );
+	}	
+	
+	epoll_event ep;
+	memset( &ep, 0, sizeof(epoll_event) );
+	ep.events = EPOLLIN;
+	ep.data.fd = wakeupEventfd_;
+	
+	int result = ::epoll_ctl( epollfd_, EPOLL_CTL_ADD, wakeupEventfd_, &ep );
+	if( result != 0 ) {
+		throw RuntimeException( strerror( errno ) );	
+	}	
 }
 
 LinuxRunLoopPeer::~LinuxRunLoopPeer()
 {
-	Lock lock( activeTimers_.mutex_ );
-	for(TimerMap::iterator it = activeTimers_.timers_.begin();
-		                   it != activeTimers_.timers_.end(); 
-						   ++it) {
-		TimerInfo* info  = it->second;
-		int r = timer_delete( info->timer_ );
-		VCF_ASSERT(r == 0);
-		delete info;
+	int result = ::close( epollfd_ );
+	if( result != 0 ) {
+			// some error occured, but how to handle it?
+			perror( "Couldn't close epoll file descriptor." );
 	}
 }
 
-void LinuxRunLoopPeer::run( const String& mode, const DateTime* duration )
+void LinuxRunLoopPeer::run()
 {
-	stopEvent_.stop_ = false;
-
-	DateTime current = DateTime::now();
-
-	DateTime end;
-	if ( NULL != duration ) {
-		end = *duration;
-	}
-	else {
-		end = current;
-	}
-
-	while ( true ) {
-		PostedEvent* pe = NULL;
-		{
-			Lock lock( postedEvents_.mutex_ );
-			if ( !postedEvents_.events_.empty() ) {
-				pe = postedEvents_.events_.front();
-				postedEvents_.events_.pop();
+	typedef std::vector<epoll_event> EventVec;
+	EventVec events;
+	events.resize(gMaxNumOfEvents);
+	
+	while( !done_ ) {
+		int count = ::epoll_wait( epollfd_, &events[0], events.size(), -1 );
+		if( count > 0 ) {
+			events.resize( count );
+			for( EventVec::iterator it = events.begin(); it != events.end(); ++it ) {
+				FileDescCallBackMap::iterator cit = callbackMap_.find( it->data.fd );
+				if( cit != callbackMap_.end() ) {
+					SmartPtr<Procedure>::Shared procedure = cit->second;
+					procedure->invoke();
+				}
 			}
 		}
-		if ( NULL != pe ) {
-			runLoop_->internal_processReceivedEvent( pe );
-			delete pe;
+		else if( count == 0 ) {
+			// nothing todo 
 		}
-
-		if ( stopEvent_.stop_ ) {
-			runLoop_->internal_cancelled( mode );
-			break;
-		}
-
-		if ( current > end ) {
-			runLoop_->internal_cancelled( mode );
-			break;
-		}
-
-		runLoop_->internal_executeOnce( mode );
-
-		handleTimers( mode );
-
-		current = DateTime::now();
-		if ( NULL == duration ) {
-			end = current;
+		else {
+			// some error occured, but how to handle it?
+			perror( "epoll_wait failed." );
 		}
 	}
 }
 
 void LinuxRunLoopPeer::stop()
 {
-	stopEvent_.stop_ = true;
+	done_ = true;
+	int result = ::close( epollfd_ );
+	if( result != 0 ) {
+		throw RuntimeException( strerror( errno ) );	
+	}		
 }
 
-void LinuxRunLoopPeer::postEvent( Event* event, EventHandler* handler, bool deleteHandler )
+bool LinuxRunLoopPeer::isStopped() const
 {
-	PostedEvent* pe = new PostedEvent( event, handler, deleteHandler );
-	Lock lock( postedEvents_.mutex_ );
-	postedEvents_.events_.push(pe);
+	return done_;
 }
 
-uint32 LinuxRunLoopPeer::addTimer( const String& mode, Object* source, EventHandler* handler, uint32 timeoutInMilliSeconds )
+void LinuxRunLoopPeer::addTimer( RunLoopTimerPtr::Shared timer )
 {
-	TimerInfo* info = new TimerInfo( source, handler, mode );
+    RunLoopTimerPeerPtr::Shared peer = timer->getPeer();
+    LinuxRunLoopTimerPeer *linuxPeer = static_cast<LinuxRunLoopTimerPeer*>( peer.get() );
 
-    sigevent ev;
-	ev.sigev_notify = SIGEV_THREAD;
-    ev.sigev_signo = 0;
-	ev.sigev_notify_function = &LinuxRunLoopPeer::TimerNotifyHandler;
-	ev.sigev_notify_attributes = NULL;
-	ev.sigev_value.sival_ptr = info;
+	int fd = linuxPeer->getFileDesc();
 
-	int32 err = timer_create( CLOCK_REALTIME, &ev, &info->timer_ );
-	VCF_ASSERT(err == 0);
-	uint32 timerID = (uint32)info->timer_;
-    
-    itimerspec itime;
-	itime.it_value.tv_sec  = timeoutInMilliSeconds / 1000;
-	itime.it_value.tv_nsec = ((timeoutInMilliSeconds * 1000) % 1000000) * 1000; 
-	itime.it_interval.tv_sec  = itime.it_value.tv_sec;
-	itime.it_interval.tv_nsec = itime.it_value.tv_nsec; 
-
-	err = timer_settime( info->timer_, 0, &itime, NULL );
-	VCF_ASSERT(err == 0);
-
-	info->startedAt_ = DateTime::now();
-	{
-		Lock lock( activeTimers_.mutex_ );
-		activeTimers_.timers_[timerID] = info;
+	epoll_event ep;
+	memset( &ep, 0, sizeof(epoll_event) );
+	ep.events = EPOLLIN;
+	ep.data.fd = fd;
+	
+	int result = ::epoll_ctl( epollfd_, EPOLL_CTL_ADD, fd, &ep );
+	if( result != 0 ) {
+		throw RuntimeException( strerror( errno ) );	
 	}
-    
-    return timerID;
+	
+    Procedure *callback = new ClassProcedure<LinuxRunLoopTimerPeer>(linuxPeer, &LinuxRunLoopTimerPeer::perform);    
+    callbackMap_[fd] = SmartPtr<Procedure>::Shared(callback);	
 }
 
-void LinuxRunLoopPeer::removeTimer( uint32 timerID )
+void LinuxRunLoopPeer::removeTimer( RunLoopTimerPtr::Shared timer )
 {
-	Lock lock( activeTimers_.mutex_ );
-	TimerMap::iterator it = activeTimers_.timers_.find( timerID );
-	if ( it != activeTimers_.timers_.end() ) {
-		TimerInfo* info = it->second;
-		int r = timer_delete( info->timer_ );
-		VCF_ASSERT(r == 0);
-		delete info;
-		activeTimers_.timers_.erase( it );
+    RunLoopTimerPeerPtr::Shared peer = timer->getPeer();
+    LinuxRunLoopTimerPeer *linuxPeer = static_cast<LinuxRunLoopTimerPeer*>( peer.get() );
+
+	int fd = linuxPeer->getFileDesc();
+	
+	int result = ::epoll_ctl( epollfd_, EPOLL_CTL_DEL, fd, NULL );
+	if( result != 0 ) {
+		throw RuntimeException( strerror( errno ) );
 	}
+	callbackMap_.erase( fd ) ;
 }
 
-void LinuxRunLoopPeer::handleTimers( const String& mode )
+void LinuxRunLoopPeer::addSource( RunLoopSourcePtr::Shared source )
 {
-	Lock lock( activeTimers_.mutex_ );
+    RunLoopSourcePeerPtr::Shared peer = source->getPeer();
+    LinuxRunLoopSourcePeer *linuxPeer = static_cast<LinuxRunLoopSourcePeer*>( peer.get() );
 
-	for(TimerMap::iterator it = activeTimers_.timers_.begin();
-		                   it != activeTimers_.timers_.end(); 
-						   ++it) {
-		TimerInfo& info  = *(it->second);
-		if ( info.fired_ > 0 ) {
-			--info.fired_;
-			runLoop_->internal_processTimer( info.mode_, info.source_, info.handler_ );
-		}
+	int fd = linuxPeer->getFileDesc();
+
+	epoll_event ep;
+	memset( &ep, 0, sizeof(epoll_event) );
+	ep.events = EPOLLIN;
+	ep.data.fd = fd;
+	
+	int result = ::epoll_ctl( epollfd_, EPOLL_CTL_ADD, fd, &ep );
+	if( result != 0 ) {
+		throw RuntimeException( strerror( errno ) );	
 	}
+	
+    Procedure *callback = new ClassProcedure<LinuxRunLoopSourcePeer>(linuxPeer, &LinuxRunLoopSourcePeer::perform);    
+    callbackMap_[fd] = SmartPtr<Procedure>::Shared(callback);
 }
 
+void LinuxRunLoopPeer::removeSource( RunLoopSourcePtr::Shared source )
+{
+	source->internal_cancel();
+    RunLoopSourcePeerPtr::Shared peer = source->getPeer();
+    LinuxRunLoopSourcePeer *linuxPeer = static_cast<LinuxRunLoopSourcePeer*>( peer.get() );
+
+	int fd = linuxPeer->getFileDesc();
+	
+	int result = ::epoll_ctl( epollfd_, EPOLL_CTL_DEL, fd, NULL );
+	if( result != 0 ) {
+		throw RuntimeException( strerror( errno ) );
+	}
+	callbackMap_.erase( fd ) ;	
+}
 
 /**
 $Id$

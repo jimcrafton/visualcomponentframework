@@ -3,7 +3,7 @@
 //LinuxSystemToolkit.h
 
 /*
-Copyright 2000-2004 The VCF Project.
+Copyright 2000-2007 The VCF Project.
 Please see License.txt in the top level directory
 where you installed the VCF.
 */
@@ -29,9 +29,11 @@ public:
 	/**
 	*creates a new ThreadPeer instance
 	*/
-    virtual ThreadPeer* internal_createThreadPeer( Thread* thread, bool mainThread );
+	virtual ThreadPeer* internal_createThreadPeer( Thread* thread, bool mainThread );
 
-    virtual RunLoopPeer* internal_createRunLoopPeer( RunLoop* runLoop );
+	virtual RunLoopPeer* internal_createRunLoopPeer( RunLoop* runLoop );
+	virtual RunLoopTimerPeer* internal_createRunLoopTimerPeer( RunLoopTimer* timer );
+	virtual RunLoopSourcePeer* internal_createRunLoopSourcePeer( RunLoopSource* source );
 
     virtual ThreadManagerPeer* internal_createThreadManagerPeer();
 
