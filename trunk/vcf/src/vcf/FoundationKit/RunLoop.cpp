@@ -1,7 +1,7 @@
 //RunLoop.cpp
 
 /*
-Copyright 2000-2004 The VCF Project.
+Copyright 2000-2007 The VCF Project.
 Please see License.txt in the top level directory
 where you installed the VCF.
 */
@@ -16,7 +16,7 @@ using namespace VCF;
 
 RunLoop::RunLoop( Thread* thread ) 
 {
-    peer_.reset(SystemToolkit::createRunLoopPeer(this));
+    peer_.reset( SystemToolkit::createRunLoopPeer( this ) );
     if ( peer_.get() == NULL ) {
 
         throw NoPeerFoundException();
@@ -45,10 +45,10 @@ void RunLoop::addTimer( RunLoopTimerPtr::Shared timer )
 
 void RunLoop::removeTimer( RunLoopTimerPtr::Shared timer )
 {
-    std::vector<RunLoopTimerPtr::Shared>::iterator it = std::find(timers_.begin(), timers_.end(), timer);
+    std::vector<RunLoopTimerPtr::Shared>::iterator it = std::find( timers_.begin(), timers_.end(), timer );
     if( it != timers_.end() ) {
         peer_->removeTimer( timer );
-        timers_.erase(it);
+        timers_.erase( it );
     }
 }
 
@@ -60,10 +60,10 @@ void RunLoop::addSource( RunLoopSourcePtr::Shared source )
 
 void RunLoop::removeSource( RunLoopSourcePtr::Shared source )
 {
-    std::vector<RunLoopSourcePtr::Shared>::iterator it = std::find(sources_.begin(), sources_.end(), source);
+    std::vector<RunLoopSourcePtr::Shared>::iterator it = std::find( sources_.begin(), sources_.end(), source );
     if( it != sources_.end() ) {
         peer_->removeSource( source );
-        sources_.erase(it);
+        sources_.erase( it );
     }
 }
 

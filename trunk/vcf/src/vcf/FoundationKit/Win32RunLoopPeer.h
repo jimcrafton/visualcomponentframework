@@ -31,6 +31,8 @@ namespace VCF {
         virtual void run();
         virtual void stop();
 
+        virtual bool isStopped() const;
+
         virtual void addTimer( RunLoopTimerPtr::Shared timer );
         virtual void removeTimer( RunLoopTimerPtr::Shared timer );
 

@@ -20,10 +20,15 @@ Win32RunLoopSourcePeer::Win32RunLoopSourcePeer( RunLoopSource* source )
 
 Win32RunLoopSourcePeer::~Win32RunLoopSourcePeer()
 {
-	::CloseEvent( source_ );
+	::CloseHandle( source_ );
 }
 
 void Win32RunLoopSourcePeer::fire()
 {
-    ::SetEvent(source_);
+    ::SetEvent( source_ );
 }
+
+/**
+$Id:$
+*/
+

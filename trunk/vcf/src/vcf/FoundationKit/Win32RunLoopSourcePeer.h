@@ -30,7 +30,7 @@ namespace VCF {
     inline void Win32RunLoopSourcePeer::perform()
     {
         owner_->internal_perform();
-        ::ResetEvent(source_);
+        ::ResetEvent( source_ );
     }
 
     inline HANDLE Win32RunLoopSourcePeer::getHandle()
@@ -40,3 +40,8 @@ namespace VCF {
 }
 
 #endif
+
+/**
+$Id:$
+*/
+

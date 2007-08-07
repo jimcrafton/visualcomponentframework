@@ -32,39 +32,6 @@ RunLoopTimer::~RunLoopTimer()
 {
 }
 
-//bool
-//RunLoopTimer::doesRepeat() const
-//{
-//    return false;
-//}
-//
-//DateTimeSpan
-//RunLoop::Timer::getInterval() const
-//{
-//    DateTimeSpan dts;
-//    return dts;
-//}
-//
-//DateTime 
-//RunLoop::Timer::getNextFireDate() const
-//{
-//    DateTime dt;
-//    return dt;
-//}
-//
-//void 
-//RunLoop::Timer::invalidate()
-//{
-//}
-//
-//bool 
-//RunLoop::Timer::isValid() const
-//{
-//    return false;
-//}
-//
-//RunLoop::Timer::Peer*
-//RunLoop::Timer::getPeer()
-//{
-//    return peer_.get();
-//}
+/**
+$Id:$
+*/
