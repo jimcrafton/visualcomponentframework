@@ -4,7 +4,7 @@
 
 
 /*
-Copyright 2000-2006 The VCF Project, Orhun Birsoy.
+Copyright 2000-2007 The VCF Project, Orhun Birsoy.
 Please see License.txt in the top level directory
 where you installed the VCF.
 */

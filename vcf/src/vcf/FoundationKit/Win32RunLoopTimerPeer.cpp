@@ -13,8 +13,8 @@
 using namespace VCF;
 
 Win32RunLoopTimerPeer::Win32RunLoopTimerPeer( RunLoopTimer* owner )
-    : timer_(::CreateWaitableTimer(NULL, FALSE, NULL))
-    , owner_(owner)
+    : timer_( ::CreateWaitableTimer( NULL, FALSE, NULL ) )
+    , owner_( owner )
 {
 }
 
@@ -27,14 +27,14 @@ void Win32RunLoopTimerPeer::create( const DateTime &fireDate )
 {
     LARGE_INTEGER li;
     li.QuadPart = fireDate.getMilliseconds()*1000;
-    ::SetWaitableTimer(timer_, &li, 0, NULL, NULL, FALSE);
+    ::SetWaitableTimer( timer_, &li, 0, NULL, NULL, FALSE );
 }
 
 void Win32RunLoopTimerPeer::create( const DateTimeSpan &interval )
 {
     LARGE_INTEGER li;
     li.QuadPart=0;
-    ::SetWaitableTimer(timer_, &li, interval.getTotalMilliseconds(), NULL, NULL, FALSE);
+    ::SetWaitableTimer( timer_, &li, interval.getTotalMilliseconds(), NULL, NULL, FALSE );
 }
 
 void Win32RunLoopTimerPeer::create( const DateTime &fireDate, const DateTimeSpan &interval )
@@ -42,7 +42,7 @@ void Win32RunLoopTimerPeer::create( const DateTime &fireDate, const DateTimeSpan
     DateTime ufireData = fireDate.toUTC();
 
     uint32 year, month, day, hour, minute, second, millisecond;
-    ufireData.get(&year, &month, &day, &hour, &minute, &second, &millisecond);
+    ufireData.get( &year, &month, &day, &hour, &minute, &second, &millisecond );
 
     SYSTEMTIME st;
     st.wYear = year;
@@ -54,21 +54,20 @@ void Win32RunLoopTimerPeer::create( const DateTime &fireDate, const DateTimeSpan
     st.wMilliseconds = millisecond;
 
     FILETIME ft;
-    ::SystemTimeToFileTime(&st, &ft);
+    ::SystemTimeToFileTime( &st, &ft );
 
     LARGE_INTEGER li;
     li.LowPart  = ft.dwLowDateTime;
     li.HighPart = ft.dwHighDateTime;
 
-    ::SetWaitableTimer(timer_, &li, interval.getTotalMilliseconds(), NULL, NULL, TRUE);
-}
-
-Win32RunLoopTimerPeer::~Win32RunLoopTimerPeer()
-{
-    ::CloseHandle(timer_);
+    ::SetWaitableTimer( timer_, &li, interval.getTotalMilliseconds(), NULL, NULL, TRUE );
 }
 
 void Win32RunLoopTimerPeer::perform()
 {
     owner_->TimerFired( *owner_ );
 }
+
+/**
+$Id:$
+*/

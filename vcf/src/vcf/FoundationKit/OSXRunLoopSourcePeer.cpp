@@ -50,3 +50,7 @@ void OSXRunLoopSourcePeer::fire()
 {
     CFRunLoopSourceSignal( sourceRef_ );
 }
+
+/**
+$Id:$
+*/

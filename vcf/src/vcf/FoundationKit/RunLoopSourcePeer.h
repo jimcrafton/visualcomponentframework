@@ -24,3 +24,6 @@ namespace VCF {
 
 #endif // _VCF_RUNLOOPSOURCEPEER_H__
 
+/**
+$Id:$
+*/

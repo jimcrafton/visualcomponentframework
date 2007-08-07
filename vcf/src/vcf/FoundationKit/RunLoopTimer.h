@@ -43,3 +43,6 @@ namespace VCF {
 
 #endif
 
+/**
+$Id:$
+*/

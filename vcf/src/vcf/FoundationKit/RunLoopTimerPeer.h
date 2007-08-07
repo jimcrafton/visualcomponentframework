@@ -24,3 +24,6 @@ namespace VCF {
 
 #endif // _VCF_RUNLOOPTIMERPEER_H__
 
+/**
+$Id:$
+*/
