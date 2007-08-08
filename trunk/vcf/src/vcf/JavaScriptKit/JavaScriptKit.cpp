@@ -310,9 +310,9 @@ void JavaScriptEngine::updateFromClassRegistry()
 		ulong pc = clazz->getPropertyCount() + 1;
 
 		int eventCount = 0;
-		Enumerator<EventProperty*>* events = clazz->getEvents();
+		Enumerator<DelegateProperty*>* events = clazz->getDelegates();
 		while ( events->hasMoreElements() ) {
-			EventProperty* event = events->nextElement();
+			DelegateProperty* event = events->nextElement();
 			if ( !event->isAbstract() ) {
 				eventCount++;
 			}
@@ -368,7 +368,7 @@ void JavaScriptEngine::updateFromClassRegistry()
 		//we'll treat each event as a property
 		i = clazz->getPropertyCount();
 		while ( events->hasMoreElements() ) {
-			EventProperty* event = events->nextElement();
+			DelegateProperty* event = events->nextElement();
 			if ( !event->isAbstract() ) {
 				
 				tmp = event->getDelegateName();
@@ -535,14 +535,14 @@ JSBool JavaScriptEngine::getObjProperty(JSContext *cx, JSObject *obj, jsval id, 
 			}
 			else {
 				//try and get and event
-				EventProperty* eventProp = ce.m_vcfClass->getEvent( String(ce.m_props[i].name) );
+				DelegateProperty* eventProp = ce.m_vcfClass->getDelegate( String(ce.m_props[i].name) );
 
 				//check to see if our value is actually a Function!
 				
 				if ( NULL != eventProp ) {
 					if ( !eventProp->isAbstract() ) {
 						eventProp->setSource( ie.instance_ );
-						Delegate* delegateSrc = eventProp->getEventDelegate();
+						Delegate* delegateSrc = eventProp->getDelegateInstance();
 						if ( NULL != delegateSrc ) {
 
 							//create a new object for hte delegate and map it to our instance
@@ -820,11 +820,11 @@ JSBool JavaScriptEngine::setObjProperty(JSContext *cx, JSObject *obj, jsval id, 
 				}								
 			}
 			else {
-				EventProperty* eventProp = ce.m_vcfClass->getEvent( String(ce.m_props[i].name) );
+				DelegateProperty* eventProp = ce.m_vcfClass->getDelegate( String(ce.m_props[i].name) );
 				if ( NULL != eventProp ) {
 					if ( !eventProp->isAbstract() ) {
 						eventProp->setSource( ie.instance_ );
-						Delegate* delegateSrc = eventProp->getEventDelegate();
+						Delegate* delegateSrc = eventProp->getDelegateInstance();
 						if ( NULL != delegateSrc ) {
 
 							String name = Format( "%sEventHandler" ) % eventProp->getDelegateName();
@@ -942,11 +942,11 @@ void JavaScriptEngine::finalize(JSContext *cx, JSObject *obj)
 
 		//check if we have to trash any event handlers
 		Class* clazz = vcfObj->getClass();
-		Enumerator<EventProperty*>* events = clazz->getEvents();
+		Enumerator<DelegateProperty*>* events = clazz->getDelegates();
 		while ( events->hasMoreElements() ) {
-			EventProperty* e = events->nextElement();
+			DelegateProperty* e = events->nextElement();
 			
-			Delegate* delegate = e->getEventDelegate(vcfObj);
+			Delegate* delegate = e->getDelegateInstance(vcfObj);
 
 			EventHandlerMapRange range = eng->jsEventHandlers_.equal_range( delegate );
 			EventHandlerMap::iterator it = range.first;

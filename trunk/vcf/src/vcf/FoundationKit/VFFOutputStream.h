@@ -214,9 +214,9 @@ protected:
 
 	void writeProperty( Component* component, Property* property );
 
-	void writeEvents( Component* component );
+	void writeDelegates( Component* component );
 
-	String generateEventHandlerString( EventProperty* eventProperty, CallBack* handler );
+	String generateDelegateString( DelegateProperty* delegateProperty, CallBack* handler );
 };
 
 };

@@ -19,7 +19,7 @@ Class::Class( const String& className, const String& classID, const String& supe
 	superClass_ = NULL;
 	superClassName_ = superClass;
 	propertyContainer_.initContainer( properties_ );
-	eventContainer_.initContainer( events_ );
+	delegateContainer_.initContainer( delegates_ );
 	interfaceContainer_.initContainer( interfaces_ );
 	methodContainer_.initContainer(methods_);
 	fieldContainer_.initContainer(fields_);
@@ -49,12 +49,12 @@ Class::~Class()
 
 	fields_.clear();
 
-	std::map<String,EventProperty*>::iterator events = events_.begin();
-	while ( events != events_.end() ){
+	std::map<String,DelegateProperty*>::iterator events = delegates_.begin();
+	while ( events != delegates_.end() ){
 		delete events->second;
 		events ++;
 	}
-	events_.clear();
+	delegates_.clear();
 
 	std::map<String,Method*>::iterator methods = methods_.begin();
 	while ( methods != methods_.end() ){
@@ -100,29 +100,29 @@ Property* Class::getProperty( const String& propertyName )
 	return result;
 }
 
-void Class::addEvent( EventProperty* event )
+void Class::addDelegate( DelegateProperty* event )
 {
 	if ( NULL != event ) {
 		String delegateName = event->getDelegateName();
-		events_[delegateName] = event;
+		delegates_[delegateName] = event;
 	}
 }
 
-EventProperty* Class::getEvent( const String& delegateName )
+DelegateProperty* Class::getDelegate( const String& delegateName )
 {
-	EventProperty* result = NULL;
-	std::map<String,EventProperty*>::iterator found = events_.find( delegateName );
-	if ( found != events_.end() ) {
+	DelegateProperty* result = NULL;
+	std::map<String,DelegateProperty*>::iterator found = delegates_.find( delegateName );
+	if ( found != delegates_.end() ) {
 		result = found->second;
 	}
 	return result;
 }
 
-bool Class::hasEventHandler( const String& delegateName )
+bool Class::hasDelegate( const String& delegateName )
 {
 	bool result = false;
-	std::map<String,EventProperty*>::iterator found = events_.find( delegateName );
-	result = (found != events_.end());
+	std::map<String,DelegateProperty*>::iterator found = delegates_.find( delegateName );
+	result = (found != delegates_.end());
 	return result;
 }
 
