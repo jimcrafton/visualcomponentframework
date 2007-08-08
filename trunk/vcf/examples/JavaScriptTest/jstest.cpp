@@ -147,8 +147,8 @@ _class_rtti_end_
 _class_rtti_( HermesTheFleet, "VCF::Object", "66440e9c-f172-4186-b829-07d19758608e" )
 	_property_(bool,"running",running,setRunning,"" )
 	_property_(int,"numLaps",numLaps,setNumLaps,"" )
-	_event_("VCF::GenericEventHandler",VCF::Event,StateChanged)
-	_event_("VCF::GenericEventHandler",VCF::Event,RunningLaps)
+	_event_(VCF::EventHandler,StateChanged)
+	_event_(VCF::EventHandler,RunningLaps)
 _class_rtti_end_
 
 
