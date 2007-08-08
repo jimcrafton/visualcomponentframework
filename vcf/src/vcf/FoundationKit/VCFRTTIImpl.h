@@ -358,28 +358,25 @@ private:
 \class TypedEventProperty VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 Concrete template class for supporting event RTTI.
 */
-template <typename SourceType, typename EventType>
-class TypedEventProperty : public EventProperty {
+template <typename SourceType>
+class TypedEventProperty : public DelegateProperty {
 public:
 
-	TypedEventProperty( const String& eventClassName, const String& handlerClassName,
+	TypedEventProperty( const String& delegateClassName,
 			const String& delegateName, DelegateMethod delegateMethod ):
-			EventProperty(eventClassName,handlerClassName,delegateName,delegateMethod)	{}
+			DelegateProperty(delegateClassName,delegateName,delegateMethod)	{}
 
-
-
-	typedef void (Object::*HandlerMethod)(EventType*);
-
-
+/*
 	virtual EventHandler* createEventHandler( Object* source, EventHandlerMethod method, const String& name ) {
 
 		//this needs to we tweaked - the EventType template type 
 		//needs to be the callback type
 		return NULL;//new EventHandlerInstance<Object,EventType>( source, (HandlerMethod)method, name );
 	}
+	*/
 
-	virtual EventProperty* clone() {
-		return new TypedEventProperty<SourceType,EventType>(*this);
+	virtual DelegateProperty* clone() {
+		return new TypedEventProperty<SourceType>(*this);
 	}
 
 	virtual bool isAbstract() {
@@ -3284,13 +3281,12 @@ template <class INTERFACE_TYPE>
 *about linker warning 4006.
 */
 
-template <typename SourceType, typename EventType>
-bool registerEvent( SourceType* dummy1, EventType* dummy2,
+template <typename SourceType>
+bool registerEvent( SourceType* dummy1,
 						const String& className,
-						const String& handlerClassName,
-						const String& eventClassName,
-						const String& eventMethodName,
-						EventProperty::DelegateMethod delegateMethod )
+						const String& delegateClassName,
+						const String& delegateName,
+						DelegateProperty::DelegateMethod delegateMethod )
 {
 	bool result = false;
 
@@ -3300,38 +3296,35 @@ bool registerEvent( SourceType* dummy1, EventType* dummy2,
 
 	if ( NULL != clazz ){
 		if ( NULL == delegateMethod ) {
-			if ( ! clazz->hasEventHandler( eventMethodName ) ) {
+			if ( ! clazz->hasDelegate( delegateName ) ) {
 
-				EventProperty* ev = new AbstractEventProperty( eventClassName,
-																handlerClassName,
-																eventMethodName );
+				DelegateProperty* ev = new AbstractDelegateProperty( delegateClassName,
+																delegateName );
 
-				clazz->addEvent( ev );
+				clazz->addDelegate( ev );
 				result = true;
 			}
 		}
 		else {
-			if ( ! clazz->hasEventHandler( eventMethodName ) ) {
+			if ( ! clazz->hasDelegate( delegateName ) ) {
 
-				EventProperty* ev = new TypedEventProperty<SourceType,EventType>( eventClassName,
-																					handlerClassName,
-																					eventMethodName,
+				DelegateProperty* ev = new TypedEventProperty<SourceType>( delegateClassName,
+																					delegateName,
 																					delegateMethod );
 
-				clazz->addEvent( ev );
+				clazz->addDelegate( ev );
 				result = true;
 			}
 			else {
-				EventProperty* ev = clazz->getEvent( eventMethodName );
+				DelegateProperty* ev = clazz->getDelegate( delegateName );
 				if ( ev->isAbstract() ) {
 					delete ev;
 
-					ev = new TypedEventProperty<SourceType,EventType>( eventClassName,
-																		handlerClassName,
-																		eventMethodName,
+					ev = new TypedEventProperty<SourceType>( delegateClassName,
+																		delegateName,
 																		delegateMethod );
 
-					clazz->addEvent( ev );
+					clazz->addDelegate( ev );
 					result = true;
 				}
 			}

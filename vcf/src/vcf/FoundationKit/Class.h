@@ -19,7 +19,7 @@ namespace VCF
 
 class Property;
 class Method;
-class EventProperty;
+class DelegateProperty;
 class InterfaceClass;
 class Field;
 
@@ -303,29 +303,29 @@ public:
 
 	/**
 	Adds an event to the Class
-	@param EventProperty* the event to add - see EventProperty for more info.
+	@param DelegateProperty* the event to add - see DelegateProperty for more info.
 	*/
-	void addEvent( EventProperty* event );
+	void addDelegate( DelegateProperty* event );
 
 	/**
 	does the Class have this particular event handler ?
 	@return bool returns true if the Class has an event handler by this name
 	*/
-	bool hasEventHandler( const String& delegateName );
+	bool hasDelegate( const String& delegateName );
 
 	/**
-	returns an enumerator containing the EventProperty values.
+	returns an enumerator containing the DelegateProperty values.
 	the enumerator does not reflect the order in which the events were added.
 	*/
-	Enumerator<EventProperty*>* getEvents(){
-		return eventContainer_.getEnumerator();
+	Enumerator<DelegateProperty*>* getDelegates(){
+		return delegateContainer_.getEnumerator();
 	};
 
 	/**
-	Returns an EventProperty by name
+	Returns an DelegateProperty by name
 	@param String the event delegate to return
 	*/
-	EventProperty* getEvent( const String& delegateName );
+	DelegateProperty* getDelegate( const String& delegateName );
 
 	/**
 	Returns an enumeration of interfaces implemented by this class
@@ -397,8 +397,8 @@ private:
 	std::map<String,Method*> methods_;
 	EnumeratorMapContainer<std::map<String,Method*>,Method*> methodContainer_;
 
-	std::map<String, EventProperty*> events_;
-	EnumeratorMapContainer<std::map<String,EventProperty*>,EventProperty*> eventContainer_;
+	std::map<String, DelegateProperty*> delegates_;
+	EnumeratorMapContainer<std::map<String,DelegateProperty*>,DelegateProperty*> delegateContainer_;
 
 	std::map<String, InterfaceClass*> interfaces_;
 	EnumeratorMapContainer<std::map<String,InterfaceClass*>,InterfaceClass*> interfaceContainer_;

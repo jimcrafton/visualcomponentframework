@@ -290,7 +290,7 @@ void VFFOutputStream::writeComponent( Component* component )
 
 
 		//write out the events for the components
-		writeEvents( component );
+		writeDelegates( component );
 
 
 		tabString = getTabString();
@@ -306,7 +306,7 @@ character, followed by the name of the event handler.
 If the name of the source can't be determined, then a 
 empty string is returned.
 */
-String VFFOutputStream::generateEventHandlerString( EventProperty* eventProperty, CallBack* handler )
+String VFFOutputStream::generateDelegateString( DelegateProperty* delegateProperty, CallBack* handler )
 {
 	String result;
 
@@ -326,7 +326,7 @@ String VFFOutputStream::generateEventHandlerString( EventProperty* eventProperty
 	return result;
 }
 
-void VFFOutputStream::writeEvents( Component* component )
+void VFFOutputStream::writeDelegates( Component* component )
 {
 	Class* clazz = component->getClass();
 	tabLevel_ ++;
@@ -334,7 +334,7 @@ void VFFOutputStream::writeEvents( Component* component )
 	if ( NULL != clazz ) {
 		String s;
 
-		Enumerator<EventProperty*>* events = clazz->getEvents();
+		Enumerator<DelegateProperty*>* events = clazz->getDelegates();
 		
 
 		bool needsDelegateSection = events->hasMoreElements();
@@ -351,8 +351,8 @@ void VFFOutputStream::writeEvents( Component* component )
 		String tabString2 = getTabString();
 
 		while ( events->hasMoreElements() ) {
-			EventProperty* eventProp = events->nextElement();
-			Delegate* eventDelegate = eventProp->getEventDelegate(component);
+			DelegateProperty* eventProp = events->nextElement();
+			Delegate* eventDelegate = eventProp->getDelegateInstance(component);
 
 			if ( NULL != eventDelegate ) {
 				EventHandler::Vector handlers;
@@ -364,7 +364,7 @@ void VFFOutputStream::writeEvents( Component* component )
 					
 					while ( it != handlers.end() ) {
 						CallBack* ev = *it;
-						String evStr = generateEventHandlerString( eventProp, ev );
+						String evStr = generateDelegateString( eventProp, ev );
 
 						if ( !evStr.empty() ) {
 							if ( it > handlers.begin() ) {

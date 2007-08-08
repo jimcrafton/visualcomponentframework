@@ -146,22 +146,19 @@ you are finished defining your RTTI.
 *Registers that the class fires an event. By declaring this it is expected that
 *there are methods for adding event handler of the specified type that fire
 */
-#define _event_(handlerClassName,EventType,DelegateID) \
+#define _event_(DelegateType,DelegateID) \
 	\
-	/*
-Temporarily commented out until we find a better solution - the 
-new delegate implementation breaks this.
-		VCF::registerEvent<RttiClassType,EventType>( NULL, NULL, tmpClassName, \
-							VCF::String(handlerClassName), VCF::String(#EventType), \
+	VCF::registerEvent<RttiClassType>( NULL, tmpClassName, \
+							VCF::String(#DelegateType),\
 							VCF::String(#DelegateID), \
-							(VCF::EventProperty::DelegateMethod)&RttiClassType::get##DelegateID); \
-		\
-*/
+							(VCF::DelegateProperty::DelegateMethod)&RttiClassType::get##DelegateID); \
+							\
 
+	
 
-#define _abstract_event_(handlerClassName,EventType,DelegateID) \
-		VCF::registerEvent<RttiClassType,EventType>( NULL, NULL, tmpClassName, \
-							VCF::String(handlerClassName), VCF::String(#EventType), \
+#define _abstract_event_(DelegateType,DelegateID) \
+		VCF::registerEvent<RttiClassType>( NULL, tmpClassName, \
+							VCF::String(DelegateType), \
 							VCF::String(#DelegateID), \
 							NULL); \
 		\

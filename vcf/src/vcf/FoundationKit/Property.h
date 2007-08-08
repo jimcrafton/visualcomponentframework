@@ -437,36 +437,29 @@ private:
 
 
 /**
-\class EventProperty Property.h "vcf/FoundationKit/Property.h"
+\class DelegateProperty Property.h "vcf/FoundationKit/Property.h"
 */
-class FOUNDATIONKIT_API EventProperty  {
+class FOUNDATIONKIT_API DelegateProperty  {
 public :
 	/**
 	Typedef for a getter function for returning a delegate
 	*/
 	typedef Delegate& (Object::*DelegateMethod)(void);
 
-	typedef void (Object::*EventHandlerMethod)(Event*);
 
-
-	EventProperty( const String& eventClassName, const String& handlerClassName,
-					const String& delegateName, DelegateMethod delegateMethod ){
-		eventClassName_ = eventClassName;
-		handlerClassName_ = handlerClassName;
+	DelegateProperty( const String& delegateClassName,
+					const String& delegateName, DelegateMethod delegateMethod ){		
+		delegateClassName_ = delegateClassName;
 		delegateName_ = delegateName;
 		source_ = NULL;
 		delegateMethod_ = delegateMethod;
 	};
 
 
-	virtual ~EventProperty(){};
+	virtual ~DelegateProperty(){};
 
-	String getEventClassName(){
-		return eventClassName_;
-	};
-
-	String getHandlerClassName(){
-		return handlerClassName_;
+	String getDelegateClassName(){
+		return delegateClassName_;
 	};
 
 	String getDelegateName() {
@@ -475,7 +468,7 @@ public :
 
 	virtual bool isAbstract()  = 0;
 
-	virtual EventProperty* clone() = 0;
+	virtual DelegateProperty* clone() = 0;
 
 	/**
 	creates a new instance of an EventHandler to use
@@ -491,12 +484,12 @@ public :
 	@return EventHandler a new event handler that wraps the
 	passed in method, and optionally attached to source
 	*/
-	virtual EventHandler* createEventHandler( Object* source, EventHandlerMethod method, const String& name ) = 0;
+	//virtual CallBack* createEventHandler( Object* source, EventHandlerMethod method, const String& name ) = 0;
 
 	/**
 	Get the delegate for the source
 	*/
-	Delegate* getEventDelegate( Object* source=NULL ) {
+	Delegate* getDelegateInstance( Object* source=NULL ) {
 		if ( NULL != delegateMethod_ ) {
 			if ( NULL != source ) {
 				return &(source->*delegateMethod_)();
@@ -512,28 +505,28 @@ public :
 		source_ = source;
 	}
 protected:
-	String eventClassName_;
-	String handlerClassName_;
+	String delegateClassName_;
 	String delegateName_;
 	Object* source_;
 	DelegateMethod delegateMethod_;
 };
 
 /**
-\class AbstractEventProperty Property.h "vcf/FoundationKit/Property.h"
+\class AbstractDelegateProperty Property.h "vcf/FoundationKit/Property.h"
 */
-class FOUNDATIONKIT_API AbstractEventProperty : public EventProperty {
+class FOUNDATIONKIT_API AbstractDelegateProperty : public DelegateProperty {
 public:
-	AbstractEventProperty( const String& eventClassName, const String& handlerClassName,
+	AbstractDelegateProperty( const String& delegateClassName,
 			const String& delegateName ):
-			EventProperty(eventClassName,handlerClassName,delegateName,NULL)	{}
+			DelegateProperty(delegateClassName,delegateName,NULL)	{}
 
-	virtual EventHandler* createEventHandler( Object* source, EventHandlerMethod method, const String& name ) {
+/*	virtual EventHandler* createEventHandler( Object* source, EventHandlerMethod method, const String& name ) {
 		return NULL;
 	}
+	*/
 
-	virtual EventProperty* clone() {
-		return new AbstractEventProperty(*this);
+	virtual DelegateProperty* clone() {
+		return new AbstractDelegateProperty(*this);
 	}
 
 	virtual bool isAbstract() {

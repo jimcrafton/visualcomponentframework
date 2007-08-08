@@ -139,9 +139,9 @@ void VFFInputStream::processDelegateAsignment( const VCF::VCFChar& token, const 
 
 	switch ( assignmentToken ) {
 		case '[': {
-			EventProperty* eventProperty = clazz->getEvent ( currentSymbol );
+			DelegateProperty* delegateProperty = clazz->getDelegate ( currentSymbol );
 
-			if ( NULL != eventProperty ) {
+			if ( NULL != delegateProperty ) {
 
 				parser_->nextToken();
 

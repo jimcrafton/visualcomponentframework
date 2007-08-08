@@ -509,13 +509,13 @@ void ClassRegistry::internal_addClass( const String& className, Class* classToRe
 			}
 
 			//copy over events
-			Enumerator<EventProperty*>* events = superClass->getEvents();
-			if ( NULL != events ){
-				while ( events->hasMoreElements() ){
-					EventProperty* event = events->nextElement();
-					if ( NULL != event ){
-						if ( false == classToRegister->hasEventHandler( event->getDelegateName() ) ) {
-							classToRegister->addEvent( event->clone() );
+			Enumerator<DelegateProperty*>* delegates = superClass->getDelegates();
+			if ( NULL != delegates ){
+				while ( delegates->hasMoreElements() ){
+					DelegateProperty* delegate = delegates->nextElement();
+					if ( NULL != delegate ){
+						if ( false == classToRegister->hasDelegate( delegate->getDelegateName() ) ) {
+							classToRegister->addDelegate( delegate->clone() );
 						}
 					}
 				}
