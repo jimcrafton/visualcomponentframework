@@ -12,5 +12,5 @@
 using namespace VCF;
 
 /**
-$Id:$
+$Id$
 */

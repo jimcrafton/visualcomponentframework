@@ -69,5 +69,5 @@ void Win32RunLoopTimerPeer::perform()
 }
 
 /**
-$Id:$
+$Id$
 */

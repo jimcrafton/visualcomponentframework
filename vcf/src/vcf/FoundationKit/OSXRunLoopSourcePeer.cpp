@@ -52,5 +52,5 @@ void OSXRunLoopSourcePeer::fire()
 }
 
 /**
-$Id:$
+$Id$
 */

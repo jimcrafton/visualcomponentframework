@@ -3282,11 +3282,10 @@ template <class INTERFACE_TYPE>
 */
 
 template <typename SourceType>
-bool registerEvent( SourceType* dummy1,
-						const String& className,
+bool registerEvent( const String& className,
 						const String& delegateClassName,
 						const String& delegateName,
-						DelegateProperty::DelegateMethod delegateMethod )
+						Delegate& (SourceType::*delegateMethod)(void) )
 {
 	bool result = false;
 
@@ -3310,7 +3309,7 @@ bool registerEvent( SourceType* dummy1,
 
 				DelegateProperty* ev = new TypedEventProperty<SourceType>( delegateClassName,
 																					delegateName,
-																					delegateMethod );
+																					(Delegate& (Object::*)(void))delegateMethod );
 
 				clazz->addDelegate( ev );
 				result = true;
@@ -3322,7 +3321,7 @@ bool registerEvent( SourceType* dummy1,
 
 					ev = new TypedEventProperty<SourceType>( delegateClassName,
 																		delegateName,
-																		delegateMethod );
+																		(Delegate& (Object::*)(void))delegateMethod );
 
 					clazz->addDelegate( ev );
 					result = true;

@@ -114,16 +114,17 @@ void Control::destroy()
 	delete context_;
 	context_ = NULL;
 
-	if ( NULL != peer_ ) {
-		peer_->destroyControl();
-		delete peer_;
-		peer_ = NULL;
-	}
-
 	if ( NULL != font_ ){
 		font_->free();
 		font_ = NULL;
 	}
+
+
+	if ( NULL != peer_ ) {
+		peer_->destroyControl();
+		delete peer_;
+		peer_ = NULL;
+	}	
 
 	if ( this == Control::currentFocusedControl ) {
 		Control::currentFocusedControl = NULL;

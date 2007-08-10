@@ -42,23 +42,6 @@ public:
 };
 
 
-/**
-\class NotifyEventHandler NotifyEvent.h "vcf/FoundationKit/NotifyEvent.h"
-*/
-/*
-template <class SOURCE_TYPE>
-class NotifyEventHandler : public EventHandlerInstance<SOURCE_TYPE,NotifyEvent> {
-public:
-	NotifyEventHandler( SOURCE_TYPE* source,
-		_typename_ EventHandlerInstance<SOURCE_TYPE,NotifyEvent>::OnEventHandlerMethod handlerMethod,
-		const String& handlerName="") :
-			EventHandlerInstance<SOURCE_TYPE,NotifyEvent>( source, handlerMethod, handlerName ) {
-
-	}
-
-};
-*/
-
 typedef Delegate1<NotifyEvent*> NotifyDelegate;
 typedef NotifyDelegate::ProcedureType NotifyHandler;
 

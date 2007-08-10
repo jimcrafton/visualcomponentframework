@@ -29,6 +29,6 @@ void Win32RunLoopSourcePeer::fire()
 }
 
 /**
-$Id:$
+$Id$
 */
 

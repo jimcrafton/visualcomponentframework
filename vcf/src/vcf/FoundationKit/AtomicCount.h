@@ -18,6 +18,6 @@ namespace VCF {
 #endif //_VCF_ATOMICOUNT_H__
 
 /**
-$Id:$
+$Id$
 */
 
