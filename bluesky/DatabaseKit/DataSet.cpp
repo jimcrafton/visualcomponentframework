@@ -74,7 +74,7 @@ void DataSet::setActive( bool active )
 	if ( active != active_ ) {
 		if ( active ) {
 			Event e(this,0);
-			BeforeOpen.fireEvent(&e);
+			BeforeOpen(&e);
 
 			try {
 				openCursor( false );
@@ -90,23 +90,23 @@ void DataSet::setActive( bool active )
 			}
 
 			Event e2(this,0);
-			AfterOpen.fireEvent(&e2);
+			AfterOpen(&e2);
 
 			Event e3(this,0);
-			AfterScroll.fireEvent(&e3);
+			AfterScroll(&e3);
 
 			active_ = active;
 		}
 		else {
 			Event e(this,0);
-			BeforeClose.fireEvent(&e);
+			BeforeClose(&e);
 
 			setState( dssInactive );
 
 			closeCursor();
 
 			Event e2(this,0);
-			AfterClose.fireEvent(&e2);
+			AfterClose(&e2);
 
 			active_ = active;
 		}
@@ -371,7 +371,7 @@ void DataSet::first()
 	checkMode( cmsBrowse );
 
 	Event e1(this,0);
-	BeforeScroll.fireEvent(&e1);
+	BeforeScroll(&e1);
 
 	clearRecords();
 
@@ -395,14 +395,14 @@ void DataSet::first()
 	handleDataEvent(&e2);
 
 	Event e3(this,0);
-	AfterScroll.fireEvent(&e3);
+	AfterScroll(&e3);
 }
 
 void DataSet::next()
 {
 	checkMode( cmsBrowse );
 	Event e1(this,0);
-	BeforeScroll.fireEvent(&e1);
+	BeforeScroll(&e1);
 
 	if ( !isEOF() ) {
 		bof_ = false;
@@ -435,7 +435,7 @@ void DataSet::next()
 		}
 
 		Event e2(this,0);
-		AfterScroll.fireEvent(&e2);
+		AfterScroll(&e2);
 	}
 }
 
@@ -459,14 +459,14 @@ void DataSet::edit()
 		}
 
 		Event e1(this,0);
-		BeforeEdit.fireEvent(&e1);
+		BeforeEdit(&e1);
 
 		try {
 			this->peer_->edit();
 		}
 		catch ( ... ) {
 			Event e2(this,0);
-			EditError.fireEvent(&e2);
+			EditError(&e2);
 		}
 
 		setState( dssEdit );
@@ -475,7 +475,7 @@ void DataSet::edit()
 		handleDataEvent( &e3 );
 
 		Event e4(this,0);
-		AfterEdit.fireEvent(&e4);
+		AfterEdit(&e4);
 	}
 }
 
@@ -488,10 +488,10 @@ void DataSet::beginNewRecord()
 	}
 
 	Event e1(this,0);
-	BeforeInsert.fireEvent(&e1);
+	BeforeInsert(&e1);
 
 	Event e2(this,0);
-	BeforeScroll.fireEvent(&e2);
+	BeforeScroll(&e2);
 }
 
 void DataSet::endNewRecord()
@@ -517,16 +517,16 @@ void DataSet::endNewRecord()
 	handleDataEvent( &e1 );
 
 	Event e2(this,0);
-	AfterInsert.fireEvent(&e2);
+	AfterInsert(&e2);
 
 	Event e3(this,0);
-	AfterScroll.fireEvent(&e3);
+	AfterScroll(&e3);
 }
 
 void DataSet::handleNewRecord()
 {
 	Event e1(this,0);
-	NewRecord.fireEvent(&e1);	
+	NewRecord(&e1);	
 }
 
 void DataSet::initNewRecord( Record* record )
@@ -579,10 +579,10 @@ void DataSet::deleteRecord()
 		handleDataEvent(&e);
 
 		Event e1(this,0);
-		BeforeDelete.fireEvent( &e1 );
+		BeforeDelete( &e1 );
 
 		Event e2(this,0);
-		BeforeScroll.fireEvent( &e2 );
+		BeforeScroll( &e2 );
 
 		this->peer_->deleteRecord();
 
@@ -591,10 +591,10 @@ void DataSet::deleteRecord()
 		resync( 0 );
 
 		Event e3(this,0);
-		AfterDelete.fireEvent( &e3 );
+		AfterDelete( &e3 );
 
 		Event e4(this,0);
-		AfterScroll.fireEvent( &e4 );
+		AfterScroll( &e4 );
 
 	}
 }
@@ -630,7 +630,7 @@ void DataSet::post()
 			checkRequiredFields();
 
 			Event e2(this,0);
-			BeforePost.fireEvent(&e2);
+			BeforePost(&e2);
 
 			try {
 				this->peer_->post();
@@ -639,13 +639,13 @@ void DataSet::post()
 				DataErrorEvent e3(this);
 				e3.reason = e.getMessage();
 
-				PostError.fireEvent( &e3 );
+				PostError( &e3 );
 			}
 			catch (...) {
 				DataErrorEvent e3(this);
 				e3.reason = "Unknown error.";
 
-				PostError.fireEvent( &e3 );
+				PostError( &e3 );
 			}
 
 
@@ -656,7 +656,7 @@ void DataSet::post()
 			resync( 0 );
 
 			Event e4(this,0);
-			AfterPost.fireEvent(&e4);
+			AfterPost(&e4);
 		}
 		break;
 	}
@@ -669,7 +669,7 @@ void DataSet::cancel()
 		handleDataEvent(&e);
 
 		Event e1(this,0);
-		BeforeCancel.fireEvent( &e1 );
+		BeforeCancel( &e1 );
 
 		//update cursor pos/????
 		
@@ -683,7 +683,7 @@ void DataSet::cancel()
 
 
 		Event e2(this,0);
-		AfterCancel.fireEvent( &e2 );
+		AfterCancel( &e2 );
 	}
 }
 

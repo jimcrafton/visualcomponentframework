@@ -58,7 +58,7 @@ public:
 		CommandButton* first = new CommandButton();
 		first->setCaption( "First" );
 		first->ButtonClicked +=
-			new GenericEventHandler<dbtest2Window>(this,&dbtest2Window::onFirst,"dbtest2Window::onFirst");
+			new ClassProcedure1<Event*,dbtest2Window>(this,&dbtest2Window::onFirst,"dbtest2Window::onFirst");
 
 		add( first );
 		first->setBounds( 10, 120, 100, 35 );
@@ -67,7 +67,7 @@ public:
 		CommandButton* next = new CommandButton();
 		next->setCaption( "Next" );
 		next->ButtonClicked +=
-			new GenericEventHandler<dbtest2Window>(this,&dbtest2Window::onNext,"dbtest2Window::onNext");
+			new ClassProcedure1<Event*,dbtest2Window>(this,&dbtest2Window::onNext,"dbtest2Window::onNext");
 
 		add( next );
 		next->setBounds( 10, 70, 100, 35 );		

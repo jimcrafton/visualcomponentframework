@@ -23,7 +23,7 @@ DataLabel::DataLabel(): Label(), dataLink_(NULL)
 	dataLink_ = new FieldDataLink();
 
 	dataLink_->DataChange +=
-		new GenericEventHandler<DataLabel>(this,&DataLabel::onDataLinkDataChanged,"DataLabel::onDataLinkDataChanged");
+		new ClassProcedure1<Event*, DataLabel>(this,&DataLabel::onDataLinkDataChanged,"DataLabel::onDataLinkDataChanged");
 }
 
 DataLabel::~DataLabel() {

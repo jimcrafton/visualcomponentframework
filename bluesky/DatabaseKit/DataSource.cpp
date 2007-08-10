@@ -54,11 +54,11 @@ void DataSource::setState( DataSetState val )
 		notifyDataLinks(&e);
 
 		Event e1(this,0);
-		StateChanged.fireEvent( &e1 );
+		StateChanged( &e1 );
 
 		if ( dssInactive == oldVal ) {
 			Event e2(this,0);
-			DataChanged.fireEvent( &e2 );
+			DataChanged( &e2 );
 		}
 
 	}
@@ -93,19 +93,19 @@ void DataSource::handleDataEvent( Event* e )
 				Event e2( this, e->getType() );
 				//source should be a DataField instance???
 				e2.setUserData( e->getSource() );
-				DataChanged.fireEvent( &e2 );
+				DataChanged( &e2 );
 			}
 			break;
 
 			case deRecordChange : case deDataSetChange : case deDataSetScroll : case deLayoutChange :{
 				Event e2( this, e->getType() );
-				DataChanged.fireEvent( &e2 );
+				DataChanged( &e2 );
 			}
 			break;
 
 			case deUpdateRecord : {
 				Event e2( this, e->getType() );
-				UpdatedData.fireEvent( &e2 );
+				UpdatedData( &e2 );
 			}
 			break;
 		}

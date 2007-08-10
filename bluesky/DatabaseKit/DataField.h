@@ -44,14 +44,16 @@ namespace VCF {
 	};
 
 
+	typedef Delegate1<ValidateFieldEvent*> ValidateFieldDelegate;
+
 
 	#define DATAFIELD_CLASSID	"48e34264-750f-4fc9-a28f-4e91c2690809"
 
 	class DATABASEKIT_API DataField : public Component {
 	public:
 
-		DELEGATE(Changed);
-		DELEGATE(Validate);
+		DELEGATE(EventDelegate,Changed);
+		DELEGATE(ValidateFieldDelegate,Validate);
 
 		DataField();
 

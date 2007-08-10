@@ -23,7 +23,7 @@ DataCheckBox::DataCheckBox(): CheckBoxControl(), dataLink_(NULL)
 	dataLink_ = new FieldDataLink();
 
 	dataLink_->DataChange +=
-		new GenericEventHandler<DataCheckBox>(this,&DataCheckBox::onDataLinkDataChanged,"DataCheckBox::onDataLinkDataChanged");
+		new ClassProcedure1<Event*, DataCheckBox>(this,&DataCheckBox::onDataLinkDataChanged,"DataCheckBox::onDataLinkDataChanged");
 }
 
 DataCheckBox::~DataCheckBox() {

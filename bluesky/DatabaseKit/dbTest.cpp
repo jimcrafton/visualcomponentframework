@@ -7,6 +7,10 @@
 
 #include "DataLink.h"
 
+
+#include "vcf/FoundationKit/RTTIMacros.h"
+
+
 /*
 
 
@@ -104,6 +108,45 @@ Time was determined using the Win32 QueryPerformanceXXX API's
 using namespace VCF;
 
 
+class FlusterEvent : public Event {
+public:
+	FlusterEvent():Event(0){}
+};
+
+typedef Delegate1<FlusterEvent*> FEDelegate;
+
+class Fluster : public Component {
+public:
+	Fluster(){}
+
+
+	FEDelegate D1;
+	FEDelegate& getD1(){ return D1; };
+
+
+
+	DELEGATE(FEDelegate,D2)
+	DELEGATE(FEDelegate,D3)
+	DELEGATE(FEDelegate,D4)
+
+
+	virtual void doit(){};
+};
+
+
+
+
+_class_rtti_(Fluster, "VCF::Component", "sdf09sd8f098450345" )
+_delegate_(FEDelegate, D1 )	
+_delegate_(FEDelegate, D2 )
+_delegate_(FEDelegate, D3 )
+_delegate_(FEDelegate, D4 )
+_class_rtti_end_
+
+
+
+
+
 void onDataChanged( Event* e )
 {
 	System::println( "onDataChanged" );
@@ -134,6 +177,10 @@ int main( int argc, char** argv ){
 	FoundationKit::init( argc, argv );
 
 	DatabaseKit::init( argc, argv );
+
+
+	REGISTER_CLASSINFO_EXTERNAL( Fluster );
+
 /*
 	{
 		//test simple calls of SQLite to compare the performance 
@@ -343,15 +390,15 @@ int main( int argc, char** argv ){
 
 			fdl->setDataSource( dbSrc );
 
-			StaticEventHandlerInstance<Event> ev1(onDataChanged);
-			StaticEventHandlerInstance<Event> ev2(onEditingChanged);
-			StaticEventHandlerInstance<Event> ev3(onUpdatedData);
-			StaticEventHandlerInstance<Event> ev4(onActiveChanged);
+			//EventHandler ev1(onDataChanged);
+			//EventHandler ev2(onEditingChanged);
+			//EventHandler ev3(onUpdatedData);
+			//EventHandler ev4(onActiveChanged);
 
-			fdl->DataChange += &ev1;
-			fdl->EditingChange += &ev2;
-			fdl->UpdatedData += &ev3;
-			fdl->ActiveChange += &ev4;
+			fdl->DataChange += onDataChanged;
+			fdl->EditingChange += onEditingChanged;
+			fdl->UpdatedData += onUpdatedData;
+			fdl->ActiveChange += onActiveChanged;
 			fdl->setFieldName( "LastName" );
 
 
