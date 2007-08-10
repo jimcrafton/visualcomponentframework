@@ -44,5 +44,5 @@ namespace VCF {
 #endif
 
 /**
-$Id:$
+$Id$
 */

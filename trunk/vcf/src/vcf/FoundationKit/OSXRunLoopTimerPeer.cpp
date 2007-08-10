@@ -80,5 +80,5 @@ OSXRunLoopTimerPeer::~OSXRunLoopTimerPeer()
 }
 
 /**
-$Id:$
+$Id$
 */

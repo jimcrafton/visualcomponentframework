@@ -290,11 +290,11 @@ Window* Application::getMainWindow()
 void Application::setMainWindow( Window* mainWindow )
 {
 	CallBack* wl = getEventHandler("AppWindowHandler");
-	if ( NULL != mainWindow_ ){
-		mainWindow_->FrameClose.remove( wl );
+	if ( NULL != mainWindow_ && NULL != wl ){		
+		mainWindow_->FrameClose.remove( wl );		
 	}
 	mainWindow_ = mainWindow;
-	if ( NULL != mainWindow_ ) {
+	if ( NULL != mainWindow_ && NULL != wl ){
 		mainWindow_->FrameClose.add( wl );
 	}
 }

@@ -65,11 +65,14 @@ static String TextAlignmentTypeNames[] = { "taTextLeft",
 
 
 
+_class_abstract_rtti_(UIComponent, "VCF::Component", UICOMPONENT_CLASSID)
+_class_rtti_end_
+
 _class_rtti_(ImageList, "VCF::Component", IMAGELIST_CLASSID )
 _property_object_( Color, "transparentColor", getTransparentColor, setTransparentColor, "" );
-_event_("VCF::ImageListEventHandler", VCF::ImageListEvent, SizeChanged );
-_event_("VCF::ImageListEventHandler", VCF::ImageListEvent, ImageAdded );
-_event_("VCF::ImageListEventHandler", VCF::ImageListEvent, ImageDeleted );
+_delegate_(ImageListDelegate, SizeChanged );
+_delegate_(ImageListDelegate, ImageAdded );
+_delegate_(ImageListDelegate, ImageDeleted );
 _class_rtti_end_
 
 
@@ -132,23 +135,23 @@ _property_( bool, "keepControlsWidth", getKeepControlsWidth, setKeepControlsWidt
 _class_rtti_end_
 /*
 _class_abstract_rtti_(AbstractListModel, "VCF::AbstractListModel", "VCF::ListModel", ABSTRACTLISTMODEL_CLASSID)
-_event_( "VCF::ModelEventHandler", AbstractListModel, VCF::ModelEvent, ModelEmptied )
-_event_( "VCF::ModelValidationEventHandler", AbstractListModel, VCF::ValidationEvent, ModelValidate )
-_event_( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, ContentsChanged )
-_event_( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, ItemAdded )
-_event_( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, ItemDeleted )
+_delegate_( "VCF::ModelEventHandler", AbstractListModel, VCF::ModelEvent, ModelEmptied )
+_delegate_( "VCF::ModelValidationEventHandler", AbstractListModel, VCF::ValidationEvent, ModelValidate )
+_delegate_( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, ContentsChanged )
+_delegate_( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, ItemAdded )
+_delegate_( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, ItemDeleted )
 _class_rtti_end_
 */
 
 _class_abstract_rtti_(Model, "VCF::Component", MODEL_CLASSID)
-_event_( "VCF::ModelEventHandler", VCF::ModelEvent, ModelChanged )
-_event_( "VCF::ModelValidationEventHandler", VCF::ValidationEvent, ModelValidate )
+_delegate_( ModelDelegate, ModelChanged )
+_delegate_( ValidationDelegate, ModelValidate )
 _class_rtti_end_
 
 
 /*
 _class_abstract_rtti_(TextModel, "VCF::TextModel", "VCF::Model", TEXTMODEL_CLASSID)
-_abstract_event_("VCF::TextModelEventHandler", TextModel, VCF::TextEvent, TextModelChanged )
+_abstract_delegate_("VCF::TextModelEventHandler", TextModel, VCF::TextEvent, TextModelChanged )
 _class_rtti_end_
 */
 
@@ -159,14 +162,11 @@ _class_rtti_end_
 
 
 _class_abstract_rtti_(ColumnModel, "VCF::Model", COLUMNMODEL_CLASSID)
-_abstract_event_( "VCF::ColumnModelEventHandler", VCF::ColumnModelEvent, ContentsChanged )
-_abstract_event_( "VCF::ColumnModelEventHandler", VCF::ColumnModelEvent, ItemAdded )
-_abstract_event_( "VCF::ColumnModelEventHandler", VCF::ColumnModelEvent, ItemDeleted )
+_abstract_delegate_( ColumnModelDelegate,ContentsChanged )
+_abstract_delegate_( ColumnModelDelegate,ItemAdded )
+_abstract_delegate_( ColumnModelDelegate,ItemDeleted )
 _class_rtti_end_
 
-
-_class_abstract_rtti_(UIComponent, "VCF::Component", UICOMPONENT_CLASSID)
-_class_rtti_end_
 
 
 
@@ -196,28 +196,30 @@ _property_enum_labeled_( AlignmentType, "alignment", getAlignment, setAlignment,
 
 _property_enumset_( VCF::AnchorTypes, "anchor", getAnchor, setAnchor, 5, AnchorTypeValues, AnchorTypeNames, ""  );
 
-_property_typedef_( int32, "cursor", getCursorID, setCursorID, "VCF::Cursor::SystemCursorType", "" );
+_property_typedef_( int32, "cursor", getCursorID, setCursorID, "VCF::Cursor::SystemCursorType", "" )
 
-_event_("VCF::ControlEventHandler",  VCF::ControlEvent, ControlSized );
-_event_("VCF::ControlEventHandler", VCF::ControlEvent, ControlPositioned );
-_event_("VCF::ControlEventHandler", VCF::ControlEvent, ControlParentChanged );
-_event_("VCF::MouseEventHandler", VCF::MouseEvent, MouseDoubleClicked );
-_event_("VCF::MouseEventHandler", VCF::MouseEvent, MouseClicked );
-_event_("VCF::MouseEventHandler", VCF::MouseEvent, MouseMove );
-_event_("VCF::MouseEventHandler", VCF::MouseEvent, MouseUp );
-_event_("VCF::MouseEventHandler", VCF::MouseEvent, MouseDown );
-_event_("VCF::MouseEventHandler", VCF::MouseEvent, MouseEnter );
-_event_("VCF::MouseEventHandler", VCF::MouseEvent, MouseLeave );
-_event_("VCF::KeyboardEventHandler", VCF::KeyboardEvent, KeyPressed  );
-_event_("VCF::KeyboardEventHandler", VCF::KeyboardEvent, KeyDown  );
-_event_("VCF::KeyboardEventHandler", VCF::KeyboardEvent, KeyUp  );
-_event_("VCF::WhatsThisHelpEventHandler", VCF::WhatsThisHelpEvent, ControlHelpRequested );
-_event_("VCF::HelpEventHandler", VCF::HelpEvent, HelpRequested );
-_event_("VCF::FocusEventHandler", VCF::FocusEvent, FocusLost  );
-_event_("VCF::FocusEventHandler", VCF::FocusEvent, FocusGained );
+_delegate_(EventDelegate, ControlSized );
+_delegate_(ControlDelegate, ControlPositioned );
+_delegate_(ControlDelegate, ControlParentChanged );
+_delegate_(MouseDelegate, MouseDoubleClicked );
+_delegate_(MouseDelegate, MouseClicked );
+_delegate_(MouseDelegate, MouseMove );
+_delegate_(MouseDelegate, MouseUp );
+_delegate_(MouseDelegate, MouseDown );
+_delegate_(MouseDelegate, MouseEnter );
+_delegate_(MouseDelegate, MouseLeave );
+_delegate_(KeyboardDelegate, KeyPressed  );
+_delegate_(KeyboardDelegate, KeyDown  );
+_delegate_(KeyboardDelegate, KeyUp  );
+_delegate_(WhatsThisHelpDelegate, ControlHelpRequested );
+_delegate_(HelpDelegate, HelpRequested );
+_delegate_(FocusDelegate, FocusLost  );
+_delegate_(FocusDelegate, FocusGained );
 
-_event_("VCF::ToolTipEventHandler", VCF::ToolTipEvent, ToolTipRequested  );
-_event_("VCF::ToolTipEventHandler", VCF::ToolTipEvent, ToolTip  );
+_delegate_(ToolTipDelegate, ToolTipRequested  );
+_delegate_(ToolTipDelegate, ToolTip  );
+
+
 _procedure4_(setBounds,const double&,const double&,const double&,const double&,"");
 _class_rtti_end_
 
@@ -232,9 +234,10 @@ _property_( bool, "isTopmost", isFrameTopmost, setFrameTopmost, "" );
 _property_( bool, "useColorForBackground", getUseColorForBackground, setUseColorForBackground, "" );
 _property_enum_labeled_( FrameStyleType, "frameStyle", getFrameStyle, setFrameStyle,
 					   fstSizeable, fstToolbarBorderFixed, 6, FrameStyleTypeNames, "");
-_event_("VCF::FrameEventHandler", FrameEvent, FrameClosing)
-_event_("VCF::WindowEventHandler", WindowEvent, FrameClose )
-_event_("VCF::WindowEventHandler", WindowEvent, FrameActivation )
+
+_delegate_(FrameDelegate, FrameClosing)
+_delegate_(FrameDelegate, FrameClose )
+_delegate_(WindowDelegate, FrameActivation )
 
 _procedure_(show)
 _procedure_(hide)
@@ -245,18 +248,18 @@ _class_rtti_end_
 
 
 _class_abstract_rtti_(Item, "VCF::UIComponent", ITEM_CLASSID)
-_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemPaint );
-_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemChanged );
-_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
-_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemAdded );
-_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemDeleted );
+_abstract_delegate_(ItemDelegate, ItemPaint );
+_abstract_delegate_(ItemDelegate, ItemChanged );
+_abstract_delegate_(ItemDelegate, ItemSelected );
+_abstract_delegate_(ItemDelegate, ItemAdded );
+_abstract_delegate_(ItemDelegate, ItemDeleted );
 _class_rtti_end_
 
 
 _class_abstract_rtti_(ListItem, "VCF::Item", LISTITEM_CLASSID)
-_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, SubItemChanged );
-_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, SubItemAdded );
-_abstract_event_("VCF::ItemEventHandler", VCF::ItemEvent, SubItemDeleted );
+_abstract_delegate_(ItemDelegate, SubItemChanged );
+_abstract_delegate_(ItemDelegate, SubItemAdded );
+_abstract_delegate_(ItemDelegate, SubItemDeleted );
 _property_( String, "name", getCaption, setCaption, "" )
 _class_rtti_end_
 
@@ -264,16 +267,16 @@ _class_rtti_end_
 /*
 _class_abstract_rtti_(ListModel, "VCF::ListModel", "VCF::Model", LISTMODEL_CLASSID)
 OBJECT_COLLECTION_PROPERTY(ListItem*, "items", ListModel::getItems, ListModel::addItem, ListModel::insertItem, ListModel::deleteItem, ListModel::deleteItemAtIndex )
-_abstract_event_( "VCF::ListModelEventHandler", ListModel, VCF::ListModelEvent, ContentsChanged )
-_abstract_event_( "VCF::ListModelEventHandler", ListModel, VCF::ListModelEvent, ItemAdded )
-_abstract_event_( "VCF::ListModelEventHandler", ListModel, VCF::ListModelEvent, ItemDeleted )
+_abstract_delegate_( "VCF::ListModelEventHandler", ListModel, VCF::ListModelEvent, ContentsChanged )
+_abstract_delegate_( "VCF::ListModelEventHandler", ListModel, VCF::ListModelEvent, ItemAdded )
+_abstract_delegate_( "VCF::ListModelEventHandler", ListModel, VCF::ListModelEvent, ItemDeleted )
 _class_rtti_end_
 */
 
 
 _class_abstract_rtti_(MenuItem, "VCF::Item", MENUITEM_CLASSID)
-_abstract_event_( "VCF::MenuItemEventHandler", VCF::MenuItemEvent, MenuItemClicked )
-_abstract_event_( "VCF::MenuItemEventHandler", VCF::MenuItemEvent, MenuItemUpdate )
+_abstract_delegate_( MenuItemDelegate, MenuItemClicked )
+_abstract_delegate_( MenuItemDelegate, MenuItemUpdate )
 _property_( String, "caption", getCaption, setCaption, "" )
 _class_rtti_end_
 
@@ -283,9 +286,9 @@ _class_rtti_end_
 /* 
 JC - Note that we should change this to RTTI as an interface!!!
 _class_abstract_rtti_(TabModel, "VCF::TabModel", "VCF::Model", TABMODEL_CLASSID )
-_abstract_event_("VCF::TabModelEventHandler", TabModel, VCF::TabModelEvent, TabPageAdded)
-_abstract_event_("VCF::TabModelEventHandler", TabModel, VCF::TabModelEvent, TabPageRemoved)
-_abstract_event_("VCF::TabModelEventHandler", TabModel, VCF::TabModelEvent, TabPageSelected)
+_abstract_delegate_("VCF::TabModelEventHandler", TabModel, VCF::TabModelEvent, TabPageAdded)
+_abstract_delegate_("VCF::TabModelEventHandler", TabModel, VCF::TabModelEvent, TabPageRemoved)
+_abstract_delegate_("VCF::TabModelEventHandler", TabModel, VCF::TabModelEvent, TabPageSelected)
 _class_rtti_end_(TabModel)
 */
 
@@ -298,19 +301,19 @@ _class_abstract_rtti_(TableCellItem, "VCF::Item", TABLECELLITEM_CLASSID)
 _class_rtti_end_
 
 _class_abstract_rtti_(TableItemEditor, "VCF::Object", TABLEITEMEDITOR_CLASSID)
-_event_("VCF::ItemEditorEventHandler", VCF::ItemEditorEvent, CellItemChanged )
-_event_("VCF::ItemEditorEventHandler", VCF::ItemEditorEvent, CellItemValidateChange )
+_delegate_(ItemEditorDelegate, CellItemChanged )
+_delegate_(ItemEditorDelegate, CellItemValidateChange )
 _class_rtti_end_
 
 
 /*
 _class_abstract_rtti_(TableModel, "VCF::TableModel", "VCF::AbstractModel", TABLEMODEL_CLASSID )
-_event_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableCellAdded )
-_event_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableCellDeleted )
-_event_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableRowsAdded )
-_event_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableRowsDeleted )
-_event_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableColumnsAdded )
-_event_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableColumnsDeleted )
+_delegate_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableCellAdded )
+_delegate_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableCellDeleted )
+_delegate_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableRowsAdded )
+_delegate_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableRowsDeleted )
+_delegate_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableColumnsAdded )
+_delegate_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableColumnsDeleted )
 _class_rtti_end_(TableModel);
 */
 
@@ -320,7 +323,7 @@ _class_rtti_end_(TableModel);
 _class_abstract_rtti_(ToggledButton, "VCF::CustomControl", TOGGLEDBUTTON_CLASSID)
 _property_(bool, "checked", isChecked, setChecked, "");
 _property_(String, "caption", getCaption, setCaption, "");
-_event_( "VCF::ButtonEventHandler", VCF::ButtonEvent, ButtonClicked )
+_delegate_( ButtonDelegate, ButtonClicked )
 _class_rtti_end_
 
 
@@ -333,9 +336,9 @@ _class_rtti_end_
 /*
 _class_abstract_rtti_(TreeModel, "VCF::TreeModel", "VCF::Model", TREEMODEL_CLASSID)
 //	_property_object_( TreeItem, "root", TreeModel::getRoot, TreeModel::setRoot );
-_abstract_event_( "VCF::TreeModelEventHandler", TreeModel, VCF::TreeModelEvent, RootNodeChanged )
-_abstract_event_( "VCF::TreeModelEventHandler", TreeModel, VCF::TreeModelEvent, NodeAdded )
-_abstract_event_( "VCF::TreeModelEventHandler", TreeModel, VCF::TreeModelEvent, NodeDeleted )
+_abstract_delegate_( "VCF::TreeModelEventHandler", TreeModel, VCF::TreeModelEvent, RootNodeChanged )
+_abstract_delegate_( "VCF::TreeModelEventHandler", TreeModel, VCF::TreeModelEvent, NodeAdded )
+_abstract_delegate_( "VCF::TreeModelEventHandler", TreeModel, VCF::TreeModelEvent, NodeDeleted )
 _class_rtti_end_
 */
 
@@ -346,11 +349,11 @@ _class_rtti_end_
 
 /*
 _class_rtti_(AbstractTreeModel, "VCF::AbstractTreeModel", "VCF::TreeModel", ABSTRACTTREEMODEL_CLASSID)
-_event_( "VCF::ModelEventHandler", AbstractTreeModel, VCF::ModelEvent, ModelEmptied )
-_event_( "VCF::ModelValidationEventHandler", AbstractTreeModel, VCF::ValidationEvent, ModelValidate )
-_event_( "VCF::TreeModelEventHandler", AbstractTreeModel, VCF::TreeModelEvent, RootNodeChanged )
-_event_( "VCF::TreeModelEventHandler", AbstractTreeModel, VCF::TreeModelEvent, NodeAdded )
-_event_( "VCF::TreeModelEventHandler", AbstractTreeModel, VCF::TreeModelEvent, NodeDeleted )
+_delegate_( "VCF::ModelEventHandler", AbstractTreeModel, VCF::ModelEvent, ModelEmptied )
+_delegate_( "VCF::ModelValidationEventHandler", AbstractTreeModel, VCF::ValidationEvent, ModelValidate )
+_delegate_( "VCF::TreeModelEventHandler", AbstractTreeModel, VCF::TreeModelEvent, RootNodeChanged )
+_delegate_( "VCF::TreeModelEventHandler", AbstractTreeModel, VCF::TreeModelEvent, NodeAdded )
+_delegate_( "VCF::TreeModelEventHandler", AbstractTreeModel, VCF::TreeModelEvent, NodeDeleted )
 _class_rtti_end_
 */
 
@@ -360,7 +363,7 @@ _class_rtti_end_
 
 
 _class_rtti_(ComboBoxControl, "VCF::CustomControl", COMBOBOXCONTROL_CLASSID )
-_event_("ItemEventHandler", VCF::ItemEvent, SelectionChanged )
+_delegate_(ItemDelegate, SelectionChanged )
 _class_rtti_end_
 
 
@@ -368,7 +371,7 @@ _class_rtti_(CommandButton, "VCF::Control", COMMANDBUTTON_CLASSID)
 _property_( String, "caption", getCaption, setCaption, "" );
 _property_enum_labeled_( ButtonCommandType, "commandType", getCommandType, setCommandType,
 					   BC_NONE, BC_MAYBE, 6, ButtonCommandTypeNames, "");
-_event_( "VCF::ButtonEventHandler", VCF::ButtonEvent, ButtonClicked )
+_delegate_( ButtonDelegate, ButtonClicked )
 _class_rtti_end_
 
 
@@ -388,34 +391,34 @@ _class_rtti_end_
 
 
 _class_rtti_(DefaultColumnItem, "VCF::ColumnItem", DEFAULTCOLUMNITEM_CLASSID)
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemPaint );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemChanged );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemAdded );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemDeleted );
+_delegate_(ItemDelegate, ItemPaint );
+_delegate_(ItemDelegate, ItemChanged );
+_delegate_(ItemDelegate, ItemSelected );
+_delegate_(ItemDelegate, ItemAdded );
+_delegate_(ItemDelegate, ItemDeleted );
 _class_rtti_end_
 
 _class_rtti_(DefaultColumnModel, "VCF::ColumnModel", DEFAULTCOLUMNMODEL_CLASSID)
-_event_( "VCF::ColumnModelEventHandler",  VCF::ColumnModelEvent, ContentsChanged )
-_event_( "VCF::ColumnModelEventHandler",  VCF::ColumnModelEvent, ItemAdded )
-_event_( "VCF::ColumnModelEventHandler",  VCF::ColumnModelEvent, ItemDeleted )
+_delegate_( ColumnModelDelegate, ContentsChanged )
+_delegate_( ColumnModelDelegate, ItemAdded )
+_delegate_( ColumnModelDelegate, ItemDeleted )
 _class_rtti_end_
 
 _class_rtti_(DefaultMenuItem, "VCF::MenuItem", DEFAULTMENUITEM_CLASSID)
-_event_( "VCF::MenuItemEventHandler", VCF::MenuItemEvent, MenuItemClicked )
-_event_( "VCF::MenuItemEventHandler", VCF::MenuItemEvent, MenuItemUpdate )
+_delegate_( MenuItemDelegate, MenuItemClicked )
+_delegate_( MenuItemDelegate, MenuItemUpdate )
 _class_rtti_end_
 
 
 _class_rtti_(DefaultListItem, "VCF::ListItem", DEFAULTLISTITEM_CLASSID)
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemPaint );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemChanged );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemAdded );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemDeleted );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, SubItemChanged );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, SubItemAdded );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, SubItemDeleted );
+_delegate_(ItemDelegate, ItemPaint );
+_delegate_(ItemDelegate, ItemChanged );
+_delegate_(ItemDelegate, ItemSelected );
+_delegate_(ItemDelegate, ItemAdded );
+_delegate_(ItemDelegate, ItemDeleted );
+_delegate_(ItemDelegate, SubItemChanged );
+_delegate_(ItemDelegate, SubItemAdded );
+_delegate_(ItemDelegate, SubItemDeleted );
 _class_rtti_end_
 
 
@@ -424,62 +427,64 @@ _class_rtti_end_
 
 
 _class_rtti_(DefaultTabModel, "VCF::Model", DEFAULTTABMODEL_CLASSID )
-	_event_("VCF::TabModelEventHandler", VCF::TabModelEvent, TabPageAdded )
-	_event_("VCF::TabModelEventHandler", VCF::TabModelEvent, TabPageRemoved )
-	_event_("VCF::TabModelEventHandler", VCF::TabModelEvent, TabPageSelected )
-	_event_( "VCF::ModelEventHandler", VCF::ModelEvent, ModelEmptied )
-	_event_( "VCF::ModelValidationEventHandler", VCF::ValidationEvent, ModelValidate )
+	_delegate_(TabModelDelegate, TabPageAdded )
+	_delegate_(TabModelDelegate, TabPageRemoved )
+	_delegate_(TabModelDelegate, TabPageSelected )
+	_delegate_( ModelDelegate, ModelEmptied )	
 _class_rtti_end_
 
 
 _class_rtti_(DefaultTabPage, "VCF::TabPage", DEFAULTTABPAGE_CLASSID)
-	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemPaint );
-	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemChanged );
-	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
-	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemAdded );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemDeleted );
+	_delegate_(ItemDelegate, ItemPaint );
+	_delegate_(ItemDelegate, ItemChanged );
+	_delegate_(ItemDelegate, ItemSelected );
+	_delegate_(ItemDelegate, ItemAdded );
+_delegate_(ItemDelegate, ItemDeleted );
 
 _class_rtti_end_
 
 
 _class_rtti_(DefaultTableCellItem, "VCF::TableCellItem", DEFAULTTABLECELLITEM_CLASSID)
-	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemPaint );
-	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemChanged );
-	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
-	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemAdded );
-	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemDeleted );
+	_delegate_(ItemDelegate, ItemPaint );
+	_delegate_(ItemDelegate, ItemChanged );
+	_delegate_(ItemDelegate, ItemSelected );
+	_delegate_(ItemDelegate, ItemAdded );
+	_delegate_(ItemDelegate, ItemDeleted );
 
 _class_rtti_end_
 
 
+
+//this class (and some other model classes) has some inheritance issues that
+//need to be cleared up - it affects the delegates
 _class_rtti_(DefaultTableModel, "VCF::Model", DEFAULTTABLEMODEL_CLASSID )
-	_event_( "VCF::TableModelEventHandler", VCF::TableModelEvent, TableCellAdded )
-	_event_( "VCF::TableModelEventHandler", VCF::TableModelEvent, TableCellDeleted )
-	_event_( "VCF::TableModelEventHandler", VCF::TableModelEvent, TableRowsAdded )
-	_event_( "VCF::TableModelEventHandler", VCF::TableModelEvent, TableRowsDeleted )
-	_event_( "VCF::TableModelEventHandler", VCF::TableModelEvent, TableColumnsAdded )
-	_event_( "VCF::TableModelEventHandler", VCF::TableModelEvent, TableColumnsDeleted )
+//	_delegate_( TableModelDelegate, TableCellAdded )
+//	_delegate_( TableModelDelegate, TableCellDeleted )
+//	_delegate_( TableModelDelegate, TableRowsAdded )
+//	_delegate_( TableModelDelegate, TableRowsDeleted )
+//	_delegate_( TableModelDelegate, TableColumnsAdded )
+//	_delegate_( TableModelDelegate, TableColumnsDeleted )
 _class_rtti_end_
 
 
 _class_rtti_(DefaultTextModel, "VCF::Model", DEFAULTTEXTMODEL_CLASSID)
-	_event_("VCF::TextModelEventHandler", VCF::TextEvent, TextModelChanged )
+	_delegate_( TextModelDelegate, TextModelChanged )
 _class_rtti_end_
 
 
 _class_rtti_(DefaultTreeItem, "VCF::TreeItem", DEFAULTTREEITEM_CLASSID)
-	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemPaint );
-	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemChanged );
-	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
-	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemAdded );
-	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemDeleted );
+	_delegate_(ItemDelegate, ItemPaint );
+	_delegate_(ItemDelegate, ItemChanged );
+	_delegate_(ItemDelegate, ItemSelected );
+	_delegate_(ItemDelegate, ItemAdded );
+	_delegate_(ItemDelegate, ItemDeleted );
 _class_rtti_end_
 
 
 _class_rtti_(DefaultTreeModel, "VCF::Model", DEFAULTTREEMODEL_CLASSID)
-	_event_( "VCF::TreeModelEventHandler", VCF::TreeModelEvent, RootNodeChanged )
-	_event_( "VCF::TreeModelEventHandler", VCF::TreeModelEvent, NodeAdded )
-	_event_( "VCF::TreeModelEventHandler", VCF::TreeModelEvent, NodeDeleted )
+	_delegate_(TreeModelDelegate, RootNodeChanged )
+	_delegate_(TreeModelDelegate, NodeAdded )
+	_delegate_(TreeModelDelegate, NodeDeleted )
 _class_rtti_end_
 
 
@@ -489,8 +494,8 @@ _class_rtti_end_
 
 _class_rtti_(HeaderControl, "VCF::CustomControl", HEADERCONTROL_CLASSID)
 	_property_object_( ColumnModel, "columnModel", getColumnModel, setColumnModel, "" );
-	_event_("VCF::MouseEventHandler", VCF::MouseEvent, ColumnItemClicked );
-	_event_("VCF::ItemEventHandler", VCF::ItemEvent, ColumnWidthChanged );
+	_delegate_(MouseDelegate, ColumnItemClicked );
+	_delegate_(ItemDelegate, ColumnWidthChanged );
 _class_rtti_end_
 
 
@@ -536,8 +541,8 @@ _property_enum_labeled_( IconAlignType, "iconAlignment", getIconAlignment, setIc
 _property_object_( ListModel, "listModel", getListModel, setListModel, "" );
 _property_object_ro_( ColumnModel, "columnModel", getColumnModel, "" );
 
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelectionChanged );
-_event_("VCF::MouseEventHandler", VCF::MouseEvent, ColumnItemClicked );
+_delegate_(ItemDelegate, ItemSelectionChanged );
+_delegate_(MouseDelegate, ColumnItemClicked );
 
 _class_rtti_end_
 
@@ -625,9 +630,9 @@ _class_rtti_end_
 _class_rtti_(TimerComponent, "VCF::Component", TIMERCOMPONENT_CLASSID)
 _property_( bool, "active",isActive, setActivated, "" );
 _property_( int32, "timeoutInterval", getTimeoutInterval, setTimeoutInterval, "" );
-_event_("VCF::TimerEventHandler", VCF::TimerEvent, TimerActivated );
-_event_("VCF::TimerEventHandler", VCF::TimerEvent, TimerDeactivated );
-_event_("VCF::TimerEventHandler", VCF::TimerEvent, TimerPulse );
+_delegate_(TimerDelegate, TimerActivated );
+_delegate_(TimerDelegate, TimerDeactivated );
+_delegate_(TimerDelegate, TimerPulse );
 _class_rtti_end_
 
 
@@ -654,18 +659,18 @@ _class_rtti_end_
 
 _class_rtti_(TreeControl, "VCF::Control", TREECONTROL_CLASSID )
 _property_object_( TreeModel, "treeModel", getTreeModel, setTreeModel, "" );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemExpanded );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemStateChangeRequested );
+_delegate_(ItemDelegate, ItemSelected );
+_delegate_(ItemDelegate, ItemExpanded );
+_delegate_(ItemDelegate, ItemStateChangeRequested );
 _class_rtti_end_
 
 
 
 _class_rtti_(TreeListControl, "VCF::CustomControl", TREELISTCONTROL_CLASSID )
 _property_object_( TreeModel, "treeModel", getTreeModel, setTreeModel, "" );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemSelected );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemExpanded );
-_event_("VCF::ItemEventHandler", VCF::ItemEvent, ItemStateChangeRequested );
+_delegate_(ItemDelegate, ItemSelected );
+_delegate_(ItemDelegate, ItemExpanded );
+_delegate_(ItemDelegate, ItemStateChangeRequested );
 _class_rtti_end_
 
 /*
@@ -676,9 +681,9 @@ _class_rtti_end_(UIApplication)
 
 _class_rtti_(Window, "VCF::Frame", WINDOW_CLASSID )
 _property_object_( MenuBar, "menuBar", getMenuBar, setMenuBar, "" );
-_event_("VCF::WindowEventHandler", VCF::WindowEvent, WindowRestore )
-_event_("VCF::WindowEventHandler", VCF::WindowEvent, WindowMaximize )
-_event_("VCF::WindowEventHandler", VCF::WindowEvent, WindowMinimize )
+_delegate_(WindowDelegate, WindowRestore )
+_delegate_(WindowDelegate, WindowMaximize )
+_delegate_(WindowDelegate, WindowMinimize )
 _class_rtti_end_
 
 
@@ -713,7 +718,7 @@ _class_rtti_end_
 
 
 _class_rtti_(SystemTray, "VCF::Component", SYSTEMTRAY_CLASSID )
-	_event_("VCF::GenericEventHandler", VCF::Event, TrayIconChanged )
+	_delegate_( EventDelegate, TrayIconChanged )
 	_property_object_( PopupMenu, "popupMenu", getPopupMenu, setPopupMenu, "" );
 	_property_( String, "tooltipText", getTooltipText, setTooltipText, "" );
 _class_rtti_end_

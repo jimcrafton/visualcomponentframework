@@ -148,22 +148,25 @@ you are finished defining your RTTI.
 */
 #define _event_(DelegateType,DelegateID) \
 	\
-	VCF::registerEvent<RttiClassType>( NULL, tmpClassName, \
+	VCF::registerEvent<RttiClassType>( tmpClassName, \
 							VCF::String(#DelegateType),\
 							VCF::String(#DelegateID), \
-							(VCF::DelegateProperty::DelegateMethod)&RttiClassType::get##DelegateID); \
+							(VCF::Delegate& (RttiClassType::*)(void))&RttiClassType::get##DelegateID); \
 							\
 
-	
+
+
+#define _delegate_(DelegateType,DelegateID)	 _event_(DelegateType,DelegateID) 
 
 #define _abstract_event_(DelegateType,DelegateID) \
-		VCF::registerEvent<RttiClassType>( NULL, tmpClassName, \
-							VCF::String(DelegateType), \
+		VCF::registerEvent<RttiClassType>( tmpClassName, \
+							VCF::String(#DelegateType), \
 							VCF::String(#DelegateID), \
 							NULL); \
 		\
 
 
+#define _abstract_delegate_(DelegateType,DelegateID)	 _abstract_event_(DelegateType,DelegateID) 
 
 #define _property_( type, propName, getFunc, setFunc, description ) \
 	VCF::registerPrimitiveProperty<type>( tmpClassName, VCF::String(propName), \
