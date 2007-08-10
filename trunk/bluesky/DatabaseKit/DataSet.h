@@ -200,6 +200,8 @@ namespace VCF {
 		bool accept;
 	};
 
+	typedef Delegate1<FilterRecordEvent*> FilterRecordDelegate; 
+
 
 	class DATABASEKIT_API DataErrorEvent : public Event {
 	public:
@@ -216,7 +218,7 @@ namespace VCF {
 		String reason;
 	};
 
-
+	typedef Delegate1<DataErrorEvent*> DataErrorDelegate; 
 
 
 	#define DATASET_CLASSID	"76ab89f0-66d1-4ba3-998e-4ec874faa6e1"
@@ -271,32 +273,32 @@ namespace VCF {
         virtual ~DataSet();
 
 
-		DELEGATE(AfterCancel);
-		DELEGATE(AfterClose);
-		DELEGATE(AfterDelete);
-		DELEGATE(AfterEdit);
-		DELEGATE(AfterInsert);
-		DELEGATE(AfterOpen);
-		DELEGATE(AfterPost);
-		DELEGATE(AfterScroll);
+		DELEGATE(EventDelegate,AfterCancel);
+		DELEGATE(EventDelegate,AfterClose);
+		DELEGATE(EventDelegate,AfterDelete);
+		DELEGATE(EventDelegate,AfterEdit);
+		DELEGATE(EventDelegate,AfterInsert);
+		DELEGATE(EventDelegate,AfterOpen);
+		DELEGATE(EventDelegate,AfterPost);
+		DELEGATE(EventDelegate,AfterScroll);
 
-		DELEGATE(BeforeCancel);
-		DELEGATE(BeforeClose);
-		DELEGATE(BeforeDelete);
-		DELEGATE(BeforeEdit);
-		DELEGATE(BeforeInsert);
-		DELEGATE(BeforeOpen);
-		DELEGATE(BeforePost);
-		DELEGATE(BeforeScroll);
+		DELEGATE(EventDelegate,BeforeCancel);
+		DELEGATE(EventDelegate,BeforeClose);
+		DELEGATE(EventDelegate,BeforeDelete);
+		DELEGATE(EventDelegate,BeforeEdit);
+		DELEGATE(EventDelegate,BeforeInsert);
+		DELEGATE(EventDelegate,BeforeOpen);
+		DELEGATE(EventDelegate,BeforePost);
+		DELEGATE(EventDelegate,BeforeScroll);
 
-		DELEGATE(CalcFields);
-		DELEGATE(DeleteError);
-		DELEGATE(EditError);
-		DELEGATE(NewRecord);
-		DELEGATE(PostError);
+		DELEGATE(EventDelegate,CalcFields);
+		DELEGATE(EventDelegate,DeleteError);
+		DELEGATE(EventDelegate,EditError);
+		DELEGATE(EventDelegate,NewRecord);
+		DELEGATE(DataErrorDelegate,PostError);
 
 
-		DELEGATE(FilterRecord);		
+		DELEGATE(FilterRecordDelegate,FilterRecord);		
 
 		String getPeerType() {
 			return peerType_;

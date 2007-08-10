@@ -21,7 +21,7 @@ namespace VCF {
     class DATABASEKIT_API Database : public Object {
     public:
 
-		DELEGATE(LoggedIn);
+		//DELEGATE(LoggedIn);
 
         Database();
 

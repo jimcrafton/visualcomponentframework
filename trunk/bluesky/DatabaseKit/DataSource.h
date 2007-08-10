@@ -28,9 +28,9 @@ namespace VCF {
 
 		typedef std::vector<DataLink*> DataLinkArray;
 
-		DELEGATE(StateChanged);
-		DELEGATE(DataChanged);
-		DELEGATE(UpdatedData);
+		DELEGATE(EventDelegate,StateChanged);
+		DELEGATE(EventDelegate,DataChanged);
+		DELEGATE(EventDelegate,UpdatedData);
 
 		DataSource();		
 

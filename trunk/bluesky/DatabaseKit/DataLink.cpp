@@ -310,7 +310,7 @@ void FieldDataLink::recordChanged( DataField* field )
 {
 	if ( NULL == field || (field == field_) ) {
 		Event e(this,0);
-		DataChange.fireEvent( &e );
+		DataChange( &e );
 		
 		modified_ = false;
 	}
@@ -321,7 +321,7 @@ void FieldDataLink::updateData()
 	if ( modified_ ) {
 		if ( NULL != field_ ) {
 			Event e(this,0);
-			UpdatedData.fireEvent( &e );
+			UpdatedData( &e );
 		}
 
 		modified_ = false;
@@ -333,7 +333,7 @@ void FieldDataLink::activeStateChanged()
 	updateField();
 
 	Event e(this,0);
-	ActiveChange.fireEvent( &e );
+	ActiveChange( &e );
 }
 
 void FieldDataLink::updateField()

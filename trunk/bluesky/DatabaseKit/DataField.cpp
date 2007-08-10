@@ -46,7 +46,7 @@ void DataField::change()
 {
 	Event e(this,0);
 
-	Changed.fireEvent(&e);
+	Changed(&e);
 }
 
 void DataField::setDataSet( DataSet* val )
@@ -80,7 +80,7 @@ void DataField::validate( const unsigned char* buffer, size_t bufferSize )
 	validating_ = true;
 
 	try {
-		Validate.fireEvent( &e );
+		Validate( &e );
 	}
 	catch (...) {
 		

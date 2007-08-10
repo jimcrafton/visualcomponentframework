@@ -112,10 +112,10 @@ namespace VCF {
 	public:
 		FieldDataLink();
 
-		DELEGATE(DataChange);
-		DELEGATE(EditingChange);
-		DELEGATE(UpdatedData);
-		DELEGATE(ActiveChange);
+		DELEGATE(EventDelegate,DataChange);
+		DELEGATE(EventDelegate,EditingChange);
+		DELEGATE(EventDelegate,UpdatedData);
+		DELEGATE(EventDelegate,ActiveChange);
 
 		virtual void recordChanged( DataField* field );
 
