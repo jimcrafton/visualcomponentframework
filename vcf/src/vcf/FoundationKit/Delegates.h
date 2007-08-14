@@ -1108,11 +1108,11 @@ public:
 		return result;
 	}
 
-	void operator() ( P1 p1, P1 p2, P3 p3 ) {
+	void operator() ( P1 p1, P2 p2, P3 p3 ) {
 		invoke( p1, p2, p3 );
 	}
 
-	void invoke( P1 p1, P1 p2, P3 p3 ) {
+	void invoke( P1 p1, P2 p2, P3 p3 ) {
 		std::vector<CallBack*> tmp;
 		getCallbacks(tmp);
 
@@ -1128,7 +1128,7 @@ public:
 	}
 
 	
-	AsyncResult* beginInvoke( P1 p1, P1 p2, P3 p3, AsyncCallback* callback ) {
+	AsyncResult* beginInvoke( P1 p1, P2 p2, P3 p3, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
 		std::vector<CallBack*> tmp;
@@ -1288,11 +1288,11 @@ public:
 		return result;
 	}
 
-	void operator() ( P1 p1, P1 p2, P3 p3, P4 p4 ) {
+	void operator() ( P1 p1, P2 p2, P3 p3, P4 p4 ) {
 		invoke( p1, p2, p3, p4 );
 	}
 
-	void invoke( P1 p1, P1 p2, P3 p3, P4 p4 ) {
+	void invoke( P1 p1, P2 p2, P3 p3, P4 p4 ) {
 		std::vector<CallBack*> tmp;
 		getCallbacks(tmp);
 
@@ -1308,7 +1308,7 @@ public:
 	}
 
 	
-	AsyncResult* beginInvoke( P1 p1, P1 p2, P3 p3, P4 p4, AsyncCallback* callback ) {
+	AsyncResult* beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
 		std::vector<CallBack*> tmp;
@@ -1470,7 +1470,7 @@ public:
 		return result;
 	}
 
-	void operator() ( P1 p1, P1 p2, P3 p3, P4 p4, P5 p5 ) {
+	void operator() ( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5 ) {
 		invoke( p1, p2, p3, p4, p5 );
 	}
 
@@ -1490,7 +1490,7 @@ public:
 	}
 
 	
-	AsyncResult* beginInvoke( P1 p1, P1 p2, P3 p3, P4 p4, P5 p5, AsyncCallback* callback ) {
+	AsyncResult* beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
 		std::vector<CallBack*> tmp;
@@ -1658,11 +1658,11 @@ public:
 		return result;
 	}
 
-	void operator() ( P1 p1, P1 p2, P3 p3, P4 p4, P5 p5, P6 p6 ) {
+	void operator() ( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6 ) {
 		invoke( p1, p2, p3, p4, p5, p6 );
 	}
 
-	void invoke( P1 p1, P1 p2, P3 p3, P4 p4, P5 p5, P6 p6 ) {
+	void invoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6 ) {
 		std::vector<CallBack*> tmp;
 		getCallbacks(tmp);
 
@@ -1678,7 +1678,7 @@ public:
 	}
 
 	
-	AsyncResult* beginInvoke( P1 p1, P1 p2, P3 p3, P4 p4, P5 p5, P6 p6, AsyncCallback* callback ) {
+	AsyncResult* beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, AsyncCallback* callback ) {
 		AsyncResult* result = new AsyncResult(callback,runCallbacksAsync_);
 
 		std::vector<CallBack*> tmp;
