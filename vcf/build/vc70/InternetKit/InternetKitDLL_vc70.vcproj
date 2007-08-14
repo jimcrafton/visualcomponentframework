@@ -39,6 +39,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="urlmon.lib"
 				OutputFile="..\..\..\bin\InternetKit_vc70_d.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
