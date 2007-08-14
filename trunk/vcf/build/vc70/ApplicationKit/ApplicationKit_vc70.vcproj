@@ -127,27 +127,6 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationKitSelectLib.h">
 			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonColorDialog.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileBrowseDialog.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileOpenDialog.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileSaveDialog.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFontDialog.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\TransparentWindow.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="Res"
@@ -159,14 +138,14 @@
 					<Tool
 						Name="VCResourceCompilerTool"
 						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories="\Dev\vcfdev\scripttest\vcf\build\resources\win32\"/>
+						AdditionalIncludeDirectories="\Dev\vcfdev\vcf\build\resources\win32\"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCResourceCompilerTool"
 						PreprocessorDefinitions=""
-						AdditionalIncludeDirectories="\Dev\vcfdev\scripttest\vcf\build\resources\win32\"/>
+						AdditionalIncludeDirectories="\Dev\vcfdev\vcf\build\resources\win32\"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -571,6 +550,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonColorDialog.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonDialog.h">
 			</File>
 			<File
@@ -592,6 +574,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileBrowseDialog.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileDialog.cpp">
@@ -637,6 +622,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileOpenDialog.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileSaveDialog.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -655,6 +643,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFileSaveDialog.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFontDialog.cpp">
@@ -677,6 +668,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonFontDialog.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -695,6 +689,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentEditor.h">
@@ -1202,6 +1199,23 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\PopupWindow.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\PropertyEditor.h">
@@ -1263,9 +1277,46 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TransparentWindow.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\TransparentWindow.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\UIComponent.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\UIMetricsManager.h">
@@ -1275,6 +1326,23 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\UIShell.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\UIShell.h">
@@ -1330,6 +1398,23 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32UIShell.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Window.cpp">
@@ -1976,6 +2061,23 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PopupWindowPeer.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PopupWindowPeer.h">
@@ -2120,6 +2222,23 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32TransparentWindowPeer.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32TransparentWindowPeer.h">
@@ -2188,12 +2307,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ColumnModelEvent.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentEvent.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\ControlEvent.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\FocusEvent.h">

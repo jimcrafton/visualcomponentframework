@@ -244,10 +244,6 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\Image.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\GraphicsKit\ImageEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\ImageList.h
 # End Source File
 # Begin Source File

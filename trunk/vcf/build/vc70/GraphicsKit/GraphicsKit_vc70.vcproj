@@ -391,15 +391,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Image.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\ImageEvent.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
@@ -417,6 +408,12 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\Image.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ImageList.h">
