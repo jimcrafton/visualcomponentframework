@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="GraphicsBasics"
-	ProjectGUID="{FC6F4770-9489-42E5-A96C-E04CD475A850}"
+	ProjectGUID="{5A11B5B0-708D-41DB-B435-860F6A48241D}"
 	>
 	<Platforms>
 		<Platform

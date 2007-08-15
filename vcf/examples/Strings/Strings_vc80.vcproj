@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="Strings"
-	ProjectGUID="{5982EE7A-8ECB-47BC-8FEC-6389B9313FEF}"
+	ProjectGUID="{43B0EE46-6788-45D1-84F0-44EE2607D66F}"
 	>
 	<Platforms>
 		<Platform
@@ -70,7 +70,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib"
 				OutputFile="vc80\Release\Strings_vc80.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"

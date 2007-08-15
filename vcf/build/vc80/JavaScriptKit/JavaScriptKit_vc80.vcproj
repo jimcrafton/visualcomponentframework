@@ -3,8 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="JavaScriptKit"
-	ProjectGUID="{C02013EC-AAEE-44C1-B6E5-9A4341C0D873}"
-	RootNamespace="JavaScriptKit"
+	ProjectGUID="{966DC70D-194B-4BAA-A214-0E3853240C2A}"
 	>
 	<Platforms>
 		<Platform
@@ -41,7 +40,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
+				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_ROOT)/src,./,$(VCF_ROOT)/src/JavaScriptKit/js-impl"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;USE_FOUNDATIONKIT_LIB;EXPORT_JS_API;XP_WIN"
@@ -127,7 +126,7 @@
 				PrecompiledHeaderFile=".\vc80\DebugS/JavaScriptKit_vc80.pch"
 				AssemblerListingLocation=".\vc80\DebugS/"
 				ObjectFile=".\vc80\DebugS/"
-				ProgramDataBaseFileName=".\vc80\DebugS/"
+				ProgramDataBaseFileName="..\..\..\lib\JavaScriptKit_vc80_sd.pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"

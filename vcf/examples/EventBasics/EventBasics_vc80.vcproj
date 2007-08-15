@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="EventBasics"
-	ProjectGUID="{6526562B-25C4-4FBC-BE95-78B698DB3DF2}"
+	ProjectGUID="{79FC3601-5877-4936-8EA2-16F585DDEB0E}"
 	>
 	<Platforms>
 		<Platform

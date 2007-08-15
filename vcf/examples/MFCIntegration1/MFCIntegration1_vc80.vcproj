@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="MFCIntegration1"
-	ProjectGUID="{2DB85331-C153-41D1-A653-275B0E2A0B4C}"
+	ProjectGUID="{E0D6910A-836E-4D97-8115-0D97BFCB6CCC}"
 	Keyword="MFCProj"
 	>
 	<Platforms>

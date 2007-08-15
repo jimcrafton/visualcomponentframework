@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="InternetKit"
-	ProjectGUID="{177137B4-88BC-4398-ACC0-91DC097AA54D}"
+	ProjectGUID="{0D5DAF05-C077-4424-A816-8E1B1FB848DC}"
 	>
 	<Platforms>
 		<Platform

@@ -1,11 +1,11 @@
 Microsoft Visual Studio Solution File, Format Version 8.00
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libXmake", ".\libXmake_vc71.vcproj", "{c76867a6-cf04-41c6-b465-7af89272982b}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libXmake", ".\libXmake_vc71.vcproj", "{1e06ec25-66b1-4aa6-b302-54bb1de7ed18}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xmake", ".\xmake_vc71.vcproj", "{bb206c40-d6a1-4b4b-8826-f33def1806a8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xmake", ".\xmake_vc71.vcproj", "{eb369977-8b72-4abc-a2bc-ae1c0e2c4571}"
 	ProjectSection(ProjectDependencies) = postProject
-		{c76867a6-cf04-41c6-b465-7af89272982b} = {c76867a6-cf04-41c6-b465-7af89272982b}
+		{1e06ec25-66b1-4aa6-b302-54bb1de7ed18} = {1e06ec25-66b1-4aa6-b302-54bb1de7ed18}
 	EndProjectSection
 EndProject
 Global
@@ -14,10 +14,10 @@ Global
 		Release = Release
 	EndGlobalSection
 	GlobalSection(ProjectConfiguration) = postSolution
-		{c76867a6-cf04-41c6-b465-7af89272982b}.Debug.ActiveCfg = Debug|Win32
-		{c76867a6-cf04-41c6-b465-7af89272982b}.Release.ActiveCfg = Release|Win32
-		{bb206c40-d6a1-4b4b-8826-f33def1806a8}.Debug.ActiveCfg = Debug|Win32
-		{bb206c40-d6a1-4b4b-8826-f33def1806a8}.Release.ActiveCfg = Release|Win32
+		{1e06ec25-66b1-4aa6-b302-54bb1de7ed18}.Debug.ActiveCfg = Debug|Win32
+		{1e06ec25-66b1-4aa6-b302-54bb1de7ed18}.Release.ActiveCfg = Release|Win32
+		{eb369977-8b72-4abc-a2bc-ae1c0e2c4571}.Debug.ActiveCfg = Debug|Win32
+		{eb369977-8b72-4abc-a2bc-ae1c0e2c4571}.Release.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

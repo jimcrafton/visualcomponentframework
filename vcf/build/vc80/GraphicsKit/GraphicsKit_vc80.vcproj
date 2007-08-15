@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="GraphicsKit"
-	ProjectGUID="{505E7AE6-3414-4D22-9BE7-87EC093FED53}"
+	ProjectGUID="{4D9AC1A3-CB31-4DC7-9841-DD4A6471E2FC}"
 	>
 	<Platforms>
 		<Platform
@@ -442,6 +442,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\GradientFills.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsContext.cpp"
 				>
 				<FileConfiguration
@@ -500,18 +504,6 @@
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp"
 				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Image.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\ImageEvent.cpp"
-				>
 				<FileConfiguration
 					Name="Release|Win32"
 					>
@@ -530,6 +522,14 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\Image.h"
+				>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ImageList.h"

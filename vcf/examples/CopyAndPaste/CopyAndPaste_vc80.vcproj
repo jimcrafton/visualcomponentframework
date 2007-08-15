@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="CopyAndPaste"
-	ProjectGUID="{D6A7A039-A854-468E-A3A1-4D9349E02C8D}"
+	ProjectGUID="{A7C33D87-EC2A-4CCD-B101-11AEE342A854}"
 	>
 	<Platforms>
 		<Platform

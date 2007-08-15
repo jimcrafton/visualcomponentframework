@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="xmake"
-	ProjectGUID="{C8E3DF07-3CE0-47B3-B524-3D4B9F280B0D}"
+	ProjectGUID="{EBCEA503-1AAF-4FC0-8E10-5C73F1712E04}"
 	>
 	<Platforms>
 		<Platform
@@ -70,6 +70,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="odbc32.lib odbccp32.lib"
 				OutputFile="..\..\bin\xmake.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -163,6 +164,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="odbc32.lib odbccp32.lib"
 				OutputFile="..\..\bin\xmake.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"

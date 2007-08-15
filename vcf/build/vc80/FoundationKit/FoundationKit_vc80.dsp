@@ -40,7 +40,7 @@ RSC=rc.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_ROOT)/src" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"vcf/FoundationKit/FoundationKit.h" /FD /c
-# SUBTRACT CPP /WX /FR
+# SUBTRACT CPP /WX /Fr
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -63,8 +63,8 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "vc80\DebugS\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Fd"..\..\..\lib\FoundationKit_vc80_sd.pdb" /Yu"vcf/FoundationKit/FoundationKit.h" /FD /GZ /c
-# SUBTRACT CPP /WX /FR
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"vcf/FoundationKit/FoundationKit.h" /Fd"..\..\..\lib\FoundationKit_vc80_sd.pdb" /FD /GZ /c
+# SUBTRACT CPP /WX /Fr
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -99,6 +99,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitSelectLib.h
 
 SOURCE=..\..\..\src\vcf\FoundationKit\FrameworkConfig.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\IniFini.h
+# End Source File
 # End Group
 # Begin Group "Source Files"
 
@@ -111,6 +115,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKit.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\IniFini.cpp
 # End Source File
 # End Group
 # Begin Group "Peers"
@@ -350,23 +358,15 @@ SOURCE=..\..\..\src\vcf\FoundationKit\TypeCastException.h
 # PROP Default_Filter "*.h"
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\Delegate.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Delegates.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\Event.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Delegates.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\Event.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\EventHandler.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\EventHandler.h
 # End Source File
 # Begin Source File
 
@@ -378,15 +378,7 @@ SOURCE=..\..\..\src\vcf\FoundationKit\OutputReadyEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\ThreadEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -492,6 +484,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\TextOutputStream.h
 
 SOURCE=..\..\..\src\vcf\FoundationKit\VariantDataStream.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFOutputStream.cpp
+# End Source File
 # End Group
 # Begin Group "Utils"
 
@@ -543,14 +543,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\Parser.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\Parser.h
 # End Source File
 # Begin Source File
 
@@ -606,6 +598,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\VCFProcess.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFParser.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFParser.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\XMLParser.cpp
 # End Source File
 # Begin Source File
@@ -619,6 +619,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\XMLParser.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\CommonDefines.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Component.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\ComponentInfo.cpp
 # End Source File
 # Begin Source File
 

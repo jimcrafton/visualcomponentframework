@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="Browser"
-	ProjectGUID="{D5DD97A8-79CA-4521-A493-F77A1552891D}"
+	ProjectGUID="{E51BC538-2B58-4596-B941-174061F52142}"
 	>
 	<Platforms>
 		<Platform

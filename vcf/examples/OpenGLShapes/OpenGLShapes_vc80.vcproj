@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="OpenGLShapes"
-	ProjectGUID="{9884820A-2E0A-4266-A6CC-A13F83BB0256}"
+	ProjectGUID="{DD2BB74F-3D09-48E2-A875-14D7DBBB3160}"
 	>
 	<Platforms>
 		<Platform

@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="ParticleEditor"
-	ProjectGUID="{0162E66E-B8A0-4024-A6A2-F7557DE4F3EF}"
+	ProjectGUID="{4E147950-76AA-48F1-9EC9-76A57E636D21}"
 	>
 	<Platforms>
 		<Platform

@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="ThreadsInGUI"
-	ProjectGUID="{87CB044D-9C4D-48A1-A754-63C31EB8BEF8}"
+	ProjectGUID="{10B0DA0A-CDB5-422A-99B1-AC50A17FAC9D}"
 	>
 	<Platforms>
 		<Platform

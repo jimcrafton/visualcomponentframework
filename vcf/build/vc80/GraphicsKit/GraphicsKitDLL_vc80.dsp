@@ -68,7 +68,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /Fd"..\..\..\bin\GraphicsKit_vc80_d.pdb" /Yu"vcf/GraphicsKit/GraphicsKit.h" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /Yu"vcf/GraphicsKit/GraphicsKit.h" /Fd"..\..\..\bin\GraphicsKit_vc80_d.pdb" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -208,6 +208,10 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\FontPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\GraphicsKit\GradientFills.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\GraphicsKit\GraphicsContext.cpp
 # End Source File
 # Begin Source File
@@ -228,19 +232,15 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\GraphicsResourceBundlePeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\GraphicsKit\Image.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\GraphicsKit\ImageBits.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\GraphicsKit\ImageEvent.cpp
 # End Source File
 # Begin Source File
 

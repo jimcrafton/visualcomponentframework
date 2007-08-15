@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="TextLayout"
-	ProjectGUID="{007D9B8E-1887-4F39-BD61-2A50893161E1}"
+	ProjectGUID="{0A46D36B-1A27-43B0-94AA-B488968DD190}"
 	>
 	<Platforms>
 		<Platform

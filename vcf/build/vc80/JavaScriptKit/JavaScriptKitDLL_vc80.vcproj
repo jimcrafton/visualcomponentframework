@@ -3,8 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="JavaScriptKitDLL"
-	ProjectGUID="{5884FBF5-2EC8-443C-BFF7-26D018FA6B70}"
-	RootNamespace="JavaScriptKitDLL"
+	ProjectGUID="{0B47E87D-E3BB-4F3F-8D8E-40ABB2C06CD9}"
 	>
 	<Platforms>
 		<Platform
@@ -57,7 +56,7 @@
 				PrecompiledHeaderFile=".\vc80\DebugDLL/JavaScriptKitDLL_vc80.pch"
 				AssemblerListingLocation=".\vc80\DebugDLL/"
 				ObjectFile=".\vc80\DebugDLL/"
-				ProgramDataBaseFileName=".\vc80\DebugDLL/"
+				ProgramDataBaseFileName="..\..\..\bin\JavaScriptKit_vc80_d.pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
@@ -75,7 +74,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="../../../bin/JavaScriptKit_vc80_d.dll"
+				OutputFile="..\..\..\bin\JavaScriptKit_vc80_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_ROOT)/lib"
@@ -144,7 +143,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
+				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_ROOT)/src,./,$(VCF_ROOT)/src/JavaScriptKit/js-impl"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN"

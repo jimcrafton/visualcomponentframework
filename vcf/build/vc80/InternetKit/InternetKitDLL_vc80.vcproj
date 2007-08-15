@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="InternetKitDLL"
-	ProjectGUID="{298C4E5D-293B-43FC-A61F-BF33596B5637}"
+	ProjectGUID="{F10C9E60-2AC8-492F-8232-59380B658734}"
 	>
 	<Platforms>
 		<Platform
@@ -172,7 +172,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="urlmon.lib"
 				OutputFile="..\..\..\bin\InternetKit_vc80.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"

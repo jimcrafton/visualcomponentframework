@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="RemoteObjectKit"
-	ProjectGUID="{86B5EE3A-638C-481A-9869-4230FC112429}"
+	ProjectGUID="{F0C8361E-2E7A-412C-910B-4B17F7C418F9}"
 	>
 	<Platforms>
 		<Platform
@@ -76,6 +76,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="odbc32.lib odbccp32.lib"
 				OutputFile="..\..\..\bin\RemoteObjectKit_vc80_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -175,6 +176,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="odbc32.lib odbccp32.lib"
 				OutputFile="..\..\..\bin\RemoteObjectKit_vc80.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
