@@ -3,8 +3,8 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="JavaScriptKitDLL"
-	ProjectGUID="{5884FBF5-2EC8-443C-BFF7-26D018FA6B70}"
-	RootNamespace="JavaScriptKitDLL">
+	SccProjectName=""
+	SccLocalPath="">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -12,8 +12,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\..\..\..\bin"
-			IntermediateDirectory=".\vc71\DebugDLL"
+			OutputDirectory="..\..\..\bin\"
+			IntermediateDirectory=".\vc71\DebugDLL\"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
@@ -21,29 +21,30 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(VCF_ROOT)/src&quot;;&quot;$(VCF_ROOT)/src/JavaScriptKit/js-impl&quot;"
+				AdditionalIncludeDirectories="$(VCF_ROOT)\src,.\,$(VCF_ROOT)\src\JavaScriptKit\js-impl\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN"
-				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\vc71\DebugDLL/JavaScriptKitDLL_vc71.pch"
-				AssemblerListingLocation=".\vc71\DebugDLL/"
-				ObjectFile=".\vc71\DebugDLL/"
-				ProgramDataBaseFileName=".\vc71\DebugDLL/"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderFile=".\vc71\DebugDLL\JavaScriptKitDLL_vc71_d.pch"
+				AssemblerListingLocation=".\vc71\DebugDLL\"
+				ObjectFile=".\vc71\DebugDLL\"
+				ProgramDataBaseFileName="..\..\..\bin\JavaScriptKit_vc71_d.pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
-				DebugInformationFormat="4"/>
+				DebugInformationFormat="4"
+				CompileAs="0"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="../../../bin/JavaScriptKit_vc71_d.dll"
-				LinkIncremental="2"
+				OutputFile="..\..\..\bin\JavaScriptKit_vc71_d.dll"
+				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="$(VCF_ROOT)/lib"
+				AdditionalLibraryDirectories="$(VCF_ROOT)\lib\"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\..\..\..\bin/JavaScriptKit_vc71_d.pdb"
+				ProgramDatabaseFile="..\..\..\bin\JavaScriptKit_vc71_d.pdb"
 				ImportLibrary="../../../lib/JavaScriptKit_vc71_d.lib"
 				TargetMachine="1"/>
 			<Tool
@@ -52,7 +53,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\..\..\..\bin/JavaScriptKitDLL_vc71.tlb"
+				TypeLibraryName="..\..\..\bin\JavaScriptKitDLL_vc71_d.tlb"
 				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -77,28 +78,30 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\..\..\..\bin"
-			IntermediateDirectory=".\vc71\ReleaseDLL"
+			OutputDirectory="..\..\..\bin\"
+			IntermediateDirectory=".\vc71\ReleaseDLL\"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
+				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_ROOT)/src,./,$(VCF_ROOT)/src/JavaScriptKit/js-impl"
+				AdditionalIncludeDirectories="$(VCF_ROOT)\src,.\,$(VCF_ROOT)\src\JavaScriptKit\js-impl\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
 				RuntimeTypeInfo="TRUE"
-				PrecompiledHeaderFile=".\vc71\ReleaseDLL/JavaScriptKitDLL_vc71.pch"
-				AssemblerListingLocation=".\vc71\ReleaseDLL/"
-				ObjectFile=".\vc71\ReleaseDLL/"
-				ProgramDataBaseFileName=".\vc71\ReleaseDLL/"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderFile=".\vc71\ReleaseDLL\JavaScriptKitDLL_vc71.pch"
+				AssemblerListingLocation=".\vc71\ReleaseDLL\"
+				ObjectFile=".\vc71\ReleaseDLL\"
+				ProgramDataBaseFileName=".\vc71\ReleaseDLL\"
 				WarningLevel="3"
-				SuppressStartupBanner="TRUE"/>
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
@@ -106,7 +109,7 @@
 				OutputFile="..\..\..\bin\JavaScriptKit_vc71.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				ProgramDatabaseFile=".\..\..\..\bin/JavaScriptKit_vc71.pdb"
+				ProgramDatabaseFile="..\..\..\bin\JavaScriptKit_vc71.pdb"
 				ImportLibrary=".\..\..\..\bin/JavaScriptKit_vc71.lib"
 				TargetMachine="1"/>
 			<Tool
@@ -115,7 +118,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\..\..\..\bin/JavaScriptKitDLL_vc71.tlb"
+				TypeLibraryName="..\..\..\bin\JavaScriptKitDLL_vc71.tlb"
 				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -151,15 +154,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
@@ -171,22 +177,30 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="js-impl">
+			Name="Resource Files"
+			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
+		</Filter>
+		<Filter
+			Name="js-impl"
+			Filter="">
 			<File
 				RelativePath="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_acos.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -195,15 +209,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -212,15 +229,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -229,15 +249,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -246,15 +269,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -263,15 +289,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -280,15 +309,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -297,15 +329,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -314,15 +349,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -331,15 +369,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -348,15 +389,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -365,15 +409,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -382,15 +429,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -399,15 +449,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -416,15 +469,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -433,15 +489,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -450,15 +509,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -467,15 +529,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -484,15 +549,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -501,15 +569,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -518,15 +589,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -535,15 +609,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -552,15 +629,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -569,15 +649,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -589,15 +672,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -606,15 +692,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -626,15 +715,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -646,15 +738,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -666,15 +761,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -689,15 +787,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -712,15 +813,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -741,15 +845,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -761,15 +868,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -781,15 +891,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -801,15 +914,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -821,15 +937,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -841,15 +960,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -861,15 +983,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -881,15 +1006,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -901,15 +1029,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -921,15 +1052,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -941,15 +1075,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -961,15 +1098,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -981,15 +1121,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1001,15 +1144,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1018,15 +1164,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1038,15 +1187,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1058,15 +1210,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1078,15 +1233,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1098,15 +1256,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1124,15 +1285,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1144,15 +1308,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1170,15 +1337,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1190,15 +1360,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1210,15 +1383,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1230,15 +1406,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1253,15 +1432,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1276,15 +1458,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1296,15 +1481,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1316,15 +1504,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1333,15 +1524,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1350,15 +1544,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1367,15 +1564,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1384,15 +1584,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1401,15 +1604,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1418,15 +1624,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1441,15 +1650,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1458,15 +1670,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1475,15 +1690,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1492,15 +1710,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1509,15 +1730,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1526,15 +1750,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1543,15 +1770,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1560,15 +1790,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1577,15 +1810,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1594,15 +1830,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1611,15 +1850,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1628,15 +1870,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1645,15 +1890,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1662,15 +1910,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1679,15 +1930,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1696,15 +1950,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1713,15 +1970,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1730,15 +1990,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1747,15 +2010,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1764,15 +2030,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1781,15 +2050,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1798,15 +2070,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1815,15 +2090,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1832,15 +2110,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1849,15 +2130,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1866,15 +2150,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1883,15 +2170,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1900,15 +2190,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1917,15 +2210,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1934,15 +2230,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1951,15 +2250,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1968,15 +2270,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -1985,15 +2290,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2002,15 +2310,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2019,15 +2330,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2036,15 +2350,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2053,15 +2370,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2070,15 +2390,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2087,15 +2410,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2104,15 +2430,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2121,15 +2450,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2138,15 +2470,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2155,15 +2490,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2172,15 +2510,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2189,15 +2530,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2206,15 +2550,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2223,15 +2570,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2240,15 +2590,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2257,15 +2610,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2274,15 +2630,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -2291,21 +2650,20 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="0"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
+						Optimization="1"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
+						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_FOUNDATIONKIT_DLL;JAVASCRIPTKIT_DLL;JAVASCRIPTKIT_EXPORTS;EXPORT_JS_API;XP_WIN;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
 		</Filter>
 	</Files>
 	<Globals>

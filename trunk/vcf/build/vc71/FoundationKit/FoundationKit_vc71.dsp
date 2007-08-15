@@ -214,6 +214,22 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\Win32SemaphorePeer.cpp
 # End Source File
 # Begin Source File
@@ -350,23 +366,15 @@ SOURCE=..\..\..\src\vcf\FoundationKit\TypeCastException.h
 # PROP Default_Filter "*.h"
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\Delegate.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Delegates.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\Event.cpp
+SOURCE=..\..\..\src\vcf\FoundationKit\Delegates.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\Event.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\EventHandler.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\EventHandler.h
 # End Source File
 # Begin Source File
 
@@ -378,15 +386,7 @@ SOURCE=..\..\..\src\vcf\FoundationKit\OutputReadyEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\ThreadEvent.cpp
 # End Source File
 # Begin Source File
 
@@ -530,6 +530,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ErrorLog.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\IniFini.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\Library.cpp
 # End Source File
 # Begin Source File
@@ -551,14 +555,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\Parser.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\Parser.h
 # End Source File
 # Begin Source File
 
@@ -611,6 +607,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\VCFProcess.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\VCFProcess.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFParser.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFParser.h
 # End Source File
 # Begin Source File
 
@@ -703,10 +707,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ResourceBundle.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\ResourceBundle.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSource.h
 # End Source File
 # Begin Source File
 
@@ -910,6 +910,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\RunLoop.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSource.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSource.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\Runnable.h
 # End Source File
 # Begin Source File
@@ -931,6 +939,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Thread.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\Thread.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\ThreadedFunctions.h
 # End Source File
 # Begin Source File
 

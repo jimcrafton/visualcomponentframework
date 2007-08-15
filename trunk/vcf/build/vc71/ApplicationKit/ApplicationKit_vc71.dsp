@@ -102,34 +102,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ApplicationKitPrivate.h
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ApplicationKitSelectLib.h
 # End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonColorDialog.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileBrowseDialog.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileOpenDialog.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileSaveDialog.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFontDialog.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\TransparentWindow.h
-# End Source File
 # End Group
 # Begin Group "Res"
 
@@ -309,11 +281,19 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\CommonColorDialog.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonColorDialog.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\CommonDialog.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileBrowseDialog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileBrowseDialog.h
 # End Source File
 # Begin Source File
 
@@ -329,7 +309,15 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileOpenDialog.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileOpenDialog.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileSaveDialog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFileSaveDialog.h
 # End Source File
 # Begin Source File
 
@@ -337,7 +325,15 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFontDialog.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonFontDialog.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.h
 # End Source File
 # Begin Source File
 
@@ -574,6 +570,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TitledBorder.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\TransparentWindow.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\TransparentWindow.h
 # End Source File
 # Begin Source File
 
@@ -966,14 +966,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnItemEvent.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnModelEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\ControlEvent.h
 # End Source File
 # Begin Source File
 

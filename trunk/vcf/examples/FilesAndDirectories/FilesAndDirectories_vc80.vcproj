@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="FilesAndDirectories"
-	ProjectGUID="{952C1EC3-A1A8-4F5C-A191-07DB4011FA2D}"
+	ProjectGUID="{0767DAFD-ECB7-44B0-B3AF-36AEC79F79B8}"
 	>
 	<Platforms>
 		<Platform

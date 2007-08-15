@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="HTMLKitDll"
-	ProjectGUID="{A0CB95D9-CDF6-4D02-BBA0-EEC6631FE44F}"
+	ProjectGUID="{AF6D7A91-F2FA-4ECA-8098-EC83293D5088}"
 	>
 	<Platforms>
 		<Platform
@@ -76,7 +76,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib"
 				OutputFile="..\..\..\bin\HTMLKit_vc80_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -176,7 +175,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib"
 				OutputFile="..\..\..\bin\HTMLKit_vc80.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"

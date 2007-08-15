@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="vcfAll"
-	ProjectGUID="{4DD03C0E-C924-4EAD-B535-8EF59C4E8852}"
+	ProjectGUID="{42B5C2C1-64CD-4BDF-B428-1B8C33864A15}"
 	Keyword="MakeFileProj"
 	>
 	<Platforms>

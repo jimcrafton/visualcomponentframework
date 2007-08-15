@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="LibMNG"
-	ProjectGUID="{D385A04C-F56B-4DC3-B898-23CC51C8DD62}"
+	ProjectGUID="{0DFBD62C-2C45-4307-828D-734F6307E875}"
 	>
 	<Platforms>
 		<Platform

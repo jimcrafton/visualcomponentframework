@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="VisualFormFiles"
-	ProjectGUID="{E8722E55-93D2-4ED1-A5C4-C045E59A2609}"
+	ProjectGUID="{FD5017D5-8F3F-4F39-BC20-B0AFFB8E191F}"
 	>
 	<Platforms>
 		<Platform
@@ -146,7 +146,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_ROOT)/src"
-				PreprocessorDefinitions="WIN32;_DEBUG;USE_FOUNDATIONKIT_DLL;USE_GRAPHICSKIT_DLL;USE_APPLICATIONKIT_DLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;USE_APPLICATIONKIT_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"

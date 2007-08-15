@@ -3,8 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="GraphicsKitDLL"
-	ProjectGUID="{B68A433E-59B4-41A2-9243-AF448A3F7BAD}"
-	RootNamespace="GraphicsKitDLL"
+	ProjectGUID="{999F89BD-EB89-4B52-A13A-807A3094919E}"
 	>
 	<Platforms>
 		<Platform
@@ -77,7 +76,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib"
 				OutputFile="..\..\..\bin\GraphicsKit_vc80_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -486,6 +484,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\GradientFills.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsContext.cpp"
 				>
 				<FileConfiguration
@@ -544,18 +546,6 @@
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp"
 				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Image.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\ImageEvent.cpp"
-				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
@@ -574,6 +564,14 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\Image.h"
+				>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ImageList.h"

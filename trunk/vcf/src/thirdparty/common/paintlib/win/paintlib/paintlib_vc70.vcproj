@@ -3,9 +3,8 @@
 	ProjectType="Visual C++"
 	Version="7.00"
 	Name="paintlib"
-	ProjectGUID="{60723282-2A3A-4B82-8D6C-8512E1E7691C}"
-	SccProjectName="&quot;$/paintlib&quot;, CAAAAAAA"
-	SccLocalPath=".">
+	SccProjectName=""
+	SccLocalPath="">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -23,24 +22,14 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Yd "
 				Optimization="0"
-				OptimizeForProcessor="0"
-				AdditionalIncludeDirectories=".\&quot;$(VCF_ROOT)\src&quot;;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibJPEG;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\Libcurl\include\"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_LIB;USE_LIBJPEG_LIB;USE_LIBPNG_LIB;USE_LIBTIFF_LIB;USE_ZLIB_LIB"
-				MinimalRebuild="FALSE"
-				BasicRuntimeChecks="3"
-				SmallerTypeCheck="FALSE"
+				AdditionalIncludeDirectories="$(VCF_ROOT)\src,.,..\..\common,..\..\common\filter,..\..\..\LibTIFF,..\..\..\LibPNG,..\..\..\ZLib,..\..\..\Libungif\lib,..\..\..\Libcurl\include,..\..\..\libjpeg\"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_LIB;USE_LIBJPEG_LIB;USE_LIBPNG_LIB;USE_LIBTIFF_LIB;USE_ZLIB_LIB"
 				RuntimeLibrary="3"
-				BufferSecurityCheck="FALSE"
-				EnableFunctionLevelLinking="FALSE"
-				ForceConformanceInForLoopScope="TRUE"
 				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="StdAfx.h"
 				PrecompiledHeaderFile=".\vc70\Debug\paintlib_vc70_sd.pch"
 				AssemblerListingLocation=".\vc70\Debug\"
 				ObjectFile=".\vc70\Debug\"
-				ProgramDataBaseFileName="$(OutDir)\paintlib_vc70_sd.pdb"
-				BrowseInformation="0"
+				ProgramDataBaseFileName="..\..\..\..\..\..\lib\paintlib_vc70_sd.pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
@@ -49,7 +38,6 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="winmm.lib"
 				OutputFile="..\..\..\..\..\..\lib\paintlib_vc70_sd.lib"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
@@ -62,7 +50,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				Culture="1031"/>
+				Culture="1033"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 		</Configuration>
@@ -76,21 +64,19 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="1"
 				InlineFunctionExpansion="2"
-				OptimizeForProcessor="0"
-				AdditionalIncludeDirectories=".\&quot;$(VCF_ROOT)\src&quot;;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\libjpeg;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\Libcurl\include\"
+				OptimizeForProcessor="1"
+				AdditionalIncludeDirectories="$(VCF_ROOT)\src,..\..\..\Libcurl\include,.,..\..\common,..\..\common\filter,..\..\..\LibTIFF,..\..\..\LibJPEG,..\..\..\LibPNG,..\..\..\ZLib,..\..\..\Libungif\lib\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_LIB;USE_LIBJPEG_LIB;USE_LIBPNG_LIB;USE_LIBTIFF_LIB;USE_ZLIB_LIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
-				BufferSecurityCheck="TRUE"
 				EnableFunctionLevelLinking="TRUE"
 				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="StdAfx.h"
-				PrecompiledHeaderFile=".\vc70\Debug\paintlib_vc70_s.pch"
+				PrecompiledHeaderFile=".\vc70\Release\paintlib_vc70_s.pch"
 				AssemblerListingLocation=".\vc70\Release\"
 				ObjectFile=".\vc70\Release\"
-				ProgramDataBaseFileName="$(OutDir)\paintlib_vc70_s.pdb"
+				ProgramDataBaseFileName=".\vc70\Release\"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
@@ -98,9 +84,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="winmm.lib"
 				OutputFile="..\..\..\..\..\..\lib\paintlib_vc70_s.lib"
-				AdditionalLibraryDirectories=".\&quot;$(VCF_LIB)&quot;\"
 				SuppressStartupBanner="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -112,7 +96,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				Culture="1031"/>
+				Culture="1033"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 		</Configuration>
@@ -126,69 +110,443 @@
 				Filter="">
 				<File
 					RelativePath="..\..\common\Filter\PLFilter.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\plfiltercolorize.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterContrast.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterCrop.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterFlip.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\plfilterfliprgb.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterGetAlpha.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterGrayscale.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterIntensity.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterLightness.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterMirror.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterQuantize.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterResize.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterResizeBilinear.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterResizeBox.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterResizeGaussian.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterResizeHamming.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\plfilterrotate.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterThreshold.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\plfiltervideoinvert.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\plhsvconvert.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\plinplacefilter.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
@@ -196,130 +554,844 @@
 				Filter="">
 				<File
 					RelativePath="pldibsect.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="plressrc.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="plStreamSink.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="plwemfdec.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="plwinbmp.cpp">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="0"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCLCompilerTool"
+							Optimization="1"
+							OptimizeForProcessor="0"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<File
 				RelativePath="..\..\common\jmemdest.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\jmemsrc.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\planybmp.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\planydec.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plbitmap.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plbmpbase.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plbmpdec.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plbmpenc.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plbmpinfo.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pldatasink.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pldatasrc.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plexcept.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plexif.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plfilesink.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plfilesrc.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pliff85dec.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pljpegdec.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pljpegenc.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plmemsink.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plmemsrc.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\PLObject.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpcxdec.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpgmdec.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpicdec.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpicenc.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpictdec.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpixelformat.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpngdec.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpngenc.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plppmdec.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpsddec.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plsgidec.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plsubbmp.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pltgadec.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pltiffdec.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pltiffenc.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pltiffencex.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\Common\tif_msrc.c">
@@ -327,13 +1399,18 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
+						Optimization="1"
+						OptimizeForProcessor="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;$(NoInherit)"
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 		</Filter>

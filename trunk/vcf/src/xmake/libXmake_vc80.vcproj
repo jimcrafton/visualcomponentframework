@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="libXmake"
-	ProjectGUID="{8B4F0C73-3C4F-4352-8EB6-C936B831BDC2}"
+	ProjectGUID="{CC96983E-FAA8-4109-83E4-F39CC38150E7}"
 	>
 	<Platforms>
 		<Platform

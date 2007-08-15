@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="SharedLibraries"
-	ProjectGUID="{11AFB61E-3780-4CBF-92D0-1054F42405F5}"
+	ProjectGUID="{59796ED0-2F77-46CB-907B-AEDD5B889FE0}"
 	>
 	<Platforms>
 		<Platform

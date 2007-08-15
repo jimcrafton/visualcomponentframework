@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="QTPlayer"
-	ProjectGUID="{10E89C30-9CA8-4AF2-A8EA-A49C40B989E2}"
+	ProjectGUID="{445DB6BD-3935-4E9E-878A-A08A22D65996}"
 	>
 	<Platforms>
 		<Platform

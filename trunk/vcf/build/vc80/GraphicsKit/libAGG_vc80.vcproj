@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="libAGG"
-	ProjectGUID="{9C900D7C-DDE4-4E0F-B5DE-A326C39607DC}"
+	ProjectGUID="{EA6C4D89-BC71-4879-8940-6B664B941090}"
 	>
 	<Platforms>
 		<Platform

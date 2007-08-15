@@ -99,9 +99,6 @@ Package=<4>
     Project_Dep_Name LibPNG
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name LibTIFF
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ZLib
     End Project Dependency
 }}}
@@ -201,7 +198,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name FreeImageLib
+    Project_Dep_Name paintlib
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ApplicationKitDLL
@@ -223,6 +220,30 @@ Package=<4>
 ###############################################################################
 
 Project: "InternetKitDLL"=".\InternetKit\InternetKitDLL_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "JavaScriptKit"=".\JavaScriptKit\JavaScriptKit_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "JavaScriptKitDLL"=".\JavaScriptKit\JavaScriptKitDLL_vc80.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -270,7 +291,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibTIFF"="..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\LibTIFF_vc80.dsp" - Package Owner=<4>
+Project: "LibTIFF"="..\..\src\thirdparty\common\LibTIFF\LibTIFF_vc80.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -392,6 +413,30 @@ Package=<5>
 
 Package=<4>
 {{{
+}}}
+
+###############################################################################
+
+Project: "paintlib"="..\..\src\thirdparty\common\paintlib\win\paintlib\paintlib_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibTIFF
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
 }}}
 
 ###############################################################################

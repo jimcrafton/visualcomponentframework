@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="RegExKit"
-	ProjectGUID="{CA2FEDD4-6419-4402-8C36-872B223CFD4A}"
+	ProjectGUID="{70EEB760-D5FF-434A-8B66-3691D56087C8}"
 	>
 	<Platforms>
 		<Platform
@@ -40,7 +40,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
+				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_ROOT)/src,$(VCF_ROOT)/src/thirdparty/common/oniguruma"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;USE_FOUNDATIONKIT_LIB;REGEXKIT_LIB;NOT_RUBY;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;_CRT_NON_CONFORMING_SWPRINTFS;ONIG_EXTERN=extern"
@@ -48,7 +48,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\ReleaseLib/RegExKit.pch"
+				PrecompiledHeaderFile=".\ReleaseLib/RegExKit_vc80.pch"
 				AssemblerListingLocation=".\ReleaseLib/"
 				ObjectFile=".\ReleaseLib/"
 				ProgramDataBaseFileName=".\ReleaseLib/"
@@ -80,7 +80,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\..\..\..\lib/RegExKit.bsc"
+				OutputFile=".\..\..\..\lib/RegExKit_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -116,17 +116,18 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/D ONIG_EXTERN=extern"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_ROOT)/src,$(VCF_ROOT)/src/thirdparty/common/oniguruma"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;USE_FOUNDATIONKIT_LIB;REGEXKIT_LIB;NOT_RUBY;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;_CRT_NON_CONFORMING_SWPRINTFS;ONIG_EXTERN=extern"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;USE_FOUNDATIONKIT_LIB;REGEXKIT_LIB;NOT_RUBY;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;_CRT_NON_CONFORMING_SWPRINTFS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				PrecompiledHeaderFile=".\DebugLib/RegExKit.pch"
+				PrecompiledHeaderFile=".\DebugLib/RegExKit_vc80.pch"
 				AssemblerListingLocation=".\DebugLib/"
 				ObjectFile=".\DebugLib/"
-				ProgramDataBaseFileName=".\DebugLib/"
+				ProgramDataBaseFileName="..\..\..\lib\RegExKit_vc80_sd.pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
@@ -156,7 +157,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\..\..\..\lib/RegExKit.bsc"
+				OutputFile=".\..\..\..\lib/RegExKit_vc80.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"

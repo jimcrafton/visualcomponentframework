@@ -155,6 +155,39 @@
 		<Filter
 			Name="ApplicationKit"
 			Filter="">
+			<Filter
+				Name="Res"
+				Filter="">
+				<File
+					RelativePath="..\..\resources\win32\ApplicationKit.rc">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCResourceCompilerTool"
+							PreprocessorDefinitions=""
+							AdditionalIncludeDirectories="..\..\..\resources\win32\"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCResourceCompilerTool"
+							PreprocessorDefinitions=""
+							AdditionalIncludeDirectories="..\..\..\resources\win32\"/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\resources\win32\inform.bmp">
+				</File>
+				<File
+					RelativePath="..\..\resources\win32\question.bmp">
+				</File>
+				<File
+					RelativePath="..\..\resources\win32\stop.bmp">
+				</File>
+				<File
+					RelativePath="..\..\resources\win32\vcf.ico">
+				</File>
+			</Filter>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractApplication.cpp">
 				<FileConfiguration
@@ -897,6 +930,29 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Component.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Component.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentEditor.h">
 			</File>
 			<File
@@ -921,6 +977,32 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentEditorManager.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentEvent.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentInfo.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ComponentInfo.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Container.h">
@@ -1425,6 +1507,32 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultTreeModel.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Desktop.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Desktop.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\DesktopPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Dialog.cpp">
@@ -2049,15 +2157,6 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\PopupMenuPeer.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\PopupWindow.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\PopupWindow.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\PopupWindowPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ProgressControl.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -2509,15 +2608,6 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ToolTipEvent.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\TransparentWindow.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\TransparentWindow.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\TransparentWindowPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeControl.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -2576,25 +2666,10 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TreePeer.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\UIComponent.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\UIComponent.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\UIMetricsManager.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\UIPolicyManager.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\UIShell.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\UIShell.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\UIShellPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\UIToolkit.cpp">
@@ -2650,6 +2725,52 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\VCFCOM.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\VFFInputStream.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\VFFInputStream.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\VFFOutputStream.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\VFFOutputStream.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\View.h">
@@ -2889,6 +3010,29 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32CursorPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Desktop.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Desktop.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Dialog.cpp">
@@ -3213,12 +3357,6 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PopupMenu.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PopupWindowPeer.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PopupWindowPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PrintDialog.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -3357,12 +3495,6 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32ToolKit.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32TransparentWindowPeer.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32TransparentWindowPeer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Tree.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -3384,12 +3516,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Tree.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32UIShell.cpp">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32UIShell.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Window.cpp">
@@ -3446,39 +3572,6 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Wizard.h">
 			</File>
-			<Filter
-				Name="Res"
-				Filter="">
-				<File
-					RelativePath="..\..\resources\win32\ApplicationKit.rc">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCResourceCompilerTool"
-							PreprocessorDefinitions=""
-							AdditionalIncludeDirectories="..\..\..\resources\win32\"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCResourceCompilerTool"
-							PreprocessorDefinitions=""
-							AdditionalIncludeDirectories="..\..\..\resources\win32\"/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\..\resources\win32\inform.bmp">
-				</File>
-				<File
-					RelativePath="..\..\resources\win32\question.bmp">
-				</File>
-				<File
-					RelativePath="..\..\resources\win32\stop.bmp">
-				</File>
-				<File
-					RelativePath="..\..\resources\win32\vcf.ico">
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="GraphicsKit"
@@ -3770,22 +3863,32 @@
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsToolKit.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Image.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\ImageBits.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\ImageEvent.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\ImageLoader.h">
@@ -4315,24 +4418,6 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\CommonDefines.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Component.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\ComponentInfo.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Condition.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -4386,16 +4471,7 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\DateTime.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Delegates.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Delegates.h">
+				RelativePath="..\..\..\src\vcf\FoundationKit\Delegate.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Dictionary.cpp">
@@ -4482,7 +4558,54 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\ErrorStrings.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Event.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Event.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\EventHandler.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\EventHandler.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Field.h">
@@ -4919,6 +5042,31 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\PackageInfo.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Parser.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Parser.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Persistable.h">
 			</File>
 			<File
@@ -4960,6 +5108,28 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Property.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.h">
@@ -5080,25 +5250,7 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopPeer.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopSource.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopSource.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopTimer.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Runnable.h">
@@ -5369,6 +5521,28 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\Thread.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadEvent.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						BasicRuntimeChecks="3"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="1"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadEvent.h">
 			</File>
 			<File
@@ -5522,33 +5696,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCFulong64.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\VFFOutputStream.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\VFFParser.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Waitable.h">
@@ -5855,24 +6002,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopPeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32SemaphorePeer.cpp">

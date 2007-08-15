@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="Dialogs"
-	ProjectGUID="{74B5D7F3-5CA6-4DBA-86BE-74E2AB6D16B5}"
+	ProjectGUID="{8FE124C3-89C3-46B9-8EF2-C1CD04E341A4}"
 	>
 	<Platforms>
 		<Platform

@@ -429,6 +429,9 @@ Package=<4>
     Project_Dep_Name FrameStyles
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Gradients
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name GraphicsAndMouseMoves
     End Project Dependency
     Begin Project Dependency
@@ -489,6 +492,12 @@ Package=<4>
     Project_Dep_Name ParticleEditor
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Pixels
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PopupMenus
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Printing
     End Project Dependency
     Begin Project Dependency
@@ -502,6 +511,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Reflection
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RegExTest
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Resources
@@ -555,6 +567,9 @@ Package=<4>
     Project_Dep_Name ThreadBasics
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name ThreadMeth
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name ThreadsInGUI
     End Project Dependency
     Begin Project Dependency
@@ -576,7 +591,13 @@ Package=<4>
     Project_Dep_Name VisualFormFiles
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Win32Integration
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name WorkingWithEnumerators
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name jstest
     End Project Dependency
 }}}
 
@@ -619,6 +640,18 @@ Package=<4>
 ###############################################################################
 
 Project: "FrameStyles"=".\FrameStyles\FrameStyles_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Gradients"=".\Gradients\Gradients_vc80.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1041,6 +1074,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Pixels"=".\Pixels\Pixels_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "PopupMenus"=".\PopupMenus\PopupMenus_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Printing"=".\Printing\Printing_vc80.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1090,6 +1147,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Reflection"=".\Reflection\Reflection_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RegExTest"=".\RegExTest\RegExTest_vc80.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1335,6 +1404,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ThreadMeth"=".\ThreadMethods\ThreadMethods_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "ThreadsInGUI"=".\ThreadsInGUI\ThreadsInGUI_vc80.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1419,7 +1500,31 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Win32Integration"=".\Win32Integration\Win32Integration_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "WorkingWithEnumerators"=".\WorkingWithEnumerators\WorkingWithEnumerators_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "jstest"=".\JavaScriptTest\jstest_vc80.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{

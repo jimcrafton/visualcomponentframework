@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="LibTIFF"
-	ProjectGUID="{1F5AEB6C-BF81-4664-8071-925A8D01C676}"
+	ProjectGUID="{8ECFBFA8-8542-4925-88B1-4E6684B1CB05}"
 	>
 	<Platforms>
 		<Platform
@@ -42,8 +42,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="&quot;$(VCF_INCLUDE)&quot;;../LibPNG;..LibJPEG;../zlib"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE),../libtiff/libtiff,../zlib"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -116,8 +116,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(VCF_INCLUDE)&quot;;..\LibJPEG;..\LibPNG;..\Zlib"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE"
+				AdditionalIncludeDirectories="$(VCF_INCLUDE),../libtiff/libtiff"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -238,8 +238,26 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\tif_color.c"
+				RelativePath="tif_color.c"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="tif_compress.c"
@@ -396,8 +414,26 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\tif_extension.c"
+				RelativePath="tif_extension.c"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="tif_fax3.c"
@@ -422,8 +458,26 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\tif_fax3sm.c"
+				RelativePath="tif_fax3sm.c"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="tif_flush.c"
@@ -558,8 +612,26 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\tif_ojpeg.c"
+				RelativePath="tif_ojpeg.c"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="tif_open.c"
@@ -694,8 +766,26 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\tif_stream.cxx"
+				RelativePath="tif_stream.cxx"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="tif_strip.c"
@@ -883,10 +973,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\tif_config.h"
-				>
-			</File>
-			<File
 				RelativePath="tif_dir.h"
 				>
 			</File>
@@ -912,10 +998,6 @@
 			</File>
 			<File
 				RelativePath="tiffiop.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tiffvers.h"
 				>
 			</File>
 			<File

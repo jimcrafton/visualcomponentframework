@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="ImageViewer"
-	ProjectGUID="{E749C8D5-1783-48DD-97A5-16FFFC694855}"
+	ProjectGUID="{11FFB188-A832-4DE4-BC93-85DA81CD5625}"
 	>
 	<Platforms>
 		<Platform

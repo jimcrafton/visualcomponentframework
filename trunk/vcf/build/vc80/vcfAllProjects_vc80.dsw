@@ -465,6 +465,9 @@ Package=<4>
     Project_Dep_Name FrameStyles
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Gradients
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name GraphicsAndMouseMoves
     End Project Dependency
     Begin Project Dependency
@@ -525,6 +528,12 @@ Package=<4>
     Project_Dep_Name ParticleEditor
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Pixels
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PopupMenus
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Printing
     End Project Dependency
     Begin Project Dependency
@@ -538,6 +547,9 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Reflection
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RegExTest
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Resources
@@ -591,6 +603,9 @@ Package=<4>
     Project_Dep_Name ThreadBasics
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name ThreadMeth
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name ThreadsInGUI
     End Project Dependency
     Begin Project Dependency
@@ -612,7 +627,13 @@ Package=<4>
     Project_Dep_Name VisualFormFiles
     End Project Dependency
     Begin Project Dependency
+    Project_Dep_Name Win32Integration
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name WorkingWithEnumerators
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name jstest
     End Project Dependency
 }}}
 
@@ -684,11 +705,20 @@ Package=<4>
     Project_Dep_Name LibPNG
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name LibTIFF
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ZLib
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Gradients"="..\..\examples\Gradients\Gradients_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -882,7 +912,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name FreeImageLib
+    Project_Dep_Name paintlib
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name ApplicationKitDLL
@@ -942,6 +972,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "JavaScriptKit"=".\JavaScriptKit\JavaScriptKit_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "JavaScriptKitDLL"=".\JavaScriptKit\JavaScriptKitDLL_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Labels"="..\..\examples\Labels\Labels_vc80.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -990,7 +1044,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibTIFF"="..\..\src\thirdparty\common\FreeImage\Source\LibTIFF\LibTIFF_vc80.dsp" - Package Owner=<4>
+Project: "LibTIFF"="..\..\src\thirdparty\common\LibTIFF\LibTIFF_vc80.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1170,6 +1224,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Pixels"="..\..\examples\Pixels\Pixels_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "PopupMenus"="..\..\examples\PopupMenus\PopupMenus_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Printing"="..\..\examples\Printing\Printing_vc80.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1231,6 +1309,42 @@ Package=<4>
 ###############################################################################
 
 Project: "RegEnVar"="..\..\src\thirdparty\win32\RegEnVar\RegEnVar_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RegExKit"=".\RegExKit\RegExKit_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RegExKitDLL"=".\RegExKit\RegExKitDLL_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RegExTest"="..\..\examples\RegExTest\RegExTest_vc80.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1476,6 +1590,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ThreadMeth"="..\..\examples\ThreadMethods\ThreadMethods_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "ThreadsInGUI"="..\..\examples\ThreadsInGUI\ThreadsInGUI_vc80.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1560,6 +1686,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Win32Integration"="..\..\examples\Win32Integration\Win32Integration_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "WorkingWithEnumerators"="..\..\examples\WorkingWithEnumerators\WorkingWithEnumerators_vc80.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1596,6 +1734,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "jstest"="..\..\examples\JavaScriptTest\jstest_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "libAGG"=".\GraphicsKit\libAGG_vc80.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1616,6 +1766,30 @@ Package=<5>
 
 Package=<4>
 {{{
+}}}
+
+###############################################################################
+
+Project: "paintlib"="..\..\src\thirdparty\common\paintlib\win\paintlib\paintlib_vc80.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibTIFF
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
 }}}
 
 ###############################################################################

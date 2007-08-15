@@ -3,8 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="Accelerators"
-	ProjectGUID="{B562B243-DE36-4AF0-98A1-C834F2460C30}"
-	RootNamespace="Accelerators"
+	ProjectGUID="{567265A9-B758-470D-A76B-75C63B8B73E3}"
 	>
 	<Platforms>
 		<Platform

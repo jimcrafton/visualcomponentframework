@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="FoundationKit"
-	ProjectGUID="{18F07694-FC61-4C07-9650-189E329972B2}"
+	ProjectGUID="{B699126F-83EB-4859-AEB1-AB7D304D9259}"
 	>
 	<Platforms>
 		<Platform
@@ -193,6 +193,10 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\FrameworkConfig.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\IniFini.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Source Files"
@@ -225,6 +229,28 @@
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl"
 				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\IniFini.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -790,15 +816,7 @@
 			Filter="*.h"
 			>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\ComponentEvent.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Delegate.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Event.cpp"
+				RelativePath="..\..\..\src\vcf\FoundationKit\Delegates.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -818,35 +836,13 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Delegates.h"
+				>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Event.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\EventHandler.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\EventHandler.h"
 				>
 			</File>
 			<File
@@ -858,52 +854,8 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.h"
 				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadEvent.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadEvent.h"
@@ -1193,18 +1145,46 @@
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp"
 				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\VFFInputStream.h"
-				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VFFOutputStream.cpp"
 				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\VFFOutputStream.h"
-				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -1287,14 +1267,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ErrorLog.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\IniFini.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\IniFini.h"
 				>
 			</File>
 			<File
@@ -1538,6 +1510,24 @@
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VFFParser.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VFFParser.h"
@@ -1575,28 +1565,52 @@
 			Filter="*.h"
 			>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\AtomicCount.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\BadComponentStateException.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\CommonDefines.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Component.cpp"
 				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\Component.h"
-				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ComponentInfo.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Dictionary.cpp"

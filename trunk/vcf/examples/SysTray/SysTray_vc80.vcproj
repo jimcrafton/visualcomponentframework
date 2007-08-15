@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="SysTray"
-	ProjectGUID="{0581BAFE-499E-4E70-84DD-1573FAA756EB}"
+	ProjectGUID="{4116785C-D3B5-4C68-B789-7C7F7318B8A1}"
 	>
 	<Platforms>
 		<Platform

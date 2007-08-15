@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="DateTimeUI"
-	ProjectGUID="{9C994545-14FB-4A54-B5BD-9F3EC6B74DDC}"
+	ProjectGUID="{FFA9A20D-4C99-4ED2-85DB-18DA7273219C}"
 	>
 	<Platforms>
 		<Platform

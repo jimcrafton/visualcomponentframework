@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="paintlib"
-	ProjectGUID="{77CB164F-ACAC-4802-B75C-547B6A5A2043}"
+	ProjectGUID="{73CC3186-2BCB-481A-8062-E0833422D0AC}"
 	>
 	<Platforms>
 		<Platform
@@ -15,9 +15,10 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\vc80\Debug\"
-			IntermediateDirectory=".\vc80\Debug\"
+			OutputDirectory=".\vc80\Debug"
+			IntermediateDirectory=".\vc80\Debug"
 			ConfigurationType="4"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -41,41 +42,31 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Yd "
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(VCF_ROOT)\src&quot;;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibJPEG;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\Libcurl\include\"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_LIB;_CRT_SECURE_NO_DEPRECATE;USE_LIBJPEG_LIB;USE_LIBPNG_LIB;USE_LIBTIFF_LIB;USE_ZLIB_LIB"
-				MinimalRebuild="false"
-				BasicRuntimeChecks="3"
-				SmallerTypeCheck="false"
+				AdditionalIncludeDirectories="$(VCF_ROOT)\src,.,..\..\common,..\..\common\filter,..\..\..\LibTIFF,..\..\..\LibPNG,..\..\..\ZLib,..\..\..\Libungif\lib,..\..\..\Libcurl\include,..\..\..\libjpeg"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_LIB;USE_LIBJPEG_LIB;USE_LIBPNG_LIB;USE_LIBTIFF_LIB;USE_ZLIB_LIB"
+				MinimalRebuild="true"
 				RuntimeLibrary="3"
-				BufferSecurityCheck="false"
-				EnableFunctionLevelLinking="false"
-				ForceConformanceInForLoopScope="true"
 				RuntimeTypeInfo="true"
-				UsePrecompiledHeader="0"
-				PrecompiledHeaderThrough=""
-				PrecompiledHeaderFile=".\vc80\Debug\paintlib_vc80_sd.pch"
-				AssemblerListingLocation=".\vc80\Debug\"
-				ObjectFile=".\vc80\Debug\"
-				ProgramDataBaseFileName="$(OutDir)\paintlib_vc80_sd.pdb"
-				BrowseInformation="0"
+				PrecompiledHeaderFile=".\vc80\Debug/paintlib_vc80.pch"
+				AssemblerListingLocation=".\vc80\Debug/"
+				ObjectFile=".\vc80\Debug/"
+				ProgramDataBaseFileName="..\..\..\..\..\..\lib\paintlib_vc80_sd.pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				Culture="1031"
+				Culture="1033"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="winmm.lib"
 				OutputFile="..\..\..\..\..\..\lib\paintlib_vc80_sd.lib"
 				SuppressStartupBanner="true"
 			/>
@@ -87,6 +78,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile="../../../../../../lib/paintlib_vc80_sd.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -97,9 +90,10 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\vc80\Release\"
-			IntermediateDirectory=".\vc80\Release\"
+			OutputDirectory=".\vc80\Release"
+			IntermediateDirectory=".\vc80\Release"
 			ConfigurationType="4"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
@@ -121,39 +115,34 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="1"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="&quot;$(VCF_ROOT)\src&quot;;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\libjpeg;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\Libcurl\include\"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_LIB;_CRT_SECURE_NO_DEPRECATE;USE_LIBJPEG_LIB;USE_LIBPNG_LIB;USE_LIBTIFF_LIB;USE_ZLIB_LIB"
+				AdditionalIncludeDirectories="$(VCF_ROOT)\src,..\..\..\Libcurl\include,.,..\..\common,..\..\common\filter,..\..\..\LibTIFF,..\..\..\LibJPEG,..\..\..\LibPNG,..\..\..\ZLib,..\..\..\Libungif\lib"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_LIB;USE_LIBJPEG_LIB;USE_LIBPNG_LIB;USE_LIBTIFF_LIB;USE_ZLIB_LIB"
 				StringPooling="true"
 				RuntimeLibrary="2"
-				BufferSecurityCheck="true"
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
-				UsePrecompiledHeader="0"
-				PrecompiledHeaderThrough=""
-				PrecompiledHeaderFile=".\vc80\Debug\paintlib_vc80_s.pch"
-				AssemblerListingLocation=".\vc80\Release\"
-				ObjectFile=".\vc80\Release\"
-				ProgramDataBaseFileName="$(OutDir)\paintlib_vc80_s.pdb"
+				PrecompiledHeaderFile=".\vc80\Release/paintlib_vc80.pch"
+				AssemblerListingLocation=".\vc80\Release/"
+				ObjectFile=".\vc80\Release/"
+				ProgramDataBaseFileName=".\vc80\Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
-				CompileAs="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				Culture="1031"
+				Culture="1033"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="winmm.lib"
 				OutputFile="..\..\..\..\..\..\lib\paintlib_vc80_s.lib"
-				AdditionalLibraryDirectories=""
 				SuppressStartupBanner="true"
 			/>
 			<Tool
@@ -164,6 +153,8 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				SuppressStartupBanner="true"
+				OutputFile="../../../../../../lib/paintlib_vc80_s.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -183,150 +174,816 @@
 			<File
 				RelativePath="..\..\common\jmemdest.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\jmemsrc.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\planybmp.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\planydec.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plbitmap.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plbmpbase.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plbmpdec.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plbmpenc.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plbmpinfo.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pldatasink.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pldatasrc.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plexcept.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plexif.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plfilesink.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plfilesrc.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pliff85dec.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pljpegdec.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pljpegenc.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plmemsink.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plmemsrc.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\PLObject.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpcxdec.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpgmdec.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpicdec.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpicenc.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpictdec.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpixelformat.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpngdec.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpngenc.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plppmdec.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plpsddec.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plsgidec.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\plsubbmp.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pltgadec.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pltiffdec.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pltiffenc.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\common\pltiffencex.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\Common\tif_msrc.c"
@@ -336,7 +993,8 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -344,7 +1002,8 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
+						AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;$(NoInherit)"
+						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
 			</File>
@@ -354,90 +1013,486 @@
 				<File
 					RelativePath="..\..\common\Filter\PLFilter.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\plfiltercolorize.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterContrast.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterCrop.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterFlip.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\plfilterfliprgb.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterGetAlpha.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterGrayscale.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterIntensity.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterLightness.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterMirror.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterQuantize.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterResize.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterResizeBilinear.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterResizeBox.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterResizeGaussian.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterResizeHamming.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\plfilterrotate.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\PLFilterThreshold.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\plfiltervideoinvert.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\plhsvconvert.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\common\Filter\plinplacefilter.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
@@ -446,22 +1501,112 @@
 				<File
 					RelativePath="pldibsect.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="plressrc.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="plStreamSink.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="plwemfdec.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="plwinbmp.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories=""
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							AdditionalIncludeDirectories="$(VCF_ROOT)\src;..\..\..\Libcurl\include;.;..\..\common;..\..\common\filter;..\..\..\LibTIFF;..\..\..\LibPNG;..\..\..\ZLib;..\..\..\Libungif\lib;..\..\..\libjpeg;$(NoInherit)"
+							PreprocessorDefinitions=""
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 		</Filter>
@@ -842,6 +1987,25 @@
 		<File
 			RelativePath="..\..\common\config.vc"
 			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					Description="Copying config.vc"
+					CommandLine="copy ..\..\common\config.vc ..\..\common\config.h&#x0D;&#x0A;"
+					Outputs="..\..\common\config.h"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+					CommandLine="copy ..\..\common\config.vc ..\..\common\config.h&#x0D;&#x0A;"
+					Outputs="..\..\common\config.h"
+				/>
+			</FileConfiguration>
 		</File>
 	</Files>
 	<Globals>
