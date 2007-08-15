@@ -4023,7 +4023,7 @@
 						<Tool
 							Name="VCResourceCompilerTool"
 							PreprocessorDefinitions=""
-							AdditionalIncludeDirectories="\Dev\vcfdev\scripttest\vcf\build\resources\win32"
+							AdditionalIncludeDirectories="..\..\..\resources\win32"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -4032,7 +4032,7 @@
 						<Tool
 							Name="VCResourceCompilerTool"
 							PreprocessorDefinitions=""
-							AdditionalIncludeDirectories="\Dev\vcfdev\scripttest\vcf\build\resources\win32"
+							AdditionalIncludeDirectories="..\..\..\resources\win32"
 						/>
 					</FileConfiguration>
 				</File>
