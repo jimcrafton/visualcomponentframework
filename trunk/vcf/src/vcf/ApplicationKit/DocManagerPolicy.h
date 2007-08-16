@@ -339,9 +339,9 @@ public:
 	void lastDocumentClosed() {
 		//Buh bye!
 
-//>>>>NEEDS FIXING!!
-		//UIToolkit::postEvent( new StaticEventHandlerInstance<Event>(MDIPolicy::postQuitEventLoop), new Event(NULL,0) );
-//>>>>
+
+		UIToolkit::postEvent( new EventHandler(MDIPolicy::postQuitEventLoop), new Event(NULL,0) );
+
 	}
 
 	static void postQuitEventLoop( Event* e ) {
