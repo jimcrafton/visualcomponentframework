@@ -248,14 +248,14 @@ public:
 		this->add(btnExtended);
 	
 		//add SelectionChanged handlers for each listbox.
-		listBoxSingle->SelectionChanged.addHandler( new ItemEventHandler<ListBoxWindow>(this, &ListBoxWindow::getListBoxSingleInfo, "ListBoxWindow::getListBoxSingleInfo"));
-		listBoxMulti->SelectionChanged.addHandler( new ItemEventHandler<ListBoxWindow>(this, &ListBoxWindow::getListBoxMultiInfo, "ListBoxWindow::getListBoxMultiInfo"));
-		listBoxExtended->SelectionChanged.addHandler( new ItemEventHandler<ListBoxWindow>(this, &ListBoxWindow::getListBoxExtendedInfo, "ListBoxWindow::getListBoxExtendedInfo"));
+		listBoxSingle->SelectionChanged.add( new ClassProcedure1<ItemEvent*,ListBoxWindow>(this, &ListBoxWindow::getListBoxSingleInfo, "ListBoxWindow::getListBoxSingleInfo"));
+		listBoxMulti->SelectionChanged.add( new ClassProcedure1<ItemEvent*,ListBoxWindow>(this, &ListBoxWindow::getListBoxMultiInfo, "ListBoxWindow::getListBoxMultiInfo"));
+		listBoxExtended->SelectionChanged.add( new ClassProcedure1<ItemEvent*,ListBoxWindow>(this, &ListBoxWindow::getListBoxExtendedInfo, "ListBoxWindow::getListBoxExtendedInfo"));
 	
 		//add ButtonClicked handlers for each command button.	
-		btnSingle->ButtonClicked.addHandler( new ButtonEventHandler<ListBoxWindow>( this, &ListBoxWindow::onbtnSingleClicked, "ListBoxWindow::onbtnSingleClicked" ) );
-		btnMulti->ButtonClicked.addHandler( new ButtonEventHandler<ListBoxWindow>( this, &ListBoxWindow::onbtnMultiClicked, "ListBoxWindow::onbtnMultiClicked" ) );
-		btnExtended->ButtonClicked.addHandler( new ButtonEventHandler<ListBoxWindow>( this, &ListBoxWindow::onbtnExtendedClicked, "ListBoxWindow::onbtnExtendedClicked" ) );
+		btnSingle->ButtonClicked.add( new ClassProcedure1<ButtonEvent*,ListBoxWindow>( this, &ListBoxWindow::onbtnSingleClicked, "ListBoxWindow::onbtnSingleClicked" ) );
+		btnMulti->ButtonClicked.add( new ClassProcedure1<ButtonEvent*,ListBoxWindow>( this, &ListBoxWindow::onbtnMultiClicked, "ListBoxWindow::onbtnMultiClicked" ) );
+		btnExtended->ButtonClicked.add( new ClassProcedure1<ButtonEvent*,ListBoxWindow>( this, &ListBoxWindow::onbtnExtendedClicked, "ListBoxWindow::onbtnExtendedClicked" ) );
 
 	}
 

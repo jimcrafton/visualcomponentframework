@@ -40,7 +40,7 @@ public:
 
 		//add our event handler to the menu item
 		fileOpenImageMenu->MenuItemClicked +=
-			new MenuItemEventHandler<ImageViewerWindow>( this,&ImageViewerWindow::openImage, "ImageViewerWindow::openImage" );
+			new ClassProcedure1<MenuItemEvent*,ImageViewerWindow>( this,&ImageViewerWindow::openImage, "ImageViewerWindow::openImage" );
 
 
 
