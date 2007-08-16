@@ -24,7 +24,7 @@ public:
 		timer = new TimerComponent(this);
 		timer->setTimeoutInterval ( 1000 );
 		timer->TimerPulse +=
-			new GenericEventHandler<DateTimeLabel>(this, &DateTimeLabel::onTimer, "DateTimeLabel::onTimer" );
+			new ClassProcedure1<Event*,DateTimeLabel>(this, &DateTimeLabel::onTimer, "DateTimeLabel::onTimer" );
 	}
 
 	virtual ~DateTimeLabel() {

@@ -115,15 +115,15 @@ public:
 
 		PopupMenu* whatsThisMenu = new PopupMenu(this);
 		DefaultMenuItem* whatsThis = new DefaultMenuItem("What's this?", whatsThisMenu->getRootMenuItem(), whatsThisMenu );
-		whatsThis->MenuItemClicked += new GenericEventHandler<HelpWindow>( this, &HelpWindow::whatsThisHelp, "HelpWindow::whatsThisHelp" );
+		whatsThis->MenuItemClicked += new ClassProcedure1<Event*,HelpWindow>( this, &HelpWindow::whatsThisHelp, "HelpWindow::whatsThisHelp" );
 
 		whatsThis->setData( showHelpContents );
 
 		showHelpContents->setPopupMenu( whatsThisMenu );
 
 
-		showHelpContents->ButtonClicked += new GenericEventHandler<HelpWindow>( this, &HelpWindow::showContents, "HelpWindow::showContents" );
-		showHelpIndex->ButtonClicked += new GenericEventHandler<HelpWindow>( this, &HelpWindow::showIndex, "HelpWindow::showIndex" );
+		showHelpContents->ButtonClicked += new ClassProcedure1<Event*,HelpWindow>( this, &HelpWindow::showContents, "HelpWindow::showContents" );
+		showHelpIndex->ButtonClicked += new ClassProcedure1<Event*,HelpWindow>( this, &HelpWindow::showIndex, "HelpWindow::showIndex" );
 		
 
 
@@ -131,7 +131,7 @@ public:
 		showDlg->setBounds( 20, 120, 150, showDlg->getPreferredHeight() );
 		showDlg->setCaption( "Show Dialog..." );
 		showDlg->ButtonClicked += 
-			new GenericEventHandler<HelpWindow>( this, &HelpWindow::showDialog, "HelpWindow::showDialog" );
+			new ClassProcedure1<Event*,HelpWindow>( this, &HelpWindow::showDialog, "HelpWindow::showDialog" );
 
 		add( showDlg );
 
@@ -197,7 +197,7 @@ public:
 		//grab the context help notifications!
 
 		HelpRequested += 
-			new GenericEventHandler<HelpWindow>(this,&HelpWindow::onContextHelp, "HelpWindow::onContextHelp" );
+			new ClassProcedure1<Event*,HelpWindow>(this,&HelpWindow::onContextHelp, "HelpWindow::onContextHelp" );
 	}
 
 	Label* l1;
