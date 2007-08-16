@@ -67,7 +67,7 @@ MainWindow::MainWindow(CombosApplication* app)
 	add( cb_ );
 
 	VCF::CommandButton* btn;
-	ButtonEventHandler<MainWindow>* bh;
+	CallBack* bh;
 
 	eddc_ = new TextControl();
 	eddc_->setBounds( 25, 20, 45, eddc_->getPreferredHeight() );
@@ -79,8 +79,8 @@ MainWindow::MainWindow(CombosApplication* app)
 
 	btn->setCaption( "Set DropDown Count" );
 	btn->setBounds ( 100, 20, btn->getPreferredWidth(), btn->getPreferredHeight() );	
-	bh = new ButtonEventHandler<MainWindow>( this, &MainWindow::onSetDropDownCount, "MainWindow::onSetDropDownCount" );
-	btn->addButtonClickHandler( bh );
+	bh = new ClassProcedure1<ButtonEvent*,MainWindow>( this, &MainWindow::onSetDropDownCount, "MainWindow::onSetDropDownCount" );
+	btn->ButtonClicked += bh;
 	add( btn );
 
 
@@ -94,8 +94,8 @@ MainWindow::MainWindow(CombosApplication* app)
 
 	btn->setCaption( "Set Items count" );
 	btn->setBounds ( 100, 75, btn->getPreferredWidth(), btn->getPreferredHeight() );	
-	bh = new ButtonEventHandler<MainWindow>( this, &MainWindow::onSetComboItemCount, "MainWindow::onSetComboItemCount" );
-	btn->addButtonClickHandler( bh );
+	bh = new ClassProcedure1<ButtonEvent*,MainWindow>( this, &MainWindow::onSetComboItemCount, "MainWindow::onSetComboItemCount" );
+	btn->ButtonClicked += bh;
 	add( btn );
 
 
@@ -110,8 +110,8 @@ MainWindow::MainWindow(CombosApplication* app)
 	btn->setCaption( "Set DropDown Width" );
 	btn->setBounds ( 100, 125, btn->getPreferredWidth(), btn->getPreferredHeight() );
 	
-	bh = new ButtonEventHandler<MainWindow>( this, &MainWindow::onSetDropDownWidth, "MainWindow::onSetDropDownWidth" );
-	btn->addButtonClickHandler( bh );
+	bh = new ClassProcedure1<ButtonEvent*,MainWindow>( this, &MainWindow::onSetDropDownWidth, "MainWindow::onSetDropDownWidth" );
+	btn->ButtonClicked += bh;
 	add( btn );
 
 
@@ -120,8 +120,8 @@ MainWindow::MainWindow(CombosApplication* app)
 	chkDropDownExtendFullScreen_->setToolTipText( "allow the dropdown list of the combo to extend to the full screen" );
 	chkDropDownExtendFullScreen_->setBounds ( &Rect(25, 175, 225, 200) );
 	chkDropDownExtendFullScreen_->setTabStop( true );
-	bh = new ButtonEventHandler<MainWindow>( this, &MainWindow::onSetDropDownExtendFullScreen, "MainWindow::onSetDropDownExtendFullScreen" );
-	chkDropDownExtendFullScreen_->addButtonClickHandler( bh );
+	bh = new ClassProcedure1<ButtonEvent*,MainWindow>( this, &MainWindow::onSetDropDownExtendFullScreen, "MainWindow::onSetDropDownExtendFullScreen" );
+	chkDropDownExtendFullScreen_->ButtonClicked += bh;
 	add( chkDropDownExtendFullScreen_ );
 
 
@@ -130,8 +130,8 @@ MainWindow::MainWindow(CombosApplication* app)
 	chkDiscreteScroll_->setToolTipText( "allow the dropdown list of the combo to be scrolled only by discrete quantities" );
 	chkDiscreteScroll_->setBounds ( &Rect(25, 215, 225, 240) );
 	chkDiscreteScroll_->setTabStop( true );
-	bh = new ButtonEventHandler<MainWindow>( this, &MainWindow::onSetDiscreteScroll, "MainWindow::onSetDiscreteScroll" );
-	chkDiscreteScroll_->addButtonClickHandler( bh );
+	bh = new ClassProcedure1<ButtonEvent*,MainWindow>( this, &MainWindow::onSetDiscreteScroll, "MainWindow::onSetDiscreteScroll" );
+	chkDiscreteScroll_->ButtonClicked += bh;
 	add( chkDiscreteScroll_ );
 }
 
