@@ -224,6 +224,22 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\Win32SemaphorePeer.cpp
 # End Source File
 # Begin Source File
@@ -664,14 +680,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Object.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\ObjectWithEvents.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\PackageInfo.cpp
 # End Source File
 # Begin Source File
@@ -909,6 +917,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\RunLoop.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\RunLoop.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSource.cpp
 # End Source File
 # Begin Source File
 
