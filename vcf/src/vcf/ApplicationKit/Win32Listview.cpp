@@ -2321,7 +2321,7 @@ void Win32Listview::setLargeImageList( ImageList* imageList )
 
 		ListView_SetImageList( hwnd_, largeImageListCtrl_, LVSIL_NORMAL );
 
-		CallBack* imgListHandler = getEventHandler( "LargeImageListHandler" );
+		CallBack* imgListHandler = getCallback( "LargeImageListHandler" );
 		if ( NULL == imgListHandler ) {
 			imgListHandler =
 				new ClassProcedure1<ImageListEvent*,Win32Listview>(this, &Win32Listview::onLargeImageListImageChanged, "LargeImageListHandler" );
@@ -2388,7 +2388,7 @@ void Win32Listview::setSmallImageList( ImageList* imageList )
 
 		ListView_SetImageList( hwnd_, smallImageListCtrl_, LVSIL_SMALL );
 
-		CallBack* imgListHandler = getEventHandler( "SmallImageListHandler" );
+		CallBack* imgListHandler = getCallback( "SmallImageListHandler" );
 		if ( NULL == imgListHandler ) {
 			imgListHandler =
 				new ClassProcedure1<ImageListEvent*,Win32Listview>(this, &Win32Listview::onSmallImageListImageChanged, "SmallImageListHandler" );

@@ -107,7 +107,7 @@ void TreeListControl::init()
 void TreeListControl::setTreeModel(TreeModel * model)
 {
 	if ( NULL != treeModel_ ) {
-		EventHandler* handler = (EventHandler*)getEventHandler( "TreeListControl::onModelChanged" );
+		EventHandler* handler = (EventHandler*)getCallback( "TreeListControl::onModelChanged" );
 		if ( NULL != handler ) {
 			treeModel_->removeTreeNodeAddedHandler( handler );
 			treeModel_->removeTreeNodeDeletedHandler( handler );
@@ -122,7 +122,7 @@ void TreeListControl::setTreeModel(TreeModel * model)
 
 		tm->addView( this );
 
-		CallBack* handler = getEventHandler( "TreeListControl::onModelChanged" );
+		CallBack* handler = getCallback( "TreeListControl::onModelChanged" );
 		if ( NULL == handler ) {
 			handler = 
 				new ClassProcedure1<TreeModelEvent*,TreeListControl>( this, &TreeListControl::onModelChanged, "TreeListControl::onModelChanged" );
@@ -134,7 +134,7 @@ void TreeListControl::setTreeModel(TreeModel * model)
 		treeModel_->addTreeNodeAddedHandler( (EventHandler*)handler );
 		treeModel_->addTreeNodeDeletedHandler( (EventHandler*)handler );	
 		
-		handler = getEventHandler( "TreeListControl::onModelEmptied" );
+		handler = getCallback( "TreeListControl::onModelEmptied" );
 		if ( NULL == handler ) {
 			handler = new ClassProcedure1<Event*,TreeListControl>( this, &TreeListControl::onModelEmptied, "TreeListControl::onModelEmptied" );
 		}
@@ -2095,7 +2095,7 @@ void TreeListControl::finishEditing( bool applyEdit ) {
 		
 	}
 
-	EventHandler* ev = (EventHandler*)getEventHandler( "TreeListControl::postFinishedEditing" );
+	EventHandler* ev = (EventHandler*)getCallback( "TreeListControl::postFinishedEditing" );
 	if ( NULL == ev ) {
 		ev = 
 			new ClassProcedure1<Event*,TreeListControl>( this, &TreeListControl::postFinishedEditing, "TreeListControl::postFinishedEditing" );
@@ -2124,10 +2124,10 @@ void TreeListControl::editItem( TreeItem* item, Point* point ) {
 		
 		if ( NULL != editor ) {			
 			editor->setBounds( &bounds );
-			CallBack* ev = getEventHandler( "TreeListControl::onEditorFocusLost" );
+			CallBack* ev = getCallback( "TreeListControl::onEditorFocusLost" );
 			editor->FocusLost += ev;
 
-			ev = getEventHandler( "TreeListControl::onEditingControlKeyPressed" );
+			ev = getCallback( "TreeListControl::onEditingControlKeyPressed" );
 			editor->KeyDown += ev;
 			
 			add( editor );

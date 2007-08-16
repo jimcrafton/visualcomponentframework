@@ -603,7 +603,7 @@ AcceleratorKey* DefaultMenuItem::getAccelerator()
 
 void DefaultMenuItem::setAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask )
 {
-	CallBack* eventHandler = this->getEventHandler( "DefaultMenuItem::onAccelerator" );
+	CallBack* eventHandler = this->getCallback( "DefaultMenuItem::onAccelerator" );
 	if ( NULL == eventHandler ) {
 		eventHandler = new ClassProcedure1<KeyboardEvent*,DefaultMenuItem>( this, &DefaultMenuItem::onAccelerator, "DefaultMenuItem::onAccelerator" );
 	}
@@ -657,7 +657,7 @@ Object* DefaultMenuItem::clone(bool deep)
 	AcceleratorKey* accel = getAccelerator();
 	if ( NULL != accel ) {		
 		if ( accel->getEventHandler() == 
-				getEventHandler( "DefaultMenuItem::onAccelerator" ) ) {
+				getCallback( "DefaultMenuItem::onAccelerator" ) ) {
 
 			VirtualKeyCode keyCode = (VirtualKeyCode)accel->getKeyCode();
 			uint32 mask = accel->getModifierMask();

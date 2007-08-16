@@ -2452,7 +2452,7 @@ public:
 	}
 };
 
-class ToolTipWatcher : public ObjectWithEvents {
+class ToolTipWatcher : public ObjectWithCallbacks {
 public:
 	ToolTipWatcher() {
 		currentControlWithTooltip_ = NULL;

@@ -29,7 +29,7 @@ namespace VCF  {
 * and RedoCommand delegates.
 */
 
-class APPLICATIONKIT_API UndoRedoStack : public ObjectWithEvents {
+class APPLICATIONKIT_API UndoRedoStack : public ObjectWithCallbacks {
 public:
 	/**
 	* Used if the user desires to bypass the default behaviour of 

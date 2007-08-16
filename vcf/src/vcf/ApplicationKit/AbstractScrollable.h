@@ -29,7 +29,7 @@ class ScrollPeer;
 */
 class APPLICATIONKIT_API AbstractScrollable : public Scrollable {
 public:
-	class ControlResizeHandler : public ObjectWithEvents {
+	class ControlResizeHandler : public ObjectWithCallbacks {
 	public:
 		ControlResizeHandler( AbstractScrollable* scrollable );
 

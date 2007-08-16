@@ -98,7 +98,7 @@ void Component::destroy()
 	}
 	components_.clear();	
 
-	ObjectWithEvents::destroy();
+	ObjectWithCallbacks::destroy();
 }
 
 String Component::getName()

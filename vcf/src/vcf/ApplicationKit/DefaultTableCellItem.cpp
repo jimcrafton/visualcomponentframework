@@ -392,7 +392,7 @@ const Font& DefaultTableCellItem::getFont()
 		if ( found != DefaultTableCellItem::tableCellsFontMap.end() ) {
 			font_ = &found->second;
 
-			CallBack* ev = getEventHandler("DefaultTableCellItem::onFontChanged");
+			CallBack* ev = getCallback("DefaultTableCellItem::onFontChanged");
 
 			if ( NULL == ev ) {
 				ev = new ClassProcedure1<Event*,DefaultTableCellItem>(this,&DefaultTableCellItem::onFontChanged,"DefaultTableCellItem::onFontChanged");
@@ -411,7 +411,7 @@ const Font& DefaultTableCellItem::getFont()
 		if ( found != DefaultTableCellItem::tableCellsFontMap.end() ) {
 			font_ = &found->second;
 
-			CallBack* ev = getEventHandler("DefaultTableCellItem::onFontChanged");
+			CallBack* ev = getCallback("DefaultTableCellItem::onFontChanged");
 
 			if ( NULL == ev ) {
 				ev = new ClassProcedure1<Event*,DefaultTableCellItem>(this,&DefaultTableCellItem::onFontChanged,"DefaultTableCellItem::onFontChanged");

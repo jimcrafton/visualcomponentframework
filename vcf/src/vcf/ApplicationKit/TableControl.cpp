@@ -499,7 +499,7 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 
 	TableModel* tm = getTableModel();
 
-	CallBack* itemHandler = getEventHandler(TABLECELL_HANDLER);
+	CallBack* itemHandler = getCallback(TABLECELL_HANDLER);
 	if ( NULL == itemHandler ) {
 		//itemHandler = new 
 	}
@@ -1342,7 +1342,7 @@ void TableControl::editCell( const CellID& cell, const Point& pt )
 				
 				editorControl->setBounds( &bounds );
 
-				CallBack* ev = getEventHandler( "TableControl::onFocusLost" );
+				CallBack* ev = getCallback( "TableControl::onFocusLost" );
 				editorControl->FocusLost += ev;
 
 
@@ -1351,7 +1351,7 @@ void TableControl::editCell( const CellID& cell, const Point& pt )
 				editorControl->setVisible( true );
 				editorControl->setFocused();
 
-				CallBack* kl = getEventHandler( TABLECONTROL_KBRD_HANDLER );
+				CallBack* kl = getCallback( TABLECONTROL_KBRD_HANDLER );
 				editorControl->KeyDown += kl;
 
 				currentEditingControl_ = editorControl;

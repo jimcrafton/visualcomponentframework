@@ -1007,6 +1007,7 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 		}
 	}
 
+	
 	AcceleratorKey::Value key( event->getKeyMask(), event->getVirtualCode() );
 
 	typedef std::multimap<uint32,AcceleratorKey*>::iterator AccelMapIter;
@@ -1478,7 +1479,7 @@ void UIToolkit::internal_removeFromUpdateList( Component* component )
 
 void UIToolkit::internal_setUpdateTimerSpeed( const uint32& milliseconds )
 {
-	CallBack* ev = getEventHandler( "UIToolkit::onUpdateComponentsTimer" );
+	CallBack* ev = getCallback( "UIToolkit::onUpdateComponentsTimer" );
 	if ( NULL != ev ) {
 		internal_unregisterTimerHandler( (EventHandler*)ev );
 	}

@@ -62,14 +62,14 @@ void MenuManager::registerWindow( Window* window )
 {
 	VCF_ASSERT( NULL != window );
 
-	CallBack* ev = MenuManager::menuManager->getEventHandler( "MenuManager::onWindowActivated" );
+	CallBack* ev = MenuManager::menuManager->getCallback( "MenuManager::onWindowActivated" );
 	if ( NULL == ev ) {
 		ev = new ClassProcedure1<Event*,MenuManager>( MenuManager::menuManager, &MenuManager::onWindowActivated, "MenuManager::onWindowActivated" );
 	}
 
 	window->FrameActivation += ev;
 
-	ev = MenuManager::menuManager->getEventHandler( "MenuManager::onWindowClosed" );
+	ev = MenuManager::menuManager->getCallback( "MenuManager::onWindowClosed" );
 	if ( NULL == ev ) {
 		ev = new ClassProcedure1<Event*,MenuManager>( MenuManager::menuManager, &MenuManager::onWindowClosed, "MenuManager::onWindowClosed" );
 	}
@@ -82,7 +82,7 @@ void MenuManager::registerMenuBar( MenuBar* menuBar )
 {
 	VCF_ASSERT( NULL != menuBar );
 
-	CallBack* ev = MenuManager::menuManager->getEventHandler( "MenuManager::onMenuItemChange" );
+	CallBack* ev = MenuManager::menuManager->getCallback( "MenuManager::onMenuItemChange" );
 	if ( NULL == ev ) {
 		ev = new ClassProcedure1<Event*,MenuManager>( MenuManager::menuManager, &MenuManager::onMenuItemChange, "MenuManager::onMenuItemChange" );
 	}
@@ -94,7 +94,7 @@ void MenuManager::registerPopupMenu( PopupMenu* popupMenu )
 {
 	VCF_ASSERT( NULL != popupMenu );
 
-	CallBack* ev = MenuManager::menuManager->getEventHandler( "MenuManager::onMenuItemChange" );
+	CallBack* ev = MenuManager::menuManager->getCallback( "MenuManager::onMenuItemChange" );
 	if ( NULL == ev ) {
 		ev = new ClassProcedure1<Event*,MenuManager>( MenuManager::menuManager, &MenuManager::onMenuItemChange, "MenuManager::onMenuItemChange" );
 	}

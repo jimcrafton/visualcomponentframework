@@ -108,7 +108,7 @@ uint32 Action::getTargetCount()
 
 EventHandler* Action::getAcceleratorEventHandler()
 {
-	EventHandler* result = (EventHandler*)getEventHandler( "Action::onAccelerator" );
+	EventHandler* result = (EventHandler*)getCallback( "Action::onAccelerator" );
 	if ( NULL == result ) {
 		result = 
 			new ClassProcedure1<Event*,Action>( this, &Action::onAccelerator, "Action::onAccelerator" );

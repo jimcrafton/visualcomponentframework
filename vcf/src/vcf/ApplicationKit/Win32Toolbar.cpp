@@ -1399,7 +1399,7 @@ void Win32Toolbar::setImageList( ImageList* imageList )
 
 		SendMessage( hwnd_, TB_SETBITMAPSIZE, 0, (LPARAM) MAKELONG(imageList->getImageWidth(), imageList->getImageHeight()) );
 
-		CallBack* imgListHandler = getEventHandler( "Win32Toolbar::onImageListImageChanged" );
+		CallBack* imgListHandler = getCallback( "Win32Toolbar::onImageListImageChanged" );
 
 		imageListCtrl_ = ImageList_Create( imageList->getImageWidth(), imageList->getImageHeight(),
 											ILC_COLOR24  | ILC_MASK, imageList->getImageCount(), 4 );

@@ -108,21 +108,21 @@ void ListViewControl::setListModel(ListModel * model)
 	if ( NULL != listModel_ ) {
 		//listModel_->addRef();
 
-		CallBack* ev = getEventHandler( "ListBoxControl::onItemAdded" );
+		CallBack* ev = getCallback( "ListBoxControl::onItemAdded" );
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onItemAdded, "ListBoxControl::onItemAdded" );
 		}
 
 		listModel_->addItemAddedHandler( (EventHandler*)ev );
 
-		ev = getEventHandler( "ListBoxControl::onItemDeleted" );
+		ev = getCallback( "ListBoxControl::onItemDeleted" );
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onItemDeleted, "ListBoxControl::onItemDeleted" );
 		}
 
 		listModel_->addItemDeletedHandler( (EventHandler*)ev );
 
-		ev = getEventHandler( "ListBoxControl::onListModelContentsChanged" );
+		ev = getCallback( "ListBoxControl::onListModelContentsChanged" );
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
 		}
@@ -202,7 +202,7 @@ void ListViewControl::onListModelContentsChanged( ListModelEvent* event )
 
 void ListViewControl::onItemAdded( ListModelEvent* event )
 {
-	CallBack* paintHandler = this->getEventHandler( "ListViewControl::onItemPaint" );
+	CallBack* paintHandler = this->getCallback( "ListViewControl::onItemPaint" );
 	ListItem* item = event->getListItem();
 	if ( NULL != paintHandler ) {
 		item->ItemPaint += paintHandler;
@@ -339,7 +339,7 @@ void ListViewControl::onColumnItemAdded( ColumnModelEvent* event )
 
 	listviewPeer_->insertHeaderColumn( item->getIndex(), item->getCaption(), item->getWidth() );
 
-	CallBack* columnItemChanged = getEventHandler( "ListViewControl::onColumnItemChanged" );
+	CallBack* columnItemChanged = getCallback( "ListViewControl::onColumnItemChanged" );
 	if ( NULL == columnItemChanged ) {
 		columnItemChanged = new ClassProcedure1<ItemEvent*,ListViewControl>( this,
 																	&ListViewControl::onColumnItemChanged,

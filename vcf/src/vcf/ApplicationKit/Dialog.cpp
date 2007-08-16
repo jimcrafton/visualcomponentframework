@@ -127,7 +127,7 @@ void Dialog::resizeChildren()
 }
 */
 
-class ControlHolder : public ObjectWithEvents {
+class ControlHolder : public ObjectWithCallbacks {
 public:
 	ControlHolder(): control_(NULL) {
 
@@ -143,7 +143,7 @@ public:
 
 	virtual ~ControlHolder() {
 		if ( NULL != control_ ) {
-			CallBack* cb = getEventHandler( "onDestroy" );
+			CallBack* cb = getCallback( "onDestroy" );
 			if ( NULL != cb ) {
 				control_->ComponentDestroyed -= cb;
 			}
@@ -176,7 +176,7 @@ public:
 protected:
 	void updateEventHandler() {
 		if ( NULL != control_ ) {
-			CallBack* ev = getEventHandler( "onDestroy" );
+			CallBack* ev = getCallback( "onDestroy" );
 			if ( NULL == ev ) {
 				ev = new ClassProcedure1<ComponentEvent*,ControlHolder>(this, &ControlHolder::onDestroy, "onDestroy" );
 			}
