@@ -22,7 +22,7 @@ namespace VCF {
 /**
 \class AbstractPropertyEditor AbstractPropertyEditor.h "vcf/ApplicationKit/AbstractPropertyEditor.h"
 */
-class APPLICATIONKIT_API AbstractPropertyEditor : public ObjectWithEvents, public PropertyEditor {
+class APPLICATIONKIT_API AbstractPropertyEditor : public ObjectWithCallbacks, public PropertyEditor {
 public:
 	AbstractPropertyEditor() : property_(NULL), attributes_(0),rootDesignerComponent_(NULL) {
 

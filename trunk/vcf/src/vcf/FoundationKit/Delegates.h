@@ -90,6 +90,62 @@ public:
 
 class CallBack;
 
+
+/**
+\class ObjectWithCallbacks Delegates.h "vcf/FoundationKit/Delegates.h"
+ObjectWithCallbacks is an object that may
+have 0 or more CallBack associated with it,
+and will automatically clean up these CallBack
+when it is destroyed. This simplifies handling
+who has to clean up CallBack that have been
+allocated on the heap (which they always will be).
+
+Because the collection is a map, an event handler may be
+retreived for future use - that is it may be reused by 
+another delegate. For example:
+\code
+class Stuff : public ObjectWithCallbacks {
+public:
+	void onEvent( Event* e ) {
+		
+	}
+
+};
+
+int main() 
+{
+	FoundationKit::init();
+
+	Stuff stuff;
+	
+	CallBack* ev = 
+		new ClassProcedure1<Event*,Stuff>(&stuff,&Stuff::onEvent,"Stuff::onEvent");
+	
+	FoundationKit::terminate();
+	return 0;
+}
+
+\endcode
+
+This adds the new callback (ev) to the stuff instance. This event handler can
+then be retreived at any time:
+
+\code
+void someFunction( Stuff* stuff ) 
+{
+	CallBack* stuffHandler = stuff->getCallback( "Stuff::onEvent" );
+	//use the stuffHandler somehow...
+}
+\endcode
+
+
+Note that the ObjectWithCallbacks should not be created directly. Instead derive a 
+new custom class using this as a base class.
+
+*/
+
+#define OBJECTWITHCALLBACKS_CLASSID		"2d386e10-4b81-4c71-801f-d38d2fdb8e88"
+
 class FOUNDATIONKIT_API ObjectWithCallbacks : public Object {
 public:
 	
@@ -101,8 +157,7 @@ public:
 
 	void removeCallback( CallBack* cb );
 
-	CallBack* getCallback( const String& name );
-
+	CallBack* getCallback( const String& name );	
 protected:
 	std::map<String,CallBack*>* callbacks_;
 };
@@ -214,7 +269,7 @@ public:
 			CallBack::Vector::iterator it = functions->begin();
 			while ( !functions->empty() ) {
 				CallBack* cb = *it;
-				cb->free(); //this indirectly removed the callback from this delegate
+				remove( cb );				
 				it = functions->begin();
 			}
 		}
@@ -249,6 +304,7 @@ public:
 				std::find( functions->begin(), functions->end(), callback );
 			
 			if ( found != functions->end() ) {
+				callback->setDelegate( NULL );
 				functions->erase( found );
 			}
 		}

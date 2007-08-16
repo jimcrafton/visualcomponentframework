@@ -66,7 +66,7 @@ Control* BasicTableItemEditor::getEditingControl()
 		tc->setBorder( NULL );
 		TextModel* tm = tc->getTextModel();
 		tm->setText( editingItem_->getCaption() );
-		CallBack* ev = getEventHandler("BasicTableItemEditor::onEditorTextChanged");
+		CallBack* ev = getCallback("BasicTableItemEditor::onEditorTextChanged");
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<TextEvent*,BasicTableItemEditor>( this, &BasicTableItemEditor::onEditorTextChanged,"BasicTableItemEditor::onEditorTextChanged" );
 		}

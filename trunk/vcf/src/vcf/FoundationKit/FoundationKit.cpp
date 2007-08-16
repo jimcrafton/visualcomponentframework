@@ -114,7 +114,7 @@ void FoundationKit::init( int argc, char** argv )
 
 	{
 		try {
-			REGISTER_CLASSINFO_EXTERNAL( ObjectWithEvents );
+			REGISTER_CLASSINFO_EXTERNAL( ObjectWithCallbacks );
 			REGISTER_CLASSINFO_EXTERNAL( Component );
 		}
 		catch ( BasicException& e ) {

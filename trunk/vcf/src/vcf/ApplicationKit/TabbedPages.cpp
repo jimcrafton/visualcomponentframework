@@ -276,20 +276,20 @@ void TabbedPages::setTabModel( TabModel* model )
 		}
 
 
-		CallBack* ev = getEventHandler( "TabbedPages::onTabPageAdded" );
+		CallBack* ev = getCallback( "TabbedPages::onTabPageAdded" );
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<TabModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageAdded, "TabbedPages::onTabPageAdded" );
 		}
 		model_->addTabPageAddedHandler( (EventHandler*)ev );
 
-		ev = getEventHandler( "TabbedPages::onTabPageRemoved" );
+		ev = getCallback( "TabbedPages::onTabPageRemoved" );
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<TabModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageRemoved, "TabbedPages::onTabPageRemoved" );
 		}
 		model_->addTabPageRemovedHandler( (EventHandler*)ev );
 
 
-		ev = getEventHandler( "TabbedPages::onTabPageSelected" );
+		ev = getCallback( "TabbedPages::onTabPageSelected" );
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<TabModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageSelected, "TabbedPages::onTabPageSelected" );
 		}

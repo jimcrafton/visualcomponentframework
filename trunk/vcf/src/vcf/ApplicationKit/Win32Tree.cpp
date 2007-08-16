@@ -341,7 +341,7 @@ void Win32Tree::setImageList( ImageList* imageList )
 		TreeView_SetImageList( hwnd_, imageListCtrl_, TVSIL_NORMAL );
 
 
-		CallBack* imgListHandler = getEventHandler( "Win32Tree::onImageListImageChanged" );
+		CallBack* imgListHandler = getCallback( "Win32Tree::onImageListImageChanged" );
 		if ( NULL == imgListHandler ) {
 			imgListHandler =
 				new ClassProcedure1<ImageListEvent*, Win32Tree>(this, &Win32Tree::onImageListImageChanged, "Win32Tree::onImageListImageChanged" );
@@ -1344,7 +1344,7 @@ void Win32Tree::setStateImageList( ImageList* imageList )
 		TreeView_SetImageList( hwnd_, stateImageListCtrl_, TVSIL_STATE );
 
 
-		CallBack* imgListHandler = getEventHandler( "Win32Tree::onStateImageListImageChanged" );
+		CallBack* imgListHandler = getCallback( "Win32Tree::onStateImageListImageChanged" );
 		if ( NULL == imgListHandler ) {
 			imgListHandler =
 				new ClassProcedure1<ImageListEvent*,Win32Tree>(this, &Win32Tree::onStateImageListImageChanged, "Win32Tree::onStateImageListImageChanged" );
@@ -1379,7 +1379,7 @@ void Win32Tree::setAllowLabelEditing( const bool& allowLabelEditing )
 
 void Win32Tree::onControlModelChanged( Event* e )
 {
-	CallBack* ev = getEventHandler( "Win32Tree::onTreeNodeDeleted" );
+	CallBack* ev = getCallback( "Win32Tree::onTreeNodeDeleted" );
 
 	if ( NULL == ev ) {
 		ev = new ClassProcedure1<TreeModelEvent*,Win32Tree>( this,

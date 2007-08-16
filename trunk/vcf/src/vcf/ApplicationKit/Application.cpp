@@ -289,7 +289,7 @@ Window* Application::getMainWindow()
 
 void Application::setMainWindow( Window* mainWindow )
 {
-	CallBack* wl = getEventHandler("AppWindowHandler");
+	CallBack* wl = getCallback("AppWindowHandler");
 	if ( NULL != mainWindow_ && NULL != wl ){		
 		mainWindow_->FrameClose.remove( wl );		
 	}

@@ -68,7 +68,7 @@ AbstractScrollable::~AbstractScrollable()
 
 void AbstractScrollable::setScrollableControl( Control* scrollableControl ) {
 
-	CallBack* ch = resizeHandler_->getEventHandler( "ControlHandler" );
+	CallBack* ch = resizeHandler_->getCallback( "ControlHandler" );
 	if ( NULL != scrollableControl_ ) {
 		scrollableControl_->ControlSized.remove( ch );
 	}

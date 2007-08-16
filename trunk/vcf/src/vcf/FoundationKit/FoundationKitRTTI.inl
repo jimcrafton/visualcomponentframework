@@ -10,11 +10,10 @@ where you installed the VCF.
 namespace VCF {
 
 
-_class_rtti_(ObjectWithEvents, "VCF::Object", OBJECTWITHEVENTS_CLASSID)
-_event_( NotifyDelegate, Notified )
+_class_abstract_rtti_(ObjectWithCallbacks, "VCF::Object", OBJECTWITHCALLBACKS_CLASSID)
 _class_rtti_end_
 
-_class_abstract_rtti_(Component, "VCF::Object", COMPONENT_CLASSID)
+_class_abstract_rtti_(Component, "VCF::ObjectWithCallbacks", COMPONENT_CLASSID)
 _property_( int32, "tag", getTag, setTag, "" );
 _property_( String, "name", getName, setName, "" );
 _event_(ComponentDelegate, ComponentCreated );

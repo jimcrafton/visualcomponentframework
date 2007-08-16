@@ -236,7 +236,9 @@ void CallBack::addToSource( Object* source )
 
 void CallBack::destroy()
 {
-	delegate_->remove( this );
+	if ( NULL != delegate_ ) {
+		delegate_->remove( this );
+	}
 
 	Object* src = getSource();
 

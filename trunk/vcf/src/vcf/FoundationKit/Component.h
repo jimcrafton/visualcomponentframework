@@ -106,7 +106,7 @@ instances of classes derived from Component.
   @del Component::ComponentLoaded
   @del Component::ComponentSaved
 */
-class FOUNDATIONKIT_API Component : public ObjectWithEvents { //, public Persistable{
+class FOUNDATIONKIT_API Component : public ObjectWithCallbacks { //, public Persistable{
 protected:
 	/**
 	The constructor and destructor is hidden - this is an abstract class and should NEVER

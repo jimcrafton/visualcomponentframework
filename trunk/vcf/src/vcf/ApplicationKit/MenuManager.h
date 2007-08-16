@@ -40,7 +40,7 @@ namespace VCF {
 	MenuManager::terminate() functions - they will be called for you
 	by the framework.
 	*/
-	class APPLICATIONKIT_API MenuManager : public ObjectWithEvents{
+	class APPLICATIONKIT_API MenuManager : public ObjectWithCallbacks {
 	public:
 		/**
 		Used by the UIToolkit to create the singleton instance of the 

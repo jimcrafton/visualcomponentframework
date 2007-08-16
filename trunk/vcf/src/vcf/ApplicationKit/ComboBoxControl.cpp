@@ -378,7 +378,7 @@ ListModel* ComboBoxControl::getListModel()
 
 void ComboBoxControl::setListModel(ListModel * model)
 {
-	CallBack* changed = getEventHandler( "ComboBox_onListModelContentsChanged" );
+	CallBack* changed = getCallback( "ComboBox_onListModelContentsChanged" );
 	if ( NULL == changed ) {
 		changed =
 			new ClassProcedure1<ListModelEvent*,ComboBoxControl>( this,
@@ -386,7 +386,7 @@ void ComboBoxControl::setListModel(ListModel * model)
 														"ComboBox_onListModelContentsChanged" );
 	}
 
-	CallBack* itemAdded = getEventHandler( "ComboBox_onItemAdded" );
+	CallBack* itemAdded = getCallback( "ComboBox_onItemAdded" );
 	if ( NULL == itemAdded ) {
 		itemAdded =
 			new ClassProcedure1<ListModelEvent*,ComboBoxControl>( this,
@@ -394,7 +394,7 @@ void ComboBoxControl::setListModel(ListModel * model)
 														"ComboBox_onItemAdded" );
 	}
 
-	CallBack* itemDeleted = getEventHandler( "ComboBox_onItemDeleted" );
+	CallBack* itemDeleted = getCallback( "ComboBox_onItemDeleted" );
 	if ( NULL == itemDeleted ) {
 		itemDeleted =
 			new ClassProcedure1<ListModelEvent*,ComboBoxControl>( this,
@@ -518,7 +518,7 @@ void ComboBoxControl::closeDropDown( Event* event )
 		ComboBoxDropDown* dropdown = (ComboBoxDropDown*)dropDown_;
 		ListItem* selectedItem = dropdown->getSelectedItem();
 
-		CallBack* lostFocusHandler = getEventHandler( "ComboBoxControl::onDropDownLostFocus" );
+		CallBack* lostFocusHandler = getCallback( "ComboBoxControl::onDropDownLostFocus" );
 		dropDown_->FrameActivation.remove( lostFocusHandler );
 
 		dropDown_->setVisible( false );
@@ -585,14 +585,14 @@ void ComboBoxControl::mouseDown( MouseEvent* event )
 
 		if ( NULL != model ) {
 			if ( model->getCount() > 0 ) {
-				CallBack* closeHandler = getEventHandler( "ComboBoxControl::closeDropDown" );
+				CallBack* closeHandler = getCallback( "ComboBoxControl::closeDropDown" );
 				if ( NULL == closeHandler ) {
 					closeHandler = new ClassProcedure1<Event*,ComboBoxControl>( this, &ComboBoxControl::closeDropDown, "ComboBoxControl::closeDropDown" );
 				}
 
 				ComboBoxDropDown* dropDown = new ComboBoxDropDown( this, (EventHandler*)closeHandler );
 
-				CallBack* lostFocusHandler = getEventHandler( "ComboBoxControl::onDropDownLostFocus" );
+				CallBack* lostFocusHandler = getCallback( "ComboBoxControl::onDropDownLostFocus" );
 				if ( NULL == lostFocusHandler ) {
 					lostFocusHandler = new ClassProcedure1<WindowEvent*,ComboBoxControl>( this,
 																				&ComboBoxControl::onDropDownLostFocus,

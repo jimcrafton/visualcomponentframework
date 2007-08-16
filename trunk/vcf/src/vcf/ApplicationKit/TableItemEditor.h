@@ -46,7 +46,7 @@ return the member variable.
 @see TableCellItem::createItemEditor
 @see BasicTableItemEditor
 */
-class APPLICATIONKIT_API TableItemEditor : public ObjectWithEvents {
+class APPLICATIONKIT_API TableItemEditor : public ObjectWithCallbacks {
 public:
 
 	TableItemEditor(){};

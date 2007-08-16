@@ -1132,64 +1132,64 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::initActions()
 {
 	Action* action = new Action();
 	action->setName("FileNew");
-	action->Performed += new GenericEventHandler< AppClass >( app_,
+	action->Performed += new ClassProcedure1< Event*,AppClass >( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onNew,
 	                        "onNew" );
 	addAction( DocumentManager::atFileNew, action );
 
 	action = new Action();
 	action->setName("FileOpen");
-	action->Performed += new GenericEventHandler< AppClass >( app_,
+	action->Performed += new ClassProcedure1< Event*,AppClass >( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onOpen,
 	                        "onOpen" );
 	addAction( DocumentManager::atFileOpen, action );
 
 	action = new Action();
 	action->setName("FileSave");
-	action->Performed += new GenericEventHandler< AppClass >( app_,
+	action->Performed += new ClassProcedure1< Event*,AppClass >( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onSave,
 	                        "onSave" );
-	action->Update += new EventHandlerInstance<AppClass,ActionEvent>( app_,
+	action->Update += new ClassProcedure1<ActionEvent*,AppClass>( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onUpdateSave,
 	                        "onUpdateSave" );
 	addAction( DocumentManager::atFileSave, action );
 
 	action = new Action();
 	action->setName("FileSaveAs");
-	action->Performed += new GenericEventHandler< AppClass >( app_,
+	action->Performed += new ClassProcedure1< Event*,AppClass >( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onSaveAs,
 	                        "onSaveAs" );
-	action->Update += new EventHandlerInstance<AppClass,ActionEvent>( app_,
+	action->Update += new ClassProcedure1<ActionEvent*,AppClass>( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onUpdateSaveAs,
 	                        "onUpdateSaveAs" );
 	addAction( DocumentManager::atFileSaveAs, action );
 
 	action = new Action();
 	action->setName("FileClose");
-	action->Performed += new GenericEventHandler< AppClass >( app_,
+	action->Performed += new ClassProcedure1< Event*,AppClass >( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onClose,
 	                        "onClose" );
-	action->Update += new EventHandlerInstance< AppClass,ActionEvent >( app_,
+	action->Update += new ClassProcedure1<ActionEvent*,AppClass>( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onUpdateClose,
 	                        "onUpdateClose" );
 	addAction( DocumentManager::atFileClose, action );
 
 	action = new Action();
 	action->setName("EditUndo");
-	action->Performed += new GenericEventHandler< AppClass >( app_,
+	action->Performed += new ClassProcedure1< Event*, AppClass >( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onUndo,
 	                        "onUndo" );
-	action->Update += new EventHandlerInstance<AppClass,ActionEvent>( app_,
+	action->Update += new ClassProcedure1<ActionEvent*,AppClass>( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onUpdateUndo,
 	                        "onUpdateUndo" );
 	addAction( DocumentManager::atEditUndo, action );
 
 	action = new Action();
 	action->setName("EditRedo");
-	action->Performed += new GenericEventHandler< AppClass >( app_,
+	action->Performed += new ClassProcedure1< Event*, AppClass >( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onRedo,
 	                        "onRedo" );
-	action->Update += new EventHandlerInstance<AppClass,ActionEvent>( app_,
+	action->Update += new ClassProcedure1<ActionEvent*,AppClass>( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onUpdateRedo,
 	                        "onUpdateRedo" );
 	addAction( DocumentManager::atEditRedo, action );
@@ -1197,10 +1197,10 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::initActions()
 
 	action = new Action();
 	action->setName("EditCut");
-	action->Performed += new GenericEventHandler< AppClass >( app_,
+	action->Performed += new ClassProcedure1< Event*, AppClass >( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onCut,
 	                        "onCut" );
-	action->Update += new EventHandlerInstance<AppClass,ActionEvent>( app_,
+	action->Update += new ClassProcedure1<ActionEvent*,AppClass>( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onUpdateCut,
 	                        "onUpdateCut" );
 
@@ -1208,10 +1208,10 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::initActions()
 
 	action = new Action();
 	action->setName("EditCopy");
-	action->Performed += new GenericEventHandler< AppClass >( app_,
+	action->Performed += new ClassProcedure1< Event*, AppClass >( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onCopy,
 	                        "onCopy" );
-	action->Update += new EventHandlerInstance<AppClass,ActionEvent>( app_,
+	action->Update += new ClassProcedure1<ActionEvent*,AppClass>( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onUpdateCopy,
 	                        "onUpdateCopy" );
 
@@ -1220,10 +1220,10 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::initActions()
 
 	action = new Action();
 	action->setName("EditPaste");
-	action->Performed += new GenericEventHandler< AppClass >( app_,
+	action->Performed += new ClassProcedure1< Event*, AppClass >( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onPaste,
 	                        "onPaste" );
-	action->Update += new EventHandlerInstance<AppClass,ActionEvent>( app_,
+	action->Update += new ClassProcedure1<ActionEvent*,AppClass>( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onUpdatePaste,
 	                        "onUpdatePaste" );
 
@@ -1232,10 +1232,10 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::initActions()
 
 	action = new Action();
 	action->setName("EditPreferences");
-	action->Performed += new GenericEventHandler< AppClass >( app_,
+	action->Performed += new ClassProcedure1< Event*, AppClass >( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onPreferences,
 	                        "onPreferences" );
-	action->Update += new EventHandlerInstance<AppClass,ActionEvent>( app_,
+	action->Update += new ClassProcedure1<ActionEvent*,AppClass>( app_,
 	                        &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onUpdatePreferences,
 	                        "onUpdatePreferences" );
 
@@ -1295,7 +1295,7 @@ bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFileAs( Document* doc
 	*@see DocManagerEvent
 	*/
 	DocManagerEvent event( doc, DocumentManager::dmSaveDocument );
-	SaveFile.fireEvent( &event );
+	SaveFile( &event );
 	if ( !event.allowFileOperation() ) {
 		return event.getFileOperationStatus();
 	}
@@ -1413,7 +1413,7 @@ bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFileAs( Document* doc
 
 		// notifies the UI that the document has changed name
 		ModelEvent e( doc, Document::deSaved );
-		doc->ModelChanged.fireEvent( &e );
+		doc->ModelChanged( &e );
 	}
 
 	return result;
@@ -1429,7 +1429,7 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::openFile()
 	*@see DocManagerEvent
 	*/
 	DocManagerEvent event( NULL, DocumentManager::dmOpenDocument );
-	OpenFile.fireEvent( &event );
+	OpenFile( &event );
 	if ( !event.allowFileOperation() ) {
 		return;
 	}
@@ -1568,7 +1568,7 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUI( const DocumentI
 {
 	Window* window = NULL;
 
-	EventHandler* docEv = app_->getEventHandler("onDocModified");
+	CallBack* docEv = app_->getCallback("onDocModified");
 
 	window = getWindowForNewDocument( document, info );
 
@@ -1579,12 +1579,12 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUI( const DocumentI
 
 	if ( NULL == docEv ) {
 
-		docEv = new ModelEventHandler< AppClass >( app_,
+		docEv = new ClassProcedure1<ModelEvent*,AppClass >( app_,
 					&DocumentManagerImpl<AppClass,DocInterfacePolicy>::onDocModified,
 					"onDocModified" );
 	}
 
-	document->addModelHandler( docEv );
+	document->addModelHandler( (ModelHandler*)docEv );
 
 	/**
 	create a view from the DocInfo if necessary
@@ -1619,36 +1619,36 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUI( const DocumentI
 
 	DocManagerEvent event( document, DocumentManager::dmDocumentInitialized );
 
-	DocumentInitialized.fireEvent( &event );
+	DocumentInitialized( &event );
 
 	// let the policy to update its data to the new document
 	DocInterfacePolicy::afterNewDocument( document );
 
 	// makes sure the Frame has an handler to 
 	// to catch if the document's window is to be closing
-	EventHandler* newEv = app_->getEventHandler("onDocWindowClosing");
+	CallBack* newEv = app_->getCallback("onDocWindowClosing");
 	if ( NULL == newEv ) {
 
-		newEv = new FrameEventHandler< AppClass >( app_,
+		newEv = new ClassProcedure1< FrameEvent*,AppClass >( app_,
 					&DocumentManagerImpl<AppClass,DocInterfacePolicy>::onDocWindowClosing,
 					"onDocWindowClosing" );
 	}
 	window->FrameClosing += newEv;
 
 	// makes sure the window has an handler to catch if the document's window has been activated
-	newEv = app_->getEventHandler("onDocWindowActive");
+	newEv = app_->getCallback("onDocWindowActive");
 	if ( NULL == newEv ) {
 
-		newEv = new WindowEventHandler< AppClass >( app_,
+		newEv = new ClassProcedure1< WindowEvent*,AppClass >( app_,
 					&DocumentManagerImpl<AppClass,DocInterfacePolicy>::onDocWindowActive,
 					"onDocWindowActive" );
 	}
 	window->FrameActivation += newEv;
 
-	newEv = app_->getEventHandler("onDocWindowCreated");
+	newEv = app_->getCallback("onDocWindowCreated");
 	if ( NULL == newEv ) {
 
-		newEv = new GenericEventHandler<AppClass>( app_, 
+		newEv = new ClassProcedure1<Event*,AppClass>( app_, 
 							&DocumentManagerImpl<AppClass,DocInterfacePolicy>::onDocWindowCreated,
 							"onDocWindowCreated" );
 	}
@@ -1666,17 +1666,17 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUIToDocument( const
 	DocumentInfo info = getDocumentInfo( mimeType );
 
 	// this handler notifies the UI to display any changes on the document
-	EventHandler* docEv = app_->getEventHandler("onDocModified");
+	CallBack* docEv = app_->getCallback("onDocModified");
 
 	// see DocumentManagerImpl::newDefaultDocument() for explanation
 	if ( DocInterfacePolicy::saveBeforeNewDocument() ) {
 		Document* doc = DocInterfacePolicy::getCurrentDocument();
 		if ( NULL != doc ) {
-			doc->removeModelHandler( docEv );
+			doc->removeModelHandler( (ModelHandler*)docEv );
 			if ( doc->isModified() ) {
 				switch ( saveChanges( doc ) ) {
 					case UIToolkit::mrCancel : {
-						doc->addModelHandler( docEv );
+						doc->addModelHandler( (ModelHandler*)docEv );
 						return ;
 					}
 					break;
@@ -1691,7 +1691,7 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUIToDocument( const
 	// after the document has been created, we notify that it has
 	// been changed, so the UI can updates itself.
 	ModelEvent e( document, Document::deOpened );
-	document->ModelChanged.fireEvent( &e );
+	document->ModelChanged( &e );
 }
 
 template < typename AppClass, typename DocInterfacePolicy >
@@ -1708,7 +1708,7 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 	Window* window = NULL;
 
 	// this handler notifies the UI to display any changes on the document
-	EventHandler* docEv = app_->getEventHandler("onDocModified");
+	CallBack* docEv = app_->getCallback("onDocModified");
 
 	if ( DocumentManager::getShouldCreateUI() ) {
 		if ( DocInterfacePolicy::saveBeforeNewDocument() ) {
@@ -1717,7 +1717,7 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 			Document* doc = DocInterfacePolicy::getCurrentDocument();
 			if ( NULL != doc ) {
 				// we remove this handler as we don't want the UI to display any changes at this point
-				doc->removeModelHandler( docEv );
+				doc->removeModelHandler( (ModelHandler*)docEv );
 				if ( doc->isModified() ) {
 					// a dialog is shown to the user asking him to save the changes 
 					// of the current document previously modified
@@ -1726,7 +1726,7 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 							/* the user wanted to abort saving the previous document
 							   no new document is created, and
 								 we put the handler back to the unsaved document */
-							doc->addModelHandler( docEv );
+							doc->addModelHandler( (ModelHandler*)docEv );
 							return NULL;
 						}
 						break;

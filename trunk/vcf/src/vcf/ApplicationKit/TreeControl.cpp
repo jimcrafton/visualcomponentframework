@@ -81,16 +81,16 @@ void TreeControl::setTreeModel( TreeModel * model )
 {
 	if ( NULL != treeModel_ ){
 
-		EventHandler* ev = (EventHandler*)getEventHandler( "TreeControl::onTreeRootNodeChanged" );
+		EventHandler* ev = (EventHandler*)getCallback( "TreeControl::onTreeRootNodeChanged" );
 		treeModel_->removeTreeRootNodeChangedHandler ( ev );
 
-		ev = (EventHandler*)getEventHandler( "TreeControl::onTreeNodeAdded" );
+		ev = (EventHandler*)getCallback( "TreeControl::onTreeNodeAdded" );
 		treeModel_->removeTreeNodeAddedHandler( ev );
 
-		ev = (EventHandler*)getEventHandler( "TreeControl::onTreeNodeDeleted" );
+		ev = (EventHandler*)getCallback( "TreeControl::onTreeNodeDeleted" );
 		treeModel_->removeTreeNodeDeletedHandler( ev );
 
-		ev = (EventHandler*)getEventHandler( "ModelHandler" );
+		ev = (EventHandler*)getCallback( "ModelHandler" );
 		getViewModel()->removeModelHandler( (ModelHandler*)ev );
 	}
 
@@ -98,20 +98,20 @@ void TreeControl::setTreeModel( TreeModel * model )
 
 	if ( NULL != treeModel_ ) {
 
-		EventHandler* tml = (EventHandler*)getEventHandler( "TreeControl::onTreeRootNodeChanged" );
+		EventHandler* tml = (EventHandler*)getCallback( "TreeControl::onTreeRootNodeChanged" );
 		treeModel_->addTreeRootNodeChangedHandler ( tml );
 
-		tml = (EventHandler*)getEventHandler( "TreeControl::onTreeNodeAdded" );
+		tml = (EventHandler*)getCallback( "TreeControl::onTreeNodeAdded" );
 		treeModel_->addTreeNodeAddedHandler( tml );
 
-		tml = (EventHandler*)getEventHandler( "TreeControl::onTreeNodeDeleted" );
+		tml = (EventHandler*)getCallback( "TreeControl::onTreeNodeDeleted" );
 		treeModel_->addTreeNodeDeletedHandler( tml );		
 	}
 
 	setViewModel( dynamic_cast<Model*>(treeModel_) );
 
 	if ( NULL != treeModel_ ) {
-		getViewModel()->addModelHandler( (ModelHandler*)getEventHandler( "ModelHandler" ) );
+		getViewModel()->addModelHandler( (ModelHandler*)getCallback( "ModelHandler" ) );
 	}
 }
 
@@ -155,7 +155,7 @@ void TreeControl::onTreeNodeAdded( TreeModelEvent* event )
 	item->setControl( this );
 
 	treePeer_->addItem( item );
-	CallBack* il = getEventHandler( "TreeItemListener" );
+	CallBack* il = getCallback( "TreeItemListener" );
 	if  ( il == NULL ) {
 		il = new ClassProcedure1<ItemEvent*,TreeControl>( this, &TreeControl::onTreeItemPaint, "TreeItemListener" );
 	}

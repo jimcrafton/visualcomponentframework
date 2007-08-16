@@ -1362,7 +1362,7 @@ void Win32Edit::finishPrinting()
 
 void Win32Edit::onControlModelChanged( Event* e )
 {
-	CallBack* tml = getEventHandler( "Win32TextModelHandler" );
+	CallBack* tml = getCallback( "Win32TextModelHandler" );
 	if ( NULL == tml ) {
 		tml = new ClassProcedure1<TextEvent*,Win32Edit>( this, &Win32Edit::onTextModelTextChanged, "Win32TextModelHandler" );
 	}

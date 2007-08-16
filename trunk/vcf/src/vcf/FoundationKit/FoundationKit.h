@@ -263,11 +263,13 @@ namespace VCF{
 #include "vcf/FoundationKit/Semaphore.h"
 #include "vcf/FoundationKit/Lock.h"
 #include "vcf/FoundationKit/Delegates.h"
-
 #include "vcf/FoundationKit/Event.h"
 
+//#include "vcf/FoundationKit/NotifyEvent.h"
 
-#include "vcf/FoundationKit/NotifyEvent.h"
+
+
+
 
 
 
@@ -290,7 +292,7 @@ namespace VCF{
 #include "vcf/FoundationKit/Method.h"
 #include "vcf/FoundationKit/Field.h"
 #include "vcf/FoundationKit/ClassRegistry.h"
-#include "vcf/FoundationKit/ObjectWithEvents.h"
+//#include "vcf/FoundationKit/ObjectWithEvents.h"
 
 //#include "vcf/FoundationKit/VCFRTTIImpl.h"
 //#include "vcf/FoundationKit/ClassInfo.h"

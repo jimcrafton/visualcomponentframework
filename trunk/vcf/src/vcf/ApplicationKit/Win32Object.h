@@ -24,7 +24,7 @@ namespace VCF
 
 class Control;
 
-class APPLICATIONKIT_API Win32Object : public ObjectWithEvents
+class APPLICATIONKIT_API Win32Object : public ObjectWithCallbacks
 {
 public:
 

@@ -99,17 +99,17 @@ ListBoxControl::~ListBoxControl()
 void ListBoxControl::destroy()
 {
 	if ( NULL != listModel_ ) {
-		EventHandler* ev = (EventHandler*)getEventHandler( "ListBoxControl::onItemAdded" );
+		EventHandler* ev = (EventHandler*)getCallback( "ListBoxControl::onItemAdded" );
 		if ( NULL != ev ) {
 			listModel_->removeItemAddedHandler( ev );
 		}
 
-		ev = (EventHandler*)getEventHandler( "ListBoxControl::onItemDeleted" );
+		ev = (EventHandler*)getCallback( "ListBoxControl::onItemDeleted" );
 		if ( NULL != ev ) {
 			listModel_->removeItemDeletedHandler( ev );
 		}
 
-		ev = (EventHandler*)getEventHandler( "ListBoxControl::onListModelContentsChanged" );
+		ev = (EventHandler*)getCallback( "ListBoxControl::onListModelContentsChanged" );
 		if ( NULL != ev ) {
 			listModel_->removeContentsChangedHandler( ev );
 		}
@@ -130,17 +130,17 @@ void ListBoxControl::setListModel( ListModel * model )
 	}
 
 	if ( NULL != listModel_ ) {
-		EventHandler* ev = (EventHandler*)getEventHandler( "ListBoxControl::onItemAdded" );
+		EventHandler* ev = (EventHandler*)getCallback( "ListBoxControl::onItemAdded" );
 		if ( NULL != ev ) {
 			listModel_->removeItemAddedHandler( ev );
 		}
 
-		ev = (EventHandler*)getEventHandler( "ListBoxControl::onItemDeleted" );
+		ev = (EventHandler*)getCallback( "ListBoxControl::onItemDeleted" );
 		if ( NULL != ev ) {
 			listModel_->removeItemDeletedHandler( ev );
 		}
 
-		ev = (EventHandler*)getEventHandler( "ListBoxControl::onListModelContentsChanged" );
+		ev = (EventHandler*)getCallback( "ListBoxControl::onListModelContentsChanged" );
 		if ( NULL != ev ) {
 			listModel_->removeContentsChangedHandler( ev );
 		}		

@@ -298,7 +298,7 @@ typedef Delegate1<XMLParserEvent*> XMLParserDelegate;
 	@del NodeCDATAFound
 
 */
-class FOUNDATIONKIT_API XMLParser : public ObjectWithEvents {
+class FOUNDATIONKIT_API XMLParser : public ObjectWithCallbacks {
 public:
 	enum XMLTagType {
 		TagCDATA	=	-3,

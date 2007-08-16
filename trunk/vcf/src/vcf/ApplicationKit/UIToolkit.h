@@ -112,7 +112,7 @@ The UIToolkit is a singleton, meaning there is only ever one single instance of 
 Developers porting the VCF to another platform will have to create a derived class
 from UIToolkit and implement the various virtual functions.
 */
-class APPLICATIONKIT_API UIToolkit : public ObjectWithEvents {
+class APPLICATIONKIT_API UIToolkit : public ObjectWithCallbacks {
 public:
 
 	/**
