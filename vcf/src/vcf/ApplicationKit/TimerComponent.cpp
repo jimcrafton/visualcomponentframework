@@ -94,7 +94,7 @@ EventHandler* TimerComponent::getTimerHandler()
 	if ( NULL == result ) {
 		result = (EventHandler*)
 			new ClassProcedure1<TimerEvent*,TimerComponent>( this, &TimerComponent::onInternalTimerPulse, "TimerComponent::onInternalTimerPulse" );
-		addCallback( result );
+		//addCallback( result );
 	}
 	return result;
 }
