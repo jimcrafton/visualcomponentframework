@@ -366,7 +366,7 @@ protected:
 		setModified( true );
 
 		ModelEvent e( this, CircleDocument::CircleAdded );
-		ModelChanged.fireEvent( &e );
+		ModelChanged( &e );
 		updateAllViews();
 	}
 
@@ -380,7 +380,7 @@ protected:
 			setModified( true );
 
 			ModelEvent e( this, CircleDocument::CircleRemoved );
-			ModelChanged.fireEvent( &e );
+			ModelChanged( &e );
 			updateAllViews();
 		}
 	}
@@ -439,12 +439,12 @@ public:
 
 
 	virtual void setViewModel( Model* model ) {
-		EventHandler* ev = getEventHandler( "CircleInfoUI::onCircleModelChanged" );
+		CallBack* ev = getCallback( "CircleInfoUI::onCircleModelChanged" );
 
 
 		if ( NULL != model ) {
 			if ( NULL != ev ) {
-				model->removeModelHandler( ev );
+				model->removeModelHandler( (ModelHandler*)ev );
 			}
 		}
 
@@ -452,9 +452,9 @@ public:
 
 		if ( NULL != model ) {
 			if ( NULL == ev ) {
-				ev = new GenericEventHandler<CircleInfoUI>( this, &CircleInfoUI::onCircleModelChanged, "CircleInfoUI::onCircleModelChanged" );
+				ev = new ClassProcedure1<Event*, CircleInfoUI>( this, &CircleInfoUI::onCircleModelChanged, "CircleInfoUI::onCircleModelChanged" );
 			}
-			model->addModelHandler( ev );
+			model->addModelHandler( (ModelHandler*)ev );
 		}
 	}
 
@@ -559,12 +559,12 @@ public:
 
 	void setModel( CircleDocument* model ) {
 		
-		EventHandler* ev = getEventHandler( "CircleDocController::onCircleModelChanged" );
+		CallBack* ev = getCallback( "CircleDocController::onCircleModelChanged" );
 
 
 		if ( NULL != model_ ) {
 			if ( NULL != ev ) {
-				model_->removeModelHandler( ev );
+				model_->removeModelHandler( (ModelHandler*)ev );
 			}
 		}
 
@@ -572,9 +572,9 @@ public:
 
 		if ( NULL != model_ ) {
 			if ( NULL == ev ) {
-				ev = new GenericEventHandler<CircleDocController>( this, &CircleDocController::onCircleModelChanged, "CircleDocController::onCircleModelChanged" );
+				ev = new ClassProcedure1<Event*, CircleDocController>( this, &CircleDocController::onCircleModelChanged, "CircleDocController::onCircleModelChanged" );
 			}
-			model_->addModelHandler( ev );
+			model_->addModelHandler( (ModelHandler*)ev );
 		}
 	}
 
@@ -671,7 +671,7 @@ public:
 
 
 		DocumentManager* docMgr = DocumentManager::getDocumentManager();
-		docMgr->DocumentInitialized += new GenericEventHandler<DocViewAdvancedWindow>( this, 
+		docMgr->DocumentInitialized += new ClassProcedure1<Event*, DocViewAdvancedWindow>( this, 
 																			&DocViewAdvancedWindow::onDocInitialized,
 																			"DocViewAdvancedWindow::onDocInitialized" );
 
@@ -688,10 +688,10 @@ public:
 		controller_->panel_ = circlePanel_;
 
 		circlePanel_->MouseClicked +=
-			new MouseEventHandler<CircleDocController>( controller_, &CircleDocController::onMouseClicked, "CircleDocController::onMouseClicked" );
+			new ClassProcedure1<MouseEvent*,CircleDocController>( controller_, &CircleDocController::onMouseClicked, "CircleDocController::onMouseClicked" );
 
 		circlePanel_->KeyUp +=
-			new KeyboardEventHandler<CircleDocController>( controller_, &CircleDocController::onKeyUp, "CircleDocController::onKeyUp" );
+			new ClassProcedure1<KeyboardEvent*,CircleDocController>( controller_, &CircleDocController::onKeyUp, "CircleDocController::onKeyUp" );
 
 		circlePanel_->setView( new CircleDocsView() );
 
@@ -723,7 +723,7 @@ public:
 
 	virtual ~DocViewAdvancedWindow(){
 		DocumentManager* docMgr = DocumentManager::getDocumentManager();
-		EventHandler* ev = getEventHandler( "DocViewAdvancedWindow::onDocInitialized" );
+		CallBack* ev = getCallback( "DocViewAdvancedWindow::onDocInitialized" );
 		if ( NULL != ev ) {
 			docMgr->DocumentInitialized -= ev;
 		}
