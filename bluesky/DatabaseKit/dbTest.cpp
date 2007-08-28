@@ -390,11 +390,6 @@ int main( int argc, char** argv ){
 
 			fdl->setDataSource( dbSrc );
 
-			//EventHandler ev1(onDataChanged);
-			//EventHandler ev2(onEditingChanged);
-			//EventHandler ev3(onUpdatedData);
-			//EventHandler ev4(onActiveChanged);
-
 			fdl->DataChange += onDataChanged;
 			fdl->EditingChange += onEditingChanged;
 			fdl->UpdatedData += onUpdatedData;

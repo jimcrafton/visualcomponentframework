@@ -16,6 +16,9 @@
 namespace VCF
 {
 
+	/**
+	\class DatabaseError DatabaseError.h "vcf/DatabaseKit/DatabaseError.h"
+	*/
     class DATABASEKIT_API DatabaseError : public BasicException {
     public:
 
