@@ -21,6 +21,9 @@ namespace VCF {
 	class DataSet;
 	class DataSource;
 
+	/**
+	\class DataLink DataLink.h "vcf/DatabaseKit/DataLink.h"
+	*/
 	class DATABASEKIT_API DataLink : public Object {
 	public:
 		DataLink();

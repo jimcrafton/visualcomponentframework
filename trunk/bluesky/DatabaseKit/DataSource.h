@@ -23,6 +23,9 @@ namespace VCF {
 
 	class DataLink;
 
+	/**
+	\class DataSource DataSource.h "vcf/DatabaseKit/DataSource.h"
+	*/
 	class DATABASEKIT_API DataSource : public Component {
 	public:
 

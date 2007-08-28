@@ -164,6 +164,9 @@ namespace VCF {
 		grmCurrent
 	};
 
+	/**
+	
+	*/
 	enum GetResultType {
 		grFailed = 0,
 		grOK,
@@ -171,6 +174,9 @@ namespace VCF {
 		grEOF,
 	};
 
+	/**
+	
+	*/
 	enum ResyncMode {
 		rmNone = 0,
 		rmExact = 0x01, 
@@ -178,6 +184,9 @@ namespace VCF {
 	};
 
 
+	/**
+	
+	*/
 	enum FilterOptions {
 		foNoOptions = 0,
 		foCaseInsensitive = 0x01,
@@ -185,6 +194,9 @@ namespace VCF {
 	};
 
 
+	/**
+	\class FilterRecordEvent DataSet.h "vcf/DatabaseKit/DataSet.h"
+	*/
 	class DATABASEKIT_API FilterRecordEvent : public Event {
 	public:
 		FilterRecordEvent( Object* source ) : Event(source,0),accept(false){}
@@ -203,6 +215,9 @@ namespace VCF {
 	typedef Delegate1<FilterRecordEvent*> FilterRecordDelegate; 
 
 
+	/**
+	\class DataErrorEvent DataSet.h "vcf/DatabaseKit/DataSet.h"
+	*/
 	class DATABASEKIT_API DataErrorEvent : public Event {
 	public:
 		DataErrorEvent( Object* source ) : Event(source,0){}
@@ -223,6 +238,48 @@ namespace VCF {
 
 	#define DATASET_CLASSID	"76ab89f0-66d1-4ba3-998e-4ec874faa6e1"
 
+	/**
+	\class DataSet DataSet.h "vcf/DatabaseKit/DataSet.h"
+	The DataSet is a class for viewing and manipulating 
+	data stored in a sequential record based format.
+	This could be data in a relational database, or data 
+	in some record based file format. The exact implementation
+	details for how the data is viewed or modified is 
+	determined by the type of DataSetPeer that the DataSet
+	is using. Developers do not use the peer interface directly,
+	instead they deal with the DataSet class or other classes
+	which may derive from the DataSet class.
+	\p
+	The DataSet has a series of delegates that are used to
+	notify interested parties when various events take place.
+	These include events such as before a post is made, or
+	after a post is completed. 
+
+	\p
+	The DataSet provides access to it's data by accessing it's 
+	fields. The DataSet has a collection of 1 or more fields
+	that are equivalent to the columns of a table. You can
+	"navigate" to a row using the functions first() and next().
+	When you edit the various fields you do so at the current row.
+	So if you open a table, you will be on the first record. If you
+	call next(), you will be moved to the next row (or record). If
+	you read the contents of the fields at this point you will be
+	looking at the contents of the second record (or row).
+	\p
+	To edit the data in the fields, you must first place the 
+	dataset into "edit" mode by calling the edit() function. 
+	After this you can modify the various fields. When you
+	are finished, you either call refresh() or navigate to
+	another record.
+	\code
+	DataSet* dataSet = new DataSet();
+	dataSet->setPeerType( "SQLiteType" );
+
+	dataSet->setParam( "databasename", "test.db3" );
+	dataSet->setParam( "tablename", "Person" );
+
+	\endcode
+	*/
     class DATABASEKIT_API DataSet : public Component {
     public:
 		struct Record {
@@ -548,7 +605,9 @@ namespace VCF {
 
 
 
-
+	/**
+	\class DataSetPeer DataSet.h "vcf/DatabaseKit/DataSet.h"
+	*/
 	class DATABASEKIT_API DataSetPeer  {
 	public:
 		virtual ~DataSetPeer(){}

@@ -18,6 +18,8 @@ where you installed the VCF.
 
 namespace VCF {
 
+	/**
+	*/
 	enum DataFieldType {
 		dftUnknown = 0,
 		dftString, 
@@ -61,6 +63,9 @@ namespace VCF {
 	class DataField;
 
 
+	/**
+	\class FieldDefinition FieldDefinitions.h "vcf/DatabaseKit/FieldDefinitions.h"
+	*/
 	class DATABASEKIT_API FieldDefinition {
 	public:
 		int fieldNumber;
@@ -91,6 +96,9 @@ namespace VCF {
 	class DataSet;
 	
 
+	/**
+	\class FieldDefinitions FieldDefinitions.h "vcf/DatabaseKit/FieldDefinitions.h"
+	*/
 	class DATABASEKIT_API FieldDefinitions {
 	public:
 		FieldDefinitions();

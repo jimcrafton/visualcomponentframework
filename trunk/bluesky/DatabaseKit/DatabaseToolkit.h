@@ -25,10 +25,14 @@ namespace VCF {
     class DataSet;
 	class DataSetPeer;
 
-    enum DatabaseType {
-        dtFirebird
-    };
+    
 
+	/**
+	\class DatabaseToolkit DatabaseToolkit.h "vcf/DatabaseKit/DatabaseToolkit.h"
+	The DatabaseToolkit class creates specific instances of various
+	peer interfaces. These peer interfaces are used by other concrete 
+	classes (such as the DataSet) in their implementation.
+	*/
     class DATABASEKIT_API DatabaseToolkit {
     public:
         static void create();
