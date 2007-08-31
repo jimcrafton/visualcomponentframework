@@ -469,7 +469,6 @@ FOUNDATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_MIMEType.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_Mutex.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_Object.obj \
-	..\..\lib\$(OBJDIR)\FoundationKit_lib_ObjectWithEvents.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_PackageInfo.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_ProcessWithRedirectedIO.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_Registry.obj \
@@ -555,7 +554,6 @@ FOUNDATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_MIMEType.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_Mutex.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_Object.obj \
-	..\..\lib\$(OBJDIR)\FoundationKit_dll_ObjectWithEvents.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_PackageInfo.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_ProcessWithRedirectedIO.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_Registry.obj \
@@ -1686,7 +1684,6 @@ ______Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_MIMEType.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Mutex.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Object.obj \
-	..\..\lib\$(OBJDIR)\Allin1_lib_ObjectWithEvents.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_PackageInfo.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_ProcessWithRedirectedIO.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Registry.obj \
@@ -1992,7 +1989,6 @@ ______Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_MIMEType.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Mutex.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Object.obj \
-	..\..\lib\$(OBJDIR)\Allin1_dll_ObjectWithEvents.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_PackageInfo.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_ProcessWithRedirectedIO.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Registry.obj \
@@ -4009,9 +4005,6 @@ sub_xmake_:
 ..\..\lib\$(OBJDIR)\FoundationKit_lib_Object.obj: ..\..\src\vcf\FoundationKit\Object.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $**
 
-..\..\lib\$(OBJDIR)\FoundationKit_lib_ObjectWithEvents.obj: ..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $**
-
 ..\..\lib\$(OBJDIR)\FoundationKit_lib_PackageInfo.obj: ..\..\src\vcf\FoundationKit\PackageInfo.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $**
 
@@ -4232,9 +4225,6 @@ sub_xmake_:
 	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\FoundationKit_dll_Object.obj: ..\..\src\vcf\FoundationKit\Object.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $**
-
-..\..\lib\$(OBJDIR)\FoundationKit_dll_ObjectWithEvents.obj: ..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\FoundationKit_dll_PackageInfo.obj: ..\..\src\vcf\FoundationKit\PackageInfo.cpp
@@ -5608,9 +5598,6 @@ sub_xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_lib_Object.obj: ..\..\src\vcf\FoundationKit\Object.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
-..\..\lib\$(OBJDIR)\Allin1_lib_ObjectWithEvents.obj: ..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_LIB_CXXFLAGS) $**
-
 ..\..\lib\$(OBJDIR)\Allin1_lib_PackageInfo.obj: ..\..\src\vcf\FoundationKit\PackageInfo.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
@@ -6404,9 +6391,6 @@ sub_xmake_:
 	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_Object.obj: ..\..\src\vcf\FoundationKit\Object.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_DLL_CXXFLAGS) $**
-
-..\..\lib\$(OBJDIR)\Allin1_dll_ObjectWithEvents.obj: ..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_PackageInfo.obj: ..\..\src\vcf\FoundationKit\PackageInfo.cpp

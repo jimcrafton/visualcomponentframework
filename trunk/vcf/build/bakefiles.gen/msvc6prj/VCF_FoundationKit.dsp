@@ -666,10 +666,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Object.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\PackageInfo.cpp
 # End Source File
 # Begin Source File
@@ -1126,19 +1122,11 @@ SOURCE=..\..\..\src\vcf\FoundationKit\NotImplementedException.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\NotifyEvent.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\OSHandlePeer.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\Object.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\ObjectWithEvents.h
 # End Source File
 # Begin Source File
 

@@ -448,7 +448,6 @@
 			<File RelativePath="..\..\..\src\vcf\FoundationKit\MessageLoader.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\FoundationKit\Mutex.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\FoundationKit\Object.cpp"/>
-			<File RelativePath="..\..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\FoundationKit\PackageInfo.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\FoundationKit\Registry.cpp"/>
