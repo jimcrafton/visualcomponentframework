@@ -67,11 +67,9 @@
         vcf/FoundationKit/NoImplementerFoundException.h
         vcf/FoundationKit/NoPeerFoundException.h
         vcf/FoundationKit/NoSuchElementException.h
-        vcf/FoundationKit/NotifyEvent.h
         vcf/FoundationKit/NotImplementedException.h
         vcf/FoundationKit/NoToolKitFoundException.h
         vcf/FoundationKit/Object.h
-        vcf/FoundationKit/ObjectWithEvents.h
         vcf/FoundationKit/OSHandlePeer.h
         vcf/FoundationKit/OutOfBoundsException.h
         vcf/FoundationKit/OutputReadyEvent.h
@@ -167,7 +165,6 @@
         vcf/FoundationKit/MIMEType.cpp
         vcf/FoundationKit/Mutex.cpp
         vcf/FoundationKit/Object.cpp
-        vcf/FoundationKit/ObjectWithEvents.cpp
         vcf/FoundationKit/PackageInfo.cpp
         vcf/FoundationKit/ProcessWithRedirectedIO.cpp
         vcf/FoundationKit/Registry.cpp
