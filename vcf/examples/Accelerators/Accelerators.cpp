@@ -53,37 +53,37 @@ public:
 		MenuItem* panelsChangeColor = new DefaultMenuItem( "Change Color", panels, mb);
 
 		EventHandler* ehEditUndo1 = 
-			new GenericEventHandler<AcceleratorsWindow>( this, &AcceleratorsWindow::onEditUndo1, "AcceleratorsWindow::onEditUndo1" );
+			new ClassProcedure1<Event*,AcceleratorsWindow>( this, &AcceleratorsWindow::onEditUndo1, "AcceleratorsWindow::onEditUndo1" );
 
 		EventHandler* ehUpdateEditUndo1 = 
-			new GenericEventHandler<AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdateEditUndo1, "AcceleratorsWindow::onUpdateEditUndo1" );
+			new ClassProcedure1<Event*,AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdateEditUndo1, "AcceleratorsWindow::onUpdateEditUndo1" );
 
 		EventHandler* ehEditUndo2 = 
-			new GenericEventHandler<AcceleratorsWindow>( this, &AcceleratorsWindow::onEditUndo2, "AcceleratorsWindow::onEditUndo2" );
+			new ClassProcedure1<Event*,AcceleratorsWindow>( this, &AcceleratorsWindow::onEditUndo2, "AcceleratorsWindow::onEditUndo2" );
 					
 		EventHandler* ehUpdateEditUndo2 = 
-			new GenericEventHandler<AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdateEditUndo2, "AcceleratorsWindow::onUpdateEditUndo2" );
+			new ClassProcedure1<Event*,AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdateEditUndo2, "AcceleratorsWindow::onUpdateEditUndo2" );
 
 
 		EventHandler* ehEditCopy = 
-			new GenericEventHandler<AcceleratorsWindow>( this, &AcceleratorsWindow::onEditCopy, "AcceleratorsWindow::onEditCopy" );
+			new ClassProcedure1<Event*,AcceleratorsWindow>( this, &AcceleratorsWindow::onEditCopy, "AcceleratorsWindow::onEditCopy" );
 					
 		EventHandler* ehUpdateEditCopy = 
-			new GenericEventHandler<AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdateEditCopy, "AcceleratorsWindow::onUpdateEditCopy" );
+			new ClassProcedure1<Event*,AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdateEditCopy, "AcceleratorsWindow::onUpdateEditCopy" );
 
 		EventHandler* ehUpdateEditCopy1 = 
-			new GenericEventHandler<AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdateEditCopy1, "AcceleratorsWindow::onUpdateEditCopy1" );
+			new ClassProcedure1<Event*,AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdateEditCopy1, "AcceleratorsWindow::onUpdateEditCopy1" );
 
 		EventHandler* ehUpdateEditCopy2 = 
-			new GenericEventHandler<AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdateEditCopy2, "AcceleratorsWindow::onUpdateEditCopy2" );
+			new ClassProcedure1<Event*,AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdateEditCopy2, "AcceleratorsWindow::onUpdateEditCopy2" );
 
 		
 
 		EventHandler* ehPanelsChangeColors = 
-			new GenericEventHandler<AcceleratorsWindow>( this, &AcceleratorsWindow::onPanelsChangeColors, "AcceleratorsWindow::onPanelsChangeColors" );
+			new ClassProcedure1<Event*,AcceleratorsWindow>( this, &AcceleratorsWindow::onPanelsChangeColors, "AcceleratorsWindow::onPanelsChangeColors" );
 
 		EventHandler* ehUpdatePanelsChangeColors = 
-			new GenericEventHandler<AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdatePanelsChangeColors, "AcceleratorsWindow::onUpdatePanelsChangeColors" );
+			new ClassProcedure1<Event*,AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdatePanelsChangeColors, "AcceleratorsWindow::onUpdatePanelsChangeColors" );
 
 
 
