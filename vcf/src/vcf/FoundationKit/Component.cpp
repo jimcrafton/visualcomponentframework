@@ -92,7 +92,7 @@ void Component::destroy()
 	std::vector<Component*>::iterator componentIter = components_.begin();
 	while ( componentIter != components_.end() ){
 		Component* component = *componentIter;
-		component->release();
+		component->free();
 		component = NULL;
 		componentIter++;
 	}

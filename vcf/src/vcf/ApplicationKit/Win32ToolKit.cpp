@@ -2395,7 +2395,7 @@ public:
 		delete event_;
 		event_ = NULL;
 		if ( true == deleteHandler_ ) {
-			delete handler_;
+			handler_->free();
 		}
 		handler_ = NULL;
 	}

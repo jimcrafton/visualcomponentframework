@@ -144,7 +144,7 @@ void Control::destroy()
 	
 	container_ = NULL;
 	
-	Component::destroy();
+	UIComponent::destroy();
 }
 
 Border* Control::getBorder()
@@ -175,7 +175,7 @@ Component* Control::findComponent( const String& componentName, const bool& recu
 	}
 
 	if ( NULL == result ) {
-		result = Component::findComponent( componentName, recursive );
+		result = UIComponent::findComponent( componentName, recursive );
 	}
 
 	return result;
@@ -206,7 +206,7 @@ void Control::postLoaded( const bool& visible )
 
 bool Control::bindVariable( Component** variablePtr, const String& variableName )
 {
-	bool result = Component::bindVariable( variablePtr, variableName );
+	bool result = UIComponent::bindVariable( variablePtr, variableName );
 
 	if ( false == result ) {
 		Control* control = dynamic_cast<Control*>(this);
@@ -263,7 +263,7 @@ bool Control::generatePropertyValue( const String& fullPropertyName, Property* p
 		return true;
 	}
 
-	return Component::generatePropertyValue( fullPropertyName, property, value, strValue );
+	return UIComponent::generatePropertyValue( fullPropertyName, property, value, strValue );
 }
 
 Rect Control::getBounds()/**throw( InvalidPeer ); -JEC - FIXME later*/
@@ -443,6 +443,7 @@ void Control::setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating ) /**t
 {
 	*bounds_ = *rect;
 
+	StringUtils::trace( Format("Control::setBounds this: %p\n") % this );
 	/**
 	Adjust the bounds to take into account a
 	potentially lightweight parent
@@ -1205,7 +1206,7 @@ void Control::translateToLocal( Point* point )
 
 void Control::beforeDestroy( ComponentEvent* event )
 {
-	Component::beforeDestroy( event );
+	UIComponent::beforeDestroy( event );
 }
 
 bool Control::isLightWeight()

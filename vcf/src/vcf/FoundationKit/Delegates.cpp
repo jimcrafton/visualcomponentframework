@@ -205,16 +205,13 @@ void ObjectWithCallbacks::removeCallback( CallBack* cb )
 ObjectWithCallbacks::~ObjectWithCallbacks()
 {
 	if ( NULL != callbacks_ ) {
-		size_t cbSize = callbacks_->size();
-		while ( cbSize > 0 ) {
+		while ( !callbacks_->empty() ) {
 			
 			std::map<String,CallBack*>::iterator it = 
 				callbacks_->begin();
 			
 			CallBack* cb = it->second;
 			cb->free();
-			
-			cbSize --;
 		}
 
 		delete callbacks_;
@@ -236,13 +233,25 @@ void CallBack::addToSource( Object* source )
 
 void CallBack::destroy()
 {
-	if ( NULL != delegate_ ) {
-		delegate_->remove( this );
+	if ( NULL != delegates_ ) {
+
+		/**
+		We do it this way because the call to Delegate::remove() 
+		will ultimately remove a delegate from the delegates_
+		vector.
+		*/
+		while ( !delegates_->empty() ) {
+			Delegate* d = delegates_->front();
+			d->remove( this );
+		}
+
+		delete delegates_;
+		delegates_ = NULL;
 	}
 
 	Object* src = getSource();
 
-	if ( NULL != src ) {
+	if ( NULL != src && !name.empty() ) {
 		ObjectWithCallbacks* objCB = dynamic_cast<ObjectWithCallbacks*>( src );
 
 		
