@@ -22,8 +22,6 @@ where you installed the VCF.
 #endif 
 
 
-#define USE_VCF_OBJECT
-
 
 
 
@@ -88,7 +86,85 @@ public:
 	}
 };
 
-class CallBack;
+
+
+
+
+
+class Delegate;
+
+class FOUNDATIONKIT_API CallBack : public Object, public FunctionTypeInfo {
+public:
+
+	typedef std::vector<CallBack*> Vector;
+
+	CallBack():delegates_(NULL){}
+
+	CallBack( const String& str ): name(str),delegates_(NULL){}
+
+	CallBack( Object* source, const String& str ): name(str),delegates_(NULL){
+		addToSource( source );
+	}
+
+	
+
+
+	String getName() const {
+		return name;
+	}
+	
+	//a callback may, or may not, have a 
+	//source. In addition, it's possible
+	//that the source is *not* an Object 
+	//based type.
+	virtual Object* getSource() {
+		return NULL;
+	}
+
+	void addToSource( Object* source );
+
+	friend class Delegate;
+protected:	
+
+	virtual ~CallBack(){};
+
+	virtual void destroy();
+
+	typedef std::vector<Delegate*> DelegatesArray;
+	String name;
+
+	void addDelegate( Delegate* val ) {
+
+		if ( NULL == delegates_ ) {
+			delegates_ = new DelegatesArray();
+		}
+
+		delegates_->push_back( val );
+	}
+
+	void removeDelegate( Delegate* val ) {
+
+		if ( NULL != delegates_ ) {
+			DelegatesArray::iterator found = 
+				std::find( delegates_->begin(), delegates_->end(), val );
+			if ( found != delegates_->end() ) {
+				delegates_->erase( found );
+			}
+		}		
+	}
+
+	DelegatesArray* delegates_;	
+
+	
+
+
+private:
+	CallBack( const CallBack& rhs ); //no copies for now
+};
+
+
+
+
 
 
 /**
@@ -164,60 +240,6 @@ protected:
 
 
 
-class Delegate;
-
-class FOUNDATIONKIT_API CallBack : public Object, public FunctionTypeInfo {
-public:
-
-	typedef std::vector<CallBack*> Vector;
-
-	CallBack():delegate_(NULL){}
-
-	CallBack( const String& str ): name(str),delegate_(NULL){}
-
-	CallBack( Object* source, const String& str ): name(str),delegate_(NULL){
-		addToSource( source );
-	}
-
-
-	String getName() const {
-		return name;
-	}
-	
-	//a callback may, or may not, have a 
-	//source. In addition, it's possible
-	//that the source is *not* an Object 
-	//based type.
-	virtual Object* getSource() {
-		return NULL;
-	}
-
-	void addToSource( Object* source );
-
-	friend class Delegate;
-protected:	
-
-	String name;
-
-	void setDelegate( Delegate* val ) {
-		delegate_ = val;
-	}
-
-	Delegate* delegate_;
-
-	virtual void destroy();
-
-	virtual ~CallBack(){}
-
-
-private:
-	CallBack( const CallBack& rhs ); //no copies for now
-};
-
-
-
-
-
 class ThreadPool;
 
 
@@ -287,7 +309,7 @@ public:
 		if ( found == functions->end() ) {
 			//verify signatures match
 			if ( *this == *callback ) {
-				callback->setDelegate( this );
+				callback->addDelegate( this );
 				functions->push_back( callback );
 			}
 			else {
@@ -304,7 +326,7 @@ public:
 				std::find( functions->begin(), functions->end(), callback );
 			
 			if ( found != functions->end() ) {
-				callback->setDelegate( NULL );
+				callback->removeDelegate( this );
 				functions->erase( found );
 			}
 		}
@@ -380,7 +402,7 @@ public:
 
 	typedef Procedure1<AsyncResult*> AsyncCallback;
 
-	virtual ~Procedure1(){}
+	
 
 	typedef void (*FuncPtr)(P1);
 
@@ -391,9 +413,9 @@ public:
 
 	Procedure1( const String& str ): CallBack(str),staticFuncPtr(NULL){}
 
-#ifdef USE_VCF_OBJECT
+
 	Procedure1( Object* source, const String& str ): CallBack(source,str),staticFuncPtr(NULL){}
-#endif
+
 
 	virtual TypeArray getArgumentTypes() const {
 		TypeArray result;
@@ -416,7 +438,8 @@ public:
 	virtual void endInvoke( AsyncResult* ) {}
 
 	FuncPtr staticFuncPtr;
-
+protected:
+	virtual ~Procedure1(){}
 private:
 	Procedure1( const Procedure1<P1>& rhs );
 };
@@ -599,11 +622,11 @@ public:
 
 	}
 
-#ifdef USE_VCF_OBJECT
+
 	virtual Object* getSource() {
 		return dynamic_cast<Object*>(funcSrc);
 	}
-#endif 
+
 
 
 	virtual void invoke( P1 p1 ) {
@@ -616,6 +639,8 @@ public:
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
+protected:
+	virtual ~ClassProcedure1(){}
 private:
 	ClassProcedure1( const ClassProcedure1<P1, ClassType>& rhs );
 };
@@ -708,8 +733,6 @@ protected:
 class FOUNDATIONKIT_API Procedure : public CallBack {
 public:
 
-	virtual ~Procedure(){}
-
 	typedef void (*FuncPtr)();
 
 
@@ -740,7 +763,8 @@ public:
 	virtual void endInvoke( AsyncResult* ) {}
 
 	FuncPtr staticFuncPtr;
-
+//protected: //JC - I uncommented this out for Obirsoy to look into a compile fix in Win32RunLoopPeer.cpp
+	virtual ~Procedure(){}
 private:
 	Procedure( const Procedure& rhs );
 };
@@ -769,11 +793,11 @@ public:
 	}
 	
 
-#ifdef USE_VCF_OBJECT
+
 	virtual Object* getSource() {
 		return dynamic_cast<Object*>(funcSrc);
 	}
-#endif 
+
 
 	virtual void invoke() {
 		if ( NULL != classFuncPtr && NULL != funcSrc ) {
@@ -785,6 +809,8 @@ public:
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
+protected:
+	virtual ~ClassProcedure(){}
 private:
 	ClassProcedure( const ClassProcedure<ClassType>& rhs );
 };
@@ -871,8 +897,6 @@ protected:
 template <typename P1, typename P2>
 class Procedure2 : public CallBack {
 public:
-	virtual ~Procedure2(){}
-
 	typedef void (*FuncPtr)(P1,P2);
 
 
@@ -907,7 +931,8 @@ public:
 	virtual void endInvoke( AsyncResult* ) {}
 
 	FuncPtr staticFuncPtr;
-
+protected:
+	virtual ~Procedure2(){}
 private:
 	Procedure2( const Procedure2<P1,P2>& rhs );
 };
@@ -934,11 +959,11 @@ public:
 		}
 	}
 
-#ifdef USE_VCF_OBJECT
+
 	virtual Object* getSource() {
 		return dynamic_cast<Object*>(funcSrc);
 	}
-#endif 
+
 
 
 	virtual void invoke( P1 p1, P2 p2 ) {
@@ -951,6 +976,8 @@ public:
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
+protected:
+	virtual ~ClassProcedure2(){}
 private:
 	ClassProcedure2( const ClassProcedure2<P1, P2, ClassType>& rhs );
 };
@@ -1044,7 +1071,6 @@ protected:
 template <typename P1, typename P2, typename P3>
 class Procedure3 : public CallBack {
 public:
-	virtual ~Procedure3(){}
 
 	typedef void (*FuncPtr)(P1,P2,P3);
 
@@ -1081,7 +1107,8 @@ public:
 	virtual void endInvoke( AsyncResult* ) {}
 
 	FuncPtr staticFuncPtr;
-
+protected:
+	virtual ~Procedure3(){}
 private:
 	Procedure3( const Procedure3<P1,P2,P3>& rhs );
 };
@@ -1108,11 +1135,11 @@ public:
 		}
 	}
 
-#ifdef USE_VCF_OBJECT
+
 	virtual Object* getSource() {
 		return dynamic_cast<Object*>(funcSrc);
 	}
-#endif 
+
 
 
 	virtual void invoke( P1 p1, P2 p2, P3 p3 ) {
@@ -1125,6 +1152,8 @@ public:
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
+protected:
+	virtual ~ClassProcedure3(){}
 private:
 	ClassProcedure3( const ClassProcedure3<P1, P2, P3, ClassType>& rhs );
 };
@@ -1222,7 +1251,6 @@ protected:
 template <typename P1, typename P2, typename P3, typename P4>
 class Procedure4 : public CallBack {
 public:
-	virtual ~Procedure4(){}
 
 	typedef void (*FuncPtr)(P1,P2,P3,P4);
 
@@ -1260,7 +1288,8 @@ public:
 	virtual void endInvoke( AsyncResult* ) {}
 
 	FuncPtr staticFuncPtr;
-
+protected:
+	virtual ~Procedure4(){}
 private:
 	Procedure4( const Procedure4<P1,P2,P3,P4>& rhs );
 };
@@ -1287,11 +1316,11 @@ public:
 		}
 	}
 
-#ifdef USE_VCF_OBJECT
+
 	virtual Object* getSource() {
 		return dynamic_cast<Object*>(funcSrc);
 	}
-#endif 
+
 
 
 	virtual void invoke( P1 p1, P2 p2, P3 p3, P4 p4 ) {
@@ -1304,6 +1333,8 @@ public:
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
+protected:
+	virtual ~ClassProcedure4(){}
 private:
 	ClassProcedure4( const ClassProcedure4<P1, P2, P3, P4, ClassType>& rhs );
 };
@@ -1402,7 +1433,6 @@ protected:
 template <typename P1, typename P2, typename P3, typename P4, typename P5>
 class Procedure5 : public CallBack {
 public:
-	virtual ~Procedure5(){}
 
 	typedef void (*FuncPtr)(P1,P2,P3,P4,P5);
 
@@ -1441,7 +1471,8 @@ public:
 	virtual void endInvoke( AsyncResult* ) {}
 
 	FuncPtr staticFuncPtr;
-
+protected:
+	virtual ~Procedure5(){}
 private:
 	Procedure5( const Procedure5<P1,P2,P3,P4,P5>& rhs );
 };
@@ -1468,11 +1499,11 @@ public:
 		}
 	}
 
-#ifdef USE_VCF_OBJECT
+
 	virtual Object* getSource() {
 		return dynamic_cast<Object*>(funcSrc);
 	}
-#endif 
+
 
 
 	virtual void invoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5 ) {
@@ -1485,6 +1516,8 @@ public:
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
+protected:
+	virtual ~ClassProcedure5(){}
 private:
 	ClassProcedure5( const ClassProcedure5<P1, P2, P3, P4, P5, ClassType>& rhs );
 };
@@ -1588,7 +1621,6 @@ protected:
 template <typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
 class Procedure6 : public CallBack {
 public:
-	virtual ~Procedure6(){}
 
 	typedef void (*FuncPtr)(P1,P2,P3,P4,P5,P6);
 
@@ -1628,7 +1660,8 @@ public:
 	virtual void endInvoke( AsyncResult* ) {}
 
 	FuncPtr staticFuncPtr;
-
+protected:
+	virtual ~Procedure6(){}
 private:
 	Procedure6( const Procedure6<P1,P2,P3,P4,P5,P6>& rhs );
 };
@@ -1655,11 +1688,11 @@ public:
 		}
 	}
 
-#ifdef USE_VCF_OBJECT
+
 	virtual Object* getSource() {
 		return dynamic_cast<Object*>(funcSrc);
 	}
-#endif 
+
 
 
 	virtual void invoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6 ) {
@@ -1672,6 +1705,8 @@ public:
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
+protected:
+	virtual ~ClassProcedure6(){}
 private:
 	ClassProcedure6( const ClassProcedure6<P1, P2, P3, P4, P5, P6, ClassType>& rhs );
 };
@@ -1880,8 +1915,6 @@ public:
 	typedef ReturnType (*FuncPtr)();
 
 
-	virtual ~Function(){}
-
 	Function():staticFuncPtr(NULL){}
 
 	Function(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
@@ -1907,6 +1940,9 @@ public:
 	virtual void beginInvoke( AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
 
 	FuncPtr staticFuncPtr;
+
+protected:
+	virtual ~Function(){}
 };
 
 
@@ -1930,6 +1966,11 @@ public:
 	ClassFunction(ClassType* src, ClassFuncPtr funcPtr, const String& s):
 		Function<ReturnType>(),classFuncPtr(funcPtr),funcSrc(src){
 		this->name = s;
+
+		Object* obj = getSource();	
+		if ( NULL != obj ) {
+			this->addToSource( obj );
+		}
 	}
 
 
@@ -1950,6 +1991,8 @@ public:
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
+protected:
+	virtual ~ClassFunction(){}
 };
 
 
@@ -2074,8 +2117,6 @@ public:
 	typedef ReturnType (*FuncPtr)(P1);
 
 
-	virtual ~Function1(){}
-
 	Function1():staticFuncPtr(NULL){}
 
 	Function1(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
@@ -2103,6 +2144,8 @@ public:
 	virtual void beginInvoke( P1 p1, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
 
 	FuncPtr staticFuncPtr;
+protected:
+	virtual ~Function1(){}
 };
 
 
@@ -2127,6 +2170,11 @@ public:
 	ClassFunction1(ClassType* src, ClassFuncPtr funcPtr, const String& s):
 		Function1<ReturnType,P1>(),classFuncPtr(funcPtr),funcSrc(src){
 		this->name = s;
+
+		Object* obj = getSource();	
+		if ( NULL != obj ) {
+			this->addToSource( obj );
+		}
 	}
 
 
@@ -2147,6 +2195,8 @@ public:
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
+protected:
+	virtual ~ClassFunction1(){}
 };
 
 
@@ -2268,8 +2318,6 @@ public:
 	typedef ReturnType (*FuncPtr)(P1,P2);
 
 
-	virtual ~Function2(){}
-
 	Function2():staticFuncPtr(NULL){}
 
 	Function2(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
@@ -2298,6 +2346,8 @@ public:
 	virtual void beginInvoke( P1 p1, P2 p2, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
 
 	FuncPtr staticFuncPtr;
+protected:
+	virtual ~Function2(){}
 };
 
 
@@ -2323,6 +2373,11 @@ public:
 	ClassFunction2(ClassType* src, ClassFuncPtr funcPtr, const String& s):
 		Function2<ReturnType,P1,P2>(),classFuncPtr(funcPtr),funcSrc(src){
 		this->name = s;
+
+		Object* obj = getSource();	
+		if ( NULL != obj ) {
+			this->addToSource( obj );
+		}
 	}
 
 
@@ -2343,6 +2398,8 @@ public:
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
+protected:
+	virtual ~ClassFunction2(){}
 };
 
 
@@ -2468,8 +2525,6 @@ public:
 	typedef ReturnType (*FuncPtr)(P1,P2,P3);
 
 
-	virtual ~Function3(){}
-
 	Function3():staticFuncPtr(NULL){}
 
 	Function3(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
@@ -2499,6 +2554,8 @@ public:
 	virtual void beginInvoke( P1 p1, P2 p2, P3 p3, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
 
 	FuncPtr staticFuncPtr;
+protected:
+	virtual ~Function3(){}
 };
 
 
@@ -2525,6 +2582,11 @@ public:
 	ClassFunction3(ClassType* src, ClassFuncPtr funcPtr, const String& s):
 		Function3<ReturnType,P1,P2,P3>(),classFuncPtr(funcPtr),funcSrc(src){
 		this->name = s;
+
+		Object* obj = getSource();	
+		if ( NULL != obj ) {
+			this->addToSource( obj );
+		}
 	}
 
 
@@ -2545,6 +2607,8 @@ public:
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
+protected:
+	virtual ~ClassFunction3(){}
 };
 
 
@@ -2679,8 +2743,6 @@ public:
 	typedef ReturnType (*FuncPtr)(P1,P2,P3,P4);
 
 
-	virtual ~Function4(){}
-
 	Function4():staticFuncPtr(NULL){}
 
 	Function4(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
@@ -2711,6 +2773,8 @@ public:
 	virtual void beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
 
 	FuncPtr staticFuncPtr;
+protected:
+	virtual ~Function4(){}
 };
 
 
@@ -2738,6 +2802,11 @@ public:
 	ClassFunction4(ClassType* src, ClassFuncPtr funcPtr, const String& s):
 		Function4<ReturnType,P1,P2,P3,P4>(),classFuncPtr(funcPtr),funcSrc(src){
 		this->name = s;
+
+		Object* obj = getSource();	
+		if ( NULL != obj ) {
+			this->addToSource( obj );
+		}
 	}
 
 
@@ -2758,6 +2827,8 @@ public:
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
+protected:
+	virtual ~ClassFunction4(){}
 };
 
 
@@ -2892,8 +2963,6 @@ public:
 	typedef ReturnType (*FuncPtr)(P1,P2,P3,P4,P5);
 
 
-	virtual ~Function5(){}
-
 	Function5():staticFuncPtr(NULL){}
 
 	Function5(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
@@ -2925,6 +2994,8 @@ public:
 	virtual void beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
 
 	FuncPtr staticFuncPtr;
+protected:
+	virtual ~Function5(){}
 };
 
 
@@ -2953,6 +3024,11 @@ public:
 	ClassFunction5(ClassType* src, ClassFuncPtr funcPtr, const String& s):
 		Function5<ReturnType,P1,P2,P3,P4,P5>(),classFuncPtr(funcPtr),funcSrc(src){
 		this->name = s;
+
+		Object* obj = getSource();	
+		if ( NULL != obj ) {
+			this->addToSource( obj );
+		}
 	}
 
 
@@ -2973,6 +3049,8 @@ public:
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
+protected:
+	virtual ~ClassFunction5(){}
 };
 
 
@@ -3122,8 +3200,6 @@ public:
 	typedef ReturnType (*FuncPtr)(P1,P2,P3,P4,P5,P6);
 
 
-	virtual ~Function6(){}
-
 	Function6():staticFuncPtr(NULL){}
 
 	Function6(FuncPtr funcPtr):staticFuncPtr(funcPtr){}
@@ -3156,6 +3232,8 @@ public:
 	virtual void beginInvoke( P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, AsyncResult* initialResult, AsyncCallback* callback, AsyncReturns* returnObject );
 
 	FuncPtr staticFuncPtr;
+protected:
+	virtual ~Function6(){}
 };
 
 
@@ -3185,6 +3263,11 @@ public:
 	ClassFunction6(ClassType* src, ClassFuncPtr funcPtr, const String& s):
 		Function6<ReturnType,P1,P2,P3,P4,P5,P6>(),classFuncPtr(funcPtr),funcSrc(src){
 		this->name = s;
+
+		Object* obj = getSource();	
+		if ( NULL != obj ) {
+			this->addToSource( obj );
+		}
 	}
 
 
@@ -3205,6 +3288,8 @@ public:
 
 	ClassFuncPtr classFuncPtr;
 	ClassType* funcSrc;
+protected:
+	virtual ~ClassFunction6(){}
 };
 
 

@@ -24,6 +24,11 @@ Win32Toolbar::Win32Toolbar(Control* control):
 
 }
 
+Win32Toolbar::~Win32Toolbar()
+{
+
+}
+
 Win32Object::CreateParams Win32Toolbar::createParams()
 {
 	Win32Object::CreateParams result;

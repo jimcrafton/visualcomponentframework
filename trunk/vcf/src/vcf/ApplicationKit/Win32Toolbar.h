@@ -31,6 +31,7 @@ public:
 
 	Win32Toolbar(Control* control);
 
+	virtual ~Win32Toolbar();
 
 	virtual void create( Control* control );
 

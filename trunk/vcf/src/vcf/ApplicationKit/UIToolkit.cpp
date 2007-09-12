@@ -78,10 +78,10 @@ UIToolkit::~UIToolkit()
 	delete informationImage_;
 	delete questionImage_;
 
-	delete acceleratorMnemonicHandler_;
+	acceleratorMnemonicHandler_->free();
 	acceleratorMnemonicHandler_ = NULL;
 
-	delete defaultButtonHandler_;
+	defaultButtonHandler_->free();
 	defaultButtonHandler_ = NULL;
 
 	metricsMgr_->free();
