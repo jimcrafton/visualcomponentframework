@@ -47,8 +47,8 @@ where you installed the VCF.
 
 
 
-#ifdef VCF_VC80
-	#pragma message ( "VC8 compiler detected - deprecation warnings turned off for now." )
+#if defined(VCF_VC80) || defined(VCF_VC90)
+	#pragma message ( "VC8 or VC9 compiler detected - deprecation warnings turned off for now." )
 	#pragma warning (disable : 4996)
     #ifndef _CRT_SECURE_NO_DEPRECATE
 	    #define _CRT_SECURE_NO_DEPRECATE 1
@@ -57,7 +57,7 @@ where you installed the VCF.
         #define _CRT_NONSTDC_NO_DEPRECATE 1
     #endif
 	#pragma message ( "_CRT_SECURE_NO_DEPRECATE turned on for now." )
-#endif //VCF_VC80
+#endif //VCF_VC80 || VCF_VC90
 
 #if ( _MSC_VER < 1300 )
 	//disable warning on base class not declared with the __declspec(dllexport) keyword

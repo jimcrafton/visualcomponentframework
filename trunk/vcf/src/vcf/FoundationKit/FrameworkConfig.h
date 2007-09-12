@@ -61,6 +61,7 @@ Compilers:
 	VCF_VC70
 	VCF_VC71
 	VCF_VC80
+	VCF_VC90
 
 	VCF_DMC - compiling with Digital Mar's C++ compiler
 
@@ -188,7 +189,11 @@ Setup compiler names, and some compiler-specific warnings
 #ifdef _MSC_VER
 	#define VCF_MSC
 
-	#if (_MSC_VER >= 1400)
+	#if (_MSC_VER >= 1500)
+		#define VCF_VC90
+		#undef VCF_COMPILER_NAME
+		#define VCF_COMPILER_NAME	"VC90"	
+	#elif (_MSC_VER >= 1400)
 		#define VCF_VC80
 		#undef VCF_COMPILER_NAME
 		#define VCF_COMPILER_NAME	"VC80"
