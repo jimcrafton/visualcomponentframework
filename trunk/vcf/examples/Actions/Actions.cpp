@@ -192,14 +192,14 @@ public:
 		fileNewAction->addTarget(fileNew);
 		fileNewAction->addTarget(newTBitem);
 		fileNewAction->Performed +=
-			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onFileNew, "ActionsWindow::onFileNew" );
+			new ClassProcedure1<Event*, ActionsWindow>(this, &ActionsWindow::onFileNew, "ActionsWindow::onFileNew" );
 
 		Action* fileOpenAction = new Action();
 		addComponent( fileOpenAction );
 		fileOpenAction->addTarget(fileOpen);
 		fileOpenAction->addTarget(openTBitem);
 		fileOpenAction->Performed +=
-			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onFileOpen, "ActionsWindow::onFileOpen" );
+			new ClassProcedure1<Event*, ActionsWindow>(this, &ActionsWindow::onFileOpen, "ActionsWindow::onFileOpen" );
 
 
 		Action* fileSaveAction = new Action();
@@ -208,10 +208,10 @@ public:
 		fileSaveAction->addTarget(saveTBitem);
 
 		fileSaveAction->Performed +=
-			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onFileSave, "ActionsWindow::onFileSave" );
+			new ClassProcedure1<Event*, ActionsWindow>(this, &ActionsWindow::onFileSave, "ActionsWindow::onFileSave" );
 
 		fileSaveAction->Update +=
-			new EventHandlerInstance<ActionsWindow,ActionEvent>(this, &ActionsWindow::onUpdateFileSave, "ActionsWindow::onUpdateFileSave" );
+			new ClassProcedure1<ActionEvent*,ActionsWindow>(this, &ActionsWindow::onUpdateFileSave, "ActionsWindow::onUpdateFileSave" );
 
 
 
@@ -220,9 +220,9 @@ public:
 		fileSaveAllAction->addTarget(fileSaveAll);
 		fileSaveAllAction->addTarget(saveAllTBitem);
 		fileSaveAllAction->Performed +=
-			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onFileSaveAll, "ActionsWindow::onFileSaveAll" );
+			new ClassProcedure1<Event*, ActionsWindow>(this, &ActionsWindow::onFileSaveAll, "ActionsWindow::onFileSaveAll" );
 		fileSaveAllAction->Update +=
-			new EventHandlerInstance<ActionsWindow,ActionEvent>(this, &ActionsWindow::onUpdateFileSaveAll, "ActionsWindow::onUpdateFileSaveAll" );
+			new ClassProcedure1<ActionEvent*,ActionsWindow>(this, &ActionsWindow::onUpdateFileSaveAll, "ActionsWindow::onUpdateFileSaveAll" );
 
 
 		Action* editCopyAction = new Action();
@@ -230,7 +230,7 @@ public:
 		editCopyAction->addTarget(editCopy);
 		editCopyAction->addTarget(copyTBitem);
 		editCopyAction->Performed +=
-			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onEditCopy, "ActionsWindow::onEditCopy" );
+			new ClassProcedure1<Event*, ActionsWindow>(this, &ActionsWindow::onEditCopy, "ActionsWindow::onEditCopy" );
 
 		Action* editPasteAction = new Action();
 		addComponent( editPasteAction );
@@ -238,9 +238,9 @@ public:
 		editPasteAction->addTarget(pasteTBitem);
 
 		editPasteAction->Performed +=
-			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onEditPaste, "ActionsWindow::onEditPaste" );
+			new ClassProcedure1<Event*, ActionsWindow>(this, &ActionsWindow::onEditPaste, "ActionsWindow::onEditPaste" );
 		editPasteAction->Update +=
-			new EventHandlerInstance<ActionsWindow,ActionEvent>(this, &ActionsWindow::onUpdateEditPaste, "ActionsWindow::onUpdateEditPaste" );
+			new ClassProcedure1<ActionEvent*,ActionsWindow>(this, &ActionsWindow::onUpdateEditPaste, "ActionsWindow::onUpdateEditPaste" );
 
 		Action* editUndoAction = new Action();
 		addComponent( editUndoAction );
@@ -248,9 +248,9 @@ public:
 		editUndoAction->addTarget(undoTBitem);
 
 		editUndoAction->Performed +=
-			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onEditUndo, "ActionsWindow::onEditUndo" );
+			new ClassProcedure1<Event*, ActionsWindow>(this, &ActionsWindow::onEditUndo, "ActionsWindow::onEditUndo" );
 		editUndoAction->Update +=
-			new EventHandlerInstance<ActionsWindow,ActionEvent>(this, &ActionsWindow::onUpdateEditUndo, "ActionsWindow::onUpdateEditUndo" );
+			new ClassProcedure1<ActionEvent*,ActionsWindow>(this, &ActionsWindow::onUpdateEditUndo, "ActionsWindow::onUpdateEditUndo" );
 
 
 
@@ -261,10 +261,10 @@ public:
 		viewSidebarAction->addTarget( sidebarTBitem );
 
 		viewSidebarAction->Performed +=
-			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onViewSidebar, "ActionsWindow::onViewSidebar" );
+			new ClassProcedure1<Event*, ActionsWindow>(this, &ActionsWindow::onViewSidebar, "ActionsWindow::onViewSidebar" );
 
 		viewSidebarAction->Update +=
-			new EventHandlerInstance<ActionsWindow,ActionEvent>(this, &ActionsWindow::onUpdateViewSidebar, "ActionsWindow::onUpdateViewSidebar" );
+			new ClassProcedure1<ActionEvent*,ActionsWindow>(this, &ActionsWindow::onUpdateViewSidebar, "ActionsWindow::onUpdateViewSidebar" );
 
 
 		Action* viewHammerBarAction = new Action();
@@ -274,10 +274,10 @@ public:
 		viewHammerBarAction->addTarget( hammerTBitem );
 
 		viewHammerBarAction->Performed +=
-			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onViewHammerBar, "ActionsWindow::onViewHammerBar" );
+			new ClassProcedure1<Event*, ActionsWindow>(this, &ActionsWindow::onViewHammerBar, "ActionsWindow::onViewHammerBar" );
 
 		viewHammerBarAction->Update +=
-			new EventHandlerInstance<ActionsWindow,ActionEvent>(this, &ActionsWindow::onUpdateViewHammerBar, "ActionsWindow::onUpdateViewHammerBar" );
+			new ClassProcedure1<ActionEvent*,ActionsWindow>(this, &ActionsWindow::onUpdateViewHammerBar, "ActionsWindow::onUpdateViewHammerBar" );
 
 
 		Action* viewWindowsAction = new Action();
@@ -287,7 +287,7 @@ public:
 		viewWindowsAction->addTarget( windowsTBitem );
 
 		viewWindowsAction->Performed +=
-			new GenericEventHandler<ActionsWindow>(this, &ActionsWindow::onViewWindows, "ActionsWindow::onViewWindows" );
+			new ClassProcedure1<Event*, ActionsWindow>(this, &ActionsWindow::onViewWindows, "ActionsWindow::onViewWindows" );
 
 		
 

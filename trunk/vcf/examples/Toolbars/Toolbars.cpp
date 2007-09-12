@@ -19,7 +19,7 @@ public:
 		setCaption( "Toolbars" );
 		
 
-		EventHandler* ev = new ButtonEventHandler<ToolbarsWindow>( this, &ToolbarsWindow::onItemClicked, "ToolbarsWindow::onItemClicked" );
+		CallBack* ev = new ClassProcedure1<ButtonEvent*,ToolbarsWindow>( this, &ToolbarsWindow::onItemClicked, "ToolbarsWindow::onItemClicked" );
 
 		Toolbar* tb = new Toolbar();
 		tb->setName( "Toolbar1" );
@@ -108,7 +108,7 @@ public:
 
 
 		item->ItemUpdate +=
-			new GenericEventHandler<ToolbarsWindow>( this, &ToolbarsWindow::onItemUpdate, "ToolbarsWindow::onItemUpdate" );
+			new ClassProcedure1<Event*,ToolbarsWindow>( this, &ToolbarsWindow::onItemUpdate, "ToolbarsWindow::onItemUpdate" );
 
 		item->setTag( 1 );
 		tb->setShowButtonCaptions( false );
