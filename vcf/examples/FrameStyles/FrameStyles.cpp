@@ -29,7 +29,7 @@ public:
 
 		MenuItem* frameStyle = new DefaultMenuItem( "Set Frame Style to", main, menu );
 
-		EventHandler* ev = new MenuItemEventHandler<FrameStylesWindow>(this, &FrameStylesWindow::onSetFrameStyle, "FrameStylesWindow::onSetFrameStyle" );
+		CallBack* ev = new ClassProcedure1<MenuItemEvent*,FrameStylesWindow>(this, &FrameStylesWindow::onSetFrameStyle, "FrameStylesWindow::onSetFrameStyle" );
 		MenuItem* sizeable = new DefaultMenuItem( "fstSizeable", frameStyle, menu );
 		sizeable->MenuItemClicked += ev;
 		sizeable->setTag( 0 );

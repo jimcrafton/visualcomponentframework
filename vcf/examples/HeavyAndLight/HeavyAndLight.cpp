@@ -129,7 +129,7 @@ public:
 		setCaption( "HeavyAndLight" );
 
 
-		EventHandler* ev = new MouseEventHandler<HeavyAndLightWindow>(this,&HeavyAndLightWindow::onCtrlMouseDown, "onCtrlMouseDown" );
+		CallBack* ev = new ClassProcedure1<MouseEvent*,HeavyAndLightWindow>(this,&HeavyAndLightWindow::onCtrlMouseDown, "onCtrlMouseDown" );
 
 		//create a light weight control
 		LightWeightControl* control1 = new LightWeightControl();
