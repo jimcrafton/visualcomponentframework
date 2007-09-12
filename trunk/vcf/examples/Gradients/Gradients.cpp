@@ -318,7 +318,7 @@ public:
 		ctx->drawImage( logoRect.getTopLeft(), logo, false );
 		ctx->renderImages();
 /*
-<<<<<<< .mine
+
 		ShadowFill logoDropShad;		
 		logoDropShad.setAlpha( 1 );
 		logoDropShad.setRadius( 0 );
@@ -418,8 +418,7 @@ public:
 
 		ctx->setCurrentFill( NULL );
 
-=======
->>>>>>> .r3047
+
 	}
 
 
