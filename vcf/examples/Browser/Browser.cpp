@@ -12,17 +12,17 @@ namespace VCF {
 
 	class URLCombo : public ComboBoxControl {
 	public:
-		DELEGATE(URLChanged);
+		DELEGATE(EventDelegate,URLChanged);
 
 		URLCombo(){
 			edit_->KeyPressed += 
-				new KeyboardEventHandler<URLCombo>( this, &URLCombo::onCBEditReturnKeyPressed, "URLCombo::onCBEditReturnKeyPressed" );
+				new ClassProcedure1<KeyboardEvent*,URLCombo>( this, &URLCombo::onCBEditReturnKeyPressed, "URLCombo::onCBEditReturnKeyPressed" );
 		}
 
 		void onCBEditReturnKeyPressed( KeyboardEvent* event ) {
 			if ( vkReturn == event->getVirtualCode() ) {
 				Event e(this);
-				URLChanged.fireEvent( &e );
+				URLChanged( &e );
 			}
 		}
 	};
@@ -86,10 +86,10 @@ public:
 		setCaption( "Custom HTML UI" );
 
 		browser->URLLoaded += 
-			new GenericEventHandler<CustomHTMLUI>(this,&CustomHTMLUI::onURLLoaded, "CustomHTMLUI::onURLLoaded" );
+			new ClassProcedure1<Event*,CustomHTMLUI>(this,&CustomHTMLUI::onURLLoaded, "CustomHTMLUI::onURLLoaded" );
 
 		browser->BeforePopupMenu += 
-			new GenericEventHandler<CustomHTMLUI>(this,&CustomHTMLUI::onPopupMenu, "CustomHTMLUI::onPopupMenu" );
+			new ClassProcedure1<Event*,CustomHTMLUI>(this,&CustomHTMLUI::onPopupMenu, "CustomHTMLUI::onPopupMenu" );
 
 		add( browser, AlignClient );
 
@@ -117,10 +117,10 @@ protected:
 		//add callbacks for various UI elements here
 
 		browser->setElementClickedEventHandler( "ClickMe", 
-			new GenericEventHandler<CustomHTMLUI>(this,&CustomHTMLUI::onElementClicked, "CustomHTMLUI::onElementClicked" ) ); 
+			new ClassProcedure1<Event*,CustomHTMLUI>(this,&CustomHTMLUI::onElementClicked, "CustomHTMLUI::onElementClicked" ) ); 
 
 		browser->setElementClickedEventHandler( "DoItBtn", 
-			new GenericEventHandler<CustomHTMLUI>(this,&CustomHTMLUI::onButtonClicked, "CustomHTMLUI::onButtonClicked" ) ); 		
+			new ClassProcedure1<Event*,CustomHTMLUI>(this,&CustomHTMLUI::onButtonClicked, "CustomHTMLUI::onButtonClicked" ) ); 		
 
 	}
 
@@ -187,13 +187,13 @@ public:
 		mainWindow->add( browser, AlignClient );
 
 		browser->StatusChanged += 
-			new GenericEventHandler<BrowserApp>(this,&BrowserApp::onHTMLStatusChanged, "BrowserApp::onHTMLStatusChanged" );
+			new ClassProcedure1<Event*,BrowserApp>(this,&BrowserApp::onHTMLStatusChanged, "BrowserApp::onHTMLStatusChanged" );
 
 		browser->URLLoaded += 
-			new GenericEventHandler<BrowserApp>(this,&BrowserApp::onURLLoaded, "BrowserApp::onURLLoaded" );
+			new ClassProcedure1<Event*,BrowserApp>(this,&BrowserApp::onURLLoaded, "BrowserApp::onURLLoaded" );
 
 		browser->URLLoadingBegun += 
-			new GenericEventHandler<BrowserApp>(this,&BrowserApp::onURLLoadingBegun, "BrowserApp::onURLLoadingBegun" );
+			new ClassProcedure1<Event*,BrowserApp>(this,&BrowserApp::onURLLoadingBegun, "BrowserApp::onURLLoadingBegun" );
 
 
 
@@ -203,7 +203,7 @@ public:
 		mainWindow->assignSetting( "mainwindow.height", "height" );
 
 		mainWindow->FrameClose += 
-			new GenericEventHandler<BrowserApp>(this,&BrowserApp::onMainWindowClosed, "BrowserApp::onMainWindowClosed" );
+			new ClassProcedure1<Event*,BrowserApp>(this,&BrowserApp::onMainWindowClosed, "BrowserApp::onMainWindowClosed" );
 		
 
 
@@ -268,7 +268,7 @@ public:
 		urlBox->setWidth( 250 );
 		urlBox->setComboBoxStyle( cbsDropDownWithEdit );
 		urlBox->URLChanged += 
-			new GenericEventHandler<BrowserApp>(this,&BrowserApp::urlChanged,"BrowserApp::urlChanged");
+			new ClassProcedure1<Event*,BrowserApp>(this,&BrowserApp::urlChanged,"BrowserApp::urlChanged");
 
 		item->setItemControl( urlBox );		
 		
@@ -287,7 +287,7 @@ public:
 		allowPopupsBtn->setChecked( browser->getAllowsPopupWindows() );
 
 		allowPopupsBtn->ButtonClicked += 
-			new GenericEventHandler<BrowserApp>(this,&BrowserApp::onAllowPopupsChecked, "BrowserApp::onAllowPopupsChecked" );
+			new ClassProcedure1<Event*,BrowserApp>(this,&BrowserApp::onAllowPopupsChecked, "BrowserApp::onAllowPopupsChecked" );
 
 		
 
@@ -304,7 +304,7 @@ public:
 		editDocument->setChecked( false );
 
 		editDocument->ButtonClicked += 
-			new GenericEventHandler<BrowserApp>(this,&BrowserApp::onEditCurrentDocChecked, "BrowserApp::onEditCurrentDocChecked" );
+			new ClassProcedure1<Event*,BrowserApp>(this,&BrowserApp::onEditCurrentDocChecked, "BrowserApp::onEditCurrentDocChecked" );
 
 		
 
@@ -350,7 +350,7 @@ public:
 		
 
 		mgr->addTarget( "appEVDemo", appEVDemo );
-		mgr->addPerformed( "appEVDemo", new GenericEventHandler<BrowserApp>(this, &BrowserApp::doEventHandlerDemo, "BrowserApp::doEventHandlerDemo" ) );
+		mgr->addPerformed( "appEVDemo", new ClassProcedure1<Event*,BrowserApp>(this, &BrowserApp::doEventHandlerDemo, "BrowserApp::doEventHandlerDemo" ) );
 
 
 
@@ -363,24 +363,24 @@ public:
 		ToolbarModel* tbModel = tb->getToolbarModel();
 
 		mgr->addTarget( "back", tbModel->getItemAtIndex(0) );
-		mgr->addPerformed( "back", new GenericEventHandler<BrowserApp>(this, &BrowserApp::back, "BrowserApp::back" ) );
+		mgr->addPerformed( "back", new ClassProcedure1<Event*,BrowserApp>(this, &BrowserApp::back, "BrowserApp::back" ) );
 
 		
 		mgr->addTarget( "forward", tbModel->getItemAtIndex(1) );
 		mgr->addPerformed( "forward", 
-			new GenericEventHandler<BrowserApp>(this, &BrowserApp::forward, "BrowserApp::forward" ) );
+			new ClassProcedure1<Event*,BrowserApp>(this, &BrowserApp::forward, "BrowserApp::forward" ) );
 
 		mgr->addTarget( "refresh", tbModel->getItemAtIndex(2) );
 		mgr->addPerformed( "refresh", 
-			new GenericEventHandler<BrowserApp>(this, &BrowserApp::refresh, "BrowserApp::refresh" ) );
+			new ClassProcedure1<Event*,BrowserApp>(this, &BrowserApp::refresh, "BrowserApp::refresh" ) );
 
 		mgr->addTarget( "home", tbModel->getItemAtIndex(3) );
 		mgr->addPerformed( "home", 
-			new GenericEventHandler<BrowserApp>(this, &BrowserApp::home, "BrowserApp::home" ) );
+			new ClassProcedure1<Event*,BrowserApp>(this, &BrowserApp::home, "BrowserApp::home" ) );
 
 		mgr->addTarget( "go", tbModel->getItemAtIndex(5) );
 		mgr->addPerformed( "go", 
-			new GenericEventHandler<BrowserApp>(this, &BrowserApp::go, "BrowserApp::go" ) );
+			new ClassProcedure1<Event*,BrowserApp>(this, &BrowserApp::go, "BrowserApp::go" ) );
 
 
 

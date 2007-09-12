@@ -282,7 +282,7 @@ public:
 		categories_->setVisible( true );
 		categories_->setBorder( NULL );
 		categories_->ItemSelected +=
-			new GenericEventHandler<CategoryTemplatePanel>(this,&CategoryTemplatePanel::onCatItemSelected, "CategoryTemplatePanel::onCatItemSelected");
+			new ClassProcedure1<Event*,CategoryTemplatePanel>(this,&CategoryTemplatePanel::onCatItemSelected, "CategoryTemplatePanel::onCatItemSelected");
 
 		categories_->setHeight( 300 );
 
@@ -357,7 +357,7 @@ public:
 
 
 		templates_->ItemSelectionChanged +=
-			new GenericEventHandler<CategoryTemplatePanel>(this,&CategoryTemplatePanel::onTemplItemSelected, "CategoryTemplatePanel::onTemplItemSelected");
+			new ClassProcedure1<Event*,CategoryTemplatePanel>(this,&CategoryTemplatePanel::onTemplItemSelected, "CategoryTemplatePanel::onTemplItemSelected");
 
 
 		add( templates_ );
