@@ -47,6 +47,8 @@ doesn't like std::basic_string<wchar_t> on OSX, go figure :(
 	typedef wchar_t WideChar;
 #elif defined( VCF_VC80 )
     typedef wchar_t WideChar;
+#elif defined( VCF_VC90 )
+    typedef wchar_t WideChar;
 #elif defined( VCF_ICL )
     typedef wchar_t WideChar;
 #else
