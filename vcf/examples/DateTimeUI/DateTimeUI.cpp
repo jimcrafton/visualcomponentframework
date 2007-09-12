@@ -21,7 +21,7 @@ public:
 
 	Calendar() {
 
-		EventHandler* ev = new KeyboardEventHandler<Calendar>( this, &Calendar::onUpArrow, "Calendar::onUpArrow" );
+		EventHandler* ev = (EventHandler*) new ClassProcedure1<KeyboardEvent*,Calendar>( this, &Calendar::onUpArrow, "Calendar::onUpArrow" );
 
 		Application::getRunningInstance()->addAcceleratorKey( vkUpArrow, 0, ev );
 
@@ -29,7 +29,7 @@ public:
 
 		Application::getRunningInstance()->addAcceleratorKey( vkUpArrow, kmCtrl | kmShift, ev );
 
-		ev = new KeyboardEventHandler<Calendar>( this, &Calendar::onDownArrow, "Calendar::onDownArrow" );
+		ev = (EventHandler*) new ClassProcedure1<KeyboardEvent*,Calendar>( this, &Calendar::onDownArrow, "Calendar::onDownArrow" );
 
 		Application::getRunningInstance()->addAcceleratorKey( vkDownArrow, 0, ev );
 
@@ -37,7 +37,7 @@ public:
 
 		Application::getRunningInstance()->addAcceleratorKey( vkDownArrow, kmCtrl | kmShift, ev );
 
-		ev = new KeyboardEventHandler<Calendar>( this, &Calendar::onSpaceBar, "Calendar::onSpaceBar" );
+		ev = (EventHandler*) new ClassProcedure1<KeyboardEvent*,Calendar>( this, &Calendar::onSpaceBar, "Calendar::onSpaceBar" );
 
 		Application::getRunningInstance()->addAcceleratorKey( vkSpaceBar, 0, ev );
 
@@ -246,7 +246,7 @@ public:
 		getFont()->setBold( true );
 
 		EventHandler* ev =
-			new GenericEventHandler<DigitalClock>( this, &DigitalClock::onTimer, "DigitalClock::onTimer" );
+			new ClassProcedure1<Event*,DigitalClock>( this, &DigitalClock::onTimer, "DigitalClock::onTimer" );
 
 		TimerComponent* timer = new TimerComponent();
 		addComponent( timer );
@@ -297,7 +297,7 @@ public:
 		current = DateTime::now();
 
 		EventHandler* ev =
-			new GenericEventHandler<AnalogClock>( this, &AnalogClock::onTimer, "AnalogClock::onTimer" );
+			new ClassProcedure1<Event*,AnalogClock>( this, &AnalogClock::onTimer, "AnalogClock::onTimer" );
 
 		TimerComponent* timer = new TimerComponent();
 		addComponent( timer );

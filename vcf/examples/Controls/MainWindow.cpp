@@ -43,12 +43,12 @@ MainWindow::MainWindow()
 	this->setMenuBar( menuBar );
 
 	MenuItem* root = menuBar->getRootMenuItem();
-	EventHandler* menuItemHandler = NULL;
+	CallBack* menuItemHandler = NULL;
 
 	//add Help menu
 	DefaultMenuItem* help = new DefaultMenuItem( "&Help", root, menuBar );
 	DefaultMenuItem* helpAbout = new DefaultMenuItem( "About...", help, menuBar );
-	menuItemHandler = new MenuItemEventHandler<MainWindow>(this, &MainWindow::onHelpAbout, "helpAbout" );
+	menuItemHandler = new ClassProcedure1<MenuItemEvent*,MainWindow>(this, &MainWindow::onHelpAbout, "helpAbout" );
 	helpAbout->MenuItemClicked += menuItemHandler;
 
 	//add TabbedPages
@@ -204,15 +204,15 @@ void MainWindow::makeListBoxPage()
 
 	// Event Handling for this page
 	//add SelectionChanged handlers for listbox.
-	listBox1_->SelectionChanged.addHandler( new ItemEventHandler<MainWindow>(this, &MainWindow::listBox1Change, "MainWindow::listBox1Change"));
+	listBox1_->SelectionChanged += new ClassProcedure1<ItemEvent*,MainWindow>(this, &MainWindow::listBox1Change, "MainWindow::listBox1Change");
 
 	//add ButtonClicked handlers for command button.
-	btnRemove->ButtonClicked.addHandler( new ButtonEventHandler<MainWindow>( this, &MainWindow::onbtnRemove, "MainWindow::onbtnRemoveClicked" ) );
-	btnDeselect->ButtonClicked.addHandler( new ButtonEventHandler<MainWindow>( this, &MainWindow::onbtnDeselect, "MainWindow::onbtnDeselectClicked" ) );
-	btnAddItem->ButtonClicked.addHandler( new ButtonEventHandler<MainWindow>( this, &MainWindow::onbtnAddItemClicked, "MainWindow::onbtnAddItemClicked" ) );
-	rbSingleSel->ButtonClicked.addHandler( new ButtonEventHandler<MainWindow>( this, &MainWindow::onrbSingleSelClicked, "MainWindow::onrbSingleSelClicked" ) );
-	rbMultiSel->ButtonClicked.addHandler( new ButtonEventHandler<MainWindow>( this, &MainWindow::onrbMultiSelClicked, "MainWindow::onrbMultiSelClicked" ) );
-	rbExtendedSel->ButtonClicked.addHandler( new ButtonEventHandler<MainWindow>( this, &MainWindow::onrbExtendedSelClicked, "MainWindow::onrbExtendedSelClicked" ) );
+	btnRemove->ButtonClicked += new ClassProcedure1<ButtonEvent*,MainWindow>( this, &MainWindow::onbtnRemove, "MainWindow::onbtnRemoveClicked" );
+	btnDeselect->ButtonClicked += new ClassProcedure1<ButtonEvent*,MainWindow>( this, &MainWindow::onbtnDeselect, "MainWindow::onbtnDeselectClicked" );
+	btnAddItem->ButtonClicked += new ClassProcedure1<ButtonEvent*,MainWindow>( this, &MainWindow::onbtnAddItemClicked, "MainWindow::onbtnAddItemClicked" );
+	rbSingleSel->ButtonClicked += new ClassProcedure1<ButtonEvent*,MainWindow>( this, &MainWindow::onrbSingleSelClicked, "MainWindow::onrbSingleSelClicked" );
+	rbMultiSel->ButtonClicked += new ClassProcedure1<ButtonEvent*,MainWindow>( this, &MainWindow::onrbMultiSelClicked, "MainWindow::onrbMultiSelClicked" );
+	rbExtendedSel->ButtonClicked += new ClassProcedure1<ButtonEvent*,MainWindow>( this, &MainWindow::onrbExtendedSelClicked, "MainWindow::onrbExtendedSelClicked" );
 }
 
 void MainWindow::onrbSingleSelClicked( VCF::ButtonEvent* ) {
@@ -390,8 +390,8 @@ void MainWindow::makeButtonsPage()
 	btn1->setCaption(  "Button 1" );
 	container->add( btn1 );
 
-	EventHandler* btnHandler = new ButtonEventHandler<MainWindow>( this, &MainWindow::onButtonClicked, "MainWindow::onButtonClicked" );
-	btn1->ButtonClicked.addHandler( btnHandler );
+	CallBack* btnHandler = new ClassProcedure1<ButtonEvent*,MainWindow>( this, &MainWindow::onButtonClicked, "MainWindow::onButtonClicked" );
+	btn1->ButtonClicked += btnHandler;
 
 
 
@@ -404,7 +404,7 @@ void MainWindow::makeButtonsPage()
 	btn2->setCaption(  "Button 2" );
 	btn2->setEnabled( false );
 	container->add( btn2 );
-	btn2->ButtonClicked.addHandler( btnHandler );
+	btn2->ButtonClicked += btnHandler;
 
 
 
@@ -814,7 +814,7 @@ void MainWindow::makeTextPage()
 
 
 	singleTextCtrl->SelectionChanged +=
-		new GenericEventHandler<MainWindow>( this, &MainWindow::onSingletextCtrlSelectionChanged, "MainWindow::onSingletextCtrlSelectionChanged" );
+		new ClassProcedure1<Event*,MainWindow>( this, &MainWindow::onSingletextCtrlSelectionChanged, "MainWindow::onSingletextCtrlSelectionChanged" );
 
 
 	label = new Label();
