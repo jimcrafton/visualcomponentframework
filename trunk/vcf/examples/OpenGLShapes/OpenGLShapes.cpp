@@ -26,11 +26,11 @@ public:
 		shape=0;
 		sphere=gluNewQuadric();
 
-		EventHandler* ev=new GenericEventHandler<OpenGLShapesControl>( this, &OpenGLShapesControl::onTimer, "OpenGLShapesControl::onTimer" );
+		CallBack* ev = new ClassProcedure1<Event*, OpenGLShapesControl>( this, &OpenGLShapesControl::onTimer, "OpenGLShapesControl::onTimer" );
 
 		TimerComponent* timer = new TimerComponent();
 		addComponent( timer );
-		timer->TimerPulse.addHandler(ev);
+		timer->TimerPulse.add(ev);
 		timer->setTimeoutInterval( 33 ); //around 30 FPS
 		timer->setActivated( true );
 	}
@@ -145,22 +145,22 @@ public:
 		add(topPanel,AlignTop);
 
 		CommandButton *cube=new CommandButton();
-		EventHandler* cubeButton=new ButtonEventHandler<OpenGLShapes>(this,&OpenGLShapes::cube,"cube");
-		cube->addButtonClickHandler(cubeButton);
+		CallBack* cubeButton=new ClassProcedure1<ButtonEvent*, OpenGLShapes>(this,&OpenGLShapes::cube,"cube");
+		cube->ButtonClicked.add(cubeButton);
 		cube->setCaption("Cube");
 		cube->setWidth(100);
 		topPanel->add(cube,AlignRight);
 
 		CommandButton *tetrahedron=new CommandButton();
-		EventHandler* tetrahedronButton=new ButtonEventHandler<OpenGLShapes>(this,&OpenGLShapes::tetrahedron,"tetrahedron");
-		tetrahedron->addButtonClickHandler(tetrahedronButton);
+		CallBack* tetrahedronButton=new ClassProcedure1<ButtonEvent*, OpenGLShapes>(this,&OpenGLShapes::tetrahedron,"tetrahedron");
+		tetrahedron->ButtonClicked.add(tetrahedronButton);
 		tetrahedron->setCaption("Tetrahedron");
 		tetrahedron->setWidth(100);
 		topPanel->add(tetrahedron,AlignClient);
 
 		CommandButton *sphere=new CommandButton();
-		EventHandler* sphereButton=new ButtonEventHandler<OpenGLShapes>(this,&OpenGLShapes::sphere,"sphere");
-		sphere->addButtonClickHandler(sphereButton);
+		CallBack* sphereButton=new ClassProcedure1<ButtonEvent*, OpenGLShapes>(this,&OpenGLShapes::sphere,"sphere");
+		sphere->ButtonClicked.add(sphereButton);
 		sphere->setCaption("Sphere");
 		sphere->setWidth(100);
 		topPanel->add(sphere,AlignLeft);

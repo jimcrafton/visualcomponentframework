@@ -143,10 +143,10 @@ public:
 
 		//add the two event handlers to the drop target's delegates
 		textDestDropTarget->DropTargetDropped +=
-			new DropEventHandler<DragAndDropWindow>( this, &DragAndDropWindow::onTextDestDropped, "onTextDestDropped" );
+			new ClassProcedure1<DropTargetEvent*, DragAndDropWindow>( this, &DragAndDropWindow::onTextDestDropped, "onTextDestDropped" );
 
 		textDestDropTarget->DropTargetEntered +=
-			new DropEventHandler<DragAndDropWindow>( this, &DragAndDropWindow::onTextDestEntered, "onTextDestEntered" );
+			new ClassProcedure1<DropTargetEvent*, DragAndDropWindow>( this, &DragAndDropWindow::onTextDestEntered, "onTextDestEntered" );
 
 
 
@@ -171,7 +171,7 @@ public:
 		addComponent( fileDestDropTarget );
 
 		fileDestDropTarget->DropTargetDropped +=
-			new DropEventHandler<DragAndDropWindow>( this, &DragAndDropWindow::onFileDestDropped, "onFileDestDropped" );
+			new ClassProcedure1<DropTargetEvent*, DragAndDropWindow>( this, &DragAndDropWindow::onFileDestDropped, "onFileDestDropped" );
 
 
 		label = new Label();
@@ -198,7 +198,7 @@ public:
 		addComponent( imageDestDropTarget );
 
 		imageDestDropTarget->DropTargetDropped +=
-			new DropEventHandler<DragAndDropWindow>( this, &DragAndDropWindow::onImageDestDropped, "onImageDestDropped" );
+			new ClassProcedure1<DropTargetEvent*, DragAndDropWindow>( this, &DragAndDropWindow::onImageDestDropped, "onImageDestDropped" );
 
 
 	}

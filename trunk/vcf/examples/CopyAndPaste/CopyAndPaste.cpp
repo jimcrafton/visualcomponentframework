@@ -49,8 +49,8 @@ public:
 		add( copyBtn );
 
 		//add the event handler
-		copyBtn->addButtonClickHandler(
-			new ButtonEventHandler<CopyAndPasteWindow>( this,
+		copyBtn->ButtonClicked.add(
+			new ClassProcedure1<ButtonEvent*, CopyAndPasteWindow>( this,
 														&CopyAndPasteWindow::onCopyClicked,
 														"CopyAndPasteWindow::onCopyClicked" ) );
 
@@ -67,8 +67,8 @@ public:
 		add( pasteBtn );
 
 		//add the event handler
-		pasteBtn->addButtonClickHandler(
-			new ButtonEventHandler<CopyAndPasteWindow>( this,
+		pasteBtn->ButtonClicked.add(
+			new ClassProcedure1<ButtonEvent*, CopyAndPasteWindow>( this,
 															&CopyAndPasteWindow::onPasteClicked,
 															"CopyAndPasteWindow::onPasteClicked" ) );
 

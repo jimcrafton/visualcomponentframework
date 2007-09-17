@@ -108,7 +108,7 @@ public:
 		btn1->setBounds( 10, 20, 175, btn1->getPreferredHeight() );
 		btn1->setCaption( "Dialog::showMessage 1" );
 		btn1->ButtonClicked +=
-			new GenericEventHandler<DialogsWindow>( this, &DialogsWindow::example1, "DialogsWindow::example1" );
+			new ClassProcedure1<Event*, DialogsWindow>( this, &DialogsWindow::example1, "DialogsWindow::example1" );
 		add( btn1 );
 
 
@@ -116,7 +116,7 @@ public:
 		btn2->setBounds( 10, btn1->getBottom() + 20, 175, btn2->getPreferredHeight() );
 		btn2->setCaption( "Dialog::showMessage 2" );
 		btn2->ButtonClicked +=
-			new GenericEventHandler<DialogsWindow>( this, &DialogsWindow::example2, "DialogsWindow::example2" );
+			new ClassProcedure1<Event*, DialogsWindow>( this, &DialogsWindow::example2, "DialogsWindow::example2" );
 		add( btn2 );
 
 
@@ -124,49 +124,49 @@ public:
 		btn3->setBounds( 10, btn2->getBottom() + 20, 175, btn3->getPreferredHeight() );
 		btn3->setCaption( "Show custom dialog" );
 		btn3->ButtonClicked +=
-			new GenericEventHandler<DialogsWindow>( this, &DialogsWindow::example3, "DialogsWindow::example3" );
+			new ClassProcedure1<Event*, DialogsWindow>( this, &DialogsWindow::example3, "DialogsWindow::example3" );
 		add( btn3 );
 
 		CommandButton* btn4 = new CommandButton();
 		btn4->setBounds( 10, btn3->getBottom() + 20, 175, btn4->getPreferredHeight() );
 		btn4->setCaption( "Show Common Font Dialog" );
 		btn4->ButtonClicked +=
-			new GenericEventHandler<DialogsWindow>( this, &DialogsWindow::example4, "DialogsWindow::example4" );
+			new ClassProcedure1<Event*, DialogsWindow>( this, &DialogsWindow::example4, "DialogsWindow::example4" );
 		add( btn4 );
 
 		CommandButton* btn5 = new CommandButton();
 		btn5->setBounds( 10, btn4->getBottom() + 20, 175, btn4->getPreferredHeight() );
 		btn5->setCaption( "Show Common Color Dialog" );
 		btn5->ButtonClicked +=
-			new GenericEventHandler<DialogsWindow>( this, &DialogsWindow::example5, "DialogsWindow::example5" );
+			new ClassProcedure1<Event*, DialogsWindow>( this, &DialogsWindow::example5, "DialogsWindow::example5" );
 		add( btn5 );
 
 		CommandButton* btn6 = new CommandButton();
 		btn6->setBounds( 10, btn5->getBottom() + 20, 175, btn6->getPreferredHeight() );
 		btn6->setCaption( "Show Common File Browse Dialog" );
 		btn6->ButtonClicked +=
-			new GenericEventHandler<DialogsWindow>( this, &DialogsWindow::example6, "DialogsWindow::example6" );
+			new ClassProcedure1<Event*, DialogsWindow>( this, &DialogsWindow::example6, "DialogsWindow::example6" );
 		add( btn6 );
 
 		CommandButton* btn7 = new CommandButton();
 		btn7->setBounds( 10, btn6->getBottom() + 20, 175, btn6->getPreferredHeight() );
 		btn7->setCaption( "Show Common File Open Dialog" );
 		btn7->ButtonClicked +=
-			new GenericEventHandler<DialogsWindow>( this, &DialogsWindow::example7, "DialogsWindow::example7" );
+			new ClassProcedure1<Event*, DialogsWindow>( this, &DialogsWindow::example7, "DialogsWindow::example7" );
 		add( btn7 );
 
 		CommandButton* btn8 = new CommandButton();
 		btn8->setBounds( 10, btn7->getBottom() + 20, 175, btn6->getPreferredHeight() );
 		btn8->setCaption( "Show Common File Save Dialog" );
 		btn8->ButtonClicked +=
-			new GenericEventHandler<DialogsWindow>( this, &DialogsWindow::example8, "DialogsWindow::example8" );
+			new ClassProcedure1<Event*, DialogsWindow>( this, &DialogsWindow::example8, "DialogsWindow::example8" );
 		add( btn8 );
 
 		CommandButton* btn9 = new CommandButton();
 		btn9->setBounds( 10, btn8->getBottom() + 20, 175, btn6->getPreferredHeight() );
 		btn9->setCaption( "Show Common Print Dialog" );
 		btn9->ButtonClicked +=
-			new GenericEventHandler<DialogsWindow>( this, &DialogsWindow::example9, "DialogsWindow::example9" );
+			new ClassProcedure1<Event*, DialogsWindow>( this, &DialogsWindow::example9, "DialogsWindow::example9" );
 		add( btn9 );
 	}
 

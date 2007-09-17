@@ -292,8 +292,8 @@ public:
 		btnPanel->setHeight( 50 );
 		add( btnPanel, AlignTop );
 
-		EventHandler* btnHandler =
-			new ButtonEventHandler<Layout2>( this, &Layout2::onButtonClicked, "onButtonClicked" );
+		CallBack* btnHandler =
+			new ClassProcedure1<ButtonEvent*, Layout2>( this, &Layout2::onButtonClicked, "Layout2::onButtonClicked" );
 
 		//this button will switch to the first control - note the use of the setTag() call
 		//this is ab easy to share a comon event handler and then use a switch() statement
@@ -400,7 +400,7 @@ public:
 
 		CommandButton* btn1 = new CommandButton();
 		btn1->ButtonClicked +=
-			new ButtonEventHandler<AdvancedAlignmentWindow>(this,&AdvancedAlignmentWindow::onBtn1Clicked, "AdvancedAlignmentWindow::onBtn1Clicked");
+			new ClassProcedure1<ButtonEvent*, AdvancedAlignmentWindow>(this,&AdvancedAlignmentWindow::onBtn1Clicked, "AdvancedAlignmentWindow::onBtn1Clicked");
 
 		btn1->setBounds( 20, 20, 100, btn1->getPreferredHeight() );
 		btn1->setCaption( "Left-to-Right layout" );
@@ -410,7 +410,7 @@ public:
 
 		CommandButton* btn2 = new CommandButton();
 		btn2->ButtonClicked +=
-			new ButtonEventHandler<AdvancedAlignmentWindow>(this,&AdvancedAlignmentWindow::onBtn2Clicked, "AdvancedAlignmentWindow::onBtn2Clicked");
+			new ClassProcedure1<ButtonEvent*, AdvancedAlignmentWindow>(this,&AdvancedAlignmentWindow::onBtn2Clicked, "AdvancedAlignmentWindow::onBtn2Clicked");
 
 		btn2->setBounds( 120, 20, 100, btn1->getPreferredHeight() );
 		btn2->setCaption( "Paged layout" );
