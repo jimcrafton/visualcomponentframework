@@ -23,6 +23,8 @@ CFG=paintlib - Win32 Release
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -39,8 +41,8 @@ RSC=rc.exe
 # PROP Intermediate_Dir "vc6\Release\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MD /W3 /GR /GX /Ob2 /O1 /I "$(VCF_ROOT)\src" /I "..\..\..\Libcurl\include" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\..\..\LibTIFF" /I "..\..\..\LibJPEG" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /c
-# SUBTRACT CPP /YX /FR
+# ADD CPP /nologo /G5 /MD /W3 /GR /GX /O1 /Ob2 /I "$(VCF_ROOT)\src" /I "..\..\..\Libcurl\include" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\..\..\LibTIFF" /I "..\..\..\LibJPEG" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /c
+# SUBTRACT CPP /Fr /YX
 # ADD BASE RSC /l 0x407
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -64,7 +66,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)\src" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\..\..\LibTIFF" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /I "..\..\..\Libcurl\include" /I "..\..\..\libjpeg" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /Fd"..\..\..\..\..\..\lib\paintlib_vc6_sd.pdb" /Yd /c
-# SUBTRACT CPP /YX /FR
+# SUBTRACT CPP /Fr /YX
 # ADD BASE RSC /l 0x407
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -895,7 +897,6 @@ DEP_CPP_PLSTR=\
 
 SOURCE=plwemfdec.cpp
 DEP_CPP_PLWEM=\
-	"..\..\Common\config.h"\
 	"..\..\common\plbitmap.h"\
 	"..\..\common\plbmpbase.h"\
 	"..\..\common\plbmpinfo.h"\
@@ -1065,7 +1066,6 @@ DEP_CPP_PLANYD=\
 	"..\..\..\LibTIFF\tiffvers.h"\
 	"..\..\..\ZLib\zconf.h"\
 	"..\..\..\ZLib\zlib.h"\
-	"..\..\Common\config.h"\
 	"..\..\common\planydec.h"\
 	"..\..\common\plbitmap.h"\
 	"..\..\common\plbmpbase.h"\
@@ -1363,7 +1363,6 @@ DEP_CPP_PLEXI=\
 	"..\..\..\LibJPEG\jmorecfg.h"\
 	"..\..\..\LibJPEG\jpegint.h"\
 	"..\..\..\LibJPEG\jpeglib.h"\
-	"..\..\Common\config.h"\
 	"..\..\common\plcountedpointer.h"\
 	"..\..\common\pldebug.h"\
 	"..\..\common\plexcept.h"\
@@ -1412,7 +1411,6 @@ DEP_CPP_PLFILE=\
 
 SOURCE=..\..\common\plfilesrc.cpp
 DEP_CPP_PLFILES=\
-	"..\..\Common\config.h"\
 	"..\..\common\pldatasrc.h"\
 	"..\..\common\pldebug.h"\
 	"..\..\common\plexcept.h"\
@@ -1498,7 +1496,6 @@ DEP_CPP_PLJPE=\
 	"..\..\common\plpixeldefs.h"\
 	"..\..\common\plpixelformat.h"\
 	"..\..\common\plpoint.h"\
-	"..\libjpeg\jmorecfg.h"\
 	
 
 !IF  "$(CFG)" == "paintlib - Win32 Release"
@@ -1542,7 +1539,6 @@ DEP_CPP_PLJPEG=\
 	"..\..\common\plpixeldefs.h"\
 	"..\..\common\plpixelformat.h"\
 	"..\..\common\plpoint.h"\
-	"..\libjpeg\jmorecfg.h"\
 	
 
 !IF  "$(CFG)" == "paintlib - Win32 Release"
@@ -1698,7 +1694,6 @@ DEP_CPP_PLPGM=\
 
 SOURCE=..\..\common\plpicdec.cpp
 DEP_CPP_PLPIC=\
-	"..\..\Common\config.h"\
 	"..\..\common\planybmp.h"\
 	"..\..\common\plbitmap.h"\
 	"..\..\common\plbmpbase.h"\
@@ -1780,7 +1775,6 @@ DEP_CPP_PLPICT=\
 	"..\..\..\LibJPEG\jmorecfg.h"\
 	"..\..\..\LibJPEG\jpegint.h"\
 	"..\..\..\LibJPEG\jpeglib.h"\
-	"..\..\Common\config.h"\
 	"..\..\common\plbitmap.h"\
 	"..\..\common\plbmpbase.h"\
 	"..\..\common\plbmpinfo.h"\
@@ -1959,7 +1953,6 @@ DEP_CPP_PLPPM=\
 
 SOURCE=..\..\common\plpsddec.cpp
 DEP_CPP_PLPSD=\
-	"..\..\Common\config.h"\
 	"..\..\common\plbitmap.h"\
 	"..\..\common\plbmpbase.h"\
 	"..\..\common\plbmpinfo.h"\
@@ -2105,7 +2098,6 @@ DEP_CPP_PLTIF=\
 	"..\..\..\LibTIFF\tiffconf.h"\
 	"..\..\..\LibTIFF\tiffio.h"\
 	"..\..\..\LibTIFF\tiffvers.h"\
-	"..\..\Common\config.h"\
 	"..\..\common\plbitmap.h"\
 	"..\..\common\plbmpbase.h"\
 	"..\..\common\plbmpinfo.h"\
@@ -2146,7 +2138,6 @@ DEP_CPP_PLTIFF=\
 	"..\..\..\LibTIFF\tiffconf.h"\
 	"..\..\..\LibTIFF\tiffio.h"\
 	"..\..\..\LibTIFF\tiffvers.h"\
-	"..\..\Common\config.h"\
 	"..\..\common\plbitmap.h"\
 	"..\..\common\plbmpbase.h"\
 	"..\..\common\plbmpinfo.h"\
@@ -2612,7 +2603,7 @@ SOURCE=..\..\common\config.vc
 
 !IF  "$(CFG)" == "paintlib - Win32 Release"
 
-# Begin Custom Build
+# Begin Custom Build - Creating config.h from config.vc
 InputPath=..\..\common\config.vc
 
 "..\..\common\config.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -2622,7 +2613,7 @@ InputPath=..\..\common\config.vc
 
 !ELSEIF  "$(CFG)" == "paintlib - Win32 Debug"
 
-# Begin Custom Build - Copying config.vc
+# Begin Custom Build - Creating config.h from config.vc
 InputPath=..\..\common\config.vc
 
 "..\..\common\config.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
