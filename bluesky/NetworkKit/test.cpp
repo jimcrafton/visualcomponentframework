@@ -158,7 +158,7 @@ public:
 		while ( canContinue() ) {
 			socket->getPeer()->select( Socket::SelectWaitForever, NULL, NULL, NULL );
 
-			do {
+			while( socket->pending() && socket->isReadable() ) {
 				try {
 					uint64 err = sis.read( tmp, sizeof(tmp) );
 					
@@ -175,7 +175,7 @@ public:
 					System::println( "Socket error!" );
 					break;
 				}
-			} while( socket->pending() && socket->isReadable() );
+			}
 
 		}
 
@@ -338,6 +338,18 @@ int main( int argc, char** argv ){
 		System::println( Format("host address: %s") % addr2.getHostAddress() );
 		System::println( Format("host name: %s") % addr2.getHostName() );
 
+
+		System::println( Format("host address: %s") % addr3.getHostAddress() );
+		System::println( Format("host name: %s") % addr3.getHostName() );
+
+
+		std::vector<IPAddress> addrs = IPAddress::getDNSHostAddresses( "google.com" );
+		for (int ipIdx=0;ipIdx<addrs.size();ipIdx++ ) {
+			System::println( Format("Host addr #%d %s") % (ipIdx+1) % addrs[ipIdx].getHostAddress() );
+		}
+
+
+
 		//System::println( Format("host address: %s") % 	addr3.getHostAddress() );
 		//System::println( Format("host name: %s") % addr3.getHostName() );
 
@@ -361,6 +373,7 @@ int main( int argc, char** argv ){
 		msg = (String)(Format( "NICK %s" ) % "Unknown[1]");
 		msg += " \r\n";
 		sos.write( (const uchar*)msg.c_str(), msg.size() );
+
 
 
 		//rt->quit();

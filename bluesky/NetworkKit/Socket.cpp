@@ -3,6 +3,7 @@
 #include "NetworkKit.h"
 #include "Socket.h"
 #include "NetworkToolkit.h"
+#include "vcf/FoundationKit/Dictionary.h"
 
 
 const VCF::String VCF::Socket::soBlocking = "soBlocking"; 
@@ -159,7 +160,7 @@ Socket* Socket::accept()
 
 		SocketEvent e(this,Socket::seClientConnected);
 		e.socket = result;
-		ClientConnected.fireEvent( &e );
+		ClientConnected( &e );
 	}
 
 	return result;
