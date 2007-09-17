@@ -682,23 +682,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Object.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp
-
-!IF  "$(CFG)" == "FoundationKitDLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "FoundationKitDLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\ObjectWithEvents.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\PackageInfo.cpp
 # End Source File
 # Begin Source File

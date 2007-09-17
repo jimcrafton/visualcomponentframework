@@ -49,7 +49,7 @@ Proxy* ClassServerInstance::createInstance( const VCF::String& className )
 	}
 	else { //we have to look elsewhere, first on this machine, then on the network
 		Socket sock( LOCAL_CLASS_SERVER, CLASS_SERVER_PORT );
-		CallBack* socketHandler = getEventHandler( "SocketHandler" );
+		CallBack* socketHandler = getCallback( "SocketHandler" );
 		sock.DataReceived.add( socketHandler );
 		try {
 			sock.setListeningLoop( new SocketListeningLoop(&sock) );
@@ -126,7 +126,7 @@ VCF::VariantData* ClassServerInstance::invoke( VCF::OutputStream* marshalledData
 	VCF::VariantData* result = NULL;
 
 	Socket sock( LOCAL_CLASS_SERVER, CLASS_SERVER_PORT );
-	CallBack* socketHandler = getEventHandler( "SocketHandler" );
+	CallBack* socketHandler = getCallback( "SocketHandler" );
 	sock.DataReceived.add( socketHandler );
 
 	try {

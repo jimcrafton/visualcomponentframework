@@ -117,7 +117,7 @@ private:
 class REMOTEKIT_API AbstractDistributedApplication : public DistributedApplication{
 public:
 
-	class DistributedAppListener : public VCF::ObjectWithEvents {
+	class DistributedAppListener : public VCF::ObjectWithCallbacks {
 	public:
 		DistributedAppListener( AbstractDistributedApplication* distributedApp=NULL ){
 			distributedApp_ = distributedApp;
