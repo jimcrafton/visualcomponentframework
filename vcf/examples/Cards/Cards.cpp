@@ -38,7 +38,7 @@ public:
         }
 
 private:
-   typedef GenericEventHandler<CardsWindow> MnuHandler;
+   typedef Event MenuEvent;
    CardControl *card1;
    void internalCreateMenu() {
    	
@@ -70,7 +70,7 @@ private:
 	Action* gameQuit = new Action();
 	addComponent( gameQuit );
 	gameQuit->addTarget(gameExit);
-	gameQuit->Performed += new MnuHandler(this,&CardsWindow::onMenuExit,"Exit Application");
+	gameQuit->Performed += new ClassProcedure1<MenuEvent*, CardsWindow>(this, &CardsWindow::onMenuExit, "Exit Application");
 		
    }
    

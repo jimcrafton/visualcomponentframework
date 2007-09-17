@@ -131,7 +131,7 @@ public:
 		scrollBarMgr->setKeepScrollbarsVisible( true, true );
 
 		ToolTipRequested +=
-			new ToolTipEventHandler<StandardColorsPanel>(this,&StandardColorsPanel::onToolTipRequested, "StandardColorsPanel::onToolTipRequested" );
+			new ClassProcedure1<ToolTipEvent*, StandardColorsPanel>(this, &StandardColorsPanel::onToolTipRequested, "StandardColorsPanel::onToolTipRequested" );
 
 	}
 
@@ -360,7 +360,7 @@ public:
 		SliderControl* slider = new SliderControl();
 		slider->setPosition( colorWell->getColor()->getRed() * 100.0 );
 		slider->PositionChanged +=
-			new GenericEventHandler<RGBPanel>( this, &RGBPanel::onRedChanged, "RGBPanel::onRedChanged" );
+			new ClassProcedure1<Event*, RGBPanel>( this, &RGBPanel::onRedChanged, "RGBPanel::onRedChanged" );
 
 		slider->setTickFrequency(0);
 		add( slider );
@@ -377,7 +377,7 @@ public:
 		slider = new SliderControl();
 		slider->setPosition( colorWell->getColor()->getGreen() * 100.0 );
 		slider->PositionChanged +=
-			new GenericEventHandler<RGBPanel>( this, &RGBPanel::onGreenChanged, "RGBPanel::onGreenChanged" );
+			new ClassProcedure1<Event*, RGBPanel>( this, &RGBPanel::onGreenChanged, "RGBPanel::onGreenChanged" );
 		slider->setTickFrequency(0);
 		add( slider );
 
@@ -393,7 +393,7 @@ public:
 		slider = new SliderControl();
 		slider->setPosition( colorWell->getColor()->getBlue() * 100.0 );
 		slider->PositionChanged +=
-			new GenericEventHandler<RGBPanel>( this, &RGBPanel::onBlueChanged, "RGBPanel::onBlueChanged" );
+			new ClassProcedure1<Event*, RGBPanel>( this, &RGBPanel::onBlueChanged, "RGBPanel::onBlueChanged" );
 
 		slider->setTickFrequency(0);
 		add( slider );
@@ -487,7 +487,7 @@ public:
 		SliderControl* slider = new SliderControl();
 		slider->setPosition( hue * 100.0 );
 		slider->PositionChanged +=
-			new GenericEventHandler<HSLPanel>( this, &HSLPanel::onRedChanged, "HSLPanel::onRedChanged" );
+			new ClassProcedure1<Event*, HSLPanel>( this, &HSLPanel::onRedChanged, "HSLPanel::onRedChanged" );
 
 		slider->setTickFrequency(0);
 		add( slider );
@@ -505,7 +505,7 @@ public:
 		slider->setPosition( saturation * 100.0 );
 		slider->setTickFrequency(0);
 		slider->PositionChanged +=
-			new GenericEventHandler<HSLPanel>( this, &HSLPanel::onGreenChanged, "HSLPanel::onGreenChanged" );
+			new ClassProcedure1<Event*, HSLPanel>( this, &HSLPanel::onGreenChanged, "HSLPanel::onGreenChanged" );
 		add( slider );
 
 		saturationVal = new Label();
@@ -521,7 +521,7 @@ public:
 		slider->setPosition( luminance * 100.0 );
 		slider->setTickFrequency(0);
 		slider->PositionChanged +=
-			new GenericEventHandler<HSLPanel>( this, &HSLPanel::onBlueChanged, "HSLPanel::onBlueChanged" );
+			new ClassProcedure1<Event*, HSLPanel>( this, &HSLPanel::onBlueChanged, "HSLPanel::onBlueChanged" );
 
 		add( slider );
 

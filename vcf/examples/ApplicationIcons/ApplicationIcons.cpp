@@ -37,7 +37,7 @@ public:
 		cmdButton->setCaption( "Set icon1" );
 		add( cmdButton );
 
-		cmdButton->addButtonClickHandler( new ButtonEventHandler<ApplicationIconsWindow>( this, &ApplicationIconsWindow::setIcon1, "ApplicationIconsWindow::setIcon1" ) );
+		cmdButton->ButtonClicked.add( new ClassProcedure1<ButtonEvent*, ApplicationIconsWindow>( this, &ApplicationIconsWindow::setIcon1, "ApplicationIconsWindow::setIcon1" ) );
 
 
 
@@ -45,7 +45,7 @@ public:
 		cmdButton = new CommandButton();
 		cmdButton->setBounds( 120, 20, 100, cmdButton->getPreferredHeight() );
 		add( cmdButton );
-		cmdButton->addButtonClickHandler( new ButtonEventHandler<ApplicationIconsWindow>( this, &ApplicationIconsWindow::setIcon2, "ApplicationIconsWindow::setIcon2" ) );
+		cmdButton->ButtonClicked.add( new ClassProcedure1<ButtonEvent*, ApplicationIconsWindow>( this, &ApplicationIconsWindow::setIcon2, "ApplicationIconsWindow::setIcon2" ) );
 		cmdButton->setCaption( "Set icon2" );
 	}
 
