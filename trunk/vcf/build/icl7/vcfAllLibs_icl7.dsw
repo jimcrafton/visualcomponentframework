@@ -81,30 +81,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FreeImageLib"="..\..\src\thirdparty\common\FreeImage\Source\FreeImageLib\FreeImageLib_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name LibJPEG
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name LibMNG
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name LibPNG
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ZLib
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "GraphicsKit"=".\GraphicsKit\GraphicsKit_icl7.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -267,18 +243,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibMNG"="..\..\src\thirdparty\common\FreeImage\Source\LibMNG\LibMNG_icl7.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "LibPNG"="..\..\src\thirdparty\common\LibPNG\LibPNG_icl7.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -359,6 +323,30 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ApplicationKitDLL
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RegExKit"=".\RegExKit\RegExKit_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RegExKitDLL"=".\RegExKit\RegExKitDLL_icl7.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################

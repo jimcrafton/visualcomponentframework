@@ -69,8 +69,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FoundationKitDLL", ".\Found
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FrameStyles", "..\..\examples\FrameStyles\FrameStyles_vc70.vcproj", "{ef7e0952-7cf1-4e45-8f58-0327560dc634}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FreeImageLib", "..\..\src\thirdparty\common\FreeImage\Source\FreeImageLib\FreeImageLib_vc70.vcproj", "{2488257d-c488-43f4-8529-59f0bb357c66}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gradients", "..\..\examples\Gradients\Gradients_vc70.vcproj", "{d51a53fe-81c0-4615-aca2-afba2687e651}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphicsAndMouseMoves", "..\..\examples\GraphicsAndMouseMoves\GraphicsAndMouseMoves_vc70.vcproj", "{90bc32f8-321b-4e39-aa9b-5e6eb2600242}"
@@ -114,8 +112,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Labels", "..\..\examples\Labels\Labels_vc70.vcproj", "{8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibJPEG", "..\..\src\thirdparty\common\LibJPEG\LibJPEG_vc70.vcproj", "{3d654766-acc3-424e-b92c-75dcd6554532}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibMNG", "..\..\src\thirdparty\common\FreeImage\Source\LibMNG\LibMNG_vc70.vcproj", "{9ea8a29c-ee15-4aea-9c3a-212973528d40}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibPNG", "..\..\src\thirdparty\common\LibPNG\LibPNG_vc70.vcproj", "{f155a370-5964-4f4a-a17d-01a4035e2ca7}"
 EndProject
@@ -347,10 +343,6 @@ Global
 		{fc6f4770-9489-42e5-a96c-e04cd475a850}.82 = {c76867a6-cf04-41c6-b465-7af89272982b}
 		{fc6f4770-9489-42e5-a96c-e04cd475a850}.83 = {bb206c40-d6a1-4b4b-8826-f33def1806a8}
 		{fc6f4770-9489-42e5-a96c-e04cd475a850}.84 = {ffeac7ab-e3c6-479b-b679-bdabad3f3aa2}
-		{2488257d-c488-43f4-8529-59f0bb357c66}.0 = {3d654766-acc3-424e-b92c-75dcd6554532}
-		{2488257d-c488-43f4-8529-59f0bb357c66}.1 = {9ea8a29c-ee15-4aea-9c3a-212973528d40}
-		{2488257d-c488-43f4-8529-59f0bb357c66}.2 = {f155a370-5964-4f4a-a17d-01a4035e2ca7}
-		{2488257d-c488-43f4-8529-59f0bb357c66}.3 = {94556f59-ad3a-46eb-87c3-0c6d62089798}
 		{505e7ae6-3414-4d22-9be7-87ec093fed53}.0 = {18f07694-fc61-4c07-9650-189e329972b2}
 		{505e7ae6-3414-4d22-9be7-87ec093fed53}.1 = {9c900d7c-dde4-4e0f-b5de-a326c39607dc}
 		{505e7ae6-3414-4d22-9be7-87ec093fed53}.2 = {3d654766-acc3-424e-b92c-75dcd6554532}
@@ -464,8 +456,6 @@ Global
 		{49eccc34-695d-472f-be5f-1e2fc4fdcecd}.Release.ActiveCfg = Release|Win32
 		{ef7e0952-7cf1-4e45-8f58-0327560dc634}.Debug.ActiveCfg = Debug|Win32
 		{ef7e0952-7cf1-4e45-8f58-0327560dc634}.Release.ActiveCfg = Release|Win32
-		{2488257d-c488-43f4-8529-59f0bb357c66}.Debug.ActiveCfg = Debug|Win32
-		{2488257d-c488-43f4-8529-59f0bb357c66}.Release.ActiveCfg = Release|Win32
 		{d51a53fe-81c0-4615-aca2-afba2687e651}.Debug.ActiveCfg = Debug|Win32
 		{d51a53fe-81c0-4615-aca2-afba2687e651}.Release.ActiveCfg = Release|Win32
 		{90bc32f8-321b-4e39-aa9b-5e6eb2600242}.Debug.ActiveCfg = Debug|Win32
@@ -510,8 +500,6 @@ Global
 		{8f6cf3db-fc3a-4936-8e6b-a7c6ab78423d}.Release.ActiveCfg = Release|Win32
 		{3d654766-acc3-424e-b92c-75dcd6554532}.Debug.ActiveCfg = Debug|Win32
 		{3d654766-acc3-424e-b92c-75dcd6554532}.Release.ActiveCfg = Release|Win32
-		{9ea8a29c-ee15-4aea-9c3a-212973528d40}.Debug.ActiveCfg = Debug|Win32
-		{9ea8a29c-ee15-4aea-9c3a-212973528d40}.Release.ActiveCfg = Release|Win32
 		{f155a370-5964-4f4a-a17d-01a4035e2ca7}.Debug.ActiveCfg = Debug|Win32
 		{f155a370-5964-4f4a-a17d-01a4035e2ca7}.Release.ActiveCfg = Release|Win32
 		{18ae3676-1f8a-4f28-9b24-7b5fc4b3afdf}.Debug.ActiveCfg = Debug|Win32

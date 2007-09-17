@@ -61,8 +61,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir "..\..\..\lib\"
 # PROP Intermediate_Dir "DebugLib\"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/common/oniguruma" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "USE_FOUNDATIONKIT_LIB" /D "REGEXKIT_LIB" /D "NOT_RUBY" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D /Fd"..\..\..\lib\RegExKit_vc71_sd.pdb" ONIG_EXTERN=extern /YX /FD /GZ /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/common/oniguruma" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "USE_FOUNDATIONKIT_LIB" /D "REGEXKIT_LIB" /D "NOT_RUBY" /D "_CRT_SECURE_NO_DEPRECATE" /D "_SCL_SECURE_NO_DEPRECATE" /D "_CRT_NON_CONFORMING_SWPRINTFS" /D ONIG_EXTERN=extern /YX /FD /D /Fd"..\..\..\lib\RegExKit_vc71_sd.pdb" /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe

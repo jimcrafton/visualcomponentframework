@@ -33,7 +33,7 @@ public:
 		down->MouseUp.add(new ClassProcedure1<MouseEvent*,Spinner>(this,&Spinner::onDownUp));
 		updown->add(down,AlignLeft);
 
-		PushButton *up=new PushButton();
+		PushButton *up = new PushButton();
 		up->setCaption("+");
 		up->setWidth(20);
 		up->MouseDown.add(new ClassProcedure1<MouseEvent*,Spinner>(this,&Spinner::onUpDown));

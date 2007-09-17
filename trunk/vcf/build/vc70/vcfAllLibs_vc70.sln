@@ -11,8 +11,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FoundationKit", ".\Foundati
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FoundationKitDLL", ".\FoundationKit\FoundationKitDLL_vc70.vcproj", "{49eccc34-695d-472f-be5f-1e2fc4fdcecd}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FreeImageLib", "..\..\src\thirdparty\common\FreeImage\Source\FreeImageLib\FreeImageLib_vc70.vcproj", "{2488257d-c488-43f4-8529-59f0bb357c66}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphicsKit", ".\GraphicsKit\GraphicsKit_vc70.vcproj", "{505e7ae6-3414-4d22-9be7-87ec093fed53}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphicsKitDLL", ".\GraphicsKit\GraphicsKitDLL_vc70.vcproj", "{b68a433e-59b4-41a2-9243-af448a3f7bad}"
@@ -33,8 +31,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JavaScriptKitDLL", ".\JavaS
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibJPEG", "..\..\src\thirdparty\common\LibJPEG\LibJPEG_vc70.vcproj", "{3d654766-acc3-424e-b92c-75dcd6554532}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibMNG", "..\..\src\thirdparty\common\FreeImage\Source\LibMNG\LibMNG_vc70.vcproj", "{9ea8a29c-ee15-4aea-9c3a-212973528d40}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibPNG", "..\..\src\thirdparty\common\LibPNG\LibPNG_vc70.vcproj", "{f155a370-5964-4f4a-a17d-01a4035e2ca7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibTIFF", "..\..\src\thirdparty\common\LibTIFF\LibTIFF_vc70.vcproj", "{18ae3676-1f8a-4f28-9b24-7b5fc4b3afdf}"
@@ -46,6 +42,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGLKit", ".\OpenGLKit\OpenGLKit_vc70.vcproj", "{86b5ee3a-638c-481a-9869-4230fc112429}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGLKitDLL", ".\OpenGLKit\OpenGLKitDLL_vc70.vcproj", "{1012d59e-6477-4541-9ecc-d6c295da8d9e}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RegExKit", ".\RegExKit\RegExKit_vc70.vcproj", "{b562b243-de36-4af0-98a1-c834f2460c30}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RegExKitDLL", ".\RegExKit\RegExKitDLL_vc70.vcproj", "{5fde7645-18ab-4b91-a5a6-709e73b3d293}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RemoteObjectKit", ".\RemoteObjectKit\RemoteObjectKit_vc70.vcproj", "{b37ff77e-b3cc-43d4-ae50-febd3865d8f2}"
 EndProject
@@ -74,10 +74,6 @@ Global
 	GlobalSection(ProjectDependencies) = postSolution
 		{fb6ee931-23d6-4a12-8a22-3bc354267563}.0 = {505e7ae6-3414-4d22-9be7-87ec093fed53}
 		{ae86332f-2e64-460b-8363-c502de1bbfb3}.0 = {b68a433e-59b4-41a2-9243-af448a3f7bad}
-		{2488257d-c488-43f4-8529-59f0bb357c66}.0 = {3d654766-acc3-424e-b92c-75dcd6554532}
-		{2488257d-c488-43f4-8529-59f0bb357c66}.1 = {9ea8a29c-ee15-4aea-9c3a-212973528d40}
-		{2488257d-c488-43f4-8529-59f0bb357c66}.2 = {f155a370-5964-4f4a-a17d-01a4035e2ca7}
-		{2488257d-c488-43f4-8529-59f0bb357c66}.3 = {94556f59-ad3a-46eb-87c3-0c6d62089798}
 		{505e7ae6-3414-4d22-9be7-87ec093fed53}.0 = {18f07694-fc61-4c07-9650-189e329972b2}
 		{505e7ae6-3414-4d22-9be7-87ec093fed53}.1 = {9c900d7c-dde4-4e0f-b5de-a326c39607dc}
 		{505e7ae6-3414-4d22-9be7-87ec093fed53}.2 = {3d654766-acc3-424e-b92c-75dcd6554532}
@@ -131,8 +127,6 @@ Global
 		{18f07694-fc61-4c07-9650-189e329972b2}.Release.ActiveCfg = Release|Win32
 		{49eccc34-695d-472f-be5f-1e2fc4fdcecd}.Debug.ActiveCfg = Debug|Win32
 		{49eccc34-695d-472f-be5f-1e2fc4fdcecd}.Release.ActiveCfg = Release|Win32
-		{2488257d-c488-43f4-8529-59f0bb357c66}.Debug.ActiveCfg = Debug|Win32
-		{2488257d-c488-43f4-8529-59f0bb357c66}.Release.ActiveCfg = Release|Win32
 		{505e7ae6-3414-4d22-9be7-87ec093fed53}.Debug.ActiveCfg = Debug|Win32
 		{505e7ae6-3414-4d22-9be7-87ec093fed53}.Release.ActiveCfg = Release|Win32
 		{b68a433e-59b4-41a2-9243-af448a3f7bad}.Debug.ActiveCfg = Debug|Win32
@@ -153,8 +147,6 @@ Global
 		{b4119c21-7e30-4967-91cc-8e0b3482ea4e}.Release.ActiveCfg = Release|Win32
 		{3d654766-acc3-424e-b92c-75dcd6554532}.Debug.ActiveCfg = Debug|Win32
 		{3d654766-acc3-424e-b92c-75dcd6554532}.Release.ActiveCfg = Release|Win32
-		{9ea8a29c-ee15-4aea-9c3a-212973528d40}.Debug.ActiveCfg = Debug|Win32
-		{9ea8a29c-ee15-4aea-9c3a-212973528d40}.Release.ActiveCfg = Release|Win32
 		{f155a370-5964-4f4a-a17d-01a4035e2ca7}.Debug.ActiveCfg = Debug|Win32
 		{f155a370-5964-4f4a-a17d-01a4035e2ca7}.Release.ActiveCfg = Release|Win32
 		{18ae3676-1f8a-4f28-9b24-7b5fc4b3afdf}.Debug.ActiveCfg = Debug|Win32
@@ -167,6 +159,10 @@ Global
 		{86b5ee3a-638c-481a-9869-4230fc112429}.Release.ActiveCfg = Release|Win32
 		{1012d59e-6477-4541-9ecc-d6c295da8d9e}.Debug.ActiveCfg = Debug|Win32
 		{1012d59e-6477-4541-9ecc-d6c295da8d9e}.Release.ActiveCfg = Release|Win32
+		{b562b243-de36-4af0-98a1-c834f2460c30}.Debug.ActiveCfg = Debug|Win32
+		{b562b243-de36-4af0-98a1-c834f2460c30}.Release.ActiveCfg = Release|Win32
+		{5fde7645-18ab-4b91-a5a6-709e73b3d293}.Debug.ActiveCfg = Debug|Win32
+		{5fde7645-18ab-4b91-a5a6-709e73b3d293}.Release.ActiveCfg = Release|Win32
 		{b37ff77e-b3cc-43d4-ae50-febd3865d8f2}.Debug.ActiveCfg = Debug|Win32
 		{b37ff77e-b3cc-43d4-ae50-febd3865d8f2}.Release.ActiveCfg = Release|Win32
 		{e88b35e8-8f56-4b04-821e-551e06f796f8}.Debug.ActiveCfg = Debug|Win32
