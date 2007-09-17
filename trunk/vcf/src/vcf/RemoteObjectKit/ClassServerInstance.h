@@ -24,7 +24,7 @@ namespace VCFRemote {
 
 class Proxy;
 
-class REMOTEKIT_API ClassServerInstance : public VCF::ObjectWithEvents {
+class REMOTEKIT_API ClassServerInstance : public VCF::ObjectWithCallbacks {
 
 public:
 	ClassServerInstance();
