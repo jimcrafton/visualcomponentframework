@@ -23,8 +23,6 @@ CFG=FoundationKit - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName ""
-# PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -42,7 +40,7 @@ RSC=rc.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_ROOT)/src" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"vcf/FoundationKit/FoundationKit.h" /FD /c
-# SUBTRACT CPP /WX /Fr
+# SUBTRACT CPP /WX /FR
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -65,8 +63,8 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "vc6\DebugS\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Yu"vcf/FoundationKit/FoundationKit.h" /Fd"..\..\..\lib\FoundationKit_vc6_sd.pdb" /FD /GZ /c
-# SUBTRACT CPP /WX /Fr
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /Fd"..\..\..\lib\FoundationKit_vc6_sd.pdb" /Yu"vcf/FoundationKit/FoundationKit.h" /FD /GZ /c
+# SUBTRACT CPP /WX /FR
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -101,10 +99,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitSelectLib.h
 
 SOURCE=..\..\..\src\vcf\FoundationKit\FrameworkConfig.h
 # End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\IniFini.h
-# End Source File
 # End Group
 # Begin Group "Source Files"
 
@@ -117,10 +111,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKit.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\IniFini.cpp
 # End Source File
 # End Group
 # Begin Group "Peers"
@@ -540,6 +530,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ErrorLog.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\IniFini.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\Library.cpp
 # End Source File
 # Begin Source File
@@ -708,10 +702,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ResourceBundle.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSource.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\System.cpp
 # End Source File
 # Begin Source File
@@ -725,10 +715,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\SystemToolkit.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\SystemToolkit.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\VCF.h
 # End Source File
 # Begin Source File
 
@@ -749,10 +735,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\VCFString.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\VCFString.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\VCFulong64.h
 # End Source File
 # Begin Source File
 
@@ -924,6 +906,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSource.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSource.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\Runnable.h
 # End Source File
 # Begin Source File
@@ -945,6 +931,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Thread.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\Thread.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\ThreadedFunctions.h
 # End Source File
 # Begin Source File
 

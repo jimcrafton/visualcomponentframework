@@ -227,14 +227,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FrameStyles", "..\..\exampl
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FreeImageLib", "..\..\src\thirdparty\common\FreeImage\Source\FreeImageLib\FreeImageLib_vc71.vcproj", "{88AFB079-E112-483A-9848-664F83B0E815}"
-	ProjectSection(ProjectDependencies) = postProject
-		{0BF5C15E-9CC6-49AC-BFA3-3DF5F09B0283} = {0BF5C15E-9CC6-49AC-BFA3-3DF5F09B0283}
-		{0619B736-BD12-4318-A093-DA41A00C326C} = {0619B736-BD12-4318-A093-DA41A00C326C}
-		{6FA834DD-F1BE-4B9F-88D6-132B7F014501} = {6FA834DD-F1BE-4B9F-88D6-132B7F014501}
-		{570A598D-2544-4D0B-A2FC-7F819DB68246} = {570A598D-2544-4D0B-A2FC-7F819DB68246}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gradients", "..\..\examples\Gradients\Gradients_vc71.vcproj", "{994BA6AA-51B1-4F71-B583-64F95FB79D9B}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
@@ -335,10 +327,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Labels", "..\..\examples\La
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibJPEG", "..\..\src\thirdparty\common\LibJPEG\LibJPEG_vc71.vcproj", "{0BF5C15E-9CC6-49AC-BFA3-3DF5F09B0283}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibMNG", "..\..\src\thirdparty\common\FreeImage\Source\LibMNG\LibMNG_vc71.vcproj", "{0619B736-BD12-4318-A093-DA41A00C326C}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -744,9 +732,6 @@ Global
 		{40A8AC5C-CFA3-4520-B2FE-31B5B397516C}.Debug.ActiveCfg = Debug|Win32
 		{40A8AC5C-CFA3-4520-B2FE-31B5B397516C}.Generate YY and LL files.ActiveCfg = Debug|Win32
 		{40A8AC5C-CFA3-4520-B2FE-31B5B397516C}.Release.ActiveCfg = Release|Win32
-		{88AFB079-E112-483A-9848-664F83B0E815}.Debug.ActiveCfg = Debug|Win32
-		{88AFB079-E112-483A-9848-664F83B0E815}.Generate YY and LL files.ActiveCfg = Release|Win32
-		{88AFB079-E112-483A-9848-664F83B0E815}.Release.ActiveCfg = Release|Win32
 		{994BA6AA-51B1-4F71-B583-64F95FB79D9B}.Debug.ActiveCfg = Debug|Win32
 		{994BA6AA-51B1-4F71-B583-64F95FB79D9B}.Generate YY and LL files.ActiveCfg = Debug|Win32
 		{994BA6AA-51B1-4F71-B583-64F95FB79D9B}.Release.ActiveCfg = Release|Win32
@@ -813,9 +798,6 @@ Global
 		{0BF5C15E-9CC6-49AC-BFA3-3DF5F09B0283}.Debug.ActiveCfg = Debug|Win32
 		{0BF5C15E-9CC6-49AC-BFA3-3DF5F09B0283}.Generate YY and LL files.ActiveCfg = Release|Win32
 		{0BF5C15E-9CC6-49AC-BFA3-3DF5F09B0283}.Release.ActiveCfg = Release|Win32
-		{0619B736-BD12-4318-A093-DA41A00C326C}.Debug.ActiveCfg = Debug|Win32
-		{0619B736-BD12-4318-A093-DA41A00C326C}.Generate YY and LL files.ActiveCfg = Debug|Win32
-		{0619B736-BD12-4318-A093-DA41A00C326C}.Release.ActiveCfg = Release|Win32
 		{6FA834DD-F1BE-4B9F-88D6-132B7F014501}.Debug.ActiveCfg = Debug|Win32
 		{6FA834DD-F1BE-4B9F-88D6-132B7F014501}.Generate YY and LL files.ActiveCfg = Debug|Win32
 		{6FA834DD-F1BE-4B9F-88D6-132B7F014501}.Release.ActiveCfg = Release|Win32

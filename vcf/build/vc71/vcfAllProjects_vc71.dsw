@@ -687,30 +687,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FreeImageLib"="..\..\src\thirdparty\common\FreeImage\Source\FreeImageLib\FreeImageLib_vc71.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name LibJPEG
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name LibMNG
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name LibPNG
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ZLib
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "Gradients"="..\..\examples\Gradients\Gradients_vc71.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1009,18 +985,6 @@ Package=<4>
 ###############################################################################
 
 Project: "LibJPEG"="..\..\src\thirdparty\common\LibJPEG\LibJPEG_vc71.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "LibMNG"="..\..\src\thirdparty\common\FreeImage\Source\LibMNG\LibMNG_vc71.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
