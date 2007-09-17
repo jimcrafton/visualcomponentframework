@@ -155,7 +155,7 @@ public:
 	@delegate TextModelChanged fired when the model's text data is changed
 	@event TextModelEvent
 	*/
-	DELEGATE(TextModelChanged)
+	DELEGATE(VCF::ModelDelegate,TextModelChanged)
 
 		virtual void addTextModelChangedHandler( VCF::EventHandler * handler ){
 		TextModelChanged += handler;

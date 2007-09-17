@@ -47,7 +47,7 @@ public:
 		add( slider );
 		slider->setTag( transXTag );
 		slider->PositionChanged += 
-			new GenericEventHandler<TransFormController>( this, &TransFormController::onSliderValChanged, "TransFormController::onSliderValChanged" );
+			new ClassProcedure1<Event*,TransFormController>( this, &TransFormController::onSliderValChanged, "TransFormController::onSliderValChanged" );
 
 		slider->setMaxValue( 400 );
 		slider->setMinValue( -400 );
@@ -63,7 +63,7 @@ public:
 		slider->setName( "translateY" );
 		add( slider );
 		slider->setTag( transYTag );
-		slider->PositionChanged += getEventHandler( "TransFormController::onSliderValChanged" );
+		slider->PositionChanged += getCallback( "TransFormController::onSliderValChanged" );
 		slider->setMaxValue( 400 );
 		slider->setMinValue( -400 );
 		slider->setTickFrequency( 80 );
@@ -76,7 +76,7 @@ public:
 		slider->setName( "shearX" );
 		add( slider );
 		slider->setTag( shearXTag );
-		slider->PositionChanged += getEventHandler( "TransFormController::onSliderValChanged" );
+		slider->PositionChanged += getCallback( "TransFormController::onSliderValChanged" );
 		slider->setMinValue( -360 );
 		slider->setMaxValue( 360 );
 		slider->setHasTickMarks( false );
@@ -91,7 +91,7 @@ public:
 		slider->setName( "shearY" );
 		add( slider );
 		slider->setTag( shearYTag );
-		slider->PositionChanged += getEventHandler( "TransFormController::onSliderValChanged" );
+		slider->PositionChanged += getCallback( "TransFormController::onSliderValChanged" );
 		slider->setMinValue( -360 );
 		slider->setMaxValue( 360 );
 		slider->setHasTickMarks( false );
@@ -107,7 +107,7 @@ public:
 		slider->setPosition( 100 );
 		add( slider );
 		slider->setTag( scaleXTag );
-		slider->PositionChanged += getEventHandler( "TransFormController::onSliderValChanged" );
+		slider->PositionChanged += getCallback( "TransFormController::onSliderValChanged" );
 
 		scaleY = new Label();
 		scaleY->setCaption( "Scale Y:" );
@@ -118,7 +118,7 @@ public:
 		slider->setPosition( 100 );
 		add( slider );
 		slider->setTag( scaleYTag );
-		slider->PositionChanged += getEventHandler( "TransFormController::onSliderValChanged" );
+		slider->PositionChanged += getCallback( "TransFormController::onSliderValChanged" );
 
 		rotate = new Label();
 		rotate->setCaption( "Rotate:" );
@@ -128,7 +128,7 @@ public:
 		slider->setName( "rotate" );
 		add( slider );
 		slider->setTag( rotateTag );
-		slider->PositionChanged += getEventHandler( "TransFormController::onSliderValChanged" );
+		slider->PositionChanged += getCallback( "TransFormController::onSliderValChanged" );
 		slider->setMaxValue( 360 );
 		slider->setHasTickMarks( false );
 		slider->setTickFrequency( 36 );
@@ -136,12 +136,12 @@ public:
 
 		CommandButton* reset = new CommandButton();
 		reset->setCaption( "Reset" );
-		reset->addButtonClickHandler( new GenericEventHandler<TransFormController>( this, &TransFormController::onReset, "TransFormController::onReset" ) );
+		reset->addButtonClickHandler( new ClassProcedure1<Event*,TransFormController>( this, &TransFormController::onReset, "TransFormController::onReset" ) );
 		add( reset );
 
 		CheckBoxControl* checkBox = new CheckBoxControl();
 		checkBox->setCaption( "Use GraphicsContext::concatXXX functions" );
-		checkBox->addButtonClickHandler( new GenericEventHandler<TransFormController>( this, &TransFormController::onUseConcatFunctions, "TransFormController::onUseConcatFunctions" ) );
+		checkBox->addButtonClickHandler( new ClassProcedure1<Event*,TransFormController>( this, &TransFormController::onUseConcatFunctions, "TransFormController::onUseConcatFunctions" ) );
 		add( checkBox );
 	}
 

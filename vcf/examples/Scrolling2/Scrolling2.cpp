@@ -55,13 +55,13 @@ public:
 
 		//add our event handler to the scrollbar menu
 		hasHorzScrollbarMenu_->MenuItemClicked +=
-			new MenuItemEventHandler<Scrolling2Window>( this, &Scrolling2Window::hasHorzScrollbar, "Scrolling2Window::hasHorzScrollbar" );
+			new ClassProcedure1<MenuItemEvent*,Scrolling2Window>( this, &Scrolling2Window::hasHorzScrollbar, "Scrolling2Window::hasHorzScrollbar" );
 		hasVertScrollbarMenu_->MenuItemClicked +=
-			new MenuItemEventHandler<Scrolling2Window>( this, &Scrolling2Window::hasVertScrollbar, "Scrolling2Window::hasVertScrollbar" );
+			new ClassProcedure1<MenuItemEvent*,Scrolling2Window>( this, &Scrolling2Window::hasVertScrollbar, "Scrolling2Window::hasVertScrollbar" );
 		keepHorzScrollbarVisibleMenu_->MenuItemClicked +=
-			new MenuItemEventHandler<Scrolling2Window>( this, &Scrolling2Window::keepHorzScrollbarVisible, "Scrolling2Window::keepHorzScrollbarVisible" );
+			new ClassProcedure1<MenuItemEvent*,Scrolling2Window>( this, &Scrolling2Window::keepHorzScrollbarVisible, "Scrolling2Window::keepHorzScrollbarVisible" );
 		keepVertScrollbarVisibleMenu_->MenuItemClicked +=
-			new MenuItemEventHandler<Scrolling2Window>( this, &Scrolling2Window::keepVertScrollbarVisible, "Scrolling2Window::keepVertScrollbarVisible" );
+			new ClassProcedure1<MenuItemEvent*,Scrolling2Window>( this, &Scrolling2Window::keepVertScrollbarVisible, "Scrolling2Window::keepVertScrollbarVisible" );
 
 
 

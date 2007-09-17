@@ -8,7 +8,7 @@ using namespace VCF;
 
 class ColorPicker:public VCF::ControlContainer{
 public:
-	DELEGATE(ColorChanged);
+	DELEGATE(ButtonDelegate,ColorChanged);
 
 	ColorPicker():ControlContainer(){
 		setBorder(0);
@@ -17,22 +17,22 @@ public:
 
 		mR=new TextControl();
 		mR->setBounds(0,0,25,20);
-		mR->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<ColorPicker>(this,&ColorPicker::onR));
+		mR->getTextModel()->addTextModelChangedHandler( (EventHandler*)new ClassProcedure1<TextEvent*,ColorPicker>(this,&ColorPicker::onR));
 		add(mR);
 
 		mG=new TextControl();
 		mG->setBounds(25,0,25,20);
-		mG->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<ColorPicker>(this,&ColorPicker::onG));
+		mG->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ColorPicker>(this,&ColorPicker::onG));
 		add(mG);
 
 		mB=new TextControl();
 		mB->setBounds(50,0,25,20);
-		mB->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<ColorPicker>(this,&ColorPicker::onB));
+		mB->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ColorPicker>(this,&ColorPicker::onB));
 		add(mB);
 
 		mA=new TextControl();
 		mA->setBounds(75,0,25,20);
-		mA->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<ColorPicker>(this,&ColorPicker::onA));
+		mA->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ColorPicker>(this,&ColorPicker::onA));
 		add(mA);
 
 		setUseColorForBackground(true);
@@ -55,7 +55,7 @@ public:
 		repaint();
 
 		ButtonEvent event(this,ITEM_EVENT_SELECTED);
-		ColorChanged.fireEvent(&event);
+		ColorChanged(&event);
 	}
 
 	virtual float getAlpha(){
@@ -77,7 +77,7 @@ public:
 		repaint();
 
 		ButtonEvent event(this,ITEM_EVENT_SELECTED);
-		ColorChanged.fireEvent(&event);
+		ColorChanged(&event);
 	}
 
 	void onG(TextEvent *e){
@@ -95,7 +95,7 @@ public:
 		repaint();
 
 		ButtonEvent event(this,ITEM_EVENT_SELECTED);
-		ColorChanged.fireEvent(&event);
+		ColorChanged(&event);
 	}
 
 	void onB(TextEvent *e){
@@ -113,7 +113,7 @@ public:
 		repaint();
 
 		ButtonEvent event(this,ITEM_EVENT_SELECTED);
-		ColorChanged.fireEvent(&event);
+		ColorChanged(&event);
 	}
 
 	void onA(TextEvent *e){
@@ -129,7 +129,7 @@ public:
 		mAlpha=a;;
 
 		ButtonEvent event(this,ITEM_EVENT_SELECTED);
-		ColorChanged.fireEvent(&event);
+		ColorChanged(&event);
 	}
 
 	TextControl *mR;

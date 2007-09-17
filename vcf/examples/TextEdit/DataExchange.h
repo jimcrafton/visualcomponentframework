@@ -10,7 +10,7 @@
 
 
 template <typename DataType, typename ControlType>
-class DataExchangeImpl : public VCF::ObjectWithEvents/*, public DataExchange*/ {
+class DataExchangeImpl : public VCF::ObjectWithCallbacks/*, public DataExchange*/ {
 public:
 	typedef ControlType Control;
 	typedef typename ControlType::BaseType ControlBase;
@@ -50,9 +50,9 @@ public:
 	DataExchangeImpl<DataType,ControlType>& operator= ( ControlBase* val ) {
 		control_ = reinterpret_cast<ControlType*>( val );
 		if ( NULL != control_ ) {
-			VCF::EventHandler* ev = getEventHandler( "DataExchangeType::onDestroy" );
+			VCF::CallBack* ev = getCallback( "DataExchangeType::onDestroy" );
 			if ( NULL == ev ) {
-				ev = new VCF::ComponentEventHandler<DataExchangeType>(this, &DataExchangeType::onDestroy, "DataExchangeType::onDestroy" );
+				ev = new VCF::ClassProcedure1<ComponentEvent*,DataExchangeType>(this, &DataExchangeType::onDestroy, "DataExchangeType::onDestroy" );
 			}
 			control_->ComponentDestroyed += ev;
 			update( false );
@@ -63,9 +63,9 @@ public:
 	DataExchangeImpl<DataType,ControlType>& operator= ( ControlType* val ) {
 		control_ = val;
 		if ( NULL != control_ ) {
-			VCF::EventHandler* ev = getEventHandler( "DataExchangeType::onDestroy" );
+			VCF::CallBack* ev = getCallback( "DataExchangeType::onDestroy" );
 			if ( NULL == ev ) {
-				ev = new VCF::ComponentEventHandler<DataExchangeType>(this, &DataExchangeType::onDestroy, "DataExchangeType::onDestroy" );
+				ev = new VCF::ClassProcedure1<ComponentEvent*,DataExchangeType>(this, &DataExchangeType::onDestroy, "DataExchangeType::onDestroy" );
 			}
 			control_->ComponentDestroyed += ev;
 			update( false );

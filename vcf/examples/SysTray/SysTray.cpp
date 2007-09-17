@@ -92,13 +92,13 @@ public:
 		MenuItem* root = pm->getRootMenuItem(); // new DefaultMenuItem( "root", NULL, pm );
 
 		DefaultMenuItem* hello = new DefaultMenuItem( "Hello!", root, pm );
-		hello->MenuItemClicked += new GenericEventHandler<SysTrayWindow>(this,&SysTrayWindow::onHello,"SysTrayWindow::onHello");
+		hello->MenuItemClicked += new ClassProcedure1<Event*,SysTrayWindow>(this,&SysTrayWindow::onHello,"SysTrayWindow::onHello");
 
 		DefaultMenuItem* about = new DefaultMenuItem( "About...", root, pm );
-		about->MenuItemClicked += new GenericEventHandler<SysTrayWindow>(this,&SysTrayWindow::onAbout,"SysTrayWindow::onAbout");
+		about->MenuItemClicked += new ClassProcedure1<Event*,SysTrayWindow>(this,&SysTrayWindow::onAbout,"SysTrayWindow::onAbout");
 
 		DefaultMenuItem* quit = new DefaultMenuItem( "Quit", root, pm );
-		quit->MenuItemClicked += new GenericEventHandler<SysTrayWindow>(this,&SysTrayWindow::onQuit,"SysTrayWindow::onQuit");
+		quit->MenuItemClicked += new ClassProcedure1<Event*,SysTrayWindow>(this,&SysTrayWindow::onQuit,"SysTrayWindow::onQuit");
 		
 		/**
 		Set the tray icon's popup menu

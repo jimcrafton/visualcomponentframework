@@ -23,7 +23,7 @@ class MyPanel : public Panel
 public:
 	MyPanel( SplittersWindow* mainWnd ) {
 		mainWnd_ = mainWnd;
-		MouseClicked += new ControlEventHandler<MyPanel>(this, &MyPanel::onMouseClicked, "MyPanel::onMouseClicked" );
+		MouseClicked += new ClassProcedure1<ControlEvent*,MyPanel>(this, &MyPanel::onMouseClicked, "MyPanel::onMouseClicked" );
 	}
 
 	SplittersWindow* getMainWindow() {
@@ -44,8 +44,8 @@ public:
 
 		setCaption( "Splitters" );
 
-		ControlSized += new ControlEventHandler<SplittersWindow>(this, &SplittersWindow::onResized, "SplittersWindow::onResized" );
-		ControlPositioned += new ControlEventHandler<SplittersWindow>(this, &SplittersWindow::onPosChanged, "SplittersWindow::onPosChanged" );
+		ControlSized += new ClassProcedure1<ControlEvent*,SplittersWindow>(this, &SplittersWindow::onResized, "SplittersWindow::onResized" );
+		ControlPositioned += new ClassProcedure1<ControlEvent*,SplittersWindow>(this, &SplittersWindow::onPosChanged, "SplittersWindow::onPosChanged" );
 
 		Panel* buttonsPanel = new Panel();
 		buttonsPanel->setUseColorForBackground( true );
@@ -56,7 +56,7 @@ public:
 
 		btnShow_ = new CommandButton();
 		btnShow_->ButtonClicked +=
-			new ButtonEventHandler<SplittersWindow>(this,&SplittersWindow::onBtnShow, "SplittersWindow::onBtnShow");
+			new ClassProcedure1<ButtonEvent*,SplittersWindow>(this,&SplittersWindow::onBtnShow, "SplittersWindow::onBtnShow");
 		btnShow_->setBounds( 120, 2, 100, btnShow_->getPreferredHeight() );
 		btnShow_->setCaption( "Hide" );
 		btnShow_->setToolTipText( "Hide/Show any selected panel" );

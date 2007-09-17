@@ -29,7 +29,7 @@ ReplaceDialog::ReplaceDialog()
 
 	y += findNext_->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager ::mtControlVerticalSpacing );
 
-	findNext_->addButtonClickHandler( new ButtonEventHandler<ReplaceDialog>(this,&ReplaceDialog::findNextClicked, "ReplaceDialog::findNextClicked" ) );
+	findNext_->ButtonClicked += new ClassProcedure1<ButtonEvent*,ReplaceDialog>(this,&ReplaceDialog::findNextClicked, "ReplaceDialog::findNextClicked" );
 
 
 	replace_ = new CommandButton();
@@ -39,7 +39,7 @@ ReplaceDialog::ReplaceDialog()
 
 	y += replace_->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager ::mtControlVerticalSpacing );
 
-	replace_->addButtonClickHandler( new ButtonEventHandler<ReplaceDialog>(this,&ReplaceDialog::replaceClicked, "ReplaceDialog::replaceClicked" ) );
+	replace_->ButtonClicked += new ClassProcedure1<ButtonEvent*,ReplaceDialog>(this,&ReplaceDialog::replaceClicked, "ReplaceDialog::replaceClicked" );
 
 
 	replaceAll_ = new CommandButton();
@@ -47,7 +47,7 @@ ReplaceDialog::ReplaceDialog()
 	replaceAll_->setCaption( "Replace &All" );
 	add( replaceAll_ );
 
-	replaceAll_->addButtonClickHandler( new ButtonEventHandler<ReplaceDialog>(this,&ReplaceDialog::replaceAllClicked, "ReplaceDialog::replaceAllClicked" ) );
+	replaceAll_->ButtonClicked += new ClassProcedure1<ButtonEvent*,ReplaceDialog>(this,&ReplaceDialog::replaceAllClicked, "ReplaceDialog::replaceAllClicked" );
 
 	y += replaceAll_->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager ::mtControlVerticalSpacing );
 

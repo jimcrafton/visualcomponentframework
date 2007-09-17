@@ -28,14 +28,14 @@ public:
 	VisualFormFilesWindow() : label1(NULL) {
 		StringUtils::trace( "VisualFormFilesWindow() " + this->toString() + "\n" );
 
-		EventHandler* ev = new ComponentEventHandler<VisualFormFilesWindow>( this, &VisualFormFilesWindow::onLoaded, "VisualFormFilesWindow::onLoaded" );
+		CallBack* ev = new ClassProcedure1<ComponentEvent*,VisualFormFilesWindow>( this, &VisualFormFilesWindow::onLoaded, "VisualFormFilesWindow::onLoaded" );
 		ComponentLoaded += ev;
 	}
 
 	virtual ~VisualFormFilesWindow(){};
 
 	void onLoaded( ComponentEvent* e ) {
-		EventHandler* ev = new MenuItemEventHandler<VisualFormFilesWindow>( this, &VisualFormFilesWindow::onFileOpened, "VisualFormFilesWindow::onFileOpened" );
+		CallBack* ev = new ClassProcedure1<MenuItemEvent*,VisualFormFilesWindow>( this, &VisualFormFilesWindow::onFileOpened, "VisualFormFilesWindow::onFileOpened" );
 
 		MenuItem* root = this->getMenuBar()->getRootMenuItem();
 		MenuItem* file = root->getChildAt( 0 );

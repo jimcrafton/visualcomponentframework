@@ -81,7 +81,7 @@ public:
 
 
 		TimerComponent* tc = new TimerComponent();
-		tc->TimerPulse += new TimerEventHandler<ProgressBarsWindow>( this, &ProgressBarsWindow::onTimer, "ProgressBarsWindow::onTimer" );
+		tc->TimerPulse += new ClassProcedure1<TimerEvent*,ProgressBarsWindow>( this, &ProgressBarsWindow::onTimer, "ProgressBarsWindow::onTimer" );
 		tc->setTimeoutInterval( 33 );
 		tc->setActivated( true );
 		addComponent( tc );

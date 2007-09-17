@@ -159,10 +159,10 @@ bool TextEdit::initRunningApplication()
 		Action*	printAction = new Action();
 		printAction->setName("EditFind");
 		printAction->Performed += 
-			new GenericEventHandler<TextEdit>( this, &TextEdit::onPrint, "TextEdit::onPrint" );
+			new ClassProcedure1<Event*,TextEdit>( this, &TextEdit::onPrint, "TextEdit::onPrint" );
 		
 		printAction->Update += 
-			new EventHandlerInstance<TextEdit,ActionEvent>( this, &TextEdit::onUpdatePrint,"TextEdit::onUpdatePrint" );
+			new ClassProcedure1<ActionEvent*,TextEdit>( this, &TextEdit::onUpdatePrint,"TextEdit::onUpdatePrint" );
 		
 		addAction( TextEdit::atFilePrint, printAction );
 
@@ -170,20 +170,20 @@ bool TextEdit::initRunningApplication()
 		Action*	findAction = new Action();
 		findAction->setName("EditFind");
 		findAction->Performed += 
-			new GenericEventHandler<TextEdit>( this, &TextEdit::onFind, "TextEdit::onFind" );
+			new ClassProcedure1<Event*,TextEdit>( this, &TextEdit::onFind, "TextEdit::onFind" );
 		
 		findAction->Update += 
-			new EventHandlerInstance<TextEdit,ActionEvent>( this, &TextEdit::onUpdateFind,"TextEdit::onUpdateFind" );
+			new ClassProcedure1<ActionEvent*,TextEdit>( this, &TextEdit::onUpdateFind,"TextEdit::onUpdateFind" );
 		
 		addAction( TextEdit::atEditFind, findAction );
 		
 		Action*	replaceAction = new Action();
 		replaceAction->setName("EditReplace");
 		replaceAction->Performed += 
-			new GenericEventHandler<TextEdit>( this, &TextEdit::onReplace, "TextEdit::onReplace" );
+			new ClassProcedure1<Event*,TextEdit>( this, &TextEdit::onReplace, "TextEdit::onReplace" );
 		
 		replaceAction->Update += 
-			new EventHandlerInstance<TextEdit,ActionEvent>( this, &TextEdit::onUpdateReplace,"TextEdit::onUpdateReplace" );
+			new ClassProcedure1<ActionEvent*,TextEdit>( this, &TextEdit::onUpdateReplace,"TextEdit::onUpdateReplace" );
 		
 		addAction( TextEdit::atEditReplace, replaceAction );
 
@@ -229,7 +229,7 @@ bool TextEdit::initRunningApplication()
 
 		DefaultMenuItem* fileExit = new DefaultMenuItem( "E&xit" );	
 		fileExit->MenuItemClicked += 
-				new GenericEventHandler<TextEdit>( this, &TextEdit::onExit, "TextEdit::onExit" );
+				new ClassProcedure1<Event*,TextEdit>( this, &TextEdit::onExit, "TextEdit::onExit" );
 
 		file->addChild( fileExit );
 
@@ -239,7 +239,7 @@ bool TextEdit::initRunningApplication()
 		
 		DocumentManager* docMgr = DocumentManager::getDocumentManager();
 		docMgr->DocumentInitialized += 
-			new GenericEventHandler<TextEdit>( this, &TextEdit::onDocInitialized, "TextEdit::onDocInitialized" );
+			new ClassProcedure1<Event*,TextEdit>( this, &TextEdit::onDocInitialized, "TextEdit::onDocInitialized" );
 		
 	}
 	return result;

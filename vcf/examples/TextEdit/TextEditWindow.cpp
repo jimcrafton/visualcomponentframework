@@ -21,7 +21,7 @@ TextEditWindow::TextEditWindow():
 	docSelectionChanging_(false)
 {
 	DocumentManager* docMgr = DocumentManager::getDocumentManager();
-	docMgr->DocumentInitialized += new GenericEventHandler<TextEditWindow>( this, 
+	docMgr->DocumentInitialized += new ClassProcedure1<Event*,TextEditWindow>( this, 
 																			&TextEditWindow::onDocInitialized,
 																			"TextEditWindow::onDocInitialized" );
 
@@ -33,7 +33,7 @@ TextEditWindow::TextEditWindow():
 	setTabStop( false );
 
 	tc->SelectionChanged += 
-		new GenericEventHandler<TextEditWindow>( this, &TextEditWindow::onSelectionChanged, "TextEditWindow::onSelectionChanged" );
+		new ClassProcedure1<Event*,TextEditWindow>( this, &TextEditWindow::onSelectionChanged, "TextEditWindow::onSelectionChanged" );
 
 
 	tc->disableStandardAccelerators();
@@ -205,10 +205,10 @@ void TextEditWindow::initMenus()
 	MenuItem* viewToolbar = new DefaultMenuItem( "&Toolbar", view, menuBar );
 
 	viewToolbar->MenuItemClicked += 
-						new MenuItemEventHandler<TextEditWindow>( this, &TextEditWindow::viewToolbarClicked, "TextEditWindow::viewToolbarClicked" );	
+						new ClassProcedure1<MenuItemEvent*,TextEditWindow>( this, &TextEditWindow::viewToolbarClicked, "TextEditWindow::viewToolbarClicked" );	
 
 	viewToolbar->MenuItemUpdate += 
-						new MenuItemEventHandler<TextEditWindow>( this, &TextEditWindow::updateViewToolbar, "TextEditWindow::updateViewToolbar" );
+						new ClassProcedure1<MenuItemEvent*,TextEditWindow>( this, &TextEditWindow::updateViewToolbar, "TextEditWindow::updateViewToolbar" );
 
 	
 	MenuItem* help = new DefaultMenuItem( "&Help", menuBar->getRootMenuItem(), menuBar );
@@ -244,12 +244,12 @@ void TextEditWindow::onDocInitialized( VCF::Event* e )
 	tc->setTextModel( doc );
 	doc->addView( tc );
 
-	EventHandler* evh = getEventHandler( "TextEditWindow::onModelChanged" );
+	CallBack* evh = getCallback( "TextEditWindow::onModelChanged" );
 	if ( NULL == evh ) {
-		evh = new GenericEventHandler<TextEditWindow>( this, &TextEditWindow::onModelChanged, "TextEditWindow::onModelChanged" );
+		evh = new ClassProcedure1<Event*,TextEditWindow>( this, &TextEditWindow::onModelChanged, "TextEditWindow::onModelChanged" );
 	}
 
-	doc->addModelHandler( evh );
+	doc->ModelChanged += evh;
 
 	tc->setFocused();
 
