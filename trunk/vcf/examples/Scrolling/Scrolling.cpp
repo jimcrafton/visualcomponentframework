@@ -45,7 +45,7 @@ public:
 
 		//add our event handler to the menu item
 		fileOpenImageMenu->MenuItemClicked +=
-			new MenuItemEventHandler<ScrollingWindow>( this,&ScrollingWindow::openImage, "ScrollingWindow::openImage" );
+			new ClassProcedure1<MenuItemEvent*,ScrollingWindow>( this,&ScrollingWindow::openImage, "ScrollingWindow::openImage" );
 		
 
 		//set the border of the window, this will give us a nice etched border

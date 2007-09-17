@@ -7,9 +7,11 @@
 
 namespace VCF{
 
+typedef Delegate1<TextEvent*> TextEventDelegate; 
+
 class Spinner:public Panel {
 public:
-	DELEGATE(SpinnerChanged);
+	DELEGATE(TextEventDelegate,SpinnerChanged);
 
 	Spinner():Panel() {
 		setBorder(0);
@@ -17,7 +19,7 @@ public:
 		setWidth(120);
 
 		mValue=new TextControl();
-		mValue->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<Spinner>(this,&Spinner::onTextChanged));
+		mValue->getTextModel()->addTextModelChangedHandler( (EventHandler*) new ClassProcedure1<TextEvent*,Spinner>(this,&Spinner::onTextChanged));
 		add(mValue,AlignClient);
 
 		Panel *updown=new Panel();
@@ -26,17 +28,17 @@ public:
 		PushButton *down=new PushButton();
 		down->setCaption("-");
 		down->setWidth(20);
-		down->MouseDown.addHandler(new MouseEventHandler<Spinner>(this,&Spinner::onDownDown));
-		down->MouseDoubleClicked.addHandler(new MouseEventHandler<Spinner>(this,&Spinner::onDownDown));
-		down->MouseUp.addHandler(new MouseEventHandler<Spinner>(this,&Spinner::onDownUp));
+		down->MouseDown.add(new ClassProcedure1<MouseEvent*,Spinner>(this,&Spinner::onDownDown));
+		down->MouseDoubleClicked.add(new ClassProcedure1<MouseEvent*,Spinner>(this,&Spinner::onDownDown));
+		down->MouseUp.add(new ClassProcedure1<MouseEvent*,Spinner>(this,&Spinner::onDownUp));
 		updown->add(down,AlignLeft);
 
 		PushButton *up=new PushButton();
 		up->setCaption("+");
 		up->setWidth(20);
-		up->MouseDown.addHandler(new MouseEventHandler<Spinner>(this,&Spinner::onUpDown));
-		up->MouseDoubleClicked.addHandler(new MouseEventHandler<Spinner>(this,&Spinner::onUpDown));
-		up->MouseUp.addHandler(new MouseEventHandler<Spinner>(this,&Spinner::onUpUp));
+		up->MouseDown.add(new ClassProcedure1<MouseEvent*,Spinner>(this,&Spinner::onUpDown));
+		up->MouseDoubleClicked.add(new ClassProcedure1<MouseEvent*,Spinner>(this,&Spinner::onUpDown));
+		up->MouseUp.add(new ClassProcedure1<MouseEvent*,Spinner>(this,&Spinner::onUpUp));
 		updown->add(up,AlignRight);
 
 		updown->setWidth(40);
@@ -48,11 +50,11 @@ public:
 		setValue(0);
 
 		mPreTimer=new TimerComponent();
-		mPreTimer->getTimerPulse().addHandler(new TimerEventHandler<Spinner>(this,&Spinner::onPreTimer));
+		mPreTimer->getTimerPulse().add(new ClassProcedure1<TimerEvent*,Spinner>(this,&Spinner::onPreTimer));
 		addComponent(mPreTimer);
 
 		mTimer=new TimerComponent();
-		mTimer->getTimerPulse().addHandler(new TimerEventHandler<Spinner>(this,&Spinner::onTimer));
+		mTimer->getTimerPulse().add(new ClassProcedure1<TimerEvent*,Spinner>(this,&Spinner::onTimer));
 		addComponent(mTimer);
 
 		mDown=false;
@@ -156,7 +158,7 @@ protected:
 			setValue(value);
 		}
 
-		SpinnerChanged.fireEvent(e);
+		SpinnerChanged(e);
 	}
 
 	TimerComponent *mPreTimer;

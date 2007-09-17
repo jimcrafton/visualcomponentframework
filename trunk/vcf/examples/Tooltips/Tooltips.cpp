@@ -61,7 +61,7 @@ public:
 
 		CheckBoxControl* cb1 = new CheckBoxControl();
 		cb1->ToolTip += 
-			new ToolTipEventHandler<TooltipsWindow>(this,&TooltipsWindow::onToolTipCB1, "TooltipsWindow::onToolTipCB1" );
+			new ClassProcedure1<ToolTipEvent*,TooltipsWindow>(this,&TooltipsWindow::onToolTipCB1, "TooltipsWindow::onToolTipCB1" );
 
 		cb1->setToolTipText( "This is a tooltip from check box 1 - see my background color!" );
 		cb1->setCaption( "This is a check box" );
@@ -69,7 +69,7 @@ public:
 
 		CheckBoxControl* cb2 = new CheckBoxControl();
 		cb2->ToolTip += 
-			new ToolTipEventHandler<TooltipsWindow>(this,&TooltipsWindow::onToolTipCB2, "TooltipsWindow::onToolTipCB2" );
+			new ClassProcedure1<ToolTipEvent*,TooltipsWindow>(this,&TooltipsWindow::onToolTipCB2, "TooltipsWindow::onToolTipCB2" );
 
 		cb2->setCaption( "And another checkbox" );
 		cb2->setToolTipText( "Yet another tip!" );
@@ -82,7 +82,7 @@ public:
 		
 		tc->setToolTipText( "null" );
 		tc->ToolTip += 
-			new ToolTipEventHandler<TooltipsWindow>(this,&TooltipsWindow::onToolTip, "TooltipsWindow::onToolTip" );
+			new ClassProcedure1<ToolTipEvent*,TooltipsWindow>(this,&TooltipsWindow::onToolTip, "TooltipsWindow::onToolTip" );
 		add( tc, AlignClient );
 
 	}

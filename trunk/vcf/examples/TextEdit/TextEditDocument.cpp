@@ -380,10 +380,10 @@ void TextEditDocument::setSelectionRange( const long pos, const VCF::uint32 leng
 
 	
 	ModelEvent e( this, TextEditDocument::teTextSelectionChanged );
-	ModelChanged.fireEvent( &e );
+	ModelChanged( &e );
 
 
-	TextModelChanged.fireEvent( &e );
+	TextModelChanged( &e );
 
 	updateAllViews();
 }
@@ -477,11 +477,11 @@ void TextEditDocument::internal_insertText( const VCF::uint32& pos, const VCF::S
 	e.text_ = text;
 	e.start_ = pos;
 	
-	ModelChanged.fireEvent( &e );
+	ModelChanged( &e );
 
 	TextEvent event( this, TextModel::tmTextInserted, text, pos, text.size() );
 
-	TextModelChanged.fireEvent( &event );
+	TextModelChanged( &event );
 
 	updateAllViews();
 }
@@ -497,11 +497,11 @@ void TextEditDocument::internal_removeText( const VCF::uint32& pos, const VCF::u
 
 	setModified( true );
 	
-	ModelChanged.fireEvent( &e );
+	ModelChanged( &e );
 
 	TextEvent event( this, TextModel::tmTextRemoved, e.text_, pos, length );
 
-	TextModelChanged.fireEvent( &event );
+	TextModelChanged( &event );
 
 	updateAllViews();
 }
@@ -523,12 +523,12 @@ void TextEditDocument::internal_replaceText( const VCF::uint32& pos, const VCF::
 
 	setModified( true );
 	
-	ModelChanged.fireEvent( &e );
+	ModelChanged( &e );
 
 
 	TextEvent event( this, TextModel::tmTextReplaced, removedText, text, 
 							pos, length );
-	TextModelChanged.fireEvent( &event );
+	TextModelChanged( &event );
 }
 
 /**

@@ -17,7 +17,7 @@ using namespace VCF;
 SketchWindow::SketchWindow()
 {
 	DocumentManager* docMgr = DocumentManager::getDocumentManager();
-	docMgr->DocumentInitialized += new GenericEventHandler<SketchWindow>( this,
+	docMgr->DocumentInitialized += new ClassProcedure1<Event*,SketchWindow>( this,
 																			&SketchWindow::onDocInitialized,
 																			"SketchWindow::onDocInitialized" );
 

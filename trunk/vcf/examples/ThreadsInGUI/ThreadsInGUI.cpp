@@ -142,7 +142,7 @@ protected:
 
 
 
-class ThreadPool {
+class MyThreadPool {
 public:
 
 	class ThreadPoolThread;
@@ -152,7 +152,7 @@ public:
 
 	class ThreadPoolThread : public Thread {
 	public:
-		ThreadPoolThread(ThreadPool& pool):threadPool_(pool){}
+		ThreadPoolThread(MyThreadPool& pool):threadPool_(pool){}
 
 		virtual bool run() {
 			while ( canContinue() ) {
@@ -168,18 +168,18 @@ public:
 			return true;
 		}
 
-		ThreadPool& threadPool_;
+		MyThreadPool& threadPool_;
 	};
 
 
-	ThreadPool():waiting_(false) {
+	MyThreadPool():waiting_(false) {
 		waitCondition_ = new Condition( &waitMutex_ );
 
 		poolThread_ = new ThreadPoolThread( *this );
 		poolThread_->start();
 	}
 	
-	~ThreadPool() {
+	~MyThreadPool() {
 		
 		waitCondition_->broadcast();
 
@@ -270,17 +270,17 @@ public:
 		setBounds( &Rect( 100.0, 100.0, 500.0, 500.0 ) );
 
 		EventHandler* ev =
-			new GenericEventHandler<ThreadsInGUIWindow>( this,
+			new ClassProcedure1<Event*,ThreadsInGUIWindow>( this,
 														&ThreadsInGUIWindow::threadChanged,
 														"ThreadsInGUIWindow::threadChanged" );
 
 		ev =
-			new GenericEventHandler<ThreadsInGUIWindow>( this,
+			new ClassProcedure1<Event*,ThreadsInGUIWindow>( this,
 														&ThreadsInGUIWindow::threadStopped,
 														"ThreadsInGUIWindow::threadStopped" );
 
 		ev =
-			new GenericEventHandler<ThreadsInGUIWindow>( this,
+			new ClassProcedure1<Event*,ThreadsInGUIWindow>( this,
 														&ThreadsInGUIWindow::deleteThread,
 														"ThreadsInGUIWindow::deleteThread" );
 
@@ -289,9 +289,9 @@ public:
 		btn->setCaption( "Start Thread" );
 		add( btn );
 
-		btn->addButtonClickHandler( new ButtonEventHandler<ThreadsInGUIWindow>( this,
+		btn->ButtonClicked += new ClassProcedure1<ButtonEvent*,ThreadsInGUIWindow>( this,
 														&ThreadsInGUIWindow::addThread,
-														"ThreadsInGUIWindow::addThread" ) );
+														"ThreadsInGUIWindow::addThread" );
 
 
 		listBox_ = new ListBoxControl();
@@ -316,9 +316,10 @@ public:
 		lm->addItem( item );
 
 		
-		Thread* thread = new CounterThread( lm->getCount()-1, getEventHandler("ThreadsInGUIWindow::threadChanged"),
-										getEventHandler("ThreadsInGUIWindow::threadStopped"),
-										getEventHandler("ThreadsInGUIWindow::deleteThread") );
+		Thread* thread = new CounterThread( lm->getCount()-1, 
+										(EventHandler*)getCallback("ThreadsInGUIWindow::threadChanged"),
+										(EventHandler*)getCallback("ThreadsInGUIWindow::threadStopped"),
+										(EventHandler*)getCallback("ThreadsInGUIWindow::deleteThread") );
 
 		pool.addThread( thread );
 	}
@@ -359,7 +360,7 @@ public:
 
 	ListBoxControl* listBox_;
 
-	ThreadPool pool;
+	MyThreadPool pool;
 };
 
 

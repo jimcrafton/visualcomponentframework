@@ -107,26 +107,26 @@ public:
 		MenuItem* test = new DefaultMenuItem( "Test", root, menuBar );
 		MenuItem* menuItem = new DefaultMenuItem( "Remove Selected Item", test, menuBar );
 		menuItem->MenuItemClicked +=
-			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::removeSelectedItem, "TreeListControlsWindow::removeSelectedItem" );
+			new ClassProcedure1<MenuItemEvent*,TreeListControlsWindow>( this, &TreeListControlsWindow::removeSelectedItem, "TreeListControlsWindow::removeSelectedItem" );
 
 
 		menuItem = new DefaultMenuItem( "Set Multi select", test, menuBar );
 		menuItem->MenuItemClicked +=
-			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::setMultiSelection, "TreeListControlsWindow::setMultiSelection" );
+			new ClassProcedure1<MenuItemEvent*,TreeListControlsWindow>( this, &TreeListControlsWindow::setMultiSelection, "TreeListControlsWindow::setMultiSelection" );
 
 
 		menuItem = new DefaultMenuItem( "Full Row Selection", test, menuBar );
 		menuItem->MenuItemClicked +=
-			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::setFullRowSelect, "TreeListControlsWindow::setFullRowSelect" );
+			new ClassProcedure1<MenuItemEvent*,TreeListControlsWindow>( this, &TreeListControlsWindow::setFullRowSelect, "TreeListControlsWindow::setFullRowSelect" );
 
 
 		menuItem = new DefaultMenuItem( "Full Row Selection Off", test, menuBar );
 		menuItem->MenuItemClicked +=
-			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::setFullRowSelectOff, "TreeListControlsWindow::setFullRowSelectOff" );
+			new ClassProcedure1<MenuItemEvent*,TreeListControlsWindow>( this, &TreeListControlsWindow::setFullRowSelectOff, "TreeListControlsWindow::setFullRowSelectOff" );
 
 		menuItem = new DefaultMenuItem( "Change Caption", test, menuBar );
 		menuItem->MenuItemClicked +=
-			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::changeCaption, "TreeListControlsWindow::changeCaption" );
+			new ClassProcedure1<MenuItemEvent*,TreeListControlsWindow>( this, &TreeListControlsWindow::changeCaption, "TreeListControlsWindow::changeCaption" );
 
 
 		ImageList* listIL = new ImageList();
@@ -164,7 +164,7 @@ public:
 
 		menuItem = new DefaultMenuItem( "Enumerate Selected items", root, popup );
 		menuItem->MenuItemClicked +=
-			new MenuItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::enumerateSelectedItems, "TreeListControlsWindow::enumerateSelectedItems" );
+			new ClassProcedure1<MenuItemEvent*,TreeListControlsWindow>( this, &TreeListControlsWindow::enumerateSelectedItems, "TreeListControlsWindow::enumerateSelectedItems" );
 
 
 		ScrollbarManager* scrollbarManager = new ScrollbarManager();
@@ -310,10 +310,10 @@ public:
 
 		treeList->showHierarchyLines( true );
 
-		treeList->ItemSelected.addHandler( new ItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::onTreeItemSelected, "TreeListControlsWindow::onTreeItemSelected" ) );
+		treeList->ItemSelected.add( new ClassProcedure1<ItemEvent*,TreeListControlsWindow>( this, &TreeListControlsWindow::onTreeItemSelected, "TreeListControlsWindow::onTreeItemSelected" ) );
 
-		treeList->ItemStateChangeRequested.addHandler(
-											new ItemEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::onTreeItemState, "TreeListControlsWindow::onTreeItemState" ) );
+		treeList->ItemStateChangeRequested.add(
+											new ClassProcedure1<ItemEvent*,TreeListControlsWindow>( this, &TreeListControlsWindow::onTreeItemState, "TreeListControlsWindow::onTreeItemState" ) );
 
 		Panel* panel = new Panel();
 		panel->setTransparent( true );
@@ -330,8 +330,8 @@ public:
 		
 
 		HeaderControl* header = treeList->getHeader();
-		header->ColumnItemClicked.addHandler(
-			new MouseEventHandler<TreeListControlsWindow>( this, &TreeListControlsWindow::headerColumnClicked, "TreeListControlsWindow::headerColumnClicked" ) );
+		header->ColumnItemClicked.add(
+			new ClassProcedure1<MouseEvent*,TreeListControlsWindow>( this, &TreeListControlsWindow::headerColumnClicked, "TreeListControlsWindow::headerColumnClicked" ) );
 
 	}
 

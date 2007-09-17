@@ -35,7 +35,7 @@ public:
 		antiAliasToggle->setBounds( 20, 20, 100, antiAliasToggle->getPreferredHeight() );
 		add( antiAliasToggle );
 
-		antiAliasToggle->ButtonClicked += new ButtonEventHandler<StrokesAndFillsWindow>( this, &StrokesAndFillsWindow::onButtonClicked, "StrokesAndFillsWindow::onButtonClicked" );
+		antiAliasToggle->ButtonClicked += new ClassProcedure1<ButtonEvent*,StrokesAndFillsWindow>( this, &StrokesAndFillsWindow::onButtonClicked, "StrokesAndFillsWindow::onButtonClicked" );
 	}
 
 	virtual ~StrokesAndFillsWindow(){};

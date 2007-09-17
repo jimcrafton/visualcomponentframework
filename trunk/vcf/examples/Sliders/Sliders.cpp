@@ -50,7 +50,7 @@ public:
 		slider->setPosition( slider->getMaxValue() );
 
 		slider->PositionChanged +=
-			new GenericEventHandler<SlidersWindow>( this, &SlidersWindow::onSliderPositionChanged, "SlidersWindow::onSliderPositionChanged" );
+			new ClassProcedure1<Event*,SlidersWindow>( this, &SlidersWindow::onSliderPositionChanged, "SlidersWindow::onSliderPositionChanged" );
 
 
 

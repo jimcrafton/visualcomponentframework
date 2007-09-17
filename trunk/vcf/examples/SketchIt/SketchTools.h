@@ -14,7 +14,7 @@ where you installed the VCF.
 #endif
 
 
-class Tool : public VCF::ObjectWithEvents {
+class Tool : public VCF::ObjectWithCallbacks {
 public:
 
 	Tool() : currentControl_(NULL){
@@ -67,7 +67,7 @@ protected:
 /**
 class ToolManager documentation
 */
-class ToolManager : public VCF::ObjectWithEvents {
+class ToolManager : public VCF::ObjectWithCallbacks {
 public:
 
 	void registerTool( Tool* tool, VCF::MenuItem* item );

@@ -29,7 +29,7 @@ FindDialog::FindDialog()
 
 	y += find_->getHeight() + UIToolkit::getUIMetricValue( UIMetricsManager ::mtControlVerticalSpacing );
 
-	find_->addButtonClickHandler( new ButtonEventHandler<FindDialog>(this,&FindDialog::findClicked, "FindDialog::findClicked" ) );
+	find_->ButtonClicked += new ClassProcedure1<ButtonEvent*,FindDialog>(this,&FindDialog::findClicked, "FindDialog::findClicked" );
 
 	
 	cancel_ = new CommandButton();

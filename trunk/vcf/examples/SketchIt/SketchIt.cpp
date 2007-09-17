@@ -41,7 +41,7 @@ public:
 		ToolManager::initialize();
 
 		DocumentManager* docMgr = DocumentManager::getDocumentManager();
-		docMgr->DocumentInitialized += new GenericEventHandler<SketchIt>( this,
+		docMgr->DocumentInitialized += new ClassProcedure1<Event*,SketchIt>( this,
 																			&SketchIt::onDocInitialized,
 																			"SketchIt::onDocInitialized" );
 
@@ -65,12 +65,12 @@ public:
 			MenuItem* viewAA = new DefaultMenuItem( "&Anti-Aliased", view, menuBar );
 
 			viewAA->MenuItemClicked +=
-				new MenuItemEventHandler<SketchIt>( this,
+				new ClassProcedure1<MenuItemEvent*,SketchIt>( this,
 													&SketchIt::onToggleAntiAliasing,
 													"SketchIt::onToggleAntiAliasing" );
 
 			viewAA->MenuItemUpdate +=
-				new MenuItemEventHandler<SketchIt>( this,
+				new ClassProcedure1<MenuItemEvent*,SketchIt>( this,
 													&SketchIt::onUpdateToggleAntiAliasing,
 													"SketchIt::onUpdateToggleAntiAliasing" );
 
@@ -126,12 +126,12 @@ public:
 			MenuItem* editDelete = new DefaultMenuItem( "Delete\tDel", NULL, NULL );
 			edit->insertChild( 7, editDelete );
 			editDelete->MenuItemClicked +=
-				new MenuItemEventHandler<SketchIt>( this,
+				new ClassProcedure1<MenuItemEvent*,SketchIt>( this,
 													&SketchIt::onDeleteShape,
 													"SketchIt::onDeleteShape" );
 
 			editDelete->MenuItemUpdate +=
-				new MenuItemEventHandler<SketchIt>( this,
+				new ClassProcedure1<MenuItemEvent*,SketchIt>( this,
 													&SketchIt::onUpdateDeleteShape,
 													"SketchIt::onUpdateDeleteShape" );
 
@@ -144,12 +144,12 @@ public:
 			edit->insertChild( 8, editFill );
 
 			editFill->MenuItemClicked +=
-				new MenuItemEventHandler<SketchIt>( this,
+				new ClassProcedure1<MenuItemEvent*,SketchIt>( this,
 													&SketchIt::onSetFillShape,
 													"SketchIt::onSetFillShape" );
 
 			editFill->MenuItemUpdate +=
-				new MenuItemEventHandler<SketchIt>( this,
+				new ClassProcedure1<MenuItemEvent*,SketchIt>( this,
 													&SketchIt::onUpdateSetFillShape,
 													"SketchIt::onUpdateSetFillShape" );
 

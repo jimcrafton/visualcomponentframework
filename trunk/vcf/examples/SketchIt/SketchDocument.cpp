@@ -54,7 +54,7 @@ void SketchDocument::addShape( Shape& shape )
 	setModified( true );
 
 	ModelEvent e( this, Model::MODEL_CHANGED );
-	ModelChanged.fireEvent( &e );
+	ModelChanged( &e );
 
 	updateAllViews();
 }

@@ -17,9 +17,9 @@ public:
 		cb->setBounds( 20, 20, 100, 30 );
 		add( cb );
 
-		cb->ButtonClicked += new GenericEventHandler<PopupMenusWindow>(this, &PopupMenusWindow::btnClick, "btnClick" );
+		cb->ButtonClicked += new ClassProcedure1<Event*,PopupMenusWindow>(this, &PopupMenusWindow::btnClick, "btnClick" );
 
-		EventHandler* eh = new GenericEventHandler<PopupMenusWindow>(this, &PopupMenusWindow::onMenuItemClicked, "onMenuItemClicked" );
+		EventHandler* eh = new ClassProcedure1<Event*,PopupMenusWindow>(this, &PopupMenusWindow::onMenuItemClicked, "onMenuItemClicked" );
 
 
 		PopupMenu* popupMenu = new PopupMenu( this );
@@ -30,7 +30,7 @@ public:
 		for (int i=1;i<=10;i++ ) {
 			MenuItem* item = 
 				new DefaultMenuItem( Format("Context Menu Item %d") % i, root,popupMenu );
-			item->MenuItemClicked += getEventHandler( "onMenuItemClicked" );
+			item->MenuItemClicked +=  getCallback( "onMenuItemClicked" );
 		}
 
 	}
@@ -46,7 +46,7 @@ public:
 		for (int i=1;i<=10;i++ ) {
 			MenuItem* item = 
 				new DefaultMenuItem( Format("Menu Item %d") % i, root,popupMenu );
-			item->MenuItemClicked += getEventHandler( "onMenuItemClicked" );
+			item->MenuItemClicked += getCallback( "onMenuItemClicked" );
 		}
 
 		Point pt(20, 50);

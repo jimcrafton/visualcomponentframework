@@ -18,53 +18,53 @@ using namespace VCF;
 
 void Tool::attach( VCF::Control* control )
 {
-	EventHandler* ev = getEventHandler( "Tool::onMouseDown" );
+	CallBack* ev = getCallback( "Tool::onMouseDown" );
 	if ( ev == NULL ) {
-		ev = new MouseEventHandler<Tool>( this, &Tool::onMouseDown, "Tool::onMouseDown" );
+		ev = new ClassProcedure1<MouseEvent*,Tool>( this, &Tool::onMouseDown, "Tool::onMouseDown" );
 	}
 
 	control->MouseDown += ev;
 
-	ev = getEventHandler( "Tool::onMouseMove" );
+	ev = getCallback( "Tool::onMouseMove" );
 	if ( ev == NULL ) {
-		ev = new MouseEventHandler<Tool>( this, &Tool::onMouseMove, "Tool::onMouseMove" );
+		ev = new ClassProcedure1<MouseEvent*,Tool>( this, &Tool::onMouseMove, "Tool::onMouseMove" );
 	}
 
 	control->MouseMove += ev;
 
-	ev = getEventHandler( "Tool::onMouseUp" );
+	ev = getCallback( "Tool::onMouseUp" );
 	if ( ev == NULL ) {
-		ev = new MouseEventHandler<Tool>( this, &Tool::onMouseUp, "Tool::onMouseUp" );
+		ev = new ClassProcedure1<MouseEvent*,Tool>( this, &Tool::onMouseUp, "Tool::onMouseUp" );
 	}
 
 	control->MouseUp += ev;
 
 
-	ev = getEventHandler( "Tool::onDblClick" );
+	ev = getCallback( "Tool::onDblClick" );
 	if ( ev == NULL ) {
-		ev = new MouseEventHandler<Tool>( this, &Tool::onDblClick, "Tool::onDblClick" );
+		ev = new ClassProcedure1<MouseEvent*,Tool>( this, &Tool::onDblClick, "Tool::onDblClick" );
 	}
 
 	control->MouseDoubleClicked += ev;
 
 
-	ev = getEventHandler( "Tool::onKeyPressed" );
+	ev = getCallback( "Tool::onKeyPressed" );
 	if ( ev == NULL ) {
-		ev = new KeyboardEventHandler<Tool>( this, &Tool::onKeyPressed, "Tool::onKeyPressed" );
+		ev = new ClassProcedure1<KeyboardEvent*,Tool>( this, &Tool::onKeyPressed, "Tool::onKeyPressed" );
 	}
 
 	control->KeyPressed += ev;
 
-	ev = getEventHandler( "Tool::onKeyDown" );
+	ev = getCallback( "Tool::onKeyDown" );
 	if ( ev == NULL ) {
-		ev = new KeyboardEventHandler<Tool>( this, &Tool::onKeyDown, "Tool::onKeyDown" );
+		ev = new ClassProcedure1<KeyboardEvent*,Tool>( this, &Tool::onKeyDown, "Tool::onKeyDown" );
 	}
 
 	control->KeyDown += ev;
 
-	ev = getEventHandler( "Tool::onKeyUp" );
+	ev = getCallback( "Tool::onKeyUp" );
 	if ( ev == NULL ) {
-		ev = new KeyboardEventHandler<Tool>( this, &Tool::onKeyUp, "Tool::onKeyUp" );
+		ev = new ClassProcedure1<KeyboardEvent*,Tool>( this, &Tool::onKeyUp, "Tool::onKeyUp" );
 	}
 
 	control->KeyUp += ev;
@@ -79,39 +79,39 @@ VCF::Control* Tool::detach()
 	}
 
 
-	EventHandler* ev = getEventHandler( "Tool::onMouseDown" );
+	CallBack* ev = getCallback( "Tool::onMouseDown" );
 	if ( ev != NULL ) {
 		currentControl_->MouseDown -= ev;
 	}
 
-	ev = getEventHandler( "Tool::onMouseMove" );
+	ev = getCallback( "Tool::onMouseMove" );
 	if ( ev != NULL ) {
 		currentControl_->MouseMove -= ev;
 	}
 
-	ev = getEventHandler( "Tool::onMouseUp" );
+	ev = getCallback( "Tool::onMouseUp" );
 	if ( ev != NULL ) {
 		currentControl_->MouseUp -= ev;
 	}
 
-	ev = getEventHandler( "Tool::onDblClick" );
+	ev = getCallback( "Tool::onDblClick" );
 	if ( ev != NULL ) {
 		currentControl_->MouseDoubleClicked -= ev;
 	}
 
 
-	ev = getEventHandler( "Tool::onKeyPressed" );
+	ev = getCallback( "Tool::onKeyPressed" );
 	if ( ev != NULL ) {
 		currentControl_->KeyPressed -= ev;
 	}
 
 
-	ev = getEventHandler( "Tool::onKeyDown" );
+	ev = getCallback( "Tool::onKeyDown" );
 	if ( ev != NULL ) {
 		currentControl_->KeyDown -= ev;
 	}
 
-	ev = getEventHandler( "Tool::onKeyUp" );
+	ev = getCallback( "Tool::onKeyUp" );
 	if ( ev != NULL ) {
 		currentControl_->KeyUp -= ev;
 	}
@@ -160,15 +160,15 @@ ToolManager* ToolManager::getToolManager()
 void ToolManager::registerTool( Tool* tool, MenuItem* item )
 {
 	toolMap_[item] = tool;
-	EventHandler* ev = getEventHandler( "ToolManager::onMenuItemClicked" );
+	CallBack* ev = getCallback( "ToolManager::onMenuItemClicked" );
 	if ( NULL == ev ) {
-		ev = new MenuItemEventHandler<ToolManager>( this, &ToolManager::onMenuItemClicked, "ToolManager::onMenuItemClicked" );
+		ev = new ClassProcedure1<MenuItemEvent*,ToolManager>( this, &ToolManager::onMenuItemClicked, "ToolManager::onMenuItemClicked" );
 	}
 	item->MenuItemClicked += ev;
 
-	ev = getEventHandler( "ToolManager::onMenuItemUpdate" );
+	ev = getCallback( "ToolManager::onMenuItemUpdate" );
 	if ( NULL == ev ) {
-		ev = new MenuItemEventHandler<ToolManager>( this, &ToolManager::onMenuItemUpdate, "ToolManager::onMenuItemUpdate" );
+		ev = new ClassProcedure1<MenuItemEvent*,ToolManager>( this, &ToolManager::onMenuItemUpdate, "ToolManager::onMenuItemUpdate" );
 	}
 
 	item->MenuItemUpdate += ev;

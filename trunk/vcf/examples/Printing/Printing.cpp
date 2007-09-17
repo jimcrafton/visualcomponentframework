@@ -34,12 +34,12 @@ public:
 		DefaultMenuItem* printingPrintHard = new DefaultMenuItem( "Print the &Hard way...", printing, menuBar );
 		printingPrintHard->setTag( printHardWay );
 
-		printingPrintHard->MenuItemClicked += new GenericEventHandler<PrintingWindow>(this,&PrintingWindow::onPrint,"PrintingWindow::onPrint");
+		printingPrintHard->MenuItemClicked += new ClassProcedure1<Event*,PrintingWindow>(this,&PrintingWindow::onPrint,"PrintingWindow::onPrint");
 
 		DefaultMenuItem* printingPrintEasy = new DefaultMenuItem( "Print the &Easy Way...", printing, menuBar );
 		printingPrintEasy->setTag( printEasyWay );
 
-		printingPrintEasy->MenuItemClicked += getEventHandler("PrintingWindow::onPrint");
+		printingPrintEasy->MenuItemClicked += getCallback("PrintingWindow::onPrint");
 	}
 
 	virtual void paint( GraphicsContext* context ) {
@@ -107,7 +107,7 @@ public:
 			switch ( source->getTag() ) {
 				case PrintingWindow::printEasyWay : {
 					printSession.PageBegun +=
-						new EventHandlerInstance<PrintingWindow,PrintEvent>( this, &PrintingWindow::onPrintPage, "PrintingWindow::onPrintPage" );
+						new ClassProcedure1<PrintEvent*,PrintingWindow>( this, &PrintingWindow::onPrintPage, "PrintingWindow::onPrintPage" );
 
 					printSession.runDefaultPrintLoop();
 				}

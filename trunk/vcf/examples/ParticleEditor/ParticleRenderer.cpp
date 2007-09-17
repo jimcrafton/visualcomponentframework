@@ -38,7 +38,7 @@ ParticleRenderer::ParticleRenderer():OpenGLControl(){
 	mUseVPs=false;
 
 	mTimer=new TimerComponent();
-	mTimer->getTimerPulse().addHandler(new TimerEventHandler<ParticleRenderer>(this,&ParticleRenderer::onTimer));
+	mTimer->getTimerPulse().add(new ClassProcedure1<TimerEvent*,ParticleRenderer>(this,&ParticleRenderer::onTimer));
 	mTimer->setTimeoutInterval(10);
 	mTimer->setActivated(true);
 	addComponent(mTimer);

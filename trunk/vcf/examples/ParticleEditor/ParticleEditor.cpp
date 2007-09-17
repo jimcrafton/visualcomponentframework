@@ -30,23 +30,23 @@ ParticleEditor::ParticleEditor():Window(){
 		MenuBar *menuBar=new MenuBar();
 		setMenuBar(menuBar);
 		MenuItem *root=menuBar->getRootMenuItem();
-		MenuItemEventHandler<ParticleEditor> *menuItemHandler=0;
+		CallBack* menuItemHandler=0;
 
 		DefaultMenuItem *file=new DefaultMenuItem("&File",root,menuBar);
 
 		DefaultMenuItem *fileLoad=new DefaultMenuItem("&Load",file,menuBar);
-		menuItemHandler=new MenuItemEventHandler<ParticleEditor>(this,&ParticleEditor::onFileLoad);
+		menuItemHandler=new ClassProcedure1<MenuItemEvent*,ParticleEditor>(this,&ParticleEditor::onFileLoad);
 		fileLoad->MenuItemClicked += menuItemHandler;
 
 		DefaultMenuItem *fileSave=new DefaultMenuItem("&Save",file,menuBar);
-		menuItemHandler=new MenuItemEventHandler<ParticleEditor>(this,&ParticleEditor::onFileSave);
+		menuItemHandler=new ClassProcedure1<MenuItemEvent*,ParticleEditor>(this,&ParticleEditor::onFileSave);
 		fileSave->MenuItemClicked += menuItemHandler;
 
 		DefaultMenuItem *sep=new DefaultMenuItem("",file,menuBar);
 		sep->setSeparator(true);
 
 		DefaultMenuItem *fileExit=new DefaultMenuItem("E&xit",file,menuBar);
-		menuItemHandler=new MenuItemEventHandler<ParticleEditor>(this,&ParticleEditor::onFileExit);
+		menuItemHandler=new ClassProcedure1<MenuItemEvent*,ParticleEditor>(this,&ParticleEditor::onFileExit);
 		fileExit->MenuItemClicked += menuItemHandler;
 	}
 
@@ -65,7 +65,7 @@ ParticleEditor::ParticleEditor():Window(){
 		mYaw->setMinValue(0);
 		mYaw->setMaxValue(360);
 		mYaw->setPosition(mYaw->getMaxValue()/2.0f);
-		mYaw->getPositionChanged().addHandler(new ScrollEventHandler<ParticleEditor>(this,&ParticleEditor::onViewChanged));
+		mYaw->getPositionChanged().add(new ClassProcedure1<ScrollEvent*,ParticleEditor>(this,&ParticleEditor::onViewChanged));
 		top->add(mYaw,AlignBottom);
 
 		mPitch=new SliderControl();
@@ -76,7 +76,7 @@ ParticleEditor::ParticleEditor():Window(){
 		mPitch->setMinValue(1);
 		mPitch->setMaxValue(179);
 		mPitch->setPosition(mPitch->getMaxValue()/2.0f);
-		mPitch->getPositionChanged().addHandler(new ScrollEventHandler<ParticleEditor>(this,&ParticleEditor::onViewChanged));
+		mPitch->getPositionChanged().add(new ClassProcedure1<ScrollEvent*,ParticleEditor>(this,&ParticleEditor::onViewChanged));
 		top->add(mPitch,AlignRight);
 
 		mZoom=new SliderControl();
@@ -87,7 +87,7 @@ ParticleEditor::ParticleEditor():Window(){
 		mZoom->setMinValue(1);
 		mZoom->setMaxValue(100);
 		mZoom->setPosition(mZoom->getMaxValue()/2.0f);
-		mZoom->getPositionChanged().addHandler(new ScrollEventHandler<ParticleEditor>(this,&ParticleEditor::onViewChanged));
+		mZoom->getPositionChanged().add(new ClassProcedure1<ScrollEvent*,ParticleEditor>(this,&ParticleEditor::onViewChanged));
 		top->add(mZoom,AlignLeft);
 
 		add(top,AlignClient);
@@ -136,13 +136,13 @@ ParticleEditor::ParticleEditor():Window(){
 		CommandButton *reset=new CommandButton();
 		reset->setCaption("Reset sim");
 		reset->setWidth(60);
-		reset->getButtonClicked().addHandler(new ButtonEventHandler<ParticleEditor>(this,&ParticleEditor::onReset));
+		reset->getButtonClicked().add(new ClassProcedure1<ButtonEvent*,ParticleEditor>(this,&ParticleEditor::onReset));
 		gradualStartPanel->add(reset,AlignLeft);
 
 		mGradualStart=new CheckBoxControl();
 		mGradualStart->setCaption(":Gradual start");
 		mGradualStart->setWidth(100);
-		mGradualStart->getButtonClicked().addHandler(new ButtonEventHandler<ParticleEditor>(this,&ParticleEditor::onGradualStart));
+		mGradualStart->getButtonClicked().add(new ClassProcedure1<ButtonEvent*,ParticleEditor>(this,&ParticleEditor::onGradualStart));
 		gradualStartPanel->add(mGradualStart,AlignRight);
 
 		gradualStartPanel->setBounds(0,0,200,ctrlHeight);
@@ -164,7 +164,7 @@ ParticleEditor::ParticleEditor():Window(){
 		mNumParticles->setMax(30000);
 		mNumParticles->setIncrement(10);
 		mNumParticles->setValue(10);
-		mNumParticles->getSpinnerChanged().addHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onNumParticles));
+		mNumParticles->getSpinnerChanged().add(new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onNumParticles));
 		numParticlePanel->add(mNumParticles,AlignClient);
 
 		numParticlePanel->setBounds(0, 1*ctrlHeight + 1*ctrlSpace ,200,ctrlHeight);
@@ -186,7 +186,7 @@ ParticleEditor::ParticleEditor():Window(){
 		mSystemLife->setMin(0);
 		mSystemLife->setMax(10000);
 		mSystemLife->setIncrement(0.1f);
-		mSystemLife->getSpinnerChanged().addHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onSystemLife));
+		mSystemLife->getSpinnerChanged().add(new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onSystemLife));
 		systemLifePanel->add(mSystemLife,AlignClient);
 
 		systemLifePanel->setBounds(0,2*ctrlHeight + 2*ctrlSpace,200,ctrlHeight);
@@ -209,7 +209,7 @@ ParticleEditor::ParticleEditor():Window(){
 		mPartLife->setMin(0);
 		mPartLife->setMax(10000);
 		mPartLife->setIncrement(0.1f);
-		mPartLife->getSpinnerChanged().addHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onParticleLife));
+		mPartLife->getSpinnerChanged().add(new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onParticleLife));
 		partLifePanel->add(mPartLife,AlignClient);
 
 		partLifePanel->setBounds(0,3*ctrlHeight + 3*ctrlSpace,200,ctrlHeight);
@@ -227,7 +227,7 @@ ParticleEditor::ParticleEditor():Window(){
 		speedPanel->add(label,AlignLeft);
 
 		mInitialSpeed=new TextControl();
-		mInitialSpeed->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onInitialSpeed));
+		mInitialSpeed->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onInitialSpeed));
 		mInitialSpeed->setWidth(40);
 		speedPanel->add(mInitialSpeed,AlignLeft);
 
@@ -237,7 +237,7 @@ ParticleEditor::ParticleEditor():Window(){
 		speedPanel->add(label,AlignLeft);
 
 		mInitialVariance=new TextControl();
-		mInitialVariance->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onInitialVariance));
+		mInitialVariance->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onInitialVariance));
 		speedPanel->add(mInitialVariance,AlignClient);
 
 		speedPanel->setBounds(0,4*ctrlHeight + 4*ctrlSpace,200,ctrlHeight);
@@ -255,7 +255,7 @@ ParticleEditor::ParticleEditor():Window(){
 		gravityPanel->add(label,AlignLeft);
 
 		mGravity=new TextControl();
-		mGravity->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onGravity));
+		mGravity->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onGravity));
 		mGravity->setWidth(40);
 		gravityPanel->add(mGravity,AlignLeft);
 
@@ -265,7 +265,7 @@ ParticleEditor::ParticleEditor():Window(){
 		gravityPanel->add(label,AlignLeft);
 
 		mGravityVariance=new TextControl();
-		mGravityVariance->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onGravityVariance));
+		mGravityVariance->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onGravityVariance));
 		gravityPanel->add(mGravityVariance,AlignClient);
 
 		gravityPanel->setBounds(0,5*ctrlHeight + 5*ctrlSpace,200,ctrlHeight);
@@ -287,7 +287,7 @@ ParticleEditor::ParticleEditor():Window(){
 		mParticleType->addItem("Lines");
 		mParticleType->addItem("Tris");
 		mParticleType->addItem("Quads");
-		mParticleType->getSelectionChanged().addHandler(new ItemEventHandler<ParticleEditor>(this,&ParticleEditor::onParticleType));
+		mParticleType->getSelectionChanged().add(new ClassProcedure1<ItemEvent*,ParticleEditor>(this,&ParticleEditor::onParticleType));
 		typePanel->add(mParticleType,AlignClient);
 
 		typePanel->setBounds(0,0,200,ctrlHeight);
@@ -306,7 +306,7 @@ ParticleEditor::ParticleEditor():Window(){
 		mAlignment=new ComboBoxControl();
 		mAlignment->addItem("View");
 		mAlignment->addItem("Velocity");
-		mAlignment->getSelectionChanged().addHandler(new ItemEventHandler<ParticleEditor>(this,&ParticleEditor::onAlignment));
+		mAlignment->getSelectionChanged().add(new ClassProcedure1<ItemEvent*,ParticleEditor>(this,&ParticleEditor::onAlignment));
 		alignmentPanel->add(mAlignment,AlignClient);
 
 		alignmentPanel->setBounds(0,1*ctrlHeight + 1*ctrlSpace,200,ctrlHeight);
@@ -328,7 +328,7 @@ ParticleEditor::ParticleEditor():Window(){
 		mBlending->addItem("Color Additive");
 		mBlending->addItem("Alpha");
 		mBlending->addItem("Alpha Additive");
-		mBlending->getSelectionChanged().addHandler(new ItemEventHandler<ParticleEditor>(this,&ParticleEditor::onBlending));
+		mBlending->getSelectionChanged().add(new ClassProcedure1<ItemEvent*,ParticleEditor>(this,&ParticleEditor::onBlending));
 		blendPanel->add(mBlending,AlignClient);
 
 		blendPanel->setBounds(0,2*ctrlHeight + 2*ctrlSpace,200,ctrlHeight);
@@ -341,7 +341,7 @@ ParticleEditor::ParticleEditor():Window(){
 
 		mDepthTest=new CheckBoxControl();
 		mDepthTest->setCaption(":Enable Depth Testing");
-		mDepthTest->getButtonClicked().addHandler(new ButtonEventHandler<ParticleEditor>(this,&ParticleEditor::onDepthTest));
+		mDepthTest->getButtonClicked().add(new ClassProcedure1<ButtonEvent*,ParticleEditor>(this,&ParticleEditor::onDepthTest));
 		depthTestPanel->add(mDepthTest,AlignClient);
 
 		depthTestPanel->setBounds(0,3*ctrlHeight + 3*ctrlSpace,200,ctrlHeight);
@@ -361,7 +361,7 @@ ParticleEditor::ParticleEditor():Window(){
 		p->add(l,AlignLeft);
 
 		mStartColor=new ColorPicker();
-		mStartColor->getColorChanged().addHandler(new ButtonEventHandler<ParticleEditor>(this,&ParticleEditor::onStartColor));
+		mStartColor->getColorChanged().add(new ClassProcedure1<ButtonEvent*,ParticleEditor>(this,&ParticleEditor::onStartColor));
 		p->add(mStartColor,AlignClient);
 
 		p->setHeight(ctrlHeight);
@@ -377,7 +377,7 @@ ParticleEditor::ParticleEditor():Window(){
 		p->add(l,AlignLeft);
 
 		mEndColor=new ColorPicker();
-		mEndColor->getColorChanged().addHandler(new ButtonEventHandler<ParticleEditor>(this,&ParticleEditor::onEndColor));
+		mEndColor->getColorChanged().add(new ClassProcedure1<ButtonEvent*,ParticleEditor>(this,&ParticleEditor::onEndColor));
 		p->add(mEndColor,AlignClient);
 
 		p->setHeight(ctrlHeight);
@@ -399,7 +399,7 @@ ParticleEditor::ParticleEditor():Window(){
 		trailingPanel->add(l,AlignLeft);
 
 		mTrailingSystem=new TextControl();
-		mTrailingSystem->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onTrailingSystem));
+		mTrailingSystem->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onTrailingSystem));
 		trailingPanel->add(mTrailingSystem,AlignClient);
 
 		trailingPanel->setBounds(0,0,210,ctrlHeight);
@@ -416,7 +416,7 @@ ParticleEditor::ParticleEditor():Window(){
 		endingPanel->add(l,AlignLeft);
 
 		mEndingSystem=new TextControl();
-		mEndingSystem->getTextModel()->addTextModelChangedHandler(new TextModelEventHandler<ParticleEditor>(this,&ParticleEditor::onEndingSystem));
+		mEndingSystem->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onEndingSystem));
 		endingPanel->add(mEndingSystem,AlignClient);
 
 		endingPanel->setBounds(0,ctrlHeight+ctrlSpace,210,ctrlHeight);
@@ -430,13 +430,13 @@ ParticleEditor::ParticleEditor():Window(){
 		CommandButton *newTexture=new CommandButton();
 		newTexture->setCaption("New Tex");
 		newTexture->setWidth(50);
-		newTexture->getButtonClicked().addHandler(new ButtonEventHandler<ParticleEditor>(this,&ParticleEditor::onNewTexture));
+		newTexture->getButtonClicked().add(new ClassProcedure1<ButtonEvent*,ParticleEditor>(this,&ParticleEditor::onNewTexture));
 		mTexturePanel->add(newTexture,AlignLeft);
 
 		CommandButton *deleteTexture=new CommandButton();
 		deleteTexture->setCaption("Delete");
 		deleteTexture->setWidth(50);
-		deleteTexture->getButtonClicked().addHandler(new ButtonEventHandler<ParticleEditor>(this,&ParticleEditor::onDeleteTexture));
+		deleteTexture->getButtonClicked().add(new ClassProcedure1<ButtonEvent*,ParticleEditor>(this,&ParticleEditor::onDeleteTexture));
 		mTexturePanel->add(deleteTexture,AlignRight);
 
 		mTextureList=new ComboBoxControl();
