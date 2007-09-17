@@ -25,6 +25,7 @@ namespace VCF {
 
 		virtual void initWithHostName( const String& host ) = 0;
 		virtual void initWithIPAddr( const IPAddress::RawBytes& ipAddr ) = 0;
+		virtual void initWithIPAddrPeer( IPAddressPeer* peer ) = 0;
 		virtual void initAsLocalHost() = 0;
 
 
@@ -33,6 +34,8 @@ namespace VCF {
 		virtual String getHostAddress() = 0;
 		virtual bool isIPV4() = 0;
 		virtual bool isIPV6() = 0;
+
+		virtual  std::vector<IPAddress> getDNSHostAddresses( const String& host ) = 0;
 	};
 
 };

@@ -4,6 +4,7 @@
 #include "NetworkKit.h"
 #include "Socket.h"
 #include "Win32SocketPeer.h"
+#include "vcf/FoundationKit/Dictionary.h"
 
 using namespace VCF;
 

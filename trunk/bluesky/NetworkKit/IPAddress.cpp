@@ -77,6 +77,16 @@ IPAddress::IPAddress( unsigned char* bytes, size_t bytesLength ):
 	peer_->initWithIPAddr(ipAddr);
 }
 
+IPAddress::IPAddress( const IPAddress& ipAddress )
+{
+	peer_ = NetworkToolkit::createIPAddressPeer();
+	if ( NULL == peer_ ) {
+		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create Inet Address peer.") );
+	}
+
+	peer_->initWithIPAddrPeer( ipAddress.peer_ );
+}
+
 IPAddress::~IPAddress()
 {
 	delete peer_;
@@ -97,3 +107,16 @@ String IPAddress::getHostAddress()
 	return peer_->getHostAddress();
 }
 
+
+std::vector<IPAddress> IPAddress::getDNSHostAddresses( const String& host )
+{
+	std::vector<IPAddress> result;
+
+	IPAddressPeer* peer = NetworkToolkit::createIPAddressPeer();
+
+	result = peer->getDNSHostAddresses( host );
+
+	delete peer;
+
+	return result;
+}

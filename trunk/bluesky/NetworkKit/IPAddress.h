@@ -32,11 +32,16 @@ namespace VCF {
 		IPAddress( const RawBytes& ipAddr );		
 		IPAddress( unsigned char b1, unsigned char b2, unsigned char b3, unsigned char b4 );		
 		IPAddress( unsigned char* bytes, size_t bytesLength );	
+
+		IPAddress( const IPAddress& ipAddress );
+
 		virtual ~IPAddress();
 
 		RawBytes getAddressBytes();
 		String getHostName();
 		String getHostAddress();
+
+		static std::vector<IPAddress> getDNSHostAddresses( const String& host );
 	protected:
 		IPAddressPeer* peer_;
 	};

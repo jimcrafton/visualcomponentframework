@@ -40,6 +40,7 @@ namespace VCF {
 	};
 
 
+	typedef Delegate1<SocketEvent*> SocketEventDelegate; 
 
 
 
@@ -226,11 +227,11 @@ namespace VCF {
 
 		//only applicable if the socket is 
 		//listening.
-		DELEGATE( ClientConnected );
-		DELEGATE( ClientDisconnected );
+		DELEGATE( SocketEventDelegate,ClientConnected );
+		DELEGATE( SocketEventDelegate,ClientDisconnected );
 
-		DELEGATE( ReadyToRead );
-		DELEGATE( ReadyToWrite );
+		DELEGATE( EventDelegate,ReadyToRead );
+		DELEGATE( EventDelegate,ReadyToWrite );
 
 
 		void open();
