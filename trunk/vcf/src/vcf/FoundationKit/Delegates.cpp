@@ -240,9 +240,11 @@ void CallBack::destroy()
 		will ultimately remove a delegate from the delegates_
 		vector.
 		*/
-		while ( !delegates_->empty() ) {
+		size_t numDelegates = delegates_->size();
+		while ( numDelegates > 0 ) {
 			Delegate* d = delegates_->front();
 			d->remove( this );
+			numDelegates --;
 		}
 
 		delete delegates_;
