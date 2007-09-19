@@ -1476,6 +1476,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "VFFTests"=.\VFFTests\VFFTests.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "VFFTests2"=.\VFFTests2\VFFTests2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Variants"=.\Variants\Variants.dsp - Package Owner=<4>
 
 Package=<5>

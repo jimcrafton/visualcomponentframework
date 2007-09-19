@@ -1,0 +1,85 @@
+object Window1 : VCF::Window, 'ED88C0A1-26AB-11d4-B539-00C04F0196DA'
+
+	alignment = AlignNone
+
+	anchor = []
+
+	autoStartDragDrop = false
+
+	border = null
+
+	bottom = 500.00000
+
+	caption = 'Window1'
+
+	color.blue = 0.89020
+
+	color.green = 0.87451
+
+	color.red = 0.87843
+
+	cursor = 0
+
+	doubleBuffered = true
+
+	enabled = true
+
+	font.bold = false
+
+	font.color.blue = 0.00000
+
+	font.color.green = 0.00000
+
+	font.color.red = 0.00000
+
+	font.italic = false
+
+	font.name = 'ControlFont'
+
+	font.pointSize = ControlFontsize
+
+	font.strikeout = false
+
+	font.underlined = false
+
+	frameStyle = fstSizeable
+
+	height = 500.00000
+
+	isTopmost = false
+
+	left = 0.00000
+
+	menuBar = null
+
+	popupMenu = null
+
+	right = 500.00000
+
+	tabOrder = -1
+
+	tabStop = true
+
+	toolTipText = ''
+
+	top = 0.00000
+
+	useColorForBackground = false
+
+	useParentFont = false
+
+	visible = false
+
+	whatThisHelpString = ''
+
+	width = 500.00000
+
+	delegates 
+
+		FrameClose = [
+			Window1@onClose]
+
+	end
+
+end
+
