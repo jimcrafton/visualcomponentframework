@@ -128,6 +128,43 @@ public:
 		}
 	}
 
+	int getColumnWidth(  const uint32& i ) {
+		return columnWidths_[i];
+	}
+
+	void setColumnWidth( const uint32& i, int val, bool addMissingValues ) {
+
+		if ( addMissingValues && ((i+1) > columnWidths_.size()) ) {
+			size_t missing = (i+1) - columnWidths_.size();
+			if ( missing > 0 ) {
+				columnWidths_.resize( missing + columnWidths_.size() );
+				columnCount_ = columnWidths_.size();
+			}
+		}
+
+		columnWidths_[i] = val;
+	}
+
+
+	void addColumnWidth( int val ){
+		columnWidths_.push_back( val );
+		columnCount_ = columnWidths_.size();
+	}
+
+	void insertColumnWidth( const uint32& i, int val ){
+		columnWidths_.insert( columnWidths_.begin() + i, val );
+		columnCount_ = columnWidths_.size();
+	}
+
+	void removeColumnWidth( const uint32& i ) {
+		columnWidths_.erase( columnWidths_.begin() + i );
+		columnCount_ = columnWidths_.size();
+	}
+
+	uint32 getColumnCount() {
+		return columnWidths_.size();
+	}
+
 	void setColumnCount( int val ) {
 		columnCount_ = val;
 		columnWidths_.resize(columnCount_,ColumnLayoutContainer::ColumnWidthResize);

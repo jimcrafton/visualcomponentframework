@@ -1269,12 +1269,16 @@ void Win32Context::curve(const double & x1, const double & y1, const double & x2
 
 void Win32Context::lineTo(const double & x, const double & y)
 {
-	::LineTo( dc_, (int32)x, (int32)y );
+	int32 xx = x;
+	int32 yy = y;
+	::LineTo( dc_, xx, yy );
 }
 
 void Win32Context::moveTo(const double & x, const double & y)
 {
-	::MoveToEx( dc_, (int32)x, (int32)y, NULL );
+	int32 xx = x;
+	int32 yy = y;
+	::MoveToEx( dc_, /*(int32)*/xx, /*(int32)*/yy, NULL );
 }
 
 void Win32Context::closePath()

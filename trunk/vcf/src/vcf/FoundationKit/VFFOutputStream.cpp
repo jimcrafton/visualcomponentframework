@@ -151,7 +151,21 @@ void VFFOutputStream::writeProperty( Component* component, Property* property )
 
 	String propertyName = property->getName();
 
+	if ( propertyName.empty() ) {
+		StringUtils::trace( Format("Warning - property name is for Component '%s' is empty!\n")
+							% component->getName() );
+		return;
+	}
+
 	VariantData* value = property->get();
+
+	if ( NULL == value ) {
+		StringUtils::trace( Format("Warning - property '%s' of Component '%s' returned a NULL value!\n")
+							% property->getName()
+							% component->getName() );
+		return;
+	}
+
 	switch ( value->type ) {
 		case pdObject : {
 			Object* obj = (Object*)(*value);

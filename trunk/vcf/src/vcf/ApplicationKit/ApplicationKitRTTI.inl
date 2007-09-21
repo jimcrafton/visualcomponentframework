@@ -122,6 +122,7 @@ _property_( double, "leftBorderWidth", getLeftBorderWidth, setLeftBorderWidth, "
 _class_rtti_end_
 
 _class_rtti_(ColumnLayoutContainer, "VCF::StandardContainer", COLUMNLAYOUTCONTAINER_CLASSID)
+_property_array_( int, "columnWidths", getColumnWidth,setColumnWidth,addColumnWidth,insertColumnWidth,removeColumnWidth,getColumnCount, "" )				
 _class_rtti_end_
 
 _class_rtti_(HorizontalLayoutContainer, "VCF::StandardContainer", HORIZONTALLAYOUTCONTAINER_CLASSID)

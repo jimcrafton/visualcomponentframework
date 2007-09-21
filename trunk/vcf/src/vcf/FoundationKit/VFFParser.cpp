@@ -64,7 +64,7 @@ void VFFParser::resetStream()
 
 void VFFParser::skipBlanks()
 {
-	while (true) {
+	while (sourcePtr_ < bufEnd_) {
 		if ( *sourcePtr_ == 10 ) {
 			sourceLine_ ++;
 		}
@@ -109,7 +109,7 @@ String VFFParser::binHexToString()
 	skipBlanks();
 	VCFChar* tmpBufPtr = sourcePtr_;
 	VCFChar* tmpSourcePtr = sourcePtr_;
-	while ( *tmpSourcePtr != '}' ) {
+	while ( *tmpSourcePtr != '}' && (tmpSourcePtr < bufEnd_) ) {
 		if ( ((*tmpSourcePtr >= '0') && (*tmpSourcePtr <= '9')) || ((*tmpSourcePtr >= 'A') && (*tmpSourcePtr <= 'F'))
 				|| ((*tmpSourcePtr >= 'a') && (*tmpSourcePtr <= 'f')) ) {
 			sourcePtr_ ++;
@@ -154,17 +154,17 @@ VCFChar VFFParser::nextToken()
 	if ( ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) || ( *P == '_' ) ) {
 		P++;
 		while ( ((*P == ':')) || ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) || ((*P >= '0') && (*P <= '9')) || ( *P == '_' )
-			     || ( *P == '@' ) ) {
+			     || ( *P == '@' ) && (P < bufEnd_) ) {
 			P++;
 		}
 		result = TO_SYMBOL;
 	}
 	else if ( *P == '@' ) {
 		P++;
-		if ( ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) || ( *P == '_' ) ) {
+		if ( ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) || ( *P == '_' ) && (P < bufEnd_) ) {
 			P++;
 			while ( ((*P == ':')) || ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) || ((*P >= '0') && (*P <= '9')) || ( *P == '_' )
-				    || ( *P == '@' ) ) {
+				    || ( *P == '@' ) && (P < bufEnd_) ) {
 				P++;
 			}
 			result = TO_SYMBOL;
@@ -179,7 +179,7 @@ VCFChar VFFParser::nextToken()
 				{
 					P++;
 					I = 0;
-					while ( (*P >= '0') && (*P <= '9') ) {
+					while ( (*P >= '0') && (*P <= '9') && (P < bufEnd_) ) {
 						I = I * 10 + (((int)(*P)) - ((int)('0')));
 						P++;
 					}
@@ -238,18 +238,18 @@ VCFChar VFFParser::nextToken()
 	}
 	else if ( *P == '$' ) {
 		P++;
-		while ( ((*P >= '0') && (*P <= '9')) || ((*P >= 'A') && (*P <= 'F')) || ((*P >= 'a') && (*P <= 'f')) ) {
+		while ( ((*P >= '0') && (*P <= '9')) || ((*P >= 'A') && (*P <= 'F')) || ((*P >= 'a') && (*P <= 'f')) && (P < bufEnd_) ) {
 			P++;
 		}
 		result = TO_INTEGER;
 	}
     else if ( (*P == '-') ||  ((*P >= '0') && (*P <= '9')) ) {
 		P++;
-		while ( ((*P >= '0') && (*P <= '9')) ) {
+		while ( ((*P >= '0') && (*P <= '9')) && (P < bufEnd_) ) {
 			P++;
 		}
 		result = TO_INTEGER;
-		while ( ((*P >= '0') && (*P <= '9')) || (*P == '.') || (*P == 'e') || (*P == '+') || (*P == '-') ) {
+		while ( ((*P >= '0') && (*P <= '9')) || (*P == '.') || (*P == 'e') || (*P == '+') || (*P == '-') && (P < bufEnd_) ) {
 			P++;
 			result = TO_FLOAT;
 		}
@@ -277,7 +277,7 @@ String VFFParser::tokenComponentIdent()
 	checkToken( TO_SYMBOL );
 	VCFChar* P = sourcePtr_;
 
-	while ( (*P == '.') ) {
+	while ( (*P == '.') && (P < bufEnd_) ) {
 		P++;
 		bool alpha = ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) || ( *P == '_' );
 		if ( !alpha ) {
@@ -287,7 +287,7 @@ String VFFParser::tokenComponentIdent()
 		do {
 			alpha = ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) || ((*P >= '0') && (*P <= '9')) || ( *P == '_' );
 			P++;
-		}while ( !alpha );
+		}while ( !alpha && (P < bufEnd_) );
 	}
 
 	sourcePtr_ = P;
