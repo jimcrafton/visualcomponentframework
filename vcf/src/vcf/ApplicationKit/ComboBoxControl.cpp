@@ -132,6 +132,8 @@ public:
 
 		listBox_->MouseUp += new ClassProcedure1<MouseEvent*,ComboBoxDropDown>( this, &ComboBoxDropDown::onListboxMouseUp, "onListboxMouseUp" );
 
+		FrameClose += new ClassProcedure1<Event*,ComboBoxDropDown>(this,&ComboBoxDropDown::cleanUpOnClose, "ComboBoxDropDown::cleanUpOnClose" );
+
 		setColor( Color::getColor( "black" ) );
 		setUseColorForBackground( true );
 		setFrameStyle( fstNoBorderFixed );
@@ -216,7 +218,7 @@ public:
 		Window::destroy();
 	}
 
-	virtual void beforeDestroy( ComponentEvent* e ) {
+	virtual void beforeDestroy( ComponentEvent* e ) {	
 
 		Window::beforeDestroy( e );
 	}
@@ -235,7 +237,7 @@ public:
 		}
 		else {
 			selectedItem_ = NULL;
-		}
+		}		
 
 		Event* closeEvent = new Event( this,666777 );
 		UIToolkit::postEvent( closeHandler_, closeEvent, false );
@@ -252,6 +254,10 @@ public:
 	void ensureVisible( ListItem* item, const bool& partialOK ) {
 		DropDownListBox* listBox = (DropDownListBox*)listBox_;
 		listBox->ensureVisible( item, false );
+	}
+
+	void cleanUpOnClose( Event* e ) {
+		listBox_->setListModel( NULL );	
 	}
 
 protected:
@@ -522,6 +528,7 @@ void ComboBoxControl::closeDropDown( Event* event )
 		dropDown_->FrameActivation.remove( lostFocusHandler );
 
 		dropDown_->setVisible( false );
+
 		this->repaint();
 		dropDown_->close();
 
@@ -541,7 +548,7 @@ void ComboBoxControl::closeDropDown( Event* event )
 			}
 		}
 
-		//delete dropDown_;
+		//delete dropDown_;		
 	}
 	dropDown_ = NULL;
 }
