@@ -22,7 +22,6 @@
     <include file="AGG.bkl"/>
     <include file="ZLib.bkl"/>
     <include file="LibJPEG.bkl"/>
-    <include file="LibMNG.bkl"/>
     <include file="LibPNG.bkl"/>
     <include file="LibTIFF.bkl"/>
     <include file="oniguruma.bkl"/>

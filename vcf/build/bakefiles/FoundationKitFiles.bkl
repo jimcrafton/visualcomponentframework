@@ -265,6 +265,8 @@
         vcf/FoundationKit/LinuxRegistry.h
         vcf/FoundationKit/LinuxResourceBundle.h
         vcf/FoundationKit/LinuxRunLoopPeer.h
+        vcf/FoundationKit/LinuxRunLoopSourcePeer.h
+        vcf/FoundationKit/LinuxRunLoopTimerPeer.h
         vcf/FoundationKit/LinuxSemaphorePeer.h
         vcf/FoundationKit/LinuxSystemPeer.h
         vcf/FoundationKit/LinuxSystemToolkit.h
@@ -282,6 +284,8 @@
         vcf/FoundationKit/LinuxRegistry.cpp
         vcf/FoundationKit/LinuxResourceBundle.cpp
         vcf/FoundationKit/LinuxRunLoopPeer.cpp
+        vcf/FoundationKit/LinuxRunLoopSourcePeer.cpp
+        vcf/FoundationKit/LinuxRunLoopTimerPeer.cpp
         vcf/FoundationKit/LinuxSemaphorePeer.cpp
         vcf/FoundationKit/LinuxSystemPeer.cpp
         vcf/FoundationKit/LinuxSystemToolkit.cpp

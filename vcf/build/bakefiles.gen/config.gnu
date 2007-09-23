@@ -88,9 +88,6 @@ OPTION_LIBJPEG := 1
 # Compile the PNG library: [0,1]
 OPTION_LIBPNG := 1
 
-# Compile the MNG library: [0,1]
-OPTION_LIBMNG := 0
-
 # Compile the TIFF library: [0,1]
 OPTION_LIBTIFF := 0
 

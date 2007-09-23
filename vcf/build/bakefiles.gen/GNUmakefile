@@ -119,28 +119,6 @@ LIBJPEG_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/LibJPEG_lib_jquant1.o \
 	../../lib/$(OBJDIR)/LibJPEG_lib_jquant2.o \
 	../../lib/$(OBJDIR)/LibJPEG_lib_jutils.o
-LIBMNG_LIB_CFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
-	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -Wno-multichar \
-	-DVCF_DISABLE_PRAGMA_LINKING -I../../src $(CPPFLAGS) $(CFLAGS)
-LIBMNG_LIB_OBJECTS =  \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_callback_xs.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_chunk_io.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_chunk_prc.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_chunk_xs.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_cms.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_display.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_dither.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_error.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_filter.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_hlapi.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_jpeg.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_object_prc.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_pixels.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_prop_xs.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_read.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_trace.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_write.o \
-	../../lib/$(OBJDIR)/LibMNG_lib_libmng_zlib.o
 LIBPNG_LIB_CFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
 	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -Wno-multichar \
 	-DVCF_DISABLE_PRAGMA_LINKING -I../../src $(CPPFLAGS) $(CFLAGS)
@@ -458,6 +436,8 @@ FOUNDATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxRegistry.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxResourceBundle.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxRunLoopPeer.o \
+	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxRunLoopSourcePeer.o \
+	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxRunLoopTimerPeer.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxSemaphorePeer.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxSystemPeer.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_LinuxSystemToolkit.o
@@ -536,6 +516,8 @@ FOUNDATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxRegistry.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxResourceBundle.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxRunLoopPeer.o \
+	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxRunLoopSourcePeer.o \
+	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxRunLoopTimerPeer.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxSemaphorePeer.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxSystemPeer.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_LinuxSystemToolkit.o
@@ -1380,6 +1362,8 @@ ____Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_LinuxRegistry.o \
 	../../lib/$(OBJDIR)/Allin1_lib_LinuxResourceBundle.o \
 	../../lib/$(OBJDIR)/Allin1_lib_LinuxRunLoopPeer.o \
+	../../lib/$(OBJDIR)/Allin1_lib_LinuxRunLoopSourcePeer.o \
+	../../lib/$(OBJDIR)/Allin1_lib_LinuxRunLoopTimerPeer.o \
 	../../lib/$(OBJDIR)/Allin1_lib_LinuxSemaphorePeer.o \
 	../../lib/$(OBJDIR)/Allin1_lib_LinuxSystemPeer.o \
 	../../lib/$(OBJDIR)/Allin1_lib_LinuxSystemToolkit.o
@@ -1647,6 +1631,8 @@ ____Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_LinuxRegistry.o \
 	../../lib/$(OBJDIR)/Allin1_dll_LinuxResourceBundle.o \
 	../../lib/$(OBJDIR)/Allin1_dll_LinuxRunLoopPeer.o \
+	../../lib/$(OBJDIR)/Allin1_dll_LinuxRunLoopSourcePeer.o \
+	../../lib/$(OBJDIR)/Allin1_dll_LinuxRunLoopTimerPeer.o \
 	../../lib/$(OBJDIR)/Allin1_dll_LinuxSemaphorePeer.o \
 	../../lib/$(OBJDIR)/Allin1_dll_LinuxSystemPeer.o \
 	../../lib/$(OBJDIR)/Allin1_dll_LinuxSystemToolkit.o
@@ -1846,23 +1832,20 @@ endif
 ifeq ($(OPTION_LIBJPEG),1)
 VAR_0 = ../../lib/libLibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
-ifeq ($(OPTION_LIBMNG),1)
-VAR_1 = ../../lib/libLibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
-endif
 ifeq ($(OPTION_LIBPNG),1)
-VAR_2 = ../../lib/libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+VAR_1 = ../../lib/libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
 ifeq ($(OPTION_LIBTIFF),1)
-VAR_3 = ../../lib/libLibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+VAR_2 = ../../lib/libLibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
 ifeq ($(OPTION_ONIGURUMA),1)
-VAR_4 = ../../lib/liboniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+VAR_3 = ../../lib/liboniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
 ifeq ($(OPTION_FDLIBM),1)
-VAR_5 = ../../lib/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+VAR_4 = ../../lib/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
 ifeq ($(OPTION_JS),1)
-VAR_6 = ../../lib/libjs$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
+VAR_5 = ../../lib/libjs$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
 endif
 ifeq ($(OPTION_ALLIN1),0)
 Kit_dll_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
@@ -1901,31 +1884,28 @@ ifeq ($(OPTION_LIBJPEG),1)
 ____Allin1_0 = $(VAR_0)
 endif
 ifeq ($(OPTION_LIBPNG),1)
-____Allin1_1 = $(VAR_2)
-endif
-ifeq ($(OPTION_LIBMNG),1)
-____Allin1_2 = $(VAR_1)
+____Allin1_1 = $(VAR_1)
 endif
 ifeq ($(OPTION_LIBTIFF),1)
-____Allin1_3 = $(VAR_3)
+____Allin1_2 = $(VAR_2)
 endif
 ifeq ($(OPTION_PAINTLIB),1)
-____Allin1_4 = $(VAR_7)
+____Allin1_3 = $(VAR_6)
 endif
 ifeq ($(OPTION_ZLIB),1)
-____Allin1_5 = $(VAR)
+____Allin1_4 = $(VAR)
 endif
 ifeq ($(OPTION_ONIGURUMA),1)
-____Allin1_6 = $(VAR_4)
+____Allin1_5 = $(VAR_3)
 endif
 ifeq ($(OPTION_FDLIBM),1)
-____Allin1_7 = $(VAR_5)
+____Allin1_6 = $(VAR_4)
 endif
 ifeq ($(OPTION_JS),1)
-____Allin1_8 = $(VAR_6)
+____Allin1_7 = $(VAR_5)
 endif
 ifeq ($(OPTION_PAINTLIB),1)
-VAR_7 = ../../lib/libpaintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+VAR_6 = ../../lib/libpaintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
 ifeq ($(OPTION_DEBUG),0)
 __DEBUG_INFO = 
@@ -1980,7 +1960,7 @@ all: ../../lib/$(OBJDIR)
 
 ### Targets: ###
 
-all: ../../bin ../../lib $(A) $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(VAR_4) $(VAR_5) $(VAR_6) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__RegExKit_lib___depname) $(__RegExKit_dll___depname) $(__JavaScriptKit_lib___depname) $(__JavaScriptKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_7) createinfo_ CreateBundle_ xmake_
+all: ../../bin ../../lib $(A) $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(VAR_4) $(VAR_5) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__RegExKit_lib___depname) $(__RegExKit_dll___depname) $(__JavaScriptKit_lib___depname) $(__JavaScriptKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_6) createinfo_ CreateBundle_ xmake_
 
 install: all
 
@@ -1992,7 +1972,6 @@ clean:
 	rm -f ../../lib/libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libLibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
-	rm -f ../../lib/libLibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libLibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/liboniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
@@ -2064,13 +2043,6 @@ ifeq ($(OPTION_LIBJPEG),1)
 	$(RANLIB) $@
 endif
 
-ifeq ($(OPTION_LIBMNG),1)
-../../lib/libLibMNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(LIBMNG_LIB_OBJECTS)
-	rm -f $@
-	$(AR) rcu $@ $(LIBMNG_LIB_OBJECTS)
-	$(RANLIB) $@
-endif
-
 ifeq ($(OPTION_LIBPNG),1)
 ../../lib/libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(LIBPNG_LIB_OBJECTS)
 	rm -f $@
@@ -2100,7 +2072,7 @@ ifeq ($(OPTION_FDLIBM),1)
 endif
 
 ifeq ($(OPTION_JS),1)
-../../lib/libjs$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(JS_DLL_OBJECTS) $(VAR_5)
+../../lib/libjs$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(JS_DLL_OBJECTS) $(VAR_4)
 	$(CC) -shared -fPIC -o $@ $(JS_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib  ../../lib/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a -ldl -luuid -lrt
 endif
 
@@ -2127,7 +2099,7 @@ endif
 ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_GRAPHICSKIT),1)
 ifeq ($(OPTION_SHARED),0)
-../../lib/libGraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(GRAPHICSKIT_LIB_OBJECTS) $(A) $(VAR_0) $(VAR_2) $(VAR) $(__FoundationKit_lib___depname)
+../../lib/libGraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(GRAPHICSKIT_LIB_OBJECTS) $(A) $(VAR_0) $(VAR_1) $(VAR) $(__FoundationKit_lib___depname)
 	rm -f $@
 	$(AR) rcu $@ $(GRAPHICSKIT_LIB_OBJECTS)
 	$(RANLIB) $@
@@ -2138,7 +2110,7 @@ endif
 ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_GRAPHICSKIT),1)
 ifeq ($(OPTION_SHARED),1)
-../../lib/libGraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(GRAPHICSKIT_DLL_OBJECTS) $(A) $(VAR_0) $(VAR_2) $(VAR) $(__FoundationKit_dll___depname)
+../../lib/libGraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(GRAPHICSKIT_DLL_OBJECTS) $(A) $(VAR_0) $(VAR_1) $(VAR) $(__FoundationKit_dll___depname)
 	$(CXX) -shared -fPIC -o $@ $(GRAPHICSKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  ../../lib/libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/libLibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/libZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a -ldl -luuid -lrt
 endif
 endif
@@ -2267,7 +2239,7 @@ endif
 ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_REGEXKIT),1)
 ifeq ($(OPTION_SHARED),0)
-../../lib/libRegExKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(REGEXKIT_LIB_OBJECTS) $(VAR_4) $(__FoundationKit_lib___depname)
+../../lib/libRegExKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(REGEXKIT_LIB_OBJECTS) $(VAR_3) $(__FoundationKit_lib___depname)
 	rm -f $@
 	$(AR) rcu $@ $(REGEXKIT_LIB_OBJECTS)
 	$(RANLIB) $@
@@ -2278,7 +2250,7 @@ endif
 ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_REGEXKIT),1)
 ifeq ($(OPTION_SHARED),1)
-../../lib/libRegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(REGEXKIT_DLL_OBJECTS) $(VAR_4) $(__FoundationKit_dll___depname)
+../../lib/libRegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(REGEXKIT_DLL_OBJECTS) $(VAR_3) $(__FoundationKit_dll___depname)
 	$(CXX) -shared -fPIC -o $@ $(REGEXKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  ../../lib/liboniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a -ldl -luuid -lrt
 endif
 endif
@@ -2287,7 +2259,7 @@ endif
 ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_JAVASCRIPTKIT),1)
 ifeq ($(OPTION_SHARED),0)
-../../lib/libJavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(JAVASCRIPTKIT_LIB_OBJECTS) $(VAR_6) $(__FoundationKit_lib___depname)
+../../lib/libJavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(JAVASCRIPTKIT_LIB_OBJECTS) $(VAR_5) $(__FoundationKit_lib___depname)
 	rm -f $@
 	$(AR) rcu $@ $(JAVASCRIPTKIT_LIB_OBJECTS)
 	$(RANLIB) $@
@@ -2298,7 +2270,7 @@ endif
 ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_JAVASCRIPTKIT),1)
 ifeq ($(OPTION_SHARED),1)
-../../lib/libJavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(JAVASCRIPTKIT_DLL_OBJECTS) $(VAR_6) $(__FoundationKit_dll___depname)
+../../lib/libJavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(JAVASCRIPTKIT_DLL_OBJECTS) $(VAR_5) $(__FoundationKit_dll___depname)
 	$(CXX) -shared -fPIC -o $@ $(JAVASCRIPTKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  ../../lib/libjs$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so -ldl -luuid -lrt
 endif
 endif
@@ -2306,7 +2278,7 @@ endif
 
 ifeq ($(OPTION_ALLIN1),1)
 ifeq ($(OPTION_SHARED),0)
-../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6) $(____Allin1_7) $(____Allin1_8)
+../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6) $(____Allin1_7)
 	rm -f $@
 	$(AR) rcu $@ $(ALLIN1_LIB_OBJECTS)
 	$(RANLIB) $@
@@ -2315,13 +2287,13 @@ endif
 
 ifeq ($(OPTION_ALLIN1),1)
 ifeq ($(OPTION_SHARED),1)
-../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6) $(____Allin1_7) $(____Allin1_8)
-	$(CXX) -shared -fPIC -o $@ $(ALLIN1_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib  $(A) $(VAR_0) $(VAR_2) $(VAR_1) $(VAR_3) $(VAR_7) $(VAR) $(VAR_4) $(VAR_5) $(VAR_6) -ldl -luuid -lrt
+../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6) $(____Allin1_7)
+	$(CXX) -shared -fPIC -o $@ $(ALLIN1_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib  $(A) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_6) $(VAR) $(VAR_3) $(VAR_4) $(VAR_5) -ldl -luuid -lrt
 endif
 endif
 
 ifeq ($(OPTION_PAINTLIB),1)
-../../lib/libpaintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(PAINTLIB_LIB_OBJECTS) $(VAR_0) $(VAR_2) $(VAR_3)
+../../lib/libpaintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(PAINTLIB_LIB_OBJECTS) $(VAR_0) $(VAR_1) $(VAR_2)
 	rm -f $@
 	$(AR) rcu $@ $(PAINTLIB_LIB_OBJECTS)
 	$(RANLIB) $@
@@ -2380,31 +2352,27 @@ LibJPEG: $(VAR_0)
 endif
 
 ifeq ($(OPTION_LIBPNG),1)
-LibPNG: $(VAR_2)
-endif
-
-ifeq ($(OPTION_LIBMNG),1)
-LibMNG: $(VAR_1)
+LibPNG: $(VAR_1)
 endif
 
 ifeq ($(OPTION_LIBTIFF),1)
-LibTIFF: $(VAR_3)
+LibTIFF: $(VAR_2)
 endif
 
 ifeq ($(OPTION_PAINTLIB),1)
-paintlib: $(VAR_7)
+paintlib: $(VAR_6)
 endif
 
 ifeq ($(OPTION_ONIGURUMA),1)
-oniguruma: $(VAR_4)
+oniguruma: $(VAR_3)
 endif
 
 ifeq ($(OPTION_FDLIBM),1)
-fdlibm: $(VAR_5)
+fdlibm: $(VAR_4)
 endif
 
 ifeq ($(OPTION_JS),1)
-js: $(VAR_6)
+js: $(VAR_5)
 endif
 
 createinfo: createinfo_
@@ -2667,60 +2635,6 @@ xmake_:
 
 ../../lib/$(OBJDIR)/LibJPEG_lib_jutils.o: ../../src/thirdparty/common/LibJPEG/jutils.c
 	$(CC) -c -o $@ $(LIBJPEG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_callback_xs.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_callback_xs.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_chunk_io.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_chunk_io.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_chunk_prc.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_chunk_prc.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_chunk_xs.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_chunk_xs.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_cms.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_cms.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_display.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_display.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_dither.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_dither.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_error.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_error.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_filter.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_filter.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_hlapi.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_hlapi.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_jpeg.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_jpeg.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_object_prc.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_object_prc.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_pixels.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_pixels.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_prop_xs.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_prop_xs.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_read.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_read.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_trace.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_trace.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_write.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_write.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/LibMNG_lib_libmng_zlib.o: ../../src/thirdparty/common/FreeImage/Source/LibMNG/libmng_zlib.c
-	$(CC) -c -o $@ $(LIBMNG_LIB_CFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/LibPNG_lib_png.o: ../../src/thirdparty/common/LibPNG/png.c
 	$(CC) -c -o $@ $(LIBPNG_LIB_CFLAGS) $(CPPDEPS) $<
@@ -3574,6 +3488,12 @@ xmake_:
 ../../lib/$(OBJDIR)/FoundationKit_lib_LinuxRunLoopPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopPeer.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/FoundationKit_lib_LinuxRunLoopSourcePeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopSourcePeer.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/FoundationKit_lib_LinuxRunLoopTimerPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopTimerPeer.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/FoundationKit_lib_LinuxSemaphorePeer.o: ../../src/vcf/FoundationKit/LinuxSemaphorePeer.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -3788,6 +3708,12 @@ xmake_:
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_dll_LinuxRunLoopPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopPeer.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/FoundationKit_dll_LinuxRunLoopSourcePeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopSourcePeer.cpp
+	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/FoundationKit_dll_LinuxRunLoopTimerPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopTimerPeer.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_dll_LinuxSemaphorePeer.o: ../../src/vcf/FoundationKit/LinuxSemaphorePeer.cpp
@@ -4960,6 +4886,12 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_lib_LinuxRunLoopPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/Allin1_lib_LinuxRunLoopSourcePeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopSourcePeer.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_lib_LinuxRunLoopTimerPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopTimerPeer.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/Allin1_lib_LinuxSemaphorePeer.o: ../../src/vcf/FoundationKit/LinuxSemaphorePeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -5653,6 +5585,12 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_LinuxRunLoopPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/Allin1_dll_LinuxRunLoopSourcePeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopSourcePeer.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_dll_LinuxRunLoopTimerPeer.o: ../../src/vcf/FoundationKit/LinuxRunLoopTimerPeer.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/Allin1_dll_LinuxSemaphorePeer.o: ../../src/vcf/FoundationKit/LinuxSemaphorePeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -6319,7 +6257,7 @@ xmake_:
 ../../lib/$(OBJDIR)/paintlib_lib_jmemsrc.o: ../../src/thirdparty/common/paintlib/common/jmemsrc.cpp
 	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-.PHONY: all install uninstall clean FoundationKit GraphicsKit ApplicationKit HTMLKit OpenGLKit NetworkKit RemoteObjectKit InternetKit RegExKit JavaScriptKit ZLib AGG LibJPEG LibPNG LibMNG LibTIFF paintlib oniguruma fdlibm js createinfo createinfo_ CreateBundle CreateBundle_ xmake xmake_
+.PHONY: all install uninstall clean FoundationKit GraphicsKit ApplicationKit HTMLKit OpenGLKit NetworkKit RemoteObjectKit InternetKit RegExKit JavaScriptKit ZLib AGG LibJPEG LibPNG LibTIFF paintlib oniguruma fdlibm js createinfo createinfo_ CreateBundle CreateBundle_ xmake xmake_
 
 
 # Dependencies tracking:

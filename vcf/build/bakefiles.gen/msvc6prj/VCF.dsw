@@ -38,18 +38,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibMNG_lib"=VCF_LibMNG_lib.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "LibPNG_lib"=VCF_LibPNG_lib.dsp - Package Owner=<4>
 
 Package=<5>
@@ -321,9 +309,6 @@ Project_Dep_Name LibJPEG_lib
 End Project Dependency
 Begin Project Dependency
 Project_Dep_Name LibPNG_lib
-End Project Dependency
-Begin Project Dependency
-Project_Dep_Name LibMNG_lib
 End Project Dependency
 Begin Project Dependency
 Project_Dep_Name LibTIFF_lib

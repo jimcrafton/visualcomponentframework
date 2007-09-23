@@ -12,11 +12,11 @@ object Window1 : VCF::Window, 'ED88C0A1-26AB-11d4-B539-00C04F0196DA'
 
 	caption = 'Window1'
 
-	color.blue = 0.89020
+	color.blue = 0.94118
 
-	color.green = 0.87451
+	color.green = 0.94118
 
-	color.red = 0.87843
+	color.red = 0.94118
 
 	cursor = 0
 

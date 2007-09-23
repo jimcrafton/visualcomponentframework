@@ -31,7 +31,7 @@ MAKEARGS = -DCC="$(CC)" -DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" \
 	-DOPTION_WARNINGS="$(OPTION_WARNINGS)" -DOPTION_ALLIN1="$(OPTION_ALLIN1)" \
 	-DOPTION_ZLIB="$(OPTION_ZLIB)" -DOPTION_AGG="$(OPTION_AGG)" \
 	-DOPTION_LIBJPEG="$(OPTION_LIBJPEG)" -DOPTION_LIBPNG="$(OPTION_LIBPNG)" \
-	-DOPTION_LIBMNG="$(OPTION_LIBMNG)" -DOPTION_LIBTIFF="$(OPTION_LIBTIFF)" \
+	-DOPTION_LIBTIFF="$(OPTION_LIBTIFF)" \
 	-DOPTION_PAINTLIB="$(OPTION_PAINTLIB)" \
 	-DOPTION_ONIGURUMA="$(OPTION_ONIGURUMA)" \
 	-DOPTION_FDLIBM="$(OPTION_FDLIBM)" -DOPTION_JS="$(OPTION_JS)" \
@@ -53,7 +53,7 @@ MAKEARGS = -DCC="$(CC)" -DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" \
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Variants VisualFormFiles WorkingWithEnumerators
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators
 
 clean: 
 	-if exist .\*.obj del .\*.obj
@@ -367,6 +367,14 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>Variants.bat
 	call Variants.bat
 	@del Variants.bat
+	@echo cd VFFTests >VFFTests.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>VFFTests.bat
+	call VFFTests.bat
+	@del VFFTests.bat
+	@echo cd VFFTests2 >VFFTests2.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>VFFTests2.bat
+	call VFFTests2.bat
+	@del VFFTests2.bat
 	@echo cd VisualFormFiles >VisualFormFiles.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>VisualFormFiles.bat
 	call VisualFormFiles.bat
@@ -837,6 +845,18 @@ Variants:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>Variants.bat
 	call Variants.bat
 	@del Variants.bat
+
+VFFTests: 
+	@echo cd VFFTests >VFFTests.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>VFFTests.bat
+	call VFFTests.bat
+	@del VFFTests.bat
+
+VFFTests2: 
+	@echo cd VFFTests2 >VFFTests2.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>VFFTests2.bat
+	call VFFTests2.bat
+	@del VFFTests2.bat
 
 VisualFormFiles: 
 	@echo cd VisualFormFiles >VisualFormFiles.bat
