@@ -111,11 +111,6 @@ OPTION_LIBJPEG = 1
 OPTION_LIBPNG = 1
 !endif
 
-# Compile the MNG library: [0,1]
-!ifndef OPTION_LIBMNG
-OPTION_LIBMNG = 0
-!endif
-
 # Compile the TIFF library: [0,1]
 !ifndef OPTION_LIBTIFF
 OPTION_LIBTIFF = 0

@@ -15,7 +15,6 @@
         <library>ZLib_lib</library>
         <library>LibJPEG_lib</library>
         <library>LibPNG_lib</library>
-        <library>LibMNG_lib</library>
         <library>LibTIFF_lib</library>
 
         <library>paintlib_lib</library>

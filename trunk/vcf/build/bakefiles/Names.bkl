@@ -17,11 +17,6 @@
         $(vcf.getLibFilename( LIBJPEG_NAME ))
     </set>
 
-    <set var="LIBMNG_NAME">LibMNG</set>
-    <set var="LIBMNG_FILENAME" make_var="1">
-        $(vcf.getLibFilename( LIBMNG_NAME ))
-    </set>
-
     <set var="LIBPNG_NAME">LibPNG</set>
     <set var="LIBPNG_FILENAME" make_var="1">
         $(vcf.getLibFilename( LIBPNG_NAME ))

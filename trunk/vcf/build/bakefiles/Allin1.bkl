@@ -132,11 +132,6 @@
         </set>
         <library>$(ALLIN1_LIBPNG_LIB)</library>
 
-        <set var="ALLIN1_LIBMNG_LIB">
-            <if cond="OPTION_LIBMNG=='1'">LibMNG_lib</if>
-        </set>
-        <library>$(ALLIN1_LIBMNG_LIB)</library>
-
         <set var="ALLIN1_LIBTIFF_LIB">
             <if cond="OPTION_LIBTIFF=='1'">LibTIFF_lib</if>
         </set>

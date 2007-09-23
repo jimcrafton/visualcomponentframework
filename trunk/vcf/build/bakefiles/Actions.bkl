@@ -90,11 +90,6 @@
             <depends>LibPNG_lib</depends>
         </action>
 
-        <action id="LibMNG" cond="OPTION_LIBMNG=='1'">
-            <is-phony>1</is-phony>
-            <depends>LibMNG_lib</depends>
-        </action>
-
         <action id="LibTIFF" cond="OPTION_LIBTIFF=='1'">
             <is-phony>1</is-phony>
             <depends>LibTIFF_lib</depends>

@@ -61,12 +61,6 @@
         </include>
     </define-tag>
 
-    <define-tag name="vcf-include-LibMNG" rules="dll,lib,exe,module">
-        <include>
-            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/FreeImage/Source/LibMNG' ))
-        </include>
-    </define-tag>
-
     <define-tag name="vcf-include-LibTIFF" rules="dll,lib,exe,module">
         <include>
             $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/LibTIFF' ))
@@ -125,11 +119,6 @@
     <define-tag name="vcf-use-LibPNG" rules="dll,lib,exe,module">
         <vcf-include-LibPNG/>
         <vcf-lib>$(LIBPNG_FILENAME)</vcf-lib>
-    </define-tag>
-
-    <define-tag name="vcf-use-LibMNG" rules="dll,lib,exe,module">
-        <vcf-include-LibMNG/>
-        <vcf-lib>$(LIBMNG_FILENAME)</vcf-lib>
     </define-tag>
 
     <define-tag name="vcf-use-LibTIFF" rules="dll,lib,exe,module">
