@@ -162,6 +162,12 @@ int Win32SocketPeer::recv( unsigned char* bytes, size_t bytesLength )
 
 	result = ::recv( handle_, (char*)bytes, bytesLength, 0 );
 
+	if ( result < 0 ) {
+		if ( !wouldOperationBlock() ) {
+			socket_->internal_setErrorState( true );
+		}
+	}
+
 	return result;
 }
 
@@ -170,6 +176,12 @@ int Win32SocketPeer::send( const unsigned char* bytes, size_t bytesLength )
 	int result = -1;
 
 	result = ::send( handle_, (const char*)bytes, bytesLength, 0 );
+
+	if ( result < 0 ) {
+		if ( !wouldOperationBlock() ) {
+			socket_->internal_setErrorState( true );
+		}
+	}
 
 	return result;
 }

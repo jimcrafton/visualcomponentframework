@@ -135,7 +135,8 @@ void Socket::close()
 void Socket::connect( const String& host, unsigned short port )
 {
 	if ( 0 != peer_->connect( host, port ) ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("Peer failed connect.") );
+		state_ &= ~Socket::ssConnected;
+		throw RuntimeException( MAKE_ERROR_MSG_2(Format("Peer failed connect to '%s', port %d.") % host % port) );
 	}
 
 	state_ |= Socket::ssConnected;
@@ -144,10 +145,45 @@ void Socket::connect( const String& host, unsigned short port )
 void Socket::listen( unsigned short port )
 {
 	if ( 0 != peer_->listen( port ) ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("Peer failed listen.") );
+		state_ &= ~Socket::ssListening;
+		throw RuntimeException( MAKE_ERROR_MSG_2(Format("Peer failed listen on port %d.") % port ) );
 	}
 
 	state_ |= Socket::ssListening;
+}
+
+void Socket::selectFor( uint32 timeout, uint32 flags )
+{
+	VCF_ASSERT( flags != 0 );
+
+	if ( 0 == flags ) {
+		return;
+	}
+
+	SocketArray* readArrPtr = NULL;
+	SocketArray* writeArrPtr = NULL;
+	SocketArray* errorArrPtr = NULL;
+
+	SocketArray readArr(1);
+	readArr[0] = this;
+	SocketArray writeArr(1);
+	writeArr[0] = this;
+	SocketArray errorArr(1);
+	errorArr[0] = this;
+
+	if ( flags & Socket::ssReadable ) {
+		readArrPtr = &readArr;
+	}
+
+	if ( flags & Socket::ssWriteable ) {
+		writeArrPtr = &writeArr;
+	}
+
+	if ( flags & Socket::ssError ) {
+		errorArrPtr = &errorArr;
+	}
+	
+	getPeer()->select( timeout, readArrPtr, writeArrPtr, errorArrPtr );
 }
 
 Socket* Socket::accept()
@@ -267,7 +303,6 @@ uint64 SocketInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 		bytesRead = err;
 	}
 	else if (!socket_->wouldOperationBlock()) { //the operation flat out failed
-
 		throw NetworkException( MAKE_ERROR_MSG_2("Socket peer's recv() failed.") );
 	}
 	

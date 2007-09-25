@@ -156,29 +156,39 @@ public:
 
 		uchar tmp[256];
 		while ( canContinue() ) {
-			socket->getPeer()->select( Socket::SelectWaitForever, NULL, NULL, NULL );
+			socket->selectFor( Socket::SelectWaitForever, Socket::ssReadable );
+			
+			printf( "\nSelect completed\n" );
 
-			while( socket->pending() && socket->isReadable() ) {
+			do {			
 				try {
 					uint64 err = sis.read( tmp, sizeof(tmp) );
 					
+					printf( "\n>>Read off %d bytes!<<\n", (int)err );
+
 					if ( err == 0 ) {
-						System::println( "Disconnect!" );
+						System::println( "Disconnect!" );						
 						break;
 					}
 					else {
 						tmp[err] = 0;
-						parseMsg( tmp, err );						
+						//parseMsg( tmp, err );
+						printf( (const char*)&tmp[0] );
 					}
 				}
 				catch ( BasicException& ) {
 					System::println( "Socket error!" );
 					break;
 				}
-			}
+			} while( socket->pending() && socket->isReadable() ) ;
 
+
+			if ( socket->isClosed() || socket->hasError() ) {
+				break;
+			}
 		}
 
+		printf( "\nRead Thread completed\n" );
 		return true;
 	}
 };
@@ -355,14 +365,14 @@ int main( int argc, char** argv ){
 
 
 		Socket ircServer;
-		unsigned short ircPort = 6667;
-		String ircHost = "irc.freenode.net";
+		unsigned short ircPort = 5030;
+		String ircHost = "172.24.82.202"; //"irc.freenode.net";
 
 		ircServer.connect( ircHost, ircPort );
 
 		ReadThread* th = new ReadThread(&ircServer);
 		th->start();
-		
+		/*
 		AnsiString msg;
 		msg = (String)(Format( "USER %s %s %s :%s" ) % "ddiego" % "b" % "c" % "Odysseus");
 		msg += " \r\n";
@@ -373,7 +383,7 @@ int main( int argc, char** argv ){
 		msg = (String)(Format( "NICK %s" ) % "Unknown[1]");
 		msg += " \r\n";
 		sos.write( (const uchar*)msg.c_str(), msg.size() );
-
+*/
 
 
 		//rt->quit();

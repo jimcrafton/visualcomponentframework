@@ -340,6 +340,20 @@ namespace VCF {
 		false if it would not. 
 		*/
 		bool wouldOperationBlock();
+
+
+		/**
+		perform a select, on this socket, for a specified timeout period,
+		checking against some set of flags that will indicate to check for 
+		readable, writeable, or error states.
+		@param uint32 the maximum number of milliseconds to wait for. 
+			@see Socket::SelectNoWait,
+			@see Socket::SelectWaitForever
+		@param uint flags these must be some combination of Socket::ssError, 
+			Socket::ssReadable, or Socket::ssWriteable. If flags is 0, the 
+			function will return immediately and do nothing.
+		*/
+		void selectFor( uint32 timeout, uint32 flags );
 	protected:
 		/**
 		Creates a socket from an existing peer
