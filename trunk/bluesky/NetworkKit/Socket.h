@@ -198,8 +198,8 @@ namespace VCF {
 		requested type.
 		@param SocketType indicates the type of 
 		socket to create. If the host operating 
-		doesn't support the requested type, the 
-		underlying peer instance will be 
+		system doesn't support the requested type, 
+		the underlying peer instance will be 
 		NULL and an exception will be thrown
 		by the constructor.
 
@@ -546,7 +546,15 @@ namespace VCF {
 
 
 
-
+	/**
+	An input stream class used for reading data from a socket. The
+	class must be used in conjunction with a valid socket instance,
+	you cannot create in instance otherwise. Not all of the InputStream
+	class's methods can be implemented, for example, the seek method is 
+	meaningless in this context, and calling it will result in 
+	a NetworkException being thrown. The only method that makes sense 
+	to call is the read() method.
+	*/
 	class NETWORKKIT_API SocketInputStream  : public InputStream {
 	public:
 
