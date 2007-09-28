@@ -4,7 +4,7 @@
 //NetworkKit.h
 
 /*
-Copyright 2000-2004 The VCF Project.
+Copyright 2000-2007 The VCF Project.
 Please see License.txt in the top level directory
 where you installed the VCF.
 */
@@ -113,38 +113,72 @@ Handle the extension based on the compiler
 
 #include "vcf/FoundationKit/FoundationKit.h"
 
-
-
+/**
+The NetworkKit is used to provide low level socket support. For example,
+things like creating a TCP/IP or UDP socket, or iterating through
+the list of IP addresses for a DNS registered hostname. If you 
+need support for more advanced protocols, such as HTTP, consider 
+using the InternetKit for these tasks. 
+*/
 
 
 
 
 namespace VCF {
+	
+	/**
+	\class NetworkKit NetworkKit.h "vcf/NetworkKit/NetworkKit.h"
+	The NetworkKit class is used to initialize the NetworkKit runtime.
+	
+	NetworkKit::init() \em must be called at start up before anything 
+	other classes in the NetworkKit are used.
+
+	NetworkKit::terminate() \em must be called to free up any resources 
+	used by the	NetworkKit.
+	
+	An example of proper usage looks like this:
+	\code
+	int main( int argc, char** argv ) 
+	{
+		VCF::FoundationKit::init(argc, argv);
+		VCF::NetworkKit::init(argc, argv);
+
+		//your code here
+
+		VCF::NetworkKit::terminate();
+		VCF::FoundationKit::terminate();
+
+		return 0;
+	}
+	\endcode
+
+	
+	The NetworkKit is cannot be instantiated nor can it be derived from.
+	*/
 	class NETWORKKIT_API NetworkKit {
 	public:
+		/**
+		Initialization takes place here, plus creating the various
+		system resources and peer instances.
+		*/
 		static void init( int argc, char **argv );
 
+		/**
+		Frees up any resources allocated in the NetworkKit::init() 
+		function.
+		*/
         static void terminate();
 	};
 
 
 
 
-	class NETWORKKIT_API NetworkException : public BasicException {
-	public:		
-		NetworkException( const String & message ):
-			BasicException( message ){};
+	
 
-		NetworkException():
-			BasicException( "Unknown Network Exception occurred." ){};
-			
-		NetworkException( const String & message, int lineNumber ):
-			BasicException(message, lineNumber){};
-			
-		virtual ~NetworkException() throw() {};
-	};
 };
 
 
+
+#include "NetworkExceptions.h"
 
 #endif //_VCF_NETWORKKIT_H__

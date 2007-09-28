@@ -30,6 +30,7 @@ void NetworkToolkit::create()
 void NetworkToolkit::destroy()
 {
 	delete NetworkToolkit::Instance;
+	NetworkToolkit::Instance = NULL;
 }
 
 SocketPeer*	NetworkToolkit::createSocketPeer() 
@@ -40,4 +41,13 @@ SocketPeer*	NetworkToolkit::createSocketPeer()
 IPAddressPeer* NetworkToolkit::createIPAddressPeer()
 {
 	return NetworkToolkit::Instance->internal_createIPAddressPeer();
+}
+
+int NetworkToolkit::getLastError()
+{
+	if ( NULL == NetworkToolkit::Instance ) {
+		return -1;
+	}
+
+	return NetworkToolkit::Instance->internal_getLastError();
 }

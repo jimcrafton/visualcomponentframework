@@ -32,6 +32,7 @@ namespace VCF {
 		static IPAddressPeer* createIPAddressPeer();
 		
 
+		static int getLastError();
 	protected:
 
 		NetworkToolkit(){};
@@ -41,6 +42,7 @@ namespace VCF {
 
 		virtual SocketPeer* internal_createSocketPeer() = 0;
 		virtual IPAddressPeer* internal_createIPAddressPeer() = 0;
+		virtual int internal_getLastError() = 0;
 	};
 
 };

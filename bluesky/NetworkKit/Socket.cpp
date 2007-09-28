@@ -136,7 +136,7 @@ void Socket::connect( const String& host, unsigned short port )
 {
 	if ( 0 != peer_->connect( host, port ) ) {
 		state_ &= ~Socket::ssConnected;
-		throw RuntimeException( MAKE_ERROR_MSG_2(Format("Peer failed connect to '%s', port %d.") % host % port) );
+		throw SocketException( MAKE_ERROR_MSG_2(Format("Peer failed connect to '%s', port %d.") % host % port) );
 	}
 
 	state_ |= Socket::ssConnected;
@@ -146,7 +146,7 @@ void Socket::listen( unsigned short port )
 {
 	if ( 0 != peer_->listen( port ) ) {
 		state_ &= ~Socket::ssListening;
-		throw RuntimeException( MAKE_ERROR_MSG_2(Format("Peer failed listen on port %d.") % port ) );
+		throw SocketException( MAKE_ERROR_MSG_2(Format("Peer failed listen on port %d.") % port ) );
 	}
 
 	state_ |= Socket::ssListening;
@@ -303,7 +303,7 @@ uint64 SocketInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 		bytesRead = err;
 	}
 	else if (!socket_->wouldOperationBlock()) { //the operation flat out failed
-		throw NetworkException( MAKE_ERROR_MSG_2("Socket peer's recv() failed.") );
+		throw SocketReadException( MAKE_ERROR_MSG_2("Socket peer's recv() failed.") );
 	}
 	
 	totalBytesRecvd_ += bytesRead;
@@ -331,7 +331,7 @@ uint64 SocketOutputStream::write( const unsigned char* bytesToWrite, uint64 size
 	}
 	else if (!socket_->wouldOperationBlock()) { //the operation flat out failed
 
-		throw NetworkException( MAKE_ERROR_MSG_2("Socket peer's send() failed.") );
+		throw SocketWriteException( MAKE_ERROR_MSG_2("Socket peer's send() failed.") );
 	}
 
 	totalBytesWritten_ += bytesWritten;

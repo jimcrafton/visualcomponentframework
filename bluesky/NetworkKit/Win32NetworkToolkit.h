@@ -31,6 +31,7 @@ namespace VCF {
 
 		virtual SocketPeer* internal_createSocketPeer();
 		virtual IPAddressPeer* internal_createIPAddressPeer();
+		virtual int internal_getLastError();
 	};
 
 };
