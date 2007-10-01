@@ -23,6 +23,8 @@ CFG=NetworkKit - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -62,7 +64,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "vc6\DebugS\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "USE_FOUNDATIONKIT_LIB" /Fd"..\..\..\lib\NetworkKit_vc6_sd.pdb" /Yu"vcf/NetworkKit/NetworkKit.h" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "USE_FOUNDATIONKIT_LIB" /Yu"vcf/NetworkKit/NetworkKit.h" /Fd"..\..\..\lib\NetworkKit_vc6_sd.pdb" /FD /GZ /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -83,16 +85,16 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\NetworkKit\DatagramSocket.cpp
+SOURCE=..\..\..\src\vcf\NetworkKit\IPAddress.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\NetworkKit\NetToolkit.cpp
+SOURCE=..\..\..\src\vcf\NetworkKit\NetworkKit.cpp
 # ADD CPP /Yc"vcf/NetworkKit/NetworkKit.h"
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\NetworkKit\ServerSocketEvent.cpp
+SOURCE=..\..\..\src\vcf\NetworkKit\NetworkToolkit.cpp
 # End Source File
 # Begin Source File
 
@@ -100,19 +102,11 @@ SOURCE=..\..\..\src\vcf\NetworkKit\Socket.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\NetworkKit\SocketEvent.cpp
+SOURCE=..\..\..\src\vcf\NetworkKit\Win32IPAddressPeer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\NetworkKit\SocketListeningLoop.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\NetworkKit\URL.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\NetworkKit\Win32DatagramSocketPeer.cpp
+SOURCE=..\..\..\src\vcf\NetworkKit\Win32NetworkToolkit.cpp
 # End Source File
 # Begin Source File
 
@@ -124,11 +118,15 @@ SOURCE=..\..\..\src\vcf\NetworkKit\Win32SocketPeer.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\NetworkKit\DatagramSocket.h
+SOURCE=..\..\..\src\vcf\NetworkKit\IPAddress.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\NetworkKit\NetToolkit.h
+SOURCE=..\..\..\src\vcf\NetworkKit\IPAddressPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\NetworkKit\NetworkExceptions.h
 # End Source File
 # Begin Source File
 
@@ -136,11 +134,7 @@ SOURCE=..\..\..\src\vcf\NetworkKit\NetworkKit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\NetworkKit\NetworkKitSelectLib.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\NetworkKit\ServerSocketEvent.h
+SOURCE=..\..\..\src\vcf\NetworkKit\NetworkToolkit.h
 # End Source File
 # Begin Source File
 
@@ -148,31 +142,11 @@ SOURCE=..\..\..\src\vcf\NetworkKit\Socket.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\NetworkKit\SocketEvent.h
+SOURCE=..\..\..\src\vcf\NetworkKit\Win32IPAddressPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\NetworkKit\SocketException.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\NetworkKit\SocketListener.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\NetworkKit\SocketListeningLoop.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\NetworkKit\SocketPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\NetworkKit\URL.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\NetworkKit\Win32DatagramSocketPeer.h
+SOURCE=..\..\..\src\vcf\NetworkKit\Win32NetworkToolkit.h
 # End Source File
 # Begin Source File
 
