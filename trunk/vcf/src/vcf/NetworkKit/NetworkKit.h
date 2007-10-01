@@ -59,7 +59,7 @@ Handle the extension based on the compiler
 #if defined(_MSC_VER) || defined(__BORLANDC__)
 	#ifdef USE_NETWORKKIT_DLL
 		#pragma message( "linking to " NETWORKKIT_LIBDLL )
-		#define DATABASEKIT_DLL
+		#define NETWORKKIT_DLL
 		// using dynamic link library		
 		#pragma comment(lib, NETWORKKIT_LIBDLL)
 	#elif defined USE_NETWORKKIT_LIB
@@ -87,7 +87,6 @@ Handle the extension based on the compiler
 #		define USE_FOUNDATIONKIT_DLL
 # 	endif
 #elif defined (USE_NETWORKKIT_LIB)
-//#		define ONIG_EXTERN extern
 # 	ifndef USE_FOUNDATIONKIT_LIB
 #		define USE_FOUNDATIONKIT_LIB
 # 	endif
