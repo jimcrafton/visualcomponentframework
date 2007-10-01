@@ -28,7 +28,22 @@ namespace VCF {
 		static void destroy();
 
 
-		static SocketPeer* createSocketPeer();
+		/**		
+		Creates a new OS specific SocketPeer instance. 
+
+		\par
+		The caller specifies the socket type, which can
+		be either a streaming type (i.e. a socket appropriate
+		for TCP/IP streaming communication), or a datagram
+		type (i.e. a socket appropriate
+		for UPD communication )
+
+		@param int socketType indicates the type of socket
+
+		@return SocketPeer Returns a new SocketPeer instance 
+		appropriate for the platform and the specified socket type.
+		*/
+		static SocketPeer* createSocketPeer( int socketType );
 		static IPAddressPeer* createIPAddressPeer();
 		
 
@@ -40,7 +55,7 @@ namespace VCF {
 			
 		static NetworkToolkit* Instance;
 
-		virtual SocketPeer* internal_createSocketPeer() = 0;
+		virtual SocketPeer* internal_createSocketPeer( int socketType ) = 0;
 		virtual IPAddressPeer* internal_createIPAddressPeer() = 0;
 		virtual int internal_getLastError() = 0;
 	};

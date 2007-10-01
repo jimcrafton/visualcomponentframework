@@ -33,9 +33,9 @@ void NetworkToolkit::destroy()
 	NetworkToolkit::Instance = NULL;
 }
 
-SocketPeer*	NetworkToolkit::createSocketPeer() 
+SocketPeer*	NetworkToolkit::createSocketPeer( int socketType ) 
 {
-	return NetworkToolkit::Instance->internal_createSocketPeer();
+	return NetworkToolkit::Instance->internal_createSocketPeer(socketType);
 }
 
 IPAddressPeer* NetworkToolkit::createIPAddressPeer()

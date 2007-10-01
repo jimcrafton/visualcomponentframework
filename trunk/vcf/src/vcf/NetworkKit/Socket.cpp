@@ -26,7 +26,7 @@ Socket::Socket():
 	type_(Socket::stStream),
 	state_(0)
 {
-	peer_ = NetworkToolkit::createSocketPeer();
+	peer_ = NetworkToolkit::createSocketPeer(type_);
 
 	if ( NULL == peer_ ) {
 		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create socket peer.") );
@@ -34,7 +34,7 @@ Socket::Socket():
 
 	peer_->setPeerOwner( this );
 
-	if ( 0 != peer_->create( type_ ) ) {
+	if ( 0 != peer_->create() ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2("Peer failed to create socket instance.") );
 	}
 }
@@ -45,7 +45,7 @@ Socket::Socket(const SocketType& socketType):
 	type_(socketType),
 	state_(0)
 {
-	peer_ = NetworkToolkit::createSocketPeer();
+	peer_ = NetworkToolkit::createSocketPeer(type_);
 
 	if ( NULL == peer_ ) {
 		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create socket peer.") );
@@ -53,7 +53,7 @@ Socket::Socket(const SocketType& socketType):
 
 	peer_->setPeerOwner( this );
 
-	if ( 0 != peer_->create( type_ ) ) {
+	if ( 0 != peer_->create() ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2("Peer failed to create socket instance.") );
 	}
 }
@@ -63,7 +63,7 @@ Socket::Socket( unsigned short port ):
 	type_(Socket::stStream),
 	state_(0)
 {
-	peer_ = NetworkToolkit::createSocketPeer();
+	peer_ = NetworkToolkit::createSocketPeer(type_);
 
 	if ( NULL == peer_ ) {
 		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create socket peer.") );
@@ -81,7 +81,7 @@ Socket::Socket( const String& host, unsigned short port ):
 	type_(Socket::stStream),
 	state_(0)
 {
-	peer_ = NetworkToolkit::createSocketPeer();
+	peer_ = NetworkToolkit::createSocketPeer(type_);
 	
 	if ( NULL == peer_ ) {
 		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create socket peer.") );
@@ -117,7 +117,7 @@ void Socket::open()
 {
 	close();
 	
-	if ( 0 != peer_->create( type_ ) ) {
+	if ( 0 != peer_->create() ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2("Peer failed to create socket instance.") );
 	}
 
@@ -337,4 +337,58 @@ uint64 SocketOutputStream::write( const unsigned char* bytesToWrite, uint64 size
 	totalBytesWritten_ += bytesWritten;
 
 	return bytesWritten;
+}
+
+
+
+
+
+
+
+
+
+
+TCPSocket::TCPSocket():
+	Socket(Socket::stStream)
+{
+
+}
+
+TCPSocket::TCPSocket( unsigned short port ):
+	Socket(Socket::stStream)
+{
+
+}
+
+TCPSocket::TCPSocket( const String& host, unsigned short port ):
+	Socket(Socket::stStream)
+{
+
+}
+
+
+
+
+
+
+
+
+
+
+UDPSocket::UDPSocket():
+	Socket(Socket::stDatagram)
+{
+
+}
+
+UDPSocket::UDPSocket( unsigned short port ):
+	Socket(Socket::stDatagram)
+{
+
+}
+
+UDPSocket::UDPSocket( const String& host, unsigned short port ):
+	Socket(Socket::stDatagram)
+{
+
 }

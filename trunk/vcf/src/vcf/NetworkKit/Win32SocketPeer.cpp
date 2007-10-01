@@ -30,12 +30,12 @@ Win32SocketPeer::Win32SocketPeer( SOCKET handle ):
 	::getpeername( handle_, (sockaddr*)&sockAddr_, &length );
 }
 
-int Win32SocketPeer::create( Socket::SocketType type )
+int Win32SocketPeer::create()
 {
 	VCF_ASSERT( NULL == handle_ );
 
 	int result = -1;
-
+/*
 	int sockType = 0;
 	switch ( type ) {
 		case Socket::stStream : {
@@ -48,8 +48,9 @@ int Win32SocketPeer::create( Socket::SocketType type )
 		}
 		break;
 	}
+*/
 
-	handle_ = ::socket( AF_INET, sockType, 0 );
+	handle_ = ::socket( AF_INET, SOCK_STREAM, 0 );
 
 	if ( INVALID_SOCKET == handle_ ) {
 		handle_ = 0;
@@ -88,23 +89,36 @@ int Win32SocketPeer::connect( const String& host, const unsigned short port )
 
 	int result = -1;
 
-	memset( &sockAddr_, 0, sizeof(sockAddr_) );
-	sockAddr_.sin_family = AF_INET;
-	struct hostent *hp = gethostbyname( host.ansi_c_str() );
 
-	if ( NULL != hp ) {
-		memcpy( &(sockAddr_.sin_addr.s_addr), hp->h_addr, hp->h_length );
-		sockAddr_.sin_port = htons( port );
-
-		result = ::connect( handle_, (sockaddr*)&sockAddr_ , sizeof(sockAddr_) );
-		if ( -1 == result ) {
-			int err =  WSAGetLastError();
-
-			if ( WSAEWOULDBLOCK == err ) {
-				result = 0;
+	switch ( socket_->getSocketType() ) {
+		case Socket::stStream : {
+			memset( &sockAddr_, 0, sizeof(sockAddr_) );
+			sockAddr_.sin_family = AF_INET;
+			struct hostent *hp = gethostbyname( host.ansi_c_str() );
+			
+			if ( NULL != hp ) {
+				memcpy( &(sockAddr_.sin_addr.s_addr), hp->h_addr, hp->h_length );
+				sockAddr_.sin_port = htons( port );
+				
+				result = ::connect( handle_, (sockaddr*)&sockAddr_ , sizeof(sockAddr_) );
+				if ( -1 == result ) {
+					int err =  WSAGetLastError();
+					
+					if ( WSAEWOULDBLOCK == err ) {
+						result = 0;
+					}
+				}
 			}
 		}
+		break;
+
+		case Socket::stDatagram : {
+
+		}
+		break;
 	}
+
+	
 
 	return result;
 }
@@ -329,15 +343,22 @@ bool Win32SocketPeer::wouldOperationBlock()
 	return WSAGetLastError() == WSAEWOULDBLOCK ? true : false;
 }
 
-void Win32SocketPeer::select( uint32 timeout, SocketArray* readSockets, 
-								SocketArray* writeSockets,
-								SocketArray* errorSockets )
+
+
+
+void selectLoopOnce( std::vector<Socket*>* inReadSockets,
+										std::vector<Socket*>* inWriteSockets,
+										std::vector<Socket*>* inErrorSockets,
+										struct timeval* timeoutVal,
+										std::vector<Socket*>* outReadSockets,
+										std::vector<Socket*>* outWriteSockets,
+										std::vector<Socket*>* outErrorSockets)
+
 {
-	fd_set* readers = NULL;
-	fd_set* writers = NULL;
+	fd_set* reader = NULL;
+	fd_set* writer = NULL;
 	fd_set* errors = NULL;
 
-	//set up the read/write/error FD's
 	fd_set readfd;
 	FD_ZERO(&readfd);
 
@@ -347,95 +368,135 @@ void Win32SocketPeer::select( uint32 timeout, SocketArray* readSockets,
 	fd_set exceptionfd;
 	FD_ZERO(&exceptionfd);
 
-	unsigned int maxSockHandle = 0;
+	unsigned int maxSock = 0;
 
-	bool selectOnSelf = false;
+	if ( NULL != inReadSockets ) {
+		VCF_ASSERT( inReadSockets->size() <= FD_SETSIZE );
 
-	if ( (NULL == readSockets) && (NULL == writeSockets) && (NULL == writeSockets) ) {
-		//select on self!
-		selectOnSelf = true;
-		socket_->internal_setReadable( false );
-		socket_->internal_setWriteable( false );
-		socket_->internal_setErrorState( false );
+		std::vector<Socket*>::iterator it = inReadSockets->begin();
 
-		unsigned int sockID = (unsigned int) getHandleID();
-		FD_SET ( sockID, &readfd) ;
-		FD_SET ( sockID, &writefd) ;
-		FD_SET ( sockID, &exceptionfd) ;
+		while ( it != inReadSockets->end() ){
+			Socket* so = *it;
+			VCF_ASSERT( so != NULL );
 
-		readers = &readfd;
-		writers = &writefd;
+			unsigned int sockID = (unsigned int)so->getPeer()->getHandleID();
+			FD_SET ( sockID, &readfd) ;		
+			if ( sockID > maxSock ){
+				maxSock = sockID;	
+			}
+			it++;
+		}
+
+		reader = &readfd;
+	}
+
+	if ( NULL != inWriteSockets ) {
+		VCF_ASSERT( inWriteSockets->size() <= FD_SETSIZE );
+
+		std::vector<Socket*>::iterator it = inWriteSockets->begin();
+
+		while ( it != inWriteSockets->end() ){
+			Socket* so = *it;
+			unsigned int sockID = (unsigned int)so->getPeer()->getHandleID();
+			FD_SET ( sockID, &writefd) ;		
+			if ( sockID > maxSock ){
+				maxSock = sockID;	
+			}
+			it++;
+		}
+
+		writer = &writefd;
+	}
+
+	if ( NULL != inErrorSockets ) {
+		VCF_ASSERT( inErrorSockets->size() <= FD_SETSIZE );
+
+		std::vector<Socket*>::iterator it = inErrorSockets->begin();
+
+		while ( it != inErrorSockets->end() ){
+			Socket* so = *it;
+			unsigned int sockID = (unsigned int)so->getPeer()->getHandleID();
+			FD_SET ( sockID, &exceptionfd) ;		
+			if ( sockID > maxSock ){
+				maxSock = sockID;	
+			}
+			it++;
+		}
+
 		errors = &exceptionfd;
-		if ( sockID > maxSockHandle ){
-			maxSockHandle = sockID;	
+	}
+
+
+	int result = ::select( maxSock + 1, reader, writer, errors, timeoutVal);
+
+	if ( result > 0 ) {
+		if ( (NULL != inReadSockets) && (NULL != outReadSockets) ) {			
+			std::vector<Socket*>::iterator it = inReadSockets->begin();			
+			while ( it != inReadSockets->end() ){
+				Socket* so = *it;
+				int sockID = (int)so->getPeer()->getHandleID();
+				if ( FD_ISSET ( sockID, reader) ) {
+					outReadSockets->push_back( so );
+					so->internal_setReadable( true );
+				}
+				else {
+					so->internal_setReadable( false );
+				}
+				it++;
+			}
+		}
+		
+		if ( (NULL != inWriteSockets) && (NULL != outWriteSockets) ) {
+			std::vector<Socket*>::iterator it = inWriteSockets->begin();			
+			while ( it != inWriteSockets->end() ){
+				Socket* so = *it;
+				int sockID = (int)so->getPeer()->getHandleID();
+				if ( FD_ISSET ( sockID, writer) ) {
+					outWriteSockets->push_back( so );
+					so->internal_setWriteable( true );
+				}
+				else {
+					so->internal_setWriteable( false );
+				}
+				it++;
+			}
+		}
+		
+		if ( (NULL != inErrorSockets) && (NULL != outErrorSockets) ) {
+			std::vector<Socket*>::iterator it = inErrorSockets->begin();			
+			while ( it != inErrorSockets->end() ){
+				Socket* so = *it;
+				int sockID = (int)so->getPeer()->getHandleID();
+				if ( FD_ISSET ( sockID, writer) ) {
+					outErrorSockets->push_back( so );
+					so->internal_setErrorState( true );
+				}
+				else {
+					so->internal_setErrorState( false );
+				}				
+					
+
+				it++;
+			}
 		}
 	}
-	else {	
-		if ( NULL != readSockets ) {
-			SocketArray::iterator it = readSockets->begin();
-			
-			while ( it != readSockets->end() ){
-				Socket* so = *it;
-				VCF_ASSERT( so != NULL );
-				
-				unsigned int sockID = (unsigned int) so->getPeer()->getHandleID();
-				
-				FD_SET ( sockID, &readfd) ;
-				if ( sockID > maxSockHandle ){
-					maxSockHandle = sockID;	
-				}
-				it++;
-			}
-			
-			readers = &readfd;
-		}
+}
 
-		if ( NULL != writeSockets ) {
-			SocketArray::iterator it = writeSockets->begin();
-			
-			while ( it != writeSockets->end() ){
-				Socket* so = *it;
-				VCF_ASSERT( so != NULL );
-				
-				unsigned int sockID = (unsigned int) so->getPeer()->getHandleID();
-				
-				FD_SET ( sockID, &writefd) ;
-				if ( sockID > maxSockHandle ){
-					maxSockHandle = sockID;	
-				}
-				it++;
-			}
-			
-			writers = &writefd;
-		}
 
-		if ( NULL != errorSockets ) {
-			SocketArray::iterator it = errorSockets->begin();
-			
-			while ( it != errorSockets->end() ){
-				Socket* so = *it;
-				VCF_ASSERT( so != NULL );
-				
-				unsigned int sockID = (unsigned int) so->getPeer()->getHandleID();
-				
-				FD_SET ( sockID, &exceptionfd) ;
-				if ( sockID > maxSockHandle ){
-					maxSockHandle = sockID;	
-				}
-				it++;
-			}
-			
-			errors = &exceptionfd;
-		}
-	}
+void Win32SocketPeer::select( uint32 timeout, SocketArray* readSockets, 
+								SocketArray* writeSockets,
+								SocketArray* errorSockets )
+{
+	//Doesn't make any sense to have ALL three null
+	VCF_ASSERT( (NULL != readSockets) || (NULL != writeSockets) || (NULL != errorSockets) );
 
 	//setup the select timeout struct...
+	struct timeval* timeoutVal;
 	struct timeval timeoutTime;	
 	//initialized to 0 values - this will return immediately
 	timeoutTime.tv_sec = 0; 
 	timeoutTime.tv_usec = 0;
 
-	struct timeval* timeoutVal;
 	if ( Socket::SelectWaitForever == timeout ) {
 		timeoutVal = NULL;
 	}
@@ -448,123 +509,220 @@ void Win32SocketPeer::select( uint32 timeout, SocketArray* readSockets,
 		timeoutVal = &timeoutTime;
 	}
 
-	//now all our FD's are set up, we can begin the select process...
 
-	int err = ::select( maxSockHandle + 1, readers, writers, errors, timeoutVal );
 
-	if ( err > 0 ) {
-		if ( selectOnSelf ) {
-			unsigned int sockID = (unsigned int) getHandleID();
+	std::vector<Socket*>* inReadSockets = NULL;
+	std::vector<Socket*>* inWriteSockets = NULL;
+	std::vector<Socket*>* inErrorSockets = NULL;
 
-			if ( FD_ISSET ( sockID, readers) ) {
-				socket_->internal_setReadable( true );
+
+	std::vector<Socket*> tmpReadSockets;
+	std::vector<Socket*> tmpWriteSockets;
+	std::vector<Socket*> tmpErrorSockets;
+
+	std::vector<Socket*> tmpOutReadSockets;
+	std::vector<Socket*> tmpOutWriteSockets;
+	std::vector<Socket*> tmpOutErrorSockets;
+
+	std::vector<Socket*>::iterator readIt;
+	std::vector<Socket*>::iterator writeIt;
+	std::vector<Socket*>::iterator errorIt;
+
+	bool selectDone = false;
+
+	if ( readSockets ) {
+		readIt = readSockets->begin();	
+	}
+	
+	if ( writeSockets ) {
+		writeIt = writeSockets->begin();	
+	}
+
+	if ( errorSockets ) {
+		errorIt = errorSockets->begin();	
+	}
+	
+
+	while ( !selectDone ) {
+
+		//load up the various socket arrays
+
+		int count = 0;
+		tmpReadSockets.clear();
+		tmpWriteSockets.clear();
+		tmpErrorSockets.clear();
+
+		inReadSockets = NULL;
+		inWriteSockets = NULL;
+		inErrorSockets = NULL;
+
+		if ( readSockets ) {
+			count = 0;
+			while ( readIt != readSockets->end() && count < FD_SETSIZE ) {
+				tmpReadSockets.push_back( *readIt );
+				++ readIt;
+				count ++;
 			}
-			
-			if ( FD_ISSET ( sockID, writers) ) {
-				socket_->internal_setWriteable( true );
+
+			inReadSockets = tmpReadSockets.empty() ? NULL : &tmpReadSockets;
+		}
+
+		if ( writeSockets ) {
+			count = 0;
+			while ( writeIt != writeSockets->end() && count < FD_SETSIZE ) {
+				tmpWriteSockets.push_back( *writeIt );
+				++ writeIt;
+				count ++;
 			}
 
-			if ( FD_ISSET ( sockID, errors) ) {
-				socket_->internal_setErrorState( true );
+			inWriteSockets = tmpWriteSockets.empty() ? NULL : &tmpWriteSockets;
+		}
+
+		if ( errorSockets ) {
+			count = 0;
+			while ( errorIt != errorSockets->end() && count < FD_SETSIZE ) {
+				tmpErrorSockets.push_back( *errorIt );
+				++ errorIt;
+				count ++;
 			}
+
+			inErrorSockets = tmpErrorSockets.empty() ? NULL : &tmpErrorSockets;
+		}
+
+		
+		if ( inReadSockets || inWriteSockets || inErrorSockets ) {
+			selectLoopOnce( inReadSockets, 
+									inWriteSockets, 
+									inErrorSockets,
+									timeoutVal,
+									(inReadSockets != NULL) ? &tmpOutReadSockets : NULL,
+									(inWriteSockets != NULL) ? &tmpOutWriteSockets : NULL,
+									(inErrorSockets != NULL) ? &tmpOutErrorSockets : NULL );
 		}
 		else {
-			SocketArray tmpSockList;
-			if ( NULL != readSockets ) {		
-				tmpSockList.clear();
-				
-				SocketArray::iterator it = readSockets->begin();
-				//check out the socket id's to see if they 
-				//are flagged as readable, if they are copy the
-				//socket to the temp list
-				while ( it != readSockets->end() ){
-					Socket* so = *it;
-					unsigned int sockID = (unsigned int) so->getPeer()->getHandleID();
-					if ( FD_ISSET ( sockID, readers) ) {						
-						tmpSockList.push_back( so );
-						so->internal_setReadable( true );
-					}
-					else {
-						so->internal_setReadable( false );
-					}
-					it++;
-				}
-				
-				//clear out the passed in array
-				readSockets->clear();
-				
-				//re-assign the temp list to the passed in array
-				*readSockets = tmpSockList;
-			}
+			selectDone = true;
+		}		
+	}
 
-			if ( NULL != writeSockets ) {		
-				tmpSockList.clear();
-				
-				SocketArray::iterator it = writeSockets->begin();
-				//check out the socket id's to see if they 
-				//are flagged as writeable, if they are copy the
-				//socket to the temp list
-				while ( it != writeSockets->end() ){
-					Socket* so = *it;
-					unsigned int sockID = (unsigned int) so->getPeer()->getHandleID();
-					if ( FD_ISSET ( sockID, writers) ) {
-						tmpSockList.push_back( so );
-						so->internal_setWriteable( true );
-					}
-					else {
-						so->internal_setReadable( false );
-					}
-					it++;
-				}
-				
-				//clear out the passed in array
-				writeSockets->clear();
-				
-				//re-assign the temp list to the passed in array
-				*writeSockets = tmpSockList;
-			}
 
-			if ( NULL != errorSockets ) {		
-				tmpSockList.clear();
-				
-				SocketArray::iterator it = errorSockets->begin();
-				//check out the socket id's to see if they 
-				//are flagged as writeable, if they are copy the
-				//socket to the temp list
-				while ( it != errorSockets->end() ){
-					Socket* so = *it;
-					unsigned int sockID = (unsigned int) so->getPeer()->getHandleID();
-					if ( FD_ISSET ( sockID, errors) ) {
-						tmpSockList.push_back( so );
-						so->internal_setErrorState( true );
-					}
-					else {
-						so->internal_setErrorState( false );
-					}
-					it++;
-				}
-				
-				//clear out the passed in array
-				errorSockets->clear();
-				
-				//re-assign the temp list to the passed in array
-				*errorSockets = tmpSockList;
-			}
-		}
+	if ( readSockets ) {
+		*readSockets = tmpOutReadSockets;
+	}
+
+	if ( writeSockets ) {
+		*writeSockets = tmpOutWriteSockets;
+	}
+
+	if ( errorSockets ) {
+		*errorSockets = tmpOutErrorSockets;
+	}
+}
+
+
+
+
+Win32UDPSocketPeer::Win32UDPSocketPeer():
+	Win32SocketPeer()
+{
+
+}
+
+Win32UDPSocketPeer::Win32UDPSocketPeer( SOCKET handle ):
+	Win32SocketPeer(handle)
+{
+
+}
+
+int Win32UDPSocketPeer::create()
+{
+	VCF_ASSERT( NULL == handle_ );
+
+	int result = -1;
+
+	handle_ = ::socket( AF_INET, SOCK_DGRAM, 0 );
+
+	if ( INVALID_SOCKET == handle_ ) {
+		handle_ = 0;
+		result = -1;
 	}
 	else {
-		//error
+		BOOL val = TRUE;
+		setsockopt( handle_, SOL_SOCKET, SO_DONTLINGER, (const char*)&val, sizeof(val) );
+		result = 0;
 
-		if ( NULL != readSockets ) {
-			readSockets->clear();
-		}
-		
-		if ( NULL != writeSockets ) {
-			writeSockets->clear();
-		}
 
-		if ( NULL != errorSockets ) {
-			errorSockets->clear();
+
+
+		memset(&sockAddr_, 0, sizeof(sockAddr_));
+    	sockAddr_.sin_family = AF_INET;    	
+    	sockAddr_.sin_addr.s_addr = htonl(INADDR_ANY);
+		sockAddr_.sin_port = htons(0);
+		result = ::bind( handle_, (struct sockaddr *)&sockAddr_, sizeof(sockAddr_) );
+	}
+
+	return result;
+}
+
+
+int Win32UDPSocketPeer::connect( const String& host, const unsigned short port )
+{
+	int result = -1;
+
+	memset( &remoteAddr_, 0, sizeof(remoteAddr_) );
+	remoteAddr_.sin_family = AF_INET;
+	struct hostent *hp = ::gethostbyname(host.ansi_c_str());
+
+	if ( NULL != hp ) {
+		memcpy( &(remoteAddr_.sin_addr.s_addr), hp->h_addr, hp->h_length );
+		remoteAddr_.sin_port = htons((short)port);
+	}
+
+	return result;
+}
+
+int Win32UDPSocketPeer::listen( unsigned short port )
+{
+	throw RuntimeException( "listen() not allowed for UDP socket" );
+	return -1;
+}
+
+SocketPeer* Win32UDPSocketPeer::accept()
+{
+	return Win32SocketPeer::accept();
+}
+
+int Win32UDPSocketPeer::recv( unsigned char* bytes, size_t bytesLength )
+{
+	int result = -1;
+
+	struct sockaddr_in fromAddr;
+	int fromLength = sizeof(fromAddr);
+	result = ::recvfrom( handle_, (char*) bytes, bytesLength, 0, (struct sockaddr*)&fromAddr, &fromLength );
+
+	if ( result < 0 ) {
+		if ( !wouldOperationBlock() ) {
+			socket_->internal_setErrorState( true );
 		}
 	}
+
+	memset(&remoteAddr_, 0, sizeof(remoteAddr_));
+	memcpy(&remoteAddr_, &fromAddr, sizeof(fromAddr));
+
+
+	return result;
+}
+
+int Win32UDPSocketPeer::send( const unsigned char* bytes, size_t bytesLength )
+{
+	int result = -1;
+
+	result = ::sendto( handle_, (const char*)bytes, bytesLength, 0, (struct sockaddr*)&remoteAddr_, sizeof(remoteAddr_));
+
+	if ( result < 0 ) {
+		if ( !wouldOperationBlock() ) {
+			socket_->internal_setErrorState( true );
+		}
+	}
+
+	return result;
 }

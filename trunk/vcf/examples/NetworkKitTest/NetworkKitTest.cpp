@@ -158,13 +158,11 @@ public:
 		while ( canContinue() ) {
 			socket->selectFor( Socket::SelectWaitForever, Socket::ssReadable );
 			
-			printf( "\nSelect completed\n" );
+			System::println( "\nSelect completed" );
 
 			do {			
 				try {
-					uint64 err = sis.read( tmp, sizeof(tmp) );
-					
-					printf( "\n>>Read off %d bytes!<<\n", (int)err );
+					uint64 err = sis.read( tmp, sizeof(tmp) );					
 
 					if ( err == 0 ) {
 						System::println( "Disconnect!" );						
@@ -172,8 +170,7 @@ public:
 					}
 					else {
 						tmp[err] = 0;
-						//parseMsg( tmp, err );
-						printf( (const char*)&tmp[0] );
+						parseMsg( tmp, err );
 					}
 				}
 				catch ( BasicException& ) {
@@ -188,7 +185,7 @@ public:
 			}
 		}
 
-		printf( "\nRead Thread completed\n" );
+		System::println( "\nRead Thread completed" );
 		return true;
 	}
 };
@@ -204,31 +201,28 @@ int main( int argc, char** argv ){
 
 	try {
 
+		//compose a localhost address from raw bytes
 		IPAddress::RawBytes ip(4);
 		ip[0] = 127;
 		ip[1] = 0;
 		ip[2] = 0;
 		ip[3] = 1;
-
+		
 		IPAddress addr(ip);
 
-		IPAddress addr2;
-
-		IPAddress addr3("www.google.com");
+		IPAddress addr2("www.google.com");
 
 		IPAddress::RawBytes ipBytes = addr.getAddressBytes();
 		System::println( Format("%d.%d.%d.%d") % ipBytes[0] % ipBytes[1] % ipBytes[2] % ipBytes[3] ) ;
 
 		System::println( Format("host address: %s") % addr.getHostAddress() );
-
+		
+		//extract info from IPAddress
 		System::println( Format("host address: %s") % addr2.getHostAddress() );
 		System::println( Format("host name: %s") % addr2.getHostName() );
 
 
-		System::println( Format("host address: %s") % addr3.getHostAddress() );
-		System::println( Format("host name: %s") % addr3.getHostName() );
-
-
+		//list all ip addresses for a given host name
 		std::vector<IPAddress> addrs = IPAddress::getDNSHostAddresses( "google.com" );
 		for (int ipIdx=0;ipIdx<addrs.size();ipIdx++ ) {
 			System::println( Format("Host addr #%d %s") % (ipIdx+1) % addrs[ipIdx].getHostAddress() );
@@ -236,30 +230,26 @@ int main( int argc, char** argv ){
 
 
 
-		//System::println( Format("host address: %s") % 	addr3.getHostAddress() );
-		//System::println( Format("host name: %s") % addr3.getHostName() );
-
-
-		Socket ircServer;
+		Socket ircConnection;
 		unsigned short ircPort = 5030;
-		String ircHost = "172.24.82.202"; //"irc.freenode.net";
+		String ircHost = "irc.freenode.net";
 
-		ircServer.connect( ircHost, ircPort );
+		ircConnection.connect( ircHost, ircPort );
 
-		ReadThread* th = new ReadThread(&ircServer);
+		ReadThread* th = new ReadThread(&ircConnection);
 		th->start();
-		/*
+		
 		AnsiString msg;
 		msg = (String)(Format( "USER %s %s %s :%s" ) % "ddiego" % "b" % "c" % "Odysseus");
 		msg += " \r\n";
 
-		SocketOutputStream sos(ircServer);
+		SocketOutputStream sos(ircConnection);
 		sos.write( (const uchar*)msg.c_str(), msg.size() );
 
 		msg = (String)(Format( "NICK %s" ) % "Unknown[1]");
 		msg += " \r\n";
 		sos.write( (const uchar*)msg.c_str(), msg.size() );
-*/
+
 
 
 		//rt->quit();

@@ -40,9 +40,21 @@ Win32NetworkToolkit::~Win32NetworkToolkit()
 	WSACleanup();
 }
 
-SocketPeer* Win32NetworkToolkit::internal_createSocketPeer()
+SocketPeer* Win32NetworkToolkit::internal_createSocketPeer( int socketType )
 {
-	SocketPeer* result = new Win32SocketPeer();
+	SocketPeer* result = NULL;
+	
+	switch ( socketType ) {
+		case Socket::stStream : {
+			result = new Win32SocketPeer();
+		}
+		break;
+
+		case Socket::stDatagram : {
+			result = new Win32UDPSocketPeer();
+		}
+		break;
+	}	
 
 	return result;
 }
