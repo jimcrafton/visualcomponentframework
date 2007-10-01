@@ -23,6 +23,8 @@ CFG=ApplicationKitDLL - Win32 Release
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -68,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /Fd"..\..\..\bin\ApplicationKit_vc6_d.pdb" /Yu"vcf/ApplicationKit/ApplicationKit.h" /FD /GZ /Zm200 /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /Yu"vcf/ApplicationKit/ApplicationKit.h" /Fd"..\..\..\bin\ApplicationKit_vc6_d.pdb" /FD /GZ /Zm200 /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -428,19 +430,11 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Dialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\DragEvent.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\DragSource.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\DragSource.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DropEvent.h
 # End Source File
 # Begin Source File
 
