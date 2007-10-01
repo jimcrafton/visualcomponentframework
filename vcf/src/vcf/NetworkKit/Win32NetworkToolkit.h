@@ -29,7 +29,7 @@ namespace VCF {
 	protected:		
 		virtual ~Win32NetworkToolkit();
 
-		virtual SocketPeer* internal_createSocketPeer();
+		virtual SocketPeer* internal_createSocketPeer( int socketType );
 		virtual IPAddressPeer* internal_createIPAddressPeer();
 		virtual int internal_getLastError();
 	};

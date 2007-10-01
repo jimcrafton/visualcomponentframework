@@ -406,7 +406,7 @@ namespace VCF {
 		@return int Returns a 0 for success, otherwise 
 		a negative number to indicate an error.
 		*/
-		virtual int create( Socket::SocketType type ) = 0;
+		virtual int create() = 0;
 
 		/**
 		Closes the OS specific socket handle and releases any resources
@@ -669,6 +669,62 @@ namespace VCF {
 	protected:
 		uint64 totalBytesWritten_;
 		Socket* socket_;
+	};
+
+
+
+
+
+
+
+
+	class NETWORKKIT_API TCPSocket : public Socket {
+	public:
+		/**
+		Creates an unconnected socket 
+		in stStream mode.
+		*/
+		TCPSocket();		
+
+		/**
+		Creates a bound and listening socket 
+		in stStream mode.
+		*/
+		TCPSocket( unsigned short port );
+
+		/**
+		Creates a connected socket 
+		in stStream mode. A connection is automatically
+		made to the specified host and port.
+		*/
+		TCPSocket( const String& host, unsigned short port );
+
+		virtual ~TCPSocket(){}
+	};
+
+
+	class NETWORKKIT_API UDPSocket : public Socket {
+	public:
+		/**
+		Creates an unconnected socket 
+		in stDatagram mode.
+		*/
+		UDPSocket();		
+
+		/**
+		Creates a bound and listening socket 
+		in stDatagram mode.
+		*/
+		UDPSocket( unsigned short port );
+
+		/**
+		Creates a connected socket 
+		in stDatagram mode. A connection is automatically
+		made to the specified host and port.
+		*/
+		UDPSocket( const String& host, unsigned short port );
+
+		virtual ~UDPSocket(){}
 	};
 };
 

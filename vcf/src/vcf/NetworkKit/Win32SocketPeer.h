@@ -32,7 +32,7 @@ namespace VCF {
 			socket_ = socket;
 		}
 
-		virtual int create( Socket::SocketType type );
+		virtual int create();
 
 		virtual int close();
 
@@ -71,6 +71,29 @@ namespace VCF {
 	};
 
 
+
+	class NETWORKKIT_API Win32UDPSocketPeer : public Win32SocketPeer {
+	public:	
+
+		Win32UDPSocketPeer();
+
+		Win32UDPSocketPeer( SOCKET handle );
+
+		virtual int create();
+
+		virtual int connect( const String& host, const unsigned short port );
+
+		virtual int listen( unsigned short port );
+
+		virtual SocketPeer* accept();
+
+		virtual int recv( unsigned char* bytes, size_t bytesLength );
+
+		virtual int send( const unsigned char* bytes, size_t bytesLength );
+
+	protected:
+		struct sockaddr_in remoteAddr_;
+	};
 };
 
 #endif //_VCF_WIN32SOCKETPEER_H__
