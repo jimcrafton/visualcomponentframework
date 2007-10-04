@@ -43,6 +43,7 @@ public:
 
 class ZipOutputStream : public OutputStream {
 public:
+	ZipOutputStream();
 	ZipOutputStream( OutputStream* outStream );
 
 	virtual ~ZipOutputStream();
@@ -189,6 +190,16 @@ bool ZipInputStream::isEOS()
 
 
 
+ZipOutputStream::ZipOutputStream():
+	compressedData_(256)//256 byte allocation increments
+{
+	memset(&zstream_,0,sizeof(zstream_));
+	memset(&zipTmpData_,1,sizeof(zipTmpData_));
+
+	if ( Z_OK != deflateInit( &zstream_, Z_DEFAULT_COMPRESSION ) ) {
+		//throw exception!!!
+	}
+}
 
 
 
@@ -249,7 +260,8 @@ uint64 ZipOutputStream::write( const unsigned char* bytesToRead, uint64 sizeOfBy
 	do {
 		zstream_.avail_out = sizeof(zipTmpData_);
 		zstream_.next_out = zipTmpData_;
-		if ( Z_STREAM_ERROR == deflate(&zstream_, Z_NO_FLUSH) ) {
+		int res= deflate(&zstream_, Z_NO_FLUSH);
+		if ( Z_STREAM_ERROR == res ) {
 			//throw exception!
 		}
 
@@ -289,9 +301,11 @@ int main( int argc, char** argv ){
 
 	String data = "Hello how are you, this is some compressed text!";
 
-	ZipOutputStream zos( NULL );
+	ZipOutputStream zos;
 
 	TextOutputStream tos(&zos);
+	tos.write( data );
+
 	tos.write( data );
 
 	zos.flush();
@@ -305,7 +319,8 @@ int main( int argc, char** argv ){
 	String s;
 	tis.read(s);
 
-
+	VCF_ASSERT( s.size() == data.size() );
+	
 
 
 	FoundationKit::terminate();
