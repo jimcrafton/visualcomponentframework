@@ -256,15 +256,67 @@ namespace VCF {
 	after a post is completed. 
 
 	\p
+	The DataSet contains 0 or more properties or attributes called
+	parameters, that are used to store implementation specific
+	details about the data set and how to open or connect to. 
+	These parameters are specified by a string name and a VariantData
+	value, and can be read or modified using the getParam() or 
+	setParam() functions. For example, if you are using a DataSet 
+	that is based on SQLite, then you would need to specify a 
+	database file name and a table name before accessing any data. 
+	Something like this:
+	\code
+	DataSet* dataSet = new DataSet();
+	dataSet->setPeerType( "SQLiteType" );
+
+	dataSet->setParam( "databasename", "test.db3" );
+	dataSet->setParam( "tablename", "Person" );
+	\endcode
+
+	A different type of data set implementation might require 
+	information	like user names or passwords to be stored as well.
+
+	\p
 	The DataSet provides access to it's data by accessing it's 
 	fields. The DataSet has a collection of 1 or more fields
 	that are equivalent to the columns of a table. You can
-	"navigate" to a row using the functions first() and next().
-	When you edit the various fields you do so at the current row.
-	So if you open a table, you will be on the first record. If you
-	call next(), you will be moved to the next row (or record). If
-	you read the contents of the fields at this point you will be
-	looking at the contents of the second record (or row).
+	"navigate" to a row using the first() and next() functions.
+	When you edit or examine the various fields you do so at the 
+	current row. So if you open a table, you will be on the first 
+	record. If you call next(), you will be moved to the next 
+	row (or record). If	you read the contents of the fields at 
+	this point you will be looking at the contents of the second 
+	record (or row). Here's a simple example:
+	\code
+	DataSet* dataSet = new DataSet();
+	dataSet->setPeerType( "SQLiteType" );
+
+	dataSet->setParam( "databasename", "test.db3" );
+	dataSet->setParam( "tablename", "Person" );
+
+	dataSet->setActive(true);
+
+	Enumerator<DataField*>* fields;
+	DataField* field;
+
+	while ( !dataSet->isEOF() ) {			
+		fields = dataSet->getFields();
+		
+		while ( fields->hasMoreElements() ) {
+			field = fields->nextElement();			
+			System::println( "Field name: " + field->getName() + " value: " + field->getAsString() );
+		}
+		dataSet->next();
+	}
+
+	\endcode
+	Here we establish the database file name, the table name, 
+	and then activate the data set. We then iterate through each
+	row of the data set until isEOF() returns true. For
+	each loop, we then iterate through all the fields (or columns)
+	of the record (or table), and print out the field name
+	and the field value interpreted a string.
+
 	\p
 	To edit the data in the fields, you must first place the 
 	dataset into "edit" mode by calling the edit() function. 
@@ -278,10 +330,25 @@ namespace VCF {
 	dataSet->setParam( "databasename", "test.db3" );
 	dataSet->setParam( "tablename", "Person" );
 
+	dataSet->edit();
+
+	String lastName = "Sombrerovich";
+	dataSet->fieldByName("LastName")->setAsString(lastName);
+
+	dataSet->refresh();
+
 	\endcode
 	*/
     class DATABASEKIT_API DataSet : public Component {
     public:
+
+		/**
+		A generic record that contains data
+		specified as a buffer of bytes. This is 
+		just here to store the data, the actual
+		interpretation of the buffer is up to the
+		data set peer implementation.
+		*/
 		struct Record {
 			Record(): buffer(NULL), size(0){}			
 
@@ -357,26 +424,72 @@ namespace VCF {
 
 		DELEGATE(FilterRecordDelegate,FilterRecord);		
 
+		/**
+		Returns a string that identifies the peer type
+		that is currently associated with this data set
+		instance.
+		*/
 		String getPeerType() {
 			return peerType_;
 		}
 
+		/**
+		Sets the current peer type. The existing peer is 
+		first destroyed, and then a new one requested
+		based on the string identifier. The data set 
+		cannot be used until it has a valid peer instance.
+		By default the peer is null, so until this function
+		is called you can't do anything useful with the 
+		data set. Once this is called with a valid type,
+		the DatabaseToolkit will attempt to create a new
+		peer instance based on the string type.
+
+		@see DatabaseToolkit::createDataSetPeer()
+		*/
 		void setPeerType( const String& val );
 
         void setDatabase( Database* database );
 
+		/**
+		Sets the value of the parameter. 
+		@oaram String the name of the parameter. If the 
+		parameter already exists, the old value will be 
+		overwritten with the new value.
+		@param VariantData some value, a string, an int,
+		or whatever that will be stored.
+		*/
 		void setParam( const String& param, VariantData value );
 
-        VariantData getParam ( const String& );
+		/**
+		Returns a value for a given parameter. If the parameter 
+		doesn't	exist the VariantData's type will be either 
+		pdUndefined or pdNull.
+		@param String the name of the value to retrieve.
+		*/
+        VariantData getParam ( const String& param );
 
 		Locale* getLocale();
 
 		void setLocale( Locale* val );
 
+		/**
+		Open's the Dataset for use. You cannot read or write data 
+		from the dataset until this is called.
+		@see setActive(true)
+		*/
         void open();
 
+		/**
+		closes the data set.
+		@see setActive(false)
+		*/
         void close();
 
+		/**
+		Sets the data set state and determines whether it is 
+		"open" or "close", or "active" or "inactive" if you 
+		prefer. 
+		*/
 		void setActive( bool active );
 
 		bool isActive();
@@ -387,16 +500,35 @@ namespace VCF {
 			return state_;
 		}
 
+		/**
+		set the current state of the data set. Generally used 
+		only internally at this point.
+		*/ 
 		void setState( DataSetState val );
 
+		/**
+		Indicates whether or not the data set can be modified. 
+		Until the data set is placed in edit mode, this will 
+		return false.
+		@see edit()
+		*/
 		bool canModify() {
 			return canModify_;
 		}
 
+		/**
+		Returns whether or not the cursor is pointing at the 
+		first record. This should return true until the after 
+		the data set's next() function is called.
+		*/
 		bool isBOF() {
 			return bof_;
 		}
 
+		/**
+		Returns whether the last record or end of file has 
+		been reached for the data set.
+		*/
 		bool isEOF() {
 			return eof_;
 		}
