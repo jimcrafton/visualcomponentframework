@@ -186,13 +186,13 @@ void Socket::selectFor( uint32 timeout, uint32 flags )
 	getPeer()->select( timeout, readArrPtr, writeArrPtr, errorArrPtr );
 }
 
-Socket* Socket::accept()
+TCPSocket* Socket::accept()
 {
-	Socket* result = NULL;
+	TCPSocket* result = NULL;
 
 	SocketPeer* newSockPeer = peer_->accept();
 	if ( NULL != newSockPeer ) {
-		result = new Socket( newSockPeer );
+		result = new TCPSocket( newSockPeer );
 
 		SocketEvent e(this,Socket::seClientConnected);
 		e.socket = result;
@@ -270,9 +270,16 @@ unsigned short Socket::getRemotePort()
 }
 
 
-bool Socket::pending() const
+bool Socket::pending() 
 {
-	peer_->select( Socket::SelectNoWait, NULL, NULL, NULL ); 
+	SocketArray readArr(1);
+	readArr[0] = this;
+	SocketArray writeArr(1);
+	writeArr[0] = this;
+	SocketArray errorArr(1);
+	errorArr[0] = this;	
+	
+	getPeer()->select( Socket::SelectNoWait, &readArr, &writeArr, &errorArr );
 
 	return isReadable() || isWriteable();
 }
@@ -292,7 +299,7 @@ bool Socket::wouldOperationBlock()
 
 
 
-SocketInputStream::SocketInputStream( Socket& socket ):
+TCPSocketInputStream::TCPSocketInputStream( TCPSocket& socket ):
 	totalBytesRecvd_(0),
 	socket_(&socket)
 {
@@ -300,7 +307,7 @@ SocketInputStream::SocketInputStream( Socket& socket ):
 }
 
 
-uint64 SocketInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
+uint64 TCPSocketInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 {
 	uint64 bytesRead = 0;
 
@@ -319,18 +326,93 @@ uint64 SocketInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 
 
 
-SocketOutputStream::SocketOutputStream( Socket& socket ):
+TCPSocketOutputStream::TCPSocketOutputStream( TCPSocket& socket ):
 	totalBytesWritten_(0),
 	socket_(&socket)
 {
 
 }
 
-uint64 SocketOutputStream::write( const unsigned char* bytesToWrite, uint64 sizeOfBytes )
+uint64 TCPSocketOutputStream::write( const unsigned char* bytesToWrite, uint64 sizeOfBytes )
 {
 	uint64 bytesWritten = 0;
 
 	int err = socket_->getPeer()->send( bytesToWrite, sizeOfBytes );
+
+	if ( err >= 0 ) {
+		bytesWritten = err;
+	}
+	else if (!socket_->wouldOperationBlock()) { //the operation flat out failed
+
+		throw SocketWriteException( MAKE_ERROR_MSG_2("Socket peer's send() failed.") );
+	}
+
+	totalBytesWritten_ += bytesWritten;
+
+	return bytesWritten;
+}
+
+
+
+
+
+
+
+
+
+
+
+UDPSocketInputStream::UDPSocketInputStream( UDPSocket& socket, const IPEndPoint& readFrom ):
+	totalBytesRecvd_(0),
+	socket_(&socket),
+	readFrom_(readFrom)
+{
+
+}
+
+
+uint64 UDPSocketInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
+{
+	return readFrom( bytesToRead, sizeOfBytes, readFrom_ );
+}
+
+uint64 UDPSocketInputStream::readFrom( unsigned char* bytesToRead, uint64 sizeOfBytes, IPEndPoint& from )
+{
+	uint64 bytesRead = 0;
+
+	int err = socket_->getPeer()->recvFrom( bytesToRead, sizeOfBytes, from );
+	if ( err >= 0 ) {
+		bytesRead = err;
+	}
+	else if (!socket_->wouldOperationBlock()) { //the operation flat out failed
+		throw SocketReadException( MAKE_ERROR_MSG_2("Socket peer's recv() failed.") );
+	}
+	
+	totalBytesRecvd_ += bytesRead;
+
+	return bytesRead;
+}
+
+
+
+UDPSocketOutputStream::UDPSocketOutputStream( UDPSocket& socket, const IPEndPoint& sendTo ):
+	totalBytesWritten_(0),
+	socket_(&socket),
+	sendTo_(sendTo)
+{
+
+}
+
+uint64 UDPSocketOutputStream::write( const unsigned char* bytesToWrite, uint64 sizeOfBytes )
+{
+	return writeTo( bytesToWrite, sizeOfBytes, sendTo_ );
+}
+
+uint64 UDPSocketOutputStream::writeTo( const unsigned char* bytesToWrite, uint64 sizeOfBytes, const IPEndPoint& to )
+{
+	uint64 bytesWritten = 0;
+
+	int err = socket_->getPeer()->sendTo( bytesToWrite, sizeOfBytes, to );
 
 	if ( err >= 0 ) {
 		bytesWritten = err;
@@ -397,4 +479,9 @@ UDPSocket::UDPSocket( const String& host, unsigned short port ):
 	Socket(Socket::stDatagram)
 {
 
+}
+
+void UDPSocket::connect()
+{
+	Socket::connect( "", 0 );
 }

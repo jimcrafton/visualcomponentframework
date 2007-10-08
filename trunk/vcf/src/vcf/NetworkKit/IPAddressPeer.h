@@ -18,6 +18,9 @@ where you installed the VCF.
 namespace VCF {
 
 
+	/**
+	\class IPAddressPeer IPAddressPeer.h "vcf/NetworkKit/IPAddressPeer.h"
+	*/
 	class NETWORKKIT_API IPAddressPeer {
 	public:
 

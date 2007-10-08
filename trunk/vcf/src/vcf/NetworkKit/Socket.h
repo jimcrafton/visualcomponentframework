@@ -23,9 +23,13 @@ namespace VCF {
 
 	class Socket;
 	class SocketPeer;
+	class TCPSocket;
 
 
 
+	/**
+	\class SocketEvent Socket.h "vcf/NetworkKit/Socket.h"
+	*/
 	class NETWORKKIT_API SocketEvent : public Event {
 	public:
 		SocketEvent( Object* source, const unsigned long& eventType ) : 
@@ -47,6 +51,9 @@ namespace VCF {
 
 	typedef  std::vector<Socket*> SocketArray;
 
+	/**
+	\class Socket Socket.h "vcf/NetworkKit/Socket.h"
+	*/
 	class NETWORKKIT_API Socket : public Object {
 	public:
 
@@ -235,22 +242,91 @@ namespace VCF {
 		DELEGATE( EventDelegate,ReadyToWrite );
 
 
+		/**
+		Opens the socket for use and creates allocates any 
+		neccessary OS resoruces for the socket (depending on 
+		the peer implementation). If it was alread open, 
+		then it is first closed and then opened. Once this 
+		is called the socket's state will be set to 
+		Socket::ssOpen.
+		*/
 		void open();
 
+		/**
+		Closes the socket and frees up any underlying OS resources
+		that were allocated for the socket by the previous call
+		to open().
+		*/
 		void close();
 
+		/**
+		Connects to a specified host and port. If the
+		peer is unable to connect, then a SocketException 
+		exception is thrown.
+		
+		@param String the host name to connect to. This may 
+		a host name, like "google.com" or a valid IP address,
+		such as "123.32.101.1".
+		@param unsigned short port the port to connect to.
+		*/
 		void connect( const String& host, unsigned short port );
 
+		/**
+		This will start the socket listening on the 
+		specified port. This can be called for either a 
+		UDP or TCP socket, with the appropriate underlying
+		calls to bind and/or listen made as neccessary.
+		*/
 		void listen( unsigned short port );
 
-		Socket* accept();
+		/**
+		Accepts a new connection and returns a new TCP socket
+		instance. Assumes the listen() call has already occurred.
+		If it has not then an exception is thrown by the underlying 
+		peer implementation. This method will block until a socket
+		connection has been detected unless the instance has been 
+		set to non blocking. This is only valid when called by a 
+		TCP socket.
 
+		@return TCPSocket* a new instance of a TCPSocket. The caller
+		of this method is responsible for the lifetime and clean up
+		of this socket instance.
+
+		@see soBlocking
+		@see setOptions
+		*/
+		TCPSocket* accept();
+
+		/**
+		Sets the options for a socket. The options are stored as a 
+		dictionary of items, with the keys being 1 or more values 
+		represented by the Socket::soXXX const string variables. 
+		The values are VariantData instances whose precise meaning
+		depends on the key. For example, if you specify the 
+		Socket::soBlocking key, then the value is bool, indicating 
+		whether or not the socket should be set to blocking mode.
+		
+		@param Dictionary a dictionary of options with key/value
+		pairs that specify various socket settings.
+
+		@see Dictionary
+		*/
 		void setOptions( Dictionary& options );
 
+		/**
+		Returns a dictionary containing the current options for 
+		the	socket.
+		*/
 		Dictionary getOptions();
 
+		/**
+		Returns the local ip address for this socket.
+		*/
 		IPAddress getLocalHostIPAddress();
 
+		/**
+		Returns the remote ip address that this socket is connected to.
+		*/
 		IPAddress getRemoteHostIPAddress();
 
 		unsigned short getLocalPort();
@@ -261,6 +337,12 @@ namespace VCF {
 			return peer_;
 		}	
 
+		/**
+		Returns the socket type. Can be one of the 
+		SocketType enumeration values.
+
+		@see SocketType
+		*/
 		SocketType getSocketType() {
 			return type_;
 		}
@@ -293,7 +375,13 @@ namespace VCF {
 			return (state_ == Socket::ssClosed) ? true : false;
 		}
 
-		bool pending() const;
+		/**
+		Does a quick test to see if there is any readable or 
+		writeable data available for the socket.
+		@return bool returns true if the socket is marked for 
+		writing or marked for reading. Otherwise returns false.
+		*/
+		bool pending() ;
 
 		/**
 		Do not call this method - for internal use 
@@ -346,9 +434,24 @@ namespace VCF {
 
 
 		/**
-		perform a select, on this socket, for a specified timeout period,
-		checking against some set of flags that will indicate to check for 
-		readable, writeable, or error states.
+		Perform a select, on this socket, for a specified timeout period,
+		checking against some set of flags that will indicate whether or 
+		not we should look for readable, writeable, or error states. 
+		When this function returns, the socket's state may change 
+		depending on the flags specified and the result of the 
+		internal call to select. After returning you may call the 
+		isReadable(), isWriteable(), or hasError() methods to determine
+		the current state. For example:
+		\code
+		Socket s("foobar.com", 1234 );
+
+		s.selectFor( 120, Socket::ssReadable );
+		if ( s.isReadable() ) {
+			//do something, such as reading data from the 
+			//socket...
+		}
+		\endcode
+
 		@param uint32 the maximum number of milliseconds to wait for. 
 			@see Socket::SelectNoWait,
 			@see Socket::SelectWaitForever
@@ -357,6 +460,7 @@ namespace VCF {
 			function will return immediately and do nothing.
 		*/
 		void selectFor( uint32 timeout, uint32 flags );
+		
 	protected:
 		/**
 		Creates a socket from an existing peer
@@ -387,13 +491,20 @@ namespace VCF {
 
 
 
-
+	/**
+	\class SocketPeer Socket.h "vcf/NetworkKit/Socket.h"
+	An abstract class that represents a platform socket implementation.
+	This needs to be implemented for each platform that the NetworkKit
+	is portetd to. A typical implementation may use the BSD socket API 
+	as a base implementation.
+	*/
 	class NETWORKKIT_API SocketPeer {
 	public:
 		
 		virtual ~SocketPeer(){};
 
 		virtual void setPeerOwner( Socket* socket ) = 0;
+
 		/**
 		\par
 		Creates a new OS specific socket handle. In the 
@@ -528,9 +639,11 @@ namespace VCF {
 		lists. Will block for a maximum of timeout milliseconds. If the all
 		the read, write, and error socket arrays are NULL, then the 
 		select is performed only on the socket instance itself.
+		
 		@param uint32 the maximum number of milliseconds to wait for. 
 			@see Socket::SelectNoWait,
 			@see Socket::SelectWaitForever
+
 		@param SocketArray a pointer to a vector of Socket instances to test
 		whether or not they can be read from. This may vector
 		may be null if the	caller is not interested in read notifications. 
@@ -561,6 +674,96 @@ namespace VCF {
 
 
 
+	/**
+	\class TCPSocket Socket.h "vcf/NetworkKit/Socket.h"
+	A socket class that represents a TCP socket. Useful for 
+	creating a TCP based client or server socket. A simple 
+	example for a server might be something like this:
+	\code
+	TCPSocket server;
+	server.listen( 1234 );
+
+	while ( true ) {
+		Socket* client = server.accept();
+
+		{
+			TCPSocketOutputStream sos( *client );
+			unsigned char bytes[256];
+			//put some data in the bytes variable...
+
+			//write to the client socket
+			sos.write( bytes, sizeof(bytes) );
+		}
+
+	}
+	\endcode
+	
+	*/
+	class NETWORKKIT_API TCPSocket : public Socket {
+	public:
+		/**
+		Creates an unconnected socket 
+		in stStream mode.
+		*/
+		TCPSocket();		
+
+		/**
+		Creates a bound and listening socket 
+		in stStream mode.
+		*/
+		TCPSocket( unsigned short port );
+
+		/**
+		Creates a connected socket 
+		in stStream mode. A connection is automatically
+		made to the specified host and port.
+		*/
+		TCPSocket( const String& host, unsigned short port );
+
+		virtual ~TCPSocket(){}
+
+		friend class Socket;
+	protected:
+		/**
+		Creates a socket from an existing peer
+		intance. This is used primarily by the accept()
+		method.
+		*/
+		TCPSocket( SocketPeer* peer ): Socket(peer){}
+	};
+
+
+	/**
+	\class UDPSocket Socket.h "vcf/NetworkKit/Socket.h"
+	*/
+	class NETWORKKIT_API UDPSocket : public Socket {
+	public:
+		/**
+		Creates an unconnected socket 
+		in stDatagram mode.
+		*/
+		UDPSocket();		
+
+		/**
+		Creates a bound and listening socket 
+		in stDatagram mode.
+		*/
+		UDPSocket( unsigned short port );
+
+		/**
+		Creates a connected socket 
+		in stDatagram mode. A connection is automatically
+		made to the specified host and port.
+		*/
+		UDPSocket( const String& host, unsigned short port );
+
+		virtual ~UDPSocket(){}
+
+
+		void connect();
+	};
+
+
 
 
 
@@ -569,18 +772,207 @@ namespace VCF {
 
 
 	/**
-	An input stream class used for reading data from a socket. The
+	\class TCPSocketInputStream Socket.h "vcf/NetworkKit/Socket.h"
+	An input stream class used for reading data from a TCP socket. 
+	The	class must be used in conjunction with a valid socket 
+	instance, you cannot create in instance otherwise. Not all 
+	of the InputStream class's methods can be implemented, for 
+	example, the seek method is meaningless in this context, and 
+	calling it will result in a RuntimeException being thrown. 
+	The only method that makes sense to call is the read() method.
+
+	\par
+	An example of how to use the class might look like this:
+	\code
+	Socket* socket = \\get valid socket instance from somewhere...
+	SocketInputStream sis(*socket);
+	uchar tmp[256];
+	uint64 err = sis.read( tmp, sizeof(tmp) );
+	\endcode
+	
+	You might choose to use it in a loop, something like this:
+	\code
+	Socket* socket = \\get valid socket instance from somewhere...
+	SocketInputStream sis(*socket);
+	uchar tmp[256];
+	while ( true ) {
+		socket->selectFor( Socket::SelectWaitForever, Socket::ssReadable );
+
+		do {			
+			try {
+				uint64 err = sis.read( tmp, sizeof(tmp) );
+
+				if ( err == 0 ) {					
+					break;
+				}
+				else {					
+					//do something with the data stored in the 
+					//tmp buffer...
+				}
+			}
+			catch ( BasicException& ) {
+				//exit the loop!
+				break;
+			}
+		} while( socket->pending() && socket->isReadable() ) ;
+
+
+		if ( socket->isClosed() || socket->hasError() ) {
+			//exit the loop if we detect problems or the socket has
+			//been closed...
+			break;
+		}
+	}
+	\endcode
+
+	@see Socket::selectFor
+	@see Socket::pending
+	*/
+	class NETWORKKIT_API TCPSocketInputStream  : public InputStream {
+	public:
+
+		TCPSocketInputStream( TCPSocket& socket );
+
+		/**
+		Seeking is not permitted!
+		*/
+		virtual void seek(const uint64& offset, const SeekType& offsetFrom) {
+			//no-op
+			throw NetworkException( "You cannot seek in a Socket Input stream" );
+		}
+
+		virtual uint64 getSize() {
+			return totalBytesRecvd_;
+		}
+
+		/**
+		Throws an exception - this is not permitted
+		*/
+		virtual char* getBuffer() {
+			throw RuntimeException( "You cannot access the buffer pointer in a Socket Input stream" );
+			return NULL;
+		}
+
+		
+		/**
+		Throws an exception - this is not permitted
+		*/
+		virtual uint64 getCurrentSeekPos() {
+			throw RuntimeException( "You cannot access the seek position in a Socket Input stream" );
+			return 0;	
+		}
+
+		virtual bool isEOS() {
+			return false;
+		}
+
+		/**
+		Attempts to read sizeOfBytes from the TCP socket 
+		associated with this stream. The method will return 
+		the number of bytes	read from the socket. The 
+		return may be the following:
+		\li A number greater than 0 but less than sizeOfBytes 
+		that indicates the number of bytes successfully read 
+		from the socket.
+		\li 0 which may indicate a disconnect has happened and 
+		no bytes were read. If the socket is marked as non-blocking 
+		then the method will return 0 bytes, but the sockets 
+		Socket::wouldOperationBlock() method will return true. 
+		This indicates that the read operation will be completable
+		in the future. If the socket is a blocking socket, then 
+		this is probably a disconnect.
+		\li If the socket's peer reports an error in reading  
+		from the socket, then the method will throw a NetworkException.
+		*/
+		virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes );
+
+	protected:
+		uint64 totalBytesRecvd_;
+		Socket* socket_;
+	};
+
+
+
+	/**
+	\class TCPSocketOutputStream Socket.h "vcf/NetworkKit/Socket.h"
+	An output stream class used for writing data to a TCP socket. 
+	The	class must be used in conjunction with a valid socket 
+	instance, you cannot create in instance otherwise. Not all 
+	of the OutputStream class's methods can be implemented, for 
+	example, the seek method is meaningless in this context, and 
+	calling it will result in a RuntimeException being thrown. 
+	The only method that makes sense to call is the write() method.
+	*/
+	class NETWORKKIT_API TCPSocketOutputStream  : public OutputStream {
+	public:
+
+		TCPSocketOutputStream( TCPSocket& socket );
+
+		/**
+		Seeking is not permitted!
+		*/
+		virtual void seek(const uint64& offset, const SeekType& offsetFrom) {
+			//no-op
+			throw RuntimeException( "You cannot seek in a Socket Output stream" );
+		}
+
+		virtual uint64 getSize() {
+			return totalBytesWritten_;
+		}
+
+		/**
+		Returns NULL - this is not permitted
+		*/
+		virtual char* getBuffer() {
+			throw RuntimeException( "You cannot access the buffer pointer in a Socket Output stream" );
+			return NULL;
+		}
+
+		
+		virtual uint64 getCurrentSeekPos() {
+			throw RuntimeException( "You cannot access the seek position in a Socket Output stream" );
+			return 0;	
+		}
+
+		/**
+		Attempts to write sizeOfBytes to the TCP socket associated 
+		with this stream. The method will return the number of bytes
+		written to the socket. The return value may be the following:
+		\li A number greater than 0 but less than sizeOfBytes that 
+		indicates the number of bytes successfully written to
+		the socket
+		\li 0 which may indicate a disconnect has happened and 
+		no bytes were written. If the socket is marked as non-blocking 
+		then the method will return 0 bytes, but the sockets 
+		Socket::wouldOperationBlock() method will return true. 
+		If the socket is a blocking socket, then this is probably
+		an error.
+		\li If the socket's peer reports an error in writing to 
+		the socket, then the method will throw a NetworkException.
+		*/
+		virtual uint64 write( const unsigned char* bytesToWrite, uint64 sizeOfBytes );
+
+	protected:
+		uint64 totalBytesWritten_;
+		Socket* socket_;
+	};
+
+
+
+	/**
+	\class UDPSocketInputStream Socket.h "vcf/NetworkKit/Socket.h"
+	An input stream class used for reading data from a UDP socket. The
 	class must be used in conjunction with a valid socket instance,
 	you cannot create in instance otherwise. Not all of the InputStream
 	class's methods can be implemented, for example, the seek method is 
 	meaningless in this context, and calling it will result in 
 	a NetworkException being thrown. The only method that makes sense 
-	to call is the read() method.
+	to call is the read() method.	
 	*/
-	class NETWORKKIT_API SocketInputStream  : public InputStream {
+	class NETWORKKIT_API UDPSocketInputStream  : public InputStream {
 	public:
 
-		SocketInputStream( Socket& socket );
+		UDPSocketInputStream( UDPSocket& socket, const IPEndPoint& readFrom );
 
 		/**
 		Seeking is not permitted!
@@ -613,7 +1005,7 @@ namespace VCF {
 		}
 
 		/**
-		Attempts to read sizeOfBytes from the socket associated 
+		Attempts to read sizeOfBytes from the UDP socket associated 
 		with this stream. The method will return the number of bytes
 		read from the socket. The return may be the following:
 		\li A number greater than 0 but less than sizeOfBytes that 
@@ -632,17 +1024,25 @@ namespace VCF {
 		*/
 		virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes );
 
+		/**
+		Reads from the specified end point.
+		*/
+		uint64 readFrom( unsigned char* bytesToRead, uint64 sizeOfBytes, IPEndPoint& from );
 	protected:
 		uint64 totalBytesRecvd_;
 		Socket* socket_;
+		IPEndPoint readFrom_;
 	};
 
 
 
-	class NETWORKKIT_API SocketOutputStream  : public OutputStream {
+	/**
+	\class UDPSocketOutputStream Socket.h "vcf/NetworkKit/Socket.h"
+	*/
+	class NETWORKKIT_API UDPSocketOutputStream  : public OutputStream {
 	public:
 
-		SocketOutputStream( Socket& socket );
+		UDPSocketOutputStream( UDPSocket& socket, const IPEndPoint& sendTo );
 
 		/**
 		Seeking is not permitted!
@@ -688,65 +1088,11 @@ namespace VCF {
 		*/
 		virtual uint64 write( const unsigned char* bytesToWrite, uint64 sizeOfBytes );
 
+		uint64 writeTo( const unsigned char* bytesToWrite, uint64 sizeOfBytes, const IPEndPoint& to );
 	protected:
 		uint64 totalBytesWritten_;
 		Socket* socket_;
-	};
-
-
-
-
-
-
-
-
-	class NETWORKKIT_API TCPSocket : public Socket {
-	public:
-		/**
-		Creates an unconnected socket 
-		in stStream mode.
-		*/
-		TCPSocket();		
-
-		/**
-		Creates a bound and listening socket 
-		in stStream mode.
-		*/
-		TCPSocket( unsigned short port );
-
-		/**
-		Creates a connected socket 
-		in stStream mode. A connection is automatically
-		made to the specified host and port.
-		*/
-		TCPSocket( const String& host, unsigned short port );
-
-		virtual ~TCPSocket(){}
-	};
-
-
-	class NETWORKKIT_API UDPSocket : public Socket {
-	public:
-		/**
-		Creates an unconnected socket 
-		in stDatagram mode.
-		*/
-		UDPSocket();		
-
-		/**
-		Creates a bound and listening socket 
-		in stDatagram mode.
-		*/
-		UDPSocket( unsigned short port );
-
-		/**
-		Creates a connected socket 
-		in stDatagram mode. A connection is automatically
-		made to the specified host and port.
-		*/
-		UDPSocket( const String& host, unsigned short port );
-
-		virtual ~UDPSocket(){}
+		IPEndPoint sendTo_;
 	};
 };
 
