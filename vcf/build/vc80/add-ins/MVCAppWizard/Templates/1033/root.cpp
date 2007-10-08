@@ -25,7 +25,7 @@ public:
 		newDefaultDocument( "" );
 
 		DocumentManager* docMgr = DocumentManager::getDocumentManager();
-		docMgr->DocumentInitialized += new GenericEventHandler<[!output PROJECT_NAME]>( this, 
+		docMgr->DocumentInitialized += new ClassProcedure1<Event*,[!output PROJECT_NAME]>( this, 
 																			&[!output PROJECT_NAME]::onDocInitialized,
 																			"[!output PROJECT_NAME]::onDocInitialized" );
 
