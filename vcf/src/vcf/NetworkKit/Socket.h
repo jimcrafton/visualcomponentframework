@@ -15,13 +15,14 @@ where you installed the VCF.
 #endif
 
 
+#ifndef _VCF_IPADDRESS_H__
+	#include "vcf/NetworkKit/IPAddress.h"
+#endif
+
 namespace VCF {
 
 	class Socket;
 	class SocketPeer;
-
-	class IPAddressPeer;
-	
 
 
 
@@ -248,11 +249,13 @@ namespace VCF {
 
 		Dictionary getOptions();
 
-		String getHostName();
+		IPAddress getLocalHostIPAddress();
 
-		String getHostIPAddress();
+		IPAddress getRemoteHostIPAddress();
 
-		unsigned short getPort();
+		unsigned short getLocalPort();
+
+		unsigned short getRemotePort();
 
 		SocketPeer* getPeer() {
 			return peer_;
@@ -451,6 +454,18 @@ namespace VCF {
 		virtual int send( const unsigned char* bytes, size_t bytesLength ) = 0;
 
 		/**
+		@return int Returns a 0 for success, otherwise 
+		a negative number to indicate an error.
+		*/
+		virtual int recvFrom( unsigned char* bytes, size_t bytesLength, IPEndPoint& fromAddr ) = 0;
+
+		/**
+		@return int Returns a 0 for success, otherwise 
+		a negative number to indicate an error.
+		*/
+		virtual int sendTo( const unsigned char* bytes, size_t bytesLength, const IPEndPoint& toAddr ) = 0;
+
+		/**
 		Returns a handle for the OS specific socket resource. This 
 		is typically a socket handle or descriptor, depending on the 
 		OS and the underlying implementation.
@@ -458,25 +473,32 @@ namespace VCF {
 		virtual OSHandleID getHandleID() = 0;
 
 		/**
-		Returns the host name that this instance represents.
-		This is a potentially blocking call, and may take a while to 
-		complete if the host name cannot be resolved by the underlying
-		OS network stack.
+		Returns the IP address of the \em local host 
+		as a string	formatted (for IPV4 at least) as 4 
+		"octets", each separated by the "." character. 
+		Each octet is a number string in the range from 
+		0 to 255.
 		*/
-		virtual String getHostName() = 0;
+		virtual IPAddress getLocalHostIPAddress() = 0;
 
 		/**
-		Returns the IP address of the host as a string
-		formatted (for IPV4 at least) as 4 "octets", 
-		each separated by the "." character. Each
-		octet is a number string in the range from 0 to 255.
+		Returns the IP address of the \em remote host 
+		as a string	formatted (for IPV4 at least) as 4 
+		"octets", each separated by the "." character. 
+		Each octet is a number string in the range from 
+		0 to 255.
 		*/
-		virtual String getHostIPAddress() = 0;
+		virtual IPAddress getRemoteHostIPAddress() = 0;
 
 		/**
-		Returns the port number for this socket instance.
+		Returns the local port number for this socket instance.
 		*/
-		virtual unsigned short getPort() = 0;
+		virtual unsigned short getLocalPort() = 0;
+
+		/**
+		Returns the remote port number for this socket instance.
+		*/
+		virtual unsigned short getRemotePort() = 0;
 
 		/**
 		Sets the options for a socket. The options are stored as a 
