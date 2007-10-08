@@ -328,18 +328,17 @@ namespace VCF{
 
 
 
-/**
-*resources handling/management
-*/
+
+//resources handling/management
 #include "vcf/FoundationKit/Resource.h"
 #include "vcf/FoundationKit/ResourceBundle.h"
 #include "vcf/FoundationKit/ResourceException.h"
 
 
 
-/**
-Components...
-*/
+
+//Components...
+
 
 #include "vcf/FoundationKit/BadComponentStateException.h"
 #include "vcf/FoundationKit/ComponentEvent.h"
@@ -381,17 +380,36 @@ pizzazz to your application, this kit is your best bet.
 
 The VCF also has additional secondary kits that perform specific functions. At 
 the moment, we have three:
-\li OpenGLKit: This kit facilitates the display of OpenGL code within an application. If you wish to use three-dimensional graphics, an OpenGLControl will be a good friend.
+\li HTMLKit: This kit provides for displaying and manipulating HTML via
+the underlying browser libraries provided by the platform. On Microsoft
+windows this currently means using the functionality provided by the 
+COM based WebBrowser control and MSHTML DLL.
+
+\li InternetKit: This kit provides easy access to common web protocols, namely
+http and ftp, again, wrapping the platform support that already exists. On 
+Microsoft windows this currently means using the functionality provided 
+by the Urlmon library.
+
+\li JavaScriptKit: This kit provides basic support for scripting your 
+C++ classes using java script. The current implementation is based on
+the java script interpreter written by Mozilla.
 
 \li NetworkKit: This kit contains items pertaining to network interactions in any 
 application, containing items like sockets. If your application demands 
 multi-party interaction, use this kit.
+
+\li OpenGLKit: This kit facilitates the display of OpenGL code within an application. 
+If you wish to use three-dimensional graphics, an OpenGLControl will be a good friend.
+
+\li RegExKit: This kit add support for using regular expressions within the VCF.
 
 \li RemoteObjectKit: This is kit was started as an experiment to determine if the 
   RTTI functions could be used to create a small library suitable for distributed 
   objects, something akin to COM/DCOM but much more practical and easy to use. At 
   this point it is more of a proof of concept - it works, but needs to be revamped 
   before using it for anything more than experiments.
+
+
 
 Since components’ interactions with the operating system vary from system to 
 system, each kit contains implementations of the generalized components. Classes 
