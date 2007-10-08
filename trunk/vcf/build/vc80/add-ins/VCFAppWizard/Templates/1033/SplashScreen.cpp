@@ -33,7 +33,7 @@ SplashScreen::SplashScreen()
 
 	tc->setTimeoutInterval( 500 ); //set timeout interval in milliseconds
 
-	tc->TimerPulse += new GenericEventHandler<SplashScreen>( this, &SplashScreen::onTimer, "SplashScreen::onTimer" );
+	tc->TimerPulse += new ClassProcedure1<Event*,SplashScreen>( this, &SplashScreen::onTimer, "SplashScreen::onTimer" );
 
 	tc->setActivated( true );
 }

@@ -8,7 +8,7 @@ using namespace VCF;
 [!output PROJECT_NAME]Window::[!output PROJECT_NAME]Window()
 {
 	DocumentManager* docMgr = DocumentManager::getDocumentManager();
-	docMgr->DocumentInitialized += new GenericEventHandler<[!output PROJECT_NAME]Window>( this, 
+	docMgr->DocumentInitialized += new ClassProcedure1<Event*,[!output PROJECT_NAME]Window>( this, 
 																			&[!output PROJECT_NAME]Window::onDocInitialized,
 																			"[!output PROJECT_NAME]Window::onDocInitialized" );
 }
