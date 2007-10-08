@@ -9,9 +9,85 @@
 
 main();
 
-function main()
+function hello()
 {
+	WScript.Echo( "hello!" );
+}
+
+
+function isVC80Express()
+{
+	var result = false;
+	var WSShell = WScript.CreateObject("WScript.Shell");
+	var FileSys = WScript.CreateObject("Scripting.FileSystemObject");
+	
+	var strVC8Key = "HKLM\\Software\\Microsoft\\VCExpress\\8.0\\Setup\\VC\\ProductDir";
+	try
+	{
+		if ( FileSys.FolderExists( WSShell.RegRead(strVC8Key) ) ) {
+			result = true;
+		}
+	}
+	catch(e)
+	{		
+		try {
+			strVC8Key = "HKLM\\SOFTWARE\\Microsoft\\VisualStudio\\8.0\\Setup\\VC\\ProductDir";
+			if ( FileSys.FolderExists( WSShell.RegRead(strVC8Key) ) ) {
+				result = false;
+			}
+		}
+		catch(e)
+		{
+			WScript.Echo("ERROR: Cannot find where Visual Studio 8.0 is installed.");
+		}
+	}
+	
+	return result;
+}
+
+function getVC80ProductDir()
+{
+	var result = "Unknown";
+	var WSShell = WScript.CreateObject("WScript.Shell");
+	
+	var strVC8Key = "HKLM\\Software\\Microsoft\\VCExpress\\8.0\\Setup\\VC\\ProductDir";
+	try
+	{
+		result = WSShell.RegRead(strVC8Key);
+	}
+	catch(e)
+	{		
+		try {
+			strVC8Key = "HKLM\\SOFTWARE\\Microsoft\\VisualStudio\\8.0\\Setup\\VC\\ProductDir";
+			result = WSShell.RegRead(strVC8Key);
+		}
+		catch(e)
+		{
+			WScript.Echo("ERROR: Cannot find where Visual Studio 8.0 is installed.");
+		}
+	}
+	
+	return result;
+}
+
+function getInstallDestFolder( rootDir )
+{
+	var result;
+	var FileSys = WScript.CreateObject("Scripting.FileSystemObject");
+	
+	result = FileSys.BuildPath( rootDir, "Express\\vcprojects" );
+	if ( !isVC80Express() ) {
+		result = FileSys.BuildPath( rootDir, "vcprojects" );
+	}
+	
+	return result;
+}
+
+function main()
+{	
 	var bDebug = false;
+	var expressVer = isVC80Express();
+	
 	var Args = WScript.Arguments;
 	if(Args.length > 0 && Args(0) == "/debug")
 		bDebug = true;
@@ -39,18 +115,13 @@ function main()
 		return;
 	}
 
-	var strVC7Key = "HKLM\\Software\\Microsoft\\VCExpress\\8.0\\Setup\\VC\\ProductDir";
-	try
-	{
-		strValue = WSShell.RegRead(strVC7Key);
-	}
-	catch(e)
-	{
-		WScript.Echo("ERROR: Cannot find where Visual Studio 8.0 is installed.");
-		return;
-	}
+	
+	strValue = getVC80ProductDir();
 
-	var strDestFolder = FileSys.BuildPath( strValue, "Express\\vcprojects" );
+	var strDestFolder = getInstallDestFolder(strValue);
+	
+	WScript.Echo("Destination: " + strDestFolder);
+	
 	if(bDebug)
 		WScript.Echo("Destination: " + strDestFolder);
 	if(!FileSys.FolderExists(strDestFolder))
@@ -141,18 +212,9 @@ function main()
 		return;
 	}
 
-	var strVC7Key = "HKLM\\Software\\Microsoft\\VCExpress\\8.0\\Setup\\VC\\ProductDir";
-	try
-	{
-		strValue = WSShell.RegRead(strVC7Key);
-	}
-	catch(e)
-	{
-		WScript.Echo("ERROR: Cannot find where Visual Studio 8.0 is installed.");
-		return;
-	}
-
-	var strDestFolder = FileSys.BuildPath( strValue, "Express\\vcprojects" );
+	strValue = getVC80ProductDir();
+	var strDestFolder = getInstallDestFolder(strValue);	
+	
 	if(bDebug)
 		WScript.Echo("Destination: " + strDestFolder);
 	if(!FileSys.FolderExists(strDestFolder))
@@ -244,10 +306,10 @@ function main()
 		return;
 	}
 
-	var strVC7Key = "HKLM\\Software\\Microsoft\\VisualStudio\\7.1\\Setup\\VC\\ProductDir";
+	var strVC8Key = "HKLM\\Software\\Microsoft\\VisualStudio\\7.1\\Setup\\VC\\ProductDir";
 	try
 	{
-		strValue = WSShell.RegRead(strVC7Key);
+		strValue = WSShell.RegRead(strVC8Key);
 	}
 	catch(e)
 	{
@@ -346,18 +408,9 @@ function main()
 		return;
 	}
 
-	var strVC7Key = "HKLM\\Software\\Microsoft\\VCExpress\\8.0\\Setup\\VC\\ProductDir";
-	try
-	{
-		strValue = WSShell.RegRead(strVC7Key);
-	}
-	catch(e)
-	{
-		WScript.Echo("ERROR: Cannot find where Visual Studio 8.0 is installed.");
-		return;
-	}
-
-	var strDestFolder = FileSys.BuildPath( strValue, "Express\\vcprojects" );
+	strValue = getVC80ProductDir();
+	var strDestFolder = getInstallDestFolder(strValue);	
+	
 	if(bDebug)
 		WScript.Echo("Destination: " + strDestFolder);
 	if(!FileSys.FolderExists(strDestFolder))
@@ -448,10 +501,10 @@ function main()
 		return;
 	}
 
-	var strVC7Key = "HKLM\\Software\\Microsoft\\VisualStudio\\7.1\\Setup\\VC\\ProductDir";
+	var strVC8Key = "HKLM\\Software\\Microsoft\\VisualStudio\\7.1\\Setup\\VC\\ProductDir";
 	try
 	{
-		strValue = WSShell.RegRead(strVC7Key);
+		strValue = WSShell.RegRead(strVC8Key);
 	}
 	catch(e)
 	{
