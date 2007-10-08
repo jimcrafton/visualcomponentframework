@@ -2,7 +2,7 @@
 #ifndef _VCF_IPADDRESS_H__
 #define _VCF_IPADDRESS_H__
 
-//IPAddressPeer.h
+//IPAddress.h
 
 /*
 Copyright 2000-2004 The VCF Project.
@@ -37,9 +37,9 @@ namespace VCF {
 
 		virtual ~IPAddress();
 
-		RawBytes getAddressBytes();
-		String getHostName();
-		String getHostAddress();
+		RawBytes getAddressBytes() const ;
+		String getHostName() const ;
+		String getHostAddress() const;
 
 		static std::vector<IPAddress> getDNSHostAddresses( const String& host );
 	protected:
@@ -47,6 +47,27 @@ namespace VCF {
 	};
 
 
+	class NETWORKKIT_API IPEndPoint : public IPAddress {
+	public:
+		IPEndPoint(): IPAddress(),port_(0) {}
+
+		IPEndPoint( const String& host ): IPAddress(host),port_(0){}
+		IPEndPoint( const RawBytes& ipAddr ): IPAddress(ipAddr),port_(0){}
+
+		IPEndPoint( const String& host, unsigned short port ): IPAddress(host),port_(port){}
+		IPEndPoint( const RawBytes& ipAddr, unsigned short port ): IPAddress(ipAddr),port_(port){}
+
+		IPEndPoint( const IPAddress& ipAddress ): IPAddress(ipAddress),port_(0){}
+
+		IPEndPoint& operator= (const IPEndPoint& rhs );
+
+		unsigned short getPort() const {
+			return port_;
+		}
+
+	protected:
+		unsigned short port_;
+	};
 
 };
 

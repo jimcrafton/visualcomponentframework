@@ -33,7 +33,7 @@ namespace VCF {
 		virtual String getHostName() = 0;
 		virtual String getHostAddress() = 0;
 		virtual bool isIPV4() = 0;
-		virtual bool isIPV6() = 0;
+		virtual bool isIPV6() = 0;		
 
 		virtual  std::vector<IPAddress> getDNSHostAddresses( const String& host ) = 0;
 	};

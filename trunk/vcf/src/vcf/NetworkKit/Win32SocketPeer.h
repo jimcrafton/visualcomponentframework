@@ -46,13 +46,19 @@ namespace VCF {
 
 		virtual int send( const unsigned char* bytes, size_t bytesLength );
 
+		virtual int recvFrom( unsigned char* bytes, size_t bytesLength, IPEndPoint& fromAddr );
+
+		virtual int sendTo( const unsigned char* bytes, size_t bytesLength, const IPEndPoint& toAddr );
+
 		virtual OSHandleID getHandleID();
 
-		virtual String getHostName();
+		virtual IPAddress getLocalHostIPAddress();
 
-		virtual String getHostIPAddress();
+		virtual unsigned short getLocalPort();
 
-		virtual unsigned short getPort();
+		virtual IPAddress getRemoteHostIPAddress();
+
+		virtual unsigned short getRemotePort();
 
 		virtual void setOptions( Dictionary& options );
 
@@ -91,8 +97,15 @@ namespace VCF {
 
 		virtual int send( const unsigned char* bytes, size_t bytesLength );
 
+		virtual int recvFrom( unsigned char* bytes, size_t bytesLength, IPEndPoint& fromAddr );
+
+		virtual int sendTo( const unsigned char* bytes, size_t bytesLength, const IPEndPoint& toAddr );
+
+		virtual IPAddress getRemoteHostIPAddress();
+
+		virtual unsigned short getRemotePort();
 	protected:
-		struct sockaddr_in remoteAddr_;
+		//struct sockaddr_in remoteAddr_;
 	};
 };
 

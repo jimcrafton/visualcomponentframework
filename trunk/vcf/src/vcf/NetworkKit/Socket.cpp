@@ -248,19 +248,25 @@ Dictionary Socket::getOptions()
 	return peer_->getOptions();
 }
 
-String Socket::getHostName()
+IPAddress Socket::getLocalHostIPAddress()
 {
-	return peer_->getHostName();
+	return peer_->getLocalHostIPAddress();
 }
 
-String Socket::getHostIPAddress()
+unsigned short Socket::getLocalPort()
 {
-	return peer_->getHostIPAddress();
+	return peer_->getLocalPort();
 }
 
-unsigned short Socket::getPort()
+
+IPAddress Socket::getRemoteHostIPAddress()
 {
-	return peer_->getPort();
+	return peer_->getRemoteHostIPAddress();
+}
+
+unsigned short Socket::getRemotePort()
+{
+	return peer_->getRemotePort();
 }
 
 
@@ -357,13 +363,13 @@ TCPSocket::TCPSocket():
 TCPSocket::TCPSocket( unsigned short port ):
 	Socket(Socket::stStream)
 {
-
+	listen( port );
 }
 
 TCPSocket::TCPSocket( const String& host, unsigned short port ):
 	Socket(Socket::stStream)
 {
-
+	connect( host, port );
 }
 
 

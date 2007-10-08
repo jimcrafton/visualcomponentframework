@@ -92,17 +92,17 @@ IPAddress::~IPAddress()
 	delete peer_;
 }
 
-IPAddress::RawBytes IPAddress::getAddressBytes()
+IPAddress::RawBytes IPAddress::getAddressBytes() const
 {
 	return peer_->getAddressBytes();
 }
 
-String IPAddress::getHostName()
+String IPAddress::getHostName() const
 {
 	return peer_->getHostName();
 }
 
-String IPAddress::getHostAddress()
+String IPAddress::getHostAddress() const
 {
 	return peer_->getHostAddress();
 }
@@ -119,4 +119,13 @@ std::vector<IPAddress> IPAddress::getDNSHostAddresses( const String& host )
 	delete peer;
 
 	return result;
+}
+
+
+
+IPEndPoint& IPEndPoint::operator= (const IPEndPoint& rhs )
+{
+	peer_->initWithIPAddrPeer( rhs.peer_ );
+	port_ = rhs.port_;
+	return *this;
 }
