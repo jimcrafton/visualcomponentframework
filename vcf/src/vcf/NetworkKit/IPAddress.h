@@ -22,7 +22,9 @@ namespace VCF {
 	class IPAddressPeer;
 
 	
-	
+	/**
+	\class IPAddress IPAddress.h "vcf/NetworkKit/IPAddress.h"
+	*/
 	class NETWORKKIT_API IPAddress : public Object {
 	public:
 		typedef std::vector<unsigned char>	RawBytes;
@@ -47,6 +49,9 @@ namespace VCF {
 	};
 
 
+	/**
+	\class IPEndPoint IPAddress.h "vcf/NetworkKit/IPAddress.h"
+	*/
 	class NETWORKKIT_API IPEndPoint : public IPAddress {
 	public:
 		IPEndPoint(): IPAddress(),port_(0) {}

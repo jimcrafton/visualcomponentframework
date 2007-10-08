@@ -393,12 +393,12 @@ bool Win32SocketPeer::wouldOperationBlock()
 
 
 void selectLoopOnce( std::vector<Socket*>* inReadSockets,
-										std::vector<Socket*>* inWriteSockets,
-										std::vector<Socket*>* inErrorSockets,
-										struct timeval* timeoutVal,
-										std::vector<Socket*>* outReadSockets,
-										std::vector<Socket*>* outWriteSockets,
-										std::vector<Socket*>* outErrorSockets)
+					std::vector<Socket*>* inWriteSockets,
+					std::vector<Socket*>* inErrorSockets,
+					struct timeval* timeoutVal,
+					std::vector<Socket*>* outReadSockets,
+					std::vector<Socket*>* outWriteSockets,
+					std::vector<Socket*>* outErrorSockets)
 
 {
 	fd_set* reader = NULL;
@@ -703,8 +703,32 @@ int Win32UDPSocketPeer::create()
 
 int Win32UDPSocketPeer::connect( const String& host, const unsigned short port )
 {
-	throw RuntimeException( "connect() not allowed for UDP socket" );
-	return -1;
+	int result = -1;
+
+	memset(&sockAddr_, 0, sizeof(sockAddr_));
+    sockAddr_.sin_family = AF_INET;
+
+
+	AnsiString tmpHost = host;
+
+	if ( tmpHost.empty() ) {
+		char tmp[256];
+		int res = ::gethostname(tmp,sizeof(tmp) );
+		tmpHost = tmp;
+	}
+
+	struct hostent *hp = ::gethostbyname(tmpHost.c_str());
+
+	if ( NULL != hp ) {
+		memcpy( &(sockAddr_.sin_addr.s_addr), hp->h_addr, hp->h_length );
+		sockAddr_.sin_port = htons((short)port);
+
+
+		result = ::bind( handle_, (struct sockaddr *)&sockAddr_, sizeof(sockAddr_) );
+	}
+
+	
+	return result;
 }
 
 int Win32UDPSocketPeer::listen( unsigned short port )
@@ -715,18 +739,6 @@ int Win32UDPSocketPeer::listen( unsigned short port )
     sockAddr_.sin_addr.s_addr = htonl(INADDR_ANY);
 	sockAddr_.sin_port = htons(port);
 	int result = ::bind( handle_, (struct sockaddr *)&sockAddr_, sizeof(sockAddr_) );
-
-	int er = WSAGetLastError();
-
-//	memset( &remoteAddr_, 0, sizeof(remoteAddr_) );/
-//	remoteAddr_.sin_family = AF_INET;
-//	struct hostent *hp = ::gethostbyname(host.ansi_c_str());
-
-//	if ( NULL != hp ) {
-//		memcpy( &(remoteAddr_.sin_addr.s_addr), hp->h_addr, hp->h_length );
-//		remoteAddr_.sin_port = htons((short)port);
-//	}
-
 
 	return result;
 }
@@ -767,7 +779,7 @@ int Win32UDPSocketPeer::recvFrom( unsigned char* bytes, size_t bytesLength, IPEn
 	}
 	else {
 		 String ipStr = ::inet_ntoa(frm.sin_addr);
-		fromAddr = IPEndPoint( ipStr, frm.sin_port );
+		fromAddr = IPEndPoint( ipStr, ntohs(frm.sin_port) );
 	}
 
 	return result;
@@ -782,7 +794,7 @@ int Win32UDPSocketPeer::sendTo( const unsigned char* bytes, size_t bytesLength, 
 	memset( &to, 0, sizeof(to) );
 
 	to.sin_family = AF_INET;
-	to.sin_port = toAddr.getPort();
+	to.sin_port = htons( toAddr.getPort() );
 
 	IPAddress::RawBytes addrBytes = toAddr.getAddressBytes();
 	to.sin_addr.S_un.S_un_b.s_b1 = addrBytes[0];

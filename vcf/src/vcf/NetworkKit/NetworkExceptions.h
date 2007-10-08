@@ -56,6 +56,7 @@ namespace VCF  {
 
 
 	/**
+	\class NetworkException NetworkExceptions.h "vcf/NetworkKit/NetworkExceptions.h"
 	Base class for all exceptions in the NetworkKit
 	*/
 	class NETWORKKIT_API NetworkException : public BasicException {
@@ -83,7 +84,9 @@ namespace VCF  {
 	};
 
 
-
+	/**
+	\class SocketException NetworkExceptions.h "vcf/NetworkKit/NetworkExceptions.h"
+	*/
 	class NETWORKKIT_API SocketException : public NetworkException {
 	public:		
 		SocketException( const String & message ):NetworkException(message){}
@@ -96,6 +99,9 @@ namespace VCF  {
 	};
 
 
+	/**
+	\class SocketReadException NetworkExceptions.h "vcf/NetworkKit/NetworkExceptions.h"
+	*/
 	class NETWORKKIT_API SocketReadException : public NetworkException {
 	public:		
 		SocketReadException( const String & message ):NetworkException(message){}
@@ -108,6 +114,9 @@ namespace VCF  {
 	};
 
 
+	/**
+	\class SocketWriteException NetworkExceptions.h "vcf/NetworkKit/NetworkExceptions.h"
+	*/
 	class NETWORKKIT_API SocketWriteException : public NetworkException {
 	public:		
 		SocketWriteException( const String & message ):NetworkException(message){}

@@ -22,6 +22,9 @@ namespace VCF {
 	class IPAddressPeer;
 
 
+	/**
+	\class NetworkToolkit NetworkToolkit.h "vcf/NetworkKit/NetworkToolkit.h"
+	*/
 	class NETWORKKIT_API NetworkToolkit {
 	public:
 		static void create();
