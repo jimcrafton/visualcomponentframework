@@ -81,6 +81,11 @@ public:
 	}
 
 	void onG(TextEvent *e){
+
+		if ( mG->getTextModel()->getText().empty() ) {
+			return;
+		}
+
 		Color *c=getColor();
 		try{
 			int v=StringUtils::fromStringAsInt(mG->getTextModel()->getText());

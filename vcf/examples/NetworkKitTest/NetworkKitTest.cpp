@@ -15,8 +15,8 @@ using namespace VCF;
 
 class ReadThread : public Thread {
 public:
-	Socket* socket;
-	ReadThread( Socket* s ) : socket(s){
+	TCPSocket* socket;
+	ReadThread( TCPSocket* s ) : socket(s){
 
 	}
 
@@ -152,7 +152,7 @@ public:
 
 	virtual bool run() {
 
-		SocketInputStream sis(*socket);
+		TCPSocketInputStream sis(*socket);
 
 		uchar tmp[256];
 		while ( canContinue() ) {
@@ -201,6 +201,17 @@ int main( int argc, char** argv ){
 
 	try {
 
+
+		{
+			IPEndPoint ep1("localhost",4591);
+			
+			IPEndPoint ep2;
+			ep2 = ep1;
+			
+			IPAddress::RawBytes bytes = ep2.getAddressBytes();
+		}		
+
+
 		//compose a localhost address from raw bytes
 		IPAddress::RawBytes ip(4);
 		ip[0] = 127;
@@ -230,8 +241,8 @@ int main( int argc, char** argv ){
 
 
 
-		Socket ircConnection;
-		unsigned short ircPort = 5030;
+		TCPSocket ircConnection;
+		unsigned short ircPort = 6667;
 		String ircHost = "irc.freenode.net";
 
 		ircConnection.connect( ircHost, ircPort );
@@ -243,7 +254,7 @@ int main( int argc, char** argv ){
 		msg = (String)(Format( "USER %s %s %s :%s" ) % "ddiego" % "b" % "c" % "Odysseus");
 		msg += " \r\n";
 
-		SocketOutputStream sos(ircConnection);
+		TCPSocketOutputStream sos(ircConnection);
 		sos.write( (const uchar*)msg.c_str(), msg.size() );
 
 		msg = (String)(Format( "NICK %s" ) % "Unknown[1]");
