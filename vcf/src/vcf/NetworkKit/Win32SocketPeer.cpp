@@ -736,7 +736,15 @@ int Win32UDPSocketPeer::listen( unsigned short port )
 	memset(&sockAddr_, 0, sizeof(sockAddr_));
     sockAddr_.sin_family = AF_INET;
 
-    sockAddr_.sin_addr.s_addr = htonl(INADDR_ANY);
+	struct hostent *hp = ::gethostbyname("localhost");
+
+	if ( NULL != hp ) {
+		memcpy( &(sockAddr_.sin_addr.s_addr), hp->h_addr, hp->h_length );
+	}
+	else {
+		sockAddr_.sin_addr.s_addr = htonl(INADDR_ANY);
+	}
+
 	sockAddr_.sin_port = htons(port);
 	int result = ::bind( handle_, (struct sockaddr *)&sockAddr_, sizeof(sockAddr_) );
 
