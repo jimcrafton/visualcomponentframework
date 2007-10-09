@@ -27,7 +27,7 @@ ParticleEditor::ParticleEditor():Window(){
 
 	// Setup UI
 	{
-		MenuBar *menuBar=new MenuBar();
+		MenuBar *menuBar=new MenuBar(this);
 		setMenuBar(menuBar);
 		MenuItem *root=menuBar->getRootMenuItem();
 		CallBack* menuItemHandler=0;
