@@ -275,11 +275,9 @@ bool Socket::pending()
 	SocketArray readArr(1);
 	readArr[0] = this;
 	SocketArray writeArr(1);
-	writeArr[0] = this;
-	SocketArray errorArr(1);
-	errorArr[0] = this;	
+	writeArr[0] = this;	
 	
-	getPeer()->select( Socket::SelectNoWait, &readArr, &writeArr, &errorArr );
+	getPeer()->select( Socket::SelectNoWait, &readArr, &writeArr, NULL );
 
 	return isReadable() || isWriteable();
 }
