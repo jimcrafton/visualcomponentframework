@@ -257,9 +257,14 @@ uint64 ZipOutputStream::write( const unsigned char* bytesToRead, uint64 sizeOfBy
 	zstream_.next_in = tmpCopy;
 	zstream_.avail_in = sizeOfBytes;
 
-	do {
-		zstream_.avail_out = sizeof(zipTmpData_);
-		zstream_.next_out = zipTmpData_;
+	
+	do {		
+		if ( NULL == zstream_.next_out ) {
+			zstream_.avail_out = sizeof(zipTmpData_);
+			zstream_.next_out = zipTmpData_;
+		}
+		
+
 		int res= deflate(&zstream_, Z_NO_FLUSH);
 		if ( Z_STREAM_ERROR == res ) {
 			//throw exception!
@@ -304,9 +309,12 @@ int main( int argc, char** argv ){
 	ZipOutputStream zos;
 
 	TextOutputStream tos(&zos);
-	tos.write( data );
 
-	tos.write( data );
+	String str1 = "Part 1";
+	String str2 = "Part 2";
+	tos.write( str1 );
+
+	tos.write( str2 );
 
 	zos.flush();
 
@@ -317,6 +325,7 @@ int main( int argc, char** argv ){
 	TextInputStream tis(&zis);
 
 	String s;
+	tis.read(s);
 	tis.read(s);
 
 	VCF_ASSERT( s.size() == data.size() );
