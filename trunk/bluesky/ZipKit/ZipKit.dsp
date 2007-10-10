@@ -52,7 +52,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib  /nologo /subsystem:console /machine:I386 /libpath:"$(VCF_LIB)"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib /nologo /subsystem:console /machine:I386 /libpath:"$(VCF_LIB)"
 
 !ELSEIF  "$(CFG)" == "ZipKit - Win32 Debug"
 
@@ -67,8 +67,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/common/ZLib" /I "$(VCF_ROOT)/src/thirdparty/common/ZLib/contrib/minizip" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_CONSOLE" /D "USE_FOUNDATIONKIT_DLL" /FD /GZ   /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/common/ZLib" /I "$(VCF_ROOT)/src/thirdparty/common/ZLib/contrib/minizip" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_CONSOLE" /D "USE_FOUNDATIONKIT_DLL" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -78,7 +78,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib  /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"$(VCF_ROOT)/lib"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"$(VCF_ROOT)/lib"
 
 !ENDIF 
 
@@ -108,46 +108,145 @@ SOURCE=.\ZipKit.cpp
 # Begin Source File
 
 SOURCE=..\..\vcf\src\thirdparty\common\ZLib\contrib\minizip\crypt.h
+
+!IF  "$(CFG)" == "ZipKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ZipKit - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\vcf\src\thirdparty\common\ZLib\contrib\minizip\ioapi.c
+
+!IF  "$(CFG)" == "ZipKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ZipKit - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\vcf\src\thirdparty\common\ZLib\contrib\minizip\ioapi.h
+
+!IF  "$(CFG)" == "ZipKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ZipKit - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\vcf\src\thirdparty\common\ZLib\contrib\minizip\iowin32.c
+
+!IF  "$(CFG)" == "ZipKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ZipKit - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\vcf\src\thirdparty\common\ZLib\contrib\minizip\iowin32.h
+
+!IF  "$(CFG)" == "ZipKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ZipKit - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\vcf\src\thirdparty\common\ZLib\contrib\minizip\mztools.c
+
+!IF  "$(CFG)" == "ZipKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ZipKit - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\vcf\src\thirdparty\common\ZLib\contrib\minizip\mztools.h
+
+!IF  "$(CFG)" == "ZipKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ZipKit - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\vcf\src\thirdparty\common\ZLib\contrib\minizip\unzip.c
+
+!IF  "$(CFG)" == "ZipKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ZipKit - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\vcf\src\thirdparty\common\ZLib\contrib\minizip\unzip.h
+
+!IF  "$(CFG)" == "ZipKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ZipKit - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\vcf\src\thirdparty\common\ZLib\contrib\minizip\zip.c
+
+!IF  "$(CFG)" == "ZipKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ZipKit - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\vcf\src\thirdparty\common\ZLib\contrib\minizip\zip.h
+
+!IF  "$(CFG)" == "ZipKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ZipKit - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # End Group
 # End Target
