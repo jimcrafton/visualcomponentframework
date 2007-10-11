@@ -1347,6 +1347,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "TCPClient"=.\TCPClient\TCPClient.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TCPServer"=.\TCPServer\TCPServer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Tables"=.\Tables\Tables.dsp - Package Owner=<4>
 
 Package=<5>
