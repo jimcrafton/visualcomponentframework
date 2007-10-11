@@ -141,17 +141,14 @@ SocketPeer* Win32SocketPeer::accept()
 	Win32SocketPeer* result = NULL;
 
 	struct sockaddr_in addr;
-	memset( &addr, 0, sizeof(addr) );
-
-	addr.sin_family = AF_INET;
-	addr.sin_addr.s_addr = INADDR_ANY;
-	addr.sin_port = sockAddr_.sin_port;
+	memcpy( &addr, &sockAddr_, sizeof(addr) );
 
 	int length = sizeof(addr);
 	SOCKET acceptSocket = ::accept( handle_ , (sockaddr*)&addr, &length );
 
 	if ( acceptSocket != INVALID_SOCKET ) {
-		result = new Win32SocketPeer( acceptSocket );
+
+		result = new Win32SocketPeer( acceptSocket );	
 	}
 
 
@@ -249,26 +246,6 @@ unsigned short Win32SocketPeer::getLocalPort()
 	unsigned short result = ntohs( sockAddr_.sin_port );
 	return result;
 }
-
-
-/*
-String Win32SocketPeer::getRemoteHostName()
-{
-	String result;
-
-	struct hostent *hp = gethostbyaddr( (const char*)&sockAddr_.sin_addr.S_un, sizeof(sockAddr_.sin_addr.S_un), 0 );
-	if ( NULL != hp ) {
-		result = hp->h_name;
-	}
-	else {
-		int err = WSAGetLastError();
-		printf( "err: %d\n", err );
-	}
-
-
-	return result;
-}
-*/
 
 IPAddress Win32SocketPeer::getRemoteHostIPAddress()
 {
