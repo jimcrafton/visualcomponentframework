@@ -1278,6 +1278,390 @@ protected:
 };
 
 
+template <
+	typename ParamType1, 
+	typename ParamType2, 
+	typename ParamType3,
+	typename ParamType4,
+	typename ParamType5,
+	typename ParamType6, 
+	typename ParamType7
+	>
+class NullClassType7 {
+	public:
+		void m(ParamType1, ParamType2, ParamType3,ParamType4,ParamType5,ParamType6,ParamType7){}
+		void m(Thread*, ParamType1, ParamType2, ParamType3,ParamType4,ParamType5,ParamType6,ParamType7){}
+};
+
+template <
+	typename ParamType1, 
+	typename ParamType2, 
+	typename ParamType3, 
+	typename ParamType4, 
+	typename ParamType5, 
+	typename ParamType6, 
+	typename ParamType7, 
+	typename ClassType=NullClassType7<ParamType1,ParamType2,ParamType3,ParamType4,ParamType5,ParamType6,ParamType7> 
+	>
+class ThreadedProcedure7: public Runnable {
+public:
+
+	typedef NullClassType7<ParamType1,ParamType2,ParamType3,ParamType4,ParamType5,ParamType6,ParamType7> NullClassType;
+
+	typedef void (*ProcPtr)(ParamType1 p1,ParamType2 p2,ParamType3 p3,ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7);
+	typedef void (*ProcThreadPtr)(Thread* thread, ParamType1 p1, ParamType2 p2, ParamType3 p3,ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7);	
+
+	typedef void (ClassType::*ClassProcPtr)(ParamType1 p1,ParamType2 p2, ParamType3 p3, ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7);
+	typedef void (ClassType::*ClassThreadProcPtr)(Thread* thread, ParamType1 p1, ParamType2 p2, ParamType3 p3, ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7);
+
+	typedef ThreadedProcedure7<ParamType1,ParamType2,ParamType3,ParamType4,ParamType5,ParamType6,ParamType7,ClassType> BaseClass;
+
+	ThreadedProcedure7( ParamType1 p1, ParamType2 p2, ParamType3 p3, ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7, ProcPtr procPtr ): 
+		param1_(p1), param2_(p2), param3_(p3), param4_(p4), param5_(p5),param6_(p6),param7_(p7),
+		internalParams_(NULL),runningThread_(NULL),
+			procPtr_(NULL),
+			procThreadPtr_(NULL),
+			classProcPtr_(NULL),
+			classThreadProcPtr_(NULL),
+			instancePtr_(NULL){
+
+		BaseClass* params = 
+			new BaseClass(p1,p2,p3,p4,p5,p6,p7);
+
+		params->procPtr_ = procPtr;
+
+		internalParams_ = params;
+	}
+
+	ThreadedProcedure7( ParamType1 p1, ParamType2 p2, ParamType3 p3, ParamType4 p4,ParamType5 p5,ParamType6 p6,ParamType7 p7,ProcThreadPtr procPtr ):
+			param1_(p1), param2_(p2), param3_(p3), param4_(p4), param5_(p5),param6_(p6),param7_(p7),
+			internalParams_(NULL),runningThread_(NULL),
+			procPtr_(NULL),
+			procThreadPtr_(NULL),
+			classProcPtr_(NULL),
+			classThreadProcPtr_(NULL),
+			instancePtr_(NULL){
+
+		BaseClass* params = 
+			new BaseClass(p1,p2,p3,p4,p5,p6,p7);
+
+		params->procThreadPtr_ = procPtr;
+
+		internalParams_ = params;
+	}
+
+	ThreadedProcedure7( ClassType* src, ParamType1 p1, ParamType2 p2, ParamType3 p3, ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7, ClassProcPtr procPtr ): 
+		param1_(p1), param2_(p2), param3_(p3), param4_(p4), param5_(p5),param6_(p6),param7_(p7),
+		internalParams_(NULL),runningThread_(NULL),
+			procPtr_(NULL),
+			procThreadPtr_(NULL),
+			classProcPtr_(NULL),
+			classThreadProcPtr_(NULL),
+			instancePtr_(NULL) {
+
+		BaseClass* params = 
+			new BaseClass(p1,p2,p3,p4,p5,p6,p7);
+
+		params->classProcPtr_ = procPtr;
+		params->instancePtr_ = src;
+
+		internalParams_ = params;
+	}
+
+
+	ThreadedProcedure7( ClassType* src, ParamType1 p1, ParamType2 p2, ParamType3 p3, ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7, ClassThreadProcPtr procPtr ): 
+			param1_(p1),param2_(p2),param3_(p3),param4_(p4),param5_(p5),param6_(p6),param7_(p7),
+			internalParams_(NULL),runningThread_(NULL),
+			procPtr_(NULL),
+			procThreadPtr_(NULL),
+			classProcPtr_(NULL),
+			classThreadProcPtr_(NULL),
+			instancePtr_(NULL){
+
+		BaseClass* params = 
+			new BaseClass(p1,p2,p3,p4,p5,p6,p7);
+
+		params->classThreadProcPtr_ = procPtr;
+		params->instancePtr_ = src;
+
+		internalParams_ = params;
+	}
+
+	virtual bool run() {
+		if ( typeid(ClassType) == typeid(NullClassType) ) {
+			if ( NULL != procThreadPtr_ ) {
+				(*procThreadPtr_)( runningThread_, param1_, param2_, param3_, param4_, param5_, param6_, param7_ );
+			}
+			else if ( NULL != procPtr_ ) {
+				(*procPtr_)( param1_, param2_, param3_, param4_, param5_, param6_, param7_ );
+			}
+			else {
+				return false;
+			}			
+		}
+		else {
+			if ( NULL != instancePtr_ ) {
+				if ( NULL != classThreadProcPtr_ ) {
+					(instancePtr_->*classThreadProcPtr_)( runningThread_, param1_, param2_, param3_, param4_, param5_, param6_, param7_ );
+				}
+				else if ( NULL != classProcPtr_ ) {
+					(instancePtr_->*classProcPtr_)( param1_, param2_, param3_, param4_, param5_, param6_, param7_ );
+				}
+				else {
+					return false;
+				}	
+				
+			}
+		}
+		
+
+		return true;
+	}
+
+	virtual void stop(){}
+
+
+	Runnable* getParams() {
+		return internalParams_;
+	}
+
+	Thread* invoke() {
+		if ( NULL == runningThread_ ) {
+			runningThread_ = new Thread( internalParams_, true, true );
+			BaseClass* params = (BaseClass*)internalParams_;
+			params->runningThread_ = runningThread_;
+
+			runningThread_->start();
+		}
+		return runningThread_;
+	}
+
+
+protected:
+
+	ThreadedProcedure7( ParamType1 p1, ParamType2 p2, ParamType3 p3, ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7 ): 
+			param1_(p1), param2_(p2), param3_(p3), param4_(p4),param5_(p5),param6_(p6),param7_(p7),
+			internalParams_(NULL),runningThread_(NULL),
+			procPtr_(NULL),
+			procThreadPtr_(NULL),
+			classProcPtr_(NULL),
+			classThreadProcPtr_(NULL),
+			instancePtr_(NULL){
+	}
+
+	
+	ParamType1 param1_;
+	ParamType2 param2_;
+	ParamType3 param3_;
+	ParamType4 param4_;
+	ParamType5 param5_;
+	ParamType6 param6_;
+	ParamType7 param7_;
+	Runnable* internalParams_;
+	Thread* runningThread_;
+	ProcPtr procPtr_;
+	ProcThreadPtr procThreadPtr_;
+	ClassProcPtr classProcPtr_;
+	ClassThreadProcPtr classThreadProcPtr_;
+	ClassType* instancePtr_;
+};
+
+
+
+
+
+template <
+	typename ParamType1, 
+	typename ParamType2, 
+	typename ParamType3,
+	typename ParamType4,
+	typename ParamType5,
+	typename ParamType6, 
+	typename ParamType7,
+	typename ParamType8
+	>
+class NullClassType8 {
+	public:
+		void m(ParamType1, ParamType2, ParamType3,ParamType4,ParamType5,ParamType6,ParamType7,ParamType8){}
+		void m(Thread*, ParamType1, ParamType2, ParamType3,ParamType4,ParamType5,ParamType6,ParamType7,ParamType8){}
+};
+
+
+template <
+	typename ParamType1, 
+	typename ParamType2, 
+	typename ParamType3, 
+	typename ParamType4, 
+	typename ParamType5, 
+	typename ParamType6, 
+	typename ParamType7, 
+	typename ParamType8, 
+	typename ClassType=NullClassType8<ParamType1,ParamType2,ParamType3,ParamType4,ParamType5,ParamType6,ParamType7,ParamType8> 
+	>
+class ThreadedProcedure8: public Runnable {
+public:
+
+	typedef NullClassType8<ParamType1,ParamType2,ParamType3,ParamType4,ParamType5,ParamType6,ParamType7,ParamType8> NullClassType;
+
+	typedef void (*ProcPtr)(ParamType1 p1,ParamType2 p2,ParamType3 p3,ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7,ParamType8 p8);
+	typedef void (*ProcThreadPtr)(Thread* thread, ParamType1 p1, ParamType2 p2, ParamType3 p3,ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7,ParamType8 p8);	
+
+	typedef void (ClassType::*ClassProcPtr)(ParamType1 p1,ParamType2 p2, ParamType3 p3, ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7,ParamType8 p8);
+	typedef void (ClassType::*ClassThreadProcPtr)(Thread* thread, ParamType1 p1, ParamType2 p2, ParamType3 p3, ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7,ParamType8 p8);
+
+	typedef ThreadedProcedure8<ParamType1,ParamType2,ParamType3,ParamType4,ParamType5,ParamType6,ParamType7,ParamType8,ClassType> BaseClass;
+
+	ThreadedProcedure8( ParamType1 p1, ParamType2 p2, ParamType3 p3, ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7,ParamType8 p8, ProcPtr procPtr ): 
+		param1_(p1), param2_(p2), param3_(p3), param4_(p4), param5_(p5),param6_(p6),param7_(p7),param8_(p8),
+		internalParams_(NULL),runningThread_(NULL),
+			procPtr_(NULL),
+			procThreadPtr_(NULL),
+			classProcPtr_(NULL),
+			classThreadProcPtr_(NULL),
+			instancePtr_(NULL){
+
+		BaseClass* params = 
+			new BaseClass(p1,p2,p3,p4,p5,p6,p7,p8);
+
+		params->procPtr_ = procPtr;
+
+		internalParams_ = params;
+	}
+
+	ThreadedProcedure8( ParamType1 p1, ParamType2 p2, ParamType3 p3, ParamType4 p4,ParamType5 p5,ParamType6 p6,ParamType7 p7,ParamType8 p8,ProcThreadPtr procPtr ):
+			param1_(p1), param2_(p2), param3_(p3), param4_(p4), param5_(p5),param6_(p6),param7_(p7),param8_(p8),
+			internalParams_(NULL),runningThread_(NULL),
+			procPtr_(NULL),
+			procThreadPtr_(NULL),
+			classProcPtr_(NULL),
+			classThreadProcPtr_(NULL),
+			instancePtr_(NULL){
+
+		BaseClass* params = 
+			new BaseClass(p1,p2,p3,p4,p5,p6,p7,p8);
+
+		params->procThreadPtr_ = procPtr;
+
+		internalParams_ = params;
+	}
+
+	ThreadedProcedure8( ClassType* src, ParamType1 p1, ParamType2 p2, ParamType3 p3, ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7,ParamType8 p8, ClassProcPtr procPtr ): 
+		param1_(p1), param2_(p2), param3_(p3), param4_(p4), param5_(p5),param6_(p6),param7_(p7),param8_(p8),
+		internalParams_(NULL),runningThread_(NULL),
+			procPtr_(NULL),
+			procThreadPtr_(NULL),
+			classProcPtr_(NULL),
+			classThreadProcPtr_(NULL),
+			instancePtr_(NULL) {
+
+		BaseClass* params = 
+			new BaseClass(p1,p2,p3,p4,p5,p6,p7,p8);
+
+		params->classProcPtr_ = procPtr;
+		params->instancePtr_ = src;
+
+		internalParams_ = params;
+	}
+
+
+	ThreadedProcedure8( ClassType* src, ParamType1 p1, ParamType2 p2, ParamType3 p3, ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7,ParamType8 p8, ClassThreadProcPtr procPtr ): 
+			param1_(p1),param2_(p2),param3_(p3),param4_(p4),param5_(p5),param6_(p6),param7_(p7),param8_(p8),
+			internalParams_(NULL),runningThread_(NULL),
+			procPtr_(NULL),
+			procThreadPtr_(NULL),
+			classProcPtr_(NULL),
+			classThreadProcPtr_(NULL),
+			instancePtr_(NULL){
+
+		BaseClass* params = 
+			new BaseClass(p1,p2,p3,p4,p5,p6,p7,p8);
+
+		params->classThreadProcPtr_ = procPtr;
+		params->instancePtr_ = src;
+
+		internalParams_ = params;
+	}
+
+	virtual bool run() {
+		if ( typeid(ClassType) == typeid(NullClassType) ) {
+			if ( NULL != procThreadPtr_ ) {
+				(*procThreadPtr_)( runningThread_, param1_, param2_, param3_, param4_, param5_, param6_, param7_, param8_ );
+			}
+			else if ( NULL != procPtr_ ) {
+				(*procPtr_)( param1_, param2_, param3_, param4_, param5_, param6_, param7_, param8_ );
+			}
+			else {
+				return false;
+			}			
+		}
+		else {
+			if ( NULL != instancePtr_ ) {
+				if ( NULL != classThreadProcPtr_ ) {
+					(instancePtr_->*classThreadProcPtr_)( runningThread_, param1_, param2_, param3_, param4_, param5_, param6_, param7_, param8_ );
+				}
+				else if ( NULL != classProcPtr_ ) {
+					(instancePtr_->*classProcPtr_)( param1_, param2_, param3_, param4_, param5_, param6_, param7_, param8_ );
+				}
+				else {
+					return false;
+				}	
+				
+			}
+		}
+		
+
+		return true;
+	}
+
+	virtual void stop(){}
+
+
+	Runnable* getParams() {
+		return internalParams_;
+	}
+
+	Thread* invoke() {
+		if ( NULL == runningThread_ ) {
+			runningThread_ = new Thread( internalParams_, true, true );
+			BaseClass* params = (BaseClass*)internalParams_;
+			params->runningThread_ = runningThread_;
+
+			runningThread_->start();
+		}
+		return runningThread_;
+	}
+
+
+protected:
+
+	ThreadedProcedure8( ParamType1 p1, ParamType2 p2, ParamType3 p3, ParamType4 p4, ParamType5 p5, ParamType6 p6, ParamType7 p7,ParamType8 p8 ): 
+			param1_(p1), param2_(p2), param3_(p3), param4_(p4),param5_(p5),param6_(p6),param7_(p7),param8_(p8),
+			internalParams_(NULL),runningThread_(NULL),
+			procPtr_(NULL),
+			procThreadPtr_(NULL),
+			classProcPtr_(NULL),
+			classThreadProcPtr_(NULL),
+			instancePtr_(NULL){
+	}
+
+	
+	ParamType1 param1_;
+	ParamType2 param2_;
+	ParamType3 param3_;
+	ParamType4 param4_;
+	ParamType5 param5_;
+	ParamType6 param6_;
+	ParamType7 param7_;
+	ParamType8 param8_;
+	Runnable* internalParams_;
+	Thread* runningThread_;
+	ProcPtr procPtr_;
+	ProcThreadPtr procThreadPtr_;
+	ClassProcPtr classProcPtr_;
+	ClassThreadProcPtr classThreadProcPtr_;
+	ClassType* instancePtr_;
+};
+
 
 
 
