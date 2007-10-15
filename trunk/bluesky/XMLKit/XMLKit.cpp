@@ -504,11 +504,101 @@ namespace VCF {
 
 
 
+	
+
+	template <typename Type, typename Impl>
+	class Attachable {
+	public:
+		Attachable():owned_(false), resource_(NULL) {}
+
+		Attachable( Type val ):owned_(false), resource_(val) {}
+
+		Attachable( const Attachable<Type,Impl>& val ):owned_(false), resource_(val.resource_) {}
 
 
+		~Attachable()	{
+			if ( owned_ ) {
+				VCF_ASSERT( NULL != resource_ );
+				if ( resource_ ) {
+					Impl::freeResource(resource_);
+				}
+			}
+		}
 
 
-	class XmlNode  {
+		Type detach() {
+			xmlNodePtr result = resource_;
+			owned_ = false;
+			return result;
+		}
+
+		void attach(Type val) {
+			owned_ = true;
+			resource_ = val;
+		}
+
+		Type get() const {
+			return resource_;
+		}
+
+		void assign( Type rhs ) {
+			if ( owned_ ) {
+				if ( resource_ ) {
+					Impl::freeResource(resource_);
+				}
+			}
+
+			resource_ = rhs;
+			owned_ = false;
+		}
+
+		bool isNull() const {
+			return (NULL == resource_) ? true : false;
+		}
+	protected:
+		bool owned_;
+		Type resource_;
+
+	};
+
+
+	class XmlDocument;
+
+	class XmlNamespace : public Attachable<xmlNsPtr,XmlNamespace> {
+	public:
+		typedef Attachable<xmlNsPtr,XmlNamespace> BaseT;
+
+		XmlNamespace():BaseT()
+		{
+
+		}
+
+		XmlNamespace( xmlNsPtr val ):BaseT(val)
+		{
+			
+		}
+
+		XmlNamespace( const XmlNamespace& val ):BaseT(val)
+		{
+			
+		}
+
+		XmlNamespace& operator=( xmlNsPtr rhs )
+		{
+			assign(rhs);
+			return *this;
+		}
+
+		static void freeResource(xmlNsPtr res)
+		{
+			xmlFreeNs( res );
+		}
+	protected:
+		
+		
+	};
+
+	class XmlNode : public Attachable<xmlNodePtr,XmlNode> {
 	public:
 
 		enum PreservesSpace {
@@ -517,58 +607,38 @@ namespace VCF {
 			psNotInherited = -1
 		};
 
-		XmlNode():owned_(false), nodePtr_(NULL)
+		typedef Attachable<xmlNodePtr,XmlNode> BaseT;
+
+		XmlNode():BaseT()
 		{
 
 		}
 
-		XmlNode( xmlNodePtr node ):owned_(false), nodePtr_(node)
+		XmlNode( xmlNodePtr val ):BaseT(val)
 		{
 			
 		}
 
-		~XmlNode()
+		XmlNode( const XmlNode& val ):BaseT(val)
 		{
-			if ( owned_ ) {
-				VCF_ASSERT( NULL != nodePtr_ );
-				if ( nodePtr_ ) {
-					xmlUnlinkNode( nodePtr_ );
-					xmlFreeNode( nodePtr_ );
-				}
-			}
+			
 		}
 
-		xmlNodePtr detach()
+		XmlNode& operator=( xmlNodePtr rhs )
 		{
-			xmlNodePtr result = nodePtr_;
-			owned_ = false;
-			return result;
-		}
-
-		void attach(xmlNodePtr node)
-		{
-			owned_ = true;
-			nodePtr_ = node;
-		}
-
-		XmlNode& operator=( xmlNodePtr rhs ) 
-		{
-			if ( owned_ ) {
-				if ( nodePtr_ ) {
-					xmlUnlinkNode( nodePtr_ );
-					xmlFreeNode( nodePtr_ );
-				}
-			}
-
-			nodePtr_ = rhs;
-			owned_ = false;
-
+			assign(rhs);
 			return *this;
+		}
+
+		static void freeResource(xmlNodePtr res)
+		{
+			xmlUnlinkNode( res );
+			xmlFreeNode( res );
 		}
 
 		bool getChildren( std::vector<XmlNode>& nodes ) const 
 		{
-			xmlNode *child = nodePtr_->children;
+			xmlNode *child = resource_->children;
 			while ( NULL != child ) {			
 				nodes.push_back( XmlNode(child) );
 				child = child->next;
@@ -579,12 +649,12 @@ namespace VCF {
 
 		XmlNode getParent() const
 		{
-			return XmlNode(nodePtr_->parent);
+			return XmlNode(resource_->parent);
 		}
 
 		XMLNodeType getType() const 
 		{
-			return (XMLNodeType) nodePtr_->type;
+			return (XMLNodeType) resource_->type;
 		}
 
 
@@ -592,7 +662,7 @@ namespace VCF {
 			String result;
 
 			xmlChar* res = 
-				xmlGetNodePath( nodePtr_ );
+				xmlGetNodePath( resource_ );
 
 			if ( NULL != res ) {
 				result = (const char*)res;
@@ -605,12 +675,12 @@ namespace VCF {
 
 
 		XmlNode copy( bool deep ) const {
-			return XmlNode( xmlCopyNode( nodePtr_, deep ? 1 : 2 ) );
+			return XmlNode( xmlCopyNode( resource_, deep ? 1 : 2 ) );
 		}
 
 
 		XmlNode copyList() const {
-			return XmlNode( xmlCopyNodeList( nodePtr_ ) );
+			return XmlNode( xmlCopyNodeList( resource_ ) );
 		}
 
 		String getAttribute( const String& name ) const 
@@ -618,7 +688,7 @@ namespace VCF {
 			String result;
 
 			xmlChar* res = 
-				xmlGetProp( nodePtr_, (const xmlChar*)name.ansi_c_str() );
+				xmlGetProp( resource_, (const xmlChar*)name.ansi_c_str() );
 
 			if ( NULL != res ) {
 				result = (const char*)res;
@@ -629,8 +699,24 @@ namespace VCF {
 			return result;
 		}
 
+		void setNamespaceAttr( const XmlNamespace& ns, const String& name, const String& value )
+		{
+			AnsiString n = name;
+			AnsiString v = value;
+
+			xmlSetNsProp( resource_, ns.get(), (const xmlChar*)n.c_str(), (const xmlChar*)v.c_str() );
+		}
+
+		void setAttribute( const String& name, const String& value )
+		{
+			AnsiString n = name;
+			AnsiString v = value;
+
+			xmlSetProp( resource_, (const xmlChar*)n.c_str(), (const xmlChar*)v.c_str() );
+		}
+
 		bool empty() const {
-			return xmlIsBlankNode( nodePtr_ ) == 1 ? true : false;
+			return xmlIsBlankNode( resource_ ) == 1 ? true : false;
 		}
 
 
@@ -639,7 +725,7 @@ namespace VCF {
 			String result;
 
 			xmlChar* res = 
-				xmlNodeGetContent( nodePtr_ );
+				xmlNodeGetContent( resource_ );
 
 			if ( NULL != res ) {
 				result = (const char*)res;
@@ -655,7 +741,7 @@ namespace VCF {
 			String result;
 
 			xmlChar* res = 
-				xmlNodeGetLang( nodePtr_ );
+				xmlNodeGetLang( resource_ );
 
 			if ( NULL != res ) {
 				result = (const char*)res;
@@ -666,51 +752,181 @@ namespace VCF {
 			return result;
 		}
 
+		String getBase() const 
+		{
+			String result;
+
+			xmlChar* res = 
+				xmlNodeGetBase( resource_->doc, resource_ );
+
+			if ( NULL != res ) {
+				result = (const char*)res;
+
+				XMLUtils::freeXMLStr( res );
+			}
+
+			return result;
+		}
+
+		void setBase( const String& val ) 
+		{
+			xmlNodeSetBase( resource_, (const xmlChar*)val.ansi_c_str() );
+		}
+
 		PreservesSpace getPreservesSpace() const 
 		{
-			return (PreservesSpace) xmlNodeGetSpacePreserve( nodePtr_ );
+			return (PreservesSpace) xmlNodeGetSpacePreserve( resource_ );
 		}
 
 		bool isText() const 
 		{
-			return xmlNodeIsText( nodePtr_ ) == 1 ? true : false;
+			return xmlNodeIsText( resource_ ) == 1 ? true : false;
 		}
 
 		int getLineNumber() const 
 		{
-			return xmlGetLineNo( nodePtr_ );
+			return xmlGetLineNo( resource_ );
 		}
 
 		void setBaseURI( const String& val ) 
 		{
-			xmlNodeSetBase( nodePtr_, (const xmlChar*) val.ansi_c_str() );
+			xmlNodeSetBase( resource_, (const xmlChar*) val.ansi_c_str() );
 		}
 
 		void setContent( const String& val ) 
 		{
-			xmlNodeSetContent( nodePtr_, (const xmlChar*) val.ansi_c_str() );
+			xmlNodeSetContent( resource_, (const xmlChar*) val.ansi_c_str() );
 		}
 
 		void setLang( const String& val ) 
 		{
-			xmlNodeSetLang( nodePtr_, (const xmlChar*) val.ansi_c_str() );
+			xmlNodeSetLang( resource_, (const xmlChar*) val.ansi_c_str() );
 		}
 
 		void setName( const String& val ) 
 		{
-			xmlNodeSetName( nodePtr_, (const xmlChar*) val.ansi_c_str() );
+			xmlNodeSetName( resource_, (const xmlChar*) val.ansi_c_str() );
 		}
 
 		String getName() const 
 		{
-			String result = (const char*)nodePtr_->name;
+			String result = (const char*)resource_->name;
 
 			return result;
 		}
-	protected:
-		bool owned_;
-		xmlNodePtr nodePtr_;
+
+		int reconcileNamespaces() const 
+		{
+			return xmlReconciliateNs( resource_->doc, resource_ );
+		}
+
+		XmlDocument getDocument() const ;
+
+		void setDocument ( const XmlDocument& );
+
+		bool getNamespaceList( std::vector<XmlNamespace>& namespaces )
+		{
+			xmlNsPtr* res = xmlGetNsList( resource_->doc, resource_ );
+
+			if ( NULL != res ) {
+				while ( NULL != *res ) {
+					namespaces.push_back( XmlNamespace(*res) );
+					res ++;
+				}
+			}
+			return !namespaces.empty();
+		}
+
+		void setNamespace( const XmlNamespace& ns )
+		{
+			xmlSetNs( resource_, ns.get() );
+		}
+
+		XmlNamespace searchNamespace( const String& ns ) 
+		{
+			return XmlNamespace( 
+						xmlSearchNs( resource_->doc, resource_, (const xmlChar*)ns.ansi_c_str() ) 
+						);
+		}
+
+		XmlNamespace searchNamespaceByHRef( const String& href ) 
+		{
+			return XmlNamespace( 
+						xmlSearchNsByHref( resource_->doc, resource_, (const xmlChar*)href.ansi_c_str() ) 
+						);
+		}
+
+		XmlNode* copy( const XmlDocument& doc, bool extended ); 
 	};
+
+
+
+	class XmlDocument : public Attachable<xmlDocPtr,XmlDocument> {
+	public:
+		typedef Attachable<xmlDocPtr,XmlDocument> BaseT;
+
+		XmlDocument():BaseT()
+		{
+
+		}
+
+		XmlDocument( xmlDocPtr val ):BaseT(val)
+		{
+			
+		}
+
+		XmlDocument( const XmlDocument& val ):BaseT(val)
+		{
+			
+		}
+
+		XmlDocument& operator=( xmlDocPtr rhs )
+		{
+			assign(rhs);
+			return *this;
+		}
+
+		static void freeResource(xmlDocPtr res)
+		{
+			xmlFreeDoc( res );
+		}
+		
+		XmlNode getRoot() const 
+		{
+			return XmlNode( xmlDocGetRootElement( resource_ ) );
+		}
+
+
+
+		XmlDocument* copy( bool recursive ) const {
+			XmlDocument* result = NULL;
+
+			xmlDocPtr res = xmlCopyDoc( resource_, recursive ? 1 : 0 );
+
+			if ( NULL != res ) {
+				result = new XmlDocument();
+				result->attach(res);
+			}
+
+			return result;
+		}
+
+
+		XmlNode* newCDATABlock( const String& data ) {
+			XmlNode* result = NULL;
+
+			AnsiString tmp = data;
+			xmlNodePtr res = xmlNewCDataBlock( resource_, (const xmlChar*)tmp.c_str(), tmp.size() );
+			if ( NULL != res ) {
+				result = new XmlNode();
+				result->attach( res );
+			}	
+
+			return result;
+		}
+	};
+
+
 
 
 	typedef Delegate1<const XMLReaderError&> XMLReaderErrorDelegate;
@@ -1497,6 +1713,38 @@ namespace VCF {
 			}
 		}
 	};
+
+
+
+
+
+
+
+
+	XmlNode* XmlNode::copy( const XmlDocument& doc, bool extended )
+	{
+		XmlNode* result = NULL;
+		xmlNodePtr res = xmlDocCopyNode( resource_, doc.get(), extended ? 2 : 1 );
+
+		if ( res ) {
+			result = new XmlNode();
+			result->attach( res);
+		}
+		return result;
+	}
+
+
+
+
+	XmlDocument XmlNode::getDocument() const 
+	{
+		return XmlDocument(resource_->doc);
+	}
+
+	void XmlNode::setDocument ( const XmlDocument& doc )
+	{
+		xmlSetTreeDoc( resource_, doc.get() );
+	}
 };
 
 
@@ -1561,17 +1809,12 @@ int main( int argc, char** argv ){
 		System::println( "lang: " + rdr.getLang() );
 		System::println( "uri: " + rdr.getBaseURI() );
 		System::println( "ns: " + rdr.getNamespaceURI() );
-		
+	
+
 		while ( rdr.read() ) {			
 			System::println( "Name: " + rdr.getName() + " depth: " + rdr.getCurrentDepth() );
 
-			XmlNode n = rdr.expand();
-			String c = n.getContent();
-			c = n.getPath();
-
-			std::vector<XmlNode> nodes;
-			n.getChildren(nodes);
-
+				
 
 			System::println( "Inner XML: { " + rdr.readInnerXml() + " }" );
 		}
