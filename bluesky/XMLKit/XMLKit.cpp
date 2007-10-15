@@ -3,6 +3,8 @@
 #include "vcf/FoundationKit/FoundationKit.h"
 #include <libxml/tree.h>
 #include <libxml/parser.h>
+#include <libxml/xmlreader.h>
+
 
 
 #pragma comment ( lib, "ws2_32.lib" )
@@ -24,6 +26,22 @@ namespace VCF {
 #ifdef _DEBUG
 			xmlMemoryDump();
 #endif
+		}
+	};
+
+	
+	class XMLUtils {
+	public:
+		
+		static void freeXMLStr( xmlChar* str )
+		{
+			xmlFreeFunc freeFunc;
+			xmlMallocFunc f1;			
+			xmlReallocFunc f3;
+			xmlStrdupFunc f4;
+			xmlMemGet( &freeFunc, &f1, &f3, &f4 );
+			
+			freeFunc( str );
 		}
 	};
 
@@ -136,11 +154,26 @@ namespace VCF {
 		}
 
 
-		void parse( const String& xml ) {
+		void parse( const String& xml ) 
+		{
 			AnsiString tmp = xml;
 
 			xmlParseChunk( parser_, tmp.c_str(), tmp.size(), 1 );
 		}
+
+
+		void parseChunk( const String& xmlChunk, bool finished=false ) 
+		{
+			AnsiString tmp = xmlChunk;
+
+			xmlParseChunk( parser_, tmp.c_str(), tmp.size(), finished ? 1 : 0 );
+		}
+
+		void finishParsing()
+		{
+			parseChunk( "", true );
+		}
+
 	protected:
 		xmlSAXHandler saxHandler_;
 		xmlParserCtxtPtr parser_;
@@ -404,6 +437,1066 @@ namespace VCF {
 
 	};
 
+
+
+
+	enum XMLNodeType {
+		ntNone = 0,
+		ntElement = 1,
+		ntAttribute = 2,
+		ntText = 3,
+		ntCDATA = 4,
+		ntEntityReference = 5,
+		ntEntity = 6,
+		ntProcessingInstruction = 7,
+		ntComment = 8,
+		ntDocument = 9,
+		ntDocumentType = 10,
+		ntDocumentFragment = 11,
+		ntNotation = 12,
+		ntWhitespace = 13,
+		ntSignificantWhitespace = 14,			
+		ntEndElement = 15,
+		ntEndEntity = 16,
+		ntXmlDeclaration = 17
+	};
+
+
+	class XMLTextReader;
+
+	class XMLReaderError {
+	public:
+
+		XMLReaderError():domain(0),code(0),level(0),line(-1),int1(0),int2(0),ctx(NULL),node(NULL){}
+
+		int	domain;
+		int	code;
+		String message;
+		int	level;
+		String filename;
+		int	line;
+		String str1;
+		String str2;
+		String str3;
+		int	int1;
+		int	int2;
+		XMLTextReader* ctx;
+		void *	node;
+
+
+		bool empty() const {
+			return domain == 0 &&
+					code == 0 &&
+					level == 0 && 
+					line == -1 &&
+					int1 == 0 &&
+					int2 == 0 &&
+					ctx == NULL &&
+					node == NULL &&
+					message.empty() &&
+					filename.empty() &&
+					str1.empty() &&
+					str2.empty() &&
+					str3.empty();
+		}
+	};
+
+
+
+
+
+
+
+
+	class XmlNode  {
+	public:
+
+		enum PreservesSpace {
+			psDefault = 0,
+			psPreserves = 1,
+			psNotInherited = -1
+		};
+
+		XmlNode():owned_(false), nodePtr_(NULL)
+		{
+
+		}
+
+		XmlNode( xmlNodePtr node ):owned_(false), nodePtr_(node)
+		{
+			
+		}
+
+		~XmlNode()
+		{
+			if ( owned_ ) {
+				VCF_ASSERT( NULL != nodePtr_ );
+				if ( nodePtr_ ) {
+					xmlUnlinkNode( nodePtr_ );
+					xmlFreeNode( nodePtr_ );
+				}
+			}
+		}
+
+		xmlNodePtr detach()
+		{
+			xmlNodePtr result = nodePtr_;
+			owned_ = false;
+			return result;
+		}
+
+		void attach(xmlNodePtr node)
+		{
+			owned_ = true;
+			nodePtr_ = node;
+		}
+
+		XmlNode& operator=( xmlNodePtr rhs ) 
+		{
+			if ( owned_ ) {
+				if ( nodePtr_ ) {
+					xmlUnlinkNode( nodePtr_ );
+					xmlFreeNode( nodePtr_ );
+				}
+			}
+
+			nodePtr_ = rhs;
+			owned_ = false;
+
+			return *this;
+		}
+
+		bool getChildren( std::vector<XmlNode>& nodes ) const 
+		{
+			xmlNode *child = nodePtr_->children;
+			while ( NULL != child ) {			
+				nodes.push_back( XmlNode(child) );
+				child = child->next;
+			}
+
+			return !nodes.empty();
+		}
+
+		XmlNode getParent() const
+		{
+			return XmlNode(nodePtr_->parent);
+		}
+
+		XMLNodeType getType() const 
+		{
+			return (XMLNodeType) nodePtr_->type;
+		}
+
+
+		String getPath() const {
+			String result;
+
+			xmlChar* res = 
+				xmlGetNodePath( nodePtr_ );
+
+			if ( NULL != res ) {
+				result = (const char*)res;
+
+				XMLUtils::freeXMLStr( res );
+			}
+
+			return result;
+		}
+
+
+		XmlNode copy( bool deep ) const {
+			return XmlNode( xmlCopyNode( nodePtr_, deep ? 1 : 2 ) );
+		}
+
+
+		XmlNode copyList() const {
+			return XmlNode( xmlCopyNodeList( nodePtr_ ) );
+		}
+
+		String getAttribute( const String& name ) const 
+		{
+			String result;
+
+			xmlChar* res = 
+				xmlGetProp( nodePtr_, (const xmlChar*)name.ansi_c_str() );
+
+			if ( NULL != res ) {
+				result = (const char*)res;
+
+				XMLUtils::freeXMLStr( res );
+			}
+
+			return result;
+		}
+
+		bool empty() const {
+			return xmlIsBlankNode( nodePtr_ ) == 1 ? true : false;
+		}
+
+
+		String getContent() const 
+		{
+			String result;
+
+			xmlChar* res = 
+				xmlNodeGetContent( nodePtr_ );
+
+			if ( NULL != res ) {
+				result = (const char*)res;
+
+				XMLUtils::freeXMLStr( res );
+			}
+
+			return result;
+		}		
+
+		String getLang() const 
+		{
+			String result;
+
+			xmlChar* res = 
+				xmlNodeGetLang( nodePtr_ );
+
+			if ( NULL != res ) {
+				result = (const char*)res;
+
+				XMLUtils::freeXMLStr( res );
+			}
+
+			return result;
+		}
+
+		PreservesSpace getPreservesSpace() const 
+		{
+			return (PreservesSpace) xmlNodeGetSpacePreserve( nodePtr_ );
+		}
+
+		bool isText() const 
+		{
+			return xmlNodeIsText( nodePtr_ ) == 1 ? true : false;
+		}
+
+		int getLineNumber() const 
+		{
+			return xmlGetLineNo( nodePtr_ );
+		}
+
+		void setBaseURI( const String& val ) 
+		{
+			xmlNodeSetBase( nodePtr_, (const xmlChar*) val.ansi_c_str() );
+		}
+
+		void setContent( const String& val ) 
+		{
+			xmlNodeSetContent( nodePtr_, (const xmlChar*) val.ansi_c_str() );
+		}
+
+		void setLang( const String& val ) 
+		{
+			xmlNodeSetLang( nodePtr_, (const xmlChar*) val.ansi_c_str() );
+		}
+
+		void setName( const String& val ) 
+		{
+			xmlNodeSetName( nodePtr_, (const xmlChar*) val.ansi_c_str() );
+		}
+
+		String getName() const 
+		{
+			String result = (const char*)nodePtr_->name;
+
+			return result;
+		}
+	protected:
+		bool owned_;
+		xmlNodePtr nodePtr_;
+	};
+
+
+	typedef Delegate1<const XMLReaderError&> XMLReaderErrorDelegate;
+
+	class XMLTextReader {
+	public:
+
+		enum ParseringFlags {
+			pfLoadDTD = 0x01,
+			pfDefaultAttrs = 0x02,
+			pfValidate = 0x04,
+			pfSubstEntities = 0x08,
+		};
+
+		enum ParserState {
+				psInitial = XML_TEXTREADER_MODE_INITIAL,
+				psInteractive = XML_TEXTREADER_MODE_INTERACTIVE,
+				psError = XML_TEXTREADER_MODE_ERROR,
+				psEOF = XML_TEXTREADER_MODE_EOF,
+				psClosed = XML_TEXTREADER_MODE_CLOSED,
+				psReading = XML_TEXTREADER_MODE_READING
+		};
+
+		XMLReaderErrorDelegate Error;
+		
+
+		XMLTextReader():
+			xmlReader_(NULL)
+		{
+			createXMLReader();
+		}
+
+		~XMLTextReader()
+		{
+			if ( NULL != xmlReader_ ) {
+				xmlFreeTextReader( xmlReader_ );
+				xmlSetStructuredErrorFunc( NULL, NULL );
+			}
+		}
+
+
+		size_t getAttributeCount() const 
+		{
+			VCF_ASSERT( NULL != xmlReader_ );
+
+			size_t result = 0;
+			int res = xmlTextReaderAttributeCount( xmlReader_ );
+
+			if ( res < 0 ) {
+				//throw an exception????
+			}
+			else {
+				result = res;
+			}
+			return result;
+		}
+
+		String getBaseURI() const 
+		{
+			String result;
+			VCF_ASSERT( NULL != xmlReader_ );
+
+			const xmlChar* uri = xmlTextReaderConstBaseUri( xmlReader_ );
+			if ( NULL != uri ) {
+				result = (const char*)uri;
+			}
+
+			return result;
+		}
+
+		int getBytesConsumed() const 
+		{
+			int result = -1;
+
+			result = xmlTextReaderByteConsumed( xmlReader_ );
+
+			return result;
+		}
+
+		bool close() 
+		{
+			return xmlTextReaderClose( xmlReader_ ) < 0 ? false : true;
+		}
+
+		String getEncoding() const 
+		{
+			String result;
+			const xmlChar* enc = xmlTextReaderConstEncoding( xmlReader_ );
+			if ( NULL != enc ) {
+				result = (const char*) enc;
+			}
+			return result;
+		}
+
+		String getLocalName() const 
+		{
+			String result;
+			const xmlChar* val = xmlTextReaderConstLocalName( xmlReader_ );
+			if ( NULL != val ) {
+				result = (const char*) val;
+			}
+			return result;
+		}
+
+		String getName() const 
+		{
+			String result;
+			const xmlChar* val = xmlTextReaderConstName( xmlReader_ );
+			if ( NULL != val ) {
+				result = (const char*) val;
+			}
+			return result;
+		}
+		
+		String getNamespaceURI() const 
+		{
+			String result;
+			const xmlChar* val = xmlTextReaderConstNamespaceUri( xmlReader_ );
+			if ( NULL != val ) {
+				result = (const char*) val;
+			}
+			return result;
+		}
+
+		String getPrefix() const 
+		{
+			String result;
+			const xmlChar* val = xmlTextReaderConstPrefix( xmlReader_ );
+			if ( NULL != val ) {
+				result = (const char*) val;
+			}
+			return result;
+		}
+
+		String getTextValue() const 
+		{
+			String result;
+			const xmlChar* val = xmlTextReaderConstValue( xmlReader_ );
+			if ( NULL != val ) {
+				result = (const char*) val;
+			}
+			return result;
+		}
+
+		String getLang() const 
+		{
+			String result;
+			const xmlChar* val = xmlTextReaderConstXmlLang( xmlReader_ );
+			if ( NULL != val ) {
+				result = (const char*) val;
+			}
+			return result;
+		}
+
+		String getVersion() const 
+		{
+			String result;
+			const xmlChar* val = xmlTextReaderConstXmlVersion( xmlReader_ );
+			if ( NULL != val ) {
+				result = (const char*) val;
+			}
+			return result;
+		}
+
+		int getCurrentDepth() const 
+		{
+			int result = -1;
+
+			result = xmlTextReaderDepth( xmlReader_ );
+
+			return result;
+		}
+
+		XmlNode expand() 
+		{			
+			xmlNodePtr nodePtr = xmlTextReaderExpand( xmlReader_ );
+
+			XmlNode result( nodePtr );
+			result.detach();
+
+			return result;
+		}
+
+		String getAttribute( const String& name ) const 
+		{
+
+			String result;
+			const xmlChar* val = xmlTextReaderGetAttribute( xmlReader_, (const xmlChar*) name.ansi_c_str() );
+			if ( NULL != val ) {
+				result = (const char*) val;
+			}
+			return result;
+		}
+		
+		String getAttribute( const size_t& index ) const 
+		{
+
+			String result;
+			const xmlChar* val = xmlTextReaderGetAttributeNo( xmlReader_, index );
+			if ( NULL != val ) {
+				result = (const char*) val;
+			}
+			return result;
+		}
+		
+		String getAttribute( const String& localName, const String& namespaceURI ) const 
+		{
+
+			String result;
+			const xmlChar* val = 
+				xmlTextReaderGetAttributeNs( xmlReader_, 
+												(const xmlChar*) localName.ansi_c_str(),
+												(const xmlChar*) namespaceURI.ansi_c_str() );
+			if ( NULL != val ) {
+				result = (const char*) val;
+			}
+			return result;
+		}
+
+
+		int getCurrentParserColumn() const 
+		{
+			return xmlTextReaderGetParserColumnNumber( xmlReader_ );
+		}
+
+		int getCurrentParserLine() const 
+		{
+			return xmlTextReaderGetParserLineNumber( xmlReader_ );
+		}
+
+		bool parserLoadsDTD() const 
+		{
+			int res = xmlTextReaderGetParserProp( xmlReader_, XML_PARSER_LOADDTD );
+			bool result = false;
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool parserUsingDefaultAttrs() const 
+		{
+			int res = xmlTextReaderGetParserProp( xmlReader_, XML_PARSER_DEFAULTATTRS );
+			bool result = false;
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool parserWillValidate() const 
+		{
+			int res = xmlTextReaderGetParserProp( xmlReader_, XML_PARSER_VALIDATE );
+			bool result = false;
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool parserWillSubstituteEntities() const 
+		{
+			int res = xmlTextReaderGetParserProp( xmlReader_, XML_PARSER_SUBST_ENTITIES );
+			bool result = false;
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		void setParserLoadsDTD( bool val ) 
+		{
+			int res = xmlTextReaderSetParserProp( xmlReader_, XML_PARSER_LOADDTD, val ? 1 : 0 );			
+			if ( res < 0 ) {
+				//throw exception???
+			}
+		}
+
+		void setParserDefaultAttrs( bool val ) 
+		{
+			int res = xmlTextReaderSetParserProp( xmlReader_, XML_PARSER_DEFAULTATTRS, val ? 1 : 0 );			
+			if ( res < 0 ) {
+				//throw exception???
+			}
+		}
+
+		void setParserWillValidate( bool val ) 
+		{
+			int res = xmlTextReaderSetParserProp( xmlReader_, XML_PARSER_VALIDATE, val ? 1 : 0 );			
+			if ( res < 0 ) {
+				//throw exception???
+			}
+		}
+
+		void setParserWillSubstituteEntities( bool val ) 
+		{			
+			int res = xmlTextReaderSetParserProp( xmlReader_, XML_PARSER_SUBST_ENTITIES, val ? 1 : 0 );			
+			if ( res < 0 ) {
+				//throw exception???
+			}
+		}
+
+
+		bool hasAttributes() const 
+		{
+			int res = xmlTextReaderHasAttributes( xmlReader_ );
+			bool result = false;
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool hasValue() const 
+		{
+			int res = xmlTextReaderHasValue( xmlReader_ );
+			bool result = false;
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool isDefaultValue() const 
+		{
+			int res = xmlTextReaderIsDefault( xmlReader_ );
+			bool result = false;
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool isEmptyElement() const 
+		{
+			int res = xmlTextReaderIsEmptyElement( xmlReader_ );
+			bool result = false;
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool isNamespace() const 
+		{
+			int res = xmlTextReaderIsNamespaceDecl( xmlReader_ );
+			bool result = false;
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool isParserValid() const 
+		{
+			int res = xmlTextReaderIsValid( xmlReader_ );
+			bool result = false;
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		String lookupNamespace( const String& prefix ) const 
+		{
+			String result;
+			xmlChar* res = xmlTextReaderLookupNamespace( xmlReader_, (const xmlChar*) prefix.ansi_c_str() );	
+			
+			if ( NULL != res ) {
+
+				result = (const char*)res;
+
+				XMLUtils::freeXMLStr(res);
+			}
+
+			return result;
+		}
+			
+		bool moveToAttribute( const String& attributeName ) 
+		{
+			bool result = false;
+
+			int res = xmlTextReaderMoveToAttribute( xmlReader_, (const xmlChar*) attributeName.ansi_c_str() );
+
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool moveToAttribute( size_t index ) 
+		{
+			bool result = false;
+
+			int res = xmlTextReaderMoveToAttributeNo( xmlReader_, index );
+
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool moveToAttribute( const String& localAttrName, const String& namespaceURI ) 
+		{
+			bool result = false;
+
+			int res = 
+				xmlTextReaderMoveToAttributeNs( xmlReader_, 
+												(const xmlChar*) localAttrName.ansi_c_str(),
+												(const xmlChar*) namespaceURI.ansi_c_str() );
+
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool moveToElement() 
+		{
+			bool result = false;
+
+			int res = 
+				xmlTextReaderMoveToElement( xmlReader_ );
+
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool moveToFirstAttribute() 
+		{
+			bool result = false;
+
+			int res = 
+				xmlTextReaderMoveToFirstAttribute( xmlReader_ );
+
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool moveToNextAttribute() 
+		{
+			bool result = false;
+
+			int res = 
+				xmlTextReaderMoveToNextAttribute( xmlReader_ );
+
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool next() 
+		{
+			bool result = false;
+
+			int res = 
+				xmlTextReaderNext( xmlReader_ );
+
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool nextSibling() 
+		{
+			bool result = false;
+
+			int res = 
+				xmlTextReaderNextSibling( xmlReader_ );
+
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		XMLNodeType getNodeType() const 
+		{
+			XMLNodeType result = ntNone;
+
+			int res = 
+				xmlTextReaderNodeType( xmlReader_ );
+
+			if ( res >= 0 ) {
+				result = (XMLNodeType) res;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		int getQuoteChar() const 
+		{
+			return xmlTextReaderQuoteChar(xmlReader_);
+		}
+
+		bool read() 
+		{
+			bool result = false;
+
+			int res = 
+				xmlTextReaderRead( xmlReader_ );
+
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool readAttrValue() 
+		{
+			bool result = false;
+
+			int res = 
+				xmlTextReaderReadAttributeValue( xmlReader_ );
+
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		String readInnerXml() 
+		{
+			String result;
+
+			xmlChar* res = 
+				xmlTextReaderReadInnerXml( xmlReader_ );
+
+			if ( NULL != res ) {
+				result = (const char*)res;
+
+				XMLUtils::freeXMLStr( res );
+			}
+
+			return result;
+		}
+
+		String readOuterXml() 
+		{
+			String result;
+
+			xmlChar* res = 
+				xmlTextReaderReadOuterXml( xmlReader_ );
+
+			if ( NULL != res ) {
+				result = (const char*)res;
+
+				XMLUtils::freeXMLStr( res );
+			}
+
+			return result;
+		}
+
+		String readString() 
+		{
+			String result;
+
+			xmlChar* res = 
+				xmlTextReaderReadString( xmlReader_ );
+
+			if ( NULL != res ) {
+				result = (const char*)res;
+
+				XMLUtils::freeXMLStr( res );
+			}
+
+			return result;
+		}
+
+		bool schemaValidate( const String& xsd ) 
+		{
+			bool result = false;
+
+			int res = 
+				xmlTextReaderSchemaValidate( xmlReader_, xsd.ansi_c_str() );
+
+			if ( res == 1 ) {
+				result = true;
+			}
+			else if ( res < 0 ) {
+				//throw exception???
+			}
+
+			return result;
+		}
+
+		bool isEOF() const {
+			return getState() & psEOF ? true : false;
+		}
+
+		int getState() const {
+			return xmlTextReaderReadState( xmlReader_ );
+		}
+
+		XmlNode getCurrentNode() 
+		{
+			XmlNode result( xmlTextReaderCurrentNode(xmlReader_) );
+			result.detach();
+
+			return result;
+		}
+
+
+		void setXML( const String& xml ) {
+			if ( NULL != xmlInputBuf_ ) {
+				xmlFreeParserInputBuffer(xmlInputBuf_);
+				xmlInputBuf_ = NULL;
+				
+				checkBuffers();	
+
+				xmlTextReaderSetup(xmlReader_, xmlInputBuf_, NULL, NULL, XML_PARSE_RECOVER );
+			}
+
+			//xmlTextReaderSetup
+			add( xml );
+		}
+
+		void add( const String& xml ) {
+			AnsiString str = xml;
+
+			add( (const unsigned char*)str.c_str(), str.size() );
+		}
+
+		void add( const unsigned char* xmlBuffer, size_t length ) {
+			checkBuffers();		
+
+			int res = xmlBufferAdd( xmlBuf_, (const xmlChar*)xmlBuffer, length );
+
+			if ( res < 0 ) {
+				//throw exception??
+			}
+		}
+	protected:
+		xmlTextReaderPtr xmlReader_;
+		xmlBufferPtr xmlBuf_;
+		xmlParserInputBufferPtr xmlInputBuf_;
+
+		
+
+		void checkBuffers() {
+			if ( NULL != xmlInputBuf_ ) {
+				return;
+			}
+
+			xmlInputBuf_ = xmlAllocParserInputBuffer( XML_CHAR_ENCODING_NONE );
+			xmlBuf_ = xmlInputBuf_->buffer;
+		}
+
+		void createXMLReader()
+		{
+			if ( xmlReader_ != NULL ) {
+				return;
+			}
+
+			xmlInputBuf_ = NULL;
+			xmlBuf_ = NULL;
+			
+			checkBuffers();
+
+			xmlReader_ = xmlNewTextReader( xmlInputBuf_, NULL );			
+			
+
+			xmlSetStructuredErrorFunc( this, XMLTextReader::xmlStructuredErrorFunc );
+
+			VCF_ASSERT( xmlReader_ != NULL );
+		}
+
+		static void	xmlStructuredErrorFunc(void * userData,  xmlErrorPtr error)
+		{
+			XMLTextReader* thisPtr = (XMLTextReader*)userData;
+
+			if ( NULL != thisPtr ) {
+
+				XMLReaderError err;
+				if ( NULL != error ) {
+					err.code = error->code;
+					err.ctx = thisPtr;
+					err.domain = error->domain;
+					err.filename = error->file;
+					err.int1 = error->int1;
+					err.int2 = error->int2;
+					err.str1 = error->str1;
+					err.str2 = error->str2;
+					err.str3 = error->str3;
+					err.level = error->level;
+					err.line = error->line;
+					err.message = error->message;
+					
+					printf( "error: %s \n", error->message );
+
+					err.node = error->node;
+				}
+
+				thisPtr->Error( err );
+			}
+		}
+	};
 };
 
 
@@ -423,45 +1516,68 @@ void MystartElementSAXFunc2( const xmlChar * name,
 					 const xmlChar ** atts)
 {
 	printf( "@MystartElementSAXFunc2 name: %s\n", (const char*) name );
-
-	const xmlChar** tmp = atts;
-	while ( *tmp != 0 ) {
-		printf( "attr: %s\n", (const char*)*tmp );
-		tmp ++;
+	
+	if ( NULL != atts ) {
+		const xmlChar** tmp = atts;
+		while ( *tmp != 0 ) {
+			printf( "attr: %s\n", (const char*)*tmp );
+			tmp ++;
+		}
 	}
 }
 
+
 int main( int argc, char** argv ){
 
-	FoundationKit::init( argc, argv );
-
-
+	FoundationKit::init( argc, argv );	
 	XMLKit::init( argc, argv );
 
-	xmlSAXHandler sax = {0};
-	sax.startElement = MystartElementSAXFunc;
-	
-	xmlParserCtxtPtr parser = xmlCreatePushParserCtxt( &sax, 
-														NULL,
-														NULL, 
-														0,
-														NULL );
+	{
+		
+		XMLSaxParser p;
+		p.StartElement += MystartElementSAXFunc2;
+		
+		p.parse( testxml );
+		
 
-	
-	xmlParseChunk( parser, testxml, strlen(testxml), 1 );
-
-	xmlFreeParserCtxt(parser);
+		xmlBuffer buf = {0};
+		xmlParserInputBuffer xib = {0};
+		xib.buffer = &buf;
 
 
+		xmlTextReaderPtr tr = xmlNewTextReader( &xib, NULL );
 
-	XMLSaxParser p;
-	p.StartElement += MystartElementSAXFunc2;
 
-	p.parse( testxml );
+		int res = xmlReaderNewMemory( tr, testxml, strlen(testxml), NULL, NULL, XML_PARSE_RECOVER );
 
+		res = xmlTextReaderRead(tr);
+
+		xmlFreeTextReader( tr );
+
+		
+		XMLTextReader rdr;
+		rdr.setXML( testxml );
+
+		System::println( "lang: " + rdr.getLang() );
+		System::println( "uri: " + rdr.getBaseURI() );
+		System::println( "ns: " + rdr.getNamespaceURI() );
+		
+		while ( rdr.read() ) {			
+			System::println( "Name: " + rdr.getName() + " depth: " + rdr.getCurrentDepth() );
+
+			XmlNode n = rdr.expand();
+			String c = n.getContent();
+			c = n.getPath();
+
+			std::vector<XmlNode> nodes;
+			n.getChildren(nodes);
+
+
+			System::println( "Inner XML: { " + rdr.readInnerXml() + " }" );
+		}
+	}
 
 	XMLKit::terminate();
-
 	FoundationKit::terminate();
 	return 0;
 }
