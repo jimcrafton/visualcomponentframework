@@ -857,6 +857,35 @@ namespace VCF {
 		}
 
 		XmlNode* copy( const XmlDocument& doc, bool extended ); 
+
+		
+		void addChild( XmlNode& child ) 
+		{
+			if ( !child.isNull() ) {
+				xmlAddChild( resource_, child.detach() );
+			}
+		}
+
+		void addNextSibling( XmlNode& element ) 
+		{
+			if ( !element.isNull() ) {
+				xmlAddNextSibling( resource_, element.detach() );
+			}
+		}
+
+		void addPrevSibling( XmlNode& element ) 
+		{
+			if ( !element.isNull() ) {
+				xmlAddPrevSibling( resource_, element.detach() );
+			}
+		}
+
+		void addSibling( XmlNode& element ) 
+		{
+			if ( !element.isNull() ) {
+				xmlAddSibling( resource_, element.detach() );
+			}
+		}
 	};
 
 
@@ -922,6 +951,102 @@ namespace VCF {
 				result->attach( res );
 			}	
 
+			return result;
+		}
+
+		XmlNode* newCharRef( const String& name ) {
+			XmlNode* result = NULL;
+
+			AnsiString tmp = name;
+			xmlNodePtr res = xmlNewCharRef( resource_, (const xmlChar*)tmp.c_str() );
+			if ( NULL != res ) {
+				result = new XmlNode();
+				result->attach( res );
+			}	
+
+			return result;
+		}
+
+		XmlNode* newComment( const String& comment ) {
+			XmlNode* result = NULL;
+
+			AnsiString tmp = comment;
+			xmlNodePtr res = xmlNewDocComment( resource_, (const xmlChar*)tmp.c_str() );
+			if ( NULL != res ) {
+				result = new XmlNode();
+				result->attach( res );
+			}	
+
+			return result;
+		}
+
+		XmlNode* newFragment() {
+			XmlNode* result = NULL;
+			xmlNodePtr res = xmlNewDocFragment( resource_ );
+			if ( NULL != res ) {
+				result = new XmlNode();
+				result->attach( res );
+			}	
+
+			return result;
+		}
+
+		XmlNode* newNode( const XmlNamespace& ns, const String& name, const String& content ) {
+			
+			XmlNode* result = NULL;
+			xmlNodePtr res = xmlNewDocNode( resource_, ns.get(), 
+											(const xmlChar*)name.ansi_c_str(),
+											(const xmlChar*)content.ansi_c_str() );
+			if ( NULL != res ) {
+				result = new XmlNode();
+				result->attach( res );
+			}	
+
+			return result;
+		}
+
+		XmlNode* newNode( const String& name, const String& content ) {
+			return newNode(XmlNamespace(), name, content);
+		}
+
+		XmlNode* newRawNode( const XmlNamespace& ns, const String& name, const String& content ) {
+			
+			XmlNode* result = NULL;
+			xmlNodePtr res = xmlNewDocRawNode( resource_, ns.get(), 
+											(const xmlChar*)name.ansi_c_str(),
+											(const xmlChar*)content.ansi_c_str() );
+			if ( NULL != res ) {
+				result = new XmlNode();
+				result->attach( res );
+			}	
+
+			return result;
+		}
+
+		XmlNode* newRawNode( const String& name, const String& content ) {
+			return newRawNode(XmlNamespace(), name, content);
+		}
+
+		XmlNode* newProcessingInstruction( const String& name, const String& content ) {
+			XmlNode* result = NULL;
+			xmlNodePtr res = xmlNewDocPI( resource_,(const xmlChar*)name.ansi_c_str(),
+											(const xmlChar*)content.ansi_c_str() );
+			if ( NULL != res ) {
+				result = new XmlNode();
+				result->attach( res );
+			}
+		}
+
+		static XmlDocument* newDocument() 
+		{
+			XmlDocument* result = NULL;
+
+			xmlDocPtr res = xmlNewDoc( (const xmlChar*)"1.0" );
+			if ( NULL != res ) {
+				result = new XmlDocument();
+				result->attach( res );
+			}
+			
 			return result;
 		}
 	};
