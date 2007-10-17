@@ -32,6 +32,11 @@ void BasicOutputStream::init()
 	outputStream_ = NULL;
 }
 
+void BasicOutputStream::clear()
+{
+	outStream_.clear();
+}
+
 void BasicOutputStream::seek(const uint64& offset, const SeekType& offsetFrom)
 {
 	if ( NULL != outputStream_ ) {
