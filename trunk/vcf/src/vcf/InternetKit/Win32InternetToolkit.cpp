@@ -149,6 +149,16 @@ public:
 			return E_ABORT;
 		}
 
+		switch ( ulStatusCode ) {
+			case BINDSTATUS_ENDDOWNLOADDATA : {
+				URLEvent done(url_, URL::evDataComplete );
+				done.setBytesReceived( ulProgressMax );
+
+				url_->DataComplete( &done );
+			}
+			break;
+		};
+
 		return S_OK;
 	}
 
@@ -190,7 +200,19 @@ public:
 						return E_ABORT;
 					}
 
-					stream_->write( data, bytesRead );					
+					stream_->write( data, bytesRead );	
+					
+
+					switch ( grfBSCF ) {
+						case BSCF_LASTDATANOTIFICATION : {
+
+						}
+						break;
+					}
+				}
+				else {
+					URLEvent e2(url_, URL::evDataError );
+					url_->DataError( &e2 );
 				}
 
 				delete[] data;
@@ -219,6 +241,11 @@ public:
 		//if ( NULL != m_dlg ) {
 		//	m_dlg->m_downloadStatus = szStatusText;		
 		//}
+
+		if ( !SUCCEEDED(hrStatus) ) {
+			URLEvent e(url_, URL::evDataError );
+			url_->DataError( &e );
+		}
 
 		return S_OK;
 	}

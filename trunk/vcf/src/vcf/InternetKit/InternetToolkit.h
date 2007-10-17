@@ -16,6 +16,7 @@ where you installed the VCF.
 
 namespace VCF {
 	class URL;
+	class AsyncURL;
 
 	/**
 	\class InternetToolkit InternetToolkit.h "vcf/InternetKit/InternetToolkit.h"
@@ -29,9 +30,9 @@ namespace VCF {
 		and writes to the output stream. This is a blocking 
 		call.
 		*/
-		static void getDataFromURL( URL* url, OutputStream* stream ) {
-			InternetToolkit::inetKitInstance->internal_getDataFromURL( url, stream );
-		}
+		static void getDataFromURL( URL* url, OutputStream* stream ); 
+
+		static void getDataFromURL( AsyncURL* url ); 
 
 		static void create();
 

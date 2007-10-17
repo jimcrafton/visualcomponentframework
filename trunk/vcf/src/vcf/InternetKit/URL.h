@@ -196,6 +196,12 @@ namespace VCF {
 			a the output stream.
 			*/
 			evDataReceived,
+
+			/**
+			The URL has received all of the data for the resource.
+			*/
+			evDataComplete,
+
 			/**
 			The status of the URL download has changed.
 			*/
@@ -205,13 +211,20 @@ namespace VCF {
 			The URL requires authentication. The handler will
 			need to supply a valid user name and password.
 			*/
-			evAuthenticationRequested
+			evAuthenticationRequested,
+
+			/**
+			There was an error while getting data for the URL.
+			*/
+			evDataError
 		};
 
 
 		DELEGATE( URLDelegate,DataReceiving );
 		DELEGATE( URLDelegate,DataReceived );
-		DELEGATE( URLDelegate,StatusChanged );
+		DELEGATE( URLDelegate,DataComplete );
+		DELEGATE( URLDelegate,DataError );
+		DELEGATE( URLDelegate,StatusChanged );		
 		DELEGATE( URLAuthenticationDelegate,AuthenticationRequested );
 
 		URL(){}
@@ -440,6 +453,51 @@ namespace VCF {
 	};
 
 
+	class INTERNETKIT_API AsyncURL : public URL, public Waitable {
+	public:
+		AsyncURL():URL(),urlWait_(&urlWaitMtx_){}
+
+		AsyncURL(const String& urlString ):URL(urlString),urlWait_(&urlWaitMtx_){}
+
+
+		void get() {
+			dataBuf_.clear();
+			InternetToolkit::getDataFromURL( this );
+		}
+
+		String getDataAsString() {
+			String result;
+			result.append( dataBuf_.getBuffer(), dataBuf_.getSize() );
+
+			return result;
+		}
+
+		OutputStream* getOutputStream() {
+			return &dataBuf_;
+		}
+
+
+		
+		virtual WaitResult wait() {
+			return urlWait_.wait();
+		}
+		
+		virtual WaitResult wait( uint32 milliseconds ) {
+			return urlWait_.wait( milliseconds );
+		}
+		
+		virtual OSHandleID getPeerHandleID() {
+			return urlWait_.getPeerHandleID();
+		}
+
+		void finished() {
+			urlWait_.broadcast();
+		}
+	protected:
+		BasicOutputStream dataBuf_;
+		Condition urlWait_;
+		Mutex urlWaitMtx_;
+	};
 	
 
 	inline URLAuthenticationEvent::URLAuthenticationEvent( URL* source ):

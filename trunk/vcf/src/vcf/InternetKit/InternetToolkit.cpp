@@ -6,6 +6,8 @@
 #include "vcf/InternetKit/Win32InternetToolkit.h"
 #endif
 
+#include "vcf/FoundationKit/ThreadPool.h"
+
 
 /*
 Copyright 2000-2004 The VCF Project.
@@ -16,6 +18,7 @@ where you installed the VCF.
 
 
 using namespace VCF;
+
 
 
 InternetToolkit* InternetToolkit::inetKitInstance = NULL;
@@ -31,10 +34,26 @@ void InternetToolkit::create()
 
 void InternetToolkit::terminate()
 {
+	
 	delete InternetToolkit::inetKitInstance;
 }
 
 
+void InternetToolkit::getDataFromURL( URL* url, OutputStream* stream )
+{
+	InternetToolkit::inetKitInstance->internal_getDataFromURL( url, stream );
+}
+
+void asyncGetDataFromURL(AsyncURL* url)
+{
+	InternetToolkit::getDataFromURL( url, url->getOutputStream() );
+	url->finished();
+}
+
+void InternetToolkit::getDataFromURL( AsyncURL* url )
+{
+	ThreadedProcedure1<AsyncURL*>(url, asyncGetDataFromURL ).invoke();
+}
 /**
 $Id$
 */
