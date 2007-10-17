@@ -45,6 +45,8 @@ public:
 	virtual uint64 write( const unsigned char* bytesToRead, uint64 sizeOfBytes );
 
 	void init();
+
+	void clear();
 private:
 	CharMemStream outStream_;
 	OutputStream* outputStream_;

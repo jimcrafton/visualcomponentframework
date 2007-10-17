@@ -166,6 +166,11 @@ void ObjectWithCallbacks::addCallback( CallBack* cb )
 		callbacks_ = new std::map<String,CallBack*>();
 	}
 
+	if ( cb->getName().empty() ) {
+		StringUtils::trace( "WARNING: callback name is empty!\n" );
+	}
+
+
 	std::map<String,CallBack*>::iterator found = 
 		callbacks_->find( cb->getName() );
 	if ( found == callbacks_->end() ) {
