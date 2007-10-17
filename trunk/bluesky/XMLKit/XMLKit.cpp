@@ -11,6 +11,19 @@
 
 
 
+
+
+
+#if !defined(VCF_DISABLE_PRAGMA_LINKING)
+#   define USE_INTERNETKIT_DLL
+#endif
+
+#include "vcf/InternetKit/InternetKit.h"
+
+
+
+
+
 namespace VCF {
 	class XMLKit {
 	public:
@@ -598,7 +611,7 @@ namespace VCF {
 		
 	};
 
-	class XmlNode : public Attachable<xmlNodePtr,XmlNode> {
+	class XmlNode : public Attachable<xmlNodePtr,XmlNode>, public Object {
 	public:
 
 		enum PreservesSpace {
@@ -908,7 +921,7 @@ namespace VCF {
 		{
 			
 		}
-
+		
 		XmlDocument& operator=( xmlDocPtr rhs )
 		{
 			assign(rhs);
@@ -919,6 +932,20 @@ namespace VCF {
 		{
 			xmlFreeDoc( res );
 		}
+
+
+		void setXML( const String& xml )
+		{
+			if ( owned_ ) {
+				if ( resource_ ) {
+					xmlFreeDoc(resource_);
+				}
+			}
+
+			AnsiString s = xml;
+			attach( xmlParseMemory( s.c_str(), s.size() ) );
+		}
+
 		
 		XmlNode getRoot() const 
 		{
@@ -1746,15 +1773,12 @@ namespace VCF {
 
 		void setXML( const String& xml ) {
 			if ( NULL != xmlInputBuf_ ) {
-				xmlFreeParserInputBuffer(xmlInputBuf_);
 				xmlInputBuf_ = NULL;
 				
 				checkBuffers();	
-
+				
 				xmlTextReaderSetup(xmlReader_, xmlInputBuf_, NULL, NULL, XML_PARSE_RECOVER );
 			}
-
-			//xmlTextReaderSetup
 			add( xml );
 		}
 
@@ -1903,6 +1927,8 @@ void MystartElementSAXFunc2( const xmlChar * name,
 int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );	
+	InternetKit::init(argc, argv);
+
 	XMLKit::init( argc, argv );
 
 	{
@@ -1943,9 +1969,41 @@ int main( int argc, char** argv ){
 
 			System::println( "Inner XML: { " + rdr.readInnerXml() + " }" );
 		}
+
+
+
+		AsyncURL url("http://www.w3schools.com/xpath/books.xml");
+		
+		url.get();
+
+		url.wait();
+
+		String xml = url.getDataAsString();
+
+		rdr.setXML( xml );
+
+		System::println( "lang: " + rdr.getLang() );
+		System::println( "uri: " + rdr.getBaseURI() );
+		System::println( "ns: " + rdr.getNamespaceURI() );
+	
+
+		while ( rdr.read() ) {			
+			System::println( "Name: " + rdr.getName() + " depth: " + rdr.getCurrentDepth() );
+
+				
+
+			System::println( "Inner XML: { " + rdr.readInnerXml() + " }" );
+		}
+
+
+		XmlDocument doc;
+		doc.setXML(xml);
+		
 	}
 
 	XMLKit::terminate();
+
+	InternetKit::terminate();
 	FoundationKit::terminate();
 	return 0;
 }
