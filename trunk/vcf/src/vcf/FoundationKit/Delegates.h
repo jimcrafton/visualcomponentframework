@@ -4324,6 +4324,18 @@ inline void Delegate6<P1,P2,P3,P4,P5,P6>::functionFinished( AsyncResult* res, Ru
 }
 
 
+template <typename P1,typename P2,typename P3,typename P4,typename P5,typename P6,typename P7>
+inline void Delegate7<P1,P2,P3,P4,P5,P6,P7>::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	//no-op for procedures - they don't return values!
+}
+
+template <typename P1,typename P2,typename P3,typename P4,typename P5,typename P6,typename P7,typename P8>
+inline void Delegate8<P1,P2,P3,P4,P5,P6,P7,P8>::functionFinished( AsyncResult* res, Runnable* runnable )
+{
+	//no-op for procedures - they don't return values!
+}
+
 
 
 
