@@ -4,6 +4,7 @@
 #include <libxml/tree.h>
 #include <libxml/parser.h>
 #include <libxml/xmlreader.h>
+#include <libxml/xpath.h>
 
 
 
@@ -1076,6 +1077,64 @@ namespace VCF {
 			
 			return result;
 		}
+
+
+		VariantData evalXPath( const String& xpathQuery, std::vector<XmlNode>& found )
+		{
+			VariantData result;
+			result.setNull();
+
+			found.clear();
+
+			xmlXPathContextPtr xpathCtx = NULL; 
+			xmlXPathObjectPtr xpathObj = NULL;
+
+			xpathCtx = xmlXPathNewContext( resource_ );
+			xpathObj = xmlXPathEvalExpression( (const xmlChar*)xpathQuery.ansi_c_str(), xpathCtx);
+
+			switch ( xpathObj->type ) {
+				case XPATH_NODESET : {
+					if ( NULL != xpathObj->nodesetval ) {
+						for ( int i=0;i < xpathObj->nodesetval->nodeNr; i++ ) {
+							found.push_back(XmlNode( xpathObj->nodesetval->nodeTab[i] ));
+						}
+					}
+				}
+				break;
+
+				case XPATH_BOOLEAN : {
+					result = xpathObj->boolval != 0 ? true : false;
+				}
+				break;
+
+				case XPATH_NUMBER : {
+					result = xpathObj->floatval;
+				}
+				break;
+
+				case XPATH_STRING : {
+					result = String( (const char*) xpathObj->stringval );
+				}
+				break;
+				/* we ignore the rest???
+    XPATH_POINT = 5
+    XPATH_RANGE = 6
+    XPATH_LOCATIONSET = 7
+    XPATH_USERS = 8
+    XPATH_XSLT_TREE 
+	*/
+			}
+
+			
+
+			xmlXPathFreeObject(xpathObj);
+			xmlXPathFreeContext(xpathCtx); 
+
+			return result;
+		}
+
+
+
 	};
 
 
@@ -1924,6 +1983,26 @@ void MystartElementSAXFunc2( const xmlChar * name,
 }
 
 
+void testXPath( const String& s, XmlDocument& doc )
+{
+	std::vector<XmlNode> nodes;
+	System::println( "------------------------------------------------------------------------------" );
+	System::println( "xpath: " + s );
+	
+	VariantData res = doc.evalXPath( s, nodes );
+	System::println( "doc.evalXPath() returned: " + res.toString() );
+
+	System::println( "results:" );
+	for (size_t i=0;i<nodes.size();i++ ) {
+		const XmlNode& n = nodes[i];
+		
+		
+		System::println( "Node name: " + n.getName() + " path: " + n.getPath() + " text: " + n.getContent() );
+	}
+	
+}
+
+
 int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );	
@@ -1980,6 +2059,8 @@ int main( int argc, char** argv ){
 
 		String xml = url.getDataAsString();
 
+		System::println( "Retrieved url " + url.getURLString() + " contents:\n" + xml );
+
 		rdr.setXML( xml );
 
 		System::println( "lang: " + rdr.getLang() );
@@ -1998,7 +2079,14 @@ int main( int argc, char** argv ){
 
 		XmlDocument doc;
 		doc.setXML(xml);
-		
+		testXPath( "/bookstore/book", doc );
+		testXPath( "/bookstore/book[1]", doc );
+		testXPath( "/bookstore/book/price/text()", doc );
+		testXPath( "/bookstore/book[price>35]/price", doc );
+		testXPath( "/bookstore/book[1]/price<34", doc );
+		testXPath( "/bookstore/book[1]/price>34", doc );
+
+		testXPath( "/bookstore/book[1]/price + 34", doc );
 	}
 
 	XMLKit::terminate();
