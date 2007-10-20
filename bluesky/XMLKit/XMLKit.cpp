@@ -37,7 +37,8 @@ namespace VCF {
 		{
 			xmlCleanupParser();
     
-#ifdef _DEBUG
+#ifdef _DEBUG   
+			//it appears that unless MEM_LIST is defined, the call below does nothing
 			xmlMemoryDump();
 #endif
 		}
@@ -1079,7 +1080,7 @@ namespace VCF {
 		}
 
 
-		VariantData evalXPath( const String& xpathQuery, std::vector<XmlNode>& found )
+		VariantData matches( const String& xpathQuery, std::vector<XmlNode>& found )
 		{
 			VariantData result;
 			result.setNull();
@@ -1090,7 +1091,7 @@ namespace VCF {
 			xmlXPathObjectPtr xpathObj = NULL;
 
 			xpathCtx = xmlXPathNewContext( resource_ );
-			xpathObj = xmlXPathEvalExpression( (const xmlChar*)xpathQuery.ansi_c_str(), xpathCtx);
+			xpathObj = xmlXPathEval( (const xmlChar*)xpathQuery.ansi_c_str(), xpathCtx);
 
 			switch ( xpathObj->type ) {
 				case XPATH_NODESET : {
@@ -1133,10 +1134,196 @@ namespace VCF {
 			return result;
 		}
 
+		XmlNode select( const String& xpathQuery )
+		{
+			XmlNode result;
+			std::vector<XmlNode> found;
+			matches( xpathQuery, found );
+			if ( !found.empty() ) {
+				result = found.front();
+			}
 
-
+			return result;
+		}
 	};
 
+
+
+	//	
+	class XPathExpression : public Attachable<xmlXPathCompExprPtr,XPathExpression> {
+	public:
+		typedef Attachable<xmlXPathCompExprPtr,XPathExpression> BaseT;
+
+		XPathExpression():BaseT()
+		{
+			
+		}
+
+		XPathExpression( xmlXPathCompExprPtr val ):BaseT(val)
+		{
+			
+		}
+
+		XPathExpression( const XPathExpression& val ):BaseT(val)
+		{
+			
+		}
+		
+		XPathExpression& operator=( xmlXPathCompExprPtr rhs )
+		{
+			assign(rhs);
+			return *this;
+		}
+
+		static void freeResource(xmlXPathCompExprPtr res)
+		{
+			xmlXPathFreeCompExpr( res );
+		}
+
+
+		void compile( const String& xpathQuery )
+		{
+			assign( NULL ); //free's up old expression
+			attach( xmlXPathCompile( (const xmlChar*)xpathQuery.ansi_c_str() ) );
+		}
+	};
+
+
+	class XPathIterator;
+
+	class XPathNodeIterator {
+	public:	
+		XPathNodeIterator():nodes_(NULL){}
+
+		XPathNodeIterator& operator++() {
+			++iterator_;
+			return *this;
+		}
+
+		XPathNodeIterator operator++(int) {
+			++iterator_;
+			return *this;
+		}
+		
+		XmlNode& operator*() {
+			return *iterator_;
+		}
+
+		bool atEnd() const {
+			return iterator_ == nodes_->end();
+		}
+
+		bool next() {
+			++iterator_;
+			return iterator_ != nodes_->end();
+		}
+
+
+		friend class XPathIterator;
+	protected:
+
+		typedef std::list<XmlNode> XmlNodeList;
+		typedef XmlNodeList::iterator NodeIter;
+		typedef XmlNodeList::const_iterator ConstNodeIter;
+
+		XPathNodeIterator( XmlNodeList& nodes ):nodes_(&nodes) {
+			iterator_ = nodes_->begin();
+		}
+
+		XmlNodeList* nodes_;
+		XmlNodeList::iterator iterator_;
+	};
+
+	class XPathIterator : public Attachable<xmlXPathContextPtr,XPathIterator> {
+	public:
+		typedef Attachable<xmlXPathContextPtr,XPathIterator> BaseT;
+
+		XPathIterator( const XmlDocument& doc ):BaseT(),xpathObj_(NULL)
+		{
+			attach( xmlXPathNewContext( doc.get() ) );
+		}
+
+		static void freeResource(xmlXPathContextPtr res)
+		{
+			xmlXPathFreeContext( res );
+		}
+
+		VariantData eval( const String& xpathQuery )
+		{
+			XPathExpression exp;
+			exp.compile(xpathQuery);
+			return eval( exp );
+		}
+
+		VariantData eval( const XPathExpression& expression ) {
+
+			VariantData result;
+			result.setNull();
+
+			if ( NULL != xpathObj_ ) {
+				xmlXPathFreeObject( xpathObj_ );
+			}
+
+			xpathObj_ = xmlXPathCompiledEval( expression.get(), resource_ );
+
+			switch ( xpathObj_->type ) {				
+				case XPATH_BOOLEAN : {
+					result = xpathObj_->boolval != 0 ? true : false;
+				}
+				break;
+
+				case XPATH_NUMBER : {
+					result = xpathObj_->floatval;
+				}
+				break;
+
+				case XPATH_STRING : {
+					result = String( (const char*) xpathObj_->stringval );
+				}
+				break;
+				/* we ignore the rest???
+    XPATH_POINT = 5
+    XPATH_RANGE = 6
+    XPATH_LOCATIONSET = 7
+    XPATH_USERS = 8
+    XPATH_XSLT_TREE 
+	*/
+			}
+
+			return result;
+		}
+
+
+		XmlNode select( const XPathExpression& expression )
+		{
+			XmlNode result;
+
+			eval( expression );
+
+			switch ( xpathObj_->type ) {
+				case XPATH_NODESET : {
+					if ( NULL != xpathObj_->nodesetval ) {
+						if ( xpathObj_->nodesetval->nodeNr > 0 ) {
+							result = xpathObj_->nodesetval->nodeTab[0];
+						}
+					}
+				}
+				break;
+			}
+
+			return result;
+		}
+
+		XPathNodeIterator selectNodes( const XPathExpression& expression )
+		{
+			return XPathNodeIterator(nodes_);
+		}
+
+
+	protected:
+		xmlXPathObjectPtr xpathObj_;
+		std::list<XmlNode> nodes_;
+	};
 
 
 
@@ -1989,8 +2176,8 @@ void testXPath( const String& s, XmlDocument& doc )
 	System::println( "------------------------------------------------------------------------------" );
 	System::println( "xpath: " + s );
 	
-	VariantData res = doc.evalXPath( s, nodes );
-	System::println( "doc.evalXPath() returned: " + res.toString() );
+	VariantData res = doc.matches( s, nodes );
+	System::println( "doc.matches() returned: " + res.toString() );
 
 	System::println( "results:" );
 	for (size_t i=0;i<nodes.size();i++ ) {
@@ -2079,6 +2266,7 @@ int main( int argc, char** argv ){
 
 		XmlDocument doc;
 		doc.setXML(xml);
+
 		testXPath( "/bookstore/book", doc );
 		testXPath( "/bookstore/book[1]", doc );
 		testXPath( "/bookstore/book/price/text()", doc );
@@ -2087,6 +2275,13 @@ int main( int argc, char** argv ){
 		testXPath( "/bookstore/book[1]/price>34", doc );
 
 		testXPath( "/bookstore/book[1]/price + 34", doc );
+		XPathIterator xp(doc);
+		XPathExpression exp;
+		exp.compile( "/bookstore/book" );
+
+
+		XPathNodeIterator it = xp.selectNodes(exp);
+		it ++;
 	}
 
 	XMLKit::terminate();
