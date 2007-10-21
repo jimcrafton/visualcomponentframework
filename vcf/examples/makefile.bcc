@@ -53,7 +53,7 @@ MAKEARGS = -DCC="$(CC)" -DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" \
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators
 
 clean: 
 	-if exist .\*.obj del .\*.obj
@@ -239,6 +239,10 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>MVCBasics.bat
 	call MVCBasics.bat
 	@del MVCBasics.bat
+	@echo cd NetworkKitTest >NetworkKitTest.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>NetworkKitTest.bat
+	call NetworkKitTest.bat
+	@del NetworkKitTest.bat
 	@echo cd OpenGLShapes >OpenGLShapes.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>OpenGLShapes.bat
 	call OpenGLShapes.bat
@@ -323,6 +327,10 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>Tables.bat
 	call Tables.bat
 	@del Tables.bat
+	@echo cd TCPServer >TCPServer.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>TCPServer.bat
+	call TCPServer.bat
+	@del TCPServer.bat
 	@echo cd TeXLabel >TeXLabel.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>TeXLabel.bat
 	call TeXLabel.bat
@@ -363,6 +371,14 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>TreeListControls.bat
 	call TreeListControls.bat
 	@del TreeListControls.bat
+	@echo cd UDPClient >UDPClient.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>UDPClient.bat
+	call UDPClient.bat
+	@del UDPClient.bat
+	@echo cd UDPServer >UDPServer.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>UDPServer.bat
+	call UDPServer.bat
+	@del UDPServer.bat
 	@echo cd Variants >Variants.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>Variants.bat
 	call Variants.bat
@@ -654,6 +670,12 @@ MVCBasics:
 	call MVCBasics.bat
 	@del MVCBasics.bat
 
+NetworkKitTest: 
+	@echo cd NetworkKitTest >NetworkKitTest.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>NetworkKitTest.bat
+	call NetworkKitTest.bat
+	@del NetworkKitTest.bat
+
 OpenGLShapes: 
 	@echo cd OpenGLShapes >OpenGLShapes.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>OpenGLShapes.bat
@@ -780,6 +802,12 @@ Tables:
 	call Tables.bat
 	@del Tables.bat
 
+TCPServer: 
+	@echo cd TCPServer >TCPServer.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>TCPServer.bat
+	call TCPServer.bat
+	@del TCPServer.bat
+
 TeXLabel: 
 	@echo cd TeXLabel >TeXLabel.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>TeXLabel.bat
@@ -839,6 +867,18 @@ TreeListControls:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>TreeListControls.bat
 	call TreeListControls.bat
 	@del TreeListControls.bat
+
+UDPClient: 
+	@echo cd UDPClient >UDPClient.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>UDPClient.bat
+	call UDPClient.bat
+	@del UDPClient.bat
+
+UDPServer: 
+	@echo cd UDPServer >UDPServer.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>UDPServer.bat
+	call UDPServer.bat
+	@del UDPServer.bat
 
 Variants: 
 	@echo cd Variants >Variants.bat

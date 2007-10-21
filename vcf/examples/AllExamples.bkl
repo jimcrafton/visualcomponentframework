@@ -53,6 +53,7 @@
     <subproject id="Localization" template="example"/>
     <subproject id="MinMax" template="example"/>
     <subproject id="MVCBasics" template="example"/>
+    <subproject id="NetworkKitTest" template="example"/>
     <subproject id="OpenGLShapes" template="example"/>
     <subproject id="ParticleEditor" template="example"/>
     <subproject id="Pixels" template="example"/>
@@ -74,6 +75,7 @@
     <subproject id="StrokesAndFills" template="example"/>
     <subproject id="SysTray" template="example"/>
     <subproject id="Tables" template="example"/>
+    <subproject id="TCPServer" template="example"/>
     <subproject id="TeXLabel" template="example"/>
     <subproject id="TextEdit" template="example"/>
     <subproject id="TextLayout" template="example"/>
@@ -84,6 +86,8 @@
     <subproject id="Tooltips" template="example"/>
     <subproject id="Transformations" template="example"/>
     <subproject id="TreeListControls" template="example"/>
+    <subproject id="UDPClient" template="example"/>
+    <subproject id="UDPServer" template="example"/>
     <subproject id="Variants" template="example"/>
     <subproject id="VFFTests" template="example"/>
     <subproject id="VFFTests2" template="example"/>
@@ -93,7 +97,7 @@
     <!--
     Please note, the following examples will compile successfully
     only if you have MFC or QuickTime SDK.
-    If you have some of them you need to compile these examples manually.
+    If you have some of them you need to compile appropriate examples manually.
 
     <subproject id="MFCIntegration1" template="example"/>
     <subproject id="MFCIntegration2" template="example"/>

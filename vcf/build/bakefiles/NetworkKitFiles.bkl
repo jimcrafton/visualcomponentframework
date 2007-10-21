@@ -3,37 +3,30 @@
 <makefile>
 
     <set var="NETWORKKIT_HDR" hints="files">
-        vcf/NetworkKit/DatagramSocket.h
-        vcf/NetworkKit/NetToolkit.h
+        vcf/NetworkKit/IPAddress.h
+        vcf/NetworkKit/IPAddressPeer.h
+        vcf/NetworkKit/NetworkExceptions.h
         vcf/NetworkKit/NetworkKit.h
-        vcf/NetworkKit/NetworkKitPrivate.h
-        vcf/NetworkKit/NetworkKitSelectLib.h
-        vcf/NetworkKit/ServerSocketEvent.h
+        vcf/NetworkKit/NetworkToolkit.h
         vcf/NetworkKit/Socket.h
-        vcf/NetworkKit/SocketEvent.h
-        vcf/NetworkKit/SocketException.h
-        vcf/NetworkKit/SocketListeningLoop.h
-        vcf/NetworkKit/SocketPeer.h
-        vcf/NetworkKit/URL.h
     </set>
 
     <set var="NETWORKKIT_SRC" hints="files">
-        vcf/NetworkKit/DatagramSocket.cpp
-        vcf/NetworkKit/NetToolkit.cpp
-        vcf/NetworkKit/ServerSocketEvent.cpp
+        vcf/NetworkKit/IPAddress.cpp
+        vcf/NetworkKit/NetworkKit.cpp
+        vcf/NetworkKit/NetworkToolkit.cpp
         vcf/NetworkKit/Socket.cpp
-        vcf/NetworkKit/SocketEvent.cpp
-        vcf/NetworkKit/SocketListeningLoop.cpp
-        vcf/NetworkKit/URL.cpp
     </set>
 
     <set var="NETWORKKIT_WIN_HDR" hints="files">
-        vcf/NetworkKit/Win32DatagramSocketPeer.h
+        vcf/NetworkKit/Win32IPAddressPeer.h
+        vcf/NetworkKit/Win32NetworkToolkit.h
         vcf/NetworkKit/Win32SocketPeer.h
     </set>
 
     <set var="NETWORKKIT_WIN_SRC" hints="files">
-        vcf/NetworkKit/Win32DatagramSocketPeer.cpp
+        vcf/NetworkKit/Win32IPAddressPeer.cpp
+        vcf/NetworkKit/Win32NetworkToolkit.cpp
         vcf/NetworkKit/Win32SocketPeer.cpp
     </set>
 

@@ -6,7 +6,7 @@
     <template id="NetworkKit_base">
         <set var="LIBRARY_NAME">$(NETWORKKIT_NAME)</set>
         <set var="LIBRARY_PRECOMP_HDR">vcf$(DIRSEP)NetworkKit$(DIRSEP)NetworkKit.h</set>
-        <set var="LIBRARY_PRECOMP_SRC">vcf$(DIRSEP)NetworkKit$(DIRSEP)NetToolkit.cpp</set>
+        <set var="LIBRARY_PRECOMP_SRC">vcf$(DIRSEP)NetworkKit$(DIRSEP)NetworkKit.cpp</set>
 
         <headers>$(NETWORKKIT_HDR)</headers>
         <sources>$(NETWORKKIT_SRC)</sources>
@@ -21,8 +21,8 @@
 
     <dll id="NetworkKit_dll" template="NetworkKit_base,vcf_dll,precomp"
             cond="OPTION_SHARED=='1' and OPTION_NETWORKKIT=='1' and OPTION_ALLIN1=='0'">
-        <define>NETKIT_DLL</define>
-        <define>NETKIT_EXPORTS</define>
+        <define>NETWORKKIT_DLL</define>
+        <define>NETWORKKIT_EXPORTS</define>
         <depends>FoundationKit_dll</depends>
     </dll>
 

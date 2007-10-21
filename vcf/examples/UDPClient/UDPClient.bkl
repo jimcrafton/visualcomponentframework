@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="UDPClient" template="vcf_exe_console" cond="OPTION_NETWORKKIT=='1'">
+        <dirname>.</dirname>
+        <sources>UDPClient.cpp</sources>
+        <vcf-use-NetworkKit/>
+    </exe>
+</makefile>
+
+<!--
+$Id$
+-->

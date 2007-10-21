@@ -878,26 +878,20 @@ NETWORKKIT_LIB_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
 	$(CXXFLAGS)
 NETWORKKIT_LIB_OBJECTS =  \
-	../../lib/$(OBJDIR)/NetworkKit_lib_DatagramSocket.o \
-	../../lib/$(OBJDIR)/NetworkKit_lib_NetToolkit.o \
-	../../lib/$(OBJDIR)/NetworkKit_lib_ServerSocketEvent.o \
-	../../lib/$(OBJDIR)/NetworkKit_lib_Socket.o \
-	../../lib/$(OBJDIR)/NetworkKit_lib_SocketEvent.o \
-	../../lib/$(OBJDIR)/NetworkKit_lib_SocketListeningLoop.o \
-	../../lib/$(OBJDIR)/NetworkKit_lib_URL.o
+	../../lib/$(OBJDIR)/NetworkKit_lib_IPAddress.o \
+	../../lib/$(OBJDIR)/NetworkKit_lib_NetworkKit.o \
+	../../lib/$(OBJDIR)/NetworkKit_lib_NetworkToolkit.o \
+	../../lib/$(OBJDIR)/NetworkKit_lib_Socket.o
 NETWORKKIT_DLL_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
 	$(____OPTION_DEBUG) -Wno-multichar -DVCF_DISABLE_PRAGMA_LINKING -I../../src \
-	-DNETKIT_DLL -DNETKIT_EXPORTS -fPIC -DPIC $(____OPTION_CPP_RTTI_0) \
+	-DNETWORKKIT_DLL -DNETWORKKIT_EXPORTS -fPIC -DPIC $(____OPTION_CPP_RTTI_0) \
 	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 NETWORKKIT_DLL_OBJECTS =  \
-	../../lib/$(OBJDIR)/NetworkKit_dll_DatagramSocket.o \
-	../../lib/$(OBJDIR)/NetworkKit_dll_NetToolkit.o \
-	../../lib/$(OBJDIR)/NetworkKit_dll_ServerSocketEvent.o \
-	../../lib/$(OBJDIR)/NetworkKit_dll_Socket.o \
-	../../lib/$(OBJDIR)/NetworkKit_dll_SocketEvent.o \
-	../../lib/$(OBJDIR)/NetworkKit_dll_SocketListeningLoop.o \
-	../../lib/$(OBJDIR)/NetworkKit_dll_URL.o
+	../../lib/$(OBJDIR)/NetworkKit_dll_IPAddress.o \
+	../../lib/$(OBJDIR)/NetworkKit_dll_NetworkKit.o \
+	../../lib/$(OBJDIR)/NetworkKit_dll_NetworkToolkit.o \
+	../../lib/$(OBJDIR)/NetworkKit_dll_Socket.o
 REMOTEOBJECTKIT_LIB_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) \
 	$(__FOUNDATIONKIT_DLL_p) $(__NETWORKKIT_DLL_p) $(__DEBUG_INFO) \
 	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
@@ -995,7 +989,7 @@ ALLIN1_DLL_CXXFLAGS = -DONIG_EXTERN=extern -DXP_UNIX $(__DEBUG_INFO) \
 	-DFOUNDATIONKIT_DLL -DFOUNDATIONKIT_EXPORTS -DGRAPHICSKIT_DLL \
 	-DGRAPHICSKIT_EXPORTS -DAPPLICATIONKIT_DLL -DAPPLICATIONKIT_EXPORTS \
 	-DHTMLKIT_DLL -DHTMLKIT_EXPORTS -DOPENGLKIT_DLL -DOPENGLKIT_EXPORTS \
-	-DNETKIT_DLL -DNETKIT_EXPORTS -DREMOTEKIT_DLL -DREMOTEKIT_EXPORTS \
+	-DNETWORKKIT_DLL -DNETWORKKIT_EXPORTS -DREMOTEKIT_DLL -DREMOTEKIT_EXPORTS \
 	-DINTERNETKIT_DLL -DINTERNETKIT_EXPORTS -DREGEXKIT_DLL -DREGEXKIT_EXPORTS \
 	-DJAVASCRIPTKIT_DLL -DJAVASCRIPTKIT_EXPORTS -fPIC -DPIC \
 	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
@@ -1522,13 +1516,10 @@ ____Allin1_lib_ALLIN1_OPENGLKIT_SRC_OBJECTS =  \
 endif
 ifeq ($(OPTION_NETWORKKIT),1)
 ____Allin1_lib_ALLIN1_NETWORKKIT_SRC_OBJECTS =  \
-	../../lib/$(OBJDIR)/Allin1_lib_DatagramSocket.o \
-	../../lib/$(OBJDIR)/Allin1_lib_NetToolkit.o \
-	../../lib/$(OBJDIR)/Allin1_lib_ServerSocketEvent.o \
-	../../lib/$(OBJDIR)/Allin1_lib_Socket.o \
-	../../lib/$(OBJDIR)/Allin1_lib_SocketEvent.o \
-	../../lib/$(OBJDIR)/Allin1_lib_SocketListeningLoop.o \
-	../../lib/$(OBJDIR)/Allin1_lib_URL.o
+	../../lib/$(OBJDIR)/Allin1_lib_IPAddress.o \
+	../../lib/$(OBJDIR)/Allin1_lib_NetworkKit.o \
+	../../lib/$(OBJDIR)/Allin1_lib_NetworkToolkit.o \
+	../../lib/$(OBJDIR)/Allin1_lib_Socket.o
 endif
 ifeq ($(OPTION_REMOTEOBJECTKIT),1)
 ____Allin1_lib_ALLIN1_REMOTEOBJECTKIT_SRC_OBJECTS =  \
@@ -1791,13 +1782,10 @@ ____Allin1_dll_ALLIN1_OPENGLKIT_SRC_OBJECTS =  \
 endif
 ifeq ($(OPTION_NETWORKKIT),1)
 ____Allin1_dll_ALLIN1_NETWORKKIT_SRC_OBJECTS =  \
-	../../lib/$(OBJDIR)/Allin1_dll_DatagramSocket.o \
-	../../lib/$(OBJDIR)/Allin1_dll_NetToolkit.o \
-	../../lib/$(OBJDIR)/Allin1_dll_ServerSocketEvent.o \
-	../../lib/$(OBJDIR)/Allin1_dll_Socket.o \
-	../../lib/$(OBJDIR)/Allin1_dll_SocketEvent.o \
-	../../lib/$(OBJDIR)/Allin1_dll_SocketListeningLoop.o \
-	../../lib/$(OBJDIR)/Allin1_dll_URL.o
+	../../lib/$(OBJDIR)/Allin1_dll_IPAddress.o \
+	../../lib/$(OBJDIR)/Allin1_dll_NetworkKit.o \
+	../../lib/$(OBJDIR)/Allin1_dll_NetworkToolkit.o \
+	../../lib/$(OBJDIR)/Allin1_dll_Socket.o
 endif
 ifeq ($(OPTION_REMOTEOBJECTKIT),1)
 ____Allin1_dll_ALLIN1_REMOTEOBJECTKIT_SRC_OBJECTS =  \
@@ -4565,46 +4553,28 @@ xmake_:
 ../../lib/$(OBJDIR)/OpenGLKit_dll_OpenGLToolkit.o: ../../src/vcf/OpenGLKit/OpenGLToolkit.cpp
 	$(CXX) -c -o $@ $(OPENGLKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/NetworkKit_lib_DatagramSocket.o: ../../src/vcf/NetworkKit/DatagramSocket.cpp
+../../lib/$(OBJDIR)/NetworkKit_lib_IPAddress.o: ../../src/vcf/NetworkKit/IPAddress.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/NetworkKit_lib_NetToolkit.o: ../../src/vcf/NetworkKit/NetToolkit.cpp
+../../lib/$(OBJDIR)/NetworkKit_lib_NetworkKit.o: ../../src/vcf/NetworkKit/NetworkKit.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/NetworkKit_lib_ServerSocketEvent.o: ../../src/vcf/NetworkKit/ServerSocketEvent.cpp
+../../lib/$(OBJDIR)/NetworkKit_lib_NetworkToolkit.o: ../../src/vcf/NetworkKit/NetworkToolkit.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/NetworkKit_lib_Socket.o: ../../src/vcf/NetworkKit/Socket.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/NetworkKit_lib_SocketEvent.o: ../../src/vcf/NetworkKit/SocketEvent.cpp
-	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/NetworkKit_lib_SocketListeningLoop.o: ../../src/vcf/NetworkKit/SocketListeningLoop.cpp
-	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/NetworkKit_lib_URL.o: ../../src/vcf/NetworkKit/URL.cpp
-	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/NetworkKit_dll_DatagramSocket.o: ../../src/vcf/NetworkKit/DatagramSocket.cpp
+../../lib/$(OBJDIR)/NetworkKit_dll_IPAddress.o: ../../src/vcf/NetworkKit/IPAddress.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/NetworkKit_dll_NetToolkit.o: ../../src/vcf/NetworkKit/NetToolkit.cpp
+../../lib/$(OBJDIR)/NetworkKit_dll_NetworkKit.o: ../../src/vcf/NetworkKit/NetworkKit.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/NetworkKit_dll_ServerSocketEvent.o: ../../src/vcf/NetworkKit/ServerSocketEvent.cpp
+../../lib/$(OBJDIR)/NetworkKit_dll_NetworkToolkit.o: ../../src/vcf/NetworkKit/NetworkToolkit.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/NetworkKit_dll_Socket.o: ../../src/vcf/NetworkKit/Socket.cpp
-	$(CXX) -c -o $@ $(NETWORKKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/NetworkKit_dll_SocketEvent.o: ../../src/vcf/NetworkKit/SocketEvent.cpp
-	$(CXX) -c -o $@ $(NETWORKKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/NetworkKit_dll_SocketListeningLoop.o: ../../src/vcf/NetworkKit/SocketListeningLoop.cpp
-	$(CXX) -c -o $@ $(NETWORKKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/NetworkKit_dll_URL.o: ../../src/vcf/NetworkKit/URL.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/RemoteObjectKit_lib_AbstractDistributedApplication.o: ../../src/vcf/RemoteObjectKit/AbstractDistributedApplication.cpp
@@ -5321,25 +5291,16 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_lib_OpenGLToolkit.o: ../../src/vcf/OpenGLKit/OpenGLToolkit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_DatagramSocket.o: ../../src/vcf/NetworkKit/DatagramSocket.cpp
+../../lib/$(OBJDIR)/Allin1_lib_IPAddress.o: ../../src/vcf/NetworkKit/IPAddress.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_NetToolkit.o: ../../src/vcf/NetworkKit/NetToolkit.cpp
+../../lib/$(OBJDIR)/Allin1_lib_NetworkKit.o: ../../src/vcf/NetworkKit/NetworkKit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_ServerSocketEvent.o: ../../src/vcf/NetworkKit/ServerSocketEvent.cpp
+../../lib/$(OBJDIR)/Allin1_lib_NetworkToolkit.o: ../../src/vcf/NetworkKit/NetworkToolkit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_Socket.o: ../../src/vcf/NetworkKit/Socket.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_lib_SocketEvent.o: ../../src/vcf/NetworkKit/SocketEvent.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_lib_SocketListeningLoop.o: ../../src/vcf/NetworkKit/SocketListeningLoop.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_lib_URL.o: ../../src/vcf/NetworkKit/URL.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_AbstractDistributedApplication.o: ../../src/vcf/RemoteObjectKit/AbstractDistributedApplication.cpp
@@ -6020,25 +5981,16 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_OpenGLToolkit.o: ../../src/vcf/OpenGLKit/OpenGLToolkit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_DatagramSocket.o: ../../src/vcf/NetworkKit/DatagramSocket.cpp
+../../lib/$(OBJDIR)/Allin1_dll_IPAddress.o: ../../src/vcf/NetworkKit/IPAddress.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_NetToolkit.o: ../../src/vcf/NetworkKit/NetToolkit.cpp
+../../lib/$(OBJDIR)/Allin1_dll_NetworkKit.o: ../../src/vcf/NetworkKit/NetworkKit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_ServerSocketEvent.o: ../../src/vcf/NetworkKit/ServerSocketEvent.cpp
+../../lib/$(OBJDIR)/Allin1_dll_NetworkToolkit.o: ../../src/vcf/NetworkKit/NetworkToolkit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_Socket.o: ../../src/vcf/NetworkKit/Socket.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_dll_SocketEvent.o: ../../src/vcf/NetworkKit/SocketEvent.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_dll_SocketListeningLoop.o: ../../src/vcf/NetworkKit/SocketListeningLoop.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_dll_URL.o: ../../src/vcf/NetworkKit/URL.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_AbstractDistributedApplication.o: ../../src/vcf/RemoteObjectKit/AbstractDistributedApplication.cpp

@@ -113,7 +113,7 @@ OPTION_LIBPNG = 1
 
 # Compile the TIFF library: [0,1]
 !ifndef OPTION_LIBTIFF
-OPTION_LIBTIFF = 0
+OPTION_LIBTIFF = 1
 !endif
 
 # Depends on:
@@ -122,7 +122,7 @@ OPTION_LIBTIFF = 0
 #     OPTION_LIBTIFF
 # Compile the paintlib library: [0,1]
 !ifndef OPTION_PAINTLIB
-OPTION_PAINTLIB = 0
+OPTION_PAINTLIB = 1
 !endif
 
 # Compile the oniguruma library: [0,1]
@@ -172,14 +172,14 @@ OPTION_HTMLKIT = 0
 #     OPTION_APPLICATIONKIT
 # Compile OpenGLKit: [0,1]
 !ifndef OPTION_OPENGLKIT
-OPTION_OPENGLKIT = 0
+OPTION_OPENGLKIT = 1
 !endif
 
 # Depends on:
 #     OPTION_FOUNDATIONKIT
 # Compile NetworkKit: [0,1]
 !ifndef OPTION_NETWORKKIT
-OPTION_NETWORKKIT = 0
+OPTION_NETWORKKIT = 1
 !endif
 
 # Depends on:

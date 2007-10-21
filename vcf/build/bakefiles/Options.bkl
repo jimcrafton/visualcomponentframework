@@ -172,7 +172,7 @@ The runtime libraries configuration.
     <option name="OPTION_LIBTIFF">
         <values>0,1</values>
         <default-value>
-            $(vcf.getOptionValue( 'OPTION_LIBTIFF', '0' ))
+            $(vcf.getOptionValue( 'OPTION_LIBTIFF', '1' ))
         </default-value>
         <description>
             Compile the TIFF library:
@@ -182,7 +182,7 @@ The runtime libraries configuration.
     <option name="OPTION_PAINTLIB">
         <values>0,1</values>
         <default-value>
-            $(vcf.getOptionValue( 'OPTION_PAINTLIB', '0' ))
+            $(vcf.getOptionValue( 'OPTION_PAINTLIB', '1' ))
         </default-value>
         <description>
 Depends on:
@@ -283,7 +283,7 @@ Compile HTMLKit:
     <option name="OPTION_OPENGLKIT">
         <values>0,1</values>
         <default-value>
-            $(vcf.getOptionValue( 'OPTION_OPENGLKIT', '0' ))
+            $(vcf.getOptionValue( 'OPTION_OPENGLKIT', '1' ))
         </default-value>
         <description>
 Depends on:
@@ -295,7 +295,7 @@ Compile OpenGLKit:
     <option name="OPTION_NETWORKKIT">
         <values>0,1</values>
         <default-value>
-            $(vcf.getOptionValue( 'OPTION_NETWORKKIT', '0' ))
+            $(vcf.getOptionValue( 'OPTION_NETWORKKIT', '1' ))
         </default-value>
         <description>
 Depends on:
