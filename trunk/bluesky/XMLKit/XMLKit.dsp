@@ -91,12 +91,24 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\test.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\XMLKit.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\DOM3.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\XMLKit.h
+# End Source File
 # End Group
 # Begin Group "Resource Files"
 
