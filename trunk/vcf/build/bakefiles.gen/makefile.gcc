@@ -964,30 +964,26 @@ NETWORKKIT_LIB_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	-DVCF_DISABLE_PRAGMA_LINKING -I..\..\src $(____OPTION_CPP_RTTI_0) \
 	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 NETWORKKIT_LIB_OBJECTS =  \
-	..\..\lib\$(OBJDIR)\NetworkKit_lib_DatagramSocket.o \
-	..\..\lib\$(OBJDIR)\NetworkKit_lib_NetToolkit.o \
-	..\..\lib\$(OBJDIR)\NetworkKit_lib_ServerSocketEvent.o \
+	..\..\lib\$(OBJDIR)\NetworkKit_lib_IPAddress.o \
+	..\..\lib\$(OBJDIR)\NetworkKit_lib_NetworkKit.o \
+	..\..\lib\$(OBJDIR)\NetworkKit_lib_NetworkToolkit.o \
 	..\..\lib\$(OBJDIR)\NetworkKit_lib_Socket.o \
-	..\..\lib\$(OBJDIR)\NetworkKit_lib_SocketEvent.o \
-	..\..\lib\$(OBJDIR)\NetworkKit_lib_SocketListeningLoop.o \
-	..\..\lib\$(OBJDIR)\NetworkKit_lib_URL.o \
-	..\..\lib\$(OBJDIR)\NetworkKit_lib_Win32DatagramSocketPeer.o \
+	..\..\lib\$(OBJDIR)\NetworkKit_lib_Win32IPAddressPeer.o \
+	..\..\lib\$(OBJDIR)\NetworkKit_lib_Win32NetworkToolkit.o \
 	..\..\lib\$(OBJDIR)\NetworkKit_lib_Win32SocketPeer.o
 NETWORKKIT_DLL_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
 	$(____OPTION_DEBUG) -D_WIN32 -DWIN32 -Wno-multichar -D_USRDLL \
-	-DVCF_DISABLE_PRAGMA_LINKING -I..\..\src -DNETKIT_DLL -DNETKIT_EXPORTS \
-	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
-	$(CXXFLAGS)
+	-DVCF_DISABLE_PRAGMA_LINKING -I..\..\src -DNETWORKKIT_DLL \
+	-DNETWORKKIT_EXPORTS $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 NETWORKKIT_DLL_OBJECTS =  \
-	..\..\lib\$(OBJDIR)\NetworkKit_dll_DatagramSocket.o \
-	..\..\lib\$(OBJDIR)\NetworkKit_dll_NetToolkit.o \
-	..\..\lib\$(OBJDIR)\NetworkKit_dll_ServerSocketEvent.o \
+	..\..\lib\$(OBJDIR)\NetworkKit_dll_IPAddress.o \
+	..\..\lib\$(OBJDIR)\NetworkKit_dll_NetworkKit.o \
+	..\..\lib\$(OBJDIR)\NetworkKit_dll_NetworkToolkit.o \
 	..\..\lib\$(OBJDIR)\NetworkKit_dll_Socket.o \
-	..\..\lib\$(OBJDIR)\NetworkKit_dll_SocketEvent.o \
-	..\..\lib\$(OBJDIR)\NetworkKit_dll_SocketListeningLoop.o \
-	..\..\lib\$(OBJDIR)\NetworkKit_dll_URL.o \
-	..\..\lib\$(OBJDIR)\NetworkKit_dll_Win32DatagramSocketPeer.o \
+	..\..\lib\$(OBJDIR)\NetworkKit_dll_Win32IPAddressPeer.o \
+	..\..\lib\$(OBJDIR)\NetworkKit_dll_Win32NetworkToolkit.o \
 	..\..\lib\$(OBJDIR)\NetworkKit_dll_Win32SocketPeer.o
 REMOTEOBJECTKIT_LIB_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) \
 	$(__FOUNDATIONKIT_DLL_p) $(__NETWORKKIT_DLL_p) $(__DEBUG_INFO) \
@@ -1093,7 +1089,7 @@ ALLIN1_DLL_CXXFLAGS = -DONIG_EXTERN=extern -DXP_WIN \
 	-DFOUNDATIONKIT_DLL -DFOUNDATIONKIT_EXPORTS -DGRAPHICSKIT_DLL \
 	-DGRAPHICSKIT_EXPORTS -DAPPLICATIONKIT_DLL -DAPPLICATIONKIT_EXPORTS \
 	-DHTMLKIT_DLL -DHTMLKIT_EXPORTS -DOPENGLKIT_DLL -DOPENGLKIT_EXPORTS \
-	-DNETKIT_DLL -DNETKIT_EXPORTS -DREMOTEKIT_DLL -DREMOTEKIT_EXPORTS \
+	-DNETWORKKIT_DLL -DNETWORKKIT_EXPORTS -DREMOTEKIT_DLL -DREMOTEKIT_EXPORTS \
 	-DINTERNETKIT_DLL -DINTERNETKIT_EXPORTS -DREGEXKIT_DLL -DREGEXKIT_EXPORTS \
 	-DJAVASCRIPTKIT_DLL -DJAVASCRIPTKIT_EXPORTS $(____OPTION_CPP_RTTI_0) \
 	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
@@ -1689,14 +1685,12 @@ ______Allin1_lib_ALLIN1_OPENGLKIT_SRC_FILENAMES_OBJECTS =  \
 endif
 ifeq ($(OPTION_NETWORKKIT),1)
 ______Allin1_lib_ALLIN1_NETWORKKIT_SRC_FILENAMES_OBJECTS =  \
-	..\..\lib\$(OBJDIR)\Allin1_lib_DatagramSocket.o \
-	..\..\lib\$(OBJDIR)\Allin1_lib_NetToolkit.o \
-	..\..\lib\$(OBJDIR)\Allin1_lib_ServerSocketEvent.o \
+	..\..\lib\$(OBJDIR)\Allin1_lib_IPAddress.o \
+	..\..\lib\$(OBJDIR)\Allin1_lib_NetworkKit.o \
+	..\..\lib\$(OBJDIR)\Allin1_lib_NetworkToolkit.o \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Socket.o \
-	..\..\lib\$(OBJDIR)\Allin1_lib_SocketEvent.o \
-	..\..\lib\$(OBJDIR)\Allin1_lib_SocketListeningLoop.o \
-	..\..\lib\$(OBJDIR)\Allin1_lib_URL.o \
-	..\..\lib\$(OBJDIR)\Allin1_lib_Win32DatagramSocketPeer.o \
+	..\..\lib\$(OBJDIR)\Allin1_lib_Win32IPAddressPeer.o \
+	..\..\lib\$(OBJDIR)\Allin1_lib_Win32NetworkToolkit.o \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Win32SocketPeer.o
 endif
 ifeq ($(OPTION_REMOTEOBJECTKIT),1)
@@ -1990,14 +1984,12 @@ ______Allin1_dll_ALLIN1_OPENGLKIT_SRC_FILENAMES_OBJECTS =  \
 endif
 ifeq ($(OPTION_NETWORKKIT),1)
 ______Allin1_dll_ALLIN1_NETWORKKIT_SRC_FILENAMES_OBJECTS =  \
-	..\..\lib\$(OBJDIR)\Allin1_dll_DatagramSocket.o \
-	..\..\lib\$(OBJDIR)\Allin1_dll_NetToolkit.o \
-	..\..\lib\$(OBJDIR)\Allin1_dll_ServerSocketEvent.o \
+	..\..\lib\$(OBJDIR)\Allin1_dll_IPAddress.o \
+	..\..\lib\$(OBJDIR)\Allin1_dll_NetworkKit.o \
+	..\..\lib\$(OBJDIR)\Allin1_dll_NetworkToolkit.o \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Socket.o \
-	..\..\lib\$(OBJDIR)\Allin1_dll_SocketEvent.o \
-	..\..\lib\$(OBJDIR)\Allin1_dll_SocketListeningLoop.o \
-	..\..\lib\$(OBJDIR)\Allin1_dll_URL.o \
-	..\..\lib\$(OBJDIR)\Allin1_dll_Win32DatagramSocketPeer.o \
+	..\..\lib\$(OBJDIR)\Allin1_dll_Win32IPAddressPeer.o \
+	..\..\lib\$(OBJDIR)\Allin1_dll_Win32NetworkToolkit.o \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Win32SocketPeer.o
 endif
 ifeq ($(OPTION_REMOTEOBJECTKIT),1)
@@ -4976,55 +4968,43 @@ xmake_:
 ..\..\lib\$(OBJDIR)\OpenGLKit_dll_Win32OpenGLPeer.o: ../../src/vcf/OpenGLKit/Win32OpenGLPeer.cpp
 	$(CXX) -c -o $@ $(OPENGLKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\NetworkKit_lib_DatagramSocket.o: ../../src/vcf/NetworkKit/DatagramSocket.cpp
+..\..\lib\$(OBJDIR)\NetworkKit_lib_IPAddress.o: ../../src/vcf/NetworkKit/IPAddress.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\NetworkKit_lib_NetToolkit.o: ../../src/vcf/NetworkKit/NetToolkit.cpp
+..\..\lib\$(OBJDIR)\NetworkKit_lib_NetworkKit.o: ../../src/vcf/NetworkKit/NetworkKit.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\NetworkKit_lib_ServerSocketEvent.o: ../../src/vcf/NetworkKit/ServerSocketEvent.cpp
+..\..\lib\$(OBJDIR)\NetworkKit_lib_NetworkToolkit.o: ../../src/vcf/NetworkKit/NetworkToolkit.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ..\..\lib\$(OBJDIR)\NetworkKit_lib_Socket.o: ../../src/vcf/NetworkKit/Socket.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\NetworkKit_lib_SocketEvent.o: ../../src/vcf/NetworkKit/SocketEvent.cpp
+..\..\lib\$(OBJDIR)\NetworkKit_lib_Win32IPAddressPeer.o: ../../src/vcf/NetworkKit/Win32IPAddressPeer.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\NetworkKit_lib_SocketListeningLoop.o: ../../src/vcf/NetworkKit/SocketListeningLoop.cpp
-	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-..\..\lib\$(OBJDIR)\NetworkKit_lib_URL.o: ../../src/vcf/NetworkKit/URL.cpp
-	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-..\..\lib\$(OBJDIR)\NetworkKit_lib_Win32DatagramSocketPeer.o: ../../src/vcf/NetworkKit/Win32DatagramSocketPeer.cpp
+..\..\lib\$(OBJDIR)\NetworkKit_lib_Win32NetworkToolkit.o: ../../src/vcf/NetworkKit/Win32NetworkToolkit.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ..\..\lib\$(OBJDIR)\NetworkKit_lib_Win32SocketPeer.o: ../../src/vcf/NetworkKit/Win32SocketPeer.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\NetworkKit_dll_DatagramSocket.o: ../../src/vcf/NetworkKit/DatagramSocket.cpp
+..\..\lib\$(OBJDIR)\NetworkKit_dll_IPAddress.o: ../../src/vcf/NetworkKit/IPAddress.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\NetworkKit_dll_NetToolkit.o: ../../src/vcf/NetworkKit/NetToolkit.cpp
+..\..\lib\$(OBJDIR)\NetworkKit_dll_NetworkKit.o: ../../src/vcf/NetworkKit/NetworkKit.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\NetworkKit_dll_ServerSocketEvent.o: ../../src/vcf/NetworkKit/ServerSocketEvent.cpp
+..\..\lib\$(OBJDIR)\NetworkKit_dll_NetworkToolkit.o: ../../src/vcf/NetworkKit/NetworkToolkit.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ..\..\lib\$(OBJDIR)\NetworkKit_dll_Socket.o: ../../src/vcf/NetworkKit/Socket.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\NetworkKit_dll_SocketEvent.o: ../../src/vcf/NetworkKit/SocketEvent.cpp
+..\..\lib\$(OBJDIR)\NetworkKit_dll_Win32IPAddressPeer.o: ../../src/vcf/NetworkKit/Win32IPAddressPeer.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\NetworkKit_dll_SocketListeningLoop.o: ../../src/vcf/NetworkKit/SocketListeningLoop.cpp
-	$(CXX) -c -o $@ $(NETWORKKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-..\..\lib\$(OBJDIR)\NetworkKit_dll_URL.o: ../../src/vcf/NetworkKit/URL.cpp
-	$(CXX) -c -o $@ $(NETWORKKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-..\..\lib\$(OBJDIR)\NetworkKit_dll_Win32DatagramSocketPeer.o: ../../src/vcf/NetworkKit/Win32DatagramSocketPeer.cpp
+..\..\lib\$(OBJDIR)\NetworkKit_dll_Win32NetworkToolkit.o: ../../src/vcf/NetworkKit/Win32NetworkToolkit.cpp
 	$(CXX) -c -o $@ $(NETWORKKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ..\..\lib\$(OBJDIR)\NetworkKit_dll_Win32SocketPeer.o: ../../src/vcf/NetworkKit/Win32SocketPeer.cpp
@@ -5837,28 +5817,22 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_lib_Win32OpenGLPeer.o: ../../src/vcf/OpenGLKit/Win32OpenGLPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\Allin1_lib_DatagramSocket.o: ../../src/vcf/NetworkKit/DatagramSocket.cpp
+..\..\lib\$(OBJDIR)\Allin1_lib_IPAddress.o: ../../src/vcf/NetworkKit/IPAddress.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\Allin1_lib_NetToolkit.o: ../../src/vcf/NetworkKit/NetToolkit.cpp
+..\..\lib\$(OBJDIR)\Allin1_lib_NetworkKit.o: ../../src/vcf/NetworkKit/NetworkKit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\Allin1_lib_ServerSocketEvent.o: ../../src/vcf/NetworkKit/ServerSocketEvent.cpp
+..\..\lib\$(OBJDIR)\Allin1_lib_NetworkToolkit.o: ../../src/vcf/NetworkKit/NetworkToolkit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_Socket.o: ../../src/vcf/NetworkKit/Socket.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\Allin1_lib_SocketEvent.o: ../../src/vcf/NetworkKit/SocketEvent.cpp
+..\..\lib\$(OBJDIR)\Allin1_lib_Win32IPAddressPeer.o: ../../src/vcf/NetworkKit/Win32IPAddressPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\Allin1_lib_SocketListeningLoop.o: ../../src/vcf/NetworkKit/SocketListeningLoop.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-..\..\lib\$(OBJDIR)\Allin1_lib_URL.o: ../../src/vcf/NetworkKit/URL.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-..\..\lib\$(OBJDIR)\Allin1_lib_Win32DatagramSocketPeer.o: ../../src/vcf/NetworkKit/Win32DatagramSocketPeer.cpp
+..\..\lib\$(OBJDIR)\Allin1_lib_Win32NetworkToolkit.o: ../../src/vcf/NetworkKit/Win32NetworkToolkit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_Win32SocketPeer.o: ../../src/vcf/NetworkKit/Win32SocketPeer.cpp
@@ -6632,28 +6606,22 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_dll_Win32OpenGLPeer.o: ../../src/vcf/OpenGLKit/Win32OpenGLPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\Allin1_dll_DatagramSocket.o: ../../src/vcf/NetworkKit/DatagramSocket.cpp
+..\..\lib\$(OBJDIR)\Allin1_dll_IPAddress.o: ../../src/vcf/NetworkKit/IPAddress.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\Allin1_dll_NetToolkit.o: ../../src/vcf/NetworkKit/NetToolkit.cpp
+..\..\lib\$(OBJDIR)\Allin1_dll_NetworkKit.o: ../../src/vcf/NetworkKit/NetworkKit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\Allin1_dll_ServerSocketEvent.o: ../../src/vcf/NetworkKit/ServerSocketEvent.cpp
+..\..\lib\$(OBJDIR)\Allin1_dll_NetworkToolkit.o: ../../src/vcf/NetworkKit/NetworkToolkit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_Socket.o: ../../src/vcf/NetworkKit/Socket.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\Allin1_dll_SocketEvent.o: ../../src/vcf/NetworkKit/SocketEvent.cpp
+..\..\lib\$(OBJDIR)\Allin1_dll_Win32IPAddressPeer.o: ../../src/vcf/NetworkKit/Win32IPAddressPeer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-..\..\lib\$(OBJDIR)\Allin1_dll_SocketListeningLoop.o: ../../src/vcf/NetworkKit/SocketListeningLoop.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-..\..\lib\$(OBJDIR)\Allin1_dll_URL.o: ../../src/vcf/NetworkKit/URL.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-..\..\lib\$(OBJDIR)\Allin1_dll_Win32DatagramSocketPeer.o: ../../src/vcf/NetworkKit/Win32DatagramSocketPeer.cpp
+..\..\lib\$(OBJDIR)\Allin1_dll_Win32NetworkToolkit.o: ../../src/vcf/NetworkKit/Win32NetworkToolkit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_Win32SocketPeer.o: ../../src/vcf/NetworkKit/Win32SocketPeer.cpp
@@ -6699,7 +6667,7 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_ApplicationKit_rc.o: ../../src/../build/resources/win32/ApplicationKit.rc
-	windres --use-temp-file -i$< -o$@  --define ONIG_EXTERN=extern --define XP_WIN --include-dir ..\..\src\thirdparty\win32 $(____OPTION_DEBUG_0) --define _WIN32 --define WIN32 --define _USRDLL --define VCF_DISABLE_PRAGMA_LINKING --include-dir ..\..\src --define FOUNDATIONKIT_DLL --define FOUNDATIONKIT_EXPORTS --define GRAPHICSKIT_DLL --define GRAPHICSKIT_EXPORTS --define APPLICATIONKIT_DLL --define APPLICATIONKIT_EXPORTS --define HTMLKIT_DLL --define HTMLKIT_EXPORTS --define OPENGLKIT_DLL --define OPENGLKIT_EXPORTS --define NETKIT_DLL --define NETKIT_EXPORTS --define REMOTEKIT_DLL --define REMOTEKIT_EXPORTS --define INTERNETKIT_DLL --define INTERNETKIT_EXPORTS --define REGEXKIT_DLL --define REGEXKIT_EXPORTS --define JAVASCRIPTKIT_DLL --define JAVASCRIPTKIT_EXPORTS --include-dir ../../build/resources/win32
+	windres --use-temp-file -i$< -o$@  --define ONIG_EXTERN=extern --define XP_WIN --include-dir ..\..\src\thirdparty\win32 $(____OPTION_DEBUG_0) --define _WIN32 --define WIN32 --define _USRDLL --define VCF_DISABLE_PRAGMA_LINKING --include-dir ..\..\src --define FOUNDATIONKIT_DLL --define FOUNDATIONKIT_EXPORTS --define GRAPHICSKIT_DLL --define GRAPHICSKIT_EXPORTS --define APPLICATIONKIT_DLL --define APPLICATIONKIT_EXPORTS --define HTMLKIT_DLL --define HTMLKIT_EXPORTS --define OPENGLKIT_DLL --define OPENGLKIT_EXPORTS --define NETWORKKIT_DLL --define NETWORKKIT_EXPORTS --define REMOTEKIT_DLL --define REMOTEKIT_EXPORTS --define INTERNETKIT_DLL --define INTERNETKIT_EXPORTS --define REGEXKIT_DLL --define REGEXKIT_EXPORTS --define JAVASCRIPTKIT_DLL --define JAVASCRIPTKIT_EXPORTS --include-dir ../../build/resources/win32
 
 ..\..\lib\$(OBJDIR)\paintlib_lib_plfilter.o: ../../src/thirdparty/common/paintlib/common/Filter/plfilter.cpp
 	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<

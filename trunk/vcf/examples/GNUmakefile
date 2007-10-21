@@ -19,7 +19,7 @@ include ../build/bakefiles.gen/config.gnu
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators
 
 install: all
 
@@ -73,6 +73,7 @@ clean:
 	(cd Localization && $(MAKE) clean)
 	(cd MinMax && $(MAKE) clean)
 	(cd MVCBasics && $(MAKE) clean)
+	(cd NetworkKitTest && $(MAKE) clean)
 	(cd OpenGLShapes && $(MAKE) clean)
 	(cd ParticleEditor && $(MAKE) clean)
 	(cd Pixels && $(MAKE) clean)
@@ -94,6 +95,7 @@ clean:
 	(cd StrokesAndFills && $(MAKE) clean)
 	(cd SysTray && $(MAKE) clean)
 	(cd Tables && $(MAKE) clean)
+	(cd TCPServer && $(MAKE) clean)
 	(cd TeXLabel && $(MAKE) clean)
 	(cd TextEdit && $(MAKE) clean)
 	(cd TextLayout && $(MAKE) clean)
@@ -104,6 +106,8 @@ clean:
 	(cd Tooltips && $(MAKE) clean)
 	(cd Transformations && $(MAKE) clean)
 	(cd TreeListControls && $(MAKE) clean)
+	(cd UDPClient && $(MAKE) clean)
+	(cd UDPServer && $(MAKE) clean)
 	(cd Variants && $(MAKE) clean)
 	(cd VFFTests && $(MAKE) clean)
 	(cd VFFTests2 && $(MAKE) clean)
@@ -245,6 +249,9 @@ MinMax:
 MVCBasics: 
 	(cd MVCBasics && $(MAKE) all)
 
+NetworkKitTest: 
+	(cd NetworkKitTest && $(MAKE) all)
+
 OpenGLShapes: 
 	(cd OpenGLShapes && $(MAKE) all)
 
@@ -308,6 +315,9 @@ SysTray:
 Tables: 
 	(cd Tables && $(MAKE) all)
 
+TCPServer: 
+	(cd TCPServer && $(MAKE) all)
+
 TeXLabel: 
 	(cd TeXLabel && $(MAKE) all)
 
@@ -338,6 +348,12 @@ Transformations:
 TreeListControls: 
 	(cd TreeListControls && $(MAKE) all)
 
+UDPClient: 
+	(cd UDPClient && $(MAKE) all)
+
+UDPServer: 
+	(cd UDPServer && $(MAKE) all)
+
 Variants: 
 	(cd Variants && $(MAKE) all)
 
@@ -353,7 +369,7 @@ VisualFormFiles:
 WorkingWithEnumerators: 
 	(cd WorkingWithEnumerators && $(MAKE) all)
 
-.PHONY: all install uninstall clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators
+.PHONY: all install uninstall clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators
 
 
 # Dependencies tracking:

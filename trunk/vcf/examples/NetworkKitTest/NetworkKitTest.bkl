@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="NetworkKitTest" template="vcf_exe_console" cond="OPTION_NETWORKKIT=='1'">
+        <dirname>.</dirname>
+        <sources>NetworkKitTest.cpp</sources>
+        <vcf-use-NetworkKit/>
+    </exe>
+</makefile>
+
+<!--
+$Id$
+-->

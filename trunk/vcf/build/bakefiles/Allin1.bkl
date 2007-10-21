@@ -183,8 +183,8 @@
         <define>HTMLKIT_EXPORTS</define>
         <define>OPENGLKIT_DLL</define>
         <define>OPENGLKIT_EXPORTS</define>
-        <define>NETKIT_DLL</define>
-        <define>NETKIT_EXPORTS</define>
+        <define>NETWORKKIT_DLL</define>
+        <define>NETWORKKIT_EXPORTS</define>
         <define>REMOTEKIT_DLL</define>
         <define>REMOTEKIT_EXPORTS</define>
         <define>INTERNETKIT_DLL</define>

@@ -41,7 +41,7 @@ MAKEARGS = CC="$(CC)" CXX="$(CXX)" CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators
 
 clean: 
 	-if exist .\*.o del .\*.o
@@ -91,6 +91,7 @@ clean:
 	$(MAKE) -C Localization -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C MinMax -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C MVCBasics -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C NetworkKitTest -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C OpenGLShapes -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C ParticleEditor -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Pixels -f makefile.gcc $(MAKEARGS) clean
@@ -112,6 +113,7 @@ clean:
 	$(MAKE) -C StrokesAndFills -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C SysTray -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Tables -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C TCPServer -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C TeXLabel -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C TextEdit -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C TextLayout -f makefile.gcc $(MAKEARGS) clean
@@ -122,6 +124,8 @@ clean:
 	$(MAKE) -C Tooltips -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Transformations -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C TreeListControls -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C UDPClient -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C UDPServer -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Variants -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C VFFTests -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C VFFTests2 -f makefile.gcc $(MAKEARGS) clean
@@ -263,6 +267,9 @@ MinMax:
 MVCBasics: 
 	$(MAKE) -C MVCBasics -f makefile.gcc $(MAKEARGS) all
 
+NetworkKitTest: 
+	$(MAKE) -C NetworkKitTest -f makefile.gcc $(MAKEARGS) all
+
 OpenGLShapes: 
 	$(MAKE) -C OpenGLShapes -f makefile.gcc $(MAKEARGS) all
 
@@ -326,6 +333,9 @@ SysTray:
 Tables: 
 	$(MAKE) -C Tables -f makefile.gcc $(MAKEARGS) all
 
+TCPServer: 
+	$(MAKE) -C TCPServer -f makefile.gcc $(MAKEARGS) all
+
 TeXLabel: 
 	$(MAKE) -C TeXLabel -f makefile.gcc $(MAKEARGS) all
 
@@ -356,6 +366,12 @@ Transformations:
 TreeListControls: 
 	$(MAKE) -C TreeListControls -f makefile.gcc $(MAKEARGS) all
 
+UDPClient: 
+	$(MAKE) -C UDPClient -f makefile.gcc $(MAKEARGS) all
+
+UDPServer: 
+	$(MAKE) -C UDPServer -f makefile.gcc $(MAKEARGS) all
+
 Variants: 
 	$(MAKE) -C Variants -f makefile.gcc $(MAKEARGS) all
 
@@ -371,7 +387,7 @@ VisualFormFiles:
 WorkingWithEnumerators: 
 	$(MAKE) -C WorkingWithEnumerators -f makefile.gcc $(MAKEARGS) all
 
-.PHONY: all clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators
+.PHONY: all clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators
 
 
 # Dependencies tracking:
