@@ -1427,7 +1427,7 @@ void Win32Edit::redo()
 
 void Win32Edit::setTextWrapping( const bool& val )
 {
-	if ( val ) {
+	if ( !val ) {
 		SendMessage(hwnd_, EM_SETTARGETDEVICE, 0, 1);
 	}
 	else {
