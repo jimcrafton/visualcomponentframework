@@ -1,0 +1,938 @@
+#ifndef _VCF_XMLKIT_H__
+#define _VCF_XMLKIT_H__
+
+//XMLKit.h
+
+/*
+Copyright 2000-2008 The VCF Project.
+Please see License.txt in the top level directory
+where you installed the VCF.
+*/
+
+
+#if _MSC_VER > 1000
+#   pragma once
+#endif
+
+
+
+
+/**
+Handle the extension based on the compiler
+*/
+# if defined(__INTEL_COMPILER)
+#   define _LIB_CPLVERNUM "icl7"
+# elif defined(__ICL)
+#   define _LIB_CPLVERNUM "icl6"
+# else
+#   if (_MSC_VER >= 1500)
+#     define _LIB_CPLVERNUM "vc90"
+#   elif (_MSC_VER >= 1400)
+#     define _LIB_CPLVERNUM "vc80"
+#   elif (_MSC_VER >= 1310)
+#     define _LIB_CPLVERNUM "vc71"
+#   elif (_MSC_VER >= 1300)
+#     define _LIB_CPLVERNUM "vc70"
+#   elif (_MSC_VER >= 1200)
+#		ifdef VCF_GTK
+#			define _LIB_CPLVERNUM "gtk"
+#		else
+#			define _LIB_CPLVERNUM "vc6"
+#		endif
+#   elif (_MSC_VER >= 1100)
+#     define _LIB_CPLVERNUM "vc5"
+#		endif
+#  ifdef VCF_BCC
+#     define _LIB_CPLVERNUM "bcc"
+#  endif
+# endif
+
+
+
+//auto link stuff
+#if defined(VCF_MSC) || defined(VCF_BCC)
+	#ifdef USE_XMLKIT_DLL
+		#define XMLKIT_DLL
+		// using dynamic link library
+		#ifdef _DEBUG
+			#pragma comment(lib, "XMLKit_"_LIB_CPLVERNUM"_d.lib")
+		#else
+			#pragma comment(lib, "XMLKit_"_LIB_CPLVERNUM".lib")
+		#endif
+	#elif defined USE_XMLKIT_LIB
+		// using statically linked library
+		#ifdef _DEBUG
+			#pragma comment(lib, "XMLKit_"_LIB_CPLVERNUM"_sd.lib")
+		#else
+			#pragma comment(lib, "XMLKit_"_LIB_CPLVERNUM"_s.lib")
+		#endif
+	#endif
+#endif //VCF_MSC
+
+
+
+//export crap
+#ifdef XMLKIT_DLL
+	#if defined(XMLKIT_EXPORTS)
+		#define XMLKIT_API __declspec(dllexport)
+	#else
+		#define XMLKIT_API __declspec(dllimport)
+	#endif
+#else
+	#define XMLKIT_API
+#endif //XMLKIT_DLL
+
+
+
+#include "vcf/FoundationKit/FoundationKit.h"
+#include <libxml/tree.h>
+#include <libxml/xpath.h>
+#include <libxml/xmlreader.h>
+
+
+namespace VCF {
+	class XMLKIT_API XMLKit {
+	public:
+		static void init( int argc, char **argv );
+
+		static void terminate();
+	};
+
+	
+	class XMLKIT_API XMLUtils {
+	public:
+		
+		static void freeXMLStr( xmlChar* str );
+	};
+
+
+
+	typedef Delegate3<const xmlChar*,const xmlChar*,const xmlChar*> InternalSubsetDelegate;
+	typedef Delegate5<const xmlChar*,int,const xmlChar*,const xmlChar*,xmlChar*> EntityDeclDelegate;
+	typedef Delegate3<const xmlChar*,const xmlChar*,const xmlChar*> NotationDeclDelegate;
+	typedef Delegate6<const xmlChar*, 
+					 const xmlChar*, 
+					 int, 
+					 int, 
+					 const xmlChar*, 
+					 xmlEnumerationPtr>	AttributeDeclDelegate;
+
+	typedef Delegate3<const xmlChar*,int,xmlElementContentPtr> ElementDeclDelegate;
+	typedef Delegate4<const xmlChar *, 
+					 const xmlChar *, 
+					 const xmlChar *, 
+					 const xmlChar *> UnparsedEntityDeclDelegate;
+
+	typedef Delegate2<const xmlChar*,const xmlChar**> StartElementDelegate;
+	typedef Delegate1<const xmlChar*> EndElementDelegate;
+	typedef Delegate1<const xmlChar*> ReferenceDelegate;
+	typedef Delegate2<const xmlChar *,int> CharactersDelegate;
+	typedef Delegate2<const xmlChar *,int> IgnorableWhitespaceDelegate;
+	typedef Delegate2<const xmlChar *,const xmlChar *> ProcessingInstructionDelegate;
+	typedef Delegate1<const xmlChar*> CommentDelegate;
+	typedef Delegate1<const char *> WarningDelegate;
+	typedef Delegate1<const char *> ErrorDelegate;
+	typedef Delegate1<const char *> FatalErrorDelegate;
+	typedef Delegate2<const xmlChar*,int> CDATABlockDelegate;
+	typedef Delegate3<const xmlChar*,const xmlChar*,const xmlChar*> ExternalSubsetDelegate;
+	typedef Delegate8<const xmlChar*, 
+					 const xmlChar*, 
+					 const xmlChar*, 
+					 int, 
+					 const xmlChar**, 
+					 int, 
+					 int, 
+					 const xmlChar**> StartElementNsDelegate;
+
+	typedef Delegate3<const xmlChar*, const xmlChar*, const xmlChar*> EndElementNsDelegate;
+	
+	
+	
+
+
+	class XMLKIT_API XMLSaxParser {
+	public:
+		InternalSubsetDelegate InternalSubset;
+		EntityDeclDelegate EntityDecl;
+		NotationDeclDelegate NotationDecl;
+		AttributeDeclDelegate AttributeDecl;
+		ElementDeclDelegate ElementDecl;
+		UnparsedEntityDeclDelegate UnparsedEntityDecl;
+		Delegate0 StartDocument;
+		Delegate0 EndDocument;
+		StartElementDelegate StartElement;
+		EndElementDelegate EndElement;
+		ReferenceDelegate Reference;
+		CharactersDelegate Characters;
+		IgnorableWhitespaceDelegate IgnorableWhitespace;
+		ProcessingInstructionDelegate ProcessingInstruction;
+		CommentDelegate Comment;
+		WarningDelegate Warning;
+		ErrorDelegate Error;
+		FatalErrorDelegate FatalError;
+		CDATABlockDelegate CDATABlock;
+		ExternalSubsetDelegate ExternalSubset;
+		StartElementNsDelegate StartElementNs;
+		EndElementNsDelegate EndElementNs;
+
+
+		XMLSaxParser();
+
+		~XMLSaxParser();
+
+
+		void parse( const String& xml );
+
+		void parseChunk( const String& xmlChunk, bool finished=false );
+
+		void finishParsing();
+
+	protected:
+		xmlSAXHandler saxHandler_;
+		xmlParserCtxtPtr parser_;
+
+		static void	internalSubsetSAXFunc(void * ctx, 
+					 const xmlChar * name, 
+					 const xmlChar * ExternalID, 
+					 const xmlChar * SystemID);
+
+		static void	entityDeclSAXFunc(void * ctx, 
+					 const xmlChar * name, 
+					 int type, 
+					 const xmlChar * publicId, 
+					 const xmlChar * systemId, 
+					 xmlChar * content);
+
+		static void notationDeclSAXFunc(void * ctx, const xmlChar * name, 
+										const xmlChar * publicId, const xmlChar * systemId);
+
+		static void	attributeDeclSAXFunc(void * ctx, 
+					 const xmlChar * elem, 
+					 const xmlChar * fullname, 
+					 int type, 
+					 int def, 
+					 const xmlChar * defaultValue, 
+					 xmlEnumerationPtr tree);
+
+		static void	elementDeclSAXFunc(void * ctx, 
+					 const xmlChar * name, 
+					 int type, 
+					 xmlElementContentPtr content);
+
+		static void	unparsedEntityDeclSAXFunc(void * ctx, 
+					 const xmlChar * name, 
+					 const xmlChar * publicId, 
+					 const xmlChar * systemId, 
+					 const xmlChar * notationName);
+
+		static void	startDocumentSAXFunc(void * ctx);
+
+		static void	endDocumentSAXFunc(void * ctx);
+
+		static void	startElementSAXFunc		(void * ctx, 
+					 const xmlChar * name, 
+					 const xmlChar ** atts);
+
+		static void	endElementSAXFunc(void * ctx, 
+					 const xmlChar * name);
+
+		static void	referenceSAXFunc(void * ctx, 
+					 const xmlChar * name);
+
+		static void	charactersSAXFunc(void * ctx, 
+					 const xmlChar * ch, 
+					 int len);
+
+		static void ignorableWhitespaceSAXFunc(void * ctx, 
+					 const xmlChar * ch, 
+					 int len);
+
+		static void	processingInstructionSAXFunc(void * ctx, 
+					 const xmlChar * target, 
+					 const xmlChar * data);
+
+		static void	commentSAXFunc(void * ctx, 
+					 const xmlChar * value);
+
+		static void	warningSAXFunc(void * ctx, const char * msg, ...);
+
+		static void	errorSAXFunc(void * ctx, const char * msg, ...);
+
+
+		static void	fatalErrorSAXFunc(void * ctx, const char * msg, ...);
+
+		static void cdataBlockSAXFunc(void * ctx,  const xmlChar * value, int len);
+
+		static void	externalSubsetSAXFunc	(void * ctx, 
+					 const xmlChar * name, 
+					 const xmlChar * ExternalID, 
+					 const xmlChar * SystemID);
+
+		static void	startElementNsSAX2Func(void * ctx, 
+					 const xmlChar * localname, 
+					 const xmlChar * prefix, 
+					 const xmlChar * URI, 
+					 int nb_namespaces, 
+					 const xmlChar ** namespaces, 
+					 int nb_attributes, 
+					 int nb_defaulted, 
+					 const xmlChar ** attributes);
+
+		static void endElementNsSAX2Func(void * ctx, 
+					 const xmlChar * localname, 
+					 const xmlChar * prefix, 
+					 const xmlChar * URI);
+
+	};
+
+
+
+
+	enum XMLNodeType {
+		ntNone = 0,
+		ntElement = 1,
+		ntAttribute = 2,
+		ntText = 3,
+		ntCDATA = 4,
+		ntEntityReference = 5,
+		ntEntity = 6,
+		ntProcessingInstruction = 7,
+		ntComment = 8,
+		ntDocument = 9,
+		ntDocumentType = 10,
+		ntDocumentFragment = 11,
+		ntNotation = 12,
+		ntWhitespace = 13,
+		ntSignificantWhitespace = 14,			
+		ntEndElement = 15,
+		ntEndEntity = 16,
+		ntXmlDeclaration = 17
+	};
+
+
+	class XMLTextReader;
+
+	class XMLKIT_API XMLReaderError {
+	public:
+
+		XMLReaderError():domain(0),code(0),level(0),line(-1),int1(0),int2(0),ctx(NULL),node(NULL){}
+
+		int	domain;
+		int	code;
+		String message;
+		int	level;
+		String filename;
+		int	line;
+		String str1;
+		String str2;
+		String str3;
+		int	int1;
+		int	int2;
+		XMLTextReader* ctx;
+		void *	node;
+
+
+		bool empty() const {
+			return domain == 0 &&
+					code == 0 &&
+					level == 0 && 
+					line == -1 &&
+					int1 == 0 &&
+					int2 == 0 &&
+					ctx == NULL &&
+					node == NULL &&
+					message.empty() &&
+					filename.empty() &&
+					str1.empty() &&
+					str2.empty() &&
+					str3.empty();
+		}
+	};
+
+
+
+
+	
+
+	template <typename Type, typename Impl>
+	class Attachable {
+	public:
+		Attachable():owned_(false), resource_(NULL) {}
+
+		Attachable( Type val ):owned_(false), resource_(val) {}
+
+		Attachable( const Attachable<Type,Impl>& val ):owned_(false), resource_(val.resource_) {}
+
+
+		~Attachable()	{
+			if ( owned_ ) {
+				VCF_ASSERT( NULL != resource_ );
+				if ( resource_ ) {
+					Impl::freeResource(resource_);
+				}
+			}
+		}
+
+
+		Type detach() {
+			Type result = resource_;
+			owned_ = false;
+			return result;
+		}
+
+		void attach(Type val) {
+			owned_ = true;
+			resource_ = val;
+		}
+
+		Type get() const {
+			return resource_;
+		}
+
+		void assign( Type rhs ) {
+			if ( owned_ ) {
+				if ( resource_ ) {
+					Impl::freeResource(resource_);
+				}
+			}
+
+			resource_ = rhs;
+			owned_ = false;
+		}
+
+		bool isNull() const {
+			return (NULL == resource_) ? true : false;
+		}
+	protected:
+		bool owned_;
+		Type resource_;
+
+	};
+
+
+	class XmlDocument;
+
+	class XMLKIT_API XmlNamespace : public Attachable<xmlNsPtr,XmlNamespace> {
+	public:
+		typedef Attachable<xmlNsPtr,XmlNamespace> BaseT;
+
+		XmlNamespace():BaseT()
+		{
+
+		}
+
+		XmlNamespace( xmlNsPtr val ):BaseT(val)
+		{
+			
+		}
+
+		XmlNamespace( const XmlNamespace& val ):BaseT(val)
+		{
+			
+		}
+
+		XmlNamespace& operator=( xmlNsPtr rhs )
+		{
+			assign(rhs);
+			return *this;
+		}
+
+		static void freeResource(xmlNsPtr res);
+
+
+		String getPrefix() const {
+			return String( (const char*)resource_->prefix );
+		}
+
+		String getURI() const {
+			return String( (const char*)resource_->href );
+		}
+	protected:
+		
+		
+	};
+
+	class XMLKIT_API XmlNode : public Attachable<xmlNodePtr,XmlNode>, public Object {
+	public:
+
+		enum PreservesSpace {
+			psDefault = 0,
+			psPreserves = 1,
+			psNotInherited = -1
+		};
+
+		typedef Attachable<xmlNodePtr,XmlNode> BaseT;
+
+		XmlNode():BaseT()
+		{
+
+		}
+
+		XmlNode( xmlNodePtr val ):BaseT(val)
+		{
+			
+		}
+
+		XmlNode( const XmlNode& val ):BaseT(val)
+		{
+			
+		}
+
+		XmlNode& operator=( xmlNodePtr rhs )
+		{
+			assign(rhs);
+			return *this;
+		}
+
+		static void freeResource(xmlNodePtr res);
+
+		bool getChildren( std::vector<XmlNode>& nodes ) const ;
+
+		XmlNode getParent() const;
+
+		XMLNodeType getType() const ;
+
+		String getPath() const ;
+
+		XmlNode copy( bool deep ) const;
+
+		XmlNode copyList() const ;
+
+		String getAttribute( const String& name ) const ;
+
+		void setNamespaceAttr( const XmlNamespace& ns, const String& name, const String& value );
+
+		void setAttribute( const String& name, const String& value );
+
+		bool empty() const;
+
+		String getContent() const ;
+
+		String getLang() const ;
+
+		String getBase() const ;
+
+		void setBase( const String& val ) ;
+
+		PreservesSpace getPreservesSpace() const ;
+
+		bool isText() const ;
+
+		int getLineNumber() const ;
+
+		void setBaseURI( const String& val ) ;
+
+		void setContent( const String& val ) ;
+
+		void setLang( const String& val ) ;
+
+		void setName( const String& val ) ;
+
+		String getName() const ;
+
+		int reconcileNamespaces() const ;
+
+		XmlDocument getDocument() const ;
+
+		void setDocument ( const XmlDocument& );
+
+		bool getNamespaceList( std::vector<XmlNamespace>& namespaces ) const;
+
+		void setNamespace( const XmlNamespace& ns );
+
+		XmlNamespace searchNamespace( const String& ns ) ;
+
+		XmlNamespace searchNamespaceByHRef( const String& href ) ;
+
+		XmlNode* copy( const XmlDocument& doc, bool extended ); 
+		
+		void addChild( XmlNode& child ) ;
+
+		void addNextSibling( XmlNode& element );
+
+		void addPrevSibling( XmlNode& element );
+
+		void addSibling( XmlNode& element ) ;
+	};
+
+
+
+	class XMLKIT_API XmlDocument : public Attachable<xmlDocPtr,XmlDocument>, public Object {
+	public:
+		typedef Attachable<xmlDocPtr,XmlDocument> BaseT;
+
+		XmlDocument():BaseT()
+		{
+
+		}
+
+		XmlDocument( xmlDocPtr val ):BaseT(val)
+		{
+			
+		}
+
+		XmlDocument( const XmlDocument& val ):BaseT(val)
+		{
+			
+		}
+		
+		XmlDocument& operator=( xmlDocPtr rhs )
+		{
+			assign(rhs);
+			return *this;
+		}
+
+		static void freeResource(xmlDocPtr res);
+
+
+		void setXML( const String& xml );
+		
+		XmlNode getRoot() const;
+
+		XmlDocument* copy( bool recursive ) const;
+
+		XmlNode* newCDATABlock( const String& data );
+
+		XmlNode* newCharRef( const String& name );
+
+		XmlNode* newComment( const String& comment );
+
+		XmlNode* newFragment();
+
+		XmlNode* newNode( const XmlNamespace& ns, const String& name, const String& content );
+
+		XmlNode* newNode( const String& name, const String& content );
+
+		XmlNode* newRawNode( const XmlNamespace& ns, const String& name, const String& content );
+
+		XmlNode* newRawNode( const String& name, const String& content );
+
+		XmlNode* newProcessingInstruction( const String& name, const String& content );
+
+		static XmlDocument* newDocument();
+
+		VariantData matches( const String& xpathQuery, std::vector<XmlNode>& found );
+
+		XmlNode select( const String& xpathQuery );
+	};
+
+
+
+	//	
+	class XMLKIT_API XPathExpression : public Attachable<xmlXPathCompExprPtr,XPathExpression> {
+	public:
+		typedef Attachable<xmlXPathCompExprPtr,XPathExpression> BaseT;
+
+		XPathExpression():BaseT()
+		{
+			
+		}
+
+		XPathExpression( xmlXPathCompExprPtr val ):BaseT(val)
+		{
+			
+		}
+
+		XPathExpression( const XPathExpression& val ):BaseT(val)
+		{
+			
+		}
+		
+		XPathExpression& operator=( xmlXPathCompExprPtr rhs )
+		{
+			assign(rhs);
+			return *this;
+		}
+
+		static void freeResource(xmlXPathCompExprPtr res);
+
+
+		void compile( const String& xpathQuery );
+	};
+
+
+	class XPathIterator;
+
+	typedef std::vector<XmlNode> XmlNodeList;
+
+	class XMLKIT_API XPathNodeIterator {
+	public:	
+		XPathNodeIterator():nodes_(NULL){}
+
+		XPathNodeIterator& operator++() {
+			if ( NULL != nodes_ ) {
+				++iterator_;
+			}
+			return *this;
+		}
+
+		XPathNodeIterator operator++(int) {
+			if ( NULL != nodes_ ) {
+				++iterator_;
+			}
+			return *this;
+		}
+		
+		bool operator != ( const XPathNodeIterator& rhs ) const {
+			return iterator_ != rhs.iterator_;
+		}
+
+		
+		XmlNode& operator*() {
+			if ( NULL == nodes_ ) {
+				static XmlNode nullNode;
+				return nullNode;
+			}
+
+			return *iterator_;
+		}
+
+		const XmlNode& operator*() const {
+			if ( NULL == nodes_ ) {
+				static XmlNode nullNode;
+				return nullNode;
+			}
+
+			return *iterator_;
+		}
+
+		bool atEnd() const {
+			if ( NULL == nodes_ ) {
+				return true;
+			}
+			return iterator_ == nodes_->end();
+		}
+
+		bool next() {
+			if ( NULL == nodes_ ) {
+				return false;
+			}
+
+			++iterator_;
+			return iterator_ != nodes_->end();
+		}
+
+		bool isNull() const {
+			return NULL == nodes_;
+		}
+
+		friend class XPathIterator;
+	protected:		
+		typedef XmlNodeList::iterator NodeIter;
+		typedef XmlNodeList::const_iterator ConstNodeIter;
+
+		XPathNodeIterator( XmlNodeList& nodes ):nodes_(&nodes) {
+			iterator_ = nodes_->begin();
+		}
+
+		XPathNodeIterator( XmlNodeList& nodes, XmlNodeList::iterator it ):
+			nodes_(&nodes), iterator_(it) {}
+
+		XmlNodeList* nodes_;
+		XmlNodeList::iterator iterator_;
+	};
+
+	class XMLKIT_API XPathIterator : public Attachable<xmlXPathContextPtr,XPathIterator> {
+	public:
+		typedef Attachable<xmlXPathContextPtr,XPathIterator> BaseT;
+
+		XPathIterator( const XmlDocument& doc );
+
+		static void freeResource(xmlXPathContextPtr res);
+
+		VariantData eval( const String& xpathQuery );
+
+		VariantData eval( const XPathExpression& expression );
+
+		XmlNode select( const String& xpathQuery ) {
+			XPathExpression exp;
+			exp.compile(xpathQuery);
+			return select( exp );
+		}
+
+		XmlNode select( const XPathExpression& expression );
+
+		XPathNodeIterator selectNodes( const String& xpathQuery ) {
+			XPathExpression exp;
+			exp.compile(xpathQuery);
+			return selectNodes( exp );
+		}
+
+		XPathNodeIterator selectNodes( const XPathExpression& expression );
+
+		XPathNodeIterator end() {
+			return XPathNodeIterator(nodes_, nodes_.end());
+		}
+
+		XPathNodeIterator begin() {
+			return XPathNodeIterator(nodes_, nodes_.begin());
+		}
+
+		void registerNamespaces( Dictionary& namespaceDict );
+
+	protected:
+		xmlXPathObjectPtr xpathObj_;
+		XmlNodeList nodes_;
+	};
+
+
+
+	typedef Delegate1<const XMLReaderError&> XMLReaderErrorDelegate;
+
+	class XMLKIT_API XMLTextReader {
+	public:
+
+		enum ParseringFlags {
+			pfLoadDTD = 0x01,
+			pfDefaultAttrs = 0x02,
+			pfValidate = 0x04,
+			pfSubstEntities = 0x08,
+		};
+
+		enum ParserState {
+				psInitial = XML_TEXTREADER_MODE_INITIAL,
+				psInteractive = XML_TEXTREADER_MODE_INTERACTIVE,
+				psError = XML_TEXTREADER_MODE_ERROR,
+				psEOF = XML_TEXTREADER_MODE_EOF,
+				psClosed = XML_TEXTREADER_MODE_CLOSED,
+				psReading = XML_TEXTREADER_MODE_READING
+		};
+
+		XMLReaderErrorDelegate Error;
+		
+
+		XMLTextReader();
+
+		~XMLTextReader();
+
+
+		size_t getAttributeCount() const;
+
+		String getBaseURI() const ;
+
+		int getBytesConsumed() const ;
+
+		bool close() ;
+
+		String getEncoding() const;
+
+		String getLocalName() const;
+
+		String getName() const ;
+		
+		String getNamespaceURI() const ;
+
+		String getPrefix() const ;
+
+		String getTextValue() const ;
+
+		String getLang() const ;
+
+		String getVersion() const;
+
+		int getCurrentDepth() const ;
+
+		XmlNode expand();
+
+		String getAttribute( const String& name ) const;
+		
+		String getAttribute( const size_t& index ) const;
+		
+		String getAttribute( const String& localName, const String& namespaceURI ) const;
+
+		int getCurrentParserColumn() const;
+
+		int getCurrentParserLine() const;
+
+		bool parserLoadsDTD() const;
+
+		bool parserUsingDefaultAttrs() const;
+
+		bool parserWillValidate() const;
+
+		bool parserWillSubstituteEntities() const;
+
+		void setParserLoadsDTD( bool val );
+
+		void setParserDefaultAttrs( bool val );
+
+		void setParserWillValidate( bool val ) ;
+
+		void setParserWillSubstituteEntities( bool val );
+
+		bool hasAttributes() const;
+
+		bool hasValue() const;
+
+		bool isDefaultValue() const;
+
+		bool isEmptyElement() const;
+
+		bool isNamespace() const;
+
+		bool isParserValid() const;
+
+		String lookupNamespace( const String& prefix ) const;
+			
+		bool moveToAttribute( const String& attributeName );
+
+		bool moveToAttribute( size_t index );
+
+		bool moveToAttribute( const String& localAttrName, const String& namespaceURI );
+
+		bool moveToElement();
+
+		bool moveToFirstAttribute();
+
+		bool moveToNextAttribute();
+
+		bool next();
+
+		bool nextSibling();
+
+		XMLNodeType getNodeType() const;
+
+		int getQuoteChar() const;
+
+		bool read();
+
+		bool readAttrValue();
+
+		String readInnerXml();
+
+		String readOuterXml();
+
+		String readString();
+
+		bool schemaValidate( const String& xsd );
+
+		bool isEOF() const;
+
+		int getState() const;
+
+		XmlNode getCurrentNode();
+
+		void setXML( const String& xml );
+
+		void add( const String& xml );
+
+		void add( const unsigned char* xmlBuffer, size_t length );
+	protected:
+		xmlTextReaderPtr xmlReader_;
+		xmlBufferPtr xmlBuf_;
+		xmlParserInputBufferPtr xmlInputBuf_;
+
+		
+
+		void checkBuffers();
+
+		void createXMLReader();
+
+		static void	xmlStructuredErrorFunc(void * userData,  xmlErrorPtr error);
+	};
+};
+
+
+
+
+#endif //_VCF_XMLKIT_H__
