@@ -2,19 +2,10 @@
 
 
 #include "XMLKit.h"
-
-
 #include <libxml/parser.h>
-
-
 #include <libxml/xpathInternals.h>
 
 #include "vcf/FoundationKit/Dictionary.h"
-
-
-
-
-#include "DOM3.h"
 
 
 
