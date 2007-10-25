@@ -503,6 +503,7 @@ namespace VCF {
 		void setNamespaceAttr( const XmlNamespace& ns, const String& name, const String& value );
 
 		void setAttribute( const String& name, const String& value );
+		void setAttributeAsVariant( const String& name, const VariantData& value );
 
 		bool empty() const;
 
@@ -553,6 +554,9 @@ namespace VCF {
 		void addPrevSibling( XmlNode& element );
 
 		void addSibling( XmlNode& element ) ;
+
+
+		virtual String toString();
 	};
 
 
@@ -589,31 +593,40 @@ namespace VCF {
 		
 		XmlNode getRoot() const;
 
+		XmlNode setRoot( const XmlNode& root );
+
 		XmlDocument* copy( bool recursive ) const;
 
-		XmlNode* newCDATABlock( const String& data );
+		XmlNode newCDATABlock( const String& data );
 
-		XmlNode* newCharRef( const String& name );
+		XmlNode newCharRef( const String& name );
 
-		XmlNode* newComment( const String& comment );
+		XmlNode newComment( const String& comment );
 
-		XmlNode* newFragment();
+		XmlNode newFragment();
 
-		XmlNode* newNode( const XmlNamespace& ns, const String& name, const String& content );
+		XmlNode newNode( const XmlNamespace& ns, const String& name, const String& content="" );
 
-		XmlNode* newNode( const String& name, const String& content );
+		XmlNode newNode( const String& name, const String& content="" );
 
-		XmlNode* newRawNode( const XmlNamespace& ns, const String& name, const String& content );
+		XmlNode newRawNode( const XmlNamespace& ns, const String& name, const String& content );
 
-		XmlNode* newRawNode( const String& name, const String& content );
+		XmlNode newRawNode( const String& name, const String& content );
 
-		XmlNode* newProcessingInstruction( const String& name, const String& content );
+		XmlNode newProcessingInstruction( const String& name, const String& content );
 
 		static XmlDocument* newDocument();
 
 		VariantData matches( const String& xpathQuery, std::vector<XmlNode>& found );
 
 		XmlNode select( const String& xpathQuery );
+
+		//virtual Object methods:
+
+		
+		virtual String toString();
+
+		virtual Object* clone( bool deep = false );
 	};
 
 

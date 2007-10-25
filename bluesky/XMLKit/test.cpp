@@ -220,7 +220,38 @@ int main( int argc, char** argv ){
 			}
 		}
 
+	
 		
+
+		XmlDocument* doc2 = XmlDocument::newDocument();
+
+		root = doc2->newNode( "n1" );
+
+		doc2->setRoot( root );
+		
+		root.addChild( doc2->newNode( "spaz" ) );
+		root.addChild( doc2->newNode( "goofy" ) );
+		root.addChild( doc2->newNode( "donald" ) );
+
+		String res;
+		res += doc2;
+		
+		res = root.toString();
+	
+		XPathIterator xp2(*doc2);
+		xp2.select("/n1/goofy").setContent( "Hello World" );
+
+		root.setAttribute( "happy", "yes" );
+		xp2.select("/n1/spaz").setAttributeAsVariant( "noise", 10 );
+
+		res = root.toString();
+
+
+		FileOutputStream fos("doc2.xml");
+		TextOutputStream tos(&fos);
+		tos << doc2->toString();
+
+		delete doc2;
 	}
 
 	XMLKit::terminate();

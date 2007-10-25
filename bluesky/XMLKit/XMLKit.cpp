@@ -377,7 +377,37 @@ void XmlNamespace::freeResource(xmlNsPtr res)
 	xmlFreeNs( res );
 }
 
+String XmlNode::toString()
+{
+	String xml;
 
+	xmlOutputBufferPtr output = NULL;
+	xmlCharEncodingHandlerPtr   encodingHandler = NULL;
+	encodingHandler = xmlFindCharEncodingHandler( (const char *)resource_->doc->encoding );
+	
+	output = xmlAllocOutputBuffer(encodingHandler);
+
+	VCF_ASSERT( NULL != output );
+
+	if ( output == NULL ) {
+		throw RuntimeException( "Unable to allocate output buffer for node." );
+	}
+
+	xmlNodeDumpOutput( output, resource_->doc, resource_, 0, 1, NULL );
+
+	xmlOutputBufferFlush(output);
+
+	if ( NULL != output->conv ) {
+		xml.assign( (const char*)output->conv->content, output->conv->use );
+	}
+	else {
+		xml.assign( (const char*)output->buffer->content, output->buffer->use );
+	}
+
+	xmlOutputBufferClose( output );
+
+	return xml;
+}
 
 void XmlNode::freeResource(xmlNodePtr res)
 {
@@ -465,6 +495,11 @@ void XmlNode::setAttribute( const String& name, const String& value )
 	AnsiString v = value;
 
 	xmlSetProp( resource_, (const xmlChar*)n.c_str(), (const xmlChar*)v.c_str() );
+}
+
+void XmlNode::setAttributeAsVariant( const String& name, const VariantData& value )
+{
+	setAttribute( name, value.toString() );
 }
 
 bool XmlNode::empty() const 
@@ -609,7 +644,10 @@ XmlNode* XmlNode::copy( const XmlDocument& doc, bool extended );
 
 
 void XmlNode::addChild( XmlNode& child ) 
-{
+{	
+	VCF_ASSERT( NULL != resource_ );
+	VCF_ASSERT( !child.isNull() );
+
 	if ( !child.isNull() ) {
 		xmlAddChild( resource_, child.detach() );
 	}
@@ -670,6 +708,29 @@ void XmlDocument::freeResource(xmlDocPtr res)
 	xmlFreeDoc( res );
 }
 
+String XmlDocument::toString()
+{
+	String xml;
+
+	xmlChar* mem = NULL;
+	int size = 0;
+	xmlDocDumpMemory( resource_, &mem, &size );
+	if ( size > 0 && NULL != mem ) {
+		xml.assign( (const char*)mem, size );
+	}
+
+	return xml;
+}
+
+Object* XmlDocument::clone( bool deep )
+{
+	XmlDocument* clonedDoc = new XmlDocument();
+
+	clonedDoc->attach( xmlCopyDoc(resource_, 1) );
+
+	return clonedDoc;
+}
+
 
 void XmlDocument::setXML( const String& xml )
 {
@@ -689,6 +750,10 @@ XmlNode XmlDocument::getRoot() const
 	return XmlNode( xmlDocGetRootElement( resource_ ) );
 }
 
+XmlNode XmlDocument::setRoot( const XmlNode& root )
+{
+	return XmlNode( xmlDocSetRootElement( resource_, root.get() ) );
+}
 
 
 XmlDocument* XmlDocument::copy( bool recursive ) const 
@@ -706,111 +771,58 @@ XmlDocument* XmlDocument::copy( bool recursive ) const
 }
 
 
-XmlNode* XmlDocument::newCDATABlock( const String& data ) 
+XmlNode XmlDocument::newCDATABlock( const String& data ) 
 {
-	XmlNode* result = NULL;
-
 	AnsiString tmp = data;
-	xmlNodePtr res = xmlNewCDataBlock( resource_, (const xmlChar*)tmp.c_str(), tmp.size() );
-	if ( NULL != res ) {
-		result = new XmlNode();
-		result->attach( res );
-	}	
-
-	return result;
+	return XmlNode( xmlNewCDataBlock( resource_, (const xmlChar*)tmp.c_str(), tmp.size() ) );
 }
 
-XmlNode* XmlDocument::newCharRef( const String& name ) 
+XmlNode XmlDocument::newCharRef( const String& name ) 
 {
-	XmlNode* result = NULL;
-
 	AnsiString tmp = name;
-	xmlNodePtr res = xmlNewCharRef( resource_, (const xmlChar*)tmp.c_str() );
-	if ( NULL != res ) {
-		result = new XmlNode();
-		result->attach( res );
-	}	
 
-	return result;
+	return XmlNode( xmlNewCharRef( resource_, (const xmlChar*)tmp.c_str() ) );
 }
 
-XmlNode* XmlDocument::newComment( const String& comment ) 
+XmlNode XmlDocument::newComment( const String& comment ) 
 {
-	XmlNode* result = NULL;
-
 	AnsiString tmp = comment;
-	xmlNodePtr res = xmlNewDocComment( resource_, (const xmlChar*)tmp.c_str() );
-	if ( NULL != res ) {
-		result = new XmlNode();
-		result->attach( res );
-	}	
+	return XmlNode( xmlNewDocComment( resource_, (const xmlChar*)tmp.c_str() ) );
+} 
 
-	return result;
+XmlNode XmlDocument::newFragment() 
+{
+	return XmlNode( xmlNewDocFragment( resource_ ) );
 }
 
-XmlNode* XmlDocument::newFragment() 
+XmlNode XmlDocument::newNode( const XmlNamespace& ns, const String& name, const String& content ) 
 {
-	XmlNode* result = NULL;
-	xmlNodePtr res = xmlNewDocFragment( resource_ );
-	if ( NULL != res ) {
-		result = new XmlNode();
-		result->attach( res );
-	}	
-
-	return result;
-}
-
-XmlNode* XmlDocument::newNode( const XmlNamespace& ns, const String& name, const String& content ) 
-{
-	
-	XmlNode* result = NULL;
-	xmlNodePtr res = xmlNewDocNode( resource_, ns.get(), 
+	return XmlNode( xmlNewDocNode( resource_, ns.get(), 
 									(const xmlChar*)name.ansi_c_str(),
-									(const xmlChar*)content.ansi_c_str() );
-	if ( NULL != res ) {
-		result = new XmlNode();
-		result->attach( res );
-	}	
-
-	return result;
+									(const xmlChar*)content.ansi_c_str() ) );
 }
 
-XmlNode* XmlDocument::newNode( const String& name, const String& content ) 
+XmlNode XmlDocument::newNode( const String& name, const String& content ) 
 {
 	return newNode(XmlNamespace(), name, content);
 }
 
-XmlNode* XmlDocument::newRawNode( const XmlNamespace& ns, const String& name, const String& content ) 
+XmlNode XmlDocument::newRawNode( const XmlNamespace& ns, const String& name, const String& content ) 
 {
-	
-	XmlNode* result = NULL;
-	xmlNodePtr res = xmlNewDocRawNode( resource_, ns.get(), 
+	return XmlNode( xmlNewDocRawNode( resource_, ns.get(), 
 									(const xmlChar*)name.ansi_c_str(),
-									(const xmlChar*)content.ansi_c_str() );
-	if ( NULL != res ) {
-		result = new XmlNode();
-		result->attach( res );
-	}	
-
-	return result;
+									(const xmlChar*)content.ansi_c_str() ) );
 }
 
-XmlNode* XmlDocument::newRawNode( const String& name, const String& content ) 
+XmlNode XmlDocument::newRawNode( const String& name, const String& content ) 
 {
 	return newRawNode(XmlNamespace(), name, content);
 }
 
-XmlNode* XmlDocument::newProcessingInstruction( const String& name, const String& content ) 
+XmlNode XmlDocument::newProcessingInstruction( const String& name, const String& content ) 
 {
-	XmlNode* result = NULL;
-	xmlNodePtr res = xmlNewDocPI( resource_,(const xmlChar*)name.ansi_c_str(),
-									(const xmlChar*)content.ansi_c_str() );
-	if ( NULL != res ) {
-		result = new XmlNode();
-		result->attach( res );
-	}
-
-	return result;
+	return XmlNode( xmlNewDocPI( resource_,(const xmlChar*)name.ansi_c_str(),
+									(const xmlChar*)content.ansi_c_str() ) );
 }
 
 XmlDocument* XmlDocument::newDocument() 
@@ -1801,14 +1813,5 @@ void XMLTextReader::xmlStructuredErrorFunc(void * userData,  xmlErrorPtr error)
 		thisPtr->Error( err );
 	}
 }
-
-
-
-
-
-
-
-
-
 
 
