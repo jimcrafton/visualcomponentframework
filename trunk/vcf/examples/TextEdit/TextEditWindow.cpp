@@ -12,6 +12,7 @@ where you installed the VCF.
 #include "TextEditWindow.h"
 #include "TextEditDocument.h"
 #include "TextEdit.h"
+#include "vcf/ApplicationKit/TextPeer.h"
 
 using namespace VCF;
 

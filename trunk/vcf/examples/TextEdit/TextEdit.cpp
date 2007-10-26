@@ -192,7 +192,7 @@ bool TextEdit::initRunningApplication()
 		*/
 		
 		MenuItem* root = MenuManager::getMainMenu()->getRootMenuItem();
-		MenuItem* edit = root->findChildNamedSimilarTo( "edit" );
+		MenuItem* edit = root->findChildNamed( "edit", false );
 		uint32 editCount = edit->getChildCount();
 		
 		
@@ -221,7 +221,7 @@ bool TextEdit::initRunningApplication()
 		editCount ++;
 		
 		
-		MenuItem* file = root->findChildNamedSimilarTo( "file" );
+		MenuItem* file = root->findChildNamed( "file", false );
 
 		sep = new DefaultMenuItem( "" );
 		sep->setSeparator( true );
