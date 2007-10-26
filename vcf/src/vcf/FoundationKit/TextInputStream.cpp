@@ -36,7 +36,7 @@ uint64 TextInputStream::getSize()
 	return size_;
 }
 
-char* TextInputStream::getBuffer()
+uchar* TextInputStream::getBuffer()
 {
 	return NULL;
 }

@@ -37,7 +37,7 @@ public:
 
 	virtual uint64 getSize();
 
-	virtual char* getBuffer();
+	virtual uchar* getBuffer();
 
 	virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes );
 

@@ -23,11 +23,14 @@ GenericMemoryBuffer
 @version 1.0
 */
 
-template <class DATA_TYPE>
+template <typename DATA_TYPE, int allocationSize = 65536>
 class GenericMemoryBuffer {
 public:
-	GenericMemoryBuffer( const uint64 allocationSize = 65536) :
-			allocationSize_(allocationSize),
+	enum {
+		AllocationSize = allocationSize
+	};
+
+	GenericMemoryBuffer() :
 			currentBuffer_(NULL),
 			currentAllocationSize_(0),
 			seekPos_(0),
@@ -36,7 +39,7 @@ public:
 
 
 
-	virtual ~GenericMemoryBuffer(){
+	~GenericMemoryBuffer(){
 		delete [] currentBuffer_;
 		currentBuffer_ = NULL;
 	}
@@ -51,7 +54,7 @@ public:
 
 	inline uint64 write( const unsigned char* buffer, const uint64& sizeOfBuffer ) {
 		if ( currentAllocationSize_ < (seekPos_ + sizeOfBuffer) ) {
-			allocate( sizeOfBuffer );
+			allocate( (seekPos_ + sizeOfBuffer) - currentAllocationSize_ );
 		}
 
 		char* tmp = (char*)currentBuffer_;
@@ -73,7 +76,7 @@ public:
 			throw NoFreeMemException("No longer have enough memory in this buffer to read from.");
 		}
 
-		char* tmp = (char*)currentBuffer_;
+		unsigned char* tmp = currentBuffer_;
 		tmp += seekPos_;
 
 		memcpy( buffer, tmp, sizeOfBuffer );
@@ -97,16 +100,16 @@ public:
 		currentAllocationSize_ = 0;
 		delete [] currentBuffer_;
 		currentBuffer_ = NULL;
-		allocate(allocationSize_);
+		allocate(AllocationSize);
 	}
 protected:
 	inline void allocate( uint64 sizeToAllocate ) {
 		uint64 oldSize = currentAllocationSize_;
 
-		sizeToAllocate = (sizeToAllocate - oldSize);
+		//sizeToAllocate = (sizeToAllocate - oldSize);
 
-		currentAllocationSize_ += ((sizeToAllocate/allocationSize_) * allocationSize_) +
-			( (sizeToAllocate % allocationSize_) ? allocationSize_ : 0 );
+		currentAllocationSize_ += ((sizeToAllocate/AllocationSize) * AllocationSize) +
+			( (sizeToAllocate % AllocationSize) ? AllocationSize : 0 );
 
 		DATA_TYPE* tmp = new DATA_TYPE[currentAllocationSize_];
 
@@ -123,7 +126,6 @@ protected:
 		currentBuffer_ = tmp;
 	}
 private:
-	uint64 allocationSize_;
 	DATA_TYPE* currentBuffer_;
 	uint64 currentAllocationSize_;
 	uint64 seekPos_;
@@ -136,13 +138,13 @@ private:
 /**
 \class CharMemStream MemStreamUtils.h "vcf/FoundationKit/MemStreamUtils.h"
 */
-class FOUNDATIONKIT_API CharMemStream : public GenericMemoryBuffer<char> {
+template <int allocationSize = 65536>
+class FOUNDATIONKIT_API CharMemStream : public GenericMemoryBuffer<uchar,allocationSize> {
 public:
-	CharMemStream( const uint64& allocationSize = 65536 ) :
-		GenericMemoryBuffer<char> ( allocationSize ) {
-	}
+	CharMemStream() :
+		GenericMemoryBuffer<uchar,allocationSize> () {}
 
-	virtual ~CharMemStream(){};
+	~CharMemStream(){};
 
 };
 

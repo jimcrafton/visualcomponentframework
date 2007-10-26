@@ -258,9 +258,14 @@ public:
 
 	Dictionary::Enumerator* getEnumerator();
 
+	const Dictionary::Enumerator* getEnumerator() const ;
+
 protected:
 	DictionaryMap data_;
-	DictionaryEnumerator dataContainer_;	
+	//the "mutable" qualifier is only here to allow for use in the const method.
+	//stupid, really and ultimately needs to be fixed - see about making 
+	//dataContainer_.getEnumerator const safe
+	mutable DictionaryEnumerator dataContainer_; 
 	bool ownsObjectValues_;
 };
 

@@ -38,8 +38,8 @@ String VFFOutputStream::binToHex( Persistable* persistableObject )
 	BasicOutputStream bos;
 	bos << persistableObject;
 
-	char* buffer = bos.getBuffer();
-	char* tmpBuffer = buffer;
+	uchar* buffer = bos.getBuffer();
+	uchar* tmpBuffer = buffer;
 	int64 size = 0;//bos.getSize();
 	int64 bufSize = bos.getSize();
 //	int64 inc =  sizeof( char );
@@ -47,7 +47,7 @@ String VFFOutputStream::binToHex( Persistable* persistableObject )
 	memset( hexBytes, 0, 3*sizeof(VCFChar) );
 	//this is slow, we might want to figure out a better way !
 	while ( size < bufSize ) {
-		uchar hexVal = *((uchar*)tmpBuffer);
+		uchar hexVal = *tmpBuffer;
         /*
 	#ifdef VCF_POSIX
 		swprintf( hexBytes, sizeof(hexBytes), L"%02X", hexVal );
@@ -57,7 +57,7 @@ String VFFOutputStream::binToHex( Persistable* persistableObject )
     */
 		result += StringUtils::toStringFromHexNumber(hexVal);// hexBytes;
 		tmpBuffer++;
-		size +=sizeof( char );
+		size +=sizeof( uchar );
 	}
 	size = result.size();
 	return result;

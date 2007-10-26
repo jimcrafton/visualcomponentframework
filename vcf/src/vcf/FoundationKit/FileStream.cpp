@@ -130,7 +130,7 @@ uint64 FileInputStream::getSize()
 	return fsPeer_->getSize();
 }
 
-char* FileInputStream::getBuffer()
+uchar* FileInputStream::getBuffer()
 {
 	return fsPeer_->getBuffer();
 }
@@ -244,7 +244,7 @@ uint64 FileOutputStream::getSize()
 	return fsPeer_->getSize();
 }
 
-char* FileOutputStream::getBuffer()
+uchar* FileOutputStream::getBuffer()
 {
 	return fsPeer_->getBuffer();
 }

@@ -45,7 +45,7 @@ public:
 		return stream_->getSize();
 	}
 
-	virtual char* getBuffer() {
+	virtual uchar* getBuffer() {
 		return stream_->getBuffer();
 	}
 

@@ -83,7 +83,7 @@ public:
 	/**
 	*returns a pointer to the buffer that holds the stream memory
 	*/
-	virtual char* getBuffer();
+	virtual uchar* getBuffer();
 
 	virtual uint64 getCurrentSeekPos() ;
 
@@ -129,7 +129,7 @@ public:
 	/**
 	*returns a pointer to the buffer that holds the stream memory
 	*/
-	virtual char* getBuffer();
+	virtual uchar* getBuffer();
 
 	virtual uint64 getCurrentSeekPos() ;
 

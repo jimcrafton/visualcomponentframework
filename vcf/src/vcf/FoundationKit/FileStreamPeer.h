@@ -68,7 +68,7 @@ public:
 	/**
 	*returns a pointer to the buffer that represents the file contents
 	*/
-	virtual char* getBuffer() = 0;
+	virtual uchar* getBuffer() = 0;
 };
 
 
