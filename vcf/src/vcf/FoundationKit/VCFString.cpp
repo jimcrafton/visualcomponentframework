@@ -79,7 +79,9 @@ UnicodeString::UnicodeString(const std::string& rhs):
 UnicodeString::UnicodeString(const UnicodeString::AnsiChar* string ):
 	ansiDataBuffer_(NULL)
 {
-	UnicodeString::transformAnsiToUnicode( string, strlen(string), data_ );
+	if ( string != NULL ) {
+		UnicodeString::transformAnsiToUnicode( string, strlen(string), data_ );
+	}
 }
 
 UnicodeString::UnicodeString(const UnicodeString::UniChar* string ):
@@ -465,50 +467,56 @@ void UnicodeString::encode( TextCodec* codec, const UnicodeString& str )
 
 bool UnicodeString::operator ==( const UnicodeString::AnsiChar* rhs ) const
 {
-	VCF_ASSERT ( rhs != NULL );
 	UnicodeString tmp;
-	UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
+	if ( rhs != NULL ) {
+		UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
+	}
 	return data_ == tmp.data_;
 }
 
 bool UnicodeString::operator !=( const UnicodeString::AnsiChar* rhs ) const
 {
-	VCF_ASSERT ( rhs != NULL );
 	UnicodeString tmp;
-	UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
+	if ( rhs != NULL ) {
+		UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
+	}
 	return data_ != tmp.data_;
 }
 
 bool UnicodeString::operator >( const UnicodeString::AnsiChar* rhs ) const
 {
-	VCF_ASSERT ( rhs != NULL );
 	UnicodeString tmp;
-	UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
+	if ( rhs != NULL ) {
+		UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
+	}
 	return data_ > tmp.data_;
 }
 
 bool UnicodeString::operator >=( const UnicodeString::AnsiChar* rhs ) const
 {
-	VCF_ASSERT ( rhs != NULL );
-	
 	UnicodeString tmp;
-	UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
+	if ( rhs != NULL ) {
+		UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
+	}
 	return data_ >= tmp.data_;
 }
 
 bool UnicodeString::operator <( const UnicodeString::AnsiChar* rhs ) const
 {
-	VCF_ASSERT ( rhs != NULL );
 	UnicodeString tmp;
-	UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
+	if ( rhs != NULL ) {
+		UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
+	}
 	return data_ < tmp.data_;
 }
 
 bool UnicodeString::operator <=( const UnicodeString::AnsiChar* rhs ) const
 {
-	VCF_ASSERT ( rhs != NULL );
+	
 	UnicodeString tmp;
-	UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
+	if ( rhs != NULL ) {
+		UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
+	}
 	return data_ <= tmp.data_;
 }
 
@@ -550,12 +558,14 @@ UnicodeString& UnicodeString::operator+=(UnicodeString::AnsiChar c)
 
 UnicodeString& UnicodeString::operator+=(const AnsiChar* rhs )
 {
-	VCF_ASSERT ( rhs != NULL );
+	
 	
 	UnicodeString tmp;
-	UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
-	data_ += tmp.data_;
-	modified();
+	if ( rhs != NULL ) {
+		UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
+		data_ += tmp.data_;
+		modified();
+	}
 
 	return *this;
 }
@@ -592,11 +602,12 @@ UnicodeString& UnicodeString::append(const UnicodeString::AnsiChar *s, UnicodeSt
 
 UnicodeString& UnicodeString::append(const UnicodeString::AnsiChar *s)
 {
-	VCF_ASSERT ( s != NULL );
-	UnicodeString tmp;
-	UnicodeString::transformAnsiToUnicode( s, strlen(s), tmp.data_ );
-	data_.append( tmp.data_ );
-	modified();
+	if ( s != NULL ) {
+		UnicodeString tmp;
+		UnicodeString::transformAnsiToUnicode( s, strlen(s), tmp.data_ );
+		data_.append( tmp.data_ );
+		modified();
+	}
 
 	return *this;
 }
@@ -620,10 +631,11 @@ UnicodeString& UnicodeString::assign(const UnicodeString::AnsiChar *s, UnicodeSt
 }
 
 UnicodeString& UnicodeString::assign(const UnicodeString::AnsiChar *s)
-{
-	VCF_ASSERT ( s != NULL );
+{	
 	UnicodeString tmp;
-	UnicodeString::transformAnsiToUnicode( s, strlen(s), tmp.data_ );
+	if ( s != NULL ) {
+		UnicodeString::transformAnsiToUnicode( s, strlen(s), tmp.data_ );
+	}
 	data_.assign( tmp.data_ );
 	modified();
 
@@ -640,9 +652,10 @@ UnicodeString& UnicodeString::assign( size_type n, UnicodeString::AnsiChar c)
 
 UnicodeString& UnicodeString::insert(UnicodeString::size_type p0, const UnicodeString::AnsiChar *s, UnicodeString::size_type n)
 {
-	VCF_ASSERT ( s != NULL );
 	UnicodeString tmp;
-	UnicodeString::transformAnsiToUnicode( s, n, tmp.data_ );
+	if ( s != NULL ) {
+		UnicodeString::transformAnsiToUnicode( s, n, tmp.data_ );
+	}
 	data_.insert( p0, tmp.data_ );
 	modified();
 	return *this;
@@ -650,9 +663,11 @@ UnicodeString& UnicodeString::insert(UnicodeString::size_type p0, const UnicodeS
 
 UnicodeString& UnicodeString::insert(UnicodeString::size_type p0, const UnicodeString::AnsiChar *s)
 {
-	VCF_ASSERT ( s != NULL );
+	
 	UnicodeString tmp;
-	UnicodeString::transformAnsiToUnicode( s, strlen(s), tmp.data_ );
+	if ( s != NULL ) {
+		UnicodeString::transformAnsiToUnicode( s, strlen(s), tmp.data_ );
+	}
 	data_.insert( p0, tmp.data_ );
 	modified();
 
