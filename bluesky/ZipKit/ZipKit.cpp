@@ -22,7 +22,7 @@ public:
 
 	virtual uint64 getSize();
 
-	virtual char* getBuffer();
+	virtual uchar* getBuffer();
 
 	virtual uint64 getCurrentSeekPos() ;
 
@@ -32,7 +32,7 @@ public:
 	
 	InputStream* inputStream_;
 	z_stream zstream_;
-	CharMemStream uncompressedData_;
+	CharMemStream<> uncompressedData_;
 	unsigned char zipTmpData_[256];
 	uint64 seekPos_;
 
@@ -43,6 +43,11 @@ public:
 
 class ZipOutputStream : public OutputStream {
 public:
+
+	enum {
+		DataSize = 256
+	};
+
 	ZipOutputStream();
 	ZipOutputStream( OutputStream* outStream );
 
@@ -52,15 +57,15 @@ public:
 
 	virtual uint64 getSize();
 
-	virtual char* getBuffer();
+	virtual uchar* getBuffer();
 
 	virtual uint64 getCurrentSeekPos();
 
 	virtual uint64 write( const unsigned char* bytesToRead, uint64 sizeOfBytes );
 	
 	z_stream zstream_;
-	CharMemStream compressedData_;
-	unsigned char zipTmpData_[256];
+	CharMemStream<DataSize> compressedData_;
+	unsigned char zipTmpData_[DataSize];
 
 	void flush();
 };
@@ -100,7 +105,7 @@ uint64 ZipInputStream::getSize()
 	return inputStream_->getSize();
 }
 
-char* ZipInputStream::getBuffer()
+uchar* ZipInputStream::getBuffer()
 {
 	return uncompressedData_.getBuffer();
 }
@@ -127,6 +132,7 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 	else {
 		while ( result < sizeOfBytes ) {
 			unsigned char tmpBuf[256];
+			memset(tmpBuf,0,sizeof(tmpBuf));
 			
 			uint64 readIn = inputStream_->read( &zipTmpData_[0], sizeof(zipTmpData_) );
 
@@ -137,7 +143,7 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 			zstream_.avail_out = sizeof(tmpBuf);
 			zstream_.next_out = tmpBuf;
 
-			int res = inflate( &zstream_, Z_NO_FLUSH );
+			int res = inflate( &zstream_, Z_SYNC_FLUSH );
 
 			VCF_ASSERT(res != Z_STREAM_ERROR);
 
@@ -151,20 +157,26 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 					inflateEnd( &zstream_ );
 					break; //out of while loop...
 				}
+
+				case Z_STREAM_END : {
+
+				}
 			}
 
-
-			uint64 have = sizeof(tmpBuf) - zstream_.avail_out;
-			uncompressedData_.write( &tmpBuf[0], have );
-
-
-			result +=  minVal<>(have,sizeOfBytes);
-
-			memcpy( tmp, &tmpBuf[0], result );
-
-			seekPos_ += result;
-
-			tmp += result;
+			if ( res == Z_OK ) {
+				
+				uint64 have = sizeof(tmpBuf) - zstream_.avail_out;
+				uncompressedData_.write( &tmpBuf[0], have );
+				
+				
+				result +=  minVal<>(have,sizeOfBytes);
+				
+				memcpy( tmp, &tmpBuf[0], result );
+				
+				seekPos_ += result;
+				
+				tmp += result;
+			}
 		}
 
 	}
@@ -190,8 +202,7 @@ bool ZipInputStream::isEOS()
 
 
 
-ZipOutputStream::ZipOutputStream():
-	compressedData_(256)//256 byte allocation increments
+ZipOutputStream::ZipOutputStream()
 {
 	memset(&zstream_,0,sizeof(zstream_));
 	memset(&zipTmpData_,1,sizeof(zipTmpData_));
@@ -203,8 +214,7 @@ ZipOutputStream::ZipOutputStream():
 
 
 
-ZipOutputStream::ZipOutputStream( OutputStream* outStream ):
-	compressedData_(256)//256 byte allocation increments
+ZipOutputStream::ZipOutputStream( OutputStream* outStream )
 {
 	memset(&zstream_,0,sizeof(zstream_));
 	memset(&zipTmpData_,1,sizeof(zipTmpData_));
@@ -232,7 +242,7 @@ uint64 ZipOutputStream::getSize()
 }
 
 
-char* ZipOutputStream::getBuffer()
+uchar* ZipOutputStream::getBuffer()
 {
 	return compressedData_.getBuffer();
 }
@@ -290,7 +300,11 @@ void ZipOutputStream::flush()
 {
 	deflate(&zstream_, Z_FINISH);
 	compressedData_.write( zipTmpData_, (sizeof(zipTmpData_) - zstream_.avail_out) );
+
+	zstream_.next_out = NULL;
+	zstream_.avail_out = 0;
 }
+
 
 
 int main( int argc, char** argv ){
@@ -303,33 +317,80 @@ int main( int argc, char** argv ){
 
 	//unzOpen2( ZIPFILE, &funcs );
 
-
-	String data = "Hello how are you, this is some compressed text!";
-
-	ZipOutputStream zos;
-
-	TextOutputStream tos(&zos);
-
-	String str1 = "Part 1";
-	String str2 = "Part 2";
-	tos.write( str1 );
-
-	tos.write( str2 );
-
-	zos.flush();
-
-
-	BasicInputStream bis( zos.getBuffer(), zos.getSize() );
-	ZipInputStream zis(&bis);
-
-	TextInputStream tis(&zis);
-
-	String s;
-	tis.read(s);
-	tis.read(s);
-
-	VCF_ASSERT( s.size() == data.size() );
+	{
+		String data = "Hello how are you, this is some compressed text!";
+		
+		ZipOutputStream zos;
+		
+		unsigned char tmp[300];
+		zos.write( tmp, sizeof(tmp) );
+		zos.flush();
+		
+		TextOutputStream tos(&zos);
+		
+		String str1 = "Part 1";
+		String str2 = "Part 2";
+		tos.write( str1 );
+		
+		tos.write( str2 );
+		
+		zos.flush();
+		
+		
+		BasicInputStream bis( zos.getBuffer(), zos.getSize() );
+		ZipInputStream zis(&bis);
+		
+		TextInputStream tis(&zis);
+		
+		String s;
+		tis.read(s);
+		tis.read(s);
+	}
 	
+
+	{
+		File f("spetz.txt", File::ofRead);
+		uint64 fsize = f.getSize();
+
+		uchar* bytes = new uchar[fsize + 256];
+		memset(bytes,0,fsize + 256);
+
+		FileInputStream* fis = f.getInputStream();
+		fis->read( bytes, fsize );
+
+
+
+		GenericMemoryBuffer<uchar> buf;
+
+		uchar* tmp = bytes;
+		buf.write( tmp, 256 );
+		tmp += 256;
+		buf.write( tmp, 256 );
+
+
+		
+		ZipOutputStream zos;
+		zos.write( bytes, fsize );
+		zos.flush();
+
+
+		BasicInputStream bis( zos.getBuffer(), zos.getSize() );
+
+		ZipInputStream zis(&bis);
+
+		uchar* bytes2 = new uchar[fsize + 256];
+
+		zis.read( bytes2, fsize );
+
+
+		int res = memcmp( bytes, bytes2, fsize );
+
+
+		delete fis;
+		delete [] bytes;
+		delete [] bytes2;
+		
+	}
 
 
 	FoundationKit::terminate();
