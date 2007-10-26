@@ -44,7 +44,7 @@ public:
 		return inStream_->getSize();
 	}
 
-	virtual char* getBuffer() {
+	virtual uchar* getBuffer() {
 		if ( NULL == inStream_ ) {
 			throw InvalidPointerException();
 		}
@@ -186,7 +186,7 @@ public:
 		return outStream_->getSize();
 	}
 
-	virtual char* getBuffer() {
+	virtual uchar* getBuffer() {
 		if ( NULL == outStream_ ) {
 			throw InvalidPointerException();
 		}

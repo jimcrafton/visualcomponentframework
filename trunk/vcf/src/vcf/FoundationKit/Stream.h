@@ -82,7 +82,7 @@ public:
 	/**
 	returns a pointer to the buffer that holds the stream memory
 	*/
-	virtual char* getBuffer() = 0;
+	virtual uchar* getBuffer() = 0;
 
 	/**
 	this is a global offset from the beggining of the stream
@@ -106,7 +106,7 @@ public:
 	// new introduced by tiziano
 	virtual bool isEOS() = 0;
 
-	virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes ) = 0;
+	virtual uint64 read( uchar* bytesToRead, uint64 sizeOfBytes ) = 0;
 
 	virtual void read( Persistable* persistableObject ) ;
 
@@ -181,7 +181,7 @@ class FOUNDATIONKIT_API OutputStream : public virtual Stream {
 public:
 	virtual ~OutputStream(){};
 
-	virtual uint64 write( const unsigned char* bytesToWrite, uint64 sizeOfBytes )=0;
+	virtual uint64 write( const uchar* bytesToWrite, uint64 sizeOfBytes )=0;
 
 	virtual void write( Persistable* persistableObject );
 

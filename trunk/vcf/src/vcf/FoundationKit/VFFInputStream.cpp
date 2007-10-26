@@ -952,7 +952,7 @@ void VFFInputStream::hexToBin( const String& hexString, Persistable* persistable
 		binSize --;
 		tmpBinBuffer ++;
 	}
-	BasicInputStream bis( (char*)binBuffer, (hexSize / 2) * sizeof(VCFChar) );
+	BasicInputStream bis( (const uchar*)binBuffer, (hexSize / 2) * sizeof(VCFChar) );
 	persistableObject->loadFromStream( &bis );
 	delete [] binBuffer;
 }

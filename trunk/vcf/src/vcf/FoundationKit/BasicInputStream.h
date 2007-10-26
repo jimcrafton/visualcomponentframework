@@ -27,7 +27,7 @@ public:
 
 	BasicInputStream( const String& textBuffer );
 
-	BasicInputStream( const char* dataBuffer, const uint32& dataBufferSize );
+	BasicInputStream( const uchar* dataBuffer, const uint32& dataBufferSize );
 
 	/**
 	*This constructor is used in stream chaining.
@@ -43,7 +43,7 @@ public:
 
 	virtual uint64 getSize();
 
-	virtual char* getBuffer();
+	virtual uchar* getBuffer();
 
 	virtual uint64 getCurrentSeekPos() ;
 
@@ -53,7 +53,7 @@ public:
 
 	void init();
 private:
-	CharMemStream inStream_;
+	CharMemStream<> inStream_;
 	InputStream* inputStream_;
 	uint64 totalStreamSize_;
 };

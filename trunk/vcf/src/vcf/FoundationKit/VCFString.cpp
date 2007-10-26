@@ -516,9 +516,11 @@ bool UnicodeString::operator <=( const UnicodeString::AnsiChar* rhs ) const
 UnicodeString& UnicodeString::operator=(const UnicodeString::AnsiChar *s)
 {
 	VCF_ASSERT ( s != NULL );
-	UnicodeString::transformAnsiToUnicode( s, strlen(s), data_ );
-	modified();
-	
+
+	if ( s != NULL ) {
+		UnicodeString::transformAnsiToUnicode( s, strlen(s), data_ );
+		modified();
+	}
 
 	return *this;
 }

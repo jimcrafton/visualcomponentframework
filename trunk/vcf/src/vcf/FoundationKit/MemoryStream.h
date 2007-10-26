@@ -47,7 +47,7 @@ public:
 
 	virtual ~MemoryStream();
 
-	virtual char* getBuffer(){
+	virtual uchar* getBuffer(){
 		return NULL;
 	};
 
@@ -71,7 +71,7 @@ public:
 		return false;
 	}
 private:
-	CharMemStream stream_;
+	CharMemStream<> stream_;
 	OutputStream* outputStream_;
 	InputStream* inputStream_;
 	uint64 size_;

@@ -28,10 +28,10 @@ BasicInputStream::BasicInputStream( const String& textBuffer )
 	totalStreamSize_ = textBuffer.size();
 }
 
-BasicInputStream::BasicInputStream( const char* dataBuffer, const uint32& dataBufferSize )
+BasicInputStream::BasicInputStream( const uchar* dataBuffer, const uint32& dataBufferSize )
 {
 	init();
-	inStream_.write( (const unsigned char*)dataBuffer, dataBufferSize );
+	inStream_.write( dataBuffer, dataBufferSize );
 	inStream_.setSeekPos( 0 );
 	totalStreamSize_ = dataBufferSize;
 }
@@ -88,7 +88,7 @@ uint64 BasicInputStream::getSize()
 	return inStream_.getSize();
 }
 
-char* BasicInputStream::getBuffer()
+uchar* BasicInputStream::getBuffer()
 {
 	return inStream_.getBuffer();
 }

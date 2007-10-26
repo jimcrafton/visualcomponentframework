@@ -71,7 +71,7 @@ uint64 BasicOutputStream::getSize()
 	return outStream_.getSize();
 }
 
-char* BasicOutputStream::getBuffer()
+uchar* BasicOutputStream::getBuffer()
 {
 	if ( NULL != outputStream_ ){
 		return outputStream_->getBuffer();

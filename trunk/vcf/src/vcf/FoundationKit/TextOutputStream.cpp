@@ -54,9 +54,9 @@ uint64 TextOutputStream::getSize()
 	return result;
 }
 
-char* TextOutputStream::getBuffer()
+uchar* TextOutputStream::getBuffer()
 {
-	char* buffer = NULL;
+	uchar* buffer = NULL;
 	if ( NULL != outStream_ ){
 		buffer = outStream_->getBuffer();
 	}

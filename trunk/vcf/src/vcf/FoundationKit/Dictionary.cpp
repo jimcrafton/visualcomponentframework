@@ -170,6 +170,10 @@ Dictionary::Enumerator* Dictionary::getEnumerator()
 	return dataContainer_.getEnumerator();
 }
 
+const Dictionary::Enumerator* Dictionary::getEnumerator() const 
+{
+	return dataContainer_.getEnumerator();
+}
 /**
 $Id$
 */

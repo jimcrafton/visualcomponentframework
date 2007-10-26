@@ -162,7 +162,7 @@ uint64 Win32FileStream::write( const unsigned char* bytesToWrite, uint64 sizeOfB
 	return totalWritten;
 }
 
-char* Win32FileStream::getBuffer()
+uchar* Win32FileStream::getBuffer()
 {
 	return NULL;
 }
