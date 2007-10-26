@@ -262,11 +262,26 @@ public:
 
 	Delegate(): functions(NULL), runCallbacksAsync_(false) {}
 
-	~Delegate() {
+	virtual ~Delegate() {
 		clear();
 
-		delete functions;
+		if ( NULL != functions ) {
+			delete functions;
+		}
 	}	
+
+	Delegate& operator=( const Delegate& rhs ) {
+		if ( NULL == rhs.functions ) {
+			clear();
+		}
+		else {
+			checkHandlers();
+			*functions = *rhs.functions;
+		}
+
+		runCallbacksAsync_ = rhs.runCallbacksAsync_;
+		return *this;
+	}
 
 
 	bool empty() const {
@@ -294,6 +309,9 @@ public:
 				remove( cb );				
 				it = functions->begin();
 			}
+
+			VCF_ASSERT( functions->empty() );
+			functions->clear();
 		}
 	}
 

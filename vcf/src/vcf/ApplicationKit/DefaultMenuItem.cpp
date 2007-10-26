@@ -65,9 +65,6 @@ DefaultMenuItem::~DefaultMenuItem()
 		previousSelectedItem = NULL;
 	}
 
-	//delete peer_;
-	//peer_ = NULL;
-
 	menuItems_.clear();
 }
 
@@ -75,17 +72,8 @@ void DefaultMenuItem::init()
 {
 	setTag(-1);
 
-	//peer_ = UIToolkit::createMenuItemPeer( this );
-
 	itemState_ |= MenuItem::mdsEnabled;
 	itemState_ |= MenuItem::mdsVisible;
-
-	//if ( NULL == peer_ ){
-		//throw exception
-	//	throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	//}
-
-	//peer_->setMenuItem( this );
 
 	container_.initContainer( menuItems_ );
 

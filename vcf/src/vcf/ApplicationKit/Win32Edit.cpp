@@ -1160,7 +1160,7 @@ void Win32Edit::getSelectionMark( long & start, long & end )
 
 void Win32Edit::clearSelection()
 {
-
+	::SendMessage( hwnd_, EM_SETSEL, (WPARAM)-1, (LPARAM)0 );	
 }
 
 void Win32Edit::setSelectionMark( const uint32& start, const uint32& count )
