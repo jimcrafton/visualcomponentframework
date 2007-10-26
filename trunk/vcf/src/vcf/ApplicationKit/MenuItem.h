@@ -124,19 +124,15 @@ public:
 	Searches all the children of this menu item for the first child menu item
 	whose name \em exactly matches the name parameter. This search is 
 	case sensitive.
+	@param String the name to match against
+	@param bool indicates whether or not the match should be exact. If it's
+	true the mactch is exact, if it's false the search is case insensitive. 
+	For example, if you were to pass in "foo" for name, and false for exactMatch
+	and a menu item had a name of "FooBar" a match would occur.
 	@return MenuItem the found menu item. If no item is found, return is NULL.
 	*/
-	virtual MenuItem* findChildNamed( const String& name ) = 0;
-
-	/**
-	Searches all the children of this menu item for the first child menu item
-	whose name roughly matches that of the named parameter. The search
-	is case insensitive. For example, if you were to pass in "foo" and a menu item
-	had a name of "FooBar" a match would occur.
-	@return MenuItem the found menu item. If no item is found, return is NULL.
-	*/
-	virtual MenuItem* findChildNamedSimilarTo( const String& name ) = 0;
-
+	virtual MenuItem* findChildNamed( const String& name, const bool& exactMatch=true ) = 0;
+	
 	/**
 	*returns the owner of the menu item. This generally
 	is either a MenuBar or a PopupMenu

@@ -83,9 +83,7 @@ public:
 
 	virtual MenuItem* getChildAt( const uint32& index );
 
-	virtual MenuItem* findChildNamedSimilarTo( const String& name );
-
-	virtual MenuItem* findChildNamed( const String& name );
+	virtual MenuItem* findChildNamed( const String& name, const bool& exactMatch=true );
 
 	virtual bool isEnabled();
 
