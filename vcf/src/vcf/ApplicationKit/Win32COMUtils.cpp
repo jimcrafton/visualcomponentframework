@@ -525,18 +525,18 @@ VCF::DataObject* COMUtils_createFromHGlobal( STGMEDIUM& stg, const VCF::String& 
 {
 	VCF::DataObject* result = NULL;
 
-	char* rawGlobalMem = (char*)::GlobalLock( stg.hGlobal );
+	uchar* rawGlobalMem = (uchar*)::GlobalLock( stg.hGlobal );
 	uint32 memSize = GlobalSize( stg.hGlobal );
 
 	if ( dataType == STRING_DATA_TYPE ) {
 		AnsiString tmp;
-		tmp.append( rawGlobalMem, memSize );
+		tmp.append( (const char*)rawGlobalMem, memSize );
 
 		result = new TextDataObject(String(tmp));
 	}
 	else if ( dataType == COMPONENT_DATA_TYPE ) {
 		AnsiString tmp;
-		tmp.append( rawGlobalMem, memSize );
+		tmp.append( (const char*)rawGlobalMem, memSize );
 
 		result = new TextDataObject(tmp);
 	}
@@ -596,7 +596,7 @@ VCF::Persistable* COMUtils_createPersistableFromHGlobal( STGMEDIUM& stg, const V
 {
 	VCF::Persistable* result = NULL;
 
-	char* rawGlobalMem = (char*)::GlobalLock( stg.hGlobal );
+	uchar* rawGlobalMem = (uchar*)::GlobalLock( stg.hGlobal );
 	uint32 memSize = GlobalSize( stg.hGlobal );
 
 	if ( (dataType == L"image/bmp" ) || (dataType == IMAGE_DATA_TYPE) ) {

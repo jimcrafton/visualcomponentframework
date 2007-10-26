@@ -405,7 +405,7 @@ bool Application::loadFrameState( Frame* frame )
 	reg.setRoot( RKT_CURRENT_USER );
 	if ( true == reg.openKey( "Software\\" + getName() + "\\Frames", false ) ) {
 
-		char* buf = NULL;
+		uchar* buf = NULL;
 		uint32 bufSize = 0;
 		String valName = "MainWindow";
 
@@ -415,6 +415,7 @@ bool Application::loadFrameState( Frame* frame )
 			Frame::State state;
 			bis >> static_cast<Persistable*>(&state);
 			state.applyState( frame );
+			delete buf;
 		}
 		else {
 			result = false;
