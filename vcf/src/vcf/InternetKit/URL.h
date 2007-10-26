@@ -467,7 +467,7 @@ namespace VCF {
 
 		String getDataAsString() {
 			String result;
-			result.append( dataBuf_.getBuffer(), dataBuf_.getSize() );
+			result.append( (const char*)dataBuf_.getBuffer(), dataBuf_.getSize() );
 
 			return result;
 		}
