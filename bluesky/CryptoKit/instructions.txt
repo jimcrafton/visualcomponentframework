@@ -1,0 +1,28 @@
+Make sure you have Perl installed on your system. Don't use 
+the Cygwin version, it causes problems. Try the latest version
+from ActiveState at http://activestate.com/store/activeperl/download/
+Once Perl is installed do the following:
+
+Build the libraries (Release and Debug):
+
+open a command prompt (CMD.EXE)
+cd to openssl
+
+nmake -f ms\ntdll.mak 
+
+nmake -f ms\ntdlld.mak 
+
+These will build release and debug builds of the OpenSSL libraries
+and executables. Currently the kit just uses libeay32.dll or 
+libeay32d.dll.
+
+Binary files will be in openssl/out32/ and openssl/out32.dbg/
+
+At this point you can open the appropriate project in your IDE 
+and build as normal.
+
+The patches at http://codefromthe70s.org/sslimprov.asp
+have already been applied to the openssl-0.9.8e distribution's
+files. The configure step has also been performed as well so 
+there's no need to do this, though you can certainly do it
+just to be safe, or if you decide to alter things.
