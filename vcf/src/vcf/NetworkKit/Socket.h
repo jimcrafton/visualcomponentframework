@@ -848,7 +848,7 @@ namespace VCF {
 		/**
 		Throws an exception - this is not permitted
 		*/
-		virtual char* getBuffer() {
+		virtual uchar* getBuffer() {
 			throw RuntimeException( "You cannot access the buffer pointer in a Socket Input stream" );
 			return NULL;
 		}
@@ -923,7 +923,7 @@ namespace VCF {
 		/**
 		Returns NULL - this is not permitted
 		*/
-		virtual char* getBuffer() {
+		virtual uchar* getBuffer() {
 			throw RuntimeException( "You cannot access the buffer pointer in a Socket Output stream" );
 			return NULL;
 		}
@@ -989,7 +989,7 @@ namespace VCF {
 		/**
 		Returns NULL - this is not permitted
 		*/
-		virtual char* getBuffer() {
+		virtual uchar* getBuffer() {
 			throw NetworkException( "You cannot access the buffer pointer in a Socket Input stream" );
 			return NULL;
 		}
@@ -1059,7 +1059,7 @@ namespace VCF {
 		/**
 		Returns NULL - this is not permitted
 		*/
-		virtual char* getBuffer() {
+		virtual uchar* getBuffer() {
 			throw NetworkException( "You cannot access the buffer pointer in a Socket Output stream" );
 			return NULL;
 		}
