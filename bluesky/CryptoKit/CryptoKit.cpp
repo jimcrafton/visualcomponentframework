@@ -6,7 +6,7 @@
 #include <openssl/rand.h>
 #include <openssl/rsa.h>
  #include <openssl/err.h>
-
+#include <openssl/pem.h>
 
 
 /**
@@ -739,8 +739,8 @@ int main( int argc, char** argv ){
 
 	MD2 md2;
 	MD5 md5;
-	SHA1 sha1;
-	SHA sha;
+	VCF::Crypto::SHA1 sha1;
+	VCF::Crypto::SHA sha;
 	DSS dss;
 	DSS1 dss1;
 	RipeMD160 rp160;
@@ -982,6 +982,11 @@ int main( int argc, char** argv ){
 	RSA_print_fp(stdout,rsaKeyPair,0);
 
 	int szOfRSA = RSA_size( rsaKeyPair );
+
+
+	FILE* fp = fopen( "test.pem", "wb" );
+
+	PEM_write_RSAPublicKey(fp,rsaKeyPair);
 
 
 	const char* data = "Holy Crap!";
