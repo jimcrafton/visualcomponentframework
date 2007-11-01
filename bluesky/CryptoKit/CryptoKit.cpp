@@ -18,7 +18,15 @@ http://codefromthe70s.org/sslimprov.asp
 
 namespace VCF {
 
-namespace OpenSSL {
+namespace Crypto {
+
+	class CryptoKit {
+	public:
+		static void init( int argc, char* argv[] );
+		static void terminate();
+	};
+
+
 	class DigestToolkit {
 	public:
 		static void init( int argc, char* argv[] );
@@ -120,6 +128,21 @@ namespace OpenSSL {
 	class Base64Encoder {
 	public:
 
+		/**
+		This adds a final 2 bytes because the logic of 
+		EVP_EncodeFinal is that it adds a final '\n' character
+		at the last index, increments the index, then sets 
+		this value to '\0'. Adding 2 here guarantees that we
+		end up with a valid size that is safe to use.
+		*/
+		inline static size_t safeSizeOf( size_t size ) {
+			return ((size + 2) / 3) * 4 + 2;
+		}
+
+		/**
+		This calculates the exact number of bytes used in encoding a 
+		given number of bytes to base 64.
+		*/
 		inline static size_t sizeOf( size_t size ) {
 			return ((size + 2) / 3) * 4;
 		}
@@ -670,11 +693,24 @@ namespace OpenSSL {
 };
 
 using namespace VCF;
-using namespace VCF::OpenSSL;
+using namespace VCF::Crypto;
+
+
+void CryptoKit::init( int argc, char* argv[] )
+{
+	OpenSSL_add_all_digests();
+}
+
+void CryptoKit::terminate()
+{
+
+}
+
+
 
 void DigestToolkit::init( int argc, char* argv[] )
 {
-	OpenSSL_add_all_digests();
+	
 }
 
 void DigestToolkit::terminate()
@@ -690,12 +726,13 @@ using namespace VCF;
 int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
+	CryptoKit::init( argc, argv );
 
 	char mess1[] = "Test Message";
 	char mess2[] = "Hello World\n";
 	
 
-	OpenSSL_add_all_digests();
+	
 
 		
 	ERR_load_crypto_strings();
@@ -781,7 +818,7 @@ int main( int argc, char** argv ){
 	char* result = NULL;
 
 	int msgLen = strlen(msg);
-	int resultLen = Base64Encoder::sizeOf(msgLen);
+	int resultLen = Base64Encoder::safeSizeOf(msgLen);
 
 	result = new char[resultLen+1];
 	int ol = 0;
@@ -790,13 +827,13 @@ int main( int argc, char** argv ){
 
 	Base64Encoder encoder;
 
-	encoder.encode( (const unsigned char*)msg, msgLen, (unsigned char*)result, resultLen );
+	encoder.encode( (const unsigned char*)msg, msgLen, (unsigned char*)result, resultLen+1 );
 
-	encoder.finish( (unsigned char*)result, resultLen );
+	encoder.finish( (unsigned char*)result, resultLen+1 );
 	
 	ol += encoder.size();
 
-	result[ol-1] = 0;
+	//result[ol-1] = 0;
 
 	printf( "predicted size from %d bytes to b64: %d. Actual: %d\n",
 		msgLen, Base64Encoder::sizeOf(msgLen), ol );
@@ -940,12 +977,11 @@ int main( int argc, char** argv ){
 	printf( "Key size: %u, bits: %d\n", pubKey.size(), pubKey.bits() );
 	
 
-	RSA* privRSA = RSA_generate_key( 512, RSA_F4, NULL, NULL );
+	RSA* rsaKeyPair = RSA_generate_key( 512, RSA_F4, NULL, NULL );
 
-	RSA* pubRSA = RSA_new( );
-	RSA_set_method(pubRSA,RSA_get_default_method());
+	RSA_print_fp(stdout,rsaKeyPair,0);
 
-	int szOfRSA = RSA_size( pubRSA );
+	int szOfRSA = RSA_size( rsaKeyPair );
 
 
 	const char* data = "Holy Crap!";
@@ -954,7 +990,7 @@ int main( int argc, char** argv ){
 	unsigned char rsaData[1024];
 	memset(rsaData, 0, sizeof(rsaData) );
 
-	err = RSA_public_encrypt( strlen(data), (const unsigned char*)data, rsaData, pubRSA, RSA_PKCS1_PADDING );
+	err = RSA_public_encrypt( strlen(data), (const unsigned char*)data, rsaData, rsaKeyPair, RSA_PKCS1_PADDING );
 
 
 	//err = RSA_padding_add_PKCS1_type_1( rsaData, sizeof(rsaData), (const unsigned char*)data, strlen(data) );
@@ -963,11 +999,12 @@ int main( int argc, char** argv ){
 	unsigned char rsaDecryptedData[1024];
 	memset(rsaDecryptedData, 0, sizeof(rsaDecryptedData) );
 
-	err = RSA_private_decrypt( szOfRSA, rsaData, rsaDecryptedData, privRSA, RSA_PKCS1_PADDING );
+	err = RSA_private_decrypt( szOfRSA, rsaData, rsaDecryptedData, rsaKeyPair, RSA_PKCS1_PADDING );
 
 	ERR_print_errors_fp( stdout );
 
 
+	CryptoKit::terminate();
 	FoundationKit::terminate();
 	return 0;
 }
