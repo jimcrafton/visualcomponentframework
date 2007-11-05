@@ -3,6 +3,7 @@
 #include "vcf/FoundationKit/FoundationKit.h"
 
 #include <openssl/evp.h>
+#include <openssl/bn.h>
 #include <openssl/rand.h>
 #include <openssl/rsa.h>
 #include <openssl/err.h>
@@ -62,6 +63,645 @@ namespace Crypto {
 		  
 		virtual ~CipherInitException() throw() {};
 		  
+	};
+
+
+	class CryptoException  : public BasicException {
+	public:
+		CryptoException():
+		  BasicException(""){
+			openSSLErr_ = ERR_get_error();
+
+			setMessage( getReason() );
+		};
+		
+		CryptoException( unsigned long err ):BasicException(""), openSSLErr_(err) {
+			setMessage( getReason() );
+		}
+
+		CryptoException( const String & message ):
+		  BasicException(""){
+			openSSLErr_ = ERR_get_error();
+			setMessage( message + " \nOpen SSL error: " + getReason() );
+		 };
+		  
+		virtual ~CryptoException() throw() {};
+		
+		String getReason() const {
+			return String( ERR_reason_error_string( openSSLErr_ ) );
+		}
+	protected:
+		unsigned long openSSLErr_;
+		
+	};
+
+
+
+	class CryptoInputStream : public InputStream {
+	public:
+
+		CryptoInputStream() : ioObject_(NULL){
+			ioObject_ = BIO_new( BIO_f_null() );
+
+		}
+
+		virtual void seek(const uint64& offset, const SeekType& offsetFrom) {
+
+		}
+		
+		virtual uint64 getSize() {
+			return 0;
+		}
+		
+		virtual uchar* getBuffer() {
+			return NULL;
+		}
+		
+		virtual uint64 getCurrentSeekPos() {
+			return 0;
+		}
+		
+		virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes ) {
+			return 0;
+		}
+		
+		virtual bool isEOS() {
+			return false;
+		}
+
+	protected:
+		static long BIOcallback(BIO *bio, int cmd, const char *argp,
+										int argi, long argl, long ret) 
+		{
+			long result = 0;
+
+			return result;
+		}
+
+		//BIO_set_callback
+		BIO* ioObject_;
+	};
+
+
+
+
+
+	class BigInteger : public Object {
+	public:
+		BigInteger() {
+			memset( &num_, 0, sizeof(num_) );
+			BN_init( &num_ );
+		}
+
+		BigInteger( const BigInteger& rhs ) {
+			memset( &num_, 0, sizeof(num_) );
+			BN_init( &num_ );
+			BN_copy(&num_, &rhs.num_ );
+		}
+
+
+		BigInteger( const int& rhs ) {
+			memset( &num_, 0, sizeof(num_) );
+			BN_init( &num_ );			
+			*this = rhs;
+		}
+
+		BigInteger( const unsigned int& rhs ) {
+			memset( &num_, 0, sizeof(num_) );
+			BN_init( &num_ );			
+			*this = rhs;
+		}
+
+		BigInteger( const long& rhs ) {
+			memset( &num_, 0, sizeof(num_) );
+			BN_init( &num_ );			
+			*this = rhs;
+		}
+
+		BigInteger( const unsigned long& rhs ) {
+			memset( &num_, 0, sizeof(num_) );
+			BN_init( &num_ );			
+			*this = rhs;
+		}
+
+
+		virtual ~BigInteger() {
+			BN_free( &num_ );
+		}
+
+
+		BigInteger& operator=( const BigInteger& rhs ) {
+			
+			BN_copy(&num_, &rhs.num_ );
+
+			return *this;
+		}
+
+		BigInteger& swap( BigInteger& rhs ) {
+			BN_swap(&num_, &rhs.num_ );
+			return *this;
+		}
+
+		size_t getSize() const {
+			return (size_t) BN_num_bytes( &num_ );
+		}
+
+		int getBits() const {
+			return BN_num_bits( &num_ );
+		}
+
+		static int getBitsInULong( unsigned long val ) {
+			return BN_num_bits_word( val );
+		}
+
+
+		bool isNegative() const {
+			return BN_is_negative( &num_ ) ? true : false;
+		}
+
+
+		/**
+		returns -1 if this < rhs, 0 if this == rhs, 1 if a > b
+		*/
+		int compare( const BigInteger& rhs ) const {
+			return BN_cmp( &num_, &rhs.num_ );
+		}
+
+		/**
+		returns -1 if abs(this) < (abs(rhs), 0 if abs(this) == (abs(rhs), 1 if abs(this) > (abs(rhs)
+		*/
+		int absCompare( const BigInteger& rhs ) const {
+			return BN_ucmp( &num_, &rhs.num_ );
+		}
+
+		bool operator == ( const BigInteger& rhs ) const {
+			return compare( rhs ) == 0;
+		}
+
+		bool operator != ( const BigInteger& rhs ) const {
+			return compare( rhs ) != 0;
+		}
+
+		bool operator > ( const BigInteger& rhs ) const {
+			return compare( rhs ) == 1;
+		}
+
+		bool operator >= ( const BigInteger& rhs ) const {
+			return (compare( rhs ) < 0) ? false : true;
+		}
+
+		bool operator < ( const BigInteger& rhs ) const {
+			return compare( rhs ) == -1;
+		}
+
+		bool operator <= ( const BigInteger& rhs ) const {
+			return (compare( rhs ) > 0) ? false : true;
+		}
+
+		bool isZero() const {
+			return BN_is_zero( &num_ ) ? true : false;
+		}
+
+		bool isOne() const {
+			return BN_is_one( &num_ ) ? true : false;
+		}
+
+		bool isOdd() const {
+			return BN_is_odd( &num_ ) ? true : false;
+		}
+
+		operator BIGNUM*() {
+			return &num_;
+		}
+
+		operator const BIGNUM*() const {
+			return &num_;
+		}
+
+		void setZero() {
+			BN_zero( &num_ );
+		}
+
+		void setOne() {
+			BN_one( &num_ );
+		}
+
+		//conversion routines...
+
+		BigInteger& operator=( const int& rhs ) {			
+			BN_set_word( &num_, abs(rhs) );			
+			BN_set_negative( &num_, (rhs < 0) ? 1 : 0 );
+			return *this;
+		}
+
+		BigInteger& operator=( const unsigned int& rhs ) {			
+			BN_set_word( &num_, rhs );
+			BN_set_negative( &num_, 0 );
+			return *this;
+		}
+
+		BigInteger& operator=( const long& rhs ) {			
+			BN_set_word( &num_, abs(rhs) );
+			BN_set_negative( &num_, (rhs < 0) ? 1 : 0 );
+			return *this;
+		}
+
+		BigInteger& operator=( const unsigned long& rhs ) {			
+			BN_set_word( &num_, rhs );
+			BN_set_negative( &num_, 0 );
+			return *this;
+		}
+
+		operator unsigned int() const {
+			return BN_get_word( &num_ );
+		}
+
+		operator int() const {
+			if ( BN_is_negative(&num_) ) {
+				return - BN_get_word( &num_ );
+			}
+			return BN_get_word( &num_ );
+		}
+
+		operator unsigned long() const {
+			return BN_get_word( &num_ );
+		}
+
+		operator long() const {
+			if ( BN_is_negative(&num_) ) {
+				return - BN_get_word( &num_ );
+			}
+			return BN_get_word( &num_ );
+		}
+
+		//addition
+
+		BigInteger& operator +=( const unsigned int& rhs ) {			
+			BN_add_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator +( const unsigned int& rhs ) const {
+			BigInteger result(*this);
+			BN_add_word( &result.num_, rhs );
+			return result;
+		}
+
+		BigInteger& operator +=( const int& rhs ) {			
+			BN_add_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator +( const int& rhs ) const {
+			BigInteger result(*this);
+			BN_add_word( &result.num_, rhs );
+			return result;
+		}
+
+
+		BigInteger& operator +=( const unsigned long& rhs ) {			
+			BN_add_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator +( const unsigned long& rhs ) const {
+			BigInteger result(*this);
+			BN_add_word( &result.num_, rhs );
+			return result;
+		}
+
+		BigInteger& operator +=( const long& rhs ) {			
+			BN_add_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator +( const long& rhs ) const {
+			BigInteger result(*this);
+			BN_add_word( &result.num_, rhs );
+			return result;
+		}
+
+		//subtraction
+
+		BigInteger& operator -=( const unsigned int& rhs ) {			
+			BN_sub_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator -( const unsigned int& rhs ) const {
+			BigInteger result(*this);
+			BN_sub_word( &result.num_, rhs );
+			return result;
+		}
+
+		BigInteger& operator -=( const int& rhs ) {			
+			BN_sub_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator -( const int& rhs ) const {
+			BigInteger result(*this);
+			BN_sub_word( &result.num_, rhs );
+			return result;
+		}
+
+
+		BigInteger& operator -=( const unsigned long& rhs ) {			
+			BN_sub_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator -( const unsigned long& rhs ) const {
+			BigInteger result(*this);
+			BN_sub_word( &result.num_, rhs );
+			return result;
+		}
+
+		BigInteger& operator -=( const long& rhs ) {			
+			BN_sub_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator -( const long& rhs ) const {
+			BigInteger result(*this);
+			BN_sub_word( &result.num_, rhs );
+			return result;
+		}
+
+
+		//multiplication
+		BigInteger& operator *=( const unsigned int& rhs ) {			
+			BN_mul_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator *( const unsigned int& rhs ) const {
+			BigInteger result(*this);
+			BN_mul_word( &result.num_, rhs );
+			return result;
+		}
+
+		BigInteger& operator *=( const int& rhs ) {			
+			BN_mul_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator *( const int& rhs ) const {
+			BigInteger result(*this);
+			BN_mul_word( &result.num_, rhs );
+			return result;
+		}
+
+
+		BigInteger& operator *=( const unsigned long& rhs ) {			
+			BN_mul_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator *( const unsigned long& rhs ) const {
+			BigInteger result(*this);
+			BN_mul_word( &result.num_, rhs );
+			return result;
+		}
+
+		BigInteger& operator *=( const long& rhs ) {			
+			BN_mul_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator *( const long& rhs ) const {
+			BigInteger result(*this);
+			BN_mul_word( &result.num_, rhs );
+			return result;
+		}
+
+
+		//division
+		BigInteger& operator /=( const unsigned int& rhs ) {			
+			BN_div_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator /( const unsigned int& rhs ) const {
+			BigInteger result(*this);
+			BN_div_word( &result.num_, rhs );
+			return result;
+		}
+
+		BigInteger& operator /=( const int& rhs ) {			
+			BN_div_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator /( const int& rhs ) const {
+			BigInteger result(*this);
+			BN_div_word( &result.num_, rhs );
+			return result;
+		}
+
+
+		BigInteger& operator /=( const unsigned long& rhs ) {			
+			BN_div_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator /( const unsigned long& rhs ) const {
+			BigInteger result(*this);
+			BN_div_word( &result.num_, rhs );
+			return result;
+		}
+
+		BigInteger& operator /=( const long& rhs ) {			
+			BN_div_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator /( const long& rhs ) const {
+			BigInteger result(*this);
+			BN_div_word( &result.num_, rhs );
+			return result;
+		}
+
+		//mod
+		BigInteger& operator %=( const unsigned int& rhs ) {			
+			BN_mod_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator %( const unsigned int& rhs ) const {
+			BigInteger result(*this);
+			BN_mod_word( &result.num_, rhs );
+			return result;
+		}
+
+		BigInteger& operator %=( const int& rhs ) {			
+			BN_div_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator %( const int& rhs ) const {
+			BigInteger result(*this);
+			BN_mod_word( &result.num_, rhs );
+			return result;
+		}
+
+
+		BigInteger& operator %=( const unsigned long& rhs ) {			
+			BN_div_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator %( const unsigned long& rhs ) const {
+			BigInteger result(*this);
+			BN_mod_word( &result.num_, rhs );
+			return result;
+		}
+
+		BigInteger& operator %=( const long& rhs ) {			
+			BN_mod_word( &num_, rhs );
+			return *this;
+		}
+
+		BigInteger operator %( const long& rhs ) const {
+			BigInteger result(*this);
+			BN_mod_word( &result.num_, rhs );
+			return result;
+		}
+
+
+		//regular arithmetic
+
+		BigInteger& operator +=( const BigInteger& rhs ) {
+			BigInteger res;
+			BN_add( &res.num_, &num_, &rhs.num_ );
+			*this = res;
+			return *this;
+		}
+
+		BigInteger operator +( const BigInteger& rhs ) const {
+			BigInteger result(*this);
+			result += rhs;
+			return result;
+		}
+
+
+		BigInteger& operator -=( const BigInteger& rhs ) {
+			BigInteger res;
+			BN_sub( &res.num_, &num_, &rhs.num_ );
+			*this = res;
+			return *this;
+		}
+
+		BigInteger operator -( const BigInteger& rhs ) const {
+			BigInteger result(*this);
+			result -= rhs;
+			return result;
+		}
+
+		BigInteger& operator *=( const BigInteger& rhs ) {
+			BigInteger res;
+			BN_CTX* ctx = BN_CTX_new();
+			BN_CTX_init( ctx );
+
+			BN_mul( &res.num_, &num_, &rhs.num_, ctx );
+
+			BN_CTX_free( ctx );
+
+			*this = res;
+			return *this;
+		}
+
+		BigInteger operator *( const BigInteger& rhs ) const {
+			BigInteger result(*this);
+			result *= rhs;
+			return result;
+		}
+
+		BigInteger& operator /=( const BigInteger& rhs ) {
+			
+			BN_CTX* ctx = BN_CTX_new();
+			BN_CTX_init( ctx );
+
+			BIGNUM* dv = BN_CTX_get(ctx);
+			BIGNUM* rem = NULL;
+
+			BN_div( dv, rem, &num_, &rhs.num_, ctx );
+
+			BN_copy(&num_, dv );
+
+			BN_CTX_free( ctx );			
+
+			return *this;
+		}
+
+		BigInteger operator /( const BigInteger& rhs ) const {
+			BigInteger result(*this);
+			result /= rhs;
+			return result;
+		}
+
+
+		BigInteger& operator %=( const BigInteger& rhs ) {
+			
+			BN_CTX* ctx = BN_CTX_new();
+			BN_CTX_init( ctx );
+
+			BIGNUM* dv = NULL;
+			BIGNUM* rem = BN_CTX_get(ctx);
+
+			BN_div( dv, rem, &num_, &rhs.num_, ctx );
+
+			BN_copy(&num_, rem );
+
+			BN_CTX_free( ctx );			
+
+			return *this;
+		}
+
+		BigInteger operator %( const BigInteger& rhs ) const {
+			BigInteger result(*this);
+			result %= rhs;
+			return result;
+		}
+
+
+		BigInteger& square() {
+			BN_CTX* ctx = BN_CTX_new();
+			BN_CTX_init( ctx );
+
+			BIGNUM* res = BN_CTX_get(ctx);
+
+			BN_sqr( res, &num_, ctx );
+
+			BN_copy(&num_, res );
+
+			BN_CTX_free( ctx );	
+			return *this;
+		}
+
+		BigInteger pow( const BigInteger& rhs ) const {
+			BigInteger result;
+
+			BN_CTX* ctx = BN_CTX_new();
+			BN_CTX_init( ctx );
+
+			BN_exp( &result.num_, &num_, &rhs.num_, ctx );		
+
+			BN_CTX_free( ctx );	
+			return *this;
+		}
+
+		virtual String toString() {		
+			char* res = BN_bn2dec( &num_ );
+
+			String result(res);
+
+			OPENSSL_free( res );
+
+			return result;
+		}
+	protected:
+		BIGNUM num_;
 	};
 
 
@@ -1679,8 +2319,25 @@ int main( int argc, char** argv ){
 	}
 
 
+	
+
+	BigInteger bi;
+	bi = 1;
+	
+	BigInteger bi2 = -120;
+	j = bi2;	
+	
+
+	bi = 1312;
+	bi2 *= bi;
+
+	String bs = bi2.toString();
 
 
+
+	CryptoInputStream cis;
+
+	
 	Key pubKey;
 	Key privKey;
 
