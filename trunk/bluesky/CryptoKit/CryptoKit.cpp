@@ -253,9 +253,8 @@ namespace Crypto {
 
 		typedef std::vector<unsigned char> DigestResult;
 
-		MessageDigest( const EVP_MD* digest ):finished_(false),resultSize_(0) {
-			EVP_MD_CTX_init( &ctx_ );
-			EVP_DigestInit( &ctx_, digest );
+		MessageDigest( const EVP_MD* digest ):finished_(false),digest_(digest),resultSize_(0) {
+			EVP_DigestInit( &ctx_, digest_ );
 		}
 
 		virtual ~MessageDigest() {
@@ -277,7 +276,21 @@ namespace Crypto {
 			EVP_DigestFinal( &ctx_, (unsigned char*)result.begin(), &resultSize_);
 			result.resize(resultSize_);
 			finished_ = true;
+			
+			EVP_DigestInit( &ctx_, digest_ );
+
 			return result;
+		}
+
+		void hash( const unsigned char* bytes, size_t sizeBytes, unsigned char* outBuffer, size_t& outBufSize ) {
+			update( bytes, sizeBytes );
+			finish( outBuffer, outBufSize );
+		}
+
+		void finish( unsigned char* outBuffer, size_t& outBufSize ) {			
+			EVP_DigestFinal( &ctx_, outBuffer, &outBufSize );			
+			finished_ = true;		
+			EVP_DigestInit( &ctx_, digest_ );
 		}
 
 		size_t size() const {
@@ -290,6 +303,7 @@ namespace Crypto {
 	protected:
 		bool finished_;
 		EVP_MD_CTX ctx_;
+		const EVP_MD* digest_;
 		size_t resultSize_;
 	};
 
@@ -1737,6 +1751,28 @@ int main( int argc, char** argv ){
 	fclose(fp);
 
 	const char* data = "Holy Crap!";
+
+
+
+
+	//sign it
+	unsigned char dataDigest[1024];
+	size_t dataDigSz = sizeof(dataDigest);
+	md5.hash( (const unsigned char*)data, strlen(data), dataDigest, dataDigSz );
+
+	unsigned char signedData[1024];
+	size_t signedDataSz = 0;
+
+	err = RSA_sign( NID_md5, dataDigest, dataDigSz, signedData, &signedDataSz, rsaPriv );
+
+
+
+	//verify the message
+
+	md5.hash( (const unsigned char*)data, strlen(data), dataDigest, dataDigSz );
+
+	err = RSA_verify( NID_md5, dataDigest, dataDigSz, signedData, signedDataSz, rsaPub );
+
 
 
 	unsigned char rsaData[1024];
