@@ -184,8 +184,13 @@ namespace Crypto {
 	public:
 
 		CryptoInputStream() : ioObject_(NULL){
-			ioObject_ = BIO_new( BIO_f_null() );
+			ioObject_ = BIO_new( CryptoInputStream::getMethod() );
 
+			ioObject_->ptr = this;
+		}
+
+		virtual ~CryptoInputStream() {
+			BIO_free(ioObject_);
 		}
 
 		virtual void seek(const uint64& offset, const SeekType& offsetFrom) {
@@ -213,16 +218,290 @@ namespace Crypto {
 		}
 
 	protected:
-		static long BIOcallback(BIO *bio, int cmd, const char *argp,
-										int argi, long argl, long ret) 
-		{
-			long result = 0;
-
-			return result;
-		}
+		
 
 		//BIO_set_callback
 		BIO* ioObject_;
+
+
+		
+		static int readBIO(BIO *h, char *buf, int size)
+		{
+			CryptoInputStream* thisPtr = (CryptoInputStream*)h->ptr;
+
+			if (NULL == thisPtr ) {
+				return -1;
+			}
+
+			uint64 res = thisPtr->read( (uchar*)buf, (uint64)size );		
+
+			return res;
+		}
+		
+		static int getsBIO(BIO *h, char *str, int size)
+		{
+			return size;
+		}
+		
+		static long ctrlBIO(BIO *h, int cmd, long arg1, void *arg2)
+		{
+			printf( "ctrl( %p, %d, %d, %p )\n", h, cmd, arg1, arg2 );
+
+			CryptoInputStream* thisPtr = (CryptoInputStream*)h->ptr;
+			if (NULL == thisPtr ) {
+				return 0;
+			}
+
+			switch (cmd) {
+				case BIO_C_FILE_SEEK:  case BIO_CTRL_RESET: {
+					thisPtr->seek( arg1, stSeekFromStart );
+					return 1;
+				}
+				break;
+
+				case BIO_C_FILE_TELL:  case BIO_CTRL_INFO: {
+					return thisPtr->getCurrentSeekPos();
+				}
+				break;
+
+				case BIO_CTRL_EOF: {
+					return thisPtr->isEOS() ? 1 : 0;
+				}
+				break;
+
+				case BIO_CTRL_GET_CLOSE: {
+					return (long) h->shutdown;
+				}
+				break;
+
+				case BIO_CTRL_SET_CLOSE: {
+					h->shutdown=(int)arg1;
+					return 1;
+				}
+				break;
+
+				case BIO_CTRL_FLUSH: {
+					//????????
+				}
+				break;
+
+				case BIO_CTRL_WPENDING:
+				case BIO_CTRL_PENDING:
+				case BIO_CTRL_PUSH:
+				case BIO_CTRL_POP: {
+					return 0;
+				}
+				break;
+			};
+			return 1;
+		}
+		
+		static int newBIO(BIO *h)
+		{
+			h->init=1;
+			h->num=0;
+			h->ptr=NULL;
+			h->flags=BIO_FLAGS_UPLINK;
+			
+			return 1;
+		}
+		
+		static int freeBIO(BIO *data)
+		{
+			if (data == NULL) return(0);
+			if (data->shutdown) {
+				
+				data->ptr=NULL;
+				data->flags=BIO_FLAGS_UPLINK;
+				data->init=0;
+			}
+			
+			return 1;
+		}
+
+		static BIO_METHOD* getMethod() 
+		{
+			static BIO_METHOD CryptoInputStreamMethod =
+			{
+				BIO_TYPE_SOURCE_SINK,
+					"CryptoInputStream BIO",
+					NULL,
+					CryptoInputStream::readBIO,
+					NULL,
+					CryptoInputStream::getsBIO,
+					CryptoInputStream::ctrlBIO,
+					CryptoInputStream::newBIO,
+					CryptoInputStream::freeBIO,
+					NULL,
+			};
+
+
+			return &CryptoInputStreamMethod;
+		}
+	};
+
+
+
+
+	
+
+	class CryptoOutputStream : public OutputStream {
+	public:
+
+		CryptoOutputStream() : ioObject_(NULL){
+			ioObject_ = BIO_new( CryptoOutputStream::getMethod() );
+
+			ioObject_->ptr = this;
+		}
+
+		virtual ~CryptoOutputStream() {
+			BIO_free(ioObject_);
+		}
+
+		virtual void seek(const uint64& offset, const SeekType& offsetFrom) {
+
+		}
+		
+		virtual uint64 getSize() {
+			return 0;
+		}
+		
+		virtual uchar* getBuffer() {
+			return NULL;
+		}
+		
+		virtual uint64 getCurrentSeekPos() {
+			return 0;
+		}
+		
+		virtual uint64 write( const unsigned char* bytesToRead, uint64 sizeOfBytes ) {
+			return 0;
+		}
+		
+		operator BIO* () {
+			return ioObject_;
+		}
+
+		operator const BIO* () const {
+			return ioObject_;
+		}
+	protected:
+		
+
+		//BIO_set_callback
+		BIO* ioObject_;
+
+
+		
+		static int writeBIO(BIO *h, const char *buf, int size)
+		{
+			CryptoOutputStream* thisPtr = (CryptoOutputStream*)h->ptr;
+
+			if (NULL == thisPtr ) {
+				return -1;
+			}
+
+			uint64 res = thisPtr->write( (const uchar*)buf, (uint64)size );		
+
+			return res;
+		}
+		
+		static int putsBIO(BIO *h, const char *str )
+		{
+			return 0;
+		}
+		
+		static long ctrlBIO(BIO *h, int cmd, long arg1, void *arg2)
+		{
+			printf( "ctrl( %p, %d, %d, %p )\n", h, cmd, arg1, arg2 );
+			CryptoOutputStream* thisPtr = (CryptoOutputStream*)h->ptr;
+			if (NULL == thisPtr ) {
+				return 0;
+			}
+
+			switch (cmd) {
+				case BIO_C_FILE_SEEK:  case BIO_CTRL_RESET: {
+					thisPtr->seek( arg1, stSeekFromStart );
+					return 1;
+				}
+				break;
+
+				case BIO_C_FILE_TELL:  case BIO_CTRL_INFO: {
+					return thisPtr->getCurrentSeekPos();
+				}
+				break;
+
+				case BIO_CTRL_GET_CLOSE: {
+					return (long) h->shutdown;
+				}
+				break;
+
+				case BIO_CTRL_SET_CLOSE: {
+					h->shutdown=(int)arg1;
+					return 1;
+				}
+				break;
+
+				case BIO_CTRL_FLUSH: {
+					//????????
+				}
+				break;
+
+				case BIO_CTRL_EOF: 
+				case BIO_CTRL_WPENDING:
+				case BIO_CTRL_PENDING:
+				case BIO_CTRL_PUSH:
+				case BIO_CTRL_POP: {
+					return 0;
+				}
+				break;
+			};		
+
+			return 1;
+		}
+		
+		static int newBIO(BIO *h)
+		{
+			h->init=1;
+			h->num=0;
+			h->ptr=NULL;
+			h->flags=BIO_FLAGS_UPLINK;
+			
+			return 1;
+		}
+		
+		static int freeBIO(BIO *data)
+		{
+			if (data == NULL) return(0);
+			if (data->shutdown) {
+				
+				data->ptr=NULL;
+				data->flags=BIO_FLAGS_UPLINK;
+				data->init=0;
+			}
+			
+			return 1;
+		}
+
+		static BIO_METHOD* getMethod() 
+		{
+			static BIO_METHOD CryptoOutputStreamMethod =
+			{
+				BIO_TYPE_SOURCE_SINK,
+					"CryptoOutputStream BIO",
+					CryptoOutputStream::writeBIO,
+					NULL,
+					CryptoOutputStream::putsBIO,
+					NULL,
+					CryptoOutputStream::ctrlBIO,
+					CryptoOutputStream::newBIO,
+					CryptoOutputStream::freeBIO,
+					NULL,
+			};
+
+
+			return &CryptoOutputStreamMethod;
+		}
 	};
 
 
