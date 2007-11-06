@@ -161,6 +161,73 @@ int my_passwd_cb(char *buf, int size, int rwflag, void *u)
 }
 
 
+
+
+
+static int my_write(BIO *h, const char *buf, int num)
+{
+	return num;
+}
+
+static int my_read(BIO *h, char *buf, int size)
+{
+	return size;
+}
+
+static int my_puts(BIO *h, const char *str)
+{
+	return strlen(str);
+}
+
+static int my_gets(BIO *h, char *str, int size)
+{
+	return size;
+}
+
+static long my_ctrl(BIO *h, int cmd, long arg1, void *arg2)
+{
+	printf( "my_ctrl( %p, %d, %d, %p )\n", h, cmd, arg1, arg2 );
+	return 1;
+}
+
+static int my_new(BIO *h)
+{
+	h->init=1;
+	h->num=0;
+	h->ptr=NULL;
+	h->flags=BIO_FLAGS_UPLINK;
+
+	return 1;
+}
+
+static int my_free(BIO *data)
+{
+	if (data == NULL) return(0);
+	if (data->shutdown) {
+
+		data->ptr=NULL;
+		data->flags=BIO_FLAGS_UPLINK;
+		data->init=0;
+	}
+
+	return 1;
+}
+
+static BIO_METHOD methods_MINE=
+	{
+	BIO_TYPE_SOURCE_SINK,
+	"Custom BIO",
+	my_write,
+	my_read,
+	my_puts,
+	my_gets,
+	my_ctrl,
+	my_new,
+	my_free,
+	NULL,
+	};
+
+
 using namespace VCF;
 
 int main( int argc, char** argv ){
@@ -171,8 +238,18 @@ int main( int argc, char** argv ){
 	char mess1[] = "Test Message";
 	char mess2[] = "Hello World\n";
 	
+	{
+		
+		CryptoOutputStream cos;
+		
+		
+		BigInteger bigNum(1234567);
+		BN_print( cos, bigNum );
+	}
+
 
 	
+
 
 
 	MD2 md2;
