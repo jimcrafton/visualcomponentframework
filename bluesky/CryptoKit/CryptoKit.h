@@ -183,7 +183,15 @@ namespace Crypto {
 	class CryptoInputStream : public InputStream {
 	public:
 
-		CryptoInputStream() : ioObject_(NULL){
+		CryptoInputStream( InputStream* inputStream ) : ioObject_(NULL),inputStream_(inputStream){
+
+			VCF_ASSERT( NULL != inputStream_ );
+
+			if ( NULL == inputStream_ ) {
+				throw RuntimeException( "Cannot have a null input stream in a CryptoInputStream instance." );
+			}
+
+
 			ioObject_ = BIO_new( CryptoInputStream::getMethod() );
 
 			ioObject_->ptr = this;
@@ -194,27 +202,27 @@ namespace Crypto {
 		}
 
 		virtual void seek(const uint64& offset, const SeekType& offsetFrom) {
-
+			inputStream_->seek( offset, offsetFrom );
 		}
 		
 		virtual uint64 getSize() {
-			return 0;
+			return inputStream_->getSize();
 		}
 		
 		virtual uchar* getBuffer() {
-			return NULL;
+			return inputStream_->getBuffer();
 		}
 		
 		virtual uint64 getCurrentSeekPos() {
-			return 0;
+			return inputStream_->getCurrentSeekPos();
 		}
 		
 		virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes ) {
-			return 0;
+			return inputStream_->read( bytesToRead, sizeOfBytes );
 		}
 		
 		virtual bool isEOS() {
-			return false;
+			return inputStream_->isEOS();
 		}
 
 	protected:
@@ -222,6 +230,7 @@ namespace Crypto {
 
 		//BIO_set_callback
 		BIO* ioObject_;
+		InputStream* inputStream_;
 
 
 		
@@ -348,7 +357,13 @@ namespace Crypto {
 	class CryptoOutputStream : public OutputStream {
 	public:
 
-		CryptoOutputStream() : ioObject_(NULL){
+		CryptoOutputStream( OutputStream* outputStream ) : ioObject_(NULL),outputStream_(outputStream){
+			VCF_ASSERT( NULL != outputStream_ );
+
+			if ( NULL == outputStream_ ) {
+				throw RuntimeException( "Cannot have a null output stream in a CryptoOutputStream instance." );
+			}
+
 			ioObject_ = BIO_new( CryptoOutputStream::getMethod() );
 
 			ioObject_->ptr = this;
@@ -359,23 +374,23 @@ namespace Crypto {
 		}
 
 		virtual void seek(const uint64& offset, const SeekType& offsetFrom) {
-
+			outputStream_->seek( offset, offsetFrom );
 		}
 		
 		virtual uint64 getSize() {
-			return 0;
+			return outputStream_->getSize();
 		}
 		
 		virtual uchar* getBuffer() {
-			return NULL;
+			return outputStream_->getBuffer();
 		}
 		
 		virtual uint64 getCurrentSeekPos() {
-			return 0;
+			return outputStream_->getCurrentSeekPos();
 		}
 		
-		virtual uint64 write( const unsigned char* bytesToRead, uint64 sizeOfBytes ) {
-			return 0;
+		virtual uint64 write( const unsigned char* bytesToWrite, uint64 sizeOfBytes ) {
+			return outputStream_->write( bytesToWrite, sizeOfBytes );
 		}
 		
 		operator BIO* () {
@@ -385,11 +400,9 @@ namespace Crypto {
 		operator const BIO* () const {
 			return ioObject_;
 		}
-	protected:
-		
-
-		//BIO_set_callback
+	protected:		
 		BIO* ioObject_;
+		OutputStream* outputStream_;
 
 
 		
@@ -408,7 +421,9 @@ namespace Crypto {
 		
 		static int putsBIO(BIO *h, const char *str )
 		{
-			return 0;
+			size_t strSz = strlen(str);
+			
+			return CryptoOutputStream::writeBIO( h, str, strSz );
 		}
 		
 		static long ctrlBIO(BIO *h, int cmd, long arg1, void *arg2)
@@ -2125,25 +2140,7 @@ namespace Crypto {
 
 
 
-	class RSABase {
-	public:
-
-		RSABase() : rsa_(NULL){
-			rsa_ = RSA_new();
-		}
-
-		~RSABase(){ 
-			RSA_free( rsa_ );
-		}
-
-		size_t modulusSize() const {
-			RSA_size( rsa_ );
-		}
-	protected:
-
-		RSA* rsa_;
-	};
-
+	
 
 
 	class Key {
@@ -2214,6 +2211,69 @@ namespace Crypto {
 
 	protected:
 		EVP_PKEY* key_;
+	};
+
+
+
+
+
+
+	typedef Delegate2<int,int> RSAKeyGenDelegate;
+
+
+
+	class RSAKeyPair : public Object {
+	public:
+
+		RSAKeyGenDelegate RSAKeyGen; 
+
+		enum {
+			expRSA_F4 = RSA_F4,
+			expRSA_3 = RSA_3
+		};
+
+		RSAKeyPair(): rsaKeyPair_(NULL){}
+
+		~RSAKeyPair(){
+			if ( NULL != rsaKeyPair_ ) {
+				RSA_free( rsaKeyPair_ );
+			}
+		}
+
+		bool generate( size_t bits, size_t exponent ) {
+
+			if ( NULL != rsaKeyPair_ ) {
+				RSA_free( rsaKeyPair_ );
+			}
+
+			rsaKeyPair_ = RSA_generate_key( bits, exponent, RSAKeyPair::keyPairCallback, this );
+
+
+
+			return rsaKeyPair_ != NULL;
+		}
+
+
+		virtual String toString() {
+			String result;
+
+			TextOutputStream tos;
+			CryptoOutputStream cos(&tos);
+
+			RSA_print( cos, rsaKeyPair_, 0 );
+
+			result += tos.getTextBuffer();
+
+			return result;
+		}
+		
+	protected:
+		RSA* rsaKeyPair_;
+
+		static void keyPairCallback( int p, int n, void *arg ) {
+			RSAKeyPair* thisPtr = (RSAKeyPair*)arg;
+			thisPtr->RSAKeyGen( p, n );
+		}
 	};
 };
 
