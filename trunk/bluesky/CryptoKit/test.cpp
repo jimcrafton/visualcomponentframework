@@ -164,94 +164,20 @@ int my_passwd_cb(char *buf, int size, int rwflag, void *u)
 
 
 
-static int my_write(BIO *h, const char *buf, int num)
-{
-	return num;
-}
-
-static int my_read(BIO *h, char *buf, int size)
-{
-	return size;
-}
-
-static int my_puts(BIO *h, const char *str)
-{
-	return strlen(str);
-}
-
-static int my_gets(BIO *h, char *str, int size)
-{
-	return size;
-}
-
-static long my_ctrl(BIO *h, int cmd, long arg1, void *arg2)
-{
-	printf( "my_ctrl( %p, %d, %d, %p )\n", h, cmd, arg1, arg2 );
-	return 1;
-}
-
-static int my_new(BIO *h)
-{
-	h->init=1;
-	h->num=0;
-	h->ptr=NULL;
-	h->flags=BIO_FLAGS_UPLINK;
-
-	return 1;
-}
-
-static int my_free(BIO *data)
-{
-	if (data == NULL) return(0);
-	if (data->shutdown) {
-
-		data->ptr=NULL;
-		data->flags=BIO_FLAGS_UPLINK;
-		data->init=0;
-	}
-
-	return 1;
-}
-
-static BIO_METHOD methods_MINE=
-	{
-	BIO_TYPE_SOURCE_SINK,
-	"Custom BIO",
-	my_write,
-	my_read,
-	my_puts,
-	my_gets,
-	my_ctrl,
-	my_new,
-	my_free,
-	NULL,
-	};
-
 
 using namespace VCF;
 
-int main( int argc, char** argv ){
-
-	FoundationKit::init( argc, argv );
-	CryptoKit::init( argc, argv );
-
-	char mess1[] = "Test Message";
-	char mess2[] = "Hello World\n";
-	
-	{
-		
-		CryptoOutputStream cos;
-		
-		
-		BigInteger bigNum(1234567);
-		BN_print( cos, bigNum );
-	}
-
-
-	
 
 
 
+
+
+
+
+
+
+void testDigests()
+{
 	MD2 md2;
 	MD5 md5;
 	VCF::Crypto::SHA1 sha1;
@@ -260,6 +186,8 @@ int main( int argc, char** argv ){
 	DSS1 dss1;
 	RipeMD160 rp160;
 
+	char mess1[] = "Test Message";
+	char mess2[] = "Hello World\n";
 
 	MessageDigest::DigestResult res = md5.hash( (const unsigned char*)mess1, strlen(mess1) );
 
@@ -306,7 +234,10 @@ int main( int argc, char** argv ){
 	printf("rp160 Digest is (%d bytes): ", rp160.size() );
 	for(i = 0; i < res.size(); i++) printf("%X", res[i]);
 	printf("\n");
+}
 
+void testRandom()
+{
 	System::println( Format("Are we seeded OK? %s") % (Random::seeded() ? "yes" : "no") );
 
 	if ( !Random::seeded() ) {
@@ -330,8 +261,161 @@ int main( int argc, char** argv ){
 		s = Random::newAnsiString();
 		System::println( Format( "random num: %.255s") % s.c_str() );
 	}
+}
 
 
+
+
+void testX509Cert()
+{
+	X509 *x509=NULL;
+	EVP_PKEY *pkey=NULL;
+	
+	mkcert(&x509,&pkey,512,0,365);
+	
+	RSA_print_fp(stdout,pkey->pkey.rsa,0);
+	X509_print_fp(stdout,x509);
+	
+	PEM_write_PrivateKey(stdout,pkey,NULL,NULL,0,NULL, NULL);
+
+
+	FILE* cert = fopen( "test509.cer", "wb" );
+
+	PEM_write_X509(stdout,x509);
+	PEM_write_X509(cert,x509);
+	fclose(cert);
+
+	cert = fopen( "test509-priv.cer", "wb" );
+	PEM_write_PrivateKey(cert,pkey,NULL,NULL,0,NULL, NULL);
+
+	fclose(cert);
+
+	
+	X509_free(x509);
+
+}
+
+
+
+
+
+void testRSA()
+{
+	MD5 md5;
+
+
+
+	RSAKeyPair kp;
+	kp.generate( 512, RSA_F4 );
+	String s = kp.toString();
+
+
+
+
+	RSA* rsaKeyPair = RSA_generate_key( 512, RSA_F4, NULL, NULL );
+
+	RSA_print_fp(stdout,rsaKeyPair,0);
+
+	int szOfRSA = RSA_size( rsaKeyPair );
+
+	
+
+
+	FILE* fp = fopen( "test-pub.pem", "wb" );
+
+	PEM_write_RSAPublicKey(fp,rsaKeyPair);
+
+
+	fclose(fp);
+
+
+#define PASSWORD	"test"
+
+	fp = fopen( "test-priv.pem", "wb" );
+	PEM_write_RSAPrivateKey( fp, rsaKeyPair, EVP_des_ede3_cbc(), NULL, 0, NULL, PASSWORD );
+	fclose(fp);
+
+
+	fp = fopen( "test-priv.pem", "rb" );
+	RSA* rsaPriv = NULL;
+	if ( !PEM_read_RSAPrivateKey(  fp, &rsaPriv, my_passwd_cb, PASSWORD ) ) {
+		unsigned long err = ERR_get_error();
+		char tmp[256];
+		sprintf( tmp, "Error: %s", ERR_reason_error_string( err ) );
+	}
+	fclose(fp);
+
+	fp = fopen( "test-pub.pem", "rb" );
+	RSA* rsaPub = NULL;
+	PEM_read_RSAPublicKey( fp, &rsaPub, NULL, NULL );
+
+	fclose(fp);
+
+	const char* data = "Holy Crap!";
+
+
+
+
+	//sign it
+	unsigned char dataDigest[1024];
+	size_t dataDigSz = sizeof(dataDigest);
+	md5.hash( (const unsigned char*)data, strlen(data), dataDigest, dataDigSz );
+
+	unsigned char signedData[1024];
+	size_t signedDataSz = 0;
+
+	int err = RSA_sign( NID_md5, dataDigest, dataDigSz, signedData, &signedDataSz, rsaPriv );
+
+
+
+	//verify the message
+
+	md5.hash( (const unsigned char*)data, strlen(data), dataDigest, dataDigSz );
+
+	err = RSA_verify( NID_md5, dataDigest, dataDigSz, signedData, signedDataSz, rsaPub );
+
+
+
+	unsigned char rsaData[1024];
+	memset(rsaData, 0, sizeof(rsaData) );
+
+
+	err = RSA_public_encrypt( strlen(data), (const unsigned char*)data, rsaData, rsaPub, RSA_PKCS1_PADDING );
+
+	printf( "encrypted data (\"%s\", %u bytes) using RSA public key, encrypted data %u bytes.\n",
+				data, strlen(data), err );
+
+	//err = RSA_padding_add_PKCS1_type_1( rsaData, sizeof(rsaData), (const unsigned char*)data, strlen(data) );
+
+
+	unsigned char rsaDecryptedData[1024];
+	memset(rsaDecryptedData, 0, sizeof(rsaDecryptedData) );
+
+	err = RSA_private_decrypt( szOfRSA, rsaData, rsaDecryptedData, rsaPriv, RSA_PKCS1_PADDING );
+
+	printf( "decrypted data ( %u bytes) using RSA private key, data ( \"%s\" ) %u bytes.\n",
+				err, data, strlen(data) );
+}
+
+
+void testBigNum()
+{
+	BigInteger bi;
+	bi = 1;
+	
+	BigInteger bi2 = -120;
+	int j = bi2;	
+	
+
+	bi = 1312;
+	bi2 *= bi;
+
+	String bs = bi2.toString();
+}
+
+
+void testBase64()
+{
 	const char* msg = "Hello world, how are you?";
 	char* result = NULL;
 
@@ -380,10 +464,11 @@ int main( int argc, char** argv ){
 
 	delete [] result;
 	delete [] decodeResult;
+}
 
 
-
-
+void testCiphers()
+{
 	unsigned char key[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
     unsigned char iv[] = {1,2,3,4,5,6,7,8};
 
@@ -520,134 +605,44 @@ int main( int argc, char** argv ){
 		System::println( "Error: " + e.getMessage() );
 	}
 
+}
+
+
+int main( int argc, char** argv ){
+
+	FoundationKit::init( argc, argv );
+	CryptoKit::init( argc, argv );
 
 	
-
-	BigInteger bi;
-	bi = 1;
 	
-	BigInteger bi2 = -120;
-	j = bi2;	
-	
-
-	bi = 1312;
-	bi2 *= bi;
-
-	String bs = bi2.toString();
-
-
-
-	CryptoInputStream cis;
-
-	
-	Key pubKey;
-	Key privKey;
-
-
-	printf( "Key size: %u, bits: %d\n", pubKey.size(), pubKey.bits() );
-	
-
-	RSA* rsaKeyPair = RSA_generate_key( 512, RSA_F4, NULL, NULL );
-
-	RSA_print_fp(stdout,rsaKeyPair,0);
-
-	int szOfRSA = RSA_size( rsaKeyPair );
-
-	X509 *x509=NULL;
-	EVP_PKEY *pkey=NULL;
-	
-	mkcert(&x509,&pkey,512,0,365);
-	
-	RSA_print_fp(stdout,pkey->pkey.rsa,0);
-	X509_print_fp(stdout,x509);
-	
-	PEM_write_PrivateKey(stdout,pkey,NULL,NULL,0,NULL, NULL);
-
-
-	FILE* cert = fopen( "test509.cer", "wb" );
-
-	PEM_write_X509(stdout,x509);
-	PEM_write_X509(cert,x509);
-	fclose(cert);
-
-	cert = fopen( "test509-priv.cer", "wb" );
-	PEM_write_PrivateKey(cert,pkey,NULL,NULL,0,NULL, NULL);
-
-	fclose(cert);
-
-	
-	X509_free(x509);
-
-
-
-	FILE* fp = fopen( "test-pub.pem", "wb" );
-
-	PEM_write_RSAPublicKey(fp,rsaKeyPair);
-
-	fclose(fp);
-
-
-#define PASSWORD	"test"
-
-	fp = fopen( "test-priv.pem", "wb" );
-	PEM_write_RSAPrivateKey( fp, rsaKeyPair, EVP_des_ede3_cbc(), NULL, 0, NULL, PASSWORD );
-	fclose(fp);
-
-
-	fp = fopen( "test-priv.pem", "rb" );
-	RSA* rsaPriv = NULL;
-	if ( !PEM_read_RSAPrivateKey(  fp, &rsaPriv, my_passwd_cb, PASSWORD ) ) {
-		unsigned long err = ERR_get_error();
-		char tmp[256];
-		sprintf( tmp, "Error: %s", ERR_reason_error_string( err ) );
+	{
+		
+		TextOutputStream tos;
+		CryptoOutputStream cos(&tos);
+		
+		
+		BigInteger bigNum(1234567);
+		BN_print( cos, bigNum );
+		BN_print_fp( stdout, bigNum );
 	}
-	fclose(fp);
-
-	fp = fopen( "test-pub.pem", "rb" );
-	RSA* rsaPub = NULL;
-	PEM_read_RSAPublicKey( fp, &rsaPub, NULL, NULL );
-
-	fclose(fp);
-
-	const char* data = "Holy Crap!";
 
 
+	
 
+	testDigests();
 
-	//sign it
-	unsigned char dataDigest[1024];
-	size_t dataDigSz = sizeof(dataDigest);
-	md5.hash( (const unsigned char*)data, strlen(data), dataDigest, dataDigSz );
+	//testRandom();
 
-	unsigned char signedData[1024];
-	size_t signedDataSz = 0;
+	testBase64();
 
-	err = RSA_sign( NID_md5, dataDigest, dataDigSz, signedData, &signedDataSz, rsaPriv );
+	testCiphers();
 
+	testBigNum();
+	
+	testX509Cert();	
 
-
-	//verify the message
-
-	md5.hash( (const unsigned char*)data, strlen(data), dataDigest, dataDigSz );
-
-	err = RSA_verify( NID_md5, dataDigest, dataDigSz, signedData, signedDataSz, rsaPub );
-
-
-
-	unsigned char rsaData[1024];
-	memset(rsaData, 0, sizeof(rsaData) );
-
-	err = RSA_public_encrypt( strlen(data), (const unsigned char*)data, rsaData, rsaPub, RSA_PKCS1_PADDING );
-
-
-	//err = RSA_padding_add_PKCS1_type_1( rsaData, sizeof(rsaData), (const unsigned char*)data, strlen(data) );
-
-
-	unsigned char rsaDecryptedData[1024];
-	memset(rsaDecryptedData, 0, sizeof(rsaDecryptedData) );
-
-	err = RSA_private_decrypt( szOfRSA, rsaData, rsaDecryptedData, rsaPriv, RSA_PKCS1_PADDING );
-
+	testRSA();
+	
 	ERR_print_errors_fp( stdout );
 
 
