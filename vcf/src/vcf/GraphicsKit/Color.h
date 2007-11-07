@@ -704,7 +704,7 @@ public:
 	overrides the Object's base class member function.
 	gives a string representation of the color in a simple format.
 	*/
-	virtual String toString(){
+	virtual String toString() const {
 		return Format("#%02X%02X%02X") % (int)(r_*xFF+0.5) % (int)(g_*xFF+0.5) % (int)(b_*xFF+0.5);
 	};
 

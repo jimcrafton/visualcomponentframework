@@ -272,8 +272,10 @@ Win32Object::CreateParams Win32Edit::createParams()
 	// a method giving the option to the user, and painting the selection
 	// in an unfocused control with a light gray on the background - MP.
 
-	result.first |= ES_AUTOHSCROLL | ES_SAVESEL /*| ES_NOHIDESEL*/;
+	result.first |= ES_AUTOHSCROLL | ES_SAVESEL;// | ES_NOHIDESEL;
 	if ( editState_ & esMultiLined ) {
+		result.first |= ES_NOHIDESEL;
+
 		result.first |= ES_SAVESEL | ES_MULTILINE | WS_HSCROLL | WS_VSCROLL;// | ES_WANTRETURN;
 	}
 

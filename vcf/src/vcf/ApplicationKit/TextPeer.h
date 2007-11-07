@@ -335,7 +335,7 @@ public:
 
 	virtual void finishPrinting() = 0;	
 
-	virtual void setTextWrapping( const bool& val ) = 0; 
+	virtual void setTextWrapping( const bool& val ) = 0; 	
 };
 
 }; // namespace VCF

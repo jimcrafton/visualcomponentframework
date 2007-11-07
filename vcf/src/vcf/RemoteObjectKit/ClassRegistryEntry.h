@@ -92,7 +92,7 @@ public:
 	*/
     virtual void loadFromStream( VCF::InputStream * stream );
 
-	virtual VCF::String toString();
+	virtual VCF::String toString() const ;
 protected:
 
 private:

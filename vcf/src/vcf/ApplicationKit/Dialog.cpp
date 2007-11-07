@@ -48,6 +48,10 @@ Dialog::Dialog( Control* owner )
 
 	//add a close handler to get notified of the closing window
 	FrameClose += new ClassProcedure1<Event*,Dialog>( this, &Dialog::onDialogClose, "Dialog::onDialogClose" );
+
+
+	StandardContainer* container = (StandardContainer*)this->getContainer();
+	container->setBorderWidth( UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta ) );
 }
 
 

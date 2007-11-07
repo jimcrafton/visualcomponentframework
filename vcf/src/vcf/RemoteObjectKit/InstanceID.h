@@ -28,7 +28,7 @@ public:
 
 	virtual ~InstanceID(){};
 
-	virtual VCF::String toString(){
+	virtual VCF::String toString() const {
 		return 	machineName_ + "." + VCF::StringUtils::toString(processID_) + "." +
 			    VCF::StringUtils::toString(threadID_) + "@" +
 				VCF::StringUtils::toString(memAddress_);

@@ -55,7 +55,7 @@ public:
 
 
 	}
-	virtual VCF::String toString();
+	virtual VCF::String toString() const ;
 
 	DataRendering& operator= (const DataRendering& rhs ) {
 		memcpy( &formatETC_, &rhs.formatETC_, sizeof(formatETC_) );

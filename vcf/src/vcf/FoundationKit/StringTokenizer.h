@@ -48,7 +48,7 @@ public:
 		reset();
 	}
 
-	virtual bool hasMoreElements(const bool& backward=false) {
+	virtual bool hasMoreElements(const bool& backward=false) const {
 		if ( (NULL == start_) || (NULL == ptr_) ) {
 			reset(backward);
 		}
@@ -157,7 +157,7 @@ public:
 		return result;
 	}
 
-	virtual void reset(const bool& backward=false) {
+	virtual void reset(const bool& backward=false) const {
 		backward_ = backward;
 		dataSize_ = data_.size();
 		start_ = data_.c_str();
@@ -186,11 +186,11 @@ protected:
 		return *this;
 	}
 
-	bool backward_;
-	size_t dataSize_;
-	const VCFChar* start_;
-	const VCFChar* ptr_;
-	const VCFChar* backPtr_;
+	mutable bool backward_;
+	mutable size_t dataSize_;
+	mutable const VCFChar* start_;
+	mutable const VCFChar* ptr_;
+	mutable const VCFChar* backPtr_;
 
 	String data_;
 	String delimiter_;

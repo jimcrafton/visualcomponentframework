@@ -44,7 +44,7 @@ public:
 		height_ = height;
 	}
 
-	virtual String toString(){
+	virtual String toString() const {
 		return Object::toString();
 	}
 
