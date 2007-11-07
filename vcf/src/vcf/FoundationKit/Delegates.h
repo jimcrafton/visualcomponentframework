@@ -69,6 +69,7 @@ public:
 
 		TypeArray rhsTypes = rhs.getArgumentTypes();
 		
+		result = types.size() == rhsTypes.size();
 		if ( types.size() == rhsTypes.size() ) {
 			for (size_t i=0;i<types.size();i++ ) {
 				result = FunctionTypeInfo::typesMatch( *(types[i]), *(rhsTypes[i]) );
@@ -78,7 +79,7 @@ public:
 			}
 
 			if ( result ) {
-				result = getReturnType() == rhs.getReturnType() ? true : false;
+				result = FunctionTypeInfo::typesMatch( getReturnType(), rhs.getReturnType() );
 			}
 		}
 

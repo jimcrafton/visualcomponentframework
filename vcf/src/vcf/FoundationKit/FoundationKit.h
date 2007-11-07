@@ -312,7 +312,7 @@ namespace VCF{
 #include "vcf/FoundationKit/ErrorLog.h"
 #include "vcf/FoundationKit/FileStreamPeer.h"
 #include "vcf/FoundationKit/LibraryPeer.h"
-#include "vcf/FoundationKit/MemoryStream.h"
+//#include "vcf/FoundationKit/MemoryStream.h"
 #include "vcf/FoundationKit/MutexPeer.h"
 #include "vcf/FoundationKit/RegistryPeer.h"
 #include "vcf/FoundationKit/ConditionPeer.h"
