@@ -1129,7 +1129,7 @@ namespace Crypto {
 			return *this;
 		}
 
-		virtual String toString() {		
+		virtual String toString() const {
 			char* res = BN_bn2dec( &num_ );
 
 			String result(res);
@@ -1321,6 +1321,15 @@ namespace Crypto {
 
 	class MessageDigest {
 	public:
+
+		enum TypeID {
+			md2 = NID_md2,
+			md5 = NID_md5,
+			sha = NID_sha,
+			sha1 = NID_sha1,
+			ripemd160 = NID_ripemd160
+		};
+
 		enum {
 			MaxSize = EVP_MAX_MD_SIZE
 		};
@@ -1378,6 +1387,10 @@ namespace Crypto {
 			return resultSize_;
 		}
 
+
+		int getType() const {
+			return EVP_MD_type( digest_ );
+		}
 	protected:
 		bool finished_;
 		EVP_MD_CTX ctx_;
@@ -2286,35 +2299,104 @@ namespace Crypto {
 
 
 
+	class RSAKeyBase : public Object {
+	public:
+		RSAKeyBase():rsaObj_(NULL){}
+
+		virtual ~RSAKeyBase(){}
+
+
+		virtual String toString() const {
+			String result;
+
+			TextOutputStream tos;
+			CryptoOutputStream cos(&tos);
+
+			RSA_print( cos, rsaObj_, 0 );
+
+			result += tos.getTextBuffer();
+
+			return result;
+		}
+
+		size_t getSize() const {
+			return RSA_size( rsaObj_ );
+		}
+	protected:
+
+		RSAKeyBase( RSA* rsaObj ):rsaObj_(rsaObj){}
+
+		RSA* rsaObj_;
+	};
+
 
 	typedef Delegate2<int,int> RSAKeyGenDelegate;
 	typedef DelegateR<String> RSAPasswordDelegate;
 
 	class RSAKeyPair;
 
-	class RSAPrivateKey : public Persistable {
+	typedef std::vector<unsigned char> SignedDataArray;
+
+	class RSAPrivateKey : public RSAKeyBase, public Persistable {
 	public:
 
 		RSAPasswordDelegate PasswordPrompt;
 
-		RSAPrivateKey() : privateKey_(NULL),encryption_(NULL){}
+		RSAPrivateKey() : RSAKeyBase(),encryption_(NULL){}
 
 		virtual ~RSAPrivateKey() {}
 
+		
+		void sign( MessageDigest::TypeID mdType, 
+					const unsigned char* mdHashedData,
+					size_t hashSize,
+					unsigned char* signatureData,
+					size_t& sigSize ) {
+
+			VCF_ASSERT( NULL != rsaObj_ );
+			VCF_ASSERT( sigSize >= RSA_size(rsaObj_)  );
+			
+			if ( sigSize < RSA_size(rsaObj_) ) {
+				throw CryptoException( "signature size is too small. The RSA sign function will not be able to put encrypted digest into the data buffer provided." );
+			}
+
+			if ( !RSA_sign( mdType, mdHashedData, hashSize, signatureData, &sigSize, rsaObj_ ) ) {
+				throw CryptoException();
+			}
+		}
+
+		SignedDataArray sign( MessageDigest& messageDigest, 
+					const unsigned char* data,
+					size_t dataSize ) {
+
+			VCF_ASSERT( NULL != rsaObj_ );		
+			
+
+			SignedDataArray result(RSA_size(rsaObj_));
+			size_t resSz = result.size();
+			unsigned char hash[MessageDigest::MaxSize];
+			size_t hashSz = sizeof(hash);
+
+			messageDigest.hash( data, dataSize, hash, hashSz );
+
+			sign( (MessageDigest::TypeID) messageDigest.getType(), hash, hashSz, &result[0], resSz );
+
+			return result;
+		}
 
 		virtual void saveToStream( OutputStream * stream ) {
 
 			VCF_ASSERT( !passwd_.empty() );
 			VCF_ASSERT( NULL != encryption_ );
-			VCF_ASSERT( NULL != privateKey_ );
+			VCF_ASSERT( NULL != rsaObj_ );
 
-			if ( (NULL == encryption_) || (NULL == privateKey_) ) {
+			if ( (NULL == encryption_) || (NULL == rsaObj_) ) {
 				throw InvalidPointerException( "Invalid RSAPrivateKey instance, encryption and/or rsa private key are NULL" );
 			}
 
 			CryptoOutputStream cos(stream);
 			if ( !PEM_write_bio_RSAPrivateKey( cos, 
-										privateKey_,
+										rsaObj_,
 										encryption_->getEncryptionCipher(), 
 										NULL,
 										0,
@@ -2331,9 +2413,14 @@ namespace Crypto {
 
 			typedef int (*PwdCB)(char*,int,int,void*);
 
+			if ( NULL != rsaObj_ ) {
+				RSA_free( rsaObj_ );
+				rsaObj_ = NULL;
+			}
+
 			PwdCB cbPtr = NULL;
 			void* cbArgPtr = NULL;
-			privateKey_ = NULL;
+			
 
 			if ( !passwd_.empty() ) {
 				cbPtr = RSAPrivateKey::knownPasswordCallback;
@@ -2345,7 +2432,7 @@ namespace Crypto {
 			}
 
 			if ( !PEM_read_bio_RSAPrivateKey( cis, 
-										&privateKey_,
+										&rsaObj_,
 										cbPtr,
 										cbArgPtr ) ) {
 
@@ -2364,7 +2451,7 @@ namespace Crypto {
 		friend class RSAKeyPair;
 	protected:
 
-		RSAPrivateKey( RSA* rsaKeyPair ): privateKey_(rsaKeyPair),encryption_(NULL) {
+		RSAPrivateKey( RSA* rsaKeyPair ): RSAKeyBase(rsaKeyPair),encryption_(NULL) {
 
 		}
 
@@ -2395,11 +2482,102 @@ namespace Crypto {
 		}
 
 		String passwd_;
-		RSA* privateKey_;
 		const SymmetricEncryptionCipher* encryption_;
 	};
 
-	class RSAKeyPair : public Object {
+
+	class RSAPublicKey : public RSAKeyBase, public Persistable {
+	public:
+
+		RSAPasswordDelegate PasswordPrompt;
+
+		RSAPublicKey():RSAKeyBase() {}
+
+		virtual ~RSAPublicKey() {}
+
+
+
+
+		void verify( MessageDigest::TypeID mdType, 
+					const unsigned char* mdHashedData,
+					size_t hashSize,
+					unsigned char* signatureData,
+					size_t sigSize ) {
+
+			if ( !RSA_verify( mdType, mdHashedData, hashSize, signatureData, sigSize, rsaObj_ ) ) {
+				throw CryptoException(); //gets err code automatically
+			}
+		}
+
+
+		void verify( MessageDigest& messageDigest, 
+					const unsigned char* data,
+					size_t dataSize,
+					SignedDataArray& signedData ) {
+
+			unsigned char hash[MessageDigest::MaxSize];
+			size_t hashSz = sizeof(hash);
+
+			messageDigest.hash( data, dataSize, hash, hashSz );
+
+
+			verify( (MessageDigest::TypeID) messageDigest.getType(), 
+						hash,
+						hashSz,
+						&signedData[0],
+						signedData.size() );
+
+		}
+
+		virtual void saveToStream( OutputStream * stream ) {
+			CryptoOutputStream cos(stream);
+
+			if ( !PEM_write_bio_RSAPublicKey( cos, rsaObj_ ) ) {
+				throw CryptoException(); //gets err code automatically
+			}
+
+		}
+
+		virtual void loadFromStream( InputStream * stream ) {
+			if ( NULL != rsaObj_ ) {
+				RSA_free( rsaObj_ );
+				rsaObj_ = NULL;
+			}
+
+			CryptoInputStream cis(stream);
+
+			if ( !PEM_read_bio_RSAPublicKey( cis, 
+											&rsaObj_, 
+											RSAPublicKey::passwordCallback, 
+											this ) ) {
+				throw CryptoException(); //gets err code automatically
+			}
+		}
+
+		friend class RSAKeyPair;		
+	protected:
+		RSAPublicKey( RSA* keyPair ): RSAKeyBase(keyPair) {}
+
+
+		static int passwordCallback(char *buf, int size, int rwflag, void *u) {
+			if ( NULL == u ) {
+				return 0;
+			}
+
+			RSAPublicKey* thisPtr = (RSAPublicKey*)u;
+
+			AnsiString pwd = thisPtr->PasswordPrompt();
+
+			size_t sz = minVal<size_t>( size, pwd.size() );
+			pwd.copy( buf, sz );
+			return sz;
+		}
+	};
+
+
+
+
+	class RSAKeyPair : public RSAKeyBase {
 	public:
 
 		RSAKeyGenDelegate RSAKeyGen; 
@@ -2409,51 +2587,38 @@ namespace Crypto {
 			expRSA_3 = RSA_3
 		};
 
-		RSAKeyPair(): rsaKeyPair_(NULL){}
+		RSAKeyPair(): RSAKeyBase(){}
 
 		~RSAKeyPair(){
-			if ( NULL != rsaKeyPair_ ) {
-				RSA_free( rsaKeyPair_ );
+			if ( NULL != rsaObj_ ) {
+				RSA_free( rsaObj_ );
 			}
 		}
 
 		bool generate( size_t bits, size_t exponent ) {
 
-			if ( NULL != rsaKeyPair_ ) {
-				RSA_free( rsaKeyPair_ );
+			if ( NULL != rsaObj_ ) {
+				RSA_free( rsaObj_ );
 			}
 
-			rsaKeyPair_ = RSA_generate_key( bits, exponent, RSAKeyPair::keyPairCallback, this );
+			rsaObj_ = RSA_generate_key( bits, exponent, RSAKeyPair::keyPairCallback, this );
 
 
 
-			return rsaKeyPair_ != NULL;
+			return rsaObj_ != NULL;
 		}
 
-
-		virtual String toString() {
-			String result;
-
-			TextOutputStream tos;
-			CryptoOutputStream cos(&tos);
-
-			RSA_print( cos, rsaKeyPair_, 0 );
-
-			result += tos.getTextBuffer();
-
-			return result;
-		}
 
 		RSAPrivateKey getPrivateKey() const {
-			return RSAPrivateKey(rsaKeyPair_);
+			return RSAPrivateKey(rsaObj_);
+		}
+
+		RSAPublicKey getPublicKey() const {
+			return RSAPublicKey(rsaObj_);
 		}
 		
 
-		size_t getSize() const {
-			return RSA_size( rsaKeyPair_ );
-		}
 	protected:
-		RSA* rsaKeyPair_;
 
 		static void keyPairCallback( int p, int n, void *arg ) {
 			RSAKeyPair* thisPtr = (RSAKeyPair*)arg;

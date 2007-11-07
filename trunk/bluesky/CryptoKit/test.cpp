@@ -379,7 +379,10 @@ void testRSA()
 
 	md5.hash( (const unsigned char*)data, strlen(data), dataDigest, dataDigSz );
 
-	err = RSA_verify( NID_md5, dataDigest, dataDigSz, signedData, signedDataSz, rsaPub );
+	unsigned char signedData2[1024];
+	size_t signedDataSz2 = signedDataSz;
+
+	err = RSA_verify( NID_md5, dataDigest, dataDigSz, signedData, signedDataSz2, rsaPub );
 
 
 
@@ -412,6 +415,8 @@ void testRSA()
 		RSAKeyPair kp2;
 		kp2.generate( 2048, RSAKeyPair::expRSA_F4 );
 		RSAPrivateKey pk = kp2.getPrivateKey();
+		RSAPublicKey pubk = kp2.getPublicKey();
+
 		pk.setPassword( PASSWORD );
 
 		DataEncryptionStandard3CBC des3cbc;
@@ -420,6 +425,11 @@ void testRSA()
 
 		FileOutputStream fos("test2-priv.pem");
 		fos.write( &pk );
+
+		fos.close();
+
+		fos.open( "test2-pub.pem" );
+		fos.write( &pubk );
 	}
 
 	{
@@ -435,9 +445,18 @@ void testRSA()
 		
 		FileInputStream fis("test2-priv.pem");
 		fis.read( &pk );
+
+		System::println( "RSAPrivateKey: \n" + pk );
 	}
 
+	{
+		RSAPublicKey pk;
+		
+		FileInputStream fis("test2-pub.pem");
+		fis.read( &pk );
 
+		System::println( "RSAPublicKey: \n" + pk );
+	}
 	
 }
 
@@ -481,11 +500,11 @@ void testBase64()
 
 	//result[ol-1] = 0;
 
-	printf( "predicted size from %d bytes to b64: %d. Actual: %d\n",
-		msgLen, Base64Encoder::sizeOf(msgLen), ol );
+	System::println( Format("predicted size from %d bytes to b64: %d. Actual: %d") %
+		msgLen % Base64Encoder::sizeOf(msgLen) % ol );
 
-	printf( "Base64 encoded \"%s\" into \n\t%s\n",
-			msg, result );
+	System::println( Format("Base64 encoded \"%s\" into \n\t%s") %
+			msg % result );
 
 
 	Base64Decoder decoder;
@@ -500,11 +519,11 @@ void testBase64()
 	decoder.finish( (unsigned char*)decodeResult, resultLen+1 );
 
 	
-	printf( "predicted size from %d bytes to normal : %d. Actual: %d\n",
-			ol, Base64Decoder::sizeOf(ol), decoder.size() );
+	System::println( Format("predicted size from %d bytes to normal : %d. Actual: %d") %
+			ol % Base64Decoder::sizeOf(ol) % decoder.size() );
 
-	printf( "Base64 decoded \"%s\" into \n\t\"%s\"\n",
-			result, decodeResult );
+	System::println( Format("Base64 decoded \"%s\" into \n\t\"%s\"") %
+			result % decodeResult );
 
 	delete [] result;
 	delete [] decodeResult;
