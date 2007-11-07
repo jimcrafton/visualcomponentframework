@@ -295,7 +295,14 @@ void testX509Cert()
 
 }
 
+#define PASSWORD	"test"
 
+
+
+String gimmeThePassword() 
+{
+	return String(PASSWORD);
+}
 
 
 
@@ -329,7 +336,7 @@ void testRSA()
 	fclose(fp);
 
 
-#define PASSWORD	"test"
+
 
 	fp = fopen( "test-priv.pem", "wb" );
 	PEM_write_RSAPrivateKey( fp, rsaKeyPair, EVP_des_ede3_cbc(), NULL, 0, NULL, PASSWORD );
@@ -395,6 +402,43 @@ void testRSA()
 
 	printf( "decrypted data ( %u bytes) using RSA private key, data ( \"%s\" ) %u bytes.\n",
 				err, data, strlen(data) );
+
+
+
+
+
+
+	{
+		RSAKeyPair kp2;
+		kp2.generate( 2048, RSAKeyPair::expRSA_F4 );
+		RSAPrivateKey pk = kp2.getPrivateKey();
+		pk.setPassword( PASSWORD );
+
+		DataEncryptionStandard3CBC des3cbc;
+		pk.setEncryptionCipher( &des3cbc );
+
+
+		FileOutputStream fos("test2-priv.pem");
+		fos.write( &pk );
+	}
+
+	{
+		RSAPrivateKey pk;
+		pk.setPassword( PASSWORD );
+		FileInputStream fis("test2-priv.pem");
+		fis.read( &pk );
+	}
+
+	{
+		RSAPrivateKey pk;
+		pk.PasswordPrompt += gimmeThePassword;
+		
+		FileInputStream fis("test2-priv.pem");
+		fis.read( &pk );
+	}
+
+
+	
 }
 
 

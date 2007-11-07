@@ -225,6 +225,13 @@ namespace Crypto {
 			return inputStream_->isEOS();
 		}
 
+		operator BIO* () {
+			return ioObject_;
+		}
+
+		operator const BIO* () const {
+			return ioObject_;
+		}
 	protected:
 		
 
@@ -249,7 +256,61 @@ namespace Crypto {
 		
 		static int getsBIO(BIO *h, char *str, int size)
 		{
-			return size;
+			CryptoInputStream* thisPtr = (CryptoInputStream*)h->ptr;
+
+			if (NULL == thisPtr ) {
+				return -1;
+			}
+
+			int totalRead = 0;
+			//read in 256 byte chunks 
+			int i=0;
+			uint64 res = 0;
+			AnsiString tmp;
+			uchar buf[256];
+			bool finished = false;
+			int skip = 0;
+			do {
+
+				size_t read = (i * 256) + (size % 256);
+				res = thisPtr->read( buf, (uint64)read );
+				if ( res <= 0 ) {
+					return 0;
+				}
+				totalRead += res;
+				const uchar* P = buf;
+				while ( (P-buf) < res ) {
+					if ( *P == '\n' || *P == '\r' ) {
+						finished = true;
+						skip = 1;
+
+						if ( (*P == '\r') && (((P-buf) + 1) < res) && (*(P+1) == '\n') ) {
+							P++;
+							skip = 2;
+						}
+						break;
+					}
+					P++;
+				}
+				
+				tmp.append( (char*)buf, (P-buf) );
+				if ( finished ) {					
+					break;
+				}
+				
+
+				i++;
+			} while ( i < (size / 256) );
+
+
+			uint64 pos = thisPtr->getCurrentSeekPos();
+			thisPtr->seek( (pos - (totalRead - tmp.size())) + skip, stSeekFromStart );
+
+			tmp += "\n";
+			tmp.copy( str, tmp.size() );
+			str[tmp.size()] = 0;		
+
+			return tmp.size();
 		}
 		
 		static long ctrlBIO(BIO *h, int cmd, long arg1, void *arg2)
@@ -1514,6 +1575,10 @@ namespace Crypto {
 		size_t getBytesEncrypted() const {
 			return bytesEncrypted_;
 		}
+
+		const EVP_CIPHER* getEncryptionCipher() const {
+			return encCipherImpl_;
+		}
 	protected:
 		EVP_CIPHER_CTX encryptCtx_;
 		size_t bytesEncrypted_;
@@ -1568,6 +1633,10 @@ namespace Crypto {
 
 		size_t getBytesDecrypted() const {
 			return bytesDecrypted_;
+		}
+
+		const EVP_CIPHER* getDecryptionCipher() const {
+			return decCipherImpl_;
 		}
 	protected:
 		EVP_CIPHER_CTX decryptionCtx_;
@@ -2219,8 +2288,116 @@ namespace Crypto {
 
 
 	typedef Delegate2<int,int> RSAKeyGenDelegate;
+	typedef DelegateR<String> RSAPasswordDelegate;
+
+	class RSAKeyPair;
+
+	class RSAPrivateKey : public Persistable {
+	public:
+
+		RSAPasswordDelegate PasswordPrompt;
+
+		RSAPrivateKey() : privateKey_(NULL),encryption_(NULL){}
+
+		virtual ~RSAPrivateKey() {}
 
 
+		virtual void saveToStream( OutputStream * stream ) {
+
+			VCF_ASSERT( !passwd_.empty() );
+			VCF_ASSERT( NULL != encryption_ );
+			VCF_ASSERT( NULL != privateKey_ );
+
+			if ( (NULL == encryption_) || (NULL == privateKey_) ) {
+				throw InvalidPointerException( "Invalid RSAPrivateKey instance, encryption and/or rsa private key are NULL" );
+			}
+
+			CryptoOutputStream cos(stream);
+			if ( !PEM_write_bio_RSAPrivateKey( cos, 
+										privateKey_,
+										encryption_->getEncryptionCipher(), 
+										NULL,
+										0,
+										NULL,
+										(void*)passwd_.ansi_c_str() ) ) {
+
+				throw CryptoException(); //gets err code automatically
+			}
+		}
+
+		virtual void loadFromStream( InputStream * stream ) {			
+			
+			CryptoInputStream cis(stream);
+
+			typedef int (*PwdCB)(char*,int,int,void*);
+
+			PwdCB cbPtr = NULL;
+			void* cbArgPtr = NULL;
+			privateKey_ = NULL;
+
+			if ( !passwd_.empty() ) {
+				cbPtr = RSAPrivateKey::knownPasswordCallback;
+				cbArgPtr = (void*) passwd_.ansi_c_str();
+			}
+			else {
+				cbPtr = RSAPrivateKey::passwordCallback;
+				cbArgPtr = this;
+			}
+
+			if ( !PEM_read_bio_RSAPrivateKey( cis, 
+										&privateKey_,
+										cbPtr,
+										cbArgPtr ) ) {
+
+				throw CryptoException(); //gets err code automatically
+			}
+		}
+
+		void setPassword( const String& passwd ) {
+			passwd_ = passwd;
+		}
+
+		void setEncryptionCipher( const SymmetricEncryptionCipher* val ) {
+			encryption_ = val;
+		}
+
+		friend class RSAKeyPair;
+	protected:
+
+		RSAPrivateKey( RSA* rsaKeyPair ): privateKey_(rsaKeyPair),encryption_(NULL) {
+
+		}
+
+		static int passwordCallback(char *buf, int size, int rwflag, void *u) {
+			if ( NULL == u ) {
+				return 0;
+			}
+
+			RSAPrivateKey* thisPtr = (RSAPrivateKey*)u;
+
+			AnsiString pwd = thisPtr->PasswordPrompt();
+
+			size_t sz = minVal<size_t>( size, pwd.size() );
+			pwd.copy( buf, sz );
+			return sz;
+		}
+
+		static int knownPasswordCallback(char *buf, int size, int rwflag, void *u) {
+			if ( NULL == u ) {
+				return 0;
+			}
+
+			AnsiString pwd = (char*)u;
+
+			size_t sz = minVal<size_t>( size, pwd.size() );
+			pwd.copy( buf, sz );
+			return sz;
+		}
+
+		String passwd_;
+		RSA* privateKey_;
+		const SymmetricEncryptionCipher* encryption_;
+	};
 
 	class RSAKeyPair : public Object {
 	public:
@@ -2266,7 +2443,15 @@ namespace Crypto {
 
 			return result;
 		}
+
+		RSAPrivateKey getPrivateKey() const {
+			return RSAPrivateKey(rsaKeyPair_);
+		}
 		
+
+		size_t getSize() const {
+			return RSA_size( rsaKeyPair_ );
+		}
 	protected:
 		RSA* rsaKeyPair_;
 
@@ -2275,6 +2460,9 @@ namespace Crypto {
 			thisPtr->RSAKeyGen( p, n );
 		}
 	};
+
+
+	
 };
 
 };
