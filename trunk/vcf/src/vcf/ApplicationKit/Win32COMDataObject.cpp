@@ -47,7 +47,7 @@ DataRendering::~DataRendering()
 	}
 }
 
-VCF::String DataRendering::toString()
+VCF::String DataRendering::toString() const 
 {
 	VCF::String result;
 	//result = format( "DataRendering @ %p \n", this );
@@ -315,7 +315,7 @@ void COMDataObject::setDataObject( VCF::DataObject* data )
 	while ( types->hasMoreElements() ) {
 		String type = types->nextElement();
 
-		VCF::MemoryStream memStream;
+		VCF::BasicOutputStream memStream;
 		//Write the data to the mem stream
 
 		if ( dataObj_->saveToStream( type, &memStream ) ) {
@@ -332,7 +332,8 @@ void COMDataObject::setDataObject( VCF::DataObject* data )
 			if ( 0 != stgMedium.hGlobal ){
 				unsigned char* globalMemPtr = (unsigned char*)::GlobalLock( stgMedium.hGlobal );
 				if ( NULL != globalMemPtr ){
-					memStream.read( globalMemPtr, memStream.getSize() );
+					memcpy( globalMemPtr, memStream.getBuffer(), memStream.getSize() );
+					//memStream.read( globalMemPtr,  );
 				}
 				GlobalUnlock( stgMedium.hGlobal );
 

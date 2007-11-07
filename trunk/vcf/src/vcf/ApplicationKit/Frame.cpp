@@ -89,7 +89,6 @@ Frame::Frame():
 	setContainerDelegate( this );
 
 	StandardContainer* container = new StandardContainer();
-	container->setBorderWidth( UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta ) );
 	setContainer( container );	
 }
 

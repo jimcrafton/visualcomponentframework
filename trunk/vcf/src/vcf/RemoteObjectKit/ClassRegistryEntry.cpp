@@ -66,7 +66,7 @@ void ClassRegistryEntry::loadFromStream( InputStream * stream )
 	stream->read( remoteServerPath_ );
 }
 
-VCF::String ClassRegistryEntry::toString()
+VCF::String ClassRegistryEntry::toString() const 
 {
 	return "classID = " + classID_ + "\nLocal Server Path = " + localServerPath_;
 }
