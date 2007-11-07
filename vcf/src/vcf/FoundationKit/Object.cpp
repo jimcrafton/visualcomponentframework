@@ -69,7 +69,7 @@ uint32 Object::release(Object* owner)
 	return refCount_;
 }
 
-Class* Object::getClass()
+Class* Object::getClass() const 
 {
 
 	Class* result = ClassRegistry::getClass( this );
@@ -79,7 +79,7 @@ Class* Object::getClass()
 	return result;
 }
 
-String Object::getClassName()
+String Object::getClassName() const 
 {
 	String result = "";
 	Class* clazz = this->getClass();
@@ -95,7 +95,7 @@ String Object::getClassName()
 	return result;
 }
 
-String Object::toString()
+String Object::toString() const
 {
 	String result;
 	/*
@@ -117,7 +117,7 @@ String Object::toString()
 	return result;
 }
 
-uintptr Object::hash()
+uintptr Object::hash() const
 {
 	return (uintptr)this;
 }

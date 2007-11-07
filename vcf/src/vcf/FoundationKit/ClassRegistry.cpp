@@ -207,7 +207,15 @@ Class* ClassRegistry::getClassFromClassID( const String& classID )
 	return ClassRegistry::getClassRegistry()->internal_getClassFromClassID( classID );
 }
 
-Class* ClassRegistry::getClass( Object* object )
+Class* ClassRegistry::getClass( const Object* object )
+{
+#ifndef VCF_RTTI
+	return NULL;
+#endif
+	return ClassRegistry::getClassRegistry()->internal_getClass( object );
+}
+
+Class* ClassRegistry::getClass( Object* object ) 
 {
 #ifndef VCF_RTTI
 	return NULL;
@@ -366,6 +374,7 @@ Class* ClassRegistry::internal_getClass( const String& className )
 	return result;
 }
 
+
 Class* ClassRegistry::internal_getClassFromClassID( const String& classID )
 {
 	Class* result = NULL;
@@ -377,6 +386,26 @@ Class* ClassRegistry::internal_getClassFromClassID( const String& classID )
 		if ( found != classIDMap_.end() ){
 			result = found->second;
 		}
+	}
+
+	return result;
+}
+
+
+Class* ClassRegistry::internal_getClass( const Object* object ) 
+{
+	Class* result = NULL;
+	std::map<String,Class*>::iterator found =
+		classMap_.begin();
+
+	Class* clazz = NULL;
+	while ( found != classMap_.end() ){
+		clazz = found->second;
+		if ( clazz->isEqual( object ) ){
+			result = clazz;
+			break;
+		}
+		found++;
 	}
 
 	return result;

@@ -1263,6 +1263,16 @@ public:
 		}
 	}
 
+	virtual void setSource( const Object* source ){
+		//does the source actually support this interface/class ?
+		Object* tmp = const_cast<Object*>(source);
+		source_ = dynamic_cast<SOURCE_TYPE*>( tmp );
+		objSource_ = NULL;
+		if ( NULL != source_ ){
+			objSource_ = tmp;
+		}
+	}
+
 protected:
 
 	SOURCE_TYPE* source_;
@@ -2459,7 +2469,7 @@ public:
 
 	virtual ~TypedInterfaceClass(){};
 
-	virtual bool compareObject( Object* object )const{
+	virtual bool compareObject( const Object* object )const{
 		bool result = false;
 		try {
 			if ( typeid(*object) == typeid(INTERFACE_TYPE) ){
@@ -2489,11 +2499,11 @@ public:
 
 	virtual ~TypedImplementedInterfaceClass(){};
 
-	virtual Object* createImplementingInstance() {
+	virtual Object* createImplementingInstance() const {
 		return new IMPLEMENTER_TYPE();
 	}
 
-	virtual void* createInterfaceInstance() {
+	virtual void* createInterfaceInstance() const {
 		void* result = NULL;
 
 		IMPLEMENTER_TYPE* implementerInstance = new IMPLEMENTER_TYPE();
@@ -2504,7 +2514,7 @@ public:
 	}
 
 
-	virtual bool compareObject( Object* object )const{
+	virtual bool compareObject( const Object* object )const{
 		bool result = false;
 		try {
 			if ( typeid(*object) == typeid(INTERFACE_TYPE) ){
@@ -2566,7 +2576,7 @@ public:
 	};
 
 
-	virtual bool compareObject( Object* object )const{
+	virtual bool compareObject( const Object* object )const{
 		bool result = false;
 		try {
 			if ( typeid(*object) == typeid(CLASS_TYPE) ){
@@ -2608,7 +2618,7 @@ public:
 		//this should probably throw an exception !
 	};
 
-	virtual bool compareObject( Object* object )const{
+	virtual bool compareObject( const Object* object )const{
 		bool result = false;
 		if ( typeid(*object) == typeid(CLASS_TYPE) ){
 			result = true;

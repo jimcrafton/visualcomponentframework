@@ -69,7 +69,7 @@ public:
 		node_ = node;
 	}
 
-	virtual String toString();
+	virtual String toString() const ;
 
 protected:
 	String name_;
@@ -101,7 +101,7 @@ public:
 	/**
 	*gets the name of the node
 	*/
-	inline String getName() {
+	inline String getName() const {
 		return name_;
 	}
 
@@ -119,7 +119,7 @@ public:
 	*@return XMLNode the parent node. NULL if this
 	*is a root node.
 	*/
-	inline XMLNode* getParentNode() {
+	inline XMLNode* getParentNode() const {
 		return parentNode_;
 	}
 
@@ -136,13 +136,13 @@ public:
 	*@return Enumerator<XMLAttr>* an enumerator of XMLAttr
 	*objects
 	*/
-	inline Enumerator<XMLAttr>* getAttrs() {
+	inline Enumerator<XMLAttr>* getAttrs() const {
 		return attrsContainer_.getEnumerator();
 	}
 
-	XMLAttr* getAttrByName( const String& name );
+	XMLAttr* getAttrByName( const String& name ) const ;
 
-	XMLAttr* getAttrByIndex( const uint32& index );
+	XMLAttr* getAttrByIndex( const uint32& index ) const ;
 
 	/**
 	*adds a new attribute to the node. Generally called by
@@ -172,7 +172,7 @@ public:
 	/**
 	*returns the character data associated with this node.
 	*/
-	inline String getCDATA() {
+	inline String getCDATA() const {
 		return CDATA_;
 	}
 
@@ -196,17 +196,17 @@ public:
 
 	void removeNode( XMLNode* node );
 
-	XMLNode* getNodeByName( const String& name );
+	XMLNode* getNodeByName( const String& name ) const ;
 
-	XMLNode* getNodeByIndex( const uint32& index );
+	XMLNode* getNodeByIndex( const uint32& index ) const ;
 
-	inline Enumerator<XMLNode*>* getChildNodes() {
+	inline Enumerator<XMLNode*>* getChildNodes() const {
 		return 	childNodesContainer_.getEnumerator();
 	};
 
 	void clearChildNodes();
 
-	virtual String toString();
+	virtual String toString() const ;
 protected:
 	String CDATA_;
 	String name_;
@@ -217,7 +217,7 @@ protected:
 
 	std::vector<XMLAttr> attrs_;
 	EnumeratorContainer<std::vector<XMLAttr>,XMLAttr> attrsContainer_;
-	int32 getDepth();
+	int32 getDepth() const ;
 };
 
 

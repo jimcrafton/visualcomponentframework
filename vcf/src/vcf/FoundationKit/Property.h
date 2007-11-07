@@ -168,7 +168,7 @@ public:
 	*/
 	virtual void set( Object* source, VariantData* value ) = 0;
 
-	virtual String toString(){
+	virtual String toString() {
 		String result;
 		VariantData* val = get();
 		if ( NULL != val ){
@@ -188,6 +188,13 @@ public:
 	*/
 	void setSource( Object* source ){
 		source_ = source;
+		get();
+	};
+
+	void setSource( const Object* source ){
+		//allowing for this here is kind of icky
+		//maybe there is a better way to handle it???
+		source_ = const_cast<Object*>(source);
 		get();
 	};
 

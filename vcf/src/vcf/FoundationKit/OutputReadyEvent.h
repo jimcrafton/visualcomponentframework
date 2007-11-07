@@ -39,7 +39,7 @@ public:
 		return outputData_;
 	}
 
-	virtual Object* clone( bool deep=false ) {
+	virtual Object* clone( bool deep=false ) const {
 		return new OutputReadyEvent(*this);
 	}
 protected:

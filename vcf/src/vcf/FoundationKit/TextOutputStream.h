@@ -67,7 +67,7 @@ public:
 
 	String getTextBuffer();
 
-	virtual String toString();
+	virtual String toString() const ;
 private:
 	String textBuffer_;
 	uint64 size_;

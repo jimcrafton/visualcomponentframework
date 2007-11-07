@@ -639,7 +639,7 @@ public:
 	*/
 	virtual File* passSearchFilter( const File* file, const Directory* subdir, const Directory::Finder* finder ) = 0;
 
-	virtual String toString() { return L""; };
+	virtual String toString()  const { return L""; };
 };
 
 /**
@@ -677,7 +677,7 @@ public:
 	*/
 	void buildSearchFilters( const String& basenameFilterList, const String& pathnameFilterList = L"", const String& separator = L";" );
 
-	virtual String toString() {
+	virtual String toString()  const {
 		return ( basenameFilterList_ + " in " + pathnameFilterList_ );
 	};
 

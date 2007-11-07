@@ -31,14 +31,14 @@ public:
 	*so to prevent this, an ID is provided. This is ID MUST be generated using
 	*some algorithm that guarantees a valid UUID
 	*/
-	String getID() {
+	String getID() const {
 		return interfaceID_;
 	}
 
 	/**
 	*returns the interface name of the InterfaceClass
 	*/
-	String getInterfaceName() {
+	String getInterfaceName() const {
 		return interfaceName_;
 	}
 
@@ -46,7 +46,7 @@ public:
 	*returns an enumerator containing the Methods of the Class
 	*the enumerator does not reflect the order in which the properties were added.
 	*/
-	Enumerator<Method*>* getMethods(){
+	Enumerator<Method*>* getMethods() const {
 		return methodContainer_.getEnumerator();
 	}
 
@@ -60,12 +60,12 @@ public:
 	*@param String the name of the method to find
 	*@return bool true if the interface has the specified method, otherwise false
 	*/
-	bool hasMethod( const String& methodName );
+	bool hasMethod( const String& methodName ) const ;
 
 	/**
 	*the number of methods the Class has
 	*/
-	uint32 getMethodCount();
+	uint32 getMethodCount() const ;
 
 	/**
 	*gets the method specified by methodName, if the class
@@ -75,9 +75,9 @@ public:
 	*/
 	Method* getMethod( const String& methodName );
 
-	virtual bool isEqual( Object* object ) const;
+	virtual bool isEqual( const Object* object ) const;
 
-	virtual bool compareObject( Object* object )const = 0;
+	virtual bool compareObject( const Object* object )const = 0;
 
 
 	/**
@@ -86,13 +86,15 @@ public:
 	*/
 	void setSource( Object* source );
 
+	void setSource( const Object* source );
+
 	/**
 	*returns the InterfaceClass that this interface is derived
 	*from, if any.
 	*@return InterfaceClass the super interface this interface is derived
 	*from. May return NULL if the interface is not derived from any thing
 	*/
-	InterfaceClass* getSuperInterfaceClass();
+	InterfaceClass* getSuperInterfaceClass() const ;
 protected:
 	String superInterfaceClassName_;
 	String interfaceName_;
@@ -120,7 +122,7 @@ public:
 	*be implemented by a given Object, more than one InterfaceClass may
 	*end up creating the same Object instance.
 	*/
-	virtual Object* createImplementingInstance() = 0;
+	virtual Object* createImplementingInstance() const  = 0;
 
 	/**
 	*creates an instance of the interface. Sadly this requires the use of a void*
@@ -128,7 +130,7 @@ public:
 	*Perhaps this may be replaced the use of the Interface base class, though it
 	*will still require a type cast by the caller into the appropriate type
 	*/
-	virtual void* createInterfaceInstance() = 0;
+	virtual void* createInterfaceInstance() const = 0;
 protected:
 };
 

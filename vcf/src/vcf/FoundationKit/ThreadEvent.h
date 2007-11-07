@@ -27,7 +27,7 @@ public:
 
 	virtual ~ThreadEvent(){};
 
-	virtual Object* clone( bool deep=false ) {
+	virtual Object* clone( bool deep=false ) const {
 		return new ThreadEvent(*this);
 	}
 

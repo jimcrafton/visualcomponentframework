@@ -80,6 +80,8 @@ public:
 	*@param Object the object instance to get a class for
 	*@return Class the class associated with the object
 	*/
+	static Class* getClass( const Object* object ) ;
+
 	static Class* getClass( Object* object ) ;
 
 	/**
@@ -206,6 +208,8 @@ protected:
 	Class* internal_getClassFromClassID( const String& classID );
 
 	Class* internal_getClass( Object* object ) ;
+
+	Class* internal_getClass( const Object* object ) ;
 
 	Object* internal_createNewInstance( const String& className ) ;
 

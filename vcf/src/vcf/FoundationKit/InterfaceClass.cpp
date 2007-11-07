@@ -39,13 +39,13 @@ void InterfaceClass::addMethod( Method* method )
 	methods_[ method->getName() ] = method;
 }
 
-bool InterfaceClass::hasMethod( const String& methodName )
+bool InterfaceClass::hasMethod( const String& methodName ) const 
 {
-	std::map<String,Method*>::iterator found = methods_.find( methodName );
+	std::map<String,Method*>::const_iterator found = methods_.find( methodName );
 	return found != methods_.end();
 }
 
-uint32 InterfaceClass::getMethodCount()
+uint32 InterfaceClass::getMethodCount() const 
 {
 	return methods_.size();
 }
@@ -60,7 +60,7 @@ Method* InterfaceClass::getMethod( const String& methodName )
 	return result;
 }
 
-bool InterfaceClass::isEqual( Object* object ) const
+bool InterfaceClass::isEqual( const Object* object ) const
 {
 	return compareObject( object );
 }
@@ -75,7 +75,17 @@ void InterfaceClass::setSource( Object* source )
 	}
 }
 
-InterfaceClass* InterfaceClass::getSuperInterfaceClass()
+void InterfaceClass::setSource( const Object* source )
+{
+	std::map<String,Method*>::iterator it = methods_.begin();
+	while ( it != methods_.end() ) {
+		Method* m = it->second;
+		m->setSource( source );
+		it ++;
+	}
+}
+
+InterfaceClass* InterfaceClass::getSuperInterfaceClass() const 
 {
 	InterfaceClass* result = NULL;
 

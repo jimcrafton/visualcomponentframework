@@ -183,25 +183,25 @@ public:
 	and then getSuperClass() was called on the return value of Rect::getClass(),
 	the return would be a Class* for Object.
 	*/
-	Class* getSuperClass();
+	Class* getSuperClass() const ;
 
 	/**
 	returns the class id for the class. Class's may have the same name
 	so to prevent this, an ID is provided. This is ID MUST be generated using
 	some algorithm that guarantees a valid UUID
 	*/
-	String getID();
+	String getID() const ;
 
 	/**
 	returns the class name for the Class
 	*/
-	String getClassName();
+	String getClassName() const ;
 
 	/**
 	returns an enumerator containing the Property values
 	the enumerator does not reflect the order in which the properties were added.
 	*/
-	Enumerator<Property*>* getProperties(){
+	Enumerator<Property*>* getProperties() const {
 		return propertyContainer_.getEnumerator();
 	};
 
@@ -209,7 +209,7 @@ public:
 	returns an enumerator containing the Field values
 	the enumerator does not reflect the order in which the fields were added.
 	*/
-	Enumerator<Field*>* getFields(){
+	Enumerator<Field*>* getFields() const {
 		return fieldContainer_.getEnumerator();
 	};
 
@@ -217,7 +217,7 @@ public:
 	returns an enumerator containing the Methods of the Class
 	the enumerator does not reflect the order in which the properties were added.
 	*/
-	Enumerator<Method*>* getMethods(){
+	Enumerator<Method*>* getMethods() const {
 		return methodContainer_.getEnumerator();
 	};
 
@@ -232,12 +232,12 @@ public:
 	@param String the name of the property to find
 	@return bool true if the class has the specified property, otherwise false
 	*/
-	bool hasProperty( const String& propertyName );
+	bool hasProperty( const String& propertyName ) const ;
 
 	/**
 	the number of properties the Class has
 	*/
-	uint32 getPropertyCount();
+	uint32 getPropertyCount() const ;
 
 	/**
 	gets the property specified by propertyName, if the class
@@ -245,7 +245,7 @@ public:
 	@param String the name of the property to try and retrieve
 	@return Property a pointer to a property of the class.
 	*/
-	Property* getProperty( const String& propertyName );
+	Property* getProperty( const String& propertyName ) const ;
 
 
 
@@ -260,12 +260,12 @@ public:
 	@param String the name of the property to find
 	@return bool true if the class has the specified property, otherwise false
 	*/
-	bool hasField( const String& fieldName );
+	bool hasField( const String& fieldName ) const;
 
 	/**
 	the number of fields the Class has
 	*/
-	uint32 getFieldCount();
+	uint32 getFieldCount() const ;
 
 	/**
 	gets the field (or member variable) specified by fieldName, if the class
@@ -273,7 +273,7 @@ public:
 	@param String the name of the field to try and retrieve
 	@return Field a pointer to a field of the class.
 	*/
-	Field* getField( const String& fieldName );
+	Field* getField( const String& fieldName ) const ;
 
 
 	/**
@@ -286,12 +286,12 @@ public:
 	@param String the name of the property to find
 	@return bool true if the class has the specified property, otherwise false
 	*/
-	bool hasMethod( const String& methodName );
+	bool hasMethod( const String& methodName ) const ;
 
 	/**
 	the number of methods the Class has
 	*/
-	uint32 getMethodCount();
+	uint32 getMethodCount() const ;
 
 	/**
 	gets the method specified by methodName, if the class
@@ -299,7 +299,7 @@ public:
 	@param String the name of the method to try and retrieve
 	@return Method a pointer to a method of the class.
 	*/
-	Method* getMethod( const String& methodName );
+	Method* getMethod( const String& methodName ) const ;
 
 	/**
 	Adds an event to the Class
@@ -311,13 +311,13 @@ public:
 	does the Class have this particular event handler ?
 	@return bool returns true if the Class has an event handler by this name
 	*/
-	bool hasDelegate( const String& delegateName );
+	bool hasDelegate( const String& delegateName ) const ;
 
 	/**
 	returns an enumerator containing the DelegateProperty values.
 	the enumerator does not reflect the order in which the events were added.
 	*/
-	Enumerator<DelegateProperty*>* getDelegates(){
+	Enumerator<DelegateProperty*>* getDelegates() const {
 		return delegateContainer_.getEnumerator();
 	};
 
@@ -325,24 +325,24 @@ public:
 	Returns an DelegateProperty by name
 	@param String the event delegate to return
 	*/
-	DelegateProperty* getDelegate( const String& delegateName );
+	DelegateProperty* getDelegate( const String& delegateName ) const ;
 
 	/**
 	Returns an enumeration of interfaces implemented by this class
 	*/
-	Enumerator<InterfaceClass*>* getInterfaces() {
+	Enumerator<InterfaceClass*>* getInterfaces() const {
 		return interfaceContainer_.getEnumerator();
 	}
 
-	uint32 getInterfaceCount();
+	uint32 getInterfaceCount() const ;
 
-	bool hasInterface( const String& interfaceName );
+	bool hasInterface( const String& interfaceName ) const ;
 
-	bool hasInterfaceID( const String& interfaceID );
+	bool hasInterfaceID( const String& interfaceID ) const ;
 
-	InterfaceClass* getInterfaceByName( const String& interfaceName );
+	InterfaceClass* getInterfaceByName( const String& interfaceName ) const ;
 
-	InterfaceClass* getInterfaceByID( const String& interfaceID );
+	InterfaceClass* getInterfaceByID( const String& interfaceID ) const;
 
 	void addInterface( InterfaceClass* newInterface );
 
@@ -353,7 +353,7 @@ public:
 	@param Object another Class instance to compare this Class instance to
 	@return bool true if the object's typeid is equal to this' typeid
 	*/
-	virtual bool isEqual( Object* object )const{
+	virtual bool isEqual( const Object* object )const{
 		return compareObject( object );
 	};
 
@@ -369,13 +369,15 @@ public:
 	Implemented in the template derived class so a type safe compare is
 	made.
 	*/
-	virtual bool compareObject( Object* object )const = 0;
+	virtual bool compareObject( const Object* object )const = 0;
 
 	/**
 	sets the source of all properties in the Class to source.
 	@param Object the source to which the properties are set
 	*/
 	void setSource( Object* source );
+
+	void setSource( const Object* source );
 
 	/**
 	returns the class name of a Property. This will also
@@ -387,7 +389,7 @@ private:
 	String className_;
 	String classID_;
 	String superClassName_;
-	Class* superClass_;
+	mutable Class* superClass_;
 	std::map<String,Property*> properties_;
 	EnumeratorMapContainer<std::map<String,Property*>,Property*> propertyContainer_;
 

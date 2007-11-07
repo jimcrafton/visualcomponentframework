@@ -119,6 +119,8 @@ public:
 	*/
 	virtual void setSource( Object* source ) = 0;
 
+	virtual void setSource( const Object* source ) = 0;
+
 	/**
 	returns the argument type for the specified argument
 	*@param uint32 a zero based index representing a particular

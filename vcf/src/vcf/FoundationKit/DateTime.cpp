@@ -796,7 +796,7 @@ uint32 DateTime::getWeeksInYear() const
 	return (uint32) floor(static_cast<float>(getDaysInYear() / 7) ) + 1;
 }
 
-String DateTime::toString()
+String DateTime::toString() const 
 {
 	return StringUtils::format( *this, TOSTRING_FORMAT );
 }

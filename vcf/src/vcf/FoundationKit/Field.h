@@ -59,6 +59,10 @@ public:
 		source_ = source ;
 	};
 
+	virtual void setSource( const Object* source ) {
+		source_ = const_cast<Object*>(source);
+	};
+
 	VariantData* get() {
 		if ( NULL == source_ ) {
 			return NULL;

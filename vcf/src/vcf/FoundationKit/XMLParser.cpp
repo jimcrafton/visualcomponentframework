@@ -13,7 +13,7 @@ where you installed the VCF.
 
 using namespace VCF;
 
-String XMLAttr::toString()
+String XMLAttr::toString() const
 {
 	String result = " " + getName() + "=\"" + getValue() + "\" ";
 	return result;
@@ -84,13 +84,14 @@ XMLNode& XMLNode::operator = ( const XMLNode& node )
 	return *this;
 }
 
-XMLAttr* XMLNode::getAttrByName( const String& name )
+XMLAttr* XMLNode::getAttrByName( const String& name ) const 
 {
 	XMLAttr* result = NULL;
-	std::vector<XMLAttr>::iterator it = attrs_.begin();
+	std::vector<XMLAttr>::const_iterator it = attrs_.begin();
 	while ( it != attrs_.end() ){
 		if ( name == (*it).getName() ) {
-			result = &(*it);
+			const XMLAttr* tmp = &(*it);
+			result = const_cast<XMLAttr*>(tmp);
 			break;
 		}
 		it ++;
@@ -98,11 +99,12 @@ XMLAttr* XMLNode::getAttrByName( const String& name )
 	return result;
 }
 
-XMLAttr* XMLNode::getAttrByIndex( const uint32& index )
+XMLAttr* XMLNode::getAttrByIndex( const uint32& index ) const 
 {
 	XMLAttr* result = NULL;
 	if ( index < attrs_.size() ) {
-		result = &attrs_[index];
+		const XMLAttr* tmp = &attrs_[index];
+		result = const_cast<XMLAttr*>(tmp);
 	}
 	return result;
 }
@@ -115,11 +117,11 @@ void XMLNode::removeNode( XMLNode* node )
 	}
 }
 
-XMLNode* XMLNode::getNodeByName( const String& name )
+XMLNode* XMLNode::getNodeByName( const String& name ) const 
 {
 	XMLNode* result = NULL;
 
-	std::vector<XMLNode*>::iterator it = childNodes_.begin();
+	std::vector<XMLNode*>::const_iterator it = childNodes_.begin();
 	while ( it != childNodes_.end() ) {
 		XMLNode* node = *it;
 		if ( node->getName() == name ) {
@@ -132,7 +134,7 @@ XMLNode* XMLNode::getNodeByName( const String& name )
 	return result;
 }
 
-XMLNode* XMLNode::getNodeByIndex( const uint32& index )
+XMLNode* XMLNode::getNodeByIndex( const uint32& index ) const 
 {
 	XMLNode* result = NULL;
 	if ( (index >= 0) && (index < childNodes_.size()) ) {
@@ -154,7 +156,7 @@ void XMLNode::clearChildNodes()
 	childNodes_.clear();
 }
 
-int32 XMLNode::getDepth()
+int32 XMLNode::getDepth() const 
 {
 	int32 result = 0;
 
@@ -167,7 +169,7 @@ int32 XMLNode::getDepth()
 	return result;
 }
 
-String XMLNode::toString()
+String XMLNode::toString() const 
 {
 	String result;
 
@@ -179,9 +181,9 @@ String XMLNode::toString()
 	String nodeString = tab + "<" + getName() + " ";
 	result += nodeString;
 
-	std::vector<XMLAttr>::iterator attrIt = attrs_.begin();
+	std::vector<XMLAttr>::const_iterator attrIt = attrs_.begin();
 	while ( attrIt != attrs_.end() ){
-		XMLAttr* attr = &(*attrIt);
+		const XMLAttr* attr = &(*attrIt);
 		result += attr->toString();
 		attrIt ++;
 	}
@@ -198,9 +200,9 @@ String XMLNode::toString()
 			result += tab + "\t" + CDATA_ + "\n";
 		}
 
-		std::vector<XMLNode*>::iterator nodeIt = childNodes_.begin();
+		std::vector<XMLNode*>::const_iterator nodeIt = childNodes_.begin();
 		while ( nodeIt != childNodes_.end() ) {
-			XMLNode* node = *nodeIt;
+			const XMLNode* node = *nodeIt;
 			result += node->toString();
 			nodeIt ++;
 		}
