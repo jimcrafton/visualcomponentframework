@@ -59,15 +59,15 @@ public:
 
 	void init();
 
-	/**
-	*shows whether or not the event has been consumed.
-	*primarily used by the Listener list implementation
-	*/
-	bool consumed_;
+	
 
 	virtual void consume() { consumed_ = true; }
 
-	bool getConsumed() {
+	/**
+	*shows whether or not the event has been consumed.
+	*primarily used by the Listener list implementation
+	*/	
+	bool getConsumed() const {
         return consumed_;
     }
 
@@ -83,7 +83,7 @@ public:
 	*retrieves the events source, in other words, who actually caused the
 	*event to be generated
 	*/
-    Object* getSource();
+    Object* getSource() const ;
 
 	/**
 	*gets the type of event. Some events may not put anything useful here, but events
@@ -91,14 +91,14 @@ public:
 	*definitely store a flag here. See the specific event class for the exact event types
 	*the event types can be set to
 	*/
-    uint32 getType();
+    uint32 getType() const ;
 
 	void setType( const uint32& type );
 
 	/**
 	*gets the time the event was created.
 	*/
-    time_t getTime();
+    time_t getTime() const ;
 
 	/*
 	*sets the user data. User data is simply a place to store any sort of user specific info
@@ -107,12 +107,13 @@ public:
 	*/
 	void setUserData( void* userData );
 
-	void* getUserData();
+	void* getUserData() const ;
 
-	virtual Object* clone( bool deep=false ) {
+	virtual Object* clone( bool deep=false ) const {
 		return new Event(*this);
 	}
-private:
+protected:
+	bool consumed_;
     Object* source_;
 	void* userData_;
     uint32 eventType_;
@@ -163,12 +164,12 @@ inline void Event::init()
 	time( &time_ );
 }
 
-inline Object* Event::getSource()
+inline Object* Event::getSource() const 
 {
 	return source_;
 }
 
-inline uint32 Event::getType()
+inline uint32 Event::getType() const 
 {
 	return eventType_;
 }
@@ -178,7 +179,7 @@ inline void Event::setType( const uint32& type )
 	eventType_ = type;
 }
 
-inline time_t Event::getTime()
+inline time_t Event::getTime() const 
 {
 	return time_;
 }
@@ -188,7 +189,7 @@ inline void Event::setUserData( void* userData )
 	userData_ = userData;
 }
 
-inline void* Event::getUserData()
+inline void* Event::getUserData() const 
 {
 	return userData_;
 }

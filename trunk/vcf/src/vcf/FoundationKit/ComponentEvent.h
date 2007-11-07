@@ -39,7 +39,7 @@ public:
 
 	virtual ~ComponentEvent(){};
 
-	virtual Object* clone( bool deep=false ) {
+	virtual Object* clone( bool deep=false ) const {
 		return new ComponentEvent(*this);
 	}
 

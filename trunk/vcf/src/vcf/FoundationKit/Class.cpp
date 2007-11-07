@@ -75,24 +75,24 @@ Class::~Class()
 	interfaces_.clear();
 }
 
-String Class::getClassName()
+String Class::getClassName() const 
 {
 	return className_;
 }
 
-bool Class::hasProperty( const String& propertyName )
+bool Class::hasProperty( const String& propertyName ) const 
 {
 	bool result = false;
-    std::map<String,Property*>::iterator found = properties_.find( propertyName );
+    std::map<String,Property*>::const_iterator found = properties_.find( propertyName );
 	result = (found != properties_.end());
 	return result;
 }
 
-Property* Class::getProperty( const String& propertyName )
+Property* Class::getProperty( const String& propertyName ) const
 {
 	Property* result = NULL;
 
-	std::map<String,Property*>::iterator found = properties_.find( propertyName );
+	std::map<String,Property*>::const_iterator found = properties_.find( propertyName );
 	if ( found != properties_.end() ){
 		result = found->second;
 	}
@@ -108,20 +108,20 @@ void Class::addDelegate( DelegateProperty* event )
 	}
 }
 
-DelegateProperty* Class::getDelegate( const String& delegateName )
+DelegateProperty* Class::getDelegate( const String& delegateName ) const 
 {
 	DelegateProperty* result = NULL;
-	std::map<String,DelegateProperty*>::iterator found = delegates_.find( delegateName );
+	std::map<String,DelegateProperty*>::const_iterator found = delegates_.find( delegateName );
 	if ( found != delegates_.end() ) {
 		result = found->second;
 	}
 	return result;
 }
 
-bool Class::hasDelegate( const String& delegateName )
+bool Class::hasDelegate( const String& delegateName ) const 
 {
 	bool result = false;
-	std::map<String,DelegateProperty*>::iterator found = delegates_.find( delegateName );
+	std::map<String,DelegateProperty*>::const_iterator found = delegates_.find( delegateName );
 	result = (found != delegates_.end());
 	return result;
 }
@@ -146,21 +146,24 @@ void Class::addMethod( Method* method )
 	}
 }
 
-bool Class::hasMethod( const String& methodName ){
+bool Class::hasMethod( const String& methodName ) const 
+{
 	bool result = false;
-    std::map<String,Method*>::iterator found = methods_.find( methodName );
+    std::map<String,Method*>::const_iterator found = methods_.find( methodName );
 	result = (found != methods_.end());
 	return result;
 }
 
-uint32 Class::getMethodCount(){
+uint32 Class::getMethodCount() const 
+{
 	return methods_.size();
 }
 
-Method* Class::getMethod( const String& methodName ){
+Method* Class::getMethod( const String& methodName ) const 
+{
 	Method* result = NULL;
 
-	std::map<String,Method*>::iterator found = methods_.find( methodName );
+	std::map<String,Method*>::const_iterator found = methods_.find( methodName );
 	if ( found != methods_.end() ){
 		result = found->second;
 	}
@@ -179,21 +182,24 @@ void Class::addField( Field* field )
 	}
 }
 
-bool Class::hasField( const String& fieldName ){
+bool Class::hasField( const String& fieldName ) const 
+{
 	bool result = false;
-    std::map<String,Field*>::iterator found = fields_.find( fieldName );
+    std::map<String,Field*>::const_iterator found = fields_.find( fieldName );
 	result = (found != fields_.end());
 	return result;
 }
 
-uint32 Class::getFieldCount(){
+uint32 Class::getFieldCount() const 
+{
 	return fields_.size();
 }
 
-Field* Class::getField( const String& fieldName ){
+Field* Class::getField( const String& fieldName ) const 
+{
 	Field* result = NULL;
 
-	std::map<String,Field*>::iterator found = fields_.find( fieldName );
+	std::map<String,Field*>::const_iterator found = fields_.find( fieldName );
 	if ( found != fields_.end() ){
 		result = found->second;
 	}
@@ -201,7 +207,34 @@ Field* Class::getField( const String& fieldName ){
 	return result;
 }
 
+void Class::setSource( const Object* source )
+{
+	std::map<String,Property*>::iterator props = properties_.begin();
+	while ( props != properties_.end() ){
+		props->second->setSource( source );
+		props++;
+	}
 
+	std::map<String,Field*>::iterator fields = fields_.begin();
+	while ( fields != fields_.end() ){
+		fields->second->setSource( source );
+		fields++;
+	}
+
+	std::map<String,Method*>::iterator methods = methods_.begin();
+	while ( methods != methods_.end() ){
+		Method* method = methods->second;
+		method->setSource( source );
+		methods++;
+	}
+
+	std::map<String,InterfaceClass*>::iterator interfaces = interfaces_.begin();
+	while ( interfaces != interfaces_.end() ){
+		InterfaceClass* interfaceClass = interfaces->second;
+		interfaceClass->setSource( source );
+		interfaces++;
+	}
+}
 
 void Class::setSource( Object* source )
 {
@@ -232,17 +265,17 @@ void Class::setSource( Object* source )
 	}
 }
 
-uint32 Class::getPropertyCount()
+uint32 Class::getPropertyCount() const 
 {
 	return properties_.size();
 }
 
-String Class::getID()
+String Class::getID() const 
 {
 	return classID_;
 }
 
-Class* Class::getSuperClass()
+Class* Class::getSuperClass() const 
 {
 	if ( NULL == superClass_ ){
 
@@ -252,7 +285,7 @@ Class* Class::getSuperClass()
 	return superClass_;
 }
 
-String Class::getClassNameForProperty( Property* property )
+String Class::getClassNameForProperty( Property* property ) 
 {
 	String result = "";
 
@@ -346,15 +379,15 @@ String Class::getClassNameForProperty( Property* property )
 	return result;
 }
 
-uint32 Class::getInterfaceCount()
+uint32 Class::getInterfaceCount() const 
 {
 	return interfaces_.size();
 }
 
-bool Class::hasInterface( const String& interfaceName )
+bool Class::hasInterface( const String& interfaceName ) const 
 {
 	bool result = false;
-	std::map<String, InterfaceClass*>::iterator it = interfaces_.begin();
+	std::map<String, InterfaceClass*>::const_iterator it = interfaces_.begin();
 	while ( (false == result) && (it != interfaces_.end()) )  {
 		InterfaceClass* ic = it->second;
 		if ( interfaceName == ic->getInterfaceName() ) {
@@ -366,17 +399,17 @@ bool Class::hasInterface( const String& interfaceName )
 	return result;
 }
 
-bool Class::hasInterfaceID( const String& interfaceID )
+bool Class::hasInterfaceID( const String& interfaceID ) const 
 {
-	std::map<String, InterfaceClass*>::iterator found = interfaces_.find( interfaceID );
+	std::map<String, InterfaceClass*>::const_iterator found = interfaces_.find( interfaceID );
 	return found != interfaces_.end();
 }
 
-InterfaceClass* Class::getInterfaceByName( const String& interfaceName )
+InterfaceClass* Class::getInterfaceByName( const String& interfaceName ) const 
 {
 	InterfaceClass* result = NULL;
 
-	std::map<String, InterfaceClass*>::iterator it = interfaces_.begin();
+	std::map<String, InterfaceClass*>::const_iterator it = interfaces_.begin();
 	while ( (NULL == result) && (it != interfaces_.end()) )  {
 		InterfaceClass* ic = it->second;
 		if ( interfaceName == ic->getInterfaceName() ) {
@@ -388,11 +421,11 @@ InterfaceClass* Class::getInterfaceByName( const String& interfaceName )
 	return result;
 }
 
-InterfaceClass* Class::getInterfaceByID( const String& interfaceID )
+InterfaceClass* Class::getInterfaceByID( const String& interfaceID ) const 
 {
 	InterfaceClass* result = NULL;
 
-	std::map<String, InterfaceClass*>::iterator found = interfaces_.find( interfaceID );
+	std::map<String, InterfaceClass*>::const_iterator found = interfaces_.find( interfaceID );
 	if ( found != interfaces_.end() ) {
 		result = found->second;
 	}

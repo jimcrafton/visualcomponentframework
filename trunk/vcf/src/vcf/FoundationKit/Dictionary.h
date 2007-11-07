@@ -44,14 +44,14 @@ public:
 		reset();
 	};
 
-	virtual Enumerator<PairType>* getEnumerator(){
+	virtual Enumerator<PairType>* getEnumerator() const {
 		reset();
 		return (Enumerator<PairType>*)this;
 	};
 
 
 
-	virtual bool hasMoreElements(const bool& backward=false){
+	virtual bool hasMoreElements(const bool& backward=false) const {
 		bool result = false;
 
 		if ( true == backward ){
@@ -85,7 +85,7 @@ public:
 		}
 	};
 
-	virtual void reset(const bool& backward=false){
+	virtual void reset(const bool& backward=false) const {
 
 		if ( backward ){
 			containerIterator_ = container_->end();
@@ -97,7 +97,7 @@ public:
 
 	
 private:
-	MapType::iterator containerIterator_;
+	mutable MapType::iterator containerIterator_;
 	MapType* container_;
 };
 
@@ -184,7 +184,7 @@ public:
 
 	virtual ~Dictionary();
 
-	virtual Object* clone( bool deep=false ) {
+	virtual Object* clone( bool deep=false ) const {
 		return new Dictionary(*this);
 	};
 

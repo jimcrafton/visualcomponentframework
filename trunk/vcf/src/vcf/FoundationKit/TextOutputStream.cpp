@@ -152,7 +152,7 @@ String TextOutputStream::getTextBuffer()
 	return this->textBuffer_;
 }
 
-String TextOutputStream::toString()
+String TextOutputStream::toString() const 
 {
 	return textBuffer_;
 }

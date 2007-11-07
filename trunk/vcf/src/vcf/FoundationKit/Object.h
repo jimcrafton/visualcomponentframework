@@ -111,19 +111,19 @@ public:
 	/**
 	returns the number of outstanding references for this object
 	*/
-	uint32 getRefCount(){
+	uint32 getRefCount() const{
 		return refCount_;
 	}
 
     /**
     returns a string representation of the object
      */
-    virtual String toString();
+    virtual String toString() const;
 
     /**
     returns the class name of the object.
     */
-    String getClassName();
+    String getClassName() const;
 
 	/**
 	This determines if object is equal to this
@@ -160,7 +160,7 @@ public:
 	@return Object a new instance that should be an copy of this. If
 	the object doesn't support cloning the return will value will be NULL.
 	*/
-	virtual Object* clone( bool deep=false ) {
+	virtual Object* clone( bool deep=false ) const {
 		return NULL;
 	};
 
@@ -168,12 +168,12 @@ public:
 	returns the RTTI Class instance associated object
 	of this type
 	*/
-	Class* getClass() ;
+	Class* getClass() const ;
 
 	/**
 	returns a hash value that represents the object instance
 	*/
-	virtual uintptr hash();
+	virtual uintptr hash() const ;
 	
 
 	/**

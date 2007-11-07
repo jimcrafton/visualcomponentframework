@@ -44,7 +44,7 @@ public:
 	@return bool true if there are any elements left to enumerate,
 	otherwise returns false.
 	*/
-	virtual bool hasMoreElements(const bool& backward=false)=0;
+	virtual bool hasMoreElements(const bool& backward=false) const =0;
 
 	/**
 	returns the next element in the enumeration. Moves the internal
@@ -67,7 +67,7 @@ public:
 	if backward is true).
 	@param bool specifies which direction to reset to
 	*/
-	virtual void reset(const bool& backward=false)=0;
+	virtual void reset(const bool& backward=false) const =0;
 
 	/**
 	Currently not used. Will allow editing of the Enumerator in the
@@ -75,7 +75,7 @@ public:
 	of the enumerator allows adding or removing of elements
 	@return bool true if the enumerator allows editing, otherwise false.
 	*/
-	bool supportsEditing(){
+	bool supportsEditing() const {
 		return supportsEditing_;
 	};
 };
@@ -133,7 +133,7 @@ public:
 		reset();
 	};
 
-	virtual bool hasMoreElements(const bool& backward=false){
+	virtual bool hasMoreElements(const bool& backward=false) const {
 		bool result = false;
 		if ( true == backward ){
 			result = containerIterator_ != container_->begin();
@@ -162,7 +162,7 @@ public:
 		}
 	};
 
-	virtual void reset(const bool& backward=false){
+	virtual void reset(const bool& backward=false) const {
 		if ( backward ) {
 			containerIterator_ = container_->end();
 		}
@@ -178,12 +178,12 @@ public:
 	@return Enumerator<COLLECTION_TYPE> a pointer to the
 	collection as an Enumerator interface.
 	*/
-	virtual Enumerator<COLLECTION_TYPE>* getEnumerator(){
+	virtual Enumerator<COLLECTION_TYPE>* getEnumerator() const {
 		reset();
 		return (Enumerator<COLLECTION_TYPE>*)this;
 	};
 private:
-	typename COLLECTION::iterator containerIterator_;
+	mutable typename COLLECTION::iterator containerIterator_;
 	//typename COLLECTION::reverse_iterator reverseContainerIterator_;
 	COLLECTION* container_;
 	//bool backwards_;
@@ -226,12 +226,12 @@ public:
 		reset();
 	};
 
-	virtual Enumerator<COLLECTION_TYPE>* getEnumerator(){
+	virtual Enumerator<COLLECTION_TYPE>* getEnumerator() const {
 		reset();
 		return (Enumerator<COLLECTION_TYPE>*)this;
 	};
 
-	virtual bool hasMoreElements(const bool& backward=false){
+	virtual bool hasMoreElements(const bool& backward=false) const {
 		bool result = false;
 
 		if ( true == backward ){
@@ -265,7 +265,7 @@ public:
 		}
 	};
 
-	virtual void reset(const bool& backward=false){
+	virtual void reset(const bool& backward=false) const {
 
 		if ( backward ){
 			containerIterator_ = container_->end();
@@ -276,7 +276,7 @@ public:
 	};
 
 private:
-	typename COLLECTION::iterator containerIterator_;
+	mutable typename COLLECTION::iterator containerIterator_;
 	COLLECTION* container_;
 };
 

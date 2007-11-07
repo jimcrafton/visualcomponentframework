@@ -458,7 +458,7 @@ public:
 	uint32 getWeeksInYear() const ;
 
 
-	virtual String toString();
+	virtual String toString() const;
 
 	virtual void loadFromStream( InputStream* stream );
 
