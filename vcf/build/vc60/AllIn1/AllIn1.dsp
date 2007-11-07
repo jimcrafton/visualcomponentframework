@@ -23,6 +23,8 @@ CFG=AllIn1 - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -40,7 +42,6 @@ RSC=rc.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GR /GX /O1 /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/win32" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "VCF_ALLIN1_LIB" /Yu"vcf/ApplicationKit/ApplicationKit.h" /FD /Zm200 /c
-
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -63,8 +64,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "vc6\DebugS\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/win32" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "VCF_ALLIN1_LIB" /Fd"..\..\..\lib\VCF_vc6_sd.pdb" /Yu"vcf/ApplicationKit/ApplicationKit.h" /FD /GZ /Zm200 /c
-
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/win32" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "VCF_ALLIN1_LIB" /Yu"vcf/ApplicationKit/ApplicationKit.h" /Fd"..\..\..\lib\VCF_vc6_sd.pdb" /FD /GZ /Zm200 /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -159,6 +159,32 @@ SOURCE=..\..\..\src\vcf\FoundationKit\CommonDefines.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\Component.cpp
+
+!IF  "$(CFG)" == "AllIn1 - Win32 Release"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "AllIn1 - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\ComponentInfo.cpp
+
+!IF  "$(CFG)" == "AllIn1 - Win32 Release"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "AllIn1 - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\Condition.cpp
 # SUBTRACT CPP /YX /Yc /Yu
 # End Source File
@@ -181,7 +207,20 @@ SOURCE=..\..\..\src\vcf\FoundationKit\DateTime.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\Delegate.h
+SOURCE=..\..\..\src\vcf\FoundationKit\Delegates.cpp
+
+!IF  "$(CFG)" == "AllIn1 - Win32 Release"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "AllIn1 - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Delegates.h
 # End Source File
 # Begin Source File
 
@@ -224,21 +263,7 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ErrorStrings.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\Event.cpp
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\Event.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\EventHandler.cpp
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\EventHandler.h
 # End Source File
 # Begin Source File
 
@@ -373,15 +398,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Lock.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\MemoryStream.cpp
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\MemoryStream.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\MemStreamUtils.h
 # End Source File
 # Begin Source File
@@ -454,15 +470,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Object.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\ObjectWithEvents.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\OutOfBoundsException.h
 # End Source File
 # Begin Source File
@@ -477,15 +484,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\PackageInfo.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\PackageInfo.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\Parser.cpp
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\Parser.h
 # End Source File
 # Begin Source File
 
@@ -519,11 +517,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ProgramInfo.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\Property.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.cpp
-# SUBTRACT CPP /YX /Yc /Yu
 # End Source File
 # Begin Source File
 
@@ -584,6 +577,19 @@ SOURCE=..\..\..\src\vcf\FoundationKit\RunLoop.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSource.cpp
+
+!IF  "$(CFG)" == "AllIn1 - Win32 Release"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "AllIn1 - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -705,11 +711,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Thread.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\ThreadEvent.cpp
-# SUBTRACT CPP /YX /Yc /Yu
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\ThreadEvent.h
 # End Source File
 # Begin Source File
@@ -792,6 +793,49 @@ SOURCE=..\..\..\src\vcf\FoundationKit\VCFString.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\VCFulong64.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp
+
+!IF  "$(CFG)" == "AllIn1 - Win32 Release"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "AllIn1 - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFOutputStream.cpp
+
+!IF  "$(CFG)" == "AllIn1 - Win32 Release"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "AllIn1 - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFParser.cpp
+
+!IF  "$(CFG)" == "AllIn1 - Win32 Release"
+
+# SUBTRACT CPP /YX /Yc /Yu
+
+!ELSEIF  "$(CFG)" == "AllIn1 - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VFFParser.h
 # End Source File
 # Begin Source File
 
@@ -1112,11 +1156,6 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\Image.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\GraphicsKit\ImageBits.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\GraphicsKit\ImageEvent.cpp
-# SUBTRACT CPP /YX /Yc /Yu
 # End Source File
 # Begin Source File
 
@@ -1630,14 +1669,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\Component.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Component.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentEditor.h
 # End Source File
 # Begin Source File
@@ -1647,18 +1678,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentEditorManager.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentEditorManager.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentInfo.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\ComponentInfo.h
 # End Source File
 # Begin Source File
 
@@ -1855,18 +1874,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTreeModel.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTreeModel.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Desktop.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Desktop.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DesktopPeer.h
 # End Source File
 # Begin Source File
 
@@ -2434,6 +2441,18 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\UIPolicyManager.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\UIShell.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\UIShell.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\UIShellPeer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\UIToolkit.cpp
 # End Source File
 # Begin Source File
@@ -2459,22 +2478,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ValidationEvent.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\VCFCOM.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\VFFInputStream.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\VFFInputStream.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\VFFOutputStream.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\VFFOutputStream.h
 # End Source File
 # Begin Source File
 
@@ -2567,14 +2570,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Win32CursorPeer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32CursorPeer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Win32Desktop.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\Win32Desktop.h
 # End Source File
 # Begin Source File
 
@@ -2743,6 +2738,14 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Win32Tree.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32Tree.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32UIShell.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32UIShell.h
 # End Source File
 # Begin Source File
 
