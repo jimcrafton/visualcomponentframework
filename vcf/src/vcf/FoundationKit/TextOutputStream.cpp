@@ -72,6 +72,9 @@ uint64 TextOutputStream::write( const unsigned char* bytesToRead, uint64 sizeOfB
 	if ( NULL != this->outStream_ ){
 		result = outStream_->write( bytesToRead, sizeOfBytes );
 	}
+	else {
+		result = sizeOfBytes;
+	}
 
 	return result;
 }
