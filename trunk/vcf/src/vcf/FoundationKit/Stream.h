@@ -177,7 +177,7 @@ primitive types is done through the insertion operator( << ),
 as well as providing support for the Persistable interface,
 and writing out an arbitrary chunk of memory
 */
-class FOUNDATIONKIT_API OutputStream : public virtual Stream {
+class FOUNDATIONKIT_API OutputStream : public Stream {
 public:
 	virtual ~OutputStream(){};
 

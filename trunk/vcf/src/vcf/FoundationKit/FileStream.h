@@ -100,6 +100,10 @@ public:
 		return false;
 	}
 
+	virtual void read( Persistable* persistableObject ) {
+		InputStream::read( persistableObject );
+	}
+
 	void open( const String& filename );
 
 protected:
@@ -109,7 +113,7 @@ protected:
 /**
 \class FileOutputStream FileStream.h "vcf/FoundationKit/FileStream.h"
 */
-class FOUNDATIONKIT_API FileOutputStream : public OutputStream , public FileStreamBase {
+class FOUNDATIONKIT_API FileOutputStream :  public OutputStream, public FileStreamBase {
 public:
 	FileOutputStream( const String& filename, const bool & append = false );
 
@@ -135,6 +139,10 @@ public:
 
 	//output
 	virtual uint64 write( const unsigned char* bytesToWrite, uint64 sizeOfBytes );
+
+	virtual void write( Persistable* persistableObject ) {
+		OutputStream::write( persistableObject );
+	}
 
 	void open( const String& filename, const bool & append = false );
 
