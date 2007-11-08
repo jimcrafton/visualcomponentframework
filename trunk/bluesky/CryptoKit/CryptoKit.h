@@ -2330,6 +2330,14 @@ namespace Crypto {
 	};
 
 
+	enum RSAPaddingMode {
+		pmPKCS1 = RSA_PKCS1_PADDING,
+		pmPKCS1_OAEP = RSA_PKCS1_OAEP_PADDING,
+		pmSSLV23 = RSA_SSLV23_PADDING,
+		pmNone = RSA_NO_PADDING
+			
+	};
+
 	typedef Delegate2<int,int> RSAKeyGenDelegate;
 	typedef DelegateR<String> RSAPasswordDelegate;
 
@@ -2383,6 +2391,26 @@ namespace Crypto {
 
 			return result;
 		}
+
+
+		size_t decrypt( const uchar* encryptedData, size_t encryptedDataSize, 
+						uchar* decryptedData, RSAPaddingMode padding ) {
+
+			size_t result = 0;
+
+			int res = RSA_private_decrypt( encryptedDataSize, encryptedData, 
+										decryptedData, rsaObj_, padding );
+
+			if ( res == -1 ) {
+				throw CryptoException(); //gets err code automatically
+			}
+
+			result = res;
+
+			return result;
+		}
+
+
 
 		virtual void saveToStream( OutputStream * stream ) {
 
@@ -2489,6 +2517,9 @@ namespace Crypto {
 	class RSAPublicKey : public RSAKeyBase, public Persistable {
 	public:
 
+		
+
+
 		RSAPasswordDelegate PasswordPrompt;
 
 		RSAPublicKey():RSAKeyBase() {}
@@ -2527,6 +2558,29 @@ namespace Crypto {
 						&signedData[0],
 						signedData.size() );
 
+		}
+
+
+		/**
+		encryptedData must be a buffer large enough to store 
+		RSAPublicKey::getSize() bytes.
+		*/
+		size_t encrypt( const uchar* data, size_t dataSize, 
+			uchar* encryptedData, RSAPaddingMode padding ) {
+	
+			size_t result = 0;
+			int res = RSA_public_encrypt( dataSize, 
+								data, 
+								encryptedData,
+								rsaObj_,
+								padding );
+
+			result = res;
+			if ( res == -1 ) { 
+				throw CryptoException(); //gets err code automatically
+			}
+
+			return result;
 		}
 
 		virtual void saveToStream( OutputStream * stream ) {
