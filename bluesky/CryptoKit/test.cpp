@@ -672,6 +672,46 @@ void testCiphers()
 }
 
 
+void testASN()
+{
+	 ASN1_INTEGER* i = M_ASN1_INTEGER_new();
+	 ASN1_INTEGER_set( i, 100 );
+
+	 long g = ASN1_INTEGER_get( i );
+
+	 
+
+	 TextOutputStream tos;
+	 BIOOutputStream bos(&tos);
+	 i2a_ASN1_INTEGER( bos, i );
+
+
+	 BasicInputStream bis(tos.getTextBuffer());
+
+	 ASN1_INTEGER_set( i, 500 );
+	 g = ASN1_INTEGER_get( i );
+
+
+	 BIOInputStream bis2(&bis);
+	 char tmp[255];
+	 a2i_ASN1_INTEGER( bis2, i, tmp, 255 );
+
+	 g = ASN1_INTEGER_get( i );
+
+
+	M_ASN1_INTEGER_free( i );
+
+	ASN1_STRING* s ;
+
+	ASN1String ss;
+	ss = "Hello there";
+	s = ss.detach();
+
+	String s2 = ss;
+
+
+}
+
 int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
@@ -682,7 +722,7 @@ int main( int argc, char** argv ){
 	{
 		
 		TextOutputStream tos;
-		CryptoOutputStream cos(&tos);
+		BIOOutputStream cos(&tos);
 		
 		
 		BigInteger bigNum(1234567);
@@ -691,6 +731,7 @@ int main( int argc, char** argv ){
 	}
 
 
+	testASN();
 	
 
 	testDigests();

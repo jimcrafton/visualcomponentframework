@@ -120,6 +120,62 @@ namespace Crypto {
 	};
 
 	
+	template <typename Type, typename Impl>
+	class Attachable {
+	public:
+		Attachable():owned_(false), resource_(NULL) {}
+
+		Attachable( Type val ):owned_(false), resource_(val) {}
+
+		Attachable( const Attachable<Type,Impl>& val ):owned_(false), resource_(val.resource_) {}
+
+
+		~Attachable()	{
+			if ( owned_ ) {
+				VCF_ASSERT( NULL != resource_ );
+				if ( resource_ ) {
+					Impl::freeResource(resource_);
+				}
+			}
+		}
+
+
+		Type detach() {
+			Type result = resource_;
+			owned_ = false;
+			return result;
+		}
+
+		void attach(Type val) {
+			owned_ = true;
+			resource_ = val;
+		}
+
+		Type get() const {
+			return resource_;
+		}
+
+		void assign( Type rhs ) {
+			if ( owned_ ) {
+				if ( resource_ ) {
+					Impl::freeResource(resource_);
+				}
+			}
+
+			resource_ = rhs;
+			owned_ = false;
+		}
+
+		bool isNull() const {
+			return (NULL == resource_) ? true : false;
+		}
+	protected:
+		bool owned_;
+		Type resource_;
+
+	};
+
+	
 	/**
 	\class RandomError "
 	*/
@@ -180,24 +236,24 @@ namespace Crypto {
 
 
 
-	class CryptoInputStream : public InputStream {
+	class BIOInputStream : public InputStream {
 	public:
 
-		CryptoInputStream( InputStream* inputStream ) : ioObject_(NULL),inputStream_(inputStream){
+		BIOInputStream( InputStream* inputStream ) : ioObject_(NULL),inputStream_(inputStream){
 
 			VCF_ASSERT( NULL != inputStream_ );
 
 			if ( NULL == inputStream_ ) {
-				throw RuntimeException( "Cannot have a null input stream in a CryptoInputStream instance." );
+				throw RuntimeException( "Cannot have a null input stream in a BIOInputStream instance." );
 			}
 
 
-			ioObject_ = BIO_new( CryptoInputStream::getMethod() );
+			ioObject_ = BIO_new( BIOInputStream::getMethod() );
 
 			ioObject_->ptr = this;
 		}
 
-		virtual ~CryptoInputStream() {
+		virtual ~BIOInputStream() {
 			BIO_free(ioObject_);
 		}
 
@@ -243,7 +299,7 @@ namespace Crypto {
 		
 		static int readBIO(BIO *h, char *buf, int size)
 		{
-			CryptoInputStream* thisPtr = (CryptoInputStream*)h->ptr;
+			BIOInputStream* thisPtr = (BIOInputStream*)h->ptr;
 
 			if (NULL == thisPtr ) {
 				return -1;
@@ -256,7 +312,7 @@ namespace Crypto {
 		
 		static int getsBIO(BIO *h, char *str, int size)
 		{
-			CryptoInputStream* thisPtr = (CryptoInputStream*)h->ptr;
+			BIOInputStream* thisPtr = (BIOInputStream*)h->ptr;
 
 			if (NULL == thisPtr ) {
 				return -1;
@@ -272,6 +328,7 @@ namespace Crypto {
 			int skip = 0;
 			do {
 
+				//fix this code.....
 				size_t read = (i * 256) + (size % 256);
 				res = thisPtr->read( buf, (uint64)read );
 				if ( res <= 0 ) {
@@ -317,7 +374,7 @@ namespace Crypto {
 		{
 			printf( "ctrl( %p, %d, %d, %p )\n", h, cmd, arg1, arg2 );
 
-			CryptoInputStream* thisPtr = (CryptoInputStream*)h->ptr;
+			BIOInputStream* thisPtr = (BIOInputStream*)h->ptr;
 			if (NULL == thisPtr ) {
 				return 0;
 			}
@@ -391,22 +448,22 @@ namespace Crypto {
 
 		static BIO_METHOD* getMethod() 
 		{
-			static BIO_METHOD CryptoInputStreamMethod =
+			static BIO_METHOD BIOInputStreamMethod =
 			{
 				BIO_TYPE_SOURCE_SINK,
-					"CryptoInputStream BIO",
+					"BIOInputStream BIO",
 					NULL,
-					CryptoInputStream::readBIO,
+					BIOInputStream::readBIO,
 					NULL,
-					CryptoInputStream::getsBIO,
-					CryptoInputStream::ctrlBIO,
-					CryptoInputStream::newBIO,
-					CryptoInputStream::freeBIO,
+					BIOInputStream::getsBIO,
+					BIOInputStream::ctrlBIO,
+					BIOInputStream::newBIO,
+					BIOInputStream::freeBIO,
 					NULL,
 			};
 
 
-			return &CryptoInputStreamMethod;
+			return &BIOInputStreamMethod;
 		}
 	};
 
@@ -415,22 +472,22 @@ namespace Crypto {
 
 	
 
-	class CryptoOutputStream : public OutputStream {
+	class BIOOutputStream : public OutputStream {
 	public:
 
-		CryptoOutputStream( OutputStream* outputStream ) : ioObject_(NULL),outputStream_(outputStream){
+		BIOOutputStream( OutputStream* outputStream ) : ioObject_(NULL),outputStream_(outputStream){
 			VCF_ASSERT( NULL != outputStream_ );
 
 			if ( NULL == outputStream_ ) {
-				throw RuntimeException( "Cannot have a null output stream in a CryptoOutputStream instance." );
+				throw RuntimeException( "Cannot have a null output stream in a BIOOutputStream instance." );
 			}
 
-			ioObject_ = BIO_new( CryptoOutputStream::getMethod() );
+			ioObject_ = BIO_new( BIOOutputStream::getMethod() );
 
 			ioObject_->ptr = this;
 		}
 
-		virtual ~CryptoOutputStream() {
+		virtual ~BIOOutputStream() {
 			BIO_free(ioObject_);
 		}
 
@@ -469,7 +526,7 @@ namespace Crypto {
 		
 		static int writeBIO(BIO *h, const char *buf, int size)
 		{
-			CryptoOutputStream* thisPtr = (CryptoOutputStream*)h->ptr;
+			BIOOutputStream* thisPtr = (BIOOutputStream*)h->ptr;
 
 			if (NULL == thisPtr ) {
 				return -1;
@@ -484,13 +541,13 @@ namespace Crypto {
 		{
 			size_t strSz = strlen(str);
 			
-			return CryptoOutputStream::writeBIO( h, str, strSz );
+			return BIOOutputStream::writeBIO( h, str, strSz );
 		}
 		
 		static long ctrlBIO(BIO *h, int cmd, long arg1, void *arg2)
 		{
 			printf( "ctrl( %p, %d, %d, %p )\n", h, cmd, arg1, arg2 );
-			CryptoOutputStream* thisPtr = (CryptoOutputStream*)h->ptr;
+			BIOOutputStream* thisPtr = (BIOOutputStream*)h->ptr;
 			if (NULL == thisPtr ) {
 				return 0;
 			}
@@ -561,22 +618,22 @@ namespace Crypto {
 
 		static BIO_METHOD* getMethod() 
 		{
-			static BIO_METHOD CryptoOutputStreamMethod =
+			static BIO_METHOD BIOOutputStreamMethod =
 			{
 				BIO_TYPE_SOURCE_SINK,
-					"CryptoOutputStream BIO",
-					CryptoOutputStream::writeBIO,
+					"BIOOutputStream BIO",
+					BIOOutputStream::writeBIO,
 					NULL,
-					CryptoOutputStream::putsBIO,
+					BIOOutputStream::putsBIO,
 					NULL,
-					CryptoOutputStream::ctrlBIO,
-					CryptoOutputStream::newBIO,
-					CryptoOutputStream::freeBIO,
+					BIOOutputStream::ctrlBIO,
+					BIOOutputStream::newBIO,
+					BIOOutputStream::freeBIO,
 					NULL,
 			};
 
 
-			return &CryptoOutputStreamMethod;
+			return &BIOOutputStreamMethod;
 		}
 	};
 
@@ -1318,6 +1375,182 @@ namespace Crypto {
 			return result;
 		}
 	};
+
+
+
+	class ASN1String : public Attachable<ASN1_STRING*,ASN1String> {
+	public:
+		typedef Attachable<ASN1_STRING*,ASN1String> BaseT;
+
+		ASN1String():BaseT(NULL){
+			resource_ = ASN1_STRING_new();
+			owned_ = true;
+		}
+
+		ASN1String( const ASN1String& rhs ):BaseT(NULL) {
+			resource_ = ASN1_STRING_dup(rhs.get());
+			owned_ = true;
+		}
+
+		ASN1String& operator=( const ASN1String& rhs ) {
+			if ( NULL != resource_ && owned_ ) {
+				ASN1_STRING_free( resource_ );
+				resource_ = NULL;
+			}
+
+			resource_ = ASN1_STRING_dup(rhs.get());
+			owned_ = true;
+
+			return *this;
+		}
+
+		ASN1String& operator=( const String& rhs ) {
+			AnsiString tmp = rhs;
+
+			ASN1_STRING_set( resource_, tmp.c_str(), tmp.size() );
+
+			return *this;
+		}
+
+		ASN1String& operator=( const char* rhs ) {
+			ASN1_STRING_set( resource_, rhs, strlen(rhs) );
+			return *this;
+		}
+
+		size_t size() const {
+			return (size_t) ASN1_STRING_length(resource_);
+		}
+
+		const char* c_str() const {
+			return (const char*) ASN1_STRING_data(resource_);
+		}
+
+		operator String() const {
+			String result;
+			int len = ASN1_STRING_length(resource_);
+			unsigned char* data = ASN1_STRING_data(resource_);
+
+			result.assign( (const char*)data, len ) ;
+
+			return result;
+		}
+
+		bool operator > ( const ASN1String& rhs ) const {
+			int res = ASN1_STRING_cmp( resource_, rhs.get() );
+			return res > 0;
+		}
+
+		bool operator >= ( const ASN1String& rhs ) const {
+			int res = ASN1_STRING_cmp( resource_, rhs.get() );
+			return res >= 0;
+		}
+
+		bool operator < ( const ASN1String& rhs ) const {
+			int res = ASN1_STRING_cmp( resource_, rhs.get() );
+			return res < 0;
+		}
+
+		bool operator <= ( const ASN1String& rhs ) const {
+			int res = ASN1_STRING_cmp( resource_, rhs.get() );
+			return res <= 0;
+		}
+
+		bool operator == ( const ASN1String& rhs ) const {
+			int res = ASN1_STRING_cmp( resource_, rhs.get() );
+			return res == 0;
+		}
+
+		static freeResource( ASN1_STRING* res ) {
+			ASN1_STRING_free( res );
+		}
+
+
+
+		virtual void saveToStream( OutputStream * stream ) {
+
+			BIOOutputStream cos(stream);
+			i2a_ASN1_STRING( cos, resource_, ASN1_STRING_type(resource_) );
+		}
+
+		virtual void loadFromStream( InputStream * stream ) {			
+			
+			BIOInputStream cis(stream);
+			char tmp[255];
+			a2i_ASN1_STRING( cis, resource_, tmp, sizeof(tmp) );
+		}
+	};
+
+
+
+
+
+	
+
+	class ASN1Integer : public Attachable<ASN1_INTEGER*,ASN1Integer>, public Persistable {
+	public:
+		typedef Attachable<ASN1_INTEGER*,ASN1Integer> BaseT;
+
+		ASN1Integer():BaseT(NULL){
+			resource_ = M_ASN1_INTEGER_new();
+			owned_ = true;
+		}
+
+		ASN1Integer( const ASN1Integer& rhs ):BaseT(NULL) {
+			resource_ = ASN1_INTEGER_dup(rhs.get());
+			owned_ = true;
+		}
+
+		ASN1Integer& operator=( const ASN1Integer& rhs ) {
+			if ( NULL != resource_ && owned_ ) {
+				M_ASN1_INTEGER_free( resource_ );
+				resource_ = NULL;
+			}
+
+			resource_ = ASN1_INTEGER_dup(rhs.get());
+			owned_ = true;
+
+			return *this;
+		}
+
+		ASN1Integer& operator=( const int& rhs ) {
+			ASN1_INTEGER_set( resource_, rhs );
+			return *this;
+		}
+
+		operator int() const {
+			return ASN1_INTEGER_get( resource_ );
+		}
+
+		static freeResource( ASN1_INTEGER* res ) {
+			M_ASN1_INTEGER_free( res );
+		}
+
+
+		virtual void saveToStream( OutputStream * stream ) {
+
+			BIOOutputStream cos(stream);
+			i2a_ASN1_INTEGER( cos, resource_ );
+		}
+
+		virtual void loadFromStream( InputStream * stream ) {			
+			
+			BIOInputStream cis(stream);
+			char tmp[128];
+			a2i_ASN1_INTEGER( cis, resource_, tmp, sizeof(tmp) );
+		}
+	};
+
+
+
+
+
+
+
+
+
+
+
+
 
 	class MessageDigest {
 	public:
@@ -2310,7 +2543,7 @@ namespace Crypto {
 			String result;
 
 			TextOutputStream tos;
-			CryptoOutputStream cos(&tos);
+			BIOOutputStream cos(&tos);
 
 			RSA_print( cos, rsaObj_, 0 );
 
@@ -2422,7 +2655,7 @@ namespace Crypto {
 				throw InvalidPointerException( "Invalid RSAPrivateKey instance, encryption and/or rsa private key are NULL" );
 			}
 
-			CryptoOutputStream cos(stream);
+			BIOOutputStream cos(stream);
 			if ( !PEM_write_bio_RSAPrivateKey( cos, 
 										rsaObj_,
 										encryption_->getEncryptionCipher(), 
@@ -2437,7 +2670,7 @@ namespace Crypto {
 
 		virtual void loadFromStream( InputStream * stream ) {			
 			
-			CryptoInputStream cis(stream);
+			BIOInputStream cis(stream);
 
 			typedef int (*PwdCB)(char*,int,int,void*);
 
@@ -2584,7 +2817,7 @@ namespace Crypto {
 		}
 
 		virtual void saveToStream( OutputStream * stream ) {
-			CryptoOutputStream cos(stream);
+			BIOOutputStream cos(stream);
 
 			if ( !PEM_write_bio_RSAPublicKey( cos, rsaObj_ ) ) {
 				throw CryptoException(); //gets err code automatically
@@ -2598,7 +2831,7 @@ namespace Crypto {
 				rsaObj_ = NULL;
 			}
 
-			CryptoInputStream cis(stream);
+			BIOInputStream cis(stream);
 
 			if ( !PEM_read_bio_RSAPublicKey( cis, 
 											&rsaObj_, 
