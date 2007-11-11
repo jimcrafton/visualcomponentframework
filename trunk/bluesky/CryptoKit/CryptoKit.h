@@ -318,22 +318,25 @@ namespace Crypto {
 				return -1;
 			}
 
+			const size_t ChunkSize = 256;
 			int totalRead = 0;
 			//read in 256 byte chunks 
-			int i=0;
 			uint64 res = 0;
 			AnsiString tmp;
-			uchar buf[256];
+			uchar buf[ChunkSize];
 			bool finished = false;
 			int skip = 0;
 			do {
 
-				//fix this code.....
-				size_t read = (i * 256) + (size % 256);
+				size_t read = (size < ChunkSize) ? size % ChunkSize : ChunkSize;
+				
 				res = thisPtr->read( buf, (uint64)read );
 				if ( res <= 0 ) {
 					return 0;
 				}
+
+				size -= (res < read) ? size : res;
+
 				totalRead += res;
 				const uchar* P = buf;
 				while ( (P-buf) < res ) {
@@ -354,10 +357,7 @@ namespace Crypto {
 				if ( finished ) {					
 					break;
 				}
-				
-
-				i++;
-			} while ( i < (size / 256) );
+			} while ( size > 0 );
 
 
 			uint64 pos = thisPtr->getCurrentSeekPos();
@@ -1378,7 +1378,7 @@ namespace Crypto {
 
 
 
-	class ASN1String : public Attachable<ASN1_STRING*,ASN1String> {
+	class ASN1String : public Attachable<ASN1_STRING*,ASN1String>, public Persistable {
 	public:
 		typedef Attachable<ASN1_STRING*,ASN1String> BaseT;
 
@@ -1421,8 +1421,16 @@ namespace Crypto {
 			return (size_t) ASN1_STRING_length(resource_);
 		}
 
+		bool empty() const {
+			return size() == 0;
+		}
+
 		const char* c_str() const {
 			return (const char*) ASN1_STRING_data(resource_);
+		}
+
+		void clear() {
+			ASN1_STRING_set( resource_, "", strlen("") );
 		}
 
 		operator String() const {
@@ -1475,8 +1483,9 @@ namespace Crypto {
 		virtual void loadFromStream( InputStream * stream ) {			
 			
 			BIOInputStream cis(stream);
-			char tmp[255];
-			a2i_ASN1_STRING( cis, resource_, tmp, sizeof(tmp) );
+			char tmp[256];
+			int err = a2i_ASN1_STRING( cis, resource_, tmp, sizeof(tmp) );
+
 		}
 	};
 
@@ -1539,9 +1548,6 @@ namespace Crypto {
 			a2i_ASN1_INTEGER( cis, resource_, tmp, sizeof(tmp) );
 		}
 	};
-
-
-
 
 
 
@@ -2914,6 +2920,24 @@ namespace Crypto {
 	};
 
 
+
+
+
+
+	class X509Certificate {
+	public:
+		X509Certificate():x509Obj_(NULL){}
+
+		~X509Certificate(){
+			if ( NULL != x509Obj_ ) {
+				X509_free( x509Obj_ );
+			}
+		}
+
+	protected:
+		X509* x509Obj_;
+
+	};
 	
 };
 
