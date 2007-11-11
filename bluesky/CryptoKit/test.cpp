@@ -275,8 +275,30 @@ void testX509Cert()
 	mkcert(&x509,&pkey,512,0,365);
 	
 	RSA_print_fp(stdout,pkey->pkey.rsa,0);
+
+	printf( "-----------------------------------------------------------------------------\n" );
+
 	X509_print_fp(stdout,x509);
 	
+	int num = X509_NAME_entry_count( X509_get_issuer_name( x509 ) );
+	for ( int j=0;j<num;j++ ) {
+		char tmp_buf[256];
+
+		X509_NAME_ENTRY* ne = 
+			X509_NAME_get_entry( X509_get_issuer_name( x509 ), j );
+
+		ASN1_OBJECT* obj = X509_NAME_ENTRY_get_object( ne );
+		ASN1_STRING* str = X509_NAME_ENTRY_get_data( ne );
+
+		i2t_ASN1_OBJECT(tmp_buf,sizeof(tmp_buf),obj);
+
+		ASN1String s;
+		s.assign( str );
+		String val = s;
+		
+	}
+
+
 	PEM_write_PrivateKey(stdout,pkey,NULL,NULL,0,NULL, NULL);
 
 
@@ -683,9 +705,16 @@ void testASN()
 
 	 TextOutputStream tos;
 	 BIOOutputStream bos(&tos);
-	 i2a_ASN1_INTEGER( bos, i );
+	 unsigned char tmp2[256];
+	 unsigned char* b = tmp2;
+	 ASN1_INTEGER_set( i, 50000 );
+	 i2d_ASN1_INTEGER( i, &b );
 
+	 memset(tmp2,0,sizeof(tmp2));
+	 ASN1_INTEGER_set( i, 5000 );
+	 i2d_ASN1_INTEGER( i, &b );
 
+/*
 	 BasicInputStream bis(tos.getTextBuffer());
 
 	 ASN1_INTEGER_set( i, 500 );
@@ -693,9 +722,9 @@ void testASN()
 
 
 	 BIOInputStream bis2(&bis);
-	 char tmp[255];
-	 a2i_ASN1_INTEGER( bis2, i, tmp, 255 );
-
+	 char tmp[256];
+	 a2i_ASN1_INTEGER( bis2, i, tmp, 256 );
+*/
 	 g = ASN1_INTEGER_get( i );
 
 
@@ -709,7 +738,18 @@ void testASN()
 
 	String s2 = ss;
 
+	ASN1Integer ii;
 
+	tos.seek( 0, stSeekFromStart );
+
+	tos << &ss;
+
+	ss.clear();
+
+	BasicInputStream bis3(tos.getTextBuffer());
+	bis3 >> &ss;
+
+	s2 = ss;
 }
 
 int main( int argc, char** argv ){
