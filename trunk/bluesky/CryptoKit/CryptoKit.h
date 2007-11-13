@@ -1377,6 +1377,102 @@ namespace Crypto {
 	};
 
 
+	class ASN1Object : public Attachable<ASN1_OBJECT*,ASN1Object> {
+	public:
+		typedef Attachable<ASN1_OBJECT*,ASN1Object> BaseT;
+
+		enum NameType {
+			ShortName = 1,
+			LongName = 2
+		};
+
+
+		ASN1Object( int nid ):BaseT() {
+			resource_ = OBJ_nid2obj(nid);
+		}
+
+		ASN1Object( const String& name, NameType nameType ):BaseT() {
+			AnsiString tmp;
+			switch ( nameType ) {
+				case ASN1Object::ShortName : {
+					resource_ = OBJ_nid2obj( OBJ_sn2nid( tmp.c_str() ) );
+				}
+				break;
+
+				case ASN1Object::LongName : {
+					resource_ = OBJ_nid2obj( OBJ_ln2nid( tmp.c_str() ) );
+				}
+				break;
+			}
+		}
+
+		ASN1Object( ASN1_OBJECT* obj ): BaseT(obj) {}
+
+
+		ASN1Object( const ASN1Object& rhs ): BaseT(){
+			resource_ = OBJ_dup( rhs.resource_ );
+		}
+
+		ASN1Object& operator=( const ASN1Object& rhs ) {
+			BaseT::operator=(rhs);
+			return *this;
+		}
+
+		ASN1Object& operator=( ASN1_OBJECT* rhs ) {
+			BaseT::operator=(rhs);
+			return *this;
+		}
+
+		static freeResource( ASN1_OBJECT* res ) {
+			ASN1_OBJECT_free( res );
+		}	
+		
+
+		int getNID() const {
+			return OBJ_obj2nid( resource_ );
+		}
+
+		String getLongName() const {
+			AnsiString result = OBJ_nid2ln( getNID() );
+			return result;
+		}
+
+		String getShortName() const {
+			AnsiString result = OBJ_nid2sn( getNID() );
+			return result;
+		}
+
+
+		bool operator > ( const ASN1Object& rhs ) const {
+			int res = OBJ_cmp( resource_, rhs.get() );
+			return res > 0;
+		}
+
+		bool operator >= ( const ASN1Object& rhs ) const {
+			int res = OBJ_cmp( resource_, rhs.get() );
+			return res >= 0;
+		}
+
+		bool operator < ( const ASN1Object& rhs ) const {
+			int res = OBJ_cmp( resource_, rhs.get() );
+			return res < 0;
+		}
+
+		bool operator <= ( const ASN1Object& rhs ) const {
+			int res = OBJ_cmp( resource_, rhs.get() );
+			return res <= 0;
+		}
+
+		bool operator == ( const ASN1Object& rhs ) const {
+			int res = OBJ_cmp( resource_, rhs.get() );
+			return res == 0;
+		}
+
+		bool operator != ( const ASN1Object& rhs ) const {
+			int res = OBJ_cmp( resource_, rhs.get() );
+			return res != 0;
+		}
+	};
 
 	class ASN1String : public Attachable<ASN1_STRING*,ASN1String>, public Persistable {
 	public:
@@ -1386,6 +1482,8 @@ namespace Crypto {
 			resource_ = ASN1_STRING_new();
 			owned_ = true;
 		}
+
+		ASN1String(ASN1_STRING*s):BaseT(s){}
 
 		ASN1String( const ASN1String& rhs ):BaseT(NULL) {
 			resource_ = ASN1_STRING_dup(rhs.get());
@@ -1468,6 +1566,11 @@ namespace Crypto {
 			return res == 0;
 		}
 
+		bool operator != ( const ASN1String& rhs ) const {
+			int res = ASN1_STRING_cmp( resource_, rhs.get() );
+			return res != 0;
+		}
+
 		static freeResource( ASN1_STRING* res ) {
 			ASN1_STRING_free( res );
 		}
@@ -1504,6 +1607,8 @@ namespace Crypto {
 			owned_ = true;
 		}
 
+		ASN1Integer(ASN1_INTEGER* i):BaseT(i){}
+
 		ASN1Integer( const ASN1Integer& rhs ):BaseT(NULL) {
 			resource_ = ASN1_INTEGER_dup(rhs.get());
 			owned_ = true;
@@ -1535,6 +1640,38 @@ namespace Crypto {
 		}
 
 
+		bool operator > ( const ASN1Integer& rhs ) const {
+			int res = ASN1_INTEGER_cmp( resource_, rhs.get() );
+			return res > 0;
+		}
+
+		bool operator >= ( const ASN1Integer& rhs ) const {
+			int res = ASN1_INTEGER_cmp( resource_, rhs.get() );
+			return res >= 0;
+		}
+
+		bool operator < ( const ASN1Integer& rhs ) const {
+			int res = ASN1_INTEGER_cmp( resource_, rhs.get() );
+			return res < 0;
+		}
+
+		bool operator <= ( const ASN1Integer& rhs ) const {
+			int res = ASN1_INTEGER_cmp( resource_, rhs.get() );
+			return res <= 0;
+		}
+
+		bool operator == ( const ASN1Integer& rhs ) const {
+			int res = ASN1_INTEGER_cmp( resource_, rhs.get() );
+			return res == 0;
+		}
+
+		bool operator != ( const ASN1Integer& rhs ) const {
+			int res = ASN1_INTEGER_cmp( resource_, rhs.get() );
+			return res != 0;
+		}
+
+
+
 		virtual void saveToStream( OutputStream * stream ) {
 
 			BIOOutputStream cos(stream);
@@ -1547,6 +1684,7 @@ namespace Crypto {
 			char tmp[128];
 			a2i_ASN1_INTEGER( cis, resource_, tmp, sizeof(tmp) );
 		}
+
 	};
 
 
@@ -2922,6 +3060,32 @@ namespace Crypto {
 
 
 
+	class X509Name {
+	public:
+
+		X509Name( X509_NAME* name ):nameObj_(name) {
+			
+		}
+
+		ASN1String getData( size_t index ) const {
+			X509_NAME_ENTRY* ne = X509_NAME_get_entry( nameObj_, index );
+			return ASN1String( X509_NAME_ENTRY_get_data( ne ) );
+		}
+
+		ASN1Object getObject( size_t index ) const {
+			X509_NAME_ENTRY* ne = X509_NAME_get_entry( nameObj_, index );
+			return ASN1Object( X509_NAME_ENTRY_get_object( ne ) );
+		}
+
+		/**
+		returns the number of entried for the name
+		*/
+		size_t size() const {
+			X509_NAME_entry_count(nameObj_);
+		}
+	protected:
+		X509_NAME* nameObj_;
+	};
 
 
 	class X509Certificate {
@@ -2934,6 +3098,108 @@ namespace Crypto {
 			}
 		}
 
+		int getVersion() const {
+			return X509_get_version( x509Obj_ );
+		}
+
+		DateTime getNotBefore() const {
+			DateTime result;
+			ASN1_TIME* notBefore = X509_get_notBefore( x509Obj_ );
+
+			switch ( notBefore->type ) {
+				case V_ASN1_UTCTIME : {
+					bool gmt = false;
+					int y=0,M=0,d=0,h=0,m=0,s=0;
+					if (notBefore->length >= 10) {
+						const char* tmData = (const char*)notBefore->data;
+						if (tmData[notBefore->length-1] == 'Z') {
+							gmt=true;
+						}
+
+						for ( int i=0; i<10; i++ ) {
+							if ((tmData[i] > '9') || (tmData[i] < '0')) {
+								throw RuntimeException( "Bad data in V_ASN1_GENERALIZEDTIME instance." );
+							}
+						}
+
+						y= (tmData[0]-'0')*10+(tmData[1]-'0');
+						if (y < 50) y+=100;
+						y += 1900;
+
+						M= (tmData[2]-'0')*10+(tmData[3]-'0');
+						
+
+						d= (tmData[4]-'0')*10+(tmData[5]-'0');
+						h= (tmData[6]-'0')*10+(tmData[7]-'0');
+						m=  (tmData[8]-'0')*10+(tmData[9]-'0');
+						if ( (tmData[10] >= '0') && (tmData[10] <= '9') &&
+							(tmData[11] >= '0') && (tmData[11] <= '9')) {
+							s=  (tmData[10]-'0')*10+(tmData[11]-'0');
+						}
+
+						result.set( y, M, d, h, m, s );
+						if ( gmt ) {
+							result = result.toUTC();
+						}
+					}
+				}
+				break;
+
+				case V_ASN1_GENERALIZEDTIME : {
+					bool gmt = false;
+					int y=0,M=0,d=0,h=0,m=0,s=0;
+					if (notBefore->length >= 12) {
+						const char* tmData = (const char*)notBefore->data;
+						if (tmData[notBefore->length-1] == 'Z') {
+							gmt=true;
+						}
+
+						for ( int i=0; i<12; i++ ) {
+							if ((tmData[i] > '9') || (tmData[i] < '0')) {
+								throw RuntimeException( "Bad data in V_ASN1_GENERALIZEDTIME instance." );
+							}
+						}
+
+						y= (tmData[0]-'0')*1000+(tmData[1]-'0')*100 + (tmData[2]-'0')*10+(tmData[3]-'0');
+						M= (tmData[4]-'0')*10+(tmData[5]-'0');
+						
+
+						d= (tmData[6]-'0')*10+(tmData[7]-'0');
+						h= (tmData[8]-'0')*10+(tmData[9]-'0');
+						m=  (tmData[10]-'0')*10+(tmData[11]-'0');
+						if ( (tmData[12] >= '0') && (tmData[12] <= '9') &&
+							(tmData[13] >= '0') && (tmData[13] <= '9')) {
+							s=  (tmData[12]-'0')*10+(tmData[13]-'0');
+						}
+
+						result.set( y, M, d, h, m, s );
+						if ( gmt ) {
+							result = result.toUTC();
+						}
+					}
+				}
+				break;
+			}
+
+			return result;
+		}
+
+		X509Name getIssuerName() const {
+			return X509Name( X509_get_issuer_name( x509Obj_ ) );
+		}
+
+		X509Name getSubjectName() const {
+			return X509Name( X509_get_subject_name( x509Obj_ ) );
+		}
+
+		ASN1Integer getSerialNumber() const {
+			return ASN1Integer( X509_get_serialNumber( x509Obj_ ) );
+		}
+
+		void setExpiresNotBefore( const DateTime& date ) {
+			time_t dtVal = date.getCTime();
+
+		}
 	protected:
 		X509* x509Obj_;
 
