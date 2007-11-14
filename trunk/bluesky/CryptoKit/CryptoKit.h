@@ -1594,6 +1594,119 @@ namespace Crypto {
 
 
 
+	class ASN1Time : public Attachable<ASN1_TIME*,ASN1Time> {
+	public:
+		typedef Attachable<ASN1_TIME*,ASN1Time> BaseT;
+
+
+		ASN1Time( ASN1_TIME* obj ): BaseT(obj) {}
+
+
+		ASN1Time( const ASN1Time& rhs ): BaseT(rhs){}
+
+		ASN1Time& operator=( const ASN1Time& rhs ) {
+			BaseT::operator=(rhs);
+			return *this;
+		}
+
+		ASN1Time& operator=( ASN1_TIME* rhs ) {
+			BaseT::operator=(rhs);
+			return *this;
+		}
+
+		static freeResource( ASN1_TIME* res ) {
+			ASN1_TIME_free( res );
+		}
+
+		operator DateTime() const {
+			DateTime result;
+			switch ( resource_->type ) {
+				case V_ASN1_UTCTIME : {
+					bool gmt = false;
+					int y=0,M=0,d=0,h=0,m=0,s=0;
+					if (resource_->length >= 10) {
+						const char* tmData = (const char*)resource_->data;
+						if (tmData[resource_->length-1] == 'Z') {
+							gmt=true;
+						}
+
+						for ( int i=0; i<10; i++ ) {
+							if ((tmData[i] > '9') || (tmData[i] < '0')) {
+								throw RuntimeException( "Bad data in V_ASN1_GENERALIZEDTIME instance." );
+							}
+						}
+
+						y= (tmData[0]-'0')*10+(tmData[1]-'0');
+						if (y < 50) y+=100;
+						y += 1900;
+
+						M= (tmData[2]-'0')*10+(tmData[3]-'0');
+						
+
+						d= (tmData[4]-'0')*10+(tmData[5]-'0');
+						h= (tmData[6]-'0')*10+(tmData[7]-'0');
+						m=  (tmData[8]-'0')*10+(tmData[9]-'0');
+						if ( (tmData[10] >= '0') && (tmData[10] <= '9') &&
+							(tmData[11] >= '0') && (tmData[11] <= '9')) {
+							s=  (tmData[10]-'0')*10+(tmData[11]-'0');
+						}
+
+						result.set( y, M, d, h, m, s );
+						if ( gmt ) {
+							result = result.toUTC();
+						}
+					}
+				}
+				break;
+
+				case V_ASN1_GENERALIZEDTIME : {
+					bool gmt = false;
+					int y=0,M=0,d=0,h=0,m=0,s=0;
+					if (resource_->length >= 12) {
+						const char* tmData = (const char*)resource_->data;
+						if (tmData[resource_->length-1] == 'Z') {
+							gmt=true;
+						}
+
+						for ( int i=0; i<12; i++ ) {
+							if ((tmData[i] > '9') || (tmData[i] < '0')) {
+								throw RuntimeException( "Bad data in V_ASN1_GENERALIZEDTIME instance." );
+							}
+						}
+
+						y= (tmData[0]-'0')*1000+(tmData[1]-'0')*100 + (tmData[2]-'0')*10+(tmData[3]-'0');
+						M= (tmData[4]-'0')*10+(tmData[5]-'0');
+						
+
+						d= (tmData[6]-'0')*10+(tmData[7]-'0');
+						h= (tmData[8]-'0')*10+(tmData[9]-'0');
+						m=  (tmData[10]-'0')*10+(tmData[11]-'0');
+						if ( (tmData[12] >= '0') && (tmData[12] <= '9') &&
+							(tmData[13] >= '0') && (tmData[13] <= '9')) {
+							s=  (tmData[12]-'0')*10+(tmData[13]-'0');
+						}
+
+						result.set( y, M, d, h, m, s );
+						if ( gmt ) {
+							result = result.toUTC();
+						}
+					}
+				}
+				break;
+			}
+			return result;
+		}
+		
+		ASN1Time& operator=( const DateTime& dt ) {
+			time_t ctime = dt.getCTime();
+
+			ASN1_TIME_set( resource_, ctime );
+
+			return *this;
+		}
+
+	};
+
 
 
 	
@@ -3102,86 +3215,14 @@ namespace Crypto {
 			return X509_get_version( x509Obj_ );
 		}
 
-		DateTime getNotBefore() const {
-			DateTime result;
-			ASN1_TIME* notBefore = X509_get_notBefore( x509Obj_ );
+		DateTime getNotBefore() const {			
+			ASN1Time notBefore = X509_get_notBefore( x509Obj_ );
+			return DateTime(notBefore);
+		}
 
-			switch ( notBefore->type ) {
-				case V_ASN1_UTCTIME : {
-					bool gmt = false;
-					int y=0,M=0,d=0,h=0,m=0,s=0;
-					if (notBefore->length >= 10) {
-						const char* tmData = (const char*)notBefore->data;
-						if (tmData[notBefore->length-1] == 'Z') {
-							gmt=true;
-						}
-
-						for ( int i=0; i<10; i++ ) {
-							if ((tmData[i] > '9') || (tmData[i] < '0')) {
-								throw RuntimeException( "Bad data in V_ASN1_GENERALIZEDTIME instance." );
-							}
-						}
-
-						y= (tmData[0]-'0')*10+(tmData[1]-'0');
-						if (y < 50) y+=100;
-						y += 1900;
-
-						M= (tmData[2]-'0')*10+(tmData[3]-'0');
-						
-
-						d= (tmData[4]-'0')*10+(tmData[5]-'0');
-						h= (tmData[6]-'0')*10+(tmData[7]-'0');
-						m=  (tmData[8]-'0')*10+(tmData[9]-'0');
-						if ( (tmData[10] >= '0') && (tmData[10] <= '9') &&
-							(tmData[11] >= '0') && (tmData[11] <= '9')) {
-							s=  (tmData[10]-'0')*10+(tmData[11]-'0');
-						}
-
-						result.set( y, M, d, h, m, s );
-						if ( gmt ) {
-							result = result.toUTC();
-						}
-					}
-				}
-				break;
-
-				case V_ASN1_GENERALIZEDTIME : {
-					bool gmt = false;
-					int y=0,M=0,d=0,h=0,m=0,s=0;
-					if (notBefore->length >= 12) {
-						const char* tmData = (const char*)notBefore->data;
-						if (tmData[notBefore->length-1] == 'Z') {
-							gmt=true;
-						}
-
-						for ( int i=0; i<12; i++ ) {
-							if ((tmData[i] > '9') || (tmData[i] < '0')) {
-								throw RuntimeException( "Bad data in V_ASN1_GENERALIZEDTIME instance." );
-							}
-						}
-
-						y= (tmData[0]-'0')*1000+(tmData[1]-'0')*100 + (tmData[2]-'0')*10+(tmData[3]-'0');
-						M= (tmData[4]-'0')*10+(tmData[5]-'0');
-						
-
-						d= (tmData[6]-'0')*10+(tmData[7]-'0');
-						h= (tmData[8]-'0')*10+(tmData[9]-'0');
-						m=  (tmData[10]-'0')*10+(tmData[11]-'0');
-						if ( (tmData[12] >= '0') && (tmData[12] <= '9') &&
-							(tmData[13] >= '0') && (tmData[13] <= '9')) {
-							s=  (tmData[12]-'0')*10+(tmData[13]-'0');
-						}
-
-						result.set( y, M, d, h, m, s );
-						if ( gmt ) {
-							result = result.toUTC();
-						}
-					}
-				}
-				break;
-			}
-
-			return result;
+		DateTime getNotAfter() const {			
+			ASN1Time notAfter = X509_get_notAfter( x509Obj_ );
+			return DateTime(notAfter);
 		}
 
 		X509Name getIssuerName() const {
@@ -3197,8 +3238,13 @@ namespace Crypto {
 		}
 
 		void setExpiresNotBefore( const DateTime& date ) {
-			time_t dtVal = date.getCTime();
+			ASN1Time notBefore = X509_get_notBefore( x509Obj_ );
+			notBefore = date;
+		}
 
+		void setExpiresNotAfter( const DateTime& date ) {
+			ASN1Time notAfter = X509_get_notAfter( x509Obj_ );
+			notBefore = date;
 		}
 	protected:
 		X509* x509Obj_;
