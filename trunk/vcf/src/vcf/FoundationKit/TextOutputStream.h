@@ -61,6 +61,10 @@ public:
 
 	virtual void write( const String& val );
 
+	virtual void write( Persistable* val ) {
+		OutputStream::write( val );
+	}
+
 	void init();
 
 	void writeLine( const String& line );
@@ -71,6 +75,7 @@ public:
 private:
 	String textBuffer_;
 	uint64 size_;
+	uint64 seekPos_;
 	OutputStream* outStream_;
 };
 
