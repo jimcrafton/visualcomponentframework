@@ -91,6 +91,15 @@ Handle the extension based on the compiler
 
 
 
+#include <openssl/evp.h>
+#include <openssl/bn.h>
+#include <openssl/rand.h>
+#include <openssl/rsa.h>
+#include <openssl/err.h>
+#include <openssl/pem.h>
+#include <openssl/conf.h>
+#include <openssl/x509v3.h>
+#include <openssl/asn1.h>
 
 
 
@@ -234,6 +243,13 @@ namespace Crypto {
 		
 	};
 
+
+	class CryptoIOException : public CryptoException {
+	public:
+		CryptoIOException():CryptoException(){}
+
+		virtual ~CryptoIOException() throw() {};
+	};
 
 
 	class BIOInputStream : public InputStream {
@@ -1881,6 +1897,10 @@ namespace Crypto {
 		int getType() const {
 			return EVP_MD_type( digest_ );
 		}
+
+		operator const EVP_MD* () const {
+			return digest_;
+		}
 	protected:
 		bool finished_;
 		EVP_MD_CTX ctx_;
@@ -2715,10 +2735,9 @@ namespace Crypto {
 	
 
 
-	class Key {
+	class Key: public Attachable<EVP_PKEY*,Key> {
 	public:
-
-		enum KeyTypes{
+		enum KeyType{
 			TypeNone = EVP_PKEY_NONE,
 			TypeRSA = EVP_PKEY_RSA,
 			TypeRSA2 =  EVP_PKEY_RSA2,
@@ -2731,58 +2750,64 @@ namespace Crypto {
 			TypeEC = EVP_PKEY_EC
 		};
 
-		Key(): key_(NULL){
-			key_ = EVP_PKEY_new();
+
+		typedef Attachable<EVP_PKEY*,Key> BaseT;
+
+		Key(): BaseT() {}
+
+		Key( EVP_PKEY* obj ): BaseT(obj) {}
+
+
+		Key( const Key& rhs ): BaseT(rhs){}
+
+		Key& operator=( const Key& rhs ) {
+			BaseT::operator=(rhs);
+			return *this;
 		}
 
-		~Key() {
-			EVP_PKEY_free( key_ );
-			key_ = NULL;
+		Key& operator=( EVP_PKEY* rhs ) {
+			BaseT::operator=(rhs);
+			return *this;
 		}
+
+		static freeResource( EVP_PKEY* res ) {
+			EVP_PKEY_free( res );
+		}		
 
 		int size() const {
-			return EVP_PKEY_size( key_ );
+			return EVP_PKEY_size( resource_ );
 		}
 
 		int bits() const {
-			return EVP_PKEY_bits( key_ );
+			return EVP_PKEY_bits( resource_ );
+		}
+
+		KeyType getType() const {
+			return (KeyType) resource_->type;
 		}
 
 		void assignKey( int type, char* key ) {
-			int err = EVP_PKEY_assign( key_, type, key );	
+			int err = EVP_PKEY_assign( resource_, type, key );	
 		}
 
 		void copy( const Key& from ) {
-			int err = EVP_PKEY_copy_parameters( key_, from.key_ );
-		}
-
-		void copy( EVP_PKEY* from ) {
-			int err = EVP_PKEY_copy_parameters( key_, from );
+			int err = EVP_PKEY_copy_parameters( resource_, from.resource_ );
 		}
 
 		bool missingParameters() const {
-			return (EVP_PKEY_missing_parameters(key_) == 1) ? true : false;
+			return (EVP_PKEY_missing_parameters(resource_) == 1) ? true : false;
 		}
 
 		void saveParameters( int mode ) {
-			int err = EVP_PKEY_save_parameters( key_, mode );
+			int err = EVP_PKEY_save_parameters( resource_, mode );
 		}
 
 		bool compare( const Key& rhs ) const {
-			return (EVP_PKEY_cmp_parameters( key_, rhs.key_ ) == 1) ? true : false;
-		}
-
-		bool compare( EVP_PKEY* rhs ) const {
-			return (EVP_PKEY_cmp_parameters( key_, rhs ) == 1) ? true : false;
-		}
-
-
-		EVP_PKEY* in() const {
-			return key_;
+			return (EVP_PKEY_cmp_parameters( resource_, rhs.resource_ ) == 1) ? true : false;
 		}
 
 	protected:
-		EVP_PKEY* key_;
+		
 	};
 
 
@@ -2794,7 +2819,6 @@ namespace Crypto {
 		RSAKeyBase():rsaObj_(NULL){}
 
 		virtual ~RSAKeyBase(){}
-
 
 		virtual String toString() const {
 			String result;
@@ -2829,7 +2853,7 @@ namespace Crypto {
 	};
 
 	typedef Delegate2<int,int> RSAKeyGenDelegate;
-	typedef DelegateR<String> RSAPasswordDelegate;
+	typedef DelegateR<String> PasswordDelegate;
 
 	class RSAKeyPair;
 
@@ -2838,7 +2862,7 @@ namespace Crypto {
 	class RSAPrivateKey : public RSAKeyBase, public Persistable {
 	public:
 
-		RSAPasswordDelegate PasswordPrompt;
+		PasswordDelegate PasswordPrompt;
 
 		RSAPrivateKey() : RSAKeyBase(),encryption_(NULL){}
 
@@ -2921,7 +2945,7 @@ namespace Crypto {
 										NULL,
 										(void*)passwd_.ansi_c_str() ) ) {
 
-				throw CryptoException(); //gets err code automatically
+				throw CryptoIOException(); //gets err code automatically
 			}
 		}
 
@@ -2954,7 +2978,7 @@ namespace Crypto {
 										cbPtr,
 										cbArgPtr ) ) {
 
-				throw CryptoException(); //gets err code automatically
+				throw CryptoIOException(); //gets err code automatically
 			}
 		}
 
@@ -3010,7 +3034,7 @@ namespace Crypto {
 		
 
 
-		RSAPasswordDelegate PasswordPrompt;
+		PasswordDelegate PasswordPrompt;
 
 		RSAPublicKey():RSAKeyBase() {}
 
@@ -3077,9 +3101,8 @@ namespace Crypto {
 			BIOOutputStream cos(stream);
 
 			if ( !PEM_write_bio_RSAPublicKey( cos, rsaObj_ ) ) {
-				throw CryptoException(); //gets err code automatically
+				throw CryptoIOException(); //gets err code automatically
 			}
-
 		}
 
 		virtual void loadFromStream( InputStream * stream ) {
@@ -3094,7 +3117,7 @@ namespace Crypto {
 											&rsaObj_, 
 											RSAPublicKey::passwordCallback, 
 											this ) ) {
-				throw CryptoException(); //gets err code automatically
+				throw CryptoIOException(); //gets err code automatically
 			}
 		}
 
@@ -3152,6 +3175,19 @@ namespace Crypto {
 			return rsaObj_ != NULL;
 		}
 
+		void assignTo( Key& key ) {
+			//the passed in Key will take over ownership of the
+			//rsaObj_, so it can be NULLed out here, it certainly
+			//doesn't need to be free'd at least according to the
+			//samples I've seen
+			if ( !EVP_PKEY_assign_RSA( key.get(), rsaObj_ ) ) {
+				throw CryptoException(); //gets err code automatically
+			}
+			else {
+				rsaObj_ = NULL; //??
+			}
+		}
+
 
 		RSAPrivateKey getPrivateKey() const {
 			return RSAPrivateKey(rsaObj_);
@@ -3201,56 +3237,350 @@ namespace Crypto {
 	};
 
 
-	class X509Certificate {
+	class X509Certificate : public Attachable<X509*,X509Certificate> {
 	public:
-		X509Certificate():x509Obj_(NULL){}
+		
+		typedef Attachable<X509*,X509Certificate> BaseT;
 
-		~X509Certificate(){
-			if ( NULL != x509Obj_ ) {
-				X509_free( x509Obj_ );
+		X509Certificate(): BaseT() {}
+
+		X509Certificate( X509* obj ): BaseT(obj) {}
+
+
+		X509Certificate( const X509Certificate& rhs ): BaseT(rhs){}
+
+		X509Certificate& operator=( const X509Certificate& rhs ) {
+			BaseT::operator=(rhs);
+			return *this;
+		}
+
+		X509Certificate& operator=( X509* rhs ) {
+			BaseT::operator=(rhs);
+			return *this;
+		}
+
+		static freeResource( X509* res ) {
+			X509_free( res );
+		}
+
+		Key generateRSA( int bits, int serial, int daysValid, int version ) {
+
+			if ( NULL != resource_ ) {
+				X509_free(resource_);
 			}
+			resource_ = NULL;
+			
+
+			Key result;
+			RSA *rsa = RSA_generate_key(bits,RSA_F4,NULL,NULL);
+			if ( NULL == rsa ) {
+				throw CryptoException();
+			}
+
+			result = EVP_PKEY_new();
+
+			if (!EVP_PKEY_assign_RSA( result.get(),rsa )) {
+				EVP_PKEY_free( result.detach() );
+			}
+
+			attach( X509_new() );
+
+			X509_set_version(resource_,version);
+			ASN1_INTEGER_set(X509_get_serialNumber(resource_),serial);
+			X509_gmtime_adj(X509_get_notBefore(resource_),0);
+			X509_gmtime_adj(X509_get_notAfter(resource_),(long)60*60*24*daysValid);
+			
+			setPublicKey( result );
+
+			return result;
 		}
 
 		int getVersion() const {
-			return X509_get_version( x509Obj_ );
+			return X509_get_version( resource_ );
+		}
+
+		void setVersion( int value ) {
+			X509_set_version(resource_,value);
 		}
 
 		DateTime getNotBefore() const {			
-			ASN1Time notBefore = X509_get_notBefore( x509Obj_ );
+			ASN1Time notBefore = X509_get_notBefore( resource_ );
 			return DateTime(notBefore);
 		}
 
 		DateTime getNotAfter() const {			
-			ASN1Time notAfter = X509_get_notAfter( x509Obj_ );
+			ASN1Time notAfter = X509_get_notAfter( resource_ );
 			return DateTime(notAfter);
 		}
 
 		X509Name getIssuerName() const {
-			return X509Name( X509_get_issuer_name( x509Obj_ ) );
+			return X509Name( X509_get_issuer_name( resource_ ) );
 		}
 
 		X509Name getSubjectName() const {
-			return X509Name( X509_get_subject_name( x509Obj_ ) );
+			return X509Name( X509_get_subject_name( resource_ ) );
 		}
 
 		ASN1Integer getSerialNumber() const {
-			return ASN1Integer( X509_get_serialNumber( x509Obj_ ) );
+			return ASN1Integer( X509_get_serialNumber( resource_ ) );
 		}
 
 		void setExpiresNotBefore( const DateTime& date ) {
-			ASN1Time notBefore = X509_get_notBefore( x509Obj_ );
+			ASN1Time notBefore = X509_get_notBefore( resource_ );
 			notBefore = date;
 		}
 
 		void setExpiresNotAfter( const DateTime& date ) {
-			ASN1Time notAfter = X509_get_notAfter( x509Obj_ );
-			notBefore = date;
+			ASN1Time notAfter = X509_get_notAfter( resource_ );
+			notAfter = date;
+		}
+
+		void addExtension( int nid, const String& value ) {
+			X509V3_CTX ctx;
+			X509V3_set_ctx_nodb(&ctx);
+			X509V3_set_ctx(&ctx, resource_, resource_, NULL, NULL, 0);
+
+			AnsiString tmp = value;
+			char* tmpVal = new char[tmp.size()+1];
+			tmp.copy( tmpVal, tmp.size() );
+			tmpVal[tmp.size()] = 0;
+
+			X509_EXTENSION *ex = X509V3_EXT_conf_nid( NULL, &ctx, nid, tmpVal );
+
+			X509_add_ext(resource_,ex,-1);
+			X509_EXTENSION_free(ex);
+			delete [] tmpVal;
+		}
+
+
+		void setPublicKey( const Key& key ) {
+			X509_set_pubkey( resource_, key.get() );
+		}
+
+		void sign( const Key& key, MessageDigest& md ) {
+			X509_sign( resource_, key.get(), md );
 		}
 	protected:
-		X509* x509Obj_;
+		
 
 	};
 	
+
+
+	class PEMOutputStream : public OutputStream {
+	public:
+
+		PEMOutputStream( OutputStream* outputStream ) : outputStream_(outputStream){
+			VCF_ASSERT( NULL != outputStream_ );
+
+			if ( NULL == outputStream_ ) {
+				throw RuntimeException( "Cannot have a null output stream in a PEMOutputStream instance." );
+			}
+		}
+
+		virtual ~PEMOutputStream() {}
+
+		virtual void seek(const uint64& offset, const SeekType& offsetFrom) {
+			outputStream_->seek( offset, offsetFrom );
+		}
+		
+		virtual uint64 getSize() {
+			return outputStream_->getSize();
+		}
+		
+		virtual uchar* getBuffer() {
+			return outputStream_->getBuffer();
+		}
+		
+		virtual uint64 getCurrentSeekPos() {
+			return outputStream_->getCurrentSeekPos();
+		}
+		
+		virtual uint64 write( const unsigned char* bytesToWrite, uint64 sizeOfBytes ) {
+			return outputStream_->write( bytesToWrite, sizeOfBytes );
+		}
+
+		void writePrivateKey( const Key& key, const String& password ) {
+			BIOOutputStream bio(this);
+
+			AnsiString tmp = password;
+
+			int res = 0;
+			if ( tmp.empty() ) {
+				res = PEM_write_bio_PrivateKey( bio, key.get(), NULL, NULL, 0, 
+											NULL,
+											NULL );
+			}
+			else {
+				res = PEM_write_bio_PrivateKey( bio, key.get(), NULL, NULL, 0, 
+											PEMOutputStream::knownPasswordCallback,
+											(void*)tmp.c_str() );
+			}
+
+			if ( !res ) {
+				throw CryptoIOException();
+			}
+		}
+
+		void writeCertificate( const X509Certificate& cert ) {
+			BIOOutputStream bio(this);			
+
+			if ( !PEM_write_bio_X509( bio, cert.get() ) ) {
+				throw CryptoIOException();
+			}
+		}
+	protected:
+		OutputStream* outputStream_;
+		static int knownPasswordCallback(char *buf, int size, int rwflag, void *u) {
+			if ( NULL == u ) {
+				return 0;
+			}
+
+			AnsiString pwd = (const char*)u;
+
+			size_t sz = minVal<size_t>( size, pwd.size() );
+			pwd.copy( buf, sz );
+			return sz;
+		}
+
+	};
+
+
+
+	class PEMInputStream : public InputStream {
+	public:
+
+		PasswordDelegate PasswordPrompt;
+
+		PEMInputStream( InputStream* inputStream ) : inputStream_(inputStream){
+
+			VCF_ASSERT( NULL != inputStream_ );
+
+			if ( NULL == inputStream_ ) {
+				throw RuntimeException( "Cannot have a null input stream in a BIOInputStream instance." );
+			}
+		}
+
+		virtual ~PEMInputStream() {}
+
+		virtual void seek(const uint64& offset, const SeekType& offsetFrom) {
+			inputStream_->seek( offset, offsetFrom );
+		}
+		
+		virtual uint64 getSize() {
+			return inputStream_->getSize();
+		}
+		
+		virtual uchar* getBuffer() {
+			return inputStream_->getBuffer();
+		}
+		
+		virtual uint64 getCurrentSeekPos() {
+			return inputStream_->getCurrentSeekPos();
+		}
+		
+		virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes ) {
+			return inputStream_->read( bytesToRead, sizeOfBytes );
+		}
+		
+		virtual bool isEOS() {
+			return inputStream_->isEOS();
+		}
+
+
+		Key* readPrivateKey( const String& password ) {
+			Key* result = new Key();
+
+			BIOInputStream bio(this);
+
+			typedef int (*PwdCB)(char*,int,int,void*);
+			PwdCB callbackPtr = NULL;
+			void* cbArgPtr = NULL;
+
+			AnsiString tmp = password;
+
+			if ( !tmp.empty() ) {
+				callbackPtr = PEMInputStream::knownPasswordCallback;
+				cbArgPtr = (void*) tmp.c_str();
+			}
+			else {
+				callbackPtr = PEMInputStream::passwordCallback;
+				cbArgPtr = this;
+			}
+
+			EVP_PKEY* pk = NULL;
+
+			if ( !PEM_read_bio_PrivateKey( bio, &pk, callbackPtr, cbArgPtr ) ) { 
+				throw CryptoIOException();
+			}
+
+			result->attach( pk );
+
+
+			return result;
+		}
+
+
+		X509Certificate* readCertificate( const String& password )  {
+
+			X509Certificate* result = new X509Certificate();
+
+			BIOInputStream bio(this);
+
+			typedef int (*PwdCB)(char*,int,int,void*);
+			PwdCB callbackPtr = NULL;
+			void* cbArgPtr = NULL;
+
+			AnsiString tmp = password;
+
+			if ( !tmp.empty() ) {
+				callbackPtr = PEMInputStream::knownPasswordCallback;
+				cbArgPtr = (void*) tmp.c_str();
+			}
+			else {
+				callbackPtr = PEMInputStream::passwordCallback;
+				cbArgPtr = this;
+			}
+
+
+			X509* certPtr = NULL;
+			if ( !PEM_read_bio_X509(bio, &certPtr, callbackPtr, cbArgPtr) ) {
+				throw CryptoIOException();
+			}
+
+			result->attach( certPtr );
+			return result;
+		}
+
+	protected:
+		InputStream* inputStream_;
+
+		static int passwordCallback(char *buf, int size, int rwflag, void *u) {
+			if ( NULL == u ) {
+				return 0;
+			}
+
+			PEMInputStream* thisPtr = (PEMInputStream*)u;
+
+			AnsiString pwd = thisPtr->PasswordPrompt();
+
+			size_t sz = minVal<size_t>( size, pwd.size() );
+			pwd.copy( buf, sz );
+			return sz;
+		}
+
+		static int knownPasswordCallback(char *buf, int size, int rwflag, void *u) {
+			if ( NULL == u ) {
+				return 0;
+			}
+
+			AnsiString pwd = (const char*)u;
+
+			size_t sz = minVal<size_t>( size, pwd.size() );
+			pwd.copy( buf, sz );
+			return sz;
+		}
+	};
 };
 
 };
