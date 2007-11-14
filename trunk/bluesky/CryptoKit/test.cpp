@@ -1,15 +1,6 @@
 //test.cpp
 
 
-#include <openssl/evp.h>
-#include <openssl/bn.h>
-#include <openssl/rand.h>
-#include <openssl/rsa.h>
-#include <openssl/err.h>
-#include <openssl/pem.h>
-#include <openssl/conf.h>
-#include <openssl/x509v3.h>
-#include <openssl/asn1.h>
 
 #include "CryptoKit.h"
 
@@ -302,6 +293,9 @@ void testX509Cert()
 	PEM_write_PrivateKey(stdout,pkey,NULL,NULL,0,NULL, NULL);
 
 
+	PEM_write_PUBKEY(stdout, pkey);
+
+
 	FILE* cert = fopen( "test509.cer", "wb" );
 
 	PEM_write_X509(stdout,x509);
@@ -315,6 +309,19 @@ void testX509Cert()
 
 	
 	X509_free(x509);
+
+
+
+	X509Certificate c;
+	Key k = c.generateRSA(512,0,365,2);
+	Key::KeyType t = k.getType();
+
+	FileInputStream fis("test509.cer");
+	PEMInputStream pis(&fis);
+
+	X509Certificate* c2 = pis.readCertificate("");
+
+	delete c2;
 
 }
 
