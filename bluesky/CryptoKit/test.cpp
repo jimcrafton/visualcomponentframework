@@ -3,6 +3,10 @@
 
 
 #include "CryptoKit.h"
+#include <openssl/bio.h>
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+
 
 
 using namespace VCF;
@@ -759,25 +763,77 @@ void testASN()
 	s2 = ss;
 }
 
+
+#pragma comment (lib,"ssleay32d.lib")
+
+void testSSL1()
+{
+	SSL_CTX * ctx = SSL_CTX_new(SSLv23_client_method());
+	SSL * ssl;
+
+	if(! SSL_CTX_load_verify_locations(ctx, NULL, "C:\\cygwin\\usr\\ssl\\certs"))
+	{
+		/* Handle failed load here */
+	}
+
+
+	BIO* bio = BIO_new_ssl_connect(ctx);
+	BIO_get_ssl(bio, & ssl);
+	SSL_set_mode(ssl, SSL_MODE_AUTO_RETRY);
+
+	BIO_set_conn_hostname(bio, "sourceforge.net:https" );//sourceforge.net:443");
+
+	if(BIO_do_connect(bio) <= 0)
+	{
+		ERR_print_errors_fp(stdout);
+	}
+
+	int ret = SSL_get_verify_result(ssl); 
+
+	if( ret != X509_V_OK )
+	{
+		
+
+		int err = SSL_get_error(ssl,ret);
+
+		const char* str = ERR_reason_error_string( err );
+
+		ERR_print_errors_fp(stdout);
+	}
+
+	char * request = "GET / HTTP/1.1\x0D\x0AHost: sourceforge.net\x0D\x0A\x43onnection: Close\x0D\x0A\x0D\x0A";
+    char r[1024];
+
+
+	BIO_write(bio, request, strlen(request));
+
+
+	FILE* out = fopen("out.xml","wb");
+	for(;;)
+    {
+        int p = BIO_read(bio, r, 1023);
+        if(p <= 0) break;
+        r[p] = 0;
+        fprintf( out, "%s", r);
+    }
+	fclose(out);
+
+
+	BIO_free_all(bio);
+	SSL_CTX_free(ctx);
+}
+
+
 int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
 	CryptoKit::init( argc, argv );
-
 	
-	
-	{
-		
-		TextOutputStream tos;
-		BIOOutputStream cos(&tos);
-		
-		
-		BigInteger bigNum(1234567);
-		BN_print( cos, bigNum );
-		BN_print_fp( stdout, bigNum );
-	}
+
+	testSSL1();
 
 
+/*
 	testASN();
 	
 
@@ -794,9 +850,7 @@ int main( int argc, char** argv ){
 	testX509Cert();	
 
 	testRSA();
-	
-	ERR_print_errors_fp( stdout );
-
+*/
 
 	CryptoKit::terminate();
 	FoundationKit::terminate();

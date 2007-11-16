@@ -69,6 +69,8 @@ void testXPath( const String& s, XmlDocument& doc )
 }
 
 
+
+
 int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );	

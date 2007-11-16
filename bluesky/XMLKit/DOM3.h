@@ -274,6 +274,8 @@ namespace VCF {
 	class DOMImplementation : public Object {
 	public:
 
+		void registerFeature(const DOMString& feature, const DOMString& version, DOMObject* featureImpl); 
+
 		bool hasFeature(const DOMString& feature, const DOMString& version);
 		// Introduced in DOM Level 2:
 		DocumentType* createDocumentType(const DOMString& qualifiedName, 
@@ -285,6 +287,8 @@ namespace VCF {
 								const DocumentType& doctype);//raises(DOMException);
 		// Introduced in DOM Level 3:
 		DOMObject* getFeature(const DOMString& feature, const DOMString& version);
+	protected:
+		std::map<DOMString,DOMObject*> features_;
 	};
 
 
@@ -484,6 +488,10 @@ namespace VCF {
 
 	class NodeList : public Object {
 	public:
+		NodeList(){}
+
+		NodeList( const std::vector<Node*>& nodes ):data_(nodes){}
+
 		Node* item(in size_t index) const {
 			if ( index >= data_.size() ) {
 				return NULL;
@@ -815,18 +823,42 @@ namespace VCF {
 	
 	class DocumentType : public Node {
 	public:
-		DOMString name;
-		NamedNodeMap entities;
-		NamedNodeMap notations;
+		DOMString name() const {
+			return name_;
+		}
+
+		const NamedNodeMap& entities() const {
+			return entities_;
+		}
+
+		const NamedNodeMap& notations() const {
+			return notations_;
+		}
+
+		DOMString publicId() const {
+			return publicId_;
+		}
+
+		DOMString systemId() const {
+			return systemId_;
+		}
+
+		DOMString internalSubset() const {
+			return internalSubset_;
+		}
+	protected:
+		DOMString name_;
+		NamedNodeMap entities_;
+		NamedNodeMap notations_;
 
 		// Introduced in DOM Level 2:
-		DOMString publicId;
+		DOMString publicId_;
 
 		// Introduced in DOM Level 2:
-		DOMString systemId;
+		DOMString systemId_;
 
 		// Introduced in DOM Level 2:
-		DOMString internalSubset;
+		DOMString internalSubset_;
 	};
 
 

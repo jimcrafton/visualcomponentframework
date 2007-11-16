@@ -92,11 +92,16 @@ DOMImplementation* DOMImplementationSource::getDOMImplementation( const DOMStrin
 	return result;
 }
 
-
+void DOMImplementation::registerFeature(const DOMString& feature, const DOMString& version, DOMObject* featureImpl)
+{
+	DOMString key = feature + "(" + version + ")";
+	features_[key] = featureImpl;
+}
 
 bool DOMImplementation::hasFeature(const DOMString& feature, const DOMString& version)
 {
-	return false;
+	DOMString key = feature + "(" + version + ")";
+	return features_.find( key ) != features_.end();
 }
 
 DocumentType* DOMImplementation::createDocumentType(const DOMString& qualifiedName, 
@@ -116,5 +121,10 @@ Document* DOMImplementation::createDocument(const DOMString& namespaceURI,
 // Introduced in DOM Level 3:
 DOMObject* DOMImplementation::getFeature(const DOMString& feature, const DOMString& version)
 {
+	DOMString key = feature + "(" + version + ")";
+	std::map<DOMString,DOMObject*>::iterator found = features_.find( key );
+	if ( found != features_.end() ) {		
+		return found->second;		
+	}
 	return NULL;
 }

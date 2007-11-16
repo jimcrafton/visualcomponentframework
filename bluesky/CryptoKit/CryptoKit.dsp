@@ -87,14 +87,15 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib libeay32d.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:".\openssl\out32dll.dbg" /libpath:$(VCF_ROOT)/lib
-# Begin Custom Build - Copying .\openssl\out32dll.dbg\libeay32d.dll to $(OutDir)
+# Begin Custom Build - Copying SSL dlls from .\openssl\out32dll.dbg\ to $(OutDir)
 OutDir=.\Debug
 InputPath=.\Debug\CryptoKit.exe
 SOURCE="$(InputPath)"
 
 "$(OutDir)\libeay32d.dll" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	copy .\openssl\out32dll.dbg\libeay32d.dll $(OutDir)
-
+	copy .\openssl\out32dll.dbg\libeay32d.dll $(OutDir) 
+	copy .\openssl\out32dll.dbg\ssleay32d.dll $(OutDir) 
+	
 # End Custom Build
 
 !ENDIF 
