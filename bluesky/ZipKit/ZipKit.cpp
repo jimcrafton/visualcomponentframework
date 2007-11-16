@@ -375,6 +375,7 @@ int main( int argc, char** argv ){
 
 
 		BasicInputStream bis( zos.getBuffer(), zos.getSize() );
+	
 
 		ZipInputStream zis(&bis);
 
