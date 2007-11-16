@@ -445,7 +445,7 @@ int main( int argc, char** argv ){
 
 
 	//ADO----
-	
+	/*
 	{
 		System::println( "------------------------------------------------------------------------------" );
 		System::println( "ADO testing" );
@@ -526,6 +526,7 @@ int main( int argc, char** argv ){
 		
 		dataSet->free();
 	}
+*/
 
 
 	DatabaseKit::terminate();
