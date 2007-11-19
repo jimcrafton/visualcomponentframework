@@ -79,8 +79,8 @@ public:
 		unsigned char* tmp = currentBuffer_;
 		tmp += seekPos_;
 
-		uint64 sz = minVal<>( sizeOfBuffer, currentSize_ );
-		memcpy( buffer, tmp, sz );
+		uint64 sz = minVal<uint64>( sizeOfBuffer, currentSize_ - seekPos_ );
+		memcpy( buffer, tmp, (size_t)sz );
 
 		seekPos_ += sz;
 
