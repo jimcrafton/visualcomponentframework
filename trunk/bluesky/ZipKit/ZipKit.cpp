@@ -118,7 +118,7 @@ uint64 ZipInputStream::getCurrentSeekPos()
 uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 {
 	uint64 result = 0;
-	unsigned char* tmp = bytesToRead;
+	//unsigned char* tmp = bytesToRead;
 
 	if ( sizeOfBytes < uncompressedData_.getSeekPos() + seekPos_ ) {
 		uint64 oldSeek = uncompressedData_.getSeekPos();
@@ -130,12 +130,16 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 		uncompressedData_.setSeekPos( oldSeek );
 	}
 	else {
-		while ( result < sizeOfBytes ) {
+		int res = 0;
+		while ( result < sizeOfBytes && res != Z_STREAM_END) {
 			unsigned char tmpBuf[256];
 			memset(tmpBuf,0,sizeof(tmpBuf));
 			
 			uint64 readIn = inputStream_->read( &zipTmpData_[0], sizeof(zipTmpData_) );
 
+			if ( readIn == 0 ) {
+				break;
+			}
 			zstream_.next_in = zipTmpData_;
 			zstream_.avail_in = readIn;
 
@@ -144,7 +148,7 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 				zstream_.avail_out = sizeof(tmpBuf);
 				zstream_.next_out = tmpBuf;
 
-				int res = inflate( &zstream_, Z_SYNC_FLUSH );
+				res = inflate( &zstream_, Z_SYNC_FLUSH );
 
 
 
@@ -165,26 +169,31 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 					case Z_STREAM_END : {
 
 					}
-				}
-
-				if ( res == Z_OK ) {
+				}				
 					
-					uint64 have = sizeof(tmpBuf) - zstream_.avail_out;
-					uncompressedData_.write( &tmpBuf[0], have );
-					
-					
-					result +=  minVal<>(have,sizeOfBytes);
-					
-					memcpy( tmp, &tmpBuf[0], result );
-					
-					seekPos_ += result;
-					
-					tmp += result;
-				}
-			} while ( zstream_.avail_out == 0);
+				uint64 have = sizeof(tmpBuf) - zstream_.avail_out;
+				uncompressedData_.write( &tmpBuf[0], have );
+				
+				
+				result +=  minVal<>(have,sizeOfBytes);
+				
+				//memcpy( tmp, &tmpBuf[0], have );
+				
+				//seekPos_ += have;
+				
+				//tmp += have;
+			} while ( zstream_.avail_out == 0 && res != Z_STREAM_END);
 		}
 
 		inflateEnd( &zstream_ );
+
+		uint64 oldSeek = uncompressedData_.getSeekPos();
+		uncompressedData_.setSeekPos( seekPos_ );
+
+		result = uncompressedData_.read( bytesToRead, sizeOfBytes );
+		seekPos_ += result;
+
+		uncompressedData_.setSeekPos( oldSeek );
 	}
 
 
@@ -265,12 +274,12 @@ uint64 ZipOutputStream::write( const unsigned char* bytesToRead, uint64 sizeOfBy
 {	
 	uint64 result = 0;
 
-	unsigned char* tmpCopy = new unsigned char[sizeOfBytes];
-	memcpy(tmpCopy,bytesToRead,sizeOfBytes);
+	//unsigned char* tmpCopy = new unsigned char[sizeOfBytes];
+	//memcpy(tmpCopy,bytesToRead,sizeOfBytes);
 
 
 
-	zstream_.next_in = tmpCopy;
+	zstream_.next_in = (unsigned char*)bytesToRead;
 	zstream_.avail_in = sizeOfBytes;
 
 	
@@ -296,8 +305,9 @@ uint64 ZipOutputStream::write( const unsigned char* bytesToRead, uint64 sizeOfBy
 	} while ( zstream_.avail_out == 0 );
 
 
+	flush();
 
-	delete [] tmpCopy;
+	//delete [] tmpCopy;
 
 	return result;
 }
@@ -317,13 +327,9 @@ int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
 
-	//zlib_filefunc_def funcs;
-	//memset(&funcs,0,size(funcs));
-	//funcs.
+	
 
-	//unzOpen2( ZIPFILE, &funcs );
-
-	{
+	{/*
 		String data = "Hello how are you, this is some compressed text!";
 		
 		ZipOutputStream zos;
@@ -351,6 +357,7 @@ int main( int argc, char** argv ){
 		String s;
 		tis.read(s);
 		tis.read(s);
+		*/
 	}
 	
 
@@ -377,7 +384,7 @@ int main( int argc, char** argv ){
 		
 		ZipOutputStream zos;
 		zos.write( bytes, fsize );
-		zos.flush();
+		//zos.flush();
 
 
 		BasicInputStream bis( zos.getBuffer(), zos.getSize() );
