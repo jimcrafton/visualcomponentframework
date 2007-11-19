@@ -68,8 +68,6 @@ namespace VCF {
 		
 		virtual GetResultType getRecord( DataSet::Record* record, GetRecordMode mode );
 
-		virtual void next();
-
 		virtual void initNewRecord( DataSet::Record* record );
 
 		virtual DataSet::Record* allocateRecordData();
