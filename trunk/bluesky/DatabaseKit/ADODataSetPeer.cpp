@@ -41,7 +41,7 @@ ADODataSetPeer::ADODataSetPeer():
 		throw DatabaseError("Unable to initialize COM for ADO data set");
 	}
 
-	setProvider( "Microsoft.Jet.OLEDB.4.0" );
+	
 }
 
 ADODataSetPeer::~ADODataSetPeer()
@@ -314,7 +314,7 @@ GetResultType ADODataSetPeer::getRecord( DataSet::Record* record, GetRecordMode 
 	if ( currentRecordSet_->GetEOF() ) {
 		
 		//eof_ = true;
-		result = grEOF;
+		result = grFailed;
 	}
 	else {
 		size_t bufferOffset = 0;
@@ -408,10 +408,6 @@ GetResultType ADODataSetPeer::getRecord( DataSet::Record* record, GetRecordMode 
 	return result;
 }
 
-void ADODataSetPeer::next()
-{
-
-}
 
 DataSet::Record* ADODataSetPeer::allocateRecordData()
 {
@@ -598,8 +594,15 @@ void ADODataSetPeer::post()
 					case dftString : {
 						const char* text = (const char*)&record->buffer[bufferOffset];
 
-						bstr_t bstrTxt = text;
-						variant_t fieldVal = bstrTxt;
+						bstr_t bstrTxt;
+						
+						variant_t fieldVal;
+
+						fieldVal = adoField->GetValue();
+						bstrTxt = fieldVal;
+
+						bstrTxt = text;
+						fieldVal = bstrTxt;
 
 						adoField->PutValue( fieldVal );
 
@@ -720,5 +723,10 @@ void ADODataSetPeer::cancel()
 
 void ADODataSetPeer::setDataSet( DataSet* dataSet )
 {
+	bool needsProvider = NULL == dataSet_ ? true : false;
 	dataSet_ = dataSet;
+
+	if ( needsProvider ) {
+		setProvider( "Microsoft.Jet.OLEDB.4.0" );
+	}
 }

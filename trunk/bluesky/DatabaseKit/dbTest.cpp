@@ -271,6 +271,11 @@ int main( int argc, char** argv ){
 						//String s = "Field name: " + field->getName() + " value: " + field->getAsString();
 						//System::println( "Field name: " + field->getName() + " value: " + field->getAsString() );
 					}
+
+					if ( rowCount == 638 ) {
+						int g = rowCount;
+					}
+
 					dataSet->next();
 					rowCount ++;
 				}
@@ -422,28 +427,6 @@ int main( int argc, char** argv ){
 
 	}
 
-
-/*
-	{
-		try {
-		Test::DB db;
-		db.open("test.db3");
-		
-		Test::ResultSet rs = db.execSQLWithResults("update Person2 set LastName = ?, FirstName = ?, Address = ?, Age = ? where LastName like 'ddggf' and FirstName like 'Jones' and Address like '2012 fillibuster ave' and Age like 40;");
-		rs[1] = "Spaz";
-		rs.next();
-		}
-		catch (	std::exception& e ) {
-			printf( "Err: %s\n", e.what() ) ;
-		}
-	}
-*/
-
-
-
-
-
-
 	//ADO----
 	/*
 	{
@@ -488,9 +471,15 @@ int main( int argc, char** argv ){
 				
 				while ( fields->hasMoreElements() ) {
 					DataField* field = fields->nextElement();
-					//System::println( "\tField name: " + field->getName() + " value: " + field->getAsString() );
+					System::println( "\tField name: " + field->getName() + " value: " + field->getAsString() + " for row: " + rowCount );
 				}
+				
+				if ( rowCount == 1472 ) {
+					int g = rowCount;
+				}
+
 				dataSet->next();
+
 				rowCount ++;
 			}
 

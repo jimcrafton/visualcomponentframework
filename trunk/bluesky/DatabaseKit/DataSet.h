@@ -753,8 +753,6 @@ namespace VCF {
 		virtual void initFieldDefinitions() = 0;
 
 		virtual void first() = 0;
-		
-		virtual void next() = 0;
 
 		virtual void post() = 0;
 

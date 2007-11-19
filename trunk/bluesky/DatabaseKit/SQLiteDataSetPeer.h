@@ -62,8 +62,6 @@ namespace VCF {
 		
 		virtual GetResultType getRecord( DataSet::Record* record, GetRecordMode mode );
 
-		virtual void next();
-
 		virtual DataSet::Record* allocateRecordData();
 
 		virtual bool isCursorOpen();

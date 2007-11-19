@@ -540,10 +540,6 @@ GetResultType SQLiteDataSetPeer::getRecord( DataSet::Record* record, GetRecordMo
 	return result;
 }
 
-void SQLiteDataSetPeer::next()
-{
-
-}
 
 DataSet::Record* SQLiteDataSetPeer::allocateRecordData()
 {
