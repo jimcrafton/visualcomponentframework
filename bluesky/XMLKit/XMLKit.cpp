@@ -5,6 +5,14 @@
 #include <libxml/parser.h>
 #include <libxml/xpathInternals.h>
 
+
+
+#include <libxslt/transform.h>
+#include <libxslt/xsltutils.h>
+#include <libxslt/extensions.h>
+#include <libxml/xpathInternals.h>
+
+
 #include "vcf/FoundationKit/Dictionary.h"
 
 
@@ -24,10 +32,14 @@ using namespace VCF;
 void XMLKit::init( int argc, char **argv ) 
 {
 	xmlInitParser();
+
+	xsltInit();
 }
 
 void XMLKit::terminate()
 {
+	xsltCleanupGlobals();
+
 	xmlCleanupParser();
 
 #ifdef _DEBUG   
@@ -35,7 +47,45 @@ void XMLKit::terminate()
 	xmlMemoryDump();
 #endif
 }
+
+
+XmlException::XmlException():
+	BasicException("")
+{
+	xmlErrorPtr err = xmlGetLastError();
+
+	if ( NULL != err ) {
+		String errMsg = 
+			Format("Error in XML libs: %s in file %s line %d")
+				% err->message 
+				% (err->file != NULL ? err->file : "(unknown)")
+				% err->line ;
+		setMessage( errMsg );
+	}
+}
+
+XmlException::XmlException(xmlErrorPtr err):
+	BasicException("")
+{
+	if ( NULL != err ) {
+		String errMsg = 
+			Format("Error in XML libs: %s in file %s line %d")
+				% err->message 
+				% (err->file != NULL ? err->file : "(unknown)")
+				% err->line ;
+		setMessage( errMsg );
+	}
+}
 	
+String XMLKit::getXMLVersion()
+{
+	return LIBXML_DOTTED_VERSION;
+}
+
+String XMLKit::getXSLTVersion()
+{
+	return LIBXSLT_DOTTED_VERSION;
+}
 
 	
 void XMLUtils::freeXMLStr( xmlChar* str )
@@ -106,6 +156,11 @@ void XMLSaxParser::parseChunk( const String& xmlChunk, bool finished )
 	AnsiString tmp = xmlChunk;
 
 	xmlParseChunk( parser_, tmp.c_str(), tmp.size(), finished ? 1 : 0 );
+}
+
+void XMLSaxParser::parseChunk( const uchar* xmlChunk, size_t chunkSize, bool finished )
+{
+	xmlParseChunk( parser_, (const char*)xmlChunk, chunkSize, finished ? 1 : 0 );
 }
 
 void XMLSaxParser::finishParsing()
@@ -377,7 +432,7 @@ void XmlNamespace::freeResource(xmlNsPtr res)
 	xmlFreeNs( res );
 }
 
-String XmlNode::toString()
+String XmlNode::toString() const
 {
 	String xml;
 
@@ -708,7 +763,12 @@ void XmlDocument::freeResource(xmlDocPtr res)
 	xmlFreeDoc( res );
 }
 
-String XmlDocument::toString()
+void XmlDocument::load( const String& fileName )
+{
+	attach( xmlParseFile( fileName.ansi_c_str() ) );
+}
+
+String XmlDocument::toString() const 
 {
 	String xml;
 
@@ -722,7 +782,7 @@ String XmlDocument::toString()
 	return xml;
 }
 
-Object* XmlDocument::clone( bool deep )
+Object* XmlDocument::clone( bool deep ) const 
 {
 	XmlDocument* clonedDoc = new XmlDocument();
 
@@ -1045,7 +1105,8 @@ void XPathIterator::registerNamespaces( Dictionary& namespaceDict )
 
 
 XMLTextReader::XMLTextReader():
-	xmlReader_(NULL)
+	xmlReader_(NULL),
+	encodingType_(XMLTextReader::etNone)
 {
 	createXMLReader();
 }
@@ -1740,12 +1801,22 @@ void XMLTextReader::add( const unsigned char* xmlBuffer, size_t length )
 	}
 }		
 
+XMLTextReader::EncodingType XMLTextReader::getEncodingType() const 
+{
+	return encodingType_;
+}
+
+void XMLTextReader::setEncodingType( XMLTextReader::EncodingType val )
+{
+	encodingType_ = val;
+}
+
 void XMLTextReader::checkBuffers() {
 	if ( NULL != xmlInputBuf_ ) {
 		return;
 	}
 
-	xmlInputBuf_ = xmlAllocParserInputBuffer( XML_CHAR_ENCODING_NONE );
+	xmlInputBuf_ = xmlAllocParserInputBuffer( (xmlCharEncoding)encodingType_ );
 	xmlBuf_ = xmlInputBuf_->buffer;
 }
 
@@ -1815,3 +1886,63 @@ void XMLTextReader::xmlStructuredErrorFunc(void * userData,  xmlErrorPtr error)
 }
 
 
+
+
+XSLTStyleSheet::XSLTStyleSheet():BaseT()
+{
+	
+}
+
+XSLTStyleSheet::XSLTStyleSheet( xsltStylesheetPtr val ):BaseT(val)
+{
+	
+}
+
+XSLTStyleSheet::XSLTStyleSheet( const XSLTStyleSheet& val ):BaseT(val)
+{
+	
+}
+
+XSLTStyleSheet& XSLTStyleSheet::operator=( xsltStylesheetPtr rhs )
+{
+	assign(rhs);
+	return *this;
+}
+
+void XSLTStyleSheet::freeResource(xsltStylesheetPtr res)
+{
+	xsltFreeStylesheet(res);
+}
+
+void XSLTStyleSheet::newStyleSheet()
+{
+	attach( xsltNewStylesheet() );
+}
+
+void XSLTStyleSheet::parse( const String& fileName ) 
+{
+	attach( xsltParseStylesheetFile( (const xmlChar *)fileName.ansi_c_str() ) );
+
+	if ( this->isNull() ) {
+		throw XmlException( xmlGetLastError() );
+	}
+}
+
+void XSLTStyleSheet::parseDocument( const XmlDocument& doc )
+{
+	attach( xsltParseStylesheetDoc( doc.get() ) );
+}
+
+
+XmlDocument* XSLTStyleSheet::transform( const XmlDocument& doc )
+{
+	XmlDocument* result = NULL;
+
+	xmlDocPtr xfrmdDoc = xsltApplyStylesheet( resource_, doc.get(), NULL );	
+	if ( NULL != xfrmdDoc ) {
+		result = new XmlDocument();
+		result->attach( xfrmdDoc );
+	}
+
+	return result;
+}
