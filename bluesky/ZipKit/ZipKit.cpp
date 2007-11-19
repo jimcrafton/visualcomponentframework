@@ -140,45 +140,51 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 			zstream_.avail_in = readIn;
 
 
-			zstream_.avail_out = sizeof(tmpBuf);
-			zstream_.next_out = tmpBuf;
+			do {
+				zstream_.avail_out = sizeof(tmpBuf);
+				zstream_.next_out = tmpBuf;
 
-			int res = inflate( &zstream_, Z_SYNC_FLUSH );
+				int res = inflate( &zstream_, Z_SYNC_FLUSH );
 
-			VCF_ASSERT(res != Z_STREAM_ERROR);
 
-			switch (res) {
-				case Z_NEED_DICT: {
-					res = Z_DATA_ERROR;     
-				} //and fall through 
 
-				case Z_DATA_ERROR:
-				case Z_MEM_ERROR: {
-					inflateEnd( &zstream_ );
-					break; //out of while loop...
+				VCF_ASSERT(res != Z_STREAM_ERROR);
+
+				switch (res) {
+					case Z_NEED_DICT: {
+						res = Z_DATA_ERROR;     
+					} //and fall through 
+
+					case Z_DATA_ERROR:
+					case Z_MEM_ERROR: {
+						inflateEnd( &zstream_ );
+						throw RuntimeException( "Error with zip stream, either a Z_DATA_ERROR or Z_MEM_ERROR occurred" );
+						//out of while loop...
+					}
+
+					case Z_STREAM_END : {
+
+					}
 				}
 
-				case Z_STREAM_END : {
-
+				if ( res == Z_OK ) {
+					
+					uint64 have = sizeof(tmpBuf) - zstream_.avail_out;
+					uncompressedData_.write( &tmpBuf[0], have );
+					
+					
+					result +=  minVal<>(have,sizeOfBytes);
+					
+					memcpy( tmp, &tmpBuf[0], result );
+					
+					seekPos_ += result;
+					
+					tmp += result;
 				}
-			}
-
-			if ( res == Z_OK ) {
-				
-				uint64 have = sizeof(tmpBuf) - zstream_.avail_out;
-				uncompressedData_.write( &tmpBuf[0], have );
-				
-				
-				result +=  minVal<>(have,sizeOfBytes);
-				
-				memcpy( tmp, &tmpBuf[0], result );
-				
-				seekPos_ += result;
-				
-				tmp += result;
-			}
+			} while ( zstream_.avail_out == 0);
 		}
 
+		inflateEnd( &zstream_ );
 	}
 
 
@@ -322,9 +328,9 @@ int main( int argc, char** argv ){
 		
 		ZipOutputStream zos;
 		
-		unsigned char tmp[300];
-		zos.write( tmp, sizeof(tmp) );
-		zos.flush();
+		//unsigned char tmp[300];
+		//zos.write( tmp, sizeof(tmp) );
+		//zos.flush();
 		
 		TextOutputStream tos(&zos);
 		
