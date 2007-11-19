@@ -68,7 +68,7 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "./libxml" /I "./libxml/include" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_CONSOLE" /D "USE_FOUNDATIONKIT_DLL" /D "HAVE_WIN32_THREADS" /D "HAVE_COMPILER_TLS" /FD /GZ /I$(VCF_ROOT)/src /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "./libxml" /I "./libxml/include" /I "./libxslt" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_CONSOLE" /D "USE_FOUNDATIONKIT_DLL" /D "HAVE_WIN32_THREADS" /D "HAVE_COMPILER_TLS" /D "LIBXML_STATIC" /D "LIBXSLT_STATIC" /FD /GZ /I$(VCF_ROOT)/src /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -124,174 +124,799 @@ SOURCE=.\XMLKit.h
 # Begin Source File
 
 SOURCE=".\libxml\c14n.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\catalog.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\chvalid.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\debugXML.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\dict.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\DOCBparser.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\encoding.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\entities.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\error.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\globals.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\hash.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\HTMLparser.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\HTMLtree.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\legacy.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\list.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\nanoftp.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\nanohttp.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\parser.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\parserInternals.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\pattern.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\relaxng.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\SAX.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\SAX2.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\schematron.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\threads.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\tree.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\uri.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\valid.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\xinclude.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\xlink.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\xmlIO.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\xmlmemory.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\xmlmodule.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\xmlreader.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\xmlregexp.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\xmlsave.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\xmlschemas.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\xmlschemastypes.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\xmlstring.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\xmlunicode.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\xmlwriter.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\xpath.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=".\libxml\xpointer.c"
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxml"
+
+!ENDIF 
+
+# End Source File
+# End Group
+# Begin Group "libxslt"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\attributes.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\attrvt.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\documents.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\extensions.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\extra.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\functions.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\imports.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\keys.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\namespaces.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\numbers.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\pattern.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\preproc.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\security.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\templates.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\transform.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\variables.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\xslt.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\libxslt\libxslt\xsltutils.c
+
+!IF  "$(CFG)" == "XMLKit - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "XMLKit - Win32 Debug"
+
+# PROP Intermediate_Dir "Debug\libxslt"
+
+!ENDIF 
+
 # End Source File
 # End Group
 # End Target

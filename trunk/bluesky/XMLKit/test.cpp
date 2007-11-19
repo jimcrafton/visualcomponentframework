@@ -4,6 +4,13 @@
 #include "XMLKit.h"
 
 
+#include <libxslt/transform.h>
+#include <libxslt/xsltutils.h>
+#include <libxslt/extensions.h>
+#include <libxml/xpathInternals.h>
+
+
+
 
 #if !defined(VCF_DISABLE_PRAGMA_LINKING)
 #   define USE_INTERNETKIT_DLL
@@ -71,12 +78,111 @@ void testXPath( const String& s, XmlDocument& doc )
 
 
 
+
+
+
+
+class XSLTTransformContext : public Attachable<xsltTransformContextPtr,XSLTTransformContext> {
+public:
+	typedef Attachable<xsltTransformContextPtr,XSLTTransformContext> BaseT;
+	
+
+	XSLTTransformContext( const XSLTStyleSheet& styleSheet, const XmlDocument& doc ):BaseT()
+	{
+
+	}
+
+	XSLTTransformContext():BaseT()
+	{
+		
+	}
+	
+	XSLTTransformContext( xsltTransformContextPtr val ):BaseT(val)
+	{
+		
+	}
+	
+	XSLTTransformContext( const XSLTTransformContext& val ):BaseT(val)
+	{
+		
+	}
+	
+	XSLTTransformContext& operator=( xsltTransformContextPtr rhs )
+	{
+		assign(rhs);
+		return *this;
+	}
+	
+	static void freeResource(xsltTransformContextPtr res)
+	{
+		xsltFreeTransformContext(res);
+	}
+};
+
+
+
+void Test_Function( xmlXPathParserContextPtr ctxt,
+                                 int nargs)
+{
+	valuePush(ctxt, xmlXPathNewString((const xmlChar *)"HOLA"));
+}
+
+void* MyxsltExtInitFunction(xsltTransformContextPtr ctxt, const xmlChar * URI)
+{
+	void* res = NULL;
+
+	xsltRegisterExtFunction( ctxt, (const xmlChar*)"test", (const xmlChar*)"urn:foo.bar", Test_Function );
+
+	return res;
+}
+
+void MyxsltExtShutdownFunction( xsltTransformContextPtr ctxt, 
+					 const xmlChar * URI, 
+					 void * data)
+{
+
+}
+
+
+
+void testXSLT()
+{
+	
+	
+	int r = xsltRegisterExtModule( (const xmlChar*)"urn:foo.bar", MyxsltExtInitFunction, MyxsltExtShutdownFunction );
+
+	xmlSubstituteEntitiesDefault(1);
+	xmlLoadExtDtdDefaultValue = 1;
+
+	XSLTStyleSheet stylesheet;
+	stylesheet.parse( "cdcatalog.xsl" );
+
+	XmlDocument doc;
+	doc.load( "cdcatalog.xml" );
+
+	XmlDocument* res = stylesheet.transform( doc );	
+
+	if ( res ) {
+		FileOutputStream fos( "xslt-proc-results.html" );
+		fos << res->toString();
+		fos.close();
+	}
+
+	delete res;
+
+	stylesheet = NULL;
+}
+
 int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );	
 	InternetKit::init(argc, argv);
 
 	XMLKit::init( argc, argv );
+
+	System::println( "XMLkit XML version: " + XMLKit::getXMLVersion() );
+	System::println( "XMLkit XSLT version: " + XMLKit::getXSLTVersion() );
+
 
 	{
 		
@@ -255,6 +361,15 @@ int main( int argc, char** argv ){
 
 		delete doc2;
 	}
+
+
+
+
+
+
+	testXSLT();
+
+
 
 	XMLKit::terminate();
 
