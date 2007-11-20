@@ -228,6 +228,9 @@ namespace VCF {
 
 		void finishParsing();
 
+		xmlParserCtxtPtr internal_getParser() {
+			return parser_;
+		}
 	protected:
 		xmlSAXHandler saxHandler_;
 		xmlParserCtxtPtr parser_;
@@ -428,11 +431,18 @@ namespace VCF {
 		}
 
 		void attach(Type val) {
+			if ( resource_ && owned_ ) {
+				Impl::freeResource(resource_);
+			}
 			owned_ = true;
 			resource_ = val;
 		}
 
 		Type get() const {
+			return resource_;
+		}
+
+		Type& get() {
 			return resource_;
 		}
 

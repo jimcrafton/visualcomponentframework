@@ -798,6 +798,7 @@ void XmlDocument::setXML( const String& xml )
 		if ( resource_ ) {
 			xmlFreeDoc(resource_);
 		}
+		resource_ = NULL;
 	}
 
 	AnsiString s = xml;
