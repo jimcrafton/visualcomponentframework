@@ -185,7 +185,7 @@ uint64 OSXFileStream::write( const unsigned char* bytesToWrite, uint64 sizeOfByt
 	return bytesWritten;
 }
 
-char* OSXFileStream::getBuffer()
+uchar* OSXFileStream::getBuffer()
 {
 	// ???
 	return NULL;

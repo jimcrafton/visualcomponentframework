@@ -2360,7 +2360,7 @@ public:
 		Function<ReturnType>(),classFuncPtr(funcPtr),funcSrc(src){
 		this->name = s;
 
-		Object* obj = getSource();	
+		Object* obj = this->getSource();	
 		if ( NULL != obj ) {
 			this->addToSource( obj );
 		}
@@ -2564,7 +2564,7 @@ public:
 		Function1<ReturnType,P1>(),classFuncPtr(funcPtr),funcSrc(src){
 		this->name = s;
 
-		Object* obj = getSource();	
+		Object* obj = this->getSource();	
 		if ( NULL != obj ) {
 			this->addToSource( obj );
 		}
@@ -2767,7 +2767,7 @@ public:
 		Function2<ReturnType,P1,P2>(),classFuncPtr(funcPtr),funcSrc(src){
 		this->name = s;
 
-		Object* obj = getSource();	
+		Object* obj = this->getSource();	
 		if ( NULL != obj ) {
 			this->addToSource( obj );
 		}
@@ -2976,7 +2976,7 @@ public:
 		Function3<ReturnType,P1,P2,P3>(),classFuncPtr(funcPtr),funcSrc(src){
 		this->name = s;
 
-		Object* obj = getSource();	
+		Object* obj = this->getSource();	
 		if ( NULL != obj ) {
 			this->addToSource( obj );
 		}
@@ -3196,7 +3196,7 @@ public:
 		Function4<ReturnType,P1,P2,P3,P4>(),classFuncPtr(funcPtr),funcSrc(src){
 		this->name = s;
 
-		Object* obj = getSource();	
+		Object* obj = this->getSource();	
 		if ( NULL != obj ) {
 			this->addToSource( obj );
 		}
@@ -3418,7 +3418,7 @@ public:
 		Function5<ReturnType,P1,P2,P3,P4,P5>(),classFuncPtr(funcPtr),funcSrc(src){
 		this->name = s;
 
-		Object* obj = getSource();	
+		Object* obj = this->getSource();	
 		if ( NULL != obj ) {
 			this->addToSource( obj );
 		}
@@ -3657,7 +3657,7 @@ public:
 		Function6<ReturnType,P1,P2,P3,P4,P5,P6>(),classFuncPtr(funcPtr),funcSrc(src){
 		this->name = s;
 
-		Object* obj = getSource();	
+		Object* obj = this->getSource();	
 		if ( NULL != obj ) {
 			this->addToSource( obj );
 		}

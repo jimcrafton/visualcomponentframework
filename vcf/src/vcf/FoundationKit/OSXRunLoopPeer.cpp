@@ -36,6 +36,11 @@ void OSXRunLoopPeer::stop()
     CFRunLoopStop( runLoopRef_ );
 }
 
+bool OSXRunLoopPeer::isStopped() const
+{
+	return false;
+}
+
 void OSXRunLoopPeer::addTimer( RunLoopTimerPtr::Shared timer )
 {
     RunLoopTimerPeerPtr::Shared peer = timer->getPeer();
