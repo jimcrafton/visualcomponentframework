@@ -172,10 +172,8 @@ void OSXWindow::create( Control* owningControl )
 							contentViewEvents, 
 							this, 
 							&contentViewHandlerRef_ );
-		
-		UIToolkit::postEvent( new GenericEventHandler<Control>( owningControl, &Control::handleEvent ),
-						new VCF::ComponentEvent( owningControl, Component::COMPONENT_CREATED ),	true );		
-
+		EventHandler* ev = new ClassProcedure1<Event*,Control>( owningControl, &Control::handleEvent );
+		UIToolkit::postEvent( ev, new VCF::ComponentEvent( owningControl, Component::COMPONENT_CREATED ), true );		
 	}
 }
 
@@ -693,10 +691,10 @@ OSStatus OSXWindow::handleOSXEvent(  EventHandlerCallRef nextHandler, EventRef t
 
 					if ( window->allowClose() ) {
 
-						VCF::WindowEvent event( getControl(), WINDOW_EVENT_CLOSE );
+						VCF::FrameEvent event( getControl(), Frame::CLOSE_EVENT );
 
 
-						window->FrameClose.fireEvent( &event );
+						window->FrameClose( &event );
 
 						if ( false == internalClose_ ){
 							//check if the main window is clossing - if it is

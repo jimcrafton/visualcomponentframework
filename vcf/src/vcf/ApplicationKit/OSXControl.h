@@ -12,7 +12,7 @@ where you installed the VCF.
 namespace VCF {
 
 
-class OSXControl : public ObjectWithEvents, public ControlPeer {
+class OSXControl : public ObjectWithCallbacks, public ControlPeer {
 public:
 	enum MouseState{
 		msNoState=0,

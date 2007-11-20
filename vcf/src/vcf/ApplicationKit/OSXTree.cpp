@@ -225,17 +225,15 @@ void OSXTree::setImageList( ImageList* imageList )
 {
 
 	if ( imageList != NULL ) {
-		
-
-		EventHandler* imgListHandler = getEventHandler( "OSXTree::onImageListImageChanged" );
+		CallBack* imgListHandler = getCallback( "OSXTree::onImageListImageChanged" );
 		if ( NULL == imgListHandler ) {
 			imgListHandler =
-				new ImageListEventHandler<OSXTree>(this, &OSXTree::onImageListImageChanged, "OSXTree::onImageListImageChanged" );
+				new ClassProcedure1<ImageListEvent*,OSXTree>(this, &OSXTree::onImageListImageChanged, "OSXTree::onImageListImageChanged" );
 
 		}
-		imageList->SizeChanged.addHandler( imgListHandler );
-		imageList->ImageAdded.addHandler( imgListHandler );
-		imageList->ImageDeleted.addHandler( imgListHandler );
+		imageList->SizeChanged += imgListHandler;
+		imageList->ImageAdded += imgListHandler;
+		imageList->ImageDeleted += imgListHandler;
 	}
 }
 
@@ -281,15 +279,15 @@ void OSXTree::onStateImageListImageChanged( ImageListEvent* event )
 void OSXTree::setStateImageList( ImageList* imageList )
 {
 	if ( imageList != NULL ) {	
-		EventHandler* imgListHandler = getEventHandler( "OSXTree::onStateImageListImageChanged" );
+		CallBack* imgListHandler = getCallback( "OSXTree::onStateImageListImageChanged" );
 		if ( NULL == imgListHandler ) {
 			imgListHandler =
-				new ImageListEventHandler<OSXTree>(this, &OSXTree::onStateImageListImageChanged, "OSXTree::onStateImageListImageChanged" );
+				new ClassProcedure1<ImageListEvent*,OSXTree>(this, &OSXTree::onStateImageListImageChanged, "OSXTree::onStateImageListImageChanged" );
 
 		}
-		imageList->SizeChanged.addHandler( imgListHandler );
-		imageList->ImageAdded.addHandler( imgListHandler );
-		imageList->ImageDeleted.addHandler( imgListHandler );
+		imageList->SizeChanged +=  imgListHandler;
+		imageList->ImageAdded += imgListHandler;
+		imageList->ImageDeleted += imgListHandler;
 	}
 }
 
@@ -305,16 +303,15 @@ void OSXTree::setAllowLabelEditing( const bool& allowLabelEditing )
 
 void OSXTree::onControlModelChanged( Event* e )
 {
-	EventHandler* ev = getEventHandler( "OSXTree::onTreeNodeDeleted" );
+	CallBack* ev = getCallback( "OSXTree::onTreeNodeDeleted" );
 
 	if ( NULL == ev ) {
-		ev = new TreeModelEventHandler<OSXTree>( this,
+		ev = new ClassProcedure1<TreeModelEvent*,OSXTree>( this,
 													&OSXTree::onTreeNodeDeleted,
 													"OSXTree::onTreeNodeDeleted" );
-	}
+	}	
 	
-	
-	treeControl_->getTreeModel()->addTreeNodeDeletedHandler( ev );
+	treeControl_->getTreeModel()->addTreeNodeDeletedHandler( (EventHandler*)ev );
 	
 	addChildItems( NULL );
 }

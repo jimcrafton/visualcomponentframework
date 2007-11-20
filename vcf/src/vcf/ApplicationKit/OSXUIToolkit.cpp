@@ -1541,7 +1541,7 @@ OSStatus OSXUIToolkit::handleAppEvents( EventHandlerCallRef nextHandler, EventRe
                         eventHandler->invoke( e );
 
                         if ( deleteHandler ) {
-                            delete eventHandler;
+                            eventHandler->free();
                         }
                         delete e;
                     }
