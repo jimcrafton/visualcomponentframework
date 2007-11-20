@@ -15,6 +15,11 @@ where you installed the VCF.
 #endif
 
 
+//#define XMLKIT_DOM
+
+#ifdef XMLKIT_DOM  
+
+
 #define readonly 
 #define attribute
 #define in
@@ -905,5 +910,7 @@ namespace VCF {
 #undef readonly 
 #undef attribute
 #undef in
+
+#endif //XMLKIT_DOM
 
 #endif //_VCF_DOM_H__

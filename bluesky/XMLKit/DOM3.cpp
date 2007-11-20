@@ -1,8 +1,14 @@
 #include "XMLKit.h"
+
+
+
 #include "DOM3.h"
+
+#ifdef XMLKIT_DOM
 
 using namespace VCF;
 using namespace VCF::DOM;
+
 
 struct DOMFeature {
 	DOMString name;
@@ -128,3 +134,6 @@ DOMObject* DOMImplementation::getFeature(const DOMString& feature, const DOMStri
 	}
 	return NULL;
 }
+
+
+#endif //XMLKIT_DOM

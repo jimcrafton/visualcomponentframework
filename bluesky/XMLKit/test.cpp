@@ -10,6 +10,8 @@
 #include <libxml/xpathInternals.h>
 
 
+#include <libxml\xmlwriter.h>
+
 
 
 #if !defined(VCF_DISABLE_PRAGMA_LINKING)
@@ -171,6 +173,77 @@ void testXSLT()
 	delete res;
 
 	stylesheet = NULL;
+}
+
+
+
+	class XmlSchema : public Attachable<xmlSchemaPtr,XmlSchema> {
+	public:
+		typedef Attachable<xmlSchemaPtr,XmlSchema> BaseT;
+		
+		XmlSchema():BaseT(),currentCtx_(NULL){}
+		
+		XmlSchema( xmlSchemaPtr val ):BaseT(val),currentCtx_(NULL){}
+		
+		XmlSchema( const XmlSchema& val ):BaseT(val),currentCtx_(NULL){}
+		
+		~XmlSchema()
+		{
+			if ( NULL != currentCtx_ ) {
+				xmlSchemaFreeParserCtxt( currentCtx_ );
+			}
+		}
+
+		XmlSchema& operator=( xmlSchemaPtr rhs ) {BaseT::operator=(rhs); return *this;} 
+		
+		static void freeResource(xmlSchemaPtr res) {xmlSchemaFree(res);}
+
+		void parseSchema( const XmlDocument& doc ) {
+			if ( NULL != currentCtx_ ) {
+				xmlSchemaFreeParserCtxt( currentCtx_ );
+			}
+
+			currentCtx_ = xmlSchemaNewDocParserCtxt( doc.get() );
+			attach( xmlSchemaParse( currentCtx_ ) );
+		}
+	protected:
+		xmlSchemaParserCtxtPtr currentCtx_;
+
+	};
+
+void testSchema()
+{
+	XmlSchema schema;
+}
+
+
+
+
+
+	class XmlTextWriter : public Attachable<xmlTextWriterPtr,XmlTextWriter> {
+	public:
+		typedef Attachable<xmlTextWriterPtr,XmlTextWriter> BaseT;
+		
+		XmlTextWriter():BaseT(){}
+		
+		XmlTextWriter( xmlTextWriterPtr val ):BaseT(val){}
+		
+		XmlTextWriter( const XmlTextWriter& val ):BaseT(val){}
+
+		XmlTextWriter& operator=( xmlTextWriterPtr rhs ) {BaseT::operator=(rhs); return *this;} 
+		
+		static void freeResource(xmlTextWriterPtr res) {xmlFreeTextWriter(res);}
+
+		
+	protected:
+		
+
+	};
+
+
+void testTextWriter()
+{
+	XmlTextWriter writer;
 }
 
 int main( int argc, char** argv ){
@@ -370,6 +443,7 @@ int main( int argc, char** argv ){
 	testXSLT();
 
 
+	testTextWriter();
 
 	XMLKit::terminate();
 
