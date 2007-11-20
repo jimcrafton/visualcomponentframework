@@ -261,12 +261,10 @@
 		5E734084082E719300CDD184 /* InterfaceClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80560641F81600A8020D /* InterfaceClass.cpp */; };
 		5E734085082E719300CDD184 /* Library.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C805C0641F81600A8020D /* Library.cpp */; };
 		5E734086082E719300CDD184 /* Locales.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C807A0641F81600A8020D /* Locales.cpp */; };
-		5E734087082E719300CDD184 /* MemoryStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C807D0641F81600A8020D /* MemoryStream.cpp */; };
 		5E734088082E719300CDD184 /* MessageLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80800641F81600A8020D /* MessageLoader.cpp */; };
 		5E734089082E719300CDD184 /* MIMEType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80830641F81600A8020D /* MIMEType.cpp */; };
 		5E73408A082E719300CDD184 /* Mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80850641F81600A8020D /* Mutex.cpp */; };
 		5E73408B082E719300CDD184 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C808E0641F81600A8020D /* Object.cpp */; };
-		5E73408C082E719300CDD184 /* ObjectWithEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80900641F81600A8020D /* ObjectWithEvents.cpp */; };
 		5E73408D082E719300CDD184 /* OSXConditionPeer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80920641F81600A8020D /* OSXConditionPeer.cpp */; };
 		5E73408E082E719300CDD184 /* OSXFilePeer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80940641F81600A8020D /* OSXFilePeer.cpp */; };
 		5E73408F082E719300CDD184 /* OSXFileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80960641F81600A8020D /* OSXFileStream.cpp */; };
@@ -358,7 +356,6 @@
 		5E73411C082E73CC00CDD184 /* GraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA3D370647393800A8020D /* GraphicsContext.cpp */; };
 		5E73411D082E73CC00CDD184 /* GraphicsKit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA3D390647393800A8020D /* GraphicsKit.cpp */; };
 		5E73411E082E73CC00CDD184 /* GraphicsToolKit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA3D3E0647393800A8020D /* GraphicsToolKit.cpp */; };
-		5E73411F082E73CC00CDD184 /* ImageEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA3D4A0647393800A8020D /* ImageEvent.cpp */; };
 		5E734120082E73CC00CDD184 /* Matrix2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA3D530647393800A8020D /* Matrix2D.cpp */; };
 		5E734121082E73CC00CDD184 /* OSXContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA3D6A0647393800A8020D /* OSXContext.cpp */; };
 		5E734122082E73CC00CDD184 /* OSXFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA3D6C0647393800A8020D /* OSXFont.cpp */; };
@@ -375,10 +372,8 @@
 		5E734173082E76C300CDD184 /* AbstractComponentEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE800648693B00A8020D /* AbstractComponentEditor.h */; };
 		5E734174082E76C300CDD184 /* AbstractContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE820648693B00A8020D /* AbstractContainer.h */; };
 		5E734175082E76C300CDD184 /* AbstractListModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE860648693B00A8020D /* AbstractListModel.h */; };
-		5E734176082E76C300CDD184 /* AbstractModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE870648693B00A8020D /* AbstractModel.h */; };
 		5E734177082E76C300CDD184 /* AbstractPropertyEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE890648693B00A8020D /* AbstractPropertyEditor.h */; };
 		5E734178082E76C300CDD184 /* AbstractScrollable.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE8B0648693B00A8020D /* AbstractScrollable.h */; };
-		5E734179082E76C300CDD184 /* AbstractTableModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE8D0648693B00A8020D /* AbstractTableModel.h */; };
 		5E73417B082E76C300CDD184 /* AbstractTreeModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE910648693B00A8020D /* AbstractTreeModel.h */; };
 		5E73417C082E76C300CDD184 /* AbstractView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE930648693B00A8020D /* AbstractView.h */; };
 		5E73417D082E76C300CDD184 /* AcceleratorKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE990648693B00A8020D /* AcceleratorKey.h */; };
@@ -576,7 +571,6 @@
 		5E734253082E76C300CDD184 /* AbstractContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDE810648693B00A8020D /* AbstractContainer.cpp */; };
 		5E734254082E76C300CDD184 /* AbstractListModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDE850648693B00A8020D /* AbstractListModel.cpp */; };
 		5E734255082E76C300CDD184 /* AbstractScrollable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDE8A0648693B00A8020D /* AbstractScrollable.cpp */; };
-		5E734256082E76C300CDD184 /* AbstractTableModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDE8C0648693B00A8020D /* AbstractTableModel.cpp */; };
 		5E734258082E76C300CDD184 /* AbstractTreeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDE900648693B00A8020D /* AbstractTreeModel.cpp */; };
 		5E734259082E76C300CDD184 /* AbstractView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDE920648693B00A8020D /* AbstractView.cpp */; };
 		5E73425A082E76C300CDD184 /* AcceleratorKey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDE980648693B00A8020D /* AcceleratorKey.cpp */; };
@@ -777,7 +771,6 @@
 		5EC1A66A0941EFF8001EA41D /* Locales.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C807A0641F81600A8020D /* Locales.cpp */; };
 		5EC1A66B0941EFF8001EA41D /* Locales.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C807B0641F81600A8020D /* Locales.h */; };
 		5EC1A66C0941EFF8001EA41D /* Lock.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C807C0641F81600A8020D /* Lock.h */; };
-		5EC1A66D0941EFF8001EA41D /* MemoryStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C807D0641F81600A8020D /* MemoryStream.cpp */; };
 		5EC1A66E0941EFF8001EA41D /* MemoryStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C807E0641F81600A8020D /* MemoryStream.h */; };
 		5EC1A66F0941EFF8001EA41D /* MemStreamUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C807F0641F81600A8020D /* MemStreamUtils.h */; };
 		5EC1A6700941EFF8001EA41D /* MessageLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80800641F81600A8020D /* MessageLoader.cpp */; };
@@ -797,7 +790,6 @@
 		5EC1A67E0941EFF8001EA41D /* NoToolKitFoundException.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C808D0641F81600A8020D /* NoToolKitFoundException.h */; };
 		5EC1A67F0941EFF8001EA41D /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C808E0641F81600A8020D /* Object.cpp */; };
 		5EC1A6800941EFF8001EA41D /* Object.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C808F0641F81600A8020D /* Object.h */; };
-		5EC1A6810941EFF8001EA41D /* ObjectWithEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80900641F81600A8020D /* ObjectWithEvents.cpp */; };
 		5EC1A6820941EFF8001EA41D /* ObjectWithEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80910641F81600A8020D /* ObjectWithEvents.h */; };
 		5EC1A6830941EFF8001EA41D /* OSXConditionPeer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80920641F81600A8020D /* OSXConditionPeer.cpp */; };
 		5EC1A6840941EFF8001EA41D /* OSXConditionPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80930641F81600A8020D /* OSXConditionPeer.h */; };
@@ -935,7 +927,6 @@
 		5EC1A74F0941F366001EA41D /* GraphicsToolKit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA3D3E0647393800A8020D /* GraphicsToolKit.cpp */; };
 		5EC1A7500941F366001EA41D /* GraphicsToolKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EAA3D3F0647393800A8020D /* GraphicsToolKit.h */; };
 		5EC1A7510941F366001EA41D /* Image.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EAA3D480647393800A8020D /* Image.h */; };
-		5EC1A7530941F366001EA41D /* ImageEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA3D4A0647393800A8020D /* ImageEvent.cpp */; };
 		5EC1A7540941F366001EA41D /* ImageEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EAA3D4B0647393800A8020D /* ImageEvent.h */; };
 		5EC1A7550941F366001EA41D /* ImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EAA3D4C0647393800A8020D /* ImageLoader.h */; };
 		5EC1A7560941F366001EA41D /* ImageLoaderException.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EAA3D4D0647393800A8020D /* ImageLoaderException.h */; };
@@ -983,12 +974,9 @@
 		5EC1A7920941F51B001EA41D /* AbstractContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE820648693B00A8020D /* AbstractContainer.h */; };
 		5EC1A7930941F51B001EA41D /* AbstractListModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDE850648693B00A8020D /* AbstractListModel.cpp */; };
 		5EC1A7940941F51B001EA41D /* AbstractListModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE860648693B00A8020D /* AbstractListModel.h */; };
-		5EC1A7950941F51B001EA41D /* AbstractModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE870648693B00A8020D /* AbstractModel.h */; };
 		5EC1A7960941F51B001EA41D /* AbstractPropertyEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE890648693B00A8020D /* AbstractPropertyEditor.h */; };
 		5EC1A7970941F51B001EA41D /* AbstractScrollable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDE8A0648693B00A8020D /* AbstractScrollable.cpp */; };
 		5EC1A7980941F51B001EA41D /* AbstractScrollable.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE8B0648693B00A8020D /* AbstractScrollable.h */; };
-		5EC1A7990941F51B001EA41D /* AbstractTableModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDE8C0648693B00A8020D /* AbstractTableModel.cpp */; };
-		5EC1A79A0941F51B001EA41D /* AbstractTableModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE8D0648693B00A8020D /* AbstractTableModel.h */; };
 		5EC1A79B0941F51B001EA41D /* AbstractTreeModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDE900648693B00A8020D /* AbstractTreeModel.cpp */; };
 		5EC1A79C0941F51B001EA41D /* AbstractTreeModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDE910648693B00A8020D /* AbstractTreeModel.h */; };
 		5EC1A79D0941F51B001EA41D /* AbstractView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDE920648693B00A8020D /* AbstractView.cpp */; };
@@ -1320,6 +1308,8 @@
 		5EC1A90E0941F53F001EA41D /* WindowEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CE0540648693C00A8020D /* WindowEvent.h */; };
 		5EC1A90F0941F53F001EA41D /* WindowPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CE0550648693C00A8020D /* WindowPeer.h */; };
 		5EC1A9100941F53F001EA41D /* Wizard.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CE0560648693C00A8020D /* Wizard.h */; };
+		5EC480F80CF2904700B805BC /* UIComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EC480F60CF2904600B805BC /* UIComponent.cpp */; };
+		5EC480F90CF2904700B805BC /* UIComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EC480F70CF2904600B805BC /* UIComponent.h */; };
 		5ED387350A3B8DB400CAB24A /* Ellipse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ED387310A3B8DB400CAB24A /* Ellipse.h */; };
 		5ED387360A3B8DB400CAB24A /* GradientFills.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ED387320A3B8DB400CAB24A /* GradientFills.h */; };
 		5ED387370A3B8DB400CAB24A /* GrayScaleImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ED387330A3B8DB400CAB24A /* GrayScaleImage.h */; };
@@ -1539,7 +1529,6 @@
 		5E2C807A0641F81600A8020D /* Locales.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Locales.cpp; path = ../../src/vcf/FoundationKit/Locales.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C807B0641F81600A8020D /* Locales.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Locales.h; path = ../../src/vcf/FoundationKit/Locales.h; sourceTree = SOURCE_ROOT; };
 		5E2C807C0641F81600A8020D /* Lock.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Lock.h; path = ../../src/vcf/FoundationKit/Lock.h; sourceTree = SOURCE_ROOT; };
-		5E2C807D0641F81600A8020D /* MemoryStream.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = MemoryStream.cpp; path = ../../src/vcf/FoundationKit/MemoryStream.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C807E0641F81600A8020D /* MemoryStream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MemoryStream.h; path = ../../src/vcf/FoundationKit/MemoryStream.h; sourceTree = SOURCE_ROOT; };
 		5E2C807F0641F81600A8020D /* MemStreamUtils.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MemStreamUtils.h; path = ../../src/vcf/FoundationKit/MemStreamUtils.h; sourceTree = SOURCE_ROOT; };
 		5E2C80800641F81600A8020D /* MessageLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = MessageLoader.cpp; path = ../../src/vcf/FoundationKit/MessageLoader.cpp; sourceTree = SOURCE_ROOT; };
@@ -1558,7 +1547,6 @@
 		5E2C808D0641F81600A8020D /* NoToolKitFoundException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = NoToolKitFoundException.h; path = ../../src/vcf/FoundationKit/NoToolKitFoundException.h; sourceTree = SOURCE_ROOT; };
 		5E2C808E0641F81600A8020D /* Object.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Object.cpp; path = ../../src/vcf/FoundationKit/Object.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C808F0641F81600A8020D /* Object.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Object.h; path = ../../src/vcf/FoundationKit/Object.h; sourceTree = SOURCE_ROOT; };
-		5E2C80900641F81600A8020D /* ObjectWithEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ObjectWithEvents.cpp; path = ../../src/vcf/FoundationKit/ObjectWithEvents.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80910641F81600A8020D /* ObjectWithEvents.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ObjectWithEvents.h; path = ../../src/vcf/FoundationKit/ObjectWithEvents.h; sourceTree = SOURCE_ROOT; };
 		5E2C80920641F81600A8020D /* OSXConditionPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXConditionPeer.cpp; path = ../../src/vcf/FoundationKit/OSXConditionPeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80930641F81600A8020D /* OSXConditionPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXConditionPeer.h; path = ../../src/vcf/FoundationKit/OSXConditionPeer.h; sourceTree = SOURCE_ROOT; };
@@ -1666,12 +1654,9 @@
 		5E2CDE820648693B00A8020D /* AbstractContainer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AbstractContainer.h; path = ../../src/vcf/ApplicationKit/AbstractContainer.h; sourceTree = SOURCE_ROOT; };
 		5E2CDE850648693B00A8020D /* AbstractListModel.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractListModel.cpp; path = ../../src/vcf/ApplicationKit/AbstractListModel.cpp; sourceTree = SOURCE_ROOT; };
 		5E2CDE860648693B00A8020D /* AbstractListModel.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AbstractListModel.h; path = ../../src/vcf/ApplicationKit/AbstractListModel.h; sourceTree = SOURCE_ROOT; };
-		5E2CDE870648693B00A8020D /* AbstractModel.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AbstractModel.h; path = ../../src/vcf/ApplicationKit/AbstractModel.h; sourceTree = SOURCE_ROOT; };
 		5E2CDE890648693B00A8020D /* AbstractPropertyEditor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AbstractPropertyEditor.h; path = ../../src/vcf/ApplicationKit/AbstractPropertyEditor.h; sourceTree = SOURCE_ROOT; };
 		5E2CDE8A0648693B00A8020D /* AbstractScrollable.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractScrollable.cpp; path = ../../src/vcf/ApplicationKit/AbstractScrollable.cpp; sourceTree = SOURCE_ROOT; };
 		5E2CDE8B0648693B00A8020D /* AbstractScrollable.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AbstractScrollable.h; path = ../../src/vcf/ApplicationKit/AbstractScrollable.h; sourceTree = SOURCE_ROOT; };
-		5E2CDE8C0648693B00A8020D /* AbstractTableModel.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractTableModel.cpp; path = ../../src/vcf/ApplicationKit/AbstractTableModel.cpp; sourceTree = SOURCE_ROOT; };
-		5E2CDE8D0648693B00A8020D /* AbstractTableModel.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AbstractTableModel.h; path = ../../src/vcf/ApplicationKit/AbstractTableModel.h; sourceTree = SOURCE_ROOT; };
 		5E2CDE900648693B00A8020D /* AbstractTreeModel.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractTreeModel.cpp; path = ../../src/vcf/ApplicationKit/AbstractTreeModel.cpp; sourceTree = SOURCE_ROOT; };
 		5E2CDE910648693B00A8020D /* AbstractTreeModel.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AbstractTreeModel.h; path = ../../src/vcf/ApplicationKit/AbstractTreeModel.h; sourceTree = SOURCE_ROOT; };
 		5E2CDE920648693B00A8020D /* AbstractView.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractView.cpp; path = ../../src/vcf/ApplicationKit/AbstractView.cpp; sourceTree = SOURCE_ROOT; };
@@ -2166,7 +2151,6 @@
 		5EAA3D3E0647393800A8020D /* GraphicsToolKit.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicsToolKit.cpp; path = ../../src/vcf/GraphicsKit/GraphicsToolKit.cpp; sourceTree = SOURCE_ROOT; };
 		5EAA3D3F0647393800A8020D /* GraphicsToolKit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = GraphicsToolKit.h; path = ../../src/vcf/GraphicsKit/GraphicsToolKit.h; sourceTree = SOURCE_ROOT; };
 		5EAA3D480647393800A8020D /* Image.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Image.h; path = ../../src/vcf/GraphicsKit/Image.h; sourceTree = SOURCE_ROOT; };
-		5EAA3D4A0647393800A8020D /* ImageEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ImageEvent.cpp; path = ../../src/vcf/GraphicsKit/ImageEvent.cpp; sourceTree = SOURCE_ROOT; };
 		5EAA3D4B0647393800A8020D /* ImageEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ImageEvent.h; path = ../../src/vcf/GraphicsKit/ImageEvent.h; sourceTree = SOURCE_ROOT; };
 		5EAA3D4C0647393800A8020D /* ImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ImageLoader.h; path = ../../src/vcf/GraphicsKit/ImageLoader.h; sourceTree = SOURCE_ROOT; };
 		5EAA3D4D0647393800A8020D /* ImageLoaderException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ImageLoaderException.h; path = ../../src/vcf/GraphicsKit/ImageLoaderException.h; sourceTree = SOURCE_ROOT; };
@@ -2202,6 +2186,8 @@
 		5EC1A6240941EDFF001EA41D /* libFoundationKit_d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFoundationKit_d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EC1A7270941F208001EA41D /* libGraphicsKit_d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGraphicsKit_d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EC1A78A0941F48E001EA41D /* libApplicationKit_d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libApplicationKit_d.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EC480F60CF2904600B805BC /* UIComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = UIComponent.cpp; path = ../../src/vcf/ApplicationKit/UIComponent.cpp; sourceTree = SOURCE_ROOT; };
+		5EC480F70CF2904600B805BC /* UIComponent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = UIComponent.h; path = ../../src/vcf/ApplicationKit/UIComponent.h; sourceTree = SOURCE_ROOT; };
 		5EC5A025064DD84E00345023 /* TCarbonEvent.cp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = TCarbonEvent.cp; path = ../../src/thirdparty/macOSX/HIView/TCarbonEvent.cp; sourceTree = SOURCE_ROOT; };
 		5EC5A026064DD84E00345023 /* TCarbonEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = TCarbonEvent.h; path = ../../src/thirdparty/macOSX/HIView/TCarbonEvent.h; sourceTree = SOURCE_ROOT; };
 		5EC5A027064DD84E00345023 /* TObject.cp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = TObject.cp; path = ../../src/thirdparty/macOSX/HIView/TObject.cp; sourceTree = SOURCE_ROOT; };
@@ -2392,14 +2378,6 @@
 		5E2C800E0641F7AA00A8020D /* FoundationKit */ = {
 			isa = PBXGroup;
 			children = (
-				EA6A4AEB0C249F700057B9F4 /* Delegates.cpp */,
-				EA6A4AEC0C249F700057B9F4 /* Delegates.h */,
-				EA6A4AED0C249F700057B9F4 /* ThreadedFunctions.h */,
-				EA96DD940C05FF4900B66658 /* IniFini.cpp */,
-				EA96DD950C05FF4900B66658 /* IniFini.h */,
-				EA96DD960C05FF4900B66658 /* OSHandlePeer.h */,
-				EA96DD970C05FF4900B66658 /* VFFParser.cpp */,
-				EA96DD980C05FF4900B66658 /* VFFParser.h */,
 				EA6D07B20BE2A8390040D69A /* RunLoops */,
 				5EC402DE0644A34200A8020D /* Extras */,
 				5E2C80180641F7E800A8020D /* Peers */,
@@ -2412,6 +2390,9 @@
 		5E2C80160641F7DB00A8020D /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				EA6A4AEB0C249F700057B9F4 /* Delegates.cpp */,
+				EA96DD940C05FF4900B66658 /* IniFini.cpp */,
+				EA96DD970C05FF4900B66658 /* VFFParser.cpp */,
 				EA6D075E0BE2A54C0040D69A /* Component.cpp */,
 				EA6D07610BE2A54C0040D69A /* ComponentInfo.cpp */,
 				EA6D07670BE2A54C0040D69A /* VFFInputStream.cpp */,
@@ -2435,12 +2416,10 @@
 				5E2C80560641F81600A8020D /* InterfaceClass.cpp */,
 				5E2C805C0641F81600A8020D /* Library.cpp */,
 				5E2C807A0641F81600A8020D /* Locales.cpp */,
-				5E2C807D0641F81600A8020D /* MemoryStream.cpp */,
 				5E2C80800641F81600A8020D /* MessageLoader.cpp */,
 				5E2C80830641F81600A8020D /* MIMEType.cpp */,
 				5E2C80850641F81600A8020D /* Mutex.cpp */,
 				5E2C808E0641F81600A8020D /* Object.cpp */,
-				5E2C80900641F81600A8020D /* ObjectWithEvents.cpp */,
 				5E2C80AE0641F81600A8020D /* PackageInfo.cpp */,
 				5E2C80BC0641F81600A8020D /* ProcessWithRedirectedIO.cpp */,
 				5E2C80C50641F81600A8020D /* Registry.cpp */,
@@ -2467,6 +2446,11 @@
 		5E2C80170641F7E200A8020D /* Includes */ = {
 			isa = PBXGroup;
 			children = (
+				EA6A4AEC0C249F700057B9F4 /* Delegates.h */,
+				EA6A4AED0C249F700057B9F4 /* ThreadedFunctions.h */,
+				EA96DD950C05FF4900B66658 /* IniFini.h */,
+				EA96DD960C05FF4900B66658 /* OSHandlePeer.h */,
+				EA96DD980C05FF4900B66658 /* VFFParser.h */,
 				5E9C9F52082DD1740050BDDA /* ThreadManagerPeer.h */,
 				EA6D075F0BE2A54C0040D69A /* Component.h */,
 				EA6D07600BE2A54C0040D69A /* ComponentEvent.h */,
@@ -2794,6 +2778,8 @@
 		5E2CDE71064868C800A8020D /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				5EC480F60CF2904600B805BC /* UIComponent.cpp */,
+				5EC480F70CF2904600B805BC /* UIComponent.h */,
 				EACECC750BC04C81001CA2BC /* MenuManager.cpp */,
 				EACECC760BC04C81001CA2BC /* MenuManager.h */,
 				EACECC770BC04C81001CA2BC /* MenuManagerPeer.h */,
@@ -3155,7 +3141,6 @@
 				5EAA3D370647393800A8020D /* GraphicsContext.cpp */,
 				5EAA3D390647393800A8020D /* GraphicsKit.cpp */,
 				5EAA3D3E0647393800A8020D /* GraphicsToolKit.cpp */,
-				5EAA3D4A0647393800A8020D /* ImageEvent.cpp */,
 				5EAA3D530647393800A8020D /* Matrix2D.cpp */,
 				5EAA3D760647393800A8020D /* Point.cpp */,
 				5EAA3D7A0647393800A8020D /* Rect.cpp */,
@@ -3231,9 +3216,6 @@
 			children = (
 				5E2CDE850648693B00A8020D /* AbstractListModel.cpp */,
 				5E2CDE860648693B00A8020D /* AbstractListModel.h */,
-				5E2CDE870648693B00A8020D /* AbstractModel.h */,
-				5E2CDE8C0648693B00A8020D /* AbstractTableModel.cpp */,
-				5E2CDE8D0648693B00A8020D /* AbstractTableModel.h */,
 				5E2CDE900648693B00A8020D /* AbstractTreeModel.cpp */,
 				5E2CDE910648693B00A8020D /* AbstractTreeModel.h */,
 				5E2CDE920648693B00A8020D /* AbstractView.cpp */,
@@ -3603,10 +3585,8 @@
 				5E734173082E76C300CDD184 /* AbstractComponentEditor.h in Headers */,
 				5E734174082E76C300CDD184 /* AbstractContainer.h in Headers */,
 				5E734175082E76C300CDD184 /* AbstractListModel.h in Headers */,
-				5E734176082E76C300CDD184 /* AbstractModel.h in Headers */,
 				5E734177082E76C300CDD184 /* AbstractPropertyEditor.h in Headers */,
 				5E734178082E76C300CDD184 /* AbstractScrollable.h in Headers */,
-				5E734179082E76C300CDD184 /* AbstractTableModel.h in Headers */,
 				5E73417B082E76C300CDD184 /* AbstractTreeModel.h in Headers */,
 				5E73417C082E76C300CDD184 /* AbstractView.h in Headers */,
 				5E73417D082E76C300CDD184 /* AcceleratorKey.h in Headers */,
@@ -3824,6 +3804,7 @@
 				EACECC790BC04C81001CA2BC /* MenuManager.h in Headers */,
 				EACECC7A0BC04C81001CA2BC /* MenuManagerPeer.h in Headers */,
 				EA6FE8730BC0BB5100B2CD1C /* OSXUIShellPeer.h in Headers */,
+				5EC480F90CF2904700B805BC /* UIComponent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4027,10 +4008,8 @@
 				5EC1A7900941F51B001EA41D /* AbstractComponentEditor.h in Headers */,
 				5EC1A7920941F51B001EA41D /* AbstractContainer.h in Headers */,
 				5EC1A7940941F51B001EA41D /* AbstractListModel.h in Headers */,
-				5EC1A7950941F51B001EA41D /* AbstractModel.h in Headers */,
 				5EC1A7960941F51B001EA41D /* AbstractPropertyEditor.h in Headers */,
 				5EC1A7980941F51B001EA41D /* AbstractScrollable.h in Headers */,
-				5EC1A79A0941F51B001EA41D /* AbstractTableModel.h in Headers */,
 				5EC1A79C0941F51B001EA41D /* AbstractTreeModel.h in Headers */,
 				5EC1A79E0941F51B001EA41D /* AbstractView.h in Headers */,
 				5EC1A7A00941F51B001EA41D /* AcceleratorKey.h in Headers */,
@@ -4623,12 +4602,10 @@
 				5E734084082E719300CDD184 /* InterfaceClass.cpp in Sources */,
 				5E734085082E719300CDD184 /* Library.cpp in Sources */,
 				5E734086082E719300CDD184 /* Locales.cpp in Sources */,
-				5E734087082E719300CDD184 /* MemoryStream.cpp in Sources */,
 				5E734088082E719300CDD184 /* MessageLoader.cpp in Sources */,
 				5E734089082E719300CDD184 /* MIMEType.cpp in Sources */,
 				5E73408A082E719300CDD184 /* Mutex.cpp in Sources */,
 				5E73408B082E719300CDD184 /* Object.cpp in Sources */,
-				5E73408C082E719300CDD184 /* ObjectWithEvents.cpp in Sources */,
 				5E73408D082E719300CDD184 /* OSXConditionPeer.cpp in Sources */,
 				5E73408E082E719300CDD184 /* OSXFilePeer.cpp in Sources */,
 				5E73408F082E719300CDD184 /* OSXFileStream.cpp in Sources */,
@@ -4707,7 +4684,6 @@
 				5E73411C082E73CC00CDD184 /* GraphicsContext.cpp in Sources */,
 				5E73411D082E73CC00CDD184 /* GraphicsKit.cpp in Sources */,
 				5E73411E082E73CC00CDD184 /* GraphicsToolKit.cpp in Sources */,
-				5E73411F082E73CC00CDD184 /* ImageEvent.cpp in Sources */,
 				5E734120082E73CC00CDD184 /* Matrix2D.cpp in Sources */,
 				5E734121082E73CC00CDD184 /* OSXContext.cpp in Sources */,
 				5E734122082E73CC00CDD184 /* OSXFont.cpp in Sources */,
@@ -4734,7 +4710,6 @@
 				5E734253082E76C300CDD184 /* AbstractContainer.cpp in Sources */,
 				5E734254082E76C300CDD184 /* AbstractListModel.cpp in Sources */,
 				5E734255082E76C300CDD184 /* AbstractScrollable.cpp in Sources */,
-				5E734256082E76C300CDD184 /* AbstractTableModel.cpp in Sources */,
 				5E734258082E76C300CDD184 /* AbstractTreeModel.cpp in Sources */,
 				5E734259082E76C300CDD184 /* AbstractView.cpp in Sources */,
 				5E73425A082E76C300CDD184 /* AcceleratorKey.cpp in Sources */,
@@ -4857,6 +4832,7 @@
 				EACECC6D0BC04C51001CA2BC /* UIShell.cpp in Sources */,
 				EACECC780BC04C81001CA2BC /* MenuManager.cpp in Sources */,
 				EA6FE8760BC0BB6F00B2CD1C /* OSXUIShellPeer.cpp in Sources */,
+				5EC480F80CF2904700B805BC /* UIComponent.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4882,12 +4858,10 @@
 				5EC1A6600941EFF8001EA41D /* InterfaceClass.cpp in Sources */,
 				5EC1A6660941EFF8001EA41D /* Library.cpp in Sources */,
 				5EC1A66A0941EFF8001EA41D /* Locales.cpp in Sources */,
-				5EC1A66D0941EFF8001EA41D /* MemoryStream.cpp in Sources */,
 				5EC1A6700941EFF8001EA41D /* MessageLoader.cpp in Sources */,
 				5EC1A6730941EFF8001EA41D /* MIMEType.cpp in Sources */,
 				5EC1A6750941EFF8001EA41D /* Mutex.cpp in Sources */,
 				5EC1A67F0941EFF8001EA41D /* Object.cpp in Sources */,
-				5EC1A6810941EFF8001EA41D /* ObjectWithEvents.cpp in Sources */,
 				5EC1A6830941EFF8001EA41D /* OSXConditionPeer.cpp in Sources */,
 				5EC1A6850941EFF8001EA41D /* OSXFilePeer.cpp in Sources */,
 				5EC1A6870941EFF8001EA41D /* OSXFileStream.cpp in Sources */,
@@ -4943,7 +4917,6 @@
 				5EC1A7490941F35A001EA41D /* GraphicsKit.cpp in Sources */,
 				5EC1A74C0941F366001EA41D /* GraphicsResourceBundle.cpp in Sources */,
 				5EC1A74F0941F366001EA41D /* GraphicsToolKit.cpp in Sources */,
-				5EC1A7530941F366001EA41D /* ImageEvent.cpp in Sources */,
 				5EC1A7580941F366001EA41D /* JPEGLoader.cpp in Sources */,
 				5EC1A75C0941F366001EA41D /* Matrix2D.cpp in Sources */,
 				5EC1A75F0941F366001EA41D /* OSXContext.cpp in Sources */,
@@ -4968,7 +4941,6 @@
 				5EC1A7910941F51B001EA41D /* AbstractContainer.cpp in Sources */,
 				5EC1A7930941F51B001EA41D /* AbstractListModel.cpp in Sources */,
 				5EC1A7970941F51B001EA41D /* AbstractScrollable.cpp in Sources */,
-				5EC1A7990941F51B001EA41D /* AbstractTableModel.cpp in Sources */,
 				5EC1A79B0941F51B001EA41D /* AbstractTreeModel.cpp in Sources */,
 				5EC1A79D0941F51B001EA41D /* AbstractView.cpp in Sources */,
 				5EC1A79F0941F51B001EA41D /* AcceleratorKey.cpp in Sources */,

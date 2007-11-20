@@ -97,11 +97,11 @@ void OSXTextEditPeer::create( Control* owningControl )
 		setFont( textControl_->getFont() );
 
 		textControl_->ControlModelChanged +=
-			new GenericEventHandler<OSXTextEditPeer>( this, &OSXTextEditPeer::onControlModelChanged, "OSXTextEditPeer::onControlModelChanged" );
+			new ClassProcedure1<Event*,OSXTextEditPeer>( this, &OSXTextEditPeer::onControlModelChanged, "OSXTextEditPeer::onControlModelChanged" );
 
 
 		textControl_->getFont()->FontChanged += 
-			new GenericEventHandler<OSXTextEditPeer>( this, &OSXTextEditPeer::onTextControlFontChanged, "OSXTextEditPeer::onTextControlFontChanged" );
+			new ClassProcedure1<Event*,OSXTextEditPeer>( this, &OSXTextEditPeer::onTextControlFontChanged, "OSXTextEditPeer::onTextControlFontChanged" );
 
 	
 }
@@ -945,13 +945,13 @@ void OSXTextEditPeer::finishPrinting()
 
 void OSXTextEditPeer::onControlModelChanged( Event* e )
 {
-	EventHandler* tml = getEventHandler( "OSXTextEditPeer::onTextModelTextChanged" );
+	CallBack* tml = getCallback( "OSXTextEditPeer::onTextModelTextChanged" );
 	if ( NULL == tml ) {
-		tml = new TextModelEventHandler<OSXTextEditPeer>( this, &OSXTextEditPeer::onTextModelTextChanged, "OSXTextEditPeer::onTextModelTextChanged" );
+		tml = new ClassProcedure1<TextEvent*,OSXTextEditPeer>( this, &OSXTextEditPeer::onTextModelTextChanged, "OSXTextEditPeer::onTextModelTextChanged" );
 	}
 
 	TextModel* tm = textControl_->getTextModel();
-	tm->addTextModelChangedHandler( tml );
+	tm->addTextModelChangedHandler( (EventHandler*)tml );
 
 	String text = tm->getText();
 

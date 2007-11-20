@@ -104,9 +104,8 @@ void OSXListview::create( Control* owningControl )
 		if ( err != noErr ) {
 			throw RuntimeException( MAKE_ERROR_MSG_2("InstallEventHandler failed for OSXTree!") );
 		}
-		
 		EventHandler* ev = 
-			new GenericEventHandler<OSXListview>( this, &OSXListview::onControlModelChanged, "OSXListview::onControlModelChanged" );					
+			new ClassProcedure1<Event*,OSXListview>( this, &OSXListview::onControlModelChanged, "OSXListview::onControlModelChanged" );					
 		
 		owningControl->ControlModelChanged += ev;
 				
@@ -590,17 +589,17 @@ void OSXListview::onControlModelChanged( Event* e )
 {
 	addListItems();
 	
-	EventHandler* ev = getEventHandler( "OSXListview::onListModelItemAdded" );
+	EventHandler* ev = (EventHandler*) getCallback( "OSXListview::onListModelItemAdded" );
 	if ( NULL == ev ) {
-		ev = new GenericEventHandler<OSXListview>( this, &OSXListview::onListModelItemAdded, "OSXListview::onListModelItemAdded" );
+		ev = new ClassProcedure1<Event*,OSXListview>( this, &OSXListview::onListModelItemAdded, "OSXListview::onListModelItemAdded" );
 	}	
 	
 	ListModel* listModel = listviewControl_->getListModel();
 	listModel->addItemAddedHandler( ev );
 	
-	ev = getEventHandler( "OSXListview::onListModelItemDeleted" );
+	ev = (EventHandler*)getCallback( "OSXListview::onListModelItemDeleted" );
 	if ( NULL == ev ) {
-		ev = new GenericEventHandler<OSXListview>( this, &OSXListview::onListModelItemDeleted, "OSXListview::onListModelItemDeleted" );
+		ev = new ClassProcedure1<Event*,OSXListview>( this, &OSXListview::onListModelItemDeleted, "OSXListview::onListModelItemDeleted" );
 	}
 	
 	listModel->addItemDeletedHandler( ev );

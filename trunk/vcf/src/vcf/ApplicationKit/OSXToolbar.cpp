@@ -30,8 +30,8 @@ OSXToolbar::OSXToolbar(Control* control):
 void OSXToolbar::create( Control* control )
 {
 	
-	control->getViewModel()->addModelHandler(
-		new ModelEventHandler<OSXToolbar>( this, &OSXToolbar::onModelChanged, "OSXToolbar::onModelChanged" ) );
+	//control->getViewModel()->addModelHandler(
+	//	new ModelEventHandler<OSXToolbar>( this, &OSXToolbar::onModelChanged, "OSXToolbar::onModelChanged" ) );
 
 }
 
@@ -239,17 +239,17 @@ void OSXToolbar::setImageList( ImageList* imageList )
 
 		control_->setVisible( false );
 		
-		EventHandler* imgListHandler = getEventHandler( "OSXToolbar::onImageListImageChanged" );
+		//EventHandler* imgListHandler = getEventHandler( "OSXToolbar::onImageListImageChanged" );
 
 		
-		if ( NULL == imgListHandler ) {
-			imgListHandler =
-				new ImageListEventHandler<OSXToolbar>(this, &OSXToolbar::onImageListImageChanged, "OSXToolbar::onImageListImageChanged" );
-		}
+		//if ( NULL == imgListHandler ) {
+			//imgListHandler =
+			//	new ImageListEventHandler<OSXToolbar>(this, &OSXToolbar::onImageListImageChanged, "OSXToolbar::onImageListImageChanged" );
+		//}
 
-		imageList->SizeChanged.addHandler( imgListHandler );
-		imageList->ImageAdded.addHandler( imgListHandler );
-		imageList->ImageDeleted.addHandler( imgListHandler );
+		//imageList->SizeChanged.addHandler( imgListHandler );
+		//imageList->ImageAdded.addHandler( imgListHandler );
+		//imageList->ImageDeleted.addHandler( imgListHandler );
 
 
 		bool val = ((Toolbar*)control_)->getShowButtonCaptions();

@@ -165,14 +165,14 @@ OSErr OSXDragDropPeer::DragInputFunction ( ::Point * mouse, SInt16 * modifiers, 
 	event.setType( DragSource::DRAG_CANCONTINUE );
 	event.setActionType( peer->dragSrc_->getActionType() );
 	
-	peer->dragSrc_->SourceCanContinueDragOp.fireEvent( &event );
+	peer->dragSrc_->SourceCanContinueDragOp( &event );
 	
 	
 	DragSourceEvent event2(peer->dragSrc_, peer->dataObj_);
 	event2.setType( DragSource::DRAG_GIVEFEEDBACK );
 	event2.setActionType( peer->dragSrc_->getActionType() );
 
-	peer->dragSrc_->SourceGiveFeedback.fireEvent( &event2 );
+	peer->dragSrc_->SourceGiveFeedback( &event2 );
 	
 	switch ( event2.getAction() ) {
 		case daNone : {

@@ -210,10 +210,8 @@ void OSXDialog::create( Control* owningControl )
 		control_ = owningControl;
 		
 		createAsSheetWindow();
-					
-		UIToolkit::postEvent( new GenericEventHandler<Control>( owningControl, &Control::handleEvent ),
-								  new VCF::ComponentEvent( owningControl, Component::COMPONENT_CREATED ),	true );					
-		
+		EventHandler* ev = new ClassProcedure1<Event*,Control>( owningControl, &Control::handleEvent );			
+		UIToolkit::postEvent( ev, new VCF::ComponentEvent( owningControl, Component::COMPONENT_CREATED ),	true );
 	}
 }
 
@@ -533,10 +531,10 @@ OSStatus OSXDialog::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef th
 
                     if ( dlg->allowClose() ) {
 
-                        VCF::WindowEvent event( getControl(), WINDOW_EVENT_CLOSE );
+                        VCF::FrameEvent event( getControl(), Frame::CLOSE_EVENT );
 
 
-                        dlg->FrameClose.fireEvent( &event );
+                        dlg->FrameClose( &event );
 
                         if ( dlg->isModal() ){
 							if ( isWindowSheet_ ) {
