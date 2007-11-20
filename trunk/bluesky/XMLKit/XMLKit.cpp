@@ -1106,7 +1106,7 @@ void XPathIterator::registerNamespaces( Dictionary& namespaceDict )
 
 XMLTextReader::XMLTextReader():
 	xmlReader_(NULL),
-	encodingType_(XMLTextReader::etNone)
+	encodingType_(XMLText::etNone)
 {
 	createXMLReader();
 }
@@ -1801,12 +1801,12 @@ void XMLTextReader::add( const unsigned char* xmlBuffer, size_t length )
 	}
 }		
 
-XMLTextReader::EncodingType XMLTextReader::getEncodingType() const 
+XMLText::EncodingType XMLTextReader::getEncodingType() const 
 {
 	return encodingType_;
 }
 
-void XMLTextReader::setEncodingType( XMLTextReader::EncodingType val )
+void XMLTextReader::setEncodingType( XMLText::EncodingType val )
 {
 	encodingType_ = val;
 }

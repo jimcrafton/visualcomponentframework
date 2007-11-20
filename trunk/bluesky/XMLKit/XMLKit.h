@@ -114,6 +114,37 @@ namespace VCF {
 	};
 
 
+	namespace XMLText {
+
+		enum EncodingType {
+			etError = XML_CHAR_ENCODING_ERROR,
+			etNone = XML_CHAR_ENCODING_NONE,
+			etUTF8 = XML_CHAR_ENCODING_UTF8,
+			etUTF16LE = XML_CHAR_ENCODING_UTF16LE,
+			etUTF16BE = XML_CHAR_ENCODING_UTF16BE,
+			etUCS4LE = XML_CHAR_ENCODING_UCS4LE,
+			etUCS4BE = XML_CHAR_ENCODING_UCS4BE,
+			etEBCDIC = XML_CHAR_ENCODING_EBCDIC,
+			etUCS4_2143 = XML_CHAR_ENCODING_UCS4_2143,
+			etUCS4_3412 = XML_CHAR_ENCODING_UCS4_3412,
+			etUCS2 = XML_CHAR_ENCODING_UCS2,
+			etISOLatin1 = XML_CHAR_ENCODING_8859_1,
+			etISO8859_1 = XML_CHAR_ENCODING_8859_1,
+			etISOLatin2 = XML_CHAR_ENCODING_8859_2,
+			etISO8859_2 = XML_CHAR_ENCODING_8859_2,
+			etISO8859_3 = XML_CHAR_ENCODING_8859_3,
+			etISO8859_4 = XML_CHAR_ENCODING_8859_4,
+			etISO8859_5 = XML_CHAR_ENCODING_8859_5,
+			etISO8859_6 = XML_CHAR_ENCODING_8859_6,
+			etISO8859_7 = XML_CHAR_ENCODING_8859_7,
+			etISO8859_8 = XML_CHAR_ENCODING_8859_8,
+			etISO8859_9 = XML_CHAR_ENCODING_8859_9,
+			etISO2022_JP = XML_CHAR_ENCODING_2022_JP,
+			etShiftJIS = XML_CHAR_ENCODING_SHIFT_JIS,
+			etEUC_JP = XML_CHAR_ENCODING_EUC_JP,
+			etAscii = XML_CHAR_ENCODING_ASCII,
+		};
+	};
 
 	typedef Delegate3<const xmlChar*,const xmlChar*,const xmlChar*> InternalSubsetDelegate;
 	typedef Delegate5<const xmlChar*,int,const xmlChar*,const xmlChar*,xmlChar*> EntityDeclDelegate;
@@ -830,34 +861,7 @@ namespace VCF {
 				psReading = XML_TEXTREADER_MODE_READING
 		};
 
-		enum EncodingType {
-			etError = XML_CHAR_ENCODING_ERROR,
-			etNone = XML_CHAR_ENCODING_NONE,
-			etUTF8 = XML_CHAR_ENCODING_UTF8,
-			etUTF16LE = XML_CHAR_ENCODING_UTF16LE,
-			etUTF16BE = XML_CHAR_ENCODING_UTF16BE,
-			etUCS4LE = XML_CHAR_ENCODING_UCS4LE,
-			etUCS4BE = XML_CHAR_ENCODING_UCS4BE,
-			etEBCDIC = XML_CHAR_ENCODING_EBCDIC,
-			etUCS4_2143 = XML_CHAR_ENCODING_UCS4_2143,
-			etUCS4_3412 = XML_CHAR_ENCODING_UCS4_3412,
-			etUCS2 = XML_CHAR_ENCODING_UCS2,
-			etISOLatin1 = XML_CHAR_ENCODING_8859_1,
-			etISO8859_1 = XML_CHAR_ENCODING_8859_1,
-			etISOLatin2 = XML_CHAR_ENCODING_8859_2,
-			etISO8859_2 = XML_CHAR_ENCODING_8859_2,
-			etISO8859_3 = XML_CHAR_ENCODING_8859_3,
-			etISO8859_4 = XML_CHAR_ENCODING_8859_4,
-			etISO8859_5 = XML_CHAR_ENCODING_8859_5,
-			etISO8859_6 = XML_CHAR_ENCODING_8859_6,
-			etISO8859_7 = XML_CHAR_ENCODING_8859_7,
-			etISO8859_8 = XML_CHAR_ENCODING_8859_8,
-			etISO8859_9 = XML_CHAR_ENCODING_8859_9,
-			etISO2022_JP = XML_CHAR_ENCODING_2022_JP,
-			etShiftJIS = XML_CHAR_ENCODING_SHIFT_JIS,
-			etEUC_JP = XML_CHAR_ENCODING_EUC_JP,
-			etAscii = XML_CHAR_ENCODING_ASCII,
-		};
+		
 
 		XMLReaderErrorDelegate Error;
 		
@@ -979,13 +983,13 @@ namespace VCF {
 
 		void add( const unsigned char* xmlBuffer, size_t length );
 
-		EncodingType getEncodingType() const ;
-		void setEncodingType( EncodingType val );
+		XMLText::EncodingType getEncodingType() const ;
+		void setEncodingType( XMLText::EncodingType val );
 	protected:
 		xmlTextReaderPtr xmlReader_;
 		xmlBufferPtr xmlBuf_;
 		xmlParserInputBufferPtr xmlInputBuf_;
-		EncodingType encodingType_;
+		XMLText::EncodingType encodingType_;
 
 		
 
@@ -1000,7 +1004,7 @@ namespace VCF {
 
 
 
-
+	
 
 
 
