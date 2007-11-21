@@ -88,7 +88,7 @@ Handle the extension based on the compiler
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
 #include <libxml/xmlreader.h>
-
+#include <libxml/xmlwriter.h>
 
 #include <libxslt/xslt.h>
 #include <libxslt/xsltInternals.h>
@@ -1014,6 +1014,135 @@ namespace VCF {
 
 
 
+
+
+
+	
+	class XmlTextWriter : public Attachable<xmlTextWriterPtr,XmlTextWriter> {
+	public:
+		typedef Attachable<xmlTextWriterPtr,XmlTextWriter> BaseT;
+		
+		XmlTextWriter();
+		
+		XmlTextWriter( OutputStream* stream );
+
+		XmlTextWriter( XMLSaxParser& parser );
+
+		XmlTextWriter( XmlDocument& doc );
+
+		XmlTextWriter( XmlDocument& doc, XmlNode& node );
+
+		
+		static void freeResource(xmlTextWriterPtr res);
+
+		
+		void initWithStream( OutputStream* stream );
+
+		void initWithParser( XMLSaxParser& parser );
+
+		void initWithDocument( XmlDocument& doc );
+
+		void initWithDocument( XmlDocument& doc, XmlNode& node ) ;
+
+		void startDocument( const String& version="", const String& encoding="", const String& standalone="" );
+			
+		void startDTD( const String& name, const String& publicID, const String& systemID );
+
+		void startDTDAttrList( const String& name );
+
+		void startDTDEntity( bool parameterEntity,  const String& name );
+
+		void startDTDElement( const String& name );
+
+		void endDTD();
+
+		void endDTDAttrList();
+
+		void endDTDElement();
+
+		void endDTDEntity();
+
+		void endDocument();
+
+		void startCDATA();
+
+		void startComment();
+
+
+		void startElement( const String& name );
+
+		void startElementNamespace( const String& prefix, const String& name, const String& URI );
+
+		void startProcessingInstruction( const String& target );
+
+		void startAttribute( const String& name );
+		
+		void startAttributeNamespace( const String& prefix, const String& name, const String& URI );
+
+		void endAttribute();
+
+		void endElement();
+
+		void endProcessingInstruction();
+
+		void endCDATA();
+
+		void endComment();
+
+		void attribute( const String& prefix, const String& name, const String& URI, const String& content );
+
+		void attribute( const String& name, const String& content );
+
+		void base64( const uchar* data, size_t dataLength );
+
+		void base64( const String& data );
+
+		void binaryHex( const uchar* data, size_t dataLength );
+
+		void binaryHex( const String& data );
+
+		void CDATA( const String& data );
+
+		void comment( const String& comment );
+
+		void DTD( const String& name, const String& publicID, const String& systemID, const String& subset );
+
+		void DTDAttrList( const String& name, const String& content );
+
+		void DTDElement( const String& name, const String& content );
+
+		void DTDEntity( bool parameterEntity, const String& name, const String& publicID, const String& systemID, 
+						const String& notation, const String& content );
+
+		void DTDExternalEntity( bool parameterEntity, const String& name, const String& publicID, 
+								const String& systemID, const String& notation );
+
+		void DTDExternalEntityContents( const String& publicID, const String& systemID, const String& notation );
+
+		void DTDInternalEntity( bool parameterEntity, const String& name, const String& content );
+
+		void DTDNotation( const String& name, const String& publicID, const String& systemID );
+
+		void element( const String& name, const String& contents );
+
+		void elementNamespace( const String& prefix, const String& name, const String& URI, const String& contents );
+
+		void processingInstruction( const String& target, const String& contents );
+
+		void rawContent( const String& contents );
+
+		void text( const String& contents );
+
+		void flush();
+		
+	protected:
+		OutputStream* writeStream_;
+		xmlOutputBufferPtr	outputBuffer_;
+
+		void initOutputBuffer();
+		static int writeCallback(void * context,  const char * buffer, int len);
+		static int closeCallback( void * context );
+	};
 	
 
 

@@ -1947,3 +1947,578 @@ XmlDocument* XSLTStyleSheet::transform( const XmlDocument& doc )
 
 	return result;
 }
+
+
+
+
+
+XmlTextWriter::XmlTextWriter():BaseT(),outputBuffer_(NULL),writeStream_(NULL)
+{
+	
+}
+
+XmlTextWriter::XmlTextWriter( OutputStream* stream ):BaseT(),outputBuffer_(NULL),writeStream_(NULL)
+{
+	initWithStream(stream);
+}
+
+XmlTextWriter::XmlTextWriter( XMLSaxParser& parser ):BaseT(),outputBuffer_(NULL),writeStream_(NULL)
+{
+	initWithParser(parser);
+}
+
+XmlTextWriter::XmlTextWriter( XmlDocument& doc ):BaseT(),outputBuffer_(NULL),writeStream_(NULL)
+{
+	initWithDocument(doc);
+}
+
+XmlTextWriter::XmlTextWriter( XmlDocument& doc, XmlNode& node ):BaseT(),outputBuffer_(NULL),writeStream_(NULL)
+{
+	initWithDocument(doc,node);
+}
+
+
+void XmlTextWriter::freeResource(xmlTextWriterPtr res) 
+{
+	xmlFreeTextWriter(res);
+}
+
+
+void XmlTextWriter::initWithStream( OutputStream* stream )
+{
+	writeStream_ = stream;
+	initOutputBuffer();
+	attach( xmlNewTextWriter( outputBuffer_ ) );
+}
+
+void XmlTextWriter::initWithParser( XMLSaxParser& parser ) 
+{
+	attach( xmlNewTextWriterPushParser( parser.internal_getParser(), 0 ) );
+}
+
+void XmlTextWriter::initWithDocument( XmlDocument& doc ) 
+{
+	doc = NULL; //clear anything else in there
+	attach( xmlNewTextWriterDoc( &doc.get(), 0 ) );
+}
+
+void XmlTextWriter::initWithDocument( XmlDocument& doc, XmlNode& node ) 
+{
+	doc = NULL; //clear anything else in there
+	attach( xmlNewTextWriterTree( doc.get(), node.get(), 0 ) );
+}
+
+void XmlTextWriter::startDocument( const String& version, const String& encoding, const String& standalone ) 
+{	
+	int res = xmlTextWriterStartDocument( resource_, 
+								version.empty() ? NULL : version.ansi_c_str(), 
+								encoding.empty() ? NULL : encoding.ansi_c_str(),
+								standalone.empty() ? NULL : standalone.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+	
+void XmlTextWriter::startDTD( const String& name, const String& publicID, const String& systemID )
+{
+	int res = 
+		xmlTextWriterStartDTD( resource_, 
+								(const xmlChar*) name.ansi_c_str(),
+								(const xmlChar*) publicID.ansi_c_str(),
+								(const xmlChar*) systemID.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::startDTDAttrList( const String& name )
+{
+	int res = 
+		xmlTextWriterStartDTDAttlist( resource_, 
+								(const xmlChar*) name.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+
+
+void XmlTextWriter::startDTDEntity( bool parameterEntity,  const String& name )
+{
+	int res = 
+		xmlTextWriterStartDTDEntity( resource_, parameterEntity ? 1 : 0,
+										(const xmlChar*) name.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::startDTDElement( const String& name )
+{
+	int res = 
+		xmlTextWriterStartDTDElement( resource_, (const xmlChar*) name.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::endDTD()
+{
+	int res = xmlTextWriterEndDTD( resource_ );
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::endDTDAttrList()
+{
+	int res = xmlTextWriterEndDTDAttlist( resource_ );
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::endDTDElement()
+{
+	int res = xmlTextWriterEndDTDElement( resource_ );
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::endDTDEntity()
+{
+	int res = xmlTextWriterEndDTDEntity( resource_ );
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::endDocument()
+{
+	int res = xmlTextWriterEndDocument( resource_ );
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::startCDATA()
+{
+	int res = 
+		xmlTextWriterStartCDATA( resource_ );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::startComment()
+{
+	int res = 
+		xmlTextWriterStartComment( resource_ );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+
+void XmlTextWriter::startElement( const String& name )
+{
+	int res = 
+		xmlTextWriterStartElement( resource_, (const xmlChar*) name.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::startElementNamespace( const String& prefix, const String& name, const String& URI )
+{
+	int res = 
+		xmlTextWriterStartElementNS( resource_, 
+									prefix.empty() ? NULL : (const xmlChar*) prefix.ansi_c_str(),
+									(const xmlChar*) name.ansi_c_str(),
+									URI.empty() ? NULL : (const xmlChar*) URI.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::startProcessingInstruction( const String& target )
+{
+	int res = 
+		xmlTextWriterStartPI( resource_, (const xmlChar*) target.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::startAttribute( const String& name )
+{
+	int res = 
+		xmlTextWriterStartAttribute( resource_, (const xmlChar*) name.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::startAttributeNamespace( const String& prefix, const String& name, const String& URI )
+{
+	int res = 
+		xmlTextWriterStartAttributeNS( resource_, 
+									prefix.empty() ? NULL : (const xmlChar*) prefix.ansi_c_str(),
+									(const xmlChar*) name.ansi_c_str(),
+									URI.empty() ? NULL : (const xmlChar*) URI.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::endAttribute()
+{
+	int res = 
+		xmlTextWriterEndAttribute( resource_ );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::endElement()
+{
+	int res = 
+		xmlTextWriterEndElement( resource_ );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::endProcessingInstruction()
+{
+	int res = 
+		xmlTextWriterEndPI( resource_ );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::endCDATA()
+{
+	int res = 
+		xmlTextWriterEndCDATA( resource_ );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::endComment()
+{
+	int res = 
+		xmlTextWriterEndComment( resource_ );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::attribute( const String& prefix, const String& name, const String& URI, const String& content )
+{
+	int res = 
+		xmlTextWriterWriteAttributeNS( resource_, 
+									prefix.empty() ? NULL : (const xmlChar*) prefix.ansi_c_str(),
+									(const xmlChar*) name.ansi_c_str(),
+									URI.empty() ? NULL : (const xmlChar*) URI.ansi_c_str(),
+									(const xmlChar*) content.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::attribute( const String& name, const String& content )
+{
+	int res = 
+		xmlTextWriterWriteAttribute( resource_, 
+									(const xmlChar*) name.ansi_c_str(),
+									(const xmlChar*) content.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::base64( const uchar* data, size_t dataLength )
+{
+	int res = 
+		xmlTextWriterWriteBase64( resource_, (const char*)data, 0, dataLength );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::base64( const String& data )
+{
+	AnsiString tmp = data;
+	base64( (const uchar*)tmp.c_str(), tmp.size() );
+}
+
+void XmlTextWriter::binaryHex( const uchar* data, size_t dataLength )
+{
+	int res = 
+		xmlTextWriterWriteBinHex( resource_, (const char*)data, 0, dataLength );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::binaryHex( const String& data )
+{
+	AnsiString tmp = data;
+	binaryHex( (const uchar*)tmp.c_str(), tmp.size() );
+}
+
+void XmlTextWriter::CDATA( const String& data )
+{
+	int res = 
+		xmlTextWriterWriteCDATA( resource_, (const xmlChar*)data.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::comment( const String& comment )
+{
+	int res = 
+		xmlTextWriterWriteComment( resource_, (const xmlChar*)comment.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::DTD( const String& name, const String& publicID, const String& systemID, const String& subset )
+{
+	int res = 
+		xmlTextWriterWriteDTD( resource_, 
+									(const xmlChar*) name.ansi_c_str(),
+									(const xmlChar*) publicID.ansi_c_str(),
+									(const xmlChar*) systemID.ansi_c_str(),
+									(const xmlChar*) subset.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::DTDAttrList( const String& name, const String& content )
+{
+	int res = 
+		xmlTextWriterWriteDTDAttlist( resource_, 
+									(const xmlChar*) name.ansi_c_str(),
+									(const xmlChar*) content.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::DTDElement( const String& name, const String& content )
+{
+	int res = 
+		xmlTextWriterWriteDTDElement( resource_, 
+									(const xmlChar*) name.ansi_c_str(),
+									(const xmlChar*) content.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::DTDEntity( bool parameterEntity, const String& name, const String& publicID, const String& systemID, 
+				const String& notation, const String& content )
+{
+	int res = 
+		xmlTextWriterWriteDTDEntity( resource_, parameterEntity ? 1 : 0,
+									(const xmlChar*) name.ansi_c_str(),
+									(const xmlChar*) publicID.ansi_c_str(),
+									(const xmlChar*) systemID.ansi_c_str(),
+									(const xmlChar*) notation.ansi_c_str(),
+									(const xmlChar*) content.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::DTDExternalEntity( bool parameterEntity, const String& name, const String& publicID, 
+						const String& systemID, const String& notation )
+{
+	int res = 
+		xmlTextWriterWriteDTDExternalEntity( resource_, parameterEntity ? 1 : 0,
+									(const xmlChar*) name.ansi_c_str(),
+									(const xmlChar*) publicID.ansi_c_str(),
+									(const xmlChar*) systemID.ansi_c_str(),
+									(const xmlChar*) notation.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::DTDExternalEntityContents( const String& publicID, const String& systemID, const String& notation )
+{
+	int res = 
+		xmlTextWriterWriteDTDExternalEntityContents( resource_, 
+									(const xmlChar*) publicID.ansi_c_str(),
+									(const xmlChar*) systemID.ansi_c_str(),
+									(const xmlChar*) notation.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::DTDInternalEntity( bool parameterEntity, const String& name, const String& content )
+{
+	int res = 
+		xmlTextWriterWriteDTDInternalEntity( resource_, parameterEntity ? 1 : 0,
+									(const xmlChar*) name.ansi_c_str(),
+									(const xmlChar*) content.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::DTDNotation( const String& name, const String& publicID, const String& systemID )
+{
+	int res = 
+		xmlTextWriterWriteDTDNotation( resource_,
+									(const xmlChar*) name.ansi_c_str(),
+									(const xmlChar*) publicID.ansi_c_str(),
+									(const xmlChar*) systemID.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::element( const String& name, const String& contents )
+{
+	int res = 
+		xmlTextWriterWriteElement( resource_, 
+								(const xmlChar*)name.ansi_c_str(),
+								(const xmlChar*)contents.ansi_c_str());
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::elementNamespace( const String& prefix, const String& name, const String& URI, const String& contents )
+{
+	int res = 
+		xmlTextWriterWriteElementNS( resource_, 
+									prefix.empty() ? NULL : (const xmlChar*) prefix.ansi_c_str(),
+									(const xmlChar*) name.ansi_c_str(),
+									URI.empty() ? NULL : (const xmlChar*) URI.ansi_c_str(),
+									(const xmlChar*) contents.ansi_c_str() );
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::processingInstruction( const String& target, const String& contents )
+{
+	int res = 
+		xmlTextWriterWritePI( resource_, 
+								(const xmlChar*)target.ansi_c_str(),
+								(const xmlChar*)contents.ansi_c_str());
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::rawContent( const String& contents )
+{
+	int res = 
+		xmlTextWriterWriteRaw( resource_, (const xmlChar*)contents.ansi_c_str());
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::text( const String& contents )
+{
+	int res = 
+		xmlTextWriterWriteString( resource_, (const xmlChar*)contents.ansi_c_str());
+
+	if ( res == -1 ) {
+		throw XmlException();
+	}
+}
+
+void XmlTextWriter::flush() 
+{
+	xmlTextWriterFlush( resource_ );
+}
+
+
+void XmlTextWriter::initOutputBuffer() 
+{
+
+	VCF_ASSERT( NULL != writeStream_ );
+
+	outputBuffer_ = 
+		xmlOutputBufferCreateIO( XmlTextWriter::writeCallback, 
+									XmlTextWriter::closeCallback, this, NULL );
+
+
+	VCF_ASSERT( NULL != outputBuffer_ );
+
+	if ( NULL == outputBuffer_ ) {
+		throw XmlException();
+	}
+}
+
+
+
+int XmlTextWriter::writeCallback(void * context,  const char * buffer, int len)
+{
+
+	XmlTextWriter* thisPtr = (XmlTextWriter*)context;
+	int res = thisPtr->writeStream_->write( (const uchar*)buffer, len );
+	if ( res >= 0 ) {
+		return res;
+	}
+
+	return -1;
+}
+
+int XmlTextWriter::closeCallback( void * context )
+{
+	XmlTextWriter* thisPtr = (XmlTextWriter*)context;
+
+	return 0;
+}
+	
