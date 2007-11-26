@@ -28,8 +28,8 @@ NB: This software will not save the world.
 
 -->
 
-<title>The VCF Book VERSION-NUMBER</title>
-	<titleabbrev>VCF Documentation VERSION-NUMBER</titleabbrev>
+<title>The VCF Book devmain-0.9.8</title>
+	<titleabbrev>VCF Documentation devmain-0.9.8</titleabbrev>
 	<bookinfo>
 		<legalnotice>
 			<para>
@@ -92,6 +92,7 @@ NB: This software will not save the world.
 			<year>2005</year>
 			<year>2006</year>
 			<year>2007</year>
+			<year>2008</year>
 			<holder>Jim Crafton, VCF Project</holder>
 		</copyright>
 
@@ -160,6 +161,13 @@ NB: This software will not save the world.
 			  <authorinitials>JC</authorinitials>
 			  <revremark>Added further documentation, plus new sections for the DatabaseKit, RegExKit and JavaScriptKit</revremark>
 			</revision>
+			
+			<revision>
+			  <revnumber>0.9.8</revnumber>
+			  <date>November 26, 2007</date>
+			  <authorinitials>JC</authorinitials>
+			  <revremark>Added new section for XMLKit</revremark>
+			</revision>
 		</revhistory>
 	</bookinfo>
 
@@ -176,7 +184,11 @@ NB: This software will not save the world.
 		
 		&coreLibApplicationKit;
 		
-		&componentAuthoring;
+		&componentAuthoring;		
+	</chapter>
+
+	<chapter><title>Additional Libraries (usage is optional) </title>
+		&coreLibXMLKit;
 		
 		&coreLibHTMLKit;
 		
@@ -193,9 +205,7 @@ NB: This software will not save the world.
 		&coreLibRegExKit;
 		
 		&coreLibRemoteObjectKit;
-	</chapter>
-
-	<chapter><title>Additional Libraries (usage is optional) </title>
+		
 		<section><title>ImageFormats</title>
 			<para>
 			</para>
