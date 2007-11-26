@@ -10,7 +10,8 @@
 	<!ENTITY coreLibGraphicsKit SYSTEM "corelib_graphicsKit.xml">
 	<!ENTITY coreLibApplicationKit SYSTEM "corelib_applicationKit.xml">
 	<!ENTITY componentAuthoring SYSTEM "corelib_componentAuthoring.xml">
-	<!ENTITY coreLibHTMLKit SYSTEM "corelib_htmlKit.xml">
+	<!ENTITY coreLibXMLKit SYSTEM "corelib_xmlKit.xml">	
+	<!ENTITY coreLibHTMLKit SYSTEM "corelib_htmlKit.xml">	
 	<!ENTITY coreLibInternetKit SYSTEM "corelib_internetKit.xml">
 	<!ENTITY coreLibOpenGLKit SYSTEM "corelib_openGLKit.xml">
 	<!ENTITY coreLibNetworkKit SYSTEM "corelib_networkKit.xml">
