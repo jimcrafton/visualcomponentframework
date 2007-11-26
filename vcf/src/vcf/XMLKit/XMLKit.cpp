@@ -766,8 +766,6 @@ XmlNamespace XmlNode::searchNamespaceByHRef( const String& href )
 				);
 }
 
-XmlNode* XmlNode::copy( const XmlDocument& doc, bool extended ); 
-
 
 void XmlNode::addChild( XmlNode& child ) 
 {	
