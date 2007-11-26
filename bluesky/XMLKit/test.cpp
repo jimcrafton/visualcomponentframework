@@ -82,47 +82,6 @@ void testXPath( const String& s, XmlDocument& doc )
 
 
 
-
-
-class XSLTTransformContext : public Attachable<xsltTransformContextPtr,XSLTTransformContext> {
-public:
-	typedef Attachable<xsltTransformContextPtr,XSLTTransformContext> BaseT;
-	
-
-	XSLTTransformContext( const XSLTStyleSheet& styleSheet, const XmlDocument& doc ):BaseT()
-	{
-
-	}
-
-	XSLTTransformContext():BaseT()
-	{
-		
-	}
-	
-	XSLTTransformContext( xsltTransformContextPtr val ):BaseT(val)
-	{
-		
-	}
-	
-	XSLTTransformContext( const XSLTTransformContext& val ):BaseT(val)
-	{
-		
-	}
-	
-	XSLTTransformContext& operator=( xsltTransformContextPtr rhs )
-	{
-		assign(rhs);
-		return *this;
-	}
-	
-	static void freeResource(xsltTransformContextPtr res)
-	{
-		xsltFreeTransformContext(res);
-	}
-};
-
-
-
 void Test_Function( xmlXPathParserContextPtr ctxt,
                                  int nargs)
 {
@@ -175,79 +134,84 @@ void testXSLT()
 	stylesheet = NULL;
 }
 
-	class XmlSchemaContext : public Attachable<xmlSchemaParserCtxtPtr,XmlSchemaContext> {
-	public:
-		typedef Attachable<xmlSchemaParserCtxtPtr,XmlSchemaContext> BaseT;
-		
-		XmlSchemaContext( const String& uri ) :BaseT()
-		{
-			initFromURI( uri );
-		}
 
-		XmlSchemaContext( const XmlDocument& doc ) :BaseT()
-		{
-			initFromDocument( doc );
-		}
 
-		XmlSchemaContext():BaseT(){}
-		
-		XmlSchemaContext( xmlSchemaParserCtxtPtr val ):BaseT(val){}
-		
-		XmlSchemaContext( const XmlSchemaContext& val ):BaseT(val){}
-		
 
-		XmlSchemaContext& operator=( xmlSchemaParserCtxtPtr rhs ) {BaseT::operator=(rhs); return *this;} 
-		
-		static void freeResource(xmlSchemaParserCtxtPtr res) {xmlSchemaFreeParserCtxt(res);}
 
-		void initFromURI( const String& uri ) {
-			attach( xmlSchemaNewParserCtxt( uri.ansi_c_str() ) );
-		}
 
-		void initFromDocument( const XmlDocument& doc ) {
-			attach( xmlSchemaNewDocParserCtxt( doc.get() ) );
-		}
 
-		//void setSAXHandler( 
-	};
 
-	class XmlSchema : public Attachable<xmlSchemaPtr,XmlSchema> {
-	public:
-		typedef Attachable<xmlSchemaPtr,XmlSchema> BaseT;
-		
-		XmlSchema():BaseT(),currentCtx_(NULL){}
-		
-		XmlSchema( xmlSchemaPtr val ):BaseT(val),currentCtx_(NULL){}
-		
-		XmlSchema( const XmlSchema& val ):BaseT(val),currentCtx_(NULL){}
-		
-		~XmlSchema()
-		{
-			if ( NULL != currentCtx_ ) {
-				xmlSchemaFreeParserCtxt( currentCtx_ );
-			}
-		}
 
-		XmlSchema& operator=( xmlSchemaPtr rhs ) {BaseT::operator=(rhs); return *this;} 
-		
-		static void freeResource(xmlSchemaPtr res) {xmlSchemaFree(res);}
 
-		void parseSchema( const XmlDocument& doc ) {
-			if ( NULL != currentCtx_ ) {
-				xmlSchemaFreeParserCtxt( currentCtx_ );
-			}
 
-			currentCtx_ = xmlSchemaNewDocParserCtxt( doc.get() );
-			attach( xmlSchemaParse( currentCtx_ ) );
-		}
-	protected:
-		xmlSchemaParserCtxtPtr currentCtx_;
 
-	};
+void MySchemaParseError( const XMLError& e )
+{
+	System::println( Format( "MySchemaParseError!\ne.message: %s\n\tcode %d\n\tdomain %d")
+		% e.message % e.code % e.domain );
+}
+
+void MySchemaValidationError( const XMLError& e )
+{
+	System::println( Format( "MySchemaValidationError!\ne.message: %s\n\tcode %d\n\tdomain %d")
+		% e.message % e.code % e.domain );
+}
 
 void testSchema()
 {
-	XmlSchema schema;
+	
+
+	XmlDocument doc;
+	doc.load( "shiporder.xml" );
+
+
+	XmlDocument schema;
+	schema.load( "shiporder.xsd" );
+
+	//method 1
+	{
+		XmlSchemaContext ctx;
+		
+		ctx.initFromDocument( schema );
+		
+		
+		XmlValidSchemaContext validCtx;
+		
+		validCtx.ValidityError += MySchemaValidationError;
+		ctx.ParserError += MySchemaParseError;
+		
+		try {
+			validCtx.parse(ctx);
+		}
+		catch ( std::exception& e ) {
+			System::print( "Exception parsing schema!! " );
+			System::println( e.what() );
+		}
+		
+		
+		try {
+			validCtx.validate( doc );
+		}
+		catch ( std::exception& e ) {
+			System::print( "Exception validating!! " );
+			System::println( e.what() );
+		}
+	}
+
+
+
+	//method 2
+	{
+		XmlSchema schm;
+
+		schm.setSchema( schema );
+		if ( schm.validate( doc ) ) {
+			System::println( "doc is valid according to schema!" );
+		}
+		else {
+			System::println( "Error! doc is NOT valid according to schema!" );
+		}
+	}
 }
 
 
@@ -468,7 +432,7 @@ int main( int argc, char** argv ){
 
 
 
-
+	testSchema();
 
 
 	testXSLT();
