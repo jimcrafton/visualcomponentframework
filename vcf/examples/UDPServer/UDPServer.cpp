@@ -22,7 +22,7 @@ int main( int argc, char** argv ){
 			s.getPeer()->recvFrom( buf, sizeof(buf), from );
 
 			DateTime date = DateTime::now();
-			AnsiString theTime = StringUtils::format( date, "%Y-%m-%d %H:%M:%S" );
+			AnsiString theTime = StringUtils::format( date, "%Y-%m-%d %H:%M:%S" );		
 
 			s.getPeer()->sendTo( (unsigned char*)theTime.c_str(), theTime.size(), from );
 		}

@@ -54,8 +54,7 @@ int main( int argc, char** argv ){
 
 				IPAddress addr = s->getRemoteHostIPAddress();
 
-				if ( 0 == bytesRead ) {
-					
+				if ( 0 == bytesRead ) {					
 					
 					System::println( "Lost connection from: " + addr.getHostAddress() +
 								" port: " + (int)s->getRemotePort() );
@@ -65,8 +64,10 @@ int main( int argc, char** argv ){
 					s->free();
 				}
 				else {
-					System::println( Format("Recv'd %d bytes from: %s port %d") 
+					buf[bytesRead] = 0;
+					System::println( Format("Recv'd %d bytes {%s} from: %s port %d") 
 										% bytesRead 
+										% &buf[0]
 										% addr.getHostAddress() 
 										% s->getRemotePort() );	
 				}

@@ -21,7 +21,7 @@ using namespace VCF;
 
 class Scrolling2Window : public Window {
 public:
-	Scrolling2Window(): listBox_(NULL) {
+	Scrolling2Window() {
 		setCaption( "Scrolling 2" );
 
 		//lets create a menu
@@ -64,23 +64,21 @@ public:
 			new ClassProcedure1<MenuItemEvent*,Scrolling2Window>( this, &Scrolling2Window::keepVertScrollbarVisible, "Scrolling2Window::keepVertScrollbarVisible" );
 
 
-
-		//add a ListBoxControl
-		listBox_ = new ListBoxControl();		
-		listBox_->setBorder( new Basic3DBorder( true ) );
-		listBox_->setAllowsMultiSelect( false );
-		//add scrollbar to listBox_
+		ListBoxControl* listBox = new ListBoxControl();		
+		listBox->setBorder( new Basic3DBorder( true ) );
+		listBox->setAllowsMultiSelect( false );
+		//add scrollbar to listBox
 		scrollBarMgr_ = new ScrollbarManager(this);
 		
 		scrollBarMgr_->setHasVerticalScrollbar( true );
 		scrollBarMgr_->setHasHorizontalScrollbar( true );		
-		scrollBarMgr_->setTarget( listBox_ );
+		scrollBarMgr_->setTarget( listBox );
 		scrollBarMgr_->setKeepScrollbarsVisible( true, true );
 		
-		this->add( listBox_, AlignClient );
+		this->add( listBox, AlignClient );
 		
-		//add some items to listBox_
-		ListModel* listBoxModel = listBox_->getListModel();	
+		//add some items to listBox
+		ListModel* listBoxModel = listBox->getListModel();	
 		for(int j=0; j<20; j++){
 			String indx = StringUtils::toString(j);
 			String capt = L"Very Ultra Hyper Extra Long ListItem " + indx;		
@@ -149,7 +147,7 @@ public:
 	MenuItem* keepHorzScrollbarVisibleMenu_;
 	MenuItem* keepVertScrollbarVisibleMenu_;
 
-	VCF::ListBoxControl* listBox_;
+	
 };
 
 
