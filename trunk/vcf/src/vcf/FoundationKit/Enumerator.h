@@ -281,6 +281,496 @@ private:
 };
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+\class OrderedEnumerator Enumerator.h "vcf/FoundationKit/Enumerator.h"
+The OrderedEnumerator is a utility class that makes it easy to use a 
+specific stl collection class (like a vector) and have support for the
+Enumerator interface. These classes do \em not represent some home 
+grown implementation of STL collections! Instead they are used as a 
+simple wrapper around some existing collection class that conforms to
+STL standards. All the extra functions here do is to directly call
+the wrapped collection, making it's usage \em identical to using
+the wrapped STL collection. For example, in most cases, using an
+Array class is \em exactly the same as using a std::vector class. 
+That's because the Array is simply a specific OrderedEnumerator 
+instantiation that uses std::vector as it's collection type. For
+further documentation about the various collection methods like 
+push_back(), size(), empty(), insert() and so forth, please see
+your compiler's STL documentation, or, if that's not available,
+try http://www.sgi.com/tech/stl/table_of_contents.html. This is 
+explains most of the standard STL collection classes.
+
+If you need direct access for a series of functions you can do 
+something like this:
+\code
+Array<int> a;
+a.resize(10);
+a[0] = 1;
+
+std::vector<int>& va = a;
+va[2] = 2;
+for ( size_t i=0;i<va.size();i++ ) {
+  va.push_back(i);  
+}
+\endcode
+In general the slight overhead of one extra function call for these
+common methods (like push_back(), size(), empty(), insert(), etc)
+shouldn't make much, if any difference, and they are all marked 
+as inline.
+
+The implementation for the Enumerator interface is handled by the
+EnumeratorContainer<> class, and the only call in this class that we
+need is to call the initContainer() function in our constructors. This 
+makes it possible for the EnumeratorContainer to iterate through the 
+collection. If you create you own sub classes, please remember to 
+call the base class for the default and copy constructors. If you 
+add additional constructors of your own, please make sure you
+call the base constructor ( OrderedEnumerator<>() ), or the collection
+will not be properly set up and when used as an Enumerator, the 
+Enumerator interface calls will fail.
+@see Array
+@see List
+@see Map
+*/
+
+template < typename ItemType, typename CollectionType >
+class OrderedEnumerator : public EnumeratorContainer<CollectionType,ItemType> {
+public:
+	typedef CollectionType CollectionT;
+	typedef ItemType ItemT;
+	typedef EnumeratorContainer<CollectionT,ItemT> BaseT;
+	typedef Enumerator<ItemT> EnumeratorT;
+
+	typedef _typename_ CollectionT::iterator iterator;
+	typedef _typename_ CollectionT::const_iterator const_iterator;
+	typedef _typename_ CollectionT::size_type size_type;
+    typedef _typename_ CollectionT::difference_type difference_type;
+    typedef _typename_ CollectionT::reference reference;
+    typedef _typename_ CollectionT::const_reference const_reference;
+    typedef _typename_ CollectionT::value_type value_type;
+    typedef _typename_ CollectionT::reverse_iterator reverse_iterator;
+    typedef _typename_ CollectionT::const_reverse_iterator const_reverse_iterator;
+
+
+
+	inline OrderedEnumerator() {
+		initContainer( collection_ );
+	}
+	
+	inline OrderedEnumerator( const OrderedEnumerator& rhs ):collection_(rhs.collection_) {
+		initContainer( collection_ );
+	}
+
+	inline operator CollectionT& () {
+		return collection_;
+	}
+
+	inline operator const CollectionT& () const {
+		return collection_;
+	}
+
+	inline CollectionT& get() {
+		return collection_;
+	}
+
+	inline const CollectionT& get() const {
+		return collection_;
+	}
+
+	inline void clear() {
+		collection_.clear();
+	}
+
+	inline size_t size() const {
+		return collection_.size();
+	}
+
+	inline bool empty() const {
+		return collection_.empty();
+	}
+
+	inline iterator begin() {
+		return collection_.begin();
+	}
+
+	inline const_iterator begin() const {
+		return collection_.begin();
+	}
+
+	inline void reserve(size_type n) {
+		collection_.reserve(n);
+	}
+
+	inline size_type capacity() const {
+		return collection_.capacity();
+	}
+	
+	inline iterator end() {
+		return collection_.end();
+	}
+
+	inline iterator end() const {
+		return collection_.end();
+	}
+
+	inline reverse_iterator rbegin() {
+		return collection_.rbegin();
+	}
+
+	inline const_reverse_iterator rbegin() const{
+		return collection_.rbegin();
+	}
+
+	inline reverse_iterator rend(){
+		return collection_.rend();
+	}
+
+	inline const_reverse_iterator rend() const {
+		return collection_.rend();
+	}
+
+	inline void resize(size_type n, ItemType x = ItemType()) {
+		collection_.resize(n,x);
+	}
+
+	inline size_type max_size() const {
+		return collection_.max_size();
+	}	
+	
+	inline reference at(size_type pos) {
+		return collection_.at(pos);
+	}
+	
+	inline const_reference at(size_type pos) const {
+		return collection_.at(pos);
+	}
+
+	inline reference operator[](size_type pos) {
+		return collection_[pos];
+	}
+
+	inline const_reference operator[](size_type pos) const {
+		return collection_.[pos]
+	}
+
+	inline reference front() {
+		return collection_.front();
+	}
+
+	inline const_reference front() const {
+		return collection_.front();
+	}
+
+	inline reference back() {
+		return collection_.back();
+	}
+
+	inline const_reference back() const {
+		return collection_.back();
+	}
+
+	inline void push_back(const ItemType& x) {
+		collection_.push_back(x);
+	}
+
+	inline void pop_back() {
+		collection_.pop_back();
+	}
+
+	inline void assign(const_iterator first, const_iterator last) {
+		return collection_.assign(first,last);
+	}
+
+	inline void assign(size_type n, const ItemType& x = ItemType()) {
+		return collection_.assign(n,x);
+	}
+
+	inline iterator insert(iterator it, const ItemType& x = ItemType()) {
+		return collection_.insert(it,x);
+	}
+
+	inline void insert(iterator it, size_type n, const ItemType& x) {
+		return collection_.insert(it,n,x);
+	}
+
+	inline void insert(iterator it,
+		const_iterator first, const_iterator last) {
+		return collection_.insert(it,first,last);
+	}
+
+	inline iterator erase(iterator it) {
+		return collection_.erase(it);
+	}
+
+	inline iterator erase(iterator first, iterator last) {
+		return collection_.erase(first,last);
+	}
+
+	
+	inline void swap(OrderedEnumerator x) {
+		collection_.swap(x);
+	}
+
+protected:
+	CollectionT collection_;
+};
+
+
+
+
+/**
+\class AssociativeEnumerator Enumerator.h "vcf/FoundationKit/Enumerator.h"
+The AssociativeEnumerator is a utility class that makes it easy to use a 
+specific stl collection class (like a map) and have support for the
+Enumerator interface. Noet that for this class when you use a 
+collection like a map, that when the Enumerator interface iterates 
+through the items, it is \em only returning the values in the map,
+not the keys. If you need the keys, you need to use the
+STL methods.
+*/
+template < typename KeyType, typename ValueType, typename CollectionType >
+class AssociativeEnumerator : public VCF::EnumeratorMapContainer<CollectionType,ValueType> {
+public:
+	typedef CollectionType CollectionT;
+	typedef KeyType KeyT;
+	typedef ValueType ValueT;
+	typedef EnumeratorMapContainer<CollectionT,ValueT> BaseT;
+
+	
+	typedef _typename_ CollectionT::key_type key_type;
+    typedef _typename_ CollectionT::referent_type referent_type;
+    typedef _typename_ CollectionT::key_compare key_compare;
+	typedef _typename_ CollectionT::value_compare value_compare;
+    typedef _typename_ CollectionT::allocator_type allocator_type;
+    typedef _typename_ CollectionT::value_type value_type;
+    
+    typedef _typename_ CollectionT::size_type size_type;
+    typedef _typename_ CollectionT::difference_type difference_type;
+    typedef _typename_ CollectionT::reference reference;
+    typedef _typename_ CollectionT::const_reference const_reference;
+    typedef _typename_ CollectionT::iterator iterator;
+    typedef _typename_ CollectionT::const_iterator const_iterator;
+    typedef _typename_ CollectionT::reverse_iterator reverse_iterator;
+    typedef _typename_ CollectionT::const_reverse_iterator const_reverse_iterator;
+
+
+	inline AssociativeEnumerator() {
+		initContainer( collection_ );
+	}
+
+	inline AssociativeEnumerator( const AssociativeEnumerator& rhs ):collection_(rhs.collection_) {
+		initContainer( collection_ );
+	}
+
+	inline operator CollectionT& () {
+		return collection_;
+	}
+
+	inline operator const CollectionT& () const {
+		return collection_;
+	}
+
+	inline CollectionT& get() {
+		return collection_;
+	}
+
+	inline const CollectionT& get() const {
+		return collection_;
+	}
+
+	inline void clear() {
+		collection_.clear();
+	}
+	
+	inline iterator begin() {
+		return collection_.begin();
+	}
+
+	inline const_iterator begin() const {
+		return collection_.begin();
+	}
+
+	inline iterator end() {
+		return collection_.end();
+	}
+
+    inline iterator end() const {
+		return collection_.end();
+	}
+
+    inline reverse_iterator rbegin() {
+		return collection_.rbegin();
+	}
+
+    inline const_reverse_iterator rbegin() const {
+		return collection_.rbegin();
+	}
+
+    inline reverse_iterator rend() {
+		return collection_.rend();
+	}
+
+    inline const_reverse_iterator rend() const {
+		return collection_.rend();
+	}
+
+    inline size_type size() const {
+		return collection_.size();
+	}
+
+    inline size_type max_size() const {
+		return collection_.max_size();
+	}
+
+    inline bool empty() const {
+		return collection_.empty();
+	}
+
+	inline ValueType& operator[](const KeyType& key) {
+		return collection_[key];
+	}
+
+    inline std::pair<iterator, bool> insert(const value_type& x) {
+		return collection_.insert(x);
+	}
+
+    inline iterator insert(iterator it, const value_type& x) {
+		return collection_.insert(it,x);
+	}
+
+    inline void insert(const value_type *first, const value_type *last) {
+		return collection_.insert(first,last);
+	}
+
+    inline iterator erase(iterator it) {
+		return collection_.erase(it);
+	}
+
+    inline iterator erase(iterator first, iterator last) {
+		return collection_.erase(first,last);
+	}
+
+    inline size_type erase(const KeyType& key) {
+		return collection_.erase(key);
+	}
+
+    inline void swap(AssociativeEnumerator x) {
+		return collection_.swap(x);
+	}
+
+    inline key_compare key_comp() const {
+		return collection_.key_comp();
+	}
+
+    inline value_compare value_comp() const {
+		return collection_.value_comp();
+	}
+
+    inline iterator find(const KeyType& key) {
+		return collection_.find(key);
+	}
+
+    inline const_iterator find(const KeyType& key) const {
+		return collection_.find(key);
+	}
+
+    inline size_type count(const KeyType& key) const {
+		return collection_.count(key);
+	}
+
+    inline iterator lower_bound(const KeyType& key) {
+		return collection_.lower_bound(key);
+	}
+
+    inline const_iterator lower_bound(const KeyType& key) const {
+		return collection_.lower_bound(key);
+	}
+
+    inline iterator upper_bound(const KeyType& key) {
+		return collection_.upper_bound(key);
+	}
+
+    inline const_iterator upper_bound(const KeyType& key) const {
+		return collection_.upper_bound(key);
+	}
+
+	inline std::pair<iterator, iterator> equal_range(const KeyType& key) {
+		return collection_.equal_range(key);
+	}
+
+	inline std::pair<const_iterator, const_iterator> equal_range(const KeyType& key) const {
+		return collection_.equal_range(key);
+	}
+
+protected:
+	CollectionT collection_;
+};
+
+/**
+\class Array Enumerator.h "vcf/FoundationKit/Enumerator.h"
+A simple wrapper for using a vector collection.
+Usage is identical to the STL's collection interface. You may
+access the underlying vector directly by calling get() or
+you may pass the Array instance to functions that take a 
+vector by reference or by value. 
+@see List
+@see Map
+*/
+template <typename ItemType>
+class Array : public OrderedEnumerator< ItemType, std::vector<ItemType> > {
+public:
+	inline Array():
+		OrderedEnumerator< ItemType, std::vector<ItemType> >() {}
+
+	inline Array( const Array& rhs ):
+		OrderedEnumerator< ItemType, std::vector<ItemType> >(rhs) {}
+
+	
+};
+
+
+template <typename ItemType>
+class List : public OrderedEnumerator< ItemType, std::list<ItemType> > {
+public:
+	inline List():
+		OrderedEnumerator< ItemType, std::list<ItemType> >() {}
+
+	inline List( const List& rhs ):
+		OrderedEnumerator< ItemType, std::list<ItemType> >(rhs) {}
+};
+
+
+
+
+
+
+template <typename KeyType, typename ValueType>
+class Map : public AssociativeEnumerator< KeyType, ValueType, std::map<KeyType,ValueType> > {
+public:
+	inline Map():
+		AssociativeEnumerator< KeyType,ValueType, std::map<KeyType,ValueType> >() {}
+
+	inline Map( const Map& rhs ):
+		AssociativeEnumerator< KeyType,ValueType, std::map<KeyType,ValueType> >(rhs) {}
+};
+
+
+
+
 };
 
 

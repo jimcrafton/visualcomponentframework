@@ -251,6 +251,53 @@ void example4()
 
 }
 
+
+void example5() 
+{
+	Array<int> v;	
+	List<int> li;
+	li.resize(10);
+
+	Enumerator<int>* ve = v.getEnumerator();
+
+	Enumerator<int>* ve2 = &v;
+
+
+	Enumerator<int>* ie = v.getEnumerator();
+	while ( ie->hasMoreElements() ) {
+		int i = ie->nextElement();
+	}
+
+	ie = li.getEnumerator();
+	while ( ie->hasMoreElements() ) {
+		int i = ie->nextElement();
+	}
+
+
+
+	List<Object*> l;
+	Enumerator<Object*>* le = l.getEnumerator();
+
+	while ( l.hasMoreElements() ) {
+		Object* o = l.nextElement();
+	}
+
+
+	Map<char,int> m;	
+	m['a'] = 100;
+	ie = m.getEnumerator();
+	while ( ie->hasMoreElements() ) {
+		int i = ie->nextElement();
+	}
+
+
+	Map<char,int> m2(m);
+
+	Map<char,int> m3 = m;
+}
+
+
+
 int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
@@ -262,6 +309,9 @@ int main( int argc, char** argv ){
 	example3();
 
 	example4();
+
+	example5();
+	
 
 	FoundationKit::terminate();
 	return 0;

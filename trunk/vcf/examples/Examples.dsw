@@ -1611,6 +1611,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "XMLKitDLL"=..\build\vc60\XMLKit\XMLKitDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "XmlTest"=.\XmlTest\XmlTest.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "jstest"=.\JavaScriptTest\jstest.dsp - Package Owner=<4>
 
 Package=<5>
