@@ -14,13 +14,6 @@ where you installed the VCF.
 #endif
 
 
-#ifndef _VCF_LISTMODEL_H__
-#	include "vcf/ApplicationKit/ListModel.h"
-#endif // _VCF_LISTMODEL_H__
-
-#ifndef _VCF_LISTMODELEVENT_H__
-#	include "vcf/ApplicationKit/ListModelEvent.h"
-#endif // _VCF_LISTMODELEVENT_H__
 
 namespace VCF{
 
@@ -39,47 +32,16 @@ class Stream;
 *@see DefaultListModel
 *@version 1.0
 *@author Jim Crafton
-@delegates
-	@del AbstractListModel::ModelEmptied
-	@del AbstractListModel::ModelValidate
-	@del AbstractListModel::ContentsChanged
-	@del AbstractListModel::ItemAdded
-	@del AbstractListModel::ItemDeleted
+
 
 */
-class APPLICATIONKIT_API AbstractListModel : public ListModel, public Persistable {
+/*
+class APPLICATIONKIT_API AbstractListModel  {
 public:
 
 	AbstractListModel();
-
 	virtual ~AbstractListModel();
-
-    
-
-    /**
-    * clears out the model's data
-    */
     void empty();
-
-	/**
-	@delegate  ContentsChanged
-	@event ListModelEvent
-	@eventtype LIST_MODEL_CONTENTS_DELETED
-	*/
-	DELEGATE(ListModelDelegate,ContentsChanged)
-
-	/**
-	@delegate ItemAdded fired when an item is added to the list model
-	@event ListModelEvent
-	*/
-	DELEGATE(ListModelDelegate,ItemAdded)
-
-	/**
-	@delegate ItemDeleted fired when an item is removed from the list model
-	@event ListModelEvent
-	*/
-	DELEGATE(ListModelDelegate,ItemDeleted)
-
 	virtual void addContentsChangedHandler(EventHandler * handler) {
 		ContentsChanged += handler;
 	}
@@ -120,24 +82,11 @@ public:
 
 	virtual uint32 getCount();
 
-	/**
-	*Write the object to the specified output stream
-	*/
     virtual void saveToStream( OutputStream * stream );
-
-	/**
-	**Read the object from the specified input stream
-	*/
     virtual void loadFromStream( InputStream * stream );
-private:
 
-    /**
-    * @supplierCardinality 0..*
-   */
-	std::vector<ListItem*> listItems_;
-	EnumeratorContainer<std::vector<ListItem*>, ListItem*> listContainer_;
 };
-
+*/
 };
 
 

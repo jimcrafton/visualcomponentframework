@@ -439,11 +439,18 @@ void Control::setUsingRenderBuffer( const bool& useRenderBuffer )
 	}
 }
 
-void Control::setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating ) /**throw( InvalidPeer ); -JEC - FIXME later*/
+void Control::setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating )
 {
+	static size_t boundsCallCount = 1;
+	if ( *bounds_ == *rect ) {
+		//nothing to do!!
+		StringUtils::trace( Format("Control::setBounds this: %p %s - *bounds_ == *rect for %uth time\n") % this % getClassName() % boundsCallCount );	
+		boundsCallCount ++;
+	}
+
 	*bounds_ = *rect;
 
-	StringUtils::trace( Format("Control::setBounds this: %p\n") % this );
+	//StringUtils::trace( Format("Control::setBounds this: %p\n") % this );
 	/**
 	Adjust the bounds to take into account a
 	potentially lightweight parent
