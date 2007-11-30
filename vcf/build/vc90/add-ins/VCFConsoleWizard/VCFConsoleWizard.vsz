@@ -1,0 +1,6 @@
+VSWIZARD 7.0
+Wizard=VsWizard.VsWizardEngine.8.0
+
+Param="WIZARD_NAME = VCFConsoleWizard"
+Param="ABSOLUTE_PATH = D:\vcf\build\vc71\add-ins\VCFConsoleWizard"
+Param="FALLBACK_LCID = 1033"
