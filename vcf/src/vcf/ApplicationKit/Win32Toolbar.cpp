@@ -195,7 +195,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 
 			LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 
-			resizeToolbarItems();
+			//resizeToolbarItems();
 		}
 		break;
 
