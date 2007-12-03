@@ -57,7 +57,7 @@ public:
 
 	virtual void mouseMove( MouseEvent* event ) {
 		CustomControl::mouseMove( event );
-
+/*
 		if ( (Component::csNormal == getComponentState()) ) {
 			ListItem* foundItem = findSingleSelectedItem( event->getPoint() );
 			if ( NULL != foundItem ) {
@@ -67,6 +67,7 @@ public:
 
 				}
 				else {
+					
 					if ( foundItem != singleSelectedItem_ ) {
 						setSelectedItem( foundItem );
 					}
@@ -74,6 +75,7 @@ public:
 
 			}
 		}
+		*/
 	}
 
 	virtual void setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating=true ) {
@@ -409,25 +411,25 @@ void ComboBoxControl::setListModel(ListModel * model)
 	}
 
 	if ( NULL != listModel_ ) {
-		listModel_->removeContentsChangedHandler( (EventHandler*)changed );
+		listModel_->ContentsChanged -= changed;
 
-		listModel_->removeItemAddedHandler( (EventHandler*)itemAdded );
+		listModel_->ItemAdded -= itemAdded;
 
-		listModel_->removeItemDeletedHandler( (EventHandler*)itemDeleted );
+		listModel_->ItemDeleted -= itemDeleted;
 	}
 
 	listModel_ = model;
 
 	if ( NULL != listModel_ ) {		
 
-		listModel_->addContentsChangedHandler( (EventHandler*)changed );
+		listModel_->ContentsChanged += changed;
 
-		listModel_->addItemAddedHandler( (EventHandler*)itemAdded );
+		listModel_->ItemAdded += itemAdded;
 
-		listModel_->addItemDeletedHandler( (EventHandler*)itemDeleted );
+		listModel_->ItemDeleted += itemDeleted;
 	}
 
-	setViewModel( dynamic_cast<Model*>(listModel_) );
+	setViewModel( listModel_ );
 }
 
 void ComboBoxControl::mouseEnter( MouseEvent* event )
@@ -487,11 +489,14 @@ void ComboBoxControl::onListModelContentsChanged( ListModelEvent* event )
 {
 	if ( NULL != event ){
 		switch ( event->getType() ){
+			/*
 			case LIST_MODEL_CONTENTS_DELETED: {
-				if ( selectedItem_ ==  event->getListItem() ) {
+				
+				if ( selectedItem_ ==  event->item ) {
 					selectedItem_ = NULL;
 					selectedIndex_ = 0;
 				}
+				
 			}
 			break;
 
@@ -502,6 +507,7 @@ void ComboBoxControl::onListModelContentsChanged( ListModelEvent* event )
 				}
 			}
 			break;
+			*/
 		}
 	}
 }
@@ -512,10 +518,11 @@ void ComboBoxControl::onItemAdded( ListModelEvent* event )
 
 void ComboBoxControl::onItemDeleted( ListModelEvent* event )
 {
-	if ( selectedItem_ ==  event->getListItem() ) {
+/*	if ( selectedItem_ ==  event->getListItem() ) {
 		selectedItem_ = NULL;
 		selectedIndex_ = 0;
 	}
+	*/
 }
 
 void ComboBoxControl::closeDropDown( Event* event )
@@ -756,8 +763,8 @@ void ComboBoxControl::setSelectedItemIndex( const uint32& selectedIndex )
 	selectedIndex_ = selectedIndex;
 	if ( NULL != listModel_ ){
 		if ( listModel_->getCount() > 0 ){
-			ListItem* item = listModel_->getItemFromIndex( selectedIndex );
-			setSelectedItem( item );
+			//ListItem* item = listModel_->getItemFromIndex( selectedIndex );
+			//setSelectedItem( item );
 		}
 	}
 }
@@ -911,6 +918,7 @@ ListItem* ComboBoxControl::lookupItem( const String& text, const bool& ignoreCas
 
 		String caption;
 		ListItem* similarItem = NULL;
+		/*
 		Enumerator<ListItem*>* items = getListModel()->getItems();
 		while ( true == items->hasMoreElements() ) {
 			ListItem* item = items->nextElement();
@@ -929,6 +937,7 @@ ListItem* ComboBoxControl::lookupItem( const String& text, const bool& ignoreCas
 					}
 			}
 		}
+		*/
 
 		found = similarItem;
 
@@ -1032,7 +1041,7 @@ void ComboBoxControl::setCurrentText( const String& text )
 			setSelectedItem( NULL );
 		}
 		else {
-			Enumerator<ListItem*>* items = getListModel()->getItems();
+/*			Enumerator<ListItem*>* items = getListModel()->getItems();
 			while ( true == items->hasMoreElements() ) {
 				ListItem* item = items->nextElement();
 				String caption = item->getCaption();
@@ -1042,6 +1051,7 @@ void ComboBoxControl::setCurrentText( const String& text )
 					break;
 				}
 			}
+			*/
 		}
 	}
 }
@@ -1054,6 +1064,7 @@ double ComboBoxControl::getPreferredHeight()
 void ComboBoxControl::selectItems( const bool& select )
 {
 	// usually used to deselect all itmes in the drop down list box
+/*
 	Enumerator<ListItem*>* items = this->getListModel()->getItems();
 	while ( true == items->hasMoreElements() ) {
 		ListItem* item = items->nextElement();
@@ -1062,6 +1073,7 @@ void ComboBoxControl::selectItems( const bool& select )
 		//}
 		item->setSelected( select );
 	}
+	*/
 }
 
 bool ComboBoxControl::generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue )

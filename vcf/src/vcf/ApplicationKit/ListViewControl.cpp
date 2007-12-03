@@ -43,11 +43,11 @@ ListViewControl::ListViewControl():
 
 	EventHandler* cmh = (EventHandler*)
 		new ClassProcedure1<ColumnModelEvent*,ListViewControl>( this, &ListViewControl::onColumnItemAdded, "ListViewControl::onColumnItemAdded" );
-	columnModel_->addItemAddedHandler( cmh );
+	columnModel_->ItemAdded += cmh;
 
 	cmh = (EventHandler*)
 		new ClassProcedure1<ColumnModelEvent*,ListViewControl>( this, &ListViewControl::onColumnItemDeleted, "ListViewControl::onColumnItemDeleted" );
-	columnModel_->addItemDeletedHandler( cmh );
+	columnModel_->ItemDeleted += cmh;
 
 
 	EventHandler* paintHandler = (EventHandler*)
@@ -112,26 +112,26 @@ void ListViewControl::setListModel(ListModel * model)
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onItemAdded, "ListBoxControl::onItemAdded" );
 		}
-
-		listModel_->addItemAddedHandler( (EventHandler*)ev );
+		
+		listModel_->ItemAdded += ev;
 
 		ev = getCallback( "ListBoxControl::onItemDeleted" );
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onItemDeleted, "ListBoxControl::onItemDeleted" );
 		}
 
-		listModel_->addItemDeletedHandler( (EventHandler*)ev );
+		listModel_->ItemDeleted += ev;
 
 		ev = getCallback( "ListBoxControl::onListModelContentsChanged" );
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
 		}
 
-		listModel_->addContentsChangedHandler( (EventHandler*)ev );
+		listModel_->ContentsChanged += ev;
 
 	}
 
-	setViewModel( dynamic_cast<Model*>(listModel_) );
+	setViewModel( listModel_ );
 }
 
 void ListViewControl::onItemPaint( ItemEvent* event )
@@ -183,7 +183,7 @@ void ListViewControl::onListModelContentsChanged( ListModelEvent* event )
 
 	if ( NULL != event ){
 		switch ( event->getType() ){
-			case LIST_MODEL_CONTENTS_DELETED: {
+/*			case LIST_MODEL_CONTENTS_DELETED: {
 				listviewPeer_->clear();
 			}
 			break;
@@ -196,6 +196,7 @@ void ListViewControl::onListModelContentsChanged( ListModelEvent* event )
 				}
 			}
 			break;
+			*/
 		}
 	}
 }
@@ -203,17 +204,19 @@ void ListViewControl::onListModelContentsChanged( ListModelEvent* event )
 void ListViewControl::onItemAdded( ListModelEvent* event )
 {
 	CallBack* paintHandler = this->getCallback( "ListViewControl::onItemPaint" );
+/*
 	ListItem* item = event->getListItem();
 	if ( NULL != paintHandler ) {
 		item->ItemPaint += paintHandler;
 	}
 
 	listviewPeer_->addItem( item );
+	*/
 }
 
 void ListViewControl::onItemDeleted( ListModelEvent* event )
 {
-	listviewPeer_->deleteItem( event->getListItem() );
+//	listviewPeer_->deleteItem( event->getListItem() );
 }
 
 ColumnItem* ListViewControl::addHeaderColumn( const String& columnName, const double& width )
@@ -254,15 +257,15 @@ void ListViewControl::deleteHeaderColumn( const uint32& index )
 }
 
 String ListViewControl::getColumnName( const uint32& index )
-{
-	ColumnItem* item = columnModel_->getItemFromIndex( index );
-	return item->getCaption();
+{	
+	return columnModel_->getItemAsString( index );
 }
 
 void ListViewControl::setColumnName( const uint32& index, const String& columnName )
 {
-	ColumnItem* item = columnModel_->getItemFromIndex( index );
-	item->setCaption( columnName );
+//	ColumnItem* item = columnModel_->getItemFromIndex( index );
+//	item->setCaption( columnName );
+	columnModel_->setItemAsString( index, columnName );
 }
 
 double ListViewControl::getColumnWidth( const uint32& index )
@@ -335,6 +338,7 @@ void ListViewControl::onListModelEmptied( ModelEvent* event )
 
 void ListViewControl::onColumnItemAdded( ColumnModelEvent* event )
 {
+	/*
 	ColumnItem* item = event->getColumnItem();
 
 	listviewPeer_->insertHeaderColumn( item->getIndex(), item->getCaption(), item->getWidth() );
@@ -347,14 +351,14 @@ void ListViewControl::onColumnItemAdded( ColumnModelEvent* event )
 	}
 
 	item->ItemChanged += columnItemChanged;
-
+	*/
 }
 
 void ListViewControl::onColumnItemDeleted( ColumnModelEvent* event )
 {
-	ColumnItem* item = event->getColumnItem();
+	//ColumnItem* item = event->getColumnItem();
 
-	listviewPeer_->deleteHeaderColumn( item->getIndex() );
+	//listviewPeer_->deleteHeaderColumn( item->getIndex() );
 }
 
 void ListViewControl::onColumnItemChanged( ItemEvent* event )

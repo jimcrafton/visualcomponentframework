@@ -18,6 +18,10 @@ namespace VCF {
 	class URL;
 
 
+	/**
+	\class URLAuthenticationEvent URL.h "vcf/InternetKit/URL.h"
+	
+	*/
 	class URLAuthenticationEvent : public Event {
 	public:
 		URLAuthenticationEvent( URL* source );
@@ -49,6 +53,9 @@ namespace VCF {
 
 	typedef Delegate1<URLAuthenticationEvent*> URLAuthenticationDelegate;
 
+	/**
+	\class URLEvent URL.h "vcf/InternetKit/URL.h"	
+	*/
 	class URLEvent : public Event {
 	public:
 		URLEvent( URL* source, uint32 eventType );
@@ -91,6 +98,12 @@ namespace VCF {
 
 	typedef Delegate1<URLEvent*> URLDelegate;
 	
+
+
+
+	/**
+	\class URLException URL.h "vcf/InternetKit/URL.h"	
+	*/
 	class URLException : public BasicException{
 	public:
 		URLException( const String & message ):
@@ -100,6 +113,28 @@ namespace VCF {
 		  BasicException(message, lineNumber){};
 		  
 		  virtual ~URLException() throw() {};
+	};
+
+	class URLAuthenticationException : public BasicException{
+	public:
+		URLAuthenticationException( const String & message ):
+		  BasicException( message ){};
+		  
+		URLAuthenticationException( const String & message, const int lineNumber ):
+		  BasicException(message, lineNumber){};
+		  
+		  virtual ~URLAuthenticationException() throw() {};
+	};
+
+	class URLDataException : public BasicException{
+	public:
+		URLDataException( const String & message ):
+		  BasicException( message ){};
+		  
+		URLDataException( const String & message, const int lineNumber ):
+		  BasicException(message, lineNumber){};
+		  
+		  virtual ~URLDataException() throw() {};
 	};
 
 
@@ -453,6 +488,9 @@ namespace VCF {
 	};
 
 
+	/**
+	\class AsyncURL URL.h "vcf/InternetKit/URL.h"	
+	*/
 	class INTERNETKIT_API AsyncURL : public URL, public Waitable {
 	public:
 		AsyncURL():URL(),urlWait_(&urlWaitMtx_){}
@@ -499,6 +537,34 @@ namespace VCF {
 		Mutex urlWaitMtx_;
 	};
 	
+
+
+
+
+
+
+	/**
+	\class ProtocolHandler URL.h "vcf/InternetKit/URL.h"	
+	*/
+	class INTERNETKIT_API ProtocolHandler {
+	public:
+		virtual ~ProtocolHandler(){}
+
+		virtual String getProtocolName() = 0;
+
+		virtual void getDataFromURL( URL* url, OutputStream* stream ) = 0;
+
+	};
+
+
+
+
+
+
+
+
+
+
 
 	inline URLAuthenticationEvent::URLAuthenticationEvent( URL* source ):
 		Event(source, URL::evAuthenticationRequested)

@@ -26,9 +26,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/ListItem.h"
 #endif // _VCF_LISTITEM_H__
 
-#ifndef _VCF_LISTMODELEVENT_H__
-#	include "vcf/ApplicationKit/ListModelEvent.h"
-#endif // _VCF_LISTMODELEVENT_H__
 
 
 
@@ -124,9 +121,7 @@ public:
 
 	Enumerator<ListItem*>* getSelectedItems();
 
-	ListItem* getSelectedItem() {
-		return singleSelectedItem_;
-	}
+	ListItem* getSelectedItem();
 
 	void setSelectedItem( ListItem* selectedItem );
 
@@ -188,9 +183,8 @@ protected:
 	bool textBounded_;
 	bool allowsMultiSelect_;
 	bool allowsExtendedSelect_;
-	ListItem* singleSelectedItem_;
-	std::vector<ListItem*> selectedItems_;
-	EnumeratorContainer<std::vector<ListItem*>,ListItem*> selectedItemsContainer_;
+	Array<ListItem*> selectedItems_;
+	Array<ListItem*> items_;
 	ImageList* imageList_;
 	ImageList* stateImageList_;
 	double stateItemIndent_;

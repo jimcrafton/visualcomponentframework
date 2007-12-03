@@ -17,6 +17,7 @@ where you installed the VCF.
 namespace VCF {
 	class URL;
 	class AsyncURL;
+	class ProtocolHandler;
 
 	/**
 	\class InternetToolkit InternetToolkit.h "vcf/InternetKit/InternetToolkit.h"
@@ -37,8 +38,14 @@ namespace VCF {
 		static void create();
 
 		static void terminate();
+
+		
+		static void addProtocolHandler( ProtocolHandler* handler );
+		static void removeProtocolHandler( ProtocolHandler* handler );
+		static ProtocolHandler* getProtocolHandler( const String& name );
+
 	protected:
-		virtual ~InternetToolkit(){}
+		virtual ~InternetToolkit();
 		InternetToolkit(){};
 
 		static InternetToolkit* inetKitInstance;
@@ -50,6 +57,7 @@ namespace VCF {
 		*/
 		virtual void internal_getDataFromURL( URL* url, OutputStream* stream ) = 0; 
 
+		std::map<String,ProtocolHandler*> protocolHandlers_;
 	private:		
 		InternetToolkit(const InternetToolkit&);
 		InternetToolkit& operator=(const InternetToolkit&);

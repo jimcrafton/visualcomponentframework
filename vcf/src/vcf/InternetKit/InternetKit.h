@@ -92,7 +92,8 @@ Handle the extension based on the compiler
 #include "vcf/InternetKit/URL.h"
 
 
-namespace VCF {
+namespace VCF {	
+
 
 	/**
 	\class InternetKit InternetKit.h "vcf/InternetKit/InternetKit.h"
@@ -121,6 +122,7 @@ namespace VCF {
 		Terminates the Internet kit.
 		*/
 		static void terminate();	
+
 	};
 
 };

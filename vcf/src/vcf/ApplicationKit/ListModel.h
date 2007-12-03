@@ -99,6 +99,12 @@ use the same control with either style.
 class APPLICATIONKIT_API ListModel : public Model  {
 public:
 
+	
+	enum {
+		IndexNotFound = (uint32)-1
+	};
+
+
 	ListModel(){
 
 	};
@@ -130,16 +136,23 @@ public:
 	virtual void insertItem( const uint32 & index, const VariantData& item ) = 0;
     
 	virtual void deleteItem( const VariantData& item ) = 0;
-	virtual void deleteItemAtIndex( const uint32 & index ) = 0;
+	virtual void deleteItemAtIndex( const uint32& index ) = 0;
 
 	virtual VariantData getItem( const uint32& index ) = 0;	
 	virtual String getItemAsString( const uint32& index ) = 0;
+
+	virtual uint32 getItemIndex( const VariantData& item ) = 0;
 
 	virtual void setItem( const uint32& index, const VariantData& item ) = 0;
 	virtual void setItemAsString( const uint32& index, const String& item ) = 0;
 
 	virtual bool getItems( std::vector<VariantData>& items ) = 0;
+	virtual bool getItems( const uint32& start, const uint32& end, std::vector<VariantData>& items ) = 0;
+	virtual Enumerator<VariantData>* getItems() = 0;
 
+	virtual bool supportsSubItems() = 0;
+	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex ) = 0; 
+	virtual String getSubItemAsString( const uint32& index, const uint32& subItemIndex ) = 0;
 	/**
 	*returns the number of the items in the model
 	*/

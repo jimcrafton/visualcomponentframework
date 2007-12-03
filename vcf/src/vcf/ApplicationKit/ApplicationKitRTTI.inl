@@ -162,14 +162,6 @@ _class_rtti_end_
 
 
 
-_class_abstract_rtti_(ColumnModel, "VCF::Model", COLUMNMODEL_CLASSID)
-_abstract_delegate_( ColumnModelDelegate,ContentsChanged )
-_abstract_delegate_( ColumnModelDelegate,ItemAdded )
-_abstract_delegate_( ColumnModelDelegate,ItemDeleted )
-_class_rtti_end_
-
-
-
 
 _class_abstract_rtti_(Control,  "VCF::UIComponent", CONTROL_CLASSID);
 _property_( double, "left", getLeft, setLeft, "" );
@@ -265,14 +257,14 @@ _property_( String, "name", getCaption, setCaption, "" )
 _class_rtti_end_
 
 
-/*
-_class_abstract_rtti_(ListModel, "VCF::ListModel", "VCF::Model", LISTMODEL_CLASSID)
-OBJECT_COLLECTION_PROPERTY(ListItem*, "items", ListModel::getItems, ListModel::addItem, ListModel::insertItem, ListModel::deleteItem, ListModel::deleteItemAtIndex )
-_abstract_delegate_( "VCF::ListModelEventHandler", ListModel, VCF::ListModelEvent, ContentsChanged )
-_abstract_delegate_( "VCF::ListModelEventHandler", ListModel, VCF::ListModelEvent, ItemAdded )
-_abstract_delegate_( "VCF::ListModelEventHandler", ListModel, VCF::ListModelEvent, ItemDeleted )
+
+_class_abstract_rtti_(ListModel, "VCF::Model", LISTMODEL_CLASSID)
+//OBJECT_COLLECTION_PROPERTY(ListItem*, "items", ListModel::getItems, ListModel::addItem, ListModel::insertItem, ListModel::deleteItem, ListModel::deleteItemAtIndex )
+_delegate_(ListModelDelegate, ContentsChanged )
+_delegate_(ListModelDelegate, ItemAdded )
+_delegate_(ListModelDelegate, ItemDeleted )
 _class_rtti_end_
-*/
+
 
 
 _class_abstract_rtti_(MenuItem, "VCF::Item", MENUITEM_CLASSID)
@@ -400,9 +392,6 @@ _delegate_(ItemDelegate, ItemDeleted );
 _class_rtti_end_
 
 _class_rtti_(DefaultColumnModel, "VCF::ColumnModel", DEFAULTCOLUMNMODEL_CLASSID)
-_delegate_( ColumnModelDelegate, ContentsChanged )
-_delegate_( ColumnModelDelegate, ItemAdded )
-_delegate_( ColumnModelDelegate, ItemDeleted )
 _class_rtti_end_
 
 _class_rtti_(DefaultMenuItem, "VCF::MenuItem", DEFAULTMENUITEM_CLASSID)
@@ -423,7 +412,10 @@ _delegate_(ItemDelegate, SubItemDeleted );
 _class_rtti_end_
 
 
-_class_rtti_(DefaultListModel, "VCF::Model", DEFAULTLISTMODEL_CLASSID)
+_class_rtti_(ColumnModel, "VCF::ListModel", COLUMNMODEL_CLASSID)
+_class_rtti_end_
+
+_class_rtti_(DefaultListModel, "VCF::ListModel", DEFAULTLISTMODEL_CLASSID)
 _class_rtti_end_
 
 

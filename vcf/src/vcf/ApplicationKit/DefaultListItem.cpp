@@ -24,15 +24,9 @@ DefaultListItem::DefaultListItem()
 DefaultListItem::DefaultListItem( ListModel* model )
 {
 	init();
-	model_ = dynamic_cast<Model*>(model);
+	model_ = model;
 }
 
-DefaultListItem::DefaultListItem( ListModel* model, const String& caption )
-{
-	init();
-	model_ = dynamic_cast<Model*>(model);
-	caption_ = caption;
-}
 
 DefaultListItem::~DefaultListItem()
 {
@@ -94,15 +88,18 @@ String DefaultListItem::getCaption()
 {
 	//control's getUseLocaleStrings() takes precedence over ours
 	Control* control = getControl();
+	ListModel* lm = (ListModel*) getModel();
 	if ( getUseLocaleStrings() && (NULL != control) && (control->getUseLocaleStrings()) ) {
-		return System::getCurrentThreadLocale()->translate( caption_ );
+		return System::getCurrentThreadLocale()->translate( lm->getItemAsString( index_ ) );
 	}
-	return caption_;
+	return lm->getItemAsString( index_ );
 }
 
 void DefaultListItem::setCaption( const String& caption )
 {
-	caption_ = caption;
+	ListModel* lm = (ListModel*) getModel();
+	lm->setItemAsString( index_, caption );
+
 	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
 	ItemChanged( &event );
 }

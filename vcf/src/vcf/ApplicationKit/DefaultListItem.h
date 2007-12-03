@@ -37,8 +37,6 @@ public:
 
 	DefaultListItem( ListModel* model );
 
-	DefaultListItem( ListModel* model, const String& caption );
-
 	virtual ~DefaultListItem();
 
 	void init();
@@ -106,7 +104,6 @@ public:
 	virtual void setStateImageIndex( const int32& index ){}
 
 private:	
-	String caption_;
 	void* data_;
 	uint32 index_;
 	Rect bounds_;	

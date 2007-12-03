@@ -36,10 +36,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/ColumnItem.h"
 #endif // _VCF_COLUMNITEM_H__
 
-#ifndef _VCF_COLUMNMODELEVENT_H__
-#	include "vcf/ApplicationKit/ColumnModelEvent.h"
-#endif // _VCF_COLUMNMODELEVENT_H__
-
 
 namespace VCF {
 

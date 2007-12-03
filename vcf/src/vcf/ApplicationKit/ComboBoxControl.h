@@ -25,10 +25,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/ListItem.h"
 #endif // _VCF_LISTITEM_H__
 
-#ifndef _VCF_LISTMODELEVENT_H__
-#	include "vcf/ApplicationKit/ListModelEvent.h"
-#endif // _VCF_LISTMODELEVENT_H__
-
 
 
 namespace VCF {
