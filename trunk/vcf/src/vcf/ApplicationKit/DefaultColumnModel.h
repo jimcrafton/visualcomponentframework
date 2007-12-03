@@ -18,11 +18,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/ColumnModel.h"
 #endif // _VCF_COLUMNMODEL_H__
 
-#ifndef _VCF_COLUMNMODELEVENT_H__
-#	include "vcf/ApplicationKit/ColumnModelEvent.h"
-#endif // _VCF_COLUMNMODELEVENT_H__
-
-
 #ifndef _VCF_COLUMNITEM_H__
 #	include "vcf/ApplicationKit/ColumnItem.h"
 #endif // _VCF_COLUMNITEM_H__
@@ -47,98 +42,6 @@ public:
 	DefaultColumnModel();
 
 	virtual ~DefaultColumnModel();
-
-	void init();
-
-
-    virtual void addModelValidationHandler( EventHandler* handler ) {
-		ModelValidate += handler;
-	}
-
-	virtual void removeModelValidationHandler( EventHandler* handler ) {
-		ModelValidate.remove(handler);
-	}
-
-	virtual void addModelHandler( EventHandler* handler ) {
-		ModelEmptied += handler;
-	}
-
-	virtual void removeModelHandler( EventHandler* handler ) {
-		ModelEmptied.remove(handler);
-	}
-
-    /**
-     * validate the model.
-     * The implementation for this can vary widely, or even be nonexistant for model's that do not require validation.
-     * The basic idea is to call all the listeners in the list , passing in a local variable to the
-     * onModelValidate() methods of the listener's. The variable is initialized to true, and if it is
-     * still true at the end of the listener iterations, then it is safe to apply the changes to the
-     * model, other wise the changes are removed.
-     */
-    virtual void validate();
-
-    /**
-    * clears out the model's data
-    */
-    virtual void empty();
-
-	virtual void removeListModelHandler(EventHandler * handler) {
-		ModelEmptied.remove(handler);
-	}
-
-	virtual void addListModelHandler(EventHandler * handler) {
-		ModelEmptied += handler;
-	}
-
-	/**
-	*ColumnModel Handlers
-	*/
-	DELEGATE(ColumnModelDelegate,ContentsChanged)
-	DELEGATE(ColumnModelDelegate,ItemAdded)
-	DELEGATE(ColumnModelDelegate,ItemDeleted)
-
-	
-	DELEGATE(ModelDelegate,ModelEmptied)
-
-	virtual void addContentsChangedHandler(EventHandler * handler) {
-		ContentsChanged += handler;
-	}
-
-	virtual void removeContentsChangedHandler(EventHandler * handler) {
-		ContentsChanged.remove(handler);
-	}
-
-	virtual void addItemAddedHandler(EventHandler * handler) {
-		ItemAdded += handler;
-	}
-
-	virtual void removeItemAddedHandler(EventHandler * handler) {
-		ItemAdded.remove(handler);
-	}
-
-	virtual void addItemDeletedHandler(EventHandler * handler) {
-		ItemDeleted += handler;
-	}
-
-	virtual void removeItemDeletedHandler(EventHandler * handler) {
-		ItemDeleted.remove(handler);
-	}
-
-
-    virtual void deleteItem( ColumnItem* item);
-
-    virtual void deleteItem(const uint32 & index);
-
-    virtual void insertItem(const uint32 & index, ColumnItem * item);
-
-    virtual void addItem( ColumnItem* item);
-
-	virtual ColumnItem* getItemFromIndex( const uint32& index );
-
-	virtual Enumerator<ColumnItem*>* getItems();
-
-	virtual uint32 getCount();
-
 	/**
 	*Write the object to the specified output stream
 	*/
@@ -150,8 +53,7 @@ public:
     virtual void loadFromStream( InputStream * stream );
 
 protected:
-	std::vector<ColumnItem*> columnItems_;
-	EnumeratorContainer<std::vector<ColumnItem*>, ColumnItem*> columnContainer_;
+	
 };
 
 

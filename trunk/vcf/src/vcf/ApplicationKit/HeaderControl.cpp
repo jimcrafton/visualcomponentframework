@@ -87,28 +87,26 @@ void HeaderControl::deleteColumn( const uint32& index )
 
 String HeaderControl::getColumnName( const uint32& index )
 {
-	ColumnItem* item = columnModel_->getItemFromIndex( index );
-	return item->getCaption();
+	return columnModel_->getItemAsString( index );
 }
 
 void HeaderControl::setColumnName( const uint32& index, const String& columnName )
 {
-	ColumnItem* item = columnModel_->getItemFromIndex( index );
-	item->setCaption( columnName );
+	columnModel_->setItemAsString( index, columnName );	
 }
 
 double HeaderControl::getColumnWidth( const uint32& index )
 {
-	ColumnItem* item = columnModel_->getItemFromIndex( index );
-	return item->getWidth();
+//	ColumnItem* item = columnModel_->getItemFromIndex( index );
+	return 0;//item->getWidth();
 }
 
 void HeaderControl::setColumnWidth( const uint32& index, const double& width )
 {
-	ColumnItem* item = columnModel_->getItemFromIndex( index );
-	item->setWidth( width );
-	ItemEvent event( this, ITEM_EVENT_CHANGED );
-	ColumnWidthChanged( &event );
+	//ColumnItem* item = columnModel_->getItemFromIndex( index );
+	//item->setWidth( width );
+	//ItemEvent event( this, ITEM_EVENT_CHANGED );
+	//ColumnWidthChanged( &event );
 }
 
 void HeaderControl::setImageList( ImageList* imageList )
@@ -119,7 +117,7 @@ void HeaderControl::setImageList( ImageList* imageList )
 ColumnItem* HeaderControl::isPtOverItem(Point* point)
 {
 	ColumnItem* result = NULL;
-
+/*
 	Enumerator<ColumnItem*>* columns = columnModel_->getItems();
 	Rect r = getClientBounds();
 	r.right_ = r.left_;
@@ -132,7 +130,7 @@ ColumnItem* HeaderControl::isPtOverItem(Point* point)
 		}
 		r.left_ = r.right_;
 	}
-
+*/
 	return result;
 }
 
@@ -143,7 +141,7 @@ void HeaderControl::paint( GraphicsContext * context )
 	Rect r = getClientBounds();
 	r.right_ = r.left_;
 
-
+/*
 	Enumerator<ColumnItem*>* columns = columnModel_->getItems();
 	uint32 colCount = columnModel_->getCount();
 
@@ -167,6 +165,7 @@ void HeaderControl::paint( GraphicsContext * context )
 			context->drawThemeHeader( &r, state );
 		}
 	}
+	*/
 }
 
 double HeaderControl::getPreferredHeight()

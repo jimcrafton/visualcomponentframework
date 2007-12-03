@@ -277,22 +277,22 @@ void Win32InternetToolkit::internal_getDataFromURL( URL* url, OutputStream* stre
 		
 		switch (res) {
 			case INET_E_AUTHENTICATION_REQUIRED : {
-				throw URLException( "Unable to access content because some form of authentication is required." );
+				throw URLAuthenticationException( "Unable to access content because some form of authentication is required." );
 			}
 			break;
 
 			case INET_E_DATA_NOT_AVAILABLE : {
-				throw URLException( "Data is unavailable. Check to see if the URL is actually correct." );
+				throw URLDataException( "Data is unavailable. Check to see if the URL is actually correct." );
 			}
 			break;
 
 			case INET_E_RESOURCE_NOT_FOUND  : {
-				throw URLException( "The server or proxy specified could not be found." );
+				throw URLDataException( "The server or proxy specified could not be found." );
 			}
 			break;
 
 			case INET_E_DOWNLOAD_FAILURE  : {
-				throw URLException( "The download failed, possibly due to an incorrect username/password combination." );
+				throw URLDataException( "The download failed, possibly due to an incorrect username/password combination." );
 			}
 			break;
 

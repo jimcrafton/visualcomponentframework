@@ -19,9 +19,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/ListModel.h"
 #endif // _VCF_LISTMODEL_H__
 
-#ifndef _VCF_LISTMODELEVENT_H__
-#	include "vcf/ApplicationKit/ListModelEvent.h"
-#endif // _VCF_LISTMODELEVENT_H__
 
 
 
@@ -40,6 +37,7 @@ public:
 
 	virtual ~DefaultListModel();
 
+
 	virtual void empty();
 
 	virtual void addItem( const VariantData& item );
@@ -51,13 +49,20 @@ public:
 	virtual VariantData getItem( const uint32& index );	
 	virtual String getItemAsString( const uint32& index );
 
+	virtual uint32 getItemIndex( const VariantData& item );
+
 	virtual void setItem( const uint32& index, const VariantData& item );
 	virtual void setItemAsString( const uint32& index, const String& item );
 
 	virtual bool getItems( std::vector<VariantData>& items );
+	virtual bool getItems( const uint32& start, const uint32& end, std::vector<VariantData>& items );
+	virtual Enumerator<VariantData>* getItems();
 
 	virtual uint32 getCount();
 
+	virtual bool supportsSubItems();
+	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex ); 
+	virtual String getSubItemAsString( const uint32& index, const uint32& subItemIndex );
 
 	/**
 	*Write the object to the specified output stream

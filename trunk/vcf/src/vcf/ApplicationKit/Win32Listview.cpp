@@ -512,6 +512,7 @@ void Win32Listview::postPaintItem( NMLVCUSTOMDRAW* drawItem )
 
 			LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 			if ( style & LVS_REPORT ) {
+				/*
 				ColumnModel* colModel = listviewControl_->getColumnModel();
 				if ( NULL != colModel ) {
 					uint32 colIndex = 0;
@@ -531,6 +532,7 @@ void Win32Listview::postPaintItem( NMLVCUSTOMDRAW* drawItem )
 						colIndex ++;
 					}
 				}
+				*/
 			}
 		}
 	}
@@ -796,6 +798,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 		case LVN_COLUMNCLICK:{
 
 			NMLISTVIEW* nmlistView = (NMLISTVIEW*)lParam;
+			/*
 			ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmlistView->iSubItem );
 			if ( NULL != item ) {
 				POINT pt = {0,0};
@@ -809,6 +812,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 
 				listviewControl_->handleEvent( &event );
 			}
+			*/
 			result = true;
 		}
 		break;
@@ -824,7 +828,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 		case HDN_ITEMCHANGINGW:  {
 			if ( true == headerControlIsTracking_ ) {
 				NMHEADERW* nmHeader = (NMHEADERW*)lParam;
-
+/*
 				if ( nmHeader->pitem->mask & HDI_WIDTH ) {
 					ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmHeader->iItem );
 					if ( NULL != item ) {
@@ -832,6 +836,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 						InvalidateRect( hwnd_, NULL, TRUE );
 					}
 				}
+				*/
 			}
 
 			wndProcResult = FALSE;
@@ -844,11 +849,13 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 				NMHEADERA* nmHeader = (NMHEADERA*)lParam;
 
 				if ( nmHeader->pitem->mask & HDI_WIDTH ) {
+					/*
 					ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmHeader->iItem );
 					if ( NULL != item ) {
 						item->setWidth( nmHeader->pitem->cxy );
 						InvalidateRect( hwnd_, NULL, TRUE );
 					}
+					*/
 				}
 			}
 
@@ -863,11 +870,13 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 			headerControlIsTracking_ = false;
 
 			if ( (nmHeader->pitem->mask & HDI_WIDTH) && (listviewControl_->getColumnModel()->getCount() > 0) ) {
+				/*
 				ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmHeader->iItem );
 				if ( NULL != item ) {
 					item->setWidth( nmHeader->pitem->cxy );
 					InvalidateRect( hwnd_, NULL, TRUE );
 				}
+				*/
 			}
 
 
@@ -883,11 +892,12 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 			headerControlIsTracking_ = false;
 
 			if ( (nmHeader->pitem->mask & HDI_WIDTH) && (listviewControl_->getColumnModel()->getCount() > 0) ) {
-				ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmHeader->iItem );
+/*				ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmHeader->iItem );
 				if ( NULL != item ) {
 					item->setWidth( nmHeader->pitem->cxy );
 					InvalidateRect( hwnd_, NULL, TRUE );
 				}
+				*/
 			}
 
 
@@ -1666,9 +1676,11 @@ void Win32Listview::insertHeaderColumn( const uint32& index, const String& colum
 				headerItem.mask = HDI_FORMAT | HDI_LPARAM;
 				Header_GetItem( header, index, &headerItem );
 				headerItem.fmt |= HDF_OWNERDRAW;
+				/*
 				ColumnItem* item = listviewControl_->getColumnModel()->getItemFromIndex( index );
 
 				headerItem.lParam = (LPARAM)item;
+				*/
 
 				int err = SendMessage( header, HDM_SETITEMW, (WPARAM)index, (LPARAM)&headerItem );
 			}
@@ -1707,9 +1719,10 @@ void Win32Listview::insertHeaderColumn( const uint32& index, const String& colum
 				headerItem.mask = HDI_FORMAT | HDI_LPARAM;
 				Header_GetItem( header, index, &headerItem );
 				headerItem.fmt |= HDF_OWNERDRAW;
-				ColumnItem* item = listviewControl_->getColumnModel()->getItemFromIndex( index );
+/*				ColumnItem* item = listviewControl_->getColumnModel()->getItemFromIndex( index );
 
 				headerItem.lParam = (LPARAM)item;
+				*/
 
 				int err = SendMessage( header, HDM_SETITEMA, (WPARAM)index, (LPARAM)&headerItem );
 			}

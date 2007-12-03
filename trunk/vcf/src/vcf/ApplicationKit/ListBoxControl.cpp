@@ -57,8 +57,6 @@ ListBoxControl::ListBoxControl( ListModel* listModel ):
 
 void ListBoxControl::init()
 {
-	singleSelectedItem_ = NULL;
-
 	allowsMultiSelect_ = false;
 
 	allowsExtendedSelect_ = true;
@@ -72,23 +70,19 @@ void ListBoxControl::init()
 	EventHandler* lmh = (EventHandler*)
 		new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onItemAdded, "ListBoxControl::onItemAdded" );
 
-	listModel_->addItemAddedHandler( lmh );
+	listModel_->ItemAdded += lmh;
 
 	lmh = (EventHandler*)
 		new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onItemDeleted, "ListBoxControl::onItemDeleted" );
 
-	listModel_->addItemDeletedHandler( lmh );
+	listModel_->ItemDeleted += lmh;
 
 	lmh = (EventHandler*)
 		new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
 
-	listModel_->addContentsChangedHandler( lmh );
-
-	selectedItemsContainer_.initContainer( selectedItems_ );
+	listModel_->ContentsChanged += lmh;
 
 	setUseColorForBackground( true );
-
-
 }
 
 ListBoxControl::~ListBoxControl()
@@ -101,19 +95,21 @@ void ListBoxControl::destroy()
 	if ( NULL != listModel_ ) {
 		EventHandler* ev = (EventHandler*)getCallback( "ListBoxControl::onItemAdded" );
 		if ( NULL != ev ) {
-			listModel_->removeItemAddedHandler( ev );
+			listModel_->ItemAdded -= ev;
 		}
 
 		ev = (EventHandler*)getCallback( "ListBoxControl::onItemDeleted" );
 		if ( NULL != ev ) {
-			listModel_->removeItemDeletedHandler( ev );
+			listModel_->ItemDeleted -= ev;
 		}
 
 		ev = (EventHandler*)getCallback( "ListBoxControl::onListModelContentsChanged" );
 		if ( NULL != ev ) {
-			listModel_->removeContentsChangedHandler( ev );
+			listModel_->ContentsChanged -= ev;
 		}
 	}
+
+	items_.clear();
 
 	CustomControl::destroy();
 }
@@ -132,17 +128,17 @@ void ListBoxControl::setListModel( ListModel * model )
 	if ( NULL != listModel_ ) {
 		EventHandler* ev = (EventHandler*)getCallback( "ListBoxControl::onItemAdded" );
 		if ( NULL != ev ) {
-			listModel_->removeItemAddedHandler( ev );
+			listModel_->ItemAdded -= ev;
 		}
 
 		ev = (EventHandler*)getCallback( "ListBoxControl::onItemDeleted" );
 		if ( NULL != ev ) {
-			listModel_->removeItemDeletedHandler( ev );
+			listModel_->ItemDeleted -= ev;
 		}
 
 		ev = (EventHandler*)getCallback( "ListBoxControl::onListModelContentsChanged" );
 		if ( NULL != ev ) {
-			listModel_->removeContentsChangedHandler( ev );
+			listModel_->ContentsChanged -= ev;
 		}		
 	}
 
@@ -153,7 +149,7 @@ void ListBoxControl::setListModel( ListModel * model )
 		
 	}
 
-	setViewModel( dynamic_cast<Model*>(listModel_) );
+	setViewModel( listModel_ );
 
 	repaint();
 }
@@ -167,7 +163,6 @@ void ListBoxControl::onListModelContentsChanged( ListModelEvent* event )
 	if ( NULL != event ){
 		switch ( event->getType() ){
 			case LIST_MODEL_CONTENTS_DELETED: {
-				singleSelectedItem_ = NULL;
 				selectedItems_.clear();
 			}
 			break;
@@ -207,7 +202,7 @@ void ListBoxControl::onItemAdded( ListModelEvent* event )
 
 	GraphicsContext* ctx = getContext();
 
-	ListItem* item = event->getListItem();
+/*	ListItem* item = event->getListItem();
 
 	itemRect.setRect( 0, currentMaxHeight_, width-scrollW, currentMaxHeight_ + defaultItemHeight_ );
 	item->setBounds( &itemRect );
@@ -233,12 +228,13 @@ void ListBoxControl::onItemAdded( ListModelEvent* event )
 
 		scrollable->setVirtualViewSize( currentMaxWidth_, currentMaxHeight_ );
 	}
+	*/
 	repaint();
 }
 
 void ListBoxControl::onItemDeleted( ListModelEvent* event )
 {
-	ListItem* item = event->getListItem();
+/*	ListItem* item = event->getListItem();
 
 	if ( item == singleSelectedItem_ ) {
 		singleSelectedItem_ = NULL;
@@ -264,7 +260,7 @@ void ListBoxControl::onItemDeleted( ListModelEvent* event )
 
 		scrollable->setVirtualViewSize( currentMaxWidth_, currentMaxHeight_ );	
 	}
-
+*/
 	repaint();
 }
 
@@ -272,17 +268,17 @@ void ListBoxControl::rangeSelect( const bool & isSelected, ListItem * first, Lis
 {
 	if ( NULL == last ) {
 		setSelectedItem( first ); //this will select it
-		if ( false == isSelected ) { // we'll deselect it
+		if ( !isSelected ) { // we'll deselect it
 			first->setSelected( isSelected );
-			singleSelectedItem_ = NULL;
+			setSelectedItem( NULL );
 		}
 		repaint();
 	}
 	else {
-		if ( NULL != singleSelectedItem_ ) {
-			singleSelectedItem_->setSelected( false );
+		ListItem* selected = getSelectedItem();
+		if ( NULL != selected ) {
+			selected->setSelected( false );
 		}
-		singleSelectedItem_ = NULL;
 
 		selectedItems_.clear();
 
@@ -291,6 +287,7 @@ void ListBoxControl::rangeSelect( const bool & isSelected, ListItem * first, Lis
 			uint32 start = first->getIndex();
 			uint32 end = last->getIndex();
 			for ( uint32 i=start;i<=end;i++) {
+				/*
 				ListItem* item = lm->getItemFromIndex( i );
 				if ( NULL != item ) {
 					item->setSelected( isSelected );
@@ -298,6 +295,7 @@ void ListBoxControl::rangeSelect( const bool & isSelected, ListItem * first, Lis
 						selectedItems_.push_back( item );
 					}
 				}
+				*/
 			}
 
 			selectionChanged( NULL );
@@ -487,7 +485,7 @@ void ListBoxControl::paint( GraphicsContext* ctx )
 		Color* selectedTextColor =
 				GraphicsToolkit::getSystemColor( SYSCOLOR_SELECTION_TEXT );
 
-		Enumerator<ListItem*>* items= lm->getItems();
+		Enumerator<ListItem*>* items= NULL;//lm->getItems();
 		double currentTop = bounds.top_;
 		Rect itemRect;
 		Rect itemPaintRect;
@@ -502,7 +500,7 @@ void ListBoxControl::paint( GraphicsContext* ctx )
 		Rect viewBounds = ctx->getViewableBounds();
 		//Point origin = ctx->getOrigin();
 		//viewBounds.offset( -origin.x_, -origin.y_ );
-
+/*
 		while ( true == items->hasMoreElements() ) {
 			ListItem* item = items->nextElement();
 			itemRect.setRect( offsetx, currentTop, offsetx + (width-scrollW), currentTop + defaultItemHeight_ );
@@ -518,6 +516,7 @@ void ListBoxControl::paint( GraphicsContext* ctx )
 
 			currentTop += itemRect.getHeight();
 		}
+		*/
 	}
 }
 
@@ -543,6 +542,7 @@ ListItem* ListBoxControl::findSingleSelectedItem( Point* pt )
 
 	ListModel* lm = getListModel();
 	if ( NULL != lm ) {
+		/*
 		Enumerator<ListItem*>* items= lm->getItems();
 		double currentTop = 0.0;
 		Rect itemRect;
@@ -555,6 +555,7 @@ ListItem* ListBoxControl::findSingleSelectedItem( Point* pt )
 			}
 			currentTop += itemRect.getHeight();
 		}
+		*/
 	}
 
 	return result;
@@ -609,7 +610,7 @@ void ListBoxControl::mouseDown( MouseEvent* event )
 
 			if ( true == allowsMultiSelect_ && true == allowsExtendedSelect_ ) {
 				if( event->hasShiftKey() ){
-					if( foundItem == singleSelectedItem_ ){
+					if( foundItem == getSelectedItem() ){
 						for( uint32 j=0;j<selectedItems_.size();j++ ){
 							selectedItems_[j]->setSelected(false);
 						}
@@ -618,39 +619,36 @@ void ListBoxControl::mouseDown( MouseEvent* event )
 						foundItem->setSelected(true);
 						selectionChanged( foundItem );
 					}
-					else if( NULL != singleSelectedItem_ ){
+					else if( NULL != getSelectedItem() ){
+						ListItem* selected = getSelectedItem();
 						uint32 foundItemPos = foundItem->getIndex();
-						uint32 singlePos = singleSelectedItem_->getIndex();
+						uint32 singlePos = selected->getIndex();
 						for( uint32 j=0;j<selectedItems_.size();j++ ){
 							selectedItems_[j]->setSelected(false);
 						}
 						if(foundItemPos < singlePos){// rangeSelect clears selectedItems_
-							rangeSelect(true, foundItem, singleSelectedItem_ );
+							rangeSelect(true, foundItem, selected );
 						}
 						else{
-							rangeSelect(true, singleSelectedItem_, foundItem );
+							rangeSelect(true, selected, foundItem );
 						}
-						singleSelectedItem_ = foundItem;
 						selectionChanged( foundItem );
 					}
 					else{// needed if no items currently selected.
 						foundItem->setSelected(true);
 						selectedItems_.push_back(foundItem);
-						singleSelectedItem_ = foundItem;
 						selectionChanged( foundItem );
 					}
 				}
 				else if( event->hasControlKey() ){
 					if( foundItem->isSelected() ){
 						foundItem->setSelected(false);
-						singleSelectedItem_ = NULL;
 						eraseFromSelectedItems( foundItem );
 						selectionChanged( foundItem );
 					}
 					else{
 						foundItem->setSelected(true);
 						selectedItems_.push_back(foundItem);
-						singleSelectedItem_ = foundItem;
 						selectionChanged( foundItem );
 					}
 				}
@@ -667,20 +665,17 @@ void ListBoxControl::mouseDown( MouseEvent* event )
 					
 					selectedItems_.push_back(foundItem);
 					foundItem->setSelected( true );
-					singleSelectedItem_ = foundItem;
 					selectionChanged( foundItem );
 				}
 			}
 			else if ( true == allowsMultiSelect_ && false == allowsExtendedSelect_ ){
 				if( foundItem->isSelected() ){
 					foundItem->setSelected(false);
-					singleSelectedItem_ = NULL;
 					eraseFromSelectedItems( foundItem );
 					selectionChanged( foundItem );
 				}
 				else{
 					foundItem->setSelected( true );
-					singleSelectedItem_ = foundItem;
 					selectedItems_.push_back( foundItem );
 					selectionChanged( foundItem );
 				}
@@ -701,21 +696,21 @@ void ListBoxControl::mouseMove( MouseEvent* event )
 		ListItem* foundItem = findSingleSelectedItem( event->getPoint() );
 		if ( NULL != foundItem ) {
 			if ( true == allowsMultiSelect_ ) {
-				if ( true == foundItem->isSelected() ){
-					singleSelectedItem_ = foundItem; 
-				}
-				else {
+				//if ( true == foundItem->isSelected() ){
+				//	singleSelectedItem_ = foundItem; 
+			//	/}
+			//	else {
 					//selectedItems_.push_back( foundItem );
 					setSelectedItem( foundItem );
-				}
+			//	}
 			}
 			else {
-				if ( foundItem != singleSelectedItem_ )  {	   
+				if ( foundItem != getSelectedItem() )  {	   
 					//JC - Integrated change by Berkano (Thanks Brian!) - fixes bug [1015368] ListBoxControl Mousemove error 
-					if(!selectedItems_.empty()) {
+					//if(!selectedItems_.empty()) {
 					// selectedItems_[0] = foundItem;//assumes index 0 exists
 					setSelectedItem( foundItem );
-					}
+					//}
 				}
 			}
 		}
@@ -761,10 +756,12 @@ void ListBoxControl::keyDown( KeyboardEvent* event )
 				else if ( vkDownArrow == event->getVirtualCode() ) {
 					index ++;
 				}
+				/*
 				item = lm->getItemFromIndex( index );
 				if ( NULL != item ) {
 					setSelectedItem( item );
 				}
+				*/
 			}
 		}
 	}
@@ -788,7 +785,7 @@ void ListBoxControl::setDefaultItemHeight( const double& defaultItemHeight )
 
 Enumerator<ListItem*>* ListBoxControl::getSelectedItems()
 {
-	return selectedItemsContainer_.getEnumerator();
+	return selectedItems_.getEnumerator();
 }
 
 void ListBoxControl::setAllowsMultiSelect( const bool& allowsMultiSelect )
@@ -806,9 +803,13 @@ void ListBoxControl::setSelectedItem( ListItem* selectedItem )
 {
 	if ( true != allowsMultiSelect_ ) {
 
-		if( NULL != singleSelectedItem_ ) singleSelectedItem_->setSelected( false );		
+		ListItem* oldSelected = getSelectedItem();
+
+		if( NULL != oldSelected ) {
+			oldSelected->setSelected( false );		
+		}
 		
-		if( !(selectedItems_.empty()) ) {
+		if( !selectedItems_.empty() ) {
 
 			for( uint32 j=0;j<selectedItems_.size();j++ ){
 				selectedItems_[j]->setSelected(false);
@@ -818,12 +819,29 @@ void ListBoxControl::setSelectedItem( ListItem* selectedItem )
 		}
 	}
 	
-	singleSelectedItem_ = selectedItem;
-	if ( NULL != singleSelectedItem_ ) {
+	//singleSelectedItem_ = selectedItem;
+
+	if ( NULL != selectedItem ) {
+		if ( selectedItems_.empty() ) {
+			selectedItems_.push_back( selectedItem );		
+		}
+		else {
+			if ( selectedItems_[0] != selectedItem ) {
+				Array<ListItem*>::iterator found = 
+					std::find( selectedItems_.begin(), selectedItems_.end(), selectedItem );
+				if ( found != selectedItems_.end() ) {
+					selectedItems_.erase( found );					
+				}
+				selectedItems_.insert( 0, selectedItem );				
+			}
+		}
+	}
+
+
+	if ( NULL != selectedItem ) {
 		if( !(selectedItem->isSelected()) ) { //If already selected, it is already in selectedItems_!!			
-			singleSelectedItem_->setSelected( true );			
-			selectedItems_.push_back( selectedItem );//should try to find it find it first, but!			
-			selectionChanged( singleSelectedItem_ );
+			selectedItem->setSelected( true );
+			selectionChanged( selectedItem );
 		}
 	}
 
@@ -894,6 +912,14 @@ void ListBoxControl::setStateImageList( ImageList* stateImageList )
 	repaint();
 }
 
+ListItem* ListBoxControl::getSelectedItem()
+{	
+	ListItem* result = NULL;
+	if ( !selectedItems_.empty() ) {
+		result = selectedItems_[0];
+	}
+	return result;
+}
 
 /**
 $Id$

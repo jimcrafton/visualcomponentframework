@@ -245,6 +245,7 @@ void TreeListControl::paintItem( TreeItem* item, GraphicsContext* context, Rect*
 	captionRect.left_ = paintRect->left_ + indent + itemHeight_;
 
 	if ( columnModel->getCount() > 0 ) {
+		/*
 		ColumnItem* col = columnModel->getItemFromIndex( 0 );
 		if ( displayOptions_ & TreeListControl::tdoShowColumnHeader ) {
 			captionRect.right_ = maxVal<double>( captionRect.left_ + 1.0,
@@ -253,6 +254,7 @@ void TreeListControl::paintItem( TreeItem* item, GraphicsContext* context, Rect*
 		else {
 			captionRect.right_ = captionRect.left_ + context->getTextWidth( item->getCaption() ) + 5;
 		}
+		*/
 	}
 	else {
 		captionRect.right_ = captionRect.left_ + context->getTextWidth( item->getCaption() ) + 5;
@@ -381,7 +383,7 @@ void TreeListControl::paintItem( TreeItem* item, GraphicsContext* context, Rect*
 
 	if ( displayOptions_ & TreeListControl::tdoShowColumnHeader ) {
 
-		Enumerator<ColumnItem*>* columns =  columnModel->getItems();
+/*		Enumerator<ColumnItem*>* columns =  columnModel->getItems();
 		int columnIndex = 0;
 
 		if ( NULL != columns ) {
@@ -398,6 +400,7 @@ void TreeListControl::paintItem( TreeItem* item, GraphicsContext* context, Rect*
 				columnIndex++;
 			}
 		}
+		*/
 	}
 
 }
@@ -633,12 +636,13 @@ void TreeListControl::paintItemImage( TreeItem* item, GraphicsContext* context, 
 
 	if ( displayOptions_ & TreeListControl::tdoShowColumnHeader ) {
 		//get the first column width
-		ColumnItem* item = header_->getColumnModel()->getItemFromIndex(0);
+/*		ColumnItem* item = header_->getColumnModel()->getItemFromIndex(0);
 		Rect tmp = *paintRect;
 		tmp.left_ += item->getWidth();
 		if ( imageRect.right_ > tmp.left_ ) {
 			imageRect.right_ = maxVal<double>( imageRect.left_, tmp.left_ );
 		}
+		*/
 	}
 
 	if ( false == imageRect.isEmpty() ) {
@@ -742,12 +746,13 @@ TreeItem* TreeListControl::hitTest( Point* pt, TreeItem* itemToTest )
 	if ( true == itemToTest->containsPoint( pt ) ) {
 		if ( ! (displayOptions_ & TreeListControl::tdoShowFullRowSelection) ) {
 			if ( displayOptions_ & TreeListControl::tdoShowColumnHeader ) {
-				ColumnItem* column = header_->getColumnModel()->getItemFromIndex(0);
+/*				ColumnItem* column = header_->getColumnModel()->getItemFromIndex(0);
 				Rect tmp = *itemToTest->getBounds();
 				tmp.right_ = tmp.left_ + column->getWidth();
 				if ( true == tmp.containsPt( pt ) ) {
 					result = itemToTest;
 				}
+				*/
 			}
 			else {
 				GraphicsContext* ctx = getContext();
@@ -1048,7 +1053,7 @@ Rect TreeListControl::getBoundsForEdit( TreeItem* item, int column )
 
 
 	ColumnModel* cm = header_->getColumnModel();
-	Enumerator<ColumnItem*>* columnItems = cm->getItems();
+/*	Enumerator<ColumnItem*>* columnItems = cm->getItems();
 
 	result = *item->getBounds();
 
@@ -1098,6 +1103,7 @@ Rect TreeListControl::getBoundsForEdit( TreeItem* item, int column )
 		result.left_ += col->getWidth();
 		index++;
 	}
+	*/
 
 	return result;
 }
@@ -1113,6 +1119,7 @@ int TreeListControl::hitTestForEditColumn( Point* pt )
 			result = 0;
 				 
 			ColumnModel* cm = header_->getColumnModel();
+			/*
 			Enumerator<ColumnItem*>* columnItems = cm->getItems();
 
 			Rect subItemRect = *item->getBounds();
@@ -1145,6 +1152,7 @@ int TreeListControl::hitTestForEditColumn( Point* pt )
 					result = -1;
 				}
 			}
+			*/
 		}
 		else {
 			result = 0;
@@ -1424,6 +1432,7 @@ bool TreeListControl::hitTest( Rect* rect, TreeItem* item, std::vector<TreeItem*
 	Rect itemBounds = *item->getBounds();
 
 	if ( ! (displayOptions_ & TreeListControl::tdoShowFullRowSelection) ) {
+		/*
 		ColumnItem* column = header_->getColumnModel()->getItemFromIndex(0);
 
 		if (NULL != column)
@@ -1440,6 +1449,7 @@ bool TreeListControl::hitTest( Rect* rect, TreeItem* item, std::vector<TreeItem*
 				itemBounds.right_ = itemBounds.right_ + w + getCurrentIndent(item) ;
 			}
 		}
+		*/
 	}
 
 
@@ -1936,10 +1946,11 @@ double TreeListControl::getColumnWidth( const uint32& index )
 {
 	double result = -1;
 	ColumnModel* model = header_->getColumnModel();
-	ColumnItem* item = model->getItemFromIndex( index );
+/*	ColumnItem* item = model->getItemFromIndex( index );
 	if ( NULL != item ) {
 		result = item->getWidth();
 	}
+	*/
 
 	return result;
 }
@@ -1947,10 +1958,11 @@ double TreeListControl::getColumnWidth( const uint32& index )
 void TreeListControl::setColumnWidth( const uint32& index, const double& width )
 {
 	ColumnModel* model = header_->getColumnModel();
-	ColumnItem* item = model->getItemFromIndex( index );
+/*	ColumnItem* item = model->getItemFromIndex( index );
 	if ( NULL != item ) {
 		item->setWidth( width );
 	}
+	*/
 }
 
 bool TreeListControl::listSelectedItems( std::vector<TreeItem*>& items, TreeItem* firstSelectedItem, TreeItem* lastSelectedItem, TreeItem* nextItem, bool& startFound )

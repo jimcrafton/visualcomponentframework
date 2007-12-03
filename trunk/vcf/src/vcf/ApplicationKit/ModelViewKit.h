@@ -47,9 +47,6 @@ where you installed the VCF.
 /**
 *core list model classes
 */
-#ifndef _VCF_LISTMODELEVENT_H__
-#	include "vcf/ApplicationKit/ListModelEvent.h"
-#endif // _VCF_LISTMODELEVENT_H__
 
 #ifndef _VCF_LISTMODEL_H__
 #	include "vcf/ApplicationKit/ListModel.h"
@@ -136,10 +133,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/ColumnItemEvent.h"
 #endif // _VCF_COLUMNITEMEVENT_H__
 
-#ifndef _VCF_COLUMNMODELEVENT_H__
-#	include "vcf/ApplicationKit/ColumnModelEvent.h"
-#endif // _VCF_COLUMNMODELEVENT_H__
-
 #ifndef _VCF_COLUMNMODEL_H__
 #	include "vcf/ApplicationKit/ColumnModel.h"
 #endif // _VCF_COLUMNMODEL_H__
@@ -149,9 +142,6 @@ where you installed the VCF.
 /**
 *implementations
 */
-#ifndef _VCF_ABSTRACTLISTMODEL_H__
-#	include "vcf/ApplicationKit/AbstractListModel.h"
-#endif // _VCF_ABSTRACTLISTMODEL_H__
 
 #ifndef _VCF_DEFAULTLISTITEM_H__
 #	include "vcf/ApplicationKit/DefaultListItem.h"
