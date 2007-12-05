@@ -23,8 +23,6 @@ CFG=paintlib - Win32 Release
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName ""
-# PROP Scc_LocalPath ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -41,8 +39,8 @@ RSC=rc.exe
 # PROP Intermediate_Dir "vc6\Release\"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MD /W3 /GR /GX /O1 /Ob2 /I "$(VCF_ROOT)\src" /I "..\..\..\Libcurl\include" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\..\..\LibTIFF" /I "..\..\..\LibJPEG" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /c
-# SUBTRACT CPP /Fr /YX
+# ADD CPP /nologo /G5 /MD /W3 /GR /GX /Ob2 /O1 /I "$(VCF_ROOT)\src" /I "..\..\..\Libcurl\include" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\..\..\LibTIFF" /I "..\..\..\LibJPEG" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /c
+# SUBTRACT CPP /YX /FR
 # ADD BASE RSC /l 0x407
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -66,7 +64,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)\src" /I "." /I "..\..\common" /I "..\..\common\filter" /I "..\..\..\LibTIFF" /I "..\..\..\LibPNG" /I "..\..\..\ZLib" /I "..\..\..\Libungif\lib" /I "..\..\..\Libcurl\include" /I "..\..\..\libjpeg" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_LIB" /D "USE_LIBJPEG_LIB" /D "USE_LIBPNG_LIB" /D "USE_LIBTIFF_LIB" /D "USE_ZLIB_LIB" /Fd"..\..\..\..\..\..\lib\paintlib_vc6_sd.pdb" /Yd /c
-# SUBTRACT CPP /Fr /YX
+# SUBTRACT CPP /YX /FR
 # ADD BASE RSC /l 0x407
 # ADD RSC /l 0x409
 BSC32=bscmake.exe

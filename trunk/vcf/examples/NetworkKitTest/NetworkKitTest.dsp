@@ -92,6 +92,13 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\NetworkKitTest.cpp
+
+!IF  "$(CFG)" == "NetworkKitTest - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "NetworkKitTest - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # End Group
 # Begin Group "Header Files"

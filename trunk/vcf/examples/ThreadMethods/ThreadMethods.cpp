@@ -295,12 +295,13 @@ int main( int argc, char** argv ){
 
 
 
-		AsyncCallback acb(doneWithInvokes) ;
-		AsyncResult* ar = d2.beginInvoke( 10, &acb );
+		AsyncCallback* acb = new AsyncCallback(doneWithInvokes) ;
+		AsyncResult* ar = d2.beginInvoke( 10, acb );
 
 		ar->wait();
 
 		ar->free();
+		acb->free();
  
 
 		s = d2.at( 0 ).getReturnType().name();
