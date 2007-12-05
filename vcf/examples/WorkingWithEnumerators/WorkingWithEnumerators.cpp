@@ -251,7 +251,10 @@ void example4()
 
 }
 
-
+class Something : public Component {
+public:
+	virtual void doit() = 0;
+};
 void example5() 
 {
 	Array<int> v;	
@@ -294,6 +297,12 @@ void example5()
 	Map<char,int> m2(m);
 
 	Map<char,int> m3 = m;
+
+
+	Array<Something*> some;	
+
+	Something* s = NULL;
+	some.insert( 0, s );
 }
 
 

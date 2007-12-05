@@ -832,7 +832,7 @@ void ListBoxControl::setSelectedItem( ListItem* selectedItem )
 				if ( found != selectedItems_.end() ) {
 					selectedItems_.erase( found );					
 				}
-				selectedItems_.insert( 0, selectedItem );				
+				selectedItems_.insert( selectedItems_.begin(), selectedItem );				
 			}
 		}
 	}

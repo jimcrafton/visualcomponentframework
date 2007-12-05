@@ -225,8 +225,8 @@ int main( int argc, char** argv ){
 
 		
 
-		delete errHandler;
-		delete scriptHandler;
+		errHandler->free();
+		scriptHandler->free();
 
     }
     catch ( BasicException& e ) {

@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="ApplicationKitDLL"
 	ProjectGUID="{874F1AC3-4F2A-4A20-BE1E-53D351CA08DA}"
+	RootNamespace="ApplicationKitDLL"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -2825,32 +2826,6 @@
 			Filter="*.h;*.cpp"
 			>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractListModel.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractListModel.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractModel.h"
 				>
 			</File>
@@ -2908,6 +2883,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ColumnItem.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ColumnModel.cpp"
 				>
 			</File>
 			<File
