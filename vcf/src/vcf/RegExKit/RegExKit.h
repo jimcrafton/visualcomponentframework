@@ -314,10 +314,10 @@ namespace Regex{
 			virtual ~Host();
 
 			// Enumerator-related functions
-			virtual bool hasMoreElements(const bool &backward = false);
+			virtual bool hasMoreElements(const bool &backward = false) const;
 			virtual Match nextElement();
 			virtual Match prevElement();
-			virtual void reset(const bool &backward = false);
+			virtual void reset(const bool &backward = false) const ;
 			Enumerator<Match>* getEnumerator() {
 				reset();
 				return this;

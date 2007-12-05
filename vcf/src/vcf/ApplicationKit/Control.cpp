@@ -448,7 +448,9 @@ void Control::setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating )
 		boundsCallCount ++;
 	}
 
-	*bounds_ = *rect;
+	if ( bounds_ != rect ) {
+		*bounds_ = *rect;
+	}
 
 	//StringUtils::trace( Format("Control::setBounds this: %p\n") % this );
 	/**

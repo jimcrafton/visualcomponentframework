@@ -265,7 +265,7 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
 		return old;
 	}
 
-	bool Regex::Host::hasMoreElements(const bool &backward) {
+	bool Regex::Host::hasMoreElements(const bool &backward) const {
 		return backward ? (!(enumerator==begin())) : (!(enumerator==end() || enumerator==--end()));
 	}
 
@@ -277,7 +277,7 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
 		return *--enumerator;
 	}
 
-	void Regex::Host::reset(const bool &backward) {
+	void Regex::Host::reset(const bool &backward) const {
 		backward ? enumerator=end() : enumerator=begin();
 	}
 
