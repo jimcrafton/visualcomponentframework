@@ -122,7 +122,13 @@
 #if defined(_WIN32) && !defined(__GNUC__)
 #define xalloca     _alloca
 #ifdef NOT_RUBY
+
+//JC - added this fix to work around compiler
+//issue with VC9
+#if (_MSC_VER < 1500) 
 #define vsnprintf   _vsnprintf
+#endif
+
 #endif
 #else
 #define xalloca     alloca

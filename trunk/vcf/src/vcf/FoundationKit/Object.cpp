@@ -82,7 +82,7 @@ Class* Object::getClass() const
 String Object::getClassName() const 
 {
 	String result = "";
-	Class* clazz = this->getClass();
+	Class* clazz = ClassRegistry::getClass( this );
 	if ( NULL != clazz ){
 		result = clazz->getClassName();
 	}
