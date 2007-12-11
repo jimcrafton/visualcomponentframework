@@ -230,7 +230,7 @@ void TreeControl::onTreeItemPaint( ItemEvent* event )
 	if ( NULL != context ) {
 		ImageList* il = getImageList();
 		if ( NULL != il ) {
-			Rect imgRect = *(item->getBounds());
+			Rect imgRect = item->getBounds();
 			imgRect.left_ += (item->getLevel()+1) * getItemIndent();
 			imgRect.right_ = imgRect.left_ + il->getImageWidth();
 			context->setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW ) );

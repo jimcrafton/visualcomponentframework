@@ -929,10 +929,10 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 					if ( foundItem->canPaint() ) {
 						result = TRUE;
-						Rect* bounds = foundItem->getBounds();
+						Rect bounds = foundItem->getBounds();
 						bool needsBounds = false;
-						if ( NULL != bounds ) {
-							needsBounds = ((bounds->getHeight() <= 0.0) && (bounds->getWidth() <= 0.0));
+						if ( !bounds.isNull() ) {
+							needsBounds = ((bounds.getHeight() <= 0.0) && (bounds.getWidth() <= 0.0));
 						}
 						else {
 							needsBounds = true;
@@ -944,8 +944,8 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 						}
 						else {
-							measureInfo->itemHeight = (int32)bounds->getHeight();
-							measureInfo->itemWidth = (int32)bounds->getWidth();
+							measureInfo->itemHeight = (int32)bounds.getHeight();
+							measureInfo->itemWidth = (int32)bounds.getWidth();
 						}
 					}
 				}

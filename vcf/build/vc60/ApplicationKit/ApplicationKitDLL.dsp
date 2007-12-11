@@ -490,6 +490,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Light3DBorder.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\ListItem.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\Menu.cpp
 # End Source File
 # Begin Source File
@@ -1062,14 +1066,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\WindowEvent.h
 # PROP Default_Filter "*.h;*.cpp"
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractListModel.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractListModel.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractModel.h
 # End Source File
 # Begin Source File
@@ -1091,6 +1087,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractView.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnItem.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnModel.cpp
 # End Source File
 # Begin Source File
 

@@ -91,7 +91,7 @@ public:
 	virtual void ensureVisible( ListItem* item, const bool& partialOK ) {
 		// makes sure that item will be visible through scrolling
 		DefaultListModel* listModel = (DefaultListModel*)comboBoxControl_->getListModel();
-		uint32 index = listModel->getItemIndex( item );
+		uint32 index = listModel->getIndexOf( item );
 		double verticalPosition = index * getDefaultItemHeight();
 		getScrollable()->setVerticalPosition( verticalPosition );
 		// Note: in the future we should call then
@@ -415,7 +415,7 @@ void ComboBoxControl::setListModel(ListModel * model)
 
 		listModel_->ItemAdded -= itemAdded;
 
-		listModel_->ItemDeleted -= itemDeleted;
+		listModel_->ItemRemoved -= itemDeleted;
 	}
 
 	listModel_ = model;
@@ -426,7 +426,7 @@ void ComboBoxControl::setListModel(ListModel * model)
 
 		listModel_->ItemAdded += itemAdded;
 
-		listModel_->ItemDeleted += itemDeleted;
+		listModel_->ItemRemoved += itemDeleted;
 	}
 
 	setViewModel( listModel_ );
@@ -994,7 +994,7 @@ ListItem* ComboBoxControl::addItem( const String& caption, const uint32 imageInd
 void ComboBoxControl::addItem( ListItem* item )
 {
 	if ( NULL != listModel_ ) {
-		listModel_->addItem( item );
+		listModel_->add( item );
 	}
 }
 

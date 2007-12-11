@@ -47,7 +47,7 @@ ListViewControl::ListViewControl():
 
 	cmh = (EventHandler*)
 		new ClassProcedure1<ColumnModelEvent*,ListViewControl>( this, &ListViewControl::onColumnItemDeleted, "ListViewControl::onColumnItemDeleted" );
-	columnModel_->ItemDeleted += cmh;
+	columnModel_->ItemRemoved += cmh;
 
 
 	EventHandler* paintHandler = (EventHandler*)
@@ -120,7 +120,7 @@ void ListViewControl::setListModel(ListModel * model)
 			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onItemDeleted, "ListBoxControl::onItemDeleted" );
 		}
 
-		listModel_->ItemDeleted += ev;
+		listModel_->ItemRemoved += ev;
 
 		ev = getCallback( "ListBoxControl::onListModelContentsChanged" );
 		if ( NULL == ev ) {
@@ -150,7 +150,7 @@ void ListViewControl::onItemPaint( ItemEvent* event )
 			il = getSmallImageList();
 		}
 		if ( NULL != il ) {
-			Rect imgRect = *(item->getBounds());
+			Rect imgRect = item->getBounds();
 
 			imgRect.left_ = imgRect.left_ + (imgRect.getWidth()/2.0 - il->getImageWidth()/2.0);
 			imgRect.right_ = imgRect.left_ + il->getImageWidth();
@@ -192,7 +192,7 @@ void ListViewControl::onListModelContentsChanged( ListModelEvent* event )
 				ListItem* item = event->getListItem();
 				if ( NULL != item ){
 					listviewPeer_->deleteItem( item );
-					listviewPeer_->insertItem( item->getIndex(), item );
+					listviewPeer_->insert( item->getIndex(), item );
 				}
 			}
 			break;
@@ -210,7 +210,7 @@ void ListViewControl::onItemAdded( ListModelEvent* event )
 		item->ItemPaint += paintHandler;
 	}
 
-	listviewPeer_->addItem( item );
+	listviewPeer_->add( item );
 	*/
 }
 
@@ -225,19 +225,19 @@ ColumnItem* ListViewControl::addHeaderColumn( const String& columnName, const do
 	result = new DefaultColumnItem();
 	result->setCaption( columnName );
 	result->setWidth( width );
-	columnModel_->addItem( result );
+	columnModel_->add( result );
 
 	return result;
 }
 
 void ListViewControl::addHeaderColumn( ColumnItem* column )
 {
-	columnModel_->addItem( column );
+	columnModel_->add( column );
 }
 
 void ListViewControl::insertHeaderColumn( const uint32& index, ColumnItem* column )
 {
-	columnModel_->insertItem( index, column );
+	columnModel_->insert( index, column );
 }
 
 ColumnItem* ListViewControl::insertHeaderColumn( const uint32& index, const String& columnName, const double& width )
@@ -246,26 +246,26 @@ ColumnItem* ListViewControl::insertHeaderColumn( const uint32& index, const Stri
 	result = new DefaultColumnItem();
 	result->setCaption( columnName );
 	result->setWidth( width );
-	columnModel_->insertItem( index, result );
+	columnModel_->insert( index, result );
 
 	return result;
 }
 
 void ListViewControl::deleteHeaderColumn( const uint32& index )
 {
-	columnModel_->deleteItem( index );
+	columnModel_->remove( index );
 }
 
 String ListViewControl::getColumnName( const uint32& index )
 {	
-	return columnModel_->getItemAsString( index );
+	return columnModel_->getAsString( index );
 }
 
 void ListViewControl::setColumnName( const uint32& index, const String& columnName )
 {
 //	ColumnItem* item = columnModel_->getItemFromIndex( index );
 //	item->setCaption( columnName );
-	columnModel_->setItemAsString( index, columnName );
+	columnModel_->setAsString( index, columnName );
 }
 
 double ListViewControl::getColumnWidth( const uint32& index )
@@ -407,14 +407,14 @@ ListItem* ListViewControl::addItem( const String& caption, const uint32 imageInd
 	result  = new DefaultListItem();
 	result->setCaption( caption );
 	result->setImageIndex( imageIndex );
-	listModel_->addItem( result );
+	listModel_->add( result );
 
 	return result;
 }
 
 void ListViewControl::addItem( ListItem* item )
 {
-	listModel_->addItem( item );
+	listModel_->add( item );
 }
 
 ListItem* ListViewControl::insertItem( const uint32& index, const String& caption, const uint32 imageIndex )
@@ -424,14 +424,14 @@ ListItem* ListViewControl::insertItem( const uint32& index, const String& captio
 	result  = new DefaultListItem();
 	result->setCaption( caption );
 	result->setImageIndex( imageIndex );
-	listModel_->insertItem( index, result );
+	listModel_->insert( index, result );
 
 	return result;
 }
 
 void ListViewControl::insertItem( const uint32& index, ListItem* item )
 {
-	listModel_->insertItem( index, item );
+	listModel_->insert( index, item );
 }
 
 void ListViewControl::setSmallImageList( ImageList* imageList )

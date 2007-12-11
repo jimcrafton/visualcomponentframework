@@ -33,33 +33,6 @@ DefaultColumnItem::~DefaultColumnItem()
 
 }
 
-bool DefaultColumnItem::containsPoint( Point * pt )
-{
-	return false;
-}
-
-uint32 DefaultColumnItem::getIndex()
-{
-	return index_;
-}
-
-void DefaultColumnItem::setIndex( const uint32& index )
-{
-	index_ = index;
-}
-
-void DefaultColumnItem::setImageIndex( const int32& imageIndex )
-{
-	imageIndex_ = imageIndex;
-}
-
-void DefaultColumnItem::setData( void* data )
-{
-	data_ = data;
-
-	ItemEvent event( this, ITEM_EVENT_CHANGED );
-	ItemChanged( &event );
-}
 
 void DefaultColumnItem::setCaption( const String& caption )
 {
@@ -85,19 +58,6 @@ void DefaultColumnItem::paint( GraphicsContext* context, Rect* paintRect )
 	ItemPaint( &event );
 }
 
-bool DefaultColumnItem::isSelected()
-{
-	return selected_;
-}
-
-void DefaultColumnItem::setSelected( const bool& selected )
-{
-	selected_ = selected;
-
-	ItemEvent event( this, ITEM_EVENT_SELECTED );
-	ItemChanged( &event );
-}
-
 void DefaultColumnItem::setCaptionAlignment( const TextAlignmentType& alignment )
 {
 	textAlignment_ = alignment;
@@ -112,11 +72,6 @@ void DefaultColumnItem::setWidth( const double& width )
 	ItemChanged( &event );
 }
 
-
-void DefaultColumnItem::setBounds( Rect* bounds )
-{
-	bounds_ = *bounds;
-}
 
 
 /**

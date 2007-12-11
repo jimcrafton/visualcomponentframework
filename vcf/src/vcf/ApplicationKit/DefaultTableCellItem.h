@@ -87,17 +87,9 @@ public:
 	virtual void setFixed( const bool& val );
 
 
-	virtual String getCaption();
+	virtual String getCaption() ;
 
 	virtual void setCaption( const String& caption );
-
-	virtual Rect* getBounds() {
-		return &bounds_;
-	}
-
-	virtual int32 getImageIndex() {
-		return imageIndex_;
-	}
 
 	virtual void setImageIndex( const int32& imageIndex );
 
@@ -107,19 +99,7 @@ public:
 
 	virtual void setBounds( Rect* bounds );
 
-	/**
-	*not supported
-	*/
-	virtual int32 getStateImageIndex(){
-		return -1;
-	};
-
 	virtual void setModel( Model* model );
-
-	/**
-	*not supported
-	*/
-	virtual void setStateImageIndex( const int32& index ){}
 
 	virtual double getTextCellWidth( GraphicsContext* context );
 
@@ -133,12 +113,8 @@ public:
 
 	virtual void setFont( Font* font );
 private:
-	void init();
-	Rect bounds_;
-	void* data_;
+	void init();	
 	String caption_;
-	int32 imageIndex_;
-
 	TableModel* tableModel_;
 	Color* color_;
 	typedef std::map<uint32,Color> ColorMap;

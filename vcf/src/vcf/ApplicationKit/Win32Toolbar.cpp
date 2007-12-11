@@ -708,7 +708,7 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_SIZE ;
 				info.cbSize = sizeof(info);
-				Rect r = *tme->getItem()->getBounds();
+				Rect r = tme->getItem()->getBounds();
 
 				info.cx = r.getWidth();
 
@@ -719,7 +719,7 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 				memset(&info,0,sizeof(info));
 				info.dwMask = TBIF_SIZE ;
 				info.cbSize = sizeof(info);
-				Rect r = *tme->getItem()->getBounds();
+				Rect r = tme->getItem()->getBounds();
 
 				info.cx = r.getWidth();
 

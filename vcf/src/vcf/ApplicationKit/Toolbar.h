@@ -89,10 +89,6 @@ public:
 
     virtual bool containsPoint( Point * pt );
 
-	virtual Rect* getBounds() {
-		return &bounds_;
-	}
-
 	virtual void setBounds( Rect* bounds );
 	
 	virtual int32 getStateImageIndex() {
@@ -120,11 +116,7 @@ public:
 	}
 	
 	virtual void setState( const int32& state );
-
-	virtual bool canPaint() {
-		return false;
-	};
-
+	
 	virtual void paint( GraphicsContext* context, Rect* paintRect ) {};
 
 	virtual bool isSelected() ;
@@ -182,13 +174,9 @@ public:
 	
 protected:
 	Control* itemControl_;	
-	void* data_;
-	int32 imageIndex_;
 	int32 imageStateIndex_;
-	Rect bounds_;
 	String caption_;
 	String tooltip_;
-
 };
 
 

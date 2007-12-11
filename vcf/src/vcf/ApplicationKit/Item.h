@@ -85,7 +85,10 @@ public:
 	};
 
 
-	Item():itemState_(0),model_(NULL),owningControl_(NULL) {};
+	Item():data_(NULL),selected_(false),imageIndex_(0),
+			itemState_(Item::idsNone),model_(NULL),owningControl_(NULL) {			
+		tag_ = -1;
+	};
 
 	virtual ~Item(){};
 
@@ -107,15 +110,21 @@ public:
 	may not support getBounds(), but may have a non-rectangular
 	region and may implement containsPoint() accordingly.
 	*/
-    virtual bool containsPoint( Point * pt ) = 0;
+    virtual bool containsPoint( Point * pt ) const {
+		return bounds_.containsPt( pt );
+	}
 
 	/**
 	returns the Bounds for the Item or NULL if not
 	applicable.
 	*/
-	virtual Rect* getBounds() = 0;
+	virtual Rect getBounds() {
+		return bounds_;
+	}
 
-	virtual void setBounds( Rect* bounds ) = 0;
+	virtual void setBounds( const Rect& bounds ) {
+		bounds_ = bounds;
+	}
 
 	/**
 	This image index represents the state of an particular item
@@ -124,31 +133,42 @@ public:
 	represents. This image is frequently used to represent check marks
 	for things like tree or list controls.
 	*/
-	virtual int32 getStateImageIndex() = 0;
+	virtual int32 getStateImageIndex() const {
+		return -1;
+	}
 
-	virtual void setStateImageIndex( const int32& index ) = 0;
+	virtual void setStateImageIndex( const int32& index ) {}
 
-	/**
-	Returns the index of the item within it's model.
-	*/
-    virtual uint32 getIndex() = 0;
+	virtual int32 getImageIndex() const {
+		return imageIndex_;
+	}
 
-	virtual int32 getImageIndex() = 0;
+	virtual void setImageIndex( const int32& imageIndex ) {
+		imageIndex_ = imageIndex;
+		ItemEvent event( this, ITEM_EVENT_CHANGED );
+		ItemChanged( &event );
+	}
 
-	virtual void setImageIndex( const int32& imageIndex ) = 0;
+	
 
-	virtual void setIndex( const uint32& index ) = 0;
+		
 
 	/**
 	Returns some application defined data. This can be anything 
 	you want, hence the void* storage.
 	*/
-    virtual void* getData() = 0;
+    virtual void* getData() const {
+		return data_;
+	}
 
 	/**
 	Sets the application defined data.
 	*/
-	virtual void setData( void* data ) = 0;
+	virtual void setData( void* data ) {
+		data_ = data;
+		ItemEvent event( this, ITEM_EVENT_CHANGED );
+		ItemChanged( &event );
+	}
 
 	/**
 	*indicates whether the item can paint itself.
@@ -157,13 +177,21 @@ public:
 	*call the item's paint() method whenever the item
 	*needs repainting.
 	*/
-	virtual bool canPaint() = 0;
+	virtual bool canPaint() const {
+		return false;
+	}
 
-	virtual void paint( GraphicsContext* context, Rect* paintRect ) = 0;
+	virtual void paint( GraphicsContext* context, Rect* paintRect ) {}
 
-	virtual bool isSelected() = 0;
+	virtual bool isSelected() const {
+		return selected_;
+	}
 
-	virtual void setSelected( const bool& selected ) = 0;
+	virtual void setSelected( const bool& selected ) {
+		selected_ = selected;
+		ItemEvent event( this, ITEM_EVENT_SELECTED );
+		ItemSelected( &event );
+	}
 
 	/**
 	Represents the current state of the item
@@ -172,7 +200,7 @@ public:
 	the item(s). Some controls will completely 
 	ignore this value.
 	*/
-	int32 getState(){
+	int32 getState() const {
 		return itemState_;
 	}
 
@@ -187,7 +215,7 @@ public:
 	/**
 	Returns the model that this item belongs to.
 	*/
-	Model* getModel() {
+	Model* getModel() const {
 		return model_;
 	}
 
@@ -206,7 +234,7 @@ public:
 	The control for item \em must match with the
 	view control of the item's model.
 	*/
-	Control* getControl() {
+	Control* getControl() const {
 		return owningControl_;
 	}
 
@@ -219,6 +247,11 @@ public:
 		owningControl_ = control;
 	}
 protected:
+	void* data_;	
+	Rect bounds_;	
+	bool selected_;
+	int32 imageIndex_;
+
 	int32 itemState_;
 	Model* model_;
 	Control* owningControl_;

@@ -126,15 +126,7 @@ public:
 	virtual void expandAllChildren( const bool& isExpanded );
 
 	virtual uint32 getLevel();
-
-	virtual Rect* getBounds() {
-		return &bounds_;
-	}
-
-	virtual int32 getImageIndex() {
-		return imageIndex_;
-	}
-
+	
 	virtual void setImageIndex( const int32& imageIndex );	
 
 	virtual int32 getSelectedImageIndex() {

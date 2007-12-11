@@ -40,14 +40,10 @@ public:
     virtual uint32 getIndex();
 
 	virtual void setIndex( const uint32& index );
-
-    virtual void* getData();
-
-	virtual void setData( void* data );	
-
+    
 	virtual void paint( GraphicsContext* context, Rect* paintRect );
 
-	virtual bool isSelected();
+	virtual bool isSelected() const ;
 
 	virtual void setSelected( const bool& selected );
 
@@ -99,7 +95,7 @@ public:
 
 	virtual void setCaption( const String& caption );
 
-	virtual String getCaption();
+	virtual String getCaption() ;
 
 	virtual MenuItemPeer* getPeer();
 
@@ -115,34 +111,12 @@ public:
 
 	virtual void update();
 
-	virtual Rect* getBounds() {
-		return &bounds_;
-	}
-
-	virtual int32 getImageIndex() {
-		return imageIndex_;
-	}
-
 	virtual void setImageIndex( const int32& imageIndex );
 
-	virtual bool canPaint();
+	virtual bool canPaint() const ;
 	
 	virtual void setCanPaint( const bool& val );
-
-	virtual void setBounds( Rect* bounds );
-
-	/**
-	*not supported
-	*/
-	virtual int32 getStateImageIndex(){
-		return -1;
-	};
-
-	/**
-	*not supported
-	*/
-	virtual void setStateImageIndex( const int32& index ){}
-
+	
 	virtual void setAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask );
 
 	virtual void setAcceleratorKey( AcceleratorKey* accelerator );
@@ -158,14 +132,10 @@ protected:
 	void onAccelerator( KeyboardEvent* e );
 
 protected:
-	std::vector<MenuItem*> menuItems_;
-	EnumeratorContainer<std::vector<MenuItem*>, MenuItem*> container_;
+	Array<MenuItem*> menuItems_;
 	String caption_;
-	void* data_;
 	Menu* menuOwner_;
 	MenuItem* parent_;
-	int32 imageIndex_;
-	Rect bounds_;
 	AcceleratorKey* currentAccelerator_;
 };
 

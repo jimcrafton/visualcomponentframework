@@ -119,6 +119,10 @@ public:
 
 	virtual uint32 getChildCount() = 0;
 
+	virtual uint32 getIndex() = 0;
+
+	virtual void setIndex( const uint32& index ) = 0;
+
 
 	/**
 	Searches all the children of this menu item for the first child menu item

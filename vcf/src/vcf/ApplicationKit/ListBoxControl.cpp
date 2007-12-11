@@ -75,7 +75,7 @@ void ListBoxControl::init()
 	lmh = (EventHandler*)
 		new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onItemDeleted, "ListBoxControl::onItemDeleted" );
 
-	listModel_->ItemDeleted += lmh;
+	listModel_->ItemRemoved += lmh;
 
 	lmh = (EventHandler*)
 		new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
@@ -100,7 +100,7 @@ void ListBoxControl::destroy()
 
 		ev = (EventHandler*)getCallback( "ListBoxControl::onItemDeleted" );
 		if ( NULL != ev ) {
-			listModel_->ItemDeleted -= ev;
+			listModel_->ItemRemoved -= ev;
 		}
 
 		ev = (EventHandler*)getCallback( "ListBoxControl::onListModelContentsChanged" );
@@ -133,7 +133,7 @@ void ListBoxControl::setListModel( ListModel * model )
 
 		ev = (EventHandler*)getCallback( "ListBoxControl::onItemDeleted" );
 		if ( NULL != ev ) {
-			listModel_->ItemDeleted -= ev;
+			listModel_->ItemRemoved -= ev;
 		}
 
 		ev = (EventHandler*)getCallback( "ListBoxControl::onListModelContentsChanged" );
@@ -162,7 +162,7 @@ void ListBoxControl::onListModelContentsChanged( ListModelEvent* event )
 
 	if ( NULL != event ){
 		switch ( event->getType() ){
-			case LIST_MODEL_CONTENTS_DELETED: {
+			case lmeContentsDeleted: {
 				selectedItems_.clear();
 			}
 			break;
@@ -184,7 +184,17 @@ void ListBoxControl::onListModelContentsChanged( ListModelEvent* event )
 void ListBoxControl::onItemAdded( ListModelEvent* event )
 {
 
-	//listBoxPeer_->addItem( event->getListItem() );
+	ListItem* item = new ListItem();
+	addComponent( item );
+	items_.push_back( item );
+	item->setModel( getViewModel() );
+	item->setControl( this );
+	item->setIndex( items_.size() - 1 );
+
+
+	//event->item 
+
+
 	Scrollable* scrollable = getScrollable();
 
 
@@ -202,12 +212,10 @@ void ListBoxControl::onItemAdded( ListModelEvent* event )
 
 	GraphicsContext* ctx = getContext();
 
-/*	ListItem* item = event->getListItem();
-
 	itemRect.setRect( 0, currentMaxHeight_, width-scrollW, currentMaxHeight_ + defaultItemHeight_ );
-	item->setBounds( &itemRect );
+	item->setBounds( itemRect );	
 
-	currentMaxHeight_ += item->getBounds()->getHeight();
+	currentMaxHeight_ += item->getBounds().getHeight();
 
 	double imageWidth = 0.0;
 
@@ -228,7 +236,7 @@ void ListBoxControl::onItemAdded( ListModelEvent* event )
 
 		scrollable->setVirtualViewSize( currentMaxWidth_, currentMaxHeight_ );
 	}
-	*/
+
 	repaint();
 }
 
@@ -309,19 +317,19 @@ Rect ListBoxControl::getStateRect( ListItem* item )
 	Rect result;
 
 	if ( item->getState() != Item::idsNone ) {
-		Rect* itemBounds = item->getBounds();
+		Rect itemBounds = item->getBounds();
 
-		result = *itemBounds;
+		result = itemBounds;
 
 		result.left_ += leftGutter_;
 		if ( NULL != stateImageList_ ) {
 			result.right_ = result.left_ + stateImageList_->getImageWidth();
-			result.top_ = itemBounds->top_ + (itemBounds->getHeight()/2.0 - stateImageList_->getImageHeight()/2.0);
+			result.top_ = itemBounds.top_ + (itemBounds.getHeight()/2.0 - stateImageList_->getImageHeight()/2.0);
 			result.bottom_ = result.top_ + stateImageList_->getImageHeight();
 		}
 		else {
 			result.right_ = result.left_ + stateItemIndent_;
-			result.top_ = itemBounds->top_ + (itemBounds->getHeight()/2.0 - (minVal<double>(stateItemIndent_,defaultItemHeight_)/2.0));
+			result.top_ = itemBounds.top_ + (itemBounds.getHeight()/2.0 - (minVal<double>(stateItemIndent_,defaultItemHeight_)/2.0));
 			result.bottom_ = result.top_ + (minVal<double>(stateItemIndent_,defaultItemHeight_));
 		}
 

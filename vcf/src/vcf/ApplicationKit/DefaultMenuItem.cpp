@@ -21,10 +21,8 @@ static DefaultMenuItem* previousSelectedItem = NULL;
 DefaultMenuItem::DefaultMenuItem():
 	//peer_(NULL),
 	//index_(0),
-	data_(NULL),
 	menuOwner_(NULL),
-	parent_(NULL),
-	imageIndex_(-1),
+	parent_(NULL),	
 	currentAccelerator_(NULL)
 {
 	init();
@@ -33,10 +31,8 @@ DefaultMenuItem::DefaultMenuItem():
 DefaultMenuItem::DefaultMenuItem( const String& caption, MenuItem* parent, Menu* menuOwner ):
 	//peer_(NULL),
 	//index_(0),
-	data_(NULL),
 	menuOwner_(NULL),
 	parent_(NULL),
-	imageIndex_(-1),
 	currentAccelerator_(NULL)
 {
 	init();
@@ -75,8 +71,6 @@ void DefaultMenuItem::init()
 	itemState_ |= MenuItem::mdsEnabled;
 	itemState_ |= MenuItem::mdsVisible;
 
-	container_.initContainer( menuItems_ );
-
 	EventHandler* ev = new ClassProcedure1<Event*,DefaultMenuItem> ( this, &DefaultMenuItem::handleEvent, "DefaultMenuItem::handleEvent" );
 
 	ComponentAdded += ev;
@@ -88,7 +82,7 @@ bool DefaultMenuItem::containsPoint( Point * pt )
 	return true;
 }
 
-uint32 DefaultMenuItem::getIndex()
+uint32 DefaultMenuItem::getIndex()  
 {
 	Menu* owner = getMenuOwner();
 	if ( NULL == owner ) {
@@ -102,15 +96,6 @@ void DefaultMenuItem::setIndex( const uint32& index ){}
 //	index_ = index;
 //}
 
-void* DefaultMenuItem::getData()
-{
-	return data_;
-}
-
-void DefaultMenuItem::setData( void* data )
-{
-	data_ = data;
-}
 
 void DefaultMenuItem::paint( GraphicsContext* context, Rect* paintRect )
 {
@@ -142,7 +127,7 @@ void DefaultMenuItem::paint( GraphicsContext* context, Rect* paintRect )
 	context->drawThemeMenuItemText( paintRect, state );
 }
 
-bool DefaultMenuItem::isSelected()
+bool DefaultMenuItem::isSelected() const 
 {
 	return (itemState_ & MenuItem::mdsSelected) ? true : false;
 }
@@ -185,7 +170,7 @@ void DefaultMenuItem::setHighlighted( const bool& val )
 
 Enumerator<MenuItem*>* DefaultMenuItem::getChildren()
 {
-	return container_.getEnumerator();
+	return menuItems_.getEnumerator();
 }
 
 void DefaultMenuItem::addChild( MenuItem* child )
@@ -200,14 +185,8 @@ void DefaultMenuItem::addChild( MenuItem* child )
 		addComponent( child );
 	}
 
-	//child->setIndex( menuItems_.size() - 1 );
-
 	child->setMenuOwner( getMenuOwner() );
 
-	//peer_->addChild( child );
-
-	//ItemEvent event( this, ITEM_EVENT_ADDED );
-	//ItemAdded( &event );
 	Menu* owner = getMenuOwner();
 	if ( NULL != owner ) {
 		owner->itemChanged( MenuItem::miAdded, child );
@@ -515,7 +494,7 @@ void DefaultMenuItem::setMenuOwner( Menu* menuOwner )
 	}
 }
 
-bool DefaultMenuItem::canPaint()
+bool DefaultMenuItem::canPaint() const
 {
 	return (itemState_ & Item::idsCanPaint) ? true : false;
 }
@@ -567,10 +546,6 @@ void DefaultMenuItem::setImageIndex( const int32& imageIndex )
 	}
 }
 
-void DefaultMenuItem::setBounds( Rect* bounds )
-{
-	bounds_ = *bounds;
-}
 
 AcceleratorKey* DefaultMenuItem::getAccelerator() 
 {

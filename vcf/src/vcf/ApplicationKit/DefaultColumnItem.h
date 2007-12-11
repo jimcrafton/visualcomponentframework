@@ -40,18 +40,6 @@ public:
 
 	virtual ~DefaultColumnItem();
 
-	virtual bool containsPoint( Point * pt );
-
-    virtual uint32 getIndex();
-
-	virtual void setIndex( const uint32& index );
-
-    virtual void* getData() {
-		return data_;
-	}
-
-	virtual void setData( void* data );
-
 	virtual String getCaption();
 
 	virtual void setCaption( const String& caption );
@@ -70,47 +58,9 @@ public:
 
 	virtual void paint( GraphicsContext* context, Rect* paintRect );
 
-	virtual bool isSelected();
-
-	virtual void setSelected( const bool& selected );
-
-	virtual int32 getImageIndex() {
-		return imageIndex_;
-	}
-
-	virtual void setImageIndex( const int32& imageIndex );
-
-	virtual Rect* getBounds() {
-		return &bounds_;
-	}
-
-	
-	virtual bool canPaint() {
-		return false;
-	}
-	
-	virtual void setBounds( Rect* bounds );
-
-	/**
-	*not supported
-	*/
-	virtual int32 getStateImageIndex(){
-		return -1;
-	};
-
-	/**
-	*not supported
-	*/
-	virtual void setStateImageIndex( const int32& index ){}
-
-
 protected:
 	String caption_;
-	void* data_;
-	uint32 index_;
-	Rect bounds_;	
 	bool selected_;
-	int32 imageIndex_;
 	double width_;
 	TextAlignmentType textAlignment_;
 };

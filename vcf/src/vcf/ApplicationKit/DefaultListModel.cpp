@@ -27,68 +27,71 @@ DefaultListModel::~DefaultListModel()
 
 void DefaultListModel::empty()
 {
-	ListModelEvent itemEvent( this, LIST_MODEL_ITEM_DELETED );
+	ListModelEvent itemEvent( this, lmeItemRemoved );
 
 	std::vector<VariantData>::iterator it = data_.begin();
 	while ( it != data_.end() ) {
 		itemEvent.item = &(*it);
-		ItemDeleted( &itemEvent );
+		itemEvent.index = it - data_.begin();
+		ItemRemoved( &itemEvent );
 		++it;
 	}
 	data_.clear();
 
-	ListModelEvent event( this, LIST_MODEL_CONTENTS_DELETED );
+	ListModelEvent event( this, lmeContentsDeleted );
 	ContentsChanged( &event );
 }
 
-void DefaultListModel::addItem( const VariantData& item )
+void DefaultListModel::add( const VariantData& item )
 {
 	data_.push_back( item );
-	ListModelEvent event( this, LIST_MODEL_ITEM_ADDED );
+	ListModelEvent event( this, lmeItemAdded );
 	event.item = &data_.back();
 	ItemAdded( &event );
 }
 
-void DefaultListModel::insertItem( const uint32 & index, const VariantData& item )
+void DefaultListModel::insert( const uint32 & index, const VariantData& item )
 {
 	data_.insert( data_.begin() + index, item );
 
-	ListModelEvent event( this, LIST_MODEL_ITEM_ADDED );
+	ListModelEvent event( this, lmeItemAdded );
 	event.item = &data_[index];
 	ItemAdded( &event );
 }
 
-void DefaultListModel::deleteItem( const VariantData& item )
+void DefaultListModel::remove( const VariantData& item )
 {
 	Array<VariantData>::iterator found = 
 		std::find( data_.begin(), data_.end(), item );
 	if ( found != data_.end() ) {
-		ListModelEvent itemEvent( this, LIST_MODEL_ITEM_DELETED );
+		ListModelEvent itemEvent( this, lmeItemRemoved );
 		itemEvent.item = &(*found);
-		ItemDeleted( &itemEvent );
+		itemEvent.index = found - data_.begin();
+		ItemRemoved( &itemEvent );
 
 		data_.erase( found );
 	}
 }
 
-void DefaultListModel::deleteItemAtIndex( const uint32 & index )
+void DefaultListModel::removeAtIndex( const uint32 & index )
 {
 	Array<VariantData>::iterator found = data_.begin() + index;		
 	if ( found != data_.end() ) {
-		ListModelEvent itemEvent( this, LIST_MODEL_ITEM_DELETED );
+		ListModelEvent itemEvent( this, lmeItemRemoved );
 		itemEvent.item = &(*found);
-		ItemDeleted( &itemEvent );
+		itemEvent.index = index;
+		ItemRemoved( &itemEvent );
 
 		data_.erase( found );
 	}
 }
 
-VariantData DefaultListModel::getItem( const uint32& index )
+VariantData DefaultListModel::get( const uint32& index )
 {
 	return data_[index];
 }
 
-uint32 DefaultListModel::getItemIndex( const VariantData& item )
+uint32 DefaultListModel::getIndexOf( const VariantData& item )
 {
 	uint32 result = IndexNotFound;
 	Array<VariantData>::iterator found = std::find( data_.begin(), data_.end(), item );
@@ -99,24 +102,24 @@ uint32 DefaultListModel::getItemIndex( const VariantData& item )
 	return result;
 }
 
-String DefaultListModel::getItemAsString( const uint32& index )
+String DefaultListModel::getAsString( const uint32& index )
 {
 	VariantData result = data_[index];
 	return result.toString();
 }
 
-void DefaultListModel::setItem( const uint32& index, const VariantData& item )
+void DefaultListModel::set( const uint32& index, const VariantData& item )
 {
 	data_[index] = item;
-	ListModelEvent itemEvent( this, LIST_MODEL_ITEM_CHANGED );
+	ListModelEvent itemEvent( this, lmeItemChanged );
 	itemEvent.item = &data_[index];
 	ContentsChanged( &itemEvent );
 }
 
-void DefaultListModel::setItemAsString( const uint32& index, const String& item )
+void DefaultListModel::setAsString( const uint32& index, const String& item )
 {
 	data_[index].setFromString(item);
-	ListModelEvent itemEvent( this, LIST_MODEL_ITEM_CHANGED );
+	ListModelEvent itemEvent( this, lmeItemChanged );
 	itemEvent.item = &data_[index];
 	ContentsChanged( &itemEvent );
 }
@@ -127,7 +130,7 @@ bool DefaultListModel::getItems( std::vector<VariantData>& items )
 	return !items.empty();
 }
 
-bool DefaultListModel::getItems( const uint32& start, const uint32& end, std::vector<VariantData>& items )
+bool DefaultListModel::getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items )
 {
 	VCF_ASSERT( end - start <= data_.size() );
 	VCF_ASSERT( data_.begin() + start != data_.end() );

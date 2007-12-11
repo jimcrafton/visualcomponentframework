@@ -18,30 +18,32 @@ where you installed the VCF.
 namespace VCF  {
 
 
-#define LIST_MODEL_CONST				900
 
-#define LIST_MODEL_CONTENTS_DELETED		CUSTOM_EVENT_TYPES + LIST_MODEL_CONST + 1
-#define LIST_MODEL_ITEM_CHANGED			CUSTOM_EVENT_TYPES + LIST_MODEL_CONST + 2
-#define LIST_MODEL_ITEM_ADDED			CUSTOM_EVENT_TYPES + LIST_MODEL_CONST + 3
-#define LIST_MODEL_ITEM_DELETED			CUSTOM_EVENT_TYPES + LIST_MODEL_CONST + 4
 
+	enum ListModelEvents {
+		LIST_MODEL_CONST		=		900,
+		lmeContentsDeleted = CUSTOM_EVENT_TYPES + LIST_MODEL_CONST + 1,
+		lmeItemChanged,
+		lmeItemAdded,
+		lmeItemRemoved
+	};
 
 /**
 \class ListModelEvent ListModel.h "vcf/ApplicationKit/ListModel.h"
 */
 class APPLICATIONKIT_API ListModelEvent : public Event {
 public:
-	ListModelEvent( Object* source ):Event(source),item(NULL){}
+	ListModelEvent( Object* source ):Event(source),item(NULL),index(0){}
 
 	ListModelEvent( Object* source, const uint32& eventType ):Event(source,eventType),
 		item(NULL){}
 
-	ListModelEvent( Object* source, VariantData* i ):Event(source),item(i){}
+	ListModelEvent( Object* source, VariantData* i ):Event(source),item(i),index(0){}
 
 	ListModelEvent( Object* source, const uint32& eventType, VariantData* i ):Event(source,eventType),
-		item(i){}
+		item(i),index(0){}
 
-	ListModelEvent( const ListModelEvent& rhs ):Event(rhs),item(NULL) {
+	ListModelEvent( const ListModelEvent& rhs ):Event(rhs),item(NULL),index(0) {
 		*this = rhs;
 	}
 
@@ -51,6 +53,7 @@ public:
 	ListModelEvent& operator=( const ListModelEvent& rhs ) {
 		Event::operator =( rhs );
 		item = rhs.item;
+		index = rhs.index;
 		return *this;
 	}
 
@@ -58,7 +61,10 @@ public:
 		return new ListModelEvent(*this);
 	}
 
+	bool isValidIndex() const ;
+
 	VariantData* item;
+	uint32 index;
 };
 
 
@@ -82,26 +88,19 @@ typedef ListModelDelegate::ProcedureType ListModelHandler;
 /**
 \class ListModel ListModel.h "vcf/ApplicationKit/ListModel.h"
 The List model is a interface for describing what a model that implements
-a list of items should do. It does not \emnot inherit from the Model class
-directly. This is to allow different implementations different base classes.
-For example, you might have a simple list model that inherits/implements the 
-Model class, and the ListModel class. This would be suitable for most controls.
-However you might want a fancier implementation, perhaps that is based 
-off of the Document and ListModel classes. This would still allow you to 
-use the same control with either style.
+a list of items should do. 
 @delegates
-	@del ListModel::ModelEmptied
-	@del ListModel::ModelValidate
 	@del ListModel::ContentsChanged
 	@del ListModel::ItemAdded
-	@del ListModel::ItemR
+	@del ListModel::ItemRemoved
 */
 class APPLICATIONKIT_API ListModel : public Model  {
 public:
 
 	
 	enum {
-		IndexNotFound = (uint32)-1
+		IndexNotFound = (uint32)-1,
+		InvalidIndex = (uint32)-1
 	};
 
 
@@ -114,7 +113,7 @@ public:
     /**
 	@delegate  ContentsChanged
 	@event ListModelEvent
-	@eventtype LIST_MODEL_CONTENTS_DELETED
+	@eventtype lmeItemChanged
 	*/
 	DELEGATE(ListModelDelegate,ContentsChanged)
 
@@ -128,27 +127,28 @@ public:
 	@delegate ItemDeleted fired when an item is removed from the list model
 	@event ListModelEvent
 	*/
-	DELEGATE(ListModelDelegate,ItemDeleted)
+	DELEGATE(ListModelDelegate,ItemRemoved)
 
 	
 
-	virtual void addItem( const VariantData& item ) = 0;
-	virtual void insertItem( const uint32 & index, const VariantData& item ) = 0;
+	virtual void add( const VariantData& item ) = 0;
+	virtual void insert( const uint32 & index, const VariantData& item ) = 0;
     
-	virtual void deleteItem( const VariantData& item ) = 0;
-	virtual void deleteItemAtIndex( const uint32& index ) = 0;
+	virtual void remove( const VariantData& item ) = 0;
+	virtual void removeAtIndex( const uint32& index ) = 0;
 
-	virtual VariantData getItem( const uint32& index ) = 0;	
-	virtual String getItemAsString( const uint32& index ) = 0;
+	virtual VariantData get( const uint32& index ) = 0;	
+	virtual String getAsString( const uint32& index ) = 0;
 
-	virtual uint32 getItemIndex( const VariantData& item ) = 0;
+	virtual uint32 getIndexOf( const VariantData& item ) = 0;
 
-	virtual void setItem( const uint32& index, const VariantData& item ) = 0;
-	virtual void setItemAsString( const uint32& index, const String& item ) = 0;
+	virtual void set( const uint32& index, const VariantData& item ) = 0;
+	virtual void setAsString( const uint32& index, const String& item ) = 0;
 
 	virtual bool getItems( std::vector<VariantData>& items ) = 0;
-	virtual bool getItems( const uint32& start, const uint32& end, std::vector<VariantData>& items ) = 0;
 	virtual Enumerator<VariantData>* getItems() = 0;
+
+	virtual bool getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items ) = 0;	
 
 	virtual bool supportsSubItems() = 0;
 	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex ) = 0; 
@@ -159,7 +159,21 @@ public:
 	virtual uint32 getCount() = 0;
 };
 
+
+
+
+
+
+
+
+inline bool ListModelEvent::isValidIndex() const 
+{
+	return index != ListModel::InvalidIndex;
 }
+
+
+
+};
 
 
 #endif // _VCF_LISTMODEL_H__

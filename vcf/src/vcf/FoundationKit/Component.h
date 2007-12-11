@@ -491,7 +491,7 @@ public:
 	ignored.
 
 	*/
-	bool getUseLocaleStrings();
+	bool getUseLocaleStrings() const ;
 
 
 

@@ -57,7 +57,7 @@ void DefaultTreeModel::insertNodeItem(TreeItem * node, TreeItem * nodeToInsertAf
 {
 	TreeItem* parent = nodeToInsertAfter->getParent();
 	if ( NULL != parent ) {
-		parent->insertChild( nodeToInsertAfter->getIndex(), node );
+		parent->insertChild( 0 /*nodeToInsertAfter->getIndex()*/, node );
 		TreeModelEvent event(dynamic_cast<Object*>(this), node, TreeModel::TREEITEM_ADDED );
 		NodeAdded( &event );
 	}
