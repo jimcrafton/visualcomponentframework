@@ -75,12 +75,12 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
 // Regex::Host
 
 	Regex::Host::Host(const String& exp, unsigned char* f, unsigned char* l, OnigSyntaxType* syntax):
-        expression_(exp), first_(f), last_(l), syntax_(syntax), reg_(NULL), enumerator(Iterator(&pastTheEnd_)) {
+        expression_(exp), first_(f), last_(l), syntax_(syntax), reg_(NULL), enumerator_(Iterator(&pastTheEnd_)) {
 		pastTheEnd_=Match(NULL, "", this);
 	}
 
 	Regex::Host::Host(const String &exp, OnigSyntaxType *syntax): expression_(exp),
-		syntax_(syntax), reg_(NULL), enumerator(Iterator(&pastTheEnd_)) {
+		syntax_(syntax), reg_(NULL), enumerator_(Iterator(&pastTheEnd_)) {
 		pastTheEnd_=Match(NULL, "", this);
 	}
 
@@ -90,12 +90,12 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
 
 	void Regex::Host::compile() {
 		if (this->init()!=ONIG_NORMAL) {
-			// Need some sort of error handling code here
-			StringUtils::trace("Some sort of Onig-based error");
+			// Need some sort of error handling code here, but for now...
+			StringUtils::trace("Some sort of Onig-based error in compile()");
 		}
 	}
 
-    Regex::Iterator Regex::Host::find(unsigned char* pos) {
+    Regex::Iterator Regex::Host::find(unsigned char* pos) const {
 		OnigRegion* region = onig_region_new();
 		Match temp;
 		InternalIterator it;
@@ -138,7 +138,8 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
 		else {
 			onig_region_free(region, 1);
 			if (status!=ONIG_MISMATCH) {
-				// some error handling here
+				// some error handling here, but for now...
+				StringUtils::trace("Some sort of Onig-based error in find()");
 			}
 			else if (pos==first_) { // There are no matches
 				pastTheEnd_.linkedNext_=true;
@@ -147,7 +148,7 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
         }
     }
 
-    Regex::Iterator Regex::Host::rfind(unsigned char* pos){
+    Regex::Iterator Regex::Host::rfind(unsigned char* pos) const {
 		OnigRegion* region=onig_region_new();
 		Match temp;
 		InternalIterator it;
@@ -182,7 +183,8 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
         }
 		else {
 			if (status !=ONIG_MISMATCH) {
-				// some error handling here
+				// some error handling here, but for now...
+				StringUtils::trace("Some sort of Onig-based error in rfind()");
 			}
 			else if (pos==last_) { // There are no matches
 				pastTheEnd_.linkedNext_=true;
@@ -191,7 +193,7 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
         }
     }
 
-    Regex::MatchList Regex::Host::findAll() {
+    Regex::MatchList Regex::Host::findAll() const {
         Iterator it=begin();
         while (&*it != &pastTheEnd_) {
             ++it;
@@ -199,8 +201,8 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
         return cache_;
     }
 
-	Regex::Iterator Regex::Host::begin() {
-		InternalIterator it=cache_.begin();
+	Regex::Iterator Regex::Host::begin() const {
+		InternalConstIterator it=cache_.begin();
 		if (it!=cache_.end() && it->linkedPrev_) {
 			return Iterator(&*it);
 		}
@@ -266,19 +268,19 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
 	}
 
 	bool Regex::Host::hasMoreElements(const bool &backward) const {
-		return backward ? (!(enumerator==begin())) : (!(enumerator==end() || enumerator==--end()));
+		return backward ? (!(enumerator_==begin())) : (!(enumerator_==end() || enumerator_==--end()));
 	}
 
 	Regex::Match Regex::Host::nextElement() {
-		return *++enumerator;
+		return *++enumerator_;
 	}
 
 	Regex::Match Regex::Host::prevElement() {
-		return *--enumerator;
+		return *--enumerator_;
 	}
 
 	void Regex::Host::reset(const bool &backward) const {
-		backward ? enumerator=end() : enumerator=begin();
+		backward ? enumerator_=end() : enumerator_=begin();
 	}
 
 	Regex::Iterator Regex::Host::next(Regex::Iterator current) const {

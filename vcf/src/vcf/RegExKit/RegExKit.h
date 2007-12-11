@@ -162,7 +162,7 @@ namespace Regex{
 		friend class Host;
 		friend class Iterator;
         public:
-            Match(unsigned char* pos=NULL, String text="", Host* const env=NULL): pos_(pos),
+            Match(unsigned char* pos=NULL, String text="", const Host* const env=NULL): pos_(pos),
 				matchText_(text), env_(env), linkedNext_(false), linkedPrev_(false){}
             Match(const Match& rhs): pos_(rhs.pos_), matchText_(rhs.matchText_), env_(rhs.env_),
 				linkedNext_(rhs.linkedNext_), linkedPrev_(rhs.linkedPrev_){}
@@ -221,7 +221,7 @@ namespace Regex{
         private:
             unsigned char* pos_;
             String matchText_;
-            Host* env_;
+            const Host* env_;
 			mutable bool linkedNext_;
 			mutable bool linkedPrev_;
     };
@@ -336,7 +336,7 @@ namespace Regex{
 			the search will start at the beginning of the range.
 			@return Iterator An iterator pointing to the match result.
 			*/
-			Iterator find(unsigned char* pos);
+			Iterator find(unsigned char* pos) const;
 			
 			/**
 			Finds the first match result at or before the specified position.
@@ -345,7 +345,7 @@ namespace Regex{
 			the search will start at the end of the range.
 			@return Iterator An iterator pointing to the match result.
 			*/
-			Iterator rfind(unsigned char* pos);
+			Iterator rfind(unsigned char* pos) const;
 
 			/**
 			Finds the first match result at or after the specified position.
@@ -354,7 +354,7 @@ namespace Regex{
 			the search will start at the beginning of the range.
 			@return Iterator An iterator pointing to the match result.
 			*/
-			Iterator find(ptrdiff_t pos) {
+			Iterator find(ptrdiff_t pos) const {
 				return find(first_+pos);
 			}
 			
@@ -365,7 +365,7 @@ namespace Regex{
 			the search will start at the end of the range.
 			@return Iterator An iterator pointing to the match result.
 			*/
-			Iterator rfind(ptrdiff_t pos) {
+			Iterator rfind(ptrdiff_t pos) const {
 				return rfind(first_+pos);
 			}
 
@@ -374,33 +374,33 @@ namespace Regex{
 			@return MatchList A std::set<Match> containing all the matches found
 			in order of position in the search range.
 			*/
-            MatchList findAll();
+            MatchList findAll() const;
 
 			/**
 			Searches from the beginning for the first match.
 			@return Iterator Either the first match or a past-the-end iterator
 			if there are no matches.
 			*/
-			Iterator begin();
+			Iterator begin() const;
 
 			/**
 			Returns a past-the-end iterator.
 			*/
-            Iterator end(){
+            Iterator end() const {
                 return Iterator(&pastTheEnd_);
             }
 
 			/**
 			Returns a ReverseIterator to the result of end()
 			*/
-            ReverseIterator rbegin(){
+            ReverseIterator rbegin() const {
                 return ReverseIterator(end());
             }
 
 			/**
 			Returns a ReverseIterator to the result of begin()
 			*/
-            ReverseIterator rend(){
+            ReverseIterator rend() const {
                 return ReverseIterator(begin());
             }
 			
@@ -455,7 +455,7 @@ namespace Regex{
 			Iterator prev(Iterator current) const;
 			virtual unsigned int characterWidth(const ptrdiff_t& pos) const=0;
 
-			MatchContainerT cache_;
+			mutable MatchContainerT cache_;
 			typedef MatchContainerT::iterator InternalIterator;
 			typedef MatchContainerT::const_iterator InternalConstIterator;
 			Match pastTheEnd_;
@@ -466,7 +466,7 @@ namespace Regex{
 			regex_t* reg_;
 			OnigSyntaxType* syntax_;
             OnigErrorInfo error_;
-			Iterator enumerator;
+			mutable Iterator enumerator_;
     };
 
 	/**
