@@ -22,8 +22,6 @@ using namespace VCF;
 //******************************************************************************
 
 ToolbarItem::ToolbarItem():
-	data_(NULL),
-	imageIndex_(0),
 	imageStateIndex_(0),
 	itemControl_(NULL)
 {

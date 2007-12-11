@@ -39,6 +39,10 @@ public:
 	virtual void setPageComponent( Control* component ) = 0;
 
 	virtual uint32 getPreferredHeight() = 0;
+
+	virtual uint32 getIndex() const  = 0;
+
+	virtual void setIndex( const uint32& index ) = 0;
 };
 
 }; //end of namespace VCF

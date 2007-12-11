@@ -28,6 +28,8 @@ namespace VCF  {
 class APPLICATIONKIT_API ColumnItem : public Item{
 public:
 
+	ColumnItem(): Item(), index_(0){}
+
 	virtual ~ColumnItem(){};
 
 	/**
@@ -73,6 +75,17 @@ public:
 	@see setCaptionAlignment()
 	*/
 	virtual TextAlignmentType getCaptionAlignment() = 0;
+
+	virtual uint32 getIndex() const {
+		return index_;
+	}
+
+	virtual void setIndex( const uint32& index ) {
+		index_ = index;
+	}
+
+protected:
+	uint32 index_;
 };
 
 

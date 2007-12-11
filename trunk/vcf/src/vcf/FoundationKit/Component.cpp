@@ -476,7 +476,8 @@ void Component::setDesigning( const bool& designing )
 }
 
 
-bool Component::getUseLocaleStrings() {
+bool Component::getUseLocaleStrings() const 
+{
 	return (Component::csUsesLocaleStrings & componentState_) ? true : false;
 }
 

@@ -235,7 +235,7 @@ void DefaultTreeItem::insertChild( const uint32& index, TreeItem* child )
 	int i = index;
 	while ( it != childNodeItems_.end() ) {
 		TreeItem* item = *it;
-		item->setIndex( i );
+//		item->setIndex( i );
 		it ++;
 		i++;
 	}
@@ -256,7 +256,7 @@ void DefaultTreeItem::deleteChild( TreeItem* child )
 		std::vector<TreeItem*>::iterator it = childNodeItems_.begin() + index;
 		while ( it != childNodeItems_.end() ) {
 			item = *it;
-			item->setIndex( i );
+//			item->setIndex( i );
 			it ++;
 			i ++;
 		}
@@ -277,7 +277,7 @@ void DefaultTreeItem::deleteChildAtIndex( const uint32& index )
 		std::vector<TreeItem*>::iterator it = childNodeItems_.begin() + index;
 		while ( it != childNodeItems_.end() ) {
 			item = *it;
-			item->setIndex( i );
+//			item->setIndex( i );
 			it ++;
 			i ++;
 		}

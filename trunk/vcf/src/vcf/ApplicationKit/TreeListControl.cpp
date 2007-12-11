@@ -203,7 +203,7 @@ void TreeListControl::recalcScrollable()
 		while ( it != visibleItems.end() ) {
 			TreeItem* item = *it;
 			
-			visibleItemsHeight_ += item->getBounds()->getHeight();
+			visibleItemsHeight_ += item->getBounds().getHeight();
 			it ++;
 		}
 
@@ -234,7 +234,7 @@ void TreeListControl::paintItem( TreeItem* item, GraphicsContext* context, Rect*
 		context->strokePath();
 	}
 
-	item->setBounds( paintRect );
+	item->setBounds( *paintRect );
 
 	TreeModel* treeModel = getTreeModel();
 	ColumnModel* columnModel = header_->getColumnModel();
@@ -757,7 +757,7 @@ TreeItem* TreeListControl::hitTest( Point* pt, TreeItem* itemToTest )
 			else {
 				GraphicsContext* ctx = getContext();
 				double w = ctx->getTextWidth( itemToTest->getCaption() );
-				Rect tmp = *itemToTest->getBounds();
+				Rect tmp = itemToTest->getBounds();
 				tmp.right_ = tmp.left_ + w + getCurrentIndent(itemToTest) ;
 				if ( true == tmp.containsPt( pt ) ) {
 					result = itemToTest;
@@ -818,7 +818,7 @@ bool TreeListControl::multiSelectionChange( MouseEvent* event )
 			Rect expanderRect;
 
 			uint32 level = foundItem->getLevel();
-			expanderRect = *foundItem->getBounds();
+			expanderRect = foundItem->getBounds();
 			expanderRect.left_ += (level * itemIndent_);
 			expanderRect.right_ = expanderRect.left_ + itemIndent_;
 
@@ -853,11 +853,11 @@ bool TreeListControl::multiSelectionChange( MouseEvent* event )
 				std::vector<TreeItem*> selectedItems;
 
 				bool startFound = false;
-				Rect* bounds1 = currentlySelectedItem->getBounds();
-				Rect* bounds2 = foundItem->getBounds();
+				Rect bounds1 = currentlySelectedItem->getBounds();
+				Rect bounds2 = foundItem->getBounds();
 				TreeItem* firstItem = currentlySelectedItem;
 				TreeItem* lastItem = foundItem;
-				if ( bounds2->top_ < bounds1->top_ ) {
+				if ( bounds2.top_ < bounds1.top_ ) {
 					firstItem = foundItem;
 					lastItem = currentlySelectedItem;
 				}
@@ -929,7 +929,7 @@ void TreeListControl::mouseDblClick(  MouseEvent* event )
 		Rect expanderRect;
 		
 		uint32 level = item->getLevel();
-		expanderRect = *item->getBounds();
+		expanderRect = item->getBounds();
 		expanderRect.left_ += (level * itemIndent_);
 		expanderRect.right_ = expanderRect.left_ + itemIndent_;	
 		
@@ -951,7 +951,7 @@ Rect TreeListControl::getExpanderRect( TreeItem* item )
 	Rect result;
 
 	uint32 level = item->getLevel();
-	result = *item->getBounds();
+	result = item->getBounds();
 	result.left_ += (level * itemIndent_);
 	result.right_ = result.left_ + itemIndent_;
 
@@ -974,7 +974,7 @@ bool TreeListControl::singleSelectionChange( MouseEvent* event )
 			Rect expanderRect;
 
 			uint32 level = foundItem->getLevel();
-			expanderRect = *foundItem->getBounds();
+			expanderRect = foundItem->getBounds();
 			expanderRect.left_ += (level * itemIndent_);
 			expanderRect.right_ = expanderRect.left_ + itemIndent_;
 
@@ -1272,7 +1272,7 @@ void TreeListControl::scrollToNextItem( TreeItem* item, bool scrollDown )
 	Scrollable* scrollable = getScrollable();
 	if ( NULL != scrollable ) {
 		Rect clientBounds = getClientBounds();
-		Rect itemBounds = *item->getBounds();
+		Rect itemBounds = item->getBounds();
 		
 		
 		double virtualHeight = scrollable->getVirtualViewHeight();
@@ -1282,7 +1282,7 @@ void TreeListControl::scrollToNextItem( TreeItem* item, bool scrollDown )
 			double adjustedBottom = (itemBounds.getHeight()*2 + itemBounds.top_) - scrollable->getVerticalPosition();
 
 			if ( adjustedBottom > clientBounds.bottom_ ) {
-				double newPos = item->getBounds()->getHeight() + 
+				double newPos = item->getBounds().getHeight() + 
 					scrollable->getVerticalPosition();
 				if ( (adjustedBottom - clientBounds.bottom_) < (itemBounds.getHeight()*2) ) {
 					newPos += ((itemBounds.getHeight()*2) - (adjustedBottom - clientBounds.bottom_));
@@ -1299,7 +1299,7 @@ void TreeListControl::scrollToNextItem( TreeItem* item, bool scrollDown )
 
 			if ( adjustedTop < clientBounds.top_ ) {
 				double newPos = scrollable->getVerticalPosition() -
-									item->getBounds()->getHeight();
+									item->getBounds().getHeight();
 /*
 				adjustedTop = abs(adjustedTop);
 				if ( (adjustedTop - clientBounds.top_) < (itemBounds.getHeight()*2) ) {
@@ -1429,7 +1429,7 @@ bool TreeListControl::hitTest( Rect* rect, TreeItem* item, std::vector<TreeItem*
 	bool result = false;
 	TreeItem* foundItem = NULL;
 
-	Rect itemBounds = *item->getBounds();
+	Rect itemBounds = item->getBounds();
 
 	if ( ! (displayOptions_ & TreeListControl::tdoShowFullRowSelection) ) {
 		/*
@@ -1750,11 +1750,11 @@ bool TreeListControl::listVisibleItems( std::vector<TreeItem*>& items, TreeItem*
 	bool result = false;
 	if ( NULL != itemToSearch ) {
 
-		Rect* bounds = itemToSearch->getBounds();
-		if ( bounds->isNull() || bounds->isEmpty() ) {
-			bounds->setRect( 1, itemHeight_ * items.size(), getWidth()-1, itemHeight_ * items.size() + itemHeight_ );			
+		Rect bounds = itemToSearch->getBounds();
+		if ( bounds.isNull() || bounds.isEmpty() ) {
+			bounds.setRect( 1, itemHeight_ * items.size(), getWidth()-1, itemHeight_ * items.size() + itemHeight_ );			
 		}
-		if ( (bounds->bottom_ >= top) || (bounds->top_ < bottom) ){
+		if ( (bounds.bottom_ >= top) || (bounds.top_ < bottom) ){
 			items.push_back( itemToSearch );
 			result = true;
 			if ( (!itemToSearch->isLeaf()) && (itemToSearch->isExpanded()) ) {
@@ -1840,19 +1840,19 @@ Rect TreeListControl::getStateRect( TreeItem* item, const double& indent )
 	Rect result;
 
 	if ( item->getState() != Item::idsNone ) {
-		Rect* itemBounds = item->getBounds();
+		Rect itemBounds = item->getBounds();
 
-		result = *itemBounds;
+		result = itemBounds;
 
 		result.left_ += indent;
 		if ( NULL != stateImageList_ ) {
 			result.right_ = result.left_ + stateImageList_->getImageWidth();
-			result.top_ = itemBounds->top_ + (itemBounds->getHeight()/2.0 - stateImageList_->getImageHeight()/2.0);
+			result.top_ = itemBounds.top_ + (itemBounds.getHeight()/2.0 - stateImageList_->getImageHeight()/2.0);
 			result.bottom_ = result.top_ + stateImageList_->getImageHeight();
 		}
 		else {
 			result.right_ = result.left_ + stateItemIndent_;
-			result.top_ = itemBounds->top_ + (itemBounds->getHeight()/2.0 - (minVal<double>(stateItemIndent_,itemHeight_)/2.0));
+			result.top_ = itemBounds.top_ + (itemBounds.getHeight()/2.0 - (minVal<double>(stateItemIndent_,itemHeight_)/2.0));
 			result.bottom_ = result.top_ + (minVal<double>(stateItemIndent_,itemHeight_));
 		}
 

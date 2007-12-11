@@ -31,16 +31,11 @@ public:
 
 	virtual ~DefaultTabPage();
 
-	virtual bool containsPoint( Point * pt );
-
-    virtual uint32 getIndex();
+    virtual uint32 getIndex() const ;
 
 	virtual void setIndex( const uint32& index );
 
-    virtual void* getData();
-
-	virtual void setData( void* data );
-	
+    
 	virtual void setPageName( const String& name );
 
 	virtual String getPageName();
@@ -49,60 +44,23 @@ public:
 
 	virtual void setPageComponent( Control* component );
 
-	virtual bool isSelected();
-
-	virtual void setSelected( const bool& selected );
-
 	virtual void paint( GraphicsContext* context, Rect* paintRect );
 
 	virtual uint32 getPreferredHeight();
-
-	virtual Rect* getBounds() {
-		return &bounds_;
-	}
-
-	virtual Control* getControl() {
-		return owningControl_;
-	}
-
-
-	virtual void setControl( Control* control ) {
-		owningControl_ = control;
-	}
-
-	virtual int32 getImageIndex() {
-		return imageIndex_;
-	}
-
-	virtual void setImageIndex( const int32& imageIndex );
-
+	
 	virtual bool canPaint() {
 		return true;
 	}
 	
-	virtual void setBounds( Rect* bounds );
+	
 
-	/**
-	*not supported
-	*/
-	virtual int32 getStateImageIndex(){
-		return -1;
-	};
+	
 
-	/**
-	*not supported
-	*/
-	virtual void setStateImageIndex( const int32& index ){}
-
-private:
-	uint32 index_;
+private:	
 	String pageName_;
-	Control* component_;
-	bool selected_;
+	Control* component_;	
 	uint32 preferredHeight_;
-	Rect bounds_;
-	int32 imageIndex_;
-	void* data_;
+	uint32 index_;
 };
 
 }; //end of namespace VCF

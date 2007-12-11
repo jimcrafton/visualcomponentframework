@@ -25,17 +25,17 @@ void ColumnModel::empty()
 	data_.clear();
 }
 
-void ColumnModel::addItem( const VariantData& item )
+void ColumnModel::add( const VariantData& item )
 {
 	data_.push_back( item );
 }
 
-void ColumnModel::insertItem( const uint32 & index, const VariantData& item )
+void ColumnModel::insert( const uint32 & index, const VariantData& item )
 {
 	data_.insert( data_.begin() + index, item );
 }
 
-void ColumnModel::deleteItem( const VariantData& item )
+void ColumnModel::remove( const VariantData& item )
 {
 	Array<VariantData>::iterator found = 
 		std::find( data_.begin(), data_.end(), item );
@@ -44,7 +44,7 @@ void ColumnModel::deleteItem( const VariantData& item )
 	}
 }
 
-void ColumnModel::deleteItemAtIndex( const uint32 & index )
+void ColumnModel::removeAtIndex( const uint32 & index )
 {
 	Array<VariantData>::iterator found = data_.begin() + index;		
 	if ( found != data_.end() ) {
@@ -52,12 +52,12 @@ void ColumnModel::deleteItemAtIndex( const uint32 & index )
 	}
 }
 
-VariantData ColumnModel::getItem( const uint32& index )
+VariantData ColumnModel::get( const uint32& index )
 {
 	return data_[index];
 }
 
-uint32 ColumnModel::getItemIndex( const VariantData& item )
+uint32 ColumnModel::getIndexOf( const VariantData& item )
 {
 	uint32 result = ListModel::IndexNotFound;
 	Array<VariantData>::iterator found = std::find( data_.begin(), data_.end(), item );
@@ -68,18 +68,18 @@ uint32 ColumnModel::getItemIndex( const VariantData& item )
 	return result;
 }
 
-String ColumnModel::getItemAsString( const uint32& index )
+String ColumnModel::getAsString( const uint32& index )
 {
 	VariantData result = data_[index];
 	return result.toString();
 }
 
-void ColumnModel::setItem( const uint32& index, const VariantData& item )
+void ColumnModel::set( const uint32& index, const VariantData& item )
 {
 	data_[index] = item;
 }
 
-void ColumnModel::setItemAsString( const uint32& index, const String& item )
+void ColumnModel::setAsString( const uint32& index, const String& item )
 {
 	data_[index].setFromString(item);
 }
@@ -90,7 +90,7 @@ bool ColumnModel::getItems( std::vector<VariantData>& items )
 	return !items.empty();
 }
 
-bool ColumnModel::getItems( const uint32& start, const uint32& end, std::vector<VariantData>& items )
+bool ColumnModel::getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items )
 {
 	VCF_ASSERT( end - start <= data_.size() );
 	VCF_ASSERT( data_.begin() + start != data_.end() );

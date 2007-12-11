@@ -14,9 +14,8 @@ where you installed the VCF.
 using namespace VCF;
 
 DefaultTabPage::DefaultTabPage( Control* component ):
-	data_(NULL),
 	preferredHeight_(8),
-	imageIndex_(0),
+	index_(0),
 	component_(NULL)	
 {
 	tag_ = -1;
@@ -28,12 +27,8 @@ DefaultTabPage::~DefaultTabPage()
 
 }
 
-bool DefaultTabPage::containsPoint( Point * pt )
-{
-	return bounds_.containsPt( pt );
-}
 
-uint32 DefaultTabPage::getIndex()
+uint32 DefaultTabPage::getIndex() const
 {
 	return index_;
 }
@@ -43,15 +38,6 @@ void DefaultTabPage::setIndex( const uint32& index )
 	index_ = index;
 }
 
-void* DefaultTabPage::getData()
-{
-	return data_;
-}
-
-void DefaultTabPage::setData( void* data )
-{
-	data_ = data;
-}
 
 void DefaultTabPage::setPageName( const String& name )
 {
@@ -78,18 +64,6 @@ void DefaultTabPage::setPageComponent( Control* component )
 	}
 	component_ = component;
 
-}
-
-bool DefaultTabPage::isSelected()
-{
-	return selected_;
-}
-
-void DefaultTabPage::setSelected( const bool& selected )
-{
-	selected_ = selected;
-	ItemEvent event( this, ITEM_EVENT_SELECTED );
-	ItemSelected( &event );
 }
 
 void DefaultTabPage::paint( GraphicsContext* context, Rect* paintRect )
@@ -122,16 +96,6 @@ uint32 DefaultTabPage::getPreferredHeight()
 	return result;
 }
 
-
-void DefaultTabPage::setImageIndex( const int32& imageIndex )
-{
-	imageIndex_ = imageIndex;
-}
-
-void DefaultTabPage::setBounds( Rect* bounds )
-{
-	bounds_ = *bounds;
-}
 
 
 /**

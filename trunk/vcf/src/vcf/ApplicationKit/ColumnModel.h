@@ -82,23 +82,24 @@ public:
 
 	virtual void empty();
 
-	virtual void addItem( const VariantData& item );
-	virtual void insertItem( const uint32 & index, const VariantData& item );
+	virtual void add( const VariantData& item );
+	virtual void insert( const uint32 & index, const VariantData& item );
     
-	virtual void deleteItem( const VariantData& item );
-	virtual void deleteItemAtIndex( const uint32 & index );
+	virtual void remove( const VariantData& item );
+	virtual void removeAtIndex( const uint32 & index );
 
-	virtual VariantData getItem( const uint32& index );	
-	virtual String getItemAsString( const uint32& index );
+	virtual VariantData get( const uint32& index );	
+	virtual String getAsString( const uint32& index );
 
-	virtual uint32 getItemIndex( const VariantData& item );
+	virtual uint32 getIndexOf( const VariantData& item );
 
-	virtual void setItem( const uint32& index, const VariantData& item );
-	virtual void setItemAsString( const uint32& index, const String& item );
+	virtual void set( const uint32& index, const VariantData& item );
+	virtual void setAsString( const uint32& index, const String& item );
 
-	virtual bool getItems( std::vector<VariantData>& items );
-	virtual bool getItems( const uint32& start, const uint32& end, std::vector<VariantData>& items );
+	virtual bool getItems( std::vector<VariantData>& items );	
 	virtual Enumerator<VariantData>* getItems();
+
+	virtual bool getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items );
 
 	virtual uint32 getCount();
 

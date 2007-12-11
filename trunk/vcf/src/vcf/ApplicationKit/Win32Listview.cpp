@@ -1989,7 +1989,7 @@ void Win32Listview::onItemSelected( ItemEvent* event )
 {
 
 	if ( !internalMessage_ ) {
-		Item* item = (Item*)event->getSource();
+		ListItem* item = (ListItem*)event->getSource();
 		if ( true == item->isSelected() ) {
 			ListView_SetItemState( hwnd_, item->getIndex(),
 				LVIS_SELECTED, LVIS_SELECTED );

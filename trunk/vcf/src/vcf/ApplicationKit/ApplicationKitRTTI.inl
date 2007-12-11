@@ -262,7 +262,7 @@ _class_abstract_rtti_(ListModel, "VCF::Model", LISTMODEL_CLASSID)
 //OBJECT_COLLECTION_PROPERTY(ListItem*, "items", ListModel::getItems, ListModel::addItem, ListModel::insertItem, ListModel::deleteItem, ListModel::deleteItemAtIndex )
 _delegate_(ListModelDelegate, ContentsChanged )
 _delegate_(ListModelDelegate, ItemAdded )
-_delegate_(ListModelDelegate, ItemDeleted )
+_delegate_(ListModelDelegate, ItemRemoved )
 _class_rtti_end_
 
 

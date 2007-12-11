@@ -54,14 +54,14 @@ ColumnItem* HeaderControl::addColumn( const String& columnName, const double& wi
 	result = new DefaultColumnItem();
 	result->setCaption( columnName );
 	result->setWidth( width );
-	columnModel_->addItem( result );
+	columnModel_->add( result );
 
 	return result;
 }
 
 void HeaderControl::addColumn( ColumnItem* column )
 {
-	columnModel_->addItem( column );
+	columnModel_->add( column );
 }
 
 ColumnItem* HeaderControl::insertColumn( const uint32& index, const String& columnName, const double& width )
@@ -70,29 +70,29 @@ ColumnItem* HeaderControl::insertColumn( const uint32& index, const String& colu
 	result = new DefaultColumnItem();
 	result->setCaption( columnName );
 	result->setWidth( width );
-	columnModel_->insertItem( index, result );
+	columnModel_->insert( index, result );
 
 	return result;
 }
 
 void HeaderControl::insertColumn( const uint32& index, ColumnItem* column )
 {
-	columnModel_->insertItem( index, column );
+	columnModel_->insert( index, column );
 }
 
 void HeaderControl::deleteColumn( const uint32& index )
 {
-	columnModel_->deleteItem( index );
+	columnModel_->remove( index );
 }
 
 String HeaderControl::getColumnName( const uint32& index )
 {
-	return columnModel_->getItemAsString( index );
+	return columnModel_->getAsString( index );
 }
 
 void HeaderControl::setColumnName( const uint32& index, const String& columnName )
 {
-	columnModel_->setItemAsString( index, columnName );	
+	columnModel_->setAsString( index, columnName );	
 }
 
 double HeaderControl::getColumnWidth( const uint32& index )
@@ -190,9 +190,9 @@ void HeaderControl::mouseDown( MouseEvent* event )
 	pressedColumn_ = NULL;
 	ColumnItem* item = isPtOverItem( event->getPoint() );
 	if ( NULL != item ) {
-		Rect* bounds = item->getBounds();
+		Rect bounds = item->getBounds();
 		Point* pt = event->getPoint();
-		if ( pt->x_ > (bounds->right_-5) ) {
+		if ( pt->x_ > (bounds.right_-5) ) {
 			draggingColumnItem_ = item;
 			keepMouseEvents();
 		}
@@ -211,8 +211,8 @@ void HeaderControl::mouseMove( MouseEvent* event )
 
 
 	if ( NULL != draggingColumnItem_ ) {
-		Rect* bounds = draggingColumnItem_->getBounds();
-		double width = maxVal<double>( minColumnWidth_, event->getPoint()->x_ - bounds->left_ );
+		Rect bounds = draggingColumnItem_->getBounds();
+		double width = maxVal<double>( minColumnWidth_, event->getPoint()->x_ - bounds.left_ );
 		draggingColumnItem_->setWidth( width );
 
 		ItemEvent itemEvent( draggingColumnItem_, HeaderControl::COLUMN_ITEM_WIDTHCHANGED );
@@ -224,9 +224,9 @@ void HeaderControl::mouseMove( MouseEvent* event )
 	else {
 		ColumnItem* item = isPtOverItem( event->getPoint() );
 		if ( NULL != item ) {
-			Rect* bounds = item->getBounds();
+			Rect bounds = item->getBounds();
 			Point* pt = event->getPoint();
-			if ( pt->x_ > (bounds->right_-5) ) {
+			if ( pt->x_ > (bounds.right_-5) ) {
 				needsResizer = true;
 			}
 		}
@@ -244,8 +244,8 @@ void HeaderControl::mouseUp( MouseEvent* event )
 {
 	CustomControl::mouseUp( event );
 	if ( NULL != draggingColumnItem_ ) {
-		Rect* bounds = draggingColumnItem_->getBounds();
-		double width = maxVal<double>( minColumnWidth_, event->getPoint()->x_ - bounds->left_ );
+		Rect bounds = draggingColumnItem_->getBounds();
+		double width = maxVal<double>( minColumnWidth_, event->getPoint()->x_ - bounds.left_ );
 		draggingColumnItem_->setWidth( width );
 
 		ItemEvent itemEvent( draggingColumnItem_, HeaderControl::COLUMN_ITEM_WIDTHCHANGED );
@@ -344,7 +344,7 @@ void HeaderControl::paintColumn( GraphicsContext* context, Rect* paintRect, cons
 	paintRect->inflate( 5, 0 );
 
 
-	item->setBounds( paintRect );
+	item->setBounds( *paintRect );
 	if ( item->canPaint() ) {
 		item->paint( context, paintRect );
 	}

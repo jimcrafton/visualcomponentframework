@@ -85,30 +85,43 @@ public:
 	DELEGATE(ItemDelegate,SubItemDeleted);
 
 
-	ListItem(){
+	ListItem(): Item(), index_(0) {
 
 	};
 
 	virtual ~ListItem(){};
 	
 
-	virtual String getCaption() = 0;
+	virtual String getCaption() const ;
 
-	virtual void setCaption( const String& caption ) = 0;
+	virtual void setCaption( const String& caption );
 
-	virtual void addSubItem( const String& caption, void* data ) = 0;
+	/**
+	Returns the index of the item within it's model.
+	*/
+    virtual uint32 getIndex() const {
+		return index_;
+	}
 
-	virtual void addSubItem( SubItem* subItem ) = 0;
+	virtual void setIndex( const uint32& index ) {
+		index_ = index;
+	}
 
-	virtual void removeSubItem( const uint32& index ) = 0;
+	virtual SubItem* addSubItem( const String& caption, void* data );
 
-	virtual Enumerator<SubItem*>* getSubItems() = 0;
+	virtual void addSubItem( SubItem* subItem );
 
-	virtual SubItem* getSubItem( const uint32& index ) = 0;
+	virtual void removeSubItem( const uint32& index );
 
-	virtual uint32 getSubItemCount() = 0;
+	virtual Enumerator<SubItem*>* getSubItems();
 
-	virtual void subItemChanged( SubItem* item ) = 0;
+	virtual SubItem* getSubItem( const uint32& index );
+
+	virtual uint32 getSubItemCount();
+
+	virtual void subItemChanged( SubItem* item );
+protected:
+		uint32 index_;
 };
 
 };

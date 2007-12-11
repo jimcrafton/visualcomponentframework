@@ -59,50 +59,6 @@ void DefaultListItem::init()
 
 }
 
-bool DefaultListItem::containsPoint( Point * pt )
-{
-	return bounds_.containsPt( pt );
-}
-
-uint32 DefaultListItem::getIndex()
-{
-	return index_;
-}
-
-void DefaultListItem::setIndex( const uint32& index )
-{
-	index_ = index;
-}
-
-void* DefaultListItem::getData()
-{
-	return data_;
-}
-
-void DefaultListItem::setData( void* data )
-{
-	data_ = data;
-}
-
-String DefaultListItem::getCaption()
-{
-	//control's getUseLocaleStrings() takes precedence over ours
-	Control* control = getControl();
-	ListModel* lm = (ListModel*) getModel();
-	if ( getUseLocaleStrings() && (NULL != control) && (control->getUseLocaleStrings()) ) {
-		return System::getCurrentThreadLocale()->translate( lm->getItemAsString( index_ ) );
-	}
-	return lm->getItemAsString( index_ );
-}
-
-void DefaultListItem::setCaption( const String& caption )
-{
-	ListModel* lm = (ListModel*) getModel();
-	lm->setItemAsString( index_, caption );
-
-	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
-	ItemChanged( &event );
-}
 
 void DefaultListItem::paint( GraphicsContext* context, Rect* paintRect )
 {
@@ -112,31 +68,13 @@ void DefaultListItem::paint( GraphicsContext* context, Rect* paintRect )
 	ItemPaint( &event );
 }
 
-bool DefaultListItem::isSelected()
-{
-	return selected_;
-}
-
-void DefaultListItem::setSelected( const bool& selected )
-{
-	selected_ = selected;
-	ItemEvent event( this, ITEM_EVENT_SELECTED );
-	ItemSelected( &event );
-}
-
-void DefaultListItem::setImageIndex( const int32& imageIndex )
-{
-	imageIndex_ = imageIndex;
-	ItemEvent event( this, ITEM_EVENT_CHANGED );
-	ItemChanged( &event );
-}
-
-void DefaultListItem::addSubItem( const String& caption, void* data )
+ListItem::SubItem* DefaultListItem::addSubItem( const String& caption, void* data )
 {
 	ListItem::SubItem* newSubItem = new ListItem::SubItem( this );
 	newSubItem->setCaption( caption );
 	newSubItem->setData( data );
 	addSubItem( newSubItem );
+	return newSubItem;
 }
 
 void DefaultListItem::addSubItem( ListItem::SubItem* subItem )
@@ -188,10 +126,6 @@ void DefaultListItem::subItemChanged( ListItem::SubItem* item )
 	SubItemChanged( &event );
 }
 
-void DefaultListItem::setBounds( Rect* bounds )
-{
-	bounds_ = *bounds;
-}
 
 
 /**
