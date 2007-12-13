@@ -68,6 +68,7 @@ can be created on the stack.
 class FOUNDATIONKIT_API Object {
 public:
 	Object();
+    Object(const Object &obj);
 
 	virtual ~Object();
 
@@ -96,9 +97,9 @@ public:
 	*increments the reference count of the object
 	@param Object* the optional owner of the new referenced object
 	for use in future, more sophisticated refcounting schemes
-	@return uint32 the current reference count of the object
+	@return long the current reference count of the object
 	*/
-	virtual uint32 addRef(Object* owner=NULL);
+    virtual long addRef(Object* owner=NULL);
 
 	/**
 	decrements the reference count of the object
@@ -106,12 +107,12 @@ public:
 	for use in future, more sophisticated refcounting schemes
 	when the refCount_ drops to 0 the object is destroyed
 	*/
-	virtual uint32 release(Object* owner=NULL);
+    virtual long release(Object* owner=NULL);
 
 	/**
 	returns the number of outstanding references for this object
 	*/
-	uint32 getRefCount() const{
+    long getRefCount() const{
 		return refCount_;
 	}
 
@@ -164,6 +165,7 @@ public:
 		return NULL;
 	};
 
+    Object& operator=(const Object &rhs) { return *this; }
 	/**
 	returns the RTTI Class instance associated object
 	of this type
@@ -253,7 +255,7 @@ protected:
 	*/
 	virtual void destroy();
 
-	uint32 refCount_;
+	AtomicCount refCount_;
 private:
 
 };

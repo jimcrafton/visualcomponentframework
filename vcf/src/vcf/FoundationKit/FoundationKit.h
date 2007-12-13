@@ -88,6 +88,7 @@ where you installed the VCF.
 
 #include "vcf/FoundationKit/FoundationKitSelectLib.h"
 
+#include "vcf/FoundationKit/AtomicCount.h"
 #include "vcf/FoundationKit/SmartPtr.h"
 #include "vcf/FoundationKit/VCFChar.h"
 #include "vcf/FoundationKit/VCFString.h"
