@@ -242,33 +242,35 @@ void ListBoxControl::onItemAdded( ListModelEvent* event )
 
 void ListBoxControl::onItemDeleted( ListModelEvent* event )
 {
-/*	ListItem* item = event->getListItem();
 
-	if ( item == singleSelectedItem_ ) {
-		singleSelectedItem_ = NULL;
-	}
-	
-	if ( item->isSelected() ) {
-		eraseFromSelectedItems( item );
-	}
-	
-	currentMaxHeight_ -= item->getBounds()->getHeight();
-	//need to recalc currentMaxWidth_ here also if item removed was the widest item. DT
+	Array<ListItem*>::iterator found = items_.begin() + event->index ;
+	if ( found != items_.end() ) {
+		ListItem* item = *found;
 
-	Scrollable* scrollable = getScrollable();
-
-	if ( NULL != scrollable ) {
-		if ( (getHeight() > currentMaxHeight_) && (scrollable->getVerticalPosition() > 0.0) ) {
-			scrollable->setVerticalPosition( 0.0 );
+		
+		if ( item->isSelected() ) {
+			eraseFromSelectedItems( item );
 		}
-
-		if ( (getWidth() > currentMaxWidth_) && (scrollable->getHorizontalPosition() > 0.0) ) {
-			scrollable->setHorizontalPosition( 0.0 );
-		}		
-
-		scrollable->setVirtualViewSize( currentMaxWidth_, currentMaxHeight_ );	
+		
+		currentMaxHeight_ -= item->getBounds().getHeight();
+		//need to recalc currentMaxWidth_ here also if item removed was the widest item. DT
+		
+		Scrollable* scrollable = getScrollable();
+		
+		if ( NULL != scrollable ) {
+			if ( (getHeight() > currentMaxHeight_) && (scrollable->getVerticalPosition() > 0.0) ) {
+				scrollable->setVerticalPosition( 0.0 );
+			}
+			
+			if ( (getWidth() > currentMaxWidth_) && (scrollable->getHorizontalPosition() > 0.0) ) {
+				scrollable->setHorizontalPosition( 0.0 );
+			}		
+			
+			scrollable->setVirtualViewSize( currentMaxWidth_, currentMaxHeight_ );	
+		}
+		
+		items_.erase( found );
 	}
-*/
 	repaint();
 }
 
@@ -295,15 +297,11 @@ void ListBoxControl::rangeSelect( const bool & isSelected, ListItem * first, Lis
 			uint32 start = first->getIndex();
 			uint32 end = last->getIndex();
 			for ( uint32 i=start;i<=end;i++) {
-				/*
-				ListItem* item = lm->getItemFromIndex( i );
-				if ( NULL != item ) {
-					item->setSelected( isSelected );
-					if ( true == isSelected ) {
-						selectedItems_.push_back( item );
-					}
+				ListItem* item =  items_[i];
+				item->setSelected( isSelected );
+				if ( true == isSelected ) {
+					selectedItems_.push_back( item );
 				}
-				*/
 			}
 
 			selectionChanged( NULL );
@@ -492,8 +490,7 @@ void ListBoxControl::paint( GraphicsContext* ctx )
 	if ( NULL != lm ) {
 		Color* selectedTextColor =
 				GraphicsToolkit::getSystemColor( SYSCOLOR_SELECTION_TEXT );
-
-		Enumerator<ListItem*>* items= NULL;//lm->getItems();
+		
 		double currentTop = bounds.top_;
 		Rect itemRect;
 		Rect itemPaintRect;
@@ -508,9 +505,9 @@ void ListBoxControl::paint( GraphicsContext* ctx )
 		Rect viewBounds = ctx->getViewableBounds();
 		//Point origin = ctx->getOrigin();
 		//viewBounds.offset( -origin.x_, -origin.y_ );
-/*
-		while ( true == items->hasMoreElements() ) {
-			ListItem* item = items->nextElement();
+		Array<ListItem*>::iterator it = items_.begin();
+		while ( it != items_.end() ) {
+			ListItem* item = *it;
 			itemRect.setRect( offsetx, currentTop, offsetx + (width-scrollW), currentTop + defaultItemHeight_ );
 
 			if ( ((itemRect.top_ <= viewBounds.bottom_ ) && (itemRect.bottom_ >= viewBounds.top_ )) ||
@@ -523,8 +520,9 @@ void ListBoxControl::paint( GraphicsContext* ctx )
 			}
 
 			currentTop += itemRect.getHeight();
+
+			++it;
 		}
-		*/
 	}
 }
 
@@ -550,20 +548,19 @@ ListItem* ListBoxControl::findSingleSelectedItem( Point* pt )
 
 	ListModel* lm = getListModel();
 	if ( NULL != lm ) {
-		/*
-		Enumerator<ListItem*>* items= lm->getItems();
 		double currentTop = 0.0;
 		Rect itemRect;
-		while ( true == items->hasMoreElements() ) {
-			ListItem* item = items->nextElement();
+		Array<ListItem*>::iterator it = items_.begin();
+		while ( it != items_.end() ) {
+			ListItem* item = *it;
 			itemRect.setRect( 0, currentTop, getWidth(), currentTop + defaultItemHeight_ );
 			if ( true == itemRect.containsPt( &tmpPt ) ) {
 				result = item;
 				break;
 			}
 			currentTop += itemRect.getHeight();
+			++it;
 		}
-		*/
 	}
 
 	return result;
@@ -689,8 +686,8 @@ void ListBoxControl::mouseDown( MouseEvent* event )
 				}
 			}
 			else {
-				selectedItems_.clear();
-				selectedItems_.push_back( foundItem );
+				//selectedItems_.clear();
+				//selectedItems_.push_back( foundItem );
 				setSelectedItem( foundItem );
 			}
 		}
@@ -764,12 +761,11 @@ void ListBoxControl::keyDown( KeyboardEvent* event )
 				else if ( vkDownArrow == event->getVirtualCode() ) {
 					index ++;
 				}
-				/*
-				item = lm->getItemFromIndex( index );
-				if ( NULL != item ) {
-					setSelectedItem( item );
+				Array<ListItem*>::iterator found = 
+					items_.begin() + index;
+				if ( found != items_.end() ) {
+					setSelectedItem( *found );
 				}
-				*/
 			}
 		}
 	}
@@ -826,8 +822,6 @@ void ListBoxControl::setSelectedItem( ListItem* selectedItem )
 			selectedItems_.clear();
 		}
 	}
-	
-	//singleSelectedItem_ = selectedItem;
 
 	if ( NULL != selectedItem ) {
 		if ( selectedItems_.empty() ) {

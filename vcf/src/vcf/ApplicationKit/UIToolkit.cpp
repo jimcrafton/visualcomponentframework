@@ -53,7 +53,7 @@ UIToolkit::~UIToolkit()
 {
 	std::multimap<uint32,AcceleratorKey*>::iterator it = acceleratorMap_.begin();
 	while ( it != acceleratorMap_.end() ) {
-		delete it->second;
+		it->second->free();
 		it ++;
 	}
 	acceleratorMap_.clear();
