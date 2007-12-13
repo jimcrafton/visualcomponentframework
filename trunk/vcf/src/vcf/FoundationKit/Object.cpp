@@ -16,12 +16,16 @@ std::list<void*> Object::allocatedObjects;
 #endif
 
 Object::Object()
-{
+    : refCount_( 0 )
 	//initialized to zero
 	//so a release after creating this object
 	//will automaitically free it
-	refCount_ = 0;
+{
+}
 
+Object::Object(const Object &obj)
+    : refCount_(0)
+{
 }
 
 Object::~Object()
@@ -41,31 +45,21 @@ void Object::destroy()
 
 void Object::free()
 {
-	refCount_ = 0;
-
 	destroy();
-
 	delete this;
 }
 
-uint32 Object::addRef(Object* owner)
+long Object::addRef(Object* owner)
 {
-	refCount_ ++;
-
-	return refCount_;
+	return ++refCount_;
 }
 
-uint32 Object::release(Object* owner)
+long Object::release(Object* owner)
 {
-	if ( refCount_ > 0 ) {
-		refCount_ --;
-	}
-
-	if ( 0 == refCount_ )  {
+	if ( 0 == --refCount_ )  {
 		free();
 		return 0;
 	}
-
 	return refCount_;
 }
 
