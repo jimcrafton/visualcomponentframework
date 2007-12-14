@@ -144,8 +144,8 @@ void MySchemaParseError( const XMLError& e )
 
 void MySchemaValidationError( const XMLError& e )
 {
-	System::println( Format( "MySchemaValidationError!\ne.message: %s\n\tcode %d\n\tdomain %d")
-		% e.message % e.code % e.domain );
+	System::println( Format( "MySchemaValidationError!\ne.message: %s\n\tcode %d\n\tdomain %d\n\tline: %d")
+		% e.message % e.code % e.domain % e.line );
 }
 
 void testSchema()
@@ -203,6 +203,58 @@ void testSchema()
 			System::println( "Error! doc is NOT valid according to schema!" );
 		}
 	}
+
+
+
+
+
+
+
+	{
+		try {
+			XmlDocument schema2;
+			schema2.load( "structure.xsd" );
+
+			XmlDocument doc2;
+			doc2.load( "structure.xml" );
+
+			{
+				XmlSchemaContext ctx;
+				
+				ctx.initFromDocument( schema2 );
+				
+				
+				XmlValidSchemaContext validCtx;
+				
+				validCtx.ValidityError += MySchemaValidationError;
+				ctx.ParserError += MySchemaParseError;
+				
+				try {
+					validCtx.parse(ctx);
+				}
+				catch ( std::exception& e ) {
+					System::print( "Exception parsing schema structure.xsd!! " );
+					System::println( e.what() );
+				}
+				
+				
+				try {
+					validCtx.validate( doc2 );
+				}
+				catch ( std::exception& e ) {
+					System::print( "Exception validating structure.xsd!! " );
+					System::println( e.what() );
+				}
+			}
+
+		}
+		catch ( std::exception& e ) {
+			System::print( "Exception with structure.xsd!! " );
+			System::println( e.what() );
+		}
+
+	}
+
 }
 
 
