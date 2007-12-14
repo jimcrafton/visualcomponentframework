@@ -200,16 +200,16 @@ public:
 		for(int j=0; j<60; j++){
 			String indx = StringUtils::toString(j);
 			String capt = L"DefaultListItem " + indx;
-		/*
-			ListItem* item = new DefaultListItem( singleModel );
+		
+			multiModel->add( capt ); 
+			extendedModel->add( capt );
+
+			singleModel->add( capt );
+			ListItem* item = listBoxSingle->getListItem(j);
 			item->setImageIndex( j / 9 );
-			if ( j == 0 ) {
+			if ( j%9 == 0 ) {
 				item->setState( Item::idsChecked );
 			}
-			*/
-			singleModel->addItem( capt );
-			multiModel->addItem( capt ); //new DefaultListItem( multiModel, capt ) );
-			extendedModel->addItem( capt );//new DefaultListItem( extendedModel, capt ) );
 		}
 
 		//add buttons for deselecting all selected items

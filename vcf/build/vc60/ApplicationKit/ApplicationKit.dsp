@@ -267,6 +267,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnLayoutContainer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnModel.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\Command.h
 # End Source File
 # Begin Source File

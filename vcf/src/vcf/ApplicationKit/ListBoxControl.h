@@ -125,6 +125,9 @@ public:
 
 	void setSelectedItem( ListItem* selectedItem );
 
+	ListItem* getListItem( const uint32& index );
+	void setListItem( const uint32& index, ListItem* item );
+
 	/**
 	*Sets the spacing between the innermost-edge of the left border and the 
 	*beginning of the Item captions when scrolled all the way to the left.

@@ -181,6 +181,26 @@ void ListBoxControl::onListModelContentsChanged( ListModelEvent* event )
 	}
 }
 
+ListItem* ListBoxControl::getListItem( const uint32& index )
+{
+	ListItem* result = NULL;
+
+	if ( index < items_.size() ) {
+		result = items_[index];
+	}
+
+	return result;
+}
+
+void ListBoxControl::setListItem( const uint32& index, ListItem* item )
+{
+	if ( index < items_.size() ) {
+		items_[index]->free();
+		items_[index] = item;
+		repaint();
+	}
+}
+
 void ListBoxControl::onItemAdded( ListModelEvent* event )
 {
 
