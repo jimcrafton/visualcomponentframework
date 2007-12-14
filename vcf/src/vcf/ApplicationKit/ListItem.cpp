@@ -29,6 +29,8 @@ String ListItem::getCaption() const
 void ListItem::setCaption( const String& caption )
 {
 	ListModel* lm = (ListModel*) getModel();
+	VCF_ASSERT( NULL != lm );
+
 	lm->setAsString( index_, caption );
 
 	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
