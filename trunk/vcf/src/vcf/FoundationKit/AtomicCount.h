@@ -24,8 +24,8 @@ namespace VCF {
         AtomicCount & operator=(AtomicCount const &);
 
 #ifdef VCF_GCC
-        void InterlockedIncrement(volatile long *value); 
-        ValueType InterlockedDecrement(volatile long *value);        
+        long InterlockedIncrement(volatile long *value); 
+        long InterlockedDecrement(volatile long *value);        
 #endif
 
     private:
