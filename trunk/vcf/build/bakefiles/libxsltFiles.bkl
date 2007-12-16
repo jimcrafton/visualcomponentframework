@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="LIBXSLT_HDR" hints="files">
+        thirdparty/common/libxslt/libxslt/attributes.h
+        thirdparty/common/libxslt/libxslt/documents.h
+        thirdparty/common/libxslt/libxslt/extensions.h
+        thirdparty/common/libxslt/libxslt/extra.h
+        thirdparty/common/libxslt/libxslt/functions.h
+        thirdparty/common/libxslt/libxslt/imports.h
+        thirdparty/common/libxslt/libxslt/keys.h
+        thirdparty/common/libxslt/libxslt/libxslt.h
+        thirdparty/common/libxslt/libxslt/namespaces.h
+        thirdparty/common/libxslt/libxslt/numbersInternals.h
+        thirdparty/common/libxslt/libxslt/pattern.h
+        thirdparty/common/libxslt/libxslt/preproc.h
+        thirdparty/common/libxslt/libxslt/security.h
+        thirdparty/common/libxslt/libxslt/templates.h
+        thirdparty/common/libxslt/libxslt/transform.h
+        thirdparty/common/libxslt/libxslt/trio.h
+        thirdparty/common/libxslt/libxslt/triodef.h
+        thirdparty/common/libxslt/libxslt/variables.h
+        thirdparty/common/libxslt/libxslt/win32config.h
+        thirdparty/common/libxslt/libxslt/xslt.h
+        thirdparty/common/libxslt/libxslt/xsltconfig.h
+        thirdparty/common/libxslt/libxslt/xsltexports.h
+        thirdparty/common/libxslt/libxslt/xsltInternals.h
+        thirdparty/common/libxslt/libxslt/xsltutils.h
+        thirdparty/common/libxslt/libxslt/xsltwin32config.h
+    </set>
+
+    <set var="LIBXSLT_SRC" hints="files">
+        thirdparty/common/libxslt/libxslt/attributes.c
+        thirdparty/common/libxslt/libxslt/attrvt.c
+        thirdparty/common/libxslt/libxslt/documents.c
+        thirdparty/common/libxslt/libxslt/extensions.c
+        thirdparty/common/libxslt/libxslt/extra.c
+        thirdparty/common/libxslt/libxslt/functions.c
+        thirdparty/common/libxslt/libxslt/imports.c
+        thirdparty/common/libxslt/libxslt/keys.c
+        thirdparty/common/libxslt/libxslt/namespaces.c
+        thirdparty/common/libxslt/libxslt/numbers.c
+        thirdparty/common/libxslt/libxslt/pattern.c
+        thirdparty/common/libxslt/libxslt/preproc.c
+        thirdparty/common/libxslt/libxslt/security.c
+        thirdparty/common/libxslt/libxslt/templates.c
+        thirdparty/common/libxslt/libxslt/transform.c
+        thirdparty/common/libxslt/libxslt/variables.c
+        thirdparty/common/libxslt/libxslt/xslt.c
+        thirdparty/common/libxslt/libxslt/xsltutils.c
+    </set>
+
+</makefile>
+
+<!--
+$Id$
+-->

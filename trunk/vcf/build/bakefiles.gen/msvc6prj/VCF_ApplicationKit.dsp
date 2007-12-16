@@ -572,10 +572,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractContainer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractListModel.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractScrollable.cpp
 # End Source File
 # Begin Source File
@@ -708,6 +704,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Clipboard.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ColorEtchedBorder.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnModel.cpp
 # End Source File
 # Begin Source File
 
@@ -892,6 +892,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\LightweightComponent.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ListBoxControl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\ListItem.cpp
 # End Source File
 # Begin Source File
 
@@ -1192,10 +1196,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractComponentEditor.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractContainer.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractListModel.h
 # End Source File
 # Begin Source File
 

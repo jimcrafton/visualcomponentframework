@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="XMLKitFiles.bkl"/>
+
+    <template id="XMLKit_base">
+        <set var="LIBRARY_NAME">$(XMLKIT_NAME)</set>
+
+        <headers>$(XMLKIT_HDR)</headers>
+        <sources>$(XMLKIT_SRC)</sources>
+
+        <vcf-use-FoundationKit/>
+
+        <vcf-include-libxml/>
+        <vcf-include-libxslt/>
+
+        <define>LIBXML_STATIC</define>
+        <define>LIBXSLT_STATIC</define>
+
+        <library>libxml_lib</library>
+        <library>libxslt_lib</library>
+    </template>
+
+    <lib id="XMLKit_lib" template="XMLKit_base,vcf_lib"
+            cond="OPTION_SHARED=='0' and OPTION_XMLKIT=='1' and OPTION_ALLIN1=='0'">
+        <depends>FoundationKit_lib</depends>
+    </lib>
+
+    <dll id="XMLKit_dll" template="XMLKit_base,vcf_dll"
+            cond="OPTION_SHARED=='1' and OPTION_XMLKIT=='1' and OPTION_ALLIN1=='0'">
+        <define>XMLKIT_DLL</define>
+        <define>XMLKIT_EXPORTS</define>
+        <depends>FoundationKit_dll</depends>
+    </dll>
+
+    <set var="MSVC6PRJ_MERGED_TARGETS" append="1"
+            cond="OPTION_XMLKIT=='1' and OPTION_ALLIN1=='0'">
+        XMLKit=XMLKit_lib+XMLKit_dll
+    </set>
+</makefile>
+
+<!--
+$Id$
+-->

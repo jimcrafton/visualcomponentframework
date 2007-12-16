@@ -364,7 +364,6 @@
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractCommand.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractComponentEditor.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractContainer.cpp"/>
-			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractListModel.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractScrollable.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractTreeModel.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractView.cpp"/>
@@ -440,6 +439,7 @@
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\CheckBoxControl.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Clipboard.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ColorEtchedBorder.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ColumnModel.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ComboBoxControl.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\CommandButton.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\CommandGroup.cpp"/>
@@ -486,6 +486,7 @@
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Light3DBorder.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\LightweightComponent.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ListBoxControl.cpp"/>
+			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ListItem.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\ListViewControl.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\Menu.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\ApplicationKit\MenuBar.cpp"/>

@@ -1,0 +1,119 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="LIBXML_HDR" hints="files">
+        thirdparty/common/libxml/include/libxml/c14n.h
+        thirdparty/common/libxml/include/libxml/catalog.h
+        thirdparty/common/libxml/include/libxml/chvalid.h
+        thirdparty/common/libxml/include/libxml/debugXML.h
+        thirdparty/common/libxml/include/libxml/dict.h
+        thirdparty/common/libxml/include/libxml/DOCBparser.h
+        thirdparty/common/libxml/include/libxml/encoding.h
+        thirdparty/common/libxml/include/libxml/entities.h
+        thirdparty/common/libxml/include/libxml/globals.h
+        thirdparty/common/libxml/include/libxml/hash.h
+        thirdparty/common/libxml/include/libxml/HTMLparser.h
+        thirdparty/common/libxml/include/libxml/HTMLtree.h
+        thirdparty/common/libxml/include/libxml/list.h
+        thirdparty/common/libxml/include/libxml/nanoftp.h
+        thirdparty/common/libxml/include/libxml/nanohttp.h
+        thirdparty/common/libxml/include/libxml/parser.h
+        thirdparty/common/libxml/include/libxml/parserInternals.h
+        thirdparty/common/libxml/include/libxml/pattern.h
+        thirdparty/common/libxml/include/libxml/relaxng.h
+        thirdparty/common/libxml/include/libxml/SAX.h
+        thirdparty/common/libxml/include/libxml/SAX2.h
+        thirdparty/common/libxml/include/libxml/schemasInternals.h
+        thirdparty/common/libxml/include/libxml/schematron.h
+        thirdparty/common/libxml/include/libxml/threads.h
+        thirdparty/common/libxml/include/libxml/tree.h
+        thirdparty/common/libxml/include/libxml/uri.h
+        thirdparty/common/libxml/include/libxml/valid.h
+        thirdparty/common/libxml/include/libxml/xinclude.h
+        thirdparty/common/libxml/include/libxml/xlink.h
+        thirdparty/common/libxml/include/libxml/xmlautomata.h
+        thirdparty/common/libxml/include/libxml/xmlerror.h
+        thirdparty/common/libxml/include/libxml/xmlexports.h
+        thirdparty/common/libxml/include/libxml/xmlIO.h
+        thirdparty/common/libxml/include/libxml/xmlmemory.h
+        thirdparty/common/libxml/include/libxml/xmlmodule.h
+        thirdparty/common/libxml/include/libxml/xmlreader.h
+        thirdparty/common/libxml/include/libxml/xmlregexp.h
+        thirdparty/common/libxml/include/libxml/xmlsave.h
+        thirdparty/common/libxml/include/libxml/xmlschemas.h
+        thirdparty/common/libxml/include/libxml/xmlschemastypes.h
+        thirdparty/common/libxml/include/libxml/xmlstring.h
+        thirdparty/common/libxml/include/libxml/xmlunicode.h
+        thirdparty/common/libxml/include/libxml/xmlversion.h
+        thirdparty/common/libxml/include/libxml/xmlwriter.h
+        thirdparty/common/libxml/include/libxml/xpath.h
+        thirdparty/common/libxml/include/libxml/xpathInternals.h
+        thirdparty/common/libxml/include/libxml/xpointer.h
+        thirdparty/common/libxml/include/win32config.h
+        thirdparty/common/libxml/include/wsockcompat.h
+        thirdparty/common/libxml/acconfig.h
+        thirdparty/common/libxml/config.h
+        thirdparty/common/libxml/elfgcchack.h
+        thirdparty/common/libxml/libxml.h
+        thirdparty/common/libxml/trio.h
+        thirdparty/common/libxml/triodef.h
+        thirdparty/common/libxml/trionan.h
+        thirdparty/common/libxml/triop.h
+        thirdparty/common/libxml/triostr.h
+    </set>
+
+    <set var="LIBXML_SRC" hints="files">
+        thirdparty/common/libxml/c14n.c
+        thirdparty/common/libxml/catalog.c
+        thirdparty/common/libxml/chvalid.c
+        thirdparty/common/libxml/debugXML.c
+        thirdparty/common/libxml/dict.c
+        thirdparty/common/libxml/DOCBparser.c
+        thirdparty/common/libxml/encoding.c
+        thirdparty/common/libxml/entities.c
+        thirdparty/common/libxml/error.c
+        thirdparty/common/libxml/globals.c
+        thirdparty/common/libxml/hash.c
+        thirdparty/common/libxml/HTMLparser.c
+        thirdparty/common/libxml/HTMLtree.c
+        thirdparty/common/libxml/legacy.c
+        thirdparty/common/libxml/list.c
+        thirdparty/common/libxml/nanoftp.c
+        thirdparty/common/libxml/nanohttp.c
+        thirdparty/common/libxml/parser.c
+        thirdparty/common/libxml/parserInternals.c
+        thirdparty/common/libxml/pattern.c
+        thirdparty/common/libxml/relaxng.c
+        thirdparty/common/libxml/SAX.c
+        thirdparty/common/libxml/SAX2.c
+        thirdparty/common/libxml/schematron.c
+        thirdparty/common/libxml/threads.c
+        thirdparty/common/libxml/tree.c
+        thirdparty/common/libxml/trio.c
+        thirdparty/common/libxml/trionan.c
+        thirdparty/common/libxml/triostr.c
+        thirdparty/common/libxml/uri.c
+        thirdparty/common/libxml/valid.c
+        thirdparty/common/libxml/xinclude.c
+        thirdparty/common/libxml/xlink.c
+        thirdparty/common/libxml/xmlIO.c
+        thirdparty/common/libxml/xmlmemory.c
+        thirdparty/common/libxml/xmlmodule.c
+        thirdparty/common/libxml/xmlreader.c
+        thirdparty/common/libxml/xmlregexp.c
+        thirdparty/common/libxml/xmlsave.c
+        thirdparty/common/libxml/xmlschemas.c
+        thirdparty/common/libxml/xmlschemastypes.c
+        thirdparty/common/libxml/xmlstring.c
+        thirdparty/common/libxml/xmlunicode.c
+        thirdparty/common/libxml/xmlwriter.c
+        thirdparty/common/libxml/xpath.c
+        thirdparty/common/libxml/xpointer.c
+    </set>
+
+</makefile>
+
+<!--
+$Id$
+-->

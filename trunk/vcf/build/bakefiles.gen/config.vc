@@ -90,6 +90,14 @@ OPTION_PAINTLIB = 1
 # Compile the oniguruma library: [0,1]
 OPTION_ONIGURUMA = 1
 
+# Compile the libxml library: [0,1]
+OPTION_LIBXML = 1
+
+# Depends on:
+#     OPTION_LIBXML
+# Compile the libxslt library: [0,1]
+OPTION_LIBXSLT = 1
+
 # Compile the fdlibm library: [0,1]
 OPTION_FDLIBM = 1
 
@@ -141,6 +149,13 @@ OPTION_INTERNETKIT = 1
 #     OPTION_ONIGURUMA
 # Compile RegExKit: [0,1]
 OPTION_REGEXKIT = 1
+
+# Depends on:
+#     OPTION_FOUNDATIONKIT
+#     OPTION_LIBXML
+#     OPTION_LIBXSLT
+# Compile XMLKit: [0,1]
+OPTION_XMLKIT = 1
 
 # Depends on:
 #     OPTION_FOUNDATIONKIT

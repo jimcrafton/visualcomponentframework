@@ -58,6 +58,12 @@
             <depends>RegExKit_dll</depends>
         </action>
         
+        <action id="XMLKit" cond="OPTION_XMLKIT=='1'">
+            <is-phony>1</is-phony>
+            <depends>XMLKit_lib</depends>
+            <depends>XMLKit_dll</depends>
+        </action>
+        
         <action id="JavaScriptKit" cond="OPTION_JAVASCRIPTKIT=='1'">
             <is-phony>1</is-phony>
             <depends>JavaScriptKit_lib</depends>
@@ -103,6 +109,16 @@
         <action id="oniguruma" cond="OPTION_ONIGURUMA=='1'">
             <is-phony>1</is-phony>
             <depends>oniguruma_lib</depends>
+        </action>
+
+        <action id="libxml" cond="OPTION_LIBXML=='1'">
+            <is-phony>1</is-phony>
+            <depends>libxml_lib</depends>
+        </action>
+
+        <action id="libxslt" cond="OPTION_LIBXSLT=='1'">
+            <is-phony>1</is-phony>
+            <depends>libxslt_lib</depends>
         </action>
 
         <action id="fdlibm" cond="OPTION_FDLIBM=='1'">

@@ -130,6 +130,18 @@ OPTION_PAINTLIB = 1
 OPTION_ONIGURUMA = 1
 !endif
 
+# Compile the libxml library: [0,1]
+!ifndef OPTION_LIBXML
+OPTION_LIBXML = 1
+!endif
+
+# Depends on:
+#     OPTION_LIBXML
+# Compile the libxslt library: [0,1]
+!ifndef OPTION_LIBXSLT
+OPTION_LIBXSLT = 1
+!endif
+
 # Compile the fdlibm library: [0,1]
 !ifndef OPTION_FDLIBM
 OPTION_FDLIBM = 1
@@ -202,6 +214,15 @@ OPTION_INTERNETKIT = 1
 # Compile RegExKit: [0,1]
 !ifndef OPTION_REGEXKIT
 OPTION_REGEXKIT = 1
+!endif
+
+# Depends on:
+#     OPTION_FOUNDATIONKIT
+#     OPTION_LIBXML
+#     OPTION_LIBXSLT
+# Compile XMLKit: [0,1]
+!ifndef OPTION_XMLKIT
+OPTION_XMLKIT = 1
 !endif
 
 # Depends on:

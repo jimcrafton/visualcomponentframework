@@ -85,6 +85,18 @@
         </include>
     </define-tag>
 
+    <define-tag name="vcf-include-libxml" rules="dll,lib,exe,module">
+        <include>
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/libxml/include' ))
+        </include>
+    </define-tag>
+
+    <define-tag name="vcf-include-libxslt" rules="dll,lib,exe,module">
+        <include>
+            $(vcf.joinPaths( VCF_INCLUDE, 'thirdparty/common/libxslt' ))
+        </include>
+    </define-tag>
+
     <define-tag name="vcf-include-fdlibm" rules="dll,lib,exe,module">
         <include>
             $(vcf.joinPaths( VCF_INCLUDE, 'vcf/JavaScriptKit/js-impl/fdlibm' ))
@@ -138,6 +150,19 @@
         <vcf-include-oniguruma/>
         <vcf-lib>$(ONIGURUMA_FILENAME)</vcf-lib>
         <define>ONIG_EXTERN=extern</define>
+    </define-tag>
+
+    <define-tag name="vcf-use-libxml" rules="dll,lib,exe,module">
+        <vcf-include-libxml/>
+        <vcf-lib>$(LIBXML_FILENAME)</vcf-lib>
+        <define>LIBXML_STATIC</define>
+    </define-tag>
+
+    <define-tag name="vcf-use-libxslt" rules="dll,lib,exe,module">
+        <vcf-include-libxslt/>
+        <vcf-lib>$(LIBXSLT_FILENAME)</vcf-lib>
+        <define>LIBXML_STATIC</define>
+        <define>LIBXSLT_STATIC</define>
     </define-tag>
 
     <define-tag name="vcf-use-fdlibm" rules="dll,lib,exe,module">
@@ -267,6 +292,20 @@
         </set>
         <vcf-lib>$(REGEXKIT)</vcf-lib>
         <define>$(REGEXKIT_DLL)</define>
+    </define-tag>
+
+    <set var="XMLKIT_DLL">
+        <if cond="OPTION_SHARED=='1'">XMLKIT_DLL</if>
+    </set>
+    <define-tag name="vcf-use-XMLKit" rules="dll,lib,exe,module">
+        <vcf-use-libxml/>
+        <vcf-use-libxslt/>
+        <vcf-use-FoundationKit/>
+        <set var="XMLKIT">
+            <if cond="OPTION_ALLIN1=='0'">$(XMLKIT_FILENAME)</if>
+        </set>
+        <vcf-lib>$(XMLKIT)</vcf-lib>
+        <define>$(XMLKIT_DLL)</define>
     </define-tag>
 
     <set var="JAVASCRIPTKIT_DLL">

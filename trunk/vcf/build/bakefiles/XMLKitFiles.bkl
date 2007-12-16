@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<makefile>
+
+    <set var="XMLKIT_HDR" hints="files">
+        vcf/XMLKit/DOM3.h
+        vcf/XMLKit/XMLKit.h
+    </set>
+
+    <set var="XMLKIT_SRC" hints="files">
+        vcf/XMLKit/DOM3.cpp
+        vcf/XMLKit/XMLKit.cpp
+    </set>
+
+</makefile>
+
+<!--
+$Id$
+-->

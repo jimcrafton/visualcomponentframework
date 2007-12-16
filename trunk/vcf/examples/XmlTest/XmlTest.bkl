@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="XmlTest" template="vcf_exe_console" cond="OPTION_XMLKIT=='1'">
+        <dirname>.</dirname>
+        <sources>XmlTest.cpp</sources>
+        <vcf-use-InternetKit/>
+        <vcf-use-XMLKit/>
+    </exe>
+</makefile>
+
+<!--
+$Id$
+-->

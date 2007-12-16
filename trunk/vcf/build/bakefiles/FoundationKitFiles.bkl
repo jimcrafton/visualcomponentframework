@@ -56,7 +56,6 @@
         vcf/FoundationKit/LocalePeer.h
         vcf/FoundationKit/Locales.h
         vcf/FoundationKit/Lock.h
-        vcf/FoundationKit/MemoryStream.h
         vcf/FoundationKit/MemStreamUtils.h
         vcf/FoundationKit/MessageLoader.h
         vcf/FoundationKit/Method.h
@@ -160,7 +159,6 @@
         vcf/FoundationKit/InterfaceClass.cpp
         vcf/FoundationKit/Library.cpp
         vcf/FoundationKit/Locales.cpp
-        vcf/FoundationKit/MemoryStream.cpp
         vcf/FoundationKit/MessageLoader.cpp
         vcf/FoundationKit/MIMEType.cpp
         vcf/FoundationKit/Mutex.cpp

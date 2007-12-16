@@ -19,7 +19,7 @@ include ../build/bakefiles.gen/config.gnu
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 install: all
 
@@ -113,6 +113,7 @@ clean:
 	(cd VFFTests2 && $(MAKE) clean)
 	(cd VisualFormFiles && $(MAKE) clean)
 	(cd WorkingWithEnumerators && $(MAKE) clean)
+	(cd XMLTest && $(MAKE) clean)
 
 Accelerators: 
 	(cd Accelerators && $(MAKE) all)
@@ -369,7 +370,10 @@ VisualFormFiles:
 WorkingWithEnumerators: 
 	(cd WorkingWithEnumerators && $(MAKE) all)
 
-.PHONY: all install uninstall clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators
+XMLTest: 
+	(cd XMLTest && $(MAKE) all)
+
+.PHONY: all install uninstall clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 
 # Dependencies tracking:

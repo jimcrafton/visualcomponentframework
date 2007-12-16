@@ -203,6 +203,28 @@ Compile the paintlib library:
         </description>
     </option>
 
+    <option name="OPTION_LIBXML">
+        <values>0,1</values>
+        <default-value>
+            $(vcf.getOptionValue( 'OPTION_LIBXML', '1' ))
+        </default-value>
+        <description>
+            Compile the libxml library:
+        </description>
+    </option>
+
+    <option name="OPTION_LIBXSLT">
+        <values>0,1</values>
+        <default-value>
+            $(vcf.getOptionValue( 'OPTION_LIBXSLT', '1' ))
+        </default-value>
+        <description>
+Depends on:
+    OPTION_LIBXML
+Compile the libxslt library:
+        </description>
+    </option>
+
     <option name="OPTION_FDLIBM">
         <values>0,1</values>
         <default-value>
@@ -342,6 +364,20 @@ Depends on:
     OPTION_FOUNDATIONKIT
     OPTION_ONIGURUMA
 Compile RegExKit:
+        </description>
+    </option>
+
+    <option name="OPTION_XMLKIT">
+        <values>0,1</values>
+        <default-value>
+            $(vcf.getOptionValue( 'OPTION_XMLKIT', 1 ))
+        </default-value>
+        <description>
+Depends on:
+    OPTION_FOUNDATIONKIT
+    OPTION_LIBXML
+    OPTION_LIBXSLT
+Compile XMLKit:
         </description>
     </option>
 

@@ -234,6 +234,82 @@ ONIGURUMA_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/oniguruma_lib_utf32_be.o \
 	../../lib/$(OBJDIR)/oniguruma_lib_utf32_le.o \
 	../../lib/$(OBJDIR)/oniguruma_lib_utf8.o
+LIBXML_LIB_CFLAGS = -I../../src/thirdparty/common/libxml/include \
+	-DLIBXML_STATIC -DHAVE_WIN32_THREADS -DHAVE_COMPILER_TLS $(__DEBUG_INFO) \
+	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -Wno-multichar -DVCF_DISABLE_PRAGMA_LINKING -I../../src \
+	$(CPPFLAGS) $(CFLAGS)
+LIBXML_LIB_OBJECTS =  \
+	../../lib/$(OBJDIR)/libxml_lib_c14n.o \
+	../../lib/$(OBJDIR)/libxml_lib_catalog.o \
+	../../lib/$(OBJDIR)/libxml_lib_chvalid.o \
+	../../lib/$(OBJDIR)/libxml_lib_debugXML.o \
+	../../lib/$(OBJDIR)/libxml_lib_dict.o \
+	../../lib/$(OBJDIR)/libxml_lib_DOCBparser.o \
+	../../lib/$(OBJDIR)/libxml_lib_encoding.o \
+	../../lib/$(OBJDIR)/libxml_lib_entities.o \
+	../../lib/$(OBJDIR)/libxml_lib_error.o \
+	../../lib/$(OBJDIR)/libxml_lib_globals.o \
+	../../lib/$(OBJDIR)/libxml_lib_hash.o \
+	../../lib/$(OBJDIR)/libxml_lib_HTMLparser.o \
+	../../lib/$(OBJDIR)/libxml_lib_HTMLtree.o \
+	../../lib/$(OBJDIR)/libxml_lib_legacy.o \
+	../../lib/$(OBJDIR)/libxml_lib_list.o \
+	../../lib/$(OBJDIR)/libxml_lib_nanoftp.o \
+	../../lib/$(OBJDIR)/libxml_lib_nanohttp.o \
+	../../lib/$(OBJDIR)/libxml_lib_parser.o \
+	../../lib/$(OBJDIR)/libxml_lib_parserInternals.o \
+	../../lib/$(OBJDIR)/libxml_lib_pattern.o \
+	../../lib/$(OBJDIR)/libxml_lib_relaxng.o \
+	../../lib/$(OBJDIR)/libxml_lib_SAX.o \
+	../../lib/$(OBJDIR)/libxml_lib_SAX2.o \
+	../../lib/$(OBJDIR)/libxml_lib_schematron.o \
+	../../lib/$(OBJDIR)/libxml_lib_threads.o \
+	../../lib/$(OBJDIR)/libxml_lib_tree.o \
+	../../lib/$(OBJDIR)/libxml_lib_trio.o \
+	../../lib/$(OBJDIR)/libxml_lib_trionan.o \
+	../../lib/$(OBJDIR)/libxml_lib_triostr.o \
+	../../lib/$(OBJDIR)/libxml_lib_uri.o \
+	../../lib/$(OBJDIR)/libxml_lib_valid.o \
+	../../lib/$(OBJDIR)/libxml_lib_xinclude.o \
+	../../lib/$(OBJDIR)/libxml_lib_xlink.o \
+	../../lib/$(OBJDIR)/libxml_lib_xmlIO.o \
+	../../lib/$(OBJDIR)/libxml_lib_xmlmemory.o \
+	../../lib/$(OBJDIR)/libxml_lib_xmlmodule.o \
+	../../lib/$(OBJDIR)/libxml_lib_xmlreader.o \
+	../../lib/$(OBJDIR)/libxml_lib_xmlregexp.o \
+	../../lib/$(OBJDIR)/libxml_lib_xmlsave.o \
+	../../lib/$(OBJDIR)/libxml_lib_xmlschemas.o \
+	../../lib/$(OBJDIR)/libxml_lib_xmlschemastypes.o \
+	../../lib/$(OBJDIR)/libxml_lib_xmlstring.o \
+	../../lib/$(OBJDIR)/libxml_lib_xmlunicode.o \
+	../../lib/$(OBJDIR)/libxml_lib_xmlwriter.o \
+	../../lib/$(OBJDIR)/libxml_lib_xpath.o \
+	../../lib/$(OBJDIR)/libxml_lib_xpointer.o
+LIBXSLT_LIB_CFLAGS = -I../../src/thirdparty/common/libxml/include \
+	-I../../src/thirdparty/common/libxslt -DLIBXML_STATIC -DLIBXSLT_STATIC \
+	$(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -Wno-multichar -DVCF_DISABLE_PRAGMA_LINKING -I../../src \
+	$(CPPFLAGS) $(CFLAGS)
+LIBXSLT_LIB_OBJECTS =  \
+	../../lib/$(OBJDIR)/libxslt_lib_attributes.o \
+	../../lib/$(OBJDIR)/libxslt_lib_attrvt.o \
+	../../lib/$(OBJDIR)/libxslt_lib_documents.o \
+	../../lib/$(OBJDIR)/libxslt_lib_extensions.o \
+	../../lib/$(OBJDIR)/libxslt_lib_extra.o \
+	../../lib/$(OBJDIR)/libxslt_lib_functions.o \
+	../../lib/$(OBJDIR)/libxslt_lib_imports.o \
+	../../lib/$(OBJDIR)/libxslt_lib_keys.o \
+	../../lib/$(OBJDIR)/libxslt_lib_namespaces.o \
+	../../lib/$(OBJDIR)/libxslt_lib_numbers.o \
+	../../lib/$(OBJDIR)/libxslt_lib_pattern.o \
+	../../lib/$(OBJDIR)/libxslt_lib_preproc.o \
+	../../lib/$(OBJDIR)/libxslt_lib_security.o \
+	../../lib/$(OBJDIR)/libxslt_lib_templates.o \
+	../../lib/$(OBJDIR)/libxslt_lib_transform.o \
+	../../lib/$(OBJDIR)/libxslt_lib_variables.o \
+	../../lib/$(OBJDIR)/libxslt_lib_xslt.o \
+	../../lib/$(OBJDIR)/libxslt_lib_xsltutils.o
 FDLIBM_LIB_CFLAGS = -D_IEEE_LIBM $(__DEBUG_INFO) $(__OPTIMIZE) \
 	$(__OPTION_THREADING) $(__OPTION_WARNINGS) $(____OPTION_DEBUG) \
 	-Wno-multichar -DVCF_DISABLE_PRAGMA_LINKING -I../../src $(CPPFLAGS) \
@@ -389,7 +465,6 @@ FOUNDATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_lib_InterfaceClass.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_Library.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_Locales.o \
-	../../lib/$(OBJDIR)/FoundationKit_lib_MemoryStream.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_MessageLoader.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_MIMEType.o \
 	../../lib/$(OBJDIR)/FoundationKit_lib_Mutex.o \
@@ -469,7 +544,6 @@ FOUNDATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/FoundationKit_dll_InterfaceClass.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_Library.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_Locales.o \
-	../../lib/$(OBJDIR)/FoundationKit_dll_MemoryStream.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_MessageLoader.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_MIMEType.o \
 	../../lib/$(OBJDIR)/FoundationKit_dll_Mutex.o \
@@ -590,7 +664,6 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractCommand.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractComponentEditor.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractContainer.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractListModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractScrollable.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractTreeModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractView.o \
@@ -604,6 +677,7 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_CheckBoxControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_Clipboard.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_ColorEtchedBorder.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_ColumnModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_ComboBoxControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_CommandButton.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_CommandGroup.o \
@@ -650,6 +724,7 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_Light3DBorder.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_LightweightComponent.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_ListBoxControl.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_ListItem.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_ListViewControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_Menu.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_MenuBar.o \
@@ -712,7 +787,6 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractCommand.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractComponentEditor.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractContainer.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractListModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractScrollable.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractTreeModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractView.o \
@@ -726,6 +800,7 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_CheckBoxControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_Clipboard.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_ColorEtchedBorder.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_ColumnModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_ComboBoxControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_CommandButton.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_CommandGroup.o \
@@ -772,6 +847,7 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_Light3DBorder.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_LightweightComponent.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_ListBoxControl.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_ListItem.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_ListViewControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_Menu.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_MenuBar.o \
@@ -952,6 +1028,26 @@ REGEXKIT_DLL_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) -DONIG_EXTERN=extern \
 	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 REGEXKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/RegExKit_dll_RegExKit.o
+XMLKIT_LIB_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) \
+	-I../../src/thirdparty/common/libxml/include \
+	-I../../src/thirdparty/common/libxslt -DLIBXML_STATIC -DLIBXSLT_STATIC \
+	$(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -Wno-multichar -DVCF_DISABLE_PRAGMA_LINKING -I../../src \
+	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
+	$(CXXFLAGS)
+XMLKIT_LIB_OBJECTS =  \
+	../../lib/$(OBJDIR)/XMLKit_lib_DOM3.o \
+	../../lib/$(OBJDIR)/XMLKit_lib_XMLKit.o
+XMLKIT_DLL_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) \
+	-I../../src/thirdparty/common/libxml/include \
+	-I../../src/thirdparty/common/libxslt -DLIBXML_STATIC -DLIBXSLT_STATIC \
+	$(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
+	$(____OPTION_DEBUG) -Wno-multichar -DVCF_DISABLE_PRAGMA_LINKING -I../../src \
+	-DXMLKIT_DLL -DXMLKIT_EXPORTS -fPIC -DPIC $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
+XMLKIT_DLL_OBJECTS =  \
+	../../lib/$(OBJDIR)/XMLKit_dll_DOM3.o \
+	../../lib/$(OBJDIR)/XMLKit_dll_XMLKit.o
 JAVASCRIPTKIT_LIB_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
 	$(____OPTION_DEBUG) -Wno-multichar -DVCF_DISABLE_PRAGMA_LINKING -I../../src \
@@ -967,11 +1063,11 @@ JAVASCRIPTKIT_DLL_CXXFLAGS = $(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) \
 	$(CXXFLAGS)
 JAVASCRIPTKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/JavaScriptKit_dll_JavaScriptKit.o
-ALLIN1_LIB_CXXFLAGS = -DONIG_EXTERN=extern -DXP_UNIX $(__DEBUG_INFO) \
-	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
-	$(____OPTION_DEBUG) -Wno-multichar -DVCF_DISABLE_PRAGMA_LINKING -I../../src \
-	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
-	$(CXXFLAGS)
+ALLIN1_LIB_CXXFLAGS = -DONIG_EXTERN=extern -DLIBXML_STATIC -DLIBXSLT_STATIC \
+	-DXP_UNIX $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -Wno-multichar \
+	-DVCF_DISABLE_PRAGMA_LINKING -I../../src $(____OPTION_CPP_RTTI_0) \
+	$(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) $(CXXFLAGS)
 ALLIN1_LIB_OBJECTS =  \
 	$(____Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS) \
 	$(____Allin1_lib_ALLIN1_GRAPHICSKIT_SRC_OBJECTS) \
@@ -982,16 +1078,18 @@ ALLIN1_LIB_OBJECTS =  \
 	$(____Allin1_lib_ALLIN1_REMOTEOBJECTKIT_SRC_OBJECTS) \
 	$(____Allin1_lib_ALLIN1_INTERNETKIT_SRC_OBJECTS) \
 	$(____Allin1_lib_ALLIN1_REGEXKIT_SRC_OBJECTS) \
+	$(____Allin1_lib_ALLIN1_XMLKIT_SRC_OBJECTS) \
 	$(____Allin1_lib_ALLIN1_JAVASCRIPTKIT_SRC_OBJECTS)
-ALLIN1_DLL_CXXFLAGS = -DONIG_EXTERN=extern -DXP_UNIX $(__DEBUG_INFO) \
-	$(__OPTIMIZE) $(__OPTION_THREADING) $(__OPTION_WARNINGS) \
-	$(____OPTION_DEBUG) -Wno-multichar -DVCF_DISABLE_PRAGMA_LINKING -I../../src \
-	-DFOUNDATIONKIT_DLL -DFOUNDATIONKIT_EXPORTS -DGRAPHICSKIT_DLL \
-	-DGRAPHICSKIT_EXPORTS -DAPPLICATIONKIT_DLL -DAPPLICATIONKIT_EXPORTS \
-	-DHTMLKIT_DLL -DHTMLKIT_EXPORTS -DOPENGLKIT_DLL -DOPENGLKIT_EXPORTS \
-	-DNETWORKKIT_DLL -DNETWORKKIT_EXPORTS -DREMOTEKIT_DLL -DREMOTEKIT_EXPORTS \
-	-DINTERNETKIT_DLL -DINTERNETKIT_EXPORTS -DREGEXKIT_DLL -DREGEXKIT_EXPORTS \
-	-DJAVASCRIPTKIT_DLL -DJAVASCRIPTKIT_EXPORTS -fPIC -DPIC \
+ALLIN1_DLL_CXXFLAGS = -DONIG_EXTERN=extern -DLIBXML_STATIC -DLIBXSLT_STATIC \
+	-DXP_UNIX $(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) \
+	$(__OPTION_WARNINGS) $(____OPTION_DEBUG) -Wno-multichar \
+	-DVCF_DISABLE_PRAGMA_LINKING -I../../src -DFOUNDATIONKIT_DLL \
+	-DFOUNDATIONKIT_EXPORTS -DGRAPHICSKIT_DLL -DGRAPHICSKIT_EXPORTS \
+	-DAPPLICATIONKIT_DLL -DAPPLICATIONKIT_EXPORTS -DHTMLKIT_DLL \
+	-DHTMLKIT_EXPORTS -DOPENGLKIT_DLL -DOPENGLKIT_EXPORTS -DNETWORKKIT_DLL \
+	-DNETWORKKIT_EXPORTS -DREMOTEKIT_DLL -DREMOTEKIT_EXPORTS -DINTERNETKIT_DLL \
+	-DINTERNETKIT_EXPORTS -DREGEXKIT_DLL -DREGEXKIT_EXPORTS -DXMLKIT_DLL \
+	-DXMLKIT_EXPORTS -DJAVASCRIPTKIT_DLL -DJAVASCRIPTKIT_EXPORTS -fPIC -DPIC \
 	$(____OPTION_CPP_RTTI_0) $(____OPTION_CPP_EXCEPTIONS_1) $(CPPFLAGS) \
 	$(CXXFLAGS)
 ALLIN1_DLL_OBJECTS =  \
@@ -1004,6 +1102,7 @@ ALLIN1_DLL_OBJECTS =  \
 	$(____Allin1_dll_ALLIN1_REMOTEOBJECTKIT_SRC_OBJECTS) \
 	$(____Allin1_dll_ALLIN1_INTERNETKIT_SRC_OBJECTS) \
 	$(____Allin1_dll_ALLIN1_REGEXKIT_SRC_OBJECTS) \
+	$(____Allin1_dll_ALLIN1_XMLKIT_SRC_OBJECTS) \
 	$(____Allin1_dll_ALLIN1_JAVASCRIPTKIT_SRC_OBJECTS)
 PAINTLIB_LIB_CFLAGS = -I../../src/thirdparty/common/paintlib/common/Filter \
 	-I../../src/thirdparty/common/paintlib/common \
@@ -1264,6 +1363,22 @@ endif
 endif
 endif
 ifeq ($(OPTION_ALLIN1),0)
+ifeq ($(OPTION_SHARED),0)
+ifeq ($(OPTION_XMLKIT),1)
+__XMLKit_lib___depname = \
+	../../lib/libXMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+endif
+endif
+endif
+ifeq ($(OPTION_ALLIN1),0)
+ifeq ($(OPTION_SHARED),1)
+ifeq ($(OPTION_XMLKIT),1)
+__XMLKit_dll___depname = \
+	../../lib/libXMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
+endif
+endif
+endif
+ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_JAVASCRIPTKIT),1)
 ifeq ($(OPTION_SHARED),0)
 __JavaScriptKit_lib___depname = \
@@ -1309,7 +1424,6 @@ ____Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_InterfaceClass.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Library.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Locales.o \
-	../../lib/$(OBJDIR)/Allin1_lib_MemoryStream.o \
 	../../lib/$(OBJDIR)/Allin1_lib_MessageLoader.o \
 	../../lib/$(OBJDIR)/Allin1_lib_MIMEType.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Mutex.o \
@@ -1393,7 +1507,6 @@ ____Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_AbstractCommand.o \
 	../../lib/$(OBJDIR)/Allin1_lib_AbstractComponentEditor.o \
 	../../lib/$(OBJDIR)/Allin1_lib_AbstractContainer.o \
-	../../lib/$(OBJDIR)/Allin1_lib_AbstractListModel.o \
 	../../lib/$(OBJDIR)/Allin1_lib_AbstractScrollable.o \
 	../../lib/$(OBJDIR)/Allin1_lib_AbstractTreeModel.o \
 	../../lib/$(OBJDIR)/Allin1_lib_AbstractView.o \
@@ -1407,6 +1520,7 @@ ____Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_CheckBoxControl.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Clipboard.o \
 	../../lib/$(OBJDIR)/Allin1_lib_ColorEtchedBorder.o \
+	../../lib/$(OBJDIR)/Allin1_lib_ColumnModel.o \
 	../../lib/$(OBJDIR)/Allin1_lib_ComboBoxControl.o \
 	../../lib/$(OBJDIR)/Allin1_lib_CommandButton.o \
 	../../lib/$(OBJDIR)/Allin1_lib_CommandGroup.o \
@@ -1453,6 +1567,7 @@ ____Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_Light3DBorder.o \
 	../../lib/$(OBJDIR)/Allin1_lib_LightweightComponent.o \
 	../../lib/$(OBJDIR)/Allin1_lib_ListBoxControl.o \
+	../../lib/$(OBJDIR)/Allin1_lib_ListItem.o \
 	../../lib/$(OBJDIR)/Allin1_lib_ListViewControl.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Menu.o \
 	../../lib/$(OBJDIR)/Allin1_lib_MenuBar.o \
@@ -1541,6 +1656,11 @@ ifeq ($(OPTION_REGEXKIT),1)
 ____Allin1_lib_ALLIN1_REGEXKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_RegExKit.o
 endif
+ifeq ($(OPTION_XMLKIT),1)
+____Allin1_lib_ALLIN1_XMLKIT_SRC_OBJECTS =  \
+	../../lib/$(OBJDIR)/Allin1_lib_DOM3.o \
+	../../lib/$(OBJDIR)/Allin1_lib_XMLKit.o
+endif
 ifeq ($(OPTION_JAVASCRIPTKIT),1)
 ____Allin1_lib_ALLIN1_JAVASCRIPTKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_JavaScriptKit.o
@@ -1575,7 +1695,6 @@ ____Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_InterfaceClass.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Library.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Locales.o \
-	../../lib/$(OBJDIR)/Allin1_dll_MemoryStream.o \
 	../../lib/$(OBJDIR)/Allin1_dll_MessageLoader.o \
 	../../lib/$(OBJDIR)/Allin1_dll_MIMEType.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Mutex.o \
@@ -1659,7 +1778,6 @@ ____Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_AbstractCommand.o \
 	../../lib/$(OBJDIR)/Allin1_dll_AbstractComponentEditor.o \
 	../../lib/$(OBJDIR)/Allin1_dll_AbstractContainer.o \
-	../../lib/$(OBJDIR)/Allin1_dll_AbstractListModel.o \
 	../../lib/$(OBJDIR)/Allin1_dll_AbstractScrollable.o \
 	../../lib/$(OBJDIR)/Allin1_dll_AbstractTreeModel.o \
 	../../lib/$(OBJDIR)/Allin1_dll_AbstractView.o \
@@ -1673,6 +1791,7 @@ ____Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_CheckBoxControl.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Clipboard.o \
 	../../lib/$(OBJDIR)/Allin1_dll_ColorEtchedBorder.o \
+	../../lib/$(OBJDIR)/Allin1_dll_ColumnModel.o \
 	../../lib/$(OBJDIR)/Allin1_dll_ComboBoxControl.o \
 	../../lib/$(OBJDIR)/Allin1_dll_CommandButton.o \
 	../../lib/$(OBJDIR)/Allin1_dll_CommandGroup.o \
@@ -1719,6 +1838,7 @@ ____Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_Light3DBorder.o \
 	../../lib/$(OBJDIR)/Allin1_dll_LightweightComponent.o \
 	../../lib/$(OBJDIR)/Allin1_dll_ListBoxControl.o \
+	../../lib/$(OBJDIR)/Allin1_dll_ListItem.o \
 	../../lib/$(OBJDIR)/Allin1_dll_ListViewControl.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Menu.o \
 	../../lib/$(OBJDIR)/Allin1_dll_MenuBar.o \
@@ -1807,6 +1927,11 @@ ifeq ($(OPTION_REGEXKIT),1)
 ____Allin1_dll_ALLIN1_REGEXKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_RegExKit.o
 endif
+ifeq ($(OPTION_XMLKIT),1)
+____Allin1_dll_ALLIN1_XMLKIT_SRC_OBJECTS =  \
+	../../lib/$(OBJDIR)/Allin1_dll_DOM3.o \
+	../../lib/$(OBJDIR)/Allin1_dll_XMLKit.o
+endif
 ifeq ($(OPTION_JAVASCRIPTKIT),1)
 ____Allin1_dll_ALLIN1_JAVASCRIPTKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_JavaScriptKit.o
@@ -1829,11 +1954,17 @@ endif
 ifeq ($(OPTION_ONIGURUMA),1)
 VAR_3 = ../../lib/liboniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
+ifeq ($(OPTION_LIBXML),1)
+VAR_4 = ../../lib/liblibxml$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+endif
+ifeq ($(OPTION_LIBXSLT),1)
+VAR_5 = ../../lib/liblibxslt$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+endif
 ifeq ($(OPTION_FDLIBM),1)
-VAR_4 = ../../lib/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+VAR_6 = ../../lib/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
 ifeq ($(OPTION_JS),1)
-VAR_5 = ../../lib/libjs$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
+VAR_7 = ../../lib/libjs$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
 endif
 ifeq ($(OPTION_ALLIN1),0)
 Kit_dll_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
@@ -1860,10 +1991,10 @@ ifeq ($(OPTION_SHARED),1)
 __FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
 endif
 ifeq ($(OPTION_THREADING),multi)
-__OPTION_THREADING_2 = -pthread
+__OPTION_THREADING_3 = -pthread
 endif
 ifeq ($(OPTION_THREADING),single)
-__OPTION_THREADING_2 = 
+__OPTION_THREADING_3 = 
 endif
 ifeq ($(OPTION_AGG),1)
 ____Allin1 = $(A)
@@ -1878,7 +2009,7 @@ ifeq ($(OPTION_LIBTIFF),1)
 ____Allin1_2 = $(VAR_2)
 endif
 ifeq ($(OPTION_PAINTLIB),1)
-____Allin1_3 = $(VAR_6)
+____Allin1_3 = $(VAR_8)
 endif
 ifeq ($(OPTION_ZLIB),1)
 ____Allin1_4 = $(VAR)
@@ -1886,14 +2017,20 @@ endif
 ifeq ($(OPTION_ONIGURUMA),1)
 ____Allin1_5 = $(VAR_3)
 endif
-ifeq ($(OPTION_FDLIBM),1)
+ifeq ($(OPTION_LIBXML),1)
 ____Allin1_6 = $(VAR_4)
 endif
-ifeq ($(OPTION_JS),1)
+ifeq ($(OPTION_LIBXSLT),1)
 ____Allin1_7 = $(VAR_5)
 endif
+ifeq ($(OPTION_FDLIBM),1)
+____Allin1_8 = $(VAR_6)
+endif
+ifeq ($(OPTION_JS),1)
+____Allin1_9 = $(VAR_7)
+endif
 ifeq ($(OPTION_PAINTLIB),1)
-VAR_6 = ../../lib/libpaintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+VAR_8 = ../../lib/libpaintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 endif
 ifeq ($(OPTION_DEBUG),0)
 __DEBUG_INFO = 
@@ -1948,7 +2085,7 @@ all: ../../lib/$(OBJDIR)
 
 ### Targets: ###
 
-all: ../../bin ../../lib $(A) $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(VAR_4) $(VAR_5) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__RegExKit_lib___depname) $(__RegExKit_dll___depname) $(__JavaScriptKit_lib___depname) $(__JavaScriptKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_6) createinfo_ CreateBundle_ xmake_
+all: ../../bin ../../lib $(A) $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(VAR_4) $(VAR_5) $(VAR_6) $(VAR_7) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__RegExKit_lib___depname) $(__RegExKit_dll___depname) $(__XMLKit_lib___depname) $(__XMLKit_dll___depname) $(__JavaScriptKit_lib___depname) $(__JavaScriptKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_8) createinfo_ CreateBundle_ xmake_
 
 install: all
 
@@ -1963,6 +2100,8 @@ clean:
 	rm -f ../../lib/libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libLibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/liboniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+	rm -f ../../lib/liblibxml$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+	rm -f ../../lib/liblibxslt$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libjs$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
 	rm -f ../../lib/libjs$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
@@ -1993,6 +2132,9 @@ clean:
 	rm -f ../../lib/libRegExKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libRegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
 	rm -f ../../lib/libRegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
+	rm -f ../../lib/libXMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
+	rm -f ../../lib/libXMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
+	rm -f ../../lib/libXMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
 	rm -f ../../lib/libJavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a
 	rm -f ../../lib/libJavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
 	rm -f ../../lib/libJavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so
@@ -2052,6 +2194,20 @@ ifeq ($(OPTION_ONIGURUMA),1)
 	$(RANLIB) $@
 endif
 
+ifeq ($(OPTION_LIBXML),1)
+../../lib/liblibxml$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(LIBXML_LIB_OBJECTS)
+	rm -f $@
+	$(AR) rcu $@ $(LIBXML_LIB_OBJECTS)
+	$(RANLIB) $@
+endif
+
+ifeq ($(OPTION_LIBXSLT),1)
+../../lib/liblibxslt$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(LIBXSLT_LIB_OBJECTS) $(VAR_4)
+	rm -f $@
+	$(AR) rcu $@ $(LIBXSLT_LIB_OBJECTS)
+	$(RANLIB) $@
+endif
+
 ifeq ($(OPTION_FDLIBM),1)
 ../../lib/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(FDLIBM_LIB_OBJECTS)
 	rm -f $@
@@ -2060,8 +2216,8 @@ ifeq ($(OPTION_FDLIBM),1)
 endif
 
 ifeq ($(OPTION_JS),1)
-../../lib/libjs$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(JS_DLL_OBJECTS) $(VAR_4)
-	$(CC) -shared -fPIC -o $@ $(JS_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib  ../../lib/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a -ldl -luuid -lrt
+../../lib/libjs$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(JS_DLL_OBJECTS) $(VAR_6)
+	$(CC) -shared -fPIC -o $@ $(JS_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_3) -L../../lib  ../../lib/libfdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a -ldl -luuid -lrt
 endif
 
 ifeq ($(OPTION_ALLIN1),0)
@@ -2079,7 +2235,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_FOUNDATIONKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libFoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(FOUNDATIONKIT_DLL_OBJECTS)
-	$(CXX) -shared -fPIC -o $@ $(FOUNDATIONKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib  -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(FOUNDATIONKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_3) -L../../lib  -ldl -luuid -lrt
 endif
 endif
 endif
@@ -2099,7 +2255,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_GRAPHICSKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libGraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(GRAPHICSKIT_DLL_OBJECTS) $(A) $(VAR_0) $(VAR_1) $(VAR) $(__FoundationKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(GRAPHICSKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  ../../lib/libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/libLibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/libZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(GRAPHICSKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_3) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  ../../lib/libAGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/libLibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/libLibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/libZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a -ldl -luuid -lrt
 endif
 endif
 endif
@@ -2119,7 +2275,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_APPLICATIONKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(APPLICATIONKIT_DLL_OBJECTS) $(__GraphicsKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(APPLICATIONKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(Kit_dll_GRAPHICSKIT_p) $(Kit_dll_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(APPLICATIONKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_3) -L../../lib $(Kit_dll_GRAPHICSKIT_p) $(Kit_dll_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
 endif
 endif
 endif
@@ -2139,7 +2295,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_HTMLKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libHTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(HTMLKIT_DLL_OBJECTS) $(__ApplicationKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(HTMLKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(LKit_dll_APPLICATIONKIT_p) $(Kit_dll_GRAPHICSKIT_p) $(Kit_dll_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(HTMLKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_3) -L../../lib $(LKit_dll_APPLICATIONKIT_p) $(Kit_dll_GRAPHICSKIT_p) $(Kit_dll_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
 endif
 endif
 endif
@@ -2159,7 +2315,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_OPENGLKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libOpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(OPENGLKIT_DLL_OBJECTS) $(__ApplicationKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(OPENGLKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(LKit_dll_APPLICATIONKIT_p) $(Kit_dll_GRAPHICSKIT_p) $(Kit_dll_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(OPENGLKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_3) -L../../lib $(LKit_dll_APPLICATIONKIT_p) $(Kit_dll_GRAPHICSKIT_p) $(Kit_dll_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
 endif
 endif
 endif
@@ -2179,7 +2335,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_NETWORKKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libNetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(NETWORKKIT_DLL_OBJECTS) $(__FoundationKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(NETWORKKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(NETWORKKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_3) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 endif
 endif
@@ -2199,7 +2355,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_REMOTEOBJECTKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libRemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(REMOTEOBJECTKIT_DLL_OBJECTS) $(__FoundationKit_dll___depname) $(__NetworkKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(REMOTEOBJECTKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(____RemoteObjectKit_dll_NETWORKKIT_p) $(____RemoteObjectKit_dll_FOUNDATIONKIT_p_1) $(Kit_dll_FOUNDATIONKIT_p)  -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(REMOTEOBJECTKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_3) -L../../lib $(____RemoteObjectKit_dll_NETWORKKIT_p) $(____RemoteObjectKit_dll_FOUNDATIONKIT_p_1) $(Kit_dll_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 endif
 endif
@@ -2219,7 +2375,7 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_INTERNETKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libInternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(INTERNETKIT_DLL_OBJECTS) $(__FoundationKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(INTERNETKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(INTERNETKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_3) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  -ldl -luuid -lrt
 endif
 endif
 endif
@@ -2239,7 +2395,27 @@ ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_REGEXKIT),1)
 ifeq ($(OPTION_SHARED),1)
 ../../lib/libRegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(REGEXKIT_DLL_OBJECTS) $(VAR_3) $(__FoundationKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(REGEXKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  ../../lib/liboniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a -ldl -luuid -lrt
+	$(CXX) -shared -fPIC -o $@ $(REGEXKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_3) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  ../../lib/liboniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a -ldl -luuid -lrt
+endif
+endif
+endif
+
+ifeq ($(OPTION_ALLIN1),0)
+ifeq ($(OPTION_SHARED),0)
+ifeq ($(OPTION_XMLKIT),1)
+../../lib/libXMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(XMLKIT_LIB_OBJECTS) $(VAR_4) $(VAR_5) $(__FoundationKit_lib___depname)
+	rm -f $@
+	$(AR) rcu $@ $(XMLKIT_LIB_OBJECTS)
+	$(RANLIB) $@
+endif
+endif
+endif
+
+ifeq ($(OPTION_ALLIN1),0)
+ifeq ($(OPTION_SHARED),1)
+ifeq ($(OPTION_XMLKIT),1)
+../../lib/libXMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(XMLKIT_DLL_OBJECTS) $(VAR_4) $(VAR_5) $(__FoundationKit_dll___depname)
+	$(CXX) -shared -fPIC -o $@ $(XMLKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_3) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  ../../lib/liblibxml$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a ../../lib/liblibxslt$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a -ldl -luuid -lrt
 endif
 endif
 endif
@@ -2247,7 +2423,7 @@ endif
 ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_JAVASCRIPTKIT),1)
 ifeq ($(OPTION_SHARED),0)
-../../lib/libJavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(JAVASCRIPTKIT_LIB_OBJECTS) $(VAR_5) $(__FoundationKit_lib___depname)
+../../lib/libJavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(JAVASCRIPTKIT_LIB_OBJECTS) $(VAR_7) $(__FoundationKit_lib___depname)
 	rm -f $@
 	$(AR) rcu $@ $(JAVASCRIPTKIT_LIB_OBJECTS)
 	$(RANLIB) $@
@@ -2258,15 +2434,15 @@ endif
 ifeq ($(OPTION_ALLIN1),0)
 ifeq ($(OPTION_JAVASCRIPTKIT),1)
 ifeq ($(OPTION_SHARED),1)
-../../lib/libJavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(JAVASCRIPTKIT_DLL_OBJECTS) $(VAR_5) $(__FoundationKit_dll___depname)
-	$(CXX) -shared -fPIC -o $@ $(JAVASCRIPTKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  ../../lib/libjs$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so -ldl -luuid -lrt
+../../lib/libJavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(JAVASCRIPTKIT_DLL_OBJECTS) $(VAR_7) $(__FoundationKit_dll___depname)
+	$(CXX) -shared -fPIC -o $@ $(JAVASCRIPTKIT_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_3) -L../../lib $(Kit_dll_FOUNDATIONKIT_p)  ../../lib/libjs$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so -ldl -luuid -lrt
 endif
 endif
 endif
 
 ifeq ($(OPTION_ALLIN1),1)
 ifeq ($(OPTION_SHARED),0)
-../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6) $(____Allin1_7)
+../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).a: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6) $(____Allin1_7) $(____Allin1_8) $(____Allin1_9)
 	rm -f $@
 	$(AR) rcu $@ $(ALLIN1_LIB_OBJECTS)
 	$(RANLIB) $@
@@ -2275,8 +2451,8 @@ endif
 
 ifeq ($(OPTION_ALLIN1),1)
 ifeq ($(OPTION_SHARED),1)
-../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6) $(____Allin1_7)
-	$(CXX) -shared -fPIC -o $@ $(ALLIN1_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_2) -L../../lib  $(A) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_6) $(VAR) $(VAR_3) $(VAR_4) $(VAR_5) -ldl -luuid -lrt
+../../lib/libVCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).so: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6) $(____Allin1_7) $(____Allin1_8) $(____Allin1_9)
+	$(CXX) -shared -fPIC -o $@ $(ALLIN1_DLL_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_3) -L../../lib  $(A) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_8) $(VAR) $(VAR_3) $(VAR_4) $(VAR_5) $(VAR_6) $(VAR_7) -ldl -luuid -lrt
 endif
 endif
 
@@ -2323,6 +2499,10 @@ ifeq ($(OPTION_REGEXKIT),1)
 RegExKit: $(__RegExKit_lib___depname) $(__RegExKit_dll___depname)
 endif
 
+ifeq ($(OPTION_XMLKIT),1)
+XMLKit: $(__XMLKit_lib___depname) $(__XMLKit_dll___depname)
+endif
+
 ifeq ($(OPTION_JAVASCRIPTKIT),1)
 JavaScriptKit: $(__JavaScriptKit_lib___depname) $(__JavaScriptKit_dll___depname)
 endif
@@ -2348,19 +2528,27 @@ LibTIFF: $(VAR_2)
 endif
 
 ifeq ($(OPTION_PAINTLIB),1)
-paintlib: $(VAR_6)
+paintlib: $(VAR_8)
 endif
 
 ifeq ($(OPTION_ONIGURUMA),1)
 oniguruma: $(VAR_3)
 endif
 
+ifeq ($(OPTION_LIBXML),1)
+libxml: $(VAR_4)
+endif
+
+ifeq ($(OPTION_LIBXSLT),1)
+libxslt: $(VAR_5)
+endif
+
 ifeq ($(OPTION_FDLIBM),1)
-fdlibm: $(VAR_4)
+fdlibm: $(VAR_6)
 endif
 
 ifeq ($(OPTION_JS),1)
-js: $(VAR_5)
+js: $(VAR_7)
 endif
 
 createinfo: createinfo_
@@ -2918,6 +3106,198 @@ xmake_:
 ../../lib/$(OBJDIR)/oniguruma_lib_utf8.o: ../../src/thirdparty/common/oniguruma/enc/utf8.c
 	$(CC) -c -o $@ $(ONIGURUMA_LIB_CFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/libxml_lib_c14n.o: ../../src/thirdparty/common/libxml/c14n.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_catalog.o: ../../src/thirdparty/common/libxml/catalog.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_chvalid.o: ../../src/thirdparty/common/libxml/chvalid.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_debugXML.o: ../../src/thirdparty/common/libxml/debugXML.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_dict.o: ../../src/thirdparty/common/libxml/dict.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_DOCBparser.o: ../../src/thirdparty/common/libxml/DOCBparser.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_encoding.o: ../../src/thirdparty/common/libxml/encoding.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_entities.o: ../../src/thirdparty/common/libxml/entities.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_error.o: ../../src/thirdparty/common/libxml/error.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_globals.o: ../../src/thirdparty/common/libxml/globals.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_hash.o: ../../src/thirdparty/common/libxml/hash.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_HTMLparser.o: ../../src/thirdparty/common/libxml/HTMLparser.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_HTMLtree.o: ../../src/thirdparty/common/libxml/HTMLtree.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_legacy.o: ../../src/thirdparty/common/libxml/legacy.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_list.o: ../../src/thirdparty/common/libxml/list.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_nanoftp.o: ../../src/thirdparty/common/libxml/nanoftp.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_nanohttp.o: ../../src/thirdparty/common/libxml/nanohttp.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_parser.o: ../../src/thirdparty/common/libxml/parser.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_parserInternals.o: ../../src/thirdparty/common/libxml/parserInternals.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_pattern.o: ../../src/thirdparty/common/libxml/pattern.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_relaxng.o: ../../src/thirdparty/common/libxml/relaxng.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_SAX.o: ../../src/thirdparty/common/libxml/SAX.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_SAX2.o: ../../src/thirdparty/common/libxml/SAX2.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_schematron.o: ../../src/thirdparty/common/libxml/schematron.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_threads.o: ../../src/thirdparty/common/libxml/threads.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_tree.o: ../../src/thirdparty/common/libxml/tree.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_trio.o: ../../src/thirdparty/common/libxml/trio.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_trionan.o: ../../src/thirdparty/common/libxml/trionan.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_triostr.o: ../../src/thirdparty/common/libxml/triostr.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_uri.o: ../../src/thirdparty/common/libxml/uri.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_valid.o: ../../src/thirdparty/common/libxml/valid.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_xinclude.o: ../../src/thirdparty/common/libxml/xinclude.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_xlink.o: ../../src/thirdparty/common/libxml/xlink.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_xmlIO.o: ../../src/thirdparty/common/libxml/xmlIO.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_xmlmemory.o: ../../src/thirdparty/common/libxml/xmlmemory.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_xmlmodule.o: ../../src/thirdparty/common/libxml/xmlmodule.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_xmlreader.o: ../../src/thirdparty/common/libxml/xmlreader.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_xmlregexp.o: ../../src/thirdparty/common/libxml/xmlregexp.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_xmlsave.o: ../../src/thirdparty/common/libxml/xmlsave.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_xmlschemas.o: ../../src/thirdparty/common/libxml/xmlschemas.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_xmlschemastypes.o: ../../src/thirdparty/common/libxml/xmlschemastypes.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_xmlstring.o: ../../src/thirdparty/common/libxml/xmlstring.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_xmlunicode.o: ../../src/thirdparty/common/libxml/xmlunicode.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_xmlwriter.o: ../../src/thirdparty/common/libxml/xmlwriter.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_xpath.o: ../../src/thirdparty/common/libxml/xpath.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxml_lib_xpointer.o: ../../src/thirdparty/common/libxml/xpointer.c
+	$(CC) -c -o $@ $(LIBXML_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_attributes.o: ../../src/thirdparty/common/libxslt/libxslt/attributes.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_attrvt.o: ../../src/thirdparty/common/libxslt/libxslt/attrvt.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_documents.o: ../../src/thirdparty/common/libxslt/libxslt/documents.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_extensions.o: ../../src/thirdparty/common/libxslt/libxslt/extensions.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_extra.o: ../../src/thirdparty/common/libxslt/libxslt/extra.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_functions.o: ../../src/thirdparty/common/libxslt/libxslt/functions.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_imports.o: ../../src/thirdparty/common/libxslt/libxslt/imports.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_keys.o: ../../src/thirdparty/common/libxslt/libxslt/keys.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_namespaces.o: ../../src/thirdparty/common/libxslt/libxslt/namespaces.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_numbers.o: ../../src/thirdparty/common/libxslt/libxslt/numbers.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_pattern.o: ../../src/thirdparty/common/libxslt/libxslt/pattern.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_preproc.o: ../../src/thirdparty/common/libxslt/libxslt/preproc.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_security.o: ../../src/thirdparty/common/libxslt/libxslt/security.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_templates.o: ../../src/thirdparty/common/libxslt/libxslt/templates.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_transform.o: ../../src/thirdparty/common/libxslt/libxslt/transform.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_variables.o: ../../src/thirdparty/common/libxslt/libxslt/variables.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_xslt.o: ../../src/thirdparty/common/libxslt/libxslt/xslt.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/libxslt_lib_xsltutils.o: ../../src/thirdparty/common/libxslt/libxslt/xsltutils.c
+	$(CC) -c -o $@ $(LIBXSLT_LIB_CFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/fdlibm_lib_e_acos.o: ../../src/vcf/JavaScriptKit/js-impl/fdlibm/e_acos.c
 	$(CC) -c -o $@ $(FDLIBM_LIB_CFLAGS) $(CPPDEPS) $<
 
@@ -3335,9 +3715,6 @@ xmake_:
 ../../lib/$(OBJDIR)/FoundationKit_lib_Locales.o: ../../src/vcf/FoundationKit/Locales.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/FoundationKit_lib_MemoryStream.o: ../../src/vcf/FoundationKit/MemoryStream.cpp
-	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/FoundationKit_lib_MessageLoader.o: ../../src/vcf/FoundationKit/MessageLoader.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -3555,9 +3932,6 @@ xmake_:
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_dll_Locales.o: ../../src/vcf/FoundationKit/Locales.cpp
-	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/FoundationKit_dll_MemoryStream.o: ../../src/vcf/FoundationKit/MemoryStream.cpp
 	$(CXX) -c -o $@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/FoundationKit_dll_MessageLoader.o: ../../src/vcf/FoundationKit/MessageLoader.cpp
@@ -3857,9 +4231,6 @@ xmake_:
 ../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractContainer.o: ../../src/vcf/ApplicationKit/AbstractContainer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractListModel.o: ../../src/vcf/ApplicationKit/AbstractListModel.cpp
-	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractScrollable.o: ../../src/vcf/ApplicationKit/AbstractScrollable.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -3897,6 +4268,9 @@ xmake_:
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_lib_ColorEtchedBorder.o: ../../src/vcf/ApplicationKit/ColorEtchedBorder.cpp
+	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/ApplicationKit_lib_ColumnModel.o: ../../src/vcf/ApplicationKit/ColumnModel.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_lib_ComboBoxControl.o: ../../src/vcf/ApplicationKit/ComboBoxControl.cpp
@@ -4035,6 +4409,9 @@ xmake_:
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_lib_ListBoxControl.o: ../../src/vcf/ApplicationKit/ListBoxControl.cpp
+	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/ApplicationKit_lib_ListItem.o: ../../src/vcf/ApplicationKit/ListItem.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_lib_ListViewControl.o: ../../src/vcf/ApplicationKit/ListViewControl.cpp
@@ -4193,9 +4570,6 @@ xmake_:
 ../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractContainer.o: ../../src/vcf/ApplicationKit/AbstractContainer.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractListModel.o: ../../src/vcf/ApplicationKit/AbstractListModel.cpp
-	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractScrollable.o: ../../src/vcf/ApplicationKit/AbstractScrollable.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -4233,6 +4607,9 @@ xmake_:
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_dll_ColorEtchedBorder.o: ../../src/vcf/ApplicationKit/ColorEtchedBorder.cpp
+	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/ApplicationKit_dll_ColumnModel.o: ../../src/vcf/ApplicationKit/ColumnModel.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_dll_ComboBoxControl.o: ../../src/vcf/ApplicationKit/ComboBoxControl.cpp
@@ -4371,6 +4748,9 @@ xmake_:
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_dll_ListBoxControl.o: ../../src/vcf/ApplicationKit/ListBoxControl.cpp
+	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/ApplicationKit_dll_ListItem.o: ../../src/vcf/ApplicationKit/ListItem.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_dll_ListViewControl.o: ../../src/vcf/ApplicationKit/ListViewControl.cpp
@@ -4643,6 +5023,18 @@ xmake_:
 ../../lib/$(OBJDIR)/RegExKit_dll_RegExKit.o: ../../src/vcf/RegExKit/RegExKit.cpp
 	$(CXX) -c -o $@ $(REGEXKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/XMLKit_lib_DOM3.o: ../../src/vcf/XMLKit/DOM3.cpp
+	$(CXX) -c -o $@ $(XMLKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/XMLKit_lib_XMLKit.o: ../../src/vcf/XMLKit/XMLKit.cpp
+	$(CXX) -c -o $@ $(XMLKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/XMLKit_dll_DOM3.o: ../../src/vcf/XMLKit/DOM3.cpp
+	$(CXX) -c -o $@ $(XMLKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/XMLKit_dll_XMLKit.o: ../../src/vcf/XMLKit/XMLKit.cpp
+	$(CXX) -c -o $@ $(XMLKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/JavaScriptKit_lib_JavaScriptKit.o: ../../src/vcf/JavaScriptKit/JavaScriptKit.cpp
 	$(CXX) -c -o $@ $(JAVASCRIPTKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -4713,9 +5105,6 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_Locales.o: ../../src/vcf/FoundationKit/Locales.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_lib_MemoryStream.o: ../../src/vcf/FoundationKit/MemoryStream.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_MessageLoader.o: ../../src/vcf/FoundationKit/MessageLoader.cpp
@@ -4949,9 +5338,6 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_lib_AbstractContainer.o: ../../src/vcf/ApplicationKit/AbstractContainer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_AbstractListModel.o: ../../src/vcf/ApplicationKit/AbstractListModel.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/Allin1_lib_AbstractScrollable.o: ../../src/vcf/ApplicationKit/AbstractScrollable.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -4989,6 +5375,9 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_ColorEtchedBorder.o: ../../src/vcf/ApplicationKit/ColorEtchedBorder.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_lib_ColumnModel.o: ../../src/vcf/ApplicationKit/ColumnModel.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_ComboBoxControl.o: ../../src/vcf/ApplicationKit/ComboBoxControl.cpp
@@ -5127,6 +5516,9 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_ListBoxControl.o: ../../src/vcf/ApplicationKit/ListBoxControl.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_lib_ListItem.o: ../../src/vcf/ApplicationKit/ListItem.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_ListViewControl.o: ../../src/vcf/ApplicationKit/ListViewControl.cpp
@@ -5336,6 +5728,12 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_lib_RegExKit.o: ../../src/vcf/RegExKit/RegExKit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/Allin1_lib_DOM3.o: ../../src/vcf/XMLKit/DOM3.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_lib_XMLKit.o: ../../src/vcf/XMLKit/XMLKit.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/Allin1_lib_JavaScriptKit.o: ../../src/vcf/JavaScriptKit/JavaScriptKit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -5403,9 +5801,6 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_Locales.o: ../../src/vcf/FoundationKit/Locales.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_dll_MemoryStream.o: ../../src/vcf/FoundationKit/MemoryStream.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_MessageLoader.o: ../../src/vcf/FoundationKit/MessageLoader.cpp
@@ -5639,9 +6034,6 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_AbstractContainer.o: ../../src/vcf/ApplicationKit/AbstractContainer.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_AbstractListModel.o: ../../src/vcf/ApplicationKit/AbstractListModel.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/Allin1_dll_AbstractScrollable.o: ../../src/vcf/ApplicationKit/AbstractScrollable.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -5679,6 +6071,9 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_ColorEtchedBorder.o: ../../src/vcf/ApplicationKit/ColorEtchedBorder.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_dll_ColumnModel.o: ../../src/vcf/ApplicationKit/ColumnModel.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_ComboBoxControl.o: ../../src/vcf/ApplicationKit/ComboBoxControl.cpp
@@ -5817,6 +6212,9 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_ListBoxControl.o: ../../src/vcf/ApplicationKit/ListBoxControl.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_dll_ListItem.o: ../../src/vcf/ApplicationKit/ListItem.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_ListViewControl.o: ../../src/vcf/ApplicationKit/ListViewControl.cpp
@@ -6026,6 +6424,12 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_RegExKit.o: ../../src/vcf/RegExKit/RegExKit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/Allin1_dll_DOM3.o: ../../src/vcf/XMLKit/DOM3.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_dll_XMLKit.o: ../../src/vcf/XMLKit/XMLKit.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/Allin1_dll_JavaScriptKit.o: ../../src/vcf/JavaScriptKit/JavaScriptKit.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -6209,7 +6613,7 @@ xmake_:
 ../../lib/$(OBJDIR)/paintlib_lib_jmemsrc.o: ../../src/thirdparty/common/paintlib/common/jmemsrc.cpp
 	$(CXX) -c -o $@ $(PAINTLIB_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-.PHONY: all install uninstall clean FoundationKit GraphicsKit ApplicationKit HTMLKit OpenGLKit NetworkKit RemoteObjectKit InternetKit RegExKit JavaScriptKit ZLib AGG LibJPEG LibPNG LibTIFF paintlib oniguruma fdlibm js createinfo createinfo_ CreateBundle CreateBundle_ xmake xmake_
+.PHONY: all install uninstall clean FoundationKit GraphicsKit ApplicationKit HTMLKit OpenGLKit NetworkKit RemoteObjectKit InternetKit RegExKit XMLKit JavaScriptKit ZLib AGG LibJPEG LibPNG LibTIFF paintlib oniguruma libxml libxslt fdlibm js createinfo createinfo_ CreateBundle CreateBundle_ xmake xmake_
 
 
 # Dependencies tracking:
