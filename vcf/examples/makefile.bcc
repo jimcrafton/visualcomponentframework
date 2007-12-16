@@ -34,6 +34,7 @@ MAKEARGS = -DCC="$(CC)" -DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" \
 	-DOPTION_LIBTIFF="$(OPTION_LIBTIFF)" \
 	-DOPTION_PAINTLIB="$(OPTION_PAINTLIB)" \
 	-DOPTION_ONIGURUMA="$(OPTION_ONIGURUMA)" \
+	-DOPTION_LIBXML="$(OPTION_LIBXML)" -DOPTION_LIBXSLT="$(OPTION_LIBXSLT)" \
 	-DOPTION_FDLIBM="$(OPTION_FDLIBM)" -DOPTION_JS="$(OPTION_JS)" \
 	-DOPTION_FOUNDATIONKIT="$(OPTION_FOUNDATIONKIT)" \
 	-DOPTION_GRAPHICSKIT="$(OPTION_GRAPHICSKIT)" \
@@ -43,7 +44,7 @@ MAKEARGS = -DCC="$(CC)" -DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" \
 	-DOPTION_NETWORKKIT="$(OPTION_NETWORKKIT)" \
 	-DOPTION_REMOTEOBJECTKIT="$(OPTION_REMOTEOBJECTKIT)" \
 	-DOPTION_INTERNETKIT="$(OPTION_INTERNETKIT)" \
-	-DOPTION_REGEXKIT="$(OPTION_REGEXKIT)" \
+	-DOPTION_REGEXKIT="$(OPTION_REGEXKIT)" -DOPTION_XMLKIT="$(OPTION_XMLKIT)" \
 	-DOPTION_JAVASCRIPTKIT="$(OPTION_JAVASCRIPTKIT)" \
 	-DOPTION_IMAGEFORMATS="$(OPTION_IMAGEFORMATS)"
 
@@ -53,7 +54,7 @@ MAKEARGS = -DCC="$(CC)" -DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" \
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 clean: 
 	-if exist .\*.obj del .\*.obj
@@ -399,6 +400,10 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>WorkingWithEnumerators.bat
 	call WorkingWithEnumerators.bat
 	@del WorkingWithEnumerators.bat
+	@echo cd XMLTest >XMLTest.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>XMLTest.bat
+	call XMLTest.bat
+	@del XMLTest.bat
 
 Accelerators: 
 	@echo cd Accelerators >Accelerators.bat
@@ -909,4 +914,10 @@ WorkingWithEnumerators:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>WorkingWithEnumerators.bat
 	call WorkingWithEnumerators.bat
 	@del WorkingWithEnumerators.bat
+
+XMLTest: 
+	@echo cd XMLTest >XMLTest.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>XMLTest.bat
+	call XMLTest.bat
+	@del XMLTest.bat
 

@@ -34,6 +34,7 @@ MAKEARGS = -DCC="$(CC)" -DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" \
 	-DOPTION_LIBTIFF="$(OPTION_LIBTIFF)" \
 	-DOPTION_PAINTLIB="$(OPTION_PAINTLIB)" \
 	-DOPTION_ONIGURUMA="$(OPTION_ONIGURUMA)" \
+	-DOPTION_LIBXML="$(OPTION_LIBXML)" -DOPTION_LIBXSLT="$(OPTION_LIBXSLT)" \
 	-DOPTION_FDLIBM="$(OPTION_FDLIBM)" -DOPTION_JS="$(OPTION_JS)" \
 	-DOPTION_FOUNDATIONKIT="$(OPTION_FOUNDATIONKIT)" \
 	-DOPTION_GRAPHICSKIT="$(OPTION_GRAPHICSKIT)" \
@@ -43,7 +44,7 @@ MAKEARGS = -DCC="$(CC)" -DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" \
 	-DOPTION_NETWORKKIT="$(OPTION_NETWORKKIT)" \
 	-DOPTION_REMOTEOBJECTKIT="$(OPTION_REMOTEOBJECTKIT)" \
 	-DOPTION_INTERNETKIT="$(OPTION_INTERNETKIT)" \
-	-DOPTION_REGEXKIT="$(OPTION_REGEXKIT)" \
+	-DOPTION_REGEXKIT="$(OPTION_REGEXKIT)" -DOPTION_XMLKIT="$(OPTION_XMLKIT)" \
 	-DOPTION_JAVASCRIPTKIT="$(OPTION_JAVASCRIPTKIT)" \
 	-DOPTION_IMAGEFORMATS="$(OPTION_IMAGEFORMATS)"
 OBJDIR = borland$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
@@ -268,6 +269,83 @@ ONIGURUMA_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\oniguruma_lib_utf32_be.obj \
 	..\..\lib\$(OBJDIR)\oniguruma_lib_utf32_le.obj \
 	..\..\lib\$(OBJDIR)\oniguruma_lib_utf8.obj
+LIBXML_LIB_CFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
+	-I..\..\src\thirdparty\common\libxml\include -DLIBXML_STATIC \
+	-DHAVE_WIN32_THREADS -DHAVE_COMPILER_TLS $(__DEBUG_INFO) $(__OPTIMIZE) \
+	$(__OPTION_THREADING) $(____OPTION_DEBUG) -D_WIN32 -DWIN32 -D_LIB \
+	-DVCF_DISABLE_PRAGMA_LINKING -I..\..\src $(CPPFLAGS) $(CFLAGS)
+LIBXML_LIB_OBJECTS =  \
+	..\..\lib\$(OBJDIR)\libxml_lib_c14n.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_catalog.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_chvalid.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_debugXML.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_dict.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_DOCBparser.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_encoding.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_entities.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_error.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_globals.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_hash.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_HTMLparser.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_HTMLtree.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_legacy.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_list.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_nanoftp.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_nanohttp.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_parser.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_parserInternals.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_pattern.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_relaxng.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_SAX.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_SAX2.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_schematron.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_threads.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_tree.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_trio.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_trionan.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_triostr.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_uri.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_valid.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_xinclude.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_xlink.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_xmlIO.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_xmlmemory.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_xmlmodule.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_xmlreader.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_xmlregexp.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_xmlsave.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_xmlschemas.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_xmlschemastypes.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_xmlstring.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_xmlunicode.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_xmlwriter.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_xpath.obj \
+	..\..\lib\$(OBJDIR)\libxml_lib_xpointer.obj
+LIBXSLT_LIB_CFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
+	-I..\..\src\thirdparty\common\libxml\include \
+	-I..\..\src\thirdparty\common\libxslt -DLIBXML_STATIC -DLIBXSLT_STATIC \
+	$(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) $(____OPTION_DEBUG) \
+	-D_WIN32 -DWIN32 -D_LIB -DVCF_DISABLE_PRAGMA_LINKING -I..\..\src $(CPPFLAGS) \
+	$(CFLAGS)
+LIBXSLT_LIB_OBJECTS =  \
+	..\..\lib\$(OBJDIR)\libxslt_lib_attributes.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_attrvt.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_documents.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_extensions.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_extra.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_functions.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_imports.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_keys.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_namespaces.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_numbers.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_pattern.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_preproc.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_security.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_templates.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_transform.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_variables.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_xslt.obj \
+	..\..\lib\$(OBJDIR)\libxslt_lib_xsltutils.obj
 FDLIBM_LIB_CFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include -D_IEEE_LIBM \
 	$(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) $(____OPTION_DEBUG) \
 	-D_WIN32 -DWIN32 -D_LIB -DVCF_DISABLE_PRAGMA_LINKING -I..\..\src $(CPPFLAGS) \
@@ -422,7 +500,6 @@ FOUNDATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_InterfaceClass.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_Library.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_Locales.obj \
-	..\..\lib\$(OBJDIR)\FoundationKit_lib_MemoryStream.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_MessageLoader.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_MIMEType.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_Mutex.obj \
@@ -501,7 +578,6 @@ FOUNDATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_InterfaceClass.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_Library.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_Locales.obj \
-	..\..\lib\$(OBJDIR)\FoundationKit_dll_MemoryStream.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_MessageLoader.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_MIMEType.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_Mutex.obj \
@@ -625,7 +701,6 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_AbstractCommand.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_AbstractComponentEditor.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_AbstractContainer.obj \
-	..\..\lib\$(OBJDIR)\ApplicationKit_lib_AbstractListModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_AbstractScrollable.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_AbstractTreeModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_AbstractView.obj \
@@ -639,6 +714,7 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_CheckBoxControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Clipboard.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_ColorEtchedBorder.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_lib_ColumnModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_ComboBoxControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_CommandButton.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_CommandGroup.obj \
@@ -685,6 +761,7 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Light3DBorder.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_LightweightComponent.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListBoxControl.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListItem.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListViewControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Menu.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_MenuBar.obj \
@@ -770,7 +847,6 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_AbstractCommand.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_AbstractComponentEditor.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_AbstractContainer.obj \
-	..\..\lib\$(OBJDIR)\ApplicationKit_dll_AbstractListModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_AbstractScrollable.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_AbstractTreeModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_AbstractView.obj \
@@ -784,6 +860,7 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_CheckBoxControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Clipboard.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_ColorEtchedBorder.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_dll_ColumnModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_ComboBoxControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_CommandButton.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_CommandGroup.obj \
@@ -830,6 +907,7 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Light3DBorder.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_LightweightComponent.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListBoxControl.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListItem.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListViewControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Menu.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_MenuBar.obj \
@@ -1040,6 +1118,24 @@ REGEXKIT_DLL_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
 	$(CPPFLAGS) $(CXXFLAGS)
 REGEXKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\RegExKit_dll_RegExKit.obj
+XMLKIT_LIB_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
+	$(__FOUNDATIONKIT_DLL_p) -I..\..\src\thirdparty\common\libxml\include \
+	-I..\..\src\thirdparty\common\libxslt -DLIBXML_STATIC -DLIBXSLT_STATIC \
+	$(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) $(____OPTION_DEBUG) \
+	-D_WIN32 -DWIN32 -D_LIB -DVCF_DISABLE_PRAGMA_LINKING -I..\..\src $(CPPFLAGS) \
+	$(CXXFLAGS)
+XMLKIT_LIB_OBJECTS =  \
+	..\..\lib\$(OBJDIR)\XMLKit_lib_DOM3.obj \
+	..\..\lib\$(OBJDIR)\XMLKit_lib_XMLKit.obj
+XMLKIT_DLL_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
+	$(__FOUNDATIONKIT_DLL_p) -I..\..\src\thirdparty\common\libxml\include \
+	-I..\..\src\thirdparty\common\libxslt -DLIBXML_STATIC -DLIBXSLT_STATIC \
+	$(__DEBUG_INFO) $(__OPTIMIZE) $(__OPTION_THREADING) $(____OPTION_DEBUG) \
+	-D_WIN32 -DWIN32 -D_USRDLL -DVCF_DISABLE_PRAGMA_LINKING -I..\..\src \
+	-DXMLKIT_DLL -DXMLKIT_EXPORTS $(CPPFLAGS) $(CXXFLAGS)
+XMLKIT_DLL_OBJECTS =  \
+	..\..\lib\$(OBJDIR)\XMLKit_dll_DOM3.obj \
+	..\..\lib\$(OBJDIR)\XMLKit_dll_XMLKit.obj
 JAVASCRIPTKIT_LIB_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
 	$(__FOUNDATIONKIT_DLL_p) $(__DEBUG_INFO) $(__OPTIMIZE) \
 	$(__OPTION_THREADING) $(____OPTION_DEBUG) -D_WIN32 -DWIN32 -D_LIB \
@@ -1054,9 +1150,10 @@ JAVASCRIPTKIT_DLL_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
 JAVASCRIPTKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\JavaScriptKit_dll_JavaScriptKit.obj
 ALLIN1_LIB_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
-	-DONIG_EXTERN=extern -DXP_WIN -I..\..\src\thirdparty\win32 $(__DEBUG_INFO) \
-	$(__OPTIMIZE) $(__OPTION_THREADING) $(____OPTION_DEBUG) -D_WIN32 -DWIN32 \
-	-D_LIB -DVCF_DISABLE_PRAGMA_LINKING -I..\..\src $(CPPFLAGS) $(CXXFLAGS)
+	-DONIG_EXTERN=extern -DLIBXML_STATIC -DLIBXSLT_STATIC -DXP_WIN \
+	-I..\..\src\thirdparty\win32 $(__DEBUG_INFO) $(__OPTIMIZE) \
+	$(__OPTION_THREADING) $(____OPTION_DEBUG) -D_WIN32 -DWIN32 -D_LIB \
+	-DVCF_DISABLE_PRAGMA_LINKING -I..\..\src $(CPPFLAGS) $(CXXFLAGS)
 ALLIN1_LIB_OBJECTS =  \
 	$(______Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_FILENAMES_OBJECTS) \
 	$(______Allin1_lib_ALLIN1_GRAPHICSKIT_SRC_FILENAMES_OBJECTS) \
@@ -1067,17 +1164,20 @@ ALLIN1_LIB_OBJECTS =  \
 	$(______Allin1_lib_ALLIN1_REMOTEOBJECTKIT_SRC_FILENAMES_OBJECTS) \
 	$(______Allin1_lib_ALLIN1_INTERNETKIT_SRC_FILENAMES_OBJECTS) \
 	$(______Allin1_lib_ALLIN1_REGEXKIT_SRC_FILENAMES_OBJECTS) \
+	$(______Allin1_lib_ALLIN1_XMLKIT_SRC_FILENAMES_OBJECTS) \
 	$(______Allin1_lib_ALLIN1_JAVASCRIPTKIT_SRC_FILENAMES_OBJECTS)
 ALLIN1_DLL_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
-	-DONIG_EXTERN=extern -DXP_WIN -I..\..\src\thirdparty\win32 $(__DEBUG_INFO) \
-	$(__OPTIMIZE) $(__OPTION_THREADING) $(____OPTION_DEBUG) -D_WIN32 -DWIN32 \
-	-D_USRDLL -DVCF_DISABLE_PRAGMA_LINKING -I..\..\src -DFOUNDATIONKIT_DLL \
+	-DONIG_EXTERN=extern -DLIBXML_STATIC -DLIBXSLT_STATIC -DXP_WIN \
+	-I..\..\src\thirdparty\win32 $(__DEBUG_INFO) $(__OPTIMIZE) \
+	$(__OPTION_THREADING) $(____OPTION_DEBUG) -D_WIN32 -DWIN32 -D_USRDLL \
+	-DVCF_DISABLE_PRAGMA_LINKING -I..\..\src -DFOUNDATIONKIT_DLL \
 	-DFOUNDATIONKIT_EXPORTS -DGRAPHICSKIT_DLL -DGRAPHICSKIT_EXPORTS \
 	-DAPPLICATIONKIT_DLL -DAPPLICATIONKIT_EXPORTS -DHTMLKIT_DLL \
 	-DHTMLKIT_EXPORTS -DOPENGLKIT_DLL -DOPENGLKIT_EXPORTS -DNETWORKKIT_DLL \
 	-DNETWORKKIT_EXPORTS -DREMOTEKIT_DLL -DREMOTEKIT_EXPORTS -DINTERNETKIT_DLL \
-	-DINTERNETKIT_EXPORTS -DREGEXKIT_DLL -DREGEXKIT_EXPORTS -DJAVASCRIPTKIT_DLL \
-	-DJAVASCRIPTKIT_EXPORTS $(CPPFLAGS) $(CXXFLAGS)
+	-DINTERNETKIT_EXPORTS -DREGEXKIT_DLL -DREGEXKIT_EXPORTS -DXMLKIT_DLL \
+	-DXMLKIT_EXPORTS -DJAVASCRIPTKIT_DLL -DJAVASCRIPTKIT_EXPORTS $(CPPFLAGS) \
+	$(CXXFLAGS)
 ALLIN1_DLL_OBJECTS =  \
 	$(______Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_FILENAMES_OBJECTS) \
 	$(______Allin1_dll_ALLIN1_GRAPHICSKIT_SRC_FILENAMES_OBJECTS) \
@@ -1088,6 +1188,7 @@ ALLIN1_DLL_OBJECTS =  \
 	$(______Allin1_dll_ALLIN1_REMOTEOBJECTKIT_SRC_FILENAMES_OBJECTS) \
 	$(______Allin1_dll_ALLIN1_INTERNETKIT_SRC_FILENAMES_OBJECTS) \
 	$(______Allin1_dll_ALLIN1_REGEXKIT_SRC_FILENAMES_OBJECTS) \
+	$(______Allin1_dll_ALLIN1_XMLKIT_SRC_FILENAMES_OBJECTS) \
 	$(______Allin1_dll_ALLIN1_JAVASCRIPTKIT_SRC_FILENAMES_OBJECTS)
 PAINTLIB_LIB_CFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
 	-I..\..\src\thirdparty\common\paintlib\common\Filter \
@@ -1310,6 +1411,14 @@ __RegExKit_lib___depname = \
 __RegExKit_dll___depname = \
 	..\..\lib\..\bin\RegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 !endif
+!if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_SHARED)" == "0" && "$(OPTION_XMLKIT)" == "1"
+__XMLKit_lib___depname = \
+	..\..\lib\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+!endif
+!if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_SHARED)" == "1" && "$(OPTION_XMLKIT)" == "1"
+__XMLKit_dll___depname = \
+	..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
+!endif
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_JAVASCRIPTKIT)" == "1" && "$(OPTION_SHARED)" == "0"
 __JavaScriptKit_lib___depname = \
 	..\..\lib\JavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
@@ -1346,7 +1455,6 @@ ______Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_InterfaceClass.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Library.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Locales.obj \
-	..\..\lib\$(OBJDIR)\Allin1_lib_MemoryStream.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_MessageLoader.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_MIMEType.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Mutex.obj \
@@ -1432,7 +1540,6 @@ ______Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_AbstractCommand.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_AbstractComponentEditor.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_AbstractContainer.obj \
-	..\..\lib\$(OBJDIR)\Allin1_lib_AbstractListModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_AbstractScrollable.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_AbstractTreeModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_AbstractView.obj \
@@ -1446,6 +1553,7 @@ ______Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_CheckBoxControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Clipboard.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_ColorEtchedBorder.obj \
+	..\..\lib\$(OBJDIR)\Allin1_lib_ColumnModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_ComboBoxControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_CommandButton.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_CommandGroup.obj \
@@ -1492,6 +1600,7 @@ ______Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Light3DBorder.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_LightweightComponent.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_ListBoxControl.obj \
+	..\..\lib\$(OBJDIR)\Allin1_lib_ListItem.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_ListViewControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Menu.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_MenuBar.obj \
@@ -1611,6 +1720,11 @@ ______Allin1_lib_ALLIN1_INTERNETKIT_SRC_FILENAMES_OBJECTS =  \
 ______Allin1_lib_ALLIN1_REGEXKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_RegExKit.obj
 !endif
+!if "$(OPTION_XMLKIT)" == "1"
+______Allin1_lib_ALLIN1_XMLKIT_SRC_FILENAMES_OBJECTS =  \
+	..\..\lib\$(OBJDIR)\Allin1_lib_DOM3.obj \
+	..\..\lib\$(OBJDIR)\Allin1_lib_XMLKit.obj
+!endif
 !if "$(OPTION_JAVASCRIPTKIT)" == "1"
 ______Allin1_lib_ALLIN1_JAVASCRIPTKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_JavaScriptKit.obj
@@ -1643,7 +1757,6 @@ ______Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_InterfaceClass.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Library.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Locales.obj \
-	..\..\lib\$(OBJDIR)\Allin1_dll_MemoryStream.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_MessageLoader.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_MIMEType.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Mutex.obj \
@@ -1729,7 +1842,6 @@ ______Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_AbstractCommand.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_AbstractComponentEditor.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_AbstractContainer.obj \
-	..\..\lib\$(OBJDIR)\Allin1_dll_AbstractListModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_AbstractScrollable.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_AbstractTreeModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_AbstractView.obj \
@@ -1743,6 +1855,7 @@ ______Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_CheckBoxControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Clipboard.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_ColorEtchedBorder.obj \
+	..\..\lib\$(OBJDIR)\Allin1_dll_ColumnModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_ComboBoxControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_CommandButton.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_CommandGroup.obj \
@@ -1789,6 +1902,7 @@ ______Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Light3DBorder.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_LightweightComponent.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_ListBoxControl.obj \
+	..\..\lib\$(OBJDIR)\Allin1_dll_ListItem.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_ListViewControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Menu.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_MenuBar.obj \
@@ -1908,6 +2022,11 @@ ______Allin1_dll_ALLIN1_INTERNETKIT_SRC_FILENAMES_OBJECTS =  \
 ______Allin1_dll_ALLIN1_REGEXKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_RegExKit.obj
 !endif
+!if "$(OPTION_XMLKIT)" == "1"
+______Allin1_dll_ALLIN1_XMLKIT_SRC_FILENAMES_OBJECTS =  \
+	..\..\lib\$(OBJDIR)\Allin1_dll_DOM3.obj \
+	..\..\lib\$(OBJDIR)\Allin1_dll_XMLKit.obj
+!endif
 !if "$(OPTION_JAVASCRIPTKIT)" == "1"
 ______Allin1_dll_ALLIN1_JAVASCRIPTKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_JavaScriptKit.obj
@@ -1942,8 +2061,14 @@ VAR_2 = ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !if "$(OPTION_ONIGURUMA)" == "1"
 VAR_3 = ..\..\lib\oniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
+!if "$(OPTION_LIBXML)" == "1"
+VAR_4 = ..\..\lib\libxml$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+!endif
+!if "$(OPTION_LIBXSLT)" == "1"
+VAR_5 = ..\..\lib\libxslt$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+!endif
 !if "$(OPTION_FDLIBM)" == "1"
-VAR_4 = ..\..\lib\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+VAR_6 = ..\..\lib\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
 !if "$(OPTION_DEBUG)" == "0"
 ____OPTION_DEBUG_0 = -dNDEBUG
@@ -1979,7 +2104,7 @@ ____Allin1_1 = $(VAR_1)
 ____Allin1_2 = $(VAR_2)
 !endif
 !if "$(OPTION_PAINTLIB)" == "1"
-____Allin1_3 = $(VAR_5)
+____Allin1_3 = $(VAR_7)
 !endif
 !if "$(OPTION_ZLIB)" == "1"
 ____Allin1_4 = $(VAR)
@@ -1987,20 +2112,26 @@ ____Allin1_4 = $(VAR)
 !if "$(OPTION_ONIGURUMA)" == "1"
 ____Allin1_5 = $(VAR_3)
 !endif
-!if "$(OPTION_FDLIBM)" == "1"
+!if "$(OPTION_LIBXML)" == "1"
 ____Allin1_6 = $(VAR_4)
 !endif
+!if "$(OPTION_LIBXSLT)" == "1"
+____Allin1_7 = $(VAR_5)
+!endif
+!if "$(OPTION_FDLIBM)" == "1"
+____Allin1_8 = $(VAR_6)
+!endif
 !if "$(OPTION_JS)" == "1"
-____Allin1_7 = $(__js_dll___depname)
+____Allin1_9 = $(__js_dll___depname)
 !endif
 !if "$(OPTION_PAINTLIB)" == "1"
-VAR_5 = ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+VAR_7 = ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 !endif
 !if "$(OPTION_RUNTIME)" == "dynamic"
-__OPTION_RUNTIME_5 = i
+__OPTION_RUNTIME_7 = i
 !endif
 !if "$(OPTION_RUNTIME)" == "static"
-__OPTION_RUNTIME_5 = 
+__OPTION_RUNTIME_7 = 
 !endif
 !if "$(OPTION_THREADING)" == "multi"
 __OPTION_THREADING_4 = mt
@@ -2055,7 +2186,7 @@ all: ..\..\lib\$(OBJDIR)
 
 ### Targets: ###
 
-all: ..\..\bin ..\..\lib $(A) $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(VAR_4) $(__js_dll___depname) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__RegExKit_lib___depname) $(__RegExKit_dll___depname) $(__JavaScriptKit_lib___depname) $(__JavaScriptKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_5) $(__ImageFormats_lib___depname) $(__ImageFormats_dll___depname) createinfo_ CreateBundle_ xmake_
+all: ..\..\bin ..\..\lib $(A) $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_3) $(VAR_4) $(VAR_5) $(VAR_6) $(__js_dll___depname) $(__FoundationKit_lib___depname) $(__FoundationKit_dll___depname) $(__GraphicsKit_lib___depname) $(__GraphicsKit_dll___depname) $(__ApplicationKit_lib___depname) $(__ApplicationKit_dll___depname) $(__HTMLKit_lib___depname) $(__HTMLKit_dll___depname) $(__OpenGLKit_lib___depname) $(__OpenGLKit_dll___depname) $(__NetworkKit_lib___depname) $(__NetworkKit_dll___depname) $(__RemoteObjectKit_lib___depname) $(__RemoteObjectKit_dll___depname) $(__InternetKit_lib___depname) $(__InternetKit_dll___depname) $(__RegExKit_lib___depname) $(__RegExKit_dll___depname) $(__XMLKit_lib___depname) $(__XMLKit_dll___depname) $(__JavaScriptKit_lib___depname) $(__JavaScriptKit_dll___depname) $(__Allin1_lib___depname) $(__Allin1_dll___depname) $(VAR_7) $(__ImageFormats_lib___depname) $(__ImageFormats_dll___depname) createinfo_ CreateBundle_ xmake_
 
 clean: 
 	-if exist ..\..\lib\$(OBJDIR)\*.obj del ..\..\lib\$(OBJDIR)\*.obj
@@ -2067,6 +2198,8 @@ clean:
 	-if exist ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\oniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\oniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+	-if exist ..\..\lib\libxml$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\libxml$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+	-if exist ..\..\lib\libxslt$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\libxslt$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\..\bin\js$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll del ..\..\lib\..\bin\js$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 	-if exist ..\..\lib\..\bin\js$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).tds del ..\..\lib\..\bin\js$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).tds
@@ -2157,6 +2290,15 @@ clean:
 	-if exist ..\..\lib\..\bin\RegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ils del ..\..\lib\..\bin\RegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ils
 	-if exist ..\..\lib\RegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\RegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
 	-if exist ..\..\lib\..\bin\RegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).map del ..\..\lib\..\bin\RegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).map
+	-if exist ..\..\lib\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
+	-if exist ..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll del ..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
+	-if exist ..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).tds del ..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).tds
+	-if exist ..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ilc del ..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ilc
+	-if exist ..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ild del ..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ild
+	-if exist ..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ilf del ..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ilf
+	-if exist ..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ils del ..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).ils
+	-if exist ..\..\lib\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib del ..\..\lib\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib
+	-if exist ..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).map del ..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).map
 	-if exist ..\..\lib\JavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib del ..\..\lib\JavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib
 	-if exist ..\..\lib\..\bin\JavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll del ..\..\lib\..\bin\JavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll
 	-if exist ..\..\lib\..\bin\JavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).tds del ..\..\lib\..\bin\JavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).tds
@@ -2252,6 +2394,22 @@ clean:
 |
 !endif
 
+!if "$(OPTION_LIBXML)" == "1"
+..\..\lib\libxml$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(LIBXML_LIB_OBJECTS)
+	if exist $@ del $@
+	tlib /a /p4096 $@ @&&|
+	$(LIBXML_LIB_OBJECTS)
+|
+!endif
+
+!if "$(OPTION_LIBXSLT)" == "1"
+..\..\lib\libxslt$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(LIBXSLT_LIB_OBJECTS) $(VAR_4)
+	if exist $@ del $@
+	tlib /a /p4096 $@ @&&|
+	$(LIBXSLT_LIB_OBJECTS)
+|
+!endif
+
 !if "$(OPTION_FDLIBM)" == "1"
 ..\..\lib\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(FDLIBM_LIB_OBJECTS)
 	if exist $@ del $@
@@ -2261,9 +2419,9 @@ clean:
 !endif
 
 !if "$(OPTION_JS)" == "1"
-..\..\lib\..\bin\js$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(JS_DLL_OBJECTS) $(VAR_4)
+..\..\lib\..\bin\js$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(JS_DLL_OBJECTS) $(VAR_6)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib @&&|
-	c0d32.obj $(JS_DLL_OBJECTS),$@,, ..\..\lib\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_5).lib,,
+	c0d32.obj $(JS_DLL_OBJECTS),$@,, ..\..\lib\fdlibm$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_7).lib,,
 |
 	implib -f ..\..\lib\js$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2279,7 +2437,7 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_FOUNDATIONKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(FOUNDATIONKIT_DLL_OBJECTS)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib @&&|
-	c0d32.obj $(FOUNDATIONKIT_DLL_OBJECTS),$@,, ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_5).lib,,
+	c0d32.obj $(FOUNDATIONKIT_DLL_OBJECTS),$@,, ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_7).lib,,
 |
 	implib -f ..\..\lib\FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2295,7 +2453,7 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_GRAPHICSKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(GRAPHICSKIT_DLL_OBJECTS) $(A) $(VAR_0) $(VAR_1) $(VAR) $(__FoundationKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib @&&|
-	c0d32.obj $(GRAPHICSKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ..\..\lib\AGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_5).lib,,
+	c0d32.obj $(GRAPHICSKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ..\..\lib\AGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_7).lib,,
 |
 	implib -f ..\..\lib\GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2311,7 +2469,7 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_APPLICATIONKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(APPLICATIONKIT_DLL_OBJECTS)  ..\..\lib\$(OBJDIR)\ApplicationKit_dll_ApplicationKit.res $(__GraphicsKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib @&&|
-	c0d32.obj $(APPLICATIONKIT_DLL_OBJECTS),$@,, $(ZLIB_FILENAME).lib $(LIBPNG_FILENAME).lib $(LIBJPEG_FILENAME).lib $(AGG_FILENAME).lib $(dll_FOUNDATIONKIT_p) $(dll_GRAPHICSKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_5).lib,, ..\..\lib\$(OBJDIR)\ApplicationKit_dll_ApplicationKit.res
+	c0d32.obj $(APPLICATIONKIT_DLL_OBJECTS),$@,, $(ZLIB_FILENAME).lib $(LIBPNG_FILENAME).lib $(LIBJPEG_FILENAME).lib $(AGG_FILENAME).lib $(dll_FOUNDATIONKIT_p) $(dll_GRAPHICSKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_7).lib,, ..\..\lib\$(OBJDIR)\ApplicationKit_dll_ApplicationKit.res
 |
 	implib -f ..\..\lib\ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2327,7 +2485,7 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_HTMLKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(HTMLKIT_DLL_OBJECTS) $(__ApplicationKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib @&&|
-	c0d32.obj $(HTMLKIT_DLL_OBJECTS),$@,, $(ZLIB_FILENAME).lib $(LIBPNG_FILENAME).lib $(LIBJPEG_FILENAME).lib $(AGG_FILENAME).lib $(dll_FOUNDATIONKIT_p) $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_5).lib,,
+	c0d32.obj $(HTMLKIT_DLL_OBJECTS),$@,, $(ZLIB_FILENAME).lib $(LIBPNG_FILENAME).lib $(LIBJPEG_FILENAME).lib $(AGG_FILENAME).lib $(dll_FOUNDATIONKIT_p) $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_7).lib,,
 |
 	implib -f ..\..\lib\HTMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2343,7 +2501,7 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_OPENGLKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(OPENGLKIT_DLL_OBJECTS) $(__ApplicationKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib @&&|
-	c0d32.obj $(OPENGLKIT_DLL_OBJECTS),$@,, $(ZLIB_FILENAME).lib $(LIBPNG_FILENAME).lib $(LIBJPEG_FILENAME).lib $(AGG_FILENAME).lib $(dll_FOUNDATIONKIT_p) $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_5).lib,,
+	c0d32.obj $(OPENGLKIT_DLL_OBJECTS),$@,, $(ZLIB_FILENAME).lib $(LIBPNG_FILENAME).lib $(LIBJPEG_FILENAME).lib $(AGG_FILENAME).lib $(dll_FOUNDATIONKIT_p) $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_7).lib,,
 |
 	implib -f ..\..\lib\OpenGLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2359,7 +2517,7 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_NETWORKKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(NETWORKKIT_DLL_OBJECTS) $(__FoundationKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib @&&|
-	c0d32.obj $(NETWORKKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_5).lib,,
+	c0d32.obj $(NETWORKKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_7).lib,,
 |
 	implib -f ..\..\lib\NetworkKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2375,7 +2533,7 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_REMOTEOBJECTKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(REMOTEOBJECTKIT_DLL_OBJECTS) $(__FoundationKit_dll___depname) $(__NetworkKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib @&&|
-	c0d32.obj $(REMOTEOBJECTKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) $(____RemoteObjectKit_dll_FOUNDATIONKIT_p_1) $(____RemoteObjectKit_dll_NETWORKKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_5).lib,,
+	c0d32.obj $(REMOTEOBJECTKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) $(____RemoteObjectKit_dll_FOUNDATIONKIT_p_1) $(____RemoteObjectKit_dll_NETWORKKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_7).lib,,
 |
 	implib -f ..\..\lib\RemoteObjectKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2391,7 +2549,7 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_INTERNETKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(INTERNETKIT_DLL_OBJECTS) $(__FoundationKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib @&&|
-	c0d32.obj $(INTERNETKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_5).lib,,
+	c0d32.obj $(INTERNETKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_7).lib,,
 |
 	implib -f ..\..\lib\InternetKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2407,9 +2565,25 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_REGEXKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\RegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(REGEXKIT_DLL_OBJECTS) $(VAR_3) $(__FoundationKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib @&&|
-	c0d32.obj $(REGEXKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ..\..\lib\oniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_5).lib,,
+	c0d32.obj $(REGEXKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ..\..\lib\oniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_7).lib,,
 |
 	implib -f ..\..\lib\RegExKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
+!endif
+
+!if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_SHARED)" == "0" && "$(OPTION_XMLKIT)" == "1"
+..\..\lib\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(XMLKIT_LIB_OBJECTS) $(VAR_4) $(VAR_5) $(__FoundationKit_lib___depname)
+	if exist $@ del $@
+	tlib /a /p4096 $@ @&&|
+	$(XMLKIT_LIB_OBJECTS)
+|
+!endif
+
+!if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_SHARED)" == "1" && "$(OPTION_XMLKIT)" == "1"
+..\..\lib\..\bin\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(XMLKIT_DLL_OBJECTS) $(VAR_4) $(VAR_5) $(__FoundationKit_dll___depname)
+	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib @&&|
+	c0d32.obj $(XMLKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ..\..\lib\libxml$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\libxslt$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_7).lib,,
+|
+	implib -f ..\..\lib\XMLKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
 
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_JAVASCRIPTKIT)" == "1" && "$(OPTION_SHARED)" == "0"
@@ -2423,13 +2597,13 @@ clean:
 !if "$(OPTION_ALLIN1)" == "0" && "$(OPTION_JAVASCRIPTKIT)" == "1" && "$(OPTION_SHARED)" == "1"
 ..\..\lib\..\bin\JavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(JAVASCRIPTKIT_DLL_OBJECTS) $(__js_dll___depname) $(__FoundationKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib @&&|
-	c0d32.obj $(JAVASCRIPTKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ..\..\lib\js$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_5).lib,,
+	c0d32.obj $(JAVASCRIPTKIT_DLL_OBJECTS),$@,, $(dll_FOUNDATIONKIT_p) ..\..\lib\js$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).lib ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_7).lib,,
 |
 	implib -f ..\..\lib\JavaScriptKit$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
 
 !if "$(OPTION_ALLIN1)" == "1" && "$(OPTION_SHARED)" == "0"
-..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6) $(____Allin1_7)
+..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(ALLIN1_LIB_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6) $(____Allin1_7) $(____Allin1_8) $(____Allin1_9)
 	if exist $@ del $@
 	tlib /a /p4096 $@ @&&|
 	$(ALLIN1_LIB_OBJECTS)
@@ -2437,9 +2611,9 @@ clean:
 !endif
 
 !if "$(OPTION_ALLIN1)" == "1" && "$(OPTION_SHARED)" == "1"
-..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6) $(____Allin1_7)  ..\..\lib\$(OBJDIR)\Allin1_dll_ApplicationKit.res
+..\..\lib\..\bin\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(ALLIN1_DLL_OBJECTS) $(____Allin1) $(____Allin1_0) $(____Allin1_1) $(____Allin1_2) $(____Allin1_3) $(____Allin1_4) $(____Allin1_5) $(____Allin1_6) $(____Allin1_7) $(____Allin1_8) $(____Allin1_9)  ..\..\lib\$(OBJDIR)\Allin1_dll_ApplicationKit.res
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib @&&|
-	c0d32.obj $(ALLIN1_DLL_OBJECTS),$@,, $(A) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_5) $(VAR) $(VAR_3) $(VAR_4) $(____Allin1_dll_ALLIN1_JS_DLL_LIBR) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_5).lib,, ..\..\lib\$(OBJDIR)\Allin1_dll_ApplicationKit.res
+	c0d32.obj $(ALLIN1_DLL_OBJECTS),$@,, $(A) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_7) $(VAR) $(VAR_3) $(VAR_4) $(VAR_5) $(VAR_6) $(____Allin1_dll_ALLIN1_JS_DLL_LIBR) ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_7).lib,, ..\..\lib\$(OBJDIR)\Allin1_dll_ApplicationKit.res
 |
 	implib -f ..\..\lib\VCF$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2453,7 +2627,7 @@ clean:
 !endif
 
 !if "$(OPTION_IMAGEFORMATS)" == "1" && "$(OPTION_SHARED)" == "0"
-..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(IMAGEFORMATS_LIB_OBJECTS) $(A) $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_5) $(__ApplicationKit_lib___depname)
+..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib: $(IMAGEFORMATS_LIB_OBJECTS) $(A) $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_7) $(__ApplicationKit_lib___depname)
 	if exist $@ del $@
 	tlib /a /p4096 $@ @&&|
 	$(IMAGEFORMATS_LIB_OBJECTS)
@@ -2461,9 +2635,9 @@ clean:
 !endif
 
 !if "$(OPTION_IMAGEFORMATS)" == "1" && "$(OPTION_SHARED)" == "1"
-..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(IMAGEFORMATS_DLL_OBJECTS) $(A) $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_5) $(__Allin1_dll___depname) $(__ApplicationKit_dll___depname)
+..\..\lib\..\bin\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC).dll: $(IMAGEFORMATS_DLL_OBJECTS) $(A) $(VAR) $(VAR_0) $(VAR_1) $(VAR_2) $(VAR_7) $(__Allin1_dll___depname) $(__ApplicationKit_dll___depname)
 	ilink32 -Tpd -q $(LDFLAGS) -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk $(__DEBUG_INFO)  -L..\..\lib @&&|
-	c0d32.obj $(IMAGEFORMATS_DLL_OBJECTS),$@,, $(ZLIB_FILENAME).lib $(LIBPNG_FILENAME).lib $(LIBJPEG_FILENAME).lib $(AGG_FILENAME).lib $(dll_FOUNDATIONKIT_p) $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ..\..\lib\AGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_5).lib,,
+	c0d32.obj $(IMAGEFORMATS_DLL_OBJECTS),$@,, $(ZLIB_FILENAME).lib $(LIBPNG_FILENAME).lib $(LIBJPEG_FILENAME).lib $(AGG_FILENAME).lib $(dll_FOUNDATIONKIT_p) $(dll_GRAPHICSKIT_p) $(dll_APPLICATIONKIT_p) ..\..\lib\AGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\LibTIFF$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ..\..\lib\paintlib$(OPTION_SELECTLIB)$(SUFFIX_STATIC).lib ole2w32.lib oleacc.lib urlmon.lib import32.lib cw32$(__OPTION_THREADING_4)$(__OPTION_RUNTIME_7).lib,,
 |
 	implib -f ..\..\lib\ImageFormats$(OPTION_SELECTLIB)$(SUFFIX_DYNAMIC) $@
 !endif
@@ -2504,6 +2678,10 @@ InternetKit: $(__InternetKit_lib___depname) $(__InternetKit_dll___depname)
 RegExKit: $(__RegExKit_lib___depname) $(__RegExKit_dll___depname)
 !endif
 
+!if "$(OPTION_XMLKIT)" == "1"
+XMLKit: $(__XMLKit_lib___depname) $(__XMLKit_dll___depname)
+!endif
+
 !if "$(OPTION_JAVASCRIPTKIT)" == "1"
 JavaScriptKit: $(__JavaScriptKit_lib___depname) $(__JavaScriptKit_dll___depname)
 !endif
@@ -2533,15 +2711,23 @@ LibTIFF: $(VAR_2)
 !endif
 
 !if "$(OPTION_PAINTLIB)" == "1"
-paintlib: $(VAR_5)
+paintlib: $(VAR_7)
 !endif
 
 !if "$(OPTION_ONIGURUMA)" == "1"
 oniguruma: $(VAR_3)
 !endif
 
+!if "$(OPTION_LIBXML)" == "1"
+libxml: $(VAR_4)
+!endif
+
+!if "$(OPTION_LIBXSLT)" == "1"
+libxslt: $(VAR_5)
+!endif
+
 !if "$(OPTION_FDLIBM)" == "1"
-fdlibm: $(VAR_4)
+fdlibm: $(VAR_6)
 !endif
 
 !if "$(OPTION_JS)" == "1"
@@ -3112,6 +3298,198 @@ xmake_:
 ..\..\lib\$(OBJDIR)\oniguruma_lib_utf8.obj: ..\..\src\thirdparty\common\oniguruma\enc\utf8.c
 	$(CC) -q -c -P- -o$@ $(ONIGURUMA_LIB_CFLAGS) $**
 
+..\..\lib\$(OBJDIR)\libxml_lib_c14n.obj: ..\..\src\thirdparty\common\libxml\c14n.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_catalog.obj: ..\..\src\thirdparty\common\libxml\catalog.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_chvalid.obj: ..\..\src\thirdparty\common\libxml\chvalid.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_debugXML.obj: ..\..\src\thirdparty\common\libxml\debugXML.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_dict.obj: ..\..\src\thirdparty\common\libxml\dict.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_DOCBparser.obj: ..\..\src\thirdparty\common\libxml\DOCBparser.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_encoding.obj: ..\..\src\thirdparty\common\libxml\encoding.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_entities.obj: ..\..\src\thirdparty\common\libxml\entities.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_error.obj: ..\..\src\thirdparty\common\libxml\error.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_globals.obj: ..\..\src\thirdparty\common\libxml\globals.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_hash.obj: ..\..\src\thirdparty\common\libxml\hash.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_HTMLparser.obj: ..\..\src\thirdparty\common\libxml\HTMLparser.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_HTMLtree.obj: ..\..\src\thirdparty\common\libxml\HTMLtree.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_legacy.obj: ..\..\src\thirdparty\common\libxml\legacy.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_list.obj: ..\..\src\thirdparty\common\libxml\list.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_nanoftp.obj: ..\..\src\thirdparty\common\libxml\nanoftp.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_nanohttp.obj: ..\..\src\thirdparty\common\libxml\nanohttp.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_parser.obj: ..\..\src\thirdparty\common\libxml\parser.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_parserInternals.obj: ..\..\src\thirdparty\common\libxml\parserInternals.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_pattern.obj: ..\..\src\thirdparty\common\libxml\pattern.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_relaxng.obj: ..\..\src\thirdparty\common\libxml\relaxng.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_SAX.obj: ..\..\src\thirdparty\common\libxml\SAX.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_SAX2.obj: ..\..\src\thirdparty\common\libxml\SAX2.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_schematron.obj: ..\..\src\thirdparty\common\libxml\schematron.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_threads.obj: ..\..\src\thirdparty\common\libxml\threads.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_tree.obj: ..\..\src\thirdparty\common\libxml\tree.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_trio.obj: ..\..\src\thirdparty\common\libxml\trio.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_trionan.obj: ..\..\src\thirdparty\common\libxml\trionan.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_triostr.obj: ..\..\src\thirdparty\common\libxml\triostr.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_uri.obj: ..\..\src\thirdparty\common\libxml\uri.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_valid.obj: ..\..\src\thirdparty\common\libxml\valid.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_xinclude.obj: ..\..\src\thirdparty\common\libxml\xinclude.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_xlink.obj: ..\..\src\thirdparty\common\libxml\xlink.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_xmlIO.obj: ..\..\src\thirdparty\common\libxml\xmlIO.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_xmlmemory.obj: ..\..\src\thirdparty\common\libxml\xmlmemory.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_xmlmodule.obj: ..\..\src\thirdparty\common\libxml\xmlmodule.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_xmlreader.obj: ..\..\src\thirdparty\common\libxml\xmlreader.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_xmlregexp.obj: ..\..\src\thirdparty\common\libxml\xmlregexp.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_xmlsave.obj: ..\..\src\thirdparty\common\libxml\xmlsave.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_xmlschemas.obj: ..\..\src\thirdparty\common\libxml\xmlschemas.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_xmlschemastypes.obj: ..\..\src\thirdparty\common\libxml\xmlschemastypes.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_xmlstring.obj: ..\..\src\thirdparty\common\libxml\xmlstring.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_xmlunicode.obj: ..\..\src\thirdparty\common\libxml\xmlunicode.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_xmlwriter.obj: ..\..\src\thirdparty\common\libxml\xmlwriter.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_xpath.obj: ..\..\src\thirdparty\common\libxml\xpath.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxml_lib_xpointer.obj: ..\..\src\thirdparty\common\libxml\xpointer.c
+	$(CC) -q -c -P- -o$@ $(LIBXML_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_attributes.obj: ..\..\src\thirdparty\common\libxslt\libxslt\attributes.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_attrvt.obj: ..\..\src\thirdparty\common\libxslt\libxslt\attrvt.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_documents.obj: ..\..\src\thirdparty\common\libxslt\libxslt\documents.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_extensions.obj: ..\..\src\thirdparty\common\libxslt\libxslt\extensions.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_extra.obj: ..\..\src\thirdparty\common\libxslt\libxslt\extra.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_functions.obj: ..\..\src\thirdparty\common\libxslt\libxslt\functions.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_imports.obj: ..\..\src\thirdparty\common\libxslt\libxslt\imports.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_keys.obj: ..\..\src\thirdparty\common\libxslt\libxslt\keys.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_namespaces.obj: ..\..\src\thirdparty\common\libxslt\libxslt\namespaces.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_numbers.obj: ..\..\src\thirdparty\common\libxslt\libxslt\numbers.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_pattern.obj: ..\..\src\thirdparty\common\libxslt\libxslt\pattern.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_preproc.obj: ..\..\src\thirdparty\common\libxslt\libxslt\preproc.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_security.obj: ..\..\src\thirdparty\common\libxslt\libxslt\security.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_templates.obj: ..\..\src\thirdparty\common\libxslt\libxslt\templates.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_transform.obj: ..\..\src\thirdparty\common\libxslt\libxslt\transform.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_variables.obj: ..\..\src\thirdparty\common\libxslt\libxslt\variables.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_xslt.obj: ..\..\src\thirdparty\common\libxslt\libxslt\xslt.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
+..\..\lib\$(OBJDIR)\libxslt_lib_xsltutils.obj: ..\..\src\thirdparty\common\libxslt\libxslt\xsltutils.c
+	$(CC) -q -c -P- -o$@ $(LIBXSLT_LIB_CFLAGS) $**
+
 ..\..\lib\$(OBJDIR)\fdlibm_lib_e_acos.obj: ..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_acos.c
 	$(CC) -q -c -P- -o$@ $(FDLIBM_LIB_CFLAGS) $**
 
@@ -3529,9 +3907,6 @@ xmake_:
 ..\..\lib\$(OBJDIR)\FoundationKit_lib_Locales.obj: ..\..\src\vcf\FoundationKit\Locales.cpp
 	$(CXX) -q -c -P -o$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $**
 
-..\..\lib\$(OBJDIR)\FoundationKit_lib_MemoryStream.obj: ..\..\src\vcf\FoundationKit\MemoryStream.cpp
-	$(CXX) -q -c -P -o$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $**
-
 ..\..\lib\$(OBJDIR)\FoundationKit_lib_MessageLoader.obj: ..\..\src\vcf\FoundationKit\MessageLoader.cpp
 	$(CXX) -q -c -P -o$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) $**
 
@@ -3749,9 +4124,6 @@ xmake_:
 	$(CXX) -q -c -P -o$@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\FoundationKit_dll_Locales.obj: ..\..\src\vcf\FoundationKit\Locales.cpp
-	$(CXX) -q -c -P -o$@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $**
-
-..\..\lib\$(OBJDIR)\FoundationKit_dll_MemoryStream.obj: ..\..\src\vcf\FoundationKit\MemoryStream.cpp
 	$(CXX) -q -c -P -o$@ $(FOUNDATIONKIT_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\FoundationKit_dll_MessageLoader.obj: ..\..\src\vcf\FoundationKit\MessageLoader.cpp
@@ -4063,9 +4435,6 @@ xmake_:
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_AbstractContainer.obj: ..\..\src\vcf\ApplicationKit\AbstractContainer.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) $**
 
-..\..\lib\$(OBJDIR)\ApplicationKit_lib_AbstractListModel.obj: ..\..\src\vcf\ApplicationKit\AbstractListModel.cpp
-	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) $**
-
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_AbstractScrollable.obj: ..\..\src\vcf\ApplicationKit\AbstractScrollable.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) $**
 
@@ -4103,6 +4472,9 @@ xmake_:
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_ColorEtchedBorder.obj: ..\..\src\vcf\ApplicationKit\ColorEtchedBorder.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\ApplicationKit_lib_ColumnModel.obj: ..\..\src\vcf\ApplicationKit\ColumnModel.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_ComboBoxControl.obj: ..\..\src\vcf\ApplicationKit\ComboBoxControl.cpp
@@ -4241,6 +4613,9 @@ xmake_:
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListBoxControl.obj: ..\..\src\vcf\ApplicationKit\ListBoxControl.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListItem.obj: ..\..\src\vcf\ApplicationKit\ListItem.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListViewControl.obj: ..\..\src\vcf\ApplicationKit\ListViewControl.cpp
@@ -4468,9 +4843,6 @@ xmake_:
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_AbstractContainer.obj: ..\..\src\vcf\ApplicationKit\AbstractContainer.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) $**
 
-..\..\lib\$(OBJDIR)\ApplicationKit_dll_AbstractListModel.obj: ..\..\src\vcf\ApplicationKit\AbstractListModel.cpp
-	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) $**
-
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_AbstractScrollable.obj: ..\..\src\vcf\ApplicationKit\AbstractScrollable.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) $**
 
@@ -4508,6 +4880,9 @@ xmake_:
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_ColorEtchedBorder.obj: ..\..\src\vcf\ApplicationKit\ColorEtchedBorder.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\ApplicationKit_dll_ColumnModel.obj: ..\..\src\vcf\ApplicationKit\ColumnModel.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_ComboBoxControl.obj: ..\..\src\vcf\ApplicationKit\ComboBoxControl.cpp
@@ -4646,6 +5021,9 @@ xmake_:
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListBoxControl.obj: ..\..\src\vcf\ApplicationKit\ListBoxControl.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListItem.obj: ..\..\src\vcf\ApplicationKit\ListItem.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListViewControl.obj: ..\..\src\vcf\ApplicationKit\ListViewControl.cpp
@@ -5038,6 +5416,18 @@ xmake_:
 ..\..\lib\$(OBJDIR)\RegExKit_dll_RegExKit.obj: ..\..\src\vcf\RegExKit\RegExKit.cpp
 	$(CXX) -q -c -P -o$@ $(REGEXKIT_DLL_CXXFLAGS) $**
 
+..\..\lib\$(OBJDIR)\XMLKit_lib_DOM3.obj: ..\..\src\vcf\XMLKit\DOM3.cpp
+	$(CXX) -q -c -P -o$@ $(XMLKIT_LIB_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\XMLKit_lib_XMLKit.obj: ..\..\src\vcf\XMLKit\XMLKit.cpp
+	$(CXX) -q -c -P -o$@ $(XMLKIT_LIB_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\XMLKit_dll_DOM3.obj: ..\..\src\vcf\XMLKit\DOM3.cpp
+	$(CXX) -q -c -P -o$@ $(XMLKIT_DLL_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\XMLKit_dll_XMLKit.obj: ..\..\src\vcf\XMLKit\XMLKit.cpp
+	$(CXX) -q -c -P -o$@ $(XMLKIT_DLL_CXXFLAGS) $**
+
 ..\..\lib\$(OBJDIR)\JavaScriptKit_lib_JavaScriptKit.obj: ..\..\src\vcf\JavaScriptKit\JavaScriptKit.cpp
 	$(CXX) -q -c -P -o$@ $(JAVASCRIPTKIT_LIB_CXXFLAGS) $**
 
@@ -5108,9 +5498,6 @@ xmake_:
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_Locales.obj: ..\..\src\vcf\FoundationKit\Locales.cpp
-	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
-
-..\..\lib\$(OBJDIR)\Allin1_lib_MemoryStream.obj: ..\..\src\vcf\FoundationKit\MemoryStream.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_MessageLoader.obj: ..\..\src\vcf\FoundationKit\MessageLoader.cpp
@@ -5350,9 +5737,6 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_lib_AbstractContainer.obj: ..\..\src\vcf\ApplicationKit\AbstractContainer.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
-..\..\lib\$(OBJDIR)\Allin1_lib_AbstractListModel.obj: ..\..\src\vcf\ApplicationKit\AbstractListModel.cpp
-	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
-
 ..\..\lib\$(OBJDIR)\Allin1_lib_AbstractScrollable.obj: ..\..\src\vcf\ApplicationKit\AbstractScrollable.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
@@ -5390,6 +5774,9 @@ xmake_:
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_ColorEtchedBorder.obj: ..\..\src\vcf\ApplicationKit\ColorEtchedBorder.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\Allin1_lib_ColumnModel.obj: ..\..\src\vcf\ApplicationKit\ColumnModel.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_ComboBoxControl.obj: ..\..\src\vcf\ApplicationKit\ComboBoxControl.cpp
@@ -5528,6 +5915,9 @@ xmake_:
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_ListBoxControl.obj: ..\..\src\vcf\ApplicationKit\ListBoxControl.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\Allin1_lib_ListItem.obj: ..\..\src\vcf\ApplicationKit\ListItem.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_ListViewControl.obj: ..\..\src\vcf\ApplicationKit\ListViewControl.cpp
@@ -5830,6 +6220,12 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_lib_RegExKit.obj: ..\..\src\vcf\RegExKit\RegExKit.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
+..\..\lib\$(OBJDIR)\Allin1_lib_DOM3.obj: ..\..\src\vcf\XMLKit\DOM3.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\Allin1_lib_XMLKit.obj: ..\..\src\vcf\XMLKit\XMLKit.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
+
 ..\..\lib\$(OBJDIR)\Allin1_lib_JavaScriptKit.obj: ..\..\src\vcf\JavaScriptKit\JavaScriptKit.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) $**
 
@@ -5897,9 +6293,6 @@ xmake_:
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_Locales.obj: ..\..\src\vcf\FoundationKit\Locales.cpp
-	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
-
-..\..\lib\$(OBJDIR)\Allin1_dll_MemoryStream.obj: ..\..\src\vcf\FoundationKit\MemoryStream.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_MessageLoader.obj: ..\..\src\vcf\FoundationKit\MessageLoader.cpp
@@ -6139,9 +6532,6 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_dll_AbstractContainer.obj: ..\..\src\vcf\ApplicationKit\AbstractContainer.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
-..\..\lib\$(OBJDIR)\Allin1_dll_AbstractListModel.obj: ..\..\src\vcf\ApplicationKit\AbstractListModel.cpp
-	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
-
 ..\..\lib\$(OBJDIR)\Allin1_dll_AbstractScrollable.obj: ..\..\src\vcf\ApplicationKit\AbstractScrollable.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
@@ -6179,6 +6569,9 @@ xmake_:
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_ColorEtchedBorder.obj: ..\..\src\vcf\ApplicationKit\ColorEtchedBorder.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\Allin1_dll_ColumnModel.obj: ..\..\src\vcf\ApplicationKit\ColumnModel.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_ComboBoxControl.obj: ..\..\src\vcf\ApplicationKit\ComboBoxControl.cpp
@@ -6317,6 +6710,9 @@ xmake_:
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_ListBoxControl.obj: ..\..\src\vcf\ApplicationKit\ListBoxControl.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\Allin1_dll_ListItem.obj: ..\..\src\vcf\ApplicationKit\ListItem.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_ListViewControl.obj: ..\..\src\vcf\ApplicationKit\ListViewControl.cpp
@@ -6619,11 +7015,17 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_dll_RegExKit.obj: ..\..\src\vcf\RegExKit\RegExKit.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
+..\..\lib\$(OBJDIR)\Allin1_dll_DOM3.obj: ..\..\src\vcf\XMLKit\DOM3.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
+
+..\..\lib\$(OBJDIR)\Allin1_dll_XMLKit.obj: ..\..\src\vcf\XMLKit\XMLKit.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
+
 ..\..\lib\$(OBJDIR)\Allin1_dll_JavaScriptKit.obj: ..\..\src\vcf\JavaScriptKit\JavaScriptKit.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) $**
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_ApplicationKit.res: ..\..\src\..\build\resources\win32\ApplicationKit.rc
-	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  -dONIG_EXTERN=extern -dXP_WIN -i..\..\src\thirdparty\win32 $(____OPTION_DEBUG_0) -d_WIN32 -dWIN32 -d_USRDLL -dVCF_DISABLE_PRAGMA_LINKING -i..\..\src -dFOUNDATIONKIT_DLL -dFOUNDATIONKIT_EXPORTS -dGRAPHICSKIT_DLL -dGRAPHICSKIT_EXPORTS -dAPPLICATIONKIT_DLL -dAPPLICATIONKIT_EXPORTS -dHTMLKIT_DLL -dHTMLKIT_EXPORTS -dOPENGLKIT_DLL -dOPENGLKIT_EXPORTS -dNETWORKKIT_DLL -dNETWORKKIT_EXPORTS -dREMOTEKIT_DLL -dREMOTEKIT_EXPORTS -dINTERNETKIT_DLL -dINTERNETKIT_EXPORTS -dREGEXKIT_DLL -dREGEXKIT_EXPORTS -dJAVASCRIPTKIT_DLL -dJAVASCRIPTKIT_EXPORTS -i..\..\build\resources\win32 $**
+	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  -dONIG_EXTERN=extern -dLIBXML_STATIC -dLIBXSLT_STATIC -dXP_WIN -i..\..\src\thirdparty\win32 $(____OPTION_DEBUG_0) -d_WIN32 -dWIN32 -d_USRDLL -dVCF_DISABLE_PRAGMA_LINKING -i..\..\src -dFOUNDATIONKIT_DLL -dFOUNDATIONKIT_EXPORTS -dGRAPHICSKIT_DLL -dGRAPHICSKIT_EXPORTS -dAPPLICATIONKIT_DLL -dAPPLICATIONKIT_EXPORTS -dHTMLKIT_DLL -dHTMLKIT_EXPORTS -dOPENGLKIT_DLL -dOPENGLKIT_EXPORTS -dNETWORKKIT_DLL -dNETWORKKIT_EXPORTS -dREMOTEKIT_DLL -dREMOTEKIT_EXPORTS -dINTERNETKIT_DLL -dINTERNETKIT_EXPORTS -dREGEXKIT_DLL -dREGEXKIT_EXPORTS -dXMLKIT_DLL -dXMLKIT_EXPORTS -dJAVASCRIPTKIT_DLL -dJAVASCRIPTKIT_EXPORTS -i..\..\build\resources\win32 $**
 
 ..\..\lib\$(OBJDIR)\paintlib_lib_plfilter.obj: ..\..\src\thirdparty\common\paintlib\common\Filter\plfilter.cpp
 	$(CXX) -q -c -P -o$@ $(PAINTLIB_LIB_CXXFLAGS) $**

@@ -650,10 +650,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\MemoryStream.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\MessageLoader.cpp
 # End Source File
 # Begin Source File
@@ -1075,10 +1071,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\MemStreamUtils.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\MemoryStream.h
 # End Source File
 # Begin Source File
 

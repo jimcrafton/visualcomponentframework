@@ -37,6 +37,16 @@
         $(vcf.getLibFilename( ONIGURUMA_NAME ))
     </set>
 
+    <set var="LIBXML_NAME">libxml</set>
+    <set var="LIBXML_FILENAME" make_var="1">
+        $(vcf.getLibFilename( LIBXML_NAME ))
+    </set>
+
+    <set var="LIBXSLT_NAME">libxslt</set>
+    <set var="LIBXSLT_FILENAME" make_var="1">
+        $(vcf.getLibFilename( LIBXSLT_NAME ))
+    </set>
+
     <set var="FDLIBM_NAME">fdlibm</set>
     <set var="FDLIBM_FILENAME" make_var="1">
         $(vcf.getLibFilename( FDLIBM_NAME ))
@@ -90,6 +100,11 @@
     <set var="REGEXKIT_NAME">RegExKit</set>
     <set var="REGEXKIT_FILENAME" make_var="1">
         $(vcf.getFilename( REGEXKIT_NAME ))
+    </set>
+    
+    <set var="XMLKIT_NAME">XMLKit</set>
+    <set var="XMLKIT_FILENAME" make_var="1">
+        $(vcf.getFilename( XMLKIT_NAME ))
     </set>
     
     <set var="JAVASCRIPTKIT_NAME">JavaScriptKit</set>

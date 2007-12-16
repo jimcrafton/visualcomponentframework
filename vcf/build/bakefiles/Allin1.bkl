@@ -78,6 +78,14 @@
         </set>
 
         
+        <set var="ALLIN1_XMLKIT_HDR" hints="files">
+            <if cond="OPTION_XMLKIT=='1'">$(XMLKIT_HDR)</if>
+        </set>
+        <set var="ALLIN1_XMLKIT_SRC" hints="files">
+            <if cond="OPTION_XMLKIT=='1'">$(XMLKIT_SRC)</if>
+        </set>
+
+        
         <set var="ALLIN1_JAVASCRIPTKIT_HDR" hints="files">
             <if cond="OPTION_JAVASCRIPTKIT=='1'">$(JAVASCRIPTKIT_HDR)</if>
         </set>
@@ -96,6 +104,7 @@
             $(ALLIN1_REMOTEOBJECTKIT_HDR)
             $(ALLIN1_INTERNETKIT_HDR)
             $(ALLIN1_REGEXKIT_HDR)
+            $(ALLIN1_XMLKIT_HDR)
             $(ALLIN1_JAVASCRIPTKIT_HDR)
         </headers>
         <sources>
@@ -108,6 +117,7 @@
             $(ALLIN1_REMOTEOBJECTKIT_SRC)
             $(ALLIN1_INTERNETKIT_SRC)
             $(ALLIN1_REGEXKIT_SRC)
+            $(ALLIN1_XMLKIT_SRC)
             $(ALLIN1_JAVASCRIPTKIT_SRC)
         </sources>
 
@@ -153,6 +163,18 @@
         <library>$(ALLIN1_ONIGURUMA_LIB)</library>
         <define>ONIG_EXTERN=extern</define>
 
+        <set var="ALLIN1_LIBXML_LIB">
+            <if cond="OPTION_LIBXML=='1'">libxml_lib</if>
+        </set>
+        <library>$(ALLIN1_LIBXML_LIB)</library>
+        <define>LIBXML_STATIC</define>
+
+        <set var="ALLIN1_LIBXSLT_LIB">
+            <if cond="OPTION_LIBXSLT=='1'">libxslt_lib</if>
+        </set>
+        <library>$(ALLIN1_LIBXSLT_LIB)</library>
+        <define>LIBXSLT_STATIC</define>
+
         <set var="ALLIN1_FDLIBM_LIB">
             <if cond="OPTION_FDLIBM=='1'">fdlibm_lib</if>
         </set>
@@ -191,6 +213,8 @@
         <define>INTERNETKIT_EXPORTS</define>
         <define>REGEXKIT_DLL</define>
         <define>REGEXKIT_EXPORTS</define>
+        <define>XMLKIT_DLL</define>
+        <define>XMLKIT_EXPORTS</define>
         <define>JAVASCRIPTKIT_DLL</define>
         <define>JAVASCRIPTKIT_EXPORTS</define>
 

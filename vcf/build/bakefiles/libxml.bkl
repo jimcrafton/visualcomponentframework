@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="libxmlFiles.bkl"/>
+
+    <template id="libxml_base">
+        <set var="LIBRARY_NAME">$(LIBXML_NAME)</set>
+
+        <headers>$(LIBXML_HDR)</headers>
+        <sources>$(LIBXML_SRC)</sources>
+
+        <vcf-include-libxml/>
+
+        <define>LIBXML_STATIC</define>
+
+        <define>HAVE_WIN32_THREADS</define>
+        <define>HAVE_COMPILER_TLS</define>
+    </template>
+
+    <lib id="libxml_lib" template="libxml_base,vcf_lib"
+            cond="OPTION_LIBXML=='1'">
+    </lib>
+</makefile>
+
+<!--
+$Id$
+-->

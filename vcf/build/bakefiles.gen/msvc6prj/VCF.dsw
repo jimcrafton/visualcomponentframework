@@ -74,6 +74,33 @@ Package=<4>
 
 ###############################################################################
 
+Project: "libxml_lib"=VCF_libxml_lib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libxslt_lib"=VCF_libxslt_lib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name libxml_lib
+End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "fdlibm_lib"=VCF_fdlibm_lib.dsp - Package Owner=<4>
 
 Package=<5>
@@ -243,6 +270,27 @@ Package=<4>
 {{{
 Begin Project Dependency
 Project_Dep_Name oniguruma_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name FoundationKit
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "XMLKit"=VCF_XMLKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name libxml_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name libxslt_lib
 End Project Dependency
 Begin Project Dependency
 Project_Dep_Name FoundationKit

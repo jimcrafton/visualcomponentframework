@@ -444,7 +444,6 @@
 			<File RelativePath="..\..\..\src\vcf\FoundationKit\Library.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\FoundationKit\Locales.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\FoundationKit\MIMEType.cpp"/>
-			<File RelativePath="..\..\..\src\vcf\FoundationKit\MemoryStream.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\FoundationKit\MessageLoader.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\FoundationKit\Mutex.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\FoundationKit\Object.cpp"/>
