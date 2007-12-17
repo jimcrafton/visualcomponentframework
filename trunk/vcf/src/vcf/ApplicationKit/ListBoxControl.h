@@ -55,10 +55,11 @@ public:
 	virtual ~ListBoxControl();
 
 	void init();
+	
+	virtual void setViewModel( Model* viewModel );
 
 	ListModel* getListModel();
-
-	void setListModel(ListModel * model);
+	void setListModel(ListModel* listModel);
 
 	virtual void rangeSelect( const bool & isSelected, ListItem * first, ListItem * last );
 
@@ -126,7 +127,12 @@ public:
 	void setSelectedItem( ListItem* selectedItem );
 
 	ListItem* getListItem( const uint32& index );
+
 	void setListItem( const uint32& index, ListItem* item );
+
+	ListItem* insertItem( const uint32& index, const String& caption, const uint32 imageIndex=0 );
+
+	ListItem* addItem( const String& caption, const uint32 imageIndex=0 );
 
 	/**
 	*Sets the spacing between the innermost-edge of the left border and the 
@@ -177,7 +183,6 @@ public:
 
 	bool stateHitTest( Point* point, ListItem* item );
 protected:
-	ListModel* listModel_;
 	double defaultItemHeight_;
 	double currentMaxWidth_;
 	double currentMaxHeight_;
@@ -188,6 +193,7 @@ protected:
 	bool allowsExtendedSelect_;
 	Array<ListItem*> selectedItems_;
 	Array<ListItem*> items_;
+	bool internalModelChange_;
 	ImageList* imageList_;
 	ImageList* stateImageList_;
 	double stateItemIndent_;

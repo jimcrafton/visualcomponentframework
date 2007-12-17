@@ -22,7 +22,6 @@ static ListItem* previouslySelectedListItem = NULL;
 
 
 ListBoxControl::ListBoxControl():
-	listModel_(NULL),
 	currentMaxWidth_(0),
 	currentMaxHeight_(0),
 	leftGutter_(2),
@@ -30,9 +29,10 @@ ListBoxControl::ListBoxControl():
 	textBounded_(false),
 	imageList_(NULL),
 	stateImageList_(NULL),
-	stateItemIndent_(19)
+	stateItemIndent_(19),
+	internalModelChange_(false)
 {
-	setListModel( new DefaultListModel() );
+	setViewModel( new DefaultListModel() );
 
 	addComponent( getViewModel() );
 
@@ -41,7 +41,6 @@ ListBoxControl::ListBoxControl():
 
 
 ListBoxControl::ListBoxControl( ListModel* listModel ):
-	listModel_(NULL),
 	currentMaxWidth_(0),
 	currentMaxHeight_(0),
 	leftGutter_(2),
@@ -51,7 +50,7 @@ ListBoxControl::ListBoxControl( ListModel* listModel ):
 	stateImageList_(NULL),
 	stateItemIndent_(19)
 {
-	setListModel( listModel );
+	setViewModel( listModel );
 	init();
 }
 
@@ -62,25 +61,8 @@ void ListBoxControl::init()
 	allowsExtendedSelect_ = true;
 
 	setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW ) );
-
-	GraphicsContext* context = getContext();
 	
 	defaultItemHeight_ = UIToolkit::getUIMetricValue( UIMetricsManager::mtListItemHeight );
-
-	EventHandler* lmh = (EventHandler*)
-		new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onItemAdded, "ListBoxControl::onItemAdded" );
-
-	listModel_->ItemAdded += lmh;
-
-	lmh = (EventHandler*)
-		new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onItemDeleted, "ListBoxControl::onItemDeleted" );
-
-	listModel_->ItemRemoved += lmh;
-
-	lmh = (EventHandler*)
-		new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
-
-	listModel_->ContentsChanged += lmh;
 
 	setUseColorForBackground( true );
 }
@@ -92,20 +74,21 @@ ListBoxControl::~ListBoxControl()
 
 void ListBoxControl::destroy()
 {
-	if ( NULL != listModel_ ) {
+	ListModel* lm = getListModel();
+	if ( NULL != lm ) {
 		EventHandler* ev = (EventHandler*)getCallback( "ListBoxControl::onItemAdded" );
 		if ( NULL != ev ) {
-			listModel_->ItemAdded -= ev;
+			lm->ItemAdded -= ev;
 		}
 
 		ev = (EventHandler*)getCallback( "ListBoxControl::onItemDeleted" );
 		if ( NULL != ev ) {
-			listModel_->ItemRemoved -= ev;
+			lm->ItemRemoved -= ev;
 		}
 
 		ev = (EventHandler*)getCallback( "ListBoxControl::onListModelContentsChanged" );
 		if ( NULL != ev ) {
-			listModel_->ContentsChanged -= ev;
+			lm->ContentsChanged -= ev;
 		}
 	}
 
@@ -116,43 +99,92 @@ void ListBoxControl::destroy()
 
 ListModel* ListBoxControl::getListModel()
 {
-	return listModel_;
+	return (ListModel*) getViewModel();
 }
 
-void ListBoxControl::setListModel( ListModel * model )
+void ListBoxControl::setListModel(ListModel* listModel)
 {
-	if ( model == listModel_ ) {
-		return;
+	setViewModel( listModel );
+}
+
+void ListBoxControl::setViewModel( Model* viewModel )
+{
+	ListModel* lm = dynamic_cast<ListModel*>( viewModel );
+	VCF_ASSERT( lm != NULL );
+	if ( NULL == lm ) {
+		throw RuntimeException( "Invalid Model type being assigned to this control." );
 	}
 
-	if ( NULL != listModel_ ) {
+	
+	lm = (ListModel*) getViewModel();
+	if ( NULL != lm ) {
 		EventHandler* ev = (EventHandler*)getCallback( "ListBoxControl::onItemAdded" );
 		if ( NULL != ev ) {
-			listModel_->ItemAdded -= ev;
+			lm->ItemAdded -= ev;
 		}
 
 		ev = (EventHandler*)getCallback( "ListBoxControl::onItemDeleted" );
 		if ( NULL != ev ) {
-			listModel_->ItemRemoved -= ev;
+			lm->ItemRemoved -= ev;
 		}
 
 		ev = (EventHandler*)getCallback( "ListBoxControl::onListModelContentsChanged" );
 		if ( NULL != ev ) {
-			listModel_->ContentsChanged -= ev;
+			lm->ContentsChanged -= ev;
 		}		
 	}
 
-	listModel_ = model;
 
-
-	if ( NULL != listModel_ ) {
-		
+	selectedItems_.clear();
+	Array<ListItem*>::iterator it = items_.begin();
+	while ( it != items_.end() ) {
+		ListItem* item = *it;
+		removeComponent( item );
+		item->free();
+		++it;
 	}
+	
+	CustomControl::setViewModel( viewModel );
 
-	setViewModel( listModel_ );
+
+	if ( NULL != viewModel ) {
+		lm = (ListModel*) viewModel;
+		
+		EventHandler* lmh = (EventHandler*)
+			new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onItemAdded, "ListBoxControl::onItemAdded" );
+		
+		lm->ItemAdded += lmh;
+		
+		lmh = (EventHandler*)
+			new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onItemDeleted, "ListBoxControl::onItemDeleted" );
+		
+		lm->ItemRemoved += lmh;
+		
+		lmh = (EventHandler*)
+			new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
+		
+		lm->ContentsChanged += lmh;
+
+
+		//reset content...
+
+		if ( lm->getCount() > 0 ) {
+			items_.resize( lm->getCount() ) ;
+			for (size_t i=0;i<items_.size();i++ ) {
+				ListItem* item = new ListItem();
+				
+				addComponent( item );
+				items_[i] = item;
+				item->setModel( lm );
+				item->setControl( this );
+				item->setIndex( i );			
+			}
+		}
+	}
 
 	repaint();
 }
+
 
 void ListBoxControl::onListModelContentsChanged( ListModelEvent* event )
 {
@@ -201,8 +233,40 @@ void ListBoxControl::setListItem( const uint32& index, ListItem* item )
 	}
 }
 
+ListItem* ListBoxControl::insertItem( const uint32& index, const String& caption, const uint32 imageIndex )
+{
+	internalModelChange_ = true;
+
+	ListModel* lm = (ListModel*) getViewModel();
+
+	lm->insert( index, caption );
+
+	ListItem* item = new ListItem();
+	addComponent( item );
+	items_.insert( items_.begin() + index, item );
+
+	item->setModel( lm );
+	item->setControl( this );
+	item->setIndex( index );
+	item->setImageIndex( imageIndex );
+
+	internalModelChange_ = false;
+
+	return item;
+}
+
+ListItem* ListBoxControl::addItem( const String& caption, const uint32 imageIndex )
+{	
+	ListModel* lm = (ListModel*) getViewModel();
+	insertItem( lm->getCount(), caption, imageIndex );	
+}
+
 void ListBoxControl::onItemAdded( ListModelEvent* event )
 {
+
+	if ( internalModelChange_ ) {
+		return;
+	}
 
 	ListItem* item = new ListItem();
 	addComponent( item );

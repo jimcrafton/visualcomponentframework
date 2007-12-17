@@ -5,7 +5,7 @@
  this uses a local path - may need to be modified for others
  -->
 
-	<xsl:import href="D:/docbook-xsl-1.60.1/htmlhelp/htmlhelp.xsl"/>
+	<xsl:import href="F:/code/docbook-xsl-1.69.1/htmlhelp/htmlhelp.xsl"/>
 	
 	<xsl:param name="generate.legalnotice.link" select="1"/>
 	<xsl:param name="html.stylesheet" select="'vcf.css'"/>
