@@ -163,14 +163,14 @@ public:
 	*@param uint32 th image index of the new item. The default value is 0
 	*@return ListItem the newly added item
 	*/
+	ListItem* insertItem( const uint32& index, const String& caption, const uint32 imageIndex=0 );
+
 	ListItem* addItem( const String& caption, const uint32 imageIndex=0 );
 
-	/**
-	*adds a new ListItem. This method simply calls the models ListModel::addItem()
-	*method.
-	*@param ListItem the item top be added to the control's ListModel
-	*/
-	void addItem( ListItem* item );
+	ListItem* getListItem( const uint32& index );
+
+	void setListItem( const uint32& index, ListItem* item );
+	
 
 	/**
 	*sets the drop down count. This is used to specify how many
@@ -326,6 +326,7 @@ protected:
 	bool dropDownSelected_;
 	bool autoLookup_;
 	bool autoLookupIgnoreCase_;
+	bool internalModelChange_;
 };
 
 }; //namespace VCF
