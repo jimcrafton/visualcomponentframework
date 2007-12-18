@@ -216,6 +216,8 @@ protected:
 	void paintItemImage( GraphicsContext* ctx, Rect& itemRect, ListItem* item );
 
 	Rect getStateRect( ListItem* item );
+
+	void recalcBoundsForItem( ListItem* item );
 };
 
 

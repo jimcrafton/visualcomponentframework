@@ -30,6 +30,7 @@ where you installed the VCF.
 namespace VCF {
 
 class TextControl;
+class ListBoxControl;
 
 #define COMBOBOXCONTROL_CLASSID		"4A9D66D5-3B26-11d4-B54C-00C04F0196DA"
 
@@ -84,26 +85,12 @@ public:
 	*/
 	ListModel* getListModel();
 
-	/**
-	*sets the ListModel for the Control. If there was a previous ListModel
-	*already associated with the control, then the old ListModel's release() method
-	*will be called prior to setting the new ListModel. The control will
-	*call the newly set ListModel's addRef() after setting.
-	*@param ListModel the new model to set for this control
-	*/
 	void setListModel(ListModel * model);
 
 	/**
 	*the overriden paint method
 	*/
-	virtual void paint( GraphicsContext* context );
-
-
-	void onListModelContentsChanged( ListModelEvent* event );
-
-	void onItemAdded( ListModelEvent* event );
-
-	void onItemDeleted( ListModelEvent* event );
+	virtual void paint( GraphicsContext* context );	
 
 	virtual void mouseDown( MouseEvent* event );
 
@@ -131,12 +118,16 @@ public:
 	*/
 	void setSelectedItem( ListItem* selectedItem );
 
+	
 	/**
 	*sets the currently selected item as specified by the index.
 	*Causes a SelectionChanged event to be fired.
 	@param uint32 the index of the item to be selected
 	*/
 	void setSelectedItemIndex( const uint32& selectedIndex );
+
+	
+
 
 	/**
 	*returns the combo box style.
@@ -295,30 +286,33 @@ public:
 	virtual void selectItems( const bool& select );
 
 	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
+
+	virtual void setViewModel( Model* viewModel );
+
+	ListBoxControl* getListBox();
 protected:
 	void onDropDownLostFocus( WindowEvent* event );
 	void closeDropDown( Event* event );
 	void onEditKeyPressed( KeyboardEvent* event );
 	void onEditReturnKeyPressed( KeyboardEvent* event );
-
 	void onFocusGained( FocusEvent* event );
-
 	void onPostSelect( ItemEvent* e );
-
 	virtual void destroy();
+	void onListModelContentsChanged( ListModelEvent* event );
+	void onItemAdded( ListModelEvent* event );
+	void onItemDeleted( ListModelEvent* event );
+	void updateEditBounds();
 
-protected:
-	Window* dropDown_;
-	ListModel* listModel_;
-	ListItem* selectedItem_;
-	uint32 selectedIndex_;
+
+	Window* dropDown_;		
 	bool arrowPressed_;
 	//Rect arrowRect_;
 	Rect viewRect_;
 	bool mouseOver_;
 	ComboBoxStyleType comboBoxStyle_;
 	TextControl* edit_;
-	void updateEditBounds();
+	ListBoxControl* listBox_;
+	
 	uint32 dropDownCount_;
 	double dropDownWidth_;
 	bool dropDownExtendFullScreen_;

@@ -22,7 +22,7 @@ using namespace VCF;
 class DropDownListBox : public ListBoxControl {
 public:
 	DropDownListBox( ComboBoxControl* comboBoxControl ) :
-		ListBoxControl( comboBoxControl->getListModel() ){
+		ListBoxControl( NULL ){
 		comboBoxControl_ = comboBoxControl;
 		// Remark: selectedItem_ differs from comboBoxControl->getListModel()->getSelectedItem() because of the DropDownListBox::mouseMove() action
 		comboBoxControl->selectItems( false );
@@ -57,7 +57,7 @@ public:
 
 	virtual void mouseMove( MouseEvent* event ) {
 		CustomControl::mouseMove( event );
-/*
+
 		if ( (Component::csNormal == getComponentState()) ) {
 			ListItem* foundItem = findSingleSelectedItem( event->getPoint() );
 			if ( NULL != foundItem ) {
@@ -68,14 +68,13 @@ public:
 				}
 				else {
 					
-					if ( foundItem != singleSelectedItem_ ) {
+					if ( foundItem != this->getSelectedItem() ) {
 						setSelectedItem( foundItem );
 					}
 				}
 
 			}
 		}
-		*/
 	}
 
 	virtual void setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating=true ) {
@@ -100,7 +99,7 @@ public:
 	}
 
 public:
-	std::vector<ListItem*> originalSelectedItems_;
+	//std::vector<ListItem*> originalSelectedItems_;
 	ComboBoxControl* comboBoxControl_;
 };
 
@@ -129,7 +128,7 @@ public:
 		closeHandler_ = closeHandler;
 
 		comboBoxControl_ = comboBoxControl;
-		listBox_ = new DropDownListBox( comboBoxControl );
+		listBox_ = comboBoxControl->getListBox();
 		add( listBox_, AlignClient );
 
 		listBox_->MouseUp += new ClassProcedure1<MouseEvent*,ComboBoxDropDown>( this, &ComboBoxDropDown::onListboxMouseUp, "onListboxMouseUp" );
@@ -210,7 +209,7 @@ public:
 	}
 
 	virtual void destroy() {
-		listBox_->setListModel( NULL );
+		remove( listBox_ );
 
 		// bugfix [ 1099910 ] commented away. The combobox
 		// may have been already destroyed by another control
@@ -259,7 +258,7 @@ public:
 	}
 
 	void cleanUpOnClose( Event* e ) {
-		listBox_->setListModel( NULL );	
+		//listBox_->setListModel( NULL );	
 	}
 
 protected:
@@ -298,15 +297,16 @@ public:
 
 ComboBoxControl::ComboBoxControl():
 	CustomControl( true ),//make this a heavyweight control !
-	listModel_(NULL)
+	dropDown_(NULL),
+	listBox_(NULL),
+	edit_(NULL)
 {
 	init();
 }
 
 void ComboBoxControl::init()
 {
-	comboBoxStyle_ = cbsDropDown;
-	selectedItem_ = NULL;
+	comboBoxStyle_ = cbsDropDown;	
 	dropDown_ = NULL;
 	dropDownCount_ = 6;
 	dropDownWidth_ = 0;
@@ -316,13 +316,8 @@ void ComboBoxControl::init()
 	autoLookup_ = true;
 	autoLookupIgnoreCase_ = true;
 
-	setListModel( new DefaultListModel() );
-
-	addComponent( getViewModel() );
-
 	setContainer( new ComboBoxContainer() );
 
-	selectedIndex_ = 0;
 	arrowPressed_ = false;
 	mouseOver_ = false;
 
@@ -352,6 +347,13 @@ void ComboBoxControl::init()
 	Basic3DBorder* border = new Basic3DBorder();
 	border->setInverted( true );
 	setBorder( border );
+
+	listBox_ = new DropDownListBox(this);
+	addComponent( listBox_ );
+
+	setViewModel( new DefaultListModel() );
+
+	addComponent( getViewModel() );
 }
 
 ComboBoxControl::~ComboBoxControl()
@@ -371,21 +373,29 @@ void ComboBoxControl::destroy()
 	*/
 
 	/*
-	Model* model = this->getViewModel();
+	Model* model = getViewModel();
 	if ( NULL != model ) {
 		model->release();
 	}
 	*/
-	listModel_ = NULL;
 }
 
 ListModel* ComboBoxControl::getListModel()
 {
-	return listModel_;
+	return (ListModel*) getViewModel() ;
 }
 
-void ComboBoxControl::setListModel(ListModel * model)
+void ComboBoxControl::setViewModel( Model* viewModel )
 {
+	ListModel* lm = dynamic_cast<ListModel*>( viewModel );
+	VCF_ASSERT( lm != NULL );
+	if ( NULL == lm ) {
+		throw RuntimeException( "Invalid Model type being assigned to this control." );
+	}
+
+	
+	lm = (ListModel*) getViewModel();
+
 	CallBack* changed = getCallback( "ComboBox_onListModelContentsChanged" );
 	if ( NULL == changed ) {
 		changed =
@@ -410,26 +420,33 @@ void ComboBoxControl::setListModel(ListModel * model)
 														"ComboBox_onItemDeleted" );
 	}
 
-	if ( NULL != listModel_ ) {
-		listModel_->ContentsChanged -= changed;
+	if ( NULL != lm ) {
+		lm->ContentsChanged -= changed;
 
-		listModel_->ItemAdded -= itemAdded;
+		lm->ItemAdded -= itemAdded;
 
-		listModel_->ItemRemoved -= itemDeleted;
+		lm->ItemRemoved -= itemDeleted;
 	}
 
-	listModel_ = model;
+	CustomControl::setViewModel( viewModel );
+	listBox_->setViewModel( viewModel );
 
-	if ( NULL != listModel_ ) {		
+	if ( NULL != viewModel ) {
+		lm = (ListModel*) viewModel;
 
-		listModel_->ContentsChanged += changed;
+		lm->ContentsChanged += changed;
 
-		listModel_->ItemAdded += itemAdded;
+		lm->ItemAdded += itemAdded;
 
-		listModel_->ItemRemoved += itemDeleted;
+		lm->ItemRemoved += itemDeleted;
 	}
 
-	setViewModel( listModel_ );
+	repaint();
+}
+
+void ComboBoxControl::setListModel(ListModel * model)
+{	
+	setViewModel( model );
 }
 
 void ComboBoxControl::mouseEnter( MouseEvent* event )
@@ -461,10 +478,10 @@ void ComboBoxControl::paint( GraphicsContext* context )
 	ButtonState state;
 	Rect clientRect = getClientBounds();
 
-	state.setActive( this->isActive() );
-	state.setEnabled( this->isEnabled() );
+	state.setActive( isActive() );
+	state.setEnabled( isEnabled() );
 	state.setPressed( arrowPressed_ );
-	state.setFocused( this->isFocused() );
+	state.setFocused( isFocused() );
 
 	ListItem* selectedItem = getSelectedItem();
 	if ( NULL != selectedItem ){
@@ -525,6 +542,26 @@ void ComboBoxControl::onItemDeleted( ListModelEvent* event )
 	*/
 }
 
+ListItem* ComboBoxControl::insertItem( const uint32& index, const String& caption, const uint32 imageIndex )
+{
+	return listBox_->insertItem( index, caption, imageIndex );
+}
+
+ListItem* ComboBoxControl::addItem( const String& caption, const uint32 imageIndex )
+{
+	return listBox_->addItem( caption, imageIndex );
+}
+
+ListItem* ComboBoxControl::getListItem( const uint32& index )
+{
+	return listBox_->getListItem( index );
+}
+
+void ComboBoxControl::setListItem( const uint32& index, ListItem* item )
+{
+	listBox_->setListItem( index, item );
+}
+
 void ComboBoxControl::closeDropDown( Event* event )
 {
 	if ( NULL != dropDown_ ) {
@@ -536,7 +573,7 @@ void ComboBoxControl::closeDropDown( Event* event )
 
 		dropDown_->setVisible( false );
 
-		this->repaint();
+		repaint();
 		dropDown_->close();
 
 		if ( NULL != selectedItem  ) {
@@ -574,19 +611,19 @@ void ComboBoxControl::onDropDownLostFocus( WindowEvent* event )
 		}
 	}
 
-	this->arrowPressed_ = false;
+	arrowPressed_ = false;
 }
 
 void ComboBoxControl::mouseDown( MouseEvent* event )
 {
 	CustomControl::mouseDown( event );
 
-	//this->arrowPressed_ = this->arrowRect_.containsPt( event->getPoint() );
+	//arrowPressed_ = arrowRect_.containsPt( event->getPoint() );
 
-	this->keepMouseEvents();
+	keepMouseEvents();
 
 	Rect clientRect = getClientBounds();
-	this->arrowPressed_ = clientRect.containsPt( event->getPoint() );
+	arrowPressed_ = clientRect.containsPt( event->getPoint() );
 
 	if ( true == arrowPressed_ ){
 		if ( dropDown_ != NULL ) {
@@ -619,28 +656,29 @@ void ComboBoxControl::mouseDown( MouseEvent* event )
 			}
 		}
 	}
-	this->repaint();
+	repaint();
 }
 
 void ComboBoxControl::mouseMove( MouseEvent* event )
 {
 	CustomControl::mouseMove( event );
 	if ( event->hasLeftButton() ){
-		//this->arrowPressed_ = this->arrowRect_.containsPt( event->getPoint() );
+		//arrowPressed_ = arrowRect_.containsPt( event->getPoint() );
 		Rect clientRect = getClientBounds();
-		this->arrowPressed_ = clientRect.containsPt( event->getPoint() );
+		arrowPressed_ = clientRect.containsPt( event->getPoint() );
 
-		this->repaint();
+		repaint();
 	}
 }
 
 void ComboBoxControl::mouseUp( MouseEvent* event )
 {
 	CustomControl::mouseUp( event );
-	this->releaseMouseEvents();
+	releaseMouseEvents();
 	arrowPressed_ = false;
-	this->repaint();
+	repaint();
 }
+
 
 void ComboBoxControl::keyPressed( KeyboardEvent* event )
 {
@@ -648,33 +686,41 @@ void ComboBoxControl::keyPressed( KeyboardEvent* event )
 	//  control, as it happens when an item is selected;
 	// it is not called when the focus is on the edit_ control
 
+	ListModel* lm = getListModel();
+
 	switch ( event->getVirtualCode() ){
 		case vkUpArrow :{
-			uint32 index = selectedIndex_ + 1;
-
-			if ( index >=	this->listModel_->getCount() ){
-				index = 0;
+			ListItem* item = getSelectedItem();
+			if ( NULL != item ) {
+				uint32 index = item->getIndex() + 1;
+				
+				if ( index >= lm->getCount() ){
+					index = 0;
+				}
+				
+				setSelectedItemIndex( index );
+				
+				repaint();
 			}
-
-			this->setSelectedItemIndex( index );
-
-			this->repaint();
 		}
 		break;
 
 		case vkDownArrow :{
-			uint32 index = selectedIndex_ - 1;
-			/**
-			* this is done this way because we have an uint32 so we
-			*won't get negative numbers, anything over the count needs to be wrapped
-			*/
-			if ( index > this->listModel_->getCount() ){
-				index = this->listModel_->getCount() -1;
+			ListItem* item = getSelectedItem();
+			if ( NULL != item ) {
+				uint32 index = item->getIndex() - 1;
+				/**
+				* this is done this way because we have an uint32 so we
+				*won't get negative numbers, anything over the count needs to be wrapped
+				*/
+				if ( index > lm->getCount() ){
+					index = lm->getCount() -1;
+				}
+				
+				setSelectedItemIndex( index );
+				
+				repaint();
 			}
-
-			this->setSelectedItemIndex( index );
-
-			this->repaint();
 		}
 		break;
 
@@ -721,7 +767,7 @@ void ComboBoxControl::keyPressed( KeyboardEvent* event )
 ListItem* ComboBoxControl::getSelectedItem()
 {
 
-	return selectedItem_;
+	return listBox_->getSelectedItem();
 }
 
 void ComboBoxControl::onPostSelect( ItemEvent* e )
@@ -731,16 +777,12 @@ void ComboBoxControl::onPostSelect( ItemEvent* e )
 
 void ComboBoxControl::setSelectedItem( ListItem* selectedItem )
 {
-	if ( NULL != selectedItem_ ) {
-		selectedItem_->setSelected( false );
-	}
+	listBox_->setSelectedItem( selectedItem );
 
-	selectedItem_ = selectedItem;
-	if ( NULL != selectedItem_ ) {
-		selectedItem_->setSelected( true );
+	if ( NULL != selectedItem ) {
 		
 		if ( cbsDropDownWithEdit == comboBoxStyle_	) {
-			edit_->getTextModel()->setText( selectedItem_->getCaption() );
+			edit_->getTextModel()->setText( selectedItem->getCaption() );
 		}
 
 		setFocused();
@@ -751,7 +793,7 @@ void ComboBoxControl::setSelectedItem( ListItem* selectedItem )
 		instance as opposed to the selected item
 		*/
  		ItemEvent event( this, ITEM_EVENT_SELECTED );
-		event.setUserData( (void*)selectedItem_ );
+		event.setUserData( (void*)selectedItem );
 		SelectionChanged( &event );
 	}
 
@@ -760,13 +802,7 @@ void ComboBoxControl::setSelectedItem( ListItem* selectedItem )
 
 void ComboBoxControl::setSelectedItemIndex( const uint32& selectedIndex )
 {
-	selectedIndex_ = selectedIndex;
-	if ( NULL != listModel_ ){
-		if ( listModel_->getCount() > 0 ){
-			//ListItem* item = listModel_->getItemFromIndex( selectedIndex );
-			//setSelectedItem( item );
-		}
-	}
+	setSelectedItem( listBox_->getListItem( selectedIndex ) );
 }
 
 void ComboBoxControl::setComboBoxStyle( const ComboBoxStyleType& comboBoxStyle )
@@ -870,7 +906,7 @@ void ComboBoxControl::onEditReturnKeyPressed( KeyboardEvent* event )
 
 		}
 		else {
-			ListItem* item = this->getSelectedItem();
+			ListItem* item = getSelectedItem();
 			if ( NULL != item ) {
 				// commented as we don't want to change the caption of the items in the list [ bugfix 1112867]
 				//item->setCaption( edit_->getTextModel()->getText() );
@@ -894,7 +930,7 @@ void ComboBoxControl::onEditReturnKeyPressed( KeyboardEvent* event )
 
 					ListItem* found = lookupItem( editCaption, autoLookupIgnoreCase_ );
 					if ( NULL != found ) {
-						this->selectItems( false );
+						selectItems( false );
 
 						((ComboBoxDropDown*)dropDown_)->ensureVisible( found, true );
 						found->setSelected( true );
@@ -981,22 +1017,6 @@ void ComboBoxControl::setAutoLookupIgnoreCase( const bool& ignoreCase )
 	autoLookupIgnoreCase_ = ignoreCase;
 }
 
-ListItem* ComboBoxControl::addItem( const String& caption, const uint32 imageIndex )
-{
-	ListItem* result = new DefaultListItem();
-	result->setCaption( caption );
-	result->setImageIndex( imageIndex );
-	addItem( result );
-
-	return result;
-}
-
-void ComboBoxControl::addItem( ListItem* item )
-{
-	if ( NULL != listModel_ ) {
-		listModel_->add( item );
-	}
-}
 
 void ComboBoxControl::onFocusGained( FocusEvent* event )
 {
@@ -1065,7 +1085,7 @@ void ComboBoxControl::selectItems( const bool& select )
 {
 	// usually used to deselect all itmes in the drop down list box
 /*
-	Enumerator<ListItem*>* items = this->getListModel()->getItems();
+	Enumerator<ListItem*>* items = getListModel()->getItems();
 	while ( true == items->hasMoreElements() ) {
 		ListItem* item = items->nextElement();
 		//if ( true == item->isSelected() ) {
@@ -1087,6 +1107,11 @@ bool ComboBoxControl::generatePropertyValue( const String& fullPropertyName, Pro
 	}
 
 	return Control::generatePropertyValue( fullPropertyName, property, value, strValue );
+}
+
+ListBoxControl* ComboBoxControl::getListBox()
+{
+	return listBox_;
 }
 
 /**
