@@ -1,6 +1,6 @@
 object Window1 : VCF::Window, 'ED88C0A1-26AB-11d4-B539-00C04F0196DA'
 
-	alignment = AlignNone
+	alignment = VCF::TypedEnum<enum VCF::AlignmentType> @ 00E12BC8, refcount: 0
 
 	anchor = []
 
@@ -12,11 +12,11 @@ object Window1 : VCF::Window, 'ED88C0A1-26AB-11d4-B539-00C04F0196DA'
 
 	caption = 'Window1'
 
-	color.blue = 0.94118
+	color.blue = 0.89020
 
-	color.green = 0.94118
+	color.green = 0.87451
 
-	color.red = 0.94118
+	color.red = 0.87843
 
 	cursor = 0
 
@@ -42,7 +42,7 @@ object Window1 : VCF::Window, 'ED88C0A1-26AB-11d4-B539-00C04F0196DA'
 
 	font.underlined = false
 
-	frameStyle = fstSizeable
+	frameStyle = VCF::TypedEnum<enum VCF::FrameStyleType> @ 00E13E10, refcount: 0
 
 	height = 500.00000
 
