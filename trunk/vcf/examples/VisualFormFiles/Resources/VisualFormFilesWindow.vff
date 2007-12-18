@@ -1,173 +1,89 @@
 object Form1 : Window, 'ED88C0A1-26AB-11d4-B539-00C04F0196DA'
-
 	alignment = AlignNone
-
 	anchor = 0
-
 	autoStartDragDrop = false
-
 	border = @
-
 	borderSize = 0.00000
-
 	bottom = 555.00000
-
 	bottomBorderHeight = 0.00000
-
 	color.blue = 0.78431
-
 	color.green = 0.81569
-
 	color.red = 0.83137
-
 	container = @
-
 	doubleBuffered = true
-
 	enabled = true
-
 	font.bold = false
-
 	font.color.blue = 0.00000
-
 	font.color.green = 0.00000
-
 	font.color.red = 0.00000
-
 	font.italic = false
-
 	font.name = 'MS Sans Serif'
-
 	font.pointSize = 9.00000
-
 	font.strikeout = false
-
 	font.underlined = false
-
 	height = 537.00000
-
 	left = 234.00000
-
 	leftBorderWidth = 0.00000
-
 	name = 'Form1'
-
 	popupMenu = null
-
 	right = 589.00000
-
 	rightBorderWidth = 0.00000
-
 	tabOrder = 2
-
 	tabStop = false
-
 	tag = 53
-
 	toolTipText = ''
-
 	top = 70.00000
-
 	topBorderHeight = 0.00000
-
 	transparent = false
-
 	useColorForBackground = false
-
 	useParentFont = false
-
 	visible = true
-
 	whatThisHelpString = ''
-
 	width = 565.00000
-
 	object label1 : VCF::Label, 'ED88C09F-26AB-11d4-B539-00C04F0196DA'
-
 		anchor = [AnchorLeft,AnchorRight]
-
 		autoStartDragDrop = false
-
 		border = null
-
 		bottom = 100.00000
-
 		caption = 'This is a label!'
-
 		color.blue = 0.50000
-
 		color.green = 1.00000
-
 		color.red = 0.00000
-
 		container = null
-
 		doubleBuffered = true
-
 		enabled = true
-
 		focusControl = null
-
 		font.bold = false
-
 		font.color.blue = 0.00000
-
 		font.color.green = 0.00000
-
 		font.color.red = 0.00000
-
 		font.italic = false
-
 		font.name = 'MS Sans Serif'
-
 		font.pointSize = 9.00000
-
 		font.strikeout = false
-
 		font.underlined = false
-
 		height = 45.00000
-
 		left = 20.00000
-
 		name = 'label1'
-
 		popupMenu = null
-
 		right = 320.00000
-
 		tabOrder = 0
-
 		tabStop = false
-
 		tag = 279
-
 		textAlignment = taTextLeft
-
 		toolTipText = ''
-
 		top = 55.00000
-
 		transparent = false
-
 		useColorForBackground = true
-
 		useParentFont = false
-
 		verticalAlignment = tvaTextCenter
-
 		visible = true
-
 		whatThisHelpString = ''
-
 		width = 300.00000
-
 		wordWrap = false
-
 		delegates 
 
 		end
-
 	end
 
 	object text1 : VCF::TextControl, 'ED88C09E-26AB-11d4-B539-00C04F0196DA'

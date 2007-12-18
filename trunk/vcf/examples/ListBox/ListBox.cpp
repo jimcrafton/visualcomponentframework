@@ -204,9 +204,8 @@ public:
 			multiModel->add( capt ); 
 			extendedModel->add( capt );
 
-			singleModel->add( capt );
-			ListItem* item = listBoxSingle->getListItem(j);
-			item->setImageIndex( j / 9 );
+			//singleModel->add( capt );
+			ListItem* item = listBoxSingle->addItem( capt, j / 9 );			
 			if ( j%9 == 0 ) {
 				item->setState( Item::idsChecked );
 			}
