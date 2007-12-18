@@ -109,10 +109,13 @@ void ListBoxControl::setListModel(ListModel* listModel)
 
 void ListBoxControl::setViewModel( Model* viewModel )
 {
-	ListModel* lm = dynamic_cast<ListModel*>( viewModel );
-	VCF_ASSERT( lm != NULL );
-	if ( NULL == lm ) {
-		throw RuntimeException( "Invalid Model type being assigned to this control." );
+	ListModel* lm = NULL;
+	if ( NULL != viewModel ) {
+		lm = dynamic_cast<ListModel*>( viewModel );
+		VCF_ASSERT( lm != NULL );
+		if ( NULL == lm ) {
+			throw RuntimeException( "Invalid Model type being assigned to this control." );
+		}
 	}
 
 	
@@ -252,33 +255,21 @@ ListItem* ListBoxControl::insertItem( const uint32& index, const String& caption
 
 	internalModelChange_ = false;
 
+	recalcBoundsForItem(item);
+
+	repaint();
+
 	return item;
 }
 
 ListItem* ListBoxControl::addItem( const String& caption, const uint32 imageIndex )
 {	
 	ListModel* lm = (ListModel*) getViewModel();
-	insertItem( lm->getCount(), caption, imageIndex );	
+	return insertItem( lm->getCount(), caption, imageIndex );	
 }
 
-void ListBoxControl::onItemAdded( ListModelEvent* event )
+void ListBoxControl::recalcBoundsForItem( ListItem* item )
 {
-
-	if ( internalModelChange_ ) {
-		return;
-	}
-
-	ListItem* item = new ListItem();
-	addComponent( item );
-	items_.push_back( item );
-	item->setModel( getViewModel() );
-	item->setControl( this );
-	item->setIndex( items_.size() - 1 );
-
-
-	//event->item 
-
-
 	Scrollable* scrollable = getScrollable();
 
 
@@ -320,6 +311,23 @@ void ListBoxControl::onItemAdded( ListModelEvent* event )
 
 		scrollable->setVirtualViewSize( currentMaxWidth_, currentMaxHeight_ );
 	}
+}
+
+void ListBoxControl::onItemAdded( ListModelEvent* event )
+{
+
+	if ( internalModelChange_ ) {
+		return;
+	}
+
+	ListItem* item = new ListItem();
+	addComponent( item );
+	items_.push_back( item );
+	item->setModel( getViewModel() );
+	item->setControl( this );
+	item->setIndex( items_.size() - 1 );
+	
+	recalcBoundsForItem(item);
 
 	repaint();
 }
