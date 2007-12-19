@@ -134,6 +134,8 @@ public:
 
 	ListItem* addItem( const String& caption, const uint32 imageIndex=0 );
 
+	Enumerator<ListItem*>* getItems();
+
 	/**
 	*Sets the spacing between the innermost-edge of the left border and the 
 	*beginning of the Item captions when scrolled all the way to the left.
@@ -218,6 +220,8 @@ protected:
 	Rect getStateRect( ListItem* item );
 
 	void recalcBoundsForItem( ListItem* item );
+
+	void removeItem( ListItem* item, const uint32& itemIndex );
 };
 
 

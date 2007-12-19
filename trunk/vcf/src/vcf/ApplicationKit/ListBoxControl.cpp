@@ -332,38 +332,62 @@ void ListBoxControl::onItemAdded( ListModelEvent* event )
 	repaint();
 }
 
+void ListBoxControl::removeItem( ListItem* item, const uint32& itemIndex )
+{
+	if ( item->isSelected() ) {
+		eraseFromSelectedItems( item );
+	}
+	
+	currentMaxHeight_ -= item->getBounds().getHeight();
+	//need to recalc currentMaxWidth_ here also if item removed was the widest item. DT
+	
+	Scrollable* scrollable = getScrollable();
+	
+	if ( NULL != scrollable ) {
+		if ( (getHeight() > currentMaxHeight_) && (scrollable->getVerticalPosition() > 0.0) ) {
+			scrollable->setVerticalPosition( 0.0 );
+		}
+		
+		if ( (getWidth() > currentMaxWidth_) && (scrollable->getHorizontalPosition() > 0.0) ) {
+			scrollable->setHorizontalPosition( 0.0 );
+		}		
+		
+		scrollable->setVirtualViewSize( currentMaxWidth_, currentMaxHeight_ );	
+	}
+
+	Array<ListItem*>::iterator found = items_.begin() + itemIndex;
+	Array<ListItem*>::iterator it = found;
+	it ++;
+	while ( it != items_.end() ) {
+		ListItem* itemAfter = *it;
+		itemAfter->setIndex( itemAfter->getIndex() - 1 );
+		
+		++it;
+	}
+
+	items_.erase( found );
+
+	removeComponent( item );
+	item->free();
+	
+	repaint();
+}
+
 void ListBoxControl::onItemDeleted( ListModelEvent* event )
 {
+	Array<ListItem*>::iterator found = items_.begin();
 
-	Array<ListItem*>::iterator found = items_.begin() + event->index ;
-	if ( found != items_.end() ) {
+	while ( found != items_.end() ) {
 		ListItem* item = *found;
-
-		
-		if ( item->isSelected() ) {
-			eraseFromSelectedItems( item );
+		if ( item->getIndex() == event->index ) {
+			break;
 		}
-		
-		currentMaxHeight_ -= item->getBounds().getHeight();
-		//need to recalc currentMaxWidth_ here also if item removed was the widest item. DT
-		
-		Scrollable* scrollable = getScrollable();
-		
-		if ( NULL != scrollable ) {
-			if ( (getHeight() > currentMaxHeight_) && (scrollable->getVerticalPosition() > 0.0) ) {
-				scrollable->setVerticalPosition( 0.0 );
-			}
-			
-			if ( (getWidth() > currentMaxWidth_) && (scrollable->getHorizontalPosition() > 0.0) ) {
-				scrollable->setHorizontalPosition( 0.0 );
-			}		
-			
-			scrollable->setVirtualViewSize( currentMaxWidth_, currentMaxHeight_ );	
-		}
-		
-		items_.erase( found );
+		++found;
 	}
-	repaint();
+
+	if ( found != items_.end() ) {		
+		removeItem( *found, found - items_.begin() );
+	}
 }
 
 void ListBoxControl::rangeSelect( const bool & isSelected, ListItem * first, ListItem * last )
@@ -1013,6 +1037,11 @@ ListItem* ListBoxControl::getSelectedItem()
 		result = selectedItems_[0];
 	}
 	return result;
+}
+
+Enumerator<ListItem*>* ListBoxControl::getItems()
+{
+	return items_.getEnumerator();
 }
 
 /**

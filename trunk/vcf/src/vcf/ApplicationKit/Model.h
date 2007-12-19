@@ -25,6 +25,9 @@ class View;
 /**
 \class Model Model.h "vcf/ApplicationKit/Model.h"
 A Model is the base class for storing data for a control or other visual elements.
+@delegates
+	@del Model::ModelChanged
+	@del Model::ModelValidate
 */
 class APPLICATIONKIT_API Model : public Component {
 public:
@@ -86,21 +89,6 @@ public:
 		ValidationEvent e( this );
 		ModelValidate( &e );
 	}
-
-    /**
-     * Adds a model listener to the model
-     */
-    void addModelHandler( ModelHandler* handler ){
-		ModelChanged +=  handler;
-	}
-
-    /**
-     * removes a model listener from the model
-     */
-    void removeModelHandler( ModelHandler* handler ){
-		ModelChanged.remove( handler );
-	}
-
 	
 
 	

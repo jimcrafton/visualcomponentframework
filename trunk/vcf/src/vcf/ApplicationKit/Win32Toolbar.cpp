@@ -103,8 +103,8 @@ void Win32Toolbar::create( Control* control )
 		SendMessage(hwnd_, TB_AUTOSIZE, 0, 0 );
 	}
 
-	control->getViewModel()->addModelHandler(
-		new ClassProcedure1<ModelEvent*,Win32Toolbar>( this, &Win32Toolbar::onModelChanged, "Win32Toolbar::onModelChanged" ) );
+	control->getViewModel()->ModelChanged +=
+		new ClassProcedure1<ModelEvent*,Win32Toolbar>( this, &Win32Toolbar::onModelChanged, "Win32Toolbar::onModelChanged" );
 
 }
 

@@ -25,10 +25,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/TabPage.h"
 #endif // _VCF_TABPAGE_H__
 
-#ifndef _VCF_TABMODELEVENT_H__
-#	include "vcf/ApplicationKit/TabModelEvent.h"
-#endif // _VCF_TABMODELEVENT_H__
-
 
 
 #ifndef _VCF_PUSHBUTTON_H__

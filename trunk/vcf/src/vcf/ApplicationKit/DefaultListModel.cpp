@@ -88,6 +88,8 @@ void DefaultListModel::removeAtIndex( const uint32 & index )
 
 VariantData DefaultListModel::get( const uint32& index )
 {
+	VCF_ASSERT( index < data_.size() );
+
 	return data_[index];
 }
 
@@ -104,6 +106,8 @@ uint32 DefaultListModel::getIndexOf( const VariantData& item )
 
 String DefaultListModel::getAsString( const uint32& index )
 {
+	VCF_ASSERT( index < data_.size() );
+
 	VariantData result = data_[index];
 	return result.toString();
 }

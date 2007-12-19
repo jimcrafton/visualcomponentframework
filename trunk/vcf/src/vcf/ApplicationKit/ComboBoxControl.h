@@ -297,16 +297,12 @@ protected:
 	void onEditReturnKeyPressed( KeyboardEvent* event );
 	void onFocusGained( FocusEvent* event );
 	void onPostSelect( ItemEvent* e );
-	virtual void destroy();
-	void onListModelContentsChanged( ListModelEvent* event );
-	void onItemAdded( ListModelEvent* event );
-	void onItemDeleted( ListModelEvent* event );
+	virtual void destroy();	
 	void updateEditBounds();
 
 
 	Window* dropDown_;		
 	bool arrowPressed_;
-	//Rect arrowRect_;
 	Rect viewRect_;
 	bool mouseOver_;
 	ComboBoxStyleType comboBoxStyle_;

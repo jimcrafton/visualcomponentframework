@@ -91,7 +91,7 @@ void TreeControl::setTreeModel( TreeModel * model )
 		treeModel_->removeTreeNodeDeletedHandler( ev );
 
 		ev = (EventHandler*)getCallback( "ModelHandler" );
-		getViewModel()->removeModelHandler( (ModelHandler*)ev );
+		getViewModel()->ModelChanged -= (ModelHandler*)ev;
 	}
 
 	treeModel_ = model;
@@ -111,7 +111,7 @@ void TreeControl::setTreeModel( TreeModel * model )
 	setViewModel( dynamic_cast<Model*>(treeModel_) );
 
 	if ( NULL != treeModel_ ) {
-		getViewModel()->addModelHandler( (ModelHandler*)getCallback( "ModelHandler" ) );
+		getViewModel()->ModelChanged += (ModelHandler*)getCallback( "ModelHandler" );
 	}
 }
 

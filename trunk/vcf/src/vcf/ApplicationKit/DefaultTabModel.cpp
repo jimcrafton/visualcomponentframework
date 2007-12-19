@@ -17,20 +17,21 @@ using namespace VCF;
 
 DefaultTabModel::DefaultTabModel()
 {
-	container_.initContainer( this->pages_ );
+	
 }
 
 DefaultTabModel::~DefaultTabModel()
 {
-	this->clearTabPages();
+	
 }
 
-void DefaultTabModel::addTabPage( TabPage* page )
-{
-	TabModelEvent event( this, TAB_MODEL_EVENT_ITEM_ADDED, page );
-	TabPageAdded( &event );
-	pages_.push_back( page );
 
+void DefaultTabModel::insertTabPage( const uint32& index, TabPage* page )
+{
+	TabModelEvent event( this, tmeItemAdded, page );
+	TabPageAdded( &event );
+	pages_.insert( pages_.begin() + index, page );
+	
 	CallBack* ev = getCallback( "DefaultTabModel::tabPageChange" );
 	if ( NULL == ev ) {
 		ev = new ClassProcedure1<ItemEvent*,DefaultTabModel>(this, &DefaultTabModel::tabPageChange, "DefaultTabModel::tabPageChange" );
@@ -38,18 +39,11 @@ void DefaultTabModel::addTabPage( TabPage* page )
 	page->ItemChanged += ev;
 }
 
-void DefaultTabModel::insertTabPage( const uint32& index, TabPage* page )
-{
-	TabModelEvent event( this, TAB_MODEL_EVENT_ITEM_ADDED, page );
-	TabPageAdded( &event );
-	pages_.insert( pages_.begin() + index, page );
-}
-
 void DefaultTabModel::deleteTabPage( TabPage* page )
 {
-	TabModelEvent event( this, TAB_MODEL_EVENT_ITEM_REMOVED, page );
+	TabModelEvent event( this, tmeItemRemoved, page );
 	TabPageRemoved( &event );
-	std::vector<TabPage*>::iterator found = std::find( pages_.begin(), pages_.end(), page );
+	Array<TabPage*>::iterator found = std::find( pages_.begin(), pages_.end(), page );
 	if ( found != pages_.end() ){
 		TabPage* page = *found;
 		//clean up memory
@@ -60,9 +54,9 @@ void DefaultTabModel::deleteTabPage( TabPage* page )
 
 void DefaultTabModel::deleteTabPage( const uint32& index )
 {
-	std::vector<TabPage*>::iterator found = pages_.begin() + index;
+	Array<TabPage*>::iterator found = pages_.begin() + index;
 	if ( found != pages_.end() ){
-		TabModelEvent event( this, TAB_MODEL_EVENT_ITEM_REMOVED, *found );
+		TabModelEvent event( this, tmeItemRemoved, *found );
 		TabPageRemoved( &event );
 		TabPage* page = *found;
 		//clean up memory
@@ -71,22 +65,24 @@ void DefaultTabModel::deleteTabPage( const uint32& index )
 	}
 }
 
-void DefaultTabModel::clearTabPages()
+void DefaultTabModel::empty()
 {
-	std::vector<TabPage*>::iterator it = pages_.begin();
+	Array<TabPage*>::iterator it = pages_.begin();
 	while ( it != pages_.end() ){
 		TabPage* page = *it;
-		delete page;
+		page->free();
 		page = NULL;
 		it++;
 	}
 	pages_.clear();
+
+	Model::empty();
 }
 
 TabPage* DefaultTabModel::getPageAt( const uint32& index )
 {
 	TabPage* result = NULL;
-	std::vector<TabPage*>::iterator it = pages_.begin() + index;
+	Array<TabPage*>::iterator it = pages_.begin() + index;
 	if ( it != pages_.end() ){
 		result = *it;
 	}
@@ -96,7 +92,7 @@ TabPage* DefaultTabModel::getPageAt( const uint32& index )
 TabPage* DefaultTabModel::getPageFromPageName( const String& pageName )
 {
 	TabPage* result = NULL;
-	std::vector<TabPage*>::iterator it = pages_.begin();
+	Array<TabPage*>::iterator it = pages_.begin();
 	while ( it != pages_.end() ){
 		TabPage* page = *it;
 		if ( page->getPageName() == pageName ) {			
@@ -110,7 +106,7 @@ TabPage* DefaultTabModel::getPageFromPageName( const String& pageName )
 
 uint32 DefaultTabModel::getItemIndex( TabPage* item )
 {
-	std::vector<TabPage*>::iterator found = std::find ( pages_.begin(), pages_.end(), item );
+	Array<TabPage*>::iterator found = std::find ( pages_.begin(), pages_.end(), item );
 	if ( found != pages_.end() ) {
 		return ( found - pages_.begin() );
 	}
@@ -120,7 +116,7 @@ uint32 DefaultTabModel::getItemIndex( TabPage* item )
 TabPage* DefaultTabModel::getSelectedPage()
 {
 	TabPage* result = NULL;
-	std::vector<TabPage*>::iterator it = pages_.begin();
+	Array<TabPage*>::iterator it = pages_.begin();
 	while ( it != pages_.end() ){
 		TabPage* page = *it;
 		if ( NULL != page ){
@@ -139,7 +135,7 @@ TabPage* DefaultTabModel::getSelectedPage()
 
 void DefaultTabModel::setSelectedPage( TabPage* page )
 {
-	std::vector<TabPage*>::iterator it = pages_.begin();
+	Array<TabPage*>::iterator it = pages_.begin();
 	while ( it != pages_.end() ){
 		TabPage* aPage = *it;
 		if ( NULL != page ){
@@ -148,13 +144,13 @@ void DefaultTabModel::setSelectedPage( TabPage* page )
 		it++;
 	}
 	page->setSelected( true );
-	TabModelEvent event( this, TAB_MODEL_EVENT_ITEM_SELECTED, page );
+	TabModelEvent event( this, tmeItemSelected, page );
 	TabPageSelected( &event );
 }
 
 void DefaultTabModel::setSelectedPage( const uint32& index )
 {
-	std::vector<TabPage*>::iterator it = pages_.begin() + index;
+	Array<TabPage*>::iterator it = pages_.begin() + index;
 	if ( it != pages_.end() ){
 		TabPage* page = *it;
 		setSelectedPage( page );
@@ -163,7 +159,7 @@ void DefaultTabModel::setSelectedPage( const uint32& index )
 
 Enumerator<TabPage*>* DefaultTabModel::getPages()
 {
-	return this->container_.getEnumerator();
+	return pages_.getEnumerator();
 }
 
 void DefaultTabModel::tabPageChange( ItemEvent* e )
@@ -199,7 +195,7 @@ TabPage* DefaultTabModel::nextPage( TabPage* page )
 {
 	TabPage* result = NULL;
 	
-	std::vector<TabPage*>::iterator found = std::find( pages_.begin(), pages_.end(), page );
+	Array<TabPage*>::iterator found = std::find( pages_.begin(), pages_.end(), page );
 	if ( found != pages_.end() ) {
 		found ++;
 		if ( found != pages_.end() ) {							
@@ -214,7 +210,7 @@ TabPage* DefaultTabModel::previousPage( TabPage* page )
 {
 	TabPage* result = NULL;
 	
-	std::vector<TabPage*>::iterator found = std::find( pages_.begin(), pages_.end(), page );
+	Array<TabPage*>::iterator found = std::find( pages_.begin(), pages_.end(), page );
 	if ( found != pages_.end() ) {
 		found --;
 		if ( found >= pages_.begin() ) {
