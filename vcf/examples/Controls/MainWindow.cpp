@@ -128,9 +128,9 @@ void MainWindow::makeListBoxPage()
 	for(int j=0; j<10; j++){
 		String indx = StringUtils::toString(j);
 		String capt = L"ListItem " + indx;
-		listBoxModel->addItem( new DefaultListItem( listBoxModel, capt ) );
+		listBoxModel->add( capt );
 	}
-	listBoxModel->addItem( new DefaultListItem( listBoxModel, "Add your own item below." ) );
+	listBoxModel->add( "Add your own item below." );
 
 
 	listBoxGroup->add( new VerticalSpacer( borderWidth ), AlignBottom );
@@ -234,19 +234,16 @@ void MainWindow::listBox1Change( VCF::ItemEvent* ) {
 }
 
 void MainWindow::onbtnRemove( VCF::ButtonEvent* ) {
-	ListModel* LBCModel = (ListModel*)(listBox1_->getListModel());
-	Enumerator<ListItem*>* items= LBCModel->getItems();
-	int i = 0;
-	i = LBCModel->getCount();
 
+	ListModel* LBCModel = listBox1_->getListModel();
+	Enumerator<ListItem*>* items = listBox1_->getItems();
+	
 	// we reverse iterate here so you don't screw iterators.
 	items->reset( true );// set iterator to .end()
 	while ( true == items->hasMoreElements( true ) ) {
 		ListItem* item = items->prevElement();
-		if ( true == item->isSelected() ) {
-			listBox1_->eraseFromSelectedItems( item );
-			item->setSelected(false);
-			LBCModel->deleteItem( item );
+		if ( item->isSelected() ) {			
+			LBCModel->removeAtIndex( item->getIndex() );
 		}
 	}
 
@@ -261,7 +258,7 @@ void MainWindow::onbtnAddItemClicked( VCF::ButtonEvent* ) {
 		ListModel* LBCModel = (ListModel*)(listBox1_->getListModel());
 		TextModel* txtModel = txtCtrlAddToListBox_->getTextModel();
 		String text = txtModel->getText();
-		LBCModel->addItem( new DefaultListItem( LBCModel, text ) );
+		LBCModel->add( text );
 	}
 }
 // end of listBoxPage code

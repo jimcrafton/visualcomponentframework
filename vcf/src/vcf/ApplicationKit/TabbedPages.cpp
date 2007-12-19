@@ -280,20 +280,20 @@ void TabbedPages::setTabModel( TabModel* model )
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<TabModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageAdded, "TabbedPages::onTabPageAdded" );
 		}
-		model_->addTabPageAddedHandler( (EventHandler*)ev );
+		model_->TabPageAdded.add( (EventHandler*)ev );
 
 		ev = getCallback( "TabbedPages::onTabPageRemoved" );
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<TabModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageRemoved, "TabbedPages::onTabPageRemoved" );
 		}
-		model_->addTabPageRemovedHandler( (EventHandler*)ev );
+		model_->TabPageRemoved.add( (EventHandler*)ev );
 
 
 		ev = getCallback( "TabbedPages::onTabPageSelected" );
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<TabModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageSelected, "TabbedPages::onTabPageSelected" );
 		}
-		model_->addTabPageSelectedHandler( (EventHandler*)ev );		
+		model_->TabPageSelected.add( (EventHandler*)ev );		
 	}
 	else {
 		setViewModel( NULL );
@@ -310,7 +310,7 @@ void TabbedPages::onTabPageAdded( TabModelEvent* event )
 	//visible
 	//repaint();
 
-	TabPage* page = event->getTabPage();
+	TabPage* page = event->page;
 
 	TabSheet* sheet = new TabSheet();
 	page->setPageComponent( sheet );
@@ -325,7 +325,7 @@ void TabbedPages::onTabPageAdded( TabModelEvent* event )
 
 void TabbedPages::onTabPageRemoved( TabModelEvent* event )
 {
-	TabPage* page = event->getTabPage();
+	TabPage* page = event->page;
 	TabPage* pageToMakeCurrent = NULL;
 	TabModel* model = getModel();
 	bool next = false;
@@ -372,7 +372,7 @@ void TabbedPages::onTabPageRemoved( TabModelEvent* event )
 
 void TabbedPages::onTabPageSelected( TabModelEvent* event )
 {
-	TabPage* page = event->getTabPage();
+	TabPage* page = event->page;
 	if ( true == page->isSelected() ){
 		Enumerator<Control*>* children = getChildren();
 		while ( true == children->hasMoreElements() ){

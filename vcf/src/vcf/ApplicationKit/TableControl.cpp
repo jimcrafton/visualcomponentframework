@@ -438,7 +438,7 @@ void TableControl::init()
 	ModelHandler* modelHandler =
 		new ClassProcedure1<ModelEvent*,TableControl>( this, &TableControl::onTableModelEmptied, "ModelHandler" );
 
-	getViewModel()->addModelHandler( modelHandler );
+	getViewModel()->ModelChanged.add( modelHandler );
 
 	CallBack* kh =
 		new ClassProcedure1<KeyboardEvent*,TableControl>( this, &TableControl::onEditingControlKeyPressed, TABLECONTROL_KBRD_HANDLER );

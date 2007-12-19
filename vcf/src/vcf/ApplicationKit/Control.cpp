@@ -441,13 +441,6 @@ void Control::setUsingRenderBuffer( const bool& useRenderBuffer )
 
 void Control::setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating )
 {
-	static size_t boundsCallCount = 1;
-	if ( *bounds_ == *rect ) {
-		//nothing to do!!
-		StringUtils::trace( Format("Control::setBounds this: %p %s - *bounds_ == *rect for %uth time\n") % this % getClassName() % boundsCallCount );	
-		boundsCallCount ++;
-	}
-
 	if ( bounds_ != rect ) {
 		*bounds_ = *rect;
 	}

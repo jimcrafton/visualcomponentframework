@@ -138,7 +138,7 @@ void TreeListControl::setTreeModel(TreeModel * model)
 		if ( NULL == handler ) {
 			handler = new ClassProcedure1<Event*,TreeListControl>( this, &TreeListControl::onModelEmptied, "TreeListControl::onModelEmptied" );
 		}
-		tm->addModelHandler( (ModelHandler*)handler );
+		tm->ModelChanged += (ModelHandler*)handler;
 	}
 	else {
 		setViewModel( NULL );

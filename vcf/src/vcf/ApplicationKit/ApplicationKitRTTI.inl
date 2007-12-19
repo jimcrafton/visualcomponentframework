@@ -418,12 +418,14 @@ _class_rtti_end_
 _class_rtti_(DefaultListModel, "VCF::ListModel", DEFAULTLISTMODEL_CLASSID)
 _class_rtti_end_
 
-
-_class_rtti_(DefaultTabModel, "VCF::Model", DEFAULTTABMODEL_CLASSID )
+_class_abstract_rtti_(TabModel, "VCF::Model", TABMODEL_CLASSID )
 	_delegate_(TabModelDelegate, TabPageAdded )
 	_delegate_(TabModelDelegate, TabPageRemoved )
 	_delegate_(TabModelDelegate, TabPageSelected )
-	_delegate_( ModelDelegate, ModelEmptied )	
+_class_rtti_end_
+
+
+_class_rtti_(DefaultTabModel, "VCF::TabModel", DEFAULTTABMODEL_CLASSID )	
 _class_rtti_end_
 
 

@@ -99,7 +99,6 @@ public:
 	}
 
 public:
-	//std::vector<ListItem*> originalSelectedItems_;
 	ComboBoxControl* comboBoxControl_;
 };
 
@@ -364,20 +363,6 @@ ComboBoxControl::~ComboBoxControl()
 void ComboBoxControl::destroy()
 {
 	CustomControl::destroy();
-
-	/*
-	if ( NULL != listModel_ ){
-		listModel_->release();
-		listModel_ = NULL;
-	}
-	*/
-
-	/*
-	Model* model = getViewModel();
-	if ( NULL != model ) {
-		model->release();
-	}
-	*/
 }
 
 ListModel* ComboBoxControl::getListModel()
@@ -392,54 +377,9 @@ void ComboBoxControl::setViewModel( Model* viewModel )
 	if ( NULL == lm ) {
 		throw RuntimeException( "Invalid Model type being assigned to this control." );
 	}
-
 	
-	lm = (ListModel*) getViewModel();
-
-	CallBack* changed = getCallback( "ComboBox_onListModelContentsChanged" );
-	if ( NULL == changed ) {
-		changed =
-			new ClassProcedure1<ListModelEvent*,ComboBoxControl>( this,
-														&ComboBoxControl::onListModelContentsChanged,
-														"ComboBox_onListModelContentsChanged" );
-	}
-
-	CallBack* itemAdded = getCallback( "ComboBox_onItemAdded" );
-	if ( NULL == itemAdded ) {
-		itemAdded =
-			new ClassProcedure1<ListModelEvent*,ComboBoxControl>( this,
-														&ComboBoxControl::onItemAdded,
-														"ComboBox_onItemAdded" );
-	}
-
-	CallBack* itemDeleted = getCallback( "ComboBox_onItemDeleted" );
-	if ( NULL == itemDeleted ) {
-		itemDeleted =
-			new ClassProcedure1<ListModelEvent*,ComboBoxControl>( this,
-														&ComboBoxControl::onItemDeleted,
-														"ComboBox_onItemDeleted" );
-	}
-
-	if ( NULL != lm ) {
-		lm->ContentsChanged -= changed;
-
-		lm->ItemAdded -= itemAdded;
-
-		lm->ItemRemoved -= itemDeleted;
-	}
-
 	CustomControl::setViewModel( viewModel );
 	listBox_->setViewModel( viewModel );
-
-	if ( NULL != viewModel ) {
-		lm = (ListModel*) viewModel;
-
-		lm->ContentsChanged += changed;
-
-		lm->ItemAdded += itemAdded;
-
-		lm->ItemRemoved += itemDeleted;
-	}
 
 	repaint();
 }
@@ -463,17 +403,7 @@ void ComboBoxControl::mouseLeave( MouseEvent* event )
 
 void ComboBoxControl::paint( GraphicsContext* context )
 {
-	CustomControl::paint( context );
-/*
-	Rect clientRect = getClientBounds();
-
-	arrowRect_ = clientRect;
-
-	
-
-	arrowRect_.left_ = clientRect.right_ - sz.width_;
-*/
-	
+	CustomControl::paint( context );	
 
 	ButtonState state;
 	Rect clientRect = getClientBounds();
@@ -502,45 +432,6 @@ void ComboBoxControl::paint( GraphicsContext* context )
 	getContainer()->paintChildren( context );
 }
 
-void ComboBoxControl::onListModelContentsChanged( ListModelEvent* event )
-{
-	if ( NULL != event ){
-		switch ( event->getType() ){
-			/*
-			case LIST_MODEL_CONTENTS_DELETED: {
-				
-				if ( selectedItem_ ==  event->item ) {
-					selectedItem_ = NULL;
-					selectedIndex_ = 0;
-				}
-				
-			}
-			break;
-
-			case LIST_MODEL_ITEM_CHANGED: {
-				ListItem* item = event->getListItem();
-				if ( NULL != item ){
-
-				}
-			}
-			break;
-			*/
-		}
-	}
-}
-
-void ComboBoxControl::onItemAdded( ListModelEvent* event )
-{
-}
-
-void ComboBoxControl::onItemDeleted( ListModelEvent* event )
-{
-/*	if ( selectedItem_ ==  event->getListItem() ) {
-		selectedItem_ = NULL;
-		selectedIndex_ = 0;
-	}
-	*/
-}
 
 ListItem* ComboBoxControl::insertItem( const uint32& index, const String& caption, const uint32 imageIndex )
 {
