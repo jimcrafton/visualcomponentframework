@@ -110,6 +110,7 @@ void DefaultTableCellItem::paint( GraphicsContext* context, Rect* paintRect )
 		border.setInverted( false );
 
 		//TableModel* tm = dynamic_cast<TableModel*>(model_);
+		/*
 		if ( NULL != tableModel_ ) {
 			TableCellItem* focusedCell = tableModel_->getFocusedCell();
 
@@ -122,6 +123,10 @@ void DefaultTableCellItem::paint( GraphicsContext* context, Rect* paintRect )
 					border.setInverted( true );
 				}
 			}
+		}
+		*/
+		if ( this->isFocused() ) {
+			border.setInverted( true );
 		}
 
 

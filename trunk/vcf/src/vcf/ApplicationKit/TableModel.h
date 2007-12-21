@@ -26,7 +26,7 @@ where you installed the VCF.
 
 namespace VCF{
 
-class TableCellItem;
+//class TableCellItem;
 
 
 typedef Enumerator<TableCellItem*> TableRowItemEnumerator;
@@ -64,12 +64,107 @@ public:
 
 
 
+
+
+#define TABLEMODEL_EVENT_CONST						2000
+#define COLUMNS_DELETED					CUSTOM_EVENT_TYPES + TABLEMODEL_EVENT_CONST + 1
+#define COLUMNS_ADDED					CUSTOM_EVENT_TYPES + TABLEMODEL_EVENT_CONST + 2
+#define ROWS_DELETED						CUSTOM_EVENT_TYPES + TABLEMODEL_EVENT_CONST + 3
+#define ROWS_ADDED						CUSTOM_EVENT_TYPES + TABLEMODEL_EVENT_CONST + 4
+#define CELL_CHANGED					CUSTOM_EVENT_TYPES + TABLEMODEL_EVENT_CONST + 5
+#define ALL_COLUMNS_CHANGED				CUSTOM_EVENT_TYPES + TABLEMODEL_EVENT_CONST + 6
+#define ALL_ROWS_CHANGED				CUSTOM_EVENT_TYPES + TABLEMODEL_EVENT_CONST + 7
+#define ALL_ITEMS_DELETED				CUSTOM_EVENT_TYPES + TABLEMODEL_EVENT_CONST + 8
+
+#define NO_ROW_CHANGED					-1
+#define NO_COLUMN_CHANGED				-1
+
+/**
+\class TableModelEvent TableModel.h "vcf/ApplicationKit/TableModel.h"
+*/
+class APPLICATIONKIT_API TableModelEvent : public Event {
+public:
+
+	TableModelEvent( Object* source, const uint32& eventType,
+		             const int& startRow =-1, const int& rowCount=0,
+					 const int& startColumn =-1, const int& columnCount =0):
+		Event(source,eventType),
+		startRow_(startRow),
+		numberOfRowsAffected_(rowCount),
+		startColumn_(startColumn),
+		numberOfColumnsAffected_(columnCount){
+
+	}
+
+	TableModelEvent( const TableModelEvent& rhs ):Event(rhs) {
+		*this = rhs;
+	}
+	virtual ~TableModelEvent(){};
+
+
+	TableModelEvent& operator=( const TableModelEvent& rhs ) {
+		Event::operator =( rhs );
+		startRow_ = rhs.startRow_;
+		numberOfRowsAffected_ = rhs.numberOfRowsAffected_;
+
+		startColumn_ = rhs.startColumn_;
+		numberOfColumnsAffected_ = rhs.numberOfColumnsAffected_;
+
+		return *this;
+	}
+
+
+	/**
+	*get the row that changed. a return of -1 means no rows
+	*changed for this event
+	*/
+	int getStartRowThatChanged() {
+		return startRow_;
+	}
+
+	int getNumberOfRowsAffected() {
+		return numberOfRowsAffected_;
+	}
+
+	int getStartColumnThatChanged() {
+		return startColumn_;
+	}
+
+	int getNumberOfColumnsAffected() {
+		return numberOfColumnsAffected_;
+	}
+
+
+
+	virtual Object* clone( bool deep=false ) {
+		return new TableModelEvent(*this);
+	}
+private:
+	int startRow_;
+	int numberOfRowsAffected_;
+	int startColumn_;
+	int numberOfColumnsAffected_;
+};
+
+
+
+
+/**
+*TableModelEventHandler
+*handles the following:
+\li onChange
+*/
+typedef Delegate1<TableModelEvent*> TableModelDelegate; 
+typedef TableModelDelegate::ProcedureType TableModelHandler;
+
+
+
+
 /**
 \class TableModel TableModel.h "vcf/ApplicationKit/TableModel.h"
 @delegates	
 	@del TableModel::TableCellAdded
-	@del TableModel::TableCellDeleted
-	@del TableModel::TableCellsSelected
+	@del TableModel::TableCellDeleted	
 	@del TableModel::TableRowsAdded
 	@del TableModel::TableRowsDeleted
 	@del TableModel::TableColumnsAdded
@@ -77,7 +172,7 @@ public:
 
 */
 
-class APPLICATIONKIT_API TableModel  {
+class APPLICATIONKIT_API TableModel : public Model  {
 public:
 
 	virtual ~TableModel(){};
@@ -94,11 +189,6 @@ public:
 	*/
 	DELEGATE(TableModelDelegate,TableCellDeleted);
 
-	/**
-	@delegate TableCellsSelected
-	@event TableModelEvent
-	*/
-	DELEGATE(TableModelDelegate,TableCellsSelected);
 
 	/**
 	@delegate TableRowAdded
@@ -124,7 +214,7 @@ public:
 	*/
 	DELEGATE(TableModelDelegate,TableColumnsDeleted);
 	
-    virtual void empty() {;}
+    
     virtual void addRow() = 0;
 
 	virtual void insertRow( const uint32& afterRow ) = 0;
@@ -143,13 +233,15 @@ public:
 
 	virtual bool isCellEditable( const uint32& row, const uint32& column ) = 0;
 
-	virtual TableCellItem* getItem( const uint32& row, const uint32& column ) = 0;
+	virtual VariantData getValue( const uint32& row, const uint32& column ) = 0;
+	virtual String getValueAsString( const uint32& row, const uint32& column ) = 0;
 
 	virtual uint32 getRowCount() = 0;
 
 	virtual uint32 getColumnCount() = 0;
 
-	virtual TableRowItemEnumerator* getRowItemEnumerator( const uint32& row ) = 0;
+	virtual bool getRowValues( const uint32& row, std::vector<VariantData>& values ) = 0;
+	virtual bool getColumnValues( const uint32& col, std::vector<VariantData>& values ) = 0;
 
 	/**
 	*this is overriden to provide TableModels derivations
@@ -157,17 +249,17 @@ public:
 	*at any cell in the table.
 	*@param uint32 - the row being created
 	*/
-	virtual TableCellItem* createCell( const uint32& row, const uint32& column ) = 0;
+	//virtual TableCellItem* createCell( const uint32& row, const uint32& column ) = 0;
 
-	virtual TableCellItem* setSelectedCell( const bool& val, const uint32& row, const uint32& column ) = 0;
+	//virtual TableCellItem* setSelectedCell( const bool& val, const uint32& row, const uint32& column ) = 0;
 
-	virtual void setFocusedCell( const uint32& row, const uint32& column ) = 0;
+	//virtual void setFocusedCell( const uint32& row, const uint32& column ) = 0;
 
-	virtual TableCellItem* getFocusedCell() = 0;
+	//virtual TableCellItem* getFocusedCell() = 0;
 
 
-	virtual void setSelectedRange( const bool& val, const uint32& startRow, const uint32& startColumn,
-									const uint32& endRow, const uint32& endColumn ) = 0;
+	//virtual void setSelectedRange( const bool& val, const uint32& startRow, const uint32& startColumn,
+	//								const uint32& endRow, const uint32& endColumn ) = 0;
 
 	virtual void setFixedColumnsCount( const uint32& count ) = 0;
 
@@ -177,11 +269,11 @@ public:
 
 	virtual uint32 getFixedRowsCount() = 0;
 
-	virtual void clearSelection() = 0;
+	//virtual void clearSelection() = 0;
 
-	virtual Enumerator<TableCellItem*>* getSelectedCells() = 0;
+	//virtual Enumerator<TableCellItem*>* getSelectedCells() = 0;
 
-	virtual CellID getCellIDForItem( TableCellItem* item ) = 0;
+	//virtual CellID getCellIDForItem( TableCellItem* item ) = 0;
 
 
 };

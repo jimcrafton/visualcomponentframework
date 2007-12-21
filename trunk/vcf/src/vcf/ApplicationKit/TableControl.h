@@ -350,6 +350,14 @@ public:
 	*/
 	DELEGATE(EventDelegate,TableSelectionChanged)
 
+	
+	/**
+	@delegate TableCellsSelected
+	@event TableModelEvent
+	*/
+	DELEGATE(TableModelDelegate,TableCellsSelected);
+
+
 	virtual void handleEvent( Event* e );
 
 	DrawGridLines getDrawGridLinesStyle() {
@@ -474,6 +482,23 @@ public:
 	Font* getDefaultTableCellFont();
 
 	void setDefaultTableCellFont( Font* font );
+
+	TableCellItem* setSelectedCell( const bool& val, const uint32& row, const uint32& column );
+
+	void setSelectedRange( const bool& val, const uint32& startRow, const uint32& startColumn,
+									const uint32& endRow, const uint32& endColumn );
+
+	void setFocusedCell( const uint32& row, const uint32& column );
+
+	TableCellItem* getFocusedCell() {
+		return focusedCell_;
+	}
+
+	void clearSelection();
+
+	Enumerator<TableCellItem*>* getSelectedCells();
+
+	CellID getCellIDForItem( TableCellItem* item );
 protected:
 
 	enum MouseState{
@@ -565,9 +590,14 @@ protected:
 
 	Rect getEditCellRect( const CellID& editCellID );
 
+	TableCellItem* createCell( const uint32& row, const uint32& column );
+
+	
 protected:
 
 	TableCellItem* selectedCellItem_;
+	TableCellItem* focusedCell_;
+
 	Control* currentEditingControl_;
 
 	TableItemEditor* currentItemEditor_;
@@ -616,6 +646,7 @@ protected:
 	std::vector<uint32> columnWidths_;
 	std::vector<uint32> rowHeights_;
 
+	Map<uint32,TableCellItem*> selectionMap_;
 	std::map<CellID,TableCellItem*> previouslySelectedCellMap_;
 
 	Color* defaultCellColor_;
