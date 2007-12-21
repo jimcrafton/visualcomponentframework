@@ -24,47 +24,7 @@ DefaultTabModel::~DefaultTabModel()
 {
 	
 }
-
-
-void DefaultTabModel::insertTabPage( const uint32& index, TabPage* page )
-{
-	TabModelEvent event( this, tmeItemAdded, page );
-	TabPageAdded( &event );
-	pages_.insert( pages_.begin() + index, page );
-	
-	CallBack* ev = getCallback( "DefaultTabModel::tabPageChange" );
-	if ( NULL == ev ) {
-		ev = new ClassProcedure1<ItemEvent*,DefaultTabModel>(this, &DefaultTabModel::tabPageChange, "DefaultTabModel::tabPageChange" );
-	}
-	page->ItemChanged += ev;
-}
-
-void DefaultTabModel::deleteTabPage( TabPage* page )
-{
-	TabModelEvent event( this, tmeItemRemoved, page );
-	TabPageRemoved( &event );
-	Array<TabPage*>::iterator found = std::find( pages_.begin(), pages_.end(), page );
-	if ( found != pages_.end() ){
-		TabPage* page = *found;
-		//clean up memory
-		page->free();
-		pages_.erase( found );
-	}
-}
-
-void DefaultTabModel::deleteTabPage( const uint32& index )
-{
-	Array<TabPage*>::iterator found = pages_.begin() + index;
-	if ( found != pages_.end() ){
-		TabModelEvent event( this, tmeItemRemoved, *found );
-		TabPageRemoved( &event );
-		TabPage* page = *found;
-		//clean up memory
-		page->free();
-		pages_.erase( found );
-	}
-}
-
+/*
 void DefaultTabModel::empty()
 {
 	Array<TabPage*>::iterator it = pages_.begin();
@@ -76,7 +36,7 @@ void DefaultTabModel::empty()
 	}
 	pages_.clear();
 
-	Model::empty();
+	ListModel::empty();
 }
 
 TabPage* DefaultTabModel::getPageAt( const uint32& index )
@@ -220,7 +180,7 @@ TabPage* DefaultTabModel::previousPage( TabPage* page )
 	
 	return result;
 }
-
+*/
 
 /**
 $Id$

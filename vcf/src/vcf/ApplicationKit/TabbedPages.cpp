@@ -9,7 +9,6 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/TabbedPages.h"
-#include "vcf/ApplicationKit/DefaultTabModel.h"
 #include "vcf/ApplicationKit/DefaultTabPage.h"
 #include "vcf/ApplicationKit/Panel.h"
 #include "vcf/ApplicationKit/Containers.h"
@@ -63,7 +62,7 @@ void TabbedPages::init()
 	setBorder( NULL );
 	//add a listener to the tab model
 
-	setTabModel( new DefaultTabModel() );
+	setTabModel( new TabModel() );
 
 	addComponent( getViewModel() );
 
@@ -88,7 +87,7 @@ void TabbedPages::recalcScrollerButtonsPos()
 {
 	
 
-	TabModel* model = getModel();
+	TabModel* model = getTabModel();
 	double width = 0.0;
 	Enumerator<TabPage*>* pages = model->getPages();
 	while ( true == pages->hasMoreElements() ) {
@@ -184,7 +183,7 @@ void TabbedPages::paint( GraphicsContext* context )
 	
 
 	if ( NULL != model_ ){
-		Enumerator<TabPage*>* pages = model_->getPages();
+		Enumerator<TabPage*>* pages;// = model_->getPages();
 
 		Rect tabsRect(0,0,0,0);
 
@@ -194,7 +193,7 @@ void TabbedPages::paint( GraphicsContext* context )
 		Rect selectedRect;
 
 
-		uint32 pageCount = model_->getPageCount();
+		uint32 pageCount;// = model_->getPageCount();
 
 		double tabWidth =  tabAreaBounds_.getWidth() / pageCount;
 		double width = tabWidth;
@@ -254,9 +253,14 @@ void TabbedPages::paint( GraphicsContext* context )
 	paintChildren( context );
 }
 
-TabModel* TabbedPages::getModel()
+TabModel* TabbedPages::getTabModel()
 {
-	return model_;
+	return (TabModel*) getViewModel();
+}
+
+void TabbedPages::setViewModel( Model* model )
+{
+
 }
 
 void TabbedPages::setTabModel( TabModel* model )
@@ -278,15 +282,15 @@ void TabbedPages::setTabModel( TabModel* model )
 
 		CallBack* ev = getCallback( "TabbedPages::onTabPageAdded" );
 		if ( NULL == ev ) {
-			ev = new ClassProcedure1<TabModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageAdded, "TabbedPages::onTabPageAdded" );
+			ev = new ClassProcedure1<ListModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageAdded, "TabbedPages::onTabPageAdded" );
 		}
-		model_->TabPageAdded.add( (EventHandler*)ev );
+		model_->ItemAdded.add( (EventHandler*)ev );
 
 		ev = getCallback( "TabbedPages::onTabPageRemoved" );
 		if ( NULL == ev ) {
-			ev = new ClassProcedure1<TabModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageRemoved, "TabbedPages::onTabPageRemoved" );
+			ev = new ClassProcedure1<ListModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageRemoved, "TabbedPages::onTabPageRemoved" );
 		}
-		model_->TabPageRemoved.add( (EventHandler*)ev );
+		model_->ItemRemoved.add( (EventHandler*)ev );
 
 
 		ev = getCallback( "TabbedPages::onTabPageSelected" );
@@ -301,7 +305,7 @@ void TabbedPages::setTabModel( TabModel* model )
 
 }
 
-void TabbedPages::onTabPageAdded( TabModelEvent* event )
+void TabbedPages::onTabPageAdded( ListModelEvent* event )
 {
 	//calculate the total width
 	//needed by all the tab pages
@@ -310,24 +314,22 @@ void TabbedPages::onTabPageAdded( TabModelEvent* event )
 	//visible
 	//repaint();
 
-	TabPage* page = event->page;
+	event->index;
 
 	TabSheet* sheet = new TabSheet();
-	page->setPageComponent( sheet );
+	//page->setPageComponent( sheet );
 	add( sheet, AlignClient );
-	//sheet->setVisible( true );
+	sheet->setVisible( true );
 
 
 	resizeChildren(NULL);
-
-	//recalcScrollerButtonsPos();
 }
 
-void TabbedPages::onTabPageRemoved( TabModelEvent* event )
+void TabbedPages::onTabPageRemoved( ListModelEvent* event )
 {
-	TabPage* page = event->page;
-	TabPage* pageToMakeCurrent = NULL;
-	TabModel* model = getModel();
+//	TabPage* page = event->page;
+/*	TabPage* pageToMakeCurrent = NULL;
+	TabModel* model = getTabModel();
 	bool next = false;
 	if ( NULL != page ) {
 		Enumerator<TabPage*>* pages = model->getPages();
@@ -366,12 +368,12 @@ void TabbedPages::onTabPageRemoved( TabModelEvent* event )
 		model->setSelectedPage( pageToMakeCurrent );
 	}
 	resizeChildren(NULL);
-
+*/
 	//recalcScrollerButtonsPos();
 }
 
 void TabbedPages::onTabPageSelected( TabModelEvent* event )
-{
+{/*
 	TabPage* page = event->page;
 	if ( true == page->isSelected() ){
 		Enumerator<Control*>* children = getChildren();
@@ -388,18 +390,18 @@ void TabbedPages::onTabPageSelected( TabModelEvent* event )
 		Container* container = page->getPageComponent()->getContainer();
 		if ( NULL != container ) {
 			container->resizeChildren(NULL);
-			/*
-			Control* tabControl = container->getFirstTabControl();
-			if ( NULL != tabControl ) {
-				tabControl->setFocused();
-			}
-			else {
-
-			}
-			*/
+			
+			//Control* tabControl = container->getFirstTabControl();
+			//if ( NULL != tabControl ) {
+		//		tabControl->setFocused();
+		//	}
+		//	else {
+//
+//			}
+			
 			page->getPageComponent()->setFocused();
 		}
-	}
+	}*/
 	repaint();
 }
 
@@ -411,10 +413,10 @@ TabPage* TabbedPages::addNewPage( const String& caption )
 
 	tabHeight_ = maxVal<double>( tabHeight_, page->getPreferredHeight() );
 
-	TabModel* model = getModel();
-	model->addTabPage( page );
+	TabModel* model = getTabModel();
+	model->add( caption );
 
-	model->setSelectedPage( page );
+//	model->setSelectedPage( page );
 
 	//recalcScrollerButtonsPos();
 
@@ -476,8 +478,9 @@ void TabbedPages::mouseDown( MouseEvent* event )
 	tabPagesBounds.setRect( 0, borderWidth_, getWidth(), borderWidth_ + tabHeight_ );
 	if ( true == tabPagesBounds.containsPt( event->getPoint() ) ){
 		//find tab
-		TabModel* model = getModel();
+		TabModel* model = getTabModel();
 		if ( NULL != model ){
+			/*
 			Enumerator<TabPage*>* pages = model->getPages();
 			if ( NULL != pages ){
 				while ( true == pages->hasMoreElements() ){
@@ -491,6 +494,7 @@ void TabbedPages::mouseDown( MouseEvent* event )
 					}
 				}
 			}
+			*/
 		}
 	}
 }
@@ -531,8 +535,9 @@ void TabbedPages::onScrollButtonClicked( ButtonEvent* e )
 
 	switch ( comp->getTag() ) {
 		case SCROLL_FWD_TAG : {
-			TabModel* model = getModel();
+			TabModel* model = getTabModel();
 			double width = 0.0;
+/*
 			Enumerator<TabPage*>* pages = model->getPages();
 			while ( true == pages->hasMoreElements() ) {
 				TabPage* aPage = pages->nextElement();
@@ -542,6 +547,7 @@ void TabbedPages::onScrollButtonClicked( ButtonEvent* e )
 
 			double offset = -((width + comp->getWidth()*2) - getWidth());
 			tabViewOffset_ = maxVal<double>( offset, tabViewOffset_ - 25 );
+			*/
 		}
 		break;
 

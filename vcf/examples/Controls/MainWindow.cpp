@@ -76,8 +76,8 @@ MainWindow::MainWindow()
 	treePage_ = mainPages_->addNewPage( "Tree Control" );
 	makeTreePage();
 
-	mainPagesModel_ = mainPages_->getModel();
-	mainPagesModel_->setSelectedPage( listBoxPage_ );
+	mainPagesModel_ = mainPages_->getTabModel();
+	mainPagesModel_->setSelectedPage( 0 );
 }
 
 MainWindow::~MainWindow()

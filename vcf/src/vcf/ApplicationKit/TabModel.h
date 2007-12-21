@@ -15,9 +15,14 @@ where you installed the VCF.
 
 
 
+#ifndef _VCF_LISTMODEL_H__
+#	include "vcf/ApplicationKit/ListModel.h"
+#endif // _VCF_LISTMODEL_H__
+
+
 namespace VCF {
 
-	class TabPage;
+	
 
 
 #define TABMODELEVENT_CONST						232
@@ -40,10 +45,10 @@ namespace VCF {
 */
 class APPLICATIONKIT_API TabModelEvent : public Event {
 public:
-	TabModelEvent( Object * source, TabPage* p ): Event(source), page(p) {}
+	TabModelEvent( Object * source, uint32 i ): Event(source), index(i) {}
 
-	TabModelEvent( Object* source, const uint32& eventType, TabPage* p )
-		: Event(source,eventType), page(p) {}
+	TabModelEvent( Object* source, const uint32& eventType, uint32 i )
+		: Event(source,eventType), index(i) {}
 
 	TabModelEvent( const TabModelEvent& rhs ):Event(rhs) {
 		*this = rhs;
@@ -55,12 +60,12 @@ public:
 	TabModelEvent& operator= ( const TabModelEvent& rhs ) {
 		Event::operator =( rhs );
 
-		page = rhs.page;
+		index = rhs.index;
 
 		return *this;
 	}
 
-	TabPage* page;
+	uint32 index;
 
 	virtual Object* clone( bool deep=false ) {
 		return new TabModelEvent(*this);
@@ -111,27 +116,12 @@ use the same control with either style.
 	@del TabModel::TabPageSelected
 */
 
-class APPLICATIONKIT_API TabModel : public Model  {
+class APPLICATIONKIT_API TabModel : public ListModel  {
 public:
 
-	TabModel(){};
+	TabModel();
 
-	virtual ~TabModel(){}
-
-	/**
-	@delegate TabPageAdded this is fired when a new tab page item is
-	added to the model.
-	@event TabModelEvent
-	@eventtype TAB_MODEL_EVENT_ITEM_ADDED
-	*/
-	DELEGATE(TabModelDelegate,TabPageAdded)
-
-	/**
-	@delegate
-	@event TabModelEvent
-	@eventtype TAB_MODEL_EVENT_ITEM_REMOVED
-	*/
-	DELEGATE(TabModelDelegate,TabPageRemoved)
+	virtual ~TabModel();
 
 	/**
 	@delegate TabModelEvent - this is fired when a tab page is selected by calling
@@ -141,32 +131,53 @@ public:
 	@see setSelectedPage()
 	*/
 	DELEGATE(TabModelDelegate,TabPageSelected)
-	
-	virtual void addTabPage( TabPage* page ) {
-		insertTabPage( 0, page );
+
+	virtual void empty();
+
+	virtual bool supportsSubItems() {
+		return false;
 	}
 
-	virtual void insertTabPage( const uint32& index, TabPage* page ) = 0;
+	void setSelectedPage( const uint32& index );
 
-	virtual void deleteTabPage( TabPage* page ) = 0;
+	uint32 getSelectedPageIndex() {
+		return selectedIndex_;
+	}
 
-	virtual void deleteTabPage( const uint32& index ) = 0;
 
-	virtual TabPage* getPageFromPageName( const String& pageName ) = 0;
+	virtual void add( const VariantData& item );
+	virtual void insert( const uint32 & index, const VariantData& item );
+    
+	virtual void remove( const VariantData& item );
+	virtual void removeAtIndex( const uint32& index );
 
-	virtual TabPage* getPageAt( const uint32& index ) = 0;
+	virtual VariantData get( const uint32& index );	
+	virtual String getAsString( const uint32& index );
 
-	virtual uint32 getItemIndex( TabPage* item ) = 0;
+	virtual uint32 getIndexOf( const VariantData& item );
 
-	virtual TabPage* getSelectedPage() = 0;
+	virtual void set( const uint32& index, const VariantData& item );
+	virtual void setAsString( const uint32& index, const String& item );
 
-	virtual void setSelectedPage( TabPage* page ) = 0;
+	virtual bool getItems( std::vector<VariantData>& items );
+	virtual Enumerator<VariantData>* getItems();
 
-	virtual void setSelectedPage( const uint32& index ) = 0;
+	virtual bool getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items );	
 
-	virtual Enumerator<TabPage*>* getPages() = 0;
+	virtual uint32 getCount();
 
-	virtual uint32 getPageCount() = 0;
+protected:
+	Array<VariantData> data_;
+	uint32 selectedIndex_;
+private:
+	
+	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex ) {
+		return VariantData::null();
+	} 
+
+	virtual String getSubItemAsString( const uint32& index, const uint32& subItemIndex ){
+		return "";	
+	}
 };
 
 };
