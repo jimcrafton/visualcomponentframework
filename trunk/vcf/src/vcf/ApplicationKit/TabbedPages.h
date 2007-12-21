@@ -50,20 +50,15 @@ public:
 
 	virtual void paint( GraphicsContext* context );
 
-	TabModel* getModel();
+	TabModel* getTabModel();
 
-	void setTabModel( TabModel* model );
+	void setTabModel( TabModel* model );	
 
-	void onTabPageAdded( TabModelEvent* event );
-
-	void onTabPageRemoved( TabModelEvent* event );
-
-	void onTabPageSelected( TabModelEvent* event );
+	virtual void setViewModel( Model* model );
 
 	TabPage* addNewPage( const String& caption );
 
 	virtual Rect getClientBounds( const bool& includeBorder=true );
-	//virtual void resizeChildren();
 
 	virtual void mouseDown( MouseEvent* event );
 
@@ -102,6 +97,11 @@ protected:
 
 	void onScrollButtonClicked( ButtonEvent* e );
 
+	void onTabPageAdded( ListModelEvent* event );
+
+	void onTabPageRemoved( ListModelEvent* event );
+
+	void onTabPageSelected( TabModelEvent* event );
 
 };
 

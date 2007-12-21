@@ -174,9 +174,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/DefaultTabPage.h"
 #endif // _VCF_DEFAULTTABPAGE_H__
 
-#ifndef _VCF_DEFAULTTABMODEL_H__
-#	include "vcf/ApplicationKit/DefaultTabModel.h"
-#endif // _VCF_DEFAULTTABMODEL_H__
 
 
 #ifndef _VCF_DEFAULTTABLECELLITEM_H__

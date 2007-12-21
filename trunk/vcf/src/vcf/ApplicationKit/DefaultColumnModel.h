@@ -18,14 +18,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/ColumnModel.h"
 #endif // _VCF_COLUMNMODEL_H__
 
-#ifndef _VCF_COLUMNITEM_H__
-#	include "vcf/ApplicationKit/ColumnItem.h"
-#endif // _VCF_COLUMNITEM_H__
-
-
-
-
-
 
 #define DEFAULTCOLUMNMODEL_CLASSID		"14b09dc3-777d-48cb-86d9-a311364cc41b"
 
