@@ -195,7 +195,7 @@ void TabbedPages::paint( GraphicsContext* context )
 
 		uint32 pageCount;// = model_->getPageCount();
 
-		double tabWidth =  tabAreaBounds_.getWidth() / pageCount;
+		double tabWidth;// =  tabAreaBounds_.getWidth() / pageCount;
 		double width = tabWidth;
 
 

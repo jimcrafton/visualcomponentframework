@@ -42,7 +42,11 @@ TableControl::TableControl( TableModel* model ):
 	allowLiveResizing_(true),
 	autoSizeStyle_(TableControl::asoBoth),
 	defaultCellColor_(NULL),
-	defaultCellFont_(NULL)
+	defaultCellFont_(NULL),
+	focusedCell_(NULL),
+	selectedCellItem_(NULL),
+	currentEditingControl_(NULL),
+	currentItemEditor_(NULL)
 {
 	setContainerDelegate( this );
 
@@ -147,8 +151,8 @@ void TableControl::paint( GraphicsContext * context )
 				rect.left_ = rect.right_+1;
 				rect.right_ = rect.left_ + colWidth-1;
 
-				cellItem = tm->getItem( row, col );
-				cellItem->paint( context, &rect );
+				///////cellItem = tm->getItem( row, col );
+				///////cellItem->paint( context, &rect );
 			}
 		}
 		
@@ -196,8 +200,8 @@ void TableControl::paint( GraphicsContext * context )
 					continue;         // Reached cliprect yet?
 				}
 
-				cellItem = tm->getItem( row, col );
-				cellItem->paint( context, &rect );
+				///////cellItem = tm->getItem( row, col );
+				///////cellItem->paint( context, &rect );
 			}
 		}
 
@@ -228,7 +232,7 @@ void TableControl::paint( GraphicsContext * context )
 			}
 
 			rect.right_ = fixedColWidth-1;
-
+/*
 			TableRowItemEnumerator* rowItemEnum = tm->getRowItemEnumerator( row );
 			col = 0;
 			while ( rowItemEnum->hasMoreElements() && (col <= maxVisibleCol) ){
@@ -256,7 +260,7 @@ void TableControl::paint( GraphicsContext * context )
 
 				col ++;
 			}
-
+*/
 		}
 
 		context->restoreState( gcs );
@@ -298,7 +302,7 @@ void TableControl::paint( GraphicsContext * context )
 
 			rect.right_ = fixedColWidth-1;
 
-			TableRowItemEnumerator* rowItemEnum = tm->getRowItemEnumerator( row );
+/*			TableRowItemEnumerator* rowItemEnum = tm->getRowItemEnumerator( row );
 
 			col = 0;
 			while ( rowItemEnum->hasMoreElements() && (col <= maxVisibleCol) ) {
@@ -330,6 +334,7 @@ void TableControl::paint( GraphicsContext * context )
 				}
 				col ++;
 			}
+			*/
 		}
 
 		context->restoreState( gcs );
@@ -433,7 +438,7 @@ void TableControl::init()
 	model->TableColumnsDeleted += tmh;
 	model->TableRowsAdded += tmh;
 	model->TableRowsDeleted += tmh;
-	model->TableCellsSelected += tmh;
+//	model->TableCellsSelected += tmh;
 
 	ModelHandler* modelHandler =
 		new ClassProcedure1<ModelEvent*,TableControl>( this, &TableControl::onTableModelEmptied, "ModelHandler" );
@@ -522,7 +527,7 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 
 				for (int col=start;col<event->getNumberOfColumnsAffected()+start;col++ ) {
 
-					TableCellItem* item = tm->getItem( row, col );
+					TableCellItem* item = NULL;//tm->getItem( row, col );
 					if ( NULL != item ){
 						if ( NULL != itemHandler ) {
 							item->ItemSelected += itemHandler;
@@ -552,6 +557,7 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 
 				for (uint32 col=0;col<colCount;col++ ) {
 
+					/*
 					TableCellItem* item = tm->getItem( row, col );
 					if ( NULL != item ){
 						if ( NULL != itemHandler ) {
@@ -561,6 +567,7 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 						item->setColor( getDefaultTableCellColor() );
 						item->setFont( getDefaultTableCellFont() );
 					}
+					*/
 				}
 			}
 
@@ -934,6 +941,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 			// If Ctrl pressed, save the current cell selection. This will get added
 			// to the new cell selection at the end of the cell selection process
 			if ( event->hasControlKey() ) {
+/*
 				Enumerator<TableCellItem*>* selectedCells = tm->getSelectedCells();
 
 				while ( selectedCells->hasMoreElements() ) {
@@ -942,6 +950,7 @@ void TableControl::mouseDown( MouseEvent* event ){
 
 					previouslySelectedCellMap_[ tm->getCellIDForItem(item) ] = item;
 				}
+				*/
 			}
 
 			if ( clickCell_.row < tm->getFixedRowsCount() ) {
@@ -1000,7 +1009,7 @@ Rect TableControl::getBoundsForCell( const CellID& cell )
 Rect TableControl::getBoundsForItem( TableCellItem* item )
 {
 	Rect result;
-
+/*
 	TableModel* tm = getTableModel();
 	CellID cell = tm->getCellIDForItem( item );
 	for ( int row=0;row<cell.row;row++ ) {
@@ -1013,7 +1022,7 @@ Rect TableControl::getBoundsForItem( TableCellItem* item )
 
 	result.left_ = result.right_ - columnWidths_[cell.column];
 	result.top_ = result.bottom_ - rowHeights_[cell.row];
-
+*/
 	return result;
 }
 
@@ -1290,7 +1299,7 @@ void TableControl::mouseClick(  MouseEvent* event )
 
 		Point pointClickedRel = getClickedPoint( cell, pt );
 
-		TableCellItem* item = tm->getItem( cell.row, cell.column );
+		
 
 		/*
         // Clicked in the text area? Only then will cell selection work
@@ -1301,11 +1310,14 @@ void TableControl::mouseClick(  MouseEvent* event )
 
 		*/
 
+		/*
+		TableCellItem* item = tm->getItem( cell.row, cell.column );
         if ( cell.row >= tm->getFixedRowsCount() && clickCell_.isValid() &&
             cell.column >= tm->getFixedColumnsCount() )  {
 
 			editCell( cell, pointClickedRel );
         }
+		*/
     }
 }
 
@@ -1322,7 +1334,7 @@ void TableControl::editCell( const CellID& cell, const Point& pt )
 		return;
 	}
 
-	TableCellItem* item = tm->getItem( cell.row, cell.column );
+/*	TableCellItem* item = tm->getItem( cell.row, cell.column );
 
 
 
@@ -1362,6 +1374,7 @@ void TableControl::editCell( const CellID& cell, const Point& pt )
 		}
 
 	}
+	*/
 
 }
 
@@ -1724,11 +1737,11 @@ TableCellItem* TableControl::getItem( const CellID& cell )
 	TableModel* tm = getTableModel();
 
 	TableCellItem* result = NULL;
-
+/*
 	if ( (tm->getRowCount() > cell.row) && (tm->getColumnCount() > cell.column) ) {
 		result = tm->getItem( cell.row, cell.column );
 	}
-
+*/
 	return result;
 }
 
@@ -1752,7 +1765,7 @@ CellID TableControl::setFocusedCell( const CellID& cell )
 
 	currentCell_ = result;
 
-	tm->setFocusedCell( currentCell_.row, currentCell_.column );
+	//tm->setFocusedCell( currentCell_.row, currentCell_.column );
 
 	return prevCell;
 }
@@ -1985,7 +1998,7 @@ void TableControl::clearSelectionRange()
 	previouslySelectedCellMap_.clear();
 
 	TableModel* tm = getTableModel();
-	tm->clearSelection();
+//	tm->clearSelection();
 }
 
 void TableControl::doSelection( const CellID& cell )
@@ -2024,10 +2037,10 @@ void TableControl::selectAllCells()
 	}
 
 	TableModel* tm = getTableModel();
-	tm->setSelectedRange( true, tm->getFixedRowsCount(),
-							tm->getFixedColumnsCount(),
-							tm->getRowCount()-1,
-							tm->getColumnCount()-1 );
+//	tm->setSelectedRange( true, tm->getFixedRowsCount(),
+//							tm->getFixedColumnsCount(),
+//							tm->getRowCount()-1,
+//							tm->getColumnCount()-1 );
 
 }
 
@@ -2050,19 +2063,19 @@ void TableControl::selectColumns( CellID currentCell, bool forceRedraw, bool sel
 
 
     if ( allowSingleColumnSelection_ ) {
-		tm->setSelectedRange( selectCells,
-								tm->getFixedRowsCount(),
-								currentCell.column,
-								tm->getRowCount()-1,
-								currentCell.column );
+//		tm->setSelectedRange( selectCells,
+//								tm->getFixedRowsCount(),
+//								currentCell.column,
+//								tm->getRowCount()-1,
+//								currentCell.column );
 
 	}
     else {
-		tm->setSelectedRange( selectCells,
-								tm->getFixedRowsCount(),
-								minVal<>(selectionStartCell_.column,currentCell.column),
-								tm->getRowCount()-1,
-								maxVal<>(selectionStartCell_.column, currentCell.column ) );
+//		tm->setSelectedRange( selectCells,
+//								tm->getFixedRowsCount(),
+//								minVal<>(selectionStartCell_.column,currentCell.column),
+//								tm->getRowCount()-1,
+//								maxVal<>(selectionStartCell_.column, currentCell.column ) );
 	}
 }
 
@@ -2083,19 +2096,19 @@ void TableControl::selectRows( CellID currentCell, bool forceRedraw, bool select
 	}
 
     if ( allowSingleColumnSelection_ ) {
-		tm->setSelectedRange( selectCells,
-								currentCell.row,
-								tm->getFixedColumnsCount(),
-								currentCell.row,
-								tm->getColumnCount()-1 );
+//		tm->setSelectedRange( selectCells,
+//								currentCell.row,
+//								tm->getFixedColumnsCount(),
+//								currentCell.row,
+//								tm->getColumnCount()-1 );
 
 	}
     else {
-		tm->setSelectedRange( selectCells,
-								minVal<>(selectionStartCell_.row,currentCell.row),
-								tm->getFixedColumnsCount(),
-								maxVal<>(selectionStartCell_.row,currentCell.row),
-								tm->getColumnCount()-1 );
+//		tm->setSelectedRange( selectCells,
+//								minVal<>(selectionStartCell_.row,currentCell.row),
+//								tm->getFixedColumnsCount(),
+//								maxVal<>(selectionStartCell_.row,currentCell.row),
+//								tm->getColumnCount()-1 );
 	}
 }
 
@@ -2122,11 +2135,11 @@ void TableControl::selectCells( CellID currentCell, bool forceRedraw, bool selec
     //if (currentCell == m_LeftClickDownCell)  return;
     //else if (currentCell == m_idCurrentCell) return;
 
-	tm->setSelectedRange( selectCells,
-							minVal<>(selectionStartCell_.row, row),
-							minVal<>(selectionStartCell_.column, col),
-							maxVal<>(selectionStartCell_.row, row),
-							maxVal<>(selectionStartCell_.column, col) );
+//	tm->setSelectedRange( selectCells,
+//							minVal<>(selectionStartCell_.row, row),
+//							minVal<>(selectionStartCell_.column, col),
+//							maxVal<>(selectionStartCell_.row, row),
+//							maxVal<>(selectionStartCell_.column, col) );
 
 }
 
@@ -2298,12 +2311,12 @@ bool TableControl::autoSizeColumn( int column, AutoSizeOption autoSizeStyle/*=as
 	double width = 0;
 
 	for (int row = startRow; row <= endRow; row++)  {
-        TableCellItem* cell = tm->getItem( row, column );
-		width = cell->getTextCellWidth( ctx );
+//        TableCellItem* cell = tm->getItem( row, column );
+//		width = cell->getTextCellWidth( ctx );
 
-        if ( width > columnWidth ) {
-            columnWidth = width;
-		}
+  //      if ( width > columnWidth ) {
+    //        columnWidth = width;
+	//	}
     }
 
 
@@ -2339,13 +2352,13 @@ bool TableControl::autoSizeRow( int row, bool resetScroll /*=true*/)
 	double height = 0;
 
     for (int col = 0; col < columnCount; col++) {
-		TableCellItem* cell = tm->getItem( row, col );
+//		TableCellItem* cell = tm->getItem( row, col );
 
-        height = cell->getTextCellHeight( ctx );
-
-        if ( height > rowHeight) {
-            rowHeight = height;
-		}
+  //      height = cell->getTextCellHeight( ctx );
+//
+  //      if ( height > rowHeight) {
+    //        rowHeight = height;
+	//	}
     }
 
     rowHeights_[row] = rowHeight;
@@ -2377,7 +2390,7 @@ void TableControl::keyDown( KeyboardEvent* e )
 				clickCell_.row  = 0;
 			}
 
-			tm->clearSelection();
+//			tm->clearSelection();
 
 			if ( clickCell_.isValid() && (clickCell_.row < tm->getRowCount()) ) {
 				selectionStartCell_ = clickCell_;
@@ -2397,7 +2410,7 @@ void TableControl::keyDown( KeyboardEvent* e )
 				clickCell_.row  = tm->getRowCount()-1;
 			}
 
-			tm->clearSelection();
+//			tm->clearSelection();
 
 			if ( clickCell_.isValid() ) {
 				selectionStartCell_ = clickCell_;
@@ -2434,6 +2447,72 @@ void TableControl::setDefaultTableCellFont( Font* font )
 }
 
 
+TableCellItem* TableControl::setSelectedCell( const bool& val, const uint32& row, const uint32& column )
+{
+	TableCellItem* result = NULL;
+
+	return result;
+}
+
+void TableControl::setSelectedRange( const bool& val, const uint32& startRow, const uint32& startColumn,
+					  const uint32& endRow, const uint32& endColumn )
+					  
+{
+	clearSelection();
+
+	for (int i=startRow;i<=endRow;i++ ) {
+		for (int j=startColumn;j<=endColumn;j++ ) {
+			TableCellItem* selectedCell;// = getItem( i, j );
+
+			selectedCell->setSelected( val );
+
+			uint32 key = (i << 16) | j;
+
+			if ( true == val ) {
+				selectionMap_[key] = selectedCell;
+			}
+			else {
+				std::map<uint32,TableCellItem*>::iterator found = selectionMap_.find( key );
+				if ( found != selectionMap_.end() ) {
+					selectionMap_.erase( found );
+				}
+			}
+		}
+	}
+
+	TableModelEvent event( this, CELL_CHANGED, startRow, endRow-startRow, startColumn, endColumn-startColumn );
+	TableCellsSelected( &event );
+}
+
+void TableControl::setFocusedCell( const uint32& row, const uint32& column )
+{
+
+}
+
+TableCellItem* TableControl::createCell( const uint32& row, const uint32& column )
+{
+	TableCellItem* result = NULL;
+
+	return result;
+}
+
+void TableControl::clearSelection()
+{
+
+}
+
+Enumerator<TableCellItem*>* TableControl::getSelectedCells()
+{
+	return selectionMap_.getEnumerator();
+}
+
+CellID TableControl::getCellIDForItem( TableCellItem* item )
+{
+	CellID result;
+
+	return result;
+}
 /**
 $Id$
 */
+

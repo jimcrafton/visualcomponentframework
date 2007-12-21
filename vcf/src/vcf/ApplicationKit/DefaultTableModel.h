@@ -14,14 +14,17 @@ where you installed the VCF.
 #endif
 
 
-
+/*
 #ifndef _VCF_TABLEMODELEVENT_H__
 #	include "vcf/ApplicationKit/TableModelEvent.h"
 #endif // _VCF_TABLEMODELEVENT_H__
+*/
 
+/*
 #ifndef _VCF_TABLECELLITEM_H__
 #include "vcf/ApplicationKit/TableCellItem.h"
 #endif // _VCF_TABLECELLITEM_H__
+*/
 
 #ifndef _VCF_TABLEMODEL_H__
 #include "vcf/ApplicationKit/TableModel.h"
@@ -37,42 +40,13 @@ class TableCellItem;
 /**
 \class DefaultTableModel DefaultTableModel.h "vcf/ApplicationKit/DefaultTableModel.h"
 */
-class APPLICATIONKIT_API DefaultTableModel : public Model, public TableModel {
+class APPLICATIONKIT_API DefaultTableModel : public TableModel {
 public:
 	DefaultTableModel();
 
 	virtual ~DefaultTableModel();
 	
-   /* These functions override those in VCF::TableModel.  This is done
-	* due to a complicated multiple inheritance rule that only the
-	* pedantic CodeWarrior enforces. ACH 
-	* The same thing happens with Borland compiler.
-	*/
-#if defined(VCF_CW) || defined(VCF_BCC)
-	VCF::Delegate& getTableCellAdded(){ 
-		return TableCellAdded; 
-	} 
-	
-	VCF::Delegate& getTableCellDeleted(){ 
-		return TableCellDeleted; 
-	} 
-
-	VCF::Delegate& getTableRowsAdded(){ 
-		return TableRowsAdded; 
-	}
-	
-	VCF::Delegate& getTableRowsDeleted(){ 
-		return TableRowsDeleted; 
-	} 
-
-	VCF::Delegate& getTableColumnsAdded(){ 
-		return TableColumnsAdded; 
-	}
-	
-	VCF::Delegate& getTableColumnsDeleted(){ 
-		return TableColumnsDeleted; 
-	}
-#endif	
+   
     /**
      * validate the model.
      * The implementation for this can vary widely, or even be nonexistant for model's that do not require validation.
@@ -106,14 +80,17 @@ public:
 
 	virtual bool isCellEditable( const uint32& row, const uint32& column );
 
-	virtual TableCellItem* getItem( const uint32& row, const uint32& column );
+	virtual VariantData getValue( const uint32& row, const uint32& column );
+	virtual String getValueAsString( const uint32& row, const uint32& column );
 
 	virtual uint32 getRowCount();
 
 	virtual uint32 getColumnCount();
 
-	virtual TableRowItemEnumerator* getRowItemEnumerator( const uint32& row );
+	virtual bool getRowValues( const uint32& row, std::vector<VariantData>& values );
+	virtual bool getColumnValues( const uint32& col, std::vector<VariantData>& values );
 
+	/*
 	virtual TableCellItem* createCell( const uint32& row, const uint32& column );
 
 	virtual TableCellItem* setSelectedCell( const bool& val, const uint32& row, const uint32& column );
@@ -126,6 +103,7 @@ public:
 	virtual TableCellItem* getFocusedCell() {
 		return focusedCell_;
 	}
+	*/
 
 	virtual void setFixedColumnsCount( const uint32& count );
 
@@ -135,16 +113,18 @@ public:
 
 	virtual uint32 getFixedRowsCount();
 
+	/*
 	virtual void clearSelection();
 
 	virtual Enumerator<TableCellItem*>* getSelectedCells();
 
 	virtual CellID getCellIDForItem( TableCellItem* item );
+	*/
 protected:
 	/**
 	*defines the a vector of TableCellItem's, or one row of data columnCount_ int32
 	*/
-	typedef std::vector<TableCellItem*> TTableColumn;
+	typedef std::vector<VariantData> TTableColumn;
 private:
 	void init();
 	uint32 rowCount_;
@@ -158,13 +138,14 @@ private:
 	*row 0 at column 3
 	*/
 	std::vector<TTableColumn*> tableData_;
-
+/*
 	EnumeratorContainer<std::vector<TableCellItem*>,TableCellItem*> rowEnumContainer_;
 
 	std::map<uint32,TableCellItem*> selectionMap_;
 	EnumeratorMapContainer<std::map<uint32,TableCellItem*>,TableCellItem*> selectionContainer_;
 
 	TableCellItem* focusedCell_;
+	*/
 };
 
 }; //end of namespace VCF

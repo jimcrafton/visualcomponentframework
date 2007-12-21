@@ -15,7 +15,10 @@ where you installed the VCF.
 using namespace VCF;
 
 DefaultTableModel::DefaultTableModel():
-	focusedCell_(NULL)
+	columnCount_(0),
+	rowCount_(0),
+	fixedRowsCount_(0),
+	fixedColumnsCount_(0)
 {
 	init();
 }
@@ -25,14 +28,6 @@ DefaultTableModel::~DefaultTableModel()
 	std::vector<TTableColumn*>::iterator rowIter = tableData_.begin();
 	while ( rowIter != tableData_.end() ){
 		TTableColumn* row = *rowIter;
-		std::vector<TableCellItem*>::iterator it = row->begin();
-		while ( it != row->end() ){
-			TableCellItem* item = *it;
-			delete item;
-			item = NULL;
-			it++;
-		}
-		row->clear();
 		delete row;
 		row = NULL;
 		rowIter ++;
@@ -42,19 +37,15 @@ DefaultTableModel::~DefaultTableModel()
 
 void DefaultTableModel::init()
 {
-	columnCount_ = 0;
-	rowCount_ = 0;
-	fixedRowsCount_ = 0;
-	fixedColumnsCount_ = 0;
-
-	selectionContainer_.initContainer( selectionMap_ );
+	//selectionContainer_.initContainer( selectionMap_ );
 }
 
-
+/*
 Enumerator<TableCellItem*>* DefaultTableModel::getSelectedCells()
 {
 	return selectionContainer_.getEnumerator();
 }
+*/
 
 void DefaultTableModel::validate()
 {
@@ -65,15 +56,7 @@ void DefaultTableModel::empty()
 {
 	std::vector<TTableColumn*>::iterator rowIter = tableData_.begin();
 	while ( rowIter != tableData_.end() ){
-		TTableColumn* row = *rowIter;
-		std::vector<TableCellItem*>::iterator it = row->begin();
-		while ( it != row->end() ){
-			TableCellItem* item = *it;
-			delete item;
-			item = NULL;
-			it++;
-		}
-		row->clear();
+		TTableColumn* row = *rowIter;		
 		delete row;
 		row = NULL;
 		rowIter ++;
@@ -83,12 +66,7 @@ void DefaultTableModel::empty()
 	rowCount_ = 0;
 	fixedColumnsCount_ = 0;
 	fixedRowsCount_ = 0;
-
-	focusedCell_ = NULL;
-
-	selectionMap_.clear();
-
-	Model::empty();
+	TableModel::empty();
 }
 
 void DefaultTableModel::addRow()
@@ -104,11 +82,12 @@ void DefaultTableModel::insertRow( const uint32& afterRow )
 
 	rowCount_ ++;
 	TTableColumn* newRow = new TTableColumn();
-	for ( uint32 i=0;i<columnCount_;i++){
-		TableCellItem* newItem = createCell( afterRow, i );
-		newItem->setModel( this );
-		newRow->push_back( newItem );
-	}
+	newRow->resize(columnCount_,VariantData::null());
+	//for ( uint32 i=0;i<columnCount_;i++){		
+		//TableCellItem* newItem = createCell( afterRow, i );
+		//newItem->setModel( this );
+		//newRow->push_back( newItem );
+	//}
 
 	tableData_.insert( tableData_.begin() + afterRow, newRow );
 	TableModelEvent event( this, ROWS_ADDED, afterRow, 1 );
@@ -127,8 +106,8 @@ void DefaultTableModel::addRows( const uint32& count )
 		TTableColumn* newRow = new TTableColumn();
 		tableData_[row] = newRow;
 
-		newRow->resize( columnCount_, NULL );
-
+		newRow->resize( columnCount_, VariantData::null() );
+/*
 		for ( uint32 i=0;i<columnCount_;i++){
 			TableCellItem* newItem = createCell( row, i );
 
@@ -140,6 +119,7 @@ void DefaultTableModel::addRows( const uint32& count )
 
 			(*newRow)[i] = newItem;
 		}
+		*/
 	}
 
 	TableModelEvent event( this, ROWS_ADDED, start, count );
@@ -185,13 +165,15 @@ void DefaultTableModel::deleteRow( const uint32& row )
 	std::vector<TTableColumn*>::iterator found = tableData_.begin() + row;
 	if ( found != tableData_.end() ){
 		TTableColumn* row = *found;
-		std::vector<TableCellItem*>::iterator it = row->begin();
+		
+		/*std::vector<TableCellItem*>::iterator it = row->begin();
 		while ( it != row->end() ){
 			TableCellItem* item = *it;
 			delete item;
 			item = NULL;
 			it++;
 		}
+		*/
 		tableData_.erase( found );
 		delete row;
 		row = NULL;
@@ -218,15 +200,15 @@ void DefaultTableModel::addColumns( const uint32& count )
 		std::vector<TTableColumn*>::iterator rowIter = tableData_.begin();
 		while ( rowIter != tableData_.end() ){
 			TTableColumn* row = *rowIter;
-			TableCellItem* newItem = createCell( i, columnCount_-1 );
+			//TableCellItem* newItem = createCell( i, columnCount_-1 );
 
-			newItem->setModel( this );
+			//newItem->setModel( this );
 
-			if ( columnCount_-1 < this->fixedColumnsCount_ ) {
-				newItem->setFixed( true );
-			}
+			//if ( columnCount_-1 < this->fixedColumnsCount_ ) {
+			//	newItem->setFixed( true );
+			//}
 
-			row->push_back( newItem );
+			row->push_back( VariantData::null() );
 			rowIter++;
 			i++;
 		}
@@ -247,14 +229,14 @@ void DefaultTableModel::insertColumn( const uint32& afterColumn )
 		std::vector<TTableColumn*>::iterator rowIter = tableData_.begin();
 		while ( rowIter != tableData_.end() ){
 			TTableColumn* row = *rowIter;
-			TableCellItem* newItem = createCell( i, afterColumn );
-			newItem->setModel( this );
+			//TableCellItem* newItem = createCell( i, afterColumn );
+			//newItem->setModel( this );
 
-			if ( afterColumn < this->fixedColumnsCount_ ) {
-				newItem->setFixed( true );
-			}
+			//if ( afterColumn < this->fixedColumnsCount_ ) {
+			//	newItem->setFixed( true );
+			//}
 
-			row->insert( row->begin() + afterColumn, newItem );
+			row->insert( row->begin() + afterColumn, VariantData::null() );//newItem );
 			rowIter++;
 			i++;
 		}
@@ -273,12 +255,12 @@ void DefaultTableModel::deleteColumn( const uint32& column )
 	std::vector<TTableColumn*>::iterator rowIter = tableData_.begin();
 	while ( rowIter != tableData_.end() ){
 		TTableColumn* row = *rowIter;
-		std::vector<TableCellItem*>::iterator found = row->begin() + column;
+		std::vector<VariantData>::iterator found = row->begin() + column;
 		if ( found != row->end() ){
-			TableCellItem* item = *found;
+			//TableCellItem* item = *found;
 			row->erase( found );
-			delete item;
-			item = NULL;
+			//delete item;
+			//item = NULL;
 		}
 		rowIter++;
 	}
@@ -289,19 +271,47 @@ void DefaultTableModel::deleteColumn( const uint32& column )
 
 bool DefaultTableModel::isCellEditable( const uint32& row, const uint32& column )
 {
-	bool result = false;
+	bool result = true;
+	/*
 	TableCellItem* item = getItem( row, column );
 	if ( NULL != item ){
 		result = item->isEditable();
 	}
+	*/
+
+	if ( row <= fixedRowsCount_ && column <= fixedColumnsCount_ ) {
+		result = false;
+	}
 	return result;
 }
-
+/*
 TableCellItem* DefaultTableModel::getItem( const uint32& row, const uint32& column )
 {
 	TableCellItem* result = NULL;
 	TTableColumn* rows = tableData_[row];
 	result = (*rows)[column];
+	return result;
+}
+*/
+
+VariantData DefaultTableModel::getValue( const uint32& row, const uint32& column )
+{
+	VariantData result;
+
+	TTableColumn* rows = tableData_[row];
+	result = (*rows)[column];
+
+	return result;
+}
+
+String DefaultTableModel::getValueAsString( const uint32& row, const uint32& column )
+{
+	String result;
+
+	TTableColumn* rows = tableData_[row];
+	const VariantData& v = (*rows)[column];
+	result = v.toString();
+
 	return result;
 }
 
@@ -315,6 +325,26 @@ uint32 DefaultTableModel::getColumnCount()
 	return columnCount_;
 }
 
+bool DefaultTableModel::getRowValues( const uint32& row, std::vector<VariantData>& values )
+{
+	values.clear();
+
+	values = *(tableData_[row]);
+
+	return !values.empty();
+}
+
+bool DefaultTableModel::getColumnValues( const uint32& col, std::vector<VariantData>& values )
+{
+	values.clear();
+	values.resize( rowCount_ );
+	for (size_t row=0;row<rowCount_;row++ ) {
+		TTableColumn* aRow = tableData_[row];
+		values[row] = (*aRow)[col];
+	}
+	return !values.empty();
+}
+/*
 TableRowItemEnumerator* DefaultTableModel::getRowItemEnumerator( const uint32& row )
 {
 	TableRowItemEnumerator* result = NULL;
@@ -389,6 +419,7 @@ void DefaultTableModel::setSelectedRange( const bool& val, const uint32& startRo
 	TableCellsSelected( &event );
 	//TableCellsSelected
 }
+*/
 
 void DefaultTableModel::setFixedColumnsCount( const uint32& count )
 {
@@ -404,14 +435,14 @@ void DefaultTableModel::setFixedColumnsCount( const uint32& count )
 	if ( count > fixedColumnsCount_ ) {
 		for ( int i=0;i<rowCount_;i++ ) {
 			for ( int j=fixedColumnsCount_;j<count;j++ ) {
-				getItem( i, j )->setFixed( true );
+				//getItem( i, j )->setFixed( true );
 			}
 		}
 	}
 	else {
 		for ( int i=fixedRowsCount_;i<rowCount_;i++ ) {
 			for ( int j=count;j<fixedColumnsCount_;j++ ) {
-				getItem( i, j )->setFixed( false );
+				//getItem( i, j )->setFixed( false );
 			}
 		}
 	}
@@ -435,14 +466,14 @@ void DefaultTableModel::setFixedRowsCount( const uint32& count )
 	if ( count > fixedRowsCount_ ) {
 		for ( int i=fixedRowsCount_;i<count;i++ ) {
 			for ( int j=0;j<columnCount_;j++ ) {
-				getItem( i, j )->setFixed( true );
+				//getItem( i, j )->setFixed( true );
 			}
 		}
 	}
 	else {
 		for ( int i=count;i<fixedRowsCount_;i++ ) {
 			for ( int j=fixedColumnsCount_;j<columnCount_;j++ ) {
-				getItem( i, j )->setFixed( false );
+				//getItem( i, j )->setFixed( false );
 			}
 		}
 	}
@@ -459,7 +490,7 @@ uint32 DefaultTableModel::getFixedRowsCount()
 {
 	return fixedRowsCount_;
 }
-
+/*
 void DefaultTableModel::clearSelection()
 {
 	for ( int i=0;i<rowCount_;i++ ) {
@@ -499,6 +530,7 @@ CellID DefaultTableModel::getCellIDForItem( TableCellItem* item )
 	return result;
 }
 
+
 void DefaultTableModel::setFocusedCell( const uint32& row, const uint32& column )
 {
 	if ( NULL != focusedCell_ ) {
@@ -518,7 +550,7 @@ void DefaultTableModel::setFocusedCell( const uint32& row, const uint32& column 
 		focusedCell_ = NULL;
 	}
 }
-
+*/
 
 /**
 $Id$
