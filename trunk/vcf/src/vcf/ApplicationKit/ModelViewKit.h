@@ -60,10 +60,6 @@ where you installed the VCF.
 /**
 *core text model classes
 */
-#ifndef _VCF_TEXTEVENT_H__
-#	include "vcf/ApplicationKit/TextEvent.h"
-#endif // _VCF_TEXTEVENT_H__
-
 #ifndef _VCF_TEXTMODEL_H__
 #	include "vcf/ApplicationKit/TextModel.h"
 #endif // _VCF_TEXTMODEL_H__

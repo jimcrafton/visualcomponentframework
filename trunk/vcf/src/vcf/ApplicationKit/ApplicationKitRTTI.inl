@@ -456,9 +456,11 @@ _class_rtti_(DefaultTableModel, "VCF::Model", DEFAULTTABLEMODEL_CLASSID )
 //	_delegate_( TableModelDelegate, TableColumnsDeleted )
 _class_rtti_end_
 
+_class_abstract_rtti_(TextModel, "VCF::Model", TEXTMODEL_CLASSID)	
+_class_rtti_end_
 
-_class_rtti_(DefaultTextModel, "VCF::Model", DEFAULTTEXTMODEL_CLASSID)
-	_delegate_( TextModelDelegate, TextModelChanged )
+
+_class_rtti_(DefaultTextModel, "VCF::TextModel", DEFAULTTEXTMODEL_CLASSID)	
 _class_rtti_end_
 
 

@@ -35,7 +35,7 @@ void DefaultTextModel::setText( const String& text )
 
 	TextEvent event( this, TextModel::tmTextSet, text, 0, text.size() );
 
-	TextModelChanged( &event );
+	ModelChanged( &event );
 }
 
 void DefaultTextModel::empty()
@@ -51,7 +51,7 @@ void DefaultTextModel::insertText( const uint32& index, const String& text )
 
 	TextEvent event( this, TextModel::tmTextInserted, text, index, text.size() );
 
-	TextModelChanged( &event );
+	ModelChanged( &event );
 }
 
 void DefaultTextModel::replaceText( const uint32& index, const uint32& count, const String& text )
@@ -72,7 +72,7 @@ void DefaultTextModel::replaceText( const uint32& index, const uint32& count, co
 
 	TextEvent event( this, TextModel::tmTextReplaced, removedText, text, 
 							index, count );
-	TextModelChanged( &event );
+	ModelChanged( &event );
 }
 
 void DefaultTextModel::deleteText( const uint32& index, const uint32& count )
@@ -85,7 +85,7 @@ void DefaultTextModel::deleteText( const uint32& index, const uint32& count )
 
 	TextEvent event( this, TextModel::tmTextRemoved, changeText, index, count );
 
-	TextModelChanged( &event );
+	ModelChanged( &event );
 }
 
 

@@ -35,6 +35,8 @@ void Label::paint( GraphicsContext * context )
 	double y = 0.0;//getBounds()->getHeight() / 4;
 	double x = 0.0;
 
+	String caption = getCaption();
+
 	int32 drawOptions = GraphicsContext::tdoNone;
 
 	switch ( textAlignment_ ) {
@@ -45,13 +47,13 @@ void Label::paint( GraphicsContext * context )
 		break;
 
 		case taTextCenter : {
-			x = maxVal<>( 1.0, (getWidth()/2.0) - (context->getTextWidth( caption_ ) / 2.0) );
+			x = maxVal<>( 1.0, (getWidth()/2.0) - (context->getTextWidth( caption ) / 2.0) );
 			drawOptions |= GraphicsContext::tdoCenterHorzAlign;
 		}
 		break;
 
 		case taTextRight : {
-			x = maxVal<>( 1.0, getWidth() - context->getTextWidth( caption_ ) );
+			x = maxVal<>( 1.0, getWidth() - context->getTextWidth( caption ) );
 			drawOptions |= GraphicsContext::tdoRightAlign;
 		}
 		break;
@@ -65,14 +67,14 @@ void Label::paint( GraphicsContext * context )
 		break;
 
 		case tvaTextCenter : {
-			y = (getHeight()/2.0) - (context->getTextHeight(caption_)/2.0);
+			y = (getHeight()/2.0) - (context->getTextHeight(caption)/2.0);
 
 			drawOptions |= GraphicsContext::tdoCenterVertAlign;
 		}
 		break;
 
 		case tvaTextBottom : {
-			y = getHeight() - context->getTextHeight(caption_);
+			y = getHeight() - context->getTextHeight(caption);
 			drawOptions |= GraphicsContext::tdoBottomAlign;
 		}
 		break;
@@ -85,11 +87,11 @@ void Label::paint( GraphicsContext * context )
 	}
 
 	if ( getUseLocaleStrings() ) {
-		String text = System::getCurrentThreadLocale()->translate( caption_ );
+		String text = System::getCurrentThreadLocale()->translate( caption );
 		context->textBoundedBy( &bounds, text, drawOptions );
 	}
 	else {
-		context->textBoundedBy( &bounds, caption_, drawOptions );
+		context->textBoundedBy( &bounds, caption, drawOptions );
 	}
 }
 
@@ -108,6 +110,11 @@ void Label::setCaption( const String& caption )
 
 String Label::getCaption()
 {
+	Model* model  = getViewModel();
+	if ( NULL != model ) {
+		return model->getValueAsString();
+	}
+
 	return caption_;
 }
 

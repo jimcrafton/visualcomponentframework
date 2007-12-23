@@ -19,10 +19,6 @@ where you installed the VCF.
 #endif // _VCF_TEXTMODEL_H__
 
 
-#ifndef _VCF_TEXTEVENT_H__
-#	include "vcf/ApplicationKit/TextEvent.h"
-#endif // _VCF_TEXTEVENT_H__
-
 
 namespace VCF {
 

@@ -121,6 +121,10 @@ public:
 		return String();
 	}
 
+	virtual void setValue( const VariantData& value, const VariantData& key=VariantData::null() ) { }
+
+	virtual void setValueAsString( const String& value, const VariantData& key=VariantData::null() ) {}
+
 protected:
 	Array<View*> views_;
 };
