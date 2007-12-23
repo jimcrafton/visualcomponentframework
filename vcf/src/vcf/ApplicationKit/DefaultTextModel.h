@@ -19,10 +19,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/TextModel.h"
 #endif // _VCF_TEXTMODEL_H__
 
-#ifndef _VCF_TEXTEVENT_H__
-#	include "vcf/ApplicationKit/TextEvent.h"
-#endif // _VCF_TEXTEVENT_H__
-
 
 
 namespace VCF{
@@ -31,7 +27,7 @@ namespace VCF{
 /**
 \class DefaultTextModel DefaultTextModel.h "vcf/ApplicationKit/DefaultTextModel.h"
 */
-class APPLICATIONKIT_API DefaultTextModel : public Model, public TextModel {
+class APPLICATIONKIT_API DefaultTextModel : public TextModel {
 public:
 
 
@@ -39,19 +35,6 @@ public:
 
 	virtual ~DefaultTextModel();
 
-	/**
-	@delegate TextModelChanged fired when the model's text data is changed
-	@event TextModelEvent
-	*/
-	DELEGATE(TextModelDelegate,TextModelChanged)
-
-	virtual void addTextModelChangedHandler( EventHandler * handler ){
-		TextModelChanged += handler;
-	}
-
-	virtual void removeTextModelChangedHandler( EventHandler * handler ) {
-		TextModelChanged.remove(handler);
-	}
 
     virtual void empty();
 

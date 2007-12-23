@@ -73,7 +73,7 @@ Control* BasicTableItemEditor::getEditingControl()
 
 		tc->setSelectionMark( 0, editingItem_->getCaption().size() );
 
-		tm->addTextModelChangedHandler( (EventHandler*)ev );
+		tm->ModelChanged.add( (EventHandler*)ev );
 
 		editingControl_ = tc;
 	}

@@ -556,7 +556,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				//modify the model, but ignore an change notifications to us!
 				editState_ |= esModelTextChanging;
 				
-				textControl_->getTextModel()->setText( getText() );
+				textControl_->getViewModel()->setValueAsString( getText() );
 				
 				editState_ &= ~esModelTextChanging;
 				
@@ -788,11 +788,11 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					if ( stateAllowsModelChange() ) {
 						editState_ |= esModelTextChanging;
 
-						VCF::TextModel* model = textControl_->getTextModel();
+						VCF::Model* model = textControl_->getViewModel();
 						if ( NULL != model ) {
 							String text = getText();
 
-							model->setText( text );
+							model->setValueAsString( text );
 						}
 
 						editState_ &= ~esModelTextChanging;
@@ -851,7 +851,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 	
 				// copy the control's text into the model
 				
-				VCF::TextModel* model = textControl_->getTextModel();
+				VCF::Model* model = textControl_->getViewModel();
 				if ( NULL != model ) {
 					editState_ |= esModelTextChanging;
 					
@@ -866,7 +866,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 						}
 					}*/
 	
-					model->setText( text );
+					model->setValueAsString( text );
 					
 					editState_ &= ~esModelTextChanging;
 				}
@@ -995,29 +995,29 @@ void Win32Edit::onTextModelTextChanged( TextEvent* event )
 
 		switch ( event->getType() ) {
 			case TextModel::tmTextInserted : {
-				insertText( event->getChangeStart(),
-											event->getChangeText() );
+				insertText( event->changeStart,
+											event->changeText );
 			}
 			break;
 
 			case TextModel::tmTextReplaced : {
-				String originalText = event->getOriginalText();
-				deleteText( event->getChangeStart(),
+				String originalText = event->originalText;
+				deleteText( event->changeStart,
 											originalText.size() );
 
-				insertText( event->getChangeStart(),
-											event->getChangeText() );
+				insertText( event->changeStart,
+											event->changeText );
 			}
 			break;
 
 			case TextModel::tmTextRemoved : {
-				deleteText( event->getChangeStart(),
-											event->getChangeLength() );
+				deleteText( event->changeStart,
+											event->changeLength );
 			}
 			break;
 
 			case TextModel::tmTextSet : {
-				setText( textControl_->getTextModel()->getText() );
+				setText( textControl_->getViewModel()->getValueAsString() );
 			}
 			break;
 		}
@@ -1042,7 +1042,7 @@ int Win32Edit::getCRCount( const uint32& begin, const uint32& end, const bool& l
 
 	TextControl* tc = (TextControl*)this->getControl();
 
-	String text = tc->getTextModel()->getText();
+	String text = tc->getViewModel()->getValueAsString();
 
 	uint32 size = text.size();
 	uint32 b = VCF::minVal<>( begin, size );
@@ -1267,7 +1267,7 @@ uint32 Win32Edit::getTotalPrintablePageCount( PrintContext* context )
 	formatRange.rc.bottom -= 350; //add a 1/4"
 
 	TextControl* tc = (TextControl*)this->getControl();
-	String text = tc->getTextModel()->getText();
+	String text = tc->getViewModel()->getValueAsString();
 	uint32 textSize = text.size();
 
 	SendMessage( hwnd_, EM_FORMATRANGE, 0, 0 );
@@ -1371,12 +1371,10 @@ void Win32Edit::onControlModelChanged( Event* e )
 
 
 
-	TextModel* tm = textControl_->getTextModel();
-	tm->addTextModelChangedHandler( (EventHandler*)tml );
+	Model* tm = textControl_->getViewModel();
+	tm->ModelChanged.add( (EventHandler*)tml );
 
-
-	String text = tm->getText();
-
+	String text = tm->getValueAsString();
 
 	setText( text );
 
