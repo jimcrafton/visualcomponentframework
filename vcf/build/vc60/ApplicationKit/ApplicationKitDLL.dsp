@@ -566,6 +566,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TableItemEditor.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\TabModel.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\TitledBorder.cpp
 # End Source File
 # Begin Source File
@@ -1155,6 +1159,15 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTableModel.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTabModel.cpp
+
+!IF  "$(CFG)" == "ApplicationKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKitDLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 

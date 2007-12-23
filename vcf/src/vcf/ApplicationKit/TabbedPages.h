@@ -74,13 +74,28 @@ public:
 
 	void setTabHeight( const double& tabHeight );
 
+	TabPage* getTabPage( const uint32& index );
+	void setTabPage( const uint32& index, TabPage* page );
+
+	TabPage* getPageFromPageName( const String& pageName );
+
+	TabPage* getSelectedPage();
+	void setSelectedPage( TabPage* page );
+	void setSelectedPage( const uint32& index );
+
+	bool isFirstPage( TabPage* page );
+	bool isLastPage( TabPage* page );
+	TabPage* nextPage( TabPage* page );
+	TabPage* previousPage( TabPage* page );
+
+	Enumerator<TabPage*>* getPages();
 protected:
 	class ScrollButton : public PushButton {
 	public:
 		virtual void paint( GraphicsContext* ctx );
 	};
 
-	TabModel* model_;
+	
 	Rect tabAreaBounds_;
 	Basic3DBorder activePageBorder_;
 	double borderWidth_;
@@ -90,6 +105,8 @@ protected:
 	double tabViewOffset_;
 	ScrollButton* scrollForward_;
 	ScrollButton* scrollBackward_;
+	Array<TabPage*> tabPages_;
+	TabPage* selectedPage_;
 
 	//void recalcScrollerButtonsPos();
 

@@ -123,6 +123,10 @@ public:
 
 	virtual ~TabModel();
 
+	enum {
+		NoPageSelected = (uint32)-1
+	};
+
 	/**
 	@delegate TabModelEvent - this is fired when a tab page is selected by calling
 	the setSelectedPage() method

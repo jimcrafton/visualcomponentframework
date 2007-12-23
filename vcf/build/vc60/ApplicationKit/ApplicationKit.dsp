@@ -571,6 +571,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TableItemEditor.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\TabModel.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\TitledBorder.cpp
 # End Source File
 # Begin Source File

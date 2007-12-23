@@ -61,22 +61,8 @@ public:
 	@event ValidationEvent
 	@see validate()
 	*/
-	DELEGATE(ValidationDelegate,ModelValidate)
-
-    /**
-     * Adds a validation listener to the model
-     */
-    void addModelValidationHandler( EventHandler* handler ){
-		ModelValidate +=  handler;
-	}
-
-    /**
-     * removes a validation listener from the model
-     */
-    void removeModelValidationHandler( EventHandler* handler ){
-		ModelValidate.remove( handler );
-	}
-
+	DELEGATE(ValidationDelegate,ModelValidate)    
+    
     /**
      * validate the model.
      * The implementation for this can vary widely, or even be nonexistant for model's that do not require validation.
@@ -119,16 +105,24 @@ public:
 	virtual void updateAllViews();
 
 	Enumerator<View*>* getViews() {
-		return viewContainer_.getEnumerator();
+		return views_.getEnumerator();
 	}
 
 	void changed( ModelEvent* event ) {
 		ModelChanged.invoke( event );
 		updateAllViews();
 	}
+
+	virtual VariantData getValue( const VariantData& key=VariantData::null() ) 	{
+		return VariantData::null();
+	}
+
+	virtual String getValueAsString( const VariantData& key=VariantData::null() ) {
+		return String();
+	}
+
 protected:
-	std::vector<View*> views_;
-	EnumeratorContainer<std::vector<View*>,View*> viewContainer_;
+	Array<View*> views_;
 };
 
 };

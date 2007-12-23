@@ -34,9 +34,9 @@ public:
 
 	virtual String getPageName() = 0;
 
-	virtual Control* getPageComponent() = 0;
+	virtual Control* getPageControl() = 0;
 
-	virtual void setPageComponent( Control* component ) = 0;
+	virtual void setPageControl( Control* component ) = 0;
 
 	virtual uint32 getPreferredHeight() = 0;
 

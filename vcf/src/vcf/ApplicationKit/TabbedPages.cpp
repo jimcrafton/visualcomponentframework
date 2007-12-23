@@ -50,7 +50,7 @@ public:
 
 TabbedPages::TabbedPages():
 	CustomControl( true ),
-	model_( NULL )
+		selectedPage_(NULL)
 {
 	setContainerDelegate( this );
 	setContainer( new StandardContainer() );
@@ -180,10 +180,11 @@ void TabbedPages::paint( GraphicsContext* context )
 	
 	context->drawThemeTabPage( &bounds, pageState );
 
-	
 
-	if ( NULL != model_ ){
-		Enumerator<TabPage*>* pages;// = model_->getPages();
+	TabModel* tm = getTabModel();
+
+	if ( NULL != tm ){
+		Array<TabPage*>::iterator it = tabPages_.begin();
 
 		Rect tabsRect(0,0,0,0);
 
@@ -193,14 +194,14 @@ void TabbedPages::paint( GraphicsContext* context )
 		Rect selectedRect;
 
 
-		uint32 pageCount;// = model_->getPageCount();
+		uint32 pageCount = tabPages_.size();
 
-		double tabWidth;// =  tabAreaBounds_.getWidth() / pageCount;
+		double tabWidth =  tabAreaBounds_.getWidth() / pageCount;
 		double width = tabWidth;
 
 
-		while ( true == pages->hasMoreElements() ){
-			TabPage* page = pages->nextElement();
+		while ( it != tabPages_.end() ){
+			TabPage* page = *it;
 			VCF_ASSERT( NULL != page );
 			width = minVal<>( tabWidth, getTabPageWidth( page, context ) );
 			tabsRect.setRect( currentLeft, bounds.top_ - tabHeight_,
@@ -219,6 +220,7 @@ void TabbedPages::paint( GraphicsContext* context )
 			}
 			
 			currentLeft += width;
+			++it;
 		}
 /*
 		//if ( oldClipRect.isEmpty() ) {
@@ -229,7 +231,7 @@ void TabbedPages::paint( GraphicsContext* context )
 
 		if ( NULL != selectedPage ) {
 
-			Control* component = selectedPage->getPageComponent();
+			Control* component = selectedPage->getPageControl();
 
 			if ( NULL != component ){
 				Rect tmp( tabAreaBounds_ );//*(component->getBounds()) );
@@ -260,49 +262,59 @@ TabModel* TabbedPages::getTabModel()
 
 void TabbedPages::setViewModel( Model* model )
 {
-
-}
-
-void TabbedPages::setTabModel( TabModel* model )
-{
-	if ( NULL != model_ ) {
-//		model_->release();
-	}
-
-	model_ = model;
-
-
-	
-	if ( NULL != model_ ) {
-		Model* mod = dynamic_cast<Model*>(model_);
-		if ( NULL != mod ) {
-			mod->addView( this ); //calls setViewModel() for us
-		}
-
-
+	TabModel* tm = getTabModel();
+	if ( NULL != tm ) {
 		CallBack* ev = getCallback( "TabbedPages::onTabPageAdded" );
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<ListModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageAdded, "TabbedPages::onTabPageAdded" );
 		}
-		model_->ItemAdded.add( (EventHandler*)ev );
+		tm->ItemAdded.remove( (EventHandler*)ev );
 
 		ev = getCallback( "TabbedPages::onTabPageRemoved" );
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<ListModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageRemoved, "TabbedPages::onTabPageRemoved" );
 		}
-		model_->ItemRemoved.add( (EventHandler*)ev );
+		tm->ItemRemoved.remove( (EventHandler*)ev );
 
 
 		ev = getCallback( "TabbedPages::onTabPageSelected" );
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<TabModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageSelected, "TabbedPages::onTabPageSelected" );
 		}
-		model_->TabPageSelected.add( (EventHandler*)ev );		
-	}
-	else {
-		setViewModel( NULL );
+		tm->TabPageSelected.remove( (EventHandler*)ev );
 	}
 
+	CustomControl::setViewModel( model );
+
+	tm = dynamic_cast<TabModel*>( model );
+
+	VCF_ASSERT( tm != NULL ) ;
+
+	if ( NULL != tm ) {
+		CallBack* ev = getCallback( "TabbedPages::onTabPageAdded" );
+		if ( NULL == ev ) {
+			ev = new ClassProcedure1<ListModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageAdded, "TabbedPages::onTabPageAdded" );
+		}
+		tm->ItemAdded.add( (EventHandler*)ev );
+
+		ev = getCallback( "TabbedPages::onTabPageRemoved" );
+		if ( NULL == ev ) {
+			ev = new ClassProcedure1<ListModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageRemoved, "TabbedPages::onTabPageRemoved" );
+		}
+		tm->ItemRemoved.add( (EventHandler*)ev );
+
+
+		ev = getCallback( "TabbedPages::onTabPageSelected" );
+		if ( NULL == ev ) {
+			ev = new ClassProcedure1<TabModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageSelected, "TabbedPages::onTabPageSelected" );
+		}
+		tm->TabPageSelected.add( (EventHandler*)ev );		
+	}	
+}
+
+void TabbedPages::setTabModel( TabModel* model )
+{
+	setViewModel( model );
 }
 
 void TabbedPages::onTabPageAdded( ListModelEvent* event )
@@ -314,109 +326,141 @@ void TabbedPages::onTabPageAdded( ListModelEvent* event )
 	//visible
 	//repaint();
 
-	event->index;
+	DefaultTabPage* page = new DefaultTabPage();	
+	addComponent( page );
+	tabPages_.insert( tabPages_.begin() + event->index, page );
+
+	page->setControl( this );
+	page->setModel( this->getViewModel() );
+	page->setIndex( tabPages_.size() - 1 );
 
 	TabSheet* sheet = new TabSheet();
-	//page->setPageComponent( sheet );
+	page->setPageControl( sheet );
+
 	add( sheet, AlignClient );
 	sheet->setVisible( true );
 
+	tabHeight_ = maxVal<double>( tabHeight_, page->getPreferredHeight() );
 
 	resizeChildren(NULL);
 }
 
 void TabbedPages::onTabPageRemoved( ListModelEvent* event )
 {
-//	TabPage* page = event->page;
-/*	TabPage* pageToMakeCurrent = NULL;
-	TabModel* model = getTabModel();
-	bool next = false;
-	if ( NULL != page ) {
-		Enumerator<TabPage*>* pages = model->getPages();
-
-		while ( true == pages->hasMoreElements() ) {
-			TabPage* aPage = pages->nextElement();
-			if ( next ) {
-				pageToMakeCurrent = aPage;
-				break;
-			}
-			if ( aPage == page ) {
-				next = true;
-			}
-		}
-		if ( (!next) || (NULL == pageToMakeCurrent)  ) {
-			pages->reset();
-			if ( true == pages->hasMoreElements() ) {
-				pageToMakeCurrent = pages->nextElement();
-			}
-		}
-
-		Control* control = page->getPageComponent();
-		page->setPageComponent( NULL );
-
-		remove( control );
-		removeComponent( control );
-		control->free();
-
-
+	Array<TabPage*>::iterator found = tabPages_.begin() + event->index;
+	Array<TabPage*>::iterator it = found;
+	it ++;
+	while ( it != tabPages_.end() ) {
+		TabPage* itemAfter = *it;
+		itemAfter->setIndex( itemAfter->getIndex() - 1 );
+		
+		++it;
 	}
+
+	TabPage* page = *found;
+	Control* control = page->getPageControl();
+	page->setPageControl( NULL );
+	
+	remove( control );
+	removeComponent( control );
+	control->free();
+
+	tabPages_.erase( found );
+
+	removeComponent( page );
+	page->free();
+	
+	resizeChildren(NULL);
+
+	
+
+	TabPage* pageToMakeCurrent = NULL;
+	
+	bool next = false;
+	
+	Enumerator<TabPage*>* pages = getPages();
+
+	while ( true == pages->hasMoreElements() ) {
+		TabPage* aPage = pages->nextElement();
+		if ( next ) {
+			pageToMakeCurrent = aPage;
+			break;
+		}
+		if ( aPage == page ) {
+			next = true;
+		}
+	}
+	if ( (!next) || (NULL == pageToMakeCurrent)  ) {
+		pages->reset();
+		if ( true == pages->hasMoreElements() ) {
+			pageToMakeCurrent = pages->nextElement();
+		}
+	}
+
 	if ( pageToMakeCurrent == page ) {
 		pageToMakeCurrent = NULL;
 	}
 
 	if ( NULL != pageToMakeCurrent ) {
-		model->setSelectedPage( pageToMakeCurrent );
+		setSelectedPage( pageToMakeCurrent );
 	}
-	resizeChildren(NULL);
-*/
+	
 	//recalcScrollerButtonsPos();
 }
 
 void TabbedPages::onTabPageSelected( TabModelEvent* event )
-{/*
-	TabPage* page = event->page;
-	if ( true == page->isSelected() ){
-		Enumerator<Control*>* children = getChildren();
-		while ( true == children->hasMoreElements() ){
-			Control* comp = children->nextElement();
-			if ( comp != page->getPageComponent() ){
-				if ( comp->getVisible() ) {
-					comp->setVisible( false );
-				}
+{
+	TabPage* page = NULL;
+	Array<TabPage*>::iterator it = tabPages_.begin();
+	while ( it != tabPages_.end() ){
+		TabPage* aPage = *it;
+		
+		if ( aPage->getIndex() == event->index ) {
+			aPage->setSelected( true );
+			page = aPage;
+		}
+		else {
+			aPage->setSelected( false );
+		}
+		
+		it++;
+	}
+
+	selectedPage_ = page;
+	if ( NULL == page ) {
+		return;
+	}
+
+
+	Enumerator<Control*>* children = getChildren();
+	while ( true == children->hasMoreElements() ){
+		Control* comp = children->nextElement();
+		if ( comp != page->getPageControl() ){
+			if ( comp->getVisible() ) {
+				comp->setVisible( false );
 			}
 		}
-		page->getPageComponent()->setVisible( true );
+	}
+	page->getPageControl()->setVisible( true );
 
-		Container* container = page->getPageComponent()->getContainer();
-		if ( NULL != container ) {
-			container->resizeChildren(NULL);
-			
-			//Control* tabControl = container->getFirstTabControl();
-			//if ( NULL != tabControl ) {
-		//		tabControl->setFocused();
-		//	}
-		//	else {
-//
-//			}
-			
-			page->getPageComponent()->setFocused();
-		}
-	}*/
+	Container* container = page->getPageControl()->getContainer();
+	if ( NULL != container ) {
+		container->resizeChildren(NULL);		
+		page->getPageControl()->setFocused();
+	}
+
 	repaint();
 }
 
 TabPage* TabbedPages::addNewPage( const String& caption )
 {
-	DefaultTabPage* page = new DefaultTabPage();
-	page->setModel( getViewModel() );
-	page->setPageName( caption );
-
-	tabHeight_ = maxVal<double>( tabHeight_, page->getPreferredHeight() );
-
+	
 	TabModel* model = getTabModel();
 	model->add( caption );
 
-//	model->setSelectedPage( page );
+	TabPage* page = tabPages_.back();
+
+	setSelectedPage( page );
 
 	//recalcScrollerButtonsPos();
 
@@ -477,24 +521,19 @@ void TabbedPages::mouseDown( MouseEvent* event )
 	Rect tabPagesBounds;
 	tabPagesBounds.setRect( 0, borderWidth_, getWidth(), borderWidth_ + tabHeight_ );
 	if ( true == tabPagesBounds.containsPt( event->getPoint() ) ){
-		//find tab
-		TabModel* model = getTabModel();
-		if ( NULL != model ){
-			/*
-			Enumerator<TabPage*>* pages = model->getPages();
-			if ( NULL != pages ){
-				while ( true == pages->hasMoreElements() ){
-					TabPage* page = pages->nextElement();
-					if ( NULL != page ){
-						if ( true == page->containsPoint( event->getPoint() ) ){
-							model_->setSelectedPage( page );
-							resizeChildren(NULL);
-							break;
-						}
-					}
-				}
-			}
-			*/
+		//find tab		
+		Array<TabPage*>::iterator it = tabPages_.begin();	
+		
+		while ( it != tabPages_.end() ){			
+			TabPage* page = *it;
+			
+			if ( page->containsPoint( event->getPoint() ) ){
+				setSelectedPage( page );
+				resizeChildren(NULL);
+				break;
+			}			
+			
+			++it;
 		}
 	}
 }
@@ -537,17 +576,17 @@ void TabbedPages::onScrollButtonClicked( ButtonEvent* e )
 		case SCROLL_FWD_TAG : {
 			TabModel* model = getTabModel();
 			double width = 0.0;
-/*
-			Enumerator<TabPage*>* pages = model->getPages();
-			while ( true == pages->hasMoreElements() ) {
-				TabPage* aPage = pages->nextElement();
-
-				width += getTabPageWidth( aPage );
+			Array<TabPage*>::iterator it = tabPages_.begin();	
+			
+			while ( it != tabPages_.end() ){			
+				TabPage* page = *it;
+				
+				width += getTabPageWidth( page );
+				
+				++it;
 			}
-
 			double offset = -((width + comp->getWidth()*2) - getWidth());
 			tabViewOffset_ = maxVal<double>( offset, tabViewOffset_ - 25 );
-			*/
 		}
 		break;
 
@@ -591,6 +630,132 @@ void TabbedPages::ScrollButton::paint( GraphicsContext* ctx )
 	}
 }
 
+TabPage* TabbedPages::getTabPage( const uint32& index )
+{
+	TabPage* result = NULL;
+	if ( index < tabPages_.size() ) {
+		tabPages_[index];
+	}
+
+	return result;
+}
+
+void TabbedPages::setTabPage( const uint32& index, TabPage* page )
+{
+	if ( index < tabPages_.size() ) {
+		tabPages_[index]->free();
+		tabPages_[index] = page;
+		repaint();
+	}
+}
+
+
+TabPage* TabbedPages::getPageFromPageName( const String& pageName )
+{
+	TabPage* result = NULL;
+	
+	Array<TabPage*>::iterator it = tabPages_.begin();	
+	
+	while ( it != tabPages_.end() ){			
+		TabPage* page = *it;		
+		if ( pageName == page->getPageName() ){
+			result = page;
+			break;
+		}			
+		
+		++it;
+	}
+
+	return result;
+}
+
+TabPage* TabbedPages::getSelectedPage()
+{
+	return selectedPage_;
+}
+
+void TabbedPages::setSelectedPage( TabPage* page )
+{	
+	TabModel* tm = getTabModel();
+	if ( NULL != page ) {		
+		tm->setSelectedPage( page->getIndex() );
+	}
+	else {		
+		tm->setSelectedPage( TabModel::NoPageSelected );
+	}
+}
+
+void TabbedPages::setSelectedPage( const uint32& index )
+{
+	TabPage* page = NULL;
+	Array<TabPage*>::iterator found = tabPages_.begin() + index;
+	if ( found != tabPages_.end() ) {
+		page = *found;
+	}
+	
+	setSelectedPage( page );	
+}
+
+bool TabbedPages::isFirstPage( TabPage* page )
+{
+	bool result = false;
+	
+	if ( !tabPages_.empty() ) {
+		if ( tabPages_.front() == page ) {
+			result = true;
+		}
+	}
+
+	return result;
+}
+
+bool TabbedPages::isLastPage( TabPage* page )
+{
+	bool result = false;
+	
+	if ( !tabPages_.empty() ) {
+		if ( tabPages_.back() == page ) {
+			result = true;
+		}
+	}
+
+	return result;
+}
+
+TabPage* TabbedPages::nextPage( TabPage* page )
+{
+	TabPage* result = NULL;
+	
+	Array<TabPage*>::iterator found = std::find( tabPages_.begin(), tabPages_.end(), page );
+	if ( found != tabPages_.end() ) {
+		found ++;
+		if ( found != tabPages_.end() ) {							
+			result = *found;
+		}
+	}
+
+	return result;
+}
+
+TabPage* TabbedPages::previousPage( TabPage* page )
+{
+	TabPage* result = NULL;
+	
+	Array<TabPage*>::iterator found = std::find( tabPages_.begin(), tabPages_.end(), page );
+	if ( found != tabPages_.end() ) {
+		found --;
+		if ( found >= tabPages_.begin() ) {
+			result = *found;
+		}
+	}
+
+	return result;
+}
+
+Enumerator<TabPage*>* TabbedPages::getPages()
+{
+	return tabPages_.getEnumerator();
+}
 
 /**
 $Id$
