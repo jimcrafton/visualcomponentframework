@@ -40,9 +40,9 @@ public:
 
 	virtual String getPageName();
 
-	virtual Control* getPageComponent();
+	virtual Control* getPageControl();
 
-	virtual void setPageComponent( Control* component );
+	virtual void setPageControl( Control* component );
 
 	virtual void paint( GraphicsContext* context, Rect* paintRect );
 
@@ -56,9 +56,8 @@ public:
 
 	
 
-private:	
-	String pageName_;
-	Control* component_;	
+private:
+	Control* pageControl_;	
 	uint32 preferredHeight_;
 	uint32 index_;
 };

@@ -100,7 +100,7 @@ void MainWindow::makeListBoxPage()
 
 	double borderWidth = UIToolkit::getUIMetricValue(UIMetricsManager::mtContainerBorderDelta);
 
-	Panel* panel1 = (Panel*)listBoxPage_->getPageComponent();
+	Panel* panel1 = (Panel*)listBoxPage_->getPageControl();
 
 	//add a panel for ListBoxControl-related controls
 	Panel* listBoxGroup = new Panel();
@@ -271,7 +271,7 @@ void MainWindow::makeBordersPage()
 {
 	double borderWidth = UIToolkit::getUIMetricValue(UIMetricsManager::mtContainerBorderDelta);
 
-	Panel* pagePanel = (Panel*)bordersPage_->getPageComponent();
+	Panel* pagePanel = (Panel*)bordersPage_->getPageControl();
 
 	// 2 panels, just to aid in layout.
 	Panel* leftPanel = new Panel();
@@ -347,7 +347,7 @@ void MainWindow::makeButtonsPage()
 	//container->setAverageHeights(true);
 	container->setKeepControlsWidth( false );
 
-	buttonsPage_->getPageComponent()->setContainer( container );
+	buttonsPage_->getPageControl()->setContainer( container );
 
 
 
@@ -768,11 +768,11 @@ void MainWindow::onButtonClicked( ButtonEvent* e )
 void MainWindow::onSingletextCtrlSelectionChanged( Event* e )
 {
 	TextControl* tc = (TextControl*) e->getSource();
-	Label* label = (Label*)textPage_->getPageComponent()->findComponent( "SelectionStart", true );
+	Label* label = (Label*)textPage_->getPageControl()->findComponent( "SelectionStart", true );
 
 	label->setCaption( Format("%d") % tc->getSelectionStart() );
 
-	label = (Label*)textPage_->getPageComponent()->findComponent( "SelectionCount", true );
+	label = (Label*)textPage_->getPageControl()->findComponent( "SelectionCount", true );
 	label->setCaption( Format("%d") % tc->getSelectionCount() );
 }
 
@@ -781,7 +781,7 @@ void MainWindow::makeTextPage()
 	HorizontalLayoutContainer* container = new HorizontalLayoutContainer();
 	container->setColumnWidth( 0, 200 );
 
-	textPage_->getPageComponent()->setContainer( container );
+	textPage_->getPageControl()->setContainer( container );
 
 	Label* label = new Label();
 
@@ -852,7 +852,7 @@ void MainWindow::makeTextPage()
 
 void MainWindow::makeTreePage()
 {
-	Container* container = treePage_->getPageComponent()->getContainer();
+	Container* container = treePage_->getPageControl()->getContainer();
 
 	Label* label = new Label();
 	label->setWidth( 200 );

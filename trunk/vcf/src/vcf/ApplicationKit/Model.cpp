@@ -17,7 +17,6 @@ using namespace VCF;
 
 Model::Model()
 {
-	viewContainer_.initContainer(views_);
 }
 
 Model::~Model()
@@ -57,3 +56,4 @@ void Model::updateAllViews()
 /**
 $Id$
 */
+
