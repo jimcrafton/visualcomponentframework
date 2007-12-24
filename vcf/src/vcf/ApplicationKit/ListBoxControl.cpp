@@ -88,7 +88,7 @@ void ListBoxControl::destroy()
 
 		ev = (EventHandler*)getCallback( "ListBoxControl::onListModelContentsChanged" );
 		if ( NULL != ev ) {
-			lm->ContentsChanged -= ev;
+			lm->ModelChanged -= ev;
 		}
 	}
 
@@ -133,7 +133,7 @@ void ListBoxControl::setViewModel( Model* viewModel )
 
 		ev = (EventHandler*)getCallback( "ListBoxControl::onListModelContentsChanged" );
 		if ( NULL != ev ) {
-			lm->ContentsChanged -= ev;
+			lm->ModelChanged -= ev;
 		}		
 	}
 
@@ -164,9 +164,9 @@ void ListBoxControl::setViewModel( Model* viewModel )
 		lm->ItemRemoved += lmh;
 		
 		lmh = (EventHandler*)
-			new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
+			new ClassProcedure1<ModelEvent*,ListBoxControl>( this, &ListBoxControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
 		
-		lm->ContentsChanged += lmh;
+		lm->ModelChanged += lmh;
 
 
 		//reset content...
@@ -189,7 +189,7 @@ void ListBoxControl::setViewModel( Model* viewModel )
 }
 
 
-void ListBoxControl::onListModelContentsChanged( ListModelEvent* event )
+void ListBoxControl::onListModelContentsChanged( ModelEvent* event )
 {
 	repaint();
 
@@ -230,8 +230,15 @@ ListItem* ListBoxControl::getListItem( const uint32& index )
 void ListBoxControl::setListItem( const uint32& index, ListItem* item )
 {
 	if ( index < items_.size() ) {
-		items_[index]->free();
+		ListItem* oldItem = items_[index];
+		
 		items_[index] = item;
+		item->setControl( this );
+		item->setModel( getViewModel() );
+		item->setIndex( oldItem->getIndex() );
+
+		oldItem->free();
+
 		repaint();
 	}
 }

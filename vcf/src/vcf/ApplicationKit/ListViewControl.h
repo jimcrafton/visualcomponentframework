@@ -120,6 +120,8 @@ public:
 		lcatAutoSizeColumnsAndHeaders = -4,
 	};
 
+	virtual void setViewModel( Model* model );
+
 	ListModel* getListModel();
 
 	ColumnModel* getColumnModel();
@@ -150,11 +152,7 @@ public:
 
 	virtual ListItem* addItem( const String& caption, const uint32 imageIndex=0 );
 
-	void addItem( ListItem* item );
-
-	virtual ListItem* insertItem( const uint32& index, const String& caption, const uint32 imageIndex=0 );
-
-	void insertItem( const uint32& index, ListItem* item );
+	virtual ListItem* insertItem( const uint32& index, const String& caption, const uint32 imageIndex=0 );	
 
 	IconStyleType getIconStyle();
 
@@ -220,6 +218,12 @@ public:
 
 	Rect getItemRect( ListItem* item );
 
+	ListItem* getListItem( const uint32& index );
+
+	void setListItem( const uint32& index, ListItem* item );
+
+	Enumerator<ListItem*>* getItems();
+
 	virtual void handleEvent( Event* event );
 protected:
 	//Events
@@ -242,7 +246,6 @@ protected:
 	void onItemSelected( ItemEvent* event );
 
 	ListviewPeer * listviewPeer_;
-	ListModel* listModel_;
 	ColumnModel* columnModel_;
 	IconStyleType iconStyle_;
 	ImageList* smallImageList_;
@@ -250,6 +253,8 @@ protected:
 	ImageList* stateImageList_;
 	ListItem* selectedItem_;
 
+	Array<ListItem*> items_;
+	bool internalModelChange_;
 };
 
 

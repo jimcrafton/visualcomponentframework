@@ -47,6 +47,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -913,6 +916,21 @@ Package=<4>
 ###############################################################################
 
 Project: "ListBox"=.\ListBox\ListBox.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ListViews"=.\ListViews\ListViews.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

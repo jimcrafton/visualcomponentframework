@@ -98,10 +98,6 @@ where you installed the VCF.
 /**
 *core table model classes
 */
-#ifndef _VCF_TABLEMODELEVENT_H__
-#	include "vcf/ApplicationKit/TableModelEvent.h"
-#endif // _VCF_TABLEMODELEVENT_H__
-
 #ifndef _VCF_TABLEMODEL_H__
 #	include "vcf/ApplicationKit/TableModel.h"
 #endif // _VCF_TABLEMODEL_H__

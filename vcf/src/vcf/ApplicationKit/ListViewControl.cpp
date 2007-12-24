@@ -19,8 +19,12 @@ using namespace VCF;
 
 
 ListViewControl::ListViewControl():
-	listModel_(NULL),
-	selectedItem_(NULL)
+	selectedItem_(NULL),
+		internalModelChange_(false),
+		smallImageList_(NULL),
+	largeImageList_(NULL),
+	stateImageList_(NULL),
+	iconStyle_(isLargeIcon)
 {
 	listviewPeer_ = UIToolkit::createListViewPeer( this );
 
@@ -73,13 +77,7 @@ ListViewControl::~ListViewControl()
 
 void ListViewControl::init()
 {
-	smallImageList_ = NULL;
-
-	largeImageList_ = NULL;
-
-	stateImageList_ = NULL;
-
-	iconStyle_ = isLargeIcon;
+	
 
 	setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW ) );
 
@@ -88,7 +86,7 @@ void ListViewControl::init()
 
 ListModel* ListViewControl::getListModel()
 {
-	return listModel_;
+	return (ListModel*) getViewModel();
 }
 
 ColumnModel* ListViewControl::getColumnModel()
@@ -96,16 +94,40 @@ ColumnModel* ListViewControl::getColumnModel()
 	return columnModel_;
 }
 
-void ListViewControl::setListModel(ListModel * model)
+void ListViewControl::setViewModel( Model* model )
 {
-	if ( NULL != listModel_ ) {
-	//	listModel_->release();
+	ListModel* lm = getListModel();
+
+	if ( NULL != lm ) {
+		CallBack* ev = getCallback( "ListBoxControl::onItemAdded" );
+		if ( NULL == ev ) {
+			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onItemAdded, "ListBoxControl::onItemAdded" );
+		}
+		
+		lm->ItemAdded -= ev;
+
+		ev = getCallback( "ListBoxControl::onItemDeleted" );
+		if ( NULL == ev ) {
+			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onItemDeleted, "ListBoxControl::onItemDeleted" );
+		}
+
+		lm->ItemRemoved -= ev;
+
+		ev = getCallback( "ListBoxControl::onListModelContentsChanged" );
+		if ( NULL == ev ) {
+			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
+		}
+
+		lm->ModelChanged -= ev;
 	}
 
-	listModel_ = model;
+	Control::setViewModel( model );
+
+	lm = dynamic_cast<ListModel*>( model );
+	VCF_ASSERT( lm != NULL );
 
 
-	if ( NULL != listModel_ ) {
+	if ( NULL != lm ) {
 		//listModel_->addRef();
 
 		CallBack* ev = getCallback( "ListBoxControl::onItemAdded" );
@@ -113,25 +135,27 @@ void ListViewControl::setListModel(ListModel * model)
 			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onItemAdded, "ListBoxControl::onItemAdded" );
 		}
 		
-		listModel_->ItemAdded += ev;
+		lm->ItemAdded += ev;
 
 		ev = getCallback( "ListBoxControl::onItemDeleted" );
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onItemDeleted, "ListBoxControl::onItemDeleted" );
 		}
 
-		listModel_->ItemRemoved += ev;
+		lm->ItemRemoved += ev;
 
 		ev = getCallback( "ListBoxControl::onListModelContentsChanged" );
 		if ( NULL == ev ) {
 			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
 		}
 
-		listModel_->ContentsChanged += ev;
-
+		lm->ModelChanged += ev;
 	}
+}
 
-	setViewModel( listModel_ );
+void ListViewControl::setListModel(ListModel * model)
+{
+	setViewModel( model );	
 }
 
 void ListViewControl::onItemPaint( ItemEvent* event )
@@ -212,11 +236,53 @@ void ListViewControl::onItemAdded( ListModelEvent* event )
 
 	listviewPeer_->add( item );
 	*/
+
+	if ( internalModelChange_ ) {
+		return;
+	}
+
+	ListItem* item = new ListItem();
+	addComponent( item );
+	items_.push_back( item );
+	item->setModel( getViewModel() );
+	item->setControl( this );
+	item->setIndex( event->index );	
+
+
+	repaint();
+
 }
 
 void ListViewControl::onItemDeleted( ListModelEvent* event )
 {
 //	listviewPeer_->deleteItem( event->getListItem() );
+	Array<ListItem*>::iterator found = items_.begin();
+
+	while ( found != items_.end() ) {
+		ListItem* item = *found;
+		if ( item->getIndex() == event->index ) {
+			break;
+		}
+		++found;
+	}
+
+	if ( found != items_.end() ) {				
+		Array<ListItem*>::iterator it = items_.begin();		
+		while ( it != items_.end() ) {
+			ListItem* item = *it;
+			if ( item->getIndex() > event->index ) {
+				item->setIndex( item->getIndex() - 1 );
+			}
+			
+			++it;
+		}
+		
+		ListItem* item = *found;
+		items_.erase( found );		
+		
+		removeComponent( item );
+		item->free();
+	}
 }
 
 ColumnItem* ListViewControl::addHeaderColumn( const String& columnName, const double& width )
@@ -402,37 +468,22 @@ void ListViewControl::rangeSelect( Rect* selectionRect )
 
 ListItem* ListViewControl::addItem( const String& caption, const uint32 imageIndex )
 {
-	ListItem* result = NULL;
+	ListModel* lm = getListModel();
 
-	result  = new DefaultListItem();
-	result->setCaption( caption );
-	result->setImageIndex( imageIndex );
-	listModel_->add( result );
-
-	return result;
+	return insertItem( lm->getCount(), caption, imageIndex );
 }
 
-void ListViewControl::addItem( ListItem* item )
-{
-	listModel_->add( item );
-}
 
 ListItem* ListViewControl::insertItem( const uint32& index, const String& caption, const uint32 imageIndex )
 {
 	ListItem* result = NULL;
-
-	result  = new DefaultListItem();
-	result->setCaption( caption );
-	result->setImageIndex( imageIndex );
-	listModel_->insert( index, result );
+	
+	ListModel* lm = getListModel();
+	lm->insert( index, caption );
 
 	return result;
 }
 
-void ListViewControl::insertItem( const uint32& index, ListItem* item )
-{
-	listModel_->insert( index, item );
-}
 
 void ListViewControl::setSmallImageList( ImageList* imageList )
 {
@@ -533,6 +584,43 @@ Rect ListViewControl::getItemRect( ListItem* item )
 	return listviewPeer_->getItemRect( item );
 }
 
+ListItem* ListViewControl::getListItem( const uint32& index )
+{
+	ListItem* result = NULL;
+
+	if ( index < items_.size() ) {
+		result = items_[index];
+	}
+
+	return result;
+}
+
+void ListViewControl::setListItem( const uint32& index, ListItem* item )
+{
+	if ( index < items_.size() ) {
+		ListItem* oldItem = items_[index];
+		
+		items_[index] = item;
+		
+		if ( NULL == item->getOwner() ) {
+			addComponent( item );
+		}
+
+		item->setControl( this );
+		item->setModel( getViewModel() );
+		item->setIndex( oldItem->getIndex() );
+
+		removeComponent( oldItem );
+		oldItem->free();
+
+		repaint();
+	}
+}
+
+Enumerator<ListItem*>* ListViewControl::getItems()
+{
+	return items_.getEnumerator();
+}
 
 /**
 $Id$

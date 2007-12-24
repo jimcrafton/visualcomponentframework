@@ -1026,18 +1026,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ScrollEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\TableModelEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\TabModelEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\TextEvent.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\TimerEvent.h
 # End Source File
 # Begin Source File

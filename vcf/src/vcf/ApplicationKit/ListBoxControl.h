@@ -63,12 +63,7 @@ public:
 
 	virtual void rangeSelect( const bool & isSelected, ListItem * first, ListItem * last );
 
-	void onListModelContentsChanged( ListModelEvent* event );
-
-	void onItemAdded( ListModelEvent* event );
-
-	void onItemDeleted( ListModelEvent* event );
-
+	
 	virtual void paint( GraphicsContext* ctx );
 
 	virtual void mouseDown( MouseEvent* event );
@@ -222,6 +217,13 @@ protected:
 	void recalcBoundsForItem( ListItem* item );
 
 	void removeItem( ListItem* item, const uint32& itemIndex );
+
+	void onListModelContentsChanged( ModelEvent* event );
+
+	void onItemAdded( ListModelEvent* event );
+
+	void onItemDeleted( ListModelEvent* event );
+
 };
 
 

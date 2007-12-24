@@ -39,7 +39,7 @@ void DefaultListModel::empty()
 	data_.clear();
 
 	ListModelEvent event( this, lmeContentsDeleted );
-	ContentsChanged( &event );
+	ModelChanged( &event );
 }
 
 void DefaultListModel::add( const VariantData& item )
@@ -47,7 +47,11 @@ void DefaultListModel::add( const VariantData& item )
 	data_.push_back( item );
 	ListModelEvent event( this, lmeItemAdded );
 	event.item = &data_.back();
+	event.index = data_.size()-1;
 	ItemAdded( &event );
+
+	event.setType( lmeItemAdded );
+	ModelChanged( &event );
 }
 
 void DefaultListModel::insert( const uint32 & index, const VariantData& item )
@@ -56,7 +60,11 @@ void DefaultListModel::insert( const uint32 & index, const VariantData& item )
 
 	ListModelEvent event( this, lmeItemAdded );
 	event.item = &data_[index];
+	event.index = index;
 	ItemAdded( &event );
+
+	event.setType( lmeItemAdded );
+	ModelChanged( &event );
 }
 
 void DefaultListModel::remove( const VariantData& item )
@@ -83,6 +91,9 @@ void DefaultListModel::removeAtIndex( const uint32 & index )
 		ItemRemoved( &itemEvent );
 
 		data_.erase( found );
+
+		itemEvent.setType( lmeItemRemoved );
+		ModelChanged( &itemEvent );
 	}
 }
 
@@ -117,7 +128,8 @@ void DefaultListModel::set( const uint32& index, const VariantData& item )
 	data_[index] = item;
 	ListModelEvent itemEvent( this, lmeItemChanged );
 	itemEvent.item = &data_[index];
-	ContentsChanged( &itemEvent );
+	itemEvent.index = index;
+	ModelChanged( &itemEvent );
 }
 
 void DefaultListModel::setAsString( const uint32& index, const String& item )
@@ -125,7 +137,8 @@ void DefaultListModel::setAsString( const uint32& index, const String& item )
 	data_[index].setFromString(item);
 	ListModelEvent itemEvent( this, lmeItemChanged );
 	itemEvent.item = &data_[index];
-	ContentsChanged( &itemEvent );
+	itemEvent.index = index;
+	ModelChanged( &itemEvent );
 }
 
 bool DefaultListModel::getItems( std::vector<VariantData>& items )
