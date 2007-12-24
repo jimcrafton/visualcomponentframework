@@ -31,19 +31,19 @@ namespace VCF  {
 /**
 \class ListModelEvent ListModel.h "vcf/ApplicationKit/ListModel.h"
 */
-class APPLICATIONKIT_API ListModelEvent : public Event {
+class APPLICATIONKIT_API ListModelEvent : public ModelEvent {
 public:
-	ListModelEvent( Object* source ):Event(source),item(NULL),index(0){}
+	ListModelEvent( Object* source ):ModelEvent(source),item(NULL),index(0){}
 
-	ListModelEvent( Object* source, const uint32& eventType ):Event(source,eventType),
+	ListModelEvent( Object* source, const uint32& eventType ):ModelEvent(source,eventType),
 		item(NULL){}
 
-	ListModelEvent( Object* source, VariantData* i ):Event(source),item(i),index(0){}
+	ListModelEvent( Object* source, VariantData* i ):ModelEvent(source),item(i),index(0){}
 
-	ListModelEvent( Object* source, const uint32& eventType, VariantData* i ):Event(source,eventType),
+	ListModelEvent( Object* source, const uint32& eventType, VariantData* i ):ModelEvent(source,eventType),
 		item(i),index(0){}
 
-	ListModelEvent( const ListModelEvent& rhs ):Event(rhs),item(NULL),index(0) {
+	ListModelEvent( const ListModelEvent& rhs ):ModelEvent(rhs),item(NULL),index(0) {
 		*this = rhs;
 	}
 
@@ -109,13 +109,6 @@ public:
 	};
 
 	virtual ~ListModel(){};
-
-    /**
-	@delegate  ContentsChanged
-	@event ListModelEvent
-	@eventtype lmeItemChanged
-	*/
-	DELEGATE(ListModelDelegate,ContentsChanged)
 
 	/**
 	@delegate ItemAdded fired when an item is added to the list model

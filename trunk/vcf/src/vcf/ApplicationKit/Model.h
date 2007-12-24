@@ -15,7 +15,35 @@ where you installed the VCF.
 
 
 
-namespace VCF{
+namespace VCF  {
+
+	
+/**
+\class ModelEvent Model.h "vcf/ApplicationKit/Model.h"
+*/
+class APPLICATIONKIT_API ModelEvent : public Event {
+public:
+	ModelEvent( Object* source, const uint32& type ) :
+	  Event( source, type ) {
+
+	  }
+
+	ModelEvent( Object* source ) : Event(source){}
+
+	virtual ~ModelEvent(){};
+
+	virtual Object* clone( bool deep=false ) {
+		return new ModelEvent(*this);
+	}
+};
+
+
+typedef Delegate1<ModelEvent*> ModelDelegate; 
+typedef ModelDelegate::ProcedureType ModelHandler;
+
+
+
+
 
 class View;
 

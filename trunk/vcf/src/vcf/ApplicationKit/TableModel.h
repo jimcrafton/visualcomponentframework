@@ -16,14 +16,6 @@ where you installed the VCF.
 
 
 
-#ifndef _VCF_TABLEMODELEVENT_H__
-#include "vcf/ApplicationKit/TableModelEvent.h"
-#endif
-
-
-
-
-
 namespace VCF{
 
 //class TableCellItem;

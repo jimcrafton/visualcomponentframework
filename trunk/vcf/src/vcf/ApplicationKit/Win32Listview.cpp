@@ -223,7 +223,7 @@ void Win32Listview::create( Control* owningControl )
 {
 
 
-	itemAddedHandler_ =
+/*	itemAddedHandler_ =
 		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onItemAdded, "Win32Listview::onItemAdded" );
 
 	itemDeletedHandler_ =
@@ -246,7 +246,7 @@ void Win32Listview::create( Control* owningControl )
 
 	subItemChangedHandler_ =
 		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onSubItemChanged, "Win32Listview::onSubItemChanged" );
-
+*/
 
 	CreateParams params = createParams();
 
@@ -301,6 +301,16 @@ void Win32Listview::create( Control* owningControl )
 
 		COLORREF backColor = backColor_.getColorRef32();
 		ListView_SetBkColor( hwnd_, backColor );
+
+
+		ctrlModelChanged = 
+			new ClassProcedure1<Event*,Win32Listview>( this, &Win32Listview::onCtrlModelChanged, "Win32Listview::onCtrlModelChanged" );
+
+		listModelChanged = 
+			new ClassProcedure1<Event*,Win32Listview>( this, &Win32Listview::onListModelChanged, "Win32Listview::onListModelChanged" );
+		
+
+		owningControl->ControlModelChanged += ctrlModelChanged;
 	}
 	else {
 		//throw exception
@@ -311,6 +321,7 @@ void Win32Listview::create( Control* owningControl )
 	headerControlIsTracking_ = false;
 }
 
+/*
 void Win32Listview::updateItemSubItems( ListItem* item )
 {
 	if ( NULL == item ) {
@@ -390,7 +401,7 @@ void Win32Listview::onSubItemDeleted( ItemEvent* event )
 
 	onSubItemChanged( event );
 }
-
+*/
 void Win32Listview::registerHeaderWndProc()
 {
 	if ( NULL == oldHeaderWndProc_ ) {
@@ -405,7 +416,7 @@ void Win32Listview::registerHeaderWndProc()
 Win32Object::CreateParams Win32Listview::createParams()
 {
 	Win32Object::CreateParams result;
-	result.first = BORDERED_VIEW | LVS_SINGLESEL | LVS_ALIGNLEFT | LVS_AUTOARRANGE | LVS_ICON | LVS_SHOWSELALWAYS;
+	result.first = BORDERED_VIEW | LVS_SINGLESEL | LVS_ALIGNLEFT | LVS_AUTOARRANGE | LVS_ICON | LVS_SHOWSELALWAYS | LVS_OWNERDATA;
 	result.first &= ~WS_BORDER;
 
 	result.second = 0;
@@ -537,6 +548,7 @@ void Win32Listview::postPaintItem( NMLVCUSTOMDRAW* drawItem )
 		}
 	}
 }
+
 
 bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc )
 {
@@ -955,24 +967,44 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 			NMLVDISPINFOW* displayInfo = (NMLVDISPINFOW*)lParam;
 			if ( displayInfo->hdr.hwndFrom == hwnd_ ) {
 
-				ListItem* item = (ListItem*)displayInfo->item.lParam;
-				if ( NULL != item ) {
-					String caption;
-					if ( displayInfo->item.iSubItem > 0 ) {
+				ListModel* lm = (ListModel*) this->peerControl_->getViewModel();
+
+				
+
+				
+				//ListItem* item = (ListItem*)displayInfo->item.lParam;
+				if ( NULL != lm ) {
+
+					if ( displayInfo->item.mask & LVIF_IMAGE ) {
+						ListItem* item = listviewControl_->getListItem( displayInfo->item.iItem );
+
+						displayInfo->item.iImage = item->getImageIndex();						
+					}
+
+					if ( displayInfo->item.mask & LVIF_TEXT ) {
+						
+						String caption;
+						
+						if ( displayInfo->item.iSubItem > 0 ) {
+						/*
 						ListItem::SubItem* subItem = item->getSubItem( displayInfo->item.iSubItem - 1 );
 						if ( NULL != subItem ) {
-							caption = subItem->getCaption();
+						caption = subItem->getCaption();
 						}
-					}
-					else{
-						caption = item->getCaption();
-					}
-					// changed to unsigned ints after discussion with Jim,
-					// but he seemed uncertain so it'd be worth checking - ACH
-					unsigned int size = VCF::minVal<unsigned int>( caption.size(), displayInfo->item.cchTextMax );
-					caption.copy( displayInfo->item.pszText, size );
-					if ( size < displayInfo->item.cchTextMax ) {
-						displayInfo->item.pszText[size] = '\0';
+							*/
+							caption = lm->getSubItemAsString( displayInfo->item.iItem, displayInfo->item.iSubItem-1 );
+						}
+						else{
+							caption = lm->getAsString( displayInfo->item.iItem );
+							//caption = item->getCaption();
+						}
+						// changed to unsigned ints after discussion with Jim,
+						// but he seemed uncertain so it'd be worth checking - ACH
+						unsigned int size = VCF::minVal<unsigned int>( caption.size(), displayInfo->item.cchTextMax );
+						caption.copy( displayInfo->item.pszText, size );
+						if ( size < displayInfo->item.cchTextMax ) {
+							displayInfo->item.pszText[size] = '\0';
+						}
 					}
 				}
 			}
@@ -1169,6 +1201,7 @@ void Win32Listview::addItem( ListItem * item )
 
 void Win32Listview::insertItem( const uint32& index, ListItem * item )
 {
+	/*
 	if ( NULL != item ){
 		int itemIndex = index;
 
@@ -1228,6 +1261,7 @@ void Win32Listview::insertItem( const uint32& index, ListItem * item )
 		item->SubItemDeleted += subItemDeletedHandler_;
 		item->SubItemChanged += subItemChangedHandler_;
 	}
+	*/
 }
 
 void Win32Listview::clear()
@@ -1630,8 +1664,8 @@ Enumerator<ListItem*>* Win32Listview::getSelectedItems()
 		return NULL;
 	}
 
-	enumContainer_.initContainer( selectedItems_ );
-	return enumContainer_.getEnumerator();
+//	enumContainer_.initContainer( selectedItems_ );
+	return selectedItems_.getEnumerator();
 }
 
 void Win32Listview::rangeSelect( Rect* selectionRect )
@@ -1902,41 +1936,43 @@ DWORD Win32Listview::translateIconAlignmentToStyleBit( const IconAlignType& icon
 	return result;
 }
 
-void Win32Listview::onItemPaint( ItemEvent* event )
+/*void Win32Listview::onItemPaint( ItemEvent* event )
 {
 
 }
+*/
 
+/*
 void Win32Listview::onItemChanged( ItemEvent* event )
 {
-	/*switch ( event->getType() ){
-			case ITEM_EVENT_TEXT_CHANGED:{
-				Object* source = event->getSource();
-				if ( NULL != source ){
-					ListItem* item = dynamic_cast<ListItem*>(source);
-					if ( NULL != item ){
-						LVITEM lvItem = {0};
-						lvItem.mask = LVIF_TEXT;
-						String caption = item->getCaption();
-						lvItem.cchTextMax = caption.size();
-						lvItem.iItem = item->getIndex();
-						TCHAR* tmp = new TCHAR[lvItem.cchTextMax];
-						memset( tmp, 0, lvItem.cchTextMax * sizeof(TCHAR) );
-						caption.copy( tmp, lvItem.cchTextMax );
-						lvItem.pszText = tmp;
-						ListView_SetItem( hwnd_, &lvItem );
-						delete [] tmp;
-					}
-				}
-			}
-			break;
-
-			default: {
-
-			}
-			break;
-		}
-	*/
+	//switch ( event->getType() ){
+	//		case ITEM_EVENT_TEXT_CHANGED:{
+	//			Object* source = event->getSource();
+	//			if ( NULL != source ){
+	//				ListItem* item = dynamic_cast<ListItem*>(source);
+	//				if ( NULL != item ){
+	//					LVITEM lvItem = {0};
+	//					lvItem.mask = LVIF_TEXT;
+	//					String caption = item->getCaption();
+	//					lvItem.cchTextMax = caption.size();
+	//					lvItem.iItem = item->getIndex();
+	//					TCHAR* tmp = new TCHAR[lvItem.cchTextMax];
+	//					memset( tmp, 0, lvItem.cchTextMax * sizeof(TCHAR) );
+	//					caption.copy( tmp, lvItem.cchTextMax );
+	//					lvItem.pszText = tmp;
+	//					ListView_SetItem( hwnd_, &lvItem );
+	//					delete [] tmp;
+	//				}
+	//			}
+	//		}
+	//		break;
+//
+//			default: {
+//
+//			}
+//			break;
+//		}
+	
 
 	Object* source = event->getSource();
 	if ( NULL != source ){
@@ -1984,7 +2020,9 @@ void Win32Listview::onItemChanged( ItemEvent* event )
 		}
 	}
 }
+*/
 
+/*
 void Win32Listview::onItemSelected( ItemEvent* event )
 {
 
@@ -2010,6 +2048,7 @@ void Win32Listview::onItemDeleted( ItemEvent* event )
 {
 
 }
+*/
 
 void Win32Listview::setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type )
 {
@@ -2455,6 +2494,19 @@ void Win32Listview::setDisplayOptions( const int32& displayOptions )
 	}
 
 	ListView_SetExtendedListViewStyleEx( hwnd_, 0, style );
+}
+
+void Win32Listview::onCtrlModelChanged( Event* e )
+{
+ 	Model* model = peerControl_->getViewModel();
+	model->ModelChanged += listModelChanged;
+}
+
+void Win32Listview::onListModelChanged( Event* e )
+{
+	ListModel* lm = (ListModel*)e->getSource();
+
+	ListView_SetItemCountEx( hwnd_, lm->getCount(), LVSICF_NOINVALIDATEALL );
 }
 
 

@@ -40,7 +40,7 @@ void TabModel::empty()
 	data_.clear();
 
 	ListModelEvent event( this, lmeContentsDeleted );
-	ContentsChanged( &event );
+	ModelChanged( &event );
 }
 
 void TabModel::add( const VariantData& item )
@@ -50,6 +50,9 @@ void TabModel::add( const VariantData& item )
 	event.item = &data_.back();
 	event.index = data_.size() - 1;
 	ItemAdded( &event );
+
+	ListModelEvent event2( this, lmeItemAdded );
+	ModelChanged( &event2 );
 }
 
 void TabModel::insert( const uint32 & index, const VariantData& item )
@@ -60,6 +63,9 @@ void TabModel::insert( const uint32 & index, const VariantData& item )
 	event.item = &data_[index];
 	event.index = index;
 	ItemAdded( &event );
+
+	ListModelEvent event2( this, lmeItemAdded );
+	ModelChanged( &event2 );
 }
 
 void TabModel::remove( const VariantData& item )
@@ -73,6 +79,9 @@ void TabModel::remove( const VariantData& item )
 		ItemRemoved( &itemEvent );
 
 		data_.erase( found );
+
+		ListModelEvent event( this, lmeItemRemoved );
+		ModelChanged( &event );
 	}
 }
 
@@ -86,6 +95,9 @@ void TabModel::removeAtIndex( const uint32 & index )
 		ItemRemoved( &itemEvent );
 
 		data_.erase( found );
+
+		ListModelEvent event( this, lmeItemRemoved );
+		ModelChanged( &event );
 	}
 }
 
@@ -120,7 +132,7 @@ void TabModel::set( const uint32& index, const VariantData& item )
 	data_[index] = item;
 	ListModelEvent itemEvent( this, lmeItemChanged );
 	itemEvent.item = &data_[index];
-	ContentsChanged( &itemEvent );
+	ModelChanged( &itemEvent );
 }
 
 void TabModel::setAsString( const uint32& index, const String& item )
@@ -128,7 +140,7 @@ void TabModel::setAsString( const uint32& index, const String& item )
 	data_[index].setFromString(item);
 	ListModelEvent itemEvent( this, lmeItemChanged );
 	itemEvent.item = &data_[index];
-	ContentsChanged( &itemEvent );
+	ModelChanged( &itemEvent );
 }
 
 bool TabModel::getItems( std::vector<VariantData>& items )

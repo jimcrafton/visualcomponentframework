@@ -10,7 +10,6 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/DefaultTableCellItem.h"
 #include "vcf/ApplicationKit/BasicTableItemEditor.h"
-#include "vcf/ApplicationKit/TableModelEvent.h"
 #include "vcf/ApplicationKit/TableModel.h"
 #include "vcf/GraphicsKit/DrawUIState.h"
 

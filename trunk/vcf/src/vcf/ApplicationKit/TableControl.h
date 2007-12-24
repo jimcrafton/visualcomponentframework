@@ -48,12 +48,6 @@ For use with CGridCtrl v2.20+
 #endif // _VCF_TABLECELLITEM_H__
 
 
-#ifndef _VCF_TABLEMODELEVENT_H__
-#	include "vcf/ApplicationKit/TableModelEvent.h"
-#endif // _VCF_TABLEMODELEVENT_H__
-
-
-
 namespace VCF {
 
 #define DEFAULT_ROW_HEIGHT			20

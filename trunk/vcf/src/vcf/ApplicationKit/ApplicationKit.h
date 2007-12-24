@@ -45,9 +45,6 @@ Action classes
 /**
 *Core model classes fopr the application kit
 */
-
-
-#include "vcf/ApplicationKit/ModelEvent.h"
 #include "vcf/ApplicationKit/Model.h"
 
 #include "vcf/ApplicationKit/ItemEvent.h"

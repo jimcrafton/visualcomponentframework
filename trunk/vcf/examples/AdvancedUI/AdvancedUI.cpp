@@ -323,6 +323,7 @@ public:
 		col.setHSL( h,l,s );
 
 
+		
 		templates_ = new ListViewControl();
 		templates_->setVisible( true );
 		templates_->setColor( &col );
@@ -332,28 +333,31 @@ public:
 		templates_->getFont()->setPointSize( 10 );
 
 
+		ListModel* templateModel = templates_->getListModel();
+		templateModel->add( "Oggle Boggle" );
 
 		TemplateItem* templateItem = new TemplateItem();
-		templateItem->setCaption( "Oggle Boggle" );
 		templateItem->setImageIndex( 0 );
 		templateItem->setComments( "Creates structures relevant to value-add propositions within the relevant vertical Oggle markets." );
 
-		templates_->addItem( templateItem );
+		templates_->setListItem( 0, templateItem );
+
+		templateModel->add( "Sub Tactical Design" );
 
 		templateItem = new TemplateItem();
-		templateItem->setCaption( "Sub Tactical Design" );
 		templateItem->setImageIndex( 1 );
 		templateItem->setComments( "A refreshing look at non capital markets in Design fetish UML." );
+		templates_->setListItem( 1, templateItem );
 
 		selectedTempl = templateItem;
-		templates_->addItem( templateItem );
+		
 
-		templateItem = new TemplateItem();
-		templateItem->setCaption( "Dongle Structures" );
+		templateModel->add( "Dongle Structures" );
+		templateItem = new TemplateItem();		
 		templateItem->setImageIndex( 2 );
 		templateItem->setComments( "Secure application design and structures through the use of 4 dimensionsal Dongles." );
 
-		templates_->addItem( templateItem );
+		templates_->setListItem( 2, templateItem );
 
 
 		templates_->ItemSelectionChanged +=

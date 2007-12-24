@@ -81,7 +81,7 @@ public:
 	virtual bool getAllowLabelEditing();
 
 	virtual void setAllowLabelEditing( const bool& allowLabelEditing );
-
+/*
 	void onItemPaint( ItemEvent* event );
 
 	void onItemChanged( ItemEvent* event );
@@ -91,6 +91,7 @@ public:
 	void onItemAdded( ItemEvent* event );
 
 	void onItemDeleted( ItemEvent* event );
+	*/
 
 	virtual void setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type=ListViewControl::lcatAutoSizeNone );
 
@@ -119,15 +120,19 @@ private:
 	ListViewControl* listviewControl_;
 	bool headerControlIsTracking_;
 	bool internalMessage_;
-	std::vector<ListItem*> selectedItems_;
-	EnumeratorContainer<std::vector<ListItem*>, ListItem*> enumContainer_;
+	Array<ListItem*> selectedItems_;
 	WNDPROC oldHeaderWndProc_;
 	Color backColor_;
 	HIMAGELIST largeImageListCtrl_;
 	HIMAGELIST smallImageListCtrl_;
 
+	void onCtrlModelChanged( Event* e );
+	void onListModelChanged( Event* e );
 
+	EventHandler* ctrlModelChanged;
+	EventHandler* listModelChanged;
 
+/*
 	ItemHandler* itemAddedHandler_;
 	ItemHandler* itemDeletedHandler_;
 	ItemHandler* itemChangedHandler_;
@@ -137,7 +142,8 @@ private:
 	ItemHandler* subItemAddedHandler_;
 	ItemHandler* subItemDeletedHandler_;
 	ItemHandler* subItemChangedHandler_;
-
+*/
+	/*
 	void onSubItemChanged( ItemEvent* event );
 
 	void onSubItemAdded( ItemEvent* event );
@@ -145,7 +151,7 @@ private:
 	void onSubItemDeleted( ItemEvent* event );
 
 	void updateItemSubItems( ListItem* item );
-
+*/
 
 	IconStyleType translateStyleToIconStyle( const DWORD& wsStyle );
 	DWORD translateIconStyleToStyleBit( const IconStyleType& iconStyle );

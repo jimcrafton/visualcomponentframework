@@ -260,7 +260,6 @@ _class_rtti_end_
 
 _class_abstract_rtti_(ListModel, "VCF::Model", LISTMODEL_CLASSID)
 //OBJECT_COLLECTION_PROPERTY(ListItem*, "items", ListModel::getItems, ListModel::addItem, ListModel::insertItem, ListModel::deleteItem, ListModel::deleteItemAtIndex )
-_delegate_(ListModelDelegate, ContentsChanged )
 _delegate_(ListModelDelegate, ItemAdded )
 _delegate_(ListModelDelegate, ItemRemoved )
 _class_rtti_end_
@@ -272,18 +271,6 @@ _abstract_delegate_( MenuItemDelegate, MenuItemClicked )
 _abstract_delegate_( MenuItemDelegate, MenuItemUpdate )
 _property_( String, "caption", getCaption, setCaption, "" )
 _class_rtti_end_
-
-
-
-
-/* 
-JC - Note that we should change this to RTTI as an interface!!!
-_class_abstract_rtti_(TabModel, "VCF::TabModel", "VCF::Model", TABMODEL_CLASSID )
-_abstract_delegate_("VCF::TabModelEventHandler", TabModel, VCF::TabModelEvent, TabPageAdded)
-_abstract_delegate_("VCF::TabModelEventHandler", TabModel, VCF::TabModelEvent, TabPageRemoved)
-_abstract_delegate_("VCF::TabModelEventHandler", TabModel, VCF::TabModelEvent, TabPageSelected)
-_class_rtti_end_(TabModel)
-*/
 
 
 _class_abstract_rtti_(TabPage, "VCF::Item", TABPAGE_CLASSID)
