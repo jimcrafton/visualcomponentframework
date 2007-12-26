@@ -539,7 +539,7 @@ Component* Component::createComponentFromResources( Class* clazz, Class* rootCla
 		result = dynamic_cast<Component*>(newObject);
 
 		if ( NULL != result ) {
-			Component::initComponent( result, clazz, rootClazz );
+			Component::initComponent( result, clazz, rootClazz, resBundle );
 			
 			result->loaded();
 		}

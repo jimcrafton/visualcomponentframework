@@ -3203,6 +3203,12 @@ template <class T> bool registerClass( T* fakeParam, const String& className,
 
 		ClassRegistry::addClass( className, objClass );
 
+		if ( objClass->getSuperClass() == NULL && !superClassName.empty() ) {
+			StringUtils::trace( Format("Class %s's super class name is %s, but super class link is NULL.\n") 
+									% className.ansi_c_str()
+									% superClassName.ansi_c_str());
+		}
+
 		result = true;
 	}
 	return result;
@@ -3222,6 +3228,12 @@ template <class T>  bool registerAbstractClass( T* fakeParam, const String& clas
 		TypedAbstractClass<T>* objClass = new TypedAbstractClass<T>( className, classID, superClassName );
 
 		ClassRegistry::addClass( className, objClass );
+
+		if ( objClass->getSuperClass() == NULL && !superClassName.empty() ) {
+			StringUtils::trace( Format("Class %s's super class name is %s, but super class link is NULL.\n") 
+									% className.ansi_c_str()
+									% superClassName.ansi_c_str());
+		}
 
 		result = true;
 	}

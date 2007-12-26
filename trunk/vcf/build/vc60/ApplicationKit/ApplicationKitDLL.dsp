@@ -270,6 +270,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ColorEtchedBorder.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnItem.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnLayoutContainer.h
 # End Source File
 # Begin Source File
@@ -487,10 +491,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Light3DBorder.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\Light3DBorder.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\ListItem.cpp
 # End Source File
 # Begin Source File
 
@@ -1082,10 +1082,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnItem.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnModel.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnModel.h
 # End Source File
 # Begin Source File
@@ -1219,6 +1215,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Item.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\ListItem.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\ListItem.h
 # End Source File
 # Begin Source File
@@ -1236,6 +1236,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Model.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ModelViewKit.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\SimpleListModel.cpp
 # End Source File
 # Begin Source File
 

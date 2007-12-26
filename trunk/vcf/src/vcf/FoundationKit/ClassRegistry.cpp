@@ -494,7 +494,8 @@ void ClassRegistry::internal_addClass( const String& className, Class* classToRe
 		}
 
 		Class* superClass = classToRegister->getSuperClass();
-		Class* tmp = NULL;
+		Class* tmp = NULL;		
+
 		while ( NULL != superClass ){
 			//copy over properties
 			Enumerator<Property*>* props = superClass->getProperties();
