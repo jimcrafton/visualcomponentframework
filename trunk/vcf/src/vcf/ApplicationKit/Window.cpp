@@ -78,7 +78,7 @@ Window::Window( Control* control )
 
 Window::~Window()
 {
-	StringUtils::traceWithArgs( Format("In Window::~Window for instance %p\n") % this );
+	StringUtils::trace( Format("In Window::~Window for instance %p\n") % this );
 }
 
 void Window::destroy()

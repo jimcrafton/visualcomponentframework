@@ -224,6 +224,8 @@ public:
 
 	Enumerator<ListItem*>* getItems();
 
+	Enumerator<ColumnItem*>* getColumnItems();
+
 	virtual void handleEvent( Event* event );
 protected:
 	//Events
@@ -254,6 +256,7 @@ protected:
 	ListItem* selectedItem_;
 
 	Array<ListItem*> items_;
+	Array<ColumnItem*> columnItems_;
 	bool internalModelChange_;
 };
 

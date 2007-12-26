@@ -257,7 +257,7 @@ public:
 	void setCurrentDocument( VCF::Document* doc ) {
 		
 
-		StringUtils::traceWithArgs( Format("setCurrentDocument( %p )\n") % doc );
+		StringUtils::trace( Format("setCurrentDocument( %p )\n") % doc );
 
 		if ( NULL != doc ) {
 			doc->getWindow()->activate();

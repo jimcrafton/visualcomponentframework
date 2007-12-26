@@ -250,8 +250,8 @@ UIToolkit::ModalReturnType DocumentManager::saveChanges( Document* document )
 		caption = app->getName();
 	}
 	MessageDialog saveDocPrompt;
-	String message = StringUtils::format( Format("Do you want to save the changes you made to the document \"%s\" ?") %
-	                                              document->getName() );
+	String message = Format("Do you want to save the changes you made to the document \"%s\" ?") %
+	                                              document->getName();
 
 	saveDocPrompt.setMessage( message );
 	saveDocPrompt.setCaption( caption );

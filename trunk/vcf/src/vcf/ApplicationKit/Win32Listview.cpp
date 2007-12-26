@@ -969,34 +969,34 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 
 				ListModel* lm = (ListModel*) this->peerControl_->getViewModel();
 
-				
-
-				
 				//ListItem* item = (ListItem*)displayInfo->item.lParam;
 				if ( NULL != lm ) {
 
 					if ( displayInfo->item.mask & LVIF_IMAGE ) {
 						ListItem* item = listviewControl_->getListItem( displayInfo->item.iItem );
 
-						displayInfo->item.iImage = item->getImageIndex();						
+						displayInfo->item.iImage = item->getImageIndex();
 					}
+
+					if ( displayInfo->item.mask & LVIF_PARAM ) {
+						ListItem* item = listviewControl_->getListItem( displayInfo->item.iItem );
+						displayInfo->item.lParam  = (LPARAM)item;
+					}
+
+					if ( displayInfo->item.mask & LVIF_STATE ) {
+						StringUtils::trace( "LVIF_STATE requested!" );
+					}
+
 
 					if ( displayInfo->item.mask & LVIF_TEXT ) {
 						
 						String caption;
 						
-						if ( displayInfo->item.iSubItem > 0 ) {
-						/*
-						ListItem::SubItem* subItem = item->getSubItem( displayInfo->item.iSubItem - 1 );
-						if ( NULL != subItem ) {
-						caption = subItem->getCaption();
-						}
-							*/
+						if ( displayInfo->item.iSubItem > 0 ) {						
 							caption = lm->getSubItemAsString( displayInfo->item.iItem, displayInfo->item.iSubItem-1 );
 						}
 						else{
 							caption = lm->getAsString( displayInfo->item.iItem );
-							//caption = item->getCaption();
 						}
 						// changed to unsigned ints after discussion with Jim,
 						// but he seemed uncertain so it'd be worth checking - ACH
@@ -1089,7 +1089,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 
 			if ( -1 != lvNotificationHdr->iItem ){
 
-				ListItem* item = (ListItem*)lvNotificationHdr->lParam;
+				ListItem* item = listviewControl_->getListItem( lvNotificationHdr->iItem );
 				if ( NULL != item ){
 					if ( (lvNotificationHdr->uChanged & LVIF_STATE) != 0 ) {
 						internalMessage_ = true;

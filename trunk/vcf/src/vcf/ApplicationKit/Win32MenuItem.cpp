@@ -288,7 +288,7 @@ void Win32MenuItem::clearChildren()
 	for ( int i=0;i<count;i++ ){
 		if ( !DeleteMenu( itemHandle_, 0, MF_BYPOSITION ) ) {
 			int err = GetLastError();
-			StringUtils::traceWithArgs( Format("DeleteMenu( %p, 0, MF_BYPOSITION ) failed,GetLastError(): %d\n") %
+			StringUtils::trace( Format("DeleteMenu( %p, 0, MF_BYPOSITION ) failed,GetLastError(): %d\n") %
 										itemHandle_ % err );
 		}
 	}

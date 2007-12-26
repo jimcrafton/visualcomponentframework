@@ -404,8 +404,12 @@ void ListViewControl::onListModelEmptied( ModelEvent* event )
 
 void ListViewControl::onColumnItemAdded( ColumnModelEvent* event )
 {
-	/*
-	ColumnItem* item = event->getColumnItem();
+	ColumnItem* item = new DefaultColumnItem();
+	item->setControl( this );
+	item->setModel( getColumnModel() );
+	item->setIndex( event->index );
+	addComponent( item );
+	columnItems_.insert( columnItems_.begin() + event->index, item );	
 
 	listviewPeer_->insertHeaderColumn( item->getIndex(), item->getCaption(), item->getWidth() );
 
@@ -417,7 +421,6 @@ void ListViewControl::onColumnItemAdded( ColumnModelEvent* event )
 	}
 
 	item->ItemChanged += columnItemChanged;
-	*/
 }
 
 void ListViewControl::onColumnItemDeleted( ColumnModelEvent* event )
@@ -621,6 +624,11 @@ Enumerator<ListItem*>* ListViewControl::getItems()
 {
 	return items_.getEnumerator();
 }
+
+Enumerator<ColumnItem*>* ListViewControl::getColumnItems()
+{
+	return columnItems_.getEnumerator();
+}	
 
 /**
 $Id$

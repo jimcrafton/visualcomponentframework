@@ -257,7 +257,7 @@ void SliderControl::movePosition( MouseEvent* e )
 		newPos = ((dragPosStart_.x_/w + delta)) * range;
 	}
 
-	StringUtils::traceWithArgs( Format("newPos: %0.1f\n") % newPos );
+	StringUtils::trace( Format("newPos: %0.1f\n") % newPos );
 	newPos += minVal_;
 
 	if ( tickFrequency_ > 0.0 ) {
