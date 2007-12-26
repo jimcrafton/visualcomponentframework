@@ -263,6 +263,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ColorEtchedBorder.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnItem.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnLayoutContainer.h
 # End Source File
 # Begin Source File
@@ -564,6 +568,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ResourceBundlePeer.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\Scrollable.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\SimpleListModel.cpp
 # End Source File
 # Begin Source File
 

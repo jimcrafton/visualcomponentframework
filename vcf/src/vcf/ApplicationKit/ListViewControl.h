@@ -226,6 +226,10 @@ public:
 
 	Enumerator<ColumnItem*>* getColumnItems();
 
+	ColumnItem* getColumnItem( const uint32& index );
+
+	void setColumnItem( const uint32& index, ColumnItem* item );
+
 	virtual void handleEvent( Event* event );
 protected:
 	//Events
@@ -239,9 +243,9 @@ protected:
 
 	void onListModelEmptied( ModelEvent* event );
 
-	void onColumnItemAdded( ColumnModelEvent* event );
+	void onColumnItemAdded( ListModelEvent* event );
 
-	void onColumnItemDeleted( ColumnModelEvent* event );
+	void onColumnItemDeleted( ListModelEvent* event );
 
 	void onColumnItemChanged( ItemEvent* event );
 

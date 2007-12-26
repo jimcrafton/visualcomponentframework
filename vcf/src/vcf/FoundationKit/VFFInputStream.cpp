@@ -434,6 +434,9 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 							}
 						}
 					}
+					else {
+						StringUtils::trace( Format("No property found named '%s'.\n") % currentSymbol.ansi_c_str() );
+					}
 				}
 				break;
 				case '[': {
@@ -444,6 +447,9 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 							value += parser_->tokenString();
 						}
 						prop->set( value );
+					}
+					else {
+						StringUtils::trace( Format("No property found named '%s'.\n") % currentSymbol.ansi_c_str() );
 					}
 				}
 				break;
@@ -465,6 +471,9 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 								}
 							}
 						}
+					}
+					else {
+						StringUtils::trace( Format("No property found named '%s'.\n") % currentSymbol.ansi_c_str() );
 					}
 				}
 				break;

@@ -11,6 +11,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ModelViewKit.h"
 #include "vcf/ApplicationKit/ControlsKit.h"
 #include "vcf/ApplicationKit/DefaultPropertyEditors.h"
+#include "vcf/ApplicationKit/SimpleListModel.h"
 
 #include "vcf/FoundationKit/RTTIMacros.h"
 #include "vcf/ApplicationKit/ApplicationKitRTTI.inl"
@@ -55,7 +56,8 @@ void ApplicationKit::init( int argc, char** argv )
 
 		GraphicsKit::init( argc, argv );
 		
-		
+		REGISTER_CLASSINFO_EXTERNAL( UIComponent );
+
 		REGISTER_CLASSINFO_EXTERNAL( AbstractPropertyEditor );
 		REGISTER_CLASSINFO_EXTERNAL( ImagePropertyEditor );
 		REGISTER_CLASSINFO_EXTERNAL( ImageFilenamePropertyEditor );
@@ -78,17 +80,14 @@ void ApplicationKit::init( int argc, char** argv )
 
 		REGISTER_CLASSINFO_EXTERNAL(Document);
 
-//		REGISTER_CLASSINFO_EXTERNAL( ListModel );
+		REGISTER_CLASSINFO_EXTERNAL( ListModel );
+		REGISTER_CLASSINFO_EXTERNAL( SimpleListModel );
 		REGISTER_CLASSINFO_EXTERNAL( MenuItem );
-//		REGISTER_CLASSINFO_EXTERNAL(TabModel);
+		REGISTER_CLASSINFO_EXTERNAL(TabModel);
 		REGISTER_CLASSINFO_EXTERNAL(TabPage);
-//		REGISTER_CLASSINFO_EXTERNAL( TextModel );
+		REGISTER_CLASSINFO_EXTERNAL( TextModel );
 		REGISTER_CLASSINFO_EXTERNAL( TreeItem );
 //		REGISTER_CLASSINFO_EXTERNAL( TreeModel );
-		
-//		REGISTER_CLASSINFO_EXTERNAL( AbstractListModel );
-//		REGISTER_CLASSINFO_EXTERNAL( AbstractTextModel );
-//		REGISTER_CLASSINFO_EXTERNAL( AbstractTreeModel );
 		
 		
 		REGISTER_CLASSINFO_EXTERNAL( Border );

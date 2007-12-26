@@ -17,26 +17,27 @@ where you installed the VCF.
 #define COLUMNMODEL_CLASSID		"997ee959-661c-437a-9879-b884f593a864"
 
 
-#ifndef _VCF_LISTMODEL_H__
-#	include "vcf/ApplicationKit/ListModel.h"
+#ifndef _VCF_SIMPLELISTMODEL_H__
+#	include "vcf/ApplicationKit/SimpleListModel.h"
 #endif // _VCF_LISTMODEL_H__
 
 
 
 namespace VCF  {
 
-
+/*
 #define COLUMN_MODEL_CONST				1900
 
 #define COLUMN_MODEL_CONTENTS_DELETED		CUSTOM_EVENT_TYPES + COLUMN_MODEL_CONST + 1
 #define COLUMN_MODEL_ITEM_CHANGED			CUSTOM_EVENT_TYPES + COLUMN_MODEL_CONST + 2
 #define COLUMN_MODEL_ITEM_ADDED				CUSTOM_EVENT_TYPES + COLUMN_MODEL_CONST + 3
 #define COLUMN_MODEL_ITEM_DELETED			CUSTOM_EVENT_TYPES + COLUMN_MODEL_CONST + 4
-
+*/
 	
 /**
 \class ColumnModelEvent ColumnModel.h "vcf/ApplicationKit/ColumnModel.h"
 */
+	/*
 class APPLICATIONKIT_API ColumnModelEvent : public ListModelEvent {
 public:
 	ColumnModelEvent( Object* source ):ListModelEvent(source){}
@@ -63,7 +64,7 @@ public:
 		return new ListModelEvent(*this);
 	}
 };
-
+*/
 /**
 \class ColumnModel ColumnModel.h "vcf/ApplicationKit/ColumnModel.h"
 *The ColumnModel is a model that represent's 0 or more ColumnItems.
@@ -72,50 +73,12 @@ public:
 *items the model currently has in it.
 *@see Model
 */
-class APPLICATIONKIT_API ColumnModel : public ListModel {
+class APPLICATIONKIT_API ColumnModel : public SimpleListModel {
 public:
 
-	ColumnModel();
+	ColumnModel() {}
 
-	virtual ~ColumnModel(){};
-
-
-	virtual void empty();
-
-	virtual void add( const VariantData& item );
-	virtual void insert( const uint32 & index, const VariantData& item );
-    
-	virtual void remove( const VariantData& item );
-	virtual void removeAtIndex( const uint32 & index );
-
-	virtual VariantData get( const uint32& index );	
-	virtual String getAsString( const uint32& index );
-
-	virtual uint32 getIndexOf( const VariantData& item );
-
-	virtual void set( const uint32& index, const VariantData& item );
-	virtual void setAsString( const uint32& index, const String& item );
-
-	virtual bool getItems( std::vector<VariantData>& items );	
-	virtual Enumerator<VariantData>* getItems();
-
-	virtual bool getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items );
-
-	virtual uint32 getCount();
-
-	virtual bool supportsSubItems() {
-		return false;
-	}
-
-	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex ) {		
-		return VariantData::null();
-	}
-
-	virtual String getSubItemAsString( const uint32& index, const uint32& subItemIndex ) {
-		return String();
-	}
-protected:
-	Array<VariantData> data_;
+	virtual ~ColumnModel(){}
 };
 
 

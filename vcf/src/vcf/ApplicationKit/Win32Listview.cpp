@@ -523,11 +523,11 @@ void Win32Listview::postPaintItem( NMLVCUSTOMDRAW* drawItem )
 
 			LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 			if ( style & LVS_REPORT ) {
-				/*
+				
 				ColumnModel* colModel = listviewControl_->getColumnModel();
 				if ( NULL != colModel ) {
 					uint32 colIndex = 0;
-					Enumerator<ColumnItem*>* columns = colModel->getItems();
+					Enumerator<ColumnItem*>* columns = listviewControl_->getColumnItems();
 					Enumerator<ListItem::SubItem*>* subItems = item->getSubItems();
 					Rect subItemRect = itemRect;
 					while ( (true == columns->hasMoreElements()) && (true == subItems->hasMoreElements()) ) {
@@ -543,7 +543,6 @@ void Win32Listview::postPaintItem( NMLVCUSTOMDRAW* drawItem )
 						colIndex ++;
 					}
 				}
-				*/
 			}
 		}
 	}
@@ -1710,11 +1709,11 @@ void Win32Listview::insertHeaderColumn( const uint32& index, const String& colum
 				headerItem.mask = HDI_FORMAT | HDI_LPARAM;
 				Header_GetItem( header, index, &headerItem );
 				headerItem.fmt |= HDF_OWNERDRAW;
-				/*
-				ColumnItem* item = listviewControl_->getColumnModel()->getItemFromIndex( index );
+				
+				ColumnItem* item = listviewControl_->getColumnItem( index );
 
 				headerItem.lParam = (LPARAM)item;
-				*/
+				
 
 				int err = SendMessage( header, HDM_SETITEMW, (WPARAM)index, (LPARAM)&headerItem );
 			}
@@ -1753,10 +1752,9 @@ void Win32Listview::insertHeaderColumn( const uint32& index, const String& colum
 				headerItem.mask = HDI_FORMAT | HDI_LPARAM;
 				Header_GetItem( header, index, &headerItem );
 				headerItem.fmt |= HDF_OWNERDRAW;
-/*				ColumnItem* item = listviewControl_->getColumnModel()->getItemFromIndex( index );
+				ColumnItem* item = listviewControl_->getColumnItem( index );
 
 				headerItem.lParam = (LPARAM)item;
-				*/
 
 				int err = SendMessage( header, HDM_SETITEMA, (WPARAM)index, (LPARAM)&headerItem );
 			}

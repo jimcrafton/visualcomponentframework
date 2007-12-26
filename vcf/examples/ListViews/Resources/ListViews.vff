@@ -1,0 +1,63 @@
+object ListViewsWindow : Window
+	top = 100
+	left = 100
+	width = 500
+	height = 500
+	caption = 'ListViews example'
+
+	object listView : VCF::ListViewControl 
+		alignment = AlignClient
+		visible = true
+		border = null
+	end
+
+	object menuBar : VCF::MenuBar
+		object listViewMenu : VCF::DefaultMenuItem
+			caption = 'ListView'
+
+			object viewStyle : VCF::DefaultMenuItem
+				caption = 'View Style'
+				object viewStyleIcon : VCF::DefaultMenuItem
+					caption = 'Icon'
+					tag = 0
+				end
+				object viewStyleSmall : VCF::DefaultMenuItem
+					caption = 'Small Icon'
+					tag = 1
+				end
+				object viewStyleList : VCF::DefaultMenuItem
+					caption = 'List'
+					tag = 2
+				end
+				object viewStyleReport : VCF::DefaultMenuItem
+					caption = 'Report'
+					tag = 3
+				end
+			end
+			object addItem : VCF::DefaultMenuItem
+				caption = 'Add Item'
+			end
+			object listModelAddItem : VCF::DefaultMenuItem
+				caption = 'ListModel Add Item'
+			end
+			object sep1 : VCF::DefaultMenuItem
+				separator = true
+			end
+			object deleteItem : VCF::DefaultMenuItem
+				caption = 'Delete item from Model'
+			end
+			object sep2 : VCF::DefaultMenuItem
+				separator = true
+			end
+		end
+		object columnsMenu : VCF::DefaultMenuItem
+			caption = 'Columns'
+			object columnAdd : VCF::DefaultMenuItem
+				caption = 'Add Column'
+			end
+			object columnDelete : VCF::DefaultMenuItem
+				caption = 'Delete Column'
+			end
+		end		
+	end
+end

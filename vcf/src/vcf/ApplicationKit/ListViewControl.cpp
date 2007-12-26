@@ -46,11 +46,11 @@ ListViewControl::ListViewControl():
 	addComponent( columnModel_ );
 
 	EventHandler* cmh = (EventHandler*)
-		new ClassProcedure1<ColumnModelEvent*,ListViewControl>( this, &ListViewControl::onColumnItemAdded, "ListViewControl::onColumnItemAdded" );
+		new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onColumnItemAdded, "ListViewControl::onColumnItemAdded" );
 	columnModel_->ItemAdded += cmh;
 
 	cmh = (EventHandler*)
-		new ClassProcedure1<ColumnModelEvent*,ListViewControl>( this, &ListViewControl::onColumnItemDeleted, "ListViewControl::onColumnItemDeleted" );
+		new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onColumnItemDeleted, "ListViewControl::onColumnItemDeleted" );
 	columnModel_->ItemRemoved += cmh;
 
 
@@ -402,7 +402,7 @@ void ListViewControl::onListModelEmptied( ModelEvent* event )
 	listviewPeer_->clear();
 }
 
-void ListViewControl::onColumnItemAdded( ColumnModelEvent* event )
+void ListViewControl::onColumnItemAdded( ListModelEvent* event )
 {
 	ColumnItem* item = new DefaultColumnItem();
 	item->setControl( this );
@@ -423,7 +423,7 @@ void ListViewControl::onColumnItemAdded( ColumnModelEvent* event )
 	item->ItemChanged += columnItemChanged;
 }
 
-void ListViewControl::onColumnItemDeleted( ColumnModelEvent* event )
+void ListViewControl::onColumnItemDeleted( ListModelEvent* event )
 {
 	//ColumnItem* item = event->getColumnItem();
 
@@ -629,6 +629,39 @@ Enumerator<ColumnItem*>* ListViewControl::getColumnItems()
 {
 	return columnItems_.getEnumerator();
 }	
+
+ColumnItem* ListViewControl::getColumnItem( const uint32& index )
+{
+	ColumnItem* result = NULL;
+
+	if ( index < columnItems_.size() ) {
+		result = columnItems_[index];
+	}
+
+	return result;
+}
+
+void ListViewControl::setColumnItem( const uint32& index, ColumnItem* item )
+{
+	if ( index < columnItems_.size() ) {
+		ColumnItem* oldItem = columnItems_[index];
+		
+		columnItems_[index] = item;
+		
+		if ( NULL == item->getOwner() ) {
+			addComponent( item );
+		}
+
+		item->setControl( this );
+		item->setModel( getViewModel() );
+		item->setIndex( oldItem->getIndex() );
+
+		removeComponent( oldItem );
+		oldItem->free();
+
+		repaint();
+	}
+}
 
 /**
 $Id$

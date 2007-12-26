@@ -38,11 +38,7 @@ public:
 
 	DefaultColumnItem();
 
-	virtual ~DefaultColumnItem();
-
-	virtual String getCaption();
-
-	virtual void setCaption( const String& caption );
+	virtual ~DefaultColumnItem();	
 
 	virtual double getWidth() {
 		return width_;
@@ -59,8 +55,6 @@ public:
 	virtual void paint( GraphicsContext* context, Rect* paintRect );
 
 protected:
-	String caption_;
-	bool selected_;
 	double width_;
 	TextAlignmentType textAlignment_;
 };

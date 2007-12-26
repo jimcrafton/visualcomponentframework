@@ -34,22 +34,6 @@ DefaultColumnItem::~DefaultColumnItem()
 }
 
 
-void DefaultColumnItem::setCaption( const String& caption )
-{
-	caption_ = caption;
-	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
-	ItemChanged( &event );
-}
-
-String DefaultColumnItem::getCaption()
-{
-	//control's getUseLocaleStrings() takes precedence over ours
-	Control* control = getControl();
-	if ( getUseLocaleStrings() && (NULL != control) && (control->getUseLocaleStrings()) ) {
-		return System::getCurrentThreadLocale()->translate( caption_ );
-	}
-	return caption_;
-}
 
 void DefaultColumnItem::paint( GraphicsContext* context, Rect* paintRect )
 {

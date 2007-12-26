@@ -44,20 +44,7 @@ public:
 	*/
 	virtual void setWidth( const double& width ) = 0;
 
-	/**
-	*sets the caption of the column.
-	*If the text is wider than the current width of the
-	*column it will be truncated to fit and drawn with an
-	*ellipsis ("...")
-	*@param String the new column caption
-	*/
-	virtual void setCaption( const String& caption ) = 0;
-
-	/**
-	*returns the caption for the column item
-	*@return String the column's caption
-	*/
-	virtual String getCaption() = 0;
+	
 
 	/**
 	*sets the alignment of the caption.
@@ -83,6 +70,21 @@ public:
 	virtual void setIndex( const uint32& index ) {
 		index_ = index;
 	}
+
+	/**
+	*sets the caption of the column.
+	*If the text is wider than the current width of the
+	*column it will be truncated to fit and drawn with an
+	*ellipsis ("...")
+	*@param String the new column caption
+	*/
+	virtual void setCaption( const String& caption );
+
+	/**
+	*returns the caption for the column item
+	*@return String the column's caption
+	*/
+	virtual String getCaption();
 
 protected:
 	uint32 index_;

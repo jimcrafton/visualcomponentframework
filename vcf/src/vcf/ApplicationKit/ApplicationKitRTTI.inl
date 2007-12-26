@@ -21,6 +21,7 @@ This was created to improved compile times
 #include "vcf/ApplicationKit/SystemTray.h"
 #include "vcf/ApplicationKit/ColumnLayoutContainer.h"
 #include "vcf/ApplicationKit/HorizontalLayoutContainer.h"
+#include "vcf/ApplicationKit/SimpleListModel.h"
 
 
 namespace VCF {
@@ -264,12 +265,18 @@ _delegate_(ListModelDelegate, ItemAdded )
 _delegate_(ListModelDelegate, ItemRemoved )
 _class_rtti_end_
 
+_class_rtti_(SimpleListModel, "VCF::ListModel", SIMPLELISTMODEL_CLASSID)
+_class_rtti_end_
 
 
 _class_abstract_rtti_(MenuItem, "VCF::Item", MENUITEM_CLASSID)
 _abstract_delegate_( MenuItemDelegate, MenuItemClicked )
 _abstract_delegate_( MenuItemDelegate, MenuItemUpdate )
 _property_( String, "caption", getCaption, setCaption, "" )
+_property_( bool, "enabled", isEnabled, setEnabled, "" )
+_property_( bool, "radioItem", getRadioItem, setRadioItem, "" )
+_property_( bool, "checked", isChecked, setChecked, "" )
+_property_( bool, "separator", isSeparator, setSeparator, "" )
 _class_rtti_end_
 
 
@@ -399,7 +406,7 @@ _delegate_(ItemDelegate, SubItemDeleted );
 _class_rtti_end_
 
 
-_class_rtti_(ColumnModel, "VCF::ListModel", COLUMNMODEL_CLASSID)
+_class_rtti_(ColumnModel, "VCF::SimpleListModel", COLUMNMODEL_CLASSID)
 _class_rtti_end_
 
 _class_rtti_(DefaultListModel, "VCF::ListModel", DEFAULTLISTMODEL_CLASSID)
