@@ -199,7 +199,7 @@ bool Win32Button::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 
 				if ( err == FALSE ) {
 					err = GetLastError();
-					StringUtils::traceWithArgs( Format("error in BitBlt during drawing of double buffered Comp: error code=%d\n") %
+					StringUtils::trace( Format("error in BitBlt during drawing of double buffered Comp: error code=%d\n") %
 						err );
 				}
 			}

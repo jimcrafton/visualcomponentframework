@@ -181,9 +181,9 @@ void Win32Edit::create( Control* owningControl )
 		}
 		else {
 			String errMsg =
-				StringUtils::format( Format("Failed to load \"%s\", a required DLL when using richedit controls. \n"\
+				Format("Failed to load \"%s\", a required DLL when using richedit controls. \n"\
 				"Please make sure this DLL is located in your Windows system, or application directory.") %
-				richeditLibrary.c_str() );
+				richeditLibrary.c_str();
 
 			throw RuntimeException( errMsg );
 		}

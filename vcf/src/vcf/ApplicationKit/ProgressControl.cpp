@@ -164,10 +164,10 @@ void ProgressControl::paint( GraphicsContext* ctx )
 	if ( displayProgressText_ ) {
 		String text;
 		if ( useProgressFormatString_ && (!progressFormatString_.empty()) ) {
-			text = StringUtils::format( Format(progressFormatString_) % position_ );
+			text = Format(progressFormatString_) % position_;
 		}
 		else {
-			text = StringUtils::format( Format("%0.1f %%") % position_ );
+			text = Format("%0.1f %%") % position_;
 		}
 		state.progressCaption_ = text; 
 	}
