@@ -31,7 +31,7 @@ void ColumnItem::setCaption( const String& caption )
 	ListModel* lm = (ListModel*) getModel();
 	VCF_ASSERT( NULL != lm );
 
-	lm->setAsString( index_, caption );
+	lm->setAsString( index_, caption, false );
 
 	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
 	ItemChanged( &event );

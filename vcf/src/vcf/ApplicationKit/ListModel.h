@@ -135,8 +135,8 @@ public:
 
 	virtual uint32 getIndexOf( const VariantData& item ) = 0;
 
-	virtual void set( const uint32& index, const VariantData& item ) = 0;
-	virtual void setAsString( const uint32& index, const String& item ) = 0;
+	virtual void set( const uint32& index, const VariantData& item, bool addMissingValues ) = 0;
+	virtual void setAsString( const uint32& index, const String& item, bool addMissingValues ) = 0;
 
 	virtual bool getItems( std::vector<VariantData>& items ) = 0;
 	virtual Enumerator<VariantData>* getItems() = 0;

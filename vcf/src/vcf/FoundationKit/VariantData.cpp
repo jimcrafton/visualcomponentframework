@@ -324,6 +324,14 @@ void VariantData::setFromString( const String& value )
 			}
 		}
 		break;
+
+		default : {
+			checkStringVal();
+
+			*StringVal = value;
+			type = pdString;
+		}
+		break;
 	}
 }
 

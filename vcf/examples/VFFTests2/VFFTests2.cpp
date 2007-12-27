@@ -38,9 +38,9 @@ public:
 class CollT1 : public Component {
 public:
 	_class_rtti_( CollT1, "VCF::Component", "093845lrotelrtkjl" )
-		_property_array_( int, "items", getItem,setItem,addItem,insertItem,removeItem,getItemSize, "" )				
+		_property_array_( int, "items", getItem,setItem,insertItem,removeItem,getItemSize, "" )				
 		//_property_collection_( double, String, "stuff", getStuff,setStuff,addStuff,insertStuff,removeStuff,getStuffSize, "" )
-		_property_obj_array_( Stuff, "stuff", getStuff,setStuff,addStuff,insertStuff,removeStuff,getStuffSize, "" )
+		_property_obj_array_( Stuff, "stuff", getStuff,setStuff,insertStuff,removeStuff,getStuffSize, "" )
 	_class_rtti_end_
 
 
@@ -49,27 +49,27 @@ public:
 
 	std::vector<Stuff*> stuff;
 
-	void addItem( int val ) {
+	virtual void addItem( const int& val ) {
 		items.push_back( val );
 	}
 
-	void insertItem( const uint32& i, int val ){
+	virtual void insertItem( const uint32& i, const int& val ){
 		items.insert( items.begin() + i, val );
 	}
 
-	uint32 getItemSize() {
+	virtual uint32 getItemSize() {
 		return items.size();
 	}
 
-	void removeItem( const uint32& i ) {
+	virtual void removeItem( const uint32& i ) {
 		items.erase( items.begin() + i );
 	}
 
-	int getItem( const uint32& i ) {
+	virtual int getItem( const uint32& i ) {
 		return items[i];
 	}
 
-	void setItem( const uint32& i, int val, bool addMissingValues ) {
+	virtual void setItem( const uint32& i, const int& val, bool addMissingValues ) {
 
 		if ( addMissingValues && ((i+1) > items.size()) ) {
 			size_t missing = (i+1) - items.size();
@@ -83,11 +83,11 @@ public:
 
 
 
-	void addStuff( Stuff* val ) {
+	virtual void addStuff( Stuff* val ) {
 		stuff.push_back( val );
 	}
 
-	void insertStuff( const uint32& i, Stuff* val ){
+	virtual void insertStuff( const uint32& i, Stuff* val ){
 		stuff.insert( stuff.begin() + i, val );
 	}
 

@@ -123,7 +123,7 @@ String DefaultListModel::getAsString( const uint32& index )
 	return result.toString();
 }
 
-void DefaultListModel::set( const uint32& index, const VariantData& item )
+void DefaultListModel::set( const uint32& index, const VariantData& item, bool addMissingValues )
 {
 	data_[index] = item;
 	ListModelEvent itemEvent( this, lmeItemChanged );
@@ -132,7 +132,7 @@ void DefaultListModel::set( const uint32& index, const VariantData& item )
 	ModelChanged( &itemEvent );
 }
 
-void DefaultListModel::setAsString( const uint32& index, const String& item )
+void DefaultListModel::setAsString( const uint32& index, const String& item, bool addMissingValues )
 {
 	data_[index].setFromString(item);
 	ListModelEvent itemEvent( this, lmeItemChanged );

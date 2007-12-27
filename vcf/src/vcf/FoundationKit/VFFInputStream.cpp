@@ -498,7 +498,13 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 				if ( NULL != object ) {
 					clazz = object->getClass();
 
-					processAsignmentTokens( newToken, objPropName, clazz );
+					if ( NULL != clazz ) {
+						processAsignmentTokens( newToken, objPropName, clazz );
+					}
+					else {
+						StringUtils::trace( Format("Warning: no Class found for property %s.")
+												% currentSymbol.ansi_c_str() );
+					}
 				}
 			}
 			else {

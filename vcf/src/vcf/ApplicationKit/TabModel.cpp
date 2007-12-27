@@ -127,7 +127,7 @@ String TabModel::getAsString( const uint32& index )
 	return result.toString();
 }
 
-void TabModel::set( const uint32& index, const VariantData& item )
+void TabModel::set( const uint32& index, const VariantData& item, bool addMissingValues )
 {
 	data_[index] = item;
 	ListModelEvent itemEvent( this, lmeItemChanged );
@@ -135,7 +135,7 @@ void TabModel::set( const uint32& index, const VariantData& item )
 	ModelChanged( &itemEvent );
 }
 
-void TabModel::setAsString( const uint32& index, const String& item )
+void TabModel::setAsString( const uint32& index, const String& item, bool addMissingValues )
 {
 	data_[index].setFromString(item);
 	ListModelEvent itemEvent( this, lmeItemChanged );

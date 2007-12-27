@@ -92,7 +92,7 @@ String HeaderControl::getColumnName( const uint32& index )
 
 void HeaderControl::setColumnName( const uint32& index, const String& columnName )
 {
-	columnModel_->setAsString( index, columnName );	
+	columnModel_->setAsString( index, columnName, false );	
 }
 
 double HeaderControl::getColumnWidth( const uint32& index )

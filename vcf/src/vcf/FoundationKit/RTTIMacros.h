@@ -276,11 +276,10 @@ you are finished defining your RTTI.
 												             \
 
 
- #define _property_array_( type, propName, getFunc, setFunc, addFunc, insertFunc, deleteFunc, getSizeFunc, description ) \
+ #define _property_array_( type, propName, getFunc, setFunc, insertFunc, deleteFunc, getSizeFunc, description ) \
 	VCF::registerCollectionProperty<type,uint32>( tmpClassName, VCF::String(propName), \
 		(VCF::TypedCollectionProperty<type,uint32>::GetFunction)&RttiClassType::getFunc, \
 		(VCF::TypedCollectionProperty<type,uint32>::SetFunction)&RttiClassType::setFunc, \
-		(VCF::TypedCollectionProperty<type,uint32>::AddFunction)&RttiClassType::addFunc, \
 		(VCF::TypedCollectionProperty<type,uint32>::InsertFunction)&RttiClassType::insertFunc, \
 		(VCF::TypedCollectionProperty<type,uint32>::DeleteFunction)&RttiClassType::deleteFunc, \
 		(VCF::TypedCollectionProperty<type,uint32>::GetSizeFunction)&RttiClassType::getSizeFunc, \
@@ -289,11 +288,10 @@ you are finished defining your RTTI.
 
 
 
-#define _property_collection_( type, key, propName, getFunc, setFunc, addFunc, insertFunc, deleteFunc, getSizeFunc, description ) \
+#define _property_collection_( type, key, propName, getFunc, setFunc, insertFunc, deleteFunc, getSizeFunc, description ) \
 	VCF::registerCollectionProperty<type,key>( tmpClassName, VCF::String(propName), \
 		(VCF::TypedCollectionProperty<type,key>::GetFunction)&RttiClassType::getFunc, \
 		(VCF::TypedCollectionProperty<type,key>::SetFunction)&RttiClassType::setFunc, \
-		(VCF::TypedCollectionProperty<type,key>::AddFunction)&RttiClassType::addFunc, \
 		(VCF::TypedCollectionProperty<type,key>::InsertFunction)&RttiClassType::insertFunc, \
 		(VCF::TypedCollectionProperty<type,key>::DeleteFunction)&RttiClassType::deleteFunc, \
 		(VCF::TypedCollectionProperty<type,key>::GetSizeFunction)&RttiClassType::getSizeFunc, \
@@ -302,11 +300,10 @@ you are finished defining your RTTI.
 
 
 
- #define _property_obj_array_( type, propName, getFunc, setFunc, addFunc, insertFunc, deleteFunc, getSizeFunc, description ) \
+ #define _property_obj_array_( type, propName, getFunc, setFunc, insertFunc, deleteFunc, getSizeFunc, description ) \
 	VCF::registerObjectCollectionProperty<type,uint32>( tmpClassName, VCF::String(propName), \
 		(VCF::TypedObjectCollectionProperty<type,uint32>::GetFunction)&RttiClassType::getFunc, \
 		(VCF::TypedObjectCollectionProperty<type,uint32>::SetFunction)&RttiClassType::setFunc, \
-		(VCF::TypedObjectCollectionProperty<type,uint32>::AddFunction)&RttiClassType::addFunc, \
 		(VCF::TypedObjectCollectionProperty<type,uint32>::InsertFunction)&RttiClassType::insertFunc, \
 		(VCF::TypedObjectCollectionProperty<type,uint32>::DeleteFunction)&RttiClassType::deleteFunc, \
 		(VCF::TypedObjectCollectionProperty<type,uint32>::GetSizeFunction)&RttiClassType::getSizeFunc, \
@@ -315,11 +312,10 @@ you are finished defining your RTTI.
 
 
 
-#define _property_obj_collection_( type, key, propName, getFunc, setFunc, addFunc, insertFunc, deleteFunc, getSizeFunc, description ) \
+#define _property_obj_collection_( type, key, propName, getFunc, setFunc, insertFunc, deleteFunc, getSizeFunc, description ) \
 	VCF::registerObjectCollectionProperty<type,key>( tmpClassName, VCF::String(propName), \
 		(VCF::TypedObjectCollectionProperty<type,key>::GetFunction)&RttiClassType::getFunc, \
 		(VCF::TypedObjectCollectionProperty<type,key>::SetFunction)&RttiClassType::setFunc, \
-		(VCF::TypedObjectCollectionProperty<type,key>::AddFunction)&RttiClassType::addFunc, \
 		(VCF::TypedObjectCollectionProperty<type,key>::InsertFunction)&RttiClassType::insertFunc, \
 		(VCF::TypedObjectCollectionProperty<type,key>::DeleteFunction)&RttiClassType::deleteFunc, \
 		(VCF::TypedObjectCollectionProperty<type,key>::GetSizeFunction)&RttiClassType::getSizeFunc, \
