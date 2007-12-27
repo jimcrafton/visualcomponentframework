@@ -370,7 +370,7 @@ Color* GraphicsToolkit::internal_getColorFromColormap( const String& colorName )
 
 Color* GraphicsToolkit::internal_getColorFromColormap( const int& gray )
 {
-	String colorName = StringUtils::format( Format("gray%d") % gray);
+	String colorName = Format("gray%d") % gray;
 	return getColorFromColormap( colorName );
 }
 
@@ -398,7 +398,7 @@ void GraphicsToolkit::internal_printColorNameMap( ) const
 		uint8 cr = (uint8)(dr*255+0.5);
 		uint8 cg = (uint8)(dg*255+0.5);
 		uint8 cb = (uint8)(db*255+0.5);
-		StringUtils::traceWithArgs( Format("r=%0.06g, g=%0.06g, b=%0.06g - (%-25s) [%3d, %3d, %3d] (0x%02X, 0x%02X, 0x%02X) <%-25s>\n") % dr % dg % db % s.c_str() %  cr % cg % cb % cr % cg % cb % sg.c_str());
+		StringUtils::trace( Format("r=%0.06g, g=%0.06g, b=%0.06g - (%-25s) [%3d, %3d, %3d] (0x%02X, 0x%02X, 0x%02X) <%-25s>\n") % dr % dg % db % s.c_str() %  cr % cg % cb % cr % cg % cb % sg.c_str());
 		it ++;
 	}
 }
@@ -1264,7 +1264,7 @@ void GraphicsToolkit::initColorMap()
 
 	String name;
 	for (int c = 0; c <= 255; c++) {
-		name = StringUtils::format( Format("gray%d") % c);
+		name = Format("gray%d") % c;
 		initColorNameMapItem( name, (VCF::uchar)c, (VCF::uchar)c, (VCF::uchar)c );	// 0xFFF0F8FF
 	}
 

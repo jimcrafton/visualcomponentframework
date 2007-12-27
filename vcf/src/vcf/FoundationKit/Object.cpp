@@ -106,7 +106,7 @@ String Object::toString() const
 	*/
 	//Note: %ls means we can pass in a WideChar* - if we wanted to 
 	//pass in a char* we would need to use the %s formatter
-	result = StringUtils::format( Format("%ls @ %p, refcount: %d") % getClassName().c_str() % this % (int)refCount_ );
+	result = Format("%ls @ %p, refcount: %d") % getClassName().c_str() % this % (int)refCount_;
 	
 	return result;
 }
@@ -197,7 +197,7 @@ void Object::dumpDebugInfo()
 		if ( !Object::debugAllocationMap.empty() ) {
 
 			StringUtils::trace( "Oops there are objects still left. Dumping memory info...\n" );
-			StringUtils::traceWithArgs( Format("There are %d objects still left over that did not get deleted\n") %
+			StringUtils::trace( Format("There are %d objects still left over that did not get deleted\n") %
 				Object::debugAllocationMap.size() );
 
 			int totalAllocationSize = 0;
@@ -215,14 +215,14 @@ void Object::dumpDebugInfo()
 					className = "unknown<exception occured retreiving class name>";
 				}
 
-				StringUtils::traceWithArgs( Format("\tObject (type: %ls) @ %p, allocated size of %d bytes\n") %
+				StringUtils::trace( Format("\tObject (type: %ls) @ %p, allocated size of %d bytes\n") %
 												className.c_str() % (void*)info.objAddress_ % info.objectAllocationSize_ );
 
 				totalAllocationSize += info.objectAllocationSize_;
 				it ++;
 			}
 
-			StringUtils::traceWithArgs( Format("Total allocated memory size of %d bytes in %d object(s).\n") %
+			StringUtils::trace( Format("Total allocated memory size of %d bytes in %d object(s).\n") %
 					totalAllocationSize % Object::debugAllocationMap.size() );
 
 			Object::debugAllocationMap.clear();
@@ -250,7 +250,7 @@ uint32 Object::objectAllocationCount()
 
 		it ++;
 	}
-	StringUtils::traceWithArgs( Format("Total memory allocated: %d bytes\n") % totmem );
+	StringUtils::trace( Format("Total memory allocated: %d bytes\n") % totmem );
 
 	return Object::debugAllocationMap.size();
 #endif

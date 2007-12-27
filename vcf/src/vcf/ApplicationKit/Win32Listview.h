@@ -128,9 +128,11 @@ private:
 
 	void onCtrlModelChanged( Event* e );
 	void onListModelChanged( Event* e );
+	void onColumnModelChanged( Event* e );
 
-	EventHandler* ctrlModelChanged;
-	EventHandler* listModelChanged;
+	EventHandler* ctrlModelChanged_;
+	EventHandler* listModelChanged_;
+	EventHandler* columnModelChanged_;
 
 /*
 	ItemHandler* itemAddedHandler_;

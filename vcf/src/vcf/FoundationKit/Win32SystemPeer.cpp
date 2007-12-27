@@ -645,7 +645,7 @@ String Win32SystemPeer::createTempFileName( const String& directory )
 
 	if ( System::isUnicodeEnabled() ) {
 		VCF::WideChar tmp[MAX_PATH];
-		memset( tmp,0,sizeof(tmp) * sizeof(tmp[0]) );
+		memset( tmp,0,sizeof(tmp) );
 		::GetTempFileNameW( directory.c_str(), L"tmp", 0, tmp );
 		result = tmp;
 
