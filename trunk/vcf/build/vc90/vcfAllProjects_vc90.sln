@@ -1,5 +1,5 @@
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Accelerators", "..\..\examples\Accelerators\Accelerators_vc90.vcproj", "{567265A9-B758-470D-A76B-75C63B8B73E3}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Actions", "..\..\examples\Actions\Actions_vc90.vcproj", "{5D5096D8-C6F3-4F9D-9008-D31EE63E6D4E}"
@@ -307,7 +307,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RegEnVar", "..\..\src\third
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RegExKit", "RegExKit\RegExKit_vc90.vcproj", "{70EEB760-D5FF-434A-8B66-3691D56087C8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RegExKitDLL", "RegExKit\RegExKitDLL_vc90.vcproj", "{C9146FB5-0C90-4A69-8AB7-DBE64884A86C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RegExKitDLL_vc90", "RegExKit\RegExKitDLL_vc90.vcproj", "{C9146FB5-0C90-4A69-8AB7-DBE64884A86C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RegExTest", "..\..\examples\RegExTest\RegExTest_vc90.vcproj", "{8EEAA55D-2D64-43EC-8D44-69C4A3A55C8E}"
 EndProject
