@@ -331,7 +331,7 @@ void ListViewControl::setColumnName( const uint32& index, const String& columnNa
 {
 //	ColumnItem* item = columnModel_->getItemFromIndex( index );
 //	item->setCaption( columnName );
-	columnModel_->setAsString( index, columnName );
+	columnModel_->setAsString( index, columnName, false );
 }
 
 double ListViewControl::getColumnWidth( const uint32& index )

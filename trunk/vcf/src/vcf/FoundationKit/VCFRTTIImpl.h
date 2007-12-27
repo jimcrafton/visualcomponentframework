@@ -913,23 +913,21 @@ template <typename ValueType,typename KeyType=uint32>
 class TypedCollectionProperty : public Property {
 public:
 	
-	typedef void (Object::*AddFunction)( ValueType );
-	typedef void (Object::*InsertFunction)( const KeyType&, ValueType );
+	typedef void (Object::*InsertFunction)( const KeyType&, const ValueType& );
 	typedef void (Object::*DeleteFunction)( const KeyType& );
 	typedef uint32 (Object::*GetSizeFunction)();
 
 	typedef ValueType (Object::*GetFunction)( const KeyType& );
-	typedef void (Object::*SetFunction)( const KeyType&, ValueType, bool );
+	typedef void (Object::*SetFunction)( const KeyType&, const ValueType&, bool );
 
 	TypedCollectionProperty( GetFunction getFunc, SetFunction setFunc, 
-							AddFunction addFunc, InsertFunction insertFunc,
+							InsertFunction insertFunc,
 							DeleteFunction deleteFunc, GetSizeFunction getSizeFunc,
 							const PropertyDescriptorType& propertyType ){
 
 		init();
 		getFunc_ = getFunc;
 		setFunc_ = setFunc;
-		addFunc_ = addFunc;
 		insertFunc_ = insertFunc;
 		deleteFunc_ = deleteFunc;
 		getSizeFunc_ = getSizeFunc;
@@ -952,7 +950,6 @@ public:
 		init();
 		getFunc_ = prop.getFunc_;
 		setFunc_ = prop.setFunc_;
-		addFunc_ = prop.addFunc_;
 		insertFunc_ = prop.insertFunc_;
 		deleteFunc_ = prop.deleteFunc_;
 		getSizeFunc_ = prop.getSizeFunc_;
@@ -963,7 +960,6 @@ public:
 		setFunc_ = NULL;
 		isCollection_ = true;
 		isReadOnly_ = true;
-		addFunc_ = NULL;
 		insertFunc_ = NULL;
 		deleteFunc_ = NULL;
 		getSizeFunc_ = NULL;
@@ -1023,11 +1019,10 @@ public:
 	};
 
 	virtual void add( Object* source, VariantData* value ){
-		if ( (NULL != value) && (NULL != addFunc_) ){
-			ValueType valToAdd = (ValueType)(*value);
-			(source->*addFunc_)( valToAdd );
-		}
-	};
+
+		uint32 idx = getCollectionCount(source);
+		insert( idx, value, source );
+	}
 
 	virtual void insert( const VariantData& key, VariantData* value, Object* source ){
 		if ( (NULL != value) && (NULL != source) && (NULL != insertFunc_) ){
@@ -1043,12 +1038,11 @@ public:
 	};
 
 	virtual bool collectionSupportsEditing() {
-		return addFunc_ == NULL;
+		return insertFunc_ == NULL;
 	}
 private:
 	GetFunction getFunc_;
 	SetFunction setFunc_;
-	AddFunction addFunc_;
 	InsertFunction insertFunc_;
 	DeleteFunction deleteFunc_;
 	GetSizeFunction getSizeFunc_;
@@ -1064,7 +1058,6 @@ class TypedObjectCollectionProperty : public Property {
 public:
 	
 	typedef ValueType* ObjectType;
-	typedef void (Object::*AddFunction)( ObjectType );
 	typedef void (Object::*InsertFunction)( const KeyType&, ObjectType );
 	typedef void (Object::*DeleteFunction)( const KeyType& );
 	typedef uint32 (Object::*GetSizeFunction)();
@@ -1073,14 +1066,13 @@ public:
 	typedef void (Object::*SetFunction)( const KeyType&, ObjectType, bool );
 
 	TypedObjectCollectionProperty( GetFunction getFunc, SetFunction setFunc, 
-							AddFunction addFunc, InsertFunction insertFunc,
+							InsertFunction insertFunc,
 							DeleteFunction deleteFunc, GetSizeFunction getSizeFunc,
 							const PropertyDescriptorType& propertyType ){
 
 		init();
 		getFunc_ = getFunc;
 		setFunc_ = setFunc;
-		addFunc_ = addFunc;
 		insertFunc_ = insertFunc;
 		deleteFunc_ = deleteFunc;
 		getSizeFunc_ = getSizeFunc;
@@ -1103,7 +1095,6 @@ public:
 		init();
 		getFunc_ = prop.getFunc_;
 		setFunc_ = prop.setFunc_;
-		addFunc_ = prop.addFunc_;
 		insertFunc_ = prop.insertFunc_;
 		deleteFunc_ = prop.deleteFunc_;
 		getSizeFunc_ = prop.getSizeFunc_;
@@ -1114,7 +1105,6 @@ public:
 		setFunc_ = NULL;
 		isCollection_ = true;
 		isReadOnly_ = true;
-		addFunc_ = NULL;
 		insertFunc_ = NULL;
 		deleteFunc_ = NULL;
 		getSizeFunc_ = NULL;
@@ -1174,10 +1164,8 @@ public:
 	};
 
 	virtual void add( Object* source, VariantData* value ){
-		if ( (NULL != value) && (NULL != addFunc_) ){
-			ObjectType valToAdd = (ObjectType)(Object*)(*value);
-			(source->*addFunc_)( valToAdd );
-		}
+		uint32 idx = getCollectionCount( source );
+		insert( idx, value, source );
 	};
 
 	virtual void insert( const VariantData& key, VariantData* value, Object* source ){
@@ -1194,12 +1182,11 @@ public:
 	};
 
 	virtual bool collectionSupportsEditing() {
-		return addFunc_ == NULL;
+		return insertFunc_ == NULL;
 	}
 private:
 	GetFunction getFunc_;
 	SetFunction setFunc_;
-	AddFunction addFunc_;
 	InsertFunction insertFunc_;
 	DeleteFunction deleteFunc_;
 	GetSizeFunction getSizeFunc_;
@@ -3360,8 +3347,7 @@ template <typename ValueType, typename KeyType>
 void registerCollectionProperty( const String& className,
 								 const String& propertyName,
 								 _typename_ TypedCollectionProperty<ValueType,KeyType>::GetFunction getFunc,
-								 _typename_ TypedCollectionProperty<ValueType,KeyType>::SetFunction setFunc,
-								 _typename_ TypedCollectionProperty<ValueType,KeyType>::AddFunction addFunc,
+								 _typename_ TypedCollectionProperty<ValueType,KeyType>::SetFunction setFunc,								 
 								 _typename_ TypedCollectionProperty<ValueType,KeyType>::InsertFunction insertFunc,
 								 _typename_ TypedCollectionProperty<ValueType,KeyType>::DeleteFunction deleteFunc,
 								 _typename_ TypedCollectionProperty<ValueType,KeyType>::GetSizeFunction getSizeFunc,
@@ -3372,7 +3358,7 @@ void registerCollectionProperty( const String& className,
 		if ( !clazz->hasProperty( propertyName ) ){
 			Property* newProperty = 
 				new TypedCollectionProperty<ValueType,KeyType>( getFunc,setFunc,
-														addFunc, insertFunc,
+														insertFunc,
 														deleteFunc, getSizeFunc,
 														getDescriptor(typeid(ValueType)) );
 
@@ -3390,7 +3376,6 @@ void registerObjectCollectionProperty( const String& className,
 								 const String& propertyName,
 								 _typename_ TypedObjectCollectionProperty<ValueType,KeyType>::GetFunction getFunc,
 								 _typename_ TypedObjectCollectionProperty<ValueType,KeyType>::SetFunction setFunc,
-								 _typename_ TypedObjectCollectionProperty<ValueType,KeyType>::AddFunction addFunc,
 								 _typename_ TypedObjectCollectionProperty<ValueType,KeyType>::InsertFunction insertFunc,
 								 _typename_ TypedObjectCollectionProperty<ValueType,KeyType>::DeleteFunction deleteFunc,
 								 _typename_ TypedObjectCollectionProperty<ValueType,KeyType>::GetSizeFunction getSizeFunc,
@@ -3401,7 +3386,7 @@ void registerObjectCollectionProperty( const String& className,
 		if ( !clazz->hasProperty( propertyName ) ){
 			Property* newProperty = 
 				new TypedObjectCollectionProperty<ValueType,KeyType>( getFunc,setFunc,
-														addFunc, insertFunc,
+														insertFunc,
 														deleteFunc, getSizeFunc,
 														getDescriptor(typeid(ValueType)) );
 

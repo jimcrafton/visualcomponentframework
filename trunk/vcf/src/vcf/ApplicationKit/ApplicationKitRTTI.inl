@@ -266,6 +266,7 @@ _delegate_(ListModelDelegate, ItemRemoved )
 _class_rtti_end_
 
 _class_rtti_(SimpleListModel, "VCF::ListModel", SIMPLELISTMODEL_CLASSID)
+	_property_array_( String, "items", getAsString,setAsString,insert,removeAtIndex,getCount, "" )
 _class_rtti_end_
 
 

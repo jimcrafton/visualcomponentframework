@@ -9,6 +9,9 @@ object ListViewsWindow : Window
 		alignment = AlignClient
 		visible = true
 		border = null
+		columnModel.items[0] = 'Column 1'
+		columnModel.items[1] = 'Column 2'
+		columnModel.items[2] = 'Column 3'
 	end
 
 	object menuBar : VCF::MenuBar

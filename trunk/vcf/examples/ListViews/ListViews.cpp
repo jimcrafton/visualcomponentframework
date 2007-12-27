@@ -131,13 +131,13 @@ public:
 	void columnChange( Event* ) {
 		ColumnModel* cm = getListView()->getColumnModel();
 		
-		cm->setAsString( 0, "New Col: " + System::createTempFileName() );
+		cm->setAsString( 0, "New Col: " + System::createTempFileName(), false );
 	}
 
 	void changeItem( Event* ) {
 		ListModel* lm = getListView()->getListModel();
 		
-		lm->setAsString( 0, "New Item: " + System::createTempFileName() );
+		lm->setAsString( 0, "New Item: " + System::createTempFileName(), false );
 	}
 
 	void addSubItem( Event* ) {
