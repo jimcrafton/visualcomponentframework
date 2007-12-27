@@ -34,11 +34,6 @@ String StringUtils::abbrevMonths[] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun",
 
 
 
-void StringUtils::traceWithArgs( const Format& formatter )
-{
-	StringUtils::trace( formatter );
-}
-
 void StringUtils::trace( const String& text )
 {
 #ifdef _DEBUG
@@ -605,10 +600,6 @@ VCF::String StringUtils::newUUID()
 }
 
 
-VCF::String StringUtils::format( const Format& formatter )
-{
-	return formatter;
-}
 /*
 VCF::String StringUtils::format( VCF::String formatText, ... )
 {

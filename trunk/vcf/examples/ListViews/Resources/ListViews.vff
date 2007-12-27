@@ -49,6 +49,14 @@ object ListViewsWindow : Window
 			object sep2 : VCF::DefaultMenuItem
 				separator = true
 			end
+			object changeItem : VCF::DefaultMenuItem
+				caption = 'Modify item'
+			end
+
+			object addSubItem : VCF::DefaultMenuItem
+				caption = 'Add Sub Item'
+			end
+			
 		end
 		object columnsMenu : VCF::DefaultMenuItem
 			caption = 'Columns'
@@ -57,6 +65,9 @@ object ListViewsWindow : Window
 			end
 			object columnDelete : VCF::DefaultMenuItem
 				caption = 'Delete Column'
+			end
+			object columnChange : VCF::DefaultMenuItem
+				caption = 'Change Column'
 			end
 		end		
 	end

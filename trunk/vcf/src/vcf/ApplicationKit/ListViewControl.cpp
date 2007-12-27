@@ -36,15 +36,15 @@ ListViewControl::ListViewControl():
 
 	peer_->create( this );
 
-	setListModel( new DefaultListModel() );
-
-	addComponent( getViewModel() );
-
-
 	columnModel_ = new DefaultColumnModel();
 
 	addComponent( columnModel_ );
 
+
+	setListModel( new DefaultListModel() );
+
+	addComponent( getViewModel() );
+	
 	EventHandler* cmh = (EventHandler*)
 		new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onColumnItemAdded, "ListViewControl::onColumnItemAdded" );
 	columnModel_->ItemAdded += cmh;
@@ -427,7 +427,7 @@ void ListViewControl::onColumnItemDeleted( ListModelEvent* event )
 {
 	//ColumnItem* item = event->getColumnItem();
 
-	//listviewPeer_->deleteHeaderColumn( item->getIndex() );
+	listviewPeer_->deleteHeaderColumn( event->index );
 }
 
 void ListViewControl::onColumnItemChanged( ItemEvent* event )

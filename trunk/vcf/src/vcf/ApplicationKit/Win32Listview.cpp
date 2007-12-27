@@ -303,14 +303,16 @@ void Win32Listview::create( Control* owningControl )
 		ListView_SetBkColor( hwnd_, backColor );
 
 
-		ctrlModelChanged = 
+		ctrlModelChanged_ = 
 			new ClassProcedure1<Event*,Win32Listview>( this, &Win32Listview::onCtrlModelChanged, "Win32Listview::onCtrlModelChanged" );
 
-		listModelChanged = 
+		listModelChanged_ = 
 			new ClassProcedure1<Event*,Win32Listview>( this, &Win32Listview::onListModelChanged, "Win32Listview::onListModelChanged" );
 		
+		columnModelChanged_ = 
+			new ClassProcedure1<Event*,Win32Listview>( this, &Win32Listview::onColumnModelChanged, "Win32Listview::onColumnModelChanged" );
 
-		owningControl->ControlModelChanged += ctrlModelChanged;
+		owningControl->ControlModelChanged += ctrlModelChanged_;
 	}
 	else {
 		//throw exception
@@ -2496,17 +2498,32 @@ void Win32Listview::setDisplayOptions( const int32& displayOptions )
 
 void Win32Listview::onCtrlModelChanged( Event* e )
 {
- 	Model* model = peerControl_->getViewModel();
-	model->ModelChanged += listModelChanged;
+ 	Model* model = listviewControl_->getViewModel();
+	model->ModelChanged += listModelChanged_;
+
+	model =  listviewControl_->getColumnModel();
+	model->ModelChanged += columnModelChanged_;
 }
 
 void Win32Listview::onListModelChanged( Event* e )
 {
 	ListModel* lm = (ListModel*)e->getSource();
 
-	ListView_SetItemCountEx( hwnd_, lm->getCount(), LVSICF_NOINVALIDATEALL );
+	int count = ListView_GetItemCount( hwnd_ );
+	if ( count != lm->getCount() ) {
+		ListView_SetItemCountEx( hwnd_, lm->getCount(), LVSICF_NOINVALIDATEALL );
+	}
+
+	InvalidateRect( hwnd_, NULL, TRUE );
 }
 
+void Win32Listview::onColumnModelChanged( Event* e )
+{
+	HWND header = ListView_GetHeader(hwnd_);
+	if ( NULL != header ) {
+		InvalidateRect( header, NULL, TRUE );
+	}
+}
 
 /**
 $Id$

@@ -1792,7 +1792,7 @@ void Win32Context::setClippingRect( Rect* clipRect )
 
 	if ( NULL != clipRGN_ ) {
 		if ( !::DeleteObject( clipRGN_ ) ) {
-			StringUtils::traceWithArgs( Format("Error in DeleteObject( %p )\n") % clipRGN_ % GetLastError() );
+			StringUtils::trace( Format("Error in DeleteObject( %p )\n") % clipRGN_ % GetLastError() );
 		}
 	}
 
@@ -1812,7 +1812,7 @@ void Win32Context::setClippingRect( Rect* clipRect )
 
 
 	if ( ERROR == ::SelectClipRgn( dc_, clipRGN_ ) ){
-		StringUtils::traceWithArgs( Format( "Error in SelectClipRgn( %p, %p )\n" ) % dc_ % clipRGN_ % GetLastError() );
+		StringUtils::trace( Format( "Error in SelectClipRgn( %p, %p )\n" ) % dc_ % clipRGN_ % GetLastError() );
 	}
 
 	releaseHandle();

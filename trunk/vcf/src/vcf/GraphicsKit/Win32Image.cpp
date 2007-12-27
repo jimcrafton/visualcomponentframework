@@ -108,7 +108,7 @@ Win32Image::Win32Image( HICON icon ):
 			setSize( bmp.bmWidth, bmp.bmHeight );
 
 			if ( !DrawIcon( hbmp_.dc(), 0, 0, icon ) ) {
-				StringUtils::traceWithArgs( Format("DrawIcon failed, err: %d\n") % GetLastError()  );
+				StringUtils::trace( Format("DrawIcon failed, err: %d\n") % GetLastError()  );
 			}
 		}
 	}

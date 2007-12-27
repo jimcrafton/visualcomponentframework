@@ -25,7 +25,7 @@ namespace VCF  {
 *and are used to display a series of rectangular shapes that each represent
 *a column vertical column.
 */
-class APPLICATIONKIT_API ColumnItem : public Item{
+class APPLICATIONKIT_API ColumnItem : public Item {
 public:
 
 	ColumnItem(): Item(), index_(0){}

@@ -61,8 +61,17 @@ public:
 		item = (MenuItem*)mainWindow->findComponent( "columnDelete", true );
 		item->MenuItemClicked += new AppHandler( this, &ListViewsApplication::deleteColumn, "deleteColumn" );
 
-		
+		item = (MenuItem*)mainWindow->findComponent( "columnChange", true );
+		item->MenuItemClicked += new AppHandler( this, &ListViewsApplication::columnChange, "columnChange" );
 
+		item = (MenuItem*)mainWindow->findComponent( "changeItem", true );
+		item->MenuItemClicked += new AppHandler( this, &ListViewsApplication::changeItem, "changeItem" );
+
+		item = (MenuItem*)mainWindow->findComponent( "addSubItem", true );
+		item->MenuItemClicked += new AppHandler( this, &ListViewsApplication::addSubItem, "addSubItem" );
+
+		
+		
 		return result;
 	}
 
@@ -117,6 +126,23 @@ public:
 	void deleteColumn( Event* e ) {
 		ColumnModel* cm = getListView()->getColumnModel();
 		cm->removeAtIndex( cm->getCount()- 1 );
+	}
+
+	void columnChange( Event* ) {
+		ColumnModel* cm = getListView()->getColumnModel();
+		
+		cm->setAsString( 0, "New Col: " + System::createTempFileName() );
+	}
+
+	void changeItem( Event* ) {
+		ListModel* lm = getListView()->getListModel();
+		
+		lm->setAsString( 0, "New Item: " + System::createTempFileName() );
+	}
+
+	void addSubItem( Event* ) {
+		ListModel* lm = getListView()->getListModel();
+		
 	}
 };
 

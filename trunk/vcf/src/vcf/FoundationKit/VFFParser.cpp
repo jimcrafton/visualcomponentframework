@@ -95,7 +95,7 @@ void VFFParser::checkToken( const VCFChar& T )
 			break;
 
 			default: {
-				error( StringUtils::format( Format("Char Expected, instead: %c") % T ) );
+				error( Format("Char Expected, instead: %c") % T );
 			}
 			break;
 		}
@@ -126,7 +126,7 @@ void VFFParser::checkTokenSymbol( const String& s )
 {
 	bool tki = tokenSymbolIs( s );
 	if ( false == tki ) {
-		error( StringUtils::format( Format("Symbol Expected, instead: %s") % s.c_str() ) );
+		error( Format("Symbol Expected, instead: %s") % s.c_str() );
 	}
 }
 
@@ -137,7 +137,7 @@ void VFFParser::error( const String& Ident )
 
 void VFFParser::errorStr( const String& Message)
 {
-	throw RuntimeException( MAKE_ERROR_MSG_2(StringUtils::format( Format("Parse Error, message: %s") % Message )) );
+	throw RuntimeException( MAKE_ERROR_MSG_2(Format("Parse Error, message: %s") % Message ) );
 }
 
 VCFChar VFFParser::nextToken()

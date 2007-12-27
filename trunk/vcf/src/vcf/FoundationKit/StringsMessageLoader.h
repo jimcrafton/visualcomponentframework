@@ -29,7 +29,7 @@ public:
 	class FOUNDATIONKIT_API Exception : public BasicException {
 	public:
 		Exception( const String& message, int line, int col ):
-		  BasicException( message + StringUtils::format( Format("\nError occurred on line %d, column %d.") % line % col ) ) {	}
+		  BasicException( message + Format("\nError occurred on line %d, column %d.") % line % col ) {	}
 	};
 
 	StringsMessageLoader();

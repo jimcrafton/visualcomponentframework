@@ -42,41 +42,6 @@ public:
 	static void trace( const VCF::String& text );
 
 	/**
-	Similar to trace() but allows variable arguments. Uses the
-	same formatting rules as printf().
-	@param String the text to trace out after formatting. See printf()
-	for formatting rules.
-	\deprecated 
-	This is now a deprecated function and should not be used at all. Existing
-	code should be changed to make use of the traceWithArgs( const Format& ) function 
-	instead. It will be removed entirely in an upcoming release.
-	*/
-	//static void traceWithArgs( const VCF::String& text );
-
-	static void traceWithArgs( const Format& formatter );
-
-	/**
-	formats a string. Uses the same formatting rules as
-	sprintf().
-	@param String the format text to use
-	@return String the formatted string
-	\deprecated 
-	This is now a deprecated function and should not be used at all. Existing
-	code should be changed to make use of the traceWithArgs( const Format& ) function 
-	instead. It will be removed entirely in an upcoming release.
-	*/
-	//static VCF::String format( VCF::String formatText, ... );
-
-	/**
-	formats a string. Uses the same formatting rules as
-	sprintf().
-	@param Format the formatter to use
-	@return String the formatted string
-	@see Format
-	*/
-	static VCF::String format( const Format& formatter );
-
-	/**
 	trim all the occurrences of a specified character
 	* at the beginning of the string
 	 until it is met the first character from the left that is different
