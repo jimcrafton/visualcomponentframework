@@ -135,15 +135,7 @@ _property_( bool, "equalizeHeights", getEqualizeHeights, setEqualizeHeights, "" 
 _property_( bool, "averageHeights", getAverageHeights, setAverageHeights, "" );
 _property_( bool, "keepControlsWidth", getKeepControlsWidth, setKeepControlsWidth, "" );
 _class_rtti_end_
-/*
-_class_abstract_rtti_(AbstractListModel, "VCF::AbstractListModel", "VCF::ListModel", ABSTRACTLISTMODEL_CLASSID)
-_delegate_( "VCF::ModelEventHandler", AbstractListModel, VCF::ModelEvent, ModelEmptied )
-_delegate_( "VCF::ModelValidationEventHandler", AbstractListModel, VCF::ValidationEvent, ModelValidate )
-_delegate_( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, ContentsChanged )
-_delegate_( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, ItemAdded )
-_delegate_( "VCF::ListModelEventHandler", AbstractListModel, VCF::ListModelEvent, ItemDeleted )
-_class_rtti_end_
-*/
+
 
 _class_abstract_rtti_(Model, "VCF::Component", MODEL_CLASSID)
 _delegate_( ModelDelegate, ModelChanged )
@@ -261,12 +253,12 @@ _class_rtti_end_
 
 _class_abstract_rtti_(ListModel, "VCF::Model", LISTMODEL_CLASSID)
 //OBJECT_COLLECTION_PROPERTY(ListItem*, "items", ListModel::getItems, ListModel::addItem, ListModel::insertItem, ListModel::deleteItem, ListModel::deleteItemAtIndex )
-_delegate_(ListModelDelegate, ItemAdded )
-_delegate_(ListModelDelegate, ItemRemoved )
+	_delegate_(ListModelDelegate, ItemAdded )
+	_delegate_(ListModelDelegate, ItemRemoved )
+	_property_array_( String, "items", getAsString,setAsString,insert,removeAtIndex,getCount, "" )
 _class_rtti_end_
 
-_class_rtti_(SimpleListModel, "VCF::ListModel", SIMPLELISTMODEL_CLASSID)
-	_property_array_( String, "items", getAsString,setAsString,insert,removeAtIndex,getCount, "" )
+_class_rtti_(SimpleListModel, "VCF::ListModel", SIMPLELISTMODEL_CLASSID)	
 _class_rtti_end_
 
 
@@ -410,7 +402,7 @@ _class_rtti_end_
 _class_rtti_(ColumnModel, "VCF::SimpleListModel", COLUMNMODEL_CLASSID)
 _class_rtti_end_
 
-_class_rtti_(DefaultListModel, "VCF::ListModel", DEFAULTLISTMODEL_CLASSID)
+_class_rtti_(DefaultListModel, "VCF::SimpleListModel", DEFAULTLISTMODEL_CLASSID)
 _class_rtti_end_
 
 _class_rtti_(TabModel, "VCF::ListModel", TABMODEL_CLASSID )
@@ -718,7 +710,7 @@ _class_rtti_end_
 
 #define ABSTRACTPROPERTYEDITOR_CLASSID	"e7bfe231-713e-4d32-b32f-fb8eecb4cf84"
 
-_class_abstract_rtti_(AbstractPropertyEditor, "VCF::ObjectWithEvents", ABSTRACTPROPERTYEDITOR_CLASSID)
+_class_abstract_rtti_(AbstractPropertyEditor, "VCF::ObjectWithCallbacks", ABSTRACTPROPERTYEDITOR_CLASSID)
 _class_rtti_end_
 
 
