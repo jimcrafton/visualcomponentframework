@@ -62,17 +62,7 @@ public:
 
 	virtual uint32 getCount();
 
-	virtual bool supportsSubItems() {
-		return false;
-	}
-
-	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex ) {		
-		return VariantData::null();
-	}
-
-	virtual String getSubItemAsString( const uint32& index, const uint32& subItemIndex ) {
-		return String();
-	}
+	
 protected:
 	Array<VariantData> data_;
 };

@@ -15,8 +15,8 @@ where you installed the VCF.
 
 
 
-#ifndef _VCF_LISTMODEL_H__
-#	include "vcf/ApplicationKit/ListModel.h"
+#ifndef _VCF_SIMPLELISTMODEL_H__
+#	include "vcf/ApplicationKit/SimpleListModel.h"
 #endif // _VCF_LISTMODEL_H__
 
 
@@ -30,41 +30,12 @@ namespace VCF{
 /**
 \class DefaultListModel DefaultListModel.h "vcf/ApplicationKit/DefaultListModel.h"
 */
-class APPLICATIONKIT_API DefaultListModel : public ListModel, public Persistable {
+class APPLICATIONKIT_API DefaultListModel : public SimpleListModel, public Persistable {
 public:
 
 	DefaultListModel();
 
 	virtual ~DefaultListModel();
-
-
-	virtual void empty();
-
-	virtual void add( const VariantData& item );
-	virtual void insert( const uint32 & index, const VariantData& item );
-    
-	virtual void remove( const VariantData& item );
-	virtual void removeAtIndex( const uint32 & index );
-
-	virtual VariantData get( const uint32& index );	
-	virtual String getAsString( const uint32& index );
-
-	virtual uint32 getIndexOf( const VariantData& item );
-
-	virtual void set( const uint32& index, const VariantData& item, bool addMissingValues );
-	virtual void setAsString( const uint32& index, const String& item, bool addMissingValues );
-
-	virtual bool getItems( std::vector<VariantData>& items );
-	virtual Enumerator<VariantData>* getItems();
-
-	virtual bool getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items );
-	
-
-	virtual uint32 getCount();
-
-	virtual bool supportsSubItems();
-	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex ); 
-	virtual String getSubItemAsString( const uint32& index, const uint32& subItemIndex );
 
 	/**
 	*Write the object to the specified output stream
@@ -76,7 +47,6 @@ public:
 	*/
     virtual void loadFromStream( InputStream * stream );
 protected:
-	Array<VariantData> data_;
 };
 
 };

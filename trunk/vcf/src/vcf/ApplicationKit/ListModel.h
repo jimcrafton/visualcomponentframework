@@ -143,13 +143,27 @@ public:
 
 	virtual bool getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items ) = 0;	
 
-	virtual bool supportsSubItems() = 0;
-	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex ) = 0; 
-	virtual String getSubItemAsString( const uint32& index, const uint32& subItemIndex ) = 0;
 	/**
 	*returns the number of the items in the model
 	*/
 	virtual uint32 getCount() = 0;
+
+	virtual bool supportsSubItems() {
+		return false;
+	}
+
+	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex ) {		
+		return VariantData::null();
+	}
+
+	virtual String getSubItemAsString( const uint32& index, const uint32& subItemIndex ) {
+		return String();
+	}
+
+	virtual void setSubItem( const uint32& index, const uint32& subItemIndex, const VariantData& value ){}
+
+	virtual void setSubItemAsString( const uint32& index, const uint32& subItemIndex, const String& value ){}
+
 };
 
 
