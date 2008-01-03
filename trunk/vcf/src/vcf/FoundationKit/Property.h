@@ -275,7 +275,16 @@ public:
 		return getCollectionCount( source_ );
 	}
 
+	virtual uint32 getCollectionCount( const VariantData& key ) {
+		return getCollectionCount( source_, key );
+	}
+
+
 	virtual uint32 getCollectionCount( Object* source ) {
+		return 0;
+	}
+
+	virtual uint32 getCollectionCount( Object* source, const VariantData& key ) {
 		return 0;
 	}
 

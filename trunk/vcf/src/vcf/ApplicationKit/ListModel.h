@@ -152,6 +152,9 @@ public:
 		return false;
 	}
 
+	virtual void insertSubItem( const uint32& index, const uint32 & subItemIndex, const VariantData& value ) {}
+	virtual void removeSubItem( const uint32& index, const uint32 & subItemIndex ){}
+
 	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex ) {		
 		return VariantData::null();
 	}
@@ -164,6 +167,68 @@ public:
 
 	virtual void setSubItemAsString( const uint32& index, const uint32& subItemIndex, const String& value ){}
 
+	virtual uint32 getSubItemsCount( const uint32& index ) {
+		return 0;	
+	}
+
+
+
+
+	void insertSubItemAtKey( const String& key, const VariantData& value ) {
+		size_t pos = key.find(",");
+		if ( pos != String::npos ) {
+			uint32 idx = StringUtils::fromStringAsUInt( key.substr(0,pos) );
+			uint32 idx2 = StringUtils::fromStringAsUInt( key.substr(pos+1,key.size()-(pos+1)) );
+
+			insertSubItem( idx, idx2, value );
+		}
+	}
+
+	void removeSubItemAtKey( const String& key ) {
+		size_t pos = key.find(",");
+		if ( pos != String::npos ) {
+			uint32 idx = StringUtils::fromStringAsUInt( key.substr(0,pos) );
+			uint32 idx2 = StringUtils::fromStringAsUInt( key.substr(pos+1,key.size()-(pos+1)) );
+
+			removeSubItem( idx, idx2 );
+		}
+	}
+
+	VariantData getSubItemAtKey( const String& key ) {		
+		size_t pos = key.find(",");
+		if ( pos != String::npos ) {
+			uint32 idx = StringUtils::fromStringAsUInt( key.substr(0,pos) );
+			uint32 idx2 = StringUtils::fromStringAsUInt( key.substr(pos+1,key.size()-(pos+1)) );
+
+			return getSubItem( idx, idx2 );
+		}
+
+		return VariantData::null();
+	}
+
+	void setSubItemAtKey( const String& key, const VariantData& value ) {
+		size_t pos = key.find(",");
+		if ( pos != String::npos ) {
+			uint32 idx = StringUtils::fromStringAsUInt( key.substr(0,pos) );
+			uint32 idx2 = StringUtils::fromStringAsUInt( key.substr(pos+1,key.size()-(pos+1)) );
+
+			setSubItem( idx, idx2, value );
+		}
+	}
+
+	void setSubItemAsStringAtKey( const String& key, const String& value ) {
+		size_t pos = key.find(",");
+		if ( pos != String::npos ) {
+			uint32 idx = StringUtils::fromStringAsUInt( key.substr(0,pos) );
+			uint32 idx2 = StringUtils::fromStringAsUInt( key.substr(pos+1,key.size()-(pos+1)) );
+
+			setSubItemAsString( idx, idx2, value );
+		}
+	}
+
+	uint32 getSubItemsCountAtKey( const String& key ) {
+		return getSubItemsCount( StringUtils::fromStringAsUInt(key) );	
+	}
 };
 
 

@@ -37,6 +37,25 @@ public:
 
 	virtual ~DefaultListModel();
 
+	virtual bool supportsSubItems() {
+		return true;
+	}
+
+	virtual void insertSubItem( const uint32& index, const uint32 & subItemIndex, const VariantData& value );
+	
+	virtual void removeSubItem( const uint32& index, const uint32 & subItemIndex );
+	
+	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex );
+	
+	virtual String getSubItemAsString( const uint32& index, const uint32& subItemIndex );
+	
+	virtual void setSubItem( const uint32& index, const uint32& subItemIndex, const VariantData& value );
+	
+	virtual void setSubItemAsString( const uint32& index, const uint32& subItemIndex, const String& value );
+
+
+	virtual uint32 getSubItemsCount( const uint32& index );
+
 	/**
 	*Write the object to the specified output stream
 	*/
@@ -47,6 +66,11 @@ public:
 	*/
     virtual void loadFromStream( InputStream * stream );
 protected:
+	typedef std::multimap<uint64,VariantData> SubItemMap;
+	typedef std::pair<SubItemMap::iterator,SubItemMap::iterator> SubItemIteratorPair;
+	typedef SubItemMap::value_type SubItemPair;
+
+	SubItemMap subItemData_;
 };
 
 };
