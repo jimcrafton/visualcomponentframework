@@ -916,6 +916,7 @@ public:
 	typedef void (Object::*InsertFunction)( const KeyType&, const ValueType& );
 	typedef void (Object::*DeleteFunction)( const KeyType& );
 	typedef uint32 (Object::*GetSizeFunction)();
+	typedef uint32 (Object::*GetSizeForKeyFunction)( const KeyType& );
 
 	typedef ValueType (Object::*GetFunction)( const KeyType& );
 	typedef void (Object::*SetFunction)( const KeyType&, const ValueType&, bool );
@@ -931,6 +932,20 @@ public:
 		insertFunc_ = insertFunc;
 		deleteFunc_ = deleteFunc;
 		getSizeFunc_ = getSizeFunc;
+		setType( propertyType );
+	};
+
+	TypedCollectionProperty( GetFunction getFunc, SetFunction setFunc, 
+							InsertFunction insertFunc,
+							DeleteFunction deleteFunc, GetSizeForKeyFunction getSizeFunc,
+							const PropertyDescriptorType& propertyType ){
+
+		init();
+		getFunc_ = getFunc;
+		setFunc_ = setFunc;
+		insertFunc_ = insertFunc;
+		deleteFunc_ = deleteFunc;
+		getSizeForKeyFunc_ = getSizeFunc;
 		setType( propertyType );
 	};
 
@@ -953,6 +968,7 @@ public:
 		insertFunc_ = prop.insertFunc_;
 		deleteFunc_ = prop.deleteFunc_;
 		getSizeFunc_ = prop.getSizeFunc_;
+		getSizeForKeyFunc_ = prop.getSizeForKeyFunc_;
 	};
 
 	void init(){
@@ -963,6 +979,7 @@ public:
 		insertFunc_ = NULL;
 		deleteFunc_ = NULL;
 		getSizeFunc_ = NULL;
+		getSizeForKeyFunc_ = NULL;
 	};
 
 	virtual ~TypedCollectionProperty(){};
@@ -988,6 +1005,16 @@ public:
 		if ( (NULL != source) && (NULL != getSizeFunc_) ){
 			
 			result = (source->*getSizeFunc_)();
+		}
+
+		return result;
+	}
+
+	virtual uint32 getCollectionCount( Object* source, const VariantData& key ) {
+		uint32 result = 0;
+		if ( (NULL != source) && (NULL != getSizeForKeyFunc_) ){
+			
+			result = (source->*getSizeForKeyFunc_)( (KeyType)key );
 		}
 
 		return result;
@@ -1046,6 +1073,7 @@ private:
 	InsertFunction insertFunc_;
 	DeleteFunction deleteFunc_;
 	GetSizeFunction getSizeFunc_;
+	GetSizeForKeyFunction getSizeForKeyFunc_;
 };
 
 /**
@@ -3351,16 +3379,27 @@ void registerCollectionProperty( const String& className,
 								 _typename_ TypedCollectionProperty<ValueType,KeyType>::InsertFunction insertFunc,
 								 _typename_ TypedCollectionProperty<ValueType,KeyType>::DeleteFunction deleteFunc,
 								 _typename_ TypedCollectionProperty<ValueType,KeyType>::GetSizeFunction getSizeFunc,
+								 _typename_ TypedCollectionProperty<ValueType,KeyType>::GetSizeForKeyFunction getSizeForKeyFunc,
 								 const String& description ){
 
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){
 		if ( !clazz->hasProperty( propertyName ) ){
-			Property* newProperty = 
-				new TypedCollectionProperty<ValueType,KeyType>( getFunc,setFunc,
+			Property* newProperty = NULL;
+
+			if ( getSizeForKeyFunc == NULL ) {
+				newProperty = new TypedCollectionProperty<ValueType,KeyType>( getFunc,setFunc,
 														insertFunc,
 														deleteFunc, getSizeFunc,
 														getDescriptor(typeid(ValueType)) );
+			}
+			else {
+				newProperty = new TypedCollectionProperty<ValueType,KeyType>( getFunc,setFunc,
+														insertFunc,
+														deleteFunc, getSizeForKeyFunc,
+														getDescriptor(typeid(ValueType)) );
+			}
+				
 
 			newProperty->setDescription( description );
 			newProperty->setName( propertyName );

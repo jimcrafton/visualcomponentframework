@@ -14,6 +14,8 @@ object ListViewsWindow : Window
 		columnModel.items[2] = 'Column 3'
 
 		listModel.items[0] = 'Item 1'
+		listModel.items[1] = 'Item 2'
+		listModel.items[2] = 'Item 3'
 	end
 
 	object menuBar : VCF::MenuBar

@@ -283,6 +283,7 @@ you are finished defining your RTTI.
 		(VCF::TypedCollectionProperty<type,uint32>::InsertFunction)&RttiClassType::insertFunc, \
 		(VCF::TypedCollectionProperty<type,uint32>::DeleteFunction)&RttiClassType::deleteFunc, \
 		(VCF::TypedCollectionProperty<type,uint32>::GetSizeFunction)&RttiClassType::getSizeFunc, \
+		NULL,\
 		VCF::String(description) ); \
 	\
 
@@ -295,8 +296,21 @@ you are finished defining your RTTI.
 		(VCF::TypedCollectionProperty<type,key>::InsertFunction)&RttiClassType::insertFunc, \
 		(VCF::TypedCollectionProperty<type,key>::DeleteFunction)&RttiClassType::deleteFunc, \
 		(VCF::TypedCollectionProperty<type,key>::GetSizeFunction)&RttiClassType::getSizeFunc, \
+		NULL, \
 		VCF::String(description) ); \
 	\
+
+#define _property_collection2_( type, key, propName, getFunc, setFunc, insertFunc, deleteFunc, getSizeForKeyFunc, description ) \
+	VCF::registerCollectionProperty<type,key>( tmpClassName, VCF::String(propName), \
+		(VCF::TypedCollectionProperty<type,key>::GetFunction)&RttiClassType::getFunc, \
+		(VCF::TypedCollectionProperty<type,key>::SetFunction)&RttiClassType::setFunc, \
+		(VCF::TypedCollectionProperty<type,key>::InsertFunction)&RttiClassType::insertFunc, \
+		(VCF::TypedCollectionProperty<type,key>::DeleteFunction)&RttiClassType::deleteFunc, \
+		NULL, \
+		(VCF::TypedCollectionProperty<type,key>::GetSizeForKeyFunction)&RttiClassType::getSizeForKeyFunc, \
+		VCF::String(description) ); \
+	\
+
 
 
 
