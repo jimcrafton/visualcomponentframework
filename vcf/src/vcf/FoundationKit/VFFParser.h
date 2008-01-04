@@ -18,13 +18,6 @@ namespace VCF {
 
 class InputStream;
 
-#define PARSE_BUF_SIZE		4096
-
-#define TO_EOF				0
-#define TO_SYMBOL			1
-#define TO_STRING			2
-#define TO_INTEGER			3
-#define TO_FLOAT			4
 
 
 /**
@@ -79,6 +72,16 @@ component-methodname ::= id
 */
 class FOUNDATIONKIT_API VFFParser : public Object {
 public:
+
+	enum {		
+		PARSE_BUF_SIZE = 4096,
+		TO_EOF = 0,
+		TO_SYMBOL,
+		TO_STRING,
+		TO_INTEGER,
+		TO_FLOAT,
+		TO_COMMENT
+	};
 
 	VFFParser( InputStream* is );
 

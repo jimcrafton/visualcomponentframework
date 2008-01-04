@@ -43,6 +43,7 @@ enum PropertyDescriptorType{
 	pdUInt64 ,
 	pdDateTime,
 	pdDateTimeSpan,
+	pdVariant,
 	pdLast,
 };
 
