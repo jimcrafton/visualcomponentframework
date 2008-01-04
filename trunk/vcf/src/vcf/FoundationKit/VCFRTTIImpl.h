@@ -2723,6 +2723,9 @@ static PropertyDescriptorType getDescriptor( const std::type_info& typeInfo )
 	else if ( typeName.find( "bool" ) != String::npos ) {
 		result = pdBool;
 	}
+	else if ( typeName.find( "VariantData" ) != String::npos ) {
+		result = pdVariant;
+	}	
 	else if ( !typeName.empty() ) {
 		result = pdObject;
 	}

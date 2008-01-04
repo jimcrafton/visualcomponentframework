@@ -236,6 +236,18 @@ VCFChar VFFParser::nextToken()
 		this->stringPtr_ = S;
 		result = TO_STRING;
 	}
+	else if ( *P == '/' ) {
+		P++;
+		if ( *P == '/'  && (P < bufEnd_) ) {
+			while ( ((*P != '\r') && (*P != '\n'))  && (P < bufEnd_) ) {
+				P++;
+			}
+			result = TO_COMMENT;
+		}
+		else{
+			P--;
+		}
+	}
 	else if ( *P == '$' ) {
 		P++;
 		while ( ((*P >= '0') && (*P <= '9')) || ((*P >= 'A') && (*P <= 'F')) || ((*P >= 'a') && (*P <= 'f')) && (P < bufEnd_) ) {

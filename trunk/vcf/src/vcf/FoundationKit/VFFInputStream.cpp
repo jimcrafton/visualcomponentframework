@@ -74,7 +74,7 @@ void VFFInputStream::getOuterClassNameAndUUID( String& className, String& UUID, 
 
 	if ( true == parser_->tokenSymbolIs( "object" ) ) {
 		String currentSymbol;
-		while ( (TO_EOF != parser_->getToken()) && (false == parser_->tokenSymbolIs( "end" )) ) {
+		while ( (VFFParser::TO_EOF != parser_->getToken()) && (false == parser_->tokenSymbolIs( "end" )) ) {
 			currentSymbol = parser_->tokenString();
 			try {
 				// do object
@@ -113,7 +113,7 @@ void VFFInputStream::readDelegates( VCF::Component* component, VCF::Class* clazz
 {	
 	if ( parser_->tokenSymbolIs( "delegates" ) ) {	
 
-		while ( (TO_EOF != parser_->getToken()) && (!parser_->tokenSymbolIs( "end" )) ) {
+		while ( (VFFParser::TO_EOF != parser_->getToken()) && (!parser_->tokenSymbolIs( "end" )) ) {
 			String currentSymbol = parser_->tokenString();
 
 			VCFChar token = parser_->nextToken();
@@ -174,12 +174,16 @@ void VFFInputStream::processDelegateAsignment( const VCF::VCFChar& token, const 
 	}
 }
 
+
+
 void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String& currentSymbol, const VariantData& key, Class* clazz )
 {
 	switch ( token ) {
 		case '=' : {
 			VCFChar assignmentToken = parser_->nextToken();
 			String value = parser_->tokenString();
+			int valToken = parser_->getToken();
+
 			switch ( assignmentToken ) {
 				default : {
 					Property* prop = clazz->getProperty( currentSymbol );
@@ -188,6 +192,36 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 
 						if ( prop->isCollection() ) {
 
+							VariantData varVal;
+							varVal.type = prop->getType();
+							if ( prop->getType() == pdVariant ) {
+								//try and guess type from context
+								switch ( valToken ) {
+									case VFFParser::TO_STRING: {
+										varVal.type = pdString;
+									}
+									break;
+
+									case VFFParser::TO_INTEGER: {
+										varVal.type = pdInt;
+									}
+									break;
+
+									case VFFParser::TO_FLOAT: {
+										varVal.type = pdDouble;
+									}
+									break;
+
+									default : {
+										if ( value == "true" || value == "false" ) {
+											varVal.type = pdBool;
+										}
+									}
+									break;
+								}
+							}
+
+							
 							if ( (pdObject == prop->getType()) && ('@' == value[0]) ) {
 								value.erase( 0, 1 );
 								if ( !value.empty() ) {
@@ -208,7 +242,11 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 								//to the specified key, but also 
 								//fill in any blank entries, if 
 								//neccessary.
-								prop->setAtKey( key, value, true );
+
+
+								varVal.setFromString( value );
+
+								prop->setAtKey( key, &varVal, true );
 							}
 						}
 					}
@@ -348,12 +386,12 @@ VariantData getKeyFromIndex( const String& index, int token )
 	VariantData key;	
 
 	switch ( token ) {
-		case TO_STRING: {
+		case VFFParser::TO_STRING: {
 			key = index;
 		}
 		break;
 
-		case TO_INTEGER: {			
+		case VFFParser::TO_INTEGER: {			
 			try {
 				int i = StringUtils::fromStringAsInt( index );
 				key = i;
@@ -364,7 +402,7 @@ VariantData getKeyFromIndex( const String& index, int token )
 		}
 		break;
 
-		case TO_FLOAT: {
+		case VFFParser::TO_FLOAT: {
 			try {
 				double d = StringUtils::fromStringAsDouble( index );
 				key = d;
@@ -828,7 +866,7 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 
 		//read in properties, sub objects, and delegates
 
-		while ( (TO_EOF != parser_->getToken()) && (!parser_->tokenSymbolIs( "end" )) ) {
+		while ( (VFFParser::TO_EOF != parser_->getToken()) && (!parser_->tokenSymbolIs( "end" )) ) {
 			currentSymbol = parser_->tokenString();		
 
 			try {
@@ -842,7 +880,12 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 					switch ( token ) {
 						//properties
 						case '=' : case '.' : case '[' : {
-							processAsignmentTokens( token, currentSymbol, clazz );
+							try {
+								processAsignmentTokens( token, currentSymbol, clazz );
+							}
+							catch ( BasicException& ) {
+								StringUtils::trace( String("Error processing assignment for ") + currentSymbol + "\n" );
+							}
 						}
 						break;
 					}
