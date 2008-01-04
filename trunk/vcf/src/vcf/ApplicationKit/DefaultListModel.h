@@ -49,12 +49,13 @@ public:
 	
 	virtual String getSubItemAsString( const uint32& index, const uint32& subItemIndex );
 	
-	virtual void setSubItem( const uint32& index, const uint32& subItemIndex, const VariantData& value );
+	virtual void setSubItem( const uint32& index, const uint32& subItemIndex, const VariantData& value, bool addMissingValues );
 	
-	virtual void setSubItemAsString( const uint32& index, const uint32& subItemIndex, const String& value );
-
+	virtual void setSubItemAsString( const uint32& index, const uint32& subItemIndex, const String& value, bool addMissingValues );
 
 	virtual uint32 getSubItemsCount( const uint32& index );
+
+	virtual bool getSubItems( const uint32& index, std::vector<VariantData>& items );
 
 	/**
 	*Write the object to the specified output stream
@@ -66,7 +67,7 @@ public:
 	*/
     virtual void loadFromStream( InputStream * stream );
 protected:
-	typedef std::multimap<uint64,VariantData> SubItemMap;
+	typedef std::multimap<uint32,VariantData> SubItemMap;
 	typedef std::pair<SubItemMap::iterator,SubItemMap::iterator> SubItemIteratorPair;
 	typedef SubItemMap::value_type SubItemPair;
 
