@@ -25,7 +25,10 @@ namespace VCF  {
 		lmeContentsDeleted = CUSTOM_EVENT_TYPES + LIST_MODEL_CONST + 1,
 		lmeItemChanged,
 		lmeItemAdded,
-		lmeItemRemoved
+		lmeItemRemoved,
+		lmeSubItemAdded,
+		lmeSubItemRemoved,
+		lmeSubItemChanged,
 	};
 
 /**
@@ -33,17 +36,17 @@ namespace VCF  {
 */
 class APPLICATIONKIT_API ListModelEvent : public ModelEvent {
 public:
-	ListModelEvent( Object* source ):ModelEvent(source),item(NULL),index(0){}
+	ListModelEvent( Object* source ):ModelEvent(source),item(NULL),index((uint32)-1),subIndex((uint32)-1){}
 
 	ListModelEvent( Object* source, const uint32& eventType ):ModelEvent(source,eventType),
 		item(NULL){}
 
-	ListModelEvent( Object* source, VariantData* i ):ModelEvent(source),item(i),index(0){}
+	ListModelEvent( Object* source, VariantData* i ):ModelEvent(source),item(i),index((uint32)-1),subIndex((uint32)-1){}
 
 	ListModelEvent( Object* source, const uint32& eventType, VariantData* i ):ModelEvent(source,eventType),
-		item(i),index(0){}
+		item(i),index((uint32)-1),subIndex((uint32)-1){}
 
-	ListModelEvent( const ListModelEvent& rhs ):ModelEvent(rhs),item(NULL),index(0) {
+	ListModelEvent( const ListModelEvent& rhs ):ModelEvent(rhs),item(NULL),index((uint32)-1),subIndex((uint32)-1) {
 		*this = rhs;
 	}
 
@@ -54,6 +57,7 @@ public:
 		Event::operator =( rhs );
 		item = rhs.item;
 		index = rhs.index;
+		subIndex = rhs.subIndex;
 		return *this;
 	}
 
@@ -65,6 +69,7 @@ public:
 
 	VariantData* item;
 	uint32 index;
+	uint32 subIndex;
 };
 
 
@@ -163,14 +168,18 @@ public:
 		return String();
 	}
 
-	virtual void setSubItem( const uint32& index, const uint32& subItemIndex, const VariantData& value ){}
+	virtual void setSubItem( const uint32& index, const uint32& subItemIndex, const VariantData& value, bool addMissingValues ){}
 
-	virtual void setSubItemAsString( const uint32& index, const uint32& subItemIndex, const String& value ){}
+	virtual void setSubItemAsString( const uint32& index, const uint32& subItemIndex, const String& value, bool addMissingValues ){}
 
 	virtual uint32 getSubItemsCount( const uint32& index ) {
 		return 0;	
 	}
 
+	virtual bool getSubItems( const uint32& index, std::vector<VariantData>& items ){
+		items.clear();
+		return false;
+	}
 
 
 
@@ -206,23 +215,35 @@ public:
 		return VariantData::null();
 	}
 
-	void setSubItemAtKey( const String& key, const VariantData& value ) {
+	String getSubItemAsStringAtKey( const String& key ) {		
 		size_t pos = key.find(",");
 		if ( pos != String::npos ) {
 			uint32 idx = StringUtils::fromStringAsUInt( key.substr(0,pos) );
 			uint32 idx2 = StringUtils::fromStringAsUInt( key.substr(pos+1,key.size()-(pos+1)) );
 
-			setSubItem( idx, idx2, value );
+			return getSubItemAsString( idx, idx2 );
+		}
+
+		return String();
+	}
+
+	void setSubItemAtKey( const String& key, const VariantData& value, bool addMissingValues ) {
+		size_t pos = key.find(",");
+		if ( pos != String::npos ) {
+			uint32 idx = StringUtils::fromStringAsUInt( key.substr(0,pos) );
+			uint32 idx2 = StringUtils::fromStringAsUInt( key.substr(pos+1,key.size()-(pos+1)) );
+
+			setSubItem( idx, idx2, value, addMissingValues );
 		}
 	}
 
-	void setSubItemAsStringAtKey( const String& key, const String& value ) {
+	void setSubItemAsStringAtKey( const String& key, const String& value, bool addMissingValues ) {
 		size_t pos = key.find(",");
 		if ( pos != String::npos ) {
 			uint32 idx = StringUtils::fromStringAsUInt( key.substr(0,pos) );
 			uint32 idx2 = StringUtils::fromStringAsUInt( key.substr(pos+1,key.size()-(pos+1)) );
 
-			setSubItemAsString( idx, idx2, value );
+			setSubItemAsString( idx, idx2, value, addMissingValues );
 		}
 	}
 

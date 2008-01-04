@@ -252,11 +252,10 @@ _class_rtti_end_
 
 
 _class_abstract_rtti_(ListModel, "VCF::Model", LISTMODEL_CLASSID)
-//OBJECT_COLLECTION_PROPERTY(ListItem*, "items", ListModel::getItems, ListModel::addItem, ListModel::insertItem, ListModel::deleteItem, ListModel::deleteItemAtIndex )
 	_delegate_(ListModelDelegate, ItemAdded )
 	_delegate_(ListModelDelegate, ItemRemoved )
 	_property_array_( String, "items", getAsString,setAsString,insert,removeAtIndex,getCount, "" )
-	_property_collection2_( String, String, "subItems", getSubItemAtKey,setSubItemAtKey,insertSubItemAtKey,removeSubItemAtKey,getSubItemsCountAtKey, "" )
+	_property_collection2_( String, String, "subItems", getSubItemAsStringAtKey,setSubItemAsStringAtKey,insertSubItemAtKey,removeSubItemAtKey,getSubItemsCountAtKey, "" )
 _class_rtti_end_
 
 _class_rtti_(SimpleListModel, "VCF::ListModel", SIMPLELISTMODEL_CLASSID)	

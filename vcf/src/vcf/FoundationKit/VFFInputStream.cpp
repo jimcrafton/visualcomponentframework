@@ -14,7 +14,7 @@ where you installed the VCF.
 
 using namespace VCF;
 
-VariantData getKeyFromIndex( const String& index ) ;
+VariantData getKeyFromIndex( const String& index, int token ) ;
 
 static Dictionary componentConstants;
 
@@ -314,6 +314,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 		case '[' : {
 			parser_->nextToken();
 			String index = parser_->tokenString();
+			VCFChar indexToken = parser_->getToken();
 			parser_->nextToken();
 			parser_->checkToken( ']' );		
 
@@ -321,7 +322,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 			switch ( token ) {
 				//properties
 				case '=' : case '.' : case '[' : {
-					VariantData key = getKeyFromIndex( index );
+					VariantData key = getKeyFromIndex( index, indexToken );
 
 					processAsignmentTokens( token, currentSymbol, key, clazz );
 				}
@@ -342,45 +343,48 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 	}
 }
 
-VariantData getKeyFromIndex( const String& index ) 
+VariantData getKeyFromIndex( const String& index, int token ) 
 {
-	VariantData key;
-	bool failed = false;
-	String tmp = index;
-	
+	VariantData key;	
 
-	try {
-		int i = StringUtils::fromStringAsInt( index );
-		key = i;
-	}
-	catch ( BasicException& ) {
-		failed = true;
-	}
-	
-	if ( failed ) {
-		try {
-			double d = StringUtils::fromStringAsDouble( index );
-			key = d;
-			failed = false;
+	switch ( token ) {
+		case TO_STRING: {
+			key = index;
 		}
-		catch ( BasicException& ) {
-			failed = true;
+		break;
+
+		case TO_INTEGER: {			
+			try {
+				int i = StringUtils::fromStringAsInt( index );
+				key = i;
+			}
+			catch ( BasicException& ) {
+				key = index;
+			}
 		}
-	}
-	
-	if ( failed ) {
-		try {
-			bool b = StringUtils::fromStringAsBool( index );
-			key  = b;
-			failed = false;
+		break;
+
+		case TO_FLOAT: {
+			try {
+				double d = StringUtils::fromStringAsDouble( index );
+				key = d;
+			}
+			catch ( BasicException& ) {
+				key = index;
+			}
 		}
-		catch ( BasicException& ) {
-			failed = true;
+		break;
+
+		default: {
+			try {
+				bool b = StringUtils::fromStringAsBool( index );
+				key  = b;
+			}
+			catch ( BasicException& ) {
+				key = index;
+			}
 		}
-	}
-	
-	if ( failed ) {
-		key = index;
+		break;
 	}
 
 	return key;
@@ -516,6 +520,9 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 		case '[' : {
 			parser_->nextToken();
 			String index = parser_->tokenString();
+
+			VCFChar indexToken = parser_->getToken();
+
 			parser_->nextToken();
 			parser_->checkToken( ']' );		
 
@@ -527,7 +534,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 					//String s = currentSymbol;
 					//Class* cl = clazz;
 
-					VariantData key = getKeyFromIndex(index);
+					VariantData key = getKeyFromIndex(index,indexToken);
 
 					processAsignmentTokens( token, currentSymbol, key, clazz );
 				}

@@ -16,6 +16,9 @@ object ListViewsWindow : Window
 		listModel.items[0] = 'Item 1'
 		listModel.items[1] = 'Item 2'
 		listModel.items[2] = 'Item 3'
+		listModel.subItems['0,0'] = 10
+		listModel.subItems['0,1'] = 'Bar'
+		listModel.subItems['0,2'] = 'Baz'
 	end
 
 	object menuBar : VCF::MenuBar
