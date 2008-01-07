@@ -65,19 +65,30 @@ class TableItemEditor;
 */
 class APPLICATIONKIT_API TableCellEvent : public Event {
 public:
-	TableCellEvent( Object* source, const uint32& type, const CellID& cell ):
-		Event(source,type), cell_(cell) {
+	TableCellEvent( Object* source, const uint32& type, const CellID& id ):
+		Event(source,type), cell(id) {
 
 	}
 
-	CellID getCellID() {
-		return cell_;
+	CellID cell;
+};
+
+class APPLICATIONKIT_API CreateTableCellEvent : public Event {
+public:
+	CreateTableCellEvent( Object* source, const uint32& type ):
+	  Event(source,type),newCell(NULL) {
+
 	}
-	CellID cell_;
+
+	TableCellItem* newCell;
+
+	CellID cell;
 };
 
 
 typedef Delegate1<TableCellEvent*> TableCellDelegate; 
+typedef Delegate1<CreateTableCellEvent*> CreateTableCellDelegate; 
+
 
 
 /**
@@ -218,14 +229,17 @@ changed, again to fit in with the VCF's coding standards.
 */
 class APPLICATIONKIT_API TableControl : public CustomControl, public DelegatedContainer<TableControl> {
 public:
-	enum {
+
+	enum TableControlEvents {
 		TableCellClickedEvent = CUSTOM_EVENT_TYPES + 32131,
-		FixedRowClickedEvent,
-		FixedColumnClickedEvent,
-		SelectingEvent,
-		TableSelectionChangingEvent,
-		TableSelectionChangedEvent
+			FixedRowClickedEvent,
+			FixedColumnClickedEvent,
+			SelectingEvent,
+			TableSelectionChangingEvent,
+			TableSelectionChangedEvent,
+			TableCellCreatingEvent,
 	};
+
 
 	enum DrawGridLines {
 		dglNone = 0,
@@ -266,7 +280,7 @@ public:
 
 	TableModel* getTableModel();
 
-	void setTableModel( TableModel* model );
+	virtual void modelChanged( Model* oldModel, Model* newModel );
 
 	void setColumnCount( const uint32& colCount );
 
@@ -352,6 +366,9 @@ public:
 	DELEGATE(TableModelDelegate,TableCellsSelected);
 
 
+	DELEGATE(CreateTableCellDelegate,TableCellCreating);
+
+	
 	virtual void handleEvent( Event* e );
 
 	DrawGridLines getDrawGridLinesStyle() {
@@ -493,6 +510,14 @@ public:
 	Enumerator<TableCellItem*>* getSelectedCells();
 
 	CellID getCellIDForItem( TableCellItem* item );
+
+	TableCellItem* getItem( const CellID& cell );
+
+	TableCellItem* getItem( const uint32& row, const uint32& column ) {
+		return getItem( CellID(row,column) );
+	}
+
+	void setItem( const uint32& row, const uint32& column, TableCellItem* cell );
 protected:
 
 	enum MouseState{
@@ -535,7 +560,8 @@ protected:
 
 	CellID getCellIDFromPoint( const Point& pt, bool allowFixedCellCheck=true );
 
-	TableCellItem* getItem( const CellID& cell );
+	
+
 
 	CellID setFocusedCell( const CellID& cell );
 
@@ -584,7 +610,7 @@ protected:
 
 	Rect getEditCellRect( const CellID& editCellID );
 
-	TableCellItem* createCell( const uint32& row, const uint32& column );
+	virtual TableCellItem* createCell( const uint32& row, const uint32& column );
 
 	
 protected:
@@ -646,6 +672,7 @@ protected:
 	Color* defaultCellColor_;
 	Font* defaultCellFont_;
 
+	std::vector<TableCellItem*> tableItems_;
 
 };
 

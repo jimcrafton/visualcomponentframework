@@ -1811,8 +1811,8 @@ bool Control::isActive()
 
 void Control::setViewModel( Model* viewModel )
 {
-	bool modelChanged = (viewModel != getViewModel()) ? true : false;
-	
+	Model* oldModel = getViewModel();
+
 	/**
 	NOTE!!
 	Control's will assume that the model is added as a component
@@ -1822,8 +1822,11 @@ void Control::setViewModel( Model* viewModel )
 	*/
 	AbstractView::setViewModel( viewModel );
 	
-	if ( modelChanged ) {
+	modelChanged( oldModel, viewModel );
+
+	if ( oldModel != viewModel ) {
 		ControlEvent event( this, Control::CONTROL_MODELCHANGED );
+		event.oldModel = oldModel;
 		ControlModelChanged(&event);
 	}
 }

@@ -13,6 +13,8 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/DefaultTableModel.h"
 #include "vcf/ApplicationKit/TableItemEditor.h"
 #include "vcf/ApplicationKit/Containers.h"
+#include "vcf/ApplicationKit/DefaultTableCellItem.h"
+
 
 using namespace VCF;
 
@@ -50,7 +52,7 @@ TableControl::TableControl( TableModel* model ):
 {
 	setContainerDelegate( this );
 
-	setViewModel( dynamic_cast<Model*>(model) );
+	setViewModel( model );
 
 	init();
 }
@@ -424,26 +426,11 @@ void TableControl::init()
 	resizeCaptureRange_ = 5;
 
 	if ( NULL == getViewModel() ){
-		setTableModel( new DefaultTableModel() );
+		setViewModel( new DefaultTableModel() );
 		addComponent( getViewModel() );
 	}
-	CallBack* tmh =
-		new ClassProcedure1<TableModelEvent*,TableControl>( this, &TableControl::onTableModelChanged, "TableModelHandler" );
 
-	TableModel* model = getTableModel();
-
-	model->TableCellAdded += tmh;
-	model->TableCellDeleted += tmh;
-	model->TableColumnsAdded += tmh;
-	model->TableColumnsDeleted += tmh;
-	model->TableRowsAdded += tmh;
-	model->TableRowsDeleted += tmh;
 //	model->TableCellsSelected += tmh;
-
-	ModelHandler* modelHandler =
-		new ClassProcedure1<ModelEvent*,TableControl>( this, &TableControl::onTableModelEmptied, "ModelHandler" );
-
-	getViewModel()->ModelChanged.add( modelHandler );
 
 	CallBack* kh =
 		new ClassProcedure1<KeyboardEvent*,TableControl>( this, &TableControl::onEditingControlKeyPressed, TABLECONTROL_KBRD_HANDLER );
@@ -496,6 +483,47 @@ void TableControl::onTableModelEmptied( ModelEvent* e )
 	currentCell_.column = -1;
 }
 
+
+void TableControl::modelChanged( Model* oldModel, Model* newModel )
+{
+	CallBack* tmh = this->getCallback( "TableModelHandler" );
+	if ( NULL == tmh ) {
+		tmh = 
+			new ClassProcedure1<TableModelEvent*,TableControl>( this, &TableControl::onTableModelChanged, "TableModelHandler" );
+	}
+
+	CallBack* modelHandler = getCallback( "ModelHandler" );
+	if ( NULL == modelHandler ) {
+		modelHandler = new ClassProcedure1<ModelEvent*,TableControl>( this, &TableControl::onTableModelEmptied, "ModelHandler" );
+	}
+
+	
+
+	TableModel* oldTM = (TableModel*)oldModel;
+
+	if ( NULL != oldTM ) {
+		oldTM->TableCellAdded -= tmh;
+		oldTM->TableCellDeleted -= tmh;
+		oldTM->TableColumnsAdded -= tmh;
+		oldTM->TableColumnsDeleted -= tmh;
+		oldTM->TableRowsAdded -= tmh;
+		oldTM->TableRowsDeleted -= tmh;
+		oldTM->ModelChanged -= modelHandler;
+	}
+
+
+	TableModel* model = (TableModel*)newModel;
+	if ( NULL != model ) {		
+		model->TableCellAdded += tmh;
+		model->TableCellDeleted += tmh;
+		model->TableColumnsAdded += tmh;
+		model->TableColumnsDeleted += tmh;
+		model->TableRowsAdded += tmh;
+		model->TableRowsDeleted += tmh;
+		model->ModelChanged += modelHandler;
+	}
+}
+
 void TableControl::onTableModelChanged( TableModelEvent* event )
 {
 	finishEditing();
@@ -509,12 +537,12 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 		//itemHandler = new 
 	}
 	switch ( event->getType() ){
-		case COLUMNS_DELETED:{
+		case tmColumnsDeleted:{
 
 		}
 		break;
 
-		case COLUMNS_ADDED:{
+		case tmColumnsAdded:{
 			int start = event->getStartColumnThatChanged();
 			for (int col=start;col<event->getNumberOfColumnsAffected()+start;col++ ) {
 				columnWidths_.insert( columnWidths_.begin() + col,
@@ -542,15 +570,21 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 		}
 		break;
 
-		case ROWS_DELETED:{
+		case tmRowsDeleted:{
 
 		}
 		break;
 
-		case ROWS_ADDED:{
+		case tmRowsAdded:{
 			int start = event->getStartRowThatChanged();
 
 			uint32 colCount = tm->getColumnCount();
+			uint32 rowCount = tm->getRowCount();
+
+			if ( colCount > 0 && rowCount > 0 ) {
+				tableItems_.resize( rowCount * colCount, NULL );
+			}
+
 
 			for (int row=start;row<event->getNumberOfRowsAffected()+start;row++ ) {
 				rowHeights_.insert( rowHeights_.begin() + row, defaultRowHeight_ );
@@ -571,20 +605,21 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 				}
 			}
 
-		}
-		break;
-
-		case ALL_COLUMNS_CHANGED:{
 
 		}
 		break;
 
-		case ALL_ROWS_CHANGED:{
+		case tmAllColumnsChanged:{
 
 		}
 		break;
 
-		case CELL_CHANGED:{
+		case tmAllRowsChanged:{
+
+		}
+		break;
+
+		case tmCellChanged:{
 			repaint();
 		}
 		break;
@@ -614,13 +649,9 @@ void TableControl::setDefaultColumnWidth( const uint32& defaultColumnWidth )
 
 TableModel* TableControl::getTableModel()
 {
-	return dynamic_cast<TableModel*>(getViewModel());
+	return (TableModel*) getViewModel();
 }
 
-void TableControl::setTableModel( TableModel* model )
-{
-	setViewModel( dynamic_cast<Model*>(model) );
-}
 
 void TableControl::setColumnCount( const uint32& colCount )
 {
@@ -1734,14 +1765,18 @@ CellID TableControl::getCellIDFromPoint( const Point& pt, bool allowFixedCellChe
 
 TableCellItem* TableControl::getItem( const CellID& cell )
 {
-	TableModel* tm = getTableModel();
-
 	TableCellItem* result = NULL;
-/*
-	if ( (tm->getRowCount() > cell.row) && (tm->getColumnCount() > cell.column) ) {
-		result = tm->getItem( cell.row, cell.column );
+
+	TableModel* tm = this->getTableModel();
+
+	uint32 idx = cell.row * tm->getColumnCount() + cell.column;
+	result = tableItems_[ idx ];
+	if ( NULL == result ) {
+		result = this->createCell( cell.row, cell.column );
+		tableItems_[ idx ] = result;
 	}
-*/
+
+
 	return result;
 }
 
@@ -2480,7 +2515,7 @@ void TableControl::setSelectedRange( const bool& val, const uint32& startRow, co
 		}
 	}
 
-	TableModelEvent event( this, CELL_CHANGED, startRow, endRow-startRow, startColumn, endColumn-startColumn );
+	TableModelEvent event( this, tmCellChanged, startRow, endRow-startRow, startColumn, endColumn-startColumn );
 	TableCellsSelected( &event );
 }
 
@@ -2492,6 +2527,25 @@ void TableControl::setFocusedCell( const uint32& row, const uint32& column )
 TableCellItem* TableControl::createCell( const uint32& row, const uint32& column )
 {
 	TableCellItem* result = NULL;
+
+	CreateTableCellEvent e(this,TableCellCreatingEvent);
+	e.cell.row = row;
+	e.cell.column = column;
+	TableCellCreating( &e );
+
+	result = e.newCell;
+
+	if ( NULL == result ) {
+		result = new DefaultTableCellItem();
+	}
+
+
+	addComponent( result );
+	
+	result->setModel( getViewModel() );
+	result->setControl( this );
+	
+
 
 	return result;
 }
@@ -2512,6 +2566,13 @@ CellID TableControl::getCellIDForItem( TableCellItem* item )
 
 	return result;
 }
+
+
+void TableControl::setItem( const uint32& row, const uint32& column, TableCellItem* cell )
+{
+
+}
+
 /**
 $Id$
 */
