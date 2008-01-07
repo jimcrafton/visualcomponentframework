@@ -90,7 +90,7 @@ void DefaultTableModel::insertRow( const uint32& afterRow )
 	//}
 
 	tableData_.insert( tableData_.begin() + afterRow, newRow );
-	TableModelEvent event( this, ROWS_ADDED, afterRow, 1 );
+	TableModelEvent event( this, tmRowsAdded, afterRow, 1 );
 	TableRowsAdded( &event );
 }
 
@@ -122,7 +122,7 @@ void DefaultTableModel::addRows( const uint32& count )
 		*/
 	}
 
-	TableModelEvent event( this, ROWS_ADDED, start, count );
+	TableModelEvent event( this, tmRowsAdded, start, count );
 	TableRowsAdded( &event );
 
 	/*
@@ -159,7 +159,7 @@ void DefaultTableModel::addRows( const uint32& count )
 
 void DefaultTableModel::deleteRow( const uint32& row )
 {
-	TableModelEvent event( this, ROWS_DELETED, row, 1 );
+	TableModelEvent event( this, tmRowsDeleted, row, 1 );
 	TableRowsDeleted( &event );
 
 	std::vector<TTableColumn*>::iterator found = tableData_.begin() + row;
@@ -214,7 +214,7 @@ void DefaultTableModel::addColumns( const uint32& count )
 		}
 
 	}
-	TableModelEvent event( this, COLUMNS_ADDED, NO_ROW_CHANGED, 0, startCol, count );
+	TableModelEvent event( this, tmColumnsAdded, NO_ROW_CHANGED, 0, startCol, count );
 	TableColumnsAdded( &event );
 }
 
@@ -242,14 +242,14 @@ void DefaultTableModel::insertColumn( const uint32& afterColumn )
 		}
 	}
 
-	TableModelEvent event( this, COLUMNS_ADDED, NO_ROW_CHANGED, 0, afterColumn, 1 );
+	TableModelEvent event( this, tmColumnsAdded, NO_ROW_CHANGED, 0, afterColumn, 1 );
 	TableColumnsAdded( &event );
 }
 
 void DefaultTableModel::deleteColumn( const uint32& column )
 {
 
-	TableModelEvent event( this, COLUMNS_DELETED, NO_ROW_CHANGED, 0, column, 1 );
+	TableModelEvent event( this, tmColumnsDeleted, NO_ROW_CHANGED, 0, column, 1 );
 	TableColumnsDeleted( &event );
 
 	std::vector<TTableColumn*>::iterator rowIter = tableData_.begin();

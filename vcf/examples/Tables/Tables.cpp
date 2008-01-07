@@ -38,14 +38,14 @@ public:
 
 		for (int y=0;y<model->getRowCount();y++ ){
 			for ( int x=0;x<model->getColumnCount();x++ ) {
-				model->getItem( y, x )->setCaption( Format( "Cell [%d,%d]" ) % y % x );
+				table->getItem( y, x )->setCaption( Format( "Cell [%d,%d]" ) % y % x );
 				if ( y == 10 && x == 5 ) {
-					Font font = model->getItem( y, x )->getFont();
+					Font font = table->getItem( y, x )->getFont();
 					font.setName( "Times New Roman" );
 					font.setPointSize( 12.6 );
 					font.setBold( true );
-					model->getItem( y, x )->setFont( &font );
-					model->getItem( y, x )->setColor( Color::getColor("yellow") );
+					table->getItem( y, x )->setFont( &font );
+					table->getItem( y, x )->setColor( Color::getColor("yellow") );
 				}
 			}
 		}

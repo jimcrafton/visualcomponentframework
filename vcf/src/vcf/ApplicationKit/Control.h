@@ -72,23 +72,23 @@ public:
 	/**
 	*use this constructor for creating CONTROL_SIZED events
 	*/
-	ControlEvent( Object* source, const Size& newSize );
+	ControlEvent( Object* source, const Size& val );
 
 	/**
 	*use this constructor for creating CONTROL_POSITIONED events
 	*/
-	ControlEvent( Object* source, const Point& newPosition );
+	ControlEvent( Object* source, const Point& val );
 
 	/**
 	*use this constructor for creating CONTROL_PARENT_CHANGED events
 	*/
-	ControlEvent( Object* source, Control* newParent );
+	ControlEvent( Object* source, Control* val );
 
 	/**
 	*use this constructor for creating BEFORE_CONTROL_PAINTED or
 	AFTER_CONTROL_PAINTED events
 	*/
-	ControlEvent( Object* source, const uint32& eventType, GraphicsContext* gc );
+	ControlEvent( Object* source, const uint32& eventType, GraphicsContext* val );
 
 	ControlEvent( const ControlEvent& rhs );
 
@@ -97,11 +97,13 @@ public:
 	ControlEvent& operator=( const ControlEvent& rhs ) {
 		Event::operator =( rhs );
 
-		newSize_ = rhs.newSize_;
-		newPosition_ = rhs.newPosition_;
-		newParent_ = rhs.newParent_;
+		newSize = rhs.newSize;
+		newPosition = rhs.newPosition;
+		newParent = rhs.newParent;
 
-		gc_ = rhs.gc_;
+		gc = rhs.gc;
+
+		oldModel = rhs.oldModel;
 
 		return *this;
 	}
@@ -110,35 +112,13 @@ public:
 		return new ControlEvent(*this);
 	}
 
-	/**
-	*returns the new size of the component
-	*/
-	Size getNewSize(){
-		return 	newSize_;
-	};
+	
 
-	/**
-	*returns the new position of the component
-	*/
-	Point getNewPosition(){
-		return 	newPosition_;
-	};
-
-	/**
-	*returns the new parent
-	*/
-	Control* getNewParent(){
-		return 	newParent_;
-	};
-
-	GraphicsContext* getPaintGraphicsContext() {
-		return gc_;
-	}
-protected:
-	Size newSize_;
-	Point newPosition_;
-	Control* newParent_;
-	GraphicsContext* gc_;
+	Size newSize;
+	Point newPosition;
+	Control* newParent;
+	GraphicsContext* gc;
+	Model* oldModel;
 };
 
 /**
@@ -1861,6 +1841,8 @@ public:
 	Once set, the control fires a ControlModelChanged event.
 	*/
 	virtual void setViewModel( Model* viewModel );
+
+	virtual void modelChanged( Model* oldModel, Model* newModel ){};
 	
 	/**
 	*returns the current control that has captured the mouse input.
@@ -1975,40 +1957,40 @@ protected:
 
 
 inline ControlEvent::ControlEvent( Object* source ):
-Event( source ),newParent_(NULL),gc_(NULL) 
+Event( source ),newParent(NULL),gc(NULL),oldModel(NULL) 
 {
 }
 
 inline ControlEvent::ControlEvent( Object* source, const uint32& eventType ):
 	Event( source,eventType ),
-		newParent_(NULL),gc_(NULL) 
+		newParent(NULL),gc(NULL),oldModel(NULL) 
 {
 }
 
 inline ControlEvent::ControlEvent( Object* source, const Size& newSize ):
 	Event( source, Control::CONTROL_SIZED ),
-		newSize_(newSize), newParent_(NULL),gc_(NULL) 
+		newSize(newSize), newParent(NULL),gc(NULL) ,oldModel(NULL)
 {
 
 }
 
 inline ControlEvent::ControlEvent( Object* source, const Point& newPosition ):
 	Event( source, Control::CONTROL_POSITIONED ),
-	newPosition_(newPosition), newParent_(NULL),gc_(NULL) 
+	newPosition(newPosition), newParent(NULL),gc(NULL) ,oldModel(NULL)
 {
 
 }
 
 inline ControlEvent::ControlEvent( Object* source, Control* newParent ):
 	Event( source, Control::CONTROL_PARENT_CHANGED ),
-	newParent_(newParent),gc_(NULL) 
+	newParent(newParent),gc(NULL) ,oldModel(NULL)
 {
 
 }
 
 inline ControlEvent::ControlEvent( Object* source, const uint32& eventType, GraphicsContext* gc ):
 	Event( source, eventType ),
-	newParent_(NULL),gc_(gc) 
+	newParent(NULL),gc(gc),oldModel(NULL) 
 {
 
 }

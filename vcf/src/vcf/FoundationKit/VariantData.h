@@ -744,6 +744,17 @@ public:
 	*/
 	void setFromString( const String& value );
 
+
+	bool isReal() const {
+		return type == pdFloat || type == pdDouble;
+	}
+
+	bool isInteger() const {
+		return type == pdInt || pdUInt || 
+				type == pdLong || type == pdULong || 
+				type == pdShort || type == pdUShort ||
+				type == pdInt64 || type == pdUInt64;
+	}
 protected:
 	void setValue( const VariantData& value );
 

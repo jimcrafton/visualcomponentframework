@@ -128,6 +128,15 @@ public:
 	DELEGATE(ListModelDelegate,ItemRemoved)
 
 	
+	virtual VariantData getValue( const VariantData& key=VariantData::null() );
+
+	virtual String getValueAsString( const VariantData& key=VariantData::null() );
+
+	virtual void setValue( const VariantData& value, const VariantData& key=VariantData::null() );
+
+	virtual void setValueAsString( const String& value, const VariantData& key=VariantData::null() );
+
+
 
 	virtual void add( const VariantData& item ) = 0;
 	virtual void insert( const uint32 & index, const VariantData& item ) = 0;
@@ -264,6 +273,39 @@ inline bool ListModelEvent::isValidIndex() const
 	return index != ListModel::InvalidIndex;
 }
 
+
+
+inline VariantData ListModel::getValue( const VariantData& key )
+{
+	if ( key.isInteger() ) {
+		return get( key );
+	}
+
+	return Model::getValue();
+}
+
+inline String ListModel::getValueAsString( const VariantData& key )
+{
+	if ( key.isInteger() ) {
+		return getAsString( key );
+	}
+
+	return Model::getValueAsString();
+}
+
+inline void ListModel::setValue( const VariantData& value, const VariantData& key )
+{
+	if ( key.isInteger() ) {
+		set( key, value, false );
+	}
+}
+
+inline void ListModel::setValueAsString( const String& value, const VariantData& key )
+{
+	if ( key.isInteger() ) {
+		setAsString( key, value, false );
+	}
+}
 
 
 };
