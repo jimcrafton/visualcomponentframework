@@ -153,8 +153,8 @@ void TableControl::paint( GraphicsContext * context )
 				rect.left_ = rect.right_+1;
 				rect.right_ = rect.left_ + colWidth-1;
 
-				///////cellItem = tm->getItem( row, col );
-				///////cellItem->paint( context, &rect );
+				cellItem = getItem( row, col );
+				cellItem->paint( context, &rect );
 			}
 		}
 		
@@ -202,8 +202,8 @@ void TableControl::paint( GraphicsContext * context )
 					continue;         // Reached cliprect yet?
 				}
 
-				///////cellItem = tm->getItem( row, col );
-				///////cellItem->paint( context, &rect );
+				cellItem = getItem( row, col );
+				cellItem->paint( context, &rect );
 			}
 		}
 
@@ -234,11 +234,10 @@ void TableControl::paint( GraphicsContext * context )
 			}
 
 			rect.right_ = fixedColWidth-1;
-/*
-			TableRowItemEnumerator* rowItemEnum = tm->getRowItemEnumerator( row );
+
 			col = 0;
-			while ( rowItemEnum->hasMoreElements() && (col <= maxVisibleCol) ){
-				cellItem = rowItemEnum->nextElement();
+			while ( col <= maxVisibleCol ){
+				cellItem = getItem( row, col );
 
 				if ( col >= minVisibleCol ) {
 					colWidth = columnWidths_[col];
@@ -262,7 +261,6 @@ void TableControl::paint( GraphicsContext * context )
 
 				col ++;
 			}
-*/
 		}
 
 		context->restoreState( gcs );
@@ -304,11 +302,11 @@ void TableControl::paint( GraphicsContext * context )
 
 			rect.right_ = fixedColWidth-1;
 
-/*			TableRowItemEnumerator* rowItemEnum = tm->getRowItemEnumerator( row );
+
 
 			col = 0;
-			while ( rowItemEnum->hasMoreElements() && (col <= maxVisibleCol) ) {
-				cellItem = rowItemEnum->nextElement();
+			while ( col <= maxVisibleCol ) {
+				cellItem = getItem( row, col );
 
 				if ( col >= minVisibleCol ) {
 					colWidth = columnWidths_[col];
@@ -336,7 +334,6 @@ void TableControl::paint( GraphicsContext * context )
 				}
 				col ++;
 			}
-			*/
 		}
 
 		context->restoreState( gcs );
@@ -459,6 +456,10 @@ void TableControl::onTableModelEmptied( ModelEvent* e )
 	//AFTER the table model's items have been cleared so the
 	//model is now empty at this point
 
+	if ( e->getType() != tmAllItemsDeleted ) {
+		return;
+	}
+
 	currentItemEditor_ = NULL;
 
 	finishEditing();
@@ -543,8 +544,8 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 		break;
 
 		case tmColumnsAdded:{
-			int start = event->getStartColumnThatChanged();
-			for (int col=start;col<event->getNumberOfColumnsAffected()+start;col++ ) {
+			int start = event->startColumn;
+			for (int col=start;col<event->numberOfColumnsAffected+start;col++ ) {
 				columnWidths_.insert( columnWidths_.begin() + col,
 				                         defaultColumnWidth_ );
 			}
@@ -553,9 +554,9 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 			uint32 rowCount = tm->getRowCount();
 			for ( uint32 row=0;row<rowCount;row++){
 
-				for (int col=start;col<event->getNumberOfColumnsAffected()+start;col++ ) {
+				for (int col=start;col<event->numberOfColumnsAffected+start;col++ ) {
 
-					TableCellItem* item = NULL;//tm->getItem( row, col );
+					TableCellItem* item = getItem( row, col );
 					if ( NULL != item ){
 						if ( NULL != itemHandler ) {
 							item->ItemSelected += itemHandler;
@@ -576,7 +577,7 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 		break;
 
 		case tmRowsAdded:{
-			int start = event->getStartRowThatChanged();
+			int start = event->startRow;
 
 			uint32 colCount = tm->getColumnCount();
 			uint32 rowCount = tm->getRowCount();
@@ -586,13 +587,12 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 			}
 
 
-			for (int row=start;row<event->getNumberOfRowsAffected()+start;row++ ) {
+			for (int row=start;row<event->numberOfRowsAffected+start;row++ ) {
 				rowHeights_.insert( rowHeights_.begin() + row, defaultRowHeight_ );
 
 				for (uint32 col=0;col<colCount;col++ ) {
-
-					/*
-					TableCellItem* item = tm->getItem( row, col );
+					
+					TableCellItem* item = getItem( row, col );
 					if ( NULL != item ){
 						if ( NULL != itemHandler ) {
 							item->ItemSelected += itemHandler;
@@ -601,7 +601,6 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 						item->setColor( getDefaultTableCellColor() );
 						item->setFont( getDefaultTableCellFont() );
 					}
-					*/
 				}
 			}
 
@@ -1341,14 +1340,13 @@ void TableControl::mouseClick(  MouseEvent* event )
 
 		*/
 
-		/*
-		TableCellItem* item = tm->getItem( cell.row, cell.column );
+		
+		TableCellItem* item = getItem( cell.row, cell.column );
         if ( cell.row >= tm->getFixedRowsCount() && clickCell_.isValid() &&
             cell.column >= tm->getFixedColumnsCount() )  {
 
 			editCell( cell, pointClickedRel );
         }
-		*/
     }
 }
 
@@ -1365,9 +1363,7 @@ void TableControl::editCell( const CellID& cell, const Point& pt )
 		return;
 	}
 
-/*	TableCellItem* item = tm->getItem( cell.row, cell.column );
-
-
+	TableCellItem* item = getItem( cell.row, cell.column );
 
 	if ( item->isEditable() ) {	
 
@@ -1405,8 +1401,6 @@ void TableControl::editCell( const CellID& cell, const Point& pt )
 		}
 
 	}
-	*/
-
 }
 
 Rect TableControl::getEditCellRect( const CellID& editCellID )
@@ -1566,6 +1560,9 @@ void TableControl::onFinishEditing( Event* e )
 
 	Control* editingControl = (Control*)e->getSource();
 	TableItemEditor* editor = fe->editor_;
+
+	VCF_ASSERT( NULL != editor );
+
 	if ( NULL != editingControl ){
 		//StringUtils::traceWithArgs( Format("TableControl::onFinishEditing(), editor[%s]@ %s\n") %
 		//							editor->getClassName() % editor->toString() );
@@ -1575,7 +1572,9 @@ void TableControl::onFinishEditing( Event* e )
 		repaint();
 	}
 
-	editor->free();
+	if ( NULL != editor ) {
+		editor->free();
+	}
 }
 
 void TableControl::cancelEditing()
@@ -2030,10 +2029,8 @@ Point TableControl::getClickedPoint( const CellID& cell, const Point& pt )
 
 void TableControl::clearSelectionRange()
 {
-	previouslySelectedCellMap_.clear();
-
-	TableModel* tm = getTableModel();
-//	tm->clearSelection();
+	previouslySelectedCellMap_.clear();	
+	clearSelection();
 }
 
 void TableControl::doSelection( const CellID& cell )
@@ -2346,12 +2343,12 @@ bool TableControl::autoSizeColumn( int column, AutoSizeOption autoSizeStyle/*=as
 	double width = 0;
 
 	for (int row = startRow; row <= endRow; row++)  {
-//        TableCellItem* cell = tm->getItem( row, column );
-//		width = cell->getTextCellWidth( ctx );
+        TableCellItem* cell = getItem( row, column );
+		width = cell->getTextCellWidth( ctx );
 
-  //      if ( width > columnWidth ) {
-    //        columnWidth = width;
-	//	}
+		if ( width > columnWidth ) {
+            columnWidth = width;
+		}
     }
 
 
@@ -2387,13 +2384,13 @@ bool TableControl::autoSizeRow( int row, bool resetScroll /*=true*/)
 	double height = 0;
 
     for (int col = 0; col < columnCount; col++) {
-//		TableCellItem* cell = tm->getItem( row, col );
+		TableCellItem* cell = getItem( row, col );
 
-  //      height = cell->getTextCellHeight( ctx );
-//
-  //      if ( height > rowHeight) {
-    //        rowHeight = height;
-	//	}
+        height = cell->getTextCellHeight( ctx );
+
+        if ( height > rowHeight) {
+            rowHeight = height;
+		}
     }
 
     rowHeights_[row] = rowHeight;
@@ -2425,7 +2422,7 @@ void TableControl::keyDown( KeyboardEvent* e )
 				clickCell_.row  = 0;
 			}
 
-//			tm->clearSelection();
+			clearSelection();
 
 			if ( clickCell_.isValid() && (clickCell_.row < tm->getRowCount()) ) {
 				selectionStartCell_ = clickCell_;
@@ -2445,7 +2442,7 @@ void TableControl::keyDown( KeyboardEvent* e )
 				clickCell_.row  = tm->getRowCount()-1;
 			}
 
-//			tm->clearSelection();
+			clearSelection();
 
 			if ( clickCell_.isValid() ) {
 				selectionStartCell_ = clickCell_;
@@ -2497,7 +2494,7 @@ void TableControl::setSelectedRange( const bool& val, const uint32& startRow, co
 
 	for (int i=startRow;i<=endRow;i++ ) {
 		for (int j=startColumn;j<=endColumn;j++ ) {
-			TableCellItem* selectedCell;// = getItem( i, j );
+			TableCellItem* selectedCell = getItem( i, j );
 
 			selectedCell->setSelected( val );
 
@@ -2528,15 +2525,18 @@ TableCellItem* TableControl::createCell( const uint32& row, const uint32& column
 {
 	TableCellItem* result = NULL;
 
-	CreateTableCellEvent e(this,TableCellCreatingEvent);
-	e.cell.row = row;
-	e.cell.column = column;
-	TableCellCreating( &e );
-
-	result = e.newCell;
+	
+	result = TableCellCreating( row, column );
 
 	if ( NULL == result ) {
 		result = new DefaultTableCellItem();
+	}
+	else {
+		for (uint32 i=1;i<TableCellCreating.results.size();i++ ) {
+			if ( NULL != TableCellCreating.results[i] ) {
+				TableCellCreating.results[i]->free();
+			}
+		}
 	}
 
 
@@ -2544,6 +2544,8 @@ TableCellItem* TableControl::createCell( const uint32& row, const uint32& column
 	
 	result->setModel( getViewModel() );
 	result->setControl( this );
+
+	result->setID( CellID(row, column) );
 	
 
 

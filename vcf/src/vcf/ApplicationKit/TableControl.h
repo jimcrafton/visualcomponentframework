@@ -73,21 +73,11 @@ public:
 	CellID cell;
 };
 
-class APPLICATIONKIT_API CreateTableCellEvent : public Event {
-public:
-	CreateTableCellEvent( Object* source, const uint32& type ):
-	  Event(source,type),newCell(NULL) {
 
-	}
-
-	TableCellItem* newCell;
-
-	CellID cell;
-};
 
 
 typedef Delegate1<TableCellEvent*> TableCellDelegate; 
-typedef Delegate1<CreateTableCellEvent*> CreateTableCellDelegate; 
+typedef Delegate2R<TableCellItem*,uint32,uint32> CreateTableCellDelegate; 
 
 
 

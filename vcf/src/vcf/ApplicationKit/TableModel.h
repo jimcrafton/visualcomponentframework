@@ -49,7 +49,6 @@ public:
 		return (row != rhs.row) || (column != rhs.column);
 	}
 
-public:
 	int row;
 	int column;
 };
@@ -75,68 +74,50 @@ enum TableModelEvents {
 /**
 \class TableModelEvent TableModel.h "vcf/ApplicationKit/TableModel.h"
 */
-class APPLICATIONKIT_API TableModelEvent : public Event {
+class APPLICATIONKIT_API TableModelEvent : public ModelEvent {
 public:
 
 	TableModelEvent( Object* source, const uint32& eventType,
-		             const int& startRow =-1, const int& rowCount=0,
-					 const int& startColumn =-1, const int& columnCount =0):
-		Event(source,eventType),
-		startRow_(startRow),
-		numberOfRowsAffected_(rowCount),
-		startColumn_(startColumn),
-		numberOfColumnsAffected_(columnCount){
+		             const int& startRowVal =-1, const int& rowCountVal=0,
+					 const int& startColumnVal =-1, const int& columnCountVal =0):
+		ModelEvent(source,eventType),
+		startRow(startRowVal),
+		numberOfRowsAffected(rowCountVal),
+		startColumn(startColumnVal),
+		numberOfColumnsAffected(columnCountVal){
 
 	}
 
-	TableModelEvent( const TableModelEvent& rhs ):Event(rhs) {
+	TableModelEvent( const TableModelEvent& rhs ):ModelEvent(rhs) {
 		*this = rhs;
 	}
 	virtual ~TableModelEvent(){};
 
 
 	TableModelEvent& operator=( const TableModelEvent& rhs ) {
-		Event::operator =( rhs );
-		startRow_ = rhs.startRow_;
-		numberOfRowsAffected_ = rhs.numberOfRowsAffected_;
+		ModelEvent::operator =( rhs );
+		startRow = rhs.startRow;
+		numberOfRowsAffected = rhs.numberOfRowsAffected;
 
-		startColumn_ = rhs.startColumn_;
-		numberOfColumnsAffected_ = rhs.numberOfColumnsAffected_;
+		startColumn = rhs.startColumn;
+		numberOfColumnsAffected = rhs.numberOfColumnsAffected;
 
 		return *this;
 	}
 
 
-	/**
-	*get the row that changed. a return of -1 means no rows
-	*changed for this event
-	*/
-	int getStartRowThatChanged() {
-		return startRow_;
-	}
-
-	int getNumberOfRowsAffected() {
-		return numberOfRowsAffected_;
-	}
-
-	int getStartColumnThatChanged() {
-		return startColumn_;
-	}
-
-	int getNumberOfColumnsAffected() {
-		return numberOfColumnsAffected_;
-	}
+	
 
 
 
 	virtual Object* clone( bool deep=false ) {
 		return new TableModelEvent(*this);
 	}
-private:
-	int startRow_;
-	int numberOfRowsAffected_;
-	int startColumn_;
-	int numberOfColumnsAffected_;
+
+	int startRow;
+	int numberOfRowsAffected;
+	int startColumn;
+	int numberOfColumnsAffected;
 };
 
 
@@ -229,30 +210,15 @@ public:
 	virtual VariantData getValue( const uint32& row, const uint32& column ) = 0;
 	virtual String getValueAsString( const uint32& row, const uint32& column ) = 0;
 
+	virtual void setValue( const uint32& row, const uint32& column, const VariantData& value ) = 0;
+	virtual void setValueAsString( const uint32& row, const uint32& column, const String& value ) = 0;
+
 	virtual uint32 getRowCount() = 0;
 
 	virtual uint32 getColumnCount() = 0;
 
 	virtual bool getRowValues( const uint32& row, std::vector<VariantData>& values ) = 0;
 	virtual bool getColumnValues( const uint32& col, std::vector<VariantData>& values ) = 0;
-
-	/**
-	*this is overriden to provide TableModels derivations
-	*control over what kind of item get created
-	*at any cell in the table.
-	*@param uint32 - the row being created
-	*/
-	//virtual TableCellItem* createCell( const uint32& row, const uint32& column ) = 0;
-
-	//virtual TableCellItem* setSelectedCell( const bool& val, const uint32& row, const uint32& column ) = 0;
-
-	//virtual void setFocusedCell( const uint32& row, const uint32& column ) = 0;
-
-	//virtual TableCellItem* getFocusedCell() = 0;
-
-
-	//virtual void setSelectedRange( const bool& val, const uint32& startRow, const uint32& startColumn,
-	//								const uint32& endRow, const uint32& endColumn ) = 0;
 
 	virtual void setFixedColumnsCount( const uint32& count ) = 0;
 
@@ -261,13 +227,6 @@ public:
 	virtual uint32 getFixedColumnsCount() = 0;
 
 	virtual uint32 getFixedRowsCount() = 0;
-
-	//virtual void clearSelection() = 0;
-
-	//virtual Enumerator<TableCellItem*>* getSelectedCells() = 0;
-
-	//virtual CellID getCellIDForItem( TableCellItem* item ) = 0;
-
 
 };
 
