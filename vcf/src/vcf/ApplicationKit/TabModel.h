@@ -15,8 +15,8 @@ where you installed the VCF.
 
 
 
-#ifndef _VCF_LISTMODEL_H__
-#	include "vcf/ApplicationKit/ListModel.h"
+#ifndef _VCF_SIMPLELISTMODEL_H__
+#	include "vcf/ApplicationKit/SimpleListModel.h"
 #endif // _VCF_LISTMODEL_H__
 
 
@@ -116,7 +116,7 @@ use the same control with either style.
 	@del TabModel::TabPageSelected
 */
 
-class APPLICATIONKIT_API TabModel : public ListModel  {
+class APPLICATIONKIT_API TabModel : public SimpleListModel  {
 public:
 
 	TabModel();
@@ -134,9 +134,11 @@ public:
 	@eventtype TAB_MODEL_EVENT_ITEM_SELECTED
 	@see setSelectedPage()
 	*/
-	DELEGATE(TabModelDelegate,TabPageSelected)
+	DELEGATE(TabModelDelegate,TabPageSelected)	
 
-	virtual void empty();
+	virtual void empty() {
+		SimpleListModel::empty();
+	}
 
 	virtual bool supportsSubItems() {
 		return false;
@@ -148,40 +150,9 @@ public:
 		return selectedIndex_;
 	}
 
-
-	virtual void add( const VariantData& item );
-	virtual void insert( const uint32 & index, const VariantData& item );
-    
-	virtual void remove( const VariantData& item );
-	virtual void removeAtIndex( const uint32& index );
-
-	virtual VariantData get( const uint32& index );	
-	virtual String getAsString( const uint32& index );
-
-	virtual uint32 getIndexOf( const VariantData& item );
-
-	virtual void set( const uint32& index, const VariantData& item, bool addMissingValues );
-	virtual void setAsString( const uint32& index, const String& item, bool addMissingValues );
-
-	virtual bool getItems( std::vector<VariantData>& items );
-	virtual Enumerator<VariantData>* getItems();
-
-	virtual bool getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items );	
-
-	virtual uint32 getCount();
-
 protected:
-	Array<VariantData> data_;
 	uint32 selectedIndex_;
-private:
 	
-	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex ) {
-		return VariantData::null();
-	} 
-
-	virtual String getSubItemAsString( const uint32& index, const uint32& subItemIndex ){
-		return "";	
-	}
 };
 
 };

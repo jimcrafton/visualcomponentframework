@@ -1151,10 +1151,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTabModel.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTabModel.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTabPage.cpp
 # End Source File
 # Begin Source File
