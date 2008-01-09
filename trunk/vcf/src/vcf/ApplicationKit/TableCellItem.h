@@ -34,8 +34,7 @@ class APPLICATIONKIT_API TableCellItem : public Item {
 public:
 
 	enum TableCellItemState {
-		tcsNone = 0,
-		tisSelected = 0x0002,
+		tcsNone = 0,		
 		tisReadonly = 0x0008,
 		tcsFixed = 0x0010,
 		tcsFocused = 0x0001,
@@ -60,9 +59,7 @@ public:
 
 	@see isReadonly()
 	*/
-	virtual TableItemEditor* createItemEditor() = 0;
-
-	virtual bool isSelected() = 0;
+	virtual TableItemEditor* createItemEditor() = 0;	
 
 	/**
 	Identifies if this item is in a readonly state, or if 
@@ -77,8 +74,6 @@ public:
 	virtual bool isDropHighlighted() = 0;
 
 	virtual bool isEditable() = 0;
-
-	virtual void setSelected( const bool& val ) = 0;
 
 	virtual void setReadonly( const bool& val ) = 0;
 

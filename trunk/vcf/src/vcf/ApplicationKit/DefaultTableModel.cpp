@@ -274,27 +274,12 @@ void DefaultTableModel::deleteColumn( const uint32& column )
 bool DefaultTableModel::isCellEditable( const uint32& row, const uint32& column )
 {
 	bool result = true;
-	/*
-	TableCellItem* item = getItem( row, column );
-	if ( NULL != item ){
-		result = item->isEditable();
-	}
-	*/
 
 	if ( row <= fixedRowsCount_ && column <= fixedColumnsCount_ ) {
 		result = false;
 	}
 	return result;
 }
-/*
-TableCellItem* DefaultTableModel::getItem( const uint32& row, const uint32& column )
-{
-	TableCellItem* result = NULL;
-	TTableColumn* rows = tableData_[row];
-	result = (*rows)[column];
-	return result;
-}
-*/
 
 VariantData DefaultTableModel::getValue( const uint32& row, const uint32& column )
 {
@@ -370,73 +355,6 @@ bool DefaultTableModel::getColumnValues( const uint32& col, std::vector<VariantD
 	}
 	return !values.empty();
 }
-/*
-
-TableCellItem* DefaultTableModel::createCell( const uint32& row, const uint32& column )
-{
-	TableCellItem* result = new DefaultTableCellItem();
-	result->setModel( this );
-	return result;
-}
-
-TableCellItem* DefaultTableModel::setSelectedCell( const bool& val, const uint32& row, const uint32& column )
-{
-	VCF_ASSERT( (row<rowCount_) && (column<columnCount_) );
-
-	TableCellItem* selectedCell = getItem( row, column );
-
-	selectedCell->setSelected( val );
-
-	uint32 key = (row << 16) | column;
-
-	if ( true == val ) {
-		selectionMap_[key] = selectedCell;
-	}
-	else {
-		std::map<uint32,TableCellItem*>::iterator found = selectionMap_.find( key );
-		if ( found != selectionMap_.end() ) {
-			selectionMap_.erase( found );
-		}
-	}
-
-	TableModelEvent event( this, CELL_CHANGED, row, 1, column, 1 );
-	TableCellsSelected( &event );
-
-	return selectedCell;
-}
-
-
-
-void DefaultTableModel::setSelectedRange( const bool& val, const uint32& startRow, const uint32& startColumn,
-									const uint32& endRow, const uint32& endColumn )
-{
-	this->clearSelection();
-
-	for (int i=startRow;i<=endRow;i++ ) {
-		for (int j=startColumn;j<=endColumn;j++ ) {
-			TableCellItem* selectedCell = getItem( i, j );
-
-			selectedCell->setSelected( val );
-
-			uint32 key = (i << 16) | j;
-
-			if ( true == val ) {
-				selectionMap_[key] = selectedCell;
-			}
-			else {
-				std::map<uint32,TableCellItem*>::iterator found = selectionMap_.find( key );
-				if ( found != selectionMap_.end() ) {
-					selectionMap_.erase( found );
-				}
-			}
-		}
-	}
-
-	TableModelEvent event( this, CELL_CHANGED, startRow, endRow-startRow, startColumn, endColumn-startColumn );
-	TableCellsSelected( &event );
-	//TableCellsSelected
-}
-*/
 
 void DefaultTableModel::setFixedColumnsCount( const uint32& count )
 {
@@ -507,67 +425,7 @@ uint32 DefaultTableModel::getFixedRowsCount()
 {
 	return fixedRowsCount_;
 }
-/*
-void DefaultTableModel::clearSelection()
-{
-	for ( int i=0;i<rowCount_;i++ ) {
-		for ( int j=0;j<columnCount_;j++ ) {
-			getItem( i, j )->setSelected( false );
-		}
-	}
 
-	selectionMap_.clear();
-
-
-	TableModelEvent event( this, CELL_CHANGED );
-	TableCellsSelected( &event );
-}
-
-CellID DefaultTableModel::getCellIDForItem( TableCellItem* item )
-{
-	CellID result;
-
-	std::vector<TTableColumn*>::iterator rowIt = tableData_.begin();
-	while ( rowIt != tableData_.end() ) {
-		TTableColumn* columns = *rowIt;
-
-		TTableColumn::iterator found = std::find( columns->begin(), columns->end(), item );
-		if ( found != columns->end() ) {
-
-			result.column = found - columns->begin();
-
-			result.row = rowIt - tableData_.begin();
-
-			break;
-		}
-
-		rowIt ++;
-	}
-
-	return result;
-}
-
-
-void DefaultTableModel::setFocusedCell( const uint32& row, const uint32& column )
-{
-	if ( NULL != focusedCell_ ) {
-		focusedCell_->setFocused( false );
-	}
-
-	CellID cell = CellID(row,column);
-
-	if ( cell.isValid() ) {
-		focusedCell_ = getItem( row, column );
-
-		if ( NULL != focusedCell_ ) {
-			focusedCell_->setFocused( true );
-		}
-	}
-	else {
-		focusedCell_ = NULL;
-	}
-}
-*/
 
 /**
 $Id$

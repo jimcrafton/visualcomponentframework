@@ -30,12 +30,17 @@ typedef Enumerator<TableCellItem*> TableRowItemEnumerator;
 */
 class APPLICATIONKIT_API CellID {
 public:
-	CellID():row(-1), column(-1){}
 
-	CellID( int r, int c ):row(r), column(c){}
+	enum {
+		Invalid = (uint32)-1
+	};
+
+	CellID():row(CellID::Invalid), column(CellID::Invalid){}
+
+	CellID( uint32 r, uint32 c ):row(r), column(c){}
 
 	bool isValid() const {
-		return ((row>=0) && (column>=0)) ? true : false;
+		return ((row!=CellID::Invalid) && (column!=CellID::Invalid)) ? true : false;
 	}
 	operator bool () const {
 		return isValid();
@@ -49,8 +54,8 @@ public:
 		return (row != rhs.row) || (column != rhs.column);
 	}
 
-	int row;
-	int column;
+	uint32 row;
+	uint32 column;
 };
 
 
