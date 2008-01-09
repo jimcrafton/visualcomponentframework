@@ -405,7 +405,7 @@ _class_rtti_end_
 _class_rtti_(DefaultListModel, "VCF::SimpleListModel", DEFAULTLISTMODEL_CLASSID)
 _class_rtti_end_
 
-_class_rtti_(TabModel, "VCF::ListModel", TABMODEL_CLASSID )
+_class_rtti_(TabModel, "VCF::SimpleListModel", TABMODEL_CLASSID )
 	_delegate_(TabModelDelegate, TabPageSelected )
 _class_rtti_end_
 
