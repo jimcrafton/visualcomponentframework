@@ -23,11 +23,18 @@ static int defaultTableCellItemCount = 0;
 
 
 DefaultTableCellItem::DefaultTableCellItem():
-	tableModel_(NULL),
 	color_(NULL),
 	font_(NULL)
 {
-	init();
+	tag_ = -1;
+	imageIndex_ = 0;
+	data_ = NULL;
+	model_ = NULL;
+	owningControl_ = NULL;
+	itemState_ = 0;
+	color_ = NULL;
+	font_ = NULL;
+
 	defaultTableCellItemCount ++;
 }
 
@@ -41,19 +48,6 @@ DefaultTableCellItem::~DefaultTableCellItem()
 		DefaultTableCellItem::tableCellsColorMap.clear();
 		DefaultTableCellItem::tableCellsFontMap.clear();
 	}
-}
-
-void DefaultTableCellItem::init()
-{
-	tag_ = -1;
-	imageIndex_ = 0;
-	data_ = NULL;
-	model_ = NULL;
-	owningControl_ = NULL;
-	itemState_ = 0;
-	color_ = NULL;
-	font_ = NULL;
-	//basicItemEditor_ = new BasicTableItemEditor( this );
 }
 
 bool DefaultTableCellItem::containsPoint( Point * pt )
@@ -179,7 +173,7 @@ void DefaultTableCellItem::paint( GraphicsContext* context, Rect* paintRect )
 		options |= GraphicsContext::tdoLeftAlign;
 	}
 
-	context->textBoundedBy( &textRect, caption_, options );	
+	context->textBoundedBy( &textRect, getCaption(), options );	
 }
 
 void DefaultTableCellItem::setSelected( const bool& val )
@@ -281,17 +275,21 @@ bool DefaultTableCellItem::isItemEditable(){
 
 String DefaultTableCellItem::getCaption()
 {
+	
 	Control* control = getControl();
+	TableModel* tm = (TableModel*) getModel();
 	if ( getUseLocaleStrings() && (NULL != control) && (control->getUseLocaleStrings()) ) {
-		return System::getCurrentThreadLocale()->translate( caption_ );
+		return System::getCurrentThreadLocale()->translate( tm->getValueAsString( id_.row, id_.column ) );
 	}
-
-	return caption_;
+	return tm->getValueAsString( id_.row, id_.column );
 }
 
 void DefaultTableCellItem::setCaption( const String& caption )
 {
-	caption_ = caption;
+	TableModel* tm = (TableModel*) getModel();
+
+	tm->setValueAsString( id_.row, id_.column, caption );
+	 
 	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
 	ItemChanged( &event );
 }
@@ -306,13 +304,6 @@ void DefaultTableCellItem::setBounds( Rect* bounds )
 	bounds_ = *bounds;
 }
 
-void DefaultTableCellItem::setModel( Model* model )
-{
-	TableCellItem::setModel( model );
-	tableModel_ = dynamic_cast<TableModel*>(model);
-
-	VCF_ASSERT( NULL != tableModel_ );
-}
 
 const Color& DefaultTableCellItem::getColor()
 {

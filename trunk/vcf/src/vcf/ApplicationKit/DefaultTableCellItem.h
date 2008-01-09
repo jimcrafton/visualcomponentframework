@@ -99,8 +99,6 @@ public:
 
 	virtual void setBounds( Rect* bounds );
 
-	virtual void setModel( Model* model );
-
 	virtual double getTextCellWidth( GraphicsContext* context );
 
 	virtual double getTextCellHeight( GraphicsContext* context );
@@ -112,11 +110,17 @@ public:
 	virtual const Font& getFont();
 
 	virtual void setFont( Font* font );
-private:
-	void init();	
-	String caption_;
-	TableModel* tableModel_;
+
+	virtual CellID getID() {
+		return id_;
+	}
+
+	virtual void setID( const CellID& val ) {
+		id_ = val;
+	}
+protected:
 	Color* color_;
+	CellID id_;
 	typedef std::map<uint32,Color> ColorMap;
 	static  ColorMap tableCellsColorMap;
 

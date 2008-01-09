@@ -2834,6 +2834,10 @@ public:
 	}
 
 
+	ReturnType operator() ( P1 p1, P2 p2 ) {
+		return invoke( p1, p2 );
+	}
+
 	ReturnType invoke( P1 p1, P2 p2 ) {
 		ReturnType result = ReturnType();
 

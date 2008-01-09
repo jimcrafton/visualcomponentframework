@@ -66,7 +66,9 @@ void DefaultTableModel::empty()
 	rowCount_ = 0;
 	fixedColumnsCount_ = 0;
 	fixedRowsCount_ = 0;
-	TableModel::empty();
+	
+	TableModelEvent event( this, tmAllItemsDeleted );
+	ModelChanged( &event );
 }
 
 void DefaultTableModel::addRow()
@@ -315,6 +317,30 @@ String DefaultTableModel::getValueAsString( const uint32& row, const uint32& col
 	return result;
 }
 
+void DefaultTableModel::setValue( const uint32& row, const uint32& column, const VariantData& value )
+{
+	TTableColumn* rows = tableData_[row];
+	(*rows)[column] = value;
+
+	TableModelEvent itemEvent( this, tmCellChanged );
+	
+	itemEvent.startRow = row;
+	itemEvent.startColumn = column;
+	itemEvent.numberOfColumnsAffected = 1;
+	itemEvent.numberOfRowsAffected = 1;
+	
+	ModelChanged( &itemEvent );
+}
+
+void DefaultTableModel::setValueAsString( const uint32& row, const uint32& column, const String& value )
+{
+	TTableColumn* rows = tableData_[row];
+	VariantData v = (*rows)[column];
+
+	v.setFromString( value );
+	setValue( row, column, v );
+}
+
 uint32 DefaultTableModel::getRowCount()
 {
 	return rowCount_;
@@ -345,15 +371,6 @@ bool DefaultTableModel::getColumnValues( const uint32& col, std::vector<VariantD
 	return !values.empty();
 }
 /*
-TableRowItemEnumerator* DefaultTableModel::getRowItemEnumerator( const uint32& row )
-{
-	TableRowItemEnumerator* result = NULL;
-	rowEnumContainer_.initContainer( *(tableData_[row]) );
-
-	result = rowEnumContainer_.getEnumerator();
-
-	return result;
-}
 
 TableCellItem* DefaultTableModel::createCell( const uint32& row, const uint32& column )
 {

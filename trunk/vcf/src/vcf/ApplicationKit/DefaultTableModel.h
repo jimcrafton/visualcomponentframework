@@ -83,6 +83,9 @@ public:
 	virtual VariantData getValue( const uint32& row, const uint32& column );
 	virtual String getValueAsString( const uint32& row, const uint32& column );
 
+	virtual void setValue( const uint32& row, const uint32& column, const VariantData& value );
+	virtual void setValueAsString( const uint32& row, const uint32& column, const String& value );
+
 	virtual uint32 getRowCount();
 
 	virtual uint32 getColumnCount();
