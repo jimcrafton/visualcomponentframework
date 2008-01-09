@@ -56,16 +56,6 @@ bool DefaultTableCellItem::containsPoint( Point * pt )
 }
 
 
-void* DefaultTableCellItem::getData()
-{
-	return data_;
-}
-
-void DefaultTableCellItem::setData( void* data )
-{
-	data_ = data;
-}
-
 double DefaultTableCellItem::getTextCellWidth( GraphicsContext* context )
 {
 	double result = context->getTextWidth( getCaption() ) + (5*2) + 2;
@@ -101,23 +91,7 @@ void DefaultTableCellItem::paint( GraphicsContext* context, Rect* paintRect )
 		Basic3DBorder border;
 
 		border.setInverted( false );
-
-		//TableModel* tm = dynamic_cast<TableModel*>(model_);
-		/*
-		if ( NULL != tableModel_ ) {
-			TableCellItem* focusedCell = tableModel_->getFocusedCell();
-
-			if ( NULL != focusedCell ) {
-				CellID thisCell = tableModel_->getCellIDForItem( this );
-
-				CellID cell = tableModel_->getCellIDForItem( focusedCell );
-
-				if ( (thisCell.column == cell.column) || (thisCell.row == cell.row) ) {
-					border.setInverted( true );
-				}
-			}
-		}
-		*/
+		
 		if ( this->isFocused() ) {
 			border.setInverted( true );
 		}
@@ -176,18 +150,6 @@ void DefaultTableCellItem::paint( GraphicsContext* context, Rect* paintRect )
 	context->textBoundedBy( &textRect, getCaption(), options );	
 }
 
-void DefaultTableCellItem::setSelected( const bool& val )
-{
-	bool changed = (val != isSelected());
-	if ( changed ) {
-		if ( val ) {
-			setState( itemState_ | TableCellItem::tisSelected );
-		}
-		else {
-			setState( itemState_ & ~TableCellItem::tisSelected );
-		}
-	}
-}
 
 void DefaultTableCellItem::setFixed( const bool& val )
 {
@@ -241,18 +203,6 @@ void DefaultTableCellItem::setDropHighlighted( const bool& val )
 	}
 }
 
-/*
-void DefaultTableCellItem::setSelected( const bool& selected )
-{
-	selected_ = selected;
-	if ( true == selected_ ){
-
-	}
-	ItemEvent e( this, ITEM_EVENT_SELECTED );
-	ItemSelected( &e );
-}
-*/
-
 TableItemEditor* DefaultTableCellItem::createItemEditor()
 {
 	return new BasicTableItemEditor( this );
@@ -275,12 +225,12 @@ bool DefaultTableCellItem::isItemEditable(){
 
 String DefaultTableCellItem::getCaption()
 {
-	
-	Control* control = getControl();
 	TableModel* tm = (TableModel*) getModel();
-	if ( getUseLocaleStrings() && (NULL != control) && (control->getUseLocaleStrings()) ) {
-		return System::getCurrentThreadLocale()->translate( tm->getValueAsString( id_.row, id_.column ) );
-	}
+	//Control* control = getControl();
+	
+	//if ( getUseLocaleStrings() && (NULL != control) && (control->getUseLocaleStrings()) ) {
+	//	return System::getCurrentThreadLocale()->translate( tm->getValueAsString( id_.row, id_.column ) );
+	//}
 	return tm->getValueAsString( id_.row, id_.column );
 }
 
@@ -292,16 +242,6 @@ void DefaultTableCellItem::setCaption( const String& caption )
 	 
 	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
 	ItemChanged( &event );
-}
-
-void DefaultTableCellItem::setImageIndex( const int32& imageIndex )
-{
-	imageIndex_ = imageIndex;
-}
-
-void DefaultTableCellItem::setBounds( Rect* bounds )
-{
-	bounds_ = *bounds;
 }
 
 

@@ -43,19 +43,12 @@ public:
 	}
 
 	virtual void setIndex( const uint32& index ) {}
-
-    virtual void* getData();
-
-	virtual void setData( void* data );
-
+    
 	virtual void paint( GraphicsContext* context, Rect* paintRect );
 
 	virtual TableItemEditor* createItemEditor();
 
-	virtual bool isSelected() {
-		return (itemState_ & TableCellItem::tisSelected) ? true : false;
-	}
-
+	
 	virtual bool isReadonly() {
 		return (itemState_ & TableCellItem::tisReadonly) ? true : false;
 	}
@@ -74,9 +67,7 @@ public:
 
 	virtual bool isEditable() {
 		return !isReadonly();
-	}
-
-	virtual void setSelected( const bool& val );
+	}	
 
 	virtual void setReadonly( const bool& val );
 
@@ -89,15 +80,11 @@ public:
 
 	virtual String getCaption() ;
 
-	virtual void setCaption( const String& caption );
-
-	virtual void setImageIndex( const int32& imageIndex );
+	virtual void setCaption( const String& caption );	
 
 	virtual bool canPaint() {
 		return true;
 	}
-
-	virtual void setBounds( Rect* bounds );
 
 	virtual double getTextCellWidth( GraphicsContext* context );
 

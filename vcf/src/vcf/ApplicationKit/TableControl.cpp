@@ -19,6 +19,7 @@ where you installed the VCF.
 using namespace VCF;
 
 
+
 #define TABLECONTROL_KBRD_HANDLER		"TCKeyboardHandler"
 
 
@@ -1766,15 +1767,16 @@ TableCellItem* TableControl::getItem( const CellID& cell )
 {
 	TableCellItem* result = NULL;
 
-	TableModel* tm = this->getTableModel();
-
-	uint32 idx = cell.row * tm->getColumnCount() + cell.column;
-	result = tableItems_[ idx ];
-	if ( NULL == result ) {
-		result = this->createCell( cell.row, cell.column );
-		tableItems_[ idx ] = result;
+	if ( cell.isValid() ) {			
+		TableModel* tm = this->getTableModel();
+		
+		uint32 idx = cell.row * tm->getColumnCount() + cell.column;
+		result = tableItems_[ idx ];
+		if ( NULL == result ) {
+			result = this->createCell( cell.row, cell.column );
+			tableItems_[ idx ] = result;
+		}		
 	}
-
 
 	return result;
 }
@@ -1799,7 +1801,17 @@ CellID TableControl::setFocusedCell( const CellID& cell )
 
 	currentCell_ = result;
 
-	//tm->setFocusedCell( currentCell_.row, currentCell_.column );
+	
+
+	TableCellItem* item = getItem( currentCell_ );
+	if ( NULL != item ) {
+		item->setFocused( true );
+	}
+	
+	item = getItem( prevCell );
+	if ( NULL != item ) {
+		item->setFocused( false );
+	}
 
 	return prevCell;
 }
@@ -2069,11 +2081,10 @@ void TableControl::selectAllCells()
 	}
 
 	TableModel* tm = getTableModel();
-//	tm->setSelectedRange( true, tm->getFixedRowsCount(),
-//							tm->getFixedColumnsCount(),
-//							tm->getRowCount()-1,
-//							tm->getColumnCount()-1 );
-
+	setSelectedRange( true, tm->getFixedRowsCount(),
+							tm->getFixedColumnsCount(),
+							tm->getRowCount()-1,
+							tm->getColumnCount()-1 );
 }
 
 void TableControl::selectColumns( CellID currentCell, bool forceRedraw, bool selectCells )
@@ -2095,19 +2106,19 @@ void TableControl::selectColumns( CellID currentCell, bool forceRedraw, bool sel
 
 
     if ( allowSingleColumnSelection_ ) {
-//		tm->setSelectedRange( selectCells,
-//								tm->getFixedRowsCount(),
-//								currentCell.column,
-//								tm->getRowCount()-1,
-//								currentCell.column );
+		setSelectedRange( selectCells,
+								tm->getFixedRowsCount(),
+								currentCell.column,
+								tm->getRowCount()-1,
+								currentCell.column );
 
 	}
     else {
-//		tm->setSelectedRange( selectCells,
-//								tm->getFixedRowsCount(),
-//								minVal<>(selectionStartCell_.column,currentCell.column),
-//								tm->getRowCount()-1,
-//								maxVal<>(selectionStartCell_.column, currentCell.column ) );
+		setSelectedRange( selectCells,
+								tm->getFixedRowsCount(),
+								minVal<>(selectionStartCell_.column,currentCell.column),
+								tm->getRowCount()-1,
+								maxVal<>(selectionStartCell_.column, currentCell.column ) );
 	}
 }
 
@@ -2128,19 +2139,19 @@ void TableControl::selectRows( CellID currentCell, bool forceRedraw, bool select
 	}
 
     if ( allowSingleColumnSelection_ ) {
-//		tm->setSelectedRange( selectCells,
-//								currentCell.row,
-//								tm->getFixedColumnsCount(),
-//								currentCell.row,
-//								tm->getColumnCount()-1 );
+		setSelectedRange( selectCells,
+								currentCell.row,
+								tm->getFixedColumnsCount(),
+								currentCell.row,
+								tm->getColumnCount()-1 );
 
 	}
     else {
-//		tm->setSelectedRange( selectCells,
-//								minVal<>(selectionStartCell_.row,currentCell.row),
-//								tm->getFixedColumnsCount(),
-//								maxVal<>(selectionStartCell_.row,currentCell.row),
-//								tm->getColumnCount()-1 );
+		setSelectedRange( selectCells,
+								minVal<>(selectionStartCell_.row,currentCell.row),
+								tm->getFixedColumnsCount(),
+								maxVal<>(selectionStartCell_.row,currentCell.row),
+								tm->getColumnCount()-1 );
 	}
 }
 
@@ -2153,8 +2164,8 @@ void TableControl::selectCells( CellID currentCell, bool forceRedraw, bool selec
 	TableModel* tm = getTableModel();
 
 
-    int row = currentCell.row;
-    int col = currentCell.column;
+    uint32 row = currentCell.row;
+    uint32 col = currentCell.column;
     if (row < tm->getFixedRowsCount() || col < tm->getFixedColumnsCount() ) {
         return;
 	}
@@ -2167,11 +2178,11 @@ void TableControl::selectCells( CellID currentCell, bool forceRedraw, bool selec
     //if (currentCell == m_LeftClickDownCell)  return;
     //else if (currentCell == m_idCurrentCell) return;
 
-//	tm->setSelectedRange( selectCells,
-//							minVal<>(selectionStartCell_.row, row),
-//							minVal<>(selectionStartCell_.column, col),
-//							maxVal<>(selectionStartCell_.row, row),
-//							maxVal<>(selectionStartCell_.column, col) );
+	setSelectedRange( selectCells,
+							minVal<>(selectionStartCell_.row, row),
+							minVal<>(selectionStartCell_.column, col),
+							maxVal<>(selectionStartCell_.row, row),
+							maxVal<>(selectionStartCell_.column, col) );
 
 }
 
@@ -2483,6 +2494,31 @@ TableCellItem* TableControl::setSelectedCell( const bool& val, const uint32& row
 {
 	TableCellItem* result = NULL;
 
+	TableModel* tm = this->getTableModel();
+
+	VCF_ASSERT( (row<tm->getRowCount()) && (column<tm->getColumnCount()) );
+
+	TableCellItem* selectedCell = getItem( row, column );
+
+	selectedCell->setSelected( val );
+
+	uint32 key = (row << 16) | column;
+
+	if ( val ) {
+		selectionMap_[key] = selectedCell;
+	}
+	else {
+		std::map<uint32,TableCellItem*>::iterator found = selectionMap_.find( key );
+		if ( found != selectionMap_.end() ) {
+			selectionMap_.erase( found );
+		}
+	}
+
+	TableModelEvent event( this, tmCellChanged, row, 1, column, 1 );
+	TableCellsSelected( &event );	
+
+	repaint();
+
 	return result;
 }
 
@@ -2514,11 +2550,28 @@ void TableControl::setSelectedRange( const bool& val, const uint32& startRow, co
 
 	TableModelEvent event( this, tmCellChanged, startRow, endRow-startRow, startColumn, endColumn-startColumn );
 	TableCellsSelected( &event );
+	repaint();
 }
 
 void TableControl::setFocusedCell( const uint32& row, const uint32& column )
 {
+	if ( NULL != focusedCell_ ) {
+		focusedCell_->setFocused( false );
+	}
 
+	CellID cell = CellID(row,column);
+
+	if ( cell.isValid() ) {
+		focusedCell_ = getItem( row, column );
+
+		if ( NULL != focusedCell_ ) {
+			focusedCell_->setFocused( true );
+		}
+	}
+	else {
+		focusedCell_ = NULL;
+	}
+	repaint();
 }
 
 TableCellItem* TableControl::createCell( const uint32& row, const uint32& column )
@@ -2546,15 +2599,29 @@ TableCellItem* TableControl::createCell( const uint32& row, const uint32& column
 	result->setControl( this );
 
 	result->setID( CellID(row, column) );
-	
 
+	TableModel* tm = this->getTableModel();
+
+	result->setFixed( row < tm->getFixedRowsCount() || column < tm->getFixedColumnsCount() );
 
 	return result;
 }
 
 void TableControl::clearSelection()
 {
+	TableModel* tm = this->getTableModel();
 
+	for ( int i=0;i<tm->getRowCount();i++ ) {
+		for ( int j=0;j<tm->getColumnCount();j++ ) {
+			getItem( i, j )->setSelected( false );
+		}
+	}
+
+	selectionMap_.clear();
+
+
+	TableModelEvent event( this, tmCellChanged );
+	TableCellsSelected( &event );
 }
 
 Enumerator<TableCellItem*>* TableControl::getSelectedCells()
@@ -2565,6 +2632,17 @@ Enumerator<TableCellItem*>* TableControl::getSelectedCells()
 CellID TableControl::getCellIDForItem( TableCellItem* item )
 {
 	CellID result;
+
+	std::vector<TableCellItem*>::iterator found =
+		std::find( tableItems_.begin(), tableItems_.end(), item );
+	if ( found != tableItems_.end() ) {
+		uint32 idx = found - tableItems_.begin();
+
+		TableModel* tm = this->getTableModel();
+
+		result.row = idx / tm->getColumnCount();
+		result.column = idx % tm->getColumnCount();
+	}
 
 	return result;
 }
