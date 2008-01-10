@@ -53,9 +53,7 @@ public:
 		return (itemState_ & TableCellItem::tisReadonly) ? true : false;
 	}
 
-	virtual bool isFixed() {
-		return (itemState_ & TableCellItem::tcsFixed) ? true : false;
-	}
+	virtual bool isFixed();
 
 	virtual bool isFocused() {
 		return (itemState_ & TableCellItem::tcsFocused) ? true : false;
@@ -74,8 +72,6 @@ public:
 	virtual void setFocused( const bool& val );
 
 	virtual void setDropHighlighted( const bool& val );
-
-	virtual void setFixed( const bool& val );
 
 
 	virtual String getCaption() ;

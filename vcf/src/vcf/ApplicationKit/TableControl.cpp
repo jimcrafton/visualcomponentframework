@@ -2600,10 +2600,6 @@ TableCellItem* TableControl::createCell( const uint32& row, const uint32& column
 
 	result->setID( CellID(row, column) );
 
-	TableModel* tm = this->getTableModel();
-
-	result->setFixed( row < tm->getFixedRowsCount() || column < tm->getFixedColumnsCount() );
-
 	return result;
 }
 

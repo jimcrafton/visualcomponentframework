@@ -150,19 +150,17 @@ void DefaultTableCellItem::paint( GraphicsContext* context, Rect* paintRect )
 	context->textBoundedBy( &textRect, getCaption(), options );	
 }
 
-
-void DefaultTableCellItem::setFixed( const bool& val )
+bool DefaultTableCellItem::isFixed()
 {
-	bool changed = (val != isFixed());
-	if ( changed ) {
-		if ( val ) {
-			setState( itemState_ | TableCellItem::tcsFixed );
-		}
-		else {
-			setState( itemState_ & ~TableCellItem::tcsFixed );
-		}
+	if ( !id_.isValid() ) {
+		return false;
 	}
+
+	TableModel* tm = (TableModel*) getModel();	
+
+	return id_.row < tm->getFixedRowsCount() || id_.column < tm->getFixedColumnsCount();
 }
+
 
 void DefaultTableCellItem::setReadonly( const bool& val )
 {
