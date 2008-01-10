@@ -36,7 +36,6 @@ public:
 	enum TableCellItemState {
 		tcsNone = 0,		
 		tisReadonly = 0x0008,
-		tcsFixed = 0x0010,
 		tcsFocused = 0x0001,
 		tcsDropHighlighted = 0x0004,
 		tcsEditable = 0x0100
@@ -80,8 +79,6 @@ public:
 	virtual void setFocused( const bool& val ) = 0;
 
 	virtual void setDropHighlighted( const bool& val ) = 0;
-
-	virtual void setFixed( const bool& val ) = 0;
 
 	virtual String getCaption() = 0;
 
