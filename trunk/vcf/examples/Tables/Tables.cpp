@@ -31,8 +31,8 @@ public:
 
 		table->setDefaultTableCellFont( &Font("Tahoma") );
 
-		model->addColumns( 120 );
-		model->addRows(1300);
+		model->addColumns( 12 );
+		model->addRows(130);
 		model->setFixedRowsCount( 1 );
 		model->setFixedColumnsCount( 1 );		
 
@@ -43,7 +43,8 @@ public:
 				}
 				else {
 					model->setValue( y, x, 1.0 * x * y );
-				}/*
+				}
+
 				if ( y == 10 && x == 5 ) {
 					Font font = table->getItem( y, x )->getFont();
 					font.setName( "Times New Roman" );
@@ -51,7 +52,7 @@ public:
 					font.setBold( true );
 					table->getItem( y, x )->setFont( &font );
 					table->getItem( y, x )->setColor( Color::getColor("yellow") );
-				}*/
+				}
 			}
 		}
 
