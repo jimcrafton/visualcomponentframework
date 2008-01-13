@@ -18,6 +18,9 @@ namespace VCF {
 
 #define TABPAGE_CLASSID		"86F02172-3E7F-11d4-8EA7-00207811CFAB"
 
+
+class TabSheet;
+
 /**
 \class TabPage TabPage.h "vcf/ApplicationKit/TabPage.h"
 */
@@ -34,9 +37,9 @@ public:
 
 	virtual String getPageName() = 0;
 
-	virtual Control* getPageControl() = 0;
+	virtual TabSheet* getTabSheet() = 0;
 
-	virtual void setPageControl( Control* component ) = 0;
+	virtual void setTabSheet( TabSheet* tabSheet ) = 0;
 
 	virtual uint32 getPreferredHeight() = 0;
 

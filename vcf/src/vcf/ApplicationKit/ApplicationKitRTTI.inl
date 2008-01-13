@@ -592,7 +592,18 @@ _class_rtti_(StatusBar, "VCF::ControlContainer", STATUSBAR_CLASSID)
 _class_rtti_end_
 
 
-_class_rtti_(TabbedPages, "VCF::CustomControl", TABBEDPAGES_CLASSID );
+_class_rtti_(TabbedPages, "VCF::CustomControl", TABBEDPAGES_CLASSID )
+	_property_(double, "tabHeight", getTabHeight, setTabHeight, "" )
+	_property_(double, "borderWidth", getBorderWidth, setBorderWidth, "" )
+	_property_object_( TabModel, "tabModel", getTabModel, setTabModel, "" )
+	_property_object_( TabPage, "selectedPage", getSelectedPage, setSelectedPage, "" )
+	_property_object_( TabSheet, "selectedSheet", getSelectedSheet, setSelectedSheet, "" )
+_class_rtti_end_
+
+
+_class_rtti_(TabSheet, "VCF::Panel", TABSHEET_CLASSID )	
+	_property_object_( TabPage, "page", getPage, setPage, "" )
+	_property_(String, "title", getTitle, setTitle, "" )
 _class_rtti_end_
 
 

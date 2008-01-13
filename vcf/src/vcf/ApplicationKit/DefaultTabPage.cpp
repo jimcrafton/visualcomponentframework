@@ -11,16 +11,17 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/DefaultTabPage.h"
 #include "vcf/GraphicsKit/DrawUIState.h"
 #include "vcf/ApplicationKit/TabModel.h"
+#include "vcf/ApplicationKit/TabbedPages.h"
 
 using namespace VCF;
 
-DefaultTabPage::DefaultTabPage( Control* component ):
+DefaultTabPage::DefaultTabPage( TabSheet* tabSheet ):
 	preferredHeight_(8),
 	index_(0),
-	pageControl_(NULL)	
+	tabSheet_(NULL)	
 {
 	tag_ = -1;
-	setPageControl( component );
+	setTabSheet( tabSheet );
 }
 
 DefaultTabPage::~DefaultTabPage()
@@ -60,18 +61,18 @@ String DefaultTabPage::getPageName()
 	return tm->getAsString( index_ );
 }
 
-Control* DefaultTabPage::getPageControl()
+TabSheet* DefaultTabPage::getTabSheet()
 {
-	return pageControl_;
+	return tabSheet_;
 }
 
-void DefaultTabPage::setPageControl( Control* component )
+void DefaultTabPage::setTabSheet( TabSheet* tabSheet )
 {
-	if ( NULL != pageControl_ ){
+	if ( NULL != tabSheet ){
 		//pageControl_->free();
-		pageControl_ = NULL;
+		tabSheet_ = NULL;
 	}
-	pageControl_ = component;
+	tabSheet_ = tabSheet;
 
 }
 
@@ -95,7 +96,7 @@ void DefaultTabPage::paint( GraphicsContext* context, Rect* paintRect )
 uint32 DefaultTabPage::getPreferredHeight()
 {
 	uint32 result = preferredHeight_;
-	Control* control = getPageControl();
+	TabSheet* control = getTabSheet();
 	if ( NULL != control ) {
 		result = (uint32)control->getContext()->getTextHeight( "EM" );
 	}

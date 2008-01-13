@@ -145,30 +145,9 @@ void SimpleListModel::set( const uint32& index, const VariantData& item, bool ad
 
 void SimpleListModel::setAsString( const uint32& index, const String& item, bool addMissingValues )
 {
-	size_t missing = (index+1) - data_.size();
-
-	if ( addMissingValues ) {		
-		if ( missing > 0 ) {
-			data_.resize( missing + data_.size() );
-		}		
-	}
-
-	data_[index].setFromString(item);
-
-
-	if ( addMissingValues && missing > 0 ) {
-		for (size_t i=index;i<data_.size();i++ ) {
-			ListModelEvent event( this, lmeItemAdded );
-			event.item = &data_[i];
-			event.index = i;
-			ItemAdded( &event );
-		}
-	}
-
-	ListModelEvent itemEvent( this, lmeItemChanged );
-	itemEvent.item = &data_[index];
-	itemEvent.index = index;
-	ModelChanged( &itemEvent );
+	VariantData v;
+	v.setFromString( item );
+	set( index, v, addMissingValues );
 }
 
 bool SimpleListModel::getItems( std::vector<VariantData>& items )

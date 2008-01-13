@@ -203,6 +203,7 @@ void Component::addComponent( Component* component )
 		ComponentEvent e(this,Component::COMPONENT_ADDED);
 		e.setChildComponent( component );
 		ComponentAdded( &e );
+		handleEvent( &e );
 	}
 }
 
@@ -218,6 +219,7 @@ void Component::removeComponent( Component* component )
 		ComponentEvent e(this,Component::COMPONENT_REMOVED);
 		e.setChildComponent( component );
 		ComponentRemoved( &e );
+		handleEvent( &e );
 
 		(*found)->owner_ = NULL;
 		components_.erase( found );

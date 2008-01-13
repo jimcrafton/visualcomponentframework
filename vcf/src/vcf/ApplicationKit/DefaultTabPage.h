@@ -27,7 +27,7 @@ namespace VCF {
 class APPLICATIONKIT_API DefaultTabPage : public TabPage {
 public:
 
-	DefaultTabPage( Control* component=NULL );
+	DefaultTabPage( TabSheet* tabSheet=NULL );
 
 	virtual ~DefaultTabPage();
 
@@ -40,9 +40,9 @@ public:
 
 	virtual String getPageName();
 
-	virtual Control* getPageControl();
+	virtual TabSheet* getTabSheet();
 
-	virtual void setPageControl( Control* component );
+	virtual void setTabSheet( TabSheet* tabSheet );
 
 	virtual void paint( GraphicsContext* context, Rect* paintRect );
 
@@ -57,7 +57,7 @@ public:
 	
 
 private:
-	Control* pageControl_;	
+	TabSheet* tabSheet_;	
 	uint32 preferredHeight_;
 	uint32 index_;
 };

@@ -16,7 +16,7 @@ using namespace VCF;
 
 
 TabModel::TabModel():
-	selectedIndex_(0)
+	selectedIndex_(TabModel::NoPageSelected)
 {
 
 }
