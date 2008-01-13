@@ -1,0 +1,37 @@
+object TabsWindow  : VCF::Window
+	top = 100
+	left = 100
+	width = 500
+	height = 500
+	caption = 'Tabs example'
+
+	object tabs :  VCF::TabbedPages 
+		alignment = AlignClient
+
+		object tab1 : VCF::TabSheet 
+			title = 'Hola'
+		end
+
+		object tab2 : VCF::TabSheet 
+			title = 'Page 2'
+		end
+
+		object tab3 : VCF::TabSheet 
+			title = 'Page 3'			
+		end
+
+		object tab4 : VCF::TabSheet 
+			title = 'Page 4'
+
+			object moreTabs :  VCF::TabbedPages
+				alignment = AlignClient
+
+				tabModel.items[0] = 'pg1'
+				tabModel.items[1] = 'pg2'
+				tabModel.items[2] = 'pg3'
+			end
+		end
+
+		selectedSheet = @tab3
+	end
+end

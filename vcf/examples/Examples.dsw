@@ -1374,7 +1374,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TCPClient"=.\ListViews\Resources\TCPClient\TCPClient.dsp - Package Owner=<4>
+Project: "TCPClient"=.\TCPClient\TCPClient.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1399,6 +1399,21 @@ Package=<4>
 ###############################################################################
 
 Project: "Tables"=.\Tables\Tables.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Tabs"=.\Tabs\Tabs.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
