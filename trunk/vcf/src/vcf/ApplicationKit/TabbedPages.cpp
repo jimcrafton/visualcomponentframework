@@ -21,29 +21,20 @@ where you installed the VCF.
 
 using namespace VCF;
 
-
-
-class TabSheet : public Panel {
-public:
-	TabSheet() {
-		setBorder( NULL );
-	}
-
-	virtual void paint( GraphicsContext* ctx ) {
-		CustomControl::paint( ctx );
-
-		Rect bounds = getClientBounds();
-
-		DrawUIState state;
-		state.setEnabled( isEnabled() );
-		state.setActive( isActive() );
-
-		ctx->drawThemeTabContent( &bounds, state );
-
-		paintChildren( ctx );
-	}
-};
-
+void TabSheet::paint( GraphicsContext* ctx )
+{
+	CustomControl::paint( ctx );
+	
+	Rect bounds = getClientBounds();
+	
+	DrawUIState state;
+	state.setEnabled( isEnabled() );
+	state.setActive( isActive() );
+	
+	ctx->drawThemeTabContent( &bounds, state );
+	
+	paintChildren( ctx );
+}
 
 
 
@@ -72,6 +63,8 @@ void TabbedPages::init()
 
 	tabViewOffset_ = 0.0;
 
+
+	internalTabChange_ = false;
 
 	CallBack* ev = new ClassProcedure1<ButtonEvent*,TabbedPages>( this, &TabbedPages::onScrollButtonClicked, "onScrollButtonClicked" );
 	
@@ -231,7 +224,7 @@ void TabbedPages::paint( GraphicsContext* context )
 
 		if ( NULL != selectedPage ) {
 
-			Control* component = selectedPage->getPageControl();
+			Control* component = selectedPage->getTabSheet();
 
 			if ( NULL != component ){
 				Rect tmp( tabAreaBounds_ );//*(component->getBounds()) );
@@ -260,9 +253,9 @@ TabModel* TabbedPages::getTabModel()
 	return (TabModel*) getViewModel();
 }
 
-void TabbedPages::setViewModel( Model* model )
+void TabbedPages::modelChanged( Model* oldModel, Model* newModel )
 {
-	TabModel* tm = getTabModel();
+	TabModel* tm = (TabModel*)oldModel;
 	if ( NULL != tm ) {
 		CallBack* ev = getCallback( "TabbedPages::onTabPageAdded" );
 		if ( NULL == ev ) {
@@ -284,9 +277,9 @@ void TabbedPages::setViewModel( Model* model )
 		tm->TabPageSelected.remove( (EventHandler*)ev );
 	}
 
-	CustomControl::setViewModel( model );
+	
 
-	tm = dynamic_cast<TabModel*>( model );
+	tm = dynamic_cast<TabModel*>( newModel );
 
 	VCF_ASSERT( tm != NULL ) ;
 
@@ -326,23 +319,31 @@ void TabbedPages::onTabPageAdded( ListModelEvent* event )
 	//visible
 	//repaint();
 
-	DefaultTabPage* page = new DefaultTabPage();	
-	addComponent( page );
-	tabPages_.insert( tabPages_.begin() + event->index, page );
+	if ( !internalTabChange_ ) {
+		
+		
+		TabSheet* sheet = new TabSheet();		
+		add( sheet, AlignClient );
 
-	page->setControl( this );
-	page->setModel( this->getViewModel() );
-	page->setIndex( tabPages_.size() - 1 );
 
-	TabSheet* sheet = new TabSheet();
-	page->setPageControl( sheet );
+		DefaultTabPage* page = new DefaultTabPage();	
+		addComponent( page );
+		tabPages_.insert( tabPages_.begin() + event->index, page );
+		
+		page->setControl( this );
+		page->setModel( this->getViewModel() );
+		page->setIndex( tabPages_.size() - 1 );
 
-	add( sheet, AlignClient );
-	sheet->setVisible( true );
+		page->setTabSheet( sheet );
 
-	tabHeight_ = maxVal<double>( tabHeight_, page->getPreferredHeight() );
+		sheet->setPage( page );
 
-	resizeChildren(NULL);
+		sheet->setVisible( true );
+		
+		tabHeight_ = maxVal<double>( tabHeight_, page->getPreferredHeight() );
+		
+		resizeChildren(NULL);
+	}
 }
 
 void TabbedPages::onTabPageRemoved( ListModelEvent* event )
@@ -358,8 +359,8 @@ void TabbedPages::onTabPageRemoved( ListModelEvent* event )
 	}
 
 	TabPage* page = *found;
-	Control* control = page->getPageControl();
-	page->setPageControl( NULL );
+	TabSheet* control = page->getTabSheet();
+	page->setTabSheet( NULL );
 	
 	remove( control );
 	removeComponent( control );
@@ -435,18 +436,18 @@ void TabbedPages::onTabPageSelected( TabModelEvent* event )
 	Enumerator<Control*>* children = getChildren();
 	while ( true == children->hasMoreElements() ){
 		Control* comp = children->nextElement();
-		if ( comp != page->getPageControl() ){
+		if ( comp != page->getTabSheet() ){
 			if ( comp->getVisible() ) {
 				comp->setVisible( false );
 			}
 		}
 	}
-	page->getPageControl()->setVisible( true );
+	page->getTabSheet()->setVisible( true );
 
-	Container* container = page->getPageControl()->getContainer();
+	Container* container = page->getTabSheet()->getContainer();
 	if ( NULL != container ) {
 		container->resizeChildren(NULL);		
-		page->getPageControl()->setFocused();
+		page->getTabSheet()->setFocused();
 	}
 
 	repaint();
@@ -669,6 +670,26 @@ TabPage* TabbedPages::getPageFromPageName( const String& pageName )
 	return result;
 }
 
+TabSheet* TabbedPages::getSelectedSheet()
+{
+	if ( NULL == selectedPage_ ) {
+		return NULL;
+	}
+
+	return selectedPage_->getTabSheet();
+}
+
+void TabbedPages::setSelectedSheet( TabSheet* sheet )
+{
+	if ( NULL == sheet ) {
+		TabPage* nullPg = NULL;
+		setSelectedPage( nullPg );
+	}
+	else {
+		setSelectedPage( sheet->getPage() );
+	}
+}
+
 TabPage* TabbedPages::getSelectedPage()
 {
 	return selectedPage_;
@@ -755,6 +776,62 @@ TabPage* TabbedPages::previousPage( TabPage* page )
 Enumerator<TabPage*>* TabbedPages::getPages()
 {
 	return tabPages_.getEnumerator();
+}
+
+void TabbedPages::handleEvent( Event* e )
+{
+	CustomControl::handleEvent( e );
+	switch ( e->getType() ){
+		case Component::COMPONENT_ADDED : {
+			ComponentEvent* ev = (ComponentEvent*)e;
+			Component* child = ev->getChildComponent();
+			Control* ctrl = dynamic_cast<Control*>(child);
+			if ( NULL != ctrl ) {
+				TabSheet* tabSheet = dynamic_cast<TabSheet*>(ctrl);
+				if ( NULL != tabSheet ) {
+
+					TabModel* tm = getTabModel();
+
+					internalTabChange_ = tm->getCount() == tabPages_.size();
+
+
+					if ( internalTabChange_ ) {
+						
+						tm->add( tabSheet->getTitle() );
+
+
+						DefaultTabPage* page = new DefaultTabPage();	
+						addComponent( page );
+						tabPages_.push_back( page );
+						
+						
+						page->setControl( this );
+						page->setModel( tm );
+						page->setIndex( tabPages_.size() - 1 );						
+						page->setTabSheet( tabSheet );
+						tabSheet->setPage( page );
+						
+						
+						tabHeight_ = maxVal<double>( tabHeight_, page->getPreferredHeight() );
+						
+						resizeChildren(NULL);
+
+
+						internalTabChange_ = false;
+					}					
+				}
+				else {
+					throw RuntimeException( "Invalid control type added." );
+				}
+			}
+		}
+		break;
+
+		case Component::COMPONENT_REMOVED : {
+			
+		}
+		break;
+	}
 }
 
 /**

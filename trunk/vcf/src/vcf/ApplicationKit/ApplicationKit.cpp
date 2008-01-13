@@ -107,7 +107,6 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( Control );
 		REGISTER_CLASSINFO_EXTERNAL( CustomControl );
 		REGISTER_CLASSINFO_EXTERNAL( ControlContainer );
-		REGISTER_CLASSINFO_EXTERNAL( TabbedPages );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultListItem );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultMenuItem );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultListModel );
@@ -131,6 +130,8 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( MenuBar );
 		REGISTER_CLASSINFO_EXTERNAL( PopupMenu );
 		REGISTER_CLASSINFO_EXTERNAL( ListBoxControl );
+		REGISTER_CLASSINFO_EXTERNAL( TabbedPages );
+		REGISTER_CLASSINFO_EXTERNAL( TabSheet );
 		
 		REGISTER_CLASSINFO_EXTERNAL( CommandButton );
 		//REGISTER_CLASSINFO_EXTERNAL( OpenGLControl );

@@ -31,11 +31,18 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/PushButton.h"
 #endif // _VCF_PUSHBUTTON_H__
 
+#ifndef _VCF_PANEL_H__
+#	include "vcf/ApplicationKit/Panel.h"
+#endif // _VCF_PANEL_H__
+
 
 
 namespace VCF  {
 
 #define TABBEDPAGES_CLASSID		"4A9D66D6-3B26-11d4-B54C-00C04F0196DA"
+
+
+class TabSheet;
 
 /**
 \class TabbedPages TabbedPages.h "vcf/ApplicationKit/TabbedPages.h"
@@ -54,7 +61,7 @@ public:
 
 	void setTabModel( TabModel* model );	
 
-	virtual void setViewModel( Model* model );
+	virtual void modelChanged( Model* oldModel, Model* newModel );
 
 	TabPage* addNewPage( const String& caption );
 
@@ -83,12 +90,20 @@ public:
 	void setSelectedPage( TabPage* page );
 	void setSelectedPage( const uint32& index );
 
+	TabSheet* getSelectedSheet();
+	void setSelectedSheet( TabSheet* sheet );
+
+	
+	
+
 	bool isFirstPage( TabPage* page );
 	bool isLastPage( TabPage* page );
 	TabPage* nextPage( TabPage* page );
 	TabPage* previousPage( TabPage* page );
 
 	Enumerator<TabPage*>* getPages();
+
+	virtual void handleEvent( Event* e );
 protected:
 	class ScrollButton : public PushButton {
 	public:
@@ -103,10 +118,11 @@ protected:
 	//this is to move the whole tab section forwards or backwards when
 	//the scroll buttons are clicked
 	double tabViewOffset_;
-	ScrollButton* scrollForward_;
-	ScrollButton* scrollBackward_;
+	//ScrollButton* scrollForward_;
+	//ScrollButton* scrollBackward_;
 	Array<TabPage*> tabPages_;
 	TabPage* selectedPage_;
+	bool internalTabChange_;
 
 	//void recalcScrollerButtonsPos();
 
@@ -121,6 +137,51 @@ protected:
 	void onTabPageSelected( TabModelEvent* event );
 
 };
+
+
+
+
+
+
+
+#define TABSHEET_CLASSID		"a6186520-7a9c-42eb-b5da-0387685f10ed"
+class TabSheet : public Panel {
+public:
+	TabSheet(): tabPage_(NULL) {
+		setBorder( NULL );
+		setAlignment( AlignClient );
+	}
+
+	virtual void paint( GraphicsContext* ctx );
+
+	TabPage* getPage() {
+		return tabPage_;
+	}
+
+	void setPage( TabPage* val ) {
+		tabPage_ = val;		
+	}
+
+	String getTitle() {
+		if ( NULL == tabPage_ ) {
+			return title_;
+		}
+
+		return tabPage_->getPageName();
+	}
+
+	void setTitle( const String& val ) {
+		title_ = val;
+		if ( NULL != tabPage_ ) {
+			tabPage_->setPageName( title_ );
+		}
+	}
+protected:
+	String title_;
+	TabPage* tabPage_;
+};
+
+
 
 };
 

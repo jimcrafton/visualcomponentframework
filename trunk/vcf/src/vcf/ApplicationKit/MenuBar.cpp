@@ -91,10 +91,10 @@ void MenuBar::init()
 
 	//item->addItemDeletedHandler( mih );
 
-	CallBack* ev = new ClassProcedure1<Event*,MenuBar> ( this, &MenuBar::handleEvent, "MenuBar::handleEvent" );
+	//CallBack* ev = new ClassProcedure1<Event*,MenuBar> ( this, &MenuBar::handleEvent, "MenuBar::handleEvent" );
 
-	ComponentAdded += ev;
-	ComponentRemoved += ev;
+	//ComponentAdded += ev;
+	//ComponentRemoved += ev;
 }
 
 void MenuBar::onMenutItemAdded( MenuItemEvent* event )
