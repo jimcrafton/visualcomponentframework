@@ -1386,11 +1386,12 @@ void Win32Tree::onControlModelChanged( Event* e )
 													&Win32Tree::onTreeNodeDeleted,
 													"Win32Tree::onTreeNodeDeleted" );
 	}
-	treeControl_->getTreeModel()->addTreeNodeDeletedHandler( (EventHandler*)ev );
+	treeControl_->getTreeModel()->NodeRemoved += ev;
 }
 
 void Win32Tree::onTreeNodeDeleted( TreeModelEvent* event )
 {
+/*
 	TreeItem* item = event->getTreeItem();
 	if ( NULL != item ){
 		std::map<TreeItem*,HTREEITEM>::iterator found =
@@ -1401,6 +1402,7 @@ void Win32Tree::onTreeNodeDeleted( TreeModelEvent* event )
 			TreeView_DeleteItem( hwnd_, hItem );
 		}
 	}
+	*/
 }
 
 

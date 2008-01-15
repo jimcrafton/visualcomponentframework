@@ -60,7 +60,7 @@ void DefaultTreeItem::init()
 
 	selected_ = false;
 
-	itemState_ = Item::idsNone;
+	displayState_ = Item::idsNone;
 
 	bounds_.setRect(0.0,0.0,0.0,0.0);
 	owningControl_ = NULL;

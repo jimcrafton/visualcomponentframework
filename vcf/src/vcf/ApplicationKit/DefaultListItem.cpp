@@ -43,7 +43,7 @@ DefaultListItem::~DefaultListItem()
 
 void DefaultListItem::init()
 {
-	itemState_ = Item::idsNone;
+	displayState_ = Item::idsNone;
 	tag_ = -1;
 	model_ = NULL;
 	owningControl_ = NULL;

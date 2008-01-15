@@ -463,7 +463,7 @@ _class_rtti_end_
 _class_rtti_(DefaultTreeModel, "VCF::Model", DEFAULTTREEMODEL_CLASSID)
 	_delegate_(TreeModelDelegate, RootNodeChanged )
 	_delegate_(TreeModelDelegate, NodeAdded )
-	_delegate_(TreeModelDelegate, NodeDeleted )
+	_delegate_(TreeModelDelegate, NodeRemoved )
 _class_rtti_end_
 
 

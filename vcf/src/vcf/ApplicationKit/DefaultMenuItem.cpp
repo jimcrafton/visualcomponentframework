@@ -68,8 +68,8 @@ void DefaultMenuItem::init()
 {
 	setTag(-1);
 
-	itemState_ |= MenuItem::mdsEnabled;
-	itemState_ |= MenuItem::mdsVisible;
+	displayState_ |= MenuItem::mdsEnabled;
+	displayState_ |= MenuItem::mdsVisible;
 
 	EventHandler* ev = new ClassProcedure1<Event*,DefaultMenuItem> ( this, &DefaultMenuItem::handleEvent, "DefaultMenuItem::handleEvent" );
 
@@ -129,7 +129,7 @@ void DefaultMenuItem::paint( GraphicsContext* context, Rect* paintRect )
 
 bool DefaultMenuItem::isSelected() const 
 {
-	return (itemState_ & MenuItem::mdsSelected) ? true : false;
+	return (displayState_ & MenuItem::mdsSelected) ? true : false;
 }
 
 void DefaultMenuItem::setSelected( const bool& selected )
@@ -139,7 +139,7 @@ void DefaultMenuItem::setSelected( const bool& selected )
 	}
 
 	if ( selected ) {
-		itemState_ |= MenuItem::mdsSelected;
+		displayState_ |= MenuItem::mdsSelected;
 
 		//ItemEvent event( this, ITEM_EVENT_SELECTED );
 		//ItemSelected( &event );
@@ -147,7 +147,7 @@ void DefaultMenuItem::setSelected( const bool& selected )
 		getMenuOwner()->itemChanged( MenuItem::miSelected, this );
 	}
 	else {
-		itemState_ &= ~MenuItem::mdsSelected;
+		displayState_ &= ~MenuItem::mdsSelected;
 	}	
 	
 	previousSelectedItem = this;
@@ -155,16 +155,16 @@ void DefaultMenuItem::setSelected( const bool& selected )
 
 bool DefaultMenuItem::isHighlighted()
 {
-	return (itemState_ & MenuItem::mdsHighlighted) ? true : false;	
+	return (displayState_ & MenuItem::mdsHighlighted) ? true : false;	
 }
 
 void DefaultMenuItem::setHighlighted( const bool& val )
 {
 	if ( val ) {
-		itemState_ |= MenuItem::mdsHighlighted;		
+		displayState_ |= MenuItem::mdsHighlighted;		
 	}
 	else {
-		itemState_ &= ~MenuItem::mdsHighlighted;
+		displayState_ &= ~MenuItem::mdsHighlighted;
 	}
 }
 
@@ -231,7 +231,7 @@ void DefaultMenuItem::deleteChild( MenuItem* child )
 	if ( found != menuItems_.end() ){
 		uint32 index = found - menuItems_.begin();
 	
-		itemState_ &= ~MenuItem::mdsBoundToMenuPeer;
+		displayState_ &= ~MenuItem::mdsBoundToMenuPeer;
 
 		Menu* owner = getMenuOwner();
 		if ( NULL != owner ) {
@@ -253,7 +253,7 @@ void DefaultMenuItem::deleteChild( const uint32& index )
 	std::vector<MenuItem*>::iterator found = menuItems_.begin() + index;
 	if ( found != menuItems_.end() ){
 
-		itemState_ &= ~MenuItem::mdsBoundToMenuPeer;
+		displayState_ &= ~MenuItem::mdsBoundToMenuPeer;
 
 		Menu* owner = getMenuOwner();
 		if ( NULL != owner ) {
@@ -282,19 +282,19 @@ void DefaultMenuItem::clearChildren()
 
 bool DefaultMenuItem::isChecked()
 {
-	return ((itemState_ & MenuItem::mdsChecked) == MenuItem::mdsChecked) ? true : false;// peer_->isChecked();
+	return ((displayState_ & MenuItem::mdsChecked) == MenuItem::mdsChecked) ? true : false;// peer_->isChecked();
 }
 
 void DefaultMenuItem::setChecked( const bool& checked )
 {
 	//peer_->setChecked( checked );
 	if ( checked ) {
-		itemState_ &= ~MenuItem::mdsUnChecked;
-		itemState_ |= MenuItem::mdsChecked;
+		displayState_ &= ~MenuItem::mdsUnChecked;
+		displayState_ |= MenuItem::mdsChecked;
 	}
 	else {
-		itemState_ &= ~MenuItem::mdsChecked;
-		itemState_ |= MenuItem::mdsUnChecked;
+		displayState_ &= ~MenuItem::mdsChecked;
+		displayState_ |= MenuItem::mdsUnChecked;
 	}
 
 	Menu* owner = getMenuOwner();
@@ -331,7 +331,7 @@ MenuItem* DefaultMenuItem::getChildAt( const uint32& index )
 
 bool DefaultMenuItem::isEnabled()
 {
-	bool result = (itemState_ & MenuItem::mdsEnabled) ? true : false;
+	bool result = (displayState_ & MenuItem::mdsEnabled) ? true : false;
 
 	if ( result ) {
 		MenuBar* menuBar = dynamic_cast<MenuBar*>( menuOwner_ );
@@ -348,10 +348,10 @@ bool DefaultMenuItem::isEnabled()
 void DefaultMenuItem::setEnabled( const bool& enabled )
 {
 	if ( enabled ) {
-		itemState_ |= MenuItem::mdsEnabled;
+		displayState_ |= MenuItem::mdsEnabled;
 	}
 	else {
-		itemState_ &= ~MenuItem::mdsEnabled;
+		displayState_ &= ~MenuItem::mdsEnabled;
 	}
 
 	//peer_->setEnabled( enabled );
@@ -371,16 +371,16 @@ void DefaultMenuItem::setEnabled( const bool& enabled )
 
 bool DefaultMenuItem::isVisible()
 {
-	return (itemState_ & MenuItem::mdsVisible) ? true : false;
+	return (displayState_ & MenuItem::mdsVisible) ? true : false;
 }
 
 void DefaultMenuItem::setVisible( const bool& visible )
 {
 	if ( visible ) {
-		itemState_ |= MenuItem::mdsVisible;
+		displayState_ |= MenuItem::mdsVisible;
 	}
 	else {
-		itemState_ &= ~MenuItem::mdsVisible;
+		displayState_ &= ~MenuItem::mdsVisible;
 	}
 
 	//peer_->setVisible( visible );
@@ -395,16 +395,16 @@ void DefaultMenuItem::setVisible( const bool& visible )
 
 bool DefaultMenuItem::getRadioItem()
 {
-	return (itemState_ & MenuItem::mdsRadioItem) ? true : false;
+	return (displayState_ & MenuItem::mdsRadioItem) ? true : false;
 }
 
 void DefaultMenuItem::setRadioItem( const bool& value )
 {
 	if ( value ) {
-		itemState_ |= MenuItem::mdsRadioItem;
+		displayState_ |= MenuItem::mdsRadioItem;
 	}
 	else {
-		itemState_ &= ~MenuItem::mdsRadioItem;
+		displayState_ &= ~MenuItem::mdsRadioItem;
 	}
 	
 	//peer_->setRadioItem( value );
@@ -496,16 +496,16 @@ void DefaultMenuItem::setMenuOwner( Menu* menuOwner )
 
 bool DefaultMenuItem::canPaint() const
 {
-	return (itemState_ & Item::idsCanPaint) ? true : false;
+	return (displayState_ & Item::idsCanPaint) ? true : false;
 }
 
 void DefaultMenuItem::setCanPaint( const bool& val )
 {
 	if ( val ) {
-		itemState_ |= Item::idsCanPaint;
+		displayState_ |= Item::idsCanPaint;
 	}
 	else {
-		itemState_ &= ~Item::idsCanPaint;
+		displayState_ &= ~Item::idsCanPaint;
 	}
 
 	Menu* owner = getMenuOwner();
@@ -517,16 +517,16 @@ void DefaultMenuItem::setCanPaint( const bool& val )
 
 bool DefaultMenuItem::isSeparator()
 {
-	return (itemState_ & MenuItem::mdsSeparator) ? true : false;;
+	return (displayState_ & MenuItem::mdsSeparator) ? true : false;;
 }
 
 void DefaultMenuItem::setSeparator( const bool& separator )
 {
 	if ( separator ) {
-		itemState_ |= MenuItem::mdsSeparator;
+		displayState_ |= MenuItem::mdsSeparator;
 	}
 	else {
-		itemState_ &= ~MenuItem::mdsSeparator;
+		displayState_ &= ~MenuItem::mdsSeparator;
 	}
 
 	//peer_->setAsSeparator( separator );
@@ -698,7 +698,7 @@ void DefaultMenuItem::handleEvent( Event* event )
 				Component* child = ev->getChildComponent();
 				MenuItem* item = dynamic_cast<MenuItem*>(child);
 				if ( NULL != item ) {
-					if ( itemState_ & MenuItem::mdsBoundToMenuPeer ) {
+					if ( displayState_ & MenuItem::mdsBoundToMenuPeer ) {
 						deleteChild( item );
 					}
 				}

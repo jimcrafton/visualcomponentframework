@@ -50,17 +50,17 @@ public:
 
 	
 	virtual bool isReadonly() {
-		return (itemState_ & TableCellItem::tisReadonly) ? true : false;
+		return (displayState_ & TableCellItem::tisReadonly) ? true : false;
 	}
 
 	virtual bool isFixed();
 
 	virtual bool isFocused() {
-		return (itemState_ & TableCellItem::tcsFocused) ? true : false;
+		return (displayState_ & TableCellItem::tcsFocused) ? true : false;
 	}
 
 	virtual bool isDropHighlighted() {
-		return (itemState_ & TableCellItem::tcsDropHighlighted) ? true : false;
+		return (displayState_ & TableCellItem::tcsDropHighlighted) ? true : false;
 	}
 
 	virtual bool isEditable() {

@@ -27,10 +27,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/TreeItem.h"
 #endif // _VCF_TREEITEM_H__
 
-#ifndef _VCF_TREEMODELEVENT_H__
-#	include "vcf/ApplicationKit/TreeModelEvent.h"
-#endif // _VCF_TREEMODELEVENT_H__
-
 
 
 
@@ -71,11 +67,13 @@ public:
 
 	double getItemIndent();
 
-	void setItemIndent( const double& indent );
+	void setItemIndent( const double& indent );	
 
-	void setTreeModel(TreeModel * model);
+	virtual void modelChanged( Model* oldModel, Model* newModel );
 
 	TreeModel* getTreeModel();
+
+	void setTreeModel( TreeModel* tm );
 
 	ImageList* getImageList();
 
@@ -123,7 +121,6 @@ protected:
 	TreePeer * treePeer_;
 	ImageList* imageList_;
 	ImageList* stateImageList_;
-	TreeModel* treeModel_;
 	TreeItem* currentSelectedItem_;
 
 
