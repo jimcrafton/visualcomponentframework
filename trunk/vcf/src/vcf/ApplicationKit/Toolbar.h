@@ -106,16 +106,8 @@ public:
 	virtual void setImageIndex( const int32& imageIndex );
 
 	virtual void setIndex( const uint32& index ) ;
-
-    virtual void* getData() {
-		return data_;
-	}
-
-	virtual void setData( void* data ) {
-		data_ = data;
-	}
 	
-	virtual void setState( const int32& state );
+	virtual void setDisplayState( const int32& state );
 	
 	virtual void paint( GraphicsContext* context, Rect* paintRect ) {};
 

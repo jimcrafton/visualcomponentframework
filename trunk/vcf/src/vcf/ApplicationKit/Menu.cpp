@@ -103,7 +103,7 @@ void Menu::handleEvent( Event* event )
 				MenuItem* root = getRootMenuItem();
 				if ( root != item ) {
 					root->addChild( item );
-					if ( !(MenuItem::mdsBoundToMenuPeer & item->getState()) ) {
+					if ( !(MenuItem::mdsBoundToMenuPeer & item->getDisplayState()) ) {
 						root->getPeer()->addChild( item );
 					}
 				}

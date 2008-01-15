@@ -31,7 +31,7 @@ DefaultTableCellItem::DefaultTableCellItem():
 	data_ = NULL;
 	model_ = NULL;
 	owningControl_ = NULL;
-	itemState_ = 0;
+	displayState_ = 0;
 	color_ = NULL;
 	font_ = NULL;
 
@@ -167,10 +167,10 @@ void DefaultTableCellItem::setReadonly( const bool& val )
 	bool changed = (val != isReadonly());
 	if ( changed ) {
 		if ( val ) {
-			setState( itemState_ | TableCellItem::tisReadonly );
+			setDisplayState( displayState_ | TableCellItem::tisReadonly );
 		}
 		else {
-			setState( itemState_ & ~TableCellItem::tisReadonly );
+			setDisplayState( displayState_ & ~TableCellItem::tisReadonly );
 		}
 	}
 }
@@ -180,10 +180,10 @@ void DefaultTableCellItem::setFocused( const bool& val )
 	bool changed = (val != isFocused());
 	if ( changed ) {
 		if ( val ) {
-			setState( itemState_ | TableCellItem::tcsFocused );
+			setDisplayState( displayState_ | TableCellItem::tcsFocused );
 		}
 		else {
-			setState( itemState_ & ~TableCellItem::tcsFocused );
+			setDisplayState( displayState_ & ~TableCellItem::tcsFocused );
 		}
 	}
 }
@@ -193,10 +193,10 @@ void DefaultTableCellItem::setDropHighlighted( const bool& val )
 	bool changed = (val != isFocused());
 	if ( changed ) {
 		if ( val ) {
-			setState( itemState_ | TableCellItem::tcsDropHighlighted );
+			setDisplayState( displayState_ | TableCellItem::tcsDropHighlighted );
 		}
 		else {
-			setState( itemState_ & ~TableCellItem::tcsDropHighlighted );
+			setDisplayState( displayState_ & ~TableCellItem::tcsDropHighlighted );
 		}
 	}
 }

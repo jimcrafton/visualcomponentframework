@@ -1058,14 +1058,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\WindowEvent.h
 # PROP Default_Filter "*.h;*.cpp"
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractTreeModel.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractTreeModel.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractView.cpp
 # End Source File
 # Begin Source File

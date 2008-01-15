@@ -22,9 +22,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/TreeItem.h"
 #endif // _VCF_TREEITEM_H__
 
-#ifndef _VCF_TREEMODELEVENT_H__
-#	include "vcf/ApplicationKit/TreeModelEvent.h"
-#endif // _VCF_TREEMODELEVENT_H__
 
 
 

@@ -109,8 +109,8 @@ void TreeListControl::setTreeModel(TreeModel * model)
 	if ( NULL != treeModel_ ) {
 		EventHandler* handler = (EventHandler*)getCallback( "TreeListControl::onModelChanged" );
 		if ( NULL != handler ) {
-			treeModel_->removeTreeNodeAddedHandler( handler );
-			treeModel_->removeTreeNodeDeletedHandler( handler );
+			treeModel_->NodeAdded -= handler;
+			treeModel_->NodeRemoved -= handler;
 		}
 		getViewModel()->removeView( this );
 	}
@@ -131,8 +131,8 @@ void TreeListControl::setTreeModel(TreeModel * model)
 			//addEventHandler( "TreeListControl::onModelChanged", handler );
 		}
 
-		treeModel_->addTreeNodeAddedHandler( (EventHandler*)handler );
-		treeModel_->addTreeNodeDeletedHandler( (EventHandler*)handler );	
+		treeModel_->NodeAdded += handler;
+		treeModel_->NodeRemoved += handler;
 		
 		handler = getCallback( "TreeListControl::onModelEmptied" );
 		if ( NULL == handler ) {
@@ -161,6 +161,7 @@ void TreeListControl::onModelEmptied( Event* event )
 
 void TreeListControl::onModelChanged( TreeModelEvent* event )
 {
+	/*////MVC
 	switch ( event->getType() ) {
 		case TreeModel::TREEITEM_DELETED : {
 			std::vector<TreeItem*>::iterator found = std::find( selectedItems_.begin(),
@@ -178,7 +179,7 @@ void TreeListControl::onModelChanged( TreeModelEvent* event )
 		}
 		break;
 	}
-
+*/
 
 	recalcScrollable();
 	
@@ -340,7 +341,7 @@ void TreeListControl::paintItem( TreeItem* item, GraphicsContext* context, Rect*
 		imageNeedsDrawing = true;
 	}
 
-	if ( Item::idsNone != item->getState() ) {
+	if ( Item::idsNone != item->getDisplayState() ) {
 		stateNeedsDrawing = true;
 	}
 
@@ -593,7 +594,7 @@ void TreeListControl::paintItemState( TreeItem* item, GraphicsContext* context, 
 	}
 	else {
 		stateRect.inflate( -1, -1 );
-		int32 state = item->getState();
+		int32 state = item->getDisplayState();
 
 		ButtonState buttonState;
 		buttonState.setActive( true );
@@ -708,7 +709,7 @@ void TreeListControl::paint( GraphicsContext * context )
 
 void TreeListControl::addItem( TreeItem* item, TreeItem* parent )
 {
-	treeModel_->addNodeItem( item, parent );
+////MVC	treeModel_->addNodeItem( item, parent );
 	item->setControl( this );
 	if ( NULL != parent ) {
 		parent->expand( true );
@@ -727,6 +728,7 @@ TreeItem* TreeListControl::addItem( TreeItem* parent, const String& caption, con
 TreeItem* TreeListControl::hitTest( Point* pt )
 {
 	TreeItem* result = NULL;
+	/*////MVC
 	Enumerator<TreeItem*>* rootChildren = treeModel_->getRootItems();
 	while ( rootChildren->hasMoreElements() ) {
 		TreeItem* rootItem = rootChildren->nextElement();
@@ -735,6 +737,7 @@ TreeItem* TreeListControl::hitTest( Point* pt )
 			break;
 		}
 	}
+	*/
 
 	return result;
 }
@@ -807,6 +810,7 @@ bool TreeListControl::multiSelectionChange( MouseEvent* event )
 	bool result = false;
 
 	TreeItem* foundItem = NULL;
+	/* ////MVC
 	Enumerator<TreeItem*>* rootChildren = treeModel_->getRootItems();
 
 	TreeItem* currentlySelectedItem = getSelectedItem();
@@ -830,7 +834,7 @@ bool TreeListControl::multiSelectionChange( MouseEvent* event )
 				ItemExpanded( &event );
 			}
 			else if ( true == stateHitTest( event->getPoint(), foundItem ) ) {
-				int32 state = foundItem->getState();
+				int32 state = foundItem->getDisplayState();
 				//probably need to come up with better id's
 				//for enum values so that we can mask together
 				//as opposed to doing a direct
@@ -893,6 +897,7 @@ bool TreeListControl::multiSelectionChange( MouseEvent* event )
 		}
 	}
 
+  */
 	return result;
 }
 
@@ -963,6 +968,7 @@ bool TreeListControl::singleSelectionChange( MouseEvent* event )
 	bool result = false;
 
 	TreeItem* foundItem = NULL;
+	/*////MVC
 	Enumerator<TreeItem*>* rootChildren = treeModel_->getRootItems();
 	TreeItem* prevSelectedItem = getSelectedItem();
 
@@ -999,7 +1005,7 @@ bool TreeListControl::singleSelectionChange( MouseEvent* event )
 				}
 			}
 			else if ( stateHitTest( event->getPoint(), foundItem ) ) {
-				int32 state = foundItem->getState();
+				int32 state = foundItem->getDisplayState();
 				//probably need to come up with better id's
 				//for enum values so that we can mask together
 				//as opposed to doing a direct
@@ -1039,6 +1045,7 @@ bool TreeListControl::singleSelectionChange( MouseEvent* event )
 			}
 		}
 	}
+	*/
 	
 	return result;
 }
@@ -1178,7 +1185,8 @@ TreeItem* TreeListControl::getNextItem( TreeItem* item, bool skipChildren )
 			}
 		}
 		else if ( item->getParent() == NULL ) {
-			Enumerator<TreeItem*>* items = tm->getRootItems();				
+			/*////MVC
+			Enumerator<TreeItem*>* items = tm->getRootItems();
 			while ( items->hasMoreElements() ) {
 				nextItem = items->nextElement();
 				if ( nextItem == item ) {
@@ -1189,6 +1197,7 @@ TreeItem* TreeListControl::getNextItem( TreeItem* item, bool skipChildren )
 					break;
 				}
 			}
+			*/
 		}
 		else {
 			nextItem = item->getNextChildNodeItem();
@@ -1207,11 +1216,13 @@ TreeItem* TreeListControl::getNextItem( TreeItem* item, bool skipChildren )
 		result = nextItem;
 	}
 	else {
+		/*////MVC
 		Enumerator<TreeItem*>* items = tm->getRootItems();
 		//get first item!
 		if ( items->hasMoreElements() ) {
 			result = items->nextElement();
 		}
+		*/
 	}
 	
 	return result;
@@ -1231,6 +1242,7 @@ TreeItem* TreeListControl::getPrevItem( TreeItem* item )
 				prevItem = item->getParent();
 			}
 			else {
+				/*////MVC
 				Enumerator<TreeItem*>* items = tm->getRootItems();
 				TreeItem* nextItem = NULL;
 				if ( items->hasMoreElements() ) {
@@ -1251,17 +1263,20 @@ TreeItem* TreeListControl::getPrevItem( TreeItem* item )
 
 					prevItem = nextItem;
 				}
+				*/
 			}
 		}
 
 		result = prevItem;
 	}
 	else {
+		/*////MVC
 		Enumerator<TreeItem*>* items = tm->getRootItems();
 		//get first item!
 		if ( items->hasMoreElements() ) {
 			result = items->nextElement();
 		}
+		*/
 	}
 
 	return result;
@@ -1517,11 +1532,13 @@ void TreeListControl::mouseMove( MouseEvent* event )
 
 		draggingSelectedItems_.clear();
 
+		/*////MVC
 		Enumerator<TreeItem*>* rootChildren = treeModel_->getRootItems();
 		while ( rootChildren->hasMoreElements() ) {
 			TreeItem* rootItem = rootChildren->nextElement();
 			hitTest( &dragSelectionRect_, rootItem, draggingSelectedItems_ );
 		}
+		*/
 
 		if ( !draggingSelectedItems_.empty() ) {
 			std::vector<TreeItem*>::iterator it = draggingSelectedItems_.begin() ;
@@ -1775,6 +1792,7 @@ bool TreeListControl::listVisibleItems( std::vector<TreeItem*>& items, TreeItem*
 
 void TreeListControl::populateVisiblityList( std::vector<TreeItem*>& items, Rect* bounds )
 {
+	/*////MVC
 	Enumerator<TreeItem*>* rootItems = treeModel_->getRootItems();
 	Rect clientBounds;
 	if ( NULL != bounds ) {
@@ -1796,6 +1814,7 @@ void TreeListControl::populateVisiblityList( std::vector<TreeItem*>& items, Rect
 			break;
 		}
 	}	
+	*/
 }
 
 double TreeListControl::getCurrentIndent( TreeItem* item )
@@ -1808,7 +1827,7 @@ double TreeListControl::getCurrentIndent( TreeItem* item )
 		result += imageList_->getImageWidth();
 	}
 
-	if ( Item::idsNone != item->getState() ) {
+	if ( Item::idsNone != item->getDisplayState() ) {
 		if ( NULL != stateImageList_ ) {
 			result += stateImageList_->getImageWidth();
 		}
@@ -1839,7 +1858,7 @@ Rect TreeListControl::getStateRect( TreeItem* item, const double& indent )
 {
 	Rect result;
 
-	if ( item->getState() != Item::idsNone ) {
+	if ( item->getDisplayState() != Item::idsNone ) {
 		Rect itemBounds = item->getBounds();
 
 		result = itemBounds;

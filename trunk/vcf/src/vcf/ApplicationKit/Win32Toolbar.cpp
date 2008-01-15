@@ -246,7 +246,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 				if ( SendMessage( hwnd_, TB_GETBUTTONINFOW, tbn->iItem, (LPARAM)&info ) >= 0 ) {
 
 					ToolbarItem* item = (ToolbarItem*)info.lParam;
-					int32 state = item->getState();
+					int32 state = item->getDisplayState();
 
 					if ( (TBSTATE_CHECKED  & info.fsState) && ( state & ToolbarItem::tisChecked ) ) {
 						state |= ToolbarItem::tisPressed;
@@ -255,7 +255,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 						state &= ~ToolbarItem::tisPressed;
 					}
 					currentlyModifyingItem_ = true;
-					item->setState( state );
+					item->setDisplayState( state );
 					currentlyModifyingItem_ = false;
 				}
 			}
@@ -270,7 +270,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 				if ( SendMessage( hwnd_, TB_GETBUTTONINFOA, tbn->iItem, (LPARAM)&info ) >= 0 ) {
 
 					ToolbarItem* item = (ToolbarItem*)info.lParam;
-					int32 state = item->getState();
+					int32 state = item->getDisplayState();
 
 					if ( (TBSTATE_CHECKED  & info.fsState) && ( state & ToolbarItem::tisChecked ) ) {
 						state |= ToolbarItem::tisPressed;
@@ -279,7 +279,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 						state &= ~ToolbarItem::tisPressed;
 					}
 					currentlyModifyingItem_ = true;
-					item->setState( state );
+					item->setDisplayState( state );
 					currentlyModifyingItem_ = false;
 				}
 			}
@@ -301,7 +301,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 				if ( NULL != item ) {
 
 
-					int32 state = item->getState();
+					int32 state = item->getDisplayState();
 
 					if ( (TBSTATE_CHECKED  & info.fsState) && ( state & ToolbarItem::tisChecked ) ) {
 						state |= ToolbarItem::tisPressed;
@@ -310,7 +310,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 						state &= ~ToolbarItem::tisPressed;
 					}
 					currentlyModifyingItem_ = true;
-					item->setState( state );
+					item->setDisplayState( state );
 					currentlyModifyingItem_ = false;
 
 
@@ -328,7 +328,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 				if ( NULL != item ) {
 
 
-					int32 state = item->getState();
+					int32 state = item->getDisplayState();
 
 					if ( (TBSTATE_CHECKED  & info.fsState) && ( state & ToolbarItem::tisChecked ) ) {
 						state |= ToolbarItem::tisPressed;
@@ -337,7 +337,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 						state &= ~ToolbarItem::tisPressed;
 					}
 					currentlyModifyingItem_ = true;
-					item->setState( state );
+					item->setDisplayState( state );
 					currentlyModifyingItem_ = false;
 
 
@@ -372,7 +372,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 						info.cbSize = sizeof(info);
 						info.dwMask |= TBIF_STATE;
 						if ( SendMessage( hwnd_, TB_GETBUTTONINFOW, lpNMCustomDraw->nmcd.dwItemSpec, (LPARAM)&info ) >= 0 ) {
-							int32 state = item->getState();
+							int32 state = item->getDisplayState();
 							if ( (TBSTATE_CHECKED  & info.fsState) && ( state & ToolbarItem::tisChecked ) ) {
 								state |= ToolbarItem::tisPressed;
 							}
@@ -381,7 +381,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 							}
 
 							currentlyModifyingItem_ = true;
-							item->setState( state );
+							item->setDisplayState( state );
 							currentlyModifyingItem_ = false;
 						}
 
@@ -392,7 +392,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 						info.cbSize = sizeof(info);
 						info.dwMask |= TBIF_STATE;
 						if ( SendMessage( hwnd_, TB_GETBUTTONINFOA, lpNMCustomDraw->nmcd.dwItemSpec, (LPARAM)&info ) >= 0 ) {
-							int32 state = item->getState();
+							int32 state = item->getDisplayState();
 							if ( (TBSTATE_CHECKED  & info.fsState) && ( state & ToolbarItem::tisChecked ) ) {
 								state |= ToolbarItem::tisPressed;
 							}
@@ -401,7 +401,7 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 							}
 
 							currentlyModifyingItem_ = true;
-							item->setState( state );
+							item->setDisplayState( state );
 							currentlyModifyingItem_ = false;
 						}
 					}
@@ -748,7 +748,7 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 
 		case ToolbarItem::tbStateChanged : {
 			ToolbarModelEvent* tme = (ToolbarModelEvent*)e;
-			int32 state = tme->getItem()->getState();
+			int32 state = tme->getItem()->getDisplayState();
 
 			if ( System::isUnicodeEnabled() ) {
 				TBBUTTONINFOW info;
@@ -928,7 +928,7 @@ void Win32Toolbar::insertToolbarButton( const uint32& index, ToolbarItem* item, 
 		info.dwMask |= TBIF_LPARAM;
 		info.lParam = (LPARAM)item;
 
-		int32 state = item->getState();
+		int32 state = item->getDisplayState();
 
 		if ( state == ToolbarItem::tisSeparator ) {
 			info.dwMask = TBIF_STYLE | TBIF_SIZE;
@@ -1025,7 +1025,7 @@ void Win32Toolbar::insertToolbarButton( const uint32& index, ToolbarItem* item, 
 		info.dwMask |= TBIF_LPARAM;
 		info.lParam = (LPARAM)item;
 
-		int32 state = item->getState();
+		int32 state = item->getDisplayState();
 
 		if ( state == ToolbarItem::tisSeparator ) {
 			info.dwMask = TBIF_STYLE | TBIF_SIZE;
@@ -1111,7 +1111,7 @@ void Win32Toolbar::resetItems( std::vector<ToolbarItem*>& items )
 			item = (ToolbarItem*)info.lParam;
 			items[index] = item;
 
-			state = item->getState();
+			state = item->getDisplayState();
 
 			if ( (TBSTATE_CHECKED  & info.fsState) && ( state & ToolbarItem::tisChecked ) ) {
 				state |= ToolbarItem::tisPressed;
@@ -1130,7 +1130,7 @@ void Win32Toolbar::resetItems( std::vector<ToolbarItem*>& items )
 			item = (ToolbarItem*)info.lParam;
 			items[index] = item;
 
-			state = item->getState();
+			state = item->getDisplayState();
 
 			if ( (TBSTATE_CHECKED  & info.fsState) && ( state & ToolbarItem::tisChecked ) ) {
 				state |= ToolbarItem::tisPressed;
@@ -1143,7 +1143,7 @@ void Win32Toolbar::resetItems( std::vector<ToolbarItem*>& items )
 
 
 		currentlyModifyingItem_ = true;
-		item->setState( state );
+		item->setDisplayState( state );
 		currentlyModifyingItem_ = false;
 
 

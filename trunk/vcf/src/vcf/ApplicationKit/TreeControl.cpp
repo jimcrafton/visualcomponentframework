@@ -20,7 +20,6 @@ using namespace VCF;
 TreeControl::TreeControl():
 	imageList_(NULL),
 	stateImageList_(NULL),
-	treeModel_(NULL),
 	currentSelectedItem_(NULL)
 {
 	treePeer_ = UIToolkit::createTreePeer( this );
@@ -39,10 +38,7 @@ TreeControl::TreeControl():
 
 TreeControl::~TreeControl()
 {
-	if ( NULL != treeModel_ ) {
-//		treeModel_->release();
-	}
-	treeModel_ = NULL;
+
 }
 
 void TreeControl::init()
@@ -68,7 +64,7 @@ void TreeControl::init()
 	CallBack* mh = new ClassProcedure1<ModelEvent*,TreeControl>( this, &TreeControl::onModelEmptied, "ModelHandler" );
 
 
-	setTreeModel( new DefaultTreeModel() );
+	setViewModel( new DefaultTreeModel() );
 
 	addComponent( getViewModel() );
 
@@ -77,47 +73,50 @@ void TreeControl::init()
 	setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW ) );
 }
 
-void TreeControl::setTreeModel( TreeModel * model )
+void TreeControl::modelChanged( Model* oldModel, Model* newModel )
 {
-	if ( NULL != treeModel_ ){
-
+	TreeModel* tm = (TreeModel*)oldModel;
+	if ( NULL != tm ) {
 		EventHandler* ev = (EventHandler*)getCallback( "TreeControl::onTreeRootNodeChanged" );
-		treeModel_->removeTreeRootNodeChangedHandler ( ev );
+		tm->RootNodeChanged -= ev;
 
 		ev = (EventHandler*)getCallback( "TreeControl::onTreeNodeAdded" );
-		treeModel_->removeTreeNodeAddedHandler( ev );
+		tm->NodeAdded -= ev;
 
 		ev = (EventHandler*)getCallback( "TreeControl::onTreeNodeDeleted" );
-		treeModel_->removeTreeNodeDeletedHandler( ev );
+		tm->NodeRemoved -= ev;
 
 		ev = (EventHandler*)getCallback( "ModelHandler" );
-		getViewModel()->ModelChanged -= (ModelHandler*)ev;
+		tm->ModelChanged -= (ModelHandler*)ev;
 	}
 
-	treeModel_ = model;
+	tm = (TreeModel*)newModel;
 
-	if ( NULL != treeModel_ ) {
+	if ( NULL != tm ) {
 
 		EventHandler* tml = (EventHandler*)getCallback( "TreeControl::onTreeRootNodeChanged" );
-		treeModel_->addTreeRootNodeChangedHandler ( tml );
+		tm->RootNodeChanged += tml;
 
 		tml = (EventHandler*)getCallback( "TreeControl::onTreeNodeAdded" );
-		treeModel_->addTreeNodeAddedHandler( tml );
+		tm->NodeAdded += tml;
 
 		tml = (EventHandler*)getCallback( "TreeControl::onTreeNodeDeleted" );
-		treeModel_->addTreeNodeDeletedHandler( tml );		
+		tm->NodeRemoved += tml;		
+
+		tm->ModelChanged += getCallback( "ModelHandler" );
 	}
 
-	setViewModel( dynamic_cast<Model*>(treeModel_) );
-
-	if ( NULL != treeModel_ ) {
-		getViewModel()->ModelChanged += (ModelHandler*)getCallback( "ModelHandler" );
-	}
 }
+
 
 TreeModel* TreeControl::getTreeModel()
 {
-	return treeModel_;
+	return (TreeModel*) getViewModel();
+}
+
+void TreeControl::setTreeModel( TreeModel* tm )
+{	
+	setViewModel( tm );
 }
 
 ImageList* TreeControl::getImageList()
@@ -144,13 +143,13 @@ void TreeControl::paint( GraphicsContext * context )
 
 void TreeControl::onTreeRootNodeChanged( TreeModelEvent* event )
 {
-	TreeItem* item = event->getTreeItem();
+////MVC	TreeItem* item = event->getTreeItem();
 	//treePeer_->addItem( item );
 }
 
 void TreeControl::onTreeNodeAdded( TreeModelEvent* event )
 {
-	TreeItem* item = event->getTreeItem();
+/*////MVC	TreeItem* item = event->getTreeItem();
 	
 	item->setControl( this );
 
@@ -160,13 +159,16 @@ void TreeControl::onTreeNodeAdded( TreeModelEvent* event )
 		il = new ClassProcedure1<ItemEvent*,TreeControl>( this, &TreeControl::onTreeItemPaint, "TreeItemListener" );
 	}
 	item->ItemPaint += il;
+	*/
 }
 
 void TreeControl::onTreeNodeDeleted( TreeModelEvent* event )
 {
+/*////MVC
 	if ( currentSelectedItem_ == event->getTreeItem() ) {
 		currentSelectedItem_ = NULL;
 	}
+	*/
 }
 
 void TreeControl::onModelEmptied( ModelEvent* event )
@@ -198,7 +200,7 @@ TreeItem* TreeControl::hitTestForItem( Point* pt, TreeItem* item )
 TreeItem* TreeControl::findItem( Point* pt )
 {
 	TreeItem* result = NULL;
-
+/*////MVC
 	Enumerator<TreeItem*>* rootItems = treeModel_->getRootItems();
 	while ( true == rootItems->hasMoreElements() ) {
 		TreeItem* item = rootItems->nextElement();
@@ -207,7 +209,7 @@ TreeItem* TreeControl::findItem( Point* pt )
 			break;
 		}
 	}
-
+*/
 	return result;
 }
 
@@ -293,21 +295,21 @@ ImageList* TreeControl::getStateImageList()
 
 void TreeControl::addItem( TreeItem* parent, TreeItem* item )
 {
-	treeModel_->addNodeItem( item, parent );
+////MVC	treeModel_->addNodeItem( item, parent );
 }
 
 TreeItem* TreeControl::addItem( TreeItem* parent, const String& caption, const uint32 imageIndex )
 {
 	TreeItem* result = NULL;
-	result = new DefaultTreeItem( caption, this, treeModel_ );
-	result->setImageIndex( imageIndex );
-	treeModel_->addNodeItem( result, parent );
+	//result = new DefaultTreeItem( caption, this, treeModel_ );
+	//result->setImageIndex( imageIndex );
+////MVC	treeModel_->addNodeItem( result, parent );
 	return result;
 }
 
 void TreeControl::removeItem( TreeItem* item )
 {
-	treeModel_->deleteNodeItem( item );
+////MVC	treeModel_->deleteNodeItem( item );
 }
 
 TreeItem* TreeControl::getSelectedItem()

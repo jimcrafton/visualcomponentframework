@@ -86,7 +86,7 @@ public:
 
 
 	Item():data_(NULL),selected_(false),imageIndex_(0),
-			itemState_(Item::idsNone),model_(NULL),owningControl_(NULL) {			
+			displayState_(Item::idsNone),model_(NULL),owningControl_(NULL) {			
 		tag_ = -1;
 	};
 
@@ -157,14 +157,14 @@ public:
 	Returns some application defined data. This can be anything 
 	you want, hence the void* storage.
 	*/
-    virtual void* getData() const {
+    void* getData() const {
 		return data_;
 	}
 
 	/**
 	Sets the application defined data.
 	*/
-	virtual void setData( void* data ) {
+	void setData( void* data ) {
 		data_ = data;
 		ItemEvent event( this, ITEM_EVENT_CHANGED );
 		ItemChanged( &event );
@@ -183,7 +183,7 @@ public:
 
 	virtual void paint( GraphicsContext* context, Rect* paintRect ) {}
 
-	virtual bool isSelected() const {
+	bool isSelected() const {
 		return selected_;
 	}
 
@@ -200,16 +200,16 @@ public:
 	the item(s). Some controls will completely 
 	ignore this value.
 	*/
-	int32 getState() const {
-		return itemState_;
+	int32 getDisplayState() const {
+		return displayState_;
 	}
 
 	/**
 	Sets the state for the item. This is made virtual to
 	allow subclasses to customize the behaviour. 
 	*/
-	virtual void setState( const int32& state ){
-		itemState_ = state;
+	virtual void setDisplayState( const int32& state ){
+		displayState_ = state;
 	}
 
 	/**
@@ -252,7 +252,7 @@ protected:
 	bool selected_;
 	int32 imageIndex_;
 
-	int32 itemState_;
+	int32 displayState_;
 	Model* model_;
 	Control* owningControl_;
 };

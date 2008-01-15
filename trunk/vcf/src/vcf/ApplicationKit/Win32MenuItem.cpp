@@ -253,9 +253,9 @@ void Win32MenuItem::addChild( MenuItem* child )
 	insertSimpleMenuItem( child, (HMENU)getMenuID() );	
 
 	//mark the child as being bound to the peer
-	int32 state = child->getState();
+	int32 state = child->getDisplayState();
 	state |= MenuItem::mdsBoundToMenuPeer;
-	child->setState( state );
+	child->setDisplayState( state );
 }
 
 void Win32MenuItem::insertChild( const uint32& index, MenuItem* child )

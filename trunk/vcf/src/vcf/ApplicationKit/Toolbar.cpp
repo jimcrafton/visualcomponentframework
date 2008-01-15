@@ -26,7 +26,7 @@ ToolbarItem::ToolbarItem():
 	itemControl_(NULL)
 {
 	tag_ = -1;
-	itemState_ = tisEnabled;
+	displayState_ = tisEnabled;
 }
 
 void ToolbarItem::click()
@@ -109,11 +109,11 @@ void ToolbarItem::setAsSeparator()
 
 void ToolbarItem::setPressed( bool val )
 {
-	if ( ( (itemState_ & ToolbarItem::tisPressed) != 0 ) == val ) {
+	if ( ( (displayState_ & ToolbarItem::tisPressed) != 0 ) == val ) {
 		return;
 	}
 
-	int32 state = itemState_;
+	int32 state = displayState_;
 	if ( val ) {
 		state |= tisPressed;
 	}
@@ -125,7 +125,7 @@ void ToolbarItem::setPressed( bool val )
 
 bool ToolbarItem::isEnabled()
 {
-	return (itemState_ & ToolbarItem::tisEnabled) ? true : false;
+	return (displayState_ & ToolbarItem::tisEnabled) ? true : false;
 }
 
 void ToolbarItem::setEnabled( const bool& val )
@@ -134,7 +134,7 @@ void ToolbarItem::setEnabled( const bool& val )
 		return;
 	}
 
-	int32 state = itemState_;
+	int32 state = displayState_;
 	if ( val ) {
 		state |= ToolbarItem::tisEnabled;
 	}
@@ -145,13 +145,13 @@ void ToolbarItem::setEnabled( const bool& val )
 	setState( state );
 }
 
-void ToolbarItem::setState( const int32& state )
+void ToolbarItem::setDisplayState( const int32& state )
 {
-	if ( itemState_ == state ) {
+	if ( displayState_ == state ) {
 		return ;
 	}
 
-	itemState_ = state;
+	displayState_ = state;
 
 	if ( NULL != model_ ) {
 		((ToolbarModel*)model_)->itemChanged( ToolbarItem::tbStateChanged, this );
@@ -186,7 +186,7 @@ void ToolbarItem::setIndex( const uint32& index )
 
 bool ToolbarItem::isSelected()
 {
-	return (itemState_ & tisSelected) ? true : false;
+	return (displayState_ & tisSelected) ? true : false;
 }
 
 void ToolbarItem::setSelected( const bool& selected )
@@ -196,10 +196,10 @@ void ToolbarItem::setSelected( const bool& selected )
 	}
 
 	if ( selected ) {
-		itemState_ |= tisSelected;
+		displayState_ |= tisSelected;
 	}
 	else {
-		itemState_ &= ~tisSelected;
+		displayState_ &= ~tisSelected;
 	}
 
 	if ( NULL != model_ ) {
@@ -266,10 +266,10 @@ void ToolbarItem::setGrouped( const bool& val )
 	}
 
 	if ( val ) {
-		itemState_ |= tisGrouped;
+		displayState_ |= tisGrouped;
 	}
 	else {
-		itemState_ &= ~tisGrouped;
+		displayState_ &= ~tisGrouped;
 	}
 
 	if ( NULL != model_ ) {
@@ -279,7 +279,7 @@ void ToolbarItem::setGrouped( const bool& val )
 
 bool ToolbarItem::isGrouped()
 {
-	return (itemState_ & tisGrouped) ? true : false;
+	return (displayState_ & tisGrouped) ? true : false;
 }
 
 void ToolbarItem::setChecked( const bool& val )
@@ -289,10 +289,10 @@ void ToolbarItem::setChecked( const bool& val )
 	}
 
 	if ( val ) {
-		itemState_ |= tisChecked;
+		displayState_ |= tisChecked;
 	}
 	else {
-		itemState_ &= ~tisChecked;
+		displayState_ &= ~tisChecked;
 	}
 
 	if ( NULL != model_ ) {
@@ -302,7 +302,7 @@ void ToolbarItem::setChecked( const bool& val )
 
 bool ToolbarItem::isChecked()
 {
-	return (itemState_ & tisChecked) ? true : false;
+	return (displayState_ & tisChecked) ? true : false;
 }
 
 //******************************************************************************

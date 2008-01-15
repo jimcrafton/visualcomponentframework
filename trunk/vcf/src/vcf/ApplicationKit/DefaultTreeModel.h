@@ -18,7 +18,7 @@ where you installed the VCF.
 
 
 #ifndef _VCF_ABSTRACTTREEMODEL_H__
-#include "vcf/ApplicationKit/AbstractTreeModel.h"
+#include "vcf/ApplicationKit/TreeModel.h"
 #endif //_VCF_ABSTRACTTREEMODEL_H__
 
 
@@ -30,81 +30,75 @@ namespace VCF{
 /**
 \class DefaultTreeModel DefaultTreeModel.h "vcf/ApplicationKit/DefaultTreeModel.h"
 */
-class APPLICATIONKIT_API DefaultTreeModel : public Model, public AbstractTreeModel {
-public:
-	/**
-	@delegate RootNodeChanged
-	@event
-	*/
-	DELEGATE(TreeModelDelegate,RootNodeChanged)
-
-	/**
-	@delegate NodeAdded
-	@event
-	*/
-	DELEGATE(TreeModelDelegate,NodeAdded)
-
-	/**
-	@delegate NodeDeleted
-	@event
-	*/
-	DELEGATE(TreeModelDelegate,NodeDeleted)
-
-	virtual void addTreeRootNodeChangedHandler( EventHandler* handler ) {
-		RootNodeChanged += handler;
-	}
-
-	virtual void removeTreeRootNodeChangedHandler( EventHandler* handler ) {
-		RootNodeChanged.remove(handler);
-	}
-
-	virtual void addTreeNodeAddedHandler( EventHandler* handler ) {
-		NodeAdded += handler;
-	}
-
-	virtual void removeTreeNodeAddedHandler( EventHandler* handler ) {
-		NodeAdded.remove(handler);
-	}
-
-	virtual void addTreeNodeDeletedHandler( EventHandler* handler ) {
-		NodeDeleted += handler;
-	}
-
-	virtual void removeTreeNodeDeletedHandler( EventHandler* handler ) {
-		NodeDeleted.remove(handler);
-	}
-
+class APPLICATIONKIT_API DefaultTreeModel : public TreeModel {
+public:	
 	DefaultTreeModel();
 
 	virtual ~DefaultTreeModel();
 
-	void init();
 
-	virtual void empty() {
-		AbstractTreeModel::empty();
+	virtual void empty();    
 
-		Model::empty();
-	}
+	virtual Key insert( const VariantData& value, const Key& parentKey=RootKey );
 
-    virtual void insertNodeItem(TreeItem * node, TreeItem * nodeToInsertAfter);
+	virtual void remove( const Key& key );
 
-    virtual void deleteNodeItem(TreeItem * nodeToDelete);
+	virtual VariantData get( const Key& key );
 
-    virtual void addNodeItem( TreeItem * node, TreeItem * nodeParent=NULL );
+	virtual String getAsString( const Key& key );
+
+	virtual void set( const Key& key, const VariantData& value );
+
+	virtual void setAsString( const Key& key, const String& value );
+
+	virtual void copy( const Key& srcKey, const Key& destKey, bool deepCopy=false );
+
+	virtual void move( const Key& srcKey, const Key& destParentKey );
+
+	virtual bool getChildren(const Key& key, std::vector<Key>& children );
+
+	virtual Key getParent( const Key& key );
+
+	virtual Key getNextSibling( const Key& key );
+
+	virtual Key getPrevSibling( const Key& key );
+
+	virtual Key getFirstChild( const Key& key );
+
+	virtual bool isLeaf( const Key& key );
+
+	virtual uint32 getCount();
+
+	virtual uint32 getChildCount( const Key& key );
 
 protected:
 
-	virtual void onItemPaint( ItemEvent* event );
+	struct TreeValRef {
+		
+		TreeValRef(): parent(NULL),nextSibling(NULL),prevSibling(NULL){}
+		
+		VariantData data;
+		TreeModel::Key key;
+		
+		TreeValRef* parent;
+		TreeValRef* nextSibling;
+		TreeValRef* prevSibling;
+	};
 
-    virtual void onItemChanged( ItemEvent* event );
 
-    virtual void onItemSelected( ItemEvent* event );
+	typedef std::map<TreeModel::Key, TreeValRef> DataMap;
+	typedef std::multimap<TreeModel::Key,TreeModel::Key> HierarchyMap;
+	typedef std::pair<HierarchyMap::iterator,HierarchyMap::iterator> HierarchyRange;
+	typedef HierarchyMap::value_type HierarchyValue;
 
-	virtual void onItemAdded( ItemEvent* event );
+	DataMap data_;
+	HierarchyMap hierarchy_;
+	uint32 lastKey_;
 
-	virtual void onItemDeleted( ItemEvent* event );
 
-	
+	TreeModel::Key removeFromHierarchy( TreeModel::Key key );
+
+	void insertRef( TreeValRef& ref, TreeModel::Key parentKey );
 };
 
 };
