@@ -105,9 +105,7 @@ public:
 	DELEGATE(TreeModelDelegate,NodeRemoved)
 
 
-	TreeModel(){
-
-	};
+	TreeModel(){}
 
 	virtual ~TreeModel(){};
 
@@ -239,6 +237,7 @@ public:
 		return false;
 	}
 
+	
 };
 
 

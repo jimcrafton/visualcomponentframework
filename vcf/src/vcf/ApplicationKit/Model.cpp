@@ -15,7 +15,7 @@ where you installed the VCF.
 using namespace VCF;
 
 
-Model::Model()
+Model::Model(): deleteVariantObjects_(false)
 {
 }
 

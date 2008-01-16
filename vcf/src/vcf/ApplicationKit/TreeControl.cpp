@@ -149,6 +149,9 @@ void TreeControl::onTreeRootNodeChanged( TreeModelEvent* event )
 
 void TreeControl::onTreeNodeAdded( TreeModelEvent* event )
 {
+
+	
+
 /*////MVC	TreeItem* item = event->getTreeItem();
 	
 	item->setControl( this );
@@ -173,8 +176,8 @@ void TreeControl::onTreeNodeDeleted( TreeModelEvent* event )
 
 void TreeControl::onModelEmptied( ModelEvent* event )
 {
-	treePeer_->clear();
-	currentSelectedItem_ = NULL;
+	//treePeer_->clear();
+	//currentSelectedItem_ = NULL;
 }
 
 TreeItem* TreeControl::hitTestForItem( Point* pt, TreeItem* item )

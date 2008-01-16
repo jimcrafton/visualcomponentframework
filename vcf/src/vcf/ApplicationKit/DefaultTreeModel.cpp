@@ -27,7 +27,26 @@ DefaultTreeModel::~DefaultTreeModel()
 
 void DefaultTreeModel::empty()
 {
+	DataMap::iterator it = data_.begin();
+	if ( shouldDeleteVarObjects() ) {
+		while ( it != data_.end() ) {
+			TreeValRef& ref = it->second;		
+			if ( ref.data.type == pdObject ) {
+				Object* obj = ref.data;
+				if ( NULL != obj ) {
+					deleteVariantObject( obj );
+				}
+			}
+			++it;
+		}
+	}
 
+	data_.clear();
+	hierarchy_.clear();
+
+	TreeModelEvent event( this, TreeModel::ContentsDeleted );
+	ModelChanged( &event );
+	lastKey_ = 0;
 }
 
 void DefaultTreeModel::insertRef( TreeValRef& ref, TreeModel::Key parentKey )

@@ -34,6 +34,13 @@ void SimpleListModel::empty()
 		itemEvent.item = &(*it);
 		itemEvent.index = it - data_.begin();
 		ItemRemoved( &itemEvent );
+
+		if ( itemEvent.item->type == pdObject && shouldDeleteVarObjects() ) {
+			Object* obj = *itemEvent.item;
+			if ( NULL != obj ) {
+				this->deleteVariantObject( obj );
+			}
+		}
 		++it;
 	}
 	data_.clear();

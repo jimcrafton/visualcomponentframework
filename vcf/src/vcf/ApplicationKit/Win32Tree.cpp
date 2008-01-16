@@ -145,9 +145,7 @@ void Win32Tree::create( Control* owningControl )
 {
 	init();
 
-	CreateParams params = createParams();
-
-	backColor_ = *treeControl_->getColor();
+	CreateParams params = createParams();	
 
 	Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
 	HWND parent = toolkit->getDummyParent();
@@ -197,7 +195,7 @@ void Win32Tree::create( Control* owningControl )
 		peerControl_->ControlModelChanged +=
 			new ClassProcedure1<Event*,Win32Tree>( this, &Win32Tree::onControlModelChanged, "Win32Tree::onControlModelChanged" );
 
-		COLORREF backColor = backColor_.getColorRef32();
+		COLORREF backColor = treeControl_->getColor()->getColorRef32();
 
 		TreeView_SetBkColor( hwnd_, backColor );
 	}
@@ -211,7 +209,7 @@ void Win32Tree::create( Control* owningControl )
 void Win32Tree::init()
 {
 
-
+/*
 	itemAddedHandler_ =
 		new ClassProcedure1<ItemEvent*, Win32Tree>( this, &Win32Tree::onItemAdded, "Win32Tree::onItemAdded" );
 
@@ -226,7 +224,7 @@ void Win32Tree::init()
 
 	itemPaintedHandler_ =
 		new ClassProcedure1<ItemEvent*, Win32Tree>( this, &Win32Tree::onItemPaint, "Win32Tree::onItemPaint" );
-
+*/
 }
 
 Win32Object::CreateParams Win32Tree::createParams()
@@ -468,11 +466,11 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 		case WM_ERASEBKGND :{
 			Color* color = treeControl_->getColor();
-			if ( backColor_ != *color ) {
-				COLORREF backColor = color->getColorRef32();
-				TreeView_SetBkColor( hwnd_, backColor );
+			COLORREF clrRef = color->getColorRef32();
+			COLORREF currentClr = TreeView_GetBkColor( hwnd_ );
 
-				backColor_ = *color;
+			if ( currentClr != clrRef ) {
+				TreeView_SetBkColor( hwnd_, clrRef );
 			}
 
 
@@ -687,14 +685,34 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		case TVN_GETDISPINFOW: {
 			LPNMTVDISPINFOW lptvdi = (LPNMTVDISPINFOW) lParam ;
 			if ( lptvdi->item.mask & TVIF_TEXT ) {
-				static String text;
-				TreeItem* item = (TreeItem*)lptvdi->item.lParam;
-				if ( NULL != item ) {
-					text = item->getCaption();
-					text.copy( lptvdi->item.pszText, text.size() );
-					lptvdi->item.pszText[text.size()] = 0;
+				//static String text;
+				TreeModel* tm = treeControl_->getTreeModel();
+				TreeModel::Key key = (TreeModel::Key)lptvdi->item.lParam;
+
+				String s = tm->getAsString( key );
+
+				//TreeItem* item = (TreeItem*)lptvdi->item.lParam;
+
+				if ( !s.empty() ) {
+					//text = item->getCaption();
+					s.copy( lptvdi->item.pszText, s.size() );
+					lptvdi->item.pszText[s.size()] = 0;
 				}
 			}
+
+
+			if ( lptvdi->item.mask & TVIF_CHILDREN ) {
+				TreeModel* tm = treeControl_->getTreeModel();
+				TreeModel::Key key = (TreeModel::Key)lptvdi->item.lParam;
+				lptvdi->item.cChildren = tm->isLeaf( key ) ? 0 : 1;
+			}
+
+			if ( lptvdi->item.mask & TVIF_IMAGE ) {
+			}
+
+			if ( lptvdi->item.mask & TVIF_SELECTEDIMAGE ) {
+			}
+
 		}
 		break;
 
@@ -750,6 +768,16 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		case TVN_ITEMEXPANDEDW:{
 			internalTreeItemExpanded_ = true;
 			NMTREEVIEWW* treeview = (NMTREEVIEWW*)lParam;
+
+			if ( treeview->action == TVE_EXPAND ) {
+			}
+			else if ( treeview->action == TVE_COLLAPSE ) {
+				TreeView_Expand (hwnd_,
+                                 treeview->itemNew.hItem,
+                                 TVE_COLLAPSE | TVE_COLLAPSERESET);	
+			}
+
+			/*
 			TreeItem* item = (TreeItem*)treeview->itemNew.lParam;
 
 			if ( NULL != item ) {
@@ -773,11 +801,29 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 				treeControl_->handleEvent( &event );
 			}
+			*/
 			internalTreeItemExpanded_ = false;
 		}
 		break;
 
-		case TVN_ITEMEXPANDING:{
+		case TVN_ITEMEXPANDINGW:{
+			NMTREEVIEWW* treeview = (NMTREEVIEWW*)lParam;
+			if ( TVE_EXPAND == treeview->action ) {
+				TreeModel* tm = treeControl_->getTreeModel();
+				TreeModel::Key key = (TreeModel::Key)treeview->itemNew.lParam;
+				
+				std::vector<TreeModel::Key> children;
+				tm->getChildren(key,children);
+				std::vector<TreeModel::Key>::iterator it = children.begin();
+				while ( it != children.end() ) {
+					addTreeItem( *it, treeview->itemNew.hItem );
+					++it;
+				}
+			}
+		}
+		break;
+
+		case TVN_ITEMEXPANDINGA:{
 
 		}
 		break;
@@ -789,6 +835,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 		case TVN_SELCHANGEDW:{
 			NMTREEVIEWW* treeview = (NMTREEVIEWW*)lParam;
+			/*
 			TreeItem* item = (TreeItem*)treeview->itemNew.lParam;
 
 			if ( NULL != item ) {
@@ -812,6 +859,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			if ( NULL != item ) {
 				item->setSelected( false );
 			}
+			*/
 		}
 		break;
 
@@ -910,6 +958,7 @@ Do we need these? What advantage does processing these events have for us???
 						wndProcResult = CDRF_DODEFAULT;
 
 						if ( NULL != treeViewDraw->nmcd.lItemlParam ) {
+							/*
 							TreeItem* item = (TreeItem*)treeViewDraw->nmcd.lItemlParam;
 
 							if ( item->canPaint() ) {
@@ -920,6 +969,7 @@ Do we need these? What advantage does processing these events have for us???
 
 								item->paint( peerControl_->getContext(), &itemRect );
 							}
+							*/
 						}
 					}
 					break;
@@ -942,6 +992,45 @@ Do we need these? What advantage does processing these events have for us???
 		break;
 	}
 	return result;
+}
+
+void Win32Tree::addTreeItem( TreeModel::Key key, HTREEITEM parent )
+{
+	if ( System::isUnicodeEnabled() ) {
+		TVINSERTSTRUCTW insert;
+		memset( &insert, 0, sizeof(TVINSERTSTRUCTW) );
+		TVITEMW tvItem;
+		memset( &tvItem, 0, sizeof(TVITEMW) );
+		
+		
+		
+		tvItem.mask = TVIF_TEXT | TVIF_PARAM | TVIF_CHILDREN | 
+			TVIF_SELECTEDIMAGE | TVIF_IMAGE;
+		
+		tvItem.cChildren = I_CHILDRENCALLBACK;
+		tvItem.iImage = I_IMAGECALLBACK;
+		tvItem.iSelectedImage = I_IMAGECALLBACK;
+		
+		/*
+		if ( item->getStateImageIndex() >= 0 ) {
+		tvItem.mask |= TVIF_STATE;
+		//INDEXTOSTATEIMAGEMASK is one based, but Item::getStateImageIndex() is zero based
+		tvItem.state = INDEXTOSTATEIMAGEMASK( item->getStateImageIndex() );
+		tvItem.stateMask = TVIS_STATEIMAGEMASK;
+		}
+		*/
+		
+		
+		tvItem.cchTextMax = 0;					
+		tvItem.pszText = LPSTR_TEXTCALLBACKW;
+		tvItem.lParam = (LPARAM)key;
+		
+		insert.hParent = parent;
+		insert.hInsertAfter = TVI_LAST;
+		insert.item = tvItem;
+		
+		::SendMessage( hwnd_, TVM_INSERTITEMW, 0, (LPARAM)&insert );
+	}
 }
 
 void Win32Tree::addItem( TreeItem* item )
@@ -1053,13 +1142,13 @@ void Win32Tree::addItem( TreeItem* item )
 	//delete [] tmpName;
 
 	treeItems_[item] = addedItem;
-
+/*
 	item->ItemAdded += itemAddedHandler_;
 	item->ItemChanged += itemChangedHandler_;
 	item->ItemDeleted += itemDeletedHandler_;
 	item->ItemPaint += itemPaintedHandler_;
 	item->ItemSelected += itemSelectedHandler_;
-
+*/
 	//now check the children
 
 	Enumerator<TreeItem*>* children = item->getChildren();
@@ -1080,6 +1169,7 @@ void Win32Tree::clear()
 	TreeView_DeleteAllItems( hwnd_ );
 }
 
+/*
 void Win32Tree::onItemPaint( ItemEvent* event )
 {
 
@@ -1220,6 +1310,7 @@ void Win32Tree::onItemDeleted( ItemEvent* event )
 		}
 	}
 }
+*/
 
 void Win32Tree::onImageListImageChanged( ImageListEvent* event )
 {
@@ -1379,18 +1470,45 @@ void Win32Tree::setAllowLabelEditing( const bool& allowLabelEditing )
 
 void Win32Tree::onControlModelChanged( Event* e )
 {
-	CallBack* ev = getCallback( "Win32Tree::onTreeNodeDeleted" );
+	CallBack* ev = getCallback( "Win32Tree::onTreeModelChanged" );
 
 	if ( NULL == ev ) {
-		ev = new ClassProcedure1<TreeModelEvent*,Win32Tree>( this,
-													&Win32Tree::onTreeNodeDeleted,
-													"Win32Tree::onTreeNodeDeleted" );
+		ev = new ClassProcedure1<ModelEvent*,Win32Tree>( this,
+													&Win32Tree::onTreeModelChanged,
+													"Win32Tree::onTreeModelChanged" );
 	}
-	treeControl_->getTreeModel()->NodeRemoved += ev;
+	treeControl_->getTreeModel()->ModelChanged += ev;
 }
 
-void Win32Tree::onTreeNodeDeleted( TreeModelEvent* event )
+void Win32Tree::onTreeModelChanged( ModelEvent* event )
 {
+	switch ( event->getType() ) {
+		case TreeModel::ItemAdded : {
+			TreeModelEvent* te = (TreeModelEvent*)event;
+			if ( TreeModel::RootKey ==  te->parentKey ) {
+				//only add root items - the rest will be added 
+				//as needed
+				addTreeItem( te->key, NULL );
+			}
+		}
+		break;
+
+		case TreeModel::ItemRemoved : {
+
+		}
+		break;
+
+		case TreeModel::ContentsDeleted : {
+			treeItems_.clear();
+			
+			TreeView_DeleteAllItems( hwnd_ );
+		}
+		break;
+	}
+}
+
+//void Win32Tree::onTreeNodeDeleted( TreeModelEvent* event )
+//{
 /*
 	TreeItem* item = event->getTreeItem();
 	if ( NULL != item ){
@@ -1403,7 +1521,7 @@ void Win32Tree::onTreeNodeDeleted( TreeModelEvent* event )
 		}
 	}
 	*/
-}
+//}
 
 
 /**
