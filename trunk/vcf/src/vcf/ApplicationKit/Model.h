@@ -153,8 +153,17 @@ public:
 
 	virtual void setValueAsString( const String& value, const VariantData& key=VariantData::null() ) {}
 
+	bool shouldDeleteVarObjects() {
+		return deleteVariantObjects_;
+	}
+
 protected:
+	bool deleteVariantObjects_;
 	Array<View*> views_;
+
+	virtual void deleteVariantObject( Object* obj ) {
+		obj->free();
+	}
 };
 
 };

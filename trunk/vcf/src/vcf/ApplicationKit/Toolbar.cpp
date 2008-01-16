@@ -104,7 +104,7 @@ void ToolbarItem::setItemControl( Control* control )
 
 void ToolbarItem::setAsSeparator()
 {
-	setState( tisSeparator );
+	setDisplayState( tisSeparator );
 }
 
 void ToolbarItem::setPressed( bool val )
@@ -120,7 +120,7 @@ void ToolbarItem::setPressed( bool val )
 	else {
 		state &= ~tisPressed;
 	}
-	setState( state );
+	setDisplayState( state );
 }
 
 bool ToolbarItem::isEnabled()
@@ -142,7 +142,7 @@ void ToolbarItem::setEnabled( const bool& val )
 		state &= ~ToolbarItem::tisEnabled;
 	}
 
-	setState( state );
+	setDisplayState( state );
 }
 
 void ToolbarItem::setDisplayState( const int32& state )
