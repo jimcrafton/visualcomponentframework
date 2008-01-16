@@ -1,0 +1,12 @@
+object TreesWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 500
+	width = 500
+	caption = 'Tree example'
+
+	object treeCtrl : VCF::TreeControl
+		alignment = AlignClient
+
+	end
+end
