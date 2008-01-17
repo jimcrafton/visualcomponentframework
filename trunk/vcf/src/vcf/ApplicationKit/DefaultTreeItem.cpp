@@ -21,7 +21,7 @@ DefaultTreeItem::DefaultTreeItem()
 DefaultTreeItem::DefaultTreeItem( const String& caption )
 {
 	init();
-	caption_ = caption;
+	//caption_ = caption;
 }
 
 DefaultTreeItem::DefaultTreeItem( const String& caption, Control* owningControl, TreeModel* model )
@@ -34,7 +34,7 @@ DefaultTreeItem::DefaultTreeItem( const String& caption, Control* owningControl,
 
 DefaultTreeItem::~DefaultTreeItem()
 {
-	std::vector<TreeItem::SubItem*>::iterator subIt = subItems_.begin();
+/*	std::vector<TreeItem::SubItem*>::iterator subIt = subItems_.begin();
 	while ( subIt != subItems_.end() ) {
 		(*subIt)->release();
 		subIt++;
@@ -47,8 +47,10 @@ DefaultTreeItem::~DefaultTreeItem()
 		it++;
 	}
 	childNodeItems_.clear();
+	*/
 }
 
+/*
 void DefaultTreeItem::init()
 {
 	imageIndex_ = 0;
@@ -454,6 +456,7 @@ void DefaultTreeItem::changed( const uint32& eventType )
 	ItemEvent event( this, eventType );
 	ItemChanged( &event );
 }
+*/
 
 
 /**

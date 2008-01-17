@@ -773,6 +773,7 @@ TreeItem* TreeListControl::hitTest( Point* pt, TreeItem* itemToTest )
 	}
 	else {
 		if ( (false == itemToTest->isLeaf()) && (true == itemToTest->isExpanded()) ) {
+			/*
 			Enumerator<TreeItem*>* children = itemToTest->getChildren();
 			while ( true == children->hasMoreElements() ) {
 				TreeItem* item = children->nextElement();
@@ -781,6 +782,7 @@ TreeItem* TreeListControl::hitTest( Point* pt, TreeItem* itemToTest )
 					break;
 				}
 			}
+			*/
 		}
 	}
 
@@ -1178,11 +1180,13 @@ TreeItem* TreeListControl::getNextItem( TreeItem* item, bool skipChildren )
 		TreeItem* nextItem = NULL;		
 		
 		if ( !item->isLeaf() && item->isExpanded() && !skipChildren ) {
+			/*////MVC
 			Enumerator<TreeItem*>* items = item->getChildren();
 			//get first item!
 			if ( items->hasMoreElements() ) {
 				nextItem = items->nextElement();
 			}
+			*/
 		}
 		else if ( item->getParent() == NULL ) {
 			/*////MVC
@@ -1380,12 +1384,14 @@ void TreeListControl::keyDown( KeyboardEvent* e )
 			TreeItem* item = getSelectedItem();	
 			if ( NULL != item ) {
 				if ( item->isExpanded() ) {
+					/*////MVC
 					Enumerator<TreeItem*>* items = item->getChildren();
 					//get first item!
 					if ( items->hasMoreElements() ) {
 						setSelectedItem( item, false );
 						setSelectedItem( items->nextElement(), true );
 					}
+					*/
 				}
 				else {
 					item->expand( true );
@@ -1476,11 +1482,13 @@ bool TreeListControl::hitTest( Rect* rect, TreeItem* item, std::vector<TreeItem*
 	}
 
 	if ( (false == item->isLeaf()) && (true == item->isExpanded()) ) {
+		/*////MVC
 		Enumerator<TreeItem*>* children = item->getChildren();
 		while ( true == children->hasMoreElements() ) {
 			TreeItem* child = children->nextElement();
 			hitTest( rect, child, hitTestList );
 		}
+		*/
 	}
 
 	return result;
@@ -1776,6 +1784,7 @@ bool TreeListControl::listVisibleItems( std::vector<TreeItem*>& items, TreeItem*
 			result = true;
 			if ( (!itemToSearch->isLeaf()) && (itemToSearch->isExpanded()) ) {
 				//check children
+				/*////MVC
 				Enumerator<TreeItem*>* children = itemToSearch->getChildren();
 				while ( children->hasMoreElements() ) {
 					TreeItem* child = children->nextElement();
@@ -1783,6 +1792,7 @@ bool TreeListControl::listVisibleItems( std::vector<TreeItem*>& items, TreeItem*
 						break;
 					}
 				}
+				*/
 			}
 		}
 	}
@@ -2004,6 +2014,7 @@ bool TreeListControl::listSelectedItems( std::vector<TreeItem*>& items, TreeItem
 	}
 
 	if ( (false == result) && (false == nextItem->isLeaf()) && (true == nextItem->isExpanded()) ) {
+		/*////MVC
 		next = nextItem->getChildren()->nextElement();
 		while ( next ) {
 			if ( false == startFound ) {
@@ -2026,6 +2037,7 @@ bool TreeListControl::listSelectedItems( std::vector<TreeItem*>& items, TreeItem
 
 			next = next->getNextChildNodeItem();
 		}
+		*/
 	}
 
 
