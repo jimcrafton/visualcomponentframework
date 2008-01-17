@@ -117,10 +117,7 @@ public:
 
 	virtual void setControl( Control* control );
 
-	virtual bool isExpanded() {
-		return isExpanded_;
-	}
-
+	
 	virtual void expand( const bool& isExpanded );
 
 	virtual void expandAllChildren( const bool& isExpanded );
@@ -163,13 +160,13 @@ public:
 	virtual void removeSubItem( const uint32& index );
 
 	virtual Enumerator<SubItem*>* getSubItems() {
-		return enumSubItemsContainer_.getEnumerator();
+		return NULL;//enumSubItemsContainer_.getEnumerator();
 	}
 
 	virtual SubItem* getSubItem( const uint32& index );
 
 	virtual uint32 getSubItemCount() {
-		return subItems_.size();
+		return 0;//subItems_.size();
 	}
 
 	virtual void subItemChanged( SubItem* item );
@@ -177,26 +174,7 @@ public:
 protected:
 	virtual void changed( const uint32& eventType=ITEM_EVENT_CHANGED  );
 
-protected:
-	bool textBold_;
-	Color TextColor_;
-	String caption_;
-	TreeItem* parent_;
-	void* userData_;	
-	uint32 index_;
-	EnumeratorContainer<std::vector<TreeItem*>,TreeItem*> enumContainer_;
-	std::vector<TreeItem*> childNodeItems_;
-
-	EnumeratorContainer<std::vector<SubItem*>,SubItem*> enumSubItemsContainer_;
-	std::vector<SubItem*> subItems_;
-
-	bool selected_;
-	bool isExpanded_;
-	Rect bounds_;	
-	int32 imageIndex_;
-	int32 selectedImageIndex_;
-	int32 expandedImageIndex_;
-	int32 stateImageIndex_;
+protected:	
 };
 
 

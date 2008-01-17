@@ -187,6 +187,7 @@ TreeItem* TreeControl::hitTestForItem( Point* pt, TreeItem* item )
 		result = item;
 	}
 	else if ( !item->isLeaf() && item->isExpanded() ){
+	/*
 		Enumerator<TreeItem*>* children = item->getChildren();
 		while ( children->hasMoreElements() ) {
 			TreeItem* childItem = children->nextElement();
@@ -195,6 +196,7 @@ TreeItem* TreeControl::hitTestForItem( Point* pt, TreeItem* item )
 				break;
 			}
 		}
+		*/
 	}
 
 	return result;

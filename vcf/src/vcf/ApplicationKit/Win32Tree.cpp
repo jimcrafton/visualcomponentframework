@@ -1150,7 +1150,7 @@ void Win32Tree::addItem( TreeItem* item )
 	item->ItemSelected += itemSelectedHandler_;
 */
 	//now check the children
-
+/*
 	Enumerator<TreeItem*>* children = item->getChildren();
 	if ( NULL != children ){
 		while ( children->hasMoreElements() ){
@@ -1160,6 +1160,7 @@ void Win32Tree::addItem( TreeItem* item )
 			}
 		}
 	}
+	*/
 }
 
 void Win32Tree::clear()
