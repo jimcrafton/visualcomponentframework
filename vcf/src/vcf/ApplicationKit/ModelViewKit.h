@@ -140,7 +140,7 @@ where you installed the VCF.
 #endif // _VCF_DEFAULTTEXTMODEL_H__
 
 #ifndef _VCF_DEFAULTTREEITEM_H__
-#	include "vcf/ApplicationKit/DefaultTreeItem.h"
+#	include "vcf/ApplicationKit/TreeItem.h"
 #endif // _VCF_DEFAULTTREEITEM_H__
 
 #ifndef _VCF_DEFAULTTREEMODEL_H__

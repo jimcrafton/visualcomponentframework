@@ -16,7 +16,6 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKitPrivate.h"
 #include "vcf/ApplicationKit/Win32Tree.h"
 #include "vcf/ApplicationKit/TreeControl.h"
-#include "vcf/ApplicationKit/DefaultTreeItem.h"
 
 
 /**

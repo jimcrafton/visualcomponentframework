@@ -11,7 +11,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/TreeListControl.h"
 #include "vcf/ApplicationKit/HeaderControl.h"
 #include "vcf/ApplicationKit/DefaultTreeModel.h"
-#include "vcf/ApplicationKit/DefaultTreeItem.h"
+#include "vcf/ApplicationKit/TreeItem.h"
 #include "vcf/ApplicationKit/Containers.h"
 #include "vcf/GraphicsKit/DrawUIState.h"
 
@@ -367,10 +367,10 @@ void TreeListControl::paintItem( TreeItem* item, GraphicsContext* context, Rect*
 		context->getCurrentFont()->setColor( selectedColor );
 	}
 	else {
-		context->getCurrentFont()->setColor( item->getTextColor() );
+		//mvc context->getCurrentFont()->setColor( item->getTextColor() );
 	}
 
-	context->getCurrentFont()->setBold( item->getTextBold() );
+	//mvc   context->getCurrentFont()->setBold( item->getTextBold() );
 
 	captionRect.right_ -= 5;
 
@@ -431,10 +431,10 @@ void TreeListControl::paintSubItem( TreeItem* item, GraphicsContext* context, co
 			context->getCurrentFont()->setColor( selectedColor );
 		}
 		else {
-			context->getCurrentFont()->setColor( item->getTextColor() );
+			//mvc  context->getCurrentFont()->setColor( item->getTextColor() );
 		}
 
-		TreeItem::SubItem* subItem = item->getSubItem( subItemIndex-1 );
+		TreeSubItem* subItem = item->getSubItem( subItemIndex-1 );
 		if ( NULL != subItem ) {
 
 			int32 drawOptions = GraphicsContext::tdoNone;
@@ -719,7 +719,7 @@ void TreeListControl::addItem( TreeItem* item, TreeItem* parent )
 
 TreeItem* TreeListControl::addItem( TreeItem* parent, const String& caption, const uint32 imageIndex )
 {
-	DefaultTreeItem* result = new DefaultTreeItem( caption, this, treeModel_ );
+	TreeItem* result = new TreeItem();// caption, this, treeModel_ );
 	result->setImageIndex( imageIndex );
 	addItem( result, parent );
 	return result;
@@ -1140,9 +1140,9 @@ int TreeListControl::hitTestForEditColumn( Point* pt )
 
 
 				bool found = false;
-				Enumerator<TreeItem::SubItem*>* subItems = item->getSubItems();
+				Enumerator<TreeSubItem*>* subItems = item->getSubItems();
 				while ( columnItems->hasMoreElements() && subItems->hasMoreElements() ) {
-					TreeItem::SubItem* subItem = subItems->nextElement();
+					TreeSubItem* subItem = subItems->nextElement();
 					ColumnItem* column = columnItems->nextElement();				
 					
 					subItemRect.right_ = subItemRect.left_ + column->getWidth();

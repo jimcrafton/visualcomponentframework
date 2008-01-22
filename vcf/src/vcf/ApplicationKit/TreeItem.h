@@ -25,6 +25,65 @@ where you installed the VCF.
 namespace VCF {
 
 class Color;
+class TreeItem;
+
+class APPLICATIONKIT_API TreeSubItem : public Object {
+public:
+	TreeSubItem( TreeItem* ownerItem ) : data_(NULL){
+		ownerItem_ = ownerItem;
+	}
+
+	virtual ~TreeSubItem(){};
+
+	void* getData() {
+		return data_;
+	}
+
+	void setData( void* data );
+
+	String getCaption();
+
+	void setCaption( const String& caption );
+
+	virtual bool canPaint() {
+		return false;
+	}
+
+	virtual void paint( GraphicsContext* context, Rect* paintRect ) {}
+
+protected:		
+	void* data_;
+	TreeItem* ownerItem_;
+};
+
+
+
+class TreeController {
+public:
+	virtual ~TreeController(){}
+
+
+	virtual TreeItem* getItemParent( TreeItem* item ) = 0;
+	virtual void setItemParent( TreeItem* item, TreeItem* parent ) = 0;
+
+	virtual Rect getItemRect( TreeItem* item ) = 0;
+
+	virtual void addChildItem( TreeItem* item, TreeItem* child ) = 0;
+	virtual void removeChildItem( TreeItem* item, TreeItem* child ) = 0;
+
+	virtual TreeItem* getItemFromKey( const TreeModel::Key& key ) = 0;
+
+	virtual bool getItemChildren( TreeItem* item, std::vector<TreeItem*>& children ) = 0;
+
+	virtual void insertItemSubItem( TreeItem* item, const uint32& index, TreeSubItem* subItem ) = 0;
+	virtual void removeItemSubItem( TreeItem* item, TreeSubItem* subItem ) = 0;
+	virtual bool getItemSubItems( TreeItem* item, std::vector<TreeSubItem*>& subItems ) = 0;
+	virtual TreeSubItem* getItemSubItem( TreeItem* item, const uint32& index ) = 0;
+	virtual uint32 getItemSubItemCount( TreeItem* item ) = 0;
+};
+
+
+
 
 
 #define TREEITEM_CLASSID		"3126B223-2819-11d4-B53A-00C04F0196DA"
@@ -33,46 +92,6 @@ class Color;
 */
 class APPLICATIONKIT_API TreeItem : public Item {
 public:
-
-	class APPLICATIONKIT_API SubItem : public Object {
-	public:
-		SubItem( TreeItem* ownerItem ) : data_(NULL){
-			ownerItem_ = ownerItem;
-		}
-
-		virtual ~SubItem(){};
-
-		void* getData() {
-			return data_;
-		}
-
-		void setData( void* data ) {
-			data_ = data;
-			ownerItem_->subItemChanged( this );
-		}
-
-		String getCaption() {
-			return caption_;
-		}
-
-		void setCaption( const String& caption ) {
-			caption_ = caption;
-			ownerItem_->subItemChanged( this );
-		}
-
-		virtual bool canPaint() {
-			return false;
-		}
-
-		virtual void paint( GraphicsContext* context, Rect* paintRect ) {
-
-		}
-
-	protected:
-		String caption_;
-		void* data_;
-		TreeItem* ownerItem_;
-	};
 
 
 	enum TreeItemState {
@@ -88,23 +107,29 @@ public:
 	};
 
 
-	TreeItem(){}
+	TreeItem();
 
-	virtual ~TreeItem(){}
+	virtual ~TreeItem();
 
 	TreeModel* getTreeModel() {
 		return (TreeModel*) getModel();
 	}
 
-	TreeModel::Key getKey();
+	TreeController* getController() {
+		return dynamic_cast<TreeController*>( getControl() );
+	}
 
-	Color* getTextColor();
+	void setKey( TreeModel::Key val ) {
+		key_ = val;
+	}
 
-	void setTextColor(Color* color);
+	TreeModel::Key getKey() {
+		return key_;
+	}
 
-	void setTextBold(const bool& bold);
+	Font* getFont();
 
-	bool getTextBold();
+	void setFont( Font* val );
 
 	bool isLeaf() {
 		return getTreeModel()->isLeaf( getKey() );
@@ -121,17 +146,7 @@ public:
 	/* expand this tree item.
 	*@param const bool& isExpanded, true if it expands, false to collapse it.
 	*/
-	void expand( const bool& val ) {
-		if ( val ) {
-			setDisplayState( getDisplayState() | tisExpanded );
-		}
-		else {
-			setDisplayState( getDisplayState() & ~tisExpanded );
-		}
-
-		Event e(this,tieExpanding);
-		getControl()->handleEvent( &e );
-	}
+	void expand( const bool& val );
 
 	/* expand this tree item.and all its children recursively.
 	*@param const bool& isExpanded, true to expand, false to collapse.
@@ -145,8 +160,8 @@ public:
 	TreeItem* getNextChildNodeItem();
 
 	TreeItem* getPrevChildNodeItem();
-
-	TreeItem* getChild( const TreeModel::Key& key );
+	
+	bool getChildren( std::vector<TreeItem*>& children );
 
 	String getCaption();
 
@@ -158,40 +173,63 @@ public:
 
 	void addChild( TreeItem* child );
 
-	void deleteChild( TreeItem* child );
+	void removeChild( TreeItem* child );
 
 	void clearChildren();
 
-	int32 getSelectedImageIndex();
+	int32 getSelectedImageIndex() {
+		return selectedImageIndex_;
+	}
 
 	void setSelectedImageIndex( const int32& selectedImageIndex );
 
-	int32 getExpandedImageIndex();
+	int32 getExpandedImageIndex() {
+		return expandedImageIndex_;
+	}
 
 	void setExpandedImageIndex( const int32& expandedImageIndex );
 
-	void addSubItem( const String& caption, void* data );
+	virtual int32 getStateImageIndex() const {
+		return stateImageIndex_;
+	}
 
-	void addSubItem( SubItem* subItem );
+	virtual void setStateImageIndex( const int32& index ) {
+		stateImageIndex_ = index;
+	}
+
+
+
+	TreeSubItem* addSubItem( const String& caption, void* data );
+
+	void addSubItem( TreeSubItem* subItem );
 
 	void removeSubItem( const uint32& index );
 
-	virtual Enumerator<SubItem*>* getSubItems();
+	bool getSubItems( std::vector<TreeSubItem*>& subItems );
 
-	virtual SubItem* getSubItem( const uint32& index );
+	TreeSubItem* getSubItem( const uint32& index );
 
-	virtual uint32 getSubItemCount();
+	uint32 getSubItemCount();
 
-	virtual void subItemChanged( SubItem* item );
+	virtual void subItemChanged( TreeSubItem* item );
 
 protected:
-	Color textColor_;
+	Font* font_;
+	TreeModel::Key key_;
 	
 	int32 selectedImageIndex_;
 	int32 expandedImageIndex_;
 	int32 stateImageIndex_;
 };
 
+
+
+
+inline void TreeSubItem::setData( void* data )
+{
+	data_ = data;
+	ownerItem_->subItemChanged( this );
+}
 
 }; //namespace VCF
 
@@ -201,3 +239,4 @@ protected:
 /**
 $Id$
 */
+

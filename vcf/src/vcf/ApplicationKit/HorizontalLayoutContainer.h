@@ -80,7 +80,7 @@ public:
 	}
 
 
-	void setNumberOfColumns( const int32& numColumns ) {
+	void setNumberOfColumns( const uint32& numColumns ) {
 
 		if ( columns_.size() != numColumns ) {
 
@@ -93,23 +93,43 @@ public:
 		}
 	}
 
-	int getNumberOfColumns() const {
+	uint32 getNumberOfColumns() const {
 		return columns_.size();
 	}
 
-	void setColumnWidth( const int32& index, const double& width ) {
+	void setColumnWidth( const uint32& index, const double& width, bool addMissingValues=false ) {
+		size_t missing = (index+1) - columns_.size();
+		
+		if ( addMissingValues ) {
+			if ( missing > 0 ) {
+				columns_.resize( missing + columns_.size() );
+			}
+		}
+		
 		columns_[index] = width;
 	}
 
-	int getColumnWidth( const int32& index ) const {
+	double getColumnWidth( const uint32& index ) const {
 		return columns_[index];
 	}
+	
+	//void insertColumn
 
-	void setColumnTweenWidth( const int32& index, const double& width ) {
+
+
+	void setColumnTweenWidth( const uint32& index, const double& width, bool addMissingValues=false ) {
+		size_t missing = (index+1) - columnTweens_.size();
+		
+		if ( addMissingValues ) {
+			if ( missing > 0 ) {
+				columnTweens_.resize( missing + columnTweens_.size() );
+			}
+		}
+
 		columnTweens_[index] = width;
 	}
 
-	int getColumnTweenWidth( const int32& index ) const {
+	double getColumnTweenWidth( const uint32& index ) const {
 		return columnTweens_[index];
 	}
 

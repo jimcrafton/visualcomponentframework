@@ -112,7 +112,7 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( DefaultListModel );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultColumnModel );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultTextModel );
-		REGISTER_CLASSINFO_EXTERNAL( DefaultTreeItem );
+//		REGISTER_CLASSINFO_EXTERNAL( DefaultTreeItem );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultTreeModel );
 		REGISTER_CLASSINFO_EXTERNAL( Frame );
 		REGISTER_CLASSINFO_EXTERNAL( Dialog );

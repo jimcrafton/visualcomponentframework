@@ -234,11 +234,11 @@ _class_rtti_end_
 
 
 _class_abstract_rtti_(Item, "VCF::UIComponent", ITEM_CLASSID)
-_abstract_delegate_(ItemDelegate, ItemPaint );
-_abstract_delegate_(ItemDelegate, ItemChanged );
-_abstract_delegate_(ItemDelegate, ItemSelected );
-_abstract_delegate_(ItemDelegate, ItemAdded );
-_abstract_delegate_(ItemDelegate, ItemDeleted );
+_delegate_(ItemDelegate, ItemPaint );
+_delegate_(ItemDelegate, ItemChanged );
+_delegate_(ItemDelegate, ItemSelected );
+_delegate_(ItemDelegate, ItemAdded );
+_delegate_(ItemDelegate, ItemDeleted );
 _class_rtti_end_
 
 
@@ -450,7 +450,7 @@ _class_rtti_end_
 _class_rtti_(DefaultTextModel, "VCF::TextModel", DEFAULTTEXTMODEL_CLASSID)	
 _class_rtti_end_
 
-
+/*
 _class_rtti_(DefaultTreeItem, "VCF::TreeItem", DEFAULTTREEITEM_CLASSID)
 	_delegate_(ItemDelegate, ItemPaint );
 	_delegate_(ItemDelegate, ItemChanged );
@@ -458,7 +458,7 @@ _class_rtti_(DefaultTreeItem, "VCF::TreeItem", DEFAULTTREEITEM_CLASSID)
 	_delegate_(ItemDelegate, ItemAdded );
 	_delegate_(ItemDelegate, ItemDeleted );
 _class_rtti_end_
-
+*/
 
 _class_rtti_(DefaultTreeModel, "VCF::Model", DEFAULTTREEMODEL_CLASSID)
 	_delegate_(TreeModelDelegate, RootNodeChanged )
