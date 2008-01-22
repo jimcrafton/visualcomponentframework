@@ -75,6 +75,7 @@
     <subproject id="StrokesAndFills" template="example"/>
     <subproject id="SysTray" template="example"/>
     <subproject id="Tables" template="example"/>
+    <subproject id="Tabs" template="example"/>
     <subproject id="TCPServer" template="example"/>
     <subproject id="TeXLabel" template="example"/>
     <subproject id="TextEdit" template="example"/>
@@ -86,6 +87,7 @@
     <subproject id="Tooltips" template="example"/>
     <subproject id="Transformations" template="example"/>
     <subproject id="TreeListControls" template="example"/>
+    <subproject id="Trees" template="example"/>
     <subproject id="UDPClient" template="example"/>
     <subproject id="UDPServer" template="example"/>
     <subproject id="Variants" template="example"/>

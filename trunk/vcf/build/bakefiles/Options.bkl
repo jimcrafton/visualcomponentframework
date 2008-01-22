@@ -5,13 +5,13 @@
 
     <set var="OPTION_SELECTLIB_DEFAULT"/>
     <set var="OPTION_SELECTLIB_DEFAULT">
-        <if cond="COMPILER=='vc'">,_vc6,_vc70,_vc71,_vc80</if>
+        <if cond="COMPILER=='vc'">,_vc6,_vc70,_vc71,_vc80,_vc90</if>
         <if cond="COMPILER=='evc'">,_evc</if>
         <if cond="COMPILER=='bcc'">,_bcc</if>
     </set>
     <option name="OPTION_SELECTLIB">
         <values>$(OPTION_SELECTLIB_DEFAULT)</values>
-        <values-description>,vc6,vc70,vc71,vc80</values-description>
+        <values-description>,vc6,vc70,vc71,vc80,vc90</values-description>
         <default-value>
             $(vcf.getOptionValue( 'OPTION_SELECTLIB', '' ))
         </default-value>
@@ -305,7 +305,7 @@ Compile HTMLKit:
     <option name="OPTION_OPENGLKIT">
         <values>0,1</values>
         <default-value>
-            $(vcf.getOptionValue( 'OPTION_OPENGLKIT', '1' ))
+            $(vcf.getOptionValue( 'OPTION_OPENGLKIT', '0' ))
         </default-value>
         <description>
 Depends on:

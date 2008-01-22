@@ -17,6 +17,10 @@ CFG=js_dll - Win32 LIB Release
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
+!MESSAGE "js_dll - Win32 vc90 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "js_dll - Win32 vc90 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "js_dll - Win32 vc90 LIB Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "js_dll - Win32 vc90 LIB Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "js_dll - Win32 vc80 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "js_dll - Win32 vc80 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "js_dll - Win32 vc80 LIB Debug" (based on "Win32 (x86) Dynamic-Link Library")
@@ -47,7 +51,107 @@ CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "js_dll - Win32 vc80 DLL Debug"
+!IF  "$(CFG)" == "js_dll - Win32 vc90 DLL Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_d\js_dll"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_d\js_dll"
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\js_vc90_d.pdb /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\js_vc90_d.pdb /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /c
+# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /mktyplib203 /win32
+# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /mktyplib203 /win32
+# ADD BASE RSC /l 0x409 /d "XP_WIN" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d EXPORT_JS_API
+# ADD RSC /l 0x409 /d "XP_WIN" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d EXPORT_JS_API
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 ..\..\..\lib\fdlibm_vc90_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc90_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc90_d.lib" /debug
+# ADD LINK32 ..\..\..\lib\fdlibm_vc90_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc90_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc90_d.lib" /debug
+
+!ELSEIF  "$(CFG)" == "js_dll - Win32 vc90 DLL Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90\js_dll"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90\js_dll"
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\js_vc90.pdb /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\js_vc90.pdb /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /c
+# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /mktyplib203 /win32
+# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /mktyplib203 /win32
+# ADD BASE RSC /l 0x409 /d "XP_WIN" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d EXPORT_JS_API
+# ADD RSC /l 0x409 /d "XP_WIN" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d EXPORT_JS_API
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 ..\..\..\lib\fdlibm_vc90_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc90.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc90.lib"
+# ADD LINK32 ..\..\..\lib\fdlibm_vc90_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc90.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc90.lib"
+
+!ELSEIF  "$(CFG)" == "js_dll - Win32 vc90 LIB Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_sd\js_dll"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_sd\js_dll"
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\js_vc90_d.pdb /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\js_vc90_d.pdb /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /c
+# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /mktyplib203 /win32
+# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /mktyplib203 /win32
+# ADD BASE RSC /l 0x409 /d "XP_WIN" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d EXPORT_JS_API
+# ADD RSC /l 0x409 /d "XP_WIN" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d EXPORT_JS_API
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 ..\..\..\lib\fdlibm_vc90_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc90_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc90_d.lib" /debug
+# ADD LINK32 ..\..\..\lib\fdlibm_vc90_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc90_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc90_d.lib" /debug
+
+!ELSEIF  "$(CFG)" == "js_dll - Win32 vc90 LIB Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_s\js_dll"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_s\js_dll"
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\js_vc90.pdb /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\js_vc90.pdb /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /c
+# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /mktyplib203 /win32
+# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "XP_WIN" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "EXPORT_JS_API" /mktyplib203 /win32
+# ADD BASE RSC /l 0x409 /d "XP_WIN" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d EXPORT_JS_API
+# ADD RSC /l 0x409 /d "XP_WIN" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d EXPORT_JS_API
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 ..\..\..\lib\fdlibm_vc90_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc90.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc90.lib"
+# ADD LINK32 ..\..\..\lib\fdlibm_vc90_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc90.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc90.lib"
+
+!ELSEIF  "$(CFG)" == "js_dll - Win32 vc80 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -551,6 +655,10 @@ LINK32=link.exe
 
 # Begin Target
 
+# Name "js_dll - Win32 vc90 DLL Debug"
+# Name "js_dll - Win32 vc90 DLL Release"
+# Name "js_dll - Win32 vc90 LIB Debug"
+# Name "js_dll - Win32 vc90 LIB Release"
 # Name "js_dll - Win32 vc80 DLL Debug"
 # Name "js_dll - Win32 vc80 DLL Release"
 # Name "js_dll - Win32 vc80 LIB Debug"

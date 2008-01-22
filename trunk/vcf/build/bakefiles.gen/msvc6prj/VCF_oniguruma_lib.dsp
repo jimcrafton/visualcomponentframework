@@ -17,6 +17,10 @@ CFG=oniguruma_lib - Win32 LIB Release
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
+!MESSAGE "oniguruma_lib - Win32 vc90 DLL Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "oniguruma_lib - Win32 vc90 DLL Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "oniguruma_lib - Win32 vc90 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "oniguruma_lib - Win32 vc90 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "oniguruma_lib - Win32 vc80 DLL Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "oniguruma_lib - Win32 vc80 DLL Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "oniguruma_lib - Win32 vc80 LIB Debug" (based on "Win32 (x86) Static Library")
@@ -46,7 +50,99 @@ CFG=oniguruma_lib - Win32 LIB Release
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "oniguruma_lib - Win32 vc80 DLL Debug"
+!IF  "$(CFG)" == "oniguruma_lib - Win32 vc90 DLL Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_d\oniguruma_lib"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_d\oniguruma_lib"
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\oniguruma" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\oniguruma_vc90_sd.pdb /D "WIN32" /D "_LIB" /D "NOT_RUBY" /D ONIG_EXTERN=extern /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\oniguruma" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\oniguruma_vc90_sd.pdb /D "WIN32" /D "_LIB" /D "NOT_RUBY" /D ONIG_EXTERN=extern /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LIB32=link.exe -lib
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\oniguruma_vc90_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\oniguruma_vc90_sd.lib"
+
+!ELSEIF  "$(CFG)" == "oniguruma_lib - Win32 vc90 DLL Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90\oniguruma_lib"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90\oniguruma_lib"
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\oniguruma" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\oniguruma_vc90_s.pdb /D "WIN32" /D "_LIB" /D "NOT_RUBY" /D ONIG_EXTERN=extern /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\oniguruma" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\oniguruma_vc90_s.pdb /D "WIN32" /D "_LIB" /D "NOT_RUBY" /D ONIG_EXTERN=extern /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LIB32=link.exe -lib
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\oniguruma_vc90_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\oniguruma_vc90_s.lib"
+
+!ELSEIF  "$(CFG)" == "oniguruma_lib - Win32 vc90 LIB Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_sd\oniguruma_lib"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_sd\oniguruma_lib"
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\oniguruma" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\oniguruma_vc90_sd.pdb /D "WIN32" /D "_LIB" /D "NOT_RUBY" /D ONIG_EXTERN=extern /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\common\oniguruma" /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\oniguruma_vc90_sd.pdb /D "WIN32" /D "_LIB" /D "NOT_RUBY" /D ONIG_EXTERN=extern /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LIB32=link.exe -lib
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\oniguruma_vc90_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\oniguruma_vc90_sd.lib"
+
+!ELSEIF  "$(CFG)" == "oniguruma_lib - Win32 vc90 LIB Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_s\oniguruma_lib"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_s\oniguruma_lib"
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\oniguruma" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\oniguruma_vc90_s.pdb /D "WIN32" /D "_LIB" /D "NOT_RUBY" /D ONIG_EXTERN=extern /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\common\oniguruma" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\oniguruma_vc90_s.pdb /D "WIN32" /D "_LIB" /D "NOT_RUBY" /D ONIG_EXTERN=extern /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LIB32=link.exe -lib
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\oniguruma_vc90_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\oniguruma_vc90_s.lib"
+
+!ELSEIF  "$(CFG)" == "oniguruma_lib - Win32 vc80 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -510,6 +606,10 @@ LIB32=link.exe -lib
 
 # Begin Target
 
+# Name "oniguruma_lib - Win32 vc90 DLL Debug"
+# Name "oniguruma_lib - Win32 vc90 DLL Release"
+# Name "oniguruma_lib - Win32 vc90 LIB Debug"
+# Name "oniguruma_lib - Win32 vc90 LIB Release"
 # Name "oniguruma_lib - Win32 vc80 DLL Debug"
 # Name "oniguruma_lib - Win32 vc80 DLL Release"
 # Name "oniguruma_lib - Win32 vc80 LIB Debug"

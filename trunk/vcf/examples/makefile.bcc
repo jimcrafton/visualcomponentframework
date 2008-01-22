@@ -54,7 +54,7 @@ MAKEARGS = -DCC="$(CC)" -DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" \
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 clean: 
 	-if exist .\*.obj del .\*.obj
@@ -328,6 +328,10 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>Tables.bat
 	call Tables.bat
 	@del Tables.bat
+	@echo cd Tabs >Tabs.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>Tabs.bat
+	call Tabs.bat
+	@del Tabs.bat
 	@echo cd TCPServer >TCPServer.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>TCPServer.bat
 	call TCPServer.bat
@@ -372,6 +376,10 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>TreeListControls.bat
 	call TreeListControls.bat
 	@del TreeListControls.bat
+	@echo cd Trees >Trees.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>Trees.bat
+	call Trees.bat
+	@del Trees.bat
 	@echo cd UDPClient >UDPClient.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>UDPClient.bat
 	call UDPClient.bat
@@ -807,6 +815,12 @@ Tables:
 	call Tables.bat
 	@del Tables.bat
 
+Tabs: 
+	@echo cd Tabs >Tabs.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>Tabs.bat
+	call Tabs.bat
+	@del Tabs.bat
+
 TCPServer: 
 	@echo cd TCPServer >TCPServer.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>TCPServer.bat
@@ -872,6 +886,12 @@ TreeListControls:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>TreeListControls.bat
 	call TreeListControls.bat
 	@del TreeListControls.bat
+
+Trees: 
+	@echo cd Trees >Trees.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>Trees.bat
+	call Trees.bat
+	@del Trees.bat
 
 UDPClient: 
 	@echo cd UDPClient >UDPClient.bat

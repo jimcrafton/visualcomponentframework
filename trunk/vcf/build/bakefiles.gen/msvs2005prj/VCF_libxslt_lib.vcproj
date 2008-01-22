@@ -14,6 +14,74 @@
 		
 	</ToolFiles>
 	<Configurations>
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc90_d\libxslt_lib" Name="vc90 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
+			<Tool Name="VCPreBuildEventTool"/>
+			<Tool Name="VCCustomBuildTool"/>
+			<Tool Name="VCXMLDataGeneratorTool"/>
+			<Tool Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool Name="VCIDLTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\common\libxml\include,..\..\..\src\thirdparty\common\libxslt,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc90_d\libxslt_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc90_d\libxslt_lib\" Optimization="0" PreprocessorDefinitions="_LIB;LIBXML_STATIC;LIBXSLT_STATIC;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\libxslt_vc90_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool Name="VCManagedResourceCompilerTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\common\libxml\include,..\..\..\src\thirdparty\common\libxslt,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="LIBXML_STATIC;LIBXSLT_STATIC;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool Name="VCPreLinkEventTool"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\libxslt_vc90_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCALinkTool"/>
+			<Tool Name="VCXDCMakeTool"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_libxslt_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCFxCopTool"/>
+			<Tool Name="VCPostBuildEventTool"/>
+		</Configuration>
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc90\libxslt_lib" Name="vc90 DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
+			<Tool Name="VCPreBuildEventTool"/>
+			<Tool Name="VCCustomBuildTool"/>
+			<Tool Name="VCXMLDataGeneratorTool"/>
+			<Tool Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool Name="VCIDLTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\common\libxml\include,..\..\..\src\thirdparty\common\libxslt,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc90\libxslt_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc90\libxslt_lib\" Optimization="2" PreprocessorDefinitions="_LIB;LIBXML_STATIC;LIBXSLT_STATIC;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\libxslt_vc90_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool Name="VCManagedResourceCompilerTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\common\libxml\include,..\..\..\src\thirdparty\common\libxslt,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="LIBXML_STATIC;LIBXSLT_STATIC;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool Name="VCPreLinkEventTool"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\libxslt_vc90_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCALinkTool"/>
+			<Tool Name="VCXDCMakeTool"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_libxslt_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCFxCopTool"/>
+			<Tool Name="VCPostBuildEventTool"/>
+		</Configuration>
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc90_sd\libxslt_lib" Name="vc90 LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
+			<Tool Name="VCPreBuildEventTool"/>
+			<Tool Name="VCCustomBuildTool"/>
+			<Tool Name="VCXMLDataGeneratorTool"/>
+			<Tool Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool Name="VCIDLTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\common\libxml\include,..\..\..\src\thirdparty\common\libxslt,..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc90_sd\libxslt_lib\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc90_sd\libxslt_lib\" Optimization="0" PreprocessorDefinitions="_LIB;LIBXML_STATIC;LIBXSLT_STATIC;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\libxslt_vc90_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool Name="VCManagedResourceCompilerTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\common\libxml\include,..\..\..\src\thirdparty\common\libxslt,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="LIBXML_STATIC;LIBXSLT_STATIC;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool Name="VCPreLinkEventTool"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\libxslt_vc90_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCALinkTool"/>
+			<Tool Name="VCXDCMakeTool"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_libxslt_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCFxCopTool"/>
+			<Tool Name="VCPostBuildEventTool"/>
+		</Configuration>
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc90_s\libxslt_lib" Name="vc90 LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
+			<Tool Name="VCPreBuildEventTool"/>
+			<Tool Name="VCCustomBuildTool"/>
+			<Tool Name="VCXMLDataGeneratorTool"/>
+			<Tool Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool Name="VCIDLTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\common\libxml\include,..\..\..\src\thirdparty\common\libxslt,..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc90_s\libxslt_lib\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc90_s\libxslt_lib\" Optimization="2" PreprocessorDefinitions="_LIB;LIBXML_STATIC;LIBXSLT_STATIC;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\libxslt_vc90_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" WarningLevel="1"/>
+			<Tool Name="VCManagedResourceCompilerTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src\thirdparty\common\libxml\include,..\..\..\src\thirdparty\common\libxslt,..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="LIBXML_STATIC;LIBXSLT_STATIC;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool Name="VCPreLinkEventTool"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\libxslt_vc90_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCALinkTool"/>
+			<Tool Name="VCXDCMakeTool"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_libxslt_lib.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCFxCopTool"/>
+			<Tool Name="VCPostBuildEventTool"/>
+		</Configuration>
 		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc80_d\libxslt_lib" Name="vc80 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>

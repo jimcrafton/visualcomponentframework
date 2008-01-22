@@ -17,6 +17,10 @@ CFG=fdlibm_lib - Win32 LIB Release
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
+!MESSAGE "fdlibm_lib - Win32 vc90 DLL Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "fdlibm_lib - Win32 vc90 DLL Release" (based on "Win32 (x86) Static Library")
+!MESSAGE "fdlibm_lib - Win32 vc90 LIB Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "fdlibm_lib - Win32 vc90 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "fdlibm_lib - Win32 vc80 DLL Debug" (based on "Win32 (x86) Static Library")
 !MESSAGE "fdlibm_lib - Win32 vc80 DLL Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "fdlibm_lib - Win32 vc80 LIB Debug" (based on "Win32 (x86) Static Library")
@@ -46,7 +50,99 @@ CFG=fdlibm_lib - Win32 LIB Release
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "fdlibm_lib - Win32 vc80 DLL Debug"
+!IF  "$(CFG)" == "fdlibm_lib - Win32 vc90 DLL Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_d\fdlibm_lib"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_d\fdlibm_lib"
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\fdlibm_vc90_sd.pdb /D "WIN32" /D "_LIB" /D "_IEEE_LIBM" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\fdlibm_vc90_sd.pdb /D "WIN32" /D "_LIB" /D "_IEEE_LIBM" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LIB32=link.exe -lib
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\fdlibm_vc90_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\fdlibm_vc90_sd.lib"
+
+!ELSEIF  "$(CFG)" == "fdlibm_lib - Win32 vc90 DLL Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90\fdlibm_lib"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90\fdlibm_lib"
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\fdlibm_vc90_s.pdb /D "WIN32" /D "_LIB" /D "_IEEE_LIBM" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\fdlibm_vc90_s.pdb /D "WIN32" /D "_LIB" /D "_IEEE_LIBM" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LIB32=link.exe -lib
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\fdlibm_vc90_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\fdlibm_vc90_s.lib"
+
+!ELSEIF  "$(CFG)" == "fdlibm_lib - Win32 vc90 LIB Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_sd\fdlibm_lib"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_sd\fdlibm_lib"
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\fdlibm_vc90_sd.pdb /D "WIN32" /D "_LIB" /D "_IEEE_LIBM" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\fdlibm_vc90_sd.pdb /D "WIN32" /D "_LIB" /D "_IEEE_LIBM" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LIB32=link.exe -lib
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\fdlibm_vc90_sd.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\fdlibm_vc90_sd.lib"
+
+!ELSEIF  "$(CFG)" == "fdlibm_lib - Win32 vc90 LIB Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "..\..\..\lib"
+# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_s\fdlibm_lib"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "..\..\..\lib"
+# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_s\fdlibm_lib"
+# PROP Target_Dir ""
+# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\fdlibm_vc90_s.pdb /D "WIN32" /D "_LIB" /D "_IEEE_LIBM" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\fdlibm_vc90_s.pdb /D "WIN32" /D "_LIB" /D "_IEEE_LIBM" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LIB32=link.exe -lib
+# ADD BASE LIB32 /nologo /out:"..\..\..\lib\fdlibm_vc90_s.lib"
+# ADD LIB32 /nologo /out:"..\..\..\lib\fdlibm_vc90_s.lib"
+
+!ELSEIF  "$(CFG)" == "fdlibm_lib - Win32 vc80 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -510,6 +606,10 @@ LIB32=link.exe -lib
 
 # Begin Target
 
+# Name "fdlibm_lib - Win32 vc90 DLL Debug"
+# Name "fdlibm_lib - Win32 vc90 DLL Release"
+# Name "fdlibm_lib - Win32 vc90 LIB Debug"
+# Name "fdlibm_lib - Win32 vc90 LIB Release"
 # Name "fdlibm_lib - Win32 vc80 DLL Debug"
 # Name "fdlibm_lib - Win32 vc80 DLL Release"
 # Name "fdlibm_lib - Win32 vc80 LIB Debug"

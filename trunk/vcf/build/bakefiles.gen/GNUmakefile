@@ -665,7 +665,6 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractComponentEditor.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractContainer.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractScrollable.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractTreeModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractView.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_AcceleratorKey.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_Action.o \
@@ -677,7 +676,7 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_CheckBoxControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_Clipboard.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_ColorEtchedBorder.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_ColumnModel.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_ColumnItem.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_ComboBoxControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_CommandButton.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_CommandGroup.o \
@@ -705,10 +704,8 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_DefaultPropertyEditors.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_DefaultTableCellItem.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_DefaultTableModel.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_DefaultTabModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_DefaultTabPage.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_DefaultTextModel.o \
-	../../lib/$(OBJDIR)/ApplicationKit_lib_DefaultTreeItem.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_DefaultTreeModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_Dialog.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_DocumentManager.o \
@@ -740,12 +737,14 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_PushButton.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_RadioButtonControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_ScrollbarManager.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_SimpleListModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_SliderControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_Splitter.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_StatusBar.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_SystemTray.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_TabbedPages.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_TableControl.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_TabModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_TextControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_TimerComponent.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_TitledBorder.o \
@@ -754,6 +753,7 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_ToolbarDock.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_TransparentWindow.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_TreeControl.o \
+	../../lib/$(OBJDIR)/ApplicationKit_lib_TreeItem.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_TreeListControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_UIComponent.o \
 	../../lib/$(OBJDIR)/ApplicationKit_lib_UIShell.o \
@@ -788,7 +788,6 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractComponentEditor.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractContainer.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractScrollable.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractTreeModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractView.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_AcceleratorKey.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_Action.o \
@@ -800,7 +799,7 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_CheckBoxControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_Clipboard.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_ColorEtchedBorder.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_ColumnModel.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_ColumnItem.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_ComboBoxControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_CommandButton.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_CommandGroup.o \
@@ -828,10 +827,8 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_DefaultPropertyEditors.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_DefaultTableCellItem.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_DefaultTableModel.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_DefaultTabModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_DefaultTabPage.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_DefaultTextModel.o \
-	../../lib/$(OBJDIR)/ApplicationKit_dll_DefaultTreeItem.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_DefaultTreeModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_Dialog.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_DocumentManager.o \
@@ -863,12 +860,14 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_PushButton.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_RadioButtonControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_ScrollbarManager.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_SimpleListModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_SliderControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_Splitter.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_StatusBar.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_SystemTray.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_TabbedPages.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_TableControl.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_TabModel.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_TextControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_TimerComponent.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_TitledBorder.o \
@@ -877,6 +876,7 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_ToolbarDock.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_TransparentWindow.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_TreeControl.o \
+	../../lib/$(OBJDIR)/ApplicationKit_dll_TreeItem.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_TreeListControl.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_UIComponent.o \
 	../../lib/$(OBJDIR)/ApplicationKit_dll_UIShell.o \
@@ -1508,7 +1508,6 @@ ____Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_AbstractComponentEditor.o \
 	../../lib/$(OBJDIR)/Allin1_lib_AbstractContainer.o \
 	../../lib/$(OBJDIR)/Allin1_lib_AbstractScrollable.o \
-	../../lib/$(OBJDIR)/Allin1_lib_AbstractTreeModel.o \
 	../../lib/$(OBJDIR)/Allin1_lib_AbstractView.o \
 	../../lib/$(OBJDIR)/Allin1_lib_AcceleratorKey.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Action.o \
@@ -1520,7 +1519,7 @@ ____Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_CheckBoxControl.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Clipboard.o \
 	../../lib/$(OBJDIR)/Allin1_lib_ColorEtchedBorder.o \
-	../../lib/$(OBJDIR)/Allin1_lib_ColumnModel.o \
+	../../lib/$(OBJDIR)/Allin1_lib_ColumnItem.o \
 	../../lib/$(OBJDIR)/Allin1_lib_ComboBoxControl.o \
 	../../lib/$(OBJDIR)/Allin1_lib_CommandButton.o \
 	../../lib/$(OBJDIR)/Allin1_lib_CommandGroup.o \
@@ -1548,10 +1547,8 @@ ____Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_DefaultPropertyEditors.o \
 	../../lib/$(OBJDIR)/Allin1_lib_DefaultTableCellItem.o \
 	../../lib/$(OBJDIR)/Allin1_lib_DefaultTableModel.o \
-	../../lib/$(OBJDIR)/Allin1_lib_DefaultTabModel.o \
 	../../lib/$(OBJDIR)/Allin1_lib_DefaultTabPage.o \
 	../../lib/$(OBJDIR)/Allin1_lib_DefaultTextModel.o \
-	../../lib/$(OBJDIR)/Allin1_lib_DefaultTreeItem.o \
 	../../lib/$(OBJDIR)/Allin1_lib_DefaultTreeModel.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Dialog.o \
 	../../lib/$(OBJDIR)/Allin1_lib_DocumentManager.o \
@@ -1583,12 +1580,14 @@ ____Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_PushButton.o \
 	../../lib/$(OBJDIR)/Allin1_lib_RadioButtonControl.o \
 	../../lib/$(OBJDIR)/Allin1_lib_ScrollbarManager.o \
+	../../lib/$(OBJDIR)/Allin1_lib_SimpleListModel.o \
 	../../lib/$(OBJDIR)/Allin1_lib_SliderControl.o \
 	../../lib/$(OBJDIR)/Allin1_lib_Splitter.o \
 	../../lib/$(OBJDIR)/Allin1_lib_StatusBar.o \
 	../../lib/$(OBJDIR)/Allin1_lib_SystemTray.o \
 	../../lib/$(OBJDIR)/Allin1_lib_TabbedPages.o \
 	../../lib/$(OBJDIR)/Allin1_lib_TableControl.o \
+	../../lib/$(OBJDIR)/Allin1_lib_TabModel.o \
 	../../lib/$(OBJDIR)/Allin1_lib_TextControl.o \
 	../../lib/$(OBJDIR)/Allin1_lib_TimerComponent.o \
 	../../lib/$(OBJDIR)/Allin1_lib_TitledBorder.o \
@@ -1597,6 +1596,7 @@ ____Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_lib_ToolbarDock.o \
 	../../lib/$(OBJDIR)/Allin1_lib_TransparentWindow.o \
 	../../lib/$(OBJDIR)/Allin1_lib_TreeControl.o \
+	../../lib/$(OBJDIR)/Allin1_lib_TreeItem.o \
 	../../lib/$(OBJDIR)/Allin1_lib_TreeListControl.o \
 	../../lib/$(OBJDIR)/Allin1_lib_UIComponent.o \
 	../../lib/$(OBJDIR)/Allin1_lib_UIShell.o \
@@ -1779,7 +1779,6 @@ ____Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_AbstractComponentEditor.o \
 	../../lib/$(OBJDIR)/Allin1_dll_AbstractContainer.o \
 	../../lib/$(OBJDIR)/Allin1_dll_AbstractScrollable.o \
-	../../lib/$(OBJDIR)/Allin1_dll_AbstractTreeModel.o \
 	../../lib/$(OBJDIR)/Allin1_dll_AbstractView.o \
 	../../lib/$(OBJDIR)/Allin1_dll_AcceleratorKey.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Action.o \
@@ -1791,7 +1790,7 @@ ____Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_CheckBoxControl.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Clipboard.o \
 	../../lib/$(OBJDIR)/Allin1_dll_ColorEtchedBorder.o \
-	../../lib/$(OBJDIR)/Allin1_dll_ColumnModel.o \
+	../../lib/$(OBJDIR)/Allin1_dll_ColumnItem.o \
 	../../lib/$(OBJDIR)/Allin1_dll_ComboBoxControl.o \
 	../../lib/$(OBJDIR)/Allin1_dll_CommandButton.o \
 	../../lib/$(OBJDIR)/Allin1_dll_CommandGroup.o \
@@ -1819,10 +1818,8 @@ ____Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_DefaultPropertyEditors.o \
 	../../lib/$(OBJDIR)/Allin1_dll_DefaultTableCellItem.o \
 	../../lib/$(OBJDIR)/Allin1_dll_DefaultTableModel.o \
-	../../lib/$(OBJDIR)/Allin1_dll_DefaultTabModel.o \
 	../../lib/$(OBJDIR)/Allin1_dll_DefaultTabPage.o \
 	../../lib/$(OBJDIR)/Allin1_dll_DefaultTextModel.o \
-	../../lib/$(OBJDIR)/Allin1_dll_DefaultTreeItem.o \
 	../../lib/$(OBJDIR)/Allin1_dll_DefaultTreeModel.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Dialog.o \
 	../../lib/$(OBJDIR)/Allin1_dll_DocumentManager.o \
@@ -1854,12 +1851,14 @@ ____Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_PushButton.o \
 	../../lib/$(OBJDIR)/Allin1_dll_RadioButtonControl.o \
 	../../lib/$(OBJDIR)/Allin1_dll_ScrollbarManager.o \
+	../../lib/$(OBJDIR)/Allin1_dll_SimpleListModel.o \
 	../../lib/$(OBJDIR)/Allin1_dll_SliderControl.o \
 	../../lib/$(OBJDIR)/Allin1_dll_Splitter.o \
 	../../lib/$(OBJDIR)/Allin1_dll_StatusBar.o \
 	../../lib/$(OBJDIR)/Allin1_dll_SystemTray.o \
 	../../lib/$(OBJDIR)/Allin1_dll_TabbedPages.o \
 	../../lib/$(OBJDIR)/Allin1_dll_TableControl.o \
+	../../lib/$(OBJDIR)/Allin1_dll_TabModel.o \
 	../../lib/$(OBJDIR)/Allin1_dll_TextControl.o \
 	../../lib/$(OBJDIR)/Allin1_dll_TimerComponent.o \
 	../../lib/$(OBJDIR)/Allin1_dll_TitledBorder.o \
@@ -1868,6 +1867,7 @@ ____Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_OBJECTS =  \
 	../../lib/$(OBJDIR)/Allin1_dll_ToolbarDock.o \
 	../../lib/$(OBJDIR)/Allin1_dll_TransparentWindow.o \
 	../../lib/$(OBJDIR)/Allin1_dll_TreeControl.o \
+	../../lib/$(OBJDIR)/Allin1_dll_TreeItem.o \
 	../../lib/$(OBJDIR)/Allin1_dll_TreeListControl.o \
 	../../lib/$(OBJDIR)/Allin1_dll_UIComponent.o \
 	../../lib/$(OBJDIR)/Allin1_dll_UIShell.o \
@@ -4234,9 +4234,6 @@ xmake_:
 ../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractScrollable.o: ../../src/vcf/ApplicationKit/AbstractScrollable.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractTreeModel.o: ../../src/vcf/ApplicationKit/AbstractTreeModel.cpp
-	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/ApplicationKit_lib_AbstractView.o: ../../src/vcf/ApplicationKit/AbstractView.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -4270,7 +4267,7 @@ xmake_:
 ../../lib/$(OBJDIR)/ApplicationKit_lib_ColorEtchedBorder.o: ../../src/vcf/ApplicationKit/ColorEtchedBorder.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_lib_ColumnModel.o: ../../src/vcf/ApplicationKit/ColumnModel.cpp
+../../lib/$(OBJDIR)/ApplicationKit_lib_ColumnItem.o: ../../src/vcf/ApplicationKit/ColumnItem.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_lib_ComboBoxControl.o: ../../src/vcf/ApplicationKit/ComboBoxControl.cpp
@@ -4354,16 +4351,10 @@ xmake_:
 ../../lib/$(OBJDIR)/ApplicationKit_lib_DefaultTableModel.o: ../../src/vcf/ApplicationKit/DefaultTableModel.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_lib_DefaultTabModel.o: ../../src/vcf/ApplicationKit/DefaultTabModel.cpp
-	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/ApplicationKit_lib_DefaultTabPage.o: ../../src/vcf/ApplicationKit/DefaultTabPage.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_lib_DefaultTextModel.o: ../../src/vcf/ApplicationKit/DefaultTextModel.cpp
-	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/ApplicationKit_lib_DefaultTreeItem.o: ../../src/vcf/ApplicationKit/DefaultTreeItem.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_lib_DefaultTreeModel.o: ../../src/vcf/ApplicationKit/DefaultTreeModel.cpp
@@ -4459,6 +4450,9 @@ xmake_:
 ../../lib/$(OBJDIR)/ApplicationKit_lib_ScrollbarManager.o: ../../src/vcf/ApplicationKit/ScrollbarManager.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/ApplicationKit_lib_SimpleListModel.o: ../../src/vcf/ApplicationKit/SimpleListModel.cpp
+	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/ApplicationKit_lib_SliderControl.o: ../../src/vcf/ApplicationKit/SliderControl.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -4475,6 +4469,9 @@ xmake_:
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_lib_TableControl.o: ../../src/vcf/ApplicationKit/TableControl.cpp
+	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/ApplicationKit_lib_TabModel.o: ../../src/vcf/ApplicationKit/TabModel.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_lib_TextControl.o: ../../src/vcf/ApplicationKit/TextControl.cpp
@@ -4499,6 +4496,9 @@ xmake_:
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_lib_TreeControl.o: ../../src/vcf/ApplicationKit/TreeControl.cpp
+	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/ApplicationKit_lib_TreeItem.o: ../../src/vcf/ApplicationKit/TreeItem.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_lib_TreeListControl.o: ../../src/vcf/ApplicationKit/TreeListControl.cpp
@@ -4573,9 +4573,6 @@ xmake_:
 ../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractScrollable.o: ../../src/vcf/ApplicationKit/AbstractScrollable.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractTreeModel.o: ../../src/vcf/ApplicationKit/AbstractTreeModel.cpp
-	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/ApplicationKit_dll_AbstractView.o: ../../src/vcf/ApplicationKit/AbstractView.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -4609,7 +4606,7 @@ xmake_:
 ../../lib/$(OBJDIR)/ApplicationKit_dll_ColorEtchedBorder.o: ../../src/vcf/ApplicationKit/ColorEtchedBorder.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_dll_ColumnModel.o: ../../src/vcf/ApplicationKit/ColumnModel.cpp
+../../lib/$(OBJDIR)/ApplicationKit_dll_ColumnItem.o: ../../src/vcf/ApplicationKit/ColumnItem.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_dll_ComboBoxControl.o: ../../src/vcf/ApplicationKit/ComboBoxControl.cpp
@@ -4693,16 +4690,10 @@ xmake_:
 ../../lib/$(OBJDIR)/ApplicationKit_dll_DefaultTableModel.o: ../../src/vcf/ApplicationKit/DefaultTableModel.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/ApplicationKit_dll_DefaultTabModel.o: ../../src/vcf/ApplicationKit/DefaultTabModel.cpp
-	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/ApplicationKit_dll_DefaultTabPage.o: ../../src/vcf/ApplicationKit/DefaultTabPage.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_dll_DefaultTextModel.o: ../../src/vcf/ApplicationKit/DefaultTextModel.cpp
-	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/ApplicationKit_dll_DefaultTreeItem.o: ../../src/vcf/ApplicationKit/DefaultTreeItem.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_dll_DefaultTreeModel.o: ../../src/vcf/ApplicationKit/DefaultTreeModel.cpp
@@ -4798,6 +4789,9 @@ xmake_:
 ../../lib/$(OBJDIR)/ApplicationKit_dll_ScrollbarManager.o: ../../src/vcf/ApplicationKit/ScrollbarManager.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/ApplicationKit_dll_SimpleListModel.o: ../../src/vcf/ApplicationKit/SimpleListModel.cpp
+	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/ApplicationKit_dll_SliderControl.o: ../../src/vcf/ApplicationKit/SliderControl.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -4814,6 +4808,9 @@ xmake_:
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_dll_TableControl.o: ../../src/vcf/ApplicationKit/TableControl.cpp
+	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/ApplicationKit_dll_TabModel.o: ../../src/vcf/ApplicationKit/TabModel.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_dll_TextControl.o: ../../src/vcf/ApplicationKit/TextControl.cpp
@@ -4838,6 +4835,9 @@ xmake_:
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_dll_TreeControl.o: ../../src/vcf/ApplicationKit/TreeControl.cpp
+	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/ApplicationKit_dll_TreeItem.o: ../../src/vcf/ApplicationKit/TreeItem.cpp
 	$(CXX) -c -o $@ $(APPLICATIONKIT_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/ApplicationKit_dll_TreeListControl.o: ../../src/vcf/ApplicationKit/TreeListControl.cpp
@@ -5341,9 +5341,6 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_lib_AbstractScrollable.o: ../../src/vcf/ApplicationKit/AbstractScrollable.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_AbstractTreeModel.o: ../../src/vcf/ApplicationKit/AbstractTreeModel.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/Allin1_lib_AbstractView.o: ../../src/vcf/ApplicationKit/AbstractView.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -5377,7 +5374,7 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_lib_ColorEtchedBorder.o: ../../src/vcf/ApplicationKit/ColorEtchedBorder.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_ColumnModel.o: ../../src/vcf/ApplicationKit/ColumnModel.cpp
+../../lib/$(OBJDIR)/Allin1_lib_ColumnItem.o: ../../src/vcf/ApplicationKit/ColumnItem.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_ComboBoxControl.o: ../../src/vcf/ApplicationKit/ComboBoxControl.cpp
@@ -5461,16 +5458,10 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_lib_DefaultTableModel.o: ../../src/vcf/ApplicationKit/DefaultTableModel.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_lib_DefaultTabModel.o: ../../src/vcf/ApplicationKit/DefaultTabModel.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/Allin1_lib_DefaultTabPage.o: ../../src/vcf/ApplicationKit/DefaultTabPage.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_DefaultTextModel.o: ../../src/vcf/ApplicationKit/DefaultTextModel.cpp
-	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_lib_DefaultTreeItem.o: ../../src/vcf/ApplicationKit/DefaultTreeItem.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_DefaultTreeModel.o: ../../src/vcf/ApplicationKit/DefaultTreeModel.cpp
@@ -5566,6 +5557,9 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_lib_ScrollbarManager.o: ../../src/vcf/ApplicationKit/ScrollbarManager.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/Allin1_lib_SimpleListModel.o: ../../src/vcf/ApplicationKit/SimpleListModel.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/Allin1_lib_SliderControl.o: ../../src/vcf/ApplicationKit/SliderControl.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
@@ -5582,6 +5576,9 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_TableControl.o: ../../src/vcf/ApplicationKit/TableControl.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_lib_TabModel.o: ../../src/vcf/ApplicationKit/TabModel.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_TextControl.o: ../../src/vcf/ApplicationKit/TextControl.cpp
@@ -5606,6 +5603,9 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_TreeControl.o: ../../src/vcf/ApplicationKit/TreeControl.cpp
+	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_lib_TreeItem.o: ../../src/vcf/ApplicationKit/TreeItem.cpp
 	$(CXX) -c -o $@ $(ALLIN1_LIB_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_lib_TreeListControl.o: ../../src/vcf/ApplicationKit/TreeListControl.cpp
@@ -6037,9 +6037,6 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_AbstractScrollable.o: ../../src/vcf/ApplicationKit/AbstractScrollable.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_AbstractTreeModel.o: ../../src/vcf/ApplicationKit/AbstractTreeModel.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/Allin1_dll_AbstractView.o: ../../src/vcf/ApplicationKit/AbstractView.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -6073,7 +6070,7 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_ColorEtchedBorder.o: ../../src/vcf/ApplicationKit/ColorEtchedBorder.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_ColumnModel.o: ../../src/vcf/ApplicationKit/ColumnModel.cpp
+../../lib/$(OBJDIR)/Allin1_dll_ColumnItem.o: ../../src/vcf/ApplicationKit/ColumnItem.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_ComboBoxControl.o: ../../src/vcf/ApplicationKit/ComboBoxControl.cpp
@@ -6157,16 +6154,10 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_DefaultTableModel.o: ../../src/vcf/ApplicationKit/DefaultTableModel.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
-../../lib/$(OBJDIR)/Allin1_dll_DefaultTabModel.o: ../../src/vcf/ApplicationKit/DefaultTabModel.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
 ../../lib/$(OBJDIR)/Allin1_dll_DefaultTabPage.o: ../../src/vcf/ApplicationKit/DefaultTabPage.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_DefaultTextModel.o: ../../src/vcf/ApplicationKit/DefaultTextModel.cpp
-	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/Allin1_dll_DefaultTreeItem.o: ../../src/vcf/ApplicationKit/DefaultTreeItem.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_DefaultTreeModel.o: ../../src/vcf/ApplicationKit/DefaultTreeModel.cpp
@@ -6262,6 +6253,9 @@ xmake_:
 ../../lib/$(OBJDIR)/Allin1_dll_ScrollbarManager.o: ../../src/vcf/ApplicationKit/ScrollbarManager.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
+../../lib/$(OBJDIR)/Allin1_dll_SimpleListModel.o: ../../src/vcf/ApplicationKit/SimpleListModel.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
 ../../lib/$(OBJDIR)/Allin1_dll_SliderControl.o: ../../src/vcf/ApplicationKit/SliderControl.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
@@ -6278,6 +6272,9 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_TableControl.o: ../../src/vcf/ApplicationKit/TableControl.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_dll_TabModel.o: ../../src/vcf/ApplicationKit/TabModel.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_TextControl.o: ../../src/vcf/ApplicationKit/TextControl.cpp
@@ -6302,6 +6299,9 @@ xmake_:
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_TreeControl.o: ../../src/vcf/ApplicationKit/TreeControl.cpp
+	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
+
+../../lib/$(OBJDIR)/Allin1_dll_TreeItem.o: ../../src/vcf/ApplicationKit/TreeItem.cpp
 	$(CXX) -c -o $@ $(ALLIN1_DLL_CXXFLAGS) $(CPPDEPS) $<
 
 ../../lib/$(OBJDIR)/Allin1_dll_TreeListControl.o: ../../src/vcf/ApplicationKit/TreeListControl.cpp
