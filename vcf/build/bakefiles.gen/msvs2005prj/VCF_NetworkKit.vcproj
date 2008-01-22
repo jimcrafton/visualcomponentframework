@@ -14,6 +14,74 @@
 		
 	</ToolFiles>
 	<Configurations>
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc90_d\NetworkKit" Name="vc90 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
+			<Tool Name="VCPreBuildEventTool"/>
+			<Tool Name="VCCustomBuildTool"/>
+			<Tool Name="VCXMLDataGeneratorTool"/>
+			<Tool Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool Name="VCIDLTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc90_d\NetworkKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc90_d\NetworkKit\" Optimization="0" PrecompiledHeaderFile="..\..\..\lib\msvs2005prj_vc90_d\NetworkKit_vc90_d.pch" PrecompiledHeaderThrough="vcf\NetworkKit\NetworkKit.h" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;NETWORKKIT_DLL;NETWORKKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\NetworkKit_vc90_d.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" UsePrecompiledHeader="2" WarningLevel="1"/>
+			<Tool Name="VCManagedResourceCompilerTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;_DEBUG;_DEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;NETWORKKIT_DLL;NETWORKKIT_EXPORTS"/>
+			<Tool Name="VCPreLinkEventTool"/>
+			<Tool AdditionalDependencies="FoundationKit_vc90_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateDebugInformation="true" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\NetworkKit_vc90_d.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\NetworkKit_vc90_d.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\NetworkKit_vc90_d.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool Name="VCALinkTool"/>
+			<Tool Name="VCXDCMakeTool"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_NetworkKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCFxCopTool"/>
+			<Tool Name="VCPostBuildEventTool"/>
+		</Configuration>
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc90\NetworkKit" Name="vc90 DLL Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
+			<Tool Name="VCPreBuildEventTool"/>
+			<Tool Name="VCCustomBuildTool"/>
+			<Tool Name="VCXMLDataGeneratorTool"/>
+			<Tool Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool Name="VCIDLTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc90\NetworkKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc90\NetworkKit\" Optimization="2" PrecompiledHeaderFile="..\..\..\lib\msvs2005prj_vc90\NetworkKit_vc90.pch" PrecompiledHeaderThrough="vcf\NetworkKit\NetworkKit.h" PreprocessorDefinitions="_USRDLL;DLL_EXPORTS;FOUNDATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;NETWORKKIT_DLL;NETWORKKIT_EXPORTS" ProgramDataBaseFileName="..\..\..\lib\..\bin\NetworkKit_vc90.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" UsePrecompiledHeader="2" WarningLevel="1"/>
+			<Tool Name="VCManagedResourceCompilerTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="FOUNDATIONKIT_DLL;NDEBUG;_WIN32;WIN32;_USRDLL;VCF_DISABLE_PRAGMA_LINKING;NETWORKKIT_DLL;NETWORKKIT_EXPORTS"/>
+			<Tool Name="VCPreLinkEventTool"/>
+			<Tool AdditionalDependencies="FoundationKit_vc90.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib" AdditionalLibraryDirectories="..\..\..\lib" AdditionalOptions="" GenerateManifest="true" ImportLibrary=".\..\..\..\lib\\NetworkKit_vc90.lib" LinkIncremental="1" Name="VCLinkerTool" OutputFile="..\..\..\lib\..\bin\NetworkKit_vc90.dll" ProgramDatabaseFile="..\..\..\lib\..\bin\NetworkKit_vc90.pdb" SuppressStartupBanner="true" TargetMachine="1"/>
+			<Tool Name="VCALinkTool"/>
+			<Tool Name="VCXDCMakeTool"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_NetworkKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCFxCopTool"/>
+			<Tool Name="VCPostBuildEventTool"/>
+		</Configuration>
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc90_sd\NetworkKit" Name="vc90 LIB Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
+			<Tool Name="VCPreBuildEventTool"/>
+			<Tool Name="VCCustomBuildTool"/>
+			<Tool Name="VCXMLDataGeneratorTool"/>
+			<Tool Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool Name="VCIDLTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MDd" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc90_sd\NetworkKit\" BasicRuntimeChecks="3" DebugInformationFormat="3" Detect64BitPortabilityProblems="true" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc90_sd\NetworkKit\" Optimization="0" PrecompiledHeaderFile="..\..\..\lib\msvs2005prj_vc90_sd\NetworkKit_vc90_sd.pch" PrecompiledHeaderThrough="vcf\NetworkKit\NetworkKit.h" PreprocessorDefinitions="_LIB;_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\NetworkKit_vc90_sd.pdb" RuntimeLibrary="3" RuntimeTypeInfo="true" SuppressStartupBanner="true" UsePrecompiledHeader="2" WarningLevel="1"/>
+			<Tool Name="VCManagedResourceCompilerTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="_DEBUG;_DEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool Name="VCPreLinkEventTool"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\NetworkKit_vc90_sd.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCALinkTool"/>
+			<Tool Name="VCXDCMakeTool"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_NetworkKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCFxCopTool"/>
+			<Tool Name="VCPostBuildEventTool"/>
+		</Configuration>
+		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="4" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc90_s\NetworkKit" Name="vc90 LIB Release|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
+			<Tool Name="VCPreBuildEventTool"/>
+			<Tool Name="VCCustomBuildTool"/>
+			<Tool Name="VCXMLDataGeneratorTool"/>
+			<Tool Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool Name="VCIDLTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" AdditionalOptions=" /MD" AssemblerListingLocation=".\..\..\..\lib\msvs2005prj_vc90_s\NetworkKit\" BasicRuntimeChecks="0" BufferSecurityCheck="false" DebugInformationFormat="0" ExceptionHandling="1" InlineFunctionExpansion="1" Name="VCCLCompilerTool" ObjectFile=".\..\..\..\lib\msvs2005prj_vc90_s\NetworkKit\" Optimization="2" PrecompiledHeaderFile="..\..\..\lib\msvs2005prj_vc90_s\NetworkKit_vc90_s.pch" PrecompiledHeaderThrough="vcf\NetworkKit\NetworkKit.h" PreprocessorDefinitions="_LIB;NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING" ProgramDataBaseFileName="..\..\..\lib\NetworkKit_vc90_s.pdb" RuntimeLibrary="2" RuntimeTypeInfo="true" SuppressStartupBanner="true" UsePrecompiledHeader="2" WarningLevel="1"/>
+			<Tool Name="VCManagedResourceCompilerTool"/>
+			<Tool AdditionalIncludeDirectories="..\..\..\src" Culture="1033" Name="VCResourceCompilerTool" PreprocessorDefinitions="NDEBUG;_WIN32;WIN32;_LIB;VCF_DISABLE_PRAGMA_LINKING"/>
+			<Tool Name="VCPreLinkEventTool"/>
+			<Tool Name="VCLibrarianTool" OutputFile="..\..\..\lib\NetworkKit_vc90_s.lib" SuppressStartupBanner="true"/>
+			<Tool Name="VCALinkTool"/>
+			<Tool Name="VCXDCMakeTool"/>
+			<Tool Name="VCBscMakeTool" OutputFile=".\..\..\..\lib\VCF_NetworkKit.bsc" SuppressStartupBanner="true"/>
+			<Tool Name="VCFxCopTool"/>
+			<Tool Name="VCPostBuildEventTool"/>
+		</Configuration>
 		<Configuration ATLMinimizesCRunTimeLibraryUsage="false" ConfigurationType="2" IntermediateDirectory=".\..\..\..\lib\msvs2005prj_vc80_d\NetworkKit" Name="vc80 DLL Debug|Win32" OutputDirectory=".\..\..\..\lib" UseOfMFC="0">
 			<Tool Name="VCPreBuildEventTool"/>
 			<Tool Name="VCCustomBuildTool"/>
@@ -362,6 +430,18 @@
 		<Filter Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx" Name="Source Files" UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File RelativePath="..\..\..\src\vcf\NetworkKit\IPAddress.cpp"/>
 			<File RelativePath="..\..\..\src\vcf\NetworkKit\NetworkKit.cpp">
+				<FileConfiguration Name="vc90 DLL Debug|Win32">
+					<Tool Name="VCCLCompilerTool" UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+				<FileConfiguration Name="vc90 DLL Release|Win32">
+					<Tool Name="VCCLCompilerTool" UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+				<FileConfiguration Name="vc90 LIB Debug|Win32">
+					<Tool Name="VCCLCompilerTool" UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+				<FileConfiguration Name="vc90 LIB Release|Win32">
+					<Tool Name="VCCLCompilerTool" UsePrecompiledHeader="1"/>
+				</FileConfiguration>
 				<FileConfiguration Name="vc80 DLL Debug|Win32">
 					<Tool Name="VCCLCompilerTool" UsePrecompiledHeader="1"/>
 				</FileConfiguration>

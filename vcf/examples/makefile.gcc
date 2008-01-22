@@ -42,7 +42,7 @@ MAKEARGS = CC="$(CC)" CXX="$(CXX)" CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 clean: 
 	-if exist .\*.o del .\*.o
@@ -114,6 +114,7 @@ clean:
 	$(MAKE) -C StrokesAndFills -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C SysTray -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Tables -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C Tabs -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C TCPServer -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C TeXLabel -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C TextEdit -f makefile.gcc $(MAKEARGS) clean
@@ -125,6 +126,7 @@ clean:
 	$(MAKE) -C Tooltips -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Transformations -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C TreeListControls -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C Trees -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C UDPClient -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C UDPServer -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Variants -f makefile.gcc $(MAKEARGS) clean
@@ -335,6 +337,9 @@ SysTray:
 Tables: 
 	$(MAKE) -C Tables -f makefile.gcc $(MAKEARGS) all
 
+Tabs: 
+	$(MAKE) -C Tabs -f makefile.gcc $(MAKEARGS) all
+
 TCPServer: 
 	$(MAKE) -C TCPServer -f makefile.gcc $(MAKEARGS) all
 
@@ -368,6 +373,9 @@ Transformations:
 TreeListControls: 
 	$(MAKE) -C TreeListControls -f makefile.gcc $(MAKEARGS) all
 
+Trees: 
+	$(MAKE) -C Trees -f makefile.gcc $(MAKEARGS) all
+
 UDPClient: 
 	$(MAKE) -C UDPClient -f makefile.gcc $(MAKEARGS) all
 
@@ -392,7 +400,7 @@ WorkingWithEnumerators:
 XMLTest: 
 	$(MAKE) -C XMLTest -f makefile.gcc $(MAKEARGS) all
 
-.PHONY: all clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+.PHONY: all clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 
 # Dependencies tracking:

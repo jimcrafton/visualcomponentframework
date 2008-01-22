@@ -34,7 +34,7 @@ LDFLAGS =
 # then the name of, say, the foundation kit debug dll
 # will be like this: FoundationKit_vc6_d.dll.
 # The default value is an empty string.
-# Backward compatibility: [,_vc6,_vc70,_vc71,_vc80]
+# Backward compatibility: [,_vc6,_vc70,_vc71,_vc80,_vc90]
 OPTION_SELECTLIB = 
 
 # The type of libraries: [0,1]
@@ -127,7 +127,7 @@ OPTION_HTMLKIT = 1
 # Depends on:
 #     OPTION_APPLICATIONKIT
 # Compile OpenGLKit: [0,1]
-OPTION_OPENGLKIT = 1
+OPTION_OPENGLKIT = 0
 
 # Depends on:
 #     OPTION_FOUNDATIONKIT
