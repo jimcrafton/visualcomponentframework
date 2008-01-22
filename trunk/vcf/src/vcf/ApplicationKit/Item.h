@@ -200,7 +200,7 @@ public:
 	the item(s). Some controls will completely 
 	ignore this value.
 	*/
-	int32 getDisplayState() const {
+	uint32 getDisplayState() const {
 		return displayState_;
 	}
 
@@ -208,7 +208,7 @@ public:
 	Sets the state for the item. This is made virtual to
 	allow subclasses to customize the behaviour. 
 	*/
-	virtual void setDisplayState( const int32& state ){
+	virtual void setDisplayState( const uint32& state ){
 		displayState_ = state;
 	}
 
@@ -252,7 +252,7 @@ protected:
 	bool selected_;
 	int32 imageIndex_;
 
-	int32 displayState_;
+	uint32 displayState_;
 	Model* model_;
 	Control* owningControl_;
 };

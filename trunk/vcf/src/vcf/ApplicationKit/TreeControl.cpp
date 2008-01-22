@@ -12,7 +12,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/TreeControl.h"
 #include "vcf/ApplicationKit/TreePeer.h"
 #include "vcf/ApplicationKit/DefaultTreeModel.h"
-#include "vcf/ApplicationKit/DefaultTreeItem.h"
+#include "vcf/ApplicationKit/TreeItem.h"
 
 
 using namespace VCF;
@@ -364,6 +364,67 @@ void TreeControl::setAllowLabelEditing( const bool& allowLabelEditing )
 Rect TreeControl::getItemRect( TreeItem* item )
 {
 	return treePeer_->getItemRect( item );
+}
+
+TreeItem* TreeControl::getItemParent( TreeItem* item )
+{
+	TreeItem* result = NULL;
+
+	return result;
+}
+
+void TreeControl::setItemParent( TreeItem* item, TreeItem* parent )
+{
+
+}
+
+void TreeControl::addChildItem( TreeItem* item, TreeItem* child )
+{
+
+}
+
+void TreeControl::removeChildItem( TreeItem* item, TreeItem* child )
+{
+
+}
+
+TreeItem* TreeControl::getItemFromKey( const TreeModel::Key& key )
+{
+	TreeItem* result = NULL;
+
+	return result;
+}
+
+bool TreeControl::getItemChildren( TreeItem* item, std::vector<TreeItem*>& children )
+{
+	return !children.empty();
+}
+
+void TreeControl::insertItemSubItem( TreeItem* item, const uint32& index, TreeSubItem* subItem )
+{
+
+}
+
+void TreeControl::removeItemSubItem( TreeItem* item, TreeSubItem* subItem )
+{
+
+}
+
+bool TreeControl::getItemSubItems( TreeItem* item, std::vector<TreeSubItem*>& subItems )
+{
+	return !subItems.empty();
+}
+
+TreeSubItem* TreeControl::getItemSubItem( TreeItem* item, const uint32& index )
+{
+	TreeSubItem* result = NULL;
+
+	return result;
+}
+
+uint32 TreeControl::getItemSubItemCount( TreeItem* item )
+{
+	return 0;
 }
 
 

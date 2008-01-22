@@ -586,6 +586,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TransparentWindow.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\TreeItem.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\UIComponent.cpp
 # End Source File
 # Begin Source File
@@ -1143,14 +1147,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTextModel.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTextModel.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTreeItem.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTreeItem.h
 # End Source File
 # Begin Source File
 

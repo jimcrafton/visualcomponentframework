@@ -48,7 +48,7 @@ class ModelEvent;
 /**
 \class TreeControl TreeControl.h "vcf/ApplicationKit/TreeControl.h" 
 */
-class APPLICATIONKIT_API TreeControl : public VCF::Control {
+class APPLICATIONKIT_API TreeControl : public VCF::Control, public TreeController {
 public:
 
 	TreeControl();
@@ -89,9 +89,27 @@ public:
 
 	TreeItem* findItem( Point* pt );
 
-	void addItem( TreeItem* parent, TreeItem* item );
+	virtual TreeItem* getItemParent( TreeItem* item );
+	virtual void setItemParent( TreeItem* item, TreeItem* parent );
 
-	TreeItem* addItem( TreeItem* parent, const String& caption=L"", const uint32 imageIndex=0 );
+	virtual Rect getItemRect( TreeItem* item );
+
+	virtual void addChildItem( TreeItem* item, TreeItem* child );
+	virtual void removeChildItem( TreeItem* item, TreeItem* child );
+
+	virtual TreeItem* getItemFromKey( const TreeModel::Key& key );
+
+	virtual bool getItemChildren( TreeItem* item, std::vector<TreeItem*>& children );
+
+	virtual void insertItemSubItem( TreeItem* item, const uint32& index, TreeSubItem* subItem );
+	virtual void removeItemSubItem( TreeItem* item, TreeSubItem* subItem );
+	virtual bool getItemSubItems( TreeItem* item, std::vector<TreeSubItem*>& subItems );
+	virtual TreeSubItem* getItemSubItem( TreeItem* item, const uint32& index );
+	virtual uint32 getItemSubItemCount( TreeItem* item );
+
+
+	void addItem( TreeItem* parent, TreeItem* item );
+	TreeItem* addItem( TreeItem* parent, const String& caption="", const uint32 imageIndex=0 );
 
 	void removeItem( TreeItem* item );
 
@@ -99,7 +117,7 @@ public:
 
 	Rect getItemImageRect( TreeItem* item );
 
-	Rect getItemRect( TreeItem* item );
+	
 
 	bool getAllowLabelEditing();
 
