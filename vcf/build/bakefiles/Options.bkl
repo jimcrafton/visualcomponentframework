@@ -5,13 +5,19 @@
 
     <set var="OPTION_SELECTLIB_DEFAULT"/>
     <set var="OPTION_SELECTLIB_DEFAULT">
-        <if cond="COMPILER=='vc'">,_vc6,_vc70,_vc71,_vc80,_vc90</if>
-        <if cond="COMPILER=='evc'">,_evc</if>
-        <if cond="COMPILER=='bcc'">,_bcc</if>
+        <if cond="FORMAT=='msvc6prj'">,_vc6</if>
+        <if cond="FORMAT=='msvs2003prj'">,_vc70,_vc71</if>
+        <if cond="FORMAT=='msvs2005prj'">,_vc80,_vc90</if>
+    </set>
+    <set var="OPTION_SELECTLIB_DESC"/>
+    <set var="OPTION_SELECTLIB_DESC">
+        <if cond="FORMAT=='msvc6prj'">,vc6</if>
+        <if cond="FORMAT=='msvs2003prj'">,vc70,vc71</if>
+        <if cond="FORMAT=='msvs2005prj'">,vc80,vc90</if>
     </set>
     <option name="OPTION_SELECTLIB">
         <values>$(OPTION_SELECTLIB_DEFAULT)</values>
-        <values-description>,vc6,vc70,vc71,vc80,vc90</values-description>
+        <values-description>$(OPTION_SELECTLIB_DESC)</values-description>
         <default-value>
             $(vcf.getOptionValue( 'OPTION_SELECTLIB', '' ))
         </default-value>

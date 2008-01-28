@@ -2,8 +2,8 @@
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
-# TARGTYPE "Win32 (x86) Static Library" 0x0104
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
+# TARGTYPE "Win32 (x86) Static Library" 0x0104
 
 CFG=FoundationKit - Win32 LIB Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
@@ -18,22 +18,6 @@ CFG=FoundationKit - Win32 LIB Release
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "FoundationKit - Win32 vc90 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "FoundationKit - Win32 vc90 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "FoundationKit - Win32 vc90 LIB Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "FoundationKit - Win32 vc90 LIB Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "FoundationKit - Win32 vc80 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "FoundationKit - Win32 vc80 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "FoundationKit - Win32 vc80 LIB Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "FoundationKit - Win32 vc80 LIB Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "FoundationKit - Win32 vc71 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "FoundationKit - Win32 vc71 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "FoundationKit - Win32 vc71 LIB Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "FoundationKit - Win32 vc71 LIB Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "FoundationKit - Win32 vc70 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "FoundationKit - Win32 vc70 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "FoundationKit - Win32 vc70 LIB Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "FoundationKit - Win32 vc70 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "FoundationKit - Win32 vc6 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "FoundationKit - Win32 vc6 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "FoundationKit - Win32 vc6 LIB Debug" (based on "Win32 (x86) Static Library")
@@ -51,391 +35,7 @@ CFG=FoundationKit - Win32 LIB Release
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "FoundationKit - Win32 vc90 DLL Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_d\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_d\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc90_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc90_d\FoundationKit_vc90_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc90_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc90_d\FoundationKit_vc90_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc90_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc90_d.lib" /debug
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc90_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc90_d.lib" /debug
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc90 DLL Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc90.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc90\FoundationKit_vc90.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc90.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc90\FoundationKit_vc90.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc90.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc90.lib"
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc90.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc90.lib"
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc90 LIB Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_sd\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_sd\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc90_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc90_sd\FoundationKit_vc90_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc90_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc90_sd\FoundationKit_vc90_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc90_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc90_sd.lib"
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc90 LIB Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_s\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_s\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc90_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc90_s\FoundationKit_vc90_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc90_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc90_s\FoundationKit_vc90_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc90_s.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc90_s.lib"
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc80 DLL Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_d\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_d\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc80_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_d\FoundationKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc80_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_d\FoundationKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc80_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc80_d.lib" /debug
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc80_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc80_d.lib" /debug
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc80 DLL Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc80.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80\FoundationKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc80.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80\FoundationKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc80.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc80.lib"
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc80.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc80.lib"
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc80 LIB Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_sd\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_sd\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc80_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_sd\FoundationKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc80_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_sd\FoundationKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc80_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc80_sd.lib"
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc80 LIB Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_s\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_s\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc80_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_s\FoundationKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc80_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_s\FoundationKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc80_s.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc80_s.lib"
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc71 DLL Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_d\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_d\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc71_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_d\FoundationKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc71_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_d\FoundationKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc71_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc71_d.lib" /debug
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc71_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc71_d.lib" /debug
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc71 DLL Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc71.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71\FoundationKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc71.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71\FoundationKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc71.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc71.lib"
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc71.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc71.lib"
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc71 LIB Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_sd\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_sd\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc71_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_sd\FoundationKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc71_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_sd\FoundationKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc71_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc71_sd.lib"
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc71 LIB Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_s\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_s\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc71_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_s\FoundationKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc71_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_s\FoundationKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc71_s.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc71_s.lib"
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc70 DLL Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_d\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_d\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc70_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_d\FoundationKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc70_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_d\FoundationKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc70_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc70_d.lib" /debug
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc70_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc70_d.lib" /debug
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc70 DLL Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc70.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70\FoundationKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\FoundationKit_vc70.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70\FoundationKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc70.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc70.lib"
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc70.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc70.lib"
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc70 LIB Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_sd\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_sd\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc70_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_sd\FoundationKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc70_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_sd\FoundationKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc70_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc70_sd.lib"
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc70 LIB Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_s\FoundationKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_s\FoundationKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc70_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_s\FoundationKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\FoundationKit_vc70_s.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_s\FoundationKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc70_s.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\FoundationKit_vc70_s.lib"
-
-!ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc6 DLL Debug"
+!IF  "$(CFG)" == "FoundationKit - Win32 vc6 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -447,8 +47,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir "..\..\..\lib"
 # PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_d\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc6_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_d\FoundationKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_vc6_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_d\FoundationKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\..\bin\FoundationKit_vc6_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_d\FoundationKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\..\bin\FoundationKit_vc6_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_d\FoundationKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
@@ -457,8 +57,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc6_d.lib" /debug
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc6_d.lib" /debug
+# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\FoundationKit_vc6_d.pdb"
+# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\FoundationKit_vc6_d.pdb"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc6 DLL Release"
 
@@ -482,8 +82,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc6.lib"
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc6.lib"
+# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc6.lib" /pdb:"..\..\..\lib\..\bin\FoundationKit_vc6.pdb"
+# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_vc6.lib" /pdb:"..\..\..\lib\..\bin\FoundationKit_vc6.pdb"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 vc6 LIB Debug"
 
@@ -497,8 +97,8 @@ LINK32=link.exe
 # PROP Output_Dir "..\..\..\lib"
 # PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_sd\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc6_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_sd\FoundationKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_vc6_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_sd\FoundationKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\FoundationKit_vc6_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_sd\FoundationKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\FoundationKit_vc6_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_sd\FoundationKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -543,8 +143,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir "..\..\..\lib"
 # PROP Intermediate_Dir "..\..\..\lib\msvc6prj_d\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_d\FoundationKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\FoundationKit_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_d\FoundationKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\..\bin\FoundationKit_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_d\FoundationKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\..\bin\FoundationKit_d.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_d\FoundationKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "FOUNDATIONKIT_DLL" /D "FOUNDATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "FOUNDATIONKIT_DLL" /d FOUNDATIONKIT_EXPORTS
@@ -553,8 +153,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_d.lib" /debug
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_d.lib" /debug
+# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_d.lib" /debug /pdb:"..\..\..\lib\..\bin\FoundationKit_d.pdb"
+# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit_d.lib" /debug /pdb:"..\..\..\lib\..\bin\FoundationKit_d.pdb"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 DLL Release"
 
@@ -578,8 +178,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit.lib"
-# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit.lib"
+# ADD BASE LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit.lib" /pdb:"..\..\..\lib\..\bin\FoundationKit.pdb"
+# ADD LINK32 rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\FoundationKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\FoundationKit.lib" /pdb:"..\..\..\lib\..\bin\FoundationKit.pdb"
 
 !ELSEIF  "$(CFG)" == "FoundationKit - Win32 LIB Debug"
 
@@ -593,8 +193,8 @@ LINK32=link.exe
 # PROP Output_Dir "..\..\..\lib"
 # PROP Intermediate_Dir "..\..\..\lib\msvc6prj_sd\FoundationKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_sd\FoundationKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\FoundationKit_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_sd\FoundationKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\FoundationKit_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_sd\FoundationKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\FoundationKit_sd.pdb /Yu"vcf\FoundationKit\FoundationKit.h" /Fp"..\..\..\lib\msvc6prj_sd\FoundationKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -631,22 +231,6 @@ LIB32=link.exe -lib
 
 # Begin Target
 
-# Name "FoundationKit - Win32 vc90 DLL Debug"
-# Name "FoundationKit - Win32 vc90 DLL Release"
-# Name "FoundationKit - Win32 vc90 LIB Debug"
-# Name "FoundationKit - Win32 vc90 LIB Release"
-# Name "FoundationKit - Win32 vc80 DLL Debug"
-# Name "FoundationKit - Win32 vc80 DLL Release"
-# Name "FoundationKit - Win32 vc80 LIB Debug"
-# Name "FoundationKit - Win32 vc80 LIB Release"
-# Name "FoundationKit - Win32 vc71 DLL Debug"
-# Name "FoundationKit - Win32 vc71 DLL Release"
-# Name "FoundationKit - Win32 vc71 LIB Debug"
-# Name "FoundationKit - Win32 vc71 LIB Release"
-# Name "FoundationKit - Win32 vc70 DLL Debug"
-# Name "FoundationKit - Win32 vc70 DLL Release"
-# Name "FoundationKit - Win32 vc70 LIB Debug"
-# Name "FoundationKit - Win32 vc70 LIB Release"
 # Name "FoundationKit - Win32 vc6 DLL Debug"
 # Name "FoundationKit - Win32 vc6 DLL Release"
 # Name "FoundationKit - Win32 vc6 LIB Debug"

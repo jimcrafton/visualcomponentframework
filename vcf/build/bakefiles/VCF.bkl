@@ -9,15 +9,19 @@
         $(VCF_DIR)$(DIRSEP)src
     </set>
 
-    <mkdir id="mkdir_bin">
-        <dir>$(VCF_BIN)</dir>
-        <dependency-of>all</dependency-of>
-    </mkdir>
+    <if cond="FORMAT_SUPPORTS_CONDITIONS=='1'">
 
-    <mkdir id="mkdir_lib">
-        <dir>$(VCF_LIB)</dir>
-        <dependency-of>all</dependency-of>
-    </mkdir>
+        <mkdir id="mkdir_bin">
+            <dir>$(VCF_BIN)</dir>
+            <dependency-of>all</dependency-of>
+        </mkdir>
+
+        <mkdir id="mkdir_lib">
+            <dir>$(VCF_LIB)</dir>
+            <dependency-of>all</dependency-of>
+        </mkdir>
+
+    </if>
 
     <include file="AGG.bkl"/>
     <include file="ZLib.bkl"/>
@@ -49,37 +53,41 @@
 
     <include file="Actions.bkl"/>
 
-    <action id="createinfo">
-        <is-phony>1</is-phony>
-        <depends>createinfo_</depends>
-    </action>
-    <subproject id="createinfo_">
-        <installable>no</installable>
-        <dir>../../src/createinfo</dir>
-        <dependency-of>all</dependency-of>
-    </subproject>
+    <if cond="FORMAT_SUPPORTS_ACTIONS=='1'">
+
+        <action id="createinfo">
+            <is-phony>1</is-phony>
+            <depends>createinfo_</depends>
+        </action>
+        <subproject id="createinfo_">
+            <installable>no</installable>
+            <dir>../../src/createinfo</dir>
+            <dependency-of>all</dependency-of>
+        </subproject>
 
 
-    <action id="CreateBundle">
-        <is-phony>1</is-phony>
-        <depends>CreateBundle_</depends>
-    </action>
-    <subproject id="CreateBundle_">
-        <installable>no</installable>
-        <dir>../../src/createbundle</dir>
-        <dependency-of>all</dependency-of>
-    </subproject>
+        <action id="CreateBundle">
+            <is-phony>1</is-phony>
+            <depends>CreateBundle_</depends>
+        </action>
+        <subproject id="CreateBundle_">
+            <installable>no</installable>
+            <dir>../../src/createbundle</dir>
+            <dependency-of>all</dependency-of>
+        </subproject>
 
 
-    <action id="xmake">
-        <is-phony>1</is-phony>
-        <depends>xmake_</depends>
-    </action>
-    <subproject id="xmake_">
-        <installable>no</installable>
-        <dir>../../src/xmake</dir>
-        <dependency-of>all</dependency-of>
-    </subproject>
+        <action id="xmake">
+            <is-phony>1</is-phony>
+            <depends>xmake_</depends>
+        </action>
+        <subproject id="xmake_">
+            <installable>no</installable>
+            <dir>../../src/xmake</dir>
+            <dependency-of>all</dependency-of>
+        </subproject>
+
+    </if>
 
 </makefile>
 

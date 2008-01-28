@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 
-<bakefile-gen>
+<bakefile-gen xmlns="http://www.bakefile.org/schema/bakefile-gen">
 
     <input>
         VCF.bkl
@@ -14,12 +14,12 @@
     
 
     <add-formats>
-        borland,mingw,gnu,msvc,msvc6prj,msvs2005prj
+        borland,mingw,gnu,msvc,msvc6prj,msvs2003prj,msvs2005prj
     </add-formats>
 
 
     <del-formats files="../../examples/*.bkl">
-        msvc6prj,msvs2005prj
+        msvc6prj,msvs2003prj,msvs2005prj
     </del-formats>
 
     <!--
@@ -27,23 +27,20 @@
     since they will overwrite existed ones.
     -->
     <del-formats files="../../examples/*/*.bkl">
-        msvc6prj,msvs2005prj
+        msvc6prj,msvs2003prj,msvs2005prj
     </del-formats>
     <del-formats files="../../src/BlackBox/*.bkl">
-        msvc6prj,msvs2005prj
+        msvc6prj,msvs2003prj,msvs2005prj
     </del-formats>
     <del-formats files="../../src/createbundle/*.bkl">
-        msvc6prj,msvs2005prj
+        msvc6prj,msvs2003prj,msvs2005prj
     </del-formats>
     <del-formats files="../../src/createinfo/*.bkl">
-        msvc6prj,msvs2005prj
+        msvc6prj,msvs2003prj,msvs2005prj
     </del-formats>
     <del-formats files="../../src/xmake/*.bkl">
-        msvc6prj,msvs2005prj
+        msvc6prj,msvs2003prj,msvs2005prj
     </del-formats>
-
-
-    <add-flags>-Iformats</add-flags>
 
 
     <add-flags files="VCF.bkl" formats="borland">
@@ -61,6 +58,9 @@
     <add-flags files="VCF.bkl" formats="msvc6prj">
         -o..\bakefiles.gen\msvc6prj\VCF.dsw
     </add-flags>
+    <add-flags files="VCF.bkl" formats="msvs2003prj">
+        -o..\bakefiles.gen\msvs2003prj\VCF.sln
+    </add-flags>
     <add-flags files="VCF.bkl" formats="msvs2005prj">
         -o..\bakefiles.gen\msvs2005prj\VCF.sln
     </add-flags>
@@ -69,13 +69,10 @@
     <add-flags formats="borland,mingw,msvc,gnu">
         -DWRITE_OPTIONS_FILE=0
     </add-flags>
-    <del-flags files="VCF.bkl">
-        -DWRITE_OPTIONS_FILE=0
-    </del-flags>
 
 
     <add-flags files="*" formats="borland,mingw,msvc,gnu">-DVCF_ROOT_BKGEN=../..</add-flags>
-    <add-flags files="*" formats="msvc6prj,msvs2005prj">-DVCF_ROOT_BKGEN=../../..</add-flags>
+    <add-flags files="*" formats="msvc6prj,msvs2003prj,msvs2005prj">-DVCF_ROOT_BKGEN=../../..</add-flags>
     <add-flags files="../../*/*">-DVCF_ROOT_BKGEN=..</add-flags>
     <add-flags files="../../*/*/*">-DVCF_ROOT_BKGEN=../..</add-flags>
 
