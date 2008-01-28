@@ -138,7 +138,7 @@ void TreeItem::removeChild( TreeItem* child )
 
 void TreeItem::clearChildren()
 {
-	
+	getTreeModel()->clearChildren( this->getKey() );
 }
 
 void TreeItem::setSelectedImageIndex( const int32& selectedImageIndex )
@@ -155,36 +155,34 @@ TreeSubItem* TreeItem::addSubItem( const String& caption, void* data )
 {
 	TreeSubItem* result = new TreeSubItem(this);
 
-	getController()->insertItemSubItem( this, getController()->getItemSubItemCount(this), result );
+	addSubItem( result );
 
 	return result;
 }
 
 void TreeItem::addSubItem( TreeSubItem* subItem )
 {
-	
+	getController()->insertItemSubItem( this, getController()->getItemSubItemCount(this), subItem );
 }
 
 void TreeItem::removeSubItem( const uint32& index )
 {
-
+	getController()->removeItemSubItem( this, getController()->getItemSubItem(this, index) );
 }
 
 bool TreeItem::getSubItems( std::vector<TreeSubItem*>& subItems )
 {
-	return false;
+	return getController()->getItemSubItems( this, subItems );
 }
 
 TreeSubItem* TreeItem::getSubItem( const uint32& index )
 {
-	TreeSubItem* result = 0;
-	return result;
+	return getController()->getItemSubItem(this, index);
 }
 
 uint32 TreeItem::getSubItemCount()
 {
-	uint32 result = 0;
-	return result;
+	return getController()->getItemSubItemCount(this);
 }
 
 void TreeItem::subItemChanged( TreeSubItem* item )

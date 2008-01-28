@@ -118,6 +118,7 @@ public:
 		ItemAdded,
 		ItemRemoved,
 		ItemMoved,
+		ChildItemsRemoved
 	};
 
 	/**
@@ -168,7 +169,8 @@ public:
 	*/
 	virtual void move( const Key& srcKey, const Key& destParentKey ) = 0;
 
-	
+	virtual void clearChildren( const Key& key ) = 0;
+
 	/**
 	Returns true if any children are found for the specified key.
 	Any children will be stored as keys in the passed in vector.

@@ -370,6 +370,11 @@ TreeItem* TreeControl::getItemParent( TreeItem* item )
 {
 	TreeItem* result = NULL;
 
+	TreeModel::Key parent = getTreeModel()->getParent( item->getKey() );
+	if ( parent != TreeModel::RootKey ) {
+		
+	}
+
 	return result;
 }
 
