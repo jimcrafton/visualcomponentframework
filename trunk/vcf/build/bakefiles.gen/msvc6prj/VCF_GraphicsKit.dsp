@@ -2,8 +2,8 @@
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
-# TARGTYPE "Win32 (x86) Static Library" 0x0104
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
+# TARGTYPE "Win32 (x86) Static Library" 0x0104
 
 CFG=GraphicsKit - Win32 LIB Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
@@ -18,22 +18,6 @@ CFG=GraphicsKit - Win32 LIB Release
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "GraphicsKit - Win32 vc90 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "GraphicsKit - Win32 vc90 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "GraphicsKit - Win32 vc90 LIB Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "GraphicsKit - Win32 vc90 LIB Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "GraphicsKit - Win32 vc80 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "GraphicsKit - Win32 vc80 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "GraphicsKit - Win32 vc80 LIB Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "GraphicsKit - Win32 vc80 LIB Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "GraphicsKit - Win32 vc71 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "GraphicsKit - Win32 vc71 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "GraphicsKit - Win32 vc71 LIB Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "GraphicsKit - Win32 vc71 LIB Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "GraphicsKit - Win32 vc70 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "GraphicsKit - Win32 vc70 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "GraphicsKit - Win32 vc70 LIB Debug" (based on "Win32 (x86) Static Library")
-!MESSAGE "GraphicsKit - Win32 vc70 LIB Release" (based on "Win32 (x86) Static Library")
 !MESSAGE "GraphicsKit - Win32 vc6 DLL Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "GraphicsKit - Win32 vc6 DLL Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "GraphicsKit - Win32 vc6 LIB Debug" (based on "Win32 (x86) Static Library")
@@ -51,391 +35,7 @@ CFG=GraphicsKit - Win32 LIB Release
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "GraphicsKit - Win32 vc90 DLL Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_d\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_d\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\GraphicsKit_vc90_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc90_d\GraphicsKit_vc90_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\GraphicsKit_vc90_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc90_d\GraphicsKit_vc90_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc90_d.lib ..\..\..\lib\AGG_vc90_sd.lib ..\..\..\lib\LibJPEG_vc90_sd.lib ..\..\..\lib\LibPNG_vc90_sd.lib ..\..\..\lib\ZLib_vc90_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc90_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc90_d.lib" /debug
-# ADD LINK32 FoundationKit_vc90_d.lib ..\..\..\lib\AGG_vc90_sd.lib ..\..\..\lib\LibJPEG_vc90_sd.lib ..\..\..\lib\LibPNG_vc90_sd.lib ..\..\..\lib\ZLib_vc90_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc90_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc90_d.lib" /debug
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc90 DLL Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\GraphicsKit_vc90.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc90\GraphicsKit_vc90.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\GraphicsKit_vc90.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc90\GraphicsKit_vc90.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc90.lib ..\..\..\lib\AGG_vc90_s.lib ..\..\..\lib\LibJPEG_vc90_s.lib ..\..\..\lib\LibPNG_vc90_s.lib ..\..\..\lib\ZLib_vc90_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc90.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc90.lib"
-# ADD LINK32 FoundationKit_vc90.lib ..\..\..\lib\AGG_vc90_s.lib ..\..\..\lib\LibJPEG_vc90_s.lib ..\..\..\lib\LibPNG_vc90_s.lib ..\..\..\lib\ZLib_vc90_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc90.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc90.lib"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc90 LIB Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_sd\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_sd\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\GraphicsKit_vc90_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc90_sd\GraphicsKit_vc90_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\GraphicsKit_vc90_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc90_sd\GraphicsKit_vc90_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc90_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc90_sd.lib"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc90 LIB Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_s\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc90_s\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\GraphicsKit_vc90_s.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc90_s\GraphicsKit_vc90_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\GraphicsKit_vc90_s.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc90_s\GraphicsKit_vc90_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc90_s.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc90_s.lib"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc80 DLL Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_d\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_d\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\GraphicsKit_vc80_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_d\GraphicsKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\GraphicsKit_vc80_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_d\GraphicsKit_vc80_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc80_d.lib ..\..\..\lib\AGG_vc80_sd.lib ..\..\..\lib\LibJPEG_vc80_sd.lib ..\..\..\lib\LibPNG_vc80_sd.lib ..\..\..\lib\ZLib_vc80_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc80_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc80_d.lib" /debug
-# ADD LINK32 FoundationKit_vc80_d.lib ..\..\..\lib\AGG_vc80_sd.lib ..\..\..\lib\LibJPEG_vc80_sd.lib ..\..\..\lib\LibPNG_vc80_sd.lib ..\..\..\lib\ZLib_vc80_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc80_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc80_d.lib" /debug
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc80 DLL Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\GraphicsKit_vc80.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc80\GraphicsKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\GraphicsKit_vc80.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc80\GraphicsKit_vc80.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc80.lib ..\..\..\lib\AGG_vc80_s.lib ..\..\..\lib\LibJPEG_vc80_s.lib ..\..\..\lib\LibPNG_vc80_s.lib ..\..\..\lib\ZLib_vc80_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc80.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc80.lib"
-# ADD LINK32 FoundationKit_vc80.lib ..\..\..\lib\AGG_vc80_s.lib ..\..\..\lib\LibJPEG_vc80_s.lib ..\..\..\lib\LibPNG_vc80_s.lib ..\..\..\lib\ZLib_vc80_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc80.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc80.lib"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc80 LIB Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_sd\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_sd\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\GraphicsKit_vc80_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_sd\GraphicsKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\GraphicsKit_vc80_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_sd\GraphicsKit_vc80_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc80_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc80_sd.lib"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc80 LIB Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_s\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc80_s\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\GraphicsKit_vc80_s.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_s\GraphicsKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\GraphicsKit_vc80_s.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc80_s\GraphicsKit_vc80_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc80_s.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc80_s.lib"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc71 DLL Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_d\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_d\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\GraphicsKit_vc71_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_d\GraphicsKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\GraphicsKit_vc71_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_d\GraphicsKit_vc71_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc71_d.lib ..\..\..\lib\AGG_vc71_sd.lib ..\..\..\lib\LibJPEG_vc71_sd.lib ..\..\..\lib\LibPNG_vc71_sd.lib ..\..\..\lib\ZLib_vc71_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc71_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc71_d.lib" /debug
-# ADD LINK32 FoundationKit_vc71_d.lib ..\..\..\lib\AGG_vc71_sd.lib ..\..\..\lib\LibJPEG_vc71_sd.lib ..\..\..\lib\LibPNG_vc71_sd.lib ..\..\..\lib\ZLib_vc71_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc71_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc71_d.lib" /debug
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc71 DLL Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\GraphicsKit_vc71.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc71\GraphicsKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\GraphicsKit_vc71.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc71\GraphicsKit_vc71.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc71.lib ..\..\..\lib\AGG_vc71_s.lib ..\..\..\lib\LibJPEG_vc71_s.lib ..\..\..\lib\LibPNG_vc71_s.lib ..\..\..\lib\ZLib_vc71_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc71.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc71.lib"
-# ADD LINK32 FoundationKit_vc71.lib ..\..\..\lib\AGG_vc71_s.lib ..\..\..\lib\LibJPEG_vc71_s.lib ..\..\..\lib\LibPNG_vc71_s.lib ..\..\..\lib\ZLib_vc71_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc71.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc71.lib"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc71 LIB Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_sd\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_sd\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\GraphicsKit_vc71_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_sd\GraphicsKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\GraphicsKit_vc71_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_sd\GraphicsKit_vc71_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc71_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc71_sd.lib"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc71 LIB Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_s\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc71_s\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\GraphicsKit_vc71_s.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_s\GraphicsKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\GraphicsKit_vc71_s.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc71_s\GraphicsKit_vc71_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc71_s.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc71_s.lib"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc70 DLL Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_d\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_d\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\GraphicsKit_vc70_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_d\GraphicsKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\GraphicsKit_vc70_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_d\GraphicsKit_vc70_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc70_d.lib ..\..\..\lib\AGG_vc70_sd.lib ..\..\..\lib\LibJPEG_vc70_sd.lib ..\..\..\lib\LibPNG_vc70_sd.lib ..\..\..\lib\ZLib_vc70_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc70_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc70_d.lib" /debug
-# ADD LINK32 FoundationKit_vc70_d.lib ..\..\..\lib\AGG_vc70_sd.lib ..\..\..\lib\LibJPEG_vc70_sd.lib ..\..\..\lib\LibPNG_vc70_sd.lib ..\..\..\lib\ZLib_vc70_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc70_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc70_d.lib" /debug
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc70 DLL Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\GraphicsKit_vc70.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc70\GraphicsKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\GraphicsKit_vc70.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc70\GraphicsKit_vc70.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-# ADD RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc70.lib ..\..\..\lib\AGG_vc70_s.lib ..\..\..\lib\LibJPEG_vc70_s.lib ..\..\..\lib\LibPNG_vc70_s.lib ..\..\..\lib\ZLib_vc70_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc70.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc70.lib"
-# ADD LINK32 FoundationKit_vc70.lib ..\..\..\lib\AGG_vc70_s.lib ..\..\..\lib\LibJPEG_vc70_s.lib ..\..\..\lib\LibPNG_vc70_s.lib ..\..\..\lib\ZLib_vc70_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc70.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc70.lib"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc70 LIB Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_sd\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_sd\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\GraphicsKit_vc70_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_sd\GraphicsKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\GraphicsKit_vc70_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_sd\GraphicsKit_vc70_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc70_sd.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc70_sd.lib"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc70 LIB Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "..\..\..\lib"
-# PROP BASE Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_s\GraphicsKit"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\..\lib"
-# PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc70_s\GraphicsKit"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\GraphicsKit_vc70_s.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_s\GraphicsKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MD /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\GraphicsKit_vc70_s.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc70_s\GraphicsKit_vc70_s.pch" /D "WIN32" /D "_LIB" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD BASE RSC /l 0x409
-# ADD RSC /l 0x409
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc70_s.lib"
-# ADD LIB32 /nologo /out:"..\..\..\lib\GraphicsKit_vc70_s.lib"
-
-!ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc6 DLL Debug"
+!IF  "$(CFG)" == "GraphicsKit - Win32 vc6 DLL Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -447,8 +47,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir "..\..\..\lib"
 # PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_d\GraphicsKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\GraphicsKit_vc6_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_d\GraphicsKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\GraphicsKit_vc6_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_d\GraphicsKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\..\bin\GraphicsKit_vc6_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_d\GraphicsKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\..\bin\GraphicsKit_vc6_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_d\GraphicsKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
@@ -457,8 +57,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc6_d.lib ..\..\..\lib\AGG_vc6_sd.lib ..\..\..\lib\LibJPEG_vc6_sd.lib ..\..\..\lib\LibPNG_vc6_sd.lib ..\..\..\lib\ZLib_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc6_d.lib" /debug
-# ADD LINK32 FoundationKit_vc6_d.lib ..\..\..\lib\AGG_vc6_sd.lib ..\..\..\lib\LibJPEG_vc6_sd.lib ..\..\..\lib\LibPNG_vc6_sd.lib ..\..\..\lib\ZLib_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc6_d.lib" /debug
+# ADD BASE LINK32 FoundationKit_vc6_d.lib ..\..\..\lib\AGG_vc6_sd.lib ..\..\..\lib\LibJPEG_vc6_sd.lib ..\..\..\lib\LibPNG_vc6_sd.lib ..\..\..\lib\ZLib_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\GraphicsKit_vc6_d.pdb"
+# ADD LINK32 FoundationKit_vc6_d.lib ..\..\..\lib\AGG_vc6_sd.lib ..\..\..\lib\LibJPEG_vc6_sd.lib ..\..\..\lib\LibPNG_vc6_sd.lib ..\..\..\lib\ZLib_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\GraphicsKit_vc6_d.pdb"
 
 !ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc6 DLL Release"
 
@@ -482,8 +82,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc6.lib ..\..\..\lib\AGG_vc6_s.lib ..\..\..\lib\LibJPEG_vc6_s.lib ..\..\..\lib\LibPNG_vc6_s.lib ..\..\..\lib\ZLib_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc6.lib"
-# ADD LINK32 FoundationKit_vc6.lib ..\..\..\lib\AGG_vc6_s.lib ..\..\..\lib\LibJPEG_vc6_s.lib ..\..\..\lib\LibPNG_vc6_s.lib ..\..\..\lib\ZLib_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc6.lib"
+# ADD BASE LINK32 FoundationKit_vc6.lib ..\..\..\lib\AGG_vc6_s.lib ..\..\..\lib\LibJPEG_vc6_s.lib ..\..\..\lib\LibPNG_vc6_s.lib ..\..\..\lib\ZLib_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc6.lib" /pdb:"..\..\..\lib\..\bin\GraphicsKit_vc6.pdb"
+# ADD LINK32 FoundationKit_vc6.lib ..\..\..\lib\AGG_vc6_s.lib ..\..\..\lib\LibJPEG_vc6_s.lib ..\..\..\lib\LibPNG_vc6_s.lib ..\..\..\lib\ZLib_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_vc6.lib" /pdb:"..\..\..\lib\..\bin\GraphicsKit_vc6.pdb"
 
 !ELSEIF  "$(CFG)" == "GraphicsKit - Win32 vc6 LIB Debug"
 
@@ -497,8 +97,8 @@ LINK32=link.exe
 # PROP Output_Dir "..\..\..\lib"
 # PROP Intermediate_Dir "..\..\..\lib\msvc6prj_vc6_sd\GraphicsKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\GraphicsKit_vc6_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_sd\GraphicsKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\GraphicsKit_vc6_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_sd\GraphicsKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\GraphicsKit_vc6_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_sd\GraphicsKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\GraphicsKit_vc6_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_sd\GraphicsKit_vc6_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -543,8 +143,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir "..\..\..\lib"
 # PROP Intermediate_Dir "..\..\..\lib\msvc6prj_d\GraphicsKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\GraphicsKit_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_d\GraphicsKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\..\bin\GraphicsKit_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_d\GraphicsKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\..\bin\GraphicsKit_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_d\GraphicsKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
+# ADD CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\..\bin\GraphicsKit_d.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_d\GraphicsKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "GRAPHICSKIT_DLL" /D "GRAPHICSKIT_EXPORTS" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "FOUNDATIONKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "GRAPHICSKIT_DLL" /d GRAPHICSKIT_EXPORTS
@@ -553,8 +153,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_d.lib ..\..\..\lib\AGG_sd.lib ..\..\..\lib\LibJPEG_sd.lib ..\..\..\lib\LibPNG_sd.lib ..\..\..\lib\ZLib_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_d.lib" /debug
-# ADD LINK32 FoundationKit_d.lib ..\..\..\lib\AGG_sd.lib ..\..\..\lib\LibJPEG_sd.lib ..\..\..\lib\LibPNG_sd.lib ..\..\..\lib\ZLib_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_d.lib" /debug
+# ADD BASE LINK32 FoundationKit_d.lib ..\..\..\lib\AGG_sd.lib ..\..\..\lib\LibJPEG_sd.lib ..\..\..\lib\LibPNG_sd.lib ..\..\..\lib\ZLib_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_d.lib" /debug /pdb:"..\..\..\lib\..\bin\GraphicsKit_d.pdb"
+# ADD LINK32 FoundationKit_d.lib ..\..\..\lib\AGG_sd.lib ..\..\..\lib\LibJPEG_sd.lib ..\..\..\lib\LibPNG_sd.lib ..\..\..\lib\ZLib_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit_d.lib" /debug /pdb:"..\..\..\lib\..\bin\GraphicsKit_d.pdb"
 
 !ELSEIF  "$(CFG)" == "GraphicsKit - Win32 DLL Release"
 
@@ -578,8 +178,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit.lib ..\..\..\lib\AGG_s.lib ..\..\..\lib\LibJPEG_s.lib ..\..\..\lib\LibPNG_s.lib ..\..\..\lib\ZLib_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit.lib"
-# ADD LINK32 FoundationKit.lib ..\..\..\lib\AGG_s.lib ..\..\..\lib\LibJPEG_s.lib ..\..\..\lib\LibPNG_s.lib ..\..\..\lib\ZLib_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit.lib"
+# ADD BASE LINK32 FoundationKit.lib ..\..\..\lib\AGG_s.lib ..\..\..\lib\LibJPEG_s.lib ..\..\..\lib\LibPNG_s.lib ..\..\..\lib\ZLib_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit.lib" /pdb:"..\..\..\lib\..\bin\GraphicsKit.pdb"
+# ADD LINK32 FoundationKit.lib ..\..\..\lib\AGG_s.lib ..\..\..\lib\LibJPEG_s.lib ..\..\..\lib\LibPNG_s.lib ..\..\..\lib\ZLib_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\GraphicsKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\GraphicsKit.lib" /pdb:"..\..\..\lib\..\bin\GraphicsKit.pdb"
 
 !ELSEIF  "$(CFG)" == "GraphicsKit - Win32 LIB Debug"
 
@@ -593,8 +193,8 @@ LINK32=link.exe
 # PROP Output_Dir "..\..\..\lib"
 # PROP Intermediate_Dir "..\..\..\lib\msvc6prj_sd\GraphicsKit"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\GraphicsKit_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_sd\GraphicsKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
-# ADD CPP /nologo /FD /MDd /Od /GR /EHsc /W1 /I "..\..\..\src" /Zi /Gm /GZ /Fd..\..\..\lib\GraphicsKit_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_sd\GraphicsKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD BASE CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\GraphicsKit_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_sd\GraphicsKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
+# ADD CPP /nologo /FD /MDd /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\GraphicsKit_sd.pdb /Yu"vcf\GraphicsKit\GraphicsKit.h" /Fp"..\..\..\lib\msvc6prj_sd\GraphicsKit_sd.pch" /D "WIN32" /D "_LIB" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_LIB" /D "VCF_DISABLE_PRAGMA_LINKING" /c
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
 BSC32=bscmake.exe
@@ -631,22 +231,6 @@ LIB32=link.exe -lib
 
 # Begin Target
 
-# Name "GraphicsKit - Win32 vc90 DLL Debug"
-# Name "GraphicsKit - Win32 vc90 DLL Release"
-# Name "GraphicsKit - Win32 vc90 LIB Debug"
-# Name "GraphicsKit - Win32 vc90 LIB Release"
-# Name "GraphicsKit - Win32 vc80 DLL Debug"
-# Name "GraphicsKit - Win32 vc80 DLL Release"
-# Name "GraphicsKit - Win32 vc80 LIB Debug"
-# Name "GraphicsKit - Win32 vc80 LIB Release"
-# Name "GraphicsKit - Win32 vc71 DLL Debug"
-# Name "GraphicsKit - Win32 vc71 DLL Release"
-# Name "GraphicsKit - Win32 vc71 LIB Debug"
-# Name "GraphicsKit - Win32 vc71 LIB Release"
-# Name "GraphicsKit - Win32 vc70 DLL Debug"
-# Name "GraphicsKit - Win32 vc70 DLL Release"
-# Name "GraphicsKit - Win32 vc70 LIB Debug"
-# Name "GraphicsKit - Win32 vc70 LIB Release"
 # Name "GraphicsKit - Win32 vc6 DLL Debug"
 # Name "GraphicsKit - Win32 vc6 DLL Release"
 # Name "GraphicsKit - Win32 vc6 LIB Debug"

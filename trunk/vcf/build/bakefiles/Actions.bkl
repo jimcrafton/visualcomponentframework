@@ -2,7 +2,7 @@
 
 <makefile>
 
-    <if cond="FORMAT_SUPPORTS_CONDITIONS=='1'">
+    <if cond="FORMAT_SUPPORTS_ACTIONS=='1'">
 
         <action id="FoundationKit" cond="OPTION_FOUNDATIONKIT=='1'">
             <is-phony>1</is-phony>
