@@ -261,6 +261,23 @@ void DefaultTreeModel::move( const TreeModel::Key& srcKey, const TreeModel::Key&
 	}
 }
 
+void DefaultTreeModel::clearChildren( const Key& key )
+{
+	std::vector<TreeModel::Key> children;
+	if ( getChildren( key, children ) ) {
+		std::vector<TreeModel::Key>::iterator it = children.begin();
+		while ( it != children.end() ) {
+			removeFromHierarchy( *it );	
+			++it;
+		}
+
+		TreeModelEvent e(this, TreeModel::ChildItemsRemoved);
+		e.key = key;
+
+		ModelChanged( &e );
+	}
+}
+
 bool DefaultTreeModel::getChildren(const TreeModel::Key& key, std::vector<TreeModel::Key>& children )
 {
 	HierarchyRange range = hierarchy_.equal_range( key );	

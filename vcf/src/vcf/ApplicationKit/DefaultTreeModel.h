@@ -55,6 +55,8 @@ public:
 
 	virtual void move( const Key& srcKey, const Key& destParentKey );
 
+	virtual void clearChildren( const Key& key );
+
 	virtual bool getChildren(const Key& key, std::vector<Key>& children );
 
 	virtual Key getParent( const Key& key );
