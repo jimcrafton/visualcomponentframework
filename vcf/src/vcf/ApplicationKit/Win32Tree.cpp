@@ -245,16 +245,6 @@ Win32Object::CreateParams Win32Tree::createParams()
 	return result;
 }
 
-TreeModel* Win32Tree::getTreeModel()
-{
-	return NULL;
-}
-
-void Win32Tree::setTreeModel( TreeModel* model )
-{
-
-}
-
 double Win32Tree::getItemIndent()
 {
 	return TreeView_GetIndent( hwnd_ );
@@ -1032,6 +1022,7 @@ void Win32Tree::addTreeItem( TreeModel::Key key, HTREEITEM parent )
 	}
 }
 
+/*
 void Win32Tree::addItem( TreeItem* item )
 {
 	HTREEITEM addedItem = NULL;
@@ -1141,34 +1132,36 @@ void Win32Tree::addItem( TreeItem* item )
 	//delete [] tmpName;
 
 	treeItems_[item] = addedItem;
-/*
-	item->ItemAdded += itemAddedHandler_;
-	item->ItemChanged += itemChangedHandler_;
-	item->ItemDeleted += itemDeletedHandler_;
-	item->ItemPaint += itemPaintedHandler_;
-	item->ItemSelected += itemSelectedHandler_;
-*/
-	//now check the children
-/*
-	Enumerator<TreeItem*>* children = item->getChildren();
-	if ( NULL != children ){
-		while ( children->hasMoreElements() ){
-			TreeItem* child = children->nextElement();
-			if ( NULL != child ){
-				addItem( child );
-			}
-		}
-	}
-	*/
-}
 
+//	item->ItemAdded += itemAddedHandler_;
+//	item->ItemChanged += itemChangedHandler_;
+//	item->ItemDeleted += itemDeletedHandler_;
+//	item->ItemPaint += itemPaintedHandler_;
+//	item->ItemSelected += itemSelectedHandler_;
+
+	//now check the children
+
+//	Enumerator<TreeItem*>* children = item->getChildren();
+//	if ( NULL != children ){
+//		while ( children->hasMoreElements() ){
+//			TreeItem* child = children->nextElement();
+//			if ( NULL != child ){
+//				addItem( child );
+//			}
+//		}
+//	}
+	
+}
+*/
+
+/*
 void Win32Tree::clear()
 {
 	treeItems_.clear();
 	
 	TreeView_DeleteAllItems( hwnd_ );
 }
-
+*/
 /*
 void Win32Tree::onItemPaint( ItemEvent* event )
 {

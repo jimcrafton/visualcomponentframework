@@ -382,7 +382,33 @@ uint32 DefaultTreeModel::getChildCount( const TreeModel::Key& key )
 }
 
 
+uint64 DefaultTreeModel::sizeOf() const
+{
+	uint64 result = 0;
+
+	result += sizeof(DefaultTreeModel);
+
+	DataMap::const_iterator it = data_.begin();
+	while ( it != data_.end() ) {
+		result += sizeof(it->first);
+		result += sizeof(it->second);
+		result += it->second.data.sizeOf();
+
+		++it;
+	}
+
+	HierarchyMap::const_iterator it2 = hierarchy_.begin();
+	while ( it2 != hierarchy_.end() ) {
+		result += sizeof(it2->first);
+		result += sizeof(it2->second);
+		++it2;
+	}
+
+
+	return result;
+}
 
 /**
 $Id$
 */
+

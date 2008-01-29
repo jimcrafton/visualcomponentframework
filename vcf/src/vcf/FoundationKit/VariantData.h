@@ -755,6 +755,8 @@ public:
 				type == pdShort || type == pdUShort ||
 				type == pdInt64 || type == pdUInt64;
 	}
+
+	uint64 sizeOf() const;
 protected:
 	void setValue( const VariantData& value );
 

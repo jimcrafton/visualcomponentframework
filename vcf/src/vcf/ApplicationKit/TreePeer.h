@@ -37,10 +37,6 @@ class APPLICATIONKIT_API TreePeer : public VCF::Interface {
 public:
 	virtual ~TreePeer(){};
 
-    virtual TreeModel* getTreeModel() = 0;
-
-	virtual void setTreeModel( TreeModel* model ) = 0;
-
     virtual double getItemIndent() = 0;
 
     virtual void setItemIndent( const double& indent ) = 0;
@@ -50,10 +46,6 @@ public:
     virtual void setImageList( ImageList* imageList ) = 0;
 
 	virtual void setStateImageList( ImageList* imageList ) = 0;
-
-	virtual void clear() = 0;
-
-	virtual void addItem( TreeItem* item ) = 0;
 
 	virtual Rect getItemImageRect( TreeItem* item ) = 0;
 
