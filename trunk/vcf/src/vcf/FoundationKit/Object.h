@@ -176,6 +176,23 @@ public:
 	returns a hash value that represents the object instance
 	*/
 	virtual uintptr hash() const ;
+
+	/**
+	Returns the size of this instance. This may be signifigantly bigger
+	than, say, sizeof(Object). For example, if your class derives from
+	Object, and has list of other objects, (such as a Component), and various
+	other bits, then these may not all show up in the value returned 
+	by sizeof(). Take a vector, a vector of ints or a vector of Object uses
+	up 16 bytes, as reported by sizeof(). But the \em actual memory used
+	will be quite different, partially dependent on how many items are 
+	in the vector. Hence the existence of this function, which allows 
+	people to implement something that does a better job of reporting 
+	how much memory the object in quest is actually using. The default 
+	implementation simply returns sizeof(Object).
+	*/
+	virtual uint64 sizeOf() const {
+		return sizeof(Object);
+	}
 	
 
 	/**

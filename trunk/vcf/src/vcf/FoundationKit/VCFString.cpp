@@ -950,6 +950,15 @@ int UnicodeString::compare(UnicodeString::size_type p0, UnicodeString::size_type
 	return data_.compare( p0, n0, tmp.data_ ) ;
 }
 
+uint64 UnicodeString::sizeOf() const
+{
+	uint64 result  = sizeof(UnicodeString);
+	
+	result +=  data_.capacity() * sizeof(VCFChar);
+
+	return result;
+}
+
 
 /**
 $Id$

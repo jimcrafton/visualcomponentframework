@@ -111,6 +111,11 @@ public:
 			tm->insert( "test (p = testD)", k4 );
 		}
 
+		size_t sz = tm->sizeOf();
+
+		StringUtils::trace( Format("tree mod %u\n") % sz );
+
+
 		setMainWindow(mainWindow);
 		mainWindow->show();
 		

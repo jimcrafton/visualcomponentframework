@@ -460,6 +460,29 @@ void VariantData::setValue( const VariantData& value )
 	}
 }
 
+uint64 VariantData::sizeOf() const
+{
+	uint64 result = sizeof(VariantData);
+
+	switch( type ){
+		case pdString:{
+			if ( NULL != StringVal ) {
+				result += StringVal->sizeOf();
+			}
+		}
+		break;
+
+		case pdObject:{
+			if ( NULL != ObjVal ) {
+				result += ObjVal->sizeOf();
+			}
+		}
+		break;
+	}
+
+
+	return result;
+}
 
 /**
 $Id$

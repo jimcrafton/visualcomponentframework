@@ -32,11 +32,7 @@ public:
 	virtual ~Win32Tree();
 
 	virtual void create( Control* owningControl );
-
-	virtual TreeModel* getTreeModel();
-
-	virtual void setTreeModel( TreeModel* model );
-
+	
     virtual double getItemIndent();
 
     virtual void setItemIndent( const double& indent );
@@ -45,11 +41,7 @@ public:
 
 	virtual void setStateImageList( ImageList* imageList );
 
-    virtual void setImageList( ImageList* imageList );
-
-	virtual void addItem( TreeItem* item );
-
-	virtual void clear();
+    virtual void setImageList( ImageList* imageList );	
 
 	void init();
 

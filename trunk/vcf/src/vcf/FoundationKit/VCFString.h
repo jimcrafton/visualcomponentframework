@@ -943,6 +943,8 @@ public:
 		return data_.compare( p0, n0, s, pos );
 	}
 
+	uint64 sizeOf() const;
+
 	static void transformAnsiToUnicode( const AnsiChar* str, size_type stringLength, StringData& newStr );
 
 	static AnsiChar* transformUnicodeToAnsi( const UnicodeString& str );

@@ -73,6 +73,9 @@ public:
 
 	virtual uint32 getChildCount( const Key& key );
 
+
+
+	virtual uint64 sizeOf() const;
 protected:
 
 	struct TreeValRef {
