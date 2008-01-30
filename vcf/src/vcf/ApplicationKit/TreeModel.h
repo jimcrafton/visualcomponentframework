@@ -62,7 +62,6 @@ public:
 /**
 TreeModelDelegate
 handles the following:
-\li onRootNodeChanged
 \li onNodeAdded
 \li onNodeDeleted
 */
@@ -84,14 +83,7 @@ public:
 		RootKey = 0,
 		InvalidKey = (uint32)-1
 	};
-
-
-	/**
-	@delegate RootNodeChanged
-	@event
-	*/
-	DELEGATE(TreeModelDelegate,RootNodeChanged)
-
+	
 	/**
 	@delegate NodeAdded
 	@event
