@@ -25,6 +25,7 @@ void TreeSubItem::setCaption( const String& caption )
 
 
 TreeItem::TreeItem():
+	Item(),
 	font_(NULL),
 	key_(TreeModel::InvalidKey),
 	selectedImageIndex_(-1),
@@ -37,6 +38,15 @@ TreeItem::TreeItem():
 TreeItem::~TreeItem()
 {
 	delete font_;
+}
+
+void TreeItem::setKey( TreeModel::Key val )
+{
+	key_ = val;
+	TreeController* controller = getController();
+	if ( controller ) {
+		controller->setItemKey( this, val );
+	}
 }
 
 Font* TreeItem::getFont()

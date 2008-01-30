@@ -72,6 +72,7 @@ public:
 	virtual void removeChildItem( TreeItem* item, TreeItem* child ) = 0;
 
 	virtual TreeItem* getItemFromKey( const TreeModel::Key& key ) = 0;
+	virtual void setItemKey( TreeItem* item, const TreeModel::Key& key ) = 0;
 
 	virtual bool getItemChildren( TreeItem* item, std::vector<TreeItem*>& children ) = 0;
 
@@ -119,9 +120,7 @@ public:
 		return dynamic_cast<TreeController*>( getControl() );
 	}
 
-	void setKey( TreeModel::Key val ) {
-		key_ = val;
-	}
+	void setKey( TreeModel::Key val );
 
 	TreeModel::Key getKey() {
 		return key_;

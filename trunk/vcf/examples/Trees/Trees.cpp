@@ -113,7 +113,7 @@ public:
 
 		size_t sz = tm->sizeOf();
 
-		StringUtils::trace( Format("tree mod %u\n") % sz );
+		StringUtils::trace( Format("tree mod size %u\n") % sz );
 
 
 		setMainWindow(mainWindow);

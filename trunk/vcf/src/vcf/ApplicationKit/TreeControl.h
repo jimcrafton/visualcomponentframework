@@ -98,6 +98,7 @@ public:
 	virtual void removeChildItem( TreeItem* item, TreeItem* child );
 
 	virtual TreeItem* getItemFromKey( const TreeModel::Key& key );
+	virtual void setItemKey( TreeItem* item, const TreeModel::Key& key );
 
 	virtual bool getItemChildren( TreeItem* item, std::vector<TreeItem*>& children );
 
@@ -125,21 +126,21 @@ public:
 protected:
 	TreeItem* hitTestForItem( Point* pt, TreeItem* item );
 
-	void onTreeItemPaint( ItemEvent* event );
+	void onTreeItemPaint( ItemEvent* event );	
 
-	void onTreeRootNodeChanged( TreeModelEvent* event );
+	//void onTreeNodeAdded( TreeModelEvent* event );
 
-	void onTreeNodeAdded( TreeModelEvent* event );
+	//void onTreeNodeDeleted( TreeModelEvent* event );
 
-	void onTreeNodeDeleted( TreeModelEvent* event );
-
-	void onModelEmptied( ModelEvent* event );
+	void onModelChanged( ModelEvent* event );
 
 
 	TreePeer * treePeer_;
 	ImageList* imageList_;
 	ImageList* stateImageList_;
 	TreeItem* currentSelectedItem_;
+	bool controlChangeToModel_;
+	std::map<TreeModel::Key,TreeItem*> itemMap_;
 
 
 };
