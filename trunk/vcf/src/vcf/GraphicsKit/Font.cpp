@@ -241,6 +241,13 @@ void Font::changed( int eventType )
 }
 
 
+uint64 Font::sizeOf() const
+{
+	uint64 result = sizeof(Font);
+
+	return result;
+}
+
 /**
 $Id$
 */

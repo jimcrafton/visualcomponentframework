@@ -57,6 +57,11 @@ Font* TreeItem::getFont()
 	return font_;
 }
 
+bool TreeItem::isFontDefault()
+{
+	return (NULL == font_) ? true : false;
+}
+
 void TreeItem::setFont( Font* val )
 {
 	Font* f = getFont();
@@ -198,4 +203,15 @@ uint32 TreeItem::getSubItemCount()
 void TreeItem::subItemChanged( TreeSubItem* item )
 {
 
+}
+
+uint64 TreeItem::sizeOf() const
+{
+	uint64 result = sizeof(TreeItem);
+
+	if ( NULL != font_ ) {
+		result += font_->sizeOf();
+	}
+
+	return result;
 }

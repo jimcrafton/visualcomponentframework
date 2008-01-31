@@ -128,6 +128,13 @@ public:
 
 	Font* getFont();
 
+	/**
+	Indicates that the default font for this item should be used. It's 
+	also an indicator that the font is NULL and no attempts at modifications
+	have been attempted.
+	*/
+	bool isFontDefault();
+
 	void setFont( Font* val );
 
 	bool isLeaf() {
@@ -212,6 +219,7 @@ public:
 
 	virtual void subItemChanged( TreeSubItem* item );
 
+	virtual uint64 sizeOf() const;
 protected:
 	Font* font_;
 	TreeModel::Key key_;

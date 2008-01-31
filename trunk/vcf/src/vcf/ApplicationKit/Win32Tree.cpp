@@ -708,14 +708,29 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		case TVN_GETDISPINFOA: {
 			LPNMTVDISPINFOA lptvdi = (LPNMTVDISPINFOA) lParam ;
 			if ( lptvdi->item.mask & TVIF_TEXT ) {
-				static AnsiString text;
-				TreeItem* item = (TreeItem*)lptvdi->item.lParam;
-				if ( NULL != item ) {
-					text = item->getCaption();
+				
+				TreeModel* tm = treeControl_->getTreeModel();
+				TreeModel::Key key = (TreeModel::Key)lptvdi->item.lParam;
 
-					text.copy( lptvdi->item.pszText, text.size() );
-					lptvdi->item.pszText[text.size()] = 0;
+				AnsiString s = tm->getAsString( key );
+
+				if ( !s.empty() ) {					
+					s.copy( lptvdi->item.pszText, s.size() );
+					lptvdi->item.pszText[s.size()] = 0;
 				}
+			}
+
+
+			if ( lptvdi->item.mask & TVIF_CHILDREN ) {
+				TreeModel* tm = treeControl_->getTreeModel();
+				TreeModel::Key key = (TreeModel::Key)lptvdi->item.lParam;
+				lptvdi->item.cChildren = tm->isLeaf( key ) ? 0 : 1;
+			}
+
+			if ( lptvdi->item.mask & TVIF_IMAGE ) {
+			}
+
+			if ( lptvdi->item.mask & TVIF_SELECTEDIMAGE ) {
 			}
 		}
 		break;
@@ -728,27 +743,13 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		case TVN_ITEMEXPANDEDA:{
 			internalTreeItemExpanded_ = true;
 			NMTREEVIEWA* treeview = (NMTREEVIEWA*)lParam;
-			TreeItem* item = (TreeItem*)treeview->itemNew.lParam;
-			if ( NULL != item ) {
 
-				if ( treeview->action & TVE_EXPAND ) {
-					item->expand( true );
-				}
-				else if ( treeview->action & TVE_COLLAPSE ) {
-					item->expand( false );
-				}
-
-				POINT tmpPt = {0,0};
-				GetCursorPos( &tmpPt );
-				::ScreenToClient( hwnd_, &tmpPt );
-				ItemEvent event( treeControl_, TREEITEM_EXPANDED );
-
-				event.setUserData( (void*)item );
-
-				Point pt( tmpPt.x, tmpPt.y );
-				event.setPoint( &pt );
-
-				treeControl_->handleEvent( &event );
+			if ( treeview->action == TVE_EXPAND ) {
+			}
+			else if ( treeview->action == TVE_COLLAPSE ) {
+				TreeView_Expand (hwnd_,
+                                 treeview->itemNew.hItem,
+                                 TVE_COLLAPSE | TVE_COLLAPSERESET);	
 			}
 			internalTreeItemExpanded_ = false;
 		}
@@ -813,7 +814,19 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		break;
 
 		case TVN_ITEMEXPANDINGA:{
-
+			NMTREEVIEWA* treeview = (NMTREEVIEWA*)lParam;
+			if ( TVE_EXPAND == treeview->action ) {
+				TreeModel* tm = treeControl_->getTreeModel();
+				TreeModel::Key key = (TreeModel::Key)treeview->itemNew.lParam;
+				
+				std::vector<TreeModel::Key> children;
+				tm->getChildren(key,children);
+				std::vector<TreeModel::Key>::iterator it = children.begin();
+				while ( it != children.end() ) {
+					addTreeItem( *it, treeview->itemNew.hItem );
+					++it;
+				}
+			}
 		}
 		break;
 
@@ -922,8 +935,6 @@ Do we need these? What advantage does processing these events have for us???
 		*/
 
 		case NM_CUSTOMDRAW:{
-			static Rect itemRect;
-
 			wndProcResult = CDRF_DODEFAULT;
 			result = true;
 
@@ -938,6 +949,23 @@ Do we need these? What advantage does processing these events have for us???
 					case CDDS_ITEMPREPAINT : {						
 
 						wndProcResult = CDRF_NOTIFYPOSTPAINT;
+
+						if ( treeControl_->itemExists( treeViewDraw->nmcd.lItemlParam ) ) {
+							TreeItem* item = treeControl_->getItemFromKey( treeViewDraw->nmcd.lItemlParam );
+							if ( !item->isFontDefault() ) {
+								Color* fc = item->getFont()->getColor();
+								
+								treeViewDraw->clrText = (COLORREF) fc->getColorRef32();
+								
+
+								Win32Font* fontPeer = dynamic_cast<Win32Font*>( item->getFont()->getFontPeer() );
+								HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( fontPeer );
+								if ( NULL != fontHandle ){
+									::SelectObject( treeViewDraw->nmcd.hdc, fontHandle );
+									wndProcResult |= CDRF_NEWFONT;
+								}
+							}							
+						}
 					}
 					break;
 
@@ -946,11 +974,10 @@ Do we need these? What advantage does processing these events have for us???
 
 						wndProcResult = CDRF_DODEFAULT;
 
-						if ( NULL != treeViewDraw->nmcd.lItemlParam ) {
-							/*
-							TreeItem* item = (TreeItem*)treeViewDraw->nmcd.lItemlParam;
-
+						if ( treeControl_->itemExists( treeViewDraw->nmcd.lItemlParam ) ) {
+							TreeItem* item = treeControl_->getItemFromKey( treeViewDraw->nmcd.lItemlParam );
 							if ( item->canPaint() ) {
+								Rect itemRect;
 								itemRect.left_ = treeViewDraw->nmcd.rc.left;
 								itemRect.top_ = treeViewDraw->nmcd.rc.top;
 								itemRect.right_ = treeViewDraw->nmcd.rc.right;
@@ -958,7 +985,7 @@ Do we need these? What advantage does processing these events have for us???
 
 								item->paint( peerControl_->getContext(), &itemRect );
 							}
-							*/
+
 						}
 					}
 					break;

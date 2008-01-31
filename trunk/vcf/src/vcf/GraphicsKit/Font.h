@@ -252,6 +252,8 @@ public:
 	GraphicsContext* getGraphicsContext() {
 		return context_;
 	}
+
+	virtual uint64 Font::sizeOf() const;
 protected:
 
 	FontPeer* peer_;

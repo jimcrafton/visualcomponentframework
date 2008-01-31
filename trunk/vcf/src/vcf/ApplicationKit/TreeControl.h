@@ -109,8 +109,8 @@ public:
 	virtual uint32 getItemSubItemCount( TreeItem* item );
 
 
-	void addItem( TreeItem* parent, TreeItem* item );
-	TreeItem* addItem( TreeItem* parent, const String& caption="", const uint32 imageIndex=0 );
+	void insertItem( TreeItem* parent, TreeItem* item );
+	TreeItem* insertItem( TreeItem* parent, const String& caption, const uint32 imageIndex=0 );
 
 	void removeItem( TreeItem* item );
 
@@ -123,6 +123,10 @@ public:
 	bool getAllowLabelEditing();
 
 	void setAllowLabelEditing( const bool& allowLabelEditing );
+
+	virtual uint64 sizeOf() const;
+
+	bool itemExists( const TreeModel::Key& key );
 protected:
 	TreeItem* hitTestForItem( Point* pt, TreeItem* item );
 
