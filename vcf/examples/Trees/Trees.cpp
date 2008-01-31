@@ -74,6 +74,22 @@ _class_rtti_end_
 
 
 
+class MyTreeItem : public TreeItem {
+public:
+	virtual bool canPaint() const {
+		return true;
+	}
+
+	virtual void paint( GraphicsContext* context, Rect* paintRect ) {
+		
+		Rect r = *paintRect;
+
+		r.inflate( -2, -2 );
+		context->rectangle( r );
+
+		context->strokePath();
+	}
+};
 
 
 class TreesApplication : public Application {
@@ -111,7 +127,27 @@ public:
 			tm->insert( "test (p = testD)", k4 );
 		}
 
-		size_t sz = tm->sizeOf();
+		size_t sz = treeCtrl->sizeOf();
+
+		StringUtils::trace( Format("tree mod size %u\n") % sz );
+
+
+
+		TreeItem* item = treeCtrl->getItemFromKey( k3 );
+		item->getFont()->setColor( Color::getColor("red") );
+		item->getFont()->setBold( true );
+		item->getFont()->setName( "Times New Roman" );
+
+
+		treeCtrl->insertItem( item, "Hello Dolly!" );
+
+		MyTreeItem* myItem = new MyTreeItem();
+		treeCtrl->insertItem( item, myItem );
+		myItem->setCaption( "My Item!" );
+
+
+
+		sz = treeCtrl->sizeOf();
 
 		StringUtils::trace( Format("tree mod size %u\n") % sz );
 

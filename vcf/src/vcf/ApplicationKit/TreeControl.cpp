@@ -189,6 +189,8 @@ void TreeControl::onModelChanged( ModelEvent* event )
 		switch ( event->getType() ) {
 			
 			case TreeModel::ContentsDeleted : {
+				currentSelectedItem_ = NULL;
+
 				std::map<TreeModel::Key,TreeItem*>::iterator it = itemMap_.begin();
 				while ( it != itemMap_.end() ) {
 					TreeItem* item = it->second;
@@ -324,17 +326,55 @@ ImageList* TreeControl::getStateImageList()
 	return stateImageList_;
 }
 
-void TreeControl::addItem( TreeItem* parent, TreeItem* item )
+void TreeControl::insertItem( TreeItem* parent, TreeItem* item )
 {
-////MVC	treeModel_->addNodeItem( item, parent );
+	controlChangeToModel_ = true;
+
+	VCF_ASSERT( NULL != item );
+	
+	TreeModel::Key parentKey = (NULL != parent) ? parent->getKey() : TreeModel::RootKey;
+
+	TreeModel* tm = getTreeModel();
+	item->setControl( this );
+
+	if ( item->getModel() == NULL ) {
+		//no model, so we need a new key...
+		TreeModel::Key key = tm->insert( VariantData(), parentKey );
+		item->setKey( key );
+	}
+	
+	item->setModel( tm );
+	
+	addComponent( item );
+
+	controlChangeToModel_ = false;
 }
 
-TreeItem* TreeControl::addItem( TreeItem* parent, const String& caption, const uint32 imageIndex )
+TreeItem* TreeControl::insertItem( TreeItem* parent, const String& caption, const uint32 imageIndex )
 {
 	TreeItem* result = NULL;
-	//result = new DefaultTreeItem( caption, this, treeModel_ );
-	//result->setImageIndex( imageIndex );
-////MVC	treeModel_->addNodeItem( result, parent );
+
+	controlChangeToModel_ = true;
+
+	TreeModel* tm = getTreeModel();
+
+	TreeModel::Key parentKey = (NULL != parent) ? parent->getKey() : TreeModel::RootKey;
+	TreeModel::Key key = tm->insert( caption, parentKey ); //since controlChangeToModel_ is set, onModelChanged is ignored
+
+	result = new TreeItem();
+	result->setModel( tm );//set explicitly here, since we've already generated a key
+
+	insertItem( parent, result );
+
+	controlChangeToModel_ = true;
+
+	result->setCaption( caption );
+	result->setImageIndex( imageIndex );
+	result->setKey( key );
+	
+
+
+	controlChangeToModel_ = false;
 	return result;
 }
 
@@ -431,8 +471,12 @@ TreeItem* TreeControl::getItemFromKey( const TreeModel::Key& key )
 		}
 		else {
 			result = new TreeItem();
+			result->setControl( this );
+			result->setModel( getTreeModel() );
 
-			itemMap_[key] = result;
+			addComponent( result );
+			result->setKey( key ); //calls setItemKey() and maps the key to the item for us
+
 		}
 	}
 
@@ -476,6 +520,34 @@ uint32 TreeControl::getItemSubItemCount( TreeItem* item )
 	return 0;
 }
 
+uint64 TreeControl::sizeOf() const
+{
+	uint64 result = sizeof(TreeControl);
+
+	TreeControl* ptr = (TreeControl*)this;
+
+	const TreeModel* tm = (const TreeModel*)ptr->getTreeModel();
+
+	result += tm->sizeOf();
+
+
+	std::map<TreeModel::Key,TreeItem*>::const_iterator it = itemMap_.begin();
+	while ( it != itemMap_.end() ) {
+		TreeItem* item = it->second;
+			
+		result += item->sizeOf();
+		
+		++it;
+	}
+
+
+	return result;
+}
+
+bool TreeControl::itemExists( const TreeModel::Key& key )
+{
+	return itemMap_.find( key ) != itemMap_.end();
+}
 
 /**
 $Id$
