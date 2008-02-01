@@ -120,7 +120,11 @@ public:
 
 		int i=0;
 		for (i=0;i<10;i++ ) {
-			tm->insert( "test (p = testB)", k2 );
+			TreeModel::Key k = tm->insert( "test (p = testB)", k2 );
+
+			for (int j=0;j<100;j++ ) {
+				tm->insert( String("test (p = testB/") + k + ")", k );
+			}
 		}
 		
 		for (i=0;i<100;i++ ) {

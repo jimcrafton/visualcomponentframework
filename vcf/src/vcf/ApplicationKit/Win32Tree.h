@@ -76,7 +76,7 @@ private:
 
 	TreeControl* treeControl_;
 	//WNDPROC oldTreeWndProc_;
-	std::map<TreeItem*,HTREEITEM> treeItems_;
+	std::map<TreeModel::Key,HTREEITEM> treeItems_;
 	//Color backColor_;
 	HIMAGELIST imageListCtrl_;
 	HIMAGELIST stateImageListCtrl_;

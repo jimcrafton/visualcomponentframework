@@ -1,0 +1,78 @@
+object BasicContainers : VCF::Window 
+	top = 100
+	left = 200
+	width = 500
+	height = 500
+
+	object stdContainer1 : VCF::StandardContainer
+	end
+
+	object stdContainer2 : VCF::ColumnLayoutContainer
+	end
+
+	object clContainer : VCF::HorizontalLayoutContainer
+	end
+
+	object tabs : VCF::TabbedPages
+		alignment = AlignClient
+		selectedSheet = @tab1
+		
+		object tab1 : VCF::TabSheet 
+			title = 'Container class: StandardContainer'
+			container = @stdContainer1
+			object lbl1 : VCF::Label
+				height = 50
+				alignment = AlignTop
+				transparent = false
+				color.red = 1.0
+				color.green = 0.0
+				color.blue = 0.0
+			end
+
+			object lbl2 : VCF::Label
+				height = 50
+				alignment = AlignTop
+				transparent = false
+				color.red = 0.0
+				color.green = 1.0
+				color.blue = 0.0
+			end
+
+			object lbl3 : VCF::Label
+				height = 50
+				alignment = AlignTop
+				transparent = false
+				color.red = 1.0
+				color.green = 1.0
+				color.blue = 1.0
+			end
+
+			object lbl3 : VCF::Label
+				alignment = AlignBottom
+				height = 35
+				transparent = false
+				color.red = 0.0
+				color.green = 0.0
+				color.blue = 1.0
+			end
+		end
+
+		object tab2 : VCF::TabSheet 
+			title = 'Anchoring with StandardContainer'
+			//container = @stdContainer2
+			
+		end
+
+		object tab3 : VCF::TabSheet 
+			title = 'Container class: ColumnLayoutContainer'
+			container = @clContainer
+			
+		end
+
+		object tab4 : VCF::TabSheet 
+			title = 'Container class: HorizontalLayoutContainer'
+
+			
+		end
+	end
+end
