@@ -54,7 +54,7 @@ MAKEARGS = -DCC="$(CC)" -DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" \
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 clean: 
 	-if exist .\*.obj del .\*.obj
@@ -92,6 +92,10 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>AppResources.bat
 	call AppResources.bat
 	@del AppResources.bat
+	@echo cd BasicContainers >BasicContainers.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>BasicContainers.bat
+	call BasicContainers.bat
+	@del BasicContainers.bat
 	@echo cd Browser >Browser.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>Browser.bat
 	call Browser.bat
@@ -332,6 +336,10 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>Tabs.bat
 	call Tabs.bat
 	@del Tabs.bat
+	@echo cd TCPClient >TCPClient.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>TCPClient.bat
+	call TCPClient.bat
+	@del TCPClient.bat
 	@echo cd TCPServer >TCPServer.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>TCPServer.bat
 	call TCPServer.bat
@@ -460,6 +468,12 @@ AppResources:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>AppResources.bat
 	call AppResources.bat
 	@del AppResources.bat
+
+BasicContainers: 
+	@echo cd BasicContainers >BasicContainers.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>BasicContainers.bat
+	call BasicContainers.bat
+	@del BasicContainers.bat
 
 Browser: 
 	@echo cd Browser >Browser.bat
@@ -820,6 +834,12 @@ Tabs:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>Tabs.bat
 	call Tabs.bat
 	@del Tabs.bat
+
+TCPClient: 
+	@echo cd TCPClient >TCPClient.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>TCPClient.bat
+	call TCPClient.bat
+	@del TCPClient.bat
 
 TCPServer: 
 	@echo cd TCPServer >TCPServer.bat

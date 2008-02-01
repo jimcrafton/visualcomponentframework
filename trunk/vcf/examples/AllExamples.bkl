@@ -16,6 +16,7 @@
     <subproject id="Anchors" template="example"/>
     <subproject id="ApplicationIcons" template="example"/>
     <subproject id="AppResources" template="example"/>
+    <subproject id="BasicContainers" template="example"/>
     <subproject id="Browser" template="example"/>
     <subproject id="Cards" template="example"/>
     <subproject id="Colors" template="example"/>
@@ -76,6 +77,7 @@
     <subproject id="SysTray" template="example"/>
     <subproject id="Tables" template="example"/>
     <subproject id="Tabs" template="example"/>
+    <subproject id="TCPClient" template="example"/>
     <subproject id="TCPServer" template="example"/>
     <subproject id="TeXLabel" template="example"/>
     <subproject id="TextEdit" template="example"/>
