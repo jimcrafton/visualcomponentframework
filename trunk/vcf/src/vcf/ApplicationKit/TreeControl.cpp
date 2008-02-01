@@ -463,7 +463,7 @@ TreeItem* TreeControl::getItemFromKey( const TreeModel::Key& key )
 {
 	TreeItem* result = NULL;
 
-	if ( key != TreeModel::InvalidKey ) {
+	if ( key != TreeModel::InvalidKey && key != TreeModel::RootKey ) {
 		std::map<TreeModel::Key,TreeItem*>::iterator found =
 			itemMap_.find( key );
 		if ( found != itemMap_.end() ) {
