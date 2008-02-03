@@ -54,7 +54,7 @@ MAKEARGS = -DCC="$(CC)" -DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" \
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 clean: 
 	-if exist .\*.obj del .\*.obj
@@ -228,6 +228,10 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>ListBox.bat
 	call ListBox.bat
 	@del ListBox.bat
+	@echo cd ListViews >ListViews.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>ListViews.bat
+	call ListViews.bat
+	@del ListViews.bat
 	@echo cd LocaleUI >LocaleUI.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>LocaleUI.bat
 	call LocaleUI.bat
@@ -672,6 +676,12 @@ ListBox:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>ListBox.bat
 	call ListBox.bat
 	@del ListBox.bat
+
+ListViews: 
+	@echo cd ListViews >ListViews.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>ListViews.bat
+	call ListViews.bat
+	@del ListViews.bat
 
 LocaleUI: 
 	@echo cd LocaleUI >LocaleUI.bat
