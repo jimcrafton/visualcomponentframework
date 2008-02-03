@@ -50,6 +50,7 @@
     <subproject id="JavaScriptTest" template="example"/>
     <subproject id="Labels" template="example"/>
     <subproject id="ListBox" template="example"/>
+    <subproject id="ListViews" template="example"/>
     <subproject id="LocaleUI" template="example"/>
     <subproject id="Localization" template="example"/>
     <subproject id="MinMax" template="example"/>
