@@ -144,40 +144,6 @@ void TreeControl::paint( GraphicsContext * context )
 	context->fillPath();
 }
 
-/*////MVC
-void TreeControl::onTreeRootNodeChanged( TreeModelEvent* event )
-{
-////MVC	TreeItem* item = event->getTreeItem();
-	//treePeer_->addItem( item );
-}
-
-void TreeControl::onTreeNodeAdded( TreeModelEvent* event )
-{
-
-	
-////MVC	TreeItem* item = event->getTreeItem();
-
-	
-//	item->setControl( this );
-
-//	treePeer_->addItem( item );
-//	CallBack* il = getCallback( "TreeItemListener" );
-//	if  ( il == NULL ) {
-//		il = new ClassProcedure1<ItemEvent*,TreeControl>( this, &TreeControl::onTreeItemPaint, "TreeItemListener" );
-//	}
-//	item->ItemPaint += il;
-
-}
-
-void TreeControl::onTreeNodeDeleted( TreeModelEvent* event )
-{
-
-	if ( currentSelectedItem_ == event->getTreeItem() ) {
-		currentSelectedItem_ = NULL;
-	}
-	
-}
-*/
 
 
 void TreeControl::onModelChanged( ModelEvent* event )
@@ -187,7 +153,24 @@ void TreeControl::onModelChanged( ModelEvent* event )
 
 	if ( !controlChangeToModel_ ) {
 		switch ( event->getType() ) {
-			
+			case TreeModel::ItemRemoved : {
+				TreeModelEvent* te = (TreeModelEvent*)event;
+
+				if ( this->itemExists( te->key ) ) {
+					std::map<TreeModel::Key,TreeItem*>::iterator it = itemMap_.find( te->key );
+
+					if ( it != itemMap_.end() ) {						
+						TreeItem* item = it->second;
+						if ( currentSelectedItem_ == item ) {
+							currentSelectedItem_ = NULL;
+						}
+						removeComponent( item );
+						itemMap_.erase( it );
+					}					
+				}
+			}
+			break;
+
 			case TreeModel::ContentsDeleted : {
 				currentSelectedItem_ = NULL;
 
@@ -380,7 +363,10 @@ TreeItem* TreeControl::insertItem( TreeItem* parent, const String& caption, cons
 
 void TreeControl::removeItem( TreeItem* item )
 {
-////MVC	treeModel_->deleteNodeItem( item );
+	TreeModel* tm = getTreeModel();
+
+	tm->remove( item->getKey() );
+	item->setKey( TreeModel::InvalidKey );
 }
 
 TreeItem* TreeControl::getSelectedItem()
@@ -398,14 +384,7 @@ void TreeControl::handleEvent( Event* event )
 	Control::handleEvent( event );
 	switch ( event->getType() ) {
 		case TREEITEM_SELECTED : {
-			currentSelectedItem_ = (TreeItem*)event->getUserData();
-
 			ItemSelected( (ItemEvent*)event );
-		}
-		break;
-
-		case TREEITEM_EXPANDED : {
-			ItemExpanded( (ItemEvent*)event );
 		}
 		break;
 
@@ -437,8 +416,8 @@ TreeItem* TreeControl::getItemParent( TreeItem* item )
 	TreeItem* result = NULL;
 
 	TreeModel::Key parent = getTreeModel()->getParent( item->getKey() );
-	if ( parent != TreeModel::RootKey ) {
-		
+	if ( parent != TreeModel::RootKey && parent != TreeModel::InvalidKey ) {
+		result = getItemFromKey( parent );
 	}
 
 	return result;
@@ -446,17 +425,17 @@ TreeItem* TreeControl::getItemParent( TreeItem* item )
 
 void TreeControl::setItemParent( TreeItem* item, TreeItem* parent )
 {
-
+	getTreeModel()->move( item->getKey(), parent->getKey() );
 }
 
 void TreeControl::addChildItem( TreeItem* item, TreeItem* child )
 {
-
+	insertItem( item, child );
 }
 
 void TreeControl::removeChildItem( TreeItem* item, TreeItem* child )
 {
-
+	removeItem( child );
 }
 
 TreeItem* TreeControl::getItemFromKey( const TreeModel::Key& key )
@@ -485,7 +464,9 @@ TreeItem* TreeControl::getItemFromKey( const TreeModel::Key& key )
 
 void TreeControl::setItemKey( TreeItem* item, const TreeModel::Key& key )
 {
-	itemMap_[key] = item;
+	if ( key != TreeModel::InvalidKey ) {
+		itemMap_[key] = item;
+	}
 }
 
 bool TreeControl::getItemChildren( TreeItem* item, std::vector<TreeItem*>& children )
@@ -547,6 +528,44 @@ uint64 TreeControl::sizeOf() const
 bool TreeControl::itemExists( const TreeModel::Key& key )
 {
 	return itemMap_.find( key ) != itemMap_.end();
+}
+
+void TreeControl::itemExpanded( TreeItem* item )
+{
+	
+	if ( item->isExpanded() ) {
+		TreeItem* parent = item->getParent();
+		if ( parent != NULL ) {
+			if ( !parent->isExpanded() ) {
+				parent->expand( true );
+			}
+		}
+	}
+
+	ItemEvent e(item, TreeItem::tieExpanding);
+	Point pt = UIShell::getUIShell()->getCurrentMousePosition();
+	this->translateFromScreenCoords( &pt );
+	e.setPoint( &pt );
+
+	ItemExpanded( &e );
+}
+
+void TreeControl::itemSelected( TreeItem* item )
+{
+	if ( item->isSelected() ) {
+		if ( NULL != currentSelectedItem_ ) {
+			currentSelectedItem_->setSelected( false );
+		}
+
+		currentSelectedItem_ = item;			
+	}	
+
+	ItemEvent event( item, TREEITEM_SELECTED );
+	Point pt = UIShell::getUIShell()->getCurrentMousePosition();
+	this->translateFromScreenCoords( &pt );
+	event.setPoint( &pt );
+		
+	ItemSelected( &event );
 }
 
 /**
