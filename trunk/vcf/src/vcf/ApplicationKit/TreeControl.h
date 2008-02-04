@@ -108,6 +108,9 @@ public:
 	virtual TreeSubItem* getItemSubItem( TreeItem* item, const uint32& index );
 	virtual uint32 getItemSubItemCount( TreeItem* item );
 
+	virtual void itemExpanded( TreeItem* item );
+	virtual void itemSelected( TreeItem* item );
+
 
 	void insertItem( TreeItem* parent, TreeItem* item );
 	TreeItem* insertItem( TreeItem* parent, const String& caption, const uint32 imageIndex=0 );

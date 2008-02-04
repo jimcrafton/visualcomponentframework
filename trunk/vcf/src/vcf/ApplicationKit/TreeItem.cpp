@@ -70,20 +70,34 @@ void TreeItem::setFont( Font* val )
 
 void TreeItem::expand( const bool& val )
 {
-	if ( val ) {
-		setDisplayState( getDisplayState() | tisExpanded );
+	if ( val != this->isExpanded() ) {
+		if ( val ) {
+			setDisplayState( getDisplayState() | tisExpanded );
+		}
+		else {
+			setDisplayState( getDisplayState() & ~tisExpanded );
+		}
+		
+		getController()->itemExpanded( this );
 	}
-	else {
-		setDisplayState( getDisplayState() & ~tisExpanded );
-	}
-	
-	Event e(this,tieExpanding);
-	getControl()->handleEvent( &e );
+}
+
+void TreeItem::setSelected( const bool& selected )
+{
+	Item::setSelected( selected );
+	getController()->itemSelected( this );
 }
 
 void TreeItem::expandAllChildren( const bool& isExpanded )
 {
-
+	expand( isExpanded );
+	TreeItem* child = getNextChildNodeItem();
+	while ( NULL != child ) { 
+		if ( !child->isLeaf() ) {
+			child->expandAllChildren( isExpanded );
+		}
+		child = getNextChildNodeItem();
+	}
 }
 
 TreeItem* TreeItem::getParent()

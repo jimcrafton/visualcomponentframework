@@ -81,6 +81,9 @@ public:
 	virtual bool getItemSubItems( TreeItem* item, std::vector<TreeSubItem*>& subItems ) = 0;
 	virtual TreeSubItem* getItemSubItem( TreeItem* item, const uint32& index ) = 0;
 	virtual uint32 getItemSubItemCount( TreeItem* item ) = 0;
+
+	virtual void itemExpanded( TreeItem* item ) = 0;
+	virtual void itemSelected( TreeItem* item ) = 0;
 };
 
 
@@ -111,6 +114,8 @@ public:
 	TreeItem();
 
 	virtual ~TreeItem();
+
+	virtual void setSelected( const bool& selected );
 
 	TreeModel* getTreeModel() {
 		return (TreeModel*) getModel();

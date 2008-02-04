@@ -291,7 +291,7 @@ bool DefaultTreeModel::getChildren(const TreeModel::Key& key, std::vector<TreeMo
 
 TreeModel::Key DefaultTreeModel::getParent( const TreeModel::Key& key )
 {
-	TreeModel::Key result;
+	TreeModel::Key result = TreeModel::InvalidKey;
 
 	DataMap::iterator found = data_.find( key );
 	if ( found != data_.end() ) {

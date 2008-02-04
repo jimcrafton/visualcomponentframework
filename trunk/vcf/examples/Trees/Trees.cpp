@@ -124,6 +124,11 @@ public:
 
 			for (int j=0;j<100;j++ ) {
 				tm->insert( String("test (p = testB/") + k + ")", k );
+
+				if ( i == 6 && j == 5 ) {
+					TreeItem* item = treeCtrl->getItemFromKey( k );
+					item->expand(true);
+				}
 			}
 		}
 		
@@ -150,11 +155,17 @@ public:
 		myItem->setCaption( "My Item!" );
 
 
+		myItem->getParent()->expand( true );
+
+		myItem->setSelected(true);
 
 		sz = treeCtrl->sizeOf();
 
 		StringUtils::trace( Format("tree mod size %u\n") % sz );
 
+		treeCtrl->removeItem( myItem );
+
+		myItem->setParent( item );
 
 		setMainWindow(mainWindow);
 		mainWindow->show();

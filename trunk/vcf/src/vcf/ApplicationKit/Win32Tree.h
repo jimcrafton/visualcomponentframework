@@ -43,8 +43,6 @@ public:
 
     virtual void setImageList( ImageList* imageList );	
 
-	void init();
-
 	virtual Win32Object::CreateParams createParams();
 
 	virtual Rect getItemImageRect( TreeItem* item );
@@ -56,41 +54,21 @@ public:
 	virtual void setAllowLabelEditing( const bool& allowLabelEditing );
 
 	virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc = NULL);
-/*
-	void onItemPaint( ItemEvent* event );
-
-    void onItemChanged( ItemEvent* event );
-
-    void onItemSelected( ItemEvent* event );
-
-	void onItemAdded( ItemEvent* event );
-
-	void onItemDeleted( ItemEvent* event );
-*/
 private:
-	//ItemHandler* itemAddedHandler_;
-	//ItemHandler* itemDeletedHandler_;
-	//ItemHandler* itemChangedHandler_;
-	//ItemHandler* itemSelectedHandler_;
-	//ItemHandler* itemPaintedHandler_;
 
 	TreeControl* treeControl_;
-	//WNDPROC oldTreeWndProc_;
 	std::map<TreeModel::Key,HTREEITEM> treeItems_;
-	//Color backColor_;
 	HIMAGELIST imageListCtrl_;
 	HIMAGELIST stateImageListCtrl_;
-	bool internalTreeItemExpanded_;
+	bool internalTreeItemMod_;
 	void onImageListImageChanged( ImageListEvent* event );
-
 	void onStateImageListImageChanged( ImageListEvent* event );
 
 	void onControlModelChanged( Event* e );
+	void onItemExpanded( ItemEvent* e );
+	void onItemSelected( ItemEvent* e );
 	void onTreeModelChanged( ModelEvent* event );
-
 	void addTreeItem( TreeModel::Key key, HTREEITEM parent );
-
-	//void onTreeNodeDeleted( TreeModelEvent* event );
 };
 
 };
