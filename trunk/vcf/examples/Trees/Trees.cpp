@@ -16,22 +16,23 @@ class HiResClock {
 public:
 
 	HiResClock(){
-		QueryPerformanceFrequency( &frequency_ );
+		QueryPerformanceFrequency( (LARGE_INTEGER*)&frequency_ );
 		memset( &performanceCounter1_, 0, sizeof(performanceCounter1_) );
 		memset( &performanceCounter2_, 0, sizeof(performanceCounter2_) );
 	}
 
 
 
-	void start() {
-		QueryPerformanceCounter( &performanceCounter1_ );
+	void start() {		
+		QueryPerformanceCounter( (LARGE_INTEGER*)&performanceCounter1_ );
 	}
 
 	void stop() {
-		QueryPerformanceCounter( &performanceCounter2_ );
+		QueryPerformanceCounter( (LARGE_INTEGER*)&performanceCounter2_ );
 	}
 
 	void clear() {
+		//QueryPerformanceFrequency( &frequency_ );
 		memset( &performanceCounter1_, 0, sizeof(performanceCounter1_) );
 		memset( &performanceCounter2_, 0, sizeof(performanceCounter2_) );
 	}
@@ -41,12 +42,12 @@ public:
 	}
 
 	double duration() const {
-		return (double)(performanceCounter2_.LowPart - performanceCounter1_.LowPart)/(double)frequency_.LowPart;
+		return ((double)(performanceCounter2_ - performanceCounter1_))/((double)frequency_);
 	}
 protected:
-	LARGE_INTEGER frequency_;
-	LARGE_INTEGER performanceCounter1_;
-	LARGE_INTEGER performanceCounter2_;
+	__int64 frequency_;
+	__int64 performanceCounter1_;
+	__int64 performanceCounter2_;
 private:
 	HiResClock( const HiResClock& rhs );
 
@@ -102,6 +103,8 @@ public:
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
 		
+		
+
 		REGISTER_CLASSINFO_EXTERNAL(TreesWindow);
 
 		Window* mainWindow = Frame::createWindow( classid(TreesWindow) );
@@ -118,7 +121,10 @@ public:
 		
 		tm->insert( "test1 (p = testA)", k1 );
 
+		HiResClock clock;
+		clock.start();
 		int i=0;
+
 		for (i=0;i<10;i++ ) {
 			TreeModel::Key k = tm->insert( "test (p = testB)", k2 );
 
@@ -132,16 +138,19 @@ public:
 			}
 		}
 		
-		for (i=0;i<100;i++ ) {
+		for (i=0;i<1000;i++ ) {
 			tm->insert( "test (p = testD)", k4 );
 		}
+
+		clock.stop();
+		double popTime = clock.duration();
 
 		size_t sz = treeCtrl->sizeOf();
 
 		StringUtils::trace( Format("tree mod size %u\n") % sz );
 
 
-
+		clock.start();
 		TreeItem* item = treeCtrl->getItemFromKey( k3 );
 		item->getFont()->setColor( Color::getColor("red") );
 		item->getFont()->setBold( true );
@@ -153,23 +162,31 @@ public:
 		MyTreeItem* myItem = new MyTreeItem();
 		treeCtrl->insertItem( item, myItem );
 		myItem->setCaption( "My Item!" );
+		clock.stop();
+
+		double uimods = clock.duration();
 
 
 		myItem->getParent()->expand( true );
+
 
 		myItem->setSelected(true);
 
 		sz = treeCtrl->sizeOf();
 
-		StringUtils::trace( Format("tree mod size %u\n") % sz );
+		//treeCtrl->removeItem( myItem );
 
-		treeCtrl->removeItem( myItem );
 
-		myItem->setParent( item );
+		//myItem->setParent( item );
+
 
 		setMainWindow(mainWindow);
 		mainWindow->show();
 		
+		clock.stop();		
+
+		Dialog::showMessage( Format("treeCtrl size %u bytes, tree mod count: %u\r\npopulation time: %.03f seconds\r\ntime for adding 2 item and retrieval: %.08f seconds\r\nshow form: %.08f seconds") % sz % tm->getCount() % popTime % uimods % clock.duration() );
+
 		return result;
 	}
 

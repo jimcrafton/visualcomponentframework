@@ -148,6 +148,8 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( Splitter );
 		REGISTER_CLASSINFO_EXTERNAL( TreeListControl );
 		REGISTER_CLASSINFO_EXTERNAL( HeaderControl );
+		REGISTER_CLASSINFO_EXTERNAL( Toolbar );
+		REGISTER_CLASSINFO_EXTERNAL( ToolbarItem );
 		//REGISTER_CLASSINFO_EXTERNAL( ToolbarDock );
 
 

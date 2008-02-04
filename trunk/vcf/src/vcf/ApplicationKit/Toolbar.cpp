@@ -102,12 +102,17 @@ void ToolbarItem::setItemControl( Control* control )
 	}
 }
 
-void ToolbarItem::setAsSeparator()
+void ToolbarItem::setAsSeparator(const bool& val)
 {
-	setDisplayState( tisSeparator );
+	if ( val ) {
+		setDisplayState( tisSeparator );
+	}
+	else {
+		setDisplayState( getDisplayState() & ~tisSeparator );
+	}
 }
 
-void ToolbarItem::setPressed( bool val )
+void ToolbarItem::setPressed( const bool& val )
 {
 	if ( ( (displayState_ & ToolbarItem::tisPressed) != 0 ) == val ) {
 		return;
@@ -232,6 +237,11 @@ void ToolbarItem::setWidth( const double& val )
 	if ( NULL != model_ ) {
 		((ToolbarModel*)model_)->itemChanged( ToolbarItem::tbDimensionsChanged, this );
 	}
+}
+
+double ToolbarItem::getWidth()
+{
+	return bounds_.getWidth();
 }
 
 
@@ -480,6 +490,22 @@ void Toolbar::handleEvent( Event* event )
 			if ( getParent() ) {
 				getParent()->getContainer()->resizeChildren( NULL );
 			}
+		}
+		break;
+
+		case Component::COMPONENT_ADDED : {
+			ComponentEvent* ev = (ComponentEvent*)event;
+			Component* child = ev->getChildComponent();
+			ToolbarItem* item = dynamic_cast<ToolbarItem*>(child);
+			if ( NULL != item ) {
+				
+				getToolbarModel()->addItem( item );
+			}
+		}
+		break;
+
+		case Component::COMPONENT_REMOVED : {
+			
 		}
 		break;
 	}

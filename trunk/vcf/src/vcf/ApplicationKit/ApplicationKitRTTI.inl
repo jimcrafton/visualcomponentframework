@@ -239,8 +239,24 @@ _delegate_(ItemDelegate, ItemChanged );
 _delegate_(ItemDelegate, ItemSelected );
 _delegate_(ItemDelegate, ItemAdded );
 _delegate_(ItemDelegate, ItemDeleted );
+_property_( int32, "stateImageIndex", getStateImageIndex, setStateImageIndex, "" )
+_property_( int32, "imageIndex", getImageIndex, setImageIndex, "" )
+_property_( bool, "imageIndex", isSelected, setSelected, "" )
 _class_rtti_end_
 
+
+
+
+_class_rtti_(ToolbarItem, "VCF::Item", TOOLBARITEM_CLASSID)
+_property_( String, "caption", getCaption, setCaption, "" )
+_property_( String, "tooltip", getTooltip, setTooltip, "" )
+_property_( bool, "separator", isSeparator, setAsSeparator, "" )
+_property_( bool, "pressed", isPressed, setPressed, "" )
+_property_object_( Control, "itemControl", getItemControl, setItemControl, "" );
+_property_( bool, "enabled", isEnabled, setEnabled, "" )
+_property_( bool, "checked", isChecked, setChecked, "" )
+_property_( bool, "grouped", isGrouped, setGrouped, "" )
+_class_rtti_end_
 
 _class_abstract_rtti_(ListItem, "VCF::Item", LISTITEM_CLASSID)
 _abstract_delegate_(ItemDelegate, SubItemChanged );
@@ -626,6 +642,10 @@ _class_rtti_end_
 
 
 _class_rtti_(Toolbar, "VCF::Control", TOOLBAR_CLASSID);
+_property_( bool, "showButtonCaptions",getShowButtonCaptions, setShowButtonCaptions, "" );
+_property_( bool, "horizontalCaptions",getButtonCaptionsHorizontal, setButtonCaptionsHorizontal, "" );
+_property_( bool, "autoResizeEnabled",isAutoResizeEnabled, setEnableAutoResize, "" );
+
 _class_rtti_end_
 
 
