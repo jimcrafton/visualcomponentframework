@@ -1,0 +1,45 @@
+object LOLCats  : VCF::Window
+	top = 200
+	left = 200
+	height = 500
+	width = 500
+	caption = 'You Can Has LOLCAT'
+
+	object toolbar : VCF::Toolbar 
+		alignment = AlignTop
+		height = 25
+		showButtonCaptions = true
+
+
+		object btn1 : VCF::ToolbarItem
+			caption = 'Refresh'
+		end
+
+		object btn2 : VCF::ToolbarItem
+			caption = 'Quit'
+		end
+
+		object btn3 : VCF::ToolbarItem
+			caption = 'Home'
+		end
+
+		//object sep : VCF::ToolbarItem
+		//	caption = ''
+		//	separator = true
+		//end
+
+		object updateEdit : VCF::TextControl 
+			width = 50
+		end
+
+		object btn4 : VCF::ToolbarItem
+			caption = 'Update interval'
+			itemControl = @updateEdit
+		end
+	end
+
+	object mainPane : VCF::Panel 
+		alignment = AlignClient
+	end
+	
+end

@@ -30,6 +30,8 @@ void GraphicsKit::init( int argc, char** argv )
 	REGISTER_CLASSINFO_EXTERNAL( Rect );
 	REGISTER_CLASSINFO_EXTERNAL( Color );
 	REGISTER_CLASSINFO_EXTERNAL( Font );
+	REGISTER_CLASSINFO_EXTERNAL( Size );
+	REGISTER_CLASSINFO_EXTERNAL( Point );
 
 	GraphicsToolkit::initGraphicsToolkit();
 }

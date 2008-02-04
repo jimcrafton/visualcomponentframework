@@ -16,6 +16,16 @@ _property_( double, "blue", getBlue, setBlue, "The blue component of the color, 
 _class_rtti_end_
 
 
+_class_rtti_(Size, "VCF::Object", SIZE_CLASSID)
+_property_( double, "width", getWidth, setWidth, "The width component." )
+_property_( double, "height", getHeight, setHeight, "The height component." )
+_class_rtti_end_
+
+_class_rtti_(Point, "VCF::Object", POINT_CLASSID)
+_property_( double, "x", getX, setX, "The x component." )
+_property_( double, "y", getY, setY, "The y component." )
+_class_rtti_end_
+
 
 _class_rtti_(Rect, "VCF::Object", RECT_CLASSID)
 _property_( double, "left", _getLeft, setLeft, "The rectangle's left value." );

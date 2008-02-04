@@ -432,14 +432,16 @@ Class* ClassRegistry::internal_getClass( Object* object )
 
 Object* ClassRegistry::internal_createNewInstance( const String& className )
 {
-	Class* clazz = NULL;
 	Object* result = NULL;
-	std::map<String,Class*>::iterator found =
-		classMap_.find( className );
-
-	if ( found != classMap_.end() ){
-		clazz = found->second;
-		result = clazz->createInstance();
+	if ( !className.empty() ) {		
+		Class* clazz = NULL;
+		std::map<String,Class*>::iterator found =
+			classMap_.find( className );
+		
+		if ( found != classMap_.end() ){
+			clazz = found->second;
+			result = clazz->createInstance();
+		}
 	}
 	if ( NULL == result ) {
 		throw CantCreateObjectException( "Unable to create an instance of class\"" + className + "\"" );

@@ -27,7 +27,7 @@ class ToolbarDock;
 
 class ToolbarPeer;
 
-
+#define TOOLBARITEM_CLASSID		"257ad8c4-dc5d-4d4a-b4fa-be668a550c5b"
 /**
 \class ToolbarItem Toolbar.h "vcf/ApplicationKit/Toolbar.h" 
 */
@@ -117,6 +117,8 @@ public:
 
 	void setWidth( const double& val );
 
+	double getWidth();
+
 	String getCaption() {
 		return caption_;
 	}
@@ -132,9 +134,17 @@ public:
 
 	void setTooltip( const String& val );
 
-	void setAsSeparator();
+	void setAsSeparator( const bool& val=true );
 
-	void setPressed( bool val );
+	bool isSeparator() {
+		return getDisplayState() == tisSeparator;	
+	}
+
+	void setPressed( const bool& val );
+
+	bool isPressed() {
+		return getDisplayState() & ToolbarItem::tisPressed ? true : false;
+	}
 
 	void setItemControl( Control* control );
 
@@ -283,6 +293,27 @@ public:
 	}
 
 	void setButtonSize( const Size& buttonSize );
+
+	double getButtonWidth() {
+		return buttonSize_.width_;
+	}
+
+	void setButtonWidth( const double& val ) {
+		Size sz = buttonSize_;
+		sz.width_ = val;
+		setButtonSize( sz );
+	}
+
+	double getButtonHeight() {
+		return buttonSize_.height_;
+	}
+
+	void setButtonHeight( const double& val ) {
+		Size sz = buttonSize_;
+		sz.height_ = val;
+		setButtonSize( sz );
+	}
+
 
 	void setButtonCaptionsHorizontal( const bool& val );
 

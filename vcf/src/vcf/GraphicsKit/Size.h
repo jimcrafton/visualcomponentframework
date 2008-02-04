@@ -14,6 +14,9 @@ where you installed the VCF.
 #endif
 
 
+#define SIZE_CLASSID	"689d8501-87de-4391-b368-075af21fdba3"
+
+
 namespace VCF {
 
 /**
@@ -65,6 +68,22 @@ public:
 
 	bool operator!= ( const Size& sizeToCompare ) const {
 		return !operator==(sizeToCompare);
+	}
+
+	double getWidth() {
+		return width_;
+	}
+
+	void setWidth( const double& val ) {
+		width_ = val;
+	}
+
+	double getHeight() {
+		return height_;
+	}
+
+	void setHeight( const double& val ) {
+		height_ = val;
 	}
 
 public:
