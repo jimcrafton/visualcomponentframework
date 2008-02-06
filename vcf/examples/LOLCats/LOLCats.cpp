@@ -99,10 +99,13 @@ public:
 		DateTime dt = DateTime::now();		
 		statusBar->setStatusText( Format("Last update: %s") % StringUtils::format( dt,"%I:%M:%S" ) );
 
+		CallBack* cb = getCallback( "LOLCatsApp::urlComplete" );
+		if ( NULL == cb ) {
+			cb = new ClassProcedure1<URLEvent*,LOLCatsApp>(this, &LOLCatsApp::urlComplete, "LOLCatsApp::urlComplete" );
+		}
 		AsyncURL* url = new AsyncURL(feedURL);
-		url->DataComplete += 
-			new ClassProcedure1<URLEvent*,LOLCatsApp>(this, LOLCatsApp::urlComplete, "LOLCatsApp::urlComplete" );
-		
+		url->DataComplete += cb;
+
 		url->get();
 
 	}
@@ -137,7 +140,7 @@ public:
 
 		
 		String filename = System::getCurrentWorkingDirectory();
-		filename += "/tmp.html";
+		filename += "tmp.html";
 		
 		{
 			FileOutputStream fos(filename);
@@ -156,7 +159,7 @@ public:
 		
 		Event* event = new Event(url);
 
-		postEvent( new ClassProcedure1<Event*,LOLCatsApp>(this, LOLCatsApp::displayURL ),
+		postEvent( new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::displayURL ),
 					event );
 		
 	}
@@ -173,21 +176,21 @@ public:
 
 		TimerComponent* timer = (TimerComponent*)component->findComponent( "timer" );
 		timer->TimerPulse += 
-			new ClassProcedure1<Event*,LOLCatsApp>(this, LOLCatsApp::update, "LOLCatsApp::update" );
+			new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::update, "LOLCatsApp::update" );
 
 
 		TextControl* updateFreqEdit = (TextControl*)component->findComponent( "updateFreqEdit", true );
 		updateFreqEdit->getTextModel()->ModelChanged +=
-			new ClassProcedure1<Event*,LOLCatsApp>(this, LOLCatsApp::onUpdateFreqChanged, "LOLCatsApp::onUpdateFreqChanged" );
+			new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::onUpdateFreqChanged, "LOLCatsApp::onUpdateFreqChanged" );
 
 
 		ToolbarItem* tbi = (ToolbarItem*)component->findComponent( "btn1", true );
 		tbi->ItemClicked += 
-			new ClassProcedure1<Event*,LOLCatsApp>(this, LOLCatsApp::onRefresh, "LOLCatsApp::onRefresh" );
+			new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::onRefresh, "LOLCatsApp::onRefresh" );
 
 		tbi = (ToolbarItem*)component->findComponent( "btn2", true );
 		tbi->ItemClicked += 
-			new ClassProcedure1<Event*,LOLCatsApp>(this, LOLCatsApp::onQuit, "LOLCatsApp::onQuit" );
+			new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::onQuit, "LOLCatsApp::onQuit" );
 
 
 		statusBar = (StatusBar*)component->findComponent( "status", true );
@@ -200,7 +203,7 @@ LOLCatsWindow::LOLCatsWindow()
 {
 	LOLCatsApp* app = (LOLCatsApp*)Application::getRunningInstance();
 	ComponentLoaded += 
-		new ClassProcedure1<ComponentEvent*,LOLCatsApp>( app, LOLCatsApp::mainWindowLoaded, "LOLCatsApp::mainWindowLoaded" );
+		new ClassProcedure1<ComponentEvent*,LOLCatsApp>( app, &LOLCatsApp::mainWindowLoaded, "LOLCatsApp::mainWindowLoaded" );
 }
 
 
