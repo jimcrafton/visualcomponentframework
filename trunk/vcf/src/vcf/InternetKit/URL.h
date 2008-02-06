@@ -497,6 +497,7 @@ namespace VCF {
 
 		AsyncURL(const String& urlString ):URL(urlString),urlWait_(&urlWaitMtx_){}
 
+		DELEGATE( EventDelegate,Finished );
 
 		void get() {
 			dataBuf_.clear();

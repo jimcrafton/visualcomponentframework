@@ -76,17 +76,6 @@ public:
 	virtual void setDefault( const bool& defaultButton ) = 0;
 
 	virtual bool isDefault() = 0;
-
-	/**
-	*Adds a new EventHandler for button click events
-	*/
-	virtual void addButtonClickHandler( EventHandler* handler ) = 0;
-
-	/**
-	*Removes an EventHandler for button click events
-	*/
-	virtual void removeButtonClickHandler( EventHandler* handler ) = 0;
-
 };
 
 

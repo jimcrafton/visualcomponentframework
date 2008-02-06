@@ -78,10 +78,11 @@ public:
 	URL* url_;
 	OutputStream* stream_;
 	Authenticater authenticater;
-
+	uint32 downloadBytes;
 
 	StatCB(URL* url, OutputStream* stream ):url_(url), stream_(stream){
 		authenticater.url_ = url_;
+		downloadBytes = 0;
 	}
 
 
@@ -151,10 +152,8 @@ public:
 
 		switch ( ulStatusCode ) {
 			case BINDSTATUS_ENDDOWNLOADDATA : {
-				URLEvent done(url_, URL::evDataComplete );
-				done.setBytesReceived( ulProgressMax );
-
-				url_->DataComplete( &done );
+				downloadBytes = ulProgressMax;
+				
 			}
 			break;
 		};
@@ -205,7 +204,7 @@ public:
 
 					switch ( grfBSCF ) {
 						case BSCF_LASTDATANOTIFICATION : {
-
+							StringUtils::trace("BSCF_LASTDATANOTIFICATION\n");
 						}
 						break;
 					}
@@ -221,7 +220,7 @@ public:
 			}
 		}
 		
-		return E_NOTIMPL;
+		return S_OK;//E_NOTIMPL;
 	}
 
 	STDMETHODIMP OnObjectAvailable( REFIID  riid, IUnknown* punk ) {
@@ -245,6 +244,12 @@ public:
 		if ( !SUCCEEDED(hrStatus) ) {
 			URLEvent e(url_, URL::evDataError );
 			url_->DataError( &e );
+		}
+		else {
+			URLEvent done(url_, URL::evDataComplete );
+			done.setBytesReceived( downloadBytes );
+
+			url_->DataComplete( &done );
 		}
 
 		return S_OK;

@@ -603,7 +603,9 @@ _class_rtti_(Splitter, "VCF::CustomControl", SPLITTER_CLASSID)
 _class_rtti_end_
 
 
-_class_rtti_(StatusBar, "VCF::ControlContainer", STATUSBAR_CLASSID)
+_class_rtti_(StatusBar, "VCF::CustomControl", STATUSBAR_CLASSID)
+	_property_(String,"statusText",getStatusText,setStatusText,"")
+	_property_array_( String, "status", getStatusPaneText,setStatusPaneText,insertStatusPane,removeStatusPane,getStatusPaneCount, "" )
 _class_rtti_end_
 
 

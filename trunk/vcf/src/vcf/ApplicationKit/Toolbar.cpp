@@ -106,6 +106,7 @@ void ToolbarItem::setAsSeparator(const bool& val)
 {
 	if ( val ) {
 		setDisplayState( tisSeparator );
+		setCaption( " " );
 	}
 	else {
 		setDisplayState( getDisplayState() & ~tisSeparator );
