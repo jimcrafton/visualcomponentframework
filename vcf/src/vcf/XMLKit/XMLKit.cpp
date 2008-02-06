@@ -1081,6 +1081,10 @@ VariantData XPathIterator::eval( const XPathExpression& expression ) {
 
 	xpathObj_ = xmlXPathCompiledEval( expression.get(), resource_ );
 
+	if( NULL == xpathObj_ ) {
+		throw XmlException( xmlGetLastError() );
+	}
+
 	switch ( xpathObj_->type ) {				
 		case XPATH_BOOLEAN : {
 			result = xpathObj_->boolval != 0 ? true : false;

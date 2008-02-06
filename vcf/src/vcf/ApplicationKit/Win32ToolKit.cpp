@@ -1705,15 +1705,36 @@ public:
 			break;
 
 			case mtInformationalControlHeight : {
-				Point pt;
-				if ( NULL != alternateFont ) {
-					pt = DLUToPixel( Point(0,10), *alternateFont );
+				
+				HTHEME theme = NULL;
+				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"STATUS" );
+				}
+				
+				if ( theme ) {
+					HDC dc = GetDC( ::GetDesktopWindow() );
+					SIZE sz;
+					
+					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, SP_PANE, 0, 
+						NULL, TS_TRUE, &sz);
+					
+					Win32VisualStylesWrapper::CloseThemeData( theme );
+					ReleaseDC(::GetDesktopWindow(),dc);
+					
+					result = sz.cy;
 				}
 				else {
-					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-					pt = DLUToPixel( Point(0,10), f );
+					Point pt;
+					if ( NULL != alternateFont ) {
+						pt = DLUToPixel( Point(0,12), *alternateFont );
+					}
+					else {
+						VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+						pt = DLUToPixel( Point(0,12), f );
+					}
+					result = pt.y_;
 				}
-				result = pt.y_;
+				
 			}
 			break;
 

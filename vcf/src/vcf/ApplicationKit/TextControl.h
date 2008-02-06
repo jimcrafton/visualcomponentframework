@@ -57,6 +57,22 @@ public:
 
 	TextModel* getTextModel();
 
+	String getText() {
+		TextModel* tm = getTextModel();
+		if ( NULL != tm ) {
+			return tm->getText();
+		}
+
+		return String();
+	}
+
+	void setText( const String& val ) {
+		TextModel* tm = getTextModel();
+		if ( NULL != tm ) {
+			tm->setText( val );
+		}
+	}
+
 	uint32 getCaretPosition() ;
 
 	void setCaretPosition( const uint32& caretPos );
@@ -216,6 +232,8 @@ public:
 	If you turn on word wrapping the scroll bars will disapear.
 	*/
 	void setTextWrapping( const bool& val );
+
+	bool getTextWrapping();
 
 	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
 

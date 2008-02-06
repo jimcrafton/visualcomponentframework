@@ -55,6 +55,7 @@ public:
 	uint32 updateFreq;
 	StatusBar* statusBar;
 	HTMLBrowserControl* browser;
+	String lolcatsFile;
 
 	LOLCatsApp( int argc, char** argv ) : Application(argc, argv) {
 		HTMLKit::init( argc, argv );
@@ -63,6 +64,8 @@ public:
 
 		feedURL = "http://feeds.feedburner.com/ICanHasCheezburger/";
 		updateFreq = 10 * 60 * 1000; //10 minutes
+		lolcatsFile = System::getCurrentWorkingDirectory();
+		lolcatsFile += "lolcats.html";
 	}
 
 	virtual bool initRunningApplication(){
@@ -112,10 +115,23 @@ public:
 
 	void displayURL( Event* e ) {
 		AsyncURL* url = (AsyncURL*)e->getSource();	
+		url->wait(); //make sure we're completely done
+
+		url->free();
+
+		
+
+		browser->setCurrentURL( lolcatsFile );	
+		
+	}
+
+	void urlComplete(URLEvent* e) {
+		AsyncURL* url = (AsyncURL*)e->getSource();
+		
 		String xml = url->getDataAsString();
 		
 		String html;
-		html += "<html><body>\n";
+		html += "<html><body style=\"background-color: #F7F7F7\">\n";
 
 		XmlDocument doc;
 		doc.setXML(xml);
@@ -129,34 +145,18 @@ public:
 			const XmlNode& n = *it;		
 			
 			String imageURL = n.getAttribute("url");
-			html += "<div><img src=\"";
+			html += "<div style=\"border: 3px outset grey\"><img width=\"100%\" src=\"";
 			html += imageURL;
 			html += "\"></div><br>\n";
 
 			it ++;
 		}
 
-		html += "</body></html>";
-
+		html += "</body></html>";		
 		
-		String filename = System::getCurrentWorkingDirectory();
-		filename += "tmp.html";
-		
-		{
-			FileOutputStream fos(filename);
-			fos << html;
-		}
+		FileOutputStream fos(lolcatsFile);
+		fos << html;
 
-		
-
-		browser->setCurrentURL( filename );
-
-		url->free();
-	}
-
-	void urlComplete(URLEvent* e) {
-		AsyncURL* url = (AsyncURL*)e->getSource();		
-		
 		Event* event = new Event(url);
 
 		postEvent( new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::displayURL ),

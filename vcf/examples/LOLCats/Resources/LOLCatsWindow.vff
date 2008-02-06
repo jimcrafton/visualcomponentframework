@@ -39,6 +39,7 @@ object LOLCats  : VCF::Window
 
 			object updateFreqEdit : VCF::TextControl 
 				alignment = AlignClient
+				text = '10'
 			end
 		end
 		
@@ -51,6 +52,9 @@ object LOLCats  : VCF::Window
 
 	object browser : VCF::HTMLBrowserControl 
 		alignment = AlignClient
+		allowPopups = false
+		allowTextSelection = false
+		allowContextMenu = false
 	end
 
 	object status : VCF::StatusBar

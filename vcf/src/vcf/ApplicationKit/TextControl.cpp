@@ -714,6 +714,10 @@ void TextControl::setTextWrapping( const bool& val )
 	textPeer_->setTextWrapping(val);
 }
 
+bool TextControl::getTextWrapping()
+{
+	return textPeer_->getTextWrapping();
+}
 
 bool TextControl::generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue )
 {

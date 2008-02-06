@@ -631,6 +631,11 @@ _class_rtti_end_
 
 
 _class_rtti_(TextControl, "VCF::Control", TEXTCONTROL_CLASSID )
+_property_( bool, "readonly",getReadOnly, setReadOnly, "" );
+_property_( bool, "keepTabbingChars",keepsTabbingCharacters, setKeepTabbingCharacters, "" );
+_property_( bool, "keepReturnChar",keepReturnCharacter, setKeepReturnCharacter, "" );
+_property_( bool, "textWrapping",getTextWrapping, setTextWrapping, "" );
+_property_( String, "text",getText, setText, "" );
 _class_rtti_end_
 
 

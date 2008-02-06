@@ -342,25 +342,25 @@ public:
 		return (policyState_ & hpAllowPopups) ? true : false;
 	}
 
-	void setAllowsPopupWindows( bool val );
+	void setAllowsPopupWindows( const bool& val );
 
 	bool getAllowsScrollbars() {
 		return (policyState_ & hpAllowsScrollbars) ? true : false;
 	}
 
-	void setAllowsScrollbars( bool val );
+	void setAllowsScrollbars( const bool& val );
 
 	bool getAllowsTextSelection() {
 		return (policyState_ & hpAllowsTextSelection) ? true : false;
 	}	
 
-	void setAllowsTextSelection( bool val );
+	void setAllowsTextSelection( const bool& val );
 
 	bool getUseDefaultAuthenticationUI() {
 		return (policyState_ & hpUseDefaultAuthenticationUI) ? true : false;
 	}
 
-	void setUseDefaultAuthenticationUI( bool val ) {
+	void setUseDefaultAuthenticationUI( const bool& val ) {
 		if ( val ) {
 			policyState_ |= hpUseDefaultAuthenticationUI;
 		}
@@ -373,7 +373,7 @@ public:
 		return (policyState_ & hpAllowDefaultContextMenu) ? true : false;
 	}
 
-	void setAllowDefaultContextMenu( bool val ) {
+	void setAllowDefaultContextMenu( const bool& val ) {
 		if ( val ) {
 			policyState_ |= hpAllowDefaultContextMenu;
 		}

@@ -12,6 +12,10 @@ using namespace VCF;
 
 _class_rtti_(HTMLBrowserControl, "VCF::Control", HTMLBROWSERCONTROL_CLASSID)
 _property_( String, "currentURL", getCurrentURL, setCurrentURL, "" );
+_property_( bool, "allowPopups", getAllowsPopupWindows, setAllowsPopupWindows, "" );
+_property_( bool, "allowScrollbars", getAllowsScrollbars, setAllowsScrollbars, "" );
+_property_( bool, "allowTextSelection", getAllowsTextSelection, setAllowsTextSelection, "" );
+_property_( bool, "allowContextMenu", getAllowDefaultContextMenu, setAllowDefaultContextMenu, "" );
 _class_rtti_end_
 
 
