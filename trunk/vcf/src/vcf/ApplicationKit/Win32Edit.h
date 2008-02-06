@@ -160,6 +160,8 @@ public:
 	virtual void redo();
 
 	virtual void setTextWrapping( const bool& val ); 
+
+	virtual bool getTextWrapping();
 protected:
 	VCF::Point posAtChar_;
 	HBRUSH backgroundBrush_;
@@ -168,6 +170,7 @@ protected:
 	TextControl* textControl_;
 	int editState_;
 	std::map<uint32,uint32> printPageMap_;
+	bool textWrapping_;
 	Win32RichEditOleCallback* richEditCallback_;//only needed in readonly mode
 
 	bool stateAllowsModelChange();

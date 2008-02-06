@@ -123,7 +123,7 @@ void HTMLBrowserControl::selectAll()
 	browserPeer_->selectAll() ;
 }
 
-void HTMLBrowserControl::setAllowsPopupWindows( bool val )
+void HTMLBrowserControl::setAllowsPopupWindows( const bool& val )
 {	
 	if ( val ) {
 		policyState_ |= HTMLBrowserControl::hpAllowPopups;
@@ -136,7 +136,7 @@ void HTMLBrowserControl::setAllowsPopupWindows( bool val )
 }
 
 
-void HTMLBrowserControl::setAllowsScrollbars( bool val )
+void HTMLBrowserControl::setAllowsScrollbars( const bool& val )
 {
 	if ( val ) {
 		policyState_ |= HTMLBrowserControl::hpAllowsScrollbars;
@@ -149,7 +149,7 @@ void HTMLBrowserControl::setAllowsScrollbars( bool val )
 }
 
 
-void HTMLBrowserControl::setAllowsTextSelection( bool val )
+void HTMLBrowserControl::setAllowsTextSelection( const bool& val )
 {
 	if ( val ) {
 		policyState_ |= HTMLBrowserControl::hpAllowsTextSelection;

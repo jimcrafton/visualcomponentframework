@@ -144,7 +144,8 @@ Win32Edit::Win32Edit( TextControl* component, const bool& isMultiLineControl ):
 	editState_(0),
 	currentSelLength_(0),
 	currentSelStart_(-1),
-	richEditCallback_(NULL)
+	richEditCallback_(NULL),
+	textWrapping_(false)
 {
 	if ( isMultiLineControl ) {
 		editState_ |= esMultiLined; 
@@ -1427,6 +1428,8 @@ void Win32Edit::redo()
 
 void Win32Edit::setTextWrapping( const bool& val )
 {
+	textWrapping_ = val;
+
 	if ( !val ) {
 		SendMessage(hwnd_, EM_SETTARGETDEVICE, 0, 1);
 	}
@@ -1435,6 +1438,10 @@ void Win32Edit::setTextWrapping( const bool& val )
 	}
 }
 
+bool Win32Edit::getTextWrapping()
+{
+	return textWrapping_;
+}
 
 /**
 $Id$
