@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="LOLCats" template="vcf_exe_gui"
+             cond="OPTION_APPLICATIONKIT=='1' and OPTION_HTMLKIT=='1' and OPTION_XMLKIT=='1' and OPTION_INTERNETKIT=='1'">
+        <dirname>.</dirname>
+        <sources>LOLCats.cpp</sources>
+        <vcf-use-ApplicationKit/>
+        <vcf-use-HTMLKit/>
+        <vcf-use-XMLKit/>
+        <vcf-use-InternetKit/>
+    </exe>
+</makefile>
+
+<!--
+$Id$
+-->
