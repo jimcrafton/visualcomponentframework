@@ -929,6 +929,15 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ApplicationKitDLL
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name HTMLKitDll
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name InternetKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name XMLKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################

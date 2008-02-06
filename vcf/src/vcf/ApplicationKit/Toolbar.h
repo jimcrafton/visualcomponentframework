@@ -69,15 +69,6 @@ public:
 	DELEGATE(ButtonDelegate,ItemClicked);
 
 	DELEGATE(EventDelegate,ItemUpdate);
-	
-
-	virtual void addButtonClickHandler( EventHandler* handler ) {
-		ItemClicked += handler;
-	}
-
-	virtual void removeButtonClickHandler( EventHandler* handler ) {
-		ItemClicked.remove(handler);
-	}
 
 	virtual void click();
 

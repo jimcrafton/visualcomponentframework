@@ -23,23 +23,42 @@ object LOLCats  : VCF::Window
 			caption = 'Home'
 		end
 
-		//object sep : VCF::ToolbarItem
-		//	caption = ''
-		//	separator = true
-		//end
-
-		object updateEdit : VCF::TextControl 
-			width = 50
+		object sep : VCF::ToolbarItem
+			separator = true
 		end
 
-		object btn4 : VCF::ToolbarItem
+		object updatePanel : VCF::Panel 
+			border = null
+			width = 120
+
+			object updateLabel : VCF::Label 
+				alignment = AlignLeft
+				caption = 'Update interval:'
+				width = 80
+			end
+
+			object updateFreqEdit : VCF::TextControl 
+				alignment = AlignClient
+			end
+		end
+		
+
+		object btn4 : VCF::ToolbarItem	
 			caption = 'Update interval'
-			itemControl = @updateEdit
+			itemControl = @updatePanel
 		end
 	end
 
-	object mainPane : VCF::Panel 
+	object browser : VCF::HTMLBrowserControl 
 		alignment = AlignClient
 	end
-	
+
+	object status : VCF::StatusBar
+		status[0] = 'Last update: '
+	end	
+
+	object timer : VCF::TimerComponent
+		timeoutInterval = 600000 //10 minutes
+		active = true
+	end
 end
