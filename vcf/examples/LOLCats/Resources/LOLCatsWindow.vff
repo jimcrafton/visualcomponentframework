@@ -5,21 +5,46 @@ object LOLCats  : VCF::Window
 	width = 500
 	caption = 'You Can Has LOLCAT'
 
+	object images : VCF::ImageList
+		transparentColor.red = 0
+		transparentColor.green = 0
+		transparentColor.blue = 0
+		
+		imageWidth = 24
+		imageHeight = 24
+
+		object img1 : VCF::ImageComponent 
+			filename = 'res:refresh.png'
+		end
+
+		object img2 : VCF::ImageComponent 
+			filename = 'res:quit.png'
+		end
+
+		object img3 : VCF::ImageComponent 
+			filename = 'res:home.png'
+		end
+	end
+
 	object toolbar : VCF::Toolbar 
 		alignment = AlignTop
 		height = 25
 		showButtonCaptions = true
+		imageList = @images;
 
 
-		object btn1 : VCF::ToolbarItem
+		object refreshBtn : VCF::ToolbarItem
+			imageIndex = 0
 			caption = 'Refresh'
 		end
 
-		object btn2 : VCF::ToolbarItem
+		object quitBtn : VCF::ToolbarItem
+			imageIndex = 1
 			caption = 'Quit'
 		end
 
-		object btn3 : VCF::ToolbarItem
+		object homeBtn : VCF::ToolbarItem
+			imageIndex = 2
 			caption = 'Home'
 		end
 
@@ -57,7 +82,7 @@ object LOLCats  : VCF::Window
 		allowContextMenu = false
 	end
 
-	object status : VCF::StatusBar
+	object statusBar : VCF::StatusBar
 		status[0] = 'Last update: '
 	end	
 

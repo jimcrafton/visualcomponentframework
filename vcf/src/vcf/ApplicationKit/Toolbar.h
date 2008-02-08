@@ -271,7 +271,14 @@ public:
 		return item;
 	}
 
+
+	ImageList* getImageList() {
+		return imageList_;
+	}
+
 	void setImageList( ImageList* imageList );
+
+	
 
 	void setShowButtonCaptions( const bool& val );
 

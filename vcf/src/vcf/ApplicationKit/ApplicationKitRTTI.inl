@@ -71,6 +71,8 @@ _class_rtti_end_
 
 _class_rtti_(ImageList, "VCF::Component", IMAGELIST_CLASSID )
 _property_object_( Color, "transparentColor", getTransparentColor, setTransparentColor, "" );
+_property_( uint32, "imageWidth", getImageWidth, setImageWidth, "" );
+_property_( uint32, "imageHeight", getImageHeight, setImageHeight, "" );
 _delegate_(ImageListDelegate, SizeChanged );
 _delegate_(ImageListDelegate, ImageAdded );
 _delegate_(ImageListDelegate, ImageDeleted );
@@ -494,6 +496,11 @@ _class_rtti_end_
 
 
 
+_class_rtti_(ImageComponent, "VCF::UIComponent", IMAGECOMPONENT_CLASSID)
+_property_typedef_( String, "filename", getFilename, setFilename, "VCF::ImageFilenameString", "" );
+_property_(bool, "transparent", getTransparent, setTransparent, "");
+_class_rtti_end_
+
 _class_rtti_(ImageControl, "VCF::CustomControl", IMAGECONTROL_CLASSID)
 _property_object_( Image, "image", getImage, setImage, "" );
 _property_(bool, "transparent", getTransparent, setTransparent, "");
@@ -652,6 +659,7 @@ _class_rtti_(Toolbar, "VCF::Control", TOOLBAR_CLASSID);
 _property_( bool, "showButtonCaptions",getShowButtonCaptions, setShowButtonCaptions, "" );
 _property_( bool, "horizontalCaptions",getButtonCaptionsHorizontal, setButtonCaptionsHorizontal, "" );
 _property_( bool, "autoResizeEnabled",isAutoResizeEnabled, setEnableAutoResize, "" );
+_property_object_( ImageList, "imageList", getImageList, setImageList, "" );
 
 _class_rtti_end_
 

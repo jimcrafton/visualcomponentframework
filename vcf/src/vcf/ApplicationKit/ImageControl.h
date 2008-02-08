@@ -23,8 +23,11 @@ where you installed the VCF.
 
 #define IMAGECONTROL_CLASSID			"16b4cd34-382c-4b3c-9fe9-f04b5983cd6c"
 
+#define IMAGECOMPONENT_CLASSID			"a95da66a-c1fb-4a38-a052-f66b95b55969"
 
 namespace VCF  {
+
+
 
 /**
 This is a typedef for a string. This typedef is then used
@@ -34,6 +37,39 @@ property type is a ImageFilenameString, which then allows us to specify
 a different kind of PropertyEditor for the string.
 */
 typedef String ImageFilenameString;
+
+
+
+
+
+
+/**
+\class ImageComponent ImageControl.h "vcf/ApplicationKit/ImageControl.h"
+
+*/
+class APPLICATIONKIT_API ImageComponent : public UIComponent {
+public:
+
+	ImageComponent();
+
+	virtual ~ImageComponent();
+
+	Image* getImage() {
+		return image_;
+	}
+
+	ImageFilenameString getFilename();
+
+	void setFilename( const ImageFilenameString& filename );
+
+	bool getTransparent();
+
+	void setTransparent( const bool& transparent );
+protected:
+	Image* image_;
+	ImageFilenameString filename_;
+};
+
 
 
 

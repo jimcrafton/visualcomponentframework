@@ -136,6 +136,7 @@ public:
 		return masterImage_;
 	}
 
+	virtual void handleEvent( Event* event );
 private:
 	void changed();
 
