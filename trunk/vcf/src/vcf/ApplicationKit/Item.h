@@ -85,7 +85,7 @@ public:
 	};
 
 
-	Item():data_(NULL),selected_(false),imageIndex_(0),
+	Item():data_(NULL),selected_(false),imageIndex_(-1),
 			displayState_(Item::idsNone),model_(NULL),owningControl_(NULL) {			
 		tag_ = -1;
 	};

@@ -1045,21 +1045,42 @@ void VFFInputStream::registerComponentConstant( const String& name, ComponentCon
 bool VFFInputStream::getComponentConstant( const String& name, String& value )
 {	
 	bool result = false;
+	bool resString = false;
 
-	const Dictionary& d = componentConstants;
-
-	VariantData tmp = d[name];
-	if ( !tmp.isNull() && tmp.type != pdUndefined ) {
-
-		if ( tmp.type == pdObject ) {
-			FuncPtrHolder* holder = (FuncPtrHolder*)((Object*)tmp);
-
-			value = (*holder->funcPtr)( name );
-			result = true;
+	if ( name.size() > 4 ) {
+		if ( name.substr(0,4) == "res:" ) {
+			resString = true;
 		}
-		else {
-			value = (String)tmp;
-			result = true;
+	}
+
+	if ( resString ) {
+		//we have a reference to a resource file.
+		//get the resource bundle and add it to the 
+		//remaining string
+
+		value = 
+			System::findResourceDirectory( System::getCurrentThreadLocale() );
+
+		value += name.substr(4,name.size()-4);
+
+		result = true;
+	}
+	else {
+		const Dictionary& d = componentConstants;
+		
+		VariantData tmp = d[name];
+		if ( !tmp.isNull() && tmp.type != pdUndefined ) {
+			
+			if ( tmp.type == pdObject ) {
+				FuncPtrHolder* holder = (FuncPtrHolder*)((Object*)tmp);
+				
+				value = (*holder->funcPtr)( name );
+				result = true;
+			}
+			else {
+				value = (String)tmp;
+				result = true;
+			}
 		}
 	}
 

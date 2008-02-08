@@ -7,6 +7,8 @@
 #include "vcf/ApplicationKit/StatusBar.h"
 #include "vcf/FoundationKit/Dictionary.h"
 
+#include <shellapi.h>
+
 #include "vcf/HTMLKit/HTMLKit.h"
 #if !defined(VCF_DISABLE_PRAGMA_LINKING)
 #   define USE_INTERNETKIT_DLL
@@ -31,6 +33,14 @@ http://arstechnica.com/journals/linux.ars/2008/02/04/you-can-has-lolcats-with-ru
 
 class LOLCatsWindow : public Window {
 public:
+	StatusBar* statusBar;
+	HTMLBrowserControl* browser;
+	TimerComponent* timer;
+	TextControl* updateFreqEdit;
+	ToolbarItem* refreshBtn;
+	ToolbarItem* quitBtn;
+	ToolbarItem* homeBtn;
+
 	LOLCatsWindow();
 
 	virtual ~LOLCatsWindow(){};
@@ -41,6 +51,14 @@ public:
 #define LOLCATSWINDOW_CLASSID		"8d47ad29-296e-4585-a6c0-d7c18a041c83"
 
 _class_rtti_(LOLCatsWindow, "VCF::Window", LOLCATSWINDOW_CLASSID)
+	_field_obj_( StatusBar*, statusBar )
+	_field_obj_( HTMLBrowserControl*, browser )
+	_field_obj_( TimerComponent*, timer )
+	_field_obj_( TextControl*, updateFreqEdit )
+	_field_obj_( ToolbarItem*, refreshBtn )
+	_field_obj_( ToolbarItem*, quitBtn )
+	_field_obj_( ToolbarItem*, homeBtn )
+	
 _class_rtti_end_
 
 
@@ -98,6 +116,21 @@ public:
 		update(NULL);
 	}
 
+	void onHome( Event* e ) {
+//		Process p;
+//		p.createProcess("firefox.exe","");
+
+
+		SHELLEXECUTEINFO info = {0};
+		info.cbSize = sizeof(info);
+		info.fMask = SEE_MASK_FLAG_DDEWAIT;
+		info.lpVerb = "Open";
+		info.lpFile = "http://icanhascheezburger.com";
+		
+		ShellExecuteEx( &info );
+
+	}
+
 	void update( Event* e ) {
 		DateTime dt = DateTime::now();		
 		statusBar->setStatusText( Format("Last update: %s") % StringUtils::format( dt,"%I:%M:%S" ) );
@@ -138,7 +171,7 @@ public:
 		XPathIterator xp(doc);
 		Dictionary nsDict;
 		nsDict["media"] = "http://search.yahoo.com/mrss";
-		xp.registerNamespaces(nsDict);
+		xp.registerNamespaces(nsDict);	
 
 		XPathNodeIterator it = xp.selectNodes("//media:content");
 		while ( it != xp.end() && !it.isNull() ) {
@@ -172,29 +205,28 @@ public:
 	}
 
 	void mainWindowLoaded( ComponentEvent* e )	{
-		Component* component = (Component*)e->getSource();
+		LOLCatsWindow* window = (LOLCatsWindow*)e->getSource();
 
-		TimerComponent* timer = (TimerComponent*)component->findComponent( "timer" );
-		timer->TimerPulse += 
+		window->timer->TimerPulse += 
 			new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::update, "LOLCatsApp::update" );
 
 
-		TextControl* updateFreqEdit = (TextControl*)component->findComponent( "updateFreqEdit", true );
-		updateFreqEdit->getTextModel()->ModelChanged +=
+		window->updateFreqEdit->getTextModel()->ModelChanged +=
 			new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::onUpdateFreqChanged, "LOLCatsApp::onUpdateFreqChanged" );
 
-
-		ToolbarItem* tbi = (ToolbarItem*)component->findComponent( "btn1", true );
-		tbi->ItemClicked += 
+		
+		window->refreshBtn->ItemClicked += 
 			new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::onRefresh, "LOLCatsApp::onRefresh" );
 
-		tbi = (ToolbarItem*)component->findComponent( "btn2", true );
-		tbi->ItemClicked += 
+		window->quitBtn->ItemClicked += 
 			new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::onQuit, "LOLCatsApp::onQuit" );
 
+		window->homeBtn->ItemClicked += 
+			new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::onHome, "LOLCatsApp::onHome" );
+		
 
-		statusBar = (StatusBar*)component->findComponent( "status", true );
-		browser = (HTMLBrowserControl*)component->findComponent( "browser", true );
+		statusBar = window->statusBar;
+		browser = window->browser;
 	}
 };
 

@@ -8,6 +8,7 @@ where you installed the VCF.
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/ImageControl.h"
 
 using namespace VCF;
 
@@ -321,6 +322,30 @@ void ImageList::afterCreate( ComponentEvent* event )
 
 }
 
+void ImageList::handleEvent( Event* event )
+{
+	Component::handleEvent( event );
+	switch ( event->getType() ){
+		case Component::COMPONENT_ADDED : {
+			ComponentEvent* ev = (ComponentEvent*)event;
+			Component* child = ev->getChildComponent();
+			ImageComponent* imgComp = dynamic_cast<ImageComponent*>(child);
+			if ( NULL != imgComp ) {
+				
+				if ( NULL != imgComp->getImage() ) {
+					addImage( imgComp->getImage() );
+					imgComp->setFilename( "" );
+				}
+			}
+		}
+		break;
+
+		case Component::COMPONENT_REMOVED : {
+			
+		}
+		break;
+	}
+}
 
 /**
 $Id$

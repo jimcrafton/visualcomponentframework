@@ -1708,7 +1708,7 @@ public:
 				
 				HTHEME theme = NULL;
 				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
-					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"STATUS" );
+				//	theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"STATUS" );
 				}
 				
 				if ( theme ) {

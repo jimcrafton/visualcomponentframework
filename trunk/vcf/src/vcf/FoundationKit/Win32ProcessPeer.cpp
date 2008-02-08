@@ -71,6 +71,8 @@ bool Win32ProcessPeer::createProcess( const String& processName, const String& a
 										bInheritHandles, dwCreationFlags,
 										NULL, NULL, &si, &win32ProcessInfo_ ) ? true : false;
 
+		int i = GetLastError();
+
 		delete [] tmp;
 	}
 	else {

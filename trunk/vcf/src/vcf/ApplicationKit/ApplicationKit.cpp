@@ -152,6 +152,9 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( ToolbarItem );
 		//REGISTER_CLASSINFO_EXTERNAL( ToolbarDock );
 		REGISTER_CLASSINFO_EXTERNAL( StatusBar );
+		REGISTER_CLASSINFO_EXTERNAL( ImageComponent );
+		REGISTER_CLASSINFO_EXTERNAL( ImageList );
+		
 
 
 

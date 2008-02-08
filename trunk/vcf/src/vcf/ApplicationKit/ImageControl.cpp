@@ -151,6 +151,62 @@ void ImagePropertyEditor::edit()
 }
 
 
+ImageComponent::ImageComponent():
+	UIComponent(),
+	image_(NULL)
+{
+	delete image_;
+}
+
+ImageComponent::~ImageComponent()
+{
+
+}
+
+
+ImageFilenameString ImageComponent::getFilename()
+{
+	if ( NULL == image_ ) {
+		return "";
+	}
+
+	return filename_;
+}
+
+
+void ImageComponent::setFilename( const ImageFilenameString& filename )
+{
+	if ( filename_ != filename ) {
+		filename_ = filename;
+		if ( NULL != image_ ) {
+			delete image_;
+			image_ = NULL;
+			filename_ = "";
+		}
+		
+		if ( !filename_.empty() ) {
+			image_ = GraphicsToolkit::createImage( filename_ );
+		}
+	}
+}
+
+bool ImageComponent::getTransparent()
+{
+	if ( NULL == image_ ) {
+		return false;
+	}
+
+	return image_->isTransparent();
+}
+
+void ImageComponent::setTransparent( const bool& transparent )
+{
+	if ( NULL != image_ ) {
+		image_->setIsTransparent( transparent );
+	}
+}
+
 /**
 $Id$
 */
+

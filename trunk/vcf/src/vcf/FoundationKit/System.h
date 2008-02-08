@@ -211,8 +211,18 @@ public:
 	*/
 	static String findResourceDirectory();
 
+	/**
+	Finds the resource for the specific locale. The generic findResourceDirectory()
+	assumes the locale that is currently set for the thread. The starting point
+	is the programs executable path.
+	*/
 	static String findResourceDirectory( Locale* locale );
 
+
+	/**
+	This will find the resource directory using fileName as the starting point and
+	the specified locale.
+	*/
 	static String findResourceDirectory( const String& fileName, Locale* locale );
 
 	static String findResourceDirectoryForExecutable( const String& fileName );
