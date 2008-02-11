@@ -46,31 +46,7 @@ public:
 
     virtual uint32 getHeight();
 
-	/**
-	@delegate ImageSizeChanged this is fired when the image's dimensions are changed
-	by calling setSize().
-	@event ImageEvent
-	@eventtype IMAGE_EVENT_WIDTH_CHANGED
-	@eventtype IMAGE_EVENT_HEIGHT_CHANGED
-	@see setSize()
-	*/
-    DELEGATE(ImageDelegate,ImageSizeChanged);
-
-	/**
-	*This macro creates a method for adding a listener to the AbstractImage's ImageSizeChangedHandler events
-	*/
-	virtual void addImageSizeChangedHandler( EventHandler* handler ) {
-		ImageSizeChanged += handler;
-	}
-
-	/**
-	*This macro creates a method for removing a listener to the AbstractImage's ImageSizeChangedHandler events
-	*/
-	virtual void removeImageSizeChangedHandler( EventHandler* handler ) {
-		ImageSizeChanged.remove( handler );
-	}
-
-    virtual GraphicsContext* getImageContext();
+	virtual GraphicsContext* getImageContext();
 
 	//virtual ImageBits* getImageBits();
 

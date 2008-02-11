@@ -24,6 +24,7 @@ where you installed the VCF.
 
 #include "vcf/GraphicsKit/Color.h"
 
+#include "vcf/GraphicsKit/ImageEvent.h"
 #include "vcf/GraphicsKit/Image.h"
 
 #include "vcf/GraphicsKit/GraphicsToolKit.h"
@@ -45,7 +46,6 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/Font.h"
 #include "vcf/GraphicsKit/FontPeer.h"
 
-#include "vcf/GraphicsKit/ImageEvent.h"
 #include "vcf/GraphicsKit/PrintContext.h"
 #include "vcf/GraphicsKit/Printable.h"
 #include "vcf/GraphicsKit/InvalidImage.h"

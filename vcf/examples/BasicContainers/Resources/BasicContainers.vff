@@ -10,7 +10,16 @@ object BasicContainers : VCF::Window
 	object stdContainer2 : VCF::ColumnLayoutContainer
 	end
 
-	object clContainer : VCF::HorizontalLayoutContainer
+	object hlContainer : VCF::HorizontalLayoutContainer
+		numberOfColumns = 3
+		maxRowHeight = 35
+		rowSpacerHeight = 10
+		widths[0] = 80
+		widths[1] = 80
+		widths[2] = 80
+
+		tweenWidths[0] = 10
+		tweenWidths[1] = 25
 	end
 
 	object tabs : VCF::TabbedPages
@@ -61,17 +70,92 @@ object BasicContainers : VCF::Window
 			title = 'Anchoring with StandardContainer'
 			//container = @stdContainer2
 			
+			width = 100
+			object lbl5 : VCF::Label
+				height = 50
+				width = 100
+				top = 30
+				left = 40				
+				transparent = false
+				color.red = 1.0
+				color.green = 0.0
+				color.blue = 0.0
+				anchor = [AnchorLeft,AnchorRight]
+			end
 		end
 
 		object tab3 : VCF::TabSheet 
-			title = 'Container class: ColumnLayoutContainer'
-			container = @clContainer
-			
+			title = 'ColumnLayoutContainer container'
+			//container = @clContainer
+
 		end
 
 		object tab4 : VCF::TabSheet 
-			title = 'Container class: HorizontalLayoutContainer'
+			title = 'HorizontalLayoutContainer container'
+			container = @hlContainer
 
+			object lbl6 : VCF::Label
+				height = 50
+				caption = '1'
+				transparent = false
+				color.red = 1.0
+				color.green = 0.0
+				color.blue = 0.0
+			end
+
+			object lbl7 : VCF::Label
+				height = 50
+				caption = '2'
+				transparent = false
+				color.red = 1.0
+				color.green = 0.0
+				color.blue = 1.0
+			end
+
+			object lbl8 : VCF::Label
+				height = 100
+				caption = '3'
+				transparent = false
+				color.red = 1.0
+				color.green = 1.0
+				color.blue = 0.0
+			end
+
+			object lbl9 : VCF::Label
+				height = 100
+				caption = '4'
+				transparent = false
+				color.red = 1.0
+				color.green = 0.80
+				color.blue = 0.230
+			end
+
+			object lbl10 : VCF::Label
+				height = 100
+				caption = '5'
+				transparent = false
+				color.red = 1.0
+				color.green = 0.60
+				color.blue = 1.0
+			end
+
+			object lbl11 : VCF::Label
+				height = 23
+				caption = '6'
+				transparent = false
+				color.red = 0.0
+				color.green = 0.0
+				color.blue = 1.0
+			end
+
+			object lbl12 : VCF::Label
+				height = 23
+				caption = '7'
+				transparent = false
+				color.red = 0.50
+				color.green = 1.0
+				color.blue = 0.60
+			end
 			
 		end
 	end

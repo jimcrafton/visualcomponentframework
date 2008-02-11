@@ -879,19 +879,19 @@ public:
 		TabbedPages* pages = new TabbedPages();
 		add( pages, AlignClient );
 
-		pages->addNewPage( "System Colors" )->getPageComponent()->getContainer()->add( new SysColorsPanel(), AlignClient );
+		pages->addNewPage( "System Colors" )->getTabSheet()->getContainer()->add( new SysColorsPanel(), AlignClient );
 
-		pages->addNewPage( "Buttons" )->getPageComponent()->getContainer()->add( new ButtonsPanel(), AlignClient );
+		pages->addNewPage( "Buttons" )->getTabSheet()->getContainer()->add( new ButtonsPanel(), AlignClient );
 
-		pages->addNewPage( "Edges and Stuff" )->getPageComponent()->getContainer()->add( new EdgesPanel(), AlignClient );
+		pages->addNewPage( "Edges and Stuff" )->getTabSheet()->getContainer()->add( new EdgesPanel(), AlignClient );
 
-		pages->addNewPage( "Tabs" )->getPageComponent()->getContainer()->add( new TabsPanel(), AlignClient );
+		pages->addNewPage( "Tabs" )->getTabSheet()->getContainer()->add( new TabsPanel(), AlignClient );
 
-		pages->addNewPage( "Sliders" )->getPageComponent()->getContainer()->add( new SlidersPanel(), AlignClient );
+		pages->addNewPage( "Sliders" )->getTabSheet()->getContainer()->add( new SlidersPanel(), AlignClient );
 
-		pages->addNewPage( "Progress Bars" )->getPageComponent()->getContainer()->add( new ProgressPanel(), AlignClient );
+		pages->addNewPage( "Progress Bars" )->getTabSheet()->getContainer()->add( new ProgressPanel(), AlignClient );
 
-		pages->addNewPage( "Theme Metrics" )->getPageComponent()->getContainer()->add( new ThemeSizesPanel(), AlignClient );
+		pages->addNewPage( "Theme Metrics" )->getTabSheet()->getContainer()->add( new ThemeSizesPanel(), AlignClient );
 	}
 
 	virtual ~ThemesWindow(){

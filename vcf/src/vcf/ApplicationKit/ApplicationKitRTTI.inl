@@ -125,7 +125,7 @@ _property_( double, "leftBorderWidth", getLeftBorderWidth, setLeftBorderWidth, "
 _class_rtti_end_
 
 _class_rtti_(ColumnLayoutContainer, "VCF::StandardContainer", COLUMNLAYOUTCONTAINER_CLASSID)
-//_property_array_( int, "columnWidths", getColumnWidth,setColumnWidth,addColumnWidth,insertColumnWidth,removeColumnWidth,getColumnCount, "" )				
+_property_array_( int, "columnWidths", getColumnWidth,setColumnWidth,insertColumnWidth,removeColumnWidth,getColumnCount, "" )
 _class_rtti_end_
 
 _class_rtti_(HorizontalLayoutContainer, "VCF::StandardContainer", HORIZONTALLAYOUTCONTAINER_CLASSID)
@@ -136,6 +136,8 @@ _property_( bool, "maximizeLastRow", getMaximizeLastRow, setMaximizeLastRow, "" 
 _property_( bool, "equalizeHeights", getEqualizeHeights, setEqualizeHeights, "" );
 _property_( bool, "averageHeights", getAverageHeights, setAverageHeights, "" );
 _property_( bool, "keepControlsWidth", getKeepControlsWidth, setKeepControlsWidth, "" );
+_property_array_( double, "widths", getColumnWidth,setColumnWidth,insertColumnWidth,removeColumnWidth,getNumberOfColumns, "" )
+_property_array_( double, "tweenWidths", getColumnTweenWidth,setColumnTweenWidth,insertColumnTweenWidth,removeColumnTweenWidth,getColumnTweenCount, "" )
 _class_rtti_end_
 
 
