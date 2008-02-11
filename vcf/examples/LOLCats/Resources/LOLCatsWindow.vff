@@ -36,16 +36,25 @@ object LOLCats  : VCF::Window
 		object refreshBtn : VCF::ToolbarItem
 			imageIndex = 0
 			caption = 'Refresh'
+			delegates
+				ItemClicked = [LOLCatsApp@LOLCatsApp::onRefresh]
+			end
 		end
 
 		object quitBtn : VCF::ToolbarItem
 			imageIndex = 1
 			caption = 'Quit'
+			delegates
+				ItemClicked = [LOLCatsApp@LOLCatsApp::onQuit]
+			end
 		end
 
 		object homeBtn : VCF::ToolbarItem
 			imageIndex = 2
 			caption = 'Home'
+			delegates
+				ItemClicked = [LOLCatsApp@LOLCatsApp::onHome]
+			end
 		end
 
 		object sep : VCF::ToolbarItem
@@ -89,5 +98,8 @@ object LOLCats  : VCF::Window
 	object timer : VCF::TimerComponent
 		timeoutInterval = 600000 //10 minutes
 		active = true
+		delegates
+			TimerPulse = [LOLCatsApp@LOLCatsApp::update]
+		end
 	end
 end
