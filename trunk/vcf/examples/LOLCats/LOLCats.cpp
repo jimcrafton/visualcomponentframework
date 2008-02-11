@@ -84,6 +84,12 @@ public:
 		updateFreq = 10 * 60 * 1000; //10 minutes
 		lolcatsFile = System::getCurrentWorkingDirectory();
 		lolcatsFile += "lolcats.html";
+
+		addCallback( new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::onHome), "LOLCatsApp::onHome" );
+		addCallback( new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::update), "LOLCatsApp::update" );
+		addCallback( new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::onUpdateFreqChanged), "LOLCatsApp::onUpdateFreqChanged" );
+		addCallback( new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::onRefresh), "LOLCatsApp::onRefresh" );
+		addCallback( new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::onQuit), "LOLCatsApp::onQuit" );
 	}
 
 	virtual bool initRunningApplication(){
@@ -167,12 +173,10 @@ public:
 		html += "<html><body style=\"background-color: #F7F7F7\">\n";
 
 		XmlDocument doc;
-		doc.setXML(xml);
-		XPathIterator xp(doc);
-		Dictionary nsDict;
-		nsDict["media"] = "http://search.yahoo.com/mrss";
-		xp.registerNamespaces(nsDict);	
+		doc.setXML(xml);		
 
+		XPathIterator xp(doc);
+		
 		XPathNodeIterator it = xp.selectNodes("//media:content");
 		while ( it != xp.end() && !it.isNull() ) {
 			const XmlNode& n = *it;		
@@ -207,23 +211,7 @@ public:
 	void mainWindowLoaded( ComponentEvent* e )	{
 		LOLCatsWindow* window = (LOLCatsWindow*)e->getSource();
 
-		window->timer->TimerPulse += 
-			new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::update, "LOLCatsApp::update" );
-
-
-		window->updateFreqEdit->getTextModel()->ModelChanged +=
-			new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::onUpdateFreqChanged, "LOLCatsApp::onUpdateFreqChanged" );
-
-		
-		window->refreshBtn->ItemClicked += 
-			new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::onRefresh, "LOLCatsApp::onRefresh" );
-
-		window->quitBtn->ItemClicked += 
-			new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::onQuit, "LOLCatsApp::onQuit" );
-
-		window->homeBtn->ItemClicked += 
-			new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::onHome, "LOLCatsApp::onHome" );
-		
+		window->updateFreqEdit->getTextModel()->ModelChanged += getCallback( "LOLCatsApp::onUpdateFreqChanged" );
 
 		statusBar = window->statusBar;
 		browser = window->browser;
