@@ -131,8 +131,8 @@ void Application::main()
 		else{//enter the main loop
 
 			Application* runningInstance = Application::getRunningInstance();
-			if ( runningInstance->applicationName_.empty() ) {
-				runningInstance->applicationName_ = runningInstance->getClassName();
+			if ( runningInstance->getName().empty() ) {
+				runningInstance->setName( runningInstance->getClassName() );
 			}
 
 			//init the running instance

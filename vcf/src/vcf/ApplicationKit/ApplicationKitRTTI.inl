@@ -250,6 +250,8 @@ _class_rtti_end_
 
 
 _class_rtti_(ToolbarItem, "VCF::Item", TOOLBARITEM_CLASSID)
+_delegate_(ButtonDelegate, ItemClicked )
+_delegate_(EventDelegate, ItemUpdate )
 _property_( String, "caption", getCaption, setCaption, "" )
 _property_( String, "tooltip", getTooltip, setTooltip, "" )
 _property_( bool, "separator", isSeparator, setAsSeparator, "" )

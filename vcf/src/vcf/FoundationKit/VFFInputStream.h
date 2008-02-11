@@ -123,20 +123,29 @@ public:
 		return false;
 	}
 
+	static void setRootComponent( Component* component ) {
+		VFFInputStream::rootComponent_ = component;
+	}
 protected:
 
 	class DeferredPropertySetter {
 	public:
-		DeferredPropertySetter( const VCF::String& propertyVal, const VCF::String& propertyName, VCF::Object* source ) {
-			propertyVal_ = propertyVal;
-			propertyName_ = propertyName;
-			source_ = source;
+		DeferredPropertySetter( const VCF::String& pv, const VCF::String& pn, VCF::Object* src ) {
+			propertyVal = pv;
+			propertyName = pn;
+			source = src;
 		}
 
-		virtual ~DeferredPropertySetter(){};
-		VCF::String propertyVal_;
-		VCF::String propertyName_;
-		VCF::Object* source_;
+		VCF::String propertyVal;
+		VCF::String propertyName;
+		VCF::Object* source;
+	};
+
+	class DeferredDelegateSetter {
+	public:
+		VCF::Object* source;
+		VCF::String delegateName;		
+		std::vector<String> callbackIds;
 	};
 
 	VCF::InputStream* stream_;
@@ -162,11 +171,14 @@ protected:
 	Object* createClassInstance( const String& className, const String& classID, const String& fallbackClassName );
 
 	std::vector<DeferredPropertySetter*> deferredProperties_;
+	std::vector<DeferredDelegateSetter*> deferredDelegates_;
+	
 	VCF::Component* topLevelComponent_;
 	bool atTopLevel_;
 	int32 componentInputLevel_;
 	bool topLevelControlVisibility_;
 	bool setDesignMode_;
+	static Component* rootComponent_;
 };
 
 

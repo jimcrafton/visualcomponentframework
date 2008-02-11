@@ -18,7 +18,7 @@ using namespace VCF;
 AbstractApplication::AbstractApplication():
 	applicationPeer_(NULL)
 {
-
+	VFFInputStream::setRootComponent( this );
 }
 
 AbstractApplication::~AbstractApplication()
@@ -98,11 +98,6 @@ void AbstractApplication::addAcceleratorKey( const VirtualKeyCode& keyCode, cons
 void AbstractApplication::addAcceleratorKey( AcceleratorKey* accelerator )
 {
 	UIToolkit::registerAccelerator( accelerator );
-}
-
-void AbstractApplication::setName( const String& name )
-{
-	applicationName_ = name;
 }
 
 
