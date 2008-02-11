@@ -225,6 +225,8 @@ public:
 	conditions it will return 0.
 	*/
 	static uint32 objectAllocationCount();
+
+	uint32 totalAllocatedObjectMemory();
 #ifdef _VCF_DEBUG_NEW
 	public:
 

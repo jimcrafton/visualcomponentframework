@@ -132,7 +132,7 @@ public:
 		return columnWidths_[i];
 	}
 
-	void setColumnWidth( const uint32& i, int val, bool addMissingValues ) {
+	void setColumnWidth( const uint32& i, const int& val, bool addMissingValues ) {
 
 		if ( addMissingValues && ((i+1) > columnWidths_.size()) ) {
 			size_t missing = (i+1) - columnWidths_.size();
@@ -146,12 +146,11 @@ public:
 	}
 
 
-	void addColumnWidth( int val ){
-		columnWidths_.push_back( val );
-		columnCount_ = columnWidths_.size();
+	void addColumnWidth( const int& val ){
+		insertColumnWidth( columnWidths_.size(), val );
 	}
 
-	void insertColumnWidth( const uint32& i, int val ){
+	void insertColumnWidth( const uint32& i, const int& val ){
 		columnWidths_.insert( columnWidths_.begin() + i, val );
 		columnCount_ = columnWidths_.size();
 	}

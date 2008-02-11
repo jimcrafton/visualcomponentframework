@@ -30,6 +30,8 @@ public:
 		Toolbar* tb = new Toolbar();
 		tb->setName( "Toolbar1" );
 		tb->setHeight( 25 );
+		tb->setShowButtonCaptions( false );
+
 		add( tb, AlignTop );
 
 		ImageList* il = new ImageList();
@@ -118,6 +120,7 @@ public:
 
 
 		ToolbarItem* newTBitem = tb->addToolBarButton( "New" );
+		newTBitem->setImageIndex( 0 );
 		newTBitem->setTooltip( "New Item" );
 
 		tb->addToolBarButton( "" )->setAsSeparator();

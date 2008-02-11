@@ -182,6 +182,16 @@ public:
 	virtual ~Image(){};
 
 	/**
+	@delegate ImageSizeChanged this is fired when the image's dimensions are changed
+	by calling setSize().
+	@event ImageEvent
+	@eventtype IMAGE_EVENT_WIDTH_CHANGED
+	@eventtype IMAGE_EVENT_HEIGHT_CHANGED
+	@see setSize()
+	*/
+    DELEGATE(ImageDelegate,ImageSizeChanged);
+
+	/**
 	returns the type of image that this Image instance represents.
 	The integer value also indicates the number of color channels
 	the Image has. Currently there are only 2 types, full color
@@ -311,9 +321,6 @@ public:
 
     virtual uint32 getHeight()=0;
 
-    virtual void addImageSizeChangedHandler( EventHandler* handler ) = 0;
-
-    virtual void removeImageSizeChangedHandler( EventHandler* handler ) = 0;
 
 	//virtual ImageBits* getImageBits() = 0;
 

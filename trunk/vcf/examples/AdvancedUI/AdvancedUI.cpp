@@ -112,7 +112,7 @@ public:
 
 
 
-class CategoryItem : public DefaultTreeItem {
+class CategoryItem : public TreeItem {
 public:
 	CategoryItem() {
 
@@ -124,7 +124,7 @@ public:
 
 	virtual void paint( GraphicsContext* ctx, Rect* paintRect ) {
 
-		DefaultTreeItem::paint( ctx, paintRect );
+		//DefaultTreeItem::paint( ctx, paintRect );
 
 		int gcs = ctx->saveState();
 		ctx->getCurrentFont()->setPointSize( 10 );

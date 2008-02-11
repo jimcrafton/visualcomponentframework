@@ -103,6 +103,7 @@ public:
 		if ( addMissingValues ) {
 			if ( missing > 0 ) {
 				columns_.resize( missing + columns_.size() );
+				columnTweens_.resize( columns_.size()-1, 0.0 );
 			}
 		}
 		
@@ -113,7 +114,13 @@ public:
 		return columns_[index];
 	}
 	
-	//void insertColumn
+	void insertColumnWidth( const uint32& index, const double& val ) {
+		columns_.insert( columns_.begin() + index, val );
+	}
+
+	void removeColumnWidth( const uint32& index ) {
+		columns_.erase( columns_.begin() + index );
+	}
 
 
 
@@ -131,6 +138,19 @@ public:
 
 	double getColumnTweenWidth( const uint32& index ) const {
 		return columnTweens_[index];
+	}
+
+
+	void insertColumnTweenWidth( const uint32& index, const double& val ) {
+		columnTweens_.insert( columnTweens_.begin() + index, val );
+	}
+
+	void removeColumnTweenWidth( const uint32& index ) {
+		columnTweens_.erase( columnTweens_.begin() + index );
+	}
+	
+	uint32 getColumnTweenCount() const {
+		return columnTweens_.size();
 	}
 
 	void setMaxRowHeight( const double& val ) {

@@ -257,6 +257,30 @@ uint32 Object::objectAllocationCount()
 	return 0;
 }
 
+uint32 Object::totalAllocatedObjectMemory()
+{
+
+#ifdef _VCF_DEBUG_NEW
+	std::map<uint32,Object::DebugInfo>::const_iterator it = Object::debugAllocationMap.begin();
+	uint32 totmem = 0;
+	while ( it != Object::debugAllocationMap.end ()  ) {
+		const DebugInfo& info = it->second;
+
+		Object* o = (Object*)info.objAddress_;
+		if ( NULL != o ) {
+			totmem += maxVal<>( info.objectAllocationSize_, (uint32)o->sizeOf() );
+		}
+		else {
+			totmem += info.objectAllocationSize_;
+		}
+
+		it ++;
+	}
+
+	return totmem;
+#endif
+	return 0;
+}
 
 /**
 $Id$
