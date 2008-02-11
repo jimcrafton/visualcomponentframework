@@ -52,20 +52,12 @@ a requirement in the VCF. It is entirely possible to use the VCF <b>without</b> 
 *the AbstractApplication functions like postEvent() or getAccelerator() do is to
 *call the approriate UIToolkit functions, so no implmentation code is duplicated.
 */
-class APPLICATIONKIT_API AbstractApplication : public ObjectWithCallbacks {
+class APPLICATIONKIT_API AbstractApplication : public Component {
 public:
 	AbstractApplication();
 
 	virtual ~AbstractApplication();
 
-	/**
-	*allows for the use of programmable, user friendly names for Applications
-	*/
-	String getName() {
-		return applicationName_;
-	}
-
-	virtual void setName( const String& name );
 	/**
 	*This happens after the Application object is constructed, after the initialize() method,
 	*and just before the app's run() method is called
@@ -167,7 +159,6 @@ public:
 
 protected:
 	ApplicationPeer* applicationPeer_;
-	String applicationName_;
 private:
 };
 

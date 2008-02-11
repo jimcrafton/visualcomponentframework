@@ -520,6 +520,17 @@ public :
 	void setSource( Object* source ) {
 		source_ = source;
 	}
+
+	void setSource( const Object* source ){
+		//allowing for this here is kind of icky
+		//maybe there is a better way to handle it???
+		source_ = const_cast<Object*>(source);
+	};
+
+	Object* getSource() {
+		return source_;
+	}
+
 protected:
 	String delegateClassName_;
 	String delegateName_;

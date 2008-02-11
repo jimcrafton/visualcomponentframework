@@ -250,22 +250,29 @@ uint32 Component::getComponentCount()
 Component* Component::findComponent( const String& componentName, const bool& recursive )
 {
 	Component* result = NULL;
-	//this is very slow !! for the moment !
-	std::vector<Component*>::iterator it = components_.begin();
-	while ( it != components_.end() ){
-		Component* child = *it;
-		if ( child->getName() == componentName ){
-			result = child;
-			break;
-		}
-		else if (recursive) {
-			//call the child component's findComponent
-			result = child->findComponent( componentName, recursive );
-			if ( NULL != result ) {
+
+	if ( componentName == this->getName() ) {
+		result = this;
+	}
+	else {
+		
+		//this is very slow !! for the moment !
+		std::vector<Component*>::iterator it = components_.begin();
+		while ( it != components_.end() ){
+			Component* child = *it;
+			if ( child->getName() == componentName ){
+				result = child;
 				break;
 			}
+			else if (recursive) {
+				//call the child component's findComponent
+				result = child->findComponent( componentName, recursive );
+				if ( NULL != result ) {
+					break;
+				}
+			}
+			++ it;
 		}
-		++ it;
 	}
 
 	return result;

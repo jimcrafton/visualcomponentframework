@@ -14,6 +14,9 @@ where you installed the VCF.
 
 using namespace VCF;
 
+Component* VFFInputStream::rootComponent_ = NULL;
+
+
 VariantData getKeyFromIndex( const String& index, int token ) ;
 
 static Dictionary componentConstants;
@@ -145,6 +148,8 @@ void VFFInputStream::processDelegateAsignment( const VCF::VCFChar& token, const 
 
 				parser_->nextToken();
 
+				std::vector<String> callbacks;
+
 				while ( ']' != parser_->getToken() ) {
 					value = "";
 					while ( (',' != parser_->getToken()) && (']' != parser_->getToken()) ) {
@@ -160,7 +165,15 @@ void VFFInputStream::processDelegateAsignment( const VCF::VCFChar& token, const 
 					String functionSrcID = value.substr(0,pos);
 					String functionPtr = value.substr(pos+1,value.size()-(pos+1));
 
+					callbacks.push_back( value );
+				}
 
+				if ( !callbacks.empty() ) {
+					DeferredDelegateSetter* delegateSetter = new DeferredDelegateSetter();
+					delegateSetter->callbackIds = callbacks;
+					delegateSetter->delegateName = currentSymbol;
+					delegateSetter->source = delegateProperty->getSource();
+					deferredDelegates_.push_back( delegateSetter );
 				}
 			}
 		}
@@ -635,11 +648,11 @@ void VFFInputStream::assignDeferredProperties( Component* component )
 		std::vector<DeferredPropertySetter*>::iterator it = deferredProperties_.begin();
 		while ( it != deferredProperties_.end() ) {
 			DeferredPropertySetter* dps = *it;
-			Class* clazz = dps->source_->getClass();
-			Property* prop = clazz->getProperty( dps->propertyName_ );
+			Class* clazz = dps->source->getClass();
+			Property* prop = clazz->getProperty( dps->propertyName );
 			if ( NULL != prop ) {
 				Component* foundComponent = NULL;
-				if ( true == component->bindVariable( &foundComponent, dps->propertyVal_ ) ) {
+				if ( true == component->bindVariable( &foundComponent, dps->propertyVal ) ) {
 					VariantData data;
 					data = foundComponent;
 					prop->set( &data );
@@ -650,6 +663,45 @@ void VFFInputStream::assignDeferredProperties( Component* component )
 			it ++;
 		}
 		deferredProperties_.clear();
+
+
+		std::vector<DeferredDelegateSetter*>::iterator it2 = deferredDelegates_.begin();
+		while ( it2 != deferredDelegates_.end() ) {
+			DeferredDelegateSetter* dds = *it2;
+			Class* clazz = dds->source->getClass();
+			DelegateProperty* delegateProperty = clazz->getDelegate( dds->delegateName );
+			if ( NULL != delegateProperty ) {
+				std::vector<String>::iterator cbIt = dds->callbackIds.begin();
+				while ( cbIt != dds->callbackIds.end() ) {
+					const String& s = *cbIt;
+					int pos = s.find( "@" );
+					String functionSrcID = s.substr(0,pos);
+					String functionPtr = s.substr(pos+1,s.size()-(pos+1));
+
+					Component* source = 
+						component->findComponent( functionSrcID, true );
+					if ( NULL == source ) {
+						if ( NULL != VFFInputStream::rootComponent_ ) {
+							source = VFFInputStream::rootComponent_->findComponent( functionSrcID, true );
+						}
+					}
+
+					if ( NULL != source ) {
+						CallBack* cb = source->getCallback( functionPtr );
+
+						if ( NULL != cb ) {
+							delegateProperty->getDelegateInstance()->add( cb );
+						}
+					}
+
+					++cbIt;
+				}
+			}
+			delete dds;
+			dds = NULL;
+			++it2;
+		}
+		deferredDelegates_.clear();
 	}
 }
 

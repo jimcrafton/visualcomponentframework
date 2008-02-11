@@ -234,6 +234,14 @@ void Class::setSource( const Object* source )
 		interfaceClass->setSource( source );
 		interfaces++;
 	}
+
+	std::map<String, DelegateProperty*>::iterator delegates = delegates_.begin();
+	while ( delegates != delegates_.end() ){
+		DelegateProperty* delegateProp = delegates->second;
+		delegateProp->setSource( source );
+		delegates++;
+	}
+
 }
 
 void Class::setSource( Object* source )

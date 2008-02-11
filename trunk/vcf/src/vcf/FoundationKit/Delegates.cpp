@@ -152,6 +152,14 @@ void AsyncResult::doWork()
 }
 
 
+void ObjectWithCallbacks::addCallback( CallBack* cb, const String& cbName )
+{
+	if ( cb->name.empty() ) {
+		cb->name = cbName;
+	}
+
+	addCallback( cb );
+}
 
 
 void ObjectWithCallbacks::addCallback( CallBack* cb )

@@ -25,7 +25,6 @@ LibraryApplication::LibraryApplication():
 	applicationPeer_ = UIToolkit::createApplicationPeer();
 	applicationPeer_->setApplication( this );
 
-	applicationName_ = "";
 /*
 #if defined( VCF_WIN ) && defined ( VCF_MSC )
 	//load the BlacBox error trapper
@@ -54,11 +53,11 @@ LibraryApplication::~LibraryApplication()
 
 void LibraryApplication::setName( const String& name )
 {
-	applicationName_ = name;
+	Component::setName( name );
 
-	std::map<String,LibraryApplication*>::iterator found = 	LibraryApplication::namedLibraryAppMap->find( applicationName_ );
+	std::map<String,LibraryApplication*>::iterator found = 	LibraryApplication::namedLibraryAppMap->find( getName() );
 	if ( found != LibraryApplication::namedLibraryAppMap->end() ) {
-		(*LibraryApplication::namedLibraryAppMap)[ applicationName_ ] = this;
+		(*LibraryApplication::namedLibraryAppMap)[ getName() ] = this;
 	}
 }
 

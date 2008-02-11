@@ -93,6 +93,7 @@ public:
 
 
 class Delegate;
+class ObjectWithCallbacks;
 
 class FOUNDATIONKIT_API CallBack : public Object, public FunctionTypeInfo {
 public:
@@ -125,6 +126,7 @@ public:
 	void addToSource( Object* source );
 
 	friend class Delegate;
+	friend class ObjectWithCallbacks;
 protected:	
 
 	virtual ~CallBack(){};
@@ -231,6 +233,9 @@ public:
 	virtual ~ObjectWithCallbacks();
 
 	void addCallback( CallBack* cb );
+	
+	void addCallback( CallBack* cb, const String& cbName );
+
 
 	void removeCallback( CallBack* cb );
 
