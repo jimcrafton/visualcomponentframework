@@ -1060,6 +1060,23 @@ XPathIterator::XPathIterator( const XmlDocument& doc ):
 	BaseT(),xpathObj_(NULL)
 {
 	attach( xmlXPathNewContext( doc.get() ) );
+	
+	std::vector<XmlNamespace> namespaces;
+	doc.getRoot().getNamespaceList(namespaces);
+
+	if ( !namespaces.empty() ) {
+		Dictionary nsDict;
+		std::vector<XmlNamespace>::iterator it = namespaces.begin();
+		while ( it != namespaces.end() ) {
+			const XmlNamespace& ns = *it;
+			
+			nsDict[ns.getPrefix()] = ns.getURI();
+			
+			++it;
+		}
+		
+		registerNamespaces(nsDict);	
+	}
 }
 
 void XPathIterator::freeResource(xmlXPathContextPtr res)
