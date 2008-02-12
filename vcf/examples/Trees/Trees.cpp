@@ -157,7 +157,8 @@ public:
 		item->getFont()->setName( "Times New Roman" );
 
 
-		treeCtrl->insertItem( item, "Hello Dolly!" );
+		TreeItem* item2 = treeCtrl->insertItem( item, "Hello Dolly!" );
+		item2->setImageIndex( 1 );
 
 		MyTreeItem* myItem = new MyTreeItem();
 		treeCtrl->insertItem( item, myItem );

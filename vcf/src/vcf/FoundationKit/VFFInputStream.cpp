@@ -1115,6 +1115,13 @@ bool VFFInputStream::getComponentConstant( const String& name, String& value )
 
 		value += name.substr(4,name.size()-4);
 
+		if ( !File::exists(value) ) {
+			//revert back, let the underlying object attempt to 
+			//deal with this. This will work perfectly for 
+			//images
+			value = name;
+		}
+
 		result = true;
 	}
 	else {

@@ -690,6 +690,7 @@ _property_object_( TreeModel, "treeModel", getTreeModel, setTreeModel, "" );
 _delegate_(ItemDelegate, ItemSelected );
 _delegate_(ItemDelegate, ItemExpanded );
 _delegate_(ItemDelegate, ItemStateChangeRequested );
+_property_object_( ImageList, "imageList", getImageList, setImageList, "" );
 _class_rtti_end_
 
 
@@ -699,6 +700,7 @@ _property_object_( TreeModel, "treeModel", getTreeModel, setTreeModel, "" );
 _delegate_(ItemDelegate, ItemSelected );
 _delegate_(ItemDelegate, ItemExpanded );
 _delegate_(ItemDelegate, ItemStateChangeRequested );
+_property_object_( ImageList, "imageList", getImageList, setImageList, "" );
 _class_rtti_end_
 
 /*
