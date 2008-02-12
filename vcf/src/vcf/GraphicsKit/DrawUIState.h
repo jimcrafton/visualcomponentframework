@@ -185,6 +185,41 @@ public:
 	};	
 };
 
+
+
+enum BackgroundColors {
+	bgShadow = 0,
+	bgFace,
+	bgHighlight,
+	bgActiveCaption,
+	bgActiveBorder,
+	bgDesktop,
+	bgCaptionText,
+	bgSelection,
+	bgSelectionText,
+	bgInactiveBorder,
+	bgInactiveCaption,
+	bgToolTip,
+	bgToolTipText,
+	bgMenu,
+	bgMenuText,
+	bgWindow,
+	bgWindowText,
+	bgWindowFrame,
+	bgTab,
+	bgControl,
+	bgStatus,
+	bgToolbar,
+	bgScrollbar,
+	bgScrollBarThumb,
+	bgScrollBarBtn,
+	bgMenuItem,
+	bgToolbarButton,
+	bgHeader,
+	bgHeaderItem,
+	bgProgress,
+};
+
 /**
 \class DrawUIState DrawUIState.h "vcf/GraphicsKit/DrawUIState.h"
 The DrawUIState is a utility class to make it easy to indicate the user interface state of 
@@ -259,17 +294,20 @@ protected:
 	int32 state_;
 };
 
+
 /**
 \class BackgroundState DrawUIState.h "vcf/GraphicsKit/DrawUIState.h"
 */
 class BackgroundState : public DrawUIState {
 public:
+
+	
 	
 	BackgroundState(): colorType_(0) {};	
 	
 	
 	/**
-	See the SYS_COLOR_XXX constants in Color.h
+	See the SYS_COLOR_XXX constants in Color.h or BackgroundColors
 	*/
 	int colorType_;
 	

@@ -9,8 +9,9 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ControlsKit.h"
-#include "StatusBar.h"
+#include "vcf/ApplicationKit/StatusBar.h"
 #include "vcf/ApplicationKit/EtchedBorder.h"
+#include "vcf/GraphicsKit/DrawUIState.h"
 
 using namespace VCF;
 
@@ -186,7 +187,16 @@ Control* StatusBar::getStatusPaneControl( const uint32& index )
 
 void StatusBar::paint( GraphicsContext* ctx )
 {
-	CustomControl::paint( ctx );
+	//CustomControl::paint( ctx );
+
+	Rect innerBounds = getClientBounds( true );
+
+	BackgroundState bkg;
+	bkg.setEnabled( isEnabled() );
+	bkg.setActive( isActive() );
+	bkg.colorType_ = SYSCOLOR_FACE;	
+			
+	ctx->drawThemeBackground( &innerBounds, bkg );
 
 	getContainer()->paintChildren( ctx );
 }

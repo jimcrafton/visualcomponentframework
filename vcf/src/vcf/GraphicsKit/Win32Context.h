@@ -253,162 +253,60 @@ public:
 	*/
 	virtual void releaseHandle();
 
-
-	/**
-	*
-	*
-	*/
 	virtual void setTextAlignment( const bool& alignTobaseline );
 
-	/**
-	*
-	*
-	*/
 	virtual bool isTextAlignedToBaseline();
 
-	/**
-	*
-	*
-	*/
 	virtual void setClippingPath( Path* clippingPath );
 
-	/**
-	*
-	*
-	*/
 	virtual void setClippingRect( Rect* clipRect );
 
-
-	/**
-	*
-	*/
 	virtual void drawThemeSelectionRect( Rect* rect, DrawUIState& state );
 
-	/**
-	*
-	*/
 	virtual void drawThemeFocusRect( Rect* rect, DrawUIState& state );
 
-	/**
-	*
-	*/
 	virtual void drawThemeButtonRect( Rect* rect, ButtonState& state, Rect* captionRect=NULL );
 
-	/**
-	*
-	*/
 	virtual void drawThemeButtonFocusRect( Rect* rect );
 
-	/**
-	*
-	*/
 	virtual void drawThemeCheckboxRect( Rect* rect, ButtonState& state );
 
-	/**
-	*
-	*/
 	virtual void drawThemeRadioButtonRect( Rect* rect, ButtonState& state );
 
-	/**
-	*
-	*/
 	virtual void drawThemeComboboxRect( Rect* rect, ButtonState& state );
 
-	/**
-	*
-	*/
 	virtual void drawThemeScrollButtonRect( Rect* rect, ScrollBarState& state );
 
-	/**
-	* Draws a button that is used to open up more details, for example
-	* the button that opens up a tree node to reveal it's children, that is compliant
-	* with the native windowing systems default look and feel.
-	* On Win32 this is usually represented by the "+" and "-" look as found on
-	* the tree controls, while on OSX it is the little triangles
-	*/
 	virtual void drawThemeDisclosureButton( Rect* rect, DisclosureButtonState& state );
 
-	/**
-	* Draws a tab, the part of the TabbedPages control that acts like a
-	* little button to activate a page, that is compliant
-	* with the native windowing systems default look and feel
-	*/
 	virtual void drawThemeTab( Rect* rect, TabState& state );
 
-	/**
-	Draws a tab page - the page on which other controls for the page are
-	parented to, that is compliant
-	with the native windowing systems default look and feel
-	*/
 	virtual void drawThemeTabPage( Rect* rect, DrawUIState& state );
 
 	virtual void drawThemeTabContent( Rect* rect, DrawUIState& state );
 
 	virtual void drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& selectedTabState, TabState& otherTabs, const std::vector<String>& tabNames, int selectedTabIndex );
 
-	/**
-	* Draws a tick mark, like that used for a slider control, that is compliant
-	* with the native windowing systems default look and feel
-	*/
 	virtual void drawThemeTickMarks( Rect* rect, SliderState& state );
 
-	/**
-	* Draws a slider control, like that used for a slider control, that is compliant
-	* with the native windowing systems default look and feel
-	*/
 	virtual void drawThemeSlider( Rect* rect, SliderState& state );
 
-	/**
-	* Draws a progress bar control, that is compliant
-	* with the native windowing systems default look and feel
-	*/
 	virtual void drawThemeProgress( Rect* rect, ProgressState& state );
 
-	/**
-	*
-	*
-	*/
 	virtual void drawThemeImage( Rect* rect, Image* image, DrawUIState& state );
 
-	/**
-	* draws a header control that is compliant
-	* with the native windowing systems default look and feel
-	*/
 	virtual void drawThemeHeader( Rect* rect, ButtonState& state );
 
-	/**
-	* draws edges, useful for separators, that is compliant
-	* with the native windowing systems default look and feel.
-	* use a mask or 1 or more values of type ContextPeer::EdgeType
-	* to indicate which sides of the rect to draw an edge on
-	*/
 	virtual void drawThemeEdge( Rect* rect, DrawUIState& state, const int32& edgeSides, const int32& edgeStyle );
 
-	/**
-	* Draws a size gripper for resizing a control/window that is compliant
-	* with the native windowing systems default look and feel
-	*/
 	virtual void drawThemeSizeGripper( Rect* rect, DrawUIState& state );
 
-	/**
-	* Draws a them compliant background
-	*/
 	virtual void drawThemeBackground( Rect* rect, BackgroundState& state );
 
-	/**
-	* Draws the background appropriate for a menu item that is compliant
-	* with the native windowing systems default look and feel.
-	* This is typically called first by a menu item to give it a standard
-	* look and feel in it's background before drawing any thing else
-	*/
 	virtual void drawThemeMenuItem( Rect* rect, MenuState& state );
 
 	virtual void drawThemeMenuItemText( Rect* rect, MenuState& state );
 
-	/**
-	*
-	*
-	*/
 	virtual void drawThemeText( Rect* rect, TextState& state );
 
 

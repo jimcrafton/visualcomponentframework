@@ -273,13 +273,17 @@ Win32InternetToolkit::~Win32InternetToolkit()
 }
 
 void Win32InternetToolkit::internal_getDataFromURL( URL* url, OutputStream* stream )
-{
+{	
+	CoInitializeEx( NULL, COINIT_APARTMENTTHREADED );
+
 	StatCB cb(url,stream);
 
 	HRESULT res = URLOpenStreamW( NULL, url->getURLString().c_str(), 0, &cb );
 
 	if ( !SUCCEEDED(res) ) {
 		
+		::CoUninitialize();
+
 		switch (res) {
 			case INET_E_AUTHENTICATION_REQUIRED : {
 				throw URLAuthenticationException( "Unable to access content because some form of authentication is required." );
@@ -311,6 +315,8 @@ void Win32InternetToolkit::internal_getDataFromURL( URL* url, OutputStream* stre
 
 		//
 	}
+
+	::CoUninitialize();
 }
 
 

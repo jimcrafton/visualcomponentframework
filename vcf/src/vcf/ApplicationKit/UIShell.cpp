@@ -15,6 +15,12 @@ where you installed the VCF.
 
 using namespace VCF;
 
+UIShell* UIShell::getUIShell()
+{
+	return UIShell::shellInstance;
+}
+
+
 UIShell* UIShell::create()
 {
 	if ( NULL == UIShell::shellInstance ) {
@@ -105,6 +111,82 @@ Point UIShell::getCurrentMousePosition()
 }
 
 
+void UIShell::performFileOp( FileOps operationType, const std::vector<String>& srcFiles, const std::vector<String>& destFiles )
+{
+	peer_->performFileOp( operationType, srcFiles, destFiles );
+}
+
+void UIShell::copyFiles( const std::vector<String>& srcFiles, const std::vector<String>& destFiles )
+{
+	performFileOp( foCopy, srcFiles, destFiles );
+}
+
+void UIShell::moveFiles( const std::vector<String>& srcFiles, const std::vector<String>& destFiles )
+{
+	performFileOp( foMove, srcFiles, destFiles );
+}
+
+void UIShell::deleteFiles( const std::vector<String>& srcFiles )
+{
+	std::vector<String> dummy;
+	performFileOp( foDelete, srcFiles, dummy );
+}
+
+void UIShell::launch( const String& fileName, const String& parameters )
+{
+	peer_->launch(fileName,parameters);
+}
+
+void UIShell::copyFile( const String& srcFile, const String& destFile )
+{
+	std::vector<String> src(1);
+	src[0] = srcFile;
+	std::vector<String> dest(1);
+	dest[0] = destFile;
+	copyFiles(src,dest);
+}
+
+void UIShell::moveFile( const String& srcFile, const String& destFile )
+{
+	std::vector<String> src(1);
+	src[0] = srcFile;
+	std::vector<String> dest(1);
+	dest[0] = destFile;
+	moveFiles(src,dest);
+}
+
+void UIShell::deleteFile( const String& srcFile )
+{
+	std::vector<String> src(1);
+	src[0] = srcFile;
+	deleteFiles(src);
+}
+
+
+void UIShell::openTrash()
+{
+	peer_->openTrash();
+}
+
+void UIShell::emptyTrash()
+{
+	peer_->emptyTrash();
+}
+
+void UIShell::createFileShortcut( const String& originalFileName, const String& shortcutFileName )
+{
+	peer_->createFileShortcut( originalFileName, shortcutFileName );
+}
+
+MIMEType UIShell::getMIMEType( const String& fileName )
+{
+	return peer_->getMIMEType( fileName );
+}
+
+void UIShell::createFileAssociation( const FileAssociationInfo& info )
+{
+	peer_->createFileAssociation( info );
+}
 /**
 $Id: UIShell.cpp 2807 2006-06-27 20:25:49Z kdmix $
 */

@@ -13,12 +13,24 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+#include "vcf/FoundationKit/MIMEType.h"
 
 namespace VCF  {
 
 class GraphicsContext;
-
 class UIShellPeer;
+class UIToolkit;
+class ApplicationKit;
+
+
+class FileAssociationInfo {
+public:
+	String extension;
+	MIMEType mimeType;
+	String documentType;
+	String documentClass;
+	String launchingProgram;
+};
 
 /**
 \class UIShell UIShell.h "vcf/ApplicationKit/UIShell.h"
@@ -31,12 +43,6 @@ an actual location on the filesystem.
 */
 class APPLICATIONKIT_API UIShell : public VCF::Object {
 public:
-	static UIShell* create();
-
-	UIShell();
-
-	virtual ~UIShell();
-
 	GraphicsContext* getContext() {
 		return context_;
 	}
@@ -67,9 +73,7 @@ public:
 		return peer_;
 	}
 
-	static UIShell* getUIShell() {
-		return UIShell::shellInstance;
-	}
+	static UIShell* getUIShell();
 
 	uint32 getWidth();
 
@@ -78,14 +82,48 @@ public:
 	Rect getUsableBounds();
 
 	Point getCurrentMousePosition();
+
+	enum FileOps{
+		foCopy = 1,
+		foMove,
+		foDelete,
+		foRename
+	};
+
+	void performFileOp( FileOps operationType, const std::vector<String>& srcFiles, const std::vector<String>& destFiles );
+
+	void copyFiles( const std::vector<String>& srcFiles, const std::vector<String>& destFiles );
+	void moveFiles( const std::vector<String>& srcFiles, const std::vector<String>& destFiles );
+	void deleteFiles( const std::vector<String>& srcFiles );
+
+	void copyFile( const String& srcFile, const String& destFile );
+	void moveFile( const String& srcFile, const String& destFile );
+	void deleteFile( const String& srcFile );
+
+	void launch( const String& fileName, const String& parameters );
+
+	void openTrash();
+	void emptyTrash();
+
+	void createFileShortcut( const String& originalFileName, const String& shortcutFileName );
+
+	MIMEType getMIMEType( const String& fileName );
+
+	void createFileAssociation( const FileAssociationInfo& info );
+
+	friend class UIToolkit;
+	friend class ApplicationKit;
+protected:
+	UIShell();
+
+	virtual ~UIShell();
+
 	/**
 	*called by the UIToolkit. repeated calls after the first initialization
 	*do nothing
-	*/
+	*/	
 	void init();
-protected:
-
-
+	static UIShell* create();
 	static UIShell* shellInstance;
 	GraphicsContext* context_;
 	bool paintingInitialized_;

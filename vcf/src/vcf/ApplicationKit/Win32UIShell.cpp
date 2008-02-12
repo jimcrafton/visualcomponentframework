@@ -11,10 +11,14 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ApplicationKitPrivate.h"
 #include "vcf/ApplicationKit/Win32UIShell.h"
+#include <shellapi.h>
+#include <shlwapi.h>
 
+#include "thirdparty/win32/comet/interface.h"
+#include "thirdparty/win32/comet/threading.h"
 
 using namespace VCF;
-
+using namespace comet;
 
 Win32UIShell::Win32UIShell( UIShell* shell )
 {
@@ -183,6 +187,293 @@ Point Win32UIShell::getCurrentMousePosition()
 	::POINT pt;
 	::GetCursorPos(&pt);
 	return Point( pt.x, pt.y );
+}
+
+void Win32UIShell::performFileOp( int operationType, const std::vector<String>& srcFiles, const std::vector<String>& destFiles )
+{
+	if ( System::isUnicodeEnabled() ) {
+
+		SHFILEOPSTRUCTW fileOp = {0};
+		
+		if ( Frame::getActiveFrame() != NULL ) {
+			fileOp.hwnd = (HWND)Frame::getActiveFrame()->getPeer()->getHandleID();
+		}
+
+		switch ( operationType ) {
+			case UIShell::foCopy : {
+				fileOp.wFunc = FO_COPY;
+			}
+			break;
+
+			case UIShell::foMove : {
+				fileOp.wFunc = FO_MOVE;
+			}
+			break;
+
+			case UIShell::foDelete : {
+				fileOp.wFunc = FO_DELETE ;
+			}
+			break;
+
+			case UIShell::foRename : {
+				fileOp.wFunc = FO_RENAME;
+			}
+			break;
+		}
+
+
+		VCFChar* srcBuf = NULL;
+		VCFChar* tmp;
+		size_t sz = 0;
+		std::vector<String>::const_iterator it = srcFiles.begin();
+		while ( it != srcFiles.end() ) {
+			const String& s = *it;
+			sz += s.length() + 1;
+			++it;
+		}
+
+		sz += 1;
+
+		srcBuf = new VCFChar[sz];
+		tmp = srcBuf;
+		it = srcFiles.begin();
+		while ( it != srcFiles.end() ) {
+			const String& s = *it;
+			s.copy( tmp, s.length() );
+			tmp += s.length();
+			*tmp = 0;
+			tmp ++;
+			++it;
+		}
+		*tmp = 0;
+
+		VCFChar* destBuf = NULL;
+
+		if ( !destFiles.empty() ) {
+			sz = 0;
+			it = destFiles.begin();
+			while ( it != destFiles.end() ) {
+				const String& s = *it;
+				sz += s.length() + 1;
+				++it;
+			}
+			
+			sz += 1;
+			
+			destBuf = new VCFChar[sz];
+			tmp = destBuf;
+			it = destFiles.begin();
+			while ( it != destFiles.end() ) {
+				const String& s = *it;
+				s.copy( tmp, s.length() );
+				tmp += s.length();
+				*tmp = 0;
+				tmp ++;
+				++it;
+			}
+			*tmp = 0;
+		}
+
+
+		fileOp.pFrom = srcBuf;
+		fileOp.pTo = destBuf;
+
+		if ( destFiles.size() > 1 ) {
+			fileOp.fFlags |= FOF_MULTIDESTFILES;
+		}
+
+		fileOp.fFlags |= FOF_ALLOWUNDO;
+
+		if ( SHFileOperationW( &fileOp ) != 0 ) {
+			//error
+		}
+
+		if ( fileOp.fAnyOperationsAborted ) {
+			
+		}
+
+		delete [] srcBuf;
+		delete [] destBuf;
+	}
+	else {
+
+	}	
+}
+
+void Win32UIShell::launch( const String& fileName, const String& parameters )
+{
+	if ( System::isUnicodeEnabled() ) {
+		SHELLEXECUTEINFOW info = {0};
+		info.cbSize = sizeof(info);
+		info.fMask = SEE_MASK_FLAG_DDEWAIT;
+
+		info.lpVerb = L"Open";
+		info.lpFile = fileName.c_str();
+		info.lpParameters = parameters.c_str();
+		
+		if ( !ShellExecuteExW( &info ) ) {
+			//int err = GetLastError();
+		}
+	}
+	else {
+		SHELLEXECUTEINFOA info = {0};
+		info.cbSize = sizeof(info);
+		info.fMask = SEE_MASK_FLAG_DDEWAIT;
+
+		info.lpVerb = "Open";
+		info.lpFile = fileName.ansi_c_str();
+		info.lpParameters = parameters.ansi_c_str();
+		
+		if ( !ShellExecuteExA( &info ) ) {
+			//int err = GetLastError();
+		}
+	}
+}
+
+void Win32UIShell::openTrash()
+{
+	if ( System::isUnicodeEnabled() ) {
+
+		LPITEMIDLIST  idList = NULL;
+		HRESULT hr = SHGetSpecialFolderLocation( NULL, CSIDL_BITBUCKET, &idList );
+	
+		if ( SUCCEEDED(hr) ) {
+			
+			SHELLEXECUTEINFOW info = {0};
+			info.cbSize = sizeof(info);
+			info.fMask = SEE_MASK_FLAG_DDEWAIT | SEE_MASK_IDLIST;
+			info.nShow = SW_SHOWNORMAL;
+			info.lpIDList = idList;
+			
+			
+			ShellExecuteExW( &info );
+
+			CoTaskMemFree( idList );
+		}
+	}
+	else {
+		LPITEMIDLIST  idList = NULL;
+		HRESULT hr = SHGetSpecialFolderLocation( NULL, CSIDL_BITBUCKET, &idList );
+	
+		if ( SUCCEEDED(hr) ) {
+			
+			SHELLEXECUTEINFOA info = {0};
+			info.cbSize = sizeof(info);
+			info.fMask = SEE_MASK_FLAG_DDEWAIT | SEE_MASK_IDLIST;
+			info.nShow = SW_SHOWNORMAL;
+			info.lpIDList = idList;
+			
+			
+			ShellExecuteExA( &info );
+
+			CoTaskMemFree( idList );
+		}
+	}
+}
+
+void Win32UIShell::emptyTrash()
+{
+	HWND hwnd = NULL;
+	if ( Frame::getActiveFrame() != NULL ) {
+		hwnd = (HWND)Frame::getActiveFrame()->getPeer()->getHandleID();
+	}
+
+	if ( System::isUnicodeEnabled() ) {
+		HRESULT hr = SHEmptyRecycleBinW( hwnd, L"", 0 );
+		if ( FAILED(hr) ) {
+			
+		}
+	}
+	else {
+		HRESULT hr = SHEmptyRecycleBinA( hwnd, "", 0 );
+		if ( FAILED(hr) ) {
+			
+		}
+	}
+	
+}
+
+
+
+#define COM_PTR(ifc) \
+namespace comet { \
+template<> struct comtype<ifc> { \
+	static const IID& uuid() { \
+        static const IID iid = IID_##ifc; \
+        return iid; \
+	} \
+    typedef nil base;\
+};\
+};\
+typedef comet::com_ptr<ifc> ifc##Ptr;\
+\
+
+
+COM_PTR(IShellLinkW)
+typedef comet::com_ptr<IPersistFile> IPersistFilePtr;
+
+
+
+void Win32UIShell::createFileShortcut( const String& originalFileName, const String& shortcutFileName )
+{
+	IShellLinkWPtr shellLink(CLSID_ShellLink);
+
+	shellLink->SetPath( originalFileName.c_str() );  // Path to the object we are referring to
+
+	IPersistFilePtr persistFile;
+	persistFile = com_cast(shellLink);
+	persistFile->Save( shortcutFileName.c_str(), TRUE );
+}
+
+#pragma comment(lib, "urlmon.lib")
+#pragma comment(lib, "shlwapi.lib")
+
+MIMEType Win32UIShell::getMIMEType( const String& fileName )
+{
+	MIMEType result;
+	if ( System::isUnicodeEnabled() ) {
+		SHFILEINFOW shInfo = {0};
+		SHGetFileInfoW( fileName.c_str(), 0, &shInfo, sizeof(shInfo), 
+						SHGFI_ATTRIBUTES  | SHGFI_DISPLAYNAME  | SHGFI_EXETYPE | SHGFI_TYPENAME );
+		
+		VCFChar* tmp2;
+		HRESULT hr = FindMimeFromData( NULL, fileName.c_str(), NULL, 0, NULL, 0, &tmp2, 0 );
+		if ( SUCCEEDED(hr) ) {
+			result = MIMEType(tmp2);
+		}
+	}
+
+
+	return result;
+}
+
+void Win32UIShell::createFileAssociation( const FileAssociationInfo& info )
+{
+	String ext = info.extension;
+	if ( ext[0] != '.' ) {
+		ext.insert( 0, '.' );
+	}
+	
+	Registry reg;
+	String key = "";
+	key += ext;
+	reg.setRoot( RKT_ROOT );
+	reg.openKey( key, true );
+	reg.setValue( info.documentClass, "" );
+	reg.setValue( info.mimeType, "Content Type" );
+	
+	key = "";
+	key += info.documentClass;
+	reg.setRoot( RKT_ROOT );
+	reg.openKey( key, true );
+	reg.setValue( info.documentType, "" );
+
+	reg.setRoot( RKT_ROOT );
+	reg.openKey( key + "\\shell\\open\\command", true );
+	String launchStr = "\"";
+	launchStr += info.launchingProgram + "\" \"%1\"";
+
+	reg.setValue( launchStr, "" );
 }
 
 

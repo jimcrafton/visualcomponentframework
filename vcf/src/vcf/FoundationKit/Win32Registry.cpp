@@ -98,14 +98,25 @@ bool Win32Registry::setValue( const String& value, const String& valuename )
 	LONG resVal = 0;
 
 	const unsigned char* val = NULL;
+
+	
+	size_t pos = value.find( "%" );
+	
+	DWORD regType = REG_SZ;
+	if ( pos != String::npos ) {
+		//there's 1 or more '%' chars found
+		//so assume, perhaps foolishly, that we have
+		//env variable that will need expanding
+		regType = REG_EXPAND_SZ;
+	}
 	if ( System::isUnicodeEnabled() ) {
 		val = (const unsigned char*)value.c_str();
-		resVal = RegSetValueExW( currentKeyHandle_, valuename.c_str(), 0, REG_SZ, (BYTE*)val, sizeof(VCF::WideChar)*(value.size()+1) );
+		resVal = RegSetValueExW( currentKeyHandle_, valuename.c_str(), 0, regType, (BYTE*)val, sizeof(VCF::WideChar)*(value.size()+1) );
 	}
 	else {
 		AnsiString tmp = value;
 		val = (const unsigned char*)tmp.c_str();
-		resVal = RegSetValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, REG_SZ, (BYTE*)val, tmp.size()+1 );
+		resVal = RegSetValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, regType, (BYTE*)val, tmp.size()+1 );
 	}
 
 	return (resVal == ERROR_SUCCESS);
