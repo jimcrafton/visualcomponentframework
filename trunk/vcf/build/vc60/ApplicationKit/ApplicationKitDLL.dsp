@@ -826,10 +826,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Win32FontDialog.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\Win32HTMLDOMElements.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32Listview.cpp
 # End Source File
 # Begin Source File

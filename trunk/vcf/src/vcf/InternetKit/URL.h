@@ -493,9 +493,11 @@ namespace VCF {
 	*/
 	class INTERNETKIT_API AsyncURL : public URL, public Waitable {
 	public:
-		AsyncURL():URL(),urlWait_(&urlWaitMtx_){}
+		AsyncURL( bool autoDelete = false):
+			URL(),autoDelete_(autoDelete), urlWait_(&urlWaitMtx_){}
 
-		AsyncURL(const String& urlString ):URL(urlString),urlWait_(&urlWaitMtx_){}
+		AsyncURL(const String& urlString, bool autoDelete = false ):
+			URL(urlString),autoDelete_(autoDelete),urlWait_(&urlWaitMtx_){}
 
 		DELEGATE( EventDelegate,Finished );
 
@@ -532,7 +534,12 @@ namespace VCF {
 		void finished() {
 			urlWait_.broadcast();
 		}
+
+		bool shouldAutoDelete() {
+			return autoDelete_;
+		}
 	protected:
+		bool autoDelete_;
 		BasicOutputStream dataBuf_;
 		Condition urlWait_;
 		Mutex urlWaitMtx_;

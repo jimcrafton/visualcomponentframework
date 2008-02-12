@@ -17,6 +17,7 @@ where you installed the VCF.
 namespace VCF  {
 
 class UIShell;
+class FileAssociationInfo;
 
 
 /**
@@ -62,6 +63,19 @@ public:
 	virtual Rect shellGetUsableBounds() = 0;
 
 	virtual Point getCurrentMousePosition() = 0;
+
+	virtual void performFileOp( int operationType, const std::vector<String>& srcFiles, const std::vector<String>& destFiles ) = 0;
+
+	virtual void launch( const String& fileName, const String& parameters ) = 0;
+
+	virtual void openTrash() = 0;
+	virtual void emptyTrash() = 0;
+
+	virtual void createFileShortcut( const String& originalFileName, const String& shortcutFileName ) = 0;
+
+	virtual MIMEType getMIMEType( const String& fileName ) = 0;
+
+	virtual void createFileAssociation( const FileAssociationInfo& info ) = 0;
 };
 
 

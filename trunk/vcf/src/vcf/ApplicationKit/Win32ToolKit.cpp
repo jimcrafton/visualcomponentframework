@@ -1708,29 +1708,37 @@ public:
 				
 				HTHEME theme = NULL;
 				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
-				//	theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"STATUS" );
+					//theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"STATUS" );
 				}
 				
 				if ( theme ) {
 					HDC dc = GetDC( ::GetDesktopWindow() );
 					SIZE sz;
 					
-					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, SP_PANE, 0, 
+					HRESULT hr = Win32VisualStylesWrapper::GetThemePartSize(theme, dc, SP_PANE, 0, 
 						NULL, TS_TRUE, &sz);
 					
+					MARGINS m = {0};
+					hr = Win32VisualStylesWrapper::GetThemeMargins(theme, dc, SP_PANE,0,TMT_CONTENTMARGINS,
+						NULL, &m );
+
+					int h = 0;
+					hr = Win32VisualStylesWrapper::GetThemeMetric(theme,dc,SP_GRIPPER,1,TMT_HEIGHT,&h);
+					
+
 					Win32VisualStylesWrapper::CloseThemeData( theme );
 					ReleaseDC(::GetDesktopWindow(),dc);
 					
-					result = sz.cy;
+					result = sz.cy + 10;// + m.;
 				}
 				else {
 					Point pt;
 					if ( NULL != alternateFont ) {
-						pt = DLUToPixel( Point(0,12), *alternateFont );
+						pt = DLUToPixel( Point(0,14), *alternateFont );
 					}
 					else {
 						VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-						pt = DLUToPixel( Point(0,12), f );
+						pt = DLUToPixel( Point(0,14), f );
 					}
 					result = pt.y_;
 				}

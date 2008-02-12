@@ -426,8 +426,7 @@ namespace VCF {
 
 
 		~Attachable()	{
-			if ( owned_ ) {
-				VCF_ASSERT( NULL != resource_ );
+			if ( owned_ ) {				
 				if ( resource_ ) {
 					Impl::freeResource(resource_);
 				}

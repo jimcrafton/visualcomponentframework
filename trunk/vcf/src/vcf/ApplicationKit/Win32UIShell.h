@@ -67,6 +67,19 @@ public:
 	virtual Rect shellGetUsableBounds();
 
 	virtual Point getCurrentMousePosition();
+
+	virtual void performFileOp( int operationType, const std::vector<String>& srcFiles, const std::vector<String>& destFiles );
+
+	virtual void launch( const String& fileName, const String& parameters );
+
+	virtual void openTrash();
+	virtual void emptyTrash();
+
+	virtual void createFileShortcut( const String& originalFileName, const String& shortcutFileName );
+
+	virtual MIMEType getMIMEType( const String& fileName );
+
+	virtual void createFileAssociation( const FileAssociationInfo& info );
 protected:
 	UIShell* shell_;
 	HRGN hClipRgn_;

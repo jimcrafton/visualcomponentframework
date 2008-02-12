@@ -80,6 +80,7 @@ public:
 		InternetKit::init(argc, argv); 
 		XMLKit::init( argc, argv );
 
+
 		feedURL = "http://feeds.feedburner.com/ICanHasCheezburger/";
 		updateFreq = 10 * 60 * 1000; //10 minutes
 		lolcatsFile = System::getCurrentWorkingDirectory();
@@ -123,29 +124,38 @@ public:
 	}
 
 	void onHome( Event* e ) {
-//		Process p;
-//		p.createProcess("firefox.exe","");
+		//UIShell::getUIShell()->launch( "http://icanhascheezburger.com", "" );
+		//UIShell::getUIShell()->openTrash();
 
-
-		SHELLEXECUTEINFO info = {0};
-		info.cbSize = sizeof(info);
-		info.fMask = SEE_MASK_FLAG_DDEWAIT;
-		info.lpVerb = "Open";
-		info.lpFile = "http://icanhascheezburger.com";
+		UIShell::getUIShell()->getMIMEType( "E:\\Documents and Settings\\Jim\\Desktop\\Interactive Data\\IS.Contribute.xls");
 		
-		ShellExecuteEx( &info );
+		FileAssociationInfo fi;
+		fi.documentClass = "Foofer.Doc";
+		fi.documentType = "A Foofer Document";
+		fi.extension = ".foof";
+		fi.mimeType = "application/foof";
+		fi.launchingProgram = System::getCurrentWorkingDirectory() + "foof.exe";
 
+		UIShell::getUIShell()->createFileAssociation( fi );
+/*
+		std::vector<String> s,d;
+		s.push_back("E:\\Documents and Settings\\Jim\\Desktop\\Interactive Data\\IS.Contribute.xls");
+		d.push_back("E:\\Documents and Settings\\Jim\\Desktop\\");
+
+
+		UIShell::getUIShell()->copyFiles( s,d);
+
+		UIShell::getUIShell()->deleteFile("E:\\Documents and Settings\\Jim\\Desktop\\IS.Contribute.xls");
+		*/
 	}
 
 	void update( Event* e ) {
-		DateTime dt = DateTime::now();		
-		statusBar->setStatusText( Format("Last update: %s") % StringUtils::format( dt,"%I:%M:%S" ) );
-
+		return;
 		CallBack* cb = getCallback( "LOLCatsApp::urlComplete" );
 		if ( NULL == cb ) {
 			cb = new ClassProcedure1<URLEvent*,LOLCatsApp>(this, &LOLCatsApp::urlComplete, "LOLCatsApp::urlComplete" );
 		}
-		AsyncURL* url = new AsyncURL(feedURL);
+		AsyncURL* url = new AsyncURL(feedURL, true);
 		url->DataComplete += cb;
 
 		url->get();
@@ -153,15 +163,9 @@ public:
 	}
 
 	void displayURL( Event* e ) {
-		AsyncURL* url = (AsyncURL*)e->getSource();	
-		url->wait(); //make sure we're completely done
-
-		url->free();
-
-		
-
-		browser->setCurrentURL( lolcatsFile );	
-		
+		browser->setCurrentURL( lolcatsFile );
+		DateTime dt = DateTime::now();
+		statusBar->setStatusText( Format("Last update: %s") % StringUtils::format( dt,"%I:%M:%S" ) );		
 	}
 
 	void urlComplete(URLEvent* e) {
@@ -191,10 +195,13 @@ public:
 
 		html += "</body></html>";		
 		
-		FileOutputStream fos(lolcatsFile);
-		fos << html;
+		{
+			FileOutputStream fos(lolcatsFile);
+			fos << html;
+		}
+		
 
-		Event* event = new Event(url);
+		Event* event = new Event(this);
 
 		postEvent( new ClassProcedure1<Event*,LOLCatsApp>(this, &LOLCatsApp::displayURL ),
 					event );

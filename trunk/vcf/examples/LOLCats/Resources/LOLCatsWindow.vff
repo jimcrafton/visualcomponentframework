@@ -31,6 +31,7 @@ object LOLCats  : VCF::Window
 		height = 25
 		showButtonCaptions = true
 		imageList = @images;
+		horizontalCaptions = true
 
 
 		object refreshBtn : VCF::ToolbarItem

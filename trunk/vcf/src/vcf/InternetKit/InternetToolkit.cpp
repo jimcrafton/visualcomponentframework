@@ -62,8 +62,17 @@ void InternetToolkit::getDataFromURL( URL* url, OutputStream* stream )
 
 void asyncGetDataFromURL(AsyncURL* url)
 {
-	InternetToolkit::getDataFromURL( url, url->getOutputStream() );
+	try {
+		InternetToolkit::getDataFromURL( url, url->getOutputStream() );
+	}
+	catch (BasicException& e) {
+		StringUtils::trace( Format("Error with getDataFromURL(). Exception: %s") % e.getMessage() );
+	}
 	url->finished();
+
+	if ( url->shouldAutoDelete() ) {
+		url->free();
+	}
 }
 
 void InternetToolkit::getDataFromURL( AsyncURL* url )
