@@ -113,7 +113,7 @@ public:
 
 
 	void insertItem( TreeItem* parent, TreeItem* item );
-	TreeItem* insertItem( TreeItem* parent, const String& caption, const uint32 imageIndex=0 );
+	TreeItem* insertItem( TreeItem* parent, const String& caption, const uint32 imageIndex=-1 );
 
 	void removeItem( TreeItem* item );
 

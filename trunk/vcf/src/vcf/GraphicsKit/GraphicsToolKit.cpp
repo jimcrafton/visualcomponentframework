@@ -201,23 +201,39 @@ Image* GraphicsToolkit::internal_createImage( const String& fileName )
 	VCF_ASSERT( !fileName.empty() );
 
 	Image* result = NULL;
-	FilePath fp = fileName;
-	String ext = fp.getExtension();
-	ext = StringUtils::lowerCase( ext );
-	/**
-	Oops forgot to remove the "." character!
-	Marcello caught this! Thanks Marcello!
-	*/
-	if ( !ext.empty() ) {
-		if ( ext[0] == '.' ) {
-			ext.erase(0,1);
+
+	bool resString = false;
+
+	if ( fileName.size() > 4 ) {
+		if ( fileName.substr(0,4) == "res:" ) {
+			resString = true;
 		}
 	}
-	std::map<String,String>::iterator it = contentTypes_.find( ext );
-	if ( it != contentTypes_.end() ){
-		ImageLoader* imageLoader = getImageLoader( it->second );
-		if ( NULL != imageLoader ){
-			result = imageLoader->loadImageFromFile( fileName );
+
+	if ( resString ) {
+		String resName = fileName.substr(4,fileName.size()-4);
+		result = GraphicsToolkit::getResourceBundle()->getImage( resName );
+	}
+	else {
+		
+		FilePath fp = fileName;
+		String ext = fp.getExtension();
+		ext = StringUtils::lowerCase( ext );
+		/**
+		Oops forgot to remove the "." character!
+		Marcello caught this! Thanks Marcello!
+		*/
+		if ( !ext.empty() ) {
+			if ( ext[0] == '.' ) {
+				ext.erase(0,1);
+			}
+		}
+		std::map<String,String>::iterator it = contentTypes_.find( ext );
+		if ( it != contentTypes_.end() ){
+			ImageLoader* imageLoader = getImageLoader( it->second );
+			if ( NULL != imageLoader ){
+				result = imageLoader->loadImageFromFile( fileName );
+			}
 		}
 	}
 	return result;

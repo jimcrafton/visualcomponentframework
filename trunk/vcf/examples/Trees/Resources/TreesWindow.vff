@@ -5,8 +5,36 @@ object TreesWindow  : VCF::Window
 	width = 500
 	caption = 'Tree example'
 
+	object imgList : VCF::ImageList
+		transparentColor.red = 0
+		transparentColor.green = 1
+		transparentColor.blue = 0
+		imageWidth = 16
+		imageHeight = 16
+
+		object img1 : VCF::ImageComponent 
+			filename = 'res:icon1.png'
+		end
+
+		object img2 : VCF::ImageComponent 
+			filename = 'res:icon2.png'
+		end
+
+		object img3 : VCF::ImageComponent 
+			filename = 'res:icon3.png'
+		end
+
+		object img4 : VCF::ImageComponent 
+			filename = 'res:icon4.png'
+		end
+
+		object img5 : VCF::ImageComponent 
+			filename = 'res:icon5.png'
+		end
+	end
+
 	object treeCtrl : VCF::TreeControl
 		alignment = AlignClient
-
+		imageList = @imgList
 	end
 end

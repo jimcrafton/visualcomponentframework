@@ -104,6 +104,26 @@ SOURCE=.\Trees.cpp
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
+SOURCE=.\Resources\icon1.png
+# End Source File
+# Begin Source File
+
+SOURCE=.\Resources\icon2.png
+# End Source File
+# Begin Source File
+
+SOURCE=.\Resources\icon3.png
+# End Source File
+# Begin Source File
+
+SOURCE=.\Resources\icon4.png
+# End Source File
+# Begin Source File
+
+SOURCE=.\Resources\icon5.png
+# End Source File
+# Begin Source File
+
 SOURCE=.\Resources\TreesWindow.vff
 # End Source File
 # End Group

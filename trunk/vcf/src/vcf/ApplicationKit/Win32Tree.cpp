@@ -279,14 +279,7 @@ void Win32Tree::setImageList( ImageList* imageList )
 
 		HBITMAP hbmImage = win32Img->getBitmap();
 
-		COLORREF transparentColor = RGB(0,0,0);
-		if ( masterImage->isTransparent() ) {
-			Color* c = masterImage->getTransparencyColor();
-			transparentColor = RGB( c->getRed() * 255, c->getGreen() * 255, c->getBlue() * 255 );
-		}
-		else {
-			transparentColor = ::GetPixel( win32Img->getDC(), 0, 0 );
-		}
+		COLORREF transparentColor = imageList->getTransparentColor()->getColorRef32();		
 
 		//JEC 11/05/2002 currently on NT4 this call seems to fail, returning the same
 		//HBITMAP value as hbmImage. This is running on NT4 in VMWare perhaps this is
@@ -674,12 +667,21 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					TreeItem* item = treeControl_->getItemFromKey( lptvdi->item.lParam );
 					lptvdi->item.iImage = item->getImageIndex();
 				}
+				else {
+					lptvdi->item.iImage = -1;
+				}
 			}
 
 			if ( lptvdi->item.mask & TVIF_SELECTEDIMAGE ) {
 				if ( treeControl_->itemExists( lptvdi->item.lParam ) ) {
 					TreeItem* item = treeControl_->getItemFromKey( lptvdi->item.lParam );
 					lptvdi->item.iSelectedImage = item->getSelectedImageIndex();
+					if ( lptvdi->item.iSelectedImage == -1 && item->getImageIndex() != -1 ) {
+						lptvdi->item.iSelectedImage = item->getImageIndex();
+					}
+				}
+				else {
+					lptvdi->item.iSelectedImage = -1;
 				}
 			}
 
@@ -713,12 +715,18 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					TreeItem* item = treeControl_->getItemFromKey( lptvdi->item.lParam );
 					lptvdi->item.iImage = item->getImageIndex();
 				}
+				else {
+					lptvdi->item.iImage = -1;
+				}
 			}
 
 			if ( lptvdi->item.mask & TVIF_SELECTEDIMAGE ) {
 				if ( treeControl_->itemExists( lptvdi->item.lParam ) ) {
 					TreeItem* item = treeControl_->getItemFromKey( lptvdi->item.lParam );
 					lptvdi->item.iSelectedImage = item->getSelectedImageIndex();
+				}
+				else {
+					lptvdi->item.iSelectedImage = -1;
 				}
 			}
 		}
