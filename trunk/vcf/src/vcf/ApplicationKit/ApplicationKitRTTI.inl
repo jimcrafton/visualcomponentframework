@@ -246,6 +246,7 @@ _delegate_(ItemDelegate, ItemDeleted );
 _property_( int32, "stateImageIndex", getStateImageIndex, setStateImageIndex, "" )
 _property_( int32, "imageIndex", getImageIndex, setImageIndex, "" )
 _property_( bool, "imageIndex", isSelected, setSelected, "" )
+_property_object_( Font, "font", getFont, setFont, "" )
 _class_rtti_end_
 
 

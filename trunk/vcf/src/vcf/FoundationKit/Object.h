@@ -121,6 +121,11 @@ public:
      */
     virtual String toString() const;
 
+	/**
+	provides a simple to initialize the object from a string.
+	*/
+	virtual void setFromString( const String& val ) {}
+
     /**
     returns the class name of the object.
     */
