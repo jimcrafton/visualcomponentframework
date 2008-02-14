@@ -71,10 +71,10 @@ void DefaultMenuItem::init()
 	displayState_ |= MenuItem::mdsEnabled;
 	displayState_ |= MenuItem::mdsVisible;
 
-	EventHandler* ev = new ClassProcedure1<Event*,DefaultMenuItem> ( this, &DefaultMenuItem::handleEvent, "DefaultMenuItem::handleEvent" );
+	//EventHandler* ev = new ClassProcedure1<Event*,DefaultMenuItem> ( this, &DefaultMenuItem::handleEvent, "DefaultMenuItem::handleEvent" );
 
-	ComponentAdded += ev;
-	ComponentRemoved += ev;
+	//ComponentAdded += ev;
+	//ComponentRemoved += ev;
 }
 
 bool DefaultMenuItem::containsPoint( Point * pt )

@@ -331,11 +331,12 @@ void ImageList::handleEvent( Event* event )
 			Component* child = ev->getChildComponent();
 			ImageComponent* imgComp = dynamic_cast<ImageComponent*>(child);
 			if ( NULL != imgComp ) {
-				
-				if ( NULL != imgComp->getImage() ) {
-					addImage( imgComp->getImage() );
-					imgComp->setFilename( "" );
+				CallBack* cb = getCallback( "ImageList::onImageComponentChanged" );
+				if ( NULL == cb ) {
+					cb = new ClassProcedure1<Event*,ImageList>(this,&ImageList::onImageComponentChanged, "ImageList::onImageComponentChanged");
 				}
+				
+				imgComp->ImageChanged += cb;
 			}
 		}
 		break;
@@ -344,6 +345,15 @@ void ImageList::handleEvent( Event* event )
 			
 		}
 		break;
+	}
+}
+
+void ImageList::onImageComponentChanged( Event* e )
+{
+	ImageComponent* imgComp = (ImageComponent*)e->getSource();
+	if ( NULL != imgComp->getImage() ) {
+		addImage( imgComp->getImage() );
+		imgComp->setFilename( "" );
 	}
 }
 

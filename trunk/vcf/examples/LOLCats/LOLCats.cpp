@@ -124,33 +124,10 @@ public:
 	}
 
 	void onHome( Event* e ) {
-		//UIShell::getUIShell()->launch( "http://icanhascheezburger.com", "" );
-		//UIShell::getUIShell()->openTrash();
-
-		UIShell::getUIShell()->getMIMEType( "E:\\Documents and Settings\\Jim\\Desktop\\Interactive Data\\IS.Contribute.xls");
-		
-		FileAssociationInfo fi;
-		fi.documentClass = "Foofer.Doc";
-		fi.documentType = "A Foofer Document";
-		fi.extension = ".foof";
-		fi.mimeType = "application/foof";
-		fi.launchingProgram = System::getCurrentWorkingDirectory() + "foof.exe";
-
-		UIShell::getUIShell()->createFileAssociation( fi );
-/*
-		std::vector<String> s,d;
-		s.push_back("E:\\Documents and Settings\\Jim\\Desktop\\Interactive Data\\IS.Contribute.xls");
-		d.push_back("E:\\Documents and Settings\\Jim\\Desktop\\");
-
-
-		UIShell::getUIShell()->copyFiles( s,d);
-
-		UIShell::getUIShell()->deleteFile("E:\\Documents and Settings\\Jim\\Desktop\\IS.Contribute.xls");
-		*/
+		UIShell::getUIShell()->launch( "http://icanhascheezburger.com", "" );
 	}
 
 	void update( Event* e ) {
-		return;
 		CallBack* cb = getCallback( "LOLCatsApp::urlComplete" );
 		if ( NULL == cb ) {
 			cb = new ClassProcedure1<URLEvent*,LOLCatsApp>(this, &LOLCatsApp::urlComplete, "LOLCatsApp::urlComplete" );

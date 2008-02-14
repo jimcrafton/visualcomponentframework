@@ -476,11 +476,13 @@ void Component::setDestroying()
 
 void Component::setDesigning( const bool& designing )
 {
-	if ( designing ) {
-		setComponentState( componentState_ | Component::csDesigning );
-	}
-	else {
-		setComponentState( componentState_ & ~Component::csDesigning );
+	if ( designing != isDesigning() ) {		
+		if ( designing ) {
+			setComponentState( componentState_ | Component::csDesigning );
+		}
+		else {
+			setComponentState( componentState_ & ~Component::csDesigning );
+		}
 	}
 }
 

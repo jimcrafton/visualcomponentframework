@@ -229,3 +229,24 @@ uint64 TreeItem::sizeOf() const
 
 	return result;
 }
+
+void TreeItem::handleEvent( Event* event )
+{
+	Item::handleEvent( event );
+	switch ( event->getType() ){
+		case Component::COMPONENT_ADDED : {
+			ComponentEvent* ev = (ComponentEvent*)event;
+			Component* child = ev->getChildComponent();
+			TreeItem* item = dynamic_cast<TreeItem*>(child);
+			if ( NULL != item ) {
+				addChild( item );
+			}
+		}
+		break;
+
+		case Component::COMPONENT_REMOVED : {
+			
+		}
+		break;
+	}
+}

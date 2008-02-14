@@ -2629,6 +2629,7 @@ public:
 	};
 
 	virtual Object* createInstance() const{
+		throw CantCreateObjectException("Abstract classes cannot be instantiated!");
 		return NULL;
 		//this should probably throw an exception !
 	};
