@@ -31,9 +31,9 @@ public:
 		ufFindSubComponent				=	0x0008
 	};
 
-	VFFInputStream( VCF::InputStream* stream );
+	VFFInputStream( InputStream* stream );
 
-	VFFInputStream( const VCF::String& vffString );
+	VFFInputStream( const String& vffString );
 
 	virtual ~VFFInputStream();
 
@@ -90,13 +90,13 @@ public:
 	*retreives the outer most class/UUID that contains all other obejcts
 	*in this VFF stream
 	*/
-	void getOuterClassNameAndUUID( VCF::String& className, VCF::String& UUID, VCF::String& fallbackClassName );
+	void getOuterClassNameAndUUID( String& className, String& UUID, String& fallbackClassName );
 
 	/**
 	*reads in a new component. The method creates a new instance for the caller.
 	*@return Component*  usually this is a top level component like a Frame
 	*/
-	VCF::Component* readNewComponent();
+	Component* readNewComponent();
 
 	/**
 	*reads in a Component from the stream, and assigns it's value to the
@@ -104,13 +104,13 @@ public:
 	*@param Component* must NOT be null. Represents the already existing component
 	*that will be updated as a result of reading the contents of the stream.
 	*/
-	void readComponentInstance( VCF::Component* component );
+	void readComponentInstance( Component* component );
 
 	/**
 	Assumes we have a new, empty, top level component (typically a FormRootWindow
 	instance), but NO child components yet. Will create child components as neccessary
 	*/
-	void readNewComponentInstance( VCF::Component* component );
+	void readNewComponentInstance( Component* component );
 
 
 	void setAllComponentsInDesignMode( const bool& val ) {
@@ -130,50 +130,52 @@ protected:
 
 	class DeferredPropertySetter {
 	public:
-		DeferredPropertySetter( const VCF::String& pv, const VCF::String& pn, VCF::Object* src ) {
+		DeferredPropertySetter( const String& pv, const String& pn, VCF::Object* src ) {
 			propertyVal = pv;
 			propertyName = pn;
 			source = src;
 		}
 
-		VCF::String propertyVal;
-		VCF::String propertyName;
+		String propertyVal;
+		String propertyName;
 		VCF::Object* source;
 	};
 
 	class DeferredDelegateSetter {
 	public:
 		VCF::Object* source;
-		VCF::String delegateName;		
+		String delegateName;		
 		std::vector<String> callbackIds;
 	};
 
-	VCF::InputStream* stream_;
-	VCF::VFFParser* parser_;
+	InputStream* stream_;
+	VFFParser* parser_;
 	bool deleteStream_;
 
-	void hexToBin( const VCF::String& hexString, VCF::Persistable* persistableObject );
+	void hexToBin( const String& hexString, VCF::Persistable* persistableObject );
 
 	void processAsignmentTokens( const VCFChar& token, const String& currentSymbol, VCF::Class* clazz );
 
 	void processAsignmentTokens( const VCFChar& token, const String& currentSymbol, const VariantData& key, Class* clazz );
 
-	void processDelegateAsignment( const VCF::VCFChar& token, const VCF::String& currentSymbol, VCF::Class* clazz );
+	void processDelegateAsignment( const VCFChar& token, const String& currentSymbol, VCF::Class* clazz );
 	
 
-	void readDelegates( VCF::Component* component, VCF::Class* clazz );
+	void readDelegates( Component* component, VCF::Class* clazz );
 
-	VCF::Component* readObject( VCF::Component* componentInstance, int flags );
+	Component* readObject( Component* componentInstance, int flags );
 		//bool createComponent, bool createChildren );
 
-	void assignDeferredProperties( VCF::Component* component );
+	void assignDeferredProperties( Component* component );
 
 	Object* createClassInstance( const String& className, const String& classID, const String& fallbackClassName );
+
+	Component* createNewComponent( Component* componentInstance, int flags );
 
 	std::vector<DeferredPropertySetter*> deferredProperties_;
 	std::vector<DeferredDelegateSetter*> deferredDelegates_;
 	
-	VCF::Component* topLevelComponent_;
+	Component* topLevelComponent_;
 	bool atTopLevel_;
 	int32 componentInputLevel_;
 	bool topLevelControlVisibility_;

@@ -330,8 +330,8 @@ _class_rtti_end_
 
 
 
-_class_abstract_rtti_(TreeItem, "VCF::Item", TREEITEM_CLASSID)
-_property_( String, "name", getCaption, setCaption, "" )
+_class_rtti_(TreeItem, "VCF::Item", TREEITEM_CLASSID)
+_property_( String, "caption", getCaption, setCaption, "" )
 _class_rtti_end_
 
 

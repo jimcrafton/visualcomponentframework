@@ -613,13 +613,6 @@ void VFFInputStream::readNewComponentInstance( VCF::Component* component )
 	if ( NULL == topLevelComponent_ ) {
 		topLevelComponent_ = component;
 
-		/*
-		Control* control = dynamic_cast<Control*>(component);
-		if ( NULL != control ) {
-			control->setVisible( false );
-		}
-		*/
-		
 		component->preLoading();
 
 		component->loading();
@@ -633,13 +626,7 @@ void VFFInputStream::readNewComponentInstance( VCF::Component* component )
 
 	component->loaded();
 
-	component->postLoaded( topLevelControlVisibility_ );
-	/*
-	Control* control = dynamic_cast<Control*>(component);
-	if ( NULL != control ) {
-		control->setVisible( topLevelControlVisibility_ );
-	}
-	*/
+	component->postLoaded( topLevelControlVisibility_ );	
 }
 
 void VFFInputStream::assignDeferredProperties( Component* component )
@@ -713,6 +700,9 @@ Object* VFFInputStream::createClassInstance( const String& className, const Stri
 		result = ClassRegistry::createNewInstance( className );
 	}
 	catch (BasicException&) {
+		StringUtils::trace( Format("Exception creating class instance named: %s, trying class UUID %s") 
+							% className % fallbackClassName );
+
 		result = ClassRegistry::createNewInstance( fallbackClassName );
 	}
 
@@ -729,10 +719,10 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 	Class* clazz = NULL;	
 	Component* childComponent = NULL;
 
-	
+	String currentSymbol;
+	String objectName;
 	if ( parser_->tokenSymbolIs( "object" ) ) {
-		String currentSymbol;
-		String objectName;
+		
 
 		//read in object info
 		try {
@@ -793,10 +783,6 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 					result->loading();
 					
 					clazz = result->getClass();
-					//control = dynamic_cast<Control*>(result);
-					//if ( NULL != control ) {
-					//	controlContainer = control->getContainer();
-					//}
 				}
 				else {
 					parser_->error( "Unable to instantiate an object of type \"" + className + "\"" );
@@ -804,26 +790,10 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 			}
 			else if ( (flags & VFFInputStream::ufCreateChildrenIfNoInstance) && (NULL != componentInstance) ) {
 				
-				if ( componentInstance != topLevelComponent_ ) {					
-					/*
-					Control* control = dynamic_cast<Control*>( componentInstance );
-					if ( NULL != control ) {
-						controlContainer = control->getContainer();
-					}
-					
-					
-					if ( NULL != controlContainer ) {
-						childComponent = controlContainer->findControl( currentSymbol );
-					}
-					if ( childComponent == NULL ) {
-						childComponent = componentInstance->findComponent( currentSymbol );
-					}
-					*/
-
+				if ( componentInstance != topLevelComponent_ ) {
 					childComponent = componentInstance->findComponent( currentSymbol );
 
 					result = childComponent;
-					//controlContainer = NULL;
 				}
 				else {
 					result = componentInstance;
@@ -844,10 +814,6 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 					result->loading();
 					
 					clazz = result->getClass();
-//					control = dynamic_cast<Control*>(result);
-//					if ( NULL != control ) {
-//						controlContainer = control->getContainer();
-//					}
 				}
 				else {
 					parser_->error( "Unable to instantiate an object of type \"" + className + "\"" );
@@ -855,22 +821,6 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 
 			}
 			else if ( (flags & VFFInputStream::ufFindSubComponent) && (NULL != componentInstance) ) {
-				/*
-				Control* control = dynamic_cast<Control*>( componentInstance );
-				if ( NULL != control ) {
-					controlContainer = control->getContainer();
-				}
-				
-				
-				if ( NULL != controlContainer ) {
-					childComponent = controlContainer->findControl( currentSymbol );
-				}
-				if ( childComponent == NULL ) {
-					childComponent = componentInstance->findComponent( currentSymbol );
-				}
-				controlContainer = NULL;
-				*/
-
 				childComponent = componentInstance->findComponent( currentSymbol );
 
 				if ( NULL != childComponent ) {
@@ -878,10 +828,6 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 					if ( clazz->getID() != classID ) {
 						parser_->error( MAKE_ERROR_MSG_2("ClassID of passed in component doesn't match ClassID encountered in parsing stream") );
 					}
-					//control = dynamic_cast<Control*>(childComponent);
-					//if ( NULL != control ) {
-					//	controlContainer = control->getContainer();
-					//}
 				}
 				else {
 					throw InvalidPointerException( MAKE_ERROR_MSG_2("component is NULL, can't write properties of stream to NULL component") );
@@ -896,10 +842,6 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 					if ( (clazz->getID() != classID) && (topLevelComponent_ != componentInstance) ) {
 						parser_->error( MAKE_ERROR_MSG_2("ClassID of passed in component doesn't match ClassID encountered in parsing stream") );
 					}
-					//control = dynamic_cast<Control*>(componentInstance);
-					//if ( NULL != control ) {
-					//	controlContainer = control->getContainer();
-					//}
 				}
 				else {
 					throw InvalidPointerException( MAKE_ERROR_MSG_2("component is NULL, can't write properties of stream to NULL component") );
@@ -914,86 +856,122 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 			StringUtils::trace( e.getMessage() + "\n" );
 			return result;
 		}
+	}
+	else {
+		if ( (flags & VFFInputStream::ufFindSubComponent) && (NULL != componentInstance) ) {
+			currentSymbol = parser_->tokenString();
 
-
-		//read in properties, sub objects, and delegates
-
-		while ( (VFFParser::TO_EOF != parser_->getToken()) && (!parser_->tokenSymbolIs( "end" )) ) {
-			currentSymbol = parser_->tokenString();		
-
-			try {
-				if ( parser_->tokenSymbolIs( "delegates" ) ) {
-					//check for delegates
-					readDelegates( componentInstance, clazz );
-				}
-				else if ( !parser_->tokenSymbolIs( "object" ) ) {
-					// do object
-					VCFChar token = parser_->nextToken();
-					switch ( token ) {
-						//properties
-						case '=' : case '.' : case '[' : {
-							try {
-								processAsignmentTokens( token, currentSymbol, clazz );
-							}
-							catch ( BasicException& ) {
-								StringUtils::trace( String("Error processing assignment for ") + currentSymbol + "\n" );
-							}
-						}
-						break;
-					}
-				}
-
-				while ( parser_->tokenSymbolIs( "object" ) ) {
-
-					Component* newComponent = NULL;
-
-					if ( flags & VFFInputStream::ufCreateChildren &&
-						!(flags & VFFInputStream::ufCreateChildrenIfNoInstance) ) {
-						newComponent = readNewComponent();
-					}
-					else if ( flags & VFFInputStream::ufCreateChildrenIfNoInstance ) {
-						newComponent = readObject( componentInstance, flags );
-					}
-					else if ( flags & VFFInputStream::ufFindSubComponent ) {
-						readObject( childComponent, VFFInputStream::ufFindSubComponent );
-					}
-					else {
-						readObject( componentInstance, VFFInputStream::ufFindSubComponent );
-					}
-
-					if ( (flags & VFFInputStream::ufCreateChildren) ||
-						(flags & VFFInputStream::ufCreateChildrenIfNoInstance)  ) {
-						if ( NULL != newComponent ) {
-							//see if we can assign the component to a field
-							//in the parent control
-							
-							Class* componentClass = topLevelComponent_->getClass();
-							if ( NULL != componentClass ) {
-								Field* field = componentClass->getField( newComponent->getName() );
-								if ( NULL != field ) {
-                                    VariantData vd(newComponent);
-									field->set( &vd );
-								}
-							}
-							
-							result->addNewComponent( newComponent );
-						}
-					}
-					
-					parser_->nextToken();
-				}
+			childComponent = componentInstance->findComponent( currentSymbol );
+			
+			if ( NULL != childComponent ) {
+				clazz = childComponent->getClass();
 			}
-			catch ( BasicException& e ) {
-				StringUtils::trace( e.getMessage() + "\n" );
-				break;
+			else {
+				throw InvalidPointerException( MAKE_ERROR_MSG_2("component is NULL, can't write properties of stream to NULL component") );
 			}
 		}
-
-		if ( !objectName.empty() && (NULL != result) && result->getName().empty() ) {
-			result->setName( objectName );
-			objectName = "";
+		else {
+			if ( NULL != componentInstance ) {
+				result = componentInstance;
+				clazz = componentInstance->getClass();				
+			}
+			else {
+				throw InvalidPointerException( MAKE_ERROR_MSG_2("component is NULL, can't write properties of stream to NULL component") );
+			}
 		}
 	}
+
+	//read in properties, sub objects, and delegates
+	while ( (VFFParser::TO_EOF != parser_->getToken()) && (!parser_->tokenSymbolIs( "end" )) ) {
+		currentSymbol = parser_->tokenString();
+
+		try {
+			if ( parser_->tokenSymbolIs( "delegates" ) ) {
+				//check for delegates
+				readDelegates( componentInstance, clazz );
+			}
+			else if ( !parser_->tokenSymbolIs( "object" ) ) {
+				// do object
+				VCFChar token = parser_->nextToken();
+				switch ( token ) {
+					//properties
+					case '=' : case '.' : case '[' : {
+						try {
+							processAsignmentTokens( token, currentSymbol, clazz );
+						}
+						catch ( BasicException& ) {
+							StringUtils::trace( String("Error processing assignment for ") + currentSymbol + "\n" );
+						}
+					}
+					break;
+				}
+			}
+
+			while ( parser_->tokenSymbolIs( "object" ) ) {
+
+				Component* newComponent = NULL;
+				Component* component = NULL;
+				int readFlags = 0;
+
+				if ( flags & VFFInputStream::ufCreateChildren &&
+					!(flags & VFFInputStream::ufCreateChildrenIfNoInstance) ) {
+
+					newComponent = createNewComponent(NULL,VFFInputStream::ufCreateComponent);
+					readFlags = VFFInputStream::ufCreateChildren;
+
+						//readNewComponent();
+				}
+				else if ( flags & VFFInputStream::ufCreateChildrenIfNoInstance ) {
+					newComponent = createNewComponent(componentInstance,VFFInputStream::ufCreateChildrenIfNoInstance);
+					readFlags = flags;
+					//newComponent = readObject( componentInstance, flags );
+				}
+				else if ( flags & VFFInputStream::ufFindSubComponent ) {
+					component = childComponent;
+					readFlags = VFFInputStream::ufFindSubComponent; 
+
+					//readObject( childComponent, VFFInputStream::ufFindSubComponent );
+				}
+				else {
+					component = componentInstance;
+					readFlags = VFFInputStream::ufFindSubComponent;
+					//readObject( componentInstance, VFFInputStream::ufFindSubComponent );
+				}
+				
+				if ( (flags & VFFInputStream::ufCreateChildren) ||
+					(flags & VFFInputStream::ufCreateChildrenIfNoInstance)  ) {
+					if ( NULL != newComponent ) {
+						Class* componentClass = topLevelComponent_->getClass();
+						if ( NULL != componentClass ) {
+							Field* field = componentClass->getField( newComponent->getName() );
+							if ( NULL != field ) {
+                                VariantData vd(newComponent);
+								field->set( &vd );
+							}
+						}
+						
+						result->addNewComponent( newComponent );
+						component = newComponent;
+					}
+				}
+
+				//read in props
+				readObject( component, readFlags );
+
+				parser_->nextToken();
+			}
+		}
+		catch ( BasicException& e ) {
+			StringUtils::trace( e.getMessage() + "\n" );
+			break;
+		}
+	}
+
+	if ( !objectName.empty() && (NULL != result) && result->getName().empty() ) {
+		result->setName( objectName );
+		objectName = "";
+	}
+	
 
 	componentInputLevel_ --;
 
@@ -1019,6 +997,104 @@ void VFFInputStream::readComponentInstance( Component* component )
 	component->loaded();
 
 	component->postLoaded( topLevelControlVisibility_ );
+}
+
+Component* VFFInputStream::createNewComponent(Component* componentInstance, int flags)
+{
+	Component* result = NULL;
+
+	if ( parser_->tokenSymbolIs( "object" ) ) {
+		String currentSymbol;
+		String objectName;		
+		try {
+			//go to object name
+			parser_->nextToken();
+			currentSymbol = parser_->tokenString();
+
+			VCFChar token;
+
+			if ( currentSymbol == ":" ) {
+				currentSymbol = "";
+				token = parser_->getToken();
+			}
+			else {
+				//skip to ':' 
+				token = parser_->nextToken();				
+			}			
+			
+			parser_->checkToken( ':' );
+			parser_->nextToken();
+
+			if ( objectName.empty() ) {
+				objectName = currentSymbol;
+			}
+			
+			
+			String className = parser_->tokenString();
+			String classID;
+			parser_->nextToken();
+			if ( parser_->getToken() == ',' ) {
+				parser_->nextToken();
+				classID = parser_->tokenString();
+				parser_->nextToken();
+			}
+
+			String fallbackClassName;
+			bool skipNextToken = false;			
+			
+			if ( parser_->getToken() == ',' ) {
+				parser_->nextToken();
+				fallbackClassName = parser_->tokenString();
+			}
+			else {
+				skipNextToken = true;
+			}
+			
+			if ( flags & VFFInputStream::ufCreateComponent ) {
+				result = (Component*)createClassInstance( className, classID, fallbackClassName );
+				
+				if ( NULL == topLevelComponent_ ) {
+					topLevelComponent_ = result;
+				}
+			}
+			else if ( (flags & VFFInputStream::ufCreateChildrenIfNoInstance) && (NULL != componentInstance) ) {
+				if ( componentInstance != topLevelComponent_ ) {
+					result = componentInstance->findComponent( currentSymbol );
+				}
+				else {
+					result = componentInstance;
+				}
+
+				if ( NULL == result ) {
+					result = (Component*)createClassInstance( className, classID, fallbackClassName );
+					if ( NULL == topLevelComponent_ ) {
+						topLevelComponent_ = result;
+					}					
+				}
+			}
+
+			if ( NULL != result ) {
+				if ( setDesignMode_ ) {
+					result->setDesigning( true );
+				}
+				result->loading();
+				
+				result->setName( objectName );				
+			}
+			else {
+				parser_->error( "Unable to instantiate an object of type \"" + className + "\"" );
+			}
+
+			if ( !skipNextToken ) {
+				parser_->nextToken();
+			}
+		}
+		catch ( BasicException& e ) {
+			StringUtils::trace( e.getMessage() + "\n" );
+			return result;
+		}
+	}
+	return result;
 }
 
 Component* VFFInputStream::readNewComponent()

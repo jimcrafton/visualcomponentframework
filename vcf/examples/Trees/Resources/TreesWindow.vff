@@ -36,5 +36,13 @@ object TreesWindow  : VCF::Window
 	object treeCtrl : VCF::TreeControl
 		alignment = AlignClient
 		imageList = @imgList
+
+		object ti1 : VCF::TreeItem 
+			caption = 'ti1'
+
+			object ti2 : VCF::TreeItem 
+				caption = 'ti2'
+			end
+		end
 	end
 end

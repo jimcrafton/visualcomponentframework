@@ -225,6 +225,8 @@ public:
 	virtual void subItemChanged( TreeSubItem* item );
 
 	virtual uint64 sizeOf() const;
+
+	virtual void handleEvent( Event* event );
 protected:
 	Font* font_;
 	TreeModel::Key key_;

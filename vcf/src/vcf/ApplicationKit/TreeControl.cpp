@@ -393,6 +393,25 @@ void TreeControl::handleEvent( Event* event )
 		}
 		break;
 
+		case Component::COMPONENT_ADDED : {
+			ComponentEvent* ev = (ComponentEvent*)event;
+			Component* child = ev->getChildComponent();
+			TreeItem* item = dynamic_cast<TreeItem*>(child);
+			if ( NULL != item ) {
+				if ( item->getControl() != this ) {
+					item->setControl(this);
+				}
+
+				insertItem( item->getParent(), item );
+			}
+		}
+		break;
+
+		case Component::COMPONENT_REMOVED : {
+			
+		}
+		break;
+
 	}
 }
 

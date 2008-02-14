@@ -50,6 +50,8 @@ typedef String ImageFilenameString;
 class APPLICATIONKIT_API ImageComponent : public UIComponent {
 public:
 
+	DELEGATE(EventDelegate,ImageChanged);
+
 	ImageComponent();
 
 	virtual ~ImageComponent();

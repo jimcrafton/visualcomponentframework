@@ -186,6 +186,9 @@ void ImageComponent::setFilename( const ImageFilenameString& filename )
 		
 		if ( !filename_.empty() ) {
 			image_ = GraphicsToolkit::createImage( filename_ );
+
+			Event e(this);
+			ImageChanged( &e );
 		}
 	}
 }

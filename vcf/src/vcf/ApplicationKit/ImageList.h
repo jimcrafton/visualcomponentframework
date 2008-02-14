@@ -158,6 +158,8 @@ private:
 	uint32 totalImageCount_;
 	Image* masterImage_;
 	uint32 resizeIncrement_;
+
+	void onImageComponentChanged( Event* e );
 };
 
 
