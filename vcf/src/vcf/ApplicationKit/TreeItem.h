@@ -129,18 +129,7 @@ public:
 
 	TreeModel::Key getKey() {
 		return key_;
-	}
-
-	Font* getFont();
-
-	/**
-	Indicates that the default font for this item should be used. It's 
-	also an indicator that the font is NULL and no attempts at modifications
-	have been attempted.
-	*/
-	bool isFontDefault();
-
-	void setFont( Font* val );
+	}	
 
 	bool isLeaf() {
 		return getTreeModel()->isLeaf( getKey() );
@@ -227,8 +216,7 @@ public:
 	virtual uint64 sizeOf() const;
 
 	virtual void handleEvent( Event* event );
-protected:
-	Font* font_;
+protected:	
 	TreeModel::Key key_;
 	
 	int32 selectedImageIndex_;

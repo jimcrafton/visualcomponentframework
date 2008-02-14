@@ -86,11 +86,13 @@ public:
 
 
 	Item():data_(NULL),selected_(false),imageIndex_(-1),
-			displayState_(Item::idsNone),model_(NULL),owningControl_(NULL) {			
+			displayState_(Item::idsNone),model_(NULL),owningControl_(NULL),font_(NULL) {			
 		tag_ = -1;
 	};
 
-	virtual ~Item(){};
+	virtual ~Item(){
+		delete font_;
+	};
 
 
 
@@ -246,16 +248,51 @@ public:
 	virtual void setControl( Control* control ) {
 		owningControl_ = control;
 	}
+
+
+	Font* getFont();
+
+	/**
+	Indicates that the default font for this item should be used. It's 
+	also an indicator that the font is NULL and no attempts at modifications
+	have been attempted.
+	*/
+	bool isFontDefault();
+
+	void setFont( Font* val );
 protected:
 	void* data_;	
 	Rect bounds_;	
 	bool selected_;
 	int32 imageIndex_;
+	Font* font_;
 
 	uint32 displayState_;
 	Model* model_;
 	Control* owningControl_;
 };
+
+
+
+inline Font* Item::getFont()
+{
+	if ( NULL == font_ ) {
+		font_ = new Font();
+	}
+	return font_;
+}
+
+inline bool Item::isFontDefault()
+{
+	return (NULL == font_) ? true : false;
+}
+
+inline void Item::setFont( Font* val )
+{
+	Font* f = getFont();
+	*f = *val;
+}
+
 
 };
 

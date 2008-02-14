@@ -6,9 +6,7 @@ object TreesWindow  : VCF::Window
 	caption = 'Tree example'
 
 	object imgList : VCF::ImageList
-		transparentColor.red = 0
-		transparentColor.green = 1
-		transparentColor.blue = 0
+		transparentColor = 'lime'
 		imageWidth = 16
 		imageHeight = 16
 
@@ -35,13 +33,18 @@ object TreesWindow  : VCF::Window
 
 	object treeCtrl : VCF::TreeControl
 		alignment = AlignClient
-		imageList = @imgList
+		imageList = @imgList		
 
 		object ti1 : VCF::TreeItem 
 			caption = 'ti1'
 
 			object ti2 : VCF::TreeItem 
 				caption = 'ti2'
+				imageIndex = 4
+				font.name = 'Times New Roman'
+				font.color = 'red'
+				font.pointSize = 12 
+				font.bold = true
 			end
 		end
 	end

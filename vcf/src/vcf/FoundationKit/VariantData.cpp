@@ -290,6 +290,9 @@ void VariantData::setFromString( const String& value )
 				else if ( (value == L"NULL") || (value == L"null") || (value == L"nil") || (value == L"0") ) {
 					ObjVal = NULL;
 				}
+				else {
+					ObjVal->setFromString( value );
+				}
 			}
 		}
 		break;
