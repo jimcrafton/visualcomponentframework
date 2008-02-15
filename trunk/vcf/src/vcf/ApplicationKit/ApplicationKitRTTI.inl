@@ -265,11 +265,11 @@ _property_( bool, "checked", isChecked, setChecked, "" )
 _property_( bool, "grouped", isGrouped, setGrouped, "" )
 _class_rtti_end_
 
-_class_abstract_rtti_(ListItem, "VCF::Item", LISTITEM_CLASSID)
-_abstract_delegate_(ItemDelegate, SubItemChanged );
-_abstract_delegate_(ItemDelegate, SubItemAdded );
-_abstract_delegate_(ItemDelegate, SubItemDeleted );
-_property_( String, "name", getCaption, setCaption, "" )
+_class_rtti_(ListItem, "VCF::Item", LISTITEM_CLASSID)
+_delegate_(ItemDelegate, SubItemChanged );
+_delegate_(ItemDelegate, SubItemAdded );
+_delegate_(ItemDelegate, SubItemDeleted );
+_property_( String, "caption", getCaption, setCaption, "" )
 _class_rtti_end_
 
 
@@ -336,14 +336,12 @@ _property_( String, "caption", getCaption, setCaption, "" )
 _class_rtti_end_
 
 
-/*
-_class_abstract_rtti_(TreeModel, "VCF::TreeModel", "VCF::Model", TREEMODEL_CLASSID)
-//	_property_object_( TreeItem, "root", TreeModel::getRoot, TreeModel::setRoot );
-_abstract_delegate_( "VCF::TreeModelEventHandler", TreeModel, VCF::TreeModelEvent, RootNodeChanged )
-_abstract_delegate_( "VCF::TreeModelEventHandler", TreeModel, VCF::TreeModelEvent, NodeAdded )
-_abstract_delegate_( "VCF::TreeModelEventHandler", TreeModel, VCF::TreeModelEvent, NodeDeleted )
+
+_class_abstract_rtti_(TreeModel, "VCF::Model", TREEMODEL_CLASSID)
+
+
 _class_rtti_end_
-*/
+
 
 
 /**
@@ -409,7 +407,7 @@ _delegate_( MenuItemDelegate, MenuItemClicked )
 _delegate_( MenuItemDelegate, MenuItemUpdate )
 _class_rtti_end_
 
-
+/*
 _class_rtti_(DefaultListItem, "VCF::ListItem", DEFAULTLISTITEM_CLASSID)
 _delegate_(ItemDelegate, ItemPaint );
 _delegate_(ItemDelegate, ItemChanged );
@@ -420,7 +418,7 @@ _delegate_(ItemDelegate, SubItemChanged );
 _delegate_(ItemDelegate, SubItemAdded );
 _delegate_(ItemDelegate, SubItemDeleted );
 _class_rtti_end_
-
+*/
 
 _class_rtti_(ColumnModel, "VCF::SimpleListModel", COLUMNMODEL_CLASSID)
 _class_rtti_end_

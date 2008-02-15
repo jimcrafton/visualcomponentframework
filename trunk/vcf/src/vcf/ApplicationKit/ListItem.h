@@ -27,6 +27,57 @@ namespace VCF{
 #define LISTITEM_EVENT_SUBTITEM_DELETED		CUSTOM_EVENT_TYPES + ITEM_CONST + 8
 #define LISTITEM_EVENT_SUBTITEM_CHANGED		CUSTOM_EVENT_TYPES + ITEM_CONST + 9
 
+class ListItem;
+class ListModel;
+
+class APPLICATIONKIT_API ListSubItem : public Object {
+public:
+	ListSubItem( ListItem* ownerItem ){
+		ownerItem_ = ownerItem;
+	}
+
+	virtual ~ListSubItem(){};
+
+	void* getData() {
+		return data_;
+	}
+
+	void setData( void* data );
+
+	String getCaption();
+
+	void setCaption( const String& caption );
+
+	virtual bool canPaint() {
+		return false;
+	}
+
+	virtual void paint( GraphicsContext* context, Rect* rect, const uint32& column ){}
+
+protected:
+	void* data_;
+	ListItem* ownerItem_;
+};
+
+
+	
+
+
+class ListController {
+public:
+	virtual ~ListController(){}
+
+
+	virtual Rect getItemRect( ListItem* item ) = 0;	
+	virtual void insertItemSubItem( ListItem* item, const uint32& index, ListSubItem* subItem ) = 0;
+	virtual void removeItemSubItem( ListItem* item, ListSubItem* subItem ) = 0;
+	virtual bool getItemSubItems( ListItem* item, std::vector<ListSubItem*>& subItems ) = 0;
+	virtual ListSubItem* getItemSubItem( ListItem* item, const uint32& index ) = 0;
+	virtual uint32 getItemSubItemCount( ListItem* item ) = 0;
+	virtual void itemSelected( ListItem* item ) = 0;
+};
+
+
 
 
 /**
@@ -34,51 +85,6 @@ namespace VCF{
 */
 class APPLICATIONKIT_API ListItem : public Item {
 public:
-
-	class APPLICATIONKIT_API SubItem : public Object {
-	public:
-		SubItem( ListItem* ownerItem ){
-			ownerItem_ = ownerItem;
-		}
-
-		virtual ~SubItem(){};
-
-		void* getData() {
-			return data_;
-		}
-
-		void setData( void* data ) {
-			data_ = data;
-			ownerItem_->subItemChanged( this );
-		}
-
-		String getCaption() {
-			if ( ownerItem_->getUseLocaleStrings() ) {
-				return System::getCurrentThreadLocale()->translate( caption_ );
-			}
-
-			return caption_;
-		}
-
-		void setCaption( const String& caption ) {
-			caption_ = caption;
-			ownerItem_->subItemChanged( this );
-		}
-
-		virtual bool canPaint() {
-			return false;
-		}
-
-		virtual void paint( GraphicsContext* context, Rect* rect, const uint32& column ){
-
-		}
-
-	protected:
-		String caption_;
-		void* data_;
-		ListItem* ownerItem_;
-	};
-
 
 	DELEGATE(ItemDelegate,SubItemChanged);
 	DELEGATE(ItemDelegate,SubItemAdded);
@@ -91,10 +97,18 @@ public:
 
 	virtual ~ListItem(){};
 	
+	ListModel* getListModel() {
+		return (ListModel*) getModel();
+	}
 
-	virtual String getCaption() const ;
+	ListController* getController() {
+		return dynamic_cast<ListController*>( getControl() );
+	}
 
-	virtual void setCaption( const String& caption );
+
+	String getCaption() const ;
+
+	void setCaption( const String& caption );
 
 	/**
 	Returns the index of the item within it's model.
@@ -107,22 +121,33 @@ public:
 		index_ = index;
 	}
 
-	virtual SubItem* addSubItem( const String& caption, void* data );
+	ListSubItem* addSubItem( const String& caption, void* data );
 
-	virtual void addSubItem( SubItem* subItem );
+	void addSubItem( ListSubItem* subItem );
 
-	virtual void removeSubItem( const uint32& index );
+	void removeSubItem( const uint32& index );
 
-	virtual Enumerator<SubItem*>* getSubItems();
+	bool getSubItems( std::vector<ListSubItem*>& subItems );
 
-	virtual SubItem* getSubItem( const uint32& index );
+	ListSubItem* getSubItem( const uint32& index );
 
-	virtual uint32 getSubItemCount();
+	uint32 getSubItemCount();
 
-	virtual void subItemChanged( SubItem* item );
+	virtual void subItemChanged( ListSubItem* item );
 protected:
-		uint32 index_;
+	uint32 index_;
 };
+
+
+
+
+
+
+inline void ListSubItem::setData( void* data ) 
+{
+	data_ = data;
+	ownerItem_->subItemChanged( this );
+}
 
 };
 

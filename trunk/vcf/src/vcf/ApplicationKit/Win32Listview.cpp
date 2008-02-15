@@ -304,7 +304,7 @@ void Win32Listview::updateItemSubItems( ListItem* item )
 		return;
 	}
 
-	Enumerator<ListItem::SubItem*>* subItems = item->getSubItems();
+	Enumerator<ListSubItem*>* subItems = item->getSubItems();
 
 	if ( NULL == subItems ) {
 		return;
@@ -313,7 +313,7 @@ void Win32Listview::updateItemSubItems( ListItem* item )
 	int index = item->getIndex();
 	int subItemIndex = 1;
 	while ( true == subItems->hasMoreElements() ) {
-		ListItem::SubItem* subItem = subItems->nextElement();
+		ListSubItem* subItem = subItems->nextElement();
 
 
 
@@ -472,18 +472,24 @@ void Win32Listview::postPaintItem( NMLVCUSTOMDRAW* drawItem )
 				if ( NULL != colModel ) {
 					uint32 colIndex = 0;
 					Enumerator<ColumnItem*>* columns = listviewControl_->getColumnItems();
-					Enumerator<ListItem::SubItem*>* subItems = item->getSubItems();
+					std::vector<ListSubItem*> subItems;
+					std::vector<ListSubItem*>::iterator it = subItems.begin();
+
+					item->getSubItems(subItems);
 					Rect subItemRect = itemRect;
-					while ( (true == columns->hasMoreElements()) && (true == subItems->hasMoreElements()) ) {
+					while ( (true == columns->hasMoreElements()) && 
+							(it != subItems.end()) ) {
 						ColumnItem* column = columns->nextElement();
 						subItemRect.right_ = subItemRect.left_ + column->getWidth();
 
 						if ( colIndex > 0 ) {
-							ListItem::SubItem* subItem = subItems->nextElement();
+							ListSubItem* subItem = *it;
 							subItem->paint( ctx, &subItemRect, colIndex );
+							++it;
 						}
 
 						subItemRect.left_ = subItemRect.right_;
+						
 						colIndex ++;
 					}
 				}
@@ -949,7 +955,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 				if ( NULL != item ) {
 					AnsiString caption;
 					if ( displayInfo->item.iSubItem > 0 ) {
-						ListItem::SubItem* subItem = item->getSubItem( displayInfo->item.iSubItem - 1 );
+						ListSubItem* subItem = item->getSubItem( displayInfo->item.iSubItem - 1 );
 						if ( NULL != subItem ) {
 							caption = subItem->getCaption();
 						}

@@ -1091,6 +1091,15 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultColumnModel.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultListItem.cpp
+
+!IF  "$(CFG)" == "ApplicationKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKitDLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 

@@ -1,3 +1,4 @@
+//ListItem.cpp
 /*
 Copyright 2000-2008 The VCF Project.
 Please see License.txt in the top level directory
@@ -12,7 +13,18 @@ where you installed the VCF.
 
 using namespace VCF;
 
-//ListItem.cpp
+
+String ListSubItem::getCaption()
+{
+	String result;
+
+	return result;
+}
+
+void ListSubItem::setCaption( const String& caption )
+{
+
+}
 
 
 String ListItem::getCaption() const
@@ -37,37 +49,39 @@ void ListItem::setCaption( const String& caption )
 	ItemChanged( &event );
 }
 
-ListItem::SubItem* ListItem::addSubItem( const String& caption, void* data )
+ListSubItem* ListItem::addSubItem( const String& caption, void* data )
 {
 	return NULL;
 }
 
-void ListItem::addSubItem( ListItem::SubItem* subItem )
+void ListItem::addSubItem( ListSubItem* subItem )
 {
-
+	getController()->insertItemSubItem( this, getController()->getItemSubItemCount(this), subItem );
 }
 
 void ListItem::removeSubItem( const uint32& index )
 {
-
+	getController()->removeItemSubItem( this, getController()->getItemSubItem(this,index) );
 }
 
-Enumerator<ListItem::SubItem*>* ListItem::getSubItems()
+bool ListItem::getSubItems( std::vector<ListSubItem*>& subItems )
 {
-	return NULL;
+	return getController()->getItemSubItems( this, subItems );
 }
 
-ListItem::SubItem* ListItem::getSubItem( const uint32& index )
+ListSubItem* ListItem::getSubItem( const uint32& index )
 {
-	return NULL;
+	return getController()->getItemSubItem(this,index);
 }
 
 uint32 ListItem::getSubItemCount()
 {
-	return 0;
+	return getController()->getItemSubItemCount(this);
 }
 
-void ListItem::subItemChanged( ListItem::SubItem* item )
+void ListItem::subItemChanged( ListSubItem* item )
 {
-
+	ItemEvent event( this, LISTITEM_EVENT_SUBTITEM_CHANGED );
+	
+	SubItemChanged( &event );
 }

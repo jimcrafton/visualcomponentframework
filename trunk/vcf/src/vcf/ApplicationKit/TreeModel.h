@@ -69,6 +69,9 @@ typedef Delegate1<TreeModelEvent*> TreeModelDelegate;
 typedef TreeModelDelegate::ProcedureType TreeModelHandler;
 
 
+#define TREEMODEL_CLASSID		"0d12cc6f-1bde-4b42-8f4e-07c8b7d0e067"
+
+
 
 /**
 \class TreeModel TreeModel.h "vcf/ApplicationKit/TreeModel.h" 

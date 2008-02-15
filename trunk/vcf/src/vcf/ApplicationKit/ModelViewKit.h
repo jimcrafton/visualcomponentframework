@@ -126,10 +126,11 @@ where you installed the VCF.
 /**
 *implementations
 */
-
+/*
 #ifndef _VCF_DEFAULTLISTITEM_H__
 #	include "vcf/ApplicationKit/DefaultListItem.h"
 #endif // _VCF_DEFAULTLISTITEM_H__
+*/
 
 #ifndef _VCF_DEFAULTLISTMODEL_H__
 #	include "vcf/ApplicationKit/DefaultListModel.h"
