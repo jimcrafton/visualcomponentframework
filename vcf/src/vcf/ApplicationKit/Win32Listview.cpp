@@ -222,32 +222,6 @@ Win32Listview::~Win32Listview()
 void Win32Listview::create( Control* owningControl )
 {
 
-
-/*	itemAddedHandler_ =
-		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onItemAdded, "Win32Listview::onItemAdded" );
-
-	itemDeletedHandler_ =
-		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onItemDeleted, "Win32Listview::onItemDeleted" );
-
-	itemChangedHandler_ =
-		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onItemChanged, "Win32Listview::onItemChanged" );
-
-	itemSelectedHandler_ =
-		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onItemSelected, "Win32Listview::onItemSelected" );
-
-	itemPaintedHandler_ =
-		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onItemPaint, "Win32Listview::onItemPaint" );
-
-	subItemAddedHandler_ =
-		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onSubItemAdded, "Win32Listview::onSubItemAdded" );
-
-	subItemDeletedHandler_ =
-		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onSubItemDeleted, "Win32Listview::onSubItemDeleted" );
-
-	subItemChangedHandler_ =
-		new ClassProcedure1<ItemEvent*,Win32Listview>( this, &Win32Listview::onSubItemChanged, "Win32Listview::onSubItemChanged" );
-*/
-
 	CreateParams params = createParams();
 
 	backColor_.copy( owningControl->getColor() );
@@ -411,6 +385,8 @@ void Win32Listview::registerHeaderWndProc()
 		if ( NULL != headerWnd ) {
 			::SetWindowLongPtr( headerWnd, GWLP_USERDATA, (LONG_PTR)this );
 			oldHeaderWndProc_ = (WNDPROC)(LONG_PTR) ::SetWindowLongPtr( headerWnd, GWLP_WNDPROC, (LONG_PTR)Win32Listview::Header_WndProc );
+
+			::SetWindowLong(headerWnd, GWL_ID, (LONG)'vcfH');
 		}
 	}
 }
@@ -432,44 +408,10 @@ LRESULT CALLBACK Win32Listview::Header_WndProc(HWND hWnd, UINT message, WPARAM w
 	Win32Listview* win32ListView = (Win32Listview*)(LONG_PTR) ::GetWindowLongPtr( hWnd, GWLP_USERDATA );
 
 	switch ( message ) {
+	
 		case WM_ERASEBKGND : {
+
 			result = 0;
-		}
-		break;
-
-
-		case WM_PAINT:{
-			//result =
-
-			PAINTSTRUCT ps;
-			HDC dc = BeginPaint( hWnd, &ps );
-
-			RECT r;
-			GetClientRect( hWnd, &r );
-
-
-			FillRect( dc, &r, (HBRUSH) (COLOR_3DFACE + 1) );
-
-
-			if ( System::isUnicodeEnabled() ) {
-				result = CallWindowProcW( win32ListView->oldHeaderWndProc_, hWnd, WM_PAINT, (WPARAM)dc, 0 );
-			}
-			else {
-				result = CallWindowProcA( win32ListView->oldHeaderWndProc_, hWnd, WM_PAINT, (WPARAM)dc, 0 );
-			}
-
-			EndPaint( hWnd, &ps );
-		}
-		break;
-
-		case WM_DRAWITEM : {			
-			if ( System::isUnicodeEnabled() ) {
-				result = CallWindowProcW( win32ListView->oldHeaderWndProc_, hWnd, message, wParam, lParam );
-			}
-			else {
-				result = CallWindowProcA( win32ListView->oldHeaderWndProc_, hWnd, message, wParam, lParam );
-			}
-
 		}
 		break;
 
@@ -510,7 +452,7 @@ void Win32Listview::postPaintItem( NMLVCUSTOMDRAW* drawItem )
 
 		//item->setSelected( isItemSelected( item ) );
 
-		if ( true == item->canPaint() ) {
+		if ( item->canPaint() ) {
 			RECT tmp = {0,0,0,0};
 			GraphicsContext* ctx = NULL;
 
@@ -574,16 +516,6 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 		break;
 
 		case WM_ERASEBKGND :{
-			/*
-			Color* color = listviewControl_->getColor();
-			if ( (backColor_.getRed() != color->getRed()) || (backColor_.getGreen() != color->getGreen()) || (backColor_.getBlue() != color->getBlue()) ) {
-				COLORREF backColor = color->getColorRef32();
-				ListView_SetBkColor( hwnd_, backColor );
-
-				backColor_.copy( color );
-			}
-			*/
-
 			wndProcResult = 0;
 			result= true;
 		}
@@ -601,84 +533,89 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 		}
 		break;
 
-
-		case WM_DRAWITEM : {
-			wndProcResult = TRUE;
+		case WM_NOTIFY:{
 			result = true;
-
-			DRAWITEMSTRUCT* drawItem = (DRAWITEMSTRUCT*)lParam;
-			if ( ODT_HEADER == drawItem->CtlType ) {
-
-				uint32 index = drawItem->itemID;
-				ColumnItem* item = NULL;
-
-				if ( listviewControl_->getColumnModel()->getCount() > 0 ) {
-					HWND header = ListView_GetHeader( hwnd_ );
-					if ( NULL != header ) {
-						HDITEM headerItem;
-						memset( &headerItem, 0, sizeof(HDITEM) );
-						headerItem.mask = HDI_FORMAT | HDI_LPARAM;
-						if ( Header_GetItem( header, index, &headerItem ) ) {
-							item = (ColumnItem*)headerItem.lParam;
-						}
-					}
+			wndProcResult = defaultWndProcedure( message, wParam, lParam );
+			if ( !peerControl_->isDestroying() ) {
+				NMHDR* notificationHdr = (LPNMHDR)lParam;
+				Win32Object* win32Obj = Win32Object::getWin32ObjectFromHWND( notificationHdr->hwndFrom );
+				if ( NULL != win32Obj ){
+					win32Obj->handleEventMessages( notificationHdr->code, wParam, lParam, wndProcResult );
 				}
+				else {
+					NMHDR* notificationHdr = (LPNMHDR)lParam;
+					if ( notificationHdr->idFrom == 'vcfH' ) {
+						
+						switch ( notificationHdr->code ) {
+							case NM_CUSTOMDRAW : {
+								NMCUSTOMDRAW* cd = (NMCUSTOMDRAW*)lParam;
+								switch ( cd->dwDrawStage ) {
+									case CDDS_PREPAINT : {
+										wndProcResult = CDRF_NOTIFYITEMDRAW;
+										
+										RECT r;
+										GetClientRect( notificationHdr->hwndFrom, &r );
+										
+										RECT rLast;
+										int index = -1;
+										index = Header_GetItemCount(notificationHdr->hwndFrom) - 1;
+										if ( index >= 0 ) {
+											Header_GetItemRect( notificationHdr->hwndFrom, index, &rLast );				
+											r.left = rLast.right;
+										}
+										FillRect( cd->hdc, &r, (HBRUSH) (COLOR_3DFACE + 1) );
+										
+									}
+									break;
 
-				if ( NULL != item ) {
-					String caption = item->getCaption();
+									case CDDS_ITEMPREPAINT : {								
+										wndProcResult = CDRF_NOTIFYPOSTPAINT;
+									}
+									break;
 
-					//::SelectObject( drawItem->hDC, ::GetStockObject(DEFAULT_GUI_FONT) );
-					UINT format = 0;
-					RECT textRect =  drawItem->rcItem;
-					InflateRect( &textRect, -5, -2 );
-					switch( item->getCaptionAlignment() ) {
-						case taTextLeft: {
-							format = DT_LEFT;
+									case CDDS_ITEMPOSTPAINT : {
+										
+										uint32 index = cd->dwItemSpec;
+										ColumnItem* item = NULL;
+
+										HWND header = ListView_GetHeader( hwnd_ );
+										if ( NULL != header ) {
+											HDITEM headerItem;
+											memset( &headerItem, 0, sizeof(HDITEM) );
+											headerItem.mask = HDI_FORMAT | HDI_LPARAM;
+											if ( Header_GetItem( header, index, &headerItem ) ) {
+												item = (ColumnItem*)headerItem.lParam;
+											}
+										}
+
+										if ( NULL != item ) {
+											if ( item->canPaint() ) {
+												GraphicsContext gc( (OSHandleID)cd->hdc );
+												Rect rect( cd->rc.left, cd->rc.top, cd->rc.right, cd->rc.bottom );
+												item->paint( &gc, &rect );
+												gc.getPeer()->setContextID( 0 );
+											}
+
+										}
+										wndProcResult = CDRF_SKIPDEFAULT;
+									}
+									break;
+
+									default : {
+										wndProcResult = CDRF_DODEFAULT;
+									}
+									break;
+								}
+
+							}
+							break;
 						}
-						break;
-
-						case taTextCenter: {
-							format = DT_CENTER;
-						}
-						break;
-
-						case taTextRight: {
-							format = DT_RIGHT;
-						}
-						break;
-					}
-
-					format |= DT_SINGLELINE | DT_WORD_ELLIPSIS;
-
-					if ( System::isUnicodeEnabled() ) {
-						::DrawTextW(drawItem->hDC, caption.c_str(), caption.size(), &textRect, format);
-					}
-					else {
-						AnsiString tmp = caption;
-						::DrawTextA(drawItem->hDC, tmp.c_str(), tmp.size(), &textRect, format);
-					}
-
-
-
-					//::SelectObject( drawItem->hDC, ::GetStockObject(SYSTEM_FONT) );
-
-					if ( true == item->canPaint() ) {
-						if ( (drawItem->itemState & ODS_SELECTED) != 0 ) {
-
-						}
-						else {
-
-						}
-
-						GraphicsContext gc( (OSHandleID)drawItem->hDC );
-						Rect rect( drawItem->rcItem.left, drawItem->rcItem.top, drawItem->rcItem.right, drawItem->rcItem.bottom );
-						item->paint( &gc, &rect );
-						gc.getPeer()->setContextID( 0 );
 					}
 				}
 			}
 		}
 		break;
+
 
 		case WM_PAINT:{
 
@@ -811,8 +748,8 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 		case LVN_COLUMNCLICK:{
 
 			NMLISTVIEW* nmlistView = (NMLISTVIEW*)lParam;
-			/*
-			ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmlistView->iSubItem );
+			ColumnItem* item  = listviewControl_->getColumnItem( (uint32)nmlistView->iSubItem );
+
 			if ( NULL != item ) {
 				POINT pt = {0,0};
 				::GetCursorPos( &pt );
@@ -825,7 +762,6 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 
 				listviewControl_->handleEvent( &event );
 			}
-			*/
 			result = true;
 		}
 		break;
@@ -841,15 +777,15 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 		case HDN_ITEMCHANGINGW:  {
 			if ( true == headerControlIsTracking_ ) {
 				NMHEADERW* nmHeader = (NMHEADERW*)lParam;
-/*
+
 				if ( nmHeader->pitem->mask & HDI_WIDTH ) {
-					ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmHeader->iItem );
+					ColumnItem* item  = listviewControl_->getColumnItem( (uint32)nmHeader->iItem );
+
 					if ( NULL != item ) {
 						item->setWidth( nmHeader->pitem->cxy );
 						InvalidateRect( hwnd_, NULL, TRUE );
 					}
-				}
-				*/
+				}				
 			}
 
 			wndProcResult = FALSE;
@@ -862,13 +798,11 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 				NMHEADERA* nmHeader = (NMHEADERA*)lParam;
 
 				if ( nmHeader->pitem->mask & HDI_WIDTH ) {
-					/*
-					ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmHeader->iItem );
+					ColumnItem* item  = listviewControl_->getColumnItem( (uint32)nmHeader->iItem );
 					if ( NULL != item ) {
 						item->setWidth( nmHeader->pitem->cxy );
 						InvalidateRect( hwnd_, NULL, TRUE );
 					}
-					*/
 				}
 			}
 
@@ -883,13 +817,12 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 			headerControlIsTracking_ = false;
 
 			if ( (nmHeader->pitem->mask & HDI_WIDTH) && (listviewControl_->getColumnModel()->getCount() > 0) ) {
-				/*
-				ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmHeader->iItem );
+				ColumnItem* item  = listviewControl_->getColumnItem( (uint32)nmHeader->iItem );
+				
 				if ( NULL != item ) {
 					item->setWidth( nmHeader->pitem->cxy );
 					InvalidateRect( hwnd_, NULL, TRUE );
 				}
-				*/
 			}
 
 
@@ -905,12 +838,11 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 			headerControlIsTracking_ = false;
 
 			if ( (nmHeader->pitem->mask & HDI_WIDTH) && (listviewControl_->getColumnModel()->getCount() > 0) ) {
-/*				ColumnItem* item  = listviewControl_->getColumnModel()->getItemFromIndex( (uint32)nmHeader->iItem );
+				ColumnItem* item  = listviewControl_->getColumnItem( (uint32)nmHeader->iItem );
 				if ( NULL != item ) {
 					item->setWidth( nmHeader->pitem->cxy );
 					InvalidateRect( hwnd_, NULL, TRUE );
 				}
-				*/
 			}
 
 
@@ -968,9 +900,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 			NMLVDISPINFOW* displayInfo = (NMLVDISPINFOW*)lParam;
 			if ( displayInfo->hdr.hwndFrom == hwnd_ ) {
 
-				ListModel* lm = (ListModel*) this->peerControl_->getViewModel();
-
-				//ListItem* item = (ListItem*)displayInfo->item.lParam;
+				ListModel* lm = (ListModel*) this->peerControl_->getViewModel();				
 				if ( NULL != lm ) {
 
 					if ( displayInfo->item.mask & LVIF_IMAGE ) {
@@ -1137,6 +1067,10 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 		break;
 
 		case NM_CUSTOMDRAW:{
+			NMCUSTOMDRAW* cd = (NMCUSTOMDRAW*)lParam;
+			if ( cd->hdr.idFrom == (LONG)'vcfH' ) {
+				StringUtils::trace( "NM_CUSTOMDRAW: 'vcfH'\n" );
+			}
 
 			NMLVCUSTOMDRAW* listViewCustomDraw = (NMLVCUSTOMDRAW*)lParam;
 			ListModel* model = listviewControl_->getListModel();
@@ -1710,7 +1644,7 @@ void Win32Listview::insertHeaderColumn( const uint32& index, const String& colum
 				memset( &headerItem, 0, sizeof(headerItem) );
 				headerItem.mask = HDI_FORMAT | HDI_LPARAM;
 				Header_GetItem( header, index, &headerItem );
-				headerItem.fmt |= HDF_OWNERDRAW;
+				//headerItem.fmt |= HDF_OWNERDRAW;
 				
 				ColumnItem* item = listviewControl_->getColumnItem( index );
 
@@ -1753,7 +1687,7 @@ void Win32Listview::insertHeaderColumn( const uint32& index, const String& colum
 				memset( &headerItem, 0, sizeof(headerItem) );
 				headerItem.mask = HDI_FORMAT | HDI_LPARAM;
 				Header_GetItem( header, index, &headerItem );
-				headerItem.fmt |= HDF_OWNERDRAW;
+				//headerItem.fmt |= HDF_OWNERDRAW;
 				ColumnItem* item = listviewControl_->getColumnItem( index );
 
 				headerItem.lParam = (LPARAM)item;
