@@ -70,6 +70,17 @@ component-methodname ::= id
 </pre>
 
 */
+
+struct ParsePosition {
+	ParsePosition():sourcePtr(NULL),sourceEnd(NULL),tokenPtr(NULL),stringPtr(NULL),sourceLine(0),token(0){}
+	VCFChar* sourcePtr;
+	VCFChar* sourceEnd;
+	VCFChar* tokenPtr;
+	VCFChar* stringPtr;
+	int32 sourceLine;
+	VCFChar token;
+};
+
 class FOUNDATIONKIT_API VFFParser : public Object {
 public:
 
@@ -112,28 +123,41 @@ public:
 	bool tokenSymbolIs(const String& s);
 
     int32 getSourceLine() {
-		return sourceLine_;
+		return current_.sourceLine;
 	}
 
     VCFChar getToken(){
-		return token_;
+		return current_.token;
 	}
 
 	String binHexToString();
 
+	void savePosition();
+	void restorePosition();
+
 protected:
+
+	
+
 	InputStream* stream_;
 	int32 origin_;
 	VCFChar* buffer_;
 	VCFChar* bufPtr_;
 	VCFChar* bufEnd_;
+	/*
 	VCFChar* sourcePtr_;
 	VCFChar* sourceEnd_;
 	VCFChar* tokenPtr_;
 	VCFChar* stringPtr_;
 	int32 sourceLine_;
-	VCFChar saveChar_;
-	VCFChar token_;
+	*/
+
+
+	ParsePosition current_;
+	ParsePosition saved_;
+
+	//VCFChar saveChar_;
+	
 
 	void skipBlanks();
 };
