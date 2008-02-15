@@ -14,7 +14,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ComboBoxControl.h"
 #include "vcf/ApplicationKit/TextControl.h"
 #include "vcf/ApplicationKit/CommandButton.h"
-#include "vcf/ApplicationKit/DefaultListItem.h"
+//#include "vcf/ApplicationKit/DefaultListItem.h"
 #include "vcf/ApplicationKit/ListBoxControl.h"
 #include "vcf/ApplicationKit/Label.h"
 

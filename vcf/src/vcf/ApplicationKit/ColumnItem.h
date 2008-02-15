@@ -78,13 +78,13 @@ public:
 	*ellipsis ("...")
 	*@param String the new column caption
 	*/
-	virtual void setCaption( const String& caption );
+	void setCaption( const String& caption );
 
 	/**
 	*returns the caption for the column item
 	*@return String the column's caption
 	*/
-	virtual String getCaption();
+	String getCaption();
 
 protected:
 	uint32 index_;

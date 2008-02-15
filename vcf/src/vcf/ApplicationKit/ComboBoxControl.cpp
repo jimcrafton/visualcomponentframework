@@ -13,7 +13,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ListBoxControl.h"
 #include "vcf/ApplicationKit/DefaultListModel.h"
 #include "vcf/ApplicationKit/TextControl.h"
-#include "vcf/ApplicationKit/DefaultListItem.h"
+//#include "vcf/ApplicationKit/DefaultListItem.h"
 #include "vcf/ApplicationKit/Containers.h"
 #include "vcf/GraphicsKit/DrawUIState.h"
 

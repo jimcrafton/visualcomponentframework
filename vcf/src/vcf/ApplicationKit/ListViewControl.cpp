@@ -11,7 +11,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ListViewControl.h"
 #include "vcf/ApplicationKit/ListviewPeer.h"
 #include "vcf/ApplicationKit/DefaultListModel.h"
-#include "vcf/ApplicationKit/DefaultListItem.h"
+//#include "vcf/ApplicationKit/DefaultListItem.h"
 #include "vcf/ApplicationKit/DefaultColumnModel.h"
 #include "vcf/ApplicationKit/DefaultColumnItem.h"
 
