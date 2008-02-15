@@ -825,7 +825,7 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 
 				if ( NULL != childComponent ) {
 					clazz = childComponent->getClass();
-					if ( clazz->getID() != classID ) {
+					if ( clazz->getID() != classID && !classID.empty() ) {
 						parser_->error( MAKE_ERROR_MSG_2("ClassID of passed in component doesn't match ClassID encountered in parsing stream") );
 					}
 				}
@@ -839,7 +839,7 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 					clazz = componentInstance->getClass();
 					//only validate the class name if the we are not parsing the top level component
 					//which, in this case, should be a FormRootWindow class
-					if ( (clazz->getID() != classID) && (topLevelComponent_ != componentInstance) ) {
+					if ( (clazz->getID() != classID && !classID.empty()) && (topLevelComponent_ != componentInstance) ) {
 						parser_->error( MAKE_ERROR_MSG_2("ClassID of passed in component doesn't match ClassID encountered in parsing stream") );
 					}
 				}

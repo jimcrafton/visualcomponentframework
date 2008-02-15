@@ -89,6 +89,7 @@ bool Win32Application::initApp()
 	controlsToInit.dwSize = sizeof(controlsToInit);
 	controlsToInit.dwICC = ICC_WIN95_CLASSES;
 	InitCommonControlsEx( &controlsToInit );
+
 #endif
 	HRESULT hr = OleInitialize(NULL);
 	if ( !(SUCCEEDED(hr)) ){
