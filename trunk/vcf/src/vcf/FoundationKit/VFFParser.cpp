@@ -54,30 +54,30 @@ void VFFParser::resetStream()
 
 	VCF_ASSERT( bufEnd_ > bufPtr_ );
 
-	sourcePtr_ = buffer_;
-	sourceEnd_ = buffer_;
-	tokenPtr_ = buffer_;
-	sourceLine_ = 1;
-	token_ = '\0';
-	this->nextToken();
+	current_.sourcePtr = buffer_;
+	current_.sourceEnd = buffer_;
+	current_.tokenPtr = buffer_;
+	current_.sourceLine = 1;
+	current_.token = '\0';
+	nextToken();
 }
 
 void VFFParser::skipBlanks()
 {
-	while (sourcePtr_ < bufEnd_) {
-		if ( *sourcePtr_ == 10 ) {
-			sourceLine_ ++;
+	while (current_.sourcePtr < bufEnd_) {
+		if ( *current_.sourcePtr == 10 ) {
+			current_.sourceLine ++;
 		}
-		else if ( (*sourcePtr_ >= 33) && (*sourcePtr_ <= 255) ) {
+		else if ( (*current_.sourcePtr >= 33) && (*current_.sourcePtr <= 255) ) {
 			return;
 		}
-		sourcePtr_++;
+		current_.sourcePtr++;
 	}
 }
 
 void VFFParser::checkToken( const VCFChar& T )
 {
-	if ( token_ != T ) {
+	if ( current_.token != T ) {
 		switch ( T ) {
 			case TO_SYMBOL: {
 				error("Identifier Expected");
@@ -107,17 +107,17 @@ String VFFParser::binHexToString()
 	String result;
 
 	skipBlanks();
-	VCFChar* tmpBufPtr = sourcePtr_;
-	VCFChar* tmpSourcePtr = sourcePtr_;
+	VCFChar* tmpBufPtr = current_.sourcePtr;
+	VCFChar* tmpSourcePtr = current_.sourcePtr;
 	while ( *tmpSourcePtr != '}' && (tmpSourcePtr < bufEnd_) ) {
 		if ( ((*tmpSourcePtr >= '0') && (*tmpSourcePtr <= '9')) || ((*tmpSourcePtr >= 'A') && (*tmpSourcePtr <= 'F'))
 				|| ((*tmpSourcePtr >= 'a') && (*tmpSourcePtr <= 'f')) ) {
-			sourcePtr_ ++;
+			current_.sourcePtr ++;
 		}
 		tmpSourcePtr++;
 	}
-	result.append( tmpBufPtr, sourcePtr_-tmpBufPtr);
-	sourcePtr_ = tmpSourcePtr;
+	result.append( tmpBufPtr, current_.sourcePtr-tmpBufPtr);
+	current_.sourcePtr = tmpSourcePtr;
 
 	return result;
 }
@@ -149,8 +149,8 @@ VCFChar VFFParser::nextToken()
 
 	skipBlanks();
 
-	P = sourcePtr_;
-	tokenPtr_ = P;
+	P = current_.sourcePtr;
+	current_.tokenPtr = P;
 	if ( ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) || ( *P == '_' ) ) {
 		P++;
 		while ( ((*P == ':')) || ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) || ((*P >= '0') && (*P <= '9')) || ( *P == '_' )
@@ -233,7 +233,7 @@ VCFChar VFFParser::nextToken()
 				break;
 			}
 		}
-		this->stringPtr_ = S;
+		current_.stringPtr = S;
 		result = TO_STRING;
 	}
 	else if ( *P == '/' ) {
@@ -272,22 +272,22 @@ VCFChar VFFParser::nextToken()
 			P++;
 		}
 	}
-	sourcePtr_ = P;
-	token_ = result;
+	current_.sourcePtr = P;
+	current_.token = result;
 
 	return result;
 }
 
 int32 VFFParser::sourcePos()
 {
-	return origin_ + (tokenPtr_ - buffer_);
+	return origin_ + (current_.tokenPtr - buffer_);
 }
 
 String VFFParser::tokenComponentIdent()
 {
 
 	checkToken( TO_SYMBOL );
-	VCFChar* P = sourcePtr_;
+	VCFChar* P = current_.sourcePtr;
 
 	while ( (*P == '.') && (P < bufEnd_) ) {
 		P++;
@@ -302,7 +302,7 @@ String VFFParser::tokenComponentIdent()
 		}while ( !alpha && (P < bufEnd_) );
 	}
 
-	sourcePtr_ = P;
+	current_.sourcePtr = P;
 
 	return tokenString();
 }
@@ -327,19 +327,19 @@ String VFFParser::tokenString()
 
 	uint32 length = 0;
 
-	if ( token_ == TO_STRING) {
-		if ( stringPtr_ > tokenPtr_ ) {
-			length = (stringPtr_ - tokenPtr_) - 1;
+	if ( current_.token == TO_STRING) {
+		if ( current_.stringPtr > current_.tokenPtr ) {
+			length = (current_.stringPtr - current_.tokenPtr) - 1;
 		}
 	}
 	else {
-		if ( sourcePtr_ > tokenPtr_ ) {
-			length = sourcePtr_ - tokenPtr_;
+		if ( current_.sourcePtr > current_.tokenPtr ) {
+			length = current_.sourcePtr - current_.tokenPtr;
 		}
 	}
 
 	if ( length > 0 ) {
-		result.append( tokenPtr_, length );
+		result.append( current_.tokenPtr, length );
 	}
 
 	return result;
@@ -347,9 +347,18 @@ String VFFParser::tokenString()
 
 bool VFFParser::tokenSymbolIs(const String& s)
 {
-	return (token_ == TO_SYMBOL) && (StringUtils::noCaseCompare( s, tokenString() ) == 0);
+	return (current_.token == TO_SYMBOL) && (StringUtils::noCaseCompare( s, tokenString() ) == 0);
 }
 
+void VFFParser::savePosition()
+{
+	saved_ = current_;
+}
+
+void VFFParser::restorePosition()
+{
+	current_ = saved_;
+}
 
 /**
 $Id$

@@ -1004,6 +1004,8 @@ Component* VFFInputStream::createNewComponent(Component* componentInstance, int 
 	Component* result = NULL;
 
 	if ( parser_->tokenSymbolIs( "object" ) ) {
+		parser_->savePosition();
+
 		String currentSymbol;
 		String objectName;		
 		try {
@@ -1091,8 +1093,11 @@ Component* VFFInputStream::createNewComponent(Component* componentInstance, int 
 		}
 		catch ( BasicException& e ) {
 			StringUtils::trace( e.getMessage() + "\n" );
+			parser_->restorePosition();
 			return result;
 		}
+
+		parser_->restorePosition();
 	}
 	return result;
 }
