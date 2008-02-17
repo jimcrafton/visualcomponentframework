@@ -570,11 +570,38 @@ Dictionary* Component::getSettings()
 	return settings_;
 }
 
+uint32 Component::getSettingNames( std::vector<String>& names )
+{
+	if ( NULL != settings_ ) {
+		Dictionary::Enumerator* items = settings_->getEnumerator();
+
+		while ( items->hasMoreElements() ) {
+			Dictionary::pair item = items->nextElement();
+
+			const String& name = item.first;
+
+			names.push_back( name );
+		}
+	}
+	return names.size();
+}
+
 ComponentSetting* Component::getSetting( const String& name )
 {
 	ComponentSetting* result = NULL;
 
+	if ( isLoading() && NULL == settings_ ) {
+		settings_ = new Dictionary();
+		settings_->setOwnsObjectValues(true);
+	}
+
 	if ( NULL != settings_ ) {
+
+		if ( isLoading() && !settings_->keyExists( name ) ) {
+			result = new ComponentSetting();
+			settings_->insert( name, result );
+		}
+
 		VariantData& v = settings_->get( name );
 
 		if ( pdUndefined != v.type ) {
@@ -586,6 +613,7 @@ ComponentSetting* Component::getSetting( const String& name )
 				result = dynamic_cast<ComponentSetting*>(object);
 			}
 		}
+		
 	}	
 
 	return result;
@@ -744,6 +772,13 @@ void Component::initializeSettings( const bool& recursive )
 
 						if ( reg.openKey( key + setting->section ) ) {
 							try {
+
+								Property* property = clazz->getProperty( setting->name );
+
+								if ( NULL != property ) {
+									setting->value.type = property->getType();
+								}
+
 								switch ( setting->value.type ) {
 									case pdString : {										
 										setting->value = reg.getStringValue(name);
@@ -776,16 +811,14 @@ void Component::initializeSettings( const bool& recursive )
 									}
 									break;
 								}
+
+								if ( NULL != property ) {
+									property->set( &setting->value );
+								}
 							}
 							catch (...){
 								StringUtils::trace("No value found for: " + name);
 								continue; //skip to next element
-							}
-							
-							Property* property = clazz->getProperty( setting->name );
-							
-							if ( NULL != property ) {
-								property->set( &setting->value );
 							}
 						}
 					}

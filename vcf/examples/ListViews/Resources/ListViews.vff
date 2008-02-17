@@ -5,6 +5,8 @@ object ListViewsWindow : Window
 	height = 500
 	caption = 'ListViews example'
 
+	settings['mainwindow.top'].name = 'top'
+
 	object listView : VCF::ListViewControl 
 		alignment = AlignClient
 		visible = true
@@ -14,6 +16,8 @@ object ListViewsWindow : Window
 		columnModel.items[1] = 'Column 2'
 		columnModel.items[2] = 'Column 3'
 
+		//add items through the list models
+		//properties
 		listModel.items[0] = 100
 		listModel.items[1] = 'Item 2'
 		listModel.items[2] = 'Item 3'
@@ -21,6 +25,20 @@ object ListViewsWindow : Window
 		listModel.subItems['0,0'] = 10
 		listModel.subItems['0,1'] = 'Bar'
 		listModel.subItems['0,2'] = 'Baz'
+
+		//add items by using the list item
+		//objects
+		object li1 : VCF::ListItem 
+			caption = 'blah blah blah'
+			object si : VCF::ListSubItem
+				caption = 'stuffy nose'
+			end
+		end
+
+		object col1 : VCF::ColumnItem 
+			caption = 'Gargle'
+		end
+		
 	end
 
 	object menuBar : VCF::MenuBar

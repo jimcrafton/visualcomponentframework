@@ -28,6 +28,7 @@ class Dictionary;
 #define COMPONENT_CLASSID		"ED88C09B-26AB-11d4-B539-00C04F0196DA"
 
 
+#define COMPONENTSETTING_CLASSID		"e3cae872-1024-416d-b3a6-f9e9abbd2b8c"
 
 /**
 A component setting is a special "value" that may be added 
@@ -71,6 +72,41 @@ public:
 	String name;
 	String section;
 	VariantData value;
+
+
+	//property getter and setters
+
+	Scope getScope() {
+		return scope;
+	}
+
+	void setScope( const Scope& val ) {
+		scope = val;
+	}
+
+	String getName() {
+		return name;
+	}
+
+	void setName( const String& val ) {
+		name = val;
+	}
+
+	String getSection() {
+		return section;
+	}
+
+	void setSection( const String& val ) {
+		section = val;
+	}
+
+	VariantData getValue() {
+		return value;
+	}
+
+	void setValue( const VariantData& val ) {
+		value = val;
+	}
 };
 
 
@@ -494,7 +530,7 @@ public:
 	bool getUseLocaleStrings() const ;
 
 
-
+	
 	/**
 	Returns the dictionary that holds this component's settings. 
 	May return NULL. The default value for a component's settings is
@@ -502,6 +538,8 @@ public:
 	return NULL.
 	*/
 	Dictionary* getSettings();
+
+	uint32 getSettingNames( std::vector<String>& names );
 
 	/**
 	Returns a specific setting specified by the name argument. The 

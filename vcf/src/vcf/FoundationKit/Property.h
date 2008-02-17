@@ -288,6 +288,10 @@ public:
 		return 0;
 	}
 
+	virtual uint32 getCollectionKeys( Object* source, std::vector<VariantData>& keys ) {
+		return 0;
+	}
+
 	/**
 	Returns the element at the specified key. Typically this is an
 	index into some array like container, but it's possibly it could be
