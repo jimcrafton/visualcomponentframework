@@ -22,6 +22,7 @@ namespace VCF{
 /** @interface */
 
 #define LISTITEM_CLASSID		"ED88C0AB-26AB-11d4-B539-00C04F0196DA"
+#define LISTSUBITEM_CLASSID		"565421ca-056a-415c-9936-3649098c66a4"
 
 #define LISTITEM_EVENT_SUBTITEM_ADDED		CUSTOM_EVENT_TYPES + ITEM_CONST + 7
 #define LISTITEM_EVENT_SUBTITEM_DELETED		CUSTOM_EVENT_TYPES + ITEM_CONST + 8
@@ -30,11 +31,15 @@ namespace VCF{
 class ListItem;
 class ListModel;
 
-class APPLICATIONKIT_API ListSubItem : public Object {
+class APPLICATIONKIT_API ListSubItem : public UIComponent {
 public:
 	ListSubItem( ListItem* ownerItem ){
 		ownerItem_ = ownerItem;
 	}
+
+	ListSubItem( ListItem* ownerItem, const String& caption, void* data=NULL );
+
+	ListSubItem():ownerItem_(NULL),data_(NULL){}
 
 	virtual ~ListSubItem(){};
 
@@ -42,7 +47,10 @@ public:
 		return data_;
 	}
 
-	void setData( void* data );
+	void setData( void* data ) {
+		data_ = data;
+	}
+
 
 	String getCaption();
 
@@ -54,6 +62,14 @@ public:
 
 	virtual void paint( GraphicsContext* context, Rect* rect, const uint32& column ){}
 
+
+	ListItem* getListItem() {
+		return ownerItem_;
+	}
+
+	void setListItem( ListItem* item ) {
+		ownerItem_ = item;
+	}
 protected:
 	void* data_;
 	ListItem* ownerItem_;
@@ -73,6 +89,7 @@ public:
 	virtual void removeItemSubItem( ListItem* item, ListSubItem* subItem ) = 0;
 	virtual bool getItemSubItems( ListItem* item, std::vector<ListSubItem*>& subItems ) = 0;
 	virtual ListSubItem* getItemSubItem( ListItem* item, const uint32& index ) = 0;
+	virtual uint32 getItemSubItemIndex( ListItem* item, ListSubItem* subItem ) = 0;
 	virtual uint32 getItemSubItemCount( ListItem* item ) = 0;
 	virtual void itemSelected( ListItem* item ) = 0;
 };
@@ -86,12 +103,7 @@ public:
 class APPLICATIONKIT_API ListItem : public Item {
 public:
 
-	DELEGATE(ItemDelegate,SubItemChanged);
-	DELEGATE(ItemDelegate,SubItemAdded);
-	DELEGATE(ItemDelegate,SubItemDeleted);
-
-
-	ListItem(): Item(), index_(0) {
+	ListItem(): Item(), index_(0),internalChange_(false) {
 
 	};
 
@@ -133,21 +145,12 @@ public:
 
 	uint32 getSubItemCount();
 
-	virtual void subItemChanged( ListSubItem* item );
+	virtual void handleEvent( Event* e );
 protected:
 	uint32 index_;
+	bool internalChange_;
 };
 
-
-
-
-
-
-inline void ListSubItem::setData( void* data ) 
-{
-	data_ = data;
-	ownerItem_->subItemChanged( this );
-}
 
 };
 

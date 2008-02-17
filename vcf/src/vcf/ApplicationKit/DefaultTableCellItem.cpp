@@ -237,9 +237,6 @@ void DefaultTableCellItem::setCaption( const String& caption )
 	TableModel* tm = (TableModel*) getModel();
 
 	tm->setValueAsString( id_.row, id_.column, caption );
-	 
-	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
-	ItemChanged( &event );
 }
 
 

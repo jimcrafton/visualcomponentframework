@@ -95,14 +95,6 @@ public:
 	};
 
 
-
-
-	DELEGATE( ItemDelegate, ItemPaint );
-	DELEGATE( ItemDelegate, ItemChanged );
-	DELEGATE( ItemDelegate, ItemSelected );
-	DELEGATE( ItemDelegate, ItemAdded );
-	DELEGATE( ItemDelegate, ItemDeleted );
-
 	
 
 	/**
@@ -147,8 +139,6 @@ public:
 
 	virtual void setImageIndex( const int32& imageIndex ) {
 		imageIndex_ = imageIndex;
-		ItemEvent event( this, ITEM_EVENT_CHANGED );
-		ItemChanged( &event );
 	}
 
 	
@@ -168,8 +158,6 @@ public:
 	*/
 	void setData( void* data ) {
 		data_ = data;
-		ItemEvent event( this, ITEM_EVENT_CHANGED );
-		ItemChanged( &event );
 	}
 
 	/**
@@ -191,8 +179,6 @@ public:
 
 	virtual void setSelected( const bool& selected ) {
 		selected_ = selected;
-		ItemEvent event( this, ITEM_EVENT_SELECTED );
-		ItemSelected( &event );
 	}
 
 	/**

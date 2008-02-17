@@ -97,7 +97,7 @@ static String IconAlignTypeNames[] = { "iaNone",
 /**
 \class ListViewControl ListViewControl.h "vcf/ApplicationKit/ListViewControl.h"
 */
-class APPLICATIONKIT_API ListViewControl : public VCF::Control {
+class APPLICATIONKIT_API ListViewControl : public Control, public ListController {
 public:
 
 
@@ -120,7 +120,7 @@ public:
 		lcatAutoSizeColumnsAndHeaders = -4,
 	};
 
-	virtual void setViewModel( Model* model );
+	virtual void modelChanged( Model* oldModel, Model* newModel );
 
 	ListModel* getListModel();
 
@@ -130,11 +130,17 @@ public:
 
 	virtual void paint( GraphicsContext * context );
 
-	virtual ColumnItem* addHeaderColumn( const String& columnName, const double& width=100.0 );
+	ColumnItem* addHeaderColumn( const String& columnName, const double& width=100.0 );
 
 	void addHeaderColumn( ColumnItem* column );
 
-	virtual ColumnItem* insertHeaderColumn( const uint32& index, const String& columnName, const double& width=100.0 );
+	ColumnItem* insertHeaderColumn( const uint32& index, const String& columnName, const double& width=100.0 );
+
+	Enumerator<ColumnItem*>* getColumnItems();
+
+	ColumnItem* getColumnItem( const uint32& index );
+
+	void setColumnItem( const uint32& index, ColumnItem* item );
 
 	void insertHeaderColumn( const uint32& index, ColumnItem* column );
 
@@ -148,11 +154,7 @@ public:
 
 	void setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type=lcatAutoSizeNone );
 
-	void setColumnsWidth( const double& width, ListViewControl::AutoSizeType type=lcatAutoSizeNone );
-
-	virtual ListItem* addItem( const String& caption, const uint32 imageIndex=0 );
-
-	virtual ListItem* insertItem( const uint32& index, const String& caption, const uint32 imageIndex=0 );	
+	void setColumnsWidth( const double& width, ListViewControl::AutoSizeType type=lcatAutoSizeNone );	
 
 	IconStyleType getIconStyle();
 
@@ -171,8 +173,6 @@ public:
 	void setAllowLabelEditing( const bool& allowLabelEditing );
 
 	void setItemFocused( ListItem* item );
-
-	void init();
 
 	void sort( ItemSort* itemSortFunctor );
 
@@ -214,23 +214,31 @@ public:
 
 	int32 getDisplayOptions();
 
-	void setDisplayOptions( const int32& displayOptions );
+	void setDisplayOptions( const int32& displayOptions );	
 
-	Rect getItemRect( ListItem* item );
+	ListItem* addItem( const String& caption, const uint32 imageIndex=0 );
 
-	ListItem* getListItem( const uint32& index );
+	ListItem* insertItem( const uint32& index, const String& caption, const uint32 imageIndex=0 );	
 
-	void setListItem( const uint32& index, ListItem* item );
+	ListItem* getItem( const uint32& index );
+
+	void setItem( const uint32& index, ListItem* item );
 
 	Enumerator<ListItem*>* getItems();
 
-	Enumerator<ColumnItem*>* getColumnItems();
-
-	ColumnItem* getColumnItem( const uint32& index );
-
-	void setColumnItem( const uint32& index, ColumnItem* item );
-
+	
 	virtual void handleEvent( Event* event );
+
+
+
+	virtual Rect getItemRect( ListItem* item );	
+	virtual void insertItemSubItem( ListItem* item, const uint32& index, ListSubItem* subItem );
+	virtual void removeItemSubItem( ListItem* item, ListSubItem* subItem );
+	virtual bool getItemSubItems( ListItem* item, std::vector<ListSubItem*>& subItems );
+	virtual ListSubItem* getItemSubItem( ListItem* item, const uint32& index );
+	virtual uint32 getItemSubItemIndex( ListItem* item, ListSubItem* subItem );
+	virtual uint32 getItemSubItemCount( ListItem* item );
+	virtual void itemSelected( ListItem* item );
 protected:
 	//Events
 	void onItemPaint( ItemEvent* event );
@@ -261,7 +269,14 @@ protected:
 
 	Array<ListItem*> items_;
 	Array<ColumnItem*> columnItems_;
+
+	typedef std::multimap<ListItem*,ListSubItem*> SubItemMap;
+	typedef std::pair<SubItemMap::iterator,SubItemMap::iterator> SubItemIteratorPair;
+	typedef SubItemMap::value_type SubItemPair;
+	SubItemMap subItems_;
+
 	bool internalModelChange_;
+	bool inCallbackChange_;
 };
 
 

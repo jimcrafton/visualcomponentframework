@@ -18,13 +18,35 @@ String ListSubItem::getCaption()
 {
 	String result;
 
+	ListModel* lm = ownerItem_->getListModel();
+	result = lm->getSubItemAsString( ownerItem_->getIndex(), 
+							ownerItem_->getController()->getItemSubItemIndex( ownerItem_, this ) );
+
+	if ( getUseLocaleStrings() && (NULL != ownerItem_->getControl()) && (ownerItem_->getControl()->getUseLocaleStrings()) ) {
+		result = System::getCurrentThreadLocale()->translate( result );
+	}
 	return result;
 }
 
 void ListSubItem::setCaption( const String& caption )
 {
+	ListModel* lm = ownerItem_->getListModel();
+
+	lm->setSubItemAsString( ownerItem_->getIndex(), 
+							ownerItem_->getController()->getItemSubItemIndex( ownerItem_, this ),
+							caption,
+							false );
+}
+
+ListSubItem::ListSubItem( ListItem* ownerItem, const String& caption, void* data ):
+	data_(data)
+{
+	ownerItem_ = ownerItem;
+	setCaption(caption);
 
 }
+
+
 
 
 String ListItem::getCaption() const
@@ -44,24 +66,37 @@ void ListItem::setCaption( const String& caption )
 	VCF_ASSERT( NULL != lm );
 
 	lm->setAsString( index_, caption, false );
-
-	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
-	ItemChanged( &event );
 }
 
 ListSubItem* ListItem::addSubItem( const String& caption, void* data )
 {
-	return NULL;
+	ListSubItem* result = new ListSubItem(this, caption, data);
+
+	addSubItem( result );
+
+	return result;
 }
 
 void ListItem::addSubItem( ListSubItem* subItem )
 {
+	internalChange_ = true;
+
+	if ( subItem->getListItem() != this ) {
+		subItem->setListItem(this);
+	}
+
+	addComponent( subItem );
 	getController()->insertItemSubItem( this, getController()->getItemSubItemCount(this), subItem );
+	internalChange_ = false;
 }
 
 void ListItem::removeSubItem( const uint32& index )
 {
-	getController()->removeItemSubItem( this, getController()->getItemSubItem(this,index) );
+	ListSubItem* item = getController()->getItemSubItem(this,index);
+	getController()->removeItemSubItem( this, item );
+
+	removeComponent( item );
+	item->free();
 }
 
 bool ListItem::getSubItems( std::vector<ListSubItem*>& subItems )
@@ -79,9 +114,30 @@ uint32 ListItem::getSubItemCount()
 	return getController()->getItemSubItemCount(this);
 }
 
-void ListItem::subItemChanged( ListSubItem* item )
+void ListItem::handleEvent( Event* event )
 {
-	ItemEvent event( this, LISTITEM_EVENT_SUBTITEM_CHANGED );
-	
-	SubItemChanged( &event );
+	Item::handleEvent( event );
+
+	switch ( event->getType() ) {
+		case Component::COMPONENT_ADDED : {
+			ComponentEvent* ev = (ComponentEvent*)event;
+			Component* child = ev->getChildComponent();
+			ListSubItem* item = dynamic_cast<ListSubItem*>(child);
+			if ( NULL != item ) {
+				if ( !internalChange_ ) {
+					if ( item->getListItem() != this ) {
+						item->setListItem(this);
+					}			
+					
+					getController()->insertItemSubItem( this, getController()->getItemSubItemCount(this), item );
+				}
+			}
+		}
+		break;
+
+		case Component::COMPONENT_REMOVED : {
+			
+		}
+		break;
+	}
 }

@@ -11,8 +11,7 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/HeaderControl.h"
-#include "vcf/ApplicationKit/DefaultColumnModel.h"
-#include "vcf/ApplicationKit/DefaultColumnItem.h"
+#include "vcf/ApplicationKit/ColumnModel.h"
 #include "vcf/GraphicsKit/DrawUIState.h"
 
 using namespace VCF;
@@ -28,7 +27,7 @@ HeaderControl::HeaderControl():
 	pressedColumn_(NULL),
 	minColumnWidth_(5)
 {
-	setColumnModel( new DefaultColumnModel() );
+	setColumnModel( new ColumnModel() );
 	addComponent( getViewModel() );
 
 	aligment_ = AlignTop;
@@ -51,7 +50,7 @@ void HeaderControl::setColumnModel( ColumnModel* model )
 ColumnItem* HeaderControl::addColumn( const String& columnName, const double& width )
 {
 	ColumnItem* result = NULL;
-	result = new DefaultColumnItem();
+	result = new ColumnItem();
 	result->setCaption( columnName );
 	result->setWidth( width );
 	columnModel_->add( result );
@@ -67,7 +66,7 @@ void HeaderControl::addColumn( ColumnItem* column )
 ColumnItem* HeaderControl::insertColumn( const uint32& index, const String& columnName, const double& width )
 {
 	ColumnItem* result = NULL;
-	result = new DefaultColumnItem();
+	result = new ColumnItem();
 	result->setCaption( columnName );
 	result->setWidth( width );
 	columnModel_->insert( index, result );

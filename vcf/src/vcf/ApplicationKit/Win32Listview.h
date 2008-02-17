@@ -134,26 +134,6 @@ private:
 	EventHandler* listModelChanged_;
 	EventHandler* columnModelChanged_;
 
-/*
-	ItemHandler* itemAddedHandler_;
-	ItemHandler* itemDeletedHandler_;
-	ItemHandler* itemChangedHandler_;
-	ItemHandler* itemSelectedHandler_;
-	ItemHandler* itemPaintedHandler_;
-
-	ItemHandler* subItemAddedHandler_;
-	ItemHandler* subItemDeletedHandler_;
-	ItemHandler* subItemChangedHandler_;
-*/
-	/*
-	void onSubItemChanged( ItemEvent* event );
-
-	void onSubItemAdded( ItemEvent* event );
-
-	void onSubItemDeleted( ItemEvent* event );
-
-	void updateItemSubItems( ListItem* item );
-*/
 
 	IconStyleType translateStyleToIconStyle( const DWORD& wsStyle );
 	DWORD translateIconStyleToStyleBit( const IconStyleType& iconStyle );
@@ -167,7 +147,7 @@ private:
 
 	void registerHeaderWndProc();
 
-	void postPaintItem( NMLVCUSTOMDRAW* drawItem );
+	void postPaintItem( NMLVCUSTOMDRAW* drawItem );	
 };
 
 

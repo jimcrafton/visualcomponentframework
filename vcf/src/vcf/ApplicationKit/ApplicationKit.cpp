@@ -75,6 +75,10 @@ void ApplicationKit::init( int argc, char** argv )
 
 		REGISTER_CLASSINFO_EXTERNAL( Item );
 		REGISTER_CLASSINFO_EXTERNAL( ListItem );
+		REGISTER_CLASSINFO_EXTERNAL( ListSubItem );
+		REGISTER_CLASSINFO_EXTERNAL( ColumnItem );
+		
+		
 		REGISTER_CLASSINFO_EXTERNAL( Model );
 
 
@@ -89,6 +93,8 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( TreeItem );
 		REGISTER_CLASSINFO_EXTERNAL( ColumnModel );
 		REGISTER_CLASSINFO_EXTERNAL( TreeModel );
+		REGISTER_CLASSINFO_EXTERNAL( TableModel );
+		
 		
 		
 		REGISTER_CLASSINFO_EXTERNAL( Border );
@@ -107,13 +113,12 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( Control );
 		REGISTER_CLASSINFO_EXTERNAL( CustomControl );
 		REGISTER_CLASSINFO_EXTERNAL( ControlContainer );
-//		REGISTER_CLASSINFO_EXTERNAL( DefaultListItem );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultMenuItem );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultListModel );
-		REGISTER_CLASSINFO_EXTERNAL( DefaultColumnModel );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultTextModel );
-//		REGISTER_CLASSINFO_EXTERNAL( DefaultTreeItem );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultTreeModel );
+		REGISTER_CLASSINFO_EXTERNAL( DefaultTableModel );
+
 		REGISTER_CLASSINFO_EXTERNAL( Frame );
 		REGISTER_CLASSINFO_EXTERNAL( Dialog );
 		REGISTER_CLASSINFO_EXTERNAL( Label );
