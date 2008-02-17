@@ -28,7 +28,7 @@ namespace VCF  {
 class APPLICATIONKIT_API ColumnItem : public Item {
 public:
 
-	ColumnItem(): Item(), index_(0){}
+	ColumnItem(): Item(), index_(0),width_(100.0), textAlignment_(taTextLeft){}
 
 	virtual ~ColumnItem(){};
 
@@ -36,13 +36,17 @@ public:
 	*returns the width of the coumn. The width should always be greater
 	*than or equal to 0
 	*/
-	virtual double getWidth() = 0;
+	double getWidth() {
+		return width_;
+	}
 
 	/**
 	*sets the width of the column
 	*@param double width - the new column width
 	*/
-	virtual void setWidth( const double& width ) = 0;
+	void setWidth( const double& width ) {
+		width_ = width;
+	}
 
 	
 
@@ -54,14 +58,18 @@ public:
 	*@param TextAlignmentType teh alignment type for the column
 	*when it is drawn
 	*/
-	virtual void setCaptionAlignment( const TextAlignmentType& alignment ) = 0;
+	void setCaptionAlignment( const TextAlignmentType& alignment ) {
+		textAlignment_ = alignment;
+	}
 
 	/**
 	*gets the current alignment type fopr the column.
 	*@return TextAlignmentType the alignment type of the column
 	@see setCaptionAlignment()
 	*/
-	virtual TextAlignmentType getCaptionAlignment() = 0;
+	TextAlignmentType getCaptionAlignment() {
+		return textAlignment_;
+	}
 
 	virtual uint32 getIndex() const {
 		return index_;
@@ -86,7 +94,14 @@ public:
 	*/
 	String getCaption();
 
+
+	virtual void paint( GraphicsContext* context, Rect* paintRect ) {
+		bounds_ = *paintRect;
+	}
+
 protected:
+	double width_;
+	TextAlignmentType textAlignment_;
 	uint32 index_;
 };
 

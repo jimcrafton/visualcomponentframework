@@ -551,8 +551,33 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 				else {
 					NMHDR* notificationHdr = (LPNMHDR)lParam;
 					if ( notificationHdr->idFrom == 'vcfH' ) {
-						
+						StringUtils::trace(Format("vcfH notify 0x%X\n") % notificationHdr->code );
 						switch ( notificationHdr->code ) {
+							case HDN_GETDISPINFOW : {
+								NMHDDISPINFOW* dispInfo = (NMHDDISPINFOW*)lParam;
+								
+								ColumnModel* cm = this->listviewControl_->getColumnModel();
+								ColumnItem* item = (ColumnItem*)dispInfo->lParam;
+								
+								if ( NULL != cm ) {
+									if ( dispInfo->mask & HDI_IMAGE ) {
+										dispInfo->iImage = item->getImageIndex();
+									}
+									
+									if ( dispInfo->mask & HDI_TEXT ) {
+										
+										String caption = item->getCaption();
+										
+										unsigned int size = VCF::minVal<unsigned int>( caption.size(), dispInfo->cchTextMax );
+										caption.copy( dispInfo->pszText, size );
+										if ( size < dispInfo->cchTextMax ) {
+											dispInfo->pszText[size] = '\0';
+										}
+									}
+								}
+							}
+							break;
+
 							case NM_CUSTOMDRAW : {
 								NMCUSTOMDRAW* cd = (NMCUSTOMDRAW*)lParam;
 								switch ( cd->dwDrawStage ) {
@@ -855,7 +880,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 			wndProcResult = FALSE;
 			result = true;
 		}
-		break;
+		break;	
 
 		case LVN_DELETEALLITEMS:{
 
@@ -910,13 +935,13 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 				if ( NULL != lm ) {
 
 					if ( displayInfo->item.mask & LVIF_IMAGE ) {
-						ListItem* item = listviewControl_->getListItem( displayInfo->item.iItem );
+						ListItem* item = listviewControl_->getItem( displayInfo->item.iItem );
 
 						displayInfo->item.iImage = item->getImageIndex();
 					}
 
 					if ( displayInfo->item.mask & LVIF_PARAM ) {
-						ListItem* item = listviewControl_->getListItem( displayInfo->item.iItem );
+						ListItem* item = listviewControl_->getItem( displayInfo->item.iItem );
 						displayInfo->item.lParam  = (LPARAM)item;
 					}
 
@@ -1026,7 +1051,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 
 			if ( -1 != lvNotificationHdr->iItem ){
 
-				ListItem* item = listviewControl_->getListItem( lvNotificationHdr->iItem );
+				ListItem* item = listviewControl_->getItem( lvNotificationHdr->iItem );
 				if ( NULL != item ){
 					if ( (lvNotificationHdr->uChanged & LVIF_STATE) != 0 ) {
 						internalMessage_ = true;
@@ -1630,42 +1655,31 @@ void Win32Listview::insertHeaderColumn( const uint32& index, const String& colum
 	if ( System::isUnicodeEnabled() ) {
 		LVCOLUMNW column;
 		memset( &column, 0, sizeof(column) );
-		column.mask = LVCF_TEXT | LVCF_FMT | LVCF_WIDTH;
+		column.mask = LVCF_FMT | LVCF_WIDTH;
 		column.cx = (int32)width;
 		column.fmt = LVCFMT_LEFT;
-
-		VCFChar* tmp = new VCFChar[columnName.size()+1];
-		memset( tmp, 0, (columnName.size()+1)*sizeof(VCFChar) );
-
-		columnName.copy( tmp, columnName.size() );
-
-		column.pszText = tmp;
-		column.cchTextMax = columnName.size();
 
 		if ( SendMessage( hwnd_, LVM_INSERTCOLUMNW, (WPARAM)index, (LPARAM)&column ) >= 0 ) {
 			HWND header = ListView_GetHeader( hwnd_ );
 
+			registerHeaderWndProc();
+
 			if ( NULL != header ) {
 				HDITEMW headerItem;
 				memset( &headerItem, 0, sizeof(headerItem) );
-				headerItem.mask = HDI_FORMAT | HDI_LPARAM;
-				Header_GetItem( header, index, &headerItem );
-				//headerItem.fmt |= HDF_OWNERDRAW;
+				headerItem.mask = HDI_LPARAM | HDI_TEXT | HDI_IMAGE | HDI_WIDTH | HDI_FORMAT;
 				
 				ColumnItem* item = listviewControl_->getColumnItem( index );
 
 				headerItem.lParam = (LPARAM)item;
-				
+				headerItem.iImage = I_IMAGECALLBACK;
+				headerItem.pszText = LPSTR_TEXTCALLBACKW;	
+				headerItem.cxy = width;
+				headerItem.fmt = HDF_LEFT | HDF_STRING;	
 
 				int err = SendMessage( header, HDM_SETITEMW, (WPARAM)index, (LPARAM)&headerItem );
 			}
-
-
-			registerHeaderWndProc();
 		}
-
-		delete tmp;
-
 	}
 	else {
 		LVCOLUMNA column;

@@ -24,6 +24,7 @@ This was created to improved compile times
 #include "vcf/ApplicationKit/SimpleListModel.h"
 
 
+
 namespace VCF {
 
 /**
@@ -153,7 +154,12 @@ _abstract_delegate_("VCF::TextModelEventHandler", TextModel, VCF::TextEvent, Tex
 _class_rtti_end_
 */
 
-_class_abstract_rtti_(ColumnItem, "VCF::Item", COLUMNITEM_CLASSID)
+_class_rtti_(ColumnItem, "VCF::Item", COLUMNITEM_CLASSID)
+_property_( String, "caption", getCaption, setCaption, "" );
+_property_( double, "width", getWidth, setWidth, "" );
+_property_enum_labeled_( TextAlignmentType, "captionAlignment", getCaptionAlignment, setCaptionAlignment,
+					   taTextLeft, taTextRight, 3, TextAlignmentTypeNames, "");
+
 _class_rtti_end_
 
 
@@ -238,11 +244,6 @@ _class_rtti_end_
 
 
 _class_abstract_rtti_(Item, "VCF::UIComponent", ITEM_CLASSID)
-_delegate_(ItemDelegate, ItemPaint );
-_delegate_(ItemDelegate, ItemChanged );
-_delegate_(ItemDelegate, ItemSelected );
-_delegate_(ItemDelegate, ItemAdded );
-_delegate_(ItemDelegate, ItemDeleted );
 _property_( int32, "stateImageIndex", getStateImageIndex, setStateImageIndex, "" )
 _property_( int32, "imageIndex", getImageIndex, setImageIndex, "" )
 _property_( bool, "imageIndex", isSelected, setSelected, "" )
@@ -266,9 +267,10 @@ _property_( bool, "grouped", isGrouped, setGrouped, "" )
 _class_rtti_end_
 
 _class_rtti_(ListItem, "VCF::Item", LISTITEM_CLASSID)
-_delegate_(ItemDelegate, SubItemChanged );
-_delegate_(ItemDelegate, SubItemAdded );
-_delegate_(ItemDelegate, SubItemDeleted );
+_property_( String, "caption", getCaption, setCaption, "" )
+_class_rtti_end_
+
+_class_rtti_(ListSubItem, "VCF::UIComponent", LISTSUBITEM_CLASSID)
 _property_( String, "caption", getCaption, setCaption, "" )
 _class_rtti_end_
 
@@ -286,8 +288,8 @@ _class_rtti_end_
 
 
 _class_abstract_rtti_(MenuItem, "VCF::Item", MENUITEM_CLASSID)
-_abstract_delegate_( MenuItemDelegate, MenuItemClicked )
-_abstract_delegate_( MenuItemDelegate, MenuItemUpdate )
+_delegate_( MenuItemDelegate, MenuItemClicked )
+_delegate_( MenuItemDelegate, MenuItemUpdate )
 _property_( String, "caption", getCaption, setCaption, "" )
 _property_( bool, "enabled", isEnabled, setEnabled, "" )
 _property_( bool, "radioItem", getRadioItem, setRadioItem, "" )
@@ -309,16 +311,10 @@ _delegate_(ItemEditorDelegate, CellItemValidateChange )
 _class_rtti_end_
 
 
-/*
-_class_abstract_rtti_(TableModel, "VCF::TableModel", "VCF::AbstractModel", TABLEMODEL_CLASSID )
-_delegate_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableCellAdded )
-_delegate_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableCellDeleted )
-_delegate_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableRowsAdded )
-_delegate_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableRowsDeleted )
-_delegate_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableColumnsAdded )
-_delegate_( "VCF::TableModelEventHandler", TableModel, VCF::TableModelEvent, TableColumnsDeleted )
-_class_rtti_end_(TableModel);
-*/
+
+_class_abstract_rtti_(TableModel, "VCF::Model", TABLEMODEL_CLASSID )
+_class_rtti_end_
+
 
 
 
@@ -391,34 +387,12 @@ _property_( bool, "useColorForBackground", getUseColorForBackground, setUseColor
 _class_rtti_end_
 
 
-_class_rtti_(DefaultColumnItem, "VCF::ColumnItem", DEFAULTCOLUMNITEM_CLASSID)
-_delegate_(ItemDelegate, ItemPaint );
-_delegate_(ItemDelegate, ItemChanged );
-_delegate_(ItemDelegate, ItemSelected );
-_delegate_(ItemDelegate, ItemAdded );
-_delegate_(ItemDelegate, ItemDeleted );
-_class_rtti_end_
-
-_class_rtti_(DefaultColumnModel, "VCF::ColumnModel", DEFAULTCOLUMNMODEL_CLASSID)
-_class_rtti_end_
 
 _class_rtti_(DefaultMenuItem, "VCF::MenuItem", DEFAULTMENUITEM_CLASSID)
 _delegate_( MenuItemDelegate, MenuItemClicked )
 _delegate_( MenuItemDelegate, MenuItemUpdate )
 _class_rtti_end_
 
-/*
-_class_rtti_(DefaultListItem, "VCF::ListItem", DEFAULTLISTITEM_CLASSID)
-_delegate_(ItemDelegate, ItemPaint );
-_delegate_(ItemDelegate, ItemChanged );
-_delegate_(ItemDelegate, ItemSelected );
-_delegate_(ItemDelegate, ItemAdded );
-_delegate_(ItemDelegate, ItemDeleted );
-_delegate_(ItemDelegate, SubItemChanged );
-_delegate_(ItemDelegate, SubItemAdded );
-_delegate_(ItemDelegate, SubItemDeleted );
-_class_rtti_end_
-*/
 
 _class_rtti_(ColumnModel, "VCF::SimpleListModel", COLUMNMODEL_CLASSID)
 _class_rtti_end_
@@ -433,29 +407,17 @@ _class_rtti_end_
 
 
 _class_rtti_(DefaultTabPage, "VCF::TabPage", DEFAULTTABPAGE_CLASSID)
-	_delegate_(ItemDelegate, ItemPaint );
-	_delegate_(ItemDelegate, ItemChanged );
-	_delegate_(ItemDelegate, ItemSelected );
-	_delegate_(ItemDelegate, ItemAdded );
-_delegate_(ItemDelegate, ItemDeleted );
 
 _class_rtti_end_
 
 
 _class_rtti_(DefaultTableCellItem, "VCF::TableCellItem", DEFAULTTABLECELLITEM_CLASSID)
-	_delegate_(ItemDelegate, ItemPaint );
-	_delegate_(ItemDelegate, ItemChanged );
-	_delegate_(ItemDelegate, ItemSelected );
-	_delegate_(ItemDelegate, ItemAdded );
-	_delegate_(ItemDelegate, ItemDeleted );
 
 _class_rtti_end_
 
 
 
-//this class (and some other model classes) has some inheritance issues that
-//need to be cleared up - it affects the delegates
-_class_rtti_(DefaultTableModel, "VCF::Model", DEFAULTTABLEMODEL_CLASSID )
+_class_rtti_(DefaultTableModel, "VCF::TableModel", DEFAULTTABLEMODEL_CLASSID )
 //	_delegate_( TableModelDelegate, TableCellAdded )
 //	_delegate_( TableModelDelegate, TableCellDeleted )
 //	_delegate_( TableModelDelegate, TableRowsAdded )
@@ -471,15 +433,6 @@ _class_rtti_end_
 _class_rtti_(DefaultTextModel, "VCF::TextModel", DEFAULTTEXTMODEL_CLASSID)	
 _class_rtti_end_
 
-/*
-_class_rtti_(DefaultTreeItem, "VCF::TreeItem", DEFAULTTREEITEM_CLASSID)
-	_delegate_(ItemDelegate, ItemPaint );
-	_delegate_(ItemDelegate, ItemChanged );
-	_delegate_(ItemDelegate, ItemSelected );
-	_delegate_(ItemDelegate, ItemAdded );
-	_delegate_(ItemDelegate, ItemDeleted );
-_class_rtti_end_
-*/
 
 _class_rtti_(DefaultTreeModel, "VCF::Model", DEFAULTTREEMODEL_CLASSID)
 	_delegate_(TreeModelDelegate, NodeAdded )

@@ -47,8 +47,6 @@ void DefaultTabPage::setPageName( const String& name )
 	VCF_ASSERT( NULL != tm );
 
 	tm->setAsString( index_, name, false );
-	ItemEvent event( this, ITEM_EVENT_TEXT_CHANGED );
-	ItemChanged( &event );
 }
 
 String DefaultTabPage::getPageName()

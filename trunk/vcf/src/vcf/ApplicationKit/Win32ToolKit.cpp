@@ -2893,7 +2893,7 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 				//handle some special case messages here that wouldn't ordinarily get caught
 				//because they are from child windows of a common control (like the header control in a listview)
 				switch ( notificationHdr->code ) {
-				case HDN_ITEMCHANGING: case HDN_TRACK: case HDN_ENDTRACK : case HDN_BEGINTRACK: {
+				case HDN_GETDISPINFOW : case HDN_ITEMCHANGING: case HDN_TRACK: case HDN_ENDTRACK : case HDN_BEGINTRACK: {
 						HWND parent = ::GetParent( notificationHdr->hwndFrom );
 						win32Obj = Win32Object::getWin32ObjectFromHWND( parent );
 						if ( NULL != win32Obj ){

@@ -137,7 +137,7 @@ typedef Delegate1<TableModelEvent*> TableModelDelegate;
 typedef TableModelDelegate::ProcedureType TableModelHandler;
 
 
-
+#define TABLEMODEL_CLASSID		"3f215738-a52d-459a-a82b-0a3e7d174714"
 
 /**
 \class TableModel TableModel.h "vcf/ApplicationKit/TableModel.h"

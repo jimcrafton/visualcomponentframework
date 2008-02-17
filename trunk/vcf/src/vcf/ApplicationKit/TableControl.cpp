@@ -559,9 +559,6 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 
 					TableCellItem* item = getItem( row, col );
 					if ( NULL != item ){
-						if ( NULL != itemHandler ) {
-							item->ItemSelected += itemHandler;
-						}
 						item->setControl( this );
 						item->setColor( getDefaultTableCellColor() );
 						item->setFont( getDefaultTableCellFont() );
@@ -594,10 +591,7 @@ void TableControl::onTableModelChanged( TableModelEvent* event )
 				for (uint32 col=0;col<colCount;col++ ) {
 					
 					TableCellItem* item = getItem( row, col );
-					if ( NULL != item ){
-						if ( NULL != itemHandler ) {
-							item->ItemSelected += itemHandler;
-						}
+					if ( NULL != item ){						
 						item->setControl( this );
 						item->setColor( getDefaultTableCellColor() );
 						item->setFont( getDefaultTableCellFont() );

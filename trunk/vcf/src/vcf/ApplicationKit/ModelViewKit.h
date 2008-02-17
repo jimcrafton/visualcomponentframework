@@ -148,13 +148,6 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/DefaultTreeModel.h"
 #endif // _VCF_DEFAULTTREEMODEL_H__
 
-#ifndef _VCF_DEFAULTCOLUMNMODEL_H__
-#	include "vcf/ApplicationKit/DefaultColumnModel.h"
-#endif // _VCF_DEFAULTCOLUMNMODEL_H__
-
-#ifndef _VCF_DEFAULTCOLUMNITEM_H__
-#	include "vcf/ApplicationKit/DefaultColumnItem.h"
-#endif // _VCF_DEFAULTCOLUMNITEM_H__
 
 #ifndef _VCF_DEFAULTTABPAGE_H__
 #	include "vcf/ApplicationKit/DefaultTabPage.h"
