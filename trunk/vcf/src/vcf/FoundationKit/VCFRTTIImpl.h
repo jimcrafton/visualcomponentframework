@@ -1076,6 +1076,113 @@ private:
 	GetSizeForKeyFunction getSizeForKeyFunc_;
 };
 
+
+
+
+/**
+\class TypedDictionaryProperty VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
+*TypedDictionaryProperty represents a type safe wrapper around properties that
+*are dictionaries of items.
+*/
+template <typename ValueType,typename KeyType>
+class TypedDictionaryProperty : public Property {
+public:
+	typedef ValueType (Object::*GetFunction)( const KeyType& );
+	typedef void (Object::*SetFunction)( const KeyType&, const ValueType& );
+
+	TypedDictionaryProperty( GetFunction getFunc, SetFunction setFunc,
+							const PropertyDescriptorType& propertyType ){
+
+		init();
+		getFunc_ = getFunc;
+		setFunc_ = setFunc;
+		setType( propertyType );
+	};
+
+	TypedDictionaryProperty( const TypedDictionaryProperty<ValueType,KeyType>& prop ):
+		Property( prop ){
+
+		init();
+		getFunc_ = prop.getFunc_;
+		setFunc_ = prop.setFunc_;
+		insertFunc_ = prop.insertFunc_;
+		deleteFunc_ = prop.deleteFunc_;
+		getSizeFunc_ = prop.getSizeFunc_;
+		getSizeForKeyFunc_ = prop.getSizeForKeyFunc_;
+	};
+
+	void init(){
+		getFunc_ = NULL;
+		setFunc_ = NULL;
+		isCollection_ = true;
+		isReadOnly_ = true;		
+	};
+
+	virtual ~TypedDictionaryProperty(){};
+
+	virtual String getTypeClassName() {
+		return StringUtils::getClassNameFromTypeInfo( typeid(ValueType) );
+	}
+
+	virtual VariantData* get( Object* source ){
+		return NULL;
+	};
+
+	virtual void set( Object* source, VariantData* value ){
+		//no-op
+	};
+
+	virtual Property* clone(){
+		return new TypedDictionaryProperty<ValueType,KeyType>(*this);
+	};
+
+	virtual uint32 getCollectionCount( Object* source ) {
+		return 0;
+	}
+
+	virtual uint32 getCollectionCount( Object* source, const VariantData& key ) {
+		return 0;
+	}
+	
+	virtual VariantData* getAtKey( const VariantData& key, Object* source ){
+		VariantData* result = NULL;
+		if ( (NULL != source) && (NULL != getFunc_) ){
+			try {
+				value_.setNull();
+				value_ = (source->*getFunc_)( (KeyType)key );
+
+				if ( !value_.isNull() ) {
+					result = &value_;
+				}
+			}
+			catch ( BasicException& ) {
+				
+			}
+		}
+
+		return result;
+	};
+
+	virtual void setAtKey( const VariantData& key, VariantData* value, Object* source, bool addMissingValues ){
+		if ( (NULL != value) && (NULL != source) && (NULL != setFunc_) ){			
+			(source->*setFunc_)( (KeyType)key, (ValueType)(*value) );
+		}
+	};
+
+	virtual void add( Object* source, VariantData* value ){}
+
+	virtual void insert( const VariantData& key, VariantData* value, Object* source ){}
+	
+	virtual void remove( const VariantData& key, Object* source ){}
+
+	virtual bool collectionSupportsEditing() {
+		return true;
+	}
+private:
+	GetFunction getFunc_;
+	SetFunction setFunc_;	
+};
+
 /**
 \class TypedObjectCollectionProperty VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
 *TypedCollectionProperty represents a type safe wrapper around properties that
@@ -1219,6 +1326,134 @@ private:
 	DeleteFunction deleteFunc_;
 	GetSizeFunction getSizeFunc_;
 };
+
+
+
+
+
+/**
+\class TypedObjectCollectionProperty VCFRTTIImpl.h "vcf/FoundationKit/VCFRTTIImpl.h"
+*TypedCollectionProperty represents a type safe wrapper around properties that
+*are enumerations of Object* derived items.
+*/
+template <typename ValueType,typename KeyType>
+class TypedObjectDictionaryProperty : public Property {
+public:
+	
+	typedef ValueType* ObjectType;
+	typedef ObjectType (Object::*GetFunction)( const KeyType& );
+	typedef void (Object::*SetFunction)( const KeyType&, ObjectType );
+	typedef uint32 (Object::*GetKeys)( std::vector<KeyType>& );
+
+	TypedObjectDictionaryProperty( GetFunction getFunc, 
+									SetFunction setFunc, 
+									GetKeys getKeysFunc,
+									const PropertyDescriptorType& propertyType ){
+
+		init();
+		getFunc_ = getFunc;
+		setFunc_ = setFunc;
+		getKeysFunc_ = getKeysFunc;
+		setType( propertyType );
+	};
+
+	TypedObjectDictionaryProperty( const TypedObjectDictionaryProperty<ValueType,KeyType>& prop ):
+		Property( prop ){
+
+		init();
+		getFunc_ = prop.getFunc_;
+		setFunc_ = prop.setFunc_;
+		getKeysFunc_ = prop.getKeysFunc_;
+	};
+
+	void init(){
+		getFunc_ = NULL;
+		setFunc_ = NULL;
+		getKeysFunc_ = NULL;
+		isCollection_ = true;
+		isReadOnly_ = true;
+	};
+
+	virtual ~TypedObjectDictionaryProperty(){};
+
+	virtual String getTypeClassName() {
+		return StringUtils::getClassNameFromTypeInfo( typeid(ValueType) );
+	}
+
+	virtual VariantData* get( Object* source ){
+		return NULL;
+	};
+
+	virtual void set( Object* source, VariantData* value ){
+		//no-op
+	};
+
+	virtual Property* clone(){
+		return new TypedObjectDictionaryProperty<ValueType,KeyType>(*this);
+	};
+
+	virtual uint32 getCollectionCount( Object* source ) {
+		return 0;
+	}
+	
+	virtual uint32 getCollectionKeys( Object* source, std::vector<VariantData>& keys ) {
+		if ( (NULL != source) && (NULL != getKeysFunc_) ){
+			std::vector<KeyType> rawKeys;
+			(source->*getKeysFunc_)( rawKeys );
+			std::vector<KeyType>::iterator it = rawKeys.begin();			
+			while ( it != rawKeys.end() ) {
+				keys.push_back( VariantData( *it ) );
+				++it;
+			}
+		}
+		return keys.size();
+	}
+
+	virtual VariantData* getAtKey( const VariantData& key, Object* source ){
+		VariantData* result = NULL;
+		if ( (NULL != source) && (NULL != getFunc_) ){
+			try {
+				value_.setNull();
+				value_ = (source->*getFunc_)( (KeyType)key );
+
+				if ( !value_.isNull() ) {
+					result = &value_;
+				}
+			}
+			catch ( BasicException& ) {
+				
+			}
+		}
+
+		return result;
+	};
+
+	virtual void setAtKey( const VariantData& key, VariantData* value, Object* source, bool addMissingValues ){
+		if ( (NULL != value) && (NULL != source) && (NULL != setFunc_) ){			
+			(source->*setFunc_)( (KeyType)key, (ObjectType)(Object*)(*value) );
+		}
+	};
+
+	virtual void add( Object* source, VariantData* value ){}
+
+	virtual void insert( const VariantData& key, VariantData* value, Object* source ){
+		if ( (NULL != value) && (NULL != source) && (NULL != setFunc_) ){			
+			(source->*setFunc_)( (KeyType)key, (ObjectType)(Object*)(*value) );
+		}
+	}
+	
+	virtual void remove( const VariantData& key, Object* source ){}
+
+	virtual bool collectionSupportsEditing() {
+		return setFunc_ != NULL;
+	}
+private:
+	GetFunction getFunc_;
+	SetFunction setFunc_;
+	GetKeys getKeysFunc_;
+};
+
+
 
 
 
@@ -3415,6 +3650,33 @@ void registerCollectionProperty( const String& className,
 
 
 template <typename ValueType, typename KeyType>
+void registerDictionaryProperty( const String& className,
+								 const String& propertyName,
+								 _typename_ TypedDictionaryProperty<ValueType,KeyType>::GetFunction getFunc,
+								 _typename_ TypedDictionaryProperty<ValueType,KeyType>::SetFunction setFunc,
+								 const String& description )
+{
+
+	Class* clazz = ClassRegistry::getClass( className );
+	if ( NULL != clazz ){
+		if ( !clazz->hasProperty( propertyName ) ){
+			Property* newProperty = NULL;
+
+		
+			newProperty = new TypedDictionaryProperty<ValueType,KeyType>( getFunc,setFunc,
+														getDescriptor(typeid(ValueType)) );
+				
+
+			newProperty->setDescription( description );
+			newProperty->setName( propertyName );
+			clazz->addProperty( newProperty );
+		}
+	}
+}
+
+
+
+template <typename ValueType, typename KeyType>
 void registerObjectCollectionProperty( const String& className,
 								 const String& propertyName,
 								 _typename_ TypedObjectCollectionProperty<ValueType,KeyType>::GetFunction getFunc,
@@ -3439,6 +3701,35 @@ void registerObjectCollectionProperty( const String& className,
 		}
 	}
 }
+
+
+
+
+template <typename ValueType, typename KeyType>
+void registerObjectDictionaryProperty( const String& className,
+								 const String& propertyName,
+								 _typename_ TypedObjectDictionaryProperty<ValueType,KeyType>::GetFunction getFunc,
+								 _typename_ TypedObjectDictionaryProperty<ValueType,KeyType>::SetFunction setFunc,
+								 _typename_ TypedObjectDictionaryProperty<ValueType,KeyType>::GetKeys getKeysFunc,
+								 const String& description )
+{
+
+	Class* clazz = ClassRegistry::getClass( className );
+	if ( NULL != clazz ){
+		if ( !clazz->hasProperty( propertyName ) ){
+			Property* newProperty = 
+				new TypedObjectDictionaryProperty<ValueType,KeyType>( getFunc,setFunc,getKeysFunc,
+														getDescriptor(typeid(ValueType)) );
+
+			newProperty->setDescription( description );
+			newProperty->setName( propertyName );
+			clazz->addProperty( newProperty );
+		}
+	}
+}
+
+
+
 
 /**
 *registers a new method with a Class

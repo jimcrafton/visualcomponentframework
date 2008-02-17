@@ -295,6 +295,9 @@ void Application::setMainWindow( Window* mainWindow )
 	}
 	mainWindow_ = mainWindow;
 	if ( NULL != mainWindow_ && NULL != wl ){
+		
+		addComponent( mainWindow_ );
+
 		mainWindow_->FrameClose.add( wl );
 	}
 }
@@ -308,7 +311,9 @@ void Application::onMainWindowClose( WindowEvent* event )
 {
 	Control* comp = (Control*)event->getSource();
 
+	comp->storeSettings(true);
 
+	removeComponent( comp );
 }
 
 
@@ -319,6 +324,8 @@ void Application::terminateRunningApplication()
 			//note an error
 		}
 	}
+
+	storeSettings(true);
 
 	/**
 	JC - I moved this code here to guarantee that the main window is

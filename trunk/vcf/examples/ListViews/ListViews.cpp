@@ -31,6 +31,9 @@ public:
 		Window* mainWindow = Frame::createWindow( classid(ListViews) );
 
 		setMainWindow(mainWindow);
+		
+		mainWindow->initializeSettings(true);
+
 		mainWindow->show();
 		
 
@@ -71,6 +74,9 @@ public:
 		item->MenuItemClicked += new AppHandler( this, &ListViewsApplication::addSubItem, "addSubItem" );
 
 		
+
+		
+
 		
 		return result;
 	}

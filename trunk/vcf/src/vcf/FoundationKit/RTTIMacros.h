@@ -311,6 +311,13 @@ you are finished defining your RTTI.
 		VCF::String(description) ); \
 	\
 
+#define _property_dictionary_( type, key, propName, getFunc, setFunc, description ) \
+	VCF::registerDictionaryProperty<type,key>( tmpClassName, VCF::String(propName), \
+		(VCF::TypedDictionaryProperty<type,key>::GetFunction)&RttiClassType::getFunc, \
+		(VCF::TypedDictionaryProperty<type,key>::SetFunction)&RttiClassType::setFunc, \
+		VCF::String(description) ); \
+	\
+
 
 
 
@@ -335,6 +342,15 @@ you are finished defining your RTTI.
 		(VCF::TypedObjectCollectionProperty<type,key>::GetSizeFunction)&RttiClassType::getSizeFunc, \
 		VCF::String(description) ); \
 	\
+
+#define _property_obj_dictionary_( type, key, propName, getFunc, setFunc, getKeysFunc, description ) \
+	VCF::registerObjectDictionaryProperty<type,key>( tmpClassName, VCF::String(propName), \
+		(VCF::TypedObjectDictionaryProperty<type,key>::GetFunction)&RttiClassType::getFunc, \
+		(VCF::TypedObjectDictionaryProperty<type,key>::SetFunction)&RttiClassType::setFunc, \
+		(VCF::TypedObjectDictionaryProperty<type,key>::GetKeys)&RttiClassType::getKeysFunc, \
+		VCF::String(description) ); \
+	\
+
 
 
 

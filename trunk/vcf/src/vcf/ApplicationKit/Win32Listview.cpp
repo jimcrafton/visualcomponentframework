@@ -550,8 +550,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 				}
 				else {
 					NMHDR* notificationHdr = (LPNMHDR)lParam;
-					if ( notificationHdr->idFrom == 'vcfH' ) {
-						StringUtils::trace(Format("vcfH notify 0x%X\n") % notificationHdr->code );
+					if ( notificationHdr->idFrom == 'vcfH' ) {						
 						switch ( notificationHdr->code ) {
 							case HDN_GETDISPINFOW : {
 								NMHDDISPINFOW* dispInfo = (NMHDDISPINFOW*)lParam;

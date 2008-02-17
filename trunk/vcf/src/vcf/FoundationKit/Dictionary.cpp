@@ -151,6 +151,13 @@ Dictionary::Value Dictionary::get(const Dictionary::Key& key) const
 	return result;
 }
 
+bool Dictionary::keyExists(const Key& key) const
+{
+	DictionaryMap::const_iterator found = data_.find( key );
+
+	return found != data_.end();
+}
+
 
 void Dictionary::insert( const Dictionary::Key& key, const Dictionary::Value& value )
 {

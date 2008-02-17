@@ -227,6 +227,11 @@ public:
 	Value get(const Key& key) const;
 
 
+	/**
+	Returns whether or not the specified key exists in the collection
+	*/
+	bool keyExists(const Key& key) const;
+
 
 	void insert( const Key& key, const Value& value );
 
