@@ -869,26 +869,29 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 						//get old selected item from tree control
 
 						TreeItem* prevItem = treeControl_->getSelectedItem();
-						TreeModel::Key key = prevItem->getKey();
-						std::map<TreeModel::Key,HTREEITEM>::iterator found =
-							treeItems_.find( key );
-						
-						if ( found != treeItems_.end() ){
-							HTREEITEM hItem = found->second;
 
-							if ( hItem != treeview->itemOld.hItem ) {
+						if ( prevItem )
+						{
+							TreeModel::Key key = prevItem->getKey();
+							std::map<TreeModel::Key,HTREEITEM>::iterator found =
+								treeItems_.find( key );
+						
+							if ( found != treeItems_.end() ){
+								HTREEITEM hItem = found->second;
+
+								if ( hItem != treeview->itemOld.hItem ) {
 								
-								TVITEM tvItem = {0};
-								tvItem.hItem = hItem;
-								tvItem.mask = TVIF_STATE ;
-								tvItem.stateMask = TVIS_SELECTED;
+									TVITEM tvItem = {0};
+									tvItem.hItem = hItem;
+									tvItem.mask = TVIF_STATE ;
+									tvItem.stateMask = TVIS_SELECTED;
 								
-								tvItem.state = tvItem.state &= ~TVIS_SELECTED;
+									tvItem.state = tvItem.state &= ~TVIS_SELECTED;
 								
-								TreeView_SetItem( hwnd_, &tvItem );
+									TreeView_SetItem( hwnd_, &tvItem );
+								}
 							}
 						}
-
 
 						item->setSelected( true );
 					}
