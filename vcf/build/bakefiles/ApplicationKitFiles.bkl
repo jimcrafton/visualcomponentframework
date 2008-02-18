@@ -71,9 +71,6 @@
         vcf/ApplicationKit/DataObject.h
         vcf/ApplicationKit/DataObjectPeer.h
         vcf/ApplicationKit/DataTypeNotSupportedException.h
-        vcf/ApplicationKit/DefaultColumnItem.h
-        vcf/ApplicationKit/DefaultColumnModel.h
-        vcf/ApplicationKit/DefaultListItem.h
         vcf/ApplicationKit/DefaultListModel.h
         vcf/ApplicationKit/DefaultMenuItem.h
         vcf/ApplicationKit/DefaultPropertyEditors.h
@@ -233,9 +230,6 @@
         vcf/ApplicationKit/CursorManager.cpp
         vcf/ApplicationKit/CustomControl.cpp
         vcf/ApplicationKit/DataObject.cpp
-        vcf/ApplicationKit/DefaultColumnItem.cpp
-        vcf/ApplicationKit/DefaultColumnModel.cpp
-        vcf/ApplicationKit/DefaultListItem.cpp
         vcf/ApplicationKit/DefaultListModel.cpp
         vcf/ApplicationKit/DefaultMenuItem.cpp
         vcf/ApplicationKit/DefaultPropertyEditors.cpp
