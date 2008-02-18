@@ -31,15 +31,7 @@ public:
 	virtual Win32Object::CreateParams createParams();
 
 	virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc = NULL);
-
-	virtual void addItem( ListItem * item );
-
-	virtual void insertItem( const uint32& index, ListItem * item );
-
-	virtual void clear();
-
-	virtual void deleteItem( ListItem* item );
-
+	
 	virtual bool ensureVisible(ListItem * item, bool partialOK );
 
 	virtual void setFocusedItem(ListItem * item);
@@ -60,12 +52,6 @@ public:
 
 	virtual void rangeSelect( Rect* selectionRect );
 
-	virtual void addHeaderColumn( const String& columnName, const double& width );
-
-	virtual void insertHeaderColumn( const uint32& index, const String& columnName, const double& width );
-
-	virtual void deleteHeaderColumn( const uint32& index );
-
 	virtual IconStyleType getIconStyle();
 
 	virtual void setIconStyle( const IconStyleType& iconStyle );
@@ -81,25 +67,10 @@ public:
 	virtual bool getAllowLabelEditing();
 
 	virtual void setAllowLabelEditing( const bool& allowLabelEditing );
-/*
-	void onItemPaint( ItemEvent* event );
-
-	void onItemChanged( ItemEvent* event );
-
-	void onItemSelected( ItemEvent* event );
-
-	void onItemAdded( ItemEvent* event );
-
-	void onItemDeleted( ItemEvent* event );
-	*/
 
 	virtual void setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type=ListViewControl::lcatAutoSizeNone );
 
 	virtual double getColumnWidth( const uint32& index );
-
-	virtual void setColumnName( const uint32& index, const String& columnName );
-
-	virtual String getColumnName( const uint32& index );
 
 	virtual void sort( ItemSort* itemSortFunctor );
 
@@ -129,12 +100,9 @@ private:
 	void onCtrlModelChanged( Event* e );
 	void onListModelChanged( Event* e );
 	void onColumnModelChanged( Event* e );
-
-	EventHandler* ctrlModelChanged_;
-	EventHandler* listModelChanged_;
-	EventHandler* columnModelChanged_;
-
-
+	void onColumnModelAdded( Event* e );
+	void onColumnModelRemoved( Event* e );
+	
 	IconStyleType translateStyleToIconStyle( const DWORD& wsStyle );
 	DWORD translateIconStyleToStyleBit( const IconStyleType& iconStyle );
 

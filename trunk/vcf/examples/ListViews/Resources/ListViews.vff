@@ -30,6 +30,10 @@ object ListViewsWindow : Window
 		//objects
 		object li1 : VCF::ListItem 
 			caption = 'blah blah blah'
+			font.name = 'Verdana'
+			font.pointSize = 12
+			font.bold = true
+
 			object si : VCF::ListSubItem
 				caption = 'stuffy nose'
 			end
@@ -37,6 +41,11 @@ object ListViewsWindow : Window
 
 		object col1 : VCF::ColumnItem 
 			caption = 'Gargle'
+			font.name = 'Times New Roman'
+			font.pointSize = 12
+			font.bold = true
+			font.italic = true
+			font.color = 'blue'
 		end
 		
 	end

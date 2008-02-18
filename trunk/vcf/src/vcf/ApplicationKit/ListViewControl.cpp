@@ -267,7 +267,7 @@ void ListViewControl::onItemDeleted( ListModelEvent* event )
 		}
 
 
-		items_.erase( found );		
+		items_.erase( found );
 		
 		removeComponent( item );
 		item->free();
@@ -277,32 +277,42 @@ void ListViewControl::onItemDeleted( ListModelEvent* event )
 
 ColumnItem* ListViewControl::addHeaderColumn( const String& columnName, const double& width )
 {
-	ColumnItem* result = NULL;
-	result = new ColumnItem();
-	result->setCaption( columnName );
-	result->setWidth( width );
-	columnModel_->add( result );
-
-	return result;
+	return insertHeaderColumn( columnModel_->getCount(), columnName, width );
 }
 
 void ListViewControl::addHeaderColumn( ColumnItem* column )
 {
-	columnModel_->add( column );
+	insertHeaderColumn( columnModel_->getCount(), column );
 }
 
 void ListViewControl::insertHeaderColumn( const uint32& index, ColumnItem* column )
 {
-	columnModel_->insert( index, column );
+	inCallbackChange_ = true;
+	columnModel_->insert( index, "" );//add empty
+	column->setControl( this );
+	column->setModel( getColumnModel() );
+	column->setIndex( index );
+	addComponent( column );
+	columnItems_.insert( columnItems_.begin() + index, column );
+
+	VCF_ASSERT( columnItems_.size() == columnModel_->getCount() );
+
+	inCallbackChange_ = false;
 }
 
 ColumnItem* ListViewControl::insertHeaderColumn( const uint32& index, const String& columnName, const double& width )
 {
 	ColumnItem* result = NULL;
-	result = new ColumnItem();
-	result->setCaption( columnName );
+	
+	internalModelChange_ = true;
+
+	columnModel_->insert( index, columnName );
+
+	internalModelChange_ = false;
+
+	result = getColumnItem( index );
 	result->setWidth( width );
-	columnModel_->insert( index, result );
+	repaint();
 
 	return result;
 }
@@ -319,8 +329,6 @@ String ListViewControl::getColumnName( const uint32& index )
 
 void ListViewControl::setColumnName( const uint32& index, const String& columnName )
 {
-//	ColumnItem* item = columnModel_->getItemFromIndex( index );
-//	item->setCaption( columnName );
 	columnModel_->setAsString( index, columnName, false );
 }
 
@@ -387,46 +395,44 @@ void ListViewControl::setItemFocused( ListItem* item )
 	listviewPeer_->setFocusedItem( item );
 }
 
-void ListViewControl::onListModelEmptied( ModelEvent* event )
-{
-	listviewPeer_->clear();
-}
 
 void ListViewControl::onColumnItemAdded( ListModelEvent* event )
 {
+	if ( internalModelChange_ ) {
+		return;
+	}
+
 	inCallbackChange_ = true;
 	ColumnItem* item = new ColumnItem();
 	item->setControl( this );
 	item->setModel( getColumnModel() );
 	item->setIndex( event->index );
 	addComponent( item );
-	columnItems_.insert( columnItems_.begin() + event->index, item );	
-
-	listviewPeer_->insertHeaderColumn( item->getIndex(), item->getCaption(), item->getWidth() );
-
-	//CallBack* columnItemChanged = getCallback( "ListViewControl::onColumnItemChanged" );
-	//if ( NULL == columnItemChanged ) {
-	//	columnItemChanged = new ClassProcedure1<ItemEvent*,ListViewControl>( this,
-	//																&ListViewControl::onColumnItemChanged,
-	//																"ListViewControl::onColumnItemChanged" );
-	//}
+	columnItems_.insert( columnItems_.begin() + event->index, item );
 
 	inCallbackChange_ = false;
 }
 
 void ListViewControl::onColumnItemDeleted( ListModelEvent* event )
 {
-	//ColumnItem* item = event->getColumnItem();
+	inCallbackChange_ = true;
 
-	listviewPeer_->deleteHeaderColumn( event->index );
+	ColumnItem* item = this->getColumnItem( event->index );
+
+	columnItems_.erase( columnItems_.begin() + event->index );
+
+	removeComponent( item );
+
+	item->free();
+
+	inCallbackChange_ = false;
 }
 
 void ListViewControl::onColumnItemChanged( ItemEvent* event )
 {
 	ColumnItem* item = (ColumnItem*)event->getSource();
 
-	uint32 index = item->getIndex();
-	listviewPeer_->setColumnName( index, item->getCaption() );
+	uint32 index = item->getIndex();	
 	listviewPeer_->setColumnWidth( index, item->getWidth() );
 }
 
@@ -581,7 +587,8 @@ void ListViewControl::handleEvent( Event* event )
 			else {
 				ColumnItem* columnItem = dynamic_cast<ColumnItem*>(child);
 				if ( NULL != columnItem ) {
-					if ( !inCallbackChange_ ) {						
+					if ( !inCallbackChange_ ) {
+						internalModelChange_ = true;
 						columnItem->setControl( this );
 						columnItem->setModel( getColumnModel() );
 
@@ -591,7 +598,8 @@ void ListViewControl::handleEvent( Event* event )
 						columnItem->setIndex( columnModel_->getCount()-1 );
 						columnItems_.insert( columnItems_.begin() + columnItem->getIndex(), columnItem );	
 						
-						listviewPeer_->insertHeaderColumn( columnItem->getIndex(), "", columnItem->getWidth() );
+						//listviewPeer_->insertHeaderColumn( columnItem->getIndex(), "", columnItem->getWidth() );
+						internalModelChange_ = false;
 					}
 
 				}
