@@ -27,15 +27,7 @@ class ListItem;
 
 class APPLICATIONKIT_API ListviewPeer : public VCF::Interface {
 public:
-	virtual ~ListviewPeer(){};
-
-	virtual void addItem( ListItem * item ) = 0;
-
-	virtual void insertItem( const uint32& index, ListItem * item ) = 0;
-
-	virtual void clear() = 0;
-
-	virtual void deleteItem( ListItem* item ) = 0;
+	virtual ~ListviewPeer(){};	
 
 	virtual bool ensureVisible(ListItem * item, bool partialOK ) = 0;
 
@@ -56,20 +48,10 @@ public:
 	virtual Enumerator<ListItem*>* getSelectedItems() = 0;
 
 	virtual void rangeSelect( Rect* selectionRect ) = 0;
-
-	virtual void addHeaderColumn( const String& columnName, const double& width ) = 0;
-
-	virtual void insertHeaderColumn( const uint32& index, const String& columnName, const double& width ) = 0;
-
-	virtual void deleteHeaderColumn( const uint32& index ) = 0;
-
+	
 	virtual void setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type=ListViewControl::lcatAutoSizeNone ) = 0;
 
 	virtual double getColumnWidth( const uint32& index ) = 0;
-
-	virtual void setColumnName( const uint32& index, const String& columnName ) = 0;
-
-	virtual String getColumnName( const uint32& index ) = 0;
 
 	virtual void sort( ItemSort* itemSortFunctor ) = 0;
 
