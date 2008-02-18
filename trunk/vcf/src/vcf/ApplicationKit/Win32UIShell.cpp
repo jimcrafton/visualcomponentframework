@@ -451,7 +451,7 @@ void Win32UIShell::createFileAssociation( const FileAssociationInfo& info )
 {
 	String ext = info.extension;
 	if ( ext[0] != '.' ) {
-		ext.insert( 0, '.' );
+		ext.insert( 0, "." );
 	}
 	
 	Registry reg;
