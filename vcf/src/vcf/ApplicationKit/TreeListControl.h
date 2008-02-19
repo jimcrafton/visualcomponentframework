@@ -45,7 +45,9 @@ class HeaderControl;
 
 
 
-class APPLICATIONKIT_API TreeListControl : public CustomControl, public DelegatedContainer<TreeListControl> {
+class APPLICATIONKIT_API TreeListControl : public CustomControl, 
+											public DelegatedContainer<TreeListControl>,
+											public TreeController {
 public:
 
 	TreeListControl();
@@ -70,9 +72,11 @@ public:
 	DELEGATE(ItemDelegate,ItemStateChangeRequested);
 	DELEGATE(ItemDelegate,ItemExpanded);
 
-	void setTreeModel(TreeModel * model);
+	virtual void modelChanged( Model* oldModel, Model* newModel );
 
 	TreeModel* getTreeModel();
+
+	void setTreeModel( TreeModel* tm );
 
 	ColumnModel* getColumnModel();
 
@@ -84,9 +88,33 @@ public:
 	virtual void paint( GraphicsContext * context );
 
 
-	void addItem( TreeItem* item, TreeItem* parent = NULL );
+	void insertItem( TreeItem* parent, TreeItem* item );
+	TreeItem* insertItem( TreeItem* parent, const String& caption, const uint32 imageIndex=-1 );
+	void removeItem( TreeItem* item );
 
-	TreeItem* addItem( TreeItem* parent=NULL, const String& caption="", const uint32 imageIndex=0 );
+	virtual TreeItem* getItemParent( TreeItem* item );
+	virtual void setItemParent( TreeItem* item, TreeItem* parent );
+
+	virtual Rect getItemRect( TreeItem* item );
+
+	virtual void addChildItem( TreeItem* item, TreeItem* child );
+	virtual void removeChildItem( TreeItem* item, TreeItem* child );
+
+	virtual TreeItem* getItemFromKey( const TreeModel::Key& key );
+	virtual void setItemKey( TreeItem* item, const TreeModel::Key& key );
+
+	virtual bool getItemChildren( TreeItem* item, std::vector<TreeItem*>& children );
+
+	virtual void insertItemSubItem( TreeItem* item, const uint32& index, TreeSubItem* subItem );
+	virtual void removeItemSubItem( TreeItem* item, TreeSubItem* subItem );
+	virtual bool getItemSubItems( TreeItem* item, std::vector<TreeSubItem*>& subItems );
+	virtual TreeSubItem* getItemSubItem( TreeItem* item, const uint32& index );
+	virtual uint32 getItemSubItemCount( TreeItem* item );
+
+	virtual void itemExpanded( TreeItem* item );
+	virtual void itemSelected( TreeItem* item );
+
+
 
 	uint32 getItemIndent() {
 		return itemIndent_;
@@ -165,14 +193,17 @@ public:
 
 	void clearSelectedItems();
 
-	TreeItem* getNextItem( TreeItem* item, bool skipChildren=false );
-	TreeItem* getPrevItem( TreeItem* item );
+	
 
 	int hitTestForEditColumn( Point* pt );
 
 	Rect getBoundsForEdit( TreeItem* item, int column );
 
 	void scrollToNextItem( TreeItem* item, bool scrollDown ); 
+
+	bool itemExists( const TreeModel::Key& key );
+
+	virtual void handleEvent( Event* event );
 protected:
 	
 
@@ -180,8 +211,6 @@ protected:
 
 	ImageList* imageList_;
 	ImageList* stateImageList_;
-
-	TreeModel* treeModel_;
 
 	double itemHeight_;
 	double columnHeight_;
@@ -193,8 +222,10 @@ protected:
 
 	double visibleItemsHeight_;
 
-	std::vector<TreeItem*> selectedItems_;
-	EnumeratorContainer<std::vector<TreeItem*>,TreeItem*> selectedItemContainer_;
+	Array<TreeItem*> selectedItems_;
+	bool controlChangeToModel_;
+	std::map<TreeModel::Key,TreeItem*> itemMap_;
+
 
 	int32 stateItemIndent_;
 
@@ -242,6 +273,10 @@ protected:
 	bool hitTest( Rect* rect, TreeItem* item, std::vector<TreeItem*>& hitTestList );
 
 	void recalcScrollable();	
+
+	TreeItem* getNextItem( TreeItem* item, bool skipChildren=false );
+	TreeItem* getPrevItem( TreeItem* item );
+
 
 	void onEditingControlKeyPressed( KeyboardEvent* event );
 	void onEditorFocusLost( Event* e );
