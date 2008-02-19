@@ -143,13 +143,29 @@ TreeModel::Key DefaultTreeModel::removeFromHierarchy( TreeModel::Key key )
 		//yank children
 		while ( range.first != range.second ) {
 			validRange = true;
-			removeFromHierarchy( range.first->second );
-			++range.first;				
+			TreeModel::Key k = range.first->second; //store the child key
+			//increment here, BEFORE we recurse. 
+			//this moves us to the next iterator. If 
+			//we did this AFTER the call to removeFromHierarchy()
+			//then the iterator would be bad (since it 
+			//pointed to the just erased item
+			++range.first; 
+			removeFromHierarchy( k );	
 		}
 		
-		if ( validRange ) {
-			hierarchy_.erase( range.first, range.second );
+
+		//thanks to Fraggle for fixing this!!
+		if ( ref.parent ) {
+			range = hierarchy_.equal_range( ref.parent->key );
+			while ( range.first != range.second && range.first->second != key ) {
+				++range.first;
+			}
+
+			if ( range.first->first == ref.parent->key && range.first->second == key ) {
+				hierarchy_.erase( range.first );
+			}
 		}
+		
 		
 
 		TreeModelEvent e(this, TreeModel::ItemRemoved);

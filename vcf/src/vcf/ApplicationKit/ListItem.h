@@ -84,7 +84,7 @@ public:
 	virtual ~ListController(){}
 
 
-	virtual Rect getItemRect( ListItem* item ) = 0;	
+	virtual Rect getItemRect( ListItem* item ) = 0;
 	virtual void insertItemSubItem( ListItem* item, const uint32& index, ListSubItem* subItem ) = 0;
 	virtual void removeItemSubItem( ListItem* item, ListSubItem* subItem ) = 0;
 	virtual bool getItemSubItems( ListItem* item, std::vector<ListSubItem*>& subItems ) = 0;

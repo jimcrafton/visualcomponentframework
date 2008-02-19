@@ -128,6 +128,8 @@ public:
 		ColumnModel* cm = getListView()->getColumnModel();
 		cm->add( "Column" );
 
+		getListView()->getColumnItem( cm->getCount() -1 )->setWidth( 250 );
+
 	}
 	void deleteColumn( Event* e ) {
 		ColumnModel* cm = getListView()->getColumnModel();

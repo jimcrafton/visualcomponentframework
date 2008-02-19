@@ -72,6 +72,10 @@ public:
 
 	virtual double getColumnWidth( const uint32& index );
 
+	virtual TextAlignmentType getColumnTextAlignment( const uint32& index );
+
+	virtual void setColumnTextAlignment( const uint32& index, const TextAlignmentType& val );
+
 	virtual void sort( ItemSort* itemSortFunctor );
 
 	virtual void setLargeImageList( ImageList* imageList );
@@ -96,6 +100,7 @@ private:
 	Color backColor_;
 	HIMAGELIST largeImageListCtrl_;
 	HIMAGELIST smallImageListCtrl_;
+	HFONT oldHeaderFont_;
 
 	void onCtrlModelChanged( Event* e );
 	void onListModelChanged( Event* e );

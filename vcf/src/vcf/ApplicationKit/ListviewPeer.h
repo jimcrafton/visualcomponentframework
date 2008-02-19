@@ -53,6 +53,10 @@ public:
 
 	virtual double getColumnWidth( const uint32& index ) = 0;
 
+	virtual TextAlignmentType getColumnTextAlignment( const uint32& index ) = 0;
+
+	virtual void setColumnTextAlignment( const uint32& index, const TextAlignmentType& val ) = 0;
+
 	virtual void sort( ItemSort* itemSortFunctor ) = 0;
 
 	virtual IconStyleType getIconStyle() = 0;

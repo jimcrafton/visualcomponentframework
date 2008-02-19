@@ -18,6 +18,25 @@ where you installed the VCF.
 
 namespace VCF  {
 
+
+class ColumnItem;
+class ColumnModel;
+	
+class ColumnController {
+public:
+	virtual ~ColumnController(){}
+	
+	virtual double getItemWidth( ColumnItem* item ) = 0;
+	virtual void setItemWidth( ColumnItem* item, const double& val ) = 0;
+
+	virtual TextAlignmentType getItemTextAlignment( ColumnItem* item ) = 0;
+	virtual void setItemTextAlignment( ColumnItem* item, const TextAlignmentType& val ) = 0;
+	
+};
+
+
+
+
 /**
 \class ColumnItem ColumnItem.h "vcf/ApplicationKit/ColumnItem.h"
 *A ColumnItem item is used to represent a single header column.
@@ -28,25 +47,29 @@ namespace VCF  {
 class APPLICATIONKIT_API ColumnItem : public Item {
 public:
 
-	ColumnItem(): Item(), index_(0),width_(100.0), textAlignment_(taTextLeft){}
+	ColumnItem(): Item(), index_(0)/*,width_(100.0), textAlignment_(taTextLeft)*/{}
 
 	virtual ~ColumnItem(){};
+
+	ColumnModel* getColumnModel() {
+		return (ColumnModel*) getModel();
+	}
+
+	ColumnController* getController() {
+		return dynamic_cast<ColumnController*>( getControl() );
+	}
 
 	/**
 	*returns the width of the coumn. The width should always be greater
 	*than or equal to 0
 	*/
-	double getWidth() {
-		return width_;
-	}
+	double getWidth();
 
 	/**
 	*sets the width of the column
 	*@param double width - the new column width
 	*/
-	void setWidth( const double& width ) {
-		width_ = width;
-	}
+	void setWidth( const double& width );
 
 	
 
@@ -58,18 +81,14 @@ public:
 	*@param TextAlignmentType teh alignment type for the column
 	*when it is drawn
 	*/
-	void setCaptionAlignment( const TextAlignmentType& alignment ) {
-		textAlignment_ = alignment;
-	}
+	void setCaptionAlignment( const TextAlignmentType& alignment );
 
 	/**
 	*gets the current alignment type fopr the column.
 	*@return TextAlignmentType the alignment type of the column
 	@see setCaptionAlignment()
 	*/
-	TextAlignmentType getCaptionAlignment() {
-		return textAlignment_;
-	}
+	TextAlignmentType getCaptionAlignment();
 
 	virtual uint32 getIndex() const {
 		return index_;
@@ -99,9 +118,7 @@ public:
 		bounds_ = *paintRect;
 	}
 
-protected:
-	double width_;
-	TextAlignmentType textAlignment_;
+protected:		
 	uint32 index_;
 };
 
