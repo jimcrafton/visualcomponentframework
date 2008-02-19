@@ -137,12 +137,10 @@ TreeModel::Key DefaultTreeModel::removeFromHierarchy( TreeModel::Key key )
 		if ( ref.nextSibling ) {
 			ref.nextSibling->prevSibling = ref.prevSibling;
 		}
-		
-		bool validRange = false;
+				
 		HierarchyRange range = hierarchy_.equal_range( key );
 		//yank children
 		while ( range.first != range.second ) {
-			validRange = true;
 			TreeModel::Key k = range.first->second; //store the child key
 			//increment here, BEFORE we recurse. 
 			//this moves us to the next iterator. If 
