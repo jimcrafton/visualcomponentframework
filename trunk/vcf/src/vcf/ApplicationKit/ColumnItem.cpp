@@ -14,6 +14,26 @@ using namespace VCF;
 
 //ColumnItem.cpp
 
+double ColumnItem::getWidth()
+{
+	return getController()->getItemWidth( this );
+}
+
+void ColumnItem::setWidth( const double& width )
+{
+	getController()->setItemWidth( this, width );
+}
+
+void ColumnItem::setCaptionAlignment( const TextAlignmentType& alignment )
+{
+	getController()->setItemTextAlignment( this, alignment );
+}
+
+TextAlignmentType ColumnItem::getCaptionAlignment()
+{
+	return getController()->getItemTextAlignment( this );
+}
+
 
 String ColumnItem::getCaption() 
 {

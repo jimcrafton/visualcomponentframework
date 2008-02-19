@@ -125,6 +125,8 @@ public:
 		clock.start();
 		int i=0;
 
+		TreeModel::Key removeThisKey;
+
 		for (i=0;i<10;i++ ) {
 			TreeModel::Key k = tm->insert( "test (p = testB)", k2 );
 
@@ -135,6 +137,11 @@ public:
 					TreeItem* item = treeCtrl->getItemFromKey( k );
 					item->expand(true);
 				}
+			}
+
+			if ( i == 8 ) {
+				removeThisKey = k;
+				tm->set( k, "Yank this item!" );
 			}
 		}
 		
@@ -175,8 +182,16 @@ public:
 
 		sz = treeCtrl->sizeOf();
 
-		//treeCtrl->removeItem( myItem );
+		
 
+
+		TreeItem* item3 = treeCtrl->insertItem( item, "Wolla-Gobbgers!" );
+		treeCtrl->removeItem( item3 );
+		item3->free();
+
+
+
+		tm->remove( removeThisKey );
 
 		//myItem->setParent( item );
 

@@ -202,7 +202,8 @@ Win32Listview::Win32Listview( ListViewControl* listviewControl ):
 	oldHeaderWndProc_(NULL),
 	largeImageListCtrl_(NULL),
 	smallImageListCtrl_(NULL),
-	internalMessage_(false)
+	internalMessage_(false),
+	oldHeaderFont_(NULL)
 {
 
 }
@@ -628,7 +629,9 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 													Win32Font* fontPeer = dynamic_cast<Win32Font*>( item->getFont()->getFontPeer() );
 													HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( fontPeer );
 													if ( NULL != fontHandle ){
-														::SelectObject( cd->hdc, fontHandle );
+														
+														oldHeaderFont_ = (HFONT)::SelectObject( cd->hdc, fontHandle );
+
 														wndProcResult |= CDRF_NEWFONT;
 													}
 												}
@@ -660,6 +663,11 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 												gc.getPeer()->setContextID( 0 );
 											}
 
+										}
+
+										if ( NULL != oldHeaderFont_ ) {
+											::SelectObject( cd->hdc, oldHeaderFont_ );
+											oldHeaderFont_ = NULL;
 										}
 										wndProcResult = CDRF_SKIPDEFAULT;
 									}
@@ -1153,16 +1161,18 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 					case CDDS_ITEMPREPAINT : {
 						// Request prepaint notifications for each item.
 						ListItem* item = listviewControl_->getItem( listViewCustomDraw->nmcd.dwItemSpec );
-						if ( !item->isFontDefault() ) {
-							
-							Color* fc = item->getFont()->getColor();
-							listViewCustomDraw->clrText = (COLORREF) fc->getColorRef32();
-							
-							Win32Font* fontPeer = dynamic_cast<Win32Font*>( item->getFont()->getFontPeer() );
-							HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( fontPeer );
-							if ( NULL != fontHandle ){
-								::SelectObject( listViewCustomDraw->nmcd.hdc, fontHandle );
-								wndProcResult |= CDRF_NEWFONT;
+						if ( NULL != item ) {
+							if ( !item->isFontDefault() ) {
+								
+								Color* fc = item->getFont()->getColor();
+								listViewCustomDraw->clrText = (COLORREF) fc->getColorRef32();
+								
+								Win32Font* fontPeer = dynamic_cast<Win32Font*>( item->getFont()->getFontPeer() );
+								HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( fontPeer );
+								if ( NULL != fontHandle ){
+									::SelectObject( listViewCustomDraw->nmcd.hdc, fontHandle );
+									wndProcResult |= CDRF_NEWFONT;
+								}
 							}
 						}
 
@@ -2517,6 +2527,54 @@ void Win32Listview::onColumnModelChanged( Event* e )
 	HWND header = ListView_GetHeader(hwnd_);
 	if ( NULL != header ) {
 		InvalidateRect( header, NULL, TRUE );
+	}
+}
+
+TextAlignmentType Win32Listview::getColumnTextAlignment( const uint32& index )
+{
+	TextAlignmentType result;
+
+	HWND header = ListView_GetHeader( hwnd_ );
+	if ( NULL != header ) {
+		HDITEM headerItem;
+		memset( &headerItem, 0, sizeof(HDITEM) );
+		headerItem.mask = HDI_FORMAT;
+
+		if ( Header_GetItem( header, index, &headerItem ) ) {
+			if ( headerItem.fmt & HDF_LEFT ) {
+				result = taTextLeft;
+			}
+			else if ( headerItem.fmt & HDF_CENTER ) {
+				result = taTextCenter;
+			}
+			else if ( headerItem.fmt & HDF_RIGHT ) {
+				result = taTextRight;
+			}
+		}
+	}
+
+	return result;
+}
+
+void Win32Listview::setColumnTextAlignment( const uint32& index, const TextAlignmentType& val )
+{
+	HWND header = ListView_GetHeader( hwnd_ );
+	if ( NULL != header ) {
+		HDITEM headerItem;
+		memset( &headerItem, 0, sizeof(HDITEM) );
+		headerItem.mask = HDI_FORMAT;
+
+		if ( val == taTextLeft ) {
+			headerItem.fmt |= HDF_LEFT;
+		}
+		else if ( val == taTextCenter ) {
+			headerItem.fmt |= HDF_CENTER;				
+		}
+		else if ( val == taTextRight ) {
+			headerItem.fmt |= HDF_RIGHT;
+		}
+
+		Header_SetItem( header, index, &headerItem );
 	}
 }
 

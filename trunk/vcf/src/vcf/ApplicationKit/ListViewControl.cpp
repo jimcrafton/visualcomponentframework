@@ -830,6 +830,25 @@ void ListViewControl::itemSelected( ListItem* item )
 
 }
 
+double ListViewControl::getItemWidth( ColumnItem* item )
+{
+	return listviewPeer_->getColumnWidth( item->getIndex() );
+}
+
+void ListViewControl::setItemWidth( ColumnItem* item, const double& val )
+{
+	listviewPeer_->setColumnWidth( item->getIndex(), val );
+}
+
+TextAlignmentType ListViewControl::getItemTextAlignment( ColumnItem* item )
+{
+	return listviewPeer_->getColumnTextAlignment( item->getIndex() );
+}
+
+void ListViewControl::setItemTextAlignment( ColumnItem* item, const TextAlignmentType& val )
+{
+	listviewPeer_->setColumnTextAlignment( item->getIndex(), val );
+}
 
 /**
 $Id$

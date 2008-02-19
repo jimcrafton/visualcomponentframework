@@ -97,7 +97,7 @@ static String IconAlignTypeNames[] = { "iaNone",
 /**
 \class ListViewControl ListViewControl.h "vcf/ApplicationKit/ListViewControl.h"
 */
-class APPLICATIONKIT_API ListViewControl : public Control, public ListController {
+class APPLICATIONKIT_API ListViewControl : public Control, public ListController, public ColumnController {
 public:
 
 
@@ -155,6 +155,15 @@ public:
 	void setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type=lcatAutoSizeNone );
 
 	void setColumnsWidth( const double& width, ListViewControl::AutoSizeType type=lcatAutoSizeNone );	
+
+
+	virtual double getItemWidth( ColumnItem* item );
+	virtual void setItemWidth( ColumnItem* item, const double& val );
+
+	virtual TextAlignmentType getItemTextAlignment( ColumnItem* item );
+	virtual void setItemTextAlignment( ColumnItem* item, const TextAlignmentType& val );
+
+
 
 	IconStyleType getIconStyle();
 
