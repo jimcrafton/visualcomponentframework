@@ -140,8 +140,7 @@ protected:
 	//void onTreeNodeDeleted( TreeModelEvent* event );
 
 	void onModelChanged( ModelEvent* event );
-
-
+	
 	TreePeer * treePeer_;
 	ImageList* imageList_;
 	ImageList* stateImageList_;

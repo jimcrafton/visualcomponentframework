@@ -21,18 +21,28 @@ using namespace VCF;
 HeaderControl::HeaderControl():
 	CustomControl( false ),
 	imageList_(NULL),
-	columnModel_(NULL),
 	textAlignment_(taTextLeft),
 	draggingColumnItem_(NULL),
 	pressedColumn_(NULL),
-	minColumnWidth_(5)
+	minColumnWidth_(5),
+	controlChangeToModel_(false),
+	inCallbackChange_(false)
 {
-	setColumnModel( new ColumnModel() );
-	addComponent( getViewModel() );
-
 	aligment_ = AlignTop;
 	setHeight( getPreferredHeight() );
 	setTabStop(false);
+
+	CallBack* cb = 
+		new ClassProcedure1<Event*,HeaderControl>(this,&HeaderControl::onColumnAdded, "HeaderControl::onColumnAdded" );
+
+	cb = 
+		new ClassProcedure1<Event*,HeaderControl>(this,&HeaderControl::onColumnRemoved, "HeaderControl::onColumnRemoved" );
+	
+	cb = 
+		new ClassProcedure1<Event*,HeaderControl>(this,&HeaderControl::onModelChanged, "HeaderControl::onModelChanged" );
+
+
+	setColumnModel( new ColumnModel() );
 }
 
 HeaderControl::~HeaderControl()
@@ -40,73 +50,64 @@ HeaderControl::~HeaderControl()
 	
 }
 
+void HeaderControl::modelChanged( Model* oldModel, Model* newModel )
+{
+	ColumnModel* cm = (ColumnModel*)oldModel;
+	if ( NULL != cm ) {
+		cm->ItemAdded -= getCallback( "HeaderControl::onColumnAdded" );
+		cm->ItemRemoved -= getCallback( "HeaderControl::onColumnRemoved" );
+		cm->ModelChanged -= getCallback( "HeaderControl::onModelChanged" );
+	}
+
+	cm = (ColumnModel*)newModel;
+	if ( NULL != cm ) {
+		cm->ItemAdded += getCallback( "HeaderControl::onColumnAdded" );
+		cm->ItemRemoved += getCallback( "HeaderControl::onColumnRemoved" );
+		cm->ModelChanged += getCallback( "HeaderControl::onModelChanged" );
+	}
+}
+
 void HeaderControl::setColumnModel( ColumnModel* model )
 {
-	columnModel_ = model;
-
-	setViewModel( columnModel_ );
+	setViewModel( model );
 }
 
 ColumnItem* HeaderControl::addColumn( const String& columnName, const double& width )
 {
-	ColumnItem* result = NULL;
-	result = new ColumnItem();
-	result->setCaption( columnName );
-	result->setWidth( width );
-	columnModel_->add( result );
-
-	return result;
+	ColumnModel* cm = getColumnModel();
+	return insertColumn( cm->getCount(), columnName, width );
 }
 
 void HeaderControl::addColumn( ColumnItem* column )
 {
-	columnModel_->add( column );
+	//columnModel_->add( column );
 }
 
 ColumnItem* HeaderControl::insertColumn( const uint32& index, const String& columnName, const double& width )
 {
 	ColumnItem* result = NULL;
-	result = new ColumnItem();
-	result->setCaption( columnName );
-	result->setWidth( width );
-	columnModel_->insert( index, result );
+
+
+	ColumnModel* cm = getColumnModel();	
+	
+	cm->insert( index, columnName );	
+
+	result = this->getColumnItem( index );
 
 	return result;
 }
 
 void HeaderControl::insertColumn( const uint32& index, ColumnItem* column )
 {
-	columnModel_->insert( index, column );
+	//columnModel_->insert( index, column );
 }
 
 void HeaderControl::deleteColumn( const uint32& index )
 {
-	columnModel_->remove( index );
+	getColumnModel()->remove( index );
 }
 
-String HeaderControl::getColumnName( const uint32& index )
-{
-	return columnModel_->getAsString( index );
-}
 
-void HeaderControl::setColumnName( const uint32& index, const String& columnName )
-{
-	columnModel_->setAsString( index, columnName, false );	
-}
-
-double HeaderControl::getColumnWidth( const uint32& index )
-{
-//	ColumnItem* item = columnModel_->getItemFromIndex( index );
-	return 0;//item->getWidth();
-}
-
-void HeaderControl::setColumnWidth( const uint32& index, const double& width )
-{
-	//ColumnItem* item = columnModel_->getItemFromIndex( index );
-	//item->setWidth( width );
-	//ItemEvent event( this, ITEM_EVENT_CHANGED );
-	//ColumnWidthChanged( &event );
-}
 
 void HeaderControl::setImageList( ImageList* imageList )
 {
@@ -116,20 +117,24 @@ void HeaderControl::setImageList( ImageList* imageList )
 ColumnItem* HeaderControl::isPtOverItem(Point* point)
 {
 	ColumnItem* result = NULL;
-/*
-	Enumerator<ColumnItem*>* columns = columnModel_->getItems();
+
+	Array<ColumnItem*>::iterator it = columnItems_.begin();
+
 	Rect r = getClientBounds();
-	r.right_ = r.left_;
-	while ( true == columns->hasMoreElements() ) {
-		ColumnItem* item = columns->nextElement();
+	r.right_ = r.left_;	
+	while ( it != columnItems_.end() ) {
+		ColumnItem* item = *it;
+		
 		r.right_ += item->getWidth();
 		if ( true == r.containsPt( point ) ) {
 			result = item;
 			break;
 		}
 		r.left_ = r.right_;
+
+		++it;
 	}
-*/
+
 	return result;
 }
 
@@ -140,17 +145,23 @@ void HeaderControl::paint( GraphicsContext * context )
 	Rect r = getClientBounds();
 	r.right_ = r.left_;
 
-/*
-	Enumerator<ColumnItem*>* columns = columnModel_->getItems();
-	uint32 colCount = columnModel_->getCount();
+
+	Array<ColumnItem*>::iterator it = columnItems_.begin();
+
+	uint32 colCount = columnItems_.size();
 
 
 	uint32 index = 0;
-	while ( columns->hasMoreElements() ) {
-		ColumnItem* item = columns->nextElement();
+	while ( it != columnItems_.end() ) {
+		ColumnItem* item = *it;
 		r.right_ += item->getWidth();
+		
 		paintColumn( context, &r, index, item );
+
 		r.left_ = r.right_;
+
+		++it;
+
 		index ++;
 	}
 
@@ -164,7 +175,6 @@ void HeaderControl::paint( GraphicsContext * context )
 			context->drawThemeHeader( &r, state );
 		}
 	}
-	*/
 }
 
 double HeaderControl::getPreferredHeight()
@@ -362,6 +372,104 @@ bool HeaderControl::generatePropertyValue( const String& fullPropertyName, Prope
 	return Control::generatePropertyValue( fullPropertyName, property, value, strValue );
 }
 
+double HeaderControl::getItemWidth( ColumnItem* item )
+{
+	return 85;
+}
+
+void HeaderControl::setItemWidth( ColumnItem* item, const double& val )
+{
+
+}
+
+TextAlignmentType HeaderControl::getItemTextAlignment( ColumnItem* item )
+{
+	return taTextLeft;
+}
+
+void HeaderControl::setItemTextAlignment( ColumnItem* item, const TextAlignmentType& val )
+{
+
+}
+
+ColumnItem* HeaderControl::getColumnItem( const uint32& index )
+{
+	ColumnItem* result = NULL;
+
+	if ( index < columnItems_.size() ) {
+		result = columnItems_[index];
+	}
+
+	return result;
+}
+
+void HeaderControl::setColumnItem( const uint32& index, ColumnItem* item )
+{
+	if ( index < columnItems_.size() ) {
+		ColumnItem* oldItem = columnItems_[index];
+		
+		columnItems_[index] = item;
+		
+		if ( NULL == item->getOwner() ) {
+			addComponent( item );
+		}
+
+		item->setControl( this );
+		item->setModel( getViewModel() );
+		item->setIndex( oldItem->getIndex() );
+
+		removeComponent( oldItem );
+		oldItem->free();
+
+		repaint();
+	}
+}
+
+void HeaderControl::onColumnAdded( Event* e )
+{
+	if ( controlChangeToModel_ ) {
+		return;
+	}
+
+	inCallbackChange_ = true;
+	
+	ListModelEvent* lme = (ListModelEvent*)e;
+
+
+	ColumnItem* item = new ColumnItem();
+	item->setControl( this );
+	item->setModel( getColumnModel() );
+	item->setIndex( lme->index );
+	addComponent( item );
+	columnItems_.insert( columnItems_.begin() + lme->index, item );
+
+
+	inCallbackChange_ = false;
+}
+
+void HeaderControl::onColumnRemoved( Event* e )
+{
+	inCallbackChange_ = true;
+
+	ListModelEvent* lme = (ListModelEvent*)e;
+
+	ColumnItem* item = this->getColumnItem( lme->index );
+
+	columnItems_.erase( columnItems_.begin() + lme->index );
+
+	removeComponent( item );
+
+	item->free();
+
+	inCallbackChange_ = false;
+}
+
+void HeaderControl::onModelChanged( Event* e )
+{
+
+}
+
 /**
 $Id$
 */
+

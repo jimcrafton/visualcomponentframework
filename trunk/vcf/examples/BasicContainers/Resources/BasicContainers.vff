@@ -69,11 +69,10 @@ object BasicContainers : VCF::Window
 		object tab2 : VCF::TabSheet 
 			title = 'Anchoring with StandardContainer'
 			//container = @stdContainer2
-			
-			width = 100
+
 			object lbl5 : VCF::Label
 				height = 50
-				width = 100
+				width = 400
 				top = 30
 				left = 40				
 				transparent = false

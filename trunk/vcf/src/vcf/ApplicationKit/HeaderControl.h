@@ -43,7 +43,7 @@ public:
 \class HeaderControl HeaderControl.h "vcf/ApplicationKit/HeaderControl.h"
 *Class HeaderControl documentation
 */
-class APPLICATIONKIT_API HeaderControl : public CustomControl {
+class APPLICATIONKIT_API HeaderControl : public CustomControl, public ColumnController {
 public:
 
 	HeaderControl();
@@ -58,9 +58,10 @@ public:
 	DELEGATE(MouseDelegate,ColumnItemClicked)
 	DELEGATE(ItemDelegate,ColumnWidthChanged)
 
+	virtual void modelChanged( Model* oldModel, Model* newModel );
 
 	inline ColumnModel* getColumnModel() {
-		return columnModel_;
+		return (ColumnModel*) getViewModel();
 	}
 
 	void setColumnModel( ColumnModel* model );
@@ -75,13 +76,9 @@ public:
 
 	void deleteColumn( const uint32& index );
 
-	String getColumnName( const uint32& index );
 
-	void setColumnName( const uint32& index, const String& columnName );
-
-	double getColumnWidth( const uint32& index );
-
-	void setColumnWidth( const uint32& index, const double& width );
+	ColumnItem* getColumnItem( const uint32& index );
+	void setColumnItem( const uint32& index, ColumnItem* item );
 
 	inline ImageList* getImageList() {
 		return imageList_;
@@ -113,16 +110,29 @@ public:
 
 	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
 
+	virtual double getItemWidth( ColumnItem* item );
+	virtual void setItemWidth( ColumnItem* item, const double& val );
+
+	virtual TextAlignmentType getItemTextAlignment( ColumnItem* item );
+	virtual void setItemTextAlignment( ColumnItem* item, const TextAlignmentType& val );
+
 protected:
 	virtual void paintColumn( GraphicsContext* context, Rect* paintRect, const uint32& index, ColumnItem* item );
-	ColumnModel* columnModel_;
+	
 	ImageList* imageList_;
 	TextAlignmentType textAlignment_;
 	ColumnItem* draggingColumnItem_;
 	ColumnItem* pressedColumn_;
 	double minColumnWidth_;
+	bool controlChangeToModel_;
+	bool inCallbackChange_;
+
+	Array<ColumnItem*> columnItems_;
 
 
+	void onColumnAdded( Event* e );
+	void onColumnRemoved( Event* e );
+	void onModelChanged( Event* e );
 };
 
 

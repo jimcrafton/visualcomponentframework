@@ -14,9 +14,9 @@ where you installed the VCF.
 using namespace VCF;
 
 
-class CustomSubItem : public TreeItem::SubItem {
+class CustomSubItem : public TreeSubItem {
 public:
-	CustomSubItem( TreeItem* ownerItem ) : TreeItem::SubItem(ownerItem) {
+	CustomSubItem( TreeItem* ownerItem ) : TreeSubItem(ownerItem) {
 	}
 
 	virtual bool canPaint() {
@@ -43,8 +43,7 @@ public:
 	void removeSelectedItem( MenuItemEvent* e ) {
 		TreeItem* selected =  treeList->getSelectedItem();
 		if ( NULL != selected ) {
-			TreeModel* tm = treeList->getTreeModel();
-			tm->deleteNodeItem( selected );
+			treeList->removeItem( selected );
 		}
 	}
 
@@ -86,12 +85,12 @@ public:
 	void doList( TreeItem* item ) {
 		TreeItem* next = NULL;
 
-		next = item->getChildren()->nextElement();
+		next = item->getNextChildNodeItem();
 
 		while ( next ) {
 			StringUtils::trace( "Name: " + next->getCaption() + "\n" );
 			doList( next );
-			next = next->getNextChildNodeItem();
+			next = item->getNextChildNodeItem();
 		}
 	}
 
@@ -193,12 +192,12 @@ public:
 		border->setInverted( true ) ;
 		treeList->setBorder( border );
 
-		TreeItem* item = treeList->addItem( NULL, "foo 1" );
+		TreeItem* item = treeList->insertItem( NULL, "foo 1" );
 
 		TreeItem* firstItem = item;
 
 		item->setExpandedImageIndex( 1 );
-		item->setState( Item::idsChecked );
+		item->setDisplayState( Item::idsChecked );
 
 		item->addSubItem( "Sub item 1", NULL );
 		item->addSubItem( "Sub item 2", NULL );
@@ -208,84 +207,84 @@ public:
 		item->addSubItem( subItem );
 		item->addSubItem( "Sub item 4", NULL );
 
-		TreeItem* child = treeList->addItem( item, "foo 1a" );
-		child = treeList->addItem( item, "foo 1b" );
-		child->setTextBold( true );
+		TreeItem* child = treeList->insertItem( item, "foo 1a" );
+		child = treeList->insertItem( item, "foo 1b" );
+		child->getFont()->setBold( true );
 
-		TreeItem::SubItem* subItm = new TreeItem::SubItem(item);
+		TreeSubItem* subItm = new TreeSubItem(item);
 		subItm->setCaption( "Sub item 1" );
 		//subItm->setTextBold( true );
 		child->addSubItem( "Sub item 2", NULL );
 
-		child = treeList->addItem( item, "foo 1c" );
-		child = treeList->addItem( item, "foo 1d" );
-		child = treeList->addItem( item, "foo 1e" );
-		child = treeList->addItem( item, "foo 1f" );
-		child->setTextColor( Color::getColor("red") );
-		subItm = new TreeItem::SubItem(item);
+		child = treeList->insertItem( item, "foo 1c" );
+		child = treeList->insertItem( item, "foo 1d" );
+		child = treeList->insertItem( item, "foo 1e" );
+		child = treeList->insertItem( item, "foo 1f" );
+		child->getFont()->setColor( Color::getColor("red") );
+		subItm = new TreeSubItem(item);
 		subItm->setCaption( "Sub item 3" );
 		//subItm->setTextColor( Color::getColor("magenta") );
 		child->addSubItem( "Sub item 2", NULL );
-		child = treeList->addItem( item, "foo 1g" );
-		child = treeList->addItem( item, "foo 1h" );
-		child = treeList->addItem( item, "foo 1i" );
-		child = treeList->addItem( item, "foo 1j" );
-		child = treeList->addItem( item, "foo 1k" );
+		child = treeList->insertItem( item, "foo 1g" );
+		child = treeList->insertItem( item, "foo 1h" );
+		child = treeList->insertItem( item, "foo 1i" );
+		child = treeList->insertItem( item, "foo 1j" );
+		child = treeList->insertItem( item, "foo 1k" );
 
 		child->setImageIndex( 2 );
 
-		item = treeList->addItem( NULL, "foo 2" );
-		child = treeList->addItem( item, "foo 2a" );
-		child = treeList->addItem( item, "foo 2b" );
-		child = treeList->addItem( item, "foo 2c" );
-		child = treeList->addItem( item, "foo 2d" );
-		child = treeList->addItem( item, "foo 2e" );
-		child = treeList->addItem( item, "foo 2f" );
-		child = treeList->addItem( item, "foo 2g" );
-		child = treeList->addItem( item, "foo 2h" );
-		child = treeList->addItem( item, "foo 2i" );
-		child = treeList->addItem( item, "foo 2j" );
-		child = treeList->addItem( item, "foo 2k" );
-		child = treeList->addItem( item, "foo 2l" );
-		child = treeList->addItem( item, "foo 2m" );
-		child = treeList->addItem( item, "foo 2n" );
-		child = treeList->addItem( item, "foo 2o" );
-		child = treeList->addItem( item, "foo 2p" );
-		child = treeList->addItem( item, "foo 2q" );
-		child = treeList->addItem( item, "foo 2r" );
-		child = treeList->addItem( item, "foo 2s" );
-		child = treeList->addItem( item, "foo 2t" );
-		child = treeList->addItem( item, "foo 2u" );
+		item = treeList->insertItem( NULL, "foo 2" );
+		child = treeList->insertItem( item, "foo 2a" );
+		child = treeList->insertItem( item, "foo 2b" );
+		child = treeList->insertItem( item, "foo 2c" );
+		child = treeList->insertItem( item, "foo 2d" );
+		child = treeList->insertItem( item, "foo 2e" );
+		child = treeList->insertItem( item, "foo 2f" );
+		child = treeList->insertItem( item, "foo 2g" );
+		child = treeList->insertItem( item, "foo 2h" );
+		child = treeList->insertItem( item, "foo 2i" );
+		child = treeList->insertItem( item, "foo 2j" );
+		child = treeList->insertItem( item, "foo 2k" );
+		child = treeList->insertItem( item, "foo 2l" );
+		child = treeList->insertItem( item, "foo 2m" );
+		child = treeList->insertItem( item, "foo 2n" );
+		child = treeList->insertItem( item, "foo 2o" );
+		child = treeList->insertItem( item, "foo 2p" );
+		child = treeList->insertItem( item, "foo 2q" );
+		child = treeList->insertItem( item, "foo 2r" );
+		child = treeList->insertItem( item, "foo 2s" );
+		child = treeList->insertItem( item, "foo 2t" );
+		child = treeList->insertItem( item, "foo 2u" );
 
 		item = child;
-		child = treeList->addItem( item, "foo 2ba" );
-		child = treeList->addItem( item, "foo 2bb" );
-		child = treeList->addItem( item, "foo 2bc" );
-		child = treeList->addItem( item, "foo 2bd" );
-		child = treeList->addItem( item, "foo 2be" );
-		child = treeList->addItem( item, "foo 2bf" );
-		child = treeList->addItem( item, "foo 2bg" );
-		child = treeList->addItem( item, "foo 2bh" );
-		child = treeList->addItem( item, "foo 2bi" );
-		child = treeList->addItem( item, "foo 2bj" );
-		child = treeList->addItem( item, "foo 2bk" );
-		child = treeList->addItem( item, "foo 2bl" );
-		child = treeList->addItem( item, "foo 2bm" );
-		child = treeList->addItem( item, "foo 2bn" );
-		child = treeList->addItem( item, "foo 2bo" );
-		child = treeList->addItem( item, "foo 2bp" );
-		child = treeList->addItem( item, "foo 2bq" );
-		child = treeList->addItem( item, "foo 2br" );
-		child = treeList->addItem( item, "foo 2bs" );
-		child = treeList->addItem( item, "foo 2bt" );
-		child = treeList->addItem( item, "foo 2bu" );
-		child = treeList->addItem( item, "foo 2bv" );
-		child = treeList->addItem( item, "foo 2bw" );
-		child = treeList->addItem( item, "foo 2bx" );
-		child = treeList->addItem( item, "foo 2by" );
-		child = treeList->addItem( item, "foo 2bz" );
-		child = treeList->addItem( item, "foo 2b1" );
-		child = treeList->addItem( item, "foo 2b2" );
+		child = treeList->insertItem( item, "foo 2ba" );
+		child = treeList->insertItem( item, "foo 2bb" );
+		child = treeList->insertItem( item, "foo 2bc" );
+		child = treeList->insertItem( item, "foo 2bd" );
+		child = treeList->insertItem( item, "foo 2be" );
+		child = treeList->insertItem( item, "foo 2bf" );
+		child = treeList->insertItem( item, "foo 2bg" );
+		child = treeList->insertItem( item, "foo 2bh" );
+		child = treeList->insertItem( item, "foo 2bi" );
+		child = treeList->insertItem( item, "foo 2bj" );
+		child = treeList->insertItem( item, "foo 2bk" );
+		child = treeList->insertItem( item, "foo 2bl" );
+		child = treeList->insertItem( item, "foo 2bm" );
+		child = treeList->insertItem( item, "foo 2bn" );
+		child = treeList->insertItem( item, "foo 2bo" );
+		child = treeList->insertItem( item, "foo 2bp" );
+		child = treeList->insertItem( item, "foo 2bq" );
+		child = treeList->insertItem( item, "foo 2br" );
+		child = treeList->insertItem( item, "foo 2bs" );
+		child = treeList->insertItem( item, "foo 2bt" );
+		child = treeList->insertItem( item, "foo 2bu" );
+		child = treeList->insertItem( item, "foo 2bv" );
+		child = treeList->insertItem( item, "foo 2bw" );
+		child = treeList->insertItem( item, "foo 2bx" );
+		child = treeList->insertItem( item, "foo 2by" );
+		child = treeList->insertItem( item, "foo 2bz" );
+		child = treeList->insertItem( item, "foo 2b1" );
+		child = treeList->insertItem( item, "foo 2b2" );
 
 
 
@@ -361,9 +360,9 @@ public:
 
 		TreeItem* item = (TreeItem*)e->getSource();
 		String s;
-		s = Format( "State item: %s, state: %d" ) % item->getCaption().c_str() % item->getState();
+		s = Format( "State item: %s, state: %d" ) % item->getCaption().c_str() % item->getDisplayState();
 
-		if ( item->getState() == Item::idsChecked ) {
+		if ( item->getDisplayState() == Item::idsChecked ) {
 			s += ", Item is Checked!";
 		}
 		status->setCaption( s );

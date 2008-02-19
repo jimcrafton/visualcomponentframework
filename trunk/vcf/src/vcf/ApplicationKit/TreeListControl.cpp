@@ -28,7 +28,6 @@ TreeListControl::TreeListControl():
 	header_(NULL),
 	imageList_(NULL),
 	stateImageList_(NULL),
-	treeModel_(NULL),
 	itemHeight_(25.0),
 	columnHeight_(0.0),
 	itemIndent_(19.0),
@@ -38,7 +37,8 @@ TreeListControl::TreeListControl():
 	stateItemIndent_(19.0),
 	draggingSelectionRect_(false),
 	currentEditColumn_(-1),
-	currentEditingControl_(NULL)
+	currentEditingControl_(NULL),
+	controlChangeToModel_(false)
 {
 	setContainerDelegate( this );
 	setContainer( new StandardContainer() );
@@ -47,20 +47,12 @@ TreeListControl::TreeListControl():
 
 TreeListControl::~TreeListControl()
 {
-	if ( NULL != treeModel_ ) {
-//		treeModel_->release();
-	}
+
 }
 
 void TreeListControl::init()
 {
-	draggingSelectionRect_ = false;
-	treeModel_ = NULL;
-	header_ = NULL;
-	imageList_ = NULL;
-	stateImageList_ = NULL;
-
-	selectedItemContainer_.initContainer( selectedItems_ );
+	draggingSelectionRect_ = false;	
 
 	allowMultipleSelection_ = false;
 	allowLabelEditing_ = false;
@@ -104,24 +96,21 @@ void TreeListControl::init()
 	ev = new ClassProcedure1<KeyboardEvent*,TreeListControl>( this, &TreeListControl::onEditingControlKeyPressed, "TreeListControl::onEditingControlKeyPressed" );
 }
 
-void TreeListControl::setTreeModel(TreeModel * model)
+void TreeListControl::modelChanged( Model* oldModel, Model* newModel )
 {
-	if ( NULL != treeModel_ ) {
+	TreeModel* tm = (TreeModel*)oldModel;
+
+	if ( NULL != tm ) {
 		EventHandler* handler = (EventHandler*)getCallback( "TreeListControl::onModelChanged" );
 		if ( NULL != handler ) {
-			treeModel_->NodeAdded -= handler;
-			treeModel_->NodeRemoved -= handler;
+			tm->NodeAdded -= handler;
+			tm->NodeRemoved -= handler;
 		}
-		getViewModel()->removeView( this );
 	}
 
-	treeModel_ = model;
+	tm = (TreeModel*)newModel;
 
-	if ( NULL != treeModel_ ) {
-		Model* tm = dynamic_cast<Model*>(treeModel_);
-
-		tm->addView( this );
-
+	if ( NULL != tm ) {
 		CallBack* handler = getCallback( "TreeListControl::onModelChanged" );
 		if ( NULL == handler ) {
 			handler = 
@@ -131,23 +120,25 @@ void TreeListControl::setTreeModel(TreeModel * model)
 			//addEventHandler( "TreeListControl::onModelChanged", handler );
 		}
 
-		treeModel_->NodeAdded += handler;
-		treeModel_->NodeRemoved += handler;
+		tm->NodeAdded += handler;
+		tm->NodeRemoved += handler;
 		
 		handler = getCallback( "TreeListControl::onModelEmptied" );
 		if ( NULL == handler ) {
 			handler = new ClassProcedure1<Event*,TreeListControl>( this, &TreeListControl::onModelEmptied, "TreeListControl::onModelEmptied" );
 		}
-		tm->ModelChanged += (ModelHandler*)handler;
-	}
-	else {
-		setViewModel( NULL );
+		tm->ModelChanged += handler;
 	}
 }
 
 TreeModel* TreeListControl::getTreeModel()
 {
-	return treeModel_;
+	return (TreeModel*) getViewModel();
+}
+
+void TreeListControl::setTreeModel( TreeModel* tm )
+{	
+	setViewModel( tm );
 }
 
 void TreeListControl::onModelEmptied( Event* event )
@@ -160,26 +151,53 @@ void TreeListControl::onModelEmptied( Event* event )
 }
 
 void TreeListControl::onModelChanged( TreeModelEvent* event )
-{
-	/*////MVC
-	switch ( event->getType() ) {
-		case TreeModel::TREEITEM_DELETED : {
-			std::vector<TreeItem*>::iterator found = std::find( selectedItems_.begin(),
-																selectedItems_.end(),
-																event->getTreeItem() );
-			if ( found != selectedItems_.end() ) {
-				selectedItems_.erase( found );
-				repaint();
-			}
-		}
-		break;
+{	
+	if ( !controlChangeToModel_ ) {
+		switch ( event->getType() ) {
+			case TreeModel::ItemRemoved : {
+				TreeModelEvent* te = (TreeModelEvent*)event;
 
-		case TreeModel::TREEITEM_ADDED : {
-			event->getTreeItem()->setControl( this );
+				if ( this->itemExists( te->key ) ) {
+					std::map<TreeModel::Key,TreeItem*>::iterator it = itemMap_.find( te->key );
+
+					if ( it != itemMap_.end() ) {						
+						TreeItem* item = it->second;
+						
+						Array<TreeItem*>::iterator found =
+							std::find(selectedItems_.begin(), selectedItems_.end(), item);
+						if ( found != selectedItems_.end() ) {
+							selectedItems_.erase( found );
+						}
+
+						//if ( currentSelectedItem_ == item ) {
+						//	currentSelectedItem_ = NULL;
+						//}
+						removeComponent( item );
+						itemMap_.erase( it );
+					}					
+				}
+			}
+			break;
+
+			case TreeModel::ContentsDeleted : {
+//				currentSelectedItem_ = NULL;
+				selectedItems_.clear();
+
+				std::map<TreeModel::Key,TreeItem*>::iterator it = itemMap_.begin();
+				while ( it != itemMap_.end() ) {
+					TreeItem* item = it->second;
+					
+					removeComponent( item );
+					item->free();
+
+					++it;
+				}
+
+				itemMap_.clear();
+			}
+			break;
 		}
-		break;
 	}
-*/
 
 	recalcScrollable();
 	
@@ -706,7 +724,7 @@ void TreeListControl::paint( GraphicsContext * context )
 	}
 }
 
-
+/*
 void TreeListControl::addItem( TreeItem* item, TreeItem* parent )
 {
 ////MVC	treeModel_->addNodeItem( item, parent );
@@ -724,6 +742,8 @@ TreeItem* TreeListControl::addItem( TreeItem* parent, const String& caption, con
 	addItem( result, parent );
 	return result;
 }
+*/
+
 
 TreeItem* TreeListControl::hitTest( Point* pt )
 {
@@ -1767,7 +1787,7 @@ void TreeListControl::setSelectedItem( TreeItem* item, const bool& isSelected )
 
 Enumerator<TreeItem*>* TreeListControl::getSelectedItems()
 {
-	return selectedItemContainer_.getEnumerator();
+	return selectedItems_.getEnumerator();
 }
 
 bool TreeListControl::listVisibleItems( std::vector<TreeItem*>& items, TreeItem* itemToSearch, const double& top, const double& bottom )
@@ -2183,6 +2203,217 @@ void TreeListControl::editItem( TreeItem* item, Point* point ) {
 	}		
 }
 
+
+TreeItem* TreeListControl::getItemParent( TreeItem* item )
+{
+	TreeItem* result = NULL;
+
+	TreeModel::Key parent = getTreeModel()->getParent( item->getKey() );
+	if ( parent != TreeModel::RootKey && parent != TreeModel::InvalidKey ) {
+		result = getItemFromKey( parent );
+	}
+
+	return result;
+}
+
+void TreeListControl::setItemParent( TreeItem* item, TreeItem* parent )
+{
+	getTreeModel()->move( item->getKey(), parent->getKey() );
+}
+
+Rect TreeListControl::getItemRect( TreeItem* item )
+{
+	Rect result;
+
+	return result;
+}
+
+void TreeListControl::addChildItem( TreeItem* item, TreeItem* child )
+{
+	insertItem( item, child );
+}
+
+void TreeListControl::removeChildItem( TreeItem* item, TreeItem* child )
+{
+	removeItem( child );
+}
+
+TreeItem* TreeListControl::getItemFromKey( const TreeModel::Key& key )
+{
+	TreeItem* result = NULL;
+
+	if ( key != TreeModel::InvalidKey && key != TreeModel::RootKey ) {
+		std::map<TreeModel::Key,TreeItem*>::iterator found =
+			itemMap_.find( key );
+		if ( found != itemMap_.end() ) {
+			result = found->second;
+		}
+		else {
+			result = new TreeItem();
+			result->setControl( this );
+			result->setModel( getTreeModel() );
+
+			addComponent( result );
+			result->setKey( key ); //calls setItemKey() and maps the key to the item for us
+
+		}
+	}
+
+	return result;
+}
+
+void TreeListControl::setItemKey( TreeItem* item, const TreeModel::Key& key )
+{
+	if ( key != TreeModel::InvalidKey ) {
+		itemMap_[key] = item;
+	}
+}
+
+bool TreeListControl::getItemChildren( TreeItem* item, std::vector<TreeItem*>& children )
+{
+	return !children.empty();
+}
+
+void TreeListControl::insertItemSubItem( TreeItem* item, const uint32& index, TreeSubItem* subItem )
+{
+
+}
+
+void TreeListControl::removeItemSubItem( TreeItem* item, TreeSubItem* subItem )
+{
+
+}
+
+bool TreeListControl::getItemSubItems( TreeItem* item, std::vector<TreeSubItem*>& subItems )
+{
+	return !subItems.empty();
+}
+
+TreeSubItem* TreeListControl::getItemSubItem( TreeItem* item, const uint32& index )
+{
+	TreeSubItem* result = NULL;
+
+	return result;
+}
+
+uint32 TreeListControl::getItemSubItemCount( TreeItem* item )
+{
+	uint32 result = 0;
+
+	return result;
+}
+
+void TreeListControl::itemExpanded( TreeItem* item )
+{
+
+}
+
+void TreeListControl::itemSelected( TreeItem* item )
+{
+
+}
+
+void TreeListControl::insertItem( TreeItem* parent, TreeItem* item )
+{
+	controlChangeToModel_ = true;
+
+	VCF_ASSERT( NULL != item );
+	
+	TreeModel::Key parentKey = (NULL != parent) ? parent->getKey() : TreeModel::RootKey;
+
+	TreeModel* tm = getTreeModel();
+	item->setControl( this );
+
+	if ( item->getModel() == NULL ) {
+		//no model, so we need a new key...
+		TreeModel::Key key = tm->insert( VariantData(), parentKey );
+		item->setKey( key );
+	}
+	
+	item->setModel( tm );
+	
+	addComponent( item );
+
+	controlChangeToModel_ = false;
+}
+
+TreeItem* TreeListControl::insertItem( TreeItem* parent, const String& caption, const uint32 imageIndex )
+{
+	TreeItem* result = NULL;
+
+	controlChangeToModel_ = true;
+
+	TreeModel* tm = getTreeModel();
+
+	TreeModel::Key parentKey = (NULL != parent) ? parent->getKey() : TreeModel::RootKey;
+	TreeModel::Key key = tm->insert( caption, parentKey ); //since controlChangeToModel_ is set, onModelChanged is ignored
+
+	result = new TreeItem();
+	result->setModel( tm );//set explicitly here, since we've already generated a key
+
+	insertItem( parent, result );
+
+	controlChangeToModel_ = true;
+
+	result->setCaption( caption );
+	result->setImageIndex( imageIndex );
+	result->setKey( key );
+	
+
+
+	controlChangeToModel_ = false;
+	return result;
+}
+
+void TreeListControl::removeItem( TreeItem* item )
+{
+	TreeModel* tm = getTreeModel();
+
+	tm->remove( item->getKey() );
+	item->setKey( TreeModel::InvalidKey );
+}
+
+bool TreeListControl::itemExists( const TreeModel::Key& key )
+{
+	return itemMap_.find( key ) != itemMap_.end();
+}
+
+
+void TreeListControl::handleEvent( Event* event )
+{
+	Control::handleEvent( event );
+	switch ( event->getType() ) {
+/*		case TREEITEM_SELECTED : {
+			//ItemSelected( (ItemEvent*)event );
+		}
+		break;
+
+		case TreeControl::ITEM_STATECHANGE_REQUESTED : {
+			//ItemStateChangeRequested( (ItemEvent*)event );
+		}
+		break;
+*/
+		case Component::COMPONENT_ADDED : {
+			ComponentEvent* ev = (ComponentEvent*)event;
+			Component* child = ev->getChildComponent();
+			TreeItem* item = dynamic_cast<TreeItem*>(child);
+			if ( NULL != item ) {
+				if ( item->getControl() != this ) {
+					item->setControl(this);
+				}
+
+				insertItem( item->getParent(), item );
+			}
+		}
+		break;
+
+		case Component::COMPONENT_REMOVED : {
+			
+		}
+		break;
+
+	}
+}
 
 /**
 $Id$
