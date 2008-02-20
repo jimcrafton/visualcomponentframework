@@ -6,13 +6,13 @@ using namespace VCF;
 
 #define InnerLoopEv 2003211
 
-void Timer1( Event* e )
+void Timer1( RunLoopTimer& timer )
 {
 	System::println( "Timer1 called!" );
 	static int c = 0;
 	c++;
 
-	RunLoop* runLoop = ThreadManager::getCurrentRunLoop();
+	RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
 
 	if ( c >= 10 ) {		
 		runLoop->stop();
@@ -32,7 +32,7 @@ void Timer2( Event* e )
 	c++;
 
 	if ( c >= 10 ) {
-		RunLoop* runLoop = ThreadManager::getCurrentRunLoop();
+		RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
 		runLoop->stop();
 	}
 }
@@ -40,13 +40,13 @@ void Timer2( Event* e )
 void InnerLoop( Event* e )
 {
 	if ( e->getType() == InnerLoopEv ) {
-		RunLoop* runLoop = ThreadManager::getCurrentRunLoop();
+		RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
 
 		int numSecondsToRun = 9;
 		DateTime start = DateTime::now();
 		DateTime dt = DateTime::now();
 		dt.incrSecond( numSecondsToRun );
-		runLoop->run( "mymode", dt );
+		runLoop->run();// "mymode", dt );
 		System::println( "Run loop finished!" );
 		
 		DateTimeSpan len = DateTime::now() - start;
@@ -60,25 +60,28 @@ void InnerLoop( Event* e )
 
 void example1()
 {
-	RunLoop* runLoop = ThreadManager::getCurrentRunLoop();
+	RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
 	
-	EventHandler ev(Timer1);
-	EventHandler ev2(Timer2);
-	EventHandler ev3(InnerLoop);
+	RunLoopTimerPtr::Shared timer1( new RunLoopTimer( DateTimeSpan( 1000 ) ) );
+	timer1->TimerFired += Timer1;
 
-	uint32 timerID = runLoop->addTimer( "", NULL, &ev, 1000 );
-	uint32 timerID2 = runLoop->addTimer( "", NULL, &ev2, 3000 );
+	//EventHandler ev(Timer1);
+	//EventHandler ev2(Timer2);
+	//EventHandler ev3(InnerLoop);
 
-	runLoop->LoopEvents += &ev3;
+	//uint32 timerID = runLoop->addTimer( "", NULL, &ev, 1000 );
+	//uint32 timerID2 = runLoop->addTimer( "", NULL, &ev2, 3000 );
 
+	//runLoop->LoopEvents += &ev3;
 
+	runLoop->addTimer( timer1 );
 	runLoop->run();
 
 	//remember to clear out our timer's now that we are done!
 
-	runLoop->removeTimer( timerID );
-	runLoop->removeTimer( timerID2 );
-	runLoop->LoopEvents -= &ev3;
+	//runLoop->removeTimer( timerID );
+	//runLoop->removeTimer( timerID2 );
+	//runLoop->LoopEvents -= &ev3;
 };
 
 
@@ -90,26 +93,25 @@ public:
 	};
 
 	SimpleSource() : answer_(0) {
-
+		fire();
 	}
 
-	virtual void setRunLoop( RunLoop* rl ) {
+	virtual void setRunLoop( RunLoopPtr::Shared rl ) {
 		runLoop_ = rl;
 	}
 
-	virtual void perform() {
+	virtual void performImpl() {
 		answer_ += 3;
 
-		Event* e = new Event( NULL, SimpleSourceEvent );
-		e->setUserData( (void*)this );
-		runLoop_->postEvent( e );
+		RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
+		runLoop->stop();
 	}
 
-	virtual void cancel() {
+	virtual void cancelImpl() {
 		System::println( Format("Cancelled SimpleSource") );
 	}
 
-	RunLoop* runLoop_;
+	RunLoopPtr::Shared runLoop_;
 
 	unsigned int answer_;
 };
@@ -122,7 +124,7 @@ void SimpleSrcCB( Event* e )
 		simSrcLoopCount ++;
 
 		if ( simSrcLoopCount >= 200 ) {
-			RunLoop* runLoop = ThreadManager::getCurrentRunLoop();
+			RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
 			runLoop->stop();
 		}
 	}
@@ -131,21 +133,16 @@ void SimpleSrcCB( Event* e )
 void example2()
 {
 	System::println( "Starting example 2" );
-	SimpleSource src;
-	StaticEventHandlerInstance<Event> ev(SimpleSrcCB);
+	SmartPtr<SimpleSource>::Shared src(new SimpleSource());	
 
-	RunLoop* runLoop = ThreadManager::getCurrentRunLoop();
+	RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
 
-	runLoop->LoopEvents += &ev;
-
-	runLoop->addSource( &src );
+	runLoop->addSource( src );
 	runLoop->run();
 
-	System::println( Format("SimpleSource answer: %d\n") % src.answer_ );
+	System::println( Format("SimpleSource answer: %d\n") % src->answer_ );
 
-	runLoop->removeSource( &src );
-
-	runLoop->LoopEvents -= &ev;
+	runLoop->removeSource( src );
 }
 
 
@@ -153,17 +150,18 @@ void example2()
 
 class SimpleSrcRunner : public Runnable {
 public:
-	SimpleSource* src_;
+	SmartPtr<SimpleSource>::Shared src_;
 	SimpleSrcRunner( SimpleSource* src ) : src_(src){}
 
 	virtual bool run() {
 		System::println( "Starting SimpleSrcThread" );
 		
-		StaticEventHandlerInstance<Event> ev(SimpleSrcCB);
 		
-		RunLoop* runLoop = ThreadManager::getCurrentRunLoop();
+		//StaticEventHandlerInstance<Event> ev(SimpleSrcCB);
 		
-		runLoop->LoopEvents += &ev;
+		RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
+		
+		//runLoop->LoopEvents += &ev;
 		
 		runLoop->addSource( src_ );
 		runLoop->run();
@@ -172,7 +170,7 @@ public:
 		
 		runLoop->removeSource( src_ );
 		
-		runLoop->LoopEvents -= &ev;
+		//runLoop->LoopEvents -= &ev;
 
 		Thread::getMainThread()->getRunLoop()->stop();
 
@@ -188,7 +186,7 @@ void example3()
 	System::println( "Starting example 3" );
 	SimpleSource src;	
 
-	RunLoop* runLoop = ThreadManager::getCurrentRunLoop();
+	RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
 
 	Thread* th = new Thread( new SimpleSrcRunner(&src) );
 	th->start();

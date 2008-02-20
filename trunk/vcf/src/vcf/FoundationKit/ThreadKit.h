@@ -6,6 +6,7 @@
 #include "vcf/FoundationKit/Thread.h"
 #include "vcf/FoundationKit/ThreadManager.h"
 #include "vcf/FoundationKit/RunLoop.h"
+#include "vcf/FoundationKit/RunLoopTimer.h"
 #include "vcf/FoundationKit/RunLoopPeer.h"
 #include "vcf/FoundationKit/RunLoopSource.h"
 #include "vcf/FoundationKit/Mutex.h"

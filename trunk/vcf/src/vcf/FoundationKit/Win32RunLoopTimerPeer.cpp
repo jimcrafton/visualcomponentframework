@@ -9,6 +9,9 @@
 #include <vcf/FoundationKit/FoundationKitPrivate.h>
 #include <vcf/FoundationKit/RunLoopTimer.h>
 #include <vcf/FoundationKit/Win32RunLoopTimerPeer.h>
+#include "vcf/FoundationKit/ThreadManager.h"
+#include "vcf/FoundationKit/RunLoop.h"
+
 
 using namespace VCF;
 
@@ -66,6 +69,8 @@ void Win32RunLoopTimerPeer::create( const DateTime &fireDate, const DateTimeSpan
 void Win32RunLoopTimerPeer::perform()
 {
     owner_->TimerFired( *owner_ );
+	RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
+	runLoop->LoopEvents(rlTimerFired);
 }
 
 /**

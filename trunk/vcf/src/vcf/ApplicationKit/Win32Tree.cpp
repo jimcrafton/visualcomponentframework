@@ -1316,6 +1316,20 @@ void Win32Tree::onControlModelChanged( Event* e )
 													"Win32Tree::onTreeModelChanged" );
 	}
 	treeControl_->getTreeModel()->ModelChanged += ev;
+
+
+	treeItems_.clear();			
+	TreeView_DeleteAllItems( hwnd_ );
+	
+	TreeModel* tm = treeControl_->getTreeModel();	
+	
+	std::vector<TreeModel::Key> children;
+	tm->getChildren(TreeModel::RootKey,children);
+	std::vector<TreeModel::Key>::iterator it = children.begin();
+	while ( it != children.end() ) {
+		addTreeItem( *it, NULL );
+		++it;
+	}
 }
 
 void Win32Tree::onTreeModelChanged( ModelEvent* event )
@@ -1324,9 +1338,13 @@ void Win32Tree::onTreeModelChanged( ModelEvent* event )
 		case TreeModel::ItemAdded : {
 			TreeModelEvent* te = (TreeModelEvent*)event;
 			if ( TreeModel::RootKey ==  te->parentKey ) {
-				//only add root items - the rest will be added 
-				//as needed
-				addTreeItem( te->key, NULL );
+				std::map<TreeModel::Key,HTREEITEM>::iterator found =
+					treeItems_.find( te->key );
+				if ( found == treeItems_.end() ){
+					//only add root items - the rest will be added 
+					//as needed
+					addTreeItem( te->key, NULL );
+				}
 			}
 			else {
 				std::map<TreeModel::Key,HTREEITEM>::iterator found =

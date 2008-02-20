@@ -182,8 +182,6 @@ public:
 
 		sz = treeCtrl->sizeOf();
 
-		
-
 
 		TreeItem* item3 = treeCtrl->insertItem( item, "Wolla-Gobbgers!" );
 		treeCtrl->removeItem( item3 );

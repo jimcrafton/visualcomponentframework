@@ -17,10 +17,21 @@ where you installed the VCF.
 
 namespace VCF {
         
+	enum RunLoopEvents {
+		rlStarted = 0,
+		rlSourceFired,
+		rlTimerFired,
+		rlStopped
+	};
+
+	typedef Delegate1<RunLoopEvents> RunLoopDelegate;
+
     class FOUNDATIONKIT_API RunLoop {
     public:
         ~RunLoop();
-        
+
+		RunLoopDelegate LoopEvents;
+
         void run();
         void stop();
         
