@@ -30,11 +30,13 @@ RunLoop::~RunLoop()
 void RunLoop::run()
 {
     peer_->run();
+	LoopEvents( rlStarted );
 }
 
 void RunLoop::stop()
 {
     peer_->stop();
+	LoopEvents( rlStopped );
 }
 
 void RunLoop::addTimer( RunLoopTimerPtr::Shared timer )

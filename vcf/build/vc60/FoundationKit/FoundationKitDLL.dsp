@@ -120,6 +120,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKit.cpp
 
 SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopTimer.cpp
+# End Source File
 # End Group
 # Begin Group "Peers"
 
@@ -902,11 +906,27 @@ SOURCE=..\..\..\src\vcf\FoundationKit\RunLoop.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopFwd.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSource.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSource.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSourcePeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopTimer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopTimerPeer.h
 # End Source File
 # Begin Source File
 
@@ -947,6 +967,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ThreadManager.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\ThreadManager.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\ThreadPool.h
 # End Source File
 # Begin Source File
 

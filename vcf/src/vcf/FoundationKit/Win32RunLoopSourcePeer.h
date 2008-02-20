@@ -9,6 +9,9 @@
 
 #include <vcf/FoundationKit/RunLoopSourcePeer.h>
 #include <vcf/FoundationKit/RunLoopSource.h>
+#include "vcf/FoundationKit/ThreadManager.h"
+#include "vcf/FoundationKit/RunLoop.h"
+
 
 namespace VCF {
     
@@ -31,6 +34,8 @@ namespace VCF {
     {
         owner_->internal_perform();
         ::ResetEvent( source_ );
+		RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
+		runLoop->LoopEvents(rlSourceFired);
     }
 
     inline HANDLE Win32RunLoopSourcePeer::getHandle()
