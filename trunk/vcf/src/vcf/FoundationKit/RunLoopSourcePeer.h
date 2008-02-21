@@ -13,7 +13,7 @@ namespace VCF {
     public:
         virtual ~RunLoopSourcePeer();
         
-        virtual void fire() = 0;
+        virtual void signal() = 0;
         
     };
         

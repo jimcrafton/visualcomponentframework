@@ -253,6 +253,12 @@ VCFChar VFFParser::nextToken()
 		while ( ((*P >= '0') && (*P <= '9')) || ((*P >= 'A') && (*P <= 'F')) || ((*P >= 'a') && (*P <= 'f')) && (P < bufEnd_) ) {
 			P++;
 		}
+
+		//skip over any unit type
+		while ( ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) && (P < bufEnd_) ) {
+			P++;
+		}
+
 		result = TO_INTEGER;
 	}
     else if ( (*P == '-') ||  ((*P >= '0') && (*P <= '9')) ) {
@@ -264,6 +270,11 @@ VCFChar VFFParser::nextToken()
 		while ( ((*P >= '0') && (*P <= '9')) || (*P == '.') || (*P == 'e') || (*P == '+') || (*P == '-') && (P < bufEnd_) ) {
 			P++;
 			result = TO_FLOAT;
+		}
+
+		//skip over any unit type
+		while ( ((*P >= 'A') && (*P <= 'Z')) || ((*P >= 'a') && (*P <= 'z')) && (P < bufEnd_) ) {
+			P++;
 		}
 	}
 	else {

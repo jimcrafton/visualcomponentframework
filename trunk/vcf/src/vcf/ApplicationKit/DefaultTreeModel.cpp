@@ -153,25 +153,25 @@ TreeModel::Key DefaultTreeModel::removeFromHierarchy( TreeModel::Key key )
 		
 
 		//thanks to Fraggle for fixing this!!
-		if ( ref.parent ) {
-			range = hierarchy_.equal_range( ref.parent->key );
-			while ( range.first != range.second && range.first->second != key ) {
-				++range.first;
-			}
-
-			if ( range.first->first == ref.parent->key && range.first->second == key ) {
-				hierarchy_.erase( range.first );
-			}
+		TreeModel::Key parentKey = (NULL != ref.parent) ? ref.parent->key : TreeModel::RootKey;
+		range = hierarchy_.equal_range( parentKey );
+		while ( range.first != range.second && range.first->second != key ) {
+			++range.first;
 		}
+
+		if ( range.first->first == parentKey && range.first->second == key ) {
+			hierarchy_.erase( range.first );
+		}
+		
 		
 		
 
 		TreeModelEvent e(this, TreeModel::ItemRemoved);
 		e.key = ref.key;
-		if ( ref.parent ) {
-			result = ref.parent->key;
-			e.parentKey = ref.parent->key;
-		}
+		
+		result = parentKey;
+		e.parentKey = parentKey;
+		
 		
 		NodeRemoved( &e );
 

@@ -93,21 +93,21 @@ public:
 	};
 
 	SimpleSource() : answer_(0) {
-		fire();
+		signal();
 	}
 
 	virtual void setRunLoop( RunLoopPtr::Shared rl ) {
 		runLoop_ = rl;
 	}
 
-	virtual void performImpl() {
+	virtual void perform() {
 		answer_ += 3;
 
 		RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
 		runLoop->stop();
 	}
 
-	virtual void cancelImpl() {
+	virtual void cancel() {
 		System::println( Format("Cancelled SimpleSource") );
 	}
 

@@ -23,7 +23,7 @@ Win32RunLoopSourcePeer::~Win32RunLoopSourcePeer()
 	::CloseHandle( source_ );
 }
 
-void Win32RunLoopSourcePeer::fire()
+void Win32RunLoopSourcePeer::signal()
 {
     ::SetEvent( source_ );
 }

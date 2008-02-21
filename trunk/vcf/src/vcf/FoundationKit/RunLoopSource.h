@@ -25,7 +25,7 @@ namespace VCF {
         virtual ~RunLoopSource(); 
         
         void setRunLoop( RunLoop* runLoop );
-        void fire();
+        void signal();
         
         RunLoopSourcePeerPtr::Shared getPeer();
 
@@ -33,8 +33,8 @@ namespace VCF {
         void internal_cancel();
     protected:
 
-        virtual void performImpl() = 0;
-        virtual void cancelImpl() = 0;
+        virtual void perform() = 0;
+        virtual void cancel() = 0;
         
     private:
         RunLoopSourcePeerPtr::Shared peer_;
@@ -45,9 +45,9 @@ namespace VCF {
         return peer_;
     }
 
-    inline void RunLoopSource::fire()
+    inline void RunLoopSource::signal()
     {
-        peer_->fire();
+        peer_->signal();
     }
 
 }
