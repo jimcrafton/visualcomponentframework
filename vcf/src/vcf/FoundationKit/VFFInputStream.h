@@ -18,6 +18,18 @@ namespace VCF {
 
 class InputStream;
 class VFFParser;
+
+
+class FOUNDATIONKIT_API UnitTransformer {
+public:
+	UnitTransformer(){}
+	virtual ~UnitTransformer(){}
+
+	virtual String transform( const String& originalValue ) = 0;
+};
+
+
+
 /**
 \class VFFInputStream VFFInputStream.h "vcf/ApplicationKit/VFFInputStream.h"  
 */
@@ -126,6 +138,10 @@ public:
 	static void setRootComponent( Component* component ) {
 		VFFInputStream::rootComponent_ = component;
 	}
+
+	static void setTransformer( UnitTransformer* val ) {
+		VFFInputStream::transformer = val;
+	}
 protected:
 
 	class DeferredPropertySetter {
@@ -172,6 +188,8 @@ protected:
 
 	Component* createNewComponent( Component* componentInstance, int flags );
 
+	String transform( const String& originalValue );
+
 	std::vector<DeferredPropertySetter*> deferredProperties_;
 	std::vector<DeferredDelegateSetter*> deferredDelegates_;
 	
@@ -181,6 +199,7 @@ protected:
 	bool topLevelControlVisibility_;
 	bool setDesignMode_;
 	static Component* rootComponent_;
+	static UnitTransformer* transformer;
 };
 
 

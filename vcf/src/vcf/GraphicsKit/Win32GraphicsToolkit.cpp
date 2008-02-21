@@ -22,12 +22,102 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/Win32GraphicsResourceBundle.h"
 
 #include "vcf/GraphicsKit/Win32VisualStylesWrapper.h"
+#include "vcf/FoundationKit/VFFInputStream.h"
+
 
 //init singleton
 Win32VisualStylesWrapper Win32VisualStylesWrapper::Instance;
 
 
+
+
 using namespace VCF;
+
+
+
+class Win32UnitTransformer : public UnitTransformer {
+public:
+	virtual String transform( const String& s ) {
+
+		const VCFChar* P = s.c_str();
+		const VCFChar* start = P;
+
+		String val,unit;
+
+		while ( P-start < s.length() ) {
+			if ( *P == '$' ) {
+				P++;
+				while ( ((*P >= '0') && (*P <= '9')) || ((*P >= 'A') && (*P <= 'F')) || ((*P >= 'a') && (*P <= 'f')) && (P-start < s.length()) ) {
+					P++;
+				}
+
+				if ( P-start >= s.length() ) {
+					return s;
+				}
+
+				val.assign( start, P );
+				
+				unit.assign( P, s.length() - val.length() );
+
+				break;
+			}
+			else if ( (*P == '-') ||  ((*P >= '0') && (*P <= '9')) ) {
+				P++;
+				while ( ((*P >= '0') && (*P <= '9')) && (P-start < s.length()) ) {
+					P++;
+				}
+
+				while ( ((*P >= '0') && (*P <= '9')) || (*P == '.') || (*P == 'e') || (*P == '+') || (*P == '-') && (P-start < s.length()) ) {
+					P++;
+				}
+
+				if ( P-start >= s.length() ) {
+					return s;
+				}
+
+				val.assign( start, P );
+				unit.assign( P, s.length() - val.length() );
+
+				break;
+			}
+			P++;
+		}
+		
+
+		unit = StringUtils::lowerCase(unit);
+		
+		HDC dc = GetDC( ::GetDesktopWindow() );
+
+		double dpi = (double)GetDeviceCaps( dc, LOGPIXELSY);
+
+		ReleaseDC(::GetDesktopWindow(),dc);
+		
+		double v = StringUtils::fromStringAsDouble(val);
+
+		if (unit == "in" ) {
+			val = StringUtils::toString( v * dpi );
+		}
+		else if (unit == "pt" ) {
+			val = StringUtils::toString( (v / 72.0) * dpi );
+		}
+		else if (unit == "em" ) {
+			
+		}
+		else if (unit == "cm" ) {
+			val = StringUtils::toString( (v / 2.54 ) * dpi );
+		}
+		else if (unit == "px" ) {
+			//no-op
+		}
+
+
+
+		return val;
+	}
+};
+
+static Win32UnitTransformer win32Tfrm;
+
 
 Win32FontManager* Win32FontManager::win32FontMgr = NULL;
 
@@ -42,6 +132,8 @@ Win32GraphicsToolkit::Win32GraphicsToolkit():
 	registerImageLoader( "image/bmp", new BMPLoader() );
 
 	initSystemFont();	
+
+	VFFInputStream::setTransformer( &win32Tfrm );
 }
 
 Win32GraphicsToolkit::~Win32GraphicsToolkit()

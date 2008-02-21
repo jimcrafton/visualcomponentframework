@@ -15,7 +15,7 @@ where you installed the VCF.
 using namespace VCF;
 
 Component* VFFInputStream::rootComponent_ = NULL;
-
+UnitTransformer* VFFInputStream::transformer = NULL;
 
 VariantData getKeyFromIndex( const String& index, int token ) ;
 
@@ -38,7 +38,7 @@ VFFInputStream::VFFInputStream( InputStream* stream ):
 	atTopLevel_(true),
     componentInputLevel_(-1),
 	topLevelControlVisibility_(false),
-	setDesignMode_(false)	
+	setDesignMode_(false)
 {
 	parser_ = new VCF::VFFParser( this );
 }
@@ -51,7 +51,7 @@ VFFInputStream::VFFInputStream( const VCF::String& vffString ):
 	atTopLevel_(true),
 	topLevelComponent_(NULL),
 	topLevelControlVisibility_(false),
-	setDesignMode_(false)	
+	setDesignMode_(false)
 {
 	stream_ = new BasicInputStream( vffString );
 
@@ -247,6 +247,12 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 								if ( VFFInputStream::getComponentConstant( value, newVal ) ) {
 									value = newVal;
 								}
+
+								if (valToken == VFFParser::TO_INTEGER ||
+									valToken == VFFParser::TO_FLOAT ) {
+									value = transform( value );
+								}
+
 								//note: need to be able to set value
 								//from a string!!
 								//also, we need to inform the 
@@ -477,6 +483,10 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 							String newVal;							
 							if ( VFFInputStream::getComponentConstant( value, newVal ) ) {
 								value = newVal;
+							}
+							if (assignmentToken == VFFParser::TO_INTEGER ||
+								assignmentToken == VFFParser::TO_FLOAT ) {
+								value = transform( value );
 							}
 							
 							prop->set( value );
@@ -1231,6 +1241,16 @@ void VFFInputStream::internal_clearComponentConstants()
 {
 	componentConstants.clear();
 }
+
+String VFFInputStream::transform( const String& originalValue )
+{
+	if ( NULL != VFFInputStream::transformer ) {
+		return VFFInputStream::transformer->transform( originalValue );
+	}
+
+	return originalValue;
+}
+
 /**
 $Id$
 */

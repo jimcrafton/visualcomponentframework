@@ -26,12 +26,12 @@ void RunLoopSource::setRunLoop( RunLoop* runLoop )
 
 void RunLoopSource::internal_perform()
 {
-    performImpl();
+    perform();
 }
 
 void RunLoopSource::internal_cancel()
 {
-    cancelImpl();
+    cancel();
 }
 
 /**

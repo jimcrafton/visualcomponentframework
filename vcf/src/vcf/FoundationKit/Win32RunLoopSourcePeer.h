@@ -20,7 +20,7 @@ namespace VCF {
         Win32RunLoopSourcePeer( RunLoopSource* source );
         virtual ~Win32RunLoopSourcePeer();
         
-        virtual void fire();
+        virtual void signal();
 
         HANDLE getHandle();
         void perform();
