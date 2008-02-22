@@ -24,7 +24,7 @@ namespace VCF {
 
         virtual ~LinuxRunLoopPeer();
 
-        virtual void run();
+        virtual void run( const DateTimeSpan* duration );
         virtual void stop();
         
         virtual bool isStopped() const;

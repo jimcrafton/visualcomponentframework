@@ -17,7 +17,7 @@ namespace VCF {
     public:
         OSXRunLoopPeer( RunLoop* runLoop );
         
-        virtual void run();
+        virtual void run( const DateTimeSpan* duration );
         virtual void stop();
 		virtual bool isStopped() const;		
         virtual void addTimer( RunLoopTimerPtr::Shared timer );
