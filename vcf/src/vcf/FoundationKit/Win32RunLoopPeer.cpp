@@ -71,6 +71,11 @@ void Win32RunLoopPeer::run( const DateTimeSpan* duration )
 				// I don't know. This looks like a logical thing to do...
 				processedAllFires = true;
 			}
+			else if ( result == WAIT_TIMEOUT && wait == timeoutInMS ) {
+				// There is no other fired event so exit the loop.
+				processedAllFires = true;
+				stop();
+			}
 			else if ( result == WAIT_TIMEOUT ) {
 				// There is no other fired event so exit the loop.
 				processedAllFires = true;
