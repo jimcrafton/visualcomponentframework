@@ -1,0 +1,130 @@
+object TreesWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 153.75pt //205px
+	width = 307.5pt //410px
+	caption = 'Find In Files'
+	frameStyle = fstFixed
+
+	object lbl1 : VCF::Label
+		top = 7.5pt //10px
+		left = 15pt //20px
+		width = 75pt //100px
+		height = LabelHeight
+		caption = 'Fi&nd what:'
+	end
+
+	object edt1 : VCF::TextControl
+		top = 7.5pt //10px
+		left = 82.5pt //110px
+		width = 90pt //120px
+		height = TextHeight
+	end
+
+	object lbl2 : VCF::Label
+		top = 26.25pt //35px
+		left = 15pt //20px
+		width = 75pt //100px
+		height = LabelHeight
+		caption = 'In files/file &types:'
+	end
+
+	object edt2 : VCF::TextControl
+		top = 26.25pt  //35px
+		left = 82.5pt //110px
+		width = 90pt //120px
+		height = TextHeight
+	end
+
+	object lbl3 : VCF::Label
+		top = 45pt //60px
+		left = 15pt //20px
+		width = 75pt //100px
+		height = LabelHeight
+		caption = 'In f&older:'
+	end
+
+	object edt3 : VCF::TextControl
+		top = 45pt //60px
+		left = 82.5pt //110px
+		width = 90pt //120px
+		height = TextHeight
+	end
+
+	object btn1 : VCF::CommandButton
+		top = 45pt //60px
+		left = 176.25pt //235px
+		width = 15pt //20px
+		height = TextHeight
+		caption='...'
+	end
+
+
+
+	object btn2 : VCF::CommandButton
+		top = 7.5pt //10px
+		left = 210pt //280px
+		width = 75pt //100px
+		height = ButtonHeight
+		caption='&Find'
+	end
+
+	object btn3 : VCF::CommandButton
+		top = 30pt //40px
+		left = 210pt //280px
+		width = 75pt //100px
+		height = ButtonHeight
+		caption='Cancel'
+	end
+
+	object btn4 : VCF::CommandButton
+		top = 52.5pt //70px
+		left = 210pt //280px
+		width = 75pt //100px
+		height = ButtonHeight
+		caption='&Advanced >>'
+	end
+
+
+	object cb1 : VCF::CheckBoxControl
+		top = 82.5pt //110px
+		left = 15pt //20px
+		width = 112.5pt //150px
+		height = CheckboxHeight
+		caption = 'Match &whole word only'
+	end
+
+
+	object cb2 : VCF::CheckBoxControl
+		top = 97.5pt //130px
+		left = 15pt //20px
+		width = 112.5pt //150px
+		height = CheckboxHeight
+		caption = 'Match &case'
+	end
+
+	object cb3 : VCF::CheckBoxControl
+		top = 112.5pt //150px
+		left = 15pt //20px
+		width = 112.5pt //150px
+		height = CheckboxHeight
+		caption = 'Regular &expression'
+	end
+
+	object cb4 : VCF::CheckBoxControl
+		top = 82.5pt //110px
+		left = 135pt //180px
+		width = 112.5pt //150px
+		height = CheckboxHeight
+		caption = 'Look in &subfolders'
+	end
+
+	object cb2 : VCF::CheckBoxControl
+		top = 97.5pt //130px
+		left = 135pt //180px
+		width = 112.5pt //150px
+		height = CheckboxHeight
+		caption = 'O&utput to pane 2'
+		checked = true
+	end
+end

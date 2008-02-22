@@ -85,32 +85,29 @@ public:
 		
 
 		unit = StringUtils::lowerCase(unit);
-		
-		HDC dc = GetDC( ::GetDesktopWindow() );
 
-		double dpi = (double)GetDeviceCaps( dc, LOGPIXELSY);
-
-		ReleaseDC(::GetDesktopWindow(),dc);
-		
-		double v = StringUtils::fromStringAsDouble(val);
-
-		if (unit == "in" ) {
-			val = StringUtils::toString( v * dpi );
-		}
-		else if (unit == "pt" ) {
-			val = StringUtils::toString( (v / 72.0) * dpi );
-		}
-		else if (unit == "em" ) {
+		if (unit != "px" ) {
+			HDC dc = GetDC( ::GetDesktopWindow() );
 			
+			double dpi = (double)GetDeviceCaps( dc, LOGPIXELSY);
+			
+			ReleaseDC(::GetDesktopWindow(),dc);
+			
+			double v = StringUtils::fromStringAsDouble(val);
+			
+			if (unit == "in" ) {
+				val = StringUtils::toString( v * dpi );
+			}
+			else if (unit == "pt" ) {
+				val = StringUtils::toString( (v / 72.0) * dpi );
+			}
+			else if (unit == "em" ) {
+				
+			}
+			else if (unit == "cm" ) {
+				val = StringUtils::toString( (v / 2.54 ) * dpi );
+			}
 		}
-		else if (unit == "cm" ) {
-			val = StringUtils::toString( (v / 2.54 ) * dpi );
-		}
-		else if (unit == "px" ) {
-			//no-op
-		}
-
-
 
 		return val;
 	}
