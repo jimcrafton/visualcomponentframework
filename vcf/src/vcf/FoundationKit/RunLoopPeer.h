@@ -21,7 +21,7 @@ namespace VCF {
     public:
         virtual ~RunLoopPeer();
         
-        virtual void run() = 0;
+        virtual void run( const DateTimeSpan* duration ) = 0;
         virtual void stop() = 0;
         
         virtual bool isStopped() const = 0;
