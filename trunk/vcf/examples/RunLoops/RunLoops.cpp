@@ -9,6 +9,9 @@ using namespace VCF;
 void Timer1( RunLoopTimer& timer )
 {
 	System::println( "Timer1 called!" );
+	static DateTime t = DateTime::now();
+
+
 	static int c = 0;
 	c++;
 
@@ -22,6 +25,9 @@ void Timer1( RunLoopTimer& timer )
 //		runLoop->postEvent( new Event(NULL,InnerLoopEv) );
 		
 	}
+
+	DateTimeSpan s = DateTime::now() - t;
+	System::println( Format("Span: %d milliseconds") % s.getTotalMilliseconds() );
 }
 
 
@@ -65,39 +71,32 @@ void example1()
 	RunLoopTimerPtr::Shared timer1( new RunLoopTimer( DateTimeSpan( 1000 ) ) );
 	timer1->TimerFired += Timer1;
 
-	//EventHandler ev(Timer1);
-	//EventHandler ev2(Timer2);
-	//EventHandler ev3(InnerLoop);
-
-	//uint32 timerID = runLoop->addTimer( "", NULL, &ev, 1000 );
-	//uint32 timerID2 = runLoop->addTimer( "", NULL, &ev2, 3000 );
-
-	//runLoop->LoopEvents += &ev3;
-
 	runLoop->addTimer( timer1 );
 	runLoop->run();
 
 	//remember to clear out our timer's now that we are done!
-
-	//runLoop->removeTimer( timerID );
-	//runLoop->removeTimer( timerID2 );
-	//runLoop->LoopEvents -= &ev3;
+	runLoop->removeTimer( timer1 );
 };
 
+void postEventHandler( Event* e )
+{
+	System::println( Format("postEventHandler called, event: %p, %s") % e % e->toString() );
+	ThreadManager::getCurrentRunLoop()->stop();
+}
+
+void example2()
+{
+	RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
+	runLoop->postEvent( new Procedure1<Event*>(postEventHandler), new Event(NULL), true );
+	runLoop->run();
+
+	System::println( "example 2 done." );	
+}
 
 class SimpleSource : public RunLoopSource {
 public:	
-
-	enum {
-		SimpleSourceEvent = 'SMPL'
-	};
-
 	SimpleSource() : answer_(0) {
 		signal();
-	}
-
-	virtual void setRunLoop( RunLoopPtr::Shared rl ) {
-		runLoop_ = rl;
 	}
 
 	virtual void perform() {
@@ -111,26 +110,10 @@ public:
 		System::println( Format("Cancelled SimpleSource") );
 	}
 
-	RunLoopPtr::Shared runLoop_;
-
 	unsigned int answer_;
 };
 
-void SimpleSrcCB( Event* e ) 
-{
-	if ( e->getType() == SimpleSource::SimpleSourceEvent ) {
-		SimpleSource* src = (SimpleSource*)e->getUserData();
-		static int simSrcLoopCount = 0;
-		simSrcLoopCount ++;
-
-		if ( simSrcLoopCount >= 200 ) {
-			RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
-			runLoop->stop();
-		}
-	}
-}
-
-void example2()
+void example3()
 {
 	System::println( "Starting example 2" );
 	SmartPtr<SimpleSource>::Shared src(new SimpleSource());	
@@ -181,7 +164,7 @@ public:
 };
 
 
-void example3()
+void example4()
 {
 	System::println( "Starting example 3" );
 	SimpleSource src;	

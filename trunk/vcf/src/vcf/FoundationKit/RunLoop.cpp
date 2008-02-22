@@ -11,16 +11,84 @@ where you installed the VCF.
 #include "vcf/FoundationKit/RunLoop.h"
 #include "vcf/FoundationKit/RunLoopPeer.h"
 #include "vcf/FoundationKit/RunLoopSource.h"
+#include <deque>
 
 using namespace VCF;
 
-RunLoop::RunLoop( Thread* thread ) 
+struct PostEventInfo {
+	PostEventInfo(): eventHandler(NULL),event(NULL),deleteHandler(false){}
+
+	EventHandler* eventHandler;
+	Event* event;
+	bool deleteHandler;
+};
+
+class PostEventSource : public RunLoopSource {
+public:	
+	
+	virtual ~PostEventSource() {
+		std::deque<PostEventInfo>::iterator it = posts.begin();
+		while ( it != posts.end() ) {
+			PostEventInfo& info = *it;	
+			if ( NULL != info.eventHandler && info.deleteHandler ) {
+				info.eventHandler->free();
+			}
+			++it;
+		}
+	}
+
+	void postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler ) {
+		{
+			Lock l(m);
+			PostEventInfo info;
+			info.eventHandler = eventHandler;
+			info.event = event;
+			info.deleteHandler = deleteHandler;
+			posts.push_back( info );		
+		}
+
+		signal();
+	}
+
+	virtual void perform() {
+		PostEventInfo info;
+
+		{
+			Lock l(m);
+			if ( !posts.empty() ) {
+				info = posts.front();
+				posts.pop_front();
+			}
+		}
+
+		if ( NULL != info.eventHandler ) {
+			info.eventHandler->invoke( info.event ) ;
+			
+			if ( info.deleteHandler ) {
+				info.eventHandler->free();
+			}
+		}
+	}
+
+	virtual void cancel() {	}
+
+protected:
+	Mutex m;
+	std::deque<PostEventInfo> posts;
+};
+
+
+
+RunLoop::RunLoop( Thread* thread ) 	
 {
     peer_.reset( SystemToolkit::createRunLoopPeer( this ) );
     if ( peer_.get() == NULL ) {
 
         throw NoPeerFoundException();
     }
+
+	postEventSource_.reset( new PostEventSource() );
+	addSource( postEventSource_ );
 }
 
 RunLoop::~RunLoop()
@@ -29,14 +97,30 @@ RunLoop::~RunLoop()
 
 void RunLoop::run()
 {
-    peer_->run();
 	LoopEvents( rlStarted );
+
+    peer_->run( NULL );
+	
+	LoopEvents( rlStopped );
+}
+
+void RunLoop::run( const DateTime& till )
+{
+	run( till - DateTime::now() );
+}
+
+void RunLoop::run( const DateTimeSpan& duration )
+{
+	LoopEvents( rlStarted );
+
+    peer_->run( &duration );
+	
+	LoopEvents( rlStopped );
 }
 
 void RunLoop::stop()
 {
-    peer_->stop();
-	LoopEvents( rlStopped );
+    peer_->stop();	
 }
 
 void RunLoop::addTimer( RunLoopTimerPtr::Shared timer )
@@ -67,6 +151,13 @@ void RunLoop::removeSource( RunLoopSourcePtr::Shared source )
         peer_->removeSource( source );
         sources_.erase( it );
     }
+}
+
+void RunLoop::postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler )
+{
+	PostEventSource* postSrc = static_cast<PostEventSource*>( postEventSource_.get() );
+
+	postSrc->postEvent( eventHandler, event, deleteHandler );	
 }
 
 /**

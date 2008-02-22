@@ -33,6 +33,11 @@ namespace VCF {
 		RunLoopDelegate LoopEvents;
 
         void run();
+
+		void run( const DateTime& till );
+
+		void run( const DateTimeSpan& duration );
+
         void stop();
         
         void addTimer( RunLoopTimerPtr::Shared timer );
@@ -41,6 +46,8 @@ namespace VCF {
         void addSource( RunLoopSourcePtr::Shared source );
         void removeSource( RunLoopSourcePtr::Shared source );
         
+		void postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler=true );
+
         class Creator;
     protected:
 
@@ -50,6 +57,7 @@ namespace VCF {
         
     private:
         RunLoopPeerPtr::Scoped peer_;
+		RunLoopSourcePtr::Shared postEventSource_;
 
         // Keep a copy of the sources/timers so that they don't get delete prematurely.
         std::vector<RunLoopTimerPtr::Shared>  timers_;

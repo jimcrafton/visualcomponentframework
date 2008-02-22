@@ -28,7 +28,7 @@ namespace VCF {
     public:
         Win32RunLoopPeer( RunLoop* runLoop );
 
-        virtual void run();
+        virtual void run( const DateTimeSpan* duration );
         virtual void stop();
 
         virtual bool isStopped() const;
