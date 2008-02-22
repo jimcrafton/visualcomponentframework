@@ -162,7 +162,7 @@ public:
 
 	virtual void stop(){ }
 };
-
+/*
 
 void example4()
 {
@@ -177,7 +177,17 @@ void example4()
 
 	System::println( Format("SimpleSource answer: %d\n") % src.answer_ );	
 }
+*/
 
+void example4() 
+{
+	RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
+	DateTime t = DateTime::now();
+	runLoop->run( DateTimeSpan(1000) );
+
+	DateTimeSpan s = DateTime::now() - t;
+	System::println( Format("example4 finished in %d milliseconds") % s.getTotalMilliseconds() );
+}
 
 int main( int argc, char** argv ){
 
@@ -188,6 +198,8 @@ int main( int argc, char** argv ){
 	example2();
 
 	example3();
+
+	example4();
 
 	FoundationKit::terminate();
 	return 0;
