@@ -25,7 +25,7 @@ OSXRunLoopPeer::OSXRunLoopPeer( RunLoop* runLoop )
 {
 }
 
-void OSXRunLoopPeer::run()
+void OSXRunLoopPeer::run( const DateTimeSpan* duration )
 {
     VCF_ASSERT( CFRunLoopGetCurrent() == runLoopRef_ );
     CFRunLoopRun();   

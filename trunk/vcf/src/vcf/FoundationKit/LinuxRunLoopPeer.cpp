@@ -58,14 +58,16 @@ LinuxRunLoopPeer::~LinuxRunLoopPeer()
 	}
 }
 
-void LinuxRunLoopPeer::run()
+void LinuxRunLoopPeer::run( const DateTimeSpan* duration )
 {
 	typedef std::vector<epoll_event> EventVec;
 	EventVec events;
 	events.resize(gMaxNumOfEvents);
 	
+	int timeoutInMS = (NULL != duration) ? duration->getTotalMilliseconds() : -1;
+
 	while( !done_ ) {
-		int count = ::epoll_wait( epollfd_, &events[0], events.size(), -1 );
+		int count = ::epoll_wait( epollfd_, &events[0], events.size(), timeoutInMS );
 		if( count > 0 ) {
 			events.resize( count );
 			for( EventVec::iterator it = events.begin(); it != events.end(); ++it ) {
