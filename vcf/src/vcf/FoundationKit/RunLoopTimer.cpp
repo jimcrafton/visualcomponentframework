@@ -32,6 +32,31 @@ RunLoopTimer::~RunLoopTimer()
 {
 }
 
+bool RunLoopTimer::isActive() const
+{
+	return peer_->isActive();
+}
+
+void RunLoopTimer::setActive( const bool& val )
+{
+	peer_->setActive( val );
+}
+
+bool RunLoopTimer::doesRepeat() const
+{
+	return peer_->doesRepeat();
+}
+
+DateTimeSpan RunLoopTimer::getInterval() const
+{
+	return peer_->getInterval();
+}
+
+DateTime RunLoopTimer::getNextFireDate() const
+{
+	return peer_->getNextFireDate();
+}
+
 /**
 $Id$
 */

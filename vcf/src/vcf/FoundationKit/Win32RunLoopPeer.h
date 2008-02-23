@@ -21,30 +21,51 @@ where you installed the VCF.
 
 
 #include "vcf/FoundationKit/RunLoopPeer.h"
+#include <deque>
 
-namespace VCF {
+namespace VCF {	
 
     class Win32RunLoopPeer : public RunLoopPeer {
     public:
         Win32RunLoopPeer( RunLoop* runLoop );
+		virtual ~Win32RunLoopPeer();
 
-        virtual void run( const DateTimeSpan* duration );
-        virtual void stop();
+        virtual void run( const DateTimeSpan* duration, const String& mode );
+        virtual void stop( const String& mode );
 
-        virtual bool isStopped() const;
+        virtual bool isStopped(const String& mode) const;
 
-        virtual void addTimer( RunLoopTimerPtr::Shared timer );
-        virtual void removeTimer( RunLoopTimerPtr::Shared timer );
+        virtual void addTimer( RunLoopTimerPtr::Shared timer, const String& mode );
+        virtual void removeTimer( RunLoopTimerPtr::Shared timer, const String& mode );
 
-        virtual void addSource( RunLoopSourcePtr::Shared source );
-        virtual void removeSource( RunLoopSourcePtr::Shared source );
+        virtual void addSource( RunLoopSourcePtr::Shared source, const String& mode );
+        virtual void removeSource( RunLoopSourcePtr::Shared source, const String& mode );
 
-    private:
+    private:	
+
+		typedef std::map<HANDLE, SmartPtr<Procedure>::Shared> HandleCallBackMap;
+		typedef std::deque<bool> DoneStack;
+
+		class ModeInfo {
+		public:
+
+			ModeInfo();
+
+			HandleCallBackMap handles;
+			DoneStack done;
+			HANDLE wakeUpEvent;
+		};
+
+
+		typedef std::map<String,ModeInfo*> ModeMap;
+
+		ModeInfo* initRun(const String& mode);
+
+
         RunLoop* runLoop_;
-        bool     done_;
-        HANDLE   wakeUpEvent_;
-        typedef std::map<HANDLE, SmartPtr<Procedure>::Shared> HandleCallBackMap;
-        HandleCallBackMap handles_;
+		ModeMap modes_;
+		HandleCallBackMap sharedHandles_;
+		
     };
 }
 

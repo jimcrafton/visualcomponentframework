@@ -21,32 +21,42 @@ namespace VCF {
 		rlStarted = 0,
 		rlSourceFired,
 		rlTimerFired,
-		rlStopped
+		rlStopped,
+		rlFinished
 	};
 
 	typedef Delegate1<RunLoopEvents> RunLoopDelegate;
 
     class FOUNDATIONKIT_API RunLoop {
     public:
+		static const String DefaultMode;
+		static const String SharedMode;
+
         ~RunLoop();
 
 		RunLoopDelegate LoopEvents;
 
-        void run();
+        void run( const String& mode=DefaultMode );
 
-		void run( const DateTime& till );
+		void run( const DateTime& till, const String& mode=DefaultMode );
 
-		void run( const DateTimeSpan& duration );
+		void run( const DateTimeSpan& duration, const String& mode=DefaultMode );
 
-        void stop();
+        void stop( const String& mode=DefaultMode );
         
-        void addTimer( RunLoopTimerPtr::Shared timer );
-        void removeTimer( RunLoopTimerPtr::Shared timer );
+        void addTimer( RunLoopTimerPtr::Shared timer, const String& mode=DefaultMode );
+        void removeTimer( RunLoopTimerPtr::Shared timer, const String& mode=DefaultMode );
 
-        void addSource( RunLoopSourcePtr::Shared source );
-        void removeSource( RunLoopSourcePtr::Shared source );
+        void addSource( RunLoopSourcePtr::Shared source, const String& mode=DefaultMode );
+        void removeSource( RunLoopSourcePtr::Shared source, const String& mode=DefaultMode );
         
-		void postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler=true );
+		void postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler=true, const String& mode=DefaultMode );
+
+		void postEvent( Procedure* callback, const bool& deleteHandler=true, const String& mode=DefaultMode );
+
+		void clearAllTimers();
+
+		void clearAllSources();
 
         class Creator;
     protected:
@@ -57,7 +67,7 @@ namespace VCF {
         
     private:
         RunLoopPeerPtr::Scoped peer_;
-		RunLoopSourcePtr::Shared postEventSource_;
+		std::map<String,RunLoopSourcePtr::Shared> postSources_;
 
         // Keep a copy of the sources/timers so that they don't get delete prematurely.
         std::vector<RunLoopTimerPtr::Shared>  timers_;

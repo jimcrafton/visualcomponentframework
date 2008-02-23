@@ -20,12 +20,27 @@ namespace VCF {
         virtual void create( const DateTimeSpan &interval );
         virtual void create( const DateTime &fireDate, const DateTimeSpan &interval );
 
+		virtual bool isActive() const {
+			return active_;
+		}
+
+		virtual void setActive( const bool& val );
+
+		virtual bool doesRepeat() const;
+        virtual DateTimeSpan getInterval() const;
+        virtual DateTime getNextFireDate() const;
+
         HANDLE getHandle();
         void perform();
 
     private:
         HANDLE        timer_;
         RunLoopTimer *owner_;
+		bool active_;
+		LARGE_INTEGER dueTime_;
+		LONG periodicInterval_;
+		DateTime lastFire_;
+
     };
 
     inline HANDLE Win32RunLoopTimerPeer::getHandle()

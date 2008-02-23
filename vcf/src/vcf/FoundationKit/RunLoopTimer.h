@@ -25,8 +25,9 @@ namespace VCF {
         bool doesRepeat() const;
         DateTimeSpan getInterval() const;
         DateTime getNextFireDate() const;
-        void invalidate();
-        bool isValid() const;
+        
+		bool isActive() const;
+		void setActive( const bool& val );
         
         RunLoopTimerPeerPtr::Shared getPeer();
         

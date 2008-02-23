@@ -21,16 +21,16 @@ namespace VCF {
     public:
         virtual ~RunLoopPeer();
         
-        virtual void run( const DateTimeSpan* duration ) = 0;
-        virtual void stop() = 0;
+        virtual void run( const DateTimeSpan* duration, const String& mode ) = 0;
+        virtual void stop( const String& mode ) = 0;
         
-        virtual bool isStopped() const = 0;
+        virtual bool isStopped(const String& mode) const = 0;
 
-        virtual void addTimer( RunLoopTimerPtr::Shared timer ) = 0;
-        virtual void removeTimer( RunLoopTimerPtr::Shared timer ) = 0;
+        virtual void addTimer( RunLoopTimerPtr::Shared timer, const String& mode ) = 0;
+        virtual void removeTimer( RunLoopTimerPtr::Shared timer, const String& mode ) = 0;
 
-        virtual void addSource( RunLoopSourcePtr::Shared source ) = 0;
-        virtual void removeSource( RunLoopSourcePtr::Shared source ) = 0;
+        virtual void addSource( RunLoopSourcePtr::Shared source, const String& mode ) = 0;
+        virtual void removeSource( RunLoopSourcePtr::Shared source, const String& mode ) = 0;
     };
     
     inline RunLoopPeer::~RunLoopPeer()
