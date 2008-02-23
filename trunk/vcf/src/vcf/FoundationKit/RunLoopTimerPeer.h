@@ -15,6 +15,13 @@ namespace VCF {
         virtual void create( const DateTime &fireDate ) = 0;
         virtual void create( const DateTimeSpan &interval ) = 0;
         virtual void create( const DateTime &fireDate, const DateTimeSpan &interval ) = 0;        
+
+		virtual bool isActive() const = 0;
+		virtual void setActive( const bool& val ) = 0;
+
+		virtual bool doesRepeat() const = 0;
+        virtual DateTimeSpan getInterval() const = 0;
+        virtual DateTime getNextFireDate() const = 0;
     };
     
     inline RunLoopTimerPeer::~RunLoopTimerPeer()

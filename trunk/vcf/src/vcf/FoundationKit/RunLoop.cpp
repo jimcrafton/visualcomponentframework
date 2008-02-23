@@ -15,10 +15,14 @@ where you installed the VCF.
 
 using namespace VCF;
 
+const String RunLoop::DefaultMode = "DefaultMode";
+const String RunLoop::SharedMode = "SharedMode";
+
 struct PostEventInfo {
-	PostEventInfo(): eventHandler(NULL),event(NULL),deleteHandler(false){}
+	PostEventInfo(): eventHandler(NULL),procedureCB(NULL),event(NULL),deleteHandler(false){}
 
 	EventHandler* eventHandler;
+	Procedure* procedureCB;
 	Event* event;
 	bool deleteHandler;
 };
@@ -33,8 +37,23 @@ public:
 			if ( NULL != info.eventHandler && info.deleteHandler ) {
 				info.eventHandler->free();
 			}
+			else if ( NULL != info.procedureCB && info.deleteHandler ) {
+				info.procedureCB->free();
+			}
 			++it;
 		}
+	}
+
+	void postEvent( Procedure* callback, const bool& deleteHandler ) {
+		{
+			Lock l(m);
+			PostEventInfo info;
+			info.procedureCB = callback;
+			info.deleteHandler = deleteHandler;
+			posts.push_back( info );		
+		}
+
+		signal();
 	}
 
 	void postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler ) {
@@ -44,7 +63,7 @@ public:
 			info.eventHandler = eventHandler;
 			info.event = event;
 			info.deleteHandler = deleteHandler;
-			posts.push_back( info );		
+			posts.push_back( info );
 		}
 
 		signal();
@@ -68,6 +87,14 @@ public:
 				info.eventHandler->free();
 			}
 		}
+		else if ( NULL != info.procedureCB ) {
+			info.procedureCB->invoke() ;
+			
+			if ( info.deleteHandler ) {
+				info.procedureCB->free();
+			}
+		}
+		
 	}
 
 	virtual void cancel() {	}
@@ -86,78 +113,161 @@ RunLoop::RunLoop( Thread* thread )
 
         throw NoPeerFoundException();
     }
-
-	postEventSource_.reset( new PostEventSource() );
-	addSource( postEventSource_ );
+	RunLoopSourcePtr::Shared src(new PostEventSource());
+	postSources_[RunLoop::DefaultMode] = src;
+	addSource( src );
 }
 
 RunLoop::~RunLoop()
 {
 }
 
-void RunLoop::run()
+void RunLoop::run( const String& mode )
 {
+	VCF_ASSERT( RunLoop::SharedMode != mode );
+
+	if ( mode == RunLoop::SharedMode ) {
+		throw RuntimeException( "attempting to run with RunLoop::SharedMode" );
+	}
+
 	LoopEvents( rlStarted );
 
-    peer_->run( NULL );
+    peer_->run( NULL, mode );
 	
+	LoopEvents( rlFinished );
+}
+
+void RunLoop::run( const DateTime& till, const String& mode )
+{
+	run( till - DateTime::now(), mode );
+}
+
+void RunLoop::run( const DateTimeSpan& duration, const String& mode )
+{
+	VCF_ASSERT( RunLoop::SharedMode != mode );
+
+	if ( mode == RunLoop::SharedMode ) {
+		throw RuntimeException( "attempting to run with RunLoop::SharedMode" );
+	}
+
+	LoopEvents( rlStarted );
+
+    peer_->run( &duration, mode );	
+	
+	LoopEvents( rlFinished );	
+}
+
+void RunLoop::stop( const String& mode )
+{
+    peer_->stop( mode );	
 	LoopEvents( rlStopped );
 }
 
-void RunLoop::run( const DateTime& till )
-{
-	run( till - DateTime::now() );
-}
-
-void RunLoop::run( const DateTimeSpan& duration )
-{
-	LoopEvents( rlStarted );
-
-    peer_->run( &duration );
-	
-	LoopEvents( rlStopped );
-}
-
-void RunLoop::stop()
-{
-    peer_->stop();	
-}
-
-void RunLoop::addTimer( RunLoopTimerPtr::Shared timer )
+void RunLoop::addTimer( RunLoopTimerPtr::Shared timer, const String& mode )
 {
     timers_.push_back( timer );
-    peer_->addTimer( timer );
+    peer_->addTimer( timer, mode );
 }
 
-void RunLoop::removeTimer( RunLoopTimerPtr::Shared timer )
+void RunLoop::removeTimer( RunLoopTimerPtr::Shared timer, const String& mode )
 {
     std::vector<RunLoopTimerPtr::Shared>::iterator it = std::find( timers_.begin(), timers_.end(), timer );
     if( it != timers_.end() ) {
-        peer_->removeTimer( timer );
+        peer_->removeTimer( timer, mode );
         timers_.erase( it );
     }
 }
 
-void RunLoop::addSource( RunLoopSourcePtr::Shared source )
+void RunLoop::addSource( RunLoopSourcePtr::Shared source, const String& mode )
 {
     sources_.push_back( source );
-    peer_->addSource( source );
+    peer_->addSource( source, mode );
 }
 
-void RunLoop::removeSource( RunLoopSourcePtr::Shared source )
+void RunLoop::removeSource( RunLoopSourcePtr::Shared source, const String& mode )
 {
     std::vector<RunLoopSourcePtr::Shared>::iterator it = std::find( sources_.begin(), sources_.end(), source );
     if( it != sources_.end() ) {
-        peer_->removeSource( source );
+        peer_->removeSource( source, mode );
         sources_.erase( it );
     }
 }
 
-void RunLoop::postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler )
+void RunLoop::postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler, const String& mode )
 {
-	PostEventSource* postSrc = static_cast<PostEventSource*>( postEventSource_.get() );
+	VCF_ASSERT( RunLoop::SharedMode != mode );
+
+	if ( mode == RunLoop::SharedMode ) {
+		throw RuntimeException( "Posting an event with using RunLoop::SharedMode" );
+	}
+
+	PostEventSource* postSrc = NULL;
+	std::map<String,RunLoopSourcePtr::Shared>::iterator found =
+		postSources_.find( mode );
+	if ( found == postSources_.end() ) {
+		RunLoopSourcePtr::Shared src(new PostEventSource());
+		postSources_[mode] = src;
+		addSource( src, mode );
+		postSrc = static_cast<PostEventSource*>( src.get() );
+	}
+	else {
+		postSrc = static_cast<PostEventSource*>( found->second.get() );
+	} 
 
 	postSrc->postEvent( eventHandler, event, deleteHandler );	
+}
+
+void RunLoop::postEvent( Procedure* callback, const bool& deleteHandler, const String& mode )
+{
+	VCF_ASSERT( RunLoop::SharedMode != mode );
+
+	if ( mode == RunLoop::SharedMode ) {
+		throw RuntimeException( "Posting an event with using RunLoop::SharedMode" );
+	}
+
+	PostEventSource* postSrc = NULL;
+	std::map<String,RunLoopSourcePtr::Shared>::iterator found =
+		postSources_.find( mode );
+	if ( found == postSources_.end() ) {
+		RunLoopSourcePtr::Shared src(new PostEventSource());
+		postSources_[mode] = src;
+		addSource( src, mode );
+		postSrc = static_cast<PostEventSource*>( src.get() );
+	}
+	else {
+		postSrc = static_cast<PostEventSource*>( found->second.get() );
+	}
+
+	postSrc->postEvent( callback, deleteHandler );
+}
+
+void RunLoop::clearAllTimers()
+{	
+	std::vector<RunLoopTimerPtr::Shared>::iterator it = timers_.begin();
+	while ( !timers_.empty() ) {
+		removeTimer( *it );
+		it = timers_.begin();
+	}
+}
+
+void RunLoop::clearAllSources()
+{
+	std::vector<RunLoopSourcePtr::Shared> tmp;
+	std::vector<RunLoopSourcePtr::Shared>::iterator it = sources_.begin();
+	while ( it != sources_.end() ) {
+		RunLoopSourcePtr::Shared src = *it;
+		 
+		if ( NULL == dynamic_cast<PostEventSource*>(src.get()) ) {
+			tmp.push_back( src );
+		}
+		++it;
+	}
+
+	it = tmp.begin();
+	while ( it != tmp.end() ) {
+		removeSource( *it );
+		++it; 
+	}
 }
 
 /**

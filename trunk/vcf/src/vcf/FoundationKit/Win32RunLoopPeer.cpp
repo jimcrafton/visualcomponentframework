@@ -17,30 +17,93 @@ where you installed the VCF.
 
 using namespace VCF;
 
-Win32RunLoopPeer::Win32RunLoopPeer( RunLoop* runLoop )
-    : runLoop_( runLoop )
-    , done_( false )
-    , wakeUpEvent_( CreateEventW( NULL, TRUE, FALSE, NULL ) )
+
+
+Win32RunLoopPeer::ModeInfo::ModeInfo():
+	wakeUpEvent( NULL )
 {
+
 }
 
-void Win32RunLoopPeer::run( const DateTimeSpan* duration )
+
+Win32RunLoopPeer::Win32RunLoopPeer( RunLoop* runLoop )
+    : runLoop_( runLoop )
+{
+	ModeInfo* modeInfo = new ModeInfo();
+	
+	modeInfo->wakeUpEvent = CreateEventW( NULL, TRUE, FALSE, NULL );
+	
+	modes_[RunLoop::DefaultMode] = modeInfo;
+}
+
+Win32RunLoopPeer::~Win32RunLoopPeer()
+{
+	ModeMap::iterator it = modes_.begin();
+	while ( it != modes_.end() ) {
+		delete it->second;
+		++it;
+	}
+	modes_.clear();
+}
+
+Win32RunLoopPeer::ModeInfo* Win32RunLoopPeer::initRun(const String& mode)
+{
+	ModeInfo* result = NULL;
+
+	ModeMap::iterator found = modes_.find( mode );
+	if ( found == modes_.end() ) {
+		result = new ModeInfo();
+
+		result->wakeUpEvent = CreateEventW( NULL, TRUE, FALSE, NULL );
+
+		modes_[mode] = result;
+	}
+	else {
+		result = modes_[mode];
+	}
+
+	VCF_ASSERT( NULL != result );
+
+	result->done.push_back(false);
+
+	return result;
+}
+
+void Win32RunLoopPeer::run( const DateTimeSpan* duration, const String& mode )
 {
 	DWORD timeoutInMS = (NULL != duration) ? duration->getTotalMilliseconds() : INFINITE;
+	
+    ModeInfo* info = initRun( mode );
 
-    while ( !done_ ) {
+	HandleCallBackMap& modeHandles = info->handles;
+
+	DateTime start = DateTime::now();
+
+    while ( !info->done.back() ) {
 		//Thanks to obirsoy for rewriting this for Win32!
 
+		DateTimeSpan elapsed = DateTime::now() - start;
+		DWORD adjustedTimeOut = (NULL == duration) ? INFINITE : timeoutInMS - elapsed.getTotalMilliseconds();
+		DWORD wait = adjustedTimeOut;
+
+
         std::vector<HANDLE> handles,firedHandles;
-        handles.push_back( wakeUpEvent_ );
-        
-        for ( std::map<HANDLE, SmartPtr<Procedure>::Shared>::iterator it =  handles_.begin();
-                                                                    it != handles_.end();
-                                                                    ++it) {
+        handles.push_back( info->wakeUpEvent );
+        std::map<HANDLE, SmartPtr<Procedure>::Shared>::iterator it;
+
+        for ( it = modeHandles.begin();
+				it != modeHandles.end();
+				++it) {
             handles.push_back(it->first);
         }
 
-		DWORD wait = timeoutInMS;
+		for ( it = sharedHandles_.begin();
+				it != sharedHandles_.end();
+				++it) {
+            handles.push_back(it->first);
+        }															
+		
+
 		bool processedAllFires = false;
 		while(!processedAllFires) {
 			DWORD result = ::MsgWaitForMultipleObjects( handles.size(), &handles[0], FALSE, wait, QS_ALLEVENTS );
@@ -71,10 +134,10 @@ void Win32RunLoopPeer::run( const DateTimeSpan* duration )
 				// I don't know. This looks like a logical thing to do...
 				processedAllFires = true;
 			}
-			else if ( result == WAIT_TIMEOUT && wait == timeoutInMS ) {
-				// There is no other fired event so exit the loop.
+			else if ( result == WAIT_TIMEOUT && wait == adjustedTimeOut ) {
+				// The run loop timeout has occurred, so quit, cause we're done running
 				processedAllFires = true;
-				stop();
+				stop(mode);
 			}
 			else if ( result == WAIT_TIMEOUT ) {
 				// There is no other fired event so exit the loop.
@@ -87,55 +150,111 @@ void Win32RunLoopPeer::run( const DateTimeSpan* duration )
 		
 		// Now fire everything we got..
 		for(std::vector<HANDLE>::iterator fit=firedHandles.begin(); fit!=firedHandles.end(); ++fit) {
-			HandleCallBackMap::iterator it = handles_.find(*fit);
-			if ( it != handles_.end() ) {
+			HandleCallBackMap::iterator it = modeHandles.find(*fit);
+			if ( it != modeHandles.end() ) {
 				HANDLE handle = *fit;
-				SmartPtr<Procedure>::Shared procedure = handles_[handle];
+				SmartPtr<Procedure>::Shared procedure = modeHandles[handle];
 				procedure->invoke();
-				::ResetEvent( wakeUpEvent_ );
+				::ResetEvent( info->wakeUpEvent );
 			}
 			else {
-				// It should be the wakeup event.
-				VCF_ASSERT( *fit == handles[0] );
-				::ResetEvent( wakeUpEvent_ );
+				it = sharedHandles_.find(*fit);
+				if ( it != sharedHandles_.end() ) {
+					HANDLE handle = *fit;
+					SmartPtr<Procedure>::Shared procedure = sharedHandles_[handle];
+					procedure->invoke();
+					::ResetEvent( info->wakeUpEvent );
+				}
+				else {
+					// It should be the wakeup event.
+					VCF_ASSERT( *fit == info->wakeUpEvent );
+					::ResetEvent( info->wakeUpEvent );
+				}
 			}
 		}
 	}
 
-	done_ = false;
+	VCF_ASSERT( !info->done.empty() );
+	info->done.pop_back();
 }
 
-void Win32RunLoopPeer::stop()
+void Win32RunLoopPeer::stop( const String& mode )
 {
-    done_ = true;
-    ::SetEvent( wakeUpEvent_ );
+	ModeMap::iterator found = modes_.find( mode );
+	if ( found != modes_.end() ) {
+		ModeInfo* info = found->second;
+		if ( !info->done.empty() ) {
+			info->done.back() = true;
+		}
+		::SetEvent( info->wakeUpEvent );
+	}
 }
 
-bool Win32RunLoopPeer::isStopped() const
+bool Win32RunLoopPeer::isStopped(const String& mode) const
 {
-    return done_;
+	ModeMap::const_iterator found = modes_.find( mode );
+	if ( found != modes_.end() ) {
+		const ModeInfo* info = found->second;
+		if ( !info->done.empty() ) {
+			return info->done.back();
+		}
+	}
+
+    return true;
 }
 
-void Win32RunLoopPeer::addTimer( RunLoopTimerPtr::Shared timer )
+void Win32RunLoopPeer::addTimer( RunLoopTimerPtr::Shared timer, const String& mode )
 {
     RunLoopTimerPeerPtr::Shared peer = timer->getPeer();
     Win32RunLoopTimerPeer *win32Peer = static_cast<Win32RunLoopTimerPeer*>( peer.get() );
-    HANDLE handle = win32Peer->getHandle();
+	
+	HANDLE handle = win32Peer->getHandle();
     
     Procedure *callback = new ClassProcedure<Win32RunLoopTimerPeer>( win32Peer, &Win32RunLoopTimerPeer::perform );
-    
-    handles_[handle] =  SmartPtr<Procedure>::Shared( callback );
+
+
+	if ( RunLoop::SharedMode == mode ) {
+		sharedHandles_[handle] = SmartPtr<Procedure>::Shared(callback);
+	}
+	else{
+		
+		ModeInfo* info = NULL;
+		
+		ModeMap::iterator found = modes_.find( mode );
+		if ( found == modes_.end() ) {
+			info = new ModeInfo();
+			
+			info->wakeUpEvent = CreateEventW( NULL, TRUE, FALSE, NULL );
+			
+			modes_[mode] = info;
+		}
+		else {
+			info = found->second;
+		}    
+		
+		info->handles[handle] =  SmartPtr<Procedure>::Shared( callback );
+	}
 }
 
-void Win32RunLoopPeer::removeTimer( RunLoopTimerPtr::Shared timer )
+void Win32RunLoopPeer::removeTimer( RunLoopTimerPtr::Shared timer, const String& mode )
 {
     RunLoopTimerPeerPtr::Shared peer = timer->getPeer();
     Win32RunLoopTimerPeer *win32Peer = static_cast<Win32RunLoopTimerPeer*>( peer.get() );
     HANDLE handle = win32Peer->getHandle();
-    handles_.erase( handle );
+
+	if ( RunLoop::SharedMode == mode ) {
+		sharedHandles_.erase( handle );
+	}
+	else {
+		ModeMap::iterator found = modes_.find( mode );
+		if ( found != modes_.end() ) {
+			ModeInfo* info = found->second;		
+			info->handles.erase( handle );
+		}
+	}
 }
 
-void Win32RunLoopPeer::addSource( RunLoopSourcePtr::Shared source )
+void Win32RunLoopPeer::addSource( RunLoopSourcePtr::Shared source, const String& mode )
 {
     RunLoopSourcePeerPtr::Shared peer = source->getPeer();
     Win32RunLoopSourcePeer *win32Peer = static_cast<Win32RunLoopSourcePeer*>( peer.get() );
@@ -143,16 +262,46 @@ void Win32RunLoopPeer::addSource( RunLoopSourcePtr::Shared source )
     
     Procedure *callback = new ClassProcedure<Win32RunLoopSourcePeer>( win32Peer, &Win32RunLoopSourcePeer::perform );
 
-    handles_[handle] = SmartPtr<Procedure>::Shared(callback);
+	if ( RunLoop::SharedMode == mode ) {
+		sharedHandles_[handle] = SmartPtr<Procedure>::Shared(callback);
+	}
+	else{
+		
+		ModeInfo* info = NULL;
+		
+		ModeMap::iterator found = modes_.find( mode );
+		if ( found == modes_.end() ) {
+			info = new ModeInfo();
+			
+			info->wakeUpEvent = CreateEventW( NULL, TRUE, FALSE, NULL );
+			
+			modes_[mode] = info;
+		}
+		else {
+			info = found->second;
+		}
+		
+		info->handles[handle] = SmartPtr<Procedure>::Shared(callback);
+	}
 }
 
-void Win32RunLoopPeer::removeSource( RunLoopSourcePtr::Shared source )
+void Win32RunLoopPeer::removeSource( RunLoopSourcePtr::Shared source, const String& mode )
 {
     source->internal_cancel();
     RunLoopSourcePeerPtr::Shared peer = source->getPeer();
     Win32RunLoopSourcePeer *win32Peer = static_cast<Win32RunLoopSourcePeer*>( peer.get() );
     HANDLE handle = win32Peer->getHandle();
-    handles_.erase( handle );
+
+	if ( RunLoop::SharedMode == mode ) {
+		sharedHandles_.erase( handle );
+	}
+	else {
+		ModeMap::iterator found = modes_.find( mode );
+		if ( found != modes_.end() ) {
+			ModeInfo* info = found->second;
+			info->handles.erase( handle );
+		}
+	}
 }
 
 /**
