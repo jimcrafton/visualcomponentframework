@@ -533,6 +533,7 @@ namespace VCF {
 
 		void finished() {
 			urlWait_.broadcast();
+			Finished( &Event(this) );
 		}
 
 		bool shouldAutoDelete() {

@@ -66,7 +66,7 @@ void asyncGetDataFromURL(AsyncURL* url)
 		InternetToolkit::getDataFromURL( url, url->getOutputStream() );
 	}
 	catch (BasicException& e) {
-		StringUtils::trace( Format("Error with getDataFromURL(). Exception: %s") % e.getMessage() );
+		StringUtils::trace( Format("Error with getDataFromURL(). Exception: %s\n") % e.getMessage() );
 	}
 	url->finished();
 

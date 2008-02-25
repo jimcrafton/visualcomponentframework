@@ -116,12 +116,20 @@ public:
 	}
 };
 
+
+class DiggItem : public ListItem {
+public:
+
+};
+
 class DiggApp : public Application {
 public:
 
 	String diggURL;
 	String appKey;
 	ListModel* listModel;
+	TextControl* searchEdit;
+	ListViewControl* listView;
 
 	DiggApp( int argc, char** argv ) : Application(argc, argv) {
 		appKey = "http%%3A%%2F%%2Fvcf-online.org";
@@ -139,48 +147,60 @@ public:
 		Thread::getMainThread()->getRunLoop()->stop();
 	}
 
+	void onSearch( Event* ) {
+		diggIt( searchEdit->getTextModel()->getText() );
+	}
 
-	void diggIt() {
+	void viewAsDetails( Event* ) {
+		listView->setIconStyle( isDetails );
+	}
+
+	void viewAsList( Event* ) {
+		listView->setIconStyle( isList );
+	}
+
+	void diggIt( const String& searchFor ) {
 
 		listModel->empty();
-
 
 		CallBack* cb = getCallback( "DiggApp::urlComplete" );
 		if ( NULL == cb ) {
 			cb = new ClassProcedure1<URLEvent*,DiggApp>(this, &DiggApp::urlComplete, "DiggApp::urlComplete" );
 		}
 
-		String s = getDiggURL("apple");
+		String s = getDiggURL(searchFor);
 		StringUtils::trace(s + "\n");
 		AsyncURL url(s);
-		url.DataComplete += cb;
-		url.DataError += cb;
+		url.Finished += cb;
 		url.get();
 
 		ThreadManager::getCurrentRunLoop()->run();
 		String xml = url.getDataAsString();
 
-		XmlDocument doc;
-		doc.setXML(xml);		
+		if ( !xml.empty() ) {
+			XmlDocument doc;
+			doc.setXML(xml);		
+			
+			XPathIterator xp(doc);
+			XPathNodeIterator it = xp.selectNodes("/stories/story");
+			while ( it != xp.end() && !it.isNull() ) {
+				const XmlNode& n = *it;
+				
+				DiggStory* story = new DiggStory();
+				story->Id = StringUtils::fromStringAsInt( n.getAttribute("id") );
+				story->title = n.getChild("title").getContent();
+				story->description = n.getChild("description").getContent();
+				story->href = n.getAttribute("link");
+				story->diggCount = StringUtils::fromStringAsInt( n.getAttribute("diggs") );
+				
+				listModel->add( story );				
 
-		XPathIterator xp(doc);
-		XPathNodeIterator it = xp.selectNodes("/stories/story");
-		while ( it != xp.end() && !it.isNull() ) {
-			const XmlNode& n = *it;
-
-			DiggStory* story = new DiggStory();
-			story->Id = StringUtils::fromStringAsInt( n.getAttribute("id") );
-			story->title = n.getChild("title").getContent();
-			story->description = n.getChild("description").getContent();
-			story->href = n.getAttribute("link");
-			story->diggCount = StringUtils::fromStringAsInt( n.getAttribute("diggs") );
-
-			listModel->add( story );
-
-
-			++it;
+				listView->setItem( listModel->getCount()-1, new DiggItem() );
+				
+				++it;
+			}
+			
 		}
-
 	}
 
 
@@ -190,6 +210,10 @@ public:
 
 		REGISTER_CLASSINFO_EXTERNAL(DiggWindow);
 		
+		addCallback( new ClassProcedure1<Event*,DiggApp>(this, &DiggApp::onSearch), "DiggApp::onSearch" );
+		addCallback( new ClassProcedure1<Event*,DiggApp>(this, &DiggApp::viewAsList), "DiggApp::viewAsList" );
+		addCallback( new ClassProcedure1<Event*,DiggApp>(this, &DiggApp::viewAsDetails), "DiggApp::viewAsDetails" );
+
 		DiggWindow* mainWindow = (DiggWindow*) Frame::createWindow( classid(DiggWindow) );
 
 		setMainWindow(mainWindow);
@@ -199,7 +223,8 @@ public:
 		addComponent( listModel );
 		mainWindow->listView->setListModel( listModel );
 
-		diggIt();
+		searchEdit = mainWindow->searchEdit;
+		listView = mainWindow->listView;
 
 		return result;
 	}

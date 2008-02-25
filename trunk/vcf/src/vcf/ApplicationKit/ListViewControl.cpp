@@ -644,6 +644,7 @@ ListItem* ListViewControl::getItem( const uint32& index )
 void ListViewControl::setItem( const uint32& index, ListItem* item )
 {
 	if ( index < items_.size() ) {
+		inCallbackChange_ = true;
 		ListItem* oldItem = items_[index];
 		
 		items_[index] = item;
@@ -669,6 +670,7 @@ void ListViewControl::setItem( const uint32& index, ListItem* item )
 		oldItem->free();
 
 		repaint();
+		inCallbackChange_ = false;
 	}
 }
 
