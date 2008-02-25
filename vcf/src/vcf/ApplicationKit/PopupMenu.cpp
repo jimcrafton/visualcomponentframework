@@ -100,11 +100,6 @@ void PopupMenu::init()
 
 	item->setMenuOwner( this );
 	item->setName( "RootMenuItem" );
-
-	CallBack* ev = new ClassProcedure1<Event*,Menu> ( this, &Menu::handleEvent, "Menu::handleEvent" );
-
-	ComponentAdded += ev;
-	ComponentRemoved += ev;
 }
 
 MenuItem* PopupMenu::popup( Point* pt )

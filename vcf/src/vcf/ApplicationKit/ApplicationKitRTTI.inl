@@ -498,6 +498,10 @@ _property_enum_labeled_( IconAlignType, "iconAlignment", getIconAlignment, setIc
 _property_object_( ListModel, "listModel", getListModel, setListModel, "" );
 _property_object_ro_( ColumnModel, "columnModel", getColumnModel, "" );
 
+_property_object_( ImageList, "smallImageList", getSmallImageList, setSmallImageList, "" );
+_property_object_( ImageList, "largeImageList", getLargeImageList, setLargeImageList, "" );
+_property_object_( ImageList, "statImageList", getStateImageList, setStateImageList, "" );
+
 _delegate_(ItemDelegate, ItemSelectionChanged );
 _delegate_(MouseDelegate, ColumnItemClicked );
 

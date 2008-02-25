@@ -10,6 +10,15 @@ object DiggWindow  : VCF::Window
 	color.blue = 0.56
 	useColorForBackground = true
 	
+	object images : VCF::ImageList
+		transparentColor.red = 0
+		transparentColor.green = 0
+		transparentColor.blue = 0
+		
+		imageWidth = 32
+		imageHeight = 32
+	end
+
 	object label1 : VCF::Label 
 		left = 10
 		top = 10
@@ -32,13 +41,17 @@ object DiggWindow  : VCF::Window
 		anchor = [AnchorTop,AnchorRight]
 	end
 
-	object searchEdit : VCF::CommandButton 
+	object searchBtn : VCF::CommandButton 
 		left = 430
 		top = 10
 		width = 50
 		height = TextHeight
 		anchor = [AnchorTop,AnchorRight]
 		caption = 'Search'
+		delegates
+			ButtonClicked = [DiggApp@DiggApp::onSearch]
+		end
+		
 	end
 
 	object listView : VCF::ListViewControl
@@ -48,6 +61,7 @@ object DiggWindow  : VCF::Window
 		height = 400
 		anchor = [AnchorTop,AnchorLeft,AnchorRight,AnchorBottom]
 		iconStyle = isDetails
+		smallImageList = @images;
 
 		object col1 : VCF::ColumnItem 
 			caption = 'Id'			
@@ -65,9 +79,26 @@ object DiggWindow  : VCF::Window
 			caption = 'Href link'			
 		end
 
+		popupMenu = @viewMenu
 	end
 
 	object statusBar : VCF::StatusBar
 		status[0] = 'Status: '
 	end	
+
+	object viewMenu : VCF::PopupMenu
+		object vmList : VCF::DefaultMenuItem
+			caption = 'List'
+			delegates
+				MenuItemClicked = [DiggApp@DiggApp::viewAsList]
+			end
+		end
+
+		object vmDetails : VCF::DefaultMenuItem
+			caption = 'Details'
+			delegates
+				MenuItemClicked = [DiggApp@DiggApp::viewAsDetails]
+			end
+		end
+	end
 end
