@@ -4,6 +4,8 @@
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/FoundationKit/RTTIMacros.h"
 #include "vcf/ApplicationKit/TextControl.h"
+#include "vcf/ApplicationKit/ListViewControl.h"
+#include "vcf/FoundationKit/ThreadKit.h"
 
 
 #if !defined(VCF_DISABLE_PRAGMA_LINKING)
@@ -24,6 +26,7 @@ public:
 	}
 
 	TextControl* searchEdit;
+	ListViewControl* listView;
 
 	virtual ~DiggWindow(){};
 
@@ -32,14 +35,93 @@ public:
 
 _class_rtti_(DiggWindow, "VCF::Window", "DiggWindow")
 _field_obj_( TextControl*, searchEdit )
+_field_obj_( ListViewControl*, listView )
 _class_rtti_end_
 
+
+class DiggStory : public Object {
+public:
+
+	DiggStory(): Id(0),diggCount(0){}
+
+	int Id;
+	String title;
+	String description;
+	int diggCount;
+	String href;
+};
+
+class DiggModel : public SimpleListModel {
+protected:
+	virtual void destroy() {
+		empty();
+		SimpleListModel::destroy();
+	}
+
+public:
+	DiggModel():SimpleListModel(){
+		deleteVariantObjects_ = true;
+	}
+
+	
+	
+	virtual bool supportsSubItems() {
+		return true;
+	}
+
+	virtual String getAsString( const uint32& index ) {
+		DiggStory* obj = (DiggStory*) (Object*)get( index);
+
+		return StringUtils::toString( obj->Id );
+	}
+
+	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex ) {		
+		DiggStory* obj = (DiggStory*) (Object*)get( index);
+
+		VariantData v;
+
+		switch ( subItemIndex ) {
+			case 0 : {
+				v = obj->title;
+			}
+			break;
+			
+			case 1 : {
+				v = obj->description;
+			}
+			break;
+
+			case 2 : {
+				v = obj->diggCount;
+			}
+			break;
+
+			case 3 : {
+				v = obj->href;
+			}
+			break;
+		}
+
+		return v;
+	}
+
+	virtual String getSubItemAsString( const uint32& index, const uint32& subItemIndex ) {
+		VariantData v = getSubItem( index, subItemIndex );
+
+		return v.toString();
+	}
+
+	virtual uint32 getSubItemsCount( const uint32& index ) {
+		return 4;	
+	}
+};
 
 class DiggApp : public Application {
 public:
 
 	String diggURL;
 	String appKey;
+	ListModel* listModel;
 
 	DiggApp( int argc, char** argv ) : Application(argc, argv) {
 		appKey = "http%%3A%%2F%%2Fvcf-online.org";
@@ -53,9 +135,30 @@ public:
 		return Format(diggURL) % searchText;
 	}
 
-	void urlComplete(URLEvent* e) {
-		AsyncURL* url = (AsyncURL*)e->getSource();
-		String xml = url->getDataAsString();
+	void urlComplete(URLEvent* e) {		
+		Thread::getMainThread()->getRunLoop()->stop();
+	}
+
+
+	void diggIt() {
+
+		listModel->empty();
+
+
+		CallBack* cb = getCallback( "DiggApp::urlComplete" );
+		if ( NULL == cb ) {
+			cb = new ClassProcedure1<URLEvent*,DiggApp>(this, &DiggApp::urlComplete, "DiggApp::urlComplete" );
+		}
+
+		String s = getDiggURL("apple");
+		StringUtils::trace(s + "\n");
+		AsyncURL url(s);
+		url.DataComplete += cb;
+		url.DataError += cb;
+		url.get();
+
+		ThreadManager::getCurrentRunLoop()->run();
+		String xml = url.getDataAsString();
 
 		XmlDocument doc;
 		doc.setXML(xml);		
@@ -64,9 +167,22 @@ public:
 		XPathNodeIterator it = xp.selectNodes("/stories/story");
 		while ( it != xp.end() && !it.isNull() ) {
 			const XmlNode& n = *it;
+
+			DiggStory* story = new DiggStory();
+			story->Id = StringUtils::fromStringAsInt( n.getAttribute("id") );
+			story->title = n.getChild("title").getContent();
+			story->description = n.getChild("description").getContent();
+			story->href = n.getAttribute("link");
+			story->diggCount = StringUtils::fromStringAsInt( n.getAttribute("diggs") );
+
+			listModel->add( story );
+
+
 			++it;
 		}
+
 	}
+
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
@@ -74,21 +190,16 @@ public:
 
 		REGISTER_CLASSINFO_EXTERNAL(DiggWindow);
 		
-		Window* mainWindow = Frame::createWindow( classid(DiggWindow) );
+		DiggWindow* mainWindow = (DiggWindow*) Frame::createWindow( classid(DiggWindow) );
+
 		setMainWindow(mainWindow);
 		mainWindow->show();
 	
-		CallBack* cb = getCallback( "DiggApp::urlComplete" );
-		if ( NULL == cb ) {
-			cb = new ClassProcedure1<URLEvent*,DiggApp>(this, &DiggApp::urlComplete, "DiggApp::urlComplete" );
-		}
+		listModel = new DiggModel();
+		addComponent( listModel );
+		mainWindow->listView->setListModel( listModel );
 
-		String s = getDiggURL("apple");
-		StringUtils::trace(s + "\n");
-		AsyncURL* url = new AsyncURL(s, true);
-		url->DataComplete += cb;
-		url->get();
-
+		diggIt();
 
 		return result;
 	}

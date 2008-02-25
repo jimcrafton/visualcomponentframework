@@ -41,12 +41,29 @@ object DiggWindow  : VCF::Window
 		caption = 'Search'
 	end
 
-	object list : VCF::ListViewControl
+	object listView : VCF::ListViewControl
 		left = 10
 		top = 40
 		width = 470
 		height = 400
 		anchor = [AnchorTop,AnchorLeft,AnchorRight,AnchorBottom]
+		iconStyle = isDetails
+
+		object col1 : VCF::ColumnItem 
+			caption = 'Id'			
+		end
+		object col2 : VCF::ColumnItem 
+			caption = 'Title'			
+		end
+		object col3 : VCF::ColumnItem 
+			caption = 'Description'			
+		end
+		object col4 : VCF::ColumnItem 
+			caption = 'Num Diggs'			
+		end
+		object col5 : VCF::ColumnItem 
+			caption = 'Href link'			
+		end
 
 	end
 

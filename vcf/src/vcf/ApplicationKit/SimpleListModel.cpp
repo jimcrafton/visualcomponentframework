@@ -22,7 +22,7 @@ SimpleListModel::SimpleListModel()
 
 SimpleListModel::~SimpleListModel()
 {
-
+	
 }
 
 void SimpleListModel::empty()

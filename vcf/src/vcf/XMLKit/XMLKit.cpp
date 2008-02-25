@@ -552,6 +552,24 @@ bool XmlNode::getChildren( std::vector<XmlNode>& nodes ) const
 	return !nodes.empty();
 }
 
+XmlNode XmlNode::getChild( const String& name ) const
+{
+	XmlNode result;
+
+	xmlNode *child = resource_->children;
+
+	while ( NULL != child ) {			
+		String n = (const char*)child->name;
+		if ( n == name ) {
+			return XmlNode(child);
+		}
+
+		child = child->next;
+	}
+
+	return result;
+}
+
 XmlNode XmlNode::getParent() const
 {
 	return XmlNode(resource_->parent);

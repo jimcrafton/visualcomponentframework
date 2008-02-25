@@ -557,6 +557,8 @@ namespace VCF {
 
 		XmlNode getParent() const;
 
+		XmlNode getChild( const String& name ) const;
+
 		XMLNodeType getType() const ;
 
 		String getPath() const ;
