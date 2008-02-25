@@ -1,0 +1,56 @@
+object DiggWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 500
+	width = 500
+	caption = 'Digg App'
+
+	color.red = 0.36
+	color.green = 0.46
+	color.blue = 0.56
+	useColorForBackground = true
+	
+	object label1 : VCF::Label 
+		left = 10
+		top = 10
+		width = 200
+		height = TextHeight
+		caption = 'DIGG Search'
+		color.red = 0.87
+		color.green = 0.87
+		color.blue = 0.87
+		transparent = false
+		anchor = [AnchorTop,AnchorLeft,AnchorRight]
+		verticalAlignment = tvaTextCenter
+	end
+
+	object searchEdit : VCF::TextControl 
+		left = 220
+		top = 10
+		width = 210
+		height = TextHeight
+		anchor = [AnchorTop,AnchorRight]
+	end
+
+	object searchEdit : VCF::CommandButton 
+		left = 430
+		top = 10
+		width = 50
+		height = TextHeight
+		anchor = [AnchorTop,AnchorRight]
+		caption = 'Search'
+	end
+
+	object list : VCF::ListViewControl
+		left = 10
+		top = 40
+		width = 470
+		height = 400
+		anchor = [AnchorTop,AnchorLeft,AnchorRight,AnchorBottom]
+
+	end
+
+	object statusBar : VCF::StatusBar
+		status[0] = 'Status: '
+	end	
+end

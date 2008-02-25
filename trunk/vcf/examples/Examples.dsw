@@ -300,6 +300,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "DiggApp"=.\DiggApp\DiggApp.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Directories"=.\Directories\Directories.dsp - Package Owner=<4>
 
 Package=<5>
