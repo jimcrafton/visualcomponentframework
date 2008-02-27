@@ -1474,6 +1474,32 @@ void Control::addAcceleratorKey( AcceleratorKey* accelerator )
 	UIToolkit::registerAccelerator( accelerator );
 }
 
+AcceleratorKey* Control::getAcceleratorKey( const uint32& index )
+{
+	std::vector<AcceleratorKey*> keys;
+	UIToolkit::getAcceleratorKeysForControl(this, keys);
+
+	return keys.at( index );
+}
+
+void Control::setAcceleratorKey( const uint32& index, AcceleratorKey* accelerator )
+{
+	UIToolkit::registerAccelerator( accelerator );	
+}
+
+uint32 Control::getAcceleratorKeyIndexes( std::vector<uint32>& indexes )
+{
+	std::vector<AcceleratorKey*> keys;
+	UIToolkit::getAcceleratorKeysForControl(this, keys);
+
+	indexes.resize(keys.size());
+	for (size_t i=0;i<keys.size();i++ ) {
+		indexes[i] = i;
+	}
+	return indexes.size();
+}
+
+
 void Control::setTabStop( const bool& tabStop )
 {
 	if ( tabStop ) {

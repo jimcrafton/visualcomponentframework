@@ -206,7 +206,7 @@ public:
 	*/
 	virtual AcceleratorKey* getAccelerator() = 0;
 
-	virtual uint32 getChildIndex( MenuItem* child ) = 0;
+	virtual uint32 getChildIndex( MenuItem* child ) = 0;	
 };
 
 };

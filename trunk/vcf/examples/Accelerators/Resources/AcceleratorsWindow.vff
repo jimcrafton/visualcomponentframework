@@ -12,6 +12,7 @@ object AcceleratorsWindow : VCF::Window
 
 			object editUndo : VCF::DefaultMenuItem
 				caption = 'Undo'
+				accelerator = @ak2
 				delegates
 					MenuItemClicked = [AcceleratorsWindow@AcceleratorsWindow::onEditUndo1]
 					MenuItemUpdate = [AcceleratorsWindow@AcceleratorsWindow::onUpdateEditUndo1]
@@ -22,7 +23,7 @@ object AcceleratorsWindow : VCF::Window
 				caption = 'Copy'
 			end
 		end
-		object edit : VCF::DefaultMenuItem
+		object panels : VCF::DefaultMenuItem
 			caption = 'Panels'
 
 			object editUndo : VCF::DefaultMenuItem
@@ -47,6 +48,7 @@ object AcceleratorsWindow : VCF::Window
 				left = 10
 				width = 100
 				height = TextHeight
+				accelerators[0] = @ak1
 			end
 
 			object tc2 : VCF::TextControl
@@ -55,6 +57,7 @@ object AcceleratorsWindow : VCF::Window
 				left = 10
 				width = 100
 				height = TextHeight
+				accelerators[0] = @ak1
 			end
 		end
 
@@ -96,16 +99,22 @@ object AcceleratorsWindow : VCF::Window
 		modifiers = [kmCtrl]
 	end
 
+	object ak2 : VCF::AcceleratorKey 
+		keyCode = vkLetterZ
+		modifiers = [kmCtrl]
+	end
+
 	object copyAction : VCF::Action
 		
 		targets[0] = @editCopy
 		accelerator = @ak1
 
 		delegates
-			Performed = [AcceleratorsWindow@AcceleratorsWindow::onPanelsChangeColors]
+			Performed = [AcceleratorsWindow@AcceleratorsWindow::onEditCopy]
 			Update = [AcceleratorsWindow@AcceleratorsWindow::onUpdateEditCopy,
 						AcceleratorsWindow@AcceleratorsWindow::onUpdateEditCopy1,
 						AcceleratorsWindow@AcceleratorsWindow::onUpdateEditCopy2 ]
 		end
 	end
+	
 end

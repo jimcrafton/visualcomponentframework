@@ -170,6 +170,16 @@ void Action::setAcceleratorKey( AcceleratorKey* accelerator )
 	currentAccelerator_ = accelerator;
 
 	if ( NULL != currentAccelerator_ ) {
+		EventHandler* eventHandler = getAcceleratorEventHandler();
+
+		if ( accelerator->getEventHandler() != eventHandler ) {
+			accelerator->setEventHandler(eventHandler);
+		}
+
+		if ( accelerator->getAssociatedObject() != this ) {
+			accelerator->setAssociatedObject( this );
+		}
+
 		UIToolkit::registerAccelerator( currentAccelerator_ );
 	}
 

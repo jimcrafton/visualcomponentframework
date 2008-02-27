@@ -399,6 +399,12 @@ public:
 	*/
 	static bool findMatchingAccelerators( AcceleratorKey* key, std::vector<AcceleratorKey*>& matchingAccelerators );
 
+	static void getAcceleratorKeysForControl( Control* control, std::vector<AcceleratorKey*>& matchingAccelerators );
+
+	static void getAcceleratorKeysForMenuItem( MenuItem* item, std::vector<AcceleratorKey*>& matchingAccelerators );
+
+	static void getAcceleratorKeysForObject( Object* src, std::vector<AcceleratorKey*>& matchingAccelerators );
+
 	static void removeAcceleratorKeysForControl( Control* control );
 
 	static void removeAcceleratorKeysForMenuItem( MenuItem* item );
@@ -764,6 +770,12 @@ protected:
 	void internal_removeAcceleratorKeysForObject( Object* src );
 
 	bool internal_findMatchingAccelerators( AcceleratorKey* key, std::vector<AcceleratorKey*>& matchingAccelerators );
+
+	void internal_getAcceleratorKeysForControl( Control* control, std::vector<AcceleratorKey*>& matchingAccelerators );
+
+	void internal_getAcceleratorKeysForMenuItem( MenuItem* item, std::vector<AcceleratorKey*>& matchingAccelerators );
+
+	void internal_getAcceleratorKeysForObject( Object* src, std::vector<AcceleratorKey*>& matchingAccelerators );
 
 	virtual void internal_idleTime();
 

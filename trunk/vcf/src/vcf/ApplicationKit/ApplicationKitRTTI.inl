@@ -328,6 +328,8 @@ _property_enumset_( VCF::AnchorTypes, "anchor", getAnchor, setAnchor, 5, AnchorT
 
 _property_typedef_( int32, "cursor", getCursorID, setCursorID, "VCF::Cursor::SystemCursorType", "" )
 
+_property_obj_dictionary_(AcceleratorKey,uint32,"accelerators",getAcceleratorKey,setAcceleratorKey,getAcceleratorKeyIndexes,"")
+
 _delegate_(EventDelegate, ControlSized );
 _delegate_(ControlDelegate, ControlPositioned );
 _delegate_(ControlDelegate, ControlParentChanged );
@@ -429,6 +431,8 @@ _property_( bool, "enabled", isEnabled, setEnabled, "" )
 _property_( bool, "radioItem", getRadioItem, setRadioItem, "" )
 _property_( bool, "checked", isChecked, setChecked, "" )
 _property_( bool, "separator", isSeparator, setSeparator, "" )
+_property_object_( AcceleratorKey, "accelerator", getAccelerator, setAcceleratorKey, "" );
+
 _class_rtti_end_
 
 
