@@ -18,6 +18,8 @@ namespace VCF  {
 
 class Control;
 
+#define ACCELERATORKEY_CLASSID		"c459a9f7-ecdc-4f90-8469-a7bb88b1f2d8"
+
 /**
 \class AcceleratorKey AcceleratorKey.h "vcf/ApplicationKit/AcceleratorKey.h"
 An AcceleratorKey represents a link between a specific
@@ -100,7 +102,7 @@ instead of the menu item directly.
 @see Action::setAcceleratorKey
 @see UIToolkit::addAcceleratorKey()
 */
-class APPLICATIONKIT_API AcceleratorKey : public VCF::Object {
+class APPLICATIONKIT_API AcceleratorKey : public Component {
 public:
 
 	/**
@@ -190,6 +192,7 @@ public:
 		uint32 val_;
 	};
 
+	AcceleratorKey();
 
 
 	AcceleratorKey( Control* associatedControl, const VirtualKeyCode& keyCode,
@@ -236,6 +239,8 @@ public:
 		return keyCode_;
 	}
 
+	void setKeyCode( const uint32& val );
+
 	/**
 	*gets the modifier mask for the AcceleratorKey. The
 	*modifier mask may be made up of any combination
@@ -245,6 +250,8 @@ public:
 		return modifierMask_;
 	}
 
+	void setModifierMask( const uint32& val );
+
 	/**
 	*returns the associated control. An AcceleratorKey
 	*can have a control instance associated with it.
@@ -252,6 +259,10 @@ public:
 	*/
 	Control* getAssociatedControl() {
 		return associatedControl_;
+	}
+
+	void setAssociatedControl( Control* val ) {
+		associatedControl_ = val;
 	}
 
 	/**
@@ -263,6 +274,10 @@ public:
 		return associatedMenuItem_;
 	}
 
+	void setAssociatedMenuItem( MenuItem* val ) {
+		associatedMenuItem_ = val;
+	}
+
 	/**
 	*returns the associated object instance. An AcceleratorKey
 	*can have an object instance associated with it.
@@ -271,6 +286,12 @@ public:
 	Object* getAssociatedObject() {
 		return associatedObject_;
 	}
+
+	void setAssociatedObject( Object* val ) {
+		associatedObject_ = val;
+	}
+
+
 
 	/**
 	*The event handler that will be invoked

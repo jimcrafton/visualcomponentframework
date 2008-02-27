@@ -23,6 +23,8 @@ CFG=Accelerators - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -100,6 +102,10 @@ SOURCE=Accelerators.cpp
 # Begin Group "Resource Files"
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+# Begin Source File
+
+SOURCE=.\Resources\AcceleratorsWindow.vff
+# End Source File
 # End Group
 # End Target
 # End Project

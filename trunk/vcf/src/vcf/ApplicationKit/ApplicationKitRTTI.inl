@@ -64,11 +64,145 @@ static String TextAlignmentTypeNames[] = { "taTextLeft",
 										 "taTextRight" };
 										 
 
+static uint32 KeyboardMaskValues[] = { kmUndefined, kmAlt, kmShift,kmCtrl };
+static String KeyboardMaskNames[] = { "kmUndefined", "kmAlt", "kmShift","kmCtrl" };
+
+
+//enum VirtualKeyCode{
+static String VirtualKeyCodeNames[] = {	
+	"vkF1",
+	"vkF2",
+	"vkF3",
+	"vkF4",
+	"vkF5",
+	"vkF6",
+	"vkF7",
+	"vkF8",
+	"vkF9",
+	"vkF10",
+	"vkF11",
+	"vkF12",
+	"vkUpArrow",
+	"vkDownArrow",
+	"vkLeftArrow",
+	"vkRightArrow",
+	"vkPgUp",
+	"vkPgDown",
+	"vkHome",
+	"vkEnd",
+	"vkInsert",
+	"vkDelete",
+	"vkBackSpace",
+	"vkNumber0",
+	"vkNumber1",
+	"vkNumber2",
+	"vkNumber3",
+	"vkNumber4",
+	"vkNumber5",
+	"vkNumber6",
+	"vkNumber7",
+	"vkNumber8",
+	"vkNumber9",
+	"vkLetterA",
+	"vkLetterB",
+	"vkLetterC",
+	"vkLetterD",
+	"vkLetterE",
+	"vkLetterF",
+	"vkLetterG",
+	"vkLetterH",
+	"vkLetterI",
+	"vkLetterJ",
+	"vkLetterK",
+	"vkLetterL",
+	"vkLetterM",
+	"vkLetterN",
+	"vkLetterO",
+	"vkLetterP",
+	"vkLetterQ",
+	"vkLetterR",
+	"vkLetterS",
+	"vkLetterT",
+	"vkLetterU",
+	"vkLetterV",
+	"vkLetterW",
+	"vkLetterX",
+	"vkLetterY",
+	"vkLetterZ",
+	"vkSpaceBar",
+	"vkReturn",
+	"vkAlt",
+	"vkShift",
+	"vkCtrl",
+	"vkTab",
+	"vkEscape",
+	"vkLeftApostrophe",			//`
+	"vkTilde",					//~
+	"vkExclamation",				//!
+	"vkCommercialAt",				//@
+	"vkNumberSign",				//#
+	"vkDollarSign",				//$
+	"vkPercent",					//%
+	"vkCircumflex",				//^
+	"vkAmpersand",				//&
+	"vkAsterix",					//*
+	"vkOpenParen",				//(
+	"vkCloseParen",				//)
+	"vkHyphen",					//-
+	"vkUnderbar",					//_
+	"vkEqualsSign",				//=
+	"vkPlusSign",					//+
+	"vkUprightBar",				//|
+	"vkBackSlash",				/* \   */
+	"vkOpenBracket",				//[
+	"vkOpenBrace",				//{
+	"vkCloseBracket",				//]
+	"vkCloseBrace",				//}
+	"vkSemiColon",
+	"vkColon",
+	"vkSingleQuote",
+	"vkDoubleQuote",
+	"vkComma",
+	"vkLessThan",
+	"vkPeriod",
+	"vkGreaterThan",
+	"vkForwardSlash",
+	"vkQuestionMark",
+	"vkPrintScreen",
+	"vkScrollLock",
+	"vkPause",
+	"vkCapsLock",
+	"vkMinusSign",
+	"vkDivideSign",
+	"vkMultiplySign",
+	"vkEnter"
+};
+
 
 
 
 _class_abstract_rtti_(UIComponent, "VCF::Component", UICOMPONENT_CLASSID)
 _class_rtti_end_
+
+_class_rtti_(Action, "VCF::Component", ACTION_CLASSID)
+_property_obj_dictionary_(UIComponent,uint32,"targets",getTarget,setTarget,getTargetIndexes,"")
+_property_object_( AcceleratorKey, "accelerator", getAccelerator, setAcceleratorKey, "" );
+_delegate_( ActionDelegate, Update )
+_delegate_( ActionDelegate, Performed )
+_class_rtti_end_
+
+
+_class_rtti_(AcceleratorKey, "VCF::Component", ACCELERATORKEY_CLASSID)
+_property_object_( Control, "control", getAssociatedControl, setAssociatedControl, "" );
+_property_object_( MenuItem, "menuItem", getAssociatedMenuItem, setAssociatedMenuItem, "" );
+_property_object_( Object, "object", getAssociatedObject, setAssociatedObject, "" );
+_property_enumset_( VCF::KeyboardMasks, "modifiers", getModifierMask, setModifierMask, 4, KeyboardMaskValues, KeyboardMaskNames, ""  );
+_property_enum_labeled_( uint32, "keyCode", getKeyCode, setKeyCode,
+					   vkF1, vkCapsLock, 101, VirtualKeyCodeNames, "");
+_property_( bool, "enabled", isEnabled, setEnabled, "" );
+_class_rtti_end_
+
+
 
 _class_rtti_(ImageList, "VCF::Component", IMAGELIST_CLASSID )
 _property_object_( Color, "transparentColor", getTransparentColor, setTransparentColor, "" );

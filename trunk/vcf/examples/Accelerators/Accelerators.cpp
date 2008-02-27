@@ -15,6 +15,8 @@ This example will introduce the basics of working with acceleratorss.
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ControlsKit.h"
 #include "vcf/GraphicsKit/DrawUIState.h"
+#include "vcf/FoundationKit/RTTIMacros.h"
+
 
 using namespace VCF;
 
@@ -37,61 +39,27 @@ public:
 
 class AcceleratorsWindow : public Window {
 public:
-	AcceleratorsWindow() {
-		setCaption( "Accelerators" );
+	AcceleratorsWindow() {		
 		
-		MenuBar* mb = new MenuBar( this );
-		setMenuBar( mb );
+		addCallback( new ClassProcedure1<Event*,AcceleratorsWindow>(this, &AcceleratorsWindow::onEditUndo1), "AcceleratorsWindow::onEditUndo1" );
+		addCallback( new ClassProcedure1<Event*,AcceleratorsWindow>(this, &AcceleratorsWindow::onUpdateEditUndo1), "AcceleratorsWindow::onUpdateEditUndo1" );
+		addCallback( new ClassProcedure1<Event*,AcceleratorsWindow>(this, &AcceleratorsWindow::onEditUndo2), "AcceleratorsWindow::onEditUndo2" );
+		addCallback( new ClassProcedure1<Event*,AcceleratorsWindow>(this, &AcceleratorsWindow::onUpdateEditUndo2), "AcceleratorsWindow::onUpdateEditUndo2" );
+		addCallback( new ClassProcedure1<Event*,AcceleratorsWindow>(this, &AcceleratorsWindow::onEditCopy), "AcceleratorsWindow::onEditCopy" );
+		addCallback( new ClassProcedure1<Event*,AcceleratorsWindow>(this, &AcceleratorsWindow::onUpdateEditCopy), "AcceleratorsWindow::onUpdateEditCopy" );
+		addCallback( new ClassProcedure1<Event*,AcceleratorsWindow>(this, &AcceleratorsWindow::onUpdateEditCopy1), "AcceleratorsWindow::onUpdateEditCopy1" );
+		addCallback( new ClassProcedure1<Event*,AcceleratorsWindow>(this, &AcceleratorsWindow::onUpdateEditCopy2), "AcceleratorsWindow::onUpdateEditCopy2" );
+		addCallback( new ClassProcedure1<Event*,AcceleratorsWindow>(this, &AcceleratorsWindow::onPanelsChangeColors), "AcceleratorsWindow::onPanelsChangeColors" );
+		addCallback( new ClassProcedure1<Event*,AcceleratorsWindow>(this, &AcceleratorsWindow::onUpdatePanelsChangeColors), "AcceleratorsWindow::onUpdatePanelsChangeColors" );
 
-		MenuItem* root = mb->getRootMenuItem();
-
-		MenuItem* edit = new DefaultMenuItem( "Edit", root, mb);
-		MenuItem* editUndo = new DefaultMenuItem( "Undo", edit, mb);
-		MenuItem* editCopy = new DefaultMenuItem( "Copy", edit, mb);
-
-		MenuItem* panels = new DefaultMenuItem( "Panels", root, mb);
-		MenuItem* panelsChangeColor = new DefaultMenuItem( "Change Color", panels, mb);
-
-		EventHandler* ehEditUndo1 = 
-			new ClassProcedure1<Event*, AcceleratorsWindow>( this, &AcceleratorsWindow::onEditUndo1, "AcceleratorsWindow::onEditUndo1" );
-
-		EventHandler* ehUpdateEditUndo1 = 
-			new ClassProcedure1<Event*, AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdateEditUndo1, "AcceleratorsWindow::onUpdateEditUndo1" );
-
-		EventHandler* ehEditUndo2 = 
-			new ClassProcedure1<Event*, AcceleratorsWindow>( this, &AcceleratorsWindow::onEditUndo2, "AcceleratorsWindow::onEditUndo2" );
-					
-		EventHandler* ehUpdateEditUndo2 = 
-			new ClassProcedure1<Event*, AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdateEditUndo2, "AcceleratorsWindow::onUpdateEditUndo2" );
-
-
-		EventHandler* ehEditCopy = 
-			new ClassProcedure1<Event*, AcceleratorsWindow>( this, &AcceleratorsWindow::onEditCopy, "AcceleratorsWindow::onEditCopy" );
-					
-		EventHandler* ehUpdateEditCopy = 
-			new ClassProcedure1<Event*, AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdateEditCopy, "AcceleratorsWindow::onUpdateEditCopy" );
-
-		EventHandler* ehUpdateEditCopy1 = 
-			new ClassProcedure1<Event*, AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdateEditCopy1, "AcceleratorsWindow::onUpdateEditCopy1" );
-
-		EventHandler* ehUpdateEditCopy2 = 
-			new ClassProcedure1<Event*, AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdateEditCopy2, "AcceleratorsWindow::onUpdateEditCopy2" );
 
 		
-
-		EventHandler* ehPanelsChangeColors = 
-			new ClassProcedure1<Event*, AcceleratorsWindow>( this, &AcceleratorsWindow::onPanelsChangeColors, "AcceleratorsWindow::onPanelsChangeColors" );
-
-		EventHandler* ehUpdatePanelsChangeColors = 
-			new ClassProcedure1<Event*, AcceleratorsWindow>( this, &AcceleratorsWindow::onUpdatePanelsChangeColors, "AcceleratorsWindow::onUpdatePanelsChangeColors" );
+		
 
 
 
-
-
-		editUndo->setAcceleratorKey( vkLetterZ, kmCtrl );
-		editUndo->MenuItemClicked += ehEditUndo1;
-		editUndo->MenuItemUpdate += ehUpdateEditUndo1;
+		//editUndo->setAcceleratorKey( vkLetterZ, kmCtrl );
+				
 		// Note that the update handler has been assigned to the
 		// menu item only, so it is different than the update handler
 		// automatically assigned to the TextControl. Because of that 
@@ -99,12 +67,7 @@ public:
 		// even if the Undo menu item is disabled.
 
 
-
-
-		panelsChangeColor->MenuItemClicked += ehPanelsChangeColors;
-		panelsChangeColor->MenuItemUpdate += ehUpdatePanelsChangeColors;
-
-
+/*
 		TabbedPages* tabs = new TabbedPages();
 		tabs->setName( "Tabs" );
 		add( tabs, AlignClient );
@@ -172,6 +135,7 @@ public:
 		// we want to be responding to it.
 		tc->addAcceleratorKey( vkLetterC, kmCtrl, copyAction );
 		tc2->addAcceleratorKey( vkLetterC, kmCtrl, copyAction );
+		*/
 	}
 
 	void onEditUndo1( Event* e ) {
@@ -298,6 +262,15 @@ public:
 
 
 
+_class_rtti_(AcceleratorsWindow, "VCF::Window", "AcceleratorsWindow")
+_class_rtti_end_
+
+_class_rtti_(FocusPanel, "VCF::Panel", "FocusPanel")
+_class_rtti_end_
+
+
+
+
 class AcceleratorsApplication : public Application {
 public:
 
@@ -307,10 +280,11 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
+		REGISTER_CLASSINFO_EXTERNAL(AcceleratorsWindow);
+		REGISTER_CLASSINFO_EXTERNAL(FocusPanel);
 		
-		Window* mainWindow = new AcceleratorsWindow();
-		setMainWindow(mainWindow);
-		mainWindow->setBounds( 100.0, 100.0, 300.0, 300.0 );
+		Window* mainWindow = Frame::createWindow( classid(AcceleratorsWindow) );
+		setMainWindow(mainWindow);		
 		mainWindow->show();
 		
 		return result;

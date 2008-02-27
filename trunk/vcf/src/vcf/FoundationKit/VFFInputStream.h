@@ -150,8 +150,19 @@ protected:
 			propertyVal = pv;
 			propertyName = pn;
 			source = src;
+			keyValid = false;
 		}
 
+		DeferredPropertySetter( const String& pv, const String& pn, VCF::Object* src, const VariantData& k ) {
+			propertyVal = pv;
+			propertyName = pn;
+			source = src;
+			key = k;
+			keyValid = true;
+		}
+
+		bool keyValid;
+		VariantData key;
 		String propertyVal;
 		String propertyName;
 		VCF::Object* source;

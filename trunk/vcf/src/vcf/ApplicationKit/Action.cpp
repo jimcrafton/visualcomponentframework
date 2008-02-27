@@ -96,6 +96,37 @@ void Action::removeTarget( UIComponent* target )
 	}
 }
 
+UIComponent* Action::getTarget( const uint32& index )
+{
+	return targets_.at( index );
+}
+
+void Action::setTarget( const uint32& index, UIComponent* target )
+{
+	size_t missing = (index+1) - targets_.size();
+	if ( missing > 0 ) {
+		targets_.resize( missing + targets_.size() );
+	}
+
+	std::vector<UIComponent*>::iterator found = std::find( targets_.begin(), targets_.end(), target );
+	//don't allow duplicate entries
+	if ( found == targets_.end() ) {
+		targets_[index] = target;
+		target->setAction( this );
+	}	
+}
+
+uint32 Action::getTargetIndexes( std::vector<uint32>& indexes )
+{
+	indexes.resize( targets_.size() );
+
+	for (size_t i=0;i<indexes.size();i++ ) {
+		indexes[i] = i;
+	}
+
+	return indexes.size();
+}
+
 Enumerator<UIComponent*>* Action::getTargets()
 {
 	return targetsContainer_.getEnumerator();

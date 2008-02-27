@@ -17,6 +17,9 @@ where you installed the VCF.
 namespace VCF {
 
 
+
+#define ACTION_CLASSID		"f3feab50-61f5-4b67-8a94-3b479e231a3e"
+
 class AcceleratorKey;
 
 /**
@@ -122,6 +125,15 @@ public:
 	removes a target from the action.
 	*/
 	void removeTarget( UIComponent* target );
+
+
+	//add targets by index, basically here for 
+	//support for modify targets via the VFF format
+	UIComponent* getTarget( const uint32& index );
+
+	void setTarget( const uint32& index, UIComponent* target );
+
+	uint32 getTargetIndexes( std::vector<uint32>& indexes );
 
 	/**
 	returns an enumerator of all the targets currently attached to this

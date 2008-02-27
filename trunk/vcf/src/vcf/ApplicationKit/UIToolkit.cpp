@@ -51,11 +51,6 @@ UIToolkit::UIToolkit():
 
 UIToolkit::~UIToolkit()
 {
-	std::multimap<uint32,AcceleratorKey*>::iterator it = acceleratorMap_.begin();
-	while ( it != acceleratorMap_.end() ) {
-		it->second->free();
-		it ++;
-	}
 	acceleratorMap_.clear();
 
 	std::map<String,ComponentInfo*>::iterator it2 = componentInfoMap_.begin();
@@ -913,9 +908,7 @@ void UIToolkit::internal_registerAccelerator( AcceleratorKey* accelerator )
 
 		if ( (accelerator->getAssociatedControl() == accel->getAssociatedControl()) && 
 				(accelerator->getAssociatedMenuItem() == accel->getAssociatedMenuItem()) && 
-				(accelerator->getAssociatedObject() == accel->getAssociatedObject()) ) {
-
-			accel->free();
+				(accelerator->getAssociatedObject() == accel->getAssociatedObject()) ) {			
 			//remove old entry!
 			acceleratorMap_.erase( it );
 			break;
@@ -1358,8 +1351,7 @@ void UIToolkit::internal_removeAccelerator( const VirtualKeyCode& keyCode, const
 		AcceleratorKey* accel = it->second;
 		if ( (accel->getAssociatedControl() == src) || 
 			(accel->getAssociatedMenuItem() == src) ||
-			(accel->getAssociatedObject() == src) ) {
-			accel->release();
+			(accel->getAssociatedObject() == src) ) {			
 			removeAccels.push_back( it );
 		}
 
@@ -1384,7 +1376,6 @@ void UIToolkit::internal_removeAcceleratorKeysForControl( Control* control )
 	while ( it != acceleratorMap_.end() ) {
 		AcceleratorKey* accel = it->second;
 		if ( accel->getAssociatedControl() == control ) {
-			accel->release();
 			removeAccels.push_back( it );
 		}
 		it ++;
@@ -1409,7 +1400,6 @@ void UIToolkit::internal_removeAcceleratorKeysForMenuItem( MenuItem* menuItem )
 	while ( it != acceleratorMap_.end() ) {
 		AcceleratorKey* accel = it->second;
 		if ( accel->getAssociatedMenuItem() == menuItem ) {
-			accel->release();
 			removeAccels.push_back( it );
 		}
 		it ++;
@@ -1433,7 +1423,6 @@ void UIToolkit::internal_removeAcceleratorKeysForObject( Object* src )
 	while ( it != acceleratorMap_.end() ) {
 		AcceleratorKey* accel = it->second;
 		if ( accel->getAssociatedObject() == src ) {
-			accel->release();
 			removeAccels.push_back( it );
 		}
 		it ++;
