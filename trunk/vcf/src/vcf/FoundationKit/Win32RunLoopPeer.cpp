@@ -71,7 +71,7 @@ Win32RunLoopPeer::ModeInfo* Win32RunLoopPeer::initRun(const String& mode)
 
 void Win32RunLoopPeer::run( const DateTimeSpan* duration, const String& mode )
 {
-	DWORD timeoutInMS = (NULL != duration) ? duration->getTotalMilliseconds() : INFINITE;
+	DWORD timeoutInMS = (NULL != duration) ? (DWORD)duration->getTotalMilliseconds() : INFINITE;
 	
     ModeInfo* info = initRun( mode );
 
