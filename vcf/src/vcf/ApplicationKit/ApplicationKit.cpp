@@ -104,6 +104,11 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( Light3DBorder );
 		REGISTER_CLASSINFO_EXTERNAL( TitledBorder );
 
+		REGISTER_CLASSINFO_EXTERNAL( Action );
+		REGISTER_CLASSINFO_EXTERNAL( AcceleratorKey );
+
+
+
 		REGISTER_CLASSINFO_EXTERNAL( Container );
 		REGISTER_CLASSINFO_EXTERNAL( AbstractContainer );
 		REGISTER_CLASSINFO_EXTERNAL( StandardContainer );

@@ -298,7 +298,7 @@ public:
 	virtual void setFromString( const String& textVal ){
 		if ( true == namesAvailable_ ){
 			std::vector<String>::iterator it = enumNames_.begin();
-			int i = 0;
+			int i = lower_;// 0;
 			bool found = false;
 			while ( it != enumNames_.end() ){
 				if ( (*it) == textVal ){

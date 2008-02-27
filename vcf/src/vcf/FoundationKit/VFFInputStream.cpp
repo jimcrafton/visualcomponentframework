@@ -239,7 +239,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 								value.erase( 0, 1 );
 								if ( !value.empty() ) {
 									//need to adjust this for arrays/collections!
-									//deferredProperties_.push_back( new DeferredPropertySetter( value, prop->getName(), prop->getSource() ) );
+									deferredProperties_.push_back( new DeferredPropertySetter( value, prop->getName(), prop->getSource(), key ) );
 								}
 							}
 							else {
@@ -652,7 +652,14 @@ void VFFInputStream::assignDeferredProperties( Component* component )
 				if ( true == component->bindVariable( &foundComponent, dps->propertyVal ) ) {
 					VariantData data;
 					data = foundComponent;
-					prop->set( &data );
+
+
+					if ( prop->isCollection() && dps->keyValid ) {
+						prop->setAtKey( dps->key, &data, true );
+					}
+					else if ( !prop->isCollection() ) {
+						prop->set( &data );
+					}
 				}
 			}
 			delete dps;

@@ -1,0 +1,111 @@
+
+object AcceleratorsWindow : VCF::Window
+	caption = 'Accelerators'
+	top = 100
+	left = 100
+	height = 300
+	width = 300
+
+	object menuBar : VCF::MenuBar
+		object edit : VCF::DefaultMenuItem
+			caption = 'Edit'
+
+			object editUndo : VCF::DefaultMenuItem
+				caption = 'Undo'
+				delegates
+					MenuItemClicked = [AcceleratorsWindow@AcceleratorsWindow::onEditUndo1]
+					MenuItemUpdate = [AcceleratorsWindow@AcceleratorsWindow::onUpdateEditUndo1]
+				end
+			end
+
+			object editCopy : VCF::DefaultMenuItem
+				caption = 'Copy'
+			end
+		end
+		object edit : VCF::DefaultMenuItem
+			caption = 'Panels'
+
+			object editUndo : VCF::DefaultMenuItem
+				caption = 'Change Color'
+				delegates
+					MenuItemClicked = [AcceleratorsWindow@AcceleratorsWindow::onPanelsChangeColors]
+					MenuItemUpdate = [AcceleratorsWindow@AcceleratorsWindow::onUpdatePanelsChangeColors]
+				end
+			end
+		end
+	end
+
+
+	object Tabs : VCF::TabbedPages
+		alignment = AlignClient
+		object tab1 : VCF::TabSheet 
+			title = 'Page 1'
+
+			object tc : VCF::TextControl
+				tag = 100
+				top = 10
+				left = 10
+				width = 100
+				height = TextHeight
+			end
+
+			object tc2 : VCF::TextControl
+				tag = 101
+				top = 60
+				left = 10
+				width = 100
+				height = TextHeight
+			end
+		end
+
+		object tab2 : VCF::TabSheet 
+			title = 'Page 2'
+
+			object lbl : VCF::Label
+				caption = 'Click top panel to set it''s focus, then click the Panels > Change Colors menu'
+				wordWrap = true
+				alignment = AlignTop
+				height = 40
+			end
+
+			object Panel1 : FocusPanel
+				left = 20
+				top = 40
+				width = 100
+				height = 40
+			end
+
+			object Panel2 : FocusPanel
+				left = 20
+				top = 90
+				width = 100
+				height = 40
+			end
+
+			object Panel3 : FocusPanel
+				left = 20
+				top = 150
+				width = 100
+				height = 40
+			end
+		end
+	end
+
+	object ak1 : VCF::AcceleratorKey 
+		keyCode = vkLetterC
+		modifiers = [kmCtrl]
+	end
+
+	object copyAction : VCF::Action
+		
+		targets[0] = @editCopy
+		accelerator = @ak1
+
+		delegates
+			Performed = [AcceleratorsWindow@AcceleratorsWindow::onPanelsChangeColors]
+			Update = [AcceleratorsWindow@AcceleratorsWindow::onUpdateEditCopy,
+						AcceleratorsWindow@AcceleratorsWindow::onUpdateEditCopy1,
+						AcceleratorsWindow@AcceleratorsWindow::onUpdateEditCopy2 ]
+		end
+	end
+end

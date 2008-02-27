@@ -14,6 +14,18 @@ where you installed the VCF.
 using namespace VCF;
 
 
+AcceleratorKey::AcceleratorKey():
+	keyCode_(vkUndefined),
+	modifierMask_(kmUndefined),
+	associatedControl_(NULL),
+	associatedMenuItem_(NULL),
+	associatedObject_(NULL),
+	eventHandler_(NULL),
+	isMnemonic_(false),
+	enabled_(false)
+{
+
+}
 
 AcceleratorKey::AcceleratorKey( Control* associatedControl, const VirtualKeyCode& keyCode,
 							   const uint32& modifierMask, EventHandler* eventHandler,
@@ -130,6 +142,16 @@ void AcceleratorKey::setEnabled( const bool& val )
 			it ++;
 		}
 	}
+}
+
+void AcceleratorKey::setKeyCode( const uint32& val )
+{
+	keyCode_ = (VirtualKeyCode)val;
+}
+
+void AcceleratorKey::setModifierMask( const uint32& val )
+{
+	modifierMask_ = val;
 }
 
 
