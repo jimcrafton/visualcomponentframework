@@ -661,6 +661,9 @@ void VFFInputStream::assignDeferredProperties( Component* component )
 						prop->set( &data );
 					}
 				}
+				else {
+					StringUtils::trace( Format("Failed to find component %s. Unable to assign deferred property.\n") % dps->propertyVal );
+				}
 			}
 			delete dps;
 			dps = NULL;

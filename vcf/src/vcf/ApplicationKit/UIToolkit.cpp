@@ -51,6 +51,13 @@ UIToolkit::UIToolkit():
 
 UIToolkit::~UIToolkit()
 {
+	std::multimap<uint32,AcceleratorKey*>::iterator it = acceleratorMap_.begin();
+	while ( it != acceleratorMap_.end() ) {
+		if ( it->second->getOwner() == NULL ) {
+			it->second->free();
+		}
+		it ++;
+	}
 	acceleratorMap_.clear();
 
 	std::map<String,ComponentInfo*>::iterator it2 = componentInfoMap_.begin();
@@ -614,6 +621,21 @@ bool UIToolkit::findMatchingAccelerators( AcceleratorKey* key, std::vector<Accel
 	return UIToolkit::toolKitInstance->internal_findMatchingAccelerators( key, matchingAccelerators );
 }
 
+void UIToolkit::getAcceleratorKeysForControl( Control* control, std::vector<AcceleratorKey*>& matchingAccelerators )
+{
+	UIToolkit::toolKitInstance->internal_getAcceleratorKeysForControl( control, matchingAccelerators );
+}
+
+void UIToolkit::getAcceleratorKeysForMenuItem( MenuItem* item, std::vector<AcceleratorKey*>& matchingAccelerators )
+{
+	UIToolkit::toolKitInstance->internal_getAcceleratorKeysForMenuItem( item, matchingAccelerators );
+}
+
+void UIToolkit::getAcceleratorKeysForObject( Object* src, std::vector<AcceleratorKey*>& matchingAccelerators )
+{
+	UIToolkit::toolKitInstance->internal_getAcceleratorKeysForObject( src, matchingAccelerators );
+}
+
 void UIToolkit::removeAcceleratorKeysForControl( Control* control )
 {
 	UIToolkit::toolKitInstance->internal_removeAcceleratorKeysForControl( control );
@@ -908,7 +930,12 @@ void UIToolkit::internal_registerAccelerator( AcceleratorKey* accelerator )
 
 		if ( (accelerator->getAssociatedControl() == accel->getAssociatedControl()) && 
 				(accelerator->getAssociatedMenuItem() == accel->getAssociatedMenuItem()) && 
-				(accelerator->getAssociatedObject() == accel->getAssociatedObject()) ) {			
+				(accelerator->getAssociatedObject() == accel->getAssociatedObject()) ) {
+
+			if ( NULL == accel->getOwner() ) {
+				accel->free();
+			}
+
 			//remove old entry!
 			acceleratorMap_.erase( it );
 			break;
@@ -918,7 +945,11 @@ void UIToolkit::internal_registerAccelerator( AcceleratorKey* accelerator )
 	}
 
 	std::pair<uint32,AcceleratorKey*> item(key,accelerator);
-	accelerator->addRef();
+	
+	if ( accelerator->getOwner() == NULL ) {
+		accelerator->addRef();
+	}
+
 	acceleratorMap_.insert( item );
 }
 
@@ -947,6 +978,39 @@ bool UIToolkit::internal_findMatchingAccelerators( AcceleratorKey* key, std::vec
 
 	return !matchingAccelerators.empty();
 }
+
+void UIToolkit::internal_getAcceleratorKeysForControl( Control* control, std::vector<AcceleratorKey*>& matchingAccelerators )
+{
+	std::multimap<uint32,AcceleratorKey*>::iterator it = acceleratorMap_.begin();
+	while ( it != acceleratorMap_.end() ) {
+		if ( it->second->getAssociatedControl() == control ) {
+			matchingAccelerators.push_back( it->second );
+		}
+		++it;
+	}
+}
+
+void UIToolkit::internal_getAcceleratorKeysForMenuItem( MenuItem* item, std::vector<AcceleratorKey*>& matchingAccelerators )
+{
+	std::multimap<uint32,AcceleratorKey*>::iterator it = acceleratorMap_.begin();
+	while ( it != acceleratorMap_.end() ) {
+		if ( it->second->getAssociatedMenuItem() == item ) {
+			matchingAccelerators.push_back( it->second );
+		}
+		++it;
+	}
+}
+
+void UIToolkit::internal_getAcceleratorKeysForObject( Object* src, std::vector<AcceleratorKey*>& matchingAccelerators )
+{
+	std::multimap<uint32,AcceleratorKey*>::iterator it = acceleratorMap_.begin();
+	while ( it != acceleratorMap_.end() ) {
+		if ( it->second->getAssociatedObject() == src ) {
+			matchingAccelerators.push_back( it->second );
+		}
+		++it;
+	}
+}	
 
 AcceleratorKey* UIToolkit::internal_getAccelerator( const VirtualKeyCode& keyCode, const uint32& modifierMask, Object* src )
 {
@@ -1351,7 +1415,11 @@ void UIToolkit::internal_removeAccelerator( const VirtualKeyCode& keyCode, const
 		AcceleratorKey* accel = it->second;
 		if ( (accel->getAssociatedControl() == src) || 
 			(accel->getAssociatedMenuItem() == src) ||
-			(accel->getAssociatedObject() == src) ) {			
+			(accel->getAssociatedObject() == src) ) {
+			if ( accel->getOwner() == NULL ) {
+				accel->release();
+			}
+
 			removeAccels.push_back( it );
 		}
 
@@ -1376,6 +1444,10 @@ void UIToolkit::internal_removeAcceleratorKeysForControl( Control* control )
 	while ( it != acceleratorMap_.end() ) {
 		AcceleratorKey* accel = it->second;
 		if ( accel->getAssociatedControl() == control ) {
+			if ( accel->getOwner() == NULL ) {
+				accel->release();
+			}
+
 			removeAccels.push_back( it );
 		}
 		it ++;
@@ -1400,6 +1472,10 @@ void UIToolkit::internal_removeAcceleratorKeysForMenuItem( MenuItem* menuItem )
 	while ( it != acceleratorMap_.end() ) {
 		AcceleratorKey* accel = it->second;
 		if ( accel->getAssociatedMenuItem() == menuItem ) {
+			if ( accel->getOwner() == NULL ) {
+				accel->release();
+			}
+
 			removeAccels.push_back( it );
 		}
 		it ++;
@@ -1423,6 +1499,10 @@ void UIToolkit::internal_removeAcceleratorKeysForObject( Object* src )
 	while ( it != acceleratorMap_.end() ) {
 		AcceleratorKey* accel = it->second;
 		if ( accel->getAssociatedObject() == src ) {
+			if ( accel->getOwner() == NULL ) {
+				accel->release();
+			}
+
 			removeAccels.push_back( it );
 		}
 		it ++;

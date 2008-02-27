@@ -577,23 +577,38 @@ void DefaultMenuItem::setAcceleratorKey( const VirtualKeyCode& keyCode, const ui
 
 void DefaultMenuItem::setAcceleratorKey( AcceleratorKey* accelerator )
 {
-	//remove the old if present
-	if ( NULL != currentAccelerator_ ) {
-		UIToolkit::removeAccelerator( (VirtualKeyCode)currentAccelerator_->getKeyCode(),
-																currentAccelerator_->getModifierMask(), this );
+	if ( accelerator != currentAccelerator_ ) {
+		//remove the old if present
+		if ( NULL != currentAccelerator_ ) {
+			UIToolkit::removeAccelerator( (VirtualKeyCode)currentAccelerator_->getKeyCode(),
+											currentAccelerator_->getModifierMask(), this );
+		}
+		
+		currentAccelerator_ = accelerator;
+		
+		if ( NULL != currentAccelerator_ ) {
+			
+			CallBack* eventHandler = this->getCallback( "DefaultMenuItem::onAccelerator" );
+			if ( NULL == eventHandler ) {
+				eventHandler = new ClassProcedure1<KeyboardEvent*,DefaultMenuItem>( this, &DefaultMenuItem::onAccelerator, "DefaultMenuItem::onAccelerator" );
+			}
+			
+			if ( accelerator->getEventHandler() != eventHandler ) {
+				accelerator->setEventHandler( (EventHandler*)eventHandler);
+			}
+			
+			if ( accelerator->getAssociatedMenuItem() != this ) {
+				accelerator->setAssociatedMenuItem( this );
+			}
+			
+			UIToolkit::registerAccelerator( currentAccelerator_ );
+		}
+		
+		Menu* owner = getMenuOwner();
+		if ( NULL != owner ) {
+			owner->itemChanged( MenuItem::miAcceleratorChanged, this );
+		}
 	}
-
-	currentAccelerator_ = accelerator;
-
-	if ( NULL != currentAccelerator_ ) {
-		UIToolkit::registerAccelerator( currentAccelerator_ );
-	}
-
-	Menu* owner = getMenuOwner();
-	if ( NULL != owner ) {
-		owner->itemChanged( MenuItem::miAcceleratorChanged, this );
-	}
-
 	//peer_->setAcceleratorKey( currentAccelerator_ );
 }
 

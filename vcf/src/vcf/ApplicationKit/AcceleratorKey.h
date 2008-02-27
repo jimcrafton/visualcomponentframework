@@ -70,7 +70,7 @@ An example of how you might use an accelerator is this:
 Let's say you have a text editor and you want the "Ctrl" and "V" key 
 combination to call an event handler whenever it is pressed to paste 
 in some text from the clipboard. You can register an AcceleratorKey with 
-the keyboard combination and you event handler, and <i>voila!</i> the VCF
+the keyboard combination and your event handler, and <i>voila!</i> the VCF
 will take care of the rest.
 
 In addition to this, menu items also work with accelerators to enable 
@@ -261,9 +261,7 @@ public:
 		return associatedControl_;
 	}
 
-	void setAssociatedControl( Control* val ) {
-		associatedControl_ = val;
-	}
+	void setAssociatedControl( Control* val );
 
 	/**
 	*returns the associated menu item. An AcceleratorKey
@@ -274,9 +272,7 @@ public:
 		return associatedMenuItem_;
 	}
 
-	void setAssociatedMenuItem( MenuItem* val ) {
-		associatedMenuItem_ = val;
-	}
+	void setAssociatedMenuItem( MenuItem* val );
 
 	/**
 	*returns the associated object instance. An AcceleratorKey
@@ -287,9 +283,7 @@ public:
 		return associatedObject_;
 	}
 
-	void setAssociatedObject( Object* val ) {
-		associatedObject_ = val;
-	}
+	void setAssociatedObject( Object* val );
 
 
 
@@ -301,6 +295,10 @@ public:
 	*/
 	EventHandler* getEventHandler() {
 		return eventHandler_;
+	}
+
+	void setEventHandler(EventHandler* val) {
+		eventHandler_ = val;
 	}
 
 	/**

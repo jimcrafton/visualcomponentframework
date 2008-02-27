@@ -1691,6 +1691,14 @@ public:
 	*/
 	void addAcceleratorKey( AcceleratorKey* accelerator );
 
+	//add targets by index, basically here for 
+	//support for modify AcceleratorKeys via the VFF format
+	AcceleratorKey* getAcceleratorKey( const uint32& index );
+
+	void setAcceleratorKey( const uint32& index, AcceleratorKey* accelerator );
+
+	uint32 getAcceleratorKeyIndexes( std::vector<uint32>& indexes );
+
 	/**
 	Pressing the accelerator character will cause the control's
 	mnemonicActivate() method to be fired, which by default

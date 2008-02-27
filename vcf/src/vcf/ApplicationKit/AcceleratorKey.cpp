@@ -154,6 +154,35 @@ void AcceleratorKey::setModifierMask( const uint32& val )
 	modifierMask_ = val;
 }
 
+void AcceleratorKey::setAssociatedControl( Control* val ) 
+{
+	if ( associatedControl_ != val ) {
+
+		associatedControl_ = val;
+
+		if ( NULL != associatedControl_ ) {
+			AcceleratorKey* ack = UIToolkit::getAccelerator( keyCode_, modifierMask_, val );
+			if ( ack != this ) {
+				associatedControl_->addAcceleratorKey(this);
+			}
+		}
+	}	
+}
+
+void AcceleratorKey::setAssociatedMenuItem( MenuItem* val ) 
+{
+	if ( associatedMenuItem_ != val ) {
+		associatedMenuItem_ = val;
+	}
+}
+
+void AcceleratorKey::setAssociatedObject( Object* val ) 
+{
+	if ( associatedObject_ != val ) {
+		associatedObject_ = val;
+	}
+}
+
 
 /**
 $Id$

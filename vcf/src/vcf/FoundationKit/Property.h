@@ -30,18 +30,24 @@ namespace VCF
 */
 class FOUNDATIONKIT_API Property  {
 public:
-	Property(){
-		source_ = NULL;
-		isCollection_ = false;
-		isReadOnly_ = false;
-		type_ = pdUndefined;
-		bound_ = false;
+	Property():
+	source_(NULL),
+	isCollection_(false),
+		isReadOnly_(false),
+		type_(pdUndefined),
+		bound_(false){
+		
 		//prop_count ++;
 		//StringUtils::trace( "Created Property\n\tProperty Count = " + StringUtils::toString(prop_count) + "\n" );
 	};
 
 	Property( const Property& prop ):
-		value_( prop.value_ )	{
+		value_( prop.value_ ),
+		source_(NULL),
+		isCollection_(false),
+		isReadOnly_(false),
+		type_(pdUndefined),
+		bound_(false){
 
 		name_ = prop.name_;
 		displayName_ = prop.displayName_;
@@ -50,6 +56,7 @@ public:
 		source_ = prop.source_;
 		isReadOnly_ = prop.isReadOnly_;
 		bound_ = prop.bound_;
+		isCollection_ = prop.isCollection_;
 
 		//prop_count ++;
 		//StringUtils::trace( "Created duplicate Property\n\tProperty Count = " + StringUtils::toString(prop_count) + "\n" );
