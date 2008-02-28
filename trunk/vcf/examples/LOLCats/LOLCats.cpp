@@ -18,10 +18,6 @@
 
 
 #include "vcf/XMLKit/XMLKit.h"
-
-
-
-
 #include "vcf/FoundationKit/RTTIMacros.h"
 
 using namespace VCF;
