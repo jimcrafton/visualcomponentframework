@@ -9,7 +9,6 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ControlsKit.h"
-#include "vcf/ApplicationKit/DefaultListItem.h"
 
 
 using namespace VCF;

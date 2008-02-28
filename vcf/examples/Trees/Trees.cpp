@@ -110,7 +110,7 @@ public:
 		Window* mainWindow = Frame::createWindow( classid(TreesWindow) );
 
 
-		TreeControl* treeCtrl = (TreeControl*)mainWindow->findComponent( "treeCtrl" );
+		TreeControl* treeCtrl = (TreeControl*)mainWindow->findComponent( "treeCtrl", true );
 
 
 		TreeModel* tm = treeCtrl->getTreeModel();
@@ -131,7 +131,7 @@ public:
 			TreeModel::Key k = tm->insert( "test (p = testB)", k2 );
 
 			for (int j=0;j<100;j++ ) {
-				tm->insert( String("test (p = testB/") + k + ")", k );
+				tm->insert( String("test (p = testB/") + k + ") " + j, k );
 
 				if ( i == 6 && j == 5 ) {
 					TreeItem* item = treeCtrl->getItemFromKey( k );
