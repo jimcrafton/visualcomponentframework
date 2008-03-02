@@ -273,6 +273,14 @@ public:
 		type  = pdUInt64;
 	};
 
+	VariantData( void* val ) {
+		StringVal = NULL;
+
+		VoidPtrVal = val;
+		type  = pdVoidPointer;
+	};
+
+	
 	/**
 	creates a Variant initialized by a DateTime value
 	*/
@@ -467,6 +475,10 @@ public:
 	*/
 	operator VCF::uint64 () const {
 		return UInt64Val;
+	};
+
+	operator void* () const {
+		return VoidPtrVal;
 	};
 
 	/**
@@ -680,6 +692,12 @@ public:
 		return *this;
 	};
 
+	VariantData& operator= ( void* newValue ){
+		VoidPtrVal = newValue;
+		type = pdVoidPointer;
+		return *this;
+	};
+	
 	/**
 	Assigns a DateTime value to the Variant
 	*/
@@ -778,6 +796,7 @@ public:
 			Interface* InterfaceVal;			
 			int64 Int64Val;
 			uint64 UInt64Val;
+			void* VoidPtrVal;
 	};
 
 	/**

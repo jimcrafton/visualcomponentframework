@@ -115,6 +115,17 @@ String VariantData::toString() const
 		}
 		break;
 
+		case pdVoidPointer:{
+			void* value = this->VoidPtrVal;
+			
+			char tmp[VariantData::DefaultPropertyValLength];
+			memset(tmp, 0, sizeof(tmp));
+			sprintf( tmp, "%p", value );
+
+			result = tmp;
+		}
+		break;
+
 		case pdDateTime:{
 			DateTime dt;
 			dt.setMilliseconds( this->UInt64Val );
@@ -278,6 +289,11 @@ void VariantData::setFromString( const String& value )
 		}
 		break;
 
+		case pdVoidPointer:{
+			VoidPtrVal = (void*)StringUtils::fromStringAsHexNumber ( value );
+		}
+		break;
+
 		case pdObject:{
 			if ( NULL != ObjVal ){
 				Persistable* persist = dynamic_cast<Persistable*>(ObjVal);
@@ -369,6 +385,11 @@ void VariantData::setValue( const VariantData& value )
 
 		case pdInterface:{
 			InterfaceVal = value.InterfaceVal;
+		}
+		break;
+
+		case pdVoidPointer:{
+			VoidPtrVal = value.VoidPtrVal;
 		}
 		break;
 

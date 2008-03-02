@@ -44,6 +44,7 @@ enum PropertyDescriptorType{
 	pdDateTime,
 	pdDateTimeSpan,
 	pdVariant,
+	pdVoidPointer,
 	pdLast,
 };
 
