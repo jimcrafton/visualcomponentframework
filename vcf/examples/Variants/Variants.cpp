@@ -1,8 +1,99 @@
 ////Variants.cpp
 
 #include "vcf/FoundationKit/FoundationKit.h"
-
+#include "vcf/FoundationKit/Dictionary.h"
 using namespace VCF;
+
+
+
+class AnyVal {
+public:
+
+	union{
+			int IntVal;
+			long LongVal;
+			short ShortVal;
+			ushort UShortVal;
+			unsigned int UIntVal;
+			unsigned long ULongVal;
+			float FloatVal;
+			char CharVal;
+			double DblVal;
+			bool BoolVal;
+			Object* ObjVal;
+			EnumValue EnumVal;
+			Interface* InterfaceVal;			
+			int64 Int64Val;
+			uint64 UInt64Val;
+			void* VoidPtrVal;
+	};
+
+	AnyVal():VoidPtrVal(NULL){}
+
+	AnyVal( Object* v ): ObjVal(v){}
+
+	AnyVal( int v ): IntVal(v){}
+	AnyVal( double v ): DblVal(v){}
+	AnyVal( float v ): FloatVal(v){}
+	AnyVal( Interface* v ): InterfaceVal(v){}
+	AnyVal( void* v ): VoidPtrVal(v){}
+
+	AnyVal& operator=( Object* v ) {
+		ObjVal = v;
+		return *this;
+	}
+
+	AnyVal& operator=( int v ) {
+		IntVal = v;
+		return *this;
+	}
+	AnyVal& operator=( double v ) {
+		DblVal = v;
+		return *this;
+	}
+
+	AnyVal& operator=( float v ) {
+		FloatVal = v;
+		return *this;
+	}
+
+	AnyVal& operator=( Interface* v ) {
+		InterfaceVal = v;
+		return *this;
+	}
+
+	AnyVal& operator=( void* v ) {
+		VoidPtrVal = v;
+		return *this;
+	}
+
+	operator Object* () const {
+		return ObjVal;
+	}
+
+	operator int () const {
+		return IntVal;
+	}
+
+	operator double () const {
+		return DblVal;
+	}
+
+	operator float () const {
+		return FloatVal;
+	}
+
+	operator Interface* () const {
+		return InterfaceVal;
+	}
+
+	operator void* () const {
+		return VoidPtrVal;
+	}
+
+
+};
+
 
 void printVariant( VariantData& v )
 {
@@ -78,6 +169,24 @@ void testConstructors()
 	VariantData v16 = dt;
 	VCF_ASSERT( v16.type == pdDateTime );
 	printVariant(v16);
+
+
+
+	char tmp[256];
+	void* tmpPtr = tmp;
+
+	VariantData v17 = tmpPtr;
+	VCF_ASSERT( v17.type == pdVoidPointer );
+	
+	String sp = v17.toString();
+	v17.setFromString(sp);
+
+
+	printVariant(v17);
+
+	Dictionary d;
+
+	
 }
 
 
