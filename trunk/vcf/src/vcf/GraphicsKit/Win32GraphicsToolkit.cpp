@@ -55,7 +55,7 @@ public:
 					return s;
 				}
 
-				val.assign( start, P );
+				val.assign( start, ( P - start ) );
 				
 				unit.assign( P, s.length() - val.length() );
 
@@ -75,7 +75,8 @@ public:
 					return s;
 				}
 
-				val.assign( start, P );
+				val.assign( start, ( P - start ) );
+
 				unit.assign( P, s.length() - val.length() );
 
 				break;
