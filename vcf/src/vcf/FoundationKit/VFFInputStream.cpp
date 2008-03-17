@@ -265,7 +265,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 
 								varVal.setFromString( value );
 
-								prop->setAtKey( key, &varVal, true );
+								prop->setAtKey( key, &varVal );
 							}
 						}
 					}
@@ -281,7 +281,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 							while ( ']' != parser_->nextToken() ) {
 								value += parser_->tokenString();
 							}
-							prop->setAtKey( key, value, true );
+							prop->setAtKey( key, value );
 						}
 					}
 				}
@@ -345,7 +345,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 					Object* obj = ClassRegistry::createNewInstance( objClassName );
 					
 					VariantData tmp(obj);
-					prop->setAtKey( key, &tmp, true );
+					prop->setAtKey( key, &tmp );
 
 					value = prop->getAtKey( key );
 				}
@@ -655,7 +655,7 @@ void VFFInputStream::assignDeferredProperties( Component* component )
 
 
 					if ( prop->isCollection() && dps->keyValid ) {
-						prop->setAtKey( dps->key, &data, true );
+						prop->setAtKey( dps->key, &data );
 					}
 					else if ( !prop->isCollection() ) {
 						prop->set( &data );

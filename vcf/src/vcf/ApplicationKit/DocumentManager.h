@@ -359,7 +359,7 @@ public:
 	* its active document, child or not.
 	*/
 	void currentDocumentChanged() {
-		DocManagerEvent event( getCurrentDocument(), DocumentManager::dmCurrentDocumentChanged );
+		DocManagerEvent event( getCurrentDocument()->getModel(), DocumentManager::dmCurrentDocumentChanged );
 		CurrentDocumentChanged( &event );
 	}
 

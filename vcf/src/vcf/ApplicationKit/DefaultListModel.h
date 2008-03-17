@@ -39,19 +39,9 @@ public:
 
 	virtual bool supportsSubItems() {
 		return true;
-	}
-
-	virtual void insertSubItem( const uint32& index, const uint32 & subItemIndex, const VariantData& value );
+	}	
 	
-	virtual void removeSubItem( const uint32& index, const uint32 & subItemIndex );
-	
-	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex );
-	
-	virtual String getSubItemAsString( const uint32& index, const uint32& subItemIndex );
-	
-	virtual void setSubItem( const uint32& index, const uint32& subItemIndex, const VariantData& value, bool addMissingValues );
-	
-	virtual void setSubItemAsString( const uint32& index, const uint32& subItemIndex, const String& value, bool addMissingValues );
+	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex );	
 
 	virtual uint32 getSubItemsCount( const uint32& index );
 
@@ -70,6 +60,10 @@ protected:
 	typedef std::multimap<uint32,VariantData> SubItemMap;
 	typedef std::pair<SubItemMap::iterator,SubItemMap::iterator> SubItemIteratorPair;
 	typedef SubItemMap::value_type SubItemPair;
+
+	virtual bool doInsertSubItem( const uint32& index, const uint32 & subItemIndex, const VariantData& value );	
+	virtual bool doRemoveSubItem( const uint32& index, const uint32 & subItemIndex );
+	virtual bool doSetSubItem( const uint32& index, const uint32& subItemIndex, const VariantData& value );
 
 	SubItemMap subItemData_;
 };

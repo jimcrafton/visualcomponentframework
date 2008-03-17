@@ -74,7 +74,7 @@ public:
 	* @param int index, the index of the control in this control's container
 	* @param const VCF::String& text, the text to write
 	*/
-	void setStatusPaneText( const uint32& index, const String& val, bool addMissingValues );
+	void setStatusPaneText( const uint32& index, const String& val );
 
 	String getStatusText();
 	void setStatusText( const String& val );

@@ -45,6 +45,11 @@ public:
 };
 
 
+
+class CircleModel : public Model {
+public:
+
+};
 /**
 */
 
@@ -53,9 +58,6 @@ public:
 
 class CircleDocument : public Document {
 public:
-	_class_rtti_( CircleDocument, "VCF::Document", CIRCLEDOCUMENT_CLASSID )
-	_class_rtti_end_
-
 
 	enum {
 		CircleAdded = Model::MODEL_LAST_EVENT + 100,
@@ -68,7 +70,7 @@ public:
 		setModified( true );
 
 		ModelEvent e( this, CircleDocument::CircleAdded );
-		ModelChanged( &e );
+		modelChanged( &e );
 		updateAllViews();
 	}
 
@@ -89,7 +91,7 @@ public:
 			setModified( true );
 
 			ModelEvent e( this, CircleDocument::CircleRemoved );
-			ModelChanged( &e );
+			modelChanged( &e );
 			updateAllViews();
 		}
 	}
@@ -218,7 +220,8 @@ protected:
 
 
 
-
+_class_rtti_( CircleDocument, "VCF::Document", CIRCLEDOCUMENT_CLASSID )
+_class_rtti_end_
 
 
 
@@ -268,25 +271,26 @@ public:
 	}
 
 
-	virtual void setViewModel( Model* model ) {
+	virtual void modelChanged( Model* oldModel, Model* newModel ) {
 		CallBack* ev = getCallback( "CircleInfoUI::onCircleModelChanged" );
 
 
-		if ( NULL != model ) {
+		if ( NULL != oldModel ) {
 			if ( NULL != ev ) {
-				model->removeModelHandler( (ModelHandler*)ev );
+				oldModel->ModelChanged -= ev;
 			}
 		}
 
-		CustomControl::setViewModel( model );
+		
 
-		if ( NULL != model ) {
+		if ( NULL != newModel ) {
 			if ( NULL == ev ) {
 				ev = new ClassProcedure1<Event*,CircleInfoUI>( this, &CircleInfoUI::onCircleModelChanged, "CircleInfoUI::onCircleModelChanged" );
 			}
-			model->addModelHandler( (ModelHandler*)ev );
+			newModel->ModelChanged +=ev;
 		}
 	}
+
 
 
 	void onCircleModelChanged( Event* e ) {
@@ -361,22 +365,22 @@ public:
 
 
 
-class CircleDocController : public Component {
+class CircleViewController : public Component {
 public:
 
 	CircleDocument* model_;
 	Panel* panel_;
 
-	CircleDocController():model_(NULL), panel_(NULL){}
+	CircleViewController():model_(NULL), panel_(NULL){}
 
 	void setModel( CircleDocument* model ) {
 		
-		CallBack* ev = getCallback( "CircleDocController::onCircleModelChanged" );
+		CallBack* ev = getCallback( "CircleViewController::onCircleModelChanged" );
 
 
 		if ( NULL != model_ ) {
 			if ( NULL != ev ) {
-				model_->removeModelHandler( (ModelHandler*)ev );
+				model_->ModelChanged -= ev;
 			}
 		}
 
@@ -384,9 +388,9 @@ public:
 
 		if ( NULL != model_ ) {
 			if ( NULL == ev ) {
-				ev = new ClassProcedure1<Event*,CircleDocController>( this, &CircleDocController::onCircleModelChanged, "CircleDocController::onCircleModelChanged" );
+				ev = new ClassProcedure1<Event*,CircleViewController>( this, &CircleViewController::onCircleModelChanged, "CircleViewController::onCircleModelChanged" );
 			}
-			model_->addModelHandler( (ModelHandler*)ev );
+			model_->ModelChanged += ev;
 		}
 	}
 
@@ -459,16 +463,16 @@ public:
 		add( circlePanel_, AlignClient );
 
 
-		controller_ = new CircleDocController();
-		controller_->setName( "CircleDocController" );
+		controller_ = new CircleViewController();
+		controller_->setName( "CircleViewController" );
 		addComponent( controller_ );
 		controller_->panel_ = circlePanel_;
 
 		circlePanel_->MouseClicked +=
-			new ClassProcedure1<MouseEvent*,CircleDocController>( controller_, &CircleDocController::onMouseClicked, "CircleDocController::onMouseClicked" );
+			new ClassProcedure1<MouseEvent*,CircleViewController>( controller_, &CircleViewController::onMouseClicked, "CircleViewController::onMouseClicked" );
 
 		circlePanel_->KeyUp +=
-			new ClassProcedure1<KeyboardEvent*,CircleDocController>( controller_, &CircleDocController::onKeyUp, "CircleDocController::onKeyUp" );
+			new ClassProcedure1<KeyboardEvent*,CircleViewController>( controller_, &CircleViewController::onKeyUp, "CircleViewController::onKeyUp" );
 
 		circlePanel_->setView( new CircleDocsView() );
 
@@ -491,7 +495,7 @@ public:
 
 	Panel* circlePanel_;
 	CircleInfoUI* info_;
-	CircleDocController* controller_;
+	CircleViewController* controller_;
 };
 
 

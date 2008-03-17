@@ -96,7 +96,7 @@ public:
 
 	void deleteItem( Event* e ) {
 		ListModel* lm = getListView()->getListModel();
-		lm->removeAtIndex( maxVal<>( 0, (int)lm->getCount()-2 ) );
+		lm->remove( maxVal<>( 0, (int)lm->getCount()-2 ) );
 	}
 
 	void changeStyle( Event* e ) {
@@ -133,19 +133,19 @@ public:
 	}
 	void deleteColumn( Event* e ) {
 		ColumnModel* cm = getListView()->getColumnModel();
-		cm->removeAtIndex( cm->getCount()- 1 );
+		cm->remove( cm->getCount()- 1 );
 	}
 
 	void columnChange( Event* ) {
 		ColumnModel* cm = getListView()->getColumnModel();
 		
-		cm->setAsString( 0, "New Col: " + System::createTempFileName(), false );
+		cm->setAsString( 0, "New Col: " + System::createTempFileName() );
 	}
 
 	void changeItem( Event* ) {
 		ListModel* lm = getListView()->getListModel();
 		
-		lm->setAsString( 0, "New Item: " + System::createTempFileName(), false );
+		lm->setAsString( 0, "New Item: " + System::createTempFileName() );
 	}
 
 	void addSubItem( Event* ) {

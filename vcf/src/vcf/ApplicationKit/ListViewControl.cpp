@@ -329,7 +329,7 @@ String ListViewControl::getColumnName( const uint32& index )
 
 void ListViewControl::setColumnName( const uint32& index, const String& columnName )
 {
-	columnModel_->setAsString( index, columnName, false );
+	columnModel_->setAsString( index, columnName );
 }
 
 double ListViewControl::getColumnWidth( const uint32& index )
@@ -477,13 +477,10 @@ ListItem* ListViewControl::addItem( const String& caption, const uint32 imageInd
 ListItem* ListViewControl::insertItem( const uint32& index, const String& caption, const uint32 imageIndex )
 {
 	ListItem* result = NULL;
-	internalModelChange_ = true;
 	ListModel* lm = getListModel();
 	lm->insert( index, caption );
 
 	result = getItem(index);
-
-	internalModelChange_ = false;
 
 	return result;
 }

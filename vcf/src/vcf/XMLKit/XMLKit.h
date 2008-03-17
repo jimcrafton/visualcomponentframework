@@ -424,6 +424,7 @@ namespace VCF {
 
 		Attachable( const Attachable<Type,Impl>& val ):owned_(false), resource_(val.resource_) {}
 
+		typedef Type ValueT;
 
 		~Attachable()	{
 			if ( owned_ ) {				
@@ -555,6 +556,10 @@ namespace VCF {
 
 		bool getChildren( std::vector<XmlNode>& nodes ) const ;
 
+		bool hasChildren() const ;
+
+		size_t getChildCount() const ;
+
 		XmlNode getParent() const;
 
 		XmlNode getChild( const String& name ) const;
@@ -626,6 +631,8 @@ namespace VCF {
 
 
 		virtual String toString() const ;
+
+		virtual Object* clone( bool deep = false ) const ;
 	};
 
 

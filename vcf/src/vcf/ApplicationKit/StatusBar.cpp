@@ -151,18 +151,16 @@ String StatusBar::getStatusPaneText( const uint32& index )
 	return result;
 }
 
-void StatusBar::setStatusPaneText( const uint32& index, const String& val, bool addMissingValues )
+void StatusBar::setStatusPaneText( const uint32& index, const String& val )
 {
 	size_t missing = (index+1) - getContainer()->getChildCount();
-
-	if ( addMissingValues ) {
-		if ( missing > 0 ) {
-			for (int i=0;i<missing;i++ ) {
-				addStatusPane();
-			}			
-		}
+	
+	if ( missing > 0 ) {
+		for (int i=0;i<missing;i++ ) {
+			addStatusPane();
+		}			
 	}
-
+	
 	Label* label = (Label*)getContainer()->getControlAtIndex(index);
 	label->setCaption( val );
 }

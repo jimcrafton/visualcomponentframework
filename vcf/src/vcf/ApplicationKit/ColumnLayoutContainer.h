@@ -132,9 +132,9 @@ public:
 		return columnWidths_[i];
 	}
 
-	void setColumnWidth( const uint32& i, const int& val, bool addMissingValues ) {
+	void setColumnWidth( const uint32& i, const int& val ) {
 
-		if ( addMissingValues && ((i+1) > columnWidths_.size()) ) {
+		if ( ((i+1) > columnWidths_.size()) ) {
 			size_t missing = (i+1) - columnWidths_.size();
 			if ( missing > 0 ) {
 				columnWidths_.resize( missing + columnWidths_.size() );
