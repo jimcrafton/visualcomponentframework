@@ -93,7 +93,7 @@ void DefaultTreeModel::insertRef( TreeValRef& ref, TreeModel::Key parentKey )
 	hierarchy_.insert( HierarchyValue(parentKey,ref2.key) );
 }
 
-TreeModel::Key DefaultTreeModel::insert( const VariantData& value, const TreeModel::Key& parentKey )
+TreeModel::Key DefaultTreeModel::doInsert( const VariantData& value, const TreeModel::Key& parentKey )
 {
 	TreeModel::Key result;
 
@@ -107,17 +107,6 @@ TreeModel::Key DefaultTreeModel::insert( const VariantData& value, const TreeMod
 	result = lastKey_;
 
 	insertRef( ref, parentKey );
-
-	TreeModelEvent e(this, TreeModel::ItemAdded);
-	e.key = result;
-	e.parentKey = parentKey;
-
-	NodeAdded( &e );
-
-	TreeModelEvent e2(this, TreeModel::ItemAdded);
-	e2.key = result;
-	e2.parentKey = parentKey;
-	ModelChanged( &e2 );
 
 	return result;
 }
@@ -162,18 +151,10 @@ TreeModel::Key DefaultTreeModel::removeFromHierarchy( TreeModel::Key key )
 		if ( range.first->first == parentKey && range.first->second == key ) {
 			hierarchy_.erase( range.first );
 		}
-		
-		
-		
 
-		TreeModelEvent e(this, TreeModel::ItemRemoved);
-		e.key = ref.key;
+		result = parentKey;		
 		
-		result = parentKey;
-		e.parentKey = parentKey;
-		
-		
-		NodeRemoved( &e );
+		notifyItemRemoved( ref.key, parentKey );
 
 		data_.erase( found );
 	}
@@ -181,15 +162,9 @@ TreeModel::Key DefaultTreeModel::removeFromHierarchy( TreeModel::Key key )
 	return result;
 }
 
-void DefaultTreeModel::remove( const TreeModel::Key& key )
+TreeModel::Key DefaultTreeModel::doRemove( const TreeModel::Key& key )
 {
-	TreeModel::Key parentKey = removeFromHierarchy( key );	
-
-	TreeModelEvent e(this, TreeModel::ItemRemoved);
-	e.key = key;
-	e.parentKey = parentKey;
-
-	ModelChanged( &e );
+	return removeFromHierarchy( key );
 }
 
 VariantData DefaultTreeModel::get( const TreeModel::Key& key )
@@ -204,44 +179,23 @@ VariantData DefaultTreeModel::get( const TreeModel::Key& key )
 	return result;
 }
 
-String DefaultTreeModel::getAsString( const TreeModel::Key& key )
-{
-	String result;
 
+bool DefaultTreeModel::doSet( const TreeModel::Key& key, const VariantData& value )
+{
+	bool result = false;
 	DataMap::iterator found = data_.find( key );
 	if ( found != data_.end() ) {
-		result = found->second.data.toString();
+		result = true;
+		found->second.data = value;
 	}
 
 	return result;
 }
 
-void DefaultTreeModel::set( const TreeModel::Key& key, const VariantData& value )
+TreeModel::Key DefaultTreeModel::doMove( const TreeModel::Key& srcKey, const TreeModel::Key& destParentKey )
 {
-	DataMap::iterator found = data_.find( key );
-	if ( found != data_.end() ) {
-		found->second.data = value;
+	TreeModel::Key result = TreeModel::InvalidKey;
 
-		TreeModelEvent itemEvent( this, TreeModel::ItemChanged );
-		itemEvent.key = key;
-		ModelChanged( &itemEvent );
-	}
-}
-
-void DefaultTreeModel::setAsString( const TreeModel::Key& key, const String& value )
-{
-	VariantData v;
-	v.setFromString( value );
-	set( key, v );
-}
-
-void DefaultTreeModel::copy( const TreeModel::Key& srcKey, const TreeModel::Key& destKey, bool deepCopy )
-{
-
-}
-
-void DefaultTreeModel::move( const TreeModel::Key& srcKey, const TreeModel::Key& destParentKey )
-{
 	DataMap::iterator found = data_.find( srcKey );
 	if ( found != data_.end() ) {
 		
@@ -268,15 +222,15 @@ void DefaultTreeModel::move( const TreeModel::Key& srcKey, const TreeModel::Key&
 
 		insertRef( ref, destParentKey );
 
-		TreeModelEvent e(this, TreeModel::ItemMoved);
-		e.key = ref.key;
-		e.parentKey = destParentKey;
-		ModelChanged(&e);
+		result = ref.key;		
 	}
+
+	return result;
 }
 
-void DefaultTreeModel::clearChildren( const Key& key )
+bool DefaultTreeModel::doClearChildren( const Key& key )
 {
+	bool result = false;
 	std::vector<TreeModel::Key> children;
 	if ( getChildren( key, children ) ) {
 		std::vector<TreeModel::Key>::iterator it = children.begin();
@@ -285,11 +239,10 @@ void DefaultTreeModel::clearChildren( const Key& key )
 			++it;
 		}
 
-		TreeModelEvent e(this, TreeModel::ChildItemsRemoved);
-		e.key = key;
-
-		ModelChanged( &e );
+		result = true;
 	}
+
+	return result;
 }
 
 bool DefaultTreeModel::getChildren(const TreeModel::Key& key, std::vector<TreeModel::Key>& children )

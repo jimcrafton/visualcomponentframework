@@ -36,38 +36,30 @@ void DefaultListModel::loadFromStream( InputStream * stream )
 
 }
 
-void DefaultListModel::insertSubItem( const uint32& index, const uint32 & subItemIndex, const VariantData& value )
+bool DefaultListModel::doInsertSubItem( const uint32& index, const uint32 & subItemIndex, const VariantData& value )
 {
 	SubItemPair val(index,value);
 	subItemData_.insert( val );
-
-	ListModelEvent itemEvent( this, lmeSubItemAdded );
-	itemEvent.item = &data_[index];
-	itemEvent.index = index;
-	itemEvent.subIndex = subItemIndex;
-	ModelChanged( &itemEvent );
+	return true;
 }
 
-void DefaultListModel::removeSubItem( const uint32& index, const uint32 & subItemIndex )
+bool DefaultListModel::doRemoveSubItem( const uint32& index, const uint32 & subItemIndex )
 {
 	SubItemIteratorPair res = subItemData_.equal_range( index );
 
 	uint32 si = 0;
 	while ( res.first != res.second ) {
 		if ( si == subItemIndex ) {
+			notifySubItemRemoved( index, subItemIndex, res.first->second );
+
 			subItemData_.erase( res.first );
 
-			ListModelEvent itemEvent( this, lmeSubItemRemoved );
-			itemEvent.item = &data_[index];
-			itemEvent.index = index;
-			itemEvent.subIndex = subItemIndex;
-			ModelChanged( &itemEvent );
-
-			break;
+			return true;
 		}
 		si ++;
 		++res.first;
 	}
+	return false;
 }
 
 
@@ -87,23 +79,8 @@ VariantData DefaultListModel::getSubItem( const uint32& index, const uint32& sub
 	return VariantData::null();
 }
 
-String DefaultListModel::getSubItemAsString( const uint32& index, const uint32& subItemIndex ) 
-{
-	SubItemIteratorPair res = subItemData_.equal_range( index );
 
-	uint32 si = 0;
-	while ( res.first != res.second ) {
-		if ( si == subItemIndex ) {			
-			return res.first->second.toString();
-		}
-		si ++;
-		++res.first;
-	}
-
-	return String();
-}
-
-void DefaultListModel::setSubItem( const uint32& index, const uint32& subItemIndex, const VariantData& value, bool addMissingValues )
+bool DefaultListModel::doSetSubItem( const uint32& index, const uint32& subItemIndex, const VariantData& value )
 {
 	size_t count = getSubItemsCount(index) ;
 	if ( subItemIndex >= count ) {
@@ -115,10 +92,7 @@ void DefaultListModel::setSubItem( const uint32& index, const uint32& subItemInd
 			count ++;
 		}
 
-		ListModelEvent itemEvent( this, lmeSubItemAdded );
-		itemEvent.item = &data_[index];
-		itemEvent.index = index;
-		ModelChanged( &itemEvent );
+		notifySubItemAdded( index, data_[index] );		
 	}
 
 	SubItemIteratorPair res = subItemData_.equal_range( index );
@@ -126,27 +100,16 @@ void DefaultListModel::setSubItem( const uint32& index, const uint32& subItemInd
 	uint32 si = 0;
 	while ( res.first != res.second ) {
 		if ( si == subItemIndex ) {			
-			res.first->second = value;
-
-			ListModelEvent itemEvent( this, lmeSubItemChanged );
-			itemEvent.item = &data_[index];
-			itemEvent.index = index;
-			itemEvent.subIndex = subItemIndex;
-			ModelChanged( &itemEvent );
-			break;
+			res.first->second = value;			
+			return true;
 		}
 		si ++;
 		++res.first;
 	}	
+
+	return false;
 }
 
-void DefaultListModel::setSubItemAsString( const uint32& index, const uint32& subItemIndex, const String& value, bool addMissingValues )
-{
-	VariantData v;
-	v.setFromString( value );
-
-	setSubItem( index, subItemIndex, v, addMissingValues );
-}
 
 bool DefaultListModel::getSubItems( const uint32& index, std::vector<VariantData>& items )
 {

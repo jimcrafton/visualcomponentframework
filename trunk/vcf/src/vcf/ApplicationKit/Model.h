@@ -141,26 +141,70 @@ public:
 		updateAllViews();
 	}
 
+	/**
+	Returns the value for the model. A key may be specified with a 
+	VariantData object. The exact meaning of the key is up to the
+	specific implementation Model based sub class. For example, a ListModel
+	would expect a key that represents an integer based index. Another
+	kind of model might use a string that represent's coordinates, or 
+	perhaps even an object instance that has relevant data for the key.
+	Some models might ignore the key altogether, for example a TextModel
+	might ignore the key and simply return the text of the model.
+	*/
 	virtual VariantData getValue( const VariantData& key=VariantData::null() ) 	{
 		return VariantData::null();
 	}
 
+	/**
+	Returns the data for the model as a string.
+	@see getValue
+	*/
 	virtual String getValueAsString( const VariantData& key=VariantData::null() ) {
 		return String();
 	}
 
+	/**
+	Sets the value of the model. The data is stored in a VariantData object. The 
+	key may be used if it's relevant to the specific kind of model. See the 
+	getValue documentation for more information about the key parameter.
+	@see getValue
+
+	*/
 	virtual void setValue( const VariantData& value, const VariantData& key=VariantData::null() ) { }
 
+	/**
+	Sets the value of the model using a string to specify the data. 
+	@see setValue()
+	*/
 	virtual void setValueAsString( const String& value, const VariantData& key=VariantData::null() ) {}
 
+	/**
+	Indicates whether or not the model will be responsible for deleting objects that may be held 
+	in a collection of VariantData instances. For example, if the model stored it's data 
+	using an array of VariantData objects, and each item in the array was a pointer
+	to some Object based instance, then if the method returns true, the model will be responsible 
+	for freeing all the object instances stored in the array. If it returns false then the
+	programmer would be responsible for freeing up the instances.
+	*/
 	bool shouldDeleteVarObjects() {
 		return deleteVariantObjects_;
 	}
 
 protected:
+	/**
+	Indicates whether the model deletes the variant objects. If you need to 
+	set this, you should do so in your models constructor by accessing this 
+	variable directly. If you set it to true, the model should delete any 
+	object's it stores.
+	@see shouldDeleteVarObjects
+	*/
 	bool deleteVariantObjects_;
 	Array<View*> views_;
 
+	/**
+	A virtual method that deletes the object stored by the model. You may choose 
+	to override this with an alternate implementation.
+	*/
 	virtual void deleteVariantObject( Object* obj ) {
 		obj->free();
 	}

@@ -34,8 +34,7 @@ void ListSubItem::setCaption( const String& caption )
 
 	lm->setSubItemAsString( ownerItem_->getIndex(), 
 							ownerItem_->getController()->getItemSubItemIndex( ownerItem_, this ),
-							caption,
-							false );
+							caption );
 }
 
 ListSubItem::ListSubItem( ListItem* ownerItem, const String& caption, void* data ):
@@ -65,7 +64,7 @@ void ListItem::setCaption( const String& caption )
 	ListModel* lm = (ListModel*) getModel();
 	VCF_ASSERT( NULL != lm );
 
-	lm->setAsString( index_, caption, false );
+	lm->setAsString( index_, caption );
 }
 
 ListSubItem* ListItem::addSubItem( const String& caption, void* data )

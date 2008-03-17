@@ -18,12 +18,16 @@ namespace VCF {
 
 #define DOCUMENT_CLASSID		"4c5ca064-5a3e-4d0a-bbe9-f37d722af092"
 
+
+
+
 /**
 \class Document Document.h "vcf/ApplicationKit/Document.h"
-A document is a model has many extra features like saving, loading, cutting 
-and all that kind of stuff.
+A document is a component that interacts with a valid model
+instance and has many extra features like saving, loading, cutting 
+no implemented within the scope of a model.
 */
-class APPLICATIONKIT_API Document : public Model {
+class APPLICATIONKIT_API Document : public Component {
 
 public:
 	enum DocumentEvents{
@@ -35,22 +39,64 @@ public:
 	/**
 	* the document's constructor
 	*/
-	Document():Model(), docWindow_(NULL),
+	Document():docWindow_(NULL),
+				docModel_(NULL),
 				fileName_(""),
 				modified_(false),
 				keepBackUpFile_(false) {
-		clipFormatContainer_.initContainer(clipFormats_);
 	}
+
+	virtual ~Document(){}
 
 	/**
 	* empties the model
 	*/
+	
 	virtual void empty() {
+		Model* docModel = getModel();
+		VCF_ASSERT( NULL != docModel );
+		
+		if ( NULL == docModel ) {
+			return;
+		}
+
 		setModified( true );
 
-		Model::empty();
+		docModel->empty();
 	}
 
+	void addView( View* view ) {
+		Model* docModel = getModel();
+		VCF_ASSERT( NULL != docModel );
+		
+		if ( NULL == docModel ) {
+			return;
+		}
+
+		docModel->addView( view );
+	}
+
+	void updateAllViews() {
+		Model* docModel = getModel();
+		VCF_ASSERT( NULL != docModel );
+		
+		if ( NULL == docModel ) {
+			return;
+		}
+
+		docModel->updateAllViews();
+	}
+
+	void modelChanged( ModelEvent* e ) {
+		Model* docModel = getModel();
+		VCF_ASSERT( NULL != docModel );
+		
+		if ( NULL == docModel ) {
+			return;
+		}
+		
+		docModel->ModelChanged( e );
+	}
 	/**
 	* tells is the document has been modified since the last time it has been saved
 	*@return bool returns true if it has been modified
@@ -124,6 +170,14 @@ public:
 		docWindow_ = val;
 	}
 
+	Model* getModel() {
+		return docModel_;//dynamic_cast<Model*>(this);
+	}
+
+	void setModel( Model* val ) {
+		docModel_ = val;
+	}
+
 	/**
 	* callback function called by the document manager framework
 	* as soon as a new document has been successfully created.
@@ -142,13 +196,20 @@ public:
 	*@return bool, true if the file has been succesfully saved.
 	*/
 	virtual bool saveAsType( const String& fileName, const String& fileType ){
+		Model* docModel = getModel();
+		VCF_ASSERT( NULL != docModel );
+		
+		if ( NULL == docModel ) {
+			return false;
+		}
+
 		FileOutputStream fs( fileName );
 
 		bool result = saveAsType( fileType, fs );
 		if ( result ) {
 			setModified( false );
-			ModelEvent e( this, Document::deSaved );
-			ModelChanged( &e );
+			ModelEvent e( getModel(), Document::deSaved );
+			modelChanged(&e);
 		}
 		return result;
 	};
@@ -160,6 +221,10 @@ public:
 	*@return bool, true if the file has been succesfully saved.
 	*/
 	virtual bool saveAsType( const String& fileType, OutputStream& stream ) {
+		Model* docModel = getModel();
+		VCF_ASSERT( NULL != docModel );
+		
+		
 		return false;
 	};
 
@@ -174,6 +239,13 @@ public:
 	*@eventtype Document::deOpened.
 	*/
 	virtual bool openFromType( const String& fileName, const String& fileType ){
+		Model* docModel = getModel();
+		VCF_ASSERT( NULL != docModel );
+		
+		if ( NULL == docModel ) {
+			return false;
+		}
+
 		bool result = false;
 		try {
 			FileInputStream fs( fileName );
@@ -187,8 +259,8 @@ public:
 				setModified( false );
 				updateAllViews();
 
-				ModelEvent e( this, Document::deOpened );
-				ModelChanged( &e );
+				ModelEvent e( getModel(), Document::deOpened );
+				modelChanged( &e );
 			}
 		}
 		catch ( BasicException& be ) {
@@ -206,6 +278,13 @@ public:
 	*@return bool, true if the file has been succesfully opened.
 	*/
 	virtual bool openFromType( const String& fileType, InputStream& stream ){
+		Model* docModel = getModel();
+		VCF_ASSERT( NULL != docModel );
+		
+		if ( NULL == docModel ) {
+			return false;
+		}
+
 		return false;
 	};
 
@@ -233,6 +312,13 @@ public:
 	*@return bool returns true if it does, false if it doesn't
 	*/
 	virtual bool canCutFromDocument() {
+		Model* docModel = getModel();
+		VCF_ASSERT( NULL != docModel );
+		
+		if ( NULL == docModel ) {
+			return false;
+		}
+
 		return false;
 	}
 
@@ -242,6 +328,13 @@ public:
 	*@return bool returns true if it does, false if it doesn't
 	*/
 	virtual bool canCopyFromDocument() {
+		Model* docModel = getModel();
+		VCF_ASSERT( NULL != docModel );
+		
+		if ( NULL == docModel ) {
+			return false;
+		}
+
 		return false;
 	}
 
@@ -251,6 +344,13 @@ public:
 	*@return bool returns true if it does, false if it doesn't
 	*/
 	virtual bool canPasteToDocument() {
+		Model* docModel = getModel();
+		VCF_ASSERT( NULL != docModel );
+		
+		if ( NULL == docModel ) {
+			return false;
+		}
+
 		return false;
 	}
 
@@ -259,6 +359,13 @@ public:
 	*@return DataObject*, a pointer to the data that has been cut.
 	*/
 	virtual DataObject* cut() {
+		Model* docModel = getModel();
+		VCF_ASSERT( NULL != docModel );
+		
+		if ( NULL == docModel ) {
+			return NULL;
+		}
+
 		return NULL;
 	}
 
@@ -267,6 +374,13 @@ public:
 	*@return DataObject*, a pointer to the data that has been copied.
 	*/
 	virtual DataObject* copy() {
+		Model* docModel = getModel();
+		VCF_ASSERT( NULL != docModel );
+		
+		if ( NULL == docModel ) {
+			return NULL;
+		}
+
 		return NULL;
 	}
 
@@ -276,6 +390,13 @@ public:
 	*@return bool, true if the operation has been performed successfully.
 	*/
 	virtual bool paste( DataObject* data ) {
+		Model* docModel = getModel();
+		VCF_ASSERT( NULL != docModel );
+		
+		if ( NULL == docModel ) {
+			return NULL;
+		}
+
 		return false;
 	}
 
@@ -286,7 +407,7 @@ public:
 	*@return Enumerator<String>*, the enumerator.
 	*/
 	Enumerator<String>* getSupportedClipboardFormats() {
-		return clipFormatContainer_.getEnumerator();
+		return clipFormats_.getEnumerator();
 	}
 
 	/**
@@ -300,6 +421,7 @@ public:
 protected:
 	/* the window associated to the document */
 	Window* docWindow_;
+	Model* docModel_;
 
 	FilePath fileName_;
 
@@ -307,8 +429,7 @@ protected:
 	bool keepBackUpFile_;
 
 	/* the clipboard formats */
-	std::vector<String> clipFormats_;
-	EnumeratorContainer<std::vector<String>,String> clipFormatContainer_;
+	Array<String> clipFormats_;
 };
 
 

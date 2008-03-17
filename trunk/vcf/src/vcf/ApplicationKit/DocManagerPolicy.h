@@ -65,10 +65,11 @@ public:
 
 		//destroy the old document if neccessary
 		if ( NULL != currentDocument_ ) {
-			Component* owner = currentDocument_->getOwner();
+			Model* docModel = currentDocument_->getModel();
+			Component* owner = docModel->getOwner();
 			if ( NULL != owner ) {
-				owner->removeComponent( currentDocument_ );
-				currentDocument_->free();
+				owner->removeComponent( docModel );
+				docModel->free();
 			}
 		}
 
@@ -113,7 +114,7 @@ public:
 			}
 		}					
 		
-		VCF::DocManagerEvent event( currentDocument_, VCF::DocumentManager::dmCloseDocument );
+		VCF::DocManagerEvent event( currentDocument_->getModel(), VCF::DocumentManager::dmCloseDocument );
 		
 		VCF::DocumentManager::getDocumentManager()->DocumentClosed( &event );
 
@@ -287,7 +288,7 @@ public:
 				}
 			}					
 		
-			VCF::DocManagerEvent event( currentDoc, VCF::DocumentManager::dmCloseDocument );
+			VCF::DocManagerEvent event( currentDoc->getModel(), VCF::DocumentManager::dmCloseDocument );
 		
 			VCF::DocumentManager::getDocumentManager()->DocumentClosed( &event );
 

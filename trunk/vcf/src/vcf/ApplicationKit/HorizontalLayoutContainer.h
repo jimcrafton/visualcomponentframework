@@ -97,15 +97,13 @@ public:
 		return columns_.size();
 	}
 
-	void setColumnWidth( const uint32& index, const double& width, bool addMissingValues=false ) {
-		size_t missing = (index+1) - columns_.size();
+	void setColumnWidth( const uint32& index, const double& width ) {
+		size_t missing = (index+1) - columns_.size();		
 		
-		if ( addMissingValues ) {
-			if ( missing > 0 ) {
-				columns_.resize( missing + columns_.size() );
-				columnTweens_.resize( columns_.size()-1, 0.0 );
-			}
-		}
+		if ( missing > 0 ) {
+			columns_.resize( missing + columns_.size() );
+			columnTweens_.resize( columns_.size()-1, 0.0 );
+		}		
 		
 		columns_[index] = width;
 	}
@@ -124,14 +122,12 @@ public:
 
 
 
-	void setColumnTweenWidth( const uint32& index, const double& width, bool addMissingValues=false ) {
+	void setColumnTweenWidth( const uint32& index, const double& width ) {
 		size_t missing = (index+1) - columnTweens_.size();
-		
-		if ( addMissingValues ) {
-			if ( missing > 0 ) {
-				columnTweens_.resize( missing + columnTweens_.size() );
-			}
-		}
+				
+		if ( missing > 0 ) {
+			columnTweens_.resize( missing + columnTweens_.size() );
+		}	
 
 		columnTweens_[index] = width;
 	}

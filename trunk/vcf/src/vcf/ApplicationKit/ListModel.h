@@ -135,22 +135,31 @@ public:
 	virtual void setValue( const VariantData& value, const VariantData& key=VariantData::null() );
 
 	virtual void setValueAsString( const String& value, const VariantData& key=VariantData::null() );
+		
+	void insert( const uint32 & index, const VariantData& item );
 
+	void add( const VariantData& item ) {
+		insert( getCount(), item );
+	}
+	
+	void remove( const uint32& index );
 
+	void set( const uint32& index, const VariantData& item );
 
-	virtual void add( const VariantData& item ) = 0;
-	virtual void insert( const uint32 & index, const VariantData& item ) = 0;
-    
-	virtual void remove( const VariantData& item ) = 0;
-	virtual void removeAtIndex( const uint32& index ) = 0;
+	virtual void setAsString( const uint32& index, const String& item ) {
+		VariantData v;
+		v.setFromString( item );
+		set( index, v );
+	}
 
 	virtual VariantData get( const uint32& index ) = 0;	
-	virtual String getAsString( const uint32& index ) = 0;
+
+	virtual String getAsString( const uint32& index ) {
+		VariantData v = get( index );
+		return v.toString();
+	}
 
 	virtual uint32 getIndexOf( const VariantData& item ) = 0;
-
-	virtual void set( const uint32& index, const VariantData& item, bool addMissingValues ) = 0;
-	virtual void setAsString( const uint32& index, const String& item, bool addMissingValues ) = 0;
 
 	virtual bool getItems( std::vector<VariantData>& items ) = 0;
 	virtual Enumerator<VariantData>* getItems() = 0;
@@ -162,24 +171,33 @@ public:
 	*/
 	virtual uint32 getCount() = 0;
 
+
+
 	virtual bool supportsSubItems() {
 		return false;
 	}
 
-	virtual void insertSubItem( const uint32& index, const uint32 & subItemIndex, const VariantData& value ) {}
-	virtual void removeSubItem( const uint32& index, const uint32 & subItemIndex ){}
+	void insertSubItem( const uint32& index, const uint32 & subItemIndex, const VariantData& value );
+	void removeSubItem( const uint32& index, const uint32 & subItemIndex );
+	void setSubItem( const uint32& index, const uint32& subItemIndex, const VariantData& value );
+	
+	virtual void setSubItemAsString( const uint32& index, const uint32& subItemIndex, const String& value ) {
+		VariantData v;
+		v.setFromString( value );
+		setSubItem( index, subItemIndex, v );
+	}
+
 
 	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex ) {		
 		return VariantData::null();
 	}
 
 	virtual String getSubItemAsString( const uint32& index, const uint32& subItemIndex ) {
-		return String();
+		VariantData v = getSubItem(index,subItemIndex);
+		return v.toString();
 	}
 
-	virtual void setSubItem( const uint32& index, const uint32& subItemIndex, const VariantData& value, bool addMissingValues ){}
-
-	virtual void setSubItemAsString( const uint32& index, const uint32& subItemIndex, const String& value, bool addMissingValues ){}
+	
 
 	virtual uint32 getSubItemsCount( const uint32& index ) {
 		return 0;	
@@ -236,28 +254,79 @@ public:
 		return String();
 	}
 
-	void setSubItemAtKey( const String& key, const VariantData& value, bool addMissingValues ) {
+	void setSubItemAtKey( const String& key, const VariantData& value ) {
 		size_t pos = key.find(",");
 		if ( pos != String::npos ) {
 			uint32 idx = StringUtils::fromStringAsUInt( key.substr(0,pos) );
 			uint32 idx2 = StringUtils::fromStringAsUInt( key.substr(pos+1,key.size()-(pos+1)) );
 
-			setSubItem( idx, idx2, value, addMissingValues );
+			setSubItem( idx, idx2, value );
 		}
 	}
 
-	void setSubItemAsStringAtKey( const String& key, const String& value, bool addMissingValues ) {
+	void setSubItemAsStringAtKey( const String& key, const String& value ) {
 		size_t pos = key.find(",");
 		if ( pos != String::npos ) {
 			uint32 idx = StringUtils::fromStringAsUInt( key.substr(0,pos) );
 			uint32 idx2 = StringUtils::fromStringAsUInt( key.substr(pos+1,key.size()-(pos+1)) );
 
-			setSubItemAsString( idx, idx2, value, addMissingValues );
+			setSubItemAsString( idx, idx2, value );
 		}
 	}
 
 	uint32 getSubItemsCountAtKey( const String& key ) {
 		return getSubItemsCount( StringUtils::fromStringAsUInt(key) );	
+	}
+
+protected:
+	virtual bool doInsert( const uint32 & index, const VariantData& item ) = 0;    	
+	virtual bool doRemove( const uint32& index ) = 0;
+	virtual bool doSet( const uint32& index, const VariantData& item ) = 0;
+
+	virtual bool doInsertSubItem( const uint32& index, const uint32 & subItemIndex, const VariantData& value ) {
+		return false;
+	}
+
+	virtual bool doRemoveSubItem( const uint32& index, const uint32 & subItemIndex ){
+		return false;
+	}
+
+	virtual bool doSetSubItem( const uint32& index, const uint32& subItemIndex, const VariantData& value ){
+		return false;
+	}
+
+
+
+	void notifyRemove( const uint32 & index, VariantData& item ) {
+		ListModelEvent itemEvent( this, lmeItemRemoved );
+		itemEvent.item = &item;
+		itemEvent.index = index;
+		ItemRemoved( &itemEvent );
+
+		itemEvent.setType( lmeItemRemoved );
+		ModelChanged( &itemEvent );
+	}
+
+	void notifyAdded( const uint32 & index, VariantData& item ) {
+		ListModelEvent event( this, lmeItemAdded );
+		event.item = &item;
+		event.index = index;
+		ItemAdded( &event );
+	}
+
+	void notifySubItemRemoved( const uint32& index, const uint32 & subItemIndex, VariantData& item ) {
+		ListModelEvent itemEvent( this, lmeSubItemRemoved );
+		itemEvent.item = &item;
+		itemEvent.index = index;
+		itemEvent.subIndex = subItemIndex;
+		ModelChanged( &itemEvent );
+	}
+
+	void notifySubItemAdded( const uint32& index, VariantData& item ) {
+		ListModelEvent itemEvent( this, lmeSubItemAdded );
+		itemEvent.item = &item;
+		itemEvent.index = index;
+		ModelChanged( &itemEvent );
 	}
 };
 
@@ -296,14 +365,14 @@ inline String ListModel::getValueAsString( const VariantData& key )
 inline void ListModel::setValue( const VariantData& value, const VariantData& key )
 {
 	if ( key.isInteger() ) {
-		set( key, value, false );
+		set( key, value );
 	}
 }
 
 inline void ListModel::setValueAsString( const String& value, const VariantData& key )
 {
 	if ( key.isInteger() ) {
-		setAsString( key, value, false );
+		setAsString( key, value );
 	}
 }
 

@@ -328,32 +328,28 @@ public:
 	index is out of bounds (greater than or equal to the total number of 
 	elements in the collection) then an exception is thrown. 
 	@param VariantData the key, frequently just an index
-	@param VariantData the value
-	@param bool whether or not the collection should add any entries if 
-	necessary. For example, if the key is 0, and the collection is empty,
-	if addMissingValues is true, then a new entry will be created first
-	before assign it the new value passed in.
+	@param VariantData the value	
 	*/
-	virtual void setAtKey( const VariantData& key, VariantData* value, bool addMissingValues=false ){
+	virtual void setAtKey( const VariantData& key, VariantData* value ){
 		if ( NULL != source_ ){
-			setAtKey( key, value, source_, addMissingValues );
+			setAtKey( key, value, source_ );
 		}
 	};
 
-	virtual void setAtKey( const VariantData& key, const String& value, bool addMissingValues=false ){
+	virtual void setAtKey( const VariantData& key, const String& value ){
 		if ( NULL != source_ ){
-			setAtKey( key, value, source_, addMissingValues );
+			setAtKey( key, value, source_ );
 		}
 	};
 
-	virtual void setAtKey( const VariantData& key, VariantData* value, Object* source, bool addMissingValues=false ){
+	virtual void setAtKey( const VariantData& key, VariantData* value, Object* source ){
 		//no-op
 	};
 
-	virtual void setAtKey( const VariantData& key, const String& value, Object* source, bool addMissingValues=false ){
+	virtual void setAtKey( const VariantData& key, const String& value, Object* source ){
 		value_.setFromString( value );
 
-		setAtKey( key, &value_, source_, addMissingValues );
+		setAtKey( key, &value_, source_ );
 	};
 
 	/**

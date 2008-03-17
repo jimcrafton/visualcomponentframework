@@ -552,6 +552,23 @@ bool XmlNode::getChildren( std::vector<XmlNode>& nodes ) const
 	return !nodes.empty();
 }
 
+size_t XmlNode::getChildCount() const 
+{
+	size_t result = 0;
+	xmlNode *child = resource_->children;
+	while ( NULL != child ) {			
+		result++;
+		child = child->next;
+	}
+
+	return result;
+}
+
+bool XmlNode::hasChildren() const 
+{
+	return (resource_->children != NULL) ? true : false;
+}
+
 XmlNode XmlNode::getChild( const String& name ) const
 {
 	XmlNode result;
@@ -839,7 +856,13 @@ void XmlNode::setDocument ( const XmlDocument& doc )
 	xmlSetTreeDoc( resource_, doc.get() );
 }
 
-
+Object* XmlNode::clone( bool deep ) const 
+{
+	XmlNode* result = new XmlNode();
+	xmlNodePtr res = xmlDocCopyNode( resource_, resource_->doc, deep ? 2 : 1 );
+	result->attach( res );
+	return result;
+}
 
 
 

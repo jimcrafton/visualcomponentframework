@@ -14,102 +14,258 @@ using namespace VCF;
 
 class XMLTreeModel : public TreeModel {
 public:
-	virtual Key insert( const VariantData& value, const Key& parentKey=RootKey ) {
-		Key result;
 
-		return result;
+	String getNodeString( const XmlNode& n ) {
+		String result;
+
+		result = n.getName();
+
+		if ( n.getType() == ntAttribute ) {
+			result += ":" + n.getContent();
+		}
+		else if ( n.getType() == ntCDATA ) {
+			result += " CDATA:";
+			String s = n.getContent();
+			if ( s.length() > 25 ) {
+				result += s.substr(0,25) + "...";
+			}
+			else {
+				result += s;
+			}
+		}
+		else if ( n.getType() == ntText ) {
+			if ( !n.empty() ) {
+				result += ":";
+				String s = n.getContent();
+				if ( s.length() > 25 ) {
+					result += s.substr(0,25) + "...";
+				}
+				else {
+					result += s;
+				}
+			}
+		}
+
+		return result;			
 	}
-
-	virtual void remove( const Key& key ){}
 
 	virtual VariantData get( const Key& key ) {
-		const XmlNode* n = keyMap[key];
-		VariantData v = n->getName() ;
-		return v;
+		if ( key == RootKey ) {
+			return VariantData(getNodeString(root));
+		}
+
+		XmlNode n( (XmlNode::ValueT) key );
+
+		return VariantData(getNodeString(n));
 	}
 
-	virtual String getAsString( const Key& key ) {
-		const XmlNode* n = keyMap[key];
-		return n->getName();
-	}
+	virtual bool getChildren(const Key& key, std::vector<Key>& children ) {		
+		XmlNode::ValueT val;
 
-	virtual void set( const Key& key, const VariantData& value ) {
-		
-	}
+		if ( key == RootKey ) {
+			val = root.get();
+		}
+		else {
+			val = (XmlNode::ValueT) key;
+		}
 
-	virtual void setAsString( const Key& key, const String& value ) {
-
-	}
-
-	virtual void copy( const Key& srcKey, const Key& destKey, bool deepCopy=false ) {
-
-	}
-
-	virtual void move( const Key& srcKey, const Key& destParentKey ) {
-
-	}
-
-	virtual void clearChildren( const Key& key ) {
-
-	}
-
-	virtual bool getChildren(const Key& key, std::vector<Key>& children ) {
-		
-
+		XmlNode n(val);
+		std::vector<XmlNode> nodes;
+		n.getChildren( nodes );
+		std::vector<XmlNode>::iterator it = nodes.begin();
+		children.resize( nodes.size() );
+		size_t i = 0;
+		while ( it != nodes.end() ) {
+			const XmlNode& child = *it;
+			children[i] = (Key) child.get();
+			i++;
+			++it;
+		}
+		return !children.empty();
 	}
 
 
 	virtual Key getParent( const Key& key ) {
+		if ( key == RootKey ) {
+			return (Key) root.get();
+		}
 
+		XmlNode n( (XmlNode::ValueT) key );
+		return (Key) n.get();
 	}
 
 	virtual Key getNextSibling( const Key& key ) {
-		Key k;
+		Key k = InvalidKey;
+
+		XmlNode::ValueT val;
+
+		if ( key == RootKey ) {
+			val = root.get();
+		}
+		else {
+			val = (XmlNode::ValueT) key;
+		}
+
+		XmlNode n(val);
+
+		XmlNode p = n.getParent();
+
+		if ( !p.isNull() ) {
+			std::vector<XmlNode> nodes;
+			p.getChildren( nodes );
+			std::vector<XmlNode>::iterator it = nodes.begin();
+			
+			while ( it != nodes.end() ) {
+				const XmlNode& child = *it;
+				
+				if ( (Key)child.get() == key ) {
+					++it;
+					if ( it != nodes.end() ) {
+						k = (Key)(*it).get();
+						break;
+					}
+				}
+					
+				++it;
+			}
+		}
+
+
 		return k;
 	}
 
 	virtual Key getPrevSibling( const Key& key ) {
-		Key k;
+		Key k = InvalidKey;
+
+		XmlNode::ValueT val;
+
+		if ( key == RootKey ) {
+			val = root.get();
+		}
+		else {
+			val = (XmlNode::ValueT) key;
+		}
+
+		XmlNode n(val);
+
+		XmlNode p = n.getParent();
+
+		if ( !p.isNull() ) {
+			std::vector<XmlNode> nodes;
+			p.getChildren( nodes );
+			std::vector<XmlNode>::iterator it = nodes.begin();
+			
+			while ( it != nodes.end() ) {
+				const XmlNode& child = *it;
+				
+				if ( ((Key)child.get() == key) && it != nodes.begin() ) {
+					--it;					
+					k = (Key)(*it).get();
+					break;					
+				}
+					
+				++it;
+			}
+		}
+
+
 		return k;
 	}
 
 	virtual Key getFirstChild( const Key& key ) {
-		Key k;
+		Key k = InvalidKey;
+		XmlNode::ValueT val;
+
+		if ( key == RootKey ) {
+			val = root.get();
+		}
+		else {
+			val = (XmlNode::ValueT) key;
+		}
+
+		XmlNode n(val);
+		std::vector<XmlNode> nodes;
+		n.getChildren( nodes );
+		if ( !nodes.empty() ) {
+			k = (Key) nodes.front().get();
+		}
+
 		return k;
 	}
 
 	virtual bool isLeaf( const Key& key ) {
-		return true;
+		Key k = InvalidKey;
+		XmlNode::ValueT val;
+
+		if ( key == RootKey ) {
+			val = root.get();
+		}
+		else {
+			val = (XmlNode::ValueT) key;
+		}
+
+		XmlNode n(val);
+		return !n.hasChildren();
 	}
 
 	virtual uint32 getCount() {
-		return 0;
+		return calcSize(root);
 	}
 
-	virtual uint32 getChildCount( const Key& key ) {
-		return 0;
-	}
+	virtual uint32 getChildCount( const Key& key ) {		
+		XmlNode::ValueT val;
 
-
-	void buildMap( const XmlNode& n ) {
-		keyMap[counter] = &n;
-		counter ++;
-		std::vector<XmlNode> nodes;
-		n.getChildren(nodes);
-		for (size_t i=0;i<nodes.size();i++ ) {
-			buildMap(nodes[i]);
+		if ( key == RootKey ) {
+			val = root.get();
 		}
+		else {
+			val = (XmlNode::ValueT) key;
+		}
+
+		XmlNode n(val);
+		return n.getChildCount();
 	}
 
-	void initKeyMap() {
-		counter = RootKey;
-		buildMap(root);
+
+
+	size_t calcSize( const XmlNode& n ) {
+		size_t result = n.getChildCount();
+		if ( n.hasChildren() ) {
+			std::vector<XmlNode> nodes;
+			n.getChildren( nodes );
+			std::vector<XmlNode>::iterator it = nodes.begin();
+			
+			while ( it != nodes.end() ) {
+				result += calcSize( *it );
+				++it;
+			}
+		}
+	
+		return result;
 	}
-
-	std::map<Key,const XmlNode*> keyMap;
-	uint32 counter;
-
+	
 	XmlNode root;
+
+protected:
+		
+	virtual Key doInsert( const VariantData& value, const Key& parentKey=RootKey ) {
+		return InvalidKey;
+	}
+
+	virtual Key doRemove( const Key& key ){
+		return InvalidKey;
+	}
+
+	
+
+	virtual bool doSet( const Key& key, const VariantData& value ) {
+		return false;
+	}
+
+	virtual bool doClearChildren( const Key& key ) {
+		return false;
+	}
+	
 };
 
 
@@ -148,7 +304,17 @@ public:
 
 		TreeControl* treeCtrl = (TreeControl*)mainWindow->findComponent( "treeCtrl", true );
 
+		XmlDocument doc;
+		doc.load( "test3.xml" );//"books.xml"); 
+
+
 		XMLTreeModel* tm = new XMLTreeModel();
+		XmlNode* root = (XmlNode*)doc.getRoot().clone();
+
+		tm->root.attach( root->detach() );
+
+		root->free();
+
 		treeCtrl->setTreeModel( tm );
 
 		return result;

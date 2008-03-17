@@ -121,12 +121,12 @@ public:
 	key value is the "parent" of the value. The return value is the
 	key that's directly associated with the data value.
 	*/
-	virtual Key insert( const VariantData& value, const Key& parentKey=RootKey ) = 0;
+	Key insert( const VariantData& value, const Key& parentKey=RootKey );
 
 	/**
 	removes any data associated with the key and any children as well
 	*/
-	virtual void remove( const Key& key ) = 0;
+	void remove( const Key& key );
 
 	/**
 	Returns the variant data for the specified key.
@@ -136,18 +136,26 @@ public:
 	/**
 	Returns the value associated with the key as a string.
 	*/
-	virtual String getAsString( const Key& key ) = 0;
+	virtual String getAsString( const Key& key ) {
+		VariantData v = get(key);
+		return v.toString();
+	}
+	
 
 	/**
 	Sets the value at the specified key.
 	*/
-	virtual void set( const Key& key, const VariantData& value ) = 0;
+	void set( const Key& key, const VariantData& value );
 
 	/**
 	Sets the value at the specified key. The string value is converted to 
 	a variant.
 	*/
-	virtual void setAsString( const Key& key, const String& value ) = 0;
+	virtual void setAsString( const Key& key, const String& value ) {
+		VariantData v;
+		v.setFromString(value);
+		set( key, v );
+	}
 
 
 	/**
@@ -156,15 +164,15 @@ public:
 	true then any children associated with the src key are copied as 
 	well.
 	*/
-	virtual void copy( const Key& srcKey, const Key& destKey, bool deepCopy=false ) = 0;
+	bool copy( const Key& srcKey, const Key& destKey, bool deepCopy=false );
 
 	/**
 	Moves the data at src key (removing it) and inserts it at 
 	the new parent key. 
 	*/
-	virtual void move( const Key& srcKey, const Key& destParentKey ) = 0;
+	bool move( const Key& srcKey, const Key& destParentKey );
 
-	virtual void clearChildren( const Key& key ) = 0;
+	void clearChildren( const Key& key );
 
 	/**
 	Returns true if any children are found for the specified key.
@@ -218,12 +226,17 @@ public:
 	}
 
 	virtual String getSubItemAsString( const Key& key, const uint32& subItemIndex ) {
-		return String();
+		VariantData v = getSubItem( key, subItemIndex );
+		return v.toString();
 	}
 
-	virtual void setSubItem( const Key& key, const uint32& subItemIndex, const VariantData& value, bool addMissingValues ){}
+	virtual void setSubItem( const Key& key, const uint32& subItemIndex, const VariantData& value ){}
 
-	virtual void setSubItemAsString( const Key& key, const uint32& subItemIndex, const String& value, bool addMissingValues ){}
+	virtual void setSubItemAsString( const Key& key, const uint32& subItemIndex, const String& value ){
+		VariantData v;
+		v.setFromString( value );
+		setSubItem( key, subItemIndex, v );
+	}
 
 	virtual uint32 getSubItemsCount( const Key& key ) {
 		return 0;	
@@ -234,7 +247,27 @@ public:
 		return false;
 	}
 
-	
+protected:
+	virtual Key doInsert( const VariantData& value, const Key& parentKey=RootKey ) = 0;
+	virtual Key doRemove( const Key& key ) = 0;
+	virtual bool doClearChildren( const Key& key ) = 0;
+	virtual bool doSet( const Key& key, const VariantData& value ) = 0;
+
+	virtual Key doCopy( const Key& srcKey, const Key& destKey, bool deepCopy=false ) {
+		return InvalidKey;
+	}
+
+	virtual Key doMove( const Key& srcKey, const Key& destParentKey ) {
+		return InvalidKey;
+	}
+
+	void notifyItemRemoved( const Key& key, const Key& parentKey ) {
+		TreeModelEvent e(this, TreeModel::ItemRemoved);
+		e.key = key;
+		e.parentKey = parentKey;	
+		
+		NodeRemoved( &e );
+	}
 };
 
 

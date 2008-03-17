@@ -49,52 +49,25 @@ void SimpleListModel::empty()
 	ModelChanged( &event );
 }
 
-void SimpleListModel::add( const VariantData& item )
-{
-	insert( data_.size(), item );
-}
 
-void SimpleListModel::insert( const uint32 & index, const VariantData& item )
+bool SimpleListModel::doInsert( const uint32 & index, const VariantData& item )
 {
 	data_.insert( data_.begin() + index, item );
 
-	ListModelEvent event( this, lmeItemAdded );
-	event.item = &data_[index];
-	event.index = index;
-	ItemAdded( &event );
-
-	event.setType( lmeItemAdded );
-	ModelChanged( &event );
+	return true;
 }
 
-void SimpleListModel::remove( const VariantData& item )
-{
-	Array<VariantData>::iterator found = 
-		std::find( data_.begin(), data_.end(), item );
-	if ( found != data_.end() ) {
-		ListModelEvent itemEvent( this, lmeItemRemoved );
-		itemEvent.item = &(*found);
-		itemEvent.index = found - data_.begin();
-		ItemRemoved( &itemEvent );
-
-		data_.erase( found );
-	}
-}
-
-void SimpleListModel::removeAtIndex( const uint32 & index )
+bool SimpleListModel::doRemove( const uint32 & index )
 {
 	Array<VariantData>::iterator found = data_.begin() + index;		
 	if ( found != data_.end() ) {
-		ListModelEvent itemEvent( this, lmeItemRemoved );
-		itemEvent.item = &(*found);
-		itemEvent.index = index;
-		ItemRemoved( &itemEvent );
+		notifyRemove( index, *found );
 
-		data_.erase( found );
-
-		itemEvent.setType( lmeItemRemoved );
-		ModelChanged( &itemEvent );
+		data_.erase( found );	
+		return true;
 	}
+
+	return false;
 }
 
 VariantData SimpleListModel::get( const uint32& index )
@@ -115,47 +88,28 @@ uint32 SimpleListModel::getIndexOf( const VariantData& item )
 	return result;
 }
 
-String SimpleListModel::getAsString( const uint32& index )
+bool SimpleListModel::doSet( const uint32& index, const VariantData& item )
 {
-	VCF_ASSERT( index < data_.size() );
-
-	VariantData result = data_[index];
-	return result.toString();
-}
-
-void SimpleListModel::set( const uint32& index, const VariantData& item, bool addMissingValues )
-{
-	size_t missing = (index+1) - data_.size();
-
-	if ( addMissingValues ) {
-		if ( missing > 0 ) {
-			data_.resize( missing + data_.size() );
-		}
+	size_t missing = 0;
+	if ( (index+1) > data_.size() ) {
+		missing = (index+1) - data_.size();
 	}
+	
+	if ( missing > 0 ) {
+		data_.resize( missing + data_.size() );
+	}	
 
 	data_[index] = item;
 
-	if ( addMissingValues && missing > 0 ) {
+	if ( missing > 0 ) {
 		for (size_t i=index;i<data_.size();i++ ) {
-			ListModelEvent event( this, lmeItemAdded );
-			event.item = &data_[i];
-			event.index = i;
-			ItemAdded( &event );
+			notifyAdded( i, data_[i] );
 		}
 	}
 
-	ListModelEvent itemEvent( this, lmeItemChanged );
-	itemEvent.item = &data_[index];
-	itemEvent.index = index;
-	ModelChanged( &itemEvent );
+	return true;	
 }
 
-void SimpleListModel::setAsString( const uint32& index, const String& item, bool addMissingValues )
-{
-	VariantData v;
-	v.setFromString( item );
-	set( index, v, addMissingValues );
-}
 
 bool SimpleListModel::getItems( std::vector<VariantData>& items )
 {

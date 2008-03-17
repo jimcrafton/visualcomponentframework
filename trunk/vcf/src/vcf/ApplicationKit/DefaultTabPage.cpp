@@ -46,7 +46,7 @@ void DefaultTabPage::setPageName( const String& name )
 	TabModel* tm = (TabModel*) this->getModel();
 	VCF_ASSERT( NULL != tm );
 
-	tm->setAsString( index_, name, false );
+	tm->setAsString( index_, name );
 }
 
 String DefaultTabPage::getPageName()

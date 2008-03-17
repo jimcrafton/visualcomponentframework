@@ -39,23 +39,13 @@ public:
 
 	virtual void empty();    
 
-	virtual Key insert( const VariantData& value, const Key& parentKey=RootKey );
-
-	virtual void remove( const Key& key );
+	
 
 	virtual VariantData get( const Key& key );
 
-	virtual String getAsString( const Key& key );
+	
 
-	virtual void set( const Key& key, const VariantData& value );
-
-	virtual void setAsString( const Key& key, const String& value );
-
-	virtual void copy( const Key& srcKey, const Key& destKey, bool deepCopy=false );
-
-	virtual void move( const Key& srcKey, const Key& destParentKey );
-
-	virtual void clearChildren( const Key& key );
+	
 
 	virtual bool getChildren(const Key& key, std::vector<Key>& children );
 
@@ -77,6 +67,13 @@ public:
 
 	virtual uint64 sizeOf() const;
 protected:
+
+	virtual Key doInsert( const VariantData& value, const Key& parentKey=RootKey );
+	virtual Key doRemove( const Key& key );
+	virtual bool doSet( const Key& key, const VariantData& value );	
+	virtual Key doMove( const Key& srcKey, const Key& destParentKey );
+	virtual bool doClearChildren( const Key& key );
+
 
 	struct TreeValRef {
 		

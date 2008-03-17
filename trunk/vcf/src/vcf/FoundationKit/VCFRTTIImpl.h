@@ -919,7 +919,7 @@ public:
 	typedef uint32 (Object::*GetSizeForKeyFunction)( const KeyType& );
 
 	typedef ValueType (Object::*GetFunction)( const KeyType& );
-	typedef void (Object::*SetFunction)( const KeyType&, const ValueType&, bool );
+	typedef void (Object::*SetFunction)( const KeyType&, const ValueType& );
 
 	TypedCollectionProperty( GetFunction getFunc, SetFunction setFunc, 
 							InsertFunction insertFunc,
@@ -1039,9 +1039,9 @@ public:
 		return result;
 	};
 
-	virtual void setAtKey( const VariantData& key, VariantData* value, Object* source, bool addMissingValues ){
+	virtual void setAtKey( const VariantData& key, VariantData* value, Object* source ){
 		if ( (NULL != value) && (NULL != source) && (NULL != setFunc_) ){			
-			(source->*setFunc_)( (KeyType)key, (ValueType)(*value), addMissingValues );
+			(source->*setFunc_)( (KeyType)key, (ValueType)(*value) );
 		}
 	};
 
@@ -1163,7 +1163,7 @@ public:
 		return result;
 	};
 
-	virtual void setAtKey( const VariantData& key, VariantData* value, Object* source, bool addMissingValues ){
+	virtual void setAtKey( const VariantData& key, VariantData* value, Object* source ){
 		if ( (NULL != value) && (NULL != source) && (NULL != setFunc_) ){			
 			(source->*setFunc_)( (KeyType)key, (ValueType)(*value) );
 		}
@@ -1198,7 +1198,7 @@ public:
 	typedef uint32 (Object::*GetSizeFunction)();
 
 	typedef ObjectType (Object::*GetFunction)( const KeyType& );
-	typedef void (Object::*SetFunction)( const KeyType&, ObjectType, bool );
+	typedef void (Object::*SetFunction)( const KeyType&, ObjectType );
 
 	TypedObjectCollectionProperty( GetFunction getFunc, SetFunction setFunc, 
 							InsertFunction insertFunc,
@@ -1292,9 +1292,9 @@ public:
 		return result;
 	};
 
-	virtual void setAtKey( const VariantData& key, VariantData* value, Object* source, bool addMissingValues ){
+	virtual void setAtKey( const VariantData& key, VariantData* value, Object* source ){
 		if ( (NULL != value) && (NULL != source) && (NULL != setFunc_) ){			
-			(source->*setFunc_)( (KeyType)key, (ObjectType)(Object*)(*value), addMissingValues );
+			(source->*setFunc_)( (KeyType)key, (ObjectType)(Object*)(*value) );
 		}
 	};
 
@@ -1428,7 +1428,7 @@ public:
 		return result;
 	};
 
-	virtual void setAtKey( const VariantData& key, VariantData* value, Object* source, bool addMissingValues ){
+	virtual void setAtKey( const VariantData& key, VariantData* value, Object* source ){
 		if ( (NULL != value) && (NULL != source) && (NULL != setFunc_) ){			
 			(source->*setFunc_)( (KeyType)key, (ObjectType)(Object*)(*value) );
 		}

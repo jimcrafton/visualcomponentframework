@@ -39,32 +39,19 @@ public:
 
 
 	virtual void empty();
-
-	virtual void add( const VariantData& item );
-	virtual void insert( const uint32 & index, const VariantData& item );
-    
-	virtual void remove( const VariantData& item );
-	virtual void removeAtIndex( const uint32 & index );
-
 	virtual VariantData get( const uint32& index );	
-	virtual String getAsString( const uint32& index );
-
 	virtual uint32 getIndexOf( const VariantData& item );
-
-	virtual void set( const uint32& index, const VariantData& item, bool addMissingValues );
-	virtual void setAsString( const uint32& index, const String& item, bool addMissingValues );
-
 	virtual bool getItems( std::vector<VariantData>& items );
 	virtual Enumerator<VariantData>* getItems();
-
 	virtual bool getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items );
-	
-
 	virtual uint32 getCount();
 
 	
 protected:
 	Array<VariantData> data_;
+	virtual bool doInsert( const uint32 & index, const VariantData& item );	
+	virtual bool doRemove( const uint32 & index );
+	virtual bool doSet( const uint32& index, const VariantData& item );
 };
 
 };
