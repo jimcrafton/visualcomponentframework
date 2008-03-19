@@ -72,7 +72,7 @@ ImageBits* AbstractImage::getImageBits()
 }
 */
 
-void AbstractImage::saveToStream( OutputStream * stream )
+void AbstractImage::saveToStream( OutputStream * stream, const MIMEType& type )
 {
 	int32 bitDepth = getType() * getChannelSize();
 
@@ -87,7 +87,7 @@ void AbstractImage::saveToStream( OutputStream * stream )
 
 }
 
-void AbstractImage::loadFromStream( InputStream * stream )
+void AbstractImage::loadFromStream( InputStream * stream, const MIMEType& type )
 {
 
 	int32 bitDepth;

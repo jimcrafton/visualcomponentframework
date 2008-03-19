@@ -282,12 +282,12 @@ public:
 	/**
 	*writes the object to the specified output stream
 	*/
-	virtual void saveToStream( OutputStream * stream );
+	virtual void saveToStream( OutputStream * stream, const MIMEType& type=MIMEType() );
 
 	/**
 	*reads the object from the specified input stream
 	*/
-	virtual void loadFromStream( InputStream * stream );
+	virtual void loadFromStream( InputStream * stream, const MIMEType& type=MIMEType() );
 
 
 	/**

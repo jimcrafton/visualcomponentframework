@@ -503,6 +503,9 @@ void selectLoopOnce( std::vector<Socket*>* inReadSockets,
 			}
 		}
 	}
+	else if ( result == SOCKET_ERROR ){
+		int err = WSAGetLastError();
+	}
 }
 
 

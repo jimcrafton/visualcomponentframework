@@ -50,7 +50,7 @@ This model allows us to add, remove and get individual circles, as
 well as access to the vector that stores the circles.
 */
 
-class CircleModel : public AbstractModel {
+class CircleModel : public Model {
 public:
 
 	enum {
@@ -62,7 +62,7 @@ public:
 		circles_.push_back( circle );
 
 		ModelEvent e( this, CircleModel::CircleAdded );
-		ModelChanged.fireEvent( &e );
+		ModelChanged( &e );
 		updateAllViews();
 	}
 
@@ -77,7 +77,7 @@ public:
 			circles_.erase( found );
 
 			ModelEvent e( this, CircleModel::CircleRemoved );
-			ModelChanged.fireEvent( &e );
+			ModelChanged( &e );
 			updateAllViews();
 		}
 	}
@@ -112,7 +112,7 @@ public:
 		circles_.clear();
 
 		//make sure to call the super class's implementation
-		AbstractModel::empty();
+		Model::empty();
 	}
 
 	std::vector<CircleShape> circles_;
@@ -233,10 +233,10 @@ public:
 		model->addView( view );
 
 		MouseClicked +=
-			new MouseEventHandler<MVCBasicsPart3Window>( this, &MVCBasicsPart3Window::onMouseClicked, "MVCBasicsPart3Window::onMouseClicked" );
+			new ClassProcedure1<MouseEvent*,MVCBasicsPart3Window>( this, &MVCBasicsPart3Window::onMouseClicked, "MVCBasicsPart3Window::onMouseClicked" );
 
 		KeyUp +=
-			new KeyboardEventHandler<MVCBasicsPart3Window>( this, &MVCBasicsPart3Window::onKeyUp, "MVCBasicsPart3Window::onKeyUp" );
+			new ClassProcedure1<KeyboardEvent*,MVCBasicsPart3Window>( this, &MVCBasicsPart3Window::onKeyUp, "MVCBasicsPart3Window::onKeyUp" );
 	}
 
 
@@ -382,24 +382,24 @@ public:
 		CustomControl::updateView( model );
 	}
 
+	
+	virtual void modelChanged( Model* oldModel, Model* newModel ) {
+		CallBack* ev = getCallback( "CircleInfoUI::onCircleModelChanged" );
 
-	virtual void setViewModel( Model* model ) {
-		EventHandler* ev = getEventHandler( "CircleInfoUI::onCircleModelChanged" );
 
-
-		if ( NULL != model ) {
+		if ( NULL != oldModel ) {
 			if ( NULL != ev ) {
-				model->removeModelHandler( ev );
+				oldModel->ModelChanged -= ev;
 			}
 		}
 
-		CustomControl::setViewModel( model );
+		
 
-		if ( NULL != model ) {
+		if ( NULL != newModel ) {
 			if ( NULL == ev ) {
-				ev = new GenericEventHandler<CircleInfoUI>( this, &CircleInfoUI::onCircleModelChanged, "CircleInfoUI::onCircleModelChanged" );
+				ev = new ClassProcedure1<Event*,CircleInfoUI>( this, &CircleInfoUI::onCircleModelChanged, "CircleInfoUI::onCircleModelChanged" );
 			}
-			model->addModelHandler( ev );
+			newModel->ModelChanged += ev;
 		}
 	}
 
@@ -438,35 +438,35 @@ public:
 
 		CommandButton* btn1 = new CommandButton();
 		btn1->ButtonClicked +=
-			new GenericEventHandler<MVCBasicsWindow>(this, &MVCBasicsWindow::example1, "MVCBasicsWindow::example1" );
+			new ClassProcedure1<Event*,MVCBasicsWindow>(this, &MVCBasicsWindow::example1, "MVCBasicsWindow::example1" );
 		btn1->setHeight( btn1->getPreferredHeight() );
 		btn1->setCaption( "MVC Basics Part 1" );
 		add( btn1, AlignTop );
 
 		CommandButton* btn2 = new CommandButton();
 		btn2->ButtonClicked +=
-			new GenericEventHandler<MVCBasicsWindow>(this, &MVCBasicsWindow::example2, "MVCBasicsWindow::example2" );
+			new ClassProcedure1<Event*,MVCBasicsWindow>(this, &MVCBasicsWindow::example2, "MVCBasicsWindow::example2" );
 		btn2->setHeight( btn2->getPreferredHeight() );
 		btn2->setCaption( "MVC Basics Part 2" );
 		add( btn2, AlignTop );
 
 		CommandButton* btn3 = new CommandButton();
 		btn3->ButtonClicked +=
-			new GenericEventHandler<MVCBasicsWindow>(this, &MVCBasicsWindow::example3, "MVCBasicsWindow::example3" );
+			new ClassProcedure1<Event*,MVCBasicsWindow>(this, &MVCBasicsWindow::example3, "MVCBasicsWindow::example3" );
 		btn3->setHeight( btn3->getPreferredHeight() );
 		btn3->setCaption( "MVC Basics Part 3" );
 		add( btn3, AlignTop );
 
 		CommandButton* btn4 = new CommandButton();
 		btn4->ButtonClicked +=
-			new GenericEventHandler<MVCBasicsWindow>(this, &MVCBasicsWindow::example4, "MVCBasicsWindow::example4" );
+			new ClassProcedure1<Event*,MVCBasicsWindow>(this, &MVCBasicsWindow::example4, "MVCBasicsWindow::example4" );
 		btn4->setHeight( btn4->getPreferredHeight() );
 		btn4->setCaption( "MVC Basics Part 4" );
 		add( btn4, AlignTop );
 
 		CommandButton* btn5 = new CommandButton();
 		btn5->ButtonClicked +=
-			new GenericEventHandler<MVCBasicsWindow>(this, &MVCBasicsWindow::example5, "MVCBasicsWindow::example5" );
+			new ClassProcedure1<Event*,MVCBasicsWindow>(this, &MVCBasicsWindow::example5, "MVCBasicsWindow::example5" );
 		btn5->setHeight( btn5->getPreferredHeight() );
 		btn5->setCaption( "MVC Basics Part 5" );
 		add( btn5, AlignTop );
@@ -506,10 +506,10 @@ public:
 		model->addView( view );
 
 		wnd->MouseClicked +=
-			new MouseEventHandler<MyMVCController>( controller, &MyMVCController::onMouseClicked, "MyMVCController::onMouseClicked" );
+			new ClassProcedure1<MouseEvent*,MyMVCController>( controller, &MyMVCController::onMouseClicked, "MyMVCController::onMouseClicked" );
 
 		wnd->KeyUp +=
-			new KeyboardEventHandler<MyMVCController>( controller, &MyMVCController::onKeyUp, "MyMVCController::onKeyUp" );
+			new ClassProcedure1<KeyboardEvent*,MyMVCController>( controller, &MyMVCController::onKeyUp, "MyMVCController::onKeyUp" );
 
 		controller->model_ = model;
 
@@ -550,10 +550,10 @@ public:
 		model->addView( view );
 
 		circlePanel->MouseClicked +=
-			new MouseEventHandler<MyMVCController>( controller, &MyMVCController::onMouseClicked, "MyMVCController::onMouseClicked" );
+			new ClassProcedure1<MouseEvent*,MyMVCController>( controller, &MyMVCController::onMouseClicked, "MyMVCController::onMouseClicked" );
 
 		circlePanel->KeyUp +=
-			new KeyboardEventHandler<MyMVCController>( controller, &MyMVCController::onKeyUp, "MyMVCController::onKeyUp" );
+			new ClassProcedure1<KeyboardEvent*,MyMVCController>( controller, &MyMVCController::onKeyUp, "MyMVCController::onKeyUp" );
 
 		controller->model_ = model;
 

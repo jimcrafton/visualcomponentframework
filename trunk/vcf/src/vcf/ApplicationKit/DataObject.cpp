@@ -71,7 +71,7 @@ bool DataObject::isTypeSupported( const String& dataType )
 	return result;
 }
 
-bool DataObject::saveToStream( const String& dataType, OutputStream * stream )
+bool DataObject::saveToStream( const String& dataType, OutputStream * stream, const MIMEType& type )
 {
 	std::map<String,Persistable*>::iterator found = dataMap_.find( dataType );
 	if ( found != dataMap_.end() ) {
@@ -84,7 +84,7 @@ bool DataObject::saveToStream( const String& dataType, OutputStream * stream )
 	return true;
 }
 
-bool DataObject::loadFromStream( const String& dataType, InputStream * stream )
+bool DataObject::loadFromStream( const String& dataType, InputStream * stream, const MIMEType& type )
 {
 	std::map<String,Persistable*>::iterator found = dataMap_.find( dataType );
 	if ( found != dataMap_.end() ) {

@@ -53,11 +53,11 @@ public:
 		delete [] data_;
 	}
 
-	virtual void saveToStream( OutputStream * stream )	{
+	virtual void saveToStream( OutputStream * stream, const MIMEType& type=MIMEType() )	{
 		stream->write( data_, dataSize_ );
 	}
 
-    virtual void loadFromStream( InputStream * stream ) {
+    virtual void loadFromStream( InputStream * stream, const MIMEType& type=MIMEType() ) {
 		stream->read( data_, dataSize_ );
 	}
 
@@ -93,9 +93,9 @@ public:
 
 	bool isTypeSupported( const String& dataType );
 
-	bool saveToStream( const String& dataType, OutputStream * stream );
+	bool saveToStream( const String& dataType, OutputStream * stream, const MIMEType& type=MIMEType() );
 
-	bool loadFromStream( const String& dataType, InputStream * stream );
+	bool loadFromStream( const String& dataType, InputStream * stream, const MIMEType& type=MIMEType() );
 
 	Enumerator<String>* getSupportedDataTypes();
 

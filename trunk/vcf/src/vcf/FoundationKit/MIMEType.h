@@ -59,6 +59,17 @@ public:
 		return !compare( rhs );
 	}
 
+	/**
+	returns true if the mimetype is empty, or has no data. 
+	If this returns true, then any of the data retreival 
+	functions (getType(), getSubType()) will return empty
+	strings ("") or no data.
+	*/
+	bool isEmpty() const {
+		return data_.empty();
+	}
+
+
 	void setFromFileName( const String& fileName ) {
 		setFromFileName( FilePath(fileName) );
 	}

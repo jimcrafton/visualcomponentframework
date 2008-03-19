@@ -801,7 +801,7 @@ String DateTime::toString() const
 	return StringUtils::format( *this, TOSTRING_FORMAT );
 }
 
-void DateTime::loadFromStream( InputStream* stream )
+void DateTime::loadFromStream( InputStream* stream, const MIMEType& type )
 {
 	int32 hi = 0;
 	int32 lo = 0;
@@ -812,7 +812,7 @@ void DateTime::loadFromStream( InputStream* stream )
 	time_ = makeUInt64(hi,lo);
 }
 
-void DateTime::saveToStream( OutputStream* stream )
+void DateTime::saveToStream( OutputStream* stream, const MIMEType& type )
 {
 	int32 hi = getHi32(time_);
 	int32 lo = (uint32)getLo32(time_);

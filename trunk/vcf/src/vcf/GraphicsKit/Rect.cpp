@@ -122,7 +122,7 @@ String VCF::Rect::toString() const
 	return result;
 }
 
-void VCF::Rect::saveToStream( OutputStream * stream )
+void VCF::Rect::saveToStream( OutputStream * stream, const MIMEType& type )
 {
 	stream->write( left_ );
 	stream->write( top_ );
@@ -130,7 +130,7 @@ void VCF::Rect::saveToStream( OutputStream * stream )
 	stream->write( bottom_ );
 }
 
-void VCF::Rect::loadFromStream( InputStream * stream )
+void VCF::Rect::loadFromStream( InputStream * stream, const MIMEType& type )
 {
 	stream->read( left_ );
 	stream->read( top_ );

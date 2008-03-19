@@ -372,7 +372,7 @@ public:
 	* implementation and open an appropriate New File dialog.
 	*/
 	virtual void newDocument() {
-		newDefaultDocument("", "");
+		newDefaultDocument("", MIMEType());
 	}
 
 	/**
@@ -384,7 +384,7 @@ public:
 	*in which case the only registered DocumentInfo is used to open the document.
 	*@return Document*, the newly created document.
 	*/
-	virtual Document* newDefaultDocument( const String& fileName, const String& mimetype ) {
+	virtual Document* newDefaultDocument( const String& fileName, const MIMEType& mimetype ) {
 		return NULL;
 	};
 
@@ -418,7 +418,7 @@ public:
 	*@param const String&, the mime type.
 	*@param const DocumentInfo& info, the DocumentInfo.
 	*/
-	void addDocumentInfo( const VCF::String& mimeType, const DocumentInfo& info );
+	void addDocumentInfo( const MIMEType& mimeType, const DocumentInfo& info );
 
 	/**
 	* gets a pointer to the enumerator of all the registered DocumentInfo(s).
@@ -431,14 +431,14 @@ public:
 	*@param const String&, the mime type.
 	*@return DocumentInfo, the document infos.
 	*/
-	DocumentInfo getDocumentInfo( const String& mimeType );
+	DocumentInfo getDocumentInfo( const MIMEType& mimeType );
 
 	/**
 	* gets the mime type of a document from the extension of its associated file.
 	*@param const String&, the filename.
 	*@return String, the mime type.
 	*/
-	String getMimeTypeFromFileExtension( const String& fileName );
+	MIMEType getMimeTypeFromFileExtension( const String& fileName );
 
 	/**
 	* sets a specified view for a specified new document.
@@ -841,7 +841,7 @@ public:
 	*@see DocInterfacePolicy::saveBeforeNewDocument()
 	*@see DocumentManagerImpl:: attachUI()
 	*/
-	virtual Document* newDefaultDocument( const String& fileName, const String& mimetype=L"" );
+	virtual Document* newDefaultDocument( const String& fileName, const MIMEType& mimetype=MIMEType() );
 
 	/**
 	* attaches a document specific User Interface to a document
@@ -1412,8 +1412,8 @@ bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFileAs( Document* doc
 		doc->setFileName( fp );
 
 		// notifies the UI that the document has changed name
-		ModelEvent e( doc, Document::deSaved );
-		doc->ModelChanged( &e );
+		DocumentEvent e( doc, Document::deSaved );
+		doc->DocumentChanged( &e );
 	}
 
 	return result;
@@ -1584,7 +1584,7 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUI( const DocumentI
 					"onDocModified" );
 	}
 
-	document->addModelHandler( (ModelHandler*)docEv );
+	document->DocumentChanged += docEv;
 
 	/**
 	create a view from the DocInfo if necessary
@@ -1672,11 +1672,11 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUIToDocument( const
 	if ( DocInterfacePolicy::saveBeforeNewDocument() ) {
 		Document* doc = DocInterfacePolicy::getCurrentDocument();
 		if ( NULL != doc ) {
-			doc->removeModelHandler( (ModelHandler*)docEv );
+			doc->DocumentChanged -= docEv;
 			if ( doc->isModified() ) {
 				switch ( saveChanges( doc ) ) {
 					case UIToolkit::mrCancel : {
-						doc->addModelHandler( (ModelHandler*)docEv );
+						doc->DocumentChanged += docEv;
 						return ;
 					}
 					break;
@@ -1690,12 +1690,12 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUIToDocument( const
 
 	// after the document has been created, we notify that it has
 	// been changed, so the UI can updates itself.
-	ModelEvent e( document, Document::deOpened );
-	document->ModelChanged( &e );
+	DocumentEvent e( document, Document::deOpened );
+	document->DocumentChanged( &e );
 }
 
 template < typename AppClass, typename DocInterfacePolicy >
-Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( const String& fileName, const String& mimetype )
+Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( const String& fileName, const MIMEType& mimetype=MIMEType() )
 {
 	/**
 	* if we create a new document while the current document of 
@@ -1717,7 +1717,7 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 			Document* doc = DocInterfacePolicy::getCurrentDocument();
 			if ( NULL != doc ) {
 				// we remove this handler as we don't want the UI to display any changes at this point
-				doc->removeModelHandler( (ModelHandler*)docEv );
+				doc->DocumentChanged -= docEv;
 				if ( doc->isModified() ) {
 					// a dialog is shown to the user asking him to save the changes 
 					// of the current document previously modified
@@ -1726,7 +1726,7 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 							/* the user wanted to abort saving the previous document
 							   no new document is created, and
 								 we put the handler back to the unsaved document */
-							doc->addModelHandler( (ModelHandler*)docEv );
+							doc->DocumentChanged += docEv;
 							return NULL;
 						}
 						break;

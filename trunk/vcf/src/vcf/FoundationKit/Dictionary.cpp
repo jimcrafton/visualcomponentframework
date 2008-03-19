@@ -79,7 +79,7 @@ void Dictionary::clear()
 	data_.clear();
 }
 
-void Dictionary::loadFromStream( InputStream* stream )
+void Dictionary::loadFromStream( InputStream* stream, const MIMEType& type )
 {
 	int dictSize = 0;
 
@@ -98,7 +98,7 @@ void Dictionary::loadFromStream( InputStream* stream )
 	}
 }
 
-void Dictionary::saveToStream( OutputStream* stream )
+void Dictionary::saveToStream( OutputStream* stream, const MIMEType& type )
 {
 	DictionaryMap::iterator it = data_.begin();
 
