@@ -197,7 +197,7 @@ void DocumentManager::pasteToDocument( Document* doc ) {
 
 		String type;
 		if ( NULL == data ) {
-			Enumerator<String>* types = doc->getSupportedClipboardFormats();
+			Enumerator<MIMEType>* types = doc->getSupportedClipboardFormats();
 			while ( types->hasMoreElements() ) {
 				type = types->nextElement();
 				data = clipboard->pasteFrom( type );

@@ -116,6 +116,10 @@ public:
 		ChildItemsRemoved
 	};
 
+	virtual bool isEmpty() { 
+		return getCount() > 0;
+	}
+
 	/**
 	inserts some data at the specified parentKey value. The specified
 	key value is the "parent" of the value. The return value is the

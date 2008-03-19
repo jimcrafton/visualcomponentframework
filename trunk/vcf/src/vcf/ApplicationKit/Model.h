@@ -105,7 +105,15 @@ public:
 	}
 	
 
-	
+	/**
+	Returns whether or not the model has an data. The default is true, since 
+	in it's abstract form the model doesn't (yet) have any data associated
+	it. It is up to implementers to return something meaningful here.
+	*/
+	virtual bool isEmpty() {
+		VCF_ASSERT( false ); //we shouldn't get here
+		return true;
+	}
 
 	/**
      * clears out the model's data

@@ -23,6 +23,11 @@ DefaultTextModel::~DefaultTextModel()
 
 }
 
+bool DefaultTextModel::isEmpty()
+{
+	return text_.empty();
+}
+
 void DefaultTextModel::setText( const String& text )
 {
 	if ( text == text_ ) {
