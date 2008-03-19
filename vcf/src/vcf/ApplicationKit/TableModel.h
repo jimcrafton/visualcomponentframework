@@ -193,7 +193,10 @@ public:
 	*/
 	DELEGATE(TableModelDelegate,TableColumnsDeleted);
 	
-    
+    virtual bool isEmpty() { 
+		return getRowCount() > 0 || getColumnCount() > 0;
+	}
+
     virtual void addRow() = 0;
 
 	virtual void insertRow( const uint32& afterRow ) = 0;

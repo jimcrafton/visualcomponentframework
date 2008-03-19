@@ -1,0 +1,10 @@
+<documentTypes>
+	<document classname="CircleDocument" classid="ccdeaf42-a9fd-4fb4-adf7-13077976539e">
+		<property name="mimetype" value="application/x-circledoc"/>
+		<property name="role" value="editor"/>
+		<property name="extension" value=".circ"/>
+		<property name="description" value="Circle Document"/>
+		<!-- <property name="view" value="t1View"/> -->
+		<property name="window" value="DocViewBasicsWindow"/>
+	</document>
+</documentTypes>

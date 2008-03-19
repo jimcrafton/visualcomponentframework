@@ -36,6 +36,8 @@ public:
 	virtual ~DefaultTextModel();
 
 
+	virtual bool isEmpty();
+
     virtual void empty();
 
 	virtual void setText( const String& text );

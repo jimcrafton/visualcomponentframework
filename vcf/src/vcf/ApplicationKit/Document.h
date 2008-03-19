@@ -370,7 +370,7 @@ public:
 			return false;
 		}
 
-		return false;
+		return docModel->isEmpty();
 	}
 
 	/**
@@ -386,7 +386,8 @@ public:
 			return false;
 		}
 
-		return false;
+
+		return docModel->isEmpty();
 	}
 
 	/**
@@ -400,6 +401,15 @@ public:
 		
 		if ( NULL == docModel ) {
 			return false;
+		}
+
+
+		Clipboard* clipboard = UIToolkit::getSystemClipboard();
+		
+		for ( size_t i=0;i<clipFormats_.size();i++ ) {
+			if ( clipboard->hasDataType( clipFormats_[i] ) ) {
+				return true;
+			}
 		}
 
 		return false;
@@ -457,7 +467,7 @@ public:
 	* of the OS only for these specified formats.
 	*@return Enumerator<String>*, the enumerator.
 	*/
-	Enumerator<String>* getSupportedClipboardFormats() {
+	Enumerator<MIMEType>* getSupportedClipboardFormats() {
 		return clipFormats_.getEnumerator();
 	}
 
@@ -465,7 +475,7 @@ public:
 	* adds a clip format to the list of supported formats.
 	*@param String, the string identifying the clip format to be added.
 	*/
-	void addSupportedClipboardFormat( const String& type ) {
+	void addSupportedClipboardFormat( const MIMEType& type ) {
 		clipFormats_.push_back( type );
 	}
 
@@ -480,7 +490,7 @@ protected:
 	bool keepBackUpFile_;
 
 	/* the clipboard formats */
-	Array<String> clipFormats_;
+	Array<MIMEType> clipFormats_;
 };
 
 

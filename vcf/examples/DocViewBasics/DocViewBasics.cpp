@@ -36,8 +36,12 @@ public:
 		return 	center_ == rhs.center_ && radius_ == rhs.radius_;
 	}
 
+	/**
+    * implementation of operator != is needed for BCB 5 because of the
+    * ackward implementation of the find algorithm in RW STL
+	*/
 	bool operator!=( const CircleShape& rhs ) const{
-		return 	center_ != rhs.center_ || radius_ != rhs.radius_;
+		return ( !operator==( rhs ) );
 	}
 
 	Point center_;
@@ -45,18 +49,14 @@ public:
 };
 
 
-
-class CircleModel : public Model {
-public:
-
-};
 /**
+First lets create a model - this will store a collection of circles.
+Each circle will have a point defining it's center and a radius.
+This model allows us to add, remove and get individual circles, as
+well as access to the vector that stores the circles.
 */
 
-
-#define CIRCLEDOCUMENT_CLASSID		"ccdeaf42-a9fd-4fb4-adf7-13077976539e"
-
-class CircleDocument : public Document {
+class CircleModel : public Model {
 public:
 
 	enum {
@@ -67,15 +67,9 @@ public:
 	void addCircle( const CircleShape& circle ) {
 		circles_.push_back( circle );
 
-		setModified( true );
-
-		ModelEvent e( this, CircleDocument::CircleAdded );
-		modelChanged( &e );
+		ModelEvent e( this, CircleModel::CircleAdded );
+		ModelChanged( &e );
 		updateAllViews();
-	}
-
-	void addCircle( const double& x, const double& y, const double& radius ) {
-		addCircle( CircleShape(Point(x,y),radius) );
 	}
 
 	void addCircle( const Point& pt, const double& radius ) {
@@ -88,10 +82,8 @@ public:
 
 			circles_.erase( found );
 
-			setModified( true );
-
-			ModelEvent e( this, CircleDocument::CircleRemoved );
-			modelChanged( &e );
+			ModelEvent e( this, CircleModel::CircleRemoved );
+			ModelChanged( &e );
 			updateAllViews();
 		}
 	}
@@ -126,10 +118,23 @@ public:
 		circles_.clear();
 
 		//make sure to call the super class's implementation
-		Document::empty();
+		Model::empty();
 	}
 
-	
+	std::vector<CircleShape> circles_;
+};
+
+
+
+
+/**
+*/
+
+
+#define CIRCLEDOCUMENT_CLASSID		"ccdeaf42-a9fd-4fb4-adf7-13077976539e"
+
+class CircleDocument : public Document {
+public:
 
 
 	/**
@@ -141,11 +146,7 @@ public:
 	3 circles that form a triangular outline
 	*/
 	virtual void initNew() {
-		addCircle( 100, 20, 10 );
-
-		addCircle( 20, 120, 10 );
-
-		addCircle( 160, 120, 10 );
+		
 	}
 
 
@@ -154,7 +155,7 @@ public:
 		bool result = false;
 
 		if ( fileType == "application/x-circledoc" ) {
-
+/*
 			
 			//save the number of circles
 			int size = circles_.size();
@@ -169,6 +170,7 @@ public:
 				stream.write( shape.radius_ );
 				it ++;
 			}
+			*/
 
 			result = true;
 		}
@@ -180,7 +182,7 @@ public:
 		bool result = false;
 
 		if ( fileType == "application/x-circledoc" ) {
-
+/*
 			int size = 0;
 			stream.read( size );
 			
@@ -193,13 +195,13 @@ public:
 
 				addCircle( pt, radius );
 			}
-
+*/
 			result = true;
 		}
 
 		return result;
 	}
-
+/*
 	virtual bool canCutFromDocument() {
 		return !circles_.empty();
 	}
@@ -212,9 +214,9 @@ public:
 		Clipboard* clipboard = UIToolkit::getSystemClipboard();
 		return clipboard->hasDataType( "application/x-circledoc" );
 	}
+	*/
 protected:
 
-	std::vector<CircleShape> circles_;
 };
 
 
@@ -260,7 +262,7 @@ public:
 	}
 
 	virtual void updateView( Model* model ) {
-		CircleDocument* circleModel = (CircleDocument*)model;
+		CircleModel* circleModel = (CircleModel*)model;
 
 		String text = Format( "Number of circle shapes: %d" ) 
 						% circleModel->getCircles().size();
@@ -295,12 +297,12 @@ public:
 
 	void onCircleModelChanged( Event* e ) {
 		switch ( e->getType() ) {
-			case CircleDocument::CircleAdded : {
+			case CircleModel::CircleAdded : {
 				modelState_->setCaption( "New Circle Added" );
 			}
 			break;
 
-			case CircleDocument::CircleRemoved : {
+			case CircleModel::CircleRemoved : {
 				modelState_->setCaption( "Circle removed" );
 			}
 			break;
@@ -344,7 +346,7 @@ public:
 		bdr.paint( &r, ctx );
 
 
-		CircleDocument* model = (CircleDocument*)getViewModel();
+		CircleModel* model = (CircleModel*)getViewModel();
 
 		const std::vector<CircleShape>& circles = model->getCircles();
 		for ( std::vector<CircleShape>::const_iterator it = circles.begin(); it!=circles.end(); it++ ) {
@@ -368,7 +370,7 @@ public:
 class CircleViewController : public Component {
 public:
 
-	CircleDocument* model_;
+	CircleModel* model_;
 	Panel* panel_;
 
 	CircleViewController():model_(NULL), panel_(NULL){}
@@ -511,8 +513,8 @@ public:
 
 	virtual bool initRunningApplication(){	
 		
-//		REGISTER_CLASSINFO( CircleDocument );
-//		REGISTER_CLASSINFO( DocViewBasicsWindow );
+		REGISTER_CLASSINFO_EXTERNAL( CircleDocument );
+		REGISTER_CLASSINFO( DocViewBasicsWindow );
 
 		bool result = SDIDocumentBasedApplication::initRunningApplication();
 

@@ -128,6 +128,10 @@ public:
 	DELEGATE(ListModelDelegate,ItemRemoved)
 
 	
+	virtual bool isEmpty() { 
+		return getCount() > 0;
+	}
+
 	virtual VariantData getValue( const VariantData& key=VariantData::null() );
 
 	virtual String getValueAsString( const VariantData& key=VariantData::null() );
