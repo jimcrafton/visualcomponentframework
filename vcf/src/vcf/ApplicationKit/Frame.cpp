@@ -61,7 +61,7 @@ void Frame::State::initState( Frame* frame )
 	}
 }
 
-void Frame::State::loadFromStream( InputStream* stream )
+void Frame::State::loadFromStream( InputStream* stream, const MIMEType& type )
 {
 	stream->read( static_cast<Persistable*>(&bounds_) );
 	stream->read( visible_ );
@@ -70,7 +70,7 @@ void Frame::State::loadFromStream( InputStream* stream )
 	displayState_ = (Frame::State::FrameDisplayState)state;
 }
 
-void Frame::State::saveToStream( OutputStream* stream )
+void Frame::State::saveToStream( OutputStream* stream, const MIMEType& type )
 {
 	stream->write( &bounds_ );
 	stream->write( visible_ );

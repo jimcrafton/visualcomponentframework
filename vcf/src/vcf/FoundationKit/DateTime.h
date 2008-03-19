@@ -460,9 +460,9 @@ public:
 
 	virtual String toString() const;
 
-	virtual void loadFromStream( InputStream* stream );
+	virtual void loadFromStream( InputStream* stream, const MIMEType& type=MIMEType() );
 
-	virtual void saveToStream( OutputStream* stream );
+	virtual void saveToStream( OutputStream* stream, const MIMEType& type=MIMEType() );
 
 
 	static void getYearMonthDay( const DateTime& dt, 

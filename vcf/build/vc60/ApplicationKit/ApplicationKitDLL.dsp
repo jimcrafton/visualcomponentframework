@@ -586,14 +586,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TransparentWindow.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\TreeItem.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\TreeModel.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\UIComponent.cpp
 # End Source File
 # Begin Source File
@@ -1166,6 +1158,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ListItem.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\ListModel.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\ListModel.h
 # End Source File
 # Begin Source File
@@ -1206,7 +1202,15 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TextModel.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\TreeItem.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\TreeItem.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\TreeModel.cpp
 # End Source File
 # Begin Source File
 

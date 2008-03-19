@@ -48,6 +48,39 @@ public:
 		reset();
 	}
 
+	StringTokenizer( const VCFChar* strPtr, size_t length, const String& delimiter="" ) :
+		backward_(false), dataSize_(0), start_(NULL), ptr_(NULL), backPtr_(NULL), data_(strPtr,length), delimiter_(delimiter) {
+		reset();
+	}
+
+	void getElements( std::vector<String>& elements ) {
+		reset();
+		elements.clear();
+
+
+		while ( ((ptr_-start_) < dataSize_) && ((backPtr_-start_) > 0) ) {
+			String result;
+			size_t pos = data_.find_first_of( delimiter_, ptr_-start_ );
+			if ( pos != String::npos ) {
+				result.append( ptr_,  (start_ + pos)-ptr_ );
+				ptr_ = start_ + pos+1;
+				pos = delimiter_.find( *ptr_ );
+				while ( (pos != String::npos) && ((ptr_-start_) < dataSize_) ) {
+					ptr_ ++;
+					pos = delimiter_.find( *ptr_ );
+				}
+			}
+			else {
+				if ( (ptr_-start_) < dataSize_ ) {
+					result.append( ptr_, dataSize_ - (ptr_-start_) );
+				}
+				ptr_ = start_ + dataSize_;
+			}
+
+			elements.push_back( result );
+		}
+	}
+
 	virtual bool hasMoreElements(const bool& backward=false) const {
 		if ( (NULL == start_) || (NULL == ptr_) ) {
 			reset(backward);

@@ -19,6 +19,28 @@ namespace VCF {
 #define DOCUMENT_CLASSID		"4c5ca064-5a3e-4d0a-bbe9-f37d722af092"
 
 
+	
+/**
+\class ModelEvent Model.h "vcf/ApplicationKit/Model.h"
+*/
+class APPLICATIONKIT_API DocumentEvent : public Event {
+public:
+	DocumentEvent( Object* source, const uint32& type ) :
+	  Event( source, type ) {
+
+	  }
+
+	DocumentEvent( Object* source ) : Event(source){}
+
+	virtual ~DocumentEvent(){};
+
+	virtual Object* clone( bool deep=false ) {
+		return new DocumentEvent(*this);
+	}
+};
+
+
+typedef Delegate1<DocumentEvent*> DocumentDelegate; 
 
 
 /**
@@ -36,6 +58,9 @@ public:
 	};
 
 public:
+
+	DELEGATE(DocumentDelegate,DocumentChanged)
+
 	/**
 	* the document's constructor
 	*/
@@ -208,8 +233,8 @@ public:
 		bool result = saveAsType( fileType, fs );
 		if ( result ) {
 			setModified( false );
-			ModelEvent e( getModel(), Document::deSaved );
-			modelChanged(&e);
+			DocumentEvent e( this, Document::deSaved );
+			DocumentChanged(&e);
 		}
 		return result;
 	};
@@ -220,10 +245,25 @@ public:
 	*@param OutputStream& stream, the output stream to be saved into.
 	*@return bool, true if the file has been succesfully saved.
 	*/
-	virtual bool saveAsType( const String& fileType, OutputStream& stream ) {
+	virtual bool saveAsType( const MIMEType& fileType, OutputStream& stream ) {
 		Model* docModel = getModel();
 		VCF_ASSERT( NULL != docModel );
 		
+		if ( NULL != docModel ) {
+			Persistable* persistable = dynamic_cast<Persistable*>( docModel );
+
+			if ( NULL != persistable ) {
+				try {
+					persistable->saveToStream( &stream, fileType );
+				}
+				catch ( std::exception& ) {
+					return false;
+				}
+				
+				return true;
+			}
+		}
+
 		
 		return false;
 	};
@@ -238,7 +278,7 @@ public:
 	*@fire ModelChanged.
 	*@eventtype Document::deOpened.
 	*/
-	virtual bool openFromType( const String& fileName, const String& fileType ){
+	virtual bool openFromType( const String& fileName, const MIMEType& fileType ){
 		Model* docModel = getModel();
 		VCF_ASSERT( NULL != docModel );
 		
@@ -259,8 +299,8 @@ public:
 				setModified( false );
 				updateAllViews();
 
-				ModelEvent e( getModel(), Document::deOpened );
-				modelChanged( &e );
+				DocumentEvent e( this, Document::deOpened );
+				DocumentChanged(&e);
 			}
 		}
 		catch ( BasicException& be ) {
@@ -277,12 +317,23 @@ public:
 	*@param const InputStream& stream, the input stream.
 	*@return bool, true if the file has been succesfully opened.
 	*/
-	virtual bool openFromType( const String& fileType, InputStream& stream ){
+	virtual bool openFromType( const MIMEType& fileType, InputStream& stream ){
 		Model* docModel = getModel();
 		VCF_ASSERT( NULL != docModel );
-		
-		if ( NULL == docModel ) {
-			return false;
+
+		if ( NULL != docModel ) {
+			Persistable* persistable = dynamic_cast<Persistable*>( docModel );
+
+			if ( NULL != persistable ) {
+				try {
+					persistable->loadFromStream( &stream, fileType );
+				}
+				catch ( std::exception& ) {
+					return false;
+				}
+				
+				return true;
+			}
 		}
 
 		return false;

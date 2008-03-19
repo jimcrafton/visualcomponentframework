@@ -257,9 +257,9 @@ public:
 		ownsObjectValues_ = val;
 	}
 
-	virtual void loadFromStream( InputStream* stream );
+	virtual void loadFromStream( InputStream* stream, const MIMEType& type=MIMEType() );
 
-	virtual void saveToStream( OutputStream* stream );
+	virtual void saveToStream( OutputStream* stream, const MIMEType& type=MIMEType() );
 
 	Dictionary::Enumerator* getEnumerator();
 

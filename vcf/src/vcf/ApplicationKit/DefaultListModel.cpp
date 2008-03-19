@@ -25,13 +25,13 @@ DefaultListModel::~DefaultListModel()
 
 }
 
-void DefaultListModel::saveToStream( OutputStream * stream )
+void DefaultListModel::saveToStream( OutputStream * stream, const MIMEType& type )
 {
 
 }
 
 
-void DefaultListModel::loadFromStream( InputStream * stream )
+void DefaultListModel::loadFromStream( InputStream * stream, const MIMEType& type )
 {
 
 }

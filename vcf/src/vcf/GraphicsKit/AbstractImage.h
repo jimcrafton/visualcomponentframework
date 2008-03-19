@@ -81,12 +81,12 @@ public:
 	/**
 	*Write the object to the specified output stream
 	*/
-    virtual void saveToStream( OutputStream * stream );
+    virtual void saveToStream( OutputStream * stream, const MIMEType& type=MIMEType() );
 
 	/**
 	**Read the object from the specified input stream
 	*/
-    virtual void loadFromStream( InputStream * stream );
+    virtual void loadFromStream( InputStream * stream, const MIMEType& type=MIMEType() );
 
 	virtual Image::ImageType getType() const ;
 

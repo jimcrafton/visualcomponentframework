@@ -374,7 +374,7 @@ public:
 	CircleViewController():model_(NULL), panel_(NULL){}
 
 	void setModel( CircleDocument* model ) {
-		
+		/*
 		CallBack* ev = getCallback( "CircleViewController::onCircleModelChanged" );
 
 
@@ -392,6 +392,7 @@ public:
 			}
 			model_->ModelChanged += ev;
 		}
+		*/
 	}
 
 
@@ -510,8 +511,8 @@ public:
 
 	virtual bool initRunningApplication(){	
 		
-		REGISTER_CLASSINFO( CircleDocument );
-		REGISTER_CLASSINFO( DocViewBasicsWindow );
+//		REGISTER_CLASSINFO( CircleDocument );
+//		REGISTER_CLASSINFO( DocViewBasicsWindow );
 
 		bool result = SDIDocumentBasedApplication::initRunningApplication();
 

@@ -51,10 +51,24 @@ void DocumentManager::init()
 	fileName += app->getName();	
 	fileName += ".xml";
 	
-	FileInputStream fs( fileName );
+	//FileInputStream fs( fileName );
+
+	String xml;
+	Resource* res = app->getResourceBundle()->getResource( app->getName() + ".xml" );
+	if ( NULL != res ) {
+		xml.assign( (const char*) res->getData(), res->getDataSize() );
+		res->free();
+	}
+	else {
+		throw RuntimeException( "You need to have a resource file named \"" + app->getName() + ".xml\" with the correct data in it."  );
+	}
+
+	if ( xml.empty() ) {
+		throw RuntimeException( "You Document resource file needs to be properly configured - there's no data in it!"  );
+	}
 
 	XMLParser parser;
-	parser.parse( &fs );
+	parser.parse( xml );
 	Enumerator<XMLNode*>* nodes = parser.getParsedNodes();
 	while ( nodes->hasMoreElements() ) {
 		XMLNode* node = nodes->nextElement();
@@ -482,9 +496,9 @@ void DocumentManager::prepareSaveDialog( CommonFileSaveDialog* saveDialog, Docum
 	}
 }
 
-String DocumentManager::getMimeTypeFromFileExtension( const String& fileName )
+MIMEType DocumentManager::getMimeTypeFromFileExtension( const String& fileName )
 {
-	String result;
+	MIMEType result;
 	DocumentInfoMap::iterator it = docInfo_.begin();
 	String mimetype;
 
@@ -504,11 +518,11 @@ String DocumentManager::getMimeTypeFromFileExtension( const String& fileName )
 	return result;
 }
 
-DocumentInfo DocumentManager::getDocumentInfo( const String& mimeType )
+DocumentInfo DocumentManager::getDocumentInfo( const MIMEType& mimeType )
 {
 	DocumentInfo result;
 
-	if ( mimeType.empty() ) {
+	if ( mimeType.isEmpty() ) {
 		result = docInfo_.begin()->second;
 	}
 	else {
@@ -517,7 +531,7 @@ DocumentInfo DocumentManager::getDocumentInfo( const String& mimeType )
 	return result;
 }
 
-void DocumentManager::addDocumentInfo( const VCF::String& mimeType, const DocumentInfo& info )
+void DocumentManager::addDocumentInfo( const MIMEType& mimeType, const DocumentInfo& info )
 {
 	docInfo_[mimeType] = info;
 }
