@@ -93,6 +93,10 @@ LINK32=link.exe
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\Base64Codec.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKit.h
 # End Source File
 # Begin Source File
@@ -107,10 +111,26 @@ SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitSelectLib.h
 
 SOURCE=..\..\..\src\vcf\FoundationKit\FrameworkConfig.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\PropertyListing.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\XMLDictInputStream.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\XMLDictOutputStream.h
+# End Source File
 # End Group
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Base64Codec.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKit.cpp

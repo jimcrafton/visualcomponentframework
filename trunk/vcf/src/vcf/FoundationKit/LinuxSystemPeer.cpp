@@ -241,6 +241,10 @@ String LinuxSystemPeer::getUserName()
     return result;
 }
 
+void LinuxSystemPeer::setTimeZoneToLocal( const DateTime& currentDate, TimeZone& tz )
+{
+
+}
 
 /**
 $Id$

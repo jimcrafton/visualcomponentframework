@@ -322,6 +322,12 @@ void System::setDateToLocalTime( DateTime* date )
 	System::systemInstance->systemPeer_->setDateToLocalTime( date );
 }
 
+void System::setTimeZoneToLocal( const DateTime& currentDate, TimeZone& tz )
+{
+	System::systemInstance->systemPeer_->setTimeZoneToLocal( currentDate, tz );
+}
+
+
 void System::setCurrentThreadLocale( Locale* locale )
 {
 	System::systemInstance->locale_->getPeer()->setLocale( locale->getLanguageCodeString(), locale->getCountryCodeString(), "" );

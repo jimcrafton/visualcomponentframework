@@ -14,6 +14,9 @@ where you installed the VCF.
 #endif
 
 
+#include "vcf/FoundationKit/StringTokenizer.h"
+
+
 namespace VCF {
 
 /**
@@ -101,6 +104,41 @@ public:
 			double val = 0.0;
 			inStream_->read( val );
 			*data = val;
+		}
+		else if ( type == "D" ) {
+			String val = ""; //date in ISO 8601 fmt YYYY-MM-DDThh:mm:ssZ UTC
+			inStream_->read( val );
+
+			size_t pos = val.find("T");
+
+			VCF_ASSERT( pos != String::npos );
+			
+			if ( pos != String::npos ) {
+				StringTokenizer dtPt(val.substr(0,pos),"-");
+				std::vector<String> vals;
+				dtPt.getElements(vals);
+				val.erase( 0, pos+1 );
+				pos = val.find("Z");
+				
+				VCF_ASSERT( pos != String::npos );
+				
+				if ( pos != String::npos ) {
+					StringTokenizer tmPt(val.substr(0,pos),":");
+					std::vector<String> vals2;
+					tmPt.getElements(vals2);
+					
+					DateTime dt;
+					dt.set( StringUtils::fromStringAsUInt(vals[0]), 
+							StringUtils::fromStringAsUInt(vals[1]), 
+							StringUtils::fromStringAsUInt(vals[2]),
+							StringUtils::fromStringAsUInt(vals2[0]), 
+							StringUtils::fromStringAsUInt(vals2[1]), 
+							StringUtils::fromStringAsUInt(vals2[2]) );
+
+					
+					*data = dt;
+				}				
+			}			
 		}
 		else if ( type == "f" ) {
 			float val = 0.0f;
@@ -255,6 +293,13 @@ public:
 			case pdDouble : {
 				outStream_->write( String("d") );
 				outStream_->write( (double)(*data) );
+			}
+			break;
+
+			case pdDateTime : {
+				outStream_->write( String("D") );
+				String s = StringUtils::format( *data, "%Y-%m-%dT%H:%M:%SZ" ) ;
+				outStream_->write( s );
 			}
 			break;
 

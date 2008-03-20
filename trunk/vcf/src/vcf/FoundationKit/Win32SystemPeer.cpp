@@ -673,7 +673,81 @@ String Win32SystemPeer::createTempFileName( const String& directory )
 	return result;
 }
 
+void Win32SystemPeer::setTimeZoneToLocal( const DateTime& currentDate, TimeZone& tz )
+{
+	TIME_ZONE_INFORMATION tzi = {0};
+	GetTimeZoneInformation( &tzi );
+	
 
+	DateTime stdDate;
+	DateTime dstDate;
+	bool dst = false;
+
+	if ( tzi.StandardDate.wMonth != 0 && tzi.DaylightDate.wMonth != 0 ) {
+		if ( tzi.StandardDate.wYear == 0 ) { //day in month
+			stdDate = currentDate;
+			stdDate.setDate( stdDate.getYear(), tzi.StandardDate.wMonth, 1 );
+
+			
+			while ( (int)stdDate.getWeekDay() != tzi.StandardDate.wDayOfWeek ) {
+				stdDate.incrDay();
+			}
+
+			int d = 1;
+			
+			unsigned int mon = stdDate.getMonth();
+			while ( (stdDate.getMonth() == mon) && (d < tzi.StandardDate.wDay) ) {
+				stdDate.incrDay(7);//increment a week forward
+				d++;
+			}
+		}
+		else { //absolute
+			stdDate.set( tzi.StandardDate.wYear, tzi.StandardDate.wMonth, tzi.StandardDate.wDay,
+							tzi.StandardDate.wHour, tzi.StandardDate.wMinute, tzi.StandardDate.wSecond,
+							tzi.StandardDate.wMilliseconds );
+
+		}
+
+		if ( tzi.DaylightDate.wYear == 0 ) { //day in month
+			dstDate = currentDate;
+			dstDate.setDate( dstDate.getYear(), tzi.DaylightDate.wMonth, 1 );
+
+			
+			while ( (int)dstDate.getWeekDay() != tzi.DaylightDate.wDayOfWeek ) {
+				dstDate.incrDay();
+			}
+
+			int d = 1;
+			
+			unsigned int mon = dstDate.getMonth();
+			while ( (dstDate.getMonth() == mon) && (d < tzi.DaylightDate.wDay) ) {
+				dstDate.incrDay(7);//increment a week forward
+				d++;
+			}
+		}
+		else { //absolute
+			dstDate.set( tzi.DaylightDate.wYear, tzi.DaylightDate.wMonth, tzi.DaylightDate.wDay,
+							tzi.DaylightDate.wHour, tzi.DaylightDate.wMinute, tzi.DaylightDate.wSecond,
+							tzi.DaylightDate.wMilliseconds );
+
+		}
+
+		if ( (currentDate >= dstDate) && (currentDate < stdDate) ) {
+			dst = true;
+		}		
+	}
+
+
+	String s;
+	if ( dst ) {
+		s.assign( &tzi.DaylightName[0], sizeof(tzi.DaylightName)/sizeof(tzi.DaylightName[0]) );
+	}
+	else {
+		s.assign( &tzi.StandardName[0], sizeof(tzi.StandardName)/sizeof(tzi.StandardName[0]) );
+	}
+
+	tz.internal_set( tzi.Bias, s, dst );
+}
 /**
 $Id$
 */

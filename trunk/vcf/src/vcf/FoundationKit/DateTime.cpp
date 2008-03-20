@@ -1136,6 +1136,24 @@ uint64 DateTimeSpan::getTotalMilliseconds() const
 }
 
 
+
+
+
+
+
+
+
+
+
+TimeZone TimeZone::local( const DateTime& currentDate )
+{
+	TimeZone result;
+
+	System::setTimeZoneToLocal( currentDate, result );
+
+	return result;
+}
+
 /**
 $Id$
 */
