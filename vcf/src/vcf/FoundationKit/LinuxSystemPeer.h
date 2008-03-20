@@ -58,6 +58,9 @@ public:
 
 	virtual DateTime convertLocalTimeToUTCTime( const DateTime& date );
 
+	virtual void setTimeZoneToLocal( const DateTime& currentDate, TimeZone& tz );
+
+
     virtual String getOSName();
     virtual String getOSVersion();
 

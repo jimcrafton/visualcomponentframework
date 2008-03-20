@@ -503,6 +503,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ListItem.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\ListModel.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\Menu.cpp
 # End Source File
 # Begin Source File
@@ -596,6 +600,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TransparentWindow.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\TransparentWindow.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\TreeModel.cpp
 # End Source File
 # Begin Source File
 

@@ -997,6 +997,65 @@ inline void DateTime::get( uint32* year, uint32* month, uint32* day, uint32* hou
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+\class TimeZone DateTime.h "vcf/FoundationKit/DateTime.h"
+*/
+class FOUNDATIONKIT_API TimeZone {
+public:
+	TimeZone():offset_(0),daylightSavings_(false){}
+
+	static TimeZone local( const DateTime& currentDate = DateTime::now() );
+
+	void internal_set( int offset, const String& name, bool daylightSavings ) {
+		offset_ = offset;
+		name_ = name;
+		daylightSavings_ = daylightSavings;
+	}
+
+	int getOffset() const {
+		return offset_;
+	}
+
+	int getTotalOffsetHours() const {
+		return offset_ / 60;
+	}
+
+	int getOffsetMinutes() const {
+		return offset_ % 60;
+	}
+
+	String getName() const {
+		return name_;
+	}
+
+	bool isDaylightSavings() const {
+		return daylightSavings_;
+	}
+private:
+	int offset_;
+	String name_;
+	bool daylightSavings_;
+};
+
+
 };
 
 

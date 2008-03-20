@@ -430,6 +430,7 @@ public:
 	*/	
 	static DateTime convertLocalTimeToUTCTime( const DateTime& date );
 
+	static void setTimeZoneToLocal( const DateTime& currentDate, TimeZone& tz );
 	/**
 	Sets the current thread's locale. May not have an impact on some systems.
 	*/

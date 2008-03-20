@@ -366,6 +366,10 @@ String OSXSystemPeer::createTempFileName( const String& directory )
 	return result;
 }
 	
+void OSXSystemPeer::setTimeZoneToLocal( const DateTime& currentDate, TimeZone& tz )
+{
+
+}
 
 /**
 $Id$
