@@ -239,7 +239,7 @@ public:
 
 	void removeCallback( CallBack* cb );
 
-	CallBack* getCallback( const String& name );	
+	CallBack* getCallback( const String& name ) const ;	
 protected:
 	std::map<String,CallBack*>* callbacks_;
 };

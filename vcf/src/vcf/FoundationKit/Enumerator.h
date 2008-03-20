@@ -423,7 +423,7 @@ public:
 		return collection_.end();
 	}
 
-	inline iterator end() const {
+	inline const_iterator end() const {
 		return collection_.end();
 	}
 

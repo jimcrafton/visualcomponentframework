@@ -37,7 +37,7 @@ public:
 
 	virtual bool containsPoint( Point * pt );
 
-    virtual uint32 getIndex();
+    virtual uint32 getIndex() const;
 
 	virtual void setIndex( const uint32& index );
     
@@ -59,21 +59,21 @@ public:
 
 	virtual void clearChildren();
 
-	virtual bool isChecked();
+	virtual bool isChecked() const;
 
 	virtual void setChecked( const bool& checked );
 
-	virtual bool hasParent();
+	virtual bool hasParent() const;
 
-	virtual bool hasChildren();
+	virtual bool hasChildren() const;
 
-	virtual uint32 getChildCount();
+	virtual uint32 getChildCount() const;
 
-	virtual Menu* getMenuOwner();
+	virtual Menu* getMenuOwner() const;
 
 	virtual void setMenuOwner( Menu* menuOwner );
 
-	virtual MenuItem* getParent();
+	virtual MenuItem* getParent() const;
 
 	virtual void setParent( MenuItem* parent );
 
@@ -81,29 +81,29 @@ public:
 
 	virtual MenuItem* findChildNamed( const String& name, const bool& exactMatch=true );
 
-	virtual bool isEnabled();
+	virtual bool isEnabled() const;
 
 	virtual void setEnabled( const bool& enabled );
 
-	virtual bool isVisible();
+	virtual bool isVisible() const;
 
 	virtual void setVisible( const bool& visible );
 
-	virtual bool getRadioItem();
+	virtual bool getRadioItem() const;
 
 	virtual void setRadioItem( const bool& value );
 
 	virtual void setCaption( const String& caption );
 
-	virtual String getCaption() ;
+	virtual String getCaption() const;
 
-	virtual MenuItemPeer* getPeer();
+	virtual MenuItemPeer* getPeer() const;
 
-	virtual bool isSeparator();
+	virtual bool isSeparator() const;
 
 	virtual void setSeparator( const bool& separator );
 
-	virtual bool isHighlighted();
+	virtual bool isHighlighted() const;
 
 	virtual void setHighlighted( const bool& val );
 
@@ -121,11 +121,11 @@ public:
 
 	virtual void setAcceleratorKey( AcceleratorKey* accelerator );
 
-	virtual AcceleratorKey* getAccelerator();
+	virtual AcceleratorKey* getAccelerator() const;
 
-	virtual uint32 getChildIndex( MenuItem* child );
+	virtual uint32 getChildIndex( MenuItem* child ) const;
 	
-	virtual Object* clone(bool deep=false);
+	virtual Object* clone(bool deep=false) const;
 
 	virtual void handleEvent( Event* event );
 protected:
@@ -136,7 +136,7 @@ protected:
 	String caption_;
 	Menu* menuOwner_;
 	MenuItem* parent_;
-	AcceleratorKey* currentAccelerator_;
+	mutable AcceleratorKey* currentAccelerator_;
 };
 
 

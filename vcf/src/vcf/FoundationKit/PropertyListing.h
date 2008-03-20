@@ -21,7 +21,6 @@ where you installed the VCF.
 
 namespace VCF {
 	
-
 	
 
 	/**

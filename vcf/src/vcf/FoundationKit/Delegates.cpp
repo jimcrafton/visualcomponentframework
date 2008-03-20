@@ -189,11 +189,11 @@ void ObjectWithCallbacks::addCallback( CallBack* cb )
 	}
 }
 
-CallBack* ObjectWithCallbacks::getCallback( const String& name ) {
+CallBack* ObjectWithCallbacks::getCallback( const String& name ) const {
 	CallBack* result = NULL;
 
 	if ( NULL != callbacks_ ) {
-		std::map<String,CallBack*>::iterator found = 
+		std::map<String,CallBack*>::const_iterator found = 
 			callbacks_->find( name );
 		if ( found != callbacks_->end() ) {
 			result = found->second;

@@ -101,7 +101,7 @@ void Component::destroy()
 	ObjectWithCallbacks::destroy();
 }
 
-String Component::getName()
+String Component::getName() const 
 {
 	return name_;
 }
@@ -159,7 +159,7 @@ void Component::beforeDestroy( ComponentEvent* event )
 }
 
 
-uint32 Component::getComponentState()
+uint32 Component::getComponentState() const 
 {
 	return componentState_;
 }
@@ -242,7 +242,7 @@ Enumerator<Component*>* Component::getComponents()
 	return componentContainer_.getEnumerator();
 }
 
-uint32 Component::getComponentCount()
+uint32 Component::getComponentCount() const 
 {
 	return components_.size();
 }
@@ -565,7 +565,7 @@ Component* Component::createComponentFromResources( Class* clazz, Class* rootCla
 	return result;
 }
 
-Dictionary* Component::getSettings()
+Dictionary* Component::getSettings() const 
 {
 	return settings_;
 }
@@ -586,7 +586,7 @@ uint32 Component::getSettingNames( std::vector<String>& names )
 	return names.size();
 }
 
-ComponentSetting* Component::getSetting( const String& name )
+ComponentSetting* Component::getSetting( const String& name ) const 
 {
 	ComponentSetting* result = NULL;
 

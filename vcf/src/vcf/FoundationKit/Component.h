@@ -297,7 +297,7 @@ public:
 	The name of the component should be unique.
 	@return String the name of the component.
 	*/
-	virtual String getName();
+	virtual String getName() const ;
 
 	/**
 	sets the name of the component. For naming conventions/rules
@@ -340,7 +340,7 @@ public:
 	UI events, while a Control with it's state set to
 	CS_DESTROYING, will not respond to any pending UI events.
 	*/
-	uint32 getComponentState();
+	uint32 getComponentState() const;
 
 	/**
 	queries the component state to check if it's
@@ -437,7 +437,7 @@ public:
 	/**
 	returns the number of components owned by this component
 	*/
-	virtual uint32 getComponentCount();
+	virtual uint32 getComponentCount() const;
 
 	/**
 	finds a particular component as specified by the componentName
@@ -476,7 +476,7 @@ public:
 	application is running, or the object has no title?)"
 	@return int32 the tag value of the Component
 	*/
-	int32 getTag() {
+	int32 getTag() const{
 		return tag_;
 	}
 
@@ -495,7 +495,7 @@ public:
 	for destroying the component when the owner is destroyed.
 	@see addComponent()
 	*/
-	Component* getOwner() {
+	Component* getOwner() const {
 		return owner_;
 	}	
 
@@ -537,7 +537,7 @@ public:
 	NULL, so if no settings have been assigned this will definitely
 	return NULL.
 	*/
-	Dictionary* getSettings();
+	Dictionary* getSettings() const;
 
 	uint32 getSettingNames( std::vector<String>& names );
 
@@ -548,7 +548,7 @@ public:
 	setting's value name.
 	@see ComponentSetting
 	*/
-	ComponentSetting* getSetting( const String& name );
+	ComponentSetting* getSetting( const String& name ) const;
 
 	/**
 	Assigns a setting to the component's settings dictionary. If the
@@ -647,7 +647,7 @@ protected:
 	std::vector<Component*> components_;
 	EnumeratorContainer<std::vector<Component*>, Component*> componentContainer_;
 
-	Dictionary* settings_;
+	mutable Dictionary* settings_;
 
 	/**
 	a map of component classes to categories

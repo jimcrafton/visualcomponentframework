@@ -201,7 +201,7 @@ void FoundationKit::assertCondition( bool condition, const String& failureMessag
 {
 	if ( !condition ) {
 
-		throw FoundationKit::Assertion( L"Assertion failure: " + failureMessage );
+		throw FoundationKit::Assertion( L"Assertion failure:\n" + failureMessage );
 	}
 }
 

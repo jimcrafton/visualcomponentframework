@@ -71,8 +71,9 @@ namespace VCF
 };
 
 
-
 #ifdef _DEBUG
+
+
 
 /**
 This macro takes 2 arguments - the condition that causes the
@@ -82,7 +83,7 @@ assert, and a string describing the reason for the assert.
 		{ \
 			bool condValue = condition; \
 			if ( ! (condValue) ) { \
-				VCF::FoundationKit::assertCondition( condValue, VCF::String( msg ) + VCF::String( L"\nAssertion in file: " ) + VCF::String( __WFILE__ ) + VCF::String( L" at line: " ) + VCF::StringUtils::toString( __LINE__ ) ); \
+				VCF::FoundationKit::assertCondition( condValue, VCF::String( __WFILE__ ) + VCF::String( L"(" ) + VCF::StringUtils::toString( __LINE__ ) + VCF::String( L") : Assertion: " ) + VCF::String( msg ) ); \
 			} \
 		} \
 		\

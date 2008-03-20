@@ -277,6 +277,21 @@ protected:
 
 
 
+
+/**
+\class VariantArray Dictionary.h "vcf/FoundationKit/Dictionary.h"
+*/
+class VariantArray : public Object {
+public:
+
+	VariantArray(){}
+	VariantArray( const std::vector<VariantData>& v ): data(v){}
+	VariantArray(size_t sz):data(sz){}
+
+
+	std::vector<VariantData> data;
+};
+
 };
 
 
