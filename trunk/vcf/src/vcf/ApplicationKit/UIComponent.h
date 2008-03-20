@@ -50,7 +50,7 @@ class Action;
 		components (like a menu item, and a push button) to share the same action
 		and to respond in a coordinated manner to changes in state.
 		*/
-		Action* getAction() {
+		Action* getAction() const {
 			return action_;
 		}
 

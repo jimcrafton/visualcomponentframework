@@ -107,19 +107,19 @@ public:
 
 	virtual void clearChildren() = 0;
 
-	virtual bool isChecked() = 0;
+	virtual bool isChecked() const = 0;
 
 	virtual void setChecked( const bool& checked ) = 0;
 
 	virtual void setCanPaint( const bool& val ) = 0;
 
-	virtual bool hasParent() = 0;
+	virtual bool hasParent() const = 0;
 
-	virtual bool hasChildren() = 0;
+	virtual bool hasChildren() const = 0;
 
-	virtual uint32 getChildCount() = 0;
+	virtual uint32 getChildCount() const = 0;
 
-	virtual uint32 getIndex() = 0;
+	virtual uint32 getIndex() const = 0;
 
 	virtual void setIndex( const uint32& index ) = 0;
 
@@ -141,7 +141,7 @@ public:
 	*returns the owner of the menu item. This generally
 	is either a MenuBar or a PopupMenu
 	*/
-	virtual Menu* getMenuOwner() = 0;
+	virtual Menu* getMenuOwner() const = 0;
 
 	/**
 	*sets the Owner for the MenuItem and for all it's children as
@@ -149,35 +149,35 @@ public:
 	*/
 	virtual void setMenuOwner( Menu* menuOwner ) = 0;
 
-	virtual MenuItem* getParent() = 0;
+	virtual MenuItem* getParent() const = 0;
 
 	virtual void setParent( MenuItem* parent ) = 0;
 
 	virtual MenuItem* getChildAt( const uint32& index ) = 0;
 
-	virtual bool isEnabled() = 0;
+	virtual bool isEnabled() const = 0;
 
 	virtual void setEnabled( const bool& enabled ) = 0;
 
-	virtual bool isVisible() = 0;
+	virtual bool isVisible() const = 0;
 
 	virtual void setVisible( const bool& visible ) = 0;
 
-	virtual bool getRadioItem() = 0;
+	virtual bool getRadioItem() const = 0;
 
 	virtual void setRadioItem( const bool& value ) = 0;
 
 	virtual void setCaption( const String& caption ) = 0;
 
-	virtual String getCaption() = 0;
+	virtual String getCaption() const = 0;
 
-	virtual MenuItemPeer* getPeer() = 0;
+	virtual MenuItemPeer* getPeer() const = 0;
 
-	virtual bool isSeparator() = 0;
+	virtual bool isSeparator() const = 0;
 
 	virtual void setSeparator( const bool& separator ) = 0;
 
-	virtual bool isHighlighted() = 0;
+	virtual bool isHighlighted() const = 0;
 
 	virtual void setHighlighted( const bool& val ) = 0;
 
@@ -204,9 +204,9 @@ public:
 	/**
 	Returns the accelerator for the menu item.
 	*/
-	virtual AcceleratorKey* getAccelerator() = 0;
+	virtual AcceleratorKey* getAccelerator() const = 0;
 
-	virtual uint32 getChildIndex( MenuItem* child ) = 0;	
+	virtual uint32 getChildIndex( MenuItem* child ) const = 0;	
 };
 
 };

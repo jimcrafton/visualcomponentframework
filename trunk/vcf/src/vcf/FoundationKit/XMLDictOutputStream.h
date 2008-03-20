@@ -136,6 +136,26 @@ public:
 		write( (const unsigned char*)tmp.c_str(), tmp.length() );
 	}
 
+	void writeArray( VariantArray* data ) {
+		AnsiString s;
+		s = getTabs() + "<array>\n";
+		write( (const unsigned char*)s.c_str(), s.length() );
+
+		tabCount_++;
+
+		std::vector<VariantData>::iterator it =
+			data->data.begin();
+		while ( it != data->data.end() ) {
+			writeVariantData( &(*it) );
+			++it;
+		}
+		
+		tabCount_--;
+
+		s = getTabs() + "</array>\n";
+		write( (const unsigned char*)s.c_str(), s.length() );
+	}
+	
 	void writeVariantData( VariantData* data ) {
 		switch ( data->type ) {
 			case pdShort : case pdULong : case pdLong : case pdInt : {				
@@ -181,19 +201,25 @@ public:
 						writeDict( *dict, false );	
 					}
 					else {
-						Persistable* persistentObj = dynamic_cast<Persistable*>(obj);
-						if ( NULL != persistentObj ) {
-							BasicOutputStream bos;
-							OutputStream* os = &bos;
-							os->write( persistentObj );
-
-							const unsigned char* buffer = (const unsigned char*)bos.getBuffer();
-							
-							writeData( buffer, bos.getSize() );
-
+						VariantArray* va = dynamic_cast<VariantArray*>(obj);
+						if ( NULL != va ) {
+							writeArray( va );	
 						}
-						else {
-							throw TypeCastException("Error attempting to write to stream.\nObject doesn't support Persistable interface!");
+						else {							
+							Persistable* persistentObj = dynamic_cast<Persistable*>(obj);
+							if ( NULL != persistentObj ) {
+								BasicOutputStream bos;
+								OutputStream* os = &bos;
+								os->write( persistentObj );
+								
+								const unsigned char* buffer = (const unsigned char*)bos.getBuffer();
+								
+								writeData( buffer, bos.getSize() );
+								
+							}
+							else {
+								throw TypeCastException("Error attempting to write to stream.\nObject doesn't support Persistable interface!");
+							}
 						}
 					}					
 				}

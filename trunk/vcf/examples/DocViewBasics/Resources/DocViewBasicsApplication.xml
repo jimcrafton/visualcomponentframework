@@ -1,4 +1,6 @@
-<documentTypes>
+<plist>
+	
+	<documentTypes>
 	<document classname="CircleDocument" classid="ccdeaf42-a9fd-4fb4-adf7-13077976539e">
 		<property name="mimetype" value="application/x-circledoc"/>
 		<property name="role" value="editor"/>
@@ -7,4 +9,5 @@
 		<!-- <property name="view" value="t1View"/> -->
 		<property name="window" value="DocViewBasicsWindow"/>
 	</document>
-</documentTypes>
+	</documentTypes>
+</plist>

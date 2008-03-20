@@ -101,6 +101,7 @@ public:
 		docModel->addView( view );
 	}
 
+
 	void updateAllViews() {
 		Model* docModel = getModel();
 		VCF_ASSERT( NULL != docModel );

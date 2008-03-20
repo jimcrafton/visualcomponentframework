@@ -82,13 +82,13 @@ bool DefaultMenuItem::containsPoint( Point * pt )
 	return true;
 }
 
-uint32 DefaultMenuItem::getIndex()  
+uint32 DefaultMenuItem::getIndex() const  
 {
 	Menu* owner = getMenuOwner();
 	if ( NULL == owner ) {
 		return MenuItem::InvalidMenuIndex;
 	}
-	return owner->getItemIndex( this );
+	return owner->getItemIndex( (MenuItem*) this );
 }
 
 void DefaultMenuItem::setIndex( const uint32& index ){}
@@ -153,7 +153,7 @@ void DefaultMenuItem::setSelected( const bool& selected )
 	previousSelectedItem = this;
 }
 
-bool DefaultMenuItem::isHighlighted()
+bool DefaultMenuItem::isHighlighted() const
 {
 	return (displayState_ & MenuItem::mdsHighlighted) ? true : false;	
 }
@@ -168,7 +168,7 @@ void DefaultMenuItem::setHighlighted( const bool& val )
 	}
 }
 
-Enumerator<MenuItem*>* DefaultMenuItem::getChildren()
+Enumerator<MenuItem*>* DefaultMenuItem::getChildren() 
 {
 	return menuItems_.getEnumerator();
 }
@@ -280,7 +280,7 @@ void DefaultMenuItem::clearChildren()
 	//peer_->clearChildren();
 }
 
-bool DefaultMenuItem::isChecked()
+bool DefaultMenuItem::isChecked() const
 {
 	return ((displayState_ & MenuItem::mdsChecked) == MenuItem::mdsChecked) ? true : false;// peer_->isChecked();
 }
@@ -303,13 +303,13 @@ void DefaultMenuItem::setChecked( const bool& checked )
 	}
 }
 
-bool DefaultMenuItem::hasParent()
+bool DefaultMenuItem::hasParent() const
 {
 
 	return (parent_ != NULL);
 }
 
-MenuItem* DefaultMenuItem::getParent()
+MenuItem* DefaultMenuItem::getParent() const
 {
 	return parent_;
 }
@@ -329,7 +329,7 @@ MenuItem* DefaultMenuItem::getChildAt( const uint32& index )
 	return menuItems_[index];
 }
 
-bool DefaultMenuItem::isEnabled()
+bool DefaultMenuItem::isEnabled() const
 {
 	bool result = (displayState_ & MenuItem::mdsEnabled) ? true : false;
 
@@ -369,7 +369,7 @@ void DefaultMenuItem::setEnabled( const bool& enabled )
 	}
 }
 
-bool DefaultMenuItem::isVisible()
+bool DefaultMenuItem::isVisible() const
 {
 	return (displayState_ & MenuItem::mdsVisible) ? true : false;
 }
@@ -393,7 +393,7 @@ void DefaultMenuItem::setVisible( const bool& visible )
 	}
 }
 
-bool DefaultMenuItem::getRadioItem()
+bool DefaultMenuItem::getRadioItem() const
 {
 	return (displayState_ & MenuItem::mdsRadioItem) ? true : false;
 }
@@ -431,17 +431,17 @@ void DefaultMenuItem::setCaption( const String& caption )
 	}
 }
 
-String DefaultMenuItem::getCaption()
+String DefaultMenuItem::getCaption() const
 {
 	return caption_;
 }
 
-MenuItemPeer* DefaultMenuItem::getPeer()
+MenuItemPeer* DefaultMenuItem::getPeer() const
 {
-	return MenuManager::getMenuItemPeer(this); //peer_;
+	return MenuManager::getMenuItemPeer((MenuItem*)this); //peer_;
 }
 
-bool DefaultMenuItem::hasChildren()
+bool DefaultMenuItem::hasChildren() const
 {
 	return ! menuItems_.empty();
 }
@@ -475,7 +475,7 @@ void DefaultMenuItem::update()
 	}
 }
 
-Menu* DefaultMenuItem::getMenuOwner()
+Menu* DefaultMenuItem::getMenuOwner() const
 {
 	return menuOwner_;
 }
@@ -515,7 +515,7 @@ void DefaultMenuItem::setCanPaint( const bool& val )
 }
 
 
-bool DefaultMenuItem::isSeparator()
+bool DefaultMenuItem::isSeparator() const
 {
 	return (displayState_ & MenuItem::mdsSeparator) ? true : false;;
 }
@@ -547,7 +547,7 @@ void DefaultMenuItem::setImageIndex( const int32& imageIndex )
 }
 
 
-AcceleratorKey* DefaultMenuItem::getAccelerator() 
+AcceleratorKey* DefaultMenuItem::getAccelerator()  const
 {
 	AcceleratorKey* result = NULL;
 
@@ -619,12 +619,12 @@ void DefaultMenuItem::onAccelerator( KeyboardEvent* e )
 	click();
 }
 
-Object* DefaultMenuItem::clone(bool deep)
+Object* DefaultMenuItem::clone(bool deep) const
 {
 	DefaultMenuItem* result = new DefaultMenuItem( getCaption(), NULL, NULL );
 
-	result->getMenuItemClicked() = getMenuItemClicked();
-	result->getMenuItemUpdate() = getMenuItemUpdate();
+	result->MenuItemClicked = MenuItemClicked;
+	result->MenuItemUpdate = MenuItemUpdate;
 	result->setTag( getTag() );
 	if ( NULL != getAction() ) {
 		getAction()->addTarget( result );
@@ -640,7 +640,7 @@ Object* DefaultMenuItem::clone(bool deep)
 			VirtualKeyCode keyCode = (VirtualKeyCode)accel->getKeyCode();
 			uint32 mask = accel->getModifierMask();
 			//remove the old one!
-			UIToolkit::removeAccelerator( keyCode, mask, this );
+			UIToolkit::removeAccelerator( keyCode, mask, (MenuItem*)this );
 			currentAccelerator_ = NULL;
 			result->setAcceleratorKey( keyCode, mask );
 		}
@@ -652,7 +652,7 @@ Object* DefaultMenuItem::clone(bool deep)
 	return result;
 }
 
-uint32 DefaultMenuItem::getChildCount()
+uint32 DefaultMenuItem::getChildCount() const 
 {
 	return menuItems_.size();
 }
@@ -763,13 +763,13 @@ MenuItem* DefaultMenuItem::findChildNamed( const String& name, const bool& exact
 	return result;
 }
 
-uint32 DefaultMenuItem::getChildIndex( MenuItem* child )
+uint32 DefaultMenuItem::getChildIndex( MenuItem* child ) const 
 {
 	uint32 result = 0;
 
-	std::vector<MenuItem*>::iterator found = std::find( menuItems_.begin(),
-														menuItems_.end(),
-														child );
+	std::vector<MenuItem*>::const_iterator found = 
+		std::find( menuItems_.begin(), menuItems_.end(), child );
+
 	if ( found != menuItems_.end() ) {
 		result = found - menuItems_.begin();
 	}

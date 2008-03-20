@@ -120,6 +120,12 @@ int main( int argc, char** argv ){
 		}
 
 
+		VariantArray* va = new VariantArray(3);
+		va->data[0] = "Hello";
+		va->data[1] = 10.04;
+		va->data[2] = 1000321;
+		pl["coll"] = va;
+
 		System::println( pl.toString() );
 	}
 
