@@ -30,6 +30,8 @@ public:
 
 	virtual bool openKey( const String& keyname, const bool& createIfNonExistant ) = 0;
 
+	virtual bool removeKey( const String& keyname ) = 0;
+
 	virtual bool setValue( const String& value, const String& valuename ) = 0;
 
 	virtual bool setValue( const uint32& value, const String& valuename ) = 0;

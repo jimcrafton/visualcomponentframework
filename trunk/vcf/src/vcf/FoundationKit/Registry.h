@@ -133,6 +133,8 @@ public:
 
 	bool openKey( const String& keyname, const bool& createIfNonExistant=false );
 
+	bool removeKey( const String& keyname );
+
 	bool setValue( const String& value, const String& valuename );
 
 	bool setValue( const uint32& value, const String& valuename );

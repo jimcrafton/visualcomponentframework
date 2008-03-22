@@ -13,6 +13,8 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+#include "vcf/FoundationKit/Base64Codec.h"
+
 
 namespace VCF {
 

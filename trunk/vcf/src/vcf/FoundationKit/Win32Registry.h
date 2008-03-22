@@ -29,6 +29,8 @@ public:
 
 	virtual bool openKey( const String& keyname, const bool& createIfNonExistant );
 
+	virtual bool removeKey( const String& keyname );
+
 	virtual bool setValue( const String& value, const String& valuename );
 
 	virtual bool setValue( const uint32& value, const String& valuename );

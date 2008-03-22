@@ -14,6 +14,8 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/MessageDialog.h"
 #endif // _VCF_MESSAGEDIALOG_H__
 
+#include "vcf/FoundationKit/PropertyListing.h"
+
 
 using namespace VCF;
 
@@ -42,27 +44,74 @@ Enumerator<DocumentInfo>* DocumentManager::getRegisteredDocumentInfo()
 	return docInfoContainer_.getEnumerator();
 }
 
+
 void DocumentManager::init()
 {
 	Application* app = Application::getRunningInstance();
-	FilePath dir = app->getFileName();
 	
-	String fileName = dir.getPathName(true);
-	fileName += app->getName();	
-	fileName += ".xml";
 	
-	//FileInputStream fs( fileName );
-
-	String xml;
 	Resource* res = app->getResourceBundle()->getResource( app->getName() + ".xml" );
 	if ( NULL != res ) {
-		xml.assign( (const char*) res->getData(), res->getDataSize() );
-		res->free();
+
+		PropertyListing properties;
+		BasicInputStream bis( (const uchar*)res->getData(), res->getDataSize() );
+
+		bis >> &properties;
+
+
+		const VariantArray& docTypes = properties.getArray( "DocumentTypes" );
+		for (size_t i=0;i<docTypes.data.size();i++ ) {
+			const PropertyListing& dict =  (const PropertyListing&)(const Object&) docTypes.data[i];
+			
+			const VariantArray& extensions = dict.getArray( "TypeExtensions" );
+
+			String icoFile = dict["TypeIcon"];
+
+			size_t pos = icoFile.find("@");
+			if ( pos != String::npos ) {
+				icoFile.erase( 0, pos+1);
+
+				icoFile = app->getFileName() + "," + icoFile;
+			}
+			else {
+				icoFile = System::findResourceDirectory() + icoFile;
+			}
+			
+			DocumentInfo info;
+			info.mimetype = (String)dict["TypeContent"];
+			info.description = (String)dict["TypeDescription"];
+			info.windowClass = (String)dict["DocumentWindow"];
+			info.docClass = (String)dict["DocumentClass"];
+
+			//register type(s)
+			UIShell* shell = UIShell::getUIShell();
+			for (size_t j=0;i<extensions.data.size();i++ ) {
+				String ext = extensions.data[i];
+
+				FileAssociationInfo fa;
+				fa.extension = ext;
+				fa.mimeType = info.mimetype;
+				fa.documentClass = app->getName() + "." + info.docClass;
+				fa.documentDescription = info.description;
+				fa.documentIconPath = icoFile;
+				fa.launchingProgram = app->getFileName();
+
+				shell->createFileAssociation( fa, false );				
+
+				info.fileTypes += ext;
+			}
+
+
+			docInfo_[info.mimetype] = info;
+		}
+
+		
 	}
 	else {
 		throw RuntimeException( "You need to have a resource file named \"" + app->getName() + ".xml\" with the correct data in it."  );
 	}
 
+/*
 	if ( xml.empty() ) {
 		throw RuntimeException( "You Document resource file needs to be properly configured - there's no data in it!"  );
 	}
@@ -115,7 +164,7 @@ void DocumentManager::init()
 			docInfo_[info.mimetype] = info;
 		}
 	}
-
+*/
 }
 
 void DocumentManager::terminate() {
@@ -299,7 +348,8 @@ DocumentInfo* DocumentManager::getDocumentInfo( Document* doc )
 	if ( NULL != clazz ) {
 		while ( it != docInfo_.end() ) {
 			DocumentInfo& info = it->second;
-			if ( info.classID == clazz->getID() ) {
+			if ( info.docClass == clazz->getClassName() ||
+					info.docClass == clazz->getID() ) {
 				result = &info;
 				break;
 			}

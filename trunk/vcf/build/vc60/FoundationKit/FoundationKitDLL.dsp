@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"../../../bin/FoundationKit_vc6.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib version.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\FoundationKit_vc6.dll"
+# ADD LINK32 rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib version.lib shlwapi.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\FoundationKit_vc6.dll"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "FoundationKitDLL - Win32 Debug"
@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"../../../bin/FoundationKit_vc6_d.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 Rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib version.lib /nologo /dll /profile /debug /machine:I386 /out:"..\..\..\bin\FoundationKit_vc6_d.dll"
+# ADD LINK32 Rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib version.lib shlwapi.lib /nologo /dll /profile /debug /machine:I386 /out:"..\..\..\bin\FoundationKit_vc6_d.dll"
 
 !ENDIF 
 
@@ -91,10 +91,6 @@ LINK32=link.exe
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\Base64Codec.h
-# End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKit.h
@@ -110,18 +106,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitSelectLib.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\FrameworkConfig.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\PropertyListing.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\XMLDictInputStream.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\XMLDictOutputStream.h
 # End Source File
 # End Group
 # Begin Group "Source Files"
@@ -430,6 +414,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ThreadEvent.h
 # PROP Default_Filter "*.h"
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\Base64Codec.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\BasicInputStream.cpp
 # End Source File
 # Begin Source File
@@ -524,6 +512,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp
 
 SOURCE=..\..\..\src\vcf\FoundationKit\VFFOutputStream.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\XMLDictInputStream.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\XMLDictOutputStream.h
+# End Source File
 # End Group
 # Begin Group "Utils"
 
@@ -535,14 +531,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\CommandLine.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\CommandLine.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\DateTime.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\DateTime.h
 # End Source File
 # Begin Source File
 
@@ -571,14 +559,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\MessageLoader.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\MessageLoader.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.h
 # End Source File
 # Begin Source File
 
@@ -666,6 +646,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ComponentInfo.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\DateTime.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\DateTime.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\Dictionary.cpp
 # End Source File
 # Begin Source File
@@ -690,6 +678,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Locales.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\MIMEType.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\Object.cpp
 # End Source File
 # Begin Source File
@@ -707,6 +703,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\PackageInfo.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\ProgramInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\PropertyListing.h
 # End Source File
 # Begin Source File
 

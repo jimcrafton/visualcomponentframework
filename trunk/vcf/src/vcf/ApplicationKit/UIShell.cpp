@@ -183,10 +183,17 @@ MIMEType UIShell::getMIMEType( const String& fileName )
 	return peer_->getMIMEType( fileName );
 }
 
-void UIShell::createFileAssociation( const FileAssociationInfo& info )
+void UIShell::createFileAssociation( const FileAssociationInfo& info, bool forAllUsers )
 {
-	peer_->createFileAssociation( info );
+	peer_->createFileAssociation( info, forAllUsers );
 }
+
+
+void UIShell::removeFileAssociation( const FileAssociationInfo& info, bool forAllUsers )
+{
+	peer_->removeFileAssociation( info, forAllUsers );
+}
+
 /**
 $Id: UIShell.cpp 2807 2006-06-27 20:25:49Z kdmix $
 */

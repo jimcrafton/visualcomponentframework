@@ -1,5 +1,36 @@
 <plist>
-	
+	<dict>
+		<key>DocumentTypes</key>
+		<array>
+			<dict>
+				<key>TypeExtensions</key>
+				<array>
+					<string>circ</string>
+				</array>
+
+				<key>TypeDescription</key>
+				<string>Circle Document</string>
+
+				<key>TypeContent</key>
+				<string>application/x-circledoc</string>
+
+				<key>TypeIcon</key>
+				<string>circ-type.bmp</string>
+				
+
+
+				<key>DocumentClass</key>
+				<string>CircleDocument</string>
+				<key>ModelClass</key>
+				<string>CircleModel</string>
+
+				<key>DocumentWindow</key>
+				<string>DocViewBasicsWindow</string>
+
+			</dict>			
+		</array>
+	</dict>
+<!--
 	<documentTypes>
 	<document classname="CircleDocument" classid="ccdeaf42-a9fd-4fb4-adf7-13077976539e">
 		<property name="mimetype" value="application/x-circledoc"/>
@@ -10,4 +41,5 @@
 		<property name="window" value="DocViewBasicsWindow"/>
 	</document>
 	</documentTypes>
+	-->
 </plist>
