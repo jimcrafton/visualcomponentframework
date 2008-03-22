@@ -9,6 +9,7 @@ where you installed the VCF.
 
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
+#include <shlwapi.h>
 
 using namespace VCF;
 
@@ -90,6 +91,27 @@ bool Win32Registry::openKey( const String& keyname, const bool& createIfNonExist
 
 	return result;
 
+}
+
+bool Win32Registry::removeKey( const String& keyname )
+{
+	String tmpKeyname = keyname;
+
+	std::replace_if( tmpKeyname.begin(), tmpKeyname.end(),
+					std::bind2nd(std::equal_to<VCFChar>(),'/') , '\\' );
+
+	if ( System::isUnicodeEnabled() ) {		
+		if ( ERROR_SUCCESS == SHDeleteKeyW( rootKeyHandle_, tmpKeyname.c_str() ) ) {
+			return true;
+		}
+	}
+	else {
+		if ( ERROR_SUCCESS == SHDeleteKeyA( rootKeyHandle_, tmpKeyname.ansi_c_str() ) ) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 bool Win32Registry::setValue( const String& value, const String& valuename )
@@ -465,3 +487,4 @@ String Win32Registry::getCurrentKey()
 /**
 $Id$
 */
+

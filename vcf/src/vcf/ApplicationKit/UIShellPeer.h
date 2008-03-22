@@ -75,7 +75,9 @@ public:
 
 	virtual MIMEType getMIMEType( const String& fileName ) = 0;
 
-	virtual void createFileAssociation( const FileAssociationInfo& info ) = 0;
+	virtual void createFileAssociation( const FileAssociationInfo& info, bool forAllUsers ) = 0;
+
+	virtual void removeFileAssociation( const FileAssociationInfo& info, bool forAllUsers ) = 0;
 };
 
 

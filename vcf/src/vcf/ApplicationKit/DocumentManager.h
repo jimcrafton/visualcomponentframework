@@ -26,25 +26,24 @@ namespace VCF {
 \class DocumentInfo DocumentManager.h "vcf/ApplicationKit/DocumentManager.h"
 Contains the string infos characterizing a document class or a kind of document.
 
-	\li classID     is the uuid identifying the document. It lets the VCF RTTI create our document,
-                with no other informations or to get all the DocumentInfo associated to a document
-                according to the map stored by the DocumentManager.
-	\li className   is the name for this class of documents.
-	\li view        is the uuid identifying the kind of view to be associated to this kind of document.
-	\li window      is the uuid identifying the kind of window to be associated to this kind of document.
+	
+	\li docClass   is the name for this class of documents.
+	\li modelClass is the name for this class of documents.	
+	\li viewClass        is the name identifying the kind of view to be associated to this kind of document.
+	\li windowClass      is the name identifying the kind of window to be associated to this kind of document.
 	\li fileTypes   is the list of allowed extension (separated by ';') for the files associated to this
                 kind of document.
 	\li mimetype    is the mime type for this kind of document.
 	\li description is just a generic description for this class of documents.
 */
 class APPLICATIONKIT_API DocumentInfo {
-public:
-	String classID;
-	String className;
-	String view;
-	String window;
+public:	
+	String docClass;
+	String modelClass;
+	String viewClass;
+	String windowClass;
 	String fileTypes;
-	String mimetype;
+	MIMEType mimetype;
 	String description;
 };
 
@@ -1522,11 +1521,11 @@ Window* DocumentManagerImpl<AppClass,DocInterfacePolicy>::getWindowForNewDocumen
 	if ( DocInterfacePolicy::usesMainWindow() ) {
 		// in a SDI policy the new window for the document is the main window
 		if ( NULL == app_->getMainWindow() ) {
-			if ( info.window.empty() ) {
+			if ( info.windowClass.empty() ) {
 				result = new Window();
 			}
 			else {
-				Object* windowObj = ClassRegistry::createNewInstance( info.window );
+				Object* windowObj = ClassRegistry::createNewInstance( info.windowClass );
 				result = dynamic_cast<Window*>(windowObj);
 			}
 			app_->setMainWindow( result );
@@ -1537,11 +1536,11 @@ Window* DocumentManagerImpl<AppClass,DocInterfacePolicy>::getWindowForNewDocumen
 	}
 	else {
 		// in a MDI policy the new window for the document is a new window
-		if ( info.window.empty() ) {
+		if ( info.windowClass.empty() ) {
 			result = new Window();
 		}
 		else {
-			Object* windowObj = ClassRegistry::createNewInstance( info.window );
+			Object* windowObj = ClassRegistry::createNewInstance( info.windowClass );
 			result = dynamic_cast<Window*>(windowObj);
 		}
 	}
@@ -1590,10 +1589,10 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUI( const DocumentI
 	create a view from the DocInfo if necessary
 	*/
 	View* view = NULL;
-	if ( !info.view.empty() ) {
-		if ( info.window != info.view ) {
+	if ( !info.viewClass.empty() ) {
+		if ( info.windowClass != info.viewClass ) {
 			Object* viewObject = NULL;
-			viewObject = ClassRegistry::createNewInstance( info.view );
+			viewObject = ClassRegistry::createNewInstance( info.viewClass );
 
 			view = dynamic_cast<View*>(viewObject);
 		}
@@ -1768,11 +1767,11 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::createDocumentFromTy
 
 	Class* clazz = NULL;
 	Object* objInstance = NULL;
-	if ( !info.classID.empty() ) {
-		objInstance = ClassRegistry::createNewInstanceFromClassID( info.classID );
+	try {
+		objInstance = ClassRegistry::createNewInstance( info.docClass );
 	}
-	else {
-		objInstance = ClassRegistry::createNewInstance( info.className );
+	catch (...) {		
+		objInstance = ClassRegistry::createNewInstanceFromClassID( info.docClass );
 	}
 
 	result = dynamic_cast<Document*>( objInstance );

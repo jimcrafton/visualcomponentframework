@@ -27,8 +27,9 @@ class FileAssociationInfo {
 public:
 	String extension;
 	MIMEType mimeType;
-	String documentType;
 	String documentClass;
+	String documentDescription;
+	String documentIconPath;
 	String launchingProgram;
 };
 
@@ -109,7 +110,9 @@ public:
 
 	MIMEType getMIMEType( const String& fileName );
 
-	void createFileAssociation( const FileAssociationInfo& info );
+	void createFileAssociation( const FileAssociationInfo& info, bool forAllUsers );
+
+	void removeFileAssociation( const FileAssociationInfo& info, bool forAllUsers );
 
 	friend class UIToolkit;
 	friend class ApplicationKit;

@@ -96,7 +96,7 @@ public:
 			value = cdata;
 		}
 		else if ( name == "real" ) {
-			double val = StringUtils::fromStringAsInt( cdata );
+			double val = StringUtils::fromStringAsDouble( cdata );
 			value = val;
 		}
 		else if ( name == "date" ) {
@@ -118,16 +118,22 @@ public:
 					std::vector<String> vals2;
 					tmPt.getElements(vals2);
 					
-					DateTime dt;
-					dt.set( StringUtils::fromStringAsUInt(vals[0]), 
-							StringUtils::fromStringAsUInt(vals[1]), 
-							StringUtils::fromStringAsUInt(vals[2]),
-							StringUtils::fromStringAsUInt(vals2[0]), 
-							StringUtils::fromStringAsUInt(vals2[1]), 
-							StringUtils::fromStringAsUInt(vals2[2]) );
+					VCF_ASSERT( vals.size() == 3 );
 
+					VCF_ASSERT( vals2.size() == 3 );
 
-					value = dt;
+					if ( vals.size() == 3 && vals2.size() == 3 ) {
+						DateTime dt;
+						dt.set( StringUtils::fromStringAsUInt(vals[0]), 
+								StringUtils::fromStringAsUInt(vals[1]), 
+								StringUtils::fromStringAsUInt(vals[2]),
+								StringUtils::fromStringAsUInt(vals2[0]), 
+								StringUtils::fromStringAsUInt(vals2[1]), 
+								StringUtils::fromStringAsUInt(vals2[2]) );
+						
+						
+						value = dt;
+					}
 				}
 				
 			}
@@ -190,6 +196,8 @@ public:
 			XMLNode* valNode = nodes->nextElement();
 			VariantData v;
 			readValue( valNode, v );
+
+			array->data.push_back( v );
 		}
 	}
 
@@ -225,118 +233,6 @@ public:
 			if ( name == "dict" || name == "array" ) {
 				dict.setOwnsObjectValues( true );
 			}
-
-/*
-			
-
-			String name = StringUtils::lowerCase(valNode->getName());
-			StringUtils::trimWhiteSpaces( name );
-
-			String cdata = valNode->getCDATA();
-			StringUtils::trimWhiteSpaces( cdata );
-			if ( name == "integer" ) {
-				int val = StringUtils::fromStringAsInt( cdata );
-				dict[ keyName ] = val;
-			}
-			else if ( name == "string" ) {
-				dict[ keyName ] = cdata;
-			}
-			else if ( name == "real" ) {
-				double val = StringUtils::fromStringAsInt( cdata );
-				dict[ keyName ] = val;
-			}
-			else if ( name == "date" ) {
-				size_t pos = cdata.find("T");
-
-				VCF_ASSERT( pos != String::npos );
-				
-				if ( pos != String::npos ) {
-					StringTokenizer dtPt(cdata.substr(0,pos),"-");
-					std::vector<String> vals;
-					dtPt.getElements(vals);
-					cdata.erase( 0, pos+1 );
-					pos = cdata.find("Z");
-					
-					VCF_ASSERT( pos != String::npos );
-					
-					if ( pos != String::npos ) {
-						StringTokenizer tmPt(cdata.substr(0,pos),":");
-						std::vector<String> vals2;
-						tmPt.getElements(vals2);
-						
-						DateTime dt;
-						dt.set( StringUtils::fromStringAsUInt(vals[0]), 
-								StringUtils::fromStringAsUInt(vals[1]), 
-								StringUtils::fromStringAsUInt(vals[2]),
-								StringUtils::fromStringAsUInt(vals2[0]), 
-								StringUtils::fromStringAsUInt(vals2[1]), 
-								StringUtils::fromStringAsUInt(vals2[2]) );
-
-
-						dict[ keyName ] = dt;
-					}
-					
-				}
-			}
-			else if ( name == "data" ) {
-				AnsiString s;
-				uint32 bufferSize = 0;
-				Base64Codec::decode( s, NULL, bufferSize );
-				if ( bufferSize > 0 ) {
-					unsigned char* buffer = new unsigned char[bufferSize];
-					
-					Base64Codec::decode( s, buffer, bufferSize );
-
-					
-					//we need to be able to attach the data to an Object class
-					//so that we can assign it to a VariantData instance,
-					//We need to create a new class for this, something like:
-					//
-					//class BinaryData : public Object {
-					//public:
-					//protected:
-					//	unsigned char* buffer_;
-				//		uint32 bufSize_;
-				//	};
-
-					//then we could do something like 
-					//Dictionary dict;
-					//BinaryData* data = new BinaryData( jpegPictData, jpegPictSize );
-					//dict["Picture"] = data;
-					
-
-					delete [] buffer;
-				}
-			}
-			else if ( name == "true" ) {
-				bool val = true;
-				dict[ keyName ] = val;
-			}
-			else if ( name == "false" ) {
-				bool val = false;
-				dict[ keyName ] = val;
-			}
-			else if ( name == "array" ) {
-				VariantArray* va = new VariantArray();
-				
-				readArray( valNode, va );
-			}
-			else if ( name == "dict" ) {
-				Dictionary* subDict = NULL;
-				if ( dict.keyExists( keyName ) ) {
-					subDict = (Dictionary*) (Object*) dict[keyName];
-				}
-				else {
-					subDict = new Dictionary();
-					dict[keyName] = subDict;
-					dict.setOwnsObjectValues( true );
-				}
-
-				VCF_ASSERT( NULL != subDict );
-
-				readDict( valNode, *subDict );
-			}
-			*/
 		}	
 	}
 

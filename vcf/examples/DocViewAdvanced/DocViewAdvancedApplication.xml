@@ -1,3 +1,10 @@
+<plist>
+	<dict>
+		<key></key>
+	</dict>
+</plist>
+
+<!--
 <documentTypes>
 	<document classname="CircleDocument" classid="ccdeaf42-a9fd-4fb4-adf7-13077976539e">
 		<property name="mimetype" value="application/x-circledoc"/>
@@ -7,3 +14,4 @@
 		<property name="window" value="DocViewAdvancedWindow"/>
 	</document>
 </documentTypes>
+-->

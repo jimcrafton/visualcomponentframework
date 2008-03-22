@@ -79,7 +79,8 @@ public:
 
 	virtual MIMEType getMIMEType( const String& fileName );
 
-	virtual void createFileAssociation( const FileAssociationInfo& info );
+	virtual void createFileAssociation( const FileAssociationInfo& info, bool forAllUsers );
+	virtual void removeFileAssociation( const FileAssociationInfo& info, bool forAllUsers );
 protected:
 	UIShell* shell_;
 	HRGN hClipRgn_;

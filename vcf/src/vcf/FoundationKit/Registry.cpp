@@ -40,6 +40,11 @@ bool Registry::openKey( const String& keyname, const bool& createIfNonExistant )
 	return peer_->openKey( keyname, createIfNonExistant );
 }
 
+bool Registry::removeKey( const String& keyname )
+{
+	return peer_->removeKey( keyname );
+}
+
 bool Registry::setValue( const String& value, const String& valuename )
 {
 	return peer_->setValue( value, valuename );

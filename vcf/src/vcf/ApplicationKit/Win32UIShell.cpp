@@ -447,7 +447,76 @@ MIMEType Win32UIShell::getMIMEType( const String& fileName )
 	return result;
 }
 
-void Win32UIShell::createFileAssociation( const FileAssociationInfo& info )
+void Win32UIShell::createFileAssociation( const FileAssociationInfo& info, bool forAllUsers )
+{
+	String ext = info.extension;
+	if ( ext[0] != '.' ) {
+		ext.insert( 0, "." );
+	}
+	
+	Registry reg;
+
+	
+	String key = "";
+	if ( forAllUsers ) {
+		key += ext;
+		reg.setRoot( RKT_ROOT );
+		reg.openKey( key, true );
+		reg.setValue( info.documentClass, "" );
+		reg.setValue( info.mimeType, "Content Type" );
+		
+		key = "";
+		key += info.documentClass;
+		reg.setRoot( RKT_ROOT );
+		reg.openKey( key, true );
+		reg.setValue( info.documentDescription, "" );
+		
+		if ( !info.documentIconPath.empty() ) {
+			reg.setRoot( RKT_ROOT );
+			reg.openKey( key + "\\DefaultIcon", true );
+			reg.setValue( String("\"") + info.documentIconPath + "\"", "" );
+		}
+
+		reg.setRoot( RKT_ROOT );
+		reg.openKey( key + "\\shell\\open\\command", true );
+		String launchStr = "\"";
+		launchStr += info.launchingProgram + "\" \"%1\"";
+		
+		reg.setValue( launchStr, "" );
+	}
+	else {
+		key = "Software\\Classes\\";
+		key += ext;
+		reg.setRoot( RKT_CURRENT_USER );
+		reg.openKey( key, true );
+		reg.setValue( info.documentClass, "" );
+		reg.setValue( info.mimeType, "Content Type" );
+		
+		key = "Software\\Classes\\";
+		key += info.documentClass;
+		reg.setRoot( RKT_CURRENT_USER );
+		reg.openKey( key, true );
+		reg.setValue( info.documentDescription, "" );
+		
+		if ( !info.documentIconPath.empty() ) {
+			reg.setRoot( RKT_CURRENT_USER );
+			reg.openKey( key + "\\DefaultIcon", true );
+			reg.setValue( String("\"") + info.documentIconPath + "\"", "" );
+		}
+
+		reg.setRoot( RKT_CURRENT_USER );
+		reg.openKey( key + "\\shell\\open\\command", true );
+		String launchStr = "\"";
+		launchStr += info.launchingProgram + "\" \"%1\"";
+		
+		reg.setValue( launchStr, "" );
+	}
+	
+
+	SHChangeNotify( SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL );
+}
+
+void Win32UIShell::removeFileAssociation( const FileAssociationInfo& info, bool forAllUsers )
 {
 	String ext = info.extension;
 	if ( ext[0] != '.' ) {
@@ -456,26 +525,27 @@ void Win32UIShell::createFileAssociation( const FileAssociationInfo& info )
 	
 	Registry reg;
 	String key = "";
-	key += ext;
-	reg.setRoot( RKT_ROOT );
-	reg.openKey( key, true );
-	reg.setValue( info.documentClass, "" );
-	reg.setValue( info.mimeType, "Content Type" );
-	
-	key = "";
-	key += info.documentClass;
-	reg.setRoot( RKT_ROOT );
-	reg.openKey( key, true );
-	reg.setValue( info.documentType, "" );
 
-	reg.setRoot( RKT_ROOT );
-	reg.openKey( key + "\\shell\\open\\command", true );
-	String launchStr = "\"";
-	launchStr += info.launchingProgram + "\" \"%1\"";
+	if ( forAllUsers ) {
+		key += ext;
+		reg.setRoot( RKT_ROOT );
+		reg.removeKey( key );
+		key = "";
+		key += info.documentClass;
+		reg.removeKey( key );
+	}
+	else {
+		key = "Software\\Classes\\";
+		key += ext;
+		reg.setRoot( RKT_CURRENT_USER );
+		reg.removeKey( key );
+		key = "Software\\Classes\\";
+		key += info.documentClass;
+		reg.removeKey( key );
+	}
 
-	reg.setValue( launchStr, "" );
+	SHChangeNotify( SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL );
 }
-
 
 /**
 $Id: Win32UIShell.cpp 2807 2006-06-27 20:25:49Z kdmix $
