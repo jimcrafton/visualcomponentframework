@@ -33,16 +33,14 @@ public:
 
 	virtual void finishedDrawing();
 
-    CGImageRef getCGImage() {
-        return imageRef_;
-    }
+    CGImageRef createCGImage();
 protected:
 
 	void setAlpha( float val );
 	
     void createBMP();
-    GrafPtr grafPort_;
-    CGImageRef imageRef_;
+	
+    CGContextRef imageCGRef_;
 
 	void loadFromURL( CFURLRef url, const String& ext );
 };
