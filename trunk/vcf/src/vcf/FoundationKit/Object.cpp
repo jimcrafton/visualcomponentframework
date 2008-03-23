@@ -268,7 +268,7 @@ uint32 Object::totalAllocatedObjectMemory()
 
 		Object* o = (Object*)info.objAddress_;
 		if ( NULL != o ) {
-			totmem += maxVal<>( info.objectAllocationSize_, (uint32)o->sizeOf() );
+			totmem += maxVal<size_t>( info.objectAllocationSize_, (uint32)o->sizeOf() );
 		}
 		else {
 			totmem += info.objectAllocationSize_;

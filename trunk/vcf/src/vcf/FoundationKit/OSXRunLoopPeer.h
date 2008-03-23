@@ -17,14 +17,17 @@ namespace VCF {
     public:
         OSXRunLoopPeer( RunLoop* runLoop );
         
-        virtual void run( const DateTimeSpan* duration );
-        virtual void stop();
-		virtual bool isStopped() const;		
-        virtual void addTimer( RunLoopTimerPtr::Shared timer );
-        virtual void removeTimer( RunLoopTimerPtr::Shared timer );
-        virtual void addSource( RunLoopSourcePtr::Shared source );
-        virtual void removeSource( RunLoopSourcePtr::Shared source );
+        virtual void run( const DateTimeSpan* duration, const String& mode );
+        virtual void stop( const String& mode );
         
+        virtual bool isStopped(const String& mode) const;
+
+        virtual void addTimer( RunLoopTimerPtr::Shared timer, const String& mode );
+        virtual void removeTimer( RunLoopTimerPtr::Shared timer, const String& mode );
+
+        virtual void addSource( RunLoopSourcePtr::Shared source, const String& mode );
+        virtual void removeSource( RunLoopSourcePtr::Shared source, const String& mode );
+		
     private:
         RunLoop*     runLoop_;
         CFRunLoopRef runLoopRef_;

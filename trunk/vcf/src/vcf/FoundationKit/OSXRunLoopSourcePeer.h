@@ -18,7 +18,7 @@ namespace VCF {
         
         CFRunLoopSourceRef getSource();
         
-        virtual void fire();
+        virtual void signal();
         
     private:
         static void CancelCallBack( void *info, CFRunLoopRef rl, CFStringRef mode );

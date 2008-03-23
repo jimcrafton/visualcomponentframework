@@ -126,7 +126,6 @@
 		5E733FF6082E719300CDD184 /* Condition.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C802B0641F81600A8020D /* Condition.h */; settings = {ATTRIBUTES = (); }; };
 		5E733FF7082E719300CDD184 /* ConditionPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C802C0641F81600A8020D /* ConditionPeer.h */; settings = {ATTRIBUTES = (); }; };
 		5E733FF8082E719300CDD184 /* DateTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80330641F81600A8020D /* DateTime.h */; settings = {ATTRIBUTES = (); }; };
-		5E733FF9082E719300CDD184 /* Delegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80340641F81600A8020D /* Delegate.h */; settings = {ATTRIBUTES = (); }; };
 		5E733FFA082E719300CDD184 /* Dictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80360641F81600A8020D /* Dictionary.h */; settings = {ATTRIBUTES = (); }; };
 		5E733FFB082E719300CDD184 /* Directory.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80380641F81600A8020D /* Directory.h */; settings = {ATTRIBUTES = (); }; };
 		5E733FFC082E719300CDD184 /* Enum.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80390641F81600A8020D /* Enum.h */; settings = {ATTRIBUTES = (); }; };
@@ -134,7 +133,6 @@
 		5E733FFE082E719300CDD184 /* ErrorLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C803C0641F81600A8020D /* ErrorLog.h */; settings = {ATTRIBUTES = (); }; };
 		5E733FFF082E719300CDD184 /* ErrorStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C803D0641F81600A8020D /* ErrorStrings.h */; settings = {ATTRIBUTES = (); }; };
 		5E734000082E719300CDD184 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C803F0641F81600A8020D /* Event.h */; settings = {ATTRIBUTES = (); }; };
-		5E734001082E719300CDD184 /* EventHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80410641F81600A8020D /* EventHandler.h */; settings = {ATTRIBUTES = (); }; };
 		5E734002082E719300CDD184 /* Field.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80420641F81600A8020D /* Field.h */; settings = {ATTRIBUTES = (); }; };
 		5E734003082E719300CDD184 /* File.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80440641F81600A8020D /* File.h */; settings = {ATTRIBUTES = (); }; };
 		5E734004082E719300CDD184 /* FileIOError.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80450641F81600A8020D /* FileIOError.h */; settings = {ATTRIBUTES = (); }; };
@@ -158,7 +156,6 @@
 		5E734016082E719300CDD184 /* LocalePeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80790641F81600A8020D /* LocalePeer.h */; settings = {ATTRIBUTES = (); }; };
 		5E734017082E719300CDD184 /* Locales.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C807B0641F81600A8020D /* Locales.h */; settings = {ATTRIBUTES = (); }; };
 		5E734018082E719300CDD184 /* Lock.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C807C0641F81600A8020D /* Lock.h */; settings = {ATTRIBUTES = (); }; };
-		5E734019082E719300CDD184 /* MemoryStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C807E0641F81600A8020D /* MemoryStream.h */; settings = {ATTRIBUTES = (); }; };
 		5E73401A082E719300CDD184 /* MemStreamUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C807F0641F81600A8020D /* MemStreamUtils.h */; settings = {ATTRIBUTES = (); }; };
 		5E73401B082E719300CDD184 /* MessageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80810641F81600A8020D /* MessageLoader.h */; settings = {ATTRIBUTES = (); }; };
 		5E73401C082E719300CDD184 /* Method.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80820641F81600A8020D /* Method.h */; settings = {ATTRIBUTES = (); }; };
@@ -169,10 +166,8 @@
 		5E734021082E719300CDD184 /* NoImplementerFoundException.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80890641F81600A8020D /* NoImplementerFoundException.h */; settings = {ATTRIBUTES = (); }; };
 		5E734022082E719300CDD184 /* NoPeerFoundException.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C808A0641F81600A8020D /* NoPeerFoundException.h */; settings = {ATTRIBUTES = (); }; };
 		5E734023082E719300CDD184 /* NoSuchElementException.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C808B0641F81600A8020D /* NoSuchElementException.h */; settings = {ATTRIBUTES = (); }; };
-		5E734024082E719300CDD184 /* NotifyEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C808C0641F81600A8020D /* NotifyEvent.h */; settings = {ATTRIBUTES = (); }; };
 		5E734025082E719300CDD184 /* NoToolKitFoundException.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C808D0641F81600A8020D /* NoToolKitFoundException.h */; settings = {ATTRIBUTES = (); }; };
 		5E734026082E719300CDD184 /* Object.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C808F0641F81600A8020D /* Object.h */; settings = {ATTRIBUTES = (); }; };
-		5E734027082E719300CDD184 /* ObjectWithEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80910641F81600A8020D /* ObjectWithEvents.h */; settings = {ATTRIBUTES = (); }; };
 		5E734028082E719300CDD184 /* OSXConditionPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80930641F81600A8020D /* OSXConditionPeer.h */; settings = {ATTRIBUTES = (); }; };
 		5E734029082E719300CDD184 /* OSXFilePeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80950641F81600A8020D /* OSXFilePeer.h */; settings = {ATTRIBUTES = (); }; };
 		5E73402A082E719300CDD184 /* OSXFileStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80970641F81600A8020D /* OSXFileStream.h */; settings = {ATTRIBUTES = (); }; };
@@ -729,7 +724,6 @@
 		5EC1A63E0941EFE0001EA41D /* ConditionPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C802C0641F81600A8020D /* ConditionPeer.h */; };
 		5EC1A63F0941EFE0001EA41D /* DateTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80320641F81600A8020D /* DateTime.cpp */; };
 		5EC1A6400941EFE0001EA41D /* DateTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80330641F81600A8020D /* DateTime.h */; };
-		5EC1A6410941EFE0001EA41D /* Delegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80340641F81600A8020D /* Delegate.h */; };
 		5EC1A6420941EFE0001EA41D /* Dictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80350641F81600A8020D /* Dictionary.cpp */; };
 		5EC1A6430941EFE0001EA41D /* Dictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80360641F81600A8020D /* Dictionary.h */; };
 		5EC1A6440941EFE0001EA41D /* Directory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80370641F81600A8020D /* Directory.cpp */; };
@@ -740,7 +734,6 @@
 		5EC1A6490941EFE0001EA41D /* ErrorLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C803C0641F81600A8020D /* ErrorLog.h */; };
 		5EC1A64A0941EFE0001EA41D /* ErrorStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C803D0641F81600A8020D /* ErrorStrings.h */; };
 		5EC1A64C0941EFE0001EA41D /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C803F0641F81600A8020D /* Event.h */; };
-		5EC1A64E0941EFE0001EA41D /* EventHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80410641F81600A8020D /* EventHandler.h */; };
 		5EC1A64F0941EFE0001EA41D /* Field.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80420641F81600A8020D /* Field.h */; };
 		5EC1A6500941EFE0001EA41D /* File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80430641F81600A8020D /* File.cpp */; };
 		5EC1A6510941EFE0001EA41D /* File.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80440641F81600A8020D /* File.h */; };
@@ -771,7 +764,6 @@
 		5EC1A66A0941EFF8001EA41D /* Locales.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C807A0641F81600A8020D /* Locales.cpp */; };
 		5EC1A66B0941EFF8001EA41D /* Locales.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C807B0641F81600A8020D /* Locales.h */; };
 		5EC1A66C0941EFF8001EA41D /* Lock.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C807C0641F81600A8020D /* Lock.h */; };
-		5EC1A66E0941EFF8001EA41D /* MemoryStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C807E0641F81600A8020D /* MemoryStream.h */; };
 		5EC1A66F0941EFF8001EA41D /* MemStreamUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C807F0641F81600A8020D /* MemStreamUtils.h */; };
 		5EC1A6700941EFF8001EA41D /* MessageLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80800641F81600A8020D /* MessageLoader.cpp */; };
 		5EC1A6710941EFF8001EA41D /* MessageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80810641F81600A8020D /* MessageLoader.h */; };
@@ -785,12 +777,10 @@
 		5EC1A6790941EFF8001EA41D /* NoImplementerFoundException.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80890641F81600A8020D /* NoImplementerFoundException.h */; };
 		5EC1A67A0941EFF8001EA41D /* NoPeerFoundException.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C808A0641F81600A8020D /* NoPeerFoundException.h */; };
 		5EC1A67B0941EFF8001EA41D /* NoSuchElementException.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C808B0641F81600A8020D /* NoSuchElementException.h */; };
-		5EC1A67C0941EFF8001EA41D /* NotifyEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C808C0641F81600A8020D /* NotifyEvent.h */; };
 		5EC1A67D0941EFF8001EA41D /* NotImplementedException.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E65B1D40701BB4C00706239 /* NotImplementedException.h */; };
 		5EC1A67E0941EFF8001EA41D /* NoToolKitFoundException.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C808D0641F81600A8020D /* NoToolKitFoundException.h */; };
 		5EC1A67F0941EFF8001EA41D /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C808E0641F81600A8020D /* Object.cpp */; };
 		5EC1A6800941EFF8001EA41D /* Object.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C808F0641F81600A8020D /* Object.h */; };
-		5EC1A6820941EFF8001EA41D /* ObjectWithEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80910641F81600A8020D /* ObjectWithEvents.h */; };
 		5EC1A6830941EFF8001EA41D /* OSXConditionPeer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80920641F81600A8020D /* OSXConditionPeer.cpp */; };
 		5EC1A6840941EFF8001EA41D /* OSXConditionPeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2C80930641F81600A8020D /* OSXConditionPeer.h */; };
 		5EC1A6850941EFF8001EA41D /* OSXFilePeer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C80940641F81600A8020D /* OSXFilePeer.cpp */; };
@@ -1486,7 +1476,6 @@
 		5E2C802C0641F81600A8020D /* ConditionPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ConditionPeer.h; path = ../../src/vcf/FoundationKit/ConditionPeer.h; sourceTree = SOURCE_ROOT; };
 		5E2C80320641F81600A8020D /* DateTime.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = DateTime.cpp; path = ../../src/vcf/FoundationKit/DateTime.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80330641F81600A8020D /* DateTime.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DateTime.h; path = ../../src/vcf/FoundationKit/DateTime.h; sourceTree = SOURCE_ROOT; };
-		5E2C80340641F81600A8020D /* Delegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Delegate.h; path = ../../src/vcf/FoundationKit/Delegate.h; sourceTree = SOURCE_ROOT; };
 		5E2C80350641F81600A8020D /* Dictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Dictionary.cpp; path = ../../src/vcf/FoundationKit/Dictionary.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80360641F81600A8020D /* Dictionary.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Dictionary.h; path = ../../src/vcf/FoundationKit/Dictionary.h; sourceTree = SOURCE_ROOT; };
 		5E2C80370641F81600A8020D /* Directory.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Directory.cpp; path = ../../src/vcf/FoundationKit/Directory.cpp; sourceTree = SOURCE_ROOT; };
@@ -1497,7 +1486,6 @@
 		5E2C803C0641F81600A8020D /* ErrorLog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ErrorLog.h; path = ../../src/vcf/FoundationKit/ErrorLog.h; sourceTree = SOURCE_ROOT; };
 		5E2C803D0641F81600A8020D /* ErrorStrings.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ErrorStrings.h; path = ../../src/vcf/FoundationKit/ErrorStrings.h; sourceTree = SOURCE_ROOT; };
 		5E2C803F0641F81600A8020D /* Event.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Event.h; path = ../../src/vcf/FoundationKit/Event.h; sourceTree = SOURCE_ROOT; };
-		5E2C80410641F81600A8020D /* EventHandler.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = EventHandler.h; path = ../../src/vcf/FoundationKit/EventHandler.h; sourceTree = SOURCE_ROOT; };
 		5E2C80420641F81600A8020D /* Field.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Field.h; path = ../../src/vcf/FoundationKit/Field.h; sourceTree = SOURCE_ROOT; };
 		5E2C80430641F81600A8020D /* File.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = File.cpp; path = ../../src/vcf/FoundationKit/File.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80440641F81600A8020D /* File.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = File.h; path = ../../src/vcf/FoundationKit/File.h; sourceTree = SOURCE_ROOT; };
@@ -1529,7 +1517,6 @@
 		5E2C807A0641F81600A8020D /* Locales.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Locales.cpp; path = ../../src/vcf/FoundationKit/Locales.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C807B0641F81600A8020D /* Locales.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Locales.h; path = ../../src/vcf/FoundationKit/Locales.h; sourceTree = SOURCE_ROOT; };
 		5E2C807C0641F81600A8020D /* Lock.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Lock.h; path = ../../src/vcf/FoundationKit/Lock.h; sourceTree = SOURCE_ROOT; };
-		5E2C807E0641F81600A8020D /* MemoryStream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MemoryStream.h; path = ../../src/vcf/FoundationKit/MemoryStream.h; sourceTree = SOURCE_ROOT; };
 		5E2C807F0641F81600A8020D /* MemStreamUtils.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MemStreamUtils.h; path = ../../src/vcf/FoundationKit/MemStreamUtils.h; sourceTree = SOURCE_ROOT; };
 		5E2C80800641F81600A8020D /* MessageLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = MessageLoader.cpp; path = ../../src/vcf/FoundationKit/MessageLoader.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80810641F81600A8020D /* MessageLoader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = MessageLoader.h; path = ../../src/vcf/FoundationKit/MessageLoader.h; sourceTree = SOURCE_ROOT; };
@@ -1543,11 +1530,9 @@
 		5E2C80890641F81600A8020D /* NoImplementerFoundException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = NoImplementerFoundException.h; path = ../../src/vcf/FoundationKit/NoImplementerFoundException.h; sourceTree = SOURCE_ROOT; };
 		5E2C808A0641F81600A8020D /* NoPeerFoundException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = NoPeerFoundException.h; path = ../../src/vcf/FoundationKit/NoPeerFoundException.h; sourceTree = SOURCE_ROOT; };
 		5E2C808B0641F81600A8020D /* NoSuchElementException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = NoSuchElementException.h; path = ../../src/vcf/FoundationKit/NoSuchElementException.h; sourceTree = SOURCE_ROOT; };
-		5E2C808C0641F81600A8020D /* NotifyEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = NotifyEvent.h; path = ../../src/vcf/FoundationKit/NotifyEvent.h; sourceTree = SOURCE_ROOT; };
 		5E2C808D0641F81600A8020D /* NoToolKitFoundException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = NoToolKitFoundException.h; path = ../../src/vcf/FoundationKit/NoToolKitFoundException.h; sourceTree = SOURCE_ROOT; };
 		5E2C808E0641F81600A8020D /* Object.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Object.cpp; path = ../../src/vcf/FoundationKit/Object.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C808F0641F81600A8020D /* Object.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Object.h; path = ../../src/vcf/FoundationKit/Object.h; sourceTree = SOURCE_ROOT; };
-		5E2C80910641F81600A8020D /* ObjectWithEvents.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ObjectWithEvents.h; path = ../../src/vcf/FoundationKit/ObjectWithEvents.h; sourceTree = SOURCE_ROOT; };
 		5E2C80920641F81600A8020D /* OSXConditionPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXConditionPeer.cpp; path = ../../src/vcf/FoundationKit/OSXConditionPeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80930641F81600A8020D /* OSXConditionPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXConditionPeer.h; path = ../../src/vcf/FoundationKit/OSXConditionPeer.h; sourceTree = SOURCE_ROOT; };
 		5E2C80940641F81600A8020D /* OSXFilePeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXFilePeer.cpp; path = ../../src/vcf/FoundationKit/OSXFilePeer.cpp; sourceTree = SOURCE_ROOT; };
@@ -2477,7 +2462,6 @@
 				5E2C802B0641F81600A8020D /* Condition.h */,
 				5E2C802C0641F81600A8020D /* ConditionPeer.h */,
 				5E2C80330641F81600A8020D /* DateTime.h */,
-				5E2C80340641F81600A8020D /* Delegate.h */,
 				5E2C80360641F81600A8020D /* Dictionary.h */,
 				5E2C80380641F81600A8020D /* Directory.h */,
 				5E2C80390641F81600A8020D /* Enum.h */,
@@ -2485,7 +2469,6 @@
 				5E2C803C0641F81600A8020D /* ErrorLog.h */,
 				5E2C803D0641F81600A8020D /* ErrorStrings.h */,
 				5E2C803F0641F81600A8020D /* Event.h */,
-				5E2C80410641F81600A8020D /* EventHandler.h */,
 				5E2C80420641F81600A8020D /* Field.h */,
 				5E2C80440641F81600A8020D /* File.h */,
 				5E2C80450641F81600A8020D /* FileIOError.h */,
@@ -2509,7 +2492,6 @@
 				5E2C80790641F81600A8020D /* LocalePeer.h */,
 				5E2C807B0641F81600A8020D /* Locales.h */,
 				5E2C807C0641F81600A8020D /* Lock.h */,
-				5E2C807E0641F81600A8020D /* MemoryStream.h */,
 				5E2C807F0641F81600A8020D /* MemStreamUtils.h */,
 				5E2C80810641F81600A8020D /* MessageLoader.h */,
 				5E2C80820641F81600A8020D /* Method.h */,
@@ -2520,11 +2502,9 @@
 				5E2C80890641F81600A8020D /* NoImplementerFoundException.h */,
 				5E2C808A0641F81600A8020D /* NoPeerFoundException.h */,
 				5E2C808B0641F81600A8020D /* NoSuchElementException.h */,
-				5E2C808C0641F81600A8020D /* NotifyEvent.h */,
 				5E65B1D40701BB4C00706239 /* NotImplementedException.h */,
 				5E2C808D0641F81600A8020D /* NoToolKitFoundException.h */,
 				5E2C808F0641F81600A8020D /* Object.h */,
-				5E2C80910641F81600A8020D /* ObjectWithEvents.h */,
 				5E2C80AC0641F81600A8020D /* OutOfBoundsException.h */,
 				5E2C80AD0641F81600A8020D /* OutputReadyEvent.h */,
 				5E2C80AF0641F81600A8020D /* PackageInfo.h */,
@@ -3368,7 +3348,6 @@
 				5E733FF6082E719300CDD184 /* Condition.h in Headers */,
 				5E733FF7082E719300CDD184 /* ConditionPeer.h in Headers */,
 				5E733FF8082E719300CDD184 /* DateTime.h in Headers */,
-				5E733FF9082E719300CDD184 /* Delegate.h in Headers */,
 				5E733FFA082E719300CDD184 /* Dictionary.h in Headers */,
 				5E733FFB082E719300CDD184 /* Directory.h in Headers */,
 				5E733FFC082E719300CDD184 /* Enum.h in Headers */,
@@ -3376,7 +3355,6 @@
 				5E733FFE082E719300CDD184 /* ErrorLog.h in Headers */,
 				5E733FFF082E719300CDD184 /* ErrorStrings.h in Headers */,
 				5E734000082E719300CDD184 /* Event.h in Headers */,
-				5E734001082E719300CDD184 /* EventHandler.h in Headers */,
 				5E734002082E719300CDD184 /* Field.h in Headers */,
 				5E734003082E719300CDD184 /* File.h in Headers */,
 				5E734004082E719300CDD184 /* FileIOError.h in Headers */,
@@ -3400,7 +3378,6 @@
 				5E734016082E719300CDD184 /* LocalePeer.h in Headers */,
 				5E734017082E719300CDD184 /* Locales.h in Headers */,
 				5E734018082E719300CDD184 /* Lock.h in Headers */,
-				5E734019082E719300CDD184 /* MemoryStream.h in Headers */,
 				5E73401A082E719300CDD184 /* MemStreamUtils.h in Headers */,
 				5E73401B082E719300CDD184 /* MessageLoader.h in Headers */,
 				5E73401C082E719300CDD184 /* Method.h in Headers */,
@@ -3411,10 +3388,8 @@
 				5E734021082E719300CDD184 /* NoImplementerFoundException.h in Headers */,
 				5E734022082E719300CDD184 /* NoPeerFoundException.h in Headers */,
 				5E734023082E719300CDD184 /* NoSuchElementException.h in Headers */,
-				5E734024082E719300CDD184 /* NotifyEvent.h in Headers */,
 				5E734025082E719300CDD184 /* NoToolKitFoundException.h in Headers */,
 				5E734026082E719300CDD184 /* Object.h in Headers */,
-				5E734027082E719300CDD184 /* ObjectWithEvents.h in Headers */,
 				5E734028082E719300CDD184 /* OSXConditionPeer.h in Headers */,
 				5E734029082E719300CDD184 /* OSXFilePeer.h in Headers */,
 				5E73402A082E719300CDD184 /* OSXFileStream.h in Headers */,
@@ -3827,7 +3802,6 @@
 				5EC1A63D0941EFE0001EA41D /* Condition.h in Headers */,
 				5EC1A63E0941EFE0001EA41D /* ConditionPeer.h in Headers */,
 				5EC1A6400941EFE0001EA41D /* DateTime.h in Headers */,
-				5EC1A6410941EFE0001EA41D /* Delegate.h in Headers */,
 				5EC1A6430941EFE0001EA41D /* Dictionary.h in Headers */,
 				5EC1A6450941EFE0001EA41D /* Directory.h in Headers */,
 				5EC1A6460941EFE0001EA41D /* Enum.h in Headers */,
@@ -3835,7 +3809,6 @@
 				5EC1A6490941EFE0001EA41D /* ErrorLog.h in Headers */,
 				5EC1A64A0941EFE0001EA41D /* ErrorStrings.h in Headers */,
 				5EC1A64C0941EFE0001EA41D /* Event.h in Headers */,
-				5EC1A64E0941EFE0001EA41D /* EventHandler.h in Headers */,
 				5EC1A64F0941EFE0001EA41D /* Field.h in Headers */,
 				5EC1A6510941EFE0001EA41D /* File.h in Headers */,
 				5EC1A6520941EFE0001EA41D /* FileIOError.h in Headers */,
@@ -3859,7 +3832,6 @@
 				5EC1A6690941EFF8001EA41D /* LocalePeer.h in Headers */,
 				5EC1A66B0941EFF8001EA41D /* Locales.h in Headers */,
 				5EC1A66C0941EFF8001EA41D /* Lock.h in Headers */,
-				5EC1A66E0941EFF8001EA41D /* MemoryStream.h in Headers */,
 				5EC1A66F0941EFF8001EA41D /* MemStreamUtils.h in Headers */,
 				5EC1A6710941EFF8001EA41D /* MessageLoader.h in Headers */,
 				5EC1A6720941EFF8001EA41D /* Method.h in Headers */,
@@ -3870,11 +3842,9 @@
 				5EC1A6790941EFF8001EA41D /* NoImplementerFoundException.h in Headers */,
 				5EC1A67A0941EFF8001EA41D /* NoPeerFoundException.h in Headers */,
 				5EC1A67B0941EFF8001EA41D /* NoSuchElementException.h in Headers */,
-				5EC1A67C0941EFF8001EA41D /* NotifyEvent.h in Headers */,
 				5EC1A67D0941EFF8001EA41D /* NotImplementedException.h in Headers */,
 				5EC1A67E0941EFF8001EA41D /* NoToolKitFoundException.h in Headers */,
 				5EC1A6800941EFF8001EA41D /* Object.h in Headers */,
-				5EC1A6820941EFF8001EA41D /* ObjectWithEvents.h in Headers */,
 				5EC1A6840941EFF8001EA41D /* OSXConditionPeer.h in Headers */,
 				5EC1A6860941EFF8001EA41D /* OSXFilePeer.h in Headers */,
 				5EC1A6880941EFF8001EA41D /* OSXFileStream.h in Headers */,

@@ -22,6 +22,12 @@ namespace VCF {
         virtual void create( const DateTimeSpan &interval );
         virtual void create( const DateTime &fireDate, const DateTimeSpan &interval );
         
+		virtual bool isActive() const;
+		virtual void setActive( const bool& val );
+
+		virtual bool doesRepeat() const;
+        virtual DateTimeSpan getInterval() const;
+        virtual DateTime getNextFireDate() const;
     private:
         static void TimerCallback( CFRunLoopTimerRef timer, void *info );
         
