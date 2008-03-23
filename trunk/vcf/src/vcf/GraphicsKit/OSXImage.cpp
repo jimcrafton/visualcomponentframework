@@ -14,16 +14,14 @@ using namespace VCF;
 
 OSXImage::OSXImage():
     AbstractImage(true),//note: we allocate the memory for the ImageBits pixels
-    grafPort_(0),
-    imageRef_(0)
+    imageCGRef_(0)
 {
     init();
 }
 
 OSXImage::OSXImage( const uint32& width, const uint32& height ):
     AbstractImage(true),//note: we allocate the memory for the ImageBits pixels
-    grafPort_(0),
-    imageRef_(0)
+    imageCGRef_(0)
 {
     init();
     setSize( width, height );
@@ -31,8 +29,7 @@ OSXImage::OSXImage( const uint32& width, const uint32& height ):
 
 OSXImage::OSXImage( GraphicsContext* context, Rect* rect ):
     AbstractImage(true),//note: we allocate the memory for the ImageBits pixels
-    grafPort_(0),
-    imageRef_(0)
+    imageCGRef_(0)
 {
     init();
     setSize( (uint32)rect->getWidth(), (uint32)rect->getHeight() );
@@ -41,8 +38,7 @@ OSXImage::OSXImage( GraphicsContext* context, Rect* rect ):
 
 OSXImage::OSXImage( CFURLRef url, const String& ext ):
     AbstractImage(true),//note: we allocate the memory for the ImageBits pixels
-    grafPort_(0),
-    imageRef_(0)
+    imageCGRef_(0)
 {
 
 	loadFromURL( url, ext );
@@ -50,15 +46,10 @@ OSXImage::OSXImage( CFURLRef url, const String& ext ):
 
 OSXImage::~OSXImage()
 {
-    if ( NULL != grafPort_ ) {
-        DisposeGWorld( grafPort_ );
-        grafPort_ = NULL;
-    }
+    if ( NULL != imageCGRef_ ) {
+        CGContextRelease( imageCGRef_ );
 
-    if ( NULL != imageRef_ ) {
-        CGImageRelease( imageRef_ );
-
-        imageRef_ = NULL;
+        imageCGRef_ = NULL;
     }
 }
 
@@ -90,18 +81,12 @@ void OSXImage::setAlpha( float val )
 
 void OSXImage::createBMP()
 {
-    if ( NULL != grafPort_ ) {
-        DisposeGWorld( grafPort_ );
-        grafPort_ = NULL;
+    if ( NULL != imageCGRef_ ) {
+        CGContextRelease( imageCGRef_ );
+        imageCGRef_ = NULL;
     }
 
-    if ( NULL != imageRef_ ) {
-        CGImageRelease( imageRef_ );
-        imageRef_ = NULL;
-    }
-
-    GWorldPtr newGWorld = 0;
-
+    
     int componentCount = getType();
     int bitsPerPix = getChannelSize() * componentCount;
 
@@ -116,7 +101,8 @@ void OSXImage::createBMP()
 
 	
 
-    OSStatus err = 0;
+    OSStatus err = noErr;
+	/*
     err = NewGWorldFromPtr( &newGWorld,
                             k32RGBAPixelFormat,
                             &boundsRect,
@@ -125,51 +111,65 @@ void OSXImage::createBMP()
                             0,
                             (char*)dataBuffer_,
                             bytesPerRow );
+							*/
 							
 	//setAlpha( 0.67 );
 
     if ( noErr == err ) {
-
-
-        grafPort_ = newGWorld;
         uint32 imgSize = width * height * componentCount;
-        CGDataProviderRef provider = CGDataProviderCreateWithData( NULL,
-                                                                    dataBuffer_,
-                                                                    imgSize,
-                                                                    NULL );
+        //CGDataProviderRef provider = CGDataProviderCreateWithData( NULL,
+          //                                                          dataBuffer_,
+            //                                                        imgSize,
+              //                                                      NULL );
 
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 
-        imageRef_ = CGImageCreate( width,
-                                   height,
-                                   getChannelSize(),
-                                   bitsPerPix,
-                                   bytesPerRow,
-                                   colorSpace,
-                                   kCGImageAlphaNoneSkipFirst,
-                                   provider,
-                                   NULL,
-                                   FALSE,
-                                   kCGRenderingIntentDefault );
-								   
-								   
-								   
-								   
-
-
-
-        CGColorSpaceRelease(colorSpace);
-        CGDataProviderRelease(provider);		
+        //imageRef_ = CGImageCreate( width,
+          //                         height,
+            //                       getChannelSize(),
+              //                     bitsPerPix,
+                //                   bytesPerRow,
+                  //                 colorSpace,
+                    //               kCGImageAlphaNoneSkipFirst,
+                      //             provider,
+                        //           NULL,
+                          //         FALSE,
+                            //       kCGRenderingIntentDefault );
 		
-        //context_->getPeer()->setContextID( (uint32)grafPort_ );
+		OSXGCRef ref;
+		
+		imageCGRef_ =
+			CGBitmapContextCreate( dataBuffer_,
+								width,
+								height,
+								getChannelSize(),
+								bytesPerRow,
+								colorSpace,
+								kCGImageAlphaPremultipliedLast );
+		ref.cgRef = imageCGRef_;
+		ref.rect.left_ = 0;
+		ref.rect.top_ = 0;
+		ref.rect.bottom_ = height;
+		ref.rect.right_ = width;
+        CGColorSpaceRelease(colorSpace);
+        //CGDataProviderRelease(provider);		
+		
 		OSXContext* peerCtx = (OSXContext*)context_->getPeer();
-		peerCtx->setPortFromImage( grafPort_, width, height );
-		//CGContextScaleCTM(contextID_, 1, -1);
+		peerCtx->setContextID( &ref );
 		
     }
     else {
         throw RuntimeException( MAKE_ERROR_MSG_2("OSXImage failed to create a new GWorld!") );
     }
+}
+
+CGImageRef OSXImage::createCGImage()
+{
+	CGImageRef result = 0;
+	
+	result = CGBitmapContextCreateImage (imageCGRef_);
+	
+	return result;
 }
 
 void OSXImage::setSize( const uint32 & width, const uint32 & height )

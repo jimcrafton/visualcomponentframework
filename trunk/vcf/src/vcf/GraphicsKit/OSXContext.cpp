@@ -19,7 +19,6 @@ using namespace VCF;
 
 
 OSXContext::OSXContext():
-	contextID_(nil),
     imgWidth_(0),
     imgHeight_(0),
 	context_(NULL),
@@ -33,7 +32,6 @@ OSXContext::OSXContext():
 }
 
 OSXContext::OSXContext( const uint32& width, const uint32& height ):
-	contextID_(nil),
     imgWidth_(width),
     imgHeight_(height),
 	context_(NULL),
@@ -48,8 +46,7 @@ OSXContext::OSXContext( const uint32& width, const uint32& height ):
 	init();
 }
 
-OSXContext::OSXContext( OSHandleID contextID ):
-	contextID_(0),    
+OSXContext::OSXContext( OSHandleID contextID ):	
     imgWidth_(0),
     imgHeight_(0),
 	context_(NULL),
@@ -59,7 +56,7 @@ OSXContext::OSXContext( OSHandleID contextID ):
 	lastPrimitive_(OSXContext::lpNone),
 	antialiasingOn_(true)
 {
-	init();
+	setContextID(contextID);
 }
 
 OSXContext::~OSXContext()
@@ -69,7 +66,7 @@ OSXContext::~OSXContext()
 		ATSUDisposeTextLayout( textLayout_ );
 	}
 
-    CGContextRelease( contextID_ );
+    CGContextRelease( contextRef_.cgRef );
 /*
     if ( NULL != inMemoryImage_ ) {
         delete [] inMemoryImage_;
@@ -78,7 +75,7 @@ OSXContext::~OSXContext()
     }
 */
 
-	contextID_ = nil;
+	contextRef_.cgRef = nil;
 }
 
 void OSXContext::setContext( GraphicsContext* context )
@@ -93,31 +90,30 @@ GraphicsContext* OSXContext::getContext()
 
 OSHandleID OSXContext::getContextID()
 {
-	return (OSHandleID)contextID_;
+	return (OSHandleID)&contextRef_;
 }
 
 void OSXContext::setContextID( OSHandleID handle )
 {
-    /*if ( NULL != inMemoryImage_ ) {
-        delete [] inMemoryImage_;
-        inMemoryImage_ = 0;
-        imgWidth_ = 0;
-        imgHeight_ = 0;
-        DisposeGWorld( grafPort_ );
-		
-    }
-
-	if ( NULL != grafPort_ ) {
-		CGContextRelease( contextID_);
-		contextID_ = NULL;
-    }
-*/
+	OSXGCRef* ref = (OSXGCRef*) handle;
 	
-
-	//grafPort_ = (GrafPtr)handle;
-    init();
+	if ( NULL != contextRef_.cgRef ) {
+		//CGContextRelease( contextRef_.cgRef);
+		//contextRef_.cgRef = NULL;
+    }
+	
+	if ( NULL != ref ) {
+		contextRef_.cgRef = ref->cgRef;
+		contextRef_.rect = ref->rect;
+	}
+	else {
+		contextRef_.cgRef = NULL;
+		contextRef_.rect.setNull();
+	}
+	
+	init();
 }
-
+/*
 void OSXContext::setPortFromImage( GrafPtr port, uint32 width, uint32 height )
 {
 	
@@ -126,14 +122,14 @@ void OSXContext::setPortFromImage( GrafPtr port, uint32 width, uint32 height )
 	//grafPort_ = port;
 	ownerRect_.setRect( 0, 0, width, height );
 	
-	if ( NULL != contextID_ ) {
-		CGContextRelease( contextID_);
+	if ( NULL != contextRef_.cgRef ) {
+		CGContextRelease( contextRef_.cgRef);
 	}
 	
-	contextID_ = NULL;
+	contextRef_.cgRef = NULL;
 	
 	
-	//CreateCGContextForPort( grafPort_, &contextID_);		
+	//CreateCGContextForPort( grafPort_, &contextRef_.cgRef);		
 	
 	//Note the absence of a transform! apparently we don't need to for 
 	//image based CG's
@@ -143,8 +139,8 @@ void OSXContext::setPortFromImage( GrafPtr port, uint32 width, uint32 height )
 	}
 	
 	ATSUAttributeTag        cgTags[] = {kATSUCGContextTag};
-	ByteCount               cgSize[] = {sizeof (contextID_)};
-	ATSUAttributeValuePtr   cgValue[] = {&contextID_};
+	ByteCount               cgSize[] = {sizeof (contextRef_.cgRef)};
+	ATSUAttributeValuePtr   cgValue[] = {&contextRef_.cgRef};
 
 	OSStatus err = ATSUSetLayoutControls (textLayout_,
 										  1,
@@ -156,68 +152,24 @@ void OSXContext::setPortFromImage( GrafPtr port, uint32 width, uint32 height )
 	}
 	
 }
-
-void OSXContext::setCGContext( CGContextRef cgRef, GrafPtr port, const Rect& ownerRect  )
-{
-/*
-	if ( NULL != inMemoryImage_ ) {
-        delete [] inMemoryImage_;
-        inMemoryImage_ = 0;
-        imgWidth_ = 0;
-        imgHeight_ = 0;
-        DisposeGWorld( grafPort_ );
-    }
 */
 
+/*
+void OSXContext::setCGContext( CGContextRef cgRef, GrafPtr port, const Rect& ownerRect  )
+{
 
 	ownerRect_ = ownerRect;
-	contextID_ = cgRef;
-/*
-	grafPort_ = NULL;
-
-	if ( NULL != inMemoryImage_ ) {
-        //allocate a new gworld
-        GWorldPtr newGworld = 0;
-
-        int bitsPerPix = 32;
-        int componentCount = 4;
-        int bytesPerRow = (imgWidth_ * (bitsPerPix/componentCount) * componentCount) / 8;
-        ::Rect imgRect;
-        imgRect.left = 0;
-        imgRect.top = 0;
-        imgRect.right = imgWidth_;
-        imgRect.bottom = imgHeight_;
-
-        OSStatus err = 0;
-        err = NewGWorldFromPtr( &newGworld,
-                            k32RGBAPixelFormat,
-                            &imgRect,
-                            NULL,
-                            NULL,
-                            0,
-                            (char*)inMemoryImage_,
-                            bytesPerRow );
-        if ( noErr == err ) {
-            grafPort_ = newGworld;
-//            printf( "NewGWorldFromPtr() succeeded, grafPort_: %p\n", grafPort_ );
-        }
-        else {
-            throw RuntimeException( MAKE_ERROR_MSG_2("NewGWorldFromPtr() failed to allocate GWorld") );
-        }
-    }
-
-	grafPort_ = port;
-	*/
+	contextRef_.cgRef = cgRef;
 
 
 	if ( nil == textLayout_ ) {
 		ATSUCreateTextLayout( &textLayout_ );
 	}
 
-	if ( NULL != contextID_ ) {
+	if ( NULL != contextRef_.cgRef ) {
 		ATSUAttributeTag        cgTags[] = {kATSUCGContextTag};
-		ByteCount               cgSize[] = {sizeof (contextID_)};
-		ATSUAttributeValuePtr   cgValue[] = {&contextID_};
+		ByteCount               cgSize[] = {sizeof (contextRef_.cgRef)};
+		ATSUAttributeValuePtr   cgValue[] = {&contextRef_.cgRef};
 
 		OSStatus err = ATSUSetLayoutControls (textLayout_,
 											  1,
@@ -229,6 +181,7 @@ void OSXContext::setCGContext( CGContextRef cgRef, GrafPtr port, const Rect& own
 		}
 	}
 }
+*/
 
 void OSXContext::init()
 {
@@ -265,26 +218,26 @@ void OSXContext::init()
             throw RuntimeException( MAKE_ERROR_MSG_2("NewGWorldFromPtr() failed to allocate GWorld") );
         }
     }
+*/
+    if ( NULL != contextRef_.cgRef ) {
+        //CreateCGContextForPort( grafPort_, &contextRef_.cgRef);
 
-    if ( NULL != grafPort_ ) {
-        CreateCGContextForPort( grafPort_, &contextID_);
-
-		//CGContextSaveGState( contextID_ );
-		::Rect portBounds;
-        GetPortBounds( grafPort_, &portBounds );
+		//CGContextSaveGState( contextRef_.cgRef );
+		//::Rect portBounds;
+        //GetPortBounds( grafPort_, &portBounds );
 
 
-        CGContextTranslateCTM(contextID_, 0,
-                                        (float)(portBounds.bottom - portBounds.top));
-        CGContextScaleCTM(contextID_, 1, -1);
+        CGContextTranslateCTM(contextRef_.cgRef, 0,
+                                        (float)(contextRef_.rect.bottom_ - contextRef_.rect.top_));
+        CGContextScaleCTM(contextRef_.cgRef, 1, -1);
 
 		if( nil == textLayout_ ) { //only do this once
 			ATSUCreateTextLayout( &textLayout_ );
 		}
 
 		ATSUAttributeTag        cgTags[] = {kATSUCGContextTag};
-		ByteCount               cgSize[] = {sizeof (contextID_)};
-		ATSUAttributeValuePtr   cgValue[] = {&contextID_};
+		ByteCount               cgSize[] = {sizeof (contextRef_.cgRef)};
+		ATSUAttributeValuePtr   cgValue[] = {&contextRef_.cgRef};
 
 		OSStatus err = ATSUSetLayoutControls (textLayout_,
 											  1,
@@ -295,7 +248,7 @@ void OSXContext::init()
 			throw RuntimeException( MAKE_ERROR_MSG_2("ATSUSetLayoutControls failed.") );
 		}
 	}
-*/
+
 
 }
 
@@ -491,14 +444,14 @@ void OSXContext::rectangle(const double & x1, const double & y1, const double & 
 
 	rect.size.width = x2 - x1;
 	rect.size.height = y2 - y1;
-	//CGContextBeginPath( contextID_ );
-	CGContextAddRect( contextID_, rect );
-	//CGContextClosePath( contextID_ );
+	//CGContextBeginPath( contextRef_.cgRef );
+	CGContextAddRect( contextRef_.cgRef, rect );
+	//CGContextClosePath( contextRef_.cgRef );
 	if ( GraphicsContext::doStroke == currentDrawingOperation_ ) {
-		//CGContextStrokePath ( contextID_ );
+		//CGContextStrokePath ( contextRef_.cgRef );
 	}
 	else if ( GraphicsContext::doFill == currentDrawingOperation_ ) {
-		//CGContextFillPath ( contextID_ );
+		//CGContextFillPath ( contextRef_.cgRef );
 	}
 }
 
@@ -521,20 +474,20 @@ void OSXContext::ellipse(const double & x1, const double & y1, const double & x2
 
     a = (x2-x1)/2.0;
     b = (y2-y1)/2.0;
-    CGContextBeginPath ( contextID_ );
-	CGContextSaveGState(contextID_);
-    CGContextTranslateCTM(contextID_, center.x, center.y);
-    CGContextScaleCTM(contextID_, a, b);
-    CGContextMoveToPoint(contextID_, 1, 0);
-    CGContextAddArc(contextID_, 0, 0, 1, Math::degreesToRadians(0), Math::degreesToRadians(360), 0);
-    CGContextClosePath(contextID_);
-    CGContextRestoreGState(contextID_);
+    CGContextBeginPath ( contextRef_.cgRef );
+	CGContextSaveGState(contextRef_.cgRef);
+    CGContextTranslateCTM(contextRef_.cgRef, center.x, center.y);
+    CGContextScaleCTM(contextRef_.cgRef, a, b);
+    CGContextMoveToPoint(contextRef_.cgRef, 1, 0);
+    CGContextAddArc(contextRef_.cgRef, 0, 0, 1, Math::degreesToRadians(0), Math::degreesToRadians(360), 0);
+    CGContextClosePath(contextRef_.cgRef);
+    CGContextRestoreGState(contextRef_.cgRef);
 
 	if ( GraphicsContext::doStroke == currentDrawingOperation_ ) {
-		CGContextStrokePath(contextID_);
+		CGContextStrokePath(contextRef_.cgRef);
 	}
 	else if ( GraphicsContext::doFill == currentDrawingOperation_ ) {
-		CGContextFillPath ( contextID_ );
+		CGContextFillPath ( contextRef_.cgRef );
 	}
 }
 
@@ -560,13 +513,13 @@ void OSXContext::polyline(const std::vector<Point>& pts )
 		i++;
 	}
 
-	CGContextAddLines( contextID_, cgPts, pts.size() );
+	CGContextAddLines( contextRef_.cgRef, cgPts, pts.size() );
 
 	if ( GraphicsContext::doStroke == currentDrawingOperation_ ) {
-		//CGContextStrokePath ( contextID_ );
+		//CGContextStrokePath ( contextRef_.cgRef );
 	}
 	else if ( GraphicsContext::doFill == currentDrawingOperation_ ) {
-		//CGContextFillPath ( contextID_ );
+		//CGContextFillPath ( contextRef_.cgRef );
 	}
 
 	delete [] cgPts;
@@ -577,29 +530,29 @@ void OSXContext::curve(const double & x1, const double & y1, const double & x2, 
 {
 	endLastPrimitive();
 	
-	//CGContextBeginPath( contextID_ );
+	//CGContextBeginPath( contextRef_.cgRef );
 
-	CGContextMoveToPoint( contextID_, x1 + origin_.x_, y1 + origin_.y_ );
-	CGContextAddCurveToPoint( contextID_, x2 + origin_.x_, y2 + origin_.y_,
+	CGContextMoveToPoint( contextRef_.cgRef, x1 + origin_.x_, y1 + origin_.y_ );
+	CGContextAddCurveToPoint( contextRef_.cgRef, x2 + origin_.x_, y2 + origin_.y_,
                                 x3 + origin_.x_, y3 + origin_.y_,
                                 x4 + origin_.x_, y4 + origin_.y_ );
 
-	//CGContextClosePath( contextID_ );
+	//CGContextClosePath( contextRef_.cgRef );
 	if ( GraphicsContext::doStroke == currentDrawingOperation_ ) {
-		//CGContextStrokePath ( contextID_ );
+		//CGContextStrokePath ( contextRef_.cgRef );
 	}
 	else if ( GraphicsContext::doFill == currentDrawingOperation_ ) {
-		//CGContextFillPath ( contextID_ );
+		//CGContextFillPath ( contextRef_.cgRef );
 	}
 }
 
 void OSXContext::lineTo(const double & x, const double & y)
 {
-	//CGContextAddLineToPoint( contextID_, x + origin_.x_, y + origin_.y_ );
-	//CGContextStrokePath ( contextID_ );
+	//CGContextAddLineToPoint( contextRef_.cgRef, x + origin_.x_, y + origin_.y_ );
+	//CGContextStrokePath ( contextRef_.cgRef );
 	finishLastPrimitive(x,y);
 	
-	CGPoint pt = CGContextGetPathCurrentPoint ( contextID_ );
+	CGPoint pt = CGContextGetPathCurrentPoint ( contextRef_.cgRef );
 	double dx = static_cast<double>(pt.x)-(x+.5);
 	double dy = static_cast<double>(pt.y)-(y+.5);
 	
@@ -619,7 +572,7 @@ void OSXContext::lineTo(const double & x, const double & y)
 	lastPrimitiveP1_.x_ = x;
 	lastPrimitiveP1_.y_ = y;
 	
-	CGContextAddLineToPoint( contextID_, x + origin_.x_ + ndx + .5, y + origin_.y_ +ndy + .5);	
+	CGContextAddLineToPoint( contextRef_.cgRef, x + origin_.x_ + ndx + .5, y + origin_.y_ +ndy + .5);	
 }
 
 void OSXContext::closePath()
@@ -630,12 +583,12 @@ void OSXContext::closePath()
 void OSXContext::moveTo(const double & x, const double & y)
 {
 
-	//CGContextMoveToPoint( contextID_, x + origin_.x_, y + origin_.y_ );
+	//CGContextMoveToPoint( contextRef_.cgRef, x + origin_.x_, y + origin_.y_ );
 	endLastPrimitive();
 	lastPrimitive_ = OSXContext::lpMove;
 	lastPrimitiveP1_.x_ = x;
 	lastPrimitiveP1_.y_ = y;
-	CGContextMoveToPoint( contextID_, x + origin_.x_ + .5, y + origin_.y_ + .5);
+	CGContextMoveToPoint( contextRef_.cgRef, x + origin_.x_ + .5, y + origin_.y_ + .5);
 }
 
 
@@ -713,7 +666,7 @@ bool OSXContext::prepareForDrawing( int32 drawingOperation )
         //SetPort( oldPort );
     //}
 
-	CGContextSetShouldAntialias(contextID_, antialiasingOn_);
+	CGContextSetShouldAntialias(contextRef_.cgRef, antialiasingOn_);
 
 
 	float colorComponents[4] =
@@ -723,31 +676,31 @@ bool OSXContext::prepareForDrawing( int32 drawingOperation )
 
 	switch ( drawingOperation ) {
 		case GraphicsContext::doStroke : {
-			CGContextSetLineWidth( contextID_, context_->getStrokeWidth() );
-			CGContextSetRGBStrokeColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetLineWidth( contextRef_.cgRef, context_->getStrokeWidth() );
+			CGContextSetRGBStrokeColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextBeginPath ( contextID_ );
+			CGContextBeginPath ( contextRef_.cgRef );
 		}
 		break;
 
 		case GraphicsContext::doFill : {
-			CGContextSetRGBFillColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetRGBFillColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextBeginPath ( contextID_ );
+			CGContextBeginPath ( contextRef_.cgRef );
 		}
 		break;
 
 		case GraphicsContext::doText : {
 			//save state
-			CGContextSaveGState( contextID_ );
+			CGContextSaveGState( contextRef_.cgRef );
 
 			//change the scaling back to normal otherwise we will have vertically
 			//flipped glyphs - and no one wants that!!
 			CGAffineTransform xfrm = CGAffineTransformMakeScale( 1, -1 );
-			CGContextConcatCTM( contextID_, xfrm );
+			CGContextConcatCTM( contextRef_.cgRef, xfrm );
 
 			//xfrm = CGAffineTransformMakeTranslation( 0, -(ownerRect_.top_) );
-			//CGContextConcatCTM( contextID_, xfrm );
+			//CGContextConcatCTM( contextRef_.cgRef, xfrm );
 
             Font* ctxFont = context_->getCurrentFont();
             OSXFont* fontImpl = (OSXFont*)ctxFont->getFontPeer();
@@ -758,9 +711,9 @@ bool OSXContext::prepareForDrawing( int32 drawingOperation )
 			colorComponents[1] = fontColor->getGreen();
 			colorComponents[2] = fontColor->getBlue();
 
-            CGContextSetRGBFillColor( contextID_, colorComponents[0], colorComponents[1],
+            CGContextSetRGBFillColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextSetRGBStrokeColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetRGBStrokeColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
 		}
 		break;
@@ -780,19 +733,19 @@ void OSXContext::finishedDrawing( int32 drawingOperation )
 
 	switch ( drawingOperation ) {
 		case GraphicsContext::doStroke : {
-			//CGContextClosePath( contextID_ );
-			CGContextStrokePath ( contextID_ );
+			//CGContextClosePath( contextRef_.cgRef );
+			CGContextStrokePath ( contextRef_.cgRef );
 		}
 		break;
 
 		case GraphicsContext::doFill : {
-			//CGContextClosePath( contextID_ );
-			CGContextFillPath ( contextID_ );
+			//CGContextClosePath( contextRef_.cgRef );
+			CGContextFillPath ( contextRef_.cgRef );
 		}
 		break;
 
 		case GraphicsContext::doText : {
-			CGContextRestoreGState( contextID_ );
+			CGContextRestoreGState( contextRef_.cgRef );
 		}
 		break;
 
@@ -820,7 +773,7 @@ void OSXContext::endLastPrimitive()
 	if (!isAntiAliasingOn()) return;
 	
 	if ( lastPrimitive_ == OSXContext::lpLine )  {
-		CGContextAddLineToPoint( contextID_, origin_.x_ + lastPrimitiveP1_.x_ + .5 + lastPrimitiveV1_.x_/2.0, origin_.y_ + lastPrimitiveP1_.y_ + .5 + lastPrimitiveV1_.y_/2.0);
+		CGContextAddLineToPoint( contextRef_.cgRef, origin_.x_ + lastPrimitiveP1_.x_ + .5 + lastPrimitiveV1_.x_/2.0, origin_.y_ + lastPrimitiveP1_.y_ + .5 + lastPrimitiveV1_.y_/2.0);
 	}
 	lastPrimitive_ = OSXContext::lpNone;
 }
@@ -833,7 +786,7 @@ void OSXContext::finishLastPrimitive(const double & x, const double & y)
 	if ( lastPrimitive_ == OSXContext::lpMove ) {
 		if (!isAntiAliasingOn()) return;
 		
-		CGPoint pt=CGContextGetPathCurrentPoint ( contextID_ );
+		CGPoint pt=CGContextGetPathCurrentPoint ( contextRef_.cgRef );
 		double dx=x-lastPrimitiveP1_.x_;
 		double dy=y-lastPrimitiveP1_.y_;
 
@@ -844,11 +797,11 @@ void OSXContext::finishLastPrimitive(const double & x, const double & y)
 		double ndx=dx/len;
 		double ndy=dy/len;
 		
-		CGContextMoveToPoint(contextID_, origin_.x_ + lastPrimitiveP1_.x_ + .5 - ndx/2.0,
+		CGContextMoveToPoint(contextRef_.cgRef, origin_.x_ + lastPrimitiveP1_.x_ + .5 - ndx/2.0,
 								origin_.y_ + lastPrimitiveP1_.y_ + .5 - ndy/2.0);
 	}
 	else if ( lastPrimitive_ == OSXContext::lpLine ){
-		CGContextAddLineToPoint(contextID_, origin_.x_ + lastPrimitiveP1_.x_ + .5,
+		CGContextAddLineToPoint(contextRef_.cgRef, origin_.x_ + lastPrimitiveP1_.x_ + .5,
 								origin_.y_ + lastPrimitiveP1_.y_ + .5);
 	}
 }
@@ -870,14 +823,16 @@ void OSXContext::drawImage( const double& x, const double& y, Rect* imageBounds,
     uint32 imgBoundsHeight = (uint32)imageBounds->getHeight();
 
     if ( (imgBoundsWidth == image->getWidth()) && (imgBoundsHeight == image->getHeight()) ) {
-        CGImageRef imgRef = osXimage->getCGImage();
+        CGImageRef imgRef = osXimage->createCGImage();
         CGRect imgBounds;
         imgBounds.origin.x = x + origin_.x_;
         imgBounds.origin.y = y + origin_.y_;
         imgBounds.size.width = imgBoundsWidth;
         imgBounds.size.height = imgBoundsHeight;
 
-        CGContextDrawImage( contextID_, imgBounds, imgRef );
+        CGContextDrawImage( contextRef_.cgRef, imgBounds, imgRef );
+		
+		CGImageRelease(imgRef);
     }
     else {
         //create a smaller portion of the image
@@ -933,7 +888,7 @@ void OSXContext::drawImage( const double& x, const double& y, Rect* imageBounds,
         imgBounds.size.width = imgBoundsWidth;
         imgBounds.size.height = imgBoundsHeight;
 
-        CGContextDrawImage( contextID_, imgBounds, imgRef );
+        CGContextDrawImage( contextRef_.cgRef, imgBounds, imgRef );
 
         CGColorSpaceRelease(colorSpace);
         CGDataProviderRelease(provider);
@@ -1249,21 +1204,21 @@ void OSXContext::setClippingPath( Path* clippingPath )
 				it ++;
 			}
 			
-			CGContextSaveGState( contextID_ );
+			CGContextSaveGState( contextRef_.cgRef );
 			
-			CGContextBeginPath ( contextID_ );
+			CGContextBeginPath ( contextRef_.cgRef );
 			
-			CGContextAddPath( contextID_, pathRef );
+			CGContextAddPath( contextRef_.cgRef, pathRef );
 			
-			CGContextClosePath(contextID_);
+			CGContextClosePath(contextRef_.cgRef);
 			
-			CGContextClip( contextID_ );
+			CGContextClip( contextRef_.cgRef );
 			
 			CGPathRelease( pathRef );			
 		}
 	}
 	else {
-		CGContextRestoreGState( contextID_ );
+		CGContextRestoreGState( contextRef_.cgRef );
 	}
 }
 
@@ -1271,7 +1226,7 @@ void OSXContext::setClippingRect( Rect* clipRect )
 {	
 	if ( NULL != clipRect ) {
 		if ( clipRect->isNull() || clipRect->isEmpty() ) {
-			//CGContextRestoreGState( contextID_ );		
+			//CGContextRestoreGState( contextRef_.cgRef );		
 		}
 		else {
 			Rect tmpClipRect = *clipRect;
@@ -1279,43 +1234,43 @@ void OSXContext::setClippingRect( Rect* clipRect )
 			
 			OSXRect r = &tmpClipRect;
 			
-			//CGContextSaveGState( contextID_ );
-			CGContextClipToRect( contextID_, r );
+			//CGContextSaveGState( contextRef_.cgRef );
+			CGContextClipToRect( contextRef_.cgRef, r );
 		}
 	}
 	else {
-		//CGContextRestoreGState( contextID_ );		
+		//CGContextRestoreGState( contextRef_.cgRef );		
 	}
 }
 
 
 void OSXContext::drawThemeSelectionRect( Rect* rect, DrawUIState& state )
 {
-	CGContextSaveGState( contextID_ );
+	CGContextSaveGState( contextRef_.cgRef );
 	
 	Color* stroke = Color::getColor("gray100");
 	Color* fill = Color::getColor("gray128");
 	
-	CGContextSetAlpha( contextID_, 0.2 );
+	CGContextSetAlpha( contextRef_.cgRef, 0.2 );
 	
 	Rect tmp = *rect;
 	tmp.offset( origin_.x_, origin_.y_ );
 	OSXRect r = &tmp;
 	
-	CGContextSetLineWidth( contextID_, 1.0 );
-	CGContextSetRGBStrokeColor( contextID_, stroke->getRed(), stroke->getGreen(),
+	CGContextSetLineWidth( contextRef_.cgRef, 1.0 );
+	CGContextSetRGBStrokeColor( contextRef_.cgRef, stroke->getRed(), stroke->getGreen(),
 										stroke->getBlue(), 1.0 );
 										
-	CGContextSetRGBFillColor( contextID_, fill->getRed(), fill->getGreen(),
+	CGContextSetRGBFillColor( contextRef_.cgRef, fill->getRed(), fill->getGreen(),
 										fill->getBlue(), 1.0 );
 										
-    CGContextBeginPath( contextID_ );
-	CGContextAddRect( contextID_, r );
-	CGContextClosePath( contextID_ );
-	CGContextDrawPath ( contextID_, kCGPathFillStroke );	
-	//CGContextFillPath ( contextID_ );
+    CGContextBeginPath( contextRef_.cgRef );
+	CGContextAddRect( contextRef_.cgRef, r );
+	CGContextClosePath( contextRef_.cgRef );
+	CGContextDrawPath ( contextRef_.cgRef, kCGPathFillStroke );	
+	//CGContextFillPath ( contextRef_.cgRef );
 	
-	CGContextRestoreGState( contextID_ );	
+	CGContextRestoreGState( contextRef_.cgRef );	
 }
 
 void OSXContext::drawThemeFocusRect( Rect* rect, DrawUIState& state )
@@ -1796,10 +1751,10 @@ void OSXContext::drawThemeProgress( Rect* rect, ProgressState& state )
 
 void OSXContext::drawThemeImage( Rect* rect, Image* image, DrawUIState& state )
 {
-	CGContextSaveGState( contextID_ );
+	CGContextSaveGState( contextRef_.cgRef );
 	
 	if ( !state.isEnabled() ) {
-		CGContextSetAlpha( contextID_, 0.2 );
+		CGContextSetAlpha( contextRef_.cgRef, 0.2 );
 	}
 	
 	
@@ -1812,14 +1767,15 @@ void OSXContext::drawThemeImage( Rect* rect, Image* image, DrawUIState& state )
     uint32 imgBoundsHeight = (uint32)rect->getHeight();
 
     if ( (imgBoundsWidth == image->getWidth()) && (imgBoundsHeight == image->getHeight()) ) {
-        CGImageRef imgRef = osXimage->getCGImage();
+        CGImageRef imgRef = osXimage->createCGImage();
         CGRect imgBounds;
         imgBounds.origin.x = rect->left_;
         imgBounds.origin.y = rect->top_;
         imgBounds.size.width = imgBoundsWidth;
         imgBounds.size.height = imgBoundsHeight;
 
-        CGContextDrawImage( contextID_, imgBounds, imgRef );
+        CGContextDrawImage( contextRef_.cgRef, imgBounds, imgRef );
+		CGImageRelease(imgRef);
     }
     else {
         //create a smaller portion of the image
@@ -1875,7 +1831,7 @@ void OSXContext::drawThemeImage( Rect* rect, Image* image, DrawUIState& state )
         imgBounds.size.width = imgBoundsWidth;
         imgBounds.size.height = imgBoundsHeight;
 
-        CGContextDrawImage( contextID_, imgBounds, imgRef );
+        CGContextDrawImage( contextRef_.cgRef, imgBounds, imgRef );
 
         CGColorSpaceRelease(colorSpace);
         CGDataProviderRelease(provider);
@@ -1883,7 +1839,7 @@ void OSXContext::drawThemeImage( Rect* rect, Image* image, DrawUIState& state )
         delete [] data;
     }
 	
-	CGContextRestoreGState( contextID_ );
+	CGContextRestoreGState( contextRef_.cgRef );
 }
 
 void OSXContext::drawThemeHeader( Rect* rect, ButtonState& state )
@@ -1984,12 +1940,12 @@ void OSXContext::drawThemeBackground( Rect* rect, BackgroundState& state )
 	
 	switch ( state.colorType_ ) {
 		case SYSCOLOR_SHADOW : {
-			CGContextSetRGBFillColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetRGBFillColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextBeginPath( contextID_ );
-			CGContextAddRect( contextID_, r );
-			CGContextClosePath( contextID_ );
-			CGContextFillPath ( contextID_ );
+			CGContextBeginPath( contextRef_.cgRef );
+			CGContextAddRect( contextRef_.cgRef, r );
+			CGContextClosePath( contextRef_.cgRef );
+			CGContextFillPath ( contextRef_.cgRef );
 										
 		}
 		break;
@@ -2005,102 +1961,102 @@ void OSXContext::drawThemeBackground( Rect* rect, BackgroundState& state )
 		break;
 		
 		case SYSCOLOR_HIGHLIGHT : {
-			CGContextSetRGBFillColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetRGBFillColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextBeginPath( contextID_ );
-			CGContextAddRect( contextID_, r );
-			CGContextClosePath( contextID_ );
-			CGContextFillPath ( contextID_ );
+			CGContextBeginPath( contextRef_.cgRef );
+			CGContextAddRect( contextRef_.cgRef, r );
+			CGContextClosePath( contextRef_.cgRef );
+			CGContextFillPath ( contextRef_.cgRef );
 		}
 		break;
 		
 		case SYSCOLOR_ACTIVE_CAPTION : {
-			CGContextSetRGBFillColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetRGBFillColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextBeginPath( contextID_ );
-			CGContextAddRect( contextID_, r );
-			CGContextClosePath( contextID_ );
-			CGContextFillPath ( contextID_ );
+			CGContextBeginPath( contextRef_.cgRef );
+			CGContextAddRect( contextRef_.cgRef, r );
+			CGContextClosePath( contextRef_.cgRef );
+			CGContextFillPath ( contextRef_.cgRef );
 		}
 		break;
 		
 		case SYSCOLOR_ACTIVE_BORDER : {
-			CGContextSetRGBFillColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetRGBFillColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextBeginPath( contextID_ );
-			CGContextAddRect( contextID_, r );
-			CGContextClosePath( contextID_ );
-			CGContextFillPath ( contextID_ );
+			CGContextBeginPath( contextRef_.cgRef );
+			CGContextAddRect( contextRef_.cgRef, r );
+			CGContextClosePath( contextRef_.cgRef );
+			CGContextFillPath ( contextRef_.cgRef );
 		}
 		break;
 		
 		case SYSCOLOR_DESKTOP : {
-			CGContextSetRGBFillColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetRGBFillColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextBeginPath( contextID_ );
-			CGContextAddRect( contextID_, r );
-			CGContextClosePath( contextID_ );
-			CGContextFillPath ( contextID_ );
+			CGContextBeginPath( contextRef_.cgRef );
+			CGContextAddRect( contextRef_.cgRef, r );
+			CGContextClosePath( contextRef_.cgRef );
+			CGContextFillPath ( contextRef_.cgRef );
 		}
 		break;
 		
 		case SYSCOLOR_CAPTION_TEXT : {
-			CGContextSetRGBFillColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetRGBFillColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextBeginPath( contextID_ );
-			CGContextAddRect( contextID_, r );
-			CGContextClosePath( contextID_ );
-			CGContextFillPath ( contextID_ );
+			CGContextBeginPath( contextRef_.cgRef );
+			CGContextAddRect( contextRef_.cgRef, r );
+			CGContextClosePath( contextRef_.cgRef );
+			CGContextFillPath ( contextRef_.cgRef );
 		}
 		break;
 		
 		case SYSCOLOR_SELECTION_TEXT : {
-			CGContextSetRGBFillColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetRGBFillColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextBeginPath( contextID_ );
-			CGContextAddRect( contextID_, r );
-			CGContextClosePath( contextID_ );
-			CGContextFillPath ( contextID_ );
+			CGContextBeginPath( contextRef_.cgRef );
+			CGContextAddRect( contextRef_.cgRef, r );
+			CGContextClosePath( contextRef_.cgRef );
+			CGContextFillPath ( contextRef_.cgRef );
 		}
 		break;
 		
 		case SYSCOLOR_INACTIVE_BORDER : {
-			CGContextSetRGBFillColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetRGBFillColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextBeginPath( contextID_ );
-			CGContextAddRect( contextID_, r );
-			CGContextClosePath( contextID_ );
-			CGContextFillPath ( contextID_ );
+			CGContextBeginPath( contextRef_.cgRef );
+			CGContextAddRect( contextRef_.cgRef, r );
+			CGContextClosePath( contextRef_.cgRef );
+			CGContextFillPath ( contextRef_.cgRef );
 		}
 		break;
 		
 		case SYSCOLOR_INACTIVE_CAPTION : {
-			CGContextSetRGBFillColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetRGBFillColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextBeginPath( contextID_ );
-			CGContextAddRect( contextID_, r );
-			CGContextClosePath( contextID_ );
-			CGContextFillPath ( contextID_ );
+			CGContextBeginPath( contextRef_.cgRef );
+			CGContextAddRect( contextRef_.cgRef, r );
+			CGContextClosePath( contextRef_.cgRef );
+			CGContextFillPath ( contextRef_.cgRef );
 		}   
 		break;
 		
 		case SYSCOLOR_TOOLTIP : {
-			CGContextSetRGBFillColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetRGBFillColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextBeginPath( contextID_ );
-			CGContextAddRect( contextID_, r );
-			CGContextClosePath( contextID_ );
-			CGContextFillPath ( contextID_ );
+			CGContextBeginPath( contextRef_.cgRef );
+			CGContextAddRect( contextRef_.cgRef, r );
+			CGContextClosePath( contextRef_.cgRef );
+			CGContextFillPath ( contextRef_.cgRef );
 		}
 		break;
 		
 		case SYSCOLOR_TOOLTIP_TEXT : {
-			CGContextSetRGBFillColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetRGBFillColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextBeginPath( contextID_ );
-			CGContextAddRect( contextID_, r );
-			CGContextClosePath( contextID_ );
-			CGContextFillPath ( contextID_ );
+			CGContextBeginPath( contextRef_.cgRef );
+			CGContextAddRect( contextRef_.cgRef, r );
+			CGContextClosePath( contextRef_.cgRef );
+			CGContextFillPath ( contextRef_.cgRef );
 		}
 		break;
 		
@@ -2117,12 +2073,12 @@ void OSXContext::drawThemeBackground( Rect* rect, BackgroundState& state )
 		break;
 		
 		case SYSCOLOR_MENU_TEXT : {
-			CGContextSetRGBFillColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetRGBFillColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextBeginPath( contextID_ );
-			CGContextAddRect( contextID_, r );
-			CGContextClosePath( contextID_ );
-			CGContextFillPath ( contextID_ );
+			CGContextBeginPath( contextRef_.cgRef );
+			CGContextAddRect( contextRef_.cgRef, r );
+			CGContextClosePath( contextRef_.cgRef );
+			CGContextFillPath ( contextRef_.cgRef );
 		}
 		break;
 		
@@ -2139,12 +2095,12 @@ void OSXContext::drawThemeBackground( Rect* rect, BackgroundState& state )
 		break;
 		
 		case SYSCOLOR_WINDOW_TEXT : {
-			CGContextSetRGBFillColor( contextID_, colorComponents[0], colorComponents[1],
+			CGContextSetRGBFillColor( contextRef_.cgRef, colorComponents[0], colorComponents[1],
 										colorComponents[2], colorComponents[3] );
-			CGContextBeginPath( contextID_ );
-			CGContextAddRect( contextID_, r );
-			CGContextClosePath( contextID_ );
-			CGContextFillPath ( contextID_ );
+			CGContextBeginPath( contextRef_.cgRef );
+			CGContextAddRect( contextRef_.cgRef, r );
+			CGContextClosePath( contextRef_.cgRef );
+			CGContextFillPath ( contextRef_.cgRef );
 		}
 		break;
 		

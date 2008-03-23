@@ -13,6 +13,25 @@ namespace VCF {
 
 class GraphicsContext;
 
+class OSXGCRef {
+public:
+	OSXGCRef(): cgRef(NULL){}
+	
+	OSXGCRef( CGContextRef p1, const Rect& p2 ): cgRef(p1),rect(p2){}
+	OSXGCRef( CGContextRef p1, CGRect p2 ): cgRef(p1){
+		rect.left_ = p2.origin.x;
+		rect.top_ = p2.origin.y;
+		rect.right_ = p2.origin.y + p2.size.width;
+		rect.bottom_ = p2.origin.y + p2.size.height;
+	}
+	CGContextRef cgRef;
+	Rect rect;
+	
+	operator CGContextRef() const {
+		return cgRef;
+	}
+};
+
 
 class OSXContext  : public ContextPeer, public Object {
 public:
@@ -26,11 +45,16 @@ public:
 
 
 	OSXContext();
+	
 	/**
-	*Creates a new HDC from scratch
+	Creates a new HDC from scratch
 	*/
 	OSXContext( const uint32& width, const uint32& height );
 
+	/**
+	conextID MUST be a pointer to a OSXGCRef instance (which in 
+	turn can be on the stack, so long as it has valid values
+	*/
 	OSXContext( OSHandleID contextID );
 
 	virtual ~OSXContext();
@@ -38,9 +62,13 @@ public:
 	virtual void setContext( GraphicsContext* context );
 
 	virtual GraphicsContext* getContext();
-
+	
 	virtual OSHandleID getContextID();
 
+	/**
+	handle/contextID MUST be a pointer to a OSXGCRef instance (which in 
+	turn can be on the stack, so long as it has valid values
+	*/
 	virtual void setContextID( OSHandleID handle );
 
 	virtual void textAt( const Rect& bounds, const String & text, const int32& drawOptions=0 );
@@ -162,18 +190,16 @@ public:
 	
 	virtual void drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& selectedTabState, TabState& otherTabs, const std::vector<String>& tabNames, int selectedTabIndex );
 	
-	void setCGContext( CGContextRef cgRef, GrafPtr port, const Rect& ownerRect  );
-	void setPortFromImage( GrafPtr port, uint32 width, uint32 height );
+	//void setCGContext( CGContextRef cgRef, const Rect& ownerRect  );
+	//void setPortFromImage( GrafPtr port, uint32 width, uint32 height );
 	
 	
 	CGContextRef getCGContext() {
-		return contextID_;
+		return contextRef_.cgRef;
 	}
 	
 protected:
-	CGContextRef contextID_;
-    //GrafPtr grafPort_;
-	//unsigned char* inMemoryImage_;
+	OSXGCRef contextRef_;
     uint32 imgWidth_;
     uint32 imgHeight_;
 	GraphicsContext* context_;
@@ -181,7 +207,6 @@ protected:
 	ATSUTextLayout textLayout_;
 	VCF::Point origin_;
     bool xorModeOn_;
-    Rect ownerRect_;
 	LastPrimitive lastPrimitive_;
 	VCF::Point lastPrimitiveP1_;
 	VCF::Point lastPrimitiveV1_;
