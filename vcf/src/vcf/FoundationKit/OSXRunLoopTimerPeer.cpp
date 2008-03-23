@@ -79,6 +79,48 @@ OSXRunLoopTimerPeer::~OSXRunLoopTimerPeer()
     CFRelease( timerRef_ );
 }
 
+bool OSXRunLoopTimerPeer::isActive() const
+{
+	return CFRunLoopTimerIsValid( timerRef_ ) ? true : false;
+}
+
+void OSXRunLoopTimerPeer::setActive( const bool& val )
+{
+	
+}
+
+bool OSXRunLoopTimerPeer::doesRepeat() const
+{
+	return CFRunLoopTimerDoesRepeat( timerRef_ ) ? true : false;
+}
+
+DateTimeSpan OSXRunLoopTimerPeer::getInterval() const
+{
+	CFTimeInterval interval = CFRunLoopTimerGetInterval( timerRef_ );
+	
+	return DateTimeSpan( interval * 1000.0 );
+}
+
+DateTime OSXRunLoopTimerPeer::getNextFireDate() const
+{
+	DateTime result;
+	CFAbsoluteTime nextFire = CFRunLoopTimerGetNextFireDate( timerRef_ );
+	
+	CFRefObject<CFTimeZoneRef> tz = CFTimeZoneCopySystem();
+	CFGregorianDate current = CFAbsoluteTimeGetGregorianDate( nextFire, tz );
+	
+	double dsecs = floor(current.second);
+	unsigned int second = (int)dsecs;
+	
+	double milliseconds = (current.second - dsecs) * 1000.0;	
+	
+	result.set( current.year, current.month, current.day, 
+				current.hour, current.minute, second, (unsigned int)milliseconds );
+				
+				
+	return result;
+}
+
 /**
 $Id$
 */

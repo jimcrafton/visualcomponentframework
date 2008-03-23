@@ -576,7 +576,7 @@ public:
 	ComponentSetting* assignSetting( const String& settingName, const String& valueName );
 
 
-	void assignSetting( const String& settingName, ComponentSetting* setting );	
+	void setSetting( const String& settingName, ComponentSetting* setting );	
 
 
 	virtual void initializeSettings( const bool& recursive );

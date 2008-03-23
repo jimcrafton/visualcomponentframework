@@ -46,7 +46,7 @@ OSXRunLoopSourcePeer::~OSXRunLoopSourcePeer()
 {
 }
 
-void OSXRunLoopSourcePeer::fire()
+void OSXRunLoopSourcePeer::signal()
 {
     CFRunLoopSourceSignal( sourceRef_ );
 }

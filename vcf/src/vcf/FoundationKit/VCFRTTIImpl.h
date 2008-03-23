@@ -1104,11 +1104,7 @@ public:
 
 		init();
 		getFunc_ = prop.getFunc_;
-		setFunc_ = prop.setFunc_;
-		insertFunc_ = prop.insertFunc_;
-		deleteFunc_ = prop.deleteFunc_;
-		getSizeFunc_ = prop.getSizeFunc_;
-		getSizeForKeyFunc_ = prop.getSizeForKeyFunc_;
+		setFunc_ = prop.setFunc_;		
 	};
 
 	void init(){
@@ -1341,9 +1337,10 @@ class TypedObjectDictionaryProperty : public Property {
 public:
 	
 	typedef ValueType* ObjectType;
-	typedef ObjectType (Object::*GetFunction)( const KeyType& );
+	typedef KeyType KeyTypeT;
+	typedef ObjectType (Object::*GetFunction)( const KeyType& ) const;
 	typedef void (Object::*SetFunction)( const KeyType&, ObjectType );
-	typedef uint32 (Object::*GetKeys)( std::vector<KeyType>& );
+	typedef uint32 (Object::*GetKeys)( std::vector<KeyTypeT>& );
 
 	TypedObjectDictionaryProperty( GetFunction getFunc, 
 									SetFunction setFunc, 
@@ -1400,7 +1397,7 @@ public:
 		if ( (NULL != source) && (NULL != getKeysFunc_) ){
 			std::vector<KeyType> rawKeys;
 			(source->*getKeysFunc_)( rawKeys );
-			std::vector<KeyType>::iterator it = rawKeys.begin();			
+			_typename_ std::vector<KeyType>::iterator it = rawKeys.begin();			
 			while ( it != rawKeys.end() ) {
 				keys.push_back( VariantData( *it ) );
 				++it;

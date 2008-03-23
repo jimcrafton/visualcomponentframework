@@ -464,7 +464,7 @@ public:
 	}
 
 	inline const_reference operator[](size_type pos) const {
-		return collection_.[pos]
+		return collection_[pos];
 	}
 
 	inline reference front() {

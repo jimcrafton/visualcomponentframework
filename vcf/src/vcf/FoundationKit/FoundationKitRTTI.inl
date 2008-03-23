@@ -32,7 +32,7 @@ _class_rtti_end_
 _class_abstract_rtti_(Component, "VCF::ObjectWithCallbacks", COMPONENT_CLASSID)
 _property_( int32, "tag", getTag, setTag, "" )
 _property_( String, "name", getName, setName, "" )
-_property_obj_dictionary_(ComponentSetting,String,"settings",getSetting,assignSetting,getSettingNames,"")
+_property_obj_dictionary_(ComponentSetting,String,"settings",getSetting,setSetting,getSettingNames,"")
 _event_(ComponentDelegate, ComponentCreated );
 _event_(ComponentDelegate, ComponentDestroyed );
 _event_(ComponentDelegate, ComponentAdded );

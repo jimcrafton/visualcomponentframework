@@ -25,23 +25,23 @@ OSXRunLoopPeer::OSXRunLoopPeer( RunLoop* runLoop )
 {
 }
 
-void OSXRunLoopPeer::run( const DateTimeSpan* duration )
+void OSXRunLoopPeer::run( const DateTimeSpan* duration, const String& mode )
 {
     VCF_ASSERT( CFRunLoopGetCurrent() == runLoopRef_ );
     CFRunLoopRun();   
 }
 
-void OSXRunLoopPeer::stop()
+void OSXRunLoopPeer::stop( const String& mode )
 {
     CFRunLoopStop( runLoopRef_ );
 }
 
-bool OSXRunLoopPeer::isStopped() const
+bool OSXRunLoopPeer::isStopped( const String& mode ) const
 {
 	return false;
 }
 
-void OSXRunLoopPeer::addTimer( RunLoopTimerPtr::Shared timer )
+void OSXRunLoopPeer::addTimer( RunLoopTimerPtr::Shared timer, const String& mode )
 {
     RunLoopTimerPeerPtr::Shared peer = timer->getPeer();
     OSXRunLoopTimerPeer *osxPeer = static_cast<OSXRunLoopTimerPeer*>( peer.get() );
@@ -53,7 +53,7 @@ void OSXRunLoopPeer::addTimer( RunLoopTimerPtr::Shared timer )
     }
 }
 
-void OSXRunLoopPeer::removeTimer( RunLoopTimerPtr::Shared timer )
+void OSXRunLoopPeer::removeTimer( RunLoopTimerPtr::Shared timer, const String& mode )
 {
     RunLoopTimerPeerPtr::Shared peer = timer->getPeer();
     OSXRunLoopTimerPeer *osxPeer = static_cast<OSXRunLoopTimerPeer*>( peer.get() );
@@ -65,7 +65,7 @@ void OSXRunLoopPeer::removeTimer( RunLoopTimerPtr::Shared timer )
     }
 }
 
-void OSXRunLoopPeer::addSource( RunLoopSourcePtr::Shared source )
+void OSXRunLoopPeer::addSource( RunLoopSourcePtr::Shared source, const String& mode )
 {
     RunLoopSourcePeerPtr::Shared peer = source->getPeer();
     OSXRunLoopSourcePeer *osxPeer = static_cast<OSXRunLoopSourcePeer*>( peer.get() );
@@ -77,7 +77,7 @@ void OSXRunLoopPeer::addSource( RunLoopSourcePtr::Shared source )
     }
 }
 
-void OSXRunLoopPeer::removeSource( RunLoopSourcePtr::Shared source )
+void OSXRunLoopPeer::removeSource( RunLoopSourcePtr::Shared source, const String& mode )
 {
     RunLoopSourcePeerPtr::Shared peer = source->getPeer();
     OSXRunLoopSourcePeer *osxPeer = static_cast<OSXRunLoopSourcePeer*>( peer.get() );

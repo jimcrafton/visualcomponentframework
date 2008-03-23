@@ -634,7 +634,7 @@ ComponentSetting* Component::assignSetting( const String& settingName, const Str
 	result->name = valueName;
 	result->value = v;
 
-	assignSetting( settingName, result );
+	setSetting( settingName, result );
 
 	return result;
 }
@@ -676,12 +676,12 @@ ComponentSetting* Component::assignSetting( const String& settingName, const Str
 		result->value = *propVal; 
 	}
 
-	assignSetting( settingName, result );
+	setSetting( settingName, result );
 
 	return result;
 }
 
-void Component::assignSetting( const String& settingName, ComponentSetting* setting )
+void Component::setSetting( const String& settingName, ComponentSetting* setting )
 {
 	if ( NULL == settings_ ) {
 		settings_ = new Dictionary();
