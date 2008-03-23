@@ -20,8 +20,6 @@ using namespace VCF;
 
 OSXContext::OSXContext():
 	contextID_(nil),
-    grafPort_(0),
-	inMemoryImage_(nil),
     imgWidth_(0),
     imgHeight_(0),
 	context_(NULL),
@@ -36,8 +34,6 @@ OSXContext::OSXContext():
 
 OSXContext::OSXContext( const uint32& width, const uint32& height ):
 	contextID_(nil),
-    grafPort_(0),
-	inMemoryImage_(nil),
     imgWidth_(width),
     imgHeight_(height),
 	context_(NULL),
@@ -48,14 +44,12 @@ OSXContext::OSXContext( const uint32& width, const uint32& height ):
 	antialiasingOn_(true)
 {
 	//allocate a RGBA buffer for use
-    inMemoryImage_ = new unsigned char[imgWidth_ * imgHeight_ * 4];
+    //inMemoryImage_ = new unsigned char[imgWidth_ * imgHeight_ * 4];
 	init();
 }
 
 OSXContext::OSXContext( OSHandleID contextID ):
-	contextID_(0),
-    grafPort_((GrafPtr)contextID),
-	inMemoryImage_(nil),
+	contextID_(0),    
     imgWidth_(0),
     imgHeight_(0),
 	context_(NULL),
@@ -75,14 +69,14 @@ OSXContext::~OSXContext()
 		ATSUDisposeTextLayout( textLayout_ );
 	}
 
-    CGContextRelease( contextID_);
-
+    CGContextRelease( contextID_ );
+/*
     if ( NULL != inMemoryImage_ ) {
         delete [] inMemoryImage_;
         inMemoryImage_ = NULL;
         DisposeGWorld( grafPort_ );
     }
-
+*/
 
 	contextID_ = nil;
 }
@@ -99,12 +93,12 @@ GraphicsContext* OSXContext::getContext()
 
 OSHandleID OSXContext::getContextID()
 {
-	return (OSHandleID)grafPort_;
+	return (OSHandleID)contextID_;
 }
 
 void OSXContext::setContextID( OSHandleID handle )
 {
-    if ( NULL != inMemoryImage_ ) {
+    /*if ( NULL != inMemoryImage_ ) {
         delete [] inMemoryImage_;
         inMemoryImage_ = 0;
         imgWidth_ = 0;
@@ -117,8 +111,10 @@ void OSXContext::setContextID( OSHandleID handle )
 		CGContextRelease( contextID_);
 		contextID_ = NULL;
     }
+*/
+	
 
-	grafPort_ = (GrafPtr)handle;
+	//grafPort_ = (GrafPtr)handle;
     init();
 }
 
@@ -127,15 +123,17 @@ void OSXContext::setPortFromImage( GrafPtr port, uint32 width, uint32 height )
 	
 	
 	
-	grafPort_ = port;
+	//grafPort_ = port;
 	ownerRect_.setRect( 0, 0, width, height );
 	
 	if ( NULL != contextID_ ) {
 		CGContextRelease( contextID_);
 	}
 	
+	contextID_ = NULL;
 	
-	CreateCGContextForPort( grafPort_, &contextID_);		
+	
+	//CreateCGContextForPort( grafPort_, &contextID_);		
 	
 	//Note the absence of a transform! apparently we don't need to for 
 	//image based CG's
@@ -161,6 +159,7 @@ void OSXContext::setPortFromImage( GrafPtr port, uint32 width, uint32 height )
 
 void OSXContext::setCGContext( CGContextRef cgRef, GrafPtr port, const Rect& ownerRect  )
 {
+/*
 	if ( NULL != inMemoryImage_ ) {
         delete [] inMemoryImage_;
         inMemoryImage_ = 0;
@@ -168,11 +167,12 @@ void OSXContext::setCGContext( CGContextRef cgRef, GrafPtr port, const Rect& own
         imgHeight_ = 0;
         DisposeGWorld( grafPort_ );
     }
-
+*/
 
 
 	ownerRect_ = ownerRect;
 	contextID_ = cgRef;
+/*
 	grafPort_ = NULL;
 
 	if ( NULL != inMemoryImage_ ) {
@@ -207,6 +207,7 @@ void OSXContext::setCGContext( CGContextRef cgRef, GrafPtr port, const Rect& own
     }
 
 	grafPort_ = port;
+	*/
 
 
 	if ( nil == textLayout_ ) {
@@ -233,7 +234,7 @@ void OSXContext::init()
 {
     origin_.x_ = 0;
 	origin_.y_ = 0;
-	
+	/*
 	if ( NULL != inMemoryImage_ ) {
         //allocate a new gworld
         GWorldPtr newGworld = 0;
@@ -294,7 +295,7 @@ void OSXContext::init()
 			throw RuntimeException( MAKE_ERROR_MSG_2("ATSUSetLayoutControls failed.") );
 		}
 	}
-
+*/
 
 }
 
@@ -432,7 +433,7 @@ VCF::Size OSXContext::getLayoutDimensions( const String& text )
 	ATSUTextLayout tmpTextLayout = NULL;
 	OSStatus err = ATSUCreateAndCopyTextLayout( textLayout_, &tmpTextLayout );
 	if ( err != noErr ) {
-		String msg = StringUtils::format( Format("ATSUCreateAndCopyTextLayout failed, err: %d, textLayout_: %p, tmpTextLayout: %p") % err % textLayout_ % tmpTextLayout );
+		String msg = Format("ATSUCreateAndCopyTextLayout failed, err: %d, textLayout_: %p, tmpTextLayout: %p") % err % textLayout_ % tmpTextLayout;
 		throw RuntimeException( MAKE_ERROR_MSG_2(msg) );
 	}	
 	
@@ -673,19 +674,19 @@ void OSXContext::copyContext( const Rect& sourceRect,
 
 
 
-    GrafPtr srcPort = (GrafPtr)sourceContext->getContextID();
-    GrafPtr destPort = grafPort_;
+    //GrafPtr srcPort = (GrafPtr)sourceContext->getContextID();
+    //GrafPtr destPort = grafPort_;
 
-	CopyBits( GetPortBitMapForCopyBits (srcPort),
-                    GetPortBitMapForCopyBits (destPort),
-                    &srcRect,
-                    &dstRect,
-                    srcCopy, 0 );
+	//CopyBits( GetPortBitMapForCopyBits (srcPort),
+      //              GetPortBitMapForCopyBits (destPort),
+        //            &srcRect,
+          //          &dstRect,
+            //        srcCopy, 0 );
 }
 
 bool OSXContext::isMemoryContext()
 {
-	return (NULL != inMemoryImage_) ? true : false;
+	return false ;//(NULL != inMemoryImage_) ? true : false;
 }
 
 bool OSXContext::prepareForDrawing( int32 drawingOperation )
@@ -695,22 +696,22 @@ bool OSXContext::prepareForDrawing( int32 drawingOperation )
     checkHandle();
 
 	Color* currentColor = context_->getColor();
-	GrafPtr oldPort;
-    GetPort( &oldPort );
-    if ( oldPort != grafPort_ ) {
+	//GrafPtr oldPort;
+    //GetPort( &oldPort );
+    //if ( oldPort != grafPort_ ) {
         //SetPort( grafPort_ );
-    }
+    //}
 
-	if ( xorModeOn_ ) {
-        PenMode( srcXor );
-    }
-    else {
-        PenMode( srcCopy );
-    }
+	//if ( xorModeOn_ ) {
+      //  PenMode( srcXor );
+    //}
+    //else {
+      //  PenMode( srcCopy );
+    //}
 
-    if ( oldPort != grafPort_ ) {
+    //if ( oldPort != grafPort_ ) {
         //SetPort( oldPort );
-    }
+    //}
 
 	CGContextSetShouldAntialias(contextID_, antialiasingOn_);
 
@@ -1997,7 +1998,7 @@ void OSXContext::drawThemeBackground( Rect* rect, BackgroundState& state )
 			err = SetThemeBackground( state.isActive() ? kThemeBrushButtonFaceActive : kThemeBrushButtonFaceInactive,
 									32, TRUE );
 			if ( err != noErr ) {
-				StringUtils::traceWithArgs( Format("SetThemeBackground() failed, err: %d\n") % err );
+				StringUtils::trace( Format("SetThemeBackground() failed, err: %d\n") % err );
 			}
 			EraseRect( r );
 		}
@@ -2108,7 +2109,7 @@ void OSXContext::drawThemeBackground( Rect* rect, BackgroundState& state )
 			err = SetThemeBackground( state.isHighlighted() ? kThemeBrushMenuBackgroundSelected : kThemeBrushMenuBackground,
 									32, TRUE );
 			if ( err != noErr ) {
-				StringUtils::traceWithArgs( Format("SetThemeBackground() failed, err: %d\n") % err );
+				StringUtils::trace( Format("SetThemeBackground() failed, err: %d\n") % err );
 			}
 			
 			EraseRect( r );
@@ -2130,7 +2131,7 @@ void OSXContext::drawThemeBackground( Rect* rect, BackgroundState& state )
 									32, TRUE );
 									
 			if ( err != noErr ) {
-				StringUtils::traceWithArgs( Format("SetThemeBackground() failed, err: %d\n") % err );
+				StringUtils::trace( Format("SetThemeBackground() failed, err: %d\n") % err );
 			}
 			
 			EraseRect( r );

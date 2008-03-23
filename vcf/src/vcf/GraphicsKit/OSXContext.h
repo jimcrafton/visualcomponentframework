@@ -170,13 +170,10 @@ public:
 		return contextID_;
 	}
 	
-	GrafPtr getGrafPtr() {
-		return grafPort_;
-	}
 protected:
 	CGContextRef contextID_;
-    GrafPtr grafPort_;
-	unsigned char* inMemoryImage_;
+    //GrafPtr grafPort_;
+	//unsigned char* inMemoryImage_;
     uint32 imgWidth_;
     uint32 imgHeight_;
 	GraphicsContext* context_;
