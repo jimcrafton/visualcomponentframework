@@ -1574,9 +1574,13 @@ public:
 					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, BP_PUSHBUTTON, PBS_NORMAL, 
 																&r, TS_TRUE, &sz);
 
+					MARGINS m = {0};
+					Win32VisualStylesWrapper::GetThemeMargins( theme, dc, BP_PUSHBUTTON, 0, TMT_CONTENTMARGINS, NULL, &m );
+
 					Win32VisualStylesWrapper::CloseThemeData( theme );
 					ReleaseDC(::GetDesktopWindow(),dc);
 
+					sz.cy += m.cyTopHeight + m.cyBottomHeight;
 					result = sz.cy;
 				}
 				else {

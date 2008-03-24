@@ -44,6 +44,7 @@ public:
 	String windowClass;
 	String fileTypes;
 	MIMEType mimetype;
+	String clipboardTypes;
 	String description;
 };
 
@@ -1763,6 +1764,16 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 		newDocument->setModel( newModel );
 		newDocument->addComponent( newModel );
 
+		String types = info.clipboardTypes;
+		size_t pos = types.find(";");
+		while ( pos != String::npos ) {
+			newDocument->addSupportedClipboardFormat( types.substr(0,pos) ) ;
+			types.erase(0,pos+1);
+			pos = types.find(";");
+		}
+		if ( !types.empty() ) {
+			newDocument->addSupportedClipboardFormat( types ) ;
+		}
 
 		if ( !fileName.empty() ) {
 			newDocument->setFileName( fileName );

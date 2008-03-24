@@ -63,7 +63,16 @@ void DocumentManager::init()
 		for (size_t i=0;i<docTypes.data.size();i++ ) {
 			const PropertyListing& dict =  (const PropertyListing&)(const Object&) docTypes.data[i];
 			
+			if ( !dict.keyExists("TypeExtensions") ) {
+				throw RuntimeException( "Invalid Document Info file - missing 'TypeExtensions' key" );
+			}
+
 			const VariantArray& extensions = dict.getArray( "TypeExtensions" );
+
+			if ( !dict.keyExists("ClipboardTypeContent") ) {
+				throw RuntimeException( "Invalid Document Info file - missing 'ClipboardTypeContent' key" );
+			}
+			const VariantArray& clipboardTypes = dict.getArray( "ClipboardTypeContent" );
 
 			String icoFile = dict["TypeIcon"];
 
@@ -84,10 +93,19 @@ void DocumentManager::init()
 			info.docClass = (String)dict["DocumentClass"];
 			info.modelClass = (String)dict["ModelClass"];
 
+			for (size_t k=0;k<clipboardTypes.data.size();k++ ) {
+				String type = clipboardTypes.data[k];
+
+				if ( k > 0 ) {
+					info.clipboardTypes += ";";
+				}
+				info.clipboardTypes += type;				
+			}
+
 			//register type(s)
 			UIShell* shell = UIShell::getUIShell();
-			for (size_t j=0;i<extensions.data.size();i++ ) {
-				String ext = extensions.data[i];
+			for (size_t j=0;j<extensions.data.size();j++ ) {
+				String ext = extensions.data[j];
 
 				FileAssociationInfo fa;
 				fa.extension = ext;
@@ -99,6 +117,9 @@ void DocumentManager::init()
 
 				shell->createFileAssociation( fa, false );				
 
+				if ( j > 0 ) {
+					info.fileTypes += ";";
+				}
 				info.fileTypes += ext;
 			}
 
@@ -223,7 +244,7 @@ void DocumentManager::copyFromDocument( Document* doc ) {
 		if ( NULL != info ) {
 			if ( doc->saveAsType( info->mimetype, bos ) ) {
 				data = new DataObject();
-				BinaryPersistable* persistable = new BinaryPersistable( (const unsigned char*)bos.getBuffer(), bos.getSize() );
+				BinaryPersistable* persistable = new BinaryPersistable( bos.getBuffer(), bos.getSize() );
 				data->addSupportedDataType( info->mimetype, persistable );
 			}
 		}
@@ -276,7 +297,7 @@ void DocumentManager::pasteToDocument( Document* doc ) {
 			else {
 				doc->openFromType( info->mimetype, bis );
 			}	
-			
+			doc->setModified( true );
 		}
 
 		if ( NULL != data ) {
@@ -344,13 +365,16 @@ DocumentInfo* DocumentManager::getDocumentInfo( Document* doc )
 	DocumentInfo* result = NULL;
 
 	DocumentInfoMap::iterator it = docInfo_.begin();
-	Class* clazz = doc->getClass();
+	Class* docClass = doc->getClass();
+	Class* modelClass = doc->getModel()->getClass();
 
-	if ( NULL != clazz ) {
+	if ( NULL != docClass && NULL != modelClass ) {
 		while ( it != docInfo_.end() ) {
 			DocumentInfo& info = it->second;
-			if ( info.docClass == clazz->getClassName() ||
-					info.docClass == clazz->getID() ) {
+			if ( (info.docClass == docClass->getClassName() ||
+					info.docClass == docClass->getID()) || 
+					(info.modelClass == modelClass->getClassName() ||
+					info.modelClass == modelClass->getID()) ) {
 				result = &info;
 				break;
 			}
