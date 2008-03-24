@@ -1693,7 +1693,7 @@ public:
 
 	//add targets by index, basically here for 
 	//support for modify AcceleratorKeys via the VFF format
-	AcceleratorKey* getAcceleratorKey( const uint32& index );
+	AcceleratorKey* getAcceleratorKey( const uint32& index ) const ;
 
 	void setAcceleratorKey( const uint32& index, AcceleratorKey* accelerator );
 

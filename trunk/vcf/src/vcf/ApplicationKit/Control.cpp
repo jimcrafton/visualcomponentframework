@@ -1474,10 +1474,10 @@ void Control::addAcceleratorKey( AcceleratorKey* accelerator )
 	UIToolkit::registerAccelerator( accelerator );
 }
 
-AcceleratorKey* Control::getAcceleratorKey( const uint32& index )
+AcceleratorKey* Control::getAcceleratorKey( const uint32& index ) const 
 {
 	std::vector<AcceleratorKey*> keys;
-	UIToolkit::getAcceleratorKeysForControl(this, keys);
+	UIToolkit::getAcceleratorKeysForControl((Control*)this, keys);
 
 	return keys.at( index );
 }

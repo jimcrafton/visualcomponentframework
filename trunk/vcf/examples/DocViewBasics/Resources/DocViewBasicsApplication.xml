@@ -21,6 +21,7 @@
 
 				<key>DocumentClass</key>
 				<string>CircleDocument</string>
+
 				<key>ModelClass</key>
 				<string>CircleModel</string>
 
