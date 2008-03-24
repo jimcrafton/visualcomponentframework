@@ -14,6 +14,11 @@
 				<key>TypeContent</key>
 				<string>application/x-circledoc</string>
 
+				<key>ClipboardTypeContent</key>
+				<array>
+					<string>application/x-circledoc</string>
+				</array>
+
 				<key>TypeIcon</key>
 				<string>circ-type.bmp</string>
 				

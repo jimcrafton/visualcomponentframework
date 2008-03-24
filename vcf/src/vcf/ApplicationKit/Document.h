@@ -371,7 +371,7 @@ public:
 			return false;
 		}
 
-		return docModel->isEmpty();
+		return !docModel->isEmpty();
 	}
 
 	/**
@@ -388,7 +388,7 @@ public:
 		}
 
 
-		return docModel->isEmpty();
+		return !docModel->isEmpty();
 	}
 
 	/**
@@ -428,7 +428,11 @@ public:
 			return NULL;
 		}
 
-		return NULL;
+		DataObject* result = copy();
+
+		empty();
+
+		return result;
 	}
 
 	/**
@@ -443,7 +447,21 @@ public:
 			return NULL;
 		}
 
-		return NULL;
+		DataObject* result = NULL;
+
+		for ( size_t i=0;i<clipFormats_.size();i++ ) {
+			BasicOutputStream bos;
+			
+			if ( saveAsType( clipFormats_[i], bos ) ) {
+				if ( NULL == result ) {
+					result = new DataObject();
+				}
+				BinaryPersistable* persistable = new BinaryPersistable( bos.getBuffer(), bos.getSize() );
+				result->addSupportedDataType( clipFormats_[i], persistable );
+			}
+		}
+
+		return result;
 	}
 
 	/**
