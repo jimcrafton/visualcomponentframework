@@ -1521,12 +1521,19 @@ Window* DocumentManagerImpl<AppClass,DocInterfacePolicy>::getWindowForNewDocumen
 	if ( DocInterfacePolicy::usesMainWindow() ) {
 		// in a SDI policy the new window for the document is the main window
 		if ( NULL == app_->getMainWindow() ) {
-			if ( info.windowClass.empty() ) {
-				result = new Window();
-			}
-			else {
-				Object* windowObj = ClassRegistry::createNewInstance( info.windowClass );
-				result = dynamic_cast<Window*>(windowObj);
+
+
+			result = Frame::createWindow( ClassRegistry::getClass(info.windowClass) );
+
+			if ( NULL == result ) {
+				
+				if ( info.windowClass.empty() ) {
+					result = new Window();
+				}
+				else {
+					Object* windowObj = ClassRegistry::createNewInstance( info.windowClass );
+					result = dynamic_cast<Window*>(windowObj);
+				}
 			}
 			app_->setMainWindow( result );
 		}
@@ -1536,12 +1543,17 @@ Window* DocumentManagerImpl<AppClass,DocInterfacePolicy>::getWindowForNewDocumen
 	}
 	else {
 		// in a MDI policy the new window for the document is a new window
-		if ( info.windowClass.empty() ) {
-			result = new Window();
-		}
-		else {
-			Object* windowObj = ClassRegistry::createNewInstance( info.windowClass );
-			result = dynamic_cast<Window*>(windowObj);
+		result = Frame::createWindow( ClassRegistry::getClass(info.windowClass) );
+		
+		if ( NULL == result ) {
+			
+			if ( info.windowClass.empty() ) {
+				result = new Window();
+			}
+			else {
+				Object* windowObj = ClassRegistry::createNewInstance( info.windowClass );
+				result = dynamic_cast<Window*>(windowObj);
+			}
 		}
 	}
 

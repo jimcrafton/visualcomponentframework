@@ -82,6 +82,7 @@ void DocumentManager::init()
 			info.description = (String)dict["TypeDescription"];
 			info.windowClass = (String)dict["DocumentWindow"];
 			info.docClass = (String)dict["DocumentClass"];
+			info.modelClass = (String)dict["ModelClass"];
 
 			//register type(s)
 			UIShell* shell = UIShell::getUIShell();
