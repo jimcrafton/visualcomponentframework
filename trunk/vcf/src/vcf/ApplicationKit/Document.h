@@ -209,7 +209,7 @@ public:
 	* as soon as a new document has been successfully created.
 	* Override this to initializations specific of your document.
 	*/
-	virtual void initNew() = 0;
+	virtual void initNew(){};
 
 
 	/**

@@ -281,15 +281,40 @@ protected:
 /**
 \class VariantArray Dictionary.h "vcf/FoundationKit/Dictionary.h"
 */
-class VariantArray : public Object {
+class FOUNDATIONKIT_API VariantArray : public Object {
 public:
 
-	VariantArray(){}
-	VariantArray( const std::vector<VariantData>& v ): data(v){}
-	VariantArray(size_t sz):data(sz){}
+	VariantArray():ownsObjectValues_(false){}
+	VariantArray( const std::vector<VariantData>& v ): data(v),ownsObjectValues_(false){}
+	VariantArray(size_t sz):data(sz),ownsObjectValues_(false){}
 
+	virtual ~VariantArray();
+
+	void clear();
 
 	std::vector<VariantData> data;
+
+	
+
+	/**
+	Returns whether or not the dictionary "owns" the
+	object values in it. If it does it will clean up these 
+	instances when the dictionary is destroyed.
+	*/
+	bool getOwnsObjectValues() const {
+		return ownsObjectValues_;
+	}
+
+	/**
+	Sets the owns object value flag, which tells the 
+	dictionary whether or not it should clean up 
+	object values when the dictionary is destroyed.
+	*/
+	void setOwnsObjectValues( const bool& val ) {
+		ownsObjectValues_ = val;
+	}
+protected:
+	bool ownsObjectValues_;
 };
 
 };

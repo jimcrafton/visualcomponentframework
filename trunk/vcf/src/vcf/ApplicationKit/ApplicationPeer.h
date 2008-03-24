@@ -69,7 +69,7 @@ public:
 	*/
 	virtual OSHandleID getHandleID()  = 0;
 
-	virtual void setHandleID( OSHandleID handleID ) = 0;
+	virtual void setHandleID( OSHandleID handleID ) = 0;	
 };
 
 

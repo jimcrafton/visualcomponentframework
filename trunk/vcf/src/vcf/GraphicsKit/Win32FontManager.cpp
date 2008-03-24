@@ -93,6 +93,8 @@ Win32FontManager::~Win32FontManager()
 	}
 
 	fontMap_.clear();
+
+	Win32FontManager::win32FontMgr = NULL;
 }
 
 void Win32FontManager::init()
@@ -196,6 +198,10 @@ HFONT Win32FontManager::getFontHandleFromFontPeer( Win32Font* font )
 
 void Win32FontManager::removeFont( Win32Font* font )
 {
+	if ( NULL == Win32FontManager::win32FontMgr ) {
+		return;
+	}
+
 	String fontID = Win32FontManager::win32FontMgr->makeStringID( font );
 
 	if ( ! Win32FontManager::win32FontMgr->fontMap_.empty() ) {

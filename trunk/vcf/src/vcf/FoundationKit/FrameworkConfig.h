@@ -92,7 +92,7 @@ Miscellaneous:
 /**
 Setup VCF_ operating system
 */
-#if defined(WIN32) || defined(_WIN32)
+#if defined(WIN32) || defined(_WIN32) || defined(_WIN32_WCE)
 	#define VCF_WIN32
 
 	// Define both to be sure that the thirdpatry code will find appropriate one.

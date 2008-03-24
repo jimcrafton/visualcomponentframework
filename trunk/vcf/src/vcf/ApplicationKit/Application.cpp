@@ -118,7 +118,7 @@ JC
 	*/
 }
 
-void Application::main()
+void Application::internal_main()
 {
 	// this is used in order to break in the right place when an exception is thrown. - MP -
 	Window* mainWindow = NULL;
@@ -223,9 +223,8 @@ void Application::main()
 		String errString = e.getMessage().c_str();
 
 		StringUtils::trace( "!!! Framework Exception: !!!\n\t" + errString + "\n" );
-		if ( NULL != mainWindow ) {
-			Dialog::showMessage( errString, "Framework Exception", Dialog::mbOK, Dialog::msError  );
-		}
+	
+		Application::showErrorMessage( errString, "Framework Exception" );	
 
 #ifdef _DEBUG
 		throw;
@@ -237,9 +236,9 @@ void Application::main()
 		errString += "\".\nApplication exiting abnormally.";
 
 		StringUtils::trace( "!!! Framework Exception: !!!\n\t" + errString + "\n" );
-		if ( NULL != mainWindow ) {
-			Dialog::showMessage( errString, "Framework Assertion Exception", Dialog::mbOK, Dialog::msError  );
-		}
+		
+		Application::showErrorMessage( errString, "Framework Assertion Exception"  );
+		
 
 #ifdef _DEBUG
 		throw;
@@ -255,10 +254,8 @@ void Application::main()
 		errString += " (Exception of type : " + clasName + ")";
 		errString += e.what();
 		errString += "\".\nApplication exiting abnormally.";
-
-		if ( NULL != mainWindow ) {
-			Dialog::showMessage( errString, "Framework Exception", Dialog::mbOK, Dialog::msError  );
-		}
+		
+		Application::showErrorMessage( errString, "Framework Exception"  );		
 
 #ifdef _DEBUG
 		throw;
@@ -266,15 +263,59 @@ void Application::main()
 	}
 	catch (...){
 		//if ( NULL != mainWindow ) {
-			Dialog::showMessage( "Unknown exception occurred. Application exiting abnormally.",
-									"Framework Exception", Dialog::mbOK, Dialog::msError  );
+			Application::showErrorMessage( "Unknown exception occurred. Application exiting abnormally.",
+									"Framework Exception"  );
 		//}
 //#ifdef _DEBUG
 		throw ;
 //#endif
 	}
+}
 
 
+
+
+
+void Application::showErrorMessage( const String& message, const String& title )
+{
+
+#ifdef VCF_WIN
+	if ( System::isUnicodeEnabled() ) {
+		::MessageBoxW( NULL, message.c_str(), title.c_str(), MB_OK | MB_ICONERROR );
+	}
+	else {
+		::MessageBoxA( NULL, message.ansi_c_str(), title.ansi_c_str(), MB_OK | MB_ICONERROR );
+	}
+#endif
+
+}
+
+
+
+
+
+int Application::main()
+{
+	try {
+		internal_main();
+	}
+	catch (std::exception& e){
+		String msg = String("Exiting main function due to uncaught exception.\nException: ") + e.what() + "\n";
+		StringUtils::trace( msg );
+		System::println( msg );
+		Application::showErrorMessage( msg, "Uncaught Exception Handler" );
+		ApplicationKit::terminate();
+		return -1;
+	}
+	catch (...){
+		String msg = String("Exiting main function due to uncaught exception. Exception type unknown.\n");
+		StringUtils::trace( msg );
+		System::println( msg );
+		Application::showErrorMessage( msg, "Uncaught Exception Handler" );
+		ApplicationKit::terminate();
+		return -1;	
+	}
+	return 0;
 }
 
 Application* Application::getRunningInstance()
@@ -476,6 +517,8 @@ void Application::getHelpInfo( String& helpBookName, String& helpDirectory )
 	helpBookName = "";
 	helpDirectory = "";
 }
+
+
 
 
 /**

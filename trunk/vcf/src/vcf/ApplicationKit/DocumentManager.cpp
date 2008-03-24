@@ -106,7 +106,7 @@ void DocumentManager::init()
 			docInfo_[info.mimetype] = info;
 		}
 
-		
+		res->free();
 	}
 	else {
 		throw RuntimeException( "You need to have a resource file named \"" + app->getName() + ".xml\" with the correct data in it."  );

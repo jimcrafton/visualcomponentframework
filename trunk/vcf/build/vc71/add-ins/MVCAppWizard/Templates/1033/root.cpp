@@ -46,10 +46,6 @@ public:
 
 int main(int argc, char *argv[])
 {
-	Application* app = new [!output PROJECT_NAME]( argc, argv );
-
-	Application::main();
-	
-	return 0;
+	return ApplicationKitMain< [!output PROJECT_NAME] >(argc,argv);
 }
 

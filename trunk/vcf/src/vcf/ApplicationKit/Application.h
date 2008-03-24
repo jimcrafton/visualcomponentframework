@@ -78,7 +78,8 @@ public:
 	/**
 	*The entry point into the application object starting up.
 	*/
-	static void main();
+	static int main();
+
 
 	/**
 	*returns the singleton instance of the current
@@ -206,6 +207,9 @@ public:
 	virtual void onOSNativeEvent( Event* nativeOSEvent ) {
 		nativeOSEventReceived( nativeOSEvent );
 	}
+	
+
+	static void showErrorMessage( const String& message, const String& title );
 protected:
 	static Application* appInstance_;
 	std::map<String,Library*> VPLMap_;
@@ -213,9 +217,20 @@ protected:
 	void init();
 
 	void internal_terminate();
+
+	static void internal_main();
 private:
     Window * mainWindow_;
 };
+
+
+
+template <typename T>
+int ApplicationKitMain(int argc, char** argv) {
+	Application* app = new T( argc, argv );
+	return Application::main();
+}
+
 
 };
 
