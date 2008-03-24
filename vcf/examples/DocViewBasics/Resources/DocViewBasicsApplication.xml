@@ -20,7 +20,7 @@
 
 
 				<key>DocumentClass</key>
-				<string>CircleDocument</string>
+				<string></string>
 
 				<key>ModelClass</key>
 				<string>CircleModel</string>

@@ -52,10 +52,6 @@ public:
 
 int main(int argc, char *argv[])
 {
-	Application* app = new $$Root$$( argc, argv );
-
-	Application::main();
-	
-	return 0;
+	return ApplicationKitMain<$$Root$$>(argc,argv);
 }
 

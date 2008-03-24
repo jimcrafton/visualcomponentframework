@@ -43,11 +43,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	Application* app = new $$Root$$Application( argc, argv );
-
-	Application::main();
-	
-	return 0;
+	return ApplicationKitMain<$$Root$$Application>(argc,argv);
 }
 
 

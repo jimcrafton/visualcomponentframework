@@ -47,6 +47,7 @@ where you installed the VCF.
 	#include <extras.h>
 #endif
 
+
 #ifdef VCF_BCC
   #include <string.h>
 #endif

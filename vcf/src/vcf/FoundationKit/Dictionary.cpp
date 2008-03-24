@@ -181,6 +181,34 @@ const Dictionary::Enumerator* Dictionary::getEnumerator() const
 {
 	return dataContainer_.getEnumerator();
 }
+
+
+VariantArray::~VariantArray()
+{
+	clear();
+}
+
+void VariantArray::clear()
+{
+	if ( ownsObjectValues_ ) {
+		std::vector<VariantData>::iterator it = data.begin();
+		while ( it != data.end() ) {
+			VariantData& v = *it;
+			
+			if ( pdObject == v.type ) {
+				Object* o = v;
+				if ( NULL != o ) {
+					o->free();
+				}
+			}
+			
+			it ++;
+		}
+	}
+
+	data.clear();	
+}
+
 /**
 $Id$
 */

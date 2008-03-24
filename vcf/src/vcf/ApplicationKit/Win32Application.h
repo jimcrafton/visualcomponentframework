@@ -42,7 +42,7 @@ public:
 
 	virtual OSHandleID getHandleID();
 
-	virtual void setHandleID( OSHandleID handleID );
+	virtual void setHandleID( OSHandleID handleID );	
 private:
 	VCF::AbstractApplication* app_;
 	HINSTANCE instanceHandle_;

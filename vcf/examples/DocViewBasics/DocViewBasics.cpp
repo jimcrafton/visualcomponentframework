@@ -56,7 +56,7 @@ This model allows us to add, remove and get individual circles, as
 well as access to the vector that stores the circles.
 */
 
-class CircleModel : public Model {
+class CircleModel : public Model, public Persistable {
 public:
 
 	enum {
@@ -121,10 +121,54 @@ public:
 		Model::empty();
 	}
 
+	virtual bool isEmpty() {
+		return circles_.empty();
+	}
+
+
+	virtual void loadFromStream( InputStream* stream, const MIMEType& type ) {
+		if ( type == "application/x-circledoc" ) {
+
+			int size = 0;
+			stream->read( size );
+			
+			double radius;
+			Point pt;
+			for (int i=0;i<size;i++ ) {
+				stream->read( pt.x_ );
+				stream->read( pt.y_ );
+				stream->read( radius );
+
+				addCircle( pt, radius );
+			}
+		}
+	}
+
+	virtual void saveToStream( OutputStream* stream, const MIMEType& type ) {
+		if ( type == "application/x-circledoc" ) {
+			//save the number of circles
+			int size = circles_.size();
+			stream->write( size );
+
+			std::vector<CircleShape>::const_iterator it = circles_.begin();
+			while ( it != circles_.end() ) {
+				const CircleShape& shape = *it;
+
+				stream->write( shape.center_.x_ );
+				stream->write( shape.center_.y_ );
+				stream->write( shape.radius_ );
+				it ++;
+			}
+		}
+	}
+
 	std::vector<CircleShape> circles_;
 };
 
 
+
+_class_rtti_( CircleModel, "VCF::Model", "CircleModel" )
+_class_rtti_end_
 
 
 /**
@@ -150,57 +194,33 @@ public:
 	}
 
 
-
+/*
 	virtual bool saveAsType( const VCF::String& fileType, VCF::OutputStream& stream ) {
 		bool result = false;
 
 		if ( fileType == "application/x-circledoc" ) {
-/*
+
 			
-			//save the number of circles
-			int size = circles_.size();
-			stream.write( size );
-
-			std::vector<CircleShape>::const_iterator it = circles_.begin();
-			while ( it != circles_.end() ) {
-				const CircleShape& shape = *it;
-
-				stream.write( shape.center_.x_ );
-				stream.write( shape.center_.y_ );
-				stream.write( shape.radius_ );
-				it ++;
-			}
-			*/
+			
+			
 
 			result = true;
 		}
 
 		return result;
 	}
+	*/
 
+	/*
 	virtual bool openFromType( const VCF::String& fileType, VCF::InputStream& stream ) {
 		bool result = false;
 
-		if ( fileType == "application/x-circledoc" ) {
-/*
-			int size = 0;
-			stream.read( size );
-			
-			double radius;
-			Point pt;
-			for (int i=0;i<size;i++ ) {
-				stream.read( pt.x_ );
-				stream.read( pt.y_ );
-				stream.read( radius );
-
-				addCircle( pt, radius );
-			}
-*/
-			result = true;
-		}
+		
 
 		return result;
 	}
+	*/
+
 /*
 	virtual bool canCutFromDocument() {
 		return !circles_.empty();
@@ -222,8 +242,6 @@ protected:
 
 
 
-_class_rtti_( CircleDocument, "VCF::Document", CIRCLEDOCUMENT_CLASSID )
-_class_rtti_end_
 
 
 
@@ -375,8 +393,8 @@ public:
 
 	CircleViewController():model_(NULL), panel_(NULL){}
 
-	void setModel( CircleDocument* model ) {
-		/*
+	void setModel( Model* model ) {
+		
 		CallBack* ev = getCallback( "CircleViewController::onCircleModelChanged" );
 
 
@@ -386,7 +404,7 @@ public:
 			}
 		}
 
-		model_ = model;
+		model_ = (CircleModel*)model;
 
 		if ( NULL != model_ ) {
 			if ( NULL == ev ) {
@@ -394,7 +412,6 @@ public:
 			}
 			model_->ModelChanged += ev;
 		}
-		*/
 	}
 
 
@@ -489,9 +506,9 @@ public:
 
 
 	void onDocInitialized( Event* e ) {
-		CircleDocument* doc = (CircleDocument*)e->getSource();		
+		Document* doc = (Document*)e->getSource();		
 
-		controller_->setModel( doc );
+		controller_->setModel( doc->getModel() );
 		doc->addView( info_ );		
 		doc->addView( circlePanel_->getView() );
 	}
@@ -513,7 +530,7 @@ public:
 
 	virtual bool initRunningApplication(){	
 		
-		REGISTER_CLASSINFO_EXTERNAL( CircleDocument );
+		REGISTER_CLASSINFO_EXTERNAL( CircleModel );
 		REGISTER_CLASSINFO( DocViewBasicsWindow );
 
 		bool result = SDIDocumentBasedApplication::initRunningApplication();

@@ -149,7 +149,6 @@ void Win32Application::setHandleID( OSHandleID handleID )
 	instanceHandle_ = (HINSTANCE)handleID;
 }
 
-
 /**
 $Id$
 */

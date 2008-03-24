@@ -397,6 +397,10 @@ public:
 		return NULL;
 	};
 
+	virtual Model* createModelFromType( const DocumentInfo& info ){
+		return NULL;
+	};
+
 	/**
 	* gets the appropriate window to be associated to a new document.
 	* The standard implementation of a Document Interface is 
@@ -811,6 +815,8 @@ public:
 	* otherwise the info.className.
 	*/
 	virtual Document* createDocumentFromType( const DocumentInfo& info );
+
+	virtual Model* createModelFromType( const DocumentInfo& info );
 
 	/**
 	* gets a window to be associated to the document just created.
@@ -1749,9 +1755,14 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 
 	// just creates the object from its type using the VCF RTTI
 	Document* newDocument = createDocumentFromType( info );
+	Model* newModel = createModelFromType( info );
 
 
-	if ( NULL != newDocument ) {
+	if ( NULL != newDocument && NULL != newModel ) {
+
+		newDocument->setModel( newModel );
+		newDocument->addComponent( newModel );
+
 
 		if ( !fileName.empty() ) {
 			newDocument->setFileName( fileName );
@@ -1767,6 +1778,13 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 	}
 	else {
 		//throw exception !
+		if ( NULL == newDocument ) {
+			throw RuntimeException( "Unable to create document of type: \"" + info.docClass + "\"" );
+		}
+
+		if ( NULL == newModel ) {
+			throw RuntimeException( "Unable to create model of type: \"" + info.modelClass + "\"" );
+		}
 	}
 
 	return newDocument;
@@ -1777,16 +1795,44 @@ template < typename AppClass, typename DocInterfacePolicy >
 Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::createDocumentFromType( const DocumentInfo& info ) {
 	Document* result = NULL;
 
+	
+	if ( info.docClass.empty() ) {
+		result = new Document();
+	}
+	else {
+		Class* clazz = NULL;
+		Object* objInstance = NULL;
+		try {
+			objInstance = ClassRegistry::createNewInstance( info.docClass );
+		}
+		catch (...) {		
+			objInstance = ClassRegistry::createNewInstanceFromClassID( info.docClass );
+		}
+		result = dynamic_cast<Document*>( objInstance );
+		if ( NULL == result ) {
+			objInstance->free();
+		}
+	}
+
+	
+
+	return result;
+}
+
+template < typename AppClass, typename DocInterfacePolicy >
+Model* DocumentManagerImpl<AppClass,DocInterfacePolicy>::createModelFromType( const DocumentInfo& info ) {
+	Model* result = NULL;
+
 	Class* clazz = NULL;
 	Object* objInstance = NULL;
 	try {
-		objInstance = ClassRegistry::createNewInstance( info.docClass );
+		objInstance = ClassRegistry::createNewInstance( info.modelClass );
 	}
 	catch (...) {		
-		objInstance = ClassRegistry::createNewInstanceFromClassID( info.docClass );
+		objInstance = ClassRegistry::createNewInstanceFromClassID( info.modelClass );
 	}
 
-	result = dynamic_cast<Document*>( objInstance );
+	result = dynamic_cast<Model*>( objInstance );
 	if ( NULL == result ) {
 		objInstance->free();
 	}

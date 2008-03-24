@@ -192,6 +192,7 @@ public:
 
 	void readArray( XMLNode* arrayNode, VariantArray* array ) {
 		Enumerator<XMLNode*>* nodes = arrayNode->getChildNodes();
+		array->setOwnsObjectValues( true );
 		while ( nodes->hasMoreElements() ) {
 			XMLNode* valNode = nodes->nextElement();
 			VariantData v;
