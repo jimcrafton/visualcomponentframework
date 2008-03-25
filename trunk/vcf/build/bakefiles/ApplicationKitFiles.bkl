@@ -253,6 +253,7 @@
         vcf/ApplicationKit/LightweightComponent.cpp
         vcf/ApplicationKit/ListBoxControl.cpp
         vcf/ApplicationKit/ListItem.cpp
+        vcf/ApplicationKit/ListModel.cpp
         vcf/ApplicationKit/ListViewControl.cpp
         vcf/ApplicationKit/Menu.cpp
         vcf/ApplicationKit/MenuBar.cpp
@@ -286,6 +287,7 @@
         vcf/ApplicationKit/TreeControl.cpp
         vcf/ApplicationKit/TreeItem.cpp
         vcf/ApplicationKit/TreeListControl.cpp
+	vcf/ApplicationKit/TreeModel.cpp
         vcf/ApplicationKit/UIComponent.cpp
         vcf/ApplicationKit/UIShell.cpp
         vcf/ApplicationKit/UIToolkit.cpp

@@ -5,6 +5,7 @@
     <set var="FOUNDATIONKIT_HDR" hints="files">
         vcf/FoundationKit/AtomicCount.h
         vcf/FoundationKit/BadComponentStateException.h
+        vcf/FoundationKit/Base64Codec.h
         vcf/FoundationKit/BasicException.h
         vcf/FoundationKit/BasicFileError.h
         vcf/FoundationKit/BasicInputStream.h
@@ -82,6 +83,7 @@
         vcf/FoundationKit/Property.h
         vcf/FoundationKit/PropertyChangeEvent.h
         vcf/FoundationKit/PropertyChangeException.h
+        vcf/FoundationKit/PropertyListing.h
         vcf/FoundationKit/References.h
         vcf/FoundationKit/Registry.h
         vcf/FoundationKit/RegistryPeer.h
@@ -133,10 +135,13 @@
         vcf/FoundationKit/VFFParser.h
         vcf/FoundationKit/Waitable.h
         vcf/FoundationKit/WarningsOffVc.h
+        vcf/FoundationKit/XMLDictInputStream.h
+        vcf/FoundationKit/XMLDictOutputStream.h
         vcf/FoundationKit/XMLParser.h
     </set>
 
     <set var="FOUNDATIONKIT_SRC" hints="files">
+        vcf/FoundationKit/Base64Codec.cpp
         vcf/FoundationKit/BasicException.cpp
         vcf/FoundationKit/BasicInputStream.cpp
         vcf/FoundationKit/BasicOutputStream.cpp
