@@ -431,6 +431,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Dialog.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\Document.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\DragEvent.h
 # End Source File
 # Begin Source File

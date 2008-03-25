@@ -28,7 +28,6 @@ DocumentManager::DocumentManager():
 {
 	DocumentManager::docManagerInstance = this;
 	docInfoContainer_.initContainer( docInfo_ );
-	openDocContainer_.initContainer( openDocuments_ );
 }
 
 
@@ -335,7 +334,7 @@ UIToolkit::ModalReturnType DocumentManager::saveChanges( Document* document )
 		caption = app->getName();
 	}
 	MessageDialog saveDocPrompt;
-	String message = Format("Do you want to save the changes you made to the document \"%s\" ?") %
+	String message = Format("Do you want to save the changes you made to the document named \"%s\" ?") %
 	                                              document->getName();
 
 	saveDocPrompt.setMessage( message );
@@ -561,12 +560,18 @@ void DocumentManager::prepareSaveDialog( CommonFileSaveDialog* saveDialog, Docum
 	size_t pos = fileTypes.find( ";" );
 	while ( pos != String::npos ) {
 		String filter = fileTypes.substr( 0 , pos );
+		if ( filter[0] != '.' ) {
+			filter.insert(0,".");
+		}
 		fileTypes.erase( 0, pos + 1 );
 		saveDialog->addFilter( filter + " files", "*" + filter );
 
 		pos = fileTypes.find( ";" );
 	}
 	if ( !fileTypes.empty() ) {
+		if ( fileTypes[0] != '.' ) {
+			fileTypes.insert(0,".");
+		}
 		saveDialog->addFilter( fileTypes + " files", "*" + fileTypes );
 	}
 }
@@ -577,12 +582,16 @@ MIMEType DocumentManager::getMimeTypeFromFileExtension( const String& fileName )
 	DocumentInfoMap::iterator it = docInfo_.begin();
 	String mimetype;
 
-	FilePath fp = fileName;
+	
+	String ext = FilePath::getExtension(fileName);
+	if ( ext[0] == '.' ) {
+		ext.erase( 0, 1 );
+	}
 
 	while ( it != docInfo_.end() ) {
 		DocumentInfo& info = it->second;
 
-		if ( String::npos != info.fileTypes.find( fp.getExtension() ) ) {
+		if ( String::npos != info.fileTypes.find( ext ) ) {
 
 			result = info.mimetype;
 			break;
@@ -629,7 +638,7 @@ void DocumentManager::removeDocument( Document* document )
 
 Enumerator<Document*>* DocumentManager::getOpenedDocuments()
 {
-	return openDocContainer_.getEnumerator();
+	return openDocuments_.getEnumerator();
 }
 
 Document* DocumentManager::openFromFileName( const String& fileName )
@@ -655,6 +664,9 @@ Document* DocumentManager::openFromFileName( const String& fileName )
 		// provides a default document to 'host' the file, and its UI too if it should
 		doc = newDefaultDocument( "", mimetype );
 	}
+	else {
+		throw RuntimeException( MAKE_ERROR_MSG_2("DocumentManager failed to find a corresponding mime type!") );
+	}
 
 	// finally reads what is specific about the document: its file
 	if ( NULL != doc ) {
@@ -673,6 +685,7 @@ Document* DocumentManager::openFromFileName( const String& fileName )
 	}
 	else {
 		//put an error message!
+		throw RuntimeException( MAKE_ERROR_MSG_2("Unable to create a default document!" ) );
 	}
 
 
@@ -700,6 +713,42 @@ void DocumentManager::addAction( uint32 tag, Action* action )
 	MenuManager::getMainMenu()->addComponent( action );
 }
 
+void DocumentManager::linkDocumentToModel( Document* document, Model* model )
+{
+	docModelMap_[document] = model;
+}
+
+void DocumentManager::unlinkDocumentToModel( Document* document )
+{
+	DocumentModelMap::iterator it = docModelMap_.find(document);
+	if ( it != docModelMap_.end() ) {
+		docModelMap_.erase( it );
+	}
+}
+
+Document* DocumentManager::getDocument( Model* model )
+{
+	Document* result = NULL;
+	DocumentModelMap::iterator it = docModelMap_.begin();
+	while ( it != docModelMap_.end() ) {
+		if ( it->second == model ) {
+			result = it->first;
+			break;
+		}
+		++it;
+	}
+	return result;
+}
+
+Model* DocumentManager::getModel( Document* document )
+{
+	Model* result = NULL;
+	DocumentModelMap::iterator it = docModelMap_.find(document);
+	if ( it != docModelMap_.end() ) {
+		result = it->second;
+	}
+	return result;
+}
 
 /**
 $Id$
