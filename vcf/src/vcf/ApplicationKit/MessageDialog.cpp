@@ -93,7 +93,8 @@ MessageDialog::MessageDialog():
 
 	Rect clientR = getClientBounds();
 
-	setHeight( 25 + (commandPane_->getHeight() + infoLabel_->getBottom()) );
+	setHeight( 50 + 
+				(commandPane_->getHeight() + infoLabel_->getBottom()) );
 
 
 	Image* image = const_cast<Image*>( UIToolkit::getStandardInformationImage() );

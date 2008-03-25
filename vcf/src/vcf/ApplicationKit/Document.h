@@ -14,6 +14,7 @@ where you installed the VCF.
 #endif
 
 
+
 namespace VCF {
 
 #define DOCUMENT_CLASSID		"4c5ca064-5a3e-4d0a-bbe9-f37d722af092"
@@ -64,65 +65,22 @@ public:
 	/**
 	* the document's constructor
 	*/
-	Document():docWindow_(NULL),
-				docModel_(NULL),
-				fileName_(""),
-				modified_(false),
-				keepBackUpFile_(false) {
-	}
+	Document();
 
-	virtual ~Document(){}
+	virtual ~Document();
 
 	/**
 	* empties the model
 	*/
 	
-	virtual void empty() {
-		Model* docModel = getModel();
-		VCF_ASSERT( NULL != docModel );
-		
-		if ( NULL == docModel ) {
-			return;
-		}
+	virtual void empty();
 
-		setModified( true );
+	void addView( View* view );
 
-		docModel->empty();
-	}
+	void updateAllViews();
 
-	void addView( View* view ) {
-		Model* docModel = getModel();
-		VCF_ASSERT( NULL != docModel );
-		
-		if ( NULL == docModel ) {
-			return;
-		}
+	void modelChanged( ModelEvent* e );
 
-		docModel->addView( view );
-	}
-
-
-	void updateAllViews() {
-		Model* docModel = getModel();
-		VCF_ASSERT( NULL != docModel );
-		
-		if ( NULL == docModel ) {
-			return;
-		}
-
-		docModel->updateAllViews();
-	}
-
-	void modelChanged( ModelEvent* e ) {
-		Model* docModel = getModel();
-		VCF_ASSERT( NULL != docModel );
-		
-		if ( NULL == docModel ) {
-			return;
-		}
-		
-		docModel->ModelChanged( e );
-	}
 	/**
 	* tells is the document has been modified since the last time it has been saved
 	*@return bool returns true if it has been modified
@@ -196,13 +154,9 @@ public:
 		docWindow_ = val;
 	}
 
-	Model* getModel() {
-		return docModel_;//dynamic_cast<Model*>(this);
-	}
+	Model* getModel();
 
-	void setModel( Model* val ) {
-		docModel_ = val;
-	}
+	void setModel( Model* val );
 
 	/**
 	* callback function called by the document manager framework
@@ -221,24 +175,7 @@ public:
 	*@param const String& fileType, the type of file to be saved as.
 	*@return bool, true if the file has been succesfully saved.
 	*/
-	virtual bool saveAsType( const String& fileName, const String& fileType ){
-		Model* docModel = getModel();
-		VCF_ASSERT( NULL != docModel );
-		
-		if ( NULL == docModel ) {
-			return false;
-		}
-
-		FileOutputStream fs( fileName );
-
-		bool result = saveAsType( fileType, fs );
-		if ( result ) {
-			setModified( false );
-			DocumentEvent e( this, Document::deSaved );
-			DocumentChanged(&e);
-		}
-		return result;
-	};
+	virtual bool saveAsType( const String& fileName, const String& fileType );
 
 	/**
 	* saves the document as a specified type of file. The output stream is also specified.
@@ -246,28 +183,7 @@ public:
 	*@param OutputStream& stream, the output stream to be saved into.
 	*@return bool, true if the file has been succesfully saved.
 	*/
-	virtual bool saveAsType( const MIMEType& fileType, OutputStream& stream ) {
-		Model* docModel = getModel();
-		VCF_ASSERT( NULL != docModel );
-		
-		if ( NULL != docModel ) {
-			Persistable* persistable = dynamic_cast<Persistable*>( docModel );
-
-			if ( NULL != persistable ) {
-				try {
-					persistable->saveToStream( &stream, fileType );
-				}
-				catch ( std::exception& ) {
-					return false;
-				}
-				
-				return true;
-			}
-		}
-
-		
-		return false;
-	};
+	virtual bool saveAsType( const MIMEType& fileType, OutputStream& stream );
 
 	/**
 	* this actually opens/loads the file associated to the document.
@@ -279,37 +195,7 @@ public:
 	*@fire ModelChanged.
 	*@eventtype Document::deOpened.
 	*/
-	virtual bool openFromType( const String& fileName, const MIMEType& fileType ){
-		Model* docModel = getModel();
-		VCF_ASSERT( NULL != docModel );
-		
-		if ( NULL == docModel ) {
-			return false;
-		}
-
-		bool result = false;
-		try {
-			FileInputStream fs( fileName );
-
-			result = openFromType( fileType, fs );
-
-			// releases the lock as soon as possible
-			fs.close();
-
-			if ( result ) {
-				setModified( false );
-				updateAllViews();
-
-				DocumentEvent e( this, Document::deOpened );
-				DocumentChanged(&e);
-			}
-		}
-		catch ( BasicException& be ) {
-			StringUtils::trace( "Document::openFromType() failed to open " + fileName + ", type: " + fileType + "\n" + be.getMessage() );
-		}
-
-		return result;
-	};
+	virtual bool openFromType( const String& fileName, const MIMEType& fileType );
 
 	/**
 	* opens the document from an input stream. The type of file has to be specified too, 
@@ -318,27 +204,7 @@ public:
 	*@param const InputStream& stream, the input stream.
 	*@return bool, true if the file has been succesfully opened.
 	*/
-	virtual bool openFromType( const MIMEType& fileType, InputStream& stream ){
-		Model* docModel = getModel();
-		VCF_ASSERT( NULL != docModel );
-
-		if ( NULL != docModel ) {
-			Persistable* persistable = dynamic_cast<Persistable*>( docModel );
-
-			if ( NULL != persistable ) {
-				try {
-					persistable->loadFromStream( &stream, fileType );
-				}
-				catch ( std::exception& ) {
-					return false;
-				}
-				
-				return true;
-			}
-		}
-
-		return false;
-	};
+	virtual bool openFromType( const MIMEType& fileType, InputStream& stream );
 
 
 	/**
@@ -396,25 +262,7 @@ public:
 	* By default a document has not thisoperation enabled.
 	*@return bool returns true if it does, false if it doesn't
 	*/
-	virtual bool canPasteToDocument() {
-		Model* docModel = getModel();
-		VCF_ASSERT( NULL != docModel );
-		
-		if ( NULL == docModel ) {
-			return false;
-		}
-
-
-		Clipboard* clipboard = UIToolkit::getSystemClipboard();
-		
-		for ( size_t i=0;i<clipFormats_.size();i++ ) {
-			if ( clipboard->hasDataType( clipFormats_[i] ) ) {
-				return true;
-			}
-		}
-
-		return false;
-	}
+	virtual bool canPasteToDocument();
 
 	/**
 	* performs a cut operation on the document and returns the cut object.
@@ -439,30 +287,7 @@ public:
 	* performs a copy operation on the document and returns the copied object.
 	*@return DataObject*, a pointer to the data that has been copied.
 	*/
-	virtual DataObject* copy() {
-		Model* docModel = getModel();
-		VCF_ASSERT( NULL != docModel );
-		
-		if ( NULL == docModel ) {
-			return NULL;
-		}
-
-		DataObject* result = NULL;
-
-		for ( size_t i=0;i<clipFormats_.size();i++ ) {
-			BasicOutputStream bos;
-			
-			if ( saveAsType( clipFormats_[i], bos ) ) {
-				if ( NULL == result ) {
-					result = new DataObject();
-				}
-				BinaryPersistable* persistable = new BinaryPersistable( bos.getBuffer(), bos.getSize() );
-				result->addSupportedDataType( clipFormats_[i], persistable );
-			}
-		}
-
-		return result;
-	}
+	virtual DataObject* copy();
 
 	/**
 	* performs a past operation on the document.
@@ -501,7 +326,6 @@ public:
 protected:
 	/* the window associated to the document */
 	Window* docWindow_;
-	Model* docModel_;
 
 	FilePath fileName_;
 
@@ -510,6 +334,10 @@ protected:
 
 	/* the clipboard formats */
 	Array<MIMEType> clipFormats_;
+
+	void internalModelChanged(Event*) {
+		setModified( true );
+	}
 };
 
 

@@ -597,6 +597,13 @@ public:
 	UndoRedoStack& getSharedUndoRedoStack() {
 		return getUndoRedoStack( NULL );
 	}
+
+	void linkDocumentToModel( Document* document, Model* model );
+	void unlinkDocumentToModel( Document* document );
+
+	Document* getDocument( Model* model );
+	Model* getModel( Document* document );
+
 protected:
 
 	/**
@@ -660,6 +667,7 @@ protected:
 	typedef std::map<String,DocumentInfo> DocumentInfoMap;
 	typedef std::map<Document*,UndoRedoStack*> DocumentUndoRedoMap;
 	typedef std::map< uint32, Action* > ActionMap;
+	typedef std::map<Document*,Model*> DocumentModelMap;
 
 	/** 
 	the only document manager instance for the application 
@@ -675,8 +683,7 @@ protected:
 	/**
 	The list of all the opened document at this moment 
 	*/
-	std::vector<Document*> openDocuments_;
-	EnumeratorContainer< std::vector<Document*>, Document* > openDocContainer_;
+	Array<Document*> openDocuments_;
 
 	/** 
 	this DocumentManager has a User Interface 
@@ -694,6 +701,8 @@ protected:
 	the map of all undo redo stack associated to each document 
 	*/
 	DocumentUndoRedoMap undoRedoStack_;
+
+	DocumentModelMap docModelMap_;
 };
 
 
@@ -1023,6 +1032,18 @@ protected:
 	*/
 	void onDocModified( ModelEvent* e ) {
 		Document* doc = (Document*)e->getSource();
+		String caption = DocInterfacePolicy::getDocumentWindowCaption(doc);
+
+		if ( caption != doc->getWindow()->getCaption() ) {
+			doc->getWindow()->setCaption( caption );
+		}
+	}
+
+	void onDocModelModified( ModelEvent* e ) {
+		Model* model = (Model*)e->getSource();
+
+		Document* doc = this->getDocument( model );
+
 		String caption = DocInterfacePolicy::getDocumentWindowCaption(doc);
 
 		if ( caption != doc->getWindow()->getCaption() ) {
@@ -1373,7 +1394,7 @@ bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFileAs( Document* doc
 
 		saveDialog.setFileName( currentDir + basename );
 		prepareSaveDialog( &saveDialog, doc );
-		saveDialog.addFilter( ".* files", "*.*" );
+		saveDialog.addFilter( "All files", "*.*" );
 		if ( saveDialog.execute() ) {
 
 			saveDialogFinished( &saveDialog );
@@ -1603,6 +1624,16 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUI( const DocumentI
 	}
 
 	document->DocumentChanged += docEv;
+
+	docEv = app_->getCallback("onDocModelModified");
+	if ( NULL == docEv ) {
+
+		docEv = new ClassProcedure1<ModelEvent*,AppClass >( app_,
+					&DocumentManagerImpl<AppClass,DocInterfacePolicy>::onDocModelModified,
+					"onDocModelModified" );
+	}	
+
+	document->getModel()->ModelChanged += docEv;
 
 	/**
 	create a view from the DocInfo if necessary
