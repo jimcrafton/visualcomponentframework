@@ -171,82 +171,6 @@ _class_rtti_( CircleModel, "VCF::Model", "CircleModel" )
 _class_rtti_end_
 
 
-/**
-*/
-
-
-#define CIRCLEDOCUMENT_CLASSID		"ccdeaf42-a9fd-4fb4-adf7-13077976539e"
-
-class CircleDocument : public Document {
-public:
-
-
-	/**
-	Document class overrides
-	*/
-
-	/**
-	This is how our default document will look:
-	3 circles that form a triangular outline
-	*/
-	virtual void initNew() {
-		
-	}
-
-
-/*
-	virtual bool saveAsType( const VCF::String& fileType, VCF::OutputStream& stream ) {
-		bool result = false;
-
-		if ( fileType == "application/x-circledoc" ) {
-
-			
-			
-			
-
-			result = true;
-		}
-
-		return result;
-	}
-	*/
-
-	/*
-	virtual bool openFromType( const VCF::String& fileType, VCF::InputStream& stream ) {
-		bool result = false;
-
-		
-
-		return result;
-	}
-	*/
-
-/*
-	virtual bool canCutFromDocument() {
-		return !circles_.empty();
-	}
-
-	virtual bool canCopyFromDocument() {
-		return !circles_.empty();
-	}
-
-	virtual bool canPasteToDocument() {
-		Clipboard* clipboard = UIToolkit::getSystemClipboard();
-		return clipboard->hasDataType( "application/x-circledoc" );
-	}
-	*/
-protected:
-
-};
-
-
-
-
-
-
-
-
-
 
 
 
@@ -547,11 +471,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	Application* app = new DocViewBasicsApplication( argc, argv );
-
-	Application::main();
-	
-	return 0;
+	return ApplicationKitMain<DocViewBasicsApplication>(argc, argv);
 }
 
 
