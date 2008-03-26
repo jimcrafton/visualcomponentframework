@@ -29,13 +29,13 @@ TextEditDocument::AddText::AddText( TextEditDocument* doc,
 void TextEditDocument::AddText::undo()
 {
 	doc_->internal_removeText( pos_, text_.size() );
-	doc_->setSelectionRange( pos_ , 0 );
+	//doc_->setSelectionRange( pos_ , 0 );
 }
 
 void TextEditDocument::AddText::redo()
 {
 	doc_->internal_insertText( pos_, text_ );
-	doc_->setSelectionRange( pos_ + text_.size(), 0 );	
+	//doc_->setSelectionRange( pos_ + text_.size(), 0 );	
 }
 
 void TextEditDocument::AddText::execute()
@@ -61,14 +61,14 @@ void TextEditDocument::ReplaceText::undo()
 {
 	doc_->internal_replaceText( pos_, text_.size(), originalText_ );
 
-	doc_->setSelectionRange( pos_ , 0 );
+//	doc_->setSelectionRange( pos_ , 0 );
 }
 
 void TextEditDocument::ReplaceText::redo()
 {
 	doc_->internal_replaceText( pos_, length_, text_ );
 	
-	doc_->setSelectionRange( pos_ + text_.size(), 0 );	
+//	doc_->setSelectionRange( pos_ + text_.size(), 0 );	
 }
 
 void TextEditDocument::ReplaceText::execute()
@@ -89,13 +89,13 @@ TextEditDocument::RemoveText::RemoveText( TextEditDocument* doc,
 void TextEditDocument::RemoveText::undo()
 {
 	doc_->internal_insertText( pos_, text_ );
-	doc_->setSelectionRange( pos_ + text_.size(), 0 );
+//	doc_->setSelectionRange( pos_ + text_.size(), 0 );
 }
 
 void TextEditDocument::RemoveText::redo()
 {
 	doc_->internal_removeText( pos_, text_.size() );
-	doc_->setSelectionRange( pos_ , 0 );
+//	doc_->setSelectionRange( pos_ , 0 );
 }
 
 void TextEditDocument::RemoveText::execute()
@@ -181,7 +181,7 @@ TextEditDocument::TextEditDocument():
 	selectionStart_(0),
 	selectionLength_(0)
 {
-	addSupportedClipboardFormat( STRING_DATA_TYPE );
+	//addSupportedClipboardFormat( STRING_DATA_TYPE );
 }
 
 TextEditDocument::~TextEditDocument()
@@ -191,7 +191,7 @@ TextEditDocument::~TextEditDocument()
 
 void TextEditDocument::initNew()
 {
-	textData_ = "";
+	
 	selectionStart_ = 0;
 	selectionLength_ = 0;
 }
@@ -201,7 +201,7 @@ void TextEditDocument::initNew()
 
 void TextEditDocument::empty()
 {
-	textData_ = "";
+	
 
 	selectionStart_ = 0;
 	selectionLength_ = 0;
@@ -220,12 +220,6 @@ bool TextEditDocument::canCopyFromDocument()
 	return (selectionLength_ != 0) ? true : false;
 }
 
-bool TextEditDocument::canPasteToDocument()
-{
-	Clipboard* clipboard = UIToolkit::getSystemClipboard();
-	return clipboard->hasDataType( STRING_DATA_TYPE );
-}
-
 bool TextEditDocument::saveAsType( const VCF::String& fileName, const VCF::String& fileType )
 {
 	long oldSelStart = selectionStart_;
@@ -240,7 +234,7 @@ bool TextEditDocument::saveAsType( const VCF::String& fileName, const VCF::Strin
 
 bool TextEditDocument::saveAsType( const VCF::String& fileType, VCF::OutputStream& stream )
 {
-	AnsiString tmp = textData_;
+	AnsiString tmp = getModel()->getValueAsString() ;
 	stream.write( (unsigned char*)tmp.c_str(), tmp.size() );
 	return true;
 }
@@ -255,7 +249,7 @@ bool TextEditDocument::openFromType( const VCF::String& fileType, VCF::InputStre
 
 	stream.read( text );
 
-	setText( text );
+	getModel()->setValueAsString( text );
 
 	return true;
 }
@@ -265,7 +259,7 @@ bool TextEditDocument::openFromType( const VCF::String& fileType, VCF::InputStre
 bool TextEditDocument::find( FindInfo& findInfo )
 {
 	int start = findInfo.position_ == 0 ? 0 : findInfo.position_ + 1;
-
+/*
 	VCF::uint32 pos = findString( findInfo, textData_ );
 	
 	findInfo.position_ = pos;
@@ -278,12 +272,14 @@ bool TextEditDocument::find( FindInfo& findInfo )
 	else {
 		findInfo.atEnd_ = false;
 	}
+	*/
 	return String::npos != findInfo.position_;
 }
 
 bool TextEditDocument::findAll( FindInfo& findInfo, std::vector<FoundEntry>& foundEntries )
 {
 	int start = 0;
+	/*
 	start = textData_.find( findInfo.searchString_, start );
 	while ( start != String::npos ) {
 		FoundEntry entry;
@@ -293,12 +289,14 @@ bool TextEditDocument::findAll( FindInfo& findInfo, std::vector<FoundEntry>& fou
 		foundEntries.push_back(entry);
 		start = textData_.find( findInfo.searchString_, start+1 );
 	}
+	*/
 
 	return !foundEntries.empty();
 }
 
 bool TextEditDocument::replace( ReplaceInfo& replaceInfo )
 {
+	/*
 	if ( replaceInfo.position_ > textData_.size() ) {
 		return false;
 	}
@@ -306,6 +304,7 @@ bool TextEditDocument::replace( ReplaceInfo& replaceInfo )
 	deleteText( replaceInfo.position_, replaceInfo.searchString_.size() );
 
 	insertText( replaceInfo.position_, replaceInfo.replaceString_ );
+*/
 
 	return true;
 }
@@ -313,6 +312,7 @@ bool TextEditDocument::replace( ReplaceInfo& replaceInfo )
 bool TextEditDocument::replaceAll( ReplaceInfo& replaceInfo )
 {
 	bool result = false;
+	/*
 	int start = 0;
 	start = textData_.find( replaceInfo.searchString_, start );
 	while ( start != String::npos ) {
@@ -323,10 +323,12 @@ bool TextEditDocument::replaceAll( ReplaceInfo& replaceInfo )
 		start = textData_.find( replaceInfo.searchString_, start+replaceInfo.replaceString_.size() );
 		result = true;
 	}
+	*/
+
 
 	return result;
 }
-
+/*
 VCF::String TextEditDocument::getText( const VCF::uint32& pos, const VCF::uint32& length  )
 {	
 	return textData_.substr( pos, length );
@@ -399,6 +401,8 @@ void TextEditDocument::setSelection( const VCF::String& selectionText )
 {
 	insertText( selectionStart_, selectionText );
 }
+*/
+
 
 DataObject* TextEditDocument::cut()
 {
@@ -408,10 +412,10 @@ DataObject* TextEditDocument::cut()
 		empty();
 	}
 	else {
-		deleteText( selectionStart_, this->selectionLength_ );		
+		//deleteText( selectionStart_, this->selectionLength_ );		
 	}	
 
-	setSelectionRange( selectionStart_, 0 );
+	//setSelectionRange( selectionStart_, 0 );
 
 	return result;
 }
@@ -422,10 +426,10 @@ DataObject* TextEditDocument::copy()
 
 	String text;
 	if ( -1 == selectionStart_ ) {
-		text = textData_;
+		//text = textData_;
 	}
 	else {
-		text = textData_.substr( selectionStart_, selectionLength_ );
+		//text = textData_.substr( selectionStart_, selectionLength_ );
 	}	
 
 	result = new TextDataObject(text);	
@@ -449,18 +453,18 @@ bool TextEditDocument::paste( DataObject* data )
 	bis >> text;
 
 	if ( -1 == selectionStart_ ) {
-		setText( text );
+//		setText( text );
 		//textData_ = text;
 	}
 	else {
 		if ( selectionLength_ > 0 ) {
-			replaceText( selectionStart_, selectionLength_, text );
+			//replaceText( selectionStart_, selectionLength_, text );
 		}
 		else {
-			insertText( selectionStart_, text ); 
+			//insertText( selectionStart_, text ); 
 		}
 		
-		setSelectionRange( selectionStart_ + text.size(), 0 );
+		//setSelectionRange( selectionStart_ + text.size(), 0 );
 	}
 
 	return true;
@@ -468,6 +472,7 @@ bool TextEditDocument::paste( DataObject* data )
 
 void TextEditDocument::internal_insertText( const VCF::uint32& pos, const VCF::String& text )
 {
+/*
 	textData_.insert( pos, text );
 
 	setModified( true );
@@ -484,10 +489,13 @@ void TextEditDocument::internal_insertText( const VCF::uint32& pos, const VCF::S
 	TextModelChanged( &event );
 
 	updateAllViews();
+	*/
+
 }
 
 void TextEditDocument::internal_removeText( const VCF::uint32& pos, const VCF::uint32& length )
 {
+	/*
 	TextEditDocumentEvent e( this, TextEditDocument::teTextRemoved );
 
 	e.text_ = textData_.substr( pos, length );
@@ -504,11 +512,13 @@ void TextEditDocument::internal_removeText( const VCF::uint32& pos, const VCF::u
 	TextModelChanged( &event );
 
 	updateAllViews();
+	*/
+
 }
 
 void TextEditDocument::internal_replaceText( const VCF::uint32& pos, const VCF::uint32& length, const VCF::String& text )
 {
-	TextEditDocumentEvent e( this, TextEditDocument::teTextAdded );
+/*	TextEditDocumentEvent e( this, TextEditDocument::teTextAdded );
 
 	e.text_ = textData_.substr( pos, length );
 	e.start_ = pos;	
@@ -529,6 +539,7 @@ void TextEditDocument::internal_replaceText( const VCF::uint32& pos, const VCF::
 	TextEvent event( this, TextModel::tmTextReplaced, removedText, text, 
 							pos, length );
 	TextModelChanged( &event );
+	*/
 }
 
 /**

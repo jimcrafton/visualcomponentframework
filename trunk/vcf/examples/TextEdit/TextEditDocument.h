@@ -77,49 +77,15 @@ public:
 
 
 
-class TextEditDocumentEvent : public VCF::ModelEvent {
-public:
-	TextEditDocumentEvent( VCF::Object* source, const VCF::uint32& eventType ) 
-		:VCF::ModelEvent(source,eventType),start_(0){
-
-	};
-
-	TextEditDocumentEvent( const TextEditDocumentEvent& rhs ):VCF::ModelEvent(rhs),start_(0) {
-		*this = rhs;
-	}
-
-#ifndef _MSC_VER
-	TextEditDocumentEvent& operator=( const TextEditDocumentEvent& rhs ) {
-		VCF::ModelEvent::operator = (rhs);
-
-		start_ = rhs.start_;
-		text_ = rhs.text_;
-		return *this;
-	}
-#endif
-
-	virtual VCF::Object* clone( bool deep=false ) {
-		return new TextEditDocumentEvent(*this);
-	}
-	VCF::uint32 start_;
-	VCF::String text_;
-
-};
-
-
 /**
 class TextEditDocument documentation
 */
-class TextEditDocument : public VCF::Document, public VCF::TextModel {
+class TextEditDocument : public VCF::Document {
 public: 
 	_class_rtti_( TextEditDocument, "VCF::Document", TEXTEDITDOCUMENT_CLASSID )
 	_class_rtti_end_
 
-	enum TextDocumentEvents {
-		teTextAdded = VCF::Model::MODEL_CHANGED + 1000,
-		teTextRemoved,
-		teTextSelectionChanged
-	};
+	
 
 	TextEditDocument();
 	virtual ~TextEditDocument();
@@ -147,66 +113,6 @@ public:
 	virtual bool paste( VCF::DataObject* data );
 
 
-	/**
-	TextModel methods
-	*/
-
-	/**
-	@delegate TextModelChanged fired when the model's text data is changed
-	@event TextModelEvent
-	*/
-	DELEGATE(VCF::ModelDelegate,TextModelChanged)
-
-		virtual void addTextModelChangedHandler( VCF::EventHandler * handler ){
-		TextModelChanged += handler;
-	}
-
-	virtual void removeTextModelChangedHandler( VCF::EventHandler * handler ) {
-		TextModelChanged -= handler;
-	}
-
-	/**
-	*sets the contents of the text model, completely changes what was previously
-	*in the model
-	*/
-    virtual void setText( const VCF::String& text );
-
-	/**
-	*inserts text into the model at the given index
-	*@param long the starting point to begin inserting the text. This number represents
-	*a zero based index.
-	*@param String the text to insert
-	*/
-    virtual void insertText( const VCF::uint32& index, const VCF::String& text );
-
-	/**
-	*replace text into the model in place of the selected text is any,
-	*or at the current position otherwise
-	*@param String the text to replace with
-	*/
-    virtual void replaceText( const VCF::uint32& index, const VCF::uint32& len, const VCF::String& text );
-
-	/**
-	*deletes text from the model, starting at index, and continuing for count characters,
-	*or until the text data is empty.
-	*@param long the starting point. The index is zero based.
-	*@param long the number of characters to delete
-	*/
-    virtual void deleteText( const VCF::uint32& index, const VCF::uint32& count );
-
-	/**
-	*returns all of the TextModel's text in a string.
-	*/
-	virtual VCF::String getText();
-
-	virtual VCF::String getText( const VCF::uint32& index, const VCF::uint32& count );
-
-	/**
-	*returns the size of the TextModel
-	*/
-	virtual VCF::uint32 getSize() {
-		return textData_.size();
-	}
 
 
 
@@ -218,40 +124,6 @@ public:
 	bool replace( ReplaceInfo& replaceInfo );
 
 	bool replaceAll( ReplaceInfo& replaceInfo );	
-
-	/**
-	sets the selection range 
-	@param pos - if pos is -1 then everything is selected
-	@param uint32 length of the selection
-	*/
-	void setSelectionRange( const long pos, const VCF::uint32 length  );
-
-	long getSelectionStart() {
-		return selectionStart_;
-	}
-
-	VCF::uint32 getSelectionLength() {
-		return selectionLength_;
-	}
-
-	/**
-	returns a string that represents the selection starting 
-	at the selection start and with a matching length as the 
-	selection has. It is possible for this to return an empty
-	string if the selection length is 0.
-	@see getSelectionStart
-	@see getSelectionLength
-	*/
-	VCF::String getSelection();
-
-	/**
-	sets the selection text. The insertion point is the current 
-	selection start position. Similar to calling insertText. The
-	inserted text is the length of the selectionText param.
-	@see insertText
-	@see getSelectionStart
-	*/
-	void setSelection( const VCF::String& selectionText );
 
 	
 
@@ -323,8 +195,6 @@ protected:
 	
 
 
-
-	VCF::String textData_;
 
 	long selectionStart_;
 	VCF::uint32 selectionLength_;

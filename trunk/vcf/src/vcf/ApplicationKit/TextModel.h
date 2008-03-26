@@ -174,7 +174,8 @@ public:
 		tmTextInserted = VCF::Model::MODEL_CHANGED + 3210,
 		tmTextReplaced,
 		tmTextSet,
-		tmTextRemoved
+		tmTextRemoved,
+		tmTextSelectionChanged
 	};	
 
 	TextModel(){

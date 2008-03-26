@@ -134,7 +134,7 @@ public:
 			result = "No Document";
 		}
 		else {
-			result = doc->getName();
+			result = doc->getTitle();
 			if ( result.empty() ) {
 				result = "Untitled";
 			}
@@ -358,10 +358,10 @@ public:
 			result = "No Document";
 		}
 		else {
-			result = doc->getName();
+			result = doc->getTitle();
 			if ( result.empty() ) {
 				result = "Document" + StringUtils::toString( documentCount_ );
-				doc->setName( result );
+				doc->setTitle( result );
 			}
 
 			if ( doc->isModified() ) {

@@ -102,7 +102,7 @@ public:
 	* This is the name of the file without its path component
 	*@return String, the filename.
 	*/
-	virtual String getName() {
+	virtual String getTitle() const {
 		return fileName_.getBaseName(true);
 	}
 
@@ -113,7 +113,7 @@ public:
 	* path component of the previous filename.
 	*@param String, the filename.
 	*/
-	virtual void setName( const String& name ) {
+	virtual void setTitle( const String& name ) {
 		FilePath fp = name;
 
 		fileName_ = fileName_.getPathName(true) + fp.getBaseName(true);
