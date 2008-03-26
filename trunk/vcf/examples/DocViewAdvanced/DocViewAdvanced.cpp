@@ -46,65 +46,60 @@ public:
 };
 
 
-/**
-*/
 
-
-#define CIRCLEDOCUMENT_CLASSID		"ccdeaf42-a9fd-4fb4-adf7-13077976539e"
-
-class CircleDocument : public Document {
+class CircleModel : public Model, public Persistable {
 public:
-	_class_rtti_( CircleDocument, "VCF::Document", CIRCLEDOCUMENT_CLASSID )
-	_class_rtti_end_
 
-
-
+	enum {
+		CircleAdded = Model::MODEL_LAST_EVENT + 100,
+		CircleRemoved
+	};
 
 	class AddCircleCommand : public AbstractCommand {
 	public:
 
-		AddCircleCommand( CircleDocument* doc, const CircleShape& shape ) : doc_(doc), shape_(shape){
+		AddCircleCommand( CircleModel* model, const CircleShape& shape ) : model_(model), shape_(shape){
 			commandName_ = "Add Circle";
 			isUndoable_ = true;
 		}
 
 		virtual void undo() {
-			doc_->internal_removeCircle( shape_ );
+			model_->internal_removeCircle( shape_ );
 		}
 
 		virtual void redo() {
-			doc_->internal_addCircle( shape_ );
+			model_->internal_addCircle( shape_ );
 		}
 
 		virtual void execute() {
-			doc_->internal_addCircle( shape_ );
+			model_->internal_addCircle( shape_ );
 		}
 
-		CircleDocument* doc_;
+		CircleModel* model_;
 		CircleShape shape_;
 	};
 
 	class RemoveCircleCommand : public AbstractCommand {
 	public:
 
-		RemoveCircleCommand( CircleDocument* doc, const CircleShape& shape ) : doc_(doc), shape_(shape){
+		RemoveCircleCommand( CircleModel* model, const CircleShape& shape ) : model_(model), shape_(shape){
 			commandName_ = "Remove Circle";
 			isUndoable_ = true;
 		}
 
 		virtual void undo() {
-			doc_->internal_addCircle( shape_ );
+			model_->internal_addCircle( shape_ );
 		}
 
 		virtual void redo() {
-			doc_->internal_removeCircle( shape_ );
+			model_->internal_removeCircle( shape_ );
 		}
 
 		virtual void execute() {
-			doc_->internal_removeCircle( shape_ );
+			model_->internal_removeCircle( shape_ );
 		}
 
-		CircleDocument* doc_;
+		CircleModel* model_;
 		CircleShape shape_;
 	};
 
@@ -113,16 +108,8 @@ public:
 	friend class RemoveCircleCommand;
 
 
-	CircleDocument() {
-		this->addSupportedClipboardFormat( STRING_DATA_TYPE );
-	}
 
-	enum {
-		CircleAdded = Model::MODEL_LAST_EVENT + 100,
-		CircleRemoved
-	};
-
-	void addCircle( const CircleShape& circle ) {
+	void addCircle( const CircleShape& circle ) {		
 		DocumentManager::getDocumentManager()->getUndoRedoStack(this).addCommand( new AddCircleCommand( this, circle ) );
 	}
 
@@ -168,115 +155,38 @@ public:
 		circles_.clear();
 
 		//make sure to call the super class's implementation
-		Document::empty();
+		Model::empty();
 	}
 
-	
-
-
-	/**
-	Document class overrides
-	*/
-
-	/**
-	This is how our default document will look:
-	3 circles that form a triangular outline
-	*/
-	virtual void initNew() {
-		addCircle( 100, 20, 10 );
-
-		addCircle( 20, 120, 10 );
-
-		addCircle( 160, 120, 10 );
+	virtual bool isEmpty() {
+		return circles_.empty();
 	}
 
 
-
-	virtual bool saveAsType( const VCF::String& fileType, VCF::OutputStream& stream ) {
-		bool result = false;
-
-		if ( fileType == "application/x-circledoc" ) {
-
-			
-			//save the number of circles
-			int size = circles_.size();
-			stream.write( size );
-
-			std::vector<CircleShape>::const_iterator it = circles_.begin();
-			while ( it != circles_.end() ) {
-				const CircleShape& shape = *it;
-
-				stream.write( shape.center_.x_ );
-				stream.write( shape.center_.y_ );
-				stream.write( shape.radius_ );
-				it ++;
-			}
-
-			result = true;
-		}
-		else if ( fileType == STRING_DATA_TYPE ) { 
-			//store in XML format as plain text!
-
-			XMLNode root;
-			root.setName( this->getClassName() );
-
-			root.addAttr( "mimetype", "application/x-circledoc"  );
-			root.addAttr( "document-name", getName() );
-
-			std::vector<CircleShape>::const_iterator it = circles_.begin();
-			while ( it != circles_.end() ) {
-
-				XMLNode* circleNode = root.addChildNode( "circle" );
-
-				const CircleShape& shape = *it;
-
-				circleNode->addAttr( "x", StringUtils::toString( shape.center_.x_ ) );
-				circleNode->addAttr( "y", StringUtils::toString( shape.center_.y_ ) );
-				circleNode->addAttr( "radius", StringUtils::toString( shape.radius_ ) );
-
-				it ++;
-			}
-
-			String xmlString = root.toString();
-
-			stream.write( xmlString );
-			result = true;
-		}
-
-		return result;
-	}
-
-	virtual bool openFromType( const VCF::String& fileType, VCF::InputStream& stream ) {
-		bool result = false;
-		
-
-		if ( fileType == "application/x-circledoc" ) {
+	virtual void loadFromStream( InputStream* stream, const MIMEType& type ) {
+		if ( type == "application/x-circledoc" ) {
 
 			circles_.clear();
 
 			int size = 0;
-			stream.read( size );
+			stream->read( size );
 			
 			double radius;
 			Point pt;
 			for (int i=0;i<size;i++ ) {
-				stream.read( pt.x_ );
-				stream.read( pt.y_ );
-				stream.read( radius );
+				stream->read( pt.x_ );
+				stream->read( pt.y_ );
+				stream->read( radius );
 
 				addCircle( pt, radius );
 			}
-
-			result = true;
 		}
-		else if ( fileType == STRING_DATA_TYPE ) { 
-			//read as XML format as plain text!
-
+		else if ( type == STRING_DATA_TYPE ) { 
 			circles_.clear();
 
 			XMLParser parser;
 			
-			parser.parse( &stream );			
+			parser.parse( stream );			
             
 
 			Enumerator<XMLNode*>* nodes = parser.getParsedNodes();
@@ -303,69 +213,64 @@ public:
 										StringUtils::fromStringAsDouble( yAttr->getValue() ),
 										StringUtils::fromStringAsDouble( radiusAttr->getValue() ) );
 						}
-
-						result = true;
 					}				
 					break;
 				}
-			}			
-		}
-
-		return result;
-	}
-
-	virtual bool canCutFromDocument() {
-		return !circles_.empty();
-	}
-
-	virtual bool canCopyFromDocument() {
-		return !circles_.empty();
-	}
-
-	virtual bool canPasteToDocument() {
-		Clipboard* clipboard = UIToolkit::getSystemClipboard();
-		return clipboard->hasDataType( "application/x-circledoc" ) || clipboard->hasDataType( STRING_DATA_TYPE );
-	}
-
-	/*
-	Add support for both our custom clipboard type, 
-	"application/x-circledoc", and support plain text in
-	the form of STRING_DATA_TYPE type. 
-	*/
-	virtual DataObject* copy() {
-		DataObject* result = NULL;
-		BasicOutputStream bos;
-		
-		if ( saveAsType( "application/x-circledoc", bos ) ) {
-			if ( NULL == result ) {
-				result = new DataObject();
 			}
-			BinaryPersistable* persistable = new BinaryPersistable( (const unsigned char*)bos.getBuffer(), bos.getSize() );
-			result->addSupportedDataType( "application/x-circledoc", persistable );
 		}
+	}
 
-		BasicOutputStream bos2;
-		
-		if ( saveAsType( STRING_DATA_TYPE, bos2 ) ) {
-			if ( NULL == result ) {
-				result = new DataObject();
+	virtual void saveToStream( OutputStream* stream, const MIMEType& type ) {
+		if ( type == "application/x-circledoc" ) {
+			//save the number of circles
+			int size = circles_.size();
+			stream->write( size );
+
+			std::vector<CircleShape>::const_iterator it = circles_.begin();
+			while ( it != circles_.end() ) {
+				const CircleShape& shape = *it;
+
+				stream->write( shape.center_.x_ );
+				stream->write( shape.center_.y_ );
+				stream->write( shape.radius_ );
+				it ++;
 			}
-			BinaryPersistable* persistable = new BinaryPersistable( (const unsigned char*)bos2.getBuffer(), bos2.getSize() );
-			result->addSupportedDataType( STRING_DATA_TYPE, persistable );
 		}
-		
-		return result;
+		else if ( type == STRING_DATA_TYPE ) { 
+			//store in XML format as plain text!
+
+			XMLNode root;
+			root.setName( this->getClassName() );
+
+			root.addAttr( "mimetype", "application/x-circledoc"  );
+			root.addAttr( "document-name", getName() );
+
+			std::vector<CircleShape>::const_iterator it = circles_.begin();
+			while ( it != circles_.end() ) {
+
+				XMLNode* circleNode = root.addChildNode( "circle" );
+
+				const CircleShape& shape = *it;
+
+				circleNode->addAttr( "x", StringUtils::toString( shape.center_.x_ ) );
+				circleNode->addAttr( "y", StringUtils::toString( shape.center_.y_ ) );
+				circleNode->addAttr( "radius", StringUtils::toString( shape.radius_ ) );
+
+				it ++;
+			}
+
+			String xmlString = root.toString();
+
+			stream->write( xmlString );
+		}
 	}
 protected:
-
 	std::vector<CircleShape> circles_;
 
 	void internal_addCircle( const CircleShape& circle ) {
 		circles_.push_back( circle );
 
-		setModified( true );
-
-		ModelEvent e( this, CircleDocument::CircleAdded );
+		ModelEvent e( this, CircleModel::CircleAdded );
 		ModelChanged( &e );
 		updateAllViews();
 	}
@@ -377,15 +282,50 @@ protected:
 
 			circles_.erase( found );
 
-			setModified( true );
-
-			ModelEvent e( this, CircleDocument::CircleRemoved );
+			ModelEvent e( this, CircleModel::CircleRemoved );
 			ModelChanged( &e );
 			updateAllViews();
 		}
 	}
 };
 
+
+
+_class_rtti_( CircleModel, "VCF::Model", "CircleModel" )
+_class_rtti_end_
+
+
+
+
+class CircleDocument : public Document {
+public:
+
+	CircleDocument() {}
+	
+	/**
+	Document class overrides
+	*/
+
+	/**
+	This is how our default document will look:
+	3 circles that form a triangular outline
+	*/
+	virtual void initNew() {
+		CircleModel* cm = (CircleModel*)getModel();
+
+		cm->addCircle( 100, 20, 10 );
+
+		cm->addCircle( 20, 120, 10 );
+
+		cm->addCircle( 160, 120, 10 );
+	}
+	
+};
+
+
+
+_class_rtti_( CircleDocument, "VCF::Document", "CircleDocument" )
+_class_rtti_end_
 
 
 
@@ -428,7 +368,7 @@ public:
 	}
 
 	virtual void updateView( Model* model ) {
-		CircleDocument* circleModel = (CircleDocument*)model;
+		CircleModel* circleModel = (CircleModel*)model;
 
 		String text = Format("Number of circle shapes: %d") % circleModel->getCircles().size();
 
@@ -438,35 +378,33 @@ public:
 	}
 
 
-	virtual void setViewModel( Model* model ) {
+	virtual void modelChanged( Model* oldModel, Model* newModel ) {
 		CallBack* ev = getCallback( "CircleInfoUI::onCircleModelChanged" );
 
 
-		if ( NULL != model ) {
+		if ( NULL != oldModel ) {
 			if ( NULL != ev ) {
-				model->removeModelHandler( (ModelHandler*)ev );
+				oldModel->ModelChanged -= ev;
 			}
-		}
+		}		
 
-		CustomControl::setViewModel( model );
-
-		if ( NULL != model ) {
+		if ( NULL != newModel ) {
 			if ( NULL == ev ) {
 				ev = new ClassProcedure1<Event*, CircleInfoUI>( this, &CircleInfoUI::onCircleModelChanged, "CircleInfoUI::onCircleModelChanged" );
 			}
-			model->addModelHandler( (ModelHandler*)ev );
+			newModel->ModelChanged += ev;
 		}
 	}
 
 
 	void onCircleModelChanged( Event* e ) {
 		switch ( e->getType() ) {
-			case CircleDocument::CircleAdded : {
+			case CircleModel::CircleAdded : {
 				modelState_->setCaption( "New Circle Added" );
 			}
 			break;
 
-			case CircleDocument::CircleRemoved : {
+			case CircleModel::CircleRemoved : {
 				modelState_->setCaption( "Circle removed" );
 			}
 			break;
@@ -526,7 +464,7 @@ public:
 		}
 
 
-		CircleDocument* model = (CircleDocument*)getViewModel();
+		CircleModel* model = (CircleModel*)getViewModel();
 
 		const std::vector<CircleShape>& circles = model->getCircles();
 		for ( std::vector<CircleShape>::const_iterator it = circles.begin(); it!=circles.end(); it++ ) {
@@ -552,19 +490,19 @@ public:
 class CircleDocController : public Component {
 public:
 
-	CircleDocument* model_;
+	CircleModel* model_;
 	Panel* panel_;
 
 	CircleDocController():model_(NULL), panel_(NULL){}
 
-	void setModel( CircleDocument* model ) {
+	void setModel( CircleModel* model ) {
 		
 		CallBack* ev = getCallback( "CircleDocController::onCircleModelChanged" );
 
 
 		if ( NULL != model_ ) {
 			if ( NULL != ev ) {
-				model_->removeModelHandler( (ModelHandler*)ev );
+				model_->ModelChanged -= ev;
 			}
 		}
 
@@ -574,7 +512,7 @@ public:
 			if ( NULL == ev ) {
 				ev = new ClassProcedure1<Event*, CircleDocController>( this, &CircleDocController::onCircleModelChanged, "CircleDocController::onCircleModelChanged" );
 			}
-			model_->addModelHandler( (ModelHandler*)ev );
+			model_->ModelChanged += ev;
 		}
 	}
 
@@ -732,12 +670,12 @@ public:
 
 
 	void onDocInitialized( Event* e ) {
-		CircleDocument* doc = (CircleDocument*)e->getSource();
+		Document* doc = (Document*)e->getSource();
 
 		//is this our document?
 		if ( doc->getWindow() == this ) {
 			
-			controller_->setModel( doc );
+			controller_->setModel( (CircleModel*)doc->getModel() );
 			doc->addView( info_ );		
 			doc->addView( circlePanel_->getView() );
 		}
@@ -760,12 +698,14 @@ public:
 
 	virtual bool initRunningApplication(){	
 		
-		REGISTER_CLASSINFO( CircleDocument );
+		REGISTER_CLASSINFO_EXTERNAL( CircleModel );
+		REGISTER_CLASSINFO_EXTERNAL( CircleDocument );
+
 		REGISTER_CLASSINFO( DocViewAdvancedWindow );
 
 		bool result = MDIDocumentBasedApplication::initRunningApplication();
 
-		newDefaultDocument("","");		
+		newDefaultDocument("");		
 		
 		return result;
 	}
@@ -775,9 +715,7 @@ public:
 
 int main(int argc, char *argv[])
 {
-	Application* app = new DocViewAdvancedApplication( argc, argv );
-
-	Application::main();
+	ApplicationKitMain<DocViewAdvancedApplication>(argc,argv);
 	
 	return 0;
 }

@@ -1580,7 +1580,7 @@ public:
 					Win32VisualStylesWrapper::CloseThemeData( theme );
 					ReleaseDC(::GetDesktopWindow(),dc);
 
-					sz.cy += m.cyTopHeight + m.cyBottomHeight;
+					//sz.cy += m.cyTopHeight + m.cyBottomHeight;
 					result = sz.cy;
 				}
 				else {

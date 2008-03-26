@@ -426,6 +426,11 @@ void DocumentManager::updateCopy( ActionEvent* event, Document* doc )
 	}
 }
 
+UndoRedoStack& DocumentManager::getUndoRedoStack( Model* model )
+{	
+	return getUndoRedoStack( getDocument(model) );
+}
+
 UndoRedoStack& DocumentManager::getUndoRedoStack( Document* doc )
 {
 	UndoRedoStack* result = NULL;

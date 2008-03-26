@@ -588,6 +588,8 @@ public:
 	*/
 	UndoRedoStack& getUndoRedoStack( Document* doc );
 
+	UndoRedoStack& getUndoRedoStack( Model* model );
+
 	/**
 	Returns the shared undo-redo stack for the document 
 	manager.
@@ -595,7 +597,7 @@ public:
 	@see getUndoRedoStack()
 	*/	
 	UndoRedoStack& getSharedUndoRedoStack() {
-		return getUndoRedoStack( NULL );
+		return getUndoRedoStack( (Document*)NULL );
 	}
 
 	void linkDocumentToModel( Document* document, Model* model );
