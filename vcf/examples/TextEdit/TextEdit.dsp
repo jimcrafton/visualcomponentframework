@@ -23,6 +23,8 @@ CFG=TextEdit - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -143,10 +145,10 @@ SOURCE=ReplaceDialog.h
 # Begin Group "Resources"
 
 # PROP Default_Filter ""
-# End Group
 # Begin Source File
 
-SOURCE=TextEdit.xml
+SOURCE=.\Resources\TextEdit.xml
 # End Source File
+# End Group
 # End Target
 # End Project

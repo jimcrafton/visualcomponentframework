@@ -1422,7 +1422,7 @@ bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFileAs( Document* doc
 	}
 
 	//store off the current name
-	String oldName = doc->getName();
+	String oldName = doc->getTitle();
 	//set the name to the new file
 	doc->setFileName( fp );
 	try {
@@ -1432,7 +1432,7 @@ bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFileAs( Document* doc
 		doc->setFileName( oldName );
 	}
 	catch ( BasicException& e) {
-		Dialog::showMessage( "Error saving '" + doc->getName() + "'\nError: " + e.getMessage() );
+		Dialog::showMessage( "Error saving '" + doc->getTitle() + "'\nError: " + e.getMessage() );
 		result = false;
 	}
 

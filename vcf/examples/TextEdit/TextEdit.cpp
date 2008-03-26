@@ -88,7 +88,7 @@ void TextEdit::onUpdatePrint( VCF::ActionEvent* e )
 
 void TextEdit::onFind( VCF::Event* e )	
 {
-	TextEditDocument* currentDoc = (TextEditDocument*)getCurrentDocument();
+	/*TextEditDocument* currentDoc = (TextEditDocument*)getCurrentDocument();
 	currentFindInfo_.position_ = currentDoc->getSelectionStart();
 	
 	if ( currentDoc->getSelectionLength() > 0 ) {			
@@ -103,7 +103,7 @@ void TextEdit::onFind( VCF::Event* e )
 	dlg->setFrameTopmost( true );
 	dlg->showModal();
 	dlg->free();
-	
+	*/
 }
 
 void TextEdit::onUpdateFind( VCF::ActionEvent* e ) 
@@ -114,7 +114,7 @@ void TextEdit::onUpdateFind( VCF::ActionEvent* e )
 
 void TextEdit::onReplace( VCF::Event* e )	
 {
-	TextEditDocument* currentDoc = (TextEditDocument*)getCurrentDocument();
+/*	TextEditDocument* currentDoc = (TextEditDocument*)getCurrentDocument();
 	if ( NULL != currentDoc ) {
 		currentReplaceInfo_.position_ = currentDoc->getSelectionStart();
 		
@@ -137,6 +137,7 @@ void TextEdit::onReplace( VCF::Event* e )
 	dlg->setFrameTopmost( true );
 	dlg->showModal();
 	dlg->free();
+	*/
 }
 
 void TextEdit::onUpdateReplace( VCF::ActionEvent* e ) 
@@ -262,9 +263,7 @@ void TextEdit::onDocInitialized( Event* e )
 
 int main(int argc, char *argv[])
 {
-	Application* app = new TextEdit( argc, argv );
-
-	Application::main();
+	ApplicationKitMain<TextEdit>(argc,argv);
 	
 	return 0;
 }

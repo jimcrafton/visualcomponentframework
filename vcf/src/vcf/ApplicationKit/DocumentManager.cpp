@@ -131,61 +131,6 @@ void DocumentManager::init()
 	else {
 		throw RuntimeException( "You need to have a resource file named \"" + app->getName() + ".xml\" with the correct data in it."  );
 	}
-
-/*
-	if ( xml.empty() ) {
-		throw RuntimeException( "You Document resource file needs to be properly configured - there's no data in it!"  );
-	}
-
-	XMLParser parser;
-	parser.parse( xml );
-	Enumerator<XMLNode*>* nodes = parser.getParsedNodes();
-	while ( nodes->hasMoreElements() ) {
-		XMLNode* node = nodes->nextElement();
-		if ( node->getName() == "document" ) {
-
-			XMLAttr* attr = node->getAttrByName( "classname" );
-
-			DocumentInfo info;
-			info.className = attr->getValue();
-
-			attr = node->getAttrByName( "classid" );
-			if ( attr ) {
-				info.classID = attr->getValue();
-			}
-
-			Enumerator<XMLNode*>* properties = node->getChildNodes();
-			while ( properties->hasMoreElements() ) {
-				XMLNode* prop = properties->nextElement();
-				if ( prop->getName() == "property" ) {
-					XMLAttr* name = prop->getAttrByName( "name" );
-					XMLAttr* val = prop->getAttrByName( "value" );
-
-					if ( name->getValue() == "mimetype" ) {
-						info.mimetype = val->getValue();
-					}
-					else if ( name->getValue() == "role" ) {
-
-					}
-					else if ( name->getValue() == "extension" ) {
-						info.fileTypes = val->getValue();
-					}
-					else if ( name->getValue() == "description" ) {
-						info.description = val->getValue();
-					}
-					else if ( name->getValue() == "view" ) {
-						info.view = val->getValue();
-					}
-					else if ( name->getValue() == "window" ) {
-						info.window = val->getValue();
-					}
-				}
-			}
-
-			docInfo_[info.mimetype] = info;
-		}
-	}
-*/
 }
 
 void DocumentManager::terminate() {
@@ -335,7 +280,7 @@ UIToolkit::ModalReturnType DocumentManager::saveChanges( Document* document )
 	}
 	MessageDialog saveDocPrompt;
 	String message = Format("Do you want to save the changes you made to the document named \"%s\" ?") %
-	                                              document->getName();
+	                                              document->getTitle();
 
 	saveDocPrompt.setMessage( message );
 	saveDocPrompt.setCaption( caption );

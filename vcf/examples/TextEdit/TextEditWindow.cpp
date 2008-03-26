@@ -242,7 +242,7 @@ void TextEditWindow::onDocInitialized( VCF::Event* e )
 	MultilineTextControl* tc = (MultilineTextControl*) findComponent( "EditControl" );
 	TextEditDocument* doc = (TextEditDocument*)e->getSource();
 
-	tc->setTextModel( doc );
+	tc->setViewModel( doc->getModel() );
 	doc->addView( tc );
 
 	CallBack* evh = getCallback( "TextEditWindow::onModelChanged" );
@@ -250,7 +250,7 @@ void TextEditWindow::onDocInitialized( VCF::Event* e )
 		evh = new ClassProcedure1<Event*,TextEditWindow>( this, &TextEditWindow::onModelChanged, "TextEditWindow::onModelChanged" );
 	}
 
-	doc->ModelChanged += evh;
+	doc->DocumentChanged += evh;
 
 	tc->setFocused();
 
