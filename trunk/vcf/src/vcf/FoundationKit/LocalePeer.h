@@ -50,6 +50,8 @@ public:
 	*/
 	virtual void setLocale( const UnicodeString& language, const UnicodeString& country, const UnicodeString& variant ) = 0;
 
+	virtual void setToCurrentThread() = 0;
+
 	virtual uint32 getLanguageCode() = 0;
 	virtual uint32 getCountryCode() = 0;
 

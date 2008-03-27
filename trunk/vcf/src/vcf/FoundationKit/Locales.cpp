@@ -21,8 +21,9 @@ using namespace VCF;
 
 
 Locale::Locale( const UnicodeString& languageCode, const UnicodeString& countryCode ):
-	peer_(NULL)
+peer_(NULL),encoding_(UnicodeString::leUnknown)
 {
+		
 	peer_ = SystemToolkit::createLocalePeer();
 	if ( NULL == peer_ ) {
 		throw InvalidPeer( MAKE_ERROR_MSG_2( "No Locale peer found" ) );
@@ -32,7 +33,7 @@ Locale::Locale( const UnicodeString& languageCode, const UnicodeString& countryC
 }
 
 Locale::Locale( const Locale::LanguageCodes& languageCode, const Locale::CountryCodes& countryCode ):
-	peer_(NULL)
+	peer_(NULL),encoding_(UnicodeString::leUnknown)
 {
 	peer_ = SystemToolkit::createLocalePeer();
 	if ( NULL == peer_ ) {

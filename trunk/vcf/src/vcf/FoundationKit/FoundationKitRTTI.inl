@@ -13,8 +13,8 @@ namespace VCF {
 /**
 *A string array for the controls alignement types
 */
-static String ComponentSettingScopeNames[] = { "sUser",
-                                         "sLocal" };
+static String ComponentSettingScopeNames[] = { L"sUser",
+                                         L"sLocal" };
 
 
 _class_abstract_rtti_(ObjectWithCallbacks, "VCF::Object", OBJECTWITHCALLBACKS_CLASSID)

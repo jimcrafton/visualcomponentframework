@@ -529,6 +529,7 @@ public:
 		lcZulu	= 'zu'
 
 	};
+	
 
 	/**
 	Construct a new locale instance from a language code string, and a
@@ -804,6 +805,14 @@ public:
 		return peer_;
 	}
 
+	UnicodeString::LanguageEncoding getEncoding() const {
+		return encoding_;
+	}
+
+	void setEncoding( UnicodeString::LanguageEncoding val ) {
+		encoding_ = val;
+	}
+
 	static UnicodeString languageCodeToString( LanguageCodes code );
 	static UnicodeString countryCodeToString( CountryCodes code );
 
@@ -812,6 +821,7 @@ public:
 protected:
 	LocalePeer* peer_;
 
+	UnicodeString::LanguageEncoding encoding_;
 
 };
 

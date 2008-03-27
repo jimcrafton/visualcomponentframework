@@ -158,7 +158,7 @@ void * Object::operator new( size_t allocationSize )
 			DebugInfo info;
 			info.objAddress_ = (uintptr)newPtr;
 			info.objectAllocationSize_ = allocationSize;
-			Object::debugAllocationMap[info.objAddress_] = info;
+			//Object::debugAllocationMap[info.objAddress_] = info;
 
 			if ( NULL != Object::accessMutex_ ) {
 				Object::accessMutex_->unlock();

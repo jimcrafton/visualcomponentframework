@@ -18,10 +18,10 @@ using namespace VCF;
 
 
 
-std::map<String,int> Win32LocalePeer::langIDs;
-std::map<String,int> Win32LocalePeer::countryIDs;
-static std::map<String,String> countryToWin32Country;
-static std::map<String,String> languageToWin32Language;
+std::map<AnsiString,int> Win32LocalePeer::langIDs;
+std::map<AnsiString,int> Win32LocalePeer::countryIDs;
+static std::map<AnsiString,AnsiString> countryToWin32Country;
+static std::map<AnsiString,AnsiString> languageToWin32Language;
 
 Win32LocalePeer::Win32LocalePeer():lcid_(0)
 {
@@ -293,19 +293,20 @@ Win32LocalePeer::Win32LocalePeer():lcid_(0)
 	}
 }
 
+void Win32LocalePeer::setToCurrentThread()
+{
+	lcid_ = GetThreadLocale();
+	crtLocaleStr_ = setlocale( LC_ALL, NULL );
+}
+
 void Win32LocalePeer::setLocale( const UnicodeString& language, const UnicodeString& country, const UnicodeString& variant )
 {
-	if ( language.empty() && country.empty() ) {
-		lcid_ = GetThreadLocale();
-
-		crtLocaleStr_ = setlocale( LC_ALL, NULL );
-	}
-	else {
+	if ( !language.empty() || !country.empty() ) {
 
 		WORD langID = 0;
 		USHORT primaryLanguage = 0;
 		USHORT subLanguage = 0;
-		std::map<String,int>::iterator found = Win32LocalePeer::langIDs.find( language );
+		std::map<AnsiString,int>::iterator found = Win32LocalePeer::langIDs.find( language );
 		if ( found != Win32LocalePeer::langIDs.end() ) {
 			primaryLanguage = found->second;
 		}
@@ -325,7 +326,7 @@ void Win32LocalePeer::setLocale( const UnicodeString& language, const UnicodeStr
 
 		crtLocaleStr_ = "";
 
-		std::map<String,String>::iterator found2 = languageToWin32Language.find( language + "_" + country );
+		std::map<AnsiString,AnsiString>::iterator found2 = languageToWin32Language.find( language + "_" + country );
 		if ( found2 != languageToWin32Language.end() ) {
 			crtLocaleStr_ = found2->second;
 		}
@@ -1305,8 +1306,9 @@ bool Win32LocalePeer::isCharA( const int32& charTypeMask, const VCFChar& c )
 		setlocale( LC_CTYPE, crtLocaleStr_.ansi_c_str() );
 	#else
 		oldLocaleStr = _wsetlocale( LC_CTYPE, NULL );
-
-		_wsetlocale( LC_CTYPE, crtLocaleStr_.c_str() );
+		
+		UnicodeString tmp(crtLocaleStr_);
+		_wsetlocale( LC_CTYPE, tmp.c_str() );
 	#endif
 
 		if ( charTypeMask & ctSpace ) {
@@ -1390,7 +1392,7 @@ bool Win32LocalePeer::isCharA( const int32& charTypeMask, const VCFChar& c )
 	else {
 		oldLocaleStr = setlocale( LC_CTYPE, NULL );
 
-		setlocale( LC_CTYPE, crtLocaleStr_.ansi_c_str() );
+		setlocale( LC_CTYPE, crtLocaleStr_.c_str() );
 
 		if ( charTypeMask & ctSpace ) {
 			if ( isspace( c ) ) {
