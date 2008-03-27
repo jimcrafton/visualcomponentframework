@@ -53,7 +53,7 @@ If you are porting to a new platform you will need to derive a new
 class from this one and provide implementations of the various
 internal_createXXXPeer methods. 
 */
-class FOUNDATIONKIT_API SystemToolkit : public Object{
+class FOUNDATIONKIT_API SystemToolkit {
 
 public:
 
@@ -206,9 +206,7 @@ protected:
 	/**
 	*returns the one and only instance of the system toolkit
 	*/
-	static SystemToolkit* getSystemToolkit() {
-		return systemToolkitInstance;
-	}
+	static SystemToolkit* getSystemToolkit();
 	
 	
 	static SystemToolkit* systemToolkitInstance;

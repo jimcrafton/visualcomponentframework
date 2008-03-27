@@ -13,6 +13,13 @@ where you installed the VCF.
 using namespace VCF;
 
 
+SystemToolkit* SystemToolkit::getSystemToolkit()
+{
+	if ( NULL == SystemToolkit::systemToolkitInstance ) {
+		//SystemToolkit::create();
+	}
+	return SystemToolkit::systemToolkitInstance;
+}
 
 SystemToolkit* SystemToolkit::create()
 {
@@ -30,7 +37,7 @@ SystemToolkit* SystemToolkit::create()
 		if ( NULL == SystemToolkit::systemToolkitInstance ) {
 			throw InvalidPointerException( MAKE_ERROR_MSG_2(String("No Toolkit instantiated!")) );
 		}
-		SystemToolkit::systemToolkitInstance->init();
+//		SystemToolkit::systemToolkitInstance->init();
 	}
 
 	return SystemToolkit::systemToolkitInstance;
@@ -38,7 +45,7 @@ SystemToolkit* SystemToolkit::create()
 
 void SystemToolkit::terminate()
 {
-	SystemToolkit::systemToolkitInstance->free();
+	delete SystemToolkit::systemToolkitInstance;
 }
 
 

@@ -69,6 +69,165 @@ class FOUNDATIONKIT_API UnicodeString {
 public:
 		
 
+	/**
+	Code page values for the locale:
+	*/
+	enum LanguageEncoding { 
+		leUnknown = -1,
+		leDefault = 0,
+		leIBM037 = 100,
+		leIBM437,
+		leIBM500,
+		leArabic708,
+		leArabic449,
+		leArabicTransparent,
+		leDOSArabic,
+		leGreek,
+		leBaltic,
+		leLatin1,
+		leLatin2,
+		leCyrillic,
+		leTurkish,
+		leMultilingualLatin1,
+		lePortuguese,
+		leIcelandic,
+		leHebrew,
+		leFrenchCanadian,
+		leArabic864,
+		leNordic,
+		leRussianCyrillic,
+		leModernGreek,
+		leEBCDICLatin2,
+		leThai,
+		leEBCDICGreekModern,
+		leShiftJIS,
+		leSimplifiedChinese,
+		leKorean,
+		leChineseTraditionalBig5,
+		leEBCDICTurkish,
+		leEBCDICLatin1,
+		leEBCDICUSCanada,
+		leEBCDICGermany,
+		leEBCDICDenmarkNorway,
+		leEBCDICFinlandSweden,
+		leEBCDICItaly,
+		leEBCDICLatinAmericaSpain,
+		leEBCDICUnitedKingdom,
+		leEBCDICFrance,
+		leEBCDICInternational,
+		leEBCDICIcelandic,
+		leUTF16LittleEndianByteOrder,
+		leUTF16BigEndianByteOrder,
+		leANSICentralEuropean,
+		leANSICyrillic,
+		leANSILatin1,
+		leANSIGreek,
+		leANSITurkish,
+		leANSIHebrew,
+		leANSIArabic,
+		leANSIBaltic,
+		leANSIVietnamese,
+		leJohabKorean,
+		leMacRoman,
+		leMacJapanese,
+		leMacTraditionalChineseBig5,
+		leMacKorean,
+		leMacArabic,
+		leMacHebrew,
+		leMacGreek,
+		leMacCyrillic,
+		leMacSimplifiedChinese,
+		leMacRomanian,
+		leMacUkrainian,
+		leMacThai,
+		leMacLatin2,
+		leMacIcelandic,
+		leMacTurkish,
+		leMacCroatian,
+		leUTF32LittleEndianByteOrder,
+		leUTF32BigEndianByteOrder,
+		leCNSTaiwan,
+		leTCATaiwan,
+		leEtenTaiwan,
+		leIBM5550Taiwan,
+		leTeleTextTaiwan,
+		leWangTaiwan,
+		leIA5WesternEuropean,
+		leIA5German,
+		leIA5Swedish,
+		leIA5Norwegian,
+		leUSASCII,
+		leT61,
+		leISO6937,
+		leIBM273Germany,
+		leIBM277DenmarkNorway,
+		leIBM278FinlandSweden,
+		leIBM280Italy,
+		leIBM284LatinAmericaSpain,
+		leIBM285UnitedKingdom,
+		leIBM290JapaneseKatakanaExt,
+		leIBM297France,
+		leIBM420Arabic,
+		leIBM423Greek,
+		leIBM424Hebrew,
+		leIBMKoreanExtended,
+		leIBMThai,
+		leRussianKOI8R,
+		leIBM871Icelandic,
+		leIBM880CyrillicRussian,
+		leIBM905Turkish,
+		leIBM00924Latin1,
+		leEUCJapaneseJIS,
+		leSimplifiedChineseGB2312,
+		leKoreanWansung,
+		leEBCDICCyrillicSerbianBulgarian,
+		leUkrainianKOI8U,
+		leISO88591Latin1,
+		leISO88592CentralEuropean,
+		leISO88593Latin3,
+		leISO88594Baltic,
+		leISO88595Cyrillic,
+		leISO88596Arabic,
+		leISO88597Greek,
+		leISO88598HebrewVisual,
+		leISO88599Turkish,
+		leISO885913Estonian,
+		leISO885915Latin9,
+		leEuropa3,
+		leISO88598HebrewLogical,
+		leISO2022JapaneseNoHalfwidthKatakana,
+		leISO2022JapaneseWithHalfwidthKatakana,
+		leISO2022JapaneseAllow1ByteKana,
+		leISO2022Korean,
+		leISO2022SimplifiedChinese,
+		leISO2022TraditionalChinese,
+		leEBCDICJapaneseExt,
+		leEBCDICUSCanadaAndJapanese,
+		leEBCDICKoreanExtAndKorean,
+		leEBCDICSimplifiedChineseExtSimplifiedChinese,
+		leEBCDICSimplifiedChinese,
+		leEBCDICUSCanadaAndTraditionalChinese,
+		leEBCDICJapaneseLatinExtAndJapanese,
+		leEUCJapanese,
+		leEUCSimplifiedChinese,
+		leEUCKorean,
+		leEUCTraditionalChinese,
+		leHZGB2312SimplifiedChinese,
+		leGB18030SimplifiedChinese,
+		leISCIIDevanagari,
+		leISCIIBengali,
+		leISCIITamil,
+		leISCIITelugu,
+		leISCIIAssamese,
+		leISCIIOriya,
+		leISCIIKannada,
+		leISCIIMalayalam,
+		leISCIIGujarati,
+		leISCIIPunjabi,
+		leUTF7,
+		leUTF8
+	};
+
 	typedef char AnsiChar;
 
 	//JC - see VCFChar.h for definiton of WideChar
@@ -123,12 +282,13 @@ public:
 
 	}
 
-	UnicodeString(const std::string& rhs);
+	UnicodeString(const std::string& rhs, LanguageEncoding encoding=leDefault);
 
-	UnicodeString(const AnsiChar* string, size_type stringLength );
+	UnicodeString(const AnsiChar* string, size_type stringLength, LanguageEncoding encoding=leDefault );	
+
 	UnicodeString(const UniChar* string, size_type stringLength );
 
-	UnicodeString(const AnsiChar* string );
+	UnicodeString(const AnsiChar* string, LanguageEncoding encoding=leDefault );
 	UnicodeString(const UniChar* string );
 
 	UnicodeString( size_type n, AnsiChar c );
@@ -945,12 +1105,12 @@ public:
 
 	uint64 sizeOf() const;
 
-	static void transformAnsiToUnicode( const AnsiChar* str, size_type stringLength, StringData& newStr );
+	static void transformAnsiToUnicode( const AnsiChar* str, size_type stringLength, StringData& newStr, LanguageEncoding encoding=leDefault );
 
-	static AnsiChar* transformUnicodeToAnsi( const UnicodeString& str );
+	static AnsiChar* transformUnicodeToAnsi( const UnicodeString& str, LanguageEncoding encoding=leDefault );
 
-	static UniChar transformAnsiCharToUnicodeChar( AnsiChar c );
-	static AnsiChar transformUnicodeCharToAnsiChar( UniChar c );
+	static UniChar transformAnsiCharToUnicodeChar( AnsiChar c, LanguageEncoding encoding=leDefault );
+	static AnsiChar transformUnicodeCharToAnsiChar( UniChar c, LanguageEncoding encoding=leDefault );
 
 	static int adjustForBOMMarker( AnsiChar*& stringPtr, uint32& len );
 protected:

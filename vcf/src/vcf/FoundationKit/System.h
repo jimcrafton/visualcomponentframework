@@ -34,7 +34,7 @@ take of this for you. You interact with it by calling the various
 static methods of the class, which in turn call the proper 
 System peer implementation.
 */
-class FOUNDATIONKIT_API System : public Object {
+class FOUNDATIONKIT_API System {
 public:
 	
 	/**
@@ -524,6 +524,8 @@ protected:
 	ResourceBundle* resBundle_;
 
 	static String getInfoFileFromFileName( const String& fileName );
+
+	static System* getInstance();
 };
 
 };

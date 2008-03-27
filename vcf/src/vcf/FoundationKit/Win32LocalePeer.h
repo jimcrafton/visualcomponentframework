@@ -24,6 +24,8 @@ public:
 
 	virtual void setLocale( const UnicodeString& language, const UnicodeString& country, const UnicodeString& variant );
 
+	virtual void setToCurrentThread();
+
 	virtual uint32 getLanguageCode();
 	virtual uint32 getCountryCode();
 
@@ -79,10 +81,10 @@ protected:
 	void initNumberFormatForFloatW( NUMBERFMTW& fmt );
 	void initNumberFormatForFloatA( NUMBERFMTA& fmt );
 	LCID lcid_;
-	UnicodeString crtLocaleStr_;
+	AnsiString crtLocaleStr_;
 
-	static std::map<String,int> langIDs;
-	static std::map<String,int> countryIDs;
+	static std::map<AnsiString,int> langIDs;
+	static std::map<AnsiString,int> countryIDs;
 };
 
 

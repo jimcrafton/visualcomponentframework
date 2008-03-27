@@ -22,11 +22,20 @@ bool System::unicodeEnabled = false;
 static std::map<String,String> cachedResourceDirMap;
 
 
+System* System::getInstance()
+{
+	if ( NULL == System::systemInstance ) {
+		//System::create();
+	}
+
+	return System::systemInstance;
+}
+
 System* System::create()
 {
 	if ( NULL == System::systemInstance ) {
 		System::systemInstance = new System();		
-		System::systemInstance->init();
+		//System::systemInstance->init();
 	}
 
 	return System::systemInstance;
@@ -34,7 +43,7 @@ System* System::create()
 
 void System::terminate()
 {
-	System::systemInstance->free();
+	delete System::systemInstance;
 }
 
 
@@ -168,20 +177,20 @@ String System::findResourceDirectoryForExecutable( const String& fileName )
 
 uint32 System::getTickCount()
 {
-	if ( NULL != System::systemInstance->systemPeer_ ) {
-		return System::systemInstance->systemPeer_->getTickCount();
+	if ( NULL != System::getInstance()->systemPeer_ ) {
+		return System::getInstance()->systemPeer_->getTickCount();
 	}
 	else return 0;
 }
 
 void System::sleep( const uint32& milliseconds )
 {
-	System::systemInstance->systemPeer_->sleep( milliseconds );
+	System::getInstance()->systemPeer_->sleep( milliseconds );
 }
 
 void System::setErrorLog( ErrorLog* errorLog )
 {
-	System::systemInstance->errorLogInstance_ = errorLog;
+	System::getInstance()->errorLogInstance_ = errorLog;
 }
 
 void System::print( const String& text )
@@ -198,8 +207,8 @@ void System::print( const String& text )
 #endif
 
 	if ( NULL != System::systemInstance ) {
-		if ( NULL != System::systemInstance->errorLogInstance_ ) {			
-			System::systemInstance->errorLogInstance_->toLog( text );
+		if ( NULL != System::getInstance()->errorLogInstance_ ) {			
+			System::getInstance()->errorLogInstance_->toLog( text );
 		}
 	}
 }
@@ -227,8 +236,8 @@ void System::println( const String& text )
 #endif
 
 	if ( NULL != System::systemInstance ) {
-		if ( NULL != System::systemInstance->errorLogInstance_ ) { 
-			System::systemInstance->errorLogInstance_->toLog( output );
+		if ( NULL != System::getInstance()->errorLogInstance_ ) { 
+			System::getInstance()->errorLogInstance_->toLog( output );
 		}
 	}
 }
@@ -255,8 +264,8 @@ void System::println( const Format& formatter )
 #endif
 
 	if ( NULL != System::systemInstance ) {
-		if ( NULL != System::systemInstance->errorLogInstance_ ) { 
-			System::systemInstance->errorLogInstance_->toLog( output );
+		if ( NULL != System::getInstance()->errorLogInstance_ ) { 
+			System::getInstance()->errorLogInstance_->toLog( output );
 		}
 	}
 }
@@ -269,37 +278,37 @@ void System::errorPrint( BasicException* exception )
 
 bool System::doesFileExist( const String& fileName )
 {
-	return System::systemInstance->systemPeer_->doesFileExist( fileName );
+	return System::getInstance()->systemPeer_->doesFileExist( fileName );
 }
 
 String System::getEnvironmentVariable( const String& variableName )
 {
-	return System::systemInstance->systemPeer_->getEnvironmentVariable( variableName );
+	return System::getInstance()->systemPeer_->getEnvironmentVariable( variableName );
 }
 
 void System::setEnvironmentVariable( const String& variableName, const String& newValue )
 {
-	System::systemInstance->systemPeer_->setEnvironmentVariable( variableName, newValue );
+	System::getInstance()->systemPeer_->setEnvironmentVariable( variableName, newValue );
 }
 
 void System::addPathDirectory( const String& directory )
 {
-	System::systemInstance->systemPeer_->addPathDirectory( directory );
+	System::getInstance()->systemPeer_->addPathDirectory( directory );
 }
 
 String System::getCurrentWorkingDirectory()
 {
-	return System::systemInstance->systemPeer_->getCurrentWorkingDirectory();
+	return System::getInstance()->systemPeer_->getCurrentWorkingDirectory();
 }
 
 void System::setCurrentWorkingDirectory( const String& currentDirectory )
 {
-	System::systemInstance->systemPeer_->setCurrentWorkingDirectory( currentDirectory );
+	System::getInstance()->systemPeer_->setCurrentWorkingDirectory( currentDirectory );
 }
 
 String System::getCommonDirectory( System::CommonDirectory directory )
 {
-	return System::systemInstance->systemPeer_->getCommonDirectory( directory );
+	return System::getInstance()->systemPeer_->getCommonDirectory( directory );
 }
 
 String System::createTempFileName( System::CommonDirectory directory )
@@ -309,37 +318,45 @@ String System::createTempFileName( System::CommonDirectory directory )
 
 String System::createTempFileName( const String& directory )
 {
-	return System::systemInstance->systemPeer_->createTempFileName( directory );
+	return System::getInstance()->systemPeer_->createTempFileName( directory );
 }
 
 void System::setDateToSystemTime( DateTime* date )
 {
-	System::systemInstance->systemPeer_->setDateToSystemTime( date );
+	System::getInstance()->systemPeer_->setDateToSystemTime( date );
 }
 
 void System::setDateToLocalTime( DateTime* date )
 {
-	System::systemInstance->systemPeer_->setDateToLocalTime( date );
+	System::getInstance()->systemPeer_->setDateToLocalTime( date );
 }
 
 void System::setTimeZoneToLocal( const DateTime& currentDate, TimeZone& tz )
 {
-	System::systemInstance->systemPeer_->setTimeZoneToLocal( currentDate, tz );
+	System::getInstance()->systemPeer_->setTimeZoneToLocal( currentDate, tz );
 }
 
 
 void System::setCurrentThreadLocale( Locale* locale )
 {
-	System::systemInstance->locale_->getPeer()->setLocale( locale->getLanguageCodeString(), locale->getCountryCodeString(), "" );
+	Locale* current = System::getInstance()->locale_;
+	current->getPeer()->setLocale( locale->getLanguageCodeString(), locale->getCountryCodeString(), "" );
+	current->setEncoding( locale->getEncoding() );
 
-	System::systemInstance->systemPeer_->setCurrentThreadLocale( locale );
+	System::getInstance()->systemPeer_->setCurrentThreadLocale( locale );
 }
 
 Locale* System::getCurrentThreadLocale()
 {
-	System::systemInstance->locale_->getPeer()->setLocale( L"", L"", L"" ); //updates it to current thread's locale info
+	System* system = System::getInstance();
+	if ( NULL != system ) {
+		system->locale_->getPeer()->setToCurrentThread();
+			
+			//setLocale( L"", L"", L"" ); //updates it to current thread's locale info
+		return System::getInstance()->locale_;
+	}
 
-	return System::systemInstance->locale_;
+	return NULL;
 }
 
 bool System::isUnicodeEnabled()
@@ -349,17 +366,17 @@ bool System::isUnicodeEnabled()
 
 DateTime System::convertUTCTimeToLocalTime( const DateTime& date )
 {
-	return System::systemInstance->systemPeer_->convertUTCTimeToLocalTime( date );
+	return System::getInstance()->systemPeer_->convertUTCTimeToLocalTime( date );
 }
 
 DateTime System::convertLocalTimeToUTCTime( const DateTime& date )
 {
-	return System::systemInstance->systemPeer_->convertLocalTimeToUTCTime( date );
+	return System::getInstance()->systemPeer_->convertLocalTimeToUTCTime( date );
 }
 
 ResourceBundle* System::getResourceBundle()
 {
-	return System::systemInstance->resBundle_;
+	return System::getInstance()->resBundle_;
 }
 
 String System::getInfoFileFromFileName( const String& fileName )
@@ -466,7 +483,7 @@ String System::getInfoFileFromFileName( const String& fileName )
 ProgramInfo* System::getProgramInfoFromFileName( const String& fileName )
 {
 	ProgramInfo* result = 
-		System::systemInstance->systemPeer_->getProgramInfoFromFileName( fileName );
+		System::getInstance()->systemPeer_->getProgramInfoFromFileName( fileName );
 
 	if ( NULL == result ) {
 			
@@ -614,21 +631,21 @@ ProgramInfo* System::getProgramInfoFromInfoFile( const String& infoFileName )
 
 void System::internal_replaceResourceBundleInstance( ResourceBundle* newInstance )
 {
-	if ( NULL != System::systemInstance->resBundle_ ) {
-		delete System::systemInstance->resBundle_;
-		System::systemInstance->resBundle_ = NULL;
+	if ( NULL != System::getInstance()->resBundle_ ) {
+		delete System::getInstance()->resBundle_;
+		System::getInstance()->resBundle_ = NULL;
 	}
-	System::systemInstance->resBundle_ = newInstance;
+	System::getInstance()->resBundle_ = newInstance;
 }
 
 String System::getOSName()
 {
-	return System::systemInstance->systemPeer_->getOSName();
+	return System::getInstance()->systemPeer_->getOSName();
 }
 
 String System::getOSVersion()
 {
-	return System::systemInstance->systemPeer_->getOSVersion();
+	return System::getInstance()->systemPeer_->getOSVersion();
 }
 
 
@@ -640,13 +657,13 @@ String System::getCompiler()
 
 String System::getComputerName()
 {
-	return System::systemInstance->systemPeer_->getComputerName();
+	return System::getInstance()->systemPeer_->getComputerName();
 }
 
 
 String System::getUserName()
 {
-	return System::systemInstance->systemPeer_->getUserName();
+	return System::getInstance()->systemPeer_->getUserName();
 }
 
 String System::getBundlePathFromExecutableName( const String& fileName )
