@@ -260,12 +260,12 @@ void TextEditWindow::onDocInitialized( VCF::Event* e )
 
 void TextEditWindow::onModelChanged( VCF::Event* e )
 {
-	if ( e->getType() == TextEditDocument::teTextSelectionChanged ) {
+	if ( e->getType() == TextModel::tmTextSelectionChanged ) {
 		docSelectionChanging_ = true;
 		MultilineTextControl* tc = (MultilineTextControl*) findComponent( "EditControl" );
-		TextEditDocument* doc = (TextEditDocument*)e->getSource();
+		//TextEditDocument* doc = (TextEditDocument*)e->getSource();
 
-		tc->setSelectionMark( doc->getSelectionStart(), doc->getSelectionLength() );
+		//tc->setSelectionMark( doc->getSelectionStart(), doc->getSelectionLength() );
 
 		docSelectionChanging_ = false;
 	}
@@ -276,12 +276,12 @@ void TextEditWindow::onSelectionChanged( VCF::Event* e )
 	if ( !docSelectionChanging_ ) {
 		TextEvent* te = (TextEvent*) e;
 		
-		int start = te->getSelectionStart();
-		
-		MultilineTextControl* tc = (MultilineTextControl*)e->getSource();
-		TextEditDocument* doc = (TextEditDocument*)tc->getViewModel();
-		
-		doc->setSelectionRange( start, te->getSelectionLength() );
+//		int start = te->getSelectionStart();
+//		
+//		MultilineTextControl* tc = (MultilineTextControl*)e->getSource();
+//		TextEditDocument* doc = (TextEditDocument*)tc->getViewModel();
+//		
+//		doc->setSelectionRange( start, te->getSelectionLength() );
 	}
 }
 

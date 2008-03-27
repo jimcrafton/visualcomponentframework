@@ -1838,22 +1838,23 @@ bool Control::isActive()
 void Control::setViewModel( Model* viewModel )
 {
 	Model* oldModel = getViewModel();
-
-	/**
-	NOTE!!
-	Control's will assume that the model is added as a component
-	some where along the line. Failure to do this will result in
-	a memory leak. It will also result in the model NOT being written
-	out for storage
-	*/
-	AbstractView::setViewModel( viewModel );
-	
-	modelChanged( oldModel, viewModel );
-
 	if ( oldModel != viewModel ) {
+		
+		/**
+		NOTE!!
+		Control's will assume that the model is added as a component
+		some where along the line. Failure to do this will result in
+		a memory leak. It will also result in the model NOT being written
+		out for storage
+		*/
+		AbstractView::setViewModel( viewModel );
+		
+		modelChanged( oldModel, viewModel );
+		
+		
 		ControlEvent event( this, Control::CONTROL_MODELCHANGED );
 		event.oldModel = oldModel;
-		ControlModelChanged(&event);
+		ControlModelChanged(&event);		
 	}
 }
 
