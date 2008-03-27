@@ -626,10 +626,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\UndoRedoStack.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\View.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32UIShell.cpp
 # End Source File
 # Begin Source File
@@ -1219,6 +1215,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TreeModel.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\TreeModel.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\View.h
 # End Source File
 # End Group
 # Begin Group "Controls"

@@ -31,11 +31,17 @@ void AbstractView::paintView( GraphicsContext* context )
 }
 
 void AbstractView::setViewModel( Model* viewModel ){
-	if ( viewModel_ == viewModel ) {
-		return;
-	}
-
-	viewModel_ = viewModel;
+	if ( viewModel_ != viewModel ) {
+		if ( NULL != viewModel_ ) {
+			viewModel_->removeView( this );
+		}	
+		
+		viewModel_ = viewModel;
+		
+		if ( NULL != viewModel_ ) {
+			viewModel_->addView( this );
+		}	
+	}	
 }
 
 

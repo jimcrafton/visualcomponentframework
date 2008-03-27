@@ -25,11 +25,11 @@ Model::~Model()
 }
 
 void Model::addView( View* view )
-{
-	view->setViewModel( this );
+{	
 	std::vector<View*>::iterator found = std::find( views_.begin(), views_.end(), view );
-	if ( found == views_.end() ) {
+	if ( found == views_.end() ) {		
 		views_.push_back( view );
+		view->setViewModel( this );
 	}
 }
 

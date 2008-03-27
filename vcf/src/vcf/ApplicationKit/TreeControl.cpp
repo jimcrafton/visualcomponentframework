@@ -44,28 +44,7 @@ TreeControl::~TreeControl()
 
 void TreeControl::init()
 {
-
-	/*
-	CallBack* tmh =
-		new ClassProcedure1<TreeModelEvent*,TreeControl>( this,
-												&TreeControl::onTreeRootNodeChanged,
-												"TreeControl::onTreeRootNodeChanged" );
-
-
-
-	tmh = new ClassProcedure1<TreeModelEvent*,TreeControl>( this,
-													&TreeControl::onTreeNodeAdded,
-													"TreeControl::onTreeNodeAdded" );
-
-	tmh = new ClassProcedure1<TreeModelEvent*,TreeControl>( this,
-													&TreeControl::onTreeNodeDeleted,
-													"TreeControl::onTreeNodeDeleted" );
-
-	
-*/
-
 	CallBack* mh = new ClassProcedure1<ModelEvent*,TreeControl>( this, &TreeControl::onModelChanged, "TreeControl::onModelChanged" );
-
 
 	setViewModel( new DefaultTreeModel() );
 
@@ -80,15 +59,6 @@ void TreeControl::modelChanged( Model* oldModel, Model* newModel )
 {
 	TreeModel* tm = (TreeModel*)oldModel;
 	if ( NULL != tm ) {
-		//ev = (EventHandler*)getCallback( "TreeControl::onTreeRootNodeChanged" );
-		//tm->RootNodeChanged -= ev;
-
-		//EventHandler* ev = (EventHandler*)getCallback( "TreeControl::onTreeNodeAdded" );
-		//tm->NodeAdded -= ev;
-
-		//ev = (EventHandler*)getCallback( "TreeControl::onTreeNodeDeleted" );
-		//tm->NodeRemoved -= ev;
-
 		CallBack* ev = getCallback( "TreeControl::onModelChanged" );
 		tm->ModelChanged -= (ModelHandler*)ev;
 	}
@@ -96,16 +66,6 @@ void TreeControl::modelChanged( Model* oldModel, Model* newModel )
 	tm = (TreeModel*)newModel;
 
 	if ( NULL != tm ) {
-
-		//tml = (EventHandler*)getCallback( "TreeControl::onTreeRootNodeChanged" );
-		//tm->RootNodeChanged += tml;
-
-		//EventHandler* tml = (EventHandler*)getCallback( "TreeControl::onTreeNodeAdded" );
-		//tm->NodeAdded += tml;
-
-		//tml = (EventHandler*)getCallback( "TreeControl::onTreeNodeDeleted" );
-		//tm->NodeRemoved += tml;		
-
 		tm->ModelChanged += getCallback( "TreeControl::onModelChanged" );
 	}
 
