@@ -43,22 +43,23 @@ public:
 	equal to ansiStrBufferLength.
 	*/
 	virtual uint32 convertToAnsiString( const UnicodeString& str, UnicodeString::AnsiChar* ansiStrBuffer,
-										const uint32& ansiStrBufferLength ) = 0;
+										const uint32& ansiStrBufferLength,
+										const UnicodeString::LanguageEncoding& encoding ) = 0;
 
 	/**
 	Transforms a single Unicode character to an ansi character.
 	*/
-	virtual UnicodeString::AnsiChar convertToAnsiChar( const UnicodeString::UniChar& c ) = 0;
+	virtual UnicodeString::AnsiChar convertToAnsiChar( const UnicodeString::UniChar& c, const UnicodeString::LanguageEncoding& encoding ) = 0;
 
 	/**
 	Convert one unicode string into the code page type of this codec.
 	*/
-	virtual UnicodeString convertToUnicodeString( const UnicodeString& str ) = 0;
+	virtual UnicodeString convertToUnicodeString( const UnicodeString& str, const UnicodeString::LanguageEncoding& encoding ) = 0;
 
 	/**
 	Converts an ansi string to a unicode string
 	*/
-	virtual UnicodeString convertToUnicodeString( const UnicodeString::AnsiChar* str, UnicodeString::size_type stringLength ) = 0;
+	virtual UnicodeString convertToUnicodeString( const UnicodeString::AnsiChar* str, UnicodeString::size_type stringLength, const UnicodeString::LanguageEncoding& encoding ) = 0;
 
 	virtual String getName() = 0;
 
