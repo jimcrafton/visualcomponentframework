@@ -239,6 +239,7 @@
         vcf/ApplicationKit/DefaultTextModel.cpp
         vcf/ApplicationKit/DefaultTreeModel.cpp
         vcf/ApplicationKit/Dialog.cpp
+	vcf/ApplicationKit/Document.cpp
         vcf/ApplicationKit/DocumentManager.cpp
         vcf/ApplicationKit/DragSource.cpp
         vcf/ApplicationKit/DropTarget.cpp
