@@ -291,7 +291,7 @@ public:
 	UnicodeString(const AnsiChar* string, LanguageEncoding encoding=leDefault );
 	UnicodeString(const UniChar* string );
 
-	UnicodeString( size_type n, AnsiChar c );
+	UnicodeString( size_type n, AnsiChar c, LanguageEncoding encoding=leDefault );
 	UnicodeString( size_type n, UniChar c );
 
 	#ifdef VCF_OSX
@@ -313,7 +313,7 @@ public:
 	null terminator will be written out
 	@see ansi_c_str()
 	*/
-	void decode_ansi( TextCodec* codec, AnsiChar* str, size_type& strSize ) const ;
+	void decode_ansi( TextCodec* codec, AnsiChar* str, size_type& strSize, LanguageEncoding encoding=leDefault ) const ;
 
 	/**
 	Decodes the unicode data in the string and returns a new string with the
@@ -322,7 +322,7 @@ public:
 	@return UnicodeString the new string that is created as a result of
 	the decode process by the codec.
 	*/
-	UnicodeString decode( TextCodec* codec ) const ;
+	UnicodeString decode( TextCodec* codec, LanguageEncoding encoding=leDefault ) const ;
 
 	/**
 	This encodes the ansi string into unicode, according to the algorithms
@@ -332,7 +332,7 @@ public:
 	@param AnsiChar* the source ansi string buffer
 	@param size_type the number of bytes to encode from the str buffer
 	*/
-	void encode( TextCodec* codec, const AnsiChar* str, size_type n );
+	void encode( TextCodec* codec, const AnsiChar* str, size_type n, LanguageEncoding encoding=leDefault );
 
 	/**
 	This encodes the data in the unicode string into another unicode string,
@@ -342,7 +342,7 @@ public:
 	algorithm used in encoding the data stored in str.
 	@param UnicodeString the source unicode string to encode from
 	*/
-	void encode( TextCodec* codec, const UnicodeString& str );
+	void encode( TextCodec* codec, const UnicodeString& str, LanguageEncoding encoding=leDefault );
 
 	/**
 	Returns a const char* pointer. Equivalent to the c_str() method,
@@ -379,7 +379,7 @@ public:
 
 	\endcode
 	*/
-	const AnsiChar* ansi_c_str() const;
+	const AnsiChar* ansi_c_str(LanguageEncoding encoding=leDefault) const;
 
 
 

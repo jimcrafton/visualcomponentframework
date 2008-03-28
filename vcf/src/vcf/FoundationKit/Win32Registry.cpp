@@ -11,6 +11,9 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include <shlwapi.h>
 
+#pragma comment(lib,"shlwapi.lib")
+
+
 using namespace VCF;
 
 Win32Registry::Win32Registry()

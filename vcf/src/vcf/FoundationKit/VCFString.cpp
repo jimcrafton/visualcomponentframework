@@ -104,8 +104,8 @@ UnicodeString::UnicodeString(const UnicodeString::UniChar* string, UnicodeString
 {
 }
 
-UnicodeString::UnicodeString( size_type n, UnicodeString::AnsiChar c ):
-	data_( n, UnicodeString::transformAnsiCharToUnicodeChar(c) ),
+UnicodeString::UnicodeString( size_type n, UnicodeString::AnsiChar c, LanguageEncoding encoding ):
+	data_( n, UnicodeString::transformAnsiCharToUnicodeChar(c,encoding) ),
 	ansiDataBuffer_(NULL)
 {
 
@@ -425,8 +425,16 @@ UnicodeString::UniChar UnicodeString::transformAnsiCharToUnicodeChar( UnicodeStr
 {
 	UnicodeString::UniChar result = 0;
 
+	unsigned int sysEncoding = UnicodeStringGetEncoding(encoding);
+
 #ifdef VCF_WIN
-	int err = MultiByteToWideChar( CP_ACP, 0, &c, 1, (LPWSTR)&result, 1 );
+	UINT codePage = CP_ACP;
+	
+	if ( sysEncoding != (unsigned int)-1 ) {
+		codePage = sysEncoding;
+	}
+
+	int err = MultiByteToWideChar( codePage, 0, &c, 1, (LPWSTR)&result, 1 );
 
 	if ( !(err > 0) ) {
 		throw RuntimeException( L"size > 0 MultiByteToWideChar() failed" );
@@ -461,9 +469,17 @@ UnicodeString::AnsiChar UnicodeString::transformUnicodeCharToAnsiChar( UnicodeSt
 {
 	AnsiChar result;
 
+	unsigned int sysEncoding = UnicodeStringGetEncoding(encoding);
+
 #ifdef VCF_WIN
 	
-	if (  0 == ::WideCharToMultiByte( CP_ACP, 0, (LPCWSTR)&c, 1,
+	UINT codePage = CP_ACP;
+	
+	if ( sysEncoding != (unsigned int)-1 ) {
+		codePage = sysEncoding;
+	}
+
+	if (  0 == ::WideCharToMultiByte( codePage, 0, (LPCWSTR)&c, 1,
 									&result, 1, NULL, NULL ) ) {
 		result = 0;
 		throw RuntimeException( L"WideCharToMultiByte() failed" );
@@ -525,13 +541,21 @@ UnicodeString::AnsiChar* UnicodeString::transformUnicodeToAnsi( const UnicodeStr
 	int size = 0;
 
 
+	unsigned int sysEncoding = UnicodeStringGetEncoding(encoding);
+
 #ifdef VCF_WIN
+	UINT codePage = CP_ACP;
+	
+	if ( sysEncoding != (unsigned int)-1 ) {
+		codePage = sysEncoding;
+	}
+
     int strLength = str.data_.size();
 	if ( str.empty() ) {
 		strLength = 1;
 	}
 
-	size = ::WideCharToMultiByte( CP_ACP, 0, (LPCWSTR)str.data_.c_str(), strLength,
+	size = ::WideCharToMultiByte( codePage, 0, (LPCWSTR)str.data_.c_str(), strLength,
 							NULL, 0, NULL, NULL );
 
 	if ( !(size > 0) ) {
@@ -540,7 +564,7 @@ UnicodeString::AnsiChar* UnicodeString::transformUnicodeToAnsi( const UnicodeStr
 
 	result = new UnicodeString::AnsiChar[size+1];
 
-	if (  0 == ::WideCharToMultiByte( CP_ACP, 0, (LPCWSTR)str.data_.c_str(), strLength,
+	if (  0 == ::WideCharToMultiByte( codePage, 0, (LPCWSTR)str.data_.c_str(), strLength,
 									result, size, NULL, NULL ) ) {
 		//WideCharToMultiByte failed
 		delete [] result;
@@ -623,11 +647,11 @@ UnicodeString::AnsiChar* UnicodeString::transformUnicodeToAnsi( const UnicodeStr
 	return result;
 }
 
-void UnicodeString::decode_ansi( TextCodec* codec, UnicodeString::AnsiChar* str, UnicodeString::size_type& strSize ) const 
+void UnicodeString::decode_ansi( TextCodec* codec, UnicodeString::AnsiChar* str, UnicodeString::size_type& strSize, LanguageEncoding encoding ) const 
 {
 	VCF_ASSERT ( str != NULL );
 
-	uint32 size = codec->convertToAnsiString( *this, str, strSize );	
+	uint32 size = codec->convertToAnsiString( *this, str, strSize, encoding );	
 	
 	if ( size < strSize ) {
 		str[size] = 0;
@@ -636,21 +660,21 @@ void UnicodeString::decode_ansi( TextCodec* codec, UnicodeString::AnsiChar* str,
 	strSize = size;
 }
 
-UnicodeString UnicodeString::decode( TextCodec* codec ) const
+UnicodeString UnicodeString::decode( TextCodec* codec, LanguageEncoding encoding ) const
 {
-	return codec->convertToUnicodeString( *this );
+	return codec->convertToUnicodeString( *this, encoding );
 }
 
-void UnicodeString::encode( TextCodec* codec, const UnicodeString::AnsiChar* str, UnicodeString::size_type n )
+void UnicodeString::encode( TextCodec* codec, const UnicodeString::AnsiChar* str, UnicodeString::size_type n, LanguageEncoding encoding )
 {
 	VCF_ASSERT ( str != NULL );
-	*this = codec->convertToUnicodeString( str, n );
+	*this = codec->convertToUnicodeString( str, n, encoding );
 	modified();
 }
 
-void UnicodeString::encode( TextCodec* codec, const UnicodeString& str )
+void UnicodeString::encode( TextCodec* codec, const UnicodeString& str, LanguageEncoding encoding )
 {
-	*this = codec->convertToUnicodeString( str );
+	*this = codec->convertToUnicodeString( str, encoding );
 	modified();
 }
 
@@ -730,10 +754,10 @@ UnicodeString& UnicodeString::operator=(UnicodeString::AnsiChar c)
 	return *this;
 }
 
-const UnicodeString::AnsiChar* UnicodeString::ansi_c_str() const
+const UnicodeString::AnsiChar* UnicodeString::ansi_c_str(LanguageEncoding encoding) const
 {	
 	if ( NULL == ansiDataBuffer_  ) {
-		ansiDataBuffer_ = UnicodeString::transformUnicodeToAnsi( *this );
+		ansiDataBuffer_ = UnicodeString::transformUnicodeToAnsi( *this, encoding );
 	}
 
 	return ansiDataBuffer_;
