@@ -20,7 +20,7 @@ DefaultTableModel::DefaultTableModel():
 	fixedRowsCount_(0),
 	fixedColumnsCount_(0)
 {
-	init();
+	
 }
 
 DefaultTableModel::~DefaultTableModel()
@@ -35,17 +35,6 @@ DefaultTableModel::~DefaultTableModel()
 	tableData_.clear();
 }
 
-void DefaultTableModel::init()
-{
-	//selectionContainer_.initContainer( selectionMap_ );
-}
-
-/*
-Enumerator<TableCellItem*>* DefaultTableModel::getSelectedCells()
-{
-	return selectionContainer_.getEnumerator();
-}
-*/
 
 void DefaultTableModel::validate()
 {
@@ -71,12 +60,8 @@ void DefaultTableModel::empty()
 	ModelChanged( &event );
 }
 
-void DefaultTableModel::addRow()
-{
-	addRows( 1 );
-}
 
-void DefaultTableModel::insertRow( const uint32& afterRow )
+void DefaultTableModel::doInsertRow( const uint32& afterRow )
 {
 	if ( 0 == columnCount_ ){
 		columnCount_++; //gotta have at least one column !
@@ -91,15 +76,12 @@ void DefaultTableModel::insertRow( const uint32& afterRow )
 		//newRow->push_back( newItem );
 	//}
 
-	tableData_.insert( tableData_.begin() + afterRow, newRow );
-	TableModelEvent event( this, tmRowsAdded, afterRow, 1 );
-	TableRowsAdded( &event );
+	tableData_.insert( tableData_.begin() + afterRow, newRow );	
 }
 
-void DefaultTableModel::addRows( const uint32& count )
+void DefaultTableModel::doAddRows( const uint32& count )
 {
 	int start = rowCount_;
-
 
 	rowCount_ += count;
 	tableData_.resize( rowCount_, NULL );
@@ -109,57 +91,10 @@ void DefaultTableModel::addRows( const uint32& count )
 		tableData_[row] = newRow;
 
 		newRow->resize( columnCount_, VariantData::null() );
-/*
-		for ( uint32 i=0;i<columnCount_;i++){
-			TableCellItem* newItem = createCell( row, i );
-
-			newItem->setModel( this );
-
-			if ( i < fixedColumnsCount_ ) {
-				newItem->setFixed( true );
-			}
-
-			(*newRow)[i] = newItem;
-		}
-		*/
 	}
-
-	TableModelEvent event( this, tmRowsAdded, start, count );
-	TableRowsAdded( &event );
-
-	/*
-	bool notifyFirstColumnAdded = false;
-	if ( 0 == columnCount_ ){
-		columnCount_++; //gotta have at least one column !
-		notifyFirstColumnAdded = true;
-	}
-
-	for ( int j=0;j<count;j++ ) {
-
-		rowCount_ ++;
-		TTableColumn* newRow = new TTableColumn();
-		for ( uint32 i=0;i<columnCount_;i++){
-			TableCellItem* newItem = createCell( rowCount_-1, i );
-			newItem->setColumn( i );
-			newItem->setRow( rowCount_ -1 );
-			newRow->push_back( newItem );
-		}
-
-		tableData_.push_back( newRow );
-	}
-
-
-	if ( notifyFirstColumnAdded ) {
-		TableModelEvent columnEvent( this, COLUMN_ADDED, NO_ROW_CHANGED, columnCount_-1 );
-
-		TableColumnAdded( &columnEvent );
-	}
-
-
-	*/
 }
 
-void DefaultTableModel::deleteRow( const uint32& row )
+void DefaultTableModel::doRemoveRow( const uint32& row )
 {
 	TableModelEvent event( this, tmRowsDeleted, row, 1 );
 	TableRowsDeleted( &event );
@@ -167,15 +102,7 @@ void DefaultTableModel::deleteRow( const uint32& row )
 	std::vector<TTableColumn*>::iterator found = tableData_.begin() + row;
 	if ( found != tableData_.end() ){
 		TTableColumn* row = *found;
-		
-		/*std::vector<TableCellItem*>::iterator it = row->begin();
-		while ( it != row->end() ){
-			TableCellItem* item = *it;
-			delete item;
-			item = NULL;
-			it++;
-		}
-		*/
+
 		tableData_.erase( found );
 		delete row;
 		row = NULL;
@@ -185,15 +112,9 @@ void DefaultTableModel::deleteRow( const uint32& row )
 	}
 }
 
-void DefaultTableModel::addColumn()
+
+void DefaultTableModel::doAddColumns( const uint32& count )
 {
-	addColumns( 1 );
-}
-
-void DefaultTableModel::addColumns( const uint32& count )
-{
-
-
 	int startCol = columnCount_;
 	for ( int j=0;j<count;j++ ) {
 		columnCount_ ++;
@@ -202,25 +123,14 @@ void DefaultTableModel::addColumns( const uint32& count )
 		std::vector<TTableColumn*>::iterator rowIter = tableData_.begin();
 		while ( rowIter != tableData_.end() ){
 			TTableColumn* row = *rowIter;
-			//TableCellItem* newItem = createCell( i, columnCount_-1 );
-
-			//newItem->setModel( this );
-
-			//if ( columnCount_-1 < this->fixedColumnsCount_ ) {
-			//	newItem->setFixed( true );
-			//}
-
 			row->push_back( VariantData::null() );
 			rowIter++;
 			i++;
 		}
-
 	}
-	TableModelEvent event( this, tmColumnsAdded, NO_ROW_CHANGED, 0, startCol, count );
-	TableColumnsAdded( &event );
 }
 
-void DefaultTableModel::insertColumn( const uint32& afterColumn )
+void DefaultTableModel::doInsertColumn( const uint32& afterColumn )
 {
 	columnCount_ ++;
 	if ( 0 == rowCount_ ){
@@ -242,18 +152,11 @@ void DefaultTableModel::insertColumn( const uint32& afterColumn )
 			rowIter++;
 			i++;
 		}
-	}
-
-	TableModelEvent event( this, tmColumnsAdded, NO_ROW_CHANGED, 0, afterColumn, 1 );
-	TableColumnsAdded( &event );
+	}	
 }
 
-void DefaultTableModel::deleteColumn( const uint32& column )
+void DefaultTableModel::doRemoveColumn( const uint32& column )
 {
-
-	TableModelEvent event( this, tmColumnsDeleted, NO_ROW_CHANGED, 0, column, 1 );
-	TableColumnsDeleted( &event );
-
 	std::vector<TTableColumn*>::iterator rowIter = tableData_.begin();
 	while ( rowIter != tableData_.end() ){
 		TTableColumn* row = *rowIter;
@@ -291,50 +194,15 @@ VariantData DefaultTableModel::getValue( const uint32& row, const uint32& column
 	return result;
 }
 
-String DefaultTableModel::getValueAsString( const uint32& row, const uint32& column )
-{
-	String result;
 
-	TTableColumn* rows = tableData_[row];
-	const VariantData& v = (*rows)[column];
-	result = v.toString();
-
-	return result;
-}
-
-void DefaultTableModel::setValue( const uint32& row, const uint32& column, const VariantData& value )
+void DefaultTableModel::doSetValue( const uint32& row, const uint32& column, const VariantData& value )
 {
 	TTableColumn* rows = tableData_[row];
 	(*rows)[column] = value;
-
-	TableModelEvent itemEvent( this, tmCellChanged );
-	
-	itemEvent.startRow = row;
-	itemEvent.startColumn = column;
-	itemEvent.numberOfColumnsAffected = 1;
-	itemEvent.numberOfRowsAffected = 1;
-	
-	ModelChanged( &itemEvent );
 }
 
-void DefaultTableModel::setValueAsString( const uint32& row, const uint32& column, const String& value )
-{
-	TTableColumn* rows = tableData_[row];
-	VariantData v = (*rows)[column];
 
-	v.setFromString( value );
-	setValue( row, column, v );
-}
 
-uint32 DefaultTableModel::getRowCount()
-{
-	return rowCount_;
-}
-
-uint32 DefaultTableModel::getColumnCount()
-{
-	return columnCount_;
-}
 
 bool DefaultTableModel::getRowValues( const uint32& row, std::vector<VariantData>& values )
 {
@@ -366,7 +234,7 @@ void DefaultTableModel::setFixedColumnsCount( const uint32& count )
 	if ( columnCount_ < count ) {
 		addColumns( count - columnCount_ );
 	}
-
+/*
 	if ( count > fixedColumnsCount_ ) {
 		for ( int i=0;i<rowCount_;i++ ) {
 			for ( int j=fixedColumnsCount_;j<count;j++ ) {
@@ -381,6 +249,7 @@ void DefaultTableModel::setFixedColumnsCount( const uint32& count )
 			}
 		}
 	}
+*/
 
 	fixedColumnsCount_ = count ;
 }
@@ -394,10 +263,8 @@ void DefaultTableModel::setFixedRowsCount( const uint32& count )
 	if ( rowCount_ < count ) {
 		uint32 oldRowCount = rowCount_;
 		addRows( count );
-		//addRows( count - oldRowCount );
-		//addColumns( count - oldRowCount );
 	}
-
+/*
 	if ( count > fixedRowsCount_ ) {
 		for ( int i=fixedRowsCount_;i<count;i++ ) {
 			for ( int j=0;j<columnCount_;j++ ) {
@@ -412,18 +279,8 @@ void DefaultTableModel::setFixedRowsCount( const uint32& count )
 			}
 		}
 	}
-
+*/
 	fixedRowsCount_ = count ;
-}
-
-uint32 DefaultTableModel::getFixedColumnsCount()
-{
-	return fixedColumnsCount_;
-}
-
-uint32 DefaultTableModel::getFixedRowsCount()
-{
-	return fixedRowsCount_;
 }
 
 

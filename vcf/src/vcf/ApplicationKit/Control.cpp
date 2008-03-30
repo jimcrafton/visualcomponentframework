@@ -748,32 +748,7 @@ void Control::handleEvent( Event* event )
 				MouseEvent*  mouseEvent = (MouseEvent*)event;
 
 				Point tmpPt = *mouseEvent->getPoint();
-				Point origPt = *mouseEvent->getPoint();
-
-
-				bool rightBtn = mouseEvent->hasRightButton();
-				MouseUp( mouseEvent );
-				if (!mouseEvent->isConsumed() && !isDesigning()) {
-					mouseUp( mouseEvent );
-				}
-				if ( (true == rightBtn) && !isDesigning() ){
-					//(NULL != popupMenu_) && 
-					ControlPopupMenuMenuEvent e(this,Control::BEFORE_POPUP_MENU);
-					e.popupMenu = popupMenu_;
-
-					BeforePopupMenu( &e );
-
-					if ( !e.cancelPopup && (NULL != e.popupMenu) ) {
-						Point tmpPt = *mouseEvent->getPoint();
-						if ( NULL != scrollable_ ) {
-							tmpPt.x_ -= scrollable_->getHorizontalPosition();
-							tmpPt.y_ -= scrollable_->getVerticalPosition();
-						}
-
-						e.popupMenu->popup( &tmpPt );
-					}
-				}
-
+				Point origPt = *mouseEvent->getPoint();				
 
 				if ( clickPt_.closeTo( tmpPt.x_, tmpPt.y_, 2 ) ){
 
@@ -805,10 +780,34 @@ void Control::handleEvent( Event* event )
 			case MOUSE_CLICK:{
 				
 				MouseEvent*  mouseEvent = (MouseEvent*)event;
+				bool rightBtn = mouseEvent->hasRightButton();
+
 				MouseClicked( mouseEvent );
 				if (!mouseEvent->isConsumed() && !isDesigning() ) {
 					mouseClick( mouseEvent );
 				}
+
+				if ( (true == rightBtn) && !isDesigning() ){
+					//(NULL != popupMenu_) && 
+					ControlPopupMenuMenuEvent e(this,Control::BEFORE_POPUP_MENU);
+					e.popupMenu = popupMenu_;
+					Point tmpPt = *mouseEvent->getPoint();
+					if ( NULL != scrollable_ ) {
+						tmpPt.x_ -= scrollable_->getHorizontalPosition();
+						tmpPt.y_ -= scrollable_->getVerticalPosition();
+					}
+
+					e.popupPt = tmpPt;
+
+					BeforePopupMenu( &e );
+
+					if ( !e.cancelPopup && (NULL != e.popupMenu) ) {
+						
+
+						e.popupMenu->popup( &e.popupPt );
+					}
+				}
+
 			}
 			break;
 

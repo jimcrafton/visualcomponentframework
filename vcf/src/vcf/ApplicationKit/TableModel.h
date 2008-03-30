@@ -197,29 +197,81 @@ public:
 		return getRowCount() > 0 || getColumnCount() > 0;
 	}
 
-    virtual void addRow() = 0;
+    virtual void addRow() {
+		addRows( 1 );
+	}
 
-	virtual void insertRow( const uint32& afterRow ) = 0;
+	void insertRow( const uint32& afterRow ) {
+		doInsertRow( afterRow );
+		TableModelEvent event( this, tmRowsAdded, afterRow, 1 );
+		TableRowsAdded( &event );
+	}
 
-	virtual void addRows( const uint32& count ) = 0;
+	void addRows( const uint32& count ) {
+		uint32 start = getRowCount();
 
-	virtual void deleteRow( const uint32& row ) = 0;
+		doAddRows( count );
 
-    virtual void addColumn() = 0;
+		TableModelEvent event( this, tmRowsAdded, start, count );
+		TableRowsAdded( &event );
+	}
 
-	virtual void insertColumn( const uint32& afterColumn ) = 0;
+	void removeRow( const uint32& row ) {
+		TableModelEvent event( this, tmRowsDeleted, row, 1 );
+		TableRowsDeleted( &event );
 
-	virtual void addColumns( const uint32& count ) = 0;
+		doRemoveRow( row );
+	}
 
-	virtual void deleteColumn( const uint32& column ) = 0;
+    virtual void addColumn() {
+		addColumns( 1 );
+	}
+
+	void insertColumn( const uint32& afterColumn ) {
+		doInsertColumn( afterColumn );
+		TableModelEvent event( this, tmColumnsAdded, NO_ROW_CHANGED, 0, afterColumn, 1 );
+		TableColumnsAdded( &event );
+	}
+
+	void addColumns( const uint32& count ) {
+		uint32 startCol = getColumnCount();
+		doAddColumns( count );
+		TableModelEvent event( this, tmColumnsAdded, NO_ROW_CHANGED, 0, startCol, count );
+		TableColumnsAdded( &event );
+	}
+
+	void removeColumn( const uint32& column ) {
+		TableModelEvent event( this, tmColumnsDeleted, NO_ROW_CHANGED, 0, column, 1 );
+		TableColumnsDeleted( &event );
+
+		doRemoveColumn( column );
+	}
 
 	virtual bool isCellEditable( const uint32& row, const uint32& column ) = 0;
 
 	virtual VariantData getValue( const uint32& row, const uint32& column ) = 0;
-	virtual String getValueAsString( const uint32& row, const uint32& column ) = 0;
 
-	virtual void setValue( const uint32& row, const uint32& column, const VariantData& value ) = 0;
-	virtual void setValueAsString( const uint32& row, const uint32& column, const String& value ) = 0;
+	virtual String getValueAsString( const uint32& row, const uint32& column ) {
+		return getValue(row,column).toString();
+	}
+
+	void setValue( const uint32& row, const uint32& column, const VariantData& value ) {
+		doSetValue( row, column, value );
+		TableModelEvent event( this, tmCellChanged );	
+
+		event.startRow = row;
+		event.startColumn = column;
+		event.numberOfColumnsAffected = 1;
+		event.numberOfRowsAffected = 1;
+		
+		ModelChanged( &event );
+	}
+	
+	virtual void setValueAsString( const uint32& row, const uint32& column, const String& value ) {
+		VariantData v;
+		v.setFromString(value);
+		setValue(row,column,v);
+	}
 
 	virtual uint32 getRowCount() = 0;
 
@@ -236,6 +288,20 @@ public:
 
 	virtual uint32 getFixedRowsCount() = 0;
 
+protected:
+	virtual void doInsertRow( const uint32& afterRow ) = 0;
+
+	virtual void doAddRows( const uint32& count ) = 0;
+
+	virtual void doRemoveRow( const uint32& row ) = 0;    
+
+	virtual void doInsertColumn( const uint32& afterColumn ) = 0;
+
+	virtual void doAddColumns( const uint32& count ) = 0;
+
+	virtual void doRemoveColumn( const uint32& column ) = 0;
+
+	virtual void doSetValue( const uint32& row, const uint32& column, const VariantData& value ) = 0;
 };
 
 };

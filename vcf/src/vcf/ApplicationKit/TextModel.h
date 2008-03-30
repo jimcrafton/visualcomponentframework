@@ -61,6 +61,14 @@ public:
 		changeText = changedText;
 	}
 
+	TextEvent( Object * source, uint32 type, uint32 changeStart, uint32 changeLength ):
+		ModelEvent(source, type),
+		selectionStart(-1),
+		selectionLength(0),
+		changeStart(changeStart),
+		changeLength(changeLength){
+	}
+
 	TextEvent( Object * source, uint32 type, const String& replacedText, 
 				const String& changedText, uint32 replaceStart, uint32 replaceLength ):
 		ModelEvent(source, type),
@@ -188,7 +196,11 @@ public:
 	*sets the contents of the text model, completely changes what was previously
 	*in the model
 	*/
-	virtual void setText( const String& text ) = 0;
+	void setText( const String& text ) {
+		doSetText( text );
+		TextEvent event( this, TextModel::tmTextSet, 0, text.size() );
+		ModelChanged( &event );
+	}
 
 	/**
 	*inserts text into the model at the given index
@@ -196,14 +208,22 @@ public:
 	*a zero based index.
 	*@param String the text to insert
 	*/
-	virtual void insertText( const uint32& index, const String& text ) = 0;
+	void insertText( const uint32& index, const String& text ) {
+		doInsertText( index, text );
+		TextEvent event( this, TextModel::tmTextInserted, index, text.size() );
+		ModelChanged( &event );
+	}
 
 	/**
 	*replace text into the model in place of the selected text is any,
 	*or at the current position otherwise
 	*@param String the text to replace with
 	*/
-	virtual void replaceText( const uint32& index, const uint32& count, const String& text ) = 0;
+	void replaceText( const uint32& index, const uint32& count, const String& text ) {
+		doReplaceText( index, count, text );
+		TextEvent event( this, TextModel::tmTextReplaced, index, count );
+		ModelChanged( &event );
+	}
 
 	/**
 	*deletes text from the model, starting at index, and continuing for count characters,
@@ -211,7 +231,11 @@ public:
 	*@param uint32 the starting point. The index is zero based.
 	*@param uint32 the number of characters to delete
 	*/
-	virtual void deleteText( const uint32& index, const uint32& count ) = 0;
+	void removeText( const uint32& index, const uint32& count ) {
+		doRemoveText( index, count );
+		TextEvent event( this, TextModel::tmTextRemoved, index, count );
+		ModelChanged( &event );
+	}
 	
 	/**
 	*returns all of the TextModel's text in a string.
@@ -246,6 +270,15 @@ public:
 	virtual void setValueAsString( const String& value, const VariantData& key=VariantData::null() ) {
 		setText( value );
 	}
+
+protected:
+	virtual void doSetText( const String& text ) = 0;
+
+	virtual void doInsertText( const uint32& index, const String& text ) = 0;
+
+	virtual void doReplaceText( const uint32& index, const uint32& count, const String& text ) = 0;
+
+	virtual void doRemoveText( const uint32& index, const uint32& count ) = 0;
 };
 
 

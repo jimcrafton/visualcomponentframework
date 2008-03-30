@@ -418,6 +418,14 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DataTypeNotSupportedException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultMenuItem.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultMenuItem.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultPropertyEditors.cpp
 # End Source File
 # Begin Source File
@@ -1075,14 +1083,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultListModel.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultListModel.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultMenuItem.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultMenuItem.h
 # End Source File
 # Begin Source File
 

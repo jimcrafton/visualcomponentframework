@@ -45,9 +45,11 @@ public:
 
 	virtual Win32Object::CreateParams createParams();
 
-	virtual Rect getItemImageRect( TreeItem* item );
+	virtual Rect getItemImageRect( const TreeModel::Key& itemKey );
 
-	virtual Rect getItemRect( TreeItem* item );
+	virtual Rect getItemRect( const TreeModel::Key& itemKey );
+
+	virtual TreeModel::Key hitTest( const Point& pt );
 
 	virtual bool getAllowLabelEditing();
 

@@ -131,6 +131,7 @@ public:
 		
 	}
 
+	Point popupPt;
 	PopupMenu* popupMenu;
 	bool cancelPopup;
 

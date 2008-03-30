@@ -66,7 +66,7 @@ public:
 	virtual TreeItem* getItemParent( TreeItem* item ) = 0;
 	virtual void setItemParent( TreeItem* item, TreeItem* parent ) = 0;
 
-	virtual Rect getItemRect( TreeItem* item ) = 0;
+	virtual Rect getItemRect( const TreeModel::Key& key ) = 0;
 
 	virtual void addChildItem( TreeItem* item, TreeItem* child ) = 0;
 	virtual void removeChildItem( TreeItem* item, TreeItem* child ) = 0;

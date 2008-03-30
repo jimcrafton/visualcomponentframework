@@ -14,6 +14,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/DefaultTextModel.h"
 #include "vcf/ApplicationKit/TextPeer.h"
 #include "vcf/FoundationKit/Dictionary.h"
+#include "vcf/ApplicationKit/ThemeBorder.h"
 
 using namespace VCF;
 
@@ -61,7 +62,7 @@ void TextControl::init()
 	keepReturnCharacter_ = false;
 	setCursorID( Cursor::SCT_TEXT );
 
-	setBorder( new Basic3DBorder(true) );
+	setBorder( new ThemeBorder(this,etTextbox) );
 
 	/**
 	create default accelerators for handling the 
@@ -368,7 +369,7 @@ void TextControl::handleEvent( Event* event )
 			HACK ALERT!
 			this is the braindead way - needs to be reworked in the future
 
-			for the future we need to be able to insertText and deleteText from the
+			for the future we need to be able to insertText and removeText from the
 			model according to the characters pressed. At first glance this is that
 			big of a deal: determine if we have a selection, delete the selected
 			text, and then insert the appropriate character. The problem comes in
@@ -418,7 +419,7 @@ void TextControl::handleEvent( Event* event )
 								//											text % text[pos] % text[pos] % pos );
 
 								if ( 0 != length ) {
-									model->deleteText( pos, length );
+									model->removeText( pos, length );
 								}
 
 								//text = model->getText();
@@ -464,7 +465,7 @@ void TextControl::handleEvent( Event* event )
 
 
 							if ( 0 != length ) {
-								model->deleteText( pos, length );
+								model->removeText( pos, length );
 							}
 
 
@@ -531,7 +532,7 @@ void TextControl::handleEvent( Event* event )
 
 									uint32 length = textPeer_->getSelectionCount();
 									if ( length > 0 ) {
-										model->deleteText( pos, length );
+										model->removeText( pos, length );
 									}
 
 
@@ -550,7 +551,7 @@ void TextControl::handleEvent( Event* event )
 
 									uint32 length = textPeer_->getSelectionCount();
 									if ( length > 0 ) {
-										model->deleteText( pos, length );
+										model->removeText( pos, length );
 									}
 
 									//StringUtils::trace( Format( "adding [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
@@ -623,7 +624,7 @@ void TextControl::handleEvent( Event* event )
 
 									uint32 length = textPeer_->getSelectionCount();
 									if ( length > 0 ) {
-										model->deleteText( pos, length );
+										model->removeText( pos, length );
 									}
 
 

@@ -1352,6 +1352,11 @@ void GraphicsContext::drawThemeEdge( Rect* rect, DrawUIState& state, const int32
 	contextPeer_->drawThemeEdge( rect, state, edgeSides, edgeStyle );
 }
 
+void GraphicsContext::drawThemeBorder( Rect* rect, DrawUIState& state )
+{
+	contextPeer_->drawThemeBorder( rect, state );
+}
+
 void GraphicsContext::drawThemeSizeGripper( Rect* rect, DrawUIState& state )
 {
 	contextPeer_->drawThemeSizeGripper( rect, state );

@@ -185,7 +185,32 @@ public:
 	};	
 };
 
+enum UIElementType {
+	etControl = 0,
+	etButton,
+	etDisclosureButton,
+	etRadioButton,
+	etCheckbox,
+	etCombobox,
+	etMenuItem,
+	etMenuBar,
+	etWindow,
+	etScrollbar,
+	etScrollbarThumb,
+	etScrollbarButton,
+	etTextbox,
+	etToolbar,
+	etToolbarButton,
+	etTab,
+	etTabPage,
+	etProgress,
+	etSlider,
+	etSliderThumb,
+	etListView,
+	etTreeView,
+	etHeader,
 
+};
 
 enum BackgroundColors {
 	bgShadow = 0,
@@ -232,7 +257,7 @@ like the text or caption of the control.
 */
 class DrawUIState {
 public:
-	DrawUIState(): state_(0){}
+	DrawUIState(): state_(0),type_(etControl){}
 	
 	virtual ~DrawUIState(){}
 
@@ -289,9 +314,16 @@ public:
 	}
 	
 	
-	
+	UIElementType getType() const {
+		return type_;
+	}
+
+	void setType( UIElementType val ) {
+		type_ = val;
+	}
 protected:
 	int32 state_;
+	UIElementType type_;
 };
 
 
@@ -326,7 +358,7 @@ protected:
 	};
 
 public:
-	MenuState() : DrawUIState(), keyCode_(vkUndefined), modifierMask_(0){}
+	MenuState() : DrawUIState(), keyCode_(vkUndefined), modifierMask_(0){ type_ = etMenuItem; }
 
 	bool isSelected() const {
 		return (state_ & DrawStates::dsSelected) ? true : false;
@@ -564,7 +596,7 @@ public:
 */
 class ProgressState : public DrawUIState {
 public:
-	ProgressState():min_(0.0),max_(100.0),position_(0.0){};
+	ProgressState():min_(0.0),max_(100.0),position_(0.0){ type_ = etProgress;};
 	
 	bool isVertical() const {
 		return (state_ & DrawStates::dsVertical) ? true : false;
@@ -621,7 +653,7 @@ public:
 */
 class SliderState : public DrawUIState {
 public:
-	SliderState():min_(0.0),max_(100.0),position_(0.0),tickMarkFrequency_(10.0){};
+	SliderState():min_(0.0),max_(100.0),position_(0.0),tickMarkFrequency_(10.0){type_ = etSlider;};
 
 	bool isVertical() const {
 		return (state_ & DrawStates::dsVertical) ? true : false;
@@ -692,7 +724,9 @@ public:
 */
 class ScrollBarState : public DrawUIState {
 public:
-	ScrollBarState(): min_(0.0), max_(0.0), position_(0.0), viewSize_(0.0), buttonType_(sbNone){};
+	ScrollBarState(): min_(0.0), max_(0.0), position_(0.0), viewSize_(0.0), buttonType_(sbNone){
+		type_ = etScrollbar;
+	}
 
 	enum ScrollButtonType {
 		sbNone = 0,
@@ -790,6 +824,11 @@ public:
 */
 class TabState : public DrawUIState {
 public:
+
+	TabState() {
+		type_ = etTab;
+	}
+
 	bool isPressed() const {
 		return (state_ & DrawStates::dsPressed) ? true : false;
 	}
@@ -862,7 +901,7 @@ public:
 */
 class TextState : public DrawUIState {
 public:
-	TextState(): DrawUIState(), themeFontType_(0),wrapText_(false){}
+	TextState(): DrawUIState(), themeFontType_(0),wrapText_(false){type_ = etTextbox;}
 	
 	bool isSelected() const {
 		return (state_ & DrawStates::dsSelected) ? true : false;

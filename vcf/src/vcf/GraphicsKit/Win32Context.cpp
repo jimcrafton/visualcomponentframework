@@ -4289,6 +4289,50 @@ void Win32Context::drawThemeEdge( Rect* rect, DrawUIState& state, const int32& e
 	releaseHandle();
 }
 
+void Win32Context::drawThemeBorder( Rect* rect, DrawUIState& state )
+{
+	checkHandle();
+
+	RECT r = {0,0,0,0};
+	r.left = (int32)rect->left_;
+	r.top = (int32)rect->top_;
+	r.right = (int32)rect->right_;
+	r.bottom = (int32)rect->bottom_;
+
+	HTHEME theme = NULL;
+
+	switch ( state.getType() ) {
+		case etTextbox : {
+			if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+				theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"Edit" );
+			}
+			
+			if ( theme ) {
+				int part = EP_EDITTEXT;
+				int partState = 0;
+				
+				if ( state.isEnabled() ) {
+					partState = ETS_NORMAL;
+				}
+				else {
+					partState = ETS_DISABLED;
+				}
+
+
+				Win32VisualStylesWrapper::DrawThemeBackground(theme, dc_, part, partState, &r, 0);
+				Win32VisualStylesWrapper::CloseThemeData( theme );
+			}
+			else {
+				
+			}
+		}
+		break;
+	}
+
+	
+	releaseHandle();
+}
+
 /**
 Draws a size gripper for resizing a control/window that is compliant
 with the native windowing systems default look and feel

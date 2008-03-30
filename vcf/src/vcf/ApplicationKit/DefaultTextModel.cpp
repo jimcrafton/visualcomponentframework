@@ -28,7 +28,7 @@ bool DefaultTextModel::isEmpty()
 	return text_.empty();
 }
 
-void DefaultTextModel::setText( const String& text )
+void DefaultTextModel::doSetText( const String& text )
 {
 	if ( text == text_ ) {
 		//do nothing  - there's no reason to change the text 
@@ -37,10 +37,6 @@ void DefaultTextModel::setText( const String& text )
 	}
 
 	text_ = text;
-
-	TextEvent event( this, TextModel::tmTextSet, text, 0, text.size() );
-
-	ModelChanged( &event );
 }
 
 void DefaultTextModel::empty()
@@ -50,16 +46,12 @@ void DefaultTextModel::empty()
 	Model::empty();
 }
 
-void DefaultTextModel::insertText( const uint32& index, const String& text )
+void DefaultTextModel::doInsertText( const uint32& index, const String& text )
 {
-	text_.insert( index, text );
-
-	TextEvent event( this, TextModel::tmTextInserted, text, index, text.size() );
-
-	ModelChanged( &event );
+	text_.insert( index, text );	
 }
 
-void DefaultTextModel::replaceText( const uint32& index, const uint32& count, const String& text )
+void DefaultTextModel::doReplaceText( const uint32& index, const uint32& count, const String& text )
 {
 	VCF_ASSERT( count > 0 );
 	VCF_ASSERT( (index+count) <= text_.size() );
@@ -73,24 +65,16 @@ void DefaultTextModel::replaceText( const uint32& index, const uint32& count, co
 	text_.erase( index, count );
 
 	//insert new text
-	text_.insert( index, text );
-
-	TextEvent event( this, TextModel::tmTextReplaced, removedText, text, 
-							index, count );
-	ModelChanged( &event );
+	text_.insert( index, text );	
 }
 
-void DefaultTextModel::deleteText( const uint32& index, const uint32& count )
+void DefaultTextModel::doRemoveText( const uint32& index, const uint32& count )
 {
-	String changeText = text_.substr( index, count );
+	//String changeText = text_.substr( index, count );
 
 	// this relies on STL to be smart enough to delete only
 	// the count character that are part of the string
-	text_.erase( index, count );
-
-	TextEvent event( this, TextModel::tmTextRemoved, changeText, index, count );
-
-	ModelChanged( &event );
+	text_.erase( index, count );	
 }
 
 
