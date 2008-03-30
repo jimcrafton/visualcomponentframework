@@ -85,14 +85,13 @@ public:
 
 	virtual void paint( GraphicsContext * context );
 
-	void init();
-
-	TreeItem* findItem( Point* pt );
+	void init();	
 
 	virtual TreeItem* getItemParent( TreeItem* item );
 	virtual void setItemParent( TreeItem* item, TreeItem* parent );
-
-	virtual Rect getItemRect( TreeItem* item );
+	
+	virtual Rect getItemRect( const TreeModel::Key& item );
+	
 
 	virtual void addChildItem( TreeItem* item, TreeItem* child );
 	virtual void removeChildItem( TreeItem* item, TreeItem* child );
@@ -118,10 +117,10 @@ public:
 	void removeItem( TreeItem* item );
 
 	TreeItem* getSelectedItem();
-
-	Rect getItemImageRect( TreeItem* item );
-
 	
+	Rect getItemImageRect( const TreeModel::Key& item );
+
+	TreeModel::Key hitTest( const Point& pt );
 
 	bool getAllowLabelEditing();
 
@@ -130,8 +129,7 @@ public:
 	virtual uint64 sizeOf() const;
 
 	bool itemExists( const TreeModel::Key& key );
-protected:
-	TreeItem* hitTestForItem( Point* pt, TreeItem* item );
+protected:	
 
 	void onTreeItemPaint( ItemEvent* event );	
 

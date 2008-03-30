@@ -446,7 +446,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			result = true;
 		}
 		break;
-
+		
 		case WM_LBUTTONDOWN : {
 
 
@@ -486,8 +486,9 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		}
 		break;
 
+/*		
 		case WM_LBUTTONDBLCLK: case WM_MBUTTONDBLCLK: case WM_RBUTTONDBLCLK:{
-			//result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 
 			
 			Win32MSG msg( hwnd_, message, wParam, lParam, peerControl_ );
@@ -502,10 +503,11 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			
 
 			//DO NOT, REPEAT: DO NOT allow the DefaultWndProc to get called!
-			wndProcResult = 1;
-			result = true;
+			//wndProcResult = 1;
+			//result = true;
 		}
 		break;
+		*/
 
 
 		case TVN_BEGINDRAGW:{
@@ -974,21 +976,38 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 		}
 		break;
-/*
-JC
-Do we need these? What advantage does processing these events have for us???
+		
 		case NM_RCLICK :{
 			POINT pt = {0,0};
 			GetCursorPos( &pt );
 			ScreenToClient( hwnd_, &pt );
 			Point tmpPt( pt.x, pt.y );
+
+			uint32 keyMask = kmUndefined;
+			if ( (::GetKeyState(VK_CONTROL) & 0x8000) != 0 ) {
+				keyMask |= kmCtrl;
+			}
+
+			if ( (::GetKeyState(VK_SHIFT) & 0x8000) != 0 ) {
+				keyMask |= kmShift;
+			}
+
+			if ( (::GetKeyState(VK_MENU) & 0x8000) != 0 ) {
+				keyMask |= kmAlt;
+			}
+
 			VCF::MouseEvent event( getControl(), Control::MOUSE_CLICK,
-						mbmRightButton, kmUndefined, &tmpPt );
+						mbmRightButton, keyMask, &tmpPt );
 			if ( peerControl_ ) {
 					peerControl_->handleEvent( &event );
 			}
 		}
 		break;
+
+/*
+JC
+Do we need these? What advantage does processing these events have for us???
+		
 
 		case NM_CLICK :{
 			POINT pt = {0,0};
@@ -1188,7 +1207,7 @@ void Win32Tree::onImageListImageChanged( ImageListEvent* event )
 	*/
 }
 
-Rect Win32Tree::getItemImageRect( TreeItem* item )
+Rect Win32Tree::getItemImageRect( const TreeModel::Key& itemKey )
 {
 	Rect result;
 
@@ -1196,23 +1215,45 @@ Rect Win32Tree::getItemImageRect( TreeItem* item )
 	return result;
 }
 
-Rect Win32Tree::getItemRect( TreeItem* item )
+Rect Win32Tree::getItemRect( const TreeModel::Key& itemKey )
 {
 	Rect result;
 	
-	if ( NULL != item ){
-		std::map<TreeModel::Key,HTREEITEM>::iterator it = treeItems_.find( item->getKey() );
-		if ( it != treeItems_.end() ){
-			if ( item->isSelected() ) {
-				RECT r;
-				memset(&r,0,sizeof(r));
-				TreeView_GetItemRect( hwnd_, it->second, &r, TRUE );				
+	std::map<TreeModel::Key,HTREEITEM>::iterator it = treeItems_.find( itemKey );
+	if ( it != treeItems_.end() ){
+		
+			RECT r;
+			memset(&r,0,sizeof(r));
+			TreeView_GetItemRect( hwnd_, it->second, &r, TRUE );				
 
-				result.left_ = r.left;
-				result.top_ = r.top;
-				result.right_ = r.right;
-				result.bottom_ = r.bottom;
-			}
+			result.left_ = r.left;
+			result.top_ = r.top;
+			result.right_ = r.right;
+			result.bottom_ = r.bottom;
+		
+	}	
+
+	return result;
+}
+
+TreeModel::Key Win32Tree::hitTest( const Point& pt )
+{
+	TreeModel::Key result = TreeModel::InvalidKey;
+
+	TVHITTESTINFO hitTestInfo;
+	memset( &hitTestInfo, 0, sizeof(TVHITTESTINFO) );
+	
+	hitTestInfo.pt.x = pt.x_;
+	hitTestInfo.pt.y = pt.y_;
+
+	HTREEITEM hItem = TreeView_HitTest( hwnd_, &hitTestInfo );
+	if ( NULL != hItem ) {
+		TVITEM tvItem;
+		memset( &tvItem, 0, sizeof(TVITEM) );
+		tvItem.mask = TVIF_PARAM | TVIF_HANDLE ;
+		tvItem.hItem = hItem;
+		if ( TreeView_GetItem( hwnd_, &tvItem ) ) {
+			result = (TreeModel::Key)tvItem.lParam;
 		}
 	}
 
@@ -1315,20 +1356,22 @@ void Win32Tree::onControlModelChanged( Event* e )
 													&Win32Tree::onTreeModelChanged,
 													"Win32Tree::onTreeModelChanged" );
 	}
-	treeControl_->getTreeModel()->ModelChanged += ev;
-
 
 	treeItems_.clear();			
 	TreeView_DeleteAllItems( hwnd_ );
-	
-	TreeModel* tm = treeControl_->getTreeModel();	
-	
-	std::vector<TreeModel::Key> children;
-	tm->getChildren(TreeModel::RootKey,children);
-	std::vector<TreeModel::Key>::iterator it = children.begin();
-	while ( it != children.end() ) {
-		addTreeItem( *it, NULL );
-		++it;
+
+	Model* model = treeControl_->getViewModel();
+	if ( NULL != model ) {
+		model->ModelChanged += ev;
+		TreeModel* tm = treeControl_->getTreeModel();	
+		
+		std::vector<TreeModel::Key> children;
+		tm->getChildren(TreeModel::RootKey,children);
+		std::vector<TreeModel::Key>::iterator it = children.begin();
+		while ( it != children.end() ) {
+			addTreeItem( *it, NULL );
+			++it;
+		}
 	}
 }
 

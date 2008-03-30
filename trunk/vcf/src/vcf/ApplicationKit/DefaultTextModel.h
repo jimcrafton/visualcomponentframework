@@ -38,15 +38,7 @@ public:
 
 	virtual bool isEmpty();
 
-    virtual void empty();
-
-	virtual void setText( const String& text );
-
-    virtual void insertText( const uint32& index, const String& text );
-	
-    virtual void replaceText( const uint32& index, const uint32& len, const String& text );
-
-    virtual void deleteText( const uint32& index, const uint32& count );
+    virtual void empty();	
 
 	virtual String getText();
 
@@ -56,6 +48,14 @@ public:
 
 protected:
 	String text_;
+
+	virtual void doSetText( const String& text );
+
+    virtual void doInsertText( const uint32& index, const String& text );
+	
+    virtual void doReplaceText( const uint32& index, const uint32& len, const String& text );
+
+    virtual void doRemoveText( const uint32& index, const uint32& count );
 };
 
 };

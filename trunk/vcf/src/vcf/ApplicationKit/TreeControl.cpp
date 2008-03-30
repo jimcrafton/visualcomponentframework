@@ -151,43 +151,6 @@ void TreeControl::onModelChanged( ModelEvent* event )
 	}
 }
 
-TreeItem* TreeControl::hitTestForItem( Point* pt, TreeItem* item )
-{
-	TreeItem* result = NULL;
-	if ( item->containsPoint( pt ) ) {
-		result = item;
-	}
-	else if ( !item->isLeaf() && item->isExpanded() ){
-	/*
-		Enumerator<TreeItem*>* children = item->getChildren();
-		while ( children->hasMoreElements() ) {
-			TreeItem* childItem = children->nextElement();
-			result = hitTestForItem( pt, childItem );
-			if ( result != NULL ) {
-				break;
-			}
-		}
-		*/
-	}
-
-	return result;
-}
-
-TreeItem* TreeControl::findItem( Point* pt )
-{
-	TreeItem* result = NULL;
-/*////MVC
-	Enumerator<TreeItem*>* rootItems = treeModel_->getRootItems();
-	while ( true == rootItems->hasMoreElements() ) {
-		TreeItem* item = rootItems->nextElement();
-		result = hitTestForItem( pt, item );
-		if ( NULL != result ) {
-			break;
-		}
-	}
-*/
-	return result;
-}
 
 double TreeControl::getItemIndent()
 {
@@ -334,9 +297,14 @@ TreeItem* TreeControl::getSelectedItem()
 	return currentSelectedItem_;
 }
 
-Rect TreeControl::getItemImageRect( TreeItem* item )
+Rect TreeControl::getItemImageRect( const TreeModel::Key& item )
 {
 	return treePeer_->getItemImageRect( item );
+}
+
+TreeModel::Key TreeControl::hitTest( const Point& pt )
+{
+	return treePeer_->hitTest( pt );
 }
 
 void TreeControl::handleEvent( Event* event )
@@ -385,7 +353,7 @@ void TreeControl::setAllowLabelEditing( const bool& allowLabelEditing )
 	treePeer_->setAllowLabelEditing( allowLabelEditing );
 }
 
-Rect TreeControl::getItemRect( TreeItem* item )
+Rect TreeControl::getItemRect( const TreeModel::Key& item )
 {
 	return treePeer_->getItemRect( item );
 }

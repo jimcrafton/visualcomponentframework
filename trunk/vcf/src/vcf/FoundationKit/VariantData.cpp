@@ -142,7 +142,8 @@ String VariantData::toString() const
 		case pdObject:{
 			Object* object = *this;
 			if ( NULL != object ){
-				//result += object->toString();
+				result += object->toString();
+				/*
 				Persistable* persist = dynamic_cast<Persistable*>(object);
 				if ( NULL != persist ){
 					TextOutputStream tos;
@@ -154,6 +155,7 @@ String VariantData::toString() const
 				else {
 					result += object->toString();
 				}
+				*/
 			}
 			else{
 				result += "null";

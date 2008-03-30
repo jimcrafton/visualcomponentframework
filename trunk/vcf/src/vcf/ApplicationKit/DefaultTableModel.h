@@ -61,75 +61,56 @@ public:
      * clears out the model's data
      */
     virtual void empty();
-
-	virtual void addRow();
-
-	virtual void insertRow( const uint32& afterRow );
-
-	virtual void addRows( const uint32& count );
-
-	virtual void deleteRow( const uint32& row );
-
-    virtual void addColumn();
-
-	virtual void insertColumn( const uint32& afterColumn );
-
-	virtual void addColumns( const uint32& count );
-
-	virtual void deleteColumn( const uint32& column );
-
+	
 	virtual bool isCellEditable( const uint32& row, const uint32& column );
 
 	virtual VariantData getValue( const uint32& row, const uint32& column );
-	virtual String getValueAsString( const uint32& row, const uint32& column );
 
-	virtual void setValue( const uint32& row, const uint32& column, const VariantData& value );
-	virtual void setValueAsString( const uint32& row, const uint32& column, const String& value );
+	virtual uint32 getRowCount() {
+		return rowCount_;
+	}
 
-	virtual uint32 getRowCount();
-
-	virtual uint32 getColumnCount();
+	virtual uint32 getColumnCount() {
+		return columnCount_;
+	}
 
 	virtual bool getRowValues( const uint32& row, std::vector<VariantData>& values );
 	virtual bool getColumnValues( const uint32& col, std::vector<VariantData>& values );
-
-	/*
-	virtual TableCellItem* createCell( const uint32& row, const uint32& column );
-
-	virtual TableCellItem* setSelectedCell( const bool& val, const uint32& row, const uint32& column );
-
-	virtual void setSelectedRange( const bool& val, const uint32& startRow, const uint32& startColumn,
-									const uint32& endRow, const uint32& endColumn );
-
-	virtual void setFocusedCell( const uint32& row, const uint32& column );
-
-	virtual TableCellItem* getFocusedCell() {
-		return focusedCell_;
-	}
-	*/
 
 	virtual void setFixedColumnsCount( const uint32& count );
 
 	virtual void setFixedRowsCount( const uint32& count );
 
-	virtual uint32 getFixedColumnsCount();
+	virtual uint32 getFixedColumnsCount() {
+		return fixedColumnsCount_;
+	}
 
-	virtual uint32 getFixedRowsCount();
+	virtual uint32 getFixedRowsCount() {
+		return fixedRowsCount_;
+	}
+	
+protected:	
 
-	/*
-	virtual void clearSelection();
+	virtual void doInsertRow( const uint32& afterRow );
 
-	virtual Enumerator<TableCellItem*>* getSelectedCells();
+	virtual void doAddRows( const uint32& count );
 
-	virtual CellID getCellIDForItem( TableCellItem* item );
-	*/
-protected:
+	virtual void doRemoveRow( const uint32& row );
+
+	virtual void doInsertColumn( const uint32& afterColumn );
+
+	virtual void doAddColumns( const uint32& count );
+
+	virtual void doRemoveColumn( const uint32& column );
+
+	virtual void doSetValue( const uint32& row, const uint32& column, const VariantData& value );
+
+
 	/**
 	*defines the a vector of TableCellItem's, or one row of data columnCount_ int32
 	*/
 	typedef std::vector<VariantData> TTableColumn;
 private:
-	void init();
 	uint32 rowCount_;
 	uint32 columnCount_;
 

@@ -2221,7 +2221,7 @@ void TreeListControl::setItemParent( TreeItem* item, TreeItem* parent )
 	getTreeModel()->move( item->getKey(), parent->getKey() );
 }
 
-Rect TreeListControl::getItemRect( TreeItem* item )
+Rect TreeListControl::getItemRect( const TreeModel::Key& item )
 {
 	Rect result;
 

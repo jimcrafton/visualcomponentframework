@@ -100,6 +100,17 @@ public:
 
 	}
 
+
+	void onPopup( Event* e ) {
+		TreeControl* treeCtrl = (TreeControl*)this->getMainWindow()->findComponent( "treeCtrl", true );
+
+		ControlPopupMenuMenuEvent* cpe = (ControlPopupMenuMenuEvent*)e;
+		TreeModel::Key k = treeCtrl->hitTest( cpe->popupPt );
+		String s = treeCtrl->getTreeModel()->getAsString(k);
+
+		Rect r = treeCtrl->getItemRect(k);
+	}
+
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
 		
@@ -112,6 +123,8 @@ public:
 
 		TreeControl* treeCtrl = (TreeControl*)mainWindow->findComponent( "treeCtrl", true );
 
+		treeCtrl->BeforePopupMenu +=
+			new ClassProcedure1<Event*,TreesApplication>(this,&TreesApplication::onPopup,"TreesApplication::onPopup");
 
 		TreeModel* tm = treeCtrl->getTreeModel();
 		TreeModel::Key k1 = tm->insert( "testA" );

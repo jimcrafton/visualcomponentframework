@@ -1644,15 +1644,40 @@ public:
 			break;
 
 			case mtHeaderHeight : {
-				Point pt;
-				if ( NULL != alternateFont ) {
-					pt = DLUToPixel( Point(0,10), *alternateFont );
+				HTHEME theme = NULL;
+				if ( Win32VisualStylesWrapper::IsThemeActive() ) {
+					theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"Header" );
+				}
+				
+				if ( theme ) {
+					HDC dc = GetDC( ::GetDesktopWindow() );
+					SIZE sz;
+					RECT r;
+					memset(&r,0,sizeof(r));
+					
+					Win32VisualStylesWrapper::GetThemePartSize(theme, dc, HP_HEADERITEM, HIS_NORMAL, 
+																&r, TS_TRUE, &sz);
+
+					MARGINS m = {0};
+					Win32VisualStylesWrapper::GetThemeMargins( theme, dc, HP_HEADERITEM, 0, TMT_CONTENTMARGINS, NULL, &m );
+
+					Win32VisualStylesWrapper::CloseThemeData( theme );
+					ReleaseDC(::GetDesktopWindow(),dc);
+
+					sz.cy += m.cyTopHeight + m.cyBottomHeight;
+					result = sz.cy;
 				}
 				else {
-					VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
-					pt = DLUToPixel( Point(0,10), f );
+					Point pt;
+					if ( NULL != alternateFont ) {
+						pt = DLUToPixel( Point(0,10), *alternateFont );
+					}
+					else {
+						VCF::Font f = getDefaultFontFor( UIMetricsManager::ftControlFont );
+						pt = DLUToPixel( Point(0,10), f );
+					}
+					result = pt.y_;
 				}
-				result = pt.y_;
 			}
 			break;
 

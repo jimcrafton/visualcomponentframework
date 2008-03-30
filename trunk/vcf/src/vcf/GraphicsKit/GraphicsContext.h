@@ -826,6 +826,8 @@ public:
 	*/
 	void drawThemeEdge( Rect* rect, DrawUIState& state, const int32& edgeSides, const int32& edgeStyle );
 
+	void drawThemeBorder( Rect* rect, DrawUIState& state );
+
 	/**
 	Draws a size gripper for resizing a control/window that is compliant
 	with the native windowing systems default look and feel

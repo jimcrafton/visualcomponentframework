@@ -299,6 +299,8 @@ public:
 
 	virtual void drawThemeEdge( Rect* rect, DrawUIState& state, const int32& edgeSides, const int32& edgeStyle );
 
+	virtual void drawThemeBorder( Rect* rect, DrawUIState& state );
+
 	virtual void drawThemeSizeGripper( Rect* rect, DrawUIState& state );
 
 	virtual void drawThemeBackground( Rect* rect, BackgroundState& state );
