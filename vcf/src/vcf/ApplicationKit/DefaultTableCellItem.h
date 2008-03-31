@@ -82,17 +82,13 @@ public:
 		return true;
 	}
 
-	virtual double getTextCellWidth( GraphicsContext* context );
+	virtual double getTextCellWidth();
 
-	virtual double getTextCellHeight( GraphicsContext* context );
+	virtual double getTextCellHeight();
 
 	virtual const Color& getColor();
 
-	virtual void setColor( Color* color );
-
-	virtual const Font& getFont();
-
-	virtual void setFont( Font* font );
+	virtual void setColor( Color* color );	
 
 	virtual CellID getID() {
 		return id_;
@@ -107,7 +103,7 @@ protected:
 	typedef std::map<uint32,Color> ColorMap;
 	static  ColorMap tableCellsColorMap;
 
-	Font* font_;
+	
 	typedef std::map<String,Font> FontMap;
 	static FontMap tableCellsFontMap;
 

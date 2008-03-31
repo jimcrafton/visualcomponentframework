@@ -169,7 +169,7 @@ void PushButton::drawImage( const Rect& rect, const ButtonState& state, const Re
 	}
 }
 
-Rect PushButton::calcCenterRect( const Rect& rect, GraphicsContext* context, Rect* captionRect, Rect* imageRect )
+Rect PushButton::calcCenterRect( const Rect& rect, Rect* captionRect, Rect* imageRect )
 {
 	Rect captRect, imgRect, rc;
 
@@ -182,8 +182,8 @@ Rect PushButton::calcCenterRect( const Rect& rect, GraphicsContext* context, Rec
 		double ch = 0;
 		double cw = 0;
 		if ( showCaption_ ) {
-			ch = context->getTextHeight( caption_ );
-			cw = context->getTextWidth( caption_ );
+			ch = getFont()->getTextHeight( caption_ );
+			cw = getFont()->getTextWidth( caption_ );
 		}
 
 		double ih = 0;
@@ -342,20 +342,20 @@ Rect PushButton::calcCenterRect( const Rect& rect, GraphicsContext* context, Rec
 	return rc;
 }
 
-Rect PushButton::calcCaptionRect( const Rect& rect, GraphicsContext* context )
+Rect PushButton::calcCaptionRect( const Rect& rect )
 {
 	Rect captionRect;
 
-	calcCenterRect( rect, context, &captionRect );
+	calcCenterRect( rect, &captionRect );
 
 	return captionRect;
 }
 
-Rect PushButton::calcImageRect( const Rect& rect, GraphicsContext* context )
+Rect PushButton::calcImageRect( const Rect& rect )
 {
 	Rect captionRect, imageRect;
 
-	calcCenterRect( rect, context, &captionRect, &imageRect );
+	calcCenterRect( rect, &captionRect, &imageRect );
 
 	return imageRect;
 }
@@ -364,11 +364,9 @@ Size PushButton::calcMinimumSize()
 {
 	Size size;
 
-	GraphicsContext* context = this->getContext();
-
 	Rect rect;
 	rect.setEmpty(); // this makes to calculate the minimum rect
-	Rect rc = calcCenterRect( rect, context );
+	Rect rc = calcCenterRect( rect );
 
 	double cw = rc.getWidth();
 	double ch = rc.getHeight();
@@ -411,7 +409,7 @@ void PushButton::paint(GraphicsContext * context)
 		// in this order. The image is supposed to stay inside the button border
 		// and its focus rect. Otherwise the bitmap needs to draw that too.
 		Rect captionRect, imageRect;
-		Rect rc = calcCenterRect( r, context, &captionRect, &imageRect );
+		Rect rc = calcCenterRect( r, &captionRect, &imageRect );
 		context->drawThemeButtonRect( &r, state, &captionRect );
 		drawImage( r, state, &imageRect, context );
 	}

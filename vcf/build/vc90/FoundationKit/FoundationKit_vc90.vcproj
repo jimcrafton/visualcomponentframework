@@ -121,6 +121,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
+				FavorSizeOrSpeed="1"
 				AdditionalIncludeDirectories="$(VCF_ROOT)/src"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;NO_MFC"
 				StringPooling="true"
@@ -568,6 +569,22 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopPeer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.h"
 				>
 			</File>
 			<File
@@ -1025,32 +1042,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\FileStream.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\MemoryStream.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\MemoryStream.h"
 				>
 			</File>
 			<File
@@ -1700,32 +1691,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\ObjectWithEvents.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\ObjectWithEvents.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\PackageInfo.cpp"
 				>
 				<FileConfiguration
@@ -2217,6 +2182,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoop.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopSource.cpp"
 				>
 			</File>
 			<File

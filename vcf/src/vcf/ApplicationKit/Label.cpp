@@ -161,10 +161,9 @@ void Label::mnemonicActivate()
 
 double Label::getPreferredWidth()
 {
-	if ( !wordWrap_ ) {
-		GraphicsContext* ctx = this->getContext();
+	if ( !wordWrap_ ) {		
 		if ( NULL != getParent() ) {
-			return ctx->getTextWidth( getCaption() );
+			return getFont()->getTextWidth( getCaption() );
 		}
 	}
 	return Control::getPreferredWidth();
@@ -173,7 +172,6 @@ double Label::getPreferredWidth()
 double Label::getPreferredHeight()
 {
 	if ( wordWrap_ ) {
-		GraphicsContext* ctx = this->getContext();
 
 		double maxHeight = UIToolkit::getUIMetricValue( UIMetricsManager::mtLabelHeight );
 
@@ -184,15 +182,16 @@ double Label::getPreferredHeight()
 			StringTokenizer tok( caption_, " \n\r\t" );
 			String currentLine;
 
+			Font* font = getFont();
 			while ( tok.hasMoreElements() ) {
 				String tmp = tok.nextElement();
 
-				lineWidth += ctx->getTextWidth( currentLine + tmp );
+				lineWidth += font->getTextWidth( currentLine + tmp );
 				if ( lineWidth < w ) {
 					currentLine += tmp;
 				}
 				else {
-					maxHeight += ctx->getTextHeight( currentLine );
+					maxHeight += font->getTextHeight( currentLine );
 					lineWidth = 0;
 					currentLine = "";
 				}

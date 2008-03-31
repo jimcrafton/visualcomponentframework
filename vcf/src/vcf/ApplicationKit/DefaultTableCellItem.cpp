@@ -23,8 +23,7 @@ static int defaultTableCellItemCount = 0;
 
 
 DefaultTableCellItem::DefaultTableCellItem():
-	color_(NULL),
-	font_(NULL)
+	color_(NULL)
 {
 	tag_ = -1;
 	imageIndex_ = 0;
@@ -33,7 +32,6 @@ DefaultTableCellItem::DefaultTableCellItem():
 	owningControl_ = NULL;
 	displayState_ = 0;
 	color_ = NULL;
-	font_ = NULL;
 
 	defaultTableCellItemCount ++;
 }
@@ -56,25 +54,25 @@ bool DefaultTableCellItem::containsPoint( Point * pt )
 }
 
 
-double DefaultTableCellItem::getTextCellWidth( GraphicsContext* context )
+double DefaultTableCellItem::getTextCellWidth()
 {
-	double result = context->getTextWidth( getCaption() ) + (5*2) + 2;
+	double result = getFont()->getTextWidth( getCaption() ) + (5*2) + 2;
 	if ( isFixed() ) {
 		result += 2;
 	}
 	return result;
 }
 
-double DefaultTableCellItem::getTextCellHeight( GraphicsContext* context )
+double DefaultTableCellItem::getTextCellHeight()
 {
-	return (context->getTextHeight( getCaption() ) + 2) * 1.15;
+	return (getFont()->getTextHeight( getCaption() ) + 2) * 1.15;
 }
 
 void DefaultTableCellItem::paint( GraphicsContext* context, Rect* paintRect )
 {
 	bounds_ = *paintRect;
 
-	const Font& currentFont = getFont();	
+	Font& currentFont = *getFont();	
 	const Color& currentColor = getColor();
 	double fontPixelSize = currentFont.getPixelSize();
 
@@ -302,7 +300,7 @@ String fontToString( Font* font )
 	result += font->getItalic();
 	return result;
 }
-
+/*
 const Font& DefaultTableCellItem::getFont()
 {
 	UIMetricsManager* mgr = UIToolkit::getUIMetricsManager();
@@ -380,7 +378,7 @@ void DefaultTableCellItem::setFont( Font* font )
 		}
 	}
 }
-
+*/
 void DefaultTableCellItem::onFontChanged( Event* e )
 {
 	Font* font = (Font*)e->getSource();

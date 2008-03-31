@@ -124,7 +124,8 @@ Win32Tree::Win32Tree( TreeControl* tree ):
 	treeControl_( tree ),
 	imageListCtrl_(NULL),
 	stateImageListCtrl_(NULL),
-	internalTreeItemMod_(false)
+	internalTreeItemMod_(false),
+	currentCtx_(NULL)
 {
 
 }
@@ -342,9 +343,10 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			}
 
 
-			VCF::GraphicsContext* ctx = peerControl_->getContext();
+			ControlGraphicsContext ctrlCtx(peerControl_);
+			currentCtx_ = &ctrlCtx;
 
-			ctx->setViewableBounds( Rect(paintRect.left, paintRect.top,
+			currentCtx_->setViewableBounds( Rect(paintRect.left, paintRect.top,
 									paintRect.right, paintRect.bottom ) );
 
 			memBMP_ = ::CreateCompatibleBitmap( dc,
@@ -367,23 +369,23 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			DeleteObject( bkBrush );
 
 
-			ctx->getPeer()->setContextID( (OSHandleID)memDC_ );
+			currentCtx_->getPeer()->setContextID( (OSHandleID)memDC_ );
 
 
-			((ControlGraphicsContext*)ctx)->setOwningControl( NULL );
+			((ControlGraphicsContext*)currentCtx_)->setOwningControl( NULL );
 
-			int gcs = ctx->saveState();
+			int gcs = currentCtx_->saveState();
 
 			//paint the control here - double buffered
 			
-			peerControl_->internal_beforePaint( ctx );
+			peerControl_->internal_beforePaint( currentCtx_ );
 
-			peerControl_->paint( ctx );
+			peerControl_->paint( currentCtx_ );
 
-			peerControl_->internal_afterPaint( ctx );
+			peerControl_->internal_afterPaint( currentCtx_ );
 
 
-			ctx->restoreState( gcs );
+			currentCtx_->restoreState( gcs );
 
 
 			//reset back to original origin
@@ -395,7 +397,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 
 			//NOW reset the owning control of teh graphics context here
-			((ControlGraphicsContext*)ctx)->setOwningControl( peerControl_ );
+			((ControlGraphicsContext*)currentCtx_)->setOwningControl( peerControl_ );
 
 			::BitBlt( dc, paintRect.left, paintRect.top,
 					  paintRect.right - paintRect.left,
@@ -903,10 +905,12 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			internalTreeItemMod_ = false;
 			
 			if ( !(treeview->itemOld.state & TVIS_SELECTED) && (NULL != treeview->itemOld.hItem) ) {
+				internalTreeItemMod_ = true;
 				TreeItem* item = treeControl_->getItemFromKey( treeview->itemOld.lParam );
 				if ( NULL != item ) {
 					item->setSelected( false );
 				}
+				internalTreeItemMod_ = false;
 			}
 
 			
@@ -954,10 +958,12 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			internalTreeItemMod_ = false;
 			
 			if ( !(treeview->itemOld.state & TVIS_SELECTED) && (NULL != treeview->itemOld.hItem) ) {
+				internalTreeItemMod_ = true;
 				TreeItem* item = treeControl_->getItemFromKey( treeview->itemOld.lParam );
 				if ( NULL != item ) {
 					item->setSelected( false );
 				}
+				internalTreeItemMod_ = false;
 			}
 		}
 		break;
@@ -1072,7 +1078,7 @@ Do we need these? What advantage does processing these events have for us???
 								itemRect.right_ = treeViewDraw->nmcd.rc.right;
 								itemRect.bottom_ = treeViewDraw->nmcd.rc.bottom;
 
-								item->paint( peerControl_->getContext(), &itemRect );
+								item->paint( currentCtx_, &itemRect );
 							}
 
 						}
@@ -1462,7 +1468,7 @@ void Win32Tree::onItemSelected( ItemEvent* e )
 
 		if ( found != treeItems_.end() ){
 			HTREEITEM hItem = found->second;
-			
+			/*
 			TVITEM tvItem = {0};
 			tvItem.hItem = hItem;
 			tvItem.mask = TVIF_STATE ;
@@ -1470,7 +1476,12 @@ void Win32Tree::onItemSelected( ItemEvent* e )
 			
 			tvItem.state = item->isSelected() ? tvItem.state |= TVIS_SELECTED : tvItem.state &= ~TVIS_SELECTED;
 
+			
+
 			TreeView_SetItem( hwnd_, &tvItem );			
+			*/
+
+			TreeView_SelectItem( hwnd_, hItem );
 		}
 	}
 }

@@ -109,6 +109,10 @@ public:
 		String s = treeCtrl->getTreeModel()->getAsString(k);
 
 		Rect r = treeCtrl->getItemRect(k);
+
+		TreeItem* item = treeCtrl->getItemFromKey( k );
+		item->setSelected( true );
+		
 	}
 
 	virtual bool initRunningApplication(){

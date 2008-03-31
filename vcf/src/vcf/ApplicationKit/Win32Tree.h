@@ -62,6 +62,7 @@ private:
 	std::map<TreeModel::Key,HTREEITEM> treeItems_;
 	HIMAGELIST imageListCtrl_;
 	HIMAGELIST stateImageListCtrl_;
+	GraphicsContext* currentCtx_;
 	bool internalTreeItemMod_;
 	void onImageListImageChanged( ImageListEvent* event );
 	void onStateImageListImageChanged( ImageListEvent* event );

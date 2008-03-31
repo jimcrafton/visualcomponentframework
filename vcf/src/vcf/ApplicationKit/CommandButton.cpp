@@ -107,10 +107,9 @@ double CommandButton::getPreferredHeight()
 
 double CommandButton::getPreferredWidth()
 {
-	String s = getCaption();
-	GraphicsContext* ctx = this->getContext();
+	String s = getCaption();	
 	if ( !s.empty() ) {
-		return maxVal<>( Control::getPreferredWidth(), ctx->getTextWidth( s ) + 20 );
+		return maxVal<>( Control::getPreferredWidth(), getFont()->getTextWidth( s ) + 20 );
 	}
 
 	return Control::getPreferredWidth();

@@ -324,9 +324,10 @@ void MessageDialog::setMessage( const String& message )
 	message_ = message;
 	messageLabel_->setCaption( message_ );
 
+	ControlGraphicsContext gc(messageLabel_);
 
-	double msgWidth = messageLabel_->getContext()->getTextWidth( message );
-	double msgHeight = messageLabel_->getContext()->getTextHeight( message );
+	double msgWidth = gc.getTextWidth( message );
+	double msgHeight = gc.getTextHeight( message );
 
 	if ( msgWidth > messageLabel_->getWidth() ) {
 		//adjust bounds
@@ -359,7 +360,8 @@ void MessageDialog::setInformation( const String& information )
 	information_ = information;
 	infoLabel_->setCaption( information_ );
 
-	double infoWidth = infoLabel_->getContext()->getTextWidth( information );
+	ControlGraphicsContext gc(infoLabel_);
+	double infoWidth = gc.getTextWidth( information );
 
 	if ( infoWidth > infoLabel_->getWidth() ) {
 		//adjust bounds

@@ -292,7 +292,7 @@ void ListBoxControl::recalcBoundsForItem( ListItem* item )
 		}
 	}
 
-	GraphicsContext* ctx = getContext();
+	Font* font = getFont();
 
 	itemRect.setRect( 0, currentMaxHeight_, width-scrollW, currentMaxHeight_ + defaultItemHeight_ );
 	item->setBounds( itemRect );	
@@ -305,7 +305,7 @@ void ListBoxControl::recalcBoundsForItem( ListItem* item )
 		imageWidth += imageList_->getImageWidth();
 	}
 
-	currentMaxWidth_ = maxVal<double>( ctx->getTextWidth( item->getCaption() ) + leftGutter_ + rightGutter_ + imageWidth, currentMaxWidth_ ); 
+	currentMaxWidth_ = maxVal<double>( font->getTextWidth( item->getCaption() ) + leftGutter_ + rightGutter_ + imageWidth, currentMaxWidth_ ); 
 
 	if ( NULL != scrollable ) {
 		if ( (getHeight() > currentMaxHeight_) && (scrollable->getVerticalPosition() > 0.0) ) {

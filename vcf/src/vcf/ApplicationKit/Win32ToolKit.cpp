@@ -2611,12 +2611,10 @@ public:
 
 		ToolTipEvent tooltipEvent( actualToolTipControl, 0 );
 		
-		tooltipEvent.setBackgroundColor( toolTip_->getColor() );
+		tooltipEvent.backgroundColor = *toolTip_->getColor();
 
-		tooltipEvent.setToolTipLocation( &adjustedPtForCursor );
-		tooltipEvent.setCustomTooltipContext( toolTip_->getContext() );
-		Size sz;
-		tooltipEvent.setToolTipSize( &sz );
+		tooltipEvent.tooltipLocation = adjustedPtForCursor;	
+		
 
 		if ( tooltip.empty() ) {
 			//fire a tooltip requested
@@ -2624,37 +2622,36 @@ public:
 
 			actualToolTipControl->ToolTipRequested( &tooltipEvent );
 
-			tooltip = tooltipEvent.getToolTipString();
+			tooltip = tooltipEvent.tooltipString;
 
 			tooltipEvent.setType( 0 );			
 		}
 
-		tooltipEvent.getToolTipLocation()->y_ += (::GetSystemMetrics( SM_CYCURSOR )*0.66);
+		tooltipEvent.tooltipLocation.y_ += (::GetSystemMetrics( SM_CYCURSOR )*0.66);
 
 		if ( !tooltip.empty() ) {
 
 			actualToolTipControl->ToolTip( &tooltipEvent );
-			tmpPt = *tooltipEvent.getToolTipLocation();
+			tmpPt = tooltipEvent.tooltipLocation;
 
 
-			toolTip_->setColor( tooltipEvent.getBackgroundColor() );
+			toolTip_->setColor( &tooltipEvent.backgroundColor );
 
 			toolTip_->setLeft( tmpPt.x_ );
 			toolTip_->setTop( tmpPt.y_ );
 
-			sz = *tooltipEvent.getToolTipSize();
-			if ( sz.height_ > 0.0 ) {
-				toolTip_->setHeight( sz.height_ );
+			if ( tooltipEvent.tooltipSize.height_ > 0.0 ) {
+				toolTip_->setHeight( tooltipEvent.tooltipSize.height_ );
 			}
 			else {
-				toolTip_->setHeight( toolTip_->getContext()->getTextHeight( "EM" ) + 5 );
+				toolTip_->setHeight( toolTip_->getFont()->getTextHeight( "EM" ) + 5 );
 			}
 
-			if ( sz.width_ > 0.0 ) {
-				toolTip_->setWidth( sz.width_ );
+			if ( tooltipEvent.tooltipSize.width_ > 0.0 ) {
+				toolTip_->setWidth( tooltipEvent.tooltipSize.width_ );
 			}
 			else {
-				toolTip_->setWidth( toolTip_->getContext()->getTextWidth( tooltip ) + 10 );
+				toolTip_->setWidth( toolTip_->getFont()->getTextWidth( tooltip ) + 10 );
 			}
 
 			if ( toolTip_->getParent() == NULL ) {
@@ -2663,9 +2660,9 @@ public:
 
 			//embed control?
 			
-			if ( NULL != tooltipEvent.getEmbeddedControl() ) {
-				embeddedTooltipControl_ = tooltipEvent.getEmbeddedControl();
-				autoDestroyEmbeddedTooltipControl_ = tooltipEvent.getAutoDestroyEmbeddedControl();			
+			if ( NULL != tooltipEvent.embeddedControl ) {
+				embeddedTooltipControl_ = tooltipEvent.embeddedControl;
+				autoDestroyEmbeddedTooltipControl_ = tooltipEvent.autoDestroyEmbeddedControl;			
 				
 				toolTip_->add( embeddedTooltipControl_, AlignClient );
 			}

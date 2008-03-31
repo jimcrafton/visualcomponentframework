@@ -1567,19 +1567,6 @@ double Win32Context::getTextWidth( const String& text )
 	HFONT font = NULL;
 
 	prepareDCWithContextFont( font );
-	/*
-	if ( System::isUnicodeEnabled() ) {
-		LOGFONTW* logFont = (LOGFONTW*)fontImpl->getFontHandleID();
-
-		font = CreateFontIndirectW( logFont );
-	}
-	else {
-		LOGFONTA* logFont = (LOGFONTA*)fontImpl->getFontHandleID();
-
-		font = CreateFontIndirectA( logFont );
-	}
-	*/
-
 
 	HFONT oldFont = (HFONT)::SelectObject( dc_, font );
 
@@ -4656,7 +4643,7 @@ void Win32Context::prepareDCWithContextFont( HFONT& fontHandle )
 	}
 
 	fontHandle = NULL;
-
+/*
 	DWORD charSet;
 
 	Locale* fontLocale = ctxFont->getLocale();
@@ -4750,23 +4737,23 @@ void Win32Context::prepareDCWithContextFont( HFONT& fontHandle )
 			break;
 		}
 	}
-
+*/
 
 	if ( System::isUnicodeEnabled() ) {
 		LOGFONTW* logFont = (LOGFONTW*)fontImpl->getFontHandleID();
 
 		LONG oldOrientation = logFont->lfOrientation;
 
-		DWORD oldCharSet = logFont->lfCharSet;
+		//DWORD oldCharSet = logFont->lfCharSet;
 
-		logFont->lfCharSet = charSet;
+		//logFont->lfCharSet = charSet;
 
 		logFont->lfOrientation = logFont->lfEscapement = (LONG)(-context_->getRotation() * 10.0);
 
 
 		fontHandle = CreateFontIndirectW( logFont );
 
-		logFont->lfCharSet = oldCharSet;
+		//logFont->lfCharSet = oldCharSet;
 		logFont->lfOrientation = logFont->lfEscapement = oldOrientation;
 	}
 	else {
@@ -4774,15 +4761,15 @@ void Win32Context::prepareDCWithContextFont( HFONT& fontHandle )
 
 		LONG oldOrientation = logFont->lfOrientation;
 
-		DWORD oldCharSet = logFont->lfCharSet;
+		//DWORD oldCharSet = logFont->lfCharSet;
 
 		logFont->lfOrientation = logFont->lfEscapement = (LONG)(-context_->getRotation() * 10.0);
 
-		logFont->lfCharSet = charSet;
+		//logFont->lfCharSet = charSet;
 
 		fontHandle = CreateFontIndirectA( logFont );
 
-		logFont->lfCharSet = oldCharSet;
+		//logFont->lfCharSet = oldCharSet;
 		logFont->lfOrientation = logFont->lfEscapement = oldOrientation;
 	}
 }

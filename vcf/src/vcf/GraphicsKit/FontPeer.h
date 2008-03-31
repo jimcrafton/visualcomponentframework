@@ -97,6 +97,10 @@ public:
 	virtual bool isFixedPitch() = 0;	
 
 	virtual void setFont( Font* font ) = 0;
+
+	virtual Size getTextSize( const String& text ) = 0;
+
+	virtual void updateLocaleSettings() = 0;
 };
 
 };

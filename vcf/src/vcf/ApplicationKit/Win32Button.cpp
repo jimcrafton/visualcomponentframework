@@ -132,6 +132,8 @@ bool Win32Button::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 			CommandButton* button = (CommandButton*)peerControl_;
 			button->setIsPressed( drawItem->itemState & ODS_SELECTED ? true : false );
 
+			ControlGraphicsContext ctrlCtx(peerControl_);
+			VCF::GraphicsContext* ctx = &ctrlCtx;
 			if ( peerControl_->isDoubleBuffered() ){
 
 				if ( NULL == memDC_ ) {
@@ -140,8 +142,6 @@ bool Win32Button::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 					memDC_ = ::CreateCompatibleDC( dc );
 					::ReleaseDC( 0,	dc );
 				}
-
-				VCF::GraphicsContext* ctx = peerControl_->getContext();
 
 				int dcState = ::SaveDC( drawItem->hDC );
 				Rect tmp(drawItem->rcItem.left, drawItem->rcItem.top, drawItem->rcItem.right, drawItem->rcItem.bottom);
@@ -204,8 +204,6 @@ bool Win32Button::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 				}
 			}
 			else {
-				VCF::GraphicsContext* ctx = peerControl_->getContext();
-
 				ctx->getPeer()->setContextID( (OSHandleID)drawItem->hDC );
 
 				peerControl_->internal_beforePaint( ctx );

@@ -87,6 +87,8 @@ Font& Font::operator= (const Font& rhs )
 void Font::setLocale( Locale* locale )
 {
 	locale_ = locale;
+	peer_->updateLocaleSettings();
+
 	changed( Font::fcFontLocale );
 }
 
@@ -246,6 +248,16 @@ uint64 Font::sizeOf() const
 	uint64 result = sizeof(Font);
 
 	return result;
+}
+
+double Font::getTextWidth( const String& text )
+{
+	return peer_->getTextSize(text).width_;
+}
+
+double Font::getTextHeight( const String& text )
+{
+	return peer_->getTextSize(text).height_;
 }
 
 /**

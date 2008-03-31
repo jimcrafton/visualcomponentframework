@@ -1255,11 +1255,6 @@ public:
 	void releaseMouseEvents();
 
 	/**
-	*return a pointer to the graphics context of the control.
-	*/
-	GraphicsContext* getContext();
-
-	/**
 	*returns the Control's PopupMenu, if any.
 	*The popupmenu will be displayed whenever the user
 	*right clicks the mouse over the control.
@@ -1901,8 +1896,7 @@ protected:
 	static Control* previousMouseOverControl;
 	static Control* capturedMouseControl;
 
-	ControlPeer* peer_;
-	ControlGraphicsContext* context_;
+	ControlPeer* peer_;	
 	Control * parent_;
 	AlignmentType aligment_;
 	uint32 anchor_;
@@ -1912,10 +1906,6 @@ protected:
 	Color* color_;
 	Font* font_;
 	View* view_;
-	//bool useParentFont_;
-	//bool doubleBuffered_;
-	//bool hasMouseCapture_;
-	//bool autoStartDragDrop_;
 	PopupMenu* popupMenu_;
 	Scrollable* scrollable_;
 	String whatThisHelpString_;
@@ -1923,22 +1913,13 @@ protected:
 	int32 cursorID_;
 	Cursor* cursor_;
 	float anchorDeltas_[4];
-	//bool tabStop_;
+	
 	int32 tabOrder_;
-	Point clickPt_;
-	//bool useRenderBuffer_;
+	Point clickPt_;	
 	Container* container_;
 	Size minSize_;
 	Size maxSize_;
-
-	/*
-	bool ignoredForLayout_;
-	bool allowPaintNotification_;
-	bool enabled_;
-	bool visible_;
-	*/
 	uint32 controlState_;
-
 };
 
 

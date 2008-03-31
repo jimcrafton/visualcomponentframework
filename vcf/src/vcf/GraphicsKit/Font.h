@@ -254,6 +254,9 @@ public:
 	}
 
 	virtual uint64 Font::sizeOf() const;
+
+	double getTextWidth( const String& text );
+	double getTextHeight( const String& text );
 protected:
 
 	FontPeer* peer_;
