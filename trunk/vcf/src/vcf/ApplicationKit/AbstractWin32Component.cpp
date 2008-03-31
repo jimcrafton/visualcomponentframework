@@ -356,7 +356,8 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 		}					
 		
 		
-		VCF::GraphicsContext* ctx = peerControl_->getContext();
+		ControlGraphicsContext ctrlCtx(peerControl_);
+		GraphicsContext* ctx = &ctrlCtx;
 		
 		Rect viewableRect(paintRect.left, paintRect.top,
 			paintRect.right, paintRect.bottom );

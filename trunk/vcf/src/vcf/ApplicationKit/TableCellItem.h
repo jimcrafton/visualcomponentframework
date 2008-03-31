@@ -89,8 +89,8 @@ public:
 	text of the cell, and any other formatting rules the 
 	cell wants to consider.
 	*/
-	virtual double getTextCellWidth( GraphicsContext* context ) = 0;
-	virtual double getTextCellHeight( GraphicsContext* context ) = 0;
+	virtual double getTextCellWidth() = 0;
+	virtual double getTextCellHeight() = 0;
 
 
 	virtual CellID getID() = 0;
@@ -104,15 +104,6 @@ public:
 	virtual const Color& getColor() = 0;
 
 	virtual void setColor( Color* color ) = 0;
-
-	/**
-	Returns a non modifiable font reference. If you need to 
-	change the cell's font, you should call setFont().
-	@see setFont()
-	*/
-	virtual const Font& getFont() = 0;
-
-	virtual void setFont( Font* font ) = 0;
 };
 
 }

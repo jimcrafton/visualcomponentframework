@@ -203,7 +203,8 @@ Win32Listview::Win32Listview( ListViewControl* listviewControl ):
 	largeImageListCtrl_(NULL),
 	smallImageListCtrl_(NULL),
 	internalMessage_(false),
-	oldHeaderFont_(NULL)
+	oldHeaderFont_(NULL),
+	currentCtx_(NULL)
 {
 
 }
@@ -463,16 +464,15 @@ void Win32Listview::postPaintItem( NMLVCUSTOMDRAW* drawItem )
 
 		if ( item->canPaint() ) {
 			RECT tmp = {0,0,0,0};
-			GraphicsContext* ctx = NULL;
+			
 
 			ListView_GetItemRect( hwnd_, drawItem->nmcd.dwItemSpec,
 				&tmp, LVIR_BOUNDS );
 
 
 			Rect itemRect( tmp.left, tmp.top, tmp.right, tmp.bottom );
-			ctx = peerControl_->getContext();
-
-			item->paint( ctx, &itemRect );
+			
+			item->paint( currentCtx_, &itemRect );
 
 			LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 			if ( style & LVS_REPORT ) {
@@ -493,7 +493,7 @@ void Win32Listview::postPaintItem( NMLVCUSTOMDRAW* drawItem )
 
 						if ( colIndex > 0 ) {
 							ListSubItem* subItem = *it;
-							subItem->paint( ctx, &subItemRect, colIndex );
+							subItem->paint( currentCtx_, &subItemRect, colIndex );
 							++it;
 						}
 
@@ -758,18 +758,19 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 
 			::SetViewportOrgEx( memDC_, -r.left, -r.top, NULL );
 
-			VCF::GraphicsContext* ctx = peerControl_->getContext();
+			ControlGraphicsContext ctrlCtx(peerControl_);
+			currentCtx_ = &ctrlCtx;			
 
-			ctx->setViewableBounds( Rect(r.left, r.top,
+			currentCtx_->setViewableBounds( Rect(r.left, r.top,
 											r.right, r.bottom ) );
 
-			ctx->getPeer()->setContextID( (OSHandleID)memDC_ );
-			((ControlGraphicsContext*)ctx)->setOwningControl( NULL );
+			currentCtx_->getPeer()->setContextID( (OSHandleID)memDC_ );
+			((ControlGraphicsContext*)currentCtx_)->setOwningControl( NULL );
 
 
 			defaultWndProcedure( WM_PAINT, (WPARAM)memDC_, 0 );
 
-			((ControlGraphicsContext*)ctx)->setOwningControl( peerControl_ );
+			((ControlGraphicsContext*)currentCtx_)->setOwningControl( peerControl_ );
 
 
 			::BitBlt( dc, r.left, r.top,
@@ -781,7 +782,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 			::DeleteObject( memBMP_ );
 
 
-
+			currentCtx_ = NULL;
 
 			EndPaint( hwnd_, &ps );
 
@@ -1154,7 +1155,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 				switch ( listViewCustomDraw->nmcd.dwDrawStage ) {
 					case CDDS_PREPAINT : {
 						// Request prepaint notifications for each item.
-						wndProcResult = CDRF_NOTIFYITEMDRAW;
+						wndProcResult = CDRF_NOTIFYITEMDRAW;						
 					}
 					break;
 

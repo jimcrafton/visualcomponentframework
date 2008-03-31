@@ -9,6 +9,8 @@ where you installed the VCF.
 
 #include "vcf/GraphicsKit/GraphicsKit.h"
 #include "vcf/GraphicsKit/GraphicsKitPrivate.h"
+#include "vcf/FoundationKit/LocalePeer.h"
+
 
 using namespace VCF;
 
@@ -955,7 +957,183 @@ void Win32Font::setAttributes( const double& pointSize, const bool& bold, const 
 	Win32FontManager::initializeFont( this );
 }
 
+Size Win32Font::getTextSize( const String& text )
+{
+	Size result ;
 
+	bool releaseDC = true;
+	HDC dc = NULL;
+	if ( NULL != font_ ) {
+		if ( NULL != font_->getGraphicsContext() ) {
+			dc = (HDC) font_->getGraphicsContext()->getPeer()->getContextID();
+			if ( NULL != dc ) {
+				releaseDC = false;
+			}
+		}
+	}
+	if ( NULL == dc ) {
+		dc = GetDC( ::GetDesktopWindow() ); // gets screen DC
+	}
+
+	HFONT fontHandle = NULL;
+
+	if ( System::isUnicodeEnabled() ) {
+		LOGFONTW* logFont = (LOGFONTW*)logFont_;
+		fontHandle = CreateFontIndirectW( logFont );
+	}
+	else {
+		LOGFONTA* logFont = (LOGFONTA*)logFont_;
+		fontHandle = CreateFontIndirectA( logFont );
+	}
+
+	if ( NULL != fontHandle ) {
+		HFONT oldFont = (HFONT)::SelectObject( dc, fontHandle );
+
+		SIZE textSize = {0,0};
+		
+		if ( String::npos != text.find( "\t" ) ) {
+			RECT r = {0,0,0,0};
+			
+			if ( System::isUnicodeEnabled() ) {
+				DrawTextW( dc, text.c_str(), text.size(), &r, DT_CALCRECT | DT_EXPANDTABS | DT_SINGLELINE | DT_LEFT );
+			}
+			else {
+				AnsiString tmpText = text;
+				
+				DrawTextA( dc, tmpText.c_str(), tmpText.size(), &r, DT_CALCRECT | DT_EXPANDTABS | DT_SINGLELINE | DT_LEFT );
+			}
+			
+			result.width_ = r.right - r.left;
+			result.height_ = r.bottom - r.top;
+		}
+		else {
+			if ( System::isUnicodeEnabled() ) {
+				GetTextExtentPoint32W( dc, text.c_str(), text.size(), &textSize );
+			}
+			else {
+				AnsiString s = text;
+				GetTextExtentPoint32A( dc, s.c_str(), s.size(), &textSize );
+			}
+			
+			result.width_ = textSize.cx;
+			result.height_ = textSize.cy;
+		}
+
+		::SelectObject( dc, oldFont );
+
+		DeleteObject( fontHandle );
+	}
+
+
+
+	if ( releaseDC ) {
+		ReleaseDC( ::GetDesktopWindow(), dc );
+	}
+
+	return result;
+}
+
+void Win32Font::updateLocaleSettings()
+{
+	if ( NULL != font_ ) {
+		DWORD charSet;
+		Locale* fontLocale = font_->getLocale();
+		if ( NULL == fontLocale ) {
+			fontLocale = System::getCurrentThreadLocale();
+		}
+		if ( NULL == fontLocale ) {
+			charSet = DEFAULT_CHARSET;
+		}
+		else if ( !isTrueType() ) {
+			charSet = DEFAULT_CHARSET;
+		}
+		else {
+			LCID lcid = (LCID)PtrToUlong( fontLocale->getPeer()->getHandleID() );
+			WORD langID = LANGIDFROMLCID( lcid );
+
+			WORD primaryLangID = PRIMARYLANGID(langID);
+			WORD subLangID = SUBLANGID(langID);
+
+			switch ( primaryLangID ) {
+				case LANG_LITHUANIAN: case LANG_LATVIAN: case LANG_ESTONIAN: {
+					charSet = BALTIC_CHARSET;
+				}
+				break;
+
+				case LANG_CHINESE: {
+					charSet = CHINESEBIG5_CHARSET;
+
+					if ( SUBLANG_CHINESE_SIMPLIFIED == subLangID ) {
+						charSet = GB2312_CHARSET;
+					}
+				}
+				break;
+
+				case LANG_SLOVENIAN: case LANG_ALBANIAN:
+				case LANG_ROMANIAN: case LANG_BULGARIAN: case LANG_CROATIAN:
+				case LANG_BELARUSIAN: case LANG_UKRAINIAN: case LANG_HUNGARIAN:
+				case LANG_SLOVAK: case LANG_POLISH: case LANG_CZECH: {
+					charSet = EASTEUROPE_CHARSET;
+				}
+				break;
+
+				case LANG_GREEK: {
+					charSet = GREEK_CHARSET;
+				}
+				break;
+
+				case LANG_KOREAN: {
+					charSet = HANGUL_CHARSET;//???JOHAB_CHARSET instead????
+				}
+				break;
+
+				case LANG_RUSSIAN: {
+					charSet = RUSSIAN_CHARSET;
+				}
+				break;
+
+				case LANG_TURKISH: {
+					charSet = TURKISH_CHARSET;
+				}
+				break;
+
+				case LANG_JAPANESE: {
+					charSet = SHIFTJIS_CHARSET;
+				}
+				break;
+
+				case LANG_HEBREW: {
+					charSet = HEBREW_CHARSET;
+				}
+				break;
+
+				case LANG_ARABIC: {
+					charSet = ARABIC_CHARSET;
+				}
+				break;
+
+				case LANG_THAI: {
+					charSet = THAI_CHARSET;
+				}
+				break;
+
+				default : {
+					charSet = DEFAULT_CHARSET;
+				}
+				break;
+			}
+		}
+
+		if ( System::isUnicodeEnabled() ) {
+			LOGFONTW* logFont = (LOGFONTW*)logFont_;			
+			logFont->lfCharSet = charSet;
+		}
+		else {
+			LOGFONTA* logFont = (LOGFONTA*)logFont_;
+			logFont->lfCharSet = charSet;
+		}
+	}
+}
 /**
 $Id$
 */

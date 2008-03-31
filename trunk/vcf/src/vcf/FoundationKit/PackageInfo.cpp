@@ -27,7 +27,7 @@ PackageInfo::PackageInfo( const String& packageName, const String& packageUUID,
 
 Enumerator<String>* PackageInfo::getRequiredStaticLibs()
 {
-	return reqStaticLibsContainer_.getEnumerator();
+	return requiredStaticLibs_.getEnumerator();
 }
 
 void PackageInfo::addRequiredStaticLib( const String& libName )
@@ -51,7 +51,7 @@ void PackageInfo::removeAllRequiredStaticLibs()
 
 Enumerator<String>* PackageInfo::getRequiredSharedLibs()
 {
-	return reqSharedLibsContainer_.getEnumerator();
+	return requiredSharedLibs_.getEnumerator();
 }
 
 void PackageInfo::addRequiredSharedLib( const String& libName )
@@ -75,7 +75,7 @@ void PackageInfo::removeAllRequiredSharedLibs()
 
 Enumerator<String>* PackageInfo::getSupportedPlatforms()
 {
-	return supportedPlatformsContainer_.getEnumerator();
+	return supportedPlatforms_.getEnumerator();
 }
 
 void PackageInfo::addSupportedPlatform( const String& platform )
@@ -114,7 +114,7 @@ void PackageManager::terminate()
 
 Enumerator<PackageInfo*>* PackageManager::getPackages()
 {
-	return PackageManager::pkgMgrInstance->packagesContainer_.getEnumerator();
+	return PackageManager::pkgMgrInstance->packages_.getEnumerator();
 }
 
 void PackageManager::registerPackage( PackageInfo* package )
@@ -148,7 +148,7 @@ PackageManager* PackageManager::getPackageManager()
 
 PackageManager::PackageManager()
 {
-	packagesContainer_.initContainer(packages_);
+	
 }
 
 PackageManager::~PackageManager()

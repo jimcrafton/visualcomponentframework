@@ -29,10 +29,6 @@ void ClassRegistry::terminate()
 
 ClassRegistry::ClassRegistry()
 {
-	classContainer_.initContainer( classMap_ );
-
-	interfaceContainer_.initContainer( interfaceMap_ );
-
 #ifdef VCF_RTTI
 	//register "Object" as default class
 	TypedClass<Object>* objClass = TypedClass<Object>::create("VCF::Object", OBJECT_CLASSID, "");
@@ -564,7 +560,7 @@ void ClassRegistry::internal_addClass( const String& className, Class* classToRe
 
 Enumerator<Class*>* ClassRegistry::internal_getClasses()
 {
-	return classContainer_.getEnumerator();
+	return classMap_.getEnumerator();
 }
 
 void ClassRegistry::internal_dump()
@@ -638,7 +634,7 @@ void ClassRegistry::internal_addInterface( const String& interfaceName, Interfac
 
 Enumerator<InterfaceClass*>* ClassRegistry::internal_getInterfaces()
 {
-	return interfaceContainer_.getEnumerator();
+	return interfaceMap_.getEnumerator();
 }
 
 InterfaceClass* ClassRegistry::internal_getInterface( const String& interfaceName )

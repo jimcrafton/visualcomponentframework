@@ -1094,10 +1094,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\MemoryStream.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\MemStreamUtils.h"
 				>
 			</File>

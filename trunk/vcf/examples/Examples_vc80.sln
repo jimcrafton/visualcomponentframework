@@ -208,6 +208,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XMLKitDLL", "..\build\vc80\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XmlTest", "XmlTest\XmlTest_vc80.vcproj", "{29896946-E59F-4BDA-AD0D-9B49DF2968C5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RCChineseDict", "RCChineseDict\RCChineseDict_vc80.vcproj", "{477DF3C4-0A21-4C66-974D-40700F821E29}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B699126F-83EB-4859-AEB1-AB7D304D9259} = {B699126F-83EB-4859-AEB1-AB7D304D9259}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -303,9 +308,12 @@ Global
 		{0767DAFD-ECB7-44B0-B3AF-36AEC79F79B8}.Generate YY and LL files|Win32.ActiveCfg = Debug|Win32
 		{0767DAFD-ECB7-44B0-B3AF-36AEC79F79B8}.Release|Win32.ActiveCfg = Release|Win32
 		{B699126F-83EB-4859-AEB1-AB7D304D9259}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B699126F-83EB-4859-AEB1-AB7D304D9259}.Debug|Win32.Build.0 = Debug|Win32
 		{B699126F-83EB-4859-AEB1-AB7D304D9259}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
 		{B699126F-83EB-4859-AEB1-AB7D304D9259}.Release|Win32.ActiveCfg = Release|Win32
+		{B699126F-83EB-4859-AEB1-AB7D304D9259}.Release|Win32.Build.0 = Release|Win32
 		{BF4D068A-13C1-4AB3-B969-1391B1436E76}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BF4D068A-13C1-4AB3-B969-1391B1436E76}.Debug|Win32.Build.0 = Debug|Win32
 		{BF4D068A-13C1-4AB3-B969-1391B1436E76}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
 		{BF4D068A-13C1-4AB3-B969-1391B1436E76}.Release|Win32.ActiveCfg = Release|Win32
 		{AB1F7517-D27C-4C00-9929-961B7475BE0B}.Debug|Win32.ActiveCfg = Debug|Win32
@@ -526,13 +534,17 @@ Global
 		{2BADC608-7B7F-4195-A8FF-CE602C8D85B8}.Generate YY and LL files|Win32.ActiveCfg = Debug|Win32
 		{2BADC608-7B7F-4195-A8FF-CE602C8D85B8}.Generate YY and LL files|Win32.Build.0 = Debug|Win32
 		{2BADC608-7B7F-4195-A8FF-CE602C8D85B8}.Release|Win32.ActiveCfg = Release|Win32
-		{2BADC608-7B7F-4195-A8FF-CE602C8D85B8}.Release|Win32.Build.0 = Release|Win32
 		{29896946-E59F-4BDA-AD0D-9B49DF2968C5}.Debug|Win32.ActiveCfg = Debug|Win32
 		{29896946-E59F-4BDA-AD0D-9B49DF2968C5}.Debug|Win32.Build.0 = Debug|Win32
 		{29896946-E59F-4BDA-AD0D-9B49DF2968C5}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
 		{29896946-E59F-4BDA-AD0D-9B49DF2968C5}.Generate YY and LL files|Win32.Build.0 = Release|Win32
 		{29896946-E59F-4BDA-AD0D-9B49DF2968C5}.Release|Win32.ActiveCfg = Release|Win32
-		{29896946-E59F-4BDA-AD0D-9B49DF2968C5}.Release|Win32.Build.0 = Release|Win32
+		{477DF3C4-0A21-4C66-974D-40700F821E29}.Debug|Win32.ActiveCfg = Debug|Win32
+		{477DF3C4-0A21-4C66-974D-40700F821E29}.Debug|Win32.Build.0 = Debug|Win32
+		{477DF3C4-0A21-4C66-974D-40700F821E29}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
+		{477DF3C4-0A21-4C66-974D-40700F821E29}.Generate YY and LL files|Win32.Build.0 = Release|Win32
+		{477DF3C4-0A21-4C66-974D-40700F821E29}.Release|Win32.ActiveCfg = Release|Win32
+		{477DF3C4-0A21-4C66-974D-40700F821E29}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

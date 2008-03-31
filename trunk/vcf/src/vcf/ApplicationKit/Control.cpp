@@ -20,8 +20,7 @@ Control* Control::currentFocusedControl = NULL;
 Control* Control::previousMouseOverControl = NULL;
 
 Control::Control():
-	peer_(NULL),
-	context_(NULL),
+	peer_(NULL),	
 	parent_(NULL),
 	aligment_(AlignNone),
 	anchor_(AnchorNone),
@@ -41,8 +40,6 @@ Control::Control():
 {
 	font_ = new Font();
 	*font_  = UIToolkit::getUIMetricsManager()->getDefaultFontFor( UIMetricsManager::ftControlFont );
-
-	context_ = new ControlGraphicsContext( this );
 
 	bounds_ = new Rect();
 	clientBounds_ = new Rect();
@@ -110,9 +107,6 @@ void Control::destroy()
 	clientBounds_ = NULL;
 	delete color_;
 	color_ = NULL;
-
-	delete context_;
-	context_ = NULL;
 
 	if ( NULL != font_ ){
 		font_->free();
@@ -427,14 +421,14 @@ void Control::setUsingRenderBuffer( const bool& useRenderBuffer )
 	}
 
 	if ( useRenderBuffer ) {
-		if ( NULL == context_->getRenderArea() ) {
-			context_->setRenderArea( getBounds() );
-		}
+//		if ( NULL == context_->getRenderArea() ) {
+//			context_->setRenderArea( getBounds() );
+//		}
 		repaint();
 	}
 	else {
 		//if ( NULL != context_->getRenderArea() ) {
-			context_->deleteRenderArea();
+//			context_->deleteRenderArea();
 		//}
 	}
 }
@@ -1334,10 +1328,6 @@ void Control::setCapturedMouseControl( Control* control )
 	Control::capturedMouseControl = control;
 }
 
-GraphicsContext* Control::getContext()
-{
-	return context_;
-}
 
 PopupMenu* Control::getPopupMenu()
 {

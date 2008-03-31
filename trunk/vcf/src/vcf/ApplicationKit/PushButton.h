@@ -350,17 +350,17 @@ protected:
 	@param const Rect& rect, the rectangle of the button. If the given rectangle is empy,
 	then the function returns the minimum rectangle containing both image and caption.
 	*/
-	virtual Rect calcCenterRect( const Rect& rect, GraphicsContext* context, Rect* captionRect=NULL, Rect* imageRect=NULL );
+	virtual Rect calcCenterRect( const Rect& rect, Rect* captionRect=NULL, Rect* imageRect=NULL );
 
 	/**
 	calculates the Rect where the caption should be placed inside the button
 	*/
-	virtual Rect calcCaptionRect( const Rect& rect, GraphicsContext* context );
+	virtual Rect calcCaptionRect( const Rect& rect );
 
 	/**
 	calculates the Rect where the image should be placed inside the button
 	*/
-	virtual Rect calcImageRect( const Rect& rect, GraphicsContext* context );
+	virtual Rect calcImageRect( const Rect& rect );
 
 	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
 protected:

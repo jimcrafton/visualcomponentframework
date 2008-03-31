@@ -105,16 +105,10 @@ Rect TitledBorder::getClientRect( Rect* initialBounds, Control* control )
 {
 	Rect result = *initialBounds;
 	
-	if ( NULL != control ) {
-		GraphicsContext* context = control->getContext();	
+	if ( NULL != control ) {		
 		result.inflate( -2.0, 0.0 );	
 		result.bottom_ -= 2.0;
-
-		Font oldFont = *context->getCurrentFont();
-		context->setCurrentFont( &font_ );
-
-		result.top_ += context->getTextHeight( "EM" );
-		context->setCurrentFont( &oldFont );
+		result.top_ += control->getFont()->getTextHeight( "EM" );
 	}
 	else {
 		result.inflate( -2.0, -2.0 );	

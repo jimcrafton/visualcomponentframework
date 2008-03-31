@@ -101,6 +101,7 @@ private:
 	HIMAGELIST largeImageListCtrl_;
 	HIMAGELIST smallImageListCtrl_;
 	HFONT oldHeaderFont_;
+	GraphicsContext* currentCtx_;
 
 	void onCtrlModelChanged( Event* e );
 	void onListModelChanged( Event* e );

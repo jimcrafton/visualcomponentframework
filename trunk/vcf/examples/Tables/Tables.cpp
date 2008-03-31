@@ -46,7 +46,7 @@ public:
 				}
 
 				if ( y == 10 && x == 5 ) {
-					Font font = table->getItem( y, x )->getFont();
+					Font font = *table->getDefaultTableCellFont();
 					font.setName( "Times New Roman" );
 					font.setPointSize( 12.6 );
 					font.setBold( true );

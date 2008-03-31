@@ -123,14 +123,8 @@ void TabbedPages::recalcScrollerButtonsPos()
 double TabbedPages::getTabPageWidth( TabPage* page, GraphicsContext* ctx )
 {
 	double result;
-
-	GraphicsContext* ctxToUse = ctx;
-
-	if ( NULL == ctxToUse ) {
-		ctxToUse = getContext();
-	}
-
-	result = ctxToUse->getTextWidth( page->getPageName() ) + 5.0 + tabHeight_;
+	
+	result = getFont()->getTextWidth( page->getPageName() ) + 5.0 + tabHeight_;
 
 	return result;
 }

@@ -202,7 +202,7 @@ public:
 	the enumerator does not reflect the order in which the properties were added.
 	*/
 	Enumerator<Property*>* getProperties() const {
-		return propertyContainer_.getEnumerator();
+		return properties_.getEnumerator();
 	};
 
 	/**
@@ -210,7 +210,7 @@ public:
 	the enumerator does not reflect the order in which the fields were added.
 	*/
 	Enumerator<Field*>* getFields() const {
-		return fieldContainer_.getEnumerator();
+		return fields_.getEnumerator();
 	};
 
 	/**
@@ -218,7 +218,7 @@ public:
 	the enumerator does not reflect the order in which the properties were added.
 	*/
 	Enumerator<Method*>* getMethods() const {
-		return methodContainer_.getEnumerator();
+		return methods_.getEnumerator();
 	};
 
 
@@ -318,7 +318,7 @@ public:
 	the enumerator does not reflect the order in which the events were added.
 	*/
 	Enumerator<DelegateProperty*>* getDelegates() const {
-		return delegateContainer_.getEnumerator();
+		return delegates_.getEnumerator();
 	};
 
 	/**
@@ -331,7 +331,7 @@ public:
 	Returns an enumeration of interfaces implemented by this class
 	*/
 	Enumerator<InterfaceClass*>* getInterfaces() const {
-		return interfaceContainer_.getEnumerator();
+		return interfaces_.getEnumerator();
 	}
 
 	uint32 getInterfaceCount() const ;
@@ -390,20 +390,11 @@ private:
 	String classID_;
 	String superClassName_;
 	mutable Class* superClass_;
-	std::map<String,Property*> properties_;
-	EnumeratorMapContainer<std::map<String,Property*>,Property*> propertyContainer_;
-
-	std::map<String,Field*> fields_;
-	EnumeratorMapContainer<std::map<String,Field*>,Field*> fieldContainer_;
-
-	std::map<String,Method*> methods_;
-	EnumeratorMapContainer<std::map<String,Method*>,Method*> methodContainer_;
-
-	std::map<String, DelegateProperty*> delegates_;
-	EnumeratorMapContainer<std::map<String,DelegateProperty*>,DelegateProperty*> delegateContainer_;
-
-	std::map<String, InterfaceClass*> interfaces_;
-	EnumeratorMapContainer<std::map<String,InterfaceClass*>,InterfaceClass*> interfaceContainer_;
+	Map<String,Property*> properties_;
+	Map<String,Field*> fields_;
+	Map<String,Method*> methods_;
+	Map<String, DelegateProperty*> delegates_;
+	Map<String, InterfaceClass*> interfaces_;
 
 };
 

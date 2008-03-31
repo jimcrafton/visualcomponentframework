@@ -96,7 +96,7 @@ uint32 DefaultTabPage::getPreferredHeight()
 	uint32 result = preferredHeight_;
 	TabSheet* control = getTabSheet();
 	if ( NULL != control ) {
-		result = (uint32)control->getContext()->getTextHeight( "EM" );
+		result = (uint32)control->getFont()->getTextHeight( "EM" );
 	}
 	return result;
 }

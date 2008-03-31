@@ -18,12 +18,6 @@ Class::Class( const String& className, const String& classID, const String& supe
 	classID_ = classID;
 	superClass_ = NULL;
 	superClassName_ = superClass;
-	propertyContainer_.initContainer( properties_ );
-	delegateContainer_.initContainer( delegates_ );
-	interfaceContainer_.initContainer( interfaces_ );
-	methodContainer_.initContainer(methods_);
-	fieldContainer_.initContainer(fields_);
-
 }
 
 Class::~Class()

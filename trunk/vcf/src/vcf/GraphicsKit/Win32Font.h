@@ -89,6 +89,10 @@ public:
 
 	virtual bool isFixedPitch();
 
+	virtual Size getTextSize( const String& text );
+
+	virtual void updateLocaleSettings();
+
 	/**
 	*returns a GlyphCollection that represents the set of shapes
 	*for the specified text string.

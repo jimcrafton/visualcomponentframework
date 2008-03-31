@@ -249,18 +249,15 @@ protected:
 	*/
 	static ClassRegistry* getClassRegistry();
 
-	EnumeratorMapContainer<std::map<String,Class*>,Class*> classContainer_;
-	EnumeratorMapContainer<std::map<String,InterfaceClass*>,InterfaceClass*> interfaceContainer_;
-
 	/**
 	*a map of all the classes in the ClassRegistry. keyed by the class name
 	*/
-	std::map<String,Class*> classMap_;
+	Map<String,Class*> classMap_;
 
 	/**
 	*a map of all the interfaces in the ClassRegistry. keyed by the interface name
 	*/
-	std::map<String,InterfaceClass*> interfaceMap_;
+	Map<String,InterfaceClass*> interfaceMap_;
 
 	/**
 	*a map of all the classes in the ClassRegistry. keyed by the classID

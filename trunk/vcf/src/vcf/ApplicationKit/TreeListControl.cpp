@@ -62,7 +62,7 @@ void TreeListControl::init()
 
 	addComponent( getViewModel() );
 
-	itemHeight_ = getContext()->getTextHeight("EM") + 2.0;
+	itemHeight_ = getFont()->getTextHeight("EM") + 2.0;
 	itemIndent_ = 19;
 	stateItemIndent_ = 19;
 
@@ -777,9 +777,8 @@ TreeItem* TreeListControl::hitTest( Point* pt, TreeItem* itemToTest )
 				}
 				*/
 			}
-			else {
-				GraphicsContext* ctx = getContext();
-				double w = ctx->getTextWidth( itemToTest->getCaption() );
+			else {				
+				double w = getFont()->getTextWidth( itemToTest->getCaption() );
 				Rect tmp = itemToTest->getBounds();
 				tmp.right_ = tmp.left_ + w + getCurrentIndent(itemToTest) ;
 				if ( true == tmp.containsPt( pt ) ) {
@@ -1526,7 +1525,7 @@ void TreeListControl::mouseMove( MouseEvent* event )
 		
 		!!!!!!!HACK!!!!!!!
 		*/
-		GraphicsContext* context = getContext();
+		/*
 		DrawUIState state;
 		state.setActive( true );
 		context->drawThemeSelectionRect( &dragSelectionRect_, state );
@@ -1537,6 +1536,7 @@ void TreeListControl::mouseMove( MouseEvent* event )
 		dragSelectionRect_.normalize();
 
 		context->drawThemeSelectionRect( &dragSelectionRect_, state );
+		*/
 
 		bool needsRepaint = false;
 
@@ -1591,6 +1591,7 @@ void TreeListControl::mouseUp( MouseEvent* event )
 {
 	CustomControl::mouseUp( event );
 	if ( (true == event->hasLeftButton()) && (true == draggingSelectionRect_) ) {
+		/*
 		GraphicsContext* context = getContext();
 		DrawUIState state;
 		state.setActive(true);
@@ -1603,6 +1604,7 @@ void TreeListControl::mouseUp( MouseEvent* event )
 
 		context->drawThemeSelectionRect( &dragSelectionRect_, state );
 		context->drawThemeSelectionRect( &dragSelectionRect_, state );
+		*/
 		repaint();
 	}
 }

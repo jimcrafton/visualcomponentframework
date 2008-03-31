@@ -2344,12 +2344,11 @@ bool TableControl::autoSizeColumn( int column, AutoSizeOption autoSizeStyle/*=as
     int startRow = (autoSizeStyle & TableControl::asoHeader)? 0 : tm->getFixedRowsCount();
     int endRow   = (autoSizeStyle & TableControl::asoData)? tm->getRowCount()-1 : tm->getFixedRowsCount()-1;
 
-	GraphicsContext* ctx = getContext();
 	double width = 0;
 
 	for (int row = startRow; row <= endRow; row++)  {
         TableCellItem* cell = getItem( row, column );
-		width = cell->getTextCellWidth( ctx );
+		width = cell->getTextCellWidth();
 
 		if ( width > columnWidth ) {
             columnWidth = width;
@@ -2385,13 +2384,13 @@ bool TableControl::autoSizeRow( int row, bool resetScroll /*=true*/)
     int rowHeight = 0;
     int columnCount = tm->getColumnCount();
 
-	GraphicsContext* ctx = getContext();
+	
 	double height = 0;
 
     for (int col = 0; col < columnCount; col++) {
 		TableCellItem* cell = getItem( row, col );
 
-        height = cell->getTextCellHeight( ctx );
+        height = cell->getTextCellHeight();
 
         if ( height > rowHeight) {
             rowHeight = height;

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="ThreadMeth"
-	ProjectGUID="{AED0797F-074A-4AF6-AE68-6BA013B8E313}"
-	RootNamespace="ThreadMeth"
+	ProjectGUID="{FD239C81-BEDB-497D-8DD3-F96BE7B17045}"
+	TargetFrameworkVersion="0"
 	>
 	<Platforms>
 		<Platform
@@ -76,13 +76,15 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\Debug/ThreadMethods.exe"
+				OutputFile="Debug\ThreadMeth_vc6.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_ROOT)/lib"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\Debug/ThreadMethods.pdb"
+				ProgramDatabaseFile=".\Debug/ThreadMeth_vc6.pdb"
 				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -104,9 +106,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -145,7 +144,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
+				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_INCLUDE)"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;USE_FOUNDATIONKIT_DLL"
@@ -174,12 +173,14 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
-				OutputFile=".\Release/ThreadMethods.exe"
+				OutputFile="Release\ThreadMeth_vc6.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="$(VCF_LIB)"
-				ProgramDatabaseFile=".\Release/ThreadMethods.pdb"
+				ProgramDatabaseFile=".\Release/ThreadMeth_vc6.pdb"
 				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -201,9 +202,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -244,6 +242,18 @@
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl"
 			>
+			<File
+				RelativePath="Delegates.h"
+				>
+			</File>
+			<File
+				RelativePath="ThreadedFunctions.h"
+				>
+			</File>
+			<File
+				RelativePath="ThreadPool.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -251,6 +261,4 @@
 			>
 		</Filter>
 	</Files>
-	<Globals>
-	</Globals>
 </VisualStudioProject>

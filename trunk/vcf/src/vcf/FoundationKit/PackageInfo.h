@@ -109,14 +109,11 @@ protected:
 	String sharedLibName_;
 	int32 linkageFlags_;
 
-	std::vector<String> requiredStaticLibs_;
-	EnumeratorContainer<std::vector<String>,String> reqStaticLibsContainer_;
+	Array<String> requiredStaticLibs_;
 
-	std::vector<String> requiredSharedLibs_;
-	EnumeratorContainer<std::vector<String>,String> reqSharedLibsContainer_;
+	Array<String> requiredSharedLibs_;
 
-	std::vector<String> supportedPlatforms_;
-	EnumeratorContainer<std::vector<String>,String> supportedPlatformsContainer_;
+	Array<String> supportedPlatforms_;
 };
 
 
@@ -140,8 +137,7 @@ private:
 
 	static PackageManager* pkgMgrInstance;
 
-	std::vector<VCF::PackageInfo*> packages_;
-	VCF::EnumeratorContainer<std::vector<VCF::PackageInfo*>,VCF::PackageInfo*> packagesContainer_;
+	Array<VCF::PackageInfo*> packages_;
 
 };
 
