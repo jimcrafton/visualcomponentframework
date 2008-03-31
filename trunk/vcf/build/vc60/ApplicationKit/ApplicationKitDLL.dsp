@@ -634,6 +634,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\UndoRedoStack.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32DropDownPeer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32UIShell.cpp
 # End Source File
 # Begin Source File

@@ -188,7 +188,7 @@ public:
 	}
 
 	void onToolTipRequested( ToolTipEvent* e ) {
-		e->setToolTipString( "Unknown color" );
+		e->tooltipString = "Unknown color" ;
 		Point pt = UIShell::getUIShell()->getCurrentMousePosition();
 
 		translateFromScreenCoords( &pt );
@@ -216,8 +216,8 @@ public:
 				int g = color->getGreen() * 255.0;
 				int b = color->getBlue() * 255.0;
 
-				e->setToolTipString( Format("Color name: %s, #%02X%02X%02X") %
-										colorName % r % g % b ) ;
+				e->tooltipString = Format("Color name: %s, #%02X%02X%02X") %
+										colorName % r % g % b  ;
 				break;
 			}
 
@@ -585,10 +585,10 @@ public:
 
 		TabbedPages* tabs = new TabbedPages();
 
-		tabs->addNewPage( "System Colors" )->getPageComponent()->getContainer()->add( new SysColorsPanel(), AlignClient );
-		tabs->addNewPage( "Standard Colors" )->getPageComponent()->getContainer()->add( new StandardColorsPanel(), AlignClient );
-		tabs->addNewPage( "RGB Colors" )->getPageComponent()->getContainer()->add( new RGBPanel(), AlignClient );
-		tabs->addNewPage( "HSL Colors" )->getPageComponent()->getContainer()->add( new HSLPanel(), AlignClient );
+		tabs->addNewPage( "System Colors" )->getTabSheet()->getContainer()->add( new SysColorsPanel(), AlignClient );
+		tabs->addNewPage( "Standard Colors" )->getTabSheet()->getContainer()->add( new StandardColorsPanel(), AlignClient );
+		tabs->addNewPage( "RGB Colors" )->getTabSheet()->getContainer()->add( new RGBPanel(), AlignClient );
+		tabs->addNewPage( "HSL Colors" )->getTabSheet()->getContainer()->add( new HSLPanel(), AlignClient );
 
 
 

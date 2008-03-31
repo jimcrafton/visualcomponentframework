@@ -97,10 +97,10 @@ public:
 		return columns_.size();
 	}
 
-	void setColumnWidth( const uint32& index, const double& width ) {
-		size_t missing = (index+1) - columns_.size();		
+	void setColumnWidth( const uint32& index, const double& width ) {		
+		if ( (index+1) > columns_.size() ) {
+			size_t missing = (index+1) - columns_.size();
 		
-		if ( missing > 0 ) {
 			columns_.resize( missing + columns_.size() );
 			columnTweens_.resize( columns_.size()-1, 0.0 );
 		}		

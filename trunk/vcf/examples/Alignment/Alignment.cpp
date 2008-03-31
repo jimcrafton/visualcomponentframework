@@ -185,17 +185,18 @@ public:
 
 
 		TreeControl* tc = new TreeControl();
+		TreeModel* tm = tc->getTreeModel();
 		tc->setHeight( 100 );
-		tc->addItem( NULL, "asdasd", 0 );
-		tc->addItem( NULL, "asdasd", 0 );
-		tc->addItem( NULL, "asdasd", 0 );
-		tc->addItem( NULL, "asdasd", 0 );
-		tc->addItem( NULL, "asdasd", 0 );
-		tc->addItem( NULL, "asdasd", 0 );
-		tc->addItem( NULL, "asdasd", 0 );
-		tc->addItem( NULL, "asdasd", 0 );
-		tc->addItem( NULL, "asdasd", 0 );
-		tc->addItem( NULL, "asdasd", 0 );
+		tm->insert( "asdasd" );
+		tm->insert( "asdasd" );
+		tm->insert( "asdasd" );
+		tm->insert( "asdasd" );
+		tm->insert( "asdasd" );
+		tm->insert( "asdasd" );
+		tm->insert( "asdasd" );
+		tm->insert( "asdasd" );
+		tm->insert( "asdasd" );
+		tm->insert( "asdasd" );
 
 		tc->getFont()->setName( "Tahoma" );
 		//f = *tc->getFont();
