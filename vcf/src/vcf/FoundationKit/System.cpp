@@ -24,18 +24,13 @@ static std::map<String,String> cachedResourceDirMap;
 
 System* System::getInstance()
 {
-	if ( NULL == System::systemInstance ) {
-		//System::create();
-	}
-
 	return System::systemInstance;
 }
 
 System* System::create()
 {
 	if ( NULL == System::systemInstance ) {
-		System::systemInstance = new System();		
-		//System::systemInstance->init();
+		System::systemInstance = new System();
 	}
 
 	return System::systemInstance;

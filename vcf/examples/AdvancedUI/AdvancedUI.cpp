@@ -76,14 +76,7 @@ public:
 		Rect result = *initialBounds;
 
 		result.inflate( -1, -1 );
-		GraphicsContext* ctx = control->getContext();
-		Font old = *ctx->getCurrentFont();
-
-		ctx->setCurrentFont(&titleFont_);
-
-		result.top_ += ctx->getTextHeight( "EM" );
-
-		ctx->setCurrentFont(&old);
+		result.top_ += titleFont_.getTextHeight( "EM" );
 
 		return result;
 	}
@@ -118,13 +111,11 @@ public:
 
 	}
 
-	virtual bool canPaint() {
+	virtual bool canPaint() const {
 		return true;
 	}
 
 	virtual void paint( GraphicsContext* ctx, Rect* paintRect ) {
-
-		//DefaultTreeItem::paint( ctx, paintRect );
 
 		int gcs = ctx->saveState();
 		ctx->getCurrentFont()->setPointSize( 10 );
@@ -170,7 +161,7 @@ public:
 };
 
 
-class TemplateItem : public DefaultListItem {
+class TemplateItem : public ListItem {
 public:
 	String getComments() {
 		return comments_;
@@ -257,7 +248,7 @@ public:
 		container->setMaximizeLastRow( true );
 		container->setBorderWidth( 15 );
 		container->setColumnTweenWidth( 0, 55 );
-		container->setColumnWidth( 0, 275 );
+		container->setColumnWidth( 0, 300 );
 		container->setRowSpacerHeight( 15 );
 
 		setContainer( container );
@@ -291,27 +282,27 @@ public:
 
 		categories_->getFont()->setName( "Tahoma" );
 		categories_->getFont()->setBold( true );
-		categories_->getFont()->setPointSize( 12 );
+		categories_->getFont()->setPointSize( 11 );
 		categories_->getFont()->setColor( Color::getColor("blue") );
 
 		CategoryItem* selectedCat = NULL;
 		TemplateItem* selectedTempl = NULL;
 
 		CategoryItem* item = new CategoryItem();
-		categories_->getTreeModel()->addNodeItem( item );
+		categories_->insertItem( NULL, item );
 		item->setCaption( "Block Diagrams" );
 
 		item = new CategoryItem();
-		categories_->getTreeModel()->addNodeItem( item );
+		categories_->insertItem( NULL, item );
 		item->setCaption( "Really Big Block Diagrams" );
 		selectedCat = item;
 
 		item = new CategoryItem();
-		categories_->getTreeModel()->addNodeItem( item );
+		categories_->insertItem( NULL, item );
 		item->setCaption( "Really Ugly Diagrams" );
 
 		item = new CategoryItem();
-		categories_->getTreeModel()->addNodeItem( item );
+		categories_->insertItem( NULL, item );
 		item->setCaption( "Tea and Crumpets Diagrams" );
 
 
@@ -340,14 +331,14 @@ public:
 		templateItem->setImageIndex( 0 );
 		templateItem->setComments( "Creates structures relevant to value-add propositions within the relevant vertical Oggle markets." );
 
-		templates_->setListItem( 0, templateItem );
+		templates_->setItem( 0, templateItem );
 
 		templateModel->add( "Sub Tactical Design" );
 
 		templateItem = new TemplateItem();
 		templateItem->setImageIndex( 1 );
 		templateItem->setComments( "A refreshing look at non capital markets in Design fetish UML." );
-		templates_->setListItem( 1, templateItem );
+		templates_->setItem( 1, templateItem );
 
 		selectedTempl = templateItem;
 		
@@ -357,7 +348,7 @@ public:
 		templateItem->setImageIndex( 2 );
 		templateItem->setComments( "Secure application design and structures through the use of 4 dimensionsal Dongles." );
 
-		templates_->setListItem( 2, templateItem );
+		templates_->setItem( 2, templateItem );
 
 
 		templates_->ItemSelectionChanged +=
@@ -433,7 +424,7 @@ public:
 		Rect itemRect;
 
 		if ( NULL != categories_->getSelectedItem() ) {
-			itemRect = categories_->getItemRect( categories_->getSelectedItem() );
+			itemRect = categories_->getItemRect( categories_->getSelectedItem()->getKey() );
 		}
 
 		categories_->translateToScreenCoords( &itemRect );

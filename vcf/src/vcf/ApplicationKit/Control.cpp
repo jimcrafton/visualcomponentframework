@@ -744,6 +744,13 @@ void Control::handleEvent( Event* event )
 				Point tmpPt = *mouseEvent->getPoint();
 				Point origPt = *mouseEvent->getPoint();				
 
+				MouseUp( mouseEvent );
+
+				//turn off normal mouse behaviour in design mode
+				if ( !event->isConsumed() && !isDesigning() ) {
+					mouseUp( mouseEvent );
+				}
+
 				if ( clickPt_.closeTo( tmpPt.x_, tmpPt.y_, 2 ) ){
 
 					
