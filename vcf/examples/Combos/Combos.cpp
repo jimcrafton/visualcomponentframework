@@ -3,8 +3,34 @@
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ControlsKit.h"
+#include "vcf/ApplicationKit/DropDownPeer.h"
+#include "vcf/ApplicationKit/ApplicationKitPrivate.h"
+#include "vcf/ApplicationKit/Win32DropDownPeer.h"
+
+
 
 using namespace VCF;
+
+
+class MyCombo : public Control {
+public:
+	MyCombo(): Control(),dropDownPeer_(NULL) { 
+		dropDownPeer_ = new Win32DropDownPeer();
+
+		peer_ = dynamic_cast<ControlPeer*>( dropDownPeer_ );
+
+		peer_->create(this);
+	}
+
+	virtual void paint( GraphicsContext* ctx ) {
+		
+	}
+
+	DropDownPeer* dropDownPeer_;
+};
+
+
+
 
 class CombosApplication : public Application {
 public:
@@ -66,6 +92,18 @@ MainWindow::MainWindow(CombosApplication* app)
 	cb_->setDropDownCount( 200 );
 	add( cb_ );
 
+
+
+
+	MyCombo* combo = new MyCombo();
+	combo->setBounds( &Rect(375, 50, 450, cb_->getPreferredHeight()) );
+	add( combo );
+
+
+
+
+
+
 	VCF::CommandButton* btn;
 	CallBack* bh;
 
@@ -76,6 +114,10 @@ MainWindow::MainWindow(CombosApplication* app)
 	add( eddc_ );
 
 	btn = new CommandButton();
+
+
+
+
 
 	btn->setCaption( "Set DropDown Count" );
 	btn->setBounds ( 100, 20, btn->getPreferredWidth(), btn->getPreferredHeight() );	

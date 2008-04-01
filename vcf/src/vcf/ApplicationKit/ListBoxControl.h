@@ -56,7 +56,7 @@ public:
 
 	void init();
 	
-	virtual void setViewModel( Model* viewModel );
+	virtual void modelChanged( Model* oldModel, Model* newModel ); 
 
 	ListModel* getListModel();
 	void setListModel(ListModel* listModel);

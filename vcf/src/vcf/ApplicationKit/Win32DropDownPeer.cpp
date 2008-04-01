@@ -6,6 +6,7 @@
 #include "vcf/ApplicationKit/ApplicationKitPrivate.h"
 #include "vcf/ApplicationKit/DropDownPeer.h"
 #include "vcf/ApplicationKit/Win32DropDownPeer.h"
+#include "vcf/ApplicationKit/ListModel.h"
 
 
 
@@ -59,8 +60,22 @@ void Win32DropDownPeer::create( Control* owningControl )
 	}
 
 	if ( NULL != hwnd_ ){
+		peerControl_ = owningControl;
+
 		Win32Object::registerWin32Object( this );
 
+		subclassWindow();
+		registerForFontChanges();
+
+		CallBack* cb = 
+			new ClassProcedure1<Event*,Win32DropDownPeer>( this, &Win32DropDownPeer::onCtrlModelChanged, "Win32DropDownPeer::onCtrlModelChanged" );
+
+		owningControl->ControlModelChanged += cb;
+
+		cb = 
+			new ClassProcedure1<Event*,Win32DropDownPeer>( this, &Win32DropDownPeer::onListModelChanged, "Win32DropDownPeer::onListModelChanged" );
+
+		setCreated( true );
 	}
 }
 
@@ -105,7 +120,7 @@ String Win32DropDownPeer::getEditText()
 
 void Win32DropDownPeer::setDropDownWidth( double val )
 {
-
+	//CB_SETDROPPEDWIDTH
 }
 
 double Win32DropDownPeer::getDropDownWidth()
@@ -116,4 +131,19 @@ double Win32DropDownPeer::getDropDownWidth()
 void Win32DropDownPeer::setDropDownCount( const uint32& dropDownCount )
 {
 
+}
+
+void Win32DropDownPeer::onCtrlModelChanged( Event* e )
+{
+ 	Model* model = peerControl_->getViewModel();
+	model->ModelChanged += getCallback( "Win32DropDownPeer::onListModelChanged" );		
+}
+
+void Win32DropDownPeer::onListModelChanged( Event* e )
+{
+	ListModel* lm = (ListModel*)e->getSource();
+
+	
+	
+	InvalidateRect( hwnd_, NULL, TRUE );
 }

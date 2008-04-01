@@ -39,6 +39,10 @@ namespace VCF {
 
 		virtual void setDropDownCount( const uint32& dropDownCount );
 
+	protected:
+		void onCtrlModelChanged( Event* e );
+		void onListModelChanged( Event* e );
+
 	};
 
 };
