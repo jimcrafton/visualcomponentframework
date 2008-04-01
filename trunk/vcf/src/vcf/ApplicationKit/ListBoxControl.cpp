@@ -107,11 +107,11 @@ void ListBoxControl::setListModel(ListModel* listModel)
 	setViewModel( listModel );
 }
 
-void ListBoxControl::setViewModel( Model* viewModel )
+void ListBoxControl::modelChanged( Model* oldModel, Model* newModel )
 {
 	ListModel* lm = NULL;
-	if ( NULL != viewModel ) {
-		lm = dynamic_cast<ListModel*>( viewModel );
+	if ( NULL != newModel ) {
+		lm = dynamic_cast<ListModel*>( newModel );
 		VCF_ASSERT( lm != NULL );
 		if ( NULL == lm ) {
 			throw RuntimeException( "Invalid Model type being assigned to this control." );
@@ -119,7 +119,7 @@ void ListBoxControl::setViewModel( Model* viewModel )
 	}
 
 	
-	lm = (ListModel*) getViewModel();
+	lm = (ListModel*) oldModel;
 	if ( NULL != lm ) {
 		EventHandler* ev = (EventHandler*)getCallback( "ListBoxControl::onItemAdded" );
 		if ( NULL != ev ) {
@@ -146,12 +146,10 @@ void ListBoxControl::setViewModel( Model* viewModel )
 		item->free();
 		++it;
 	}
-	
-	CustomControl::setViewModel( viewModel );
 
 
-	if ( NULL != viewModel ) {
-		lm = (ListModel*) viewModel;
+	if ( NULL != newModel ) {
+		lm = (ListModel*) newModel;
 		
 		EventHandler* lmh = (EventHandler*)
 			new ClassProcedure1<ListModelEvent*,ListBoxControl>( this, &ListBoxControl::onItemAdded, "ListBoxControl::onItemAdded" );
