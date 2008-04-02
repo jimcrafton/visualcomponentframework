@@ -13,10 +13,12 @@ where you installed the VCF.
 #   pragma once
 #endif
 
-
+#ifndef _VCF_LISTPEER_H__
+#include "vcf/ApplicationKit/ListPeer.h"
+#endif 
 
 namespace VCF {
-	class APPLICATIONKIT_API DropDownPeer {
+	class APPLICATIONKIT_API DropDownPeer : public ListPeer {
 	public:
 		virtual ~DropDownPeer(){}
 
