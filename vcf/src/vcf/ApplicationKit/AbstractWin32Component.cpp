@@ -345,16 +345,7 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 {
 	HDC result = NULL;
 
-	if ( !peerControl_->isDestroying() ) {
-		
-		if ( NULL == memDC_ ) {
-			// we need a memory HDC, so we create it here one compatible 
-			// with the HDC of the entire screen
-			HDC dc = ::GetDC(0);
-			memDC_ = ::CreateCompatibleDC( dc );
-			::ReleaseDC( 0,	dc );
-		}					
-		
+	if ( !peerControl_->isDestroying() ) {	
 		
 		ControlGraphicsContext ctrlCtx(peerControl_);
 		GraphicsContext* ctx = &ctrlCtx;
@@ -367,8 +358,21 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 		
 		if ( peerControl_->isUsingRenderBuffer() && 
 				!viewableRect.isNull() && 
-				!viewableRect.isEmpty() &&
-				(NULL != renderArea) ) {
+				!viewableRect.isEmpty() /*&&
+				(NULL != renderArea)*/ ) {
+
+/*
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+VERY VERY SLOOOOOOWWWWW!!!! 
+We need to revamp this when we are using the render buffer
+wee need to cache something here and just blit out the contents
+unless we resize the control or there's some other indicator
+that the control needs a real paint cycle.
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+*/
+
 
 			((ControlGraphicsContext*)ctx)->setOwningControl( NULL );
 
@@ -427,6 +431,15 @@ HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* e
 			result = paintDC;
 		}
 		else if ( true == peerControl_->isDoubleBuffered() ) {
+
+			if ( NULL == memDC_ ) {
+				// we need a memory HDC, so we create it here one compatible 
+				// with the HDC of the entire screen
+				HDC dc = ::GetDC(GetDesktopWindow());
+				memDC_ = ::CreateCompatibleDC( dc );
+				::ReleaseDC( GetDesktopWindow(), dc );
+			}
+
 
 			Rect dirtyRect( paintRect.left,paintRect.top,paintRect.right,paintRect.bottom);
 			

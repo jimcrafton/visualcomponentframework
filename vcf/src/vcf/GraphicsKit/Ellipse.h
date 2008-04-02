@@ -42,40 +42,73 @@ public:
 		ellipsePath_.concat_path(xfrmdPath);
 	}
 
-	virtual bool contains( const Rect& rect) {
+	virtual bool contains( const Rect& rect, Matrix2D* transform=NULL) {
+		agg::trans_affine mat;
+		if ( NULL != transform ) {
+			mat = *transform;
+		}
+
 		agg::rasterizer_scanline_aa<> rasterizer;
-		agg::conv_curve<agg::path_storage> smooth(ellipsePath_);
+		agg::conv_transform< agg::path_storage > xfrmedPath(ellipsePath_,mat);
+		agg::conv_curve< agg::conv_transform< agg::path_storage > > smooth(xfrmedPath);
 		rasterizer.add_path( smooth );
 
 		Point topLeft = rect.getTopLeft();
 		Point bottomRight = rect.getTopLeft();
 
+		ellipsePath_.rewind(0);
+
 		return rasterizer.hit_test( (unsigned int)bottomRight.x_, (unsigned int)bottomRight.y_ ) && rasterizer.hit_test( (unsigned int)topLeft.x_, (unsigned int)topLeft.y_ );
 	}
 
-    virtual bool contains( const Point& pt ) {
+    virtual bool contains( const Point& pt, Matrix2D* transform=NULL ) {
+		agg::trans_affine mat;
+		if ( NULL != transform ) {
+			mat = *transform;
+		}
+
 		agg::rasterizer_scanline_aa<> rasterizer;
-		agg::conv_curve<agg::path_storage> smooth(ellipsePath_);
+		agg::conv_transform< agg::path_storage > xfrmedPath(ellipsePath_,mat);
+		agg::conv_curve< agg::conv_transform< agg::path_storage > > smooth(xfrmedPath);
 		rasterizer.add_path( smooth );
+
+		ellipsePath_.rewind(0);
 
 		return rasterizer.hit_test( (unsigned int)pt.x_, (unsigned int)pt.y_ );
 	}
 
-    virtual bool intersects( const Point& pt ) {
+    virtual bool intersects( const Point& pt, Matrix2D* transform=NULL ) {
+		agg::trans_affine mat;
+		if ( NULL != transform ) {
+			mat = *transform;
+		}
+
 		agg::rasterizer_scanline_aa<> rasterizer;
-		agg::conv_curve<agg::path_storage> smooth(ellipsePath_);
-		agg::conv_stroke<agg::conv_curve<agg::path_storage> >  stroke(smooth);
+		agg::conv_transform< agg::path_storage > xfrmedPath(ellipsePath_,mat);
+		agg::conv_curve< agg::conv_transform< agg::path_storage > > smooth(xfrmedPath);
+		agg::conv_stroke< agg::conv_curve< agg::conv_transform< agg::path_storage > > >  stroke(smooth);
 		stroke.width( 2 );
+
+		ellipsePath_.rewind(0);
 
 		rasterizer.add_path( stroke );
 		return rasterizer.hit_test( (unsigned int)pt.x_, (unsigned int)pt.y_ );
 	}
 
-    virtual bool intersects( const Rect& rect ) {
+    virtual bool intersects( const Rect& rect, Matrix2D* transform=NULL ) {
+		agg::trans_affine mat;
+		if ( NULL != transform ) {
+			mat = *transform;
+		}
+
 		agg::rasterizer_scanline_aa<> rasterizer;
-		agg::conv_curve<agg::path_storage> smooth(ellipsePath_);
+		agg::conv_transform< agg::path_storage > xfrmedPath(ellipsePath_,mat);
+		agg::conv_curve< agg::conv_transform< agg::path_storage > > smooth(xfrmedPath);
+		agg::conv_stroke< agg::conv_curve< agg::conv_transform< agg::path_storage > > >  stroke(smooth);
 		rasterizer.add_path( smooth );
 		
+		ellipsePath_.rewind(0);
+
 		if ( rasterizer.hit_test( (unsigned int)rect.left_, (unsigned int)rect.top_ ) ) {
 			return true;
 		}
@@ -104,6 +137,7 @@ public:
 						&result.left_, &result.top_,
 						&result.right_, &result.bottom_ );
 
+		ellipsePath_.rewind(0);
 		return result;
 	}
 
@@ -128,25 +162,29 @@ public:
 			switch ( vertCmd ) {
 				case agg::path_cmd_move_to : {
 					pt.type_ = PathPoint::ptMoveTo;
+					points.push_back( pt );
 				}
 				break;
 
 				case agg::path_cmd_line_to : {
 					pt.type_ = PathPoint::ptLineTo;
+					points.push_back( pt );
 				}
 				break;
 
 				default : {
 					if ( vertCmd & agg::path_flags_close ) {
 						pt.type_ = PathPoint::ptClose;
+						points.push_back( pt );
 					}
 				}
 				break;
 			}
 
-			points.push_back( pt );
+			
 		}
 
+		ellipsePath_.rewind(0);
 
 		return !points.empty();
 	}

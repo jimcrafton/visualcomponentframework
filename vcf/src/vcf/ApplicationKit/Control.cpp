@@ -485,12 +485,6 @@ void Control::setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating )
 		peer_->setBounds( bounds_ );
 	}
 
-	if ( isUsingRenderBuffer() ) {
-//		if ( NULL == context_->getRenderArea() ) {
-			//context_->setRenderArea( *bounds_ );
-//		}
-	}
-
 	if ( true == anchorDeltasNeedUpdating ) {
 		updateAnchorDeltas();
 	}
@@ -653,12 +647,7 @@ void Control::handleEvent( Event* event )
 
 				if (!event->isConsumed() && !isDesigning()) {
 					sizeChange( controlEvent );
-				}
-
-				if ( isUsingRenderBuffer() ) {
-					Rect bounds = getClientBounds(false);
-					//context_->setRenderArea( bounds );						
-				}				
+				}			
 			}
 			break;
 
@@ -1283,17 +1272,11 @@ void Control::afterCreate( ComponentEvent* event )
 void Control::repaint( Rect* repaintRect )
 {	
 	peer_->repaint( repaintRect, false );
-	//if ( isUsingRenderBuffer() ) {
-	//	context_->markRenderAreaDirty();
-	///}
 }
 
 void Control::repaintNow( Rect* repaintRect )
 {
 	peer_->repaint( repaintRect, true );
-	//if ( isUsingRenderBuffer() ) {
-	//	context_->markRenderAreaDirty();
-	//}
 }
 
 bool Control::isDoubleBuffered()

@@ -177,6 +177,8 @@ public:
 
 	void apply( double& x, double& y ) const;
 
+	Rect apply( Rect* rect ) const;
+
 	/**
 	*is the current matrix instance equal to the object passed in ?
 	*where hopefully the object is a pointer to a Matrix2D instance.

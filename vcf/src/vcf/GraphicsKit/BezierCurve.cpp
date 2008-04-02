@@ -38,8 +38,16 @@ void BezierCurve::applyTransform( const Matrix2D& transform )
 }
 
 
-bool BezierCurve::contains( const Rect& rect )
+bool BezierCurve::contains( const Rect& rect, Matrix2D* transform )
 {
+	if ( points_.empty() ) {
+		return false;
+	}
+
+	agg::trans_affine mat;
+	if ( NULL != transform ) {
+		mat = *transform;
+	}
 	agg::rasterizer_scanline_aa<> rasterizer;
 	agg::path_storage path;
 
@@ -90,8 +98,9 @@ bool BezierCurve::contains( const Rect& rect )
 
 		it ++;
 	}
-	agg::conv_curve<agg::path_storage> smooth(path);
-	//agg::conv_stroke<agg::conv_curve<agg::path_storage> >  stroke(smooth);
+
+	agg::conv_transform< agg::path_storage > xfrmedPath(path,mat);
+	agg::conv_curve< agg::conv_transform< agg::path_storage > > smooth(xfrmedPath);	
 
 	rasterizer.add_path( smooth );
 
@@ -101,8 +110,17 @@ bool BezierCurve::contains( const Rect& rect )
 	return rasterizer.hit_test( (unsigned int)bottomRight.x_, (unsigned int)bottomRight.y_ ) && rasterizer.hit_test( (unsigned int)topLeft.x_, (unsigned int)topLeft.y_ );
 }
 
-bool BezierCurve::contains( const Point& pt )
+bool BezierCurve::contains( const Point& pt, Matrix2D* transform )
 {
+	if ( points_.empty() ) {
+		return false;
+	}
+
+	agg::trans_affine mat;
+	if ( NULL != transform ) {
+		mat = *transform;
+	}
+
 	agg::rasterizer_scanline_aa<> rasterizer;
 	agg::path_storage path;
 
@@ -154,8 +172,8 @@ bool BezierCurve::contains( const Point& pt )
 		it ++;
 	}
 
-	agg::conv_curve<agg::path_storage> smooth(path);
-	//agg::conv_stroke<agg::conv_curve<agg::path_storage> >  stroke(smooth);
+	agg::conv_transform< agg::path_storage > xfrmedPath(path,mat);
+	agg::conv_curve< agg::conv_transform< agg::path_storage > > smooth(xfrmedPath);	
 
 	rasterizer.add_path( smooth );
 
@@ -163,8 +181,16 @@ bool BezierCurve::contains( const Point& pt )
 	return rasterizer.hit_test( (unsigned int)pt.x_, (unsigned int)pt.y_ );
 }
 
-bool BezierCurve::intersects( const Point& pt )
+bool BezierCurve::intersects( const Point& pt, Matrix2D* transform )
 {
+	if ( points_.empty() ) {
+		return false;
+	}
+
+	agg::trans_affine mat;
+	if ( NULL != transform ) {
+		mat = *transform;
+	}
 	agg::rasterizer_scanline_aa<> rasterizer;
 	agg::path_storage path;
 
@@ -215,8 +241,10 @@ bool BezierCurve::intersects( const Point& pt )
 
 		it ++;
 	}
-	agg::conv_curve<agg::path_storage> smooth(path);
-	agg::conv_stroke<agg::conv_curve<agg::path_storage> >  stroke(smooth);
+
+	agg::conv_transform< agg::path_storage > xfrmedPath(path,mat);
+	agg::conv_curve< agg::conv_transform< agg::path_storage > > smooth(xfrmedPath);	
+	agg::conv_stroke< agg::conv_curve< agg::conv_transform< agg::path_storage > > >  stroke(smooth);
 	stroke.width( 2 );
 
 	rasterizer.add_path( stroke );
@@ -225,8 +253,16 @@ bool BezierCurve::intersects( const Point& pt )
 	return rasterizer.hit_test( (unsigned int)pt.x_, (unsigned int)pt.y_ );
 }
 
-bool BezierCurve::intersects( const Rect& rect)
+bool BezierCurve::intersects( const Rect& rect, Matrix2D* transform )
 {
+	if ( points_.empty() ) {
+		return false;
+	}
+
+	agg::trans_affine mat;
+	if ( NULL != transform ) {
+		mat = *transform;
+	}
 	agg::rasterizer_scanline_aa<> rasterizer;
 	agg::path_storage path;
 
@@ -278,7 +314,8 @@ bool BezierCurve::intersects( const Rect& rect)
 		it ++;
 	}
 
-	agg::conv_curve<agg::path_storage> smooth(path);
+	agg::conv_transform< agg::path_storage > xfrmedPath(path,mat);
+	agg::conv_curve< agg::conv_transform< agg::path_storage > > smooth(xfrmedPath);
 	rasterizer.add_path( smooth );
 
 
