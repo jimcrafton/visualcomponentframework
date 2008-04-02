@@ -2977,6 +2977,36 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 			}
 		}
 		break;
+
+		case WM_MEASUREITEM:{
+			MEASUREITEMSTRUCT* measureItem = (MEASUREITEMSTRUCT*)lParam;
+			if ( ODT_COMBOBOX == measureItem->CtlType ) {
+				HWND hwndCtl = GetDlgItem( hWnd, measureItem->CtlID );
+
+				Win32Object* win32Obj = Win32Object::getWin32ObjectFromHWND( hwndCtl );
+				if ( NULL != win32Obj ){
+					win32Obj->handleEventMessages( WM_MEASUREITEM, wParam, lParam, result );
+				}
+				else {
+					if ( System::isUnicodeEnabled() ) {
+						result =  DefWindowProcW( hWnd, message, wParam, lParam );
+					}
+					else {
+						result =  DefWindowProcA( hWnd, message, wParam, lParam );
+					}
+				}
+			}
+			else {
+				if ( System::isUnicodeEnabled() ) {
+					result =  DefWindowProcW( hWnd, message, wParam, lParam );
+				}
+				else {
+					result =  DefWindowProcA( hWnd, message, wParam, lParam );
+				}
+			}
+		}
+		break;
+
 		/*
 		case WM_CTLCOLOREDIT : case WM_CTLCOLORBTN: case WM_CTLCOLORLISTBOX: {
 

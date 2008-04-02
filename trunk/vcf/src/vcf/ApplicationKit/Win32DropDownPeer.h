@@ -39,6 +39,32 @@ namespace VCF {
 
 		virtual void setDropDownCount( const uint32& dropDownCount );
 
+
+		virtual void selectItem( const uint32& index );
+		
+		virtual uint32 getSelectedItem();
+		
+		virtual uint32 getFocusedItem();
+		
+		virtual bool isItemSelected( const uint32& index );
+		
+		virtual Rect getItemRect( const uint32& index );	
+		
+		virtual Rect getItemImageRect( const uint32& index );
+		
+		virtual uint32 hitTest( const Point& point );	
+		
+		virtual Enumerator<uint32>* getSelectedItems();
+		
+		virtual void rangeSelect( const Rect& selectionRect );	
+		
+		virtual bool allowsMultiSelect();
+		
+		virtual void setAllowsMultiSelect( const bool& allowsMultiSelect );	
+		
+		virtual void setLargeImageList( ImageList* imageList );
+		
+		virtual void setSmallImageList( ImageList* imageList );
 	protected:
 		void onCtrlModelChanged( Event* e );
 		void onListModelChanged( Event* e );
