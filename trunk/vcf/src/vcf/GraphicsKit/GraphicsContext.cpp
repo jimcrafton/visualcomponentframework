@@ -30,8 +30,8 @@ namespace VCF {
 
 class RenderArea {
 public:
-	RenderArea():renderArea(NULL),renderBuffer(NULL),renderAreaAlphaVal(NULL),renderAreaAlphaSize(1),
-					renderAreaAlphaState(GraphicsContext::rasDefault),scanline(NULL),oldContextID(0){
+	RenderArea():image(NULL),renderBuffer(NULL),alphaVal(NULL),alphaSize(1),
+					alphaState(GraphicsContext::rasDefault),scanline(NULL),oldContextID(0){
 
 	}
 
@@ -41,15 +41,15 @@ public:
 			renderBuffer->attach( NULL, 0, 0, 0 );
 			delete renderBuffer;
 		}
-		delete renderArea;
+		delete image;
 	}
 
-	Rect renderAreaRect;
-	Image* renderArea;
+	Rect rect;
+	Image* image;
 	agg::rendering_buffer* renderBuffer;
-	uchar* renderAreaAlphaVal;
-	size_t renderAreaAlphaSize;
-	GraphicsContext::RenderAreaAlphaState renderAreaAlphaState;
+	uchar* alphaVal;
+	size_t alphaSize;
+	GraphicsContext::RenderAreaAlphaState alphaState;
 	Rect viewableBounds;
 	agg::scanline_u8* scanline;
 	OSHandleID oldContextID;
@@ -435,6 +435,23 @@ void GraphicsContext::setCurrentStroke(Stroke * stroke)
 
 void GraphicsContext::draw(Path * path)
 {
+	Rect r = path->getBounds();
+
+
+	r = getCurrentTransform()->apply(&r);
+
+	if ( !viewableBounds_.isEmpty() ) {
+		Rect r2 = r.makeIntersection(&viewableBounds_);
+		if ( r2.isEmpty() ) {		
+			return;
+		}
+	}
+
+	
+	//if ( !path->intersects( viewableBounds_, getCurrentTransform() ) ) {
+	//	return;
+	//}
+
 	Fill* fill = currentGraphicsState_->fill_;
 	Stroke* stroke = currentGraphicsState_->stroke_;
 	if ( NULL != fill ){
@@ -459,6 +476,17 @@ void GraphicsContext::bitBlit( const double& x, const double& y, Image* image )
 
 void GraphicsContext::bitBlit( const double& x, const double& y, Rect* imageBounds, Image* image )
 {
+	if ( !viewableBounds_.isEmpty() ) {
+		Rect r = *imageBounds;
+		r.offset( x,y );
+		r = getCurrentTransform()->apply(&r);
+
+		Rect r2 = r.makeIntersection(&viewableBounds_);
+		if ( r2.isEmpty() ) {		
+			return;
+		}
+	}
+
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doImage ) ) {
 
 		VCF_ASSERT( imageBounds->getWidth() <= image->getWidth() );
@@ -483,7 +511,16 @@ void GraphicsContext::drawImageWithinBounds( Rect* bounds, Image* image, const b
 
 void GraphicsContext::drawPartialImage( const double& x, const double& y, Rect* imageBounds, Image* image, const bool& renderImmediately )
 {
-	//contextPeer_->drawPartialImage( x, y, imageBounds, image );
+	if ( !viewableBounds_.isEmpty() ) {
+		Rect r = *imageBounds;
+		r.offset( x,y );
+		r = getCurrentTransform()->apply(&r);
+
+		Rect r2 = r.makeIntersection(&viewableBounds_);
+		if ( r2.isEmpty() ) {		
+			return;
+		}
+	}
 
 	if ( renderImmediately ) {
 		if ( contextPeer_->prepareForDrawing( GraphicsContext::doImage ) ) {
@@ -1633,76 +1670,76 @@ void GraphicsContext::checkPathOperations()
 
 void GraphicsContext::cacheRenderAreaAlpha()
 {
-	if ( (NULL != renderArea_->renderArea) && (renderArea_->renderAreaAlphaState != rasDirty) && (NULL == renderArea_->renderAreaAlphaVal) ) {
-		renderArea_->renderAreaAlphaVal = new uchar[ renderArea_->renderAreaAlphaSize ];
+	if ( (NULL != renderArea_->image) && (renderArea_->alphaState != rasDirty) && (NULL == renderArea_->alphaVal) ) {
+		renderArea_->alphaVal = new uchar[ renderArea_->alphaSize ];
 
-		ColorPixels pix(renderArea_->renderArea);
+		ColorPixels pix(renderArea_->image);
 		ColorPixels::Type* bits = pix;
 
-		for (size_t i=0;i<renderArea_->renderAreaAlphaSize;i++ ) {
-			renderArea_->renderAreaAlphaVal[i] = bits[i].a;
+		for (size_t i=0;i<renderArea_->alphaSize;i++ ) {
+			renderArea_->alphaVal[i] = bits[i].a;
 		}
 	}
 }
 
 void GraphicsContext::renderAreaAlphaOverwritten()
 {
-	if ( NULL != renderArea_->renderArea ) {
-		renderArea_->renderAreaAlphaState = rasDirty;
+	if ( NULL != renderArea_->image ) {
+		renderArea_->alphaState = rasDirty;
 	}
 }
 
 void GraphicsContext::setRenderAreaAlphaSize( bool usingNonDefaultAlpha )
 {
-	if ( NULL != renderArea_->renderArea ) {
+	if ( NULL != renderArea_->image ) {
 		if ( usingNonDefaultAlpha ) {
-			renderArea_->renderAreaAlphaSize = renderArea_->renderArea->getHeight() * renderArea_->renderArea->getWidth();
+			renderArea_->alphaSize = renderArea_->image->getHeight() * renderArea_->image->getWidth();
 		}
 		else {
-			renderArea_->renderAreaAlphaSize = 1;
+			renderArea_->alphaSize = 1;
 		}
 	}
 }
 
 void GraphicsContext::resetRenderAreaAlpha()
 {
-	if ( (NULL != renderArea_->renderArea) && (renderArea_->renderAreaAlphaState == rasDirty) && (NULL != renderArea_->renderAreaAlphaVal) ) {
+	if ( (NULL != renderArea_->image) && (renderArea_->alphaState == rasDirty) && (NULL != renderArea_->alphaVal) ) {
 
-		ColorPixels pix(renderArea_->renderArea);
+		ColorPixels pix(renderArea_->image);
 		ColorPixels::Type* bits = pix;
 
-		if ( 1 == renderArea_->renderAreaAlphaSize ) {
+		if ( 1 == renderArea_->alphaSize ) {
 			size_t sz = pix.height() * pix.width();
 
 			for (size_t i=0;i<sz;i++ ) {
-				 bits[i].a = renderArea_->renderAreaAlphaVal[0];
+				 bits[i].a = renderArea_->alphaVal[0];
 			}
 
-			renderArea_->renderAreaAlphaState = rasDefault;
+			renderArea_->alphaState = rasDefault;
 		}
 		else {
-			for (size_t i=0;i<renderArea_->renderAreaAlphaSize;i++ ) {
-				 bits[i].a = renderArea_->renderAreaAlphaVal[i];
+			for (size_t i=0;i<renderArea_->alphaSize;i++ ) {
+				 bits[i].a = renderArea_->alphaVal[i];
 			}
 
-			renderArea_->renderAreaAlphaState = rasNonDefaultAlphaVals;
+			renderArea_->alphaState = rasNonDefaultAlphaVals;
 		}
 
 
-		delete [] renderArea_->renderAreaAlphaVal;
-		renderArea_->renderAreaAlphaVal = NULL;
+		delete [] renderArea_->alphaVal;
+		renderArea_->alphaVal = NULL;
 	}
 }
 
 
 Image* GraphicsContext::getRenderArea()
 {
-	return renderArea_->renderArea;
+	return renderArea_->image;
 }
 
 bool GraphicsContext::hasRenderArea()
 {
-	return NULL != renderArea_->renderArea;
+	return NULL != renderArea_->image;
 }
 
 agg::rendering_buffer* GraphicsContext::getRenderingBuffer()
@@ -1723,28 +1760,28 @@ agg::scanline_u8& GraphicsContext::internal_getRenderAreaScanline()
 
 void GraphicsContext::setRenderArea( Rect bounds )
 {
-	renderArea_->renderAreaRect = bounds;
+	renderArea_->rect = bounds;
 
-	if ( NULL == renderArea_->renderArea ) {
-		renderArea_->renderArea = GraphicsToolkit::createImage( (uint32)bounds.getWidth(), (uint32)bounds.getHeight() );
+	if ( NULL == renderArea_->image ) {
+		renderArea_->image = GraphicsToolkit::createImage( (uint32)bounds.getWidth(), (uint32)bounds.getHeight() );
 		renderArea_->renderBuffer = new agg::rendering_buffer();
 	}
 	else {
-		renderArea_->renderArea->setSize( (uint32)bounds.getWidth(), (uint32)bounds.getHeight() );
+		renderArea_->image->setSize( (uint32)bounds.getWidth(), (uint32)bounds.getHeight() );
 	}
 
-	renderArea_->renderBuffer->attach( (unsigned char*)renderArea_->renderArea->getData(),
-							renderArea_->renderArea->getWidth(),
-							renderArea_->renderArea->getHeight(),
-							renderArea_->renderArea->getWidth() * renderArea_->renderArea->getType() );
+	renderArea_->renderBuffer->attach( (unsigned char*)renderArea_->image->getData(),
+							renderArea_->image->getWidth(),
+							renderArea_->image->getHeight(),
+							renderArea_->image->getWidth() * renderArea_->image->getType() );
 
 
 	renderArea_->scanline = new agg::scanline_u8();
 
 
-	renderArea_->renderArea->getImageContext()->setOrigin( -bounds.left_, -bounds.top_ );
+	renderArea_->image->getImageContext()->setOrigin( -bounds.left_, -bounds.top_ );
 	renderArea_->oldContextID = getPeer()->getContextID();
-	getPeer()->setContextID( renderArea_->renderArea->getImageContext()->getPeer()->getContextID() );
+	getPeer()->setContextID( renderArea_->image->getImageContext()->getPeer()->getContextID() );
 }
 
 void GraphicsContext::deleteRenderArea()
@@ -1752,15 +1789,15 @@ void GraphicsContext::deleteRenderArea()
 	renderArea_->renderBuffer->attach( NULL, 0, 0, 0 );
 	delete renderArea_->renderBuffer;
 
-	delete renderArea_->renderArea;
+	delete renderArea_->image;
 
 	delete renderArea_->scanline;
 
 	renderArea_->renderBuffer = NULL;
 	renderArea_->scanline = NULL;
-	renderArea_->renderArea = NULL;
-	renderArea_->renderAreaAlphaState = rasDefault;
-	renderArea_->renderAreaAlphaSize = 1;
+	renderArea_->image = NULL;
+	renderArea_->alphaState = rasDefault;
+	renderArea_->alphaSize = 1;
 }
 
 void GraphicsContext::flushRenderArea()
@@ -1768,7 +1805,7 @@ void GraphicsContext::flushRenderArea()
 	getPeer()->setContextID( renderArea_->oldContextID );
 
 	if ( viewableBounds_.isNull() ) {
-		bitBlit( renderArea_->renderAreaRect.getTopLeft(), renderArea_->renderArea );
+		bitBlit( renderArea_->rect.getTopLeft(), renderArea_->image );
 	}
 	else {
 
@@ -1779,11 +1816,11 @@ void GraphicsContext::flushRenderArea()
 		//																	viewableBounds_.bottom_ ) );
 
 		Rect tmp;
-		tmp.right_ = tmp.left_ + minVal<double>( viewableBounds_.getWidth(), renderArea_->renderArea->getWidth() );
-		tmp.bottom_ = tmp.top_ + minVal<double>( viewableBounds_.getHeight(), renderArea_->renderArea->getHeight() );
+		tmp.right_ = tmp.left_ + minVal<double>( viewableBounds_.getWidth(), renderArea_->image->getWidth() );
+		tmp.bottom_ = tmp.top_ + minVal<double>( viewableBounds_.getHeight(), renderArea_->image->getHeight() );
 
 		//drawPartialImage(  viewableBounds_.getTopLeft(), &tmp, renderArea_ );
-		bitBlit( viewableBounds_.getTopLeft(), renderArea_->renderArea );
+		bitBlit( viewableBounds_.getTopLeft(), renderArea_->image );
 	}
 }
 

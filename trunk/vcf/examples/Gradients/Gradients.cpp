@@ -426,7 +426,9 @@ public:
 		Window::mouseMove(e);
 		if ( e->hasLeftButton() ) {
 			mousePt = *e->getPoint();
-			repaint();
+			Rect rect(mousePt.x_ - 100,mousePt.y_ - 50,mousePt.x_ + 100,mousePt.y_ + 50);
+			rect.inflate(10,10);
+			repaint(&rect);
 		}
 	}
 
@@ -434,7 +436,9 @@ public:
 		Window::mouseDown(e);
 		if ( e->hasLeftButton() ) {
 			mousePt = *e->getPoint();
-			repaint();
+			Rect rect(mousePt.x_ - 100,mousePt.y_ - 50,mousePt.x_ + 100,mousePt.y_ + 50);
+			rect.inflate(10,10);
+			repaint(&rect);
 		}
 	}
 
@@ -442,7 +446,9 @@ public:
 		Window::mouseUp(e);
 		if ( e->hasLeftButton() ) {
 			mousePt = *e->getPoint();
-			repaint();
+			Rect rect(mousePt.x_ - 100,mousePt.y_ - 50,mousePt.x_ + 100,mousePt.y_ + 50);
+			rect.inflate(10,10);
+			repaint(&rect);
 		}
 	}
 

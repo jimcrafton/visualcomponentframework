@@ -29,13 +29,13 @@ public:
 
 	virtual void applyTransform( const Matrix2D& transform );
 
-	virtual bool contains( const Rect& rect);
+	virtual bool contains( const Rect& rect, Matrix2D* transform=NULL);
 
-    virtual bool contains( const Point& pt );
+    virtual bool contains( const Point& pt, Matrix2D* transform=NULL );
 
-    virtual bool intersects( const Point& pt );
+    virtual bool intersects( const Point& pt, Matrix2D* transform=NULL );
 
-    virtual bool intersects( const Rect& rect );
+    virtual bool intersects( const Rect& rect, Matrix2D* transform=NULL );
 
     virtual Rect getBounds();
 

@@ -131,7 +131,7 @@ public:
 	@return bool Returns true if the rect is within the bounds of the
 	shape, otherwise false.
 	*/
-    virtual bool contains(const Rect& rect ) = 0;
+    virtual bool contains(const Rect& rect, Matrix2D* transform=NULL ) = 0;
 
 
 	/**
@@ -140,7 +140,7 @@ public:
 	@return bool Returns true if the point is within the bounds of the
 	shape, otherwise false.
 	*/
-    virtual bool contains( const Point& pt ) = 0;
+    virtual bool contains( const Point& pt, Matrix2D* transform=NULL ) = 0;
 
 
 	/**
@@ -149,7 +149,7 @@ public:
 	@return bool Returns true if the point intersects 
 	the shape, otherwise false.
 	*/
-    virtual bool intersects( const Point& pt ) = 0;
+    virtual bool intersects( const Point& pt, Matrix2D* transform=NULL ) = 0;
 
 	/**
 	Returns true or false, depending on whether or not the 
@@ -157,7 +157,7 @@ public:
 	@return bool Returns true if the rectangle intersects 
 	the shape, otherwise false.
 	*/
-    virtual bool intersects( const Rect& rect ) = 0;
+    virtual bool intersects( const Rect& rect, Matrix2D* transform=NULL ) = 0;
 
 	/**
 	returns the smallest rectangular bounds that fully enclose this path

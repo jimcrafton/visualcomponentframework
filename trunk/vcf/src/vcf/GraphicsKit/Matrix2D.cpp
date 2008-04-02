@@ -184,6 +184,28 @@ Point Matrix2D::apply( Point* point ) const
 	return result;
 }
 
+Rect Matrix2D::apply( Rect* rect ) const
+{
+	double x1,x2,y1,y2;
+	x1 = rect->left_ * (matrix_[0][0]) +
+							rect->top_ * (matrix_[1][0]) +
+								(matrix_[2][0]);
+
+	y1 = rect->left_ * (matrix_[0][1]) +
+							rect->top_ * (matrix_[1][1]) +
+								(matrix_[2][1]);
+
+	x2 = rect->right_ * (matrix_[0][0]) +
+							rect->bottom_ * (matrix_[1][0]) +
+								(matrix_[2][0]);
+
+	y2 = rect->right_ * (matrix_[0][1]) +
+							rect->bottom_ * (matrix_[1][1]) +
+								(matrix_[2][1]);
+
+	return Rect(x1,y1,x2,y2);
+}
+
 void Matrix2D::apply( double& x, double& y ) const
 {
 	double tmpX = x;
