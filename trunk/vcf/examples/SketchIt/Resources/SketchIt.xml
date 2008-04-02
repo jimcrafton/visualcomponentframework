@@ -1,0 +1,53 @@
+<plist>
+	<dict>
+		<key>DocumentTypes</key>
+		<array>
+			<dict>
+				<key>TypeExtensions</key>
+				<array>
+					<string>skt</string>
+				</array>
+
+				<key>TypeDescription</key>
+				<string>Sketch Document</string>
+
+				<key>TypeContent</key>
+				<string>application/x-sketch</string>
+
+				<key>ClipboardTypeContent</key>
+				<array>
+					<string>application/x-sketch</string>
+				</array>
+
+				<key>TypeIcon</key>
+				<string>circ-type.bmp</string>
+
+				<key>DocumentClass</key>
+				<string></string>
+
+				<key>ModelClass</key>
+				<string>SketchModel</string>
+
+				<key>DocumentWindow</key>
+				<string>SketchWindow</string>
+
+				<key>DocumentView</key>
+				<string>SketchView</string>
+			</dict>			
+		</array>
+	</dict>
+<!--
+<documentTypes>
+	<document classname="SketchDocument" classid="5e2698e2-bbe0-4f6f-ab6e-938f522a3c0d">
+		<property name="mimetype" value="application/x-sketch"/>
+		<property name="role" value="editor"/>
+		<property name="extension" value=".skt"/>
+		<property name="description" value="Sketch Document"/>
+		<property name="view" value="SketchView"/>
+		<property name="window" value="SketchWindow"/>
+	</document>
+</documentTypes>
+-->
+
+
+</plist>

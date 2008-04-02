@@ -8,7 +8,7 @@ where you installed the VCF.
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
-#include "../examples/SketchIt/SketchWindow.h"
+#include "SketchWindow.h"
 #include "vcf/ApplicationKit/ModelViewKit.h"
 
 using namespace VCF;
@@ -21,7 +21,7 @@ SketchWindow::SketchWindow()
 																			&SketchWindow::onDocInitialized,
 																			"SketchWindow::onDocInitialized" );
 
-	//setUsingRenderBuffer( true );
+	
 }
 
 SketchWindow::~SketchWindow()

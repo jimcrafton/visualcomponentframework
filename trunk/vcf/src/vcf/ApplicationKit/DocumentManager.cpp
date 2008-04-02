@@ -89,8 +89,11 @@ void DocumentManager::init()
 			info.mimetype = (String)dict["TypeContent"];
 			info.description = (String)dict["TypeDescription"];
 			info.windowClass = (String)dict["DocumentWindow"];
+			info.viewClass = (String)dict["DocumentView"];
 			info.docClass = (String)dict["DocumentClass"];
 			info.modelClass = (String)dict["ModelClass"];
+			
+			
 
 			for (size_t k=0;k<clipboardTypes.data.size();k++ ) {
 				String type = clipboardTypes.data[k];
