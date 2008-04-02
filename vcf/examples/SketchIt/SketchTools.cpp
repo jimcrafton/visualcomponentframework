@@ -8,8 +8,8 @@ where you installed the VCF.
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
-#include "../examples/SketchIt/SketchTools.h"
-#include "../examples/SketchIt/SketchDocument.h"
+#include "SketchTools.h"
+#include "SketchModel.h"
 
 
 using namespace VCF;
@@ -227,8 +227,9 @@ Shape* SelectTool::hitTest( Point& pt )
 {
 	Shape* result = NULL;
 
-	SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
-	Enumerator<Shape*>* shapes = doc->getShapes();
+	Document* doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+	SketchModel* model = (SketchModel*)doc->getModel();
+	Enumerator<Shape*>* shapes = model->getShapes();
 	while ( shapes->hasMoreElements() ) {
 		Shape* shape = shapes->nextElement();
 
@@ -249,17 +250,18 @@ Shape* SelectTool::hitTest( Point& pt )
 
 void SelectTool::onMouseDown( VCF::MouseEvent* e )
 {
-	SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
+	Document* doc = DocumentManager::getDocumentManager()->getCurrentDocument();
 	if ( e->hasLeftButton() ) {
+		SketchModel* model = (SketchModel*)doc->getModel();
 		Shape* shape =  hitTest( *e->getPoint() );
 		if ( shape ) {
-			doc->setSelectedShape( shape );
+			model->setSelectedShape( shape );
 			dragPoint_ = *e->getPoint();
 			startDragPoint_ = dragPoint_;
 
 		}
 		else {
-			doc->setSelectedShape( NULL );
+			model->setSelectedShape( NULL );
 		}
 	}
 }
@@ -267,8 +269,9 @@ void SelectTool::onMouseDown( VCF::MouseEvent* e )
 void SelectTool::onMouseMove( VCF::MouseEvent* e )
 {
 	if ( e->hasLeftButton() ) {
-		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
-		Shape* shape = doc->getSelectedShape();
+		Document* doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+		SketchModel* model = (SketchModel*)doc->getModel();
+		Shape* shape = model->getSelectedShape();
 
 
 		if ( NULL != shape ) {
@@ -292,7 +295,7 @@ void SelectTool::onMouseMove( VCF::MouseEvent* e )
 			StringUtils::trace( Format( "translate %.4f, %.4f m.x %.3f m.y %.3f\n") % x % y % m2.getTranslateX() % m2.getTranslateY() );
 
 			shape->polygon_.applyTransform( m2 );
-			doc->updateAllViews();
+			model->updateAllViews();
 
 
 			dragPoint_ = *e->getPoint();
@@ -302,8 +305,9 @@ void SelectTool::onMouseMove( VCF::MouseEvent* e )
 		if ( (!e->hasMiddleButton()) && (!e->hasRightButton()) ) {
 			mouseOverShape_ =  hitTest( *e->getPoint() );
 
-			SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
-			doc->updateAllViews();
+			Document* doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+			SketchModel* model = (SketchModel*)doc->getModel();
+			model->updateAllViews();
 		}
 	}
 
@@ -314,8 +318,9 @@ void SelectTool::onMouseMove( VCF::MouseEvent* e )
 void SelectTool::onMouseUp( VCF::MouseEvent* e )
 {
 	if ( e->hasLeftButton() ) {
-		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
-		Shape* shape = doc->getSelectedShape();
+		Document* doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+		SketchModel* model = (SketchModel*)doc->getModel();
+		Shape* shape = model->getSelectedShape();
 		if ( NULL != shape ) {
 
 
@@ -349,7 +354,7 @@ void SelectTool::onMouseUp( VCF::MouseEvent* e )
 
 			ctx->setCurrentStroke( NULL );
 */
-			doc->updateAllViews();
+			model->updateAllViews();
 		}
 	}
 }
@@ -357,7 +362,8 @@ void SelectTool::onMouseUp( VCF::MouseEvent* e )
 void SelectTool::paintState( VCF::GraphicsContext* ctx )
 {
 
-	SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
+	Document* doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+	SketchModel* model = (SketchModel*)doc->getModel();
 	//Shape* shape = doc->getSelectedShape();
 	if ( NULL != mouseOverShape_ ) {
 		BasicStroke bs;
@@ -376,7 +382,7 @@ void SelectTool::paintState( VCF::GraphicsContext* ctx )
 	bs.setAllowAntiAlias( false );
 	bs.setColor( Color::getColor( "green" ) );
 
-	Enumerator<Shape*>* shapes = doc->getSelectedShapes();
+	Enumerator<Shape*>* shapes = model->getSelectedShapes();
 	while ( shapes->hasMoreElements() ) {
 		Shape* shape = shapes->nextElement();
 		ctx->draw( &shape->polygon_ );
@@ -402,19 +408,23 @@ void LineTool::onMouseDown( VCF::MouseEvent* e )
 	start_ = *e->getPoint();
 	end_ = start_;
 	Control* c = (Control*)e->getSource();
-	GraphicsContext* ctx = c->getContext();
+/*
 	ctx->setColor( Color::getColor("blue") );
 	ctx->setXORModeOn( true );
 	ctx->moveTo( start_ );
 	ctx->lineTo( end_ );
 	ctx->strokePath();
 	ctx->setXORModeOn( false );
+	*/
 }
 
 void LineTool::onMouseMove( VCF::MouseEvent* e )
 {
 	if ( e->hasLeftButton() ) {
 
+		end_ = *e->getPoint();
+
+/*
 		Control* c = (Control*)e->getSource();
 		GraphicsContext* ctx = c->getContext();
 		ctx->setColor( Color::getColor("blue") );
@@ -423,20 +433,23 @@ void LineTool::onMouseMove( VCF::MouseEvent* e )
 		ctx->lineTo( end_ );
 		ctx->strokePath();
 
-		end_ = *e->getPoint();
+		
 
 		ctx->moveTo( start_ );
 		ctx->lineTo( end_ );
 		ctx->strokePath();
 
 		ctx->setXORModeOn( false );
-
+*/
 	}
 }
 
 void LineTool::onMouseUp( VCF::MouseEvent* e )
 {
 	if ( e->hasLeftButton() ) {
+
+		end_ = *e->getPoint();
+	/*
 		Control* c = (Control*)e->getSource();
 		GraphicsContext* ctx = c->getContext();
 		ctx->setColor( Color::getColor("blue") );
@@ -445,19 +458,20 @@ void LineTool::onMouseUp( VCF::MouseEvent* e )
 		ctx->lineTo( end_ );
 		ctx->strokePath();
 
-		end_ = *e->getPoint();
+		
 
 		ctx->moveTo( start_ );
 		ctx->lineTo( end_ );
 		ctx->strokePath();
 
 		ctx->setXORModeOn( false );
-
-		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
+*/
+		Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+		SketchModel* model = (SketchModel*)doc->getModel();
 		Shape shape;
 		shape.polygon_.moveTo( start_.x_, start_.y_ );
 		shape.polygon_.lineTo( end_.x_, end_.y_ );
-		doc->addShape( shape );
+		model->addShape( shape );
 	}
 }
 
@@ -526,9 +540,10 @@ void RotateTool::onMouseDown( VCF::MouseEvent* e )
 		startDragPoint_ = dragPoint_ = *e->getPoint();
 		startAngle_ = getAngleFromLine( dragPoint_, startDragPoint_ );
 
-		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
+		Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+		SketchModel* model = (SketchModel*)doc->getModel();
 
-		Shape* shape = doc->getSelectedShape();
+		Shape* shape = model->getSelectedShape();
 
 		if ( NULL == shape ) {
 			return;
@@ -561,8 +576,9 @@ void RotateTool::onMouseMove( VCF::MouseEvent* e )
 
 	if ( e->hasLeftButton() ) {
 
-		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
-		Shape* shape = doc->getSelectedShape();
+		Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+		SketchModel* model = (SketchModel*)doc->getModel();
+		Shape* shape = model->getSelectedShape();
 
 		if ( NULL == shape ) {
 			return;
@@ -570,7 +586,7 @@ void RotateTool::onMouseMove( VCF::MouseEvent* e )
 
 		rotateShape( shape, *e->getPoint() );
 
-		doc->updateAllViews();
+		model->updateAllViews();
 
 		dragPoint_ = *e->getPoint();
 	}
@@ -579,8 +595,9 @@ void RotateTool::onMouseMove( VCF::MouseEvent* e )
 void RotateTool::onMouseUp( VCF::MouseEvent* e )
 {
 	if ( e->hasLeftButton() ) {
-		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
-		Shape* shape = doc->getSelectedShape();
+		Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+		SketchModel* model = (SketchModel*)doc->getModel();
+		Shape* shape = model->getSelectedShape();
 
 		if ( NULL == shape ) {
 			return;
@@ -588,7 +605,7 @@ void RotateTool::onMouseUp( VCF::MouseEvent* e )
 
 		rotateShape( shape, *e->getPoint() );
 
-		doc->updateAllViews();
+		model->updateAllViews();
 
 		dragPoint_ = *e->getPoint();
 	}
@@ -605,9 +622,10 @@ void ScaleTool::onMouseDown( VCF::MouseEvent* e )
 		startDragPoint_ = dragPoint_ = *e->getPoint();
 
 
-		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
+		Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+		SketchModel* model = (SketchModel*)doc->getModel();
 
-		Shape* shape = doc->getSelectedShape();
+		Shape* shape = model->getSelectedShape();
 
 		if ( NULL == shape ) {
 			return;
@@ -652,8 +670,9 @@ void ScaleTool::scaleShape( Shape* shape, VCF::Point pt )
 void ScaleTool::onMouseMove( VCF::MouseEvent* e )
 {
 	if ( e->hasLeftButton() ) {
-		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
-		Shape* shape = doc->getSelectedShape();
+		Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+		SketchModel* model = (SketchModel*)doc->getModel();
+		Shape* shape = model->getSelectedShape();
 
 		if ( NULL == shape ) {
 			return;
@@ -661,7 +680,7 @@ void ScaleTool::onMouseMove( VCF::MouseEvent* e )
 
 		scaleShape( shape, *e->getPoint() );
 
-		doc->updateAllViews();
+		model->updateAllViews();
 
 		dragPoint_ = *e->getPoint();
 	}
@@ -684,9 +703,10 @@ void SkewTool::onMouseDown( VCF::MouseEvent* e )
 		startDragPoint_ = dragPoint_ = *e->getPoint();
 		startAngle_ = getAngleFromLine( dragPoint_, startDragPoint_ );
 
-		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
+		Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+		SketchModel* model = (SketchModel*)doc->getModel();
 
-		Shape* shape = doc->getSelectedShape();
+		Shape* shape = model->getSelectedShape();
 
 		if ( NULL == shape ) {
 			return;
@@ -701,8 +721,9 @@ void SkewTool::onMouseDown( VCF::MouseEvent* e )
 void SkewTool::onMouseMove( VCF::MouseEvent* e )
 {
 	if ( e->hasLeftButton() ) {
-		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
-		Shape* shape = doc->getSelectedShape();
+		Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+		SketchModel* model = (SketchModel*)doc->getModel();
+		Shape* shape = model->getSelectedShape();
 
 		if ( NULL == shape ) {
 			return;
@@ -710,7 +731,7 @@ void SkewTool::onMouseMove( VCF::MouseEvent* e )
 
 		skewShape( shape, *e->getPoint() );
 
-		doc->updateAllViews();
+		model->updateAllViews();
 
 		dragPoint_ = *e->getPoint();
 	}
@@ -778,7 +799,7 @@ void RectangleTool::onMouseDown( VCF::MouseEvent* e )
 {
 	if ( e->hasLeftButton() ) {
 		end_ = start_ = *e->getPoint();
-
+/*
 		Control* c = (Control*)e->getSource();
 		GraphicsContext* ctx = c->getContext();
 
@@ -790,12 +811,16 @@ void RectangleTool::onMouseDown( VCF::MouseEvent* e )
 		ctx->strokePath();
 
 		ctx->setXORModeOn( false );
+		*/
 	}
 }
 
 void RectangleTool::onMouseMove( VCF::MouseEvent* e )
 {
 	if ( e->hasLeftButton() ) {
+		end_ = *e->getPoint();
+
+		/*
 		Control* c = (Control*)e->getSource();
 		GraphicsContext* ctx = c->getContext();
 
@@ -808,7 +833,7 @@ void RectangleTool::onMouseMove( VCF::MouseEvent* e )
 		ctx->rectangle( &r );
 		ctx->strokePath();
 
-		end_ = *e->getPoint();
+		
 
 		r.setRect(start_.x_,start_.y_,end_.x_,end_.y_);
 		r.normalize();
@@ -817,12 +842,14 @@ void RectangleTool::onMouseMove( VCF::MouseEvent* e )
 		ctx->strokePath();
 
 		ctx->setXORModeOn( false );
+		*/
 	}
 }
 
 void RectangleTool::onMouseUp( VCF::MouseEvent* e )
 {
 	if ( e->hasLeftButton() ) {
+		/*
 		Control* c = (Control*)e->getSource();
 		GraphicsContext* ctx = c->getContext();
 
@@ -846,12 +873,20 @@ void RectangleTool::onMouseUp( VCF::MouseEvent* e )
 		ctx->rectangle( &r );
 		ctx->strokePath();
 
-		SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
-		Shape shape;
-		shape.polygon_.rectangle( r );
-		doc->addShape( shape );
+		
 
 		ctx->setXORModeOn( false );
+		*/
+
+		end_ = *e->getPoint();
+		Rect r;
+		r.setRect(start_.x_,start_.y_,end_.x_,end_.y_);
+		r.normalize();
+		Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+		SketchModel* model = (SketchModel*)doc->getModel();
+		Shape shape;
+		shape.polygon_.rectangle( r );
+		model->addShape( shape );
 	}
 }
 
@@ -912,7 +947,7 @@ void CurveTool::drawCurve( VCF::GraphicsContext* ctx )
 
 void CurveTool::onMouseDown( VCF::MouseEvent* e )
 {
-	StringUtils::traceWithArgs( Format("CurveTool::onMouseDown, state: %d\n") % state_ );
+	StringUtils::trace( Format("CurveTool::onMouseDown, state: %d\n") % state_ );
 	if ( e->hasLeftButton() ) {
 
 		switch ( state_ ) {
@@ -941,7 +976,7 @@ void CurveTool::onMouseDown( VCF::MouseEvent* e )
 			}
 			break;
 		}
-
+/*
 		Control* c = (Control*)e->getSource();
 		GraphicsContext* ctx = c->getContext();
 
@@ -953,7 +988,7 @@ void CurveTool::onMouseDown( VCF::MouseEvent* e )
 
 		paintSegments( ctx );
 
-
+*/
 
 
 
@@ -966,6 +1001,7 @@ void CurveTool::onMouseDown( VCF::MouseEvent* e )
 void CurveTool::onMouseMove( VCF::MouseEvent* e )
 {
 	if ( e->hasLeftButton() ) {
+		/*
 		Control* c = (Control*)e->getSource();
 		GraphicsContext* ctx = c->getContext();
 
@@ -995,16 +1031,17 @@ void CurveTool::onMouseMove( VCF::MouseEvent* e )
 
 
 		drawCurve( ctx );
-
+*/
 
 	}
 }
 
 void CurveTool::onMouseUp( VCF::MouseEvent* e )
 {
-	StringUtils::traceWithArgs( Format("CurveTool::onMouseUp, state: %d\n") % state_ );
+	StringUtils::trace( Format("CurveTool::onMouseUp, state: %d\n") % state_ );
 
 	if ( e->hasLeftButton() ) {
+		/*
 		Control* c = (Control*)e->getSource();
 		GraphicsContext* ctx = c->getContext();
 
@@ -1022,6 +1059,7 @@ void CurveTool::onMouseUp( VCF::MouseEvent* e )
 		segments_.push_back( segment_ );
 
 		paintSegments( ctx );
+		*/
 	}
 
 }
@@ -1031,7 +1069,9 @@ void CurveTool::finishCurve()
 	state_ = CurveTool::sFirstPoint;
 
 
-	SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
+	Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+	SketchModel* model = (SketchModel*)doc->getModel();
+
 	Shape shape;
 	std::vector<Segment>::iterator it = segments_.begin();
 	while ( it != segments_.end() ) {
@@ -1046,14 +1086,14 @@ void CurveTool::finishCurve()
 	if ( overFirstPoint( start_ ) ) {
 		shape.polygon_.close();
 	}
-	doc->addShape( shape );
+	model->addShape( shape );
 
 	segments_.clear();
 }
 
 void CurveTool::onDblClick( VCF::MouseEvent* e )
 {
-	StringUtils::traceWithArgs( Format("CurveTool::onDblClick, state: %d\n") % state_ );
+	StringUtils::trace( Format("CurveTool::onDblClick, state: %d\n") % state_ );
 
 	finishCurve();
 }
@@ -1126,11 +1166,13 @@ void ImageTool::onMouseDown( VCF::MouseEvent* e )
 									e->getPoint()->y_ + img->getHeight());
 
 
-				SketchDocument* doc = (SketchDocument*) DocumentManager::getDocumentManager()->getCurrentDocument();
+				Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+				SketchModel* model = (SketchModel*)doc->getModel();
+
 				Shape shape;
 				shape.polygon_.rectangle( imageRect );
 				shape.image_ = img;
-				doc->addShape( shape );
+				model->addShape( shape );
 			}
 
 		}

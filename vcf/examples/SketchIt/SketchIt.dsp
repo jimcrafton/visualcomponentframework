@@ -23,6 +23,8 @@ CFG=SketchIt - Win32 Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
+# PROP Scc_ProjName ""
+# PROP Scc_LocalPath ""
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -91,11 +93,11 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=SketchDocument.cpp
+SOURCE=SketchIt.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=SketchIt.cpp
+SOURCE=.\SketchModel.cpp
 # End Source File
 # Begin Source File
 
@@ -119,6 +121,10 @@ SOURCE=SketchDocument.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\SketchModel.h
+# End Source File
+# Begin Source File
+
 SOURCE=SketchTools.h
 # End Source File
 # Begin Source File
@@ -135,7 +141,7 @@ SOURCE=SketchWindow.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=SketchIt.xml
+SOURCE=.\Resources\SketchIt.xml
 # End Source File
 # End Group
 # End Target

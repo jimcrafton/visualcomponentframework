@@ -9,9 +9,9 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ModelViewKit.h"
-#include "../examples/SketchIt/SketchView.h"
-#include "../examples/SketchIt/SketchDocument.h"
-#include "../examples/SketchIt/SketchTools.h"
+#include "SketchView.h"
+#include "SketchModel.h"
+#include "SketchTools.h"
 
 
 
@@ -51,7 +51,7 @@ void SketchView::paintView( GraphicsContext* ctx )
 	ctx->fillPath();
 
 
-	SketchDocument* doc = (SketchDocument*)getViewModel();
+	SketchModel* model = (SketchModel*)getViewModel();
 
 	BasicStroke bs;
 	BasicFill bf;
@@ -60,7 +60,7 @@ void SketchView::paintView( GraphicsContext* ctx )
 	Rect viewBounds = ctx->getViewableBounds();
 
 
-	Enumerator<Shape*>* shapes = doc->getShapes();
+	Enumerator<Shape*>* shapes = model->getShapes();
 	while ( shapes->hasMoreElements() ) {
 		Shape* shape = shapes->nextElement();
 

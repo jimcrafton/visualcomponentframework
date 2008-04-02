@@ -8,10 +8,10 @@ where you installed the VCF.
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
-#include "../examples/SketchIt/SketchDocument.h"
-#include "../examples/SketchIt/SketchWindow.h"
-#include "../examples/SketchIt/SketchView.h"
-#include "../examples/SketchIt/SketchTools.h"
+#include "SketchModel.h"
+#include "SketchWindow.h"
+#include "SketchView.h"
+#include "SketchTools.h"
 
 
 using namespace VCF;
@@ -32,7 +32,7 @@ public:
 	}
 
 	virtual bool initRunningApplication(){
-		REGISTER_CLASSINFO( SketchDocument );
+		REGISTER_CLASSINFO( SketchModel );
 		REGISTER_CLASSINFO( SketchWindow );
 		REGISTER_CLASSINFO( SketchView );
 
@@ -45,7 +45,7 @@ public:
 																			&SketchIt::onDocInitialized,
 																			"SketchIt::onDocInitialized" );
 
-		newDefaultDocument("","");
+		newDefaultDocument("");
 
 		return result;
 	}
@@ -162,11 +162,11 @@ public:
 	void onDeleteShape( MenuItemEvent* e ) {
 		Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
 
-		if ( NULL != doc ) {
-			SketchDocument* skDoc = (SketchDocument*)doc;
-			Shape* shape = skDoc->getSelectedShape();
+		if ( NULL != doc ) {			
+			SketchModel* model = (SketchModel*)doc->getModel();
+			Shape* shape = model->getSelectedShape();
 
-			skDoc->removeShape( shape );
+			model->removeShape( shape );
 		}
 	}
 
@@ -175,8 +175,8 @@ public:
 		Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
 
 		if ( NULL != doc ) {
-			SketchDocument* skDoc = (SketchDocument*)doc;
-			Shape* shape = skDoc->getSelectedShape();
+			SketchModel* model = (SketchModel*)doc->getModel();
+			Shape* shape = model->getSelectedShape();
 			enabled = (NULL != shape) ? true : false;
 		}
 
@@ -189,8 +189,8 @@ public:
 		Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
 
 		if ( NULL != doc ) {
-			SketchDocument* skDoc = (SketchDocument*)doc;
-			Shape* shape = skDoc->getSelectedShape();
+			SketchModel* model = (SketchModel*)doc->getModel();
+			Shape* shape = model->getSelectedShape();
 
 			shape->fill_ = !shape->fill_;
 		}
@@ -202,8 +202,8 @@ public:
 		Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
 
 		if ( NULL != doc ) {
-			SketchDocument* skDoc = (SketchDocument*)doc;
-			Shape* shape = skDoc->getSelectedShape();
+			SketchModel* model = (SketchModel*)doc->getModel();
+			Shape* shape = model->getSelectedShape();
 			enabled = (NULL != shape) ? true : false;
 
 			if ( NULL != shape ) {
@@ -221,12 +221,7 @@ public:
 	void onToggleAntiAliasing( MenuItemEvent* e ) {
 		Document*  doc = DocumentManager::getDocumentManager()->getCurrentDocument();
 
-		doc->getWindow()->setUsingRenderBuffer( !doc->getWindow()->isUsingRenderBuffer() );
-		GraphicsContext* ctx = doc->getWindow()->getContext();
-		if ( doc->getWindow()->isUsingRenderBuffer() ) {
-			ctx->setRenderArea( doc->getWindow()->getClientBounds() );
-		}
-
+		doc->getWindow()->setUsingRenderBuffer( !doc->getWindow()->isUsingRenderBuffer() );		
 		doc->getWindow()->repaint();
 	}
 
