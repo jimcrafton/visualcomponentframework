@@ -34,10 +34,17 @@ public:
 		Application::initRunningApplication();
 
 		DocMgrImpl::init();
+
+		const CommandLine& comdLine = FoundationKit::getCommandLine();
+		if ( comdLine.hasSwitch( REGISTERDOCTYPES ) ) {
+			return false; //exit the app
+		}
+
+
 		DocMgrImpl::createMenus();
 
 		return true;
-	}
+	}	
 
 	void terminateRunningApplication() {
 		DocMgrImpl::terminate();

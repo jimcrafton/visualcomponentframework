@@ -459,9 +459,7 @@ public:
 
 		bool result = SDIDocumentBasedApplication::initRunningApplication();
 
-		newDefaultDocument("");
-
-		
+		processCommandLine();
 		
 		return result;
 	}

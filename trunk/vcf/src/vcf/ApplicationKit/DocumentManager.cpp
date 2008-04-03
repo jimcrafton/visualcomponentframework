@@ -15,6 +15,7 @@ where you installed the VCF.
 #endif // _VCF_MESSAGEDIALOG_H__
 
 #include "vcf/FoundationKit/PropertyListing.h"
+#include "vcf/FoundationKit/StringTokenizer.h"
 
 
 using namespace VCF;
@@ -24,10 +25,11 @@ using namespace VCF;
 DocumentManager* DocumentManager::docManagerInstance = NULL;
 
 DocumentManager::DocumentManager():
-	shouldCreateUI_(true)
+	shouldCreateUI_(true),
+		currentDragDocument_(NULL)
 {
 	DocumentManager::docManagerInstance = this;
-	docInfoContainer_.initContainer( docInfo_ );
+	docInfoContainer_.initContainer( docInfo_ );		
 }
 
 
@@ -35,7 +37,6 @@ DocumentManager::DocumentManager():
 
 DocumentManager::~DocumentManager()
 {
-
 }
 
 Enumerator<DocumentInfo>* DocumentManager::getRegisteredDocumentInfo()
@@ -112,7 +113,13 @@ void DocumentManager::init()
 				FileAssociationInfo fa;
 				fa.extension = ext;
 				fa.mimeType = info.mimetype;
-				fa.documentClass = app->getName() + "." + info.docClass;
+				fa.documentClass = app->getName() + ".";
+				if ( !info.docClass.empty() ) {
+					fa.documentClass += info.docClass;
+				}
+				else {
+					fa.documentClass += info.modelClass;
+				}
 				fa.documentDescription = info.description;
 				fa.documentIconPath = icoFile;
 				fa.launchingProgram = app->getFileName();
@@ -624,10 +631,7 @@ Document* DocumentManager::openFromFileName( const String& fileName )
 	// finally reads what is specific about the document: its file
 	if ( NULL != doc ) {
 		doc->setFileName( fp );
-		if ( doc->openFromType( fp, mimetype ) ) {
-			addDocument( doc );
-		}
-		else {
+		if ( !doc->openFromType( fp, mimetype ) ) {
 			// failed to open the file, we close the default document just opened.
 			setCurrentDocument( doc );
 			closeCurrentDocument();
@@ -703,6 +707,196 @@ Model* DocumentManager::getModel( Document* document )
 	return result;
 }
 
+void DocumentManager::onDocWndEntered( DropTargetEvent* e )
+{
+	currentDragDocument_ = NULL;
+
+	DropTarget* dt = (DropTarget*)e->getSource();	
+
+	//the point of the following is 
+	//to make sure we are actually talking about the right document
+	//and window pairing for the specific drop target that 
+	//we're getting this callback for
+	Window* window = (Window*)dt->getTarget();
+	Document* doc = NULL;
+
+	Array<Document*>::iterator it = openDocuments_.begin();
+	while ( it != openDocuments_.end() ) {
+		if ( (*it)->getWindow() == window ) {
+			doc = *it;
+			break;
+		}
+		++it;
+	}
+
+	VCF_ASSERT( doc != NULL );
+
+	if ( doc == NULL ) {
+		return;
+	}	
+
+	DocumentInfo* info = getDocumentInfo( doc );
+	VCF_ASSERT( info != NULL );
+
+	if ( info == NULL ) {
+		return;
+	}
+
+	DataObject* dataObj = e->getDataObject();
+	Enumerator<String>* dataTypes = dataObj->getSupportedDataTypes();
+	StringTokenizer tok( info->clipboardTypes, "," );
+
+	bool matchFound = false;
+	while ( !matchFound && tok.hasMoreElements() ) {
+		String type = tok.nextElement();
+		dataTypes->reset();
+
+		while ( dataTypes->hasMoreElements() ) {
+			String dataType = dataTypes->nextElement();
+			if ( dataType.find( type ) != String::npos ) {
+				matchFound = true;
+				break;
+			}
+		}
+	}
+
+	if ( !matchFound ) {
+		if ( dataObj->isTypeSupported( FILE_DATA_TYPE ) ) {
+			matchFound = true;//let it go through we'll figure this out on a drop
+			/*
+			BasicOutputStream stream; //dump the file names here
+			//write the data in the data object to the stream
+			if ( dataObj->saveToStream( FILE_DATA_TYPE, &stream ) ) {
+				//create a string from the output streams data
+				String fileNames;
+				fileNames.append( (VCF::WideChar*)stream.getBuffer(), stream.getSize()/sizeof(VCF::WideChar) );
+
+				//create a string tokenizer, with the delimeter set to '\n'
+				tok.assign( fileNames, "\n");
+				//enumerate through all the file names
+				while ( tok.hasMoreElements() ) {
+					String fileName = tok.nextElement();
+					
+				}
+			}
+			*/
+		}
+	}
+
+	if ( matchFound ) {
+		currentDragDocument_ = doc;
+	}
+
+
+	e->setActionType( matchFound ? daCopy : daNone );
+}
+
+void DocumentManager::onDocWndDragging( DropTargetEvent* e )
+{
+	e->setActionType( (NULL != currentDragDocument_) ? daCopy : daNone );
+}
+
+void DocumentManager::onDocWndDropped( DropTargetEvent* e )
+{
+	if ( NULL != currentDragDocument_ ) {
+		DocumentInfo* info = getDocumentInfo( currentDragDocument_ );
+		VCF_ASSERT( info != NULL );
+		
+		if ( info == NULL ) {
+			return;
+		}
+		
+		DataObject* dataObj = e->getDataObject();
+
+		if ( dataObj->isTypeSupported( FILE_DATA_TYPE ) ) {
+			BasicOutputStream stream; //dump the file names here
+			//write the data in the data object to the stream
+			if ( dataObj->saveToStream( FILE_DATA_TYPE, &stream ) ) {
+				//create a string from the output streams data
+				String fileNames;
+				fileNames.append( (VCF::WideChar*)stream.getBuffer(), stream.getSize()/sizeof(VCF::WideChar) );
+
+				//create a string tokenizer, with the delimeter set to '\n'
+				StringTokenizer tok( fileNames, "\n");
+				//enumerate through all the file names
+				while ( tok.hasMoreElements() ) {
+					String fileName = tok.nextElement();
+					Document* doc = openFromFileName( fileName );
+					break;
+				}
+			}
+		}
+		else {
+			if ( !currentDragDocument_->paste( dataObj ) ) {
+				
+				StringTokenizer tok( info->clipboardTypes, "," );
+				
+				String type;				
+				while ( tok.hasMoreElements() ) {
+					type = tok.nextElement();
+					
+					if ( dataObj->isTypeSupported( type ) ) {
+						break;
+					}
+				}
+
+				if ( !type.empty() ) {
+					BasicOutputStream bos;
+					if ( !type.empty() ) {				
+						dataObj->saveToStream( type, &bos );
+					}		
+					
+					BasicInputStream bis( bos.getBuffer(), bos.getSize() );
+					
+					if ( !type.empty() ) {				
+						currentDragDocument_->openFromType( type, bis );
+					}
+					currentDragDocument_->setModified( true );
+				}
+			}
+		}
+
+	}
+	currentDragDocument_ = NULL;
+}
+
+void DocumentManager::addDropTarget( DropTarget* dropTarget )
+{
+	dropTargets_.push_back(dropTarget);
+}
+
+void DocumentManager::cleanupDropTarget( Document* doc )
+{
+	std::vector<DropTarget*>::iterator it = dropTargets_.begin();
+	while ( it != dropTargets_.end() ) {
+		DropTarget* dt = *it;
+		if ( dt->getTarget() == doc->getWindow() ) {
+			dt->removeTargetControl( doc->getWindow() );
+			dt->free();
+			dropTargets_.erase( it );
+			break;
+		}
+		++it;
+	}
+}
+
+void DocumentManager::processCommandLine()
+{
+	const CommandLine& comdLine = FoundationKit::getCommandLine();
+	
+	size_t argc = comdLine.getArgCount();
+	
+	if ( argc > 1 ) {
+		String docFileName = comdLine.getArgument(1);
+		
+		openFromFileName( docFileName );
+	}
+	else {
+		newDefaultDocument("", VCF::MIMEType() );
+	}
+}
+
 /**
 $Id$
 */
+

@@ -17,8 +17,6 @@ using namespace VCF;
 
 DropTarget::DropTarget( Control* control )
 {
-	targetContainer_.initContainer( targets_ );
-
 	dropTargetPeer_ = UIToolkit::createDropTargetPeer();
 	if ( NULL != dropTargetPeer_ ){
 		dropTargetPeer_->setDropTarget( this );
@@ -31,9 +29,7 @@ DropTarget::DropTarget( Control* control )
 }
 
 DropTarget::DropTarget()
-{
-	targetContainer_.initContainer( targets_ );
-
+{	
 	dropTargetPeer_ = UIToolkit::createDropTargetPeer();
 	if ( NULL != dropTargetPeer_ ){
 		dropTargetPeer_->setDropTarget( this );
@@ -46,8 +42,6 @@ DropTarget::DropTarget()
 DropTarget::DropTarget( Component* owner ):
 	Component( owner )
 {
-	targetContainer_.initContainer( targets_ );
-
 	dropTargetPeer_ = UIToolkit::createDropTargetPeer();
 	if ( NULL != dropTargetPeer_ ){
 		dropTargetPeer_->setDropTarget( this );
@@ -60,8 +54,6 @@ DropTarget::DropTarget( Component* owner ):
 DropTarget::DropTarget( const String& name, Component* owner ):
 	Component( name, owner )
 {
-	targetContainer_.initContainer( targets_ );
-
 	dropTargetPeer_ = UIToolkit::createDropTargetPeer();
 	if ( NULL != dropTargetPeer_ ){
 		dropTargetPeer_->setDropTarget( this );
@@ -74,8 +66,6 @@ DropTarget::DropTarget( const String& name, Component* owner ):
 DropTarget::DropTarget( const String& name ):
 	Component( name )
 {
-	targetContainer_.initContainer( targets_ );
-
 	dropTargetPeer_ = UIToolkit::createDropTargetPeer();
 	if ( NULL != dropTargetPeer_ ){
 		dropTargetPeer_->setDropTarget( this );
@@ -146,21 +136,26 @@ Control* DropTarget::getTarget()
 
 Enumerator<Control*>* DropTarget::getTargets()
 {
-	return targetContainer_.getEnumerator();
+	return targets_.getEnumerator();
 }
 
 void DropTarget::addTargetControl( Control* control )
 {
-	targets_.push_back( control );
-	dropTargetPeer_->registerTarget( control );
+	std::vector<Control*>::iterator found = std::find( targets_.begin(), targets_.end(), control );
+	if ( found == targets_.end() ) {
+		targets_.push_back( control );
+		dropTargetPeer_->registerTarget( control );
+	}
 }
 
 void DropTarget::removeTargetControl( Control* control )
 {
-	std::vector<Control*>::iterator found = std::find( targets_.begin(), targets_.end(), control );
-	if ( found != targets_.end() ) {
-		dropTargetPeer_->unregisterTarget( control );
-		targets_.erase( found );
+	if ( NULL != control ) {
+		std::vector<Control*>::iterator found = std::find( targets_.begin(), targets_.end(), control );
+		if ( found != targets_.end() ) {
+			dropTargetPeer_->unregisterTarget( control );
+			targets_.erase( found );
+		}
 	}
 }
 
