@@ -2952,7 +2952,8 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 
 		case WM_DRAWITEM:{
 			DRAWITEMSTRUCT* drawItem = (DRAWITEMSTRUCT*)lParam;
-			if ( ODT_BUTTON == drawItem->CtlType ) {
+			if ( ODT_BUTTON == drawItem->CtlType || 
+					ODT_COMBOBOX == drawItem->CtlType ) {
 				HWND hwndCtl = drawItem->hwndItem;
 				Win32Object* win32Obj = Win32Object::getWin32ObjectFromHWND( hwndCtl );
 				if ( NULL != win32Obj ){

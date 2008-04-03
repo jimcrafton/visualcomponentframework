@@ -120,7 +120,7 @@ ListControl::ListControl():
 	Control(),
 		listPeer_(NULL)
 {
-
+	setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW ) );
 }
 
 ListModel* ListControl::getListModel()
@@ -452,8 +452,14 @@ public:
 		setViewModel( new DefaultListModel() );
 	}
 
-	virtual void paint( GraphicsContext* ctx ) {
+	virtual void paint( GraphicsContext* context ) {
+		Rect innerBounds = getClientBounds( false );	
+
+		context->setColor( getColor() );
 		
+		context->rectangle( &innerBounds );
+		
+		context->fillPath();
 	}
 
 	DropDownPeer* dropDownPeer_;
@@ -526,16 +532,26 @@ MainWindow::MainWindow(CombosApplication* app)
 
 
 	MyCombo* combo = new MyCombo();
-	combo->setBounds( &Rect(375, 50, 450, cb_->getPreferredHeight()) );
+	combo->setBounds( &Rect(250, 100, 350, cb_->getPreferredHeight()) );
 	add( combo );
 
-	combo->dropDownPeer_->setDropDownCount( 5 );
-	combo->dropDownPeer_->enableEditBox( true );
+	combo->dropDownPeer_->setDropDownCount( 6 );
+	combo->setAnchor( AnchorLeft | AnchorRight );
+	//combo->dropDownPeer_->enableEditBox( false );
 
 	combo->getListModel()->add( "Item 1" );
 	combo->getListModel()->add( "Item 2" );
 	combo->getListModel()->add( "Item 3" );
 	combo->getListModel()->add( "Item 4" );
+	combo->getListModel()->add( "Item 5" );
+	combo->getListModel()->add( "Item 6" );
+	combo->getListModel()->add( "Item 7" );
+	combo->getListModel()->add( "Item 8" );
+	combo->getListModel()->add( "Item 9" );
+	combo->getListModel()->add( "Item A" );
+	combo->getListModel()->add( "Item B" );
+	combo->getListModel()->add( "Item C" );
+	combo->getListModel()->add( "Item D" );
 
 
 

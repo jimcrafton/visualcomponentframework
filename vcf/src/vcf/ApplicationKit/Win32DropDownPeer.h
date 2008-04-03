@@ -69,6 +69,15 @@ namespace VCF {
 		void onCtrlModelChanged( Event* e );
 		void onListModelChanged( Event* e );
 
+		HWND listBoxHwnd_;
+		WNDPROC oldLBWndProc_;
+		bool editEnabled_;
+
+		static LRESULT CALLBACK LB_WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+		void attachToHwnd( HWND wnd, Control* owner = NULL );
+		void detachFromHwnd( HWND wnd );
+
 	};
 
 };
