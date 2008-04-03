@@ -64,6 +64,8 @@ public:
 	static Win32Object* getWin32ObjectFromHWND( HWND hwnd );
 
 	static void registerWin32Object( Win32Object* wndObj );
+	static void registerWin32ObjectQuietly( Win32Object* wndObj );
+	static void unRegisterWin32Object( Win32Object* wndObj );
 
 	HWND getHwnd();
 

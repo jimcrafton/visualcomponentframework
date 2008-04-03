@@ -13,8 +13,24 @@
 using namespace VCFWin32;
 using namespace VCF;
 
+typedef struct tagCOMBOBOXINFO {
+	DWORD cbSize;
+	RECT rcItem;
+	RECT rcButton;
+	DWORD stateButton;
+	HWND hwndCombo;
+	HWND hwndItem;
+	HWND hwndList;
+} COMBOBOXINFO, *PCOMBOBOXINFO, *LPCOMBOBOXINFO;
 
-Win32DropDownPeer::Win32DropDownPeer()
+typedef BOOL  (WINAPI *GetComboBoxInfoPtr) ( HWND, PCOMBOBOXINFO );
+
+static GetComboBoxInfoPtr GetComboBoxInfoFunc = NULL;
+
+Win32DropDownPeer::Win32DropDownPeer():
+	listBoxHwnd_(NULL),
+		oldLBWndProc_(NULL),
+		editEnabled_(false)
 {
 
 }
@@ -30,8 +46,11 @@ void Win32DropDownPeer::create( Control* owningControl )
 	Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
 	HWND parent = toolkit->getDummyParent();
 
+	editEnabled_ = (params.first & CBS_DROPDOWN) ? true : false;
+
+	HWND wnd = NULL;
 	if ( System::isUnicodeEnabled() ) {
-		hwnd_ = ::CreateWindowExW( params.second,
+		wnd = ::CreateWindowExW( params.second,
 		                             L"COMBOBOX",
 									 NULL,
 									 params.first,
@@ -45,7 +64,7 @@ void Win32DropDownPeer::create( Control* owningControl )
 									 NULL );
 	}
 	else {
-		hwnd_ = ::CreateWindowExA( params.second,
+		wnd = ::CreateWindowExA( params.second,
 		                             "COMBOBOX",
 									 NULL,
 									 params.first,
@@ -59,31 +78,143 @@ void Win32DropDownPeer::create( Control* owningControl )
 									 NULL );
 	}
 
-	if ( NULL != hwnd_ ){
-		peerControl_ = owningControl;
+	CallBack* cb = 
+		new ClassProcedure1<Event*,Win32DropDownPeer>( this, &Win32DropDownPeer::onCtrlModelChanged, "Win32DropDownPeer::onCtrlModelChanged" );
 
-		Win32Object::registerWin32Object( this );
+	owningControl->ControlModelChanged += cb;
+
+	cb = 
+		new ClassProcedure1<Event*,Win32DropDownPeer>( this, &Win32DropDownPeer::onListModelChanged, "Win32DropDownPeer::onListModelChanged" );
+
+	if ( NULL == GetComboBoxInfoFunc ) {
+		HINSTANCE user32 = LoadLibrary( "user32.dll" );
+		GetComboBoxInfoFunc = (GetComboBoxInfoPtr)::GetProcAddress( user32, "GetComboBoxInfo" );
+		FreeLibrary(user32);
+		
+		if ( NULL == GetComboBoxInfoFunc ) {
+			StringUtils::trace( "WARNING! GetComboBoxInfo() was not found in User32.dll. Maybe this is an old version of Windows?\n" );
+		}
+	}
+
+	attachToHwnd( wnd, owningControl );
+}
+
+void Win32DropDownPeer::attachToHwnd( HWND wnd, Control* owner )
+{
+	if ( NULL != wnd ){
+		hwnd_ = wnd;
+
+		bool firstTime = false;
+
+		if ( NULL == peerControl_ ) {
+			peerControl_ = owner;
+			firstTime = true;
+			Win32Object::registerWin32Object( this );
+		}
+		else {
+			Win32Object::registerWin32ObjectQuietly( this );
+		}
 
 		subclassWindow();
-		registerForFontChanges();
 
-		CallBack* cb = 
-			new ClassProcedure1<Event*,Win32DropDownPeer>( this, &Win32DropDownPeer::onCtrlModelChanged, "Win32DropDownPeer::onCtrlModelChanged" );
-
-		owningControl->ControlModelChanged += cb;
-
-		cb = 
-			new ClassProcedure1<Event*,Win32DropDownPeer>( this, &Win32DropDownPeer::onListModelChanged, "Win32DropDownPeer::onListModelChanged" );
+		if ( firstTime ) {
+			registerForFontChanges();
+		}
+		else {
+			setFont( peerControl_->getFont() );
+		}
 
 		setCreated( true );
+		if ( !firstTime ) {
+			canProcessMessages_ = true;
+			delete cachedMessages_;
+		}
+
+		
+		if ( NULL != GetComboBoxInfoFunc ) {
+			COMBOBOXINFO info = {0};
+			info.cbSize = sizeof(info);
+			GetComboBoxInfoFunc( hwnd_, &info );
+			listBoxHwnd_ = info.hwndList;
+
+
+			if ( System::isUnicodeEnabled() ) {
+				::SetWindowLongPtr( listBoxHwnd_, GWLP_USERDATA, (LONG_PTR)this );
+				oldLBWndProc_ = (WNDPROC)(LONG_PTR) ::SetWindowLongPtr( listBoxHwnd_, GWLP_WNDPROC, (LONG_PTR)Win32DropDownPeer::LB_WndProc );			
+			}
+			else {
+				::SetWindowLongPtrA( listBoxHwnd_, GWLP_USERDATA, (LONG_PTR)this );
+				oldLBWndProc_ = (WNDPROC)(LONG_PTR) ::SetWindowLongPtrA( listBoxHwnd_, GWLP_WNDPROC, (LONG_PTR)Win32DropDownPeer::LB_WndProc );			
+			}			
+		}
 	}
+}
+
+void Win32DropDownPeer::detachFromHwnd( HWND wnd )
+{
+	Win32Object::unRegisterWin32Object( this );
+
+	if ( System::isUnicodeEnabled() ) {
+		::SetWindowLongPtrW( wnd, GWLP_WNDPROC, (LONG_PTR)defaultWndProc_ );	
+	}
+	else {
+		::SetWindowLongPtrA( wnd, GWLP_WNDPROC, (LONG_PTR)defaultWndProc_ );	
+	}
+
+	if ( NULL != listBoxHwnd_ ) {	
+		if ( System::isUnicodeEnabled() ) {
+			::SetWindowLongPtrW( listBoxHwnd_, GWLP_WNDPROC, (LONG_PTR)oldLBWndProc_ );	
+		}
+		else {
+			::SetWindowLongPtrA( listBoxHwnd_, GWLP_WNDPROC, (LONG_PTR)oldLBWndProc_ );	
+		}
+	}
+
+	listBoxHwnd_ = NULL;
+	hwnd_ = NULL;	
+	setCreated( false );	
+	canProcessMessages_ = false;
+}
+
+LRESULT CALLBACK Win32DropDownPeer::LB_WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	LRESULT result = 0;
+	Win32DropDownPeer* dropDownPeer = (Win32DropDownPeer*)(LONG_PTR) ::GetWindowLongPtr( hWnd, GWLP_USERDATA );
+
+	switch ( message ) {	
+
+		case LB_GETTEXT : {
+
+			result = ::SendMessage( dropDownPeer->hwnd_, CB_GETLBTEXT, wParam, lParam );
+		}
+		break;
+
+		case LB_GETTEXTLEN : {
+
+			result = ::SendMessage( dropDownPeer->hwnd_, CB_GETLBTEXTLEN, wParam, lParam );
+		}
+		break;
+
+		default : {
+			if ( System::isUnicodeEnabled() ) {
+				result = CallWindowProcW( dropDownPeer->oldLBWndProc_, hWnd, message, wParam, lParam );
+			}
+			else {
+				result = CallWindowProcA( dropDownPeer->oldLBWndProc_, hWnd, message, wParam, lParam );
+			}
+		}
+		break;
+	}
+
+
+	return result;
 }
 
 Win32Object::CreateParams Win32DropDownPeer::createParams()
 {
 	Win32Object::CreateParams result;
-	result.first = BORDERED_VIEW | CBS_AUTOHSCROLL | CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | CBS_HASSTRINGS;
-	//result.first &= ~WS_BORDER;
+	result.first = BORDERED_VIEW | CBS_AUTOHSCROLL | CBS_DROPDOWNLIST | CBS_OWNERDRAWVARIABLE  | CBS_HASSTRINGS | WS_VSCROLL;
+	//result.first &= ~WS_BORDER;	
 
 	result.second = 0;
 
@@ -102,13 +233,136 @@ bool Win32DropDownPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM
 		}
 		break;
 
+		case WM_GETTEXT:{
+			wndProcResult = 0;
+			result = true;
+
+			ListModel* lm = (ListModel*) peerControl_->getViewModel();
+			UINT res = ::SendMessage( hwnd_, CB_GETCURSEL, 0, 0 );
+			if ( res != CB_ERR ) {
+				size_t index = res;
+				String s = lm->getAsString( index );
+				size_t len = wParam;
+				if ( System::isUnicodeEnabled() ) {
+					WCHAR* str = (WCHAR*)lParam;
+					wndProcResult = s.copy( str, minVal<>(len,s.length()) );
+					
+				}
+				else {
+					char* str = (char*)lParam;					
+					AnsiString tmp = s;
+					wndProcResult = tmp.copy( str, minVal<>(len,tmp.length()) );
+				}
+			}
+		}
+		break;
+
+		
+		case WM_GETTEXTLENGTH :{
+			wndProcResult = 0;
+			result = true;
+
+			ListModel* lm = (ListModel*) peerControl_->getViewModel();
+			UINT res = ::SendMessage( hwnd_, CB_GETCURSEL, 0, 0 );
+			if ( res != CB_ERR ) {
+				size_t index = res;
+				String s = lm->getAsString( index );
+				if ( System::isUnicodeEnabled() ) {
+					wndProcResult = s.length();
+				}
+				else {
+					AnsiString tmp = s;
+					wndProcResult = tmp.length();
+				}
+			}
+		}
+		break;
+
+		case CB_GETLBTEXTLEN :{
+			wndProcResult = TRUE;
+			result = true;
+
+			ListModel* lm = (ListModel*) peerControl_->getViewModel();
+			size_t index = wParam;
+			String s = lm->getAsString( index );
+			if ( System::isUnicodeEnabled() ) {
+				wndProcResult = s.length();
+			}
+			else {
+				AnsiString tmp = s;
+				wndProcResult = tmp.length();
+			}
+		}
+		break;		
+
+		case CB_GETLBTEXT :{
+			wndProcResult = 0;
+			result = true;
+
+			ListModel* lm = (ListModel*) peerControl_->getViewModel();
+			size_t index = wParam;
+			String s = lm->getAsString( index );
+			size_t len = 0;
+			if ( System::isUnicodeEnabled() ) {
+				WCHAR* str = (WCHAR*)lParam;
+				len = wcslen( str );
+				wndProcResult = s.copy( str, minVal<>(len,s.length()) );
+
+			}
+			else {
+				char* str = (char*)lParam;
+				len = strlen( str );
+				AnsiString tmp = s;
+				wndProcResult = tmp.copy( str, minVal<>(len,tmp.length()) );
+			}
+		}
+		break;
+
+		
+
 		case WM_PAINT:{
-			//result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+			//AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+			wndProcResult = 0;
 		}
 		break;
 
 		case WM_DRAWITEM:{
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+			//result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+
+			DRAWITEMSTRUCT* drawItemStruct = (DRAWITEMSTRUCT*) lParam;
+
+			Win32Font* fontPeer = (Win32Font*) peerControl_->getFont()->getFontPeer();
+			HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( fontPeer );
+
+			ListModel* lm = (ListModel*) peerControl_->getViewModel();
+			size_t count = lm->getCount();
+			if ( drawItemStruct->itemID >= 0 && drawItemStruct->itemID < count ) {
+
+				String s = lm->getAsString( drawItemStruct->itemID );
+
+				GraphicsContext gc( drawItemStruct->hDC );
+				Rect r;
+				r.left_ = drawItemStruct->rcItem.left;
+				r.top_ = drawItemStruct->rcItem.top;
+				r.right_ = drawItemStruct->rcItem.right;
+				r.bottom_ = drawItemStruct->rcItem.bottom;
+
+				Color* color = peerControl_->getColor();
+				Color* defaultBackClr = color;
+				
+				if ( drawItemStruct->itemState & ODS_SELECTED ) {
+					defaultBackClr = GraphicsToolkit::getSystemColor( SYSCOLOR_SELECTION );
+				}
+
+				gc.setColor( defaultBackClr );
+				gc.rectangle( &r );
+				gc.fillPath();
+
+
+				gc.textBoundedBy( &r, s );
+
+			}			
+			
 		}
 		break;
 
@@ -145,7 +399,15 @@ bool Win32DropDownPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM
 
 void Win32DropDownPeer::enableEditBox( bool val )
 {
-	LONG style = GetWindowLong( hwnd_, GWL_STYLE );
+	if ( val == editEnabled_ ) {
+		return;
+	}
+
+
+	bool visible = this->getVisible();
+
+	UINT style = BORDERED_VIEW | CBS_AUTOHSCROLL | CBS_DROPDOWN | CBS_OWNERDRAWVARIABLE  | CBS_HASSTRINGS;
+
 	if ( val ) {
 		style &= ~CBS_DROPDOWNLIST;
 		style |= CBS_DROPDOWN;
@@ -155,9 +417,86 @@ void Win32DropDownPeer::enableEditBox( bool val )
 		style |= CBS_DROPDOWNLIST;
 	}
 
-	::SetWindowLong( hwnd_, GWL_STYLE, style );
+	if ( visible ) {
+		style |= WS_VISIBLE;
+	}
+	
 
-	SetWindowPos(hwnd_, NULL,0,0,0,0, SWP_FRAMECHANGED|SWP_NOMOVE|SWP_NOSIZE);
+	HWND parent = GetParent(hwnd_);
+	LONG styleEx = GetWindowLong( hwnd_, GWL_EXSTYLE );
+	Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
+	HWND dummy = toolkit->getDummyParent();
+
+
+	RECT r = {0};
+	GetWindowRect( hwnd_, &r );
+	
+	POINT pt;
+	pt.x = r.left;
+	pt.y = r.top;
+
+	ScreenToClient( parent, &pt );
+	r.left = pt.x;
+	r.top = pt.y;
+
+	pt.x = r.right;
+	pt.y = r.bottom;
+
+	ScreenToClient( parent, &pt );
+	r.right = pt.x;
+	r.bottom = pt.y;
+
+	HWND wnd = hwnd_;
+	detachFromHwnd( wnd );
+
+	DestroyWindow( wnd );
+
+	wnd = NULL;
+	if ( System::isUnicodeEnabled() ) {
+		wnd = ::CreateWindowExW( styleEx,
+		                             L"COMBOBOX",
+									 NULL,
+									 style,
+		                             r.left,
+									 r.top,
+									 r.right - r.left,
+									 (r.bottom - r.top) * 5,
+									 dummy,
+									 NULL,
+									 ::GetModuleHandle(NULL),
+									 NULL );
+	}
+	else {
+		wnd = ::CreateWindowExA( styleEx,
+		                             "COMBOBOX",
+									 NULL,
+									 style,
+		                             r.left,
+									 r.top,
+									 r.right - r.left,
+									 r.bottom - r.top,
+									 dummy,
+									 NULL,
+									 ::GetModuleHandle(NULL),
+									 NULL );
+	}
+
+	attachToHwnd( wnd );
+
+	::SetParent( hwnd_, parent );
+
+	
+	ListModel* lm = (ListModel*)peerControl_->getViewModel();
+
+	size_t modelCount = lm->getCount();	
+	UINT count = 0;
+	if ( modelCount > count ) {
+		while ( count < modelCount ) {
+			::SendMessage( hwnd_, CB_ADDSTRING, 0, (LPARAM)"null" );
+			count ++;
+		}		
+	}
+	editEnabled_ = val;
 }
 
 bool Win32DropDownPeer::editBoxEnabled()

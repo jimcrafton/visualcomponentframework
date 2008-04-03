@@ -214,6 +214,23 @@ void Win32Object::registerWin32Object( Win32Object* wndObj )
 	::PostMessage( wndObj->getHwnd(), VCF_CONTROL_CREATE, 0, 0 );
 }
 
+void Win32Object::registerWin32ObjectQuietly( Win32Object* wndObj )
+{
+	Win32Object::windowMap_[ wndObj->getHwnd() ] = wndObj;
+}
+
+void Win32Object::unRegisterWin32Object( Win32Object* wndObj )
+{
+	if ( Win32Object::windowMap_.empty() ) {
+		return;
+	}
+
+	std::map<HWND, Win32Object*>::iterator found =  Win32Object::windowMap_.find( wndObj->getHwnd() );
+	if ( found != Win32Object::windowMap_.end() ){
+		Win32Object::windowMap_.erase( found );
+	}
+}
+
 LRESULT Win32Object::defaultWndProcedure( UINT message, WPARAM wParam, LPARAM lParam )
 {
 	LRESULT result = 0;

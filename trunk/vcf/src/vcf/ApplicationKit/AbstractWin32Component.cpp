@@ -642,8 +642,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		if ( (message == WM_SIZE) || 
 			(message == WM_MOVE) ||
 			(message == WM_ERASEBKGND) ||
-			(message == WM_SETFOCUS) ||
-			(message == WM_MEASUREITEM) ||
+			(message == WM_SETFOCUS) ||			
 			(message == WM_KILLFOCUS) )  {
 			
 			MSG m;
