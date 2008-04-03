@@ -203,11 +203,19 @@ public:
 	}
 
 	StringTokenizer& operator=( const String& data ) {
+		assign( data );
+		return *this;
+	}
+
+	void assign( const String& data, const String& delimiter="" ) {
 		data_ = data;
 		ptr_ = NULL;
 		start_ = NULL;
 		backPtr_ = NULL;
-		return *this;
+		if ( !delimiter.empty() ) {
+			delimiter_ = delimiter;
+		}
+		reset();
 	}
 
 protected:

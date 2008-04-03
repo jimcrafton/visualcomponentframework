@@ -21,6 +21,7 @@ where you installed the VCF.
 
 namespace VCF {
 
+#define REGISTERDOCTYPES "register"
 
 /**
 \class DocumentInfo DocumentManager.h "vcf/ApplicationKit/DocumentManager.h"
@@ -606,6 +607,17 @@ public:
 	Document* getDocument( Model* model );
 	Model* getModel( Document* document );
 
+	void addDropTarget( DropTarget* dropTarget );
+	void cleanupDropTarget( Document* doc );
+	
+	/** called to add a document to the document based application */
+	void addDocument( Document* document );
+
+	/** called to remove a document from the document based application */
+	void removeDocument( Document* document );
+
+	virtual void processCommandLine();
+
 protected:
 
 	/**
@@ -659,11 +671,7 @@ protected:
 	/** add an action to the internal action map */
 	void addAction( uint32 tag, Action* action );
 
-	/** called to add a document to the document based application */
-	void addDocument( Document* document );
-
-	/** called to remove a document from the document based application */
-	void removeDocument( Document* document );
+	
 
 
 	typedef std::map<String,DocumentInfo> DocumentInfoMap;
@@ -705,6 +713,17 @@ protected:
 	DocumentUndoRedoMap undoRedoStack_;
 
 	DocumentModelMap docModelMap_;
+
+	std::vector<DropTarget*> dropTargets_;	
+	Document* currentDragDocument_;
+
+	
+
+	void onDocWndEntered( DropTargetEvent* e );
+
+	void onDocWndDragging( DropTargetEvent* e );
+
+	void onDocWndDropped( DropTargetEvent* e );
 };
 
 
@@ -1511,6 +1530,12 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::closeCurrentDocument()
 	documentClosedOK_ = false;
 	*/
 
+	Document* currentDoc = DocInterfacePolicy::getCurrentDocument();	
+	if ( NULL != currentDoc ) {
+		cleanupDropTarget( currentDoc );	
+		removeDocument( currentDoc );
+	}
+
 	DocInterfacePolicy::closeDocument();
 }
 
@@ -1617,6 +1642,34 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUI( const DocumentI
 
 	document->setWindow( window );
 	window->addComponent( document );
+
+	DropTarget* dropTarget = new DropTarget(window);
+
+	CallBack* cb = app_->getCallback( "onDocWndEntered" );
+	if ( cb == NULL ) {
+		cb =
+		new ClassProcedure1<DropTargetEvent*, AppClass>( app_, &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onDocWndEntered, "onDocWndEntered" );
+	}
+
+	dropTarget->DropTargetEntered += cb;
+
+	cb = app_->getCallback( "onDocWndDragging" );
+	if ( cb == NULL ) {
+		cb =
+		new ClassProcedure1<DropTargetEvent*, AppClass>( app_, &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onDocWndDragging, "onDocWndDragging" );
+	}
+
+	dropTarget->DropTargetDraggingOver += cb;
+
+	cb = app_->getCallback( "onDocWndDropped" );
+	if ( cb == NULL ) {
+		cb =
+		new ClassProcedure1<DropTargetEvent*, AppClass>( app_, &DocumentManagerImpl<AppClass,DocInterfacePolicy>::onDocWndDropped, "onDocWndDropped" );
+	}
+
+	dropTarget->DropTargetDropped += cb;
+
+	addDropTarget( dropTarget );
 
 	if ( NULL == docEv ) {
 
@@ -1812,6 +1865,8 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 			newDocument->setFileName( fileName );
 		}
 
+		addDocument( newDocument );
+
 		// calls user implementation
 		newDocument->initNew();
 
@@ -1849,16 +1904,19 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::createDocumentFromTy
 		try {
 			objInstance = ClassRegistry::createNewInstance( info.docClass );
 		}
-		catch (...) {		
-			objInstance = ClassRegistry::createNewInstanceFromClassID( info.docClass );
+		catch (...) {
+			try {
+				objInstance = ClassRegistry::createNewInstanceFromClassID( info.docClass );
+			}
+			catch (...) {		
+				objInstance = new Document();
+			}
 		}
 		result = dynamic_cast<Document*>( objInstance );
 		if ( NULL == result ) {
 			objInstance->free();
 		}
 	}
-
-	
 
 	return result;
 }

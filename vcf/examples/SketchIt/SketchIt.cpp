@@ -38,14 +38,16 @@ public:
 
 		bool result = SDIDocumentBasedApplication::initRunningApplication();
 
-		ToolManager::initialize();
-
-		DocumentManager* docMgr = DocumentManager::getDocumentManager();
-		docMgr->DocumentInitialized += new ClassProcedure1<Event*,SketchIt>( this,
-																			&SketchIt::onDocInitialized,
-																			"SketchIt::onDocInitialized" );
-
-		newDefaultDocument("");
+		if ( result ) {
+			ToolManager::initialize();
+			
+			DocumentManager* docMgr = DocumentManager::getDocumentManager();
+			docMgr->DocumentInitialized += new ClassProcedure1<Event*,SketchIt>( this,
+																&SketchIt::onDocInitialized,
+																"SketchIt::onDocInitialized" );
+			
+			newDefaultDocument("");
+		}
 
 		return result;
 	}

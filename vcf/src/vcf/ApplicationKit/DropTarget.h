@@ -233,8 +233,7 @@ public:
 	void removeTargetControl( Control* control );
 protected:
 	DropTargetPeer* dropTargetPeer_;
-	std::vector<Control*> targets_;
-	EnumeratorContainer<std::vector<Control*>,Control*> targetContainer_;
+	Array<Control*> targets_;
 };
 
 };

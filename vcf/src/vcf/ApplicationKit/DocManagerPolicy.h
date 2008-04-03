@@ -65,11 +65,21 @@ public:
 
 		//destroy the old document if neccessary
 		if ( NULL != currentDocument_ ) {
+			VCF::DocumentManager* mgr = VCF::DocumentManager::getDocumentManager();
+			//mgr->cleanupDropTarget( currentDocument_ );
+			mgr->removeDocument( currentDocument_ );
+
 			Model* docModel = currentDocument_->getModel();
 			Component* owner = docModel->getOwner();
 			if ( NULL != owner ) {
 				owner->removeComponent( docModel );
 				docModel->free();
+			}
+
+			owner = currentDocument_->getOwner();
+			if ( NULL != owner ) {
+				owner->removeComponent( currentDocument_ );
+				currentDocument_->free();
 			}
 		}
 

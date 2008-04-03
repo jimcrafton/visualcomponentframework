@@ -206,8 +206,12 @@ bool CommandLine::isSwitch(const String& aParam) const
 
 bool CommandLine::hasSwitch(const String& aSwitch) const
 {
-	CommandLineMap::const_iterator theIterator;
-	theIterator = commandLine_.find(aSwitch);
+	String aParam = aSwitch;
+	if ( aParam[0] != '-' )   {
+		aParam.insert(0,"-");
+	}
+
+	CommandLineMap::const_iterator theIterator = commandLine_.find(aParam);
 	return (theIterator != commandLine_.end());
 }
 

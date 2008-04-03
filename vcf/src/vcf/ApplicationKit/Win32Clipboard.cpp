@@ -78,6 +78,8 @@ bool Win32Clipboard::hasDataType( const String& dataType )
 		if ( SUCCEEDED(hr) ) {
 			result = true;
 		}
+
+		oleDataObject->Release();
 	}
 
 	return result;
