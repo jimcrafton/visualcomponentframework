@@ -449,7 +449,7 @@ class DocViewBasicsApplication : public SDIDocumentBasedApplication {
 public:
 
 	DocViewBasicsApplication( int argc, char** argv ) : SDIDocumentBasedApplication(argc, argv) {
-
+		this->setSingleInstance(true);
 	}
 
 	virtual bool initRunningApplication(){	

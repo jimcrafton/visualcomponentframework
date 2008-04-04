@@ -42,11 +42,13 @@ public:
 
 	virtual OSHandleID getHandleID();
 
-	virtual void setHandleID( OSHandleID handleID );	
+	virtual void setHandleID( OSHandleID handleID );
 private:
 	VCF::AbstractApplication* app_;
 	HINSTANCE instanceHandle_;
 	Win32ResourceBundle* resBundle_;
+	HANDLE singleInstanceMutex_;
+	String uniqueAppName_;
 };
 
 };

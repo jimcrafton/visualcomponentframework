@@ -107,6 +107,15 @@ HINSTANCE Win32ToolKit_toolkitHInstance = NULL;
 static HHOOK Win32ToolKit_mouseHook = NULL;
 static HHOOK Win32ToolKit_kbHook = NULL;
 
+
+UINT Win32ToolKit::AreUMeMessage = 0xFFFFFFFF;
+const UINT Win32ToolKit::RestoreSingleInstAppMessage = 
+	::RegisterWindowMessageA("RestoreSingleInstAppMessage-32270e92-b3fc-4c12-9027-26810a01b100");	
+
+static String RestoreSingleInstAppCmdLine;
+
+
+
 #ifndef _LIB //DLL Linkage...
 
 extern "C" BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved )
@@ -2718,6 +2727,12 @@ static ToolTipWatcher* toolTipWatcher = NULL;
 LRESULT CALLBACK ToolKitHookWndProc( int nCode, WPARAM wParam, LPARAM lParam );
 
 
+
+void Win32ToolKit::initAreUMeMessage( const String& uniqueAppName )
+{
+	Win32ToolKit::AreUMeMessage = ::RegisterWindowMessageA(uniqueAppName.ansi_c_str());	
+}
+
 /**
 *this is a weird case that Win32 gives us, so here's the deal:
 *A hidden dummy window, whose parent is the UIShell, is created and made
@@ -2745,7 +2760,39 @@ LRESULT CALLBACK ToolKitHookWndProc( int nCode, WPARAM wParam, LPARAM lParam );
 LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	LRESULT result = 0;
+
+	if ( (message == Win32ToolKit::AreUMeMessage) && (Win32ToolKit::AreUMeMessage != 0xFFFFFFFF) ) {
+		return Win32ToolKit::AreUMeMessage;
+	}
+	else if ( message == Win32ToolKit::RestoreSingleInstAppMessage ) {
+		StringUtils::trace( "Win32ToolKit::RestoreSingleInstAppMessage recvd\n" );
+
+		Window* mainWnd = Application::getRunningInstance()->getMainWindow();
+		
+		if ( NULL != mainWnd ) {
+			HWND mainHwnd = (HWND)mainWnd->getPeer()->getHandleID();
+			::SetForegroundWindow( mainHwnd );
+			
+			if ( IsIconic( mainHwnd ) )
+			{ /* restore */
+				::ShowWindow( mainHwnd, SW_RESTORE );
+			} /* restore */
+		}
+
+		RestoreSingleInstAppCmdLine = String();
+	}
+
 	switch ( message ){
+
+		case WM_COPYDATA : {
+			COPYDATASTRUCT* cpd = (COPYDATASTRUCT*)lParam;
+			if ( NULL != cpd ) {
+				if ( cpd->dwData == Win32ToolKit::RestoreSingleInstAppMessage ) {
+					RestoreSingleInstAppCmdLine.assign( (VCFChar*)cpd->lpData, cpd->cbData / sizeof(VCFChar) );
+				}
+			}
+		}
+		break;
 
 		case WM_INPUTLANGCHANGE : {
 			StringUtils::trace( "WM_INPUTLANGCHANGE\n" );
