@@ -208,6 +208,11 @@ public:
 		nativeOSEventReceived( nativeOSEvent );
 	}
 	
+	bool isSingleInstance() const {
+		return singleInstance_;
+	}
+
+	void setSingleInstance( bool val );
 
 	static void showErrorMessage( const String& message, const String& title );
 protected:
@@ -221,6 +226,7 @@ protected:
 	static void internal_main();
 private:
     Window * mainWindow_;
+	bool singleInstance_;
 };
 
 

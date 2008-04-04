@@ -21,58 +21,120 @@ using namespace VCFWin32;
 using namespace VCF;
 
 
-/*
-class Win32ApplicationResBundle : public Win32GraphicsResourceBundle {
-public:
-	Win32ApplicationResBundle( ApplicationPeer* peer ): Win32GraphicsResourceBundle(), appPeer_(peer){
-		
-	}
-protected:
-	virtual HINSTANCE getResourceInstance() {
-
-		HINSTANCE result = NULL;
-
-		if ( NULL != this->appPeer_ ) {
-			result = (HINSTANCE)appPeer_->getHandleID();
-		}
-		else {
-			//throw exception !!
-		}
-		return result;
-	}
-
-	ApplicationPeer* appPeer_;
-};
 
 
-class AppKitGraphicsResourceBundle : public GraphicsResourceBundle {
-public:
-	AppKitGraphicsResourceBundle(Win32Application* peer) : GraphicsResourceBundle(){
-		delete graphicsResPeer_;
-
-		graphicsResPeer_ = new Win32ApplicationResBundle(peer);
-		peer_ = dynamic_cast<ResourceBundlePeer*>( graphicsResPeer_ );
-	}
-};
-*/
-
-
-
-Win32Application::Win32Application()
+Win32Application::Win32Application():
+	instanceHandle_(NULL),
+	singleInstanceMutex_(NULL)
 {
-	//System::internal_replaceResourceBundleInstance( new AppKitGraphicsResourceBundle(this) );
 
-
-	instanceHandle_ = NULL;
 }
 
 Win32Application::~Win32Application()
 {
-	
+	if ( NULL != singleInstanceMutex_ ) {
+		CloseHandle( singleInstanceMutex_ );
+	}
+}
+
+
+BOOL CALLBACK SearchForAppWindows(HWND hWnd, LPARAM lParam)
+{
+	DWORD result;
+    LRESULT ok = ::SendMessageTimeout(hWnd,
+										Win32ToolKit::AreUMeMessage,
+										0, 0, 
+										SMTO_BLOCK |
+										SMTO_ABORTIFHUNG,
+										200,
+										&result );
+    if(ok == 0)
+       return TRUE; // ignore this and continue
+
+    if(result == Win32ToolKit::AreUMeMessage)
+    { /* found it */
+        HWND * target = (HWND *)lParam;
+        *target = hWnd;
+        return FALSE; // stop search
+
+    } /* found it */
+    return TRUE; // continue search
 }
 
 bool Win32Application::initApp()
 {
+
+	Application* app = Application::getRunningInstance();
+	if ( app->isSingleInstance() && app == app_ ) {
+
+		bool alreadyRunning = false;
+
+		uniqueAppName_ = app->getName();
+		
+		DWORD len;
+		HDESK desktop = GetThreadDesktop(GetCurrentThreadId());
+		BOOL result = GetUserObjectInformation(desktop, UOI_NAME, NULL, 0, &len);
+		DWORD err = ::GetLastError();
+		if(!result && err == ERROR_INSUFFICIENT_BUFFER)	{ 
+			/* NT/2000 */
+			LPBYTE data = new BYTE[len];
+			result = GetUserObjectInformation(desktop, UOI_NAME, data, len, &len);
+			uniqueAppName_ += "-";
+			uniqueAppName_ += (const char*)data;
+			delete [ ] data;
+		} /* NT/2000 */
+		else { 
+			/* Win9x */
+			uniqueAppName_ += "-Win9x";
+		} /* Win9x */
+
+		singleInstanceMutex_ = ::CreateMutexW( NULL, FALSE, uniqueAppName_.c_str() );
+		
+		Win32ToolKit::initAreUMeMessage( uniqueAppName_ );
+
+		alreadyRunning = ( ::GetLastError() == ERROR_ALREADY_EXISTS || 
+							::GetLastError() == ERROR_ACCESS_DENIED) ? true : false;
+
+		if ( alreadyRunning ) {
+
+			//Win32ToolKit::AreUMeMessage
+			HWND otherToolkitWnd = NULL;
+			EnumWindows( SearchForAppWindows, (LPARAM)&otherToolkitWnd );
+
+			if ( otherToolkitWnd != NULL )
+			{ /* pop up */
+				const std::vector<String>& cmdLine = FoundationKit::getCommandLine().getOriginalCommandLine();
+				std::vector<String>::const_iterator it = cmdLine.begin();
+				String cmds;
+
+				while ( it != cmdLine.end() ) {					
+					
+					const String& s = *it;
+					cmds += s + "\n";
+					++it;
+				}
+
+				Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
+				HWND toolkitWnd = toolkit->getDummyParent();
+
+				COPYDATASTRUCT cpd = {0};
+				cpd.dwData = Win32ToolKit::RestoreSingleInstAppMessage;
+				cpd.cbData = cmds.size_in_bytes();
+				cpd.lpData = (void*)cmds.c_str();
+
+				::SendMessage( otherToolkitWnd, WM_COPYDATA, (WPARAM)toolkitWnd, (LPARAM)&cpd );
+
+				::SendMessage( otherToolkitWnd, Win32ToolKit::RestoreSingleInstAppMessage, 0, 0 );
+
+			} /* pop up */
+
+
+
+			return false;
+		}
+	}
+
+
 	/**
 	*set the HandleID if it is still NULL
 	*Dy default it should be set in the DLLMain()

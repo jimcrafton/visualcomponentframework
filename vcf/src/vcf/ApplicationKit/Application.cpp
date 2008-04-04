@@ -48,7 +48,8 @@ void terminateLoadedLibraryApplications()
 
 Application::Application( int argc, char** argv ):
 	autoLoadSaveAppState_(false),
-	mainWindow_(NULL)
+	mainWindow_(NULL),
+	singleInstance_(false)
 {
 	Application::appInstance_ = this;
 
@@ -148,12 +149,13 @@ void Application::internal_main()
 				//throw exception - this is very BADDDDD
 				throw InvalidPointerException( MAKE_ERROR_MSG_2("Application Peer is NULL") );
 			}
-			if ( true != appPeer->initApp() ){
+			//if ( true != appPeer->initApp() ){
 				//ouch - something bad happened - terminate the app
-				appPeer->terminateApp();
-			}
-			else {
+			//	appPeer->terminateApp();
+			//}
+			//else {
 
+			if ( appPeer->initApp() ){
 				if ( runningInstance->initRunningApplication() ) { 
 /*
 					runningInstance->terminateRunningApplication();
@@ -193,29 +195,28 @@ void Application::internal_main()
 						runningInstance->run();
 					}
 				}
-
-				terminateLoadedLibraryApplications();
-
-				/**
-				JC - I moved the code to free the main window inside of terminateRunningApplication()
-				This requires that people correctly call the application super class's terminateRunningApplication()
-				inside of their overide of it.
-				*/
-				runningInstance->terminateRunningApplication();
-
-				mainWindow = runningInstance->mainWindow_;
-
-				if ( runningInstance->mainWindow_ != NULL ) {
-					StringUtils::trace( "Oops! The Main window has not been freed.\nDid you forget to call the super class's terminateRunningApplication() method?\n" );
-				}
-
-				runningInstance->internal_terminate();
-
-				runningInstance->free();
-
-				ApplicationKit::terminate();
-				
 			}
+
+			terminateLoadedLibraryApplications();
+
+			/**
+			JC - I moved the code to free the main window inside of terminateRunningApplication()
+			This requires that people correctly call the application super class's terminateRunningApplication()
+			inside of their overide of it.
+			*/
+			runningInstance->terminateRunningApplication();
+
+			mainWindow = runningInstance->mainWindow_;
+
+			if ( runningInstance->mainWindow_ != NULL ) {
+				StringUtils::trace( "Oops! The Main window has not been freed.\nDid you forget to call the super class's terminateRunningApplication() method?\n" );
+			}
+
+			runningInstance->internal_terminate();
+
+			runningInstance->free();
+
+			ApplicationKit::terminate();			
 		}
 	}
 
@@ -518,7 +519,12 @@ void Application::getHelpInfo( String& helpBookName, String& helpDirectory )
 	helpDirectory = "";
 }
 
-
+void Application::setSingleInstance( bool val )
+{
+	if ( singleInstance_ != val ) {
+		singleInstance_ = val;
+	}
+}
 
 
 /**

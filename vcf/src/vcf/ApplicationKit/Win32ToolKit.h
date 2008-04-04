@@ -218,6 +218,9 @@ public:
 
 	static HINSTANCE getInstanceHandle();
 
+	static void initAreUMeMessage( const String& uniqueAppName );
+	static UINT AreUMeMessage;
+	static const UINT RestoreSingleInstAppMessage;
 
 	bool getWhatsThisHelpActive() {
 		return whatsThisHelpActive_;
