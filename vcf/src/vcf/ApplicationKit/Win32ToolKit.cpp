@@ -2779,6 +2779,16 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 			} /* restore */
 		}
 
+		CommandLine cmdLine;
+		StringTokenizer tok(RestoreSingleInstAppCmdLine);
+		std::vector<String> cmds;
+		while ( tok.hasMoreElements() ) {
+			cmds.push_back( tok.nextElement() );
+		}
+		cmdLine.splitLine( cmds );
+
+		Application::getRunningInstance()->processCommandLine( cmdLine );
+
 		RestoreSingleInstAppCmdLine = String();
 	}
 
@@ -2822,6 +2832,10 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 			static bool changeStyle = true;
 
 			Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
+
+			if ( NULL == toolkit ) {
+				return 0;
+			}
 
 			if ( changeStyle ) {
 				
@@ -3093,7 +3107,7 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 LRESULT CALLBACK Win32ToolKit::mouseHookProc( int nCode, WPARAM wParam, LPARAM lParam )
 {
 	Win32ToolKit* toolkit = (Win32ToolKit*) UIToolkit::internal_getDefaultUIToolkit();
-
+	
 	if ( NULL != toolTipWatcher ) {
 		if ( WM_MOUSEMOVE == wParam ) {
 			if ( 0 == ToolTipTimerID ) {
@@ -3104,11 +3118,11 @@ LRESULT CALLBACK Win32ToolKit::mouseHookProc( int nCode, WPARAM wParam, LPARAM l
 			ToolTipTimoutTimerID = ::SetTimer( toolkit->getDummyParent(), TOOLTIP_TIMEOUT_TIMERID, 1, NULL );
 		}
 	}
-
+	
 	if ( WM_LBUTTONDOWN == wParam ) {
 		toolkit->setWhatsThisHelpActive(false);
 	}
-
+	
 	return CallNextHookEx( Win32ToolKit_mouseHook, nCode, wParam, lParam );
 }
 
@@ -3116,7 +3130,9 @@ LRESULT CALLBACK Win32ToolKit::keyboardHookProc( int nCode, WPARAM wParam, LPARA
 {
 	if ( NULL != toolTipWatcher ) {
 		Win32ToolKit* toolkit = (Win32ToolKit*) UIToolkit::toolKitInstance;
+		
 		ToolTipTimoutTimerID = ::SetTimer( toolkit->getDummyParent(), TOOLTIP_TIMEOUT_TIMERID, 1, NULL );
+		
 	}
 	return CallNextHookEx( Win32ToolKit_kbHook, nCode, wParam, lParam );	
 }
@@ -3354,7 +3370,6 @@ void Win32ToolKit::createDummyParentWindow()
 
 		dummyParentWnd_ = ::CreateWindowA( "Win32ToolKit", NULL, WS_POPUP , 0, 0, 0, 0, parent, NULL, ::GetModuleHandleA( NULL ), NULL );
 	}
-
 }
 
 HWND Win32ToolKit::getDummyParent()

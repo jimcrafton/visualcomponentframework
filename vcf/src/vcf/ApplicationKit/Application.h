@@ -214,6 +214,8 @@ public:
 
 	void setSingleInstance( bool val );
 
+	virtual void processCommandLine(const CommandLine& comdLine){}
+
 	static void showErrorMessage( const String& message, const String& title );
 protected:
 	static Application* appInstance_;

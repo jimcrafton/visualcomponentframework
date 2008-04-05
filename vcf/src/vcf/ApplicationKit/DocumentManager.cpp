@@ -880,10 +880,8 @@ void DocumentManager::cleanupDropTarget( Document* doc )
 	}
 }
 
-void DocumentManager::processCommandLine()
-{
-	const CommandLine& comdLine = FoundationKit::getCommandLine();
-	
+void DocumentManager::openFromCommandLine(const CommandLine& comdLine)
+{	
 	size_t argc = comdLine.getArgCount();
 	
 	if ( argc > 1 ) {

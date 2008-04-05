@@ -41,23 +41,29 @@ Win32Application::~Win32Application()
 BOOL CALLBACK SearchForAppWindows(HWND hWnd, LPARAM lParam)
 {
 	DWORD result;
-    LRESULT ok = ::SendMessageTimeout(hWnd,
-										Win32ToolKit::AreUMeMessage,
-										0, 0, 
-										SMTO_BLOCK |
-										SMTO_ABORTIFHUNG,
-										200,
-										&result );
-    if(ok == 0)
-       return TRUE; // ignore this and continue
 
-    if(result == Win32ToolKit::AreUMeMessage)
-    { /* found it */
-        HWND * target = (HWND *)lParam;
-        *target = hWnd;
-        return FALSE; // stop search
+	Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
+	HWND toolkitWnd = toolkit->getDummyParent();
 
-    } /* found it */
+	if ( toolkitWnd != hWnd ) {
+		LRESULT ok = ::SendMessageTimeout(hWnd,
+											Win32ToolKit::AreUMeMessage,
+											0, 0, 
+											SMTO_BLOCK |
+											SMTO_ABORTIFHUNG,
+											200,
+											&result );
+		if(ok == 0)
+			return TRUE; // ignore this and continue
+		
+		if(result == Win32ToolKit::AreUMeMessage)
+		{ /* found it */
+			HWND * target = (HWND *)lParam;
+			*target = hWnd;
+			return FALSE; // stop search
+			
+		} /* found it */
+	}
     return TRUE; // continue search
 }
 

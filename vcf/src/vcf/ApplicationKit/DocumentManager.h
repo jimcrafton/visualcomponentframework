@@ -616,7 +616,7 @@ public:
 	/** called to remove a document from the document based application */
 	void removeDocument( Document* document );
 
-	virtual void processCommandLine();
+	void openFromCommandLine(const CommandLine& comdLine);
 
 protected:
 
