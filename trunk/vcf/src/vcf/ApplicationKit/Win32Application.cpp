@@ -73,9 +73,16 @@ bool Win32Application::initApp()
 	Application* app = Application::getRunningInstance();
 	if ( app->isSingleInstance() && app == app_ ) {
 
+		/**
+		The technique for this comes from the Codeproject 
+		article http://www.codeproject.com/KB/cpp/avoidmultinstance.aspx
+		by Joseph M. Newcomer. This is a great approach, and I 
+		also incorporated the idea of passing the command line arguments 
+		via WM_COPYDATA as well (also from Mr. Newcomer).
+		*/
 		bool alreadyRunning = false;
 
-		uniqueAppName_ = app->getName();
+		String uniqueAppName = app->getName();
 		
 		DWORD len;
 		HDESK desktop = GetThreadDesktop(GetCurrentThreadId());
@@ -85,25 +92,24 @@ bool Win32Application::initApp()
 			/* NT/2000 */
 			LPBYTE data = new BYTE[len];
 			result = GetUserObjectInformation(desktop, UOI_NAME, data, len, &len);
-			uniqueAppName_ += "-";
-			uniqueAppName_ += (const char*)data;
+			uniqueAppName += "-";
+			uniqueAppName += (const char*)data;
 			delete [ ] data;
 		} /* NT/2000 */
 		else { 
 			/* Win9x */
-			uniqueAppName_ += "-Win9x";
+			uniqueAppName += "-Win9x";
 		} /* Win9x */
 
-		singleInstanceMutex_ = ::CreateMutexW( NULL, FALSE, uniqueAppName_.c_str() );
+		singleInstanceMutex_ = ::CreateMutexW( NULL, FALSE, uniqueAppName.c_str() );
 		
-		Win32ToolKit::initAreUMeMessage( uniqueAppName_ );
+		Win32ToolKit::initAreUMeMessage( uniqueAppName );
 
 		alreadyRunning = ( ::GetLastError() == ERROR_ALREADY_EXISTS || 
 							::GetLastError() == ERROR_ACCESS_DENIED) ? true : false;
 
 		if ( alreadyRunning ) {
 
-			//Win32ToolKit::AreUMeMessage
 			HWND otherToolkitWnd = NULL;
 			EnumWindows( SearchForAppWindows, (LPARAM)&otherToolkitWnd );
 

@@ -47,8 +47,7 @@ private:
 	VCF::AbstractApplication* app_;
 	HINSTANCE instanceHandle_;
 	Win32ResourceBundle* resBundle_;
-	HANDLE singleInstanceMutex_;
-	String uniqueAppName_;
+	HANDLE singleInstanceMutex_;	
 };
 
 };
