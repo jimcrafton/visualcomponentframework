@@ -458,8 +458,6 @@ public:
 		REGISTER_CLASSINFO( DocViewBasicsWindow );
 
 		bool result = SDIDocumentBasedApplication::initRunningApplication();
-
-		processCommandLine();
 		
 		return result;
 	}

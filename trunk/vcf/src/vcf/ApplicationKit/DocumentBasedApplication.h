@@ -51,6 +51,10 @@ public:
 
 		Application::terminateRunningApplication();
 	}
+
+	virtual void processCommandLine(const CommandLine& comdLine) {
+		DocMgrImpl::openFromCommandLine( comdLine );
+	}
 };
 
 

@@ -149,23 +149,9 @@ void Application::internal_main()
 				//throw exception - this is very BADDDDD
 				throw InvalidPointerException( MAKE_ERROR_MSG_2("Application Peer is NULL") );
 			}
-			//if ( true != appPeer->initApp() ){
-				//ouch - something bad happened - terminate the app
-			//	appPeer->terminateApp();
-			//}
-			//else {
 
 			if ( appPeer->initApp() ){
 				if ( runningInstance->initRunningApplication() ) { 
-/*
-					runningInstance->terminateRunningApplication();
-
-					if ( runningInstance->mainWindow_ != NULL ) {
-						StringUtils::trace( "Oops! The Main window has not been freed.\nDid you forget to call the super class's terminateRunningApplication() method?\n" );
-					}
-
-					//appPeer->terminateApp();
-					*/
 				
 					mainWindow = runningInstance->mainWindow_;
 
@@ -186,11 +172,13 @@ void Application::internal_main()
 
 					if ( libsInitialized ) {
 
-						if ( true == runningInstance->autoLoadSaveAppState_ ) {
+						if ( runningInstance->autoLoadSaveAppState_ ) {
 							if ( false == runningInstance->loadState() ) {
 								//note an error
 							}
 						}
+
+						runningInstance->processCommandLine( FoundationKit::getCommandLine() );
 
 						runningInstance->run();
 					}
