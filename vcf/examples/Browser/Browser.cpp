@@ -3,7 +3,6 @@
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ControlsKit.h"
-#include "vcf/ApplicationKit/DefaultTreeItem.h"
 #include "vcf/HTMLKit/HTMLKit.h"
 
 
@@ -443,7 +442,7 @@ protected:
 	}
 
 
-	void walkElements( HTMLElement& parent, TreeItem* treeItemParent ) {
+	void walkElements( HTMLElement& parent, TreeModel::Key treeItemParent ) {
 		HTMLElementCollection children = parent.getChildren();
 
 		long length = children.getLength();
@@ -456,11 +455,9 @@ protected:
 				title += " " + s.substr(0,minVal<size_t>(s.size(),25));
 			}
 
-			TreeItem* item = new DefaultTreeItem( title );
+			TreeModel::Key k = documentTree->insert( title, treeItemParent );
 
-			documentTree->addNodeItem( item, treeItemParent );
-
-			walkElements( *child, item );
+			walkElements( *child, k );
 		}
 	}
 	
@@ -480,17 +477,17 @@ protected:
 		//walk the DOM tree
 
 		//first clear out the old stuff
-		Model* treeModel = dynamic_cast<Model*>(documentTree);
-		treeModel->empty();
+		documentTree->empty();
 
 
 		HTMLDocument doc = browser->getDocument();
 
 		if ( !doc.null() ) {			
-			HTMLElement body = doc.getBody();			
-			TreeItem* item = new DefaultTreeItem( doc.getTitle() + " - Body" );
-			documentTree->addNodeItem( item );
-			walkElements( body, item );
+			HTMLElement body = doc.getBody();
+
+			TreeModel::Key k = documentTree->insert( doc.getTitle() + " - Body" );
+
+			walkElements( body, k );
 		}
 	}
 
