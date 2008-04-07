@@ -12,7 +12,7 @@
 
 using namespace VCFWin32;
 using namespace VCF;
-
+/*
 typedef struct tagCOMBOBOXINFO {
 	DWORD cbSize;
 	RECT rcItem;
@@ -22,6 +22,7 @@ typedef struct tagCOMBOBOXINFO {
 	HWND hwndItem;
 	HWND hwndList;
 } COMBOBOXINFO, *PCOMBOBOXINFO, *LPCOMBOBOXINFO;
+*/
 
 typedef BOOL  (WINAPI *GetComboBoxInfoPtr) ( HWND, PCOMBOBOXINFO );
 

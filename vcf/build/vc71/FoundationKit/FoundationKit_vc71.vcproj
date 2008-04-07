@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="FoundationKit"
+	ProjectGUID="{07CB8588-3E69-4D54-95F8-1B111F8ED851}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -845,29 +846,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\FileStream.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\MemoryStream.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\MemoryStream.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\MemStreamUtils.h">

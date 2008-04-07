@@ -55,6 +55,8 @@ public:
 
 	virtual void setAllowLabelEditing( const bool& allowLabelEditing );
 
+	virtual void enableHeader( const bool& val );
+
 	virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc = NULL);
 private:
 
@@ -63,6 +65,13 @@ private:
 	HIMAGELIST imageListCtrl_;
 	HIMAGELIST stateImageListCtrl_;
 	GraphicsContext* currentCtx_;
+	HWND headerWnd_;
+	WNDPROC oldHeaderWndProc_;
+	HFONT oldHeaderFont_;
+	bool headerEnabled_;
+
+	std::vector<RECT> headerRects_;
+
 	bool internalTreeItemMod_;
 	void onImageListImageChanged( ImageListEvent* event );
 	void onStateImageListImageChanged( ImageListEvent* event );
@@ -72,6 +81,9 @@ private:
 	void onItemSelected( ItemEvent* e );
 	void onTreeModelChanged( ModelEvent* event );
 	void addTreeItem( TreeModel::Key key, HTREEITEM parent );
+
+	void registerHeaderWndProc();
+	static LRESULT CALLBACK HeaderWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 };
 
 };

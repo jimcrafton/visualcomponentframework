@@ -16,6 +16,8 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKitPrivate.h"
 #include "vcf/ApplicationKit/Win32Tree.h"
 #include "vcf/ApplicationKit/TreeControl.h"
+#include "vcf/ApplicationKit/ColumnModel.h"
+#include "vcf/ApplicationKit/ColumnItem.h"
 
 
 /**
@@ -125,7 +127,11 @@ Win32Tree::Win32Tree( TreeControl* tree ):
 	imageListCtrl_(NULL),
 	stateImageListCtrl_(NULL),
 	internalTreeItemMod_(false),
-	currentCtx_(NULL)
+	currentCtx_(NULL),
+	headerWnd_(NULL),
+	oldHeaderWndProc_(NULL),
+	oldHeaderFont_(NULL),
+	headerEnabled_(false)
 {
 
 }
@@ -325,8 +331,40 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 	bool result = 0;
 	wndProcResult = 0;
 
+	switch ( message ) {
+
+		
+	}
+
 
 	switch ( message ) {
+		case WM_MOUSEMOVE: case WM_LBUTTONDBLCLK: case WM_MBUTTONDBLCLK: case WM_RBUTTONDBLCLK:
+			case WM_LBUTTONUP : case WM_MBUTTONUP: case WM_RBUTTONUP: 
+			case WM_MBUTTONDOWN: case WM_RBUTTONDOWN: {
+			
+
+			
+			if ( NULL != headerWnd_ ) {
+				if ( ::IsWindowVisible(headerWnd_) ) {
+					RECT r;
+					GetWindowRect(headerWnd_,&r);
+
+					int xPos = LOWORD(lParam); 
+					int yPos = HIWORD(lParam);
+					yPos -= (r.bottom - r.top);
+
+					lParam = MAKELPARAM(xPos,yPos);
+				}
+			}
+
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+
+			result = true;
+			wndProcResult = defaultWndProcedure( message, wParam, lParam );	
+
+		}
+		break;
+
 		case WM_PAINT:{
 			PAINTSTRUCT ps;
 
@@ -357,9 +395,32 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			memDCState_ = ::SaveDC( memDC_ );
 			originalMemBMP_ = (HBITMAP)::SelectObject( memDC_, memBMP_ );
 
+			int headerHeight = 0;
+
+			if ( NULL != headerWnd_ ) {
+				if ( ::IsWindowVisible(headerWnd_) ) {
+					RECT r;
+					GetWindowRect(headerWnd_,&r);
+
+					headerHeight = r.bottom - r.top;
+					int count = SendMessage(headerWnd_,HDM_GETITEMCOUNT,0,0);
+
+					if ( headerRects_.size() != count ) {
+						headerRects_.resize(count);
+					}
+
+					for ( int i=0;i<count;i++ ) {						
+						SendMessage( this->headerWnd_, HDM_GETITEMRECT, i, (LPARAM)&headerRects_[i] );
+					}
+
+				}
+			}
+
+			::SetViewportOrgEx( dc, 0, headerHeight, NULL );
+
 			POINT oldOrg;
 			memset(&oldOrg,0,sizeof(oldOrg));
-			::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
+			::SetViewportOrgEx( memDC_, -paintRect.left, -(paintRect.top), &oldOrg );
 
 			Color* color = peerControl_->getColor();
 			COLORREF backColor = color->getColorRef32();
@@ -452,6 +513,19 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		case WM_LBUTTONDOWN : {
 
 
+			if ( NULL != headerWnd_ ) {
+				if ( ::IsWindowVisible(headerWnd_) ) {
+					RECT r;
+					GetWindowRect(headerWnd_,&r);
+
+					int xPos = LOWORD(lParam); 
+					int yPos = HIWORD(lParam);				
+					yPos -= (r.bottom - r.top); 
+
+					lParam = MAKELPARAM(xPos,yPos);
+				}
+			}
+
 			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 
 
@@ -479,6 +553,9 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					}
 				}
 			}
+
+			result = true;
+			wndProcResult = defaultWndProcedure( message, wParam, lParam );	
 
 		}
 		break;
@@ -1061,13 +1138,80 @@ Do we need these? What advantage does processing these events have for us???
 								}
 							}							
 						}
+
+
+						if ( this->headerEnabled_ ) {
+
+							wndProcResult |= CDRF_SKIPDEFAULT;
+
+							int dcs = SaveDC( treeViewDraw->nmcd.hdc );
+							
+							//col 1
+							int ident = SendMessage( hwnd_, TVM_GETINDENT, 0, 0 );
+
+							RECT bkRect = treeViewDraw->nmcd.rc;
+
+							treeViewDraw->nmcd.rc.left = headerRects_[0].left + ident * treeViewDraw->iLevel;
+							treeViewDraw->nmcd.rc.right = headerRects_[0].right;
+							bkRect.right = headerRects_.back().right;
+							
+							
+							
+							::SetTextColor( treeViewDraw->nmcd.hdc, treeViewDraw->clrText );
+							::SetBkColor( treeViewDraw->nmcd.hdc, treeViewDraw->clrTextBk );
+							
+							HBRUSH bk = CreateSolidBrush( treeViewDraw->clrTextBk );
+							FillRect( treeViewDraw->nmcd.hdc, &bkRect, bk );
+
+							DeleteObject( bk );
+
+							TreeModel* tm = treeControl_->getTreeModel();
+							TreeModel::Key key = (TreeModel::Key)treeViewDraw->nmcd.lItemlParam;
+							
+							String s = tm->getAsString( key );
+							
+							
+
+							VCFChar tmp[255];
+							size_t sz = minVal<size_t>(s.length(),254);
+							s.copy(tmp,sz);
+							tmp[sz] = 0;
+
+							RECT r = treeViewDraw->nmcd.rc;
+							DrawTextExW( treeViewDraw->nmcd.hdc, tmp, sz, &r, 
+											DT_LEFT | DT_END_ELLIPSIS | DT_EXPANDTABS | DT_SINGLELINE | DT_VCENTER,
+											NULL );
+
+							ColumnModel* cm = this->treeControl_->getColumnModel();
+							
+							for (size_t i=1;i<cm->getCount();i++ ) {
+								s = tm->getSubItemAsString( key, i-1 );	
+								
+								if ( !s.empty() ) {
+									r.left = headerRects_[i].left;
+									r.right = headerRects_[i].right;
+									size_t sz = minVal<size_t>(s.length(),254);
+									s.copy(tmp,sz);
+									tmp[sz] = 0;
+
+									DrawTextExW( treeViewDraw->nmcd.hdc, tmp, sz, &r, 
+											DT_LEFT | DT_END_ELLIPSIS | DT_EXPANDTABS | DT_SINGLELINE | DT_VCENTER,
+											NULL );
+								}
+							}
+
+							::RestoreDC( treeViewDraw->nmcd.hdc, dcs );
+						}
 					}
 					break;
 
-					case CDDS_ITEMPOSTPAINT : {
-
-
+					case CDDS_ITEMPOSTPAINT : {						
 						wndProcResult = CDRF_DODEFAULT;
+
+						if ( this->headerEnabled_ ) {
+							treeViewDraw->nmcd.rc.left = headerRects_[0].left;
+							treeViewDraw->nmcd.rc.right = headerRects_[0].right;
+						}
 
 						if ( treeControl_->itemExists( treeViewDraw->nmcd.lItemlParam ) ) {
 							TreeItem* item = treeControl_->getItemFromKey( treeViewDraw->nmcd.lItemlParam );
@@ -1080,7 +1224,27 @@ Do we need these? What advantage does processing these events have for us???
 
 								item->paint( currentCtx_, &itemRect );
 							}
+						}
 
+						if ( this->headerEnabled_ ) {
+
+							HPEN p = CreatePen( PS_SOLID, 1, RGB(0,0,0) ); 
+
+
+							int count = SendMessage( this->headerWnd_, HDM_GETITEMCOUNT, 0, 0 );
+							
+							HPEN op = (HPEN) SelectObject( treeViewDraw->nmcd.hdc, p );
+
+							for ( int i=0;i<count;i++ ) {
+								RECT r={0};
+								SendMessage( this->headerWnd_, HDM_GETITEMRECT, i, (LPARAM)&r );
+								
+								::MoveToEx( treeViewDraw->nmcd.hdc, r.right, treeViewDraw->nmcd.rc.top, NULL );
+								::LineTo( treeViewDraw->nmcd.hdc, r.right, treeViewDraw->nmcd.rc.bottom );
+							}
+
+							SelectObject( treeViewDraw->nmcd.hdc, op );
+							DeleteObject(p);
 						}
 					}
 					break;
@@ -1090,6 +1254,169 @@ Do we need these? What advantage does processing these events have for us???
 						wndProcResult = 0;
 					}
 					break;
+				}
+			}
+		}
+		break;
+
+		case WM_SIZE : {
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+
+			if ( NULL != headerWnd_ ) {
+				RECT r = {0};
+				GetWindowRect( headerWnd_, &r );
+
+				WINDOWPOS wp = {0};
+				HDLAYOUT layout = {0};
+				layout.prc = &r;
+				layout.pwpos = &wp;
+
+				::SendMessage( headerWnd_, HDM_LAYOUT, 0, (LPARAM)&layout );
+
+				MoveWindow( headerWnd_, 0, 0, LOWORD(lParam), wp.cy, TRUE );
+			}
+		}
+		break;
+
+
+		case WM_NOTIFY: {
+			result = true;
+			wndProcResult = defaultWndProcedure( message, wParam, lParam );
+			if ( !peerControl_->isDestroying() ) {
+				NMHDR* notificationHdr = (LPNMHDR)lParam;
+				Win32Object* win32Obj = Win32Object::getWin32ObjectFromHWND( notificationHdr->hwndFrom );
+				if ( NULL != win32Obj ){
+					win32Obj->handleEventMessages( notificationHdr->code, wParam, lParam, wndProcResult );
+				}
+				else {
+					NMHDR* notificationHdr = (LPNMHDR)lParam;
+					if ( notificationHdr->hwndFrom == headerWnd_ ) {
+						switch ( notificationHdr->code ) {
+							case HDN_TRACKW:  case HDN_ENDTRACKW : {
+								InvalidateRect( hwnd_, NULL, TRUE );
+							}
+							break;
+
+							case HDN_GETDISPINFOW : {
+								NMHDDISPINFOW* dispInfo = (NMHDDISPINFOW*)lParam;
+								
+								ColumnModel* cm = treeControl_->getColumnModel();
+								//ColumnItem* item = treeControl_->getColumnItem( (uint32)dispInfo->lParam );
+								
+								if ( NULL != cm ) {
+									if ( dispInfo->mask & HDI_IMAGE ) {
+										dispInfo->iImage = 0;//item->getImageIndex();
+									}
+									
+									if ( dispInfo->mask & HDI_TEXT ) {								
+										
+										String caption = cm->getAsString( dispInfo->lParam ) ;
+										
+										unsigned int size = VCF::minVal<unsigned int>( caption.size(), dispInfo->cchTextMax );
+										caption.copy( dispInfo->pszText, size );
+										if ( size < dispInfo->cchTextMax ) {
+											dispInfo->pszText[size] = '\0';
+										}
+									}
+								}
+							}
+							break;
+
+							case NM_CUSTOMDRAW : {
+								NMCUSTOMDRAW* cd = (NMCUSTOMDRAW*)lParam;
+								switch ( cd->dwDrawStage ) {
+									case CDDS_PREPAINT : {
+										wndProcResult = CDRF_NOTIFYITEMDRAW;
+										
+										RECT r;
+										GetClientRect( notificationHdr->hwndFrom, &r );
+										
+										RECT rLast;
+										int index = -1;
+										index = Header_GetItemCount(notificationHdr->hwndFrom) - 1;
+										if ( index >= 0 ) {
+											Header_GetItemRect( notificationHdr->hwndFrom, index, &rLast );				
+											r.left = rLast.right;
+										}
+										FillRect( cd->hdc, &r, (HBRUSH) (COLOR_3DFACE + 1) );
+										InvalidateRect( hwnd_, NULL, TRUE );
+									}
+									break;
+
+									case CDDS_ITEMPREPAINT : {								
+										wndProcResult = CDRF_NOTIFYPOSTPAINT;
+
+										uint32 index = cd->dwItemSpec;
+										ColumnItem* item = NULL;
+										
+										HDITEM headerItem;
+										memset( &headerItem, 0, sizeof(HDITEM) );
+										headerItem.mask = HDI_FORMAT | HDI_LPARAM;
+										if ( Header_GetItem( headerWnd_, index, &headerItem ) ) {
+											item = treeControl_->getColumnItem( (uint32)headerItem.lParam );
+											if ( NULL != item ) {
+												if ( !item->isFontDefault() ) {
+													
+													Color* fc = item->getFont()->getColor();
+													
+													SetTextColor( cd->hdc, (COLORREF) fc->getColorRef32() );
+													
+													Win32Font* fontPeer = dynamic_cast<Win32Font*>( item->getFont()->getFontPeer() );
+													HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( fontPeer );
+													if ( NULL != fontHandle ){
+														
+														oldHeaderFont_ = (HFONT)::SelectObject( cd->hdc, fontHandle );
+														
+														wndProcResult |= CDRF_NEWFONT;
+													}
+												}
+											}
+										}
+										
+									}
+									break;
+
+									case CDDS_ITEMPOSTPAINT : {
+										
+										uint32 index = cd->dwItemSpec;
+										ColumnItem* item = NULL;
+										
+										HDITEM headerItem;
+										memset( &headerItem, 0, sizeof(HDITEM) );
+										headerItem.mask = HDI_FORMAT | HDI_LPARAM;
+										if ( Header_GetItem( headerWnd_, index, &headerItem ) ) {
+											item = treeControl_->getColumnItem( (uint32)headerItem.lParam );
+										}
+										
+
+										if ( NULL != item ) {
+											if ( item->canPaint() ) {
+												GraphicsContext gc( (OSHandleID)cd->hdc );
+												Rect rect( cd->rc.left, cd->rc.top, cd->rc.right, cd->rc.bottom );
+												item->paint( &gc, &rect );
+												gc.getPeer()->setContextID( 0 );
+											}
+
+										}
+
+										if ( NULL != oldHeaderFont_ ) {
+											::SelectObject( cd->hdc, oldHeaderFont_ );
+											oldHeaderFont_ = NULL;
+										}
+										wndProcResult = CDRF_SKIPDEFAULT;										
+
+									}
+									break;
+
+									default : {
+										wndProcResult = CDRF_DODEFAULT;
+									}
+									break;
+								}
+							}
+							
+						}						
+					}
 				}
 			}
 		}
@@ -1486,6 +1813,107 @@ void Win32Tree::onItemSelected( ItemEvent* e )
 	}
 }
 
+void Win32Tree::registerHeaderWndProc()
+{
+	if ( NULL == headerWnd_ ) {
+		headerWnd_ = CreateWindowExW( 0, WC_HEADERW, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | 
+										HDS_BUTTONS | HDS_HORZ | HDS_FULLDRAG,
+										0, 0,
+										0, CW_USEDEFAULT,
+										hwnd_,NULL, NULL, NULL);
+
+
+		::SetWindowLongPtr( headerWnd_, GWLP_USERDATA, (LONG_PTR)this );
+		oldHeaderWndProc_ = (WNDPROC)(LONG_PTR) ::SetWindowLongPtr( headerWnd_, GWLP_WNDPROC, (LONG_PTR)Win32Tree::HeaderWndProc );
+
+		HFONT f = (HFONT)SendMessage( hwnd_, WM_GETFONT, 0, 0 );
+
+		SendMessage( headerWnd_, WM_SETFONT, (WPARAM)f, MAKELPARAM(TRUE,0) );
+
+	}
+}
+
+void Win32Tree::enableHeader( const bool& val )
+{
+	if ( headerEnabled_ != val ) {
+		headerEnabled_ = val;
+
+		registerHeaderWndProc();
+		
+		int count = Header_GetItemCount( headerWnd_ );
+		for (int i=0;i<count;i++ ) {
+			Header_DeleteItem( headerWnd_, i );
+		}
+		
+		if ( headerEnabled_ ) {
+			
+			ColumnModel* columnModel = treeControl_->getColumnModel();
+			
+			size_t colCount = columnModel->getCount();
+			for (size_t j=0;j<colCount;j++ ) {
+				HDITEMW headerItem;
+				memset( &headerItem, 0, sizeof(headerItem) );
+				headerItem.mask = HDI_LPARAM | HDI_WIDTH|HDI_FORMAT|HDI_TEXT;
+				//HDI_LPARAM | | HDI_IMAGE | | ;				
+				
+				headerItem.lParam = (LPARAM)j;
+				headerItem.iImage = I_IMAGECALLBACK;
+				headerItem.pszText = LPSTR_TEXTCALLBACKW;
+				headerItem.cxy = 80;
+				headerItem.fmt = HDF_LEFT;	
+				
+				int err = SendMessage( headerWnd_, HDM_INSERTITEMW, (WPARAM)j, (LPARAM)&headerItem );
+			}
+			ShowWindow( headerWnd_, SW_NORMAL );		
+		}
+		else {
+			ShowWindow( headerWnd_, SW_HIDE );
+		}
+	}
+}
+
+LRESULT CALLBACK Win32Tree::HeaderWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	LRESULT result = 0;
+
+	Win32Tree* tree = (Win32Tree*)(LONG_PTR) ::GetWindowLongPtr( hWnd, GWLP_USERDATA );
+
+	switch ( message ) {
+	
+		case WM_ERASEBKGND : {
+
+			result = 0;
+		}
+		break;
+/*
+		case WM_LBUTTONDOWN : {
+			win32ListView->headerControlIsTracking_ = true;
+			if ( System::isUnicodeEnabled() ) {
+				result = CallWindowProcW( win32ListView->oldHeaderWndProc_, hWnd, message, wParam, lParam );
+			}
+			else {
+				result = CallWindowProcA( win32ListView->oldHeaderWndProc_, hWnd, message, wParam, lParam );
+			}
+
+		}
+		break;
+		*/
+
+		default : {
+			if ( System::isUnicodeEnabled() ) {
+				result = CallWindowProcW( tree->oldHeaderWndProc_, hWnd, message, wParam, lParam );
+			}
+			else {
+				result = CallWindowProcA( tree->oldHeaderWndProc_, hWnd, message, wParam, lParam );
+			}
+
+		}
+		break;
+	}
+
+
+	return result;
+}
 
 /**
 $Id$

@@ -4,6 +4,10 @@
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/FoundationKit/RTTIMacros.h"
 #include "vcf/ApplicationKit/TreeControl.h"
+#include "vcf/ApplicationKit/ColumnModel.h"
+#include "vcf/ApplicationKit/TreePeer.h"
+#include "vcf/ApplicationKit/DefaultTreeModel.h"
+
 
 using namespace VCF;
 
@@ -55,6 +59,133 @@ private:
 	HiResClock& operator=( const HiResClock& rhs );
 };
 
+class MyTreeModel : public DefaultTreeModel {
+public:
+
+	virtual void insertSubItem( const Key& key, const uint32 & subItemIndex, const VariantData& value ) {
+		SubItemPair val(key,value);
+		subItemData_.insert( val );
+	}
+
+	virtual void removeSubItem( const Key& key, const uint32 & subItemIndex ){
+		SubItemIteratorPair res = subItemData_.equal_range( key );
+		
+		uint32 si = 0;
+		while ( res.first != res.second ) {
+			if ( si == subItemIndex ) {
+				//notifySubItemRemoved( index, subItemIndex, res.first->second );
+				
+				subItemData_.erase( res.first );
+				
+				return ;
+			}
+			si ++;
+			++res.first;
+		}
+	}
+
+	virtual VariantData getSubItem( const Key& key, const uint32& subItemIndex ) {
+		SubItemIteratorPair res = subItemData_.equal_range( key );
+		
+		uint32 si = 0;
+		while ( res.first != res.second ) {
+			if ( si == subItemIndex ) {			
+				return res.first->second;
+			}
+			si ++;
+			++res.first;
+		}
+		
+		return VariantData::null();
+	}
+
+	virtual void setSubItem( const Key& key, const uint32& subItemIndex, const VariantData& value ){
+		size_t count = getSubItemsCount(key) ;
+		if ( subItemIndex >= count ) {
+			while ( count <= subItemIndex ) {
+				
+				SubItemPair val(key,VariantData::null());
+				subItemData_.insert( val );
+				
+				count ++;
+			}
+			
+			//notifySubItemAdded( index, data_[index] );		
+		}
+		
+		SubItemIteratorPair res = subItemData_.equal_range( key );
+		
+		uint32 si = 0;
+		while ( res.first != res.second ) {
+			if ( si == subItemIndex ) {			
+				res.first->second = value;			
+				return ;
+			}
+			si ++;
+			++res.first;
+		}
+	}
+
+	virtual uint32 getSubItemsCount( const Key& key ) {
+		uint32 result = 0;
+		
+		SubItemIteratorPair res = subItemData_.equal_range( key );
+		
+		while ( res.first != res.second ) {
+			result ++;
+			++res.first;
+		}
+		
+		return result;
+	}
+
+	virtual bool getSubItems( const Key& key, std::vector<VariantData>& items ){
+
+		SubItemIteratorPair res = subItemData_.equal_range( key );
+		
+		while ( res.first != res.second ) {
+			items.push_back( res.first->second );
+			++res.first;
+		}
+		
+		return !items.empty();
+	}
+
+	typedef std::multimap<TreeModel::Key,VariantData> SubItemMap;
+	typedef std::pair<SubItemMap::iterator,SubItemMap::iterator> SubItemIteratorPair;
+	typedef SubItemMap::value_type SubItemPair;
+
+	SubItemMap subItemData_;
+};
+
+
+class MyTree : public TreeControl {
+public:
+	MyTree(): TreeControl() {
+
+		setTreeModel( new MyTreeModel() );
+
+		columnModel_ = new ColumnModel();
+
+		columnModel_->add( "Column 1" );
+		columnModel_->add( "Column 2" );
+
+		treePeer_->enableHeader( true );
+
+
+		TreeModel* tm = getTreeModel();
+		TreeModel::Key k1 = tm->insert( "testA" );
+		TreeModel::Key k2 = tm->insert( "testB" );
+		TreeModel::Key k3 = tm->insert( "testC" );
+		TreeModel::Key k4 = tm->insert( "testD" );
+		for (int i=0;i<100;i++ ) {
+			tm->insert( "test (p = testD)", k4 );
+		}
+
+		tm->insertSubItem( k2, 0, "sub 1" );
+		tm->insertSubItem( k2, 1, "sub 1" );
+	}
+};
 
 
 
@@ -217,6 +348,14 @@ public:
 		clock.stop();		
 
 		Dialog::showMessage( Format("treeCtrl size %u bytes, tree mod count: %u\r\npopulation time: %.03f seconds\r\ntime for adding 2 item and retrieval: %.08f seconds\r\nshow form: %.08f seconds") % sz % tm->getCount() % popTime % uimods % clock.duration() );
+
+
+
+		MyTree* myTree = new MyTree();
+		myTree->setHeight( 200 );
+		mainWindow->add( myTree, AlignBottom );
+
+
 
 		return result;
 	}

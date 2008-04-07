@@ -21,7 +21,8 @@ TreeControl::TreeControl():
 	imageList_(NULL),
 	stateImageList_(NULL),
 	currentSelectedItem_(NULL),
-	controlChangeToModel_(false)
+	controlChangeToModel_(false),
+	columnModel_(NULL)
 {
 	treePeer_ = UIToolkit::createTreePeer( this );
 	peer_ = dynamic_cast<ControlPeer*>( treePeer_ );
@@ -513,6 +514,17 @@ void TreeControl::itemSelected( TreeItem* item )
 	event.point = pt;
 		
 	ItemSelected( &event );
+}
+
+ColumnItem* TreeControl::getColumnItem( const uint32& index )
+{
+	ColumnItem* result = NULL;
+
+	if ( index < columnItems_.size() ) {
+		result = columnItems_[index];
+	}
+
+	return result;
 }
 
 /**
