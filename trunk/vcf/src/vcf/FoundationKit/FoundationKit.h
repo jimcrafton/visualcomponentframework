@@ -80,6 +80,27 @@ where you installed the VCF.
 	#include <process.h>
 	//include std windoze headers for peers....
 	#include <windows.h>
+
+/*
+#if WINVER < 0x0400
+	#pragma message( "WINVER < 0x0400" )
+#elif WINVER == 0x0400
+	#pragma message( "WINVER == 0x0400" )
+#elif WINVER > 0x0400
+	#pragma message( "WINVER > 0x0400" )
+#endif
+
+#ifndef _WIN32_WINNT
+	#pragma message( "_WIN32_WINNT not defined" )
+#elif _WIN32_WINNT < 0x0400
+	#pragma message( "_WIN32_WINNT < 0x0400" )
+#elif _WIN32_WINNT == 0x0400
+	#pragma message( "_WIN32_WINNT == 0x0400" )
+#elif _WIN32_WINNT > 0x0400
+	#pragma message( "_WIN32_WINNT > 0x0400" )
+#endif
+*/
+
 	//#include "Rpcdce.h" //make sure to link with Rpcrt4.lib
 	#include <commctrl.h> //make sure to link with comctl32.lib
 	#include <shlobj.h>

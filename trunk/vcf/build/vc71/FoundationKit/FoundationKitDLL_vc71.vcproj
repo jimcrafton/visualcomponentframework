@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="FoundationKitDLL"
+	ProjectGUID="{26794944-C46A-466A-92B8-12E848F2F084}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>

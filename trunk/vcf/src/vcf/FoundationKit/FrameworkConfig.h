@@ -590,14 +590,26 @@ this define is to fix:
 
 
 	#if !defined(VCF_CYGWIN) && !defined(VCF_BCC)  
-		#ifdef WINVER
+		/*
+		#ifndef WINVER
+			//define the minimum if it's not already defined
+			#define WINVER 0x0400
+		#elif WINVER < 0x0400
+			//force it to  be ver 4? 
 			#undef WINVER
+			#define WINVER 0x0400		
 		#endif
-		#define WINVER 0x0400
-		#ifdef _WIN32_WINNT
+		*/
+		#ifndef _WIN32_WINNT
+			//define the minimum if it's not already defined
+			#define _WIN32_WINNT 0x0400			
+		#elif _WIN32_WINNT < 0x0400
 			#undef _WIN32_WINNT
+			#define _WIN32_WINNT 0x0400			
 		#endif
-		#define _WIN32_WINNT 0x0400
+		
+		
+		#define VCF_OUTPUTVERMSG
 	#endif
 
 	#if defined(VCF_MINGW)  

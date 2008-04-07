@@ -157,7 +157,7 @@ int main( int argc, char** argv ){
 	LangDictionary dict;
 	clock.stop();
 
-	System::println( Format("Took %0.8f seconds or %0.4f milliseconds") % clock.duration() % (clock.duration()*1000.0) );
+	System::println( Format("Took %0.8f seconds or %0.4f milliseconds for %d entries") % clock.duration() % (clock.duration()*1000.0) % dict.Length() );
 
 
 	

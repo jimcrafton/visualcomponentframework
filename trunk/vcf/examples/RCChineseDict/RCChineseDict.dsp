@@ -53,11 +53,11 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib /nologo /subsystem:console /machine:I386 /libpath:$(VCF_ROOT)/lib
-# SUBTRACT LINK32 /profile /map
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib rpcrt4.lib /nologo /subsystem:console /profile /machine:I386 /libpath:$(VCF_ROOT)/lib
+# SUBTRACT LINK32 /map
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Cmds=copy    %VCF_ROOT%\bin\FoundationKit_vc6.dll    Release\ 
+PostBuild_Cmds=copy     %VCF_ROOT%\bin\FoundationKit_vc6.dll     Release\ 
 # End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "RCChineseDict - Win32 Debug"

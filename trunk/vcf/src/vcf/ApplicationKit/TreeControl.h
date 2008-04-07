@@ -38,6 +38,8 @@ class TreeItem;
 class ImageList;
 
 class ModelEvent;
+class ColumnModel;
+class ColumnItem;
 
 
 #define TREECONTROL_CLASSID			"ED88C09C-26AB-11d4-B539-00C04F0196DA"
@@ -129,6 +131,13 @@ public:
 	virtual uint64 sizeOf() const;
 
 	bool itemExists( const TreeModel::Key& key );
+
+
+	ColumnModel* getColumnModel() {
+		return columnModel_;
+	}
+
+	ColumnItem* getColumnItem( const uint32& index );
 protected:	
 
 	void onTreeItemPaint( ItemEvent* event );	
@@ -143,8 +152,10 @@ protected:
 	ImageList* imageList_;
 	ImageList* stateImageList_;
 	TreeItem* currentSelectedItem_;
+	ColumnModel* columnModel_;
 	bool controlChangeToModel_;
 	std::map<TreeModel::Key,TreeItem*> itemMap_;
+	Array<ColumnItem*> columnItems_;
 
 
 };

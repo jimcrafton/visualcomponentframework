@@ -21,6 +21,7 @@ where you installed the VCF.
 namespace VCF{
 
 class ImageList;
+class ColumnModel;
 
 /**
 \class TreePeer TreePeer.h "vcf/ApplicationKit/TreePeer.h"  
@@ -49,6 +50,12 @@ public:
 	virtual bool getAllowLabelEditing() = 0;
 
 	virtual void setAllowLabelEditing( const bool& allowLabelEditing ) = 0;
+
+	/**
+	Pass in a null column model to disable the header, 
+	other wise it's enabled and made visible
+	*/
+	virtual void enableHeader( const bool& val ) = 0;
 };
 
 };
