@@ -18,7 +18,7 @@ where you installed the VCF.
 namespace VCF {
 	class APPLICATIONKIT_API Win32DropDownPeer : public AbstractWin32Component, public DropDownPeer {
 	public:
-		Win32DropDownPeer();
+		Win32DropDownPeer( Control* control );
 		virtual ~Win32DropDownPeer();
 
 		virtual void create( Control* owningControl );
@@ -38,12 +38,15 @@ namespace VCF {
 		virtual double getDropDownWidth();
 
 		virtual void setDropDownCount( const uint32& dropDownCount );
+		virtual uint32 getDropDownCount();
 
 
 		virtual void selectItem( const uint32& index );
 		
 		virtual uint32 getSelectedItem();
 		
+		virtual void setFocusedItem( const uint32& index );
+
 		virtual uint32 getFocusedItem();
 		
 		virtual bool isItemSelected( const uint32& index );
@@ -65,18 +68,32 @@ namespace VCF {
 		virtual void setLargeImageList( ImageList* imageList );
 		
 		virtual void setSmallImageList( ImageList* imageList );
+
+		virtual void setFont( Font* font );
+
+		virtual bool acceptsWMCommandMessages() {
+			return true;
+		}
+
 	protected:
 		void onCtrlModelChanged( Event* e );
-		void onListModelChanged( Event* e );
-
-		HWND listBoxHwnd_;
-		WNDPROC oldLBWndProc_;
-		bool editEnabled_;
+		void onListModelChanged( Event* e );	
 
 		static LRESULT CALLBACK LB_WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 		void attachToHwnd( HWND wnd, Control* owner = NULL );
 		void detachFromHwnd( HWND wnd );
+
+		void updateDimensions();
+
+
+		HWND listBoxHwnd_;
+		WNDPROC oldLBWndProc_;
+		bool editEnabled_;
+		uint32 dropDownCount_;
+		double dropDownWidth_;
+		Array<uint32> selectedItems_;
+
 
 	};
 

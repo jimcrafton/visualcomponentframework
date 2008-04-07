@@ -24,7 +24,6 @@ This was created to improved compile times
 #include "vcf/ApplicationKit/SimpleListModel.h"
 
 
-
 namespace VCF {
 
 /**
@@ -628,19 +627,33 @@ _class_rtti_end_
 
 
 
-_class_rtti_(ListViewControl, "VCF::Control", LISTVIEWCONTROL_CLASSID )
-_property_enum_labeled_( IconStyleType, "iconStyle", getIconStyle, setIconStyle,
-					   isLargeIcon, isDetails, 4, IconStyleTypeNames, "");
-_property_enum_labeled_( IconAlignType, "iconAlignment", getIconAlignment, setIconAlignment,
-					   iaNone, iaAutoArrange, 4, IconAlignTypeNames, "");
-_property_object_( ListModel, "listModel", getListModel, setListModel, "" );
-_property_object_ro_( ColumnModel, "columnModel", getColumnModel, "" );
-
+_class_abstract_rtti_(ListControl, "VCF::Control", LISTCONTROL_CLASSID )
 _property_object_( ImageList, "smallImageList", getSmallImageList, setSmallImageList, "" );
 _property_object_( ImageList, "largeImageList", getLargeImageList, setLargeImageList, "" );
 _property_object_( ImageList, "statImageList", getStateImageList, setStateImageList, "" );
 
+_property_object_( ListModel, "listModel", getListModel, setListModel, "" );
+
 _delegate_(ItemDelegate, ItemSelectionChanged );
+_class_rtti_end_
+
+
+_class_rtti_(DropDownControl, "VCF::ListControl", DROPDOWNCONTROL_CLASSID )
+_property_( String, "editText", getEditText, setEditText, "" );
+_property_( double, "dropDownWidth", getDropDownWidth, setDropDownWidth, "" );
+_property_( uint32, "dropDownCount", getDropDownCount, setDropDownCount, "" );
+_property_( bool, "editBoxEnabled", editBoxEnabled, enableEditBox, "" );
+_class_rtti_end_
+
+
+_class_rtti_(ListViewControl, "VCF::ListControl", LISTVIEWCONTROL_CLASSID )
+_property_enum_labeled_( IconStyleType, "iconStyle", getIconStyle, setIconStyle,
+					   isLargeIcon, isDetails, 4, IconStyleTypeNames, "");
+_property_enum_labeled_( IconAlignType, "iconAlignment", getIconAlignment, setIconAlignment,
+					   iaNone, iaAutoArrange, 4, IconAlignTypeNames, "");
+
+_property_object_ro_( ColumnModel, "columnModel", getColumnModel, "" );
+
 _delegate_(MouseDelegate, ColumnItemClicked );
 
 _class_rtti_end_

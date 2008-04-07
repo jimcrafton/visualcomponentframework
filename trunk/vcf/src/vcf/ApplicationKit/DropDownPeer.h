@@ -32,6 +32,7 @@ namespace VCF {
 		virtual double getDropDownWidth() = 0;
 
 		virtual void setDropDownCount( const uint32& dropDownCount ) = 0;
+		virtual uint32 getDropDownCount() = 0;
 
 	};
 

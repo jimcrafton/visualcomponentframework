@@ -139,8 +139,6 @@ protected:
 	HBITMAP memBMP_;
 	bool mouseEnteredControl_;	
 	int memDCState_;
-	HFONT currentFont_;
-
 	bool destroyed_;
 
 	//this starts off false - the control just ignores messages UNTIL 

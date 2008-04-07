@@ -405,7 +405,8 @@ public:
 
 	void onTemplItemSelected( Event* e ) {
 
-		catPanel_->selectedItem_ = (TemplateItem*)templates_->getSelectedItem();
+		ListItem* item = templates_->getItem(templates_->getSelectedItem());
+		catPanel_->selectedItem_ = (TemplateItem*)item;
 		catPanel_->repaint();
 
 		repaint();

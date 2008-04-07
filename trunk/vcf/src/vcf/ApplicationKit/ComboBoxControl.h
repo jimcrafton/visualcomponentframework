@@ -51,16 +51,21 @@ static String ComboBoxStyleTypeNames[] = { "cbsDropDown",
 
 /**
 \class ComboBoxControl ComboBoxControl.h "vcf/ApplicationKit/ComboBoxControl.h"
-*A combo box control is a control that is used to display a selection from a list of choices
-*in a single field. When the down arrow is clicked on a popup list is displayed that shows
-*all the possible choices for the control.
-*<p>
-*The ComboBoxControl uses the ListModel, same abstract model as the ListBoxControl and
-*ListViewControl controls, to store it's presentation data in.
+A combo box control is a control that is used to display a selection from a list of choices
+in a single field. When the down arrow is clicked on a popup list is displayed that shows
+all the possible choices for the control.
+
+The ComboBoxControl uses the ListModel, same abstract model as the ListBoxControl and
+ListViewControl controls, to store it's presentation data in.
+
+Note that as of the April 2008 this class is deprecated and should not be used. Instead
+please use the DropDownControl which does the same thing, only uses a native control
+wrapper. The next release of the Framework will get rid of this class completely.
 
 @delegates
 	@del ComboBoxControl::SelectionChanged
-
+@deprecated 
+@see DropDownControl
 */
 class APPLICATIONKIT_API ComboBoxControl : public VCF::CustomControl {
 public:

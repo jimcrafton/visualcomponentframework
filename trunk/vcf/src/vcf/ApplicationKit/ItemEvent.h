@@ -36,16 +36,21 @@ class GraphicsContext;
 class APPLICATIONKIT_API ItemEvent : public Event
 {
 public:
+
+	enum {
+		InvalidIndex = (uint32)-1
+	};
+
 	ItemEvent( Object* source ):Event(source),
-		paintContext_(NULL){}
+		paintContext(NULL),index(InvalidIndex),itemSelected(false){}
 
 	ItemEvent( Object* source, const uint32& eventType ):Event(source,eventType),
-		paintContext_(NULL){}
+		paintContext(NULL),index(InvalidIndex),itemSelected(false){}
 
 	ItemEvent( Object* source, GraphicsContext* context ):Event(source),
-		paintContext_(context){}
+		paintContext(context),index(InvalidIndex),itemSelected(false){}
 
-	ItemEvent( const ItemEvent& rhs ):Event(rhs),paintContext_(NULL) {
+	ItemEvent( const ItemEvent& rhs ):Event(rhs),paintContext(NULL),index(InvalidIndex),itemSelected(false) {
 		*this = rhs;
 	}
 
@@ -53,8 +58,10 @@ public:
 
 
 	ItemEvent& operator=( const ItemEvent& rhs ) {
-		paintContext_ = rhs.paintContext_;
-		point_ = rhs.point_;
+		paintContext = rhs.paintContext;
+		point = rhs.point;
+		index = rhs.index;
+		itemSelected = rhs.itemSelected;
 		return *this;
 	}
 
@@ -63,26 +70,13 @@ public:
 		return new ItemEvent(*this);
 	}
 
-	GraphicsContext* getContext() {
-		return this->paintContext_;
-	}
 
+		
 
-	/**
-	*returns the point for this mouse event
-	*/
-	Point* getPoint() {
-		return  &this->point_;
-	}
-
-	void setPoint( Point* point ){
-		point_.x_ = point->x_;
-		point_.y_ = point->y_;
-	}
-
-private:
-	GraphicsContext* paintContext_;
-	Point point_;
+	GraphicsContext* paintContext;
+	Point point;
+	uint32 index;
+	bool itemSelected;
 };
 
 

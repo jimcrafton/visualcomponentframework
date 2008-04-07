@@ -1025,7 +1025,9 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 							::ScreenToClient( hwnd_, &tmpPt );
 							ItemEvent event( listviewControl_, ITEM_EVENT_SELECTED );
 							Point pt( tmpPt.x, tmpPt.y );
-							event.setPoint( &pt );
+							event.point = pt;
+							event.index = lvNotificationHdr->iItem;
+							event.itemSelected = true;
 
 							listviewControl_->ItemSelectionChanged( &event );
 						}
@@ -1158,25 +1160,18 @@ void Win32Listview::deleteItem( ListItem* item )
 }
 */
 
-bool Win32Listview::ensureVisible(ListItem * item, bool partialOK )
+bool Win32Listview::ensureVisible( const uint32& index, bool partialOK )
 {
 	//LVM_ENSUREVISIBLE
 	bool result = false;
-	if ( NULL != item ){
+	if ( ListModel::InvalidIndex != index ){
 
-		if ( System::isUnicodeEnabled() ) {
-			LVFINDINFOW findInfo;
-			memset( &findInfo, 0, sizeof(LVFINDINFOW) );
-			findInfo.flags = LVFI_PARAM;
-			findInfo.lParam = (LPARAM)item;
-
-
-			int index = SendMessage( hwnd_, LVM_FINDITEMW, -1, (LPARAM)&findInfo );
-			if ( index > -1 ) {
+//		if ( System::isUnicodeEnabled() ) {
+			
 				result = ( 0 !=
 					ListView_EnsureVisible( hwnd_, index, partialOK ) );
-			}
-
+			
+/*
 		}
 		else {
 			LVFINDINFOA findInfo;
@@ -1184,252 +1179,161 @@ bool Win32Listview::ensureVisible(ListItem * item, bool partialOK )
 			findInfo.flags = LVFI_PARAM;
 			findInfo.lParam = (LPARAM)item;
 
-			int index = SendMessage( hwnd_, LVM_FINDITEMA, -1, (LPARAM)&findInfo );
-			if ( index > -1 ) {
+			int foundIndex = SendMessage( hwnd_, LVM_FINDITEMA, -1, (LPARAM)&findInfo );
+			if ( foundIndex > -1 ) {
 				result = ( 0 !=
-					ListView_EnsureVisible( hwnd_, index, partialOK ) );
+					ListView_EnsureVisible( hwnd_, foundIndex, partialOK ) );
 			}
 		}
 
-
+*/
 	}
 	return result;
 }
 
-void Win32Listview::setFocusedItem(ListItem * item)
+void Win32Listview::setFocusedItem( const uint32& index )
 {
-	if ( NULL != item ){
+	if ( ListModel::InvalidIndex != index ){
 
-		if ( System::isUnicodeEnabled() ) {
-			LVFINDINFOW findInfo;
-			memset( &findInfo, 0, sizeof(LVFINDINFOW) );
-			findInfo.flags = LVFI_PARAM;
-			findInfo.lParam = (LPARAM)item;
+		if ( System::isUnicodeEnabled() ) {		
+			LV_ITEMW lvItem;
+			memset(&lvItem,0,sizeof(lvItem));
+			lvItem.stateMask = LVIS_FOCUSED;
+			lvItem.state = LVIS_FOCUSED;
 
-			int index = SendMessage( hwnd_, LVM_FINDITEMW, -1, (LPARAM)&findInfo );
-
-			if ( index > -1 ) {
-				LV_ITEMW lvItem;
-				memset(&lvItem,0,sizeof(lvItem));
-				lvItem.stateMask = LVIS_FOCUSED;
-				lvItem.state = LVIS_FOCUSED;
-
-
-				SendMessage( hwnd_, LVM_SETITEMSTATE, index, (LPARAM)&lvItem );
-			}
+			SendMessage( hwnd_, LVM_SETITEMSTATE, index, (LPARAM)&lvItem );			
 		}
-		else {
-			LVFINDINFOA findInfo;
-			memset( &findInfo, 0, sizeof(LVFINDINFOA) );
-			findInfo.flags = LVFI_PARAM;
-			findInfo.lParam = (LPARAM)item;
+		else {			
+			LV_ITEMA lvItem;
+			memset(&lvItem,0,sizeof(lvItem));
+			lvItem.stateMask = LVIS_FOCUSED;
+			lvItem.state = LVIS_FOCUSED;
 
-			int index = SendMessage( hwnd_, LVM_FINDITEMA, -1, (LPARAM)&findInfo );
-
-			if ( index > -1 ) {
-				LV_ITEMA lvItem;
-				memset(&lvItem,0,sizeof(lvItem));
-				lvItem.stateMask = LVIS_FOCUSED;
-				lvItem.state = LVIS_FOCUSED;
-
-
-				SendMessage( hwnd_, LVM_SETITEMSTATE, index, (LPARAM)&lvItem );
-			}
+			SendMessage( hwnd_, LVM_SETITEMSTATE, index, (LPARAM)&lvItem );			
 		}
 	}
 }
 
-void Win32Listview::selectItem(ListItem * item)
+void Win32Listview::selectItem(const uint32& index)
 {
-	if ( NULL != item ){
+	if ( ListModel::InvalidIndex != index ){
 
 		internalMessage_ = true;
 
 		if ( System::isUnicodeEnabled() ) {
-			LVFINDINFOW findInfo;
-			memset( &findInfo, 0, sizeof(LVFINDINFOW) );
-			findInfo.flags = LVFI_PARAM;
-			findInfo.lParam = (LPARAM)item;
-
-			int index = SendMessage( hwnd_, LVM_FINDITEMW, -1, (LPARAM)&findInfo );
-
-			if ( index > -1 ) {
-				LV_ITEMW lvItem;
-				memset(&lvItem,0,sizeof(lvItem));
-				lvItem.stateMask = LVIS_SELECTED;
-				lvItem.state = LVIS_SELECTED;
+			LV_ITEMW lvItem;
+			memset(&lvItem,0,sizeof(lvItem));
+			lvItem.stateMask = LVIS_SELECTED;
+			lvItem.state = LVIS_SELECTED;
 
 
-				SendMessage( hwnd_, LVM_SETITEMSTATE, index, (LPARAM)&lvItem );
-			}
+			SendMessage( hwnd_, LVM_SETITEMSTATE, index, (LPARAM)&lvItem );
+			
 		}
-		else {
-			LVFINDINFOA findInfo;
-			memset( &findInfo, 0, sizeof(LVFINDINFOA) );
-			findInfo.flags = LVFI_PARAM;
-			findInfo.lParam = (LPARAM)item;
-
-			int index = SendMessage( hwnd_, LVM_FINDITEMA, -1, (LPARAM)&findInfo );
-
-			if ( index > -1 ) {
-				LV_ITEMA lvItem;
-				memset(&lvItem,0,sizeof(lvItem));
-				lvItem.stateMask = LVIS_SELECTED;
-				lvItem.state = LVIS_SELECTED;
+		else {			
+			LV_ITEMA lvItem;
+			memset(&lvItem,0,sizeof(lvItem));
+			lvItem.stateMask = LVIS_SELECTED;
+			lvItem.state = LVIS_SELECTED;
 
 
-				SendMessage( hwnd_, LVM_SETITEMSTATE, index, (LPARAM)&lvItem );
-			}
+			SendMessage( hwnd_, LVM_SETITEMSTATE, index, (LPARAM)&lvItem );			
 		}
 
 		internalMessage_ = false;
 	}
 }
 
-Rect Win32Listview::getItemRect( ListItem* item )
+Rect Win32Listview::getItemRect( const uint32& index )
 {
 	Rect result;
 
 	RECT rect = {0,0,0,0};
-	if ( NULL != item ){
-		LVFINDINFO findInfo;
-		memset( &findInfo, 0, sizeof(LVFINDINFO) );
-		findInfo.flags = LVFI_PARAM;
-		findInfo.lParam = (LPARAM)item;
-
-		int index = ListView_FindItem( hwnd_, -1, &findInfo );
-		if ( index > -1 ) {
-			ListView_GetItemRect( hwnd_, index, &rect, LVIR_BOUNDS );
-			result.setRect( rect.left, rect.top, rect.right, rect.bottom );
-		}
+	
+	if ( index != ListModel::InvalidIndex ) {
+		ListView_GetItemRect( hwnd_, index, &rect, LVIR_BOUNDS );
+		result.setRect( rect.left, rect.top, rect.right, rect.bottom );
 	}
+	
 	return result;
 }
 
-bool Win32Listview::isItemSelected(ListItem* item)
+bool Win32Listview::isItemSelected( const uint32& index )
 {
 	bool result = false;
-	if ( NULL != item ){
-		if ( System::isUnicodeEnabled() ) {
-			LVFINDINFOW findInfo;
-			memset( &findInfo, 0, sizeof(LVFINDINFOW) );
-			findInfo.flags = LVFI_PARAM;
-			findInfo.lParam = (LPARAM)item;
-
-			int index = SendMessage( hwnd_, LVM_FINDITEMW, -1, (LPARAM)&findInfo );
-
-			if ( index > -1 ) {
-				result = ( LVIS_SELECTED ==
-					SendMessage( hwnd_, LVM_GETITEMSTATE, index, LVIS_SELECTED ) );
-			}
-		}
-		else {
-			LVFINDINFOA findInfo;
-			memset( &findInfo, 0, sizeof(LVFINDINFOA) );
-			findInfo.flags = LVFI_PARAM;
-			findInfo.lParam = (LPARAM)item;
-
-			int index = SendMessage( hwnd_, LVM_FINDITEMA, -1, (LPARAM)&findInfo );
-
-			if ( index > -1 ) {
-				result = ( LVIS_SELECTED ==
-					SendMessage( hwnd_, LVM_GETITEMSTATE, index, LVIS_SELECTED ) );
-			}
-		}
+	if ( index != ListModel::InvalidIndex ){		
+		result = ( LVIS_SELECTED ==
+			SendMessage( hwnd_, LVM_GETITEMSTATE, index, LVIS_SELECTED ) );
 	}
 	return result;
 }
 
-ListItem* Win32Listview::isPtOverItem( Point* point )
+uint32 Win32Listview::getFocusedItem()
 {
-	ListItem* result = NULL;
-
-	LVHITTESTINFO hitTestInfo;
-	memset( &hitTestInfo, 0, sizeof(LVHITTESTINFO) );
-	hitTestInfo.pt.x = (int32)point->x_;
-	hitTestInfo.pt.y = (int32)point->y_;
-
-	int index = ListView_HitTest( hwnd_, &hitTestInfo );
-	if ( index > -1 ) {
-		ListModel* model = listviewControl_->getListModel();
-		if ( NULL != model ){
-			if ( System::isUnicodeEnabled() ) {
-				LVITEMW lvItem;
-				memset( &lvItem, 0, sizeof(LVITEMW) );
-
-				lvItem.mask = LVIF_PARAM ;
-				lvItem.iItem = index;
-				if ( SendMessage( hwnd_, LVM_GETITEMW, 0, (LPARAM)&lvItem ) ) {
-					result = (ListItem*)lvItem.lParam;
-				}
-			}
-			else {
-				LVITEMA lvItem;
-				memset( &lvItem, 0, sizeof(LVITEMA) );
-
-				lvItem.mask = LVIF_PARAM ;
-				lvItem.iItem = index;
-				if ( SendMessage( hwnd_, LVM_GETITEMA, 0, (LPARAM)&lvItem ) ) {
-					result = (ListItem*)lvItem.lParam;
-				}
-			}
-
-		}
-	}
-	return result;
-}
-
-ListItem* Win32Listview::getFocusedItem()
-{
-	ListItem* result = NULL;
+	uint32 result = ListModel::InvalidIndex;
 
 	int index = ListView_GetSelectionMark( hwnd_ );
 	if ( index > -1 ){
-		int i = 0;
-		int count = ListView_GetSelectedCount( hwnd_ );
-		while ( i < count ){
-			if ( LVIS_FOCUSED  == ListView_GetItemState( hwnd_, index, LVIS_FOCUSED  ) ){
-
-				if ( System::isUnicodeEnabled() ) {
-					LVITEMW lvItem;
-					memset( &lvItem, 0, sizeof(LVITEMW) );
-
-					lvItem.mask = LVIF_PARAM ;
-					lvItem.iItem = index;
-					if ( SendMessage( hwnd_, LVM_GETITEMW, 0, (LPARAM)&lvItem ) ) {
-						result = (ListItem*)lvItem.lParam;
-					}
-				}
-				else {
-					LVITEMA lvItem;
-					memset( &lvItem, 0, sizeof(LVITEMA) );
-
-					lvItem.mask = LVIF_PARAM ;
-					lvItem.iItem = index;
-					if ( SendMessage( hwnd_, LVM_GETITEMA, 0, (LPARAM)&lvItem ) ) {
-						result = (ListItem*)lvItem.lParam;
-
-					}
-				}
-
-				if ( NULL != result ) {
+		if ( LVIS_FOCUSED  == ListView_GetItemState( hwnd_, index, LVIS_FOCUSED  ) ){
+			result = index;
+		}
+		else {
+			
+			int i = 0;
+			int count = ListView_GetSelectedCount( hwnd_ );
+			while ( i < count ){
+				index = ListView_GetNextItem( hwnd_, index, LVNI_FOCUSED );
+				if ( index != -1 ) {
+					result = index;
 					break;
 				}
-
+				//if ( LVIS_FOCUSED  == ListView_GetItemState( hwnd_, index, LVIS_FOCUSED  ) ){
+					
+					
+					/*
+					if ( System::isUnicodeEnabled() ) {
+					LVITEMW lvItem;
+					memset( &lvItem, 0, sizeof(LVITEMW) );
+					
+					  lvItem.mask = LVIF_PARAM ;
+					  lvItem.iItem = index;
+					  if ( SendMessage( hwnd_, LVM_GETITEMW, 0, (LPARAM)&lvItem ) ) {
+					  result = (ListItem*)lvItem.lParam;
+					  }
+					  }
+					  else {
+					  LVITEMA lvItem;
+					  memset( &lvItem, 0, sizeof(LVITEMA) );
+					  
+						lvItem.mask = LVIF_PARAM ;
+						lvItem.iItem = index;
+						if ( SendMessage( hwnd_, LVM_GETITEMA, 0, (LPARAM)&lvItem ) ) {
+						result = (ListItem*)lvItem.lParam;
+						
+						  }
+						  }
+						  
+							if ( NULL != result ) {
+							break;
+							}
+							*/
+					//		break;
+				//}
+				i++;
 			}
-			index++;
-			i++;
 		}
 	}
 	return result;
 }
 
-ListItem* Win32Listview::getSelectedItem()
+uint32 Win32Listview::getSelectedItem()
 {
-	ListItem* result = NULL;
+	uint32 result = ListModel::InvalidIndex;
 
 	int index = ListView_GetNextItem(hwnd_, -1, LVNI_SELECTED);
 	if ( index >= 0 ) {
+		result = index;
+		/*
 		if ( System::isUnicodeEnabled() ) {
 			LVITEMW lvItem;
 			memset( &lvItem, 0, sizeof(LVITEMW) );
@@ -1450,12 +1354,12 @@ ListItem* Win32Listview::getSelectedItem()
 				result = (ListItem*)lvItem.lParam;
 			}
 		}
-
+*/
 	}
 	return result;
 }
 
-Enumerator<ListItem*>* Win32Listview::getSelectedItems()
+Enumerator<uint32>* Win32Listview::getSelectedItems()
 {
 	//int index = ListView_GetSelectionMark( hwnd_ );
 
@@ -1464,7 +1368,7 @@ Enumerator<ListItem*>* Win32Listview::getSelectedItems()
 
 	int index = ListView_GetNextItem(hwnd_, -1, LVNI_SELECTED);
 	if ( index >= 0 ) {
-
+/*
 		if ( System::isUnicodeEnabled() ) {
 			LVITEMW lvItem;
 			memset( &lvItem, 0, sizeof(LVITEMW) );
@@ -1485,12 +1389,14 @@ Enumerator<ListItem*>* Win32Listview::getSelectedItems()
 				item = (ListItem*)lvItem.lParam;
 			}
 		}
+		*/
 
-		selectedItems_.push_back( item );
+		selectedItems_.push_back( index );
 
 		index = ListView_GetNextItem(hwnd_, index, LVNI_SELECTED);
 
 		while ( index >= 0 ) {
+			/*
 			if ( System::isUnicodeEnabled() ) {
 				LVITEMW lvItem;
 				memset( &lvItem, 0, sizeof(LVITEMW) );
@@ -1511,117 +1417,21 @@ Enumerator<ListItem*>* Win32Listview::getSelectedItems()
 					item = (ListItem*)lvItem.lParam;
 				}
 			}
+			*/
 
-			selectedItems_.push_back( item );
+			selectedItems_.push_back( index );
 
 			index = ListView_GetNextItem(hwnd_, index, LVNI_SELECTED);
 		}
 	}
-	else {
-		return NULL;
-	}
 
-//	enumContainer_.initContainer( selectedItems_ );
 	return selectedItems_.getEnumerator();
 }
 
-void Win32Listview::rangeSelect( Rect* selectionRect )
+void Win32Listview::rangeSelect( const Rect& selectionRect )
 {
 
 }
-
-/*
-void Win32Listview::addHeaderColumn( const String& columnName, const double& width )
-{
-	HWND header = ListView_GetHeader( hwnd_ );
-	int index = 0;
-	if ( NULL != header ) {
-		index = Header_GetItemCount( header );
-	}
-
-	insertHeaderColumn( index, columnName, width );
-}
-
-void Win32Listview::insertHeaderColumn( const uint32& index, const String& columnName, const double& width )
-{
-	if ( System::isUnicodeEnabled() ) {
-		LVCOLUMNW column;
-		memset( &column, 0, sizeof(column) );
-		column.mask = LVCF_FMT | LVCF_WIDTH;
-		column.cx = (int32)width;
-		column.fmt = LVCFMT_LEFT;
-
-		if ( SendMessage( hwnd_, LVM_INSERTCOLUMNW, (WPARAM)index, (LPARAM)&column ) >= 0 ) {
-			HWND header = ListView_GetHeader( hwnd_ );
-
-			registerHeaderWndProc();
-
-			if ( NULL != header ) {
-				HDITEMW headerItem;
-				memset( &headerItem, 0, sizeof(headerItem) );
-				headerItem.mask = HDI_LPARAM | HDI_TEXT | HDI_IMAGE | HDI_WIDTH | HDI_FORMAT;
-				
-				ColumnItem* item = listviewControl_->getColumnItem( index );
-
-				headerItem.lParam = (LPARAM)item;
-				headerItem.iImage = I_IMAGECALLBACK;
-				headerItem.pszText = LPSTR_TEXTCALLBACKW;	
-				headerItem.cxy = width;
-				headerItem.fmt = HDF_LEFT | HDF_STRING;	
-
-				int err = SendMessage( header, HDM_SETITEMW, (WPARAM)index, (LPARAM)&headerItem );
-			}
-		}
-	}
-	else {
-		LVCOLUMNA column;
-
-		AnsiString tmpColName = columnName;
-
-		memset( &column, 0, sizeof(column) );
-		column.mask = LVCF_TEXT | LVCF_FMT | LVCF_WIDTH;
-		column.cx = (int32)width;
-		column.fmt = LVCFMT_LEFT;
-
-		char* tmp = new char[tmpColName.size()+1];
-		memset( tmp, 0, (tmpColName.size()+1)*sizeof(char) );
-
-		tmpColName.copy( tmp, tmpColName.size() );
-
-		column.pszText = tmp;
-		column.cchTextMax = tmpColName.size();
-
-		if ( SendMessage( hwnd_, LVM_INSERTCOLUMNA, (WPARAM)index, (LPARAM)&column ) >= 0 ) {
-			HWND header = ListView_GetHeader( hwnd_ );
-
-			if ( NULL != header ) {
-				HDITEMA headerItem;
-				memset( &headerItem, 0, sizeof(headerItem) );
-				headerItem.mask = HDI_FORMAT | HDI_LPARAM;
-				Header_GetItem( header, index, &headerItem );
-				//headerItem.fmt |= HDF_OWNERDRAW;
-				ColumnItem* item = listviewControl_->getColumnItem( index );
-
-				headerItem.lParam = (LPARAM)item;
-
-				int err = SendMessage( header, HDM_SETITEMA, (WPARAM)index, (LPARAM)&headerItem );
-			}
-
-
-			registerHeaderWndProc();
-		}
-
-		delete tmp;
-	}
-
-}
-
-void Win32Listview::deleteHeaderColumn( const uint32& index )
-{
-	int err = ListView_DeleteColumn( hwnd_, index );
-
-}
-*/
 
 IconStyleType Win32Listview::getIconStyle()
 {
@@ -1645,7 +1455,7 @@ void Win32Listview::setIconStyle( const IconStyleType& iconStyle )
 	InvalidateRect( hwnd_, NULL, TRUE );
 }
 
-bool Win32Listview::getAllowsMultiSelect()
+bool Win32Listview::allowsMultiSelect()
 {
 	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 	return ((style & LVS_SINGLESEL) == 0);
@@ -2031,11 +1841,12 @@ int CALLBACK Win32Listview::sortFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lPar
 	result = compareResult ? -1 : 1 ;
 	return result;
 }
-
+/*
 void Win32Listview::sort( ItemSort* itemSortFunctor )
 {
 	int err = ListView_SortItems( hwnd_, Win32Listview::sortFunc, (LPARAM)itemSortFunctor );
 }
+*/
 
 void Win32Listview::onLargeImageListImageChanged( ImageListEvent* event )
 {
@@ -2300,9 +2111,53 @@ void Win32Listview::setSmallImageList( ImageList* imageList )
 	}
 }
 
-Rect Win32Listview::getItemImageRect( ListItem* item )
+Rect Win32Listview::getItemImageRect( const uint32& index )
 {
 	Rect result;
+
+	return result;
+}
+
+uint32 Win32Listview::hitTest( const Point& point )
+{
+	uint32 result = ListModel::InvalidIndex;
+
+	LVHITTESTINFO hitTestInfo;
+	memset( &hitTestInfo, 0, sizeof(LVHITTESTINFO) );
+	hitTestInfo.pt.x = (int32)point.x_;
+	hitTestInfo.pt.y = (int32)point.y_;
+
+	int index = ListView_HitTest( hwnd_, &hitTestInfo );
+	if ( index > -1 ) {
+		/*
+		ListModel* model = listviewControl_->getListModel();
+		if ( NULL != model ){
+			if ( System::isUnicodeEnabled() ) {
+				LVITEMW lvItem;
+				memset( &lvItem, 0, sizeof(LVITEMW) );
+
+				lvItem.mask = LVIF_PARAM ;
+				lvItem.iItem = index;
+				if ( SendMessage( hwnd_, LVM_GETITEMW, 0, (LPARAM)&lvItem ) ) {
+					result = (ListItem*)lvItem.lParam;
+				}
+			}
+			else {
+				LVITEMA lvItem;
+				memset( &lvItem, 0, sizeof(LVITEMA) );
+
+				lvItem.mask = LVIF_PARAM ;
+				lvItem.iItem = index;
+				if ( SendMessage( hwnd_, LVM_GETITEMA, 0, (LPARAM)&lvItem ) ) {
+					result = (ListItem*)lvItem.lParam;
+				}
+			}
+
+		}
+		*/
+
+		result = index;
+	}
 
 	return result;
 }
@@ -2348,17 +2203,19 @@ void Win32Listview::setDisplayOptions( const int32& displayOptions )
 void Win32Listview::onCtrlModelChanged( Event* e )
 {
  	Model* model = listviewControl_->getViewModel();
-	model->ModelChanged += getCallback( "Win32Listview::onListModelChanged" );
+	if ( NULL != model ) {
+		model->ModelChanged += getCallback( "Win32Listview::onListModelChanged" );
 
-	model =  listviewControl_->getColumnModel();
-	model->ModelChanged += getCallback( "Win32Listview::onColumnModelChanged" );
+		model =  listviewControl_->getColumnModel();
+		model->ModelChanged += getCallback( "Win32Listview::onColumnModelChanged" );
 
-	ColumnModel* cm = (ColumnModel*)model;
-	cm->ItemAdded += 
-		getCallback( "Win32Listview::onColumnModelAdded" );
+		ColumnModel* cm = (ColumnModel*)model;
+		cm->ItemAdded += 
+			getCallback( "Win32Listview::onColumnModelAdded" );
 
-	cm->ItemRemoved += 
-		getCallback( "Win32Listview::onColumnModelRemoved" );
+		cm->ItemRemoved += 
+			getCallback( "Win32Listview::onColumnModelRemoved" );
+	}
 	
 }
 

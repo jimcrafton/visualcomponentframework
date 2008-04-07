@@ -15,14 +15,9 @@ where you installed the VCF.
 
 
 
-#ifndef _VCF_LISTMODEL_H__
-#	include "vcf/ApplicationKit/ListModel.h"
-#endif // _VCF_LISTMODEL_H__
-
-#ifndef _VCF_LISTITEM_H__
-#	include "vcf/ApplicationKit/ListItem.h"
-#endif // _VCF_LISTITEM_H__
-
+#ifndef _VCF_LISTCONTROL_H__
+#	include "vcf/ApplicationKit/ListControl.h"
+#endif // _VCF_LISTCONTROL_H__
 
 
 
@@ -97,7 +92,7 @@ static String IconAlignTypeNames[] = { "iaNone",
 /**
 \class ListViewControl ListViewControl.h "vcf/ApplicationKit/ListViewControl.h"
 */
-class APPLICATIONKIT_API ListViewControl : public Control, public ListController, public ColumnController {
+class APPLICATIONKIT_API ListViewControl : public ListControl, public ColumnController {
 public:
 
 
@@ -120,13 +115,7 @@ public:
 		lcatAutoSizeColumnsAndHeaders = -4,
 	};
 
-	virtual void modelChanged( Model* oldModel, Model* newModel );
-
-	ListModel* getListModel();
-
 	ColumnModel* getColumnModel();
-
-	void setListModel(ListModel * model);
 
 	virtual void paint( GraphicsContext * context );
 
@@ -167,11 +156,7 @@ public:
 
 	IconStyleType getIconStyle();
 
-	void setIconStyle( const IconStyleType& iconStyle );
-
-	bool getAllowsMultiSelect();
-
-	void setAllowsMultiSelect( const bool& allowsMultiSelect );
+	void setIconStyle( const IconStyleType& iconStyle );	
 
 	IconAlignType getIconAlignment();
 
@@ -179,47 +164,13 @@ public:
 
 	bool getAllowLabelEditing();
 
-	void setAllowLabelEditing( const bool& allowLabelEditing );
-
-	void setItemFocused( ListItem* item );
-
-	void sort( ItemSort* itemSortFunctor );
-
-	ListItem* isPtOverItem(Point* point);
-
-	ListItem* getFocusedItem();
-
-	ListItem* getSelectedItem();
-
-	/**
-	*calling this repeatedly on the same item will toggle the
-	*selection state of the item
-	*/
-	void selectItem( ListItem* item );
-
-	Enumerator<ListItem*>* getSelectedItems();
-
-	void rangeSelect( Rect* selectionRect );
-
-	ImageList* getSmallImageList() {
-		return stateImageList_;
-	}
-
-	ImageList* getLargeImageList() {
-		return largeImageList_;
-	}
-
+	void setAllowLabelEditing( const bool& allowLabelEditing );	
+	
 	ImageList* getStateImageList() {
 		return stateImageList_;
 	}
 
-	void setLargeImageList( ImageList* imageList );
-
-	void setSmallImageList( ImageList* imageList );
-
-	void setStateImageList( ImageList* imageList );
-
-	Rect getItemImageRect( ListItem* item );
+	void setStateImageList( ImageList* imageList );	
 
 	int32 getDisplayOptions();
 
@@ -238,27 +189,25 @@ public:
 	
 	virtual void handleEvent( Event* event );
 
-
-
-	virtual Rect getItemRect( ListItem* item );	
+	
 	virtual void insertItemSubItem( ListItem* item, const uint32& index, ListSubItem* subItem );
 	virtual void removeItemSubItem( ListItem* item, ListSubItem* subItem );
 	virtual bool getItemSubItems( ListItem* item, std::vector<ListSubItem*>& subItems );
 	virtual ListSubItem* getItemSubItem( ListItem* item, const uint32& index );
 	virtual uint32 getItemSubItemIndex( ListItem* item, ListSubItem* subItem );
 	virtual uint32 getItemSubItemCount( ListItem* item );
-	virtual void itemSelected( ListItem* item );
+	
 protected:
 	//Events
-	void onItemPaint( ItemEvent* event );
+	//void onItemPaint( ItemEvent* event );
 
-	void onListModelContentsChanged( ListModelEvent* event );
+	//void onListModelContentsChanged( ListModelEvent* event );
 
-	void onItemAdded( ListModelEvent* event );
+	//void onItemAdded( ListModelEvent* event );
 
-	void onItemDeleted( ListModelEvent* event );
+	//void onItemDeleted( ListModelEvent* event );
 
-	void onListModelEmptied( ModelEvent* event );
+	//void onListModelEmptied( ModelEvent* event );
 
 	void onColumnItemAdded( ListModelEvent* event );
 
@@ -266,26 +215,20 @@ protected:
 
 	void onColumnItemChanged( ItemEvent* event );
 
-	void onItemSelected( ItemEvent* event );
+	//void onItemSelected( ItemEvent* event );
+
+	virtual void removeSubItemsForItem( ListItem* item );
 
 	ListviewPeer * listviewPeer_;
 	ColumnModel* columnModel_;
 	IconStyleType iconStyle_;
-	ImageList* smallImageList_;
-	ImageList* largeImageList_;
-	ImageList* stateImageList_;
-	ListItem* selectedItem_;
-
-	Array<ListItem*> items_;
+		
 	Array<ColumnItem*> columnItems_;
 
 	typedef std::multimap<ListItem*,ListSubItem*> SubItemMap;
 	typedef std::pair<SubItemMap::iterator,SubItemMap::iterator> SubItemIteratorPair;
 	typedef SubItemMap::value_type SubItemPair;
 	SubItemMap subItems_;
-
-	bool internalModelChange_;
-	bool inCallbackChange_;
 };
 
 

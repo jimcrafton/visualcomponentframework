@@ -32,42 +32,38 @@ public:
 
 	virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc = NULL);
 	
-	virtual bool ensureVisible(ListItem * item, bool partialOK );
 
-	virtual void setFocusedItem(ListItem * item);
+	virtual void selectItem( const uint32& index );
 
-	virtual void selectItem(ListItem * item);
+	virtual uint32 getSelectedItem();
 
-	virtual Rect getItemRect( ListItem* item );
+	virtual void setFocusedItem( const uint32& index );
 
-	virtual bool isItemSelected(ListItem* item);
+	virtual uint32 getFocusedItem();
 
-	virtual ListItem* isPtOverItem(Point* point);
+	virtual bool isItemSelected( const uint32& index );
 
-	virtual ListItem* getFocusedItem();
+	virtual Rect getItemRect( const uint32& index );	
 
-	virtual ListItem* getSelectedItem();
+	virtual Rect getItemImageRect( const uint32& index );
 
-	virtual Enumerator<ListItem*>* getSelectedItems();
+	virtual uint32 hitTest( const Point& point );	
 
-	virtual void rangeSelect( Rect* selectionRect );
+	virtual Enumerator<uint32>* getSelectedItems();
 
-	virtual IconStyleType getIconStyle();
+	virtual void rangeSelect( const Rect& selectionRect );	
 
-	virtual void setIconStyle( const IconStyleType& iconStyle );
+	virtual bool allowsMultiSelect();
 
-	virtual bool getAllowsMultiSelect();
+	virtual void setAllowsMultiSelect( const bool& allowsMultiSelect );	
 
-	virtual void setAllowsMultiSelect( const bool& allowsMultiSelect );
+	virtual void setLargeImageList( ImageList* imageList );
 
-	virtual IconAlignType getIconAlignment();
+	virtual void setSmallImageList( ImageList* imageList );
 
-	virtual void setIconAlignment( const IconAlignType& iconAlignType );
 
-	virtual bool getAllowLabelEditing();
-
-	virtual void setAllowLabelEditing( const bool& allowLabelEditing );
-
+	virtual bool ensureVisible(const uint32& index, bool partialOK );
+	
 	virtual void setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type=ListViewControl::lcatAutoSizeNone );
 
 	virtual double getColumnWidth( const uint32& index );
@@ -76,17 +72,23 @@ public:
 
 	virtual void setColumnTextAlignment( const uint32& index, const TextAlignmentType& val );
 
-	virtual void sort( ItemSort* itemSortFunctor );
+	virtual IconStyleType getIconStyle();
 
-	virtual void setLargeImageList( ImageList* imageList );
+	virtual void setIconStyle( const IconStyleType& iconStyle );
 
-	virtual void setSmallImageList( ImageList* imageList );
+	virtual IconAlignType getIconAlignment();
 
-	virtual Rect getItemImageRect( ListItem* item );
+	virtual void setIconAlignment( const IconAlignType& iconAlignType );
+
+	virtual bool getAllowLabelEditing();
+
+	virtual void setAllowLabelEditing( const bool& allowLabelEditing );		
 
 	virtual int32 getDisplayOptions();
 
 	virtual void setDisplayOptions( const int32& displayOptions );
+
+
 private:
 	static int CALLBACK sortFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
 
@@ -95,7 +97,7 @@ private:
 	ListViewControl* listviewControl_;
 	bool headerControlIsTracking_;
 	bool internalMessage_;
-	Array<ListItem*> selectedItems_;
+	Array<uint32> selectedItems_;
 	WNDPROC oldHeaderWndProc_;
 	Color backColor_;
 	HIMAGELIST largeImageListCtrl_;

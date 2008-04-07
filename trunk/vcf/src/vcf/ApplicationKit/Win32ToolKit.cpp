@@ -71,7 +71,8 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/TransparentWindowPeer.h"
 #include "vcf/ApplicationKit/Win32TransparentWindowPeer.h"
 
-
+#include "vcf/ApplicationKit/DropDownPeer.h"
+#include "vcf/ApplicationKit/Win32DropDownPeer.h"
 
 
 
@@ -3509,6 +3510,11 @@ PopupWindowPeer* Win32ToolKit::internal_createPopupWindowPeer( Frame* frame, Win
 TransparentWindowPeer* Win32ToolKit::internal_createTransparentWindowPeer( Frame* frame )
 {
 	return new Win32TransparentWindowPeer( frame );
+}
+
+DropDownPeer* Win32ToolKit::internal_createDropDownPeer( Control* control )
+{
+	return new Win32DropDownPeer(control);
 }
 
 ToolbarPeer* Win32ToolKit::internal_createToolbarPeer( Toolbar* toolbar )

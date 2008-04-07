@@ -133,6 +133,8 @@ public:
 
 	virtual TransparentWindowPeer* internal_createTransparentWindowPeer( Frame* frame );
 
+	virtual DropDownPeer* internal_createDropDownPeer( Control* control );
+
 	virtual ToolbarPeer* internal_createToolbarPeer( Toolbar* toolbar );
 
 	HWND getDummyParent();

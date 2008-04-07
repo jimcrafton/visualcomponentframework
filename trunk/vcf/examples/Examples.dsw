@@ -317,6 +317,12 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ApplicationKitDLL
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name InternetKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name XMLKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -1794,7 +1800,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "WindowsShell"=.\SketchIt\WindowsShell\WindowsShell.dsp - Package Owner=<4>
+Project: "WindowsShell"=.\WindowsShell\WindowsShell.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
