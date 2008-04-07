@@ -37,6 +37,14 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/Label.h"
 #endif // _VCF_LABEL_H__
 
+#ifndef _VCF_LISTCONTROL_H__
+#	include "vcf/ApplicationKit/ListControl.h"
+#endif // _VCF_LISTCONTROL_H__
+
+#ifndef _VCF_DROPDOWNCONTROL_H__
+#	include "vcf/ApplicationKit/DropDownControl.h"
+#endif // _VCF_DROPDOWNCONTROL_H__
+
 
 #ifndef _VCF_LISTVIEWCONTROL_H__
 #	include "vcf/ApplicationKit/ListViewControl.h"

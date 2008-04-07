@@ -111,6 +111,14 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ApplicationKitPrivate.h
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ApplicationKitSelectLib.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\DropDownControl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\ListControl.h
+# End Source File
 # End Group
 # Begin Group "Res"
 
@@ -454,6 +462,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DragSource.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\DropDownControl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\DropTarget.cpp
 # End Source File
 # Begin Source File
@@ -503,6 +515,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Light3DBorder.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\Light3DBorder.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\ListControl.cpp
 # End Source File
 # Begin Source File
 

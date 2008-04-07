@@ -18,15 +18,17 @@ using namespace VCF;
 
 
 ListViewControl::ListViewControl():
-	selectedItem_(NULL),
-	internalModelChange_(false),
-	inCallbackChange_(false),
-	smallImageList_(NULL),
-	largeImageList_(NULL),
-	stateImageList_(NULL),
+	ListControl(),
 	iconStyle_(isLargeIcon)
 {
 	listviewPeer_ = UIToolkit::createListViewPeer( this );
+
+	listPeer_ = dynamic_cast<ListPeer*>(listviewPeer_ );
+
+	if ( NULL == this->listPeer_ ){
+		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
+	}
+
 
 	peer_ = dynamic_cast<ControlPeer*>(listviewPeer_ );
 
@@ -57,7 +59,7 @@ ListViewControl::ListViewControl():
 	//EventHandler* paintHandler = (EventHandler*)
 	//	new ClassProcedure1<ItemEvent*,ListViewControl>( this, &ListViewControl::onItemPaint, "ListViewControl::onItemPaint" );
 
-	ItemSelectionChanged += new ClassProcedure1<ItemEvent*,ListViewControl>( this, &ListViewControl::onItemSelected, "ListViewControl::onItemSelected" );
+	//ItemSelectionChanged += new ClassProcedure1<ItemEvent*,ListViewControl>( this, &ListViewControl::onItemSelected, "ListViewControl::onItemSelected" );
 
 	setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW ) );
 
@@ -72,16 +74,12 @@ ListViewControl::~ListViewControl()
 	subItems_.clear();
 }
 
-ListModel* ListViewControl::getListModel()
-{
-	return (ListModel*) getViewModel();
-}
 
 ColumnModel* ListViewControl::getColumnModel()
 {
 	return columnModel_;
 }
-
+/*
 void ListViewControl::modelChanged( Model* oldModel, Model* newModel )
 {
 	ListModel* lm = (ListModel*)oldModel;
@@ -136,18 +134,15 @@ void ListViewControl::modelChanged( Model* oldModel, Model* newModel )
 		lm->ModelChanged += ev;
 	}
 }
+*/
 
-void ListViewControl::setListModel(ListModel * model)
-{
-	setViewModel( model );	
-}
-
+/*
 void ListViewControl::onItemPaint( ItemEvent* event )
 {
 	return;
 
 	ListItem* item = (ListItem*)event->getSource();
-	GraphicsContext* context = event->getContext();
+	GraphicsContext* context = event->paintContext;
 	if ( NULL != context ) {
 		ImageList* il = NULL;
 
@@ -182,33 +177,9 @@ void ListViewControl::onItemPaint( ItemEvent* event )
 		}
 	}
 }
+*/
 
-void ListViewControl::onListModelContentsChanged( ListModelEvent* event )
-{
-	if ( NULL == this->listviewPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
-	if ( NULL != event ){
-		switch ( event->getType() ){
-/*			case LIST_MODEL_CONTENTS_DELETED: {
-				listviewPeer_->clear();
-			}
-			break;
-
-			case LIST_MODEL_ITEM_CHANGED: {
-				ListItem* item = event->getListItem();
-				if ( NULL != item ){
-					listviewPeer_->deleteItem( item );
-					listviewPeer_->insert( item->getIndex(), item );
-				}
-			}
-			break;
-			*/
-		}
-	}
-}
-
+/*
 void ListViewControl::onItemAdded( ListModelEvent* event )
 {
 	if ( internalModelChange_ ) {
@@ -229,7 +200,9 @@ void ListViewControl::onItemAdded( ListModelEvent* event )
 
 	inCallbackChange_ = false;
 }
+*/
 
+/*
 void ListViewControl::onItemDeleted( ListModelEvent* event )
 {
 	inCallbackChange_ = true;
@@ -257,14 +230,7 @@ void ListViewControl::onItemDeleted( ListModelEvent* event )
 		
 		ListItem* item = *found;
 
-		//free up sub items
-		SubItemIteratorPair res = subItems_.equal_range( item );
 		
-		while ( res.first != res.second ) {
-			delete res.first->second;
-			subItems_.erase(res.first);
-			++res.first;
-		}
 
 
 		items_.erase( found );
@@ -273,6 +239,18 @@ void ListViewControl::onItemDeleted( ListModelEvent* event )
 		item->free();
 	}
 	inCallbackChange_ = false;
+}
+*/
+void ListViewControl::removeSubItemsForItem( ListItem* item )
+{
+	//free up sub items
+	SubItemIteratorPair res = subItems_.equal_range( item );
+	
+	while ( res.first != res.second ) {
+		delete res.first->second;
+		subItems_.erase(res.first);
+		++res.first;
+	}
 }
 
 ColumnItem* ListViewControl::addHeaderColumn( const String& columnName, const double& width )
@@ -360,15 +338,6 @@ void ListViewControl::setIconStyle( const IconStyleType& iconStyle )
 	listviewPeer_->setIconStyle( iconStyle_ );
 }
 
-bool ListViewControl::getAllowsMultiSelect()
-{
-	return listviewPeer_->getAllowsMultiSelect();
-}
-
-void ListViewControl::setAllowsMultiSelect( const bool& allowsMultiSelect )
-{
-	listviewPeer_->setAllowsMultiSelect( allowsMultiSelect );
-}
 
 IconAlignType ListViewControl::getIconAlignment()
 {
@@ -389,12 +358,6 @@ void ListViewControl::setAllowLabelEditing( const bool& allowLabelEditing )
 {
 	listviewPeer_->setAllowLabelEditing( allowLabelEditing );
 }
-
-void ListViewControl::setItemFocused( ListItem* item )
-{
-	listviewPeer_->setFocusedItem( item );
-}
-
 
 void ListViewControl::onColumnItemAdded( ListModelEvent* event )
 {
@@ -436,36 +399,6 @@ void ListViewControl::onColumnItemChanged( ItemEvent* event )
 	listviewPeer_->setColumnWidth( index, item->getWidth() );
 }
 
-void ListViewControl::sort( ItemSort* itemSortFunctor )
-{
-	listviewPeer_->sort( itemSortFunctor );
-}
-
-ListItem* ListViewControl::isPtOverItem(Point* point)
-{
-	return listviewPeer_->isPtOverItem( point );
-}
-
-ListItem* ListViewControl::getFocusedItem()
-{
-	return listviewPeer_->getFocusedItem();
-}
-
-ListItem* ListViewControl::getSelectedItem()
-{
-	return listviewPeer_->getSelectedItem();//
-}
-
-Enumerator<ListItem*>* ListViewControl::getSelectedItems()
-{
-	return listviewPeer_->getSelectedItems();
-}
-
-void ListViewControl::rangeSelect( Rect* selectionRect )
-{
-	listviewPeer_->rangeSelect( selectionRect );
-}
-
 ListItem* ListViewControl::addItem( const String& caption, const uint32 imageIndex )
 {
 	ListModel* lm = getListModel();
@@ -485,29 +418,6 @@ ListItem* ListViewControl::insertItem( const uint32& index, const String& captio
 	return result;
 }
 
-
-void ListViewControl::setSmallImageList( ImageList* imageList )
-{
-	if ( NULL == this->listviewPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
-	smallImageList_ = imageList;
-
-	listviewPeer_->setSmallImageList( smallImageList_ );
-}
-
-void ListViewControl::setLargeImageList( ImageList* imageList )
-{
-	if ( NULL == this->listviewPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
-	largeImageList_ = imageList;
-
-	listviewPeer_->setLargeImageList( largeImageList_ );
-}
-
 void ListViewControl::setStateImageList( ImageList* imageList )
 {
 	if ( NULL == this->listviewPeer_ ){
@@ -515,15 +425,6 @@ void ListViewControl::setStateImageList( ImageList* imageList )
 	}
 
 	stateImageList_ = imageList;
-}
-
-Rect ListViewControl::getItemImageRect( ListItem* item )
-{
-	if ( NULL == this->listviewPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
-	return listviewPeer_->getItemImageRect( item );
 }
 
 int32 ListViewControl::getDisplayOptions()
@@ -544,18 +445,9 @@ void ListViewControl::setDisplayOptions( const int32& displayOptions )
 	listviewPeer_->setDisplayOptions( displayOptions );
 }
 
-void ListViewControl::selectItem( ListItem* item )
-{
-	if ( NULL == this->listviewPeer_ ){
-		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
-	}
-
-	listviewPeer_->selectItem( item );
-}
-
 void ListViewControl::handleEvent( Event* event )
 {
-	Control::handleEvent( event );
+	ListControl::handleEvent( event );
 	switch ( event->getType() ) {
 		case ListViewControl::COLUMN_MOUSE_EVENT_CLICK : {
 			ColumnItemClicked( (MouseEvent*)event );
@@ -565,40 +457,21 @@ void ListViewControl::handleEvent( Event* event )
 		case Component::COMPONENT_ADDED : {
 			ComponentEvent* ev = (ComponentEvent*)event;
 			Component* child = ev->getChildComponent();
-			ListItem* item = dynamic_cast<ListItem*>(child);
-			if ( NULL != item ) {
-				
-				if ( !inCallbackChange_ ) {				
+			ColumnItem* columnItem = dynamic_cast<ColumnItem*>(child);
+			if ( NULL != columnItem ) {
+				if ( !inCallbackChange_ ) {
 					internalModelChange_ = true;
-					ListModel* lm = getListModel();
-					lm->add( "" );
+					columnItem->setControl( this );
+					columnItem->setModel( getColumnModel() );
+
+
+					columnModel_->add("");
+
+					columnItem->setIndex( columnModel_->getCount()-1 );
+					columnItems_.insert( columnItems_.begin() + columnItem->getIndex(), columnItem );	
 					
-					items_.push_back( item );
-					item->setModel( getViewModel() );
-					item->setControl( this );
-					item->setIndex( lm->getCount()-1 );	
-					
+					//listviewPeer_->insertHeaderColumn( columnItem->getIndex(), "", columnItem->getWidth() );
 					internalModelChange_ = false;
-				}
-			}
-			else {
-				ColumnItem* columnItem = dynamic_cast<ColumnItem*>(child);
-				if ( NULL != columnItem ) {
-					if ( !inCallbackChange_ ) {
-						internalModelChange_ = true;
-						columnItem->setControl( this );
-						columnItem->setModel( getColumnModel() );
-
-
-						columnModel_->add("");
-
-						columnItem->setIndex( columnModel_->getCount()-1 );
-						columnItems_.insert( columnItems_.begin() + columnItem->getIndex(), columnItem );	
-						
-						//listviewPeer_->insertHeaderColumn( columnItem->getIndex(), "", columnItem->getWidth() );
-						internalModelChange_ = false;
-					}
-
 				}
 			}
 		}
@@ -610,11 +483,12 @@ void ListViewControl::handleEvent( Event* event )
 		break;
 	}
 }
-
+/*
 void ListViewControl::onItemSelected( ItemEvent* event )
 {
-	selectedItem_ = listviewPeer_->getSelectedItem();
+//	selectedItem_ = listviewPeer_->getSelectedItem();
 }
+*/
 
 void ListViewControl::paint( GraphicsContext * context )
 {
@@ -715,12 +589,13 @@ void ListViewControl::setColumnItem( const uint32& index, ColumnItem* item )
 }
 
 
-
+/*
 Rect ListViewControl::getItemRect( ListItem* item )
 {
-	Rect result = listviewPeer_->getItemRect( item );
+	Rect result;// = listviewPeer_->getItemRect( item );
 	return result;
 }
+*/
 
 void ListViewControl::insertItemSubItem( ListItem* item, const uint32& index, ListSubItem* subItem )
 {
@@ -823,11 +698,12 @@ uint32 ListViewControl::getItemSubItemCount( ListItem* item )
 	}
 	return result;
 }
-
+/*
 void ListViewControl::itemSelected( ListItem* item )
 {
 
 }
+*/
 
 double ListViewControl::getItemWidth( ColumnItem* item )
 {

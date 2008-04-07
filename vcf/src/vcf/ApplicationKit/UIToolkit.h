@@ -92,6 +92,7 @@ class MenuManagerPeer;
 
 class PopupWindowPeer;
 class TransparentWindowPeer;
+class DropDownPeer;
 
 
 
@@ -223,6 +224,8 @@ public:
 
 	static TransparentWindowPeer* createTransparentWindowPeer( Frame* frame );
 
+	static DropDownPeer* createDropDownPeer( Control* control );
+	
 
 	static ToolbarPeer* createToolbarPeer( Toolbar* toolbar );
 
@@ -626,6 +629,8 @@ protected:
 	virtual PopupWindowPeer* internal_createPopupWindowPeer( Frame* frame, Window* owner ) = 0;
 
 	virtual TransparentWindowPeer* internal_createTransparentWindowPeer( Frame* frame ) = 0;
+
+	virtual DropDownPeer* internal_createDropDownPeer( Control* control ) = 0;
 
 
 	virtual ToolbarPeer* internal_createToolbarPeer( Toolbar* toolbar ) = 0;

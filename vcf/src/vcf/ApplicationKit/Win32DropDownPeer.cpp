@@ -7,7 +7,7 @@
 #include "vcf/ApplicationKit/DropDownPeer.h"
 #include "vcf/ApplicationKit/Win32DropDownPeer.h"
 #include "vcf/ApplicationKit/ListModel.h"
-
+#include "vcf/ApplicationKit/ListItem.h"
 
 
 using namespace VCFWin32;
@@ -27,10 +27,11 @@ typedef BOOL  (WINAPI *GetComboBoxInfoPtr) ( HWND, PCOMBOBOXINFO );
 
 static GetComboBoxInfoPtr GetComboBoxInfoFunc = NULL;
 
-Win32DropDownPeer::Win32DropDownPeer():
+Win32DropDownPeer::Win32DropDownPeer( Control* control ):
 	listBoxHwnd_(NULL),
 		oldLBWndProc_(NULL),
-		editEnabled_(false)
+		editEnabled_(false),
+		dropDownCount_(5)
 {
 
 }
@@ -46,7 +47,7 @@ void Win32DropDownPeer::create( Control* owningControl )
 	Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
 	HWND parent = toolkit->getDummyParent();
 
-	editEnabled_ = (params.first & CBS_DROPDOWN) ? true : false;
+	editEnabled_ = (params.first & CBS_DROPDOWNLIST) ? false : true;
 
 	HWND wnd = NULL;
 	if ( System::isUnicodeEnabled() ) {
@@ -145,7 +146,7 @@ void Win32DropDownPeer::attachToHwnd( HWND wnd, Control* owner )
 			else {
 				::SetWindowLongPtrA( listBoxHwnd_, GWLP_USERDATA, (LONG_PTR)this );
 				oldLBWndProc_ = (WNDPROC)(LONG_PTR) ::SetWindowLongPtrA( listBoxHwnd_, GWLP_WNDPROC, (LONG_PTR)Win32DropDownPeer::LB_WndProc );			
-			}			
+			}
 		}
 	}
 }
@@ -221,6 +222,12 @@ Win32Object::CreateParams Win32DropDownPeer::createParams()
 	return result;
 }
 
+void Win32DropDownPeer::setFont( Font* font )
+{
+	AbstractWin32Component::setFont( font );	
+	updateDimensions();
+}
+
 bool Win32DropDownPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc)
 {
 	bool result = false;
@@ -228,10 +235,52 @@ bool Win32DropDownPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM
 
 	switch ( message ) {
 		case WM_ERASEBKGND:{
-			wndProcResult = TRUE;
+			wndProcResult = 0;
 			result = true;
 		}
 		break;
+
+		case CBN_SELENDOK:{
+			wndProcResult = 0;
+			result = true;
+		}
+		break;
+
+		case CBN_SELENDCANCEL:{
+			wndProcResult = 0;
+			result = true;
+		}
+		break;
+
+		case CBN_SELCHANGE:{
+			wndProcResult = 0;
+
+			int idx = ::SendMessage( hwnd_, CB_GETCURSEL, 0, 0 );
+			
+			ItemEvent event( peerControl_, ITEM_EVENT_SELECTED );
+			POINT tmpPt = {0,0};
+			GetCursorPos( &tmpPt );
+			::ScreenToClient( hwnd_, &tmpPt );
+			Point pt( tmpPt.x, tmpPt.y );
+			event.point = pt;
+			
+			event.itemSelected = (idx == CB_ERR) ? false : true;
+			event.index = event.itemSelected ? idx : ItemEvent::InvalidIndex;
+
+			peerControl_->handleEvent( &event );
+
+			
+
+			result = true;
+		}
+		break;
+
+		case CBN_EDITCHANGE:{
+			wndProcResult = 0;
+			result = false;
+		}
+		break;
+		
 
 		case WM_GETTEXT:{
 			wndProcResult = 0;
@@ -268,11 +317,11 @@ bool Win32DropDownPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM
 				size_t index = res;
 				String s = lm->getAsString( index );
 				if ( System::isUnicodeEnabled() ) {
-					wndProcResult = s.length();
+					wndProcResult = s.length()+1;
 				}
 				else {
 					AnsiString tmp = s;
-					wndProcResult = tmp.length();
+					wndProcResult = tmp.length()+1;
 				}
 			}
 		}
@@ -286,11 +335,11 @@ bool Win32DropDownPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM
 			size_t index = wParam;
 			String s = lm->getAsString( index );
 			if ( System::isUnicodeEnabled() ) {
-				wndProcResult = s.length();
+				wndProcResult = s.length()+1;
 			}
 			else {
 				AnsiString tmp = s;
-				wndProcResult = tmp.length();
+				wndProcResult = tmp.length()+1;
 			}
 		}
 		break;		
@@ -306,14 +355,15 @@ bool Win32DropDownPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM
 			if ( System::isUnicodeEnabled() ) {
 				WCHAR* str = (WCHAR*)lParam;
 				len = wcslen( str );
-				wndProcResult = s.copy( str, minVal<>(len,s.length()) );
-
+				//wndProcResult = s.copy( str, minVal<>(len,s.length()) );
+				wndProcResult = s.copy( str, s.length() );
 			}
 			else {
 				char* str = (char*)lParam;
 				len = strlen( str );
 				AnsiString tmp = s;
-				wndProcResult = tmp.copy( str, minVal<>(len,tmp.length()) );
+				//wndProcResult = tmp.copy( str, minVal<>(len,tmp.length()) );
+				wndProcResult = tmp.copy( str, tmp.length() );
 			}
 		}
 		break;
@@ -338,6 +388,9 @@ bool Win32DropDownPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM
 			size_t count = lm->getCount();
 			if ( drawItemStruct->itemID >= 0 && drawItemStruct->itemID < count ) {
 
+				ListItem* item = NULL;
+
+
 				String s = lm->getAsString( drawItemStruct->itemID );
 
 				GraphicsContext gc( drawItemStruct->hDC );
@@ -350,10 +403,23 @@ bool Win32DropDownPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM
 				Color* color = peerControl_->getColor();
 				Color* defaultBackClr = color;
 				
+				gc.setCurrentFont( peerControl_->getFont() );
+				
+				if ( NULL != item ) {
+					if ( !item->isFontDefault() ) {
+						gc.setCurrentFont( item->getFont() );
+					}
+				}
+				
 				if ( drawItemStruct->itemState & ODS_SELECTED ) {
 					defaultBackClr = GraphicsToolkit::getSystemColor( SYSCOLOR_SELECTION );
 				}
 
+				if ( drawItemStruct->itemState & ODS_DEFAULT ) {
+					defaultBackClr = GraphicsToolkit::getSystemColor( SYSCOLOR_SELECTION );
+				}
+
+				
 				gc.setColor( defaultBackClr );
 				gc.rectangle( &r );
 				gc.fillPath();
@@ -361,6 +427,12 @@ bool Win32DropDownPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM
 
 				gc.textBoundedBy( &r, s );
 
+
+				if ( NULL != item ) {
+					if ( item->canPaint() ) {
+						item->paint( &gc, &r );
+					}
+				}				
 			}			
 			
 		}
@@ -406,14 +478,12 @@ void Win32DropDownPeer::enableEditBox( bool val )
 
 	bool visible = this->getVisible();
 
-	UINT style = BORDERED_VIEW | CBS_AUTOHSCROLL | CBS_DROPDOWN | CBS_OWNERDRAWVARIABLE  | CBS_HASSTRINGS;
+	UINT style = BORDERED_VIEW | CBS_AUTOHSCROLL | CBS_OWNERDRAWVARIABLE  | CBS_HASSTRINGS;
 
-	if ( val ) {
-		style &= ~CBS_DROPDOWNLIST;
+	if ( val ) {		
 		style |= CBS_DROPDOWN;
 	}
-	else {
-		style &= ~CBS_DROPDOWN;
+	else {		
 		style |= CBS_DROPDOWNLIST;
 	}
 
@@ -507,7 +577,7 @@ bool Win32DropDownPeer::editBoxEnabled()
 
 void Win32DropDownPeer::setEditText( const String& text )
 {
-	
+	setText( text );
 }
 
 String Win32DropDownPeer::getEditText()
@@ -528,27 +598,55 @@ double Win32DropDownPeer::getDropDownWidth()
 	return result;
 }
 
-void Win32DropDownPeer::setDropDownCount( const uint32& dropDownCount )
+void Win32DropDownPeer::updateDimensions()
 {
 	RECT r = {0};
 	GetWindowRect( hwnd_, &r );
-	r.bottom = r.top + ((r.bottom-r.top) * dropDownCount);
+
+	MEASUREITEMSTRUCT msItem = {0};
+
+	msItem.CtlID = ::GetDlgCtrlID(hwnd_);
+	msItem.CtlType = ODT_COMBOBOX;
+	msItem.itemData = 0;
+	msItem.itemWidth = r.right - r.left;
+
+
+	SendMessage( hwnd_, WM_MEASUREITEM, 1, (LPARAM)&msItem );
+
+	
+	r.bottom = r.top + ((msItem.itemHeight) * dropDownCount_);
 	POINT pt;
 	pt.x = r.left;
 	pt.y = r.top;
-
+	
 	ScreenToClient( GetParent(hwnd_), &pt );
 	r.left = pt.x;
 	r.top = pt.y;
-
+	
 	pt.x = r.right;
 	pt.y = r.bottom;
-
+	
 	ScreenToClient( GetParent(hwnd_), &pt );
 	r.right = pt.x;
 	r.bottom = pt.y;
+	
+	SendMessage( hwnd_, CB_SETITEMHEIGHT, -1, msItem.itemHeight );
+	UINT count = SendMessage( hwnd_,  CB_GETCOUNT, 0, 0 );
+	for (UINT i=0;i<count;i++ ) {
+		SendMessage( hwnd_, CB_SETITEMHEIGHT, i, msItem.itemHeight );
+	}
+
 
 	SetWindowPos( hwnd_, NULL, r.left, r.top, r.right - r.left, r.bottom - r.top, SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER );
+}
+
+void Win32DropDownPeer::setDropDownCount( const uint32& dropDownCount )
+{
+	if ( dropDownCount_ != dropDownCount ) {
+		dropDownCount_ = dropDownCount;
+
+		updateDimensions();
+	}	
 }
 
 void Win32DropDownPeer::onCtrlModelChanged( Event* e )
@@ -622,6 +720,11 @@ uint32 Win32DropDownPeer::getFocusedItem()
 	return getSelectedItem();
 }
 
+void Win32DropDownPeer::setFocusedItem( const uint32& index )
+{
+	selectItem( index );
+}
+
 bool Win32DropDownPeer::isItemSelected( const uint32& index )
 {
 	UINT idx = ::SendMessage( hwnd_, CB_GETCURSEL, 0, 0 );
@@ -636,6 +739,17 @@ Rect Win32DropDownPeer::getItemRect( const uint32& index )
 {
 	Rect result ;
 
+	RECT r = {0};
+	::GetClientRect( hwnd_, &r );
+
+	int height = SendMessage( hwnd_, CB_GETITEMHEIGHT, index, 0 );
+	if ( CB_ERR != height ) {		
+		result.left_ = 0;
+		result.top_ = index * height;
+		result.right_ = result.left_ + (r.right-r.left);
+		result.bottom_ = result.top_ + height;
+	}
+
 	return result;
 }
 
@@ -643,17 +757,41 @@ Rect Win32DropDownPeer::getItemImageRect( const uint32& index )
 {
 	Rect result ;
 
+	RECT r = {0};
+	::GetClientRect( hwnd_, &r );
+
+	int height = SendMessage( hwnd_, CB_GETITEMHEIGHT, index, 0 );
+	if ( CB_ERR != height ) {		
+		result.left_ = 0;
+		result.top_ = index * height;
+		result.right_ = result.left_ + height;
+		result.bottom_ = result.top_ + height;
+	}
+
 	return result;
 }
 
 uint32 Win32DropDownPeer::hitTest( const Point& point )
 {
-	return ListModel::InvalidIndex;
+	uint32 result = ListModel::InvalidIndex;
+	if ( SendMessage( hwnd_, CB_GETDROPPEDSTATE, 0, 0 ) ) {
+		result = SendMessage( this->listBoxHwnd_, LB_ITEMFROMPOINT, 0, (LPARAM) MAKELPARAM((int)point.x_, (int)point.y_) );
+	}
+
+	return result;
 }
 
 Enumerator<uint32>* Win32DropDownPeer::getSelectedItems()
 {
-	return NULL;
+	selectedItems_.clear();
+
+	int idx = ::SendMessage(hwnd_, CB_GETCURSEL, 0, 0 );
+
+	if ( idx != CB_ERR ) {
+		selectedItems_.push_back( idx );
+	}
+
+	return selectedItems_.getEnumerator();
 }
 
 void Win32DropDownPeer::rangeSelect( const Rect& selectionRect )
@@ -681,3 +819,7 @@ void Win32DropDownPeer::setSmallImageList( ImageList* imageList )
 
 }
 
+uint32 Win32DropDownPeer::getDropDownCount()
+{
+	return dropDownCount_;
+}

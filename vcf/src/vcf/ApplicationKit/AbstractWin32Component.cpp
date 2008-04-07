@@ -43,7 +43,6 @@ AbstractWin32Component::AbstractWin32Component():
 	memDCState_(0),
 	destroyed_(false),
 	canProcessMessages_(false),
-	currentFont_(NULL),
 	cachedMessages_(NULL)
 {
 	init();
@@ -58,7 +57,6 @@ AbstractWin32Component::AbstractWin32Component( Control* component ):
 	memDCState_(0),
 	destroyed_(false),
 	canProcessMessages_(false),
-	currentFont_(NULL),
 	cachedMessages_(NULL)
 {
 	init();
@@ -332,7 +330,7 @@ void AbstractWin32Component::setFont( Font* font )
 			HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( win32FontPeer );
 			if ( NULL != fontHandle ){
 				::SendMessage( hwnd_, WM_SETFONT, (WPARAM)fontHandle, MAKELPARAM(TRUE, 0) );
-				currentFont_ = fontHandle;
+				
 			}
 		}
 		else {

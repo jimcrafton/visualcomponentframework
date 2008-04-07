@@ -385,6 +385,11 @@ TransparentWindowPeer* UIToolkit::createTransparentWindowPeer( Frame* frame )
 	return UIToolkit::toolKitInstance->internal_createTransparentWindowPeer( frame );
 }
 
+DropDownPeer* UIToolkit::createDropDownPeer( Control* control )
+{
+	return UIToolkit::toolKitInstance->internal_createDropDownPeer( control );
+}
+
 ToolbarPeer* UIToolkit::createToolbarPeer( Toolbar* toolbar )
 {
 	return UIToolkit::toolKitInstance->internal_createToolbarPeer( toolbar );

@@ -167,7 +167,7 @@ void TreeControl::onTreeItemPaint( ItemEvent* event )
 	return ;
 
 	TreeItem* item = (TreeItem*)event->getSource();
-	GraphicsContext* context = event->getContext();
+	GraphicsContext* context = event->paintContext;
 	if ( NULL != context ) {
 		ImageList* il = getImageList();
 		if ( NULL != il ) {
@@ -492,7 +492,7 @@ void TreeControl::itemExpanded( TreeItem* item )
 	ItemEvent e(item, TreeItem::tieExpanding);
 	Point pt = UIShell::getUIShell()->getCurrentMousePosition();
 	this->translateFromScreenCoords( &pt );
-	e.setPoint( &pt );
+	e.point =pt;
 
 	ItemExpanded( &e );
 }
@@ -510,7 +510,7 @@ void TreeControl::itemSelected( TreeItem* item )
 	ItemEvent event( item, TREEITEM_SELECTED );
 	Point pt = UIShell::getUIShell()->getCurrentMousePosition();
 	this->translateFromScreenCoords( &pt );
-	event.setPoint( &pt );
+	event.point = pt;
 		
 	ItemSelected( &event );
 }

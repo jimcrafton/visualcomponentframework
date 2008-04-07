@@ -33,6 +33,8 @@ public:
 
 	virtual uint32 getSelectedItem() = 0;
 
+	virtual void setFocusedItem( const uint32& index ) = 0;
+
 	virtual uint32 getFocusedItem() = 0;
 
 	virtual bool isItemSelected( const uint32& index ) = 0;

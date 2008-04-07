@@ -773,7 +773,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				event.setUserData( (void*)item );
 
 				Point pt( tmpPt.x, tmpPt.y );
-				event.setPoint( &pt );
+				event.point =pt;
 
 				treeControl_->handleEvent( &event );
 			}
