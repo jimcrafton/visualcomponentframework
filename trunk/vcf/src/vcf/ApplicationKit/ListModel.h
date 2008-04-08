@@ -92,8 +92,15 @@ typedef ListModelDelegate::ProcedureType ListModelHandler;
 
 /**
 \class ListModel ListModel.h "vcf/ApplicationKit/ListModel.h"
-The List model is a interface for describing what a model that implements
-a list of items should do. 
+The List is a simple model that stores a list of data. You 
+add data by passing in a VariantData object to wrap the 
+precise data type. The implementation could be any kind of 
+sequential list. The SimpleListModel uses a vector of 
+VariantData objects, allowing a fairly flexible way of 
+storing data, though not neccessarily the most memory
+efficient.
+
+
 @delegates
 	@del ListModel::ContentsChanged
 	@del ListModel::ItemAdded
@@ -116,7 +123,7 @@ public:
 	virtual ~ListModel(){};
 
 	/**
-	@delegate ItemAdded fired when an item is added to the list model
+	@delegate ItemAdded fired when an item is added/inserted to the list model
 	@event ListModelEvent
 	*/
 	DELEGATE(ListModelDelegate,ItemAdded)
@@ -132,6 +139,11 @@ public:
 		return getCount() > 0;
 	}
 
+	/**
+	Returns the value at the specified key. The key is expected to 
+	be some integer type.
+	@see get()
+	*/
 	virtual VariantData getValue( const VariantData& key=VariantData::null() );
 
 	virtual String getValueAsString( const VariantData& key=VariantData::null() );
@@ -140,14 +152,31 @@ public:
 
 	virtual void setValueAsString( const String& value, const VariantData& key=VariantData::null() );
 		
+	/**
+	inserts some item into the model at the index specified. This 
+	calls doInsert which does the actual work of inserting/storing
+	the data into whatever collection the implementor has chosen. 
+	If the item doInsert() returns true, then the ItemAdded delegate
+	is called, followed by the ModelChanged delegate.
+	*/
 	void insert( const uint32 & index, const VariantData& item );
 
+	/**
+	Adds an item to the end of the collection.
+	@see insert
+	*/
 	void add( const VariantData& item ) {
 		insert( getCount(), item );
 	}
 	
+	/**
+	Removes the data at the specified index. 
+	*/
 	void remove( const uint32& index );
 
+	/**
+	Sets data 
+	*/
 	void set( const uint32& index, const VariantData& item );
 
 	virtual void setAsString( const uint32& index, const String& item ) {
@@ -354,7 +383,7 @@ inline VariantData ListModel::getValue( const VariantData& key )
 		return get( key );
 	}
 
-	return Model::getValue();
+	return VariantData::null();
 }
 
 inline String ListModel::getValueAsString( const VariantData& key )
@@ -363,7 +392,7 @@ inline String ListModel::getValueAsString( const VariantData& key )
 		return getAsString( key );
 	}
 
-	return Model::getValueAsString();
+	return String();
 }
 
 inline void ListModel::setValue( const VariantData& value, const VariantData& key )

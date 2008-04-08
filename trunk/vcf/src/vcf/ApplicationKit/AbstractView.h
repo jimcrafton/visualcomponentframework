@@ -18,7 +18,13 @@ namespace VCF {
 
 /**
 \class AbstractView AbstractView.h "vcf/ApplicationKit/AbstractView.h"
-*Basic implementation of a view
+Basic implementation of a view. Serves as a starting point for
+your own specific implementation. Implements the basic view methods 
+like get/setViewModel(), get/setViewControl, etc.
+Implementers of a view should probably derive from this class
+as opposed to arbitrarily reimplementing the functions. This means 
+that only function you'll really need to implement is the paintView()
+method.
 */
 class APPLICATIONKIT_API AbstractView : public View {
 public:

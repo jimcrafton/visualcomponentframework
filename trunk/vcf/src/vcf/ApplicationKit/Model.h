@@ -52,7 +52,31 @@ class View;
 
 /**
 \class Model Model.h "vcf/ApplicationKit/Model.h"
-A Model is the base class for storing data for a control or other visual elements.
+A model is the base class for storing data that can then 
+be presented to the user by controls and/or views. 
+The model maintains zero or more views. It can update
+the views in one shot by the updateAllViews(). 
+
+The exact kind of data store in the model is up to the implementor
+but all models has some basic common characteristics.
+ \li They can be emptied or cleared out by calling the empty() method.
+ \li You can determine is the model has any data at all by calling
+ the isEmpty() method. 
+ \li A model's data can be "validated", in other words you can 
+ call validate() to determine if the data in the model is in a 
+ correct state, or has meaningful values. Again, the exact implementation
+ is up to the programmer, but if the model is not considered "valid" 
+ then the validate() method \em must throw an exception.
+ \li A model can notify interested parties that it's state or data 
+ has changed through it's ModelChanged delegate. Any time the data 
+ for the model is modified some sort of ModelEvent should be
+ passed to the ModelChanged delegate to notify any of the associated 
+ callbacks.
+ \li a generic method for retrieving data is provided (it may not be the 
+ best or most effient way to retreive data) via the getValue() method
+ \li a generic method for setting/modifying data is provided (it may not be the 
+ best or most effient way to retreive data) via the setValue() method
+
 @delegates
 	@del Model::ModelChanged
 	@del Model::ModelValidate
@@ -77,7 +101,7 @@ public:
 
 	/**
 	@delegate ModelChanged fired when the model's empty() method is
-	called. Should be fired for any change to the model's content.
+	called. Should also be fired for any change to the model's content.
 	@event ModelEvent
 	@eventtype Model::MODEL_EMPTIED
 	@see empty()
@@ -92,13 +116,8 @@ public:
 	DELEGATE(ValidationDelegate,ModelValidate)    
     
     /**
-     * validate the model.
-     * The implementation for this can vary widely, or even be nonexistant for model's that do not require validation.
-     * The basic idea is to call all the listeners in the list , passing in a local variable to the
-     * onModelValidate() methods of the listener's. The variable is initialized to true, and if it is
-     * still true at the end of the listener iterations, then it is safe to apply the changes to the
-     * model, other wise the changes are removed.
-     */
+	Validate the model.
+	 */
     virtual void validate() {
 		ValidationEvent e( this );
 		ModelValidate( &e );
@@ -168,7 +187,7 @@ public:
 	@see getValue
 	*/
 	virtual String getValueAsString( const VariantData& key=VariantData::null() ) {
-		return String();
+		return getValue().toString();
 	}
 
 	/**
@@ -184,7 +203,11 @@ public:
 	Sets the value of the model using a string to specify the data. 
 	@see setValue()
 	*/
-	virtual void setValueAsString( const String& value, const VariantData& key=VariantData::null() ) {}
+	virtual void setValueAsString( const String& value, const VariantData& key=VariantData::null() ) {
+		Variant v;
+		v.setFromString(value);
+		setValue( v, key );
+	}
 
 	/**
 	Indicates whether or not the model will be responsible for deleting objects that may be held 
