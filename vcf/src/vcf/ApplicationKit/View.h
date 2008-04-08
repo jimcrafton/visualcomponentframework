@@ -26,6 +26,15 @@ class Model;
 
 /**
 \class View View.h "vcf/ApplicationKit/View.h"  
+A view represents a visual display or rendering of part or all of the data 
+in a model. Each view has a single model that it is associated with. Each view 
+has a single control that it is associated with. A control may have 
+more than one view if it's main view is implemented in such a way that it 
+allows ofr multiple views. Unlike a control which gets OS events like mouse 
+input and keyboard input and may be a wrapper for some underlying native 
+control (like a edit box, or a tree control), a view is strictly for
+rendering the model associated with it. 
+
 */
 class APPLICATIONKIT_API View  {
 public:
