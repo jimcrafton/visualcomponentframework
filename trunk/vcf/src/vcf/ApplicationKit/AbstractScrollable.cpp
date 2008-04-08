@@ -62,7 +62,7 @@ AbstractScrollable::AbstractScrollable():
 
 AbstractScrollable::~AbstractScrollable()
 {
-	resizeHandler_->free();
+	delete resizeHandler_;
 	delete scrollPeer_;
 }
 

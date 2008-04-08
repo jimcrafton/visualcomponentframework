@@ -136,8 +136,8 @@ Win32GraphicsToolkit::Win32GraphicsToolkit():
 
 Win32GraphicsToolkit::~Win32GraphicsToolkit()
 {
-	systemFont_->free();
-	Win32FontManager::getFontManager()->free();
+	delete systemFont_;
+	delete Win32FontManager::getFontManager();
 }
 
 void Win32GraphicsToolkit::internal_systemSettingsChanged()

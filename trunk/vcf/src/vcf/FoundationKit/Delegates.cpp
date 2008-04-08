@@ -244,7 +244,7 @@ void CallBack::addToSource( Object* source )
 	}
 }
 
-void CallBack::destroy()
+void CallBack::free()
 {
 	if ( NULL != delegates_ ) {
 
@@ -274,4 +274,7 @@ void CallBack::destroy()
 			objCB->removeCallback( this );
 		}
 	}
+
+	delete this;
 }
+

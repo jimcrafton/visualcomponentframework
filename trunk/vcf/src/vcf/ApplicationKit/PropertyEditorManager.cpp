@@ -41,7 +41,7 @@ PropertyEditor* PropertyEditorManager::createEditor( const String& className )
 				result->internal_setPropertyType( className );
 			}
 			else {
-				instance->free();
+				delete instance;
 			}
 		}
 	}
@@ -111,7 +111,6 @@ void PropertyEditorManager::removePropertyEditor( const String& editorClassName,
 void PropertyEditorManager::initPropertyEditorManager()
 {
 	PropertyEditorManager::propertyEditorMgr = new PropertyEditorManager();
-	PropertyEditorManager::propertyEditorMgr->init();
 }
 
 void PropertyEditorManager::closePropertyEditorManager()

@@ -206,7 +206,7 @@ void Thread::stop()
 	Now clean up here if neccessary
 	*/
 	if ( true == autoDelete_ )	{
-		free();
+		delete this;
 	}
 }
 

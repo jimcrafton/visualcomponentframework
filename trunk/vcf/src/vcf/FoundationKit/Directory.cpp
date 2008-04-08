@@ -39,7 +39,7 @@ Directory::Finder::~Finder()
 		std::vector<Directory::Finder*>::iterator it = subfinders_->begin();
 		while ( it != subfinders_->end() ) {
 			Directory::Finder* finder = *it;
-			finder->free();
+			delete finder;
 			it ++;
 		}
 		subfinders_->clear();
@@ -51,7 +51,7 @@ Directory::Finder::~Finder()
 		std::vector<Directory*>::iterator it = subdirs_->begin();
 		while ( it != subdirs_->end() ) {
 			Directory* subDir = *it;
-			subDir->free();
+			delete subDir;
 			it ++;
 		}
 		subdirs_->clear();

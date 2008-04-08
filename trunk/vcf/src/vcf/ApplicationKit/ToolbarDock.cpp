@@ -253,7 +253,6 @@ DockManager* DockManager::create()
 {
 	if ( NULL == DockManager::dockManagerInstance ) {
 		DockManager::dockManagerInstance = new DockManager();
-		DockManager::dockManagerInstance->init();
 	}
 
 	return DockManager::dockManagerInstance;

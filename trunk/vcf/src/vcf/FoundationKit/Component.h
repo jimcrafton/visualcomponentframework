@@ -160,7 +160,29 @@ protected:
 	This is protected - you should call free, or release to destroy the component
 	*/
 	virtual ~Component();
+
+	/**
+	called by the free() method. Should be overriden
+	and any clean up code performed here
+	*/
+	virtual void destroy();
 public:
+
+	/**
+	Call this method to free up the memory of the class
+	for heap based objects. Use this instead of calling the 
+	operator delete. For example:
+	\code
+	Component*  m = //get some component
+	m->free();
+	\endcode
+	This will ensure that the destroy() method is called 
+	\em before calling operator delete which allows a 
+	deriving class to override the destroy methods and safely
+	call virtual methods from within it.
+	*/
+	void free();
+
 
 	enum ComponentEvents{
 		COMPONENT_CREATED = 0,
@@ -629,17 +651,6 @@ public:
 	static Component* createComponentFromResources( Class* clazz, Class* rootClazz, ResourceBundle* resBundle=NULL );
 
 protected:
-	/**
-	*
-	*
-	*/
-	virtual void destroy();
-
-protected:
-	/**
-	*
-	*
-	*/
 	Component* owner_;
 	uint32 componentState_;
 	String name_;

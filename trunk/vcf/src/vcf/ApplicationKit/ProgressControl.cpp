@@ -36,8 +36,8 @@ ProgressControl::ProgressControl():
 
 ProgressControl::~ProgressControl()
 {
-	progressBarColor_->free();
-	progressTextColor_->free();
+	delete progressBarColor_;
+	delete progressTextColor_;
 }
 
 

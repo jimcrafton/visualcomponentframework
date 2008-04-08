@@ -33,22 +33,6 @@ Object::~Object()
 
 }
 
-void Object::init()
-{
-
-}
-
-void Object::destroy()
-{
-
-}
-
-void Object::free()
-{
-	destroy();
-	delete this;
-}
-
 long Object::addRef(Object* owner)
 {
 	return ++refCount_;
@@ -57,7 +41,13 @@ long Object::addRef(Object* owner)
 long Object::release(Object* owner)
 {
 	if ( 0 == --refCount_ )  {
-		free();
+		Component* c = dynamic_cast<Component*>(this);
+		if ( c ) {
+			c->free();
+		}
+		else {
+			delete this;
+		}
 		return 0;
 	}
 	return refCount_;

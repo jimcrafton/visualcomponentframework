@@ -206,11 +206,11 @@ void ApplicationKit::terminate()
 
 		LibraryApplication::clearLibraryRegistrar();
 
-		DockManager::getDockManager()->free();
+		delete DockManager::getDockManager();
 
-		UIShell::getUIShell()->free();
+		delete UIShell::getUIShell();
 
-		CursorManager::getCursorManager()->free();
+		delete CursorManager::getCursorManager();
 
 		ComponentEditorManager::closeComponentEditorManager();
 

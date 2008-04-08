@@ -86,7 +86,7 @@ UIToolkit::~UIToolkit()
 	defaultButtonHandler_->free();
 	defaultButtonHandler_ = NULL;
 
-	metricsMgr_->free();
+	delete metricsMgr_;
 
 	delete policyMgr_;	
 }
@@ -1063,10 +1063,10 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 			e->setType( Control::KEYBOARD_DOWN );
 			frame->handleEvent( e );
 			if ( e->isConsumed() ) {
-				e->free();
+				delete e;
 				return;
 			}
-			e->free();
+			delete e;
 		}
 	}
 

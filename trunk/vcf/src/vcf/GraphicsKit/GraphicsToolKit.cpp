@@ -517,7 +517,7 @@ void GraphicsToolkit::initGraphicsToolkit()
 
 void GraphicsToolkit::terminate()
 {
-	GraphicsToolkit::graphicsToolkitInstance->free();
+	delete GraphicsToolkit::graphicsToolkitInstance;
 
 	GraphicsToolkit::graphicsToolkitInstance = NULL;
 }

@@ -25,91 +25,91 @@ this is redifined here because the mingw version is WRONG! (or the MS iversion i
 wrong, depends on how you look at it :) ).
 */
 
-#if (_WIN32_IE >= 0x0400)
-typedef struct tagNMCUSTOMDRAWINFO__ {
-    NMHDR  hdr;
-    DWORD  dwDrawStage;
-    HDC    hdc;
-    RECT   rc;
-    DWORD  dwItemSpec;
-    UINT   uItemState;
-    LPARAM lItemlParam;
-} NMCUSTOMDRAW__, FAR * LPNMCUSTOMDRAW__;
-
-#endif
-
-
-typedef struct tagNMTVCUSTOMDRAW__ {
-    NMCUSTOMDRAW__ nmcd;
-    COLORREF clrText;
-    COLORREF clrTextBk;
-#if (_WIN32_IE >= 0x0400)
-    int iLevel;
-#endif
-} NMTVCUSTOMDRAW__, *LPNMTVCUSTOMDRAW__;
 
 
 
-#ifdef VCF_CYGWIN
+#ifdef VCF_CYGWIN		
+	#if (_WIN32_IE >= 0x0400)
+	typedef struct tagNMCUSTOMDRAWINFO__ {
+		NMHDR  hdr;
+		DWORD  dwDrawStage;
+		HDC    hdc;
+		RECT   rc;
+		DWORD  dwItemSpec;
+		UINT   uItemState;
+		LPARAM lItemlParam;
+	} NMCUSTOMDRAW__, FAR * LPNMCUSTOMDRAW__;
 
-#if (_WIN32_IE >= 0x0300)
-#define LPTV_HITTESTINFO   LPTVHITTESTINFO
-#define   TV_HITTESTINFO     TVHITTESTINFO
-#else
-#define tagTVHITTESTINFO    _TV_HITTESTINFO
-#define    TVHITTESTINFO     TV_HITTESTINFO
-#define  LPTVHITTESTINFO   LPTV_HITTESTINFO
-#endif
-
-typedef struct tagTVHITTESTINFO {
-    POINT       pt;
-    UINT        flags;
-    HTREEITEM   hItem;
-} TVHITTESTINFO, FAR *LPTVHITTESTINFO;
+	#endif
 
 
-#if (_WIN32_IE >= 0x0400)
-#define TVN_GETINFOTIPA         (TVN_FIRST-13)
-#define TVN_GETINFOTIPW         (TVN_FIRST-14)
-#define TVN_SINGLEEXPAND        (TVN_FIRST-15)
-#endif // 0x400
+	typedef struct tagNMTVCUSTOMDRAW__ {
+		NMCUSTOMDRAW__ nmcd;
+		COLORREF clrText;
+		COLORREF clrTextBk;
+	#if (_WIN32_IE >= 0x0400)
+		int iLevel;
+	#endif
+	} NMTVCUSTOMDRAW__, *LPNMTVCUSTOMDRAW__;
+
+	#if (_WIN32_IE >= 0x0300)
+		#define LPTV_HITTESTINFO   LPTVHITTESTINFO
+		#define   TV_HITTESTINFO     TVHITTESTINFO
+	#else
+		#define tagTVHITTESTINFO    _TV_HITTESTINFO
+		#define    TVHITTESTINFO     TV_HITTESTINFO
+		#define  LPTVHITTESTINFO   LPTV_HITTESTINFO
+	#endif
+
+	typedef struct tagTVHITTESTINFO {
+		POINT       pt;
+		UINT        flags;
+		HTREEITEM   hItem;
+	} TVHITTESTINFO, FAR *LPTVHITTESTINFO;
+
+
+	#if (_WIN32_IE >= 0x0400)
+	#define TVN_GETINFOTIPA         (TVN_FIRST-13)
+	#define TVN_GETINFOTIPW         (TVN_FIRST-14)
+	#define TVN_SINGLEEXPAND        (TVN_FIRST-15)
+	#endif // 0x400
 
 
 
-#if (_WIN32_IE >= 0x0400)
+	#if (_WIN32_IE >= 0x0400)
 
-// for tooltips
+	// for tooltips
 
-typedef struct tagNMTVGETINFOTIPA
-{
-    NMHDR hdr;
-    LPSTR pszText;
-    int cchTextMax;
-    HTREEITEM hItem;
-    LPARAM lParam;
-} NMTVGETINFOTIPA, *LPNMTVGETINFOTIPA;
+	typedef struct tagNMTVGETINFOTIPA
+	{
+		NMHDR hdr;
+		LPSTR pszText;
+		int cchTextMax;
+		HTREEITEM hItem;
+		LPARAM lParam;
+	} NMTVGETINFOTIPA, *LPNMTVGETINFOTIPA;
 
-typedef struct tagNMTVGETINFOTIPW
-{
-    NMHDR hdr;
-    LPWSTR pszText;
-    int cchTextMax;
-    HTREEITEM hItem;
-    LPARAM lParam;
-} NMTVGETINFOTIPW, *LPNMTVGETINFOTIPW;
+	typedef struct tagNMTVGETINFOTIPW
+	{
+		NMHDR hdr;
+		LPWSTR pszText;
+		int cchTextMax;
+		HTREEITEM hItem;
+		LPARAM lParam;
+	} NMTVGETINFOTIPW, *LPNMTVGETINFOTIPW;
 
 
-#ifdef VCF_UNICODE
-	#define TVN_GETINFOTIP          TVN_GETINFOTIPW
-	#define NMTVGETINFOTIP          NMTVGETINFOTIPW
-	#define LPNMTVGETINFOTIP        LPNMTVGETINFOTIPW
-#else
-	#define TVN_GETINFOTIP          TVN_GETINFOTIPA
-	#define NMTVGETINFOTIP          NMTVGETINFOTIPA
-	#define LPNMTVGETINFOTIP        LPNMTVGETINFOTIPA
-#endif
+	#ifdef VCF_UNICODE
+		#define TVN_GETINFOTIP          TVN_GETINFOTIPW
+		#define NMTVGETINFOTIP          NMTVGETINFOTIPW
+		#define LPNMTVGETINFOTIP        LPNMTVGETINFOTIPW
+	#else
+		#define TVN_GETINFOTIP          TVN_GETINFOTIPA
+		#define NMTVGETINFOTIP          NMTVGETINFOTIPA
+		#define LPNMTVGETINFOTIP        LPNMTVGETINFOTIPA
+	#endif
 
-#endif //_WIN32_IE
+	#endif //_WIN32_IE
 
 
 #endif //VCF_CYGWIN
@@ -131,7 +131,9 @@ Win32Tree::Win32Tree( TreeControl* tree ):
 	headerWnd_(NULL),
 	oldHeaderWndProc_(NULL),
 	oldHeaderFont_(NULL),
-	headerEnabled_(false)
+	headerEnabled_(false),
+	hasLines_(false),
+	hasButtons_(false)
 {
 
 }
@@ -368,6 +370,10 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		case WM_PAINT:{
 			PAINTSTRUCT ps;
 
+			DWORD style = GetWindowLong( hwnd_, GWL_STYLE );
+			hasLines_ = (style & TVS_HASLINES) ? true : false;
+			hasButtons_ = (style & TVS_HASBUTTONS) ? true : false;
+
 			HDC dc = BeginPaint( hwnd_, &ps );
 
 			RECT paintRect;
@@ -416,7 +422,10 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				}
 			}
 
-			::SetViewportOrgEx( dc, 0, headerHeight, NULL );
+			
+			POINT org = {0};
+			GetViewportOrgEx( dc, &org );
+			::SetViewportOrgEx( dc, org.x, org.y+headerHeight, NULL );
 
 			POINT oldOrg;
 			memset(&oldOrg,0,sizeof(oldOrg));
@@ -1110,7 +1119,7 @@ Do we need these? What advantage does processing these events have for us???
 			wndProcResult = CDRF_DODEFAULT;
 			result = true;
 
-			NMTVCUSTOMDRAW__* treeViewDraw = (NMTVCUSTOMDRAW__*)lParam;
+			NMTVCUSTOMDRAW* treeViewDraw = (NMTVCUSTOMDRAW*)lParam;
 			if ( NULL != treeViewDraw )	{
 				switch ( treeViewDraw->nmcd.dwDrawStage ) {
 					case CDDS_PREPAINT : {
@@ -1140,67 +1149,9 @@ Do we need these? What advantage does processing these events have for us???
 						}
 
 
-						if ( this->headerEnabled_ ) {
-
+						if ( this->headerEnabled_ ) {							
 							wndProcResult |= CDRF_SKIPDEFAULT;
-
-							int dcs = SaveDC( treeViewDraw->nmcd.hdc );
-							
-							//col 1
-							int ident = SendMessage( hwnd_, TVM_GETINDENT, 0, 0 );
-
-							RECT bkRect = treeViewDraw->nmcd.rc;
-
-							treeViewDraw->nmcd.rc.left = headerRects_[0].left + ident * treeViewDraw->iLevel;
-							treeViewDraw->nmcd.rc.right = headerRects_[0].right;
-							bkRect.right = headerRects_.back().right;
-							
-							
-							
-							::SetTextColor( treeViewDraw->nmcd.hdc, treeViewDraw->clrText );
-							::SetBkColor( treeViewDraw->nmcd.hdc, treeViewDraw->clrTextBk );
-							
-							HBRUSH bk = CreateSolidBrush( treeViewDraw->clrTextBk );
-							FillRect( treeViewDraw->nmcd.hdc, &bkRect, bk );
-
-							DeleteObject( bk );
-
-							TreeModel* tm = treeControl_->getTreeModel();
-							TreeModel::Key key = (TreeModel::Key)treeViewDraw->nmcd.lItemlParam;
-							
-							String s = tm->getAsString( key );
-							
-							
-
-							VCFChar tmp[255];
-							size_t sz = minVal<size_t>(s.length(),254);
-							s.copy(tmp,sz);
-							tmp[sz] = 0;
-
-							RECT r = treeViewDraw->nmcd.rc;
-							DrawTextExW( treeViewDraw->nmcd.hdc, tmp, sz, &r, 
-											DT_LEFT | DT_END_ELLIPSIS | DT_EXPANDTABS | DT_SINGLELINE | DT_VCENTER,
-											NULL );
-
-							ColumnModel* cm = this->treeControl_->getColumnModel();
-							
-							for (size_t i=1;i<cm->getCount();i++ ) {
-								s = tm->getSubItemAsString( key, i-1 );	
-								
-								if ( !s.empty() ) {
-									r.left = headerRects_[i].left;
-									r.right = headerRects_[i].right;
-									size_t sz = minVal<size_t>(s.length(),254);
-									s.copy(tmp,sz);
-									tmp[sz] = 0;
-
-									DrawTextExW( treeViewDraw->nmcd.hdc, tmp, sz, &r, 
-											DT_LEFT | DT_END_ELLIPSIS | DT_EXPANDTABS | DT_SINGLELINE | DT_VCENTER,
-											NULL );
-								}
-							}
-
-							::RestoreDC( treeViewDraw->nmcd.hdc, dcs );
+							drawItem( treeViewDraw );
 						}
 					}
 					break;
@@ -1225,7 +1176,7 @@ Do we need these? What advantage does processing these events have for us???
 								item->paint( currentCtx_, &itemRect );
 							}
 						}
-
+/*
 						if ( this->headerEnabled_ ) {
 
 							HPEN p = CreatePen( PS_SOLID, 1, RGB(0,0,0) ); 
@@ -1246,6 +1197,7 @@ Do we need these? What advantage does processing these events have for us???
 							SelectObject( treeViewDraw->nmcd.hdc, op );
 							DeleteObject(p);
 						}
+						*/
 					}
 					break;
 
@@ -1430,6 +1382,175 @@ Do we need these? What advantage does processing these events have for us???
 		break;
 	}
 	return result;
+}
+
+#define BUTTON_SIZE 9
+
+void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
+{
+	int dcs = SaveDC( drawInfo->nmcd.hdc );
+	
+	TVITEM tvItem = {0};
+	tvItem.mask = TVIF_STATE;
+	tvItem.hItem = (HTREEITEM)drawInfo->nmcd.dwItemSpec;
+	TreeView_GetItem( hwnd_, &tvItem );
+
+	int offsetX = 0;
+	int offsetY = 0;
+	
+
+	SCROLLINFO si = {0};
+	si.cbSize = sizeof(SCROLLINFO);
+	si.fMask = SIF_POS;
+	GetScrollInfo( hwnd_, SB_HORZ, &si );
+	offsetX -= si.nPos;
+	
+
+	//col 1
+	int indent = SendMessage( hwnd_, TVM_GETINDENT, 0, 0 );
+
+	RECT bkRect = drawInfo->nmcd.rc;
+
+	drawInfo->nmcd.rc.left = headerRects_[0].left + indent * drawInfo->iLevel;
+	drawInfo->nmcd.rc.right = headerRects_[0].right;
+	bkRect.right = headerRects_.back().right;
+	
+	int x = drawInfo->nmcd.rc.left;
+	int y = drawInfo->nmcd.rc.top;
+	
+	
+	::SetTextColor( drawInfo->nmcd.hdc, drawInfo->clrText );
+	::SetBkColor( drawInfo->nmcd.hdc, drawInfo->clrTextBk );
+	
+	HBRUSH bk = CreateSolidBrush( drawInfo->clrTextBk );
+	FillRect( drawInfo->nmcd.hdc, &bkRect, bk );
+
+	DeleteObject( bk );
+
+	TreeModel* tm = treeControl_->getTreeModel();
+	TreeModel::Key key = (TreeModel::Key)drawInfo->nmcd.lItemlParam;
+	bool hasChildren = !tm->isLeaf( key );
+
+	String s = tm->getAsString( key );
+	
+	
+
+	VCFChar tmp[255];
+	size_t sz = minVal<size_t>(s.length(),254);
+	s.copy(tmp,sz);
+	tmp[sz] = 0;
+
+	SIZE tmpSz = {0};
+	::GetTextExtentPoint32W( drawInfo->nmcd.hdc, tmp, sz, &tmpSz );	
+	
+	RECT btn;
+	btn.left = x+offsetX+ (indent )/2 - BUTTON_SIZE / 2; 
+	btn.top = y+offsetY + tmpSz.cy/2 - BUTTON_SIZE/2;
+	btn.right = btn.left + BUTTON_SIZE;
+	btn.bottom = btn.top + BUTTON_SIZE;
+
+	if ( this->hasLines_ && hasChildren && btn.right < drawInfo->nmcd.rc.right ) {
+		HPEN p = CreatePen( PS_GEOMETRIC | PS_DOT, 0, RGB(120,120,120) );
+		SelectObject( drawInfo->nmcd.hdc, p );
+
+		int lx = x+offsetX+ (indent )/2;
+		int ly = y+offsetY + tmpSz.cy/2;
+
+		
+
+		::MoveToEx( drawInfo->nmcd.hdc, 
+						lx, ly, NULL);
+
+		::LineTo( drawInfo->nmcd.hdc, 
+						lx, drawInfo->nmcd.rc.bottom);
+
+
+		HTREEITEM parent = TreeView_GetParent( hwnd_, tvItem.hItem );
+		while ( parent ) {
+
+			lx -= indent;
+			::MoveToEx( drawInfo->nmcd.hdc, 
+							lx, drawInfo->nmcd.rc.top, NULL);
+
+			::LineTo( drawInfo->nmcd.hdc, 
+							lx, drawInfo->nmcd.rc.bottom);
+			
+
+			parent = TreeView_GetParent( hwnd_, parent );
+		}
+		
+		DeleteObject(p);
+	}
+
+	if ( this->hasButtons_ && hasChildren && btn.right < drawInfo->nmcd.rc.right ) {	
+		HPEN p = CreatePen( PS_SOLID, 1, RGB(120,120,120) );
+		SelectObject( drawInfo->nmcd.hdc, p );
+		
+
+		::Rectangle(drawInfo->nmcd.hdc, btn.left,btn.top, btn.right,btn.bottom);
+
+		DeleteObject(p);
+
+		p = CreatePen( PS_SOLID, 1, RGB(0,0,0) );
+		SelectObject( drawInfo->nmcd.hdc, p );
+
+		::MoveToEx( drawInfo->nmcd.hdc, 
+					btn.left + 2, 
+					btn.top + BUTTON_SIZE / 2, NULL);
+
+		::LineTo( drawInfo->nmcd.hdc,
+					btn.right - 2, 
+					btn.top + BUTTON_SIZE / 2);
+
+
+		if ( (tvItem.state  & TVIS_EXPANDED) == 0 ) {
+			::MoveToEx( drawInfo->nmcd.hdc, 
+						btn.left + BUTTON_SIZE / 2, 
+						btn.top + 2, NULL);
+
+			::LineTo( drawInfo->nmcd.hdc,
+						btn.left + BUTTON_SIZE / 2, 
+						btn.bottom - 2);
+		}
+		DeleteObject(p);
+	}
+
+
+	
+
+	RECT r = drawInfo->nmcd.rc;
+	r.left += indent;
+
+	r.left -= si.nPos;
+	r.right -= si.nPos;
+
+	DrawTextExW( drawInfo->nmcd.hdc, tmp, sz, &r, 
+					DT_LEFT | DT_END_ELLIPSIS | DT_EXPANDTABS | DT_SINGLELINE | DT_VCENTER,
+					NULL );
+
+	ColumnModel* cm = this->treeControl_->getColumnModel();
+	int count = SendMessage(headerWnd_,HDM_GETITEMCOUNT,0,0);
+	for (size_t i=1;i<count;i++ ) {
+		s = tm->getSubItemAsString( key, i-1 );	
+		
+		if ( !s.empty() ) {
+			r.left = headerRects_[i].left;
+			r.right = headerRects_[i].right;
+
+			r.left -= si.nPos;
+			r.right -= si.nPos;
+
+			size_t sz = minVal<size_t>(s.length(),254);
+			s.copy(tmp,sz);
+			tmp[sz] = 0;
+
+			DrawTextExW( drawInfo->nmcd.hdc, tmp, sz, &r, 
+					DT_LEFT | DT_END_ELLIPSIS | DT_EXPANDTABS | DT_SINGLELINE | DT_VCENTER,
+					NULL );
+		}
+	}
+
+	::RestoreDC( drawInfo->nmcd.hdc, dcs );
 }
 
 void Win32Tree::addTreeItem( TreeModel::Key key, HTREEITEM parent )

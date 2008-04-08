@@ -94,7 +94,7 @@ HRESULT Win32DropTargetPeer::DragEnter( LPDATAOBJECT dataObject, DWORD keyState,
 	HRESULT result = E_FAIL;
 
 	if ( NULL != currentDataObj_ ) {
-		currentDataObj_->free();
+		delete currentDataObj_;
 		currentDataObj_ = NULL;
 	}
 
@@ -247,7 +247,7 @@ HRESULT Win32DropTargetPeer::DragLeave(void)
 	}
 
 	if ( NULL != currentDataObj_ ) {
-		currentDataObj_->free();
+		delete currentDataObj_;
 		currentDataObj_ = NULL;
 	}
 
@@ -262,7 +262,7 @@ HRESULT Win32DropTargetPeer::Drop( LPDATAOBJECT dataObject, DWORD keyState, POIN
 	HRESULT result = E_FAIL;
 
 	if ( NULL != currentDataObj_ ) {
-		currentDataObj_->free();
+		delete currentDataObj_;
 		currentDataObj_ = NULL;
 	}
 
@@ -321,7 +321,7 @@ HRESULT Win32DropTargetPeer::Drop( LPDATAOBJECT dataObject, DWORD keyState, POIN
 			getDropTarget()->handleEvent( &event );
 
 			if ( NULL != currentDataObj_ ) {
-				currentDataObj_->free();
+				delete currentDataObj_;
 				currentDataObj_ = NULL;
 			}
 		}

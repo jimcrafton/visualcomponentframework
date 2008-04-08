@@ -25,73 +25,15 @@ class Mutex;
 /**
 \class Object Object.h "vcf/FoundationKit/Object.h"
 Base class for the entire Visual Component Framework.
-New as of July 5,2001, Object will also support
-refcounting for those who need this kind of support.
-There are several places in the ApplicationKit that will need to make use
-of this fairly soon.
-
-Also Object supports a new technique for destroying Object derived instances.
-In general, in C++, when creating a destroying an object instance on the heap (free-store)
-you would use the operator delete() function. This is being phased out in the VCF
-for a variety of reasons, in favor of a different scheme.
-Destroying the memory now happens in two ways: The first is the equivalent of the operator delete()
-call. This involves calling the objects free() method, which will call the virtual destroy() method
-before calling operator delete() on itself;
-The second way an object can be destroyed is if it's refcount drops to 0, at which point the object's
-free() method will be invoked. Calling the object's release() method decrements the reference count
-on the object.
-By default if an object is created on the heap via new, and no one addref()'s it, then a
-single call to the release() method will free up it's memory.
-
-Object::destroy() is a virtual method, where common shared cleanup may take place. Because this
-is called before the delete() method, it is still safe to call virtual methods and have them
-execute correctly (in C++ virtual calls inside of a constructor or destructor are not allowed
-and if made then the behaviour is undefined).
-
-Classes which are heap based (such as all of the UI classes that derive from Component) should
-define their destructor as having protected access. In addition the majority of the cleanup code
-should be placed in the overridden Object::destroy() method as opposed to the class destructor.
-Anything that requires method calls to other objects or to the class itself (particularly if the method
-is a virtual one) should be moved to the destroy() method instead of the destructor.
-
-Semantics of the addRef/release usage are as follows:
-An object's refcount indicates "ownership " of the object. In other words, the "owner" of the
-object is responsible for releasing it's hold on the object, thus decrementing the objects
-refcount, which, when reduced to 0, causes the object to be deleted. This is also known as
-a strong reference to an object, as opposed to a weak reference where the "owner" doesn't
-claim any responsibility over the object.
-
-Note that this whole scheme is aimed at heap based objects. Many objects that are created on the stack
-do not need this. For example, common utility objects like Rect or Point do not need this - they
-can be created on the stack.
 */
 class FOUNDATIONKIT_API Object {
 public:
 	Object();
     Object(const Object &obj);
 
-	virtual ~Object();
+	virtual ~Object();	
 
-	/**
-	This is going to be removed from the bext release
-	@deprecated
-	*/
-	void init();
-
-	/**
-	Call this method to free up the memory of the class
-	for heap based objects. Use this instead of calling the 
-	operator delete. For example:
-	\code
-	Mutex*  m = new Mutex();
-	m->free();
-	\endcode
-	This will ensure that the destroy() method is called 
-	\em before calling operator delete which allows a 
-	deriving class to override the destroy methods and safely
-	call virtual methods from within it.
-	*/
-	void free();
+	
 
 	/**
 	*increments the reference count of the object
@@ -273,11 +215,7 @@ public:
 #endif //_VCF_DEBUG_NEW
 
 protected:
-	/**
-	called by the free() method. Should be overriden
-	and any clean up code performed here
-	*/
-	virtual void destroy();
+	
 
 	AtomicCount refCount_;
 private:

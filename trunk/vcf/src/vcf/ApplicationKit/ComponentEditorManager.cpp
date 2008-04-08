@@ -64,8 +64,7 @@ void ComponentEditorManager::removeComponentEditor( const String& className )
 
 void ComponentEditorManager::initComponentEditorManager()
 {
-	ComponentEditorManager::componentEditorMgr = new ComponentEditorManager();
-	ComponentEditorManager::componentEditorMgr->init();
+	ComponentEditorManager::componentEditorMgr = new ComponentEditorManager();	
 }
 
 void ComponentEditorManager::closeComponentEditorManager()

@@ -266,7 +266,7 @@ void PrintSession::runDefaultPrintLoop()
 
 	endPrintingDocument();
 
-	printCtx->free();
+	delete printCtx;
 }
 
 

@@ -152,7 +152,7 @@ unsigned __stdcall Win32Thread::threadProc( void* param )
 			*/
 			if ( true == autoDeleteThread )	{
 
-				thread->free();
+				delete thread;
 			}
 		}
 

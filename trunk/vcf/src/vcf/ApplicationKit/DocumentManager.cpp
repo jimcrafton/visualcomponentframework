@@ -136,7 +136,7 @@ void DocumentManager::init()
 			docInfo_[info.mimetype] = info;
 		}
 
-		res->free();
+		delete res;
 	}
 	else {
 		throw RuntimeException( "You need to have a resource file named \"" + app->getName() + ".xml\" with the correct data in it."  );
@@ -184,7 +184,7 @@ void DocumentManager::cutFromDocument( Document* doc ) {
 	if ( NULL != data ) {
 		Clipboard* clipboard = UIToolkit::getSystemClipboard();
 		clipboard->copyTo( data );
-		data->free();
+		delete data;
 	}
 }
 
@@ -208,7 +208,7 @@ void DocumentManager::copyFromDocument( Document* doc ) {
 		Clipboard* clipboard = UIToolkit::getSystemClipboard();
 		clipboard->copyTo( data );
 
-		data->free();
+		delete data;
 	}
 }
 
@@ -255,7 +255,7 @@ void DocumentManager::pasteToDocument( Document* doc ) {
 		}
 
 		if ( NULL != data ) {
-			data->free();
+			delete data;
 		}
 	}
 }
