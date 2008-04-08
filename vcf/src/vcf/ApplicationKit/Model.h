@@ -237,7 +237,13 @@ protected:
 	to override this with an alternate implementation.
 	*/
 	virtual void deleteVariantObject( Object* obj ) {
-		obj->free();
+		Component* c = dynamic_cast<Component*>(obj);
+		if (c) {
+			c->free();
+		}
+		else {
+			delete obj;
+		}
 	}
 };
 

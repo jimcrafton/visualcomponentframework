@@ -179,7 +179,9 @@ public:
 		TreeModel::Key k3 = tm->insert( "testC" );
 		TreeModel::Key k4 = tm->insert( "testD" );
 		for (int i=0;i<100;i++ ) {
-			tm->insert( "test (p = testD)", k4 );
+			TreeModel::Key kk = tm->insert( "test (p = testD)", k4 );			
+			TreeModel::Key kkk = tm->insert( "test (p = kk)", kk );
+			tm->insert( "test (p = kkk)", kkk );
 		}
 
 		tm->insertSubItem( k2, 0, "sub 1" );

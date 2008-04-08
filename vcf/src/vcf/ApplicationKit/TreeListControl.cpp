@@ -2093,7 +2093,7 @@ void TreeListControl::onEditingControlKeyPressed( KeyboardEvent* event )
 			
 			handleEvent( event2 );
 			
-			event2->free();		
+			delete event2;	
 			
 			TreeItem* item = getSelectedItem();
 			if ( NULL != item ) {

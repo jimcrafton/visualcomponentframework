@@ -60,10 +60,10 @@ TableControl::TableControl( TableModel* model ):
 
 TableControl::~TableControl()
 {
-	defaultCellFont_->free();
+	delete defaultCellFont_;
 	defaultCellFont_ = NULL;
 
-	defaultCellColor_->free();
+	delete defaultCellColor_;
 	defaultCellColor_ = NULL;
 }
 
@@ -1541,7 +1541,7 @@ void TableControl::onEditingControlKeyPressed( KeyboardEvent* event )
 
 			handleEvent( event2 );
 
-			event2->free();
+			delete event2;
 
 		}
 		break;
@@ -1568,7 +1568,7 @@ void TableControl::onFinishEditing( Event* e )
 	}
 
 	if ( NULL != editor ) {
-		editor->free();
+		delete editor;
 	}
 }
 

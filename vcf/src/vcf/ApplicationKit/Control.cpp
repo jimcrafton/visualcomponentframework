@@ -109,7 +109,7 @@ void Control::destroy()
 	color_ = NULL;
 
 	if ( NULL != font_ ){
-		font_->free();
+		delete font_;
 		font_ = NULL;
 	}
 

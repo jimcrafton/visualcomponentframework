@@ -180,7 +180,7 @@ void FoundationKit::terminate()
 #ifdef _VCF_DEBUG_NEW
 	Mutex* mutex = Object::accessMutex_;
 	Object::accessMutex_ = NULL;
-	mutex->free();
+	delete mutex;
 #endif
 
 #ifdef _DEBUG

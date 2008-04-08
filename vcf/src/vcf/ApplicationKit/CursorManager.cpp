@@ -19,7 +19,6 @@ CursorManager* CursorManager::create()
 {
 	if ( NULL == CursorManager::cursorMgrInstance ) {
 		CursorManager::cursorMgrInstance = new CursorManager();
-		CursorManager::cursorMgrInstance->init();
 	}
 
 	return CursorManager::cursorMgrInstance;

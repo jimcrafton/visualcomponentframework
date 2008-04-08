@@ -108,7 +108,7 @@ public:
 		addToSource( source );
 	}
 
-	
+	void free();
 
 
 	String getName() const {
@@ -129,9 +129,7 @@ public:
 	friend class ObjectWithCallbacks;
 protected:	
 
-	virtual ~CallBack(){};
-
-	virtual void destroy();
+	
 
 	typedef std::vector<Delegate*> DelegatesArray;
 	String name;
@@ -159,10 +157,11 @@ protected:
 	DelegatesArray* delegates_;	
 
 	
-
-
+protected:
+	virtual ~CallBack(){};
 private:
 	CallBack( const CallBack& rhs ); //no copies for now
+	
 };
 
 
@@ -788,8 +787,11 @@ public:
 
 	FuncPtr staticFuncPtr;
 //protected: //JC - I uncommented this out for Obirsoy to look into a compile fix in Win32RunLoopPeer.cpp
+//protected:
 	virtual ~Procedure(){}
 private:
+	
+
 	Procedure( const Procedure& rhs );
 };
 

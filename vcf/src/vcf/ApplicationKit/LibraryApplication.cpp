@@ -41,7 +41,7 @@ LibraryApplication::LibraryApplication():
 LibraryApplication::~LibraryApplication()
 {
 	if ( NULL != resourceBundle_ ) {
-		resourceBundle_->free();
+		delete resourceBundle_;
 	}
 	resourceBundle_ = NULL;
 

@@ -3311,7 +3311,7 @@ Win32ToolKit::~Win32ToolKit()
 		StringUtils::trace( Format("::DestroyWindow( dummyParentWnd_[=%p] ) failed!, err: %d\n") % dummyParentWnd_ % err );
 
 		if ( NULL != toolTipWatcher ) {
-			toolTipWatcher->free();
+			delete toolTipWatcher;
 		}
 	}
 

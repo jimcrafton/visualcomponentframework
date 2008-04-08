@@ -69,6 +69,8 @@ private:
 	WNDPROC oldHeaderWndProc_;
 	HFONT oldHeaderFont_;
 	bool headerEnabled_;
+	bool hasLines_;
+	bool hasButtons_;
 
 	std::vector<RECT> headerRects_;
 
@@ -84,6 +86,8 @@ private:
 
 	void registerHeaderWndProc();
 	static LRESULT CALLBACK HeaderWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void drawItem( NMTVCUSTOMDRAW* drawInfo );
 };
 
 };

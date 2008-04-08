@@ -81,6 +81,14 @@ Component::~Component()
 	delete settings_;
 }
 
+
+
+void Component::free()
+{
+	destroy();
+	delete this;
+}
+
 void Component::destroy()
 {
 	if ( !(Component::csDestroying & componentState_) ) {
@@ -96,9 +104,7 @@ void Component::destroy()
 		component = NULL;
 		componentIter++;
 	}
-	components_.clear();	
-
-	ObjectWithCallbacks::destroy();
+	components_.clear();
 }
 
 String Component::getName() const 
@@ -555,7 +561,7 @@ Component* Component::createComponentFromResources( Class* clazz, Class* rootCla
 			result->loaded();
 		}
 		else {
-			newObject->free();
+			delete newObject;
 		}
 	}
 	catch ( BasicException& ) {

@@ -79,7 +79,7 @@ void Application::internal_terminate()
 	std::map<String,Library*>::iterator it = VPLMap_.begin();
 	while ( it != VPLMap_.end() ){
 		Library* lib = it->second;
-		lib->free();
+		delete lib;
 		lib = NULL;
 		it++;
 	}

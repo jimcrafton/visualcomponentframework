@@ -68,7 +68,13 @@ void Dictionary::clear()
 			if ( pdObject == item.second.type ) {
 				Object* o = item.second;
 				if ( NULL != o ) {
-					o->free();
+					Component* c = dynamic_cast<Component*>(o);
+					if (c) {
+						c->free();
+					}
+					else {
+						delete o;
+					}
 				}
 			}
 			
@@ -198,7 +204,13 @@ void VariantArray::clear()
 			if ( pdObject == v.type ) {
 				Object* o = v;
 				if ( NULL != o ) {
-					o->free();
+					Component* c = dynamic_cast<Component*>(o);
+					if (c) {
+						c->free();
+					}
+					else {
+						delete o;
+					}
 				}
 			}
 			

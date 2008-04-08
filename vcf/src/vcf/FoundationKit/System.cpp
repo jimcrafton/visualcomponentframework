@@ -678,7 +678,7 @@ String System::getBundlePathFromExecutableName( const String& fileName )
 	bundleName = StringUtils::lowerCase( bundleName );
 
 	//done with bundle !
-	info->free();
+	delete info;
 
 	VCF_ASSERT( !bundleName.empty() );
 
@@ -735,7 +735,7 @@ String System::getExecutableNameFromBundlePath( const String& fileName )
 
 	String executableName = info->getProgramFileName();
 
-	info->free();
+	delete info;
 
 	if ( executableName.empty() ) {
 		return result;
