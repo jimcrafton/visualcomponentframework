@@ -109,14 +109,6 @@ SOURCE=..\..\..\src\vcf\FoundationKit\FrameworkConfig.h
 
 SOURCE=..\..\..\src\vcf\FoundationKit\PropertyListing.h
 # End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\XMLDictInputStream.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\XMLDictOutputStream.h
-# End Source File
 # End Group
 # Begin Group "Source Files"
 
@@ -517,6 +509,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\VFFOutputStream.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\XMLDictInputStream.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\XMLDictOutputStream.h
 # End Source File
 # End Group
 # Begin Group "Utils"

@@ -14,10 +14,11 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ApplicationKitPrivate.h"
-#include "vcf/ApplicationKit/Win32Tree.h"
 #include "vcf/ApplicationKit/TreeControl.h"
 #include "vcf/ApplicationKit/ColumnModel.h"
 #include "vcf/ApplicationKit/ColumnItem.h"
+
+#include "vcf/ApplicationKit/Win32Tree.h"
 
 
 /**
@@ -1125,7 +1126,7 @@ Do we need these? What advantage does processing these events have for us???
 								
 
 					case CDDS_PREPAINT : {
-						wndProcResult = CDRF_NOTIFYITEMDRAW | CDRF_NOTIFYPOSTPAINT | CDRF_NOTIFYPOSTERASE;
+						wndProcResult = CDRF_NOTIFYITEMDRAW | CDRF_NOTIFYPOSTPAINT;
 					}
 					break;
 
@@ -1497,14 +1498,22 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 
 
 	
+	
 
 	RECT r = drawInfo->nmcd.rc;
 	r.left += indent;
 
 	r.left -= si.nPos;
-	r.right -= si.nPos;
+	r.right -= si.nPos;	
 
 	if ( r.right - r.left > 3 ) {
+		r.left -= 2;
+		if ( (drawInfo->nmcd.uItemState & CDIS_FOCUS ) ) {
+			DrawFocusRect( drawInfo->nmcd.hdc, &r );
+		}
+
+		r.left += 2;
+
 		DrawTextExW( drawInfo->nmcd.hdc, tmp, sz, &r, 
 						DT_LEFT | DT_END_ELLIPSIS | DT_EXPANDTABS | DT_SINGLELINE | DT_VCENTER,
 						NULL );
@@ -1556,17 +1565,19 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 		if ( paintItem ) {
 			uint32 siCount = item->getSubItemCount();
 			if ( (i-1) < siCount ) {
-				 TreeSubItem* subItem = item->getSubItem( i-1 );
-				 if ( NULL != subItem ) {
-					 if ( subItem->canPaint() ) {
-						 Rect itemRect;
-						 itemRect.left_ = r.left;
-						 itemRect.top_ = r.top;
-						 itemRect.right_ = r.right;
-						 itemRect.bottom_ = r.bottom;
-						 subItem->paint( currentCtx_, &itemRect );
-					 }
-				 }
+				if ( treeControl_->subItemExists( key, i-1 ) ) {					
+					TreeSubItem* subItem = item->getSubItem( i-1 );
+					if ( NULL != subItem ) {
+						if ( subItem->canPaint() ) {
+							Rect itemRect;
+							itemRect.left_ = r.left;
+							itemRect.top_ = r.top;
+							itemRect.right_ = r.right;
+							itemRect.bottom_ = r.bottom;
+							subItem->paint( currentCtx_, &itemRect );
+						}
+					}
+				}
 			}
 		}
 	}
@@ -1991,6 +2002,14 @@ void Win32Tree::enableHeader( const bool& val )
 			
 			ColumnModel* columnModel = treeControl_->getColumnModel();
 			
+
+			CallBack* cb = getCallback("Win32Tree::onColumnModelChanged");
+			if ( NULL == cb ) {
+				cb = new ClassProcedure1<ModelEvent*,Win32Tree>(this, &Win32Tree::onColumnModelChanged, "Win32Tree::onColumnModelChanged" );
+			}
+
+			columnModel->ModelChanged += cb;
+
 			size_t colCount = columnModel->getCount();
 			for (size_t j=0;j<colCount;j++ ) {
 				HDITEMW headerItem;
@@ -2057,6 +2076,103 @@ LRESULT CALLBACK Win32Tree::HeaderWndProc(HWND hWnd, UINT message, WPARAM wParam
 	return result;
 }
 
+void Win32Tree::setColumnWidth( const uint32& index, const double& width, ColumnAutosizeType type )
+{
+	if ( NULL != this->headerWnd_ ) {
+		HDITEMW item = {0};
+		item.mask = HDI_WIDTH;
+		item.cxy = width;
+		SendMessage( headerWnd_, HDM_SETITEMW, index, (LPARAM)&item );
+	}
+}
+
+double Win32Tree::getColumnWidth( const uint32& index )
+{
+	double result = 0.0;
+	if ( NULL != this->headerWnd_ ) {
+		HDITEMW item = {0};
+		item.mask = HDI_WIDTH;
+		SendMessage( headerWnd_, HDM_GETITEMW, index, (LPARAM)&item );
+
+		result = item.cxy;
+	}
+
+	return result;
+}
+
+TextAlignmentType Win32Tree::getColumnTextAlignment( const uint32& index )
+{
+	TextAlignmentType result;
+
+	if ( NULL != this->headerWnd_ ) {
+		HDITEMW item = {0};
+		item.mask = HDI_FORMAT;
+		SendMessage( headerWnd_, HDM_GETITEMW, index, (LPARAM)&item );
+
+		if ( item.fmt & HDF_LEFT ) {
+			result = taTextLeft;
+		}
+		else if ( item.fmt & HDF_CENTER ) {
+			result = taTextCenter;
+		}
+		else if ( item.fmt & HDF_RIGHT ) {
+			result = taTextRight;
+		}
+	}
+
+	return result;
+}
+
+void Win32Tree::setColumnTextAlignment( const uint32& index, const TextAlignmentType& val )
+{
+	if ( NULL != this->headerWnd_ ) {
+		HDITEMW item = {0};
+		item.mask = HDI_FORMAT;
+
+		if ( val == taTextLeft ) {
+			item.fmt = HDF_LEFT;
+		}
+		else if ( val == taTextCenter ) {
+			item.fmt = HDF_CENTER;
+		}
+		else if ( val == taTextRight ) {
+			item.fmt = HDF_RIGHT;
+		}
+
+		item.fmt |= HDF_STRING ;
+		SendMessage( headerWnd_, HDM_SETITEMW, index, (LPARAM)&item );
+	}
+}
+
+void Win32Tree::onColumnModelChanged( ModelEvent* event )
+{
+	switch ( event->getType() ) {
+		case lmeItemAdded : {
+			ListModelEvent* lme = (ListModelEvent*)event;
+			 
+			HDITEMW headerItem;
+			memset( &headerItem, 0, sizeof(headerItem) );
+			headerItem.mask = HDI_LPARAM | HDI_WIDTH|HDI_FORMAT|HDI_TEXT;
+			//HDI_LPARAM | | HDI_IMAGE | | ;				
+			
+			headerItem.lParam = (LPARAM)lme->index;
+			headerItem.iImage = I_IMAGECALLBACK;
+			headerItem.pszText = LPSTR_TEXTCALLBACKW;
+			headerItem.cxy = 80;
+			headerItem.fmt = HDF_LEFT;	
+			 
+			SendMessage( headerWnd_, HDM_INSERTITEMW, (WPARAM)lme->index, (LPARAM)&headerItem );
+		}
+		break;
+
+		case lmeItemRemoved : {
+			ListModelEvent* lme = (ListModelEvent*)event;
+			SendMessage( headerWnd_, HDM_DELETEITEM, (WPARAM)lme->index, 0 );
+		}
+		break;
+	}
+}
 /**
 $Id$
 */
+

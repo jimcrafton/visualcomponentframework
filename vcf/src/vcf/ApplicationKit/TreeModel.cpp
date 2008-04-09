@@ -88,3 +88,30 @@ void TreeModel::clearChildren( const Key& key )
 		ModelChanged( &e );
 	}
 }
+
+void TreeModel::setSubItem( const Key& key, const uint32& subItemIndex, const VariantData& value )
+{
+	if ( doSetSubItem( key, subItemIndex, value ) ) {
+		TreeModelEvent itemEvent( this, SubItemChanged );
+		itemEvent.key = key;
+		itemEvent.subItemIndex = subItemIndex;
+		ModelChanged( &itemEvent );
+	}
+}
+
+void TreeModel::insertSubItem( const Key& key, const uint32 & subItemIndex, const VariantData& value )
+{
+	if ( doInsertSubItem( key, subItemIndex, value ) ) {
+		TreeModelEvent itemEvent( this, SubItemAdded );		
+		itemEvent.key = key;
+		itemEvent.subItemIndex = subItemIndex;
+		ModelChanged( &itemEvent );
+	}
+}
+
+void TreeModel::removeSubItem( const Key& key, const uint32 & subItemIndex )
+{
+	if ( doRemoveSubItem( key, subItemIndex ) ) {
+		
+	}
+}

@@ -1707,23 +1707,23 @@ void Win32Listview::onItemDeleted( ItemEvent* event )
 }
 */
 
-void Win32Listview::setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type )
+void Win32Listview::setColumnWidth( const uint32& index, const double& width, ColumnAutosizeType type )
 {
 	//don't do this if we are tracking
 	if ( false == headerControlIsTracking_ ) {
 		/* autoresizing added by Marcello */
 		int err = 0;
 		switch ( type ) {
-		case ListViewControl::lcatAutoSizeNone:
+		case casAutoSizeNone:
 			err = ListView_SetColumnWidth( hwnd_, index, (int32)width );
 			break;
-		case ListViewControl::lcatAutoSizeColumns:
+		case casAutoSizeColumns:
 			err = ListView_SetColumnWidth( hwnd_, index, (int32)LVSCW_AUTOSIZE );
 			break;
-		case ListViewControl::lcatAutoSizeHeaders:
+		case casAutoSizeHeaders:
 			err = ListView_SetColumnWidth( hwnd_, index, (int32)LVSCW_AUTOSIZE_USEHEADER  );
 			break;
-		case ListViewControl::lcatAutoSizeColumnsAndHeaders:
+		case casAutoSizeColumnsAndHeaders:
 			err = ListView_SetColumnWidth( hwnd_, index, (int32)LVSCW_AUTOSIZE_USEHEADER );
 			break;
 		default:

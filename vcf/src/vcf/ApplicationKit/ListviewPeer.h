@@ -35,7 +35,7 @@ public:
 
 	virtual bool ensureVisible(const uint32& index, bool partialOK ) = 0;
 	
-	virtual void setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type=ListViewControl::lcatAutoSizeNone ) = 0;
+	virtual void setColumnWidth( const uint32& index, const double& width, ColumnAutosizeType type=casAutoSizeNone ) = 0;
 
 	virtual double getColumnWidth( const uint32& index ) = 0;
 

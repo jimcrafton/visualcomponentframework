@@ -21,6 +21,11 @@ where you installed the VCF.
 
 
 
+#ifndef _VCF_HEADERCONTROL_H__
+#	include "vcf/ApplicationKit/HeaderControl.h"
+#endif // _VCF_HEADERCONTROL_H__
+
+
 #ifndef _VCF_COLUMNMODEL_H__
 #	include "vcf/ApplicationKit/ColumnModel.h"
 #endif // _VCF_COLUMNMODEL_H__
@@ -107,13 +112,7 @@ public:
 		COLUMN_MOUSE_EVENT_CLICK = Control::CONTROL_EVENTS_LAST + 200
 	};
 
-	/* autoresizing added by Marcello */
-	enum AutoSizeType {
-		lcatAutoSizeNone = -1,
-		lcatAutoSizeColumns = -2,
-		lcatAutoSizeHeaders = -3,
-		lcatAutoSizeColumnsAndHeaders = -4,
-	};
+	
 
 	ColumnModel* getColumnModel();
 
@@ -141,9 +140,9 @@ public:
 
 	double getColumnWidth( const uint32& index );
 
-	void setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type=lcatAutoSizeNone );
+	void setColumnWidth( const uint32& index, const double& width, ColumnAutosizeType type=casAutoSizeNone );
 
-	void setColumnsWidth( const double& width, ListViewControl::AutoSizeType type=lcatAutoSizeNone );	
+	void setColumnsWidth( const double& width, ColumnAutosizeType type=casAutoSizeNone );	
 
 
 	virtual double getItemWidth( ColumnItem* item );

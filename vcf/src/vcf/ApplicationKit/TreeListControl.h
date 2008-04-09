@@ -14,47 +14,55 @@ where you installed the VCF.
 #endif
 
 
-#ifndef _VCF_TREEMODEL_H__
-#	include "vcf/ApplicationKit/TreeModel.h"
-#endif // _VCF_TREEMODEL_H__
+#ifndef _VCF_TREECONTROL_H__
+#	include "vcf/ApplicationKit/TreeControl.h"
+#endif // _VCF_TREECONTROL_H__
 
-#ifndef _VCF_TREEITEM_H__
-#	include "vcf/ApplicationKit/TreeItem.h"
-#endif // _VCF_TREEITEM_H__
-
-
-
-
-#ifndef _VCF_COLUMNMODEL_H__
-#	include "vcf/ApplicationKit/ColumnModel.h"
-#endif // _VCF_COLUMNMODEL_H__
-
-#ifndef _VCF_COLUMNITEM_H__
-#	include "vcf/ApplicationKit/ColumnItem.h"
-#endif // _VCF_COLUMNITEM_H__
 
 
 namespace VCF {
 
 class ImageList;
 
-class HeaderControl;
+
 
 #define TREELISTCONTROL_CLASSID		"C7ED6506-98BD-45e9-ABCD-7704EE00A027"
 
 
 
 
-class APPLICATIONKIT_API TreeListControl : public CustomControl, 
-											public DelegatedContainer<TreeListControl>,
-											public TreeController {
+class APPLICATIONKIT_API TreeListControl : public TreeControl, public ColumnController {
 public:
 
 	TreeListControl();
 	virtual ~TreeListControl();
+	
+	double getColumnWidth( const uint32& index );
 
-	void init();
+	void setColumnWidth( const uint32& index, const double& width );
 
+	virtual ColumnItem* getColumnItem( const uint32& index );
+
+	virtual void insertItemSubItem( TreeItem* item, const uint32& index, TreeSubItem* subItem );
+	virtual void removeItemSubItem( TreeItem* item, TreeSubItem* subItem );
+	virtual bool getItemSubItems( TreeItem* item, std::vector<TreeSubItem*>& subItems );
+	virtual TreeSubItem* getItemSubItem( TreeItem* item, const uint32& index );
+	virtual uint32 getItemSubItemCount( TreeItem* item );
+	virtual bool subItemExists( const TreeModel::Key& key, const uint32& subItemIndex );
+
+
+	virtual double getItemWidth( ColumnItem* item );
+	virtual void setItemWidth( ColumnItem* item, const double& val );
+	virtual TextAlignmentType getItemTextAlignment( ColumnItem* item );
+	virtual void setItemTextAlignment( ColumnItem* item, const TextAlignmentType& val );
+
+
+	virtual void mouseDown( MouseEvent* event );
+
+	virtual void keyDown( KeyboardEvent* e );
+
+	
+/*
 	enum TreeListControlEvents {
 		ITEM_STATECHANGE_REQUESTED = CUSTOM_EVENT_TYPES + ITEM_CONST + 10
 	};
@@ -78,11 +86,9 @@ public:
 
 	void setTreeModel( TreeModel* tm );
 
-	ColumnModel* getColumnModel();
+	
 
-	double getColumnWidth( const uint32& index );
-
-	void setColumnWidth( const uint32& index, const double& width );
+	
 
 
 	virtual void paint( GraphicsContext * context );
@@ -170,9 +176,6 @@ public:
 
 	TreeItem* hitTest( Point* pt, TreeItem* itemToTest );
 
-	/**
-	*searches all the items for a match for the point
-	*/
 	TreeItem* hitTest( Point* pt );
 
 	bool stateHitTest( Point* pt, TreeItem* itemToTest );
@@ -195,17 +198,38 @@ public:
 
 	
 
-	int hitTestForEditColumn( Point* pt );
-
-	Rect getBoundsForEdit( TreeItem* item, int column );
+	
 
 	void scrollToNextItem( TreeItem* item, bool scrollDown ); 
 
 	bool itemExists( const TreeModel::Key& key );
 
-	virtual void handleEvent( Event* event );
-protected:
 	
+	*/
+
+	virtual void handleEvent( Event* event );
+
+	int hitTestForEditColumn( const Point& pt );
+
+	Rect getBoundsForEdit( TreeItem* item, int column );
+protected:
+	bool allowLabelEditing_;
+	int currentEditColumn_;
+	Control* currentEditingControl_;
+
+	typedef std::multimap<TreeItem*,TreeSubItem*> SubItemMap;
+	typedef std::pair<SubItemMap::iterator,SubItemMap::iterator> SubItemIteratorPair;
+	typedef SubItemMap::value_type SubItemPair;
+	SubItemMap subItems_;
+
+	Array<ColumnItem*> columnItems_;
+
+	void onColumnItemAdded( ListModelEvent* event );
+	void onColumnItemDeleted( ListModelEvent* event );
+
+
+
+	/*
 
 	HeaderControl* header_;
 
@@ -238,8 +262,7 @@ protected:
 	bool draggingSelectionRect_;
 	std::vector<TreeItem*> draggingSelectedItems_;
 
-	int currentEditColumn_;
-	Control* currentEditingControl_;
+	
 
 	void onModelChanged( TreeModelEvent* event );
 	void onModelEmptied( Event* event );
@@ -276,7 +299,7 @@ protected:
 
 	TreeItem* getNextItem( TreeItem* item, bool skipChildren=false );
 	TreeItem* getPrevItem( TreeItem* item );
-
+*/
 
 	void onEditingControlKeyPressed( KeyboardEvent* event );
 	void onEditorFocusLost( Event* e );

@@ -29,11 +29,11 @@ typedef  uint32 TreeModelKey;
 */
 class APPLICATIONKIT_API TreeModelEvent : public ModelEvent {
 public:
-	TreeModelEvent( Object* source ):ModelEvent(source),key(-1),parentKey(-1){}
+	TreeModelEvent( Object* source ):ModelEvent(source),key(-1),parentKey(-1),subItemIndex(-1){}
 
-	TreeModelEvent( Object* source, const uint32& eventType ):ModelEvent(source,eventType),key(-1),parentKey(-1){}
+	TreeModelEvent( Object* source, const uint32& eventType ):ModelEvent(source,eventType),key(-1),parentKey(-1),subItemIndex(-1){}
 
-	TreeModelEvent( const TreeModelEvent& rhs ):ModelEvent(rhs),key(-1),parentKey(-1) {
+	TreeModelEvent( const TreeModelEvent& rhs ):ModelEvent(rhs),key(-1),parentKey(-1),subItemIndex(-1) {
 		*this = rhs;
 	}
 
@@ -43,6 +43,7 @@ public:
 		ModelEvent::operator =( rhs );
 		key = rhs.key;
 		parentKey = rhs.parentKey;
+		subItemIndex = rhs.subItemIndex;
 		return *this;
 	}
 
@@ -53,6 +54,7 @@ public:
 
 	TreeModelKey parentKey;
 	TreeModelKey key;
+	uint32 subItemIndex;
 };
 
 
@@ -113,7 +115,10 @@ public:
 		ItemAdded,
 		ItemRemoved,
 		ItemMoved,
-		ChildItemsRemoved
+		ChildItemsRemoved,
+		SubItemAdded,
+		SubItemRemoved,
+		SubItemChanged,
 	};
 
 	virtual bool isEmpty() { 
@@ -222,8 +227,8 @@ public:
 		return false;
 	}
 
-	virtual void insertSubItem( const Key& key, const uint32 & subItemIndex, const VariantData& value ) {}
-	virtual void removeSubItem( const Key& key, const uint32 & subItemIndex ){}
+	void insertSubItem( const Key& key, const uint32 & subItemIndex, const VariantData& value );
+	void removeSubItem( const Key& key, const uint32 & subItemIndex );
 
 	virtual VariantData getSubItem( const Key& key, const uint32& subItemIndex ) {		
 		return VariantData::null();
@@ -234,7 +239,7 @@ public:
 		return v.toString();
 	}
 
-	virtual void setSubItem( const Key& key, const uint32& subItemIndex, const VariantData& value ){}
+	void setSubItem( const Key& key, const uint32& subItemIndex, const VariantData& value );
 
 	virtual void setSubItemAsString( const Key& key, const uint32& subItemIndex, const String& value ){
 		VariantData v;
@@ -265,12 +270,38 @@ protected:
 		return InvalidKey;
 	}
 
+	virtual bool doInsertSubItem( const Key& key, const uint32 & subItemIndex, const VariantData& value ) {
+		return false;
+	}
+
+	virtual bool doRemoveSubItem( const Key& key, const uint32 & subItemIndex ){
+		return false;
+	}
+
+	virtual bool doSetSubItem( const Key& key, const uint32& subItemIndex, const VariantData& value ){
+		return false;
+	}
+
 	void notifyItemRemoved( const Key& key, const Key& parentKey ) {
 		TreeModelEvent e(this, TreeModel::ItemRemoved);
 		e.key = key;
 		e.parentKey = parentKey;	
 		
 		NodeRemoved( &e );
+	}
+
+	void notifySubItemRemoved( const Key& key, const uint32& subItemIndex ) {
+		TreeModelEvent itemEvent( this, SubItemRemoved );		
+		itemEvent.key = key;
+		itemEvent.subItemIndex = subItemIndex;
+		ModelChanged( &itemEvent );
+	}
+
+	void notifySubItemAdded( const Key& key, const uint32& subItemIndex ) {
+		TreeModelEvent itemEvent( this, SubItemAdded );
+		itemEvent.key = key;
+		itemEvent.subItemIndex = subItemIndex;
+		ModelChanged( &itemEvent );
 	}
 };
 

@@ -57,6 +57,14 @@ public:
 
 	virtual void enableHeader( const bool& val );
 
+	virtual void setColumnWidth( const uint32& index, const double& width, ColumnAutosizeType type );
+
+	virtual double getColumnWidth( const uint32& index );
+
+	virtual TextAlignmentType getColumnTextAlignment( const uint32& index );
+
+	virtual void setColumnTextAlignment( const uint32& index, const TextAlignmentType& val );
+
 	virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc = NULL);
 private:
 
@@ -82,6 +90,7 @@ private:
 	void onItemExpanded( ItemEvent* e );
 	void onItemSelected( ItemEvent* e );
 	void onTreeModelChanged( ModelEvent* event );
+	void onColumnModelChanged( ModelEvent* event );
 	void addTreeItem( TreeModel::Key key, HTREEITEM parent );
 
 	void registerHeaderWndProc();

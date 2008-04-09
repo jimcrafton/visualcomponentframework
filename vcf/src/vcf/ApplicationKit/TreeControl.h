@@ -28,6 +28,12 @@ where you installed the VCF.
 #endif // _VCF_TREEITEM_H__
 
 
+#ifndef _VCF_HEADERCONTROL_H__
+#	include "vcf/ApplicationKit/HeaderControl.h"
+#endif // _VCF_HEADERCONTROL_H__
+
+
+
 
 
 namespace VCF {
@@ -54,6 +60,7 @@ class APPLICATIONKIT_API TreeControl : public VCF::Control, public TreeControlle
 public:
 
 	TreeControl();
+	TreeControl( TreeModel* model );
 	virtual ~TreeControl();
 
 
@@ -85,9 +92,7 @@ public:
 
 	void setStateImageList( ImageList* imageList );
 
-	virtual void paint( GraphicsContext * context );
-
-	void init();	
+	virtual void paint( GraphicsContext * context );	
 
 	virtual TreeItem* getItemParent( TreeItem* item );
 	virtual void setItemParent( TreeItem* item, TreeItem* parent );
@@ -132,12 +137,18 @@ public:
 
 	bool itemExists( const TreeModel::Key& key );
 
+	virtual bool subItemExists( const TreeModel::Key& key, const uint32& subItemIndex ) {
+		return false;
+	}
+
 
 	ColumnModel* getColumnModel() {
 		return columnModel_;
 	}
 
-	ColumnItem* getColumnItem( const uint32& index );
+	virtual ColumnItem* getColumnItem( const uint32& index ) {
+		return NULL;
+	}	
 protected:	
 
 	void onTreeItemPaint( ItemEvent* event );	
@@ -154,8 +165,8 @@ protected:
 	TreeItem* currentSelectedItem_;
 	ColumnModel* columnModel_;
 	bool controlChangeToModel_;
-	std::map<TreeModel::Key,TreeItem*> itemMap_;
-	Array<ColumnItem*> columnItems_;
+	std::map<TreeModel::Key,TreeItem*> itemMap_;	
+	bool inCallbackChange_;
 
 
 };

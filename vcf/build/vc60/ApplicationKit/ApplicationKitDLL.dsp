@@ -119,6 +119,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DropDownControl.h
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ListControl.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\TreeListModel.h
+# End Source File
 # End Group
 # Begin Group "Res"
 
@@ -611,6 +615,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TransparentWindow.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\TransparentWindow.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\TreeListModel.cpp
 # End Source File
 # Begin Source File
 

@@ -22,7 +22,8 @@ TreeControl::TreeControl():
 	stateImageList_(NULL),
 	currentSelectedItem_(NULL),
 	controlChangeToModel_(false),
-	columnModel_(NULL)
+	columnModel_(NULL),
+	inCallbackChange_(false)
 {
 	treePeer_ = UIToolkit::createTreePeer( this );
 	peer_ = dynamic_cast<ControlPeer*>( treePeer_ );
@@ -33,18 +34,6 @@ TreeControl::TreeControl():
 
 	peer_->create( this );
 
-	init();
-
-	setVisible( true );
-}
-
-TreeControl::~TreeControl()
-{
-
-}
-
-void TreeControl::init()
-{
 	CallBack* mh = new ClassProcedure1<ModelEvent*,TreeControl>( this, &TreeControl::onModelChanged, "TreeControl::onModelChanged" );
 
 	setViewModel( new DefaultTreeModel() );
@@ -54,7 +43,49 @@ void TreeControl::init()
 	setBorder( new Basic3DBorder( true ) );
 
 	setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW ) );
+
+	setVisible( true );
 }
+
+TreeControl::TreeControl( TreeModel* model ):
+	imageList_(NULL),
+	stateImageList_(NULL),
+	currentSelectedItem_(NULL),
+	controlChangeToModel_(false),
+	columnModel_(NULL),
+	inCallbackChange_(false)
+{
+	treePeer_ = UIToolkit::createTreePeer( this );
+	peer_ = dynamic_cast<ControlPeer*>( treePeer_ );
+
+	if ( NULL == treePeer_ ){
+		throw InvalidPeer(MAKE_ERROR_MSG(NO_PEER), __LINE__);
+	};
+
+	peer_->create( this );
+
+	CallBack* mh = new ClassProcedure1<ModelEvent*,TreeControl>( this, &TreeControl::onModelChanged, "TreeControl::onModelChanged" );
+
+	if ( NULL != model ) {
+		setViewModel( model );
+		
+		
+		addComponent( getViewModel() );
+	}
+
+	setBorder( new Basic3DBorder( true ) );
+
+	setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_WINDOW ) );
+
+	setVisible( true );
+}
+
+
+TreeControl::~TreeControl()
+{
+	
+}
+
 
 void TreeControl::modelChanged( Model* oldModel, Model* newModel )
 {
@@ -419,6 +450,18 @@ void TreeControl::setItemKey( TreeItem* item, const TreeModel::Key& key )
 
 bool TreeControl::getItemChildren( TreeItem* item, std::vector<TreeItem*>& children )
 {
+	TreeModel* tm = getTreeModel();
+	std::vector<TreeModel::Key> childKeys;
+	tm->getChildren( item->getKey(), childKeys );
+
+	std::vector<TreeModel::Key>::iterator it = childKeys.begin();
+	while ( it != childKeys.end() ) {
+		TreeItem* childItem = getItemFromKey( *it );
+		children.push_back( childItem );
+		++it;
+	}
+
+
 	return !children.empty();
 }
 
@@ -516,16 +559,6 @@ void TreeControl::itemSelected( TreeItem* item )
 	ItemSelected( &event );
 }
 
-ColumnItem* TreeControl::getColumnItem( const uint32& index )
-{
-	ColumnItem* result = NULL;
-
-	if ( index < columnItems_.size() ) {
-		result = columnItems_[index];
-	}
-
-	return result;
-}
 
 /**
 $Id$

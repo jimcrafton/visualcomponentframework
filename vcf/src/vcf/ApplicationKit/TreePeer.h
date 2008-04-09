@@ -56,6 +56,15 @@ public:
 	other wise it's enabled and made visible
 	*/
 	virtual void enableHeader( const bool& val ) = 0;
+
+	virtual void setColumnWidth( const uint32& index, const double& width, ColumnAutosizeType type=casAutoSizeNone ) = 0;
+
+	virtual double getColumnWidth( const uint32& index ) = 0;
+
+	virtual TextAlignmentType getColumnTextAlignment( const uint32& index ) = 0;
+
+	virtual void setColumnTextAlignment( const uint32& index, const TextAlignmentType& val ) = 0;
+
 };
 
 };
