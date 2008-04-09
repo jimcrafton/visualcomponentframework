@@ -71,7 +71,7 @@ void asyncGetDataFromURL(AsyncURL* url)
 	url->finished();
 
 	if ( url->shouldAutoDelete() ) {
-		url->free();
+		delete url;
 	}
 }
 

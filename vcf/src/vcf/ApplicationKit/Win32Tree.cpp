@@ -459,7 +459,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 
 			//reset back to original origin
-			::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
+			//::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
 
 			//let the tree control's DefWndProc do windwos painting
 
@@ -1122,8 +1122,10 @@ Do we need these? What advantage does processing these events have for us???
 			NMTVCUSTOMDRAW* treeViewDraw = (NMTVCUSTOMDRAW*)lParam;
 			if ( NULL != treeViewDraw )	{
 				switch ( treeViewDraw->nmcd.dwDrawStage ) {
+								
+
 					case CDDS_PREPAINT : {
-						wndProcResult = CDRF_NOTIFYITEMDRAW | CDRF_NOTIFYPOSTPAINT;
+						wndProcResult = CDRF_NOTIFYITEMDRAW | CDRF_NOTIFYPOSTPAINT | CDRF_NOTIFYPOSTERASE;
 					}
 					break;
 
@@ -1176,28 +1178,6 @@ Do we need these? What advantage does processing these events have for us???
 								item->paint( currentCtx_, &itemRect );
 							}
 						}
-/*
-						if ( this->headerEnabled_ ) {
-
-							HPEN p = CreatePen( PS_SOLID, 1, RGB(0,0,0) ); 
-
-
-							int count = SendMessage( this->headerWnd_, HDM_GETITEMCOUNT, 0, 0 );
-							
-							HPEN op = (HPEN) SelectObject( treeViewDraw->nmcd.hdc, p );
-
-							for ( int i=0;i<count;i++ ) {
-								RECT r={0};
-								SendMessage( this->headerWnd_, HDM_GETITEMRECT, i, (LPARAM)&r );
-								
-								::MoveToEx( treeViewDraw->nmcd.hdc, r.right, treeViewDraw->nmcd.rc.top, NULL );
-								::LineTo( treeViewDraw->nmcd.hdc, r.right, treeViewDraw->nmcd.rc.bottom );
-							}
-
-							SelectObject( treeViewDraw->nmcd.hdc, op );
-							DeleteObject(p);
-						}
-						*/
 					}
 					break;
 
@@ -1445,10 +1425,10 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 	
 	RECT btn;
 	btn.left = x+offsetX+ (indent )/2 - BUTTON_SIZE / 2; 
-	btn.top = y+offsetY + tmpSz.cy/2 - BUTTON_SIZE/2;
+	btn.top = y+offsetY + (drawInfo->nmcd.rc.bottom-drawInfo->nmcd.rc.top) /2 - BUTTON_SIZE/2;
 	btn.right = btn.left + BUTTON_SIZE;
 	btn.bottom = btn.top + BUTTON_SIZE;
-
+/*
 	if ( this->hasLines_ && hasChildren && btn.right < drawInfo->nmcd.rc.right ) {
 		HPEN p = CreatePen( PS_GEOMETRIC | PS_DOT, 0, RGB(120,120,120) );
 		SelectObject( drawInfo->nmcd.hdc, p );
@@ -1481,7 +1461,7 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 		
 		DeleteObject(p);
 	}
-
+*/
 	if ( this->hasButtons_ && hasChildren && btn.right < drawInfo->nmcd.rc.right ) {	
 		HPEN p = CreatePen( PS_SOLID, 1, RGB(120,120,120) );
 		SelectObject( drawInfo->nmcd.hdc, p );
@@ -1524,9 +1504,30 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 	r.left -= si.nPos;
 	r.right -= si.nPos;
 
-	DrawTextExW( drawInfo->nmcd.hdc, tmp, sz, &r, 
-					DT_LEFT | DT_END_ELLIPSIS | DT_EXPANDTABS | DT_SINGLELINE | DT_VCENTER,
-					NULL );
+	if ( r.right - r.left > 3 ) {
+		DrawTextExW( drawInfo->nmcd.hdc, tmp, sz, &r, 
+						DT_LEFT | DT_END_ELLIPSIS | DT_EXPANDTABS | DT_SINGLELINE | DT_VCENTER,
+						NULL );
+	}
+
+	TreeItem* item = NULL;
+	if ( treeControl_->itemExists(key) ) {
+		item = treeControl_->getItemFromKey( key );
+	}
+
+	bool paintItem = false;
+	if ( NULL != item ) {
+		if ( item->canPaint() ) {
+			paintItem = true;
+			Rect itemRect;
+			itemRect.left_ = r.left;
+			itemRect.top_ = r.top;
+			itemRect.right_ = r.right;
+			itemRect.bottom_ = r.bottom;
+
+			item->paint( this->currentCtx_, &itemRect );
+		}
+	}
 
 	ColumnModel* cm = this->treeControl_->getColumnModel();
 	int count = SendMessage(headerWnd_,HDM_GETITEMCOUNT,0,0);
@@ -1540,13 +1541,33 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 			r.left -= si.nPos;
 			r.right -= si.nPos;
 
-			size_t sz = minVal<size_t>(s.length(),254);
-			s.copy(tmp,sz);
-			tmp[sz] = 0;
+			if ( r.right - r.left > 3 ) {
+				size_t sz = minVal<size_t>(s.length(),254);
+				s.copy(tmp,sz);
+				tmp[sz] = 0;
 
-			DrawTextExW( drawInfo->nmcd.hdc, tmp, sz, &r, 
-					DT_LEFT | DT_END_ELLIPSIS | DT_EXPANDTABS | DT_SINGLELINE | DT_VCENTER,
-					NULL );
+				DrawTextExW( drawInfo->nmcd.hdc, tmp, sz, &r, 
+						DT_LEFT | DT_END_ELLIPSIS | DT_EXPANDTABS | DT_SINGLELINE | DT_VCENTER,
+						NULL );
+			}
+		}
+
+
+		if ( paintItem ) {
+			uint32 siCount = item->getSubItemCount();
+			if ( (i-1) < siCount ) {
+				 TreeSubItem* subItem = item->getSubItem( i-1 );
+				 if ( NULL != subItem ) {
+					 if ( subItem->canPaint() ) {
+						 Rect itemRect;
+						 itemRect.left_ = r.left;
+						 itemRect.top_ = r.top;
+						 itemRect.right_ = r.right;
+						 itemRect.bottom_ = r.bottom;
+						 subItem->paint( currentCtx_, &itemRect );
+					 }
+				 }
+			}
 		}
 	}
 
