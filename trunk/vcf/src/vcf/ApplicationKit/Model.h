@@ -204,7 +204,7 @@ public:
 	@see setValue()
 	*/
 	virtual void setValueAsString( const String& value, const VariantData& key=VariantData::null() ) {
-		Variant v;
+		VariantData v;
 		v.setFromString(value);
 		setValue( v, key );
 	}
