@@ -315,12 +315,12 @@ double ListViewControl::getColumnWidth( const uint32& index )
 	return listviewPeer_->getColumnWidth( index );
 }
 
-void ListViewControl::setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type )
+void ListViewControl::setColumnWidth( const uint32& index, const double& width, ColumnAutosizeType type )
 {
 	listviewPeer_->setColumnWidth( index, width, type );
 }
 
-void ListViewControl::setColumnsWidth( const double& width, ListViewControl::AutoSizeType type )
+void ListViewControl::setColumnsWidth( const double& width, ColumnAutosizeType type )
 {
 	for ( int i = 0; i < columnModel_->getCount(); ++i ) {
 		listviewPeer_->setColumnWidth( i, width, type );

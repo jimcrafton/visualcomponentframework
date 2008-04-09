@@ -12,6 +12,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/Win32ToolKit.h"
 #include "vcf/ApplicationKit/Win32Application.h"
 #include "vcf/ApplicationKit/Win32Edit.h"
+#include "vcf/ApplicationKit/HeaderControl.h"
 #include "vcf/ApplicationKit/Win32Tree.h"
 #include "vcf/ApplicationKit/ListViewControl.h"
 #include "vcf/ApplicationKit/Win32Listview.h"

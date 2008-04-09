@@ -25,46 +25,6 @@ where you installed the VCF.
 
 namespace VCF  {
 
-/*
-#define COLUMN_MODEL_CONST				1900
-
-#define COLUMN_MODEL_CONTENTS_DELETED		CUSTOM_EVENT_TYPES + COLUMN_MODEL_CONST + 1
-#define COLUMN_MODEL_ITEM_CHANGED			CUSTOM_EVENT_TYPES + COLUMN_MODEL_CONST + 2
-#define COLUMN_MODEL_ITEM_ADDED				CUSTOM_EVENT_TYPES + COLUMN_MODEL_CONST + 3
-#define COLUMN_MODEL_ITEM_DELETED			CUSTOM_EVENT_TYPES + COLUMN_MODEL_CONST + 4
-*/
-	
-/**
-\class ColumnModelEvent ColumnModel.h "vcf/ApplicationKit/ColumnModel.h"
-*/
-	/*
-class APPLICATIONKIT_API ColumnModelEvent : public ListModelEvent {
-public:
-	ColumnModelEvent( Object* source ):ListModelEvent(source){}
-
-	ColumnModelEvent( Object* source, const uint32& eventType ):ListModelEvent(source,eventType){}
-
-	ColumnModelEvent( Object* source, VariantData* i ):ListModelEvent(source,i){}
-
-	ColumnModelEvent( Object* source, const uint32& eventType, VariantData* i ):ListModelEvent(source,eventType,i){}
-
-	ColumnModelEvent( const ColumnModelEvent& rhs ):ListModelEvent(rhs) {
-		*this = rhs;
-	}
-
-	virtual ~ColumnModelEvent(){}
-
-
-	ColumnModelEvent& operator=( const ColumnModelEvent& rhs ) {
-		ListModelEvent::operator =( rhs );
-		return *this;
-	}
-
-	virtual Object* clone( bool deep=false ) {
-		return new ListModelEvent(*this);
-	}
-};
-*/
 /**
 \class ColumnModel ColumnModel.h "vcf/ApplicationKit/ColumnModel.h"
 *The ColumnModel is a model that represent's 0 or more ColumnItems.
