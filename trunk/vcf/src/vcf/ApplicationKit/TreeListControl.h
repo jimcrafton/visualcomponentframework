@@ -37,6 +37,10 @@ public:
 	TreeListControl();
 	virtual ~TreeListControl();
 	
+	DELEGATE(MouseDelegate,ColumnItemClicked)
+	DELEGATE(ItemDelegate,ColumnWidthChanged)
+
+
 	double getColumnWidth( const uint32& index );
 	void setColumnWidth( const uint32& index, const double& width );
 
@@ -49,6 +53,22 @@ public:
 
 	void setHeaderVisible( const bool& val );
 	bool isHeaderVisible();
+	
+	void showHierarchyLines( const bool& show );
+	bool hierarchyLinesVisible();
+
+	void showRowLines( const bool& show );
+	bool rowLinesVisible();
+
+	void showColumnLines( const bool& show );
+	bool columnLinesVisible();
+
+	void showFullRowSelection( const bool& show );
+	bool fullRowSelectionVisible();
+
+	ImageList* getHeaderImageList();
+	void setHeaderImageList( ImageList* imageList );
+
 
 	virtual void insertItemSubItem( TreeItem* item, const uint32& index, TreeSubItem* subItem );
 	virtual void removeItemSubItem( TreeItem* item, TreeSubItem* subItem );
@@ -75,14 +95,7 @@ public:
 		ITEM_STATECHANGE_REQUESTED = CUSTOM_EVENT_TYPES + ITEM_CONST + 10
 	};
 
-	enum TreeDisplayOptions {
-		tdoNone = 0,
-		tdoShowHierarchyLines = 1,
-		tdoShowRowLines = 2,
-		tdoShowColumnLines = 4,
-		tdoShowFullRowSelection = 8,
-		tdoShowColumnHeader = 16
-	};
+	
 
 	DELEGATE(ItemDelegate,ItemSelected);
 	DELEGATE(ItemDelegate,ItemStateChangeRequested);
@@ -192,14 +205,7 @@ public:
 
 	double getDefaultItemHeight();
 
-	void showHierarchyLines( const bool& show );
-
-	void showRowLines( const bool& show );
-
-	void showColumnLines( const bool& show );
-
-	void showFullRowSelection( const bool& show );
-
+	
 	void showColumnHeader( const bool& show );
 
 	void clearSelectedItems();
@@ -231,6 +237,7 @@ protected:
 	SubItemMap subItems_;
 
 	Array<ColumnItem*> columnItems_;
+	ImageList* headerImageList_;
 
 	void onColumnItemAdded( ListModelEvent* event );
 	void onColumnItemDeleted( ListModelEvent* event );

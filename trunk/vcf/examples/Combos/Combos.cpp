@@ -79,6 +79,7 @@ MainWindow::MainWindow(CombosApplication* app)
 
 	DropDownControl* combo = new DropDownControl();
 	combo->setBounds( &Rect(250, 100, 350, 5));//cb_->getPreferredHeight()) );
+	
 	add( combo );
 
 	combo->setDropDownCount( 6 );
@@ -105,7 +106,9 @@ MainWindow::MainWindow(CombosApplication* app)
 
 	combo->setDropDownWidth( 200 );
 
-	
+	combo->selectItem( 2 );
+
+	//combo->setEnabled( false );
 
 
 

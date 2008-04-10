@@ -27,7 +27,8 @@ TreeListControl::TreeListControl():
 	TreeControl(NULL),	
 	allowLabelEditing_(false),
 	currentEditColumn_(-1),
-	currentEditingControl_(NULL)
+	currentEditingControl_(NULL),
+	headerImageList_(NULL)
 {
 	setTreeModel( new TreeListModel() );
 
@@ -48,7 +49,7 @@ TreeListControl::TreeListControl():
 	ev = new ClassProcedure1<ListModelEvent*,TreeListControl>( this, &TreeListControl::onColumnItemDeleted, "TreeListControl::onColumnItemDeleted" );
 	columnModel_->ItemRemoved += ev; 
 
-	treePeer_->enableHeader( true );
+	this->setDisplayOptions( tdoShowColumnHeader );
 }
 
 TreeListControl::~TreeListControl()
@@ -234,15 +235,6 @@ void TreeListControl::showColumnHeader( const bool& show )
 }
 
 
-double TreeListControl::getColumnWidth( const uint32& index )
-{
-	return result;
-}
-
-void TreeListControl::setColumnWidth( const uint32& index, const double& width )
-{
-	
-}
 */
 
 void TreeListControl::onEditingControlKeyPressed( KeyboardEvent* event ) 
@@ -660,12 +652,103 @@ ColumnItem* TreeListControl::addColumn( const String& caption, const double& wid
 
 void TreeListControl::setHeaderVisible( const bool& val )
 {
-	treePeer_->enableHeader( val );
+	if ( val ) {
+		setDisplayOptions( getDisplayOptions() | tdoShowColumnHeader );	
+	}
+	else {
+		setDisplayOptions( getDisplayOptions() & ~tdoShowColumnHeader );
+	}
 }
 
 bool TreeListControl::isHeaderVisible()
 {
-	return true;
+	return getDisplayOptions() & tdoShowColumnHeader ? true : false;
+}
+
+void TreeListControl::showHierarchyLines( const bool& val )
+{	
+	if ( val ) {
+		setDisplayOptions( getDisplayOptions() | tdoShowHierarchyLines );	
+	}
+	else {
+		setDisplayOptions( getDisplayOptions() & ~tdoShowHierarchyLines );
+	}
+}
+
+bool TreeListControl::hierarchyLinesVisible()
+{
+	return getDisplayOptions() & tdoShowHierarchyLines ? true : false;
+}
+
+
+void TreeListControl::showRowLines( const bool& val )
+{
+	if ( val ) {
+		setDisplayOptions( getDisplayOptions() | tdoShowRowLines );	
+	}
+	else {
+		setDisplayOptions( getDisplayOptions() & ~tdoShowRowLines );
+	}
+}
+
+bool TreeListControl::rowLinesVisible()
+{
+	return getDisplayOptions() & tdoShowRowLines ? true : false;
+}
+
+
+void TreeListControl::showColumnLines( const bool& val )
+{
+	if ( val ) {
+		setDisplayOptions( getDisplayOptions() | tdoShowColumnLines );	
+	}
+	else {
+		setDisplayOptions( getDisplayOptions() & ~tdoShowColumnLines );
+	}
+}	
+
+bool TreeListControl::columnLinesVisible()
+{
+	return getDisplayOptions() & tdoShowColumnLines ? true : false;
+}
+
+
+void TreeListControl::showFullRowSelection( const bool& val )
+{
+	if ( val ) {
+		setDisplayOptions( getDisplayOptions() | tdoShowFullRowSelection );	
+	}
+	else {
+		setDisplayOptions( getDisplayOptions() & ~tdoShowFullRowSelection );
+	}
+}
+
+bool TreeListControl::fullRowSelectionVisible()
+{
+	return getDisplayOptions() & tdoShowFullRowSelection ? true : false;
+}
+
+double TreeListControl::getColumnWidth( const uint32& index )
+{
+	return treePeer_->getColumnWidth( index );
+}
+
+void TreeListControl::setColumnWidth( const uint32& index, const double& width )
+{
+	treePeer_->setColumnWidth( index, width );
+}
+
+ImageList* TreeListControl::getHeaderImageList()
+{
+	return this->headerImageList_;
+}
+
+void TreeListControl::setHeaderImageList( ImageList* imageList ) 
+{
+	if ( headerImageList_ != imageList ) {
+		headerImageList_ = imageList;
+		treePeer_->setHeaderImageList( headerImageList_ );
+	}
 }
 /**
 $Id$

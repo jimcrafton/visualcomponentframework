@@ -70,7 +70,7 @@ public:
 				if ( g_showFilenames ) System::print ( Format("%s\n") % path.ansi_c_str() );
 			}
 		}
-		finder->free();
+		delete finder;
 
 	}
 
@@ -118,7 +118,7 @@ public:
 				if ( g_showFilenames ) System::print ( Format("%s\n") % path.ansi_c_str() );
 			}
 		}
-		finder->free();
+		delete finder;
 	}
 
 };
@@ -238,7 +238,7 @@ public:
 
 		//Object::dumpDebugInfo();
 
-		finder->free();
+		delete finder;
 
 		Object::objectAllocationCount();
 
@@ -269,7 +269,7 @@ void test( FinderTest& finderTest, const String& name, const bool& recurse = fal
 
 	DateTime stopTime = DateTime::now();
 	DateTimeSpan deltaTime = stopTime - startTime;
-	double td = (1.0 * (double)deltaTime.getTotalMilliseconds())/1000;
+	double td = (1.0 * (double)(int64)deltaTime.getTotalMilliseconds())/1000;
 	System::println( Format("[%s] files: %d, subdirs: %d  Total time: %.3f seconds\n")
 					% name.ansi_c_str() % finderTest.countFiles_
 					% finderTest.countDirectories_ % td );

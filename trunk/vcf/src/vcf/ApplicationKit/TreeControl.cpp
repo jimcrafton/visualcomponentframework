@@ -23,7 +23,8 @@ TreeControl::TreeControl():
 	currentSelectedItem_(NULL),
 	controlChangeToModel_(false),
 	columnModel_(NULL),
-	inCallbackChange_(false)
+	inCallbackChange_(false),
+	displayOptions_(0)
 {
 	treePeer_ = UIToolkit::createTreePeer( this );
 	peer_ = dynamic_cast<ControlPeer*>( treePeer_ );
@@ -564,7 +565,13 @@ void TreeControl::itemSelected( TreeItem* item )
 	ItemSelected( &event );
 }
 
-
+void TreeControl::setDisplayOptions( const uint32& displayOptions )
+{
+	if ( displayOptions_ != displayOptions ) {
+		displayOptions_ = displayOptions;
+		treePeer_->setDisplayOptions( displayOptions_ );
+	}
+}
 /**
 $Id$
 */

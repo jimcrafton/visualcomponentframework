@@ -213,10 +213,12 @@ public:
 		returnValue_ = returnType;
 	}
 
-	static void showMessage( const String& message, const String& caption="" );
+	static void showMessage( const String& message );
+
+	static void showMessage( const String& message, const String& caption );	
 
 	static UIToolkit::ModalReturnType showMessage( const String& message, const String& caption,
-											const int32& messageButtons = mbOKCancel,
+											const int32& messageButtons,
 											const MessageStyle& messageStyle=msDefault );
 
 	virtual void setFrameStyle( const FrameStyleType& frameStyle );

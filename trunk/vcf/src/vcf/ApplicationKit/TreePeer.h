@@ -35,11 +35,11 @@ public:
 
     virtual void setItemIndent( const double& indent ) = 0;
 
-    virtual ImageList* getImageList() = 0;
-
     virtual void setImageList( ImageList* imageList ) = 0;
 
 	virtual void setStateImageList( ImageList* imageList ) = 0;
+
+	virtual void setHeaderImageList( ImageList* imageList ) = 0;
 
 	virtual Rect getItemImageRect( const TreeModel::Key& itemKey ) = 0;
 
@@ -49,13 +49,7 @@ public:
 
 	virtual bool getAllowLabelEditing() = 0;
 
-	virtual void setAllowLabelEditing( const bool& allowLabelEditing ) = 0;
-
-	/**
-	Pass in a null column model to disable the header, 
-	other wise it's enabled and made visible
-	*/
-	virtual void enableHeader( const bool& val ) = 0;
+	virtual void setAllowLabelEditing( const bool& allowLabelEditing ) = 0;	
 
 	virtual void setColumnWidth( const uint32& index, const double& width, ColumnAutosizeType type=casAutoSizeNone ) = 0;
 
@@ -64,6 +58,8 @@ public:
 	virtual TextAlignmentType getColumnTextAlignment( const uint32& index ) = 0;
 
 	virtual void setColumnTextAlignment( const uint32& index, const TextAlignmentType& val ) = 0;
+
+	virtual void setDisplayOptions( uint32 displayOptions ) = 0;
 
 };
 

@@ -510,6 +510,1204 @@ uint64 VariantData::sizeOf() const
 	return result;
 }
 
+
+
+
+ 
+double VariantData::convertToDbl() const  {
+	double result = double();
+	switch ( type ) {
+		case pdInt:{
+			result = (double) IntVal;
+		}
+		break;
+
+		case pdLong:{
+			result = (double) LongVal;
+		}
+		break;
+
+		case pdShort:{
+			result = (double) ShortVal;
+		}
+		break;
+
+		case pdUShort:{
+			result = (double) UShortVal;
+		}
+		break;
+
+		case pdUInt:{
+			result = (double) UIntVal;
+		}
+		break;
+
+		case pdULong:{
+			result = (double) ULongVal;
+		}
+		break;
+
+		case pdFloat:{
+			result = (double) FloatVal;
+		}
+		break;
+
+		case pdChar:{
+			result = (double) CharVal;
+		}
+		break;
+
+		case pdDouble:{
+			result = (double) DblVal;
+		}
+		break;
+
+		case pdBool:{
+			result = (double) BoolVal;			
+		}
+		break;
+
+		case pdInt64:{
+			result = (double) Int64Val;
+		}
+		break;
+
+		case pdUInt64:{
+			result = (double) (int64)UInt64Val;
+		}
+		break;
+
+		case pdVoidPointer:{
+			result = (double) (int)VoidPtrVal;
+		}
+		break;
+
+		case pdDateTime:{
+			result = (double) (int64)UInt64Val;
+		}
+		break;
+
+		case pdDateTimeSpan:{
+			result = (double) (int64)UInt64Val;
+		}
+		break;
+
+		case pdString:{
+			if ( NULL != StringVal ) {
+				result = StringUtils::fromStringAsDouble(*StringVal);
+			}
+		}
+		break;
+	}
+	
+
+	return result;
+}
+
+
+int VariantData::convertToInt() const 
+{
+	int result = int();
+	switch ( type ) {
+		case pdInt:{
+			result = (int) IntVal;
+		}
+		break;
+
+		case pdLong:{
+			result = (int) LongVal;
+		}
+		break;
+
+		case pdShort:{
+			result = (int) ShortVal;
+		}
+		break;
+
+		case pdUShort:{
+			result = (int) UShortVal;
+		}
+		break;
+
+		case pdUInt:{
+			result = (int) UIntVal;
+		}
+		break;
+
+		case pdULong:{
+			result = (int) ULongVal;
+		}
+		break;
+
+		case pdFloat:{
+			result = (int) FloatVal;
+		}
+		break;
+
+		case pdChar:{
+			result = (int) CharVal;
+		}
+		break;
+
+		case pdDouble:{
+			result = (int) DblVal;
+		}
+		break;
+
+		case pdBool:{
+			result = (int) BoolVal;			
+		}
+		break;
+
+		case pdInt64:{
+			result = (int) Int64Val;
+		}
+		break;
+
+		case pdUInt64:{
+			result = (int) (int64)UInt64Val;
+		}
+		break;
+
+		case pdVoidPointer:{
+			result = (int) (int)VoidPtrVal;
+		}
+		break;
+
+		case pdDateTime:{
+			result = (int) (int64)UInt64Val;
+		}
+		break;
+
+		case pdDateTimeSpan:{
+			result = (int) (int64)UInt64Val;
+		}
+		break;
+
+		case pdString:{
+			if ( NULL != StringVal ) {
+				result = StringUtils::fromStringAsInt(*StringVal);
+			}
+		}
+		break;
+	}
+	
+
+	return result;
+}
+
+
+long VariantData::convertToLong() const 
+{
+	long result = long();
+	switch ( type ) {
+		case pdInt:{
+			result = (long) IntVal;
+		}
+		break;
+
+		case pdLong:{
+			result = (long) LongVal;
+		}
+		break;
+
+		case pdShort:{
+			result = (long) ShortVal;
+		}
+		break;
+
+		case pdUShort:{
+			result = (long) UShortVal;
+		}
+		break;
+
+		case pdUInt:{
+			result = (long) UIntVal;
+		}
+		break;
+
+		case pdULong:{
+			result = (long) ULongVal;
+		}
+		break;
+
+		case pdFloat:{
+			result = (long) FloatVal;
+		}
+		break;
+
+		case pdChar:{
+			result = (long) CharVal;
+		}
+		break;
+
+		case pdDouble:{
+			result = (long) DblVal;
+		}
+		break;
+
+		case pdBool:{
+			result = (long) BoolVal;			
+		}
+		break;
+
+		case pdInt64:{
+			result = (long) Int64Val;
+		}
+		break;
+
+		case pdUInt64:{
+			result = (long) UInt64Val;
+		}
+		break;
+
+		case pdVoidPointer:{
+			result = (long) (int)VoidPtrVal;
+		}
+		break;
+
+		case pdDateTime:{
+			result = (long) UInt64Val;
+		}
+		break;
+
+		case pdDateTimeSpan:{
+			result = (long) UInt64Val;
+		}
+		break;
+
+		case pdString:{
+			if ( NULL != StringVal ) {
+				result = StringUtils::fromStringAsLong(*StringVal);
+			}
+		}
+		break;
+	}
+	
+
+	return result;
+}
+
+
+short VariantData::convertToShort() const 
+{
+	short result = short();
+	switch ( type ) {
+		case pdInt:{
+			result = (short) IntVal;
+		}
+		break;
+
+		case pdLong:{
+			result = (short) LongVal;
+		}
+		break;
+
+		case pdShort:{
+			result = (short) ShortVal;
+		}
+		break;
+
+		case pdUShort:{
+			result = (short) UShortVal;
+		}
+		break;
+
+		case pdUInt:{
+			result = (short) UIntVal;
+		}
+		break;
+
+		case pdULong:{
+			result = (short) ULongVal;
+		}
+		break;
+
+		case pdFloat:{
+			result = (short) FloatVal;
+		}
+		break;
+
+		case pdChar:{
+			result = (short) CharVal;
+		}
+		break;
+
+		case pdDouble:{
+			result = (short) DblVal;
+		}
+		break;
+
+		case pdBool:{
+			result = (short) BoolVal;			
+		}
+		break;
+
+		case pdInt64:{
+			result = (short) Int64Val;
+		}
+		break;
+
+		case pdUInt64:{
+			result = (short) UInt64Val;
+		}
+		break;
+
+		case pdVoidPointer:{
+			result = (short) (int)VoidPtrVal;
+		}
+		break;
+
+		case pdDateTime:{
+			result = (short) UInt64Val;
+		}
+		break;
+
+		case pdDateTimeSpan:{
+			result = (short) UInt64Val;
+		}
+		break;
+
+		case pdString:{
+			if ( NULL != StringVal ) {
+				result = StringUtils::fromStringAsShort(*StringVal);
+			}
+		}
+		break;
+	}
+	
+
+	return result;
+}
+
+
+ushort VariantData::convertToUShort() const 
+{
+	ushort result = ushort();
+	switch ( type ) {
+		case pdInt:{
+			result = (ushort) IntVal;
+		}
+		break;
+
+		case pdLong:{
+			result = (ushort) LongVal;
+		}
+		break;
+
+		case pdShort:{
+			result = (ushort) ShortVal;
+		}
+		break;
+
+		case pdUShort:{
+			result = (ushort) UShortVal;
+		}
+		break;
+
+		case pdUInt:{
+			result = (ushort) UIntVal;
+		}
+		break;
+
+		case pdULong:{
+			result = (ushort) ULongVal;
+		}
+		break;
+
+		case pdFloat:{
+			result = (ushort) FloatVal;
+		}
+		break;
+
+		case pdChar:{
+			result = (ushort) CharVal;
+		}
+		break;
+
+		case pdDouble:{
+			result = (ushort) DblVal;
+		}
+		break;
+
+		case pdBool:{
+			result = (ushort) BoolVal;			
+		}
+		break;
+
+		case pdInt64:{
+			result = (ushort) Int64Val;
+		}
+		break;
+
+		case pdUInt64:{
+			result = (ushort) UInt64Val;
+		}
+		break;
+
+		case pdVoidPointer:{
+			result = (ushort) (int)VoidPtrVal;
+		}
+		break;
+
+		case pdDateTime:{
+			result = (ushort) UInt64Val;
+		}
+		break;
+
+		case pdDateTimeSpan:{
+			result = (ushort) UInt64Val;
+		}
+		break;
+
+		case pdString:{
+			if ( NULL != StringVal ) {
+				result = (ushort) StringUtils::fromStringAsShort(*StringVal);
+			}
+		}
+		break;
+	}
+	
+
+	return result;
+}
+
+
+unsigned int VariantData::convertToUInt() const 
+{
+	unsigned int result = unsigned int();
+	switch ( type ) {
+		case pdInt:{
+			result = (unsigned int) IntVal;
+		}
+		break;
+
+		case pdLong:{
+			result = (unsigned int) LongVal;
+		}
+		break;
+
+		case pdShort:{
+			result = (unsigned int) ShortVal;
+		}
+		break;
+
+		case pdUShort:{
+			result = (unsigned int) UShortVal;
+		}
+		break;
+
+		case pdUInt:{
+			result = (unsigned int) UIntVal;
+		}
+		break;
+
+		case pdULong:{
+			result = (unsigned int) ULongVal;
+		}
+		break;
+
+		case pdFloat:{
+			result = (unsigned int) FloatVal;
+		}
+		break;
+
+		case pdChar:{
+			result = (unsigned int) CharVal;
+		}
+		break;
+
+		case pdDouble:{
+			result = (unsigned int) DblVal;
+		}
+		break;
+
+		case pdBool:{
+			result = (unsigned int) BoolVal;			
+		}
+		break;
+
+		case pdInt64:{
+			result = (unsigned int) Int64Val;
+		}
+		break;
+
+		case pdUInt64:{
+			result = (unsigned int) UInt64Val;
+		}
+		break;
+
+		case pdVoidPointer:{
+			result = (unsigned int) (int)VoidPtrVal;
+		}
+		break;
+
+		case pdDateTime:{
+			result = (unsigned int) UInt64Val;
+		}
+		break;
+
+		case pdDateTimeSpan:{
+			result = (unsigned int) UInt64Val;
+		}
+		break;
+
+		case pdString:{
+			if ( NULL != StringVal ) {
+				result = StringUtils::fromStringAsUInt(*StringVal);
+			}
+		}
+		break;
+	}
+	
+
+	return result;
+}
+
+
+unsigned long VariantData::convertToULong() const 
+{
+	unsigned long result = unsigned long();
+	switch ( type ) {
+		case pdInt:{
+			result = (unsigned long) IntVal;
+		}
+		break;
+
+		case pdLong:{
+			result = (unsigned long) LongVal;
+		}
+		break;
+
+		case pdShort:{
+			result = (unsigned long) ShortVal;
+		}
+		break;
+
+		case pdUShort:{
+			result = (unsigned long) UShortVal;
+		}
+		break;
+
+		case pdUInt:{
+			result = (unsigned long) UIntVal;
+		}
+		break;
+
+		case pdULong:{
+			result = (unsigned long) ULongVal;
+		}
+		break;
+
+		case pdFloat:{
+			result = (unsigned long) FloatVal;
+		}
+		break;
+
+		case pdChar:{
+			result = (unsigned long) CharVal;
+		}
+		break;
+
+		case pdDouble:{
+			result = (unsigned long) DblVal;
+		}
+		break;
+
+		case pdBool:{
+			result = (unsigned long) BoolVal;			
+		}
+		break;
+
+		case pdInt64:{
+			result = (unsigned long) Int64Val;
+		}
+		break;
+
+		case pdUInt64:{
+			result = (unsigned long) UInt64Val;
+		}
+		break;
+
+		case pdVoidPointer:{
+			result = (unsigned long) (int)VoidPtrVal;
+		}
+		break;
+
+		case pdDateTime:{
+			result = (unsigned long) UInt64Val;
+		}
+		break;
+
+		case pdDateTimeSpan:{
+			result = (unsigned long) UInt64Val;
+		}
+		break;
+
+		case pdString:{
+			if ( NULL != StringVal ) {
+				result = StringUtils::fromStringAsULong(*StringVal);
+			}
+		}
+		break;
+	}
+	
+
+	return result;
+}
+
+
+float VariantData::convertToFloat() const 
+{
+	float result = float();
+	switch ( type ) {
+		case pdInt:{
+			result = (float) IntVal;
+		}
+		break;
+
+		case pdLong:{
+			result = (float) LongVal;
+		}
+		break;
+
+		case pdShort:{
+			result = (float) ShortVal;
+		}
+		break;
+
+		case pdUShort:{
+			result = (float) UShortVal;
+		}
+		break;
+
+		case pdUInt:{
+			result = (float) UIntVal;
+		}
+		break;
+
+		case pdULong:{
+			result = (float) ULongVal;
+		}
+		break;
+
+		case pdFloat:{
+			result = (float) FloatVal;
+		}
+		break;
+
+		case pdChar:{
+			result = (float) CharVal;
+		}
+		break;
+
+		case pdDouble:{
+			result = (float) DblVal;
+		}
+		break;
+
+		case pdBool:{
+			result = (float) BoolVal;			
+		}
+		break;
+
+		case pdInt64:{
+			result = (float) Int64Val;
+		}
+		break;
+
+		case pdUInt64:{
+			result = (float) (int64)UInt64Val;
+		}
+		break;
+
+		case pdVoidPointer:{
+			result = (float) (int)VoidPtrVal;
+		}
+		break;
+
+		case pdDateTime:{
+			result = (float) (int64)UInt64Val;
+		}
+		break;
+
+		case pdDateTimeSpan:{
+			result = (float) (int64)UInt64Val;
+		}
+		break;
+
+		case pdString:{
+			if ( NULL != StringVal ) {
+				result = StringUtils::fromStringAsFloat(*StringVal);
+			}
+		}
+		break;
+	}
+	
+
+	return result;
+}
+
+
+char VariantData::convertToChar() const 
+{
+	char result = char();
+	switch ( type ) {
+		case pdInt:{
+			result = (char) IntVal;
+		}
+		break;
+
+		case pdLong:{
+			result = (char) LongVal;
+		}
+		break;
+
+		case pdShort:{
+			result = (char) ShortVal;
+		}
+		break;
+
+		case pdUShort:{
+			result = (char) UShortVal;
+		}
+		break;
+
+		case pdUInt:{
+			result = (char) UIntVal;
+		}
+		break;
+
+		case pdULong:{
+			result = (char) ULongVal;
+		}
+		break;
+
+		case pdFloat:{
+			result = (char) FloatVal;
+		}
+		break;
+
+		case pdChar:{
+			result = (char) CharVal;
+		}
+		break;
+
+		case pdDouble:{
+			result = (char) DblVal;
+		}
+		break;
+
+		case pdBool:{
+			result = (char) BoolVal;			
+		}
+		break;
+
+		case pdInt64:{
+			result = (char) Int64Val;
+		}
+		break;
+
+		case pdUInt64:{
+			result = (char) (int64)UInt64Val;
+		}
+		break;
+
+		case pdVoidPointer:{
+			result = (char) (int)VoidPtrVal;
+		}
+		break;
+
+		case pdDateTime:{
+			result = (char) (int64)UInt64Val;
+		}
+		break;
+
+		case pdDateTimeSpan:{
+			result = (char) (int64)UInt64Val;
+		}
+		break;
+
+		case pdString:{
+			if ( NULL != StringVal ) {
+				result = StringUtils::fromStringAsChar(*StringVal);
+			}
+		}
+		break;
+	}
+	
+
+	return result;
+}
+
+
+bool VariantData::convertToBool() const 
+{
+	bool result = bool();
+	switch ( type ) {
+		case pdInt:{
+			result = IntVal ? true : false;
+		}
+		break;
+
+		case pdLong:{
+			result =  LongVal ? true : false;
+		}
+		break;
+
+		case pdShort:{
+			result =  ShortVal ? true : false;
+		}
+		break;
+
+		case pdUShort:{
+			result =  UShortVal ? true : false;
+		}
+		break;
+
+		case pdUInt:{
+			result =  UIntVal ? true : false;
+		}
+		break;
+
+		case pdULong:{
+			result =  ULongVal ? true : false;
+		}
+		break;
+
+		case pdFloat:{
+			result =  FloatVal > 0  ? true : false;
+		}
+		break;
+
+		case pdChar:{
+			result =  CharVal ? true : false;
+		}
+		break;
+
+		case pdDouble:{
+			result =  DblVal > 0  ? true : false;
+		}
+		break;
+
+		case pdBool:{
+			result =  BoolVal;			
+		}
+		break;
+
+		case pdInt64:{
+			result =  Int64Val ? true : false;
+		}
+		break;
+
+		case pdUInt64:{
+			result =  (int64)UInt64Val ? true : false;
+		}
+		break;
+
+		case pdVoidPointer:{
+			result =  (int)VoidPtrVal != 0  ? true : false;
+		}
+		break;
+
+		case pdDateTime:{
+			result =  (int64)UInt64Val ? true : false;
+		}
+		break;
+
+		case pdDateTimeSpan:{
+			result =  (int64)UInt64Val ? true : false;
+		}
+		break;
+
+		case pdString:{
+			if ( NULL != StringVal ) {
+				result = StringUtils::fromStringAsBool(*StringVal);
+			}
+		}
+		break;
+	}
+	
+
+	return result;
+}
+
+
+int64 VariantData::convertToInt64() const 
+{
+	int64 result = int64();
+	switch ( type ) {
+		case pdInt:{
+			result = (int64) IntVal;
+		}
+		break;
+
+		case pdLong:{
+			result = (int64) LongVal;
+		}
+		break;
+
+		case pdShort:{
+			result = (int64) ShortVal;
+		}
+		break;
+
+		case pdUShort:{
+			result = (int64) UShortVal;
+		}
+		break;
+
+		case pdUInt:{
+			result = (int64) UIntVal;
+		}
+		break;
+
+		case pdULong:{
+			result = (int64) ULongVal;
+		}
+		break;
+
+		case pdFloat:{
+			result = (int64) FloatVal;
+		}
+		break;
+
+		case pdChar:{
+			result = (int64) CharVal;
+		}
+		break;
+
+		case pdDouble:{
+			result = (int64) DblVal;
+		}
+		break;
+
+		case pdBool:{
+			result = (int64) BoolVal;			
+		}
+		break;
+
+		case pdInt64:{
+			result = (int64) Int64Val;
+		}
+		break;
+
+		case pdUInt64:{
+			result = (int64) UInt64Val;
+		}
+		break;
+
+		case pdVoidPointer:{
+			result = (int64) (int)VoidPtrVal;
+		}
+		break;
+
+		case pdDateTime:{
+			result = (int64) UInt64Val;
+		}
+		break;
+
+		case pdDateTimeSpan:{
+			result = (int64) UInt64Val;
+		}
+		break;
+
+		case pdString:{
+			if ( NULL != StringVal ) {
+				result = StringUtils::fromStringAsInt64(*StringVal);
+			}
+		}
+		break;
+	}
+	
+
+	return result;
+}
+
+
+uint64 VariantData::convertToUInt64() const 
+{
+	uint64 result = uint64();
+	switch ( type ) {
+		case pdInt:{
+			result = (uint64) IntVal;
+		}
+		break;
+
+		case pdLong:{
+			result = (uint64) LongVal;
+		}
+		break;
+
+		case pdShort:{
+			result = (uint64) ShortVal;
+		}
+		break;
+
+		case pdUShort:{
+			result = (uint64) UShortVal;
+		}
+		break;
+
+		case pdUInt:{
+			result = (uint64) UIntVal;
+		}
+		break;
+
+		case pdULong:{
+			result = (uint64) ULongVal;
+		}
+		break;
+
+		case pdFloat:{
+			result = (uint64) FloatVal;
+		}
+		break;
+
+		case pdChar:{
+			result = (uint64) CharVal;
+		}
+		break;
+
+		case pdDouble:{
+			result = (uint64) DblVal;
+		}
+		break;
+
+		case pdBool:{
+			result = (uint64) BoolVal;			
+		}
+		break;
+
+		case pdInt64:{
+			result = (uint64) Int64Val;
+		}
+		break;
+
+		case pdUInt64:{
+			result = (uint64) UInt64Val;
+		}
+		break;
+
+		case pdVoidPointer:{
+			result = (uint64) (int)VoidPtrVal;
+		}
+		break;
+
+		case pdDateTime:{
+			result = (uint64) UInt64Val;
+		}
+		break;
+
+		case pdDateTimeSpan:{
+			result = (uint64) UInt64Val;
+		}
+		break;
+
+		case pdString:{
+			if ( NULL != StringVal ) {
+				result = StringUtils::fromStringAsUInt64(*StringVal);
+			}
+		}
+		break;
+	}
+	
+
+	return result;
+}
+
+
+void* VariantData::convertToVoidPtr() const 
+{
+	void* result = NULL;
+	switch ( type ) {
+		case pdInt:{
+			result = (void*) IntVal;
+		}
+		break;
+
+		case pdLong:{
+			result = (void*) LongVal;
+		}
+		break;
+
+		case pdShort:{
+			result = (void*) ShortVal;
+		}
+		break;
+
+		case pdUShort:{
+			result = (void*) UShortVal;
+		}
+		break;
+
+		case pdUInt:{
+			result = (void*) UIntVal;
+		}
+		break;
+
+		case pdULong:{
+			result = (void*) ULongVal;
+		}
+		break;
+
+		case pdFloat:{
+			result = (void*) (int)FloatVal;
+		}
+		break;
+
+		case pdChar:{
+			result = (void*) CharVal;
+		}
+		break;
+
+		case pdDouble:{
+			result = (void*) (int)DblVal;
+		}
+		break;
+
+		case pdBool:{
+			result = (void*) BoolVal;			
+		}
+		break;
+
+		case pdInt64:{
+			result = (void*) Int64Val;
+		}
+		break;
+
+		case pdUInt64:{
+			result = (void*) UInt64Val;
+		}
+		break;
+
+		case pdVoidPointer:{
+			result = (void*) (int)VoidPtrVal;
+		}
+		break;
+
+		case pdDateTime:{
+			result = (void*) UInt64Val;
+		}
+		break;
+
+		case pdDateTimeSpan:{
+			result = (void*) UInt64Val;
+		}
+		break;
+
+		case pdString:{
+			if ( NULL != StringVal ) {
+				result = (void*)StringUtils::fromStringAsHexNumber(*StringVal);
+			}
+		}
+		break;
+	}
+	
+
+	return result;
+}
+
 /**
 $Id$
 */

@@ -56,6 +56,9 @@ public:
 		DefaultPropertyValLength = 50
 	};
 
+
+	
+
 	/**
 	creates an empty, undefined object
 	*/
@@ -352,63 +355,65 @@ public:
 	converts the VariantData to an int
 	*/
 	operator int () const {
-		return IntVal;
+		return convertToInt();
 	};
 
 	/**
 	converts the VariantData to an long
 	*/
 	operator long () const {
-		return LongVal;
+		return convertToLong();
 	};
 
 	/**
 	converts the VariantData to an short
 	*/
 	operator short () const {
-		return ShortVal;
+		return convertToShort();
 	};
 
 	/**
 	converts the VariantData to an unsigned short
 	*/
 	operator ushort () const {
-		return UShortVal;
+		return convertToUShort();
 	};
 
 	/**
 	converts the VariantData to an unsigned int
 	*/
 	operator unsigned int () const {
-		return UIntVal;
+		return convertToUInt();
 	};
 
 	/**
 	converts the VariantData to an unsigned long
 	*/
 	operator unsigned long () const {
-		return ULongVal;
+		return convertToULong();
 	};
 
 	/**
 	converts the VariantData to an float
 	*/
 	operator float () const {
-		return FloatVal;
+		return convertToFloat();
 	};
 
 	/**
 	converts the VariantData to an char
 	*/
 	operator char () const {
-		return CharVal;
+		return convertToChar();
 	};
 
 	/**
 	converts the VariantData to an double
 	*/
 	operator double () const {
-		return DblVal;
+		//return DblVal;
+
+		return convertToDbl();
 	};
 
 	/**
@@ -446,7 +451,7 @@ public:
 	converts the VariantData to a bool
 	*/
 	operator bool () const {
-		return BoolVal;
+		return convertToBool();
 	};
 
 	/**
@@ -467,18 +472,18 @@ public:
 	converts the Variant to a int64
 	*/
 	operator VCF::int64 () const {
-		return Int64Val;
+		return convertToInt64();
 	};
 
 	/**
 	converts the Variant to an uint64
 	*/
 	operator VCF::uint64 () const {
-		return UInt64Val;
+		return convertToUInt64();
 	};
 
 	operator void* () const {
-		return VoidPtrVal;
+		return convertToVoidPtr();
 	};
 
 	/**
@@ -774,11 +779,24 @@ public:
 				type == pdInt64 || type == pdUInt64;
 	}
 
-	uint64 sizeOf() const;
+	uint64 sizeOf() const;	
+
 protected:
 	void setValue( const VariantData& value );
 
-
+	int convertToInt() const ;
+	long convertToLong() const ;
+	short convertToShort() const ;
+	ushort convertToUShort() const ;
+	unsigned int convertToUInt() const ;
+	unsigned long convertToULong() const ;
+	float convertToFloat() const ;
+	char convertToChar() const ;
+	double convertToDbl() const ;
+	bool convertToBool() const ;
+	int64 convertToInt64() const ;
+	uint64 convertToUInt64() const ;
+	void* convertToVoidPtr() const ;
 public:
 	union{
 			int IntVal;
@@ -819,7 +837,6 @@ public:
 	PropertyDescriptorType type;
 
 };
-
 
 
 }; // namespace VCF

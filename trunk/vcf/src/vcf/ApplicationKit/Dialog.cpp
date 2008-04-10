@@ -259,6 +259,17 @@ void Dialog::showWithModalState( ModalState state )
 	peer_->setVisible(true);
 }
 
+void Dialog::showMessage( const String& message )
+{
+	String captionText;
+	Application* app = Application::getRunningInstance();
+	if ( NULL != app ) {
+		captionText = app->getName();
+	}
+
+	Dialog::showMessage( message, captionText );
+}
+
 void Dialog::showMessage( const String& message, const String& caption )
 {
 	DialogPeer* dialogPeer = UIToolkit::createDialogPeer();// owner, this );

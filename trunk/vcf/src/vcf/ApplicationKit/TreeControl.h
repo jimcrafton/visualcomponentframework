@@ -53,6 +53,16 @@ class ColumnItem;
 #define TREEITEM_SELECTED	CUSTOM_EVENT_TYPES + ITEM_CONST + 20
 #define TREEITEM_EXPANDED	CUSTOM_EVENT_TYPES + ITEM_CONST + 21
 
+
+enum TreeDisplayOptions {
+	tdoNone = 0,
+	tdoShowHierarchyLines = 1,
+	tdoShowRowLines = 2,
+	tdoShowColumnLines = 4,
+	tdoShowFullRowSelection = 8,
+	tdoShowColumnHeader = 16
+};
+
 /**
 \class TreeControl TreeControl.h "vcf/ApplicationKit/TreeControl.h" 
 */
@@ -150,6 +160,12 @@ public:
 	virtual ColumnItem* getColumnItem( const uint32& index ) {
 		return NULL;
 	}	
+
+	void setDisplayOptions( const uint32& displayOptions );
+
+	uint32 getDisplayOptions() {
+		return displayOptions_;
+	}
 protected:	
 
 	void onTreeItemPaint( ItemEvent* event );	
@@ -168,6 +184,7 @@ protected:
 	bool controlChangeToModel_;
 	std::map<TreeModel::Key,TreeItem*> itemMap_;	
 	bool inCallbackChange_;
+	uint32 displayOptions_;
 
 
 };

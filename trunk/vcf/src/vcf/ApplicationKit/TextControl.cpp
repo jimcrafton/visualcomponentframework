@@ -56,7 +56,7 @@ void TextControl::init()
 {
 	setVisible( true );
 	
-	setFocused();
+	//setFocused();
 	setEnabled( true );
 	keepTabbingCharacters_ = false;
 	keepReturnCharacter_ = false;
