@@ -427,7 +427,27 @@ void TreeListControl::handleEvent( Event* event )
 	}
 }
 
+void TreeListControl::setColumnItem( const uint32& index, ColumnItem* item )
+{
+	if ( index < columnItems_.size() ) {
+		ColumnItem* oldItem = columnItems_[index];
+		
+		columnItems_[index] = item;
+		
+		if ( NULL == item->getOwner() ) {
+			addComponent( item );
+		}
 
+		item->setControl( this );
+		item->setModel( getViewModel() );
+		item->setIndex( oldItem->getIndex() );
+
+		removeComponent( oldItem );
+		oldItem->free();
+
+		repaint();
+	}
+}
 
 ColumnItem* TreeListControl::getColumnItem( const uint32& index )
 {
@@ -613,6 +633,40 @@ void TreeListControl::onColumnItemDeleted( ListModelEvent* event )
 	inCallbackChange_ = false;
 }
 
+ColumnItem* TreeListControl::addColumn( const String& caption  )
+{
+	ColumnItem* result = NULL;
+	
+	getColumnModel()->add( caption );
+
+	result = getColumnItem( getColumnModel()->getCount() - 1 );
+
+	return result;
+}
+
+ColumnItem* TreeListControl::addColumn( const String& caption, const double& width )
+{
+	ColumnItem* result = NULL;
+	
+	getColumnModel()->add( caption );
+
+	uint32 index = getColumnModel()->getCount() - 1;
+	result = getColumnItem( index );
+
+	this->treePeer_->setColumnWidth( index, width );	
+
+	return result;
+}
+
+void TreeListControl::setHeaderVisible( const bool& val )
+{
+	treePeer_->enableHeader( val );
+}
+
+bool TreeListControl::isHeaderVisible()
+{
+	return true;
+}
 /**
 $Id$
 */

@@ -55,30 +55,30 @@ public:
 	}
 
 	void setMultiSelection( MenuItemEvent* e ) {
-		treeList->setAllowsMultipleSelection( ! treeList->getAllowsMultipleSelection() );
+//		treeList->setAllowsMultipleSelection( ! treeList->getAllowsMultipleSelection() );
 	}
 
 
 	void enumerateSelectedItems( MenuItemEvent* e ) {
-		Enumerator<TreeItem*>* selectedItems = treeList->getSelectedItems();
-		while ( true == selectedItems->hasMoreElements() ) {
-			TreeItem* item = selectedItems->nextElement();
-			StringUtils::trace( item->getCaption() + "\n" );
-		}
+//		Enumerator<TreeItem*>* selectedItems = treeList->getSelectedItems();
+//		while ( true == selectedItems->hasMoreElements() ) {
+//			TreeItem* item = selectedItems->nextElement();
+//			StringUtils::trace( item->getCaption() + "\n" );
+//		}
 	}
 
 	void setFullRowSelect( MenuItemEvent* e ) {
 
-		treeList->setDisplayOptions( TreeListControl::tdoShowHierarchyLines |
-										TreeListControl::tdoShowFullRowSelection |
-										TreeListControl::tdoShowColumnHeader );
+//		treeList->setDisplayOptions( TreeListControl::tdoShowHierarchyLines |
+//										TreeListControl::tdoShowFullRowSelection |
+//										TreeListControl::tdoShowColumnHeader );
 
 
 	}
 
 	void setFullRowSelectOff( MenuItemEvent* e ) {
 
-		treeList->showFullRowSelection( false );
+		//treeList->showFullRowSelection( false );
 
 	}
 
@@ -172,7 +172,7 @@ public:
 		
 
 		treeList = new TreeListControl();
-		treeList->setDefaultItemHeight( 18 );
+//		treeList->setDefaultItemHeight( 18 );
 
 		scrollbarManager->setTarget( treeList );
 
@@ -180,9 +180,9 @@ public:
 
 		treeList->setImageList( listIL );
 
-		treeList->showRowLines( true );
-		treeList->showColumnLines( true );
-		treeList->showFullRowSelection( true );
+//		treeList->showRowLines( true );
+//		treeList->showColumnLines( true );
+//		treeList->showFullRowSelection( true );
 
 		addComponent( listIL );
 
@@ -289,19 +289,19 @@ public:
 
 
 
-		treeList->getHeader()->setImageList( listIL );
+//		treeList->getHeader()->setImageList( listIL );
 
-		ColumnItem* col = treeList->getHeader()->addColumn( "Column 1" );
+		ColumnItem* col = treeList->addColumn( "Column 1" );
 		col->setImageIndex( 0 );
 
-		col = treeList->getHeader()->addColumn( "Column 2" );
+		col = treeList->addColumn( "Column 2" );
 		col->setImageIndex( 3 );
 
-		col = treeList->getHeader()->addColumn( "Column 3" );
+		col = treeList->addColumn( "Column 3" );
 		col->setImageIndex( 4 );
 
-		treeList->getHeader()->addColumn( "Column 4" );
-		treeList->getHeader()->addColumn( "Column 5" );
+		treeList->addColumn( "Column 4" );
+		treeList->addColumn( "Column 5" );
 
 		
 

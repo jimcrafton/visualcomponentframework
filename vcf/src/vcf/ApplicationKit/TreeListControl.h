@@ -38,10 +38,17 @@ public:
 	virtual ~TreeListControl();
 	
 	double getColumnWidth( const uint32& index );
-
 	void setColumnWidth( const uint32& index, const double& width );
 
+	ColumnItem* addColumn( const String& caption );
+	ColumnItem* addColumn( const String& caption, const double& width );
+
+
 	virtual ColumnItem* getColumnItem( const uint32& index );
+	void setColumnItem( const uint32& index, ColumnItem* item );
+
+	void setHeaderVisible( const bool& val );
+	bool isHeaderVisible();
 
 	virtual void insertItemSubItem( TreeItem* item, const uint32& index, TreeSubItem* subItem );
 	virtual void removeItemSubItem( TreeItem* item, TreeSubItem* subItem );
