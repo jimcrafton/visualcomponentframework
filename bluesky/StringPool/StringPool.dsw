@@ -3,18 +3,6 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "FoundationKitDLL"=..\..\vcf\build\vc60\FoundationKit\FoundationKitDLL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "StringPool"=.\StringPool.dsp - Package Owner=<4>
 
 Package=<5>
