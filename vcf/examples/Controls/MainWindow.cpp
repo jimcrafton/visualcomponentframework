@@ -11,7 +11,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ControlsKit.h"
 
 #include "vcf/ApplicationKit/DefaultMenuItem.h"
-#include "vcf/ApplicationKit/DefaultListItem.h"
+#include "vcf/ApplicationKit/ListItem.h"
 #include "vcf/ApplicationKit/TitledBorder.h"
 #include "vcf/ApplicationKit/EtchedBorder.h"
 #include "vcf/ApplicationKit/ColorEtchedBorder.h"
@@ -100,7 +100,7 @@ void MainWindow::makeListBoxPage()
 
 	double borderWidth = UIToolkit::getUIMetricValue(UIMetricsManager::mtContainerBorderDelta);
 
-	Panel* panel1 = (Panel*)listBoxPage_->getPageControl();
+	Panel* panel1 = (Panel*)listBoxPage_->getTabSheet();
 
 	//add a panel for ListBoxControl-related controls
 	Panel* listBoxGroup = new Panel();
@@ -243,7 +243,7 @@ void MainWindow::onbtnRemove( VCF::ButtonEvent* ) {
 	while ( true == items->hasMoreElements( true ) ) {
 		ListItem* item = items->prevElement();
 		if ( item->isSelected() ) {			
-			LBCModel->removeAtIndex( item->getIndex() );
+			LBCModel->remove( item->getIndex() );
 		}
 	}
 
@@ -271,7 +271,7 @@ void MainWindow::makeBordersPage()
 {
 	double borderWidth = UIToolkit::getUIMetricValue(UIMetricsManager::mtContainerBorderDelta);
 
-	Panel* pagePanel = (Panel*)bordersPage_->getPageControl();
+	Panel* pagePanel = (Panel*)bordersPage_->getTabSheet();
 
 	// 2 panels, just to aid in layout.
 	Panel* leftPanel = new Panel();
@@ -347,7 +347,7 @@ void MainWindow::makeButtonsPage()
 	//container->setAverageHeights(true);
 	container->setKeepControlsWidth( false );
 
-	buttonsPage_->getPageControl()->setContainer( container );
+	buttonsPage_->getTabSheet()->setContainer( container );
 
 
 
@@ -768,11 +768,11 @@ void MainWindow::onButtonClicked( ButtonEvent* e )
 void MainWindow::onSingletextCtrlSelectionChanged( Event* e )
 {
 	TextControl* tc = (TextControl*) e->getSource();
-	Label* label = (Label*)textPage_->getPageControl()->findComponent( "SelectionStart", true );
+	Label* label = (Label*)textPage_->getTabSheet()->findComponent( "SelectionStart", true );
 
 	label->setCaption( Format("%d") % tc->getSelectionStart() );
 
-	label = (Label*)textPage_->getPageControl()->findComponent( "SelectionCount", true );
+	label = (Label*)textPage_->getTabSheet()->findComponent( "SelectionCount", true );
 	label->setCaption( Format("%d") % tc->getSelectionCount() );
 }
 
@@ -781,7 +781,7 @@ void MainWindow::makeTextPage()
 	HorizontalLayoutContainer* container = new HorizontalLayoutContainer();
 	container->setColumnWidth( 0, 200 );
 
-	textPage_->getPageControl()->setContainer( container );
+	textPage_->getTabSheet()->setContainer( container );
 
 	Label* label = new Label();
 
@@ -852,7 +852,7 @@ void MainWindow::makeTextPage()
 
 void MainWindow::makeTreePage()
 {
-	Container* container = treePage_->getPageControl()->getContainer();
+	Container* container = treePage_->getTabSheet()->getContainer();
 
 	Label* label = new Label();
 	label->setWidth( 200 );
@@ -866,16 +866,16 @@ void MainWindow::makeTreePage()
 	label->setCaption( s );
 	TreeControl* tc = new TreeControl();
 
-	TreeItem* i = tc->addItem( NULL, "Item 1" );
-	tc->addItem( i, "Item 1a" );
-	tc->addItem( i, "Item 1b" );
-	tc->addItem( i, "Item 1c" );
-	tc->addItem( i, "Item 1d" );
-	tc->addItem( i, "Item 1e" );
-	tc->addItem( i, "Item 1f" );
-	tc->addItem( i, "Item 1g" );
-	tc->addItem( i, "Item 1h" );
-	tc->addItem( i, "Item 1i" );
+	TreeItem* i = tc->insertItem( NULL, "Item 1" );
+	tc->insertItem( i, "Item 1a" );
+	tc->insertItem( i, "Item 1b" );
+	tc->insertItem( i, "Item 1c" );
+	tc->insertItem( i, "Item 1d" );
+	tc->insertItem( i, "Item 1e" );
+	tc->insertItem( i, "Item 1f" );
+	tc->insertItem( i, "Item 1g" );
+	tc->insertItem( i, "Item 1h" );
+	tc->insertItem( i, "Item 1i" );
 
 	container->add( tc, AlignClient );
 }

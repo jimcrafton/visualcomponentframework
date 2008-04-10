@@ -127,6 +127,7 @@ Win32Tree::Win32Tree( TreeControl* tree ):
 	treeControl_( tree ),
 	imageListCtrl_(NULL),
 	stateImageListCtrl_(NULL),
+	headerImageListCtrl_(NULL),
 	internalTreeItemMod_(false),
 	currentCtx_(NULL),
 	headerWnd_(NULL),
@@ -251,10 +252,6 @@ void Win32Tree::setItemIndent( const double& indent )
 	BOOL err = TreeView_SetIndent( hwnd_, (int)indent );
 }
 
-ImageList* Win32Tree::getImageList()
-{
-	return NULL;
-}
 
 void Win32Tree::setImageList( ImageList* imageList )
 {
@@ -485,6 +482,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 
 
+			currentCtx_ = NULL;
 
 			EndPaint( hwnd_, &ps );
 
@@ -1176,7 +1174,9 @@ Do we need these? What advantage does processing these events have for us???
 								itemRect.right_ = treeViewDraw->nmcd.rc.right;
 								itemRect.bottom_ = treeViewDraw->nmcd.rc.bottom;
 
-								item->paint( currentCtx_, &itemRect );
+								if ( NULL != currentCtx_ ) {
+									item->paint( currentCtx_, &itemRect );
+								}								
 							}
 						}
 					}
@@ -1193,8 +1193,10 @@ Do we need these? What advantage does processing these events have for us???
 		break;
 
 		case WM_SIZE : {
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
-
+			result = true;
+			AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+			
+			int hdrHeight = 0;
 			if ( NULL != headerWnd_ ) {
 				RECT r = {0};
 				GetWindowRect( headerWnd_, &r );
@@ -1204,10 +1206,42 @@ Do we need these? What advantage does processing these events have for us???
 				layout.prc = &r;
 				layout.pwpos = &wp;
 
+				hdrHeight = wp.cy;
 				::SendMessage( headerWnd_, HDM_LAYOUT, 0, (LPARAM)&layout );
 
 				MoveWindow( headerWnd_, 0, 0, LOWORD(lParam), wp.cy, TRUE );
 			}
+
+
+			wndProcResult = defaultWndProcedure( message, wParam, lParam );
+
+			
+			if ( NULL != headerWnd_ ) {
+				if ( ::IsWindowVisible(headerWnd_) ) {
+					/*
+					SCROLLINFO si = {0};
+					si.cbSize = sizeof(SCROLLINFO);
+					si.fMask = SIF_PAGE | SIF_RANGE;
+					GetScrollInfo( hwnd_, SB_VERT, &si );
+					si.nMax += hdrHeight;
+					::SetScrollInfo( hwnd_, SB_VERT, &si, TRUE );
+
+					int hdrWidth = 0;
+					int count = SendMessage(headerWnd_,HDM_GETITEMCOUNT,0,0);
+					for (size_t i=0;i<count;i++ ) {
+						RECT r = {0};
+						SendMessage( headerWnd_,	HDM_GETITEMRECT, i, (LPARAM)&r );
+						hdrWidth += (r.right - r.left);
+					}
+
+					si.fMask = SIF_PAGE | SIF_RANGE;
+					GetScrollInfo( hwnd_, SB_HORZ, &si );
+					si.nMax = hdrWidth;
+					::SetScrollInfo( hwnd_, SB_HORZ, &si, TRUE );
+					*/
+				}
+			}
+			
 		}
 		break;
 
@@ -1234,11 +1268,12 @@ Do we need these? What advantage does processing these events have for us???
 								NMHDDISPINFOW* dispInfo = (NMHDDISPINFOW*)lParam;
 								
 								ColumnModel* cm = treeControl_->getColumnModel();
-								//ColumnItem* item = treeControl_->getColumnItem( (uint32)dispInfo->lParam );
+								
 								
 								if ( NULL != cm ) {
 									if ( dispInfo->mask & HDI_IMAGE ) {
-										dispInfo->iImage = 0;//item->getImageIndex();
+										ColumnItem* item = treeControl_->getColumnItem( (uint32)dispInfo->lParam );
+										dispInfo->iImage = item->getImageIndex();
 									}
 									
 									if ( dispInfo->mask & HDI_TEXT ) {								
@@ -1369,6 +1404,10 @@ Do we need these? What advantage does processing these events have for us???
 
 void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 {
+	if ( headerRects_.empty() ) {
+		return;
+	}
+
 	int dcs = SaveDC( drawInfo->nmcd.hdc );
 	
 	TVITEM tvItem = {0};
@@ -1544,7 +1583,7 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 		s = tm->getSubItemAsString( key, i-1 );	
 		
 		if ( !s.empty() ) {
-			r.left = headerRects_[i].left;
+			r.left = headerRects_[i].left + 5;
 			r.right = headerRects_[i].right;
 
 			r.left -= si.nPos;
@@ -1562,7 +1601,7 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 		}
 
 
-		if ( paintItem ) {
+		if ( NULL != item ) {
 			uint32 siCount = item->getSubItemCount();
 			if ( (i-1) < siCount ) {
 				if ( treeControl_->subItemExists( key, i-1 ) ) {					
@@ -2015,7 +2054,10 @@ void Win32Tree::enableHeader( const bool& val )
 				HDITEMW headerItem;
 				memset( &headerItem, 0, sizeof(headerItem) );
 				headerItem.mask = HDI_LPARAM | HDI_WIDTH|HDI_FORMAT|HDI_TEXT;
-				//HDI_LPARAM | | HDI_IMAGE | | ;				
+				//HDI_LPARAM | | HDI_IMAGE | | ;
+				if ( this->headerImageListCtrl_ != NULL ) {
+					headerItem.mask |= HDI_IMAGE;
+				}
 				
 				headerItem.lParam = (LPARAM)j;
 				headerItem.iImage = I_IMAGECALLBACK;
@@ -2152,7 +2194,10 @@ void Win32Tree::onColumnModelChanged( ModelEvent* event )
 			 
 			HDITEMW headerItem;
 			memset( &headerItem, 0, sizeof(headerItem) );
-			headerItem.mask = HDI_LPARAM | HDI_WIDTH|HDI_FORMAT|HDI_TEXT;
+			headerItem.mask = HDI_LPARAM | HDI_WIDTH|HDI_FORMAT|HDI_TEXT;//
+			if ( this->headerImageListCtrl_ != NULL ) {
+				headerItem.mask |= HDI_IMAGE;
+			}
 			//HDI_LPARAM | | HDI_IMAGE | | ;				
 			
 			headerItem.lParam = (LPARAM)lme->index;
@@ -2171,6 +2216,134 @@ void Win32Tree::onColumnModelChanged( ModelEvent* event )
 		}
 		break;
 	}
+}
+
+void Win32Tree::setDisplayOptions( uint32 displayOptions )
+{
+	bool showHeader = (displayOptions & tdoShowColumnHeader) ? true : false;
+
+	this->enableHeader( showHeader );
+
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
+
+	if ( displayOptions & tdoShowHierarchyLines ) {
+		style |= TVS_HASLINES;
+	}
+	else {
+		style &= ~TVS_HASLINES;
+	}
+
+	
+	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
+
+	::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
+
+	::UpdateWindow( hwnd_ );
+
+}
+
+void Win32Tree::setHeaderImageList( ImageList* imageList )
+{
+	if ( NULL != imageListCtrl_ ) {
+		BOOL err = ImageList_Destroy( headerImageListCtrl_ );
+	}
+	headerImageListCtrl_ = NULL;
+
+	if ( NULL != this->headerWnd_ ) {
+		Header_SetImageList( headerWnd_, headerImageListCtrl_ );
+	}
+
+	if ( imageList != NULL ) {
+		headerImageListCtrl_ = ImageList_Create( imageList->getImageWidth(), imageList->getImageHeight(),
+										ILC_COLOR24|ILC_MASK, imageList->getImageCount(), 4 );
+
+		Image* masterImage = imageList->getMasterImage();
+		Win32Image* win32Img = (Win32Image*)masterImage;
+
+		/*
+		JC added this cause it appears that for 32bit images the alpa val
+		matters! If it's not set back to 0 then the transparency affect doesn't
+		work? Bizarre
+		*/
+		ColorPixels pix(win32Img);
+		SysPixelType* bits = pix;
+		int sz = win32Img->getWidth() * win32Img->getHeight();
+		unsigned char* oldAlpaVals = new unsigned char[sz];
+		do {
+			sz --;
+			oldAlpaVals[sz] = bits[sz].a;
+			bits[sz].a = 0;
+		} while( sz > 0 );
+
+		HBITMAP hbmImage = win32Img->getBitmap();
+
+		COLORREF transparentColor = imageList->getTransparentColor()->getColorRef32();		
+
+		//JEC 11/05/2002 currently on NT4 this call seems to fail, returning the same
+		//HBITMAP value as hbmImage. This is running on NT4 in VMWare perhaps this is
+		//some weird bug within VMWare? Need to test this on a "real" NT4 install
+		HBITMAP hBMPcopy = (HBITMAP)CopyImage( hbmImage, IMAGE_BITMAP,
+												0,
+												0,
+												NULL );
+
+		int err = ImageList_AddMasked( headerImageListCtrl_, hBMPcopy, transparentColor );
+		if ( err < 0 ) {
+			//error condition !
+		}
+
+		DeleteObject( hBMPcopy );
+		sz = win32Img->getWidth() * win32Img->getHeight();
+		do {
+			sz --;
+			bits[sz].a = oldAlpaVals[sz];
+		} while( sz > 0 );
+
+		delete [] oldAlpaVals;
+
+
+		if ( NULL != this->headerWnd_ ) {
+			Header_SetImageList( headerWnd_, headerImageListCtrl_ );
+		}
+
+
+		CallBack* imgListHandler = getCallback( "Win32Tree::onHeaderImageListImageChanged" );
+		if ( NULL == imgListHandler ) {
+			imgListHandler =
+				new ClassProcedure1<ImageListEvent*, Win32Tree>(this, &Win32Tree::onHeaderImageListImageChanged, "Win32Tree::onHeaderImageListImageChanged" );
+
+		}
+		imageList->SizeChanged += imgListHandler;
+		imageList->ImageAdded += imgListHandler;
+		imageList->ImageDeleted += imgListHandler;
+	}
+
+
+	//reset header item flags
+	int count = SendMessage( this->headerWnd_, HDM_GETITEMCOUNT, 0, 0 );
+	for (int i=0;i<count;i++ ) {
+		HDITEM item = {0};
+		item.mask = HDI_FORMAT | HDI_IMAGE;
+
+		SendMessage( headerWnd_, HDM_GETITEM, i, (LPARAM)&item );
+
+		if ( imageList == NULL ) {
+			item.fmt &= ~HDF_IMAGE;
+			item.iImage = -1;
+		}
+		else {
+			item.fmt |= HDF_IMAGE;
+			item.iImage = I_IMAGECALLBACK;
+		}
+
+		SendMessage( headerWnd_, HDM_SETITEM, i, (LPARAM)&item );
+	}
+}
+
+void Win32Tree::onHeaderImageListImageChanged( ImageListEvent* event )
+{
+	ImageList* imageList = (ImageList*)event->getSource();
+	setHeaderImageList( imageList );
 }
 /**
 $Id$

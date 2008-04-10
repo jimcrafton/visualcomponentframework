@@ -28,7 +28,7 @@ public:
 		context->setColor( Color::getColor("blue") );
 
 		Rect r = *paintRect;
-		r.inflate( -2,-1 );
+		r.inflate( 0,-1 );
 		context->rectangle( &r );
 		context->strokePath();
 
@@ -305,7 +305,7 @@ public:
 
 		
 
-		treeList->showColumnHeader( true );
+		treeList->setHeaderVisible( true );
 
 		treeList->showHierarchyLines( true );
 
@@ -317,8 +317,6 @@ public:
 		Panel* panel = new Panel();
 		panel->setTransparent( true );
 
-		treeList->setTransparent( true );
-
 		panel->setHeight( 35 );
 		add( panel, AlignBottom );
 
@@ -328,8 +326,7 @@ public:
 
 		
 
-		HeaderControl* header = treeList->getHeader();
-		header->ColumnItemClicked.add(
+		treeList->ColumnItemClicked.add(
 			new ClassProcedure1<MouseEvent*,TreeListControlsWindow>( this, &TreeListControlsWindow::headerColumnClicked, "TreeListControlsWindow::headerColumnClicked" ) );
 
 	}
@@ -343,10 +340,11 @@ public:
 	}
 
 	void onTreeItemSelected( ItemEvent* e ) {
-		TreeListControl* tlc = (TreeListControl*)e->getSource();
+		TreeItem* item = (TreeItem*)e->getSource();
 
-		TreeItem* item = tlc->getSelectedItem();
-		if ( item ) {
+		TreeListControl* tlc = (TreeListControl*)item->getControl();		
+		
+		if ( item->isSelected() ) {
 			String s = "Selected item: " + item->getCaption();
 			s += " column width: " + StringUtils::toString( tlc->getColumnWidth( 2 ) );
 			status->setCaption( s );

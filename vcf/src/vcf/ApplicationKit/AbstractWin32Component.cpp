@@ -637,11 +637,12 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 	*/
 	if ( !canProcessMessages_ && (VCF_CONTROL_CREATE != message) ) {
 		
-		if ( (message == WM_SIZE) || 
-			(message == WM_MOVE) ||
-			(message == WM_ERASEBKGND) ||
-			(message == WM_SETFOCUS) ||			
-			(message == WM_KILLFOCUS) )  {
+		if ( (message == WM_SIZE)
+			|| (message == WM_MOVE)
+			|| (message == WM_ERASEBKGND)
+			//|| (message == WM_SETFOCUS)
+			//|| (message == WM_KILLFOCUS) 
+			)  {
 			
 			MSG m;
 			memset(&m,0,sizeof(m));
@@ -658,7 +659,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		where this control will be, (but before this control is to be painted), and 
 		we will get a flicker effect.
 		*/
-		if( message == WM_ERASEBKGND )
+		if( message == WM_ERASEBKGND || message == WM_SETFOCUS || message == WM_KILLFOCUS )
 		{
 			wndProcResult = 0;			
 			return true;
@@ -723,7 +724,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		break;
 
 		case  WM_SETFOCUS : {
-			/*
+			
 			HWND hwndLoseFocus = (HWND) wParam;
 			Win32Object* obj = Win32Object::getWin32ObjectFromHWND( hwndLoseFocus );
 			if ( NULL != obj ){
@@ -731,7 +732,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 				StringUtils::trace( Format( "lost focus: %s @ %p\n" ) % obj->getPeerControl()->getClassName() % obj->getPeerControl() );
 
 			}
-			*/
+			
 			if ( NULL != event && (!peerControl_->isDestroying()) ) {
 				peerControl_->handleEvent( event );
 			}
@@ -739,7 +740,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		break;
 
 		case  WM_KILLFOCUS : {
-			/*
+			
 			HWND hwndGetFocus = (HWND) wParam;
 			Win32Object* obj = Win32Object::getWin32ObjectFromHWND( hwndGetFocus );
 			if ( NULL != obj ){
@@ -747,7 +748,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 				StringUtils::trace( Format( "gained focus: %s @ %p\n" ) % obj->getPeerControl()->getClassName() % obj->getPeerControl() );
 
 			}
-			*/
+			
 			
 			if ( NULL != event && (!peerControl_->isDestroying()) ) {
 				peerControl_->handleEvent( event );

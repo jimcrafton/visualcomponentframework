@@ -58,47 +58,6 @@ private:
 
 	HiResClock& operator=( const HiResClock& rhs );
 };
-/*
-
-class MyTree : public TreeListControl {
-public:
-	MyTree(): TreeListControl() {
-		columnModel_->add( "Column 1" );
-		columnModel_->add( "Column 2" );
-
-		treePeer_->enableHeader( true );
-
-
-		treePeer_->setColumnWidth( 0, 200 );
-		treePeer_->setColumnTextAlignment( 1, taTextCenter );
-
-		TreeModel* tm = getTreeModel();
-		TreeModel::Key k1 = tm->insert( "testA" );
-		TreeModel::Key k2 = tm->insert( "testB" );
-		TreeModel::Key k3 = tm->insert( "testC" );
-		TreeModel::Key k4 = tm->insert( "testD" );
-		for (int i=0;i<100;i++ ) {
-			TreeModel::Key kk = tm->insert( "test (p = testD)", k4 );			
-			TreeModel::Key kkk = tm->insert( "test (p = kk)", kk );
-			tm->insert( "test (p = kkk)", kkk );
-		}
-
-		tm->insertSubItem( k2, 0, "sub 1" );
-		tm->insertSubItem( k2, 1, "sub 2" );
-
-
-		ColumnItem* ci = new ColumnItem();
-		addComponent( ci );
-		ci->setCaption( "Platypus!" );
-	}
-
-	
-};
-
-*/
-
-
-
 
 
 

@@ -52,6 +52,7 @@ object TreesWindow  : VCF::Window
 	object treeCtrl2 : VCF::TreeListControl
 		height = 200
 		alignment = AlignBottom
+		headerImageList = @imgList
 		object tia1 : VCF::TreeItem 
 			caption = 'tia1'
 
@@ -71,10 +72,12 @@ object TreesWindow  : VCF::Window
 
 		object col1 : VCF::ColumnItem 
 			caption = 'Gargle'
+			width = 150
 		end
 
 		object col2 : VCF::ColumnItem 
 			caption = 'State'
+			imageIndex = 4
 		end
 	end
 end

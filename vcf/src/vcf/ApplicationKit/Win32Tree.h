@@ -37,11 +37,11 @@ public:
 
     virtual void setItemIndent( const double& indent );
 
-    virtual ImageList* getImageList();
-
 	virtual void setStateImageList( ImageList* imageList );
 
     virtual void setImageList( ImageList* imageList );	
+
+	virtual void setHeaderImageList( ImageList* imageList );
 
 	virtual Win32Object::CreateParams createParams();
 
@@ -65,6 +65,8 @@ public:
 
 	virtual void setColumnTextAlignment( const uint32& index, const TextAlignmentType& val );
 
+	virtual void setDisplayOptions( uint32 displayOptions );
+
 	virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc = NULL);
 private:
 
@@ -72,6 +74,7 @@ private:
 	std::map<TreeModel::Key,HTREEITEM> treeItems_;
 	HIMAGELIST imageListCtrl_;
 	HIMAGELIST stateImageListCtrl_;
+	HIMAGELIST headerImageListCtrl_;
 	GraphicsContext* currentCtx_;
 	HWND headerWnd_;
 	WNDPROC oldHeaderWndProc_;
@@ -85,6 +88,7 @@ private:
 	bool internalTreeItemMod_;
 	void onImageListImageChanged( ImageListEvent* event );
 	void onStateImageListImageChanged( ImageListEvent* event );
+	void onHeaderImageListImageChanged( ImageListEvent* event );
 
 	void onControlModelChanged( Event* e );
 	void onItemExpanded( ItemEvent* e );

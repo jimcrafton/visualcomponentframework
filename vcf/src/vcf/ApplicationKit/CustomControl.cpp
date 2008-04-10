@@ -99,7 +99,7 @@ void CustomControl::init()
 {
 	setEnabled( true );
 	setVisible( true );
-	setFocused();
+	//setFocused();
 }
 
 bool CustomControl::isLightWeight()

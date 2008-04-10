@@ -179,6 +179,9 @@ TreeSubItem* TreeItem::addSubItem( const String& caption, void* data )
 
 	addSubItem( result );
 
+	result->setCaption( caption );
+	result->setData( data );
+
 	return result;
 }
 

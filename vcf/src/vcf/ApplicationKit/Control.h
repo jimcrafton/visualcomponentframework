@@ -781,7 +781,7 @@ public:
 	*implements the Container interface, then any child controls
 	*wil be resized via the Container::resizeChildren() automatically.
 	*/
-	virtual void setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating=true ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
+	void setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating=true ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 	/**
 	*sets the alignment of the control

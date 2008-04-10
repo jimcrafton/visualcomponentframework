@@ -554,7 +554,8 @@ File* FileSearchFilterStandard::passSearchFilter( const File* file, const Direct
 	bool pass = false;
 	if ( 0 == searchFiltersBasename_.size() ) {
 		pass = true;
-	} else {
+	} 
+	else {
 		searchFilterIterator_ = searchFiltersBasename_.begin();
 		while ( searchFilterIterator_ != searchFiltersBasename_.end() ) {
 			sf = *searchFilterIterator_ ++;

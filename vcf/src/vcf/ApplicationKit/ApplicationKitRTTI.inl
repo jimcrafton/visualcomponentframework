@@ -66,6 +66,25 @@ static String TextAlignmentTypeNames[] = { "taTextLeft",
 static uint32 KeyboardMaskValues[] = { kmUndefined, kmAlt, kmShift,kmCtrl };
 static String KeyboardMaskNames[] = { "kmUndefined", "kmAlt", "kmShift","kmCtrl" };
 
+/**
+*an array of Anchor type names
+*/
+static String TreeDisplayOptionsNames[] = { "tdoNone",
+                                         "tdoShowHierarchyLines",
+										 "tdoShowRowLines",
+										 "tdoShowColumnLines",
+										 "tdoShowFullRowSelection",
+										 "tdoShowColumnHeader" };
+										 
+										 
+										 
+
+static uint32 TreeDisplayOptionsValues[] = { tdoNone,
+                                         tdoShowHierarchyLines,
+										 tdoShowRowLines,
+										 tdoShowColumnLines,
+										 tdoShowFullRowSelection,
+										 tdoShowColumnHeader };	
 
 //enum VirtualKeyCode{
 static String VirtualKeyCodeNames[] = {	
@@ -794,12 +813,17 @@ _delegate_(ItemDelegate, ItemExpanded );
 _delegate_(ItemDelegate, ItemStateChangeRequested );
 _property_object_( ImageList, "imageList", getImageList, setImageList, "" );
 _property_object_( ImageList, "stateImageList", getStateImageList, setStateImageList, "" );
+_property_enumset_( uint32, "displayOptions", getDisplayOptions, setDisplayOptions, 6, TreeDisplayOptionsValues, TreeDisplayOptionsNames, ""  );
+
 _class_rtti_end_
 
 
 
 _class_rtti_(TreeListControl, "VCF::TreeControl", TREELISTCONTROL_CLASSID )
 _property_object_ro_( ColumnModel, "columnModel", getColumnModel, "" );
+_property_object_( ImageList, "headerImageList", getHeaderImageList, setHeaderImageList, "" );
+_delegate_(MouseDelegate, ColumnItemClicked );
+_delegate_(ItemDelegate, ColumnWidthChanged );
 _class_rtti_end_
 
 /*

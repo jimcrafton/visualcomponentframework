@@ -8,6 +8,7 @@
 #include "vcf/ApplicationKit/Win32DropDownPeer.h"
 #include "vcf/ApplicationKit/ListModel.h"
 #include "vcf/ApplicationKit/ListItem.h"
+#include "vcf/GraphicsKit/DrawUIState.h"
 
 
 using namespace VCFWin32;
@@ -426,7 +427,13 @@ bool Win32DropDownPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM
 				gc.fillPath();
 
 
-				gc.textBoundedBy( &r, s );
+				TextState txt;
+				txt.setEnabled( !(drawItemStruct->itemState & ODS_DISABLED) );
+				txt.text_ = s;
+				txt.wrapText_ = false;
+				
+				gc.textWithStateAt( r.getTopLeft(), s, !(drawItemStruct->itemState & ODS_DISABLED) );
+					//drawThemeText( &r, txt );
 
 
 				if ( NULL != item ) {
