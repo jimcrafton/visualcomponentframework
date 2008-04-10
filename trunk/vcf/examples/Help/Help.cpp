@@ -220,7 +220,7 @@ public:
 		Point pt = UIShell::getUIShell()->getCurrentMousePosition();
 
 		Rect r = l1->getBounds();
-		l1->getParent()->translateToScreenCoords(&r);
+		l1->translateToScreenCoords(&r);
 		if ( r.containsPt( &pt ) ) {
 
 			he->helpSection = "index.html#Complex";
@@ -229,7 +229,7 @@ public:
 		}
 
 		r = l2->getBounds();
-		l2->getParent()->translateToScreenCoords(&r);
+		l2->translateToScreenCoords(&r);
 		if ( r.containsPt( &pt ) ) {
 
 			he->helpSection = "index.html#figure1";
@@ -238,7 +238,7 @@ public:
 		}
 
 		r = l3->getBounds();
-		l3->getParent()->translateToScreenCoords(&r);
+		l3->translateToScreenCoords(&r);
 		if ( r.containsPt( &pt ) ) {
 
 			he->helpSection = "index.html#fig1expl";
@@ -247,7 +247,7 @@ public:
 		}
 
 		r = l4->getBounds();
-		l4->getParent()->translateToScreenCoords(&r);
+		l4->translateToScreenCoords(&r);
 		if ( r.containsPt( &pt ) ) {
 
 			he->helpSection = "index.html#yada";
