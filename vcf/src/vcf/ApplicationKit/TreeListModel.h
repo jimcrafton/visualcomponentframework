@@ -22,6 +22,9 @@ where you installed the VCF.
 
 namespace VCF {
 
+#define TREELISTMODEL_CLASSID		"FE9E2A20-BC22-4BC4-9B62-E271D3867FC9"
+
+
 
 class TreeListModel : public DefaultTreeModel {
 public:

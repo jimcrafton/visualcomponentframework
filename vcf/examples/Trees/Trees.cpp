@@ -58,7 +58,7 @@ private:
 
 	HiResClock& operator=( const HiResClock& rhs );
 };
-
+/*
 
 class MyTree : public TreeListControl {
 public:
@@ -95,7 +95,7 @@ public:
 	
 };
 
-
+*/
 
 
 
@@ -259,9 +259,9 @@ public:
 
 
 
-		MyTree* myTree = new MyTree();
-		myTree->setHeight( 200 );
-		mainWindow->add( myTree, AlignBottom );
+		//MyTree* myTree = new MyTree();
+		//myTree->setHeight( 200 );
+		//mainWindow->add( myTree, AlignBottom );
 
 
 

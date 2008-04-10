@@ -27,11 +27,15 @@ namespace VCF {
 class Color;
 class TreeItem;
 
-class APPLICATIONKIT_API TreeSubItem : public Object {
+#define TREESUBITEM_CLASSID		"EEEFBDCB-7752-4A15-8B4A-BDDF5978CA55"
+
+class APPLICATIONKIT_API TreeSubItem : public UIComponent {
 public:
 	TreeSubItem( TreeItem* ownerItem ) : data_(NULL){
 		ownerItem_ = ownerItem;
 	}
+
+	TreeSubItem(): data_(NULL),ownerItem_(NULL){}
 
 	virtual ~TreeSubItem(){};
 
@@ -51,6 +55,13 @@ public:
 
 	virtual void paint( GraphicsContext* context, Rect* paintRect ) {}
 
+	TreeItem* getTreeItem() {
+		return ownerItem_;
+	}
+
+	void setTreeItem( TreeItem* val ) {
+		ownerItem_ = val;
+	}
 protected:		
 	void* data_;
 	TreeItem* ownerItem_;
@@ -80,6 +91,7 @@ public:
 	virtual void removeItemSubItem( TreeItem* item, TreeSubItem* subItem ) = 0;
 	virtual bool getItemSubItems( TreeItem* item, std::vector<TreeSubItem*>& subItems ) = 0;
 	virtual TreeSubItem* getItemSubItem( TreeItem* item, const uint32& index ) = 0;
+	virtual uint32 getItemSubItemIndex( TreeItem* item, TreeSubItem* subItem ) = 0;
 	virtual uint32 getItemSubItemCount( TreeItem* item ) = 0;
 
 	virtual void itemExpanded( TreeItem* item ) = 0;
@@ -222,6 +234,7 @@ protected:
 	int32 selectedImageIndex_;
 	int32 expandedImageIndex_;
 	int32 stateImageIndex_;
+	bool internalChange_;
 };
 
 

@@ -22,7 +22,7 @@ This was created to improved compile times
 #include "vcf/ApplicationKit/ColumnLayoutContainer.h"
 #include "vcf/ApplicationKit/HorizontalLayoutContainer.h"
 #include "vcf/ApplicationKit/SimpleListModel.h"
-
+#include "vcf/ApplicationKit/TreeListModel.h"
 
 namespace VCF {
 
@@ -468,28 +468,28 @@ _class_rtti_(TreeItem, "VCF::Item", TREEITEM_CLASSID)
 _property_( String, "caption", getCaption, setCaption, "" )
 _class_rtti_end_
 
+_class_rtti_(TreeSubItem, "VCF::UIComponent", TREESUBITEM_CLASSID)
+_property_( String, "caption", getCaption, setCaption, "" )
+_class_rtti_end_
+
 
 
 _class_abstract_rtti_(TreeModel, "VCF::Model", TREEMODEL_CLASSID)
+	_delegate_(TreeModelDelegate, NodeAdded )
+	_delegate_(TreeModelDelegate, NodeRemoved )
+_class_rtti_end_
 
 
+_class_rtti_(DefaultTreeModel, "VCF::TreeModel", DEFAULTTREEMODEL_CLASSID)
+	
 _class_rtti_end_
 
 
 
-/**
--------------------------------------------------------------------------------
-*/
-
-/*
-_class_rtti_(AbstractTreeModel, "VCF::AbstractTreeModel", "VCF::TreeModel", ABSTRACTTREEMODEL_CLASSID)
-_delegate_( "VCF::ModelEventHandler", AbstractTreeModel, VCF::ModelEvent, ModelEmptied )
-_delegate_( "VCF::ModelValidationEventHandler", AbstractTreeModel, VCF::ValidationEvent, ModelValidate )
-_delegate_( "VCF::TreeModelEventHandler", AbstractTreeModel, VCF::TreeModelEvent, RootNodeChanged )
-_delegate_( "VCF::TreeModelEventHandler", AbstractTreeModel, VCF::TreeModelEvent, NodeAdded )
-_delegate_( "VCF::TreeModelEventHandler", AbstractTreeModel, VCF::TreeModelEvent, NodeDeleted )
+_class_rtti_(TreeListModel, "VCF::DefaultTreeModel", TREELISTMODEL_CLASSID)
+	
 _class_rtti_end_
-*/
+
 
 
 _class_rtti_(CheckBoxControl, "VCF::ToggledButton", CHECKBOXCONTROL_CLASSID )
@@ -570,11 +570,6 @@ _class_rtti_end_
 _class_rtti_(DefaultTextModel, "VCF::TextModel", DEFAULTTEXTMODEL_CLASSID)	
 _class_rtti_end_
 
-
-_class_rtti_(DefaultTreeModel, "VCF::Model", DEFAULTTREEMODEL_CLASSID)
-	_delegate_(TreeModelDelegate, NodeAdded )
-	_delegate_(TreeModelDelegate, NodeRemoved )
-_class_rtti_end_
 
 
 _class_rtti_(Dialog, "VCF::Frame", DIALOG_CLASSID )
@@ -798,16 +793,13 @@ _delegate_(ItemDelegate, ItemSelected );
 _delegate_(ItemDelegate, ItemExpanded );
 _delegate_(ItemDelegate, ItemStateChangeRequested );
 _property_object_( ImageList, "imageList", getImageList, setImageList, "" );
+_property_object_( ImageList, "stateImageList", getStateImageList, setStateImageList, "" );
 _class_rtti_end_
 
 
 
-_class_rtti_(TreeListControl, "VCF::CustomControl", TREELISTCONTROL_CLASSID )
-_property_object_( TreeModel, "treeModel", getTreeModel, setTreeModel, "" );
-_delegate_(ItemDelegate, ItemSelected );
-_delegate_(ItemDelegate, ItemExpanded );
-_delegate_(ItemDelegate, ItemStateChangeRequested );
-_property_object_( ImageList, "imageList", getImageList, setImageList, "" );
+_class_rtti_(TreeListControl, "VCF::TreeControl", TREELISTCONTROL_CLASSID )
+_property_object_ro_( ColumnModel, "columnModel", getColumnModel, "" );
 _class_rtti_end_
 
 /*

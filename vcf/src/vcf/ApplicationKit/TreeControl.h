@@ -112,6 +112,7 @@ public:
 	virtual void removeItemSubItem( TreeItem* item, TreeSubItem* subItem );
 	virtual bool getItemSubItems( TreeItem* item, std::vector<TreeSubItem*>& subItems );
 	virtual TreeSubItem* getItemSubItem( TreeItem* item, const uint32& index );
+	virtual uint32 getItemSubItemIndex( TreeItem* item, TreeSubItem* subItem );
 	virtual uint32 getItemSubItemCount( TreeItem* item );
 
 	virtual void itemExpanded( TreeItem* item );

@@ -47,6 +47,8 @@ TreeListControl::TreeListControl():
 
 	ev = new ClassProcedure1<ListModelEvent*,TreeListControl>( this, &TreeListControl::onColumnItemDeleted, "TreeListControl::onColumnItemDeleted" );
 	columnModel_->ItemRemoved += ev; 
+
+	treePeer_->enableHeader( true );
 }
 
 TreeListControl::~TreeListControl()
@@ -506,6 +508,25 @@ TreeSubItem* TreeListControl::getItemSubItem( TreeItem* item, const uint32& inde
 	
 	return result;
 }
+
+
+uint32 TreeListControl::getItemSubItemIndex( TreeItem* item, TreeSubItem* subItem )
+{
+	uint32 result = 0;
+
+	SubItemIteratorPair res = subItems_.equal_range( item );
+
+	while ( res.first != res.second ) {
+		if ( res.first->second == subItem ) {
+			break;
+		}
+		result ++;
+		++res.first;
+	}
+
+	return result;
+}
+
 
 uint32 TreeListControl::getItemSubItemCount( TreeItem* item ) {
 	uint32 result = 0;
