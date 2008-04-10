@@ -1,8 +1,22 @@
 ////StringPool.cpp
 
-#include "vcf/FoundationKit/FoundationKit.h"
+//#include "vcf/FoundationKit/FoundationKit.h"
 
-using namespace VCF;
+#define WIN32_LEAN_AND_MEAN
+
+#pragma warning (disable:4786)
+#include <string>
+#include <map>
+#include <vector>
+#include <stdio.h>
+#include <windows.h>
+
+
+
+typedef unsigned int uint32;
+typedef unsigned short VCFChar;
+typedef std::basic_string<VCFChar> String;
+
 
 
 class HiResClock {
@@ -72,15 +86,13 @@ public:
 
 	static uint32 hash( const VCFChar* str, size_t length )
     {
-        uint32 result = 0;
-
-		for (size_t i=0;i<length;i+=1 ) {
-        //while ( length>0 ) {
-            result = str[i] + (result << 6) + (result << 16) - result;
-			//length --;
-			//str++;
+        uint32 result = (uint32)str;
+#if 1
+		result = 0;
+		for (size_t i=0;i<length;i+=8 ) {        
+            result = str[i] + (result << 6) + (result << 16) - result;			
 		}
-
+#endif
         return result;
     }
 
@@ -157,7 +169,7 @@ VCFChar* StringPool::allocate(const VCFChar* begin, const VCFChar* end)
 	VCFChar* tmpPtr = next_;
 	if (next_ + length <= limit_) {
 		next_ += length;
-		lstrcpynW(tmpPtr, begin, length);
+		memcpy(tmpPtr, begin, length*sizeof(VCFChar));
 		return tmpPtr;
 	}
 	
@@ -192,22 +204,43 @@ uint32 StringPool::find( const VCFChar* str, size_t length )
 {
 	uint32 result = NoEntry;
 
-	uint32 hash = StringPool::hash(str,length);
+	uint32 hashID = hash(str,length);
 
-	StringMapRangeT found = stringMap_.equal_range( hash );
-	while ( found.first != found.second ) {
-		uint32 idx = found.first->second;
+	StringMapRangeT found = stringMap_.equal_range( hashID );
+	StringMapIter current = found.first;
+
+	size_t rangeCount = 0;
+	while ( current != found.second ) {
+		rangeCount ++;
+		++current;
+	}
+
+	current = found.first;
+	if ( rangeCount == 1 ) {
+		uint32 idx = current->second;
 		if ( idx < stringEntries_.size() ) {
 			const StrEntry& entry = stringEntries_[idx];
 			if ( entry.length == length ) {
-				if ( 0 == memcmp( entry.str, str, length * sizeof(VCFChar) ) ) {
-					result = idx;
-					break;
-				}
+				result = idx;
 			}
 		}
-
-		++found.first ;
+	}
+	else {
+		while ( current != found.second ) {
+			uint32 idx = current->second;
+			if ( idx < stringEntries_.size() ) {
+				const StrEntry& entry = stringEntries_[idx];
+				if ( entry.length == length ) {
+					
+					if ( 0 == memcmp( entry.str, str, length * sizeof(VCFChar) ) ) {
+						result = idx;
+						break;
+					}
+				}
+			}
+			
+			++current ;
+		}
 	}
 	
 
@@ -223,7 +256,7 @@ uint32 StringPool::addString( const VCFChar* str, size_t length )
 	if ( result == NoEntry ) {
 		VCFChar* newStr = allocate( str, str+length );
 
-		uint32 hash = StringPool::hash(str, length);
+		uint32 hashID = hash(str, length);
 
 		StrEntry entry;
 		entry.length = length;
@@ -232,7 +265,7 @@ uint32 StringPool::addString( const VCFChar* str, size_t length )
 		stringEntries_.push_back( entry );
 		result = stringEntries_.size()-1;
 
-		stringMap_.insert(StringMapPairT(hash,result));
+		stringMap_.insert(StringMapPairT(hashID,result));
 	}
 
 
@@ -264,6 +297,32 @@ static StringPool stringPool;
 
 class FastString {
 public:
+
+	typedef VCFChar* iterator;
+    typedef const VCFChar* const_iterator;
+	typedef size_t size_type;
+	typedef ptrdiff_t difference_type;
+	typedef VCFChar value_type;	
+    typedef VCFChar *pointer;
+    typedef const VCFChar *const_pointer;
+	typedef VCFChar& reference;
+    typedef const VCFChar& const_reference;
+
+	typedef std::reverse_iterator<iterator, value_type,
+        reference, pointer, difference_type> reverse_iterator;
+
+	typedef std::reverse_iterator<const_iterator, value_type,
+        const_reference, const_pointer, difference_type>
+            const_reverse_iterator;
+
+
+	enum {
+		npos = (size_type) -1
+	};
+
+
+
+
 
 	FastString( const VCFChar* str ): index_(StringPool::NoEntry) {
 		assign( str, wcslen(str) );
@@ -328,6 +387,98 @@ public:
 	}
 
 
+
+	
+    const_iterator begin() const {
+		return stringPool.getString(index_);
+	}
+
+    const_iterator end() const {
+		return stringPool.getString(index_) + stringPool.getStringLength(index_);
+	}
+    
+    const_reverse_iterator rbegin() const {
+		return const_reverse_iterator( end() );
+	}
+
+    const_reverse_iterator rend() const {
+		return const_reverse_iterator( begin() );
+	}
+
+    const_reference at(size_type pos) const {
+		if ( pos >= stringPool.getStringLength(index_) ) {
+			throw std::out_of_range("array index is too large");
+		}
+		return stringPool.getString(index_)[ pos ];
+	}
+
+    const_reference operator[](size_type pos) const {
+		return stringPool.getString(index_)[ pos ];
+	}
+
+	void swap( FastString& str ) {
+		size_t tmp = index_;
+		index_ = str.index_;
+		str.index_ = tmp;
+	}
+
+	size_type find(const FastString& str, size_type pos = 0) const {
+		return find( str.c_str(), pos, str.size() ); 
+	}
+
+	size_type find(const VCFChar* strPtr, size_type pos = 0) const {
+		return find( strPtr, pos, wcslen(strPtr) ); 
+	}
+
+	size_type find( VCFChar ch, size_type pos = 0) const {
+		return find( (const VCFChar*)&ch, pos, 1); 
+	}
+
+	size_type find( const VCFChar* strPtr, size_type pos, size_type length) const {
+		size_type len = stringPool.getStringLength(index_);
+
+		if (length == 0 && pos <= len) {
+			return (pos);
+		}
+
+		size_type _Nm = len - pos;
+		const VCFChar* ptr = stringPool.getString(index_);
+
+		if ( pos < len && (length <= _Nm) ) {
+			const VCFChar *_U, *_V;
+			
+			for (_Nm -= length - 1, _V = ptr + pos;
+					(_U = wmemchr(_V, _Nm, *strPtr)) != 0;
+					_Nm -= _U - _V + 1, _V = _U + 1) {
+
+					if (wmemcmp(_U, strPtr, length) == 0) {
+						return (_U - ptr); 
+					}
+			}
+		}
+		return FastString::npos; 
+	}
+
+
+
+	size_type rfind( const VCFChar *strPtr, size_type pos, size_type length) const {
+		size_type len = stringPool.getStringLength(index_);
+		if (length == 0) {
+			return (pos < len ? pos : len);
+		}
+
+		if (length <= len) {
+			const VCFChar* ptr = stringPool.getString(index_);
+
+			for (const _E *_U = ptr +
+				+ (pos < len - length ? pos : len - length); ; --_U)
+				if (_Tr::eq(*_U, *strPtr)
+					&& _Tr::compare(_U, strPtr, length) == 0)
+					return (_U - ptr);
+				else if (_U == ptr)
+					break;
+		}
+		return (npos); }
 protected:
 	size_t index_;
 };
@@ -399,7 +550,7 @@ protected:
 
 int main( int argc, char** argv ){
 
-	FoundationKit::init( argc, argv );
+//	FoundationKit::init( argc, argv );
 	{
 		const VCFChar* s = L"Hola";
 		
@@ -507,8 +658,11 @@ int main( int argc, char** argv ){
 
 
 
+	s2.find(L"hello");
+	
 
-	FoundationKit::terminate();
+
+//	FoundationKit::terminate();
 	return 0;
 }
 
