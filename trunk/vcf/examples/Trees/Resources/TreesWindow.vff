@@ -48,4 +48,33 @@ object TreesWindow  : VCF::Window
 			end
 		end
 	end
+
+	object treeCtrl2 : VCF::TreeListControl
+		height = 200
+		alignment = AlignBottom
+		object tia1 : VCF::TreeItem 
+			caption = 'tia1'
+
+			object tia2 : VCF::TreeItem 
+				caption = 'tia2'				
+				font.name = 'Times New Roman'
+				font.color = 'red'
+				font.pointSize = 12 
+				font.bold = true
+
+				object si : VCF::TreeSubItem
+					caption = 'stuffy nose'
+				end
+			end
+		end
+
+
+		object col1 : VCF::ColumnItem 
+			caption = 'Gargle'
+		end
+
+		object col2 : VCF::ColumnItem 
+			caption = 'State'
+		end
+	end
 end

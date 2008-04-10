@@ -91,8 +91,12 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL(TabPage);
 		REGISTER_CLASSINFO_EXTERNAL( TextModel );
 		REGISTER_CLASSINFO_EXTERNAL( TreeItem );
+		REGISTER_CLASSINFO_EXTERNAL( TreeSubItem );
 		REGISTER_CLASSINFO_EXTERNAL( ColumnModel );
 		REGISTER_CLASSINFO_EXTERNAL( TreeModel );
+
+		
+
 		REGISTER_CLASSINFO_EXTERNAL( TableModel );
 		
 		
@@ -122,6 +126,8 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( DefaultListModel );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultTextModel );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultTreeModel );
+		REGISTER_CLASSINFO_EXTERNAL( TreeListModel );
+		
 		REGISTER_CLASSINFO_EXTERNAL( DefaultTableModel );
 
 		REGISTER_CLASSINFO_EXTERNAL( Frame );
@@ -133,7 +139,7 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( Panel );
 		REGISTER_CLASSINFO_EXTERNAL( TextControl );
 		REGISTER_CLASSINFO_EXTERNAL( MultilineTextControl );
-		REGISTER_CLASSINFO_EXTERNAL(TreeControl );
+		REGISTER_CLASSINFO_EXTERNAL(TreeControl );		
 		REGISTER_CLASSINFO_EXTERNAL(Window );
 		REGISTER_CLASSINFO_EXTERNAL( ToggledButton );
 		REGISTER_CLASSINFO_EXTERNAL( CheckBoxControl );

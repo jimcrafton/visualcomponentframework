@@ -15,11 +15,23 @@ using namespace VCF;
 
 String TreeSubItem::getCaption()
 {
-	return "";
+	String result;
+	TreeModel* tm = ownerItem_->getTreeModel();
+	result = tm->getSubItemAsString( ownerItem_->getKey(), 
+							ownerItem_->getController()->getItemSubItemIndex( ownerItem_, this ) );
+
+	if ( getUseLocaleStrings() && (NULL != ownerItem_->getControl()) && (ownerItem_->getControl()->getUseLocaleStrings()) ) {
+		result = System::getCurrentThreadLocale()->translate( result );
+	}
+	return result;
 }
 
 void TreeSubItem::setCaption( const String& caption )
 {
+	TreeModel* tm = ownerItem_->getTreeModel();
+	tm->setSubItemAsString( ownerItem_->getKey(), 
+							ownerItem_->getController()->getItemSubItemIndex(ownerItem_,this), 
+							caption );
 
 }
 
@@ -29,7 +41,8 @@ TreeItem::TreeItem():
 	key_(TreeModel::InvalidKey),
 	selectedImageIndex_(-1),
 	expandedImageIndex_(-1),
-	stateImageIndex_(-1)
+	stateImageIndex_(-1),
+	internalChange_(false)
 {
 
 }
@@ -171,12 +184,16 @@ TreeSubItem* TreeItem::addSubItem( const String& caption, void* data )
 
 void TreeItem::addSubItem( TreeSubItem* subItem )
 {
+	internalChange_ = true;
 	getController()->insertItemSubItem( this, getController()->getItemSubItemCount(this), subItem );
+	internalChange_ = false;
 }
 
 void TreeItem::removeSubItem( const uint32& index )
 {
+	internalChange_ = true;
 	getController()->removeItemSubItem( this, getController()->getItemSubItem(this, index) );
+	internalChange_ = false;
 }
 
 bool TreeItem::getSubItems( std::vector<TreeSubItem*>& subItems )
@@ -221,6 +238,18 @@ void TreeItem::handleEvent( Event* event )
 			if ( NULL != item ) {
 				addChild( item );
 			}
+			else {
+				TreeSubItem* subItem = dynamic_cast<TreeSubItem*>(child);
+				if ( NULL != subItem ) {
+					if ( !internalChange_ ) {
+						if ( subItem->getTreeItem() != this ) {
+							subItem->setTreeItem(this);
+						}			
+						
+						getController()->insertItemSubItem( this, getController()->getItemSubItemCount(this), subItem );
+					}
+				}
+			}
 		}
 		break;
 
@@ -230,3 +259,4 @@ void TreeItem::handleEvent( Event* event )
 		break;
 	}
 }
+

@@ -487,6 +487,11 @@ TreeSubItem* TreeControl::getItemSubItem( TreeItem* item, const uint32& index )
 	return result;
 }
 
+uint32 TreeControl::getItemSubItemIndex( TreeItem* item, TreeSubItem* subItem )
+{
+	return -1;
+}
+
 uint32 TreeControl::getItemSubItemCount( TreeItem* item )
 {
 	return 0;
