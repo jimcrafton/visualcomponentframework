@@ -919,8 +919,8 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 						try {
 							processAsignmentTokens( token, currentSymbol, clazz );
 						}
-						catch ( BasicException& ) {
-							StringUtils::trace( String("Error processing assignment for ") + currentSymbol + "\n" );
+						catch ( BasicException& e ) {
+							StringUtils::trace( String("Error processing assignment for ") + currentSymbol + "\n\tException: " + e.what() + "\n" );
 						}
 					}
 					break;

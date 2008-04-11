@@ -321,7 +321,7 @@ int main( int argc, char** argv ){
 
 
 
-		AsyncURL url("http://www.w3schools.com/xpath/books.xml");
+		AsyncURL url("http://www.w3schools.com/xpath/books.xml",false);
 		
 		url.get();
 
@@ -349,6 +349,7 @@ int main( int argc, char** argv ){
 
 		XmlDocument doc;
 		doc.setXML(xml);
+
 
 		XmlNode root = doc.getRoot();
 		std::vector<XmlNode> children;
@@ -414,9 +415,9 @@ int main( int argc, char** argv ){
 			doc.setXML( BooksXML );
 			
 			XPathIterator xp(doc);
-			Dictionary nsDict;
-			nsDict["bk"] = "http://www.example.com/books";
-			xp.registerNamespaces(nsDict);
+			//Dictionary nsDict;
+			//nsDict["bk"] = "http://www.example.com/books";
+			//xp.registerNamespaces(nsDict);
 			
 			XPathNodeIterator it = xp.selectNodes("/books/bk:book");
 			while ( it != xp.end() && !it.isNull() ) {

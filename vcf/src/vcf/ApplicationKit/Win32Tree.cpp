@@ -228,7 +228,8 @@ Win32Object::CreateParams Win32Tree::createParams()
 	Win32Object::CreateParams result;
 
 
-	result.first = BORDERED_VIEW | TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | /*TVS_NOTOOLTIPS | */ TVS_SHOWSELALWAYS;
+	result.first = BORDERED_VIEW | TVS_HASBUTTONS | 
+			TVS_HASLINES | TVS_LINESATROOT | /*TVS_NOTOOLTIPS | */ TVS_SHOWSELALWAYS;
 
 	result.first &= ~WS_BORDER;
 	result.first &= ~WS_VISIBLE;
@@ -357,11 +358,47 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				}
 			}
 
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );			
 
 			result = true;
 			wndProcResult = defaultWndProcedure( message, wParam, lParam );	
 
+			if ( message == WM_LBUTTONUP ) {
+				//hit test to see if we pressed a state icon
+				if ( NULL != this->stateImageListCtrl_ ) {
+					TVHITTESTINFO hitTestInfo;
+					memset( &hitTestInfo, 0, sizeof(TVHITTESTINFO) );
+					
+					hitTestInfo.pt.x = LOWORD( lParam );
+					hitTestInfo.pt.y = HIWORD( lParam );
+					HTREEITEM hItem = TreeView_HitTest( hwnd_, &hitTestInfo );
+					if ( NULL != hItem ) {
+						if( hitTestInfo.flags & TVHT_ONITEMSTATEICON ) {
+							TVITEM tvItem;
+							memset( &tvItem, 0, sizeof(TVITEM) );
+							tvItem.mask = TVIF_PARAM | TVIF_HANDLE ;
+							tvItem.hItem = hItem;
+							if ( TreeView_GetItem( hwnd_, &tvItem ) ) {
+								TreeItem* item = treeControl_->getItemFromKey( tvItem.lParam );
+								if ( NULL != item ) {
+									
+									ItemEvent event( item, TreeControl::ITEM_STATECHANGE_REQUESTED );
+									
+									treeControl_->handleEvent( &event );
+
+
+									
+									tvItem.mask = TVIF_STATE | TVIF_HANDLE;
+									tvItem.state = INDEXTOSTATEIMAGEMASK( item->getStateImageIndex()+1 );
+									tvItem.stateMask = TVIS_STATEIMAGEMASK;
+									TreeView_SetItem( hwnd_, &tvItem );
+									
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		break;
 
@@ -538,29 +575,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 
 
-			TVHITTESTINFO hitTestInfo;
-			memset( &hitTestInfo, 0, sizeof(TVHITTESTINFO) );
-
-			hitTestInfo.pt.x = Win32UIUtils::getXFromLParam( lParam );
-			hitTestInfo.pt.y = Win32UIUtils::getYFromLParam( lParam );
-			HTREEITEM hItem = TreeView_HitTest( hwnd_, &hitTestInfo );
-			if ( NULL != hItem ) {
-				if( hitTestInfo.flags & TVHT_ONITEMSTATEICON ) {
-					TVITEM tvItem;
-					memset( &tvItem, 0, sizeof(TVITEM) );
-					tvItem.mask = TVIF_PARAM | TVIF_HANDLE ;
-					tvItem.hItem = hItem;
-					if ( TreeView_GetItem( hwnd_, &tvItem ) ) {
-						TreeItem* item = treeControl_->getItemFromKey( tvItem.lParam );
-						if ( NULL != item ) {
-							
-							ItemEvent event( item, TreeControl::ITEM_STATECHANGE_REQUESTED );
-							
-							treeControl_->handleEvent( &event );
-						}
-					}
-				}
-			}
+			
 
 			result = true;
 			wndProcResult = defaultWndProcedure( message, wParam, lParam );	
@@ -1115,80 +1130,8 @@ Do we need these? What advantage does processing these events have for us???
 		*/
 
 		case NM_CUSTOMDRAW:{
-			wndProcResult = CDRF_DODEFAULT;
-			result = true;
-
-			NMTVCUSTOMDRAW* treeViewDraw = (NMTVCUSTOMDRAW*)lParam;
-			if ( NULL != treeViewDraw )	{
-				switch ( treeViewDraw->nmcd.dwDrawStage ) {
-								
-
-					case CDDS_PREPAINT : {
-						wndProcResult = CDRF_NOTIFYITEMDRAW | CDRF_NOTIFYPOSTPAINT;
-					}
-					break;
-
-					case CDDS_ITEMPREPAINT : {						
-
-						wndProcResult = CDRF_NOTIFYPOSTPAINT;
-
-						if ( treeControl_->itemExists( treeViewDraw->nmcd.lItemlParam ) ) {
-							TreeItem* item = treeControl_->getItemFromKey( treeViewDraw->nmcd.lItemlParam );
-							if ( !item->isFontDefault() ) {
-								Color* fc = item->getFont()->getColor();
-								
-								treeViewDraw->clrText = (COLORREF) fc->getColorRef32();
-								
-
-								Win32Font* fontPeer = dynamic_cast<Win32Font*>( item->getFont()->getFontPeer() );
-								HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( fontPeer );
-								if ( NULL != fontHandle ){
-									::SelectObject( treeViewDraw->nmcd.hdc, fontHandle );
-									wndProcResult |= CDRF_NEWFONT;
-								}
-							}							
-						}
-
-
-						if ( this->headerEnabled_ ) {							
-							wndProcResult |= CDRF_SKIPDEFAULT;
-							drawItem( treeViewDraw );
-						}
-					}
-					break;
-
-					case CDDS_ITEMPOSTPAINT : {						
-						wndProcResult = CDRF_DODEFAULT;
-
-						if ( this->headerEnabled_ ) {
-							treeViewDraw->nmcd.rc.left = headerRects_[0].left;
-							treeViewDraw->nmcd.rc.right = headerRects_[0].right;
-						}
-
-						if ( treeControl_->itemExists( treeViewDraw->nmcd.lItemlParam ) ) {
-							TreeItem* item = treeControl_->getItemFromKey( treeViewDraw->nmcd.lItemlParam );
-							if ( item->canPaint() ) {
-								Rect itemRect;
-								itemRect.left_ = treeViewDraw->nmcd.rc.left;
-								itemRect.top_ = treeViewDraw->nmcd.rc.top;
-								itemRect.right_ = treeViewDraw->nmcd.rc.right;
-								itemRect.bottom_ = treeViewDraw->nmcd.rc.bottom;
-
-								if ( NULL != currentCtx_ ) {
-									item->paint( currentCtx_, &itemRect );
-								}								
-							}
-						}
-					}
-					break;
-
-					default : {
-
-						wndProcResult = 0;
-					}
-					break;
-				}
-			}
+			wndProcResult = treeCustomDraw( (NMTVCUSTOMDRAW*)lParam );
+			result = true;			
 		}
 		break;
 
@@ -1291,98 +1234,8 @@ Do we need these? What advantage does processing these events have for us???
 							break;
 
 							case NM_CUSTOMDRAW : {
-								NMCUSTOMDRAW* cd = (NMCUSTOMDRAW*)lParam;
-								switch ( cd->dwDrawStage ) {
-									case CDDS_PREPAINT : {
-										wndProcResult = CDRF_NOTIFYITEMDRAW;
-										
-										RECT r;
-										GetClientRect( notificationHdr->hwndFrom, &r );
-										
-										RECT rLast;
-										int index = -1;
-										index = Header_GetItemCount(notificationHdr->hwndFrom) - 1;
-										if ( index >= 0 ) {
-											Header_GetItemRect( notificationHdr->hwndFrom, index, &rLast );				
-											r.left = rLast.right;
-										}
-										FillRect( cd->hdc, &r, (HBRUSH) (COLOR_3DFACE + 1) );
-										InvalidateRect( hwnd_, NULL, TRUE );
-									}
-									break;
-
-									case CDDS_ITEMPREPAINT : {								
-										wndProcResult = CDRF_NOTIFYPOSTPAINT;
-
-										uint32 index = cd->dwItemSpec;
-										ColumnItem* item = NULL;
-										
-										HDITEM headerItem;
-										memset( &headerItem, 0, sizeof(HDITEM) );
-										headerItem.mask = HDI_FORMAT | HDI_LPARAM;
-										if ( Header_GetItem( headerWnd_, index, &headerItem ) ) {
-											item = treeControl_->getColumnItem( (uint32)headerItem.lParam );
-											if ( NULL != item ) {
-												if ( !item->isFontDefault() ) {
-													
-													Color* fc = item->getFont()->getColor();
-													
-													SetTextColor( cd->hdc, (COLORREF) fc->getColorRef32() );
-													
-													Win32Font* fontPeer = dynamic_cast<Win32Font*>( item->getFont()->getFontPeer() );
-													HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( fontPeer );
-													if ( NULL != fontHandle ){
-														
-														oldHeaderFont_ = (HFONT)::SelectObject( cd->hdc, fontHandle );
-														
-														wndProcResult |= CDRF_NEWFONT;
-													}
-												}
-											}
-										}
-										
-									}
-									break;
-
-									case CDDS_ITEMPOSTPAINT : {
-										
-										uint32 index = cd->dwItemSpec;
-										ColumnItem* item = NULL;
-										
-										HDITEM headerItem;
-										memset( &headerItem, 0, sizeof(HDITEM) );
-										headerItem.mask = HDI_FORMAT | HDI_LPARAM;
-										if ( Header_GetItem( headerWnd_, index, &headerItem ) ) {
-											item = treeControl_->getColumnItem( (uint32)headerItem.lParam );
-										}
-										
-
-										if ( NULL != item ) {
-											if ( item->canPaint() ) {
-												GraphicsContext gc( (OSHandleID)cd->hdc );
-												Rect rect( cd->rc.left, cd->rc.top, cd->rc.right, cd->rc.bottom );
-												item->paint( &gc, &rect );
-												gc.getPeer()->setContextID( 0 );
-											}
-
-										}
-
-										if ( NULL != oldHeaderFont_ ) {
-											::SelectObject( cd->hdc, oldHeaderFont_ );
-											oldHeaderFont_ = NULL;
-										}
-										wndProcResult = CDRF_SKIPDEFAULT;										
-
-									}
-									break;
-
-									default : {
-										wndProcResult = CDRF_DODEFAULT;
-									}
-									break;
-								}
-							}
-							
+								wndProcResult = headerCustomDraw( (NMCUSTOMDRAW*)lParam );
+							}							
 						}						
 					}
 				}
@@ -1398,6 +1251,179 @@ Do we need these? What advantage does processing these events have for us???
 		break;
 	}
 	return result;
+}
+
+LRESULT Win32Tree::treeCustomDraw( NMTVCUSTOMDRAW* drawInfo )
+{
+	LRESULT result = CDRF_DODEFAULT;
+	if ( NULL == drawInfo )	{
+		return result;
+	}
+
+	switch ( drawInfo->nmcd.dwDrawStage ) {					
+
+		case CDDS_PREPAINT : {
+			result = CDRF_NOTIFYITEMDRAW;// | CDRF_NOTIFYPOSTPAINT;
+		}
+		break;
+
+		case CDDS_ITEMPREPAINT : {						
+
+			result = CDRF_NOTIFYPOSTPAINT;
+
+			if ( treeControl_->itemExists( drawInfo->nmcd.lItemlParam ) ) {
+				TreeItem* item = treeControl_->getItemFromKey( drawInfo->nmcd.lItemlParam );
+				if ( !item->isFontDefault() ) {
+					Color* fc = item->getFont()->getColor();
+					
+					drawInfo->clrText = (COLORREF) fc->getColorRef32();
+					
+
+					Win32Font* fontPeer = dynamic_cast<Win32Font*>( item->getFont()->getFontPeer() );
+					HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( fontPeer );
+					if ( NULL != fontHandle ){
+						::SelectObject( drawInfo->nmcd.hdc, fontHandle );
+						result |= CDRF_NEWFONT;
+					}
+				}							
+			}
+
+
+			if ( this->headerEnabled_ ) {							
+				result |= CDRF_SKIPDEFAULT;
+				drawItem( drawInfo );
+			}
+		}
+		break;
+
+		case CDDS_ITEMPOSTPAINT : {						
+			result = CDRF_DODEFAULT;
+
+			if ( this->headerEnabled_ ) {
+				drawInfo->nmcd.rc.left = headerRects_[0].left;
+				drawInfo->nmcd.rc.right = headerRects_[0].right;
+			}
+
+			if ( treeControl_->itemExists( drawInfo->nmcd.lItemlParam ) ) {
+				TreeItem* item = treeControl_->getItemFromKey( drawInfo->nmcd.lItemlParam );
+				if ( item->canPaint() ) {
+					Rect itemRect;
+					itemRect.left_ = drawInfo->nmcd.rc.left;
+					itemRect.top_ = drawInfo->nmcd.rc.top;
+					itemRect.right_ = drawInfo->nmcd.rc.right;
+					itemRect.bottom_ = drawInfo->nmcd.rc.bottom;
+
+					if ( NULL != currentCtx_ ) {
+						item->paint( currentCtx_, &itemRect );
+					}								
+				}
+			}
+		}
+		break;
+
+		default : {
+
+			result = CDRF_DODEFAULT;
+		}
+		break;
+	}
+			
+	return result;
+}
+
+LRESULT Win32Tree::headerCustomDraw( NMCUSTOMDRAW* drawInfo )
+{
+	LRESULT result = 0;
+	switch ( drawInfo->dwDrawStage ) {
+		case CDDS_PREPAINT : {
+			result = CDRF_NOTIFYITEMDRAW;
+			
+			RECT r;
+			GetClientRect( headerWnd_, &r );
+			
+			RECT rLast;
+			int index = -1;
+			index = Header_GetItemCount(headerWnd_) - 1;
+			if ( index >= 0 ) {
+				Header_GetItemRect( headerWnd_, index, &rLast );				
+				r.left = rLast.right;
+			}
+			FillRect( drawInfo->hdc, &r, (HBRUSH) (COLOR_3DFACE + 1) );
+			InvalidateRect( hwnd_, NULL, TRUE );
+		}
+		break;
+
+		case CDDS_ITEMPREPAINT : {								
+			result = CDRF_NOTIFYPOSTPAINT;
+
+			uint32 index = drawInfo->dwItemSpec;
+			ColumnItem* item = NULL;
+			
+			HDITEM headerItem;
+			memset( &headerItem, 0, sizeof(HDITEM) );
+			headerItem.mask = HDI_FORMAT | HDI_LPARAM;
+			if ( Header_GetItem( headerWnd_, index, &headerItem ) ) {
+				item = treeControl_->getColumnItem( (uint32)headerItem.lParam );
+				if ( NULL != item ) {
+					if ( !item->isFontDefault() ) {
+						
+						Color* fc = item->getFont()->getColor();
+						
+						SetTextColor( drawInfo->hdc, (COLORREF) fc->getColorRef32() );
+						
+						Win32Font* fontPeer = dynamic_cast<Win32Font*>( item->getFont()->getFontPeer() );
+						HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( fontPeer );
+						if ( NULL != fontHandle ){
+							
+							oldHeaderFont_ = (HFONT)::SelectObject( drawInfo->hdc, fontHandle );
+							
+							result |= CDRF_NEWFONT;
+						}
+					}
+				}
+			}
+			
+		}
+		break;
+
+		case CDDS_ITEMPOSTPAINT : {
+			
+			uint32 index = drawInfo->dwItemSpec;
+			ColumnItem* item = NULL;
+			
+			HDITEM headerItem;
+			memset( &headerItem, 0, sizeof(HDITEM) );
+			headerItem.mask = HDI_FORMAT | HDI_LPARAM;
+			if ( Header_GetItem( headerWnd_, index, &headerItem ) ) {
+				item = treeControl_->getColumnItem( (uint32)headerItem.lParam );
+			}
+			
+
+			if ( NULL != item ) {
+				if ( item->canPaint() ) {
+					GraphicsContext gc( (OSHandleID)drawInfo->hdc );
+					Rect rect( drawInfo->rc.left, drawInfo->rc.top, drawInfo->rc.right, drawInfo->rc.bottom );
+					item->paint( &gc, &rect );
+					gc.getPeer()->setContextID( 0 );
+				}
+
+			}
+
+			if ( NULL != oldHeaderFont_ ) {
+				::SelectObject( drawInfo->hdc, oldHeaderFont_ );
+				oldHeaderFont_ = NULL;
+			}
+			result = CDRF_SKIPDEFAULT;										
+
+		}
+		break;
+
+		default : {
+			result = CDRF_DODEFAULT;
+		}
+		break;
+	}
+	return 0;
 }
 
 #define BUTTON_SIZE 9
@@ -1638,11 +1664,13 @@ void Win32Tree::addTreeItem( TreeModel::Key key, HTREEITEM parent )
 		
 		tvItem.mask = TVIF_TEXT | TVIF_PARAM | TVIF_CHILDREN | 
 			TVIF_SELECTEDIMAGE | TVIF_IMAGE;
+		tvItem.mask |= TVIF_STATE;
 		
 		tvItem.cChildren = I_CHILDRENCALLBACK;
 		tvItem.iImage = I_IMAGECALLBACK;
 		tvItem.iSelectedImage = I_IMAGECALLBACK;
 		
+
 		/*
 		if ( item->getStateImageIndex() >= 0 ) {
 		tvItem.mask |= TVIF_STATE;
@@ -1652,6 +1680,8 @@ void Win32Tree::addTreeItem( TreeModel::Key key, HTREEITEM parent )
 		}
 		*/
 		
+		tvItem.state = INDEXTOSTATEIMAGEMASK(1);
+		tvItem.stateMask = TVIS_STATEIMAGEMASK;
 		
 		tvItem.cchTextMax = 0;					
 		tvItem.pszText = LPSTR_TEXTCALLBACKW;
@@ -2233,6 +2263,14 @@ void Win32Tree::setDisplayOptions( uint32 displayOptions )
 		style &= ~TVS_HASLINES;
 	}
 
+	if ( displayOptions & tdoShowFullRowSelection ) {
+		style |= TVS_FULLROWSELECT;
+	}
+	else {
+		style &= ~TVS_FULLROWSELECT;
+	}
+
+	
 	
 	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
 

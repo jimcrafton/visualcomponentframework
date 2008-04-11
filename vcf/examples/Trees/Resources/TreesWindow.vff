@@ -31,9 +31,28 @@ object TreesWindow  : VCF::Window
 		end
 	end
 
+	object stateImgList : VCF::ImageList
+		transparentColor = 'lime'
+		imageWidth = 16
+		imageHeight = 16
+
+		object img1a : VCF::ImageComponent 
+			filename = 'res:state1.bmp'
+		end
+
+		object img1a : VCF::ImageComponent 
+			filename = 'res:state1.bmp'
+		end
+
+		object img2a : VCF::ImageComponent 
+			filename = 'res:state2.bmp'
+		end
+	end
+
 	object treeCtrl : VCF::TreeControl
 		alignment = AlignClient
-		//imageList = @imgList		
+		imageList = @imgList	
+		stateImageList = @stateImgList	
 
 		object ti1 : VCF::TreeItem 
 			caption = 'ti1'
@@ -53,6 +72,9 @@ object TreesWindow  : VCF::Window
 		height = 200
 		alignment = AlignBottom
 		headerImageList = @imgList
+
+		
+
 		object tia1 : VCF::TreeItem 
 			caption = 'tia1'
 
