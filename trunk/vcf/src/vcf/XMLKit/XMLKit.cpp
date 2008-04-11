@@ -11,7 +11,7 @@
 #include <libxslt/xsltutils.h>
 #include <libxslt/extensions.h>
 #include <libxml/xpathInternals.h>
-
+#include <libxml/debugXML.h>
 
 #include "vcf/FoundationKit/Dictionary.h"
 
@@ -871,6 +871,11 @@ Object* XmlNode::clone( bool deep ) const
 void XmlDocument::freeResource(xmlDocPtr res)
 {
 	xmlFreeDoc( res );
+}
+
+void XmlDocument::dump()
+{	
+	xmlDebugDumpDocument( stdout, get() );
 }
 
 void XmlDocument::load( const String& fileName )

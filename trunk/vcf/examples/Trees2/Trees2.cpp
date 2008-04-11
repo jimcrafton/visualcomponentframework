@@ -305,7 +305,7 @@ public:
 		TreeControl* treeCtrl = (TreeControl*)mainWindow->findComponent( "treeCtrl", true );
 
 		XmlDocument doc;
-		doc.load( "test3.xml" );//"books.xml"); 
+		doc.load( "books.xml"); 
 
 
 		XMLTreeModel* tm = new XMLTreeModel();
@@ -313,7 +313,7 @@ public:
 
 		tm->root.attach( root->detach() );
 
-		root->free();
+		delete root;
 
 		treeCtrl->setTreeModel( tm );
 

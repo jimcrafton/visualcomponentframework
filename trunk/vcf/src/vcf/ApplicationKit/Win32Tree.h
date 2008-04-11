@@ -101,6 +101,10 @@ private:
 	static LRESULT CALLBACK HeaderWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void drawItem( NMTVCUSTOMDRAW* drawInfo );
+
+	LRESULT treeCustomDraw( NMTVCUSTOMDRAW* drawInfo );
+	LRESULT headerCustomDraw( NMCUSTOMDRAW* drawInfo );
+
 };
 
 };

@@ -706,6 +706,9 @@ namespace VCF {
 		virtual String toString() const ;
 
 		virtual Object* clone( bool deep = false ) const ;
+
+		void dump();
+		
 	};
 
 

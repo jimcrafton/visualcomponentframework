@@ -103,14 +103,16 @@ Color* ImageList::getTransparentColor()
 void ImageList::addImage( Image* newImage )
 {
 	VCF_ASSERT( NULL != newImage );
+	VCF_ASSERT( newImage->getHeight() == imageHeight_ );
+	VCF_ASSERT( newImage->getWidth() == imageWidth_ );
 
 	if ( newImage->getHeight() != imageHeight_ ) {
-		//throw exception
+		throw RuntimeException("New Image being added doesn't match the current image list height");
 		return;
 	}
 
 	if ( newImage->getWidth() != imageWidth_ ) {
-		//throw exception
+		throw RuntimeException("New Image being added doesn't match the current image list height");
 		return;
 	}
 
@@ -145,13 +147,17 @@ void ImageList::addImage( Image* newImage )
 
 void ImageList::insertImage( const uint32 & index, Image* newImage )
 {
+	VCF_ASSERT( NULL != newImage );
+	VCF_ASSERT( newImage->getHeight() == imageHeight_ );
+	VCF_ASSERT( newImage->getWidth() == imageWidth_ );
+
 	if ( newImage->getHeight() != imageHeight_ ) {
-		//throw exception
+		throw RuntimeException("New Image being inserted doesn't match the current image list height");
 		return;
 	}
 
 	if ( newImage->getWidth() != imageWidth_ ) {
-		//throw exception
+		throw RuntimeException("New Image being inserted doesn't match the current image list height");
 		return;
 	}
 
