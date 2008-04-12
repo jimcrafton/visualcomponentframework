@@ -193,6 +193,7 @@ Setup compiler names, and some compiler-specific warnings
 		#define VCF_VC90
 		#undef VCF_COMPILER_NAME
 		#define VCF_COMPILER_NAME	"VC90"	
+		#define _WIN32_WINNT 0x0500
 	#elif (_MSC_VER >= 1400)
 		#define VCF_VC80
 		#undef VCF_COMPILER_NAME
