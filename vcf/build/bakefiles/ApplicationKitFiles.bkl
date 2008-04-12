@@ -88,6 +88,8 @@
         vcf/ApplicationKit/DragDropPeer.h
         vcf/ApplicationKit/DragScrollEvent.h
         vcf/ApplicationKit/DragSource.h
+	vcf/ApplicationKit/DropDownControl.h
+	vcf/ApplicationKit/DropDownPeer.h
         vcf/ApplicationKit/DropTarget.h
         vcf/ApplicationKit/DropTargetPeer.h
         vcf/ApplicationKit/EtchedBorder.h
@@ -109,9 +111,11 @@
         vcf/ApplicationKit/Light3DBorder.h
         vcf/ApplicationKit/LightweightComponent.h
         vcf/ApplicationKit/ListBoxControl.h
+	vcf/ApplicationKit/ListControl.h
         vcf/ApplicationKit/ListItem.h
         vcf/ApplicationKit/ListModel.h
         vcf/ApplicationKit/ListModelEvent.h
+	vcf/ApplicaitonKit/ListPeer.h
         vcf/ApplicationKit/ListViewControl.h
         vcf/ApplicationKit/ListviewPeer.h
         vcf/ApplicationKit/Menu.h
@@ -161,6 +165,7 @@
         vcf/ApplicationKit/TextEvent.h
         vcf/ApplicationKit/TextModel.h
         vcf/ApplicationKit/TextPeer.h
+	vcf/ApplicationKit/ThemeBorder.h
         vcf/ApplicationKit/TimerComponent.h
         vcf/ApplicationKit/TimerEvent.h
         vcf/ApplicationKit/TitledBorder.h
@@ -174,6 +179,7 @@
         vcf/ApplicationKit/TreeControl.h
         vcf/ApplicationKit/TreeItem.h
         vcf/ApplicationKit/TreeListControl.h
+	vcf/ApplicationKit/TreeListModel.h
         vcf/ApplicationKit/TreeModel.h
         vcf/ApplicationKit/TreePeer.h
         vcf/ApplicationKit/UIComponent.h
@@ -242,6 +248,7 @@
 	vcf/ApplicationKit/Document.cpp
         vcf/ApplicationKit/DocumentManager.cpp
         vcf/ApplicationKit/DragSource.cpp
+	vcf/ApplicationKit/DropDownControl.cpp
         vcf/ApplicationKit/DropTarget.cpp
         vcf/ApplicationKit/EtchedBorder.cpp
         vcf/ApplicationKit/Frame.cpp
@@ -253,6 +260,7 @@
         vcf/ApplicationKit/Light3DBorder.cpp
         vcf/ApplicationKit/LightweightComponent.cpp
         vcf/ApplicationKit/ListBoxControl.cpp
+	vcf/ApplicationKit/ListControl.cpp
         vcf/ApplicationKit/ListItem.cpp
         vcf/ApplicationKit/ListModel.cpp
         vcf/ApplicationKit/ListViewControl.cpp
@@ -288,6 +296,7 @@
         vcf/ApplicationKit/TreeControl.cpp
         vcf/ApplicationKit/TreeItem.cpp
         vcf/ApplicationKit/TreeListControl.cpp
+	vcf/ApplicationKit/TreeListModel.cpp
 	vcf/ApplicationKit/TreeModel.cpp
         vcf/ApplicationKit/UIComponent.cpp
         vcf/ApplicationKit/UIShell.cpp
@@ -314,6 +323,7 @@
         vcf/ApplicationKit/Win32CursorPeer.h
         vcf/ApplicationKit/Win32Dialog.h
         vcf/ApplicationKit/Win32DragDropPeer.h
+	vcf/ApplicationKit/Win32DropDownPeer.h
         vcf/ApplicationKit/Win32DropTargetPeer.h
         vcf/ApplicationKit/Win32Edit.h
         vcf/ApplicationKit/Win32FileOpenDialog.h
@@ -355,6 +365,7 @@
         vcf/ApplicationKit/Win32CursorPeer.cpp
         vcf/ApplicationKit/Win32Dialog.cpp
         vcf/ApplicationKit/Win32DragDropPeer.cpp
+	vcf/ApplicaitonKit/Win32DropDownPeer.cpp
         vcf/ApplicationKit/Win32DropTargetPeer.cpp
         vcf/ApplicationKit/Win32Edit.cpp
         vcf/ApplicationKit/Win32FileOpenDialog.cpp
