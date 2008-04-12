@@ -2132,6 +2132,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DropDownPeer.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp"
 				>
 				<FileConfiguration
@@ -2826,62 +2830,6 @@
 			Filter="*.h;*.cpp"
 			>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractListModel.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractListModel.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractModel.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractTreeModel.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractTreeModel.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractView.cpp"
 				>
 				<FileConfiguration
@@ -2908,89 +2856,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ColumnItem.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ColumnItem.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ColumnModel.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultColumnItem.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultColumnItem.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultColumnModel.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultColumnModel.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultListItem.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultListItem.h"
 				>
 			</File>
 			<File
@@ -3098,32 +2972,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultTabModel.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultTabModel.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultTabPage.cpp"
 				>
 				<FileConfiguration
@@ -3176,32 +3024,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultTreeItem.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultTreeItem.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultTreeModel.cpp"
 				>
 				<FileConfiguration
@@ -3229,6 +3051,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DocManagerPolicy.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Document.cpp"
 				>
 			</File>
 			<File
@@ -3270,7 +3096,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ListItem.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListItem.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ListModel.cpp"
 				>
 			</File>
 			<File
@@ -3308,11 +3142,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\SimpleListModel.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TableCellItem.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TableModel.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\TabModel.cpp"
 				>
 			</File>
 			<File
@@ -3328,7 +3170,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeItem.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeItem.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeListModel.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeModel.cpp"
 				>
 			</File>
 			<File
@@ -3479,6 +3333,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\DropDownControl.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\HeaderControl.cpp"
 				>
 				<FileConfiguration
@@ -3580,6 +3438,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListBoxControl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ListControl.cpp"
 				>
 			</File>
 			<File
