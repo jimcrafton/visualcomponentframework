@@ -61,7 +61,7 @@ void DefaultTableModel::empty()
 }
 
 
-void DefaultTableModel::doInsertRow( const uint32& afterRow )
+bool DefaultTableModel::doInsertRow( const uint32& afterRow )
 {
 	if ( 0 == columnCount_ ){
 		columnCount_++; //gotta have at least one column !
@@ -77,9 +77,11 @@ void DefaultTableModel::doInsertRow( const uint32& afterRow )
 	//}
 
 	tableData_.insert( tableData_.begin() + afterRow, newRow );	
+
+	return true;
 }
 
-void DefaultTableModel::doAddRows( const uint32& count )
+bool DefaultTableModel::doAddRows( const uint32& count )
 {
 	int start = rowCount_;
 
@@ -92,9 +94,10 @@ void DefaultTableModel::doAddRows( const uint32& count )
 
 		newRow->resize( columnCount_, VariantData::null() );
 	}
+	return true;
 }
 
-void DefaultTableModel::doRemoveRow( const uint32& row )
+bool DefaultTableModel::doRemoveRow( const uint32& row )
 {
 	TableModelEvent event( this, tmRowsDeleted, row, 1 );
 	TableRowsDeleted( &event );
@@ -110,10 +113,11 @@ void DefaultTableModel::doRemoveRow( const uint32& row )
 			rowCount_ --;
 		}
 	}
+	return true;
 }
 
 
-void DefaultTableModel::doAddColumns( const uint32& count )
+bool DefaultTableModel::doAddColumns( const uint32& count )
 {
 	int startCol = columnCount_;
 	for ( int j=0;j<count;j++ ) {
@@ -128,9 +132,10 @@ void DefaultTableModel::doAddColumns( const uint32& count )
 			i++;
 		}
 	}
+	return true;
 }
 
-void DefaultTableModel::doInsertColumn( const uint32& afterColumn )
+bool DefaultTableModel::doInsertColumn( const uint32& afterColumn )
 {
 	columnCount_ ++;
 	if ( 0 == rowCount_ ){
@@ -152,10 +157,11 @@ void DefaultTableModel::doInsertColumn( const uint32& afterColumn )
 			rowIter++;
 			i++;
 		}
-	}	
+	}
+	return true;
 }
 
-void DefaultTableModel::doRemoveColumn( const uint32& column )
+bool DefaultTableModel::doRemoveColumn( const uint32& column )
 {
 	std::vector<TTableColumn*>::iterator rowIter = tableData_.begin();
 	while ( rowIter != tableData_.end() ){
@@ -172,6 +178,8 @@ void DefaultTableModel::doRemoveColumn( const uint32& column )
 	if ( columnCount_ > 0 ){
 		columnCount_--;
 	}
+
+	return true;
 }
 
 bool DefaultTableModel::isCellEditable( const uint32& row, const uint32& column )
@@ -195,10 +203,12 @@ VariantData DefaultTableModel::getValue( const uint32& row, const uint32& column
 }
 
 
-void DefaultTableModel::doSetValue( const uint32& row, const uint32& column, const VariantData& value )
+bool DefaultTableModel::doSetValue( const uint32& row, const uint32& column, const VariantData& value )
 {
 	TTableColumn* rows = tableData_[row];
 	(*rows)[column] = value;
+
+	return true;
 }
 
 

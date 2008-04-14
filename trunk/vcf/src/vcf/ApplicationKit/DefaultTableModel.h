@@ -91,19 +91,19 @@ public:
 	
 protected:	
 
-	virtual void doInsertRow( const uint32& afterRow );
+	virtual bool doInsertRow( const uint32& afterRow );
 
-	virtual void doAddRows( const uint32& count );
+	virtual bool doAddRows( const uint32& count );
 
-	virtual void doRemoveRow( const uint32& row );
+	virtual bool doRemoveRow( const uint32& row );
 
-	virtual void doInsertColumn( const uint32& afterColumn );
+	virtual bool doInsertColumn( const uint32& afterColumn );
 
-	virtual void doAddColumns( const uint32& count );
+	virtual bool doAddColumns( const uint32& count );
 
-	virtual void doRemoveColumn( const uint32& column );
+	virtual bool doRemoveColumn( const uint32& column );
 
-	virtual void doSetValue( const uint32& row, const uint32& column, const VariantData& value );
+	virtual bool doSetValue( const uint32& row, const uint32& column, const VariantData& value );
 
 
 	/**

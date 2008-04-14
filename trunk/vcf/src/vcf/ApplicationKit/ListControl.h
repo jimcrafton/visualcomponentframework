@@ -55,7 +55,7 @@ public:
 
 
 	ImageList* getSmallImageList() {
-		return stateImageList_;
+		return smallImageList_;
 	}
 
 	ImageList* getLargeImageList() {
@@ -66,11 +66,11 @@ public:
 		return stateImageList_;
 	}
 
-	void setLargeImageList( ImageList* imageList );
+	virtual void setLargeImageList( ImageList* imageList );
 
-	void setSmallImageList( ImageList* imageList );
+	virtual void setSmallImageList( ImageList* imageList );
 
-	void setStateImageList( ImageList* imageList );		
+	virtual void setStateImageList( ImageList* imageList );		
 
 	ListItem* addItem( const String& caption, const uint32 imageIndex=0 );
 
@@ -85,23 +85,23 @@ public:
 	virtual Rect getItemImageRect( const uint32& index );
 
 
-	void selectItem( const uint32& index );
+	virtual void selectItem( const uint32& index );
 
-	Enumerator<uint32>* getSelectedItems();
+	virtual Enumerator<uint32>* getSelectedItemsByIndex();
 
-	void rangeSelect( const Rect& selectionRect );
+	virtual void rangeSelect( const Rect& selectionRect );
 
-	uint32 getFocusedItem();
+	virtual uint32 getFocusedItem();
 
-	uint32 getSelectedItem();
+	virtual uint32 getSelectedItem();
 
-	bool allowsMultiSelect();
+	virtual bool allowsMultiSelect();
 
-	void setAllowsMultiSelect( const bool& allowsMultiSelect );
+	virtual void setAllowsMultiSelect( const bool& allowsMultiSelect );
 
 	void sort( ItemSort* itemSortFunctor );
 
-	uint32 hitTest( const Point& point );
+	virtual uint32 hitTest( const Point& point );
 
 	virtual Rect getItemRect( ListItem* item );
 
@@ -125,10 +125,9 @@ public:
 	virtual void handleEvent( Event* event );	
 
 	virtual void paintItem( GraphicsContext* ctx, const Rect& itemRect, const uint32& index, const DrawUIState& state ) {}
-protected:
-	void onListModelContentsChanged( ListModelEvent* event );
-	void onItemAdded( ListModelEvent* event );
-	void onItemDeleted( ListModelEvent* event );
+protected:	
+	virtual void onItemAdded( ListModelEvent* event );
+	virtual void onItemDeleted( ListModelEvent* event );
 
 	virtual void removeSubItemsForItem( ListItem* item );
 

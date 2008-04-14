@@ -522,10 +522,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Light3DBorder.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\ListControl.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\Menu.cpp
 # End Source File
 # Begin Source File
@@ -1267,6 +1263,13 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\CheckBoxControl.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ComboBoxControl.cpp
+
+!IF  "$(CFG)" == "ApplicationKitDLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ApplicationKitDLL - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
@@ -1331,6 +1334,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ListBoxControl.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ListBoxControl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\ListControl.cpp
 # End Source File
 # Begin Source File
 
