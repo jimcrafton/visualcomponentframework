@@ -14,7 +14,8 @@
 
 
 typedef unsigned int uint32;
-typedef unsigned short VCFChar;
+//typedef unsigned short VCFChar;
+typedef wchar_t VCFChar;
 typedef std::basic_string<VCFChar> String;
 
 
@@ -64,7 +65,7 @@ private:
 
 
 
-inline RoundUp(size_t cb, size_t units)
+inline size_t RoundUp(size_t cb, size_t units)
 {
     return ((cb + units - 1) / units) * units;
 }
@@ -103,11 +104,15 @@ public:
 
 	const VCFChar* getString( uint32 index );
 	size_t getStringLength( uint32 index );
+
+	uint32 incStringRefcount( uint32 index );
+	uint32 decStringRefcount( uint32 index );
 private:
 
 	struct StrEntry {
 		VCFChar* str;
 		size_t length;
+		size_t refcount;		
 	};
 
 	union MemHeader {
@@ -232,7 +237,7 @@ uint32 StringPool::find( const VCFChar* str, size_t length )
 				const StrEntry& entry = stringEntries_[idx];
 				if ( entry.length == length ) {
 					
-					if ( 0 == memcmp( entry.str, str, length * sizeof(VCFChar) ) ) {
+					if ( 0 == ::wcscmp( entry.str, str/*, length * sizeof(VCFChar)*/ ) ) {
 						result = idx;
 						break;
 					}
@@ -261,6 +266,7 @@ uint32 StringPool::addString( const VCFChar* str, size_t length )
 		StrEntry entry;
 		entry.length = length;
 		entry.str = newStr;
+		entry.refcount = 0;
 
 		stringEntries_.push_back( entry );
 		result = stringEntries_.size()-1;
@@ -268,7 +274,31 @@ uint32 StringPool::addString( const VCFChar* str, size_t length )
 		stringMap_.insert(StringMapPairT(hashID,result));
 	}
 
+	return result;
+}
 
+uint32 StringPool::incStringRefcount( uint32 index )
+{
+	uint32 result = NoEntry;
+	if ( index < stringEntries_.size() ) {
+		StrEntry& entry = stringEntries_[index];
+		entry.refcount++;
+		result = entry.refcount;
+	}
+	return result;
+}
+
+uint32 StringPool::decStringRefcount( uint32 index )
+{
+	uint32 result = NoEntry;
+	if ( index < stringEntries_.size() ) {
+		StrEntry& entry = stringEntries_[index];
+		entry.refcount--;
+		if ( 0 == entry.refcount ) {
+			printf( "No more refs to str[\"%.8ls...\":%u]\n", entry.str, entry.length );
+		}
+		result = entry.refcount;
+	}
 	return result;
 }
 
@@ -308,13 +338,16 @@ public:
 	typedef VCFChar& reference;
     typedef const VCFChar& const_reference;
 
-	typedef std::reverse_iterator<iterator, value_type,
-        reference, pointer, difference_type> reverse_iterator;
+	//typedef std::reverse_iterator<iterator, value_type,
+      //  reference, pointer, difference_type> reverse_iterator;
 
-	typedef std::reverse_iterator<const_iterator, value_type,
-        const_reference, const_pointer, difference_type>
-            const_reverse_iterator;
+	typedef std::reverse_iterator<iterator> reverse_iterator;
 
+	//typedef std::reverse_iterator<const_iterator, value_type,
+      //  const_reference, const_pointer, difference_type>
+        //    const_reverse_iterator;
+
+	typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
 	enum {
 		npos = (size_type) -1
@@ -324,9 +357,9 @@ public:
 
 
 
-	FastString( const VCFChar* str ): index_(StringPool::NoEntry) {
-		assign( str, wcslen(str) );
-	}
+	//FastString( const VCFChar* str ): index_(StringPool::NoEntry) {
+	//	assign( str, wcslen(str) );
+	//}
 
 	FastString( const VCFChar* str, size_t length ): index_(StringPool::NoEntry) {
 		assign( str, length );
@@ -335,9 +368,13 @@ public:
 	FastString(): index_(StringPool::NoEntry){}
 
 	FastString( const FastString& f ):index_(f.index_) {
-
+		stringPool.incStringRefcount(index_);
 	}
 
+
+	~FastString() {
+		stringPool.decStringRefcount(index_);
+	}
 
 	operator const VCFChar*() const {
 		return stringPool.getString(index_);
@@ -349,12 +386,20 @@ public:
 	}
 
 	FastString& operator=( const FastString& rhs ) {
+		stringPool.decStringRefcount(index_);
+
 		index_ = rhs.index_;
+		
+		stringPool.incStringRefcount(index_);
 		return *this;
 	}
 
 	void assign( const VCFChar* str, size_t length ) {
+		stringPool.decStringRefcount(index_);
+
 		index_ = stringPool.addString( str, length );
+		
+		stringPool.incStringRefcount(index_);
 	}
 
 	const VCFChar* c_str() const {
@@ -375,6 +420,7 @@ public:
 	}
 
 	void clear() {
+		stringPool.decStringRefcount(index_);
 		index_ = 0;
 	}
 
@@ -417,9 +463,11 @@ public:
 	}
 
 	void swap( FastString& str ) {
-		size_t tmp = index_;
-		index_ = str.index_;
-		str.index_ = tmp;
+		if ( str.index_ != index_ ) {			
+			size_t tmp = index_;
+			index_ = str.index_;
+			str.index_ = tmp;
+		}
 	}
 
 	size_type find(const FastString& str, size_type pos = 0) const {
@@ -434,25 +482,25 @@ public:
 		return find( (const VCFChar*)&ch, pos, 1); 
 	}
 
-	size_type find( const VCFChar* strPtr, size_type pos, size_type length) const {
+	size_type find( const VCFChar* searchStr, size_type pos, size_type length) const {
 		size_type len = stringPool.getStringLength(index_);
 
 		if (length == 0 && pos <= len) {
 			return (pos);
 		}
 
-		size_type _Nm = len - pos;
-		const VCFChar* ptr = stringPool.getString(index_);
+		size_type searchLength = len - pos;
+		const VCFChar* sourceStr = stringPool.getString(index_);
 
-		if ( pos < len && (length <= _Nm) ) {
-			const VCFChar *_U, *_V;
+		if ( pos < len && (length <= searchLength) ) {
+			const VCFChar *currentStr1, *currentStr2;
 			
-			for (_Nm -= length - 1, _V = ptr + pos;
-					(_U = wmemchr(_V, _Nm, *strPtr)) != 0;
-					_Nm -= _U - _V + 1, _V = _U + 1) {
+			for (searchLength -= length - 1, currentStr2 = sourceStr + pos;
+					(currentStr1 = wmemchr(currentStr2, *searchStr, searchLength )) != 0;
+					searchLength -= currentStr1 - currentStr2 + 1, currentStr2 = currentStr1 + 1) {
 
-					if (wmemcmp(_U, strPtr, length) == 0) {
-						return (_U - ptr); 
+					if (wmemcmp(currentStr1, searchStr, length) == 0) {
+						return (currentStr1 - sourceStr); 
 					}
 			}
 		}
@@ -460,6 +508,18 @@ public:
 	}
 
 
+
+	size_type rfind(VCFChar c, size_type pos = npos) const {
+		return rfind( &c, pos, 1 );
+	}
+
+	size_type rfind(const VCFChar* strPtr, size_type pos = npos) const {
+		return rfind( strPtr, pos, wcslen(strPtr) );
+	}
+
+	size_type rfind(const FastString& str, size_type pos = npos) const {
+		return rfind( str.c_str(), pos, str.length() );
+	}
 
 	size_type rfind( const VCFChar *strPtr, size_type pos, size_type length) const {
 		size_type len = stringPool.getStringLength(index_);
@@ -470,12 +530,10 @@ public:
 		if (length <= len) {
 			const VCFChar* ptr = stringPool.getString(index_);
 
-			for (const _E *_U = ptr +
-				+ (pos < len - length ? pos : len - length); ; --_U)
-				if (_Tr::eq(*_U, *strPtr)
-					&& _Tr::compare(_U, strPtr, length) == 0)
-					return (_U - ptr);
-				else if (_U == ptr)
+			for (const VCFChar* currentStr1 = ptr + + (pos < len - length ? pos : len - length); ; --currentStr1)
+				if ( (*currentStr1 == *strPtr) && wmemcmp(currentStr1, strPtr, length) == 0)
+					return (currentStr1 - ptr);
+				else if (currentStr1 == ptr)
 					break;
 		}
 		return (npos); }
@@ -550,7 +608,7 @@ protected:
 
 int main( int argc, char** argv ){
 
-//	FoundationKit::init( argc, argv );
+
 	{
 		const VCFChar* s = L"Hola";
 		
@@ -571,16 +629,19 @@ int main( int argc, char** argv ){
 	}
 
 	HiResClock clock;
-
+	{
 	FastString f;
 	clock.start();
 	f = L"Hola!";
 	clock.stop();
-
-
 	printf( "fs Length %u, took %0.8f seconds\n",f.length(),clock.duration() );
+	}
+
 
 	
+
+	
+	FastString f;
 
 	clock.start();
 	f = BIGSTR;
@@ -662,7 +723,13 @@ int main( int argc, char** argv ){
 	
 
 
-//	FoundationKit::terminate();
+	FastString f3;
+	f3 = L"Hello Sam I am because I like green Eggs and Ham!";
+	size_t pos = f3.find( L"Sam" );
+
+
+	pos = f3.rfind( L"Sam" );
+
 	return 0;
 }
 
