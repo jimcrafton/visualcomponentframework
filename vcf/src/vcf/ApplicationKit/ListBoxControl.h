@@ -18,51 +18,69 @@ where you installed the VCF.
 
 
 
-#ifndef _VCF_LISTMODEL_H__
-#	include "vcf/ApplicationKit/ListModel.h"
-#endif // _VCF_LISTMODEL_H__
+#ifndef _VCF_LISTCONTROL_H__
+#	include "vcf/ApplicationKit/ListControl.h"
+#endif // _VCF_LISTCONTROL_H__
 
-#ifndef _VCF_LISTITEM_H__
-#	include "vcf/ApplicationKit/ListItem.h"
-#endif // _VCF_LISTITEM_H__
 
 
 
 
 namespace VCF{
 
-class ImageList;
-
-
 
 #define LISTBOXCONTROL_CLASSID		"ED88C0A5-26AB-11d4-B539-00C04F0196DA"
 /**
 \class ListBoxControl ListBoxControl.h "vcf/ApplicationKit/ListBoxControl.h"
 */
-class APPLICATIONKIT_API ListBoxControl : public CustomControl {
+class APPLICATIONKIT_API ListBoxControl : public ListControl {
 
 public:
 	enum ListBoxControlEvents {
 		lbeItemStateChangeRequested = CUSTOM_EVENT_TYPES + ITEM_CONST + 100
 	};
 
-	DELEGATE(ItemDelegate,SelectionChanged);
 	DELEGATE(ItemDelegate,ItemStateChangeRequested);
 
 	ListBoxControl();
 
 	ListBoxControl( ListModel* listModel );
+	
 	virtual ~ListBoxControl();
 
-	void init();
-	
-	virtual void modelChanged( Model* oldModel, Model* newModel ); 
+	void setSelectedItem( ListItem* item ) {
+		selectItem( (NULL != item) ? item->getIndex() : ListModel::InvalidIndex );
+	}
 
-	ListModel* getListModel();
-	void setListModel(ListModel* listModel);
+	virtual void setLargeImageList( ImageList* imageList );
+
+	virtual void setSmallImageList( ImageList* imageList );
+
+	virtual void setStateImageList( ImageList* imageList );
+
+	virtual Rect getItemImageRect( const uint32& index );
+
+	virtual void selectItem( const uint32& index );
+
+	virtual Enumerator<uint32>* getSelectedItemsByIndex();
+
+	Enumerator<ListItem*>* getSelectedItems();
+
+	virtual void rangeSelect( const Rect& selectionRect );
+
+	virtual uint32 getFocusedItem();
+
+	virtual uint32 getSelectedItem();
+
+	virtual bool allowsMultiSelect();
+
+	virtual void setAllowsMultiSelect( const bool& allowsMultiSelect );
+
+	virtual uint32 hitTest( const Point& point );
+
+	virtual Rect getItemRect( ListItem* item );
 
 	virtual void rangeSelect( const bool & isSelected, ListItem * first, ListItem * last );
-
 	
 	virtual void paint( GraphicsContext* ctx );
 
@@ -88,17 +106,6 @@ public:
 
 	void setDefaultItemHeight( const double& defaultItemHeight );
 
-	bool getAllowsMultiSelect() {
-		return allowsMultiSelect_;
-	}
-
-	/**
-	*Enables/disables the ability to have more than 1 item selected at any time.
-	*Item pointers are automatically added and removed from the selectedItems_ container
-	*as they are selected and deselected, respectively.
-	*/
-	void setAllowsMultiSelect( const bool& allowsMultiSelect );
-
 	bool getAllowsExtendedSelect() {
 		return allowsExtendedSelect_;
 	}
@@ -114,22 +121,6 @@ public:
 	*from extended selection behaviour to single selection behavior. 
 	*/
 	void setAllowsExtendedSelect (const bool& allowsExtendedSelect);
-
-	Enumerator<ListItem*>* getSelectedItems();
-
-	ListItem* getSelectedItem();
-
-	void setSelectedItem( ListItem* selectedItem );
-
-	ListItem* getListItem( const uint32& index );
-
-	void setListItem( const uint32& index, ListItem* item );
-
-	ListItem* insertItem( const uint32& index, const String& caption, const uint32 imageIndex=0 );
-
-	ListItem* addItem( const String& caption, const uint32 imageIndex=0 );
-
-	Enumerator<ListItem*>* getItems();
 
 	/**
 	*Sets the spacing between the innermost-edge of the left border and the 
@@ -165,20 +156,28 @@ public:
 	*/
 	virtual void setScrollable( Scrollable* scrollable );
 
-
-	ImageList* getImageList() {
-		return imageList_;
-	}
-
-	ImageList* getStateImageList() {
-		return stateImageList_;
-	}
-
-	void setImageList( ImageList* imageList );
-
-	void setStateImageList( ImageList* stateImageList );
-
 	bool stateHitTest( Point* point, ListItem* item );
+
+	/**
+	* sets if we want to use the control's color to draw the control's background;
+	* otherwise the theme background is drawn.
+	*@param const bool&, true if we use the control's color, false if 
+	* we draw the theme background.
+	*/
+	void setUseColorForBackground( const bool& val ) {
+		useColorForBackground_ = val;
+		repaint();
+	}
+	
+	/**
+	* gets if we use the control's color to draw the control's background
+	*@return bool, true if we use the control's color, false if it uses the theme background.
+	*/
+	bool getUseColorForBackground() {
+		return useColorForBackground_;
+	}
+
+	virtual void handleEvent( Event* event );
 protected:
 	double defaultItemHeight_;
 	double currentMaxWidth_;
@@ -189,11 +188,9 @@ protected:
 	bool allowsMultiSelect_;
 	bool allowsExtendedSelect_;
 	Array<ListItem*> selectedItems_;
-	Array<ListItem*> items_;
-	bool internalModelChange_;
-	ImageList* imageList_;
-	ImageList* stateImageList_;
+	Array<uint32> selectedIndices_;
 	double stateItemIndent_;
+	bool useColorForBackground_;
 
 	virtual void destroy();
 
@@ -216,14 +213,10 @@ protected:
 
 	void recalcBoundsForItem( ListItem* item );
 
-	void removeItem( ListItem* item, const uint32& itemIndex );
+	void removeItem( ListItem* item, const uint32& itemIndex );	
 
-	void onListModelContentsChanged( ModelEvent* event );
-
-	void onItemAdded( ListModelEvent* event );
-
-	void onItemDeleted( ListModelEvent* event );
-
+	virtual void onItemAdded( ListModelEvent* event );
+	virtual void onItemDeleted( ListModelEvent* event );
 };
 
 

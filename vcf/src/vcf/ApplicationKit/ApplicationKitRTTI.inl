@@ -633,10 +633,9 @@ _class_rtti_end_
 
 
 
-_class_rtti_(ListBoxControl, "VCF::CustomControl", LISTBOXCONTROL_CLASSID )
+_class_rtti_(ListBoxControl, "VCF::ListControl", LISTBOXCONTROL_CLASSID )
 _property_( double, "defaultItemHeight", getDefaultItemHeight, setDefaultItemHeight, "" );
-_property_( bool, "allowsMultiSelect", getAllowsMultiSelect, setAllowsMultiSelect, "" );
-_property_object_( ListModel, "listModel", getListModel, setListModel, "" );
+//_property_( bool, "allowsMultiSelect", getAllowsMultiSelect, setAllowsMultiSelect, "" );
 _class_rtti_end_
 
 

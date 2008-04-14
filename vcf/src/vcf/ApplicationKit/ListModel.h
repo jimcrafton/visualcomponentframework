@@ -312,9 +312,17 @@ public:
 	}
 
 protected:
-	virtual bool doInsert( const uint32 & index, const VariantData& item ) = 0;    	
-	virtual bool doRemove( const uint32& index ) = 0;
-	virtual bool doSet( const uint32& index, const VariantData& item ) = 0;
+	virtual bool doInsert( const uint32 & index, const VariantData& item ){
+		return false;
+	}
+
+	virtual bool doRemove( const uint32& index ) {
+		return false;
+	}
+
+	virtual bool doSet( const uint32& index, const VariantData& item ) {
+		return false;
+	}
 
 	virtual bool doInsertSubItem( const uint32& index, const uint32 & subItemIndex, const VariantData& value ) {
 		return false;

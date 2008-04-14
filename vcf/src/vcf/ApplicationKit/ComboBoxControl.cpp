@@ -56,7 +56,7 @@ public:
 
 
 	virtual void mouseMove( MouseEvent* event ) {
-		CustomControl::mouseMove( event );
+		ListControl::mouseMove( event );
 
 		if ( (Component::csNormal == getComponentState()) ) {
 			ListItem* foundItem = findSingleSelectedItem( event->getPoint() );
@@ -68,7 +68,7 @@ public:
 				}
 				else {
 					
-					if ( foundItem != this->getSelectedItem() ) {
+					if ( foundItem != getItem( this->getSelectedItem() ) ) {
 						setSelectedItem( foundItem );
 					}
 				}
@@ -233,7 +233,7 @@ public:
 		}
 
 		if ( clientRect.containsPt( e->getPoint() ) ) {
-			selectedItem_ = listBox_->getSelectedItem();
+			selectedItem_ = listBox_->getItem( listBox_->getSelectedItem() );
 		}
 		else {
 			selectedItem_ = NULL;
@@ -445,12 +445,12 @@ ListItem* ComboBoxControl::addItem( const String& caption, const uint32 imageInd
 
 ListItem* ComboBoxControl::getListItem( const uint32& index )
 {
-	return listBox_->getListItem( index );
+	return listBox_->getItem( index );
 }
 
 void ComboBoxControl::setListItem( const uint32& index, ListItem* item )
 {
-	listBox_->setListItem( index, item );
+	listBox_->setItem( index, item );
 }
 
 void ComboBoxControl::closeDropDown( Event* event )
@@ -626,7 +626,8 @@ void ComboBoxControl::keyPressed( KeyboardEvent* event )
 		case vkReturn : {
 			StringUtils::trace( "ComboBoxControl::keyPressed: vkReturn()\n" );
 			if ( NULL != dropDown_ ) {
-				ListItem* item = ((ComboBoxDropDown*)dropDown_)->getListBox()->getSelectedItem();
+
+				ListItem* item = NULL;//((ComboBoxDropDown*)dropDown_)->getListBox()->getSelectedItem();
 
 				// we close the drodownbox here because if we do it after, 
 				// we would set back the current selected item, while
@@ -658,7 +659,7 @@ void ComboBoxControl::keyPressed( KeyboardEvent* event )
 ListItem* ComboBoxControl::getSelectedItem()
 {
 
-	return listBox_->getSelectedItem();
+	return NULL;//listBox_->getSelectedItem();
 }
 
 void ComboBoxControl::onPostSelect( ItemEvent* e )
@@ -693,7 +694,7 @@ void ComboBoxControl::setSelectedItem( ListItem* selectedItem )
 
 void ComboBoxControl::setSelectedItemIndex( const uint32& selectedIndex )
 {
-	setSelectedItem( listBox_->getListItem( selectedIndex ) );
+//	setSelectedItem( listBox_->getListItem( selectedIndex ) );
 }
 
 void ComboBoxControl::setComboBoxStyle( const ComboBoxStyleType& comboBoxStyle )
@@ -779,7 +780,7 @@ void ComboBoxControl::onEditReturnKeyPressed( KeyboardEvent* event )
 
 	if ( vkReturn == event->getVirtualCode() ) {
 		if ( NULL != dropDown_ ) {
-			ListItem* item = ((ComboBoxDropDown*)dropDown_)->getListBox()->getSelectedItem();
+			ListItem* item = NULL;//((ComboBoxDropDown*)dropDown_)->getListBox()->getSelectedItem();
 
 			// we close the drodownbox now because if we do it after, 
 			// we would set back the current selected item

@@ -109,7 +109,7 @@ public:
 		*/
 		listBoxSingle->setAllowsExtendedSelect( false );
 
-		listBoxSingle->setImageList( imgList );
+		listBoxSingle->setSmallImageList( imgList );
 
 		ListBoxControl* listBoxMulti = new ListBoxControl();
 		listBoxMulti->setName( L"listBoxMulti" );
@@ -247,9 +247,9 @@ public:
 		this->add(btnExtended);
 	
 		//add SelectionChanged handlers for each listbox.
-		listBoxSingle->SelectionChanged.add( new ClassProcedure1<ItemEvent*,ListBoxWindow>(this, &ListBoxWindow::getListBoxSingleInfo, "ListBoxWindow::getListBoxSingleInfo"));
-		listBoxMulti->SelectionChanged.add( new ClassProcedure1<ItemEvent*,ListBoxWindow>(this, &ListBoxWindow::getListBoxMultiInfo, "ListBoxWindow::getListBoxMultiInfo"));
-		listBoxExtended->SelectionChanged.add( new ClassProcedure1<ItemEvent*,ListBoxWindow>(this, &ListBoxWindow::getListBoxExtendedInfo, "ListBoxWindow::getListBoxExtendedInfo"));
+		listBoxSingle->ItemSelectionChanged.add( new ClassProcedure1<ItemEvent*,ListBoxWindow>(this, &ListBoxWindow::getListBoxSingleInfo, "ListBoxWindow::getListBoxSingleInfo"));
+		listBoxMulti->ItemSelectionChanged.add( new ClassProcedure1<ItemEvent*,ListBoxWindow>(this, &ListBoxWindow::getListBoxMultiInfo, "ListBoxWindow::getListBoxMultiInfo"));
+		listBoxExtended->ItemSelectionChanged.add( new ClassProcedure1<ItemEvent*,ListBoxWindow>(this, &ListBoxWindow::getListBoxExtendedInfo, "ListBoxWindow::getListBoxExtendedInfo"));
 	
 		//add ButtonClicked handlers for each command button.	
 		btnSingle->ButtonClicked.add( new ClassProcedure1<ButtonEvent*,ListBoxWindow>( this, &ListBoxWindow::onbtnSingleClicked, "ListBoxWindow::onbtnSingleClicked" ) );

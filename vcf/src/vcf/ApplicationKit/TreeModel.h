@@ -257,10 +257,21 @@ public:
 	}
 
 protected:
-	virtual Key doInsert( const VariantData& value, const Key& parentKey=RootKey ) = 0;
-	virtual Key doRemove( const Key& key ) = 0;
-	virtual bool doClearChildren( const Key& key ) = 0;
-	virtual bool doSet( const Key& key, const VariantData& value ) = 0;
+	virtual Key doInsert( const VariantData& value, const Key& parentKey=RootKey ) {
+		return InvalidKey;
+	}
+
+	virtual Key doRemove( const Key& key ) {
+		return InvalidKey;
+	}
+
+	virtual bool doClearChildren( const Key& key ) {
+		return false;
+	}
+
+	virtual bool doSet( const Key& key, const VariantData& value ) {
+		return false;
+	}
 
 	virtual Key doCopy( const Key& srcKey, const Key& destKey, bool deepCopy=false ) {
 		return InvalidKey;

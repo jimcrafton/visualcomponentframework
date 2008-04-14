@@ -38,11 +38,6 @@ void ListControl::setListModel(ListModel * model)
 	setViewModel( model );
 }
 
-void ListControl::onListModelContentsChanged( ListModelEvent* event )
-{
-
-}
-
 void ListControl::onItemAdded( ListModelEvent* event )
 {
 	if ( internalModelChange_ ) {
@@ -124,9 +119,9 @@ void ListControl::modelChanged( Model* oldModel, Model* newModel )
 
 		lm->ItemRemoved -= ev;
 
-		ev = getCallback( "ListControl::onListModelContentsChanged" );
+		ev = getCallback( "ListControl::handleEvent" );
 		if ( NULL == ev ) {
-			ev = new ClassProcedure1<ListModelEvent*,ListControl>( this, &ListControl::onListModelContentsChanged, "ListControl::onListModelContentsChanged" );
+			ev = new ClassProcedure1<Event*,ListControl>( this, &ListControl::handleEvent, "ListControl::handleEvent" );
 		}
 
 		lm->ModelChanged -= ev;
@@ -152,9 +147,9 @@ void ListControl::modelChanged( Model* oldModel, Model* newModel )
 			
 			lm->ItemRemoved += ev;
 			
-			ev = getCallback( "ListControl::onListModelContentsChanged" );
+			ev = getCallback( "ListControl::handleEvent" );
 			if ( NULL == ev ) {
-				ev = new ClassProcedure1<ListModelEvent*,ListControl>( this, &ListControl::onListModelContentsChanged, "ListControl::onListModelContentsChanged" );
+				ev = new ClassProcedure1<Event*,ListControl>( this, &ListControl::handleEvent, "ListControl::handleEvent" );
 			}
 			
 			lm->ModelChanged += ev;
@@ -246,6 +241,9 @@ ListItem* ListControl::insertItem( const uint32& index, const String& caption, c
 	lm->insert( index, caption );
 
 	result = getItem(index);
+	if ( NULL != result ) {
+		result->setImageIndex( imageIndex );
+	}
 
 	return result;
 }
@@ -308,7 +306,7 @@ void ListControl::selectItem( const uint32& index )
 	listPeer_->selectItem( index );
 }
 
-Enumerator<uint32>* ListControl::getSelectedItems()
+Enumerator<uint32>* ListControl::getSelectedItemsByIndex()
 {
 	return listPeer_->getSelectedItems();
 }
