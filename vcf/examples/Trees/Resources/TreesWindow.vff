@@ -40,11 +40,11 @@ object TreesWindow  : VCF::Window
 			filename = 'res:state1.bmp'
 		end
 
-		object img1a : VCF::ImageComponent 
+		object img2a : VCF::ImageComponent 
 			filename = 'res:state1.bmp'
 		end
 
-		object img2a : VCF::ImageComponent 
+		object img3a : VCF::ImageComponent 
 			filename = 'res:state2.bmp'
 		end
 	end
@@ -91,6 +91,28 @@ object TreesWindow  : VCF::Window
 			end
 		end
 
+
+		object tia3 : VCF::TreeItem 
+			caption = 'tia3'
+		end
+		object tia4 : VCF::TreeItem 
+			caption = 'tia4'
+			object tia7 : VCF::TreeItem 
+				caption = 'tia7'
+			end
+			object tia8 : VCF::TreeItem 
+				caption = 'tia8'
+			end
+			object tia9 : VCF::TreeItem 
+				caption = 'tia9'
+			end
+		end
+		object tia5 : VCF::TreeItem 
+			caption = 'tia5'
+		end
+		object tia6 : VCF::TreeItem 
+			caption = 'tia6'
+		end
 
 		object col1 : VCF::ColumnItem 
 			caption = 'Gargle'

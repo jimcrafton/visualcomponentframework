@@ -217,6 +217,11 @@ Image* GraphicsToolkit::internal_createImage( const String& fileName )
 	else {
 		
 		FilePath fp = fileName;
+
+		if ( !File::exists( fp ) ) {
+			throw RuntimeException( String("File \"") + fileName + "\" doesn't exist!" );
+		}
+
 		String ext = fp.getExtension();
 		ext = StringUtils::lowerCase( ext );
 		/**
@@ -236,6 +241,13 @@ Image* GraphicsToolkit::internal_createImage( const String& fileName )
 			}
 		}
 	}
+
+	
+
+	if ( NULL == result ) {
+		//throw RuntimeException( String("Unable to create image for file \"") + fileName + "\"" );
+	}
+
 	return result;
 }
 

@@ -166,6 +166,10 @@ public:
 	uint32 getDisplayOptions() {
 		return displayOptions_;
 	}
+
+	virtual void paintItem( GraphicsContext* ctx, const Rect& itemRect, const TreeModel::Key& key, const DrawUIState& state ) {}
+	virtual void paintSubItem( GraphicsContext* ctx, const Rect& itemRect, const TreeModel::Key& key, const uint32& subItemIndex, const DrawUIState& state ) {}
+
 protected:	
 
 	void onTreeItemPaint( ItemEvent* event );	

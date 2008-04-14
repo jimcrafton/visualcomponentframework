@@ -19,7 +19,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ColumnItem.h"
 
 #include "vcf/ApplicationKit/Win32Tree.h"
-
+#include "vcf/GraphicsKit/DrawUIState.h"
 
 /**
 this is redifined here because the mingw version is WRONG! (or the MS iversion is
@@ -333,12 +333,6 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 	wndProcResult = 0;
 
 	switch ( message ) {
-
-		
-	}
-
-
-	switch ( message ) {
 		case WM_MOUSEMOVE: case WM_LBUTTONDBLCLK: case WM_MBUTTONDBLCLK: case WM_RBUTTONDBLCLK:
 			case WM_LBUTTONUP : case WM_MBUTTONUP: case WM_RBUTTONUP: 
 			case WM_MBUTTONDOWN: case WM_RBUTTONDOWN: {
@@ -404,37 +398,9 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 		case WM_PAINT:{
 			PAINTSTRUCT ps;
-
-			DWORD style = GetWindowLong( hwnd_, GWL_STYLE );
-			hasLines_ = (style & TVS_HASLINES) ? true : false;
-			hasButtons_ = (style & TVS_HASBUTTONS) ? true : false;
+			//return false;
 
 			HDC dc = BeginPaint( hwnd_, &ps );
-
-			RECT paintRect;
-			GetClientRect( hwnd_, &paintRect );
-
-			if ( NULL == memDC_ ) {
-				//create here
-				HDC tmpDC = ::GetDC(0);
-				memDC_ = ::CreateCompatibleDC( tmpDC );
-				::ReleaseDC( 0,	tmpDC );
-			}
-
-
-			ControlGraphicsContext ctrlCtx(peerControl_);
-			currentCtx_ = &ctrlCtx;
-
-			currentCtx_->setViewableBounds( Rect(paintRect.left, paintRect.top,
-									paintRect.right, paintRect.bottom ) );
-
-			memBMP_ = ::CreateCompatibleBitmap( dc,
-					paintRect.right - paintRect.left,
-					paintRect.bottom - paintRect.top );
-
-
-			memDCState_ = ::SaveDC( memDC_ );
-			originalMemBMP_ = (HBITMAP)::SelectObject( memDC_, memBMP_ );
 
 			int headerHeight = 0;
 
@@ -453,18 +419,108 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					for ( int i=0;i<count;i++ ) {						
 						SendMessage( this->headerWnd_, HDM_GETITEMRECT, i, (LPARAM)&headerRects_[i] );
 					}
-
 				}
 			}
 
-			
+			DWORD style = GetWindowLong( hwnd_, GWL_STYLE );
+			hasLines_ = (style & TVS_HASLINES) ? true : false;
+			hasButtons_ = (style & TVS_HASBUTTONS) ? true : false;
+
 			POINT org = {0};
-			GetViewportOrgEx( dc, &org );
-			::SetViewportOrgEx( dc, org.x, org.y+headerHeight, NULL );
+			::GetViewportOrgEx( dc, &org );
+			//::SetViewportOrgEx( dc, org.x, org.y+headerHeight, NULL );
+
+			OffsetWindowOrgEx( dc, 0, -headerHeight, NULL );
+			::GetWindowOrgEx( dc, &org );
+			//::SetWindowOrgEx( dc, org.x, -(org.y+headerHeight), NULL );
+
+			OffsetClipRgn( dc, 0, org.y+headerHeight );
+
+			/*
+			
+
+			
+			
+
+			RECT paintRect;
+			GetClientRect( hwnd_, &paintRect );
+
+			//paintRect = ps.rcPaint;
+
+			if ( NULL == memDC_ ) {
+				//create here
+				HDC tmpDC = ::GetDC(0);
+				memDC_ = ::CreateCompatibleDC( tmpDC );
+				::ReleaseDC( 0,	tmpDC );
+			}
+
+			
+
+
+			paintRect.bottom -= headerHeight;
+
+
+			ControlGraphicsContext ctrlCtx(peerControl_);
+			currentCtx_ = &ctrlCtx;
+
+			currentCtx_->setViewableBounds( Rect(paintRect.left, paintRect.top,
+									paintRect.right, paintRect.bottom ) );
+
+			memBMP_ = ::CreateCompatibleBitmap( dc,
+					paintRect.right - paintRect.left,
+					paintRect.bottom - paintRect.top );
+
+
+			StringUtils::trace(Format("ps.rcPaint l: %d, t: %d, w: %d, h: %d\n") % ps.rcPaint.left
+										% ps.rcPaint.top
+										% (ps.rcPaint.right - ps.rcPaint.left)
+										% (ps.rcPaint.bottom - ps.rcPaint.top));
+
+			StringUtils::trace(Format("paintRect l: %d, t: %d, w: %d, h: %d\n") % paintRect.left
+										% paintRect.top
+										% (paintRect.right - paintRect.left)
+										% (paintRect.bottom - paintRect.top));
+									
+					
+			memDCState_ = ::SaveDC( memDC_ );
+			originalMemBMP_ = (HBITMAP)::SelectObject( memDC_, memBMP_ );
+
+			
+
+			
+			
+
+			
+
+			//::OffsetRect( &paintRect, 0, headerHeight );
 
 			POINT oldOrg;
 			memset(&oldOrg,0,sizeof(oldOrg));
-			::SetViewportOrgEx( memDC_, -paintRect.left, -(paintRect.top), &oldOrg );
+			//::SetViewportOrgEx( memDC_, -paintRect.left, -(paintRect.top), &oldOrg );
+			//::SetViewportOrgEx( memDC_, -paintRect.left, -headerHeight, &oldOrg );
+
+			RECT cr = {0};
+			::GetClipBox( dc, &cr );
+			StringUtils::trace(Format("GetClipBox l: %d, t: %d, w: %d, h: %d\n") % cr.left
+										% cr.top
+										% (cr.right - cr.left)
+										% (cr.bottom - cr.top));
+
+			HRGN rgn = CreateRectRgn( cr.left, cr.top+headerHeight, cr.right, cr.bottom+headerHeight );
+			//::SelectClipRgn( memDC_, rgn );
+			//SelectClipRgn( dc, NULL );
+
+			::GetClipBox( memDC_, &cr );
+			StringUtils::trace(Format("GetClipBox memDC_ l: %d, t: %d, w: %d, h: %d\n") % cr.left
+										% cr.top
+										% (cr.right - cr.left)
+										% (cr.bottom - cr.top));
+
+			//OffsetRect(&cr,0,headerHeight);
+			
+
+			//::OffsetClipRgn( dc, 0, -headerHeight );
+
 
 			Color* color = peerControl_->getColor();
 			COLORREF backColor = color->getColorRef32();
@@ -475,8 +531,9 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 
 			currentCtx_->getPeer()->setContextID( (OSHandleID)memDC_ );
+*/
 
-
+/*
 			((ControlGraphicsContext*)currentCtx_)->setOwningControl( NULL );
 
 			int gcs = currentCtx_->saveState();
@@ -492,26 +549,31 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 			currentCtx_->restoreState( gcs );
 
+*/
 
 			//reset back to original origin
-			//::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
+			//::SetViewportOrgEx( memDC_, paintRect.left, paintRect.top, &oldOrg );
 
 			//let the tree control's DefWndProc do windwos painting
 
-			defaultWndProcedure( WM_PAINT, (WPARAM)memDC_, 0 );
+			defaultWndProcedure( WM_PAINT, (WPARAM)dc, 0 );
 
 
+			
 			//NOW reset the owning control of teh graphics context here
-			((ControlGraphicsContext*)currentCtx_)->setOwningControl( peerControl_ );
+			//((ControlGraphicsContext*)currentCtx_)->setOwningControl( peerControl_ );
 
-			::BitBlt( dc, paintRect.left, paintRect.top,
-					  paintRect.right - paintRect.left,
-					  paintRect.bottom - paintRect.top,
-					  memDC_, paintRect.left, paintRect.top, SRCCOPY );
 
+			//::BitBlt( dc, paintRect.left, paintRect.top+headerHeight,
+			//		  paintRect.right - paintRect.left,
+			//		  paintRect.bottom - paintRect.top,
+			//		  memDC_, 0, 0, SRCCOPY );
+/*
 			::RestoreDC ( memDC_, memDCState_ );
 
 			::DeleteObject( memBMP_ );
+
+			::DeleteObject(rgn);
 
 			memBMP_ = NULL;
 			originalMemBMP_ = NULL;
@@ -520,6 +582,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 
 			currentCtx_ = NULL;
+*/
 
 			EndPaint( hwnd_, &ps );
 
@@ -1128,12 +1191,12 @@ Do we need these? What advantage does processing these events have for us???
 		}
 		break;
 		*/
-
+/*
 		case NM_CUSTOMDRAW:{
 			wndProcResult = treeCustomDraw( (NMTVCUSTOMDRAW*)lParam );
 			result = true;			
 		}
-		break;
+		break;*/
 
 		case WM_SIZE : {
 			result = true;
@@ -1290,8 +1353,8 @@ LRESULT Win32Tree::treeCustomDraw( NMTVCUSTOMDRAW* drawInfo )
 
 
 			if ( this->headerEnabled_ ) {							
-				result |= CDRF_SKIPDEFAULT;
-				drawItem( drawInfo );
+				//result |= CDRF_SKIPDEFAULT;
+				//drawItem( drawInfo );				
 			}
 		}
 		break;
@@ -1300,24 +1363,38 @@ LRESULT Win32Tree::treeCustomDraw( NMTVCUSTOMDRAW* drawInfo )
 			result = CDRF_DODEFAULT;
 
 			if ( this->headerEnabled_ ) {
+				
+
 				drawInfo->nmcd.rc.left = headerRects_[0].left;
 				drawInfo->nmcd.rc.right = headerRects_[0].right;
 			}
 
-			if ( treeControl_->itemExists( drawInfo->nmcd.lItemlParam ) ) {
-				TreeItem* item = treeControl_->getItemFromKey( drawInfo->nmcd.lItemlParam );
-				if ( item->canPaint() ) {
-					Rect itemRect;
-					itemRect.left_ = drawInfo->nmcd.rc.left;
-					itemRect.top_ = drawInfo->nmcd.rc.top;
-					itemRect.right_ = drawInfo->nmcd.rc.right;
-					itemRect.bottom_ = drawInfo->nmcd.rc.bottom;
-
-					if ( NULL != currentCtx_ ) {
-						item->paint( currentCtx_, &itemRect );
-					}								
+			if ( !headerEnabled_ ) {
+				
+				bool useItemPaint = false;
+				Rect itemRect;
+				itemRect.left_ = drawInfo->nmcd.rc.left;
+				itemRect.top_ = drawInfo->nmcd.rc.top;
+				itemRect.right_ = drawInfo->nmcd.rc.right;
+				itemRect.bottom_ = drawInfo->nmcd.rc.bottom;
+				
+				if ( treeControl_->itemExists( drawInfo->nmcd.lItemlParam ) ) {
+					TreeItem* item = treeControl_->getItemFromKey( drawInfo->nmcd.lItemlParam );
+					if ( item->canPaint() ) {
+						if ( NULL != currentCtx_ ) {
+							item->paint( currentCtx_, &itemRect );
+							useItemPaint = true;
+						}								
+					}
+				}
+				
+				if ( !useItemPaint ) {
+					TreeItemState itemState;
+					treeControl_->paintItem( currentCtx_, itemRect, drawInfo->nmcd.lItemlParam, itemState );
 				}
 			}
+
+
 		}
 		break;
 
@@ -1475,6 +1552,10 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 
 	TreeModel* tm = treeControl_->getTreeModel();
 	TreeModel::Key key = (TreeModel::Key)drawInfo->nmcd.lItemlParam;
+
+	StringUtils::trace(Format("drawItem() key: %u hitem: %p\n")% key % tvItem.hItem);
+
+
 	bool hasChildren = !tm->isLeaf( key );
 
 	String s = tm->getAsString( key );
@@ -1528,6 +1609,7 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 		DeleteObject(p);
 	}
 */
+	/*
 	if ( this->hasButtons_ && hasChildren && btn.right < drawInfo->nmcd.rc.right ) {	
 		HPEN p = CreatePen( PS_SOLID, 1, RGB(120,120,120) );
 		SelectObject( drawInfo->nmcd.hdc, p );
@@ -1561,7 +1643,7 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 		DeleteObject(p);
 	}
 
-
+*/
 	
 	
 
@@ -1583,24 +1665,28 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 						DT_LEFT | DT_END_ELLIPSIS | DT_EXPANDTABS | DT_SINGLELINE | DT_VCENTER,
 						NULL );
 	}
-
+/*
 	TreeItem* item = NULL;
 	if ( treeControl_->itemExists(key) ) {
 		item = treeControl_->getItemFromKey( key );
 	}
 
-	bool paintItem = false;
+	Rect itemRect;
+	itemRect.left_ = r.left;
+	itemRect.top_ = r.top;
+	itemRect.right_ = r.right;
+	itemRect.bottom_ = r.bottom;
+	bool useItemPaint = false;
 	if ( NULL != item ) {
-		if ( item->canPaint() ) {
-			paintItem = true;
-			Rect itemRect;
-			itemRect.left_ = r.left;
-			itemRect.top_ = r.top;
-			itemRect.right_ = r.right;
-			itemRect.bottom_ = r.bottom;
-
+		if ( item->canPaint() ) {			
 			item->paint( this->currentCtx_, &itemRect );
+			useItemPaint = true;
 		}
+	}
+
+	if ( !useItemPaint ) {
+		TreeItemState itemState;
+		treeControl_->paintItem( currentCtx_, itemRect, key, itemState );
 	}
 
 	ColumnModel* cm = this->treeControl_->getColumnModel();
@@ -1630,6 +1716,8 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 		if ( NULL != item ) {
 			uint32 siCount = item->getSubItemCount();
 			if ( (i-1) < siCount ) {
+				useItemPaint = false;
+
 				if ( treeControl_->subItemExists( key, i-1 ) ) {					
 					TreeSubItem* subItem = item->getSubItem( i-1 );
 					if ( NULL != subItem ) {
@@ -1643,10 +1731,16 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 						}
 					}
 				}
+
+				if ( !useItemPaint ) {
+					TreeItemState itemState;
+					itemState.setAsSubItem(true);
+					treeControl_->paintSubItem( currentCtx_, itemRect, key, i-1, itemState );
+				}
 			}
 		}
 	}
-
+*/
 	::RestoreDC( drawInfo->nmcd.hdc, dcs );
 }
 
@@ -2038,7 +2132,7 @@ void Win32Tree::onItemSelected( ItemEvent* e )
 void Win32Tree::registerHeaderWndProc()
 {
 	if ( NULL == headerWnd_ ) {
-		headerWnd_ = CreateWindowExW( 0, WC_HEADERW, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | 
+		headerWnd_ = CreateWindowExW( 0, WC_HEADERW, NULL, WS_CHILD | WS_VISIBLE |  
 										HDS_BUTTONS | HDS_HORZ | HDS_FULLDRAG,
 										0, 0,
 										0, CW_USEDEFAULT,

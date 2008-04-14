@@ -20,12 +20,6 @@ where you installed the VCF.
 #endif // _VCF_LISTCONTROL_H__
 
 
-
-#ifndef _VCF_HEADERCONTROL_H__
-#	include "vcf/ApplicationKit/HeaderControl.h"
-#endif // _VCF_HEADERCONTROL_H__
-
-
 #ifndef _VCF_COLUMNMODEL_H__
 #	include "vcf/ApplicationKit/ColumnModel.h"
 #endif // _VCF_COLUMNMODEL_H__
@@ -196,6 +190,8 @@ public:
 	virtual uint32 getItemSubItemIndex( ListItem* item, ListSubItem* subItem );
 	virtual uint32 getItemSubItemCount( ListItem* item );
 	
+
+	virtual void paintSubItem( GraphicsContext* ctx, const Rect& itemRect, const uint32& index, const uint32& subItemIndex, const DrawUIState& state ) {}
 protected:
 	//Events
 	//void onItemPaint( ItemEvent* event );

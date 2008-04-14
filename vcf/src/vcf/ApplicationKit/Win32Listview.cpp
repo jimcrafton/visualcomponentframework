@@ -17,7 +17,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKitPrivate.h"
 #include "vcf/ApplicationKit/ListViewControl.h"
 #include "vcf/ApplicationKit/Win32Listview.h"
-
+#include "vcf/GraphicsKit/DrawUIState.h"
 
 
 #if defined(VCF_CYGWIN) || defined(VCF_MINGW)
@@ -376,20 +376,18 @@ void Win32Listview::postPaintItem( NMLVCUSTOMDRAW* drawItem )
 	ListModel* model = listviewControl_->getListModel();
 	ListItem* item = listviewControl_->getItem( drawItem->nmcd.dwItemSpec );
 	
+	bool useItemPaint = false;
+	
+	RECT tmp = {0,0,0,0};
+	ListView_GetItemRect( hwnd_, drawItem->nmcd.dwItemSpec, &tmp, LVIR_BOUNDS );
+	Rect itemRect( tmp.left, tmp.top, tmp.right, tmp.bottom );
 
 	if ( NULL != item ) {
 
 		//item->setSelected( isItemSelected( item ) );
 
 		if ( item->canPaint() ) {
-			RECT tmp = {0,0,0,0};
 			
-
-			ListView_GetItemRect( hwnd_, drawItem->nmcd.dwItemSpec,
-				&tmp, LVIR_BOUNDS );
-
-
-			Rect itemRect( tmp.left, tmp.top, tmp.right, tmp.bottom );
 			
 			item->paint( currentCtx_, &itemRect );
 
@@ -407,22 +405,39 @@ void Win32Listview::postPaintItem( NMLVCUSTOMDRAW* drawItem )
 					Rect subItemRect = itemRect;
 					while ( (true == columns->hasMoreElements()) && 
 							(it != subItems.end()) ) {
+						useItemPaint = false;
 						ColumnItem* column = columns->nextElement();
 						subItemRect.right_ = subItemRect.left_ + column->getWidth();
 
 						if ( colIndex > 0 ) {
 							ListSubItem* subItem = *it;
-							subItem->paint( currentCtx_, &subItemRect, colIndex );
+							if ( subItem->canPaint() ) {
+								subItem->paint( currentCtx_, &subItemRect, colIndex );
+								useItemPaint = true;
+							}
 							++it;
 						}
 
+						if ( !useItemPaint ) {
+							ListItemState itemState;
+							itemState.setAsSubItem(true);
+							listviewControl_->paintSubItem( currentCtx_, subItemRect, drawItem->nmcd.dwItemSpec, colIndex-1, itemState );
+						}
+						
 						subItemRect.left_ = subItemRect.right_;
 						
 						colIndex ++;
 					}
 				}
 			}
+
+			useItemPaint = true;
 		}
+	}
+
+	if ( !useItemPaint ) {
+		ListItemState itemState;
+		listviewControl_->paintItem( currentCtx_, itemRect, drawItem->nmcd.dwItemSpec, itemState );
 	}
 }
 

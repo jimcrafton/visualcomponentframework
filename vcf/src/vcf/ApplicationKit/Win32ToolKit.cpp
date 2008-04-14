@@ -3846,200 +3846,220 @@ Event* Win32ToolKit::internal_createEventFromNativeOSEventData( void* eventData 
 	return result;
 }
 
+bool Win32ToolKit::runEventLoopRunOnce( MSG& msg, bool& isIdle )
+{
+	HACCEL hAccelTable = NULL;
+	Application* runningApp = Application::getRunningInstance();
+	// phase1: check to see if we can do idle work
+	while ( isIdle && (!::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE)) ) {
+
+		internal_idleTime();
+
+		if ( NULL != runningApp ) {
+			//StringUtils::trace( "runningApp->idleTime()\n" );
+			runningApp->idleTime();
+		}
+
+		//check library apps;
+		Enumerator<LibraryApplication*>* registeredLibs = LibraryApplication::getRegisteredLibraries();
+		while ( true == registeredLibs->hasMoreElements() ) {
+			LibraryApplication* libraryApp = registeredLibs->nextElement();
+			libraryApp->idleTime();
+		}
+		isIdle = false;
+	}
+
+	if ( msg.message == WM_QUIT ) {
+		StringUtils::trace( "WM_QUIT\n" );
+		return false;
+	}
+	else if ( msg.message == WM_EXITMENULOOP ) {
+		StringUtils::trace( "WM_EXITMENULOOP\n" );
+	}
+	else if ( msg.message == WM_INPUTLANGCHANGE ) {
+		StringUtils::trace( "WM_INPUTLANGCHANGE\n" );
+	}
+	else if ( msg.message == WM_WININICHANGE ) {
+		StringUtils::trace( "WM_WININICHANGE\n" );
+	}
+
+	do	{
+		//dispatch message, but quit on WM_QUIT
+		if ( GetMessage( &msg, NULL, 0, 0 ) ) {
+			/**
+			*we're going to want to handle accelerators here
+			*the steps should
+			*identify if the message is a
+			*WM_KEYPRESS
+			*if it is then check to find the Control associated with the msg
+			*if it is then call the Control's getAccelator and match to the
+			*key stroke's VK code and modifier keys. if the accelerator is
+			*found the call the invoke() method on the event handler for hte
+			*accelerator.
+			*if no accelerator is found on the control or no control is found,
+			*try and get the running Application. if one is found then call
+			*the getAccelerator() on the Application and do the same thing as described
+			*for the control
+			*if any accelerator is found then do NOT call TranslateMessage() and DispatchMessage()
+			*
+			*
+			*/
+			bool doTranslateAndDispatch = true;
+			switch( msg.message ) {
+
+				case WM_KEYDOWN :  case WM_SYSKEYDOWN : {
+
+					KeyboardData keyData = Win32UIUtils::translateKeyData( msg.hwnd, msg.lParam );
+
+					KeyboardMasks modifierKey = (KeyboardMasks)Win32UIUtils::translateKeyMask( keyData.keyMask );
+					VirtualKeyCode vkCode = (VirtualKeyCode)Win32UIUtils::translateVKCode( keyData.VKeyCode );
+
+					if ( vkUndefined == vkCode ) { //tranlsate by ascii value
+
+						switch ( keyData.character ) {
+							case '{' : {
+								vkCode = vkOpenBrace;
+							}
+							break;
+
+							case '}' : {
+								vkCode = vkCloseBrace;
+							}
+							break;
+
+							case '[' : {
+								vkCode = vkOpenBracket;
+							}
+							break;
+
+							case ']' : {
+								vkCode = vkCloseBracket;
+							}
+							break;
+
+							case '~' : {
+								vkCode = vkTilde;
+							}
+							break;
+
+							case '`' : {
+								vkCode = vkLeftApostrophe;
+							}
+							break;
+						}
+					}
+
+					Win32Object* w = Win32Object::getWin32ObjectFromHWND( msg.hwnd );
+
+					Control* control = NULL;
+					Control* currentFocusedControl = Control::getCurrentFocusedControl();
+
+					if ( NULL != w ) {
+						control = w->getPeerControl();
+						if ( NULL != currentFocusedControl ) {
+							if ( (control != currentFocusedControl) && (currentFocusedControl->isLightWeight()) ) {
+								control = currentFocusedControl;
+							}
+						}
+					}
+					/**
+					JC - I put this very small change to attempt to
+					properly capture the "correct" focused control,
+					from the VCF's perspective. It seems to work fine.
+					*/
+					else {
+						control = currentFocusedControl;
+					}
+
+					KeyboardEvent event( control, Control::KEYBOARD_ACCELERATOR, keyData.repeatCount,
+						modifierKey, keyData.character, vkCode );
+
+					handleKeyboardEvent( &event );
+					if ( event.isConsumed() ) {
+						doTranslateAndDispatch = false;
+					}
+				}
+			}
+
+			if ( doTranslateAndDispatch ) {
+				if (!TranslateAccelerator( msg.hwnd, hAccelTable, &msg ) ) {
+					TranslateMessage( &msg );
+					DispatchMessage( &msg );
+				}
+			}
+
+			if ( msg.message == WM_QUIT ) {
+				StringUtils::trace( "WM_QUIT\n" );
+				return false;
+			}
+			else if ( msg.message == WM_EXITMENULOOP ) {
+				StringUtils::trace( "WM_EXITMENULOOP\n" );
+			}
+		}
+		else {
+			return false; //we're outta here - nothing more to do
+		}
+
+		/**
+		0x0118 is a WM_SYSTIMER, according to MSDN:
+		"The WM_SYSTIMER message in Windows is an undocumented system message;
+		it should not be trapped or relied on by an application. This message
+		can occasionally be viewed in Spy or in CodeView while debugging.
+
+		Windows uses the WM_SYSTIMER message internally to control the scroll
+		rate of highlighted text (text selected by the user) in edit controls,
+		or highlighted items in list boxes.
+
+		NOTE: The WM_SYSTIMER message is for Windows's internal use only and
+		can be changed without prior notice. "
+		*/
+
+		// WM_PAINT and WM_SYSTIMER (caret blink)
+		bool isIdleMessage = ( (msg.message != WM_PAINT) && (msg.message != 0x0118) );
+		if ( isIdleMessage ) {
+			if ( (msg.message == WM_MOUSEMOVE) || (msg.message == WM_NCMOUSEMOVE) ) {
+				//check the prev mouse pt;
+			}
+		}
+
+		if ( isIdleMessage ) {
+			isIdle = true;
+		}
+
+	}
+	while ( ::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) );
+
+	return true;
+}
+
 void Win32ToolKit::internal_runEventLoop()
 {
 	runEventCount_ ++;
 
 	MSG msg;
-	memset( &msg, 0, sizeof(MSG) );
-
-	HACCEL hAccelTable = NULL;
-
-	//we should have one of these, but it is not the end of the world if we don't.
-	//we can check at the beginning here cause our app instance isn't going to magically
-	//disapear on us, and if it does then we are doomed anyway...
-	Application* runningApp = Application::getRunningInstance();
+	memset( &msg, 0, sizeof(MSG) );	
 
 	bool isIdle = true;
 	while (true) {
-		// phase1: check to see if we can do idle work
-		while ( isIdle && (!::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE)) ) {
-
-			internal_idleTime();
-
-			if ( NULL != runningApp ) {
-				//StringUtils::trace( "runningApp->idleTime()\n" );
-				runningApp->idleTime();
+		try {
+			if ( !runEventLoopRunOnce( msg, isIdle ) ) {
+				return;
 			}
-
-			//check library apps;
-			Enumerator<LibraryApplication*>* registeredLibs = LibraryApplication::getRegisteredLibraries();
-			while ( true == registeredLibs->hasMoreElements() ) {
-				LibraryApplication* libraryApp = registeredLibs->nextElement();
-				libraryApp->idleTime();
+		}
+		catch (FoundationKit::Assertion& e){
+			String errString = "Assertion Exception caught.\n\"";
+			errString += e.what();
+			errString += "\".\nApplication exiting abnormally.";
+			
+			StringUtils::trace( "!!! Framework Exception: !!!\n\t" + errString + "\n" );
+			
+			if ( !Application::showAssertMessage( errString, "Framework Assertion Exception"  ) ) {
+#ifdef _DEBUG
+				//rethrow the exception and let the application fail out.
+				throw;
+#endif			
 			}
-			isIdle = false;
 		}
-
-		if ( msg.message == WM_QUIT ) {
-			StringUtils::trace( "WM_QUIT\n" );
-			return;
-		}
-		else if ( msg.message == WM_EXITMENULOOP ) {
-			StringUtils::trace( "WM_EXITMENULOOP\n" );
-		}
-		else if ( msg.message == WM_INPUTLANGCHANGE ) {
-			StringUtils::trace( "WM_INPUTLANGCHANGE\n" );
-		}
-		else if ( msg.message == WM_WININICHANGE ) {
-			StringUtils::trace( "WM_WININICHANGE\n" );
-		}
-
-		do	{
-			//dispatch message, but quit on WM_QUIT
-			if ( GetMessage( &msg, NULL, 0, 0 ) ) {
-				/**
-				*we're going to want to handle accelerators here
-				*the steps should
-				*identify if the message is a
-				*WM_KEYPRESS
-				*if it is then check to find the Control associated with the msg
-				*if it is then call the Control's getAccelator and match to the
-				*key stroke's VK code and modifier keys. if the accelerator is
-				*found the call the invoke() method on the event handler for hte
-				*accelerator.
-				*if no accelerator is found on the control or no control is found,
-				*try and get the running Application. if one is found then call
-				*the getAccelerator() on the Application and do the same thing as described
-				*for the control
-				*if any accelerator is found then do NOT call TranslateMessage() and DispatchMessage()
-				*
-				*
-				*/
-				bool doTranslateAndDispatch = true;
-				switch( msg.message ) {
-
-					case WM_KEYDOWN :  case WM_SYSKEYDOWN : {
-
-						KeyboardData keyData = Win32UIUtils::translateKeyData( msg.hwnd, msg.lParam );
-
-						KeyboardMasks modifierKey = (KeyboardMasks)Win32UIUtils::translateKeyMask( keyData.keyMask );
-						VirtualKeyCode vkCode = (VirtualKeyCode)Win32UIUtils::translateVKCode( keyData.VKeyCode );
-
-						if ( vkUndefined == vkCode ) { //tranlsate by ascii value
-
-							switch ( keyData.character ) {
-								case '{' : {
-									vkCode = vkOpenBrace;
-								}
-								break;
-
-								case '}' : {
-									vkCode = vkCloseBrace;
-								}
-								break;
-
-								case '[' : {
-									vkCode = vkOpenBracket;
-								}
-								break;
-
-								case ']' : {
-									vkCode = vkCloseBracket;
-								}
-								break;
-
-								case '~' : {
-									vkCode = vkTilde;
-								}
-								break;
-
-								case '`' : {
-									vkCode = vkLeftApostrophe;
-								}
-								break;
-							}
-						}
-
-						Win32Object* w = Win32Object::getWin32ObjectFromHWND( msg.hwnd );
-
-						Control* control = NULL;
-						Control* currentFocusedControl = Control::getCurrentFocusedControl();
-
-						if ( NULL != w ) {
-							control = w->getPeerControl();
-							if ( NULL != currentFocusedControl ) {
-								if ( (control != currentFocusedControl) && (currentFocusedControl->isLightWeight()) ) {
-									control = currentFocusedControl;
-								}
-							}
-						}
-						/**
-						JC - I put this very small change to attempt to
-						properly capture the "correct" focused control,
-						from the VCF's perspective. It seems to work fine.
-						*/
-						else {
-							control = currentFocusedControl;
-						}
-
-						KeyboardEvent event( control, Control::KEYBOARD_ACCELERATOR, keyData.repeatCount,
-							modifierKey, keyData.character, vkCode );
-
-						handleKeyboardEvent( &event );
-						if ( event.isConsumed() ) {
-							doTranslateAndDispatch = false;
-						}
-					}
-				}
-
-				if ( doTranslateAndDispatch ) {
-					if (!TranslateAccelerator( msg.hwnd, hAccelTable, &msg ) ) {
-						TranslateMessage( &msg );
-						DispatchMessage( &msg );
-					}
-				}
-
-				if ( msg.message == WM_QUIT ) {
-					StringUtils::trace( "WM_QUIT\n" );
-					return;
-				}
-				else if ( msg.message == WM_EXITMENULOOP ) {
-					StringUtils::trace( "WM_EXITMENULOOP\n" );
-				}
-			}
-			else {
-				return; //we're outta here - nothing more to do
-			}
-
-			/**
-			0x0118 is a WM_SYSTIMER, according to MSDN:
-			"The WM_SYSTIMER message in Windows is an undocumented system message;
-			it should not be trapped or relied on by an application. This message
-			can occasionally be viewed in Spy or in CodeView while debugging.
-
-			Windows uses the WM_SYSTIMER message internally to control the scroll
-			rate of highlighted text (text selected by the user) in edit controls,
-			or highlighted items in list boxes.
-
-			NOTE: The WM_SYSTIMER message is for Windows's internal use only and
-			can be changed without prior notice. "
-			*/
-
-			// WM_PAINT and WM_SYSTIMER (caret blink)
-			bool isIdleMessage = ( (msg.message != WM_PAINT) && (msg.message != 0x0118) );
-			if ( isIdleMessage ) {
-				if ( (msg.message == WM_MOUSEMOVE) || (msg.message == WM_NCMOUSEMOVE) ) {
-					//check the prev mouse pt;
-				}
-			}
-
-			if ( isIdleMessage ) {
-				isIdle = true;
-			}
-
-		}
-		while ( ::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) );
 	}
 
 	runEventCount_ --;

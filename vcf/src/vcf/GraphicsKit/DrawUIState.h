@@ -154,33 +154,40 @@ public:
 		dsToggledNo						= 0x00200000,
 
 		/**
+		The element is "toggled" in a "partial" state - akin to windows 
+		tri-state checkbox. In a check box this	would typically cause 
+		the "check" mark to be drawn partially grey with a shaded background.
+		*/
+		dsToggledPartial				= 0x00400000,
+
+		/**
 		The ui element is a menu item separator
 		*/
-		dsMenuItemSeparator				= 0x00400000,
+		dsMenuItemSeparator				= 0x00800000,
 
 		/**
 		The element is a the default button. Usually, on most windowing platforms,
 		the default button is the button that will be "clicked" if the user hits the 
 		enter or return key.
 		*/
-		dsDefaultButton					= 0x00800000,
+		dsDefaultButton					= 0x01000000,
 
 		/**
 		Indicates that the custom color should be used if the underlying
 		windowing theme API supports this. 
 		*/
-		dsUseCustomProgressColor		= 0x01000000,
-		dsUseCustomProgressTextColor	= 0x02000000,
+		dsUseCustomProgressColor		= 0x02000000,
+		dsUseCustomProgressTextColor	= 0x04000000,
 
 		/**
 		This indicates that the UI will be a radio button
 		like look. In other words only one choice will show up.
 		Its typicalle used in menu items. 
 		*/
-		dsMutualExclusiveToggle			= 0x04000000,
+		dsMutualExclusiveToggle			= 0x08000000,
 
-		dsMenuItemHasChildren			= 0x08000000,
-		dsMenuItemHasImage				= 0x10000000,
+		dsMenuItemHasChildren			= 0x10000000,
+		dsMenuItemHasImage				= 0x20000000,
 
 	};	
 };
@@ -199,6 +206,7 @@ enum UIElementType {
 	etScrollbarThumb,
 	etScrollbarButton,
 	etTextbox,
+	etLabel,
 	etToolbar,
 	etToolbarButton,
 	etTab,
@@ -209,7 +217,16 @@ enum UIElementType {
 	etListView,
 	etTreeView,
 	etHeader,
-
+	etItem,
+	etListItem,
+	etHeaderItem,
+	etTreeItem,
+	etTableItem,
+	etSubItem = 0x01000000, //can be OR'd with an existing type to 
+							//indicate that the item is a sub item 
+							//like a tree sub item, or a list sub item
+	etItemMask = 0x0000FFFF, //masks out the lower 16 bits to isolate the
+							//precise item type
 };
 
 enum BackgroundColors {
@@ -241,8 +258,12 @@ enum BackgroundColors {
 	bgMenuItem,
 	bgToolbarButton,
 	bgHeader,
-	bgHeaderItem,
 	bgProgress,
+	bgItem,
+	bgListItem,
+	bgHeaderItem,
+	bgTreeItem,
+	bgTableItem
 };
 
 /**
@@ -315,17 +336,60 @@ public:
 	
 	
 	UIElementType getType() const {
-		return type_;
+		return (UIElementType)type_;
 	}
 
 	void setType( UIElementType val ) {
 		type_ = val;
 	}
+
+	bool isSubItem() const {
+		return type_ & etSubItem ? true : false;
+	}
+
+	void setAsSubItem(bool val) {
+		type_ = val ? (type_ | etSubItem) : (type_ & ~etSubItem);
+	}
+	
+	UIElementType getItemType() const {
+		return (UIElementType) (type_ & etItemMask);
+	}
 protected:
 	int32 state_;
-	UIElementType type_;
+	uint32 type_;
 };
 
+	
+class ListItemState : public DrawUIState {
+public:
+	ListItemState():DrawUIState() {
+		type_ = etListItem;
+	}
+};
+
+
+class HeaderItemState : public DrawUIState {
+public:
+	HeaderItemState():DrawUIState() {
+		type_ = etHeaderItem;
+	}
+};
+
+
+class TreeItemState : public DrawUIState {
+public:
+	TreeItemState():DrawUIState() {
+		type_ = etTreeItem;
+	}
+};
+
+
+class TableItemState : public DrawUIState {
+public:
+	TableItemState():DrawUIState() {
+		type_ = etTableItem;
+	}
+};
 
 /**
 \class BackgroundState DrawUIState.h "vcf/GraphicsKit/DrawUIState.h"
@@ -815,8 +879,6 @@ public:
 	double viewSize_;
 	ScrollButtonType buttonType_;
 };
-
-
 
 
 /**

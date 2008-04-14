@@ -227,11 +227,10 @@ void Application::internal_main()
 		StringUtils::trace( "!!! Framework Exception: !!!\n\t" + errString + "\n" );
 		
 		Application::showErrorMessage( errString, "Framework Assertion Exception"  );
-		
-
 #ifdef _DEBUG
+			//rethrow the exception and let the application fail out.
 		throw;
-#endif
+#endif			
 	}
 	catch (std::exception& e){
 		String errString = "STL C++ exception throw.\nError : \"";
@@ -279,7 +278,26 @@ void Application::showErrorMessage( const String& message, const String& title )
 
 }
 
+bool Application::showAssertMessage( const String& message, const String& title )
+{
+	bool result = false;
+	String msg = message;
+	msg += "\nDo you want to continue with the program execution?";
+#ifdef VCF_WIN
+	if ( System::isUnicodeEnabled() ) {
+		if ( IDYES == ::MessageBoxW( NULL, msg.c_str(), title.c_str(), MB_YESNO | MB_ICONERROR ) ) {
+			result = true;
+		}
+	}
+	else {
+		if ( IDYES == ::MessageBoxA( NULL, msg.ansi_c_str(), title.ansi_c_str(), MB_OK | MB_ICONERROR ) ) {
+			result = true;
+		}
+	}
+#endif
 
+	return result;
+}
 
 
 

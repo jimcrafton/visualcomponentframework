@@ -18,6 +18,20 @@ where you installed the VCF.
 
 namespace VCF  {
 
+	/* autoresizing added by Marcello */
+	enum ColumnAutosizeType {
+		casAutoSizeNone = -1,
+		casAutoSizeColumns = -2,
+		casAutoSizeHeaders = -3,
+		casAutoSizeColumnsAndHeaders = -4,
+	};
+
+
+	static String ColumnAutosizeTypeNames[] = { "casAutoSizeNone",
+                                         "casAutoSizeColumns",
+										 "casAutoSizeHeaders",
+										 "casAutoSizeColumnsAndHeaders" };
+
 
 class ColumnItem;
 class ColumnModel;
