@@ -217,6 +217,7 @@ public:
 	virtual void processCommandLine(const CommandLine& comdLine){}
 
 	static void showErrorMessage( const String& message, const String& title );
+	static bool showAssertMessage( const String& message, const String& title );
 protected:
 	static Application* appInstance_;
 	std::map<String,Library*> VPLMap_;
@@ -248,3 +249,4 @@ int ApplicationKitMain(int argc, char** argv) {
 /**
 $Id$
 */
+

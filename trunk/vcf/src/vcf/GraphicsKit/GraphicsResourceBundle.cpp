@@ -46,9 +46,11 @@ Image* GraphicsResourceBundle::getImage( const String& resourceName )
 	if ( NULL == result ) {
 		String fileName = getResourcesDirectory() + resourceName;
 		
-		if ( File::exists( fileName ) ) {
-			result = GraphicsToolkit::createImage( fileName );
+		if ( !File::exists( fileName ) ) {
+			throw RuntimeException( String("File \"") + fileName + "\" doesn't exist!" );	
 		}
+
+		result = GraphicsToolkit::createImage( fileName );
 	}
 
 	return result;

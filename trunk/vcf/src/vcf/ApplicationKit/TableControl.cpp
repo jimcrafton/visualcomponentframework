@@ -14,7 +14,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/TableItemEditor.h"
 #include "vcf/ApplicationKit/Containers.h"
 #include "vcf/ApplicationKit/DefaultTableCellItem.h"
-
+#include "vcf/GraphicsKit/DrawUIState.h"
 
 using namespace VCF;
 
@@ -100,6 +100,9 @@ void TableControl::paint( GraphicsContext * context )
 	uint32 rowCount = tm->getRowCount();
 	uint32 columnCount = tm->getColumnCount();
 
+	bool useItemPaint = false;
+	CellID paintId;
+	TableItemState paintState;
 	if ( (rowCount > 0) && (columnCount > 0) ) {
 
 		int gcs = context->saveState();
@@ -155,7 +158,20 @@ void TableControl::paint( GraphicsContext * context )
 				rect.right_ = rect.left_ + colWidth-1;
 
 				cellItem = getItem( row, col );
-				cellItem->paint( context, &rect );
+
+				
+				useItemPaint = false;
+				if ( NULL != cellItem ) {
+					if ( cellItem->canPaint() ) {
+						cellItem->paint( context, &rect );
+						useItemPaint = true;
+					}
+				}
+				if ( !useItemPaint ) {
+					paintId.column = col;
+					paintId.row = row;
+					this->paintItem( context, rect, paintId, paintState );
+				}
 			}
 		}
 		
@@ -204,7 +220,19 @@ void TableControl::paint( GraphicsContext * context )
 				}
 
 				cellItem = getItem( row, col );
-				cellItem->paint( context, &rect );
+				
+				useItemPaint = false;
+				if ( NULL != cellItem ) {
+					if ( cellItem->canPaint() ) {
+						cellItem->paint( context, &rect );
+						useItemPaint = true;
+					}
+				}
+				if ( !useItemPaint ) {
+					paintId.column = col;
+					paintId.row = row;
+					this->paintItem( context, rect, paintId, paintState );
+				}
 			}
 		}
 
@@ -256,7 +284,18 @@ void TableControl::paint( GraphicsContext * context )
 						}
 
 
-						cellItem->paint( context, &rect );
+						useItemPaint = false;
+						if ( NULL != cellItem ) {
+							if ( cellItem->canPaint() ) {
+								cellItem->paint( context, &rect );
+								useItemPaint = true;
+							}
+						}
+						if ( !useItemPaint ) {
+							paintId.column = col;
+							paintId.row = row;
+							this->paintItem( context, rect, paintId, paintState );
+						}
 					}
 				}
 
@@ -329,7 +368,19 @@ void TableControl::paint( GraphicsContext * context )
 						//context->setColor( &Color(0xCCCCCC) );
 						//context->rectangle( &rect );
 						//context->fillPath();
-						cellItem->paint( context, &rect );
+						
+						useItemPaint = false;
+						if ( NULL != cellItem ) {
+							if ( cellItem->canPaint() ) {
+								cellItem->paint( context, &rect );
+								useItemPaint = true;
+							}
+						}
+						if ( !useItemPaint ) {
+							paintId.column = col;
+							paintId.row = row;
+							this->paintItem( context, rect, paintId, paintState );
+						}
 
 					}
 				}
@@ -2645,4 +2696,5 @@ void TableControl::setItem( const uint32& row, const uint32& column, TableCellIt
 /**
 $Id$
 */
+
 

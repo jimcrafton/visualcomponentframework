@@ -44,6 +44,11 @@ public:
 
 	virtual void setIndex( const uint32& index ) {}
     
+	virtual bool canPaint() const {
+		return true;
+	}
+
+
 	virtual void paint( GraphicsContext* context, Rect* paintRect );
 
 	virtual TableItemEditor* createItemEditor();
@@ -76,11 +81,7 @@ public:
 
 	virtual String getCaption() ;
 
-	virtual void setCaption( const String& caption );	
-
-	virtual bool canPaint() {
-		return true;
-	}
+	virtual void setCaption( const String& caption );
 
 	virtual double getTextCellWidth();
 

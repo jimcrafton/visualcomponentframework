@@ -259,6 +259,9 @@ protected:
 
 	static LRESULT CALLBACK mouseHookProc( int nCode, WPARAM wParam, LPARAM lParam );
 	static LRESULT CALLBACK keyboardHookProc( int nCode, WPARAM wParam, LPARAM lParam );
+
+
+	bool runEventLoopRunOnce( MSG& msg, bool& isIdle );
 };
 
 };

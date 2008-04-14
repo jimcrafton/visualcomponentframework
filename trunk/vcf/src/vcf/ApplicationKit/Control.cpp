@@ -1099,7 +1099,7 @@ void Control::mouseEnter( MouseEvent* event )
 void Control::mouseDown( MouseEvent* event )
 {
 	if ( getAllowsMouseFocus() ) {
-	//	setFocused();
+		//setFocused();
 	}
 }
 

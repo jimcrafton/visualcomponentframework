@@ -58,7 +58,7 @@ namespace VCF {
 class TableControl;
 class ItemEvent;
 class TableItemEditor;
-
+class DrawUIState;
 
 /**
 \class TableCellEvent TableControl.h "vcf/ApplicationKit/TableControl.h"
@@ -602,7 +602,7 @@ protected:
 
 	virtual TableCellItem* createCell( const uint32& row, const uint32& column );
 
-	
+	virtual void paintItem( GraphicsContext* ctx, const Rect& itemRect, const CellID& cell, const DrawUIState& state ) {}	
 protected:
 
 	TableCellItem* selectedCellItem_;

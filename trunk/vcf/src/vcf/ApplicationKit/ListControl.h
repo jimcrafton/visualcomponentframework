@@ -123,6 +123,8 @@ public:
 	virtual void modelChanged( Model* oldModel, Model* newModel );
 
 	virtual void handleEvent( Event* event );	
+
+	virtual void paintItem( GraphicsContext* ctx, const Rect& itemRect, const uint32& index, const DrawUIState& state ) {}
 protected:
 	void onListModelContentsChanged( ListModelEvent* event );
 	void onItemAdded( ListModelEvent* event );
