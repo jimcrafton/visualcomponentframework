@@ -68,6 +68,8 @@ public:
 	virtual void setDisplayOptions( uint32 displayOptions );
 
 	virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc = NULL);
+
+	virtual void setFont( Font* font );
 private:
 
 	TreeControl* treeControl_;
@@ -78,6 +80,9 @@ private:
 	GraphicsContext* currentCtx_;
 	HWND headerWnd_;
 	WNDPROC oldHeaderWndProc_;
+	HWND treeWnd_;
+	WNDPROC oldTreeWndProc_;
+
 	HFONT oldHeaderFont_;
 	bool headerEnabled_;
 	bool hasLines_;
@@ -99,12 +104,14 @@ private:
 
 	void registerHeaderWndProc();
 	static LRESULT CALLBACK HeaderWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK TreeWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void drawItem( NMTVCUSTOMDRAW* drawInfo );
 
 	LRESULT treeCustomDraw( NMTVCUSTOMDRAW* drawInfo );
 	LRESULT headerCustomDraw( NMCUSTOMDRAW* drawInfo );
 
+	LRESULT treeWndPaint(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 };
 
 };

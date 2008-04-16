@@ -133,6 +133,8 @@ Win32Tree::Win32Tree( TreeControl* tree ):
 	headerWnd_(NULL),
 	oldHeaderWndProc_(NULL),
 	oldHeaderFont_(NULL),
+	treeWnd_(NULL),
+	oldTreeWndProc_(NULL),
 	headerEnabled_(false),
 	hasLines_(false),
 	hasButtons_(false)
@@ -155,18 +157,25 @@ void Win32Tree::create( Control* owningControl )
 {
 	init();
 
-	CreateParams params = createParams();	
+	if ( true != isRegistered() ){
+		registerWin32Class( "Win32Tree", wndProc_  );
+	}
 
 	Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
 	HWND parent = toolkit->getDummyParent();
 
-	String className = getClassName();
+
+	 
+
+
+
+	CreateParams params = createParams();	
+
 
 	if ( System::isUnicodeEnabled() ) {
-		hwnd_ = ::CreateWindowExW( params.second,
-										 WC_TREEVIEWW,
+		hwnd_ = ::CreateWindowExW( 0, L"Win32Tree",
 										 NULL,
-										 params.first,
+										 WS_CHILD | WS_BORDER | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
 										 0,
 										 0,
 										 1,
@@ -177,10 +186,9 @@ void Win32Tree::create( Control* owningControl )
 										 NULL );
 	}
 	else {
-		hwnd_ = ::CreateWindowExA( params.second,
-										 WC_TREEVIEWA,
+		hwnd_ = ::CreateWindowExA( 0, "Win32Tree",
 										 NULL,
-										 params.first,
+										 WS_CHILD | WS_BORDER | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
 										 0,
 										 0,
 										 1,
@@ -191,6 +199,13 @@ void Win32Tree::create( Control* owningControl )
 										 NULL );
 	}
 
+	
+
+
+	
+
+	
+
 
 	if ( NULL != hwnd_ ){
 		treeControl_ = (TreeControl*)owningControl;
@@ -198,9 +213,11 @@ void Win32Tree::create( Control* owningControl )
 
 		Win32Object::registerWin32Object( this );
 
-		subclassWindow();		
+		//subclassWindow();		
 
 		registerForFontChanges();
+
+
 
 		peerControl_->ControlModelChanged +=
 			new ClassProcedure1<Event*,Win32Tree>( this, &Win32Tree::onControlModelChanged, "Win32Tree::onControlModelChanged" );
@@ -213,7 +230,44 @@ void Win32Tree::create( Control* owningControl )
 
 		COLORREF backColor = treeControl_->getColor()->getColorRef32();
 
-		TreeView_SetBkColor( hwnd_, backColor );
+		
+
+
+
+		if ( System::isUnicodeEnabled() ) {
+			this->treeWnd_ = ::CreateWindowExW( params.second,
+											 WC_TREEVIEWW,
+											 NULL,
+											 params.first | WS_VISIBLE,
+											 0,
+											 0,
+											 1,
+											 1,
+											 hwnd_,
+											 NULL,
+											 ::GetModuleHandleW(NULL),
+											 NULL );
+		}
+		else {
+			treeWnd_ = ::CreateWindowExA( params.second,
+											 WC_TREEVIEWA,
+											 NULL,
+											 params.first,
+											 0,
+											 0,
+											 1,
+											 1,
+											 hwnd_,
+											 NULL,
+											 ::GetModuleHandleA(NULL),
+											 NULL );
+		}
+
+
+		::SetWindowLongPtr( treeWnd_, GWLP_USERDATA, (LONG_PTR)this );
+		oldTreeWndProc_ = (WNDPROC)(LONG_PTR) ::SetWindowLongPtr( treeWnd_, GWLP_WNDPROC, (LONG_PTR)Win32Tree::TreeWndProc );
+
+		TreeView_SetBkColor( treeWnd_, backColor );
 	}
 	else {
 		//throw exception
@@ -222,6 +276,27 @@ void Win32Tree::create( Control* owningControl )
 	setCreated( true );
 }
 
+void Win32Tree::setFont( Font* font )
+{
+	VCF_ASSERT(NULL != hwnd_);
+	if ( NULL != font ){
+		Win32Font* win32FontPeer = NULL;
+		FontPeer* fontPeer = font->getFontPeer();
+		win32FontPeer = dynamic_cast<Win32Font*>(fontPeer );
+		if ( NULL != win32FontPeer ){
+			HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( win32FontPeer );
+			if ( NULL != fontHandle ){
+				::SendMessage( hwnd_, WM_SETFONT, (WPARAM)fontHandle, MAKELPARAM(TRUE, 0) );
+				
+				::SendMessage( treeWnd_, WM_SETFONT, (WPARAM)fontHandle, MAKELPARAM(TRUE, 0) );
+
+				if ( NULL != headerWnd_ ) {
+					::SendMessage( headerWnd_, WM_SETFONT, (WPARAM)fontHandle, MAKELPARAM(TRUE, 0) );
+				}
+			}
+		}
+	}
+}
 
 Win32Object::CreateParams Win32Tree::createParams()
 {
@@ -245,12 +320,12 @@ Win32Object::CreateParams Win32Tree::createParams()
 
 double Win32Tree::getItemIndent()
 {
-	return TreeView_GetIndent( hwnd_ );
+	return TreeView_GetIndent( treeWnd_ );
 }
 
 void Win32Tree::setItemIndent( const double& indent )
 {
-	BOOL err = TreeView_SetIndent( hwnd_, (int)indent );
+	BOOL err = TreeView_SetIndent( treeWnd_, (int)indent );
 }
 
 
@@ -261,7 +336,7 @@ void Win32Tree::setImageList( ImageList* imageList )
 		BOOL err = ImageList_Destroy( imageListCtrl_ );
 	}
 	imageListCtrl_ = NULL;
-	TreeView_SetImageList( hwnd_, imageListCtrl_, TVSIL_NORMAL );
+	TreeView_SetImageList( treeWnd_, imageListCtrl_, TVSIL_NORMAL );
 
 	if ( imageList != NULL ) {
 		imageListCtrl_ = ImageList_Create( imageList->getImageWidth(), imageList->getImageHeight(),
@@ -312,7 +387,7 @@ void Win32Tree::setImageList( ImageList* imageList )
 		delete [] oldAlpaVals;
 
 
-		TreeView_SetImageList( hwnd_, imageListCtrl_, TVSIL_NORMAL );
+		TreeView_SetImageList( treeWnd_, imageListCtrl_, TVSIL_NORMAL );
 
 
 		CallBack* imgListHandler = getCallback( "Win32Tree::onImageListImageChanged" );
@@ -332,262 +407,14 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 	bool result = 0;
 	wndProcResult = 0;
 
-	switch ( message ) {
-		case WM_MOUSEMOVE: case WM_LBUTTONDBLCLK: case WM_MBUTTONDBLCLK: case WM_RBUTTONDBLCLK:
-			case WM_LBUTTONUP : case WM_MBUTTONUP: case WM_RBUTTONUP: 
-			case WM_MBUTTONDOWN: case WM_RBUTTONDOWN: {
-			
-
-			
-			if ( NULL != headerWnd_ ) {
-				if ( ::IsWindowVisible(headerWnd_) ) {
-					RECT r;
-					GetWindowRect(headerWnd_,&r);
-
-					int xPos = LOWORD(lParam); 
-					int yPos = HIWORD(lParam);
-					yPos -= (r.bottom - r.top);
-
-					lParam = MAKELPARAM(xPos,yPos);
-				}
-			}
-
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );			
-
-			result = true;
-			wndProcResult = defaultWndProcedure( message, wParam, lParam );	
-
-			if ( message == WM_LBUTTONUP ) {
-				//hit test to see if we pressed a state icon
-				if ( NULL != this->stateImageListCtrl_ ) {
-					TVHITTESTINFO hitTestInfo;
-					memset( &hitTestInfo, 0, sizeof(TVHITTESTINFO) );
-					
-					hitTestInfo.pt.x = LOWORD( lParam );
-					hitTestInfo.pt.y = HIWORD( lParam );
-					HTREEITEM hItem = TreeView_HitTest( hwnd_, &hitTestInfo );
-					if ( NULL != hItem ) {
-						if( hitTestInfo.flags & TVHT_ONITEMSTATEICON ) {
-							TVITEM tvItem;
-							memset( &tvItem, 0, sizeof(TVITEM) );
-							tvItem.mask = TVIF_PARAM | TVIF_HANDLE ;
-							tvItem.hItem = hItem;
-							if ( TreeView_GetItem( hwnd_, &tvItem ) ) {
-								TreeItem* item = treeControl_->getItemFromKey( tvItem.lParam );
-								if ( NULL != item ) {
-									
-									ItemEvent event( item, TreeControl::ITEM_STATECHANGE_REQUESTED );
-									
-									treeControl_->handleEvent( &event );
-
-
-									
-									tvItem.mask = TVIF_STATE | TVIF_HANDLE;
-									tvItem.state = INDEXTOSTATEIMAGEMASK( item->getStateImageIndex()+1 );
-									tvItem.stateMask = TVIS_STATEIMAGEMASK;
-									TreeView_SetItem( hwnd_, &tvItem );
-									
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		break;
+	switch ( message ) {		
+		
 
 		case WM_PAINT:{
-			PAINTSTRUCT ps;
-			//return false;
-
-			HDC dc = BeginPaint( hwnd_, &ps );
-
-			int headerHeight = 0;
-
-			if ( NULL != headerWnd_ ) {
-				if ( ::IsWindowVisible(headerWnd_) ) {
-					RECT r;
-					GetWindowRect(headerWnd_,&r);
-
-					headerHeight = r.bottom - r.top;
-					int count = SendMessage(headerWnd_,HDM_GETITEMCOUNT,0,0);
-
-					if ( headerRects_.size() != count ) {
-						headerRects_.resize(count);
-					}
-
-					for ( int i=0;i<count;i++ ) {						
-						SendMessage( this->headerWnd_, HDM_GETITEMRECT, i, (LPARAM)&headerRects_[i] );
-					}
-				}
-			}
-
-			DWORD style = GetWindowLong( hwnd_, GWL_STYLE );
-			hasLines_ = (style & TVS_HASLINES) ? true : false;
-			hasButtons_ = (style & TVS_HASBUTTONS) ? true : false;
-
-			POINT org = {0};
-			::GetViewportOrgEx( dc, &org );
-			//::SetViewportOrgEx( dc, org.x, org.y+headerHeight, NULL );
-
-			OffsetWindowOrgEx( dc, 0, -headerHeight, NULL );
-			::GetWindowOrgEx( dc, &org );
-			//::SetWindowOrgEx( dc, org.x, -(org.y+headerHeight), NULL );
-
-			OffsetClipRgn( dc, 0, org.y+headerHeight );
-
-			/*
 			
 
-			
-			
-
-			RECT paintRect;
-			GetClientRect( hwnd_, &paintRect );
-
-			//paintRect = ps.rcPaint;
-
-			if ( NULL == memDC_ ) {
-				//create here
-				HDC tmpDC = ::GetDC(0);
-				memDC_ = ::CreateCompatibleDC( tmpDC );
-				::ReleaseDC( 0,	tmpDC );
-			}
-
-			
-
-
-			paintRect.bottom -= headerHeight;
-
-
-			ControlGraphicsContext ctrlCtx(peerControl_);
-			currentCtx_ = &ctrlCtx;
-
-			currentCtx_->setViewableBounds( Rect(paintRect.left, paintRect.top,
-									paintRect.right, paintRect.bottom ) );
-
-			memBMP_ = ::CreateCompatibleBitmap( dc,
-					paintRect.right - paintRect.left,
-					paintRect.bottom - paintRect.top );
-
-
-			StringUtils::trace(Format("ps.rcPaint l: %d, t: %d, w: %d, h: %d\n") % ps.rcPaint.left
-										% ps.rcPaint.top
-										% (ps.rcPaint.right - ps.rcPaint.left)
-										% (ps.rcPaint.bottom - ps.rcPaint.top));
-
-			StringUtils::trace(Format("paintRect l: %d, t: %d, w: %d, h: %d\n") % paintRect.left
-										% paintRect.top
-										% (paintRect.right - paintRect.left)
-										% (paintRect.bottom - paintRect.top));
-									
-					
-			memDCState_ = ::SaveDC( memDC_ );
-			originalMemBMP_ = (HBITMAP)::SelectObject( memDC_, memBMP_ );
-
-			
-
-			
-			
-
-			
-
-			//::OffsetRect( &paintRect, 0, headerHeight );
-
-			POINT oldOrg;
-			memset(&oldOrg,0,sizeof(oldOrg));
-			//::SetViewportOrgEx( memDC_, -paintRect.left, -(paintRect.top), &oldOrg );
-			//::SetViewportOrgEx( memDC_, -paintRect.left, -headerHeight, &oldOrg );
-
-			RECT cr = {0};
-			::GetClipBox( dc, &cr );
-			StringUtils::trace(Format("GetClipBox l: %d, t: %d, w: %d, h: %d\n") % cr.left
-										% cr.top
-										% (cr.right - cr.left)
-										% (cr.bottom - cr.top));
-
-			HRGN rgn = CreateRectRgn( cr.left, cr.top+headerHeight, cr.right, cr.bottom+headerHeight );
-			//::SelectClipRgn( memDC_, rgn );
-			//SelectClipRgn( dc, NULL );
-
-			::GetClipBox( memDC_, &cr );
-			StringUtils::trace(Format("GetClipBox memDC_ l: %d, t: %d, w: %d, h: %d\n") % cr.left
-										% cr.top
-										% (cr.right - cr.left)
-										% (cr.bottom - cr.top));
-
-			//OffsetRect(&cr,0,headerHeight);
-			
-
-			//::OffsetClipRgn( dc, 0, -headerHeight );
-
-
-			Color* color = peerControl_->getColor();
-			COLORREF backColor = color->getColorRef32();
-
-			HBRUSH bkBrush = CreateSolidBrush( backColor );
-			FillRect( memDC_, &paintRect, bkBrush );
-			DeleteObject( bkBrush );
-
-
-			currentCtx_->getPeer()->setContextID( (OSHandleID)memDC_ );
-*/
-
-/*
-			((ControlGraphicsContext*)currentCtx_)->setOwningControl( NULL );
-
-			int gcs = currentCtx_->saveState();
-
-			//paint the control here - double buffered
-			
-			peerControl_->internal_beforePaint( currentCtx_ );
-
-			peerControl_->paint( currentCtx_ );
-
-			peerControl_->internal_afterPaint( currentCtx_ );
-
-
-			currentCtx_->restoreState( gcs );
-
-*/
-
-			//reset back to original origin
-			//::SetViewportOrgEx( memDC_, paintRect.left, paintRect.top, &oldOrg );
-
-			//let the tree control's DefWndProc do windwos painting
-
-			defaultWndProcedure( WM_PAINT, (WPARAM)dc, 0 );
-
-
-			
-			//NOW reset the owning control of teh graphics context here
-			//((ControlGraphicsContext*)currentCtx_)->setOwningControl( peerControl_ );
-
-
-			//::BitBlt( dc, paintRect.left, paintRect.top+headerHeight,
-			//		  paintRect.right - paintRect.left,
-			//		  paintRect.bottom - paintRect.top,
-			//		  memDC_, 0, 0, SRCCOPY );
-/*
-			::RestoreDC ( memDC_, memDCState_ );
-
-			::DeleteObject( memBMP_ );
-
-			::DeleteObject(rgn);
-
-			memBMP_ = NULL;
-			originalMemBMP_ = NULL;
-			memDCState_ = 0;
-
-
-
-			currentCtx_ = NULL;
-*/
-
-			EndPaint( hwnd_, &ps );
-
-			wndProcResult = 1;
-			result = true;
+			wndProcResult = 0;
+			result = false;
 		}
 		break;
 
@@ -603,15 +430,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		}
 		break;
 
-		case WM_ERASEBKGND :{
-			Color* color = treeControl_->getColor();
-			COLORREF clrRef = color->getColorRef32();
-			COLORREF currentClr = TreeView_GetBkColor( hwnd_ );
-
-			if ( currentClr != clrRef ) {
-				TreeView_SetBkColor( hwnd_, clrRef );
-			}
-
+		case WM_ERASEBKGND :{		
 
 			wndProcResult = 0;
 			result = true;
@@ -911,7 +730,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			if ( treeview->action == TVE_EXPAND ) {
 			}
 			else if ( treeview->action == TVE_COLLAPSE ) {
-				TreeView_Expand (hwnd_,
+				TreeView_Expand (treeWnd_,
                                  treeview->itemNew.hItem,
                                  TVE_COLLAPSE | TVE_COLLAPSERESET);	
 			}
@@ -930,7 +749,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 				POINT tmpPt = {0,0};
 				GetCursorPos( &tmpPt );
-				::ScreenToClient( hwnd_, &tmpPt );
+				::ScreenToClient( treeWnd_, &tmpPt );
 				ItemEvent event( treeControl_, TREEITEM_EXPANDED );
 
 				event.setUserData( (void*)item );
@@ -952,7 +771,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			if ( treeview->action == TVE_EXPAND ) {
 			}
 			else if ( treeview->action == TVE_COLLAPSE ) {
-				TreeView_Expand (hwnd_,
+				TreeView_Expand (treeWnd_,
                                  treeview->itemNew.hItem,
                                  TVE_COLLAPSE | TVE_COLLAPSERESET);	
 			}
@@ -1055,7 +874,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 								
 									tvItem.state = tvItem.state &= ~TVIS_SELECTED;
 								
-									TreeView_SetItem( hwnd_, &tvItem );
+									TreeView_SetItem( treeWnd_, &tvItem );
 								}
 							}
 						}
@@ -1108,7 +927,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 								
 								tvItem.state = tvItem.state &= ~TVIS_SELECTED;
 								
-								TreeView_SetItem( hwnd_, &tvItem );
+								TreeView_SetItem( treeWnd_, &tvItem );
 							}
 						}
 
@@ -1149,7 +968,7 @@ bool Win32Tree::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		case NM_RCLICK :{
 			POINT pt = {0,0};
 			GetCursorPos( &pt );
-			ScreenToClient( hwnd_, &pt );
+			ScreenToClient( treeWnd_, &pt );
 			Point tmpPt( pt.x, pt.y );
 
 			uint32 keyMask = kmUndefined;
@@ -1181,7 +1000,7 @@ Do we need these? What advantage does processing these events have for us???
 		case NM_CLICK :{
 			POINT pt = {0,0};
 			GetCursorPos( &pt );
-			ScreenToClient( hwnd_, &pt );
+			ScreenToClient( treeWnd_, &pt );
 			Point tmpPt( pt.x, pt.y );
 			VCF::MouseEvent event( getControl(), Control::MOUSE_CLICK,
 						mbmLeftButton, kmUndefined, &tmpPt );
@@ -1191,12 +1010,18 @@ Do we need these? What advantage does processing these events have for us???
 		}
 		break;
 		*/
-/*
+
 		case NM_CUSTOMDRAW:{
-			wndProcResult = treeCustomDraw( (NMTVCUSTOMDRAW*)lParam );
-			result = true;			
+			NMHDR* notificationHdr = (LPNMHDR)lParam;
+			if ( notificationHdr->hwndFrom == headerWnd_ ) {
+				wndProcResult = headerCustomDraw( (NMCUSTOMDRAW*)lParam );
+			}
+			else {
+				wndProcResult = treeCustomDraw( (NMTVCUSTOMDRAW*)lParam );
+			}
+			result = true;	
 		}
-		break;*/
+		break;
 
 		case WM_SIZE : {
 			result = true;
@@ -1210,14 +1035,22 @@ Do we need these? What advantage does processing these events have for us???
 				WINDOWPOS wp = {0};
 				HDLAYOUT layout = {0};
 				layout.prc = &r;
-				layout.pwpos = &wp;
+				layout.pwpos = &wp;		
 
-				hdrHeight = wp.cy;
 				::SendMessage( headerWnd_, HDM_LAYOUT, 0, (LPARAM)&layout );
 
-				MoveWindow( headerWnd_, 0, 0, LOWORD(lParam), wp.cy, TRUE );
+				hdrHeight = headerEnabled_ ? wp.cy : 0;
+				
+				MoveWindow( headerWnd_, 0, 0, LOWORD(lParam), hdrHeight, TRUE );
 			}
 
+			if ( NULL != this->treeWnd_ ) {
+				MoveWindow( treeWnd_, 0, hdrHeight, LOWORD(lParam), HIWORD(lParam) - hdrHeight, TRUE );
+			}
+
+
+
+			
 
 			wndProcResult = defaultWndProcedure( message, wParam, lParam );
 
@@ -1228,9 +1061,9 @@ Do we need these? What advantage does processing these events have for us???
 					SCROLLINFO si = {0};
 					si.cbSize = sizeof(SCROLLINFO);
 					si.fMask = SIF_PAGE | SIF_RANGE;
-					GetScrollInfo( hwnd_, SB_VERT, &si );
+					GetScrollInfo( treeWnd_, SB_VERT, &si );
 					si.nMax += hdrHeight;
-					::SetScrollInfo( hwnd_, SB_VERT, &si, TRUE );
+					::SetScrollInfo( treeWnd_, SB_VERT, &si, TRUE );
 
 					int hdrWidth = 0;
 					int count = SendMessage(headerWnd_,HDM_GETITEMCOUNT,0,0);
@@ -1241,9 +1074,9 @@ Do we need these? What advantage does processing these events have for us???
 					}
 
 					si.fMask = SIF_PAGE | SIF_RANGE;
-					GetScrollInfo( hwnd_, SB_HORZ, &si );
+					GetScrollInfo( treeWnd_, SB_HORZ, &si );
 					si.nMax = hdrWidth;
-					::SetScrollInfo( hwnd_, SB_HORZ, &si, TRUE );
+					::SetScrollInfo( treeWnd_, SB_HORZ, &si, TRUE );
 					*/
 				}
 			}
@@ -1251,10 +1084,58 @@ Do we need these? What advantage does processing these events have for us???
 		}
 		break;
 
+		case HDN_TRACKW:  case HDN_ENDTRACKW : {
+			InvalidateRect( treeWnd_, NULL, TRUE );
+		}
+		break;
+
+		case HDN_GETDISPINFOW : {
+			NMHDDISPINFOW* dispInfo = (NMHDDISPINFOW*)lParam;
+			
+			ColumnModel* cm = treeControl_->getColumnModel();
+			
+			
+			if ( NULL != cm ) {
+				if ( dispInfo->mask & HDI_IMAGE ) {
+					ColumnItem* item = treeControl_->getColumnItem( (uint32)dispInfo->lParam );
+					dispInfo->iImage = item->getImageIndex();
+				}
+				
+				if ( dispInfo->mask & HDI_TEXT ) {								
+					
+					String caption = cm->getAsString( dispInfo->lParam ) ;
+					
+					unsigned int size = VCF::minVal<unsigned int>( caption.size(), dispInfo->cchTextMax );
+					caption.copy( dispInfo->pszText, size );
+					if ( size < dispInfo->cchTextMax ) {
+						dispInfo->pszText[size] = '\0';
+					}
+				}
+			}
+		}
+		break;
 
 		case WM_NOTIFY: {
-			result = true;
-			wndProcResult = defaultWndProcedure( message, wParam, lParam );
+			result = true;			
+			if ( !peerControl_->isDestroying() ) {
+				NMHDR* notificationHdr = (LPNMHDR)lParam;
+				handleEventMessages( notificationHdr->code, wParam, lParam, wndProcResult );
+
+				if ( notificationHdr->hwndFrom == headerWnd_ && notificationHdr->code == NM_CUSTOMDRAW ) {
+				//	wndProcResult = headerCustomDraw( (NMCUSTOMDRAW*)lParam );
+				}
+				else {
+					
+				}
+				
+			}
+		}
+		break;
+
+
+/*
+		case WM_NOTIFY: {
+			
 			if ( !peerControl_->isDestroying() ) {
 				NMHDR* notificationHdr = (LPNMHDR)lParam;
 				Win32Object* win32Obj = Win32Object::getWin32ObjectFromHWND( notificationHdr->hwndFrom );
@@ -1263,49 +1144,12 @@ Do we need these? What advantage does processing these events have for us???
 				}
 				else {
 					NMHDR* notificationHdr = (LPNMHDR)lParam;
-					if ( notificationHdr->hwndFrom == headerWnd_ ) {
-						switch ( notificationHdr->code ) {
-							case HDN_TRACKW:  case HDN_ENDTRACKW : {
-								InvalidateRect( hwnd_, NULL, TRUE );
-							}
-							break;
-
-							case HDN_GETDISPINFOW : {
-								NMHDDISPINFOW* dispInfo = (NMHDDISPINFOW*)lParam;
-								
-								ColumnModel* cm = treeControl_->getColumnModel();
-								
-								
-								if ( NULL != cm ) {
-									if ( dispInfo->mask & HDI_IMAGE ) {
-										ColumnItem* item = treeControl_->getColumnItem( (uint32)dispInfo->lParam );
-										dispInfo->iImage = item->getImageIndex();
-									}
-									
-									if ( dispInfo->mask & HDI_TEXT ) {								
-										
-										String caption = cm->getAsString( dispInfo->lParam ) ;
-										
-										unsigned int size = VCF::minVal<unsigned int>( caption.size(), dispInfo->cchTextMax );
-										caption.copy( dispInfo->pszText, size );
-										if ( size < dispInfo->cchTextMax ) {
-											dispInfo->pszText[size] = '\0';
-										}
-									}
-								}
-							}
-							break;
-
-							case NM_CUSTOMDRAW : {
-								wndProcResult = headerCustomDraw( (NMCUSTOMDRAW*)lParam );
-							}							
-						}						
-					}
+					
 				}
 			}
 		}
 		break;
-
+*/
 		default: {
 			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 			//result = CallWindowProc( oldTreeWndProc_, hwnd_, message, wParam, lParam );
@@ -1327,6 +1171,19 @@ LRESULT Win32Tree::treeCustomDraw( NMTVCUSTOMDRAW* drawInfo )
 
 		case CDDS_PREPAINT : {
 			result = CDRF_NOTIFYITEMDRAW;// | CDRF_NOTIFYPOSTPAINT;
+			if ( NULL != headerWnd_ ) {
+				if ( ::IsWindowVisible(headerWnd_) ) {					
+					int count = SendMessage(headerWnd_,HDM_GETITEMCOUNT,0,0);
+
+					if ( headerRects_.size() != count ) {
+						headerRects_.resize(count);
+					}
+
+					for ( int i=0;i<count;i++ ) {						
+						SendMessage( headerWnd_, HDM_GETITEMRECT, i, (LPARAM)&headerRects_[i] );
+					}
+				}
+			}
 		}
 		break;
 
@@ -1352,9 +1209,9 @@ LRESULT Win32Tree::treeCustomDraw( NMTVCUSTOMDRAW* drawInfo )
 			}
 
 
-			if ( this->headerEnabled_ ) {							
-				//result |= CDRF_SKIPDEFAULT;
-				//drawItem( drawInfo );				
+			if ( headerEnabled_ ) {							
+				result |= CDRF_SKIPDEFAULT;
+				drawItem( drawInfo );				
 			}
 		}
 		break;
@@ -1362,9 +1219,7 @@ LRESULT Win32Tree::treeCustomDraw( NMTVCUSTOMDRAW* drawInfo )
 		case CDDS_ITEMPOSTPAINT : {						
 			result = CDRF_DODEFAULT;
 
-			if ( this->headerEnabled_ ) {
-				
-
+			if ( headerEnabled_ ) {
 				drawInfo->nmcd.rc.left = headerRects_[0].left;
 				drawInfo->nmcd.rc.right = headerRects_[0].right;
 			}
@@ -1426,7 +1281,7 @@ LRESULT Win32Tree::headerCustomDraw( NMCUSTOMDRAW* drawInfo )
 				r.left = rLast.right;
 			}
 			FillRect( drawInfo->hdc, &r, (HBRUSH) (COLOR_3DFACE + 1) );
-			InvalidateRect( hwnd_, NULL, TRUE );
+			InvalidateRect( treeWnd_, NULL, TRUE );
 		}
 		break;
 
@@ -1516,7 +1371,7 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 	TVITEM tvItem = {0};
 	tvItem.mask = TVIF_STATE;
 	tvItem.hItem = (HTREEITEM)drawInfo->nmcd.dwItemSpec;
-	TreeView_GetItem( hwnd_, &tvItem );
+	TreeView_GetItem( treeWnd_, &tvItem );
 
 	int offsetX = 0;
 	int offsetY = 0;
@@ -1525,12 +1380,12 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 	SCROLLINFO si = {0};
 	si.cbSize = sizeof(SCROLLINFO);
 	si.fMask = SIF_POS;
-	GetScrollInfo( hwnd_, SB_HORZ, &si );
+	GetScrollInfo( treeWnd_, SB_HORZ, &si );
 	offsetX -= si.nPos;
 	
 
 	//col 1
-	int indent = SendMessage( hwnd_, TVM_GETINDENT, 0, 0 );
+	int indent = SendMessage( treeWnd_, TVM_GETINDENT, 0, 0 );
 
 	RECT bkRect = drawInfo->nmcd.rc;
 
@@ -1553,15 +1408,10 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 	TreeModel* tm = treeControl_->getTreeModel();
 	TreeModel::Key key = (TreeModel::Key)drawInfo->nmcd.lItemlParam;
 
-	StringUtils::trace(Format("drawItem() key: %u hitem: %p\n")% key % tvItem.hItem);
-
-
 	bool hasChildren = !tm->isLeaf( key );
 
-	String s = tm->getAsString( key );
-	
-	
 
+	String s = tm->getAsString( key );
 	VCFChar tmp[255];
 	size_t sz = minVal<size_t>(s.length(),254);
 	s.copy(tmp,sz);
@@ -1576,7 +1426,7 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 	btn.right = btn.left + BUTTON_SIZE;
 	btn.bottom = btn.top + BUTTON_SIZE;
 /*
-	if ( this->hasLines_ && hasChildren && btn.right < drawInfo->nmcd.rc.right ) {
+	if ( hasLines_ && hasChildren && btn.right < drawInfo->nmcd.rc.right ) {
 		HPEN p = CreatePen( PS_GEOMETRIC | PS_DOT, 0, RGB(120,120,120) );
 		SelectObject( drawInfo->nmcd.hdc, p );
 
@@ -1609,8 +1459,8 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 		DeleteObject(p);
 	}
 */
-	/*
-	if ( this->hasButtons_ && hasChildren && btn.right < drawInfo->nmcd.rc.right ) {	
+	
+	if ( hasButtons_ && hasChildren && btn.right < drawInfo->nmcd.rc.right ) {	
 		HPEN p = CreatePen( PS_SOLID, 1, RGB(120,120,120) );
 		SelectObject( drawInfo->nmcd.hdc, p );
 		
@@ -1642,8 +1492,6 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 		}
 		DeleteObject(p);
 	}
-
-*/
 	
 	
 
@@ -1665,7 +1513,7 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 						DT_LEFT | DT_END_ELLIPSIS | DT_EXPANDTABS | DT_SINGLELINE | DT_VCENTER,
 						NULL );
 	}
-/*
+
 	TreeItem* item = NULL;
 	if ( treeControl_->itemExists(key) ) {
 		item = treeControl_->getItemFromKey( key );
@@ -1679,7 +1527,7 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 	bool useItemPaint = false;
 	if ( NULL != item ) {
 		if ( item->canPaint() ) {			
-			item->paint( this->currentCtx_, &itemRect );
+			item->paint( currentCtx_, &itemRect );
 			useItemPaint = true;
 		}
 	}
@@ -1689,7 +1537,7 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 		treeControl_->paintItem( currentCtx_, itemRect, key, itemState );
 	}
 
-	ColumnModel* cm = this->treeControl_->getColumnModel();
+	ColumnModel* cm = treeControl_->getColumnModel();
 	int count = SendMessage(headerWnd_,HDM_GETITEMCOUNT,0,0);
 	for (size_t i=1;i<count;i++ ) {
 		s = tm->getSubItemAsString( key, i-1 );	
@@ -1740,7 +1588,7 @@ void Win32Tree::drawItem( NMTVCUSTOMDRAW* drawInfo )
 			}
 		}
 	}
-*/
+
 	::RestoreDC( drawInfo->nmcd.hdc, dcs );
 }
 
@@ -1785,7 +1633,7 @@ void Win32Tree::addTreeItem( TreeModel::Key key, HTREEITEM parent )
 		insert.hInsertAfter = TVI_LAST;
 		insert.item = tvItem;
 		
-		hItem = (HTREEITEM) ::SendMessage( hwnd_, TVM_INSERTITEMW, 0, (LPARAM)&insert );
+		hItem = (HTREEITEM) ::SendMessage( treeWnd_, TVM_INSERTITEMW, 0, (LPARAM)&insert );
 	}
 	else {
 		TVINSERTSTRUCTA insert;
@@ -1811,7 +1659,7 @@ void Win32Tree::addTreeItem( TreeModel::Key key, HTREEITEM parent )
 		insert.hInsertAfter = TVI_LAST;
 		insert.item = tvItem;
 		
-		hItem = (HTREEITEM) ::SendMessage( hwnd_, TVM_INSERTITEMA, 0, (LPARAM)&insert );
+		hItem = (HTREEITEM) ::SendMessage( treeWnd_, TVM_INSERTITEMA, 0, (LPARAM)&insert );
 	}
 
 	if ( NULL != hItem ) {
@@ -1873,7 +1721,7 @@ Rect Win32Tree::getItemRect( const TreeModel::Key& itemKey )
 		
 			RECT r;
 			memset(&r,0,sizeof(r));
-			TreeView_GetItemRect( hwnd_, it->second, &r, TRUE );				
+			TreeView_GetItemRect( treeWnd_, it->second, &r, TRUE );				
 
 			result.left_ = r.left;
 			result.top_ = r.top;
@@ -1895,13 +1743,13 @@ TreeModel::Key Win32Tree::hitTest( const Point& pt )
 	hitTestInfo.pt.x = pt.x_;
 	hitTestInfo.pt.y = pt.y_;
 
-	HTREEITEM hItem = TreeView_HitTest( hwnd_, &hitTestInfo );
+	HTREEITEM hItem = TreeView_HitTest( treeWnd_, &hitTestInfo );
 	if ( NULL != hItem ) {
 		TVITEM tvItem;
 		memset( &tvItem, 0, sizeof(TVITEM) );
 		tvItem.mask = TVIF_PARAM | TVIF_HANDLE ;
 		tvItem.hItem = hItem;
-		if ( TreeView_GetItem( hwnd_, &tvItem ) ) {
+		if ( TreeView_GetItem( treeWnd_, &tvItem ) ) {
 			result = (TreeModel::Key)tvItem.lParam;
 		}
 	}
@@ -1921,7 +1769,7 @@ void Win32Tree::setStateImageList( ImageList* imageList )
 		BOOL err = ImageList_Destroy( stateImageListCtrl_ );
 	}
 	stateImageListCtrl_ = NULL;
-	TreeView_SetImageList( hwnd_, imageListCtrl_, TVSIL_STATE );
+	TreeView_SetImageList( treeWnd_, imageListCtrl_, TVSIL_STATE );
 
 	if ( imageList != NULL ) {
 		stateImageListCtrl_ = ImageList_Create( imageList->getImageWidth(), imageList->getImageHeight(),
@@ -1960,7 +1808,7 @@ void Win32Tree::setStateImageList( ImageList* imageList )
 
 		delete [] oldAlpaVals;
 
-		TreeView_SetImageList( hwnd_, stateImageListCtrl_, TVSIL_STATE );
+		TreeView_SetImageList( treeWnd_, stateImageListCtrl_, TVSIL_STATE );
 
 
 		CallBack* imgListHandler = getCallback( "Win32Tree::onStateImageListImageChanged" );
@@ -1977,23 +1825,23 @@ void Win32Tree::setStateImageList( ImageList* imageList )
 
 bool Win32Tree::getAllowLabelEditing()
 {
-	return ( TVS_EDITLABELS & ::GetWindowLongPtr( hwnd_, GWL_STYLE ) ) ? true : false;
+	return ( TVS_EDITLABELS & ::GetWindowLongPtr( treeWnd_, GWL_STYLE ) ) ? true : false;
 }
 
 void Win32Tree::setAllowLabelEditing( const bool& allowLabelEditing )
 {
-	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( treeWnd_, GWL_STYLE );
 	if ( allowLabelEditing ) {
 		style |= TVS_EDITLABELS;
 	}
 	else {
 		style &= ~TVS_EDITLABELS;
 	}
-	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
+	::SetWindowLongPtr( treeWnd_, GWL_STYLE, style );
 
-	::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
+	::SetWindowPos( treeWnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
 
-	::UpdateWindow( hwnd_ );
+	::UpdateWindow( treeWnd_ );
 }
 
 void Win32Tree::onControlModelChanged( Event* e )
@@ -2007,7 +1855,7 @@ void Win32Tree::onControlModelChanged( Event* e )
 	}
 
 	treeItems_.clear();			
-	TreeView_DeleteAllItems( hwnd_ );
+	TreeView_DeleteAllItems( treeWnd_ );
 
 	Model* model = treeControl_->getViewModel();
 	if ( NULL != model ) {
@@ -2050,7 +1898,7 @@ void Win32Tree::onTreeModelChanged( ModelEvent* event )
 					tvItem.mask = TVIF_STATE ;
 					tvItem.stateMask = TVIS_EXPANDED;
 
-					TreeView_GetItem( hwnd_, &tvItem );
+					TreeView_GetItem( treeWnd_, &tvItem );
 
 					if ( tvItem.state & TVIS_EXPANDED ) {
 						//need to add the item
@@ -2068,7 +1916,7 @@ void Win32Tree::onTreeModelChanged( ModelEvent* event )
 			if ( found != treeItems_.end() ){
 				HTREEITEM hItem = found->second;
 				treeItems_.erase( found );
-				TreeView_DeleteItem( hwnd_, hItem );
+				TreeView_DeleteItem( treeWnd_, hItem );
 			}
 		}
 		break;
@@ -2076,7 +1924,7 @@ void Win32Tree::onTreeModelChanged( ModelEvent* event )
 		case TreeModel::ContentsDeleted : {
 			treeItems_.clear();
 			
-			TreeView_DeleteAllItems( hwnd_ );
+			TreeView_DeleteAllItems( treeWnd_ );
 		}
 		break;
 	}
@@ -2092,10 +1940,10 @@ void Win32Tree::onItemExpanded( ItemEvent* e )
 
 		if ( found != treeItems_.end() ){
 			if ( item->isExpanded() ) {
-				TreeView_Expand( hwnd_, found->second, TVE_EXPAND );
+				TreeView_Expand( treeWnd_, found->second, TVE_EXPAND );
 			}
 			else {
-				TreeView_Expand( hwnd_, found->second, TVE_COLLAPSE | TVE_COLLAPSERESET );
+				TreeView_Expand( treeWnd_, found->second, TVE_COLLAPSE | TVE_COLLAPSERESET );
 			}
 		}
 	}
@@ -2121,10 +1969,10 @@ void Win32Tree::onItemSelected( ItemEvent* e )
 
 			
 
-			TreeView_SetItem( hwnd_, &tvItem );			
+			TreeView_SetItem( treeWnd_, &tvItem );			
 			*/
 
-			TreeView_SelectItem( hwnd_, hItem );
+			TreeView_SelectItem( treeWnd_, hItem );
 		}
 	}
 }
@@ -2179,7 +2027,7 @@ void Win32Tree::enableHeader( const bool& val )
 				memset( &headerItem, 0, sizeof(headerItem) );
 				headerItem.mask = HDI_LPARAM | HDI_WIDTH|HDI_FORMAT|HDI_TEXT;
 				//HDI_LPARAM | | HDI_IMAGE | | ;
-				if ( this->headerImageListCtrl_ != NULL ) {
+				if ( headerImageListCtrl_ != NULL ) {
 					headerItem.mask |= HDI_IMAGE;
 				}
 				
@@ -2198,6 +2046,194 @@ void Win32Tree::enableHeader( const bool& val )
 		}
 	}
 }
+
+LRESULT Win32Tree::treeWndPaint(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	LRESULT result = 0;
+	PAINTSTRUCT ps;			
+
+	HDC dc = BeginPaint( hWnd, &ps );			
+	
+	DWORD style = GetWindowLong( hWnd, GWL_STYLE );
+	hasLines_ = (style & TVS_HASLINES) ? true : false;
+	hasButtons_ = (style & TVS_HASBUTTONS) ? true : false;	
+	
+	RECT paintRect;
+	GetClientRect( hwnd_, &paintRect );
+	
+	//paintRect = ps.rcPaint;
+	
+	if ( NULL == memDC_ ) {
+		//create here
+		HDC tmpDC = ::GetDC(0);
+		memDC_ = ::CreateCompatibleDC( tmpDC );
+		::ReleaseDC( 0,	tmpDC );
+	}
+	
+	
+	ControlGraphicsContext ctrlCtx(peerControl_);
+	currentCtx_ = &ctrlCtx;
+	
+	currentCtx_->setViewableBounds( Rect(paintRect.left, paintRect.top,
+		paintRect.right, paintRect.bottom ) );
+	
+	memBMP_ = ::CreateCompatibleBitmap( dc,
+		paintRect.right - paintRect.left,
+		paintRect.bottom - paintRect.top );
+	
+	memDCState_ = ::SaveDC( memDC_ );
+	originalMemBMP_ = (HBITMAP)::SelectObject( memDC_, memBMP_ );
+	
+	POINT oldOrg;
+	memset(&oldOrg,0,sizeof(oldOrg));
+	::SetViewportOrgEx( memDC_, -paintRect.left, -(paintRect.top), &oldOrg );			
+	
+	Color* color = peerControl_->getColor();
+	COLORREF backColor = color->getColorRef32();
+	
+	HBRUSH bkBrush = CreateSolidBrush( backColor );
+	FillRect( memDC_, &paintRect, bkBrush );
+	DeleteObject( bkBrush );
+	
+	
+	currentCtx_->getPeer()->setContextID( (OSHandleID)memDC_ );
+	
+	
+	
+	
+	int gcs = currentCtx_->saveState();
+	
+	//paint the control here - double buffered
+	
+	peerControl_->internal_beforePaint( currentCtx_ );
+
+	peerControl_->paint( currentCtx_ );
+
+	peerControl_->internal_afterPaint( currentCtx_ );
+
+
+	currentCtx_->restoreState( gcs );
+				  
+	
+	
+	//reset back to original origin
+	::SetViewportOrgEx( memDC_, paintRect.left, paintRect.top, &oldOrg );
+	
+	//let the tree control's DefWndProc do windwos painting
+	
+	if ( System::isUnicodeEnabled() ) {
+		result = CallWindowProcW( oldTreeWndProc_, hWnd, WM_PAINT, (WPARAM)memDC_, lParam );
+	}
+	else {
+		result = CallWindowProcA( oldTreeWndProc_, hWnd, WM_PAINT, (WPARAM)memDC_, lParam );
+	}
+	
+	
+	::BitBlt( dc, paintRect.left, paintRect.top,
+		paintRect.right - paintRect.left,
+		paintRect.bottom - paintRect.top,
+		memDC_, 0, 0, SRCCOPY );
+	
+	::RestoreDC ( memDC_, memDCState_ );
+	
+	::DeleteObject( memBMP_ );
+	
+	memBMP_ = NULL;
+	originalMemBMP_ = NULL;
+	memDCState_ = 0;
+	
+	
+	
+	currentCtx_ = NULL;
+	
+	
+	EndPaint( hWnd, &ps );
+	
+	return result;
+}
+
+LRESULT CALLBACK Win32Tree::TreeWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	LRESULT result = 0;
+
+	Win32Tree* tree = (Win32Tree*)(LONG_PTR) ::GetWindowLongPtr( hWnd, GWLP_USERDATA );
+	switch ( message ) {
+		case WM_LBUTTONUP :{
+			tree->handleEventMessages( message, wParam, lParam, result );
+
+			//wndProcResult = tree->defaultWndProcedure( message, wParam, lParam );	
+			
+			//hit test to see if we pressed a state icon
+			if ( NULL != tree->stateImageListCtrl_ ) {
+				TVHITTESTINFO hitTestInfo;
+				memset( &hitTestInfo, 0, sizeof(TVHITTESTINFO) );
+				
+				hitTestInfo.pt.x = LOWORD( lParam );
+				hitTestInfo.pt.y = HIWORD( lParam );
+				HTREEITEM hItem = TreeView_HitTest( hWnd, &hitTestInfo );
+				if ( NULL != hItem ) {
+					if( hitTestInfo.flags & TVHT_ONITEMSTATEICON ) {
+						TVITEM tvItem;
+						memset( &tvItem, 0, sizeof(TVITEM) );
+						tvItem.mask = TVIF_PARAM | TVIF_HANDLE ;
+						tvItem.hItem = hItem;
+						if ( TreeView_GetItem( hWnd, &tvItem ) ) {
+							TreeItem* item = tree->treeControl_->getItemFromKey( tvItem.lParam );
+							if ( NULL != item ) {
+								
+								ItemEvent event( item, TreeControl::ITEM_STATECHANGE_REQUESTED );
+								
+								tree->treeControl_->handleEvent( &event );
+
+
+								
+								tvItem.mask = TVIF_STATE | TVIF_HANDLE;
+								tvItem.state = INDEXTOSTATEIMAGEMASK( item->getStateImageIndex()+1 );
+								tvItem.stateMask = TVIS_STATEIMAGEMASK;
+								TreeView_SetItem( hWnd, &tvItem );
+								
+							}
+						}
+					}
+				}
+			}			
+		}
+		break;
+
+		case WM_ERASEBKGND : {
+
+			Color* color = tree->treeControl_->getColor();
+			COLORREF clrRef = color->getColorRef32();
+			COLORREF currentClr = TreeView_GetBkColor( hWnd );
+
+			if ( currentClr != clrRef ) {
+				TreeView_SetBkColor( hWnd, clrRef );
+			}
+
+
+			result = 0;
+		}
+		break;
+
+		case WM_PAINT:{
+			result = tree->treeWndPaint( hWnd, message, wParam, lParam );		
+		}
+		break;
+
+		default : {
+			if ( System::isUnicodeEnabled() ) {
+				result = CallWindowProcW( tree->oldTreeWndProc_, hWnd, message, wParam, lParam );
+			}
+			else {
+				result = CallWindowProcA( tree->oldTreeWndProc_, hWnd, message, wParam, lParam );
+			}
+		}
+		break;
+	}
+
+	return result;
+}
+
 
 LRESULT CALLBACK Win32Tree::HeaderWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -2244,7 +2280,7 @@ LRESULT CALLBACK Win32Tree::HeaderWndProc(HWND hWnd, UINT message, WPARAM wParam
 
 void Win32Tree::setColumnWidth( const uint32& index, const double& width, ColumnAutosizeType type )
 {
-	if ( NULL != this->headerWnd_ ) {
+	if ( NULL != headerWnd_ ) {
 		HDITEMW item = {0};
 		item.mask = HDI_WIDTH;
 		item.cxy = width;
@@ -2255,7 +2291,7 @@ void Win32Tree::setColumnWidth( const uint32& index, const double& width, Column
 double Win32Tree::getColumnWidth( const uint32& index )
 {
 	double result = 0.0;
-	if ( NULL != this->headerWnd_ ) {
+	if ( NULL != headerWnd_ ) {
 		HDITEMW item = {0};
 		item.mask = HDI_WIDTH;
 		SendMessage( headerWnd_, HDM_GETITEMW, index, (LPARAM)&item );
@@ -2270,7 +2306,7 @@ TextAlignmentType Win32Tree::getColumnTextAlignment( const uint32& index )
 {
 	TextAlignmentType result;
 
-	if ( NULL != this->headerWnd_ ) {
+	if ( NULL != headerWnd_ ) {
 		HDITEMW item = {0};
 		item.mask = HDI_FORMAT;
 		SendMessage( headerWnd_, HDM_GETITEMW, index, (LPARAM)&item );
@@ -2291,7 +2327,7 @@ TextAlignmentType Win32Tree::getColumnTextAlignment( const uint32& index )
 
 void Win32Tree::setColumnTextAlignment( const uint32& index, const TextAlignmentType& val )
 {
-	if ( NULL != this->headerWnd_ ) {
+	if ( NULL != headerWnd_ ) {
 		HDITEMW item = {0};
 		item.mask = HDI_FORMAT;
 
@@ -2319,7 +2355,7 @@ void Win32Tree::onColumnModelChanged( ModelEvent* event )
 			HDITEMW headerItem;
 			memset( &headerItem, 0, sizeof(headerItem) );
 			headerItem.mask = HDI_LPARAM | HDI_WIDTH|HDI_FORMAT|HDI_TEXT;//
-			if ( this->headerImageListCtrl_ != NULL ) {
+			if ( headerImageListCtrl_ != NULL ) {
 				headerItem.mask |= HDI_IMAGE;
 			}
 			//HDI_LPARAM | | HDI_IMAGE | | ;				
@@ -2346,9 +2382,9 @@ void Win32Tree::setDisplayOptions( uint32 displayOptions )
 {
 	bool showHeader = (displayOptions & tdoShowColumnHeader) ? true : false;
 
-	this->enableHeader( showHeader );
+	enableHeader( showHeader );
 
-	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
+	LONG_PTR style = ::GetWindowLongPtr( treeWnd_, GWL_STYLE );
 
 	if ( displayOptions & tdoShowHierarchyLines ) {
 		style |= TVS_HASLINES;
@@ -2366,11 +2402,11 @@ void Win32Tree::setDisplayOptions( uint32 displayOptions )
 
 	
 	
-	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
+	::SetWindowLongPtr( treeWnd_, GWL_STYLE, style );
 
-	::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
+	::SetWindowPos( treeWnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
 
-	::UpdateWindow( hwnd_ );
+	::UpdateWindow( treeWnd_ );
 
 }
 
@@ -2381,7 +2417,7 @@ void Win32Tree::setHeaderImageList( ImageList* imageList )
 	}
 	headerImageListCtrl_ = NULL;
 
-	if ( NULL != this->headerWnd_ ) {
+	if ( NULL != headerWnd_ ) {
 		Header_SetImageList( headerWnd_, headerImageListCtrl_ );
 	}
 
@@ -2434,7 +2470,7 @@ void Win32Tree::setHeaderImageList( ImageList* imageList )
 		delete [] oldAlpaVals;
 
 
-		if ( NULL != this->headerWnd_ ) {
+		if ( NULL != headerWnd_ ) {
 			Header_SetImageList( headerWnd_, headerImageListCtrl_ );
 		}
 
@@ -2452,7 +2488,7 @@ void Win32Tree::setHeaderImageList( ImageList* imageList )
 
 
 	//reset header item flags
-	int count = SendMessage( this->headerWnd_, HDM_GETITEMCOUNT, 0, 0 );
+	int count = SendMessage( headerWnd_, HDM_GETITEMCOUNT, 0, 0 );
 	for (int i=0;i<count;i++ ) {
 		HDITEM item = {0};
 		item.mask = HDI_FORMAT | HDI_IMAGE;
