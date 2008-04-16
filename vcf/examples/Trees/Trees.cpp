@@ -214,13 +214,11 @@ public:
 		
 		clock.stop();		
 
-		Dialog::showMessage( Format("treeCtrl size %u bytes, tree mod count: %u\r\npopulation time: %.03f seconds\r\ntime for adding 2 item and retrieval: %.08f seconds\r\nshow form: %.08f seconds") % sz % tm->getCount() % popTime % uimods % clock.duration() );
+		//Dialog::showMessage( Format("treeCtrl size %u bytes, tree mod count: %u\r\npopulation time: %.03f seconds\r\ntime for adding 2 item and retrieval: %.08f seconds\r\nshow form: %.08f seconds") % sz % tm->getCount() % popTime % uimods % clock.duration() );
 
 
-
-		//MyTree* myTree = new MyTree();
-		//myTree->setHeight( 200 );
-		//mainWindow->add( myTree, AlignBottom );
+		TreeListControl* treeCtrl2 = (TreeListControl*)mainWindow->findComponent( "treeCtrl2", true );
+		treeCtrl2->showFullRowSelection(true);
 
 
 
