@@ -17,22 +17,26 @@ public:
 
 		mR=new TextControl();
 		mR->setBounds(0,0,25,20);
-		mR->getTextModel()->addTextModelChangedHandler( (EventHandler*)new ClassProcedure1<TextEvent*,ColorPicker>(this,&ColorPicker::onR));
+		mR->getTextModel()->ModelChanged +=
+			new ClassProcedure1<TextEvent*,ColorPicker>(this,&ColorPicker::onR);
 		add(mR);
 
 		mG=new TextControl();
 		mG->setBounds(25,0,25,20);
-		mG->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ColorPicker>(this,&ColorPicker::onG));
+		mG->getTextModel()->ModelChanged +=
+			new ClassProcedure1<TextEvent*,ColorPicker>(this,&ColorPicker::onG);
 		add(mG);
 
 		mB=new TextControl();
 		mB->setBounds(50,0,25,20);
-		mB->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ColorPicker>(this,&ColorPicker::onB));
+		mB->getTextModel()->ModelChanged +=
+			new ClassProcedure1<TextEvent*,ColorPicker>(this,&ColorPicker::onB);
 		add(mB);
 
 		mA=new TextControl();
 		mA->setBounds(75,0,25,20);
-		mA->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ColorPicker>(this,&ColorPicker::onA));
+		mA->getTextModel()->ModelChanged +=
+			new ClassProcedure1<TextEvent*,ColorPicker>(this,&ColorPicker::onA);
 		add(mA);
 
 		setUseColorForBackground(true);

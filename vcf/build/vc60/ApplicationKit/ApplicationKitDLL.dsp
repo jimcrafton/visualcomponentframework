@@ -466,10 +466,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DragSource.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\DropDownControl.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\DropTarget.cpp
 # End Source File
 # Begin Source File
@@ -1263,13 +1259,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\CheckBoxControl.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ComboBoxControl.cpp
-
-!IF  "$(CFG)" == "ApplicationKitDLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ApplicationKitDLL - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -1302,6 +1291,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\CustomControl.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\CustomControl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\DropDownControl.cpp
 # End Source File
 # Begin Source File
 

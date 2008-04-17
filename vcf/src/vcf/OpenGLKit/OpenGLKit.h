@@ -78,7 +78,7 @@ defined to use the DLL or static libraries.
 #include "vcf/ApplicationKit/ApplicationKit.h"
 
 #include "vcf/OpenGLKit/OpenGLPeer.h"
-#include "vcf/OpenGLKit/OpenGLControlContext.h"
+#include "vcf/OpenGLKit/OpenGLContext.h"
 #include "vcf/OpenGLKit/OpenGLControl.h"
 
 

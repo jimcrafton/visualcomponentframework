@@ -8,11 +8,10 @@
 #include <vrtoad/Math.h>
 
 #include "vcf/ApplicationKit/Panel.h"
-#include "vcf/ApplicationKit/ComboBoxControl.h"
+#include "vcf/ApplicationKit/DropDownControl.h"
 #include "vcf/ApplicationKit/Label.h"
 #include "vcf/ApplicationKit/TextControl.h"
 #include "vcf/ApplicationKit/CommandButton.h"
-#include "vcf/ApplicationKit/TextEvent.h"
 #include "vcf/ApplicationKit/SliderControl.h"
 #include "vcf/ApplicationKit/CheckBoxControl.h"
 #include "vcf/ApplicationKit/HorizontalLayoutContainer.h"
@@ -227,7 +226,7 @@ ParticleEditor::ParticleEditor():Window(){
 		speedPanel->add(label,AlignLeft);
 
 		mInitialSpeed=new TextControl();
-		mInitialSpeed->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onInitialSpeed));
+		mInitialSpeed->getTextModel()->ModelChanged += new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onInitialSpeed);
 		mInitialSpeed->setWidth(40);
 		speedPanel->add(mInitialSpeed,AlignLeft);
 
@@ -237,7 +236,7 @@ ParticleEditor::ParticleEditor():Window(){
 		speedPanel->add(label,AlignLeft);
 
 		mInitialVariance=new TextControl();
-		mInitialVariance->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onInitialVariance));
+		mInitialVariance->getTextModel()->ModelChanged += new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onInitialVariance);
 		speedPanel->add(mInitialVariance,AlignClient);
 
 		speedPanel->setBounds(0,4*ctrlHeight + 4*ctrlSpace,200,ctrlHeight);
@@ -255,7 +254,7 @@ ParticleEditor::ParticleEditor():Window(){
 		gravityPanel->add(label,AlignLeft);
 
 		mGravity=new TextControl();
-		mGravity->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onGravity));
+		mGravity->getTextModel()->ModelChanged += new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onGravity);
 		mGravity->setWidth(40);
 		gravityPanel->add(mGravity,AlignLeft);
 
@@ -265,7 +264,7 @@ ParticleEditor::ParticleEditor():Window(){
 		gravityPanel->add(label,AlignLeft);
 
 		mGravityVariance=new TextControl();
-		mGravityVariance->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onGravityVariance));
+		mGravityVariance->getTextModel()->ModelChanged += new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onGravityVariance);
 		gravityPanel->add(mGravityVariance,AlignClient);
 
 		gravityPanel->setBounds(0,5*ctrlHeight + 5*ctrlSpace,200,ctrlHeight);
@@ -282,12 +281,12 @@ ParticleEditor::ParticleEditor():Window(){
 		label->setWidth(70);
 		typePanel->add(label,AlignLeft);
 
-		mParticleType=new ComboBoxControl();
+		mParticleType=new DropDownControl();
 		mParticleType->addItem("Points");
 		mParticleType->addItem("Lines");
 		mParticleType->addItem("Tris");
 		mParticleType->addItem("Quads");
-		mParticleType->getSelectionChanged().add(new ClassProcedure1<ItemEvent*,ParticleEditor>(this,&ParticleEditor::onParticleType));
+		mParticleType->ItemSelectionChanged.add(new ClassProcedure1<ItemEvent*,ParticleEditor>(this,&ParticleEditor::onParticleType));
 		typePanel->add(mParticleType,AlignClient);
 
 		typePanel->setBounds(0,0,200,ctrlHeight);
@@ -303,10 +302,10 @@ ParticleEditor::ParticleEditor():Window(){
 		l->setWidth(70);
 		alignmentPanel->add(l,AlignLeft);
 
-		mAlignment=new ComboBoxControl();
+		mAlignment=new DropDownControl();
 		mAlignment->addItem("View");
 		mAlignment->addItem("Velocity");
-		mAlignment->getSelectionChanged().add(new ClassProcedure1<ItemEvent*,ParticleEditor>(this,&ParticleEditor::onAlignment));
+		mAlignment->ItemSelectionChanged.add(new ClassProcedure1<ItemEvent*,ParticleEditor>(this,&ParticleEditor::onAlignment));
 		alignmentPanel->add(mAlignment,AlignClient);
 
 		alignmentPanel->setBounds(0,1*ctrlHeight + 1*ctrlSpace,200,ctrlHeight);
@@ -322,13 +321,14 @@ ParticleEditor::ParticleEditor():Window(){
 		l->setWidth(70);
 		blendPanel->add(l,AlignLeft);
 
-		mBlending=new ComboBoxControl();
+		mBlending=new DropDownControl();
 		mBlending->addItem("None");
 		mBlending->addItem("Color");
 		mBlending->addItem("Color Additive");
 		mBlending->addItem("Alpha");
 		mBlending->addItem("Alpha Additive");
-		mBlending->getSelectionChanged().add(new ClassProcedure1<ItemEvent*,ParticleEditor>(this,&ParticleEditor::onBlending));
+		mBlending->ItemSelectionChanged.add(new ClassProcedure1<ItemEvent*,ParticleEditor>(this,&ParticleEditor::onBlending));
+		mBlending->setWidth( 100 );
 		blendPanel->add(mBlending,AlignClient);
 
 		blendPanel->setBounds(0,2*ctrlHeight + 2*ctrlSpace,200,ctrlHeight);
@@ -399,7 +399,7 @@ ParticleEditor::ParticleEditor():Window(){
 		trailingPanel->add(l,AlignLeft);
 
 		mTrailingSystem=new TextControl();
-		mTrailingSystem->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onTrailingSystem));
+		mTrailingSystem->getTextModel()->ModelChanged += new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onTrailingSystem);
 		trailingPanel->add(mTrailingSystem,AlignClient);
 
 		trailingPanel->setBounds(0,0,210,ctrlHeight);
@@ -416,7 +416,7 @@ ParticleEditor::ParticleEditor():Window(){
 		endingPanel->add(l,AlignLeft);
 
 		mEndingSystem=new TextControl();
-		mEndingSystem->getTextModel()->addTextModelChangedHandler((EventHandler*)new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onEndingSystem));
+		mEndingSystem->getTextModel()->ModelChanged += new ClassProcedure1<TextEvent*,ParticleEditor>(this,&ParticleEditor::onEndingSystem);
 		endingPanel->add(mEndingSystem,AlignClient);
 
 		endingPanel->setBounds(0,ctrlHeight+ctrlSpace,210,ctrlHeight);
@@ -439,7 +439,7 @@ ParticleEditor::ParticleEditor():Window(){
 		deleteTexture->getButtonClicked().add(new ClassProcedure1<ButtonEvent*,ParticleEditor>(this,&ParticleEditor::onDeleteTexture));
 		mTexturePanel->add(deleteTexture,AlignRight);
 
-		mTextureList=new ComboBoxControl();
+		mTextureList=new DropDownControl();
 		mTexturePanel->add(mTextureList,AlignClient);
 
 		mTexturePanel->setBounds(0,40,210,20);
@@ -542,22 +542,24 @@ void ParticleEditor::onGravityVariance(TextEvent *e){
 }
 
 void ParticleEditor::onParticleType(ItemEvent *e){
-	ListItem *item=mParticleType->getSelectedItem();
+	uint32 index = mParticleType->getSelectedItem();
 
-	if(item){
-		if(item->getCaption()=="Points"){
+	if(index != ListModel::InvalidIndex){
+		String itemVal = mParticleType->getListModel()->getAsString(index);
+
+		if( itemVal =="Points"){
 			mParticleResource->setType(ParticleResource::TYPE_POINTS);
 			mTexturePanel->setVisible(false);
 		}
-		else if(item->getCaption()=="Lines"){
+		else if(itemVal=="Lines"){
 			mParticleResource->setType(ParticleResource::TYPE_LINES);
 			mTexturePanel->setVisible(false);
 		}
-		else if(item->getCaption()=="Tris"){
+		else if(itemVal=="Tris"){
 			mParticleResource->setType(ParticleResource::TYPE_TRIANGLES);
 			mTexturePanel->setVisible(false);
 		}
-		else if(item->getCaption()=="Quads"){
+		else if(itemVal=="Quads"){
 			mParticleResource->setType(ParticleResource::TYPE_QUADS);
 			mTexturePanel->setVisible(true);
 		}
@@ -565,38 +567,39 @@ void ParticleEditor::onParticleType(ItemEvent *e){
 }
 
 void ParticleEditor::onAlignment(ItemEvent *e){
-	ListItem *item=mAlignment->getSelectedItem();
-
-	if(item){
-		if(item->getCaption()=="View"){
-			mParticleResource->setAlignment(ParticleResource::ALIGN_VIEW);
-		}
-		else if(item->getCaption()=="Velocity"){
-			mParticleResource->setAlignment(ParticleResource::ALIGN_VELOCITY);
-		}
+	
+	uint32 index = mAlignment->getSelectedItem();
+	String itemVal = mAlignment->getListModel()->getAsString(index);
+	
+	if(itemVal=="View"){
+		mParticleResource->setAlignment(ParticleResource::ALIGN_VIEW);
 	}
+	else if(itemVal=="Velocity"){
+		mParticleResource->setAlignment(ParticleResource::ALIGN_VELOCITY);
+	}
+	
 }
 
 void ParticleEditor::onBlending(ItemEvent *e){
-	ListItem *item=mBlending->getSelectedItem();
-
-	if(item){
-		if(item->getCaption()=="None"){
-			mParticleResource->setBlending(ParticleResource::BLEND_NONE);
-		}
-		else if(item->getCaption()=="Color"){
-			mParticleResource->setBlending(ParticleResource::BLEND_COLOR);
-		}
-		else if(item->getCaption()=="Color Additive"){
-			mParticleResource->setBlending(ParticleResource::BLEND_COLOR_ADDITIVE);
-		}
-		else if(item->getCaption()=="Alpha"){
-			mParticleResource->setBlending(ParticleResource::BLEND_ALPHA);
-		}
-		else if(item->getCaption()=="Alpha Additive"){
-			mParticleResource->setBlending(ParticleResource::BLEND_ALPHA_ADDITIVE);
-		}
+	uint32 index = mBlending->getSelectedItem();
+	String itemVal = mBlending->getListModel()->getAsString(index);
+	
+	if(itemVal=="None"){
+		mParticleResource->setBlending(ParticleResource::BLEND_NONE);
 	}
+	else if(itemVal=="Color"){
+		mParticleResource->setBlending(ParticleResource::BLEND_COLOR);
+	}
+	else if(itemVal=="Color Additive"){
+		mParticleResource->setBlending(ParticleResource::BLEND_COLOR_ADDITIVE);
+	}
+	else if(itemVal=="Alpha"){
+		mParticleResource->setBlending(ParticleResource::BLEND_ALPHA);
+	}
+	else if(itemVal=="Alpha Additive"){
+		mParticleResource->setBlending(ParticleResource::BLEND_ALPHA_ADDITIVE);
+	}
+	
 }
 
 void ParticleEditor::onDepthTest(ButtonEvent *e){
@@ -659,17 +662,19 @@ void ParticleEditor::onNewTexture(ButtonEvent *e){
 }
 
 void ParticleEditor::onDeleteTexture(ButtonEvent *e){
-	ListItem *item=mTextureList->getSelectedItem();
+	uint32 index = mTextureList->getSelectedItem();
+	
 
-	if(item){
-		mTextureList->setSelectedItem(0);
-		mTextureList->getListModel()->deleteItem(item);
+	if(index != ListModel::InvalidIndex){
+		mTextureList->selectItem(ListModel::InvalidIndex);
+		mTextureList->getListModel()->remove(index);
 
 		mParticleResource->mTextures.clear();
 
 		int i;
 		for(i=0;i<mTextureList->getListModel()->getCount();i++){
-			mParticleResource->mTextures.push_back(mTextureList->getListModel()->getItemFromIndex(i)->getCaption());
+			String itemVal = mTextureList->getListModel()->getAsString(i);
+			mParticleResource->mTextures.push_back(itemVal);
 		}
 	}
 }
@@ -746,9 +751,9 @@ void ParticleEditor::setParticleResource(ParticleResource *r){
 	mGravity->getTextModel()->setText(StringUtils::toString(r->getGravity()));
 	mGravityVariance->getTextModel()->setText(StringUtils::toString(r->getGravityVariance()));
 
-	mParticleType->setSelectedItemIndex(r->getType());
-	mAlignment->setSelectedItemIndex(r->getAlignment());
-	mBlending->setSelectedItemIndex(r->getBlending());
+	mParticleType->selectItem(r->getType());
+	mAlignment->selectItem(r->getAlignment());
+	mBlending->selectItem(r->getBlending());
 	mDepthTest->setChecked(r->mDepthTest);
 
 	mStartColor->setColor(new Color(r->getStartColor()[0],r->getStartColor()[1],r->getStartColor()[2]),r->getStartColor()[3]);

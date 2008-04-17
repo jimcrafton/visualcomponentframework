@@ -21,17 +21,17 @@ class OPENGLKIT_API GraphicsContext;
 class OPENGLKIT_API Win32OpenGLPeer : public OpenGLPeer{
 
 public:
-	Win32OpenGLPeer( GraphicsContext* glContext , OpenGLControl* owningControl );
+	Win32OpenGLPeer( Control* owningControl );
 
 	virtual ~Win32OpenGLPeer();
 
-	virtual void initGL();
+	virtual void initGL( GraphicsContext * context );
 
 	virtual void swapBuffers();
 
 	virtual void makeCurrent();
 private:
-	OpenGLControl* owningControl_;
+	Control* owningControl_;
 	GraphicsContext* glContext_;
 	HGLRC hrc_;
 	bool isInitialized_;

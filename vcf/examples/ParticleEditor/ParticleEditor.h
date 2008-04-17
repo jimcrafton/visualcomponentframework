@@ -5,6 +5,7 @@
 #include "vcf/ApplicationKit/Panel.h"
 #include "vcf/ApplicationKit/SliderControl.h"
 #include "vcf/ApplicationKit/CheckBoxControl.h"
+#include "vcf/ApplicationKit/DropDownControl.h"
 
 #include "Spinner.h"
 #include "ColorPicker.h"
@@ -61,9 +62,9 @@ protected:
 	VCF::TextControl *mGravity;
 	VCF::TextControl *mGravityVariance;
 
-	VCF::ComboBoxControl *mParticleType;
-	VCF::ComboBoxControl *mAlignment;
-	VCF::ComboBoxControl *mBlending;
+	VCF::DropDownControl *mParticleType;
+	VCF::DropDownControl *mAlignment;
+	VCF::DropDownControl *mBlending;
 	VCF::CheckBoxControl *mDepthTest;
 	ColorPicker *mStartColor;
 	ColorPicker *mEndColor;
@@ -72,7 +73,7 @@ protected:
 	VCF::TextControl *mEndingSystem;
 
 	VCF::Panel *mTexturePanel;
-	VCF::ComboBoxControl *mTextureList;
+	VCF::DropDownControl *mTextureList;
 
 	ParticleRenderer *mParticleRenderer;
 	ParticleSystem *mParticleSystem;
