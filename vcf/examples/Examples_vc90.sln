@@ -226,10 +226,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Reflection", "Reflection\Re
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RegExTest", "RegExTest\RegExTest.vcproj", "{518DFE37-B68C-425E-8A50-0E961137D850}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RemoteObjectKit", "..\build\vc60\RemoteObjectKit\RemoteObjectKit.vcproj", "{A4F119E8-0F9A-435F-8974-656C765C201A}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RemoteObjectKitStatic", "..\build\vc60\RemoteObjectKit\RemoteObjectKitStatic.vcproj", "{85D6E419-A836-4CC6-8694-041F0D43BA42}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Resources", "Resources\Resources.vcproj", "{2C7523F0-E97E-4E8A-8414-F7C845AF19E8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RunLoops", "RunLoops\RunLoops.vcproj", "{B4797BE7-1C1C-46A5-B73B-EB6EAF4B9CAE}"
@@ -765,18 +761,6 @@ Global
 		{518DFE37-B68C-425E-8A50-0E961137D850}.Generate YY and LL files|Win32.Build.0 = Debug|Win32
 		{518DFE37-B68C-425E-8A50-0E961137D850}.Release|Win32.ActiveCfg = Release|Win32
 		{518DFE37-B68C-425E-8A50-0E961137D850}.Release|Win32.Build.0 = Release|Win32
-		{A4F119E8-0F9A-435F-8974-656C765C201A}.Debug|Win32.ActiveCfg = Debug|Win32
-		{A4F119E8-0F9A-435F-8974-656C765C201A}.Debug|Win32.Build.0 = Debug|Win32
-		{A4F119E8-0F9A-435F-8974-656C765C201A}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
-		{A4F119E8-0F9A-435F-8974-656C765C201A}.Generate YY and LL files|Win32.Build.0 = Release|Win32
-		{A4F119E8-0F9A-435F-8974-656C765C201A}.Release|Win32.ActiveCfg = Release|Win32
-		{A4F119E8-0F9A-435F-8974-656C765C201A}.Release|Win32.Build.0 = Release|Win32
-		{85D6E419-A836-4CC6-8694-041F0D43BA42}.Debug|Win32.ActiveCfg = Debug|Win32
-		{85D6E419-A836-4CC6-8694-041F0D43BA42}.Debug|Win32.Build.0 = Debug|Win32
-		{85D6E419-A836-4CC6-8694-041F0D43BA42}.Generate YY and LL files|Win32.ActiveCfg = Debug|Win32
-		{85D6E419-A836-4CC6-8694-041F0D43BA42}.Generate YY and LL files|Win32.Build.0 = Debug|Win32
-		{85D6E419-A836-4CC6-8694-041F0D43BA42}.Release|Win32.ActiveCfg = Release|Win32
-		{85D6E419-A836-4CC6-8694-041F0D43BA42}.Release|Win32.Build.0 = Release|Win32
 		{2C7523F0-E97E-4E8A-8414-F7C845AF19E8}.Debug|Win32.ActiveCfg = Debug|Win32
 		{2C7523F0-E97E-4E8A-8414-F7C845AF19E8}.Debug|Win32.Build.0 = Debug|Win32
 		{2C7523F0-E97E-4E8A-8414-F7C845AF19E8}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32

@@ -50,6 +50,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -68,4 +69,6 @@
 	</References>
 	<Files>
 	</Files>
+	<Globals>
+	</Globals>
 </VisualStudioProject>

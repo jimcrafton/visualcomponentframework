@@ -43,7 +43,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE),../libtiff/libtiff,../zlib"
+				AdditionalIncludeDirectories="$(VCF_ROOT)/src,../libtiff/libtiff,../zlib"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -117,7 +117,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(VCF_INCLUDE),../libtiff/libtiff"
+				AdditionalIncludeDirectories="&quot;$(VCF_ROOT)/src&quot;;../libtiff/libtiff"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"

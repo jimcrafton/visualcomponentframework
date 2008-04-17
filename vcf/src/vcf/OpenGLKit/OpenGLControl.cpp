@@ -14,9 +14,9 @@ using namespace VCF;
 OpenGLControl::OpenGLControl():
 	CustomControl( true )
 {
-	delete this->context_;
-	context_ = NULL;
-	context_ = new OpenGLControlContext( this );
+	
+	//context_ = NULL;
+	//context_ = new OpenGLControlContext( this );
 
 	setDoubleBuffered( false );
 }
@@ -33,7 +33,7 @@ void OpenGLControl::paint(GraphicsContext * context)
 //	CustomControl::paint( context );
 
 	// These initialize the context, if necesary (check is in initGL), and then make it current
-	OpenGLControlContext* glCtx = dynamic_cast<OpenGLControlContext*>(context_);
+	OpenGLControlContext* glCtx = NULL;//dynamic_cast<OpenGLControlContext*>(context_);
 	if ( NULL != glCtx ){
 		glCtx->initGL();
 		glCtx->makeCurrent();
@@ -41,7 +41,7 @@ void OpenGLControl::paint(GraphicsContext * context)
 }
 
 void OpenGLControl::swapBuffers(){
-	OpenGLControlContext* glCtx = dynamic_cast<OpenGLControlContext*>(context_);
+	OpenGLControlContext* glCtx = NULL;//dynamic_cast<OpenGLControlContext*>(context_);
 	if ( NULL != glCtx ){
 		glCtx->swapBuffers();
 	}
