@@ -17,10 +17,10 @@ where you installed the VCF.
 
 using namespace VCF;
 
-Win32OpenGLPeer::Win32OpenGLPeer( GraphicsContext* glContext, OpenGLControl* owningControl )
-{
-	this->glContext_ = glContext;
-	this->owningControl_ = owningControl;
+Win32OpenGLPeer::Win32OpenGLPeer( Control* owningControl ):
+	glContext_(NULL),
+		owningControl_(owningControl)
+{		
 	isInitialized_ = false;
 }
 
@@ -33,11 +33,14 @@ Win32OpenGLPeer::~Win32OpenGLPeer()
 	}
 }
 
-void Win32OpenGLPeer::initGL()
+void Win32OpenGLPeer::initGL(GraphicsContext * context)
 {
+	glContext_ = context;
+
 	if ( true == isInitialized_ ){
 		return;
 	}
+
 	if ( NULL != glContext_ ){
 		Win32Context* win32Ctx = dynamic_cast<Win32Context*>(glContext_->getPeer());
 		VCF_ASSERT( NULL != win32Ctx );

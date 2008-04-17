@@ -93,11 +93,11 @@ LINK32=link.exe
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\OpenGLKit\OpenGLControl.cpp
+SOURCE=..\..\..\src\vcf\OpenGLKit\OpenGLContext.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp
+SOURCE=..\..\..\src\vcf\OpenGLKit\OpenGLControl.cpp
 # End Source File
 # Begin Source File
 
@@ -114,10 +114,6 @@ SOURCE=..\..\..\src\vcf\OpenGLKit\Win32OpenGLPeer.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\OpenGLKit\OpenGLControl.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\OpenGLKit\OpenGLControlContext.h
 # End Source File
 # Begin Source File
 
@@ -140,5 +136,9 @@ SOURCE=..\..\..\src\vcf\OpenGLKit\VCFOpenGL.h
 SOURCE=..\..\..\src\vcf\OpenGLKit\Win32OpenGLPeer.h
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\OpenGLKit\OpenGLContext.h
+# End Source File
 # End Target
 # End Project

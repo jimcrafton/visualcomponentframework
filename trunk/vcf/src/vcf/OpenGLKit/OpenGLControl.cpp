@@ -12,18 +12,17 @@ where you installed the VCF.
 using namespace VCF;
 
 OpenGLControl::OpenGLControl():
-	CustomControl( true )
+	CustomControl( true ),
+	glContext_(NULL)
 {
-	
-	//context_ = NULL;
-	//context_ = new OpenGLControlContext( this );
+	glContext_ = new OpenGLContext( this );
 
 	setDoubleBuffered( false );
 }
 
 OpenGLControl::~OpenGLControl()
 {
-
+	delete glContext_;
 }
 
 void OpenGLControl::paint(GraphicsContext * context)
@@ -33,17 +32,16 @@ void OpenGLControl::paint(GraphicsContext * context)
 //	CustomControl::paint( context );
 
 	// These initialize the context, if necesary (check is in initGL), and then make it current
-	OpenGLControlContext* glCtx = NULL;//dynamic_cast<OpenGLControlContext*>(context_);
-	if ( NULL != glCtx ){
-		glCtx->initGL();
-		glCtx->makeCurrent();
+	
+	if ( NULL != glContext_ ){
+		glContext_->initGL(context);
+		glContext_->makeCurrent();
 	}
 }
 
 void OpenGLControl::swapBuffers(){
-	OpenGLControlContext* glCtx = NULL;//dynamic_cast<OpenGLControlContext*>(context_);
-	if ( NULL != glCtx ){
-		glCtx->swapBuffers();
+	if ( NULL != glContext_ ){
+		glContext_->swapBuffers();
 	}
 }
 

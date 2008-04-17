@@ -74,7 +74,7 @@ public:
 	virtual void afterCreate( ComponentEvent* event );
 
 protected:
-
+	OpenGLContext* glContext_;
 };
 
 }; //end of namespace VCF

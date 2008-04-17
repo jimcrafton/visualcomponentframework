@@ -19,7 +19,9 @@ public:
 		setWidth(120);
 
 		mValue=new TextControl();
-		mValue->getTextModel()->addTextModelChangedHandler( (EventHandler*) new ClassProcedure1<TextEvent*,Spinner>(this,&Spinner::onTextChanged));
+		mValue->getTextModel()->ModelChanged +=
+			new ClassProcedure1<TextEvent*,Spinner>(this,&Spinner::onTextChanged);
+
 		add(mValue,AlignClient);
 
 		Panel *updown=new Panel();

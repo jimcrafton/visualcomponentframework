@@ -16,9 +16,9 @@ where you installed the VCF.
 
 using namespace VCF;
 
-OpenGLPeer *OpenGLToolkit::createOpenGLPeer(GraphicsContext *context, OpenGLControl* owningControl){
+OpenGLPeer *OpenGLToolkit::createOpenGLPeer(OpenGLControl* owningControl){
 #ifdef VCF_WIN
-	return new Win32OpenGLPeer(context,owningControl);
+	return new Win32OpenGLPeer(owningControl);
 #else
 	throw BasicException("OpenGLToolkit::createOpenGLPeer: Unsupported on this platform");
 #endif

@@ -32,7 +32,7 @@ public:
 	Creates an instance of the OpenGLPeer. The framework calls this for you,
 	you should never need to call this directly.
 	*/
-	static OpenGLPeer* createOpenGLPeer(GraphicsContext *context, OpenGLControl* owningControl);
+	static OpenGLPeer* createOpenGLPeer( OpenGLControl* owningControl);
 };
 
 }
