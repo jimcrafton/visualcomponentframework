@@ -75,7 +75,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib"
+				AdditionalDependencies="odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib"
 				OutputFile="..\..\..\bin\ImageFormats_vc90_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -173,7 +173,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib opengl32.lib glaux.lib glu32.lib"
+				AdditionalDependencies="odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib"
 				OutputFile="..\..\..\bin\ImageFormats_vc90.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
