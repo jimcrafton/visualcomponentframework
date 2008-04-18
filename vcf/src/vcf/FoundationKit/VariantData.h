@@ -329,12 +329,7 @@ public:
 	/**
 	comparison operator
 	*/
-	bool operator == ( const VariantData& v ) const {
-		return (	type == v.type &&
-		          ( ( type == pdString && (*StringVal) == (*v.StringVal) ) ||
-		            ( type != pdString && ObjVal == v.ObjVal ) )
-		          );
-	}
+	bool operator == ( const VariantData& v ) const;
 
 	/**
 	comparison operator

@@ -1041,11 +1041,14 @@ Do we need these? What advantage does processing these events have for us???
 
 				hdrHeight = headerEnabled_ ? wp.cy : 0;
 				
-				MoveWindow( headerWnd_, 0, 0, LOWORD(lParam), hdrHeight, TRUE );
+				SetWindowPos(headerWnd_, NULL,0, 0, LOWORD(lParam), hdrHeight, SWP_NOACTIVATE );
+
+				//MoveWindow( headerWnd_, 0, 0, LOWORD(lParam), hdrHeight, TRUE );
 			}
 
 			if ( NULL != this->treeWnd_ ) {
-				MoveWindow( treeWnd_, 0, hdrHeight, LOWORD(lParam), HIWORD(lParam) - hdrHeight, TRUE );
+				SetWindowPos(treeWnd_, NULL,0, hdrHeight, LOWORD(lParam), HIWORD(lParam) - hdrHeight, SWP_NOACTIVATE );
+				//MoveWindow( treeWnd_, 0, hdrHeight, LOWORD(lParam), HIWORD(lParam) - hdrHeight, TRUE );
 			}
 
 
@@ -2158,10 +2161,23 @@ LRESULT CALLBACK Win32Tree::TreeWndProc(HWND hWnd, UINT message, WPARAM wParam, 
 
 	Win32Tree* tree = (Win32Tree*)(LONG_PTR) ::GetWindowLongPtr( hWnd, GWLP_USERDATA );
 	switch ( message ) {
-		case WM_LBUTTONUP :{
-			tree->handleEventMessages( message, wParam, lParam, result );
 
-			//wndProcResult = tree->defaultWndProcedure( message, wParam, lParam );	
+		case WM_LBUTTONDOWN: case WM_MBUTTONDOWN: case WM_RBUTTONDOWN: case WM_MOUSEMOVE:
+		case WM_MBUTTONUP: case WM_RBUTTONUP: case WM_SETFOCUS:
+		case WM_KILLFOCUS: case WM_SYSKEYDOWN: case WM_SYSKEYUP:
+		case WM_KEYDOWN: case WM_KEYUP: case WM_CHAR: {
+			tree->handleEventMessages( message, wParam, lParam, result );
+			if ( System::isUnicodeEnabled() ) {
+				result = CallWindowProcW( tree->oldTreeWndProc_, hWnd, message, wParam, lParam );
+			}
+			else {
+				result = CallWindowProcA( tree->oldTreeWndProc_, hWnd, message, wParam, lParam );
+			}
+		}
+		break;
+
+		case WM_LBUTTONUP :{
+			tree->handleEventMessages( message, wParam, lParam, result );			
 			
 			//hit test to see if we pressed a state icon
 			if ( NULL != tree->stateImageListCtrl_ ) {
