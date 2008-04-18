@@ -94,11 +94,7 @@ void testConstructors()
 	v17.setFromString(sp);
 
 
-	printVariant(v17);
-
-	Dictionary d;
-
-	
+	printVariant(v17);	
 }
 
 
@@ -143,11 +139,26 @@ void testConversions()
 	//from v2's call to toString() is that of 
 	//a double (pdDouble). So the boolean string
 	//parsing of a double string is nonsensical
-	v1.setFromString( v2.toString() );
+	try {
+		v1.setFromString( v2.toString() );
+	}
+	catch ( std::exception& e ) {
+		System::println( String("Error: \n") + e.what() );
+	}
 
 	printVariant(v1);
 }
 
+
+void testCompares()
+{
+	VariantData v1(true);
+	VariantData v2;
+
+	v2 = true;
+	
+	VCF_ASSERT( v1 == v2 );
+}
 
 int main( int argc, char** argv ){
 
@@ -159,6 +170,10 @@ int main( int argc, char** argv ){
 
 		testConversions();
 		System::println( "testConversions completed OK." );
+
+		testCompares();
+		System::println( "testCompares completed OK." );
+
 	}
 	catch ( BasicException& e ) {
 		System::println( String("Error: \n") + e.getMessage() );
@@ -167,7 +182,6 @@ int main( int argc, char** argv ){
 		System::println( String("Error: \n") + e.what() );
 	}
 
-    System::println(System::createTempFileName(System::getCurrentWorkingDirectory()));
 	FoundationKit::terminate();
 	return 0;
 }

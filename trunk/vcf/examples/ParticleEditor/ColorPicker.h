@@ -67,6 +67,9 @@ public:
 	}
 
 	void onR(TextEvent *e){
+		if ( mR->getTextModel()->getText().empty() ) {
+			return;
+		}
 		Color *c=getColor();
 		try{
 			int v=StringUtils::fromStringAsInt(mR->getTextModel()->getText());
@@ -108,6 +111,10 @@ public:
 	}
 
 	void onB(TextEvent *e){
+		if ( mB->getTextModel()->getText().empty() ) {
+			return;
+		}
+
 		Color *c=getColor();
 		try{
 			int v=StringUtils::fromStringAsInt(mB->getTextModel()->getText());
@@ -126,6 +133,10 @@ public:
 	}
 
 	void onA(TextEvent *e){
+		if ( mA->getTextModel()->getText().empty() ) {
+			return;
+		}
+
 		float a=1;
 		try{
 			int v=StringUtils::fromStringAsInt(mA->getTextModel()->getText());

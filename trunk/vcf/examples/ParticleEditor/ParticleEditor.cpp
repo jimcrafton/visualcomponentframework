@@ -120,9 +120,9 @@ ParticleEditor::ParticleEditor():Window(){
 	Panel *bottomRight=new Panel();
 	bottomRight->setBorder(0);	
 
-	bottom->add(bottomLeft,AlignLeft);
-	bottom->add(bottomCenter,AlignLeft);
-	bottom->add(bottomRight,AlignClient);
+	//bottom->add(bottomLeft,AlignLeft);
+	bottom->add(bottomCenter,AlignClient);
+	//bottom->add(bottomRight,AlignRight);
 
 	
 	double ctrlHeight = 22;
@@ -328,7 +328,8 @@ ParticleEditor::ParticleEditor():Window(){
 		mBlending->addItem("Alpha");
 		mBlending->addItem("Alpha Additive");
 		mBlending->ItemSelectionChanged.add(new ClassProcedure1<ItemEvent*,ParticleEditor>(this,&ParticleEditor::onBlending));
-		mBlending->setWidth( 100 );
+		mBlending->setWidth( 50);
+		mBlending->setHeight(32);
 		blendPanel->add(mBlending,AlignClient);
 
 		blendPanel->setBounds(0,2*ctrlHeight + 2*ctrlSpace,200,ctrlHeight);

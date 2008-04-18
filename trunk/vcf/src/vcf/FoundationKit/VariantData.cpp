@@ -1708,6 +1708,101 @@ void* VariantData::convertToVoidPtr() const
 	return result;
 }
 
+bool VariantData::operator == ( const VariantData& v ) const
+{
+	if ( type != v.type ) {
+		return false;
+	}
+
+	switch ( type ) {
+		case pdInt:{
+			return IntVal == v.IntVal;
+		}
+		break;
+
+		case pdLong:{
+			return LongVal == v.LongVal;
+		}
+		break;
+
+		case pdShort:{
+			return ShortVal == v.ShortVal;
+		}
+		break;
+
+		case pdUShort:{
+			return UShortVal == v.UShortVal;
+		}
+		break;
+
+		case pdUInt:{
+			return UIntVal == v.UIntVal;
+		}
+		break;
+
+		case pdULong:{
+			return ULongVal == v.ULongVal;
+		}
+		break;
+
+		case pdFloat:{
+			return FloatVal == v.FloatVal;
+		}
+		break;
+
+		case pdChar:{
+			return CharVal == v.CharVal;
+		}
+		break;
+
+		case pdDouble:{
+			return DblVal == v.DblVal;
+		}
+		break;
+
+		case pdBool:{
+			return BoolVal == v.BoolVal;		
+		}
+		break;
+
+		case pdInt64:{
+			return Int64Val == v.Int64Val;
+		}
+		break;
+
+		case pdUInt64:{
+			return UInt64Val == v.UInt64Val;
+		}
+		break;
+
+		case pdVoidPointer:{
+			return VoidPtrVal == v.VoidPtrVal;
+		}
+		break;
+
+		case pdDateTime:{
+			return UInt64Val == v.UInt64Val;
+		}
+		break;
+
+		case pdDateTimeSpan:{
+			return UInt64Val == v.UInt64Val;
+		}
+		break;
+
+		case pdString:{
+			return IntVal == v.IntVal;
+			if ( (NULL != StringVal) && (NULL != v.StringVal) ) {
+				return *StringVal == *v.StringVal;
+			}
+		}
+		break; 
+	}
+
+
+	return false;
+}
+
 /**
 $Id$
 */
