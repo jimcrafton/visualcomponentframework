@@ -195,9 +195,8 @@ namespace Regex{
 			}
 
 			/**
-			Returns the offset position of the first character of the match.
-			@return ptrdiff_t Offset position relative to the
-			beginning of the search range.
+			Gets a pointer to the beginning of the match
+			@return unsigned char* First character of the match.
 			*/
             unsigned char* getPos() const {
                 return pos_;
@@ -409,7 +408,8 @@ namespace Regex{
 			This will invalidate any iterators that point to matches lying
 			outside the new search range. Also, any offset values (such as
 			from Match::getPosAsOffset()) previously calculated will now be
-			incorrect.
+			incorrect. Further calls to Match::getPosAsOffset() from Iterators
+			which are still valid will give correct results.
 			@param unsigned char* Pointer to the new range limit.
 			@return unsigned char* Pointer to the previous range limit.
 			*/
