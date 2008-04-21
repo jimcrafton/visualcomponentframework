@@ -1359,6 +1359,48 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RegExGUI"=.\RegExGUI\RegExGUI.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RegExKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RegExKit"=..\build\vc60\RegExKit\RegExKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RegExKitDLL"=..\build\vc60\RegExKit\RegExKitDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "RegExTest"=.\RegExTest\RegExTest.dsp - Package Owner=<4>
 
 Package=<5>

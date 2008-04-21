@@ -364,6 +364,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZLib", "..\src\thirdparty\c
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libAGG", "..\build\vc90\GraphicsKit\libAGG_vc90.vcproj", "{EA6C4D89-BC71-4879-8940-6B664B941090}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RegExGUI", "RegExGUI\RegExGUI_vc90.vcproj", "{BD1AF6FD-523B-4334-93F0-F9EB1688DD4C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C9146FB5-0C90-4A69-8AB7-DBE64884A86C} = {C9146FB5-0C90-4A69-8AB7-DBE64884A86C}
+		{874F1AC3-4F2A-4A20-BE1E-53D351CA08DA} = {874F1AC3-4F2A-4A20-BE1E-53D351CA08DA}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -1145,6 +1151,12 @@ Global
 		{EA6C4D89-BC71-4879-8940-6B664B941090}.Generate YY and LL files|Win32.Build.0 = Release|Win32
 		{EA6C4D89-BC71-4879-8940-6B664B941090}.Release|Win32.ActiveCfg = Release|Win32
 		{EA6C4D89-BC71-4879-8940-6B664B941090}.Release|Win32.Build.0 = Release|Win32
+		{BD1AF6FD-523B-4334-93F0-F9EB1688DD4C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BD1AF6FD-523B-4334-93F0-F9EB1688DD4C}.Debug|Win32.Build.0 = Debug|Win32
+		{BD1AF6FD-523B-4334-93F0-F9EB1688DD4C}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
+		{BD1AF6FD-523B-4334-93F0-F9EB1688DD4C}.Generate YY and LL files|Win32.Build.0 = Release|Win32
+		{BD1AF6FD-523B-4334-93F0-F9EB1688DD4C}.Release|Win32.ActiveCfg = Release|Win32
+		{BD1AF6FD-523B-4334-93F0-F9EB1688DD4C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
