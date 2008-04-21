@@ -1,0 +1,14 @@
+The VCF Application Form Wizard has created the following files for you:
+	$$root$$.cpp
+	Resources\$$Root$$Window.vff
+	$$root$$.dsp
+	$$root$$.dsw
+
+	$$root$$.cpp - this is you main program and contains a "Hello World" 
+	app and VFF based main window.
+
+	Resources\$$Root$$Window.vff - this is the VFF resource file used to 
+	populate your main form. Edit it to make changes to your UI.
+
+	$$root$$.dsp has the correct settings for linking to the VCF FoundationKit,
+	GraphicsKit, and ApplicationKit libraries.
