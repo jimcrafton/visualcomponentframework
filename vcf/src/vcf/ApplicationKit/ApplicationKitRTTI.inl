@@ -86,6 +86,26 @@ static uint32 TreeDisplayOptionsValues[] = { tdoNone,
 										 tdoShowFullRowSelection,
 										 tdoShowColumnHeader };	
 
+
+
+
+
+static String ItemDisplayStateNames[] = { "idsNone",
+                                         "idsChecked",
+										 "idsUnChecked",
+										 "idsRadioUnpressed",
+										 "idsRadioPressed" };
+										 
+										 
+										 
+
+static uint32 ItemDisplayStateValues[] = { idsNone,
+                                         idsChecked,
+										 idsUnChecked,
+										 idsRadioUnpressed,
+										 idsRadioPressed };	
+
+
 //enum VirtualKeyCode{
 static String VirtualKeyCodeNames[] = {	
 	"vkF1",
@@ -400,8 +420,9 @@ _class_rtti_end_
 _class_abstract_rtti_(Item, "VCF::UIComponent", ITEM_CLASSID)
 _property_( int32, "stateImageIndex", getStateImageIndex, setStateImageIndex, "" )
 _property_( int32, "imageIndex", getImageIndex, setImageIndex, "" )
-_property_( bool, "imageIndex", isSelected, setSelected, "" )
+_property_( bool, "selected", isSelected, setSelected, "" )
 _property_object_( Font, "font", getFont, setFont, "" )
+_property_enumset_( uint32, "displayState", getDisplayState, setDisplayState, 5, ItemDisplayStateValues, ItemDisplayStateNames, ""  );
 _class_rtti_end_
 
 

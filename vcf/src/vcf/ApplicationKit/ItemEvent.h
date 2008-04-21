@@ -21,13 +21,6 @@ class GraphicsContext;
 
 #define ITEM_CONST						300
 
-#define ITEM_EVENT_PAINT				CUSTOM_EVENT_TYPES + ITEM_CONST + 1
-#define ITEM_EVENT_CHANGED				CUSTOM_EVENT_TYPES + ITEM_CONST + 2
-#define ITEM_EVENT_SELECTED				CUSTOM_EVENT_TYPES + ITEM_CONST + 3
-#define ITEM_EVENT_ADDED				CUSTOM_EVENT_TYPES + ITEM_CONST + 4
-#define ITEM_EVENT_DELETED				CUSTOM_EVENT_TYPES + ITEM_CONST + 5
-#define ITEM_EVENT_TEXT_CHANGED			CUSTOM_EVENT_TYPES + ITEM_CONST + 6
-#define ITEM_EVENT_UNSELECTED			CUSTOM_EVENT_TYPES + ITEM_CONST + 7
 
 
 /**
@@ -36,6 +29,20 @@ class GraphicsContext;
 class APPLICATIONKIT_API ItemEvent : public Event
 {
 public:
+
+		
+	enum ItemEvents {
+		Paint = CUSTOM_EVENT_TYPES + ITEM_CONST + 1,
+		Changed,
+		Selected,
+		Added,
+		Removed,
+		TextChanged,
+		Unselected,
+		StateChangeRequested,
+		StateChanged,
+	};
+
 
 	enum {
 		InvalidIndex = (uint32)-1

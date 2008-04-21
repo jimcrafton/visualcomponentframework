@@ -2774,6 +2774,45 @@ void Win32Context::drawThemeDisclosureButton( Rect* rect, DisclosureButtonState&
 	}
 	else {
 		//old way????
+#define BUTTON_SIZE  9
+		RECT btn;
+		btn.left = rect->left_ + rect->getWidth()/2 - BUTTON_SIZE / 2; 
+		btn.top = rect->top_ + rect->getHeight() /2 - BUTTON_SIZE/2;
+		btn.right = btn.left + BUTTON_SIZE;
+		btn.bottom = btn.top + BUTTON_SIZE;
+
+
+		HPEN p = CreatePen( PS_SOLID, 1, GetSysColor(COLOR_3DFACE) );//  RGB(120,120,120) );
+		SelectObject( dc_, p );
+		SelectObject( dc_, ::GetSysColorBrush( COLOR_WINDOW ) );
+
+		
+		FillRect( dc_, &btn, ::GetSysColorBrush( COLOR_WINDOW ) );
+
+		::Rectangle(dc_, btn.left,btn.top, btn.right,btn.bottom);
+		DeleteObject(p);
+
+		p = CreatePen( PS_SOLID, 1, RGB(0,0,0) );
+		SelectObject( dc_, p );
+
+		::MoveToEx( dc_, 
+					btn.left + 2, 
+					btn.top + BUTTON_SIZE / 2, NULL);
+
+		::LineTo( dc_,
+					btn.right - 2, 
+					btn.top + BUTTON_SIZE / 2);
+
+		if ( !state.isOpened() ) {
+			::MoveToEx( dc_, 
+						btn.left + BUTTON_SIZE / 2, 
+						btn.top + 2, NULL);
+
+			::LineTo( dc_,
+						btn.left + BUTTON_SIZE / 2, 
+						btn.bottom - 2);
+		}
+		DeleteObject(p);
 	}
 }
 

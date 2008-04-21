@@ -715,12 +715,14 @@ bool TreeListControl::columnLinesVisible()
 
 void TreeListControl::showFullRowSelection( const bool& val )
 {
+	uint32 options = getDisplayOptions();
 	if ( val ) {
-		setDisplayOptions( getDisplayOptions() | tdoShowFullRowSelection );	
+		options |= tdoShowFullRowSelection;
 	}
 	else {
-		setDisplayOptions( getDisplayOptions() & ~tdoShowFullRowSelection );
+		options &= ~tdoShowFullRowSelection;		
 	}
+	setDisplayOptions( options );
 }
 
 bool TreeListControl::fullRowSelectionVisible()

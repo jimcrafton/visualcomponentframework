@@ -83,6 +83,7 @@ public:
 		
 		Rect r = *paintRect;
 
+		context->setColor( Color::getColor("blue") );
 		r.inflate( -2, -2 );
 		context->rectangle( r );
 

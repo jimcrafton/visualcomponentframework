@@ -73,13 +73,22 @@ public:
 //										TreeListControl::tdoShowFullRowSelection |
 //										TreeListControl::tdoShowColumnHeader );
 
+		treeList->showFullRowSelection( true );
 
 	}
 
 	void setFullRowSelectOff( MenuItemEvent* e ) {
 
-		//treeList->showFullRowSelection( false );
+		treeList->showFullRowSelection( false );
 
+	}
+
+	void toggleColLines( MenuItemEvent* ) {
+		treeList->showColumnLines( !treeList->columnLinesVisible() );
+	}
+
+	void toggleRowLines( MenuItemEvent* ) {
+		treeList->showRowLines( !treeList->rowLinesVisible() );
 	}
 
 	void doList( TreeItem* item ) {
@@ -126,6 +135,17 @@ public:
 		menuItem = new DefaultMenuItem( "Change Caption", test, menuBar );
 		menuItem->MenuItemClicked +=
 			new ClassProcedure1<MenuItemEvent*,TreeListControlsWindow>( this, &TreeListControlsWindow::changeCaption, "TreeListControlsWindow::changeCaption" );
+
+
+		menuItem = new DefaultMenuItem( "Toggle Column Lines Visible", test, menuBar );
+		menuItem->MenuItemClicked +=
+			new ClassProcedure1<MenuItemEvent*,TreeListControlsWindow>( this, &TreeListControlsWindow::toggleColLines, "TreeListControlsWindow::toggleColLines" );
+
+		menuItem = new DefaultMenuItem( "Toggle Row Lines Visible", test, menuBar );
+		menuItem->MenuItemClicked +=
+			new ClassProcedure1<MenuItemEvent*,TreeListControlsWindow>( this, &TreeListControlsWindow::toggleRowLines, "TreeListControlsWindow::toggleRowLines" );
+
+		
 
 
 		ImageList* listIL = new ImageList();
@@ -179,8 +199,9 @@ public:
 		treeList->setPopupMenu( popup );
 
 		treeList->setImageList( listIL );
+		treeList->setStateImageList( listIL );
 
-//		treeList->showRowLines( true );
+		treeList->showRowLines( true );
 //		treeList->showColumnLines( true );
 //		treeList->showFullRowSelection( true );
 
@@ -193,11 +214,13 @@ public:
 		treeList->setBorder( border );
 
 		TreeItem* item = treeList->insertItem( NULL, "foo 1" );
+		
 
 		TreeItem* firstItem = item;
+		firstItem->setStateImageIndex(0);
 
-		item->setExpandedImageIndex( 1 );
-		item->setDisplayState( Item::idsChecked );
+		item->setExpandedImageIndex( 3 );
+		item->setDisplayState( idsChecked );
 
 		item->addSubItem( "Sub item 1", NULL );
 		item->addSubItem( "Sub item 2", NULL );
@@ -213,7 +236,6 @@ public:
 
 		TreeSubItem* subItm = new TreeSubItem(item);
 		subItm->setCaption( "Sub item 1" );
-		//subItm->setTextBold( true );
 		child->addSubItem( "Sub item 2", NULL );
 
 		child = treeList->insertItem( item, "foo 1c" );
@@ -223,7 +245,7 @@ public:
 		child->getFont()->setColor( Color::getColor("red") );
 		subItm = new TreeSubItem(item);
 		subItm->setCaption( "Sub item 3" );
-		//subItm->setTextColor( Color::getColor("magenta") );
+		
 		child->addSubItem( "Sub item 2", NULL );
 		child = treeList->insertItem( item, "foo 1g" );
 		child = treeList->insertItem( item, "foo 1h" );
@@ -232,6 +254,7 @@ public:
 		child = treeList->insertItem( item, "foo 1k" );
 
 		child->setImageIndex( 2 );
+		child->setSelectedImageIndex( 4 );
 
 		item = treeList->insertItem( NULL, "foo 2" );
 		child = treeList->insertItem( item, "foo 2a" );
@@ -289,7 +312,7 @@ public:
 
 
 
-//		treeList->getHeader()->setImageList( listIL );
+		treeList->setHeaderImageList( listIL );
 
 		ColumnItem* col = treeList->addColumn( "Column 1" );
 		col->setImageIndex( 0 );
@@ -360,9 +383,19 @@ public:
 		String s;
 		s = Format( "State item: %s, state: %d" ) % item->getCaption().c_str() % item->getDisplayState();
 
-		if ( item->getDisplayState() == Item::idsChecked ) {
+		item->setChecked( !item->isChecked() );
+
+		if ( item->isChecked() ) {
 			s += ", Item is Checked!";
+			
 		}
+		else if ( item->isUnchecked() ) {
+			s += ", Item is Unchecked!";
+		}
+		
+		item->getControl()->repaint();
+		
+		
 		status->setCaption( s );
 	}
 

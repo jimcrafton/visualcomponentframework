@@ -247,24 +247,6 @@ public:
 	XmlNode root;
 
 protected:
-		
-	virtual Key doInsert( const VariantData& value, const Key& parentKey=RootKey ) {
-		return InvalidKey;
-	}
-
-	virtual Key doRemove( const Key& key ){
-		return InvalidKey;
-	}
-
-	
-
-	virtual bool doSet( const Key& key, const VariantData& value ) {
-		return false;
-	}
-
-	virtual bool doClearChildren( const Key& key ) {
-		return false;
-	}
 	
 };
 

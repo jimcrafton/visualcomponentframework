@@ -42,10 +42,10 @@ class APPLICATIONKIT_API MenuItem : public Item {
 public:
 
 	enum MenuItemEvents {		
-		miAdded = ITEM_EVENT_ADDED,
-		miRemoved = ITEM_EVENT_DELETED,
-		miCaptionChanged = ITEM_EVENT_TEXT_CHANGED,
-		miStateChanged = ITEM_EVENT_CHANGED,
+		miAdded = ItemEvent::Added,
+		miRemoved = ItemEvent::Removed,
+		miCaptionChanged = ItemEvent::TextChanged,
+		miStateChanged = ItemEvent::Changed,
 		miImageIndexChanged = 400431,
 		miStateImageIndexChanged,
 		miIndexChanged,
@@ -62,10 +62,10 @@ public:
 	};
 
 	enum MenuItemDisplayState{
-		mdsChecked = Item::idsChecked,
-		mdsUnChecked = Item::idsUnChecked,
-		mdsRadioUnpressed = Item::idsRadioUnpressed,
-		mdsRadioPressed = Item::idsRadioPressed,
+		mdsChecked = idsChecked,
+		mdsUnChecked = idsUnChecked,
+		mdsRadioUnpressed = idsRadioUnpressed,
+		mdsRadioPressed = idsRadioPressed,
 		mdsVisible =		0x0100,
 		mdsSelected =		0x0200,
 		mdsEnabled =		0x0400,

@@ -117,6 +117,7 @@ object TreesWindow  : VCF::Window
 		object col1 : VCF::ColumnItem 
 			caption = 'Gargle'
 			width = 150
+			imageIndex = 0
 		end
 
 		object col2 : VCF::ColumnItem 

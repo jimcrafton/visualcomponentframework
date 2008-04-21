@@ -259,7 +259,7 @@ bool Win32DropDownPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM
 
 			int idx = ::SendMessage( hwnd_, CB_GETCURSEL, 0, 0 );
 			
-			ItemEvent event( peerControl_, ITEM_EVENT_SELECTED );
+			ItemEvent event( peerControl_, ItemEvent::Selected );
 			POINT tmpPt = {0,0};
 			GetCursorPos( &tmpPt );
 			::ScreenToClient( hwnd_, &tmpPt );

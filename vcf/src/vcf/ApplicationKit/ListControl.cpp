@@ -188,7 +188,7 @@ void ListControl::handleEvent( Event* event )
 		}
 		break;
 
-		case ITEM_EVENT_SELECTED : {
+		case ItemEvent::Selected : {
 			ItemSelectionChanged( (ItemEvent*)event );
 		}
 		break;

@@ -1038,7 +1038,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 							POINT tmpPt = {0,0};
 							GetCursorPos( &tmpPt );
 							::ScreenToClient( hwnd_, &tmpPt );
-							ItemEvent event( listviewControl_, ITEM_EVENT_SELECTED );
+							ItemEvent event( listviewControl_, ItemEvent::Selected );
 							Point pt( tmpPt.x, tmpPt.y );
 							event.point = pt;
 							event.index = lvNotificationHdr->iItem;

@@ -51,6 +51,22 @@ public:
 };
 
 
+/**
+*these are a general set of enumeration masks that can be used
+*to describe the items state above and beyond whether the item
+*is selected
+*/
+enum ItemDisplayState{
+	idsNone =			0x0000,
+	idsChecked =		0x0005,
+	idsUnChecked =		0x0006,
+	idsRadioUnpressed = 0x0007,
+	idsRadioPressed =	0x0008,
+	idsCanPaint =		0x0010
+};
+
+
+
 #define ITEM_CLASSID		"ED88C0AA-26AB-11d4-B539-00C04F0196DA"
 
 /**
@@ -70,31 +86,17 @@ is attached to and ask the model for the item's index position.
 */
 class APPLICATIONKIT_API Item : public UIComponent {
 public:
-	/**
-	*these are a general set of enumeration masks that can be used
-	*to describe the items state above and beyond whether the item
-	*is selected
-	*/
-	enum ItemDisplayState{
-		idsNone =			0x0000,
-		idsChecked =		0x0005,
-		idsUnChecked =		0x0006,
-		idsRadioUnpressed = 0x0007,
-		idsRadioPressed =	0x0008,
-		idsCanPaint =		0x0010
-	};
-
+	
 
 	Item():data_(NULL),selected_(false),imageIndex_(-1),
-			displayState_(Item::idsNone),model_(NULL),owningControl_(NULL),font_(NULL) {			
+			displayState_(idsNone),model_(NULL),owningControl_(NULL),font_(NULL) {			
 		tag_ = -1;
 	};
 
 	virtual ~Item(){
 		delete font_;
 	};
-
-
+	
 	
 
 	/**
@@ -131,7 +133,9 @@ public:
 		return -1;
 	}
 
-	virtual void setStateImageIndex( const int32& index ) {}
+	virtual void setStateImageIndex( const int32& index ) {
+		stateChanged();
+	}
 
 	virtual int32 getImageIndex() const {
 		return imageIndex_;
@@ -142,7 +146,6 @@ public:
 	}
 
 	
-
 		
 
 	/**
@@ -198,7 +201,58 @@ public:
 	*/
 	virtual void setDisplayState( const uint32& state ){
 		displayState_ = state;
+		stateChanged();
 	}
+
+	void setChecked( const bool& val ) {
+		if ( val ) {
+			if ( (displayState_ & idsUnChecked) == idsUnChecked ) {
+				displayState_ &= ~idsUnChecked;
+			}
+			displayState_ |= idsChecked;
+			stateChanged();
+		}
+		else {
+			if ( (displayState_ & idsChecked) == idsChecked ) {
+				displayState_ &= ~idsChecked;
+			}
+			displayState_ |= idsUnChecked;
+			stateChanged();
+		}
+	}
+
+	bool isChecked() const {
+		return (displayState_ & idsChecked) == idsChecked;
+	}
+
+	bool isUnchecked() const {
+		return (displayState_ & idsUnChecked) == idsUnChecked;
+	}
+
+	void setRadioPressed( const bool& val ) {
+		if ( val ) {
+			displayState_ |= idsRadioPressed;
+			displayState_ &= ~idsRadioUnpressed;
+			stateChanged();
+		}
+		else {
+			displayState_ &= ~idsRadioPressed;
+			displayState_ |= idsRadioUnpressed;
+			stateChanged();
+		}		
+	}
+
+	bool isRadioPressed() const {
+		return (displayState_ & idsRadioPressed) == idsRadioPressed;
+	}
+
+	bool isRadioUnpressed() const {
+		return (displayState_ & idsRadioUnpressed) == idsRadioUnpressed;
+	}
+
+	
+
+
 
 	/**
 	Returns the model that this item belongs to.
@@ -256,6 +310,14 @@ protected:
 	uint32 displayState_;
 	Model* model_;
 	Control* owningControl_;
+
+	void stateChanged() {
+		if ( NULL != owningControl_ ) {
+			ItemEvent e(this,ItemEvent::StateChanged);
+			Component* c = (Component*)owningControl_;
+			c->handleEvent( &e );
+		}
+	}
 };
 
 

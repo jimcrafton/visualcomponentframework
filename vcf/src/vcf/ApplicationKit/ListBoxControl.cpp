@@ -244,7 +244,7 @@ Rect ListBoxControl::getStateRect( ListItem* item )
 {
 	Rect result;
 
-	if ( item->getDisplayState() != Item::idsNone ) {
+	if ( item->getDisplayState() != idsNone ) {
 		Rect itemBounds = item->getBounds();
 
 		result = itemBounds;
@@ -302,16 +302,16 @@ void ListBoxControl::paintItemState( GraphicsContext* ctx, Rect& itemRect, ListI
 		ButtonState buttonState;
 		buttonState.setActive( true );
 
-		if ( (state & Item::idsChecked) || 
-				(state & Item::idsUnChecked) ) {
+		if ( (state & idsChecked) || 
+				(state & idsUnChecked) ) {
 
-			buttonState.setPressed( state == Item::idsChecked ? true : false );
+			buttonState.setPressed( state == idsChecked ? true : false );
 			ctx->drawThemeCheckboxRect( &stateRect, buttonState );
 		}
-		else if ( (state & Item::idsRadioPressed) || 
-				(state & Item::idsRadioUnpressed) ) {
+		else if ( (state & idsRadioPressed) || 
+				(state & idsRadioUnpressed) ) {
 
-			buttonState.setPressed( state == Item::idsRadioPressed ? true : false );
+			buttonState.setPressed( state == idsRadioPressed ? true : false );
 			ctx->drawThemeRadioButtonRect( &stateRect, buttonState );
 		}		
 	}
@@ -362,7 +362,7 @@ void ListBoxControl::paintItem( GraphicsContext* ctx, Rect& itemRect,
 		imageNeedsDrawing = true;
 	}
 
-	if ( Item::idsNone != item->getDisplayState() ) {
+	if ( idsNone != item->getDisplayState() ) {
 		stateNeedsDrawing = true;
 	}
 
@@ -561,20 +561,20 @@ void ListBoxControl::mouseDown( MouseEvent* event )
 		ListItem* foundItem = findSingleSelectedItem( event->getPoint() );
 		if ( NULL != foundItem ) {
 			//check state hit test first!
-			if ( foundItem->getDisplayState() != Item::idsNone ) {
+			if ( foundItem->getDisplayState() != idsNone ) {
 				if ( stateHitTest( event->getPoint(), foundItem ) ) {
 					int32 state = foundItem->getDisplayState();
-					if ( Item::idsChecked == state ) {
-						state = Item::idsUnChecked;
+					if ( idsChecked == state ) {
+						state = idsUnChecked;
 					}
-					else if ( Item::idsUnChecked == state ) {
-						state = Item::idsChecked;
+					else if ( idsUnChecked == state ) {
+						state = idsChecked;
 					}
-					else if ( Item::idsRadioUnpressed == state ) {
-						state = Item::idsRadioPressed;
+					else if ( idsRadioUnpressed == state ) {
+						state = idsRadioPressed;
 					}
-					else if ( Item::idsRadioPressed == state ) {
-						state = Item::idsRadioUnpressed;
+					else if ( idsRadioPressed == state ) {
+						state = idsRadioUnpressed;
 					}
 					foundItem->setDisplayState( state );
 
@@ -771,7 +771,7 @@ Enumerator<ListItem*>* ListBoxControl::getSelectedItems()
 
 void ListBoxControl::selectionChanged( ListItem* item )
 {
-	ItemEvent event( item, ITEM_EVENT_SELECTED );
+	ItemEvent event( item, ItemEvent::Selected );
 	ItemSelectionChanged( &event );
 }
 

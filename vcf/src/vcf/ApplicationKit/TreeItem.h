@@ -207,6 +207,7 @@ public:
 
 	virtual void setStateImageIndex( const int32& index ) {
 		stateImageIndex_ = index;
+		Item::setStateImageIndex(index);
 	}
 
 
