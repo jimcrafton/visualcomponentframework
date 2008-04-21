@@ -91,7 +91,7 @@ void copyFiles( const String& src, const String& dest )
 		catch ( BasicException& e ) {
 			System::errorPrint( &e );
 		}				
-		finder->free();
+		delete finder;
 	}
 }
 
