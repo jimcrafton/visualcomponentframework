@@ -986,7 +986,7 @@ void JavaScriptEngine::initialize()
 void JavaScriptEngine::terminate()
 {
 	if ( NULL != JavaScriptEngine::singleton ) {
-		JavaScriptEngine::singleton->free();
+		delete JavaScriptEngine::singleton;
 	}
 }
 
