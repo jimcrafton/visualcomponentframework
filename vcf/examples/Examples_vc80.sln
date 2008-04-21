@@ -49,10 +49,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dictionaries", "Dictionarie
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Directories", "Directories\Directories_vc80.vcproj", "{5427842D-0C55-4B79-942A-BD8D6E843081}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DocViewAdvanced", "DocViewAdvanced\DocViewAdvanced_vc80.vcproj", "{48C1B410-D9D2-4744-B67B-71BA98D04CE6}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DocViewBasics", "DocViewBasics\DocViewBasics_vc80.vcproj", "{BB6EB9AF-FC0C-4500-A5FF-4A85B0F72DBC}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DragAndDrop", "DragAndDrop\DragAndDrop_vc80.vcproj", "{6FB2F8DB-E922-4F20-AD6A-3046A43EE9C7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EventBasics", "EventBasics\EventBasics_vc80.vcproj", "{79FC3601-5877-4936-8EA2-16F585DDEB0E}"
@@ -119,8 +115,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFCIntegration1", "MFCIntegration1\MFCIntegration1_vc80.vcproj", "{E0D6910A-836E-4D97-8115-0D97BFCB6CCC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFCIntegration2", "MFCIntegration2\MFCIntegration2_vc80.vcproj", "{061EFA55-3D67-4E51-A23C-3518ED544F82}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MVCBasics", "MVCBasics\MVCBasics_vc80.vcproj", "{22EADFB7-C0DA-4BCE-9684-FF07ADBE7169}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MinMax", "MinMax\MinMax_vc80.vcproj", "{922CAB6C-0063-431E-8909-A41370770D82}"
 EndProject
@@ -229,6 +223,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibPNG", "..\src\thirdparty
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZLib", "..\src\thirdparty\common\ZLib\ZLib_vc80.vcproj", "{F902002C-A511-4784-A0B7-3220E6092F85}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DocViewAdvanced", "MVC\DocViewAdvanced\DocViewAdvanced_vc80.vcproj", "{48C1B410-D9D2-4744-B67B-71BA98D04CE6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DocViewBasics", "MVC\DocViewBasics\DocViewBasics_vc80.vcproj", "{BB6EB9AF-FC0C-4500-A5FF-4A85B0F72DBC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MVCBasics", "MVC\MVCBasics\MVCBasics_vc80.vcproj", "{22EADFB7-C0DA-4BCE-9684-FF07ADBE7169}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -305,12 +305,6 @@ Global
 		{5427842D-0C55-4B79-942A-BD8D6E843081}.Debug|Win32.ActiveCfg = Debug|Win32
 		{5427842D-0C55-4B79-942A-BD8D6E843081}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
 		{5427842D-0C55-4B79-942A-BD8D6E843081}.Release|Win32.ActiveCfg = Release|Win32
-		{48C1B410-D9D2-4744-B67B-71BA98D04CE6}.Debug|Win32.ActiveCfg = Debug|Win32
-		{48C1B410-D9D2-4744-B67B-71BA98D04CE6}.Generate YY and LL files|Win32.ActiveCfg = Debug|Win32
-		{48C1B410-D9D2-4744-B67B-71BA98D04CE6}.Release|Win32.ActiveCfg = Release|Win32
-		{BB6EB9AF-FC0C-4500-A5FF-4A85B0F72DBC}.Debug|Win32.ActiveCfg = Debug|Win32
-		{BB6EB9AF-FC0C-4500-A5FF-4A85B0F72DBC}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
-		{BB6EB9AF-FC0C-4500-A5FF-4A85B0F72DBC}.Release|Win32.ActiveCfg = Release|Win32
 		{6FB2F8DB-E922-4F20-AD6A-3046A43EE9C7}.Debug|Win32.ActiveCfg = Debug|Win32
 		{6FB2F8DB-E922-4F20-AD6A-3046A43EE9C7}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
 		{6FB2F8DB-E922-4F20-AD6A-3046A43EE9C7}.Release|Win32.ActiveCfg = Release|Win32
@@ -405,9 +399,6 @@ Global
 		{061EFA55-3D67-4E51-A23C-3518ED544F82}.Debug|Win32.ActiveCfg = Debug|Win32
 		{061EFA55-3D67-4E51-A23C-3518ED544F82}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
 		{061EFA55-3D67-4E51-A23C-3518ED544F82}.Release|Win32.ActiveCfg = Release|Win32
-		{22EADFB7-C0DA-4BCE-9684-FF07ADBE7169}.Debug|Win32.ActiveCfg = Debug|Win32
-		{22EADFB7-C0DA-4BCE-9684-FF07ADBE7169}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
-		{22EADFB7-C0DA-4BCE-9684-FF07ADBE7169}.Release|Win32.ActiveCfg = Release|Win32
 		{922CAB6C-0063-431E-8909-A41370770D82}.Debug|Win32.ActiveCfg = Debug|Win32
 		{922CAB6C-0063-431E-8909-A41370770D82}.Generate YY and LL files|Win32.ActiveCfg = Debug|Win32
 		{922CAB6C-0063-431E-8909-A41370770D82}.Release|Win32.ActiveCfg = Release|Win32
@@ -581,6 +572,24 @@ Global
 		{F902002C-A511-4784-A0B7-3220E6092F85}.Generate YY and LL files|Win32.Build.0 = Release|Win32
 		{F902002C-A511-4784-A0B7-3220E6092F85}.Release|Win32.ActiveCfg = Release|Win32
 		{F902002C-A511-4784-A0B7-3220E6092F85}.Release|Win32.Build.0 = Release|Win32
+		{48C1B410-D9D2-4744-B67B-71BA98D04CE6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{48C1B410-D9D2-4744-B67B-71BA98D04CE6}.Debug|Win32.Build.0 = Debug|Win32
+		{48C1B410-D9D2-4744-B67B-71BA98D04CE6}.Generate YY and LL files|Win32.ActiveCfg = Debug|Win32
+		{48C1B410-D9D2-4744-B67B-71BA98D04CE6}.Generate YY and LL files|Win32.Build.0 = Debug|Win32
+		{48C1B410-D9D2-4744-B67B-71BA98D04CE6}.Release|Win32.ActiveCfg = Release|Win32
+		{48C1B410-D9D2-4744-B67B-71BA98D04CE6}.Release|Win32.Build.0 = Release|Win32
+		{BB6EB9AF-FC0C-4500-A5FF-4A85B0F72DBC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BB6EB9AF-FC0C-4500-A5FF-4A85B0F72DBC}.Debug|Win32.Build.0 = Debug|Win32
+		{BB6EB9AF-FC0C-4500-A5FF-4A85B0F72DBC}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
+		{BB6EB9AF-FC0C-4500-A5FF-4A85B0F72DBC}.Generate YY and LL files|Win32.Build.0 = Release|Win32
+		{BB6EB9AF-FC0C-4500-A5FF-4A85B0F72DBC}.Release|Win32.ActiveCfg = Release|Win32
+		{BB6EB9AF-FC0C-4500-A5FF-4A85B0F72DBC}.Release|Win32.Build.0 = Release|Win32
+		{22EADFB7-C0DA-4BCE-9684-FF07ADBE7169}.Debug|Win32.ActiveCfg = Debug|Win32
+		{22EADFB7-C0DA-4BCE-9684-FF07ADBE7169}.Debug|Win32.Build.0 = Debug|Win32
+		{22EADFB7-C0DA-4BCE-9684-FF07ADBE7169}.Generate YY and LL files|Win32.ActiveCfg = Release|Win32
+		{22EADFB7-C0DA-4BCE-9684-FF07ADBE7169}.Generate YY and LL files|Win32.Build.0 = Release|Win32
+		{22EADFB7-C0DA-4BCE-9684-FF07ADBE7169}.Release|Win32.ActiveCfg = Release|Win32
+		{22EADFB7-C0DA-4BCE-9684-FF07ADBE7169}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
