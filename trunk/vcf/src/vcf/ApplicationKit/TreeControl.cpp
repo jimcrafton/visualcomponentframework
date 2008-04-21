@@ -349,11 +349,17 @@ void TreeControl::handleEvent( Event* event )
 		}
 		break;
 
-		case TreeControl::ITEM_STATECHANGE_REQUESTED : {
+		case ItemEvent::StateChangeRequested : {
 			ItemStateChangeRequested( (ItemEvent*)event );
 		}
 		break;
 
+		case ItemEvent::StateChanged : {
+			ItemStateChanged( (ItemEvent*)event );
+		}
+		break;
+
+		
 		case Component::COMPONENT_ADDED : {
 			ComponentEvent* ev = (ComponentEvent*)event;
 			Component* child = ev->getChildComponent();
@@ -570,6 +576,7 @@ void TreeControl::setDisplayOptions( const uint32& displayOptions )
 	if ( displayOptions_ != displayOptions ) {
 		displayOptions_ = displayOptions;
 		treePeer_->setDisplayOptions( displayOptions_ );
+		repaint();
 	}
 }
 /**

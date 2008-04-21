@@ -75,12 +75,13 @@ public:
 
 
 	enum TreeControlEvents {
-		ITEM_STATECHANGE_REQUESTED = CUSTOM_EVENT_TYPES + ITEM_CONST + 10
+		
 	};
 
 	DELEGATE(ItemDelegate,ItemSelected);
 	DELEGATE(ItemDelegate,ItemStateChangeRequested);
 	DELEGATE(ItemDelegate,ItemExpanded);
+	DELEGATE(ItemDelegate,ItemStateChanged);
 
 	virtual void handleEvent( Event* event );
 

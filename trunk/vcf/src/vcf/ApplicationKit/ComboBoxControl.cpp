@@ -684,7 +684,7 @@ void ComboBoxControl::setSelectedItem( ListItem* selectedItem )
 		I changed this so that the source is the ComboBoxControl
 		instance as opposed to the selected item
 		*/
- 		ItemEvent event( this, ITEM_EVENT_SELECTED );
+		ItemEvent event( this, ItemEvent::Selected );
 		event.setUserData( (void*)selectedItem );
 		SelectionChanged( &event );
 	}

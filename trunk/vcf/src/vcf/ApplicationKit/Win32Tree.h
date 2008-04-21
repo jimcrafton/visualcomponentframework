@@ -70,6 +70,8 @@ public:
 	virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc = NULL);
 
 	virtual void setFont( Font* font );
+
+	virtual void repaint( Rect* repaintRect, const bool& immediately );
 private:
 
 	TreeControl* treeControl_;
@@ -84,9 +86,7 @@ private:
 	WNDPROC oldTreeWndProc_;
 
 	HFONT oldHeaderFont_;
-	bool headerEnabled_;
-	bool hasLines_;
-	bool hasButtons_;
+	bool headerEnabled_;	
 
 	std::vector<RECT> headerRects_;
 
@@ -98,6 +98,7 @@ private:
 	void onControlModelChanged( Event* e );
 	void onItemExpanded( ItemEvent* e );
 	void onItemSelected( ItemEvent* e );
+	void onItemStateChanged( ItemEvent* e );
 	void onTreeModelChanged( ModelEvent* event );
 	void onColumnModelChanged( ModelEvent* event );
 	void addTreeItem( TreeModel::Key key, HTREEITEM parent );

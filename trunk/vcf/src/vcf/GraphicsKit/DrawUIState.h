@@ -186,8 +186,8 @@ public:
 		*/
 		dsMutualExclusiveToggle			= 0x08000000,
 
-		dsMenuItemHasChildren			= 0x10000000,
-		dsMenuItemHasImage				= 0x20000000,
+		dsItemHasChildren				= 0x10000000,
+		dsItemHasImage					= 0x20000000,
 
 	};	
 };
@@ -334,6 +334,122 @@ public:
 		}
 	}
 	
+	bool isSelected() const {
+		return (state_ & DrawStates::dsSelected) ? true : false;
+	}
+	
+	void setSelected( bool val ) {
+		if ( val ) {
+			state_ |= DrawStates::dsSelected;
+		}
+		else {
+			state_ &= ~DrawStates::dsSelected;
+		}
+	}
+
+	bool isToggled() const {
+		return  (state_ & DrawStates::dsToggledYes) ? true : false;
+	}
+	
+	void setToggled( bool val ) {
+		if ( val ) {
+			state_ &= ~DrawStates::dsToggledNo;
+			state_ |= DrawStates::dsToggledYes;
+		}
+		else {
+			state_ &= ~DrawStates::dsToggledYes;
+			state_ |= DrawStates::dsToggledNo;
+		}
+	}
+
+	bool isToggleYes() const {
+		return  (state_ & DrawStates::dsToggledYes) ? true : false;
+	}
+
+	bool isToggleNo() const {
+		return  (state_ & DrawStates::dsToggledNo) ? true : false;
+	}
+
+	bool isMutuallyExclusive() const {
+		return  (state_ & DrawStates::dsMutualExclusiveToggle) ? true : false;
+	}
+	
+	void setMutuallyExclusive( bool val ) {
+		if ( val ) {			
+			state_ |= DrawStates::dsMutualExclusiveToggle;
+		}
+		else {
+			state_ &= ~DrawStates::dsMutualExclusiveToggle;
+		}
+	}
+	
+	bool hasChildren() const {
+		return  (state_ & DrawStates::dsItemHasChildren) ? true : false;
+	}
+	
+	void setHasChildren( bool val ) {
+		if ( val ) {			
+			state_ |= DrawStates::dsItemHasChildren;			
+		}
+		else {
+			state_ &= ~DrawStates::dsItemHasChildren;
+		}
+	}
+
+	bool itemHasImage() const {
+		return  (state_ & DrawStates::dsItemHasImage) ? true : false;
+	}
+	
+	void setItemHasImage( bool val ) {
+		if ( val ) {			
+			state_ |= DrawStates::dsItemHasImage;			
+		}
+		else {
+			state_ &= ~DrawStates::dsItemHasImage;
+		}
+	}
+
+	bool isClosed() const {
+		return (state_ & DrawStates::dsDisclosureClosed) ? true : false;
+	}
+	
+	void setClosed( bool val ) {
+		if ( val ) {
+			state_ |= DrawStates::dsDisclosureClosed;
+			state_ &= ~(DrawStates::dsDisclosureOpened | DrawStates::dsDisclosurePartialOpened);
+		}
+		else {
+			state_ &= ~DrawStates::dsDisclosureClosed;
+		}
+	}
+	
+	bool isPartialOpened() const {
+		return (state_ & DrawStates::dsDisclosurePartialOpened) ? true : false;
+	}
+	
+	void setPartialOpened( bool val ) {
+		if ( val ) {
+			state_ |= DrawStates::dsDisclosurePartialOpened;
+			state_ &= ~(DrawStates::dsDisclosureOpened | DrawStates::dsDisclosureClosed);
+		}
+		else {
+			state_ &= ~DrawStates::dsDisclosurePartialOpened;
+		}
+	}
+	
+	bool isOpened() const {
+		return (state_ & DrawStates::dsDisclosureOpened) ? true : false;
+	}
+	
+	void setOpened( bool val ) {
+		if ( val ) {
+			state_ |= DrawStates::dsDisclosureOpened;
+			state_ &= ~(DrawStates::dsDisclosurePartialOpened | DrawStates::dsDisclosureClosed);
+		}
+		else {
+			state_ &= ~DrawStates::dsDisclosureOpened;
+		}
+	}
 	
 	UIElementType getType() const {
 		return (UIElementType)type_;
@@ -354,8 +470,16 @@ public:
 	UIElementType getItemType() const {
 		return (UIElementType) (type_ & etItemMask);
 	}
+
+	uint32 getState() const {
+		return state_;
+	}
+
+	void setState( const uint32& val ) {
+		state_ = val;
+	}
 protected:
-	int32 state_;
+	uint32 state_;
 	uint32 type_;
 };
 
@@ -424,19 +548,7 @@ protected:
 public:
 	MenuState() : DrawUIState(), keyCode_(vkUndefined), modifierMask_(0){ type_ = etMenuItem; }
 
-	bool isSelected() const {
-		return (state_ & DrawStates::dsSelected) ? true : false;
-	}
 	
-	void setSelected( bool val ) {
-		if ( val ) {
-			state_ |= DrawStates::dsSelected;
-		}
-		else {
-			state_ &= ~DrawStates::dsSelected;
-		}
-	}
-
 	bool isSeparator() const {
 		return (state_ & DrawStates::dsMenuItemSeparator) ? true : false;
 	}
@@ -447,61 +559,6 @@ public:
 		}
 		else {
 			state_ &= ~DrawStates::dsMenuItemSeparator;
-		}
-	}
-
-	
-	bool isToggled() const {
-		return  (state_ & DrawStates::dsToggledYes) ? true : false;
-	}
-	
-	void setToggled( bool val ) {
-		if ( val ) {
-			state_ &= ~DrawStates::dsToggledNo;
-			state_ |= DrawStates::dsToggledYes;
-		}
-		else {
-			state_ &= ~DrawStates::dsToggledYes;
-			state_ |= DrawStates::dsToggledNo;
-		}
-	}
-
-	bool isMutuallyExclusive() const {
-		return  (state_ & DrawStates::dsMutualExclusiveToggle) ? true : false;
-	}
-	
-	void setMutuallyExclusive( bool val ) {
-		if ( val ) {			
-			state_ |= DrawStates::dsMutualExclusiveToggle;
-		}
-		else {
-			state_ &= ~DrawStates::dsMutualExclusiveToggle;
-		}
-	}
-	
-	bool hasChildren() const {
-		return  (state_ & DrawStates::dsMenuItemHasChildren) ? true : false;
-	}
-	
-	void setHasChildren( bool val ) {
-		if ( val ) {			
-			state_ |= DrawStates::dsMenuItemHasChildren;			
-		}
-		else {
-			state_ &= ~DrawStates::dsMenuItemHasChildren;
-		}
-	}
-
-	bool menuItemHasImage() const {
-		return  (state_ & DrawStates::dsMenuItemHasImage) ? true : false;
-	}
-	
-	void setMenuItemHasImage( bool val ) {
-		if ( val ) {			
-			state_ |= DrawStates::dsMenuItemHasImage;			
-		}
-		else {
-			state_ &= ~DrawStates::dsMenuItemHasImage;
 		}
 	}
 	
@@ -572,22 +629,7 @@ public:
 		else {
 			state_ &= ~DrawStates::dsPressed;
 		}
-	}
-	
-	bool isToggled() const {
-		return  (state_ & DrawStates::dsToggledYes) ? true : false;
-	}
-	
-	void setToggled( bool val ) {
-		if ( val ) {
-			state_ &= ~DrawStates::dsToggledNo;
-			state_ |= DrawStates::dsToggledYes;
-		}
-		else {
-			state_ &= ~DrawStates::dsToggledYes;
-			state_ |= DrawStates::dsToggledNo;
-		}
-	}
+	}	
 	
 	bool isDefaultButton() const {
 		return (state_ & DrawStates::dsDefaultButton) ? true : false;
@@ -611,47 +653,7 @@ public:
 */
 class DisclosureButtonState : public DrawUIState {
 public:
-	bool isClosed() const {
-		return (state_ & DrawStates::dsDisclosureClosed) ? true : false;
-	}
 	
-	void setClosed( bool val ) {
-		if ( val ) {
-			state_ |= DrawStates::dsDisclosureClosed;
-			state_ &= ~(DrawStates::dsDisclosureOpened | DrawStates::dsDisclosurePartialOpened);
-		}
-		else {
-			state_ &= ~DrawStates::dsDisclosureClosed;
-		}
-	}
-	
-	bool isPartialOpened() const {
-		return (state_ & DrawStates::dsDisclosurePartialOpened) ? true : false;
-	}
-	
-	void setPartialOpened( bool val ) {
-		if ( val ) {
-			state_ |= DrawStates::dsDisclosurePartialOpened;
-			state_ &= ~(DrawStates::dsDisclosureOpened | DrawStates::dsDisclosureClosed);
-		}
-		else {
-			state_ &= ~DrawStates::dsDisclosurePartialOpened;
-		}
-	}
-	
-	bool isOpened() const {
-		return (state_ & DrawStates::dsDisclosureOpened) ? true : false;
-	}
-	
-	void setOpened( bool val ) {
-		if ( val ) {
-			state_ |= DrawStates::dsDisclosureOpened;
-			state_ &= ~(DrawStates::dsDisclosurePartialOpened | DrawStates::dsDisclosureClosed);
-		}
-		else {
-			state_ &= ~DrawStates::dsDisclosureOpened;
-		}
-	}
 };
 
 
@@ -969,14 +971,6 @@ public:
 		return (state_ & DrawStates::dsSelected) ? true : false;
 	}
 	
-	void setSelected( bool val ) {
-		if ( val ) {
-			state_ |= DrawStates::dsSelected;
-		}
-		else {
-			state_ &= ~DrawStates::dsSelected;
-		}
-	}
 	
 public:	
 	int themeFontType_;

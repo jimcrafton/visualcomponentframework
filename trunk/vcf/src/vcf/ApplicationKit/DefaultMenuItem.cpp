@@ -496,16 +496,16 @@ void DefaultMenuItem::setMenuOwner( Menu* menuOwner )
 
 bool DefaultMenuItem::canPaint() const
 {
-	return (displayState_ & Item::idsCanPaint) ? true : false;
+	return (displayState_ & idsCanPaint) ? true : false;
 }
 
 void DefaultMenuItem::setCanPaint( const bool& val )
 {
 	if ( val ) {
-		displayState_ |= Item::idsCanPaint;
+		displayState_ |= idsCanPaint;
 	}
 	else {
-		displayState_ &= ~Item::idsCanPaint;
+		displayState_ &= ~idsCanPaint;
 	}
 
 	Menu* owner = getMenuOwner();
