@@ -255,6 +255,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "CreateBundle"=..\src\createbundle\CreateBundle.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "DateTimeUI"=.\DateTimeUI\DateTimeUI.dsp - Package Owner=<4>
 
 Package=<5>
@@ -943,6 +955,30 @@ Package=<4>
 ###############################################################################
 
 Project: "InternetKitDLL"=..\build\vc60\InternetKit\InternetKitDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "JavaScriptKit"=..\build\vc60\JavaScriptKit\JavaScriptKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "JavaScriptKitDLL"=..\build\vc60\JavaScriptKit\JavaScriptKitDLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1891,6 +1927,18 @@ Package=<4>
 ###############################################################################
 
 Project: "ZLib"=..\src\thirdparty\common\ZLib\ZLib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "createinfo"=..\src\createinfo\createinfo.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
