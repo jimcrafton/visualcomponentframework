@@ -704,8 +704,6 @@ public:
 		REGISTER_CLASSINFO( DocViewAdvancedWindow );
 
 		bool result = MDIDocumentBasedApplication::initRunningApplication();
-
-		newDefaultDocument("");		
 		
 		return result;
 	}
