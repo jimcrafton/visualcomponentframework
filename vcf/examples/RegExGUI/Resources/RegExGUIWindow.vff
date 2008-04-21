@@ -1,0 +1,22 @@
+object RegExGUIWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 153.75pt //205px
+	width = 307.5pt //410px
+	caption = 'Regular Expression Example'	
+
+	object lbl1 : VCF::Label
+		top = 7.5pt //10px
+		left = 15pt //20px
+		width = 75pt //100px
+		height = LabelHeight
+		caption = 'Fi&nd what:'
+	end
+
+	object edt1 : VCF::TextControl
+		top = 7.5pt //10px
+		left = 82.5pt //110px
+		width = 90pt //120px
+		height = TextHeight
+	end
+end
