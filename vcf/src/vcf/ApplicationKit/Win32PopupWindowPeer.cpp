@@ -40,8 +40,12 @@ public:
 		return Win32PopupHook::hookInstance;
 	}
 
-	void setCurrentPopupHwnd( HWND val ) {
-		currentPopupHwnd_ = val;
+	void setCurrentPopupHwnd( Win32PopupWindowPeer* val ) {
+		currentPopup_ = val;
+
+		if ( NULL == currentPopup_ ) {
+			ignoreRemainingMessages_ = true;
+		}
 	}
 protected:
 	static Win32PopupHook* hookInstance;
@@ -51,19 +55,16 @@ protected:
 
 	HHOOK mouseHook_;
 	HHOOK keyboardHook_;
-	HHOOK activateAndKBHook_;
 	int refs_;
-	HWND currentPopupHwnd_;
+	Win32PopupWindowPeer* currentPopup_;
 	bool ignoreRemainingMessages_;
 private:
 
 	Win32PopupHook():refs_(0),
 			mouseHook_(NULL),
-			activateAndKBHook_(NULL),
-			currentPopupHwnd_(NULL),
+			currentPopup_(NULL),
 			ignoreRemainingMessages_(false){
-		mouseHook_ = SetWindowsHookEx( WH_MOUSE, Win32PopupHook::MouseProc, NULL, GetCurrentThreadId() );
-		activateAndKBHook_ = SetWindowsHookEx( WH_CALLWNDPROC, Win32PopupHook::ActivateAndKBProc, NULL, GetCurrentThreadId() );
+		mouseHook_ = SetWindowsHookEx( WH_MOUSE, Win32PopupHook::MouseProc, NULL, GetCurrentThreadId() );		
 		keyboardHook_ = SetWindowsHookEx( WH_KEYBOARD, Win32PopupHook::KBProc, NULL, GetCurrentThreadId() );
 	}
 
@@ -71,12 +72,12 @@ private:
 		if ( !UnhookWindowsHookEx( mouseHook_ ) ) {
 			int err = GetLastError();
 		}
-		UnhookWindowsHookEx( activateAndKBHook_ );
 		UnhookWindowsHookEx( keyboardHook_ );
 		
 		mouseHook_ = NULL;
-		activateAndKBHook_ = NULL;
 		keyboardHook_ = NULL;
+
+		StringUtils::trace( "Hooks removed for Win32PopupWindow\n" );
 	}	
 };
 
@@ -92,14 +93,14 @@ LRESULT CALLBACK Win32PopupHook::KBProc( int nCode, WPARAM wParam, LPARAM lParam
 				case VK_ESCAPE : {
 					StringUtils::trace( "Win32PopupHook::KBProc/VK_ESCAPE posting WM_CLOSE\n" );
 					Win32PopupHook::hookInstance->ignoreRemainingMessages_ = true;
-					PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+					Win32PopupHook::hookInstance->currentPopup_->closePopup();
 				}
 				break;
 
 				case VK_RETURN : {
 					StringUtils::trace( "Win32PopupHook::KBProc/VK_ESCAPE posting VK_RETURN\n" );
-					Win32PopupHook::hookInstance->ignoreRemainingMessages_ = true;
-					PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+					Win32PopupHook::hookInstance->ignoreRemainingMessages_ = true;					
+					Win32PopupHook::hookInstance->currentPopup_->closePopup();
 				}
 				break;
 			}
@@ -116,22 +117,21 @@ LRESULT CALLBACK Win32PopupHook::MouseProc( int nCode, WPARAM wParam, LPARAM lPa
 			if ( (WM_LBUTTONDOWN == wParam) || (WM_MBUTTONDOWN == wParam) || (WM_RBUTTONDOWN == wParam) ) {
 				//close the popup!!!
 				MOUSEHOOKSTRUCT* mh = (MOUSEHOOKSTRUCT*)lParam;
-				BOOL isChild = IsChild( Win32PopupHook::hookInstance->currentPopupHwnd_, mh->hwnd );
-				StringUtils::trace( Format("IsChild %d hwnd %p, popup hwnd %p\n") % isChild % 
-										mh->hwnd % Win32PopupHook::hookInstance->currentPopupHwnd_ );
-				if ( !isChild ) {
+				HWND popup = (HWND)Win32PopupHook::hookInstance->currentPopup_->getHandleID();
+				BOOL isChild = IsChild( popup, mh->hwnd );				
+				if ( !isChild && popup != mh->hwnd ) {
 					StringUtils::trace( "Win32PopupHook::MouseProc posting WM_CLOSE\n" );
 					Win32PopupHook::hookInstance->ignoreRemainingMessages_ = true;
-					SendMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+					Win32PopupHook::hookInstance->currentPopup_->closePopup();
 				}
 			}
-			else if ( (wParam == WM_NCLBUTTONDOWN) ||
+			if ( (wParam == WM_NCLBUTTONDOWN) ||
 						(wParam == WM_NCMBUTTONDOWN) ||
-						(wParam == WM_NCRBUTTONDOWN) ) {
+						(wParam == WM_NCRBUTTONDOWN) ) {				
 
 				StringUtils::trace( "Win32PopupHook::MouseProc/WM_NCXBUTTONDOWN posting WM_CLOSE\n" );
 				Win32PopupHook::hookInstance->ignoreRemainingMessages_ = true;
-				SendMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
+				Win32PopupHook::hookInstance->currentPopup_->closePopup();
 			}
 		}
 		return CallNextHookEx( Win32PopupHook::hookInstance->mouseHook_, nCode, wParam, lParam );
@@ -139,44 +139,6 @@ LRESULT CALLBACK Win32PopupHook::MouseProc( int nCode, WPARAM wParam, LPARAM lPa
 	return 1;
 }
 
-LRESULT CALLBACK Win32PopupHook::ActivateAndKBProc( int nCode, WPARAM wParam, LPARAM lParam )
-{
-	if ( NULL != Win32PopupHook::hookInstance ) {
-		if ( !Win32PopupHook::hookInstance->ignoreRemainingMessages_ ) {
-			CWPSTRUCT* cwp = (CWPSTRUCT*)lParam;
-			if ( cwp->message == WM_ACTIVATE && cwp->hwnd == Win32PopupHook::hookInstance->currentPopupHwnd_ ) {
-				if ( WA_INACTIVE == LOWORD(cwp->wParam) ) {
-					//close the popup!!!
-					StringUtils::trace( Format("Win32PopupHook::ActivateAndKBProc/WM_ACTIVATE hwnd %p posting WM_CLOSE to %p\n") % 
-										cwp->hwnd % Win32PopupHook::hookInstance->currentPopupHwnd_ );
-					Win32PopupHook::hookInstance->ignoreRemainingMessages_ = true;
-					PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
-				}
-			}
-			else if ( cwp->message == WM_KEYUP ) {
-				switch ( wParam ) {
-					case VK_ESCAPE : {
-						StringUtils::trace( "Win32PopupHook::ActivateAndKBProc/VK_ESCAPE posting WM_CLOSE\n" );
-						Win32PopupHook::hookInstance->ignoreRemainingMessages_ = true;
-						PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
-					}
-					break;
-				}
-			}
-			else if ( (cwp->message == WM_NCLBUTTONDOWN) ||
-						(cwp->message == WM_NCMBUTTONDOWN) ||
-						(cwp->message == WM_NCRBUTTONDOWN) ) {
-
-				StringUtils::trace( "Win32PopupHook::ActivateAndKBProc/WM_NCXBUTTONDOWN posting WM_CLOSE\n" );
-				Win32PopupHook::hookInstance->ignoreRemainingMessages_ = true;
-				PostMessage( Win32PopupHook::hookInstance->currentPopupHwnd_, WM_CLOSE, 0, 0 );
-			}
-		}
-		return CallNextHookEx( Win32PopupHook::hookInstance->activateAndKBHook_, nCode, wParam, lParam );
-	}
-
-	return 1;	
-}
 
 
 
@@ -372,6 +334,23 @@ void Win32PopupWindowPeer::setBorder( Border* border )
 	SetWindowPos(hwnd_, NULL,0,0,0,0, SWP_FRAMECHANGED|SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE);
 }
 
+void Win32PopupWindowPeer::closePopup()
+{
+	PopupWindow* popup = (PopupWindow*)peerControl_;
+	if ( NULL != popup ) {
+		if ( popup->isModal() ) {
+			//PostQuitMessage(0);
+			//SendMessage( hwnd_, WM_QUIT, 0, 0 );
+			ShowWindow( hwnd_, SW_HIDE );
+
+			UIToolkit::quitModalEventLoop();			
+		}
+		else {
+			SendMessage( hwnd_, WM_CLOSE, 0, 0 );
+		}
+	}
+}
+
 bool Win32PopupWindowPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc )
 {
 	bool result = false;
@@ -380,6 +359,8 @@ bool Win32PopupWindowPeer::handleEventMessages( UINT message, WPARAM wParam, LPA
 	switch ( message ) {
 		case WM_CLOSE:{
 			
+			Win32PopupHook::instance()->setCurrentPopupHwnd( NULL );
+
 			PopupWindow* popup = (PopupWindow*)peerControl_;
 
 			VCF::FrameEvent event( popup, Frame::CLOSE_EVENT );
@@ -390,54 +371,72 @@ bool Win32PopupWindowPeer::handleEventMessages( UINT message, WPARAM wParam, LPA
 		}
 		break;
 
-		case WM_DESTROY:{
-			
-			Win32Window::handleEventMessages( message, wParam, lParam, wndProcResult );
-			PopupWindow* popup = (PopupWindow*)peerControl_;
-			if ( NULL != popup ) {
-				if ( popup->isModal() ) {
-					PostQuitMessage(0);
-				}
-			}
-		}
-		break;
-
 		case WM_MOUSEACTIVATE : {
 			wndProcResult = MA_NOACTIVATE;
 			result = true;
 		}
 		break;
 
-		case WM_SETFOCUS : {
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+		case WM_LBUTTONDOWN: 
+		case WM_LBUTTONDBLCLK:
+		case WM_RBUTTONUP:
+		case WM_RBUTTONDBLCLK:
+		case WM_MBUTTONDOWN:
+		case WM_MBUTTONDBLCLK:
+		case WM_NCLBUTTONDOWN:
+		case WM_NCLBUTTONDBLCLK:
+		case WM_NCRBUTTONDOWN:
+		case WM_NCRBUTTONDBLCLK:
+		case WM_NCMBUTTONDOWN:
+		case WM_NCMBUTTONDBLCLK:
+		case WM_KEYDOWN:
+		case WM_SYSKEYDOWN:
+		case WM_MOUSEWHEEL: {
+			closePopup();
 		}
 		break;
-
 		
-		case WM_ACTIVATE : {
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
-		}
-		break;
+		case WM_ACTIVATEAPP: {
 
-		case WM_LBUTTONDOWN : {
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+			if ( !wParam ) {
+				closePopup();
+			}
 		}
 		break;
 
 		case WM_NCACTIVATE : {
 			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
-		}
-		break;
+			HWND ownerHwnd = (HWND)this->owner_->getPeer()->getHandleID();
 
-		case WM_NCLBUTTONDOWN : {
-			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+			wndProcResult = defaultWndProcedure( message, wParam, lParam );
+			result = false;
+
+			//////////////////////////////////////////////////////////////
+			//This is a HACK! I read about it here ( http://vbaccelerator.com/home/NET/Code/Controls/Popup_Windows/Popup_Windows/article.asp)
+			//as a way to force the owner window to reactivate itself in the case that
+			//we have a some child windows that we click on in the popup
+			//window. It works but god only know if it's actually the 
+			//correct thing to do
+			//////////////////////////////////////////////////////////////
+			SendMessage( ownerHwnd, WM_NCACTIVATE, TRUE, 0 );
 		}
 		break;
 
 		case VCF_CONTROL_CREATE: {
 			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
-
 			activatesPending_ = false;			
+		}
+		break;
+
+		case WM_NCCALCSIZE: {
+			wndProcResult = handleNCCalcSize( wParam, lParam );
+			result= true;
+		}
+		break;
+
+		case WM_NCPAINT: {
+			wndProcResult = handleNCPaint( wParam, lParam );
+			result= true;
 		}
 		break;
 
@@ -457,7 +456,7 @@ void Win32PopupWindowPeer::showModal()
 
 	::ShowWindow( hwnd_, SW_SHOWNOACTIVATE );
 
-	Win32PopupHook::instance()->setCurrentPopupHwnd( hwnd_ );
+	Win32PopupHook::instance()->setCurrentPopupHwnd( this );
 
 	UIToolkit::runModalEventLoopFor( peerControl_ );
 
@@ -472,7 +471,7 @@ void Win32PopupWindowPeer::showAsSheet( Window* owningWindow )
 {
 	VCF_ASSERT( NULL != hwnd_ );
 
-	Win32PopupHook::instance()->setCurrentPopupHwnd( hwnd_ );
+	Win32PopupHook::instance()->setCurrentPopupHwnd( this );
 
 	::ShowWindow( hwnd_, SW_SHOWNOACTIVATE );
 }

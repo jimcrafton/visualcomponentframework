@@ -45,8 +45,10 @@ PopupWindow::~PopupWindow()
 
 void PopupWindow::onClose( FrameEvent* e )
 {
-	EventHandler* ev = new ClassProcedure1<Event*,PopupWindow>( this, &PopupWindow::postClose );
-	UIToolkit::postEvent( ev, new Event( this ) );
+	if ( !modal_ ) {
+		EventHandler* ev = new ClassProcedure1<Event*,PopupWindow>( this, &PopupWindow::postClose );
+		UIToolkit::postEvent( ev, new Event( this ) );
+	}
 }
 
 void PopupWindow::postClose( Event* event )
@@ -57,7 +59,8 @@ void PopupWindow::postClose( Event* event )
 		return;
 	}
 	
-	free();
+	
+	free();	
 }
 
 

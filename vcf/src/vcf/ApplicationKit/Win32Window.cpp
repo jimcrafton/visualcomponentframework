@@ -852,6 +852,24 @@ void Win32Window::setText( const VCF::String& text )
 
 void Win32Window::setBorderPath( Path* path )
 {
+	std::vector<Point> pts;
+
+	path->flattenPoints(pts);
+
+	std::vector<POINT> rgnPts(pts.size());
+	for (size_t i=0;i<pts.size();i++ ) {
+		POINT& p = rgnPts[i];
+		const Point& p2 = pts[i];
+		p.x = p2.x_;
+		p.y = p2.y_;
+	}
+
+
+	HRGN rgn = CreatePolygonRgn( &rgnPts[0], rgnPts.size(), WINDING );
+
+	if ( NULL != rgn ) {
+		::SetWindowRgn( hwnd_, rgn, TRUE );
+	}
 
 }
 
