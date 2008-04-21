@@ -44,7 +44,7 @@ public:
 	void talk() {
 		Event e(this);
 
-		Talking.fireEvent( &e );
+		Talking( &e );
 	}
 };
 

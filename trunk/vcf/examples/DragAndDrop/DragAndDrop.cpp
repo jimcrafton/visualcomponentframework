@@ -261,7 +261,7 @@ public:
 				//create a string from the data
 				String string;
 				//append the data in the stream's buffer to the string
-				string.append( stream.getBuffer(), stream.getSize() );
+				string.append( (char*)stream.getBuffer(), stream.getSize() );
 
 				//popup a message box to display the text
 				Dialog::showMessage( "onTextDestDropped got: " + string );
@@ -322,9 +322,9 @@ public:
 				DropTarget* dropTarget = (DropTarget*)e->getSource();
 
 				//get the graphics context for hte drop target's control
-				GraphicsContext* ctx = dropTarget->getTarget()->getContext();
+				//GraphicsContext* ctx = dropTarget->getTarget()->getContext();
 				//draw the image
-				ctx->drawImage( 20, 20, image );
+				//ctx->drawImage( 20, 20, image );
 				delete image;
 			}
 		}

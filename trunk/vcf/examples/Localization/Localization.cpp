@@ -203,13 +203,14 @@ public:
 	*/
 
 	virtual uint32 convertToAnsiString( const UnicodeString& str, UnicodeString::AnsiChar* ansiStrBuffer,
-										const uint32& ansiStrBufferLength );
+										const uint32& ansiStrBufferLength,
+										const UnicodeString::LanguageEncoding& encoding);
 
-	virtual UnicodeString::AnsiChar convertToAnsiChar( const UnicodeString::UniChar& c );
+	virtual UnicodeString::AnsiChar convertToAnsiChar( const UnicodeString::UniChar& c, const UnicodeString::LanguageEncoding& encoding );
 
-	virtual UnicodeString convertToUnicodeString( const UnicodeString& str );
+	virtual UnicodeString convertToUnicodeString( const UnicodeString& str, const UnicodeString::LanguageEncoding& encoding );
 
-	virtual UnicodeString convertToUnicodeString( const UnicodeString::AnsiChar* str, UnicodeString::size_type stringLength );
+	virtual UnicodeString convertToUnicodeString( const UnicodeString::AnsiChar* str, UnicodeString::size_type stringLength,const UnicodeString::LanguageEncoding& encoding );
 
 	/**
 	You need to return a name, which needs to be unique, for your codec
@@ -240,7 +241,8 @@ unsigned long MyTextCodec::offsetsFromUTF8[6] = {0x00000000, 0x00003080, 0x000E2
 
 
 uint32 MyTextCodec::convertToAnsiString( const UnicodeString& str, UnicodeString::AnsiChar* ansiStrBuffer,
-									const uint32& ansiStrBufferLength )
+									const uint32& ansiStrBufferLength,
+									const UnicodeString::LanguageEncoding& encoding )
 {
 	long ch;
 	short T = 0;
@@ -320,21 +322,21 @@ uint32 MyTextCodec::convertToAnsiString( const UnicodeString& str, UnicodeString
 	return strLength;
 }
 
-UnicodeString::AnsiChar MyTextCodec::convertToAnsiChar( const UnicodeString::UniChar& c )
+UnicodeString::AnsiChar MyTextCodec::convertToAnsiChar( const UnicodeString::UniChar& c, const UnicodeString::LanguageEncoding& encoding )
 {
 	UnicodeString::AnsiChar result = 0;
 
 	return result;
 }
 
-UnicodeString MyTextCodec::convertToUnicodeString( const UnicodeString& str )
+UnicodeString MyTextCodec::convertToUnicodeString( const UnicodeString& str,const UnicodeString::LanguageEncoding& encoding )
 {
 	UnicodeString result(str);
 
 	return result;
 }
 
-UnicodeString MyTextCodec::convertToUnicodeString( const UnicodeString::AnsiChar* str, UnicodeString::size_type stringLength )
+UnicodeString MyTextCodec::convertToUnicodeString( const UnicodeString::AnsiChar* str, UnicodeString::size_type stringLength, const UnicodeString::LanguageEncoding& encoding )
 {
 	UnicodeString result(str,stringLength);
 
