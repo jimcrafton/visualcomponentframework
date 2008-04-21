@@ -283,10 +283,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnLayoutContainer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnModel.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\Command.h
 # End Source File
 # Begin Source File
@@ -823,6 +819,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Win32DragDropPeer.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32DropDownPeer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp
 # End Source File
 # Begin Source File
@@ -1119,26 +1119,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\WindowEvent.h
 # PROP Default_Filter "*.h;*.cpp"
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractListModel.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractListModel.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractModel.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractTreeModel.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractTreeModel.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\AbstractView.cpp
 # End Source File
 # Begin Source File
@@ -1152,30 +1132,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnItem.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ColumnModel.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultColumnItem.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultColumnItem.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultColumnModel.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultColumnModel.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultListItem.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultListItem.h
 # End Source File
 # Begin Source File
 
@@ -1211,14 +1167,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTableModel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTabModel.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTabModel.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTabPage.cpp
 # End Source File
 # Begin Source File
@@ -1232,14 +1180,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTextModel.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTextModel.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTreeItem.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultTreeItem.h
 # End Source File
 # Begin Source File
 
@@ -1312,6 +1252,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TabPage.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\TextModel.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\TreeItem.cpp
 # End Source File
 # Begin Source File
 

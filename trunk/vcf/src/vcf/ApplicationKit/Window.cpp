@@ -301,7 +301,7 @@ bool Window::isActiveFrame()
 
 void Window::setBorderPath( Path* path )
 {
-
+	windowPeer_->setBorderPath( path );
 }
 
 /**

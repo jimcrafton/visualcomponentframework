@@ -31,6 +31,18 @@ class GRAPHICSKIT_API Ellipse : public VCF::Object, public VCF::Path {
 public:
 	Ellipse(){}
 
+	Ellipse( const Rect& r ){
+		ellipse(r);
+	}
+
+	Ellipse( const double& x1, const double& y1, const double& x2, const double& y2 ){
+		ellipse(Rect(x1,y1,x2,y2));
+	}
+
+	Ellipse( const Point& tl, const Point& br ){
+		ellipse(Rect(tl.x_,tl.y_,br.x_,br.y_));
+	}
+
 	virtual ~Ellipse(){}
 
 
@@ -189,8 +201,31 @@ public:
 		return !points.empty();
 	}
 
-	virtual void flattenPoints( std::vector<Point>& flattenedPoints ) {
+	virtual void flattenPoints( std::vector<Point>& flattenedPoints ) {		
+		for ( size_t i=0;i<ellipsePath_.total_vertices();i++ ) {
+			Point pt;
+			unsigned vertCmd = ellipsePath_.vertex(&pt.x_, &pt.y_);
+			switch ( vertCmd ) {
+				case agg::path_cmd_move_to : {
+					flattenedPoints.push_back( pt );
+				}
+				break;
 
+				case agg::path_cmd_line_to : {
+					flattenedPoints.push_back( pt );
+				}
+				break;
+
+				default : {
+					if ( vertCmd & agg::path_flags_close ) {
+						flattenedPoints.push_back( pt );
+					}
+				}
+				break;
+			}			
+		}
+
+		ellipsePath_.rewind(0);
 	}
 
 

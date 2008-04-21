@@ -65,6 +65,8 @@ public:
 	virtual void showAsSheet( Window* owningWindow );
 
 	virtual void show();	
+
+	void closePopup();
 };
 
 

@@ -355,6 +355,8 @@ public:
 	*/
 	static void quitCurrentEventLoop();
 
+	static void quitModalEventLoop();
+
 	/**
 	*This method creates a new event from native windowing OS event
 	*data. Each UIToolkit implementation must implement this method
@@ -590,6 +592,7 @@ protected:
 	std::vector<Button*> defaultButtonList_;
 
 	std::vector<Component*> componentsToUpdate_;
+	bool quitModalLoop_;
 
 
 

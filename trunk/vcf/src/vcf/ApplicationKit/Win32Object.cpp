@@ -102,6 +102,16 @@ void Win32Object::registerWin32Class( const String& className, WNDPROC wndProc )
 		wcex.cbSize = sizeof(wcex);
 
 		wcex.style			= CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
+
+		/**
+		This gives us a drop shadow, but we probably need a better way...
+#define CS_DROPSHADOW  0x20000
+
+		if ( className == "VCF::Win32PopupWindowPeer" ) {
+			wcex.style |= CS_DROPSHADOW;
+		}
+		*/
+
 		wcex.lpfnWndProc	= (WNDPROC)wndProc;
 		wcex.cbClsExtra		= 0;
 		wcex.cbWndExtra		= 0;

@@ -4080,7 +4080,7 @@ UIToolkit::ModalReturnType Win32ToolKit::internal_runModalEventLoopFor( Control*
 		memset( &msg, 0, sizeof(MSG) );
 
 		bool done = false;
-		while (false == done) {
+		while (!done && !quitModalLoop_ ) {
 
 			if ( NULL != runningApp ) {
 				runningApp->idleTime();
@@ -4130,7 +4130,7 @@ UIToolkit::ModalReturnType Win32ToolKit::internal_runModalEventLoopFor( Control*
 							}
 						}
 					}
-					if ( true == doTranslateAndDispatch ) {
+					if ( doTranslateAndDispatch ) {
 						TranslateMessage( &msg );
 						DispatchMessage( &msg );
 					}
@@ -4167,7 +4167,7 @@ UIToolkit::ModalReturnType Win32ToolKit::internal_runModalEventLoopFor( Control*
 					PostQuitMessage(0);
 				}
 
-			} while (::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE));
+			} while (::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) && !quitModalLoop_ );
 		} //outer for loop
 
 	}
@@ -4176,6 +4176,7 @@ UIToolkit::ModalReturnType Win32ToolKit::internal_runModalEventLoopFor( Control*
 		result = mrFalse;
 	}
 
+	quitModalLoop_ = false;
 
 	return result;
 }

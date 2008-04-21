@@ -32,7 +32,7 @@ public:
 	The delegate is what you hook
 	up event handlers to.
 	*/
-	Delegate Talking;
+	Delegate1<Event*> Talking;
 
 	/**
 	This method fires fires off
@@ -63,24 +63,24 @@ void example1() {
 	System::println( "Example 1" );
 	Simple simple;
 	/**
-	create the event handler
+	create the callback
 	*/
-	EventHandler* handler = new StaticEventHandlerInstance<Event>( StaticTalkingCallBack );
+	CallBack* callback = new Procedure1<Event*>( StaticTalkingCallBack );
 
 	/**
 	add the event handler to the Simple::Talking delegate
 	*/
-	simple.Talking.addHandler( handler );
+	simple.Talking.add( callback );
 
 
 	simple.talk();
 
 	/**
 	When we created the event handler we did not specify a source to hold the event handler
-	and performa automatic cleanup for us. Because of this we need to delete it ourselves
+	and perform automatic cleanup for us. Because of this we need to delete it ourselves
 	*/
 
-	delete handler;
+	callback->free();
 
 	System::println( "Finished with Example 1" );
 }
@@ -107,16 +107,16 @@ void example2() {
 
 	Simple simple;
 
-	SimpleCallBackClass callback;
+	SimpleCallBackClass callbackInst;
 
-	EventHandler* handler = new GenericEventHandler<SimpleCallBackClass>( &callback, &SimpleCallBackClass::onTalking );
+	CallBack* callback = new ClassProcedure1<Event*,SimpleCallBackClass>( &callbackInst, &SimpleCallBackClass::onTalking );
 
 	/**
 	Add the handler to the Talking delegate. Note the
 	use of the += operator to add the event handler. This
-	is exactly equivalent to calling addHandler(handler).
+	is exactly equivalent to calling add(callback).
 	*/
-	simple.Talking += handler;
+	simple.Talking += callback;
 
 
 	simple.talk();
@@ -127,7 +127,7 @@ void example2() {
 	is performed. So we must delete the handler ourselves
 	*/
 
-	delete handler;
+	callback->free();
 
 	System::println( "Finished with Example 2" );
 }
@@ -141,12 +141,12 @@ and when the instance is destroyed, the event handlers will also be destroyed.
 The event handlers can also be named, and you can then refer to any of the event
 handlers in the collection by name.
 */
-class SimpleCallBackClass2 : public ObjectWithEvents {
+class SimpleCallBackClass2 : public ObjectWithCallbacks {
 public:
 	SimpleCallBackClass2() {
 		//lets add an event handler to our collection
-		EventHandler* handler =
-			new GenericEventHandler<SimpleCallBackClass2>( this, &SimpleCallBackClass2::onTalking, "SimpleCallBackClass2::onTalking" );
+		CallBack* callback =
+			new ClassProcedure1<Event*,SimpleCallBackClass2>( this, &SimpleCallBackClass2::onTalking, "SimpleCallBackClass2::onTalking" );
 
 		/**
 		The handler will be automatically cleaned up for us, os we don't have to worry about it
@@ -168,25 +168,25 @@ void example3()
 
 	Simple simple;
 
-	SimpleCallBackClass callback;
+	SimpleCallBackClass callbackInst;
 
 	/**
 	Note that the SimpleCallBackClass2
 	wil automatically
 	*/
-	SimpleCallBackClass2 callback2;
+	SimpleCallBackClass2 callback2Inst;
 
-	EventHandler* handler = new GenericEventHandler<SimpleCallBackClass>( &callback, &SimpleCallBackClass::onTalking );
+	CallBack* callback = new ClassProcedure1<Event*,SimpleCallBackClass>( &callbackInst, &SimpleCallBackClass::onTalking );
 
 	/**
 	Add the handler to the Talking delegate.
 	*/
-	simple.Talking += handler;
+	simple.Talking += callback;
 
 	/**
 	add callback2's event handler - we can access it by calling getEventHandler()
 	*/
-	simple.Talking += callback2.getEventHandler( "SimpleCallBackClass2::onTalking" );
+	simple.Talking += callback2Inst.getCallback( "SimpleCallBackClass2::onTalking" );
 
 
 	/**
@@ -194,7 +194,7 @@ void example3()
 	*/
 	simple.talk();
 
-	delete handler;
+	callback->free();
 
 	System::println( "Finished with Example 3" );
 }

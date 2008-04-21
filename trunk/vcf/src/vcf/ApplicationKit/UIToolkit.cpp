@@ -38,7 +38,8 @@ UIToolkit::UIToolkit():
 	acceleratorMnemonicHandler_(NULL),
 	defaultButtonHandler_(NULL),
 	metricsMgr_(NULL),
-	policyMgr_(NULL)
+	policyMgr_(NULL),
+	quitModalLoop_(false)
 {
 	acceleratorMnemonicHandler_ =
 		new ClassProcedure1<KeyboardEvent*,UIToolkit>( this, &UIToolkit::onAcceleratorMnemonic );
@@ -537,17 +538,24 @@ void UIToolkit::unregisterTimerHandler( EventHandler* handler )
 
 void UIToolkit::runEventLoop()
 {
+	UIToolkit::toolKitInstance->quitModalLoop_ = false;
 	UIToolkit::toolKitInstance->internal_runEventLoop();
 }
 
 UIToolkit::ModalReturnType UIToolkit::runModalEventLoopFor( Control* control )
 {
+	UIToolkit::toolKitInstance->quitModalLoop_ = false;
 	return UIToolkit::toolKitInstance->internal_runModalEventLoopFor( control );
 }
 
 
-void UIToolkit::quitCurrentEventLoop()
+void UIToolkit::quitModalEventLoop()
 {
+	UIToolkit::toolKitInstance->quitModalLoop_ = true;
+}
+
+void UIToolkit::quitCurrentEventLoop()
+{	
 	UIToolkit::toolKitInstance->internal_quitCurrentEventLoop();
 }
 
