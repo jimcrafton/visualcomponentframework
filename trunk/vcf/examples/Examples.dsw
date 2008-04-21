@@ -351,7 +351,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DocViewAdvanced"=.\DocViewAdvanced\DocViewAdvanced.dsp - Package Owner=<4>
+Project: "DocViewAdvanced"=.\MVC\DocViewAdvanced\DocViewAdvanced.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -359,14 +359,11 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
-    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "DocViewBasics"=.\DocViewBasics\DocViewBasics.dsp - Package Owner=<4>
+Project: "DocViewBasics"=.\MVC\DocViewBasics\DocViewBasics.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -374,9 +371,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -480,12 +474,6 @@ Package=<4>
     Project_Dep_Name Directories
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name DocViewAdvanced
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name DocViewBasics
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name DragAndDrop
     End Project Dependency
     Begin Project Dependency
@@ -547,9 +535,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name MFCIntegration2
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name MVCBasics
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name MinMax
@@ -1128,7 +1113,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MVCBasics"=.\MVCBasics\MVCBasics.dsp - Package Owner=<4>
+Project: "MVCBasics"=.\MVC\MVCBasics\MVCBasics.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
