@@ -70,12 +70,11 @@ public:
 					%	StringUtils::format( currentMonthDate, "The current month starts on %A, %B %d, %Y" ).c_str()
 					%	StringUtils::format( current, "Today is %A, %B %d, %Y week %#W" ).c_str();
 
-		String s2 =
-			StringUtils::format( Format("\nThe current month has %d days in it, and the current year has %d days in it, starts on week %d,\nand has %d total weeks in the year\n")
+		String s2 = Format("\nThe current month has %d days in it, and the current year has %d days in it, starts on week %d,\nand has %d total weeks in the year\n")
 									%	currentMonthDate.getNumberOfDaysInMonth()
 									%	currentMonthDate.getDaysInYear()
 									%	currentMonthDate.getWeekOfYearStartingMon()
-									%	currentMonthDate.getWeeksInYear() );
+									%	currentMonthDate.getWeeksInYear();
 
 		s += s2;
 		s += StringUtils::format( current, "The current time is %#I:%M:%S" );

@@ -204,7 +204,7 @@ void MainWindow::makeListBoxPage()
 
 	// Event Handling for this page
 	//add SelectionChanged handlers for listbox.
-	listBox1_->SelectionChanged += new ClassProcedure1<ItemEvent*,MainWindow>(this, &MainWindow::listBox1Change, "MainWindow::listBox1Change");
+	listBox1_->ItemSelectionChanged += new ClassProcedure1<ItemEvent*,MainWindow>(this, &MainWindow::listBox1Change, "MainWindow::listBox1Change");
 
 	//add ButtonClicked handlers for command button.
 	btnRemove->ButtonClicked += new ClassProcedure1<ButtonEvent*,MainWindow>( this, &MainWindow::onbtnRemove, "MainWindow::onbtnRemoveClicked" );
@@ -236,15 +236,15 @@ void MainWindow::listBox1Change( VCF::ItemEvent* ) {
 void MainWindow::onbtnRemove( VCF::ButtonEvent* ) {
 
 	ListModel* LBCModel = listBox1_->getListModel();
-	Enumerator<ListItem*>* items = listBox1_->getItems();
-	
+	Enumerator<ListItem*>* items = listBox1_->getSelectedItems();	
 	// we reverse iterate here so you don't screw iterators.
 	items->reset( true );// set iterator to .end()
+
+	
+
 	while ( true == items->hasMoreElements( true ) ) {
-		ListItem* item = items->prevElement();
-		if ( item->isSelected() ) {			
-			LBCModel->remove( item->getIndex() );
-		}
+		ListItem* item = items->prevElement();		
+		LBCModel->remove( item->getIndex() );		
 	}
 
 }

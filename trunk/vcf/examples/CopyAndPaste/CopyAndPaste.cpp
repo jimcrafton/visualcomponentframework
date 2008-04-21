@@ -140,13 +140,13 @@ public:
 				//create some text
 				String text;
 				//append the contents of the stream's buffer to the string
-				text.append( stream.getBuffer(), stream.getSize() );
+				text.append( (char*)stream.getBuffer(), stream.getSize() );
 
 				//set the text control model's text
 				edit2->getTextModel()->setText( text );
 			}
 
-			dataObject->free();
+			delete dataObject;
 		}
 	}
 
