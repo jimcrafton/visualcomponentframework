@@ -628,13 +628,13 @@ void VFFInputStream::readNewComponentInstance( VCF::Component* component )
 		component->loading();
 	}
 
-	readObject( component, VFFInputStream::ufCreateChildren );// | VFFInputStream::ufCreateChildrenIfNoInstance );
-
-	assignDeferredProperties(component);
+	readObject( component, VFFInputStream::ufCreateChildren );// | VFFInputStream::ufCreateChildrenIfNoInstance );	
 	
 	componentInputLevel_ = -1;
 
 	component->loaded();
+
+	assignDeferredProperties(component);
 
 	component->postLoaded( topLevelControlVisibility_ );	
 }
@@ -991,6 +991,10 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 		result->setName( objectName );
 		objectName = "";
 	}
+
+	if ( NULL != componentInstance ) {
+		componentInstance->loaded();
+	}
 	
 
 	componentInputLevel_ --;
@@ -1010,11 +1014,11 @@ void VFFInputStream::readComponentInstance( Component* component )
 
 	readObject( component, 0 );
 	
+	component->loaded();
+
 	assignDeferredProperties(component);	
 
 	componentInputLevel_ = -1;
-	
-	component->loaded();
 
 	component->postLoaded( topLevelControlVisibility_ );
 }
@@ -1126,14 +1130,13 @@ Component* VFFInputStream::readNewComponent()
 {
 	Component* result = NULL;	
 	
-	result = readObject( NULL, VFFInputStream::ufCreateComponent | VFFInputStream::ufCreateChildren );
-
-
-	assignDeferredProperties( result );
+	result = readObject( NULL, VFFInputStream::ufCreateComponent | VFFInputStream::ufCreateChildren );	
 
 	if ( NULL != result ) {
 		result->loaded();
 	}	
+
+	assignDeferredProperties( result );
 
 	if ( -1 == componentInputLevel_ ) {
 		result->postLoaded(topLevelControlVisibility_);
