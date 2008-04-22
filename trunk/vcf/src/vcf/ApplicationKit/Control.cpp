@@ -61,6 +61,8 @@ Control::Control():
 
 	maxSize_.width_ = Control::mmIgnoreMaxWidth;
 	maxSize_.height_ = Control::mmIgnoreMaxHeight;
+
+	modelKey_ = VariantData::null();
 }
 
 Control::~Control()
@@ -1923,6 +1925,13 @@ void Control::getAppNameAndKey( String& appName, String& key )
 	//neutral reg keys!!!!! 
 	//These are window specific for now!
 	key += appName + "\\";
+}
+
+void Control::setModelKey( const VariantData& val )
+{
+	modelKey_ = val;
+
+	repaint();
 }
 
 /**

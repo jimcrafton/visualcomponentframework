@@ -77,6 +77,7 @@ public:
 		return captionAlignment_;
 	}
 
+	virtual void updateView( Model* updatedModel );
 protected:
 	String caption_;
 	TextAlignmentType captionAlignment_;

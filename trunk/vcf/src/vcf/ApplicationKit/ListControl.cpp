@@ -96,6 +96,7 @@ void ListControl::onItemDeleted( ListModelEvent* event )
 		
 		removeComponent( item );
 		item->free();
+		repaint();
 	}
 	inCallbackChange_ = false;
 }

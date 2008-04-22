@@ -670,6 +670,14 @@ public:
 
 	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
 
+
+	VariantData getModelKey() {
+		return modelKey_;
+	}
+
+	void setModelKey( const VariantData& val );
+
+
 	/**
 	*Returns the control's current border object, if any
 	*/
@@ -1920,6 +1928,7 @@ protected:
 	Size minSize_;
 	Size maxSize_;
 	uint32 controlState_;
+	VariantData modelKey_;
 };
 
 

@@ -112,7 +112,7 @@ String Label::getCaption()
 {
 	Model* model  = getViewModel();
 	if ( NULL != model ) {
-		return model->getValueAsString();
+		return model->getValueAsString( getModelKey() );
 	}
 
 	return caption_;

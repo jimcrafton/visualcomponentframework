@@ -67,7 +67,7 @@ void RadioButtonControl::paint( GraphicsContext* context )
 	ButtonState state;
 	state.setActive( isActive() );
 	state.setEnabled( isEnabled() );
-	state.setToggled( checked_ );
+	state.setToggled( isChecked() );
 	state.setFocused( isFocused() );
 	state.buttonCaption_ = caption_;
 	if ( getUseLocaleStrings() ) {

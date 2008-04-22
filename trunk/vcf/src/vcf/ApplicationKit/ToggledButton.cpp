@@ -30,13 +30,40 @@ ToggledButton::~ToggledButton()
 
 bool ToggledButton::isChecked()
 {
+	Model* model  = getViewModel();
+	if ( NULL != model ) {
+		VariantData v = model->getValue( getModelKey() );
+		if ( v.type == pdBool ) {
+			return v;
+		}
+	}
 	return checked_;
+}
+
+void ToggledButton::updateView( Model* updatedModel )
+{
+	VariantData v = updatedModel->getValue( getModelKey() );
+	if ( v.type == pdBool ) {
+		if ( checked_ != (bool)v ) {
+			checked_ = v;
+			repaint();
+		}
+	}
 }
 
 void ToggledButton::setChecked( const bool& checked )
 {
-	checked_ = checked;
-	repaint();
+	if ( checked_ != checked ) {
+		checked_ = checked;
+		Model* model  = getViewModel();
+		if ( NULL != model ) {
+			VariantData v = checked_;
+			
+			model->setValue( v, getModelKey() );
+		}	
+		
+		repaint();
+	}
 }
 
 void ToggledButton::setName( const String& name )
