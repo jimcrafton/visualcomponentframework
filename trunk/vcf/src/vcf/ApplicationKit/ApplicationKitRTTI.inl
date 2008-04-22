@@ -351,6 +351,9 @@ _property_( bool, "doubleBuffered", isDoubleBuffered, setDoubleBuffered, "" );
 _property_( bool, "useParentFont", useParentFont, setUseParentFont, "" );
 _property_( bool, "autoStartDragDrop", getAutoStartDragDrop, setAutoStartDragDrop, "" );
 _property_( bool, "tabStop", getTabStop, setTabStop, "" );
+_property_( bool, "keepsTabKey",keepsTabKey, setKeepsTabKey, "" );
+_property_( bool, "keepsReturnCharacter",keepsReturnCharacter, setKeepsReturnChar, "" );
+_property_( bool, "keepsArrowKeys",keepsArrowKeys, setKeepsArrowKeys, "" );
 _property_( int32, "tabOrder", getTabOrder, setTabOrder, "" );
 _property_( String, "whatThisHelpString", getWhatThisHelpString, setWhatThisHelpString, "" );
 _property_( String, "toolTipText", getToolTipText, setToolTipText, "" );
@@ -784,8 +787,6 @@ _class_rtti_end_
 
 _class_rtti_(TextControl, "VCF::Control", TEXTCONTROL_CLASSID )
 _property_( bool, "readonly",getReadOnly, setReadOnly, "" );
-_property_( bool, "keepTabbingChars",keepsTabbingCharacters, setKeepTabbingCharacters, "" );
-_property_( bool, "keepReturnChar",keepReturnCharacter, setKeepReturnCharacter, "" );
 _property_( bool, "textWrapping",getTextWrapping, setTextWrapping, "" );
 _property_( String, "text",getText, setText, "" );
 _class_rtti_end_

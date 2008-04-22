@@ -19,7 +19,6 @@ where you installed the VCF.
 using namespace VCF;
 
 TextControl::TextControl( const bool& multiLineControl ):
-	model_(NULL),
 	readOnly_(false)
 {
 	textPeer_ =	UIToolkit::createTextEditPeer( this, multiLineControl );
@@ -46,10 +45,7 @@ TextControl::TextControl( const bool& multiLineControl ):
 
 TextControl::~TextControl()
 {
-	if ( NULL != model_ ){
-		//model_->release();
-		model_ = NULL;
-	}
+	
 }
 
 void TextControl::init()
@@ -58,8 +54,7 @@ void TextControl::init()
 	
 	//setFocused();
 	setEnabled( true );
-	keepTabbingCharacters_ = false;
-	keepReturnCharacter_ = false;
+	
 	setCursorID( Cursor::SCT_TEXT );
 
 	setBorder( new ThemeBorder(this,etTextbox) );
@@ -190,14 +185,12 @@ void TextControl::paint( GraphicsContext * context )
 
 void TextControl::setTextModel( TextModel * model )
 {
-	model_ = model;
-
-	setViewModel( dynamic_cast<Model*>(model_) );
+	setViewModel( dynamic_cast<Model*>(model) );
 }
 
 TextModel* TextControl::getTextModel()
 {
-	return model_;
+	return (TextModel*) getViewModel();
 }
 
 uint32 TextControl::getCaretPosition()
@@ -307,7 +300,8 @@ String TextControl::getSelectedText()
 	uint32 selectionCount = getSelectionCount();
 
 	if ( selectionCount > 0 ) {
-		result = model_->getText();
+		TextModel* tm = getTextModel();
+		result = tm->getText();
 		result = result.substr( getSelectionStart(), selectionCount );
 	}
 
@@ -323,13 +317,15 @@ void TextControl::replaceSelectedText( const String& text )
 		throw RuntimeException( "No characters currently selected. Invalid selection count." );
 	}
 
-	model_->replaceText( selectionStart, selectionCount, text );
+	TextModel* tm = getTextModel();
+	tm->replaceText( selectionStart, selectionCount, text );
 }
 
 void TextControl::gotFocus( FocusEvent* event )
 {
-	if ( NULL != model_ ) {
-		String text = model_->getText();
+	TextModel* tm = getTextModel();
+	if ( NULL != tm ) {		
+		String text = tm->getText();
 
 		setSelectionMark( 0, text.size() );
 	}

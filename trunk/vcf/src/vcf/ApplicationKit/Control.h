@@ -380,7 +380,12 @@ public:
 		csUseRenderBuffer			= 0x00000400,
 		csAllowMouseFocus			= 0x00000800,
 		csAllowFocus				= 0x00001000,
-		csDefaultControlState = csEnabled | csTabStop | csDoubleBuffered | csAllowMouseFocus | csAllowFocus
+		csKeepsReturnKey			= 0x00002000,
+		csKeepsTabKey				= 0x00004000,
+		csKeepsArrowKeys			= 0x00008000,
+
+		csDefaultControlState = csEnabled | csTabStop | csDoubleBuffered | 
+									csAllowMouseFocus | csAllowFocus
 	};
 
 	enum MinMaxSizeDefaults{
@@ -1584,10 +1589,11 @@ public:
 	*event until they receive focus.
 	*@see Button::setDefault()
 	*/
-	virtual bool keepReturnCharacter() {
-		return false;
+	bool keepsReturnCharacter() {
+		return (controlState_ & Control::csKeepsReturnKey) ? true : false;
 	}
 
+	void setKeepsReturnChar( const bool& val );
 	/**
 	*This function determines whether or not the
 	*control should have precedence and prevent the
@@ -1602,9 +1608,11 @@ public:
 	*when appropriate, otherwise if it returns true the control
 	*will keep the tabbed key event and process it
 	*/
-	virtual bool keepsTabKey() {
-		return false;
+	bool keepsTabKey() {
+		return (controlState_ & Control::csKeepsTabKey) ? true : false;
 	}
+
+	void setKeepsTabKey( const bool& val );
 
 	/**
 	*This function determines whether or not the
@@ -1620,10 +1628,11 @@ public:
 	*when appropriate, otherwise if it returns true the control
 	*will keep the tabbed key event and process it
 	*/
-	virtual bool keepsArrowKeys() {
-		return false;
+	bool keepsArrowKeys() {
+		return (controlState_ & Control::csKeepsArrowKeys) ? true : false;
 	}
 
+	void setKeepsArrowKeys( const bool& val );
 
 	/**
 	*Indicates whether the control responds to the TAB key

@@ -1934,6 +1934,38 @@ void Control::setModelKey( const VariantData& val )
 	repaint();
 }
 
+void Control::setKeepsReturnChar( const bool& val )
+{
+	if ( val ) {
+		controlState_  |= Control::csKeepsReturnKey;
+	}
+	else {
+		controlState_  &= ~Control::csKeepsReturnKey;
+	}
+}
+
+
+void Control::setKeepsTabKey( const bool& val )
+{
+	if ( val ) {
+		controlState_  |= Control::csKeepsTabKey;
+	}
+	else {
+		controlState_  &= ~Control::csKeepsTabKey;
+	}
+}
+
+
+void Control::setKeepsArrowKeys( const bool& val )
+{
+	if ( val ) {
+		controlState_  |= Control::csKeepsArrowKeys;
+	}
+	else {
+		controlState_  &= ~Control::csKeepsArrowKeys;
+	}
+}
+
 /**
 $Id$
 */

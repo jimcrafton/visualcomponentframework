@@ -1197,7 +1197,7 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 
 			case vkReturn :{
 
-				if ( false == control->keepReturnCharacter() ) {
+				if ( false == control->keepsReturnCharacter() ) {
 					//event->setConsumed( true );
 
 					Button* button = getDefaultButton();
