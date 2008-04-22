@@ -201,6 +201,25 @@ void ListBoxControl::removeItem( ListItem* item, const uint32& itemIndex )
 
 void ListBoxControl::onItemDeleted( ListModelEvent* event )
 {
+	Array<uint32>::iterator it1 = selectedIndices_.begin();
+	while ( it1 != selectedIndices_.end() ) {
+		if ( *it1 == event->index ) {
+			selectedIndices_.erase( it1 );
+			break;
+		}
+		++it1;
+	}
+
+	Array<ListItem*>::iterator it2 = selectedItems_.begin();
+	while ( it2 != selectedItems_.end() ) {
+		ListItem* item = *it2;
+		if ( item->getIndex() == event->index ) {
+			selectedItems_.erase( it2 );
+			break;
+		}
+		++it2;
+	}
+
 	ListControl::onItemDeleted(event);
 }
 

@@ -1914,7 +1914,7 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::createDocumentFromTy
 		}
 		result = dynamic_cast<Document*>( objInstance );
 		if ( NULL == result ) {
-			objInstance->free();
+			delete objInstance;
 		}
 	}
 
@@ -1936,7 +1936,7 @@ Model* DocumentManagerImpl<AppClass,DocInterfacePolicy>::createModelFromType( co
 
 	result = dynamic_cast<Model*>( objInstance );
 	if ( NULL == result ) {
-		objInstance->free();
+		delete objInstance;
 	}
 
 	return result;

@@ -43,7 +43,7 @@ void CheckBoxControl::paint( GraphicsContext* context )
 	buttonState.setActive( isActive() );
 	buttonState.setEnabled( isEnabled() );
 	//buttonState.setPressed( checked_ );
-	buttonState.setToggled( checked_ );
+	buttonState.setToggled( isChecked() );
 	buttonState.setFocused( isFocused() && buttonState.isActive() );
 
 	if ( getUseLocaleStrings() ) {
