@@ -49,7 +49,7 @@ void Win32Window::create( Control* owningControl )
 
 	if ( true != isRegistered() ){
 		if ( className.empty() ) {
-			className = "Win32Window::Win32Window";
+			className = "VCF::Win32Window";
 		}
 		registerWin32Class( className, wndProc_  );
 	}

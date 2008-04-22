@@ -51,9 +51,12 @@ public:
 	double getAlpha();
 
 	void setAlphaImage( Image* img );
+
+	virtual void paint( GraphicsContext* context );
 protected:
 	TransparentWindowPeer* transparentWndPeer_;
 	WindowPeer * windowPeer_;
+	Image* alphaImage_;
 
 	void onClose( FrameEvent* e );
 	void postClose( Event* event );

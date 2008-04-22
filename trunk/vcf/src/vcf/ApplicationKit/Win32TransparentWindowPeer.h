@@ -30,6 +30,15 @@ public:
 	virtual double getAlpha();
 
 	virtual void setAlphaImage( Image* img );
+
+	virtual void create( Control* owningControl );
+
+	virtual Win32Object::CreateParams createParams();
+
+	virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc = NULL);
+	virtual void setVisible( const bool& visible );
+protected:
+	double alpha_;
 };
 
 
