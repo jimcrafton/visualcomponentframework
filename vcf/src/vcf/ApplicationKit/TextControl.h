@@ -119,23 +119,7 @@ public:
 	String getSelectedText();
 
 	void replaceSelectedText( const String& text );
-
-	virtual bool keepsTabbingCharacters() {
-		return keepTabbingCharacters_;
-	}
-
-	void setKeepTabbingCharacters( const bool& keepTabChars ) {
-		keepTabbingCharacters_ = keepTabChars;
-	}
-
-	virtual bool keepReturnCharacter() {
-		return keepReturnCharacter_;
-	}
-
-	void setKeepReturnCharacter( const bool& keepReturn ) {
-		keepReturnCharacter_ = keepReturn;
-	}
-
+	
 	virtual double getPreferredHeight();
 
 	virtual void handleEvent( Event* event );
@@ -257,9 +241,6 @@ protected:
 
 protected:
 	TextEditPeer * textPeer_;
-	TextModel* model_;
-	bool keepTabbingCharacters_;
-	bool keepReturnCharacter_;
 	bool readOnly_;
 
 };

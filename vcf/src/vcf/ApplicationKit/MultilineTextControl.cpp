@@ -19,8 +19,8 @@ using namespace VCF;
 MultilineTextControl::MultilineTextControl():
 	TextControl( true )
 {
-	keepTabbingCharacters_ = true;
-	keepReturnCharacter_ = true;
+	setKeepsReturnChar( true );
+	setKeepsTabKey( true );
 }
 
 MultilineTextControl::~MultilineTextControl()

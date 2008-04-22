@@ -331,7 +331,7 @@ void ComboBoxControl::init()
 	edit_->setVisible( (comboBoxStyle_ == cbsDropDownWithEdit) );
 	edit_->setEnabled( (comboBoxStyle_ == cbsDropDownWithEdit) );
 
-	edit_->setKeepTabbingCharacters( true );
+	edit_->setKeepsTabKey( true );
 
 	edit_->KeyPressed += 
 		new ClassProcedure1<KeyboardEvent*,ComboBoxControl>( this, &ComboBoxControl::onEditKeyPressed, "ComboBoxControl::onEditKeyPressed" );
