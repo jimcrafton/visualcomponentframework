@@ -244,6 +244,10 @@ LIB32=link.exe -lib
 # PROP Default_Filter ""
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\Base64Codec.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\BasicException.cpp
 # End Source File
 # Begin Source File
@@ -547,6 +551,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\AtomicCount.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\BadComponentStateException.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Base64Codec.h
 # End Source File
 # Begin Source File
 
@@ -858,6 +866,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\PropertyChangeException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\PropertyListing.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\RTTIMacros.h
 # End Source File
 # Begin Source File
@@ -1135,6 +1147,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Win32Thread.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\Win32ThreadManagerPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\XMLDictInputStream.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\XMLDictOutputStream.h
 # End Source File
 # Begin Source File
 

@@ -33,8 +33,8 @@ SKETCHIT_CXXFLAGS = /M$(__OPTION_RUNTIME_10)$(__DEBUG_RUNTIME_LIBS_5) /DWIN32 \
 	$(____OPTION_CPP_RTTI_0_11) $(____OPTION_CPP_EXCEPTIONS_1_12) $(CPPFLAGS) \
 	$(CXXFLAGS)
 SKETCHIT_OBJECTS =  \
-	..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchDocument.obj \
 	..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchIt.obj \
+	..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchModel.obj \
 	..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchTools.obj \
 	..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchView.obj \
 	..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchWindow.obj
@@ -190,11 +190,11 @@ clean:
 <<
 !endif
 
-..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchDocument.obj: .\SketchDocument.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(SKETCHIT_CXXFLAGS) .\SketchDocument.cpp
-
 ..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchIt.obj: .\SketchIt.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(SKETCHIT_CXXFLAGS) .\SketchIt.cpp
+
+..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchModel.obj: .\SketchModel.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(SKETCHIT_CXXFLAGS) .\SketchModel.cpp
 
 ..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchTools.obj: .\SketchTools.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(SKETCHIT_CXXFLAGS) .\SketchTools.cpp

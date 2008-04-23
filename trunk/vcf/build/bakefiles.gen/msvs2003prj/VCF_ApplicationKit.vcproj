@@ -889,12 +889,6 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DataObject.cpp"/>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultColumnItem.cpp"/>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultColumnModel.cpp"/>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultListItem.cpp"/>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultListModel.cpp"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultMenuItem.cpp"/>
@@ -913,9 +907,13 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Dialog.cpp"/>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Document.cpp"/>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DocumentManager.cpp"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DragSource.cpp"/>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\DropDownControl.cpp"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DropTarget.cpp"/>
 			<File
@@ -939,7 +937,11 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListBoxControl.cpp"/>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ListControl.cpp"/>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListItem.cpp"/>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ListModel.cpp"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListViewControl.cpp"/>
 			<File
@@ -1007,6 +1009,10 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeListControl.cpp"/>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeListModel.cpp"/>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeModel.cpp"/>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\UIComponent.cpp"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\UIShell.cpp"/>
@@ -1038,6 +1044,8 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Dialog.cpp"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DragDropPeer.cpp"/>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DropDownPeer.cpp"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp"/>
 			<File
@@ -1230,12 +1238,6 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DataTypeNotSupportedException.h"/>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultColumnItem.h"/>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultColumnModel.h"/>
-			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultListItem.h"/>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultListModel.h"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DefaultMenuItem.h"/>
@@ -1269,6 +1271,10 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DragScrollEvent.h"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DragSource.h"/>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\DropDownControl.h"/>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\DropDownPeer.h"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DropTarget.h"/>
 			<File
@@ -1314,11 +1320,15 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListBoxControl.h"/>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ListControl.h"/>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListItem.h"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListModel.h"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListModelEvent.h"/>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicaitonKit\ListPeer.h"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListViewControl.h"/>
 			<File
@@ -1420,6 +1430,8 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TextPeer.h"/>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ThemeBorder.h"/>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TimerComponent.h"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TimerEvent.h"/>
@@ -1445,6 +1457,8 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeItem.h"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeListControl.h"/>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeListModel.h"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeModel.h"/>
 			<File
@@ -1499,6 +1513,8 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Dialog.h"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DragDropPeer.h"/>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DropDownPeer.h"/>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.h"/>
 			<File

@@ -38,8 +38,8 @@ SKETCHIT_CXXFLAGS = $(__OPTION_RUNTIME_4) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	-I..\..\src\thirdparty\common\agg\include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) $(CPPFLAGS) $(CXXFLAGS)
 SKETCHIT_OBJECTS =  \
-	..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchDocument.obj \
 	..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchIt.obj \
+	..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchModel.obj \
 	..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchTools.obj \
 	..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchView.obj \
 	..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchWindow.obj
@@ -158,11 +158,11 @@ clean:
 |
 !endif
 
-..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchDocument.obj: .\SketchDocument.cpp
-	$(CXX) -q -c -P -o$@ $(SKETCHIT_CXXFLAGS) .\SketchDocument.cpp
-
 ..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchIt.obj: .\SketchIt.cpp
 	$(CXX) -q -c -P -o$@ $(SKETCHIT_CXXFLAGS) .\SketchIt.cpp
+
+..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchModel.obj: .\SketchModel.cpp
+	$(CXX) -q -c -P -o$@ $(SKETCHIT_CXXFLAGS) .\SketchModel.cpp
 
 ..\..\lib\$(OBJDIR)\examples\SketchIt\SketchIt_SketchTools.obj: .\SketchTools.cpp
 	$(CXX) -q -c -P -o$@ $(SKETCHIT_CXXFLAGS) .\SketchTools.cpp

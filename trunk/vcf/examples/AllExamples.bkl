@@ -28,6 +28,7 @@
     <subproject id="DatesAndTime" template="example"/>
     <subproject id="DateTimeUI" template="example"/>
     <subproject id="Dialogs" template="example"/>
+    <subproject id="DiggApp" template="example"/>
     <subproject id="Dictionaries" template="example"/>
     <subproject id="Directories" template="example"/>
     <subproject id="DocViewAdvanced" template="example"/>
@@ -64,10 +65,12 @@
     <subproject id="Printing" template="example"/>
     <subproject id="Processes" template="example"/>
     <subproject id="ProgressBars" template="example"/>
+    <subproject id="RCChineseDict" template="example"/>
     <subproject id="Reflection" template="example"/>
     <subproject id="RegExTest" template="example"/>
     <subproject id="Resources" template="example"/>
     <subproject id="RunLoops" template="example"/>
+    <subproject id="ScreenDPI" template="example"/>
     <subproject id="Scrolling" template="example"/>
     <subproject id="Scrolling2" template="example"/>
     <subproject id="SharedLibraries" template="example"/>
@@ -86,12 +89,14 @@
     <subproject id="TextLayout" template="example"/>
     <subproject id="Themes" template="example"/>
     <subproject id="ThreadBasics" template="example"/>
+    <subproject id="ThreadMethods" template="example"/>
     <subproject id="ThreadsInGUI" template="example"/>
     <subproject id="Toolbars" template="example"/>
     <subproject id="Tooltips" template="example"/>
     <subproject id="Transformations" template="example"/>
     <subproject id="TreeListControls" template="example"/>
     <subproject id="Trees" template="example"/>
+    <subproject id="Trees2" template="example"/>
     <subproject id="UDPClient" template="example"/>
     <subproject id="UDPServer" template="example"/>
     <subproject id="Variants" template="example"/>

@@ -19,7 +19,7 @@ include ../build/bakefiles.gen/config.gnu
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars RCChineseDict Reflection RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 install: all
 
@@ -48,6 +48,7 @@ clean:
 	-(cd DatesAndTime && $(MAKE) clean)
 	-(cd DateTimeUI && $(MAKE) clean)
 	-(cd Dialogs && $(MAKE) clean)
+	-(cd DiggApp && $(MAKE) clean)
 	-(cd Dictionaries && $(MAKE) clean)
 	-(cd Directories && $(MAKE) clean)
 	-(cd DocViewAdvanced && $(MAKE) clean)
@@ -84,10 +85,12 @@ clean:
 	-(cd Printing && $(MAKE) clean)
 	-(cd Processes && $(MAKE) clean)
 	-(cd ProgressBars && $(MAKE) clean)
+	-(cd RCChineseDict && $(MAKE) clean)
 	-(cd Reflection && $(MAKE) clean)
 	-(cd RegExTest && $(MAKE) clean)
 	-(cd Resources && $(MAKE) clean)
 	-(cd RunLoops && $(MAKE) clean)
+	-(cd ScreenDPI && $(MAKE) clean)
 	-(cd Scrolling && $(MAKE) clean)
 	-(cd Scrolling2 && $(MAKE) clean)
 	-(cd SharedLibraries && $(MAKE) clean)
@@ -106,12 +109,14 @@ clean:
 	-(cd TextLayout && $(MAKE) clean)
 	-(cd Themes && $(MAKE) clean)
 	-(cd ThreadBasics && $(MAKE) clean)
+	-(cd ThreadMethods && $(MAKE) clean)
 	-(cd ThreadsInGUI && $(MAKE) clean)
 	-(cd Toolbars && $(MAKE) clean)
 	-(cd Tooltips && $(MAKE) clean)
 	-(cd Transformations && $(MAKE) clean)
 	-(cd TreeListControls && $(MAKE) clean)
 	-(cd Trees && $(MAKE) clean)
+	-(cd Trees2 && $(MAKE) clean)
 	-(cd UDPClient && $(MAKE) clean)
 	-(cd UDPServer && $(MAKE) clean)
 	-(cd Variants && $(MAKE) clean)
@@ -180,6 +185,9 @@ DateTimeUI:
 
 Dialogs: 
 	(cd Dialogs && $(MAKE) all)
+
+DiggApp: 
+	(cd DiggApp && $(MAKE) all)
 
 Dictionaries: 
 	(cd Dictionaries && $(MAKE) all)
@@ -289,6 +297,9 @@ Processes:
 ProgressBars: 
 	(cd ProgressBars && $(MAKE) all)
 
+RCChineseDict: 
+	(cd RCChineseDict && $(MAKE) all)
+
 Reflection: 
 	(cd Reflection && $(MAKE) all)
 
@@ -300,6 +311,9 @@ Resources:
 
 RunLoops: 
 	(cd RunLoops && $(MAKE) all)
+
+ScreenDPI: 
+	(cd ScreenDPI && $(MAKE) all)
 
 Scrolling: 
 	(cd Scrolling && $(MAKE) all)
@@ -355,6 +369,9 @@ Themes:
 ThreadBasics: 
 	(cd ThreadBasics && $(MAKE) all)
 
+ThreadMethods: 
+	(cd ThreadMethods && $(MAKE) all)
+
 ThreadsInGUI: 
 	(cd ThreadsInGUI && $(MAKE) all)
 
@@ -372,6 +389,9 @@ TreeListControls:
 
 Trees: 
 	(cd Trees && $(MAKE) all)
+
+Trees2: 
+	(cd Trees2 && $(MAKE) all)
 
 UDPClient: 
 	(cd UDPClient && $(MAKE) all)
@@ -397,7 +417,7 @@ WorkingWithEnumerators:
 XMLTest: 
 	(cd XMLTest && $(MAKE) all)
 
-.PHONY: all install uninstall clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars Reflection RegExTest Resources RunLoops Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+.PHONY: all install uninstall clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars RCChineseDict Reflection RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 
 # Dependencies tracking:
