@@ -3,7 +3,7 @@
 <makefile>
     <set var="OPENGLKIT_HDR" hints="files">
         vcf/OpenGLKit/OpenGLControl.h
-        vcf/OpenGLKit/OpenGLControlContext.h
+        vcf/OpenGLKit/OpenGLContext.h
         vcf/OpenGLKit/OpenGLKit.h
         vcf/OpenGLKit/OpenGLPeer.h
         vcf/OpenGLKit/OpenGLToolkit.h
@@ -12,7 +12,7 @@
 
     <set var="OPENGLKIT_SRC" hints="files">
         vcf/OpenGLKit/OpenGLControl.cpp
-        vcf/OpenGLKit/OpenGLControlContext.cpp
+        vcf/OpenGLKit/OpenGLContext.cpp
         vcf/OpenGLKit/OpenGLToolkit.cpp
     </set>
 
