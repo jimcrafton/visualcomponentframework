@@ -73,11 +73,12 @@ double TransparentWindow::getAlpha()
 void TransparentWindow::setAlphaImage( Image* img )
 {
 	alphaImage_ = img;
-	transparentWndPeer_->setAlphaImage( img );
-	if ( NULL != alphaImage_ ) {
+	if ( NULL != alphaImage_ ) {		
 		setWidth( alphaImage_->getWidth() );
 		setHeight( alphaImage_->getHeight() );
 	}
+
+	transparentWndPeer_->setAlphaImage( img );	
 }
 
 void TransparentWindow::onClose( FrameEvent* e )
@@ -137,7 +138,12 @@ void TransparentWindow::paint( GraphicsContext* context )
 		}
 	}
 	else { 
+		bool oldVal = alphaImage_->isTransparent();
+		alphaImage_->setIsTransparent(false);
+		
 		context->drawImage( 0, 0, alphaImage_ );
+		
+		alphaImage_->setIsTransparent(oldVal);
 	}
 
 	paintChildren( context );

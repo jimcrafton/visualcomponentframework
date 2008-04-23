@@ -551,8 +551,10 @@ void Control::setRight( const double& right ) /**throw( InvalidPeer ); -JEC - FI
 
 void Control::setWidth( const double& width ) /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
-	bounds_->right_ = bounds_->left_ + width;
-	setBounds( bounds_ );
+	if ( bounds_->getWidth() != width ) {
+		bounds_->right_ = bounds_->left_ + width;
+		setBounds( bounds_ );
+	}
 }
 
 void Control::setTop( const double& top ) /**throw( InvalidPeer ); -JEC - FIXME later*/
@@ -572,8 +574,10 @@ void Control::setBottom( const double& bottom ) /**throw( InvalidPeer ); -JEC - 
 void Control::setHeight( const double& height ) /**throw( InvalidPeer ); -JEC - FIXME later*/
 {
 	if ( NULL != peer_ ){
-		bounds_->bottom_ = bounds_->top_ + height;
-		setBounds( bounds_ );
+		if ( bounds_->getHeight() != height ) {
+			bounds_->bottom_ = bounds_->top_ + height;
+			setBounds( bounds_ );
+		}
 	};
 }
 

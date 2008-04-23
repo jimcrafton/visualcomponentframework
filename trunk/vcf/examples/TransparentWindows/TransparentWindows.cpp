@@ -91,19 +91,19 @@ public:
 		TransparentWindow* trans = new TransparentWindow( getMainWindow() );
 
 		trans->setBounds( 400, 300, 400, 300 );		
-		//trans->setAlpha( StringUtils::fromStringAsDouble( textCtrl->getViewModel()->getValueAsString() ) );
 		
-		Image* img = this->getResourceBundle()->getImage( "logo.png" );
+		Image* img = this->getResourceBundle()->getImage( "shiny_clock.png" );
 		img->setIsTransparent(true);
-		img->setTransparencyColor( Color::getColor("black") );
+		img->setTransparencyColor( Color::getColor("white") );
 		trans->setAlphaImage( img );
-		trans->setDoubleBuffered(false);
-		//img->setIsTransparent(false);
 
 		trans->show();
 
 		trans->MouseDoubleClicked += getCallback( "TransWndApp::onTransWndDblClick" );	
+
+		trans->setAlpha( StringUtils::fromStringAsDouble( textCtrl->getViewModel()->getValueAsString() ) );
 	}
+		
 
 
 	std::vector<Point> pts;
