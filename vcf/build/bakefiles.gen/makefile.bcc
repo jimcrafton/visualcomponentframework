@@ -478,6 +478,7 @@ FOUNDATIONKIT_LIB_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
 	-D_WIN32 -DWIN32 -D_LIB -DVCF_DISABLE_PRAGMA_LINKING -I..\..\src $(CPPFLAGS) \
 	$(CXXFLAGS)
 FOUNDATIONKIT_LIB_OBJECTS =  \
+	..\..\lib\$(OBJDIR)\FoundationKit_lib_Base64Codec.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_BasicException.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_BasicInputStream.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_lib_BasicOutputStream.obj \
@@ -556,6 +557,7 @@ FOUNDATIONKIT_DLL_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
 	-D_WIN32 -DWIN32 -D_USRDLL -DVCF_DISABLE_PRAGMA_LINKING -I..\..\src \
 	-DFOUNDATIONKIT_DLL -DFOUNDATIONKIT_EXPORTS $(CPPFLAGS) $(CXXFLAGS)
 FOUNDATIONKIT_DLL_OBJECTS =  \
+	..\..\lib\$(OBJDIR)\FoundationKit_dll_Base64Codec.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_BasicException.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_BasicInputStream.obj \
 	..\..\lib\$(OBJDIR)\FoundationKit_dll_BasicOutputStream.obj \
@@ -733,9 +735,6 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_CursorManager.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_CustomControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_DataObject.obj \
-	..\..\lib\$(OBJDIR)\ApplicationKit_lib_DefaultColumnItem.obj \
-	..\..\lib\$(OBJDIR)\ApplicationKit_lib_DefaultColumnModel.obj \
-	..\..\lib\$(OBJDIR)\ApplicationKit_lib_DefaultListItem.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_DefaultListModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_DefaultMenuItem.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_DefaultPropertyEditors.obj \
@@ -745,8 +744,10 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_DefaultTextModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_DefaultTreeModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Dialog.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Document.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_DocumentManager.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_DragSource.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_lib_DropDownControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_DropTarget.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_EtchedBorder.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Frame.obj \
@@ -758,7 +759,9 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Light3DBorder.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_LightweightComponent.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListBoxControl.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListItem.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListViewControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Menu.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_MenuBar.obj \
@@ -792,6 +795,8 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_TreeControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_TreeItem.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_TreeListControl.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_lib_TreeListModel.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_lib_TreeModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_UIComponent.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_UIShell.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_UIToolkit.obj \
@@ -810,6 +815,7 @@ APPLICATIONKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Win32CursorPeer.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Win32Dialog.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Win32DragDropPeer.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Win32DropDownPeer.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Win32DropTargetPeer.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Win32Edit.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_lib_Win32FileOpenDialog.obj \
@@ -879,9 +885,6 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_CursorManager.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_CustomControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_DataObject.obj \
-	..\..\lib\$(OBJDIR)\ApplicationKit_dll_DefaultColumnItem.obj \
-	..\..\lib\$(OBJDIR)\ApplicationKit_dll_DefaultColumnModel.obj \
-	..\..\lib\$(OBJDIR)\ApplicationKit_dll_DefaultListItem.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_DefaultListModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_DefaultMenuItem.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_DefaultPropertyEditors.obj \
@@ -891,8 +894,10 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_DefaultTextModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_DefaultTreeModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Dialog.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Document.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_DocumentManager.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_DragSource.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_dll_DropDownControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_DropTarget.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_EtchedBorder.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Frame.obj \
@@ -904,7 +909,9 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Light3DBorder.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_LightweightComponent.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListBoxControl.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListItem.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListViewControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Menu.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_MenuBar.obj \
@@ -938,6 +945,8 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_TreeControl.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_TreeItem.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_TreeListControl.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_dll_TreeListModel.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_dll_TreeModel.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_UIComponent.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_UIShell.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_UIToolkit.obj \
@@ -956,6 +965,7 @@ APPLICATIONKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Win32CursorPeer.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Win32Dialog.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Win32DragDropPeer.obj \
+	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Win32DropDownPeer.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Win32DropTargetPeer.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Win32Edit.obj \
 	..\..\lib\$(OBJDIR)\ApplicationKit_dll_Win32FileOpenDialog.obj \
@@ -1019,7 +1029,7 @@ OPENGLKIT_LIB_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
 	-D_LIB -DVCF_DISABLE_PRAGMA_LINKING -I..\..\src $(CPPFLAGS) $(CXXFLAGS)
 OPENGLKIT_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\OpenGLKit_lib_OpenGLControl.obj \
-	..\..\lib\$(OBJDIR)\OpenGLKit_lib_OpenGLControlContext.obj \
+	..\..\lib\$(OBJDIR)\OpenGLKit_lib_OpenGLContext.obj \
 	..\..\lib\$(OBJDIR)\OpenGLKit_lib_OpenGLToolkit.obj \
 	..\..\lib\$(OBJDIR)\OpenGLKit_lib_Win32OpenGLPeer.obj
 OPENGLKIT_DLL_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
@@ -1032,7 +1042,7 @@ OPENGLKIT_DLL_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
 	-DOPENGLKIT_EXPORTS $(CPPFLAGS) $(CXXFLAGS)
 OPENGLKIT_DLL_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\OpenGLKit_dll_OpenGLControl.obj \
-	..\..\lib\$(OBJDIR)\OpenGLKit_dll_OpenGLControlContext.obj \
+	..\..\lib\$(OBJDIR)\OpenGLKit_dll_OpenGLContext.obj \
 	..\..\lib\$(OBJDIR)\OpenGLKit_dll_OpenGLToolkit.obj \
 	..\..\lib\$(OBJDIR)\OpenGLKit_dll_Win32OpenGLPeer.obj
 NETWORKKIT_LIB_CXXFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include \
@@ -1433,6 +1443,7 @@ __Allin1_lib___depname = \
 !endif
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 ______Allin1_lib_ALLIN1_FOUNDATIONKIT_SRC_FILENAMES_OBJECTS =  \
+	..\..\lib\$(OBJDIR)\Allin1_lib_Base64Codec.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_BasicException.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_BasicInputStream.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_BasicOutputStream.obj \
@@ -1572,9 +1583,6 @@ ______Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_CursorManager.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_CustomControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_DataObject.obj \
-	..\..\lib\$(OBJDIR)\Allin1_lib_DefaultColumnItem.obj \
-	..\..\lib\$(OBJDIR)\Allin1_lib_DefaultColumnModel.obj \
-	..\..\lib\$(OBJDIR)\Allin1_lib_DefaultListItem.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_DefaultListModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_DefaultMenuItem.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_DefaultPropertyEditors.obj \
@@ -1584,8 +1592,10 @@ ______Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_DefaultTextModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_DefaultTreeModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Dialog.obj \
+	..\..\lib\$(OBJDIR)\Allin1_lib_Document.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_DocumentManager.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_DragSource.obj \
+	..\..\lib\$(OBJDIR)\Allin1_lib_DropDownControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_DropTarget.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_EtchedBorder.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Frame.obj \
@@ -1597,7 +1607,9 @@ ______Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Light3DBorder.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_LightweightComponent.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_ListBoxControl.obj \
+	..\..\lib\$(OBJDIR)\Allin1_lib_ListControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_ListItem.obj \
+	..\..\lib\$(OBJDIR)\Allin1_lib_ListModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_ListViewControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Menu.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_MenuBar.obj \
@@ -1631,6 +1643,8 @@ ______Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_TreeControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_TreeItem.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_TreeListControl.obj \
+	..\..\lib\$(OBJDIR)\Allin1_lib_TreeListModel.obj \
+	..\..\lib\$(OBJDIR)\Allin1_lib_TreeModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_UIComponent.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_UIShell.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_UIToolkit.obj \
@@ -1649,6 +1663,7 @@ ______Allin1_lib_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Win32CursorPeer.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Win32Dialog.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Win32DragDropPeer.obj \
+	..\..\lib\$(OBJDIR)\Allin1_lib_Win32DropDownPeer.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Win32DropTargetPeer.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Win32Edit.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Win32FileOpenDialog.obj \
@@ -1685,7 +1700,7 @@ ______Allin1_lib_ALLIN1_HTMLKIT_SRC_FILENAMES_OBJECTS =  \
 !if "$(OPTION_OPENGLKIT)" == "1"
 ______Allin1_lib_ALLIN1_OPENGLKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_lib_OpenGLControl.obj \
-	..\..\lib\$(OBJDIR)\Allin1_lib_OpenGLControlContext.obj \
+	..\..\lib\$(OBJDIR)\Allin1_lib_OpenGLContext.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_OpenGLToolkit.obj \
 	..\..\lib\$(OBJDIR)\Allin1_lib_Win32OpenGLPeer.obj
 !endif
@@ -1735,6 +1750,7 @@ __Allin1_dll___depname = \
 !endif
 !if "$(OPTION_FOUNDATIONKIT)" == "1"
 ______Allin1_dll_ALLIN1_FOUNDATIONKIT_SRC_FILENAMES_OBJECTS =  \
+	..\..\lib\$(OBJDIR)\Allin1_dll_Base64Codec.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_BasicException.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_BasicInputStream.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_BasicOutputStream.obj \
@@ -1874,9 +1890,6 @@ ______Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_CursorManager.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_CustomControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_DataObject.obj \
-	..\..\lib\$(OBJDIR)\Allin1_dll_DefaultColumnItem.obj \
-	..\..\lib\$(OBJDIR)\Allin1_dll_DefaultColumnModel.obj \
-	..\..\lib\$(OBJDIR)\Allin1_dll_DefaultListItem.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_DefaultListModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_DefaultMenuItem.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_DefaultPropertyEditors.obj \
@@ -1886,8 +1899,10 @@ ______Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_DefaultTextModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_DefaultTreeModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Dialog.obj \
+	..\..\lib\$(OBJDIR)\Allin1_dll_Document.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_DocumentManager.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_DragSource.obj \
+	..\..\lib\$(OBJDIR)\Allin1_dll_DropDownControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_DropTarget.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_EtchedBorder.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Frame.obj \
@@ -1899,7 +1914,9 @@ ______Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Light3DBorder.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_LightweightComponent.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_ListBoxControl.obj \
+	..\..\lib\$(OBJDIR)\Allin1_dll_ListControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_ListItem.obj \
+	..\..\lib\$(OBJDIR)\Allin1_dll_ListModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_ListViewControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Menu.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_MenuBar.obj \
@@ -1933,6 +1950,8 @@ ______Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_TreeControl.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_TreeItem.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_TreeListControl.obj \
+	..\..\lib\$(OBJDIR)\Allin1_dll_TreeListModel.obj \
+	..\..\lib\$(OBJDIR)\Allin1_dll_TreeModel.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_UIComponent.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_UIShell.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_UIToolkit.obj \
@@ -1951,6 +1970,7 @@ ______Allin1_dll_ALLIN1_APPLICATIONKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Win32CursorPeer.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Win32Dialog.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Win32DragDropPeer.obj \
+	..\..\lib\$(OBJDIR)\Allin1_dll_Win32DropDownPeer.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Win32DropTargetPeer.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Win32Edit.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Win32FileOpenDialog.obj \
@@ -1987,7 +2007,7 @@ ______Allin1_dll_ALLIN1_HTMLKIT_SRC_FILENAMES_OBJECTS =  \
 !if "$(OPTION_OPENGLKIT)" == "1"
 ______Allin1_dll_ALLIN1_OPENGLKIT_SRC_FILENAMES_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\Allin1_dll_OpenGLControl.obj \
-	..\..\lib\$(OBJDIR)\Allin1_dll_OpenGLControlContext.obj \
+	..\..\lib\$(OBJDIR)\Allin1_dll_OpenGLContext.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_OpenGLToolkit.obj \
 	..\..\lib\$(OBJDIR)\Allin1_dll_Win32OpenGLPeer.obj
 !endif
@@ -3841,6 +3861,9 @@ xmake_:
 ..\..\lib\$(OBJDIR)\js_dll_prmjtime.obj: ..\..\src\vcf\JavaScriptKit\js-impl\prmjtime.c
 	$(CC) -q -c -P- -o$@ $(JS_DLL_CFLAGS) ..\..\src\vcf\JavaScriptKit\js-impl\prmjtime.c
 
+..\..\lib\$(OBJDIR)\FoundationKit_lib_Base64Codec.obj: ..\..\src\vcf\FoundationKit\Base64Codec.cpp
+	$(CXX) -q -c -P -o$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\FoundationKit\Base64Codec.cpp
+
 ..\..\lib\$(OBJDIR)\FoundationKit_lib_BasicException.obj: ..\..\src\vcf\FoundationKit\BasicException.cpp
 	$(CXX) -q -c -P -o$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\FoundationKit\BasicException.cpp
 
@@ -4059,6 +4082,9 @@ xmake_:
 
 ..\..\lib\$(OBJDIR)\FoundationKit_lib_Win32ThreadManagerPeer.obj: ..\..\src\vcf\FoundationKit\Win32ThreadManagerPeer.cpp
 	$(CXX) -q -c -P -o$@ $(FOUNDATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\FoundationKit\Win32ThreadManagerPeer.cpp
+
+..\..\lib\$(OBJDIR)\FoundationKit_dll_Base64Codec.obj: ..\..\src\vcf\FoundationKit\Base64Codec.cpp
+	$(CXX) -q -c -P -o$@ $(FOUNDATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\FoundationKit\Base64Codec.cpp
 
 ..\..\lib\$(OBJDIR)\FoundationKit_dll_BasicException.obj: ..\..\src\vcf\FoundationKit\BasicException.cpp
 	$(CXX) -q -c -P -o$@ $(FOUNDATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\FoundationKit\BasicException.cpp
@@ -4531,15 +4557,6 @@ xmake_:
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_DataObject.obj: ..\..\src\vcf\ApplicationKit\DataObject.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DataObject.cpp
 
-..\..\lib\$(OBJDIR)\ApplicationKit_lib_DefaultColumnItem.obj: ..\..\src\vcf\ApplicationKit\DefaultColumnItem.cpp
-	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultColumnItem.cpp
-
-..\..\lib\$(OBJDIR)\ApplicationKit_lib_DefaultColumnModel.obj: ..\..\src\vcf\ApplicationKit\DefaultColumnModel.cpp
-	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultColumnModel.cpp
-
-..\..\lib\$(OBJDIR)\ApplicationKit_lib_DefaultListItem.obj: ..\..\src\vcf\ApplicationKit\DefaultListItem.cpp
-	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultListItem.cpp
-
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_DefaultListModel.obj: ..\..\src\vcf\ApplicationKit\DefaultListModel.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultListModel.cpp
 
@@ -4567,11 +4584,17 @@ xmake_:
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_Dialog.obj: ..\..\src\vcf\ApplicationKit\Dialog.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Dialog.cpp
 
+..\..\lib\$(OBJDIR)\ApplicationKit_lib_Document.obj: ..\..\src\vcf\ApplicationKit\Document.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Document.cpp
+
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_DocumentManager.obj: ..\..\src\vcf\ApplicationKit\DocumentManager.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DocumentManager.cpp
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_DragSource.obj: ..\..\src\vcf\ApplicationKit\DragSource.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DragSource.cpp
+
+..\..\lib\$(OBJDIR)\ApplicationKit_lib_DropDownControl.obj: ..\..\src\vcf\ApplicationKit\DropDownControl.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DropDownControl.cpp
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_DropTarget.obj: ..\..\src\vcf\ApplicationKit\DropTarget.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DropTarget.cpp
@@ -4606,8 +4629,14 @@ xmake_:
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListBoxControl.obj: ..\..\src\vcf\ApplicationKit\ListBoxControl.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListBoxControl.cpp
 
+..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListControl.obj: ..\..\src\vcf\ApplicationKit\ListControl.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListControl.cpp
+
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListItem.obj: ..\..\src\vcf\ApplicationKit\ListItem.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListItem.cpp
+
+..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListModel.obj: ..\..\src\vcf\ApplicationKit\ListModel.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListModel.cpp
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_ListViewControl.obj: ..\..\src\vcf\ApplicationKit\ListViewControl.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListViewControl.cpp
@@ -4708,6 +4737,12 @@ xmake_:
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_TreeListControl.obj: ..\..\src\vcf\ApplicationKit\TreeListControl.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\TreeListControl.cpp
 
+..\..\lib\$(OBJDIR)\ApplicationKit_lib_TreeListModel.obj: ..\..\src\vcf\ApplicationKit\TreeListModel.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\TreeListModel.cpp
+
+..\..\lib\$(OBJDIR)\ApplicationKit_lib_TreeModel.obj: ..\..\src\vcf\ApplicationKit\TreeModel.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\TreeModel.cpp
+
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_UIComponent.obj: ..\..\src\vcf\ApplicationKit\UIComponent.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\UIComponent.cpp
 
@@ -4761,6 +4796,9 @@ xmake_:
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_Win32DragDropPeer.obj: ..\..\src\vcf\ApplicationKit\Win32DragDropPeer.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Win32DragDropPeer.cpp
+
+..\..\lib\$(OBJDIR)\ApplicationKit_lib_Win32DropDownPeer.obj: ..\..\src\vcf\ApplicationKit\Win32DropDownPeer.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Win32DropDownPeer.cpp
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_lib_Win32DropTargetPeer.obj: ..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp
@@ -4939,15 +4977,6 @@ xmake_:
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_DataObject.obj: ..\..\src\vcf\ApplicationKit\DataObject.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DataObject.cpp
 
-..\..\lib\$(OBJDIR)\ApplicationKit_dll_DefaultColumnItem.obj: ..\..\src\vcf\ApplicationKit\DefaultColumnItem.cpp
-	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultColumnItem.cpp
-
-..\..\lib\$(OBJDIR)\ApplicationKit_dll_DefaultColumnModel.obj: ..\..\src\vcf\ApplicationKit\DefaultColumnModel.cpp
-	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultColumnModel.cpp
-
-..\..\lib\$(OBJDIR)\ApplicationKit_dll_DefaultListItem.obj: ..\..\src\vcf\ApplicationKit\DefaultListItem.cpp
-	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultListItem.cpp
-
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_DefaultListModel.obj: ..\..\src\vcf\ApplicationKit\DefaultListModel.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultListModel.cpp
 
@@ -4975,11 +5004,17 @@ xmake_:
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_Dialog.obj: ..\..\src\vcf\ApplicationKit\Dialog.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Dialog.cpp
 
+..\..\lib\$(OBJDIR)\ApplicationKit_dll_Document.obj: ..\..\src\vcf\ApplicationKit\Document.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Document.cpp
+
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_DocumentManager.obj: ..\..\src\vcf\ApplicationKit\DocumentManager.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DocumentManager.cpp
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_DragSource.obj: ..\..\src\vcf\ApplicationKit\DragSource.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DragSource.cpp
+
+..\..\lib\$(OBJDIR)\ApplicationKit_dll_DropDownControl.obj: ..\..\src\vcf\ApplicationKit\DropDownControl.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DropDownControl.cpp
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_DropTarget.obj: ..\..\src\vcf\ApplicationKit\DropTarget.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DropTarget.cpp
@@ -5014,8 +5049,14 @@ xmake_:
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListBoxControl.obj: ..\..\src\vcf\ApplicationKit\ListBoxControl.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListBoxControl.cpp
 
+..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListControl.obj: ..\..\src\vcf\ApplicationKit\ListControl.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListControl.cpp
+
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListItem.obj: ..\..\src\vcf\ApplicationKit\ListItem.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListItem.cpp
+
+..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListModel.obj: ..\..\src\vcf\ApplicationKit\ListModel.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListModel.cpp
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_ListViewControl.obj: ..\..\src\vcf\ApplicationKit\ListViewControl.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListViewControl.cpp
@@ -5116,6 +5157,12 @@ xmake_:
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_TreeListControl.obj: ..\..\src\vcf\ApplicationKit\TreeListControl.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\TreeListControl.cpp
 
+..\..\lib\$(OBJDIR)\ApplicationKit_dll_TreeListModel.obj: ..\..\src\vcf\ApplicationKit\TreeListModel.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\TreeListModel.cpp
+
+..\..\lib\$(OBJDIR)\ApplicationKit_dll_TreeModel.obj: ..\..\src\vcf\ApplicationKit\TreeModel.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\TreeModel.cpp
+
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_UIComponent.obj: ..\..\src\vcf\ApplicationKit\UIComponent.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\UIComponent.cpp
 
@@ -5169,6 +5216,9 @@ xmake_:
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_Win32DragDropPeer.obj: ..\..\src\vcf\ApplicationKit\Win32DragDropPeer.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Win32DragDropPeer.cpp
+
+..\..\lib\$(OBJDIR)\ApplicationKit_dll_Win32DropDownPeer.obj: ..\..\src\vcf\ApplicationKit\Win32DropDownPeer.cpp
+	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Win32DropDownPeer.cpp
 
 ..\..\lib\$(OBJDIR)\ApplicationKit_dll_Win32DropTargetPeer.obj: ..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp
 	$(CXX) -q -c -P -o$@ $(APPLICATIONKIT_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp
@@ -5281,8 +5331,8 @@ xmake_:
 ..\..\lib\$(OBJDIR)\OpenGLKit_lib_OpenGLControl.obj: ..\..\src\vcf\OpenGLKit\OpenGLControl.cpp
 	$(CXX) -q -c -P -o$@ $(OPENGLKIT_LIB_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLControl.cpp
 
-..\..\lib\$(OBJDIR)\OpenGLKit_lib_OpenGLControlContext.obj: ..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp
-	$(CXX) -q -c -P -o$@ $(OPENGLKIT_LIB_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp
+..\..\lib\$(OBJDIR)\OpenGLKit_lib_OpenGLContext.obj: ..\..\src\vcf\OpenGLKit\OpenGLContext.cpp
+	$(CXX) -q -c -P -o$@ $(OPENGLKIT_LIB_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLContext.cpp
 
 ..\..\lib\$(OBJDIR)\OpenGLKit_lib_OpenGLToolkit.obj: ..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp
 	$(CXX) -q -c -P -o$@ $(OPENGLKIT_LIB_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp
@@ -5293,8 +5343,8 @@ xmake_:
 ..\..\lib\$(OBJDIR)\OpenGLKit_dll_OpenGLControl.obj: ..\..\src\vcf\OpenGLKit\OpenGLControl.cpp
 	$(CXX) -q -c -P -o$@ $(OPENGLKIT_DLL_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLControl.cpp
 
-..\..\lib\$(OBJDIR)\OpenGLKit_dll_OpenGLControlContext.obj: ..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp
-	$(CXX) -q -c -P -o$@ $(OPENGLKIT_DLL_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp
+..\..\lib\$(OBJDIR)\OpenGLKit_dll_OpenGLContext.obj: ..\..\src\vcf\OpenGLKit\OpenGLContext.cpp
+	$(CXX) -q -c -P -o$@ $(OPENGLKIT_DLL_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLContext.cpp
 
 ..\..\lib\$(OBJDIR)\OpenGLKit_dll_OpenGLToolkit.obj: ..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp
 	$(CXX) -q -c -P -o$@ $(OPENGLKIT_DLL_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp
@@ -5433,6 +5483,9 @@ xmake_:
 
 ..\..\lib\$(OBJDIR)\JavaScriptKit_dll_JavaScriptKit.obj: ..\..\src\vcf\JavaScriptKit\JavaScriptKit.cpp
 	$(CXX) -q -c -P -o$@ $(JAVASCRIPTKIT_DLL_CXXFLAGS) ..\..\src\vcf\JavaScriptKit\JavaScriptKit.cpp
+
+..\..\lib\$(OBJDIR)\Allin1_lib_Base64Codec.obj: ..\..\src\vcf\FoundationKit\Base64Codec.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\FoundationKit\Base64Codec.cpp
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_BasicException.obj: ..\..\src\vcf\FoundationKit\BasicException.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\FoundationKit\BasicException.cpp
@@ -5833,15 +5886,6 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_lib_DataObject.obj: ..\..\src\vcf\ApplicationKit\DataObject.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DataObject.cpp
 
-..\..\lib\$(OBJDIR)\Allin1_lib_DefaultColumnItem.obj: ..\..\src\vcf\ApplicationKit\DefaultColumnItem.cpp
-	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultColumnItem.cpp
-
-..\..\lib\$(OBJDIR)\Allin1_lib_DefaultColumnModel.obj: ..\..\src\vcf\ApplicationKit\DefaultColumnModel.cpp
-	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultColumnModel.cpp
-
-..\..\lib\$(OBJDIR)\Allin1_lib_DefaultListItem.obj: ..\..\src\vcf\ApplicationKit\DefaultListItem.cpp
-	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultListItem.cpp
-
 ..\..\lib\$(OBJDIR)\Allin1_lib_DefaultListModel.obj: ..\..\src\vcf\ApplicationKit\DefaultListModel.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultListModel.cpp
 
@@ -5869,11 +5913,17 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_lib_Dialog.obj: ..\..\src\vcf\ApplicationKit\Dialog.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Dialog.cpp
 
+..\..\lib\$(OBJDIR)\Allin1_lib_Document.obj: ..\..\src\vcf\ApplicationKit\Document.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Document.cpp
+
 ..\..\lib\$(OBJDIR)\Allin1_lib_DocumentManager.obj: ..\..\src\vcf\ApplicationKit\DocumentManager.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DocumentManager.cpp
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_DragSource.obj: ..\..\src\vcf\ApplicationKit\DragSource.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DragSource.cpp
+
+..\..\lib\$(OBJDIR)\Allin1_lib_DropDownControl.obj: ..\..\src\vcf\ApplicationKit\DropDownControl.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DropDownControl.cpp
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_DropTarget.obj: ..\..\src\vcf\ApplicationKit\DropTarget.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DropTarget.cpp
@@ -5908,8 +5958,14 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_lib_ListBoxControl.obj: ..\..\src\vcf\ApplicationKit\ListBoxControl.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListBoxControl.cpp
 
+..\..\lib\$(OBJDIR)\Allin1_lib_ListControl.obj: ..\..\src\vcf\ApplicationKit\ListControl.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListControl.cpp
+
 ..\..\lib\$(OBJDIR)\Allin1_lib_ListItem.obj: ..\..\src\vcf\ApplicationKit\ListItem.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListItem.cpp
+
+..\..\lib\$(OBJDIR)\Allin1_lib_ListModel.obj: ..\..\src\vcf\ApplicationKit\ListModel.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListModel.cpp
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_ListViewControl.obj: ..\..\src\vcf\ApplicationKit\ListViewControl.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListViewControl.cpp
@@ -6010,6 +6066,12 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_lib_TreeListControl.obj: ..\..\src\vcf\ApplicationKit\TreeListControl.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\TreeListControl.cpp
 
+..\..\lib\$(OBJDIR)\Allin1_lib_TreeListModel.obj: ..\..\src\vcf\ApplicationKit\TreeListModel.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\TreeListModel.cpp
+
+..\..\lib\$(OBJDIR)\Allin1_lib_TreeModel.obj: ..\..\src\vcf\ApplicationKit\TreeModel.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\TreeModel.cpp
+
 ..\..\lib\$(OBJDIR)\Allin1_lib_UIComponent.obj: ..\..\src\vcf\ApplicationKit\UIComponent.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\UIComponent.cpp
 
@@ -6063,6 +6125,9 @@ xmake_:
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_Win32DragDropPeer.obj: ..\..\src\vcf\ApplicationKit\Win32DragDropPeer.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Win32DragDropPeer.cpp
+
+..\..\lib\$(OBJDIR)\Allin1_lib_Win32DropDownPeer.obj: ..\..\src\vcf\ApplicationKit\Win32DropDownPeer.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Win32DropDownPeer.cpp
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_Win32DropTargetPeer.obj: ..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp
@@ -6154,8 +6219,8 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_lib_OpenGLControl.obj: ..\..\src\vcf\OpenGLKit\OpenGLControl.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLControl.cpp
 
-..\..\lib\$(OBJDIR)\Allin1_lib_OpenGLControlContext.obj: ..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp
-	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp
+..\..\lib\$(OBJDIR)\Allin1_lib_OpenGLContext.obj: ..\..\src\vcf\OpenGLKit\OpenGLContext.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLContext.cpp
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_OpenGLToolkit.obj: ..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp
@@ -6228,6 +6293,9 @@ xmake_:
 
 ..\..\lib\$(OBJDIR)\Allin1_lib_JavaScriptKit.obj: ..\..\src\vcf\JavaScriptKit\JavaScriptKit.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_LIB_CXXFLAGS) ..\..\src\vcf\JavaScriptKit\JavaScriptKit.cpp
+
+..\..\lib\$(OBJDIR)\Allin1_dll_Base64Codec.obj: ..\..\src\vcf\FoundationKit\Base64Codec.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\FoundationKit\Base64Codec.cpp
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_BasicException.obj: ..\..\src\vcf\FoundationKit\BasicException.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\FoundationKit\BasicException.cpp
@@ -6628,15 +6696,6 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_dll_DataObject.obj: ..\..\src\vcf\ApplicationKit\DataObject.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DataObject.cpp
 
-..\..\lib\$(OBJDIR)\Allin1_dll_DefaultColumnItem.obj: ..\..\src\vcf\ApplicationKit\DefaultColumnItem.cpp
-	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultColumnItem.cpp
-
-..\..\lib\$(OBJDIR)\Allin1_dll_DefaultColumnModel.obj: ..\..\src\vcf\ApplicationKit\DefaultColumnModel.cpp
-	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultColumnModel.cpp
-
-..\..\lib\$(OBJDIR)\Allin1_dll_DefaultListItem.obj: ..\..\src\vcf\ApplicationKit\DefaultListItem.cpp
-	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultListItem.cpp
-
 ..\..\lib\$(OBJDIR)\Allin1_dll_DefaultListModel.obj: ..\..\src\vcf\ApplicationKit\DefaultListModel.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DefaultListModel.cpp
 
@@ -6664,11 +6723,17 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_dll_Dialog.obj: ..\..\src\vcf\ApplicationKit\Dialog.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Dialog.cpp
 
+..\..\lib\$(OBJDIR)\Allin1_dll_Document.obj: ..\..\src\vcf\ApplicationKit\Document.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Document.cpp
+
 ..\..\lib\$(OBJDIR)\Allin1_dll_DocumentManager.obj: ..\..\src\vcf\ApplicationKit\DocumentManager.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DocumentManager.cpp
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_DragSource.obj: ..\..\src\vcf\ApplicationKit\DragSource.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DragSource.cpp
+
+..\..\lib\$(OBJDIR)\Allin1_dll_DropDownControl.obj: ..\..\src\vcf\ApplicationKit\DropDownControl.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DropDownControl.cpp
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_DropTarget.obj: ..\..\src\vcf\ApplicationKit\DropTarget.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\DropTarget.cpp
@@ -6703,8 +6768,14 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_dll_ListBoxControl.obj: ..\..\src\vcf\ApplicationKit\ListBoxControl.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListBoxControl.cpp
 
+..\..\lib\$(OBJDIR)\Allin1_dll_ListControl.obj: ..\..\src\vcf\ApplicationKit\ListControl.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListControl.cpp
+
 ..\..\lib\$(OBJDIR)\Allin1_dll_ListItem.obj: ..\..\src\vcf\ApplicationKit\ListItem.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListItem.cpp
+
+..\..\lib\$(OBJDIR)\Allin1_dll_ListModel.obj: ..\..\src\vcf\ApplicationKit\ListModel.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListModel.cpp
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_ListViewControl.obj: ..\..\src\vcf\ApplicationKit\ListViewControl.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\ListViewControl.cpp
@@ -6805,6 +6876,12 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_dll_TreeListControl.obj: ..\..\src\vcf\ApplicationKit\TreeListControl.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\TreeListControl.cpp
 
+..\..\lib\$(OBJDIR)\Allin1_dll_TreeListModel.obj: ..\..\src\vcf\ApplicationKit\TreeListModel.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\TreeListModel.cpp
+
+..\..\lib\$(OBJDIR)\Allin1_dll_TreeModel.obj: ..\..\src\vcf\ApplicationKit\TreeModel.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\TreeModel.cpp
+
 ..\..\lib\$(OBJDIR)\Allin1_dll_UIComponent.obj: ..\..\src\vcf\ApplicationKit\UIComponent.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\UIComponent.cpp
 
@@ -6858,6 +6935,9 @@ xmake_:
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_Win32DragDropPeer.obj: ..\..\src\vcf\ApplicationKit\Win32DragDropPeer.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Win32DragDropPeer.cpp
+
+..\..\lib\$(OBJDIR)\Allin1_dll_Win32DropDownPeer.obj: ..\..\src\vcf\ApplicationKit\Win32DropDownPeer.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Win32DropDownPeer.cpp
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_Win32DropTargetPeer.obj: ..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp
@@ -6949,8 +7029,8 @@ xmake_:
 ..\..\lib\$(OBJDIR)\Allin1_dll_OpenGLControl.obj: ..\..\src\vcf\OpenGLKit\OpenGLControl.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLControl.cpp
 
-..\..\lib\$(OBJDIR)\Allin1_dll_OpenGLControlContext.obj: ..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp
-	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp
+..\..\lib\$(OBJDIR)\Allin1_dll_OpenGLContext.obj: ..\..\src\vcf\OpenGLKit\OpenGLContext.cpp
+	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLContext.cpp
 
 ..\..\lib\$(OBJDIR)\Allin1_dll_OpenGLToolkit.obj: ..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp
 	$(CXX) -q -c -P -o$@ $(ALLIN1_DLL_CXXFLAGS) ..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp

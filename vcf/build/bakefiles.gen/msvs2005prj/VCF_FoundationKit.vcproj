@@ -1055,6 +1055,9 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Base64Codec.cpp"
+			/>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\BasicException.cpp"
 			/>
 			<File
@@ -1383,6 +1386,9 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\BadComponentStateException.h"
 			/>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Base64Codec.h"
+			/>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\BasicException.h"
 			/>
 			<File
@@ -1614,6 +1620,9 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\PropertyChangeException.h"
 			/>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\PropertyListing.h"
+			/>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\RTTIMacros.h"
 			/>
 			<File
@@ -1822,6 +1831,12 @@
 			/>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32ThreadManagerPeer.h"
+			/>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\XMLDictInputStream.h"
+			/>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\XMLDictOutputStream.h"
 			/>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\XMLParser.h"

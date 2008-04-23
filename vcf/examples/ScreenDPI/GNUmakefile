@@ -22,7 +22,7 @@ FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 GRAPHICSKIT_FILENAME = GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-SKETCHIT_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING_6) \
+SCREENDPI_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING_6) \
 	$(__OPTION_WARNINGS_9) $(____OPTION_DEBUG_10_p) -Wno-multichar \
 	-DVCF_DISABLE_PRAGMA_LINKING -I../../src \
 	-I../../src/thirdparty/common/ZLib -I../../src/thirdparty/common/LibPNG \
@@ -31,12 +31,8 @@ SKETCHIT_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING_6) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) \
 	$(____OPTION_CPP_RTTI_0_7) $(____OPTION_CPP_EXCEPTIONS_1_8) $(CPPFLAGS) \
 	$(CXXFLAGS)
-SKETCHIT_OBJECTS =  \
-	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchIt.o \
-	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchModel.o \
-	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchTools.o \
-	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchView.o \
-	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchWindow.o
+SCREENDPI_OBJECTS =  \
+	../../lib/$(OBJDIR)/examples/ScreenDPI/ScreenDPI_ScreenDPI.o
 
 ### Conditionally set variables: ###
 
@@ -59,7 +55,7 @@ ifeq ($(OPTION_SHARED),1)
 SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 endif
 ifeq ($(OPTION_APPLICATIONKIT),1)
-__SketchIt___depname = ./SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+__ScreenDPI___depname = ./ScreenDPI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 endif
 ifeq ($(OPTION_DEBUG),0)
 __OPTIMIZE_4 = -O2
@@ -107,22 +103,22 @@ ifeq ($(OPTION_DEBUG),1)
 ____OPTION_DEBUG_10_p = -D_DEBUG
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____SketchIt_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
+____ScreenDPI_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
 endif
 ifeq ($(OPTION_ALLIN1),1)
-____SketchIt_FOUNDATIONKIT_p = -l$(ALLIN1_FILENAME)
+____ScreenDPI_FOUNDATIONKIT_p = -l$(ALLIN1_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____SketchIt_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
+____ScreenDPI_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __GRAPHICSKIT_DLL_p = -DGRAPHICSKIT_DLL
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____SketchIt_APPLICATIONKIT_p = -l$(APPLICATIONKIT_FILENAME)
+____ScreenDPI_APPLICATIONKIT_p = -l$(APPLICATIONKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __APPLICATIONKIT_DLL_p = -DAPPLICATIONKIT_DLL
@@ -135,45 +131,33 @@ __DEBUG_INFO = -g
 endif
 
 
-all: ../../lib/$(OBJDIR)/examples/SketchIt
-../../lib/$(OBJDIR)/examples/SketchIt:
-	@mkdir -p ../../lib/$(OBJDIR)/examples/SketchIt
+all: ../../lib/$(OBJDIR)/examples/ScreenDPI
+../../lib/$(OBJDIR)/examples/ScreenDPI:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/ScreenDPI
 
 ### Targets: ###
 
-all: $(__SketchIt___depname)
+all: $(__ScreenDPI___depname)
 
 install: all
 
 uninstall: 
 
 clean: 
-	rm -f ../../lib/$(OBJDIR)/examples/SketchIt/*.o
-	rm -f ../../lib/$(OBJDIR)/examples/SketchIt/*.d
-	rm -f ./SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+	rm -f ../../lib/$(OBJDIR)/examples/ScreenDPI/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/ScreenDPI/*.d
+	rm -f ./ScreenDPI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
-./SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(SKETCHIT_OBJECTS)
-	$(CXX) -o $@ $(SKETCHIT_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_5) -L../../lib  $(____SketchIt_APPLICATIONKIT_p) $(____SketchIt_GRAPHICSKIT_p) $(____SketchIt_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
+./ScreenDPI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(SCREENDPI_OBJECTS)
+	$(CXX) -o $@ $(SCREENDPI_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_5) -L../../lib  $(____ScreenDPI_APPLICATIONKIT_p) $(____ScreenDPI_GRAPHICSKIT_p) $(____ScreenDPI_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
 endif
 
-../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchIt.o: ./SketchIt.cpp
-	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchModel.o: ./SketchModel.cpp
-	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchTools.o: ./SketchTools.cpp
-	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchView.o: ./SketchView.cpp
-	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchWindow.o: ./SketchWindow.cpp
-	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
+../../lib/$(OBJDIR)/examples/ScreenDPI/ScreenDPI_ScreenDPI.o: ./ScreenDPI.cpp
+	$(CXX) -c -o $@ $(SCREENDPI_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include ../../lib/$(OBJDIR)/examples/SketchIt/*.d
+-include ../../lib/$(OBJDIR)/examples/ScreenDPI/*.d

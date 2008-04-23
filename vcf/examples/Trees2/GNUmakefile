@@ -18,25 +18,26 @@ AGG_FILENAME = AGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 ZLIB_FILENAME = ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 LIBJPEG_FILENAME = LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 LIBPNG_FILENAME = LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
+LIBXML_FILENAME = libxml$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
+LIBXSLT_FILENAME = libxslt$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 GRAPHICSKIT_FILENAME = GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+XMLKIT_FILENAME = XMLKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-SKETCHIT_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING_6) \
+TREES2_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING_6) \
 	$(__OPTION_WARNINGS_9) $(____OPTION_DEBUG_10_p) -Wno-multichar \
 	-DVCF_DISABLE_PRAGMA_LINKING -I../../src \
 	-I../../src/thirdparty/common/ZLib -I../../src/thirdparty/common/LibPNG \
 	-I../../src/thirdparty/common/LibJPEG \
 	-I../../src/thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) \
-	$(____OPTION_CPP_RTTI_0_7) $(____OPTION_CPP_EXCEPTIONS_1_8) $(CPPFLAGS) \
-	$(CXXFLAGS)
-SKETCHIT_OBJECTS =  \
-	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchIt.o \
-	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchModel.o \
-	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchTools.o \
-	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchView.o \
-	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchWindow.o
+	-I../../src/thirdparty/common/libxml/include -DLIBXML_STATIC \
+	-I../../src/thirdparty/common/libxslt -DLIBXML_STATIC -DLIBXSLT_STATIC \
+	$(__FOUNDATIONKIT_DLL_p) $(__XMLKIT_DLL_p) $(____OPTION_CPP_RTTI_0_7) \
+	$(____OPTION_CPP_EXCEPTIONS_1_8) $(CPPFLAGS) $(CXXFLAGS)
+TREES2_OBJECTS =  \
+	../../lib/$(OBJDIR)/examples/Trees2/Trees2_Trees2.o
 
 ### Conditionally set variables: ###
 
@@ -59,7 +60,7 @@ ifeq ($(OPTION_SHARED),1)
 SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 endif
 ifeq ($(OPTION_APPLICATIONKIT),1)
-__SketchIt___depname = ./SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+__Trees2___depname = ./Trees2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 endif
 ifeq ($(OPTION_DEBUG),0)
 __OPTIMIZE_4 = -O2
@@ -107,25 +108,40 @@ ifeq ($(OPTION_DEBUG),1)
 ____OPTION_DEBUG_10_p = -D_DEBUG
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____SketchIt_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
+____Trees2_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
 endif
 ifeq ($(OPTION_ALLIN1),1)
-____SketchIt_FOUNDATIONKIT_p = -l$(ALLIN1_FILENAME)
-endif
-ifeq ($(OPTION_SHARED),1)
-__FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
+____Trees2_FOUNDATIONKIT_p = -l$(ALLIN1_FILENAME)
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____SketchIt_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
+____Trees2_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __GRAPHICSKIT_DLL_p = -DGRAPHICSKIT_DLL
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____SketchIt_APPLICATIONKIT_p = -l$(APPLICATIONKIT_FILENAME)
+____Trees2_APPLICATIONKIT_p = -l$(APPLICATIONKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __APPLICATIONKIT_DLL_p = -DAPPLICATIONKIT_DLL
+endif
+ifeq ($(OPTION_ALLIN1),1)
+____Trees2_FOUNDATIONKIT_p_1 = -l$(ALLIN1_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),0)
+____Trees2_FOUNDATIONKIT_p_1 = -l$(FOUNDATIONKIT_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),1)
+____Trees2_FOUNDATIONKIT_p_1 = -l$(ALLIN1_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),0)
+____Trees2_FOUNDATIONKIT_p_1 = -l$(FOUNDATIONKIT_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),0)
+____Trees2_XMLKIT_p = -l$(XMLKIT_FILENAME)
+endif
+ifeq ($(OPTION_SHARED),1)
+__XMLKIT_DLL_p = -DXMLKIT_DLL
 endif
 ifeq ($(OPTION_DEBUG),0)
 __DEBUG_INFO = 
@@ -133,47 +149,38 @@ endif
 ifeq ($(OPTION_DEBUG),1)
 __DEBUG_INFO = -g
 endif
+ifeq ($(OPTION_SHARED),1)
+__FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
+endif
 
 
-all: ../../lib/$(OBJDIR)/examples/SketchIt
-../../lib/$(OBJDIR)/examples/SketchIt:
-	@mkdir -p ../../lib/$(OBJDIR)/examples/SketchIt
+all: ../../lib/$(OBJDIR)/examples/Trees2
+../../lib/$(OBJDIR)/examples/Trees2:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/Trees2
 
 ### Targets: ###
 
-all: $(__SketchIt___depname)
+all: $(__Trees2___depname)
 
 install: all
 
 uninstall: 
 
 clean: 
-	rm -f ../../lib/$(OBJDIR)/examples/SketchIt/*.o
-	rm -f ../../lib/$(OBJDIR)/examples/SketchIt/*.d
-	rm -f ./SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+	rm -f ../../lib/$(OBJDIR)/examples/Trees2/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/Trees2/*.d
+	rm -f ./Trees2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
-./SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(SKETCHIT_OBJECTS)
-	$(CXX) -o $@ $(SKETCHIT_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_5) -L../../lib  $(____SketchIt_APPLICATIONKIT_p) $(____SketchIt_GRAPHICSKIT_p) $(____SketchIt_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
+./Trees2$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(TREES2_OBJECTS)
+	$(CXX) -o $@ $(TREES2_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_5) -L../../lib  $(____Trees2_XMLKIT_p) $(____Trees2_FOUNDATIONKIT_p_1) -l$(LIBXSLT_FILENAME) -l$(LIBXML_FILENAME) $(____Trees2_APPLICATIONKIT_p) $(____Trees2_GRAPHICSKIT_p) $(____Trees2_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
 endif
 
-../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchIt.o: ./SketchIt.cpp
-	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchModel.o: ./SketchModel.cpp
-	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchTools.o: ./SketchTools.cpp
-	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchView.o: ./SketchView.cpp
-	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchWindow.o: ./SketchWindow.cpp
-	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
+../../lib/$(OBJDIR)/examples/Trees2/Trees2_Trees2.o: ./Trees2.cpp
+	$(CXX) -c -o $@ $(TREES2_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include ../../lib/$(OBJDIR)/examples/SketchIt/*.d
+-include ../../lib/$(OBJDIR)/examples/Trees2/*.d

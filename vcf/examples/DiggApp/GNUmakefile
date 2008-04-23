@@ -18,25 +18,28 @@ AGG_FILENAME = AGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 ZLIB_FILENAME = ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 LIBJPEG_FILENAME = LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 LIBPNG_FILENAME = LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
+LIBXML_FILENAME = libxml$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
+LIBXSLT_FILENAME = libxslt$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 GRAPHICSKIT_FILENAME = GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+INTERNETKIT_FILENAME = InternetKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+XMLKIT_FILENAME = XMLKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-SKETCHIT_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING_6) \
+DIGGAPP_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING_6) \
 	$(__OPTION_WARNINGS_9) $(____OPTION_DEBUG_10_p) -Wno-multichar \
 	-DVCF_DISABLE_PRAGMA_LINKING -I../../src \
 	-I../../src/thirdparty/common/ZLib -I../../src/thirdparty/common/LibPNG \
 	-I../../src/thirdparty/common/LibJPEG \
 	-I../../src/thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
-	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) \
+	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) $(__FOUNDATIONKIT_DLL_p) \
+	$(__INTERNETKIT_DLL_p) -I../../src/thirdparty/common/libxml/include \
+	-DLIBXML_STATIC -I../../src/thirdparty/common/libxslt -DLIBXML_STATIC \
+	-DLIBXSLT_STATIC $(__FOUNDATIONKIT_DLL_p) $(__XMLKIT_DLL_p) \
 	$(____OPTION_CPP_RTTI_0_7) $(____OPTION_CPP_EXCEPTIONS_1_8) $(CPPFLAGS) \
 	$(CXXFLAGS)
-SKETCHIT_OBJECTS =  \
-	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchIt.o \
-	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchModel.o \
-	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchTools.o \
-	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchView.o \
-	../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchWindow.o
+DIGGAPP_OBJECTS =  \
+	../../lib/$(OBJDIR)/examples/DiggApp/DiggApp_DiggApp.o
 
 ### Conditionally set variables: ###
 
@@ -59,7 +62,7 @@ ifeq ($(OPTION_SHARED),1)
 SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 endif
 ifeq ($(OPTION_APPLICATIONKIT),1)
-__SketchIt___depname = ./SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+__DiggApp___depname = ./DiggApp$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 endif
 ifeq ($(OPTION_DEBUG),0)
 __OPTIMIZE_4 = -O2
@@ -107,25 +110,64 @@ ifeq ($(OPTION_DEBUG),1)
 ____OPTION_DEBUG_10_p = -D_DEBUG
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____SketchIt_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
+____DiggApp_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
 endif
 ifeq ($(OPTION_ALLIN1),1)
-____SketchIt_FOUNDATIONKIT_p = -l$(ALLIN1_FILENAME)
-endif
-ifeq ($(OPTION_SHARED),1)
-__FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
+____DiggApp_FOUNDATIONKIT_p = -l$(ALLIN1_FILENAME)
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____SketchIt_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
+____DiggApp_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __GRAPHICSKIT_DLL_p = -DGRAPHICSKIT_DLL
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____SketchIt_APPLICATIONKIT_p = -l$(APPLICATIONKIT_FILENAME)
+____DiggApp_APPLICATIONKIT_p = -l$(APPLICATIONKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __APPLICATIONKIT_DLL_p = -DAPPLICATIONKIT_DLL
+endif
+ifeq ($(OPTION_ALLIN1),1)
+____DiggApp_FOUNDATIONKIT_p_1 = -l$(ALLIN1_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),0)
+____DiggApp_FOUNDATIONKIT_p_1 = -l$(FOUNDATIONKIT_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),1)
+____DiggApp_FOUNDATIONKIT_p_1 = -l$(ALLIN1_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),0)
+____DiggApp_FOUNDATIONKIT_p_1 = -l$(FOUNDATIONKIT_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),0)
+____DiggApp_INTERNETKIT_p = -l$(INTERNETKIT_FILENAME)
+endif
+ifeq ($(OPTION_SHARED),1)
+__INTERNETKIT_DLL_p = -DINTERNETKIT_DLL
+endif
+ifeq ($(OPTION_ALLIN1),1)
+____DiggApp_FOUNDATIONKIT_p_2 = -l$(ALLIN1_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),0)
+____DiggApp_FOUNDATIONKIT_p_2 = -l$(FOUNDATIONKIT_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),1)
+____DiggApp_FOUNDATIONKIT_p_2 = -l$(ALLIN1_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),0)
+____DiggApp_FOUNDATIONKIT_p_2 = -l$(FOUNDATIONKIT_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),1)
+____DiggApp_FOUNDATIONKIT_p_2 = -l$(ALLIN1_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),0)
+____DiggApp_FOUNDATIONKIT_p_2 = -l$(FOUNDATIONKIT_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),0)
+____DiggApp_XMLKIT_p = -l$(XMLKIT_FILENAME)
+endif
+ifeq ($(OPTION_SHARED),1)
+__XMLKIT_DLL_p = -DXMLKIT_DLL
 endif
 ifeq ($(OPTION_DEBUG),0)
 __DEBUG_INFO = 
@@ -133,47 +175,38 @@ endif
 ifeq ($(OPTION_DEBUG),1)
 __DEBUG_INFO = -g
 endif
+ifeq ($(OPTION_SHARED),1)
+__FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
+endif
 
 
-all: ../../lib/$(OBJDIR)/examples/SketchIt
-../../lib/$(OBJDIR)/examples/SketchIt:
-	@mkdir -p ../../lib/$(OBJDIR)/examples/SketchIt
+all: ../../lib/$(OBJDIR)/examples/DiggApp
+../../lib/$(OBJDIR)/examples/DiggApp:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/DiggApp
 
 ### Targets: ###
 
-all: $(__SketchIt___depname)
+all: $(__DiggApp___depname)
 
 install: all
 
 uninstall: 
 
 clean: 
-	rm -f ../../lib/$(OBJDIR)/examples/SketchIt/*.o
-	rm -f ../../lib/$(OBJDIR)/examples/SketchIt/*.d
-	rm -f ./SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+	rm -f ../../lib/$(OBJDIR)/examples/DiggApp/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/DiggApp/*.d
+	rm -f ./DiggApp$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
-./SketchIt$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(SKETCHIT_OBJECTS)
-	$(CXX) -o $@ $(SKETCHIT_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_5) -L../../lib  $(____SketchIt_APPLICATIONKIT_p) $(____SketchIt_GRAPHICSKIT_p) $(____SketchIt_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
+./DiggApp$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(DIGGAPP_OBJECTS)
+	$(CXX) -o $@ $(DIGGAPP_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_5) -L../../lib  $(____DiggApp_XMLKIT_p) $(____DiggApp_FOUNDATIONKIT_p_2) -l$(LIBXSLT_FILENAME) -l$(LIBXML_FILENAME) $(____DiggApp_INTERNETKIT_p) $(____DiggApp_FOUNDATIONKIT_p_1) $(____DiggApp_APPLICATIONKIT_p) $(____DiggApp_GRAPHICSKIT_p) $(____DiggApp_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
 endif
 
-../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchIt.o: ./SketchIt.cpp
-	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchModel.o: ./SketchModel.cpp
-	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchTools.o: ./SketchTools.cpp
-	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchView.o: ./SketchView.cpp
-	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
-
-../../lib/$(OBJDIR)/examples/SketchIt/SketchIt_SketchWindow.o: ./SketchWindow.cpp
-	$(CXX) -c -o $@ $(SKETCHIT_CXXFLAGS) $(CPPDEPS) $<
+../../lib/$(OBJDIR)/examples/DiggApp/DiggApp_DiggApp.o: ./DiggApp.cpp
+	$(CXX) -c -o $@ $(DIGGAPP_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include ../../lib/$(OBJDIR)/examples/SketchIt/*.d
+-include ../../lib/$(OBJDIR)/examples/DiggApp/*.d

@@ -1055,10 +1055,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			>
 			<File
-				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControl.cpp"
+				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLContext.cpp"
 			/>
 			<File
-				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp"
+				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControl.cpp"
 			/>
 			<File
 				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp"
@@ -1170,10 +1170,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
-				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControl.h"
+				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLContext.h"
 			/>
 			<File
-				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControlContext.h"
+				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControl.h"
 			/>
 			<File
 				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLKit.h"
