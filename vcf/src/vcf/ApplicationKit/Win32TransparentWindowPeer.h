@@ -39,6 +39,8 @@ public:
 	virtual void setVisible( const bool& visible );
 protected:
 	double alpha_;
+	bool hasAlphaImg_;
+	COLORREF alphaColor_;
 };
 
 

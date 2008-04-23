@@ -30,10 +30,12 @@ static UpdateLayeredWindowFunc UpdateLayeredWindow = NULL;
 #endif
 
 
-Win32TransparentWindowPeer::Win32TransparentWindowPeer( Frame* frame )
+Win32TransparentWindowPeer::Win32TransparentWindowPeer( Frame* frame ):
+	alpha_(1.0),
+	hasAlphaImg_(false),
+	alphaColor_(RGB(255,255,255))
 {
 	owner_ = frame;
-	alpha_ = 1.0;
 #if(_WIN32_WINNT < 0x0500)
 	HMODULE user32DLL = LoadLibrary ("user32");
 	if ( NULL == SetLayeredWindowAttributes ) {
@@ -60,7 +62,7 @@ Win32Object::CreateParams Win32TransparentWindowPeer::createParams()
 {
 	Win32Object::CreateParams result;
 
-	result.first = WS_POPUP | WS_VISIBLE;
+	result.first = WS_POPUP;
 	result.second = WS_EX_LAYERED;
 
 
@@ -138,7 +140,12 @@ void Win32TransparentWindowPeer::setAlpha( const double& alphaValue )
 {
 	alpha_ = alphaValue;
 
-	SetLayeredWindowAttributes ( hwnd_, RGB(255,255,255), (int) (255.0 * alpha_), LWA_ALPHA );
+	if ( hasAlphaImg_ ) {
+		SetLayeredWindowAttributes ( hwnd_, alphaColor_, (int) (255.0 * alpha_), LWA_ALPHA | LWA_COLORKEY );
+	}
+	else {
+		SetLayeredWindowAttributes ( hwnd_, alphaColor_, (int) (255.0 * alpha_), LWA_ALPHA );
+	}
 }
 
 double Win32TransparentWindowPeer::getAlpha()
@@ -149,27 +156,24 @@ double Win32TransparentWindowPeer::getAlpha()
 void Win32TransparentWindowPeer::setAlphaImage( Image* img )
 {
 	if ( NULL != img ) {
-		COLORREF alphaColor;
+		hasAlphaImg_ = true;
 
 		if ( img->isTransparent() ) {
-			alphaColor = RGB(0,0,0);//img->getTransparencyColor()->getColorRef32();
+			alphaColor_ = img->getTransparencyColor()->getColorRef32();
 		}
 		else {
 			ColorPixels pix = img;
 			ColorPixels::Type* bits = pix;
-
-			alphaColor = RGB( bits[0].r, bits[0].g, bits[0].b );
+			
+			alphaColor_ = RGB( bits[0].r, bits[0].g, bits[0].b );
 		}
-		SetLayeredWindowAttributes ( hwnd_, alphaColor,100, 
-									LWA_COLORKEY );
-
-		RedrawWindow(hwnd_, NULL, NULL, RDW_ERASE | RDW_INVALIDATE | RDW_FRAME |
-										RDW_ALLCHILDREN);
+		SetLayeredWindowAttributes ( hwnd_, alphaColor_,(int) (255.0 * alpha_), 
+									LWA_ALPHA | LWA_COLORKEY );
 	}
 	else {
 		SetLayeredWindowAttributes ( hwnd_, RGB(255,255,255), (int) (255.0 * alpha_), LWA_ALPHA );
+		hasAlphaImg_ = false;
 	}
-
 
 }
 
