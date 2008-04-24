@@ -61,6 +61,9 @@ ListBoxControl::ListBoxControl( ListModel* listModel ):
 	textBounded_(false),	
 	stateItemIndent_(19)
 {
+	peer_ =	UIToolkit::createControlPeer( this, CT_HEAVYWEIGHT );
+	peer_->create( this );
+
 	setViewModel( listModel );
 	allowsMultiSelect_ = false;
 

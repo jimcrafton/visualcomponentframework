@@ -40,7 +40,6 @@ struct KeyboardData {
 
 
 
-
 class APPLICATIONKIT_API Win32UIUtils {
 public:
 	static VCF::uint32 translateKeyMask( UINT win32KeyMask );
@@ -71,6 +70,22 @@ public:
 
 namespace VCF
 {
+
+
+
+	
+
+typedef bool (*FilterCallbackFunc)( MSG*, void* );
+
+struct APPLICATIONKIT_API FilterCBData {
+	FilterCBData(): userData(NULL), cb(NULL){}
+
+	void* userData;
+	FilterCallbackFunc cb;
+};
+
+
+
 
 class Win32MSG {
 public:
@@ -231,6 +246,11 @@ public:
 	void setWhatsThisHelpActive( bool val ) {
 		whatsThisHelpActive_ = val;
 	}
+
+
+	int addFilter( FilterCallbackFunc callback, void* userData );
+	void removeFilter( int id );
+
 protected:
 
 	void createDummyParentWindow();
@@ -250,6 +270,8 @@ protected:
 
 	bool whatsThisHelpActive_;
 	std::map<UINT,TimerRec*> timerMap_;
+	std::map<int,FilterCBData> filterMap_;
+	
 
 	TimerRec* findTimerRec( UINT id );
 
@@ -262,6 +284,8 @@ protected:
 
 
 	bool runEventLoopRunOnce( MSG& msg, bool& isIdle );
+
+	bool runMsgFilter( MSG* msg );
 };
 
 };

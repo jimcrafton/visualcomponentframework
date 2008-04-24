@@ -3974,7 +3974,7 @@ bool Win32ToolKit::runEventLoopRunOnce( MSG& msg, bool& isIdle )
 					KeyboardEvent event( control, Control::KEYBOARD_ACCELERATOR, keyData.repeatCount,
 						modifierKey, keyData.character, vkCode );
 
-					handleKeyboardEvent( &event );
+					//handleKeyboardEvent( &event );
 					if ( event.isConsumed() ) {
 						doTranslateAndDispatch = false;
 					}
@@ -3982,9 +3982,13 @@ bool Win32ToolKit::runEventLoopRunOnce( MSG& msg, bool& isIdle )
 			}
 
 			if ( doTranslateAndDispatch ) {
-				if (!TranslateAccelerator( msg.hwnd, hAccelTable, &msg ) ) {
-					TranslateMessage( &msg );
-					DispatchMessage( &msg );
+
+				if ( !runMsgFilter( &msg ) ) {
+					
+					if (!TranslateAccelerator( msg.hwnd, hAccelTable, &msg ) ) {
+						TranslateMessage( &msg );
+						DispatchMessage( &msg );
+					}
 				}
 			}
 
@@ -4349,6 +4353,43 @@ void Win32ToolKit::internal_systemSettingsChanged()
 	
 }
 
+int Win32ToolKit::addFilter( FilterCallbackFunc callback, void* userData )
+{	
+	static int id = 1;
+
+	int result = id;
+	FilterCBData data;
+	data.cb = callback;
+	data.userData = userData;
+
+	filterMap_[id] = data;
+
+	id ++;
+
+	return result;
+}
+
+void Win32ToolKit::removeFilter( int id )
+{
+	std::map<int,FilterCBData>::iterator found = filterMap_.find( id );
+	if ( found != filterMap_.end() ) {
+		filterMap_.erase( found );
+	}
+}
+
+bool Win32ToolKit::runMsgFilter( MSG* msg )
+{
+	std::map<int,FilterCBData>::iterator it = filterMap_.begin();
+	while ( it != filterMap_.end() ) {
+		FilterCBData& fcb = it->second;
+		if ( fcb.cb( msg, fcb.userData ) ) {
+			return true;
+		}
+		++it;
+	}
+
+	return false;
+}
 
 /**
 $Id$
