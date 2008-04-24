@@ -174,6 +174,8 @@ public:
 	STDMETHOD(ShowContextMenu)( DWORD hWndID, POINT *ppt, 
 								IUnknown *pcmdtReserved, IDispatch *pdispReserved);
 
+	STDMETHOD(TranslateUrl)( DWORD dwTranslate, OLECHAR *pchURLIn, OLECHAR **ppchURLOut);
+
 	STDMETHOD(GetHostInfo)( DOCHOSTUIINFO *pInfo ) ;
 	
 	STDMETHOD(OnDocWindowActivate)( BOOL fEnable );
@@ -202,6 +204,8 @@ protected:
 	HWND browserHwnd_;	
 	std::map<String,HTMLEventHandler*> eventHandlers_;
 
+	int msgFilterID_;
+
 	String getElementText( bool textIsHTML, const String& elementName );
 	void setElementText( bool textIsHTML, const String& elementName, const String& text );
 
@@ -214,6 +218,8 @@ protected:
 
 		eventHandlers_.clear();
 	}
+
+	static bool msgFilter( MSG* msg, void* data );
 };
 
 

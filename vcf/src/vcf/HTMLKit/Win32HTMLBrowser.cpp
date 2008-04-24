@@ -14,7 +14,11 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/AbstractWin32Component.h"
 #include "vcf/HTMLKit/Win32HTMLBrowser.h"
 #include "vcf/ApplicationKit/Win32Toolkit.h"
+#include <Wininet.h>
 
+#pragma comment (lib,"Wininet.lib")
+
+COM_PTR(IOleInPlaceActiveObject)
 
 
 
@@ -41,12 +45,39 @@ STDMETHODIMP HTMLEventHandler::Invoke( DISPID dispIdMember, REFIID riid, LCID lc
 
 
 
+bool Win32HTMLBrowser::msgFilter( MSG* msg, void* data )
+{
+	Win32HTMLBrowser* thisPtr = (Win32HTMLBrowser*)data;
 
+	if ( NULL != thisPtr ) {
+		if ( msg->message == WM_KEYFIRST && msg->message < WM_KEYLAST ) {
+			if ( IsChild( thisPtr->hwnd_, msg->hwnd ) ) {
+				//OK lets try and process this
+				com_ptr<IOleInPlaceActiveObject> ipao = com_cast( thisPtr->browser_ );
+				
+				if ( IsDialogMessage(msg->hwnd, msg) ) {
+					
+					return true;
+				}
+
+				if ( ipao ) {
+					hresult hr = ipao->TranslateAccelerator( msg );
+					if ( S_OK == (HRESULT)hr ) {
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
+}
 
 
 
 Win32HTMLBrowser::Win32HTMLBrowser():
-	browserHwnd_(NULL)	
+	browserHwnd_(NULL)	,
+		msgFilterID_(0)
 {
 	uiStyle_ = DOCHOSTUIFLAG_NO3DBORDER;
 }
@@ -54,6 +85,12 @@ Win32HTMLBrowser::Win32HTMLBrowser():
 Win32HTMLBrowser::~Win32HTMLBrowser()
 {
 	clearHTMLHandlers();
+
+	if ( msgFilterID_ != 0 ) {
+		Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
+
+		toolkit->removeFilter( msgFilterID_ );
+	}
 }
 
 void Win32HTMLBrowser::create( VCF::Control* owningControl )
@@ -68,6 +105,9 @@ void Win32HTMLBrowser::create( VCF::Control* owningControl )
 
 		Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
 		HWND parent = toolkit->getDummyParent();
+		
+		msgFilterID_ = toolkit->addFilter( Win32HTMLBrowser::msgFilter, this );
+
 
 		if ( System::isUnicodeEnabled() ) {
 
@@ -630,6 +670,63 @@ void Win32HTMLBrowser::onNavigateError( LPDISPATCH pDisp,
 	e.status = hr.toString();
 
 	browserCtrl->URLLoadError( &e );
+}
+
+STDMETHODIMP Win32HTMLBrowser::TranslateUrl( DWORD dwTranslate, OLECHAR *pchURLIn, OLECHAR **ppchURLOut)
+{
+	String s(pchURLIn);
+
+	URL_COMPONENTSW components;
+	
+	VCFChar* scheme = new VCFChar[s.size()];
+	VCFChar* host = new VCFChar[s.size()];
+	VCFChar* user = new VCFChar[s.size()];
+	VCFChar* pwd = new VCFChar[s.size()];
+	VCFChar* url = new VCFChar[s.size()];
+	VCFChar* extra = new VCFChar[s.size()];
+
+	components.dwStructSize = sizeof(components);
+	components.dwExtraInfoLength = s.size();
+
+	components.dwHostNameLength = components.dwPasswordLength = components.dwSchemeLength = 
+		components.dwUrlPathLength = components.dwUserNameLength = s.size();
+
+	components.lpszExtraInfo = extra;
+	components.lpszHostName = host;
+	components.lpszPassword = pwd;
+	components.lpszScheme = scheme;
+	components.lpszUrlPath = url;
+	components.lpszUserName = user;
+
+
+	InternetCrackUrlW( s.c_str(), s.size(), 0, &components );
+
+
+
+	if ( components.nScheme == INTERNET_SCHEME_RES ) {
+		//check out resources dir first to see if we have anything
+		Application* app = Application::getRunningInstance();
+		if ( NULL != app ) {
+			String resDir = app->getResourceBundle()->getResourcesDirectory();
+			FilePath fp = resDir + components.lpszUrlPath;
+			if ( File::exists( fp ) ) {
+
+			}
+		}
+	}
+
+
+	delete [] scheme;
+	delete [] host;
+	delete [] user;
+	delete [] pwd;
+	delete [] url;
+	delete [] extra;
+
+
+
+
+	return E_NOTIMPL;
 }
 
 STDMETHODIMP Win32HTMLBrowser::ShowContextMenu( DWORD hWndID, POINT *ppt, 
