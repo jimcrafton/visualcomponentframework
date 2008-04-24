@@ -3974,7 +3974,7 @@ bool Win32ToolKit::runEventLoopRunOnce( MSG& msg, bool& isIdle )
 					KeyboardEvent event( control, Control::KEYBOARD_ACCELERATOR, keyData.repeatCount,
 						modifierKey, keyData.character, vkCode );
 
-					//handleKeyboardEvent( &event );
+					handleKeyboardEvent( &event );
 					if ( event.isConsumed() ) {
 						doTranslateAndDispatch = false;
 					}

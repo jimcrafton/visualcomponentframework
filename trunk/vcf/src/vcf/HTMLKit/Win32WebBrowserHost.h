@@ -358,7 +358,7 @@ public:
 		if ( NULL != realImpl_ ) {
 			return realImpl_->TranslateAccelerator(lpMsg,pguidCmdGroup,nCmdID);
 		}
-		return S_OK;
+		return E_NOTIMPL;
 	}
 
 	STDMETHOD(GetOptionKeyPath)( LPOLESTR *pchKey, DWORD dw) {

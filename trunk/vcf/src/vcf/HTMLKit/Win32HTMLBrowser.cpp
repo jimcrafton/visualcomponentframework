@@ -19,7 +19,7 @@ where you installed the VCF.
 #pragma comment (lib,"Wininet.lib")
 
 COM_PTR(IOleInPlaceActiveObject)
-
+COM_PTR(IOleWindow)
 
 
 
@@ -50,24 +50,7 @@ bool Win32HTMLBrowser::msgFilter( MSG* msg, void* data )
 	Win32HTMLBrowser* thisPtr = (Win32HTMLBrowser*)data;
 
 	if ( NULL != thisPtr ) {
-		if ( msg->message == WM_KEYFIRST && msg->message < WM_KEYLAST ) {
-			if ( IsChild( thisPtr->hwnd_, msg->hwnd ) ) {
-				//OK lets try and process this
-				com_ptr<IOleInPlaceActiveObject> ipao = com_cast( thisPtr->browser_ );
-				
-				if ( IsDialogMessage(msg->hwnd, msg) ) {
-					
-					return true;
-				}
-
-				if ( ipao ) {
-					hresult hr = ipao->TranslateAccelerator( msg );
-					if ( S_OK == (HRESULT)hr ) {
-						return true;
-					}
-				}
-			}
-		}
+		return thisPtr->processMessageFilter( msg );
 	}
 
 	return false;
@@ -77,7 +60,8 @@ bool Win32HTMLBrowser::msgFilter( MSG* msg, void* data )
 
 Win32HTMLBrowser::Win32HTMLBrowser():
 	browserHwnd_(NULL)	,
-		msgFilterID_(0)
+		msgFilterID_(0),
+		oldBrowserWndProc_(NULL)
 {
 	uiStyle_ = DOCHOSTUIFLAG_NO3DBORDER;
 }
@@ -135,6 +119,20 @@ void Win32HTMLBrowser::create( VCF::Control* owningControl )
 
 			//embed the browser 
 			embed( hwnd_ );
+
+			IOleWindowPtr wnd = com_cast(browser_); 
+			if ( wnd ) {
+				wnd->GetWindow( &browserHwnd_ );
+			}
+
+			//Win32HTMLBrowser::browserWndProc
+			if ( NULL != browserHwnd_ ) {
+				//::SetWindowLongPtr( browserHwnd_, GWLP_USERDATA, (LONG_PTR)this );
+				//oldBrowserWndProc_ = (WNDPROC)(LONG_PTR) ::SetWindowLongPtr( treeWnd_, GWLP_WNDPROC, (LONG_PTR)Win32Tree::TreeWndProc );
+			}
+
+			inPlaceObj_ = com_cast( browser_ );
+
 		}
 		else {
 			throw RuntimeException( MAKE_ERROR_MSG_2("Unable to create hwnd") );
@@ -163,6 +161,12 @@ void Win32HTMLBrowser::setVisible( const bool& val )
 	else {
 		//::ShowWindow( browserHwnd_, SW_HIDE );
 	}
+}
+
+LRESULT CALLBACK Win32HTMLBrowser::browserWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	return 0;
 }
 
 bool Win32HTMLBrowser::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndResult, WNDPROC defaultWndProc )
@@ -674,6 +678,8 @@ void Win32HTMLBrowser::onNavigateError( LPDISPATCH pDisp,
 
 STDMETHODIMP Win32HTMLBrowser::TranslateUrl( DWORD dwTranslate, OLECHAR *pchURLIn, OLECHAR **ppchURLOut)
 {
+	HRESULT result = E_NOTIMPL;
+
 	String s(pchURLIn);
 
 	URL_COMPONENTSW components;
@@ -699,22 +705,59 @@ STDMETHODIMP Win32HTMLBrowser::TranslateUrl( DWORD dwTranslate, OLECHAR *pchURLI
 	components.lpszUserName = user;
 
 
-	InternetCrackUrlW( s.c_str(), s.size(), 0, &components );
-
-
-
-	if ( components.nScheme == INTERNET_SCHEME_RES ) {
-		//check out resources dir first to see if we have anything
-		Application* app = Application::getRunningInstance();
-		if ( NULL != app ) {
-			String resDir = app->getResourceBundle()->getResourcesDirectory();
-			FilePath fp = resDir + components.lpszUrlPath;
-			if ( File::exists( fp ) ) {
-
+	if ( InternetCrackUrlW( s.c_str(), s.size(), 0, &components ) ) {
+		if ( components.nScheme == INTERNET_SCHEME_RES ) {
+			//check out resources dir first to see if we have anything
+			Application* app = Application::getRunningInstance();
+			if ( NULL != app ) {
+				FilePath fp;
+				String resDir = app->getResourceBundle()->getResourcesDirectory();
+				
+				String file;
+				if ( components.dwUrlPathLength == 1 && components.lpszUrlPath[0] == '/' ) {
+					file += components.lpszHostName;
+				}
+				else {
+					String binary = components.lpszHostName;
+					
+					FilePath ourExe = app->getFileName();
+					file = components.lpszUrlPath;
+					
+					FilePath binFp = binary;
+					if ( binFp.getPathName().empty() && binFp.getBaseName() == ourExe.getBaseName() ) {
+						if ( System::getCurrentWorkingDirectory() == ourExe.getPathName() ) {
+							binary = System::getCurrentWorkingDirectory() + components.lpszHostName;	
+						}
+					}
+					else if ( binFp.getPathName().empty() ) {
+						binary = "";
+						file = "";
+					}			
+					
+					
+					if ( !binary.empty() ) {
+						resDir = System::findResourceDirectoryForExecutable( FilePath( binary ) );
+						
+						resDir.erase( resDir.size()-1, 1 );
+					}
+				}
+				
+				fp = resDir + file;
+				
+				if ( File::exists( fp ) ) {
+					String newResFile = "file://";
+					newResFile += fp;
+					
+					*ppchURLOut = (OLECHAR*) CoTaskMemAlloc( newResFile.size_in_bytes() + 2 );
+					
+					newResFile.copy( *ppchURLOut, newResFile.size() );
+					
+					(*ppchURLOut)[ newResFile.size() ] = 0;
+					result = S_OK;
+				}
 			}
 		}
 	}
-
 
 	delete [] scheme;
 	delete [] host;
@@ -726,7 +769,7 @@ STDMETHODIMP Win32HTMLBrowser::TranslateUrl( DWORD dwTranslate, OLECHAR *pchURLI
 
 
 
-	return E_NOTIMPL;
+	return result;
 }
 
 STDMETHODIMP Win32HTMLBrowser::ShowContextMenu( DWORD hWndID, POINT *ppt, 
@@ -755,6 +798,15 @@ STDMETHODIMP Win32HTMLBrowser::ShowContextMenu( DWORD hWndID, POINT *ppt,
 	return E_NOTIMPL;
 }
 
+STDMETHODIMP Win32HTMLBrowser::TranslateAccelerator( LPMSG lpMsg, const GUID *pguidCmdGroup, DWORD nCmdID )
+{
+	if ( this->peerControl_->keepsTabKey() ) {
+		return S_OK;
+	}
+
+	return E_NOTIMPL;
+}
+
 STDMETHODIMP Win32HTMLBrowser::GetHostInfo( DOCHOSTUIINFO *pInfo ) 
 {
 	pInfo->cbSize = sizeof(DOCHOSTUIINFO);
@@ -762,7 +814,7 @@ STDMETHODIMP Win32HTMLBrowser::GetHostInfo( DOCHOSTUIINFO *pInfo )
 
 	pInfo->dwDoubleClick = DOCHOSTUIDBLCLK_DEFAULT;
 
-	return S_OK;
+	return E_NOTIMPL;
 }
 
 STDMETHODIMP Win32HTMLBrowser::OnDocWindowActivate( BOOL fEnable ) 
@@ -817,9 +869,31 @@ STDMETHODIMP Win32HTMLBrowser::Authenticate( HWND* phwnd, LPWSTR* pszUsername,
 	return S_OK;
 }
 
+bool Win32HTMLBrowser::processMessageFilter( MSG* msg )
+{
+	if ( msg->message == WM_KEYFIRST && msg->message < WM_KEYLAST ) {
+		if ( IsChild( hwnd_, msg->hwnd ) ) {
+
+			if ( inPlaceObj_ ) {
+				if ( S_OK == inPlaceObj_->TranslateAccelerator( msg ) ) {
+					return true;
+				}
+			}
+
+			if ( msg->hwnd == browserHwnd_ ) {
+				handleBrowserMessages( msg );
+			}
+		}
+	}
+	return false;
+}
+
+void Win32HTMLBrowser::handleBrowserMessages( MSG* msg )
+{
+
+}
 
 
-using namespace VCF;
 
 
 
