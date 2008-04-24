@@ -495,7 +495,9 @@ Color* GraphicsToolkit::internal_getColorMatchFromColormap( const Color& color )
 
 void GraphicsToolkit::initGraphicsToolkit()
 {
-#ifdef VCF_WIN
+#ifdef VCF_AGG
+	GraphicsToolkit::graphicsToolkitInstance = new AggGraphicsToolkit();
+#elif VCF_WIN
 	GraphicsToolkit::graphicsToolkitInstance = new Win32GraphicsToolkit();
 
 #elif VCF_X11
@@ -509,8 +511,8 @@ void GraphicsToolkit::initGraphicsToolkit()
 
 #elif VCF_XCB
 	GraphicsToolkit::graphicsToolkitInstance = new XCBGraphicsToolkit();
-
 #endif
+
 
 	if ( NULL == GraphicsToolkit::graphicsToolkitInstance ){
 		throw NoGraphicsToolkitFoundException( MAKE_ERROR_MSG_2(NO_GFX_TOOLKIT_ERROR) );

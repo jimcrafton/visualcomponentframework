@@ -19,7 +19,7 @@ where you installed the VCF.
 
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 
-#ifdef VCF_WIN
+#if defined(VCF_WIN) && !defined(VCF_AGG)
 #	include "vcf/GraphicsKit/Win32GraphicsToolkit.h"
 #	include "vcf/GraphicsKit/Win32Context.h"
 #	include "vcf/GraphicsKit/Win32Image.h"
@@ -54,6 +54,9 @@ extern "C"
 #	include "vcf/GraphicsKit/XCBGraphicsToolkit.h"
 #endif
 
+#ifdef VCF_AGG
+#include "AggGraphicsToolkit.h"
+#endif
 
 #ifdef VCF_GTK
 	#include <gtk/gtk.h>
