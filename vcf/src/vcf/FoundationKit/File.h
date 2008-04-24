@@ -401,7 +401,12 @@ inline File::FileAttributes File::getFileAttributes()
 inline bool File::isDirectory()
 {
 	if ( 0 == ( validStat_ & File::smAttributes ) ) {
-		updateStat( File::smAttributes );
+		try {
+			updateStat( File::smAttributes );
+		}
+		catch ( ... ) {
+			return false;
+		}
 	}
 	return ( 0 != ( fileAttributes_ & File::faDirectory ) );
 }

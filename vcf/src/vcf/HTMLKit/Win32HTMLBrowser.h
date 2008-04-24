@@ -199,12 +199,17 @@ public:
 
 		return result;
 	}
+
+	STDMETHOD(TranslateAccelerator)( LPMSG lpMsg, const GUID *pguidCmdGroup, DWORD nCmdID );
 protected:
 	String loadingURL_;
 	HWND browserHwnd_;	
 	std::map<String,HTMLEventHandler*> eventHandlers_;
 
+	com_ptr<IOleInPlaceActiveObject> inPlaceObj_;
+
 	int msgFilterID_;
+	WNDPROC oldBrowserWndProc_;
 
 	String getElementText( bool textIsHTML, const String& elementName );
 	void setElementText( bool textIsHTML, const String& elementName, const String& text );
@@ -220,6 +225,11 @@ protected:
 	}
 
 	static bool msgFilter( MSG* msg, void* data );
+
+	bool processMessageFilter( MSG* msg );
+	void handleBrowserMessages( MSG* msg );
+
+	static LRESULT CALLBACK browserWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 };
 
 
