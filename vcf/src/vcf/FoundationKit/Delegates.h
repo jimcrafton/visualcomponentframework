@@ -42,6 +42,14 @@ called get<name>, which will return a reference to the delegate.
 namespace VCF {
 
 
+/**
+\class FunctionTypeInfo Delegates.h "vcf/FoundationKit/Delegates.h"
+Base class for storing function information for a delegate.
+The class stores an array of std::type_info for each 
+argument of the function the class is used to 
+represent. This is then used to compare to FunctionTypeInfo
+instance's and verify that they are the same (or not).
+*/
 class FOUNDATIONKIT_API FunctionTypeInfo {
 public:
 	typedef std::vector<const std::type_info*> TypeArray;
@@ -95,6 +103,103 @@ public:
 class Delegate;
 class ObjectWithCallbacks;
 
+/**
+\class CallBack Delegates.h "vcf/FoundationKit/Delegates.h"
+Base class for a function callback. This class is used to wrap a 
+C++ function pointer, either a static function, or a C++ class
+member function. The class can have an optional name that may be
+used to reference it for later use. A callback is attached to 
+delegate. Calling the invoke function on a delegate causes the 
+delegate to pass this along and call an invoke function on all 
+of the callbacks registered with it. 
+
+Note that some of the documentation here will introduce
+methods that are not directly declared on the Delegate 
+base class, but instead are declared and implemented in
+derived classes. This specifically the case for the 
+invoke(), beginInvoke(), and endInvoke() methods. 
+However their usage is identical, the only difference is 
+in the return type (if any) and the number of function
+arguments that they take.
+
+A callback may be associated with multiple Delegates. Because of this
+the callback stores a list of delegates that it is registered with.
+When the callback is deleted, it will remove it self from any 
+delegates that it is still registered with at that point.
+
+If a callback has a source, then the source will clean up the instance
+of the CallBack and you don't have to worry about freeing the 
+memory instance. If the callback does \em not have a source, then
+it is up to the programmer to delete it. 
+
+You cannot call the delete operator directly on a CallBack instance. 
+Instead use the CallBack::free() member function to delete an instance. 
+
+Classes that derive from CallBack are classed into 2 main categories,
+functions that return some type, and functions that have a void 
+return type (they return nothing). The naming convention used is that 
+a procedure refers to a function with a void return type, and a function
+is used to refer to something that \em does return something, e.g.
+\code
+void someFunction( int t );
+\endcode
+Note that this is \not the same as 
+\code
+void* someFunction( int t );
+\endcode
+Now we do have an actual return type ( a void pointer ).
+
+Therefore all callback classes that wrap a procedure will be named 
+ProcedureX where X indicates the number of arguments the procedure
+takes. So 
+\code
+void foobar()
+\endcode
+is represented by the class Procedure and 
+\code
+void foobar2( const String, int, bool )
+\endcode
+is represented by the class Procedure3.
+
+A callback class that wraps a function is named FunctionX where 
+X is the number arguments that the function takes. For example:
+\code
+int foobar(char*)
+\endcode
+is represented by the class Function1.
+
+Within these two groups there is a further distinction between static functions
+and functions that are C++ member functions that require a "this" pointer.
+Consider the following:
+\code
+int someFunc( int );
+
+class MyClass {
+public:
+  void doit();
+  static void dontDoIt();
+};
+\endcode
+
+Both someFunc and MyClass::dontDoIt are considered static functions. However
+MyClass::doit is a member function, and requires special treatment
+according to the rules of C++ function binding.
+
+To handle C++ member functions we also derive classes from the various
+ProcedureX and FunctionX classes. These are named ClassProcedureX and
+ClassFunctionX where X defines the number of arguments the 
+member function takes. So the following 
+\code
+class MyClass {
+public:
+  void doit( int, bool );
+  static void dontDoIt();
+};
+\endcode
+
+uses the callback class ClassProcedure2 wrap MyClass::doit.
+
+*/
 class FOUNDATIONKIT_API CallBack : public Object, public FunctionTypeInfo {
 public:
 
@@ -108,21 +213,65 @@ public:
 		addToSource( source );
 	}
 
+	/**
+	Deletes the instance of the callback. You must use this
+	method to delete a callback, i.e.
+	\code
+	CallBack* cb =  //some callback...
+
+	//delete the callback
+	//(a) Right way:
+	cb->free();
+
+	//(b) wrong way
+	delete cb
+	\endcode
+	Note that not only is the second technique (b) not allowed
+	but you will get a compile error as the destructor is marked
+	as protected.
+	*/
 	void free();
 
 
+	/**
+	The name of the callback. It can be anything
+	you want, although the convention is the fully
+	qualified C++ function name (like "SomeClass::someFunction" ).
+	The name is optional and it may be an empty string.
+	*/
 	String getName() const {
 		return name;
 	}
 	
-	//a callback may, or may not, have a 
-	//source. In addition, it's possible
-	//that the source is *not* an Object 
-	//based type.
+	/**
+	A callback may, or may not, have a 
+	source. In addition, it's possible
+	that the source is *not* an Object 
+	based type. For this reason this 
+	function is made virtual so that 
+	derived classes can properly implement
+	it and return a valid source point
+	if possible.
+	@return Object the object that "owns"
+	the callback and will delete it when the
+	object is deleted. This means that the
+	callback;s lifetime is that of it's 
+	owning object unless it's explicitly
+	removed from the object and deleted.
+	*/
+	
 	virtual Object* getSource() {
 		return NULL;
 	}
 
+	/**
+	Add the callback to a source. If the Object instance
+	is derived from ObjectWithCallbacks, then the 
+	ObjectWithCallbacks::addCallback will get called
+	for you. Otherwise nothing happens. This method will
+	get called automatically for you by the framework.
+	@see ObjectWithCallbacks
+	*/
 	void addToSource( Object* source );
 
 	friend class Delegate;
@@ -172,14 +321,14 @@ private:
 /**
 \class ObjectWithCallbacks Delegates.h "vcf/FoundationKit/Delegates.h"
 ObjectWithCallbacks is an object that may
-have 0 or more CallBack associated with it,
-and will automatically clean up these CallBack
+have 0 or more CallBacks associated with it,
+and will automatically clean up these CallBacks
 when it is destroyed. This simplifies handling
-who has to clean up CallBack that have been
+who has to clean up a CallBack that may have been
 allocated on the heap (which they always will be).
 
-Because the collection is a map, an event handler may be
-retreived for future use - that is it may be reused by 
+Because the collection is a map, a CallBack may be
+retrieved for future use - that is it may be reused by 
 another delegate. For example:
 \code
 class Stuff : public ObjectWithCallbacks {
@@ -205,7 +354,7 @@ int main()
 
 \endcode
 
-This adds the new callback (ev) to the stuff instance. This event handler can
+This adds the new callback (ev) to the stuff instance. The callback can
 then be retreived at any time:
 
 \code
@@ -249,22 +398,120 @@ class ThreadPool;
 
 
 
+/**
+\class Delegate Delegates.h "vcf/FoundationKit/Delegates.h"
+A delegate can be thought of as a function pointer on steroids. 
+A delegate stores a collection of callbacks, or function pointers, 
+and when you "invoke" the delegate, the delegate passes the function 
+arguments to each of it's callbacks. It is essentially the same idea
+as .Net's multicast delegate. Therefore \em all delegates in the VCF 
+can have multiple "outputs" or callbacks.
 
+Like a function a delegate has a function signature and takes 0 
+or more arguments and may or may not return a value. The delegate 
+derives from FunctionTypeInfo so that it can store information 
+about it's function signature. This is used to make sure that 
+any added callbacks actually match the function signature of 
+the delegate. For instance, if you had a delegate with a function
+signature of 
+\code
+void (delegate)(int, double)
+\endcode
+and tried to add a callback with a function signature of 
+\code
+void (callback)(double,int)
+\endcode
+the result would be the throwing of an exception since the 
+signature's do not match.
+
+A delegate may have 0 or more callbacks associated with it,
+and when the delegate is destroyed it removes all it's callbacks.
+When a callback is removed from the delegate, the delegate
+makes sure the callback removes the delegate from the callbacks's 
+internal list as well. In other words, both the callback and the
+delegate keep references to each other, and both need to be cleaned
+up when a callback is removed from a delegate.
+
+A delegate is invoked by calling the invoke method and 
+passing in the appropriate arguments. This in turn will
+iteratate through all the callbacks registered with the 
+delegate and invoke each callback's bound function pointer.
+The invoke usage looks something like this:
+\code
+//define function..
+bool duhDoIt( const String& str, double d );
+
+//define a delegate with a bool return value and two 
+//function arguments:
+Delegate2R<bool,const String&,double> myDelegate;
+
+//add the static function pointer to delegate
+myDelegate += duhDoIt; 
+
+//invoke the delegate
+myDelegate.invoke("Hola", 120.456);
+
+\endcode
+This will call the duhDoIt() function and pass in "Hola" and
+120.456 as arguments to the function. You can use the operator()
+shorthand if you prefer:
+\code
+//invoke the delegate
+myDelegate("Hola", 120.456);
+\endcode
+
+it will call invoke() for you.
+
+Note that once invoke() is called, it will block
+until all the callbacks have been called and 
+completed. If you have a lengthy operation in a 
+callback then this may take a while. This leads
+us to wanting some sort of asynchronous invocation
+mode.
+
+You can invoke a delegate asynchronously by using the
+beginInvoke() method as well as the
+AsyncResult class. You start the async invocation out
+by calling beingInvoke(), passing in the delegate's
+function arguments, and an optional callback
+that is triggered once all the callbacks have 
+completed. The beginInvoke() call will return 
+immediately and give you a new AsyncResult instance
+which is now your responsibility to delete. 
+
+With the AsyncResult instance you can call it's wait() method
+to block until all of the callbacks have finished executing.
+For example
+\code
+void myFunc( int i );
+
+Delegate1<int> d2;
+d2 += doit;
+
+AsyncResult* ar = d2.beginInvoke( 10, NULL );
+ar->wait();//block till we're done
+delete ar;
+\endcode
+
+
+There is static ThreadPool for Delegates to use when they are 
+operating in asynchronous mode. The lifetime of the thread pool
+is managed by the framework and created and deleted automatically.
+
+Like the CallBack class, delegates may be broken down into
+two categories, those that do not return any value
+and those that do. For delegates that do not return anything
+the derived classes are named DelegateX where X is the 
+number of arguments that the delegate function takes. 
+For delegates that do return a value the classes are named
+DelegateRX where where X is the number of arguments that 
+the delegate function takes and the R indicates that the 
+delegate has a return type.
+
+@see DelegateR
+*/
 class FOUNDATIONKIT_API Delegate : public FunctionTypeInfo {
 public:
-
-	
-
-	static ThreadPool* delegateThreadPool;
-
-	static void initThreadPool();
-
-	static void terminateThreadPool();
-
-
-	static ThreadPool* getThreadPool();
-
-
 	Delegate(): functions(NULL), runCallbacksAsync_(false) {}
 
 	virtual ~Delegate() {
@@ -289,6 +536,9 @@ public:
 	}
 
 
+	/**
+	Returns whether or not the delegate has any callbacks.
+	*/
 	bool empty() const {
 		bool result = true;
 		if ( NULL != functions ) {
@@ -297,6 +547,10 @@ public:
 		return result;
 	}
 
+	/**
+	Returns the number of callbacks currently associated with this
+	delegate.
+	*/
 	size_t size() const {
 		size_t result = 0;
 		if ( NULL != functions ) {
@@ -306,6 +560,10 @@ public:
 	}
 
 
+	/**
+	cleans out all callbacks from the delegate. Note that
+	this does \em not delete the callback.
+	*/
 	void clear() {
 		if ( NULL != functions ) {
 			CallBack::Vector::iterator it = functions->begin();
@@ -321,6 +579,12 @@ public:
 	}
 
 
+	/**
+	Adds a callback to a delegate. If the callback
+	function signature does not match the
+	delegate function signature then the callback is
+	not added and the function throws a RuntimeException.
+	*/
 	void add( CallBack* callback ) {
 		VCF_ASSERT( NULL != callback );
 
@@ -341,6 +605,10 @@ public:
 		}
 	}
 
+	/**
+	Removes a callback from a delegate. This does \em not
+	delete the callback.
+	*/
 	void remove( CallBack* callback ) {
 		VCF_ASSERT( NULL != callback );
 
@@ -356,12 +624,20 @@ public:
 	}
 
 
+	/**
+	@see remove
+	*/
 	Delegate& operator -=( CallBack* callback ) {
 		remove( callback );
 		return *this;
 	}
 
 
+	/**
+	Returns the callback at the specific index. If the
+	delegate has no callbacks, or if the index is out of bounds
+	then an exception is thrown.
+	*/
 	const CallBack& at( const uint32& index ) const {
 		if ( NULL == functions ) {
 			throw RuntimeException( "No callbacks assigned to this delegate." );
@@ -370,6 +646,21 @@ public:
 	}
 
 
+	/**
+	Tells the delegate whether the callbacks should be invoked 
+	in a synchronous manner or asynchronously. This is only
+	relevant when you invoke a delagate in async mode. When this 
+	happens, and the thread pool determines that it's time to 
+	invoke the delegate's various callbacks it has a choice:
+	1) to invoke each callback, blocking until the callback 
+	returns
+	or
+	2) to post each \em callback to the delegate thread pool 
+	for asynchronous execution.
+	If the delegate is set to run callbacks asynchronously
+	then option 2 is used, otherwise option 1 is performed.
+	The default is option 1.	
+	*/
 	void setRunCallbacksAsynchronously( bool val ) {
 		runCallbacksAsync_ = val;
 	}
@@ -392,6 +683,29 @@ public:
 
 		return !val.empty();
 	}
+
+
+
+
+	/**
+	Initializes the thread pool used by delegates for 
+	asynchronous callback invocation. This is called by the 
+	framework.
+	*/
+	static void initThreadPool();
+
+	/**
+	Terminates the thread pool used by delegates for 
+	asynchronous callback invocation. This is called by the 
+	framework.
+	*/
+	static void terminateThreadPool();
+
+	/**
+	Get's the current trhead pool used by delegates for 
+	asynchronous callback invocation.
+	*/
+	static ThreadPool* getThreadPool();
 protected:
 	CallBack::Vector* functions;
 
@@ -402,6 +716,8 @@ protected:
 	}
 
 	bool runCallbacksAsync_;
+
+	static ThreadPool* delegateThreadPool;
 };
 
 
@@ -409,7 +725,16 @@ protected:
 
 class AsyncResult;
 
-
+/**
+\class AsyncReturns Delegates.h "vcf/FoundationKit/Delegates.h"
+Interface class used for async delegate execution. It is
+used to indicate that a function call (by a callback)
+completed. The implemenation for delegates that have
+no return type is a no-op. For delegates do have a return
+type, the implementation is to store the return value
+in the delegate's results cache.
+@see DelegateR
+*/
 class FOUNDATIONKIT_API AsyncReturns {
 public:
 	virtual ~AsyncReturns(){};
@@ -418,7 +743,11 @@ public:
 };
 
 
-
+/**
+\class Procedure1 Delegates.h "vcf/FoundationKit/Delegates.h"
+Represents a callback for a static function with one function 
+argument of type P1 and no return type. 
+*/
 template <typename P1>
 class Procedure1 : public CallBack {
 public:
@@ -468,7 +797,13 @@ private:
 };
 
 
-
+/**
+\class AsyncResult Delegates.h "vcf/FoundationKit/Delegates.h"
+This class is used to manage invoking a delegate's callbacks
+asynchronously. You don't need to create an instance of
+it, instead the framework will hand you a new instance 
+when you call beginInvoke on a delegate.
+*/
 class FOUNDATIONKIT_API AsyncResult : public Object, public Waitable {
 public:
 	typedef Procedure1<AsyncResult*> AsyncCallback;
@@ -537,6 +872,12 @@ public:
 
 	void doWork();
 
+	/**
+	This function will wait till the async result is completed.
+	The result is "finished" when all the callbacks for the delegate
+	that created it are done executing. This method will
+	block indefinitely until all the callbacks are done.
+	*/
 	virtual WaitResult wait() {
 		{
 			Lock l(runnableMtx_);
@@ -547,6 +888,13 @@ public:
 		return resultWait_.wait();
 	}
 
+	/**
+	This function will attempt to wait till the async result is completed.
+	The result is "finished" when all the callbacks for the delegate
+	that created it are done executing. This method will
+	block for the passed in number of milliseconds or 
+	until all the callbacks are done whichever happens first.
+	*/
 	virtual WaitResult wait( uint32 milliseconds ) {
 		{
 			Lock l(runnableMtx_);
@@ -565,11 +913,15 @@ public:
 
 	void internal_run();
 
+	/**
+	A flag that indicates whether or not the delegate's callbacks have 
+	finished executing.	
+	@return bool a result of true means the callbacks are done, otherwise 
+	it returns false.
+	*/
 	bool isCompleted() const {
 		return completed_;
 	}
-
-	void* getUserData() const;
 
 	void internal_addRunnable( AsyncReturns* returnObject, Runnable* internalRunnable ) {
 		internalRunnables_.push_back(CallbackWork(returnObject,internalRunnable));
@@ -621,7 +973,11 @@ protected:
 
 typedef Procedure1<AsyncResult*> AsyncCallback;
 
-
+/**
+\class ClassProcedure1 Delegates.h "vcf/FoundationKit/Delegates.h"
+A class member function. The callback takes one argument of type P1 
+for a class type of ClassType. 
+*/
 template <typename P1, typename ClassType >
 class ClassProcedure1 : public Procedure1<P1> {
 public:
@@ -670,7 +1026,10 @@ private:
 
 
 
-
+/**
+\class Delegate1 Delegates.h "vcf/FoundationKit/Delegates.h"
+A delegate that takes one argument of type P1.
+*/
 template < typename P1>
 class Delegate1 : public Delegate, AsyncReturns {
 public:
@@ -752,7 +1111,10 @@ protected:
 
 
 
-
+/**
+\class Procedure Delegates.h "vcf/FoundationKit/Delegates.h"
+A callback that takes no arguments. 
+*/
 class FOUNDATIONKIT_API Procedure : public CallBack {
 public:
 
@@ -796,7 +1158,11 @@ private:
 };
 
 
-
+/**
+\class ClassProcedure Delegates.h "vcf/FoundationKit/Delegates.h"
+A class method that takes no arguments. The callback class
+is of type ClassType.
+*/
 template <typename ClassType >
 class ClassProcedure : public Procedure {
 public:
@@ -843,7 +1209,10 @@ private:
 
 
 
-
+/**
+\class Delegate0 Delegates.h "vcf/FoundationKit/Delegates.h"
+A delegate that takes no arguments.
+*/
 class FOUNDATIONKIT_API Delegate0 : public Delegate, AsyncReturns {
 public:
 	typedef void (*FuncPtr)();	
@@ -916,6 +1285,7 @@ public:
 protected:
 	virtual void functionFinished( AsyncResult*, Runnable* runnable );
 };
+
 
 
 
@@ -2215,7 +2585,12 @@ protected:
 
 
 
-
+/**
+\class ResultsCache Delegates.h "vcf/FoundationKit/Delegates.h"
+A class that is uses to cache the results of callbacks that
+return values. The ResultsCache may be used with delegates
+that have been fired asynchronously. 
+*/
 template <typename ReturnType>
 class ResultsCache {
 public:
@@ -2236,6 +2611,12 @@ public:
 		}		
 	}
 	
+	/**
+	this is called by the various implementations of callbacks that
+	return a value when a function is finished. The AsyncResult
+	passed in is used as a key to make sure that the results
+	list that the result is added to is the correct one.
+	*/
 	void addResult( ReturnType result, AsyncResult* asyncRes ) {
 		
 		Lock l(asyncResultsMtx_);
@@ -2258,6 +2639,17 @@ public:
 	}
 
 
+	/**
+	Get's the last result for a given AsyncResult instance.
+	This is called to get the last result in a collection
+	of possible results, for a given AsyncResult. If 
+	you had a delegate that return a value with three 
+	callbacks associated with it, then the result list
+	would have 3 possible values in it, stored in the 
+	order the callbacks were invoked. This function
+	would return the \em last result put into the
+	list.
+	*/
 	ReturnType getLastResult( AsyncResult* asyncResult )  {
 		ReturnType result = ReturnType();
 
@@ -2274,6 +2666,12 @@ public:
 		return result;
 	}
 
+	/**
+	Gets an instance of the result collection for an
+	AsyncResult instance. This may be NULL if there
+	are no results. This will return \em all
+	the results for the delegate that was invoked asynchronously.
+	*/
 	Results* getResults( AsyncResult* asyncResult ) {
 		Results* result = NULL;
 
@@ -2396,6 +2794,28 @@ protected:
 };
 
 
+
+/**
+\class DelegateR Delegates.h "vcf/FoundationKit/Delegates.h"
+The base calss for delegates that return a value from
+a function. This delegate returns a value of type 
+ReturnType but has no arguments.
+
+The delegate stores all the return values in a vector
+of type ReturnType. You can access the values via the
+results member variable which is marked as public.
+
+When the invoke() method returns the results vector will
+have been populated with all the return values from
+the callbacks, stored in the order the callbacks were
+called in. The return result for invoke() is the return
+value of the last callback.
+
+If the delegate is invoked asynchronously with beingInvoke()
+then if you want to get the return value(s) you need ot 
+call either endInvoke(), or endInvokeWithResults()
+to get all the return values.
+*/
 template <typename ReturnType>
 class DelegateR : public Delegate, AsyncReturns {
 public:
@@ -2420,6 +2840,10 @@ public:
 		return *this;
 	}
 
+	/**
+	Returns a type_info that represents the return type defined
+	by ReturnType.
+	*/
 	virtual const std::type_info& getReturnType() const {
 		return typeid(ReturnType);
 	}
@@ -2433,6 +2857,12 @@ public:
 		return invoke();
 	}
 
+	/**
+	invokes the delegate and iterates through it's 
+	list of callbacks. 
+	@return ReturnType returns the return value of the 
+	last callback.
+	*/
 	ReturnType invoke() {
 		ReturnType result = ReturnType();
 
@@ -2485,8 +2915,23 @@ public:
 	}
 
 
+	/**
+	Gets the result for the AsyncResult instance that was 
+	returned by the previous call to beginInvoke().
+
+	@return ReturnType returns the return value of the 
+	last callback.
+	*/
 	ReturnType endInvoke( AsyncResult* asyncResult );
 
+	/**
+	Gets the results for the AsyncResult instance that was 
+	returned by the previous call to beginInvoke().
+
+	@return Results returns an a array of results, reprepresenting
+	all the return values for each callback that was called. 
+	The collection is a vector of ReturnType.
+	*/
 	Results endInvokeWithResults( AsyncResult* asyncResult );	
 
 	Results results;

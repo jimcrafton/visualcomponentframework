@@ -27,6 +27,24 @@ namespace VCF {
 
 	typedef Delegate1<RunLoopEvents> RunLoopDelegate;
 
+	/**
+	\class RunLoop RunLoop.h "vcf/FoundationKit/RunLoop.h"
+	The RunLoop class is used to create an instance of an OS
+	event queue. This can then be run and you can post events
+	to it, or add a timer, or some other source of notification.
+
+	The idea behind this is neither new or original. In our
+	case we have \em heavily borrowed upon Apple's 
+	CFRunLoop, so you may want to check their documentation
+	here:
+	http://developer.apple.com/documentation/CoreFoundation/Reference/CFRunLoopRef/Reference/reference.html
+
+	You never create a RunLoop. Instead you get access to it 
+	through the ThreadManager's getCurrentRunLoop() function
+	which will return the RunLoop for the thread that's running
+	when the call was made. Also you can get the run loop
+	from a valid, running thread instance.
+	*/
     class FOUNDATIONKIT_API RunLoop {
     public:
 		static const String DefaultMode;
@@ -36,12 +54,27 @@ namespace VCF {
 
 		RunLoopDelegate LoopEvents;
 
+		/**
+		starts the run loop running. it will keep 
+		running till you call stop().
+		*/
         void run( const String& mode=DefaultMode );
 
+		/**
+		Run the run loop till the current time hits the passed
+		in date time value.
+		@param DateTime the time to run the loop till.
+		*/
 		void run( const DateTime& till, const String& mode=DefaultMode );
 
+		/**
+		Runs the run loop for the specified duration.
+		*/
 		void run( const DateTimeSpan& duration, const String& mode=DefaultMode );
 
+		/**
+		Stops the run loop
+		*/
         void stop( const String& mode=DefaultMode );
         
         void addTimer( RunLoopTimerPtr::Shared timer, const String& mode=DefaultMode );
