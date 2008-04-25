@@ -257,6 +257,15 @@ public:
 		runWithExceptionBlock_ = val;
 	}
 
+	/**
+	Returns the main or primary thread for a program. There
+	is always at \em least one thread (what you might 
+	say is the "primary" thread of execution) that an
+	executable program will create when it is started up. 
+	This function will return that primary thread. You don't 
+	create it, and you don't destroy it, that's handled 
+	by the framework.
+	*/
 	static Thread* getMainThread();
 
 	/**
