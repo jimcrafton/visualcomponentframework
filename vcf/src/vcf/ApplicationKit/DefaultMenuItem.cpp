@@ -564,7 +564,7 @@ AcceleratorKey* DefaultMenuItem::getAccelerator()  const
 	return result;
 }
 
-void DefaultMenuItem::setAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask )
+void DefaultMenuItem::setAcceleratorKeyInfo( const VirtualKeyCode& keyCode, const uint32& modifierMask )
 {
 	CallBack* eventHandler = this->getCallback( "DefaultMenuItem::onAccelerator" );
 	if ( NULL == eventHandler ) {
@@ -642,7 +642,7 @@ Object* DefaultMenuItem::clone(bool deep) const
 			//remove the old one!
 			UIToolkit::removeAccelerator( keyCode, mask, (MenuItem*)this );
 			currentAccelerator_ = NULL;
-			result->setAcceleratorKey( keyCode, mask );
+			result->setAcceleratorKeyInfo( keyCode, mask );
 		}
 		else {
 			result->setAcceleratorKey( (AcceleratorKey*)accel->clone() );

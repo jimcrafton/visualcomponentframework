@@ -552,7 +552,12 @@ public:
 
 	
 	typedef _typename_ CollectionT::key_type key_type;
-    typedef _typename_ CollectionT::referent_type referent_type;
+	#ifdef VCF_GCC
+ //   typedef _typename_ CollectionT::referent_type referent_type; ?? what is this on GCC?
+	#else
+//    typedef _typename_ CollectionT::referent_type referent_type;
+	#endif
+
     typedef _typename_ CollectionT::key_compare key_compare;
 	typedef _typename_ CollectionT::value_compare value_compare;
     typedef _typename_ CollectionT::allocator_type allocator_type;
@@ -652,16 +657,16 @@ public:
 		return collection_.insert(it,x);
 	}
 
-    inline void insert(const value_type *first, const value_type *last) {
+    inline iterator insert(const value_type *first, const value_type *last) {
 		return collection_.insert(first,last);
 	}
 
-    inline iterator erase(iterator it) {
-		return collection_.erase(it);
+    inline void erase(iterator it) {
+		collection_.erase(it);
 	}
 
-    inline iterator erase(iterator first, iterator last) {
-		return collection_.erase(first,last);
+    inline void erase(iterator first, iterator last) {
+		collection_.erase(first,last);
 	}
 
     inline size_type erase(const KeyType& key) {

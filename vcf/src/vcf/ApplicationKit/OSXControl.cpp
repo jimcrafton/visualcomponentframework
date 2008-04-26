@@ -16,6 +16,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/OSXWindow.h"
 #include "vcf/ApplicationKit/OSXCursorPeer.h"
 
+/*
 
 class OSXControlView : public TView {
 public:
@@ -70,7 +71,7 @@ public:
 		
 		if ( inPart == kControlContentMetaPart
 				|| inPart == kControlStructureMetaPart
-				/* || inPart == kControlOpaqueRegionMetaPart */ )
+				) // || inPart == kControlOpaqueRegionMetaPart  )
 		{
 			bounds = Bounds();
 			qdBounds = bounds;
@@ -309,7 +310,7 @@ void OSXControl::setParent( Control* parent )
 		ControlRef parentControlRef = (ControlRef)parent->getPeer()->getHandleID();
 		OSStatus err = HIViewAddSubview( parentControlRef, hiView_ );
 		if ( err != noErr ) {
-			StringUtils::traceWithArgs( Format("HIViewAddSubview failed, err: %d\n") % err );
+			StringUtils::trace( Format("HIViewAddSubview failed, err: %d\n") % err );
 		}
 	}
 }
@@ -642,31 +643,31 @@ OSStatus OSXControl::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef t
 				case kEventControlHit: {
 					result = ::CallNextEventHandler( nextHandler, theEvent );
 				
-					/*									
-					if ( !control_->isDestroying() && (NULL != vcfEvent) ) {
-						
-						if ( OSXControl::msNoState == mouseState_ ) {							
-							control_->handleEvent( vcfEvent );
-							mouseState_ = OSXControl::msDown;
-							printf( "kEventControlHit, mouseState_ = OSXControl::msDown\n" );
-						}
-						else if ( OSXControl::msDown == mouseState_ ) {
-							mouseState_ = OSXControl::msUp;
-							
-							MouseEvent* tmpEvent = (MouseEvent*)vcfEvent;
-							
-							MouseEvent mouseEvent( tmpEvent->getSource(), Control::MOUSE_UP,
-													tmpEvent->getButtonMask(),
-													tmpEvent->getKeyMask(),
-													tmpEvent->getPoint() );
-													
-							control_->handleEvent( &mouseEvent );						
-							
-							mouseState_ = OSXControl::msNoState;
-							printf( "kEventControlHit, mouseState_ = OSXControl::msNoState\n" );
-						}						
-					}
-					*/
+			
+			//		if ( !control_->isDestroying() && (NULL != vcfEvent) ) {
+			//			
+			//			if ( OSXControl::msNoState == mouseState_ ) {							
+			//				control_->handleEvent( vcfEvent );
+			//				mouseState_ = OSXControl::msDown;
+			//				printf( "kEventControlHit, mouseState_ = OSXControl::msDown\n" );
+			//			}
+			//			else if ( OSXControl::msDown == mouseState_ ) {
+			//				mouseState_ = OSXControl::msUp;
+			//				
+			//				MouseEvent* tmpEvent = (MouseEvent*)vcfEvent;
+			//				
+			//				MouseEvent mouseEvent( tmpEvent->getSource(), Control::MOUSE_UP,
+			//										tmpEvent->getButtonMask(),
+			//										tmpEvent->getKeyMask(),
+			//										tmpEvent->getPoint() );
+			//										
+			//				control_->handleEvent( &mouseEvent );						
+			//				
+			//				mouseState_ = OSXControl::msNoState;
+			//				printf( "kEventControlHit, mouseState_ = OSXControl::msNoState\n" );
+			//			}						
+			//		}
+			//		
 							
 				}
 				break;
@@ -767,6 +768,7 @@ OSStatus OSXControl::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef t
 	
 };
 
+*/
 
 /**
 $Id$

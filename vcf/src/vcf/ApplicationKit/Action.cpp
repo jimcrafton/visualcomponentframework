@@ -149,7 +149,7 @@ EventHandler* Action::getAcceleratorEventHandler()
 }
 
 
-void Action::setAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask )
+void Action::setAcceleratorKeyInfo( const VirtualKeyCode& keyCode, const uint32& modifierMask )
 {
 	
 	EventHandler* eventHandler = getAcceleratorEventHandler();

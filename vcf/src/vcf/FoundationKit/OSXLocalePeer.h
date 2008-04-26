@@ -69,6 +69,8 @@ public:
 	virtual OSHandleID getHandleID() {
 		return (OSHandleID)localeRef_;
 	}
+	
+	virtual void setToCurrentThread();
 protected:
 
     static std::map<String,AppleLocalePair> localeMaping;

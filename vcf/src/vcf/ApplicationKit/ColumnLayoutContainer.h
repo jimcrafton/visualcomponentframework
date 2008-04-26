@@ -169,11 +169,6 @@ public:
 		columnWidths_.resize(columnCount_,ColumnLayoutContainer::ColumnWidthResize);
 	}
 
-	void setColumnWidth( int col, int val ) {
-		columnWidths_[col] = val;
-	}
-
-
 	int columnCount_ ;
 	std::vector<int> columnWidths_;
 

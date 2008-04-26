@@ -330,7 +330,18 @@ bool OSXFont::isEqual( Object* object )
 	return result;
 }
 
+VCF::Size OSXFont::getTextSize( const String& text )
+{
+	VCF::Size result;
+	
+	return result;
+}
 
+void OSXFont::updateLocaleSettings()
+{
+
+}
+	
 /**
 $Id$
 */

@@ -18,28 +18,46 @@ public:
 		virtual ~OSXUIShellPeer();
         
 		virtual void shellBeginPainting( Rect* clippingRect );
-        
+
 		virtual void shellEndPainting();
-        
+
 		virtual bool shellSupportsVirtualDirectories();
-        
+
 		virtual bool shellHasFileSystemDirectory();
-        
+
 		virtual String shellGetDirectory();
-        
-		virtual OSHandleID shellGetHandleID();
-        
+
 		virtual OSHandleID shellGetGraphicsContextHandleID();
-        
+
+		virtual OSHandleID shellGetHandleID();
+
 		virtual void shellSetUIShell( UIShell* shell );
-        
+
+		virtual void shellTranslateToScreenCoords( Control* control, Point* pt );
+
+		virtual void shellTranslateFromScreenCoords( Control* control, Point* pt );
+
 		virtual uint32 shellGetWidth();
-        
+
 		virtual uint32 shellGetHeight();
-        
+
 		virtual Rect shellGetUsableBounds();
-        
+
 		virtual Point getCurrentMousePosition();
+
+		virtual void performFileOp( int operationType, const std::vector<String>& srcFiles, const std::vector<String>& destFiles );
+
+		virtual void launch( const String& fileName, const String& parameters );
+
+		virtual void openTrash();
+		virtual void emptyTrash();
+
+		virtual void createFileShortcut( const String& originalFileName, const String& shortcutFileName );
+
+		virtual MIMEType getMIMEType( const String& fileName );
+
+		virtual void createFileAssociation( const FileAssociationInfo& info, bool forAllUsers );
+		virtual void removeFileAssociation( const FileAssociationInfo& info, bool forAllUsers );
         
 	};
 };

@@ -117,7 +117,7 @@ public:
 	
 	virtual void setCanPaint( const bool& val );
 	
-	virtual void setAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask );
+	virtual void setAcceleratorKeyInfo( const VirtualKeyCode& keyCode, const uint32& modifierMask );
 
 	virtual void setAcceleratorKey( AcceleratorKey* accelerator );
 

@@ -123,7 +123,7 @@ void OSXToolbar::onModelChanged( ModelEvent* e )
 
 		case ToolbarItem::tbStateChanged : {
 			ToolbarModelEvent* tme = (ToolbarModelEvent*)e;
-			int32 state = tme->getItem()->getState();
+			int32 state = tme->getItem()->getDisplayState();
 
 			if ( state == ToolbarItem::tisSeparator ) {
 				

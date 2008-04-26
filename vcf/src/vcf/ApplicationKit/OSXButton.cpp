@@ -160,7 +160,7 @@ OSStatus OSXButton::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef th
 					result = noErr;//::CallNextEventHandler( nextHandler, theEvent );
 					//break;
 					if ( !control_->isDestroying() ) {
-												
+							/*					
 						GrafPtr port = NULL;										
 						CGContextRef context = NULL;
 						RgnHandle region = NULL;
@@ -219,6 +219,7 @@ OSStatus OSXButton::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef th
 						ctx->restoreState( gcs );
 						
 						osxCtx->setCGContext( NULL, 0, bounds );
+						*/
 					}
 				}
 				break;

@@ -146,6 +146,8 @@ public:
 	virtual void redo();
 
 	virtual void setTextWrapping( const bool& val );
+	
+	virtual bool getTextWrapping();
 protected:
 	TextControl* textControl_;
 	int editState_;

@@ -88,7 +88,8 @@ public:
 
 	TabPage* getSelectedPage();
 	void setSelectedPage( TabPage* page );
-	void setSelectedPage( const uint32& index );
+	
+	void setSelectedPageByIndex( const uint32& index );
 
 	TabSheet* getSelectedSheet();
 	void setSelectedSheet( TabSheet* sheet );

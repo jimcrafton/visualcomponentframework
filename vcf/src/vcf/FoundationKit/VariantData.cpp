@@ -881,9 +881,9 @@ short VariantData::convertToShort() const
 }
 
 
-ushort VariantData::convertToUShort() const 
+VCF::ushort VariantData::convertToUShort() const 
 {
-	ushort result = ushort();
+	VCF::ushort result = VCF::ushort();
 	switch ( type ) {
 		case pdInt:{
 			result = (ushort) IntVal;
@@ -975,7 +975,7 @@ ushort VariantData::convertToUShort() const
 
 unsigned int VariantData::convertToUInt() const 
 {
-	unsigned int result = unsigned int();
+	unsigned int result = 0;
 	switch ( type ) {
 		case pdInt:{
 			result = (unsigned int) IntVal;
@@ -1067,7 +1067,7 @@ unsigned int VariantData::convertToUInt() const
 
 unsigned long VariantData::convertToULong() const 
 {
-	unsigned long result = unsigned long();
+	unsigned long result = 0;
 	switch ( type ) {
 		case pdInt:{
 			result = (unsigned long) IntVal;

@@ -2260,7 +2260,10 @@ void OSXContext::drawThemeText( Rect* rect, TextState& state )
 						teFlushDefault, NULL );
 }
 	
-	
+void OSXContext::drawThemeBorder( Rect* rect, DrawUIState& state )
+{
+
+}	
 	
 /**
 $Id$

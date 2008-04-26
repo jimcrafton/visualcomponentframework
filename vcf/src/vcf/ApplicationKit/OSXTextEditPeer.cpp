@@ -18,6 +18,11 @@ where you installed the VCF.
 
 using namespace VCF;
 
+
+
+/*
+
+
 OSXTextEditPeer::OSXTextEditPeer( TextControl* component, const bool& isMultiLineControl ):
 	OSXControl( component ),
 	OSXTextPeer( true, isMultiLineControl ),
@@ -82,17 +87,17 @@ void OSXTextEditPeer::create( Control* owningControl )
 			throw RuntimeException( MAKE_ERROR_MSG_2("InstallEventHandler failed for OSXTextEditPeer!") );
 		}
 		
-		/*
-		TXNCarbonEventInfo      carbonEventInfo;
-		TXNControlTag           iControlTags[] = { kTXNUseCarbonEvents };  
-		TXNControlData          iControlData[1];
-		carbonEventInfo.useCarbonEvents = false;  
-		carbonEventInfo.filler = 0;
-		carbonEventInfo.flags = 0;   
-		carbonEventInfo.fDictionary = NULL;
-		iControlData[0].uValue = (UInt32) &carbonEventInfo;
-		TXNSetTXNObjectControls( txnObject_, false, 1, iControlTags, iControlData ); 
-		*/
+
+		//TXNCarbonEventInfo      carbonEventInfo;
+		//TXNControlTag           iControlTags[] = { kTXNUseCarbonEvents };  
+		//TXNControlData          iControlData[1];
+		//carbonEventInfo.useCarbonEvents = false;  
+		//carbonEventInfo.filler = 0;
+		//carbonEventInfo.flags = 0;   
+		//carbonEventInfo.fDictionary = NULL;
+		//iControlData[0].uValue = (UInt32) &carbonEventInfo;
+		//TXNSetTXNObjectControls( txnObject_, false, 1, iControlTags, iControlData ); 
+		
 
 		setFont( textControl_->getFont() );
 
@@ -878,12 +883,12 @@ uint32 OSXTextEditPeer::getSelectionCount()
 	return e - s;
 }
 
-/*
-void OSXTextEditPeer::getSelectionMark( uint32 & start, uint32 & end )
-{
-	
-}
-*/
+
+//void OSXTextEditPeer::getSelectionMark( uint32 & start, uint32 & end )
+//{
+//	
+//}
+
 
 
 void OSXTextEditPeer::clearSelection()
@@ -902,7 +907,7 @@ void OSXTextEditPeer::scrollToLine( const uint32& lineIndex )
 	
 }
 
-void OSXTextEditPeer::scrollToSelection( const bool& _showEndSel/*=false*/ )
+void OSXTextEditPeer::scrollToSelection( const bool& _showEndSel )
 {
 	
 }
@@ -1014,6 +1019,12 @@ void OSXTextEditPeer::setTextWrapping( const bool& val )
 {
 
 }
+
+bool OSXTextEditPeer::getTextWrapping()
+{
+
+}
+*/
 
 
 /**

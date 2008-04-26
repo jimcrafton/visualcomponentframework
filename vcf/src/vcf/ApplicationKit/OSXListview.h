@@ -24,47 +24,48 @@ public:
 
 	virtual void create( Control* owningControl );
 
-	virtual void addItem( ListItem * item );
+	virtual void selectItem( const uint32& index );
 
-	virtual void insertItem( const uint32& index, ListItem * item );
+	virtual uint32 getSelectedItem();
 
-	virtual void clear();
+	virtual void setFocusedItem( const uint32& index );
 
-	virtual void deleteItem( ListItem* item );
+	virtual uint32 getFocusedItem();
 
-	virtual bool ensureVisible(ListItem * item, bool partialOK );
+	virtual bool isItemSelected( const uint32& index );
 
-	virtual void setFocusedItem(ListItem * item);
+	virtual Rect getItemRect( const uint32& index );	
 
-	virtual void selectItem(ListItem * item);
+	virtual Rect getItemImageRect( const uint32& index );
 
-	virtual Rect getItemRect( ListItem* item );
+	virtual uint32 hitTest( const Point& point );	
 
-	virtual bool isItemSelected(ListItem* item);
+	virtual Enumerator<uint32>* getSelectedItems();
 
-	virtual ListItem* isPtOverItem(Point* point);
+	virtual void rangeSelect( const Rect& selectionRect );	
 
-	virtual ListItem* getFocusedItem();
+	virtual bool allowsMultiSelect();
 
-	virtual ListItem* getSelectedItem();
+	virtual void setAllowsMultiSelect( const bool& allowsMultiSelect );	
 
-	virtual Enumerator<ListItem*>* getSelectedItems();
+	virtual void setLargeImageList( ImageList* imageList );
 
-	virtual void rangeSelect( Rect* selectionRect );
+	virtual void setSmallImageList( ImageList* imageList );
 
-	virtual void addHeaderColumn( const String& columnName, const double& width );
 
-	virtual void insertHeaderColumn( const uint32& index, const String& columnName, const double& width );
+	virtual bool ensureVisible(const uint32& index, bool partialOK );
+	
+	virtual void setColumnWidth( const uint32& index, const double& width, ColumnAutosizeType type );
 
-	virtual void deleteHeaderColumn( const uint32& index );
+	virtual double getColumnWidth( const uint32& index );
+
+	virtual TextAlignmentType getColumnTextAlignment( const uint32& index );
+
+	virtual void setColumnTextAlignment( const uint32& index, const TextAlignmentType& val );
 
 	virtual IconStyleType getIconStyle();
 
 	virtual void setIconStyle( const IconStyleType& iconStyle );
-
-	virtual bool getAllowsMultiSelect();
-
-	virtual void setAllowsMultiSelect( const bool& allowsMultiSelect );
 
 	virtual IconAlignType getIconAlignment();
 
@@ -72,23 +73,7 @@ public:
 
 	virtual bool getAllowLabelEditing();
 
-	virtual void setAllowLabelEditing( const bool& allowLabelEditing );
-
-	virtual void setColumnWidth( const uint32& index, const double& width, ListViewControl::AutoSizeType type=ListViewControl::lcatAutoSizeNone );
-
-	virtual double getColumnWidth( const uint32& index );
-
-	virtual void setColumnName( const uint32& index, const String& columnName );
-
-	virtual String getColumnName( const uint32& index );
-
-	virtual void sort( ItemSort* itemSortFunctor );
-
-	virtual void setLargeImageList( ImageList* imageList );
-
-	virtual void setSmallImageList( ImageList* imageList );
-
-	virtual Rect getItemImageRect( ListItem* item );
+	virtual void setAllowLabelEditing( const bool& allowLabelEditing );		
 
 	virtual int32 getDisplayOptions();
 
