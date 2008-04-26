@@ -77,7 +77,7 @@ void ClassRegistry::removeClass( const String& className )
 	if ( !className.empty() ) {
 		String id ;
 
-		std::map<String,Class*>::iterator found =
+		Map<String,Class*>::iterator found =
 			registryInstance_->classMap_.find( className );
 
 		if ( found != registryInstance_->classMap_.end() ){
@@ -130,7 +130,7 @@ void ClassRegistry::removeInterface( const String& interfaceName )
 	if ( !interfaceName.empty() ) {
 		String id ;
 
-		std::map<String,InterfaceClass*>::iterator found =
+		Map<String,InterfaceClass*>::iterator found =
 			registryInstance_->interfaceMap_.find( interfaceName );
 
 		if ( found != registryInstance_->interfaceMap_.end() ){
@@ -144,7 +144,7 @@ void ClassRegistry::removeInterface( const String& interfaceName )
 				registryInstance_->interfaceIDMap_.erase( found );
 			}
 
-			std::map<String,ImplementedInterfaceClass*>::iterator found2 =
+			Map<String,ImplementedInterfaceClass*>::iterator found2 =
 				registryInstance_->implementedInterfacesIDMap_.find( id );
 
 			if ( found2 != registryInstance_->implementedInterfacesIDMap_.end() ) {

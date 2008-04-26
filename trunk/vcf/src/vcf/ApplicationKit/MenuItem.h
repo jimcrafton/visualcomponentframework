@@ -194,7 +194,7 @@ public:
 	\p
 	A menu item may have only one accelerator associated with it at any given time.
 	*/
-	virtual void setAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask ) = 0;
+	virtual void setAcceleratorKeyInfo( const VirtualKeyCode& keyCode, const uint32& modifierMask ) = 0;
 
 	/**
 	Sets the acclerator object for this menu item. If one already exists then it is removed.

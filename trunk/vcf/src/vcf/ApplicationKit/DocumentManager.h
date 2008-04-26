@@ -1799,7 +1799,7 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUIToDocument( const
 }
 
 template < typename AppClass, typename DocInterfacePolicy >
-Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( const String& fileName, const MIMEType& mimetype=MIMEType() )
+Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( const String& fileName, const MIMEType& mimetype )
 {
 	/**
 	* if we create a new document while the current document of 

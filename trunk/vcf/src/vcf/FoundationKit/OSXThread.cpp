@@ -91,7 +91,7 @@ OSStatus OSXThread::taskProc( void *parameter )
 			*/
 			if ( true == autoDeleteThread )	{
 
-				thread->free();
+				delete thread;
 			}
 		}
     }

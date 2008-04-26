@@ -21,6 +21,8 @@ where you installed the VCF.
 using namespace VCF;
 
 
+/*
+
 
 struct ForEachData {
 	OSXListview* listview;
@@ -626,6 +628,8 @@ void OSXListview::onListModelItemDeleted( Event* e )
 	
 	RemoveDataBrowserItems( hiView_, kDataBrowserNoItem, 1, &dbItem, kDataBrowserItemNoProperty );
 }
+
+*/
 
 
 /**

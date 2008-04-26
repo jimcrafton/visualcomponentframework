@@ -29,19 +29,8 @@ public:
 
 	virtual ~Win32UIShell();
 
-	/**
-	*Prepares the shell for painting.
-	*MUST be called before calling getContext(), or errors
-	*may occur
-	*@param Rect* specifies a rectangular region to clip
-	*the drawing to. The rectangles coords are screen coords.
-	*/
 	virtual void shellBeginPainting( Rect* clippingRect );
 
-	/**
-	*called after finished painting on the shell
-	*allows for native Windowing system cleanup to happen
-	*/
 	virtual void shellEndPainting();
 
 	virtual bool shellSupportsVirtualDirectories();

@@ -2629,7 +2629,7 @@ public:
 		typename CacheMap::iterator found = cache_->find( asyncRes );
 		if ( found == cache_->end() ) {
 			results = new Results();
-			cache_->insert( CacheMap::value_type(asyncRes,results) );
+			cache_->insert( _typename_ CacheMap::value_type(asyncRes,results) );
 		}
 		else {
 			results = found->second;

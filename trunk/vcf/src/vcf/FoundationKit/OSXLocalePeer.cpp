@@ -860,6 +860,11 @@ String OSXLocalePeer::getLanguage()
 	return result;
 }
 
+ void OSXLocalePeer::setToCurrentThread()
+ {
+ 
+ }
+
 
 /**
 $Id$

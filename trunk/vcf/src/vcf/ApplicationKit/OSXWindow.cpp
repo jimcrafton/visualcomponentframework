@@ -185,7 +185,7 @@ void OSXWindow::destroyControl()
 	//control_->handleEvent( &event );
 
 	DisposeWindow( windowRef_ );
-	StringUtils::traceWithArgs( Format("windowRef_: %p, destroyed\n") % windowRef_ );
+	StringUtils::trace( Format("windowRef_: %p, destroyed\n") % windowRef_ );
 
 	//DisposeRgn( mouseTrackRgn_ );
 	ReleaseMouseTrackingRegion( mouseTrackRef_ );
@@ -997,7 +997,7 @@ OSStatus OSXWindow::wndContentViewHandler(EventHandlerCallRef nextHandler, Event
 OSStatus OSXWindow::handleContentViewDraw( EventHandlerCallRef nextHandler, EventRef theEvent )
 {
 	TCarbonEvent event( theEvent );
-	
+	/*
 	
 	GrafPtr port = NULL;										
 	CGContextRef context = NULL;
@@ -1026,7 +1026,7 @@ OSStatus OSXWindow::handleContentViewDraw( EventHandlerCallRef nextHandler, Even
 	ctx->restoreState( gcs );
 	
 	osxCtx->setCGContext( NULL, 0, clientBounds );
-	
+	*/
 	return noErr;
 }
 

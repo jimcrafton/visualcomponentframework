@@ -160,7 +160,7 @@ public:
 	more details.
 	@see setAcceleratorKey
 	*/
-	void setAcceleratorKey( const VirtualKeyCode& keyCode, const uint32& modifierMask );
+	void setAcceleratorKeyInfo( const VirtualKeyCode& keyCode, const uint32& modifierMask );
 
 	/**
 	\p

@@ -700,7 +700,7 @@ void TabbedPages::setSelectedPage( TabPage* page )
 	}
 }
 
-void TabbedPages::setSelectedPage( const uint32& index )
+void TabbedPages::setSelectedPageByIndex( const uint32& index )
 {
 	TabPage* page = NULL;
 	Array<TabPage*>::iterator found = tabPages_.begin() + index;

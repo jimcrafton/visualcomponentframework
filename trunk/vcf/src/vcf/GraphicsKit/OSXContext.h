@@ -190,6 +190,7 @@ public:
 	
 	virtual void drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& selectedTabState, TabState& otherTabs, const std::vector<String>& tabNames, int selectedTabIndex );
 	
+	virtual void drawThemeBorder( Rect* rect, DrawUIState& state );
 	//void setCGContext( CGContextRef cgRef, const Rect& ownerRect  );
 	//void setPortFromImage( GrafPtr port, uint32 width, uint32 height );
 	

@@ -13,9 +13,13 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/OSXControl.h"
 
-#include "vcf/ApplicationKit/OSXTree.h"
+#include "vcf/ApplicationKit/ColumnModel.h"
+#include "vcf/ApplicationKit/ColumnItem.h"
 #include "vcf/ApplicationKit/TreeControl.h"
-#include "vcf/ApplicationKit/DefaultTreeItem.h"
+#include "vcf/ApplicationKit/TreeItem.h"
+
+
+#include "vcf/ApplicationKit/OSXTree.h"
 
 
 
@@ -24,6 +28,9 @@ where you installed the VCF.
 
 
 using namespace VCF;
+
+/*
+
 
 OSXTree::OSXTree( TreeControl* tree ):
 	OSXControl( tree ),
@@ -91,20 +98,20 @@ void OSXTree::DBItemNotificationCallback( ControlRef browser, DataBrowserItemID 
     {
         case kDataBrowserContainerOpened: 
 // 1
-        {           
-            /*int i, myItemsPerContainer;
-            myItemsPerContainer = myTunesDatabase[itemID].songsInAlbum; 
+//        {           
+//            int i, myItemsPerContainer;
+//           myItemsPerContainer = myTunesDatabase[itemID].songsInAlbum; 
 // 2
- 
-            DataBrowserItemID myItems [myItemsPerContainer];
-            for ( i = 0; i < myItemsPerContainer; i++) 
+// 
+//            DataBrowserItemID myItems [myItemsPerContainer];
+//            for ( i = 0; i < myItemsPerContainer; i++) 
 // 3
-                        myItems[i] =  MyGetChild (itemID, i);
-            status = AddDataBrowserItems (browser, itemID,
-                                    myItemsPerContainer, 
-                                    myItems, kTitleColumn); 
+//                        myItems[i] =  MyGetChild (itemID, i);
+//            status = AddDataBrowserItems (browser, itemID,
+//                                    myItemsPerContainer, 
+//                                    myItems, kTitleColumn); 
 // 4
-			*/
+			
 			//DataBrowserItemID item2 = BASE_ID +1;
 			//status = AddDataBrowserItems( browser, BASE_ID, 1, &item2, kDataBrowserItemNoProperty );
 	
@@ -393,6 +400,7 @@ OSStatus OSXTree::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theE
 	
 	return result;
 }
+*/
 
 
 /**

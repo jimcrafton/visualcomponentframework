@@ -90,6 +90,10 @@ public:
 	
 	virtual void setFont( Font* font );
 
+	virtual Size getTextSize( const String& text );
+
+	virtual void updateLocaleSettings();
+	
 	ATSUStyle getATSUStyle() {
 		return fontStyle_;
 	}

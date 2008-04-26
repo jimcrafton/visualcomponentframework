@@ -1170,6 +1170,12 @@ TransparentWindowPeer* OSXUIToolkit::internal_createTransparentWindowPeer( Frame
     return NULL;
 }
 
+DropDownPeer* OSXUIToolkit::internal_createDropDownPeer( Control* control )
+{
+	return NULL;
+}
+
+
 ToolbarPeer* OSXUIToolkit::internal_createToolbarPeer( Toolbar* toolbar )
 {
     return new OSXToolbar(toolbar);
@@ -1782,7 +1788,7 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
 						//result = NULL;
 					}
 
-					StringUtils::traceWithArgs( Format("keyMask: %d, virtKeyValue: %d\n") %
+					StringUtils::trace( Format("keyMask: %d, virtKeyValue: %d\n") %
 												keyMask% virtKeyValue );
                 }
                 break;

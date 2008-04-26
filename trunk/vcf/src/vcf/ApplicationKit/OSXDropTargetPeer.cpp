@@ -187,7 +187,7 @@ OSStatus OSXDropTargetPeer::handleDropTargetEvents (EventHandlerCallRef inHandle
 					target->handleEvent( &event );
 					
 					if ( NULL != peer->currentDataObj_ ) {
-						peer->currentDataObj_->free();
+						delete peer->currentDataObj_;
 						peer->currentDataObj_ = NULL;
 					}
 					
@@ -200,7 +200,7 @@ OSStatus OSXDropTargetPeer::handleDropTargetEvents (EventHandlerCallRef inHandle
 				case kEventControlDragReceive : {	
 								
 					if ( NULL != peer->currentDataObj_ ) {
-						peer->currentDataObj_->free();
+						delete peer->currentDataObj_;
 						peer->currentDataObj_ = NULL;
 					}
 					DragRef drag = NULL;
@@ -217,7 +217,7 @@ OSStatus OSXDropTargetPeer::handleDropTargetEvents (EventHandlerCallRef inHandle
 						target->handleEvent( &event );
 						
 						if ( NULL != peer->currentDataObj_ ) {
-							peer->currentDataObj_->free();
+							delete peer->currentDataObj_;
 							peer->currentDataObj_ = NULL;
 						}
 						

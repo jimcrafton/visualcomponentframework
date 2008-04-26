@@ -196,7 +196,7 @@ void ListControl::handleEvent( Event* event )
 	}
 }
 
-Rect ListControl::getItemRect( ListItem* item )
+VCF::Rect ListControl::getItemRect( ListItem* item )
 {
 	return listPeer_->getItemRect( item->getIndex() ) ;
 }
@@ -297,7 +297,7 @@ void ListControl::setItem( const uint32& index, ListItem* item )
 	}
 }
 
-Rect ListControl::getItemImageRect( const uint32& index )
+VCF::Rect ListControl::getItemImageRect( const uint32& index )
 {
 	return listPeer_->getItemImageRect( index );
 }

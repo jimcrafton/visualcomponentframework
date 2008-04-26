@@ -30,31 +30,37 @@ public:
 
 	virtual void create( Control* owningControl );
 
-	virtual TreeModel* getTreeModel();
-
-	virtual void setTreeModel( TreeModel* model );
-
-    virtual double getItemIndent();
+	virtual double getItemIndent();
 
     virtual void setItemIndent( const double& indent );
 
-    virtual ImageList* getImageList();
-
 	virtual void setStateImageList( ImageList* imageList );
 
-    virtual void setImageList( ImageList* imageList );
+    virtual void setImageList( ImageList* imageList );	
 
-	virtual void addItem( TreeItem* item );
+	virtual void setHeaderImageList( ImageList* imageList );
 
-	virtual void clear();
+	virtual Rect getItemImageRect( const TreeModel::Key& itemKey );
 
-	virtual Rect getItemImageRect( TreeItem* item );
-	
-	virtual Rect getItemRect( TreeItem* item );
+	virtual Rect getItemRect( const TreeModel::Key& itemKey );
+
+	virtual TreeModel::Key hitTest( const Point& pt );
 
 	virtual bool getAllowLabelEditing();
 
 	virtual void setAllowLabelEditing( const bool& allowLabelEditing );
+
+	virtual void enableHeader( const bool& val );
+
+	virtual void setColumnWidth( const uint32& index, const double& width, ColumnAutosizeType type );
+
+	virtual double getColumnWidth( const uint32& index );
+
+	virtual TextAlignmentType getColumnTextAlignment( const uint32& index );
+
+	virtual void setColumnTextAlignment( const uint32& index, const TextAlignmentType& val );
+
+	virtual void setDisplayOptions( uint32 displayOptions );
 
 	virtual OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
 protected:
