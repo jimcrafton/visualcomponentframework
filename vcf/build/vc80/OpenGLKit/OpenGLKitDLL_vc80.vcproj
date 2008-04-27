@@ -238,28 +238,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp"
 				>
 				<FileConfiguration
@@ -312,10 +290,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControlContext.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLKit.h"
 				>
 			</File>
@@ -336,6 +310,14 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLContext.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLContext.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

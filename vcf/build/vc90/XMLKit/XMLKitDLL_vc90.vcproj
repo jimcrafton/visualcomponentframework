@@ -75,14 +75,14 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="..\..\..\bin\XMLKit_vc6.dll"
+				OutputFile="..\..\..\bin\XMLKit_vc90.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="..\..\..\lib"
 				ProgramDatabaseFile=".\..\..\..\lib/XMLKit_vc6.pdb"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary=".\..\..\..\lib/XMLKit_vc6.lib"
+				ImportLibrary=".\..\..\..\lib/XMLKit_vc90.lib"
 				TargetMachine="1"
 			/>
 			<Tool
