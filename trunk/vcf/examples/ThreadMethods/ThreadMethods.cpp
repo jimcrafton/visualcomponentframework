@@ -300,7 +300,7 @@ int main( int argc, char** argv ){
 
 		ar->wait();
 
-		ar->free();
+		delete ar;
 		acb->free();
  
 
@@ -347,7 +347,7 @@ int main( int argc, char** argv ){
 
 		bool b = d3.endInvoke( ar );
 
-		ar->free();
+		delete ar;
 
 
 		//test adding bogus callback type
@@ -366,7 +366,7 @@ int main( int argc, char** argv ){
 
 		ar->wait();
 
-		ar->free();
+		delete ar;
 
 		d5(  true, true, 10, 10, "Oops" );
 

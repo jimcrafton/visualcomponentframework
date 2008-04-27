@@ -221,204 +221,40 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\DatagramSocket.cpp"
+				RelativePath="..\..\..\src\vcf\NetworkKit\IPAddress.cpp"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\NetToolkit.cpp"
+				RelativePath="..\..\..\src\vcf\NetworkKit\NetworkKit.cpp"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\ServerSocketEvent.cpp"
+				RelativePath="..\..\..\src\vcf\NetworkKit\NetworkToolkit.cpp"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\NetworkKit\Socket.cpp"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\SocketEvent.cpp"
+				RelativePath="..\..\..\src\vcf\NetworkKit\Win32IPAddressPeer.cpp"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\SocketListeningLoop.cpp"
+				RelativePath="..\..\..\src\vcf\NetworkKit\Win32NetworkToolkit.cpp"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\URL.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\Win32DatagramSocketPeer.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\NetworkKit\Win32SocketPeer.cpp"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -426,11 +262,15 @@
 			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\DatagramSocket.h"
+				RelativePath="..\..\..\src\vcf\NetworkKit\IPAddress.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\NetToolkit.h"
+				RelativePath="..\..\..\src\vcf\NetworkKit\IPAddressPeer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\NetworkKit\NetworkExceptions.h"
 				>
 			</File>
 			<File
@@ -438,11 +278,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\NetworkKitSelectLib.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\ServerSocketEvent.h"
+				RelativePath="..\..\..\src\vcf\NetworkKit\NetworkToolkit.h"
 				>
 			</File>
 			<File
@@ -450,31 +286,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\SocketEvent.h"
+				RelativePath="..\..\..\src\vcf\NetworkKit\Win32IPAddressPeer.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\SocketException.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\SocketListener.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\SocketListeningLoop.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\SocketPeer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\URL.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\NetworkKit\Win32DatagramSocketPeer.h"
+				RelativePath="..\..\..\src\vcf\NetworkKit\Win32NetworkToolkit.h"
 				>
 			</File>
 			<File

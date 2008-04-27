@@ -297,7 +297,7 @@ void example3()
 						% thread->getThreadID() );
 
 	System::println( Format("Thread: %s") % thread->toString() );
-	thread->free();
+	delete thread;
 
 
 	System::println( "example3 done" );

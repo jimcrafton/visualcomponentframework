@@ -179,7 +179,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glaux.lib comctl32.lib rpcrt4.lib odbc32.lib odbccp32.lib"
+				AdditionalDependencies="comctl32.lib rpcrt4.lib odbc32.lib odbccp32.lib"
 				OutputFile="..\..\..\bin\ApplicationKit_vc90.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"

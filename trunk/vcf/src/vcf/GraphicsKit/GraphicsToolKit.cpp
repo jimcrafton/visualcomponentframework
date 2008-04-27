@@ -495,11 +495,10 @@ Color* GraphicsToolkit::internal_getColorMatchFromColormap( const Color& color )
 
 void GraphicsToolkit::initGraphicsToolkit()
 {
-#ifdef VCF_AGG
-	GraphicsToolkit::graphicsToolkitInstance = new AggGraphicsToolkit();
-#elif VCF_WIN
+#ifdef VCF_WIN
 	GraphicsToolkit::graphicsToolkitInstance = new Win32GraphicsToolkit();
-
+#elif VCF_AGG
+	GraphicsToolkit::graphicsToolkitInstance = new AggGraphicsToolkit();
 #elif VCF_X11
 	GraphicsToolkit::graphicsToolkitInstance = new X11GraphicsToolkit();
 
