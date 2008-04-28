@@ -10,6 +10,10 @@
 #include <vector>
 #include <stdio.h>
 #include <windows.h>
+#include <stdexcept>
+#include <emmintrin.h>
+
+
 
 
 
@@ -70,6 +74,7 @@ inline size_t RoundUp(size_t cb, size_t units)
     return ((cb + units - 1) / units) * units;
 }
 
+#define HAVE_MMX
 
 class StringPool {
 public:
@@ -81,16 +86,74 @@ public:
 
 
 	StringPool();
-	~StringPool();
+	~StringPool();	
 
 	VCFChar* allocate(const VCFChar* begin, const VCFChar* end);
+
+	static int wmemcmp(const wchar_t *s1, const wchar_t *s2, size_t n) {
+		int result = 0;
+
+		#ifdef HAVE_MMX
+		size_t numChars = (n / 4); //4 chars at a time
+		size_t leftOver = (n % 4);
+
+		__asm {
+			emms
+			mov         esi, s1            // input pointer
+			mov         edi, s2              // output pointer
+			mov         ecx, numChars
+	do_loop:
+
+			dec         ecx
+			jnz         do_loop
+			emms
+		}
+		#else
+		result = ::wmemcmp( s1, s2, n );
+		#endif
+		return result;
+	}
+
+	static VCFChar* wmemcpy( VCFChar* dest, const VCFChar* src, uint32 len ) {
+#ifdef HAVE_MMX
+		size_t numChars = (len / 4); //4 chars at a time
+		size_t leftOver = (len % 4);
+
+		__asm {
+			emms
+			mov         esi, src            // input pointer
+			mov         edi, dest              // output pointer
+			mov         ecx, numChars
+	do_loop:
+			movq        mm0, [esi]
+			movq        [edi], mm0
+
+			add         esi, 8
+			add         edi, 8
+
+			dec         ecx
+			jnz         do_loop
+			
+
+			emms //reset to fpu
+		}
+		if ( leftOver > 0 ) {
+			memcpy( dest + numChars*4, src + numChars*4, leftOver );
+		}
+#else
+		::wmemcpy( dest, src, len );
+#endif
+
+		return dest;
+	}
+
 
 	static uint32 hash( const VCFChar* str, size_t length )
     {
         uint32 result = (uint32)str;
 #if 1
 		result = 0;
-		for (size_t i=0;i<length;i+=8 ) {        
+		for (size_t i=0;i<length;i+=1 ) {        
             result = str[i] + (result << 6) + (result << 16) - result;			
 		}
 #endif
@@ -325,6 +388,39 @@ size_t StringPool::getStringLength( uint32 index )
 static StringPool stringPool;
 
 
+class StringLiteral {
+public:
+	enum {
+		InitialStorageSize = 256
+	};
+	StringLiteral():strPtr_(NULL){}
+	StringLiteral( const StringLiteral& rhs ){}
+	StringLiteral( const char* s ):strPtr_(NULL){
+		size_t len = strlen(s);
+		if ( len > storage.size() ) {
+			storage.resize(len);
+		}
+		
+		do {
+			len --;
+			storage[len] = s[len];
+		}while ( len != 0 );
+
+		strPtr_ = &storage[0];
+	}
+	StringLiteral( const VCFChar* s ):strPtr_(s){}
+
+	operator const VCFChar* () const {
+		return strPtr_;
+	}
+protected:
+	static std::vector<VCFChar> storage;
+	const VCFChar* strPtr_;
+};
+
+std::vector<VCFChar> StringLiteral::storage(StringLiteral::InitialStorageSize);
+
+
 class FastString {
 public:
 
@@ -338,16 +434,18 @@ public:
 	typedef VCFChar& reference;
     typedef const VCFChar& const_reference;
 
-	//typedef std::reverse_iterator<iterator, value_type,
-      //  reference, pointer, difference_type> reverse_iterator;
+	#if (_MSC_VER <= 1200) && !defined(__GNUC__)
+	typedef std::reverse_iterator<iterator, value_type,
+				reference, pointer, difference_type> reverse_iterator;
 
+	typedef std::reverse_iterator<const_iterator, value_type,
+				const_reference, const_pointer, difference_type>
+				const_reverse_iterator;
+	#else
 	typedef std::reverse_iterator<iterator> reverse_iterator;
-
-	//typedef std::reverse_iterator<const_iterator, value_type,
-      //  const_reference, const_pointer, difference_type>
-        //    const_reverse_iterator;
-
 	typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+	#endif
+		
 
 	enum {
 		npos = (size_type) -1
@@ -606,8 +704,26 @@ protected:
 				L"station with Krikalev and Cosmonaut Yuri Gidzenko."
 
 
-int main( int argc, char** argv ){
+int main( int argc, char** argv )
+{
 
+	HiResClock clock;
+
+	VCFChar t1[5000];
+
+	size_t BIGSTR2_len = wcslen(BIGSTR2);
+	clock.start();
+	StringPool::wmemcpy( t1, BIGSTR2, BIGSTR2_len );
+	clock.stop();
+
+	printf( "StringPool::wmemcpy took %0.8f seconds\n", clock.duration() );
+	
+
+	clock.start();
+	::wmemcpy( t1, BIGSTR2, BIGSTR2_len );
+	clock.stop();
+
+	printf( "::wmemcpy took %0.8f seconds\n", clock.duration() );
 
 	{
 		const VCFChar* s = L"Hola";
@@ -628,7 +744,7 @@ int main( int argc, char** argv ){
 		uint32 idx2 = sp.addString(s,4);
 	}
 
-	HiResClock clock;
+	
 	{
 	FastString f;
 	clock.start();
@@ -729,6 +845,10 @@ int main( int argc, char** argv ){
 
 
 	pos = f3.rfind( L"Sam" );
+
+
+	FastString f4;
+	f4 = StringLiteral("Hello World");
 
 	return 0;
 }
