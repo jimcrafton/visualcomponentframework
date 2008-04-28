@@ -704,6 +704,77 @@ protected:
 				L"station with Krikalev and Cosmonaut Yuri Gidzenko."
 
 
+
+
+
+
+
+
+
+
+#define BIGSTR2_ANSI "The seven-day mission was highlighted by the mating of the"\
+				" U.S.-built Node 1 station element to the Functional Cargo Block"\
+				"(FGB in Russian) already in orbit, and two spacewalks to connect "\
+				"power and data transmission cables between the Node and the FGB. "\
+				"The FGB, built by Boeing and the Russian Space Agency, launched "\
+				"on a Russian Proton rocket from the Baikonur Cosmodrome in Kazakhstan "\
+				"in November 1998."\
+				"Node 1, also called the Unity Module was the first Space Station hardware"\
+				"delivered by the Space Shuttle. It has two Pressurized Mating Adapters "\
+				"(PMA), one attached to either end. One PMA is permanently mated to the "\
+				"FGB and the other used for orbiter dockings and crew access to the station"\
+				". Node 1 also contains an International Standard Payload Rack used to support"\
+				"on-orbit activities which was activated after the fifth Shuttle/Station assembly"\
+				"flight."\
+				"To begin the assembly sequence, the crew conducted a series of rendezvous "\
+				"maneuvers similar to those conducted on other Shuttle missions to reach the "\
+				"orbiting FGB. On the way, Currie used the Shuttle's robot arm to place Node "\
+				"1 atop the Orbiter Docking System. Cabana completed the rendezvous by flying "\
+				"Endeavour to within 35 feet (10 m) of the FGB, allowing Currie to capture the "\
+				"FGB with the robot arm and place it on the Node's Pressurized Mating Adapter."\
+				"Once the two elements were docked, Ross and Newman conducted two scheduled "\
+				"spacewalks to connect power and data cables between the Node, PMAs and the "\
+				"FGB. The day following the spacewalks, Endeavour undocked from the two components"\
+				", completing the first Space Station assembly mission."\
+				"The ISS after STS-88 construction."\
+				"The ISS after STS-88 construction."\
+				"Illustration of the International Space Station after STS-88"\
+				"Illustration of the International Space Station after STS-88"\
+				"Other payloads on the STS-88 mission included the IMAX Cargo Bay Camera "\
+				"(ICBC), the Argentinean Scientific Applications Satellite-S (SAC-A), the "\
+				"MightySat 1 Hitchhiker payload, the Space Experiment Module (SEM-07) and "\
+				"Getaway Special G-093 sponsored by the University of Michigan."\
+				"Endeavour's astronauts toured the new International Space Statio on "\
+				"Dec. 11, entering the Unity and Zarya modules for the first time and establishing "\
+				"an S-band communications system that enables U.S. flight controllers to monitor "\
+				"the outpost's systems."\
+				"Reflecting the international cooperation involved in building the largest space "\
+				"complex in history, Commander Robert Cabana and Russian Cosmonaut Sergei Krikalev "\
+				"opened the hatch to the U.S.-built Unity connecting module and floated into the "\
+				"new station together."\
+				"The rest of the crew followed and began turning on lights and unstowing gear in "\
+				"the roomy hub to which other modules will be connected in the future. Each "\
+				"passageway within Unity was marked by a sign leading the way into tunnels to "\
+				"which new modules will be connected."\
+				"About an hour later, Robert Cabana and Sergei Krikalyov opened the hatch to the "\
+				"Russian-built Zarya control module, which will be the nerve center for the station "\
+				"in its embryonic stage. Joined by Pilot Frederick Sturckow and Mission Specialists "\
+				"Jerry Ross, James Newman and Nancy Currie, Cabana and Krikalev hailed the historic"\
+				"entrance into the International Space Station and said the hatch opening signified "\
+				"the start of a new era in space exploration."\
+				"Ross and Newman went right to work in Unity, completing the assembly of an early "\
+				"S-band communications system that allows flight controllers in Houston to send "\
+				"commands to Unity's systems and to keep tabs on the health of the station with a "\
+				"more extensive communications capability than exists through Russian ground stations"\
+				". The astronauts also conducted a successful test of the videoconferencing "\
+				"capability of the early communications system, which was used by the first crew "\
+				"to permanently occupy the station in January 2000 (Expedition 1). Newman downlinked"\
+				"greetings to controllers in the station flight control room in Houston and to "\
+				"astronaut Bill Shepherd, who will command the first crew and live aboard the "\
+				"station with Krikalev and Cosmonaut Yuri Gidzenko."
+
+
+
 int main( int argc, char** argv )
 {
 
@@ -716,7 +787,7 @@ int main( int argc, char** argv )
 	StringPool::wmemcpy( t1, BIGSTR2, BIGSTR2_len );
 	clock.stop();
 
-	printf( "StringPool::wmemcpy took %0.8f seconds\n", clock.duration() );
+	printf( "StringPool::wmemcpy %u bytes took %0.8f seconds\n", BIGSTR2_len, clock.duration() );
 	
 
 	clock.start();
@@ -849,6 +920,42 @@ int main( int argc, char** argv )
 
 	FastString f4;
 	f4 = StringLiteral("Hello World");
+
+	const char* str = BIGSTR2_ANSI;
+	size_t stringLength = strlen(str);
+
+	HiResClock clock2;
+
+	clock.start();
+	clock2.start();
+	size_t size = MultiByteToWideChar( CP_UTF8, 0, str, stringLength, NULL, 0 );
+	VCFChar* tmp = new VCFChar[size];
+
+	int err = MultiByteToWideChar( CP_UTF8, 0, str, stringLength, (LPWSTR)tmp, size );
+
+	clock2.stop();
+
+	FastString f5;
+	f5 = tmp;
+
+
+	delete [] tmp;
+	clock.stop();
+
+	printf( "f5 from ansi Length %u, MultiByteToWideChar took %0.8f seconds, total took %0.8f seconds\n",f5.length(),clock2.duration(), clock.duration() );
+
+
+
+	clock.start();
+	clock2.start();
+
+	FastString f6;
+	StringLiteral sl("Hello World");
+	clock2.stop();
+	f6 = sl;
+	clock.stop();
+
+	printf( "f6 from ansi Length %u, StringLiteral took %0.8f seconds, total took %0.8f seconds\n",f5.length(),clock2.duration(), clock.duration() );
 
 	return 0;
 }
