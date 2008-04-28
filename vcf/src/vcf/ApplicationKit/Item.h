@@ -89,7 +89,7 @@ public:
 	
 
 	Item():data_(NULL),selected_(false),imageIndex_(-1),
-			displayState_(idsNone),model_(NULL),owningControl_(NULL),font_(NULL) {			
+			displayState_(idsNone),model_(NULL),owningControl_(NULL),font_(NULL),keyVal_(NULL) {			
 		tag_ = -1;
 	};
 
@@ -300,6 +300,26 @@ public:
 	bool isFontDefault();
 
 	void setFont( Font* val );
+
+
+	VariantData getKeyValue() const {
+		if ( NULL == keyVal_ ) {
+			return VariantData::null();
+		}
+
+		return *keyVal_;
+	}
+
+	void setKeyValue( const VariantData& val ) {
+		
+		if ( NULL == keyVal_ && !val.isNull() ) {
+			keyVal_ = new VariantData();
+		}
+
+		if ( *keyVal_ != val ) {
+			*keyVal_ = val;
+		}
+	}
 protected:
 	void* data_;	
 	Rect bounds_;	
@@ -310,6 +330,7 @@ protected:
 	uint32 displayState_;
 	Model* model_;
 	Control* owningControl_;
+	VariantData* keyVal_;
 
 	void stateChanged() {
 		if ( NULL != owningControl_ ) {
