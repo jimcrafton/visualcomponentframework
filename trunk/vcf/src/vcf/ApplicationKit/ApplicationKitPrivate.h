@@ -24,18 +24,7 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/Win32ToolKit.h"
 #	include "vcf/ApplicationKit/Win32Object.h"
 #	include "vcf/ApplicationKit/AbstractWin32Component.h"
-#elif VCF_X11
-	#include <unistd.h>
-	#include <sys/time.h>
-
-	//X11 stuff
-#	include "vcf/ApplicationKit/X11Peer.h"
-#	include "vcf/ApplicationKit/X11UIToolkit.h"
-#elif VCF_GTK
-
-#	include "vcf/ApplicationKit/GTKUIToolkit.h"
 #elif VCF_OSX
-
 #	include "vcf/ApplicationKit/OSXUIToolkit.h"
 #elif VCF_XCB
 #	include "vcf/ApplicationKit/XCBUIToolkit.h"

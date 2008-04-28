@@ -27,19 +27,6 @@ where you installed the VCF.
 #	include "vcf/GraphicsKit/Win32FontManager.h"
 #endif
 
-#ifdef VCF_X11
-	#include <X11/Xlib.h>
-	#include <X11/Xutil.h>
-
-	//include the imlib2 headers
-	#include "Imlib2.h"
-
-#	include "vcf/ApplicationKit/X11VCFUtils.h"
-#	include "vcf/ApplicationKit/X11GraphicsToolkit.h"
-#	include "vcf/ApplicationKit/X11Context.h"
-#	include "vcf/ApplicationKit/X11Image.h"
-#	include "vcf/ApplicationKit/X11Font.h"
-#endif
 
 #ifdef VCF_XCB
 #	include <xcb/xcb.h>
