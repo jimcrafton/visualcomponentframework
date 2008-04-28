@@ -250,6 +250,20 @@ struct CachedGlyph {
 
 
 
+struct DrawingSurface {
+
+	DrawingSurface(): height(0),width(0),imageData(NULL){}
+
+	uint32 height;
+	uint32 width;
+	unsigned char* imageData;
+
+	typedef agg::pixfmt_bgra32 PixFmt;
+	typedef agg::pixfmt_bgra32_pre PixFmtPre;
+	typedef agg::rgba8 ColorType;
+	typedef agg::order_bgra ComponentOrder;
+};
+
 
 class AggContextPeer : public ContextPeer {
 public:
@@ -258,6 +272,9 @@ public:
 
 	AggContextPeer( const uint32& width, const uint32& height );
 
+	/**
+	contextID is interpreted as DrawingSurface pointer
+	*/
 	AggContextPeer( OSHandleID contextID );
 
 	virtual ~AggContextPeer();
@@ -272,8 +289,14 @@ public:
 
 	virtual GraphicsContext* getContext();
 
+	/**
+	contextID is interpreted as DrawingSurface pointer
+	*/
 	virtual OSHandleID getContextID();
 
+	/**
+	contextID is interpreted as DrawingSurface pointer
+	*/
 	virtual void setContextID( OSHandleID contextID );
 
 	virtual bool prepareForDrawing( int32 drawingOperation );
@@ -386,6 +409,7 @@ public:
 
 	virtual void drawThemeText( Rect* rect, TextState& state );
 
+	virtual void drawThemeBorder( Rect* rect, DrawUIState& state );
 	////////////////////////////////////
 //	void internal_setImage(xcb_image_t *image);
 
@@ -400,9 +424,9 @@ protected:
 
 
 	GraphicsContext *context_;
-//	xcb_image_t        *image_;
+	bool antiAliasing_;
 
-//    XCBSurface* drawingSurface_;
+	DrawingSurface* drawingSurface_;
 
     agg::rendering_buffer renderBuffer_;
     agg::scanline_u8 scanline_;

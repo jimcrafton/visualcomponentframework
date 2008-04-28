@@ -15,6 +15,8 @@
 
 #include "AggGraphicsPeers.h"
 #include "AggGraphicsToolkit.h"
+#include "vcf/GraphicsKit/DrawUIState.h"
+
 #include "thirdparty/common/agg/include/agg_conv_dash.h"
 #include "thirdparty/common/agg/include/agg_renderer_mclip.h"
 
@@ -219,14 +221,16 @@ Image* AggGraphicsResourceBundle::getImage( const String& resourceName )
 
 AggContextPeer::AggContextPeer() :
 context_(NULL),
-fonts_(NULL)
+fonts_(NULL),
+antiAliasing_(true)
 {
 	init();
 }
 
 AggContextPeer::AggContextPeer( const uint32& width, const uint32& height ) :
 context_(NULL),
-fonts_(NULL)
+fonts_(NULL),
+antiAliasing_(true)
 {
 	//LinuxDebugUtils::FunctionNotImplemented(__FUNCTION__);
 	init();
@@ -234,7 +238,8 @@ fonts_(NULL)
 
 AggContextPeer::AggContextPeer( OSHandleID contextID ) :
 context_(NULL),
-fonts_(NULL)
+fonts_(NULL),
+antiAliasing_(true)
 {
 	init();
     setContextID( contextID );
@@ -290,13 +295,11 @@ void AggContextPeer::setContextID( OSHandleID contextID )
 		renderBuffer_.attach( NULL, 0, 0, 0 );
 	}
 
-	drawingSurface_ = (XCBSurface*)contextID;
+	drawingSurface_ = (DrawingSurface*)contextID;
 
 	if ( NULL != drawingSurface_ ) {
-		unsigned char* imageData = drawingSurface_->drawableImage->data;
-
-		renderBuffer_.attach( imageData, drawingSurface_->drawableImage->width, drawingSurface_->drawableImage->height,
-								drawingSurface_->drawableImage->width * 4 );
+		renderBuffer_.attach( drawingSurface_->imageData, drawingSurface_->width, 
+								drawingSurface_->height, drawingSurface_->width * 4 );
 	}
 }
 
@@ -428,8 +431,8 @@ bool AggContextPeer::prepareForDrawing( int32 drawingOperation )
 
 
 			Font* font = context_->getCurrentFont();
-			XCBFontPeer* fontPeer = (XCBFontPeer*)font->getFontPeer();
-
+			AggFont* fontPeer = (AggFont*)font->getFontPeer();
+/*
 			String fontHash = fontPeer->getHashcode();
 
 
@@ -458,7 +461,7 @@ bool AggContextPeer::prepareForDrawing( int32 drawingOperation )
 
 			VCF_ASSERT( fonts_->fontLoaded );
 
-
+*/
 
 			Color c = *context_->getCurrentFont()->getColor();
 			fonts_->color = agg::rgba(c.getRed(),c.getGreen(),c.getBlue(),c.getAlpha());
@@ -597,20 +600,20 @@ void AggContextPeer::renderScanlinesSolid( agg::rasterizer_scanline_aa<>& raster
 {
 
 
-	typedef agg::renderer_mclip<XCBSurface::PixFmt> RendererBase;
+	typedef agg::renderer_mclip<DrawingSurface::PixFmt> RendererBase;
 	typedef agg::renderer_scanline_aa_solid<RendererBase> RendererSolidAA;
 	typedef agg::renderer_scanline_bin_solid<RendererBase> RendererSolidBin;
 
 
 
 
-	typedef agg::comp_op_adaptor_rgba<XCBSurface::ColorType, XCBSurface::ComponentOrder> blender_type;
+	typedef agg::comp_op_adaptor_rgba<DrawingSurface::ColorType, DrawingSurface::ComponentOrder> blender_type;
 	typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
 	typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
 
 	//agg::scanline_u8 scanline;
 	if ( GraphicsContext::cmSource == context_->getCompositingMode() ) {
-		XCBSurface::PixFmt pixf( renderBuffer_ );
+		DrawingSurface::PixFmt pixf( renderBuffer_ );
 		RendererBase renb(pixf);
 
 
@@ -696,14 +699,14 @@ void AggContextPeer::renderLine( const std::vector<GlyphInfo>& glyphs, size_t la
 {
 	if ( lastGlyphPos > 0 ) {
 		bool doSrcRender = (GraphicsContext::cmSource == context_->getCompositingMode()) ? true : false;
-		typedef agg::renderer_mclip<XCBSurface::PixFmt> RendererBase;
+		typedef agg::renderer_mclip<DrawingSurface::PixFmt> RendererBase;
 		typedef agg::renderer_scanline_aa_solid<RendererBase> RendererSolid;
 
-		typedef agg::comp_op_adaptor_rgba<XCBSurface::ColorType, XCBSurface::ComponentOrder> blender_type;
+		typedef agg::comp_op_adaptor_rgba<DrawingSurface::ColorType, DrawingSurface::ComponentOrder> blender_type;
 		typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
 		typedef agg::renderer_mclip<pixfmt_type> comp_renderer_type;
 
-		XCBSurface::PixFmt pixfSrc( renderBuffer_ );
+		DrawingSurface::PixFmt pixfSrc( renderBuffer_ );
 		RendererBase renbSrc(pixfSrc);
 		RendererSolid rendererSrc( renbSrc );
 		rendererSrc.color(fonts_->color);
@@ -877,8 +880,8 @@ Size AggContextPeer::getTextSize( const String& text )
 	Size result;
 
 	Font* font = context_->getCurrentFont();
-	XCBFontPeer* fontPeer = (XCBFontPeer*)font->getFontPeer();
-
+	AggFont* fontPeer = (AggFont*)font->getFontPeer();
+/*
 	String fontHash = fontPeer->getHashcode();
 
 	if ( prevFontHash_ != fontHash ) {
@@ -906,7 +909,7 @@ Size AggContextPeer::getTextSize( const String& text )
 			prevFontHash_ = fontHash;
 		}
 	}
-
+*/
 	if ( fonts_->fontLoaded ) {
 		double x1 = 0; //need to convert appropriately
 		double y1 = 0;
@@ -1086,7 +1089,8 @@ void AggContextPeer::setAntiAliasingOn( bool antiAliasingOn )
 
 void AggContextPeer::drawImage( const double& x, const double& y, Rect* imageBounds, Image* image, int compositeMode )
 {
-	XCBImagePeer *srcImagePeer = dynamic_cast<XCBImagePeer*>(image);
+	AggRGBAImage *srcImagePeer = dynamic_cast<AggRGBAImage*>(image);
+	/*
 	if(srcImagePeer != NULL) {
 		for(int32 srcY = 0; srcY<imageBounds->getHeight(); ++srcY) {
 			for(int32 srcX = 0; srcX<imageBounds->getWidth(); ++srcX) {
@@ -1095,6 +1099,7 @@ void AggContextPeer::drawImage( const double& x, const double& y, Rect* imageBou
 			}
 		}
 	}
+	*/
 }
 
 void AggContextPeer::bitBlit( const double& x, const double& y, Rect* imageBounds, Image* image )
@@ -2350,8 +2355,7 @@ void AggContextPeer::drawThemeText( Rect* rect, TextState& state )
 	context_->restoreState( gcs );
 }
 
-void AggContextPeer::internal_setImage(xcb_image_t *image)
+void AggContextPeer::drawThemeBorder( Rect* rect, DrawUIState& state )
 {
-	image_ = image;
+	
 }
-
