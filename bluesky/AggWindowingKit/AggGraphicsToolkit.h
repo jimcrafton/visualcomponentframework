@@ -94,7 +94,7 @@ public:
 	AGGFontEngine(HDC dc, unsigned max_fonts = 32) : 
             font_engine_win32_tt_int32( dc, max_fonts) {}	
 
-	bool get_metrics( TextMetric* metrics ) const ;
+	bool getMetrics( TextMetric* metrics ) const ;
 	
 };
 
@@ -139,9 +139,17 @@ public:
 
 	virtual void internal_systemSettingsChanged();
 	
-	Size DLUToPixel( const Size& dlu, VCF::Font& font );
+	static Font getDefaultFontFor( const int& type );
 
-	Size getTextSize( const String& text, Font* font );
+	static Size DLUToPixel( const Size& dlu, VCF::Font& font );
+
+	static Size getTextSize( const String& text, Font* font );
+
+	static Size getSize( const int& type, const String& text, Font* alternateFont );
+
+	static double getValue( const int& type, const String& text, Font* alternateFont );
+
+	static Rect getRect( const int& type, Rect* rect, Font* alternateFont );
 protected:
 	void initSystemFont();
 	void loadSystemColors();

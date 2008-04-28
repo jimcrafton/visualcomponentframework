@@ -18,7 +18,7 @@ using namespace VCF;
 
 #ifdef VCF_WIN
 
-bool AGGFontEngine::get_metrics( TextMetric* metrics ) const
+bool AGGFontEngine::getMetrics( TextMetric* metrics ) const
 {
 	OUTLINETEXTMETRIC otm = {0};
 	otm.otmSize = sizeof(OUTLINETEXTMETRIC);
@@ -60,12 +60,12 @@ AggGraphicsToolkit::~AggGraphicsToolkit()
 
 ContextPeer* AggGraphicsToolkit::internal_createContextPeer( const uint32& width, const uint32& height )
 {
-	return NULL;
+	return new AggContextPeer(width,height);
 }
 
 ContextPeer* AggGraphicsToolkit::internal_createContextPeer( OSHandleID contextID )
 {
-	return NULL;
+	return new AggContextPeer(contextID);
 }
 
 FontPeer* AggGraphicsToolkit::internal_createFontPeer( const String& fontName )
@@ -208,6 +208,129 @@ void AggGraphicsToolkit::loadSystemColors()
 
 
 
+VCF::Font AggGraphicsToolkit::getDefaultFontFor( const int& type )
+{
+	VCF::Font result("Arial",9);
+	switch ( type ) {
+		case MENUITEMFONT : {
+
+		}
+		break;
+
+		case SELECTEDMENUITEMFONT : {
+
+		}
+		break;
+
+		case SYSTEMFONT : {
+
+		}
+		break;
+
+		case CONTROLFONT : {
+
+		}
+		break;
+
+		case MESSAGEFONT : {
+
+		}
+		break;
+
+		case TOOLTIPFONT : {
+
+		}
+		break;
+	}
+
+	return result;
+}
+
+
+double AggGraphicsToolkit::getValue( const int& type, const String& text, Font* alternateFont )
+{
+	double result = 0;
+	switch ( type ) {
+		case LABELHEIGHT : {
+			Size sz;
+			if ( NULL != alternateFont ) {
+				sz = AggGraphicsToolkit::DLUToPixel( Size(0,8), *alternateFont );
+			}
+			else {
+				VCF::Font f = AggGraphicsToolkit::getDefaultFontFor( CONTROLFONT );
+				sz = AggGraphicsToolkit::DLUToPixel( Size(0,8), f );
+			}
+			result = sz.height_;
+		}
+		break;
+
+		case BUTTONHEIGHT : {
+			Size sz;
+			if ( NULL != alternateFont ) {
+				sz = AggGraphicsToolkit::DLUToPixel( Size(0,14), *alternateFont );
+			}
+			else {
+				VCF::Font f = AggGraphicsToolkit::getDefaultFontFor( CONTROLFONT );
+				sz = AggGraphicsToolkit::DLUToPixel( Size(0,14), f );
+			}
+			result = sz.height_;
+		}
+		break;
+
+		case CHECKBOXHEIGHT : {
+			Size sz;
+			if ( NULL != alternateFont ) {
+				sz = AggGraphicsToolkit::DLUToPixel( Size(0,10), *alternateFont );
+			}
+			else {
+				VCF::Font f = AggGraphicsToolkit::getDefaultFontFor( CONTROLFONT );
+				sz = AggGraphicsToolkit::DLUToPixel( Size(0,10), f );
+			}
+			result = sz.height_;
+		}
+		break;
+
+	}
+	return result;
+}
+
+Size AggGraphicsToolkit::getSize( const int& type, const String& text, Font* alternateFont )
+{
+	Size result;
+
+	switch ( type ) {
+		case TABSIZE : {
+			Size sz;
+			if ( NULL != alternateFont ) {
+				sz = AggGraphicsToolkit::DLUToPixel( Size(0,14), *alternateFont );
+
+				result.width_ = AggGraphicsToolkit::getTextSize( text, alternateFont ).width_ + 10;
+			}
+			else {
+				VCF::Font f = AggGraphicsToolkit::getDefaultFontFor( CONTROLFONT );
+				sz = AggGraphicsToolkit::DLUToPixel( Size(0,14), f );
+
+				result.width_ = AggGraphicsToolkit::getTextSize( text, &f ).width_ + 10;
+			}
+
+
+
+
+			result.height_ = sz.height_;
+		}
+		break;
+	}
+
+	return result;
+}
+
+Rect AggGraphicsToolkit::getRect( const int& type, Rect* rect, Font* alternateFont )
+{
+	Rect result;
+	return result;
+}
+
+
 Size AggGraphicsToolkit::DLUToPixel( const Size& dlu, VCF::Font& font )
 {
 	Size result;
@@ -215,7 +338,7 @@ Size AggGraphicsToolkit::DLUToPixel( const Size& dlu, VCF::Font& font )
 	int baseUnitY = (int)(font.getAscent() + font.getDescent());
 
 	int cx = 0;
-	Size sz = getTextSize( "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", &font );
+	Size sz = AggGraphicsToolkit::getTextSize( "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", &font );
 
 
 	cx = (int)sz.width_;
@@ -230,6 +353,8 @@ Size AggGraphicsToolkit::DLUToPixel( const Size& dlu, VCF::Font& font )
 
 Size AggGraphicsToolkit::getTextSize( const String& text, Font* font )
 {
+	AggGraphicsToolkit* toolkit = (AggGraphicsToolkit*) GraphicsToolkit::internal_getDefaultGraphicsToolkit();
+
 	Size result;
 
 	double x1 = 0; //need to convert appropriately 
@@ -247,7 +372,7 @@ Size AggGraphicsToolkit::getTextSize( const String& text, Font* font )
 	for ( size_t i=0;i<text.length();i++ ) {
 		character = text[i];
 	
-		glyph = fontManager_.glyph(character);
+		glyph = toolkit->fontManager_.glyph(character);
 
 
 		//glyph = fontManager_.glyph(character);
@@ -256,9 +381,9 @@ Size AggGraphicsToolkit::getTextSize( const String& text, Font* font )
 			double x = x;
 			double y = y;
 
-			fontManager_.add_kerning(&x, &y);		
+			toolkit->fontManager_.add_kerning(&x, &y);		
 
-			fontManager_.init_embedded_adaptors(glyph, x, y);
+			toolkit->fontManager_.init_embedded_adaptors(glyph, x, y);
 
 			if ( glyph->bounds.is_valid() ) {
 
