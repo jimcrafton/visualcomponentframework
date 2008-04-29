@@ -1,0 +1,70 @@
+object ClassRegistryBrowserWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 300
+	width = 320
+	caption = 'ClassRegistryBrowser Window'	
+
+	settings['mainwindow.top'].name = 'top'
+	settings['mainwindow.left'].name = 'left'
+	settings['mainwindow.width'].name = 'width'
+	settings['mainwindow.height'].name = 'height'
+
+
+	object classList : VCF::ListViewControl
+		alignment = AlignLeft
+		width = 300
+		iconStyle = isDetails
+		settings['classListSize'].name = 'width'
+
+		object col1 : VCF::ColumnItem 
+			caption = 'Classes'
+			settings['classesColWidth'].name = 'width'
+		end
+
+		delegates
+			ItemSelectionChanged = [ClassRegistryBrowser@ClassRegistryBrowser::onClassSelected]
+		end
+	end
+
+	object splitter1 : VCF::Splitter
+		alignment = AlignLeft
+	end
+
+	object p1 : VCF::Panel
+		border = null
+		alignment  = AlignClient
+
+
+		object classDocBrowser : VCF::HTMLBrowserControl
+			alignment = AlignTop
+			height = 300
+
+			allowPopups = false
+			allowTextSelection = false
+			allowContextMenu = false
+
+			currentURL = 'http://vcf-online.org/docs/next-rev/src_manual/index.html'
+
+			settings['classDocSize'].name = 'height'
+		end
+
+		object splitter2 : VCF::Splitter
+			alignment = AlignTop
+		end
+
+		object classData : VCF::TreeListControl 
+			alignment = AlignClient
+
+			object col1 : VCF::ColumnItem 
+				caption = 'Class Elements'
+				settings['classDataColWidth'].name = 'width'
+			end
+
+			object col2 : VCF::ColumnItem 
+				caption = 'Type'
+				settings['classDataTypeColWidth'].name = 'width'
+			end
+		end
+	end
+end

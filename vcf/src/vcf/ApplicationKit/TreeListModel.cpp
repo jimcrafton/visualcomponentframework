@@ -10,6 +10,25 @@ where you installed the VCF.
 
 using namespace VCF;
 
+void TreeListModel::empty()
+{
+	SubItemMap::iterator it = subItemData_.begin();
+	if ( shouldDeleteVarObjects() ) {
+		while ( it != subItemData_.end() ) {
+			VariantData& data = it->second;
+			if ( data.type == pdObject ) {
+				Object* obj = data;
+				if ( NULL != obj ) {
+					deleteVariantObject( obj );
+				}
+			}
+			++it;
+		}
+	}
+
+	subItemData_.clear();
+	DefaultTreeModel::empty();
+}
 
 bool TreeListModel::doInsertSubItem( const Key& key, const uint32 & subItemIndex, const VariantData& value ) 
 {

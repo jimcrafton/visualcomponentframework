@@ -32,6 +32,8 @@ public:
 	TreeListModel(){}
 
 	virtual ~TreeListModel(){}
+
+	virtual void empty();
 protected:
 	virtual bool doInsertSubItem( const Key& key, const uint32 & subItemIndex, const VariantData& value );
 

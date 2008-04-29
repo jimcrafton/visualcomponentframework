@@ -93,9 +93,6 @@ static String IconAlignTypeNames[] = { "iaNone",
 */
 class APPLICATIONKIT_API ListViewControl : public ListControl, public ColumnController {
 public:
-
-
-	DELEGATE(ItemDelegate,ItemSelectionChanged);
 	DELEGATE(MouseDelegate,ColumnItemClicked);
 
 	ListViewControl();

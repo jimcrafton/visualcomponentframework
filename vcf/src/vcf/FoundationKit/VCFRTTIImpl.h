@@ -434,6 +434,10 @@ public:
 
 	virtual String getTypeClassName() {
 		String result;
+		result = StringUtils::getClassNameFromTypeInfo( typeid(PROPERTY) );
+
+		return result;
+
 		VariantData* val = Property::get();
 		if ( NULL != val ){
 			switch ( val->type ){
