@@ -177,6 +177,24 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ClassRegistryBrowser"=.\ClassRegistryBrowser\ClassRegistryBrowser.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name HTMLKitDll
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Colors"=.\Colors\Colors.dsp - Package Owner=<4>
 
 Package=<5>
