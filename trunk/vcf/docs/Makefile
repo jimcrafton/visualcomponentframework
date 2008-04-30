@@ -381,7 +381,7 @@ doxy :
 	mv Doxyfile.tmp Doxyfile
 	doxygen
 	mv Doxyfile.bak Doxyfile
-	cp -r gfx/ doxy_html/
+	-cp -r gfx/ doxy_html/
 	cp vcf.css doxy_html/
 	cp vcf_tabs.css doxy_html/
 

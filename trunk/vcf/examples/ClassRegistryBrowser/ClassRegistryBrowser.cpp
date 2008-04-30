@@ -6,10 +6,16 @@
 #include "vcf/HTMLKit/HTMLKit.h"
 #include "vcf/ApplicationKit/TreeListControl.h"
 #include "vcf/ApplicationKit/ListViewControl.h"
+#include "vcf/ApplicationKit/Label.h"
 
 using namespace VCF;
 
 
+enum ClassImages {
+	ciClassImg = 0,
+	ciPropertyImg,
+	ciDelegateImg
+};
 
 class ClassRegistryBrowserWindow : public Window {
 public:
@@ -75,12 +81,25 @@ public:
 
 		lm->empty();
 
+		TreeModel* tm =  classData->getTreeModel();
+		tm->empty();
+
+	
+		uint32 totBytes = 0;
+
 		Enumerator<Class*>* classes = ClassRegistry::getClasses();
 		while ( classes->hasMoreElements() ) {
 			Class* clazz = classes->nextElement();
 
+			totBytes += clazz->sizeOf();
+
 			lm->add( clazz->getClassName() );
+
+			classList->getItem( lm->getCount()-1 )->setImageIndex( ciClassImg );
 		}
+
+		Label* tbLable = (Label*) getMainWindow()->findComponent( "totalBytes", true );
+		tbLable->setCaption( StringUtils::toString(totBytes) );
 
 	}
 
@@ -108,6 +127,10 @@ public:
 		tm->empty();
 
 
+		tm->insert( "Class Name:  " + clazz->getClassName() );
+		tm->insert( "ID:  " + clazz->getID() );		
+
+
 		TreeModel::Key superKey = tm->insert( "Class Hierarchy:" );
 
 		std::vector<Class*> derived;
@@ -121,11 +144,15 @@ public:
 		std::vector<Class*>::reverse_iterator it = derived.rbegin();
 		while ( it != derived.rend() ) {
 			Class* super = *it;
+			
 			superKey = tm->insert( super->getClassName(), superKey );
+			classData->getItemFromKey(superKey)->setImageIndex( ciClassImg );
+
 			++it;
 		}
 
-		tm->insert( clazz->getClassName(), superKey );	
+		superKey = tm->insert( clazz->getClassName(), superKey );	
+		classData->getItemFromKey(superKey)->setImageIndex( ciClassImg );
 
 
 		TreeModel::Key propsKey = tm->insert( "Properties:" );
@@ -136,6 +163,7 @@ public:
 			Property* prop = props->nextElement();
 
 			TreeModel::Key k = tm->insert( prop->getDisplayName(), propsKey );
+			classData->getItemFromKey(k)->setImageIndex( ciPropertyImg );
 
 			tm->insertSubItem( k, 0, prop->getTypeClassName() );
 
@@ -152,8 +180,10 @@ public:
 		while ( delegates->hasMoreElements() ) {
 			DelegateProperty* prop = delegates->nextElement();
 
-			tm->insert( prop->getDelegateName(), delegatesKey );
+			TreeModel::Key k = tm->insert( prop->getDelegateName(), delegatesKey );
+			classData->getItemFromKey(k)->setImageIndex( ciDelegateImg );
 
+			tm->insertSubItem( k, 0, prop->getDelegateClassName() );
 		}
 
 		classData->getItemFromKey(delegatesKey)->expand( true );

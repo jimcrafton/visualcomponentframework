@@ -3,35 +3,93 @@ object ClassRegistryBrowserWindow  : VCF::Window
 	left = 200
 	height = 300
 	width = 320
-	caption = 'ClassRegistryBrowser Window'	
+	caption = 'VCF ClassRegistry Browser'
 
 	settings['mainwindow.top'].name = 'top'
 	settings['mainwindow.left'].name = 'left'
 	settings['mainwindow.width'].name = 'width'
 	settings['mainwindow.height'].name = 'height'
 
+	
 
-	object classList : VCF::ListViewControl
-		alignment = AlignLeft
-		width = 300
-		iconStyle = isDetails
-		settings['classListSize'].name = 'width'
+	object imgList : VCF::ImageList 
+		transparentColor = 'lime'
+		imageWidth = 16
+		imageHeight = 16
 
-		object col1 : VCF::ColumnItem 
-			caption = 'Classes'
-			settings['classesColWidth'].name = 'width'
+		object img1 : VCF::ImageComponent 
+			filename = 'res:class.bmp'
 		end
 
-		delegates
-			ItemSelectionChanged = [ClassRegistryBrowser@ClassRegistryBrowser::onClassSelected]
+		object img2 : VCF::ImageComponent 
+			filename = 'res:property.bmp'
+		end
+
+		object img3 : VCF::ImageComponent 
+			filename = 'res:delegate.bmp'
 		end
 	end
+
+	object hlContainer : VCF::HorizontalLayoutContainer
+		numberOfColumns = 2
+		maxRowHeight = 35
+		rowSpacerHeight = 10
+		widths[0] = 80
+		widths[1] = 35
+
+		tweenWidths[0] = 10
+	end
+
+	object p1 : VCF::Panel
+		border = null
+		alignment = AlignLeft
+		width = 300
+		settings['classListSize'].name = 'width'
+
+		object bdr : VCF::TitledBorder
+			caption = 'Class Registry Info'
+		end
+
+		object info : VCF::Panel
+			alignment = AlignTop
+			height = 100
+			border = @bdr
+			container = @hlContainer
+
+			object lbl1 : VCF::Label 
+				caption = 'Total bytes:'
+			end
+
+			object totalBytes : VCF::Label 
+				caption = '???'
+			end
+		end
+
+		object classList : VCF::ListViewControl
+			alignment = AlignClient			
+			iconStyle = isDetails
+
+			smallImageList = @imgList
+			
+
+			object col1 : VCF::ColumnItem 
+				caption = 'Classes'
+				settings['classesColWidth'].name = 'width'
+			end
+
+			delegates
+				ItemSelectionChanged = [ClassRegistryBrowser@ClassRegistryBrowser::onClassSelected]
+			end
+		end
+	end
+
+	
 
 	object splitter1 : VCF::Splitter
 		alignment = AlignLeft
 	end
 
-	object p1 : VCF::Panel
+	object p2 : VCF::Panel
 		border = null
 		alignment  = AlignClient
 
@@ -51,10 +109,13 @@ object ClassRegistryBrowserWindow  : VCF::Window
 
 		object splitter2 : VCF::Splitter
 			alignment = AlignTop
+			cursor = 3
 		end
 
 		object classData : VCF::TreeListControl 
 			alignment = AlignClient
+
+			imageList = @imgList
 
 			object col1 : VCF::ColumnItem 
 				caption = 'Class Elements'

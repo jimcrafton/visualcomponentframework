@@ -29,6 +29,7 @@ Source: ..\..\build\vc60\add-ins\VCFConsoleWiz\Release\VCFConsoleWiz.awx; DestDi
 Source: ..\..\build\vc60\add-ins\VCFLibraryAppWizard\Release\VCFLibraryAppWizard.awx; DestDir: {app}\VC6-Addins; Components: VC6_Wizards; Flags: ignoreversion
 Source: ..\..\build\vc60\add-ins\VCFNewClassWiz\Release\VCFNewClassWiz.dll; DestDir: {app}\VC6-Addins; Components: VC6_Addins; Flags: regserver
 Source: ..\..\build\vc60\add-ins\VPLAppWiz\Release\VPLAppWiz.awx; DestDir: {app}\VC6-Addins; Components: VC6_Wizards; Flags: ignoreversion
+Source: ..\..\build\vc60\add-ins\VCFFormWizard\Release\VCFFormWizard.awx; DestDir: {app}\VC6-Addins; Components: VC6_Wizards; Flags: ignoreversion
 Source: C:\WINNT\system32\msvcp60.dll; DestDir: {app}\VC6-Addins
 
 ; various help files
@@ -65,16 +66,16 @@ Source: ..\..\src\thirdparty\win32\RegEnVar\RegEnVar.exe; DestDir: {app}
 [Setup]
 OutputDir=..\..\uploadToSF
 OutputBaseFilename=VCFSrcOnlyInstaller-VCF-VERSION
-AppCopyright=2000-2006 Jim Crafton
+AppCopyright=2000-3006 Jim Crafton
 AppName=Visual Component Framework VCF-LONG-VERSION
 AppVerName=Visual Component Framework VCF-LONG-VERSION
 LicenseFile=..\..\license.txt
 DefaultDirName={pf}\VCF-VCF-VERSION
 DefaultGroupName=Visual Component Framework VCF-VERSION
 AppPublisher=VCF
-AppPublisherURL=http://vcf.sf.net
+AppPublisherURL=http://vcf-online.org
 AppSupportURL=http://vcf-online.org
-AppUpdatesURL=http://vcf.sf.net
+AppUpdatesURL=http://vcf-online.org
 AppVersion=VCF-VERSION
 UninstallDisplayIcon={app}\vcf.ico
 UninstallDisplayName=Visual Component Framework VCF-VERSION
@@ -111,7 +112,10 @@ Name: installwizards; Description: Visual Studio 6; GroupDescription: Install Vi
 ;Name: VC70_installwizards; Description: Visual Studio 7.0 (.NET 2002); GroupDescription: Install Visual Studio Addins/Wizards; Components: Src; Flags: unchecked
 
 Name: VC71_installwizards; Description: Visual Studio 7.1 (.NET 2003); GroupDescription: Install Visual Studio Addins/Wizards; Components: Src; Flags: unchecked
-Name: VC80_installwizards; Description: Visual C++ 8.0 (Express 2005); GroupDescription: Install Visual Studio Addins/Wizards; Components: Src; Flags: unchecked
+Name: VC80_installwizards; Description: Visual C++ 8.0 (Visual Studio 2005/Express); GroupDescription: Install Visual Studio Addins/Wizards; Components: Src; Flags: unchecked
+Name: VC90_installwizards; Description: Visual C++ 9.0 (Visual Studio 2008/Express); GroupDescription: Install Visual Studio Addins/Wizards; Components: Src; Flags: unchecked
+
+
 
 
 [Run]
@@ -130,6 +134,9 @@ Filename: {app}\quickbuild.html; Description: Read Quick build Instructions; Fla
 ;Filename: {app}\build\vc70\Add-Ins\Setup.js; Tasks: VC70_installwizards; Components: Src;  Flags: shellexec waituntilterminated
 Filename: {app}\build\vc71\Add-Ins\Setup.js; Components: Src; Flags: shellexec waituntilterminated; Tasks: VC80_installwizards
 Filename: {app}\build\vc80\Add-Ins\Setup-vcexpress.js; Components: Src; Flags: shellexec waituntilterminated; Tasks: VC80_installwizards
+Filename: {app}\build\vc90\Add-Ins\Setup-vcexpress.js; Components: Src; Flags: shellexec waituntilterminated; Tasks: VC90_installwizards
+
+
 
 [UninstallRun]
 Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{858cf701-5e04-48ba-968e-46569c787d5f}"" -chi ""{app}\docs\VCFDocs.VCF-VERSION.chi"" -chm ""{app}\docs\VCFDocs.VCF-VERSION.chm"" -remove -title ""VCF Documentation"""; StatusMsg: Removing VCF Documentation with MSDN...; Components: Help_Files; Tasks: msdnintegrate
@@ -246,6 +253,7 @@ begin
         FileCopy( ExpandConstant('{app}\VC6-Addins') + '\VCFLibraryAppWizard.awx', templatesDir + 'VCFLibraryAppWizard.awx', true );
         FileCopy( ExpandConstant('{app}\VC6-Addins') + '\VCFConsoleWiz.awx', templatesDir + 'VCFConsoleWiz.awx', true );
         FileCopy( ExpandConstant('{app}\VC6-Addins') + '\vcfwizard.awx', templatesDir + 'vcfwizard.awx', true );
+		FileCopy( ExpandConstant('{app}\VC6-Addins') + '\VCFFormWizard.awx', templatesDir + 'VCFFormWizard.awx', true );
 	  end
     end
   end

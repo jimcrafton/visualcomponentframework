@@ -28,12 +28,12 @@ NB: This software will not save the world.
 
 -->
 
-<title>The VCF Book devmain-0.9.8</title>
-	<titleabbrev>VCF Documentation devmain-0.9.8</titleabbrev>
+<title>The VCF Book 0.9.8</title>
+	<titleabbrev>VCF Documentation 0.9.8</titleabbrev>
 	<bookinfo>
 		<legalnotice>
 			<para>
-			Copyright (c) 2000-2006, Jim Crafton
+			Copyright (c) 2000-3006, Jim Crafton
 			</para>
 			<para>
 			All rights reserved.
@@ -93,6 +93,7 @@ NB: This software will not save the world.
 			<year>2006</year>
 			<year>2007</year>
 			<year>2008</year>
+			<year>3008</year>
 			<holder>Jim Crafton, VCF Project</holder>
 		</copyright>
 
@@ -167,6 +168,13 @@ NB: This software will not save the world.
 			  <date>November 26, 2007</date>
 			  <authorinitials>JC</authorinitials>
 			  <revremark>Added new section for XMLKit</revremark>
+			</revision>
+			
+			<revision>
+			  <revnumber>0.9.8</revnumber>
+			  <date>April 27, 2008</date>
+			  <authorinitials>JC</authorinitials>
+			  <revremark>Documentation updates in preparation for the new 0.9.8 release</revremark>
 			</revision>
 		</revhistory>
 	</bookinfo>
