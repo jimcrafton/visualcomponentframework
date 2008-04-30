@@ -456,7 +456,36 @@ void Class::addInterface( InterfaceClass* newInterface )
 	}
 }
 
+uint32 Class::sizeOf() const
+{
+	uint32 result = sizeof(*this);
 
+	result += className_.sizeOf();
+	result += classID_.sizeOf();
+	result += superClassName_.sizeOf();
+	
+	Map<String,Property*>::const_iterator it = properties_.begin();
+	while ( it != properties_.end() ) {
+		result += it->second->sizeOf();
+		++it;
+	}
+
+	Map<String,Field*>::const_iterator it2 = fields_.begin();
+	while ( it2 != fields_.end() ) {
+		result += sizeof(*it2->second);
+		++it2;
+	}
+
+	
+	Map<String, DelegateProperty*>::const_iterator it3 = delegates_.begin();
+	while ( it3 != delegates_.end() ) {
+		result += it3->second->sizeOf();
+		++it3;
+	}
+
+	return result;
+}
 /**
 $Id$
 */
+

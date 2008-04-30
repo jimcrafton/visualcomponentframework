@@ -444,6 +444,14 @@ public:
 		bound_ = bound;
 	};
 
+
+	uint32 sizeOf() const {
+		uint32 result = sizeof(*this);
+		result += name_.sizeOf();
+		result += description_.sizeOf();
+		result += value_.sizeOf();
+		return result;
+	}
 protected:
 	VariantData value_;
 	bool isCollection_;
@@ -536,6 +544,13 @@ public :
 
 	Object* getSource() {
 		return source_;
+	}
+
+	uint32 sizeOf() const {
+		uint32 result = sizeof(*this);
+		result += delegateClassName_.sizeOf();
+		result += delegateName_.sizeOf();
+		return result;
 	}
 
 protected:

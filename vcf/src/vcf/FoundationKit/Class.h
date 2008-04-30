@@ -385,6 +385,8 @@ public:
 	bool, etc)
 	*/
 	static String getClassNameForProperty( Property* property );
+
+	uint32 sizeOf() const;
 private:
 	String className_;
 	String classID_;

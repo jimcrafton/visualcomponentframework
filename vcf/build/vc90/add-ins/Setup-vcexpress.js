@@ -15,13 +15,13 @@ function hello()
 }
 
 
-function isVC80Express()
+function isVC90Express()
 {
 	var result = false;
 	var WSShell = WScript.CreateObject("WScript.Shell");
 	var FileSys = WScript.CreateObject("Scripting.FileSystemObject");
 	
-	var strVC8Key = "HKLM\\Software\\Microsoft\\VCExpress\\8.0\\Setup\\VC\\ProductDir";
+	var strVC8Key = "HKLM\\Software\\Microsoft\\VCExpress\\9.0\\Setup\\VC\\ProductDir";
 	try
 	{
 		if ( FileSys.FolderExists( WSShell.RegRead(strVC8Key) ) ) {
@@ -31,26 +31,26 @@ function isVC80Express()
 	catch(e)
 	{		
 		try {
-			strVC8Key = "HKLM\\SOFTWARE\\Microsoft\\VisualStudio\\8.0\\Setup\\VC\\ProductDir";
+			strVC8Key = "HKLM\\SOFTWARE\\Microsoft\\VisualStudio\\9.0\\Setup\\VC\\ProductDir";
 			if ( FileSys.FolderExists( WSShell.RegRead(strVC8Key) ) ) {
 				result = false;
 			}
 		}
 		catch(e)
 		{
-			WScript.Echo("ERROR: Cannot find where Visual Studio 8.0 is installed.");
+			WScript.Echo("ERROR: Cannot find where Visual Studio 9.0 is installed.");
 		}
 	}
 	
 	return result;
 }
 
-function getVC80ProductDir()
+function getVC90ProductDir()
 {
 	var result = "Unknown";
 	var WSShell = WScript.CreateObject("WScript.Shell");
 	
-	var strVC8Key = "HKLM\\Software\\Microsoft\\VCExpress\\8.0\\Setup\\VC\\ProductDir";
+	var strVC8Key = "HKLM\\Software\\Microsoft\\VCExpress\\9.0\\Setup\\VC\\ProductDir";
 	try
 	{
 		result = WSShell.RegRead(strVC8Key);
@@ -58,12 +58,12 @@ function getVC80ProductDir()
 	catch(e)
 	{		
 		try {
-			strVC8Key = "HKLM\\SOFTWARE\\Microsoft\\VisualStudio\\8.0\\Setup\\VC\\ProductDir";
+			strVC8Key = "HKLM\\SOFTWARE\\Microsoft\\VisualStudio\9.0\\Setup\\VC\\ProductDir";
 			result = WSShell.RegRead(strVC8Key);
 		}
 		catch(e)
 		{
-			WScript.Echo("ERROR: Cannot find where Visual Studio 8.0 is installed.");
+			WScript.Echo("ERROR: Cannot find where Visual Studio 9.0 is installed.");
 		}
 	}
 	
@@ -76,7 +76,7 @@ function getInstallDestFolder( rootDir )
 	var FileSys = WScript.CreateObject("Scripting.FileSystemObject");
 	
 	result = FileSys.BuildPath( rootDir, "Express\\vcprojects" );
-	if ( !isVC80Express() ) {
+	if ( !isVC90Express() ) {
 		result = FileSys.BuildPath( rootDir, "vcprojects" );
 	}
 	
@@ -86,7 +86,7 @@ function getInstallDestFolder( rootDir )
 function main()
 {	
 	var bDebug = false;
-	var expressVer = isVC80Express();
+	var expressVer = isVC90Express();
 	
 	var Args = WScript.Arguments;
 	if(Args.length > 0 && Args(0) == "/debug")
@@ -116,7 +116,7 @@ function main()
 	}
 
 	
-	strValue = getVC80ProductDir();
+	strValue = getVC90ProductDir();
 
 	var strDestFolder = getInstallDestFolder(strValue);
 	
@@ -212,7 +212,7 @@ function main()
 		return;
 	}
 
-	strValue = getVC80ProductDir();
+	strValue = getVC90ProductDir();
 	var strDestFolder = getInstallDestFolder(strValue);	
 	
 	if(bDebug)
@@ -288,110 +288,6 @@ function main()
 	// WScript.Echo("VCF Console Application Wizard successfully installed - enjoy!");
 
 
-/*
-
-// VCFLibraryAppWizard
-
-	var strValue = FileSys.GetAbsolutePathName(".");
-	if(strValue == null || strValue == "")
-		strValue = ".";
-
-	var strSourceFolder = strValue + "/" + "VCFLibraryAppWizard";
-	if(bDebug)
-		WScript.Echo("Source: " + strSourceFolder);
-
-	if(!FileSys.FolderExists(strSourceFolder))
-	{
-		WScript.Echo("ERROR: Cannot find Wizard folder (should be: " + strSourceFolder + ")");
-		return;
-	}
-
-	var strVC8Key = "HKLM\\Software\\Microsoft\\VisualStudio\\7.1\\Setup\\VC\\ProductDir";
-	try
-	{
-		strValue = WSShell.RegRead(strVC8Key);
-	}
-	catch(e)
-	{
-		WScript.Echo("ERROR: Cannot find where Visual Studio 7.1 is installed.");
-		return;
-	}
-
-	var strDestFolder = strValue + "\\vcprojects";
-	if(bDebug)
-		WScript.Echo("Destination: " + strDestFolder);
-	if(!FileSys.FolderExists(strDestFolder))
-	{
-		WScript.Echo("ERROR: Cannot find destination folder (should be: " + strDestFolder + ")");
-		return;
-	}
-
-	var strDest = strDestFolder + "\\";
-	var strSrc = "";
-
-	// Copy files
-	try
-	{
-		strSrc = strSourceFolder + "\\VCFLibraryAppWizard.ico";
-		FileSys.CopyFile(strSrc, strDest);
-		strSrc = strSourceFolder + "\\VCFLibraryAppWizard.vsdir";
-		FileSys.CopyFile(strSrc, strDest);
-	}
-	catch(e)
-	{
-		var strError = "no info";
-		if(e.description.length != 0)
-			strError = e.description;
-		WScript.Echo("ERROR: Cannot copy file (" + strError + ")");
-		return;
-	}
-
-	// Read and write VCFLibraryAppWizard.vsz, replace path when found
-	try
-	{
-		strSrc = strSourceFolder + "\\VCFLibraryAppWizard.vsz";
-		strDest = strDestFolder + "\\VCFLibraryAppWizard.vsz";
-
-		var ForReading = 1;
-		var fileSrc = FileSys.OpenTextFile(strSrc, ForReading);
-		if(fileSrc == null)
-		{
-			WScript.Echo("ERROR: Cannot open source file " + strSrc);
-			return;
-		}
-
-		var ForWriting = 2;
-		var fileDest = FileSys.OpenTextFile(strDest, ForWriting, true);
-		if(fileDest == null)
-		{
-			WScript.Echo("ERROR: Cannot open destination file" + strDest);
-			return;
-		}
-
-		while(!fileSrc.AtEndOfStream)
-		{
-			var strLine = fileSrc.ReadLine();
-			if(strLine.indexOf("ABSOLUTE_PATH") != -1)
-				strLine = "Param=\"ABSOLUTE_PATH = " + strSourceFolder + "\"";
-			fileDest.WriteLine(strLine);
-		}
-
-		fileSrc.Close();
-		fileDest.Close();
-	}
-	catch(e)
-	{
-		var strError = "no info";
-		if(e.description.length != 0)
-			strError = e.description;
-		WScript.Echo("ERROR: Cannot read and write VCFLibraryAppWizard.vsz (" + strError + ")");
-		return;
-	}
-
-	// WScript.Echo("VCF Library Application Wizard successfully installed - enjoy!");
-
-
-*/
 // MVCAppWizard
 
 	var strValue = FileSys.GetAbsolutePathName(".");
@@ -408,7 +304,7 @@ function main()
 		return;
 	}
 
-	strValue = getVC80ProductDir();
+	strValue = getVC90ProductDir();
 	var strDestFolder = getInstallDestFolder(strValue);	
 	
 	if(bDebug)
@@ -484,107 +380,6 @@ function main()
 	// WScript.Echo("VCF MVC Application Wizard successfully installed - enjoy!");
 
 
-/*
-// VPLApplicationWizard
-
-	var strValue = FileSys.GetAbsolutePathName(".");
-	if(strValue == null || strValue == "")
-		strValue = ".";
-
-	var strSourceFolder = strValue + "/" + "VPLApplicationWizard";
-	if(bDebug)
-		WScript.Echo("Source: " + strSourceFolder);
-
-	if(!FileSys.FolderExists(strSourceFolder))
-	{
-		WScript.Echo("ERROR: Cannot find Wizard folder (should be: " + strSourceFolder + ")");
-		return;
-	}
-
-	var strVC8Key = "HKLM\\Software\\Microsoft\\VisualStudio\\7.1\\Setup\\VC\\ProductDir";
-	try
-	{
-		strValue = WSShell.RegRead(strVC8Key);
-	}
-	catch(e)
-	{
-		WScript.Echo("ERROR: Cannot find where Visual Studio 7.1 is installed.");
-		return;
-	}
-
-	var strDestFolder = strValue + "\\vcprojects";
-	if(bDebug)
-		WScript.Echo("Destination: " + strDestFolder);
-	if(!FileSys.FolderExists(strDestFolder))
-	{
-		WScript.Echo("ERROR: Cannot find destination folder (should be: " + strDestFolder + ")");
-		return;
-	}
-
-	var strDest = strDestFolder + "\\";
-	var strSrc = "";
-
-	// Copy files
-	try
-	{
-		strSrc = strSourceFolder + "\\VPLApplicationWizard.ico";
-		FileSys.CopyFile(strSrc, strDest);
-		strSrc = strSourceFolder + "\\VPLApplicationWizard.vsdir";
-		FileSys.CopyFile(strSrc, strDest);
-	}
-	catch(e)
-	{
-		var strError = "no info";
-		if(e.description.length != 0)
-			strError = e.description;
-		WScript.Echo("ERROR: Cannot copy file (" + strError + ")");
-		return;
-	}
-
-	// Read and write VPLApplicationWizard.vsz, replace path when found
-	try
-	{
-		strSrc = strSourceFolder + "\\VPLApplicationWizard.vsz";
-		strDest = strDestFolder + "\\VPLApplicationWizard.vsz";
-
-		var ForReading = 1;
-		var fileSrc = FileSys.OpenTextFile(strSrc, ForReading);
-		if(fileSrc == null)
-		{
-			WScript.Echo("ERROR: Cannot open source file " + strSrc);
-			return;
-		}
-
-		var ForWriting = 2;
-		var fileDest = FileSys.OpenTextFile(strDest, ForWriting, true);
-		if(fileDest == null)
-		{
-			WScript.Echo("ERROR: Cannot open destination file" + strDest);
-			return;
-		}
-
-		while(!fileSrc.AtEndOfStream)
-		{
-			var strLine = fileSrc.ReadLine();
-			if(strLine.indexOf("ABSOLUTE_PATH") != -1)
-				strLine = "Param=\"ABSOLUTE_PATH = " + strSourceFolder + "\"";
-			fileDest.WriteLine(strLine);
-		}
-
-		fileSrc.Close();
-		fileDest.Close();
-	}
-	catch(e)
-	{
-		var strError = "no info";
-		if(e.description.length != 0)
-			strError = e.description;
-		WScript.Echo("ERROR: Cannot read and write VPLApplicationWizard.vsz (" + strError + ")");
-		return;
-	}
-
-	// WScript.Echo("VCF VPL Wizard successfully installed - enjoy!");
-*/
 
 	WScript.Echo("The VCF Application Wizards has been successfully installed!");
 }
