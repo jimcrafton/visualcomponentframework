@@ -116,21 +116,7 @@ void someFunction()
 		the refcount, and calling VCF::Object::release() decrements the 
 		refcount. If VCF::Object::release() is called and the refcount is 
 		equal to 0, then the object is destroyed by a call to VCF::Object::free().
-		</formalpara>
-		<formalpara><title>Creating and destroying Objects</title>
-		Creating objects on the heap is done using the typical operator 
-		new(). However, to destroy an instance that is directly or indirectly 
-		derived from VCF::Object, you should call VCF::Object::free() if 
-		you own the object, or VCF::Object::release() to decrement the 
-		refcount on the object. When the VCF::Object::free() is called it 
-		first calls the virtual VCF::Object::destroy() method, allowing 
-		you customize the clean up of your class, and making it safe to 
-		call otehr virtual methods. After VCF::Object::destroy() returns, 
-		it then deletes the instance. So, if you have a class that is 
-		intended to be used on the heap, it's a good idea to override the 
-		destroy() method (keeping it in protected scope), and put your 
-		clean code in there, instead of the destructor.
-		</formalpara>
+		</formalpara>		
 		<formalpara><title>RTTI</title>
 		You can get the VCF::Class instance from any instance of a VCF::Object 
 		by calling VCF::Object::getClass() method. If the class has been 
@@ -188,7 +174,110 @@ void someFunction()
 		by calling VCF::Object::release(), as opposed to deleting it.
 		</para>
 	</section>
-
+	<section id="Components"><title>Components</title>
+		<para>
+		Components represent the smallest nonvisual class that can be manipulated at design 
+		time.  This manipulation takes place through property editors, event editors, and 
+		component editors.  Technically the VCF RTTI system and event system will work with 
+		any class that is derived (directly or indirectly) from VCF::Object, but the 
+		VCF::Component represents the beginning of user interface related classes. In 
+		addition, any class derived from Component can be registered with the run time 
+		component information system, and will also show up in an IDE's component palette.
+		</para>		
+		<para>
+		Components come in two flavors: non-visual components, such as the TimerComponent, 
+		and visual components, that derive from Control (which is itself derived from 
+		Component), and are visible to the user. Examples of visual components are the 
+		ListBoxControl, Window, and Panel control.
+		</para>
+		<para>
+		You do <emphasis>not</emphasis> create instances of Component. It is an abstract 
+		class that is intended to serve as a base class for other concrete components. 
+		</para>
+		<formalpara><title>Creating and destroying Components</title>
+		Components need to be created on the heap using the typical operator 
+		new() function. However, to destroy an instance that is directly 
+		or indirectly derived from VCF::Component, you should call the
+		component's VCF::Component::free() method if you own the object. 
+		When the VCF::Object::free() is called it first calls the 
+		virtual VCF::Object::destroy() method, allowing you customize the 
+		clean up of your class, and making it safe to call other virtual 
+		methods. After VCF::Component::destroy() returns, it then deletes the 
+		instance. 
+		</formalpara>
+		<para>
+		Components can be "owned" by other components, freeing the developer from having to 
+		worry about deleting the Components later on. To add a Component you simply call the 
+		Component's <function>addComponent()</function> method, passing in the instance of 
+		the component you want to "own". Once the component is added, it's owner will take 
+		care of destroying it when the owner is destroyed. You can also remove a component. 
+		If you remove a component, and then do not add it back to some other owner, the 
+		responsibility for destroying the component is up to you. 
+		</para>
+		<para>
+		When components get added or removed they fire an event which can be handled. You
+		can register for this event by adding an callback to the either the 
+		Component's ComponentAdded or ComponentRemoved delegate. 
+		</para>
+		
+		<para>
+		Components maintain a special state variable called component state, that indicates 
+		the current state of the component. This is useful, for example, in determining if 
+		the component is in design mode, or normal mode. The state is an enumeration 
+		of type ComponentState. In general the	component's state is csNormal indicating 
+		that it's been created. When a component is in the process of being read in from a 
+		stream, it's state is marked as csLoading, and	when the component is being written 
+		to a stream it's state is marked as csSaving. As a general rule most UI events are 
+		only fired if the component's state is csNormal. The other important state is the 
+		csDesigning state. This is set when the component is being edited through some 
+		visual editing tool (like the VCF Builder's Form Designer). A component in the 
+		csDesigning state can process some event, but ignores most others. This is 
+		particularly true if the component is a control. For example, if the component 
+		is a TextControl, then any keyboard events are ignored if it's state is set to 
+		csDesigning.
+		</para>
+		<para>
+		Components are intended to be reused by other applications. They can be part of a 
+		standalone library, that can be used by other applications, or a an application may 
+		create a series of components specifically for it's use. When part of a standalone 
+		library, library is referred to as a Visual Package Library (VPL). A VPL can be a 
+		static library, or a dynamic library in the form of a DLL or Shared Object. VPL's 
+		typically have a file extension of ".vpl". To allow this form of re-use, 
+		Components need to provide not only RTTI information, but also language specific 
+		information, such as the name of the library they belong to, the header(s) they 
+		require for usage, etc. This information is stored in two main classes, 
+		ComponentInfo, which deals with the specific details of a particular Component 
+		class, and PackageInfo, which deals with the specifics of the package libary (VPL) 
+		that the Component belongs to.
+		</para>
+		<para>
+		The ComponentInfo class gives detailed information about the particular component 
+		class. It provides information about the author of the component, the company (if 
+		relevant),copyright, and text containing any other relevant information the 
+		developer wishes to provide.  A developer can set the image to use for the component 
+		as well (if left alone a default image will be provided).
+		</para>
+		<para>
+		The ComponentInfo class also provides information about which include file(s) are 
+		needed by the component. The getRequiredHeaders() method returns an Enumerator of 
+		Strings that lists the include files in the order they should be included. The 
+		headers should <emphasis>not</emphasis> contain absolute paths. If the component 
+		is part of a namespace (other than the VCF namespace) it can expose this information 
+		via the <function>getRequiredNamespaces()</function> method. This will list any 
+		namespaces the component requires for usage.
+		</para>
+		<para>
+		The PackageInfo class describes the library the component is part of. It specifies 
+		the author of the package library, the company, copyright info, and text for other 
+		information. It gives out the name of the library <emphasis>excluding</emphasis> the 
+		platform specific extension (such as .lib or .a or .so). It indicates the 
+		platforms/toolchains it supports (if no source is provided). It indicates whether 
+		it allows static linkage, dynamic linkage, or both.
+		</para>
+		<para>
+		</para>
+	</section>
+	
 	<section><title>Exceptions</title>
 		<para>
 		The VCF uses exceptions throughout the framework as a way of indicating
@@ -435,79 +524,253 @@ while ( properties->hasMoreElements() ) {
 		</para>
 	</section>
 
-	<section><title>Events</title>
+	<section><title>Delegates and Callbacks (aka Event Handling)</title>
 		<para>
-		Events happen to us every day. When we open a door, when we go 
-		to work, when we fall asleep. Objects in a framework, particularly 
-		objects that represent a user interface, are no different. Events 
-		are triggered when a user closes a window, or clicks on a button. 
-		Events can happen when the state of an object changes, such as 
-		reading data from a stream, or upon the object's creation. Not 
-		only do events happen, but quite often one object wants to be notified 
-		when a particular event happens to another object, and frequently 
-		the two objects may have no direct knowledge of each other beyond 
-		a basic base class. To further complicate matters, it is entirely 
-		possible that more than one object wants to notified when the 
-		event happens!</para>
-		<para>
-		One of the goals of the VCF is to provide a uniform architecture for
-		this and provide a solution that allows events to be used every where 
-		in the framework, but that in no way ties their usage just to user 
-		interface classes. So this is an overview and explanation of how the 
-		event mechanism is used in the VCF.		
+		Many frameworks have some sort of mechanism to notify others when 
+		something else changes, for example, the user clicks on a form, or 
+		an object is deleted. Usually this involves 1 or more callback functions 
+		and some way of invoking them with a series of parameters. 
+		C++ introduces some special challenges here due to the way the language
+		differentiates static function pointers from class member function
+		pointers. The VCF's previous technique for dealing with this had a 
+		number of limitations that have now been fixed, as well as adding 
+		the ability to work asynchronously.		
 		</para>
 		<para>
-		In most frameworks event handling is done through callbacks, and their 
-		are many different ways to approach this. In C++ this gets a bit tricky 
-		due to the nature of C++ member functions, so we need a way to wrap the 
-		callback function, which itself needs to be a member function. In addition, 
-		we need a consistent way to let objects know that we are interested in 
-		being notified when a particular event happens, as well as telling the 
-		same object when we are no longer interested in the notifications.
+		Previously the VCF was limited to callback functions (sometimes referred to 
+		as "event handlers") with a very specific type of function signature.
+		This is no longer the case. You can now define a notification to use
+		any sort of function signature you'd like, with a limit of up to 
+		8 function parameters. The function signature also no longer has to 
+		just be "void", you are now allowed to have arbitrary return values.
+		The idea of a Delegate is still in use, however the idea of an "event 
+		handler" has been replaced with the more generic term of callback.
 		</para>
 		<para>
-		To accomplish this in the VCF we have three main players: the source, or 
-		object that fires the event, the event, which is itself represented by 
-		an object, and the observer ( also called listener ), or the object that wishes 
-		to receive some notification when the event occurs and have that notification 
-		call a method on the observer object. Each of these objects has to have certain 
-		responsibilities as described in the table below.
-		<table frame="none" pgwide="1">
-			<tgroup cols="2" align="left" colsep="1" rowsep="1">
-				<thead>
-					<row>
-						<entry>Object</entry>
-						<entry>Responsibilities</entry>
-					</row>							
-				</thead>
-				<tbody>
-					<row>
-						<entry>Source object</entry>
-						<entry>The source must provide a way to register, and un-register 
-								one or more observer objects with a particular event that 
-								will be fired by the source object.
-						</entry>
-					</row>
-					<row>
-						<entry>Event object</entry>
-						<entry>The Event object must provide data to be used by the observer 
-						objects. For example, mouse event object would contain data about the 
-						position of the mouse, the buttons that were held down, etc. In 
-						addition, the event must be able to expose who actually fired the 
-						event, in other words provide a pointer back to the source of the 
-						event.
-						</entry>
-					</row>
-					<row>
-						<entry>Observer object</entry>
-						<entry>The observer must define one or more callback methods that 
-						will be invoked during the firing of a specific event by the
-						source object that the observer has registered with.</entry>
-					</row>
-				</tbody>	
-			</tgroup>
-		</table>
+		What is a callback? A callback is simply a function pointer. Specifically
+		it is represented in the VCF by the CallBack class. The callback,
+		like an event handler, has a name that can be used to identify it. A 
+		callback may have a "source" object that it belongs to if it represents
+		a C++ member function. A "source" in this case is the class instance
+		that is bound with the member function pointer so that the function
+		is triggered on the correct class instance. If the source instance is 
+		derived from ObjectWithCallbacks, then the source will clean up the
+		callback for you, and you can retreive the callback by the name that 
+		you gave it.
 		</para>
+		<para>
+		The delegate is kind of a super function pointer, essentially the same,
+		in principal, as .Net's multicast delegate. A delegate is represented 
+		by the Delegate base class. A Delegate maintains a collection of 
+		0 or more CallBack instances. When you "invoke" a delegate, the delegate 
+		manages the job of invoking all of it's callbacks.
+		</para>
+		<para>
+		An object that wishes to fire "event", so to speak, uses a Delagate
+		as the way to allow others to be notified (through callbacks). When
+		the object needs this notification to take place it uses the 
+		specific delegate and calls the invoke method of the delegate. For 
+		example, let say we had a simple class called Person, that had 
+		a method called talk(). When talk() is called, we want to allow
+		others to know that the Person object is "talking", so we define a 
+		Delegate member variable called Talking. This allows other 
+		objects to register with the Talking delegate, and then be nortified 
+		through their callback methods. The pseudo code might look like this:
+<programlisting>
+<![CDATA[		
+class Person {
+public:
+	Delegate Talking;
+	
+	void talk() {
+	  Talking.invoke();
+	}
+};
+
+
+void myTalkingCallback()
+{
+  //do something interesting
+}
+
+Person p;
+p.Talking += myTalkingCallback;
+
+p.talk();
+]]>
+		</programlisting>
+		Obviously the exact C++ is a little more complex than that, but that's
+		the basic principle.
+		</para>
+		<para>
+		Both the CallBack and Delegate classes use templates to handle the generic function
+		parameters and for dealing with generic return types.
+		</para>	
+		<para>
+		The CallBack class is the base class for all other callbacks, but you'll 
+		need ot use a specific type and declare with the appropriate template
+		parameters. Callbacks are broke into two main groups - functions that 
+		return a value, and functions that do not. Within these two groups we 
+		have a further distinction for functions that are class member functions.		
+		</para>
+		<para>
+		Functions that do not return anything are called a Procedure. If the
+		Procedure is a class member function, then it's called a ClassProcedure.
+		Following the name are the number of function paramters/arguments that
+		it takes forming something like Procedure for a function with nor arguments,
+		or Procedure3 for a function with three arguments. You will need to
+		declare the exact argument types, and possibly the type of the class
+		if it is a class member function. Some examples:
+		<programlisting>
+<![CDATA[
+//for a simple static function
+void myCallBack()
+{
+
+}
+
+//here's your callback wrapper
+CallBack* myCB = new Procedure(myCallBack);
+
+
+//for a static function with 2 arguments
+void myCallBack2( int i, const String& s )
+{
+
+}
+
+//here's your callback wrapper
+CallBack* myCB = new Procedure2<int,const String&>(myCallBack2);
+
+//for a class member function that takes 1 parameter
+
+class MyClass : public Object {
+public:
+  void myCallBack( Event* e ) {
+	
+	}
+};
+
+//here's your callback wrapper
+MyClass cbSrc;
+
+CallBack* myCB = new ClassProcedure1<Event*,MyClass>(&MyClass::myCallBack,&cbSrc);
+]]>
+		</programlisting>		
+		</para>
+		<para>
+		Functions that do return something are called Function and for class
+		member functions are called ClassFunction. Like a Procedure, they are 
+		followed by the number of arguments that the function takes and you must
+		declare the function return type and argument types in the template
+		declaration. A function	that returns an int, but takes no arguments is 
+		called Function&lt;int&gt;, a function that returns a String and takes a 
+		const bool reference is	Function1&lt;String,const bool&amp;&gt; and so 
+		on. Some examples:
+		<programlisting>
+<![CDATA[
+//for a simple static function
+int myCallBack()
+{
+	return 100;
+}
+
+//here's your callback wrapper
+CallBack* myCB = new Function<int>(myCallBack);
+
+
+//for a static function with 2 arguments
+String myCallBack2( int i, const String& s )
+{
+	return s + i;
+}
+
+//here's your callback wrapper
+CallBack* myCB = new Function2<String,int,const String&>(myCallBack2);
+
+//for a class member function that takes 1 parameter
+
+class MyClass : public Object {
+public:
+  bool myCallBack( Event* e ) {
+		return true;
+	}
+};
+
+//here's your callback wrapper
+MyClass cbSrc;
+
+CallBack* myCB = new ClassFunction1<bool,Event*,MyClass>(&MyClass::myCallBack,&cbSrc);
+]]>
+		</programlisting>		
+		</para>
+		<para>
+		Delegates are differentiated in a similar manner as callbacks. They are 
+		broken into 2 groups, delegates that return values, and delegates that
+		do not. Also, the exact delegate class name includes the number of 
+		arguments it takes. So a delegate that has no return value and no
+		arguments is named Delegate0, a delegate with 3 function arguments and
+		no return type is Delegate3, and a delegate with a return type and 1 function
+		argument is Delegate1R, where the "R" means it returns a value. Note that
+		the delegate does not need to distinguish between static functions 
+		or class member functions - these are handled by the concrete CallBack
+		classes and can therefor be safely ignored by the delegate. Which
+		means that a delegate may have callback functions of either type. Some
+		examples:
+		<programlisting>
+<![CDATA[
+//a simple delegate
+void myCallBack()
+{
+	
+}
+
+//returns nothing, takes no parameters
+Delegate0 d; 
+
+
+void myCallBack2( int i)
+{
+	
+}
+
+//returns nothing, takes on parameter, an int
+Delegate1 d<int>; 
+
+
+//for a delegate with 2 arguments and a return type of String
+String myCallBack2( int i, const String& s )
+{
+	return s + i;
+}
+
+
+//returns a String, takes 2 parameters, an int and a const String ref 
+Delegate2R<String,int,const String&> d2;
+]]>
+		</programlisting>		
+		</para>
+		<para>
+		Once you've declared a delegate you can add a callback to it:
+		<programlisting>		
+<![CDATA[
+void doit( int j ) 
+{
+
+}
+
+Delegate1 d<int>; 
+CallBack* myCB = new Procedure1<int>(doit);
+d += myCB;
+
+//for static functions you can also do:
+d += doit;
+
+]]>
+		</programlisting>		
+		</para>
+		
+		<!--
 		<para>
 		To make all of this work in the VCF there are three main classes that are 
 		used. The first is the EventHandler class. This provides an interface that 
@@ -632,10 +895,13 @@ int main( int argc, char** argv )
 		how we have connected the two object (source and observer) through the use 
 		of Delegates and EventHandlers.
 		</para>
+-->
 
 	</section>
 
-
+	<section><title>Threading and Asynchronous Delegates</title>
+	</section>
+	
 	<section><title>Synchronization Primitives</title>
 		<para>
 		The VCF has several classes that can be used to synchronize 
