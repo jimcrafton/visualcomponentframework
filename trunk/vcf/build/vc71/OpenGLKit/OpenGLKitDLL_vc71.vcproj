@@ -170,26 +170,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS;$(NoInherit)"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;USE_APPLICATIONKIT_DLL;OPENGLKIT_DLL;OPENGLKIT_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -237,9 +217,6 @@
 				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControl.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControlContext.h">
-			</File>
-			<File
 				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLKit.h">
 			</File>
 			<File
@@ -255,6 +232,12 @@
 				RelativePath="..\..\..\src\vcf\OpenGLKit\Win32OpenGLPeer.h">
 			</File>
 		</Filter>
+		<File
+			RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLContext.cpp">
+		</File>
+		<File
+			RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLContext.h">
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
