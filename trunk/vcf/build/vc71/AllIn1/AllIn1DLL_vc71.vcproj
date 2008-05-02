@@ -155,39 +155,6 @@
 		<Filter
 			Name="ApplicationKit"
 			Filter="">
-			<Filter
-				Name="Res"
-				Filter="">
-				<File
-					RelativePath="..\..\resources\win32\ApplicationKit.rc">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCResourceCompilerTool"
-							PreprocessorDefinitions=""
-							AdditionalIncludeDirectories="..\..\..\resources\win32\"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCResourceCompilerTool"
-							PreprocessorDefinitions=""
-							AdditionalIncludeDirectories="..\..\..\resources\win32\"/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\..\resources\win32\inform.bmp">
-				</File>
-				<File
-					RelativePath="..\..\resources\win32\question.bmp">
-				</File>
-				<File
-					RelativePath="..\..\resources\win32\stop.bmp">
-				</File>
-				<File
-					RelativePath="..\..\resources\win32\vcf.ico">
-				</File>
-			</Filter>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\AbstractApplication.cpp">
 				<FileConfiguration
@@ -3572,6 +3539,39 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Wizard.h">
 			</File>
+			<Filter
+				Name="Res"
+				Filter="">
+				<File
+					RelativePath="..\..\resources\win32\ApplicationKit.rc">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCResourceCompilerTool"
+							PreprocessorDefinitions=""
+							AdditionalIncludeDirectories="..\..\..\resources\win32\"/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCResourceCompilerTool"
+							PreprocessorDefinitions=""
+							AdditionalIncludeDirectories="..\..\..\resources\win32\"/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\resources\win32\inform.bmp">
+				</File>
+				<File
+					RelativePath="..\..\resources\win32\question.bmp">
+				</File>
+				<File
+					RelativePath="..\..\resources\win32\stop.bmp">
+				</File>
+				<File
+					RelativePath="..\..\resources\win32\vcf.ico">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="GraphicsKit"
@@ -5519,28 +5519,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Thread.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadEvent.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ThreadEvent.h">

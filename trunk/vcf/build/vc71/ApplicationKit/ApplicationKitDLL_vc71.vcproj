@@ -1542,6 +1542,9 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\SystemTray.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeListModel.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\VCFCOM.h">
 			</File>
 			<File
@@ -1822,6 +1825,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DragDropPeer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DropDownPeer.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp">
@@ -2618,6 +2624,9 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DocManagerPolicy.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Document.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Document.h">
 			</File>
 			<File
@@ -2654,6 +2663,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListItem.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ListModel.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListModel.h">
@@ -2710,6 +2722,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeItem.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeModel.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TreeModel.h">
@@ -2840,6 +2855,9 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CustomControl.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\DropDownControl.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\HeaderControl.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -2930,6 +2948,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListBoxControl.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ListControl.cpp">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ListViewControl.cpp">
