@@ -1031,6 +1031,9 @@
 			Name="Utils"
 			Filter="*.h">
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Base64Codec.cpp">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\CommandLine.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
