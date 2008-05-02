@@ -121,27 +121,10 @@
 			Name="Source"
 			Filter="">
 			<File
-				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControl.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
+				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLContext.cpp">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControlContext.cpp">
+				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControl.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
@@ -205,10 +188,10 @@
 			Name="Headers"
 			Filter="">
 			<File
-				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControl.h">
+				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLContext.h">
 			</File>
 			<File
-				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControlContext.h">
+				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLControl.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLKit.h">
