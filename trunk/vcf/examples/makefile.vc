@@ -43,7 +43,7 @@ MAKEARGS = CC="$(CC)" CXX="$(CXX)" CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
 
 ### Targets: ###
 
-all: sub_Accelerators sub_Actions sub_AdvancedAlignment sub_AdvancedUI sub_Alignment sub_Anchors sub_ApplicationIcons sub_AppResources sub_BasicContainers sub_Browser sub_Cards sub_Colors sub_Combos sub_CommonDirectories sub_Conditions sub_Controls sub_CopyAndPaste sub_DatesAndTime sub_DateTimeUI sub_Dialogs sub_DiggApp sub_Dictionaries sub_Directories sub_DocViewAdvanced sub_DocViewBasics sub_DragAndDrop sub_EventBasics sub_FilesAndDirectories sub_FrameStyles sub_Gradients sub_GraphicsAndMouseMoves sub_GraphicsBasics sub_HeavyAndLight sub_HelloWorld sub_HelloWorld2 sub_HelloWorld3 sub_Help sub_ImageBasics sub_ImageViewer sub_InetKit sub_JavaScriptTest sub_Labels sub_ListBox sub_ListViews sub_LocaleUI sub_Localization sub_LOLCats sub_MinMax sub_MVCBasics sub_NetworkKitTest sub_OpenGLShapes sub_ParticleEditor sub_Pixels sub_PopupMenus sub_Printing sub_Processes sub_ProgressBars sub_RCChineseDict sub_Reflection sub_RegExTest sub_Resources sub_RunLoops sub_ScreenDPI sub_Scrolling sub_Scrolling2 sub_SharedLibraries sub_SketchIt sub_Sliders sub_Splitters sub_Strings sub_StrokesAndFills sub_SysTray sub_Tables sub_Tabs sub_TCPClient sub_TCPServer sub_TeXLabel sub_TextEdit sub_TextLayout sub_Themes sub_ThreadBasics sub_ThreadMethods sub_ThreadsInGUI sub_Toolbars sub_Tooltips sub_Transformations sub_TreeListControls sub_Trees sub_Trees2 sub_UDPClient sub_UDPServer sub_Variants sub_VFFTests sub_VFFTests2 sub_VisualFormFiles sub_WorkingWithEnumerators sub_XMLTest
+all: sub_Accelerators sub_Actions sub_AdvancedAlignment sub_AdvancedUI sub_Alignment sub_Anchors sub_ApplicationIcons sub_AppResources sub_BasicContainers sub_Browser sub_Cards sub_ClassRegistryBrowser sub_Colors sub_Combos sub_CommonDirectories sub_Conditions sub_Controls sub_CopyAndPaste sub_DatesAndTime sub_DateTimeUI sub_Dialogs sub_DiggApp sub_Dictionaries sub_Directories sub_DocViewAdvanced sub_DocViewBasics sub_DragAndDrop sub_EventBasics sub_FilesAndDirectories sub_FrameStyles sub_Gradients sub_GraphicsAndMouseMoves sub_GraphicsBasics sub_HeavyAndLight sub_HelloWorld sub_HelloWorld2 sub_HelloWorld3 sub_Help sub_ImageBasics sub_ImageViewer sub_InetKit sub_JavaScriptTest sub_Labels sub_ListBox sub_ListViews sub_LocaleUI sub_Localization sub_LOLCats sub_MinMax sub_MVCBasics sub_NetworkKitTest sub_OpenGLShapes sub_ParticleEditor sub_Pixels sub_PopupMenus sub_PopupWindows sub_Printing sub_Processes sub_ProgressBars sub_RCChineseDict sub_Reflection sub_RegExGUI sub_RegExTest sub_Resources sub_RunLoops sub_ScreenDPI sub_Scrolling sub_Scrolling2 sub_ShapedWindow sub_SharedLibraries sub_SketchIt sub_Sliders sub_Splitters sub_Strings sub_StrokesAndFills sub_SysTray sub_Tables sub_Tabs sub_TCPClient sub_TCPServer sub_TeXLabel sub_TextEdit sub_TextLayout sub_Themes sub_ThreadBasics sub_ThreadMethods sub_ThreadsInGUI sub_Toolbars sub_Tooltips sub_Transformations sub_TransparentWindows sub_TreeListControls sub_Trees sub_Trees2 sub_UDPClient sub_UDPServer sub_Variants sub_VFFTests sub_VFFTests2 sub_VisualFormFiles sub_WorkingWithEnumerators sub_XMLTest
 
 clean: 
 	-if exist .\*.obj del .\*.obj
@@ -82,6 +82,9 @@ clean:
 	cd Cards
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
+	cd ClassRegistryBrowser
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
 	cd Colors
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
@@ -118,10 +121,10 @@ clean:
 	cd Directories
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
-	cd DocViewAdvanced
+	cd MVC\DocViewAdvanced
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
-	cd DocViewBasics
+	cd MVC\DocViewBasics
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
 	cd DragAndDrop
@@ -193,7 +196,7 @@ clean:
 	cd MinMax
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
-	cd MVCBasics
+	cd MVC\MVCBasics
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
 	cd NetworkKitTest
@@ -211,6 +214,9 @@ clean:
 	cd PopupMenus
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
+	cd PopupWindows
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
 	cd Printing
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
@@ -224,6 +230,9 @@ clean:
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
 	cd Reflection
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
+	cd RegExGUI
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
 	cd RegExTest
@@ -242,6 +251,9 @@ clean:
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
 	cd Scrolling2
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
+	cd ShapedWindow
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
 	cd SharedLibraries
@@ -305,6 +317,9 @@ clean:
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
 	cd Transformations
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
+	cd TransparentWindows
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
 	cd TreeListControls
@@ -396,6 +411,11 @@ sub_Cards:
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 
+sub_ClassRegistryBrowser: 
+	cd ClassRegistryBrowser
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
+	cd "$(MAKEDIR)"
+
 sub_Colors: 
 	cd Colors
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
@@ -457,12 +477,12 @@ sub_Directories:
 	cd "$(MAKEDIR)"
 
 sub_DocViewAdvanced: 
-	cd DocViewAdvanced
+	cd MVC\DocViewAdvanced
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 
 sub_DocViewBasics: 
-	cd DocViewBasics
+	cd MVC\DocViewBasics
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 
@@ -582,7 +602,7 @@ sub_MinMax:
 	cd "$(MAKEDIR)"
 
 sub_MVCBasics: 
-	cd MVCBasics
+	cd MVC\MVCBasics
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 
@@ -611,6 +631,11 @@ sub_PopupMenus:
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 
+sub_PopupWindows: 
+	cd PopupWindows
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
+	cd "$(MAKEDIR)"
+
 sub_Printing: 
 	cd Printing
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
@@ -633,6 +658,11 @@ sub_RCChineseDict:
 
 sub_Reflection: 
 	cd Reflection
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
+	cd "$(MAKEDIR)"
+
+sub_RegExGUI: 
+	cd RegExGUI
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 
@@ -663,6 +693,11 @@ sub_Scrolling:
 
 sub_Scrolling2: 
 	cd Scrolling2
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
+	cd "$(MAKEDIR)"
+
+sub_ShapedWindow: 
+	cd ShapedWindow
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 
@@ -768,6 +803,11 @@ sub_Tooltips:
 
 sub_Transformations: 
 	cd Transformations
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
+	cd "$(MAKEDIR)"
+
+sub_TransparentWindows: 
+	cd TransparentWindows
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 

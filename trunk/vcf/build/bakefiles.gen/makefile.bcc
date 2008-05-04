@@ -85,7 +85,8 @@ AGG_LIB_OBJECTS =  \
 	..\..\lib\$(OBJDIR)\AGG_lib_agg_vcgen_smooth_poly1.obj \
 	..\..\lib\$(OBJDIR)\AGG_lib_agg_vcgen_stroke.obj \
 	..\..\lib\$(OBJDIR)\AGG_lib_agg_vpgen_clip_polygon.obj \
-	..\..\lib\$(OBJDIR)\AGG_lib_agg_vpgen_segmentator.obj
+	..\..\lib\$(OBJDIR)\AGG_lib_agg_vpgen_segmentator.obj \
+	..\..\lib\$(OBJDIR)\AGG_lib_agg_font_win32_tt.obj
 ZLIB_LIB_CFLAGS = $(__OPTION_RUNTIME) -I$(BCCDIR)\include $(__DEBUG_INFO) \
 	$(__OPTIMIZE) $(__OPTION_THREADING) $(____OPTION_DEBUG) -D_WIN32 -DWIN32 \
 	-D_LIB -DVCF_DISABLE_PRAGMA_LINKING -I..\..\src $(CPPFLAGS) $(CFLAGS)
@@ -2849,6 +2850,9 @@ xmake_:
 
 ..\..\lib\$(OBJDIR)\AGG_lib_agg_vpgen_segmentator.obj: ..\..\src\thirdparty\common\agg\src\agg_vpgen_segmentator.cpp
 	$(CXX) -q -c -P -o$@ $(AGG_LIB_CXXFLAGS) ..\..\src\thirdparty\common\agg\src\agg_vpgen_segmentator.cpp
+
+..\..\lib\$(OBJDIR)\AGG_lib_agg_font_win32_tt.obj: ..\..\src\thirdparty\common\agg\src\agg_font_win32_tt.cpp
+	$(CXX) -q -c -P -o$@ $(AGG_LIB_CXXFLAGS) ..\..\src\thirdparty\common\agg\src\agg_font_win32_tt.cpp
 
 ..\..\lib\$(OBJDIR)\ZLib_lib_adler32.obj: ..\..\src\thirdparty\common\ZLib\adler32.c
 	$(CC) -q -c -P- -o$@ $(ZLIB_LIB_CFLAGS) ..\..\src\thirdparty\common\ZLib\adler32.c

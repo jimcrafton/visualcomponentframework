@@ -6,6 +6,7 @@
         VCF.bkl
         ../../examples/*.bkl
         ../../examples/*/*.bkl
+        ../../examples/*/*/*.bkl
         ../../src/BlackBox/*.bkl
         ../../src/createbundle/*.bkl
         ../../src/createinfo/*.bkl
@@ -26,7 +27,7 @@
     Do not generate dsw/dsp/sln/vcproj files for the following bkls, 
     since they will overwrite existed ones.
     -->
-    <del-formats files="../../examples/*/*.bkl">
+    <del-formats files="../../examples/*/*.bkl,../../examples/*/*/*.bkl">
         msvc6prj,msvs2003prj,msvs2005prj
     </del-formats>
     <del-formats files="../../src/BlackBox/*.bkl">
@@ -75,6 +76,7 @@
     <add-flags files="*" formats="msvc6prj,msvs2003prj,msvs2005prj">-DVCF_ROOT_BKGEN=../../..</add-flags>
     <add-flags files="../../*/*">-DVCF_ROOT_BKGEN=..</add-flags>
     <add-flags files="../../*/*/*">-DVCF_ROOT_BKGEN=../..</add-flags>
+    <add-flags files="../../*/*/*/*">-DVCF_ROOT_BKGEN=../../..</add-flags>
 
 
     <add-flags files="VCF.bkl" formats="borland">
@@ -116,6 +118,20 @@
     </add-flags>
     <add-flags files="../../*/*/*" formats="msvc">
         -DOPTIONS_FILE=../../build/bakefiles.gen/config.vc
+    </add-flags>
+
+
+    <add-flags files="../../*/*/*/*" formats="borland">
+        -DOPTIONS_FILE=../../../build/bakefiles.gen/config.bcc
+    </add-flags>
+    <add-flags files="../../*/*/*/*" formats="mingw">
+        -DOPTIONS_FILE=../../../build/bakefiles.gen/config.gcc
+    </add-flags>
+    <add-flags files="../../*/*/*/*" formats="gnu">
+        -DOPTIONS_FILE=../../../build/bakefiles.gen/config.gnu
+    </add-flags>
+    <add-flags files="../../*/*/*/*" formats="msvc">
+        -DOPTIONS_FILE=../../../build/bakefiles.gen/config.vc
     </add-flags>
 
 

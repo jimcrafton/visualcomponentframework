@@ -4,7 +4,7 @@
 #     Do not modify, all changes will be overwritten!
 # =========================================================================
 
-include ../../build/bakefiles.gen/config.gcc
+include ../../../build/bakefiles.gen/config.gcc
 
 # -------------------------------------------------------------------------
 # Do not modify the rest of this file!
@@ -24,15 +24,16 @@ APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 DOCVIEWADVANCED_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) \
 	$(__OPTION_THREADING) $(__OPTION_WARNINGS_9) $(____OPTION_DEBUG_10_p) \
-	-D_WIN32 -DWIN32 -Wno-multichar -DVCF_DISABLE_PRAGMA_LINKING -I..\..\src \
-	-I..\..\src\thirdparty\common\ZLib -I..\..\src\thirdparty\common\LibPNG \
-	-I..\..\src\thirdparty\common\LibJPEG \
-	-I..\..\src\thirdparty\common\agg\include $(__FOUNDATIONKIT_DLL_p) \
+	-D_WIN32 -DWIN32 -Wno-multichar -DVCF_DISABLE_PRAGMA_LINKING -I..\..\..\src \
+	-I..\..\..\src\thirdparty\common\ZLib \
+	-I..\..\..\src\thirdparty\common\LibPNG \
+	-I..\..\..\src\thirdparty\common\LibJPEG \
+	-I..\..\..\src\thirdparty\common\agg\include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) \
 	$(____OPTION_CPP_RTTI_0_7) $(____OPTION_CPP_EXCEPTIONS_1_8) $(CPPFLAGS) \
 	$(CXXFLAGS)
 DOCVIEWADVANCED_OBJECTS =  \
-	..\..\lib\$(OBJDIR)\examples\DocViewAdvanced\DocViewAdvanced_DocViewAdvanced.o
+	..\..\..\lib\$(OBJDIR)\examples\DocViewAdvanced\DocViewAdvanced_DocViewAdvanced.o
 
 ### Conditionally set variables: ###
 
@@ -126,25 +127,25 @@ __OPTION_THREADING =
 endif
 
 
-all: ..\..\lib\$(OBJDIR)\examples\DocViewAdvanced
-..\..\lib\$(OBJDIR)\examples\DocViewAdvanced:
-	-if not exist ..\..\lib\$(OBJDIR)\examples\DocViewAdvanced mkdir ..\..\lib\$(OBJDIR)\examples\DocViewAdvanced
+all: ..\..\..\lib\$(OBJDIR)\examples\DocViewAdvanced
+..\..\..\lib\$(OBJDIR)\examples\DocViewAdvanced:
+	-if not exist ..\..\..\lib\$(OBJDIR)\examples\DocViewAdvanced mkdir ..\..\..\lib\$(OBJDIR)\examples\DocViewAdvanced
 
 ### Targets: ###
 
 all: $(__DocViewAdvanced___depname)
 
 clean: 
-	-if exist ..\..\lib\$(OBJDIR)\examples\DocViewAdvanced\*.o del ..\..\lib\$(OBJDIR)\examples\DocViewAdvanced\*.o
-	-if exist ..\..\lib\$(OBJDIR)\examples\DocViewAdvanced\*.d del ..\..\lib\$(OBJDIR)\examples\DocViewAdvanced\*.d
+	-if exist ..\..\..\lib\$(OBJDIR)\examples\DocViewAdvanced\*.o del ..\..\..\lib\$(OBJDIR)\examples\DocViewAdvanced\*.o
+	-if exist ..\..\..\lib\$(OBJDIR)\examples\DocViewAdvanced\*.d del ..\..\..\lib\$(OBJDIR)\examples\DocViewAdvanced\*.d
 	-if exist .\DocViewAdvanced$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\DocViewAdvanced$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
 .\DocViewAdvanced$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(DOCVIEWADVANCED_OBJECTS)
-	$(CXX) -o $@ $(DOCVIEWADVANCED_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING) -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--subsystem,windows -mwindows $(____DocViewAdvanced_APPLICATIONKIT_p) $(____DocViewAdvanced_GRAPHICSKIT_p) $(____DocViewAdvanced_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32
+	$(CXX) -o $@ $(DOCVIEWADVANCED_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING) -Wl,--enable-runtime-pseudo-reloc -L..\..\..\lib -Wl,--subsystem,windows -mwindows $(____DocViewAdvanced_APPLICATIONKIT_p) $(____DocViewAdvanced_GRAPHICSKIT_p) $(____DocViewAdvanced_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32
 endif
 
-..\..\lib\$(OBJDIR)\examples\DocViewAdvanced\DocViewAdvanced_DocViewAdvanced.o: ./DocViewAdvanced.cpp
+..\..\..\lib\$(OBJDIR)\examples\DocViewAdvanced\DocViewAdvanced_DocViewAdvanced.o: ./DocViewAdvanced.cpp
 	$(CXX) -c -o $@ $(DOCVIEWADVANCED_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean
@@ -153,4 +154,4 @@ endif
 SHELL := $(COMSPEC)
 
 # Dependencies tracking:
--include ..\..\lib\$(OBJDIR)\examples\DocViewAdvanced/*.d
+-include ..\..\..\lib\$(OBJDIR)\examples\DocViewAdvanced/*.d

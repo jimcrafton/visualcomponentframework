@@ -4,7 +4,7 @@
 #     Do not modify, all changes will be overwritten!
 # =========================================================================
 
-include ../../../build/bakefiles.gen/config.gnu
+include ../../build/bakefiles.gen/config.gnu
 
 # -------------------------------------------------------------------------
 # Do not modify the rest of this file!
@@ -22,18 +22,17 @@ FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 GRAPHICSKIT_FILENAME = GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-MVCBASICS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING_6) \
-	$(__OPTION_WARNINGS_9) $(____OPTION_DEBUG_10_p) -Wno-multichar \
-	-DVCF_DISABLE_PRAGMA_LINKING -I../../../src \
-	-I../../../src/thirdparty/common/ZLib \
-	-I../../../src/thirdparty/common/LibPNG \
-	-I../../../src/thirdparty/common/LibJPEG \
-	-I../../../src/thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
+TRANSPARENTWINDOWS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) \
+	$(__OPTION_THREADING_6) $(__OPTION_WARNINGS_9) $(____OPTION_DEBUG_10_p) \
+	-Wno-multichar -DVCF_DISABLE_PRAGMA_LINKING -I../../src \
+	-I../../src/thirdparty/common/ZLib -I../../src/thirdparty/common/LibPNG \
+	-I../../src/thirdparty/common/LibJPEG \
+	-I../../src/thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) \
 	$(____OPTION_CPP_RTTI_0_7) $(____OPTION_CPP_EXCEPTIONS_1_8) $(CPPFLAGS) \
 	$(CXXFLAGS)
-MVCBASICS_OBJECTS =  \
-	../../../lib/$(OBJDIR)/examples/MVCBasics/MVCBasics_MVCBasics.o
+TRANSPARENTWINDOWS_OBJECTS =  \
+	../../lib/$(OBJDIR)/examples/TransparentWindows/TransparentWindows_TransparentWindows.o
 
 ### Conditionally set variables: ###
 
@@ -56,7 +55,8 @@ ifeq ($(OPTION_SHARED),1)
 SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 endif
 ifeq ($(OPTION_APPLICATIONKIT),1)
-__MVCBasics___depname = ./MVCBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+__TransparentWindows___depname = \
+	./TransparentWindows$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 endif
 ifeq ($(OPTION_DEBUG),0)
 __OPTIMIZE_4 = -O2
@@ -104,22 +104,22 @@ ifeq ($(OPTION_DEBUG),1)
 ____OPTION_DEBUG_10_p = -D_DEBUG
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____MVCBasics_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
+____TransparentWindows_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
 endif
 ifeq ($(OPTION_ALLIN1),1)
-____MVCBasics_FOUNDATIONKIT_p = -l$(ALLIN1_FILENAME)
+____TransparentWindows_FOUNDATIONKIT_p = -l$(ALLIN1_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____MVCBasics_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
+____TransparentWindows_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __GRAPHICSKIT_DLL_p = -DGRAPHICSKIT_DLL
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____MVCBasics_APPLICATIONKIT_p = -l$(APPLICATIONKIT_FILENAME)
+____TransparentWindows_APPLICATIONKIT_p = -l$(APPLICATIONKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __APPLICATIONKIT_DLL_p = -DAPPLICATIONKIT_DLL
@@ -132,33 +132,33 @@ __DEBUG_INFO = -g
 endif
 
 
-all: ../../../lib/$(OBJDIR)/examples/MVCBasics
-../../../lib/$(OBJDIR)/examples/MVCBasics:
-	@mkdir -p ../../../lib/$(OBJDIR)/examples/MVCBasics
+all: ../../lib/$(OBJDIR)/examples/TransparentWindows
+../../lib/$(OBJDIR)/examples/TransparentWindows:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/TransparentWindows
 
 ### Targets: ###
 
-all: $(__MVCBasics___depname)
+all: $(__TransparentWindows___depname)
 
 install: all
 
 uninstall: 
 
 clean: 
-	rm -f ../../../lib/$(OBJDIR)/examples/MVCBasics/*.o
-	rm -f ../../../lib/$(OBJDIR)/examples/MVCBasics/*.d
-	rm -f ./MVCBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+	rm -f ../../lib/$(OBJDIR)/examples/TransparentWindows/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/TransparentWindows/*.d
+	rm -f ./TransparentWindows$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
-./MVCBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(MVCBASICS_OBJECTS)
-	$(CXX) -o $@ $(MVCBASICS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_5) -L../../../lib  $(____MVCBasics_APPLICATIONKIT_p) $(____MVCBasics_GRAPHICSKIT_p) $(____MVCBasics_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
+./TransparentWindows$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(TRANSPARENTWINDOWS_OBJECTS)
+	$(CXX) -o $@ $(TRANSPARENTWINDOWS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_5) -L../../lib  $(____TransparentWindows_APPLICATIONKIT_p) $(____TransparentWindows_GRAPHICSKIT_p) $(____TransparentWindows_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
 endif
 
-../../../lib/$(OBJDIR)/examples/MVCBasics/MVCBasics_MVCBasics.o: ./MVCBasics.cpp
-	$(CXX) -c -o $@ $(MVCBASICS_CXXFLAGS) $(CPPDEPS) $<
+../../lib/$(OBJDIR)/examples/TransparentWindows/TransparentWindows_TransparentWindows.o: ./TransparentWindows.cpp
+	$(CXX) -c -o $@ $(TRANSPARENTWINDOWS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include ../../../lib/$(OBJDIR)/examples/MVCBasics/*.d
+-include ../../lib/$(OBJDIR)/examples/TransparentWindows/*.d
