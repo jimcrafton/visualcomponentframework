@@ -33,7 +33,8 @@ CLASSREGISTRYBROWSER_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) \
 	$(____OPTION_CPP_RTTI_0_7) $(____OPTION_CPP_EXCEPTIONS_1_8) $(CPPFLAGS) \
 	$(CXXFLAGS)
 CLASSREGISTRYBROWSER_OBJECTS =  \
-	..\..\lib\$(OBJDIR)\examples\ClassRegistryBrowser\ClassRegistryBrowser_ClassRegistryBrowser.o
+	..\..\lib\$(OBJDIR)\examples\ClassRegistryBrowser\ClassRegistryBrowser_ClassRegistryBrowser.o \
+	..\..\lib\$(OBJDIR)\examples\ClassRegistryBrowser\ClassRegistryBrowser_ClassRegistryBrowser_rc.o
 
 ### Conditionally set variables: ###
 
@@ -92,6 +93,12 @@ endif
 ifeq ($(OPTION_DEBUG),1)
 ____OPTION_DEBUG_10_p = -D_DEBUG
 endif
+ifeq ($(OPTION_DEBUG),0)
+____OPTION_DEBUG_10_p_1 = --define NDEBUG
+endif
+ifeq ($(OPTION_DEBUG),1)
+____OPTION_DEBUG_10_p_1 = --define _DEBUG
+endif
 ifeq ($(OPTION_ALLIN1),0)
 ____ClassRegistryBrowser_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
 endif
@@ -101,11 +108,17 @@ endif
 ifeq ($(OPTION_SHARED),1)
 __FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
 endif
+ifeq ($(OPTION_SHARED),1)
+__FOUNDATIONKIT_DLL_p_1 = --define FOUNDATIONKIT_DLL
+endif
 ifeq ($(OPTION_ALLIN1),0)
 ____ClassRegistryBrowser_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __GRAPHICSKIT_DLL_p = -DGRAPHICSKIT_DLL
+endif
+ifeq ($(OPTION_SHARED),1)
+__GRAPHICSKIT_DLL_p_1 = --define GRAPHICSKIT_DLL
 endif
 ifeq ($(OPTION_ALLIN1),0)
 ____ClassRegistryBrowser_APPLICATIONKIT_p = -l$(APPLICATIONKIT_FILENAME)
@@ -113,11 +126,17 @@ endif
 ifeq ($(OPTION_SHARED),1)
 __APPLICATIONKIT_DLL_p = -DAPPLICATIONKIT_DLL
 endif
+ifeq ($(OPTION_SHARED),1)
+__APPLICATIONKIT_DLL_p_1 = --define APPLICATIONKIT_DLL
+endif
 ifeq ($(OPTION_ALLIN1),0)
 ____ClassRegistryBrowser_HTMLKIT_p = -l$(HTMLKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __HTMLKIT_DLL_p = -DHTMLKIT_DLL
+endif
+ifeq ($(OPTION_SHARED),1)
+__HTMLKIT_DLL_p_1 = --define HTMLKIT_DLL
 endif
 ifeq ($(OPTION_DEBUG),0)
 __DEBUG_INFO = 
@@ -147,12 +166,15 @@ clean:
 	-if exist .\ClassRegistryBrowser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\ClassRegistryBrowser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 
 ifeq ($(OPTION_HTMLKIT),1)
-.\ClassRegistryBrowser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(CLASSREGISTRYBROWSER_OBJECTS)
+.\ClassRegistryBrowser$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(CLASSREGISTRYBROWSER_OBJECTS) ..\..\lib\$(OBJDIR)\examples\ClassRegistryBrowser\ClassRegistryBrowser_ClassRegistryBrowser_rc.o
 	$(CXX) -o $@ $(CLASSREGISTRYBROWSER_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING) -Wl,--enable-runtime-pseudo-reloc -L..\..\lib -Wl,--subsystem,windows -mwindows $(____ClassRegistryBrowser_HTMLKIT_p) $(____ClassRegistryBrowser_APPLICATIONKIT_p) $(____ClassRegistryBrowser_GRAPHICSKIT_p) $(____ClassRegistryBrowser_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32
 endif
 
 ..\..\lib\$(OBJDIR)\examples\ClassRegistryBrowser\ClassRegistryBrowser_ClassRegistryBrowser.o: ./ClassRegistryBrowser.cpp
 	$(CXX) -c -o $@ $(CLASSREGISTRYBROWSER_CXXFLAGS) $(CPPDEPS) $<
+
+..\..\lib\$(OBJDIR)\examples\ClassRegistryBrowser\ClassRegistryBrowser_ClassRegistryBrowser_rc.o: ./ClassRegistryBrowser.rc
+	windres --use-temp-file -i$< -o$@  $(____OPTION_DEBUG_10_p_1) --define _WIN32 --define WIN32 --define VCF_DISABLE_PRAGMA_LINKING --include-dir ..\..\src --include-dir ..\..\src\thirdparty\common\ZLib --include-dir ..\..\src\thirdparty\common\LibPNG --include-dir ..\..\src\thirdparty\common\LibJPEG --include-dir ..\..\src\thirdparty\common\agg\include $(__FOUNDATIONKIT_DLL_p_1) $(__GRAPHICSKIT_DLL_p_1) $(__APPLICATIONKIT_DLL_p_1) $(__HTMLKIT_DLL_p_1)
 
 .PHONY: all clean
 
