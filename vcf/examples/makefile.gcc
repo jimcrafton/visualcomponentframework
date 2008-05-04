@@ -43,7 +43,7 @@ MAKEARGS = LINK_DLL_FLAGS="$(LINK_DLL_FLAGS)" \
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars RCChineseDict Reflection RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards ClassRegistryBrowser Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus PopupWindows Printing Processes ProgressBars RCChineseDict Reflection RegExGUI RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 ShapedWindow SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TransparentWindows TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 clean: 
 	-if exist .\*.o del .\*.o
@@ -59,6 +59,7 @@ clean:
 	$(MAKE) -C BasicContainers -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Browser -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Cards -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C ClassRegistryBrowser -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Colors -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Combos -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C CommonDirectories -f makefile.gcc $(MAKEARGS) clean
@@ -71,8 +72,8 @@ clean:
 	$(MAKE) -C DiggApp -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Dictionaries -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Directories -f makefile.gcc $(MAKEARGS) clean
-	$(MAKE) -C DocViewAdvanced -f makefile.gcc $(MAKEARGS) clean
-	$(MAKE) -C DocViewBasics -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C MVC\DocViewAdvanced -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C MVC\DocViewBasics -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C DragAndDrop -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C EventBasics -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C FilesAndDirectories -f makefile.gcc $(MAKEARGS) clean
@@ -96,23 +97,26 @@ clean:
 	$(MAKE) -C Localization -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C LOLCats -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C MinMax -f makefile.gcc $(MAKEARGS) clean
-	$(MAKE) -C MVCBasics -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C MVC\MVCBasics -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C NetworkKitTest -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C OpenGLShapes -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C ParticleEditor -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Pixels -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C PopupMenus -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C PopupWindows -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Printing -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Processes -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C ProgressBars -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C RCChineseDict -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Reflection -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C RegExGUI -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C RegExTest -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Resources -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C RunLoops -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C ScreenDPI -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Scrolling -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Scrolling2 -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C ShapedWindow -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C SharedLibraries -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C SketchIt -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Sliders -f makefile.gcc $(MAKEARGS) clean
@@ -134,6 +138,7 @@ clean:
 	$(MAKE) -C Toolbars -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Tooltips -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Transformations -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C TransparentWindows -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C TreeListControls -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Trees -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Trees2 -f makefile.gcc $(MAKEARGS) clean
@@ -179,6 +184,9 @@ Browser:
 Cards: 
 	$(MAKE) -C Cards -f makefile.gcc $(MAKEARGS) all
 
+ClassRegistryBrowser: 
+	$(MAKE) -C ClassRegistryBrowser -f makefile.gcc $(MAKEARGS) all
+
 Colors: 
 	$(MAKE) -C Colors -f makefile.gcc $(MAKEARGS) all
 
@@ -216,10 +224,10 @@ Directories:
 	$(MAKE) -C Directories -f makefile.gcc $(MAKEARGS) all
 
 DocViewAdvanced: 
-	$(MAKE) -C DocViewAdvanced -f makefile.gcc $(MAKEARGS) all
+	$(MAKE) -C MVC\DocViewAdvanced -f makefile.gcc $(MAKEARGS) all
 
 DocViewBasics: 
-	$(MAKE) -C DocViewBasics -f makefile.gcc $(MAKEARGS) all
+	$(MAKE) -C MVC\DocViewBasics -f makefile.gcc $(MAKEARGS) all
 
 DragAndDrop: 
 	$(MAKE) -C DragAndDrop -f makefile.gcc $(MAKEARGS) all
@@ -291,7 +299,7 @@ MinMax:
 	$(MAKE) -C MinMax -f makefile.gcc $(MAKEARGS) all
 
 MVCBasics: 
-	$(MAKE) -C MVCBasics -f makefile.gcc $(MAKEARGS) all
+	$(MAKE) -C MVC\MVCBasics -f makefile.gcc $(MAKEARGS) all
 
 NetworkKitTest: 
 	$(MAKE) -C NetworkKitTest -f makefile.gcc $(MAKEARGS) all
@@ -308,6 +316,9 @@ Pixels:
 PopupMenus: 
 	$(MAKE) -C PopupMenus -f makefile.gcc $(MAKEARGS) all
 
+PopupWindows: 
+	$(MAKE) -C PopupWindows -f makefile.gcc $(MAKEARGS) all
+
 Printing: 
 	$(MAKE) -C Printing -f makefile.gcc $(MAKEARGS) all
 
@@ -322,6 +333,9 @@ RCChineseDict:
 
 Reflection: 
 	$(MAKE) -C Reflection -f makefile.gcc $(MAKEARGS) all
+
+RegExGUI: 
+	$(MAKE) -C RegExGUI -f makefile.gcc $(MAKEARGS) all
 
 RegExTest: 
 	$(MAKE) -C RegExTest -f makefile.gcc $(MAKEARGS) all
@@ -340,6 +354,9 @@ Scrolling:
 
 Scrolling2: 
 	$(MAKE) -C Scrolling2 -f makefile.gcc $(MAKEARGS) all
+
+ShapedWindow: 
+	$(MAKE) -C ShapedWindow -f makefile.gcc $(MAKEARGS) all
 
 SharedLibraries: 
 	$(MAKE) -C SharedLibraries -f makefile.gcc $(MAKEARGS) all
@@ -404,6 +421,9 @@ Tooltips:
 Transformations: 
 	$(MAKE) -C Transformations -f makefile.gcc $(MAKEARGS) all
 
+TransparentWindows: 
+	$(MAKE) -C TransparentWindows -f makefile.gcc $(MAKEARGS) all
+
 TreeListControls: 
 	$(MAKE) -C TreeListControls -f makefile.gcc $(MAKEARGS) all
 
@@ -437,7 +457,7 @@ WorkingWithEnumerators:
 XMLTest: 
 	$(MAKE) -C XMLTest -f makefile.gcc $(MAKEARGS) all
 
-.PHONY: all clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars RCChineseDict Reflection RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+.PHONY: all clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards ClassRegistryBrowser Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus PopupWindows Printing Processes ProgressBars RCChineseDict Reflection RegExGUI RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 ShapedWindow SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TransparentWindows TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 
 SHELL := $(COMSPEC)

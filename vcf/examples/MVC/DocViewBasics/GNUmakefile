@@ -4,7 +4,7 @@
 #     Do not modify, all changes will be overwritten!
 # =========================================================================
 
-include ../../build/bakefiles.gen/config.gnu
+include ../../../build/bakefiles.gen/config.gnu
 
 # -------------------------------------------------------------------------
 # Do not modify the rest of this file!
@@ -24,15 +24,16 @@ APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 DOCVIEWBASICS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) \
 	$(__OPTION_THREADING_6) $(__OPTION_WARNINGS_9) $(____OPTION_DEBUG_10_p) \
-	-Wno-multichar -DVCF_DISABLE_PRAGMA_LINKING -I../../src \
-	-I../../src/thirdparty/common/ZLib -I../../src/thirdparty/common/LibPNG \
-	-I../../src/thirdparty/common/LibJPEG \
-	-I../../src/thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
+	-Wno-multichar -DVCF_DISABLE_PRAGMA_LINKING -I../../../src \
+	-I../../../src/thirdparty/common/ZLib \
+	-I../../../src/thirdparty/common/LibPNG \
+	-I../../../src/thirdparty/common/LibJPEG \
+	-I../../../src/thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) \
 	$(____OPTION_CPP_RTTI_0_7) $(____OPTION_CPP_EXCEPTIONS_1_8) $(CPPFLAGS) \
 	$(CXXFLAGS)
 DOCVIEWBASICS_OBJECTS =  \
-	../../lib/$(OBJDIR)/examples/DocViewBasics/DocViewBasics_DocViewBasics.o
+	../../../lib/$(OBJDIR)/examples/DocViewBasics/DocViewBasics_DocViewBasics.o
 
 ### Conditionally set variables: ###
 
@@ -132,9 +133,9 @@ __DEBUG_INFO = -g
 endif
 
 
-all: ../../lib/$(OBJDIR)/examples/DocViewBasics
-../../lib/$(OBJDIR)/examples/DocViewBasics:
-	@mkdir -p ../../lib/$(OBJDIR)/examples/DocViewBasics
+all: ../../../lib/$(OBJDIR)/examples/DocViewBasics
+../../../lib/$(OBJDIR)/examples/DocViewBasics:
+	@mkdir -p ../../../lib/$(OBJDIR)/examples/DocViewBasics
 
 ### Targets: ###
 
@@ -145,20 +146,20 @@ install: all
 uninstall: 
 
 clean: 
-	rm -f ../../lib/$(OBJDIR)/examples/DocViewBasics/*.o
-	rm -f ../../lib/$(OBJDIR)/examples/DocViewBasics/*.d
+	rm -f ../../../lib/$(OBJDIR)/examples/DocViewBasics/*.o
+	rm -f ../../../lib/$(OBJDIR)/examples/DocViewBasics/*.d
 	rm -f ./DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
 ./DocViewBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(DOCVIEWBASICS_OBJECTS)
-	$(CXX) -o $@ $(DOCVIEWBASICS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_5) -L../../lib  $(____DocViewBasics_APPLICATIONKIT_p) $(____DocViewBasics_GRAPHICSKIT_p) $(____DocViewBasics_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
+	$(CXX) -o $@ $(DOCVIEWBASICS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_5) -L../../../lib  $(____DocViewBasics_APPLICATIONKIT_p) $(____DocViewBasics_GRAPHICSKIT_p) $(____DocViewBasics_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
 endif
 
-../../lib/$(OBJDIR)/examples/DocViewBasics/DocViewBasics_DocViewBasics.o: ./DocViewBasics.cpp
+../../../lib/$(OBJDIR)/examples/DocViewBasics/DocViewBasics_DocViewBasics.o: ./DocViewBasics.cpp
 	$(CXX) -c -o $@ $(DOCVIEWBASICS_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include ../../lib/$(OBJDIR)/examples/DocViewBasics/*.d
+-include ../../../lib/$(OBJDIR)/examples/DocViewBasics/*.d

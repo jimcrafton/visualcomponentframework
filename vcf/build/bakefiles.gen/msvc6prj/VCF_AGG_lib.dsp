@@ -259,6 +259,10 @@ SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_embedded_raster_fonts.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_font_win32_tt.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_gsv_text.cpp
 # End Source File
 # Begin Source File
@@ -335,491 +339,495 @@ SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_vpgen_segmentator.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_alpha_mask_u8.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_alpha_mask_u8.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_arc.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_arc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_array.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_array.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_arrowhead.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_arrowhead.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_basics.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_basics.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_bezier_arc.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_bezier_arc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_bitset_iterator.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_bitset_iterator.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_bounding_rect.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_bounding_rect.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_bspline.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_bspline.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_clip_liang_barsky.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_clip_liang_barsky.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_color_rgba.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_color_rgba.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_color_rgba8.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_color_rgba8.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_color_rgba8_pre.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_color_rgba8_pre.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_adaptor_vcgen.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_adaptor_vcgen.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_adaptor_vpgen.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_adaptor_vpgen.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_bspline.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_bspline.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_clip_polygon.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_clip_polygon.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_close_polygon.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_close_polygon.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_concat.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_concat.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_contour.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_contour.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_curve.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_curve.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_dash.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_dash.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_gpc.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_gpc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_marker.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_marker.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_marker_adaptor.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_marker_adaptor.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_segmentator.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_segmentator.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_shorten_path.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_shorten_path.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_smooth_poly1.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_smooth_poly1.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_stroke.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_stroke.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_transform.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_transform.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_conv_unclose_polygon.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_conv_unclose_polygon.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_curves.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_curves.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_dda_line.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_dda_line.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_ellipse.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_ellipse.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_ellipse_bresenham.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_ellipse_bresenham.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_embedded_raster_fonts.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_embedded_raster_fonts.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_font_cache_manager.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_font_cache_manager.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_gamma_functions.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_font_win32_tt.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_gamma_lut.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_gamma_functions.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_glyph_raster_bin.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_gamma_lut.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_gray8.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_glyph_raster_bin.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_gsv_text.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_gray8.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_image_accessors.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_gsv_text.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_image_filters.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_image_accessors.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_line_aa_basics.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_image_filters.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_math.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_line_aa_basics.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_path_length.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_math.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_path_storage.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_path_length.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_path_storage_integer.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_path_storage.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_pattern_filters_rgba8.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_path_storage_integer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_pixfmt_amask_adaptor.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_pattern_filters_rgba8.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_pixfmt_gray8.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_pixfmt_amask_adaptor.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_pixfmt_rgb24.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_pixfmt_gray8.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_pixfmt_rgb24_gamma.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_pixfmt_rgb24.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_pixfmt_rgb24_image.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_pixfmt_rgb24_gamma.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_pixfmt_rgb555.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_pixfmt_rgb24_image.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_pixfmt_rgb565.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_pixfmt_rgb555.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_pixfmt_rgba32.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_pixfmt_rgb565.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_pixfmt_rgba32_plain.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_pixfmt_rgba32.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_pixfmt_rgba32_pre.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_pixfmt_rgba32_plain.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_rasterizer_cells_aa.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_pixfmt_rgba32_pre.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_rasterizer_compound_aa.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_rasterizer_cells_aa.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_rasterizer_outline.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_rasterizer_compound_aa.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_rasterizer_outline_aa.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_rasterizer_outline.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_rasterizer_scanline_aa.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_rasterizer_outline_aa.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_rasterizer_sl_clip.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_rasterizer_scanline_aa.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_renderer_base.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_rasterizer_sl_clip.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_renderer_markers.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_renderer_base.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_renderer_mclip.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_renderer_markers.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_renderer_outline_aa.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_renderer_mclip.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_renderer_outline_image.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_renderer_outline_aa.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_renderer_primitives.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_renderer_outline_image.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_renderer_raster_text.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_renderer_primitives.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_renderer_scanline.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_renderer_raster_text.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_rendering_buffer.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_renderer_scanline.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_rounded_rect.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_rendering_buffer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_scanline_bin.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_rounded_rect.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_scanline_boolean_algebra.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_scanline_bin.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_scanline_p.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_scanline_boolean_algebra.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_scanline_storage_aa.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_scanline_p.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_scanline_storage_bin.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_scanline_storage_aa.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_scanline_u.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_scanline_storage_bin.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_shorten_path.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_scanline_u.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_simul_eq.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_shorten_path.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_allocator.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_simul_eq.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_converter.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_allocator.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_generator.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_converter.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_gouraud.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_generator.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_gouraud_gray8.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_gouraud.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_gouraud_rgba8.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_gouraud_gray8.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_gouraud_rgba8_gamma.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_gouraud_rgba8.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_gradient.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_gouraud_rgba8_gamma.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_image_filter.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_gradient.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_image_filter_rgb24.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_image_filter.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_image_filter_rgb24_gamma.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_image_filter_rgb24.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_image_filter_rgba32.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_image_filter_rgb24_gamma.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_interpolator_adaptor.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_image_filter_rgba32.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_interpolator_linear.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_interpolator_adaptor.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_interpolator_trans.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_interpolator_linear.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_pattern.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_interpolator_trans.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_pattern_gray.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_pattern.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_pattern_rgb24.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_pattern_gray.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_pattern_rgba32.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_pattern_rgb24.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_span_solid.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_pattern_rgba32.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_trans_affine.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_span_solid.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_trans_bilinear.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_trans_affine.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_trans_double_path.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_trans_bilinear.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_trans_perspective.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_trans_double_path.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_trans_single_path.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_trans_perspective.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_trans_viewport.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_trans_single_path.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_trans_warp_magnifier.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_trans_viewport.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_vcgen_bspline.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_trans_warp_magnifier.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_vcgen_contour.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_vcgen_bspline.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_vcgen_dash.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_vcgen_contour.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_vcgen_markers_term.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_vcgen_dash.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_vcgen_smooth_poly1.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_vcgen_markers_term.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_vcgen_stroke.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_vcgen_smooth_poly1.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_vcgen_vertex_sequence.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_vcgen_stroke.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_vertex_iterator.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_vcgen_vertex_sequence.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_vertex_sequence.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_vertex_iterator.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_vpgen_clip_polygon.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_vertex_sequence.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\thirdparty\common\agg\src\agg_vpgen_segmentator.h
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_vpgen_clip_polygon.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\thirdparty\common\agg\include\agg_vpgen_segmentator.h
 # End Source File
 # End Group
 # End Target

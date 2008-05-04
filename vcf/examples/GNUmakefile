@@ -19,7 +19,7 @@ include ../build/bakefiles.gen/config.gnu
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars RCChineseDict Reflection RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards ClassRegistryBrowser Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus PopupWindows Printing Processes ProgressBars RCChineseDict Reflection RegExGUI RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 ShapedWindow SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TransparentWindows TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 install: all
 
@@ -39,6 +39,7 @@ clean:
 	-(cd BasicContainers && $(MAKE) clean)
 	-(cd Browser && $(MAKE) clean)
 	-(cd Cards && $(MAKE) clean)
+	-(cd ClassRegistryBrowser && $(MAKE) clean)
 	-(cd Colors && $(MAKE) clean)
 	-(cd Combos && $(MAKE) clean)
 	-(cd CommonDirectories && $(MAKE) clean)
@@ -51,8 +52,8 @@ clean:
 	-(cd DiggApp && $(MAKE) clean)
 	-(cd Dictionaries && $(MAKE) clean)
 	-(cd Directories && $(MAKE) clean)
-	-(cd DocViewAdvanced && $(MAKE) clean)
-	-(cd DocViewBasics && $(MAKE) clean)
+	-(cd MVC/DocViewAdvanced && $(MAKE) clean)
+	-(cd MVC/DocViewBasics && $(MAKE) clean)
 	-(cd DragAndDrop && $(MAKE) clean)
 	-(cd EventBasics && $(MAKE) clean)
 	-(cd FilesAndDirectories && $(MAKE) clean)
@@ -76,23 +77,26 @@ clean:
 	-(cd Localization && $(MAKE) clean)
 	-(cd LOLCats && $(MAKE) clean)
 	-(cd MinMax && $(MAKE) clean)
-	-(cd MVCBasics && $(MAKE) clean)
+	-(cd MVC/MVCBasics && $(MAKE) clean)
 	-(cd NetworkKitTest && $(MAKE) clean)
 	-(cd OpenGLShapes && $(MAKE) clean)
 	-(cd ParticleEditor && $(MAKE) clean)
 	-(cd Pixels && $(MAKE) clean)
 	-(cd PopupMenus && $(MAKE) clean)
+	-(cd PopupWindows && $(MAKE) clean)
 	-(cd Printing && $(MAKE) clean)
 	-(cd Processes && $(MAKE) clean)
 	-(cd ProgressBars && $(MAKE) clean)
 	-(cd RCChineseDict && $(MAKE) clean)
 	-(cd Reflection && $(MAKE) clean)
+	-(cd RegExGUI && $(MAKE) clean)
 	-(cd RegExTest && $(MAKE) clean)
 	-(cd Resources && $(MAKE) clean)
 	-(cd RunLoops && $(MAKE) clean)
 	-(cd ScreenDPI && $(MAKE) clean)
 	-(cd Scrolling && $(MAKE) clean)
 	-(cd Scrolling2 && $(MAKE) clean)
+	-(cd ShapedWindow && $(MAKE) clean)
 	-(cd SharedLibraries && $(MAKE) clean)
 	-(cd SketchIt && $(MAKE) clean)
 	-(cd Sliders && $(MAKE) clean)
@@ -114,6 +118,7 @@ clean:
 	-(cd Toolbars && $(MAKE) clean)
 	-(cd Tooltips && $(MAKE) clean)
 	-(cd Transformations && $(MAKE) clean)
+	-(cd TransparentWindows && $(MAKE) clean)
 	-(cd TreeListControls && $(MAKE) clean)
 	-(cd Trees && $(MAKE) clean)
 	-(cd Trees2 && $(MAKE) clean)
@@ -159,6 +164,9 @@ Browser:
 Cards: 
 	(cd Cards && $(MAKE) all)
 
+ClassRegistryBrowser: 
+	(cd ClassRegistryBrowser && $(MAKE) all)
+
 Colors: 
 	(cd Colors && $(MAKE) all)
 
@@ -196,10 +204,10 @@ Directories:
 	(cd Directories && $(MAKE) all)
 
 DocViewAdvanced: 
-	(cd DocViewAdvanced && $(MAKE) all)
+	(cd MVC/DocViewAdvanced && $(MAKE) all)
 
 DocViewBasics: 
-	(cd DocViewBasics && $(MAKE) all)
+	(cd MVC/DocViewBasics && $(MAKE) all)
 
 DragAndDrop: 
 	(cd DragAndDrop && $(MAKE) all)
@@ -271,7 +279,7 @@ MinMax:
 	(cd MinMax && $(MAKE) all)
 
 MVCBasics: 
-	(cd MVCBasics && $(MAKE) all)
+	(cd MVC/MVCBasics && $(MAKE) all)
 
 NetworkKitTest: 
 	(cd NetworkKitTest && $(MAKE) all)
@@ -288,6 +296,9 @@ Pixels:
 PopupMenus: 
 	(cd PopupMenus && $(MAKE) all)
 
+PopupWindows: 
+	(cd PopupWindows && $(MAKE) all)
+
 Printing: 
 	(cd Printing && $(MAKE) all)
 
@@ -302,6 +313,9 @@ RCChineseDict:
 
 Reflection: 
 	(cd Reflection && $(MAKE) all)
+
+RegExGUI: 
+	(cd RegExGUI && $(MAKE) all)
 
 RegExTest: 
 	(cd RegExTest && $(MAKE) all)
@@ -320,6 +334,9 @@ Scrolling:
 
 Scrolling2: 
 	(cd Scrolling2 && $(MAKE) all)
+
+ShapedWindow: 
+	(cd ShapedWindow && $(MAKE) all)
 
 SharedLibraries: 
 	(cd SharedLibraries && $(MAKE) all)
@@ -384,6 +401,9 @@ Tooltips:
 Transformations: 
 	(cd Transformations && $(MAKE) all)
 
+TransparentWindows: 
+	(cd TransparentWindows && $(MAKE) all)
+
 TreeListControls: 
 	(cd TreeListControls && $(MAKE) all)
 
@@ -417,7 +437,7 @@ WorkingWithEnumerators:
 XMLTest: 
 	(cd XMLTest && $(MAKE) all)
 
-.PHONY: all install uninstall clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars RCChineseDict Reflection RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+.PHONY: all install uninstall clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards ClassRegistryBrowser Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus PopupWindows Printing Processes ProgressBars RCChineseDict Reflection RegExGUI RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 ShapedWindow SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TransparentWindows TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 
 # Dependencies tracking:

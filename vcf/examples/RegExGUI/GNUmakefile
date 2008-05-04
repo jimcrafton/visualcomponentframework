@@ -4,7 +4,7 @@
 #     Do not modify, all changes will be overwritten!
 # =========================================================================
 
-include ../../../build/bakefiles.gen/config.gnu
+include ../../build/bakefiles.gen/config.gnu
 
 # -------------------------------------------------------------------------
 # Do not modify the rest of this file!
@@ -18,22 +18,24 @@ AGG_FILENAME = AGG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 ZLIB_FILENAME = ZLib$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 LIBJPEG_FILENAME = LibJPEG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 LIBPNG_FILENAME = LibPNG$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
+ONIGURUMA_FILENAME = oniguruma$(OPTION_SELECTLIB)$(SUFFIX_STATIC)
 FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 GRAPHICSKIT_FILENAME = GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+REGEXKIT_FILENAME = RegExKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-MVCBASICS_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING_6) \
+REGEXGUI_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING_6) \
 	$(__OPTION_WARNINGS_9) $(____OPTION_DEBUG_10_p) -Wno-multichar \
-	-DVCF_DISABLE_PRAGMA_LINKING -I../../../src \
-	-I../../../src/thirdparty/common/ZLib \
-	-I../../../src/thirdparty/common/LibPNG \
-	-I../../../src/thirdparty/common/LibJPEG \
-	-I../../../src/thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
+	-DVCF_DISABLE_PRAGMA_LINKING -I../../src \
+	-I../../src/thirdparty/common/ZLib -I../../src/thirdparty/common/LibPNG \
+	-I../../src/thirdparty/common/LibJPEG \
+	-I../../src/thirdparty/common/agg/include $(__FOUNDATIONKIT_DLL_p) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) \
-	$(____OPTION_CPP_RTTI_0_7) $(____OPTION_CPP_EXCEPTIONS_1_8) $(CPPFLAGS) \
-	$(CXXFLAGS)
-MVCBASICS_OBJECTS =  \
-	../../../lib/$(OBJDIR)/examples/MVCBasics/MVCBasics_MVCBasics.o
+	-I../../src/thirdparty/common/oniguruma -DONIG_EXTERN=extern \
+	$(__FOUNDATIONKIT_DLL_p) $(__REGEXKIT_DLL_p) $(____OPTION_CPP_RTTI_0_7) \
+	$(____OPTION_CPP_EXCEPTIONS_1_8) $(CPPFLAGS) $(CXXFLAGS)
+REGEXGUI_OBJECTS =  \
+	../../lib/$(OBJDIR)/examples/RegExGUI/RegExGUI_RegExGUI.o
 
 ### Conditionally set variables: ###
 
@@ -56,7 +58,9 @@ ifeq ($(OPTION_SHARED),1)
 SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 endif
 ifeq ($(OPTION_APPLICATIONKIT),1)
-__MVCBasics___depname = ./MVCBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+ifeq ($(OPTION_REGEXKIT),1)
+__RegExGUI___depname = ./RegExGUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+endif
 endif
 ifeq ($(OPTION_DEBUG),0)
 __OPTIMIZE_4 = -O2
@@ -104,25 +108,40 @@ ifeq ($(OPTION_DEBUG),1)
 ____OPTION_DEBUG_10_p = -D_DEBUG
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____MVCBasics_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
+____RegExGUI_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
 endif
 ifeq ($(OPTION_ALLIN1),1)
-____MVCBasics_FOUNDATIONKIT_p = -l$(ALLIN1_FILENAME)
-endif
-ifeq ($(OPTION_SHARED),1)
-__FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
+____RegExGUI_FOUNDATIONKIT_p = -l$(ALLIN1_FILENAME)
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____MVCBasics_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
+____RegExGUI_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __GRAPHICSKIT_DLL_p = -DGRAPHICSKIT_DLL
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____MVCBasics_APPLICATIONKIT_p = -l$(APPLICATIONKIT_FILENAME)
+____RegExGUI_APPLICATIONKIT_p = -l$(APPLICATIONKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __APPLICATIONKIT_DLL_p = -DAPPLICATIONKIT_DLL
+endif
+ifeq ($(OPTION_ALLIN1),1)
+____RegExGUI_FOUNDATIONKIT_p_1 = -l$(ALLIN1_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),0)
+____RegExGUI_FOUNDATIONKIT_p_1 = -l$(FOUNDATIONKIT_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),1)
+____RegExGUI_FOUNDATIONKIT_p_1 = -l$(ALLIN1_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),0)
+____RegExGUI_FOUNDATIONKIT_p_1 = -l$(FOUNDATIONKIT_FILENAME)
+endif
+ifeq ($(OPTION_ALLIN1),0)
+____RegExGUI_REGEXKIT_p = -l$(REGEXKIT_FILENAME)
+endif
+ifeq ($(OPTION_SHARED),1)
+__REGEXKIT_DLL_p = -DREGEXKIT_DLL
 endif
 ifeq ($(OPTION_DEBUG),0)
 __DEBUG_INFO = 
@@ -130,35 +149,40 @@ endif
 ifeq ($(OPTION_DEBUG),1)
 __DEBUG_INFO = -g
 endif
+ifeq ($(OPTION_SHARED),1)
+__FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
+endif
 
 
-all: ../../../lib/$(OBJDIR)/examples/MVCBasics
-../../../lib/$(OBJDIR)/examples/MVCBasics:
-	@mkdir -p ../../../lib/$(OBJDIR)/examples/MVCBasics
+all: ../../lib/$(OBJDIR)/examples/RegExGUI
+../../lib/$(OBJDIR)/examples/RegExGUI:
+	@mkdir -p ../../lib/$(OBJDIR)/examples/RegExGUI
 
 ### Targets: ###
 
-all: $(__MVCBasics___depname)
+all: $(__RegExGUI___depname)
 
 install: all
 
 uninstall: 
 
 clean: 
-	rm -f ../../../lib/$(OBJDIR)/examples/MVCBasics/*.o
-	rm -f ../../../lib/$(OBJDIR)/examples/MVCBasics/*.d
-	rm -f ./MVCBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+	rm -f ../../lib/$(OBJDIR)/examples/RegExGUI/*.o
+	rm -f ../../lib/$(OBJDIR)/examples/RegExGUI/*.d
+	rm -f ./RegExGUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
-./MVCBasics$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(MVCBASICS_OBJECTS)
-	$(CXX) -o $@ $(MVCBASICS_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_5) -L../../../lib  $(____MVCBasics_APPLICATIONKIT_p) $(____MVCBasics_GRAPHICSKIT_p) $(____MVCBasics_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
+ifeq ($(OPTION_REGEXKIT),1)
+./RegExGUI$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(REGEXGUI_OBJECTS)
+	$(CXX) -o $@ $(REGEXGUI_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_5) -L../../lib  $(____RegExGUI_REGEXKIT_p) $(____RegExGUI_FOUNDATIONKIT_p_1) -l$(ONIGURUMA_FILENAME) $(____RegExGUI_APPLICATIONKIT_p) $(____RegExGUI_GRAPHICSKIT_p) $(____RegExGUI_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
+endif
 endif
 
-../../../lib/$(OBJDIR)/examples/MVCBasics/MVCBasics_MVCBasics.o: ./MVCBasics.cpp
-	$(CXX) -c -o $@ $(MVCBASICS_CXXFLAGS) $(CPPDEPS) $<
+../../lib/$(OBJDIR)/examples/RegExGUI/RegExGUI_RegExGUI.o: ./RegExGUI.cpp
+	$(CXX) -c -o $@ $(REGEXGUI_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include ../../../lib/$(OBJDIR)/examples/MVCBasics/*.d
+-include ../../lib/$(OBJDIR)/examples/RegExGUI/*.d

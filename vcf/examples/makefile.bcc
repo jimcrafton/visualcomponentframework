@@ -54,7 +54,7 @@ MAKEARGS = -DCC="$(CC)" -DCXX="$(CXX)" -DCFLAGS="$(CFLAGS)" \
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus Printing Processes ProgressBars RCChineseDict Reflection RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards ClassRegistryBrowser Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus PopupWindows Printing Processes ProgressBars RCChineseDict Reflection RegExGUI RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 ShapedWindow SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TransparentWindows TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 clean: 
 	-if exist .\*.obj del .\*.obj
@@ -104,6 +104,10 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>Cards.bat
 	call Cards.bat
 	@del Cards.bat
+	@echo cd ClassRegistryBrowser >ClassRegistryBrowser.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>ClassRegistryBrowser.bat
+	call ClassRegistryBrowser.bat
+	@del ClassRegistryBrowser.bat
 	@echo cd Colors >Colors.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>Colors.bat
 	call Colors.bat
@@ -152,11 +156,11 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>Directories.bat
 	call Directories.bat
 	@del Directories.bat
-	@echo cd DocViewAdvanced >DocViewAdvanced.bat
+	@echo cd MVC\DocViewAdvanced >DocViewAdvanced.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>DocViewAdvanced.bat
 	call DocViewAdvanced.bat
 	@del DocViewAdvanced.bat
-	@echo cd DocViewBasics >DocViewBasics.bat
+	@echo cd MVC\DocViewBasics >DocViewBasics.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>DocViewBasics.bat
 	call DocViewBasics.bat
 	@del DocViewBasics.bat
@@ -252,7 +256,7 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>MinMax.bat
 	call MinMax.bat
 	@del MinMax.bat
-	@echo cd MVCBasics >MVCBasics.bat
+	@echo cd MVC\MVCBasics >MVCBasics.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>MVCBasics.bat
 	call MVCBasics.bat
 	@del MVCBasics.bat
@@ -276,6 +280,10 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>PopupMenus.bat
 	call PopupMenus.bat
 	@del PopupMenus.bat
+	@echo cd PopupWindows >PopupWindows.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>PopupWindows.bat
+	call PopupWindows.bat
+	@del PopupWindows.bat
 	@echo cd Printing >Printing.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>Printing.bat
 	call Printing.bat
@@ -296,6 +304,10 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>Reflection.bat
 	call Reflection.bat
 	@del Reflection.bat
+	@echo cd RegExGUI >RegExGUI.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>RegExGUI.bat
+	call RegExGUI.bat
+	@del RegExGUI.bat
 	@echo cd RegExTest >RegExTest.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>RegExTest.bat
 	call RegExTest.bat
@@ -320,6 +332,10 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>Scrolling2.bat
 	call Scrolling2.bat
 	@del Scrolling2.bat
+	@echo cd ShapedWindow >ShapedWindow.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>ShapedWindow.bat
+	call ShapedWindow.bat
+	@del ShapedWindow.bat
 	@echo cd SharedLibraries >SharedLibraries.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>SharedLibraries.bat
 	call SharedLibraries.bat
@@ -404,6 +420,10 @@ clean:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>Transformations.bat
 	call Transformations.bat
 	@del Transformations.bat
+	@echo cd TransparentWindows >TransparentWindows.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>TransparentWindows.bat
+	call TransparentWindows.bat
+	@del TransparentWindows.bat
 	@echo cd TreeListControls >TreeListControls.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) clean >>TreeListControls.bat
 	call TreeListControls.bat
@@ -515,6 +535,12 @@ Cards:
 	call Cards.bat
 	@del Cards.bat
 
+ClassRegistryBrowser: 
+	@echo cd ClassRegistryBrowser >ClassRegistryBrowser.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>ClassRegistryBrowser.bat
+	call ClassRegistryBrowser.bat
+	@del ClassRegistryBrowser.bat
+
 Colors: 
 	@echo cd Colors >Colors.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>Colors.bat
@@ -588,13 +614,13 @@ Directories:
 	@del Directories.bat
 
 DocViewAdvanced: 
-	@echo cd DocViewAdvanced >DocViewAdvanced.bat
+	@echo cd MVC\DocViewAdvanced >DocViewAdvanced.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>DocViewAdvanced.bat
 	call DocViewAdvanced.bat
 	@del DocViewAdvanced.bat
 
 DocViewBasics: 
-	@echo cd DocViewBasics >DocViewBasics.bat
+	@echo cd MVC\DocViewBasics >DocViewBasics.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>DocViewBasics.bat
 	call DocViewBasics.bat
 	@del DocViewBasics.bat
@@ -738,7 +764,7 @@ MinMax:
 	@del MinMax.bat
 
 MVCBasics: 
-	@echo cd MVCBasics >MVCBasics.bat
+	@echo cd MVC\MVCBasics >MVCBasics.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>MVCBasics.bat
 	call MVCBasics.bat
 	@del MVCBasics.bat
@@ -773,6 +799,12 @@ PopupMenus:
 	call PopupMenus.bat
 	@del PopupMenus.bat
 
+PopupWindows: 
+	@echo cd PopupWindows >PopupWindows.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>PopupWindows.bat
+	call PopupWindows.bat
+	@del PopupWindows.bat
+
 Printing: 
 	@echo cd Printing >Printing.bat
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>Printing.bat
@@ -802,6 +834,12 @@ Reflection:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>Reflection.bat
 	call Reflection.bat
 	@del Reflection.bat
+
+RegExGUI: 
+	@echo cd RegExGUI >RegExGUI.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>RegExGUI.bat
+	call RegExGUI.bat
+	@del RegExGUI.bat
 
 RegExTest: 
 	@echo cd RegExTest >RegExTest.bat
@@ -838,6 +876,12 @@ Scrolling2:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>Scrolling2.bat
 	call Scrolling2.bat
 	@del Scrolling2.bat
+
+ShapedWindow: 
+	@echo cd ShapedWindow >ShapedWindow.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>ShapedWindow.bat
+	call ShapedWindow.bat
+	@del ShapedWindow.bat
 
 SharedLibraries: 
 	@echo cd SharedLibraries >SharedLibraries.bat
@@ -964,6 +1008,12 @@ Transformations:
 	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>Transformations.bat
 	call Transformations.bat
 	@del Transformations.bat
+
+TransparentWindows: 
+	@echo cd TransparentWindows >TransparentWindows.bat
+	@echo $(MAKE) -f makefile.bcc $(MAKEARGS) all >>TransparentWindows.bat
+	call TransparentWindows.bat
+	@del TransparentWindows.bat
 
 TreeListControls: 
 	@echo cd TreeListControls >TreeListControls.bat
