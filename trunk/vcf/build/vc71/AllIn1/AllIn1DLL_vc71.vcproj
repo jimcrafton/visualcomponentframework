@@ -238,6 +238,12 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationKit.h">
@@ -1314,664 +1320,218 @@
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\AbstractImage.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\AbstractImage.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\AggCommon.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\BasicFill.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\BasicFill.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\BasicRectangle.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\BasicStroke.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\BasicStroke.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\BezierCurve.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\BezierCurve.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Circle.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Color.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Color.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Contextpeer.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\DrawUIState.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Ellipse.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Fill.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Filter.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Font.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Font.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\FontPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsContext.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsContext.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsKit.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsKit.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsKitRTTI.inl">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsKitSelectLib.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsResourceBundle.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsResourceBundle.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsResourceBundlePeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsToolKit.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\GraphicsToolKit.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Image.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\ImageBits.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\ImageLoader.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\ImageLoaderException.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\JPEGLoader.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\JPEGLoader.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Matrix2D.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Matrix2D.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\MatrixFunction.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Path.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\PixelFormats.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\PNGLoader.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\PNGLoader.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Point.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Point.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Printable.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\PrintContext.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\PrintEvent.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\PrintSession.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\PrintSession.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\PrintSessionPeer.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Rect.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Rect.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Size.h">
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Stroke.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32Context.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32Context.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32Font.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32Font.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32FontManager.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32FontManager.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32GraphicsResourceBundle.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32GraphicsResourceBundle.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32GraphicsToolkit.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32GraphicsToolkit.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32Image.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32Image.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32PrintSession.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="1"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_MBCS;_USRDLL;VCF_ALLIN1_DLL;VCF_ALLIN1_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32PrintSession.h">
 			</File>
 		</Filter>
 		<Filter
@@ -1985,11 +1545,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\BasicException.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2003,11 +1575,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\BasicOutputStream.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2021,11 +1605,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ClassRegistry.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2039,11 +1635,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Component.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2057,11 +1665,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Condition.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2075,11 +1695,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Delegates.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2093,11 +1725,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Directory.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2111,11 +1755,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\File.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2129,11 +1785,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\FileStream.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2147,11 +1815,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\IniFini.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2165,11 +1845,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Library.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2183,11 +1875,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\MessageLoader.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2201,11 +1905,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Mutex.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2219,11 +1935,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\PackageInfo.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2237,11 +1965,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Registry.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2255,11 +1995,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ResourceBundle.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2273,11 +2025,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopSource.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2291,11 +2055,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\RunLoopTimer.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2309,11 +2085,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Stream.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2327,11 +2115,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\StringUtils.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2345,11 +2145,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\SystemToolkit.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2363,11 +2175,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\TextInputStream.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2381,11 +2205,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Thread.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2399,11 +2235,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VariantData.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2417,11 +2265,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCFProcess.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2435,11 +2295,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2453,11 +2325,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VFFParser.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2471,11 +2355,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32FilePeer.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2489,11 +2385,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32LibraryPeer.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2507,11 +2415,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32Mutex.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2525,11 +2445,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32ProcessIORedirector.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2543,11 +2475,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32Registry.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2561,11 +2505,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopPeer.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2579,11 +2535,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2597,11 +2565,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32SystemPeer.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2615,11 +2595,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32Thread.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
@@ -2633,11 +2625,23 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\XMLParser.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>

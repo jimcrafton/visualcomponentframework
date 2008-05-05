@@ -1,3 +1,63 @@
+Visual Component Framework 0.9.8
+
+Readme
+Bugs fixed include:
+- 838600 get rid of virtual setBounds
+- 909662 Tab on edit controls inserts and changes focus
+- 1526281 Win32Tree::clear() exception
+- 1633409 BezierCurve::applyTransform() doesn't work?
+- 1520206 Crash in Variants sample
+- 1111162 Transparency lost when scaling
+- 1114193 Alpha-channel transparency only works when scaling
+- 1110901 Scaling images inaccurate/not working
+- 1457486 Cannot set Font color in ProgressControl
+- 1475057 Saving a BMP ends up with artifacts in image
+- 1153866 Disabled combo boxes
+- 1733209 unable to retrieve list of adapters
+- 1717997 encountered an access violation (fix included)
+- 1827514 rtti property setter work incorrectly
+- 1547468 Dialog::showMessage("something", "something") won't compile
+
+
+New features include:
+-Better support for Visual Form files, and fixes for some minor bugs in
+loading up forms and/or components
+-Added support for units for scalar types in the VFF format. This means
+that you use DPI indepedent values, such as specifying a width in Points
+as opposed to pixels.
+-Complete revamp of the current delegate implementation in the framework. 
+The new implementation allows for arbitrary function signatures.
+-Asynchronous Delegate invocation.
+-Threaded functions and thread pools
+-Compositing mode support when drawing in anti-aliased mode. 
+-Applying multiple image operations together, plus use of compositing
+modes in drawing the image.
+-Use of imahe channels and the ability to manipulate the image bits just
+of a particular color channel.
+-Gradient support (also takes into account the compositing effects).
+-Thorough revamp of Model/View/Controller code. Simplifies a number of things
+when implementing a model.
+-Added Key/Value methods for retreiving or setting data in a model.
+-Modified tree, list, listview, tree list, and other controls to 
+take advantage of new Model design. Allows for better scaling with
+large data sets.
+-Made changes to Document/View design. Added support for automatically
+registering file formats/type with the OS.
+-A more complete implementation of the RunLoop class is now in place 
+thanks to Obirsoy for helping with that and the OS/linux port of it.
+-Added support for Regular Expressions thanks to Fraggle. See the 
+RegExKit.
+-Added new JavaScript support with the JavaScriptKit. This is based on the
+Java Script intepreter from the Mozilla project.
+-Added advanced XML support with the XMLKit
+-Rewrote the NetworkKit.
+Issues:
+-OSX port will compile but not link. The next release will fix this and complete the 
+port.
+
+
+
+
 Visual Component Framework 0.9.0
 
 Readme

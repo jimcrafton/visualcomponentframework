@@ -351,6 +351,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "XMLKitDLL"=.\XMLKit\XMLKitDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "XMLKitLib"=.\XMLKit\XMLKitLib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "ZLib"=..\..\src\thirdparty\common\ZLib\ZLib.dsp - Package Owner=<4>
 
 Package=<5>
