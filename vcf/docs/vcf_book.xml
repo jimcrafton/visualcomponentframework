@@ -283,33 +283,9 @@ NB: This software will not save the world.
 			<itemizedlist>
 				<listitem>
 					<para>
-					<ulink url="http://www.gtk.org">GTK2</ulink> - The backend library used as the basis for the Linux port.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-					<ulink url="http://freeimage.sourceforge.net/">FreeImage</ulink> - Graphics library that supports a 
-					wide variety of image formats
-					</para>
-				</listitem>
-				
-				<listitem>
-					<para>
 					<ulink url="http://www.stlport.org/">STL</ulink> - The C++ Standard Template Library
 					</para>
-				</listitem>
-				
-				<listitem>
-					<para>
-					<ulink url="http://www.pcre.org/">PCRE - Perl Compatible Regular Expressions</ulink> - 
-					</para>
-				</listitem>
-				
-				<listitem>
-					<para>
-					<ulink url="http://bazar.conectiva.com.br/~niemeyer/projects/regexx/">Regexx</ulink> - 
-					</para>
-				</listitem>
+				</listitem>				
 				
 				<listitem>
 					<para>
@@ -320,8 +296,31 @@ NB: This software will not save the world.
 				
 				<listitem>
 					<para>
-					<ulink url="http://www.scintilla.org">Scintilla</ulink> - A syntax highlighting text editor
-					component, used for the VCF Builder's text editor.
+					<ulink url="http://www.boost.org/">Boost</ulink> - Used for smart pointer functionality
+					</para>
+				</listitem>
+				
+				<listitem>
+					<para>
+					<ulink url="http://xmlsoft.org/">libxml</ulink> - Used for advanced XML features
+					</para>
+				</listitem>
+				
+				<listitem>
+					<para>
+					<ulink url="http://www.ijg.org/">libJPEG</ulink> - Used by GraphicsKit for jpeg loading
+					</para>
+				</listitem>
+				
+				<listitem>
+					<para>
+					<ulink url="http://www.libpng.org/pub/png/libpng.html">libPNG</ulink> - Used by GraphicsKit for png loading
+					</para>
+				</listitem>
+				
+				<listitem>
+					<para>
+					<ulink url="http://www.geocities.jp/kosako3/oniguruma/">Onigurama</ulink> - Used by RegExKit for regular expression handling
 					</para>
 				</listitem>
 				
