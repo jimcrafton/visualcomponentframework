@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Accelerators"="..\..\examples\Accelerators\Accelerators.dsp" - Package Owner=<4>
+Project: "Accelerators"=..\..\examples\Accelerators\Accelerators.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Actions"="..\..\examples\Actions\Actions.dsp" - Package Owner=<4>
+Project: "Actions"=..\..\examples\Actions\Actions.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -27,7 +27,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "AdvancedAlignment"="..\..\examples\AdvancedAlignment\AdvancedAlignment.dsp" - Package Owner=<4>
+Project: "AdvancedAlignment"=..\..\examples\AdvancedAlignment\AdvancedAlignment.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -39,7 +39,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "AdvancedUI"="..\..\examples\AdvancedUI\AdvancedUI.dsp" - Package Owner=<4>
+Project: "AdvancedUI"=..\..\examples\AdvancedUI\AdvancedUI.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -51,7 +51,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Alignment"="..\..\examples\Alignment\Alignment.dsp" - Package Owner=<4>
+Project: "Alignment"=..\..\examples\Alignment\Alignment.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -63,7 +63,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "AllIn1"=".\AllIn1\AllIn1.dsp" - Package Owner=<4>
+Project: "AllIn1"=.\AllIn1\AllIn1.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -75,7 +75,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "AllIn1DLL"=".\AllIn1\AllIn1DLL.dsp" - Package Owner=<4>
+Project: "AllIn1DLL"=.\AllIn1\AllIn1DLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -87,7 +87,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Anchors"="..\..\examples\Anchors\Anchors.dsp" - Package Owner=<4>
+Project: "Anchors"=..\..\examples\Anchors\Anchors.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -99,7 +99,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "AppResources"="..\..\examples\AppResources\AppResources.dsp" - Package Owner=<4>
+Project: "AppResources"=..\..\examples\AppResources\AppResources.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -111,7 +111,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ApplicationIcons"="..\..\examples\ApplicationIcons\ApplicationIcons.dsp" - Package Owner=<4>
+Project: "ApplicationIcons"=..\..\examples\ApplicationIcons\ApplicationIcons.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -123,7 +123,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ApplicationKit"=".\ApplicationKit\ApplicationKit.dsp" - Package Owner=<4>
+Project: "ApplicationKit"=.\ApplicationKit\ApplicationKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -138,7 +138,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ApplicationKitDLL"=".\ApplicationKit\ApplicationKitDLL.dsp" - Package Owner=<4>
+Project: "ApplicationKitDLL"=.\ApplicationKit\ApplicationKitDLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -153,7 +153,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Browser"="..\..\examples\Browser\Browser.dsp" - Package Owner=<4>
+Project: "Browser"=..\..\examples\Browser\Browser.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -168,7 +168,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Cards"="..\..\examples\Cards\Cards.dsp" - Package Owner=<4>
+Project: "Cards"=..\..\examples\Cards\Cards.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -180,7 +180,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Colors"="..\..\examples\Colors\Colors.dsp" - Package Owner=<4>
+Project: "Colors"=..\..\examples\Colors\Colors.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -192,7 +192,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Combos"="..\..\examples\Combos\Combos.dsp" - Package Owner=<4>
+Project: "Combos"=..\..\examples\Combos\Combos.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -204,7 +204,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CommonDirectories"="..\..\examples\CommonDirectories\CommonDirectories.dsp" - Package Owner=<4>
+Project: "CommonDirectories"=..\..\examples\CommonDirectories\CommonDirectories.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -216,7 +216,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Conditions"="..\..\examples\Conditions\Conditions.dsp" - Package Owner=<4>
+Project: "Conditions"=..\..\examples\Conditions\Conditions.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -228,7 +228,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Controls"="..\..\examples\Controls\Controls.dsp" - Package Owner=<4>
+Project: "Controls"=..\..\examples\Controls\Controls.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -240,7 +240,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CopyAndPaste"="..\..\examples\CopyAndPaste\CopyAndPaste.dsp" - Package Owner=<4>
+Project: "CopyAndPaste"=..\..\examples\CopyAndPaste\CopyAndPaste.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -252,7 +252,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CreateBundle"="..\..\src\createbundle\CreateBundle.dsp" - Package Owner=<4>
+Project: "CreateBundle"=..\..\src\createbundle\CreateBundle.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -264,7 +264,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DateTimeUI"="..\..\examples\DateTimeUI\DateTimeUI.dsp" - Package Owner=<4>
+Project: "DateTimeUI"=..\..\examples\DateTimeUI\DateTimeUI.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -276,7 +276,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DatesAndTime"="..\..\examples\DatesAndTime\DatesAndTime.dsp" - Package Owner=<4>
+Project: "DatesAndTime"=..\..\examples\DatesAndTime\DatesAndTime.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -288,7 +288,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Dialogs"="..\..\examples\Dialogs\Dialogs.dsp" - Package Owner=<4>
+Project: "Dialogs"=..\..\examples\Dialogs\Dialogs.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -300,7 +300,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Dictionaries"="..\..\examples\Dictionaries\Dictionaries.dsp" - Package Owner=<4>
+Project: "Dictionaries"=..\..\examples\Dictionaries\Dictionaries.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -312,7 +312,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Directories"="..\..\examples\Directories\Directories.dsp" - Package Owner=<4>
+Project: "Directories"=..\..\examples\Directories\Directories.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -324,7 +324,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DocViewAdvanced"="..\..\examples\DocViewAdvanced\DocViewAdvanced.dsp" - Package Owner=<4>
+Project: "DocViewAdvanced"=..\..\examples\MVC\DocViewAdvanced\DocViewAdvanced.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -336,7 +336,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DocViewBasics"="..\..\examples\DocViewBasics\DocViewBasics.dsp" - Package Owner=<4>
+Project: "DocViewBasics"=..\..\examples\MVC\DocViewBasics\DocViewBasics.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -348,7 +348,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DragAndDrop"="..\..\examples\DragAndDrop\DragAndDrop.dsp" - Package Owner=<4>
+Project: "DragAndDrop"=..\..\examples\DragAndDrop\DragAndDrop.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -360,7 +360,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "EventBasics"="..\..\examples\EventBasics\EventBasics.dsp" - Package Owner=<4>
+Project: "EventBasics"=..\..\examples\EventBasics\EventBasics.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -372,7 +372,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Examples"="..\..\examples\Examples\Examples.dsp" - Package Owner=<4>
+Project: "Examples"=..\..\examples\Examples\Examples.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -639,7 +639,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FilesAndDirectories"="..\..\examples\FilesAndDirectories\FilesAndDirectories.dsp" - Package Owner=<4>
+Project: "FilesAndDirectories"=..\..\examples\FilesAndDirectories\FilesAndDirectories.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -651,7 +651,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FoundationKit"=".\FoundationKit\FoundationKit.dsp" - Package Owner=<4>
+Project: "FoundationKit"=.\FoundationKit\FoundationKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -663,7 +663,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FoundationKitDLL"=".\FoundationKit\FoundationKitDLL.dsp" - Package Owner=<4>
+Project: "FoundationKitDLL"=.\FoundationKit\FoundationKitDLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -675,7 +675,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FrameStyles"="..\..\examples\FrameStyles\FrameStyles.dsp" - Package Owner=<4>
+Project: "FrameStyles"=..\..\examples\FrameStyles\FrameStyles.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -687,7 +687,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Gradients"="..\..\examples\Gradients\Gradients.dsp" - Package Owner=<4>
+Project: "Gradients"=..\..\examples\Gradients\Gradients.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -699,7 +699,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "GraphicsAndMouseMoves"="..\..\examples\GraphicsAndMouseMoves\GraphicsAndMouseMoves.dsp" - Package Owner=<4>
+Project: "GraphicsAndMouseMoves"=..\..\examples\GraphicsAndMouseMoves\GraphicsAndMouseMoves.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -711,7 +711,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "GraphicsBasics"="..\..\examples\GraphicsBasics\GraphicsBasics.dsp" - Package Owner=<4>
+Project: "GraphicsBasics"=..\..\examples\GraphicsBasics\GraphicsBasics.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -723,7 +723,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "GraphicsKit"=".\GraphicsKit\GraphicsKit.dsp" - Package Owner=<4>
+Project: "GraphicsKit"=.\GraphicsKit\GraphicsKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -750,7 +750,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "GraphicsKitDLL"=".\GraphicsKit\GraphicsKitDLL.dsp" - Package Owner=<4>
+Project: "GraphicsKitDLL"=.\GraphicsKit\GraphicsKitDLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -777,7 +777,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "HTMLKit"=".\HTMLKit\HTMLKit.dsp" - Package Owner=<4>
+Project: "HTMLKit"=.\HTMLKit\HTMLKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -792,7 +792,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "HTMLKitDll"=".\HTMLKit\HTMLKitDll.dsp" - Package Owner=<4>
+Project: "HTMLKitDll"=.\HTMLKit\HTMLKitDll.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -807,7 +807,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "HeavyAndLight"="..\..\examples\HeavyAndLight\HeavyAndLight.dsp" - Package Owner=<4>
+Project: "HeavyAndLight"=..\..\examples\HeavyAndLight\HeavyAndLight.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -819,7 +819,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "HelloWorld"="..\..\examples\HelloWorld\HelloWorld.dsp" - Package Owner=<4>
+Project: "HelloWorld"=..\..\examples\HelloWorld\HelloWorld.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -831,7 +831,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "HelloWorld2"="..\..\examples\HelloWorld2\HelloWorld2.dsp" - Package Owner=<4>
+Project: "HelloWorld2"=..\..\examples\HelloWorld2\HelloWorld2.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -843,7 +843,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "HelloWorld3"="..\..\examples\HelloWorld3\HelloWorld3.dsp" - Package Owner=<4>
+Project: "HelloWorld3"=..\..\examples\HelloWorld3\HelloWorld3.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -855,7 +855,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Help"="..\..\examples\Help\Help.dsp" - Package Owner=<4>
+Project: "Help"=..\..\examples\Help\Help.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -867,7 +867,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ImageBasics"="..\..\examples\ImageBasics\ImageBasics.dsp" - Package Owner=<4>
+Project: "ImageBasics"=..\..\examples\ImageBasics\ImageBasics.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -879,7 +879,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ImageFormats"=".\GraphicsKit\ImageFormats.dsp" - Package Owner=<4>
+Project: "ImageFormats"=.\GraphicsKit\ImageFormats.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -897,7 +897,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ImageViewer"="..\..\examples\ImageViewer\ImageViewer.dsp" - Package Owner=<4>
+Project: "ImageViewer"=..\..\examples\ImageViewer\ImageViewer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -909,7 +909,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "InetKit"="..\..\examples\InetKit\InetKit.dsp" - Package Owner=<4>
+Project: "InetKit"=..\..\examples\InetKit\InetKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -924,7 +924,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "InternetKit"=".\InternetKit\InternetKit.dsp" - Package Owner=<4>
+Project: "InternetKit"=.\InternetKit\InternetKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -936,7 +936,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "InternetKitDLL"=".\InternetKit\InternetKitDLL.dsp" - Package Owner=<4>
+Project: "InternetKitDLL"=.\InternetKit\InternetKitDLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -948,7 +948,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "JavaScriptKit"=".\JavaScriptKit\JavaScriptKit.dsp" - Package Owner=<4>
+Project: "JavaScriptKit"=.\JavaScriptKit\JavaScriptKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -960,7 +960,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "JavaScriptKitDLL"=".\JavaScriptKit\JavaScriptKitDLL.dsp" - Package Owner=<4>
+Project: "JavaScriptKitDLL"=.\JavaScriptKit\JavaScriptKitDLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -972,7 +972,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Labels"="..\..\examples\Labels\Labels.dsp" - Package Owner=<4>
+Project: "Labels"=..\..\examples\Labels\Labels.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -984,7 +984,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibJPEG"="..\..\src\thirdparty\common\LibJPEG\LibJPEG.dsp" - Package Owner=<4>
+Project: "LibJPEG"=..\..\src\thirdparty\common\LibJPEG\LibJPEG.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -996,7 +996,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibPNG"="..\..\src\thirdparty\common\LibPNG\LibPNG.dsp" - Package Owner=<4>
+Project: "LibPNG"=..\..\src\thirdparty\common\LibPNG\LibPNG.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1008,7 +1008,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LibTIFF"="..\..\src\thirdparty\common\LibTIFF\LibTIFF.dsp" - Package Owner=<4>
+Project: "LibTIFF"=..\..\src\thirdparty\common\LibTIFF\LibTIFF.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1020,7 +1020,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ListBox"="..\..\examples\ListBox\ListBox.dsp" - Package Owner=<4>
+Project: "ListBox"=..\..\examples\ListBox\ListBox.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1032,7 +1032,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "LocaleUI"="..\..\examples\LocaleUI\LocaleUI.dsp" - Package Owner=<4>
+Project: "LocaleUI"=..\..\examples\LocaleUI\LocaleUI.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1044,7 +1044,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Localization"="..\..\examples\Localization\Localization.dsp" - Package Owner=<4>
+Project: "Localization"=..\..\examples\Localization\Localization.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1056,7 +1056,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MFCIntegration1"="..\..\examples\MFCIntegration1\MFCIntegration1.dsp" - Package Owner=<4>
+Project: "MFCIntegration1"=..\..\examples\MFCIntegration1\MFCIntegration1.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1068,7 +1068,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MFCIntegration2"="..\..\examples\MFCIntegration2\MFCIntegration2.dsp" - Package Owner=<4>
+Project: "MFCIntegration2"=..\..\examples\MFCIntegration2\MFCIntegration2.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1080,7 +1080,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MVCBasics"="..\..\examples\MVCBasics\MVCBasics.dsp" - Package Owner=<4>
+Project: "MVCBasics"=..\..\examples\MVC\MVCBasics\MVCBasics.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1092,7 +1092,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MinMax"="..\..\examples\MinMax\MinMax.dsp" - Package Owner=<4>
+Project: "MinMax"=..\..\examples\MinMax\MinMax.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1104,7 +1104,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "NetworkKit"=".\NetworkKit\NetworkKit.dsp" - Package Owner=<4>
+Project: "NetworkKit"=.\NetworkKit\NetworkKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1119,7 +1119,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "NetworkKitDLL"=".\NetworkKit\NetworkKitDLL.dsp" - Package Owner=<4>
+Project: "NetworkKitDLL"=.\NetworkKit\NetworkKitDLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1134,7 +1134,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "OpenGLKit"=".\OpenGLKit\OpenGLKit.dsp" - Package Owner=<4>
+Project: "OpenGLKit"=.\OpenGLKit\OpenGLKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1149,7 +1149,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "OpenGLKitDLL"=".\OpenGLKit\OpenGLKitDLL.dsp" - Package Owner=<4>
+Project: "OpenGLKitDLL"=.\OpenGLKit\OpenGLKitDLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1164,7 +1164,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "OpenGLShapes"="..\..\examples\OpenGLShapes\OpenGLShapes.dsp" - Package Owner=<4>
+Project: "OpenGLShapes"=..\..\examples\OpenGLShapes\OpenGLShapes.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1176,7 +1176,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ParticleEditor"="..\..\examples\ParticleEditor\ParticleEditor.dsp" - Package Owner=<4>
+Project: "ParticleEditor"=..\..\examples\ParticleEditor\ParticleEditor.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1188,7 +1188,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Pixels"="..\..\examples\Pixels\Pixels.dsp" - Package Owner=<4>
+Project: "Pixels"=..\..\examples\Pixels\Pixels.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1200,7 +1200,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "PopupMenus"="..\..\examples\PopupMenus\PopupMenus.dsp" - Package Owner=<4>
+Project: "PopupMenus"=..\..\examples\PopupMenus\PopupMenus.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1212,7 +1212,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Printing"="..\..\examples\Printing\Printing.dsp" - Package Owner=<4>
+Project: "Printing"=..\..\examples\Printing\Printing.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1224,7 +1224,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Processes"="..\..\examples\Processes\Processes.dsp" - Package Owner=<4>
+Project: "Processes"=..\..\examples\Processes\Processes.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1236,7 +1236,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ProgressBars"="..\..\examples\ProgressBars\ProgressBars.dsp" - Package Owner=<4>
+Project: "ProgressBars"=..\..\examples\ProgressBars\ProgressBars.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1248,7 +1248,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "QTPlayer"="..\..\examples\QTPlayer\QTPlayer.dsp" - Package Owner=<4>
+Project: "QTPlayer"=..\..\examples\QTPlayer\QTPlayer.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1260,7 +1260,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Reflection"="..\..\examples\Reflection\Reflection.dsp" - Package Owner=<4>
+Project: "Reflection"=..\..\examples\Reflection\Reflection.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1272,7 +1272,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RegEnVar"="..\..\src\thirdparty\win32\RegEnVar\RegEnVar.dsp" - Package Owner=<4>
+Project: "RegEnVar"=..\..\src\thirdparty\win32\RegEnVar\RegEnVar.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1284,7 +1284,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RegExKit"=".\RegExKit\RegExKit.dsp" - Package Owner=<4>
+Project: "RegExKit"=.\RegExKit\RegExKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1296,7 +1296,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RegExKitDLL"=".\RegExKit\RegExKitDLL.dsp" - Package Owner=<4>
+Project: "RegExKitDLL"=.\RegExKit\RegExKitDLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1308,7 +1308,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RegExTest"="..\..\examples\RegExTest\RegExTest.dsp" - Package Owner=<4>
+Project: "RegExTest"=..\..\examples\RegExTest\RegExTest.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1320,7 +1320,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RemoteObjectKit"=".\RemoteObjectKit\RemoteObjectKit.dsp" - Package Owner=<4>
+Project: "RemoteObjectKit"=.\RemoteObjectKit\RemoteObjectKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1335,7 +1335,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RemoteObjectKitStatic"=".\RemoteObjectKit\RemoteObjectKitStatic.dsp" - Package Owner=<4>
+Project: "RemoteObjectKitStatic"=.\RemoteObjectKit\RemoteObjectKitStatic.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1350,7 +1350,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Resources"="..\..\examples\Resources\Resources.dsp" - Package Owner=<4>
+Project: "Resources"=..\..\examples\Resources\Resources.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1362,7 +1362,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RunLoops"="..\..\examples\RunLoops\RunLoops.dsp" - Package Owner=<4>
+Project: "RunLoops"=..\..\examples\RunLoops\RunLoops.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1374,7 +1374,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Scrolling"="..\..\examples\Scrolling\Scrolling.dsp" - Package Owner=<4>
+Project: "Scrolling"=..\..\examples\Scrolling\Scrolling.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1386,7 +1386,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Scrolling2"="..\..\examples\Scrolling2\Scrolling2.dsp" - Package Owner=<4>
+Project: "Scrolling2"=..\..\examples\Scrolling2\Scrolling2.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1398,7 +1398,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "SharedLibraries"="..\..\examples\SharedLibraries\SharedLibraries.dsp" - Package Owner=<4>
+Project: "SharedLibraries"=..\..\examples\SharedLibraries\SharedLibraries.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1410,7 +1410,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "SketchIt"="..\..\examples\SketchIt\SketchIt.dsp" - Package Owner=<4>
+Project: "SketchIt"=..\..\examples\SketchIt\SketchIt.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1422,7 +1422,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Sliders"="..\..\examples\Sliders\Sliders.dsp" - Package Owner=<4>
+Project: "Sliders"=..\..\examples\Sliders\Sliders.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1434,7 +1434,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Splitters"="..\..\examples\Splitters\Splitters.dsp" - Package Owner=<4>
+Project: "Splitters"=..\..\examples\Splitters\Splitters.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1446,7 +1446,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Strings"="..\..\examples\Strings\Strings.dsp" - Package Owner=<4>
+Project: "Strings"=..\..\examples\Strings\Strings.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1458,7 +1458,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "StrokesAndFills"="..\..\examples\StrokesAndFills\StrokesAndFills.dsp" - Package Owner=<4>
+Project: "StrokesAndFills"=..\..\examples\StrokesAndFills\StrokesAndFills.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1470,7 +1470,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "SysTray"="..\..\examples\SysTray\SysTray.dsp" - Package Owner=<4>
+Project: "SysTray"=..\..\examples\SysTray\SysTray.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1482,7 +1482,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Tables"="..\..\examples\Tables\Tables.dsp" - Package Owner=<4>
+Project: "Tables"=..\..\examples\Tables\Tables.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1494,7 +1494,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TeXLabel"="..\..\examples\TeXLabel\TeXLabel.dsp" - Package Owner=<4>
+Project: "TeXLabel"=..\..\examples\TeXLabel\TeXLabel.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1506,7 +1506,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TextEdit"="..\..\examples\TextEdit\TextEdit.dsp" - Package Owner=<4>
+Project: "TextEdit"=..\..\examples\TextEdit\TextEdit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1518,7 +1518,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TextLayout"="..\..\examples\TextLayout\TextLayout.dsp" - Package Owner=<4>
+Project: "TextLayout"=..\..\examples\TextLayout\TextLayout.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1530,7 +1530,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Themes"="..\..\examples\Themes\Themes.dsp" - Package Owner=<4>
+Project: "Themes"=..\..\examples\Themes\Themes.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1542,7 +1542,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ThreadBasics"="..\..\examples\ThreadBasics\ThreadBasics.dsp" - Package Owner=<4>
+Project: "ThreadBasics"=..\..\examples\ThreadBasics\ThreadBasics.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1554,7 +1554,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ThreadMeth"="..\..\examples\ThreadMethods\ThreadMethods.dsp" - Package Owner=<4>
+Project: "ThreadMeth"=..\..\examples\ThreadMethods\ThreadMethods.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1566,7 +1566,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ThreadsInGUI"="..\..\examples\ThreadsInGUI\ThreadsInGUI.dsp" - Package Owner=<4>
+Project: "ThreadsInGUI"=..\..\examples\ThreadsInGUI\ThreadsInGUI.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1578,7 +1578,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Toolbars"="..\..\examples\Toolbars\Toolbars.dsp" - Package Owner=<4>
+Project: "Toolbars"=..\..\examples\Toolbars\Toolbars.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1590,7 +1590,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Tooltips"="..\..\examples\Tooltips\Tooltips.dsp" - Package Owner=<4>
+Project: "Tooltips"=..\..\examples\Tooltips\Tooltips.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1602,7 +1602,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Transformations"="..\..\examples\Transformations\Transformations.dsp" - Package Owner=<4>
+Project: "Transformations"=..\..\examples\Transformations\Transformations.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1614,7 +1614,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TreeListControls"="..\..\examples\TreeListControls\TreeListControls.dsp" - Package Owner=<4>
+Project: "TreeListControls"=..\..\examples\TreeListControls\TreeListControls.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1626,7 +1626,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Variants"="..\..\examples\Variants\Variants.dsp" - Package Owner=<4>
+Project: "Variants"=..\..\examples\Variants\Variants.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1638,7 +1638,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "VisualFormFiles"="..\..\examples\VisualFormFiles\VisualFormFiles.dsp" - Package Owner=<4>
+Project: "VisualFormFiles"=..\..\examples\VisualFormFiles\VisualFormFiles.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1650,7 +1650,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Win32Integration"="..\..\examples\Win32Integration\Win32Integration.dsp" - Package Owner=<4>
+Project: "Win32Integration"=..\..\examples\Win32Integration\Win32Integration.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1662,7 +1662,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "WorkingWithEnumerators"="..\..\examples\WorkingWithEnumerators\WorkingWithEnumerators.dsp" - Package Owner=<4>
+Project: "WorkingWithEnumerators"=..\..\examples\WorkingWithEnumerators\WorkingWithEnumerators.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1674,7 +1674,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ZLib"="..\..\src\thirdparty\common\ZLib\ZLib.dsp" - Package Owner=<4>
+Project: "XMLKitDLL"=.\XMLKit\XMLKitDLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1686,7 +1686,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "createinfo"="..\..\src\createinfo\createinfo.dsp" - Package Owner=<4>
+Project: "XMLKitLib"=.\XMLKit\XMLKitLib.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1698,7 +1698,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "jstest"="..\..\examples\JavaScriptTest\jstest.dsp" - Package Owner=<4>
+Project: "ZLib"=..\..\src\thirdparty\common\ZLib\ZLib.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1710,7 +1710,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "libAGG"=".\GraphicsKit\libAGG.dsp" - Package Owner=<4>
+Project: "createinfo"=..\..\src\createinfo\createinfo.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1722,7 +1722,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "libXmake"="..\..\src\xmake\libXmake.dsp" - Package Owner=<4>
+Project: "jstest"=..\..\examples\JavaScriptTest\jstest.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1734,7 +1734,31 @@ Package=<4>
 
 ###############################################################################
 
-Project: "paintlib"="..\..\src\thirdparty\common\paintlib\win\paintlib\paintlib.dsp" - Package Owner=<4>
+Project: "libAGG"=.\GraphicsKit\libAGG.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libXmake"=..\..\src\xmake\libXmake.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "paintlib"=..\..\src\thirdparty\common\paintlib\win\paintlib\paintlib.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1758,7 +1782,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "vcfAll"=".\AllIn1\vcfAll.dsp" - Package Owner=<4>
+Project: "vcfAll"=.\AllIn1\vcfAll.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1770,7 +1794,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "vcfAllDynamicLibs"=".\vcfAllDynamicLibs.dsp" - Package Owner=<4>
+Project: "vcfAllDynamicLibs"=.\vcfAllDynamicLibs.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1803,7 +1827,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "vcfAllLibs"=".\vcfAllLibs.dsp" - Package Owner=<4>
+Project: "vcfAllLibs"=.\vcfAllLibs.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1821,7 +1845,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "vcfAllStaticLibs"=".\vcfAllStaticLibs.dsp" - Package Owner=<4>
+Project: "vcfAllStaticLibs"=.\vcfAllStaticLibs.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1851,7 +1875,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "xmake"="..\..\src\xmake\xmake.dsp" - Package Owner=<4>
+Project: "xmake"=..\..\src\xmake\xmake.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

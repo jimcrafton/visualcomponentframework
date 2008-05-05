@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="RegExKitDLL"
+	ProjectGUID="{2BA3C0E8-BCD0-4209-BCD5-1C3927DF6A7A}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>

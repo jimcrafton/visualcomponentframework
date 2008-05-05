@@ -30,7 +30,7 @@ Source: ..\..\build\vc60\add-ins\VCFLibraryAppWizard\Release\VCFLibraryAppWizard
 Source: ..\..\build\vc60\add-ins\VCFNewClassWiz\Release\VCFNewClassWiz.dll; DestDir: {app}\VC6-Addins; Components: VC6_Addins; Flags: regserver
 Source: ..\..\build\vc60\add-ins\VPLAppWiz\Release\VPLAppWiz.awx; DestDir: {app}\VC6-Addins; Components: VC6_Wizards; Flags: ignoreversion
 Source: ..\..\build\vc60\add-ins\VCFFormWizard\Release\VCFFormWizard.awx; DestDir: {app}\VC6-Addins; Components: VC6_Wizards; Flags: ignoreversion
-Source: C:\WINNT\system32\msvcp60.dll; DestDir: {app}\VC6-Addins
+Source: C:\Windows\system32\msvcp60.dll; DestDir: {app}\VC6-Addins
 
 ; various help files
 Source: ..\..\docs\VCFDocs.VCF-VERSION.chm; DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
@@ -87,15 +87,15 @@ WizardImageStretch=false
 [Registry]
 ;Root: HKCU; Subkey: Environment; ValueType: string; ValueName: VCF_ROOT; ValueData: {app}; Components: Src Binaries
 ;Root: HKCU; Subkey: Environment; ValueType: string; ValueName: path; ValueData: "%VCF_ROOT%\bin;{olddata}"; Components: Src Binaries
-Root: HKCU; Subkey: Software\Microsoft\Devstudio\6.0\Build System\Components\Platforms\Win32 (x86)\Directories; ValueType: string; ValueName: Include Dirs; ValueData: "{olddata};{app}\include"; Tasks: addvc6dirs
+Root: HKCU; Subkey: Software\Microsoft\Devstudio\6.0\Build System\Components\Platforms\Win32 (x86)\Directories; ValueType: string; ValueName: Include Dirs; ValueData: "{olddata};{app}\src"; Tasks: addvc6dirs
 Root: HKCU; Subkey: Software\Microsoft\Devstudio\6.0\Build System\Components\Platforms\Win32 (x86)\Directories; ValueType: string; ValueName: Library Dirs; ValueData: "{olddata};{app}\lib"; Tasks: addvc6dirs
 Root: HKCU; Subkey: Software\Microsoft\Devstudio\6.0\Build System\Components\Platforms\Win32 (x86)\Directories; ValueType: string; ValueName: Path Dirs; ValueData: "{olddata};{app}\bin"; Tasks: addvc6dirs
 
 [Icons]
 Name: {group}\Uninstall VCF; Filename: {uninstallexe}
 Name: {group}\Submit Bug; Filename: http://sourceforge.net/tracker/?group_id=6796&atid=106796; IconFilename: {app}\vcf.ico; IconIndex: 0
-Name: {group}\Online Documentation; Filename: http://vcf-online.org/docs/ref_manual/; IconFilename: {app}\vcf.ico; IconIndex: 0
-Name: {group}\Online Source Documentation; Filename: http://vcf-online.org/docs/src_manual/; IconFilename: {app}\vcf.ico; IconIndex: 0
+Name: {group}\Online Documentation; Filename: http://vcf-online.org/docs/ref_manual/index.html; IconFilename: {app}\vcf.ico; IconIndex: 0
+Name: {group}\Online Source Documentation; Filename: http://vcf-online.org/docs/src_manual/index.html; IconFilename: {app}\vcf.ico; IconIndex: 0
 Name: {group}\VCF Documentation; Filename: {app}\docs\VCFDocs.VCF-VERSION.chm; Components: Help_Files/CHM_Help_Files
 Name: {group}\VCF Source Documentation; Filename: {app}\docs\VCFSrcDocs.VCF-VERSION.chm; Components: Help_Files/CHM_Help_Files
 Name: {group}\VCF Website; Filename: http://vcf-online.org; IconFilename: {app}\vcf.ico; IconIndex: 0

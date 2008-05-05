@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="RegExKit"
+	ProjectGUID="{4660991E-7212-4590-81DD-4C30707C23D3}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -23,6 +24,7 @@
 				Optimization="1"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="$(VCF_ROOT)\src,$(VCF_ROOT)\src\thirdparty\common\oniguruma\"
+				PreprocessorDefinitions="WIN32;_NDEBUG;_WINDOWS;_LIB;USE_FOUNDATIONKIT_LIB;REGEXKIT_LIB;NOT_RUBY;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;_CRT_NON_CONFORMING_SWPRINTFS;EXPORT"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="TRUE"
@@ -74,7 +76,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_ROOT)\src,$(VCF_ROOT)\src\thirdparty\common\oniguruma\"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;USE_FOUNDATIONKIT_LIB;REGEXKIT_LIB;NOT_RUBY;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;_CRT_NON_CONFORMING_SWPRINTFS"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_LIB;USE_FOUNDATIONKIT_LIB;REGEXKIT_LIB;NOT_RUBY;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;_CRT_NON_CONFORMING_SWPRINTFS;EXPORT"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
