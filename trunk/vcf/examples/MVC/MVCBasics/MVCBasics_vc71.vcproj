@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="MVCBasics"
+	ProjectGUID="{C16049FD-2220-49A0-92EC-70DC63BAD534}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>

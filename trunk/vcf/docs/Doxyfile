@@ -23,7 +23,7 @@ PROJECT_NAME           = "Visual Component Framework"
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
-PROJECT_NUMBER         = VERSION-NUMBER
+PROJECT_NUMBER         = 0.9.8
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
 # base path where the generated documentation will be put. 
@@ -457,7 +457,7 @@ WARN_LOGFILE           = doxy_warnings.log
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                  = ../src/vcf
+INPUT                  = ../src/vcf/FoundationKit ../src/vcf/GraphicsKit ../src/vcf/ApplicationKit ../src/vcf/InternetKit ../src/vcf/HTMLKit ../src/vcf/NetworkKit ../src/vcf/RegExKit ../src/vcf/XMLKit ../src/vcf/JavaScriptKit ../src/vcf/OpenGLKit
 
 # If the value of the INPUT tag contains directories, you can use the 
 # FILE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp 
@@ -473,7 +473,7 @@ FILE_PATTERNS          = *.h \
 # should be searched for input files as well. Possible values are YES and NO. 
 # If left blank NO is used.
 
-RECURSIVE              = YES
+RECURSIVE              = NO
 
 # The EXCLUDE tag can be used to specify files and/or directories that should 
 # excluded from the INPUT source files. This way you can easily exclude a 
