@@ -271,24 +271,16 @@ NB: This software will not save the world.
 		get that from 
 		<ulink url="http://sourceforge.net/project/showfiles.php?group_id=6796">Source Forge</ulink>) 
 		and uncompress it somewhere on you hardrive. Once you have done this you'll need 
-		to set up some environment variables, which are as follows: 
+		to set up an environment variable: 
 		</formalpara>
 		<itemizedlist>
 			<listitem><para>
-				VCF_BIN : this should point to the bin under the root where you installed the 
-				VCF. For example, on my machine it resolves to "d:\code\vcf\bin". 
-			</para></listitem>
-			<listitem><para>
-				VCF_INCLUDE : this should point to the include directory under the same VCF 
-				root mentioned earlier. Once again (as an example), on my machine this 
-				resolves to "d:\code\vcf\src".
-			</para></listitem>
-			<listitem><para>
-				VCF_LIB : this should point to the lib directory under the same VCF root 
-				mentioned earlier. Once again (as an example), on my machine this resolves 
-				to "d:\code\vcf\lib". 
-			</para></listitem>
+				VCF_ROOT : this should point to the root where you installed the 
+				VCF. For example, on my machine it resolves to "d:\code\vcf". 
+			</para></listitem>			
 		</itemizedlist>
+		The old style of VCF_BIN, VCF_INCLUDE, and VCF_LIB is no longer needed, 
+		and any directories can be worked out assuming that VCF_ROOT is properly defined.
 		<para>
 		Once you have this done you can open up the projects in Microsoft Visual Studio and build 
 		the various workspaces (.dsw files).
@@ -1938,63 +1930,106 @@ open .MacOSX/environment.plist
 			<section><title>Linux</title>
 				<para>
 				Currently the Linux port is in progress and these instructions may change,
-				but here are the current steps to build, as of November 3, 2003.
-				</para>
-				<para>For Linux systemsFor Linux systems
-				First make sure you have GTK (at least version 2.2). Most recent linux 
-				distributions include this by default, so you probably have it. An easy 
-				test would be to try the following:
-	<programlisting>
-echo `pkg-config gtk+-2.0 --cflags`
-	</programlisting>
-				You should see some sort of GCC compiler flags - if you get back error messages 
-				like:
-	<programlisting>
-pkg-config: command not found
-	</programlisting>
-				Then you don't have the pkg-config system installed (and almost certainly not 
-				GTK which depends on pkg-config). If you see something like:
-	<programlisting>
-Package gtk+-2.0 was not found in the pkg-config search path.
-Perhaps you should add the directory containing `gtk+-2.0.pc'
-to the PKG_CONFIG_PATH environment variable
-No package 'gtk+-2.0' found
-	</programlisting>
-				Then you have the pkg-config tool, but probably not gtk installed (or not 
-				installed correctly).
-				</para>
-				<para>For more information about GTK and installing it go 
-				<ulink url="http://developer.gnome.org/doc/API/2.2/gtk/gtk-building.html"> 
-				here</ulink>.
+				but here are the current steps to build, as of May 2, 2008.
 				</para>
 				<para>
-				Once you have confirmed you have (or installed) GTK, go to the 
-				vcf/build/make directory. Type 
+				Some required libs are: 
+				<itemizedlist>
+					<listitem>
+					XCB
+					</listitem>
+					<listitem>
+					fontconfig - make sure you have any neccessary development headers/libraries.
+					</listitem>
+					<listitem>
+					The UUID libs - on Ubuntu just add the uuid-dev package.
+					</listitem>
+				</itemizedlist>
+				</para>
+				<formalpara><title>Building XCB</title>
+				First you'll need to install git. Then make sure you have 
+				<itemizedlist>
+					<listitem>
+					pkgconfig 0.15.0
+					</listitem>
+					<listitem>
+					automake 1.7
+					</listitem>
+					<listitem>
+					autoconf 2.50
+					</listitem>
+					<listitem>
+					libtool 1.5.6
+					</listitem>
+					<listitem>
+					check (but see NoCheck if you don't want to install this)
+					</listitem>
+					<listitem>
+					xsltproc
+					</listitem>
+					<listitem>
+					gperf 3.0.1
+					</listitem>
+				</itemizedlist>
+				</formalpara>
+				<para>
+				Next download xcb. Create a directory somewhere and name it "xcb".
+				Then 
 				<programlisting>
-make debug
+cd xcb
+git clone git://anongit.freedesktop.org/git/xorg/util/macros
+git clone git://anongit.freedesktop.org/git/xorg/lib/libXau
+git clone git://anongit.freedesktop.org/git/xcb/pthread-stubs
+git clone git://anongit.freedesktop.org/git/xcb/proto
+git clone git://anongit.freedesktop.org/git/xcb/libxcb
+git clone git://anongit.freedesktop.org/git/xcb/util
 				</programlisting>
-				for a debug version of the libraries, or 
-				<programlisting>
-make release</programlisting>
-				for an optimized, release version of the libraries. To build both release
-				and debug targets, type:
-				<programlisting>
-make all</programlisting>
+				You'll need to get http://xorg.freedesktop.org/releases/X11R7.0/src/proto/xproto-X11R7.0-7.0.4.tar.gz
+				and unpack it under the xcb as well.
 				</para>
 				<para>
-				The .a library files will be output to the vcf/lib directory, while the 
-				.so shared libraries will be output to the vcf/bin directory. To ensure 
-				programs can load these up you may need to add the vcf/bin path to your 
-				LD_LIBRARY_PATH. In the future this may change to correctly using the -rpath
-				option to ld when linking.
-				</para>
-				<para>
-				There is currently no install target. This needs to be addressed in the 
-				very near future! Presumably, you can just copy the .so's in the vcf/bin 
-				directory into /usr/local/lib.
-				</para>
-			</section>
-			
+				While still in the "xcb" directory begin your build:
+				<programlisting>
+cd macros
+./autogen.sh
+make
+sudo make install
+
+export ACLOCAL="aclocal -I /usr/local/share/aclocal"
+
+cd ../xproto-X11R7.0-7.0.4
+./autogen.sh
+make
+sudo make install
+
+cd ../libXau
+./autogen.sh
+make
+sudo make install
+
+cd ../pthread-stubs
+./autogen.sh
+make
+sudo make install
+
+cd ../proto
+./autogen.sh
+make
+sudo make install
+
+cd ../libxcb
+./autogen.sh
+make
+sudo make install
+
+cd ../util
+./autogen.sh
+make
+sudo make install				
+				</programlisting>
+				You may need to add /usr/local/lib to your LD_LIBRARY_PATH, or modify ld.conf.
+				</para>				
+			</section>			
 		</section>
 		<section><title>Library Support by Compiler</title>
 			<para>
@@ -2055,7 +2090,7 @@ make all</programlisting>
 							<entry>Yes</entry>
 							<entry>No</entry>
 						</row>
-	
+	<!--
 						<row>
 							<entry>RemoteObjectKit</entry>
 							<entry>Yes</entry>
@@ -2065,6 +2100,7 @@ make all</programlisting>
 							<entry>No</entry>
 							<entry>No</entry>
 						</row>
+						-->
 						<row>
 							<entry>NetworkKit</entry>
 							<entry>Yes</entry>
@@ -2120,15 +2156,6 @@ make all</programlisting>
 							<entry>Yes</entry>
 						</row>
 						<row>
-							<entry>LibMNG</entry>
-							<entry>Yes</entry>
-							<entry>Yes</entry>
-							<entry>Yes</entry>							
-							<entry>Yes</entry>
-							<entry>Yes</entry>
-							<entry>No</entry>
-						</row>
-						<row>
 							<entry>LibJPEG</entry>
 							<entry>Yes</entry>
 							<entry>Yes</entry>
@@ -2136,24 +2163,6 @@ make all</programlisting>
 							<entry>Yes</entry>
 							<entry>Yes</entry>
 							<entry>Yes</entry>
-						</row>
-						<row>
-							<entry>LibTIFF</entry>
-							<entry>Yes</entry>
-							<entry>Yes</entry>
-							<entry>Yes</entry>							
-							<entry>Yes</entry>
-							<entry>Yes</entry>
-							<entry>No</entry>
-						</row>
-						<row>						
-							<entry>FreeImageLib</entry>
-							<entry>Yes</entry>
-							<entry>Yes</entry>
-							<entry>Yes</entry>							
-							<entry>No</entry>
-							<entry>No</entry>
-							<entry>No</entry>
 						</row>
 					</tbody>
 				</tgroup>
@@ -2177,8 +2186,22 @@ make all</programlisting>
 		source tree. 
 		</para>
 		</section>
+		<section><title>Setting up Subversion</title>
+		<para>		
+		The VCF development repository is accessed using the Subversion
+		client (or svn as it's command line program is known). There's information
+		about this specific to Sourceforge 
+		<ulink url="http://sourceforge.net/svn/?group_id=6796">here</ulink>. There
+		are a number of clients you can install, some have GUIs, others work from
+		the command line. 
+		</para>
+		
+		</section>
+		
 		<section><title>Setting up CVS</title>
 			<para>
+			CVS is no longer supported.
+			<!--
 			Once all of this is done, all you have to do is setup your machine to use CVS 
 			and SSH. CVS and SSH are must have tools, without these you'll not be able to 
 			check source code in or out from CVS, which is the standard version control 
@@ -2201,13 +2224,14 @@ make all</programlisting>
 				You'll need a CVS_RSH that equals "ssh" 
 				</para></listitem>				
 			</itemizedlist>
+			-->
 			</para>				
 		</section>
 		
 		<section><title>Developing in the main VCF source tree</title>
 			<para>
 			When developing in the VCF proper you need to be aware that there are
-			at least two branches in CVS at any given time. There will be a dev 
+			at least two branches in Subversion at any given time. There will be a dev 
 			branch for adding new features etc. Until this new set of features is 
 			tested and ready it will stay separate from the main branch, which should 
 			contain relatively stable code. When you are working on implementing these 
@@ -2219,9 +2243,10 @@ make all</programlisting>
 			<para>
 			As a developer you need to be aware of this and make sure that you 
 			are checking out the correct version. Please see this for instructions 
-			on how to access branches in CVS trees. For further help look at the 
-			<ulink url="http://www.cvshome.org/docs/manual/cvs.html">cvshome.org</ulink> 
-			pages for more detailed information on using cvs.
+			on how to access branches in SVN trees. For further help look at the 
+			<ulink url="http://svnbook.red-bean.com/">Version Control with 
+			Subversion</ulink> pages for more detailed information on using
+			Subversion.
 			</para>
 			<para>
 			The recommended procedure is the following:
@@ -2942,8 +2967,8 @@ else {
 			<listitem><para>
 			If you want to generate HTML Help then you'll need Microsoft's HTML 
 			Help. You can get it from:
-			<ulink url="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp">
-			http://msdn.microsoft.com/library/default.asp?url=/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp
+			<ulink url="http://msdn.microsoft.com/en-us/library/ms669985.aspx">
+			http://msdn.microsoft.com/en-us/library/ms669985.aspx
 			</ulink>. Download it from <ulink url="http://go.microsoft.com/fwlink/?LinkId=14188">http://go.microsoft.com/fwlink/?LinkId=14188</ulink>
 			</para></listitem>
 			</itemizedlist>

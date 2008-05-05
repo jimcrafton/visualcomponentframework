@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="DocViewAdvanced"
+	ProjectGUID="{559AA4E9-FB67-4F9E-96B9-501D04DF6BFF}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>

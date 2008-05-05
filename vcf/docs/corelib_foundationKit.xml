@@ -295,7 +295,8 @@ void someFunction()
 		exception, call VCF::BasicException::getMessage().
 		</para>
 		<para>
-		To throw a VCF exception, you create the exception on the stack, 
+		To throw a VCF exception, you create the exception on the 
+		<emphasis>stack</emphasis>, 
 		and pass in a VCF::String to the exceptions constructor. Some of 
 		the specific exception classes has a default constructor that fills 
 		in a default message for you. If you would like to include line 
@@ -420,7 +421,7 @@ if ( fileName.empty() ) {
 			of a class
 			</para></listitem>
 			<listitem><para>
-			getEvents() - allows you to enumerate all the events a class 
+			getDelegates() - allows you to enumerate all the delegates a class 
 			has
 			</para></listitem>
 		</itemizedlist>
@@ -768,104 +769,40 @@ d += doit;
 
 ]]>
 		</programlisting>		
-		</para>
-		
-		<!--
-		<para>
-		To make all of this work in the VCF there are three main classes that are 
-		used. The first is the EventHandler class. This provides an interface that 
-		wraps a C++ callback function, be it a static function, or a class member 
-		function. The EventHandler class itself is an abstract class, the developer 
-		creates concrete template classes when using event handlers. For example:
-		<programlisting>
-<![CDATA[
-class MyClass : public VCF::Object {
-public:
-	void onButtonClick( ButtonEvent* e ) {
-
-	}
-};
-
-MyClass* myClassInstance = ..... //get a MyClass instance
-VCF::EventHandler* handler = 
-	new ButtonEventHandler<MyClass>( myClassInstance, &MyClass::onButtonClick, "onButtonClick" );
-]]>
-		</programlisting>
-		The above example creates an event handler and attaches the calss member 
-		function MyClass::onButtonClick	to the event handler.
-		</para>
-		<para>
-		The next part of this is the Delegate class. The Delegate represents a 
-		single event that would be fired by the source object, and holds a collection 
-		of EventHandlers. The Delegate allows you to add or remove event handlers 
-		at will. For example:
-		<programlisting>
-<![CDATA[
-EventHandler* handler = ...//get handler from somewhere
-
-Delegate d;
-//add a handler
-d.addHandler( handler );
-
-//remove handler
-d.removeHandler( handler );
-
-//or if you prefer the syntactical "sugar"
-d += handler;
-
-//to remove the handler
-d -= handler;
-]]>
-		</programlisting>
-		The Delegate also handles routing a single Event instance, as the result 
-		of the source object firing an event, to all of the handlers that have 
-		registered with it. This is accomplished by calling the Delegate::fireEvent() 
-		method, and passing in an event.
-		<programlisting>
-<![CDATA[
-Delegate d;
-Event event( this, 123 );
-//fire the event
-d.fireEvent( &event );
-]]>
-		</programlisting>
-		That's all there is to it! Delegate::fireEvent() will take the event, and 
-		loop through it's list of event handler's. For each handler, it will check 
-		to verify the event has not been marked as being consumed (Event::isConsumed() 
-		returns false), and then call the EventHandler::invoke() method on the 
-		handler, which in turn invokes the callback function.
+		At this point you have a delegate with callbacks hooked up to it. Now when
+		you "invoke" the delegate, the delegate will pass this along to all it's 
+		callbacks.		
 		</para>
 		<para>
 		The next step is to actually use the Delegate class within your source 
 		object, so that the source can fire events. The VCF does this by declaring
-		a public member variable of type Delegate and giving it the name of the
+		a public member variable of type Delegate1&lt;Person&amp;&gt; and giving it the name of the
 		event that will be fired. For example:
 		<programlisting>
 <![CDATA[
-class Foo : public VCF::Object {
+class Person;
+
+typedef Delegate1<Person&> TalkDelegate;
+
+class Person : public VCF::Object {
 public :
-	enum {
-		TalkingEvent = 0x111111
-	};
-	Delegate Talking;
+	TalkDelegate Talking;
   
-	void speak() {
-		Event talkingEvent( this, TalkingEvent );
-		
-		Talking.fireEvent( &talkingEvent );		
+	void talk() {
+		Talking.invoke(*this);
 	}
 };
 ]]>
 		</programlisting>
 		We have exposed the talking event by declaring a Delegate named Talking. Now 
-		any interested observer can register their callback (or event handler) with 
-		this and be notified when a talking event is fired. For example:
+		any interested observer can register their callback with this and be notified 
+		when a talking event is fired. For example:
 		<programlisting>
 <![CDATA[
-class FooObserver : public VCF::ObjectWithEvents {
+class PersonObserver : public VCF::ObjectWithCallbacks {
 public:
-	void onTalking( Event* e ) {
-		System.println( "FooObserver got it's onTalking() method called!" );
+	void onTalking( Person& thePerson ) {
+		System.println( "PersonObserver got it's onTalking() method called!" );
 	}
 };
 
@@ -873,34 +810,31 @@ int main( int argc, char** argv )
 {
 	FoundationKit::init(argc,argv);
 	
-	Foo foo;
+	Person person;
 	
 	//our observer
-	FooObserver observer;
+	PersonObserver observer;
 	
 	//the observer now registers with the Foo object's Talking delegate
-	foo.Talking += 
-		new GenericEventHandler<FooObserver>(&observer, &FooObserver::onTalking, "onTalking" );
+	person.Talking += 
+		new ClassProcedure1<Person&,PersonObserver>(&observer, &PersonObserver::onTalking, "onTalking" );
 	
-	//teh Foo speaks, and lo, and behold the FooObserver's onTalking() method will
+	//the person talks, and lo, and behold the PersonObserver's onTalking() method will
 	//get called!
-	foo.speak();
+	person.talk();
 	
 	FoundationKit::terminate();
 	return 0;
 }
 ]]>
 		</programlisting>
-		Talking events are fired if the Foo::speak() method is called, and we can see 
-		how we have connected the two object (source and observer) through the use 
-		of Delegates and EventHandlers.
+		The Talking delegate it triggered if the Person::talk() method is called, and we 
+		can see how we have connected the two objects (source and observer) through the 
+		use of Delegates and callbacks.
 		</para>
--->
-
 	</section>
 
-	<section><title>Threading and Asynchronous Delegates</title>
-	</section>
+	
 	
 	<section><title>Synchronization Primitives</title>
 		<para>
@@ -1213,7 +1147,10 @@ int main( int argc, char** argv )
 		</para>
 		
 	</section>
-
+	
+	<section><title>Threaded Functions and Asynchronous Delegates</title>
+	</section>
+	
 	<section><title>Run Loops</title>
 		<para>
 		</para>
