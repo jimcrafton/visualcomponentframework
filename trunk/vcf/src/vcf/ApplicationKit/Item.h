@@ -79,7 +79,7 @@ editor (like the VCF Builder).
 
 The Item class has a number of virtual methods that must be implemented,
 but the exact methods of implementation may vary widely. For example
-it possible that in order to calculate the item's index hte item
+it's possible that in order to calculate the item's index the item
 may simply carry around a member variable that stores the index. 
 An alternate approach would be to query the model the item
 is attached to and ask the model for the item's index position.

@@ -561,7 +561,7 @@ public:
 		</para>
 	</section>
 	
-	<section id="AppKit_EventLoops"><title>Event loops </title>
+	<section id="AppKit_EventLoops"><title>Event Loops </title>
 		<para>
 		An event loop is a special loop that runs and retrieves and dispatches
 		events from the native windowing system's event queue. In general there
@@ -750,7 +750,7 @@ public:
 	
 	<section id="DragAndDrop"><title>Drag and Drop </title>
 		<para>
-		Drag and Drop, some times referred to as a form direct manipulation, is the process of
+		Drag and Drop, some times referred to as a form of direct manipulation, is the process of
 		selecting something (text, a link, a graphic, a chart, a file, etc), dragging it to a 
 		target (an open document, a folder, a chart, etc ), and then releasing the selection
 		to drop the selection and complete the operation. It is a form of transfer between 
