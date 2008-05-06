@@ -1,22 +1,58 @@
 object RegExGUIWindow  : VCF::Window
 	top = 200
 	left = 200
-	height = 153.75pt //205px
-	width = 307.5pt //410px
+	height = 200pt //205px
+	width = 400pt //410px
 	caption = 'Regular Expression Example'	
 
-	object lbl1 : VCF::Label
+	object reset : VCF::CommandButton
 		top = 7.5pt //10px
 		left = 15pt //20px
-		width = 75pt //100px
-		height = LabelHeight
-		caption = 'Fi&nd what:'
+		width = 55pt //100px
+		height = TextHeight
+		caption = 'New Search'
+	delegates
+		ButtonClicked = [RegExGUIApplication@RegExGUIApplication::reset]
+	end
 	end
 
 	object edt1 : VCF::TextControl
 		top = 7.5pt //10px
-		left = 82.5pt //110px
+		left = 75pt //110px
 		width = 90pt //120px
 		height = TextHeight
+	delegates
+		KeyDown = [RegExGUIApplication@RegExGUIApplication::onKeyDown]
+	end
+	end
+
+	object nextbtn : VCF::CommandButton
+		top = 7.5pt
+		left = 175pt
+		width = 50pt
+		height = TextHeight
+		caption = 'Find Next'
+	delegates
+		ButtonClicked = [RegExGUIApplication@RegExGUIApplication::findNext]
+	end
+	end
+
+	object prevbtn : VCF::CommandButton
+		top = 7.5pt
+		left = 230pt
+		width = 60pt
+		height = TextHeight
+		caption = 'Find Previous'
+	delegates
+		ButtonClicked = [RegExGUIApplication@RegExGUIApplication::findPrev]
+	end
+	end
+
+	object data : VCF::MultilineTextControl
+		top = 25pt
+		left = 15pt
+		width = 355pt
+		height = 135pt
+		readonly = true
 	end
 end
