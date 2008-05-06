@@ -1,0 +1,32 @@
+object CPBrowserWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 300
+	width = 320
+	caption = 'CPBrowser'		
+
+	object rssDropDown : VCF::DropDownControl 
+		left = 0
+		top = 0
+		height = 35
+		width = 100
+
+		alignment = AlignTop
+		visible = true
+
+		dropDownCount = 10
+	end
+
+	object browser : VCF::HTMLBrowserControl 
+		delegates
+			TitleChanged = [CPBrowserApp@CPBrowserApp::onBrowserDocTitleChanged]
+			URLLoaded = [CPBrowserApp@CPBrowserApp::onBrowserURLLoaded]
+		end
+		alignment = AlignClient
+		allowPopups = false
+		allowTextSelection = false
+		allowContextMenu = false
+
+		currentURL = 'http://www.codeproject.com/'
+	end
+end

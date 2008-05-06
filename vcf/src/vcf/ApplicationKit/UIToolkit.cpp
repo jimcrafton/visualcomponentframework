@@ -271,8 +271,10 @@ void UIToolkit::init()
 void UIToolkit::initToolKit()
 {
 	if ( NULL == UIToolkit::toolKitInstance ) {
-#ifdef VCF_WIN
+#if defined(VCF_WIN) && !defined(VCF_AGG)
 		UIToolkit::toolKitInstance = new Win32ToolKit();
+#elif VCF_AGG
+		UIToolkit::toolKitInstance = NULL;
 #elif VCF_X11
 		UIToolkit::toolKitInstance = new X11UIToolkit();
 #elif VCF_GTK

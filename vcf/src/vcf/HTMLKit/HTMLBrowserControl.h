@@ -87,7 +87,21 @@ namespace VCF  {
 
 
 	typedef Delegate1<HTMLEvent*> HTMLDelegate; 
+
+	class HTMLKIT_API HTMLNewWindowEvent : public Event {
+	public:
+		HTMLNewWindowEvent( Object* source, uint32 type ):Event(source,type), allowNewWindow(true) {};
+
+		virtual Object* clone( bool deep=false ) {
+			return new HTMLNewWindowEvent(*this);
+		}
 	
+		
+		bool allowNewWindow;
+	};
+
+	typedef Delegate1<HTMLNewWindowEvent*> HTMLNewWindowDelegate; 
+
 
 	/**
 	An event thats used for HTMLElement events. 
@@ -246,7 +260,7 @@ public:
 	@event HTMLEvent
 	@eventtype heNewWindowDisplayed
 	*/
-	DELEGATE( HTMLDelegate,NewWindowDisplayed );
+	DELEGATE( HTMLNewWindowDelegate,NewWindowDisplayed );
 
 	/**
 	@delegate TitleChanged

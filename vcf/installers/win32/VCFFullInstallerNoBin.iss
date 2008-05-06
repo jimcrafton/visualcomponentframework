@@ -33,10 +33,10 @@ Source: ..\..\build\vc60\add-ins\VCFFormWizard\Release\VCFFormWizard.awx; DestDi
 Source: C:\Windows\system32\msvcp60.dll; DestDir: {app}\VC6-Addins
 
 ; various help files
-Source: ..\..\docs\VCFDocs.VCF-VERSION.chm; DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
-Source: ..\..\docs\VCFDocs.VCF-VERSION.chi; DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
-Source: ..\..\docs\VCFSrcDocs.VCF-VERSION.chm; DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
-Source: ..\..\docs\VCFSrcDocs.VCF-VERSION.chi; DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
+Source: ..\..\docs\VCFDocs.0.9.8.chm; DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
+Source: ..\..\docs\VCFDocs.0.9.8.chi; DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
+Source: ..\..\docs\VCFSrcDocs.0.9.8.chm; DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
+Source: ..\..\docs\VCFSrcDocs.0.9.8.chi; DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
 
 ;readme files
 Source: ..\..\readme.txt; DestDir: {app}
@@ -65,20 +65,20 @@ Source: ..\..\src\thirdparty\win32\RegEnVar\RegEnVar.exe; DestDir: {app}
 
 [Setup]
 OutputDir=..\..\uploadToSF
-OutputBaseFilename=VCFSrcOnlyInstaller-VCF-VERSION
+OutputBaseFilename=VCFSrcOnlyInstaller-0.9.8
 AppCopyright=2000-3006 Jim Crafton
-AppName=Visual Component Framework VCF-LONG-VERSION
-AppVerName=Visual Component Framework VCF-LONG-VERSION
+AppName=Visual Component Framework 0.9.8 beta
+AppVerName=Visual Component Framework 0.9.8 beta
 LicenseFile=..\..\license.txt
-DefaultDirName={pf}\VCF-VCF-VERSION
-DefaultGroupName=Visual Component Framework VCF-VERSION
+DefaultDirName={pf}\VCF-0.9.8
+DefaultGroupName=Visual Component Framework 0.9.8
 AppPublisher=VCF
 AppPublisherURL=http://vcf-online.org
 AppSupportURL=http://vcf-online.org
 AppUpdatesURL=http://vcf-online.org
-AppVersion=VCF-VERSION
+AppVersion=0.9.8
 UninstallDisplayIcon={app}\vcf.ico
-UninstallDisplayName=Visual Component Framework VCF-VERSION
+UninstallDisplayName=Visual Component Framework 0.9.8
 WizardImageFile=wizimage.bmp
 WizardImageBackColor=clBlack
 WizardSmallImageFile=wizsmall.bmp
@@ -96,8 +96,8 @@ Name: {group}\Uninstall VCF; Filename: {uninstallexe}
 Name: {group}\Submit Bug; Filename: http://sourceforge.net/tracker/?group_id=6796&atid=106796; IconFilename: {app}\vcf.ico; IconIndex: 0
 Name: {group}\Online Documentation; Filename: http://vcf-online.org/docs/ref_manual/index.html; IconFilename: {app}\vcf.ico; IconIndex: 0
 Name: {group}\Online Source Documentation; Filename: http://vcf-online.org/docs/src_manual/index.html; IconFilename: {app}\vcf.ico; IconIndex: 0
-Name: {group}\VCF Documentation; Filename: {app}\docs\VCFDocs.VCF-VERSION.chm; Components: Help_Files/CHM_Help_Files
-Name: {group}\VCF Source Documentation; Filename: {app}\docs\VCFSrcDocs.VCF-VERSION.chm; Components: Help_Files/CHM_Help_Files
+Name: {group}\VCF Documentation; Filename: {app}\docs\VCFDocs.0.9.8.chm; Components: Help_Files/CHM_Help_Files
+Name: {group}\VCF Source Documentation; Filename: {app}\docs\VCFSrcDocs.0.9.8.chm; Components: Help_Files/CHM_Help_Files
 Name: {group}\VCF Website; Filename: http://vcf-online.org; IconFilename: {app}\vcf.ico; IconIndex: 0
 
 [Tasks]
@@ -119,8 +119,8 @@ Name: VC90_installwizards; Description: Visual C++ 9.0 (Visual Studio 2008/Expre
 
 
 [Run]
-Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{858cf701-5e04-48ba-968e-46569c787d5f}"" -chi ""{app}\docs\VCFDocs.VCF-VERSION.chi""    -chm ""{app}\docs\VCFDocs.VCF-VERSION.chm""    -add -title ""VCF Documentation"""; StatusMsg: Registering VCF Documentation with MSDN...; Tasks: msdnintegrate; Components: Help_Files/VC6_Help_Files
-Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{cf54ec6b-a508-4b05-b04d-794bf0cb2757}"" -chi ""{app}\docs\VCFSrcDocs.VCF-VERSION.chi"" -chm ""{app}\docs\VCFSrcDocs.VCF-VERSION.chm"" -add -title ""VCF Source Documentation"""; StatusMsg: Registering VCF Documentation with MSDN...; Tasks: msdnintegrate; Components: Help_Files/VC6_Help_Files
+Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{858cf701-5e04-48ba-968e-46569c787d5f}"" -chi ""{app}\docs\VCFDocs.0.9.8.chi""    -chm ""{app}\docs\VCFDocs.0.9.8.chm""    -add -title ""VCF Documentation"""; StatusMsg: Registering VCF Documentation with MSDN...; Tasks: msdnintegrate; Components: Help_Files/VC6_Help_Files
+Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{cf54ec6b-a508-4b05-b04d-794bf0cb2757}"" -chi ""{app}\docs\VCFSrcDocs.0.9.8.chi"" -chm ""{app}\docs\VCFSrcDocs.0.9.8.chm"" -add -title ""VCF Source Documentation"""; StatusMsg: Registering VCF Documentation with MSDN...; Tasks: msdnintegrate; Components: Help_Files/VC6_Help_Files
 
 Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_ROOT ""{app}"""; Components: Src; Tasks: addenvpaths; Flags: runhidden
 Filename: {app}\RegEnVar.exe; Parameters: --add-to-user-path %VCF_ROOT%\bin; Components: Src; Tasks: addenvpaths; Flags: runhidden
@@ -139,8 +139,8 @@ Filename: {app}\build\vc90\Add-Ins\Setup-vcexpress.js; Components: Src; Flags: s
 
 
 [UninstallRun]
-Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{858cf701-5e04-48ba-968e-46569c787d5f}"" -chi ""{app}\docs\VCFDocs.VCF-VERSION.chi"" -chm ""{app}\docs\VCFDocs.VCF-VERSION.chm"" -remove -title ""VCF Documentation"""; StatusMsg: Removing VCF Documentation with MSDN...; Components: Help_Files; Tasks: msdnintegrate
-Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{cf54ec6b-a508-4b05-b04d-794bf0cb2757}"" -chi ""{app}\docs\VCFSrcDocs.VCF-VERSION.chi"" -chm ""{app}\docs\VCFSrcDocs.VCF-VERSION.chm"" -remove -title ""VCF Source Documentation"""; StatusMsg: Removing VCF Documentation with MSDN...; Components: Help_Files; Tasks: msdnintegrate
+Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{858cf701-5e04-48ba-968e-46569c787d5f}"" -chi ""{app}\docs\VCFDocs.0.9.8.chi"" -chm ""{app}\docs\VCFDocs.0.9.8.chm"" -remove -title ""VCF Documentation"""; StatusMsg: Removing VCF Documentation with MSDN...; Components: Help_Files; Tasks: msdnintegrate
+Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{cf54ec6b-a508-4b05-b04d-794bf0cb2757}"" -chi ""{app}\docs\VCFSrcDocs.0.9.8.chi"" -chm ""{app}\docs\VCFSrcDocs.0.9.8.chm"" -remove -title ""VCF Source Documentation"""; StatusMsg: Removing VCF Documentation with MSDN...; Components: Help_Files; Tasks: msdnintegrate
 Filename: {app}\RegEnVar.exe; Parameters: --del-from-user-path %VCF_ROOT%\bin; Tasks: addenvpaths; Components: Src; Flags: runhidden
 Filename: {app}\RegEnVar.exe; Parameters: --del-user-var VCF_ROOT; Tasks: addenvpaths; Components: Src; Flags: runhidden
 
