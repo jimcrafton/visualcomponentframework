@@ -624,10 +624,13 @@ void Win32HTMLBrowser::onNewWindow2( LPDISPATCH* ppDisp, VARIANT_BOOL* Cancel)
 	}
 	else {
 		
-		HTMLEvent e(peerControl_,HTMLBrowserControl::heNewWindowDisplayed);
+		HTMLNewWindowEvent e(peerControl_,HTMLBrowserControl::heNewWindowDisplayed);
 		HTMLBrowserControl* browserCtrl = (HTMLBrowserControl*)peerControl_;
 		
 		browserCtrl->NewWindowDisplayed( &e );
+		if ( !e.allowNewWindow ) {
+			*Cancel = TRUE;
+		}
 	}
 }
 

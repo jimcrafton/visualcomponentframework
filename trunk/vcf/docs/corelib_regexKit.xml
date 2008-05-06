@@ -29,7 +29,70 @@ NB: This software will not save the world.
 
 <section><title> RegEx Kit</title>
 	<para>
+	The VCF includes routines based on the <ulink url="http://www.geocities.jp/kosako3/oniguruma/">
+	Oniguruma regex library</ulink> which allows developers to quickly 
+	add regex searching capabilities to their applications. Regex 
+	objects in VCF support the Enumerator interface.
 	</para>
+	<para>
+	The current implementation includes support for Ascii and UTF_16LE text 
+	across a continuous block of characters (i.e. between two pointers or 
+	alternatively a String object). The default regex syntax used is 
+	<todo>(insert default here - I can't remember)</todo>, but can be set to any that 
+	Oniguruma supports.
+	</para>
+	<para>
+	The RegexKit is not thread-safe.
+	</para>
+	<section><title>Usage</title>
+	<para>
+	To use the RegexKit, create either a Regex::Ascii or Regex::UTF_16LE 
+	object, call the compile function on the object then use one of the find 
+	functions:
+	<programlisting>
+<![CDATA[		
+Regex::Ascii search("searching for this", PointerToStartOfText, PointerToEndOfText);
+search.compile(); // should always be called immediately after object creation
+Regex::Iterator it = search.find(); // finds the first match from the beginning of the range
+]]>
+	</programlisting>
+	This gives us an iterator through which we can get details of the match 
+	and/or continue searching:
+	<programlisting>
+	<![CDATA[		
+String matching = it->getText();
+unsigned char* matchLocation = it->getPos();
+++it;
+]]>
+	</programlisting>
+	</para>
+	<para>	
+	If the data to be searched is altered while the Regex object still exists, 
+	the object will need to be reset before any further searching can take 
+	place. Note that this typically invalidates any existing iterators. If 
+	the range of the search has changed this will need to be set also in the 
+	Regex object. This will invalidate any iterators outside of the new range 
+	and any offset values based on the previous range if the beginning has 
+	changed (however further calls to getPosAsOffset() on Iterators that are 
+	still valid will be correctly calculated):
+	<programlisting>
+	<![CDATA[		
+search.clearCache();
+search.changeRangeEnd(PointerToNewEndOfText);
+]]>
+	</programlisting>
+	</para>
+	<para>
+	If you wish to perform a new search and do not need the results of the 
+	previous search you can change the expression to search for (you do not 
+	need to call compile() again in this instance):
+	<programlisting>
+<![CDATA[		
+search.changeSearchExpression("this instead");
+]]>
+	</programlisting>
+	</para>
+	</section>
 </section>
 
 <!--

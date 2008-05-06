@@ -165,6 +165,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "CPBrowser"=.\CPBrowser\CPBrowser.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name HTMLKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name InternetKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name XMLKitLib
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Cards"=.\Cards\Cards.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1962,21 +1986,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "WindowsShell"=.\WindowsShell\WindowsShell.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "WorkingWithEnumerators"=.\WorkingWithEnumerators\WorkingWithEnumerators.dsp - Package Owner=<4>
 
 Package=<5>
@@ -2000,6 +2009,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name FoundationKitDLL
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "XMLKitLib"=..\build\vc60\XMLKit\XMLKitLib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################

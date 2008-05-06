@@ -2,7 +2,7 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Mon May 05 17:39:45 2008
+/* at Mon May 05 18:16:43 2008
  */
 /* Compiler settings for c:\code\vcfdev\dev\vcf\build\vc60\add-ins\COMToVCFClassWizard\COMToVCFClassWizard.idl:
     Oicf (OptLev=i2), W1, Zp8, env=Win32, ms_ext, c_ext
