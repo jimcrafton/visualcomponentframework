@@ -65,9 +65,10 @@ LINK32=link.exe
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "Debug"
 # PROP Intermediate_Dir "Debug"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "AGGAPPLICATIONKIT_EXPORTS" /YX /FD /GZ  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /D "VCF_AGG" /Yu"vcf/ApplicationKit/ApplicationKit.h" /FD /GZ /Zm200 /c
+# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "AGGAPPLICATIONKIT_EXPORTS" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "../" /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_GRAPHICSKIT_DLL" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /D "VCF_AGG" /Yu"vcf/ApplicationKit/ApplicationKit.h" /FD /GZ /Zm200 /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -77,7 +78,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"..\AggApplicationKit_vc6_d.dll" /pdbtype:sept /libpath:"$(VCF_ROOT)/lib"
 
 !ENDIF 
 
@@ -692,6 +693,102 @@ SOURCE=..\..\..\vcf\src\vcf\ApplicationKit\WindowEvent.h
 # Begin Group "Peers"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\AggAbstractControl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggAbstractControl.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggApplicationPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggApplicationPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggApplicationResourceBundlePeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggApplicationResourceBundlePeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggButton.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggButton.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggControlContextPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggControlContextPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggCursorPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggCursorPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggMenuBarPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggMenuBarPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggMenuManagerPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggMenuManagerPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggUIMetricsManager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggUIMetricsManager.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggUIShellPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggUIShellPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggUIToolkit.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggUIToolkit.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggWindowPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggWindowPeer.h
+# End Source File
 # End Group
 # Begin Group "Source Files"
 

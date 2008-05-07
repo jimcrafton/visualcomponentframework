@@ -209,11 +209,15 @@ public:
 
 
 
-class GRAPHICSKIT_API AggGraphicsResourceBundle : public Win32ResourceBundle, public GraphicsResourceBundlePeer {
+class GRAPHICSKIT_API AggGraphicsResourceBundlePeer : 
+		#ifdef VCF_WIN
+		public Win32ResourceBundle, 
+		#endif
+		public GraphicsResourceBundlePeer {
 public:
-	AggGraphicsResourceBundle();
+	AggGraphicsResourceBundlePeer();
 
-	virtual ~AggGraphicsResourceBundle();
+	virtual ~AggGraphicsResourceBundlePeer();
 
 	virtual Image* getImage( const String& resourceName );	
 protected:
@@ -229,7 +233,7 @@ protected:
 
 
 
-struct FontStruct {
+struct GRAPHICSKIT_API FontStruct {
 #ifdef VCF_WIN32
 	FontStruct(): engine(GetDC(GetDesktopWindow())), mgr(engine){}
 #endif
@@ -250,7 +254,7 @@ struct CachedGlyph {
 
 
 
-struct DrawingSurface {
+struct GRAPHICSKIT_API DrawingSurface {
 
 	DrawingSurface(): height(0),width(0),imageData(NULL){}
 
@@ -265,7 +269,7 @@ struct DrawingSurface {
 };
 
 
-class AggContextPeer : public ContextPeer {
+class GRAPHICSKIT_API AggContextPeer : public ContextPeer {
 public:
 
 	AggContextPeer();
