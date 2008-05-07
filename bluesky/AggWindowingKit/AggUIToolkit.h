@@ -13,6 +13,12 @@ namespace VCF
 class AggWindowPeer;
 
 
+struct OSMessage {
+	void* msgData;
+	Control* control;
+};
+
+
 class AggUIToolkit : public UIToolkit
 {
 public:

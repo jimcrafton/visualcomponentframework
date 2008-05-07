@@ -96,9 +96,41 @@ namespace VCF {
 		/////////////////////////////////////////////////////////////////////
 		
 	protected:
-        Rect 	 	      clientBounds_;
+        Rect clientBounds_;
+		bool internalClose_;
 
-		
+#ifdef VCF_WIN
+#pragma pack(push,1)
+		struct _WndProcThunk
+		{
+			DWORD	movInstr;
+			DWORD	thisPtr;
+			BYTE	jmpInstr;
+			DWORD	relproc;
+		};
+#pragma pack(pop)
+
+		class WndThunk {
+		public:
+
+			_WndProcThunk thunk;
+			void init( WNDPROC proc, void* thisPtr ) {
+				thunk.movInstr	= 0x042444c7;// mov dword ptr [esp+4]
+				thunk.thisPtr	= (DWORD)thisPtr;
+				thunk.jmpInstr	= 0xe9;		  // jmp WndProc
+				thunk.relproc = 	
+					(int)proc - ((int)this+sizeof(_WndProcThunk));
+			}
+		};
+
+		WndThunk thunker_;
+		HWND hwnd_;
+		HDC memDC_;
+		HBITMAP memBMP_;
+		void* memDataPtr_;
+		static LRESULT CALLBACK InitialWndProc( HWND, UINT, WPARAM, LPARAM );
+		static LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
+#endif
 	};
 };
 

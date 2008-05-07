@@ -262,10 +262,12 @@ struct GRAPHICSKIT_API DrawingSurface {
 	uint32 width;
 	unsigned char* imageData;
 
-	typedef agg::pixfmt_bgra32 PixFmt;
-	typedef agg::pixfmt_bgra32_pre PixFmtPre;
-	typedef agg::rgba8 ColorType;
-	typedef agg::order_bgra ComponentOrder;
+	Rect dirtyRect;
+
+	typedef pixfmt PixFmt;
+	typedef pixfmt_pre PixFmtPre;
+	typedef color_type ColorType;
+	typedef component_order ComponentOrder;
 };
 
 
