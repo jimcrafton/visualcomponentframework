@@ -1749,7 +1749,9 @@ agg::rendering_buffer* GraphicsContext::getRenderingBuffer()
 
 void GraphicsContext::setRenderingBuffer( agg::rendering_buffer* buffer )
 {
-	renderArea_->renderBuffer = buffer;
+	if ( NULL != renderArea_ ) {
+		renderArea_->renderBuffer = buffer;
+	}
 }
 
 agg::scanline_u8& GraphicsContext::internal_getRenderAreaScanline()
