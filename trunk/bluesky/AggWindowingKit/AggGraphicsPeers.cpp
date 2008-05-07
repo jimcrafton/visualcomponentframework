@@ -195,17 +195,17 @@ void AggGrayScaleImage::finishedDrawing()
 
 
 
-AggGraphicsResourceBundle::AggGraphicsResourceBundle()
+AggGraphicsResourceBundlePeer::AggGraphicsResourceBundlePeer()
 {
 
 }
 
-AggGraphicsResourceBundle::~AggGraphicsResourceBundle()
+AggGraphicsResourceBundlePeer::~AggGraphicsResourceBundlePeer()
 {
 }
 
 
-Image* AggGraphicsResourceBundle::getImage( const String& resourceName )
+Image* AggGraphicsResourceBundlePeer::getImage( const String& resourceName )
 {
 	return NULL;
 }

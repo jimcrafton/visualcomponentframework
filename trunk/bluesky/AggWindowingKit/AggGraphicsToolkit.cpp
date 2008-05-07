@@ -112,7 +112,7 @@ PrintSessionPeer* AggGraphicsToolkit::internal_createPrintSessionPeer()
 
 GraphicsResourceBundlePeer* AggGraphicsToolkit::internal_createGraphicsResourceBundlePeer()
 {
-	return new AggGraphicsResourceBundle();;
+	return new AggGraphicsResourceBundlePeer();
 }
 
 double AggGraphicsToolkit::internal_getDPI( GraphicsContext* context )
