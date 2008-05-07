@@ -380,6 +380,7 @@ void Application::terminateRunningApplication()
 	destroyed during derinved Application class's terminateRunningApplication()
 	*/
 	if ( NULL != mainWindow_ ){
+		removeComponent( mainWindow_ );
 		mainWindow_->free();
 		mainWindow_ = NULL;
 	}
