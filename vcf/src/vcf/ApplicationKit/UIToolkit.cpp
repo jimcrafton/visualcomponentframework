@@ -17,6 +17,10 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/PropertyEditorManager.h"
 #include "vcf/FoundationKit/VFFInputStream.h"
 
+#if defined(VCF_AGG)
+#include "AggUIToolkit.h"
+#endif
+
 
 using namespace VCF;
 
@@ -274,7 +278,7 @@ void UIToolkit::initToolKit()
 #if defined(VCF_WIN) && !defined(VCF_AGG)
 		UIToolkit::toolKitInstance = new Win32ToolKit();
 #elif VCF_AGG
-		UIToolkit::toolKitInstance = NULL;
+		UIToolkit::toolKitInstance = new AggUIToolkit();
 #elif VCF_X11
 		UIToolkit::toolKitInstance = new X11UIToolkit();
 #elif VCF_GTK
