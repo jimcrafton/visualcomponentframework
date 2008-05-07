@@ -50,7 +50,7 @@ AggGraphicsToolkit::AggGraphicsToolkit():
 	fontEngine_(::GetDC(GetDesktopWindow())),	
 	fontManager_(fontEngine_)
 {
-	
+	loadSystemColors();
 }
 
 AggGraphicsToolkit::~AggGraphicsToolkit()
@@ -137,7 +137,7 @@ void AggGraphicsToolkit::loadSystemColors()
 	systemColors_[SYSCOLOR_SHADOW] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_SHADOW";
 
-	sysColor = new Color( (unsigned int)0xeFF0dfe3, Color::cpsABGR );
+	sysColor = new Color( (unsigned int)0xFFF0dfe3, Color::cpsABGR );
 	systemColors_[SYSCOLOR_FACE] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_FACE";
 

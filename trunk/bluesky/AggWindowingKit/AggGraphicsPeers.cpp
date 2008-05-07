@@ -239,7 +239,8 @@ antiAliasing_(true)
 AggContextPeer::AggContextPeer( OSHandleID contextID ) :
 context_(NULL),
 fonts_(NULL),
-antiAliasing_(true)
+antiAliasing_(true),
+drawingSurface_(NULL)
 {
 	init();
     setContextID( contextID );
@@ -276,6 +277,10 @@ void AggContextPeer::releaseHandle()
 void AggContextPeer::setContext( GraphicsContext* context )
 {
 	context_ = context;
+
+	if ( NULL != context_ ) {
+		context_->setRenderingBuffer( &renderBuffer_ );
+	}
 }
 
 GraphicsContext* AggContextPeer::getContext()
@@ -285,7 +290,7 @@ GraphicsContext* AggContextPeer::getContext()
 
 OSHandleID AggContextPeer::getContextID()
 {
-	return (OSHandleID) 0;//drawingSurface_;
+	return (OSHandleID) drawingSurface_;
 }
 
 void AggContextPeer::setContextID( OSHandleID contextID )
@@ -300,6 +305,10 @@ void AggContextPeer::setContextID( OSHandleID contextID )
 	if ( NULL != drawingSurface_ ) {
 		renderBuffer_.attach( drawingSurface_->imageData, drawingSurface_->width, 
 								drawingSurface_->height, drawingSurface_->width * 4 );
+
+		if ( NULL != context_  ) {
+			context_->setRenderingBuffer( &renderBuffer_ );
+		}
 	}
 }
 
@@ -2244,6 +2253,8 @@ void AggContextPeer::drawThemeBackground( Rect* rect, BackgroundState& state )
 	if ( state.colorType_ == SYSCOLOR_WINDOW ) {
 		backColor = GraphicsToolkit::getSystemColor( SYSCOLOR_FACE );
 	}
+
+	VCF_ASSERT( NULL != backColor );
 
 	context_->setColor( backColor );
 	context_->rectangle( rect );
