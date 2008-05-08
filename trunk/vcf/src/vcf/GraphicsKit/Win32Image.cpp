@@ -830,6 +830,106 @@ void BMPLoader::saveImageToFile( const String& fileName, Image* image )
 }
 
 
+inline void endian_swap(unsigned long& x)
+{
+    x = (x>>24) | 
+        ((x<<8) & 0x00FF0000) |
+        ((x>>8) & 0x0000FF00) |
+        (x<<24);
+}
+
+#define BFT_ICON   0x4349   /* 'IC' */
+#define BFT_BITMAP 0x4d42   /* 'BM' */
+#define BFT_CURSOR 0x5450   /* 'PT' */
+
+Image* BMPLoader::loadImageFromBytes( const unsigned char* imageData, const uint64& dataLength )
+{
+	Image* result = NULL;
+
+	const unsigned char* tmp = imageData;
+
+	BITMAPFILEHEADER   bf;
+	memcpy( &bf, tmp, sizeof(bf) );
+	
+	
+	tmp += sizeof(bf);
+	
+	if (bf.bfType != BFT_BITMAP) { //do we have a RC HEADER?
+        bf.bfOffBits = 0L;
+		tmp = imageData;
+    }
+
+	BITMAPINFOHEADER bmpHeader;
+	memcpy( &bmpHeader, tmp, sizeof(bmpHeader) );
+	tmp += sizeof(bmpHeader);
+
+	switch ( bmpHeader.biSize ) {
+		case sizeof(BITMAPINFOHEADER):
+            break;
+
+		case 64: //sizeof(OS2_BMP_HEADER):
+			tmp += (64 - sizeof(BITMAPINFOHEADER));
+		break;
+
+		case sizeof(BITMAPCOREHEADER):
+		{
+            BITMAPCOREHEADER bc = *(BITMAPCOREHEADER*)&bmpHeader;
+            bmpHeader.biSize               = bc.bcSize;
+            bmpHeader.biWidth              = (DWORD)bc.bcWidth;
+            bmpHeader.biHeight             = (DWORD)bc.bcHeight;
+            bmpHeader.biPlanes             =  bc.bcPlanes;
+            bmpHeader.biBitCount           =  bc.bcBitCount;
+            bmpHeader.biCompression        = BI_RGB;
+            bmpHeader.biSizeImage          = 0;
+            bmpHeader.biXPelsPerMeter      = 0;
+            bmpHeader.biYPelsPerMeter      = 0;
+            bmpHeader.biClrUsed            = 0;
+            bmpHeader.biClrImportant       = 0;
+
+			tmp += (sizeof(BITMAPCOREHEADER)-sizeof(BITMAPINFOHEADER));
+		}
+		break;
+
+		default: {
+
+			if (bmpHeader.biSize>(sizeof(BITMAPINFOHEADER))&&
+				(bmpHeader.biSizeImage>=(unsigned long)(bmpHeader.biHeight*((((bmpHeader.biBitCount*bmpHeader.biWidth)+31)/32)*4)))&&
+				(bmpHeader.biPlanes==1)&&(bmpHeader.biClrUsed==0))
+			 {
+				if (bmpHeader.biCompression==BI_RGB) {
+					tmp += (bmpHeader.biSize - sizeof(BITMAPINFOHEADER));
+				}
+				else {
+					return NULL;
+				}
+			 }
+		}
+		break;
+	}
+
+
+
+	return result;
+}
+
+
+Image* BMPLoader::loadImageFromStream( InputStream* stream )
+{
+	Image* result = NULL;
+
+	uint64 sz = stream->getSize();
+
+	unsigned char* data = new unsigned char[sz];
+
+	stream->read( data, sz );
+
+	result = loadImageFromBytes( data, sz );
+
+	delete [] data;
+
+	return result;
+}
+
 /**
 $Id$
 */

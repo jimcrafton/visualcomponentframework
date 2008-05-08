@@ -494,27 +494,43 @@ namespace VCF {
 	class INTERNETKIT_API AsyncURL : public URL, public Waitable {
 	public:
 		AsyncURL( bool autoDelete = false):
-			URL(),autoDelete_(autoDelete), urlWait_(&urlWaitMtx_){}
+			URL(),autoDelete_(autoDelete), urlWait_(&urlWaitMtx_),inputBuf_(NULL){}
 
 		AsyncURL(const String& urlString, bool autoDelete = false ):
-			URL(urlString),autoDelete_(autoDelete),urlWait_(&urlWaitMtx_){}
+			URL(urlString),autoDelete_(autoDelete),urlWait_(&urlWaitMtx_),inputBuf_(NULL){}
+
+
+		virtual ~AsyncURL() {
+			delete inputBuf_;
+		}
 
 		DELEGATE( EventDelegate,Finished );
 
 		void get() {
-			dataBuf_.clear();
+			outputBuf_.clear();
+			delete inputBuf_;
+			inputBuf_ = NULL;
+
 			InternetToolkit::getDataFromURL( this );
 		}
 
 		String getDataAsString() {
 			String result;
-			result.append( (const char*)dataBuf_.getBuffer(), dataBuf_.getSize() );
+			result.append( (const char*)outputBuf_.getBuffer(), outputBuf_.getSize() );
 
 			return result;
 		}
 
+		InputStream* getDataStream() {
+			if ( NULL == inputBuf_ ) {
+				inputBuf_ = new BasicInputStream(outputBuf_.getBuffer(), outputBuf_.getSize());
+			}
+			return inputBuf_;
+		}
+
+
 		OutputStream* getOutputStream() {
-			return &dataBuf_;
+			return &outputBuf_;
 		}
 
 
@@ -541,7 +557,8 @@ namespace VCF {
 		}
 	protected:
 		bool autoDelete_;
-		BasicOutputStream dataBuf_;
+		BasicOutputStream outputBuf_;
+		InputStream* inputBuf_;
 		Condition urlWait_;
 		Mutex urlWaitMtx_;
 	};

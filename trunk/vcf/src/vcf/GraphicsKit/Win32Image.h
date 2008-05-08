@@ -322,6 +322,9 @@ public:
 
 	virtual Image* loadImageFromFile( const String& fileName );
 
+	virtual Image* loadImageFromBytes( const unsigned char* imageData, const uint64& dataLength );
+
+	virtual Image* loadImageFromStream( InputStream* stream );
 
 	virtual void saveImageToFile( const String& fileName, Image* image );
 

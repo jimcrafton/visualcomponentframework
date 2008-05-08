@@ -533,6 +533,149 @@ void JPEGLoader::saveImageToFile( const String& fileName, Image* image )
 }
 
 
+Image* JPEGLoader::loadImageFromBytes( const unsigned char* imageData, const uint64& dataLength )
+{
+	Image* result = NULL;
+
+	//WARNING!!!
+	//This is really wasteful as we duplicate the data
+	//here. Probably need to adjust this so we don't need 
+	//to do that
+	BasicInputStream bis(imageData,dataLength);
+
+	result = loadImageFromStream( &bis );
+
+	return result;
+}
+
+
+Image* JPEGLoader::loadImageFromStream( InputStream* stream )
+{
+	Image* result = NULL;
+
+	JPEGLoaderInput* src;
+
+	struct jpeg_decompress_struct cinfo;
+	struct jpeg_error_mgr jerr;
+
+	// Step 1: allocate and initialize JPEG decompression object
+
+	cinfo.err = jpeg_std_error(&jerr);
+
+	jerr.error_exit     = jpeg_error_exit;
+	jerr.output_message = jpeg_output_message;
+	
+	jpeg_create_decompress(&cinfo);
+
+
+	// allocate memory for the buffer. is released automatically in the end
+
+	if (cinfo.src == NULL) {
+		cinfo.src = (struct jpeg_source_mgr *) (*cinfo.mem->alloc_small)
+			((j_common_ptr) &cinfo, JPOOL_PERMANENT, SIZEOF(JPEGLoaderInput));
+
+		src = (JPEGLoaderInput*) cinfo.src;
+
+		src->buffer = (JOCTET *) (*cinfo.mem->alloc_small)
+			((j_common_ptr) &cinfo, JPOOL_PERMANENT, INPUT_BUF_SIZE * SIZEOF(JOCTET));
+	}
+
+	// initialize the jpeg pointer struct with pointers to functions
+	
+	src = (JPEGLoaderInput*) cinfo.src;
+	src->pub.init_source = init_source;
+	src->pub.fill_input_buffer = fill_input_buffer;
+	src->pub.skip_input_data = skip_input_data;
+	src->pub.resync_to_restart = jpeg_resync_to_restart; /* use default method */
+	src->pub.term_source = term_source;
+	
+	src->inStream = stream;
+
+	src->pub.bytes_in_buffer = 0; /* forces fill_input_buffer on first read */
+	src->pub.next_input_byte = NULL; /* until buffer loaded */
+
+
+	//now we're ready to start reading...
+
+	// Step 3: read handle parameters with jpeg_read_header()
+
+	jpeg_read_header(&cinfo, TRUE);
+	
+	
+	/*
+	// Step 4a: set parameters for decompression
+	cinfo.dct_method          = JDCT_IFAST;
+	cinfo.do_fancy_upsampling = FALSE;
+	}
+	*/
+
+	if (cinfo.num_components == 1) {
+		//gray scale image - not quite yet...	
+	}
+	else {
+
+	}
+
+	// Step 5: start decompressor
+
+	jpeg_start_decompress(&cinfo);
+
+	// Step 6: while (scan lines remain to be read) jpeg_read_scanlines(...);
+	
+	result = GraphicsToolkit::createImage( cinfo.output_width, cinfo.output_height );
+
+	unsigned char* tmpBuffer = new unsigned char[ cinfo.output_width * cinfo.out_color_components ];
+	unsigned char* tmpBufPtr = tmpBuffer;
+
+	ColorPixels pixels(result); 
+	SysPixelType* pix = pixels;//result->getImageBits()->pixels_;
+		 
+	while (cinfo.output_scanline < cinfo.output_height) {
+		JSAMPROW b = (JSAMPROW) tmpBufPtr;
+			//freeimage.get_scanline_proc(dib, cinfo.output_height - cinfo.output_scanline - 1);
+		
+		jpeg_read_scanlines(&cinfo, &b, 1);
+
+		for ( unsigned int x=0;x<cinfo.output_width;x++ ) {
+			pix[x].r = pix[x].g = pix[x].b = tmpBufPtr[(x * cinfo.out_color_components)];
+			for (int channel=0;channel<cinfo.out_color_components;channel++ ) {				
+				switch ( channel ) {
+					case 0 : {
+						pix[x].b = tmpBufPtr[(x * cinfo.out_color_components) + channel];
+					}
+					break;
+
+					case 1 : {
+						pix[x].g = tmpBufPtr[(x * cinfo.out_color_components) + channel];
+					}
+					break;
+
+					case 2 : {
+						pix[x].r = tmpBufPtr[(x * cinfo.out_color_components) + channel];
+					}
+					break;
+				}
+			}
+		}
+		
+		pix += cinfo.output_width;
+	}
+	
+	delete [] tmpBuffer;
+
+	// Step 7: finish decompression 
+	
+	jpeg_finish_decompress(&cinfo);
+	
+	// Step 8: release JPEG decompression object
+	
+	jpeg_destroy_decompress(&cinfo);
+
+
+	return result;
+}
+
+
 /**
 $Id$
 */

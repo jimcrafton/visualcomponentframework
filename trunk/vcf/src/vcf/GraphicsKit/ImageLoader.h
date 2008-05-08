@@ -37,6 +37,10 @@ public:
 	*/
 	virtual Image* loadImageFromFile( const String& fileName )=0;
 
+	virtual Image* loadImageFromBytes( const unsigned char* imageData, const uint64& dataLength )=0;
+
+	virtual Image* loadImageFromStream( InputStream* stream )=0;
+
 	/**
 	*does this ImageLoader support saving the image
 	*@return bool returns true if the ImageLoader supports
