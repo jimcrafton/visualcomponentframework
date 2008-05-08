@@ -92,6 +92,17 @@ Image* GraphicsToolkit::createImage( const String& fileName )
 	return GraphicsToolkit::graphicsToolkitInstance->internal_createImage( fileName );
 }
 
+Image* GraphicsToolkit::createImage( const MIMEType& type, const unsigned char* imageData, const uint64& dataLength )
+{
+	return GraphicsToolkit::graphicsToolkitInstance->internal_createImage( type, imageData, dataLength );
+}
+
+Image* GraphicsToolkit::createImage( const MIMEType& type, InputStream* stream )
+{
+	return GraphicsToolkit::graphicsToolkitInstance->internal_createImage( type, stream );
+}
+
+
 PrintSessionPeer* GraphicsToolkit::createPrintSessionPeer()
 {
 	return GraphicsToolkit::graphicsToolkitInstance->internal_createPrintSessionPeer();
@@ -250,6 +261,33 @@ Image* GraphicsToolkit::internal_createImage( const String& fileName )
 
 	return result;
 }
+
+
+Image* GraphicsToolkit::internal_createImage( const MIMEType& type, const unsigned char* imageData, const uint64& dataLength )
+{
+	Image* result = NULL;
+
+	ImageLoader* imageLoader = getImageLoader( type );
+	if ( NULL != imageLoader ) {
+		result = imageLoader->loadImageFromBytes( imageData, dataLength );
+	}
+
+	return result;
+}
+
+Image* GraphicsToolkit::internal_createImage( const MIMEType& type, InputStream* stream )
+{
+	Image* result = NULL;
+
+	ImageLoader* imageLoader = getImageLoader( type );
+	if ( NULL != imageLoader ) {
+		result = imageLoader->loadImageFromStream( stream );
+	}
+
+	return result;
+}
+
+
 
 void GraphicsToolkit::internal_saveImage( const String& fileName, Image* image )
 {

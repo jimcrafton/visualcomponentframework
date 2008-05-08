@@ -139,6 +139,10 @@ public:
 	*/
 	static Image* createImage( const String& fileName );
 
+	static Image* createImage( const MIMEType& type, const unsigned char* imageData, const uint64& dataLength );
+
+	static Image* createImage( const MIMEType& type, InputStream* stream );
+
 	static void saveImage( const String& fileName, Image* image );
 
 	static void registerImageLoader( const String& name, ImageLoader* imageLoader );
@@ -220,6 +224,10 @@ protected:
 	*an ImageLoader instance. The ImageLoader does the work of actually decoding the image
 	*/
 	virtual Image* internal_createImage( const String& fileName );
+
+	virtual Image* internal_createImage( const MIMEType& type, const unsigned char* imageData, const uint64& dataLength );
+
+	virtual Image* internal_createImage( const MIMEType& type, InputStream* stream );
 
 	virtual void internal_saveImage( const String& fileName, Image* image );
 

@@ -52,6 +52,8 @@ public:
 	virtual bool isEOS();
 
 	void init();
+
+	void clear();
 private:
 	CharMemStream<> inStream_;
 	InputStream* inputStream_;

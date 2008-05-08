@@ -123,7 +123,10 @@ bool BasicInputStream::isEOS()
 	return inStream_.getSeekPos() == (totalStreamSize_-1);
 }
 
-
+void BasicInputStream::clear()
+{
+	inStream_.clear();
+}
 /**
 $Id$
 */

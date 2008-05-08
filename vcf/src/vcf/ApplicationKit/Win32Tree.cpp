@@ -1133,9 +1133,11 @@ Do we need these? What advantage does processing these events have for us???
 LRESULT Win32Tree::treeCustomDraw( NMTVCUSTOMDRAW* drawInfo )
 {
 	LRESULT result = CDRF_DODEFAULT;
-	if ( NULL == drawInfo )	{
+	if ( NULL == drawInfo || currentCtx_ == NULL )	{
 		return result;
 	}
+
+	//VCF_ASSERT( currentCtx_ != NULL );
 
 	switch ( drawInfo->nmcd.dwDrawStage ) {					
 
