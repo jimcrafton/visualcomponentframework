@@ -29,14 +29,11 @@ _class_rtti_end_
 
 class RegExGUIApplication : public Application {
 public:
-	MultilineTextControl* data;
-	TextControl* edt1;
-	CommandButton* nextBtn;
-	CommandButton* prevBtn;
+	
 
 
-	RegExGUIApplication( int argc, char** argv ) : Application(argc, argv),
-		host("", search, ONIG_SYNTAX_RUBY), lastExpression("") {
+	RegExGUIApplication( int argc, char** argv ) : Application(argc, argv),		
+		host("", "", ONIG_SYNTAX_RUBY), lastExpression("") {
 
 		addCallback( new ClassProcedure1<Event*,RegExGUIApplication>
 			(this, &RegExGUIApplication::findNext), "RegExGUIApplication::findNext" );
@@ -68,17 +65,19 @@ public:
 		prevBtn = reinterpret_cast<CommandButton*>(findComponent("prevbtn", true));
 
 		supplyText();
-		
+
 		return result;
 	}
 
 	void supplyText() {
 		ResourceBundle* bundle = System::getResourceBundle();
 		Resource* res = bundle->getResource("Search.txt");
-		search = String((char*)(res->getData()), res->getDataSize());
-//		search = "Nothing to see here - move along";		
-		data->setText(search);
-		host.setRangeAsString(search); 
+		searchStr = (const char*)(res->getData());//, res->getDataSize());
+//		searchStr = "Nothing to see here - move along";		
+		data->setText(searchStr);	
+
+		host.changeRangeBeginning( (unsigned char*) searchStr.c_str() );
+		host.changeRangeEnd( (unsigned char*) searchStr.c_str() + searchStr.length() );
 	}
 
 	void findNext(Event* e) {
@@ -168,9 +167,13 @@ public:
 private:
 	Regex::Ascii host;
 	Regex::Iterator it;
-	String search;
+	AnsiString searchStr;
 	String lastExpression;
 
+	MultilineTextControl* data;
+	TextControl* edt1;
+	CommandButton* nextBtn;
+	CommandButton* prevBtn;
 };
 
 

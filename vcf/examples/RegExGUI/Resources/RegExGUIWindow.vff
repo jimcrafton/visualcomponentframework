@@ -21,6 +21,7 @@ object RegExGUIWindow  : VCF::Window
 		left = 75pt //110px
 		width = 90pt //120px
 		height = TextHeight
+		anchor = [AnchorRight,AnchorLeft]
 	delegates
 		KeyDown = [RegExGUIApplication@RegExGUIApplication::onKeyDown]
 	end
@@ -32,6 +33,7 @@ object RegExGUIWindow  : VCF::Window
 		width = 50pt
 		height = TextHeight
 		caption = 'Find Next'
+		anchor = [AnchorRight]
 	delegates
 		ButtonClicked = [RegExGUIApplication@RegExGUIApplication::findNext]
 	end
@@ -43,6 +45,7 @@ object RegExGUIWindow  : VCF::Window
 		width = 60pt
 		height = TextHeight
 		caption = 'Find Previous'
+		anchor = [AnchorRight]
 	delegates
 		ButtonClicked = [RegExGUIApplication@RegExGUIApplication::findPrev]
 	end
