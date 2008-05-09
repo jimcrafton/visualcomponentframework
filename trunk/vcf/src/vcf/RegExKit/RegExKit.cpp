@@ -1,13 +1,55 @@
 //#include "oniguruma.h"
 #include "vcf/RegExKit/RegExKit.h"
 
+OnigSyntaxType* onigTranslateSyntax(const VCF::RegExKit::Syntax& syntax) {
+	OnigSyntaxType* returned;
+	switch (syntax) {
+		case VCF::RegExKit::sDefault:
+			returned = onigTranslateSyntax(VCF::RegExKit::getDefaultSyntax());
+			break;
+		case VCF::RegExKit::sASIS:
+			returned = ONIG_SYNTAX_ASIS;
+			break;
+		case VCF::RegExKit::sBasicPosix:
+			returned = ONIG_SYNTAX_POSIX_BASIC;
+			break;
+		case VCF::RegExKit::sExtendedPosix:
+			returned = ONIG_SYNTAX_POSIX_EXTENDED;
+			break;
+		case VCF::RegExKit::sEmacs:
+			returned = ONIG_SYNTAX_EMACS;
+			break;
+		case VCF::RegExKit::sGrep:
+			returned = ONIG_SYNTAX_GREP;
+			break;
+		case VCF::RegExKit::sGnu:
+			returned = ONIG_SYNTAX_GNU_REGEX;
+			break;
+		case VCF::RegExKit::sJava:
+			returned = ONIG_SYNTAX_JAVA;
+			break;
+		case VCF::RegExKit::sPerl:
+			returned = ONIG_SYNTAX_PERL;
+			break;
+		case VCF::RegExKit::sPerlNG:
+			returned = ONIG_SYNTAX_PERL_NG;
+			break;
+		case VCF::RegExKit::sRuby:
+			returned = ONIG_SYNTAX_RUBY;
+			break;
+	}
+	return returned;
+}
+
 namespace VCF {
 
 //RegExKit
 
+	RegExKit::Syntax RegExKit::default_ = RegExKit::sRuby; // this gets replaced when RegExKit is initialised
+
 	void RegExKit::init( int argc, char** argv )
 	{
-
+//		setDefaultSyntax(sRuby); (ACH) Why is this not happening?
 	}
 
 
@@ -16,13 +58,30 @@ namespace VCF {
 		onig_end();
 	}
 
+	RegExKit::Syntax RegExKit::setDefaultSyntax(const RegExKit::Syntax& newDefault) {
+		if (newDefault != sDefault) {
+			Syntax old = default_;
+			default_ = newDefault;
 
+			return old;
+		} else {
+			return default_;
+		}
+	}
+
+	RegExKit::Syntax RegExKit::getDefaultSyntax() {
+		return default_;
+	}
 
 namespace Regex { //Borland compiler requires explicitly namespace declaration
 // Regex:: Match
 
 	ptrdiff_t Regex::Match::getPosAsOffset() const {
 		return pos_-(env_->first_);
+	}
+
+	String::size_type Regex::Match::getPosAsCount() const {
+		return env_->countCharacters(env_->first_, pos_);
 	}
 	
 // Regex::Iterator
@@ -74,14 +133,16 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
 
 // Regex::Host
 
-	Regex::Host::Host(const String& exp, unsigned char* f, unsigned char* l, OnigSyntaxType* syntax):
-        expression_(exp), first_(f), last_(l), syntax_(syntax), reg_(NULL), enumerator_(Iterator(&pastTheEnd_)) {
-		pastTheEnd_=Match(NULL, "", this);
+	Regex::Host::Host(const String& exp, const unsigned char* const f, 
+		const unsigned char* const l, const RegExKit::Syntax& syntax): 
+		expression_(exp), first_(f), last_(l), syntax_(onigTranslateSyntax(syntax)), 
+		reg_(NULL), enumerator_(Iterator(&pastTheEnd_)) {
+			pastTheEnd_ = Match(NULL, "", this);
 	}
 
-	Regex::Host::Host(const String &exp, OnigSyntaxType *syntax): expression_(exp),
-		syntax_(syntax), reg_(NULL), enumerator_(Iterator(&pastTheEnd_)) {
-		pastTheEnd_=Match(NULL, "", this);
+	Regex::Host::Host(const String &exp, const RegExKit::Syntax& syntax): expression_(exp),
+		syntax_(onigTranslateSyntax(syntax)), reg_(NULL), enumerator_(Iterator(&pastTheEnd_)) {
+		pastTheEnd_ = Match(NULL, "", this);
 	}
 
 	Regex::Host::~Host() {
@@ -89,13 +150,16 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
 	}
 
 	void Regex::Host::compile() {
+		if (reg_) {
+			onig_free(reg_);
+		}
 		if (this->init()!=ONIG_NORMAL) {
 			// Need some sort of error handling code here, but for now...
 			StringUtils::trace("Some sort of Onig-based error in compile()");
 		}
 	}
 
-    Regex::Iterator Regex::Host::find(unsigned char* pos) const {
+    Regex::Iterator Regex::Host::find(const unsigned char* const pos) const {
 		OnigRegion* region = onig_region_new();
 		Match temp;
 		InternalIterator it;
@@ -104,7 +168,7 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
         }
         ptrdiff_t status = onig_search(reg_, first_, last_, pos, last_, region, ONIG_OPTION_NONE);
         if (status>=0) {
-			temp=Match(first_+status, String((char*)(first_+status), (*region->end)-status), this);
+			temp = createMatch(region, status);
 			onig_region_free(region, 1);
 			if (pos==first_) { // No possible results before this one
 				temp.linkedPrev_=true;
@@ -148,7 +212,7 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
         }
     }
 
-    Regex::Iterator Regex::Host::rfind(unsigned char* pos) const {
+    Regex::Iterator Regex::Host::rfind(const unsigned char* const pos) const {
 		OnigRegion* region=onig_region_new();
 		Match temp;
 		InternalIterator it;
@@ -157,7 +221,7 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
         }
         ptrdiff_t status = onig_search(reg_, first_, last_, pos, first_, region, ONIG_OPTION_NONE);
         if (status>=0) {
-			temp=Match(first_+status, String((char*)(first_+status), (*region->end)-status), this);
+			temp = createMatch(region, status);
 			onig_region_free(region, 1);
 			if (pos==last_) {
 				temp.linkedNext_=true;
@@ -211,8 +275,8 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
 		}
 	}
 
-	unsigned char* Regex::Host::changeRangeBeginning(unsigned char* newBeginning) {
-		unsigned char* old = first_;
+	const unsigned char* Regex::Host::changeRangeBeginning(const unsigned char* const newBeginning) {
+		const unsigned char* old = first_;
 		first_ = newBeginning;
 		InternalIterator it = cache_.begin();
 		if (old > first_) {
@@ -232,8 +296,8 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
 		return old;
 	}
 
-	unsigned char* Regex::Host::changeRangeEnd(unsigned char* newEnd) {
-		unsigned char* old = last_;
+	const unsigned char* Regex::Host::changeRangeEnd(const unsigned char* const newEnd) {
+		const unsigned char* old = last_;
 		last_ = newEnd;
 		InternalIterator it = cache_.end();
 		if (old < last_) {
@@ -310,39 +374,74 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
 
 // Regex::Ascii
 
-	Regex::Ascii::Ascii(const String &exp, unsigned char *first, unsigned char *last, OnigSyntaxType *syntax):
-			Host(exp, first, last, syntax) {}
+	Regex::Ascii::Ascii(const String &exp, const unsigned char* const first, 
+		const unsigned char* const last, const RegExKit::Syntax& syntax): 
+		Host(exp, first, last, syntax) {}
 
-	Regex::Ascii::Ascii(const String &exp, const String &source, OnigSyntaxType *syntax): Host(exp, syntax) {
-		first_=(unsigned char*)source.ansi_c_str();
-		last_=(unsigned char*)(source.ansi_c_str()+source.length());
+	Regex::Ascii::Ascii(const String &exp, const String &source, 
+		const RegExKit::Syntax& syntax): Host(exp, syntax) {
+			setRangeAsString(source);
+	}
+
+	void Regex::Ascii::setRangeAsString(const String& newExpression) {
+		first_=(const unsigned char*)newExpression.ansi_c_str();
+		last_=(const unsigned char*)(newExpression.ansi_c_str()+newExpression.length());
 	}
 
 	int Regex::Ascii::init() {
-        return onig_new(&reg_, (unsigned char*)expression_.ansi_c_str(), (unsigned char*)expression_.ansi_c_str() + expression_.length(),
+        return onig_new(&reg_, (const unsigned char*)expression_.ansi_c_str(), (const unsigned char*)expression_.ansi_c_str() + expression_.length(),
             ONIG_OPTION_DEFAULT, ONIG_ENCODING_ASCII, syntax_, &error_);
+	}
+
+	Regex::Match Regex::Ascii::createMatch(const OnigRegion* region, const ptrdiff_t pos) const {
+			return Match(first_+pos, String((char*)(first_+pos), (*region->end)-pos), this);
 	}
 
 // Regex::UTF_16LE
 
-	Regex::UTF_16LE::UTF_16LE(const String &exp, unsigned char *first, unsigned char *last, OnigSyntaxType *syntax):
-		Host(exp, first, last, syntax) {}
+	Regex::UTF_16LE::UTF_16LE(const String &exp, const unsigned char* const first, const unsigned char* const last, 
+		const RegExKit::Syntax& syntax): Host(exp, first, last, syntax) {}
 
-	Regex::UTF_16LE::UTF_16LE(const String &exp, const String &source, OnigSyntaxType *syntax): Host(exp, syntax) {
-        first_=(unsigned char*)(source.data());        
-		last_=first_+(source.size_in_bytes());
+	Regex::UTF_16LE::UTF_16LE(const String &exp, const String &source, 
+		const RegExKit::Syntax& syntax): Host(exp, syntax) {
+			setRangeAsString(source);
+	}
+
+	void Regex::UTF_16LE::setRangeAsString(const String& newExpression) {
+        first_=(const unsigned char*)(newExpression.data());        
+		last_=first_+(newExpression.size_in_bytes());
 	}
 
 	int Regex::UTF_16LE::init() {
-        return onig_new(&reg_, (unsigned char*)expression_.c_str(), (unsigned char*)expression_.c_str() + expression_.size_in_bytes(),
+        return onig_new(&reg_, (const unsigned char*)expression_.c_str(), 
+			(const unsigned char*)expression_.c_str() + expression_.size_in_bytes(),
             ONIG_OPTION_DEFAULT, ONIG_ENCODING_UTF16_LE, syntax_, &error_);
 	}
 
-	unsigned int Regex::UTF_16LE::characterWidth(const ptrdiff_t &pos) const {
-		return isSurrogate(*reinterpret_cast<VCFChar*>(first_+pos)) ? 4 : 2;
+	unsigned int Regex::UTF_16LE::characterWidth(const unsigned char* const location) const {
+		return isSurrogate(*reinterpret_cast<const VCFChar* const>(location)) ? 4 : 2;
 	}
 
-	bool Regex::UTF_16LE::isSurrogate(VCFChar octet) const {
+	Regex::Match Regex::UTF_16LE::createMatch(const OnigRegion* region, const ptrdiff_t pos) const {
+		return Match(first_+pos, String((VCFChar*)(first_+pos), 
+			countCharacters(first_+pos, first_+(*region->end))), this);
+	}
+
+	String::size_type Regex::UTF_16LE::countCharacters(const unsigned char* const start,
+		const unsigned char* const end) const {
+			String::size_type returned=0;
+			unsigned int temp;
+			const unsigned char* current = start;
+			while (current < end) {
+				temp = characterWidth(current);
+				++returned;
+				current += temp;
+				VCF_ASSERT(current <= end);
+			}
+			return returned;
+	}
+
+	bool Regex::UTF_16LE::isSurrogate(const VCFChar octet) const {
 		return (0xD800 <= octet && octet <= 0xDBFF);
 	}
  } //namespace Regex

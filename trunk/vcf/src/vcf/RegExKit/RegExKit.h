@@ -90,6 +90,7 @@ Handle the extension based on the compiler
 #ifdef USE_REGEXKIT_DLL
 #pragma message( "REGEXKIT_DLL" )
 //#		define ONIG_EXTERN extern __declspec(dllimport)
+//#		define ONIG_EXTERN
 # 	ifndef REGEXKIT_DLL
 #		define REGEXKIT_DLL
 # 	endif
@@ -98,6 +99,7 @@ Handle the extension based on the compiler
 # 	endif
 #elif defined (USE_REGEXKIT_LIB)
 //#		define ONIG_EXTERN extern
+//#		define ONIG_EXTERN
 # 	ifndef USE_FOUNDATIONKIT_LIB
 #		define USE_FOUNDATIONKIT_LIB
 # 	endif
@@ -139,6 +141,39 @@ namespace VCF {
 		static void init( int argc, char** argv );
 
 		static void terminate();
+
+		enum Syntax {
+			sDefault = 0,
+
+			sASIS,
+			sBasicPosix,
+			sExtendedPosix,
+			sEmacs,
+			sGrep,
+			sGnu,
+			sJava,
+			sPerl,
+			sPerlNG,
+			sRuby
+		};
+
+		/**
+		Sets the syntax selected automatically by the RegExKit if host objects are
+		constructed with the sDefault syntax.  The initial default is sRuby.
+		@param Syntax the regex syntax to make default, passing sDefault as this
+		argument will result in this function doing nothing
+		@return Syntax the previous default syntax
+		*/
+		static Syntax setDefaultSyntax( const Syntax& syntax );
+
+		/**
+		Determines which syntax the RegEx uses by default.  This can be changed by 
+		setDefaultSyntax.
+		@return Syntax the current default syntax
+		*/
+		static Syntax getDefaultSyntax();
+	private:
+		static Syntax default_;
 	};
 
 
@@ -162,7 +197,7 @@ namespace Regex{
 		friend class Host;
 		friend class Iterator;
         public:
-            Match(unsigned char* pos=NULL, String text="", const Host* const env=NULL): pos_(pos),
+            Match(const unsigned char* pos=NULL, const String& text="", const Host* const env=NULL): pos_(pos),
 				matchText_(text), env_(env), linkedNext_(false), linkedPrev_(false){}
             Match(const Match& rhs): pos_(rhs.pos_), matchText_(rhs.matchText_), env_(rhs.env_),
 				linkedNext_(rhs.linkedNext_), linkedPrev_(rhs.linkedPrev_){}
@@ -198,7 +233,7 @@ namespace Regex{
 			Gets a pointer to the beginning of the match
 			@return unsigned char* First character of the match.
 			*/
-            unsigned char* getPos() const {
+            const unsigned char* getPos() const {
                 return pos_;
             }			
 
@@ -210,6 +245,13 @@ namespace Regex{
             ptrdiff_t getPosAsOffset() const;
 
 			/**
+			Counts the number of characters between the start reference and
+			the match position.
+			@return String::size_type Result of count
+			*/
+			String::size_type getPosAsCount() const;
+
+			/**
 			Returns the text that matched the search expression.
 			@return String Matching text.
 			*/
@@ -218,7 +260,7 @@ namespace Regex{
             }
 
         private:
-            unsigned char* pos_;
+            const unsigned char* pos_;
             String matchText_;
             const Host* env_;
 			mutable bool linkedNext_;
@@ -335,7 +377,7 @@ namespace Regex{
 			the search will start at the beginning of the range.
 			@return Iterator An iterator pointing to the match result.
 			*/
-			Iterator find(unsigned char* pos) const;
+			Iterator find(const unsigned char* const pos) const;
 			
 			/**
 			Finds the first match result at or before the specified position.
@@ -344,7 +386,7 @@ namespace Regex{
 			the search will start at the end of the range.
 			@return Iterator An iterator pointing to the match result.
 			*/
-			Iterator rfind(unsigned char* pos) const;
+			Iterator rfind(const unsigned char* const pos) const;
 
 			/**
 			Finds the first match result at or after the specified position.
@@ -353,7 +395,7 @@ namespace Regex{
 			the search will start at the beginning of the range.
 			@return Iterator An iterator pointing to the match result.
 			*/
-			Iterator find(ptrdiff_t pos) const {
+			Iterator find(const ptrdiff_t pos) const {
 				return find(first_+pos);
 			}
 			
@@ -364,7 +406,7 @@ namespace Regex{
 			the search will start at the end of the range.
 			@return Iterator An iterator pointing to the match result.
 			*/
-			Iterator rfind(ptrdiff_t pos) const {
+			Iterator rfind(const ptrdiff_t pos) const {
 				return rfind(first_+pos);
 			}
 
@@ -413,7 +455,7 @@ namespace Regex{
 			@param unsigned char* Pointer to the new range limit.
 			@return unsigned char* Pointer to the previous range limit.
 			*/
-			unsigned char* changeRangeBeginning(unsigned char* newBeginning);
+			const unsigned char* changeRangeBeginning(const unsigned char* const newBeginning);
 			
 			/**
 			Moves the pointer that marks the end of the search range.
@@ -422,7 +464,7 @@ namespace Regex{
 			@param unsigned char* Pointer to the new range limit.
 			@return unsigned char* Pointer to the previous range limit.
 			*/
-			unsigned char* changeRangeEnd(unsigned char* newEnd);
+			const unsigned char* changeRangeEnd(const unsigned char* const newEnd);
 
 			/**
 			Changes the regular expression for the search.  Note that this
@@ -434,6 +476,15 @@ namespace Regex{
 			String changeSearchExpression(const String& newExpression);
 
 			/**
+			Sets the search range pointers to the beginning and end of a 
+			VCF::String	object.  This is implemented by classes derived 
+			from Host as the result depends on the character width and
+			representation.
+			@param String Data to be searched
+			*/
+			virtual void setRangeAsString(const String& newExpression)=0;
+
+			/**
 			Deletes information about previously found matches.  Use this
 			if the contents of the search range have changed since the
 			last search or the last time the cache was cleared.  Note
@@ -441,6 +492,8 @@ namespace Regex{
 			*/
 			void clearCache() {
 				cache_.clear();
+				pastTheEnd_.linkedPrev_ = false;
+				pastTheEnd_.linkedNext_ = false;
 				reset();
 			}
 
@@ -448,12 +501,21 @@ namespace Regex{
 
 			typedef std::set<Match> MatchContainerT;
 
-            Host(const String& expression, unsigned char* first, unsigned char* last, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
-			Host(const String& expression, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
+			Host(const String& expression, const unsigned char* first, 
+				const unsigned char* last, const RegExKit::Syntax& syntax = 
+				RegExKit::sDefault);
+			Host(const String& expression, 
+				const RegExKit::Syntax& syntax = RegExKit::sDefault);
 			virtual int init()=0;
 			Iterator next(Iterator current) const;
 			Iterator prev(Iterator current) const;
-			virtual unsigned int characterWidth(const ptrdiff_t& pos) const=0;
+			virtual unsigned int characterWidth(const unsigned char* const location) const=0;
+			unsigned int characterWidth(const ptrdiff_t& pos) const {
+				return characterWidth(first_ + pos);
+			}
+			virtual Match createMatch(const OnigRegion* region, const ptrdiff_t pos) const=0;
+			virtual String::size_type countCharacters(const unsigned char* const start, 
+				const unsigned char* const end) const=0;
 
 			mutable MatchContainerT cache_;
 			typedef MatchContainerT::iterator InternalIterator;
@@ -461,8 +523,8 @@ namespace Regex{
 			Match pastTheEnd_;
 
             String expression_;
-            unsigned char* first_;
-            unsigned char* last_;
+            const unsigned char* first_;
+            const unsigned char* last_;
 			regex_t* reg_;
 			OnigSyntaxType* syntax_;
             OnigErrorInfo error_;
@@ -487,7 +549,8 @@ namespace Regex{
 			@param OnigSyntaxType The regex syntax used to interpret the
 			expression.
 			*/
-            Ascii(const String& expression, unsigned char* first, unsigned char* last, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
+            Ascii(const String& expression, const unsigned char* const first, const unsigned char* const last, 
+				const RegExKit::Syntax& syntax = RegExKit::sDefault);
 
 			/**
 			Alternate constructor using a String to denote the search range.
@@ -498,11 +561,19 @@ namespace Regex{
 			@param OnigSyntaxType The regex syntax used to interpret the
 			expression.
 			*/
-            Ascii(const String& expression, const String& source, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
+            Ascii(const String& expression, const String& source, 
+				const RegExKit::Syntax& syntax = RegExKit::sDefault);
+
+			void setRangeAsString(const String& newExpression);
 		protected:
 			virtual int init();
-			virtual unsigned int characterWidth(const ptrdiff_t& pos) const {
+			virtual unsigned int characterWidth(const unsigned char* const location) const {
 				return 1;
+			}
+			virtual Match createMatch(const OnigRegion* region, const ptrdiff_t pos) const;
+			virtual String::size_type countCharacters(const unsigned char* const start, 
+				const unsigned char* const end) const {
+					return end-start;
 			}
 	};
 
@@ -524,7 +595,9 @@ namespace Regex{
 			@param OnigSyntaxType The regex syntax used to interpret the
 			expression.
 			*/
-            UTF_16LE(const String& expression, unsigned char* first, unsigned char* last, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
+            UTF_16LE(const String& expression, const unsigned char* const first, 
+				const unsigned char* const last, const RegExKit::Syntax& syntax = 
+				RegExKit::sDefault);
 			
 			/**
 			Alternate constructor using a String to denote the search range.
@@ -535,10 +608,16 @@ namespace Regex{
 			@param OnigSyntaxType The regex syntax used to interpret the
 			expression.
 			*/
-			UTF_16LE(const String& expression, const String& source, OnigSyntaxType* syntax=ONIG_SYNTAX_DEFAULT);
+			UTF_16LE(const String& expression, const String& source, 
+				const RegExKit::Syntax& syntax = RegExKit::sDefault);
+
+			void setRangeAsString(const String& newExpression);
 		protected:
 			virtual int init();
-			virtual unsigned int characterWidth(const ptrdiff_t& pos) const;
+			virtual unsigned int characterWidth(const unsigned char* const location) const;
+			virtual Match createMatch(const OnigRegion* region, const ptrdiff_t pos) const;
+			virtual String::size_type countCharacters(const unsigned char* const start, 
+				const unsigned char* const end) const;
 			bool Regex::UTF_16LE::isSurrogate(VCFChar octet) const;
 	};
 }; //end of namespace Regex
