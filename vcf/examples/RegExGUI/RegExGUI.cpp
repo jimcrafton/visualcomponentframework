@@ -32,8 +32,8 @@ public:
 	
 
 
-	RegExGUIApplication( int argc, char** argv ) : Application(argc, argv),		
-		host("", "", ONIG_SYNTAX_RUBY), lastExpression("") {
+	RegExGUIApplication( int argc, char** argv ) : Application(argc, argv),
+		host("", ""), lastExpression("") {
 
 		addCallback( new ClassProcedure1<Event*,RegExGUIApplication>
 			(this, &RegExGUIApplication::findNext), "RegExGUIApplication::findNext" );
@@ -72,12 +72,9 @@ public:
 	void supplyText() {
 		ResourceBundle* bundle = System::getResourceBundle();
 		Resource* res = bundle->getResource("Search.txt");
-		searchStr = (const char*)(res->getData());//, res->getDataSize());
-//		searchStr = "Nothing to see here - move along";		
-		data->setText(searchStr);	
-
-		host.changeRangeBeginning( (unsigned char*) searchStr.c_str() );
-		host.changeRangeEnd( (unsigned char*) searchStr.c_str() + searchStr.length() );
+		searchStr = String((char*)(res->getData()), res->getDataSize());
+		data->setText(searchStr);
+		host.setRangeAsString(searchStr); 
 	}
 
 	void findNext(Event* e) {
@@ -94,6 +91,7 @@ public:
 		if (it != host.end()) {
 			showMatch(it);
 		} else {
+			--it;
 			endSearch();
 		}
 	}
@@ -101,16 +99,19 @@ public:
 	void findPrev(Event* e) {
 		String text = edt1->getText();
 		if (text == lastExpression) {
-			if (it != host.rend().base()) {
+			if (it != host.begin()) {
 				--it;
+			} else {
+				endSearch(true);
+				return;
 			}
 		} else {
 			host.changeSearchExpression(text);
 			lastExpression = text;
-			it = host.rbegin().base();
+			it = --host.end();
 		}
-		if (it != host.rend().base()) {
-			showMatch(Regex::ReverseIterator(it));
+		if (it != host.end()) {
+			showMatch(it);
 		} else {
 			endSearch(true);
 		}
@@ -128,28 +129,20 @@ public:
 		edt1->repaint();
 		lastExpression = "";
 		host.changeSearchExpression("");
+		data->setSelectionMark(0,0);
 		
 		nextBtn->setEnabled(true);		
 		prevBtn->setEnabled(true);
 	}
 
-	void showMatch(const Regex::Iterator& it) {		
-		data->setSelectionMark(it->getPosAsOffset(), it->getText().length());
-		
-		
-		nextBtn->setEnabled(true);		
-		prevBtn->setEnabled(true);
-	}
+	void showMatch(const Regex::Iterator& it) {
+		data->setSelectionMark(it->getPosAsCount(), it->getText().length());
 
-	void showMatch(const Regex::ReverseIterator& rit) {
-		data->setSelectionMark(rit->getPosAsOffset(), rit->getText().length());
-		
 		nextBtn->setEnabled(true);		
 		prevBtn->setEnabled(true);
 	}
 
 	void endSearch(bool backwards=false) {
-		data->setSelectionMark(0,0);
 		MessageDialog end;
 		end.setMessage("End of text");
 		end.setInformation("There are no more matches for this expression");
@@ -165,11 +158,10 @@ public:
 	}
 
 private:
-	Regex::Ascii host;
+	Regex::UTF_16LE host;
 	Regex::Iterator it;
-	AnsiString searchStr;
+	String searchStr;
 	String lastExpression;
-
 	MultilineTextControl* data;
 	TextControl* edt1;
 	CommandButton* nextBtn;

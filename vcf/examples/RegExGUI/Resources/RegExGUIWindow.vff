@@ -3,7 +3,7 @@ object RegExGUIWindow  : VCF::Window
 	left = 200
 	height = 200pt //205px
 	width = 400pt //410px
-	caption = 'Regular Expression Example'	
+	caption = 'Regular Expression Example - Use Ruby Syntax'	
 
 	object reset : VCF::CommandButton
 		top = 7.5pt //10px
