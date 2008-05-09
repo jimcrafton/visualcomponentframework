@@ -89,8 +89,6 @@ Handle the extension based on the compiler
 
 #ifdef USE_REGEXKIT_DLL
 #pragma message( "REGEXKIT_DLL" )
-//#		define ONIG_EXTERN extern __declspec(dllimport)
-//#		define ONIG_EXTERN
 # 	ifndef REGEXKIT_DLL
 #		define REGEXKIT_DLL
 # 	endif
@@ -98,8 +96,6 @@ Handle the extension based on the compiler
 #		define USE_FOUNDATIONKIT_DLL
 # 	endif
 #elif defined (USE_REGEXKIT_LIB)
-//#		define ONIG_EXTERN extern
-//#		define ONIG_EXTERN
 # 	ifndef USE_FOUNDATIONKIT_LIB
 #		define USE_FOUNDATIONKIT_LIB
 # 	endif
