@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 {
 	FoundationKit::init( argc, argv );
 
-    String target=L"This is a test. Do not panic. I repeat: DO NOT PANIC!";
+    String target=L"This \r\n is a test. Do\r\n not panic. I repeat: DO NOT PANIC!";
 	int pos=8;
 	System::println(Format("Character at position %d is '%lc'") % pos % target.at(pos));
     String exp="is";

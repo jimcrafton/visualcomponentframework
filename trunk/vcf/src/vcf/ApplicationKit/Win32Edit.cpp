@@ -1157,6 +1157,18 @@ void Win32Edit::getSelectionMark( long & start, long & end )
 	if ( NULL != selection ) {
 		selection->GetStart( (long*)&start );
 		selection->GetEnd( (long*)&end );
+
+		unsigned long count = end - start;
+		unsigned long crCount = getCRCount( 0, start, false );
+		unsigned long crCountSpan = 0;
+		if ( end != -1 ) {
+			// we need to see if the selection has some '\r' in it
+			crCountSpan = getCRCount( start, start + count, false );
+		}
+		start = start + crCount;
+		end = start + count + crCountSpan;
+
+		
 		selection->Release();
 	}
 }
@@ -1169,8 +1181,16 @@ void Win32Edit::clearSelection()
 void Win32Edit::setSelectionMark( const uint32& start, const uint32& count )
 {
 	uint32 end = start + count;
-	
-	::SendMessage( hwnd_, EM_SETSEL, (WPARAM)start, (LPARAM)end );	
+   
+   	int crCount = getCRCount( 0, start, true );
+   	int crCountSpan = getCRCount( start, end, true );	//fix 2004/01/14 was false before which gives error that seem almost random
+   
+   
+   	unsigned long adjustedStart = start - crCount;
+   	unsigned long adjustedCount = count - crCountSpan;
+   	end = adjustedStart + adjustedCount;
+
+	::SendMessage( hwnd_, EM_SETSEL, (WPARAM)adjustedStart, (LPARAM)end );	
 }
 
 
