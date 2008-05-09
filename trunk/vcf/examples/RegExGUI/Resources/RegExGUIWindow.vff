@@ -49,10 +49,12 @@ object RegExGUIWindow  : VCF::Window
 	end
 
 	object data : VCF::MultilineTextControl
-		top = 25pt
+		top = 28pt
 		left = 15pt
-		width = 355pt
+		width = 365pt
 		height = 135pt
 		readonly = true
+		anchor = [AnchorLeft,AnchorRight,AnchorBottom,AnchorTop]
+		textWrapping = true
 	end
 end
