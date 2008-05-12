@@ -835,6 +835,7 @@ int main( int argc, char** argv )
 	</section>
 
 	
+	<section><title>Multithreaded programming support</title>
 	
 	<section><title>Synchronization Primitives</title>
 		<para>
@@ -962,7 +963,43 @@ switch ( thread->wait() ) {
 			state. A condition, on the other hand, can have multiple threads waiting on 
 			it, and wake them all up.
 			</para>
-		</section>				
+			<para>
+			A condition is used in conjunction with a valid mutex instance like this:
+Mutex m;
+Condition c(m);
+
+			Now the condition instance ("c") is ready to be used. At this point
+			the conidition can be used in one of two ways: you can notify it that
+			some "condition" has occured, for example, some data is ready to processed,
+			or you can wait on it for some amount of time. 
+			</para>
+			<para>
+			If you're waiting on a condition, then you will use the wait methods, either
+			waiting for a specific period of time (measured in milliseconds), or waiting
+			indefinitely. Either way, the wait is ended when the condition is notified, 
+			or "signaled", in some way. 
+			</para>
+			<para>
+			The condition is considered signaled when either it's signal() or broadcast()
+			method is called. Once the condition is signaled it then wakes up one or more 
+			threads that are waiting on it. Depending on whether signal() or broadcast() is 
+			called, the condition may wake up only one thread, or all the threads, as seen 
+			below. 
+			
+			<figure><title>Conditions and Threads - Condition::signal()</title>
+			<graphic fileref="gfx/condition-signal.png"/>
+			</figure>
+			
+			<figure><title>Conditions and Threads - Condition::broadcast()</title>
+			<graphic fileref="gfx/condition-broadcast.png"/>
+			</figure>
+	
+			In the first figure we see that the condition's signal() method has been called,
+			and only one thread is "woken up", e.g. it will return from it's wait() call. In
+			the second firgure we see that <emphasis>all</emphasis> the threads have been
+			"woken up" and will all return from their respective wait() calls.
+			</para>
+		</section>
 	</section>
 	
 	<section><title>Threads</title>
@@ -1145,36 +1182,229 @@ int main( int argc, char** argv )
 		turned of. For more on this, please see the Thread.h and the
 		Thread constructors.
 		</para>
+	
+		<section><title>Thread Manager</title>
+			<para>
+			The ThreadManager is used to manage threads and provide access to 
+			both the current thread and current run loop.
+			</para>
+			<para>
+			You can also use it to wait on multiple "waitable" objects, and then
+			get a list of what objects became signaled. This is basically the same 
+			idea behind the Win32 API function WaitForMultipleObjects. 
+			</para>
+			<para>
+			You can get the current thread object by calling the thread manager's 
+			ThreadManager::getCurrentThread() function. This will return the thread 
+			instance that's associated with the calling thread. For example:
+			<programlisting>
+<![CDATA[
+int main( int argc, char** argv ) 
+{
+	FoundationKit::init(argc,argv);
+	
+	Thread* thread = ThreadManager::getCurrentThread();
 		
-	</section>
+	FoundationKit::terminate();
+	return 0;
+}
+]]>		
+			</programlisting>
+			This returns the main thread's thread object. If you had made this call within 
+			the context of a different running thread, then you would get that thread's 
+			thread object.		
+			</para>
+			<para>
+			Likewise, there's a method to the retreive the current runloop for the calling
+			thread. For that you just call ThreadManager::getCurrentRunLoop(), for example:
+			<programlisting>
+<![CDATA[
+int main( int argc, char** argv ) 
+{
+	FoundationKit::init(argc,argv);
 	
-	<section><title>Threaded Functions and Asynchronous Delegates</title>
-	</section>
-	
+	RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
+		
+	FoundationKit::terminate();
+	return 0;
+}
+]]>						
+			</programlisting>
+		
+			Note that this returns you a smart pointer, not a raw RunLoop pointer. 
+			</para>
+		</section>
 	<section><title>Run Loops</title>
 		<para>
+		A RunLoop is used to represent a repeating loop that runs
+		within the context of a particular thread. You might say that
+		a RunLoop is a sort of OO wrapper around a while {} loop. Runloops
+		are <emphasis>never</emphasis> created by the programmer - instead
+		they are maintained by the framework. 
+		</para>
+		<para>
+		Run loops work by having sources that feed them events, timers that
+		get fired, and observers that get notified when these kind of events
+		take place. The run loop is activated by calling one of the run loop's 
+		run() methods. These can cause the run loop to run indefinitely or 
+		for a specified period of time.
 		</para>
 		
 		<section><title>Relationship to Threads</title>
 			<para>
+			Each thread instance has one and only one RunLoop instance associated 
+			with it. The runloop is created on demand, so if the thread in question
+			never uses the runloop, then it will not get created. When the thread is 
+			destroyed, the runloop (if it exists) will also be destroyed.
+			</para>
+			<para>
+			You can get access to a RunLoop through the ThreadManager's getCurrentRunLoop()
+			function.
 			</para>
 		</section>
 		
 		<section><title>Run Loop Source</title>
 			<para>
+			A run loop Source is used to "feed" events and/or notifications to
+			the run loop. Each run loop can have 0 or more sources attached to
+			it. A run loop source is meant to be customized by overriding it's 
+			perform() method. The perform() method is what will get called
+			by the run loop, and where you're expected to do your work.
+			</para>
+			<para>
+			Sources can be attached at any time to a run loop. Once attached to the
+			run loop, the source needs to notify the run loop that it's ready to 
+			perform. It does this by calling it's signal() method, which notifies 
+			the run loop and in turn ultimately ends up with the source's perform()
+			method being called.			
+			</para>
+			<para>
+			Since the perform() method may get called repeatedly, you need to take 
+			this into account when designing your run loop source class. This kind
+			of behaviour is ideal for writing a state machine like class, where 
+			you maintain a state variable that changes as the perform method is called.
 			</para>
 		</section>
 		
 		<section><title>Timers</title>
 			<para>
+			In addition to run loop sources, a run loop may have any number of 
+			timers associated with it. Adding the timer is simply a matter of 
+			creating the timer object - a RunLoopTimer instance, and adding
+			it to the runloop. When you create a timer and specify when it will 
+			fire and whether or not it will repeat.
+			<programlisting>
+<![CDATA[
+RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
+	
+RunLoopTimerPtr::Shared timer1( new RunLoopTimer( DateTimeSpan( 1000 ) ) );
+runLoop->addTimer( timer1 );
+]]>
+			</programlisting>
+			This code creates a time that fires every 1000 milliseconds. 
+			<programlisting>
+<![CDATA[
+RunLoopPtr::Shared runLoop = ThreadManager::getCurrentRunLoop();
+	
+RunLoopTimerPtr::Shared timer1( new RunLoopTimer( DateTime( 2008,5,12,22,30,0 ) ) );
+runLoop->addTimer( timer1 );
+]]>
+			</programlisting>
+			This timer will fire <emphasis>once</emphasis> on May 12, 2008 at 
+			10:30 PM local time.
+			</para>
+			<para>
+			You can get notified that a timer has fired by adding a callback
+			to the TimerFired delegate. The function signature for this
+			callback looks like:
+			<programlisting>
+<![CDATA[
+void TimerFiredCallback( RunLoopTimer& );
+]]>
+			</programlisting>
 			</para>
 		</section>
 		
 		<section><title>Posting Events</title>
 			<para>
+			You post an event to a run loop. The "event" must
+			be an object instance that derives from the Event
+			class. You can post the event to a specific run 
+			loop from any calling thread. When the event is
+			processed, it will be executed in the thread 
+			that the run loop belongs to.
 			</para>
+			<para>
+			To post an event to a run loop, you need an event 
+			instance that's been created on the heap,
+			and a CallBack instance of type Procedure1&lt;Event*&gt;
+			or ClassProcedure1&lt;Event*&gt;. Pass both of these
+			to the run loop's postEvent() method. 
+			</para>			
 		</section>
 	</section>
+	
+	
+	<section><title>Threaded Functions</title>
+		<para>
+			A threaded function is like a regular function, only it
+			get's asynchronously in a new thread.
+		</para>
+	</section>
+	
+	<section><title>Thread Pools</title>
+		<para>
+		A ThreadPool is used to manage a group, or "pool",
+		of threads that can then be assigned work to do
+		by the thread pool. The ThreadPool constructor takes
+		a integer that specifies how many threads to create
+		in the pool.
+		</para>
+		<para>
+		Once you've created the thread pool you need to start
+		the pool by a call to start(). You can stop the pool
+		by calling stop(). You can assign work to the thread
+		pool where "work" item is a valid Runnable instance. To 
+		add the item to be run, just call the ThreadPool's postWork()
+		method. This will push the runnable instance on the thread
+		pool's work queue and then return immediately.
+		</para>
+		<para>
+		You can wait on the thread pool. Waiting means that the
+		wait() methods will return when all the work assigned to 
+		the thread pool's threads have been completed.
+		</para>
+	</section>
+	
+	<section><title>Asynchronous Delegates</title>
+		<para>
+		Delegates can be fired synchonously or asynchronously.
+		If you fire them asynchronously, then the delegates
+		callbacks will be fired in some other thread, one managed 
+		by a thread pool used by all delegates. The thread pool
+		is created and managed by the framework, so you don't have
+		to worry about it.		
+		</para>
+		<para>
+		To invoke the delegate asynchronously, all you need to do is
+		call the delegate's beginInvoke() method (as opposed to
+		the synchonous invoke() method). This will return an 
+		AsyncResult instance. The caller needs to delete this instance
+		when they are done with it. For example:
+		<programlisting>
+<![CDATA[
+Delegate1<int> myDelegate;
+AsyncResult* ar = myDelegate.beginInvoke( 1001 );
+delete ar;
+]]>
+			</programlisting>
+		</para>
+	</section>
+
+	</section>
+	
+	</section> <!--multithreaded programming support -->
+	
 	
 	<section id="FK_Strings"><title>Strings</title>
 		<para>
@@ -1235,6 +1465,34 @@ String str = L"Hello World";
 			World") than their wchar_t counterparts.
 			</para>
 		</section>
+		
+		<section><title>Language Encoding</title>
+			<para>
+			When loading an ansi string you can specify a specific language encoding 
+			to use when converting the string from ansi to unicode. The complete list
+			is compatible with Windows Code Page values. Other systems may not 
+			support as complete a list of encodings.
+			</para>
+			<para>
+			To convert the ansi string, you just specify an encoding to use:
+			<programlisting>
+<![CDATA[
+FileInputStream fs("cedict.b5");
+	
+unsigned char* data = new unsigned char[ fs.getSize() ];
+
+fs.read( data, fs.getSize() );
+
+String chStr((const char*)data,fs.getSize(),UnicodeString::leChineseTraditionalBig5);
+
+delete [] data;
+]]>
+			</programlisting>
+			chStr now contains a unicode string that's been converted using Chinese Traditional Big5
+			language encoding (also known as code page 950 on Win32).
+			</para>
+		</section>	
+			
 		
 		<section><title>Conversion and Text Codecs</title>
 			<para>
