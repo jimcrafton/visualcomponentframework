@@ -43,7 +43,7 @@ MAKEARGS = LINK_DLL_FLAGS="$(LINK_DLL_FLAGS)" \
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards ClassRegistryBrowser Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus PopupWindows Printing Processes ProgressBars RCChineseDict Reflection RegExGUI RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 ShapedWindow SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TransparentWindows TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards ClassRegistryBrowser Colors Combos CommonDirectories Conditions Controls CopyAndPaste CPBrowser DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus PopupWindows Printing Processes ProgressBars RCChineseDict Reflection RegExGUI RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 ShapedWindow SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TransparentWindows TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 clean: 
 	-if exist .\*.o del .\*.o
@@ -66,6 +66,7 @@ clean:
 	$(MAKE) -C Conditions -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Controls -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C CopyAndPaste -f makefile.gcc $(MAKEARGS) clean
+	$(MAKE) -C CPBrowser -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C DatesAndTime -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C DateTimeUI -f makefile.gcc $(MAKEARGS) clean
 	$(MAKE) -C Dialogs -f makefile.gcc $(MAKEARGS) clean
@@ -204,6 +205,9 @@ Controls:
 
 CopyAndPaste: 
 	$(MAKE) -C CopyAndPaste -f makefile.gcc $(MAKEARGS) all
+
+CPBrowser: 
+	$(MAKE) -C CPBrowser -f makefile.gcc $(MAKEARGS) all
 
 DatesAndTime: 
 	$(MAKE) -C DatesAndTime -f makefile.gcc $(MAKEARGS) all
@@ -457,7 +461,7 @@ WorkingWithEnumerators:
 XMLTest: 
 	$(MAKE) -C XMLTest -f makefile.gcc $(MAKEARGS) all
 
-.PHONY: all clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards ClassRegistryBrowser Colors Combos CommonDirectories Conditions Controls CopyAndPaste DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus PopupWindows Printing Processes ProgressBars RCChineseDict Reflection RegExGUI RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 ShapedWindow SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TransparentWindows TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+.PHONY: all clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards ClassRegistryBrowser Colors Combos CommonDirectories Conditions Controls CopyAndPaste CPBrowser DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus PopupWindows Printing Processes ProgressBars RCChineseDict Reflection RegExGUI RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 ShapedWindow SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TransparentWindows TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
 
 
 SHELL := $(COMSPEC)
