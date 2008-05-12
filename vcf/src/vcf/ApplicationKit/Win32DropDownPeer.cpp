@@ -606,10 +606,73 @@ double Win32DropDownPeer::getDropDownWidth()
 	return result;
 }
 
+VCF::Rect Win32DropDownPeer::getBounds()
+{
+	VCF::Rect result;	
+	RECT r;
+	HWND parent = ::GetParent( hwnd_ );
+
+ 	::GetWindowRect( hwnd_, &r );
+	POINT pt = {0,0};
+	pt.x = r.left;
+	pt.y = r.top;
+	::ScreenToClient( parent, &pt );
+	r.left = pt.x;
+	r.top = pt.y;
+	
+	pt.x = r.right;
+	pt.y = r.bottom;
+	::ScreenToClient( parent, &pt );
+	
+	r.right = pt.x;
+	r.bottom = pt.y;
+	
+	result.setRect( r.left, r.top, r.right, r.bottom );
+
+	StringUtils::trace( Format("Win32DropDownPeer::getBounds() height is %d\n") % (int)result.getHeight() );
+
+	return result;
+}
+
+
+void Win32DropDownPeer::setBounds( VCF::Rect* rect )
+{
+	int height = 0;
+	MEASUREITEMSTRUCT msItem = {0};
+
+	msItem.CtlID = ::GetDlgCtrlID(hwnd_);
+	msItem.CtlType = ODT_COMBOBOX;
+	msItem.itemData = 0;
+	msItem.itemWidth = rect->getWidth();
+
+	RECT r;
+	::GetWindowRect( hwnd_, &r );
+	int ih = SendMessage( hwnd_, CB_GETITEMHEIGHT, -1, 0 );
+
+
+	height = rect->getHeight() - ( (r.bottom-r.top) - ih );
+
+	StringUtils::trace( Format("Win32DropDownPeer height is %d\n") % height );
+
+	SendMessage( hwnd_, CB_SETITEMHEIGHT, -1, height );
+	UINT count = SendMessage( hwnd_,  CB_GETCOUNT, 0, 0 );
+	for (UINT i=0;i<count;i++ ) {
+		SendMessage( hwnd_, CB_SETITEMHEIGHT, i, height );
+	}
+
+	height = rect->getHeight() * (dropDownCount_+1);
+
+	::SetWindowPos( hwnd_, NULL, (int)rect->left_, (int)rect->top_,
+			          (int)rect->getWidth(), height, SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER );
+}
+
 void Win32DropDownPeer::updateDimensions()
 {
 	RECT r = {0};
 	GetWindowRect( hwnd_, &r );
+	int ih = SendMessage( hwnd_, CB_GETITEMHEIGHT, -1, 0 );
+
+	int dy = (r.bottom - r.top) - ih;
 
 	MEASUREITEMSTRUCT msItem = {0};
 
@@ -622,7 +685,7 @@ void Win32DropDownPeer::updateDimensions()
 	SendMessage( hwnd_, WM_MEASUREITEM, 1, (LPARAM)&msItem );
 
 	
-	r.bottom = r.top + ((msItem.itemHeight) * dropDownCount_);
+	r.bottom = r.top + ((msItem.itemHeight+dy) * (dropDownCount_+1));
 	POINT pt;
 	pt.x = r.left;
 	pt.y = r.top;
@@ -650,11 +713,11 @@ void Win32DropDownPeer::updateDimensions()
 
 void Win32DropDownPeer::setDropDownCount( const uint32& dropDownCount )
 {
-	if ( dropDownCount_ != dropDownCount ) {
+//	if ( dropDownCount_ != dropDownCount ) {
 		dropDownCount_ = dropDownCount;
 
 		updateDimensions();
-	}	
+//	}	
 }
 
 void Win32DropDownPeer::onCtrlModelChanged( Event* e )

@@ -27,6 +27,8 @@ namespace VCF {
 
 		virtual bool handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc = NULL);
 	
+		virtual VCF::Rect getBounds();
+		virtual void setBounds( VCF::Rect* rect );
 
 		virtual void enableEditBox( bool val );
 		virtual bool editBoxEnabled();

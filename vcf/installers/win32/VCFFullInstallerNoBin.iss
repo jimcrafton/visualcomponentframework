@@ -30,7 +30,7 @@ Source: ..\..\build\vc60\add-ins\VCFLibraryAppWizard\Release\VCFLibraryAppWizard
 Source: ..\..\build\vc60\add-ins\VCFNewClassWiz\Release\VCFNewClassWiz.dll; DestDir: {app}\VC6-Addins; Components: VC6_Addins; Flags: regserver
 Source: ..\..\build\vc60\add-ins\VPLAppWiz\Release\VPLAppWiz.awx; DestDir: {app}\VC6-Addins; Components: VC6_Wizards; Flags: ignoreversion
 Source: ..\..\build\vc60\add-ins\VCFFormWizard\Release\VCFFormWizard.awx; DestDir: {app}\VC6-Addins; Components: VC6_Wizards; Flags: ignoreversion
-Source: C:\Windows\system32\msvcp60.dll; DestDir: {app}\VC6-Addins
+Source: e:\Windows\system32\msvcp60.dll; DestDir: {app}\VC6-Addins
 
 ; various help files
 Source: ..\..\docs\VCFDocs.0.9.8.chm; DestDir: {app}\docs; Components: Help_Files/CHM_Help_Files  Help_Files/VC6_Help_Files
