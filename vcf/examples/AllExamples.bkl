@@ -31,6 +31,7 @@
     <subproject id="Conditions" template="example"/>
     <subproject id="Controls" template="example"/>
     <subproject id="CopyAndPaste" template="example"/>
+    <subproject id="CPBrowser" template="example"/>
     <subproject id="DatesAndTime" template="example"/>
     <subproject id="DateTimeUI" template="example"/>
     <subproject id="Dialogs" template="example"/>
