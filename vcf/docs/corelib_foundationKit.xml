@@ -832,6 +832,43 @@ int main( int argc, char** argv )
 		can see how we have connected the two objects (source and observer) through the 
 		use of Delegates and callbacks.
 		</para>
+		<para>
+		A Delegate may have a return value, and because it can have more than one callback
+		it needs to store an equivalent number of return values. You can access these return
+		values in two different ways. The easiest is to use the value returned by the
+		invoke() function. This will give the last return value in the return value
+		collection. So if you had a delegate with three callbacks, you'd have a collection
+		of 3 return values, and after calling invoke() you'd be returned the result of the
+		3rd callback. For example:
+		<programlisting>
+<![CDATA[
+Delegate2R<bool,const String&,double> myDelegate;
+myDelegate += //some callback #1
+myDelegate += //some callback #2
+myDelegate += //some callback #3
+bool result = myDelegate.invoke( "Hello", 0.000812 );
+]]>
+		</programlisting>
+		The above example would return the result from callback #3.
+		</para>
+		<para>
+		You can access <emphasis>all</emphasis> the return values by examing the
+		delegate's results member variable. The return values are simply stored 
+		in a vector, and they are in the order that the callbacks are invoked in.
+		<programlisting>
+<![CDATA[
+Delegate2R<bool,const String&,double> myDelegate;
+myDelegate += //some callback #1
+myDelegate += //some callback #2
+myDelegate += //some callback #3
+for ( size_t i=0;i<myDelegate.results.size();i++ ) {
+	printf( "myDelegate results[%d]: %s\n", i, myDelegate.results[i] ? "true" : "false" );
+}
+]]>
+		</programlisting>
+		The results member variable is cleared when the invoke() method is called, 
+		and is not considered usable until after the invoke() method has returned.
+		</para>
 	</section>
 
 	
@@ -1394,11 +1431,78 @@ void TimerFiredCallback( RunLoopTimer& );
 		<programlisting>
 <![CDATA[
 Delegate1<int> myDelegate;
-AsyncResult* ar = myDelegate.beginInvoke( 1001 );
+AsyncResult* ar = myDelegate.beginInvoke( 1001, NULL );
+delete ar;
+]]>
+			</programlisting>			
+		</para>
+		<para>
+		When you invoke the delegate, you need to supply the function
+		arguments, and an optional callback that will let you 
+		know when the delegate has completed executing all of it's 
+		callbacks. This optional completion callback takes the form of:
+		<programlisting>
+<![CDATA[
+void AsyncCompletionCallback( AsyncResult* ) 
+]]>
+			</programlisting>	
+			This may be a Procedure1&lt;AsyncResult*&gt; or 
+			ClassProcedure1&lt;AsyncResult*&gt;
+			instance.	The AsyncResult that is passed in to your callback is 
+			the same instance that is returned by the delegate's beginInvoke()
+			method.
+		<note>
+		<para>
+		When your async completion callback is called, don't assume it's 
+		in the same calling thread as the one that called the delegate's 
+		beginInvoke(). Keep this in mind if you need to access resources or
+		make calls to UI objects like controls or windows.
+		</para>
+		</note>
+		</para>
+		<para>
+		You can also wait on the AsyncResult instance. The AsyncResult will
+		get notified by the internal thread pool when all of the delegate's 
+		callbacks have been completed. After the wait is over it's safe to 
+		delete the AsyncResult instance.
+		<programlisting>
+<![CDATA[
+Delegate1<int> myDelegate;
+AsyncResult* ar = myDelegate.beginInvoke( 1001, NULL );
+ar->wait();
+delete ar;
+]]>
+			</programlisting>			
+			This will block until all the callbacks have completed.
+		</para>
+		<para>
+		If the delegate has a return value you can extract this value 
+		by calling the delegate's endInvoke() method, passing
+		in the AsyncResult instance that was returned in the 
+		beginInvoke() call. It's important to remember that
+		these two calls, beginInvoke() and endInvoke(), need to
+		be paired up if you're interested in the return value. 
+		An example of this might look like:
+		<programlisting>
+<![CDATA[
+Delegate1R<bool,int> myDelegate;
+AsyncResult* ar = myDelegate.beginInvoke( 300, NULL );
+ar->wait();
+bool res = myDelegate.endInvoke(ar);
 delete ar;
 ]]>
 			</programlisting>
-		</para>
+		Since a delegate can have multiple callbacks, it's also possible
+		to have multiple return values. When you call endInvoke() it will
+		return you the last result, or return value, in it's collection
+		of return values. If you want to get all the return values
+		then you need to call endInvokeWithResults() and, just like with 
+		the endInvoke() call, pass in AsyncResult instance. When
+		you call endInvokeWithResults() you'll get the result collection
+		specific to the AsyncResult. This result collection is simply
+		a vector of return values, just like the delegate's <code>results</code> 
+		member variable.
+		</para>		
 	</section>
 
 	</section>
