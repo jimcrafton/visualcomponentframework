@@ -1,0 +1,134 @@
+object ModelDataWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 110pt
+	width = 240pt
+	caption = 'ModelData Window'	
+
+	minHeight = 110pt
+	maxHeight = 110pt
+
+	object hlContainer : VCF::HorizontalLayoutContainer
+		numberOfColumns = 2
+		maxRowHeight = 35
+		rowSpacerHeight = 10
+		widths[0] = 80
+		widths[1] = 80
+
+		tweenWidths[0] = 10
+	end
+
+	object hlContainer2 : VCF::HorizontalLayoutContainer
+		numberOfColumns = 2
+		maxRowHeight = 35
+		rowSpacerHeight = 10
+		widths[0] = 80
+		widths[1] = 80
+
+		tweenWidths[0] = 10
+	end
+	
+
+
+
+	object joeBobSnake :  Person
+		firstName = 'Joe Bob'
+		lastName = 'Snake'
+		age = 24
+	end
+
+
+	object pnl1 : VCF::Panel 
+		border = null
+		alignment = AlignLeft
+		width = 120pt
+		container = @hlContainer
+
+		object lbl1 : VCF::Label
+			caption = 'First Name'		
+		end
+
+		object edt1 : VCF::Label
+			model = @joeBobSnake
+			modelKey = 'FirstName'
+		end
+
+
+		object lbl2 : VCF::Label
+			caption = 'Last Name'		
+		end
+
+		object edt2 : VCF::TextControl
+			model = @joeBobSnake
+			modelKey = 'LastName'
+		end
+
+		object lbl3 : VCF::Label
+			caption = 'Age'		
+		end
+
+		object edt3 : VCF::TextControl
+			readonly = true
+			enabled = false
+			model = @joeBobSnake
+			modelKey = 'Age'
+		end
+
+
+
+		object lbl4 : VCF::Label
+			caption = 'Modify Age'		
+		end
+
+		object btn1 : VCF::CommandButton
+			caption = 'Click Me'
+
+			delegates
+				ButtonClicked = [ModelDataApp@ModelDataApp::clickMe]
+			end
+		end
+	end
+	
+
+	object pnl1 : VCF::Splitter 
+		alignment = AlignLeft
+	end
+
+	object pnl2 : VCF::Panel 
+		container = @hlContainer2
+		border = null
+		alignment = AlignClient
+
+		object lbl1a : VCF::Label
+			caption = 'First Name'		
+		end
+
+		object valLbl1 : VCF::Label
+			model = @joeBobSnake
+			modelKey = 'FirstName'
+		end
+
+
+		object lbl2a : VCF::Label
+			caption = 'Last Name'		
+		end
+
+		object valLbl2 : VCF::Label
+			model = @joeBobSnake
+			modelKey = 'LastName'
+		end
+
+		object lbl3a : VCF::Label
+			caption = 'Age'		
+		end
+
+		object valLbl3 : VCF::Label
+			model = @joeBobSnake
+			modelKey = 'Age'
+		end
+
+
+	end
+	
+	
+end

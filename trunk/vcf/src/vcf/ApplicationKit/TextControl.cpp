@@ -185,7 +185,7 @@ void TextControl::paint( GraphicsContext * context )
 
 void TextControl::setTextModel( TextModel * model )
 {
-	setViewModel( dynamic_cast<Model*>(model) );
+	setViewModel( model );
 }
 
 TextModel* TextControl::getTextModel()
@@ -323,12 +323,18 @@ void TextControl::replaceSelectedText( const String& text )
 
 void TextControl::gotFocus( FocusEvent* event )
 {
-	TextModel* tm = getTextModel();
-	if ( NULL != tm ) {		
-		String text = tm->getText();
 
-		setSelectionMark( 0, text.size() );
+	Model* m = getViewModel();
+	TextModel* tm = dynamic_cast<TextModel*>(getViewModel());
+	if ( NULL == m ) {
+		return;
 	}
+
+	String text = m->getValueAsString( this->getModelKey() );
+	
+		//tm->getText();
+
+	setSelectionMark( 0, text.size() );	
 }
 
 double TextControl::getPreferredHeight()
@@ -361,6 +367,10 @@ void TextControl::handleEvent( Event* event )
 				return;
 			}
 
+			Model* model = getViewModel();
+			TextModel* textModel = dynamic_cast<TextModel*>(model);
+			
+
 			/**
 			HACK ALERT!
 			this is the braindead way - needs to be reworked in the future
@@ -378,9 +388,7 @@ void TextControl::handleEvent( Event* event )
 			#-------------------------------------------------------------------------------#
 			JC - I have currently implemented this so that we now add text key press at 
 			a time,	or delete text if appropriate.
-			*/
-
-			TextModel* model = getTextModel();
+			*/			
 
 			if ( !getReadOnly() && !(getComponentState() & Component::csDesigning) ) {
 				KeyboardEvent* ke = (KeyboardEvent*)event;
@@ -390,85 +398,154 @@ void TextControl::handleEvent( Event* event )
 						case vkDelete : {
 							uint32 pos =  textPeer_->getSelectionStart();
 
-							//Thanks to Marcello to fixing this!!!
-							uint32 size = model->getSize();
-							if ( ( 0 < size ) && pos <= (size-1) ) {
-								uint32 length = maxVal<uint32>( 1, textPeer_->getSelectionCount() );
+							if ( NULL == textModel ) {
+								String text = model->getValueAsString( this->getModelKey() );
+								uint32 size = text.length();
 
-								// workaround for a '\r\n' sequence: we need to
-								// delete '\n' too at the end of the selection
-								uint32 pos2 = pos+length-1;
-								if ( pos2 < (size-1)  ) {
-									String text = model->getText();
-									const VCFChar* textBuffer = text.c_str();
-
-									if ( textBuffer[pos2] == '\r' ) {
-										if ( textBuffer[pos2+1] == '\n' ) {
-											length += 1;
+								if ( ( 0 < size ) && pos <= (size-1) ) {
+									uint32 length = maxVal<uint32>( 1, textPeer_->getSelectionCount() );
+									
+									// workaround for a '\r\n' sequence: we need to
+									// delete '\n' too at the end of the selection
+									uint32 pos2 = pos+length-1;
+									if ( pos2 < (size-1)  ) {
+										const VCFChar* textBuffer = text.c_str();
+										
+										if ( textBuffer[pos2] == '\r' ) {
+											if ( textBuffer[pos2+1] == '\n' ) {
+												length += 1;
+											}
 										}
 									}
+
+									if ( 0 != length ) {
+										text.erase( pos, length );
+										model->setValueAsString( text, this->getModelKey() );
+									}
 								}
-
-								//Debug diagnostics - JC
-								//String text = model->getText();
-								//StringUtils::trace( Format( "vkDelete [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
-								//											text % text[pos] % text[pos] % pos );
-
-								if ( 0 != length ) {
-									model->removeText( pos, length );
-								}
-
-								//text = model->getText();
-								//StringUtils::trace( Format( "after vkDelete [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
-								//											text % text[pos] % text[pos] % pos );
 							}
+							else {
+								//Thanks to Marcello to fixing this!!!
+								uint32 size = textModel->getSize();
+								if ( ( 0 < size ) && pos <= (size-1) ) {
+									uint32 length = maxVal<uint32>( 1, textPeer_->getSelectionCount() );
 
+									// workaround for a '\r\n' sequence: we need to
+									// delete '\n' too at the end of the selection
+									uint32 pos2 = pos+length-1;
+									if ( pos2 < (size-1)  ) {
+										String text = textModel->getText();
+										const VCFChar* textBuffer = text.c_str();
+
+										if ( textBuffer[pos2] == '\r' ) {
+											if ( textBuffer[pos2+1] == '\n' ) {
+												length += 1;
+											}
+										}
+									}
+
+									//Debug diagnostics - JC
+									//String text = model->getText();
+									//StringUtils::trace( Format( "vkDelete [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
+									//											text % text[pos] % text[pos] % pos );
+
+									if ( 0 != length ) {
+										textModel->removeText( pos, length );
+									}
+
+									//text = model->getText();
+									//StringUtils::trace( Format( "after vkDelete [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
+									//											text % text[pos] % text[pos] % pos );
+								}
+							}
 						}
 						break;
 
 						case vkBackSpace : {
-							uint32 length = textPeer_->getSelectionCount();
-							uint32 pos =  minVal<uint32>( model->getSize(), textPeer_->getSelectionStart() );
+							uint32 length = textPeer_->getSelectionCount();			
 
-							// if the selection is not empty we delete it, but the cursor doesn't move.
-							if ( 0 == length ) {
-								if ( pos > 0 ) {
-									// we are deleting the previous character
-									pos -= 1;
-									length = 1;
-								}
-							}
-
-						
-							// workaround for a '\r\n' sequence: we need to
-							// delete '\r' too at the beginning of the selection
-							if ( pos > 0 ) {
-								String text = model->getText();
-								const VCFChar* textBuffer = text.c_str();
-
-								if ( textBuffer[pos] == '\n' ) {
-									if ( textBuffer[pos-1] == '\r' ) {
+							if ( NULL == textModel ) {
+								String text = model->getValueAsString( this->getModelKey() );
+								uint32 pos =  minVal<uint32>( text.size(), textPeer_->getSelectionStart() );
+								
+								// if the selection is not empty we delete it, but the cursor doesn't move.
+								if ( 0 == length ) {
+									if ( pos > 0 ) {
+										// we are deleting the previous character
 										pos -= 1;
-										length += 1;
+										length = 1;
 									}
 								}
+								
+								
+								// workaround for a '\r\n' sequence: we need to
+								// delete '\r' too at the beginning of the selection
+								if ( pos > 0 ) {
+									const VCFChar* textBuffer = text.c_str();
+									
+									if ( textBuffer[pos] == '\n' ) {
+										if ( textBuffer[pos-1] == '\r' ) {
+											pos -= 1;
+											length += 1;
+										}
+									}
+								}
+								
+								//Debug diagnostics - JC
+								//String text = model->getText();
+								//StringUtils::trace( Format( "vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
+								//											text % text[pos] % text[pos] % pos );
+								
+								
+								if ( 0 != length ) {
+									text.erase( pos, length );
+									model->setValueAsString( text, this->getModelKey() );
+								}
 							}
-
-							//Debug diagnostics - JC
-							//String text = model->getText();
-							//StringUtils::trace( Format( "vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
-							//											text % text[pos] % text[pos] % pos );
-
-
-							if ( 0 != length ) {
-								model->removeText( pos, length );
+							else {
+								
+								uint32 pos =  minVal<uint32>( textModel->getSize(), textPeer_->getSelectionStart() );
+								
+								// if the selection is not empty we delete it, but the cursor doesn't move.
+								if ( 0 == length ) {
+									if ( pos > 0 ) {
+										// we are deleting the previous character
+										pos -= 1;
+										length = 1;
+									}
+								}
+								
+								
+								// workaround for a '\r\n' sequence: we need to
+								// delete '\r' too at the beginning of the selection
+								if ( pos > 0 ) {
+									String text = textModel->getText();
+									const VCFChar* textBuffer = text.c_str();
+									
+									if ( textBuffer[pos] == '\n' ) {
+										if ( textBuffer[pos-1] == '\r' ) {
+											pos -= 1;
+											length += 1;
+										}
+									}
+								}
+								
+								//Debug diagnostics - JC
+								//String text = model->getText();
+								//StringUtils::trace( Format( "vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
+								//											text % text[pos] % text[pos] % pos );
+								
+								
+								if ( 0 != length ) {
+									textModel->removeText( pos, length );
+								}
+								
+								
+								//text = model->getText();
+								//StringUtils::trace( Format( "after vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
+								//											text % text[pos-length] % text[pos-length] % pos-length );
+								
 							}
-
-
-							//text = model->getText();
-							//StringUtils::trace( Format( "after vkBackSpace [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
-							//											text % text[pos-length] % text[pos-length] % pos-length );
-
 
 						}
 						break;
@@ -527,12 +604,26 @@ void TextControl::handleEvent( Event* event )
 									//add in the new character(s)
 
 									uint32 length = textPeer_->getSelectionCount();
-									if ( length > 0 ) {
-										model->removeText( pos, length );
+
+									if ( NULL == textModel ) {
+										String newText = model->getValueAsString( this->getModelKey() );
+
+										if ( length > 0 ) {
+											newText.erase( pos, length );
+										}
+
+										newText.insert( pos, text );
+										
+										model->setValueAsString( newText, this->getModelKey() );
 									}
-
-
-									model->insertText( pos, text );
+									else {
+										if ( length > 0 ) {
+											textModel->removeText( pos, length );
+										}
+										
+										
+										textModel->insertText( pos, text );
+									}
 								}
 							}
 						}
@@ -546,14 +637,30 @@ void TextControl::handleEvent( Event* event )
 									String text = "\n";
 
 									uint32 length = textPeer_->getSelectionCount();
-									if ( length > 0 ) {
-										model->removeText( pos, length );
+
+
+									if ( NULL == textModel ) {
+										String newText = model->getValueAsString( this->getModelKey() );
+
+										if ( length > 0 ) {
+											newText.erase( pos, length );
+										}
+
+										newText.insert( pos, text );
+										
+										model->setValueAsString( newText, this->getModelKey() );
 									}
-
-									//StringUtils::trace( Format( "adding [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
-									//											text % text[0] % text[0] % pos );
-
-									model->insertText( pos, text );
+									else {
+										
+										if ( length > 0 ) {
+											textModel->removeText( pos, length );
+										}
+										
+										//StringUtils::trace( Format( "adding [ %s ] (as char: %c[0x%04X]) to text model at pos %d\n" ) %
+										//											text % text[0] % text[0] % pos );
+										
+										textModel->insertText( pos, text );
+									}
 								}
 							}
 						}
@@ -619,12 +726,26 @@ void TextControl::handleEvent( Event* event )
 									//add in the new character(s)
 
 									uint32 length = textPeer_->getSelectionCount();
-									if ( length > 0 ) {
-										model->removeText( pos, length );
+
+									if ( NULL == textModel ) {
+										String newText = model->getValueAsString( this->getModelKey() );
+
+										if ( length > 0 ) {
+											newText.erase( pos, length );
+										}
+
+										newText.insert( pos, text );
+										
+										model->setValueAsString( newText, this->getModelKey() );
 									}
-
-
-									model->insertText( pos, text );
+									else {
+										if ( length > 0 ) {
+											textModel->removeText( pos, length );
+										}
+										
+										
+										textModel->insertText( pos, text );
+									}
 								}
 							}
 						}

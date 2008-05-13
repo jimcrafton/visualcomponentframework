@@ -1287,7 +1287,7 @@ public:
 	/**
 	*sets the view to associate with this control
 	*/
-	void setView( View* view );
+	void setView( View* view );	
 
 	/**
 	*returns the preferred width for this control. This is used
@@ -1857,6 +1857,10 @@ public:
 	*/
 	void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
 
+	virtual Model* getViewModel() {
+		return AbstractView::getViewModel();
+	}
+
 	/**
 	sets a new model for the view
 	Once set, the control fires a ControlModelChanged event.
@@ -1865,6 +1869,15 @@ public:
 
 	virtual void modelChanged( Model* oldModel, Model* newModel ){};
 	
+
+	Model* getModel() {
+		return getViewModel();
+	}
+
+	void setModel( Model* val ) {
+		setViewModel( val );
+	}
+
 	/**
 	*returns the current control that has captured the mouse input.
 	*This may return NULL if no control has expressly captured the
