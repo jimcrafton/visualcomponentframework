@@ -175,7 +175,7 @@ protected:
 
 	bool stateAllowsModelChange();
 
-	void onTextModelTextChanged( TextEvent* event );
+	void onTextModelTextChanged( ModelEvent* event );
 
 	/**
 	this is a fix from Marcello to work around an apparent bug in Win32's handling of

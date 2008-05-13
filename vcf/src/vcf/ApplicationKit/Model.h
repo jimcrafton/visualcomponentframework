@@ -187,7 +187,7 @@ public:
 	@see getValue
 	*/
 	virtual String getValueAsString( const VariantData& key=VariantData::null() ) {
-		return getValue().toString();
+		return getValue(key).toString();
 	}
 
 	/**

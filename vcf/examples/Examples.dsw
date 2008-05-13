@@ -1182,6 +1182,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ModelData"=.\MVC\ModelData\ModelData.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "NetworkKit"=..\build\vc60\NetworkKit\NetworkKit.dsp - Package Owner=<4>
 
 Package=<5>

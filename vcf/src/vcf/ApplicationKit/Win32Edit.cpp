@@ -557,7 +557,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				//modify the model, but ignore an change notifications to us!
 				editState_ |= esModelTextChanging;
 				
-				textControl_->getViewModel()->setValueAsString( getText() );
+				textControl_->getViewModel()->setValueAsString( getText(), textControl_->getModelKey() );
 				
 				editState_ &= ~esModelTextChanging;
 				
@@ -793,7 +793,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 						if ( NULL != model ) {
 							String text = getText();
 
-							model->setValueAsString( text );
+							model->setValueAsString( text, textControl_->getModelKey() );
 						}
 
 						editState_ &= ~esModelTextChanging;
@@ -867,7 +867,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 						}
 					}*/
 	
-					model->setValueAsString( text );
+					model->setValueAsString( text, textControl_->getModelKey() );
 					
 					editState_ &= ~esModelTextChanging;
 				}
@@ -988,7 +988,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 	return result;
 }
 
-void Win32Edit::onTextModelTextChanged( TextEvent* event )
+void Win32Edit::onTextModelTextChanged( ModelEvent* event )
 {
 	if ( (NULL != event) && 
 		!(editState_ & esModelTextChanging) &&
@@ -996,29 +996,32 @@ void Win32Edit::onTextModelTextChanged( TextEvent* event )
 
 		switch ( event->getType() ) {
 			case TextModel::tmTextInserted : {
-				insertText( event->changeStart,
-											event->changeText );
+				TextEvent* te = (TextEvent*)event;
+				insertText( te->changeStart,
+											te->changeText );
 			}
 			break;
 
 			case TextModel::tmTextReplaced : {
-				String originalText = event->originalText;
-				deleteText( event->changeStart,
+				TextEvent* te = (TextEvent*)event;
+				String originalText = te->originalText;
+				deleteText( te->changeStart,
 											originalText.size() );
 
-				insertText( event->changeStart,
-											event->changeText );
+				insertText( te->changeStart,
+											te->changeText );
 			}
 			break;
 
 			case TextModel::tmTextRemoved : {
-				deleteText( event->changeStart,
-											event->changeLength );
+				TextEvent* te = (TextEvent*)event;
+				deleteText( te->changeStart,
+											te->changeLength );
 			}
 			break;
 
-			case TextModel::tmTextSet : {
-				setText( textControl_->getViewModel()->getValueAsString() );
+			case Model::MODEL_CHANGED : case TextModel::tmTextSet : {
+				setText( textControl_->getViewModel()->getValueAsString( textControl_->getModelKey() ) );
 			}
 			break;
 		}
@@ -1043,7 +1046,12 @@ int Win32Edit::getCRCount( const uint32& begin, const uint32& end, const bool& l
 
 	TextControl* tc = (TextControl*)this->getControl();
 
-	String text = tc->getViewModel()->getValueAsString();
+	Model* tm = tc->getViewModel();
+	if ( NULL == tm ) {
+		return 0;
+	}
+
+	String text = tm->getValueAsString(tc->getModelKey());
 
 	uint32 size = text.size();
 	uint32 b = VCF::minVal<>( begin, size );
@@ -1288,7 +1296,7 @@ uint32 Win32Edit::getTotalPrintablePageCount( PrintContext* context )
 	formatRange.rc.bottom -= 350; //add a 1/4"
 
 	TextControl* tc = (TextControl*)this->getControl();
-	String text = tc->getViewModel()->getValueAsString();
+	String text = tc->getViewModel()->getValueAsString(tc->getModelKey());
 	uint32 textSize = text.size();
 
 	SendMessage( hwnd_, EM_FORMATRANGE, 0, 0 );
@@ -1387,19 +1395,22 @@ void Win32Edit::onControlModelChanged( Event* e )
 {
 	CallBack* tml = getCallback( "Win32TextModelHandler" );
 	if ( NULL == tml ) {
-		tml = new ClassProcedure1<TextEvent*,Win32Edit>( this, &Win32Edit::onTextModelTextChanged, "Win32TextModelHandler" );
+		tml = new ClassProcedure1<ModelEvent*,Win32Edit>( this, &Win32Edit::onTextModelTextChanged, "Win32TextModelHandler" );
 	}
 
 
 
 	Model* tm = textControl_->getViewModel();
-	tm->ModelChanged.add( (EventHandler*)tml );
-
-	String text = tm->getValueAsString();
-
-	setText( text );
-
-
+	if ( NULL != tm ) {
+		tm->ModelChanged.add( tml );
+		
+		String text = tm->getValueAsString(textControl_->getModelKey());
+		
+		setText( text );
+	}
+	else {
+		setText( String("") );
+	}
 }
 
 void Win32Edit::cut()

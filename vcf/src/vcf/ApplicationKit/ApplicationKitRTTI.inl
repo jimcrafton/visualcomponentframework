@@ -357,11 +357,24 @@ _property_( bool, "keepsArrowKeys",keepsArrowKeys, setKeepsArrowKeys, "" );
 _property_( int32, "tabOrder", getTabOrder, setTabOrder, "" );
 _property_( String, "whatThisHelpString", getWhatThisHelpString, setWhatThisHelpString, "" );
 _property_( String, "toolTipText", getToolTipText, setToolTipText, "" );
+_property_( VariantData, "modelKey", getModelKey, setModelKey, "" );
+
+_property_( double, "minHeight", getMinHeight, setMinHeight, "" );
+_property_( double, "minWidth", getMinWidth, setMinWidth, "" );
+
+_property_( double, "maxHeight", getMaxHeight, setMaxHeight, "" );
+_property_( double, "maxWidth", getMaxWidth, setMaxWidth, "" );
+
+_property_( double, "bottom", getBottom, setBottom, "" );
+_property_( double, "bottom", getBottom, setBottom, "" );
+
 _property_object_( Border, "border", getBorder, setBorder, "" );
 _property_object_( Color, "color", getColor, setColor, "" );
 _property_object_( Font, "font", getFont, setFont, "" );
 _property_object_( PopupMenu, "popupMenu", getPopupMenu, setPopupMenu, "" );
 _property_object_( Container, "container", getContainer, setContainer, "" );
+_property_object_( Model, "model", getModel, setModel, "" );
+
 _property_enum_labeled_( AlignmentType, "alignment", getAlignment, setAlignment,
 					   AlignNone, AlignClient, 6, AlignmentTypeNames, "");
 
