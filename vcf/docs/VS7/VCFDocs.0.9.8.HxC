@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE HelpCollection>
+<HelpCollection
+  DTDVersion="1.0"
+  Id=""
+  FileVersion="0.0.0.0"
+  LangId=""
+  Font=""
+  FontSize=""
+  Charset=""
+  Title="Visual Component Framework 0.9.8"
+  Copyright="2008 The VCF Project">
+
+  <AttributeDef File="VCFDocs.0.9.8.HxA"/>
+
+  <TOCDef File="VCFDocs.0.9.8.HxT"/>
+
+  <KeywordIndexDef File="VCFDocs.0.9.8_K.HxK"/>
+  <KeywordIndexDef File="VCFDocs.0.9.8_NamedUrlIndex.HxK"/>
+
+  <ItemMoniker Name="!DefaultFullTextSearch" ProgId="HxDs.HxFullTextSearch" InitData="FTS"/>
+  <ItemMoniker Name="!DefaultKeywordIndex" ProgId="HxDs.HxIndex" InitData="K"/>
+  <ItemMoniker Name="!DefaultNamedUrlIndex" ProgId="HxDs.HxIndex" InitData="NamedUrlIndex"/>
+  <ItemMoniker Name="!DefaultTOC" ProgId="HxDs.HxHierarchy" InitData="VCFDocs.0.9.8"/>
+
+  <ToolData Name="MSVHWLogLevel" Value="3"/>
+  <ToolData Name="MSVHWLogFile" Value="VCFDocs.0.9.8.log"/>
+  <ToolData Name="MSVHWNamespace" Value="VCFDocs.0.9.8"/>
+  <ToolData Name="FAR.NamespaceDesc" Value="VCF.0.9.8"/>
+  <ToolData Name="FAR.ProjectList_00" Value="vcf-docbook.HxC"/>
+  <ToolData Name="FAR.ProjectList_01" Value="VCFSrcDocs.0.9.8.HxC"/>
+</HelpCollection>
