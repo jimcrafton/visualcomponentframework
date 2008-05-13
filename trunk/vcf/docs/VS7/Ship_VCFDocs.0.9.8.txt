@@ -1,0 +1,21 @@
+Copy files from folder: "C:\Dev\libs\vcf\docs\VCFBook\"
+Install to target folder keeping any relative path relationship
+
+* Copy: VCFDocs.0.9.8.HxC  (register under Namespace="VCFDocs.0.9.8", Desc="VCF.0.9.8"
+* Copy: VCFDocs.0.9.8.HxA
+* Copy: VCFDocs.0.9.8.HxT
+* Copy: VCFDocs.0.9.8_K.HxK
+* Copy: VCFDocs.0.9.8_NamedUrlIndex.HxK
+* Copy: VCFBook.0.9.8.HxS  (register as TitleId="VCF.Book.0.9.8" under Namespace="VCFDocs.0.9.8")
+* Copy: VCFSrcDocs.0.9.8.HxS  (register as TitleId="VCFSrcDocs.0.9.8" under Namespace="VCFDocs.0.9.8")
+
+Note: Test by registering under any namespace name. But if you register titles using
+different TitleId(s) then make sure you also change the TitleIds in the .HxT file.
+
+Collection Registration:
+
+* Copy: H2Reg_cmd.ini  (registration script)
+* Copy: H2Reg.exe  (registration utility - free download from http://helpware.net)
+* Copy: H2Reg.ini  (configuration file - free download from http://helpware.net)
+* Run: H2Reg.exe -R "cmdfile=H2Reg_cmd.ini"  (run at install time to register all files)
+* Run: H2Reg.exe -U "cmdfile=H2Reg_cmd.ini"  (run at uninstall time to unregister all files)

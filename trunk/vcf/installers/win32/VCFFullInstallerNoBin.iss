@@ -48,15 +48,14 @@ Source: ..\..\src\thirdparty\win32\MSDNIntegrator\MSDNIntegrator.exe; DestDir: {
 
 Source: ..\..\docs\VS7\H2Reg.exe; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
 Source: ..\..\docs\VS7\H2Reg.ini; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
-Source: ..\..\docs\VS7\H2Reg_cmd.ini; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
-Source: ..\..\docs\VS7\H2Reg_cmd_090.ini; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
-Source: ..\..\docs\VS7\VCFBook.0.9.0.HxS; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
-Source: ..\..\docs\VS7\VCFSrcDocs.0.9.0.HxS; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
-Source: ..\..\docs\VS7\VCFDocs.0.9.0.HxA; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
-Source: ..\..\docs\VS7\VCFDocs.0.9.0.HxC; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
-Source: ..\..\docs\VS7\VCFDocs.0.9.0_K.HxK; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
-Source: ..\..\docs\VS7\VCFDocs.0.9.0.HxT; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
-Source: ..\..\docs\VS7\VCFDocs.0.9.0_NamedUrlIndex.HxK; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
+Source: ..\..\docs\VS7\H2Reg_cmd_098.ini; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
+Source: ..\..\docs\VS7\VCFBook.0.9.8.HxS; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
+Source: ..\..\docs\VS7\VCFSrcDocs.0.9.8.HxS; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
+Source: ..\..\docs\VS7\VCFDocs.0.9.8.HxA; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
+Source: ..\..\docs\VS7\VCFDocs.0.9.8.HxC; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
+Source: ..\..\docs\VS7\VCFDocs.0.9.8_K.HxK; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
+Source: ..\..\docs\VS7\VCFDocs.0.9.8.HxT; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
+Source: ..\..\docs\VS7\VCFDocs.0.9.8_NamedUrlIndex.HxK; DestDir: {app}\docs; Components: Help_Files/MSHelp2_Files
 
 
 Source: psvince.dll; Flags: dontcopy
@@ -125,7 +124,7 @@ Filename: {app}\MSDNIntegrator.exe; Parameters: "-guid ""{{cf54ec6b-a508-4b05-b0
 Filename: {app}\RegEnVar.exe; Parameters: "--add-user-var VCF_ROOT ""{app}"""; Components: Src; Tasks: addenvpaths; Flags: runhidden
 Filename: {app}\RegEnVar.exe; Parameters: --add-to-user-path %VCF_ROOT%\bin; Components: Src; Tasks: addenvpaths; Flags: runhidden
 
-Filename: {app}\docs\H2Reg.exe; Parameters: "-R ""cmdfile=H2Reg_cmd_090.ini"""; Tasks: MSHelp2_msdnintegrate; Components: Help_Files/MSHelp2_Files
+Filename: {app}\docs\H2Reg.exe; Parameters: "-R ""cmdfile=H2Reg_cmd_098.ini"""; Tasks: MSHelp2_msdnintegrate; Components: Help_Files/MSHelp2_Files
 
 ;run the quick build instructions!
 Filename: {app}\quickbuild.html; Description: Read Quick build Instructions; Flags: shellexec nowait postinstall skipifsilent
@@ -145,7 +144,7 @@ Filename: {app}\RegEnVar.exe; Parameters: --del-from-user-path %VCF_ROOT%\bin; T
 Filename: {app}\RegEnVar.exe; Parameters: --del-user-var VCF_ROOT; Tasks: addenvpaths; Components: Src; Flags: runhidden
 
 
-Filename: {app}\docs\H2Reg.exe; Parameters: "-U ""cmdfile=H2Reg_cmd_090.ini"""; Tasks: MSHelp2_msdnintegrate; Components: Help_Files/MSHelp2_Files
+Filename: {app}\docs\H2Reg.exe; Parameters: "-U ""cmdfile=H2Reg_cmd_098.ini"""; Tasks: MSHelp2_msdnintegrate; Components: Help_Files/MSHelp2_Files
 ; Must uninstall VS addins/wizards through IDE, I guess.
 
 
