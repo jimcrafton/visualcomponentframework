@@ -569,7 +569,10 @@ public:
 			CallBack::Vector::iterator it = functions->begin();
 			while ( !functions->empty() ) {
 				CallBack* cb = *it;
-				remove( cb );				
+				remove( cb );
+				if ( cb->getSource() == NULL ) {
+					cb->free();
+				}
 				it = functions->begin();
 			}
 

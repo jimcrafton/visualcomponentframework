@@ -275,6 +275,10 @@ int main( int argc, char** argv ){
 
 	*/
 
+		{
+			Delegate1<int> ds;
+			ds += doit;
+		}
 
 		Delegate1<int> d2;
 		d2 += doit;

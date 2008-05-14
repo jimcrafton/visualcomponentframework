@@ -128,7 +128,5 @@ object ModelDataWindow  : VCF::Window
 		end
 
 
-	end
-	
-	
+	end	
 end
