@@ -21,11 +21,12 @@ function main()
 	// Create file system object
 	var FileSys = WScript.CreateObject("Scripting.FileSystemObject");
 
-
+	var WshSysEnv = WSShell.Environment("USER");
+	var addinsDir = WshSysEnv("VCF_ROOT") + "/build/vc90/add-ins";
 
 // VCFAppWizard
 
-	var strValue = FileSys.GetAbsolutePathName(".");
+	var strValue = FileSys.GetAbsolutePathName(addinsDir);
 	if(strValue == null || strValue == "")
 		strValue = ".";
 
@@ -127,7 +128,7 @@ function main()
 
 // VCFConsoleWizard
 
-	var strValue = FileSys.GetAbsolutePathName(".");
+	var strValue = FileSys.GetAbsolutePathName(addinsDir);
 	if(strValue == null || strValue == "")
 		strValue = ".";
 
@@ -230,7 +231,7 @@ function main()
 
 // VCFLibraryAppWizard
 
-	var strValue = FileSys.GetAbsolutePathName(".");
+	var strValue = FileSys.GetAbsolutePathName(addinsDir);
 	if(strValue == null || strValue == "")
 		strValue = ".";
 
@@ -332,7 +333,7 @@ function main()
 
 // MVCAppWizard
 
-	var strValue = FileSys.GetAbsolutePathName(".");
+	var strValue = FileSys.GetAbsolutePathName(addinsDir);
 	if(strValue == null || strValue == "")
 		strValue = ".";
 
@@ -434,7 +435,7 @@ function main()
 
 // VPLApplicationWizard
 
-	var strValue = FileSys.GetAbsolutePathName(".");
+	var strValue = FileSys.GetAbsolutePathName(addinsDir);
 	if(strValue == null || strValue == "")
 		strValue = ".";
 
