@@ -392,26 +392,27 @@ Control* AbstractContainer::findControl( const String& controlName )
 
 void AbstractContainer::updateTabOrder( Control* child, uint32& newTabOrder )
 {
-	int32 currentTabOrder = child->getTabOrder();
-	if ( newTabOrder >= 0 ) {
+	int32 currentTabOrder = child->getTabOrder();	
 
-		if ( newTabOrder > tabOrderMap_.size() ) {
-			newTabOrder = tabOrderMap_.size() - 1;
-		}
-		else if ( newTabOrder < 0 ) {
-			newTabOrder = 0;
-		}
-		std::map<int32,Control*>::iterator found = tabOrderMap_.find( currentTabOrder );
-		if ( found != tabOrderMap_.end() ) {
-			tabOrderMap_.erase( found );
-		}
-
-		tabOrderMap_[newTabOrder] = child;
+	if ( newTabOrder > tabOrderMap_.size() ) {
+		newTabOrder = tabOrderMap_.size() - 1;
 	}
+	else if ( newTabOrder < 0 ) {
+		newTabOrder = 0;
+	}
+	std::map<int32,Control*>::iterator found = tabOrderMap_.find( currentTabOrder );
+	if ( found != tabOrderMap_.end() ) {
+		tabOrderMap_.erase( found );
+	}
+
+	tabOrderMap_[newTabOrder] = child;
+	
 }
 
 void AbstractContainer::getTabList( std::vector<Control*>& tabList )
 {
+	VCF_ASSERT( tabOrderMap_.size() == controls_.size() );
+
 	std::map<int32,Control*>::iterator it = tabOrderMap_.begin();
 	while ( it != tabOrderMap_.end() ) {
 		Control::buildTabList( it->second, tabList );

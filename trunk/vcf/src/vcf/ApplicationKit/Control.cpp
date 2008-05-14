@@ -1605,6 +1605,8 @@ void Control::setContainer( Container* container )
 			oldContainer->remove( control );
 
 			container_->add( control );
+			uint32 tmp = control->getTabOrder();
+			container_->updateTabOrder( control, tmp );
 		}
 
 		oldContainer->clear();
@@ -1642,7 +1644,7 @@ bool Control::canAcceptFocus()
 {
 	bool result = true;
 
-	if ( isEnabled() ) {
+	if ( isEnabled() && getAllowsFocus() ) {
 		Control* parent = getParent();
 		while ( parent != NULL ) {
 			if ( !parent->isEnabled() ) {
