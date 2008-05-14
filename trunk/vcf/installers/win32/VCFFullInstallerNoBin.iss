@@ -131,9 +131,9 @@ Filename: {app}\quickbuild.html; Description: Read Quick build Instructions; Fla
 
 ;we are not supporting VC70 for wizards at the moment
 ;Filename: {app}\build\vc70\Add-Ins\Setup.js; Tasks: VC70_installwizards; Components: Src;  Flags: shellexec waituntilterminated
-Filename: {app}\build\vc71\Add-Ins\Setup.js; Components: Src; Flags: shellexec waituntilterminated; Tasks: VC80_installwizards
-Filename: {app}\build\vc80\Add-Ins\Setup-vcexpress.js; Components: Src; Flags: shellexec waituntilterminated; Tasks: VC80_installwizards
-Filename: {app}\build\vc90\Add-Ins\Setup-vcexpress.js; Components: Src; Flags: shellexec waituntilterminated; Tasks: VC90_installwizards
+Filename: {sys}\cscript.exe; Parameters: """{app}\build\vc71\Add-Ins\Setup.js"""; Components: Src; Flags: shellexec waituntilterminated; Tasks: VC80_installwizards
+Filename: {sys}\cscript.exe; Parameters: """{app}\build\vc80\Add-Ins\Setup-vcexpress.js"""; Components: Src; Flags: shellexec waituntilterminated; Tasks: VC80_installwizards
+Filename: {sys}\cscript.exe; Parameters: """{app}\build\vc90\Add-Ins\Setup-vcexpress.js"""; Components: Src; Flags: shellexec waituntilterminated; Tasks: VC90_installwizards
 
 
 
