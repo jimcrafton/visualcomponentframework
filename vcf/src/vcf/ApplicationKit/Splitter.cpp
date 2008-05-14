@@ -38,6 +38,8 @@ void Splitter::init()
 
 	setWidth( getPreferredWidth() );
 	setHeight( getPreferredHeight() );
+	setAllowsFocus( false );
+	setTabStop( false );
 }
 
 Splitter::~Splitter()
