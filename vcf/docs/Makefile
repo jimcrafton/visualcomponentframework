@@ -395,7 +395,7 @@ online_doxy :
 	mv Doxyfile.tmp Doxyfile.online
 	doxygen Doxyfile.online
 	mv Doxyfile.bak Doxyfile.online
-	cp -r gfx/ doxy_html/
+	-cp -r gfx/ doxy_html/
 	cp vcf.css doxy_html/
 	cp vcf_tabs.css doxy_html/
 		
