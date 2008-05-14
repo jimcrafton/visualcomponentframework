@@ -28,6 +28,8 @@ void StatusBar::Container::resizeChildren( Control* control )
 		bounds.right_ - rightBorderWidth_, 
 		bounds.bottom_ - bottomBorderHeight_ );
 
+	bounds = rect;
+
 	double spacer = 2.0;
 
 	double currentRight = bounds.right_ - spacer;
@@ -71,7 +73,10 @@ void StatusBar::Container::resizeChildren( Control* control )
 StatusBar::StatusBar():
 	VCF::CustomControl(true)
 {
-	setContainer( new StatusBar::Container() );
+	StatusBar::Container* container =  new StatusBar::Container();
+	container->setTopBorderHeight(2);
+	container->setBottomBorderHeight(2);
+	setContainer( container );
 	Label* primary = new Label();
 	primary->setCaption( "" );
 
