@@ -63,6 +63,7 @@
     <subproject id="Localization" template="example"/>
     <subproject id="LOLCats" template="example"/>
     <subproject id="MinMax" template="example"/>
+    <subproject id="ModelData" template="example_mvc"/>
     <subproject id="MVCBasics" template="example_mvc"/>
     <subproject id="NetworkKitTest" template="example"/>
     <subproject id="OpenGLShapes" template="example"/>
