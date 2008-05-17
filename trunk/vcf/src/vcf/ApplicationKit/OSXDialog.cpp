@@ -61,8 +61,8 @@ WindowClass OSXDialog::getCreationWinClass()
 
 void OSXDialog::createAsSheetWindow()
 {
-	sheetParent_ = NULL;
-
+	//sheetParent_ = NULL;
+/*
 	WindowAttributes attrs = kWindowCompositingAttribute | kWindowStandardHandlerAttribute;
 	
 	::Rect bounds = {0,0,0,0};
@@ -129,11 +129,12 @@ void OSXDialog::createAsSheetWindow()
 		Frame* ownerFrame = owner_->getParentFrame();
 		sheetParent_ = (WindowRef) ownerFrame->getPeer()->getHandleID();
 	}
+	*/
 }
 
 void OSXDialog::createAsWindow()
 {
-	sheetParent_ = NULL;
+/*	sheetParent_ = NULL;
 	WindowAttributes attrs=getCreationWinAttrs();// = kWindowCompositingAttribute | kWindowStandardHandlerAttribute;
     
     ::Rect bounds = {0,0,0,0};
@@ -199,6 +200,7 @@ void OSXDialog::createAsWindow()
 							this, 
 							&contentViewHandlerRef_ );
 	}
+	*/
 }
 
 void OSXDialog::create( Control* owningControl )
@@ -209,9 +211,9 @@ void OSXDialog::create( Control* owningControl )
 	else {
 		control_ = owningControl;
 		
-		createAsSheetWindow();
-		EventHandler* ev = new ClassProcedure1<Event*,Control>( owningControl, &Control::handleEvent );			
-		UIToolkit::postEvent( ev, new VCF::ComponentEvent( owningControl, Component::COMPONENT_CREATED ),	true );
+		//createAsSheetWindow();
+		//EventHandler* ev = new ClassProcedure1<Event*,Control>( owningControl, &Control::handleEvent );			
+		//UIToolkit::postEvent( ev, new VCF::ComponentEvent( owningControl, Component::COMPONENT_CREATED ),	true );
 	}
 }
 
@@ -240,9 +242,12 @@ void OSXDialog::setVisible( const bool& visible )
 {
 	//we are being displayed - chewck if we need to 
 	//"turn into" a sheet from a dialog, or vice-versa
+	
+	/*
 	Dialog* dialog = (Dialog*)control_;
 	if ( dialog->isSheetModal() ) {
 		//check if we are alread a sheet
+		
 		if ( !isWindowSheet_ ) {
 			//oops! We are not a sheet! Store off
 			//our current window ref, create a new sheet
@@ -325,6 +330,7 @@ void OSXDialog::setVisible( const bool& visible )
 			repaint(NULL, false);
 		}
 	 }
+	 */
 }
 
 void OSXDialog::close()
@@ -334,6 +340,7 @@ void OSXDialog::close()
 
 void OSXDialog::showMessage( const String& message, const String& caption )
 {
+	/*
 	DialogItemIndex itemIndex;
 	CFTextString msg;
 	msg = message;
@@ -352,12 +359,15 @@ void OSXDialog::showMessage( const String& message, const String& caption )
 	RunStandardAlert (dialogRef_, NULL, &itemIndex);
 	
 	dialogRef_ = NULL;
+	*/
 }
 
 UIToolkit::ModalReturnType OSXDialog::showMessage( const String& message, const String& caption,
 												const int32& messageButtons,	const Dialog::MessageStyle& messageStyle )
 {
 	UIToolkit::ModalReturnType result = UIToolkit::mrNone;
+	/*
+	
 	DialogItemIndex itemIndex;
 	CFTextString msg;
 	msg = message;
@@ -499,7 +509,7 @@ UIToolkit::ModalReturnType OSXDialog::showMessage( const String& message, const 
 	} 
 	
 	dialogRef_ = NULL;
-	
+	*/
 	return result;
 }
 
@@ -507,7 +517,7 @@ void OSXDialog::init()
 {
 
 }
-
+/*
 OSStatus OSXDialog::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent )
 {
 	UInt32 whatHappened = GetEventKind (theEvent);
@@ -569,7 +579,7 @@ OSStatus OSXDialog::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef th
 				
 	return OSXWindow::handleOSXEvent( nextHandler, theEvent );
 }
-
+*/
 
 /**
 $Id$

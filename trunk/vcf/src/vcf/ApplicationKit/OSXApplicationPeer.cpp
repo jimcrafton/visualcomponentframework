@@ -16,7 +16,7 @@ using namespace VCF;
 
 OSXApplicationPeer::OSXApplicationPeer():
 	app_(NULL),
-	handleID_(0)
+	appInstance_(0)
 {
 
 }
@@ -30,7 +30,7 @@ OSXApplicationPeer::~OSXApplicationPeer()
 bool OSXApplicationPeer::initApp()
 {
 	bool result = true;
-
+	appInstance_ = [NSApplication sharedApplication];
 	return result;
 }
 
@@ -71,12 +71,12 @@ String OSXApplicationPeer::getFileName()
 
 OSHandleID OSXApplicationPeer::getHandleID()
 {
-	return (OSHandleID)handleID_;
+	return (OSHandleID)appInstance_;
 }
 
 void OSXApplicationPeer::setHandleID( OSHandleID handleID )
 {
-	handleID_ = handleID;
+	appInstance_ = (NSApplication*) handleID;
 }
 
 

@@ -770,6 +770,160 @@ OSStatus OSXControl::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef t
 
 */
 
+
+
+namespace VCF {
+
+OSXControl::OSXControl( Control* control )
+{
+
+}
+
+OSXControl::~OSXControl()
+{
+
+}
+
+OSHandleID OSXControl::getHandleID()
+{
+
+}
+
+void OSXControl::create( Control* owningControl )
+{
+
+}
+
+void OSXControl::destroyControl()
+{
+
+}
+
+void OSXControl::setBounds( Rect* rect )
+{
+
+}
+
+bool OSXControl::beginSetBounds( const uint32& numberOfChildren )
+{
+	return true;
+}
+
+void OSXControl::endSetBounds()
+{
+
+}
+
+Rect OSXControl::getBounds()
+{
+
+}
+
+void OSXControl::setVisible( const bool& visible )
+{
+
+}
+
+bool OSXControl::getVisible()
+{
+	return false;
+}
+
+Control* OSXControl::getControl()
+{
+	return NULL;
+}
+
+void OSXControl::setControl( Control* component )
+{
+
+}
+
+void OSXControl::setCursor( Cursor* cursor )
+{
+
+}
+
+void OSXControl::setParent( Control* parent )
+{
+
+}
+
+Control* OSXControl::getParent()
+{
+	return NULL;
+}
+
+bool OSXControl::isFocused()
+{
+	return false;
+}
+
+void OSXControl::setFocused()
+{
+	
+}
+
+bool OSXControl::isEnabled()
+{
+	return false;
+}
+
+void OSXControl::setEnabled( const bool& enabled )
+{
+
+}
+
+void OSXControl::setFont( Font* font )
+{
+
+}
+
+void OSXControl::repaint( Rect* repaintRect, const bool& immediately )
+{
+
+}
+	
+void OSXControl::keepMouseEvents()
+{
+
+}
+
+void OSXControl::releaseMouseEvents()
+{
+
+}
+
+void OSXControl::translateToScreenCoords( Point* pt )
+{
+
+}
+
+void OSXControl::translateFromScreenCoords( Point* pt )
+{
+
+}
+	
+void OSXControl::setBorder( Border* border )
+{
+
+}
+	
+void OSXControl::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
+{
+
+}
+	
+void OSXControl::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
+{
+
+}
+	
+
+
+};
+
+
 /**
 $Id$
 */

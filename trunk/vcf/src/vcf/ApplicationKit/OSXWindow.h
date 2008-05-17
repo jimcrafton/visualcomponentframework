@@ -14,7 +14,7 @@ where you installed the VCF.
 namespace VCF {
 
 
-class OSXWindow : public Object, public ControlPeer, public WindowPeer {
+class OSXWindow : public ControlPeer, public WindowPeer {
 public:
 
 	enum WindowState{
@@ -31,7 +31,7 @@ public:
 	virtual ~OSXWindow();
 
 	virtual OSHandleID getHandleID() {
-		return (OSHandleID)windowRef_;
+		return (OSHandleID)0;
 	}
 
 	virtual void create( Control* owningControl );
@@ -126,12 +126,8 @@ public:
 	virtual bool isActiveWindow();
     
    	virtual void setBorderPath( Path* path );
-
-	virtual OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
-
-	bool isComposited();
 	
-	static OSXWindow* getWindowFromWindowRef( WindowRef window );
+	bool isComposited();	
 	
 	ControlRef getRootControl();
 	
@@ -139,33 +135,26 @@ public:
 		return currentMouseBtn_;
 	}
 	
-	virtual WindowAttributes getCreationWinAttrs();
 	
-	virtual WindowClass getCreationWinClass();
 protected:
-	static EventHandlerUPP getEventHandlerUPP();
-
-	WindowRef windowRef_;
 	Control* control_;
 	Rect bounds_;
-	EventHandlerRef handlerRef_;
-	EventHandlerRef contentViewHandlerRef_;	
 	//RgnHandle mouseTrackRgn_;
-	MouseTrackingRef mouseTrackRef_;	
+	//MouseTrackingRef mouseTrackRef_;	
 	uint32 currentMouseBtn_;
 	bool internalClose_;	
 
-	RgnHandle determineUnobscuredClientRgn();
+	//RgnHandle determineUnobscuredClientRgn();
 	
-	static OSStatus handleOSXEvents(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
+	//static OSStatus handleOSXEvents(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
 	
-   	Control* getControlForMouseEvent( EventRef event );
+   	//Control* getControlForMouseEvent( EventRef event );
 	
-	static OSStatus wndContentViewHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
+	//static OSStatus wndContentViewHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
 	
-	OSStatus handleContentViewDraw( EventHandlerCallRef nextHandler, EventRef theEvent );
+	//OSStatus handleContentViewDraw( EventHandlerCallRef nextHandler, EventRef theEvent );
 	
-	void copyControlsFromWndRef( WindowRef oldWndRef );
+	//void copyControlsFromWndRef( WindowRef oldWndRef );
 };
 
 

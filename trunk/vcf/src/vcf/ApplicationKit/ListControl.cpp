@@ -2,7 +2,7 @@
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
-#include "vcf/ApplicationKit/ApplicationKitPrivate.h"
+//#include "vcf/ApplicationKit/ApplicationKitPrivate.h"
 #include "vcf/ApplicationKit/ListModel.h"
 #include "vcf/ApplicationKit/ListPeer.h"
 #include "vcf/ApplicationKit/ListControl.h"

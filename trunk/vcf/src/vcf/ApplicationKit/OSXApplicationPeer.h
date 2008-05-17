@@ -39,7 +39,7 @@ public:
 	virtual void setHandleID( OSHandleID handleID );
 protected:
 	VCF::AbstractApplication* app_;
-	OSHandleID handleID_;
+	NSApplication* appInstance_;
 };
 
 }; //end of namespace VCF

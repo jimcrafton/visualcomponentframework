@@ -8,9 +8,8 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
+#include <Cocoa/Cocoa.h>
 
-#include "thirdparty/macOSX/HIView/TCarbonEvent.h"
-#include "thirdparty/macOSX/HIView/TView.h"
 
 #define VCF_PROPERTY_CREATOR			'VCFA'
 #define VCF_PROPERTY_CONTROL_VAL		'VCFc'
@@ -28,63 +27,6 @@ static VCF::uint32 translateKeyMask( UInt32 keyMod );
 };
 
 
-template <typename ViewType >
-class ViewCreator {
-public:
-
-	static OSStatus create( HIViewRef* outControl,
-							const HIRect* inBounds = NULL,
-							WindowRef inWindow = NULL ) {
-
-		OSStatus			err;
-		EventRef			event = TObject::CreateInitializationEvent();
-		
-		// Register this class
-		VCF::CFTextString classID;
-		VCF::String className = VCF::StringUtils::getClassNameFromTypeInfo( typeid(ViewType) );
-		classID = className;
-
-		ViewCreator<ViewType>::RegisterClass(classID);
-
-
-		// Make a new instantiation of this class
-		err = HIObjectCreate( classID, event, (HIObjectRef*) outControl );
-
-		ReleaseEvent( event );
-
-		if ( err == noErr ) {
-			if ( inWindow != NULL ) {
-				//GetRootControl( inWindow, &root );
-				//HIViewAddSubview( root, *outControl );
-			}
-
-			//HIViewSetFrame( *outControl, inBounds );
-		}
-		return err;
-	}
-
-	static void RegisterClass( CFStringRef classID ) {
-		static bool sRegistered;
-
-		if ( !sRegistered ) {
-
-			TView::RegisterSubclass( classID, ViewCreator<ViewType>::Constructor );
-			sRegistered = true;
-		}
-	}
-
-	static OSStatus	Constructor( HIObjectRef inObjectRef,
-	                           TObject** outObject ) {
-
-		*outObject = new ViewType( (HIViewRef) inObjectRef );
-
-		return noErr;
-	}
-};
-
-
-
-
 namespace VCF {
 
 
@@ -97,25 +39,12 @@ this class is used as a wrapper around an XEvent.
 */
 class OSXEventMsg {
 public:
-	OSXEventMsg( EventRef event, Control* control ): osxEvent_(event), control_(control) {}
 
 
-	EventRef osxEvent_;
 	Control* control_;
 };
 
 
-
-class TimeOutHandler {
-public:
-	TimeOutHandler():source_(NULL), handler_(NULL), timerRef_(0) {
-
-	}
-
-	Object* source_;
-	EventHandler* handler_;
-	EventLoopTimerRef timerRef_;
-};
 
 /**
 */
@@ -246,28 +175,28 @@ public:
 
 	virtual void internal_displayHelpSection( const String& helpBookName, const String& helpDirectory, const String& helpSection );
 	
-	static EventRef createUserCarbonEvent( UInt32 eventType );
+	//static EventRef createUserCarbonEvent( UInt32 eventType );
 protected:
 	//VirtualKeyCode translateKeyCode( guint code );
 	//uint32 translateKeyMask( GdkModifierType keyState );
 	//uint32 translateButtonMask( GdkModifierType buttonState );
 
-	static OSStatus handleOSXApplicationEvents( EventHandlerCallRef nextHandler,
-                                                EventRef osxEvent, void* userData );
+	//static OSStatus handleOSXApplicationEvents( EventHandlerCallRef nextHandler,
+      //                                          EventRef osxEvent, void* userData );
 
-    OSStatus handleAppEvents( EventHandlerCallRef nextHandler, EventRef osxEvent );
+    //OSStatus handleAppEvents( EventHandlerCallRef nextHandler, EventRef osxEvent );
 
-	std::map<EventLoopTimerRef,TimeOutHandler> timeoutHandlers_;
+	//std::map<EventLoopTimerRef,TimeOutHandler> timeoutHandlers_;
     bool quitEventLoop_;
-    EventHandlerRef eventHandlerRef_;
-    EventHandlerUPP handlerUPP_;
-    EventLoopTimerUPP timerUPP_;
-    EventLoopIdleTimerUPP idleTimerUPP_;
-    EventLoopTimerRef idleTimerRef_;
-    void processOSXEvent( EventRecord* eventRec );
+    //EventHandlerRef eventHandlerRef_;
+    //EventHandlerUPP handlerUPP_;
+    //EventLoopTimerUPP timerUPP_;
+    //EventLoopIdleTimerUPP idleTimerUPP_;
+    //EventLoopTimerRef idleTimerRef_;
+    //void processOSXEvent( EventRecord* eventRec );
 
-    static void handleTimerEvent( EventLoopTimerRef inTimer, void * inUserData );
-    static void handleIdleTimer( EventLoopTimerRef inTimer, EventLoopIdleTimerMessage inState, void *inUserData );
+    //static void handleTimerEvent( EventLoopTimerRef inTimer, void * inUserData );
+    //static void handleIdleTimer( EventLoopTimerRef inTimer, EventLoopIdleTimerMessage inState, void *inUserData );
 
 
 };

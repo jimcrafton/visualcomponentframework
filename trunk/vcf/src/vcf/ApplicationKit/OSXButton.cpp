@@ -34,9 +34,9 @@ void OSXButton::setImage( Image* image )
 		
 ButtonState OSXButton::getState()
 {
-	state_.setEnabled( IsControlEnabled( hiView_ ) ? true : false );
-	state_.setActive( IsControlActive( hiView_ ) ? true : false );
-	state_.setFocused( isFocused() ? true : false );
+	//state_.setEnabled( IsControlEnabled( hiView_ ) ? true : false );
+	//state_.setActive( IsControlActive( hiView_ ) ? true : false );
+	//state_.setFocused( isFocused() ? true : false );
 	
 	return state_;
 }
@@ -45,7 +45,7 @@ void OSXButton::create( Control* owningControl )
 {
 	::Rect bounds = {0,0,0,0};
 	
-		
+		/*
 	if ( noErr == CreatePushButtonControl( NULL, &bounds, CFSTR(""), &hiView_ ) ) {
 		
 		control_ = owningControl;
@@ -66,6 +66,7 @@ void OSXButton::create( Control* owningControl )
 	else {
 		throw RuntimeException( MAKE_ERROR_MSG_2("OSXButton failed to be created!") );
 	}
+	*/
 }
 	
 String OSXButton::getText()
@@ -76,10 +77,10 @@ String OSXButton::getText()
 	
 	
 	CFStringRef tmp;
-	OSStatus err = CopyControlTitleAsCFString( hiView_, &tmp );	
-	if ( err != noErr ) {
-		printf( "CopyControlTitleAsCFString() failed, err: %d\n", err );
-	}
+	//OSStatus err = CopyControlTitleAsCFString( hiView_, &tmp );	
+	//if ( err != noErr ) {
+	//	printf( "CopyControlTitleAsCFString() failed, err: %d\n", err );
+	//}
 	CFTextString title(tmp);
 	CFRelease( tmp );
 	result = title;
@@ -90,12 +91,12 @@ void OSXButton::setText( const String& text )
 {	
 	CFTextString tmp(text);
 	
-	OSStatus err = SetControlTitleWithCFString( hiView_, tmp );
-	if ( err != noErr ) {
-		printf( "SetControlTitleWithCFString() failed, err: %d\n", err );
-	}
+	//OSStatus err = SetControlTitleWithCFString( hiView_, tmp );
+	//if ( err != noErr ) {
+	//	printf( "SetControlTitleWithCFString() failed, err: %d\n", err );
+	//}
 }
-	
+	/*
 OSStatus OSXButton::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent )
 {
 	OSStatus result = eventNotHandledErr;
@@ -160,66 +161,7 @@ OSStatus OSXButton::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef th
 					result = noErr;//::CallNextEventHandler( nextHandler, theEvent );
 					//break;
 					if ( !control_->isDestroying() ) {
-							/*					
-						GrafPtr port = NULL;										
-						CGContextRef context = NULL;
-						RgnHandle region = NULL;
-						
-						event.GetParameter( kEventParamRgnHandle, &region );
-						event.GetParameter<CGContextRef>( kEventParamCGContextRef, typeCGContextRef, &context );
-						event.GetParameter<GrafPtr>( kEventParamGrafPort, typeGrafPtr, &port );						
-						
-												
-						::Rect rgnBds;
-						GetRegionBounds( region, &rgnBds );						
-						
-						
-						VCF::Rect bounds = control_->getClientBounds();									
-						
-						VCF::GraphicsContext* ctx = control_->getContext();
-						
-						WindowRef wnd = GetControlOwner( hiView_ );
-						::Rect wndR;
-						GetWindowBounds( wnd, kWindowContentRgn, &wndR );
-						
-						
-						HIRect bds;
-						//bounds = control_->getBounds();
-						
-						bds.origin.x = bounds.left_;
-						bds.origin.y = bounds.top_;
-						bds.size.width = bounds.getWidth();
-						bds.size.height = bounds.getHeight();
-						HIViewConvertRect( &bds, hiView_, NULL );
-						
-						bounds.setRect( bds.origin.x,
-										bds.origin.y, 
-										bds.origin.x + bds.size.width,
-										bds.origin.y + bds.size.height );
-						
-						
-						
-									
-						ctx->setViewableBounds( bounds );
-						
-						
-						OSXContext* osxCtx =  (OSXContext*)ctx->getPeer();
-						
-						bounds.setRect( 0, 0, wndR.right-wndR.left, wndR.bottom-wndR.top );
-						
-									
-						osxCtx->setCGContext( context, port, bounds );
-		
-						int gcs = ctx->saveState();
-		
-						control_->paintBorder( ctx );
-		
-						control_->paint( ctx );							
-						
-						ctx->restoreState( gcs );
-						
-						osxCtx->setCGContext( NULL, 0, bounds );
-						*/
+							
 					}
 				}
 				break;
@@ -241,7 +183,7 @@ OSStatus OSXButton::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef th
 	return result;
 	//return OSXControl::handleOSXEvent( nextHandler, theEvent );
 }
-
+*/
 
 /**
 $Id$
