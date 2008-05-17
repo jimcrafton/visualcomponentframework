@@ -26,7 +26,9 @@ where you installed the VCF.
 
 #include "vcf/GraphicsKit/ImageEvent.h"
 #include "vcf/GraphicsKit/Image.h"
+#include "vcf/GraphicsKit/Font.h"
 
+#include "vcf/GraphicsKit/UIMetricsManager.h"
 #include "vcf/GraphicsKit/GraphicsToolKit.h"
 #include "vcf/GraphicsKit/Pixels.h"
 
@@ -43,7 +45,7 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/BezierCurve.h"
 #include "vcf/GraphicsKit/Ellipse.h"
 #include "vcf/GraphicsKit/Circle.h"
-#include "vcf/GraphicsKit/Font.h"
+
 #include "vcf/GraphicsKit/FontPeer.h"
 
 #include "vcf/GraphicsKit/PrintContext.h"
