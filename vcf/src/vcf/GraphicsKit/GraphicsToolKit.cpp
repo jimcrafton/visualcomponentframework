@@ -16,7 +16,8 @@ where you installed the VCF.
 using namespace VCF;
 
 
-GraphicsToolkit::GraphicsToolkit()
+GraphicsToolkit::GraphicsToolkit():
+	metricsMgr_(NULL)
 {
 	GraphicsToolkit::graphicsToolkitInstance = this;
 
@@ -52,6 +53,8 @@ GraphicsToolkit::~GraphicsToolkit()
 	imageLoaders_.clear();
 
 	availableSystemFonts_.clear();
+
+	delete metricsMgr_;
 }
 
 
@@ -554,6 +557,13 @@ void GraphicsToolkit::initGraphicsToolkit()
 	if ( NULL == GraphicsToolkit::graphicsToolkitInstance ){
 		throw NoGraphicsToolkitFoundException( MAKE_ERROR_MSG_2(NO_GFX_TOOLKIT_ERROR) );
 	}
+
+	//verify the presence of a valid UIMetricsManager instance
+	if ( NULL == GraphicsToolkit::graphicsToolkitInstance->metricsMgr_ ) {
+		//Oops! we're screwed, do not pass GO, do NOT collect $200!
+		throw InvalidPointerException( MAKE_ERROR_MSG_2("This implementation of the UIToolkit does NOT have a valid instance of a UIMetricsManager! Please fix this!") );
+	}
+
 
 	System::internal_replaceResourceBundleInstance( new GraphicsResourceBundle() );
 
@@ -1414,6 +1424,25 @@ void GraphicsToolkit::destroySystemColorNameMap()
 	}
 }
 
+UIMetricsManager* GraphicsToolkit::getUIMetricsManager()
+{
+	return GraphicsToolkit::graphicsToolkitInstance->metricsMgr_;
+}
+
+double GraphicsToolkit::getUIMetricValue( const UIMetricsManager::MetricType& type, const String& text, Font* alternateFont )
+{
+	return GraphicsToolkit::graphicsToolkitInstance->metricsMgr_->getValue( type, text, alternateFont );
+}
+
+VCF::Size GraphicsToolkit::getUIMetricSize( const UIMetricsManager::MetricType& type, const String& text, Font* alternateFont )
+{
+	return GraphicsToolkit::graphicsToolkitInstance->metricsMgr_->getSize( type, text, alternateFont );
+}
+
+VCF::Rect GraphicsToolkit::getUIMetricRect( const UIMetricsManager::MetricType& type, VCF::Rect* rect, Font* alternateFont )
+{
+	return GraphicsToolkit::graphicsToolkitInstance->metricsMgr_->getRect( type, rect, alternateFont );
+}
 
 /**
 $Id$

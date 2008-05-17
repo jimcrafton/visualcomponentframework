@@ -21,7 +21,7 @@ where you installed the VCF.
 
 namespace VCF {
 	/**
-	\class UIMetricsManager UIMetricsManager.h "vcf/ApplicationKit/UIMetricsManager.h"  
+	\class UIMetricsManager UIMetricsManager.h "vcf/GraphicsKit/UIMetricsManager.h"  
 	A utility class to retrieve standard ui element metrics. 
 	
 	The Win32 implementation takes XP theming into account, 
@@ -32,7 +32,7 @@ namespace VCF {
 	The Mac OS X implementation is based on the Appearance Manager
 	http://developer.apple.com/documentation/Carbon/Reference/Appearance_Manager/index.html
 	*/
-	class UIMetricsManager : public Object {
+	class UIMetricsManager {
 	public:
 
 		enum FontType{

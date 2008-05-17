@@ -27,7 +27,7 @@ class FontPeer;
 class GraphicsResourceBundle;
 class PrintSessionPeer; 
 class GraphicsResourceBundlePeer;
-
+class UIMetricsManager;
 
 /**
 \class FontInfo GraphicsToolKit.h "vcf/GraphicsKit/GraphicsToolKit.h"
@@ -188,6 +188,15 @@ public:
 
 	static bool getAvailableImageTypes( std::vector< std::pair<String,String> >& contentTypes );
 
+	static UIMetricsManager* getUIMetricsManager();
+
+	static double getUIMetricValue( const UIMetricsManager::MetricType& type, const String& text="", Font* alternateFont=NULL );
+
+	static Size getUIMetricSize( const UIMetricsManager::MetricType& type, const String& text="", Font* alternateFont=NULL );
+
+	static Rect getUIMetricRect( const UIMetricsManager::MetricType& type, Rect* rect=NULL, Font* alternateFont=NULL );
+
+
 	static GraphicsToolkit* internal_getDefaultGraphicsToolkit();
 
 	/**
@@ -293,6 +302,8 @@ protected:
 
 
 	std::map<String,String> contentTypes_;
+
+	UIMetricsManager* metricsMgr_;
 
 
 	/**
