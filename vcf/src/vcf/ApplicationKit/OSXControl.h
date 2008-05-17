@@ -86,28 +86,24 @@ public:
 	
 	virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
 	
-	static OSXControl* getControlFromControlRef( ControlRef control );
 protected:
-	ControlRef hiView_;
-	Control* control_;
-	EventHandlerRef handlerRef_;
+	Control* control_;	
 	MouseState mouseState_;
-	::Point lastMousePt_;
+	::Point lastMousePt_;	
 	
-	virtual OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
 
-	OSStatus handleControlTrack( EventRef theEvent );
+	//OSStatus handleControlTrack( EventRef theEvent );
 	
-	OSStatus handleWrappedControlTrack( EventRef theEvent );
+	//OSStatus handleWrappedControlTrack( EventRef theEvent );
 	
-	OSStatus handleWrappedControlTrackDone( EventRef theEvent );
+	//OSStatus handleWrappedControlTrackDone( EventRef theEvent );
 	
-	OSStatus handleWrappedControlHitTest( EventRef theEvent );
+	//OSStatus handleWrappedControlHitTest( EventRef theEvent );
 	
-	OSStatus installStdControlHandler();
+	//OSStatus installStdControlHandler();
 
-	static EventHandlerUPP getEventHandlerUPP();
-	static OSStatus handleOSXEvents(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
+	//static EventHandlerUPP getEventHandlerUPP();
+	//static OSStatus handleOSXEvents(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
 };
 
 

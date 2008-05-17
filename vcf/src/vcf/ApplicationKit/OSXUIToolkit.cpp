@@ -396,482 +396,6 @@ VirtualKeyCode translateOSXKeyToVirtKeyCode( VCFChar ch, UInt32 keyCode, UInt32 
 
 
 
-//UIMetricsManager implementation for OSX
-class OSXUIMetricsManager : public UIMetricsManager {
-public:
-	OSXUIMetricsManager(){}
-
-	virtual ~OSXUIMetricsManager(){}
-
-	virtual VCF::Font getDefaultFontFor( const UIMetricsManager::FontType& type ) {
-		VCF::Font result("Arial", 13);
-
-		result.setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_CAPTION_TEXT ) );
-		
-		Str255 fontName;
-		SInt16 fontSize = 0;
-		Style fontStyle = 0;
-		OSStatus err = noErr;
-		
-		switch ( type ) {
-			case UIMetricsManager::ftMenuItemFont : {
-				err = GetThemeFont( kThemeSystemFont, smSystemScript, fontName, &fontSize, &fontStyle );	
-				if ( err != noErr ) {
-					CFTextString name(fontName);
-					result.setName( name );
-					result.setPointSize( fontSize );
-					result.setBold ( (fontStyle & bold) ? true : false );
-					result.setItalic ( (fontStyle & italic) ? true : false );
-				}				
-			}
-			break;
-
-			case UIMetricsManager::ftSelectedMenuItemFont : {
-				err = GetThemeFont( kThemeSystemFont, smSystemScript, fontName, &fontSize, &fontStyle );	
-				if ( err != noErr ) {
-					CFTextString name(fontName);
-					result.setName( name );
-					result.setPointSize( fontSize );
-					result.setBold ( (fontStyle & bold) ? true : false );
-					result.setItalic ( (fontStyle & italic) ? true : false );
-					result.setUnderlined ( (fontStyle & underline) ? true : false );					
-				}
-			}
-			break;
-
-			case UIMetricsManager::ftSystemFont : {
-				err = GetThemeFont( kThemeSystemFont, smSystemScript, fontName, &fontSize, &fontStyle );	
-				if ( err != noErr ) {
-					CFTextString name(fontName);
-					result.setName( name );
-					result.setPointSize( fontSize );
-					result.setBold ( (fontStyle & bold) ? true : false );
-					result.setItalic ( (fontStyle & italic) ? true : false );
-					result.setUnderlined ( (fontStyle & underline) ? true : false );
-				}
-			}
-			break;
-			
-			case UIMetricsManager::ftControlFont :   {
-				err = GetThemeFont( kThemeLabelFont, smSystemScript, fontName, &fontSize, &fontStyle );	
-				if ( err != noErr ) {
-					CFTextString name(fontName);
-					result.setName( name );
-					result.setPointSize( fontSize );
-					result.setBold ( (fontStyle & bold) ? true : false );
-					result.setItalic ( (fontStyle & italic) ? true : false );
-					result.setUnderlined ( (fontStyle & underline) ? true : false );
-				}
-			}
-			break;
-			
-
-			case UIMetricsManager::ftMessageFont : {
-				err = GetThemeFont( kThemeEmphasizedSystemFont, smSystemScript, fontName, &fontSize, &fontStyle );	
-				if ( err != noErr ) {
-					CFTextString name(fontName);
-					result.setName( name );
-					result.setPointSize( fontSize );
-					result.setBold ( (fontStyle & bold) ? true : false );
-					result.setItalic ( (fontStyle & italic) ? true : false );
-					result.setUnderlined ( (fontStyle & underline) ? true : false );
-				}
-			}
-			break;
-
-			case UIMetricsManager::ftToolTipFont : {
-				err = GetThemeFont( kThemeSmallSystemFont, smSystemScript, fontName, &fontSize, &fontStyle );	
-				if ( err != noErr ) {
-					CFTextString name(fontName);
-					result.setName( name );
-					result.setPointSize( fontSize );
-					result.setBold ( (fontStyle & bold) ? true : false );
-					result.setItalic ( (fontStyle & italic) ? true : false );
-					result.setUnderlined ( (fontStyle & underline) ? true : false );
-				}
-			}
-			break;
-		}
-
-		return result;
-	}
-/*
-	virtual double getDefaultHeightFor( const UIMetricsManager::HeightType& type )  {
-		double result = 0.0;
-		switch ( type ) {
-			case UIMetricsManager::htLabelHeight : {
-				result = 18;
-			}
-			break;
-
-			case UIMetricsManager::htComboBoxHeight : {
-				result = 20;
-			}
-			break;
-
-			case UIMetricsManager::htListItemHeight : {
-				result = 18;
-			}
-			break;
-
-			case UIMetricsManager::htButtonHeight : {
-				SInt32 val = 0;
-				if ( noErr == GetThemeMetric( kThemeMetricPushButtonHeight, &val ) ) {
-					result = val;
-				}
-				else {
-					result = 20;
-				}
-			}
-			break;
-
-			case UIMetricsManager::htRadioBoxHeight : case UIMetricsManager::htCheckBoxHeight : {
-				result = 18;
-			}
-			break;
-
-			case UIMetricsManager::htToolTipHeight : {
-				result = 18;
-			}
-			break;
-
-			case UIMetricsManager::htSeparatorHeight : {
-				result = 2.0;
-			}
-			break;
-
-			case UIMetricsManager::htInformationalControl : {
-				result = 15;
-			}
-			break;
-		}
-		return result;
-
-	}
-
-	virtual double getPreferredSpacingFor( const UIMetricsManager::SpacingType& type )  {
-		double result = 0.0;
-
-		//values largely derived from the Apple HIG at
-		//http://developer.apple.com/documentation/UserExperience/Conceptual/OSXHIGuidelines/index.html
-		//http://developer.apple.com/documentation/UserExperience/Conceptual/OSXHIGuidelines/XHIGLayout/chapter_19_section_2.html#//apple_ref/doc/uid/TP30000360-BEIBEAFJ
-		switch ( type ) {
-			case UIMetricsManager::stWindowBorderDelta : {
-				result = 20.0;
-			}
-			break;
-
-			case UIMetricsManager::stContainerBorderDelta : {
-				result = 22;
-			}
-			break;
-
-			case UIMetricsManager::stControlVerticalSpacing : {
-				result = 12;
-			}
-			break;
-
-			case UIMetricsManager::stControlHorizontalSpacing : {
-				result = 12;
-			}
-			break;
-
-			case UIMetricsManager::stInformationControlTopSpacer : {
-				result = 2.0;
-			}
-			break;
-
-			case UIMetricsManager::stInformationControlBottomSpacer : {
-				result = 8.0;
-			}
-			break;
-		}
-
-		return result;
-	}
-
-	virtual Size getDefaultSliderThumbDimensions()  {
-		Size result;
-		SInt32 val = 0;
-		GetThemeMetric( kThemeMetricScrollBarWidth, &val );		
-
-		result.width_ = val;
-		result.height_ = val;
-
-		return result;
-	}
-
-	virtual Size getDefaultMenuItemDimensions( const String& caption )  {
-		Size result;
-
-
-		return result;
-	}
-
-	virtual Size getDefaultVerticalScrollButtonDimensions()  {
-		Size result;
-		SInt32 val = 0;
-		GetThemeMetric( kThemeMetricScrollBarWidth, &val );		
-
-		result.width_ = val;
-		result.height_ = val;
-
-		return result;
-	}
-
-	virtual Size getDefaultHorizontalScrollButtonDimensions()  {
-		Size result;
-
-		result.width_ = 22;
-		result.height_ = 22;
-
-		return result;
-	}
-
-	virtual Size getDefaultTabDimensions( const String& caption )  {
-		Size result;
-
-		return result;
-	}
-	*/
-	virtual double getValue( const MetricType& type, const String& text, Font* font ) {
-		double result = 0;
-
-		switch ( type ) {
-			case mtLabelHeight : {
-				result = 18;
-			}
-			break;
-
-			case mtComboBoxHeight : {
-				result = 20;
-			}
-			break;
-
-			case mtListItemHeight : {
-				result = 19.0;
-			}
-			break;
-
-			case mtButtonHeight : {			
-				SInt32 val = 0;
-				if ( noErr == GetThemeMetric( kThemeMetricPushButtonHeight, &val ) ) {
-					result = val;
-				}
-				else {
-					result = 20;
-				}
-			}
-			break;
-
-			case mtRadioBoxHeight : {			
-				result = 18;
-			}
-			break;
-
-			case mtCheckBoxHeight : {				
-				result = 18;
-			}
-			break;
-
-			case mtToolTipHeight : {
-				result = 18;
-			}
-			break;
-
-			case mtSeparatorHeight : {
-				result = 2.0;
-			}
-			break;
-
-			case mtHeaderHeight : {
-				SInt32 val = 0;
-				if ( noErr == GetThemeMetric( kThemeMetricListHeaderHeight, &val ) ) {
-					result = val;
-				}
-				else {
-					result = 20;
-				}
-			}
-			break;
-
-			case mtTreeItemHeight : {//???? is this even right?
-				result = 19.0;
-			}
-			break;
-
-			case mtTextControlHeight : {
-				result = 22.0;
-			}
-			break;
-
-			case mtVerticalProgressWidth : {
-				result = 16.0;
-			}
-			break;
-
-			case mtHorizontalProgressHeight : {
-				result = 16.0;
-			}
-			break;
-
-			case mtInformationalControlHeight : {
-				
-			}
-			break;
-
-			case mtVerticalScrollbarThumbWidth : {
-				SInt32 val = 0;
-				if ( noErr == GetThemeMetric( kThemeMetricScrollBarWidth, &val ) ) {
-					result = val;
-				}
-				else {
-					result = 20;
-				}
-			}
-			break;
-
-			case mtHorizontalScrollbarThumbHeight : {
-				SInt32 val = 0;
-				if ( noErr == GetThemeMetric( kThemeMetricScrollBarWidth, &val ) ) {
-					result = val;
-				}
-				else {
-					result = 20;
-				}
-			}
-			break;
-
-			case mtVerticalScrollbarWidth : {
-				SInt32 val = 0;
-				if ( noErr == GetThemeMetric( kThemeMetricScrollBarWidth, &val ) ) {
-					result = val;
-				}
-				else {
-					result = 20;
-				}
-			}
-			break;
-
-			case mtHorizontalScrollbarHeight : {
-				SInt32 val = 0;
-				if ( noErr == GetThemeMetric( kThemeMetricScrollBarWidth, &val ) ) {
-					result = val;
-				}
-				else {
-					result = 20;
-				}
-			}
-			break;
-
-			case mtMenuIndent : {
-
-			}
-			break;
-
-			case mtWindowBorderDelta : {
-				result = 20.0;
-			}
-			break;
-
-			case mtContainerBorderDelta : {
-				result = 22;
-			}
-			break;
-
-			case mtControlVerticalSpacing : {
-				result = 12;
-			}
-			break;
-
-			case mtControlHorizontalSpacing : {
-				result = 12;
-			}
-			break;
-
-			case mtInformationControlTopSpacer : {
-				result = 2.0;
-			}
-			break;
-
-			case mtInformationControlBottomSpacer : {
-				result = 8.0;
-			}
-			break;
-
-			default : {
-				throw RuntimeException( MAKE_ERROR_MSG_2("Invalid metric type.") );
-			}
-			break;
-		}
-		
-		return result;
-	}
-	
-	virtual VCF::Size getSize( const MetricType& type, const String& text, Font* font ) {
-		Size result;
-		
-		switch ( type ) {
-		/*
-			case mtMenuSize : {
-				
-			}
-			break;
-*/
-			case mtVerticalSliderThumbSize : {
-				
-			}
-			break;
-
-			case mtHorizontalSliderThumbSize : {
-				
-			}
-			break;
-
-			case mtTabSize : {
-				
-			}
-			break;
-
-			case mtRadioBoxBtnSize : {
-				
-			}
-			break;
-
-			case mtCheckBoxBtnSize : {
-				
-			}
-			break;
-
-			case mtComboBoxDropBtnSize : {
-			
-			}
-			break;
-
-			case mtDisclosureButtonSize : {
-				
-			}
-			break;
-
-			default : {
-				throw RuntimeException( MAKE_ERROR_MSG_2("Invalid metric type.") );
-			}
-			break;
-		}
-
-		return result;
-
-	}
-	
-	virtual VCF::Rect getRect( const MetricType& type, VCF::Rect* rect, Font* font ) {
-		return VCF::Rect();
-	}
-};
-
-
-
-
-
 
 class OSXUIPolicyManager : public UIPolicyManager {
 public:
@@ -1044,16 +568,16 @@ using namespace VCF;
 
 
 OSXUIToolkit::OSXUIToolkit():
-    quitEventLoop_(false),
-    eventHandlerRef_(NULL),
-    handlerUPP_(NULL),
-    timerUPP_(NULL),
-    idleTimerUPP_(NULL),
-    idleTimerRef_(NULL)
+    quitEventLoop_(false)
+    //eventHandlerRef_(NULL),
+    //handlerUPP_(NULL),
+    //timerUPP_(NULL),
+    //idleTimerUPP_(NULL),
+    //idleTimerRef_(NULL)
 {
-    metricsMgr_ = new OSXUIMetricsManager();
 	policyMgr_ = new OSXUIPolicyManager();
     //install event loop callbacks
+	/*
     handlerUPP_ = NewEventHandlerUPP(OSXUIToolkit::handleOSXApplicationEvents);
     static EventTypeSpec eventsToHandle[] ={
                             { kEventClassCommand, kEventCommandProcess },
@@ -1078,14 +602,14 @@ OSXUIToolkit::OSXUIToolkit():
         printf( "InstallEventHandler failed" );
     }
 	
-	
+	*/
 	
 	
 }
 
 OSXUIToolkit::~OSXUIToolkit()
 {
-
+/*
     std::map<EventLoopTimerRef,TimeOutHandler>::iterator found = timeoutHandlers_.begin();
     while ( !timeoutHandlers_.empty() ) {
         internal_unregisterTimerHandler( found->second.handler_ );
@@ -1098,6 +622,7 @@ OSXUIToolkit::~OSXUIToolkit()
 
     RemoveEventLoopTimer( idleTimerRef_ );
     DisposeEventLoopIdleTimerUPP(idleTimerUPP_);
+	*/
     printf( "OSXUIToolkit destroyed\n");
 }
 
@@ -1313,7 +838,8 @@ void OSXUIToolkit::internal_setCaretPos( Point* point )
 
 void OSXUIToolkit::internal_postEvent( VCF::EventHandler* eventHandler, Event* event, const bool& deleteHandler )
 {
-    EventRef osxEvent = OSXUIToolkit::createUserCarbonEvent(OSXUIToolkit::EventPosted);
+    /*
+	EventRef osxEvent = OSXUIToolkit::createUserCarbonEvent(OSXUIToolkit::EventPosted);
 
 
     OSStatus err = SetEventParameter( osxEvent, OSXUIToolkit::EventHandler,
@@ -1339,8 +865,9 @@ void OSXUIToolkit::internal_postEvent( VCF::EventHandler* eventHandler, Event* e
     if ( err != noErr ) {
         printf( "PostEventToQueue failed\n" );
     }
+	*/
 }
-
+/*
 void OSXUIToolkit::handleIdleTimer( EventLoopTimerRef inTimer, EventLoopIdleTimerMessage inState, void *inUserData )
 {
     OSXUIToolkit* toolkit = (OSXUIToolkit*)inUserData;
@@ -1385,11 +912,11 @@ void OSXUIToolkit::handleTimerEvent( EventLoopTimerRef inTimer, void * inUserDat
 		toh.handler_->invoke( &event );
     }
 }
-
+*/
 
 void OSXUIToolkit::internal_registerTimerHandler( Object* source, VCF::EventHandler* handler, const uint32& timeoutInMilliSeconds )
 {
-
+/*
     TimeOutHandler toh;
     toh.source_ = source;
     toh.handler_ = handler;
@@ -1416,11 +943,12 @@ void OSXUIToolkit::internal_registerTimerHandler( Object* source, VCF::EventHand
                             &toh.timerRef_ );
 
     timeoutHandlers_[toh.timerRef_] = toh;
+	*/
 }
 
 void OSXUIToolkit::internal_unregisterTimerHandler( VCF::EventHandler* handler )
 {
-    std::map<EventLoopTimerRef,TimeOutHandler>::iterator found = timeoutHandlers_.begin();
+  /*  std::map<EventLoopTimerRef,TimeOutHandler>::iterator found = timeoutHandlers_.begin();
     while ( found != timeoutHandlers_.end() ) {
         TimeOutHandler& tmHandler = found->second;
         if ( tmHandler.handler_ == handler ) {
@@ -1430,6 +958,7 @@ void OSXUIToolkit::internal_unregisterTimerHandler( VCF::EventHandler* handler )
         }
         found ++;
     }
+	*/
 }
 
 
@@ -1437,9 +966,9 @@ void OSXUIToolkit::internal_runEventLoop()
 {
     //set to false to begin with
     quitEventLoop_ = false;
-
-    RunApplicationEventLoop();
-
+	
+	[[NSApplication sharedApplication] run];
+	
     //reset back to false when finished
     quitEventLoop_ = false;
 }
@@ -1447,9 +976,7 @@ void OSXUIToolkit::internal_runEventLoop()
 UIToolkit::ModalReturnType OSXUIToolkit::internal_runModalEventLoopFor( Control* control )
 {
 	Frame* ownerFrame = control->getParentFrame();
-	WindowRef controlWindow = (WindowRef) ownerFrame->getPeer()->getHandleID();
-	
-	//EndAppModalStateForWindow( controlWindow );
+		
 	UIToolkit::ModalReturnType result = UIToolkit::mrTrue;
 	/*
 	EventRef theEvent;
@@ -1484,7 +1011,7 @@ UIToolkit::ModalReturnType OSXUIToolkit::internal_runModalEventLoopFor( Control*
 	}
 	*/
 	
-	RunAppModalLoopForWindow( controlWindow );
+	//RunAppModalLoopForWindow( controlWindow );
 	
 	
 	//EndAppModalStateForWindow( controlWindow );
@@ -1494,11 +1021,14 @@ UIToolkit::ModalReturnType OSXUIToolkit::internal_runModalEventLoopFor( Control*
 
 void OSXUIToolkit::internal_quitCurrentEventLoop()
 {
-    EventLoopRef currentLoop = GetCurrentEventLoop();
-    QuitEventLoop( currentLoop );
+    //EventLoopRef currentLoop = GetCurrentEventLoop();
+    //QuitEventLoop( currentLoop );
+	
+	[[NSApplication sharedApplication] stop];
+	
     quitEventLoop_ = true;
 }
-
+/*
 OSStatus OSXUIToolkit::handleOSXApplicationEvents( EventHandlerCallRef nextHandler, EventRef osxEvent, void* userData )
 {
     OSXUIToolkit * toolkit = (OSXUIToolkit*)userData;
@@ -1618,14 +1148,15 @@ OSStatus OSXUIToolkit::handleAppEvents( EventHandlerCallRef nextHandler, EventRe
 
     return result;
 }
-
+*/
 
 
 
 VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* eventData )
 {
     VCF::Event* result = NULL;
-    OSXEventMsg* msg = (OSXEventMsg*)eventData;
+  /*
+	  OSXEventMsg* msg = (OSXEventMsg*)eventData;
     UInt32 whatHappened = GetEventKind( msg->osxEvent_ );
 
     UInt32 type = GetEventClass( msg->osxEvent_ );
@@ -2581,9 +2112,11 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
         }
         break;
     }
+	*/
     return result;
 }
 
+/*
 EventRef OSXUIToolkit::createUserCarbonEvent( UInt32 eventType )
 {
     EventRef result = NULL;
@@ -2604,6 +2137,7 @@ EventRef OSXUIToolkit::createUserCarbonEvent( UInt32 eventType )
 
     return result;
 }
+*/
 
 VCF::Size OSXUIToolkit::internal_getDragDropDelta()
 {
