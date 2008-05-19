@@ -18,7 +18,6 @@ where you installed the VCF.
 
 #define OSX_LISTVIEW_CTRL_PRIMARY_COL		'PRIM'
 
-using namespace VCF;
 
 
 /*
@@ -34,20 +33,10 @@ struct FindPtForItemData : public ForEachData {
 	VCF::Point* pt;
 };
 
-
-OSXListview::OSXListview( ListViewControl* listviewControl ):
-	OSXControl( listviewControl ),
-	listviewControl_( listviewControl )
-{
-
-}
-
-OSXListview::~OSXListview()
-{
-	
-}
+*/
 
 
+/*
 void OSXListview::create( Control* owningControl )
 {
 	::Rect r;
@@ -630,6 +619,165 @@ void OSXListview::onListModelItemDeleted( Event* e )
 }
 
 */
+
+namespace VCF {
+
+OSXListview::OSXListview( ListViewControl* listviewControl ):
+	OSXControl( listviewControl ),
+	listviewControl_( listviewControl )
+{
+
+}
+
+OSXListview::~OSXListview()
+{
+	
+}
+
+
+
+void OSXListview::create( Control* owningControl )
+{
+
+}
+
+void OSXListview::selectItem( const uint32& index )
+{
+
+}
+
+uint32 OSXListview::getSelectedItem()
+{
+	return 0;
+}
+
+void OSXListview::setFocusedItem( const uint32& index )
+{
+
+}
+
+uint32 OSXListview::getFocusedItem()
+{
+	return 0;
+}
+
+bool OSXListview::isItemSelected( const uint32& index )
+{
+	return false;
+}
+
+Rect OSXListview::getItemRect( const uint32& index )
+{
+	return Rect();
+}
+
+Rect OSXListview::getItemImageRect( const uint32& index )
+{
+	return Rect();
+}
+
+uint32 OSXListview::hitTest( const Point& point )
+{
+	return 0;
+}
+
+Enumerator<uint32>* OSXListview::getSelectedItems()
+{
+	return selectedItems_.getEnumerator();
+}
+
+void OSXListview::rangeSelect( const Rect& selectionRect )
+{
+
+}
+
+bool OSXListview::allowsMultiSelect()
+{
+	return false;
+}
+
+void OSXListview::setAllowsMultiSelect( const bool& allowsMultiSelect )
+{
+
+}
+
+void OSXListview::setLargeImageList( ImageList* imageList )
+{
+
+}
+
+void OSXListview::setSmallImageList( ImageList* imageList )
+{
+
+}
+
+
+bool OSXListview::ensureVisible(const uint32& index, bool partialOK )
+{
+	return false;
+}
+	
+void OSXListview::setColumnWidth( const uint32& index, const double& width, ColumnAutosizeType type )
+{
+
+}
+
+double OSXListview::getColumnWidth( const uint32& index )
+{
+	return 0.0;
+}
+
+TextAlignmentType OSXListview::getColumnTextAlignment( const uint32& index )
+{
+	return TextAlignmentType();
+}
+
+void OSXListview::setColumnTextAlignment( const uint32& index, const TextAlignmentType& val )
+{
+
+}
+
+IconStyleType OSXListview::getIconStyle()
+{
+	return IconStyleType();
+}
+
+void OSXListview::setIconStyle( const IconStyleType& iconStyle )
+{
+
+}
+
+IconAlignType OSXListview::getIconAlignment()
+{
+	return IconAlignType();
+}
+
+void OSXListview::setIconAlignment( const IconAlignType& iconAlignType )
+{
+
+}
+
+bool OSXListview::getAllowLabelEditing()
+{
+	return false;
+}
+
+void OSXListview::setAllowLabelEditing( const bool& allowLabelEditing )
+{
+
+}
+
+int32 OSXListview::getDisplayOptions()
+{
+	return 0;
+}	
+
+void OSXListview::setDisplayOptions( const int32& displayOptions )
+{
+
+}
+
+};
 
 
 /**

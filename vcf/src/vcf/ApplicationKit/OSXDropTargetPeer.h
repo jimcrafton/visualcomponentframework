@@ -29,10 +29,10 @@ public:
 
 protected:
 	DropTarget* dropTarget_;
-	EventHandlerRef eventHandlerRef_;
+	//EventHandlerRef eventHandlerRef_;
 	DataObject* currentDataObj_;
 	
-	static OSStatus handleDropTargetEvents(EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void *inUserData);
+	//static OSStatus handleDropTargetEvents(EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void *inUserData);
 };
 
 

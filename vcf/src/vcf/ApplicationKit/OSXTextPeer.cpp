@@ -13,7 +13,7 @@ where you installed the VCF.
 #include "vcf/FoundationKit/Dictionary.h"
 
 using namespace VCF;
-
+/*
 static int MLTERefCount = 0;
 
 void initMLTE()
@@ -35,18 +35,16 @@ void initMLTE()
 
 	MLTERefCount ++;
 }
-
-OSXTextPeer::OSXTextPeer( const bool& autoWordWrap, const bool& multiLined ):
-	txnObject_(NULL)
+*/
+OSXTextPeer::OSXTextPeer( const bool& autoWordWrap, const bool& multiLined )
+	
 {
-	initMLTE();
+	
 }
 
-OSXTextPeer::OSXTextPeer():
-	txnObject_(NULL)
+OSXTextPeer::OSXTextPeer()
 {
-	initMLTE();
-
+/*
 	TXNFrameOptions frameOptions;
     frameOptions = kTXNDoFontSubstitutionMask;
 
@@ -71,11 +69,12 @@ OSXTextPeer::OSXTextPeer():
 	carbonEventInfo.fDictionary = NULL;
 	iControlData[0].uValue = (UInt32) &carbonEventInfo;
 	TXNSetTXNObjectControls( txnObject_, false, 1, iControlTags, iControlData ); 
+	*/
 }
 
 OSXTextPeer::~OSXTextPeer()
 {
-
+/*
 	if ( NULL != txnObject_ ) {
 		TXNDeleteObject(txnObject_);
 	}
@@ -86,6 +85,7 @@ OSXTextPeer::~OSXTextPeer()
 	if ( MLTERefCount <= 0 ) {
 		TXNTerminateTextension();
 	}
+	*/
 }
 
 
@@ -93,7 +93,7 @@ OSHandleID OSXTextPeer::getTextObjectHandle()
 {
 	OSHandleID result ;
 
-	result = (OSHandleID)txnObject_;
+	result = (OSHandleID)0;
 
 	return result;
 }
@@ -101,19 +101,19 @@ OSHandleID OSXTextPeer::getTextObjectHandle()
 //storage
 void OSXTextPeer::insertText( unsigned int start, const String& text )
 {
-	TXNSetData( txnObject_, kTXNUnicodeTextData, text.c_str(), text.size_in_bytes(), start, start );
+//	TXNSetData( txnObject_, kTXNUnicodeTextData, text.c_str(), text.size_in_bytes(), start, start );
 }
 
 void OSXTextPeer::deleteText( unsigned int start, unsigned int length )
 {
-	TXNSetData( txnObject_, kTXNUnicodeTextData, NULL, 0, start, start+length );
+//	TXNSetData( txnObject_, kTXNUnicodeTextData, NULL, 0, start, start+length );
 }
 
 unsigned int OSXTextPeer::getTextLength()
 {
 	unsigned int result = 0;
 
-	result = TXNDataSize(txnObject_) / sizeof(UniChar);
+//	result = TXNDataSize(txnObject_) / sizeof(UniChar);
 
 	return result;
 }
@@ -121,7 +121,7 @@ unsigned int OSXTextPeer::getTextLength()
 String OSXTextPeer::getText( unsigned int start, unsigned int length )
 {
 	String result;
-
+/*
 	Handle data = NULL;
 	if ( noErr == TXNGetData( txnObject_, start, start+length, &data ) ) {
 		HLock(data);
@@ -135,13 +135,13 @@ String OSXTextPeer::getText( unsigned int start, unsigned int length )
 		
 		DisposeHandle( data );
 	}
-
+*/
 	return result;
 }
 
 void OSXTextPeer::paint( GraphicsContext* context, const Rect& paintRect )
 {
-
+/*
 	OSXContext* ctxPeer = (OSXContext*) context->getPeer();
 	
 	HIRect txBounds;
@@ -165,6 +165,7 @@ void OSXTextPeer::paint( GraphicsContext* context, const Rect& paintRect )
 	
 	//draw it!!!
 	TXNDrawObject( txnObject_, NULL, kTXNDrawItemTextMask );	
+	*/
 }
 
 void OSXTextPeer::setRightMargin( const double & rightMargin )
@@ -212,7 +213,7 @@ uint32 OSXTextPeer::getLineCount()
 	uint32 result = 0;
 
 	
-	TXNGetLineCount( txnObject_, (ItemCount*)&result );
+	//TXNGetLineCount( txnObject_, (ItemCount*)&result );
 	
 	return result;
 }
@@ -221,7 +222,7 @@ VCF::Rect OSXTextPeer::getContentBoundsForWidth(const double& width)
 {
 	VCF::Rect result;
 
-	
+	/*
 	HIRect originalBounds;
 	TXNGetHIRect( txnObject_, kTXNViewRectKey, &originalBounds );
 	
@@ -251,12 +252,13 @@ VCF::Rect OSXTextPeer::getContentBoundsForWidth(const double& width)
 	//reset the old bounds! 
 	TXNSetHIRectBounds( txnObject_, &originalBounds, &originalBounds, false );
 	TXNRecalcTextLayout( txnObject_ );
-	
+	*/
 	return result;
 }
 
 void OSXTextPeer::getStyle( unsigned int start, unsigned int length, Dictionary& styles )
 {
+/*
 	ItemCount count = 0;
 	if ( noErr != TXNCountRunsInRange( txnObject_, start, start+length,&count ) ) {
 		return;
@@ -317,11 +319,13 @@ void OSXTextPeer::getStyle( unsigned int start, unsigned int length, Dictionary&
 	styles [Text::fsItalic] = (bool)attrs[4].data.dataValue;
 	styles [Text::fsStrikeout] = (bool)attrs[5].data.dataValue;
 	styles [Text::fsUnderlined] = (bool)attrs[6].data.dataValue;
-
+*/
 }
 
 void OSXTextPeer::setStyle( unsigned int start, unsigned int length, Dictionary& styles )
 {
+
+/*
 	Dictionary::Enumerator* items = styles.getEnumerator();
 	std::vector<TXNTypeAttributes> attrs;
 	Str255 pStr;
@@ -450,11 +454,12 @@ void OSXTextPeer::setStyle( unsigned int start, unsigned int length, Dictionary&
 	if ( !attrs.empty() ) {
 		TXNSetTypeAttributes( txnObject_, attrs.size(), &attrs[0], start, start+length );
 	}
+	*/
 }
 
 void OSXTextPeer::setDefaultStyle( Dictionary&  styles )
 {
-
+/*
 	TXNMacOSPreferredFontDescription defaults;
 	defaults.encoding = CreateTextEncoding(kTextEncodingMacRoman, kTextEncodingDefaultVariant, kTextEncodingDefaultFormat);
 
@@ -542,6 +547,7 @@ void OSXTextPeer::setDefaultStyle( Dictionary&  styles )
 	}
 
 	TXNSetFontDefaults( txnObject_, 1, &defaults );
+	*/
 }
 
 

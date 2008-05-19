@@ -25,10 +25,10 @@ public:
 
 	virtual String getDirectory();
 protected:
-	static void BrowseDlgCallbackProc( NavEventCallbackMessage callBackSelector, NavCBRecPtr callBackParms, void *callBackUD );
+//	static void BrowseDlgCallbackProc( NavEventCallbackMessage callBackSelector, NavCBRecPtr callBackParms, void *callBackUD );
 	String title_;
 	String directory_;
-	NavDialogCreationOptions dlgOptions_;
+//	NavDialogCreationOptions dlgOptions_;
 	bool browseDlgResult_;
 };
 

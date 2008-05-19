@@ -30,7 +30,7 @@ void OSXFileSaveDialog::setTitle( const String& title )
 {
 	title_ = title;
 }
-
+/*
 void OSXFileSaveDialog::buildFileTypesMap()
 {
 	//Can you say "Royal Pain In the Ass"? Yes? I knew you could!
@@ -109,11 +109,12 @@ void OSXFileSaveDialog::buildFileTypesMap()
 	
 	ICStop( inst );
 }
+*/
 
 bool OSXFileSaveDialog::execute() 
 {
 	bool result = false;
-	fileName_ = "";
+/*	fileName_ = "";
 	selectedFilter_ = "";
 	selectedFileExt_ = "";
 			
@@ -239,10 +240,10 @@ bool OSXFileSaveDialog::execute()
 	
 	
 	NavDialogDispose( saveDlg );
-													
+								*/					
 	return result;
 }
-
+/*
 bool OSXFileSaveDialog::matchFileType( NavFileOrFolderInfo* info, FSRef* fileRef )
 {
 	bool result = false;
@@ -327,14 +328,14 @@ pascal void OSXFileSaveDialog::saveNavEventProc( NavEventCallbackMessage inSelec
 		break;
 		
 		case kNavCBPopupMenuSelect : {
-			/**
-			This gets called when the user selects something in the popup menu.
-			 It would *appear* (and I put this in quotes because Nav Services is apparently
-								kind of buggy on OS X) that the menuType field represents the index of the 
-			 array of menu popup names that we pass in to the NavCreateGetFileDialog
-			 in the saveDlgOptions.popupExtension. Other code on the internet apparently relies 
-			 on this as well, so hopefully this won't change (knock on wood) in the near future.
-			 */
+			
+			//This gets called when the user selects something in the popup menu.
+			// It would *appear* (and I put this in quotes because Nav Services is apparently
+			//					kind of buggy on OS X) that the menuType field represents the index of the 
+			// array of menu popup names that we pass in to the NavCreateGetFileDialog
+			// in the saveDlgOptions.popupExtension. Other code on the internet apparently relies 
+			// on this as well, so hopefully this won't change (knock on wood) in the near future.
+			 
 			NavMenuItemSpec* menuItemSpec = (NavMenuItemSpec *)ioParams->eventData.eventDataParms.param;
 			thisPtr->selectedFileTypeIndex_ = menuItemSpec->menuType;
 			FilterPair filt = thisPtr->filter_[thisPtr->selectedFileTypeIndex_];
@@ -370,8 +371,7 @@ pascal void OSXFileSaveDialog::saveNavEventProc( NavEventCallbackMessage inSelec
 		break;
 	}	
 }
-										
-										
+*/
 
 void OSXFileSaveDialog::addFilter( const String & description, const String & extension ) 
 {

@@ -79,25 +79,23 @@ public:
 
 	virtual void setDisplayOptions( const int32& displayOptions );
 
-	virtual OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
 protected:	
 	ListViewControl* listviewControl_;
-	std::vector<ListItem*> selectedItems_;
-	EnumeratorContainer<std::vector<ListItem*>, ListItem*> enumContainer_;	
+	Array<uint32> selectedItems_;
 	
 	void onControlModelChanged( Event* e );
 	void onListModelItemAdded( Event* e );
 	void onListModelItemDeleted( Event* e );
 	
-	static OSStatus DBItemDataCallback( ControlRef browser, DataBrowserItemID item, 
-										DataBrowserPropertyID property, DataBrowserItemDataRef itemData,
-										Boolean setValue );
+	//static OSStatus DBItemDataCallback( ControlRef browser, DataBrowserItemID item, 
+	//									DataBrowserPropertyID property, DataBrowserItemDataRef itemData,
+	//									Boolean setValue );
 										
-	static void DBItemNotificationCallback( ControlRef browser, DataBrowserItemID itemID, 
-															DataBrowserItemNotification message);
+	//static void DBItemNotificationCallback( ControlRef browser, DataBrowserItemID itemID, 
+	//														DataBrowserItemNotification message);
 															
-	static void findPtForEachItem ( DataBrowserItemID item, DataBrowserItemState state, void *clientData );
-	void addListItems();
+	//static void findPtForEachItem ( DataBrowserItemID item, DataBrowserItemState state, void *clientData );
+	//void addListItems();
 };
 
 

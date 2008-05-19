@@ -62,7 +62,6 @@ public:
 
 	virtual void setDisplayOptions( uint32 displayOptions );
 
-	virtual OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
 protected:
 	
 	TreeControl* treeControl_;

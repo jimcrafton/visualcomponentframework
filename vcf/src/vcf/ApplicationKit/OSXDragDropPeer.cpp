@@ -34,7 +34,7 @@ DragActionType OSXDragDropPeer::startDragDrop( DataObject* cdo )
 {
 
 	dataObj_ = cdo;
-
+/*
 	//init pasteboard
 	CFRefObject<PasteboardRef>   pasteboard;
 	if ( noErr != PasteboardCreate( kPasteboardUniqueName, &pasteboard ) ) {
@@ -49,33 +49,33 @@ DragActionType OSXDragDropPeer::startDragDrop( DataObject* cdo )
 	while ( dataTypes->hasMoreElements() ) {
 		CFTextString type;
 		type = dataTypes->nextElement();
-		/*
-		if ( type == STRING_DATA_TYPE ) {
-			flavor = CFSTR("com.apple.traditional-mac-plain-text");
-		}
-		else if ( type == RTF_DATA_TYPE ) {
-			flavor = CFSTR("");
-		}
-		else if ( type == INTEGER_DATA_TYPE ) {
-			//flavor = kUTTypeRTF;
-		}
-		else if ( type == OBJECT_DATA_TYPE ) {
-			//flavor = kUTTypeRTF;
-		}
-		else if ( type == FILE_DATA_TYPE ) {
-			flavor = CFSTR("");
-		}
-		else if ( type == BYTE_STREAM_DATA_TYPE ) {
-			//flavor = kUTTypeFileURL;
-		}
-		else if ( type == IMAGE_DATA_TYPE ) {
-			flavor = CFSTR(""); //assume PNG for default image type
-		}
-		else if ( type == COMPONENT_DATA_TYPE ) {
-			//we need a custom type!!!
-			//flavor = kUTTypePlainText; //assume PNG for default image type
-		}
-		*/
+		
+		//if ( type == STRING_DATA_TYPE ) {
+		//	flavor = CFSTR("com.apple.traditional-mac-plain-text");
+		//}
+		//else if ( type == RTF_DATA_TYPE ) {
+		//	flavor = CFSTR("");
+	//	}
+	//	else if ( type == INTEGER_DATA_TYPE ) {
+	//		//flavor = kUTTypeRTF;
+	//	}
+	//	else if ( type == OBJECT_DATA_TYPE ) {
+	//		//flavor = kUTTypeRTF;
+	//	}
+	//	else if ( type == FILE_DATA_TYPE ) {
+	//		flavor = CFSTR("");
+	//	}
+	//	else if ( type == BYTE_STREAM_DATA_TYPE ) {
+	//		//flavor = kUTTypeFileURL;
+	//	}
+	//	else if ( type == IMAGE_DATA_TYPE ) {
+	//		flavor = CFSTR(""); //assume PNG for default image type
+	//	}
+	//	else if ( type == COMPONENT_DATA_TYPE ) {
+	//		//we need a custom type!!!
+	//		//flavor = kUTTypePlainText; //assume PNG for default image type
+	//	}
+		
 		flavor = UTTypeCreatePreferredIdentifierForTag( kUTTagClassMIMEType, type, NULL );
 
 		BasicOutputStream memStream;
@@ -139,9 +139,8 @@ DragActionType OSXDragDropPeer::startDragDrop( DataObject* cdo )
 	DisposeDrag( drag );
 	
 	SetThemeCursor(  kThemeArrowCursor );
-	
+	*/
 	return actionType_;
-
 }
 
 void OSXDragDropPeer::setActionType( const VCF::DragActionType& actionType )
@@ -176,22 +175,22 @@ OSErr OSXDragDropPeer::DragInputFunction ( ::Point * mouse, SInt16 * modifiers, 
 	
 	switch ( event2.getAction() ) {
 		case daNone : {
-			SetThemeCursor(  kThemeNotAllowedCursor );
+	//		SetThemeCursor(  kThemeNotAllowedCursor );
 		}
 		break;
 		
 		case daCopy : {
-			SetThemeCursor(  kThemeCopyArrowCursor );
+	//		SetThemeCursor(  kThemeCopyArrowCursor );
 		}
 		break;
 		
 		case daMove : {
-			SetThemeCursor(  kThemeClosedHandCursor );
+	//		SetThemeCursor(  kThemeClosedHandCursor );
 		}
 		break;
 		
 		case daLink : {
-			SetThemeCursor(  kThemeAliasArrowCursor );
+	//		SetThemeCursor(  kThemeAliasArrowCursor );
 		}
 		break;
 	}

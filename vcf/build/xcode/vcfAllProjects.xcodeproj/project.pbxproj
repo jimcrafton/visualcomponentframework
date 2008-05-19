@@ -2591,6 +2591,10 @@
 		5E2CDE70064868C100A8020D /* Includes */ = {
 			isa = PBXGroup;
 			children = (
+				5ECC90330DC3BB9C005F692A /* DropDownPeer.h */,
+				5ECC90340DC3BB9C005F692A /* ListPeer.h */,
+				5ECC90350DC3BB9C005F692A /* PopupWindowPeer.h */,
+				5ECC90360DC3BB9C005F692A /* TransparentWindowPeer.h */,
 				5E2CDE7C0648693B00A8020D /* AbstractApplication.h */,
 				5E2CDE7E0648693B00A8020D /* AbstractCommand.h */,
 				5E2CDE800648693B00A8020D /* AbstractComponentEditor.h */,
@@ -2784,10 +2788,6 @@
 		5E2CDE72064868CD00A8020D /* Peers */ = {
 			isa = PBXGroup;
 			children = (
-				5ECC90330DC3BB9C005F692A /* DropDownPeer.h */,
-				5ECC90340DC3BB9C005F692A /* ListPeer.h */,
-				5ECC90350DC3BB9C005F692A /* PopupWindowPeer.h */,
-				5ECC90360DC3BB9C005F692A /* TransparentWindowPeer.h */,
 				5E2CDF930648693C00A8020D /* OSXApplicationPeer.cpp */,
 				5E2CDF940648693C00A8020D /* OSXApplicationPeer.h */,
 				5E834885086A3D78007C5678 /* OSXAppResourceBundle.cpp */,

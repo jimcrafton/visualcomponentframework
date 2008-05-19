@@ -65,7 +65,7 @@ public:
 	virtual void setDefaultStyle( Dictionary& styles );
 
 protected:
-	TXNObject txnObject_; 
+	//TXNObject txnObject_; 
 	Rect margins_;
 };
 

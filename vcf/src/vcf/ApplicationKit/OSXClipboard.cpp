@@ -44,53 +44,56 @@ String UTItoMimeType( CFStringRef uti )
 
 OSXClipboard::OSXClipboard()
 {
+/*
 	if ( noErr == PasteboardCreate( kPasteboardClipboard, &globalPasteBoard_ ) ) {
 		//globalPasteBoard_ = tmp;
 	}
 	else {
 		throw RuntimeException( MAKE_ERROR_MSG_2("Failed to attach to global pasteboard!") );
 	}
+	*/
 }
 
 OSXClipboard::~OSXClipboard()
 {
-	PasteboardResolvePromises( globalPasteBoard_ );
+	//PasteboardResolvePromises( globalPasteBoard_ );
 }
 
 void OSXClipboard::copy( VCF::DataObject* data )
 {
+/*
 	CFTextString flavor;
 	Enumerator<String>* dataTypes = data->getSupportedDataTypes();
 	while ( dataTypes->hasMoreElements() ) {
 		CFTextString type;
 		type = dataTypes->nextElement();
-		/*
-		if ( type == STRING_DATA_TYPE ) {
-			flavor = kUTTypePlainText;
-		}
-		else if ( type == RTF_DATA_TYPE ) {
-			flavor = kUTTypeRTF;
-		}
-		else if ( type == INTEGER_DATA_TYPE ) {
-			//flavor = kUTTypeRTF;
-		}
-		else if ( type == OBJECT_DATA_TYPE ) {
-			//flavor = kUTTypeRTF;
-		}
-		else if ( type == FILE_DATA_TYPE ) {
-			flavor = kUTTypeFileURL;
-		}
-		else if ( type == BYTE_STREAM_DATA_TYPE ) {
-			//flavor = kUTTypeFileURL;
-		}
-		else if ( type == IMAGE_DATA_TYPE ) {
-			flavor = kUTTypePNG; //assume PNG for default image type
-		}
-		else if ( type == COMPONENT_DATA_TYPE ) {
-			//we need a custom type!!!
-			//flavor = kUTTypePlainText; //assume PNG for default image type
-		}
-		*/
+		
+	//	if ( type == STRING_DATA_TYPE ) {
+	//		flavor = kUTTypePlainText;
+	//	}
+	//	else if ( type == RTF_DATA_TYPE ) {
+	//		flavor = kUTTypeRTF;
+	//	}
+	//	else if ( type == INTEGER_DATA_TYPE ) {
+	//		//flavor = kUTTypeRTF;
+	//	}
+	//	else if ( type == OBJECT_DATA_TYPE ) {
+	//		//flavor = kUTTypeRTF;
+	//	}
+	//	else if ( type == FILE_DATA_TYPE ) {
+	//		flavor = kUTTypeFileURL;
+	//	}
+	//	else if ( type == BYTE_STREAM_DATA_TYPE ) {
+	//		//flavor = kUTTypeFileURL;
+	//	}
+	//	else if ( type == IMAGE_DATA_TYPE ) {
+	//		flavor = kUTTypePNG; //assume PNG for default image type
+	//	}
+	//	else if ( type == COMPONENT_DATA_TYPE ) {
+	//		//we need a custom type!!!
+	//		//flavor = kUTTypePlainText; //assume PNG for default image type
+	//	}
+		
 		
 		flavor = UTTypeCreatePreferredIdentifierForTag( kUTTagClassMIMEType, type, NULL );
 
@@ -102,13 +105,14 @@ void OSXClipboard::copy( VCF::DataObject* data )
 
 			PasteboardPutItemFlavor( globalPasteBoard_, data, flavor, dataRef, 0 );
 		}
-	}	
+	}
+	*/	
 }
 
 VCF::DataObject* OSXClipboard::paste( const String& dataType )
 {
 	VCF::DataObject* result = NULL;
-
+/*
 	PasteboardSynchronize( globalPasteBoard_ );
 
 	//currently we are using mime-types 
@@ -146,7 +150,7 @@ VCF::DataObject* OSXClipboard::paste( const String& dataType )
 			}
 		}
 	}
-
+*/
 	return result;
 }
 
@@ -155,7 +159,7 @@ VCF::DataObject* OSXClipboard::paste( const String& dataType )
 bool OSXClipboard::hasDataType( const String& dataType )
 {
 	bool result = false;
-
+/*
 	PasteboardSynchronize( globalPasteBoard_ );
 
 	//currently we are using mime-types 
@@ -187,13 +191,14 @@ bool OSXClipboard::hasDataType( const String& dataType )
 			}
 		}
 	}
-	
+	*/
 	return result;
 }
 
 void OSXClipboard::initDataObjectFromPasteBoard( PasteboardRef pasteBoard, DataObject* dataObject )
 {	
 	//sync the paste board
+	/*
 	PasteboardSynchronize( pasteBoard );
 	
 	ItemCount itemCount = 0;
@@ -221,10 +226,11 @@ void OSXClipboard::initDataObjectFromPasteBoard( PasteboardRef pasteBoard, DataO
 				}
 			}
 		}
-	}	
+	}
+	*/	
 }
 
-
+/*
 VCF::Persistable* OSX_getPersistableFromDataRef( const VCF::String dataType, CFStringRef flavorType, CFDataRef dataRef )
 {
 	VCF::Persistable* result = NULL;
@@ -250,11 +256,11 @@ VCF::Persistable* OSX_getPersistableFromDataRef( const VCF::String dataType, CFS
 	
 	return result;
 }
-
+*/
 DataObject* OSXClipboard::createDataObjectFromPasteBoard( PasteboardRef pasteBoard )
 {
 	DataObject* result = new DataObject();
-	
+/*	
 	StringUtils::trace("OSXClipboard::createDataObjectFromPasteBoard" );
 	//sync the paste board
 	PasteboardSynchronize( pasteBoard );
@@ -295,7 +301,7 @@ DataObject* OSXClipboard::createDataObjectFromPasteBoard( PasteboardRef pasteBoa
 			}
 		}
 	}
-	
+*/	
 	return result;
 }
 

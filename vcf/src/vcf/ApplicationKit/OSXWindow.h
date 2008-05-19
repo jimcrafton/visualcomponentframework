@@ -31,7 +31,7 @@ public:
 	virtual ~OSXWindow();
 
 	virtual OSHandleID getHandleID() {
-		return (OSHandleID)0;
+		return (OSHandleID)window_;
 	}
 
 	virtual void create( Control* owningControl );
@@ -137,6 +137,7 @@ public:
 	
 	
 protected:
+	NSWindow* window_;
 	Control* control_;
 	Rect bounds_;
 	//RgnHandle mouseTrackRgn_;

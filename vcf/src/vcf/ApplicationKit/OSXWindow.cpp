@@ -287,7 +287,7 @@ void OSXWindow::setCursor( Cursor* cursor )
 	}
 	
 	if (peer->isSystemCursor()){
-		SetThemeCursor(peer->getCursorID());
+		//SetThemeCursor(peer->getCursorID());
 	}
 }
 

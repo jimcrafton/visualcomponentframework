@@ -17,8 +17,7 @@ where you installed the VCF.
 using namespace VCF;
 
 OSXDropTargetPeer::OSXDropTargetPeer():
-	dropTarget_(NULL),
-	eventHandlerRef_(NULL),
+	dropTarget_(NULL),	
 	currentDataObj_(NULL)
 {
 	
@@ -31,29 +30,29 @@ OSXDropTargetPeer::~OSXDropTargetPeer()
 
 void OSXDropTargetPeer::registerTarget( Control* control )
 {
-	static EventTypeSpec dropTargetEvents[] =
-			{
-				{ kEventClassControl, kEventControlDragEnter },
-				{ kEventClassControl, kEventControlDragWithin },
-				{ kEventClassControl, kEventControlDragLeave },
-				{ kEventClassControl, kEventControlDragReceive }
-			};
-			
-	ControlRef ctrlRef = (ControlRef) control->getPeer()->getHandleID();
+//	static EventTypeSpec dropTargetEvents[] =
+//			{
+//				{ kEventClassControl, kEventControlDragEnter },
+//				{ kEventClassControl, kEventControlDragWithin },
+//				{ kEventClassControl, kEventControlDragLeave },
+//				{ kEventClassControl, kEventControlDragReceive }
+//			};
+//			
+//	ControlRef ctrlRef = (ControlRef) control->getPeer()->getHandleID();
 	
-	InstallEventHandler(GetControlEventTarget(ctrlRef), OSXDropTargetPeer::handleDropTargetEvents, 
-						sizeof(dropTargetEvents)/sizeof(EventTypeSpec), 
-						dropTargetEvents, this, &eventHandlerRef_ );
+	//InstallEventHandler(GetControlEventTarget(ctrlRef), OSXDropTargetPeer::handleDropTargetEvents, 
+	//					sizeof(dropTargetEvents)/sizeof(EventTypeSpec), 
+	//					dropTargetEvents, this, &eventHandlerRef_ );
 						
-	SetControlDragTrackingEnabled( ctrlRef, true );
-	SetAutomaticControlDragTrackingEnabledForWindow( GetControlOwner(ctrlRef), true );
+//SetControlDragTrackingEnabled( ctrlRef, true );
+//	SetAutomaticControlDragTrackingEnabledForWindow( GetControlOwner(ctrlRef), true );
 }
 
 void OSXDropTargetPeer::unregisterTarget( Control* control )
 {
-	RemoveEventHandler( eventHandlerRef_ );
-	ControlRef ctrlRef = (ControlRef) control->getPeer()->getHandleID();
-	SetControlDragTrackingEnabled( ctrlRef, false );
+//	RemoveEventHandler( eventHandlerRef_ );
+//	ControlRef ctrlRef = (ControlRef) control->getPeer()->getHandleID();
+//	SetControlDragTrackingEnabled( ctrlRef, false );
 }
 
 VCF::DropTarget* OSXDropTargetPeer::getDropTarget()
@@ -66,7 +65,7 @@ void OSXDropTargetPeer::setDropTarget( VCF::DropTarget* dropTarget )
 	dropTarget_ = dropTarget;
 }
 
-
+/*
 void OSX_ShowDragCursor( DragActionType action ) 
 {
 	switch ( action ) {
@@ -91,8 +90,8 @@ void OSX_ShowDragCursor( DragActionType action )
 		break;
 	}
 }
-
-	
+*/
+	/*
 OSStatus OSXDropTargetPeer::handleDropTargetEvents (EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void *inUserData)
 {
 	OSStatus result = eventNotHandledErr;	
@@ -232,7 +231,7 @@ OSStatus OSXDropTargetPeer::handleDropTargetEvents (EventHandlerCallRef inHandle
 		
 	return result;
 }
-
+*/
 
 /**
 $Id$
