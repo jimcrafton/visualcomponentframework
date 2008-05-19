@@ -27,22 +27,10 @@ where you installed the VCF.
 #define OSX_TREE_CTRL_PRIMARY_COL		'PRIM'
 
 
-using namespace VCF;
+
+
 
 /*
-
-
-OSXTree::OSXTree( TreeControl* tree ):
-	OSXControl( tree ),
-	treeControl_( tree )	
-{
-
-}
-
-OSXTree::~OSXTree()
-{
-	
-}
 
 OSStatus OSXTree::DBItemDataCallback( ControlRef browser, DataBrowserItemID item, 
 										DataBrowserPropertyID property, DataBrowserItemDataRef itemData,
@@ -402,7 +390,111 @@ OSStatus OSXTree::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theE
 }
 */
 
+namespace VCF {
 
+
+
+OSXTree::OSXTree( TreeControl* tree ):
+	OSXControl( tree ),
+	treeControl_( tree )	
+{
+
+}
+
+OSXTree::~OSXTree()
+{
+	
+}
+
+
+
+void OSXTree::create( Control* owningControl )
+{
+
+}
+
+double OSXTree::getItemIndent()
+{
+	return 0.0;
+}
+
+void OSXTree::setItemIndent( const double& indent )
+{
+
+}
+
+void OSXTree::setStateImageList( ImageList* imageList )
+{
+
+}
+
+void OSXTree::setImageList( ImageList* imageList )
+{
+
+}
+
+void OSXTree::setHeaderImageList( ImageList* imageList )
+{
+
+}
+
+Rect OSXTree::getItemImageRect( const TreeModel::Key& itemKey )
+{
+	return Rect();
+}
+
+Rect OSXTree::getItemRect( const TreeModel::Key& itemKey )
+{
+	return Rect();
+}
+
+TreeModel::Key OSXTree::hitTest( const Point& pt )
+{
+	return TreeModel::InvalidKey;
+}
+
+bool OSXTree::getAllowLabelEditing()
+{
+	return false;
+}
+
+void OSXTree::setAllowLabelEditing( const bool& allowLabelEditing )
+{
+
+}
+
+void OSXTree::enableHeader( const bool& val )
+{
+
+}
+
+void OSXTree::setColumnWidth( const uint32& index, const double& width, ColumnAutosizeType type )
+{
+
+}
+
+double OSXTree::getColumnWidth( const uint32& index )
+{
+	return 0.0;
+}
+
+TextAlignmentType OSXTree::getColumnTextAlignment( const uint32& index )
+{
+	return TextAlignmentType();
+}
+
+void OSXTree::setColumnTextAlignment( const uint32& index, const TextAlignmentType& val )
+{
+
+}
+
+void OSXTree::setDisplayOptions( uint32 displayOptions )
+{
+
+}
+	
+};
+	
 /**
 $Id$
 */

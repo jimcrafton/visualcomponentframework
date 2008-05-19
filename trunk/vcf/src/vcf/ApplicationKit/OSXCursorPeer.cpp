@@ -20,13 +20,13 @@ OSXCursorPeer::OSXCursorPeer( Cursor* cursor ):
     cursorHandle_(0),
 	isSystemCursor_(false)
 {
-    cursorHandle_ = GetCCursor(0);
+    //cursorHandle_ = GetCCursor(0);
 }
 
 OSXCursorPeer::~OSXCursorPeer()
 {
     if( NULL != cursorHandle_ ) {
-        DisposeCCursor( cursorHandle_ );
+       // DisposeCCursor( cursorHandle_ );
     }
 }
 
@@ -40,7 +40,7 @@ void OSXCursorPeer::createSystemCursor( const Cursor::SystemCursorType& systemCu
 
 	cursorID_ = (int32)systemCursor;
 	isSystemCursor_ = true;
-
+/*
 	switch ( systemCursor ) {
 		case Cursor::SCT_DEFAULT : {
 			cursorID_ = kThemeArrowCursor;
@@ -113,6 +113,7 @@ void OSXCursorPeer::createSystemCursor( const Cursor::SystemCursorType& systemCu
 		}
 		break;
 	}
+	*/
 }
 
 void OSXCursorPeer::createFromResourceName( const String& cursorName, OSHandleID instanceHandle )

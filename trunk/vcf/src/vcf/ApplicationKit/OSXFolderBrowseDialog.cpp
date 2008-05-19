@@ -31,6 +31,7 @@ void OSXFolderBrowseDialog::setTitle( const String& title )
 bool OSXFolderBrowseDialog::execute()
 {
 	bool result = false;
+	/*
 	browseDlgResult_ = false;
 	OSStatus err = NavGetDefaultDialogCreationOptions (&dlgOptions_ );
 	if ( err != noErr ) {
@@ -60,7 +61,7 @@ bool OSXFolderBrowseDialog::execute()
 		result = browseDlgResult_;
 	}
 	NavDialogDispose( browseForFolder );
-														
+	*/																	
 	return result;
 }
 
@@ -74,6 +75,7 @@ String OSXFolderBrowseDialog::getDirectory()
 	return directory_;
 }
 	
+/*
 void OSXFolderBrowseDialog::BrowseDlgCallbackProc( NavEventCallbackMessage callBackSelector, 
 													NavCBRecPtr callBackParms, 
 													void *callBackUD )
@@ -135,6 +137,7 @@ void OSXFolderBrowseDialog::BrowseDlgCallbackProc( NavEventCallbackMessage callB
         }
     }
 }
+*/
 
 };
 

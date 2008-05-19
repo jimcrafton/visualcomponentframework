@@ -17,8 +17,8 @@ where you installed the VCF.
 using namespace VCF;
 
 
-uint32 OSXMenuItem::globalMenuItemID = 0;
-
+//uint32 OSXMenuItem::globalMenuItemID = 0;
+/*
 String OSXGenerateCaption( MenuItem* item, OSXMenuItem* peer, String caption )
 {
 	String acceleratorText;
@@ -60,14 +60,13 @@ String OSXGenerateCaption( MenuItem* item, OSXMenuItem* peer, String caption )
 
 	return caption;
 }
-
+*/
 
 
 
 OSXMenuItem::OSXMenuItem( MenuItem* item ):
 	itemID_(0),
 	menuItem_(item),
-	itemHandle_(NULL),
 	itemAdded_(false)
 {
 	init();
@@ -76,7 +75,6 @@ OSXMenuItem::OSXMenuItem( MenuItem* item ):
 OSXMenuItem::OSXMenuItem():
 	itemID_(0),
 	menuItem_(NULL),
-	itemHandle_(NULL),
 	itemAdded_(false)
 {
 	init();
@@ -84,15 +82,12 @@ OSXMenuItem::OSXMenuItem():
 
 OSXMenuItem::~OSXMenuItem()
 {
-	if ( NULL != itemHandle_ ) {
-		DisposeMenu( itemHandle_ );
-	}	
 }
 
 void OSXMenuItem::init()
 {
-	OSXMenuItem::globalMenuItemID ++;
-	itemID_ = OSXMenuItem::globalMenuItemID;
+	//OSXMenuItem::globalMenuItemID ++;
+	//itemID_ = OSXMenuItem::globalMenuItemID;
 }
 
 bool OSXMenuItem::isMenuItemRoot( MenuItem* item )
@@ -191,10 +186,10 @@ void OSXMenuItem::insertChild( const uint32& index, MenuItem* child )
 {
 	child->setIndex( index );
 	
-	CFTextString tmp( OSXGenerateCaption( child, (OSXMenuItem*)child->getPeer(), child->getCaption() ) );
+	//CFTextString tmp( OSXGenerateCaption( child, (OSXMenuItem*)child->getPeer(), child->getCaption() ) );
 	//is this child a top level menu item?
 	
-	
+	/*
 	if ( OSXMenuItem::isParentMenuItemRoot( child ) ) {
 		OSXMenuItem* peer = (OSXMenuItem*)child->getPeer();		
 		MenuRef handle = (MenuRef) peer->getMenuID();
@@ -243,7 +238,7 @@ void OSXMenuItem::insertChild( const uint32& index, MenuItem* child )
 							sizeof(child), 
 							&child );		
 	}
-	
+	*/
 	/**
 	check to see if we have children that have not yet been added
 	*/
@@ -253,7 +248,7 @@ void OSXMenuItem::insertChild( const uint32& index, MenuItem* child )
 void OSXMenuItem::deleteChild( MenuItem* child )
 {
 	int index = child->getIndex();
-
+/*
 	OSXMenuItem* peer = (OSXMenuItem*)child->getPeer();
 	MenuRef handle = (MenuRef) getMenuID();	
 	
@@ -261,6 +256,7 @@ void OSXMenuItem::deleteChild( MenuItem* child )
 		DeleteMenu( peer->itemID_ );
 	}
 	DeleteMenuItem( handle, index + 1 );
+	*/
 }
 
 void OSXMenuItem::deleteChild( const uint32& index )
@@ -271,15 +267,15 @@ void OSXMenuItem::deleteChild( const uint32& index )
 
 void OSXMenuItem::clearChildren()
 {
-	MenuRef handle = (MenuRef) getMenuID();	
+	//MenuRef handle = (MenuRef) getMenuID();	
 	int start = 1;
-	DeleteMenuItems( handle, 1,	menuItem_->getChildCount() );
+	//DeleteMenuItems( handle, 1,	menuItem_->getChildCount() );
 }
 
 bool OSXMenuItem::isChecked()
 {
 	bool result = false;
-	
+	/*
 	MenuItem* parent = menuItem_->getParent();
 	OSXMenuItem* parentPeer = (OSXMenuItem*)parent->getPeer();
  	MenuRef parentHandle = (MenuRef)parentPeer->getMenuID();
@@ -290,6 +286,7 @@ bool OSXMenuItem::isChecked()
 	if ( checkMark == markChar ) {
 		result = true;
 	}
+	*/
 	return result;
 }
 
@@ -298,7 +295,7 @@ void OSXMenuItem::setChecked( const bool& checked )
 	if ( menuItem_->hasChildren() ) {
 		return;
 	}
-	
+	/*
 	MenuItem* parent = menuItem_->getParent();	
 	OSXMenuItem* parentPeer = (OSXMenuItem*)parent->getPeer();
  	MenuRef parentHandle = (MenuRef)parentPeer->getMenuID();
@@ -306,6 +303,7 @@ void OSXMenuItem::setChecked( const bool& checked )
 	int index = menuItem_->getIndex()+1;
 	CharParameter markChar = checked ? checkMark : 0;
 	SetItemMark( parentHandle, index, markChar );
+	*/
 }
 
 bool OSXMenuItem::hasParent()
@@ -325,13 +323,14 @@ MenuItem* OSXMenuItem::getChildAt( const uint32& index )
 
 bool OSXMenuItem::isEnabled()
 {
+/*
 	MenuItem* parent = menuItem_->getParent();	
 	OSXMenuItem* parentPeer = (OSXMenuItem*)parent->getPeer();
  	MenuRef parentHandle = (MenuRef)parentPeer->getMenuID();
 	
 	int index = menuItem_->getIndex()+1;
-	
-	return IsMenuItemEnabled( parentHandle, index ) ? true : false;
+	*/
+	return false; // IsMenuItemEnabled( parentHandle, index ) ? true : false;
 }
 
 void OSXMenuItem::setEnabled( const bool& enabled )
@@ -339,7 +338,7 @@ void OSXMenuItem::setEnabled( const bool& enabled )
 	if ( true == menuItem_->isSeparator() ){
 		return;
 	}
-	
+	/*
 	MenuItem* parent = menuItem_->getParent();	
 	OSXMenuItem* parentPeer = (OSXMenuItem*)parent->getPeer();
  	MenuRef parentHandle = (MenuRef)parentPeer->getMenuID();
@@ -350,7 +349,8 @@ void OSXMenuItem::setEnabled( const bool& enabled )
 	}
 	else {
 		DisableMenuItem( parentHandle, index );
-	}	
+	}
+	*/	
 }
 
 bool OSXMenuItem::isVisible()
@@ -372,7 +372,7 @@ void OSXMenuItem::setVisible( const bool& visible )
 bool OSXMenuItem::getRadioItem()
 {
 	bool result = false;
-	
+	/*
 	MenuItem* parent = menuItem_->getParent();
 	OSXMenuItem* parentPeer = (OSXMenuItem*)parent->getPeer();
  	MenuRef parentHandle = (MenuRef)parentPeer->getMenuID();
@@ -383,6 +383,7 @@ bool OSXMenuItem::getRadioItem()
 	if ( diamondMark == markChar ) {
 		result = true;
 	}
+	*/
 	return result;
 }
 
@@ -391,7 +392,7 @@ void OSXMenuItem::setRadioItem( const bool& value )
 	if ( menuItem_->hasChildren() || menuItem_->isSeparator() ) {
 		return;
 	}
-	
+	/*
 	MenuItem* parent = menuItem_->getParent();	
 	OSXMenuItem* parentPeer = (OSXMenuItem*)parent->getPeer();
  	MenuRef parentHandle = (MenuRef)parentPeer->getMenuID();
@@ -399,6 +400,7 @@ void OSXMenuItem::setRadioItem( const bool& value )
 	int index = menuItem_->getIndex()+1;
 	CharParameter markChar = value ? diamondMark : 0;
 	SetItemMark( parentHandle, index, markChar );
+	*/
 }
 
 void OSXMenuItem::setMenuItem( MenuItem* item )
@@ -414,6 +416,7 @@ void OSXMenuItem::setCaption( const String& caption )
 	if ( true == menuItem_->isSeparator() ){
 		return;
 	}
+	/*
 	int index = menuItem_->getIndex();
 	
 	MenuItem* parent = menuItem_->getParent();
@@ -434,6 +437,7 @@ void OSXMenuItem::setCaption( const String& caption )
 			SetMenuItemTextWithCFString( ref, index + 1, tmp );
 		}
 	}
+	*/
 }
 
 
@@ -445,6 +449,7 @@ If the menuItem_ is the "root" menu item then this is a no-op
 */
 OSHandleID OSXMenuItem::getMenuID()
 {
+/*
 	if ( isMenuItemRoot() ) {
 		printf( "the menu item is the root item!\n" );
 		return 0;
@@ -473,12 +478,12 @@ OSHandleID OSXMenuItem::getMenuID()
 			}
 			else {
 				MenuBar* menuBarOwner = dynamic_cast<MenuBar*>( menuOwner );
-				/**
-				At this point we either have a menu bar, because we are top level 
-				items, 
-				or..
-				We don't, which means we are nested hierarchical menu items
-				*/
+				
+				//At this point we either have a menu bar, because we are top level 
+				//items, 
+				//or..
+				//We don't, which means we are nested hierarchical menu items
+				
 				if ( NULL != menuBarOwner ){
 					if ( isParentMenuItemRoot() ) {
 						CreateNewMenu( itemID_,0,&itemHandle_);
@@ -510,12 +515,14 @@ OSHandleID OSXMenuItem::getMenuID()
 			}
 		}
 	}
-	return (OSHandleID)itemHandle_;
+	*/
+	return (OSHandleID)0;
 }
 
 
 void OSXMenuItem::setAsSeparator( const bool& isSeperator )
 {
+/*
 	MenuItem* parent = menuItem_->getParent();	
 	OSXMenuItem* parentPeer = (OSXMenuItem*)parent->getPeer();
  	MenuRef parentHandle = (MenuRef)parentPeer->getMenuID();
@@ -527,6 +534,7 @@ void OSXMenuItem::setAsSeparator( const bool& isSeperator )
 	else{
 		ChangeMenuItemAttributes( parentHandle, index, 0, kMenuItemAttrSeparator );
 	}
+	*/
 }
 
 void OSXMenuItem::setAcceleratorKey( AcceleratorKey* accelerator )

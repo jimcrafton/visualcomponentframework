@@ -43,6 +43,8 @@ void OSXColorDialog::setTitle( const String& title )
 
 bool OSXColorDialog::execute()
 {
+	bool result = false;
+/*
 	NColorPickerInfo info ;
 	memset( &info, 0, sizeof(info) );
 	info.placeWhere = kCenterOnMainScreen;
@@ -53,7 +55,7 @@ bool OSXColorDialog::execute()
 	
 	//CopyCStringToPascal( "Hello World", &info.prompt );
 	
-	bool result = false;
+	
 	OSStatus err = NPickColor ( &info );
 	
 	if ((err == noErr) && info.newColorChosen)	{
@@ -62,7 +64,7 @@ bool OSXColorDialog::execute()
 		color_.setGreen( ((double)info.theColor.color.rgb.green) / ((double)0xFFFF) );
 		color_.setBlue( ((double)info.theColor.color.rgb.blue) / ((double)0xFFFF) );
 	}
-	
+	*/
 	return result;
 }
 

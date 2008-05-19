@@ -1023,8 +1023,8 @@ void OSXUIToolkit::internal_quitCurrentEventLoop()
 {
     //EventLoopRef currentLoop = GetCurrentEventLoop();
     //QuitEventLoop( currentLoop );
-	
-	[[NSApplication sharedApplication] stop];
+	NSApplication* app = [NSApplication sharedApplication];
+	[app stop: app];
 	
     quitEventLoop_ = true;
 }

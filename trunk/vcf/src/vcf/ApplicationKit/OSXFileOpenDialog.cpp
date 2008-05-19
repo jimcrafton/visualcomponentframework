@@ -31,10 +31,11 @@ void OSXFileOpenDialog::setTitle( const String& title )
 {
 	title_ = title;
 }
-
+/*
 void OSXFileOpenDialog::buildFileTypesMap()
 {
 	//Can you say "Royal Pain In the Ass"? Yes? I knew you could!
+	
 	fileTypesFilterMap_.clear();
 	
 	ICInstance inst;
@@ -108,12 +109,14 @@ void OSXFileOpenDialog::buildFileTypesMap()
 	
 	DisposeHandle( entries );
 	
-	ICStop( inst );
+	ICStop( inst );	
 }
+*/
 
 bool OSXFileOpenDialog::execute() 
 {
 	bool result = false;
+	/*
 	selectedFiles_.clear();
 	fileName_ = "";
 	
@@ -238,10 +241,10 @@ bool OSXFileOpenDialog::execute()
 		fileName_ = selectedFiles_.front();
 		result = true;
 	}
-													
+	*/												
 	return result;
 }
-
+/*
 bool OSXFileOpenDialog::matchFileType( NavFileOrFolderInfo* info, FSRef* fileRef )
 {
 	bool result = false;
@@ -249,7 +252,7 @@ bool OSXFileOpenDialog::matchFileType( NavFileOrFolderInfo* info, FSRef* fileRef
 	if ( filter_.empty() ) {
 		return true;
 	}
-	
+
 	LSItemInfoRecord itemInfo;
 	LSCopyItemInfoForRef( fileRef, kLSRequestAllInfo, &itemInfo );
 	String ext;
@@ -306,7 +309,8 @@ bool OSXFileOpenDialog::matchFileType( NavFileOrFolderInfo* info, FSRef* fileRef
 	
 	return result;
 }
-
+*/
+/*
 pascal Boolean OSXFileOpenDialog::openFileFilterProc( AEDesc* theItem, void* info, NavCallBackUserData callBackUD, NavFilterModes filterMode )
 {
 	Boolean result = true;
@@ -356,14 +360,14 @@ pascal void OSXFileOpenDialog::openNavEventProc( NavEventCallbackMessage inSelec
 		break;
 		
 		case kNavCBPopupMenuSelect : {
-			/**
-			This gets called when the user selects something in the popup menu.
-			 It would *appear* (and I put this in quotes because Nav Services is apparently
-								kind of buggy on OS X) that the menuType field represents the index of the 
-			 array of menu popup names that we pass in to the NavCreateGetFileDialog
-			 in the openDlgOptions_.popupExtension. Other code on the internet apparently relies 
-			 on this as well, so hopefully this won't change (knock on wood) in the near future.
-			 */
+			
+			//This gets called when the user selects something in the popup menu.
+			 //It would *appear* (and I put this in quotes because Nav Services is apparently
+				//				kind of buggy on OS X) that the menuType field represents the index of the 
+			// array of menu popup names that we pass in to the NavCreateGetFileDialog
+			// in the openDlgOptions_.popupExtension. Other code on the internet apparently relies 
+			// on this as well, so hopefully this won't change (knock on wood) in the near future.
+			 
 			NavMenuItemSpec* menuItemSpec = (NavMenuItemSpec *)ioParams->eventData.eventDataParms.param;
 			thisPtr->selectedFileTypeIndex_ = menuItemSpec->menuType;
 			FilterPair filt = thisPtr->filter_[thisPtr->selectedFileTypeIndex_];
@@ -394,8 +398,7 @@ pascal void OSXFileOpenDialog::openNavEventProc( NavEventCallbackMessage inSelec
 		break;
 	}	
 }
-										
-										
+*/
 
 void OSXFileOpenDialog::addFilter( const String & description, const String & extension ) 
 {

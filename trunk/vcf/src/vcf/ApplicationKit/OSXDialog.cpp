@@ -17,7 +17,6 @@ using namespace VCF;
 OSXDialog::OSXDialog()	:
 	owner_(NULL),
 	dialogComponent_(NULL),
-	dialogRef_(NULL),
 	isWindowSheet_(false)
 {
 
@@ -26,7 +25,6 @@ OSXDialog::OSXDialog()	:
 OSXDialog::OSXDialog( Control* owner, Dialog* component ):
 	owner_(owner),
 	dialogComponent_(component),
-	dialogRef_(NULL),
 	isWindowSheet_(false)
 {
 	
@@ -37,30 +35,8 @@ OSXDialog::~OSXDialog()
 
 }
 
-WindowAttributes OSXDialog::getCreationWinAttrs()
-{
-	return kWindowCompositingAttribute |
-              kWindowStandardHandlerAttribute | kWindowLiveResizeAttribute;
-}
-
-WindowClass OSXDialog::getCreationWinClass()
-{
-	/*
-	Dialog* dialog = (Dialog*)control_;
-	if ( NULL != dialog ) {
-		if ( dialog->isSheetModal() ) {
-			return kSheetAlertWindowClass;
-		}
-		else if ( dialog->isModal() ) {
-			return kMovableModalWindowClass;
-		}
-	}
-	*/
-	return kDocumentWindowClass;
-}
-
-void OSXDialog::createAsSheetWindow()
-{
+//void OSXDialog::createAsSheetWindow()/
+//{
 	//sheetParent_ = NULL;
 /*
 	WindowAttributes attrs = kWindowCompositingAttribute | kWindowStandardHandlerAttribute;
@@ -130,10 +106,10 @@ void OSXDialog::createAsSheetWindow()
 		sheetParent_ = (WindowRef) ownerFrame->getPeer()->getHandleID();
 	}
 	*/
-}
+//}
 
-void OSXDialog::createAsWindow()
-{
+//void OSXDialog::createAsWindow()
+//{
 /*	sheetParent_ = NULL;
 	WindowAttributes attrs=getCreationWinAttrs();// = kWindowCompositingAttribute | kWindowStandardHandlerAttribute;
     
@@ -201,7 +177,7 @@ void OSXDialog::createAsWindow()
 							&contentViewHandlerRef_ );
 	}
 	*/
-}
+//}
 
 void OSXDialog::create( Control* owningControl )
 {

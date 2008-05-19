@@ -41,7 +41,7 @@ public:
 	
 protected:
 
-	virtual OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
+
 
 	ButtonState state_;
 	CommandButton* commandButton_;

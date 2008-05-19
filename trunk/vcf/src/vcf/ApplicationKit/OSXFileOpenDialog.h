@@ -63,17 +63,17 @@ protected:
 	bool fileMustExist_;
 	Control* owner_;
 	String selectedFilter_;
-	NavDialogCreationOptions openDlgOptions_;
+	//NavDialogCreationOptions openDlgOptions_;
 	int selectedFileTypeIndex_;
 	
-	void buildFileTypesMap();
+	//void buildFileTypesMap();
 	
-	bool matchFileType( NavFileOrFolderInfo* info, FSRef* fileRef );
+	//bool matchFileType( NavFileOrFolderInfo* info, FSRef* fileRef );
 	
-	static pascal void openNavEventProc( NavEventCallbackMessage inSelector, NavCBRecPtr ioParams, 
-										NavCallBackUserData	ioUserData);
+	//static pascal void openNavEventProc( NavEventCallbackMessage inSelector, NavCBRecPtr ioParams, 
+	//									NavCallBackUserData	ioUserData);
 										
-	static pascal Boolean openFileFilterProc( AEDesc* theItem, void* info, NavCallBackUserData callBackUD, NavFilterModes filterMode );
+	//static pascal Boolean openFileFilterProc( AEDesc* theItem, void* info, NavCallBackUserData callBackUD, NavFilterModes filterMode );
 };
 
 

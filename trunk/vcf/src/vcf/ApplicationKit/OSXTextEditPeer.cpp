@@ -20,7 +20,6 @@ using namespace VCF;
 
 
 
-/*
 
 
 OSXTextEditPeer::OSXTextEditPeer( TextControl* component, const bool& isMultiLineControl ):
@@ -36,19 +35,17 @@ OSXTextEditPeer::OSXTextEditPeer( TextControl* component, const bool& isMultiLin
 
 OSXTextEditPeer::~OSXTextEditPeer()
 {
-	//null this out so the ~OSXTextPeer doesn't
-	//release the txnObject_ - this is handled by the 
-	//HITextView
-	txnObject_ = NULL;
+	
 }
 
 void OSXTextEditPeer::create( Control* owningControl )
 {
+
 	if ( NULL == textControl_ ){
 		throw RuntimeException( MAKE_ERROR_MSG_2( "NULL owner control for Text Edit Peer" ) );
 	}
 
-
+/*
 		TXNFrameOptions frameOptions;
 		frameOptions = kTXNDoFontSubstitutionMask;
 		
@@ -108,10 +105,10 @@ void OSXTextEditPeer::create( Control* owningControl )
 		textControl_->getFont()->FontChanged += 
 			new ClassProcedure1<Event*,OSXTextEditPeer>( this, &OSXTextEditPeer::onTextControlFontChanged, "OSXTextEditPeer::onTextControlFontChanged" );
 
-	
+*/	
 }
 
-	
+/*	
 OSStatus OSXTextEditPeer::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent )
 {
 	OSStatus result = eventNotHandledErr;
@@ -270,7 +267,7 @@ OSStatus OSXTextEditPeer::handleOSXEvent( EventHandlerCallRef nextHandler, Event
 	
 	return result;
 }
-	
+*/	
 
 OSHandleID OSXTextEditPeer::getTextObjectHandle()
 {
@@ -814,6 +811,7 @@ bool OSXTextEditPeer::stateAllowsModelChange()
 
 void OSXTextEditPeer::onTextModelTextChanged( TextEvent* event )
 {
+/*
 	if ( (NULL != event) && 
 		!(editState_ & esModelTextChanging) &&
 		!(editState_ & esKeyEvent) ){
@@ -847,6 +845,7 @@ void OSXTextEditPeer::onTextModelTextChanged( TextEvent* event )
 			break;
 		}
 	}
+	*/
 }
 
 
@@ -865,22 +864,22 @@ uint32 OSXTextEditPeer::getSelectionStart()
 {
 	uint32 start = 0;
 	
-	TXNOffset s, e;
+	//TXNOffset s, e;
 	
-	TXNGetSelection( txnObject_, &s, &e );
+	//TXNGetSelection( txnObject_, &s, &e );
 	
-	start = s;
+	//start = s;
 	
 	return start;
 }
 
 uint32 OSXTextEditPeer::getSelectionCount()
 {
-	TXNOffset s, e;
+	//TXNOffset s, e;
 	
-	TXNGetSelection( txnObject_, &s, &e );
+	//TXNGetSelection( txnObject_, &s, &e );
 	
-	return e - s;
+	return 0;// e - s;
 }
 
 
@@ -893,12 +892,12 @@ uint32 OSXTextEditPeer::getSelectionCount()
 
 void OSXTextEditPeer::clearSelection()
 {
-	TXNClear( txnObject_ );
+	//TXNClear( txnObject_ );
 }
 
 void OSXTextEditPeer::setSelectionMark( const uint32& start, const uint32& count )
 {
-	TXNSetSelection( txnObject_, start, start + count );
+	//TXNSetSelection( txnObject_, start, start + count );
 }
 
 
@@ -919,7 +918,7 @@ void OSXTextEditPeer::repaint( Rect* repaintRect )
 
 void OSXTextEditPeer::setReadOnly( const bool& readonly )
 {
-	
+	/*
 	TXNControlTag           iControlTags[] = { kTXNIOPrivilegesTag };  
 	TXNControlData          iControlData[1];
 	if ( readonly ) {
@@ -929,6 +928,7 @@ void OSXTextEditPeer::setReadOnly( const bool& readonly )
 		iControlData[0].uValue = (UInt32) kTXNReadWrite;	
 	}
 	TXNSetTXNObjectControls( txnObject_, false, 1, iControlTags, iControlData ); 
+	*/
 }
 
 uint32 OSXTextEditPeer::getTotalPrintablePageCount( PrintContext* context )
@@ -956,7 +956,7 @@ void OSXTextEditPeer::onControlModelChanged( Event* e )
 	}
 
 	TextModel* tm = textControl_->getTextModel();
-	tm->addTextModelChangedHandler( (EventHandler*)tml );
+	tm->ModelChanged += tml;
 
 	String text = tm->getText();
 
@@ -967,36 +967,36 @@ void OSXTextEditPeer::onControlModelChanged( Event* e )
 void OSXTextEditPeer::cut()
 {
 	if ( !textControl_->getReadOnly() ) {
-		TXNCut( txnObject_ );
+	//	TXNCut( txnObject_ );
 	}
 }
 
 void OSXTextEditPeer::copy()
 {
-	TXNCopy( txnObject_ );
+	//TXNCopy( txnObject_ );
 }
 
 void OSXTextEditPeer::paste()
 {
 	if ( !textControl_->getReadOnly() ) {
-		TXNPaste( txnObject_ );
+	//	TXNPaste( txnObject_ );
 	}
 }
 
 bool OSXTextEditPeer::canUndo()
 {
-	return TXNCanUndo( txnObject_, NULL );
+	return false ;// TXNCanUndo( txnObject_, NULL );
 }
 
 bool OSXTextEditPeer::canRedo()
 {
-	return TXNCanRedo( txnObject_, NULL );
+	return false;//TXNCanRedo( txnObject_, NULL );
 }
 
 void OSXTextEditPeer::undo()
 {
 	if ( !textControl_->getReadOnly() ) {
-		TXNUndo( txnObject_ );
+		//TXNUndo( txnObject_ );
 	}
 }
 
@@ -1004,7 +1004,7 @@ void OSXTextEditPeer::redo()
 {
 	//this one is necessary too, otherwise the model wouldn't be updated
 	if ( !textControl_->getReadOnly() ) {
-		TXNRedo( txnObject_ );
+	//	TXNRedo( txnObject_ );
 	}
 }
 
@@ -1024,7 +1024,7 @@ bool OSXTextEditPeer::getTextWrapping()
 {
 
 }
-*/
+
 
 
 /**

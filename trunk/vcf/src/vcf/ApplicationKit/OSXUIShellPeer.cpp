@@ -76,6 +76,16 @@ VCF::Point OSXUIShellPeer::getCurrentMousePosition()
 	return Point();
 }
 
+void OSXUIShellPeer::shellTranslateToScreenCoords( Control* control, Point* pt )
+{
+
+}
+
+void OSXUIShellPeer::shellTranslateFromScreenCoords( Control* control, Point* pt )
+{
+
+}
+		
 void OSXUIShellPeer::performFileOp( int operationType, const std::vector<String>& srcFiles, const std::vector<String>& destFiles )
 {
 

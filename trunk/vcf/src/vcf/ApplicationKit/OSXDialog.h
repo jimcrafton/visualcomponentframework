@@ -46,24 +46,13 @@ public:
 
 	void init();
 
-	virtual OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
-	
-	virtual WindowAttributes getCreationWinAttrs();
-	
-	virtual WindowClass getCreationWinClass();
-	
 	virtual void close();
 private:
 	Control* owner_;
 	Dialog* dialogComponent_;
-	DialogRef dialogRef_;
-	WindowRef sheetParent_;
 	bool isWindowSheet_;	
-	VCF::Rect realSheetBounds_;
+	VCF::Rect realSheetBounds_;	
 	
-	void createAsSheetWindow();
-	
-	void createAsWindow();
 };
 
 

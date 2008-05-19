@@ -92,9 +92,9 @@ public:
 protected:
 	uint32 itemID_;
 	MenuItem* menuItem_;
-	MenuRef itemHandle_;
+	//MenuRef itemHandle_;
 	bool itemAdded_;
-	static uint32 globalMenuItemID;
+	//static uint32 globalMenuItemID;
 };
 
 };

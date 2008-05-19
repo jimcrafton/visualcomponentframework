@@ -62,14 +62,14 @@ protected:
 	String selectedFilter_;
 	int selectedFileTypeIndex_;
 	
-	void buildFileTypesMap();
+	//void buildFileTypesMap();
 	
-	bool matchFileType( NavFileOrFolderInfo* info, FSRef* fileRef );
+	//bool matchFileType( NavFileOrFolderInfo* info, FSRef* fileRef );
 	
-	static pascal void saveNavEventProc( NavEventCallbackMessage inSelector, NavCBRecPtr ioParams, 
-										NavCallBackUserData	ioUserData);
+	//static pascal void saveNavEventProc( NavEventCallbackMessage inSelector, NavCBRecPtr ioParams, 
+	//									NavCallBackUserData	ioUserData);
 										
-	static pascal Boolean saveFileFilterProc( AEDesc* theItem, void* info, NavCallBackUserData callBackUD, NavFilterModes filterMode );
+	//static pascal Boolean saveFileFilterProc( AEDesc* theItem, void* info, NavCallBackUserData callBackUD, NavFilterModes filterMode );
 };
 
 

@@ -47,8 +47,6 @@ public:
 
 	virtual void repaint( Rect* repaintRect=NULL );
 	
-	virtual OSStatus handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent );
-
 	//TextPeer interface
 
 	virtual OSHandleID getTextObjectHandle();
