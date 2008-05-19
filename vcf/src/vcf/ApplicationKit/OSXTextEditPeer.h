@@ -20,7 +20,7 @@ namespace VCF
 class TextEvent;
 
 
-class OSXTextEditPeer : public OSXControl, 
+class OSXTextEditPeer : public ObjectWithCallbacks,  public OSXControl, 
 					public TextEditPeer, public OSXTextPeer {
 
 public:

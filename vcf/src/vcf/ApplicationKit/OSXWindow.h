@@ -127,15 +127,11 @@ public:
     
    	virtual void setBorderPath( Path* path );
 	
-	bool isComposited();	
-	
-	ControlRef getRootControl();
-	
 	uint32 getCurrentMouseBtn() {
 		return currentMouseBtn_;
 	}
 	
-	
+	void internal_paint( NSRect r );
 protected:
 	NSWindow* window_;
 	Control* control_;
@@ -143,19 +139,7 @@ protected:
 	//RgnHandle mouseTrackRgn_;
 	//MouseTrackingRef mouseTrackRef_;	
 	uint32 currentMouseBtn_;
-	bool internalClose_;	
-
-	//RgnHandle determineUnobscuredClientRgn();
-	
-	//static OSStatus handleOSXEvents(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
-	
-   	//Control* getControlForMouseEvent( EventRef event );
-	
-	//static OSStatus wndContentViewHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
-	
-	//OSStatus handleContentViewDraw( EventHandlerCallRef nextHandler, EventRef theEvent );
-	
-	//void copyControlsFromWndRef( WindowRef oldWndRef );
+	bool internalClose_;		
 };
 
 
