@@ -329,13 +329,14 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 			VCF_ASSERT( prop->isCollection() );
 			if ( prop->isCollection() ) {
 
-				if ( prop->getType() != pdObject ) {
+				if ( prop->getType() != pdObject &&
+					(prop->getType() != pdVariant) ) {
 					throw RuntimeException("Attempting to assign values to a value that is not an object");
 				}
 
 				VariantData* value = NULL;
 				try {
-					value = prop->getAtKey( key );
+					value = prop->getAtKey( key );					
 				}
 				catch(...) {
 					value = NULL;
