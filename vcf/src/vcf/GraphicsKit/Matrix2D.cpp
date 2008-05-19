@@ -363,6 +363,27 @@ double Matrix2D::getScaleY() const
 	return result;
 }
 
+
+double Matrix2D::getShearX() const 
+{
+	double result = 0;
+	double y = 0;
+
+	getShear( result, y );
+
+	return result;
+}
+
+double Matrix2D::getShearY() const 
+{
+	double result = 0;
+	double x = 0;
+
+	getShear( x, result );
+
+	return result;
+}
+
 double Matrix2D::getTranslateX() const 
 {
 	double result = 0;
@@ -383,6 +404,10 @@ double Matrix2D::getTranslateY() const
 	return result;
 }
 
+void Matrix2D::getShear( double& x, double& y ) const
+{
+
+}
 
 void Matrix2D::getScale( double& x, double& y ) const
 {
