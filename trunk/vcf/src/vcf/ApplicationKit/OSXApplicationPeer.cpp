@@ -31,6 +31,8 @@ bool OSXApplicationPeer::initApp()
 {
 	bool result = true;
 	appInstance_ = [NSApplication sharedApplication];
+	NSAutoreleasePool * Pool = [[NSAutoreleasePool alloc] init];
+	
 	return result;
 }
 

@@ -15,7 +15,36 @@ where you installed the VCF.
 
 
 
+@interface VCFWindowContentView : NSView
+{
+	VCF::OSXWindow* wnd;
+}
+@end
 
+@implementation VCFWindowContentView
+
+- (id)initWithFrame:(NSRect)frameRect
+{
+	if ((self = [super initWithFrame:frameRect]) != nil) {
+		// Add initialization code here
+		wnd = NULL;
+	}
+	return self;
+}
+
+- (void)drawRect:(NSRect)rect
+{
+	if ( NULL != wnd ) {
+		wnd->internal_paint(rect);
+	}	
+}
+
+- (void) setVCFWindow: (id) aWnd
+{
+	wnd = (VCF::OSXWindow*)aWnd;
+}
+ 
+@end
 
 namespace VCF {
 
@@ -31,6 +60,7 @@ OSXWindow::OSXWindow():
 
 OSXWindow::OSXWindow( Control* control, Control* owner ):
 	control_(control),
+	window_(NULL),
 	internalClose_(false),
 	currentMouseBtn_(0)
 {
@@ -133,6 +163,31 @@ void OSXWindow::create( Control* owningControl )
 		UIToolkit::postEvent( ev, new VCF::ComponentEvent( owningControl, Component::COMPONENT_CREATED ), true );		
 	}
 	*/
+	
+	this->window_ = [NSWindow alloc];
+	NSRect r;
+	r.size.width = 1;
+	r.size.height = 1;
+	r.origin.x = 0;
+	r.origin.y = 0;
+	
+	[window_ initWithContentRect: r 
+				styleMask: NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask
+				backing: NSBackingStoreBuffered
+				defer: YES ];
+	
+	
+	VCFWindowContentView* contentView = [VCFWindowContentView alloc];	
+	
+	r.size.width = 1;
+	r.size.height = 1;
+	r.origin.x = 0;
+	r.origin.y = 0;
+	[contentView initWithFrame:r];
+	
+	[contentView setVCFWindow: (id)this];
+	
+	[window_ setContentView: contentView ];
 }
 
 void OSXWindow::destroyControl()
@@ -149,18 +204,20 @@ void OSXWindow::destroyControl()
 	//ReleaseMouseTrackingRegion( mouseTrackRef_ );
 	
 	//windowRef_ = NULL;
+	
+	[window_ release];
 }
 
 String OSXWindow::getText()
 {
 	VCF::String result;
-	CFStringRef wndTitle;
-	//CopyWindowTitleAsCFString( windowRef_, &wndTitle );
-
+	//CFStringRef wndTitle = 
+		
 	CFTextString text;
-	text = wndTitle;
+	text = (CFStringRef) [window_ title];
+	//text = wndTitle;
 	result = text;
-
+	
 	return result;
 }
 
@@ -168,11 +225,19 @@ void OSXWindow::setText( const String& text )
 {
 	CFTextString wndTitle;
 	wndTitle = text;
-	//SetWindowTitleWithCFString( windowRef_, wndTitle );
+	CFStringRef tmp = wndTitle;
+	[window_ setTitle: (NSString*) tmp ];
 }
 
 void OSXWindow::setBounds( Rect* rect )
 {
+	NSRect r;
+	r.origin.x = rect->left_;
+	r.origin.y = rect->top_;
+	r.size.width = rect->getWidth();
+	r.size.height = rect->getHeight();
+	[window_ setFrame:r display:YES];
+	
 /*
 	OSXRect r = rect;
 
@@ -229,16 +294,25 @@ void OSXWindow::endSetBounds()
 
 Rect OSXWindow::getBounds()
 {
-	OSXRect r;
+	NSRect r = [window_ frame];
+	
 	//GetWindowBounds( windowRef_, kWindowStructureRgn, r );
 
-	VCF::Rect result = r;
+	VCF::Rect result( r.origin.x, r.origin.y, 
+						r.origin.x + r.size.width, 
+						r.origin.y + r.size.height );
 
 	return result;
 }
 
 void OSXWindow::setVisible( const bool& visible )
 {
+	if ( !visible ) {
+		[window_ orderOut:nil];
+	}
+	else {
+		[window_ makeKeyAndOrderFront:nil];
+	}
 /*
 	if ( !visible ) {
 		HideWindow( windowRef_ );
@@ -261,7 +335,7 @@ void OSXWindow::setVisible( const bool& visible )
 
 bool OSXWindow::getVisible()
 {
-	return false; //IsWindowVisible( windowRef_ ) ? true : false;
+	return  [window_ isVisible] ? true : false ; //IsWindowVisible( windowRef_ ) ? true : false;
 }
 
 Control* OSXWindow::getControl()
@@ -314,7 +388,7 @@ void OSXWindow::setFocused()
 
 bool OSXWindow::isEnabled()
 {
-	return false; //IsWindowActive( windowRef_ ) ? true : false;
+	return true; //IsWindowActive( windowRef_ ) ? true : false;
 }
 
 void OSXWindow::setEnabled( const bool& enabled )
@@ -372,6 +446,14 @@ void OSXWindow::translateToScreenCoords( Point* pt )
 	pt->x_ = point.h;
 	pt->y_ = point.v;
 	*/
+	
+	NSPoint tmp;
+	tmp.x = pt->x_;
+	tmp.y = pt->y_;
+	tmp = [window_ convertBaseToScreen: tmp];
+	
+	pt->x_ = tmp.x;
+	pt->y_ = tmp.y;
 }
 
 void OSXWindow::translateFromScreenCoords( Point* pt )
@@ -388,6 +470,14 @@ void OSXWindow::translateFromScreenCoords( Point* pt )
 	pt->x_ = point.h;
 	pt->y_ = point.v;
 	*/
+	
+	NSPoint tmp;
+	tmp.x = pt->x_;
+	tmp.y = pt->y_;
+	tmp = [window_ convertScreenToBase: tmp];
+	
+	pt->x_ = tmp.x;
+	pt->y_ = tmp.y;
 }
 
 
@@ -418,8 +508,14 @@ Rect OSXWindow::getClientBounds()
 	result.right_ = pt.h;
 	result.bottom_ = pt.v;
 
-*/
-	VCF::Rect result;
+*/	
+	NSView* v = [window_ contentView];
+	NSRect r = [v bounds];	
+	
+	VCF::Rect result( r.origin.x, r.origin.y, 
+						r.origin.x + r.size.width, 
+						r.origin.y + r.size.height );
+
 	return result;
 }
 
@@ -782,20 +878,6 @@ OSStatus OSXWindow::handleOSXEvents( EventHandlerCallRef nextHandler, EventRef t
 }
 */
 
-bool OSXWindow::isComposited()
-{
-	bool result = false;
-/*	WindowAttributes attrs = 0;
-	if ( noErr == GetWindowAttributes( windowRef_, &attrs ) ) {
-		if ( attrs & kWindowCompositingAttribute ) {
-			result = true;
-		}
-	}
-	*/
-
-	return result;
-}
-
 /*
 void internal_handleChildRepaint( Control* control )
 {
@@ -1003,6 +1085,23 @@ void OSXWindow::preChildPaint( GraphicsContext* graphicsContext, Control* child,
 void OSXWindow::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
 {
 	
+}
+
+void OSXWindow::internal_paint( NSRect r )
+{
+	NSGraphicsContext* theContext = [NSGraphicsContext currentContext];
+
+	Color* c = this->control_->getColor();
+	
+	NSColor* backColor = [NSColor colorWithCalibratedRed:c->getRed() 
+									green:c->getGreen() 
+									blue:c->getBlue() 
+									alpha:c->getAlpha()];
+									
+	
+	[backColor setFill];
+	
+	NSRectFill( r );
 }
 
 };//end of namespace VCF

@@ -12,7 +12,7 @@ where you installed the VCF.
 namespace VCF {
 
 
-class OSXControl : public ObjectWithCallbacks, public ControlPeer {
+class OSXControl : public ControlPeer {
 public:
 	enum MouseState{
 		msNoState=0,
@@ -90,7 +90,7 @@ protected:
 	Control* control_;	
 	MouseState mouseState_;
 	::Point lastMousePt_;	
-	
+	NSView* view_;
 
 	//OSStatus handleControlTrack( EventRef theEvent );
 	
