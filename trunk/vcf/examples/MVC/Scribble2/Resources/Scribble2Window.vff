@@ -1,0 +1,55 @@
+object Scribble2Window  : VCF::Window
+	top = 200
+	left = 200
+	height = 300
+	width = 320
+	caption = 'Scribble2 Window'
+
+	model = @scribble
+
+	object scribble : ScribbleModel 
+		backColor.red = 1.0
+		backColor.green = 0.20
+
+		shapes[0].fill.red = 0.12
+		shapes[0].fill.blue = 0.52
+		shapes[0].fill.green = 0.92
+		shapes[0].data = 'line M 10 10 L 50 300'
+
+
+		shapes[1].fill.red = 0.12
+		shapes[1].fill.blue = 0.52
+		shapes[1].fill.green = 0.92
+		shapes[1].stroke.red = 0.92
+		shapes[1].stroke.blue = 0.52
+		shapes[1].stroke.green = 0.22
+		shapes[1].strokeWidth = 3.22
+		shapes[1].data = 'rect M 100 20 L 150 250'
+		shapes[1].transX = -125.0
+		shapes[1].transY = -70.0
+		shapes[1].rotation = 45.0
+		shapes[1].transX = 125.0
+		shapes[1].transY = 70.0
+
+		shapes[1].transX = 50.0
+
+		shapes[1].shearY = 12.0
+
+		
+
+		shapes[2].data = 'free M 50 100 L 150 250 L 170 220 L 175 210 L 180 165'
+		shapes[2].stroke.red = 0.92
+		shapes[2].stroke.blue = 0.92
+		shapes[2].stroke.green = 0.922
+		shapes[2].strokeWidth = 2.0
+		shapes[2].filled = false
+
+
+
+		shapes[3].data = 'ellipse M 100 20 L 250 150'
+		shapes[3].fill.red = 0.812
+		shapes[3].fill.blue = 0.552
+		shapes[3].fill.green = 0.892
+	end
+
+end
