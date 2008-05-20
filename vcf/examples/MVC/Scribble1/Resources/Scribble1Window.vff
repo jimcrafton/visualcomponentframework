@@ -1,0 +1,8 @@
+object Scribble1Window  : VCF::Window
+	top = 200
+	left = 200
+	height = 300
+	width = 320
+	caption = 'Scribble1 Window'
+
+end
