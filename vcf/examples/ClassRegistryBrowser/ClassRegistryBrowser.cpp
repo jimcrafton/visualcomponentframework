@@ -67,7 +67,7 @@ public:
 		classList = mainWindow->classList;
 		classData = mainWindow->classData;
 
-		classDocsRootURL = "http://vcf-online.org/docs/next-rev/src_manual/";
+		classDocsRootURL = "http://vcf-online.org/docs/src_manual/";
 		refresh();
 
 		mainWindow->show();

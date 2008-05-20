@@ -1775,6 +1775,11 @@ bool VariantData::operator == ( const VariantData& v ) const
 		}
 		break;
 
+		case pdObject:{
+			return ObjVal == v.ObjVal;
+		}
+		break;
+
 		case pdVoidPointer:{
 			return VoidPtrVal == v.VoidPtrVal;
 		}

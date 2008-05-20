@@ -708,9 +708,7 @@ public:
 		return Format("#%02X%02X%02X") % (int)(r_*xFF+0.5) % (int)(g_*xFF+0.5) % (int)(b_*xFF+0.5);
 	};
 
-	virtual void setFromString( const String& val ) {
-		copyColor( *Color::getColor(val) );
-	}
+	virtual void setFromString( const String& val );
 
 	/**
 	generates a String with the internal representation of the color
