@@ -48,7 +48,11 @@ public:
 
 	virtual void applyTransform( const Matrix2D& transform ) {
 		agg::trans_affine mat = transform;
-		agg::conv_transform< agg::path_storage > xfrmdPath(ellipsePath_,mat);
+		agg::path_storage tmp = ellipsePath_;
+		agg::conv_transform< agg::path_storage > xfrmdPath(tmp,mat);
+
+		
+		
 
 		ellipsePath_.remove_all();
 		ellipsePath_.concat_path(xfrmdPath);

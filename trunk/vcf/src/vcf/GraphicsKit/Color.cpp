@@ -913,7 +913,54 @@ const String Color::getColorNameFromMap( const Color& color )
 	return GraphicsToolkit::getColorNameFromMap( color );
 }
 
+void Color::setFromString( const String& val )
+{
+	if ( val.length() > 1 ) {
+		if ( val[0] == '#' ) {
+			String colorStr;
 
+			//format can be #rgb #rgba #rrggbb #rrggbbaa
+			if ( val.length() == 4 ) {
+				colorStr = "ff";
+
+				colorStr += val[1];
+				colorStr += val[1];
+
+				colorStr += val[2];
+				colorStr += val[2];
+
+				colorStr += val[3];
+				colorStr += val[3];				
+			}
+			else if ( val.length() == 5 ) {
+				colorStr = val[4];
+				colorStr += val[4];
+
+				colorStr += val[1];
+				colorStr += val[1];
+
+				colorStr += val[2];
+				colorStr += val[2];
+
+				colorStr += val[3];
+				colorStr += val[3];				
+			}
+			else if ( val.length() == 7 ) {
+				colorStr = "ff";
+				colorStr += val.substr(1,6);				
+			}
+			else if ( val.length() == 9 ) {
+				colorStr = val.substr(1,8);
+			}
+
+			uint32 col = StringUtils::fromStringAsHexNumber(colorStr);
+			setRGBPack8( col, cpsARGB );
+		}
+		else {
+			copyColor( *Color::getColor(val) );
+		}
+	}
+}
 
 
 
@@ -1671,6 +1718,7 @@ String ColorNames::unknownColorName()
 {
 	return ColorNames::unknownColorName_;
 }
+
 
 
 /**
