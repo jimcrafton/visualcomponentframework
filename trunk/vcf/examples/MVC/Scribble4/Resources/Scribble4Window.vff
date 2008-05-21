@@ -179,19 +179,33 @@ object Scribble4Window  : VCF::Window
 		shapes[129].data = 'poly M 147 338 L 142 341 L 143 345 L 141 354 L 147 343'
 		shapes[130].data = 'poly M 157 342 L 156 349 L 150 356 L 157 353 L 163 346 L 162 342'
 		shapes[131].data = 'poly M 99 265 L 96 284 L 92 299 L 73 339 L 73 333 L 87 300'
-
-		
 	end
 
 	
+
+	object contentPanel : VCF::Panel
+		alignment = AlignClient
+		border = null;
+	end
+
 	object scrollbarMgr : VCF::ScrollbarManager
-		target = @Scribble4Window
+		target = @contentPanel
 		hasVerticalScrollbar = true
 		hasHorizontalScrollbar = true
 	end
 	
 
 	object mainMenu : VCF::MenuBar
+		object help : VCF::DefaultMenuItem
+			caption = '&View'
+			object viewListing : VCF::DefaultMenuItem
+				caption = '&Shape Listing'
+				delegates
+					MenuItemClicked = [Scribble4App@Scribble4App::onViewListing]
+				end
+			end
+		end
+
 		object help : VCF::DefaultMenuItem
 			caption = '&Help'
 			object helpAbout : VCF::DefaultMenuItem
@@ -201,6 +215,28 @@ object Scribble4Window  : VCF::Window
 				end
 			end
 		end
+	end	
+
+	object scribbleListing : VCF::ListViewControl
+		alignment = AlignLeft
+		width = 100pt
+		border = null
+		iconStyle = isDetails
+		columnModel.items[0] = 'Items'
+		model = @scribble
+		delegates 
+			ItemSelectionChanged = [Scribble4App@Scribble4App::onListSelectionChanged]
+		end 
 	end
 
+	object splitter : VCF::Splitter 
+		
+	end
+	
+	object status : VCF::StatusBar
+		height = 15pt
+		status[0] = 'Status: '
+		status[1] = 'Dimensions: '
+		status[2] = 'Coords: '
+	end
 end

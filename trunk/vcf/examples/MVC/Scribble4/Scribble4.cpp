@@ -5,9 +5,13 @@
 #include "vcf/FoundationKit/RTTIMacros.h"
 #include "vcf/GraphicsKit/Ellipse.h"
 #include "vcf/ApplicationKit/Label.h"
+#include "vcf/ApplicationKit/Panel.h"
+#include "vcf/ApplicationKit/StatusBar.h"
+#include "vcf/ApplicationKit/ListViewControl.h"
 
 #include "ScribbleModel.h"
 #include "ScribbleView.h"
+#include "ScribbleController.h"
 
 
 using namespace VCF;
@@ -18,199 +22,14 @@ public:
 	Label* author;
 	Label* company;
 	Label* copyright;
-	AboutDialog(){
+	AboutDialog(){}
+
+	virtual ~AboutDialog()
+	{
 
 	}
 };
 
-class ScribbleController : public Component {
-public:
-	ScribbleController(): model(NULL), modelControl(NULL),activeShape(NULL) {
-		addCallback( new ClassProcedure1<Event*,ScribbleController>(this, &ScribbleController::onModelChanged), "ScribbleController::onModelChanged" );
-		addCallback( new ClassProcedure1<MouseEvent*,ScribbleController>(this, &ScribbleController::onMouseMove), "ScribbleController::onMouseMove" );
-		addCallback( new ClassProcedure1<MouseEvent*,ScribbleController>(this, &ScribbleController::onMouseDown), "ScribbleController::onMouseDown" );
-		addCallback( new ClassProcedure1<MouseEvent*,ScribbleController>(this, &ScribbleController::onMouseUp), "ScribbleController::onMouseUp" );
-	}
-
-	void setControl( Control* val ) {
-		if ( NULL != modelControl ) {
-
-		}
-
-		modelControl = val;
-
-		if ( NULL != modelControl ) {
-			modelControl->MouseMove += getCallback( "ScribbleController::onMouseMove" );
-			modelControl->MouseDown += getCallback( "ScribbleController::onMouseDown" );
-			modelControl->MouseUp += getCallback( "ScribbleController::onMouseUp" );
-		}
-	}
-
-	void setModel( ScribbleModel* scribbleModel ) {
-		
-		CallBack* ev = getCallback( "ScribbleController::onModelChanged" );
-
-
-		if ( NULL != model ) {			
-			model->ModelChanged -= ev;			
-		}
-
-		model = scribbleModel;
-
-		if ( NULL != model ) {
-			model->ModelChanged += ev;
-
-
-			Scrollable* scrollable = modelControl->getScrollable();
-
-
-			if ( NULL != scrollable ) {
-				Rect bounds = model->getMaxBounds();
-				bounds.inflate( 0,0,20,20);
-				scrollable->setVirtualViewHeight( bounds.getHeight() );
-				scrollable->setVirtualViewWidth( bounds.getWidth() );
-			}
-		}
-	}
-
-	void onModelChanged( Event* e ) {
-		Scrollable* scrollable = modelControl->getScrollable();
-		
-		
-		if ( NULL != scrollable ) {
-			Rect bounds = model->getMaxBounds();
-			bounds.inflate( 0,0,20,20);
-			scrollable->setVirtualViewHeight( bounds.getHeight() );
-			scrollable->setVirtualViewWidth( bounds.getWidth() );
-		}
-	}
-
-	void onMouseMove( MouseEvent* e ) {
-		const ScribbleShape* tmp = hitTest( *e->getPoint() );
-		if ( tmp != activeShape ) {
-			model->setActiveShape( tmp );
-			activeShape = tmp;
-
-			if ( NULL != activeShape ) {
-				
-				VariantData v;
-				v = (Object*)activeShape;
-				uint32 index = model->getIndexOf( v );
-				
-				modelControl->setToolTipText( String("Shape #") + index  );
-			}
-			else {
-				modelControl->setToolTipText( "" );
-			}
-		}
-	}
-
-	void onMouseDown( MouseEvent* e ) {
-
-	}
-
-	void onMouseUp( MouseEvent* e ) {
-
-	}
-
-
-	const ScribbleShape* hitTest( const Point& point ) {
-		const ScribbleShape* result = NULL;
-
-		BezierCurve curve;
-		VCF::Ellipse ellipse;
-		Path* p = NULL;
-		size_t count = model->getCount();
-		for (int i=count-1;i>=0;i-- ) {
-			const ScribbleShape* shape = model->getShape(i);	
-			curve.clear();
-			
-
-			switch ( shape->type ) {
-				case ScribbleShape::stLine : {
-					Point pt = shape->points[0];
-					curve.moveTo( pt.x_, pt.y_ );
-					pt = shape->points[1];
-					curve.lineTo( pt.x_, pt.y_ );
-					p = &curve;
-				}
-				break;
-
-				case ScribbleShape::stRect : {
-					Point pt1 = shape->points[0];
-					Point pt2 = shape->points[1];
-					Rect r(pt1.x_, pt1.y_, pt2.x_, pt2.y_ );
-					curve.rectangle( r );
-					p = &curve;
-				}
-				break;
-
-				case ScribbleShape::stEllipse : {
-					Point pt1 = shape->points[0];
-					Point pt2 = shape->points[1];
-					Rect r(pt1.x_, pt1.y_, pt2.x_, pt2.y_ );
-					ellipse.ellipse( r );
-					p = &ellipse;
-				}
-				break;
-
-				case ScribbleShape::stPolygon : {
-					std::vector<Point>::const_iterator it = shape->points.begin();			
-					while ( it != shape->points.end() ) {
-						const Point& pt = *it;
-						if ( it == shape->points.begin() ) {
-							curve.moveTo( pt.x_, pt.y_ );
-						}
-						else {
-							curve.lineTo( pt.x_, pt.y_ );
-						}
-						++it;
-					}
-					p = &curve;
-				}
-				break;
-
-				case ScribbleShape::stFreehand : {
-					std::vector<Point>::const_iterator it = shape->points.begin();			
-					while ( it != shape->points.end() ) {
-						const Point& pt = *it;
-						if ( it == shape->points.begin() ) {
-							curve.moveTo( pt.x_, pt.y_ );
-						}
-						else {
-							curve.lineTo( pt.x_, pt.y_ );
-						}
-						++it;
-					}
-					p = &curve;
-				}
-				break;
-			}
-
-			
-
-			p->applyTransform( shape->mat );
-			if ( shape->filled && shape->type != ScribbleShape::stLine ) {
-				if ( p->contains( point ) ) {
-					result = shape;
-					break;
-				}
-			}
-			else {
-				if ( p->intersects( point ) ) {
-					result = shape;
-					break;
-				}
-			}
-		}
-
-		return result;
-	}
-
-	Control* modelControl;
-	ScribbleModel* model;
-	const ScribbleShape* activeShape;
-};
 
 
 class Scribble4Window : public Window {
@@ -220,6 +39,10 @@ public:
 	}
 	virtual ~Scribble4Window(){};
 
+	Panel* contentPanel;
+	ScribbleModel* scribble;	
+	StatusBar* status;	
+	ListViewControl* scribbleListing;
 };
 
 
@@ -234,20 +57,23 @@ public:
 		bool result = Application::initRunningApplication();
 		
 
-		Window* mainWindow = Frame::createWindow( classid(Scribble4Window) );
+		Scribble4Window* mainWindow = (Scribble4Window*) Frame::createWindow( classid(Scribble4Window) );
 		setMainWindow(mainWindow);
-
-		ScribbleModel* m = (ScribbleModel*)findComponent( "scribble", true );
+		
 		ScribbleView* view = new ScribbleView();
-		mainWindow->setView( view );
-		m->addView( view );
+		mainWindow->contentPanel->setView( view );
+		mainWindow->scribble->addView( view );
 		
 		ScribbleController* controller = new ScribbleController();
 		addComponent(controller);
-		controller->setControl( mainWindow );
-		controller->setModel( m );
+		controller->setControl( mainWindow->contentPanel );
+		controller->setModel( mainWindow->scribble );
 
+		Rect r = mainWindow->scribble->getMaxBounds();
+		mainWindow->status->setStatusPaneText( 1, Format("Dimensions: %0.1f x %0.1f") % r.getWidth() % r.getHeight() );
 
+		mainWindow->contentPanel->MouseMove += 
+			new ClassProcedure1<MouseEvent*,Scribble4App>(this,&Scribble4App::onContentMouseMove,"Scribble4App::onContentMouseMove");
 
 		mainWindow->show();
 		
@@ -255,7 +81,9 @@ public:
 	}
 
 	void onAbout(Event*) {
-		AboutDialog* aboutDlg = (AboutDialog*)Frame::createDialog( classid(AboutDialog) );
+		typedef SmartPtr<AboutDialog> AboutDialogPtr;
+
+		AboutDialogPtr::Shared aboutDlg = AboutDialogPtr::New( (AboutDialog*)Frame::createDialog( classid(AboutDialog) ) );
 		ProgramInfo* info = this->getResourceBundle()->getProgramInfo();
 		if ( NULL != info ) {
 			aboutDlg->program->setCaption( info->getProgramName() );
@@ -265,8 +93,26 @@ public:
 			delete info;
 		}
 		aboutDlg->showModal();
+		
 	}
 
+	void onContentMouseMove( MouseEvent* e ) {
+		Scribble4Window* mainWindow = (Scribble4Window*)getMainWindow();
+		mainWindow->status->setStatusPaneText( 2, Format("Coords: %0.1f, %0.1f") % e->getPoint()->x_ % e->getPoint()->y_ );
+	}
+
+	void onListSelectionChanged( Event* e ) {
+		ItemEvent* ie = (ItemEvent*)e;
+		Scribble4Window* mainWindow = (Scribble4Window*)getMainWindow();
+		mainWindow->scribble->setActiveShape( mainWindow->scribble->getShape(ie->index) );
+	}
+
+	void onViewListing( Event* e ) {
+		Scribble4Window* mainWindow = (Scribble4Window*)getMainWindow();
+		mainWindow->scribbleListing->setVisible( !mainWindow->scribbleListing->getVisible() );
+		MenuItem* item = (MenuItem*)e->getSource();
+		item->setChecked( mainWindow->scribbleListing->getVisible() );
+	}
 };
 
 
@@ -283,6 +129,11 @@ _class_rtti_(ScribbleController, "VCF::Component", "ScribbleController")
 _class_rtti_end_
 
 _class_rtti_(Scribble4Window, "VCF::Window", "Scribble4Window")
+_field_obj_( Panel*, contentPanel )
+_field_obj_( ScribbleModel*, scribble )
+_field_obj_( StatusBar*, status )
+_field_obj_( ListViewControl*, scribbleListing )
+
 _class_rtti_end_
 
 _class_rtti_(AboutDialog, "VCF::Dialog", "AboutDialog")
@@ -327,7 +178,8 @@ Scribble4App::Scribble4App( int argc, char** argv ) :
 	
 	
 	addCallback( new ClassProcedure1<Event*,Scribble4App>(this, &Scribble4App::onAbout), "Scribble4App::onAbout" );
-	
+	addCallback( new ClassProcedure1<Event*,Scribble4App>(this, &Scribble4App::onListSelectionChanged), "Scribble4App::onListSelectionChanged" );
+	addCallback( new ClassProcedure1<Event*,Scribble4App>(this, &Scribble4App::onViewListing), "Scribble4App::onViewListing" );
 }
 
 
