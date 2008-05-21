@@ -140,17 +140,18 @@ OSHandleID OSXFont::getFontHandleID()
 
 String OSXFont::getName()
 {
-    String result = "FoobarBaz";
+    String result;
     ByteCount length = 0;
     OSStatus err = ATSUFindFontName(attrFontID_, kFontFamilyName, kFontNoPlatform, kFontNoScript, kFontNoLanguage, 0, NULL, &length, NULL);
     if ( noErr == err ) {
         ++length;
-        std::vector<char> name(length);
-        err = ATSUFindFontName(attrFontID_, kFontFamilyName, kFontNoPlatform, kFontNoScript, kFontNoLanguage, length, &name[0], NULL, NULL);
-        if ( noErr == err ) {
-            CFStringRef CFName = CFStringCreateWithCharacters(NULL, (UniChar *) &name[0], (length-1) >> 1);
-            CFTextString converter(CFName);
-            result = converter;
+        std::vector<VCFChar> name(length);
+        err = ATSUFindFontName(attrFontID_, kFontFamilyName, kFontNoPlatform, kFontNoScript, kFontNoLanguage, length, (char*)&name[0], NULL, NULL);
+        if ( noErr == err && length > 1 ) {
+			name[name.size()-1] = 0;
+            //CFStringRef CFName = CFStringCreateWithCharacters(NULL, (UniChar *) &name[0], (length-1) >> 1);
+            //CFTextString converter(CFName);
+            result.assign( &name[0], name.size() );
         }
     }
 	return result;

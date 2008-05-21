@@ -1102,6 +1102,10 @@ void OSXWindow::internal_paint( NSRect r )
 	[backColor setFill];
 	
 	NSRectFill( r );
+	
+	CGContextRef cgRef = (CGContextRef)	[theContext graphicsPort];
+	GraphicsContext gc( cgRef );
+	control_->paint(&gc);
 }
 
 };//end of namespace VCF
