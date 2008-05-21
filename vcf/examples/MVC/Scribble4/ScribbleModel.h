@@ -404,6 +404,16 @@ public:
 		return data_[index];
 	}
 
+	virtual String getAsString(const uint32& index ) {
+		String result;
+		ScribbleShape* shape = getShape(index);
+		if ( NULL != shape ) {
+			result = String("Shape #") + (index+1) + " pts: " + shape->points.size();
+		}
+		
+		return result;
+	}
+
 	const ScribbleShape* getActiveShape() {
 		return activeShape;
 	}

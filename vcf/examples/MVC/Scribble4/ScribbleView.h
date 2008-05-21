@@ -51,14 +51,6 @@ public:
 					ctx->moveTo( shape->points[0] );
 					ctx->lineTo( shape->points[1] );
 					ctx->strokePath();
-
-					if ( shape == scribble->getActiveShape() ) {
-						Color c = shape->stroke;
-						ctx->setStrokeWidth( 1.0 );
-						c.invert();
-						ctx->setColor( &c );
-						ctx->strokePath();
-					}
 				}
 				break;
 
@@ -101,15 +93,15 @@ public:
 				ctx->strokePath();
 
 
-				if ( shape == scribble->getActiveShape() ) {
-					Color c = shape->stroke;
-					ctx->setStrokeWidth( 1.0 );
-					c.invert();
-					ctx->setColor( &c );
-					ctx->strokePath();
-				}
+				
 			}
 
+			if ( shape == scribble->getActiveShape() ) {
+				Color c( (unsigned char)0x47,(unsigned char)0x8A,(unsigned char)0xFF );
+				ctx->setStrokeWidth( 2.0 );
+				ctx->setColor( &c );
+				ctx->strokePath();
+			}
 
 
 			ctx->restoreState( gcs );

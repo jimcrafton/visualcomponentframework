@@ -98,6 +98,10 @@ SOURCE=.\Scribble4.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\ScribbleController.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ScribbleModel.h
 # End Source File
 # Begin Source File
@@ -110,16 +114,16 @@ SOURCE=.\ScribbleView.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=.\Resources\Scribble4Window.vff
-# End Source File
-# End Group
-# Begin Source File
-
 SOURCE=.\Resources\AboutDialog.vff
 # End Source File
 # Begin Source File
 
-SOURCE=.\Resources\Info.plist
+SOURCE=.\Info.plist
 # End Source File
+# Begin Source File
+
+SOURCE=.\Resources\Scribble4Window.vff
+# End Source File
+# End Group
 # End Target
 # End Project

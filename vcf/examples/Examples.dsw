@@ -1581,6 +1581,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Scribble4"=.\MVC\Scribble4\Scribble4.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Scrolling"=.\Scrolling\Scrolling.dsp - Package Owner=<4>
 
 Package=<5>
