@@ -95,6 +95,7 @@ public:
 		}
 		else if ( dataType == "poly" ) {
 			type = stPolygon;
+			points.push_back( points.front() );
 		}
 		else if ( dataType == "free" ) {
 			type = stFreehand;

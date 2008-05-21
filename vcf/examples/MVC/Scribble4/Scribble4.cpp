@@ -4,12 +4,24 @@
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/FoundationKit/RTTIMacros.h"
 #include "vcf/GraphicsKit/Ellipse.h"
+#include "vcf/ApplicationKit/Label.h"
 
 #include "ScribbleModel.h"
 #include "ScribbleView.h"
 
 
 using namespace VCF;
+
+class AboutDialog : public Dialog {
+public:
+	Label* program;
+	Label* author;
+	Label* company;
+	Label* copyright;
+	AboutDialog(){
+
+	}
+};
 
 class ScribbleController : public Component {
 public:
@@ -213,10 +225,10 @@ public:
 
 
 
-class Scribble1Application : public Application {
+class Scribble4App : public Application {
 public:
 
-	Scribble1Application( int argc, char** argv );
+	Scribble4App( int argc, char** argv );
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
@@ -242,6 +254,19 @@ public:
 		return result;
 	}
 
+	void onAbout(Event*) {
+		AboutDialog* aboutDlg = (AboutDialog*)Frame::createDialog( classid(AboutDialog) );
+		ProgramInfo* info = this->getResourceBundle()->getProgramInfo();
+		if ( NULL != info ) {
+			aboutDlg->program->setCaption( info->getProgramName() );
+			aboutDlg->author->setCaption( info->getAuthor() );
+			aboutDlg->company->setCaption( info->getCompany() );
+			aboutDlg->copyright->setCaption( info->getCopyright() );
+			delete info;
+		}
+		aboutDlg->showModal();
+	}
+
 };
 
 
@@ -258,6 +283,13 @@ _class_rtti_(ScribbleController, "VCF::Component", "ScribbleController")
 _class_rtti_end_
 
 _class_rtti_(Scribble4Window, "VCF::Window", "Scribble4Window")
+_class_rtti_end_
+
+_class_rtti_(AboutDialog, "VCF::Dialog", "AboutDialog")
+_field_obj_( Label*, program )
+_field_obj_( Label*, copyright )
+_field_obj_( Label*, author )
+_field_obj_( Label*, company )
 _class_rtti_end_
 
 
@@ -285,18 +317,23 @@ _property_( double, "defaultStrokeWidth", getDefaultWidth, setDefaultWidth, "" )
 _property_( bool, "defaultFilled", getDefaultFilled, setDefaultFilled, "" );
 _class_rtti_end_
 
-Scribble1Application::Scribble1Application( int argc, char** argv ) : 
+Scribble4App::Scribble4App( int argc, char** argv ) : 
 	Application(argc, argv)
 {
 	REGISTER_CLASSINFO_EXTERNAL(Scribble4Window);
 	REGISTER_CLASSINFO_EXTERNAL(ScribbleShape);
 	REGISTER_CLASSINFO_EXTERNAL(ScribbleModel);
+	REGISTER_CLASSINFO_EXTERNAL(AboutDialog);
+	
+	
+	addCallback( new ClassProcedure1<Event*,Scribble4App>(this, &Scribble4App::onAbout), "Scribble4App::onAbout" );
+	
 }
 
 
 int main(int argc, char *argv[])
 {
-	return ApplicationKitMain<Scribble1Application>(argc,argv);
+	return ApplicationKitMain<Scribble4App>(argc,argv);
 }
 
 
