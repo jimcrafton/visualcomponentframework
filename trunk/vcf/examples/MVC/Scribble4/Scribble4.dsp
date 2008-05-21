@@ -113,5 +113,13 @@ SOURCE=.\ScribbleView.h
 SOURCE=.\Resources\Scribble4Window.vff
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=.\Resources\AboutDialog.vff
+# End Source File
+# Begin Source File
+
+SOURCE=.\Resources\Info.plist
+# End Source File
 # End Target
 # End Project
