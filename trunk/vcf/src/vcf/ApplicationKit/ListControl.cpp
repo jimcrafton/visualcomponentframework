@@ -2,7 +2,7 @@
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
-//#include "vcf/ApplicationKit/ApplicationKitPrivate.h"
+#include "vcf/ApplicationKit/ApplicationKitPrivate.h"
 #include "vcf/ApplicationKit/ListModel.h"
 #include "vcf/ApplicationKit/ListPeer.h"
 #include "vcf/ApplicationKit/ListControl.h"
@@ -263,6 +263,21 @@ ListItem* ListControl::getItem( const uint32& index )
 
 	if ( index < items_.size() ) {
 		result = items_[index];
+	}
+
+	if ( result == NULL ) {
+		if ( index >= items_.size() ) {
+			items_.resize( index + 1, NULL );
+		}
+
+		inCallbackChange_ = true;
+		ListItem* item = new ListItem();
+		addComponent( item );
+		items_[index] = item;
+		item->setModel( getViewModel() );
+		item->setControl( this );
+		item->setIndex( index );
+		inCallbackChange_ = false;
 	}
 
 	return result;

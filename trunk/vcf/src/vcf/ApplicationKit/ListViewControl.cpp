@@ -501,49 +501,6 @@ void ListViewControl::paint( GraphicsContext * context )
 	context->fillPath();
 }
 
-ListItem* ListViewControl::getItem( const uint32& index )
-{
-	ListItem* result = NULL;
-
-	if ( index < items_.size() ) {
-		result = items_[index];
-	}
-
-	return result;
-}
-
-void ListViewControl::setItem( const uint32& index, ListItem* item )
-{
-	if ( index < items_.size() ) {
-		inCallbackChange_ = true;
-		ListItem* oldItem = items_[index];
-		
-		items_[index] = item;
-		
-		if ( NULL == item->getOwner() ) {
-			addComponent( item );
-		}
-
-		item->setControl( this );
-		item->setModel( getViewModel() );
-		item->setIndex( oldItem->getIndex() );
-
-
-
-		//free up sub items
-		SubItemIteratorPair res = subItems_.equal_range( oldItem );		
-		while ( res.first != res.second ) {			
-			subItems_.erase(res.first);
-			++res.first;
-		}
-
-		removeComponent( oldItem );
-		oldItem->free();
-
-		repaint();
-		inCallbackChange_ = false;
-	}
-}
 
 Enumerator<ListItem*>* ListViewControl::getItems()
 {

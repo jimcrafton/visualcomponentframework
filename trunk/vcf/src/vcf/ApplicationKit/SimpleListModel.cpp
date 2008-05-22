@@ -22,7 +22,18 @@ SimpleListModel::SimpleListModel()
 
 SimpleListModel::~SimpleListModel()
 {
-	
+	std::vector<VariantData>::iterator it = data_.begin();
+	while ( it != data_.end() ) {
+		VariantData& v = *it;
+		if ( v.type == pdObject && shouldDeleteVarObjects() ) {
+			Object* obj = v;
+			if ( NULL != obj ) {
+				this->deleteVariantObject( obj );
+			}
+		}
+		++it;
+	}
+	data_.clear();
 }
 
 void SimpleListModel::empty()

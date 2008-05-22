@@ -307,18 +307,18 @@ int Application::main()
 		internal_main();
 	}
 	catch (std::exception& e){
-		String msg = String("Exiting main function due to uncaught exception.\nException: ") + e.what() + "\n";
+		String msg = String(L"Exiting main function due to uncaught exception.\nException: ") + e.what() + L"\n";
 		StringUtils::trace( msg );
 		System::println( msg );
-		Application::showErrorMessage( msg, "Uncaught Exception Handler" );
+		Application::showErrorMessage( msg, L"Uncaught Exception Handler" );
 		ApplicationKit::terminate();
 		return -1;
 	}
 	catch (...){
-		String msg = String("Exiting main function due to uncaught exception. Exception type unknown.\n");
+		String msg = String(L"Exiting main function due to uncaught exception. Exception type unknown.\n");
 		StringUtils::trace( msg );
 		System::println( msg );
-		Application::showErrorMessage( msg, "Uncaught Exception Handler" );
+		Application::showErrorMessage( msg, L"Uncaught Exception Handler" );
 		ApplicationKit::terminate();
 		return -1;	
 	}

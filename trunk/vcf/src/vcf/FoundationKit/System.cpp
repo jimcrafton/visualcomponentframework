@@ -39,6 +39,7 @@ System* System::create()
 void System::terminate()
 {
 	delete System::systemInstance;
+	System::systemInstance = NULL;
 }
 
 
@@ -217,7 +218,7 @@ void System::println( const String& text )
 		return;
 	}
 
-	output += "\n";
+	output += L"\n";
 
 #ifdef VCF_OSX
 	//JC - I got rid of CFShow as it doesn't 
@@ -590,8 +591,8 @@ ProgramInfo* System::getProgramInfoFromInfoFile( const String& infoFileName, con
 						StringUtils::trimWhiteSpaces( author );
 					}
 					else if ( cdata == "Company" ) {
-						author = val->getCDATA();
-						StringUtils::trimWhiteSpaces( author );
+						company = val->getCDATA();
+						StringUtils::trimWhiteSpaces( company );
 					}
 					else if ( cdata == "Description" ) {
 						description = val->getCDATA();

@@ -163,9 +163,7 @@ void FoundationKit::terminate()
 
 	TextCodec::internal_freeAllRegisteredCodecs();
 
-	MessageLoader::internal_freeAllRegisteredMessageLoaders();
-
-	System::terminate();
+	MessageLoader::internal_freeAllRegisteredMessageLoaders();	
 
 	ClassRegistry::terminate();
 
@@ -177,6 +175,8 @@ void FoundationKit::terminate()
 
 	VFFInputStream::internal_clearComponentConstants();
 
+	System::terminate();
+
 #ifdef _VCF_DEBUG_NEW
 	Mutex* mutex = Object::accessMutex_;
 	Object::accessMutex_ = NULL;
@@ -186,7 +186,8 @@ void FoundationKit::terminate()
 #ifdef _DEBUG
 	Object::dumpDebugInfo();
 #endif
-
+	
+	
 
 }
 
