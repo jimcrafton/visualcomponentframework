@@ -48,8 +48,11 @@ void* Win32LibraryPeer::getFunction( const String& functionName )
 		throw InvalidPointerException(MAKE_ERROR_MSG(INVALID_POINTER_ERROR), __LINE__);
 	}
 
+#ifdef VCF_WIN32CE
+	result = (void*)GetProcAddress( libHandle_, functionName.c_str() );	
+#else
 	result = (void*)GetProcAddress( libHandle_, functionName.ansi_c_str() );
-
+#endif
 
 	if ( NULL == result ){
 		String error = VCFWin32::Win32Utils::getErrorString( GetLastError() );

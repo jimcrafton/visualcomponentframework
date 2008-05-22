@@ -38,7 +38,11 @@ where you installed the VCF.
 #   if (_MSC_VER >= 1500)
 #     define _LIB_CPLVERNUM "vc90"
 #   elif (_MSC_VER >= 1400)
-#     define _LIB_CPLVERNUM "vc80"
+		#ifdef VCF_WIN32CE
+			#define _LIB_CPLVERNUM "vc80ce"
+		#else
+			#define _LIB_CPLVERNUM "vc80"
+		#endif
 #   elif (_MSC_VER >= 1310)
 #     define _LIB_CPLVERNUM "vc71"
 #   elif (_MSC_VER >= 1300)

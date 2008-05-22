@@ -8,7 +8,10 @@ where you installed the VCF.
 
 
 #include "vcf/FoundationKit/FoundationKit.h"
-using namespace VCF;
+
+
+namespace VCF {
+
 
 TextInputStream::TextInputStream( InputStream* inStream )
 {
@@ -195,6 +198,7 @@ uint64 TextInputStream::getCurrentSeekPos()
 	return 0;
 }
 
+};
 
 /**
 $Id$

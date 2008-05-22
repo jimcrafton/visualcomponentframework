@@ -76,6 +76,7 @@ bool Win32ProcessPeer::createProcess( const String& processName, const String& a
 		delete [] tmp;
 	}
 	else {
+#ifndef VCF_WIN32CE
 		STARTUPINFOA si;
 		memset(&si,0,sizeof(si) );
 		si.cb = sizeof(STARTUPINFOA);
@@ -89,6 +90,7 @@ bool Win32ProcessPeer::createProcess( const String& processName, const String& a
 										NULL, NULL, &si, &win32ProcessInfo_ ) ? true : false;
 
 		delete [] tmp;
+#endif
 	}
 
 

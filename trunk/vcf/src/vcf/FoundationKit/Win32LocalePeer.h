@@ -72,7 +72,11 @@ public:
 	virtual UnicodeString translate( const UnicodeString& id );
 
 	virtual OSHandleID getHandleID() {
+#ifdef VCF_WIN32CE
+		return (OSHandleID)lcid_;
+#else
 		return (OSHandleID)UIntToPtr( (uintptr)lcid_ );
+#endif
 	}
 protected:
 	UnicodeString changeToGenericNumberString( const UnicodeString& str );

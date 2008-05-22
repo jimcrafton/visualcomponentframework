@@ -25,7 +25,7 @@ where you installed the VCF.
 
 #define TO_STRING_TXT_SIZE		50
 
-using namespace VCF;
+namespace VCF {
 
 String StringUtils::weekdays[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 String StringUtils::abbrevWeekdays[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
@@ -1069,6 +1069,8 @@ float StringUtils::fromStringAsFloat( const VCF::String& value )
 		if ( 0.0 == result ) {
 			//check_true_error( tmp );
 		}
+	#elif defined VCF_WIN32CE
+		result = atof( value.ansi_c_str() );
 	#else
 		#if ( defined VCF_MSC ) && ( _MSC_VER >= 1300 )
 			result = _wtof( value.c_str() );
@@ -1096,6 +1098,8 @@ double StringUtils::fromStringAsDouble( const VCF::String& value )
 		if ( 0.0 == result ) {
 			//check_true_error( tmp );
 		}
+	#elif defined VCF_WIN32CE
+		result = atof( value.ansi_c_str() );
 	#else
 		#if ( defined VCF_MSC ) && ( _MSC_VER >= 1300 )
 			result = _wtof( value.c_str() );
@@ -2357,6 +2361,8 @@ VCF::String StringUtils::translateVKCodeToString( VirtualKeyCode code )
 	return result;
 }
 
+
+};
 
 /**
 $Id$

@@ -96,7 +96,10 @@ Win32Thread::~Win32Thread()
 bool Win32Thread::start()
 {
 	if ( 0 == threadHandle_ ) {
+#ifdef VCF_WIN32CE
+#else
 		threadHandle_ = _beginthreadex( security_, stackSize_, Win32Thread::threadProc, (void*)this, initFlags_, &threadID_ );
+#endif
 
 		owningProcessID_ = GetCurrentProcessId();
 

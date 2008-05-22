@@ -333,12 +333,14 @@ Enumerator<String>* Win32Registry::getKeyNames()
 	DWORD index = 0;
 	const DWORD size = MAX_PATH + 1;
 
-
+	keys_.clear();
+#ifdef VCF_WIN32CE
+		///??????? RegEnumKeyW doesn't exist????
+#else
 	if ( System::isUnicodeEnabled() ) {
 		WideChar keyName[size];
 		memset( keyName, 0, size*sizeof(WideChar) );
 
-		keys_.clear();
 		while ( ERROR_SUCCESS == RegEnumKeyW( currentKeyHandle_, index, keyName, size ) ){
 			keys_.push_back( String(keyName) );
 			memset( keyName, 0, size*sizeof(WideChar) );
@@ -356,8 +358,7 @@ Enumerator<String>* Win32Registry::getKeyNames()
 			index ++;
 		}
 	}
-
-	
+#endif	
 	keysContainer_.initContainer( keys_ );
 
 	return keysContainer_.getEnumerator();

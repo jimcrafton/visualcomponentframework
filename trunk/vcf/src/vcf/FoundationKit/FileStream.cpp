@@ -8,7 +8,8 @@ where you installed the VCF.
 
 
 #include "vcf/FoundationKit/FoundationKit.h"
-using namespace VCF;
+
+namespace VCF {
 
 
 FileStreamBase::FileStreamBase():	
@@ -264,6 +265,9 @@ uint64 FileOutputStream::getCurrentSeekPos()
 	return currentSeekPos_;
 }
 
+
+
+};
 
 /**
 $Id$
