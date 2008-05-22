@@ -29,11 +29,98 @@ where you installed the VCF.
 #endif
 
 
-//#include <iostream>
+
+
+
+#ifdef VCF_WIN
+
+
+/*
+#if WINVER < 0x0400
+	#pragma message( "WINVER < 0x0400" )
+#elif WINVER == 0x0400
+	#pragma message( "WINVER == 0x0400" )
+#elif WINVER > 0x0400
+	#pragma message( "WINVER > 0x0400" )
+#endif
+
+#ifndef _WIN32_WINNT
+	#pragma message( "_WIN32_WINNT not defined" )
+#elif _WIN32_WINNT < 0x0400
+	#pragma message( "_WIN32_WINNT < 0x0400" )
+#elif _WIN32_WINNT == 0x0400
+	#pragma message( "_WIN32_WINNT == 0x0400" )
+#elif _WIN32_WINNT > 0x0400
+	#pragma message( "_WIN32_WINNT > 0x0400" )
+#endif
+*/
+
+
+
+
+
+	#ifdef VCF_WIN32CE
+		#pragma comment(linker, "/nodefaultlib:libc.lib")
+		#pragma comment(linker, "/nodefaultlib:libcd.lib")
+		#define WINVER _WIN32_WCE
+		#include <ceconfig.h>
+		#if defined(WIN32_PLATFORM_PSPC) || defined(WIN32_PLATFORM_WFSP)
+		#define SHELL_AYGSHELL
+		#endif
+
+		#ifdef _CE_DCOM
+		#define _ATL_APARTMENT_THREADED
+		#endif
+
+		#include <aygshell.h>
+		#pragma comment(lib, "aygshell.lib") 
+
+		#include <windows.h>
+
+
+		#if defined(WIN32_PLATFORM_PSPC) || defined(WIN32_PLATFORM_WFSP)
+		#ifndef _DEVICE_RESOLUTION_AWARE
+		#define _DEVICE_RESOLUTION_AWARE
+		#endif
+		#endif
+
+		#ifdef _DEVICE_RESOLUTION_AWARE
+		#include "DeviceResolutionAware.h"
+		#endif
+
+		#if _WIN32_WCE < 0x500 && ( defined(WIN32_PLATFORM_PSPC) || defined(WIN32_PLATFORM_WFSP) )
+			#pragma comment(lib, "ccrtrtti.lib")
+			#ifdef _X86_	
+				#if defined(_DEBUG)
+					#pragma comment(lib, "libcmtx86d.lib")
+				#else
+					#pragma comment(lib, "libcmtx86.lib")
+				#endif
+			#endif
+		#endif
+
+
+		#define GetThreadLocale() LOCALE_USER_DEFAULT
+	#else
+		#include <process.h>
+		//include std windoze headers for peers....
+		#include <windows.h>
+		
+
+		#include <commctrl.h> //make sure to link with comctl32.lib
+		#include <shlobj.h>
+		#include <shobjidl.h> // some interfaces were moved from shlobj.h in Vista
+	#endif
+	
+	
+
+
+	//#include "Rpcdce.h" //make sure to link with Rpcrt4.lib
+	
+#endif //VCF_WIN
+
 
 #include <typeinfo>
-
-
 #include <algorithm>
 #include <math.h>
 #ifdef VCF_GCC
@@ -74,38 +161,6 @@ where you installed the VCF.
 #include <bitset>
 #include <exception>
 #include <list>
-
-
-#ifdef VCF_WIN
-	#include <process.h>
-	//include std windoze headers for peers....
-	#include <windows.h>
-
-/*
-#if WINVER < 0x0400
-	#pragma message( "WINVER < 0x0400" )
-#elif WINVER == 0x0400
-	#pragma message( "WINVER == 0x0400" )
-#elif WINVER > 0x0400
-	#pragma message( "WINVER > 0x0400" )
-#endif
-
-#ifndef _WIN32_WINNT
-	#pragma message( "_WIN32_WINNT not defined" )
-#elif _WIN32_WINNT < 0x0400
-	#pragma message( "_WIN32_WINNT < 0x0400" )
-#elif _WIN32_WINNT == 0x0400
-	#pragma message( "_WIN32_WINNT == 0x0400" )
-#elif _WIN32_WINNT > 0x0400
-	#pragma message( "_WIN32_WINNT > 0x0400" )
-#endif
-*/
-
-	//#include "Rpcdce.h" //make sure to link with Rpcrt4.lib
-	#include <commctrl.h> //make sure to link with comctl32.lib
-	#include <shlobj.h>
-	#include <shobjidl.h> // some interfaces were moved from shlobj.h in Vista
-#endif //VCF_WIN
 
 
 #include "vcf/FoundationKit/FoundationKitSelectLib.h"

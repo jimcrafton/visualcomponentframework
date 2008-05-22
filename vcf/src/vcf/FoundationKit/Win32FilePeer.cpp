@@ -949,7 +949,9 @@ DateTime Win32FilePeer::convertFileTimeToDateTime( const FILETIME& ft )
 				String error = VCFWin32::Win32Utils::getErrorString( GetLastError() );
 				throw BasicException( MAKE_ERROR_MSG_2(error) );
 			}
+#ifndef VCF_WIN32CE
 			dosName = findData.cAlternateFileName;
+#endif
 		} else {
 			WIN32_FIND_DATAA findData;
 			HANDLE searchHandle = ::FindFirstFileA( fileName.ansi_c_str(), &findData );

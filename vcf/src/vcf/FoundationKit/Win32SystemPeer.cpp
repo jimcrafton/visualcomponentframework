@@ -73,7 +73,8 @@ bool Win32SystemPeer::doesFileExist( const String& fileName )
 String Win32SystemPeer::getEnvironmentVariable( const String& variableName )
 {
 	String result;
-
+#ifdef VCF_WIN32CE
+#else
 	BOOL ret = FALSE;
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar path[4096];
@@ -96,24 +97,28 @@ String Win32SystemPeer::getEnvironmentVariable( const String& variableName )
 		String error = VCFWin32::Win32Utils::getErrorString( GetLastError() );
 		throw RuntimeException( MAKE_ERROR_MSG_2( error ) );
 	}
-
+#endif
 	return result;
 }
 
 
 void Win32SystemPeer::setEnvironmentVariable( const String& variableName, const String& newValue )
 {
+#ifdef VCF_WIN32CE
+#else
 	if ( System::isUnicodeEnabled() ) {
 		SetEnvironmentVariableW( variableName.c_str(), newValue.c_str() );
 	}
 	else {
 		SetEnvironmentVariableA( variableName.ansi_c_str(), newValue.ansi_c_str() );
 	}
-	
+#endif
 }
 
 void Win32SystemPeer::addPathDirectory( const String& directory )
 {
+#ifdef VCF_WIN32CE
+#else
 	String tmpDir = StringUtils::trimRight( directory, '\\' );
 	
 	if ( System::isUnicodeEnabled() ) {
@@ -156,12 +161,14 @@ void Win32SystemPeer::addPathDirectory( const String& directory )
 
 		delete path;
 	}
+#endif
 }
 
 String Win32SystemPeer::getCurrentWorkingDirectory()
 {
 	String result;
-
+#ifdef VCF_WIN32CE
+#else
 	VCFChar path[MAX_PATH+1];
 	BOOL ret = FALSE;
 	if ( System::isUnicodeEnabled() ) {
@@ -187,12 +194,14 @@ String Win32SystemPeer::getCurrentWorkingDirectory()
 			result += "\\";
 		}
 	}
-
+#endif
 	return result;
 }
 
 void Win32SystemPeer::setCurrentWorkingDirectory( const String& currentDirectory )
 {
+#ifdef VCF_WIN32CE
+#else
 	BOOL result = FALSE;
 	if ( System::isUnicodeEnabled() ) {
 		result = SetCurrentDirectoryW( currentDirectory.c_str() );
@@ -204,13 +213,17 @@ void Win32SystemPeer::setCurrentWorkingDirectory( const String& currentDirectory
 		String error = VCFWin32::Win32Utils::getErrorString( GetLastError() );
 		throw RuntimeException( MAKE_ERROR_MSG_2( error ) );
 	}
+#endif
 }
 
 
 void Win32SystemPeer::setCurrentThreadLocale( Locale* locale )
 {
-
+#ifdef VCF_WIN32CE
+	//SetThreadLocale( (LCID)locale->getPeer()->getHandleID() );
+#else
 	SetThreadLocale( (LCID)PtrToUlong( locale->getPeer()->getHandleID() ));
+#endif
 }
 
 bool Win32SystemPeer::isUnicodeEnabled()
@@ -397,7 +410,8 @@ String Win32SystemPeer::getCommonDirectory( System::CommonDirectory directory )
 	memset(&osVersion,0,sizeof(osVersion));
 	osVersion.dwOSVersionInfoSize = sizeof(osVersion);
 	::GetVersionEx( &osVersion );
-
+#ifdef VCF_WIN32CE
+#else
 
 	switch ( directory ) {
 		case System::cdUserHome : {
@@ -591,13 +605,15 @@ String Win32SystemPeer::getCommonDirectory( System::CommonDirectory directory )
 		}
 		break;
 	}
-
+#endif
 	return result;
 }
 
 String Win32SystemPeer::getComputerName()
 {
 	String result;
+#ifdef VCF_WIN32CE
+#else
 	DWORD size = MAX_COMPUTERNAME_LENGTH + 25;
 	size -= 1;
 	if ( System::isUnicodeEnabled() ) {
@@ -612,7 +628,7 @@ String Win32SystemPeer::getComputerName()
 			result = tmp;
 		}
 	}	
-
+#endif
 	return result;
 }
 
@@ -620,6 +636,8 @@ String Win32SystemPeer::getComputerName()
 String Win32SystemPeer::getUserName()
 {
 	String result;
+#ifdef VCF_WIN32CE
+#else
 
 	DWORD size = UNLEN + 25;
 	size -= 1;
@@ -635,7 +653,7 @@ String Win32SystemPeer::getUserName()
 			result = tmp;
 		}
 	}
-
+#endif
 	return result;
 }
 

@@ -10,8 +10,10 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 
-using namespace VCF;
 using namespace VCFWin32;
+
+namespace VCF {
+
 
 Win32FileStream::Win32FileStream( const String& filename, const FileStreamAccessType& accessType ):
 	fileHandle_(NULL),
@@ -233,6 +235,7 @@ DWORD Win32FileStream::translateSeekTypeToMoveType( const SeekType& offsetFrom )
 	return result;
 }
 
+}
 
 /**
 $Id$

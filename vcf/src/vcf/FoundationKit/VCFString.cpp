@@ -11,7 +11,10 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include "vcf/FoundationKit/TextCodec.h"
 
+#ifndef VCF_WIN32CE
 #include <errno.h>
+#endif
+
 
 using namespace VCF;
 

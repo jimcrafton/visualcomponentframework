@@ -8,7 +8,8 @@ where you installed the VCF.
 
 
 #include "vcf/FoundationKit/FoundationKit.h"
-using namespace VCF;
+
+namespace VCF {
 
 
 BasicOutputStream::BasicOutputStream()
@@ -100,6 +101,10 @@ uint64 BasicOutputStream::getCurrentSeekPos()
 	return outStream_.getSeekPos();
 }
 
+
+
+
+};
 
 /**
 $Id$

@@ -8,7 +8,8 @@ where you installed the VCF.
 
 
 #include "vcf/FoundationKit/FoundationKit.h"
-using namespace VCF;
+
+namespace VCF {
 
 #define NUMBER_TXT_SIZE		25
 
@@ -198,6 +199,9 @@ uint64 TextOutputStream::getCurrentSeekPos()
 	}
 	return 0;
 }
+
+
+};
 
 
 /**

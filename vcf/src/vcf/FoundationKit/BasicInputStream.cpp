@@ -8,7 +8,9 @@ where you installed the VCF.
 
 
 #include "vcf/FoundationKit/FoundationKit.h"
-using namespace VCF;
+
+namespace VCF {
+
 
 BasicInputStream::BasicInputStream()
 {
@@ -127,6 +129,10 @@ void BasicInputStream::clear()
 {
 	inStream_.clear();
 }
+
+
+};
+
 /**
 $Id$
 */

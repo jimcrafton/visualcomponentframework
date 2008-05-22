@@ -36,7 +36,7 @@ Platforms:
 
 	VCF_POSIX - running under a linux
 
-
+	VCF_WIN32CE - embedded windows platform
 Toolkits:
 
 	VCF_X11 - runnning under the X11 windowing platform using the raw xlib library
@@ -101,6 +101,10 @@ Setup VCF_ operating system
 	#endif
 	#ifndef WIN32
 		#define WIN32
+	#endif
+
+	#if defined WINCE
+		#define VCF_WIN32CE
 	#endif
 #endif
 
