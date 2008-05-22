@@ -43,7 +43,7 @@ MAKEARGS = CC="$(CC)" CXX="$(CXX)" CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" \
 
 ### Targets: ###
 
-all: sub_Accelerators sub_Actions sub_AdvancedAlignment sub_AdvancedUI sub_Alignment sub_Anchors sub_ApplicationIcons sub_AppResources sub_BasicContainers sub_Browser sub_Cards sub_ClassRegistryBrowser sub_Colors sub_Combos sub_CommonDirectories sub_Conditions sub_Controls sub_CopyAndPaste sub_CPBrowser sub_DatesAndTime sub_DateTimeUI sub_Dialogs sub_DiggApp sub_Dictionaries sub_Directories sub_DocViewAdvanced sub_DocViewBasics sub_DragAndDrop sub_EventBasics sub_FilesAndDirectories sub_FrameStyles sub_Gradients sub_GraphicsAndMouseMoves sub_GraphicsBasics sub_HeavyAndLight sub_HelloWorld sub_HelloWorld2 sub_HelloWorld3 sub_Help sub_ImageBasics sub_ImageViewer sub_InetKit sub_JavaScriptTest sub_Labels sub_ListBox sub_ListViews sub_LocaleUI sub_Localization sub_LOLCats sub_MinMax sub_ModelData sub_MVCBasics sub_NetworkKitTest sub_OpenGLShapes sub_ParticleEditor sub_Pixels sub_PopupMenus sub_PopupWindows sub_Printing sub_Processes sub_ProgressBars sub_RCChineseDict sub_Reflection sub_RegExGUI sub_RegExTest sub_Resources sub_RunLoops sub_ScreenDPI sub_Scrolling sub_Scrolling2 sub_ShapedWindow sub_SharedLibraries sub_SketchIt sub_Sliders sub_Splitters sub_Strings sub_StrokesAndFills sub_SysTray sub_Tables sub_Tabs sub_TCPClient sub_TCPServer sub_TeXLabel sub_TextEdit sub_TextLayout sub_Themes sub_ThreadBasics sub_ThreadMethods sub_ThreadsInGUI sub_Toolbars sub_Tooltips sub_Transformations sub_TransparentWindows sub_TreeListControls sub_Trees sub_Trees2 sub_UDPClient sub_UDPServer sub_Variants sub_VFFTests sub_VFFTests2 sub_VisualFormFiles sub_WorkingWithEnumerators sub_XMLTest
+all: sub_Accelerators sub_Actions sub_AdvancedAlignment sub_AdvancedUI sub_Alignment sub_Anchors sub_ApplicationIcons sub_AppResources sub_BasicContainers sub_Browser sub_Cards sub_ClassRegistryBrowser sub_Colors sub_Combos sub_CommonDirectories sub_Conditions sub_Controls sub_CopyAndPaste sub_CPBrowser sub_DatesAndTime sub_DateTimeUI sub_Dialogs sub_DiggApp sub_Dictionaries sub_Directories sub_DragAndDrop sub_EventBasics sub_FilesAndDirectories sub_FrameStyles sub_Gradients sub_GraphicsAndMouseMoves sub_GraphicsBasics sub_HeavyAndLight sub_HelloWorld sub_HelloWorld2 sub_HelloWorld3 sub_Help sub_ImageBasics sub_ImageViewer sub_InetKit sub_JavaScriptTest sub_Labels sub_ListBox sub_ListViews sub_LocaleUI sub_Localization sub_LOLCats sub_MinMax sub_NetworkKitTest sub_OpenGLShapes sub_ParticleEditor sub_Pixels sub_PopupMenus sub_PopupWindows sub_Printing sub_Processes sub_ProgressBars sub_RCChineseDict sub_Reflection sub_RegExGUI sub_RegExTest sub_Resources sub_RunLoops sub_ScreenDPI sub_Scrolling sub_Scrolling2 sub_ShapedWindow sub_SharedLibraries sub_SketchIt sub_Sliders sub_Splitters sub_Strings sub_StrokesAndFills sub_SysTray sub_Tables sub_Tabs sub_TCPClient sub_TCPServer sub_TeXLabel sub_TextEdit sub_TextLayout sub_Themes sub_ThreadBasics sub_ThreadMethods sub_ThreadsInGUI sub_Toolbars sub_Tooltips sub_Transformations sub_TransparentWindows sub_TreeListControls sub_Trees sub_Trees2 sub_UDPClient sub_UDPServer sub_Variants sub_VFFTests sub_VFFTests2 sub_VisualFormFiles sub_WorkingWithEnumerators sub_XMLTest sub_DocViewAdvanced sub_DocViewBasics sub_ModelData sub_MVCBasics sub_Scribble1 sub_Scribble2 sub_Scribble3 sub_Scribble4
 
 clean: 
 	-if exist .\*.obj del .\*.obj
@@ -124,12 +124,6 @@ clean:
 	cd Directories
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
-	cd MVC\DocViewAdvanced
-	$(MAKE) -f makefile.vc $(MAKEARGS) clean
-	cd "$(MAKEDIR)"
-	cd MVC\DocViewBasics
-	$(MAKE) -f makefile.vc $(MAKEARGS) clean
-	cd "$(MAKEDIR)"
 	cd DragAndDrop
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
@@ -197,12 +191,6 @@ clean:
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
 	cd MinMax
-	$(MAKE) -f makefile.vc $(MAKEARGS) clean
-	cd "$(MAKEDIR)"
-	cd MVC\ModelData
-	$(MAKE) -f makefile.vc $(MAKEARGS) clean
-	cd "$(MAKEDIR)"
-	cd MVC\MVCBasics
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
 	cd NetworkKitTest
@@ -361,6 +349,30 @@ clean:
 	cd XMLTest
 	$(MAKE) -f makefile.vc $(MAKEARGS) clean
 	cd "$(MAKEDIR)"
+	cd MVC\DocViewAdvanced
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
+	cd MVC\DocViewBasics
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
+	cd MVC\ModelData
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
+	cd MVC\MVCBasics
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
+	cd MVC\Scribble1
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
+	cd MVC\Scribble2
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
+	cd MVC\Scribble3
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
+	cd MVC\Scribble4
+	$(MAKE) -f makefile.vc $(MAKEARGS) clean
+	cd "$(MAKEDIR)"
 
 sub_Accelerators: 
 	cd Accelerators
@@ -487,16 +499,6 @@ sub_Directories:
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 
-sub_DocViewAdvanced: 
-	cd MVC\DocViewAdvanced
-	$(MAKE) -f makefile.vc $(MAKEARGS) all
-	cd "$(MAKEDIR)"
-
-sub_DocViewBasics: 
-	cd MVC\DocViewBasics
-	$(MAKE) -f makefile.vc $(MAKEARGS) all
-	cd "$(MAKEDIR)"
-
 sub_DragAndDrop: 
 	cd DragAndDrop
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
@@ -609,16 +611,6 @@ sub_LOLCats:
 
 sub_MinMax: 
 	cd MinMax
-	$(MAKE) -f makefile.vc $(MAKEARGS) all
-	cd "$(MAKEDIR)"
-
-sub_ModelData: 
-	cd MVC\ModelData
-	$(MAKE) -f makefile.vc $(MAKEARGS) all
-	cd "$(MAKEDIR)"
-
-sub_MVCBasics: 
-	cd MVC\MVCBasics
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 
@@ -879,6 +871,46 @@ sub_WorkingWithEnumerators:
 
 sub_XMLTest: 
 	cd XMLTest
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
+	cd "$(MAKEDIR)"
+
+sub_DocViewAdvanced: 
+	cd MVC\DocViewAdvanced
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
+	cd "$(MAKEDIR)"
+
+sub_DocViewBasics: 
+	cd MVC\DocViewBasics
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
+	cd "$(MAKEDIR)"
+
+sub_ModelData: 
+	cd MVC\ModelData
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
+	cd "$(MAKEDIR)"
+
+sub_MVCBasics: 
+	cd MVC\MVCBasics
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
+	cd "$(MAKEDIR)"
+
+sub_Scribble1: 
+	cd MVC\Scribble1
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
+	cd "$(MAKEDIR)"
+
+sub_Scribble2: 
+	cd MVC\Scribble2
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
+	cd "$(MAKEDIR)"
+
+sub_Scribble3: 
+	cd MVC\Scribble3
+	$(MAKE) -f makefile.vc $(MAKEARGS) all
+	cd "$(MAKEDIR)"
+
+sub_Scribble4: 
+	cd MVC\Scribble4
 	$(MAKE) -f makefile.vc $(MAKEARGS) all
 	cd "$(MAKEDIR)"
 
