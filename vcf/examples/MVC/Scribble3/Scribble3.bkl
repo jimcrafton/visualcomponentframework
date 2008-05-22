@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="Scribble3" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <dirname>.</dirname>
+        <headers>
+            ScribbleModel.h
+            ScribbleView.h
+        </headers>
+        <sources>Scribble3.cpp</sources>
+        <vcf-use-ApplicationKit/>
+    </exe>
+</makefile>
+
+<!--
+$Id$
+-->
