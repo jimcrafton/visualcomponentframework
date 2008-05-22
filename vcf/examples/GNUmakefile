@@ -19,7 +19,7 @@ include ../build/bakefiles.gen/config.gnu
 
 ### Targets: ###
 
-all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards ClassRegistryBrowser Colors Combos CommonDirectories Conditions Controls CopyAndPaste CPBrowser DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax ModelData MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus PopupWindows Printing Processes ProgressBars RCChineseDict Reflection RegExGUI RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 ShapedWindow SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TransparentWindows TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+all: Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards ClassRegistryBrowser Colors Combos CommonDirectories Conditions Controls CopyAndPaste CPBrowser DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus PopupWindows Printing Processes ProgressBars RCChineseDict Reflection RegExGUI RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 ShapedWindow SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TransparentWindows TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest DocViewAdvanced DocViewBasics ModelData MVCBasics Scribble1 Scribble2 Scribble3 Scribble4
 
 install: all
 
@@ -53,8 +53,6 @@ clean:
 	-(cd DiggApp && $(MAKE) clean)
 	-(cd Dictionaries && $(MAKE) clean)
 	-(cd Directories && $(MAKE) clean)
-	-(cd MVC/DocViewAdvanced && $(MAKE) clean)
-	-(cd MVC/DocViewBasics && $(MAKE) clean)
 	-(cd DragAndDrop && $(MAKE) clean)
 	-(cd EventBasics && $(MAKE) clean)
 	-(cd FilesAndDirectories && $(MAKE) clean)
@@ -78,8 +76,6 @@ clean:
 	-(cd Localization && $(MAKE) clean)
 	-(cd LOLCats && $(MAKE) clean)
 	-(cd MinMax && $(MAKE) clean)
-	-(cd MVC/ModelData && $(MAKE) clean)
-	-(cd MVC/MVCBasics && $(MAKE) clean)
 	-(cd NetworkKitTest && $(MAKE) clean)
 	-(cd OpenGLShapes && $(MAKE) clean)
 	-(cd ParticleEditor && $(MAKE) clean)
@@ -132,6 +128,14 @@ clean:
 	-(cd VisualFormFiles && $(MAKE) clean)
 	-(cd WorkingWithEnumerators && $(MAKE) clean)
 	-(cd XMLTest && $(MAKE) clean)
+	-(cd MVC/DocViewAdvanced && $(MAKE) clean)
+	-(cd MVC/DocViewBasics && $(MAKE) clean)
+	-(cd MVC/ModelData && $(MAKE) clean)
+	-(cd MVC/MVCBasics && $(MAKE) clean)
+	-(cd MVC/Scribble1 && $(MAKE) clean)
+	-(cd MVC/Scribble2 && $(MAKE) clean)
+	-(cd MVC/Scribble3 && $(MAKE) clean)
+	-(cd MVC/Scribble4 && $(MAKE) clean)
 
 Accelerators: 
 	(cd Accelerators && $(MAKE) all)
@@ -208,12 +212,6 @@ Dictionaries:
 Directories: 
 	(cd Directories && $(MAKE) all)
 
-DocViewAdvanced: 
-	(cd MVC/DocViewAdvanced && $(MAKE) all)
-
-DocViewBasics: 
-	(cd MVC/DocViewBasics && $(MAKE) all)
-
 DragAndDrop: 
 	(cd DragAndDrop && $(MAKE) all)
 
@@ -282,12 +280,6 @@ LOLCats:
 
 MinMax: 
 	(cd MinMax && $(MAKE) all)
-
-ModelData: 
-	(cd MVC/ModelData && $(MAKE) all)
-
-MVCBasics: 
-	(cd MVC/MVCBasics && $(MAKE) all)
 
 NetworkKitTest: 
 	(cd NetworkKitTest && $(MAKE) all)
@@ -445,7 +437,31 @@ WorkingWithEnumerators:
 XMLTest: 
 	(cd XMLTest && $(MAKE) all)
 
-.PHONY: all install uninstall clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards ClassRegistryBrowser Colors Combos CommonDirectories Conditions Controls CopyAndPaste CPBrowser DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DocViewAdvanced DocViewBasics DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax ModelData MVCBasics NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus PopupWindows Printing Processes ProgressBars RCChineseDict Reflection RegExGUI RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 ShapedWindow SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TransparentWindows TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest
+DocViewAdvanced: 
+	(cd MVC/DocViewAdvanced && $(MAKE) all)
+
+DocViewBasics: 
+	(cd MVC/DocViewBasics && $(MAKE) all)
+
+ModelData: 
+	(cd MVC/ModelData && $(MAKE) all)
+
+MVCBasics: 
+	(cd MVC/MVCBasics && $(MAKE) all)
+
+Scribble1: 
+	(cd MVC/Scribble1 && $(MAKE) all)
+
+Scribble2: 
+	(cd MVC/Scribble2 && $(MAKE) all)
+
+Scribble3: 
+	(cd MVC/Scribble3 && $(MAKE) all)
+
+Scribble4: 
+	(cd MVC/Scribble4 && $(MAKE) all)
+
+.PHONY: all install uninstall clean Accelerators Actions AdvancedAlignment AdvancedUI Alignment Anchors ApplicationIcons AppResources BasicContainers Browser Cards ClassRegistryBrowser Colors Combos CommonDirectories Conditions Controls CopyAndPaste CPBrowser DatesAndTime DateTimeUI Dialogs DiggApp Dictionaries Directories DragAndDrop EventBasics FilesAndDirectories FrameStyles Gradients GraphicsAndMouseMoves GraphicsBasics HeavyAndLight HelloWorld HelloWorld2 HelloWorld3 Help ImageBasics ImageViewer InetKit JavaScriptTest Labels ListBox ListViews LocaleUI Localization LOLCats MinMax NetworkKitTest OpenGLShapes ParticleEditor Pixels PopupMenus PopupWindows Printing Processes ProgressBars RCChineseDict Reflection RegExGUI RegExTest Resources RunLoops ScreenDPI Scrolling Scrolling2 ShapedWindow SharedLibraries SketchIt Sliders Splitters Strings StrokesAndFills SysTray Tables Tabs TCPClient TCPServer TeXLabel TextEdit TextLayout Themes ThreadBasics ThreadMethods ThreadsInGUI Toolbars Tooltips Transformations TransparentWindows TreeListControls Trees Trees2 UDPClient UDPServer Variants VFFTests VFFTests2 VisualFormFiles WorkingWithEnumerators XMLTest DocViewAdvanced DocViewBasics ModelData MVCBasics Scribble1 Scribble2 Scribble3 Scribble4
 
 
 # Dependencies tracking:
