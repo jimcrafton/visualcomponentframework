@@ -586,7 +586,8 @@ protected:
 	Image* informationImage_;
 	Image* questionImage_;
 	KeyboardHandler* acceleratorMnemonicHandler_;
-	KeyboardHandler* defaultButtonHandler_;	
+	KeyboardHandler* defaultButtonHandler_;
+	UIMetricsManager* metricsMgr_;
 	UIPolicyManager* policyMgr_;
 	std::vector<Button*> defaultButtonList_;
 
@@ -790,6 +791,10 @@ protected:
 	ComponentInfo* internal_getComponentInfo( const String& componentUUID );
 
 	ComponentInfo* internal_getComponentInfo( Class* componentClass );
+
+	UIMetricsManager* internal_getUIMetricsManager() {
+		return metricsMgr_;
+	}
 
 	UIPolicyManager* internal_getUIPolicyManager() {
 		return policyMgr_;

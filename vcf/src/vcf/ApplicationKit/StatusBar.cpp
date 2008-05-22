@@ -158,7 +158,7 @@ String StatusBar::getStatusPaneText( const uint32& index )
 
 void StatusBar::setStatusPaneText( const uint32& index, const String& val )
 {
-	size_t missing = (index+1) - getContainer()->getChildCount();
+	int missing = (index+1) - getContainer()->getChildCount();
 	
 	if ( missing > 0 ) {
 		for (int i=0;i<missing;i++ ) {
@@ -168,6 +168,9 @@ void StatusBar::setStatusPaneText( const uint32& index, const String& val )
 	
 	Label* label = (Label*)getContainer()->getControlAtIndex(index);
 	label->setCaption( val );
+	if ( label->getPreferredWidth() > label->getWidth() ) {
+		label->setWidth( label->getPreferredWidth() + 10 );
+	}
 }
 /*
 void StatusBar::setStatusText( const uint32& index, const VCF::String& text )

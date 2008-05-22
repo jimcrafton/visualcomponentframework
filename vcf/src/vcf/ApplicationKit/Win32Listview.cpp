@@ -912,8 +912,9 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 
 					if ( displayInfo->item.mask & LVIF_IMAGE ) {
 						ListItem* item = listviewControl_->getItem( displayInfo->item.iItem );
-
-						displayInfo->item.iImage = item->getImageIndex();
+						if ( NULL != item ) {
+							displayInfo->item.iImage = item->getImageIndex();
+						}
 					}
 
 					if ( displayInfo->item.mask & LVIF_PARAM ) {
@@ -2220,6 +2221,11 @@ void Win32Listview::onCtrlModelChanged( Event* e )
  	Model* model = listviewControl_->getViewModel();
 	if ( NULL != model ) {
 		model->ModelChanged += getCallback( "Win32Listview::onListModelChanged" );
+
+		ListModel* lm = (ListModel*)model;		
+		ListView_SetItemCountEx( hwnd_, lm->getCount(), LVSICF_NOINVALIDATEALL );				
+		InvalidateRect( hwnd_, NULL, TRUE );
+
 
 		model =  listviewControl_->getColumnModel();
 		model->ModelChanged += getCallback( "Win32Listview::onColumnModelChanged" );

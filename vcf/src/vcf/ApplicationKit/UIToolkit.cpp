@@ -41,6 +41,7 @@ UIToolkit::UIToolkit():
 	questionImage_(NULL),
 	acceleratorMnemonicHandler_(NULL),
 	defaultButtonHandler_(NULL),
+	metricsMgr_(NULL),
 	policyMgr_(NULL),
 	quitModalLoop_(false)
 {
@@ -88,7 +89,9 @@ UIToolkit::~UIToolkit()
 	acceleratorMnemonicHandler_ = NULL;
 
 	defaultButtonHandler_->free();
-	defaultButtonHandler_ = NULL;	
+	defaultButtonHandler_ = NULL;
+
+	delete metricsMgr_;
 
 	delete policyMgr_;	
 }
@@ -294,7 +297,13 @@ void UIToolkit::initToolKit()
 
 
 		//inialize the toolkit instance
-		((UIToolkit*)UIToolkit::toolKitInstance)->init();	
+		((UIToolkit*)UIToolkit::toolKitInstance)->init();
+
+		//verify the presence of a valid UIMetricsManager instance
+		if ( NULL == UIToolkit::toolKitInstance->metricsMgr_ ) {
+			//Oops! we're screwed, do not pass GO, do NOT collect $200!
+			throw InvalidPointerException( MAKE_ERROR_MSG_2("This implementation of the UIToolkit does NOT have a valid instance of a UIMetricsManager! Please fix this!") );
+		}
 	}
 }
 
@@ -684,22 +693,22 @@ ComponentInfo* UIToolkit::getComponentInfo( Class* componentClass )
 
 UIMetricsManager* UIToolkit::getUIMetricsManager()
 {
-	return GraphicsToolkit::getUIMetricsManager();
+	return UIToolkit::toolKitInstance->internal_getUIMetricsManager();
 }
 
 double UIToolkit::getUIMetricValue( const UIMetricsManager::MetricType& type, const String& text, Font* alternateFont )
 {
-	return GraphicsToolkit::getUIMetricValue( type, text, alternateFont );
+	return UIToolkit::toolKitInstance->internal_getUIMetricsManager()->getValue( type, text, alternateFont );
 }
 
 VCF::Size UIToolkit::getUIMetricSize( const UIMetricsManager::MetricType& type, const String& text, Font* alternateFont )
 {
-	return GraphicsToolkit::getUIMetricSize( type, text, alternateFont );
+	return UIToolkit::toolKitInstance->internal_getUIMetricsManager()->getSize( type, text, alternateFont );
 }
 
 VCF::Rect UIToolkit::getUIMetricRect( const UIMetricsManager::MetricType& type, VCF::Rect* rect, Font* alternateFont )
 {
-	return GraphicsToolkit::getUIMetricRect( type, rect, alternateFont );
+	return UIToolkit::toolKitInstance->internal_getUIMetricsManager()->getRect( type, rect, alternateFont );
 }
 
 UIPolicyManager* UIToolkit::getUIPolicyManager()

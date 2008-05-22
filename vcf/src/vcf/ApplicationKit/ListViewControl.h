@@ -170,9 +170,7 @@ public:
 
 	ListItem* insertItem( const uint32& index, const String& caption, const uint32 imageIndex=0 );	
 
-	ListItem* getItem( const uint32& index );
-
-	void setItem( const uint32& index, ListItem* item );
+	
 
 	Enumerator<ListItem*>* getItems();
 
