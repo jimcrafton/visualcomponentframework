@@ -94,11 +94,12 @@ public:
 	}
 
 	void onMouseDown( MouseEvent* e ) {
-
+		const ScribbleShape* shape = hitTest( *e->getPoint() );
+		model->setActiveShape( shape );
 	}
 
 	void onMouseUp( MouseEvent* e ) {
-
+		
 	}
 
 
