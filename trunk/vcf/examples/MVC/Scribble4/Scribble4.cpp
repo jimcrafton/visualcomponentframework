@@ -54,6 +54,8 @@ public:
 	Scribble4App( int argc, char** argv );
 
 	virtual bool initRunningApplication(){
+		contentMouseDown = false;
+
 		bool result = Application::initRunningApplication();
 		
 
@@ -71,9 +73,6 @@ public:
 
 		Rect r = mainWindow->scribble->getMaxBounds();
 		mainWindow->status->setStatusPaneText( 1, Format("Dimensions: %0.1f x %0.1f") % r.getWidth() % r.getHeight() );
-
-		mainWindow->contentPanel->MouseMove += 
-			new ClassProcedure1<MouseEvent*,Scribble4App>(this,&Scribble4App::onContentMouseMove,"Scribble4App::onContentMouseMove");
 
 		mainWindow->show();
 		
@@ -101,6 +100,18 @@ public:
 		mainWindow->status->setStatusPaneText( 2, Format("Coords: %0.1f, %0.1f") % e->getPoint()->x_ % e->getPoint()->y_ );
 	}
 
+	void onContentMouseDown( MouseEvent* e ) {
+		contentMouseDown = true;
+		Scribble4Window* mainWindow = (Scribble4Window*)getMainWindow();
+		mainWindow->status->setStatusPaneText( 2, Format("Coords: %0.1f, %0.1f") % e->getPoint()->x_ % e->getPoint()->y_ );
+	}
+
+	void onContentMouseUp( MouseEvent* e ) {
+		contentMouseDown = false;
+	}
+
+	
+
 	void onListSelectionChanged( Event* e ) {
 		ItemEvent* ie = (ItemEvent*)e;
 		Scribble4Window* mainWindow = (Scribble4Window*)getMainWindow();
@@ -113,6 +124,22 @@ public:
 		MenuItem* item = (MenuItem*)e->getSource();
 		item->setChecked( mainWindow->scribbleListing->getVisible() );
 	}
+
+	void onScribbleModelChanged( Event* e ) {
+		if ( e->getType() == ScribbleModel::ActiveShapeChanged && contentMouseDown ) {
+			ScribbleModel* model = (ScribbleModel*)e->getSource();
+			Scribble4Window* mainWindow = (Scribble4Window*)getMainWindow();
+			if ( NULL != model->getActiveShape() ) {
+				VariantData v = (ScribbleShape*) model->getActiveShape();
+				mainWindow->scribbleListing->selectItem( model->getIndexOf( v ) );
+			}
+			else {
+				mainWindow->scribbleListing->selectItem( ListModel::InvalidIndex );
+			}
+		}
+	}
+
+	bool contentMouseDown;
 };
 
 
@@ -180,6 +207,12 @@ Scribble4App::Scribble4App( int argc, char** argv ) :
 	addCallback( new ClassProcedure1<Event*,Scribble4App>(this, &Scribble4App::onAbout), "Scribble4App::onAbout" );
 	addCallback( new ClassProcedure1<Event*,Scribble4App>(this, &Scribble4App::onListSelectionChanged), "Scribble4App::onListSelectionChanged" );
 	addCallback( new ClassProcedure1<Event*,Scribble4App>(this, &Scribble4App::onViewListing), "Scribble4App::onViewListing" );
+	addCallback( new ClassProcedure1<Event*,Scribble4App>(this, &Scribble4App::onScribbleModelChanged), "Scribble4App::onScribbleModelChanged" );
+	addCallback( new ClassProcedure1<MouseEvent*,Scribble4App>(this, &Scribble4App::onContentMouseMove), "Scribble4App::onContentMouseMove" );
+	addCallback( new ClassProcedure1<MouseEvent*,Scribble4App>(this, &Scribble4App::onContentMouseDown), "Scribble4App::onContentMouseDown" );
+	addCallback( new ClassProcedure1<MouseEvent*,Scribble4App>(this, &Scribble4App::onContentMouseUp), "Scribble4App::onContentMouseUp" );
+	
+	
 }
 
 
@@ -187,5 +220,6 @@ int main(int argc, char *argv[])
 {
 	return ApplicationKitMain<Scribble4App>(argc,argv);
 }
+
 
 

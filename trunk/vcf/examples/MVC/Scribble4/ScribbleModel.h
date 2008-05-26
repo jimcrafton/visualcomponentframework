@@ -15,9 +15,13 @@ using VCF::String;
 using VCF::StringTokenizer;
 using VCF::StringUtils;
 using VCF::Format;
+using VCF::ModelEvent;
+
 
 class ScribbleShape : public VCF::Object {
 public:
+	
+
 	ScribbleShape():type(stLine),strokeWidth(1.0),filled(true) {}
 	enum Type {
 		stLine,
@@ -224,6 +228,12 @@ public:
 
 class ScribbleModel : public VCF::SimpleListModel {
 public:
+
+	enum ScribbleModelEvents {
+		ActiveShapeChanged =  MODEL_LAST_EVENT + 10
+	};
+
+
 	ScribbleModel():activeShape(NULL){
 		//set this to true to 
 		//delete all our objects
@@ -420,7 +430,8 @@ public:
 
 	void setActiveShape(const ScribbleShape* val) {
 		activeShape = val;
-		updateAllViews();
+		ModelEvent e(this,ActiveShapeChanged);
+		changed( &e );
 	}
 
 protected:
