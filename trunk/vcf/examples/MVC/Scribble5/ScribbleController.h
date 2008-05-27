@@ -64,7 +64,7 @@ public:
 	}
 
 	void onMouseMove( MouseEvent* e ) {
-		const ScribbleShape* tmp = hitTest( *e->getPoint() );
+		ScribbleShape* tmp = hitTest( *e->getPoint() );
 		if ( tmp != activeShape ) {
 			model->setActiveShape( tmp );
 			activeShape = tmp;
@@ -84,7 +84,7 @@ public:
 	}
 
 	void onMouseDown( MouseEvent* e ) {
-		const ScribbleShape* shape = hitTest( *e->getPoint() );
+		ScribbleShape* shape = hitTest( *e->getPoint() );
 		model->setActiveShape( shape );
 	}
 
@@ -93,15 +93,15 @@ public:
 	}
 
 
-	const ScribbleShape* hitTest( const Point& point ) {
-		const ScribbleShape* result = NULL;
+	ScribbleShape* hitTest( const Point& point ) {
+		ScribbleShape* result = NULL;
 
 		BezierCurve curve;
 		VCF::Ellipse ellipse;
 		Path* p = NULL;
 		size_t count = model->getCount();
 		for (int i=count-1;i>=0;i-- ) {
-			const ScribbleShape* shape = model->getShape(i);	
+			ScribbleShape* shape = model->getShape(i);	
 			curve.clear();
 			
 
