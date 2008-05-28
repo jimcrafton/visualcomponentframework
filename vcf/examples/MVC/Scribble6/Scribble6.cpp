@@ -35,12 +35,12 @@ public:
 
 
 
-class Scribble5Window : public Window {
+class Scribble6Window : public Window {
 public:
-	Scribble5Window() {
+	Scribble6Window() {
 		
 	}
-	virtual ~Scribble5Window(){};
+	virtual ~Scribble6Window(){};
 
 	Panel* contentPanel;
 	ScribbleModel* scribble;	
@@ -51,10 +51,10 @@ public:
 
 
 
-class Scribble5App : public Application {
+class Scribble6App : public Application {
 public:
 
-	Scribble5App( int argc, char** argv );
+	Scribble6App( int argc, char** argv );
 
 	virtual bool initRunningApplication(){
 		contentMouseDown = false;
@@ -66,7 +66,7 @@ public:
 		addComponent(controller);
 
 
-		Scribble5Window* mainWindow = (Scribble5Window*) Frame::createWindow( classid(Scribble5Window) );
+		Scribble6Window* mainWindow = (Scribble6Window*) Frame::createWindow( classid(Scribble6Window) );
 		setMainWindow(mainWindow);
 		
 		ScribbleView* view = new ScribbleView();
@@ -102,13 +102,13 @@ public:
 	}
 
 	void onContentMouseMove( MouseEvent* e ) {
-		Scribble5Window* mainWindow = (Scribble5Window*)getMainWindow();
+		Scribble6Window* mainWindow = (Scribble6Window*)getMainWindow();
 		mainWindow->status->setStatusPaneText( 2, Format("Coords: %0.1f, %0.1f") % e->getPoint()->x_ % e->getPoint()->y_ );
 	}
 
 	void onContentMouseDown( MouseEvent* e ) {
 		contentMouseDown = true;
-		Scribble5Window* mainWindow = (Scribble5Window*)getMainWindow();
+		Scribble6Window* mainWindow = (Scribble6Window*)getMainWindow();
 		mainWindow->status->setStatusPaneText( 2, Format("Coords: %0.1f, %0.1f") % e->getPoint()->x_ % e->getPoint()->y_ );
 	}
 
@@ -119,19 +119,19 @@ public:
 
 	void onListSelectionChanged( Event* e ) {
 		ItemEvent* ie = (ItemEvent*)e;
-		Scribble5Window* mainWindow = (Scribble5Window*)getMainWindow();
+		Scribble6Window* mainWindow = (Scribble6Window*)getMainWindow();
 		mainWindow->scribble->setActiveShape( mainWindow->scribble->getShape(ie->index) );
 	}
 
 	void onViewListing( Event* e ) {
-		Scribble5Window* mainWindow = (Scribble5Window*)getMainWindow();
+		Scribble6Window* mainWindow = (Scribble6Window*)getMainWindow();
 		mainWindow->scribbleListing->setVisible( !mainWindow->scribbleListing->getVisible() );
 		MenuItem* item = (MenuItem*)e->getSource();
 		item->setChecked( mainWindow->scribbleListing->getVisible() );
 	}
 
 	void onViewStatusbar( Event* e ) {
-		Scribble5Window* mainWindow = (Scribble5Window*)getMainWindow();
+		Scribble6Window* mainWindow = (Scribble6Window*)getMainWindow();
 		mainWindow->status->setVisible( !mainWindow->status->getVisible() );
 		MenuItem* item = (MenuItem*)e->getSource();
 		item->setChecked( mainWindow->status->getVisible() );
@@ -140,7 +140,7 @@ public:
 	void onEditCurrentShape( Event* e ) {		
 		ScribbleController* controller = (ScribbleController*) findComponent("controller");
 
-		Scribble5Window* mainWindow = (Scribble5Window*)getMainWindow();
+		Scribble6Window* mainWindow = (Scribble6Window*)getMainWindow();
 		controller->editShape( mainWindow->scribble->getActiveShape() );
 	}
 
@@ -154,7 +154,7 @@ public:
 			ScribbleController* controller = (ScribbleController*) findComponent("controller");		
 			controller->deleteCurrentShape();
 
-			Scribble5Window* mainWindow = (Scribble5Window*)getMainWindow();
+			Scribble6Window* mainWindow = (Scribble6Window*)getMainWindow();
 			if ( !mainWindow->scribble->isEmpty() ) {
 				mainWindow->scribble->setActiveShape( mainWindow->scribble->getShape(0) );
 			}
@@ -166,7 +166,7 @@ public:
 	void onScribbleModelChanged( Event* e ) {
 		if ( e->getType() == ScribbleModel::ActiveShapeChanged && contentMouseDown ) {
 			ScribbleModel* model = (ScribbleModel*)e->getSource();
-			Scribble5Window* mainWindow = (Scribble5Window*)getMainWindow();
+			Scribble6Window* mainWindow = (Scribble6Window*)getMainWindow();
 			if ( NULL != model->getActiveShape() ) {
 				VariantData v = (ScribbleShape*) model->getActiveShape();
 				mainWindow->scribbleListing->selectItem( model->getIndexOf( v ) );
@@ -193,7 +193,7 @@ public:
 _class_rtti_(ScribbleController, "VCF::Component", "ScribbleController")
 _class_rtti_end_
 
-_class_rtti_(Scribble5Window, "VCF::Window", "Scribble5Window")
+_class_rtti_(Scribble6Window, "VCF::Window", "Scribble6Window")
 _field_obj_( Panel*, contentPanel )
 _field_obj_( ScribbleModel*, scribble )
 _field_obj_( StatusBar*, status )
@@ -236,10 +236,10 @@ _property_( double, "defaultStrokeWidth", getDefaultWidth, setDefaultWidth, "" )
 _property_( bool, "defaultFilled", getDefaultFilled, setDefaultFilled, "" );
 _class_rtti_end_
 
-Scribble5App::Scribble5App( int argc, char** argv ) : 
+Scribble6App::Scribble6App( int argc, char** argv ) : 
 	Application(argc, argv)
 {
-	REGISTER_CLASSINFO_EXTERNAL(Scribble5Window);
+	REGISTER_CLASSINFO_EXTERNAL(Scribble6Window);
 	REGISTER_CLASSINFO_EXTERNAL(ScribbleShape);
 	REGISTER_CLASSINFO_EXTERNAL(ScribbleModel);
 	REGISTER_CLASSINFO_EXTERNAL(AboutDialog);
@@ -247,26 +247,26 @@ Scribble5App::Scribble5App( int argc, char** argv ) :
 	
 	
 	
-	addCallback( new ClassProcedure1<Event*,Scribble5App>(this, &Scribble5App::onAbout), "Scribble5App::onAbout" );
-	addCallback( new ClassProcedure1<Event*,Scribble5App>(this, &Scribble5App::onListSelectionChanged), "Scribble5App::onListSelectionChanged" );
-	addCallback( new ClassProcedure1<Event*,Scribble5App>(this, &Scribble5App::onViewListing), "Scribble5App::onViewListing" );
-	addCallback( new ClassProcedure1<Event*,Scribble5App>(this, &Scribble5App::onViewStatusbar), "Scribble5App::onViewStatusbar" );
-	addCallback( new ClassProcedure1<Event*,Scribble5App>(this, &Scribble5App::onEditCurrentShape), "Scribble5App::onEditCurrentShape" );
-	addCallback( new ClassProcedure1<Event*,Scribble5App>(this, &Scribble5App::onDeleteCurrentShape), "Scribble5App::onDeleteCurrentShape" );
+	addCallback( new ClassProcedure1<Event*,Scribble6App>(this, &Scribble6App::onAbout), "Scribble6App::onAbout" );
+	addCallback( new ClassProcedure1<Event*,Scribble6App>(this, &Scribble6App::onListSelectionChanged), "Scribble6App::onListSelectionChanged" );
+	addCallback( new ClassProcedure1<Event*,Scribble6App>(this, &Scribble6App::onViewListing), "Scribble6App::onViewListing" );
+	addCallback( new ClassProcedure1<Event*,Scribble6App>(this, &Scribble6App::onViewStatusbar), "Scribble6App::onViewStatusbar" );
+	addCallback( new ClassProcedure1<Event*,Scribble6App>(this, &Scribble6App::onEditCurrentShape), "Scribble6App::onEditCurrentShape" );
+	addCallback( new ClassProcedure1<Event*,Scribble6App>(this, &Scribble6App::onDeleteCurrentShape), "Scribble6App::onDeleteCurrentShape" );
 	
-	addCallback( new ClassProcedure1<Event*,Scribble5App>(this, &Scribble5App::onScribbleModelChanged), "Scribble5App::onScribbleModelChanged" );
-	addCallback( new ClassProcedure1<MouseEvent*,Scribble5App>(this, &Scribble5App::onContentMouseMove), "Scribble5App::onContentMouseMove" );
-	addCallback( new ClassProcedure1<MouseEvent*,Scribble5App>(this, &Scribble5App::onContentMouseDown), "Scribble5App::onContentMouseDown" );
-	addCallback( new ClassProcedure1<MouseEvent*,Scribble5App>(this, &Scribble5App::onContentMouseUp), "Scribble5App::onContentMouseUp" );
+	addCallback( new ClassProcedure1<Event*,Scribble6App>(this, &Scribble6App::onScribbleModelChanged), "Scribble6App::onScribbleModelChanged" );
+	addCallback( new ClassProcedure1<MouseEvent*,Scribble6App>(this, &Scribble6App::onContentMouseMove), "Scribble6App::onContentMouseMove" );
+	addCallback( new ClassProcedure1<MouseEvent*,Scribble6App>(this, &Scribble6App::onContentMouseDown), "Scribble6App::onContentMouseDown" );
+	addCallback( new ClassProcedure1<MouseEvent*,Scribble6App>(this, &Scribble6App::onContentMouseUp), "Scribble6App::onContentMouseUp" );
 	
-	addCallback( new ClassProcedure1<KeyboardEvent*,Scribble5App>(this, &Scribble5App::onListKeyDown), "Scribble5App::onListKeyDown" );
+	addCallback( new ClassProcedure1<KeyboardEvent*,Scribble6App>(this, &Scribble6App::onListKeyDown), "Scribble6App::onListKeyDown" );
 	
 }
 
 
 int main(int argc, char *argv[])
 {
-	return ApplicationKitMain<Scribble5App>(argc,argv);
+	return ApplicationKitMain<Scribble6App>(argc,argv);
 }
 
 
