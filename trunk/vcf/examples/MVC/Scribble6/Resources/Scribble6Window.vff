@@ -1,10 +1,10 @@
-object Scribble5Window  : VCF::Window
+object Scribble6Window  : VCF::Window
 	top = 200
 	left = 200
 	height = 300
 	width = 320
 
-	caption = 'Scribble5 - Lion'
+	caption = 'Scribble6 - Lion'
 
 
 	object scribble : ScribbleModel 
@@ -182,7 +182,7 @@ object Scribble5Window  : VCF::Window
 
 
 		delegates 
-			ModelChanged = [Scribble5App@Scribble5App::onScribbleModelChanged]
+			ModelChanged = [Scribble6App@Scribble6App::onScribbleModelChanged]
 		end
 	end
 
@@ -193,9 +193,9 @@ object Scribble5Window  : VCF::Window
 		border = null;
 
 		delegates 
-			MouseMove = [Scribble5App@Scribble5App::onContentMouseMove, controller@ScribbleController::onMouseMove]
-			MouseDown = [Scribble5App@Scribble5App::onContentMouseDown, controller@ScribbleController::onMouseDown]
-			MouseUp = [Scribble5App@Scribble5App::onContentMouseUp, controller@ScribbleController::onMouseUp]
+			MouseMove = [Scribble6App@Scribble6App::onContentMouseMove, controller@ScribbleController::onMouseMove]
+			MouseDown = [Scribble6App@Scribble6App::onContentMouseDown, controller@ScribbleController::onMouseDown]
+			MouseUp = [Scribble6App@Scribble6App::onContentMouseUp, controller@ScribbleController::onMouseUp]
 			MouseDoubleClicked = [controller@ScribbleController::onMouseDblClick]
 			KeyDown = [controller@ScribbleController::onKeyDown]
 		end
@@ -214,14 +214,14 @@ object Scribble5Window  : VCF::Window
 			object editShape : VCF::DefaultMenuItem
 				caption = 'Current &Shape...'
 				delegates
-					MenuItemClicked = [Scribble5App@Scribble5App::onEditCurrentShape]
+					MenuItemClicked = [Scribble6App@Scribble6App::onEditCurrentShape]
 				end
 			end
 
 			object editShape : VCF::DefaultMenuItem
 				caption = 'Delete'
 				delegates
-					MenuItemClicked = [Scribble5App@Scribble5App::onDeleteCurrentShape]
+					MenuItemClicked = [Scribble6App@Scribble6App::onDeleteCurrentShape]
 				end
 			end
 		end
@@ -232,7 +232,7 @@ object Scribble5Window  : VCF::Window
 				caption = 'Shape &Listing'
 				checked = true
 				delegates
-					MenuItemClicked = [Scribble5App@Scribble5App::onViewListing]
+					MenuItemClicked = [Scribble6App@Scribble6App::onViewListing]
 				end
 			end
 
@@ -240,7 +240,7 @@ object Scribble5Window  : VCF::Window
 				caption = '&Status Bar'
 				checked = true
 				delegates
-					MenuItemClicked = [Scribble5App@Scribble5App::onViewStatusbar]
+					MenuItemClicked = [Scribble6App@Scribble6App::onViewStatusbar]
 				end
 			end
 		end
@@ -250,7 +250,7 @@ object Scribble5Window  : VCF::Window
 			object helpAbout : VCF::DefaultMenuItem
 				caption = '&About...'
 				delegates
-					MenuItemClicked = [Scribble5App@Scribble5App::onAbout]
+					MenuItemClicked = [Scribble6App@Scribble6App::onAbout]
 				end
 			end
 		end
@@ -264,9 +264,9 @@ object Scribble5Window  : VCF::Window
 		columnModel.items[0] = 'Items'
 		model = @scribble
 		delegates 
-			ItemSelectionChanged = [Scribble5App@Scribble5App::onListSelectionChanged]
-			MouseDoubleClicked = [Scribble5App@Scribble5App::onEditCurrentShape]
-			KeyDown = [Scribble5App@Scribble5App::onListKeyDown]
+			ItemSelectionChanged = [Scribble6App@Scribble6App::onListSelectionChanged]
+			MouseDoubleClicked = [Scribble6App@Scribble6App::onEditCurrentShape]
+			KeyDown = [Scribble6App@Scribble6App::onListKeyDown]
 		end 
 	end
 

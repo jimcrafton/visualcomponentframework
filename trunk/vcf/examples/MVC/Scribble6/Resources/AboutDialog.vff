@@ -1,0 +1,54 @@
+object AboutDialog : VCF::Dialog 
+	height = 150pt
+	width = 220pt
+	caption = 'About Scribble 6'
+
+	object hlContainer : VCF::HorizontalLayoutContainer
+		numberOfColumns = 2
+		maxRowHeight = 35
+		rowSpacerHeight = 10
+		widths[0] = 80
+		widths[1] = 80
+
+		tweenWidths[0] = 10
+	end
+
+	object program : VCF::Label 
+		alignment = AlignTop
+		height = 50
+		font.pointSize = 18
+		textAlignment = taTextCenter
+	end
+		
+	object panel : VCF::Panel 
+		border = null
+		alignment = AlignClient
+		container = @hlContainer
+
+		object lbl1 : VCF::Label 
+			caption = 'Copyright:' 
+		end
+
+		object copyright : VCF::Label 			
+			caption = '???' 
+		end
+
+		object lbl2 : VCF::Label 
+			caption = 'Author:' 
+		end
+
+		object author : VCF::Label 			
+			caption = '???' 
+		end
+	
+		object lbl3 : VCF::Label 
+			caption = 'Company:' 
+			whatThisHelpString = 'The company that produced the product.'
+		end
+
+		object company : VCF::Label 			
+			caption = '???' 
+		end
+	end
+	
+end
