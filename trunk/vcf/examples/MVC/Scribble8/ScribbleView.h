@@ -75,29 +75,34 @@ public:
 					break;
 
 					case ScribbleShape::stPolygon : {
-						ctx->polyline( shape->points );
-						ctx->closePath( shape->points.back() );
+						if ( shape->points.size() > 1 ) {
+							ctx->polyline( shape->points );
+							ctx->closePath( shape->points.back() );
+						}
 					}
 					break;
 
 					case ScribbleShape::stFreehand : {
-						ctx->polyline( shape->points );
+						if ( shape->points.size() > 1 ) {
+							ctx->polyline( shape->points );
+						}
 					}
 					break;
 				}
 
 				if ( shape->type != ScribbleShape::stLine ) {
-					if ( shape->filled ) {
-						ctx->setColor( &shape->fill );
-						ctx->fillPath();
-					}
 
-					ctx->setStrokeWidth( shape->strokeWidth );
-					ctx->setColor( &shape->stroke );
-					ctx->strokePath();
-
-
-					
+					if ( shape->points.size() > 1 ) {
+						
+						if ( shape->filled ) {
+							ctx->setColor( &shape->fill );
+							ctx->fillPath();
+						}
+						
+						ctx->setStrokeWidth( shape->strokeWidth );
+						ctx->setColor( &shape->stroke );
+						ctx->strokePath();
+					}					
 				}
 
 				if ( shape == scribble->getActiveShape() ) {

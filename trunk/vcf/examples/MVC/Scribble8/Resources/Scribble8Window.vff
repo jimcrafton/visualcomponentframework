@@ -223,7 +223,7 @@ object Scribble8Window  : VCF::Window
 			object deleteShape : VCF::DefaultMenuItem
 				caption = 'Delete'
 			end
-		end
+		end		
 
 		object help : VCF::DefaultMenuItem
 			caption = '&View'
@@ -233,6 +233,44 @@ object Scribble8Window  : VCF::Window
 
 			object viewStatusbar : VCF::DefaultMenuItem
 				caption = '&Status Bar'
+			end
+		end
+
+		object draw : VCF::DefaultMenuItem
+			caption = 'Draw'
+
+			object drawSelect : VCF::DefaultMenuItem
+				tag = 0
+				caption = 'Select Shape'
+			end
+
+			object sep : VCF::DefaultMenuItem
+				separator = true
+			end
+
+			object drawRect : VCF::DefaultMenuItem
+				tag = 1
+				caption = 'Rectangle'
+			end
+
+			object drawLine : VCF::DefaultMenuItem
+				tag = 2
+				caption = 'Line'
+			end
+
+			object drawEllipse : VCF::DefaultMenuItem
+				tag = 3
+				caption = 'Ellipse'
+			end
+
+			object drawPolygon : VCF::DefaultMenuItem
+				tag = 4
+				caption = 'Polygon'
+			end
+
+			object drawFreehand : VCF::DefaultMenuItem
+				tag = 5
+				caption = 'Freehand'
 			end
 		end
 
@@ -399,4 +437,60 @@ object Scribble8Window  : VCF::Window
 			Performed  = [Scribble8App@Scribble8App::onAbout]
 		end
 	end	
+
+	object drawSelectAction : VCF::Action
+		targets[0] = @drawSelect
+		tag = 0
+		delegates 
+			Performed  = [controller@ScribbleController::onChangeTool]
+			Update  = [controller@ScribbleController::onUpdateChangeTool]
+		end
+	end	
+
+	object drawRectAction : VCF::Action
+		targets[0] = @drawRect
+		tag = 1
+		delegates 
+			Performed  = [controller@ScribbleController::onChangeTool]
+			Update  = [controller@ScribbleController::onUpdateChangeTool]
+		end
+	end	
+
+	object drawLineAction : VCF::Action
+		targets[0] = @drawLine
+		tag = 2
+		delegates 
+			Performed  = [controller@ScribbleController::onChangeTool]
+			Update  = [controller@ScribbleController::onUpdateChangeTool]
+		end
+	end	
+
+	object drawEllipseAction : VCF::Action
+		targets[0] = @drawEllipse
+		tag = 3
+		delegates 
+			Performed  = [controller@ScribbleController::onChangeTool]
+			Update  = [controller@ScribbleController::onUpdateChangeTool]
+		end
+	end	
+
+	object drawPolygonAction : VCF::Action
+		targets[0] = @drawPolygon
+		tag = 4
+		delegates 
+			Performed  = [controller@ScribbleController::onChangeTool]
+			Update  = [controller@ScribbleController::onUpdateChangeTool]
+		end
+	end	
+
+	object drawFreehandAction : VCF::Action
+		targets[0] = @drawFreehand
+		tag = 5
+		delegates 
+			Performed  = [controller@ScribbleController::onChangeTool]
+			Update  = [controller@ScribbleController::onUpdateChangeTool]
+		end
+	end	
+
+	
 end

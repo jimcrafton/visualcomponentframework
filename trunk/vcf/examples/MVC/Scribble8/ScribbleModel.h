@@ -16,6 +16,11 @@ using VCF::StringTokenizer;
 using VCF::StringUtils;
 using VCF::Format;
 using VCF::ModelEvent;
+using VCF::Persistable;
+using VCF::InputStream;
+using VCF::OutputStream;
+using VCF::MIMEType;
+
 
 
 class ScribbleShape : public VCF::Object {
@@ -231,12 +236,13 @@ public:
 
 
 
-class ScribbleModel : public VCF::SimpleListModel {
+class ScribbleModel : public VCF::SimpleListModel, public Persistable {
 public:
 
 	enum ScribbleModelEvents {
 		ActiveShapeChanged =  MODEL_LAST_EVENT + 10,
 		ShapeMatrixChanged,
+		ShapePointsChanged,
 	};
 
 
@@ -246,6 +252,7 @@ public:
 		deleteVariantObjects_ = true;
 
 		backColor = *Color::getColor("white");
+		defaultShape.fill = *Color::getColor("white");
 	}
 
 	ScribbleShape* getShape( const unsigned int& index ) {
@@ -309,8 +316,56 @@ public:
 		*s = defaultShape;
 		s->points = pts;
 		s->type = ScribbleShape::stFreehand;
+		s->filled = false;
 		add( s );
 	}
+
+
+	void setRect( const size_t& index, const Point& p1, const Point& p2 ) {
+		ScribbleShape* s = getShape( index );
+
+		Rect r(p1.x_,p1.y_,p2.x_,p2.y_);
+		r.normalize();
+
+		s->points[0] = r.getTopLeft();
+		s->points[1] = r.getBottomRight();
+
+		ModelEvent e(this,ShapePointsChanged);		
+		changed( &e );
+	}
+
+	void setLine( const size_t& index, const Point& p1, const Point& p2 ) {
+		ScribbleShape* s = getShape( index );
+		Rect r(p1.x_,p1.y_,p2.x_,p2.y_);
+		r.normalize();
+
+		s->points[0] = r.getTopLeft();
+		s->points[1] = r.getBottomRight();
+
+		ModelEvent e(this,ShapePointsChanged);		
+		changed( &e );
+	}
+
+	void setEllipse( const size_t& index, const Point& p1, const Point& p2 ) {
+		ScribbleShape* s = getShape( index );
+		Rect r(p1.x_,p1.y_,p2.x_,p2.y_);
+		r.normalize();
+
+		s->points[0] = r.getTopLeft();
+		s->points[1] = r.getBottomRight();
+
+		ModelEvent e(this,ShapePointsChanged);		
+		changed( &e );
+	}
+
+	void addPolygonPt( const size_t& index, const Point& p1 ) {
+		ScribbleShape* s = getShape( index );
+		s->points.push_back( p1 );
+
+		ModelEvent e(this,ShapePointsChanged);		
+		changed( &e );
+	}
+
 
 	void setDefaultWidth( const double& val ) {
 		defaultShape.strokeWidth = val;
@@ -446,9 +501,146 @@ public:
 		ModelEvent e(this,ShapeMatrixChanged);		
 		changed( &e );
 	}
-
-protected:
 	
+
+	virtual void loadFromStream( InputStream* stream, const MIMEType& type ) {
+		if ( type == "application/x-scribbledoc" ) {
+			readShape( stream, &defaultShape );
+			
+			double val = 0;
+			stream->read( val );
+			backColor.setRed(val);
+			
+			stream->read( val );
+			backColor.setGreen(val);
+			
+			stream->read( val );
+			backColor.setBlue(val);
+			
+			stream->read( val );
+			backColor.setAlpha(val);
+			
+
+			size_t count = 0;
+			stream->read( count );
+
+			for (size_t i=0;i<count;i++ ) {
+				ScribbleShape* shape = getShape(i);
+				readShape( stream, shape );
+			}
+		}
+	}
+
+	virtual void saveToStream( OutputStream* stream, const MIMEType& type ) {
+		if ( type == "application/x-scribbledoc" ) {
+			writeShape( stream, &defaultShape );
+
+			stream->write( backColor.getRed()  );
+			stream->write( backColor.getGreen()  );
+			stream->write( backColor.getBlue()  );
+			stream->write( backColor.getAlpha()  );
+
+			size_t count = getCount();
+			stream->write( count );
+
+			for (size_t i=0;i<count;i++ ) {
+				ScribbleShape* shape = getShape(i);
+				writeShape( stream, shape );
+			}
+		}
+	}
+protected:
+	void readShape( InputStream* stream, ScribbleShape* shape ) {
+		double val = 0;
+
+		stream->read( shape->filled );
+		stream->read( val );
+		shape->fill.setRed(val);
+
+		stream->read( val );
+		shape->fill.setGreen(val);
+
+		stream->read( val );
+		shape->fill.setBlue(val);
+
+		stream->read( val );
+		shape->fill.setAlpha(val);
+
+		stream->read( val );
+		shape->stroke.setRed(val);
+
+		stream->read( val );
+		shape->stroke.setGreen(val);
+
+		stream->read( val );
+		shape->stroke.setBlue(val);
+
+		stream->read( val );
+		shape->stroke.setAlpha(val);
+
+		stream->read( shape->strokeWidth );
+
+		int val2 = 0;
+		stream->read( val2);
+		shape->type = (ScribbleShape::Type)val2;
+
+		stream->read( shape->mat[Matrix2D::mei00] );
+		stream->read( shape->mat[Matrix2D::mei01] );
+		stream->read( shape->mat[Matrix2D::mei02] );
+		stream->read( shape->mat[Matrix2D::mei10] );
+		stream->read( shape->mat[Matrix2D::mei11] );
+		stream->read( shape->mat[Matrix2D::mei12] );
+		stream->read( shape->mat[Matrix2D::mei20] );
+		stream->read( shape->mat[Matrix2D::mei21] );
+		stream->read( shape->mat[Matrix2D::mei22] );
+
+		size_t ptCount = 0;
+		stream->read( ptCount );
+		shape->points.resize(ptCount);
+
+		for (size_t j=0;j<ptCount;j++ ) {
+			Point& pt = shape->points[j];
+			stream->read( pt.x_ );
+			stream->read( pt.y_ );
+		} 
+	}
+
+	void writeShape( OutputStream* stream, ScribbleShape* shape ) {
+		stream->write( shape->filled  );
+		stream->write( shape->fill.getRed()  );
+		stream->write( shape->fill.getGreen()  );
+		stream->write( shape->fill.getBlue()  );
+		stream->write( shape->fill.getAlpha()  );
+		
+		stream->write( shape->stroke.getRed()  );
+		stream->write( shape->stroke.getGreen()  );
+		stream->write( shape->stroke.getBlue()  );
+		stream->write( shape->stroke.getAlpha()  );
+		
+		stream->write( shape->strokeWidth );
+		
+		stream->write( (int)shape->type );
+		
+		stream->write( shape->mat[Matrix2D::mei00] );
+		stream->write( shape->mat[Matrix2D::mei01] );
+		stream->write( shape->mat[Matrix2D::mei02] );
+		stream->write( shape->mat[Matrix2D::mei10] );
+		stream->write( shape->mat[Matrix2D::mei11] );
+		stream->write( shape->mat[Matrix2D::mei12] );
+		stream->write( shape->mat[Matrix2D::mei20] );
+		stream->write( shape->mat[Matrix2D::mei21] );
+		stream->write( shape->mat[Matrix2D::mei22] );
+		
+		
+		size_t ptCount = shape->points.size();
+		stream->write( ptCount );
+		for (size_t j=0;j<ptCount;j++ ) {
+			const Point& pt = shape->points[j];
+			stream->write( pt.x_ );
+			stream->write( pt.y_ );
+		}
+	}
+
 	virtual bool doRemove( const uint32& index ) {
 		activeShape = NULL;
 		return SimpleListModel::doRemove(index);

@@ -43,7 +43,7 @@ object AboutDialog : VCF::Dialog
 	
 		object lbl3 : VCF::Label 
 			caption = 'Company:' 
-			whatThisHelpString = 'The company that produced the product.'
+			whatsThisHelpString = 'The company that produced the product.'
 		end
 
 		object company : VCF::Label 			
