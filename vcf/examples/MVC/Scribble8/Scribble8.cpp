@@ -44,6 +44,8 @@ public:
 		controller->setName( "controller" );
 		addComponent(controller);		
 
+		view = new ScribbleView();
+
 		DocumentManager* docMgr = DocumentManager::getDocumentManager();
 		docMgr->DocumentInitialized += new ClassProcedure1<Event*,Scribble8Window>( this, 
 																			&Scribble8Window::onDocInitialized,
@@ -64,7 +66,7 @@ public:
 
 		ScribbleModel* model = (ScribbleModel*)doc->getModel();
 
-		ScribbleView* view = new ScribbleView();
+		
 		contentPanel->setView( view );
 		model->addView( view );
 
@@ -81,7 +83,7 @@ public:
 
 
 	Panel* contentPanel;
-	ScribbleModel* scribble;	
+	ScribbleView* view;
 	StatusBar* status;	
 	ListViewControl* scribbleListing;
 	ScribbleController* controller;
@@ -137,8 +139,11 @@ public:
 
 	void onListSelectionChanged( Event* e ) {
 		ItemEvent* ie = (ItemEvent*)e;
-		Scribble8Window* mainWindow = (Scribble8Window*)getMainWindow();
-		mainWindow->scribble->setActiveShape( mainWindow->scribble->getShape(ie->index) );
+		
+		Document* doc = getCurrentDocument();
+		ScribbleModel* model = (ScribbleModel*) doc->getModel();
+
+		model->setActiveShape( model->getShape(ie->index) );
 	}
 
 	void onViewListing( Event* e ) {
@@ -174,30 +179,34 @@ public:
 	}
 
 	void onEditCurrentShape( Event* e ) {		
-		ScribbleController* controller = (ScribbleController*) findComponent("controller");
+		ScribbleController* controller = (ScribbleController*) findComponent("controller",true);
 
-		Scribble8Window* mainWindow = (Scribble8Window*)getMainWindow();
-		controller->editShape( mainWindow->scribble->getActiveShape() );
+		Document* doc = getCurrentDocument();
+		ScribbleModel* model = (ScribbleModel*) doc->getModel();
+
+		controller->editShape( model->getActiveShape() );
 	}
 
 	void onUpdateEditCurrentShape( ActionEvent* e ) {
-		Scribble8Window* mainWindow = (Scribble8Window*)getMainWindow();
-		e->setEnabled( NULL != mainWindow->scribble->getActiveShape() );
+		Document* doc = getCurrentDocument();
+		ScribbleModel* model = (ScribbleModel*) doc->getModel();
+		e->setEnabled( NULL != model->getActiveShape() );
 	}
 
 	void onDeleteCurrentShape( Event* e ) {		
-		ScribbleController* controller = (ScribbleController*) findComponent("controller");		
+		ScribbleController* controller = (ScribbleController*) findComponent("controller",true);		
 		controller->deleteCurrentShape();
 	}
 	
 	void onListKeyDown( KeyboardEvent* e ) {	
 		if ( e->getVirtualCode() == vkDelete ) {
-			ScribbleController* controller = (ScribbleController*) findComponent("controller");		
+			ScribbleController* controller = (ScribbleController*) findComponent("controller",true);		
 			controller->deleteCurrentShape();
 
-			Scribble8Window* mainWindow = (Scribble8Window*)getMainWindow();
-			if ( !mainWindow->scribble->isEmpty() ) {
-				mainWindow->scribble->setActiveShape( mainWindow->scribble->getShape(0) );
+			Document* doc = getCurrentDocument();
+			ScribbleModel* model = (ScribbleModel*) doc->getModel();
+			if ( !model->isEmpty() ) {
+				model->setActiveShape( model->getShape(0) );
 			}
 		}
 	}
@@ -236,7 +245,6 @@ _class_rtti_end_
 
 _class_rtti_(Scribble8Window, "VCF::Window", "Scribble8Window")
 _field_obj_( Panel*, contentPanel )
-_field_obj_( ScribbleModel*, scribble )
 _field_obj_( StatusBar*, status )
 _field_obj_( ListViewControl*, scribbleListing )
 

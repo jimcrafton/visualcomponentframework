@@ -25,7 +25,7 @@ object ShapeEditDialog : VCF::Dialog
 		end
 
 		object strokeWidth : VCF::TextControl 
-			
+			whatsThisHelpString = 'Stroke Width'
 		end
 
 		object lbl2 : VCF::Label 
@@ -34,6 +34,7 @@ object ShapeEditDialog : VCF::Dialog
 
 		object strokeColor : VCF::Panel	
 			useColorForBackground = true
+			whatsThisHelpString = 'Stroke Color - double click to change'
 			delegates
 				MouseDoubleClicked = [ShapeEditDialog@ShapeEditDialog::onDoColor]
 			end
@@ -45,6 +46,7 @@ object ShapeEditDialog : VCF::Dialog
 
 		object filled : VCF::CheckBoxControl
 			caption = ''
+			whatsThisHelpString = 'Indicates whether or not the shape is filled.'
 		end
 
 		object lbl4 : VCF::Label 
@@ -53,6 +55,7 @@ object ShapeEditDialog : VCF::Dialog
 
 		object fillColor : VCF::Panel	
 			useColorForBackground = true
+			whatsThisHelpString = 'Fill Color - double click to change'
 			delegates
 				MouseDoubleClicked = [ShapeEditDialog@ShapeEditDialog::onDoColor]
 			end
