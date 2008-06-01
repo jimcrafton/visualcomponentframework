@@ -1277,9 +1277,15 @@ void OSXContext::drawThemeFocusRect( Rect* rect, DrawUIState& state )
 {
 	Rect tmp = *rect;
 	tmp.offset( origin_.x_, origin_.y_ );
-	OSXRect r = &tmp;
-
-    DrawThemeFocusRect( r, state.isFocused() );
+	
+	HIRect r;
+	r.origin.x = tmp.left_;
+	r.origin.y = tmp.top_;
+	r.size.width = tmp.getWidth();
+	r.size.height = tmp.getHeight();
+	
+	
+    HIThemeDrawFocusRect( &r, state.isFocused(), contextRef_.cgRef, kHIThemeOrientationNormal  );
 }
 
 void OSXContext_drawThemeButtonText( const ::Rect * bounds, ThemeButtonKind kind, 
