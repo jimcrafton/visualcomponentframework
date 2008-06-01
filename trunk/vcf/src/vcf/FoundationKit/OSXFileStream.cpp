@@ -16,7 +16,7 @@ where you installed the VCF.
 #include <dirent.h>
 #include <sys/stat.h>
 
-using namespace VCF;
+namespace VCF {
 
 OSXFileStream::OSXFileStream( const String& filename, const FileStreamAccessType& accessType ):
 fileHandle_(0),
@@ -214,6 +214,9 @@ int OSXFileStream::translateSeekTypeToMoveType( const SeekType& offsetFrom )
 	}
 	return result;
 }
+
+
+};
 
 
 /**

@@ -13,7 +13,7 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include "vcf/FoundationKit/OSXThreadManagerPeer.h"
 
-using namespace VCF;
+namespace VCF {
 
 
 OSXThreadManagerPeer::OSXThreadManagerPeer()
@@ -56,6 +56,8 @@ uint32 OSXThreadManagerPeer::getCurrentThreadID()
 {
 	return (uint32) MPCurrentTaskID();
 }
+
+};
 
 
 /**

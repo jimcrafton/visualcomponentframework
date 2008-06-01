@@ -8,9 +8,10 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
+#include <sys/time.h>
 
-namespace VCF
-{
+
+namespace VCF {
 
 class OSXSystemPeer : public SystemPeer {
 public:

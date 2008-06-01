@@ -29,14 +29,14 @@ where you installed the VCF.
 #define OTHER_READ	04
 
 
-using namespace VCF;
+namespace VCF {
 
 FSCatalogInfoBitmap defaultSearchFlags = kFSCatInfoCreateDate | kFSCatInfoContentMod | 
 									kFSCatInfoAccessDate | kFSCatInfoPermissions | kFSCatInfoFinderInfo |
 									kFSCatInfoDataSizes | kFSCatInfoNodeFlags ;
 									
 
-uint32 OSX_convertAttributesFromSystemSpecific( FSCatalogInfo* catInfo )
+VCF::uint32 OSX_convertAttributesFromSystemSpecific( FSCatalogInfo* catInfo )
 {
 	uint32 fileAttributes = File::faNone;
 	
@@ -557,6 +557,7 @@ void OSXFilePeer::endFileSearch( Directory::Finder* finder )
 	searchData_ = NULL;
 }
 	
+};
 
 /**
 $Id$
