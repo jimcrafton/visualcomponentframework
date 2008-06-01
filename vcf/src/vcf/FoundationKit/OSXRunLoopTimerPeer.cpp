@@ -11,7 +11,7 @@
 #include <vcf/FoundationKit/OSXRunLoopTimerPeer.h>
 
 
-using namespace VCF;
+namespace VCF {
 
 OSXRunLoopTimerPeer::OSXRunLoopTimerPeer( RunLoopTimer* timer )
     : owner_( timer )
@@ -120,6 +120,9 @@ DateTime OSXRunLoopTimerPeer::getNextFireDate() const
 				
 	return result;
 }
+
+};
+
 
 /**
 $Id$

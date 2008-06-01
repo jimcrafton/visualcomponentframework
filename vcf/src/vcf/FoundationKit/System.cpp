@@ -15,7 +15,7 @@ where you installed the VCF.
 #include "vcf/FoundationKit/Locales.h"
 
 
-using namespace VCF;
+namespace VCF {
 
 bool System::unicodeEnabled = false;
 
@@ -766,6 +766,8 @@ String System::getExecutableNameFromBundlePath( const String& fileName )
 	return result;
 
 }	
+
+};
 
 
 /**

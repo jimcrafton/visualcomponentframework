@@ -16,7 +16,7 @@ where you installed the VCF.
 
 
 
-using namespace VCF;
+namespace VCF {
 
 
 
@@ -1022,9 +1022,10 @@ void OSXTextEditPeer::setTextWrapping( const bool& val )
 
 bool OSXTextEditPeer::getTextWrapping()
 {
-
+	return false;
 }
 
+};
 
 
 /**

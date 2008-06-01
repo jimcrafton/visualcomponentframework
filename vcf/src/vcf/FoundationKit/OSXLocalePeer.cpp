@@ -15,7 +15,7 @@ where you installed the VCF.
 
 
 
-using namespace VCF;
+namespace VCF {
 
 
 
@@ -864,6 +864,8 @@ String OSXLocalePeer::getLanguage()
  {
  
  }
+
+};
 
 
 /**

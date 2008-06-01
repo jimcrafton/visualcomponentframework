@@ -16,7 +16,7 @@ where you installed the VCF.
 #endif
 
 
-using namespace VCF;
+namespace VCF {
 
 
 
@@ -1175,6 +1175,8 @@ uint64 UnicodeString::sizeOf() const
 
 	return result;
 }
+
+};
 
 
 /**

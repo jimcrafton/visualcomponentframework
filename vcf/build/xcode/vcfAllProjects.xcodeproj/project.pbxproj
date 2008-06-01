@@ -2149,7 +2149,7 @@
 		5ECC900E0DC3BB2F005F692A /* TreeModel.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = TreeModel.cpp; path = ../../src/vcf/ApplicationKit/TreeModel.cpp; sourceTree = SOURCE_ROOT; };
 		5ECC90270DC3BB69005F692A /* DropDownControl.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = DropDownControl.cpp; path = ../../src/vcf/ApplicationKit/DropDownControl.cpp; sourceTree = SOURCE_ROOT; };
 		5ECC90280DC3BB69005F692A /* DropDownControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DropDownControl.h; path = ../../src/vcf/ApplicationKit/DropDownControl.h; sourceTree = SOURCE_ROOT; };
-		5ECC90290DC3BB69005F692A /* ListControl.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ListControl.cpp; path = ../../src/vcf/ApplicationKit/ListControl.cpp; sourceTree = SOURCE_ROOT; };
+		5ECC90290DC3BB69005F692A /* ListControl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ListControl.cpp; path = ../../src/vcf/ApplicationKit/ListControl.cpp; sourceTree = SOURCE_ROOT; };
 		5ECC902A0DC3BB69005F692A /* ListControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ListControl.h; path = ../../src/vcf/ApplicationKit/ListControl.h; sourceTree = SOURCE_ROOT; };
 		5ECC90330DC3BB9C005F692A /* DropDownPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = DropDownPeer.h; path = ../../src/vcf/ApplicationKit/DropDownPeer.h; sourceTree = SOURCE_ROOT; };
 		5ECC90340DC3BB9C005F692A /* ListPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ListPeer.h; path = ../../src/vcf/ApplicationKit/ListPeer.h; sourceTree = SOURCE_ROOT; };
@@ -4322,10 +4322,12 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 5E53A070093A2576007B8C80 /* Build configuration list for PBXProject "vcfAllProjects" */;
+			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 1;
 			mainGroup = 0867D691FE84028FC02AAC07 /* vcfAllProjects */;
 			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
 			projectDirPath = "";
+			projectRoot = "";
 			targets = (
 				5E733FE8082E719300CDD184 /* FoundationKit */,
 				5E7340CD082E736000CDD184 /* libAgg */,
@@ -5030,7 +5032,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		5E53A041093A2576007B8C80 /* Development */ = {
+		5E53A041093A2576007B8C80 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(HOME)/Library/Frameworks";
@@ -5075,9 +5077,9 @@
 				WRAPPER_EXTENSION = framework;
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		5E53A042093A2576007B8C80 /* Deployment */ = {
+		5E53A042093A2576007B8C80 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(HOME)/Library/Frameworks";
@@ -5119,49 +5121,9 @@
 				WRAPPER_EXTENSION = framework;
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		5E53A043093A2576007B8C80 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_DIR = "$(HOME)/Library/Frameworks";
-				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "";
-				FRAMEWORK_VERSION = A;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/FoundationKit/FoundationKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					VCF_GCC,
-					VCF_OSX,
-					_DEBUG,
-				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
-				INFOPLIST_FILE = "Info-FoundationKit_debug.plist";
-				LIBRARY_SEARCH_PATHS = "$(LIBRARY_SEARCH_PATHS_QUOTED_1)";
-				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_ROOT)/lib\"";
-				OTHER_CFLAGS = "-Wno-multichar";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOL_FLAGS = "";
-				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
-				PRINCIPAL_CLASS = "";
-				PRODUCT_NAME = FoundationKit_d;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-					"-Wno-switch",
-					"-Wno-newline-eof",
-				);
-				WRAPPER_EXTENSION = framework;
-			};
-			name = Default;
-		};
-		5E53A045093A2576007B8C80 /* Development */ = {
+		5E53A045093A2576007B8C80 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(VCF_ROOT)/lib";
@@ -5202,9 +5164,9 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		5E53A046093A2576007B8C80 /* Deployment */ = {
+		5E53A046093A2576007B8C80 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(VCF_ROOT)/lib";
@@ -5241,45 +5203,9 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		5E53A047093A2576007B8C80 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_DIR = "$(VCF_ROOT)/lib";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					VCF_GCC,
-					VCF_OSX,
-					_DEBUG,
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(VCF_ROOT)/src",
-					"$(VCF_ROOT)/src/thirdparty/common/agg/include",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_ROOT)/lib",
-					/Users/jimcrafton/code/vcfdev/dev/vcf/lib,
-				);
-				LIBRARY_STYLE = STATIC;
-				OTHER_CFLAGS = "-Wno-multichar";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOL_FLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Agg_d;
-				REZ_EXECUTABLE = YES;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
-			name = Default;
-		};
-		5E53A049093A2576007B8C80 /* Development */ = {
+		5E53A049093A2576007B8C80 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(VCF_ROOT)/lib";
@@ -5312,9 +5238,9 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		5E53A04A093A2576007B8C80 /* Deployment */ = {
+		5E53A04A093A2576007B8C80 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(VCF_ROOT)/lib";
@@ -5343,36 +5269,9 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		5E53A04B093A2576007B8C80 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_DIR = "$(VCF_ROOT)/lib";
-				HEADER_SEARCH_PATHS = (
-					"$(VCF_ROOT)/src",
-					"$(VCF_ROOT)/src/thirdparty/common/LibJPEG",
-				);
-				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_ROOT)/lib",
-					/Users/jimcrafton/code/vcfdev/dev/vcf/lib,
-				);
-				LIBRARY_STYLE = STATIC;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = jpeg_d;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
-			name = Default;
-		};
-		5E53A04D093A2576007B8C80 /* Development */ = {
+		5E53A04D093A2576007B8C80 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(VCF_ROOT)/lib";
@@ -5402,9 +5301,9 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		5E53A04E093A2576007B8C80 /* Deployment */ = {
+		5E53A04E093A2576007B8C80 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(VCF_ROOT)/lib";
@@ -5431,34 +5330,9 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		5E53A04F093A2576007B8C80 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_DIR = "$(VCF_ROOT)/lib";
-				HEADER_SEARCH_PATHS = (
-					"$(VCF_ROOT)/src",
-					"$(VCF_ROOT)/src/thirdparty/common/LibPNG",
-				);
-				INSTALL_PATH = /usr/local/lib;
-				LIBRARY_SEARCH_PATHS = "\"$(VCF_ROOT)/lib\"";
-				LIBRARY_STYLE = STATIC;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
-				PRODUCT_NAME = png_d;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
-			name = Default;
-		};
-		5E53A051093A2576007B8C80 /* Development */ = {
+		5E53A051093A2576007B8C80 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(HOME)/Library/Frameworks";
@@ -5503,9 +5377,9 @@
 				WRAPPER_EXTENSION = framework;
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		5E53A052093A2576007B8C80 /* Deployment */ = {
+		5E53A052093A2576007B8C80 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(HOME)/Library/Frameworks";
@@ -5546,50 +5420,9 @@
 				WRAPPER_EXTENSION = framework;
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		5E53A053093A2576007B8C80 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_DIR = "$(HOME)/Library/Frameworks";
-				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "";
-				FRAMEWORK_VERSION = A;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/GraphicsKit/GraphicsKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					VCF_GCC,
-					VCF_OSX,
-					_DEBUG,
-				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
-				INFOPLIST_FILE = "Info-GraphicsKit_debug.plist";
-				LIBRARY_SEARCH_PATHS = "$(LIBRARY_SEARCH_PATHS_QUOTED_1)";
-				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(VCF_ROOT)/lib\"";
-				OTHER_CFLAGS = "-Wno-multichar";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOL_FLAGS = "";
-				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
-				PRINCIPAL_CLASS = "";
-				PRODUCT_NAME = "GraphicsKit-debug";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-					"-Wno-switch",
-					"-Wno-newline-eof",
-				);
-				WRAPPER_EXTENSION = framework;
-				ZERO_LINK = NO;
-			};
-			name = Default;
-		};
-		5E53A055093A2576007B8C80 /* Development */ = {
+		5E53A055093A2576007B8C80 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(HOME)/Library/Frameworks";
@@ -5629,9 +5462,9 @@
 				WRAPPER_EXTENSION = framework;
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		5E53A056093A2576007B8C80 /* Deployment */ = {
+		5E53A056093A2576007B8C80 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(HOME)/Library/Frameworks";
@@ -5668,48 +5501,9 @@
 				WRAPPER_EXTENSION = framework;
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		5E53A057093A2576007B8C80 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_DIR = "$(HOME)/Library/Frameworks";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "\"$(HOME)/Library/Frameworks\"";
-				FRAMEWORK_VERSION = A;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/ApplicationKit/ApplicationKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					VCF_GCC,
-					VCF_OSX,
-					_DEBUG,
-				);
-				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
-				INFOPLIST_FILE = "Info-ApplicationKit_debug.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(VCF_ROOT)/lib",
-					/usr/lib/gcc/darwin/3.3,
-				);
-				OTHER_CFLAGS = "-Wno-multichar";
-				OTHER_LIBTOOL_FLAGS = "";
-				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
-				PRINCIPAL_CLASS = "";
-				PRODUCT_NAME = "ApplicationKit-debug";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-					"-Wno-switch",
-				);
-				WRAPPER_EXTENSION = framework;
-			};
-			name = Default;
-		};
-		5E53A071093A2576007B8C80 /* Development */ = {
+		5E53A071093A2576007B8C80 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EA676F7D0BC036AD00330747 /* VCF.xcconfig */;
 			buildSettings = {
@@ -5718,9 +5512,9 @@
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/Frameworks";
 				PREBINDING = YES;
 			};
-			name = Development;
+			name = Debug;
 		};
-		5E53A072093A2576007B8C80 /* Deployment */ = {
+		5E53A072093A2576007B8C80 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
@@ -5729,19 +5523,9 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				PREBINDING = YES;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		5E53A073093A2576007B8C80 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/Frameworks";
-				PREBINDING = YES;
-			};
-			name = Default;
-		};
-		5EC1A6260941EE3E001EA41D /* Development */ = {
+		5EC1A6260941EE3E001EA41D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(VCF_ROOT)/lib";
@@ -5776,9 +5560,9 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		5EC1A6270941EE3E001EA41D /* Deployment */ = {
+		5EC1A6270941EE3E001EA41D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -5809,27 +5593,9 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		5EC1A6280941EE3E001EA41D /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
-				INSTALL_PATH = /usr/local/lib;
-				OTHER_LDFLAGS = (
-					"-framework",
-					Carbon,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = libFoundationKit;
-				ZERO_LINK = YES;
-			};
-			name = Default;
-		};
-		5EC1A7310941F283001EA41D /* Development */ = {
+		5EC1A7310941F283001EA41D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(VCF_ROOT)/lib";
@@ -5864,9 +5630,9 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		5EC1A7320941F283001EA41D /* Deployment */ = {
+		5EC1A7320941F283001EA41D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(VCF_ROOT)/lib";
@@ -5898,27 +5664,9 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		5EC1A7330941F283001EA41D /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
-				INSTALL_PATH = /usr/local/lib;
-				OTHER_LDFLAGS = (
-					"-framework",
-					Carbon,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = libGraphicsKit;
-				ZERO_LINK = YES;
-			};
-			name = Default;
-		};
-		5EC1A9120941F55D001EA41D /* Development */ = {
+		5EC1A9120941F55D001EA41D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(VCF_ROOT)/lib";
@@ -5953,9 +5701,9 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		5EC1A9130941F55D001EA41D /* Deployment */ = {
+		5EC1A9130941F55D001EA41D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_DIR = "$(VCF_ROOT)/lib";
@@ -5985,25 +5733,7 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
-		};
-		5EC1A9140941F55D001EA41D /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
-				INSTALL_PATH = /usr/local/lib;
-				OTHER_LDFLAGS = (
-					"-framework",
-					Carbon,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = libApplicationKit;
-				ZERO_LINK = YES;
-			};
-			name = Default;
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -6011,102 +5741,92 @@
 		5E53A040093A2576007B8C80 /* Build configuration list for PBXNativeTarget "FoundationKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5E53A041093A2576007B8C80 /* Development */,
-				5E53A042093A2576007B8C80 /* Deployment */,
-				5E53A043093A2576007B8C80 /* Default */,
+				5E53A041093A2576007B8C80 /* Debug */,
+				5E53A042093A2576007B8C80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		5E53A044093A2576007B8C80 /* Build configuration list for PBXNativeTarget "libAgg" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5E53A045093A2576007B8C80 /* Development */,
-				5E53A046093A2576007B8C80 /* Deployment */,
-				5E53A047093A2576007B8C80 /* Default */,
+				5E53A045093A2576007B8C80 /* Debug */,
+				5E53A046093A2576007B8C80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		5E53A048093A2576007B8C80 /* Build configuration list for PBXNativeTarget "libJPEG" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5E53A049093A2576007B8C80 /* Development */,
-				5E53A04A093A2576007B8C80 /* Deployment */,
-				5E53A04B093A2576007B8C80 /* Default */,
+				5E53A049093A2576007B8C80 /* Debug */,
+				5E53A04A093A2576007B8C80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		5E53A04C093A2576007B8C80 /* Build configuration list for PBXNativeTarget "libpng" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5E53A04D093A2576007B8C80 /* Development */,
-				5E53A04E093A2576007B8C80 /* Deployment */,
-				5E53A04F093A2576007B8C80 /* Default */,
+				5E53A04D093A2576007B8C80 /* Debug */,
+				5E53A04E093A2576007B8C80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		5E53A050093A2576007B8C80 /* Build configuration list for PBXNativeTarget "GraphicsKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5E53A051093A2576007B8C80 /* Development */,
-				5E53A052093A2576007B8C80 /* Deployment */,
-				5E53A053093A2576007B8C80 /* Default */,
+				5E53A051093A2576007B8C80 /* Debug */,
+				5E53A052093A2576007B8C80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		5E53A054093A2576007B8C80 /* Build configuration list for PBXNativeTarget "ApplicationKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5E53A055093A2576007B8C80 /* Development */,
-				5E53A056093A2576007B8C80 /* Deployment */,
-				5E53A057093A2576007B8C80 /* Default */,
+				5E53A055093A2576007B8C80 /* Debug */,
+				5E53A056093A2576007B8C80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		5E53A070093A2576007B8C80 /* Build configuration list for PBXProject "vcfAllProjects" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5E53A071093A2576007B8C80 /* Development */,
-				5E53A072093A2576007B8C80 /* Deployment */,
-				5E53A073093A2576007B8C80 /* Default */,
+				5E53A071093A2576007B8C80 /* Debug */,
+				5E53A072093A2576007B8C80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		5EC1A6250941EE3E001EA41D /* Build configuration list for PBXNativeTarget "libFoundationKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5EC1A6260941EE3E001EA41D /* Development */,
-				5EC1A6270941EE3E001EA41D /* Deployment */,
-				5EC1A6280941EE3E001EA41D /* Default */,
+				5EC1A6260941EE3E001EA41D /* Debug */,
+				5EC1A6270941EE3E001EA41D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		5EC1A7300941F283001EA41D /* Build configuration list for PBXNativeTarget "libGraphicsKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5EC1A7310941F283001EA41D /* Development */,
-				5EC1A7320941F283001EA41D /* Deployment */,
-				5EC1A7330941F283001EA41D /* Default */,
+				5EC1A7310941F283001EA41D /* Debug */,
+				5EC1A7320941F283001EA41D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		5EC1A9110941F55D001EA41D /* Build configuration list for PBXNativeTarget "libApplicationKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5EC1A9120941F55D001EA41D /* Development */,
-				5EC1A9130941F55D001EA41D /* Deployment */,
-				5EC1A9140941F55D001EA41D /* Default */,
+				5EC1A9120941F55D001EA41D /* Debug */,
+				5EC1A9130941F55D001EA41D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

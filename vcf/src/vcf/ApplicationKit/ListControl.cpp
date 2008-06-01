@@ -9,7 +9,7 @@
 #include "vcf/ApplicationKit/ListItem.h"
 
 
-using namespace VCF;
+namespace VCF {
 
 
 
@@ -361,4 +361,8 @@ uint32 ListControl::hitTest( const Point& point )
 {
 	return listPeer_->hitTest( point );
 }
+
+
+};
+
 

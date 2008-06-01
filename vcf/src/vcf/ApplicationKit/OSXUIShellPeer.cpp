@@ -9,7 +9,8 @@
 #include "vcf/ApplicationKit/ApplicationKitPrivate.h"
 #include "vcf/ApplicationKit/OSXUIShellPeer.h"
 
-using namespace VCF;
+namespace VCF {
+
 
 OSXUIShellPeer::OSXUIShellPeer( UIShell* shell )
 {
@@ -125,6 +126,10 @@ void OSXUIShellPeer::removeFileAssociation( const FileAssociationInfo& info, boo
 {
 
 }
+
+
+};
+
 
 /**
 $Id$

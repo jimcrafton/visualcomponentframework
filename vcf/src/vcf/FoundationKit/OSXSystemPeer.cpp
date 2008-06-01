@@ -19,7 +19,8 @@ where you installed the VCF.
 #include <sys/stat.h>
 #include <errno.h>
 
-using namespace VCF;
+
+namespace VCF {
 
 
 
@@ -370,6 +371,9 @@ void OSXSystemPeer::setTimeZoneToLocal( const DateTime& currentDate, TimeZone& t
 {
 
 }
+
+};
+
 
 /**
 $Id$

@@ -28,6 +28,7 @@ It is provided "as is" without express or implied warranty.
 
 
 #include "vcf/FoundationKit/FoundationKit.h"
+
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include "vcf/FoundationKit/OSXConditionPeer.h"
 #include "vcf/FoundationKit/ThreadException.h"

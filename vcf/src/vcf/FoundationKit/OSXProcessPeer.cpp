@@ -13,7 +13,7 @@ where you installed the VCF.
 #include <sys/wait.h>
 
 
-using namespace VCF;
+namespace VCF {
 
 OSXProcessPeer::OSXProcessPeer():
 	processTerminated_(false)
@@ -346,6 +346,8 @@ OSStatus OSXProcessPeer::osxProcessTerminated( EventHandlerCallRef inHandlerCall
 	
 	return noErr;
 }
+
+};
 
 
 /**

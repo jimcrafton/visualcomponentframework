@@ -12,7 +12,8 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/OSXTextPeer.h"
 #include "vcf/FoundationKit/Dictionary.h"
 
-using namespace VCF;
+namespace VCF {
+
 /*
 static int MLTERefCount = 0;
 
@@ -549,6 +550,8 @@ void OSXTextPeer::setDefaultStyle( Dictionary&  styles )
 	TXNSetFontDefaults( txnObject_, 1, &defaults );
 	*/
 }
+
+};
 
 
 /**
