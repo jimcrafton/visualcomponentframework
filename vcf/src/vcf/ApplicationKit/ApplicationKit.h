@@ -121,7 +121,6 @@ Action classes
 *Toolkit stuff
 */
 #include "vcf/FoundationKit/NoToolKitFoundException.h"
-#include "vcf/ApplicationKit/UIMetricsManager.h"
 #include "vcf/ApplicationKit/UIPolicyManager.h"
 #include "vcf/ApplicationKit/UIToolkit.h"
 

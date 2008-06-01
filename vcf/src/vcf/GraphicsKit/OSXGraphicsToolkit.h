@@ -84,7 +84,7 @@ public:
 	operator ::Rect* () {
 		return &rect_;
 	}
-	
+		
 	operator const ::Rect& () const {
 		return rect_;
 	}
