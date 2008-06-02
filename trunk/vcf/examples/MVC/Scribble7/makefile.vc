@@ -21,9 +21,9 @@ FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 GRAPHICSKIT_FILENAME = GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-SCRIBBLE4_CXXFLAGS = /M$(__OPTION_RUNTIME_10)$(__DEBUG_RUNTIME_LIBS_5) \
+SCRIBBLE7_CXXFLAGS = /M$(__OPTION_RUNTIME_10)$(__DEBUG_RUNTIME_LIBS_5) \
 	/DWIN32 $(__DEBUG_INFO_2) \
-	/Fd.\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb \
+	/Fd.\Scribble7$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb \
 	$(____DEBUG_RUNTIME_LIBS_4_p) $(__OPTIMIZE_6) $(__OPTION_WARNINGS_13) \
 	$(____OPTION_DEBUG_14_p) /D_WIN32 /DWIN32 /DVCF_DISABLE_PRAGMA_LINKING \
 	/I..\..\..\src /D_WINDOWS /I..\..\..\src\thirdparty\common\ZLib \
@@ -33,8 +33,8 @@ SCRIBBLE4_CXXFLAGS = /M$(__OPTION_RUNTIME_10)$(__DEBUG_RUNTIME_LIBS_5) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) \
 	$(____OPTION_CPP_RTTI_0_11) $(____OPTION_CPP_EXCEPTIONS_1_12) $(CPPFLAGS) \
 	$(CXXFLAGS)
-SCRIBBLE4_OBJECTS =  \
-	..\..\..\lib\$(OBJDIR)\examples\Scribble6\Scribble6_Scribble6.obj
+SCRIBBLE7_OBJECTS =  \
+	..\..\..\lib\$(OBJDIR)\examples\Scribble7\Scribble7_Scribble7.obj
 
 ### Conditionally set variables: ###
 
@@ -57,7 +57,7 @@ SUFFIX_LIBRARY = $(SUFFIX_STATIC)
 SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 !endif
 !if "$(OPTION_APPLICATIONKIT)" == "1"
-__Scribble6___depname = .\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
+__Scribble7___depname = .\Scribble7$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 !endif
 !if "$(OPTION_DEBUG)" == "0"
 __DEBUG_INFO_2 = 
@@ -141,52 +141,52 @@ ____OPTION_DEBUG_14_p = /DNDEBUG
 ____OPTION_DEBUG_14_p = /D_DEBUG
 !endif
 !if "$(OPTION_ALLIN1)" == "0"
-____Scribble6_FOUNDATIONKIT_p = $(FOUNDATIONKIT_FILENAME).lib
+____Scribble7_FOUNDATIONKIT_p = $(FOUNDATIONKIT_FILENAME).lib
 !endif
 !if "$(OPTION_ALLIN1)" == "1"
-____Scribble6_FOUNDATIONKIT_p = $(ALLIN1_FILENAME).lib
+____Scribble7_FOUNDATIONKIT_p = $(ALLIN1_FILENAME).lib
 !endif
 !if "$(OPTION_SHARED)" == "1"
 __FOUNDATIONKIT_DLL_p = /DFOUNDATIONKIT_DLL
 !endif
 !if "$(OPTION_ALLIN1)" == "0"
-____Scribble6_GRAPHICSKIT_p = $(GRAPHICSKIT_FILENAME).lib
+____Scribble7_GRAPHICSKIT_p = $(GRAPHICSKIT_FILENAME).lib
 !endif
 !if "$(OPTION_SHARED)" == "1"
 __GRAPHICSKIT_DLL_p = /DGRAPHICSKIT_DLL
 !endif
 !if "$(OPTION_ALLIN1)" == "0"
-____Scribble6_APPLICATIONKIT_p = $(APPLICATIONKIT_FILENAME).lib
+____Scribble7_APPLICATIONKIT_p = $(APPLICATIONKIT_FILENAME).lib
 !endif
 !if "$(OPTION_SHARED)" == "1"
 __APPLICATIONKIT_DLL_p = /DAPPLICATIONKIT_DLL
 !endif
 
 
-all: ..\..\..\lib\$(OBJDIR)\examples\Scribble6
-..\..\..\lib\$(OBJDIR)\examples\Scribble6:
-	-if not exist ..\..\..\lib\$(OBJDIR)\examples\Scribble6 mkdir ..\..\..\lib\$(OBJDIR)\examples\Scribble6
+all: ..\..\..\lib\$(OBJDIR)\examples\Scribble7
+..\..\..\lib\$(OBJDIR)\examples\Scribble7:
+	-if not exist ..\..\..\lib\$(OBJDIR)\examples\Scribble7 mkdir ..\..\..\lib\$(OBJDIR)\examples\Scribble7
 
 ### Targets: ###
 
-all: $(__Scribble6___depname)
+all: $(__Scribble7___depname)
 
 clean: 
-	-if exist ..\..\..\lib\$(OBJDIR)\examples\Scribble6\*.obj del ..\..\..\lib\$(OBJDIR)\examples\Scribble6\*.obj
-	-if exist ..\..\..\lib\$(OBJDIR)\examples\Scribble6\*.res del ..\..\..\lib\$(OBJDIR)\examples\Scribble6\*.res
-	-if exist ..\..\..\lib\$(OBJDIR)\examples\Scribble6\*.pch del ..\..\..\lib\$(OBJDIR)\examples\Scribble6\*.pch
-	-if exist .\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
-	-if exist .\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
-	-if exist .\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
-	-if exist .\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
+	-if exist ..\..\..\lib\$(OBJDIR)\examples\Scribble7\*.obj del ..\..\..\lib\$(OBJDIR)\examples\Scribble7\*.obj
+	-if exist ..\..\..\lib\$(OBJDIR)\examples\Scribble7\*.res del ..\..\..\lib\$(OBJDIR)\examples\Scribble7\*.res
+	-if exist ..\..\..\lib\$(OBJDIR)\examples\Scribble7\*.pch del ..\..\..\lib\$(OBJDIR)\examples\Scribble7\*.pch
+	-if exist .\Scribble7$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Scribble7$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
+	-if exist .\Scribble7$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk del .\Scribble7$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).ilk
+	-if exist .\Scribble7$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb del .\Scribble7$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb
+	-if exist .\Scribble7$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest del .\Scribble7$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe.manifest
 
 !if "$(OPTION_APPLICATIONKIT)" == "1"
-.\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(SCRIBBLE4_OBJECTS)
-	link /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_3) /pdb:".\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb"  /LIBPATH:..\..\..\lib /SUBSYSTEM:WINDOWS /ENTRY:"mainCRTStartup" @<<
-	$(SCRIBBLE4_OBJECTS)  rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib $(ZLIB_FILENAME).lib $(LIBPNG_FILENAME).lib $(LIBJPEG_FILENAME).lib $(AGG_FILENAME).lib $(____Scribble6_FOUNDATIONKIT_p) $(____Scribble6_GRAPHICSKIT_p) $(____Scribble6_APPLICATIONKIT_p)
+.\Scribble7$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(SCRIBBLE7_OBJECTS)
+	link /NOLOGO /OUT:$@ $(LDFLAGS) $(__DEBUG_INFO_3) /pdb:".\Scribble7$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).pdb"  /LIBPATH:..\..\..\lib /SUBSYSTEM:WINDOWS /ENTRY:"mainCRTStartup" @<<
+	$(SCRIBBLE7_OBJECTS)  rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib $(ZLIB_FILENAME).lib $(LIBPNG_FILENAME).lib $(LIBJPEG_FILENAME).lib $(AGG_FILENAME).lib $(____Scribble7_FOUNDATIONKIT_p) $(____Scribble7_GRAPHICSKIT_p) $(____Scribble7_APPLICATIONKIT_p)
 <<
 !endif
 
-..\..\..\lib\$(OBJDIR)\examples\Scribble6\Scribble6_Scribble6.obj: .\Scribble6.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(SCRIBBLE4_CXXFLAGS) .\Scribble6.cpp
+..\..\..\lib\$(OBJDIR)\examples\Scribble7\Scribble7_Scribble7.obj: .\Scribble7.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(SCRIBBLE7_CXXFLAGS) .\Scribble7.cpp
 

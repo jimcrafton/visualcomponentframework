@@ -558,6 +558,10 @@ SOURCE=..\..\..\src\vcf\GraphicsKit\TileManager.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\GraphicsKit\UIMetricsManager.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\GraphicsKit\UVMap.h
 # End Source File
 # Begin Source File

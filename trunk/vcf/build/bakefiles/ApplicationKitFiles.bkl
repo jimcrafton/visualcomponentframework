@@ -183,7 +183,6 @@
         vcf/ApplicationKit/TreeModel.h
         vcf/ApplicationKit/TreePeer.h
         vcf/ApplicationKit/UIComponent.h
-        vcf/ApplicationKit/UIMetricsManager.h
         vcf/ApplicationKit/UIPolicyManager.h
         vcf/ApplicationKit/UIShell.h
         vcf/ApplicationKit/UIShellPeer.h
