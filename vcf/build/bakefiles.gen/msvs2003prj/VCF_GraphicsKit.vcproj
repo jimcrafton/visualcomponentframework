@@ -974,6 +974,8 @@
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\TileManager.h"/>
 			<File
+				RelativePath="..\..\..\src\vcf\GraphicsKit\UIMetricsManager.h"/>
+			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\UVMap.h"/>
 			<File
 				RelativePath="..\..\..\src\vcf\GraphicsKit\Win32Context.h"/>

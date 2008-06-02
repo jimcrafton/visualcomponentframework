@@ -125,6 +125,11 @@
     <subproject id="Scribble2" template="example_mvc"/>
     <subproject id="Scribble3" template="example_mvc"/>
     <subproject id="Scribble4" template="example_mvc"/>
+    <subproject id="Scribble5" template="example_mvc"/>
+    <subproject id="Scribble6" template="example_mvc"/>
+    <subproject id="Scribble7" template="example_mvc"/>
+    <subproject id="Scribble8" template="example_mvc"/>
+    <subproject id="Scribble9" template="example_mvc"/>
 
 
     <!--

@@ -1577,10 +1577,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\UIComponent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\UIMetricsManager.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\UIPolicyManager.h
 # End Source File
 # Begin Source File

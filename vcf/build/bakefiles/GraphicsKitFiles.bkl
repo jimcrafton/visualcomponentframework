@@ -55,6 +55,7 @@
         vcf/GraphicsKit/Size.h
         vcf/GraphicsKit/Stroke.h
         vcf/GraphicsKit/TileManager.h
+        vcf/GraphicsKit/UIMetricsManager.h
         vcf/GraphicsKit/UVMap.h
     </set>
 

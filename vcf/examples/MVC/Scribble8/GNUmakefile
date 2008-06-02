@@ -22,7 +22,7 @@ FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 GRAPHICSKIT_FILENAME = GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-SCRIBBLE6_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING_6) \
+SCRIBBLE8_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING_6) \
 	$(__OPTION_WARNINGS_9) $(____OPTION_DEBUG_10_p) -Wno-multichar \
 	-DVCF_DISABLE_PRAGMA_LINKING -I../../../src \
 	-I../../../src/thirdparty/common/ZLib \
@@ -32,8 +32,8 @@ SCRIBBLE6_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING_6) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) \
 	$(____OPTION_CPP_RTTI_0_7) $(____OPTION_CPP_EXCEPTIONS_1_8) $(CPPFLAGS) \
 	$(CXXFLAGS)
-SCRIBBLE6_OBJECTS =  \
-	../../../lib/$(OBJDIR)/examples/Scribble6/Scribble6_Scribble6.o
+SCRIBBLE8_OBJECTS =  \
+	../../../lib/$(OBJDIR)/examples/Scribble8/Scribble8_Scribble8.o
 
 ### Conditionally set variables: ###
 
@@ -56,7 +56,7 @@ ifeq ($(OPTION_SHARED),1)
 SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 endif
 ifeq ($(OPTION_APPLICATIONKIT),1)
-__Scribble6___depname = ./Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+__Scribble8___depname = ./Scribble8$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 endif
 ifeq ($(OPTION_DEBUG),0)
 __OPTIMIZE_4 = -O2
@@ -104,22 +104,22 @@ ifeq ($(OPTION_DEBUG),1)
 ____OPTION_DEBUG_10_p = -D_DEBUG
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____Scribble6_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
+____Scribble8_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
 endif
 ifeq ($(OPTION_ALLIN1),1)
-____Scribble6_FOUNDATIONKIT_p = -l$(ALLIN1_FILENAME)
+____Scribble8_FOUNDATIONKIT_p = -l$(ALLIN1_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____Scribble6_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
+____Scribble8_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __GRAPHICSKIT_DLL_p = -DGRAPHICSKIT_DLL
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____Scribble6_APPLICATIONKIT_p = -l$(APPLICATIONKIT_FILENAME)
+____Scribble8_APPLICATIONKIT_p = -l$(APPLICATIONKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __APPLICATIONKIT_DLL_p = -DAPPLICATIONKIT_DLL
@@ -132,33 +132,33 @@ __DEBUG_INFO = -g
 endif
 
 
-all: ../../../lib/$(OBJDIR)/examples/Scribble6
-../../../lib/$(OBJDIR)/examples/Scribble6:
-	@mkdir -p ../../../lib/$(OBJDIR)/examples/Scribble6
+all: ../../../lib/$(OBJDIR)/examples/Scribble8
+../../../lib/$(OBJDIR)/examples/Scribble8:
+	@mkdir -p ../../../lib/$(OBJDIR)/examples/Scribble8
 
 ### Targets: ###
 
-all: $(__Scribble6___depname)
+all: $(__Scribble8___depname)
 
 install: all
 
 uninstall: 
 
 clean: 
-	rm -f ../../../lib/$(OBJDIR)/examples/Scribble6/*.o
-	rm -f ../../../lib/$(OBJDIR)/examples/Scribble6/*.d
-	rm -f ./Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
+	rm -f ../../../lib/$(OBJDIR)/examples/Scribble8/*.o
+	rm -f ../../../lib/$(OBJDIR)/examples/Scribble8/*.d
+	rm -f ./Scribble8$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
-./Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(SCRIBBLE6_OBJECTS)
-	$(CXX) -o $@ $(SCRIBBLE6_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_5) -L../../../lib  $(____Scribble6_APPLICATIONKIT_p) $(____Scribble6_GRAPHICSKIT_p) $(____Scribble6_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
+./Scribble8$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY): $(SCRIBBLE8_OBJECTS)
+	$(CXX) -o $@ $(SCRIBBLE8_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING_5) -L../../../lib  $(____Scribble8_APPLICATIONKIT_p) $(____Scribble8_GRAPHICSKIT_p) $(____Scribble8_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -ldl -luuid -lrt
 endif
 
-../../../lib/$(OBJDIR)/examples/Scribble6/Scribble6_Scribble6.o: ./Scribble6.cpp
-	$(CXX) -c -o $@ $(SCRIBBLE6_CXXFLAGS) $(CPPDEPS) $<
+../../../lib/$(OBJDIR)/examples/Scribble8/Scribble8_Scribble8.o: ./Scribble8.cpp
+	$(CXX) -c -o $@ $(SCRIBBLE8_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include ../../../lib/$(OBJDIR)/examples/Scribble6/*.d
+-include ../../../lib/$(OBJDIR)/examples/Scribble8/*.d

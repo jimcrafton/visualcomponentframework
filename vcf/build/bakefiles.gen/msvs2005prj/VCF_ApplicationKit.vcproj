@@ -2127,9 +2127,6 @@
 				RelativePath="..\..\..\src\vcf\ApplicationKit\UIComponent.h"
 			/>
 			<File
-				RelativePath="..\..\..\src\vcf\ApplicationKit\UIMetricsManager.h"
-			/>
-			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\UIPolicyManager.h"
 			/>
 			<File

@@ -22,7 +22,7 @@ FOUNDATIONKIT_FILENAME = FoundationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 GRAPHICSKIT_FILENAME = GraphicsKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 APPLICATIONKIT_FILENAME = ApplicationKit$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
 ALLIN1_FILENAME = VCF$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY)
-SCRIBBLE4_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING) \
+SCRIBBLE9_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING) \
 	$(__OPTION_WARNINGS_9) $(____OPTION_DEBUG_10_p) -D_WIN32 -DWIN32 \
 	-Wno-multichar -DVCF_DISABLE_PRAGMA_LINKING -I..\..\..\src \
 	-I..\..\..\src\thirdparty\common\ZLib \
@@ -32,8 +32,8 @@ SCRIBBLE4_CXXFLAGS = $(__DEBUG_INFO) $(__OPTIMIZE_4) $(__OPTION_THREADING) \
 	$(__GRAPHICSKIT_DLL_p) $(__APPLICATIONKIT_DLL_p) \
 	$(____OPTION_CPP_RTTI_0_7) $(____OPTION_CPP_EXCEPTIONS_1_8) $(CPPFLAGS) \
 	$(CXXFLAGS)
-SCRIBBLE4_OBJECTS =  \
-	..\..\..\lib\$(OBJDIR)\examples\Scribble6\Scribble6_Scribble6.o
+SCRIBBLE9_OBJECTS =  \
+	..\..\..\lib\$(OBJDIR)\examples\Scribble9\Scribble9_Scribble9.o
 
 ### Conditionally set variables: ###
 
@@ -56,7 +56,7 @@ ifeq ($(OPTION_SHARED),1)
 SUFFIX_LIBRARY = $(SUFFIX_DYNAMIC)
 endif
 ifeq ($(OPTION_APPLICATIONKIT),1)
-__Scribble6___depname = .\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
+__Scribble9___depname = .\Scribble9$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 endif
 ifeq ($(OPTION_DEBUG),0)
 __OPTIMIZE_4 = -O2
@@ -92,22 +92,22 @@ ifeq ($(OPTION_DEBUG),1)
 ____OPTION_DEBUG_10_p = -D_DEBUG
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____Scribble6_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
+____Scribble9_FOUNDATIONKIT_p = -l$(FOUNDATIONKIT_FILENAME)
 endif
 ifeq ($(OPTION_ALLIN1),1)
-____Scribble6_FOUNDATIONKIT_p = -l$(ALLIN1_FILENAME)
+____Scribble9_FOUNDATIONKIT_p = -l$(ALLIN1_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __FOUNDATIONKIT_DLL_p = -DFOUNDATIONKIT_DLL
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____Scribble6_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
+____Scribble9_GRAPHICSKIT_p = -l$(GRAPHICSKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __GRAPHICSKIT_DLL_p = -DGRAPHICSKIT_DLL
 endif
 ifeq ($(OPTION_ALLIN1),0)
-____Scribble6_APPLICATIONKIT_p = -l$(APPLICATIONKIT_FILENAME)
+____Scribble9_APPLICATIONKIT_p = -l$(APPLICATIONKIT_FILENAME)
 endif
 ifeq ($(OPTION_SHARED),1)
 __APPLICATIONKIT_DLL_p = -DAPPLICATIONKIT_DLL
@@ -126,26 +126,26 @@ __OPTION_THREADING =
 endif
 
 
-all: ..\..\..\lib\$(OBJDIR)\examples\Scribble6
-..\..\..\lib\$(OBJDIR)\examples\Scribble6:
-	-if not exist ..\..\..\lib\$(OBJDIR)\examples\Scribble6 mkdir ..\..\..\lib\$(OBJDIR)\examples\Scribble6
+all: ..\..\..\lib\$(OBJDIR)\examples\Scribble9
+..\..\..\lib\$(OBJDIR)\examples\Scribble9:
+	-if not exist ..\..\..\lib\$(OBJDIR)\examples\Scribble9 mkdir ..\..\..\lib\$(OBJDIR)\examples\Scribble9
 
 ### Targets: ###
 
-all: $(__Scribble6___depname)
+all: $(__Scribble9___depname)
 
 clean: 
-	-if exist ..\..\..\lib\$(OBJDIR)\examples\Scribble6\*.o del ..\..\..\lib\$(OBJDIR)\examples\Scribble6\*.o
-	-if exist ..\..\..\lib\$(OBJDIR)\examples\Scribble6\*.d del ..\..\..\lib\$(OBJDIR)\examples\Scribble6\*.d
-	-if exist .\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
+	-if exist ..\..\..\lib\$(OBJDIR)\examples\Scribble9\*.o del ..\..\..\lib\$(OBJDIR)\examples\Scribble9\*.o
+	-if exist ..\..\..\lib\$(OBJDIR)\examples\Scribble9\*.d del ..\..\..\lib\$(OBJDIR)\examples\Scribble9\*.d
+	-if exist .\Scribble9$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe del .\Scribble9$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe
 
 ifeq ($(OPTION_APPLICATIONKIT),1)
-.\Scribble6$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(SCRIBBLE4_OBJECTS)
-	$(CXX) -o $@ $(SCRIBBLE4_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING) -Wl,--enable-runtime-pseudo-reloc -L..\..\..\lib -Wl,--subsystem,windows -mwindows $(____Scribble6_APPLICATIONKIT_p) $(____Scribble6_GRAPHICSKIT_p) $(____Scribble6_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32
+.\Scribble9$(OPTION_SELECTLIB)$(SUFFIX_LIBRARY).exe: $(SCRIBBLE9_OBJECTS)
+	$(CXX) -o $@ $(SCRIBBLE9_OBJECTS) $(LDFLAGS) $(__DEBUG_INFO) $(__OPTION_THREADING) -Wl,--enable-runtime-pseudo-reloc -L..\..\..\lib -Wl,--subsystem,windows -mwindows $(____Scribble9_APPLICATIONKIT_p) $(____Scribble9_GRAPHICSKIT_p) $(____Scribble9_FOUNDATIONKIT_p) -l$(AGG_FILENAME) -l$(LIBJPEG_FILENAME) -l$(LIBPNG_FILENAME) -l$(ZLIB_FILENAME)  -lrpcrt4 -lodbc32 -lodbccp32 -lversion -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lcomctl32 -lws2_32 -lopengl32 -lglu32
 endif
 
-..\..\..\lib\$(OBJDIR)\examples\Scribble6\Scribble6_Scribble6.o: ./Scribble6.cpp
-	$(CXX) -c -o $@ $(SCRIBBLE4_CXXFLAGS) $(CPPDEPS) $<
+..\..\..\lib\$(OBJDIR)\examples\Scribble9\Scribble9_Scribble9.o: ./Scribble9.cpp
+	$(CXX) -c -o $@ $(SCRIBBLE9_CXXFLAGS) $(CPPDEPS) $<
 
 .PHONY: all clean
 
@@ -153,4 +153,4 @@ endif
 SHELL := $(COMSPEC)
 
 # Dependencies tracking:
--include ..\..\..\lib\$(OBJDIR)\examples\Scribble6/*.d
+-include ..\..\..\lib\$(OBJDIR)\examples\Scribble9/*.d
