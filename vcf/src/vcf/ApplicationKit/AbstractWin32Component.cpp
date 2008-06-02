@@ -620,6 +620,41 @@ void AbstractWin32Component::updatePaintDC( HDC paintDC, RECT paintRect, RECT* e
 	}
 }
 
+
+Control* getActualHelpControl( Control* control, Point* pt ) 
+{
+	Control* result = NULL;
+	
+	Container* container = control->getContainer();
+	if ( NULL != container ) {
+		Enumerator<Control*>* children = container->getChildren();
+		bool found = false;
+		while ( children->hasMoreElements() && !found ) {
+			Control* child = children->nextElement();
+			if ( child->isLightWeight() ) {
+				Rect bounds = child->getBounds();
+				if ( bounds.containsPt( pt ) ) {
+					Point tmpPt = *pt;
+					child->translateToLocal( &tmpPt );
+					result = getActualHelpControl( child, &tmpPt );
+					if ( NULL != result  ) {
+						found = true;//quit the loop
+					}
+				}
+			}
+		}
+		if ( !found && (NULL == result) ) {
+			result = control;
+		}
+	}
+	else {
+		result = control;
+	}
+	
+	return result;
+}
+
+
 bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc )
 {
 	
@@ -777,7 +812,15 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 						helpInfo->hItemHandle % helpInfo->iCtrlId %
 						helpInfo->MousePos.x % helpInfo->MousePos.y );
 
-			UIToolkit::displayContextHelpForControl( peerControl_ );
+
+			POINT pt = helpInfo->MousePos;
+			::ScreenToClient( hwnd_, &pt );
+			Point tmp(pt.x,pt.y);
+
+			
+
+			Control* control = getActualHelpControl( peerControl_, &tmp );
+			UIToolkit::displayContextHelpForControl( control );
 
 			Win32ToolKit* toolkit = (Win32ToolKit*) UIToolkit::internal_getDefaultUIToolkit();
 			toolkit->setWhatsThisHelpActive( false );

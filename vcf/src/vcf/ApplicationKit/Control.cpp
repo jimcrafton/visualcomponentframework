@@ -1904,27 +1904,29 @@ void Control::getAppNameAndKey( String& appName, String& key )
 	
 	key = "Software\\";
 	
-	if ( Application::getRunningInstance() != NULL ) {
-		appName = Application::getRunningInstance()->getName();
+	
+	ResourceBundle* bundle = System::getResourceBundle();
+	ProgramInfo* info = NULL;
+
+	if ( NULL != bundle ) {
+		info = bundle->getProgramInfo(); 
 	}
-	else {
-		ResourceBundle* bundle = System::getResourceBundle();
-		if ( NULL != bundle ) {
-			ProgramInfo* info = bundle->getProgramInfo(); 
-			if ( NULL != info ) {
-				String s = info->getProgramName();
-				if ( !s.empty() ) {
-					appName = s;
-				}
-				
-				s = info->getCompany();
-				if ( !s.empty() ) {
-					key += s + "\\";
-				}
-				
-				delete info;
-			}
+
+	if ( NULL != info ) {
+		String s = info->getProgramName();
+		if ( !s.empty() ) {
+			appName = s;
 		}
+		
+		s = info->getCompany();
+		if ( !s.empty() ) {
+			key += s + "\\";
+		}
+		
+		delete info;
+	}	
+	else if ( Application::getRunningInstance() != NULL ) {
+		appName = Application::getRunningInstance()->getName();
 	}
 	
 	//need a way to generate platform 

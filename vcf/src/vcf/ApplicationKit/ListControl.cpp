@@ -71,7 +71,12 @@ void ListControl::onItemDeleted( ListModelEvent* event )
 
 	while ( found != items_.end() ) {
 		ListItem* item = *found;
-		if ( item->getIndex() == event->index ) {
+		if ( NULL == item ) {
+			if ( (found - items_.begin()) == event->index ) {
+				break;
+			}
+		}
+		else if ( item->getIndex() == event->index ) {
 			break;
 		}
 		++found;
@@ -81,21 +86,26 @@ void ListControl::onItemDeleted( ListModelEvent* event )
 		Array<ListItem*>::iterator it = items_.begin();		
 		while ( it != items_.end() ) {
 			ListItem* item = *it;
-			if ( item->getIndex() > event->index ) {
-				item->setIndex( item->getIndex() - 1 );
+			if ( NULL != item ) {
+				if ( item->getIndex() > event->index ) {
+					item->setIndex( item->getIndex() - 1 );
+				}
 			}
 			
 			++it;
 		}
 		
 		ListItem* item = *found;
-		
-		removeSubItemsForItem( item );
+		if ( NULL != item ) {
+			removeSubItemsForItem( item );
+		}
 
 		items_.erase( found );
-		
-		removeComponent( item );
-		item->free();
+
+		if ( NULL != item ) {
+			removeComponent( item );
+			item->free();
+		}
 		repaint();
 	}
 	inCallbackChange_ = false;

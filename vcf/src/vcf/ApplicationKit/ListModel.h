@@ -136,7 +136,7 @@ public:
 
 	
 	virtual bool isEmpty() { 
-		return getCount() > 0;
+		return getCount() == 0;
 	}
 
 	/**
@@ -345,7 +345,7 @@ protected:
 		ItemRemoved( &itemEvent );
 
 		itemEvent.setType( lmeItemRemoved );
-		ModelChanged( &itemEvent );
+		changed( &itemEvent );
 	}
 
 	void notifyAdded( const uint32 & index, VariantData& item ) {
@@ -360,14 +360,14 @@ protected:
 		itemEvent.item = &item;
 		itemEvent.index = index;
 		itemEvent.subIndex = subItemIndex;
-		ModelChanged( &itemEvent );
+		changed( &itemEvent );
 	}
 
 	void notifySubItemAdded( const uint32& index, VariantData& item ) {
 		ListModelEvent itemEvent( this, lmeSubItemAdded );
 		itemEvent.item = &item;
 		itemEvent.index = index;
-		ModelChanged( &itemEvent );
+		changed( &itemEvent );
 	}
 };
 

@@ -812,7 +812,7 @@ void UIToolkit::displayContextHelpForControl( Control* control )
 	String helpDirectory;
 	getHelpInfo( helpBookName, helpDirectory );
 
-	String whatsThis = control->getWhatThisHelpString();
+	String whatsThis = control->getWhatsThisHelpString();
 
 
 	if ( !UIToolkit::toolKitInstance->internal_displayContextHelpForControl( control, helpBookName, helpDirectory ) ) {

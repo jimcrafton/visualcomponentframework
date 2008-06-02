@@ -72,9 +72,19 @@ bool SimpleListModel::doRemove( const uint32 & index )
 {
 	Array<VariantData>::iterator found = data_.begin() + index;		
 	if ( found != data_.end() ) {
-		notifyRemove( index, *found );
-
+		VariantData v = *found;
 		data_.erase( found );	
+
+		notifyRemove( index, v );
+
+		if ( v.type == pdObject && shouldDeleteVarObjects() ) {
+			Object* obj = v;
+			if ( NULL != obj ) {
+				deleteVariantObject( obj );
+			}
+		}
+
+		
 		return true;
 	}
 

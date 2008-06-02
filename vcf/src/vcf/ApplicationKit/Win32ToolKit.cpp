@@ -3257,7 +3257,6 @@ Win32ToolKit::Win32ToolKit():
 
 	createDummyParentWindow();
 
-	metricsMgr_ = new Win32UIMetricsManager();
 	policyMgr_ = new Win32UIPolicyManager();
 
 
@@ -4279,7 +4278,7 @@ bool Win32ToolKit::internal_displayContextHelpForControl( Control* control, cons
 	}
 
 	bool result = false;
-	String whatsThis = control->getWhatThisHelpString();
+	String whatsThis = control->getWhatsThisHelpString();
 
 	WhatsThisHelpEvent event(control);
 

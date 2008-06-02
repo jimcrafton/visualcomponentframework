@@ -1447,16 +1447,16 @@ public:
 	*returns a string that is used for context sensitive help
 	*for the control.
 	*/
-	String getWhatThisHelpString() {
-		return whatThisHelpString_;
+	String getWhatsThisHelpString() {
+		return whatsThisHelpString_;
 	}
 
 	/**
 	*sets the string that is used for context sensitive help
 	*for the control.
 	*/
-	void setWhatThisHelpString( const String& whatThisHelpString ) {
-		whatThisHelpString_ = whatThisHelpString;
+	void setWhatsThisHelpString( const String& val ) {
+		whatsThisHelpString_ = val;
 	}
 
 	/**
@@ -1938,7 +1938,7 @@ protected:
 	View* view_;
 	PopupMenu* popupMenu_;
 	Scrollable* scrollable_;
-	String whatThisHelpString_;
+	String whatsThisHelpString_;
 	String toolTip_;
 	int32 cursorID_;
 	Cursor* cursor_;

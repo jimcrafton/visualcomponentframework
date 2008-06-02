@@ -1955,13 +1955,13 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::createMenus() {
 
 	AcceleratorKey::Value val = mgr->getStandardAcceleratorFor(UIPolicyManager::saFileNew);
 
-	fileNew->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
+	fileNew->setAcceleratorKeyInfo( val.getKeyCode(), val.getModifierMask() );
 	fileNew->setTag( DocumentManager::atFileNew );
 
 
 	DefaultMenuItem* fileOpen = new DefaultMenuItem( "&Open...", file, standardMenu);
 	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saFileOpen);
-	fileOpen->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
+	fileOpen->setAcceleratorKeyInfo( val.getKeyCode(), val.getModifierMask() );
 	fileOpen->setTag( DocumentManager::atFileOpen );
 
 	DefaultMenuItem* fileClose = new DefaultMenuItem( "Close", file, standardMenu);
@@ -1974,24 +1974,24 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::createMenus() {
 
 	DefaultMenuItem* fileSave = new DefaultMenuItem( "&Save", file, standardMenu);
 	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saFileSave);
-	fileSave->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
+	fileSave->setAcceleratorKeyInfo( val.getKeyCode(), val.getModifierMask() );
 	fileSave->setTag( DocumentManager::atFileSave );
 
 	DefaultMenuItem* fileSaveAs = new DefaultMenuItem( "Save &As...", file, standardMenu);
 	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saFileSaveAs);
-	fileSaveAs->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
+	fileSaveAs->setAcceleratorKeyInfo( val.getKeyCode(), val.getModifierMask() );
 	fileSaveAs->setTag( DocumentManager::atFileSaveAs );
 
 
 	DefaultMenuItem* edit = new DefaultMenuItem( "&Edit", root, standardMenu);
 	DefaultMenuItem* editUndo = new DefaultMenuItem( "&Undo", edit, standardMenu);
 	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditUndo);
-	editUndo->setAcceleratorKey( val.getKeyCode(), val.getModifierMask()  );
+	editUndo->setAcceleratorKeyInfo( val.getKeyCode(), val.getModifierMask()  );
 	editUndo->setTag( DocumentManager::atEditUndo );
 
 	DefaultMenuItem* editRedo = new DefaultMenuItem( "&Redo", edit, standardMenu);
 	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditRedo);
-	editRedo->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
+	editRedo->setAcceleratorKeyInfo( val.getKeyCode(), val.getModifierMask() );
 	editRedo->setTag( DocumentManager::atEditRedo );
 
 	separator = new DefaultMenuItem( "", edit, standardMenu);
@@ -1999,17 +1999,17 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::createMenus() {
 
 	DefaultMenuItem* editCut = new DefaultMenuItem( "Cu&t", edit, standardMenu);
 	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditCut);
-	editCut->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
+	editCut->setAcceleratorKeyInfo( val.getKeyCode(), val.getModifierMask() );
 	editCut->setTag( DocumentManager::atEditCut );
 
 	DefaultMenuItem* editCopy = new DefaultMenuItem( "&Copy", edit, standardMenu);
 	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditCopy);
-	editCopy->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
+	editCopy->setAcceleratorKeyInfo( val.getKeyCode(), val.getModifierMask() );
 	editCopy->setTag( DocumentManager::atEditCopy );
 
 	DefaultMenuItem* editPaste = new DefaultMenuItem( "&Paste", edit, standardMenu);
 	val = mgr->getStandardAcceleratorFor(UIPolicyManager::saEditPaste);
-	editPaste->setAcceleratorKey( val.getKeyCode(), val.getModifierMask() );
+	editPaste->setAcceleratorKeyInfo( val.getKeyCode(), val.getModifierMask() );
 	editPaste->setTag( DocumentManager::atEditPaste );
 
 	separator = new DefaultMenuItem( "", edit, standardMenu);
