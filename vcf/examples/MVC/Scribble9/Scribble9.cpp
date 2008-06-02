@@ -37,9 +37,9 @@ public:
 
 
 
-class Scribble8Window : public Window {
+class Scribble9Window : public Window {
 public:
-	Scribble8Window() {
+	Scribble9Window() {
 		controller = new ScribbleController();
 		controller->setName( "controller" );
 		addComponent(controller);		
@@ -47,14 +47,14 @@ public:
 		view = new ScribbleView();
 
 		DocumentManager* docMgr = DocumentManager::getDocumentManager();
-		docMgr->DocumentInitialized += new ClassProcedure1<Event*,Scribble8Window>( this, 
-																			&Scribble8Window::onDocInitialized,
-																			"Scribble8Window::onDocInitialized" );
+		docMgr->DocumentInitialized += new ClassProcedure1<Event*,Scribble9Window>( this, 
+																			&Scribble9Window::onDocInitialized,
+																			"Scribble9Window::onDocInitialized" );
 
 
 	}
 
-	virtual ~Scribble8Window(){};
+	virtual ~Scribble9Window(){};
 
 	void onDocInitialized( Event* e ) {
 		static bool firstTime = true;
@@ -92,10 +92,10 @@ public:
 
 
 
-class Scribble8App : public SDIDocumentBasedApplication {
+class Scribble9App : public SDIDocumentBasedApplication {
 public:
 
-	Scribble8App( int argc, char** argv );
+	Scribble9App( int argc, char** argv );
 
 	virtual bool initRunningApplication(){
 		contentMouseDown = false;
@@ -103,10 +103,10 @@ public:
 		bool result = SDIDocumentBasedApplication::initRunningApplication();
 
 		DocumentManager* docMgr = DocumentManager::getDocumentManager();
-		docMgr->DocumentInitialized += new ClassProcedure1<Event*,Scribble8App>( this, 
-																			&Scribble8App::onDocInitialized,
-																			"Scribble8App::onDocInitialized" );
-//Scribble8App::onScribbleModelChanged
+		docMgr->DocumentInitialized += new ClassProcedure1<Event*,Scribble9App>( this, 
+																			&Scribble9App::onDocInitialized,
+																			"Scribble9App::onDocInitialized" );
+//Scribble9App::onScribbleModelChanged
 
 		return result;
 	}
@@ -116,7 +116,7 @@ public:
 		Document* doc = (Document*)e->getSource();
 
 		ScribbleModel* model = (ScribbleModel*)doc->getModel();
-		model->ModelChanged += getCallback( "Scribble8App::onScribbleModelChanged" );
+		model->ModelChanged += getCallback( "Scribble9App::onScribbleModelChanged" );
 	}
 
 	void onAbout(Event*) {
@@ -136,13 +136,13 @@ public:
 	}
 
 	void onContentMouseMove( MouseEvent* e ) {
-		Scribble8Window* mainWindow = (Scribble8Window*)getMainWindow();
+		Scribble9Window* mainWindow = (Scribble9Window*)getMainWindow();
 		mainWindow->status->setStatusPaneText( 2, Format("Coords: %0.1f, %0.1f") % e->getPoint()->x_ % e->getPoint()->y_ );
 	}
 
 	void onContentMouseDown( MouseEvent* e ) {
 		contentMouseDown = true;
-		Scribble8Window* mainWindow = (Scribble8Window*)getMainWindow();
+		Scribble9Window* mainWindow = (Scribble9Window*)getMainWindow();
 		mainWindow->status->setStatusPaneText( 2, Format("Coords: %0.1f, %0.1f") % e->getPoint()->x_ % e->getPoint()->y_ );
 	}
 
@@ -161,17 +161,17 @@ public:
 	}
 
 	void onViewListing( Event* e ) {
-		Scribble8Window* mainWindow = (Scribble8Window*)getMainWindow();
+		Scribble9Window* mainWindow = (Scribble9Window*)getMainWindow();
 		mainWindow->scribbleListing->setVisible( !mainWindow->scribbleListing->getVisible() );
 	}
 
 	void onViewStatusbar( Event* e ) {
-		Scribble8Window* mainWindow = (Scribble8Window*)getMainWindow();
+		Scribble9Window* mainWindow = (Scribble9Window*)getMainWindow();
 		mainWindow->status->setVisible( !mainWindow->status->getVisible() );		
 	}
 
 	void onUpdateViewListing( ActionEvent* e ) {
-		Scribble8Window* mainWindow = (Scribble8Window*)getMainWindow();
+		Scribble9Window* mainWindow = (Scribble9Window*)getMainWindow();
 		e->setChecked( mainWindow->scribbleListing->getVisible() );
 		if ( mainWindow->scribbleListing->getVisible() ) {
 			e->setState( e->getState() | ToolbarItem::tisPressed );
@@ -182,7 +182,7 @@ public:
 	}
 
 	void onUpdateViewStatusbar( ActionEvent* e ) {
-		Scribble8Window* mainWindow = (Scribble8Window*)getMainWindow();
+		Scribble9Window* mainWindow = (Scribble9Window*)getMainWindow();
 		e->setChecked( mainWindow->status->getVisible() );
 		if ( mainWindow->status->getVisible() ) {
 			e->setState( e->getState() | ToolbarItem::tisPressed );
@@ -230,7 +230,7 @@ public:
 	void onScribbleModelChanged( Event* e ) {
 		if ( e->getType() == ScribbleModel::ActiveShapeChanged && contentMouseDown ) {
 			ScribbleModel* model = (ScribbleModel*)e->getSource();
-			Scribble8Window* mainWindow = (Scribble8Window*)getMainWindow();
+			Scribble9Window* mainWindow = (Scribble9Window*)getMainWindow();
 			if ( NULL != model->getActiveShape() ) {
 				VariantData v = (ScribbleShape*) model->getActiveShape();
 				mainWindow->scribbleListing->selectItem( model->getIndexOf( v ) );
@@ -257,7 +257,7 @@ public:
 _class_rtti_(ScribbleController, "VCF::Component", "ScribbleController")
 _class_rtti_end_
 
-_class_rtti_(Scribble8Window, "VCF::Window", "Scribble8Window")
+_class_rtti_(Scribble9Window, "VCF::Window", "Scribble9Window")
 _field_obj_( Panel*, contentPanel )
 _field_obj_( StatusBar*, status )
 _field_obj_( ListViewControl*, scribbleListing )
@@ -299,10 +299,10 @@ _property_( double, "defaultStrokeWidth", getDefaultWidth, setDefaultWidth, "" )
 _property_( bool, "defaultFilled", getDefaultFilled, setDefaultFilled, "" );
 _class_rtti_end_
 
-Scribble8App::Scribble8App( int argc, char** argv ) : 
+Scribble9App::Scribble9App( int argc, char** argv ) : 
 	SDIDocumentBasedApplication(argc, argv)
 {
-	REGISTER_CLASSINFO_EXTERNAL(Scribble8Window);
+	REGISTER_CLASSINFO_EXTERNAL(Scribble9Window);
 	REGISTER_CLASSINFO_EXTERNAL(ScribbleShape);
 	REGISTER_CLASSINFO_EXTERNAL(ScribbleModel);
 	REGISTER_CLASSINFO_EXTERNAL(AboutDialog);
@@ -310,32 +310,32 @@ Scribble8App::Scribble8App( int argc, char** argv ) :
 	
 	
 	
-	addCallback( new ClassProcedure1<Event*,Scribble8App>(this, &Scribble8App::onAbout), "Scribble8App::onAbout" );
-	addCallback( new ClassProcedure1<Event*,Scribble8App>(this, &Scribble8App::onListSelectionChanged), "Scribble8App::onListSelectionChanged" );
-	addCallback( new ClassProcedure1<Event*,Scribble8App>(this, &Scribble8App::onViewListing), "Scribble8App::onViewListing" );
-	addCallback( new ClassProcedure1<Event*,Scribble8App>(this, &Scribble8App::onViewStatusbar), "Scribble8App::onViewStatusbar" );
-	addCallback( new ClassProcedure1<Event*,Scribble8App>(this, &Scribble8App::onEditCurrentShape), "Scribble8App::onEditCurrentShape" );
+	addCallback( new ClassProcedure1<Event*,Scribble9App>(this, &Scribble9App::onAbout), "Scribble9App::onAbout" );
+	addCallback( new ClassProcedure1<Event*,Scribble9App>(this, &Scribble9App::onListSelectionChanged), "Scribble9App::onListSelectionChanged" );
+	addCallback( new ClassProcedure1<Event*,Scribble9App>(this, &Scribble9App::onViewListing), "Scribble9App::onViewListing" );
+	addCallback( new ClassProcedure1<Event*,Scribble9App>(this, &Scribble9App::onViewStatusbar), "Scribble9App::onViewStatusbar" );
+	addCallback( new ClassProcedure1<Event*,Scribble9App>(this, &Scribble9App::onEditCurrentShape), "Scribble9App::onEditCurrentShape" );
 	
-	addCallback( new ClassProcedure1<ActionEvent*,Scribble8App>(this, &Scribble8App::onUpdateEditCurrentShape), "Scribble8App::onUpdateEditCurrentShape" );
-	addCallback( new ClassProcedure1<ActionEvent*,Scribble8App>(this, &Scribble8App::onUpdateViewListing), "Scribble8App::onUpdateViewListing" );
-	addCallback( new ClassProcedure1<ActionEvent*,Scribble8App>(this, &Scribble8App::onUpdateViewStatusbar), "Scribble8App::onUpdateViewStatusbar" );
+	addCallback( new ClassProcedure1<ActionEvent*,Scribble9App>(this, &Scribble9App::onUpdateEditCurrentShape), "Scribble9App::onUpdateEditCurrentShape" );
+	addCallback( new ClassProcedure1<ActionEvent*,Scribble9App>(this, &Scribble9App::onUpdateViewListing), "Scribble9App::onUpdateViewListing" );
+	addCallback( new ClassProcedure1<ActionEvent*,Scribble9App>(this, &Scribble9App::onUpdateViewStatusbar), "Scribble9App::onUpdateViewStatusbar" );
 
-	addCallback( new ClassProcedure1<Event*,Scribble8App>(this, &Scribble8App::onDeleteCurrentShape), "Scribble8App::onDeleteCurrentShape" );
+	addCallback( new ClassProcedure1<Event*,Scribble9App>(this, &Scribble9App::onDeleteCurrentShape), "Scribble9App::onDeleteCurrentShape" );
 	
 	
-	addCallback( new ClassProcedure1<Event*,Scribble8App>(this, &Scribble8App::onScribbleModelChanged), "Scribble8App::onScribbleModelChanged" );
-	addCallback( new ClassProcedure1<MouseEvent*,Scribble8App>(this, &Scribble8App::onContentMouseMove), "Scribble8App::onContentMouseMove" );
-	addCallback( new ClassProcedure1<MouseEvent*,Scribble8App>(this, &Scribble8App::onContentMouseDown), "Scribble8App::onContentMouseDown" );
-	addCallback( new ClassProcedure1<MouseEvent*,Scribble8App>(this, &Scribble8App::onContentMouseUp), "Scribble8App::onContentMouseUp" );
+	addCallback( new ClassProcedure1<Event*,Scribble9App>(this, &Scribble9App::onScribbleModelChanged), "Scribble9App::onScribbleModelChanged" );
+	addCallback( new ClassProcedure1<MouseEvent*,Scribble9App>(this, &Scribble9App::onContentMouseMove), "Scribble9App::onContentMouseMove" );
+	addCallback( new ClassProcedure1<MouseEvent*,Scribble9App>(this, &Scribble9App::onContentMouseDown), "Scribble9App::onContentMouseDown" );
+	addCallback( new ClassProcedure1<MouseEvent*,Scribble9App>(this, &Scribble9App::onContentMouseUp), "Scribble9App::onContentMouseUp" );
 	
-	addCallback( new ClassProcedure1<KeyboardEvent*,Scribble8App>(this, &Scribble8App::onListKeyDown), "Scribble8App::onListKeyDown" );
+	addCallback( new ClassProcedure1<KeyboardEvent*,Scribble9App>(this, &Scribble9App::onListKeyDown), "Scribble9App::onListKeyDown" );
 	
 }
 
 
 int main(int argc, char *argv[])
 {
-	return ApplicationKitMain<Scribble8App>(argc,argv);
+	return ApplicationKitMain<Scribble9App>(argc,argv);
 }
 
 

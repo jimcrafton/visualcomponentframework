@@ -1,0 +1,37 @@
+<plist>
+	<dict>
+		<key>DocumentTypes</key>
+		<array>
+			<dict>
+				<key>TypeExtensions</key>
+				<array>
+					<string>scribble</string>
+				</array>
+
+				<key>TypeDescription</key>
+				<string>Scribble Document</string>
+
+				<key>TypeContent</key>
+				<string>application/x-scribbledoc</string>
+
+				<key>ClipboardTypeContent</key>
+				<array>
+					<string>application/x-scribbledoc</string>
+				</array>
+
+				<key>TypeIcon</key>
+				<string>scribble-type.bmp</string>
+
+				<key>DocumentClass</key>
+				<string></string>
+
+				<key>ModelClass</key>
+				<string>ScribbleModel</string>
+
+				<key>DocumentWindow</key>
+				<string>Scribble8Window</string>
+
+			</dict>			
+		</array>
+	</dict>
+</plist>

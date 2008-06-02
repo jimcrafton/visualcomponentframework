@@ -1,0 +1,87 @@
+object ShapeEditDialog : VCF::Dialog 
+	caption = 'Edit Shape'
+
+	height = 250
+	width = 250
+
+	object hlContainer : VCF::HorizontalLayoutContainer
+		numberOfColumns = 2
+		maxRowHeight = 35
+		rowSpacerHeight = 10
+		widths[0] = 120
+		widths[1] = 40
+
+		tweenWidths[0] = 10
+	end
+
+	object panel : VCF::Panel 
+		alignment = AlignClient
+		container = @hlContainer
+		border = null
+
+
+		object lbl1 : VCF::Label 
+			caption = 'Stroke Width:'
+		end
+
+		object strokeWidth : VCF::TextControl 
+			
+		end
+
+		object lbl2 : VCF::Label 
+			caption = 'Stroke Color:'
+		end
+
+		object strokeColor : VCF::Panel	
+			useColorForBackground = true
+			delegates
+				MouseDoubleClicked = [ShapeEditDialog@ShapeEditDialog::onDoColor]
+			end
+		end
+
+		object lbl3 : VCF::Label 
+			caption = 'Fill Shape:'
+		end
+
+		object filled : VCF::CheckBoxControl
+			caption = ''
+		end
+
+		object lbl4 : VCF::Label 
+			caption = 'Fill Color:'
+		end
+
+		object fillColor : VCF::Panel	
+			useColorForBackground = true
+			delegates
+				MouseDoubleClicked = [ShapeEditDialog@ShapeEditDialog::onDoColor]
+			end
+		end
+	end
+
+
+	object panel2 : VCF::Panel 
+		border = null
+		alignment = AlignBottom
+		height = 40
+		
+		object OKBtn : VCF::CommandButton 
+			caption = 'OK'
+			commandType = BC_OK
+			height = ButtonHeight
+			width = 80
+			top = 10
+			left = 40
+		end
+
+		object cancelBtn : VCF::CommandButton 
+			caption = 'Cancel'
+			height = ButtonHeight
+			top = 10
+			left = 130
+			width = 80
+
+			commandType = BC_CANCEL
+		end
+	end
+end
