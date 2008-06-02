@@ -24,6 +24,10 @@ using VCF::AbstractCommand;
 using VCF::DocumentManager;
 using VCF::pdObject;
 using VCF::Object;
+using VCF::XMLNode;
+using VCF::XMLParser;
+using VCF::Enumerator;
+
 
 
 class ScribbleShape : public VCF::Object {
@@ -77,7 +81,7 @@ public:
 		String tmp = StringUtils::lowerCase(val);
 		points.clear();
 
-		StringTokenizer tok(tmp, " \r\n");
+		StringTokenizer tok(tmp, " \t\r\n");
 
 		String dataType;
 		if ( tok.hasMoreElements() ) {
@@ -708,6 +712,59 @@ public:
 				readShape( stream, shape );
 			}
 		}
+		else if ( "text/plain" == type ) {
+			XMLParser parser;
+			parser.parse( stream );
+
+			Enumerator<XMLNode*>* nodes = parser.getParsedNodes();
+
+			while ( nodes->hasMoreElements() ) {
+				XMLNode* node = nodes->nextElement();
+
+				if ( node->getName() == "ScribbleDoc" ) {
+
+					ScribbleShape* shape = new ScribbleShape();
+
+					XMLNode* active = node->getNodeByName( "activeShape" );
+					XMLNode* mat = active->getNodeByName( "transform" );
+					shape->mat[Matrix2D::mei00] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei00")->getCDATA() );
+					shape->mat[Matrix2D::mei01] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei01")->getCDATA() );
+					shape->mat[Matrix2D::mei02] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei02")->getCDATA() );
+					shape->mat[Matrix2D::mei10] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei10")->getCDATA() );
+					shape->mat[Matrix2D::mei11] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei11")->getCDATA() );
+					shape->mat[Matrix2D::mei12] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei12")->getCDATA() );
+					shape->mat[Matrix2D::mei20] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei20")->getCDATA() );
+					shape->mat[Matrix2D::mei21] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei21")->getCDATA() );
+					shape->mat[Matrix2D::mei22] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei22")->getCDATA() );
+
+				
+					shape->filled = StringUtils::fromStringAsBool( active->getAttrByName("filled")->getValue() );
+					shape->fill.setFromString( active->getAttrByName("fill")->getValue() );
+					shape->stroke.setFromString( active->getAttrByName("stroke")->getValue() );
+					shape->strokeWidth = StringUtils::fromStringAsDouble( active->getAttrByName("strokeWidth")->getValue() );
+
+
+					XMLNode* pts = active->getNodeByName( "points" );
+
+					shape->setData( pts->getCDATA() );
+
+					shape->mat *= Matrix2D::translation( 10, 10 );
+
+					add( shape );
+					
+					break;
+				}
+			}
+
+		}
+		else if ( "application/x-scribbleshape" == type ) {			
+			ScribbleShape* shape = new ScribbleShape();
+			readShape( stream, shape );
+
+			shape->mat *= Matrix2D::translation( 10, 10 ); //make a slight offset
+
+			add( shape );
+		}
 	}
 
 	virtual void saveToStream( OutputStream* stream, const MIMEType& type ) {
@@ -726,6 +783,44 @@ public:
 				ScribbleShape* shape = getShape(i);
 				writeShape( stream, shape );
 			}
+		}
+		else if ( "text/plain" == type ) {
+			VCF_ASSERT( NULL != activeShape );
+
+			XMLNode root("ScribbleDoc");		
+			
+			XMLNode* node = root.addChildNode( "activeShape" );
+			node->addAttr( "filled", StringUtils::toString(activeShape->filled) );
+
+			node->addAttr( "fill", activeShape->fill.toString() );
+			node->addAttr( "stroke", activeShape->stroke.toString() );
+			node->addAttr( "strokeWidth", StringUtils::toString(activeShape->strokeWidth) );
+			
+
+			node->addAttr( "type", StringUtils::toString(activeShape->type) );
+
+			XMLNode* mat = node->addChildNode( "transform" );
+			mat->addChildNode( "mei00" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei00]) );
+			mat->addChildNode( "mei01" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei01]) );
+			mat->addChildNode( "mei02" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei02]) );
+			mat->addChildNode( "mei10" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei10]) );
+			mat->addChildNode( "mei11" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei11]) );
+			mat->addChildNode( "mei12" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei12]) );
+			mat->addChildNode( "mei20" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei20]) );
+			mat->addChildNode( "mei21" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei21]) );
+			mat->addChildNode( "mei22" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei22]) );
+			
+			
+
+			XMLNode* pts = node->addChildNode( "points" );
+			pts->setCDATA( activeShape->getData() );
+
+			stream->write( root.toString() );
+		}
+		else if ( "application/x-scribbleshape" == type ) {
+			VCF_ASSERT( NULL != activeShape );
+
+			writeShape( stream, activeShape );
 		}
 	}
 
