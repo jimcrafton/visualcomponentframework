@@ -172,6 +172,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="urlmon.lib"
 				OutputFile="..\..\..\bin\InternetKit_vc80.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
