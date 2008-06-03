@@ -23,6 +23,16 @@ using VCF::maxVal;
 using VCF::Component;
 using VCF::ActionEvent;
 using VCF::ToolbarItem;
+using VCF::DragSource;
+using VCF::daCopy;
+using VCF::daMove;
+using VCF::daNone;
+using VCF::DataObject;
+using VCF::BasicOutputStream;
+using VCF::MIMEType;
+using VCF::BinaryPersistable;
+using VCF::Document;
+using VCF::DropTargetEvent;
 
 
 
@@ -421,6 +431,42 @@ public:
 		}
 	}
 
+
+	void onContentPanelEntered( DropTargetEvent* e ) {
+		e->setActionType( daNone );	
+
+		DataObject* dataObj = e->getDataObject();
+		Document* doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+		Enumerator<MIMEType>* clipboardFmts = doc->getSupportedClipboardFormats();
+		while ( clipboardFmts->hasMoreElements() ) {
+			MIMEType m =  clipboardFmts->nextElement();
+			if ( dataObj->isTypeSupported( m ) ) {
+				e->setActionType( daMove );	
+				break;
+			}
+		}
+	}
+
+	void onContentPanelDragging( DropTargetEvent* e ) {
+		onContentPanelEntered(e);
+	}
+
+	void onContentPanelDropped( DropTargetEvent* e ) {
+		DataObject* dataObj = e->getDataObject();
+		Document* doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+		doc->paste( dataObj );
+		Point pt = e->getDropPoint();
+
+		ScribbleShape* shape = model->getShape( model->getCount()-1 );
+
+		Rect r = getBounds( shape );
+
+		Matrix2D m = shape->mat * Matrix2D::translation( pt.x_ - (r.left_ + r.getWidth()/2.0), 
+														pt.y_ - (r.top_ + r.getHeight()/2.0));
+		model->setShapeMatrix( shape, m );
+	}
+
+
 	Control* modelControl;
 	ScribbleModel* model;
 	ScribbleShape* activeShape;	
@@ -581,6 +627,19 @@ public:
 	Rect originalScaleBounds;
 	Matrix2D originalMat;
 
+	void beginDrag( Point pt, ScribbleShape* shape ) {
+
+		DragSource src;
+		src.setActionType( daMove );
+
+		Document* doc = DocumentManager::getDocumentManager()->getCurrentDocument();
+		DataObject* shapeData = doc->copy();
+
+		src.startDragDrop( shapeData );
+
+		delete shapeData;
+	}
+
 
 	virtual void mouseDown( MouseEvent* e ) {
 		ScribbleShape* shape = controller->hitTest( *e->getPoint() );
@@ -634,7 +693,9 @@ public:
 
 
 		if ( e->hasLeftButton() ) {
+
 			ScribbleShape* shape = controller->model->getActiveShape();
+			
 			if ( e->hasShiftKey() ) {				
 				if ( NULL != shape ) {	
 					Rect tmp = originalScaleBounds;
@@ -677,12 +738,19 @@ public:
 				}
 			}
 			else {
-				if ( NULL != shape ) {	
+				
+				Rect r = controller->modelControl->getClientBounds();
+				if ( (NULL != shape) && (!r.containsPt( e->getPoint() )) ) {
+					controller->modelControl->releaseMouseEvents();
+
+					beginDrag(  *e->getPoint(), shape );
+				}
+				else if ( NULL != shape ) {	
 					Matrix2D m = shape->getMatrix();
 					m *= Matrix2D::translation( e->getPoint()->x_ - currentDragPt.x_,
-													e->getPoint()->y_ - currentDragPt.y_ );
-					controller->model->setShapeMatrix( shape, m );
-				}
+						e->getPoint()->y_ - currentDragPt.y_ );
+					controller->model->setShapeMatrix( shape, m );					
+				}			
 
 				currentDragPt = *e->getPoint();
 			}			
@@ -778,6 +846,9 @@ ScribbleController::ScribbleController():
 	addCallback( new ClassProcedure1<Event*,ScribbleController>(this, &ScribbleController::onChangeTool), "ScribbleController::onChangeTool" );
 	addCallback( new ClassProcedure1<ActionEvent*,ScribbleController>(this, &ScribbleController::onUpdateChangeTool), "ScribbleController::onUpdateChangeTool" );
 	
+	addCallback( new ClassProcedure1<DropTargetEvent*,ScribbleController>(this, &ScribbleController::onContentPanelEntered), "ScribbleController::onContentPanelEntered" );
+	addCallback( new ClassProcedure1<DropTargetEvent*,ScribbleController>(this, &ScribbleController::onContentPanelDragging), "ScribbleController::onContentPanelDragging" );
+	addCallback( new ClassProcedure1<DropTargetEvent*,ScribbleController>(this, &ScribbleController::onContentPanelDropped), "ScribbleController::onContentPanelDropped" );
 	
 
 	tools.push_back( new SelectTool() );
