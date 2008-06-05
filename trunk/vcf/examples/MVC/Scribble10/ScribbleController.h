@@ -766,8 +766,10 @@ public:
 				}
 			}
 			else {
-				
+				Scrollable* scrollable = controller->modelControl->getScrollable();
+
 				Rect r = controller->modelControl->getClientBounds();
+
 				if ( (NULL != shape) && (!r.containsPt( e->getPoint() )) ) {
 					controller->modelControl->releaseMouseEvents();
 
