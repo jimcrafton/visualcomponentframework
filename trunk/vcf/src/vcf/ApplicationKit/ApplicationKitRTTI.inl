@@ -410,6 +410,16 @@ _procedure4_(setBounds,const double&,const double&,const double&,const double&,"
 _class_rtti_end_
 
 
+_class_rtti_(DropTarget, "VCF::Component", "DropTarget")
+	_delegate_(DropTargetDelegate, DropTargetDraggingOver)
+	_delegate_(DropTargetDelegate, DropTargetDropped)
+	_delegate_(DropTargetDelegate, DropTargetLeft)
+	_delegate_(DropTargetDelegate, DropTargetEntered)
+	_property_obj_array_(Control,"targets",getTargetControl,setTargetControl,insertTargetControl,removeTargetControl,getTargetControlCount,"")
+_class_rtti_end_
+
+
+
 _class_abstract_rtti_(Document, "VCF::Model", DOCUMENT_CLASSID)
 _class_rtti_end_
 

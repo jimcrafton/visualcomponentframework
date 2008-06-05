@@ -174,6 +174,7 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( ImageList );
 		
 
+		REGISTER_CLASSINFO_EXTERNAL( DropTarget );
 
 
 

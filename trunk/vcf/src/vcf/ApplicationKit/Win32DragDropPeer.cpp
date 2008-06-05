@@ -35,7 +35,7 @@ DragActionType Win32DragDropPeer::startDragDrop( DataObject* cdo )
 	dragDropEffect_ = 0;
 
 	dragDropResult_ = ::DoDragDrop( dataObj_, comDragSrc_,
-									COMUtils::translateActionType( dragSrc_->getActionType() ),
+									DROPEFFECT_COPY | DROPEFFECT_MOVE | DROPEFFECT_LINK,//COMUtils::translateActionType( dragSrc_->getActionType() ),
 									&dragDropEffect_ );
 
 
@@ -73,6 +73,7 @@ VCF::DragSource* Win32DragDropPeer::getDragSource()
 
 HRESULT Win32DragDropPeer::GiveFeedback( DWORD dwEffect )
 {
+	
 	DragSourceEvent event(dragSrc_, clipDataObj_);
 	event.setType( DragSource::DRAG_GIVEFEEDBACK );
 

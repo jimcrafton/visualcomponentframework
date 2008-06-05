@@ -743,20 +743,14 @@ void DocumentManager::onDocWndEntered( DropTargetEvent* e )
 	}
 
 	DataObject* dataObj = e->getDataObject();
-	Enumerator<String>* dataTypes = dataObj->getSupportedDataTypes();
-	StringTokenizer tok( info->clipboardTypes, "," );
+	StringTokenizer tok( info->clipboardTypes, ";" );
 
 	bool matchFound = false;
 	while ( !matchFound && tok.hasMoreElements() ) {
 		String type = tok.nextElement();
-		dataTypes->reset();
-
-		while ( dataTypes->hasMoreElements() ) {
-			String dataType = dataTypes->nextElement();
-			if ( dataType.find( type ) != String::npos ) {
-				matchFound = true;
-				break;
-			}
+		if ( dataObj->isTypeSupported( type ) ) {
+			matchFound = true;
+			break;
 		}
 	}
 
@@ -793,7 +787,7 @@ void DocumentManager::onDocWndEntered( DropTargetEvent* e )
 
 void DocumentManager::onDocWndDragging( DropTargetEvent* e )
 {
-	e->setActionType( (NULL != currentDragDocument_) ? daCopy : daNone );
+	e->setActionType( (NULL != currentDragDocument_) ? daCopy : daNone );	
 }
 
 void DocumentManager::onDocWndDropped( DropTargetEvent* e )
@@ -829,7 +823,7 @@ void DocumentManager::onDocWndDropped( DropTargetEvent* e )
 		else {
 			if ( !currentDragDocument_->paste( dataObj ) ) {
 				
-				StringTokenizer tok( info->clipboardTypes, "," );
+				StringTokenizer tok( info->clipboardTypes, ";" );
 				
 				String type;				
 				while ( tok.hasMoreElements() ) {
@@ -837,6 +831,9 @@ void DocumentManager::onDocWndDropped( DropTargetEvent* e )
 					
 					if ( dataObj->isTypeSupported( type ) ) {
 						break;
+					}
+					else {
+						type = "";
 					}
 				}
 

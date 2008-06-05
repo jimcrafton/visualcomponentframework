@@ -100,8 +100,14 @@ HRESULT Win32DropTargetPeer::DragEnter( LPDATAOBJECT dataObject, DWORD keyState,
 
 	dataObject_=NULL;
 
-    if(keyState & MK_CONTROL){
-        *effect = DROPEFFECT_COPY;
+    if ( keyState & MK_SHIFT ) {
+	   *effect = DROPEFFECT_MOVE;
+	}
+	else if ( keyState & MK_ALT ) {
+	   *effect = DROPEFFECT_LINK;
+	}
+	else if ( keyState & MK_CONTROL ) {
+	   *effect = DROPEFFECT_COPY;
 	}
 
     dataObject_ = dataObject;
@@ -174,13 +180,12 @@ HRESULT Win32DropTargetPeer::DragEnter( LPDATAOBJECT dataObject, DWORD keyState,
 		result = NOERROR;
 	}
 
-
 	return result;
 }
 
 HRESULT Win32DropTargetPeer::DragOver( DWORD keyState, POINTL point, LPDWORD effect )
 {
-	HRESULT result = NOERROR;
+	HRESULT result = S_OK;
 
 	if ( NULL == dataObject_ )
 	{
@@ -193,7 +198,13 @@ HRESULT Win32DropTargetPeer::DragOver( DWORD keyState, POINTL point, LPDWORD eff
     effect=DROPEFFECT_MOVE;
 	*/
 
-    if ( keyState & MK_CONTROL ) {
+    if ( keyState & MK_SHIFT ) {
+	   *effect = DROPEFFECT_MOVE;
+	}
+	else if ( keyState & MK_ALT ) {
+	   *effect = DROPEFFECT_LINK;
+	}
+	else if ( keyState & MK_CONTROL ) {
 	   *effect = DROPEFFECT_COPY;
 	}
 
@@ -224,8 +235,10 @@ HRESULT Win32DropTargetPeer::DragOver( DWORD keyState, POINTL point, LPDWORD eff
 	else if ( (*effect) & DROPEFFECT_LINK )  {
 		event.setActionType( daLink );
 	}
-
+	
 	getDropTarget()->handleEvent( &event );
+
+	
 
 	*effect = COMUtils::translateActionType( event.getAction() );
 
@@ -316,7 +329,19 @@ HRESULT Win32DropTargetPeer::Drop( LPDATAOBJECT dataObject, DWORD keyState, POIN
 			}
 
 			VCF::DropTargetEvent event( target, currentDataObj_ );
-
+			
+			POINT pt = {point.x,point.y};
+			::ScreenToClient( (HWND)getDropTarget()->getTarget()->getPeer()->getHandleID(),
+				&pt );
+			point.x = pt.x;
+			point.y = pt.y;
+			
+			
+			
+			Point dropPt( point.x, point.y );
+			
+			event.setDropPoint( dropPt );
+			
 			event.setType( DropTarget::DRAG_DROPPED );
 			getDropTarget()->handleEvent( &event );
 
