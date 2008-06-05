@@ -231,6 +231,13 @@ public:
 	void addTargetControl( Control* control );
 
 	void removeTargetControl( Control* control );
+
+
+	Control* getTargetControl( const uint32& index );
+	void setTargetControl( const uint32& index, Control* target );
+	void insertTargetControl( const uint32& index, Control* target );
+	void removeTargetControl( const uint32& index );
+	uint32 getTargetControlCount();
 protected:
 	DropTargetPeer* dropTargetPeer_;
 	Array<Control*> targets_;

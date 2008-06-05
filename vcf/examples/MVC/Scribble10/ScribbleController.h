@@ -35,7 +35,6 @@ using VCF::Document;
 using VCF::DropTargetEvent;
 
 
-
 double getAngleFromLine( Point p1, Point p2 )
 {
 	return  VCF::Math::radiansToDegrees( atan2( p1.y_-p2.y_, p1.x_-p2.x_ ) );
@@ -122,6 +121,7 @@ public:
 class ScribbleController : public Component {
 public:
 	ScribbleController();
+	virtual ~ScribbleController();
 
 	void setControl( Control* val ) {
 		modelControl = val;
@@ -434,6 +434,9 @@ public:
 
 	void onContentPanelEntered( DropTargetEvent* e ) {
 		e->setActionType( daNone );	
+		ScribbleView* view = (ScribbleView*)modelControl->getView();
+		view->dragShape = NULL;
+
 
 		DataObject* dataObj = e->getDataObject();
 		Document* doc = DocumentManager::getDocumentManager()->getCurrentDocument();
@@ -442,16 +445,29 @@ public:
 			MIMEType m =  clipboardFmts->nextElement();
 			if ( dataObj->isTypeSupported( m ) ) {
 				e->setActionType( daMove );	
+				view->dragShape = dragShape;
 				break;
 			}
 		}
 	}
 
 	void onContentPanelDragging( DropTargetEvent* e ) {
-		onContentPanelEntered(e);
+		
+
+		if ( NULL != dragShape && e->getAction() != daNone ) {
+			Rect r = getBounds( dragShape );
+			
+			Point pt = e->getDropPoint();
+			Matrix2D m = dragShape->mat * Matrix2D::translation( pt.x_ - (r.left_ + r.getWidth()/2.0), 
+														pt.y_ - (r.top_ + r.getHeight()/2.0));
+
+			model->setShapeMatrix( dragShape, m );
+		}
 	}
 
 	void onContentPanelDropped( DropTargetEvent* e ) {
+		ScribbleView* view = (ScribbleView*)modelControl->getView();
+		view->dragShape = NULL;
 		DataObject* dataObj = e->getDataObject();
 		Document* doc = DocumentManager::getDocumentManager()->getCurrentDocument();
 		doc->paste( dataObj );
@@ -470,9 +486,11 @@ public:
 	Control* modelControl;
 	ScribbleModel* model;
 	ScribbleShape* activeShape;	
+	ScribbleShape* dragShape;
 
 	std::vector<Tool*> tools;
 	Tool* currentTool;
+	
 
 };
 
@@ -619,6 +637,7 @@ class DrawFreehandTool : public Tool {
 	}
 };
 
+
 class SelectTool : public Tool {
 public:
 	Point currentDragPt;
@@ -627,17 +646,26 @@ public:
 	Rect originalScaleBounds;
 	Matrix2D originalMat;
 
-	void beginDrag( Point pt, ScribbleShape* shape ) {
 
+	SelectTool() {}
+
+
+	void beginDrag( Point pt, ScribbleShape* shape ) {
 		DragSource src;
 		src.setActionType( daMove );
 
 		Document* doc = DocumentManager::getDocumentManager()->getCurrentDocument();
-		DataObject* shapeData = doc->copy();
+		DataObject* shapeData = doc->cut();
+		controller->dragShape = shape;
+		
 
 		src.startDragDrop( shapeData );
 
 		delete shapeData;
+		controller->dragShape = NULL;
+		ScribbleView* view = (ScribbleView*)controller->modelControl->getView();
+		view->dragShape = NULL;
+		controller->modelControl->repaint();
 	}
 
 
@@ -834,7 +862,7 @@ public:
 
 
 ScribbleController::ScribbleController(): 
-	model(NULL), modelControl(NULL),activeShape(NULL),currentTool(NULL)
+	model(NULL), modelControl(NULL),activeShape(NULL),currentTool(NULL),dragShape(NULL)
 {
 	addCallback( new ClassProcedure1<Event*,ScribbleController>(this, &ScribbleController::onModelChanged), "ScribbleController::onModelChanged" );
 	addCallback( new ClassProcedure1<MouseEvent*,ScribbleController>(this, &ScribbleController::onMouseMove), "ScribbleController::onMouseMove" );
@@ -864,5 +892,11 @@ ScribbleController::ScribbleController():
 	setCurrentTool(0);
 }
 
+ScribbleController::~ScribbleController()
+{
+	for (size_t i=0;i<tools.size();i++ ) {
+		delete tools[i];
+	}
+}
 
 #endif //SCRIBBLECONTROLLER_H__

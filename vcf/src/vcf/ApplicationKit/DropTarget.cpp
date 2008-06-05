@@ -159,6 +159,53 @@ void DropTarget::removeTargetControl( Control* control )
 	}
 }
 
+Control* DropTarget::getTargetControl( const uint32& index )
+{
+	if ( index < targets_.size() ) {
+		return targets_[index];
+	}
+
+	return NULL;
+}
+
+void DropTarget::setTargetControl( const uint32& index, Control* target )
+{
+	size_t missing = (index+1) - targets_.size();
+	if ( missing > 0 ) {
+		targets_.resize( missing + targets_.size() );
+	}
+
+	Array<Control*>::iterator found = std::find( targets_.begin(), targets_.end(), target );
+	//don't allow duplicate entries
+	if ( found == targets_.end() ) {
+		targets_[index] = target;
+		dropTargetPeer_->registerTarget( target );
+	}
+}
+
+void DropTarget::insertTargetControl( const uint32& index, Control* target )
+{
+	Array<Control*>::iterator found = std::find( targets_.begin(), targets_.end(), target );
+	//don't allow duplicate entries
+	if ( found == targets_.end() ) {
+		targets_.insert( targets_.begin() + index, target );
+		dropTargetPeer_->registerTarget( target );
+	}
+}
+
+void DropTarget::removeTargetControl( const uint32& index )
+{
+	if ( index < targets_.size() ) {
+		Control* control = targets_[index];
+		
+		dropTargetPeer_->unregisterTarget( control );
+		targets_.erase( targets_.begin() + index );
+	}
+}
+
+uint32 DropTarget::getTargetControlCount() {
+	return targets_.size();
+}
 
 /**
 $Id$
