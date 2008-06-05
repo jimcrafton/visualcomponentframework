@@ -72,6 +72,7 @@ object ShapeEditDialog : VCF::Dialog
 			width = 80
 			top = 10
 			left = 40
+			default = true
 		end
 
 		object cancelBtn : VCF::CommandButton 

@@ -128,6 +128,10 @@ SOURCE=.\Resources\Scribble10App.xml
 
 SOURCE=.\Resources\Scribble10Window.vff
 # End Source File
+# Begin Source File
+
+SOURCE=.\Resources\ShapeEditDialog.vff
+# End Source File
 # End Group
 # End Target
 # End Project
