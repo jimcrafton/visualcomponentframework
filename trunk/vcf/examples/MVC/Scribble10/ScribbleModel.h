@@ -712,6 +712,35 @@ public:
 				readShape( stream, shape );
 			}
 		}
+		else if ( "text/xml" == type ) {
+			XMLParser parser;
+			parser.parse( stream );
+
+			Enumerator<XMLNode*>* nodes = parser.getParsedNodes();
+
+			while ( nodes->hasMoreElements() ) {
+				XMLNode* node = nodes->nextElement();
+
+				if ( node->getName() == "ScribbleDoc" ) {
+
+					backColor.setFromString( node->getAttrByName("backColor")->getValue() );
+
+					Enumerator<XMLNode*>* children = node->getChildNodes();
+
+					while ( nodes->hasMoreElements() ) {
+						XMLNode* child = nodes->nextElement();
+						if ( child->getName() == "defaultShape" ) {
+							readXmlShape( child, &defaultShape );
+						}
+						else if ( child->getName() == "shape" ) {
+							readXmlShape( child );
+						}
+					}
+
+					break;
+				}
+			}
+		}
 		else if ( "text/plain" == type ) {
 			XMLParser parser;
 			parser.parse( stream );
@@ -782,6 +811,17 @@ public:
 			for (size_t i=0;i<count;i++ ) {
 				ScribbleShape* shape = getShape(i);
 				writeShape( stream, shape );
+			}
+		}
+		else if ( "text/xml" == type ) {
+			XMLNode root("ScribbleDoc");
+			writeXmlShape( &root, &defaultShape, "defaultShape" );
+			root.addAttr( "backColor", backColor.toString() );
+
+			size_t count = getCount();
+			for (size_t i=0;i<count;i++ ) {
+				ScribbleShape* shape = getShape(i);
+				writeXmlShape( &root, shape );
 			}
 		}
 		else if ( "text/plain" == type ) {
@@ -933,6 +973,71 @@ protected:
 			stream->write( pt.x_ );
 			stream->write( pt.y_ );
 		}
+	}
+
+	void readXmlShape( XMLNode* node, ScribbleShape* existingShape=NULL ) {
+
+		ScribbleShape* shape = existingShape;
+		if ( NULL == shape ) {
+			shape = new ScribbleShape();
+		}
+		
+		XMLNode* mat = node->getNodeByName( "transform" );
+		shape->mat[Matrix2D::mei00] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei00")->getCDATA() );
+		shape->mat[Matrix2D::mei01] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei01")->getCDATA() );
+		shape->mat[Matrix2D::mei02] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei02")->getCDATA() );
+		shape->mat[Matrix2D::mei10] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei10")->getCDATA() );
+		shape->mat[Matrix2D::mei11] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei11")->getCDATA() );
+		shape->mat[Matrix2D::mei12] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei12")->getCDATA() );
+		shape->mat[Matrix2D::mei20] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei20")->getCDATA() );
+		shape->mat[Matrix2D::mei21] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei21")->getCDATA() );
+		shape->mat[Matrix2D::mei22] = StringUtils::fromStringAsDouble( mat->getNodeByName("mei22")->getCDATA() );
+		
+		
+		shape->filled = StringUtils::fromStringAsBool( node->getAttrByName("filled")->getValue() );
+		shape->fill.setFromString( node->getAttrByName("fill")->getValue() );
+		shape->stroke.setFromString( node->getAttrByName("stroke")->getValue() );
+		shape->strokeWidth = StringUtils::fromStringAsDouble( node->getAttrByName("strokeWidth")->getValue() );
+		
+		
+		XMLNode* pts = node->getNodeByName( "points" );
+		
+		shape->setData( pts->getCDATA() );
+		
+		shape->mat *= Matrix2D::translation( 10, 10 );
+		
+		if ( NULL == existingShape ) {
+			add( shape );
+		}
+	}
+
+	void writeXmlShape( XMLNode* parent, ScribbleShape* shape, const String& shapeName="shape" ) {
+
+		XMLNode* node = parent->addChildNode( shapeName );
+		node->addAttr( "filled", StringUtils::toString(activeShape->filled) );
+		
+		node->addAttr( "fill", activeShape->fill.toString() );
+		node->addAttr( "stroke", activeShape->stroke.toString() );
+		node->addAttr( "strokeWidth", StringUtils::toString(activeShape->strokeWidth) );
+		
+		
+		node->addAttr( "type", StringUtils::toString(activeShape->type) );
+		
+		XMLNode* mat = node->addChildNode( "transform" );
+		mat->addChildNode( "mei00" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei00]) );
+		mat->addChildNode( "mei01" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei01]) );
+		mat->addChildNode( "mei02" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei02]) );
+		mat->addChildNode( "mei10" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei10]) );
+		mat->addChildNode( "mei11" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei11]) );
+		mat->addChildNode( "mei12" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei12]) );
+		mat->addChildNode( "mei20" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei20]) );
+		mat->addChildNode( "mei21" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei21]) );
+		mat->addChildNode( "mei22" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei22]) );
+		
+		
+		
+		XMLNode* pts = node->addChildNode( "points" );
+		pts->setCDATA( activeShape->getData() );
 	}
 
 	void internal_insert( const uint32 & index, const VariantData& item ) {
