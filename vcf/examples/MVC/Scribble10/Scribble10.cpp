@@ -80,6 +80,7 @@ public:
 		Rect r = model->getMaxBounds();
 		status->setStatusPaneText( 1, Format("Dimensions: %0.1f x %0.1f") % r.getWidth() % r.getHeight() );		
 		firstTime = false;
+
 	}
 
 

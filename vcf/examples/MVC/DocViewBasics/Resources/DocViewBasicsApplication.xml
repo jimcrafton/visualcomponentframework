@@ -11,8 +11,16 @@
 				<key>TypeDescription</key>
 				<string>Circle Document</string>
 
+
 				<key>TypeContent</key>
+				<array>
+					<string>application/x-circledoc</string>
+				</array>
+
+				<key>DocTypeContent</key>
 				<string>application/x-circledoc</string>
+
+
 
 				<key>ClipboardTypeContent</key>
 				<array>
