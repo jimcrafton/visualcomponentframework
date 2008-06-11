@@ -27,7 +27,8 @@ using VCF::Object;
 using VCF::XMLNode;
 using VCF::XMLParser;
 using VCF::Enumerator;
-
+using VCF::AnsiString;
+using VCF::uchar;
 
 
 class ScribbleShape : public VCF::Object {
@@ -823,6 +824,9 @@ public:
 				ScribbleShape* shape = getShape(i);
 				writeXmlShape( &root, shape );
 			}
+
+			AnsiString tmp = root.toString();
+			stream->write( (const uchar*)tmp.c_str(), tmp.size() );
 		}
 		else if ( "text/plain" == type ) {
 			VCF_ASSERT( NULL != activeShape );
@@ -855,7 +859,8 @@ public:
 			XMLNode* pts = node->addChildNode( "points" );
 			pts->setCDATA( activeShape->getData() );
 
-			stream->write( root.toString() );
+			AnsiString tmp = root.toString();
+			stream->write( (const uchar*)tmp.c_str(), tmp.size() );
 		}
 		else if ( "application/x-scribbleshape" == type ) {
 			VCF_ASSERT( NULL != activeShape );
@@ -1014,30 +1019,30 @@ protected:
 	void writeXmlShape( XMLNode* parent, ScribbleShape* shape, const String& shapeName="shape" ) {
 
 		XMLNode* node = parent->addChildNode( shapeName );
-		node->addAttr( "filled", StringUtils::toString(activeShape->filled) );
+		node->addAttr( "filled", StringUtils::toString(shape->filled) );
 		
-		node->addAttr( "fill", activeShape->fill.toString() );
-		node->addAttr( "stroke", activeShape->stroke.toString() );
-		node->addAttr( "strokeWidth", StringUtils::toString(activeShape->strokeWidth) );
+		node->addAttr( "fill", shape->fill.toString() );
+		node->addAttr( "stroke", shape->stroke.toString() );
+		node->addAttr( "strokeWidth", StringUtils::toString(shape->strokeWidth) );
 		
 		
-		node->addAttr( "type", StringUtils::toString(activeShape->type) );
+		node->addAttr( "type", StringUtils::toString(shape->type) );
 		
 		XMLNode* mat = node->addChildNode( "transform" );
-		mat->addChildNode( "mei00" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei00]) );
-		mat->addChildNode( "mei01" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei01]) );
-		mat->addChildNode( "mei02" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei02]) );
-		mat->addChildNode( "mei10" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei10]) );
-		mat->addChildNode( "mei11" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei11]) );
-		mat->addChildNode( "mei12" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei12]) );
-		mat->addChildNode( "mei20" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei20]) );
-		mat->addChildNode( "mei21" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei21]) );
-		mat->addChildNode( "mei22" )->setCDATA( StringUtils::toString(activeShape->mat[Matrix2D::mei22]) );
+		mat->addChildNode( "mei00" )->setCDATA( StringUtils::toString(shape->mat[Matrix2D::mei00]) );
+		mat->addChildNode( "mei01" )->setCDATA( StringUtils::toString(shape->mat[Matrix2D::mei01]) );
+		mat->addChildNode( "mei02" )->setCDATA( StringUtils::toString(shape->mat[Matrix2D::mei02]) );
+		mat->addChildNode( "mei10" )->setCDATA( StringUtils::toString(shape->mat[Matrix2D::mei10]) );
+		mat->addChildNode( "mei11" )->setCDATA( StringUtils::toString(shape->mat[Matrix2D::mei11]) );
+		mat->addChildNode( "mei12" )->setCDATA( StringUtils::toString(shape->mat[Matrix2D::mei12]) );
+		mat->addChildNode( "mei20" )->setCDATA( StringUtils::toString(shape->mat[Matrix2D::mei20]) );
+		mat->addChildNode( "mei21" )->setCDATA( StringUtils::toString(shape->mat[Matrix2D::mei21]) );
+		mat->addChildNode( "mei22" )->setCDATA( StringUtils::toString(shape->mat[Matrix2D::mei22]) );
 		
 		
 		
 		XMLNode* pts = node->addChildNode( "points" );
-		pts->setCDATA( activeShape->getData() );
+		pts->setCDATA( shape->getData() );
 	}
 
 	void internal_insert( const uint32 & index, const VariantData& item ) {

@@ -12,6 +12,11 @@
 				<string>Scribble Document</string>
 
 				<key>TypeContent</key>
+				<array>
+					<string>application/x-scribbledoc</string>
+				</array>
+
+				<key>DocTypeContent</key>
 				<string>application/x-scribbledoc</string>
 
 				<key>ClipboardTypeContent</key>
