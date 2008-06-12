@@ -1,0 +1,44 @@
+This will the first in a 3 part series of articles
+that will explain how to use the built Model-View-Controller
+features of the Visual Component Framework, and it's
+DocumentManager classes that provide a high level set of 
+funcionality similar to MFC's Doc/View classes.
+
+Model-View-Controller (MVC) is a pattern that's been discussed
+all over the place. It originated with the Smalltalk group
+at Xerox PARC, run by Alan Kay, in the early 1970's. It's 
+basically a design pattern whose goal is to cleanly separate 
+the code that deals with application's data (or model) from 
+it's user interface(or view) and the code that responds to 
+the user's actions. There are are a variety of implementations
+out there, some better than others, some easier to use,
+some more difficult. Java's Swing framework is one example
+of MVC (though some might argue that it's a bit overdone).
+MFC also has a primitive sort of MVC though it's possible to
+argue that it's not very well done. 
+
+Typically the Model is designed to hold only data. You interact
+with the model to chage it's data. The Model usually has
+one or more Views, with each view being responsible for
+display some or all of the Model's data. If the Model
+is changed, then there should be some mechanism by which
+Views are notified so they can update themselves. The 
+Controller acts as a kind of "referee" between the model
+and the View(s). For example, if the user were to click
+on the view, then the Controller would decide how to 
+interpret the action (the mouse click), and make any changes.
+Perhaps if the program were a drawing program, the click
+might result in adding a new shape. If this were the case,
+then the Controller would need to tell the Model to 
+add a new shape. This would result in a modification to the 
+Model, which would in turn notify it's View(s) and 
+the UI would be updated and redrawn.
+
+Given a general overview let's take a look at how the VCF implements
+the specifics of this. The VCF has two primary classes that 
+define the Model and View. The Model class is an abstract class
+that other more specific model classes derive from. It provides 
+the basic implementation for managing and connecting views to 
+the model. It also provides a general purpose notification
+system for anyone interested in changes to the model by using 
+a specific delegate. 
