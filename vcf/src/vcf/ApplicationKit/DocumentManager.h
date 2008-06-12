@@ -37,6 +37,11 @@ Contains the string infos characterizing a document class or a kind of document.
 	\li mimetype    is the mime type for this kind of document.
 	\li description is just a generic description for this class of documents.
 */
+class APPLICATIONKIT_API FileTypeInfo {
+public:	
+	String extension;
+	MIMEType mimeInfo;
+};
 class APPLICATIONKIT_API DocumentInfo {
 public:	
 	String docClass;
@@ -47,6 +52,12 @@ public:
 	MIMEType mimetype;
 	String clipboardTypes;
 	String description;
+
+	FileTypeInfo fileTypeAt( const size_t& index ) const ;
+	String clipboardTypeAt( const size_t& index ) const ;
+
+	std::vector<FileTypeInfo> getFileTypes() const;
+	std::vector<String> getClipboardTypes() const;
 };
 
 
@@ -340,9 +351,13 @@ public:
 	* close the current ( active ) document.
 	* The basic functionality is empty. The real implementation is dependent on the policy.
 	*/
-	virtual void closeCurrentDocument(){
-	
+	virtual bool closeCurrentDocument(){
+		return false;
 	};
+
+	virtual bool closeDocument(Document* document, bool promptForSave ){
+		return false;
+	}
 
 	/**
 	* reloads from the hard drive the file for an existing document.
@@ -443,7 +458,8 @@ public:
 	*@param const String&, the filename.
 	*@return String, the mime type.
 	*/
-	MIMEType getMimeTypeFromFileExtension( const String& fileName );
+	MIMEType getDocTypeFromFileExtension( const String& fileName );
+	MIMEType getFileTypeFromFileExtension( const String& fileName );
 
 	/**
 	* sets a specified view for a specified new document.
@@ -827,7 +843,9 @@ public:
 	* closes the current document, and all its children if they exist
 	* according to the policy.
 	*/
-	virtual void closeCurrentDocument();
+	virtual bool closeCurrentDocument();
+
+	virtual bool closeDocument(Document* document, bool promptForSave);
 
 	/**
 	* reloads a file for an existing document.
@@ -984,7 +1002,14 @@ protected:
 	* closes a document.
 	*/
 	virtual void onClose( Event* e ) {
-		closeCurrentDocument();
+		//closeCurrentDocument();
+
+		Document* doc = DocInterfacePolicy::getCurrentDocument();
+		Window* window = NULL;
+		if ( NULL != doc ) {
+			window = doc->getWindow();			
+		}
+		DocInterfacePolicy::closeDocumentWindow( window );
 	}
 
 	/**
@@ -1020,8 +1045,9 @@ protected:
 	* closes the document's window
 	*/
 	void onDocWindowClosing( FrameEvent* e ) {
-
-		if ( !DocInterfacePolicy::closeDocumentWindow( (Window*)e->getSource() ) ) {
+		Window* window = (Window*)e->getSource();
+		
+		if ( !closeDocument( DocInterfacePolicy::getDocumentForWindow(window), true ) ) {
 			e->setOkToClose( false );
 		}
 	}
@@ -1445,6 +1471,9 @@ bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFileAs( Document* doc
 	//set the name to the new file
 	doc->setFileName( fp );
 	try {
+
+		fileType = getFileTypeFromFileExtension( fp );
+
 		result = doc->saveAsType( fp, fileType );
 
 		//reset it back to the old name, we'll change it later
@@ -1499,44 +1528,37 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::openFile()
 }
 
 template < typename AppClass, typename DocInterfacePolicy >
-void DocumentManagerImpl<AppClass,DocInterfacePolicy>::closeCurrentDocument()
+bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::closeDocument(Document* document, bool promptForSave)
 {
-	//JC - I got rid of this because I beleive it is no longer 
-	//neccessary
-	/*closingDocument_ = true;
+	
+	if ( NULL != document ) {
 
-	Document* currentDoc = DocInterfacePolicy::getCurrentDocument();
+		if ( document->isModified() && promptForSave ) {
+			if ( !VCF::DocumentManager::getDocumentManager()->saveDocument( document ) ) {
+				return false;
+			}
+		}
+		Window* window = document->getWindow();
+		VCF::DocManagerEvent event( document->getModel(), VCF::DocumentManager::dmCloseDocument );
+		
+		VCF::DocumentManager::getDocumentManager()->DocumentClosed( &event );
 
-	Component* owner = currentDoc->getOwner();
-	if ( NULL != owner ) {
-		owner->removeComponent( currentDoc );
+		cleanupDropTarget( document );	
+		removeDocument( document );
+		removeUndoRedoStackForDocument( document );
 	}
-	documentClosedOK_ = false;
-	// closes the current document window ( and so the window 
-	// associated  to the just deleted document ).
-	DocInterfacePolicy::closeDocument();
 
+	DocInterfacePolicy::closeDocument( document );
 
-	// remove the current document form the list of opened documents
-	// and frees it.
-	removeDocument( currentDoc );	
+	return true;
+}
 
-	closingDocument_ = false;
-
-	removeUndoRedoStackForDocument( currentDoc );
-
-	currentDoc->free();
-
-	documentClosedOK_ = false;
-	*/
-
+template < typename AppClass, typename DocInterfacePolicy >
+bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::closeCurrentDocument()
+{
 	Document* currentDoc = DocInterfacePolicy::getCurrentDocument();	
-	if ( NULL != currentDoc ) {
-		cleanupDropTarget( currentDoc );	
-		removeDocument( currentDoc );
-	}
 
-	DocInterfacePolicy::closeDocument();
+	return closeDocument( currentDoc, true );
 }
 
 template < typename AppClass, typename DocInterfacePolicy >
@@ -1814,7 +1836,7 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 	// this handler notifies the UI to display any changes on the document
 	CallBack* docEv = app_->getCallback("onDocModified");
 
-	if ( DocumentManager::getShouldCreateUI() ) {
+	if ( DocumentManager::getShouldCreateUI() ) {		
 		if ( DocInterfacePolicy::saveBeforeNewDocument() ) {
 			// only in a SDI policy
 
@@ -1827,9 +1849,9 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 					// of the current document previously modified
 					switch ( saveChanges( doc ) ) {
 					case UIToolkit::mrCancel : {
-							/* the user wanted to abort saving the previous document
-							   no new document is created, and
-								 we put the handler back to the unsaved document */
+							// the user wanted to abort saving the previous document
+							//   no new document is created, and
+							//	 we put the handler back to the unsaved document 
 							doc->DocumentChanged += docEv;
 							return NULL;
 						}
@@ -1837,7 +1859,7 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 					}
 				}
 			}
-		}
+		}		
 	}
 
 	// just creates the object from its type using the VCF RTTI
@@ -2035,6 +2057,7 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::createMenus() {
 	}
 
 }
+
 
 
 

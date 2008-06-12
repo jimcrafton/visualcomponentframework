@@ -22,6 +22,54 @@ using namespace VCF;
 
 
 
+
+
+std::vector<FileTypeInfo> DocumentInfo::getFileTypes() const
+{
+	std::vector<FileTypeInfo> result;
+	
+	StringTokenizer tok(fileTypes, ";");
+	std::vector<String> elements;
+	tok.getElements( elements );
+	
+	VCF_ASSERT( elements.size() % 2 == 0 );
+
+	
+	if ( elements.size() % 2 == 0 ) {
+		result.resize( elements.size()/2 );
+
+		for ( size_t i=0;i<elements.size()/2; i ++ ) {
+			result[i].extension = elements[i*2];
+			result[i].mimeInfo = elements[i*2+1];
+		}
+	}
+
+	return result;
+}
+
+std::vector<String> DocumentInfo::getClipboardTypes() const
+{	
+	std::vector<String> result;
+
+	StringTokenizer tok(clipboardTypes, ";");
+	tok.getElements( result );
+
+	return result;
+}
+
+FileTypeInfo DocumentInfo::fileTypeAt( const size_t& index ) const 
+{
+	return getFileTypes().at( index );
+}
+
+String DocumentInfo::clipboardTypeAt( const size_t& index ) const 
+{
+	return getClipboardTypes().at( index );
+}
+
+
+
+
 DocumentManager* DocumentManager::docManagerInstance = NULL;
 
 DocumentManager::DocumentManager():
@@ -67,7 +115,19 @@ void DocumentManager::init()
 				throw RuntimeException( "Invalid Document Info file - missing 'TypeExtensions' key" );
 			}
 
+			if ( !dict.keyExists("TypeContent") ) {
+				throw RuntimeException( "Invalid Document Info file - missing 'TypeContent' key" );
+			}
+
 			const VariantArray& extensions = dict.getArray( "TypeExtensions" );
+			const VariantArray& typeContents = dict.getArray( "TypeContent" );
+
+			VCF_ASSERT( extensions.data.size() == typeContents.data.size() );
+
+			if ( extensions.data.size() != typeContents.data.size() ) {
+				throw RuntimeException( "Invalid Document Info file - 'TypeContent' and 'TypeExtensions' array sizes don't match" );
+			}
+
 
 			if ( !dict.keyExists("ClipboardTypeContent") ) {
 				throw RuntimeException( "Invalid Document Info file - missing 'ClipboardTypeContent' key" );
@@ -87,7 +147,7 @@ void DocumentManager::init()
 			}
 			
 			DocumentInfo info;
-			info.mimetype = (String)dict["TypeContent"];
+			info.mimetype = (String)dict["DocTypeContent"];
 			info.description = (String)dict["TypeDescription"];
 			info.windowClass = (String)dict["DocumentWindow"];
 			info.viewClass = (String)dict["DocumentView"];
@@ -109,10 +169,12 @@ void DocumentManager::init()
 			UIShell* shell = UIShell::getUIShell();
 			for (size_t j=0;j<extensions.data.size();j++ ) {
 				String ext = extensions.data[j];
+				String mime = typeContents.data[j];
+				
 
 				FileAssociationInfo fa;
 				fa.extension = ext;
-				fa.mimeType = info.mimetype;
+				fa.mimeType = mime;
 				fa.documentClass = app->getName() + ".";
 				if ( !info.docClass.empty() ) {
 					fa.documentClass += info.docClass;
@@ -130,6 +192,7 @@ void DocumentManager::init()
 					info.fileTypes += ";";
 				}
 				info.fileTypes += ext;
+				info.fileTypes += ";" + mime;
 			}
 
 
@@ -143,22 +206,24 @@ void DocumentManager::init()
 	}
 }
 
-void DocumentManager::terminate() {
+void DocumentManager::terminate() {	
+
+	std::vector<Document*>::iterator it2 = openDocuments_.begin();
+	while ( it2 != openDocuments_.end() ) {
+		Document* document = *it2;
+		if ( NULL == document->getOwner() ) {
+			document->free();
+		}
+		it2 ++;
+	}
+
+
 	DocumentUndoRedoMap::iterator it = undoRedoStack_.begin();
 	while ( it != undoRedoStack_.end() ) {
 		delete it->second;
 		it ++;
 	}
 	undoRedoStack_.clear();
-
-	std::vector<Document*>::iterator it2 = openDocuments_.begin();
-	while ( it2 != openDocuments_.end() ) {
-		Document* document = *it2;
-		if ( NULL == document->getOwner() ) {
-			document->release();
-		}
-		it2 ++;
-	}
 }
 
 
@@ -487,21 +552,21 @@ void DocumentManager::prepareOpenDialog( CommonFileOpenDialog* openDialog )
 	String fileTypes;
 	while ( it != docInfo_.end() ) {
 		DocumentInfo& info = it->second;
-		fileTypes = info.fileTypes;
 
-		size_t pos = fileTypes.find( ";" );
-		while ( pos != String::npos ) {
-			String filter = fileTypes.substr( 0 , pos );
-			fileTypes.erase( 0, pos + 1 );
+		std::vector<FileTypeInfo> fileTypes = info.getFileTypes();
+		std::vector<FileTypeInfo>::iterator it2 = fileTypes.begin();
+		
+		while ( it2 != fileTypes.end() ) {
+			const FileTypeInfo& fti = *it2;
+
+			String filter = fti.extension;
+			if ( filter[0] != '.' ) {
+				filter.insert(0,".");
+			}
 			openDialog->addFilter( info.description + " (*" + filter + ")", "*" + filter );
-
-			pos = fileTypes.find( ";" );
+			++it2;
 		}
-		if ( !fileTypes.empty() ) {
-			openDialog->addFilter( info.description + " (*" + fileTypes + ")", "*" + fileTypes );
-		}
-
-		it ++;
+		++it;
 	}
 
 }
@@ -509,34 +574,32 @@ void DocumentManager::prepareOpenDialog( CommonFileOpenDialog* openDialog )
 void DocumentManager::prepareSaveDialog( CommonFileSaveDialog* saveDialog, Document* doc )
 {
 	String fileType;
-	String fileTypes;
-
+	std::vector<FileTypeInfo> fileTypes;
+	String desc;
 	DocumentInfo* info = getDocumentInfo( doc );
 	if ( NULL != info ) {
 		fileType = info->mimetype;
-		fileTypes = info->fileTypes;
+		fileTypes = info->getFileTypes();
+		desc = info->description;
 	}
 
-	size_t pos = fileTypes.find( ";" );
-	while ( pos != String::npos ) {
-		String filter = fileTypes.substr( 0 , pos );
+	
+	std::vector<FileTypeInfo>::iterator it = fileTypes.begin();
+
+	while ( it != fileTypes.end() ) {
+		const FileTypeInfo& fti = *it;
+		
+		String filter = fti.extension;
 		if ( filter[0] != '.' ) {
 			filter.insert(0,".");
 		}
-		fileTypes.erase( 0, pos + 1 );
-		saveDialog->addFilter( filter + " files", "*" + filter );
 
-		pos = fileTypes.find( ";" );
-	}
-	if ( !fileTypes.empty() ) {
-		if ( fileTypes[0] != '.' ) {
-			fileTypes.insert(0,".");
-		}
-		saveDialog->addFilter( fileTypes + " files", "*" + fileTypes );
+		saveDialog->addFilter( desc + " file (*" + filter + ")", "*" + filter );
+		++it;
 	}
 }
 
-MIMEType DocumentManager::getMimeTypeFromFileExtension( const String& fileName )
+MIMEType DocumentManager::getDocTypeFromFileExtension( const String& fileName )
 {
 	MIMEType result;
 	DocumentInfoMap::iterator it = docInfo_.begin();
@@ -556,6 +619,41 @@ MIMEType DocumentManager::getMimeTypeFromFileExtension( const String& fileName )
 			result = info.mimetype;
 			break;
 		}
+		it ++;
+	}
+
+	return result;
+}
+
+MIMEType DocumentManager::getFileTypeFromFileExtension( const String& fileName )
+{
+	MIMEType result;
+	DocumentInfoMap::iterator it = docInfo_.begin();
+	String mimetype;
+
+	
+	String ext = FilePath::getExtension(fileName);
+	if ( ext[0] == '.' ) {
+		ext.erase( 0, 1 );
+	}
+
+	bool done = false;
+	while ( it != docInfo_.end() || !done ) {
+		DocumentInfo& info = it->second;
+
+		std::vector<FileTypeInfo> fileTypes = info.getFileTypes();
+		std::vector<FileTypeInfo>::iterator it2 = fileTypes.begin();
+		while ( it2 != fileTypes.end() ) {
+			const FileTypeInfo& fti = *it2;
+			if ( 0 == StringUtils::noCaseCompare( fti.extension, ext ) ) {
+				result = fti.mimeInfo;
+				done = true;
+				break;
+			}
+
+			++it2;
+		}		
+
 		it ++;
 	}
 
@@ -617,7 +715,7 @@ Document* DocumentManager::openFromFileName( const String& fileName )
 	}
 
 	FilePath fp = fileName;
-	String mimetype = getMimeTypeFromFileExtension( fp );
+	String mimetype = getDocTypeFromFileExtension( fp );
 
 	Document* doc = NULL;
 	if ( !mimetype.empty() )  {
@@ -631,6 +729,7 @@ Document* DocumentManager::openFromFileName( const String& fileName )
 	// finally reads what is specific about the document: its file
 	if ( NULL != doc ) {
 		doc->setFileName( fp );
+		mimetype = getFileTypeFromFileExtension( fp );
 		if ( !doc->openFromType( fp, mimetype ) ) {
 			// failed to open the file, we close the default document just opened.
 			setCurrentDocument( doc );
@@ -743,6 +842,8 @@ void DocumentManager::onDocWndEntered( DropTargetEvent* e )
 	}
 
 	DataObject* dataObj = e->getDataObject();
+
+	/*
 	StringTokenizer tok( info->clipboardTypes, ";" );
 
 	bool matchFound = false;
@@ -753,10 +854,10 @@ void DocumentManager::onDocWndEntered( DropTargetEvent* e )
 			break;
 		}
 	}
+	*/
 
-	if ( !matchFound ) {
-		if ( dataObj->isTypeSupported( FILE_DATA_TYPE ) ) {
-			matchFound = true;//let it go through we'll figure this out on a drop
+		//if (  ) {
+		//	matchFound = true;//let it go through we'll figure this out on a drop
 			/*
 			BasicOutputStream stream; //dump the file names here
 			//write the data in the data object to the stream
@@ -774,15 +875,15 @@ void DocumentManager::onDocWndEntered( DropTargetEvent* e )
 				}
 			}
 			*/
-		}
-	}
+		//}
+	//}
 
-	if ( matchFound ) {
+	if ( dataObj->isTypeSupported( FILE_DATA_TYPE ) ) {
 		currentDragDocument_ = doc;
 	}
 
 
-	e->setActionType( matchFound ? daCopy : daNone );
+	e->setActionType( dataObj->isTypeSupported( FILE_DATA_TYPE ) ? daCopy : daNone );
 }
 
 void DocumentManager::onDocWndDragging( DropTargetEvent* e )
@@ -820,6 +921,10 @@ void DocumentManager::onDocWndDropped( DropTargetEvent* e )
 				}
 			}
 		}
+
+		//turn this off for now - we don't want to deal with 
+		//NON file dragging
+		/*
 		else {
 			if ( !currentDragDocument_->paste( dataObj ) ) {
 				
@@ -852,6 +957,7 @@ void DocumentManager::onDocWndDropped( DropTargetEvent* e )
 				}
 			}
 		}
+		*/
 
 	}
 	currentDragDocument_ = NULL;

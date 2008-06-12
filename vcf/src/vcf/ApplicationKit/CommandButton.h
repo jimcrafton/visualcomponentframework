@@ -74,6 +74,15 @@ public:
 	virtual bool isDefault();
 
 	virtual void setName( const String& name );
+
+
+	void setAsDefaultBtn( const bool& defaultButton ) {
+		setDefault( defaultButton );
+	}
+
+	bool isDefaultBtn() {
+		return isDefault();
+	}
 	/**
 	*sets the caption for the button. The is the
 	*text that is displayed on the button's face

@@ -66,20 +66,24 @@ public:
 		//destroy the old document if neccessary
 		if ( NULL != currentDocument_ ) {
 			VCF::DocumentManager* mgr = VCF::DocumentManager::getDocumentManager();
-			//mgr->cleanupDropTarget( currentDocument_ );
-			mgr->removeDocument( currentDocument_ );
 
-			Model* docModel = currentDocument_->getModel();
+			Document* oldDoc = currentDocument_;
+
+			//do the default clean up and prompt for save if neccessary
+			mgr->closeDocument( oldDoc, false );
+
+			//delete old doc
+			Model* docModel = oldDoc->getModel();
 			Component* owner = docModel->getOwner();
 			if ( NULL != owner ) {
 				owner->removeComponent( docModel );
 				docModel->free();
 			}
 
-			owner = currentDocument_->getOwner();
+			owner = oldDoc->getOwner();
 			if ( NULL != owner ) {
-				owner->removeComponent( currentDocument_ );
-				currentDocument_->free();
+				owner->removeComponent( oldDoc );
+				oldDoc->free();
 			}
 		}
 
@@ -92,6 +96,13 @@ public:
 	* gets the document that currently has the focus, so to speak, in the application
 	*/
 	Document* getCurrentDocument() {
+		return currentDocument_;
+	}
+
+	Document* getDocumentForWindow( Window* window ) {
+		VCF_ASSERT( currentDocument_ != NULL );
+		VCF_ASSERT( currentDocument_->getWindow() == window );
+
 		return currentDocument_;
 	}
 
@@ -109,28 +120,24 @@ public:
 	/**
 	* closes the window associated to the current document
 	*/
-	void closeDocument() {
-		getCurrentDocument()->getWindow()->close();
+	bool closeDocument( VCF::Document* doc ) {
+		if ( (doc == currentDocument_) && (NULL != currentDocument_) ) {
+			Window* window = currentDocument_->getWindow();
+			currentDocument_ = NULL;
+			window->setView( NULL );
+			window->setViewModel( NULL );
+		}
+
+		return true;
 	}
 
 	/**
 	* closes the specified window
 	*/
 	bool closeDocumentWindow( Window* window ) {
-		
-		if ( currentDocument_->isModified() ) {
-			if ( !VCF::DocumentManager::getDocumentManager()->saveDocument( currentDocument_ ) ) {
-				return false;
-			}
-		}					
-		
-		VCF::DocManagerEvent event( currentDocument_->getModel(), VCF::DocumentManager::dmCloseDocument );
-		
-		VCF::DocumentManager::getDocumentManager()->DocumentClosed( &event );
+		window->close();
+		//getCurrentDocument()->getWindow()->close();
 
-		currentDocument_ = NULL;
-		window->setView( NULL );
-		window->setViewModel( NULL );
 		return true;
 	}
 
@@ -262,6 +269,17 @@ public:
 		return result;
 	}
 
+	Document* getDocumentForWindow( Window* window ) {
+		Document* result = NULL;
+		std::map<Window*,Document*>::iterator found = documents_.find( window );
+		if ( found != documents_.end() ) {
+			result = found->second;
+		}
+
+		return result;
+	}
+
+
 	/**
 	* sets the specified document as the active one in the application
 	*/
@@ -278,30 +296,27 @@ public:
 	/**
 	* closes the window associated to the current document
 	*/
-	void closeDocument() {
-		getCurrentDocument()->getWindow()->close();
-	}
+	bool closeDocument( VCF::Document* doc ) {
+		//getCurrentDocument()->getWindow()->close();
+		//doc->getWindow()->close();
 
-	/**
-	* closes the specified window
-	* and activates the next document window in the internal list
-	*/
-	bool closeDocumentWindow( Window* window ) {
-		std::map<Window*,Document*>::iterator found = documents_.find( window );
+		Window* window = NULL;
+
+		std::map<Window*,Document*>::iterator found = documents_.begin();
+		while ( found != documents_.end() ) {
+			Document* currentDoc = found->second;
+			if ( doc == currentDoc ) {
+				window = doc->getWindow();
+				break;
+			}
+			++found;
+		}
+
 		std::map<Window*,Document*>::iterator next = documents_.end();
 		if ( found != documents_.end() ) {
 
 			Document* currentDoc = found->second;
-			if ( currentDoc->isModified() ) {
-				if ( !VCF::DocumentManager::getDocumentManager()->saveDocument( currentDoc ) ) {
-					return false;
-				}
-			}					
-		
-			VCF::DocManagerEvent event( currentDoc->getModel(), VCF::DocumentManager::dmCloseDocument );
-		
-			VCF::DocumentManager::getDocumentManager()->DocumentClosed( &event );
-
+			
 			window->setView( NULL );
 			window->setViewModel( NULL );
 
@@ -310,8 +325,6 @@ public:
 			next = found;
 			++next;
 			documents_.erase( found );
-
-			//currentDocument_ = NULL;
 		}
 
 		std::vector<Menu*>::iterator found2 = std::find( mergedMenus_.begin(), mergedMenus_.end(), window->getMenuBar() );
@@ -339,6 +352,19 @@ public:
 			}
 
 		}
+
+		return true;
+	}
+
+	/**
+	* closes the specified window
+	* and activates the next document window in the internal list
+	*/
+	bool closeDocumentWindow( Window* window ) {
+		
+		window->close();
+
+		
 		return true;
 	}
 

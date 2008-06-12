@@ -95,8 +95,6 @@ protected:
 
 	VCF::DataObject * clipDataObj_;
 
-	HRESULT dragDropResult_;
-
 	DWORD dragDropEffect_;
 
 	DragActionType actionType_;

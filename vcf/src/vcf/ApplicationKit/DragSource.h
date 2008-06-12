@@ -107,11 +107,19 @@ public:
 		return action_;
 	}
 
+	Point getPoint() {
+		return point_;
+	}
+
+	void setPoint( const Point& val ) {
+		point_ = val;
+	}
 private:
     VCF::DataObject* data_;
 	uint32 keyMask_;
     uint32 buttonMask_;
 	DragActionType action_;
+	Point point_;
 };
 
 typedef Delegate1<DragSourceEvent*> DragSourceDelegate; 

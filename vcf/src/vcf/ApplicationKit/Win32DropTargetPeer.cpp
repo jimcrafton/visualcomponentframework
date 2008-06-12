@@ -279,6 +279,16 @@ HRESULT Win32DropTargetPeer::Drop( LPDATAOBJECT dataObject, DWORD keyState, POIN
 		currentDataObj_ = NULL;
 	}
 
+	if ( keyState & MK_SHIFT ) {
+	   *effect = DROPEFFECT_MOVE;
+	}
+	else if ( keyState & MK_ALT ) {
+	   *effect = DROPEFFECT_LINK;
+	}
+	else if ( keyState & MK_CONTROL ) {
+	   *effect = DROPEFFECT_COPY;
+	}
+
 	/*
     *pdwEffect=DROPEFFECT_NONE;
 	*/
@@ -295,7 +305,7 @@ HRESULT Win32DropTargetPeer::Drop( LPDATAOBJECT dataObject, DWORD keyState, POIN
 
 		IEnumFORMATETC* enumFMT = NULL;
 
-		HRESULT result = dataObject_->EnumFormatEtc( DATADIR_GET, &enumFMT );
+		result = dataObject_->EnumFormatEtc( DATADIR_GET, &enumFMT );
 		if ( (SUCCEEDED(result)) && (NULL != enumFMT) ){
 
 
@@ -305,11 +315,9 @@ HRESULT Win32DropTargetPeer::Drop( LPDATAOBJECT dataObject, DWORD keyState, POIN
 
 
 
-			HRESULT res = enumFMT->Next( 1, &fmtETC, &fetched );
+			result = enumFMT->Next( 1, &fmtETC, &fetched );
 
-
-
-			while ( (1 == fetched) && (SUCCEEDED(res)) ){
+			while ( (1 == fetched) && (SUCCEEDED(result)) ){
 				String dataType = VCFCOM::COMUtils::translateWin32ClipboardFormat(fmtETC);
 				if ( !dataType.empty() ) {
 					if ( NULL == currentDataObj_ ) {
@@ -343,23 +351,34 @@ HRESULT Win32DropTargetPeer::Drop( LPDATAOBJECT dataObject, DWORD keyState, POIN
 			event.setDropPoint( dropPt );
 			
 			event.setType( DropTarget::DRAG_DROPPED );
+
+
+			if ( (*effect) & DROPEFFECT_NONE )  {
+				event.setActionType( daNone );
+			}
+			else if ( (*effect) & DROPEFFECT_COPY )  {
+				event.setActionType( daCopy );
+			}
+			else if ( (*effect) & DROPEFFECT_MOVE )  {
+				event.setActionType( daMove );
+			}
+			else if ( (*effect) & DROPEFFECT_LINK )  {
+				event.setActionType( daLink );
+			}
+
 			getDropTarget()->handleEvent( &event );
+
+			*effect = COMUtils::translateActionType( event.getAction() );
 
 			if ( NULL != currentDataObj_ ) {
 				delete currentDataObj_;
 				currentDataObj_ = NULL;
 			}
 		}
-
-
-		//*effect = DROPEFFECT_MOVE;
-
-		if ( keyState & MK_CONTROL ){
-			*effect = DROPEFFECT_COPY;
-		}
+		
 
 		dataObject_->Release();
-		result = NOERROR;
+		result = S_OK;
 	}
 	else {
 		result = E_FAIL;
