@@ -662,6 +662,8 @@ public:
 		DataObject* shapeData = doc->copy();
 		controller->dragShape = shape;
 
+		Matrix2D oldMat = shape->mat;
+
 		src.startDragDrop( shapeData );
 		switch ( src.getActionType() ) {
 			case daNone : {
@@ -670,7 +672,7 @@ public:
 			break;
 
 			case daCopy : {
-				 
+				 controller->model->setShapeMatrix( shape, originalMat );
 			}
 			break;
 
