@@ -189,6 +189,34 @@ object Scribble10Window  : VCF::Window
 		object img11 : VCF::ImageComponent 
 			filename = 'res:freehand.png'
 		end
+
+		object img12 : VCF::ImageComponent 
+			filename = 'res:open.png'
+		end
+
+		object img13 : VCF::ImageComponent 
+			filename = 'res:save.png'
+		end
+
+		object img14 : VCF::ImageComponent 
+			filename = 'res:cut.png'
+		end
+
+		object img15 : VCF::ImageComponent 
+			filename = 'res:copy.png'
+		end
+
+		object img16 : VCF::ImageComponent 
+			filename = 'res:paste.png'
+		end
+
+		object img17 : VCF::ImageComponent 
+			filename = 'res:undo.png'
+		end
+
+		object img18 : VCF::ImageComponent 
+			filename = 'res:redo.png'
+		end
 	end
 
 	object toolbar : VCF::Toolbar 
@@ -197,6 +225,53 @@ object Scribble10Window  : VCF::Window
 		showButtonCaptions = false
 		imageList = @images;
 		horizontalCaptions = false
+
+		object openBtn : VCF::ToolbarItem
+			imageIndex = 11
+			caption = 'Open Scribble File'
+		end
+
+		object saveBtn : VCF::ToolbarItem
+			imageIndex = 12
+			caption = 'Save Scribble File'
+		end
+
+		object sep1 : VCF::ToolbarItem
+			separator = true
+		end
+
+		object cutBtn : VCF::ToolbarItem
+			imageIndex = 13
+			caption = 'Cut Selection to Clipboard'
+		end
+
+		object copyBtn : VCF::ToolbarItem
+			imageIndex = 14
+			caption = 'Copy Selection to Clipboard'
+		end
+
+		object pasteBtn : VCF::ToolbarItem
+			imageIndex = 15
+			caption = 'Paste Selection from Clipboard'
+		end
+
+		object sep1 : VCF::ToolbarItem
+			separator = true
+		end
+
+		object undoBtn : VCF::ToolbarItem
+			imageIndex = 16
+			caption = 'Undo last action'
+		end
+
+		object redoBtn : VCF::ToolbarItem
+			imageIndex = 17
+			caption = 'Redo last action'
+		end
+
+		object sep1 : VCF::ToolbarItem
+			separator = true
+		end
 
 		object infoBtn : VCF::ToolbarItem
 			imageIndex = 0
@@ -384,8 +459,7 @@ object Scribble10Window  : VCF::Window
 			Performed  = [controller@ScribbleController::onChangeTool]
 			Update  = [controller@ScribbleController::onUpdateChangeTool]
 		end
-	end	
-
+	end
 
 	object contentDropTarget : VCF::DropTarget
 		targets[0] = @contentPanel

@@ -198,13 +198,17 @@ public:
 		editShape( shape );
 	}
 
+	void deleteShape( ScribbleShape* shape ) {
+		VariantData v;
+		v = shape;
+		
+		uint32 index = model->getIndexOf( v );
+		model->remove( index );
+	}
+
 	void deleteCurrentShape() {
-		if ( NULL != model->getActiveShape() ) {
-			VariantData v;
-			v = model->getActiveShape();
-			
-			uint32 index = model->getIndexOf( v );
-			model->remove( index );
+		if ( NULL != model->getActiveShape() ) {			
+			deleteShape( model->getActiveShape() );
 		}
 	}
 
@@ -655,11 +659,28 @@ public:
 		src.setActionType( daMove );
 
 		Document* doc = DocumentManager::getDocumentManager()->getCurrentDocument();
-		DataObject* shapeData = doc->cut();
+		DataObject* shapeData = doc->copy();
 		controller->dragShape = shape;
-		
 
 		src.startDragDrop( shapeData );
+		switch ( src.getActionType() ) {
+			case daNone : {
+
+			}
+			break;
+
+			case daCopy : {
+				 
+			}
+			break;
+
+			case daMove : {
+				controller->deleteShape( shape );
+			}
+			break;
+		}
+
+
 
 		delete shapeData;
 		controller->dragShape = NULL;
