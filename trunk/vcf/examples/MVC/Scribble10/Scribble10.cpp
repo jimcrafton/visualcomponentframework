@@ -61,6 +61,16 @@ public:
 		static bool firstTime = true;
 		if ( firstTime ) {
 			initializeSettings(true);
+
+			DocumentManager* docMgr = DocumentManager::getDocumentManager();
+
+			docMgr->getAction( DocumentManager::atEditCopy )->addTarget( (UIComponent*)findComponent( "copyBtn", true ) );
+			docMgr->getAction( DocumentManager::atEditCut )->addTarget( (UIComponent*)findComponent( "cutBtn", true ) );
+			docMgr->getAction( DocumentManager::atEditPaste )->addTarget( (UIComponent*)findComponent( "pasteBtn", true ) );
+			docMgr->getAction( DocumentManager::atFileOpen )->addTarget( (UIComponent*)findComponent( "openBtn", true ) );
+			docMgr->getAction( DocumentManager::atFileSave )->addTarget( (UIComponent*)findComponent( "saveBtn", true ) );
+			docMgr->getAction( DocumentManager::atEditUndo )->addTarget( (UIComponent*)findComponent( "undoBtn", true ) );
+			docMgr->getAction( DocumentManager::atEditRedo )->addTarget( (UIComponent*)findComponent( "redoBtn", true ) );
 		}
 
 		Document* doc = (Document*)e->getSource();
@@ -118,7 +128,8 @@ public:
 		Document* doc = (Document*)e->getSource();
 
 		ScribbleModel* model = (ScribbleModel*)doc->getModel();
-		model->ModelChanged += getCallback( "Scribble10App::onScribbleModelChanged" );
+		model->ModelChanged += getCallback( "Scribble10App::onScribbleModelChanged" );	
+
 	}
 
 	void onAbout(Event*) {
