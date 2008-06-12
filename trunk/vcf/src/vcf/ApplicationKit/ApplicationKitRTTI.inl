@@ -569,6 +569,7 @@ _class_rtti_end_
 
 _class_rtti_(CommandButton, "VCF::Control", COMMANDBUTTON_CLASSID)
 _property_( String, "caption", getCaption, setCaption, "" );
+_property_( bool, "default", isDefaultBtn, setAsDefaultBtn, "" );
 _property_enum_labeled_( ButtonCommandType, "commandType", getCommandType, setCommandType,
 					   BC_NONE, BC_MAYBE, 6, ButtonCommandTypeNames, "");
 _delegate_( ButtonDelegate, ButtonClicked )

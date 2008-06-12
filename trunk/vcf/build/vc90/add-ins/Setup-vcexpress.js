@@ -58,7 +58,7 @@ function getVC90ProductDir()
 	catch(e)
 	{		
 		try {
-			strVC8Key = "HKLM\\SOFTWARE\\Microsoft\\VisualStudio\9.0\\Setup\\VC\\ProductDir";
+			strVC8Key = "HKLM\\SOFTWARE\\Microsoft\\VisualStudio\\9.0\\Setup\\VC\\ProductDir";
 			result = WSShell.RegRead(strVC8Key);
 		}
 		catch(e)

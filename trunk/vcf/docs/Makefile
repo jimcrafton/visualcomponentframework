@@ -12,10 +12,10 @@ VERSION = $(shell cat ../VERSION)
 XMAKE_VERSION = 1.0.5
 
 
-HTMLHELP_COMPILER = "c:/Program Files/HTML Help Workshop/hhc.exe"
-XSL_DOCBOOK_DIR = "f:/code/docbook-xsl-1.69.1"
+HTMLHELP_COMPILER = "f:/Program Files/HTML Help Workshop/hhc.exe"
+#XSL_DOCBOOK_DIR = "f:/code/docbook-xsl-1.69.1"
 
-#XSL_DOCBOOK_DIR = "c:/code/docbook-xsl-1.73.2"
+XSL_DOCBOOK_DIR = "f:/code/docbook-xsl-1.73.2"
 
 XSL_HTMLHELP_IMPORT = "$(XSL_DOCBOOK_DIR)/htmlhelp/htmlhelp.xsl"
 XSL_HTML_IMPORT = "$(XSL_DOCBOOK_DIR)/html/docbook.xsl"

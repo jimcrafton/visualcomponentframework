@@ -1,5 +1,5 @@
 VSWIZARD 7.0
-Wizard=VsWizard.VsWizardEngine.8.0
+Wizard=VsWizard.VsWizardEngine.9.0
 
 Param="WIZARD_NAME = VCFAppWizard"
 Param="ABSOLUTE_PATH = D:\vcf\build\vc71\add-ins\VCFAppWizard"
