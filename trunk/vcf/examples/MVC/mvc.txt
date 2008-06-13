@@ -2,7 +2,22 @@ This will the first in a 3 part series of articles
 that will explain how to use the built Model-View-Controller
 features of the Visual Component Framework, and it's
 DocumentManager classes that provide a high level set of 
-funcionality similar to MFC's Doc/View classes.
+funcionality similar to MFC's Doc/View classes. During the
+course of the articles, we'll discuss the basic design
+of MVC in the framework, how to make a simple MVC app with 
+a Model and a very simple controller. I'll discuss how to 
+build your UI using the VCF's Visual Form File format 
+and how to hook up event handlers (or callbacks) in 
+C++ code to the UI components defined in the layout file.
+Then we'll walk through making a complete MVC based app
+that starts with drawing simple shapes and ends with an
+simple drawing app that can draw shapes, allows you to
+open or save with different file formats, supports 
+cut/copy/paste, undo and redo, drag and drop for both
+files and shape objects that you select, and that can
+be dropped on external applications, shell integration
+and finally has support in the UI for updating the state
+of various UI elements like menu items and toolbar buttons.
 
 Model-View-Controller (MVC) is a pattern that's been discussed
 all over the place. It originated with the Smalltalk group
@@ -36,9 +51,178 @@ the UI would be updated and redrawn.
 
 Given a general overview let's take a look at how the VCF implements
 the specifics of this. The VCF has two primary classes that 
-define the Model and View. The Model class is an abstract class
-that other more specific model classes derive from. It provides 
-the basic implementation for managing and connecting views to 
-the model. It also provides a general purpose notification
-system for anyone interested in changes to the model by using 
-a specific delegate. 
+define the Model and View. In addition there is the Control class 
+that implements the View interface as well as allowing you to set 
+a custom view. All of the various UI control classes, such as the 
+TextControl, ListControl, TreeControl, and so on, use Models to 
+store their data, so MVC is not just a throwaway in the framework, 
+it's built in and heavily used.
+
+Model Basics
+
+The Model class is an abstract class that other more specific model 
+classes derive from. It provides the basic implementation for 
+managing and connecting views to the model. It also provides a 
+general purpose notification system for anyone interested in changes 
+to the model by using a specific delegate variable named ModelChanged. 
+The Model's views are updated by the updateAllViews() function that
+iterates through all the registered views of a model and calls the
+updateView() function for each view. 
+
+Data Access
+The Model class itself does not store or define how data is stored. 
+It does provide some basic methods to setting and/or retrieving data,
+as well as determing if the model has any data at all, and a method 
+to clear it, or empty it, of all data. 
+
+You can access data generically using the Model's getValue() or 
+getValueAsString() methods. These take an optional key that's a 
+variant that can be used to help retrieve the specific value.
+For example if you had a model that represented a bunch of text,
+then your implementation of getValue might just ignore the 
+key parameter and simply return all the text. If your model
+was a list of some sort, then the key might be interpreted as an
+index and you'd return the value at the specified index in the list.
+These are not meant to be the only way to provide access to the model's
+data, but rather an optional way that you provide in the case where
+it's not possible to call a more specific method of a model derived
+class.
+
+Likewise it's possible to set data generically through the Model's
+setValue() method. Like the getValue() method, this takes a variant
+to store the data and an optional variant to specify the key. Again,
+this is not considered as the only way to set data on a model, but 
+rather an optional method.
+
+Data Storage and Variants
+If you look at the Model class methods getValue() and setValue(), and
+if you look at some of the other model implementations like ListModel
+or TreeModel, you'll see that the VariantData class is used to represent
+a piece of data. This makes it easy to pass around a variety of different
+data types transparently, but it does not mean that you have to implement
+the model storage using a VariantData. For example, if you had a collection
+of floating point values, you might decide to implement the ListModel
+and store the data in an array of doubles using std::vector<double>.
+
+Views
+While the Model has a number of methods associated with it, the 
+View class is relatively simple. It's main function is to render, or 
+draw the model. This is done in the View's 	paintView() method
+which gets called by the framework. A GraphicsContext is passed 
+in and you can draw whatever you need to. 
+
+The View also has a pointer to the Model it's associated with and 
+a pointer to a Control intance that it's associated with. Beyond
+that it's up to the application specific design of a particular view
+to store anything else. 
+
+Controls and Views
+A Control derives from the View class as well as containting a pointer
+to a view. This means that by default any control can be added to a 
+Model. By default the Control's paintView() method is just going to 
+call the code in the Control's paint() method. By allowing the control
+the possibility of an external View, you can customize the display
+of a Control without using inheritance. The default painting behavior
+for a Control is to check to see if it's view instance is non NULL,
+if it is then it calls the view instance's paintView() method, 
+otherwise it does it's own internal painting. 
+
+Where's the Controller?
+So far I haven't mentioned a specific class for the Controller. That's
+because there isn't one! The Controller tends to be extremely application
+specific and there's not enough common elements to justify a class.
+Some possible options are to use the existing Application class 
+and put your Controller logic there, or create a brand new class
+that becomes your Controller. The important thing is what the class
+does and how it interacts with the Model and View that qualify it as 
+a controller.
+
+Before you get started
+Before we get too far into this, please make sure that you've installed 
+the latest version of the VCF (version 0-9-8 or better). And you may want 
+to have a glance at some of the articles here on CP to get a feel for 
+how things work. Some useful articles:
+[
+helloworld
+resources
+help
+localization
+]
+
+A Simple Example
+For our first step, let's create a simple application that displays
+the information in the ubiquitous Person class.
+
+[sc1]
+
+First lets create our model. We'll call it a Person and define like so:
+
+
+class Person : public Model {
+public:
+	virtual bool isEmpty() {
+		return attributes.empty();
+	}
+protected:
+	Dictionary attributes;
+};
+
+
+This is obviously pretty bare. Instead of having separate fields for
+each member variable, like a name, address, etc, we are going to be 
+lazy and use the framework's Dictionary class, which is not much more than
+a wrapper around std::map<String,VariantData>, with a few utility methods 
+thrown in for good measure. This let's us write something like:
+
+
+attributes["Age"] = 38;
+attributes["Name"] = "Bob";
+
+When you implement your model class you need to implement the 
+isEmpty() method, this allows the framework to tell if you model has
+any data in it. In our case we just return whether or not the attributes 
+member variable is empty().
+
+Now lets add support for getting or setting data implementing the generic 
+getValue() and setValue() methods:
+
+class Person : public Model {
+public:
+	virtual bool isEmpty() {
+		return attributes.empty();
+	}
+	
+	virtual VariantData getValue( const VariantData& key=VariantData::null() ) 	{
+		String strKey = key;
+		return attributes[ strKey ];
+	}
+
+	virtual void setValue( const VariantData& value, const VariantData& key=VariantData::null() )  {
+		String strKey = key;
+		attributes[ strKey ] = value;
+		ModelEvent e( this, Model::MODEL_CHANGED );
+		changed( &e );
+	}
+protected:
+	Dictionary attributes;
+};
+
+
+Note our setValue() implementation. We declare a ModelEvent, pass in the event's 
+source (the model), set it's event type to Model::MODEL_CHANGED, and then 
+call the Model's changed() method. This does two things for us: it makes 
+sure to invoke the ModelChanged delegate with the event instance, and it 
+calls the Model's updateAllViews() method. It's a convenience method so 
+you don't forget to do this yourself.
+
+If we wanted to get really fancy we could add a specific delegate to our 
+class for greater granularity, for example we could have a NameChanged 
+delegate, but for now we're just going to keep things simple.
+
+
+
+
+
+
+
+
