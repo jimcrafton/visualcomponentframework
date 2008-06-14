@@ -25,7 +25,7 @@ DropTarget::DropTarget( Control* control )
 		throw InvalidPeer( MAKE_ERROR_MSG_2("Unable to create DropTarget peer") );
 	}
 
-	addTargetControl( control );
+	addTarget( control );
 }
 
 DropTarget::DropTarget()
@@ -139,7 +139,7 @@ Enumerator<Control*>* DropTarget::getTargets()
 	return targets_.getEnumerator();
 }
 
-void DropTarget::addTargetControl( Control* control )
+void DropTarget::addTarget( Control* control )
 {
 	std::vector<Control*>::iterator found = std::find( targets_.begin(), targets_.end(), control );
 	if ( found == targets_.end() ) {
@@ -148,7 +148,7 @@ void DropTarget::addTargetControl( Control* control )
 	}
 }
 
-void DropTarget::removeTargetControl( Control* control )
+void DropTarget::removeTarget( Control* control )
 {
 	if ( NULL != control ) {
 		std::vector<Control*>::iterator found = std::find( targets_.begin(), targets_.end(), control );

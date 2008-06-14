@@ -15,7 +15,7 @@ where you installed the VCF.
 
 
 
-@interface VCFWindowContentView : NSView
+@interface VCFWindowContentView : VCFControlView
 {
 	VCF::OSXWindow* wnd;
 }
@@ -34,9 +34,12 @@ where you installed the VCF.
 
 - (void)drawRect:(NSRect)rect
 {
+	printf( "rect: %d,%d,%d,%d\n", (int)rect.origin.x, (int)rect.origin.y, (int)rect.size.width, (int)rect.size.height );
 	if ( NULL != wnd ) {
-		wnd->internal_paint(rect);
+		//wnd->internal_paint(rect);
 	}	
+	
+	[super drawRect:rect];
 }
 
 - (void) setVCFWindow: (id) aWnd
@@ -44,6 +47,15 @@ where you installed the VCF.
 	wnd = (VCF::OSXWindow*)aWnd;
 }
  
+- (void)setFrame:(NSRect)rect
+{
+	[super setFrame:rect];
+	
+	
+	printf( "VCFWindowContentView set setFrame\n\trect: %d,%d,%d,%d\n", (int)rect.origin.x, (int)rect.origin.y, (int)rect.size.width, (int)rect.size.height );
+	
+}
+
 @end
 
 namespace VCF {
@@ -178,16 +190,22 @@ void OSXWindow::create( Control* owningControl )
 	
 	
 	VCFWindowContentView* contentView = [VCFWindowContentView alloc];	
+	[contentView setAutoresizingMask: (NSViewWidthSizable | NSViewHeightSizable)];
 	
 	r.size.width = 1;
 	r.size.height = 1;
 	r.origin.x = 0;
 	r.origin.y = 0;
-	[contentView initWithFrame:r];
 	
+	[contentView setVCFControl: owningControl];
 	[contentView setVCFWindow: (id)this];
 	
+	[contentView initWithFrame:r];
+	
+	
+	
 	[window_ setContentView: contentView ];
+	[window_ setAcceptsMouseMovedEvents: YES];
 }
 
 void OSXWindow::destroyControl()
@@ -236,50 +254,7 @@ void OSXWindow::setBounds( Rect* rect )
 	r.origin.y = rect->top_;
 	r.size.width = rect->getWidth();
 	r.size.height = rect->getHeight();
-	[window_ setFrame:r display:YES];
-	
-/*
-	OSXRect r = rect;
-
-	SetWindowBounds( windowRef_, kWindowStructureRgn, r );
-	
-	if ( NULL != mouseTrackRef_ ) {
-		ReleaseMouseTrackingRegion( mouseTrackRef_ );
-	}
-	
-	GetWindowBounds( windowRef_, kWindowContentRgn, r );	
-	
-	::Rect rgnRect = r;
-	RgnHandle rgn = NewRgn();
-	SetRectRgn( rgn, rgnRect.left, rgnRect.top, rgnRect.right, rgnRect.bottom );
-		
-	MouseTrackingRegionID id;
-	id.signature = VCF_WINDOW_MOUSE_RGN;
-	id.id = (SInt32)this;
-		
-	OSStatus err = CreateMouseTrackingRegion( windowRef_, rgn, NULL, kMouseTrackingOptionsLocalClip,
-												  id, this, NULL, &mouseTrackRef_ );
-	if ( noErr == err ) {
-		RetainMouseTrackingRegion( mouseTrackRef_ );
-		err = SetMouseTrackingRegionEnabled( mouseTrackRef_, TRUE );
-	}
-	
-		
-	DisposeRgn( rgn );
-*/		
-	
-	/*
-	if ( !IsWindowVisible( windowRef_ ) ) {
-		//send an artificial size event!
-		if ( !control_->isDestroying() ) {
-			StringUtils::trace( "Sending artificial size event!" );
-			VCF::Size sz( rect->getWidth(), rect->getHeight() );
-			ControlEvent event( control_, sz );
-							
-			control_->handleEvent( &event );
-		}						
-	}
-	*/
+	[window_ setFrame:r display:YES];	
 }
 
 bool OSXWindow::beginSetBounds( const uint32& numberOfChildren )
@@ -296,8 +271,6 @@ Rect OSXWindow::getBounds()
 {
 	NSRect r = [window_ frame];
 	
-	//GetWindowBounds( windowRef_, kWindowStructureRgn, r );
-
 	VCF::Rect result( r.origin.x, r.origin.y, 
 						r.origin.x + r.size.width, 
 						r.origin.y + r.size.height );
@@ -313,24 +286,6 @@ void OSXWindow::setVisible( const bool& visible )
 	else {
 		[window_ makeKeyAndOrderFront:nil];
 	}
-/*
-	if ( !visible ) {
-		HideWindow( windowRef_ );
-	}
-	else {
-		bool doResize = false;
-		if ( !IsWindowVisible( windowRef_ ) ) {
-			doResize = true;
-		}
-		
-		ShowWindow( windowRef_ );
-	
-		if ( doResize ) {
-			control_->getContainer()->resizeChildren( NULL );
-		}
-		repaint( NULL,false );
-	}
-	*/
 }
 
 bool OSXWindow::getVisible()
@@ -346,6 +301,8 @@ Control* OSXWindow::getControl()
 void OSXWindow::setControl( Control* control )
 {
 	control_ = control;
+	VCFWindowContentView* contentView = [ window_ contentView];
+	[contentView setVCFControl: control];
 }
 
 void OSXWindow::setCursor( Cursor* cursor )
@@ -410,10 +367,6 @@ void OSXWindow::repaint( Rect* repaintRect, const bool& immediately )
 	else {
 		r = repaintRect;
 	}
-
-	//HIViewSetNeedsDisplay( getRootControl(), true );
-
-	//InvalWindowRect( windowRef_, r );
 }
 
 void OSXWindow::keepMouseEvents()

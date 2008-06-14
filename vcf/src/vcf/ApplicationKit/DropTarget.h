@@ -228,9 +228,9 @@ public:
 	Adds a new target control to the drop target's collection
 	and registers it.
 	*/
-	void addTargetControl( Control* control );
+	void addTarget( Control* control );
 
-	void removeTargetControl( Control* control );
+	void removeTarget( Control* control );
 
 
 	Control* getTargetControl( const uint32& index );
