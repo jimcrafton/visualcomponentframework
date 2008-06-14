@@ -18,14 +18,6 @@ where you installed the VCF.
 #define VCF_WINDOW_MOUSE_RGN			'VCfW'
 #define VCF_CONTROL_MOUSE_RGN			'VCfC'
 
-class OSXUIUtils {
-public:
-static VCF::uint32 translateButtonMask( EventMouseButton button );
-
-static VCF::uint32 translateKeyMask( UInt32 keyMod );
-
-};
-
 
 namespace VCF {
 
@@ -39,9 +31,10 @@ this class is used as a wrapper around an XEvent.
 */
 class OSXEventMsg {
 public:
-
-
-	Control* control_;
+	OSXEventMsg(): event(NULL),view(nil), control(NULL){}
+	NSEvent* event;
+	NSView* view;
+	Control* control;
 };
 
 
@@ -184,7 +177,7 @@ protected:
 	//static OSStatus handleOSXApplicationEvents( EventHandlerCallRef nextHandler,
       //                                          EventRef osxEvent, void* userData );
 
-    //OSStatus handleAppEvents( EventHandlerCallRef nextHandler, EventRef osxEvent );
+    bool handleAppEvents( NSEvent* event );
 
 	//std::map<EventLoopTimerRef,TimeOutHandler> timeoutHandlers_;
     bool quitEventLoop_;

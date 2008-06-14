@@ -16,6 +16,227 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/OSXWindow.h"
 #include "vcf/ApplicationKit/OSXCursorPeer.h"
 
+
+VCF::uint32 translateButtonMask( NSEvent* event )
+{
+	VCF::uint32 result = 0;
+	
+	NSUInteger flags = [event modifierFlags];
+	
+	if ( flags == kEventMouseButtonPrimary ) {
+		result = VCF::mbmLeftButton;
+	}
+	else if ( flags == kEventMouseButtonSecondary ) {
+		result = VCF::mbmRightButton;
+	}
+	else if ( flags == kEventMouseButtonTertiary ) {
+		result = VCF::mbmMiddleButton;
+	}
+	
+	return result;
+}
+
+VCF::uint32 translateKeyMask( NSEvent* event )
+{
+    VCF::uint32 result = 0;
+	
+	NSUInteger flags = [event modifierFlags];
+	
+    if ( flags & NSShiftKeyMask  ) {
+        result |= VCF::kmShift;
+    }
+	
+    if ( flags & NSAlternateKeyMask ) {
+        result |= VCF::kmAlt;
+    }
+	
+	if ( flags & NSCommandKeyMask ) {
+        result |= VCF::kmCtrl;
+    }
+	
+    if ( flags &  NSControlKeyMask  ) {
+        result |= VCF::kmCtrl;
+    }
+    return result;
+}
+
+
+
+
+
+@implementation VCFControlView
+
+- (id)initWithFrame:(NSRect)frameRect
+{
+	if ((self = [super initWithFrame:frameRect]) != nil) {
+		// Add initialization code here		
+	}
+	return self;
+}
+
+- (void)drawRect:(NSRect)rect
+{
+	if ( NULL != control ) {		
+		peer->internal_paint( rect );
+	}	
+}
+
+- (void) setPeerInst: (VCF::OSXControl*) val
+{
+	peer = val;
+}
+
+
+- (void) setVCFControl: (VCF::Control*) val
+{
+	control = val;
+}
+
+ 
+- (void)setFrame:(NSRect)rect
+{
+	[super setFrame:rect];
+	
+	VCF::Size sz( rect.size.width, rect.size.height );
+	VCF::ControlEvent e( control, sz );
+	control->handleEvent( &e );
+	
+	
+	VCF::ControlEvent e2( control, VCF::Point(rect.origin.x,rect.origin.y) );
+	control->handleEvent( &e2 );
+}
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+	[super mouseDown:theEvent];
+	
+	NSPoint location = [theEvent locationInWindow];
+	NSPoint local = [self convertPoint:location fromView:nil];
+	VCF::Point pt(local.x, local.y);
+	VCF::uint32 mouseButton = 0;
+	
+	
+	switch ( [theEvent type] ) {
+		case NSLeftMouseDown: { mouseButton = VCF::mbmLeftButton; };
+		break;
+		
+		case NSRightMouseDown: { mouseButton = VCF::mbmRightButton; };
+		break;
+		
+	}
+				
+	VCF::MouseEvent me( control, VCF::Control::MOUSE_DOWN,mouseButton,
+												translateKeyMask( theEvent ), &pt );
+												
+	control->handleEvent( &me );
+	
+	printf( "mouseDown! %0.2f, %0.2f\n", pt.x_, pt.y_  );
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+	[super mouseUp:theEvent];
+	
+	NSPoint location = [theEvent locationInWindow];
+	NSPoint local = [self convertPoint:location fromView:nil];
+	VCF::Point pt(local.x, local.y);
+	VCF::uint32 mouseButton = 0;
+	
+	
+	switch ( [theEvent type] ) {
+		case NSLeftMouseDown: { mouseButton = VCF::mbmLeftButton; };
+		break;
+		
+		case NSRightMouseDown: { mouseButton = VCF::mbmRightButton; };
+		break;
+		
+	}
+				
+	VCF::MouseEvent me( control, VCF::Control::MOUSE_UP,mouseButton,
+												translateKeyMask( theEvent ), &pt );
+												
+	control->handleEvent( &me );
+	
+	printf( "mouseUp! %0.2f, %0.2f\n", pt.x_, pt.y_  );
+}
+
+
+- (void)rightMouseDown:(NSEvent *)theEvent
+{
+	[super rightMouseDown:theEvent];
+	
+	NSPoint location = [theEvent locationInWindow];
+	NSPoint local = [self convertPoint:location fromView:nil];
+	VCF::Point pt(local.x, local.y);
+	VCF::uint32 mouseButton = 0;
+	
+	
+	switch ( [theEvent type] ) {
+		case NSLeftMouseDown: { mouseButton = VCF::mbmLeftButton; };
+		break;
+		
+		case NSRightMouseDown: { mouseButton = VCF::mbmRightButton; };
+		break;
+		
+	}
+				
+	VCF::MouseEvent me( control, VCF::Control::MOUSE_DOWN,mouseButton,
+												translateKeyMask( theEvent ), &pt );
+												
+	control->handleEvent( &me );
+	
+	printf( "rmouseDown! %0.2f, %0.2f\n", pt.x_, pt.y_  );
+}
+
+- (void)rightMouseUp:(NSEvent *)theEvent
+{
+	[super rightMouseUp:theEvent];
+	
+	NSPoint location = [theEvent locationInWindow];
+	NSPoint local = [self convertPoint:location fromView:nil];
+	VCF::Point pt(local.x, local.y);
+	VCF::uint32 mouseButton = 0;
+	
+	
+	switch ( [theEvent type] ) {
+		case NSLeftMouseDown: { mouseButton = VCF::mbmLeftButton; };
+		break;
+		
+		case NSRightMouseDown: { mouseButton = VCF::mbmRightButton; };
+		break;
+		
+	}
+				
+	VCF::MouseEvent me( control, VCF::Control::MOUSE_UP,mouseButton,
+												translateKeyMask( theEvent ), &pt );
+												
+	control->handleEvent( &me );
+	
+	printf( "rmouseUp! %0.2f, %0.2f\n", pt.x_, pt.y_  );
+}
+
+
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+	[super mouseMoved:theEvent];
+	
+	NSPoint location = [theEvent locationInWindow];
+	NSPoint local = [self convertPoint:location fromView:nil];
+	VCF::Point pt(local.x, local.y);
+	
+	
+	VCF::MouseEvent me( control, VCF::Control::MOUSE_MOVE,translateButtonMask(theEvent),
+									translateKeyMask(theEvent), &pt );
+									
+	control->handleEvent( &me );
+	printf( "mouseMoved! %0.2f, %0.2f\n", pt.x_, pt.y_  );
+}
+
+
+@end
+
+
+
 /*
 
 class OSXControlView : public TView {
@@ -919,7 +1140,10 @@ void OSXControl::postChildPaint( GraphicsContext* graphicsContext, Control* chil
 
 }
 	
+void OSXControl::internal_paint( const NSRect& r )
+{
 
+}
 
 };
 

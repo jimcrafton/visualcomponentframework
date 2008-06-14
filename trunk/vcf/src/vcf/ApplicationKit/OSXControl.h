@@ -9,7 +9,27 @@ where you installed the VCF.
 */
 
 
+
 namespace VCF {
+	class OSXControl;
+};
+
+
+@interface VCFControlView : NSView
+{
+	VCF::OSXControl* peer;
+	VCF::Control* control;
+}
+
+
+- (void) setPeerInst: (VCF::OSXControl*) peer;
+- (void) setVCFControl: (VCF::Control*) ctrl;
+@end
+
+
+namespace VCF {
+
+
 
 
 class OSXControl : public ControlPeer {
@@ -86,6 +106,7 @@ public:
 	
 	virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
 	
+	void internal_paint( const NSRect& r );
 protected:
 	Control* control_;	
 	MouseState mouseState_;

@@ -974,7 +974,7 @@ void DocumentManager::cleanupDropTarget( Document* doc )
 	while ( it != dropTargets_.end() ) {
 		DropTarget* dt = *it;
 		if ( dt->getTarget() == doc->getWindow() ) {
-			dt->removeTargetControl( doc->getWindow() );
+			dt->removeTarget( doc->getWindow() );
 			dt->free();
 			dropTargets_.erase( it );
 			break;

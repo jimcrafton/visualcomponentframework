@@ -50,42 +50,50 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/OSXAppResourceBundle.h"
 
 #define kSleepTime	32767
-
-VCF::uint32 OSXUIUtils::translateButtonMask( EventMouseButton button )
+/*
+VCF::uint32 translateButtonMask( NSEvent* event )
 {
 	VCF::uint32 result = 0;
 	
-	if ( button == kEventMouseButtonPrimary ) {
+	NSUInteger flags = [event modifierFlags];
+	
+	if ( flags == kEventMouseButtonPrimary ) {
 		result = VCF::mbmLeftButton;
 	}
-	else if ( button == kEventMouseButtonSecondary ) {
+	else if ( flags == kEventMouseButtonSecondary ) {
 		result = VCF::mbmRightButton;
 	}
-	else if ( button == kEventMouseButtonTertiary ) {
+	else if ( flags == kEventMouseButtonTertiary ) {
 		result = VCF::mbmMiddleButton;
 	}
 	
 	return result;
 }
 
-VCF::uint32 OSXUIUtils::translateKeyMask( UInt32 keyMod )
+VCF::uint32 translateKeyMask( NSEvent* event )
 {
     VCF::uint32 result = 0;
 	
-    if ( keyMod & shiftKey ) {
+	NSUInteger flags = [event modifierFlags];
+	
+    if ( flags & NSShiftKeyMask  ) {
         result |= VCF::kmShift;
     }
 	
-    if ( keyMod & cmdKey ) {
+    if ( flags & NSAlternateKeyMask ) {
         result |= VCF::kmAlt;
     }
 	
-    if ( keyMod & controlKey ) {
+	if ( flags & NSCommandKeyMask ) {
+        result |= VCF::kmCtrl;
+    }
+	
+    if ( flags &  NSControlKeyMask  ) {
         result |= VCF::kmCtrl;
     }
     return result;
 }
-
+*/
 
 
 
@@ -961,13 +969,50 @@ void OSXUIToolkit::internal_unregisterTimerHandler( VCF::EventHandler* handler )
 	*/
 }
 
+bool OSXUIToolkit::handleAppEvents( NSEvent* event )
+{
+	bool result = true;
+	
+	internal_idleTime();
+	
+	Application* runningApp = Application::getRunningInstance();
+	
+	if ( NULL != runningApp ) {
+		runningApp->idleTime();
+	}
+	
+	//check library apps;
+	Enumerator<LibraryApplication*>* registeredLibs = LibraryApplication::getRegisteredLibraries();
+	while ( true == registeredLibs->hasMoreElements() ) {
+		LibraryApplication* libraryApp = registeredLibs->nextElement();
+		libraryApp->idleTime();
+	}
+	
+	
+	
+	return result;
+}
 
 void OSXUIToolkit::internal_runEventLoop()
 {
     //set to false to begin with
     quitEventLoop_ = false;
 	
-	[[NSApplication sharedApplication] run];
+	NSApplication* app = [NSApplication sharedApplication];
+	/*
+	while (!quitEventLoop_) {
+		NSEvent *event = [app nextEventMatchingMask:NSAnyEventMask
+								untilDate:[NSDate distantFuture] 
+								inMode:NSDefaultRunLoopMode dequeue:YES];
+		
+		if (event) {
+			if ( handleAppEvents( event ) ) {
+				[app sendEvent:event];
+			}
+		}
+	}
+*/
+	[app run];
 	
     //reset back to false when finished
     quitEventLoop_ = false;
@@ -1155,6 +1200,132 @@ OSStatus OSXUIToolkit::handleAppEvents( EventHandlerCallRef nextHandler, EventRe
 VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* eventData )
 {
     VCF::Event* result = NULL;
+	/*
+	OSXEventMsg* msg = (OSXEventMsg*) eventData;
+	
+	NSEventType type = [msg->event type];
+	switch ( type ) {
+		case NSLeftMouseDown: {
+			if ( msg->view != nil ) {
+				NSPoint location = [msg->event locationInWindow];
+				NSPoint local = [msg->view convertPoint:location fromView:nil];
+				Point pt(local.x, local.y);
+				
+				result = new VCF::MouseEvent( msg->control, Control::MOUSE_DOWN,VCF::mbmLeftButton,
+												translateKeyMask( msg->event ), &pt );
+			}
+		}
+		break;
+		
+		case NSLeftMouseUp: {
+			if ( msg->view != nil ) {
+				NSPoint location = [msg->event locationInWindow];
+				NSPoint local = [msg->view convertPoint:location fromView:nil];
+				Point pt(local.x, local.y);
+				
+				result = new VCF::MouseEvent( msg->control, Control::MOUSE_UP,VCF::mbmLeftButton,
+												translateKeyMask( msg->event ), &pt );
+			}		
+		}
+		break;
+		
+		case NSRightMouseDown: {
+			if ( msg->view != nil ) {
+				NSPoint location = [msg->event locationInWindow];
+				NSPoint local = [msg->view convertPoint:location fromView:nil];
+				Point pt(local.x, local.y);
+				
+				result = new VCF::MouseEvent( msg->control, Control::MOUSE_DOWN,VCF::mbmRightButton,
+												translateKeyMask( msg->event ), &pt );
+			}
+		}
+		break;
+		
+		case NSRightMouseUp: {
+			if ( msg->view != nil ) {
+				NSPoint location = [msg->event locationInWindow];
+				NSPoint local = [msg->view convertPoint:location fromView:nil];
+				Point pt(local.x, local.y);
+				
+				result = new VCF::MouseEvent( msg->control, Control::MOUSE_UP,VCF::mbmRightButton,
+												translateKeyMask( msg->event ), &pt );
+			}
+		}
+		break;
+		
+		case NSOtherMouseDown: {
+			if ( msg->view != nil ) {
+				NSPoint location = [msg->event locationInWindow];
+				NSPoint local = [msg->view convertPoint:location fromView:nil];
+				Point pt(local.x, local.y);
+				
+				result = new VCF::MouseEvent( msg->control, Control::MOUSE_DOWN,translateButtonMask(msg->event),
+												translateKeyMask( msg->event ), &pt );
+			}
+		}
+		break;
+		
+		case NSOtherMouseUp: {
+			if ( msg->view != nil ) {
+				NSPoint location = [msg->event locationInWindow];
+				NSPoint local = [msg->view convertPoint:location fromView:nil];
+				Point pt(local.x, local.y);
+				
+				result = new VCF::MouseEvent( msg->control, Control::MOUSE_UP,translateButtonMask(msg->event),
+												translateKeyMask( msg->event ), &pt );
+			}
+		}
+		break;
+		
+		case NSMouseMoved: {
+			if ( msg->view != nil ) {
+				NSPoint location = [msg->event locationInWindow];
+				NSPoint local = [msg->view convertPoint:location fromView:nil];
+				Point pt(local.x, local.y);
+				
+				result = new VCF::MouseEvent( msg->control, Control::MOUSE_UP,translateButtonMask(msg->event),
+												translateKeyMask( msg->event ), &pt );
+			}
+		}
+		break;
+		
+		case NSLeftMouseDragged: {
+		
+		}
+		break;
+		
+		case NSRightMouseDragged: {
+		
+		}
+		break;
+		
+		case NSOtherMouseDragged: {
+		
+		}
+		break;
+		
+		case NSMouseEntered: {
+		
+		}
+		break;
+		
+		case NSMouseExited: {
+		
+		}
+		break;
+		
+		case NSKeyDown: {
+		
+		}
+		break;
+		
+		case NSKeyUp: {
+		
+		}
+		break;
+		
+	}
+	*/
   /*
 	  OSXEventMsg* msg = (OSXEventMsg*)eventData;
     UInt32 whatHappened = GetEventKind( msg->osxEvent_ );

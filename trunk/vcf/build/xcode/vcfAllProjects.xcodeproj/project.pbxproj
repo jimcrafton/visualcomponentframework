@@ -516,7 +516,6 @@
 		5E734230082E76C300CDD184 /* TreeModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDFF20648693C00A8020D /* TreeModel.h */; };
 		5E734232082E76C300CDD184 /* TreePeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDFF50648693C00A8020D /* TreePeer.h */; };
 		5E734233082E76C300CDD184 /* UIApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDFF70648693C00A8020D /* UIApplication.h */; };
-		5E734234082E76C300CDD184 /* UIMetricsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDFF80648693C00A8020D /* UIMetricsManager.h */; };
 		5E734235082E76C300CDD184 /* UIPolicyManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDFF90648693C00A8020D /* UIPolicyManager.h */; };
 		5E734236082E76C300CDD184 /* UIToolkit.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDFFB0648693C00A8020D /* UIToolkit.h */; };
 		5E734237082E76C300CDD184 /* UndoRedoEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDFFD0648693C00A8020D /* UndoRedoEvent.h */; };
@@ -1227,7 +1226,6 @@
 		5EC1A8F40941F53F001EA41D /* TreeModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDFF20648693C00A8020D /* TreeModel.h */; };
 		5EC1A8F70941F53F001EA41D /* TreePeer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDFF50648693C00A8020D /* TreePeer.h */; };
 		5EC1A8FA0941F53F001EA41D /* UIApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDFF70648693C00A8020D /* UIApplication.h */; };
-		5EC1A8FB0941F53F001EA41D /* UIMetricsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDFF80648693C00A8020D /* UIMetricsManager.h */; };
 		5EC1A8FC0941F53F001EA41D /* UIPolicyManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDFF90648693C00A8020D /* UIPolicyManager.h */; };
 		5EC1A8FD0941F53F001EA41D /* UIToolkit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CDFFA0648693C00A8020D /* UIToolkit.cpp */; };
 		5EC1A8FE0941F53F001EA41D /* UIToolkit.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2CDFFB0648693C00A8020D /* UIToolkit.h */; };
@@ -1847,7 +1845,6 @@
 		5E2CDFF20648693C00A8020D /* TreeModel.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = TreeModel.h; path = ../../src/vcf/ApplicationKit/TreeModel.h; sourceTree = SOURCE_ROOT; };
 		5E2CDFF50648693C00A8020D /* TreePeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = TreePeer.h; path = ../../src/vcf/ApplicationKit/TreePeer.h; sourceTree = SOURCE_ROOT; };
 		5E2CDFF70648693C00A8020D /* UIApplication.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = UIApplication.h; path = ../../src/vcf/ApplicationKit/UIApplication.h; sourceTree = SOURCE_ROOT; };
-		5E2CDFF80648693C00A8020D /* UIMetricsManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = UIMetricsManager.h; path = ../../src/vcf/ApplicationKit/UIMetricsManager.h; sourceTree = SOURCE_ROOT; };
 		5E2CDFF90648693C00A8020D /* UIPolicyManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = UIPolicyManager.h; path = ../../src/vcf/ApplicationKit/UIPolicyManager.h; sourceTree = SOURCE_ROOT; };
 		5E2CDFFA0648693C00A8020D /* UIToolkit.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = UIToolkit.cpp; path = ../../src/vcf/ApplicationKit/UIToolkit.cpp; sourceTree = SOURCE_ROOT; };
 		5E2CDFFB0648693C00A8020D /* UIToolkit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = UIToolkit.h; path = ../../src/vcf/ApplicationKit/UIToolkit.h; sourceTree = SOURCE_ROOT; };
@@ -2347,7 +2344,6 @@
 			isa = PBXGroup;
 			children = (
 				EA6D07B20BE2A8390040D69A /* RunLoops */,
-				5EC402DE0644A34200A8020D /* Extras */,
 				5E2C80180641F7E800A8020D /* Peers */,
 				5E2C80170641F7E200A8020D /* Includes */,
 				5E2C80160641F7DB00A8020D /* Source */,
@@ -2696,7 +2692,6 @@
 				5E2CDFEB0648693C00A8020D /* ToolTipEvent.h */,
 				5E2CDFF50648693C00A8020D /* TreePeer.h */,
 				5E2CDFF70648693C00A8020D /* UIApplication.h */,
-				5E2CDFF80648693C00A8020D /* UIMetricsManager.h */,
 				5E2CDFF90648693C00A8020D /* UIPolicyManager.h */,
 				5E2CDFFB0648693C00A8020D /* UIToolkit.h */,
 				5E2CDFFD0648693C00A8020D /* UndoRedoEvent.h */,
@@ -3211,13 +3206,6 @@
 			name = MVC;
 			sourceTree = "<group>";
 		};
-		5EC402DE0644A34200A8020D /* Extras */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Extras;
-			sourceTree = "<group>";
-		};
 		EA6D07B20BE2A8390040D69A /* RunLoops */ = {
 			isa = PBXGroup;
 			children = (
@@ -3659,7 +3647,6 @@
 				5E734230082E76C300CDD184 /* TreeModel.h in Headers */,
 				5E734232082E76C300CDD184 /* TreePeer.h in Headers */,
 				5E734233082E76C300CDD184 /* UIApplication.h in Headers */,
-				5E734234082E76C300CDD184 /* UIMetricsManager.h in Headers */,
 				5E734235082E76C300CDD184 /* UIPolicyManager.h in Headers */,
 				5E734236082E76C300CDD184 /* UIToolkit.h in Headers */,
 				5E734237082E76C300CDD184 /* UndoRedoEvent.h in Headers */,
@@ -4097,7 +4084,6 @@
 				5EC1A8F40941F53F001EA41D /* TreeModel.h in Headers */,
 				5EC1A8F70941F53F001EA41D /* TreePeer.h in Headers */,
 				5EC1A8FA0941F53F001EA41D /* UIApplication.h in Headers */,
-				5EC1A8FB0941F53F001EA41D /* UIMetricsManager.h in Headers */,
 				5EC1A8FC0941F53F001EA41D /* UIPolicyManager.h in Headers */,
 				5EC1A8FE0941F53F001EA41D /* UIToolkit.h in Headers */,
 				5EC1A9000941F53F001EA41D /* UndoRedoEvent.h in Headers */,
@@ -5073,6 +5059,7 @@
 					"-Wno-unknown-pragmas",
 					"-Wno-switch",
 					"-Wno-newline-eof",
+					"-Wno-multichar",
 				);
 				WRAPPER_EXTENSION = framework;
 				ZERO_LINK = NO;
@@ -5094,10 +5081,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/FoundationKit/FoundationKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					VCF_GCC,
-					VCF_OSX,
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = VCF_OSX;
 				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-FoundationKit.plist";
 				LIBRARY_SEARCH_PATHS = "$(LIBRARY_SEARCH_PATHS_QUOTED_1)";
@@ -5117,6 +5101,7 @@
 					"-Wno-unknown-pragmas",
 					"-Wno-switch",
 					"-Wno-newline-eof",
+					"-Wno-multichar",
 				);
 				WRAPPER_EXTENSION = framework;
 				ZERO_LINK = NO;
@@ -5350,7 +5335,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/GraphicsKit/GraphicsKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					VCF_GCC,
 					VCF_OSX,
 					_DEBUG,
 				);
@@ -5373,6 +5357,7 @@
 					"-Wno-unknown-pragmas",
 					"-Wno-switch",
 					"-Wno-newline-eof",
+					"-Wno-multichar",
 				);
 				WRAPPER_EXTENSION = framework;
 				ZERO_LINK = NO;
@@ -5394,10 +5379,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/GraphicsKit/GraphicsKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					VCF_GCC,
-					VCF_OSX,
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = VCF_OSX;
 				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-GraphicsKit.plist";
 				LIBRARY_SEARCH_PATHS = "$(LIBRARY_SEARCH_PATHS_QUOTED_1)";
@@ -5416,6 +5398,7 @@
 					"-Wno-unknown-pragmas",
 					"-Wno-switch",
 					"-Wno-newline-eof",
+					"-Wno-multichar",
 				);
 				WRAPPER_EXTENSION = framework;
 				ZERO_LINK = NO;
@@ -5438,7 +5421,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/ApplicationKit/ApplicationKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					VCF_GCC,
 					VCF_OSX,
 					_DEBUG,
 				);
@@ -5458,6 +5440,7 @@
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
 					"-Wno-switch",
+					"-Wno-multichar",
 				);
 				WRAPPER_EXTENSION = framework;
 				ZERO_LINK = NO;
@@ -5478,10 +5461,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(VCF_ROOT)/src/vcf/ApplicationKit/ApplicationKit.h";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					VCF_GCC,
-					VCF_OSX,
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = VCF_OSX;
 				HEADER_SEARCH_PATHS = "\"$(VCF_ROOT)/src\"";
 				INFOPLIST_FILE = "Info-ApplicationKit.plist";
 				LIBRARY_SEARCH_PATHS = "$(VCF_ROOT)/lib";
@@ -5497,6 +5477,7 @@
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
 					"-Wno-switch",
+					"-Wno-multichar",
 				);
 				WRAPPER_EXTENSION = framework;
 				ZERO_LINK = NO;
