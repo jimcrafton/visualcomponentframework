@@ -133,14 +133,6 @@ public:
 	*/
 	void loadVPL( const String& vplFileName );
 
-	virtual bool loadState();
-
-	virtual bool saveState();
-
-	virtual bool loadFrameState( Frame* frame );
-
-	virtual bool saveFrameState( Frame* frame );
-
 	void setAutoLoadSaveAppState( const bool& autoLoadSaveState );
 
 	/**
@@ -218,13 +210,15 @@ public:
 
 	static void showErrorMessage( const String& message, const String& title );
 	static bool showAssertMessage( const String& message, const String& title );
+	
+	void internal_terminate();
 protected:
 	static Application* appInstance_;
 	std::map<String,Library*> VPLMap_;
 	bool autoLoadSaveAppState_;
 	void init();
 
-	void internal_terminate();
+	
 
 	static void internal_main();
 private:

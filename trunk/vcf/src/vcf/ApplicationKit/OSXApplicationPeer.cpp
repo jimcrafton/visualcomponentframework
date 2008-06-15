@@ -12,6 +12,44 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/OSXApplicationPeer.h"
 
 
+@interface VCFAppDelegate : NSObject
+{
+
+}
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication;
+
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender;
+@end
+
+@implementation VCFAppDelegate
+
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
+{
+	return NO;
+}
+
+
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
+{
+	printf( "applicationShouldTerminate called!\n" );
+	
+	VCF::Application* app = VCF::Application::getRunningInstance();
+	
+	app->internal_terminate();
+	
+	VCF::ApplicationPeer* appPeer = app->getPeer();
+	delete appPeer;
+	
+	app->free();
+	VCF::ApplicationKit::terminate();
+	
+	return NSTerminateNow;
+}
+
+@end
+
+
+
 using namespace VCF;
 
 OSXApplicationPeer::OSXApplicationPeer():
@@ -31,14 +69,22 @@ bool OSXApplicationPeer::initApp()
 {
 	bool result = true;
 	appInstance_ = [NSApplication sharedApplication];
-	NSAutoreleasePool * Pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];	
 	
-	return result;
+	VCFAppDelegate* appDelegate = [[VCFAppDelegate alloc] init];
+	[appInstance_ setDelegate: appDelegate];
+	
+	
+	return result;	
 }
 
 void OSXApplicationPeer::terminateApp()
 {
+	//appInstance_->free();
 
+	
+	NSApplication* app = [NSApplication sharedApplication];
+	[app terminate: app];		
 }
 
 

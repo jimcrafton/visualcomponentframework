@@ -192,9 +192,11 @@ public:
 
 	}
 	
+	/*
 	CFTextString( ConstStr255Param str ): cfStringRef(nil), unicodeText(NULL) {
 		assign( str );
 	}
+	*/
 
 	CFTextString( const String& s ) : cfStringRef(nil), unicodeText(NULL){
 		assign( s );
@@ -235,10 +237,12 @@ public:
 		return *this;
 	}
 	
+	/*
 	CFTextString& operator=( ConstStr255Param str ) {
 		assign( str );
 		return *this;
 	}
+	*/
 
 	int length() const {
 		if ( NULL == cfStringRef ) {
@@ -253,7 +257,7 @@ public:
 		CFStringAppendCharacters( cfStringRef, s.c_str(), s.size() );
 		buildUnicodeBuffer();
 	}
-	
+	/*
 	void assign( ConstStr255Param str ) {
 		
 		char tmp[256];
@@ -262,6 +266,7 @@ public:
 		
 		assign( tmp );        
 	}
+	*/
 
     void assign( CFStringRef s ) {
 		cleanup();

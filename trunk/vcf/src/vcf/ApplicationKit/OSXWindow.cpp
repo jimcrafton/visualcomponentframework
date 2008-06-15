@@ -13,6 +13,115 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/OSXControl.h"
 #include "vcf/ApplicationKit/OSXCursorPeer.h"
 
+@interface VCFWindowDelegate : NSObject
+{
+@public
+	VCF::Window* vcfWnd;	
+}
+- (void)windowWillClose:(NSNotification *)notification;
+- (BOOL)windowShouldClose:(id)window;
+- (void)windowDidMiniaturize:(NSNotification *)notification;
+- (void)windowDidDeminiaturize:(NSNotification *)notification;
+- (BOOL)windowShouldZoom:(NSWindow *)window toFrame:(NSRect)proposedFrame;
+- (NSSize)windowWillResize:(NSWindow *)window toSize:(NSSize)proposedFrameSize;
+@end
+
+
+@implementation VCFWindowDelegate
+
+- (NSSize)windowWillResize:(NSWindow *)window toSize:(NSSize)proposedFrameSize
+{
+	NSSize result = proposedFrameSize;
+	
+	VCF::Size minSize = vcfWnd->getMinSize();
+	VCF::Size maxSize = vcfWnd->getMaxSize();
+			
+	if ( minSize.width_ > VCF::Control::mmIgnoreMinWidth ) {
+		if ( proposedFrameSize.width < minSize.width_ ) {
+			result.width = minSize.width_;
+		}		
+	}
+	
+	if ( minSize.height_ > VCF::Control::mmIgnoreMinHeight ) {
+		if ( proposedFrameSize.height < minSize.height_ ) {
+			result.height = minSize.height_;
+		}		
+	}
+	
+	if ( maxSize.width_ > VCF::Control::mmIgnoreMaxWidth ) {
+		if ( proposedFrameSize.width > maxSize.width_ ) {
+			result.width = minSize.width_;
+		}		
+	}
+	
+	if ( maxSize.height_ > VCF::Control::mmIgnoreMaxHeight ) {
+		if ( proposedFrameSize.height > maxSize.height_ ) {
+			result.height = minSize.height_;
+		}		
+	}
+				
+	return result;
+}
+
+
+- (BOOL)windowShouldZoom:(NSWindow *)window toFrame:(NSRect)proposedFrame
+{
+	VCF::WindowEvent e(vcfWnd,WINDOW_EVENT_MAXIMIZE);
+	vcfWnd->WindowRestore( &e );
+	return YES;
+}
+
+- (void)windowDidDeminiaturize:(NSNotification *)notification
+{
+	VCF::WindowEvent e(vcfWnd,WINDOW_EVENT_RESTORE);
+	vcfWnd->WindowRestore( &e );
+}
+
+- (void)windowDidMiniaturize:(NSNotification *)notification
+{	
+	VCF::WindowEvent e(vcfWnd,WINDOW_EVENT_MINIMIZE);
+	vcfWnd->WindowMinimize( &e );	
+}
+
+- (void)windowWillClose:(NSNotification *)notification
+{
+	printf( "windowWillClose called \n" );
+	VCF::Application* app = VCF::Application::getRunningInstance();
+	if ( app->getMainWindow() == vcfWnd ) {
+		
+		NSApplication* app = [NSApplication sharedApplication];
+		[app stop: app];
+	}
+}
+
+
+
+- (BOOL)windowShouldClose:(id)window
+{
+	BOOL result = YES;
+	
+	printf( "windowShouldClose called \n" );
+	
+	if ( vcfWnd->isDesigning() ) {
+	}
+	else {
+		if ( vcfWnd->allowClose() ) {
+					
+			VCF::FrameEvent event( vcfWnd, VCF::Frame::CLOSE_EVENT );
+			
+			
+			vcfWnd->FrameClose( &event );		
+		}
+		else {
+			result = NO;
+		}
+	}
+	
+	return result;
+}
+@end
+
+
 
 
 @interface VCFWindowContentView : VCFControlView
@@ -34,12 +143,10 @@ where you installed the VCF.
 
 - (void)drawRect:(NSRect)rect
 {
-	printf( "rect: %d,%d,%d,%d\n", (int)rect.origin.x, (int)rect.origin.y, (int)rect.size.width, (int)rect.size.height );
+	printf( "VCFWindowContentView drawRect rect: %d,%d,%d,%d\n", (int)rect.origin.x, (int)rect.origin.y, (int)rect.size.width, (int)rect.size.height );
 	if ( NULL != wnd ) {
-		//wnd->internal_paint(rect);
-	}	
-	
-	[super drawRect:rect];
+		wnd->internal_paint(rect);
+	}
 }
 
 - (void) setVCFWindow: (id) aWnd
@@ -84,28 +191,6 @@ OSXWindow::~OSXWindow()
 
 }
 
-/*
-EventHandlerUPP OSXWindow::getEventHandlerUPP()
-{
-	static EventHandlerUPP result = NULL;
-	if ( NULL == result ) {
-		result = NewEventHandlerUPP( OSXWindow::handleOSXEvents );
-	}
-	return result;
-}
-
-WindowAttributes OSXWindow::getCreationWinAttrs()
-{
-	return kWindowCloseBoxAttribute | kWindowFullZoomAttribute | kWindowCollapseBoxAttribute |
-			  kWindowResizableAttribute | kWindowCloseBoxAttribute | kWindowCompositingAttribute |
-			  kWindowStandardHandlerAttribute | kWindowLiveResizeAttribute | kWindowInWindowMenuAttribute;
-}
-
-WindowClass OSXWindow::getCreationWinClass()
-{
-	return kDocumentWindowClass;
-}
-*/
 void OSXWindow::create( Control* owningControl )
 {
 	/*
@@ -203,6 +288,10 @@ void OSXWindow::create( Control* owningControl )
 	[contentView initWithFrame:r];
 	
 	
+	VCFWindowDelegate* wndDelegate = [[VCFWindowDelegate alloc] init];
+	wndDelegate->vcfWnd = (Window*)owningControl;
+	[window_ setDelegate: wndDelegate ];
+	
 	
 	[window_ setContentView: contentView ];
 	[window_ setAcceptsMouseMovedEvents: YES];
@@ -223,7 +312,7 @@ void OSXWindow::destroyControl()
 	
 	//windowRef_ = NULL;
 	
-	[window_ release];
+	//[window_ release];
 }
 
 String OSXWindow::getText()
@@ -334,13 +423,13 @@ Control* OSXWindow::getParent()
 
 bool OSXWindow::isFocused()
 {
-	//WindowRef wndRef = GetUserFocusWindow();
-	return false; //(wndRef == windowRef_) ? true : false;
+	return [window_ isKeyWindow] ? true : false;
 }
 
 void OSXWindow::setFocused()
 {
 //	SetUserFocusWindow( windowRef_ );
+	[window_ makeKeyWindow];
 }
 
 bool OSXWindow::isEnabled()
@@ -381,25 +470,12 @@ void OSXWindow::releaseMouseEvents()
 
 void OSXWindow::setBorder( Border* border )
 {
-	//cause the window to repaint itself!!!
-	//HIViewSetNeedsDisplay( getRootControl(), true );
+	//cause the window to repaint itself!!!	
+	[window_ display];
 }
 
 void OSXWindow::translateToScreenCoords( Point* pt )
-{
-	/*
-	WndSwitchPort port(windowRef_);
-
-	::Point point;
-	point.h = pt->x_;
-	point.v = pt->y_;
-
-	LocalToGlobal( &point );
-
-	pt->x_ = point.h;
-	pt->y_ = point.v;
-	*/
-	
+{	
 	NSPoint tmp;
 	tmp.x = pt->x_;
 	tmp.y = pt->y_;
@@ -410,20 +486,7 @@ void OSXWindow::translateToScreenCoords( Point* pt )
 }
 
 void OSXWindow::translateFromScreenCoords( Point* pt )
-{
-	/*
-	WndSwitchPort port(windowRef_);
-
-	::Point point;
-	point.h = pt->x_;
-	point.v = pt->y_;
-
-	GlobalToLocal( &point );
-
-	pt->x_ = point.h;
-	pt->y_ = point.v;
-	*/
-	
+{		
 	NSPoint tmp;
 	tmp.x = pt->x_;
 	tmp.y = pt->y_;
@@ -435,33 +498,7 @@ void OSXWindow::translateFromScreenCoords( Point* pt )
 
 
 Rect OSXWindow::getClientBounds()
-{
-/*
-	::Rect r;
-	GetWindowBounds( windowRef_, kWindowContentRgn, &r );
-
-	WndSwitchPort port(windowRef_);
-
-	::Point pt;
-	pt.h = r.left;
-	pt.v = r.top;
-
-	VCF::Rect result;
-
-	GlobalToLocal(&pt);
-
-	result.left_ = pt.h;
-	result.top_ = pt.v;
-
-	pt.h = r.right;
-	pt.v = r.bottom;
-
-	GlobalToLocal(&pt);
-
-	result.right_ = pt.h;
-	result.bottom_ = pt.v;
-
-*/	
+{	
 	NSView* v = [window_ contentView];
 	NSRect r = [v bounds];	
 	
@@ -480,33 +517,7 @@ void  OSXWindow::setClientBounds( Rect* bounds )
 
 void OSXWindow::close()
 {
-	if ( !internalClose_ ){
-		internalClose_ = true;
-		Application* app = Application::getRunningInstance();
-		if ( NULL != app ){
-			Window* mainWindow = app->getMainWindow();
-			if ( mainWindow == getControl() ){
-				//::PostMessage( hwnd_, WM_QUIT, 0, 0 );
-			}
-		}
-	}
-	/*
-	EventRef closeWindowEvent = NULL;
-	
-	OSStatus err = CreateEvent( NULL,
-	                          kEventClassWindow,
-	                          kEventWindowClose,
-	                          0,
-	                          kEventAttributeUserEvent,
-	                          &closeWindowEvent );
-	
-	err = SetEventParameter( closeWindowEvent, kEventParamDirectObject,
-	                         typeWindowRef, sizeof(WindowRef), &windowRef_ );
-	//SendEventToEventTarget( closeWindowEvent, GetWindowEventTarget(parent) );	
-	//CFRelease( result );
-	
-	PostEventToQueue( GetCurrentEventQueue(), closeWindowEvent, kEventPriorityStandard );
-	*/
+	[window_ performClose: window_ ];
 }
 
 void OSXWindow::setFrameStyle( const FrameStyleType& frameStyle )
@@ -521,33 +532,32 @@ void OSXWindow::setFrameTopmost( const bool& isTopmost )
 
 bool OSXWindow::isMaximized()
 {
-	return false;//IsWindowInStandardState( windowRef_, NULL, NULL ) ? true : false;
+	return [window_ isZoomed] ? true : false;
 }
 
 void OSXWindow::setMaximized( const bool maximised )
-{/*
-	if ( maximised ) {
-		ZoomWindow( windowRef_, inZoomOut, true );
-	}
-	else {
-		ZoomWindow( windowRef_, inZoomIn, false );
-	}
-	*/
+{	
+	[window_ zoom: window_];
 }
 
 bool OSXWindow::isMinimized()
 {
-	return false; //IsWindowCollapsed( windowRef_ ) ? true : false;
+	return [window_ isMiniaturized] ? true : false;
 }
 
 void OSXWindow::setMinimized( const bool& minimized )
 {
-	//CollapseWindow( windowRef_, minimized );
+	if ( minimized ) {
+		[window_ miniaturize: window_];
+	}
+	else {
+		[window_ deminiaturize: window_];
+	}
 }
 
 void OSXWindow::restore()
 {
-
+	[window_ deminiaturize: window_];
 }
 
 void OSXWindow::setIconImage( Image* icon )
@@ -984,51 +994,13 @@ RgnHandle OSXWindow::determineUnobscuredClientRgn()
 
 bool OSXWindow::isActiveWindow()
 {
-	//Boolean active = IsWindowActive(windowRef_);
-	
-	return false;//active ? true : false;
+	return [window_ isKeyWindow] ? true : false;
 }
 
 void OSXWindow::setBorderPath( Path* path )
 {
     
 }
-/*
-OSStatus OSXWindow::wndContentViewHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData)
-{
-	OSXWindow* thisPtr = (OSXWindow*)userData;
-	return thisPtr->handleContentViewDraw( nextHandler, theEvent );
-}
-
-OSStatus OSXWindow::handleContentViewDraw( EventHandlerCallRef nextHandler, EventRef theEvent )
-{
-	TCarbonEvent event( theEvent );
-	return noErr;
-}
-
-void OSXWindow::copyControlsFromWndRef( WindowRef oldWndRef )
-{
-	ControlRef contentView = getRootControl();
-	
-	ControlRef oldContentView = NULL;
-	HIViewFindByID(HIViewGetRoot(oldWndRef), kHIViewWindowContentID, &oldContentView);
-	UInt16 count = 0;
-	UInt16 i = 1;
-	CountSubControls( oldContentView, &count );
-	for (i=1;i<=count;i++ ) {
-		ControlRef child;
-		OSStatus err = GetIndexedSubControl( oldContentView, 1, &child );
-		if ( noErr == err ) {			
-			EmbedControl( child, contentView );
-			ShowControl( child );
-		}
-		else {
-			printf( "GetIndexedSubControl failed (err: %d) for child # %d (%p) of %d in new content view %p\n",
-						err, i, child, count, contentView );
-		}
-	}						
-}
-*/
 
 void OSXWindow::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
 {
@@ -1042,8 +1014,6 @@ void OSXWindow::postChildPaint( GraphicsContext* graphicsContext, Control* child
 
 void OSXWindow::internal_paint( NSRect r )
 {
-	NSGraphicsContext* theContext = [NSGraphicsContext currentContext];
-
 	Color* c = this->control_->getColor();
 	
 	NSColor* backColor = [NSColor colorWithCalibratedRed:c->getRed() 
@@ -1056,8 +1026,11 @@ void OSXWindow::internal_paint( NSRect r )
 	
 	NSRectFill( r );
 	
-	CGContextRef cgRef = (CGContextRef)	[theContext graphicsPort];
-	GraphicsContext gc( cgRef );
+	NSGraphicsContext* currentCtx = [NSGraphicsContext currentContext];
+	CGContextRef cgCtx = (CGContextRef) [currentCtx graphicsPort];
+	
+	OSXGCRef cgr(cgCtx, r );
+	GraphicsContext gc(&cgr);
 	control_->paint(&gc);
 }
 

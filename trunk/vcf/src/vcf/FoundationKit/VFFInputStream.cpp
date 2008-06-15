@@ -31,27 +31,27 @@ public:
 
 
 VFFInputStream::VFFInputStream( InputStream* stream ):
-    stream_(stream),	
-    parser_(NULL),
 	topLevelComponent_(NULL),
-	deleteStream_(false),
 	atTopLevel_(true),
-    componentInputLevel_(-1),
+	componentInputLevel_(-1),
 	topLevelControlVisibility_(false),
-	setDesignMode_(false)
+	setDesignMode_(false),
+    stream_(stream),	
+    parser_(NULL),	
+	deleteStream_(false)	
 {
 	parser_ = new VCF::VFFParser( this );
 }
 
 VFFInputStream::VFFInputStream( const VCF::String& vffString ):
-	componentInputLevel_(-1),
-	parser_(NULL),
-	stream_(NULL),
-	deleteStream_(true),
-	atTopLevel_(true),
 	topLevelComponent_(NULL),
+	atTopLevel_(true),
+	componentInputLevel_(-1),
 	topLevelControlVisibility_(false),
-	setDesignMode_(false)
+	setDesignMode_(false),
+    stream_(NULL),	
+    parser_(NULL),	
+	deleteStream_(true)
 {
 	stream_ = new BasicInputStream( vffString );
 

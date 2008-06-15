@@ -37,6 +37,10 @@ public:
 	virtual OSHandleID getHandleID();
 
 	virtual void setHandleID( OSHandleID handleID );
+	
+	virtual bool shouldPerformCleanup() {
+		return true;
+	}
 protected:
 	VCF::AbstractApplication* app_;
 	NSApplication* appInstance_;

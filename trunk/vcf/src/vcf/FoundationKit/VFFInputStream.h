@@ -175,9 +175,7 @@ protected:
 		std::vector<String> callbackIds;
 	};
 
-	InputStream* stream_;
-	VFFParser* parser_;
-	bool deleteStream_;
+	
 
 	void hexToBin( const String& hexString, VCF::Persistable* persistableObject );
 
@@ -209,6 +207,10 @@ protected:
 	int32 componentInputLevel_;
 	bool topLevelControlVisibility_;
 	bool setDesignMode_;
+	InputStream* stream_;
+	VFFParser* parser_;
+	bool deleteStream_;
+	
 	static Component* rootComponent_;
 	static UnitTransformer* transformer;
 };
