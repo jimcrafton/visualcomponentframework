@@ -74,7 +74,9 @@ Application::~Application()
 
 void Application::internal_terminate()
 {
-	applicationPeer_->terminateApp();
+	if ( !applicationPeer_->shouldPerformCleanup() ) {
+		applicationPeer_->terminateApp();
+	}
 
 	std::map<String,Library*>::iterator it = VPLMap_.begin();
 	while ( it != VPLMap_.end() ){
@@ -84,8 +86,9 @@ void Application::internal_terminate()
 		it++;
 	}
 
-
-	delete applicationPeer_;
+	if ( !applicationPeer_->shouldPerformCleanup() ) {
+		delete applicationPeer_;
+	}
 
 	Application::appInstance_ = NULL;
 }
@@ -171,13 +174,7 @@ void Application::internal_main()
 					}
 
 					if ( libsInitialized ) {
-
-						if ( runningInstance->autoLoadSaveAppState_ ) {
-							if ( false == runningInstance->loadState() ) {
-								//note an error
-							}
-						}
-
+					
 						runningInstance->processCommandLine( FoundationKit::getCommandLine() );
 
 						runningInstance->run();
@@ -200,11 +197,19 @@ void Application::internal_main()
 				StringUtils::trace( "Oops! The Main window has not been freed.\nDid you forget to call the super class's terminateRunningApplication() method?\n" );
 			}
 
-			runningInstance->internal_terminate();
+			
+			
+			
+			if ( appPeer->shouldPerformCleanup() ) {
+				appPeer->terminateApp();
+			}
+			else {
+				runningInstance->internal_terminate();
+			
+				runningInstance->free();
 
-			runningInstance->free();
-
-			ApplicationKit::terminate();			
+				ApplicationKit::terminate();			
+			}			
 		}
 	}
 
@@ -366,13 +371,7 @@ void Application::onMainWindowClose( WindowEvent* event )
 
 
 void Application::terminateRunningApplication()
-{
-	if ( true == autoLoadSaveAppState_ ) {
-		if ( false == saveState() ) {
-			//note an error
-		}
-	}
-
+{	
 	storeSettings(true);
 
 	/**
@@ -414,97 +413,6 @@ void Application::loadVPL( const String& vplFileName )
 		}
 	}
 }
-
-bool Application::loadState()
-{
-	bool result = true;
-
-	Registry reg;
-
-	reg.setRoot( RKT_CURRENT_USER );
-	if ( true == reg.openKey( "Software\\" + getName(), false ) ) {
-		if ( NULL != mainWindow_ ) {
-			result = loadFrameState( mainWindow_ );
-		}
-	}
-	else {
-		result = false;
-	}
-
-	return result;
-}
-
-bool Application::saveState()
-{
-	bool result = true;
-
-	Registry reg;
-	reg.setRoot( RKT_CURRENT_USER );
-	if ( true == reg.openKey( "Software\\" + getName(), true ) ) {
-		if ( NULL != mainWindow_ ) {
-			result = saveFrameState( mainWindow_ );
-		}
-	}
-	else {
-		result = false;
-	}
-
-	return result;
-}
-
-bool Application::loadFrameState( Frame* frame )
-{
-	bool result = true;
-
-	Registry reg;
-
-	reg.setRoot( RKT_CURRENT_USER );
-	if ( true == reg.openKey( "Software\\" + getName() + "\\Frames", false ) ) {
-
-		uchar* buf = NULL;
-		uint32 bufSize = 0;
-		String valName = "MainWindow";
-
-		reg.getDataBufValue( valName, bufSize, (void**)&buf );
-		if ( bufSize > 0 ) {
-			BasicInputStream bis(buf,bufSize);
-			Frame::State state;
-			bis >> static_cast<Persistable*>(&state);
-			state.applyState( frame );
-			delete buf;
-		}
-		else {
-			result = false;
-		}
-	}
-	else {
-		result = false;
-	}
-	return result;
-}
-
-bool Application::saveFrameState( Frame* frame )
-{
-	bool result = true;
-
-	Registry reg;
-
-	reg.setRoot( RKT_CURRENT_USER );
-	if ( true == reg.openKey( "Software\\" + getName() + "\\Frames", true ) ) {
-		BasicOutputStream bos;
-		Frame::State state;
-		state.initState( frame );
-		bos << &state;
-		String valName = "MainWindow";
-		result = reg.setValue( bos.getBuffer(), bos.getSize(), valName );
-	}
-	else {
-		result = false;
-	}
-
-	return result;
-}
-
 void Application::setAutoLoadSaveAppState( const bool& autoLoadSaveState )
 {
 	autoLoadSaveAppState_ = autoLoadSaveState;

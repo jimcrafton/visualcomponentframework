@@ -31,10 +31,10 @@ namespace VCF
 class FOUNDATIONKIT_API Property  {
 public:
 	Property():
-	source_(NULL),
-	isCollection_(false),
-		isReadOnly_(false),
+		isCollection_(false),
+		isReadOnly_(false),			
 		type_(pdUndefined),
+		source_(NULL),
 		bound_(false){
 		
 		//prop_count ++;
@@ -42,11 +42,11 @@ public:
 	};
 
 	Property( const Property& prop ):
-		value_( prop.value_ ),
-		source_(NULL),
+		value_( prop.value_ ),		
 		isCollection_(false),
 		isReadOnly_(false),
 		type_(pdUndefined),
+		source_(NULL),
 		bound_(false){
 
 		name_ = prop.name_;

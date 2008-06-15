@@ -18,7 +18,7 @@ public:
 	OSXGCRef(): cgRef(NULL){}
 	
 	OSXGCRef( CGContextRef p1, const Rect& p2 ): cgRef(p1),rect(p2){}
-	OSXGCRef( CGContextRef p1, CGRect p2 ): cgRef(p1){
+	OSXGCRef( CGContextRef p1, NSRect p2 ): cgRef(p1){
 		rect.left_ = p2.origin.x;
 		rect.top_ = p2.origin.y;
 		rect.right_ = p2.origin.y + p2.size.width;

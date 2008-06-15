@@ -76,7 +76,7 @@ VCF::uint32 translateKeyMask( NSEvent* event )
 
 - (void)drawRect:(NSRect)rect
 {
-	if ( NULL != control ) {		
+	if ( NULL != peer ) {		
 		peer->internal_paint( rect );
 	}	
 }
@@ -1142,7 +1142,11 @@ void OSXControl::postChildPaint( GraphicsContext* graphicsContext, Control* chil
 	
 void OSXControl::internal_paint( const NSRect& r )
 {
-
+	NSGraphicsContext* currentCtx = [NSGraphicsContext currentContext];
+	CGContextRef cgCtx = (CGContextRef) [currentCtx graphicsPort];
+	
+	OSXGCRef cgr(cgCtx, r );
+	GraphicsContext gc(&cgr);
 }
 
 };

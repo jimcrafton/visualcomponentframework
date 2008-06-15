@@ -116,7 +116,7 @@ void OSXImage::createBMP()
 	//setAlpha( 0.67 );
 
     if ( noErr == err ) {
-        uint32 imgSize = width * height * componentCount;
+       // uint32 imgSize = width * height * componentCount;
         //CGDataProviderRef provider = CGDataProviderCreateWithData( NULL,
           //                                                          dataBuffer_,
             //                                                        imgSize,

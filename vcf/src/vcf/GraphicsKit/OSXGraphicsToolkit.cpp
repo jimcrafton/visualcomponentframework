@@ -38,31 +38,26 @@ public:
 		OSStatus err = noErr;
 		
 		switch ( type ) {
-			case UIMetricsManager::ftMenuItemFont : {
-				err = GetThemeFont( kThemeSystemFont, smSystemScript, fontName, &fontSize, &fontStyle );	
-				if ( err != noErr ) {
-					CFTextString name(fontName);
-					result.setName( name );
-					result.setPointSize( fontSize );
-					result.setBold ( (fontStyle & bold) ? true : false );
-					result.setItalic ( (fontStyle & italic) ? true : false );
-				}				
+			case UIMetricsManager::ftSelectedMenuItemFont : 
+				case UIMetricsManager::ftMenuItemFont : {
+				NSFont* f = [NSFont menuFontOfSize:0.0f];
+				  
+				CFTextString name( (CFStringRef) [f fontName] );
+				result.setName( name );
+				result.setPointSize( [f pointSize] );
+				NSFontManager *fontManager = [NSFontManager sharedFontManager];
+				
+				NSFontTraitMask traits = [fontManager traitsOfFont:f];
+				
+				result.setBold ( (traits & NSBoldFontMask) ? true : false );
+				result.setItalic ( (traits & NSItalicFontMask) ? true : false );
+				
+				[f release];				
 			}
 			break;
 
-			case UIMetricsManager::ftSelectedMenuItemFont : {
-				err = GetThemeFont( kThemeSystemFont, smSystemScript, fontName, &fontSize, &fontStyle );	
-				if ( err != noErr ) {
-					CFTextString name(fontName);
-					result.setName( name );
-					result.setPointSize( fontSize );
-					result.setBold ( (fontStyle & bold) ? true : false );
-					result.setItalic ( (fontStyle & italic) ? true : false );
-					result.setUnderlined ( (fontStyle & underline) ? true : false );					
-				}
-			}
-			break;
-
+			
+/*
 			case UIMetricsManager::ftSystemFont : {
 				err = GetThemeFont( kThemeSystemFont, smSystemScript, fontName, &fontSize, &fontStyle );	
 				if ( err != noErr ) {
@@ -115,6 +110,7 @@ public:
 				}
 			}
 			break;
+			*/
 		}
 
 		return result;
