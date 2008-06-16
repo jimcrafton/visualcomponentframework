@@ -1,5 +1,73 @@
+<!--------------------------------------------------------------------------->  
+<!--                           INTRODUCTION                                
+
+ The Code Project article submission template (HTML version)
+
+Using this template will help us post your article sooner. To use, just 
+follow the 3 easy steps below:
+ 
+     1. Fill in the article description details
+     2. Add links to your images and downloads
+     3. Include the main article text
+
+That's all there is to it! All formatting will be done by our submission
+scripts and style sheets. 
+
+-->  
+<!--------------------------------------------------------------------------->  
+<!--                        IGNORE THIS SECTION                            -->
+<html>
+<head>
+<title>The Code Project</title>
+<Style>
+BODY, P, TD { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt }
+H2,H3,H4,H5 { color: #ff9900; font-weight: bold; }
+H2 { font-size: 13pt; }
+H3 { font-size: 12pt; }
+H4 { font-size: 10pt; color: black; }
+PRE { BACKGROUND-COLOR: #FBEDBB; FONT-FAMILY: "Courier New", Courier, mono; WHITE-SPACE: pre; }
+CODE { COLOR: #990000; FONT-FAMILY: "Courier New", Courier, mono; }
+</style>
+<link rel="stylesheet" type=text/css href="http://www.codeproject.com/styles/global.css">
+</head>
+<body bgcolor="#FFFFFF" color=#000000>
+<!--------------------------------------------------------------------------->  
+
+
+<!-------------------------------     STEP 1      --------------------------->
+<!--  Fill in the details (CodeProject will reformat this section for you) -->
+
+<pre>
+Title:       MVC in the Visual Component Framework
+Author:      Jim Crafton
+Email:       jim.crafton@gmail.com	
+Member ID:   12433
+Language:    C++
+Platform:    Windows
+Technology:  
+Level:       Intermediate
+Description: An introduction to the Model-View-Controller Pattern in the Visual Component Framework
+Section      Libraries
+SubSection   General
+License:     BSD
+</pre>
+
+<!-------------------------------     STEP 2      --------------------------->
+<!--  Include download and sample image information.                       --> 
+
+<ul class=download>
+<li><a href="Article_demo.zip">Download demo project - XXX Kb </a></li>
+<li><a href="Article_src.zip">Download source - XXX Kb</a></li>
+</ul>
+
+<p><img src="scribble10.png" ></p>
+
+<!-------------------------------     STEP 3      --------------------------->
+
+
 <p>
-This will the first in a 3 part series of articles
+<h2>Introduction</h2>
+This will the first in a four part series of articles
 that will explain how to use the built Model-View-Controller
 features of the Visual Component Framework, and it's
 DocumentManager classes that provide a high level set of 
@@ -20,6 +88,7 @@ be dropped on external applications, shell integration
 and finally has support in the UI for updating the state
 of various UI elements like menu items and toolbar buttons.
 </p>
+<h2>Intro to Model-View-Controller</h2>
 <p>
 Model-View-Controller (MVC) is a pattern that's been discussed
 all over the place. It originated with the Smalltalk group
@@ -63,7 +132,7 @@ store their data, so MVC is not just a throwaway in the framework,
 it's built in and heavily used.
 </p>
 
-Model Basics
+<h2>Model Basics</h2>
 <p>
 The Model class is an abstract class that other more specific model 
 classes derive from. It provides the basic implementation for 
@@ -74,7 +143,7 @@ The Model's views are updated by the updateAllViews() function that
 iterates through all the registered views of a model and calls the
 updateView() function for each view. 
 </p>
-Data Access
+<h2>Data Access</h2>
 <p>
 The Model class itself does not store or define how data is stored. 
 It does provide some basic methods to setting and/or retrieving data,
@@ -102,7 +171,7 @@ to store the data and an optional variant to specify the key. Again,
 this is not considered as the only way to set data on a model, but 
 rather an optional method.
 </p>
-Data Storage and Variants
+<h2>Data Storage and Variants</h2>
 <p>
 If you look at the Model class methods getValue() and setValue(), and
 if you look at some of the other model implementations like ListModel
@@ -114,7 +183,7 @@ of floating point values, you might decide to implement the ListModel
 and store the data in an array of doubles using std::vector<double>.
 </p>
 
-Views
+<h2>Views</h2>
 <p>
 While the Model has a number of methods associated with it, the 
 View class is relatively simple. It's main function is to render, or 
@@ -129,7 +198,7 @@ that it's up to the application specific design of a particular view
 to store anything else. 
 </p>
 <p>
-Controls and Views
+<h2>Controls and Views</h2>
 <p>
 A Control derives from the View class as well as containing a pointer
 to a view. This means that by default any control can be added to a 
@@ -142,7 +211,7 @@ if it is then it calls the view instance's paintView() method,
 otherwise it does it's own internal painting. 
 </p>
 
-Where's the Controller?
+<h2>Where's the Controller?</h2>
 <p>
 So far I haven't mentioned a specific class for the Controller. That's
 because there isn't one! The Controller tends to be extremely application
@@ -153,7 +222,7 @@ that becomes your Controller. The important thing is what the class
 does and how it interacts with the Model and View that qualify it as 
 a controller.
 </p>
-Before you get started
+<h2>Before you get started</h2>
 <p>
 Before we get too far into this, please make sure that you've installed 
 the latest version of the VCF (version 0-9-8 or better). And you may want 
@@ -167,11 +236,11 @@ how things work. Some useful articles:
 <li><a href="???">Events and Delegates</a>
 </ul>
 
-A Simple Example
+<h2>A Simple Example</h2>
 <p>
 For our first step, let's create a simple application that displays
 the information in the ubiquitous Person class.
-
+<br>
 <img src="sc1.png">
 </p>
 <p>
@@ -364,8 +433,8 @@ for years. It's easy to parse, it's not XML, and, possibly more importantly, it'
 extremely easy to read and edit by hand. For a more complete definition
 of it, see these links:
 <ul>
-<li><a href="http://software-windmills.blogspot.com/2008/05/working-with-delegates-in-visual-form.html">Working with Delegates</a>
 <li><a href="http://software-windmills.blogspot.com/2007/05/visual-form-file-format.html">Visual Form File format</a>
+<li><a href="http://software-windmills.blogspot.com/2008/05/working-with-delegates-in-visual-form.html">Working with Delegates</a>
 </ul>
  
 Basically the VCF loads up a VFF file for each UI class that it attempts to 
@@ -587,7 +656,7 @@ class ModelDataApp : public Application {
 public:
 
 	ModelDataApp( int argc, char** argv ) : Application(argc, argv) {
-		addCallback( new ClassProcedure1<Event*,ModelDataApp>(this, &ModelDataApp::clickMe), "ModelDataApp::clickMe" );
+		addCallback( new ClassProcedure1&lt;Event*,ModelDataApp&gt;(this, &ModelDataApp::clickMe), "ModelDataApp::clickMe" );
 	}
 
 	virtual bool initRunningApplication(){
@@ -620,7 +689,7 @@ it's ready to be used and when we load our window's VFF we can reference it
 as a callback to use to add to the buttons ButtonClicked delegate.
 </p>
 <p>
-When we run it, we get something like this:
+When we run it, we get something like this:<br>
 <img src="sc1a.png">
 </p>
 <p>
@@ -764,8 +833,24 @@ public:
 Note that we already had defined a method for this earlier. This just 
 retreives the component, and increments it's age attribute. What
 we end up with is something like this:
-
+<br>
 <img src="sc1.png">
 </p>
 
+<h2>Conclusion</h2>
+<p>
+At this point we've gone through the basics of creating a model class, 
+creating a user interface, and linking the two together. Our "controller",
+if you will, is both the text control, and the application class. The 
+text control, which is also a view, takes care of converting key input 
+and updating the model. This in turn updates any other views attached
+to the model. The other controller is the application which gets notified
+when a ui element is clicked on, and then modifies the model by incrementing
+the age. Obviously this is a somewhat simplistic implementation so 
+our next step will be to enhance this functionality.
+</p>
 
+
+</body>
+
+</html>
