@@ -143,10 +143,10 @@ the latest version of the VCF (version 0-9-8 or better). And you may want
 to have a glance at some of the articles here on CP to get a feel for 
 how things work. Some useful articles:
 [
-helloworld
-resources
-help
-localization
+http://www.codeproject.com/KB/library/vcf_hello_world1.aspx
+http://www.codeproject.com/KB/library/Resources.aspx
+http://www.codeproject.com/KB/library/HelpVCF.aspx
+http://www.codeproject.com/KB/library/Locales.aspx
 ]
 
 A Simple Example
@@ -170,9 +170,9 @@ protected:
 
 This is obviously pretty bare. Instead of having separate fields for
 each member variable, like a name, address, etc, we are going to be 
-lazy and use the framework's Dictionary class, which is not much more than
-a wrapper around std::map<String,VariantData>, with a few utility methods 
-thrown in for good measure. This let's us write something like:
+lazy and use the framework's Dictionary class, which is not much more 
+than a wrapper around std::map<String,VariantData>, with a few utility 
+methods thrown in for good measure. This let's us write something like:
 
 
 attributes["Age"] = 38;
@@ -208,21 +208,423 @@ protected:
 };
 
 
-Note our setValue() implementation. We declare a ModelEvent, pass in the event's 
-source (the model), set it's event type to Model::MODEL_CHANGED, and then 
-call the Model's changed() method. This does two things for us: it makes 
-sure to invoke the ModelChanged delegate with the event instance, and it 
-calls the Model's updateAllViews() method. It's a convenience method so 
-you don't forget to do this yourself.
+Note our setValue() implementation. We declare a ModelEvent, pass in the 
+event's source (the model), set it's event type to Model::MODEL_CHANGED, 
+and then call the Model's changed() method. This does two things for us: 
+it makes sure to invoke the ModelChanged delegate with the event instance, 
+and it calls the Model's updateAllViews() method. It's a convenience 
+method so you don't forget to do this yourself.
 
 If we wanted to get really fancy we could add a specific delegate to our 
 class for greater granularity, for example we could have a NameChanged 
 delegate, but for now we're just going to keep things simple.
 
+Obviosuly we don't want to hve ot remember what the various attribute keys
+are, so lets add some methods to make it easy to get and set the various
+attributes of the Person class.
 
 
 
 
+class Person : public Model {
+public:
+	virtual bool isEmpty() {
+		return attributes.empty();
+	}
+
+	virtual VariantData getValue( const VariantData& key=VariantData::null() ) 	{
+		String strKey = key;
+		return attributes[ strKey ];
+	}
+
+	virtual void setValue( const VariantData& value, const VariantData& key=VariantData::null() )  {
+		String strKey = key;
+		attributes[ strKey ] = value;
+		ModelEvent e( this, Model::MODEL_CHANGED );
+		changed( &e );
+	}
+
+	uint32 getAge() const {
+		return attributes["Age"];
+	}
+
+	String getFirstName() const {
+		return attributes["FirstName"];
+	}
+
+	String getLastName() const {
+		return attributes["LastName"];
+	}
+
+	String getZIPCode() const {
+		return attributes["ZIPCode"];
+	}
+
+	String getAddress() const {
+		return attributes["Address"];
+	}
+
+	String getState() const {
+		return attributes["State"];
+	}
+
+	String getCountry() const {
+		return attributes["Country"];
+	}
+
+	String getPhoneNumber() const {
+		return attributes["PhoneNumber"];
+	}
+
+	void setAge( const uint32& val ) {
+		attributes["Age"] = val;
+		ModelEvent e( this, Model::MODEL_CHANGED );
+		changed( &e );
+	}
+
+	void setFirstName( const String& val ) {
+		attributes["FirstName"] = val;
+		ModelEvent e( this, Model::MODEL_CHANGED );
+		changed( &e );
+	}
+
+	void setLastName( const String& val ) {
+		attributes["LastName"] = val;
+		ModelEvent e( this, Model::MODEL_CHANGED );
+		changed( &e );
+	}
+
+	void setZIPCode( const String& val ) {
+		attributes["ZIPCode"] = val;
+		ModelEvent e( this, Model::MODEL_CHANGED );
+		changed( &e );
+	}
+
+	void setAddress( const String& val ) {
+		attributes["Address"] = val;
+		ModelEvent e( this, Model::MODEL_CHANGED );
+		changed( &e );
+	}
+
+	void setState( const String& val ) {
+		attributes["State"] = val;
+		ModelEvent e( this, Model::MODEL_CHANGED );
+		changed( &e );
+	}
+
+	void setCountry( const String& val ) {
+		attributes["Country"] = val;
+		ModelEvent e( this, Model::MODEL_CHANGED );
+		changed( &e );
+	}
+
+	void setPhoneNumber( const String& val ) {
+		attributes["PhoneNumber"] = val;
+		ModelEvent e( this, Model::MODEL_CHANGED );
+		changed( &e );
+	}
+
+protected:
+	Dictionary attributes;
+};
 
 
 
+So we can now easily get and set values on the Person class. Note that
+there's no real reason to use the Dictionary object to store the value
+other laziness. It makes for smaller code when implementing the generic
+getValue() and setValue() methods and isEmpty(), but it's not as efficient 
+as using more traditional individual member variables for each attribute.
+
+At this point we have a complete, if simplistic, Model implementation. 
+
+Now that we've defined a model let's set up a user interface. We're going to 
+build the UI's for all these examples using the VCF's Visual File Format (VFF), 
+which is basically an extension of the format that Borland's Delphi has used 
+for years. It's easy to parse, it's not XML, and, possibly more importantly, it's 
+extremely easy to read and edit by hand. For a more complete definition
+of it, see these links:
+[
+http://software-windmills.blogspot.com/2008/05/working-with-delegates-in-visual-form.html
+http://software-windmills.blogspot.com/2007/05/visual-form-file-format.html
+]
+ 
+Basically the VCF loads up a VFF file for each UI class that it attempts to create
+using it's resource loading logic to load the data in memory. Resources
+can be stored in a more traditional resource script (.RC) and compiled into the 
+final executable, or they can exist as external files. For the purposes of these
+articles, to make things easy, we'll use resources as external files. The actual file 
+name must be the same as the class with the ".vff" extension on the end. Our
+window class is named "ModelDataWindow" so our file will be stored as 
+"ModelDataWindow.vff" and it will be in the Resources/ directory, at the same
+level where the executable is.
+
+We'll start with the following to define our main window:
+
+object ModelDataWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 110pt
+	width = 240pt
+	caption = 'ModelData Window'	
+
+	minHeight = 110pt
+	maxHeight = 110pt	
+end
+
+
+A few points really quickly: 
+ - as you can see you define an object with a name (this becomes the name
+ of the component), specify it's C++ class, and then write out the properties
+that you want to define. 
+ - the VFF allows you to specify coordinate values in 
+pixels (the default), points, inches, or centimeters. Points, inches, and centimeters
+all use the screens current DPI to determine the actual pixel value. 
+ - note the use of minHeight/maxHeight - by setting these values we can 
+ constrain the size of the main window. Since we've set them to the same value
+ we will not be able to change the height of the window. We will be able to 
+ change the resize width.
+ 
+We're going to have a simple UI that displays some values, in a tabular interface.
+To make this easy, we're going to use a special container class that will 
+do all the work of positioning the controls
+
+object ModelDataWindow  : VCF::Window
+	//rest commented out
+	object hlContainer : VCF::HorizontalLayoutContainer
+		numberOfColumns = 2
+		maxRowHeight = 35
+		rowSpacerHeight = 10
+		widths[0] = 80
+		widths[1] = 80
+
+		tweenWidths[0] = 10
+	end
+
+	object hlContainer2 : VCF::HorizontalLayoutContainer
+		numberOfColumns = 2
+		maxRowHeight = 35
+		rowSpacerHeight = 10
+		widths[0] = 80
+		widths[1] = 80
+
+		tweenWidths[0] = 10
+	end
+end
+
+This defines 2 containers that we can use and reference later on. Most of the
+values just specify various dimensions of the container.
+
+We'll split the UI in two : the left side will be editable, and the right side
+will just show the current values, and will be updated whenever changes
+are made to the model.
+
+
+object ModelDataWindow  : VCF::Window
+	//rest commented out
+	object hlContainer : VCF::HorizontalLayoutContainer
+		//rest commented out
+	end
+
+	object hlContainer2 : VCF::HorizontalLayoutContainer
+		//rest commented out
+	end
+	
+	object pnl1 : VCF::Panel 
+		border = null
+		alignment = AlignLeft
+		width = 120pt
+		container = @hlContainer		
+	end
+	
+
+	object pnl1 : VCF::Splitter 
+		alignment = AlignLeft
+	end
+
+	object pnl2 : VCF::Panel 
+		container = @hlContainer2
+		border = null
+		alignment = AlignClient
+	end	
+end
+
+Now we have the basics of our UI laid out. Lets add the rest of the controls,
+specifically the labels, text control, and button that we'll use. The labels will
+be for names of the Person attributes that we will display, some of the read
+only attribute values. The text control will hold the LastName attribute
+which can be edited. The button will be used to increment the Person's age
+by 1 year each time it's clicked.
+
+object ModelDataWindow  : VCF::Window
+	//commented out
+	object pnl1 : VCF::Panel 
+		border = null
+		alignment = AlignLeft
+		width = 120pt
+		container = @hlContainer
+
+		object lbl1 : VCF::Label
+			caption = 'First Name'		
+		end
+
+		object edt1 : VCF::Label
+			
+		end
+
+
+		object lbl2 : VCF::Label
+			caption = 'Last Name'		
+		end
+
+		object edt2 : VCF::TextControl
+			
+		end
+
+		object lbl3 : VCF::Label
+			caption = 'Age'		
+		end
+
+		object edt3 : VCF::TextControl
+			readonly = true
+			enabled = false			
+		end
+
+
+
+		object lbl4 : VCF::Label
+			caption = 'Modify Age'		
+		end
+
+		object btn1 : VCF::CommandButton
+			caption = 'Click Me'
+
+			delegates
+				ButtonClicked = [ModelDataApp@ModelDataApp::clickMe]
+			end
+		end
+	end
+	
+
+	object pnl1 : VCF::Splitter 
+		alignment = AlignLeft
+	end
+
+	object pnl2 : VCF::Panel 
+		container = @hlContainer2
+		border = null
+		alignment = AlignClient
+
+		object lbl1a : VCF::Label
+			caption = 'First Name'		
+		end
+
+		object valLbl1 : VCF::Label
+			
+		end
+
+
+		object lbl2a : VCF::Label
+			caption = 'Last Name'		
+		end
+
+		object valLbl2 : VCF::Label
+			
+		end
+
+		object lbl3a : VCF::Label
+			caption = 'Age'		
+		end
+
+		object valLbl3 : VCF::Label
+			
+		end
+	end	
+end
+
+Now that we have the basic UI defined, let's put some code in place to load
+it up:
+
+
+
+class ModelDataWindow : public Window {
+public:
+	ModelDataWindow() {}
+	virtual ~ModelDataWindow(){};
+};
+
+_class_rtti_(ModelDataWindow, "VCF::Window", "ModelDataWindow")
+_class_rtti_end_
+
+
+class ModelDataApp : public Application {
+public:
+
+	ModelDataApp( int argc, char** argv ) : Application(argc, argv) {
+		addCallback( new ClassProcedure1<Event*,ModelDataApp>(this, &ModelDataApp::clickMe), "ModelDataApp::clickMe" );
+	}
+
+	virtual bool initRunningApplication(){
+		bool result = Application::initRunningApplication();
+		REGISTER_CLASSINFO_EXTERNAL(ModelDataWindow);
+		Window* mainWindow = Frame::createWindow( classid(ModelDataWindow) );
+		setMainWindow(mainWindow);
+		mainWindow->show();
+		
+		return result;
+	}
+
+	void clickMe( Event* ) {
+		//omitted
+	}	
+
+};
+
+The first thing to note is that we need to add support for the VCF's advanced 
+reflection/RTTI features, and that's where the _class_rtti_, and REGISTER_CLASSINFO_EXTERNAL
+macros come into play. You need to define this so that the framework can
+load up your window class dynamically. This happens when the Frame::createWindow
+static function is called - it loads up a window, based on it's RTTI Class instance,
+and automatically loads up the corresponding VFF resource for you.
+
+The next thing is that we add a callback to our application, in it's constructor. That way
+it's ready to be used and when we load our window's VFF we can reference it as a callback
+to use to add to the buttons ButtonClicked delegate.
+
+When we run it, we get something like this:
+sc1a.png
+
+Obviously not very useful yet, as there's no data! Our plan here is to create the model, and set it's
+initial properties, in the ModelDataWindow VFF file. You don't have to do things, but for the purpose
+of this first step, it's an easy way to work with it. In order to be able to this, we need to add RTTI
+support, just like we did with the main window, only we will also be adding support for the various 
+properties that we want to expose. To do that we define something like this:
+
+
+_class_rtti_(Person, "VCF::Model", "Person")
+_property_( uint32, "age", getAge, setAge, "" );
+_property_( String, "firstName", getFirstName, setFirstName, "" );
+_property_( String, "lastName", getLastName, setLastName, "" );
+_property_( String, "zipCode", getZIPCode, setZIPCode, "" );
+_property_( String, "address", getAddress, setAddress, "" );
+_property_( String, "state", getState, setState, "" );
+_property_( String, "country", getCountry, setCountry, "" );
+_property_( String, "phoneNumber", getPhoneNumber, setPhoneNumber, "" );
+_class_rtti_end_
+
+This means that we can reference the age (or any of the other properties that we have
+declared here) of the person in the VFF by using the property name "age". We register
+this in the application by adding the code
+
+virtual bool initRunningApplication(){
+	bool result = Application::initRunningApplication();
+	REGISTER_CLASSINFO_EXTERNAL(ModelDataWindow);
+	REGISTER_CLASSINFO_EXTERNAL(Person);
+	//rest omitted
+	
+}
+
+Now we can make some changes to our UI and do the following:
+ - we'll create a new Person object. This will be our Model.
+ - we'll set the first name, last name, and age of our Person instance.  
+ - we'll set the model property of some of our controls
