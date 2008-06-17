@@ -60,11 +60,7 @@ License:     BSD
 <li><a href="Article_src.zip">Download source - XXX Kb</a></li>
 </ul>
 
-<p><img src="scribble10.png" ></p>
-
-<!-------------------------------     STEP 3      --------------------------->
-
-
+<p><img src="vcfmvc/scribble10.png" ></p>
 <p>
 <h2>Introduction</h2>
 This will the first in a four part series of articles
@@ -131,6 +127,10 @@ TextControl, ListControl, TreeControl, and so on, use Models to
 store their data, so MVC is not just a throwaway in the framework, 
 it's built in and heavily used.
 </p>
+<p>
+<i>MVC classes in the VCF</i> <br>
+<img src="vcfmvc/mvc-diagram1.png">
+</p>
 
 <h2>Model Basics</h2>
 <p>
@@ -143,6 +143,11 @@ The Model's views are updated by the updateAllViews() function that
 iterates through all the registered views of a model and calls the
 updateView() function for each view. 
 </p>
+<p>
+<i>ModelChanged delegate</i> <br>
+<img src="vcfmvc/mvc-diagram2.png">
+</p>
+
 <h2>Data Access</h2>
 <p>
 The Model class itself does not store or define how data is stored. 
@@ -241,7 +246,7 @@ how things work. Some useful articles:
 For our first step, let's create a simple application that displays
 the information in the ubiquitous Person class.
 <br>
-<img src="sc1.png">
+<img src="vcfmvc/sc1.png">
 </p>
 <p>
 First lets create our model. We'll call it a Person and define like so:
@@ -690,7 +695,7 @@ as a callback to use to add to the buttons ButtonClicked delegate.
 </p>
 <p>
 When we run it, we get something like this:<br>
-<img src="sc1a.png">
+<img src="vcfmvc/sc1a.png">
 </p>
 <p>
 Obviously not very useful yet, as there's no data! Our plan here is to create 
@@ -834,7 +839,7 @@ Note that we already had defined a method for this earlier. This just
 retreives the component, and increments it's age attribute. What
 we end up with is something like this:
 <br>
-<img src="sc1.png">
+<img src="vcfmvc/sc1.png">
 </p>
 
 <h2>Conclusion</h2>
