@@ -185,6 +185,161 @@ protected:
 
 </pre>
 </p>
+
+<p>
+This gives us a basic model for storing shapes. Since each ScribbleShape
+derives from Object, we can store it in the array of VariantData items
+that the model maintains for us. When we add shapes to the model, the
+ModelChanged delegate is triggered, and the normal update mechanism
+for any associated views takes place. With that in mind let's move on 
+to the UI.
+</p>
+<h2>The Scribble UI: a first cut</h2>
+<p>
+Our first UI for the scribble app will be very simple. We will use
+the main window itself as our view, and handle the painting there
+as well. Our painting logic simply iterates through all the 
+shape objects in the model, and then draws each shape. 
+<pre>
+virtual void paint( GraphicsContext* ctx ) {
+  Window::paint( ctx );
+
+  ScribbleModel* scribble = (ScribbleModel*) getViewModel();
+
+  Rect r = getClientBounds();
+
+  ctx->rectangle( r );
+  ctx->setColor( scribble->getBackColor() );
+  ctx->fillPath();
+
+  size_t count = scribble->getCount();
+  for (size_t i=0;i&lt;count;i++ ) {
+    const ScribbleShape* shape = scribble->getShape(i);			
+
+    int gcs = ctx->saveState();
+
+    ctx->setCurrentTransform( shape->mat );
+    switch ( shape->type ) {
+      case ScribbleShape::stLine : {
+        ctx->setColor( &shape->stroke );
+        ctx->moveTo( shape->points[0] );
+        ctx->lineTo( shape->points[1] );
+        ctx->strokePath();
+      }
+      break;
+
+      case ScribbleShape::stRect : {
+        
+        r.setRect( shape->points[0].x_, shape->points[0].y_,
+              shape->points[1].x_, shape->points[1].y_ );
+        ctx->rectangle( r );
+      }
+      break;
+
+      case ScribbleShape::stEllipse : {
+        r.setRect( shape->points[0].x_, shape->points[0].y_,
+              shape->points[1].x_, shape->points[1].y_ );
+
+        ctx->ellipse( r.getTopLeft(), r.getBottomRight() );					
+      }
+      break;
+
+      case ScribbleShape::stPolygon : {
+        ctx->polyline( shape->points );
+        ctx->closePath( shape->points.back() );
+      }
+      break;
+
+      case ScribbleShape::stFreehand : {
+        ctx->polyline( shape->points );
+      }
+      break;
+    }
+
+    if ( shape->type != ScribbleShape::stLine ) {
+      if ( shape->filled ) {
+        ctx->setColor( &shape->fill );
+        ctx->fillPath();
+      }
+
+      ctx->setStrokeWidth( shape->strokeWidth );
+      ctx->setColor( &shape->stroke );
+      ctx->strokePath();
+    }
+
+    ctx->restoreState( gcs );
+  }
+}
+</pre>
+</p>
+<p>
+The code is reasonably simple, note that the Window, which
+derives from Control and is therefore also a View, gets it's
+model using the getViewModel() method. This makes the code 
+pretty easy to migrate to anything else that has a model later on.
+</p>
+<p>
+Like the previous article, we'll use the VFF format here to 
+define the basic window UI, but it will be very simple:
+<pre>
+object Scribble1Window  : VCF::Window
+	top = 200
+	left = 200
+	height = 300
+	width = 320
+	caption = 'Scribble1 Window'
+
+end
+</pre>
+Just enough to position the window set it's title. The rest of
+work will be done in the window's constructor:
+<pre>
+Scribble1Window() {
+  ScribbleModel* scribble = new ScribbleModel();
+
+  addComponent( scribble );
+  scribble->addView( this );
+
+  scribble->addLine( Point(10, 100), Point(100, 300) );
+
+  scribble->addRect( Point(100, 20), Point(200, 110) );
+
+  ScribbleShape* shape = new ScribbleShape();
+  shape->type = ScribbleShape::stPolygon;
+  shape->points.push_back( Point(40, 30) );
+  shape->points.push_back( Point(34, 120) );
+  shape->points.push_back( Point(200, 180) );
+  shape->points.push_back( Point(300, 100) );
+  shape->points.push_back( Point(260, 80) );
+  shape->points.push_back( Point(100, 40) );
+  shape->strokeWidth = 5;
+  shape->filled = true;
+  shape->fill = *Color::getColor("red");
+  shape->stroke = *Color::getColor("purple");
+  shape->mat = Matrix2D::translation( -40, -30 ) * 
+                Matrix2D::rotation(-25) * 
+                Matrix2D::translation( 70, 200 );
+                
+  scribble->add( shape );
+}
+</pre>
+</p>
+<p>
+The code creates a new ScribbleModel instance and adds the window
+(as a view) to the model. We create three shapes, the first two calls
+are done using the specific ScribbleModel methods to make a shape,
+and the third call creates a ScribbleShape from scratch and adds
+it using the ListModel::add() method. Since the ListModel::add() 
+method takes a VariantData object, we can pass in our ScribbleShape
+instance pointer. Once we build all this and run it, we end up
+with something like this
+</p>
+<p>
+<img src="sc2.png">
+</p>
+
+
+
 </body>
 
 </html>
