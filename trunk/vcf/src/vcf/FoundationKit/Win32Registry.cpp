@@ -11,8 +11,9 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include <shlwapi.h>
 
+#ifndef VCF_WIN32CE
 #pragma comment(lib,"shlwapi.lib")
-
+#endif
 
 using namespace VCF;
 

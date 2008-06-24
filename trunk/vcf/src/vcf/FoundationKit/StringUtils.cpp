@@ -272,6 +272,8 @@ int StringUtils::noCaseCompare( const VCF::String& str1, const VCF::String& str2
 
 #elif defined(VCF_WIN)
 	int cmpRes = CSTR_EQUAL;
+
+	#ifndef VCF_WIN32CE
 	if ( System::isUnicodeEnabled() ) {
 		cmpRes = ::CompareStringW( GetThreadLocale(), NORM_IGNORECASE, str1.c_str(), str1.size(), str2.c_str(), str2.size() );
 
@@ -298,6 +300,10 @@ int StringUtils::noCaseCompare( const VCF::String& str1, const VCF::String& str2
 		}
 		break;
 	}
+	#else
+		cmpRes = ::CompareString( GetThreadLocale(), NORM_IGNORECASE, str1.c_str(), str1.size(), str2.c_str(), str2.size() );
+	#endif
+
 #else
 	String s1 = StringUtils::upperCase(str1);
 	String s2 = StringUtils::upperCase(str2);
@@ -540,9 +546,19 @@ VCF::String StringUtils::toString( const bool& value )
 VCF::String StringUtils::newUUID()
 {
 	VCF::String result = "";
-#ifdef VCF_WIN
+#if defined(VCF_WIN)
 	UUID id;
 	if ( RPC_S_OK == ::UuidCreate( &id ) ){
+		#if defined(VCF_WIN32CE)
+		WideChar* tmpid = NULL;
+		RPC_STATUS rpcresult = UuidToString(  &id, reinterpret_cast<unsigned short**>(&tmpid) );
+
+		if ( RPC_S_OUT_OF_MEMORY != rpcresult ) {
+			result = VCF::String( tmpid );
+
+			RpcStringFree( reinterpret_cast<unsigned short**>(&tmpid) );
+		}
+		#else
 		if ( System::isUnicodeEnabled() ) {
 			WideChar* tmpid = NULL;
 			RPC_STATUS rpcresult = UuidToStringW(  &id, reinterpret_cast<unsigned short**>(&tmpid) );
@@ -562,7 +578,8 @@ VCF::String StringUtils::newUUID()
 
 				RpcStringFreeA( (unsigned char**)&tmpid );
 			}
-		}
+		}		
+		#endif
 	}
 #elif defined(VCF_OSX)
 	CFUUIDRef uuidRef = CFUUIDCreate( kCFAllocatorDefault );

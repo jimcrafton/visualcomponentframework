@@ -81,12 +81,16 @@ void Win32FilePeer::create(  uint32 openFlags  )
 				dirPath += "\\" + *it;
 
 				BOOL res = FALSE;
+				#ifndef VCF_WIN32CE
 				if ( System::isUnicodeEnabled() ) {
 					res = ::CreateDirectoryW( dirPath.c_str(), NULL );
 				}
 				else {
 					res = ::CreateDirectoryA( dirPath.ansi_c_str(), NULL );
 				}
+				#else
+				res = ::CreateDirectory( dirPath.c_str(), NULL );
+				#endif
 
 				if ( !res ) {
 					int err = GetLastError();
@@ -101,6 +105,8 @@ void Win32FilePeer::create(  uint32 openFlags  )
 			//attach to the file
 			FilePath fp = filename;
 			String fileDir = fp.getPathName(true);
+			
+			#ifndef VCF_WIN32CE
 			if ( true == fileDir.empty() ){
 				TCHAR currentDir[MAX_PATH];
 				memset( currentDir, 0 , sizeof(currentDir) );
@@ -108,6 +114,7 @@ void Win32FilePeer::create(  uint32 openFlags  )
 				filename = "\\" + filename;
 				filename = currentDir +  filename;
 			}
+			#endif 
 
 			DWORD rwFlags = 0;
 			DWORD shFlags = 0;
@@ -122,6 +129,7 @@ void Win32FilePeer::create(  uint32 openFlags  )
 				shFlags |= FILE_SHARE_WRITE;
 			}
 
+			#ifndef VCF_WIN32CE
 			if ( System::isUnicodeEnabled() ) {
 				fileHandle_ = ::CreateFileW( filename.c_str(),
 											rwFlags,
@@ -140,7 +148,15 @@ void Win32FilePeer::create(  uint32 openFlags  )
 											FILE_ATTRIBUTE_NORMAL,
 											NULL );
 			}
-
+#else
+			fileHandle_ = ::CreateFile( filename.c_str(),
+											rwFlags,
+											shFlags,
+											NULL,
+											CREATE_ALWAYS,
+											FILE_ATTRIBUTE_NORMAL,
+											NULL );
+#endif
 
 			if ( (NULL == fileHandle_) || (INVALID_HANDLE_VALUE == fileHandle_) ){
 				fileHandle_ = NULL;
@@ -168,12 +184,16 @@ uint64 Win32FilePeer::getSize()
 		WIN32_FILE_ATTRIBUTE_DATA fileAttribData;	
 		
 		int res;
+		#ifndef VCF_WIN32CE
 		if ( System::isUnicodeEnabled() ) {
 			res = ::GetFileAttributesExW( getName().c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
 		} 
 		else {
 			res = ::GetFileAttributesExA( getName().ansi_c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
 		}
+		#else
+		res = ::GetFileAttributesEx( getName().c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
+		#endif
 
 		result = result = makeUInt64( fileAttribData.nFileSizeHigh, fileAttribData.nFileSizeLow );
 	}
@@ -191,12 +211,16 @@ DateTime Win32FilePeer::getDateModified()
 	VCF_ASSERT( !fileName.empty() );
 
 	int res;
+	#ifndef VCF_WIN32CE
 	if ( System::isUnicodeEnabled() ) {
 		res = ::GetFileAttributesExW( fileName.c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
 	} 
 	else {
 		res = ::GetFileAttributesExA( fileName.ansi_c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
 	}
+#else
+	res = ::GetFileAttributesEx( fileName.c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
+#endif
 
 	if ( res ) {
 		result = Win32FilePeer::convertFileTimeToDateTime( fileAttribData.ftLastWriteTime );		
@@ -218,12 +242,16 @@ DateTime Win32FilePeer::getDateCreated()
 	VCF_ASSERT( !fileName.empty() );
 
 	int res;
+	#ifndef VCF_WIN32CE
 	if ( System::isUnicodeEnabled() ) {
 		res = ::GetFileAttributesExW( fileName.c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
 	} 
 	else {
 		res = ::GetFileAttributesExA( fileName.ansi_c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
 	}
+#else
+	res = ::GetFileAttributesEx( fileName.c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
+#endif
 
 	if ( res ) {
 		result = Win32FilePeer::convertFileTimeToDateTime( fileAttribData.ftCreationTime );		
@@ -245,12 +273,16 @@ DateTime Win32FilePeer::getDateAccessed()
 	VCF_ASSERT( !fileName.empty() );
 
 	int res;
+	#ifndef VCF_WIN32CE
 	if ( System::isUnicodeEnabled() ) {
 		res = ::GetFileAttributesExW( fileName.c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
 	} 
 	else {
 		res = ::GetFileAttributesExA( fileName.ansi_c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
 	}
+#else
+	res = ::GetFileAttributesEx( fileName.c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
+#endif
 
 	if ( res ) {
 		result = Win32FilePeer::convertFileTimeToDateTime( fileAttribData.ftLastAccessTime );		
@@ -541,6 +573,7 @@ void Win32FilePeer::updateStat( File::StatMask statMask/*=File::smMaskAll*/ )
 	file_->internal_removeFromStatMask( statMask );
 
 	int res;
+	#ifndef VCF_WIN32CE
 	if ( System::isUnicodeEnabled() ) {
 		if ( res = ::GetFileAttributesExW( getName().c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData ) ) {
 			copyFromAttributeData( file_, fileAttribData, statMask );
@@ -551,6 +584,11 @@ void Win32FilePeer::updateStat( File::StatMask statMask/*=File::smMaskAll*/ )
 			copyFromAttributeData( file_, fileAttribData, statMask );
 		}
 	}
+#else
+	if ( res = ::GetFileAttributesEx( getName().c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData ) ) {
+		copyFromAttributeData( file_, fileAttribData, statMask );
+	}
+#endif
 
 	if( !res ) {
 		String error = "updateStat: " + VCFWin32::Win32Utils::getErrorString( GetLastError() );
@@ -628,6 +666,7 @@ void Win32FilePeer::setDateModified( const DateTime& dateModified )
 			throw BasicException( error );
 		}
 
+		#ifndef VCF_WIN32CE
 		if ( unicodeEnabled ) {
 			hFile = ::CreateFileW( file_->getName().c_str(), GENERIC_READ|GENERIC_WRITE,
 				FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -644,6 +683,14 @@ void Win32FilePeer::setDateModified( const DateTime& dateModified )
 				throw BasicException( error );
 			}
 		}
+#else
+		hFile = ::CreateFile( file_->getName().c_str(), GENERIC_READ|GENERIC_WRITE,
+				FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+		if (hFile == INVALID_HANDLE_VALUE) {
+			String error = VCFWin32::Win32Utils::getErrorString( GetLastError() );
+			throw BasicException( error );
+		}
+#endif
 
 		if (! ::SetFileTime( hFile, NULL, NULL, &ftUTC ) ) {
 			String error = VCFWin32::Win32Utils::getErrorString( GetLastError() );
@@ -689,9 +736,13 @@ void Win32FilePeer::setDateModified( const DateTime& dateModified )
 	}
 #if (_MSC_VER >= 1300)
 	// vc7 and above
+	
+	#ifndef VCF_WIN32CE
 	if ( dwAttributes & FILE_ATTRIBUTE_DEVICE ) {
 		fileAttributes += File::faDevice;
 	}
+	#endif
+
 #endif
 	if ( dwAttributes & FILE_ATTRIBUTE_NORMAL ) {
 		fileAttributes += File::faNormal;
@@ -721,9 +772,11 @@ void Win32FilePeer::setDateModified( const DateTime& dateModified )
 	}
 #if (_MSC_VER >= 1300)
 	// vc7 and above
+	#ifndef VCF_WIN32CE
 	if ( fileAttributes & File::faDevice ) {
 		dwAttributes += FILE_ATTRIBUTE_DEVICE;
 	}
+	#endif 
 #endif
 	if ( fileAttributes & File::faNormal ) {
 		dwAttributes += FILE_ATTRIBUTE_NORMAL;
@@ -746,6 +799,8 @@ void Win32FilePeer::open( const String& fileName, uint32 openFlags, File::ShareF
 	//attach to the file
 	FilePath fp = winFileName;
 	String fileDir = fp.getPathName(true);
+
+	#ifndef VCF_WIN32CE
 	if ( true == fileDir.empty() ){
 		TCHAR currentDir[MAX_PATH];
 		memset( currentDir, 0 , sizeof(currentDir) );
@@ -753,6 +808,7 @@ void Win32FilePeer::open( const String& fileName, uint32 openFlags, File::ShareF
 		winFileName = "\\" + winFileName;
 		winFileName = currentDir +  winFileName;
 	}
+	#endif
 	
 	DWORD rwFlags = 0;
 	DWORD shFlags = 0;
@@ -773,8 +829,8 @@ void Win32FilePeer::open( const String& fileName, uint32 openFlags, File::ShareF
 	if ( shareFlags & File::shWrite ) {
 		shFlags |= FILE_SHARE_WRITE;
 	}
-	
 
+	#ifndef VCF_WIN32CE
 	if ( System::isUnicodeEnabled() ) {
 		fileHandle_ = ::CreateFileW( winFileName.c_str(),
 			rwFlags,
@@ -793,6 +849,17 @@ void Win32FilePeer::open( const String& fileName, uint32 openFlags, File::ShareF
 			FILE_ATTRIBUTE_NORMAL,
 			NULL );
 	}
+	#else
+	fileHandle_ = ::CreateFile( winFileName.c_str(),
+			rwFlags,
+			shFlags,
+			NULL,
+			createFlags,
+			FILE_ATTRIBUTE_NORMAL,
+			NULL );
+	#endif
+
+	
 	
 	
 	if ( (NULL == fileHandle_) || (INVALID_HANDLE_VALUE == fileHandle_) ){

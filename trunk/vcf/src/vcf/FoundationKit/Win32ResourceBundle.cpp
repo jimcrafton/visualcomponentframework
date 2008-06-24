@@ -62,7 +62,10 @@ String Win32ResourceBundle::getString( const String& resourceName )
 			TCHAR* strData = (TCHAR*)::LockResource( data );
 			result = strData;
 			failedToFindRes = false;
+
+			#ifndef VCF_WIN32CE
 			::FreeResource( data );
+			#endif
 		}
 	}
 	else {		
@@ -146,7 +149,9 @@ String Win32ResourceBundle::getVFF( const String& resourceName )
 				resSize = result.size();
 				failedToFindRes = false;
 			}
+			#ifndef VCF_WIN32CE
 			::FreeResource( data );
+			#endif
 		}
 	}
 	else {
@@ -167,6 +172,9 @@ Resource* Win32ResourceBundle::getResource( const String& resourceName )
 	foundResType_ = "\0";
 
 	searchResName_ = resourceName;
+
+	#ifndef VCF_WIN32CE
+
 	/**
 	JC
 	we are using the ansi version as there isn't 
@@ -205,6 +213,9 @@ Resource* Win32ResourceBundle::getResource( const String& resourceName )
 			//throw exception- resource not found !!!!
 		}
 	}
+	#else
+	//how to do this in WinCE???
+	#endif
 
 	//if we got this far then look for files!
 

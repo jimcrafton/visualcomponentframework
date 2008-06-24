@@ -142,7 +142,7 @@ where you installed the VCF.
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+
 #ifndef VCF_CW
 	#include <memory.h>
 #else
@@ -179,7 +179,7 @@ where you installed the VCF.
 
 
 
-
+#include "vcf/FoundationKit/VCFTime.h"
 
 
 

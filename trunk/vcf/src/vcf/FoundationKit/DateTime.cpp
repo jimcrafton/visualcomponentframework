@@ -29,8 +29,8 @@ using namespace VCF;
 
 DateTime::DateTime( time_t newTime ):
 	time_(0)
-{
-	tm gm = *localtime( &newTime );
+{	
+	tm gm = *vcflocaltime( &newTime );
 
 	set( gm.tm_year + 1900, gm.tm_mon+1, gm.tm_mday, gm.tm_hour, gm.tm_min, gm.tm_sec );
 }
@@ -619,7 +619,7 @@ bool DateTime::operator!= ( const DateTime& rhs ) const
 
 DateTime& DateTime::operator =( const time_t& rhs )
 {
-	tm gm = *localtime( &rhs );
+	tm gm = *vcflocaltime( &rhs );
 
 	set( gm.tm_year + 1900, gm.tm_mon+1, gm.tm_mday, gm.tm_hour, gm.tm_min, gm.tm_sec );
 
