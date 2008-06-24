@@ -90,8 +90,11 @@ defined to use the DLL or static libraries.
 	#endif // FOUNDATIONKIT_LIB
 
 	//Always link to Rpcrt4.lib version.lib no matter what
+#ifndef VCF_WIN32CE
 	#		pragma comment(lib, "Rpcrt4.lib")
 	#		pragma comment(lib, "version.lib")
+#endif
+	
 #endif //VCF_MSC
 
 #endif //VCF_ALLIN1_DLL/LIB

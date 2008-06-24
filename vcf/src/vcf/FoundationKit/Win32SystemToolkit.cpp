@@ -10,7 +10,10 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/FoundationKitPrivate.h"
 #include "vcf/FoundationKit/ProcessIORedirectionPeer.h"
+
+#ifndef VCF_WIN32CE
 #include "vcf/FoundationKit/Win32ProcessIORedirector.h"
+#endif
 
 #include "vcf/FoundationKit/LocalePeer.h"
 #include "vcf/FoundationKit/Win32LocalePeer.h"
@@ -47,9 +50,11 @@ ProcessPeer* Win32SystemToolkit::internal_createProcessPeer( Process* process )
 
 ProcessIORedirectionPeer* Win32SystemToolkit::internal_createProcessIORedirectionPeer( ProcessWithRedirectedIO* process )
 {
-	ProcessIORedirectionPeer * result = new Win32ProcessIORedirector();
+	ProcessIORedirectionPeer * result = NULL;
+#ifndef VCF_WIN32CE
+	result = new Win32ProcessIORedirector();
 	result->setProcess( process );
-
+#endif
 	return result;
 }
 

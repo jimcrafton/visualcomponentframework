@@ -161,7 +161,8 @@ inline Event::Event( Object* source, const uint32& eventType )
 inline void Event::init()
 {
 	consumed_ = false;
-	time( &time_ );
+	time_ = 0;
+	vcftime( &time_ );
 }
 
 inline Object* Event::getSource() const 
