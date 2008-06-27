@@ -112,19 +112,7 @@ protected:
 	MouseState mouseState_;
 	::Point lastMousePt_;	
 	NSView* view_;
-
-	//OSStatus handleControlTrack( EventRef theEvent );
-	
-	//OSStatus handleWrappedControlTrack( EventRef theEvent );
-	
-	//OSStatus handleWrappedControlTrackDone( EventRef theEvent );
-	
-	//OSStatus handleWrappedControlHitTest( EventRef theEvent );
-	
-	//OSStatus installStdControlHandler();
-
-	//static EventHandlerUPP getEventHandlerUPP();
-	//static OSStatus handleOSXEvents(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
+	static OSXControl* getControlForView( NSView* view ); 
 };
 
 

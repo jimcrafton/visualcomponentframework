@@ -85,7 +85,7 @@ where you installed the VCF.
 
 - (void)windowWillClose:(NSNotification *)notification
 {
-	printf( "windowWillClose called \n" );
+	//printf( "windowWillClose called \n" );
 	VCF::Application* app = VCF::Application::getRunningInstance();
 	if ( app->getMainWindow() == vcfWnd ) {
 		
@@ -100,7 +100,7 @@ where you installed the VCF.
 {
 	BOOL result = YES;
 	
-	printf( "windowShouldClose called \n" );
+	//printf( "windowShouldClose called \n" );
 	
 	if ( vcfWnd->isDesigning() ) {
 	}
@@ -136,22 +136,21 @@ where you installed the VCF.
 {
 	if ((self = [super initWithFrame:frameRect]) != nil) {
 		// Add initialization code here
-		wnd = NULL;
 	}
 	return self;
 }
 
 - (void)drawRect:(NSRect)rect
 {
-	printf( "VCFWindowContentView drawRect rect: %d,%d,%d,%d\n", (int)rect.origin.x, (int)rect.origin.y, (int)rect.size.width, (int)rect.size.height );
+	//printf( "VCFWindowContentView drawRect rect: %d,%d,%d,%d\n", (int)rect.origin.x, (int)rect.origin.y, (int)rect.size.width, (int)rect.size.height );
 	if ( NULL != wnd ) {
 		wnd->internal_paint(rect);
 	}
 }
 
-- (void) setVCFWindow: (id) aWnd
+- (void) setVCFWindow: (VCF::OSXWindow*) aWnd
 {
-	wnd = (VCF::OSXWindow*)aWnd;
+	wnd = aWnd;
 }
  
 - (void)setFrame:(NSRect)rect
@@ -159,7 +158,7 @@ where you installed the VCF.
 	[super setFrame:rect];
 	
 	
-	printf( "VCFWindowContentView set setFrame\n\trect: %d,%d,%d,%d\n", (int)rect.origin.x, (int)rect.origin.y, (int)rect.size.width, (int)rect.size.height );
+	//printf( "VCFWindowContentView set setFrame\n\trect: %d,%d,%d,%d\n", (int)rect.origin.x, (int)rect.origin.y, (int)rect.size.width, (int)rect.size.height );
 	
 }
 
@@ -169,7 +168,7 @@ namespace VCF {
 
 
 OSXWindow::OSXWindow():	
-	control_(NULL),
+	OSXControl(NULL),
 	internalClose_(false),
 	currentMouseBtn_(0)
 {
@@ -178,7 +177,7 @@ OSXWindow::OSXWindow():
 
 
 OSXWindow::OSXWindow( Control* control, Control* owner ):
-	control_(control),
+	OSXControl(control),
 	window_(NULL),
 	internalClose_(false),
 	currentMouseBtn_(0)
@@ -283,17 +282,19 @@ void OSXWindow::create( Control* owningControl )
 	r.origin.y = 0;
 	
 	[contentView setVCFControl: owningControl];
-	[contentView setVCFWindow: (id)this];
+	[contentView setPeerInst: this];
+	[contentView setVCFWindow: this];
 	
 	[contentView initWithFrame:r];
 	
-	
+	view_ = contentView;
+
 	VCFWindowDelegate* wndDelegate = [[VCFWindowDelegate alloc] init];
 	wndDelegate->vcfWnd = (Window*)owningControl;
 	[window_ setDelegate: wndDelegate ];
 	
 	
-	[window_ setContentView: contentView ];
+	[window_ setContentView: view_ ];
 	[window_ setAcceptsMouseMovedEvents: YES];
 }
 
@@ -318,11 +319,9 @@ void OSXWindow::destroyControl()
 String OSXWindow::getText()
 {
 	VCF::String result;
-	//CFStringRef wndTitle = 
-		
+	
 	CFTextString text;
-	text = (CFStringRef) [window_ title];
-	//text = wndTitle;
+	text = (CFStringRef) [window_ title];	
 	result = text;
 	
 	return result;
@@ -379,7 +378,7 @@ void OSXWindow::setVisible( const bool& visible )
 
 bool OSXWindow::getVisible()
 {
-	return  [window_ isVisible] ? true : false ; //IsWindowVisible( windowRef_ ) ? true : false;
+	return  [window_ isVisible] ? true : false ;
 }
 
 Control* OSXWindow::getControl()
@@ -413,7 +412,7 @@ void OSXWindow::setCursor( Cursor* cursor )
 
 void OSXWindow::setParent( Control* parent )
 {
-
+	
 }
 
 Control* OSXWindow::getParent()
@@ -456,6 +455,8 @@ void OSXWindow::repaint( Rect* repaintRect, const bool& immediately )
 	else {
 		r = repaintRect;
 	}
+	
+	[window_ display];
 }
 
 void OSXWindow::keepMouseEvents()

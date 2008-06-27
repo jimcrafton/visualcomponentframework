@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38847C110E057D38005D0874 /* OSXCustomControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 38847C0F0E057D38005D0874 /* OSXCustomControl.h */; };
+		38847C120E057D38005D0874 /* OSXCustomControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38847C100E057D38005D0874 /* OSXCustomControl.cpp */; };
+		38847C130E057D38005D0874 /* OSXCustomControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 38847C0F0E057D38005D0874 /* OSXCustomControl.h */; };
+		38847C140E057D38005D0874 /* OSXCustomControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38847C100E057D38005D0874 /* OSXCustomControl.cpp */; };
 		38CFDF640E0481DC00904FA7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB598030DDF49900061EF95 /* Cocoa.framework */; };
 		5E4EB2280932A461009AB90C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E4EB2260932A44F009AB90C /* libz.dylib */; };
 		5E4EB2670932A751009AB90C /* FoundationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7340BB082E719300CDD184 /* FoundationKit_d.framework */; };
@@ -1439,6 +1443,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		38847C0F0E057D38005D0874 /* OSXCustomControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSXCustomControl.h; path = ../../src/vcf/ApplicationKit/OSXCustomControl.h; sourceTree = SOURCE_ROOT; };
+		38847C100E057D38005D0874 /* OSXCustomControl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = OSXCustomControl.cpp; path = ../../src/vcf/ApplicationKit/OSXCustomControl.cpp; sourceTree = SOURCE_ROOT; };
 		5E092B0E0741D5AD004B45E4 /* OSXMenuBar.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXMenuBar.cpp; path = ../../src/vcf/ApplicationKit/OSXMenuBar.cpp; sourceTree = SOURCE_ROOT; };
 		5E092B0F0741D5AD004B45E4 /* OSXMenuBar.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXMenuBar.h; path = ../../src/vcf/ApplicationKit/OSXMenuBar.h; sourceTree = SOURCE_ROOT; };
 		5E092B240741D94F004B45E4 /* OSXMenuItem.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXMenuItem.cpp; path = ../../src/vcf/ApplicationKit/OSXMenuItem.cpp; sourceTree = SOURCE_ROOT; };
@@ -2841,6 +2847,8 @@
 				5E2CDFA20648693C00A8020D /* OSXWindow.h */,
 				EA6FE8710BC0BB5100B2CD1C /* OSXUIShellPeer.h */,
 				EA6FE8740BC0BB6F00B2CD1C /* OSXUIShellPeer.cpp */,
+				38847C0F0E057D38005D0874 /* OSXCustomControl.h */,
+				38847C100E057D38005D0874 /* OSXCustomControl.cpp */,
 			);
 			name = Peers;
 			sourceTree = "<group>";
@@ -3706,6 +3714,7 @@
 				5ECC90460DC3BBCD005F692A /* PopupWindow.h in Headers */,
 				5ECC90470DC3BBCD005F692A /* ThemeBorder.h in Headers */,
 				5ECC90490DC3BBCD005F692A /* TransparentWindow.h in Headers */,
+				38847C110E057D38005D0874 /* OSXCustomControl.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4125,6 +4134,7 @@
 				5ECC904C0DC3BBCD005F692A /* PopupWindow.h in Headers */,
 				5ECC904D0DC3BBCD005F692A /* ThemeBorder.h in Headers */,
 				5ECC904F0DC3BBCD005F692A /* TransparentWindow.h in Headers */,
+				38847C130E057D38005D0874 /* OSXCustomControl.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4724,6 +4734,7 @@
 				5ECC902D0DC3BB69005F692A /* ListControl.cpp in Sources */,
 				5ECC90450DC3BBCD005F692A /* PopupWindow.cpp in Sources */,
 				5ECC90480DC3BBCD005F692A /* TransparentWindow.cpp in Sources */,
+				38847C120E057D38005D0874 /* OSXCustomControl.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4961,6 +4972,7 @@
 				5ECC90310DC3BB69005F692A /* ListControl.cpp in Sources */,
 				5ECC904B0DC3BBCD005F692A /* PopupWindow.cpp in Sources */,
 				5ECC904E0DC3BBCD005F692A /* TransparentWindow.cpp in Sources */,
+				38847C140E057D38005D0874 /* OSXCustomControl.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -66,7 +66,10 @@ OSXContext::~OSXContext()
 		ATSUDisposeTextLayout( textLayout_ );
 	}
 
-    CGContextRelease( contextRef_.cgRef );
+	if ( contextRef_.destroyCGRef ) {
+		CGContextRelease( contextRef_.cgRef );
+	}
+   // 
 /*
     if ( NULL != inMemoryImage_ ) {
         delete [] inMemoryImage_;
@@ -101,10 +104,12 @@ void OSXContext::setContextID( OSHandleID handle )
 		//CGContextRelease( contextRef_.cgRef);
 		//contextRef_.cgRef = NULL;
     }
+	contextRef_.destroyCGRef = false;
 	
 	if ( NULL != ref ) {
 		contextRef_.cgRef = ref->cgRef;
 		contextRef_.rect = ref->rect;
+		contextRef_.destroyCGRef = ref->destroyCGRef;
 	}
 	else {
 		contextRef_.cgRef = NULL;
@@ -113,123 +118,18 @@ void OSXContext::setContextID( OSHandleID handle )
 	
 	init();
 }
-/*
-void OSXContext::setPortFromImage( GrafPtr port, uint32 width, uint32 height )
-{
-	
-	
-	
-	//grafPort_ = port;
-	ownerRect_.setRect( 0, 0, width, height );
-	
-	if ( NULL != contextRef_.cgRef ) {
-		CGContextRelease( contextRef_.cgRef);
-	}
-	
-	contextRef_.cgRef = NULL;
-	
-	
-	//CreateCGContextForPort( grafPort_, &contextRef_.cgRef);		
-	
-	//Note the absence of a transform! apparently we don't need to for 
-	//image based CG's
-	
-	if ( nil == textLayout_ ) {
-		ATSUCreateTextLayout( &textLayout_ );
-	}
-	
-	ATSUAttributeTag        cgTags[] = {kATSUCGContextTag};
-	ByteCount               cgSize[] = {sizeof (contextRef_.cgRef)};
-	ATSUAttributeValuePtr   cgValue[] = {&contextRef_.cgRef};
-
-	OSStatus err = ATSUSetLayoutControls (textLayout_,
-										  1,
-										  cgTags,
-										  cgSize,
-										  cgValue);
-	if ( err != noErr ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("ATSUSetLayoutControls failed.") );
-	}
-	
-}
-*/
-
-/*
-void OSXContext::setCGContext( CGContextRef cgRef, GrafPtr port, const Rect& ownerRect  )
-{
-
-	ownerRect_ = ownerRect;
-	contextRef_.cgRef = cgRef;
-
-
-	if ( nil == textLayout_ ) {
-		ATSUCreateTextLayout( &textLayout_ );
-	}
-
-	if ( NULL != contextRef_.cgRef ) {
-		ATSUAttributeTag        cgTags[] = {kATSUCGContextTag};
-		ByteCount               cgSize[] = {sizeof (contextRef_.cgRef)};
-		ATSUAttributeValuePtr   cgValue[] = {&contextRef_.cgRef};
-
-		OSStatus err = ATSUSetLayoutControls (textLayout_,
-											  1,
-											  cgTags,
-											  cgSize,
-											  cgValue);
-		if ( err != noErr ) {
-			throw RuntimeException( MAKE_ERROR_MSG_2("ATSUSetLayoutControls failed.") );
-		}
-	}
-}
-*/
 
 void OSXContext::init()
 {
     origin_.x_ = 0;
 	origin_.y_ = 0;
-	/*
-	if ( NULL != inMemoryImage_ ) {
-        //allocate a new gworld
-        GWorldPtr newGworld = 0;
-
-        int bitsPerPix = 32;
-        int componentCount = 4;
-        int bytesPerRow = (imgWidth_ * (bitsPerPix/componentCount) * componentCount) / 8;
-        ::Rect imgRect;
-        imgRect.left = 0;
-        imgRect.top = 0;
-        imgRect.right = imgWidth_;
-        imgRect.bottom = imgHeight_;
-
-        OSStatus err = 0;
-        err = NewGWorldFromPtr( &newGworld,
-                            k32RGBAPixelFormat,
-                            &imgRect,
-                            NULL,
-                            NULL,
-                            0,
-                            (char*)inMemoryImage_,
-                            bytesPerRow );
-        if ( noErr == err ) {
-            grafPort_ = newGworld;
-//            printf( "NewGWorldFromPtr() succeeded, grafPort_: %p\n", grafPort_ );
-        }
-        else {
-            throw RuntimeException( MAKE_ERROR_MSG_2("NewGWorldFromPtr() failed to allocate GWorld") );
-        }
-    }
-*/
     if ( NULL != contextRef_.cgRef ) {
-        //CreateCGContextForPort( grafPort_, &contextRef_.cgRef);
 
-		//CGContextSaveGState( contextRef_.cgRef );
-		//::Rect portBounds;
-        //GetPortBounds( grafPort_, &portBounds );
-
-
-        CGContextTranslateCTM(contextRef_.cgRef, 0,
-                                        (float)(contextRef_.rect.bottom_ - contextRef_.rect.top_));
-        CGContextScaleCTM(contextRef_.cgRef, 1, -1);
+		//this is here for text stuff, otherwise hte
+		//text draws upside down!!
+        //CGContextTranslateCTM(contextRef_.cgRef, 0,
+         //                               (float)(contextRef_.rect.bottom_ - contextRef_.rect.top_));
+        //CGContextScaleCTM(contextRef_.cgRef, 1, -1);
 
 		if( nil == textLayout_ ) { //only do this once
 			ATSUCreateTextLayout( &textLayout_ );
@@ -1292,16 +1192,37 @@ void OSXContext_drawThemeButtonText( const ::Rect * bounds, ThemeButtonKind kind
 										const ThemeButtonDrawInfo * info, UInt32 userData,
 										SInt16 depth, Boolean isColorDev )
 {
-	
+	/*
 	ButtonState* state = (ButtonState*)userData;
 	CFTextString cfStr;
 	cfStr = state->buttonCaption_;
 	::Point textSize;
 	SInt16 baseLine;
 	GetThemeTextDimensions( cfStr, kThemePushButtonFont, info->state, FALSE, &textSize, &baseLine );
-	::Rect adjustedBounds = *bounds;
-	adjustedBounds.top += ((bounds->bottom-bounds->top)/2) - (textSize.v/2);
+	
+	
+	HIRect newBounds;
+	newBounds.origin.x = bounds->left;
+	newBounds.origin.y = bounds->top + ((bounds->bottom-bounds->top)/2) - (textSize.v/2);
+	newBounds.size.width = bounds->right - bounds->left;
+	newBounds.size.width = bounds->bottom - bounds->top;
+	
+	
+	
 	DrawThemeTextBox( cfStr, kThemePushButtonFont, info->state, FALSE, &adjustedBounds, teCenter, NULL );
+		
+	HIThemeTextInfo txtInfo = {0};
+	txtInfo.version = 1;
+	txtInfo.state = info->state;
+	txtInfo.fontID = kThemePushButtonFont;
+	txtInfo.horizontalFlushness = kHIThemeTextHorizontalFlushLeft;
+	txtInfo.verticalFlushness = kHIThemeTextVerticalFlushCenter;
+	txtInfo.options = 0;
+	txtInfo.truncationPosition = kHIThemeTextTruncationNone;	
+	
+	HIThemeSetTextFill( kThemeTextColorDialogActive, NULL, contextRef_.cgRef, kHIThemeOrientationNormal );
+	HIThemeDrawTextBox( cfStr, &newBounds, &txtInfo, contextRef_.cgRef, kHIThemeOrientationNormal );
+	*/
 }
 
 
@@ -1355,45 +1276,82 @@ void OSXContext::drawThemeButtonFocusRect( Rect* rect )
 
 void OSXContext::drawThemeCheckboxRect( Rect* rect, ButtonState& state )
 {
-	Rect tmp = *rect;
+	Rect tmp = *rect;	
 	tmp.offset( origin_.x_, origin_.y_ );
 	OSXRect r = &tmp;
+	CGContextSaveGState(contextRef_.cgRef);
 	
-    ThemeButtonDrawInfo btnInfo;
-	btnInfo.state = kThemeStateInactive ;
+	HIThemeButtonDrawInfo drawInfo;
+	HIRect labelRect;
+	memset( &drawInfo, 0, sizeof(drawInfo) );
 	
-	btnInfo.value = kThemeButtonOff;
+    drawInfo.version = 0;
+    drawInfo.kind = kThemeCheckBox;
 	
-	if ( state.isPressed() ) {
-		btnInfo.state |= kThemeStatePressed;
-	}
+	drawInfo.state = state.isActive() && state.isEnabled() ? kThemeStateActive : kThemeStateInactive;
 	
 	if ( state.isToggled() ) {
-		btnInfo.value = kThemeButtonOn;
+		drawInfo.value = kThemeButtonOn;
 	}
+	drawInfo.adornment = kThemeAdornmentNone;
+	HIRect hr = r;	
+	HIThemeDrawButton( &hr, &drawInfo, contextRef_.cgRef, kHIThemeOrientationNormal, &labelRect );
+	CFTextString cfStr;
+	cfStr = state.buttonCaption_;
 	
-	if ( state.isActive() && state.isEnabled() ) {
-		btnInfo.state |= kThemeStateActive;
-	}
+	HIThemeTextInfo txtInfo = {0};
+	txtInfo.version = 1;
+	txtInfo.state = drawInfo.state;
+	txtInfo.fontID = kThemeSystemFont;
+	txtInfo.horizontalFlushness = kHIThemeTextHorizontalFlushLeft;
+	txtInfo.verticalFlushness = kHIThemeTextVerticalFlushCenter;
+	txtInfo.options = 0;
+	txtInfo.truncationPosition = kHIThemeTextTruncationNone;	
 	
-	
-	btnInfo.adornment = kThemeAdornmentNone;
-	
-	if ( state.isFocused() ) {
-		btnInfo.adornment |= kThemeAdornmentFocus;
-	}	
-    
-    
-
-	ThemeButtonDrawUPP btnDrawUPP = NewThemeButtonDrawUPP(OSXContext_drawThemeButtonText);
-	
-    DrawThemeButton( r, kThemeCheckBox, &btnInfo, NULL, NULL, btnDrawUPP, (UInt32)&state );
-	
-	DisposeThemeButtonDrawUPP(btnDrawUPP);
+	HIThemeSetTextFill( kThemeTextColorDialogActive, NULL, contextRef_.cgRef, kHIThemeOrientationNormal );
+	HIThemeDrawTextBox( cfStr, &labelRect, &txtInfo, contextRef_.cgRef, kHIThemeOrientationNormal );		
+	CGContextRestoreGState( contextRef_.cgRef );
 }
 
 void OSXContext::drawThemeRadioButtonRect( Rect* rect, ButtonState& state )
 {
+	Rect tmp = *rect;	
+	tmp.offset( origin_.x_, origin_.y_ );
+	OSXRect r = &tmp;
+	CGContextSaveGState(contextRef_.cgRef);
+	
+	HIThemeButtonDrawInfo drawInfo;
+	HIRect labelRect;
+	memset( &drawInfo, 0, sizeof(drawInfo) );
+	
+    drawInfo.version = 0;
+    drawInfo.kind = kThemeRadioButton;
+	
+	drawInfo.state = state.isActive() && state.isEnabled() ? kThemeStateActive : kThemeStateInactive;
+	
+	if ( state.isToggled() ) {
+		drawInfo.value = kThemeButtonOn;
+	}
+	drawInfo.adornment = kThemeAdornmentNone;
+	HIRect hr = r;	
+	HIThemeDrawButton( &hr, &drawInfo, contextRef_.cgRef, kHIThemeOrientationNormal, &labelRect );
+	CFTextString cfStr;
+	cfStr = state.buttonCaption_;
+	
+	HIThemeTextInfo txtInfo = {0};
+	txtInfo.version = 1;
+	txtInfo.state = drawInfo.state;
+	txtInfo.fontID = kThemeSystemFont;
+	txtInfo.horizontalFlushness = kHIThemeTextHorizontalFlushLeft;
+	txtInfo.verticalFlushness = kHIThemeTextVerticalFlushCenter;
+	txtInfo.options = 0;
+	txtInfo.truncationPosition = kHIThemeTextTruncationNone;	
+	
+	HIThemeSetTextFill( kThemeTextColorDialogActive, NULL, contextRef_.cgRef, kHIThemeOrientationNormal );
+	HIThemeDrawTextBox( cfStr, &labelRect, &txtInfo, contextRef_.cgRef, kHIThemeOrientationNormal );		
+	CGContextRestoreGState( contextRef_.cgRef );
+	
+	/*
 	Rect tmp = *rect;
 	tmp.offset( origin_.x_, origin_.y_ );
 	OSXRect r = &tmp;
@@ -1429,11 +1387,48 @@ void OSXContext::drawThemeRadioButtonRect( Rect* rect, ButtonState& state )
     DrawThemeButton( r, kThemeRadioButton, &btnInfo, NULL, NULL, btnDrawUPP, (UInt32)&state );
 	
 	DisposeThemeButtonDrawUPP(btnDrawUPP);
+	*/
 }
 
 void OSXContext::drawThemeComboboxRect( Rect* rect, ButtonState& state )
 {
-	Rect tmp = *rect;
+	Rect tmp = *rect;	
+	tmp.offset( origin_.x_, origin_.y_ );
+	OSXRect r = &tmp;
+	CGContextSaveGState(contextRef_.cgRef);
+	
+	HIThemeButtonDrawInfo drawInfo;
+	HIRect labelRect;
+	memset( &drawInfo, 0, sizeof(drawInfo) );
+	
+    drawInfo.version = 0;
+    drawInfo.kind = kThemePopupButton;
+	
+	drawInfo.state = state.isActive() && state.isEnabled() ? kThemeStateActive : kThemeStateInactive;
+	
+	if ( state.isToggled() ) {
+		drawInfo.value = kThemeButtonOn;
+	}
+	drawInfo.adornment = kThemeAdornmentNone;
+	HIRect hr = r;	
+	HIThemeDrawButton( &hr, &drawInfo, contextRef_.cgRef, kHIThemeOrientationNormal, &labelRect );
+	CFTextString cfStr;
+	cfStr = state.buttonCaption_;
+	
+	HIThemeTextInfo txtInfo = {0};
+	txtInfo.version = 1;
+	txtInfo.state = drawInfo.state;
+	txtInfo.fontID = kThemeSystemFont;
+	txtInfo.horizontalFlushness = kHIThemeTextHorizontalFlushLeft;
+	txtInfo.verticalFlushness = kHIThemeTextVerticalFlushCenter;
+	txtInfo.options = 0;
+	txtInfo.truncationPosition = kHIThemeTextTruncationNone;	
+	
+	HIThemeSetTextFill( kThemeTextColorDialogActive, NULL, contextRef_.cgRef, kHIThemeOrientationNormal );
+	HIThemeDrawTextBox( cfStr, &labelRect, &txtInfo, contextRef_.cgRef, kHIThemeOrientationNormal );		
+	CGContextRestoreGState( contextRef_.cgRef );
+	
+	/*Rect tmp = *rect;
 	tmp.offset( origin_.x_, origin_.y_ );
 	OSXRect r = &tmp;
 	
@@ -1465,6 +1460,7 @@ void OSXContext::drawThemeComboboxRect( Rect* rect, ButtonState& state )
     DrawThemeButton( r, kThemePopupButton, &btnInfo, NULL, NULL, btnDrawUPP, (UInt32)&state );
 	
 	DisposeThemeButtonDrawUPP(btnDrawUPP);
+	*/
 }
 
 void OSXContext::drawThemeScrollButtonRect( Rect* rect, ScrollBarState& state )
@@ -1491,7 +1487,28 @@ void OSXContext::drawThemeScrollButtonRect( Rect* rect, ScrollBarState& state )
 
 void OSXContext::drawThemeDisclosureButton( Rect* rect, DisclosureButtonState& state )
 {
-	Rect tmp = *rect;
+	Rect tmp = *rect;	
+	tmp.offset( origin_.x_, origin_.y_ );
+	OSXRect r = &tmp;
+	CGContextSaveGState(contextRef_.cgRef);
+	
+	HIThemeButtonDrawInfo drawInfo;
+	HIRect labelRect;
+	memset( &drawInfo, 0, sizeof(drawInfo) );
+	
+    drawInfo.version = 0;
+    drawInfo.kind = kThemeDisclosureButton;
+	
+	drawInfo.state = state.isActive() && state.isEnabled() ? kThemeStateActive : kThemeStateInactive;
+	
+	if ( state.isToggled() ) {
+		drawInfo.value = kThemeButtonOn;
+	}
+	drawInfo.adornment = kThemeAdornmentNone;
+	HIRect hr = r;	
+	HIThemeDrawButton( &hr, &drawInfo, contextRef_.cgRef, kHIThemeOrientationNormal, &labelRect );
+	CGContextRestoreGState( contextRef_.cgRef );
+	/*Rect tmp = *rect;
 	tmp.offset( origin_.x_, origin_.y_ );
 	OSXRect r = &tmp;
 	
@@ -1515,6 +1532,7 @@ void OSXContext::drawThemeDisclosureButton( Rect* rect, DisclosureButtonState& s
 	btnInfo.adornment = kThemeAdornmentNone;		    
 
     DrawThemeButton( r, kThemeDisclosureButton, &btnInfo, NULL, NULL, NULL, 0 );
+	*/
 	
 }
 
@@ -1962,7 +1980,7 @@ void OSXContext::drawThemeBackground( Rect* rect, BackgroundState& state )
 			if ( err != noErr ) {
 				StringUtils::trace( Format("SetThemeBackground() failed, err: %d\n") % err );
 			}
-			EraseRect( r );
+			//EraseRect( r );
 		}
 		break;
 		
@@ -2074,7 +2092,7 @@ void OSXContext::drawThemeBackground( Rect* rect, BackgroundState& state )
 				StringUtils::trace( Format("SetThemeBackground() failed, err: %d\n") % err );
 			}
 			
-			EraseRect( r );
+			//EraseRect( r );
 		}
 		break;
 		
@@ -2089,6 +2107,8 @@ void OSXContext::drawThemeBackground( Rect* rect, BackgroundState& state )
 		break;
 		
 		case SYSCOLOR_WINDOW : {
+			HIThemeSetTextFill( state.isActive() ? kThemeBrushUtilityWindowBackgroundActive : kThemeBrushUtilityWindowBackgroundInactive, NULL, contextRef_.cgRef, kHIThemeOrientationNormal );
+			
 			err = SetThemeBackground( state.isActive() ? kThemeBrushUtilityWindowBackgroundActive : kThemeBrushUtilityWindowBackgroundInactive,
 									32, TRUE );
 									
@@ -2096,7 +2116,7 @@ void OSXContext::drawThemeBackground( Rect* rect, BackgroundState& state )
 				StringUtils::trace( Format("SetThemeBackground() failed, err: %d\n") % err );
 			}
 			
-			EraseRect( r );
+			//EraseRect( r );
 		}
 		break;
 		
@@ -2111,9 +2131,11 @@ void OSXContext::drawThemeBackground( Rect* rect, BackgroundState& state )
 		break;
 		
 		case SYSCOLOR_WINDOW_FRAME : {
-			SetThemeBackground( state.isActive() ? kThemeBrushDocumentWindowBackground : kThemeBrushDocumentWindowBackground,
-									32, TRUE );
-			EraseRect( r );			
+			HIThemeSetTextFill( state.isActive() ? kThemeBrushDocumentWindowBackground : kThemeBrushDocumentWindowBackground, NULL, contextRef_.cgRef, kHIThemeOrientationNormal );
+		
+		//	SetThemeBackground( state.isActive() ? kThemeBrushDocumentWindowBackground : kThemeBrushDocumentWindowBackground,
+		//							32, TRUE );
+			//EraseRect( r );			
 		}
 		break;
 	}
@@ -2137,8 +2159,11 @@ void OSXContext_drawThemeMenuItemText ( const ::Rect * inBounds, SInt16 inDepth,
 		menuState = kThemeStateInactive;
 	}
 	
-	::DrawThemeTextBox( cfStr, kThemeMenuItemFont, menuState, false, inBounds,
-			teFlushDefault, NULL );
+	
+	
+	
+	//::DrawThemeTextBox( cfStr, kThemeMenuItemFont, menuState, false, inBounds,
+			//teFlushDefault, NULL );
 }
  
 void OSXContext::drawThemeMenuItem( Rect* rect, MenuState& state )
@@ -2174,6 +2199,29 @@ void OSXContext::drawThemeMenuItem( Rect* rect, MenuState& state )
 		menuState = kThemeMenuDisabled;
 	}
 	
+	CFTextString cfStr;
+	cfStr = state.menuCaption_;
+	
+	HIThemeTextInfo txtInfo = {0};
+	txtInfo.version = 1;
+	txtInfo.state = menuState;
+	txtInfo.fontID = kThemeMenuItemFont;
+	txtInfo.horizontalFlushness = kHIThemeTextHorizontalFlushLeft;
+	txtInfo.verticalFlushness = kHIThemeTextVerticalFlushCenter;
+	txtInfo.options = 0;
+	txtInfo.truncationPosition = kHIThemeTextTruncationNone;	
+	HIRect r2;
+	r2.origin.x = menuRect.left;
+	r2.origin.y = menuRect.top;
+	r2.size.width = menuRect.right - menuRect.left;
+	r2.size.height = menuRect.bottom - menuRect.top;
+	
+	HIThemeSetTextFill( kThemeTextColorDialogActive, NULL, contextRef_.cgRef, kHIThemeOrientationNormal );
+	HIThemeDrawTextBox( cfStr, &r2, &txtInfo, contextRef_.cgRef, kHIThemeOrientationNormal );
+	
+	
+	/*
+	
 	MenuItemDrawingUPP menuDrawUPP = NewMenuItemDrawingUPP(OSXContext_drawThemeMenuItemText);
 	
     	
@@ -2181,7 +2229,7 @@ void OSXContext::drawThemeMenuItem( Rect* rect, MenuState& state )
 						menuState, kThemeMenuItemPlain, menuDrawUPP, (UInt32)&state );
 						
 	DisposeMenuItemDrawingUPP(menuDrawUPP);
-	
+	*/
 }
 
 void OSXContext::drawThemeMenuItemText( Rect* rect, MenuState& state )
@@ -2260,10 +2308,31 @@ void OSXContext::drawThemeText( Rect* rect, TextState& state )
 	CFTextString cfStr;
 	cfStr = state.text_;
 	
-	::SetThemeTextColor( textColor, 32, true );
+	//::SetThemeTextColor( textColor, 32, true );
+	HIThemeSetTextFill( textColor, NULL, contextRef_.cgRef, kHIThemeOrientationNormal );
 	
-	::DrawThemeTextBox( cfStr, fontID, menuState, state.wrapText_, r,
-						teFlushDefault, NULL );
+	
+	
+	
+	HIThemeTextInfo txtInfo = {0};
+	txtInfo.version = 1;
+	txtInfo.state = menuState;
+	txtInfo.fontID = kThemeMenuItemFont;
+	txtInfo.horizontalFlushness = kHIThemeTextHorizontalFlushLeft;
+	txtInfo.verticalFlushness = kHIThemeTextVerticalFlushCenter;
+	txtInfo.options = 0;
+	txtInfo.truncationPosition = kHIThemeTextTruncationNone;	
+	HIRect r2 = r;
+	//r2.origin.x = menuRect.left;
+	//r2.origin.y = menuRect.top;
+	//r2.size.width = menuRect.right - menuRect.left;
+	//r2.size.height = menuRect.bottom - menuRect.top;	
+
+	HIThemeDrawTextBox( cfStr, &r2, &txtInfo, contextRef_.cgRef, kHIThemeOrientationNormal );
+	
+	
+	//::DrawThemeTextBox( cfStr, fontID, menuState, state.wrapText_, r,
+	//					teFlushDefault, NULL );
 }
 	
 void OSXContext::drawThemeBorder( Rect* rect, DrawUIState& state )

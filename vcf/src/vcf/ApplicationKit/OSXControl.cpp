@@ -66,6 +66,11 @@ VCF::uint32 translateKeyMask( NSEvent* event )
 
 @implementation VCFControlView
 
+- (BOOL)isFlipped
+{
+	return YES;
+}
+
 - (id)initWithFrame:(NSRect)frameRect
 {
 	if ((self = [super initWithFrame:frameRect]) != nil) {
@@ -995,7 +1000,22 @@ OSStatus OSXControl::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef t
 
 namespace VCF {
 
-OSXControl::OSXControl( Control* control )
+typedef std::map<NSView*,OSXControl*> ViewControlMap;
+static ViewControlMap viewControlMap;
+
+OSXControl* OSXControl::getControlForView( NSView* view )
+{
+	OSXControl* result = NULL;
+	ViewControlMap::iterator found = viewControlMap.find( view );
+	if ( found != viewControlMap.end() ) {
+		result = found->second;
+	}
+	return result;
+}
+
+OSXControl::OSXControl( Control* control ):
+	control_(control),
+	view_(NULL)
 {
 
 }
@@ -1007,22 +1027,34 @@ OSXControl::~OSXControl()
 
 OSHandleID OSXControl::getHandleID()
 {
-
+	return (OSHandleID) view_;
 }
 
 void OSXControl::create( Control* owningControl )
 {
-
+	VCF_ASSERT( view_ != NULL );
+	[view_ setPeerInst:this];
+	[view_ setVCFControl:owningControl];
+	
+	viewControlMap[ view_ ] = this;
 }
 
 void OSXControl::destroyControl()
 {
-
+	ViewControlMap::iterator found = viewControlMap.find( view_ );
+	if ( found != viewControlMap.end() ) {
+		viewControlMap.erase( found );
+	}
 }
 
 void OSXControl::setBounds( Rect* rect )
 {
-
+	NSRect frame;
+	frame.origin.x = rect->left_;
+	frame.origin.y = rect->top_;
+	frame.size.width = rect->getWidth();
+	frame.size.height = rect->getHeight();
+	[view_ setFrame:frame];
 }
 
 bool OSXControl::beginSetBounds( const uint32& numberOfChildren )
@@ -1037,27 +1069,30 @@ void OSXControl::endSetBounds()
 
 Rect OSXControl::getBounds()
 {
-
+	NSRect frame = [view_ frame];
+	return Rect( frame.origin.x, frame.origin.y, 
+				frame.origin.x + frame.size.width,
+				frame.origin.y + frame.size.height );
 }
 
 void OSXControl::setVisible( const bool& visible )
 {
-
+	[view_ setHidden: visible ? NO : YES ];
 }
 
 bool OSXControl::getVisible()
 {
-	return false;
+	return [view_ isHidden] ? false : true;
 }
 
 Control* OSXControl::getControl()
 {
-	return NULL;
+	return control_;
 }
 
-void OSXControl::setControl( Control* component )
+void OSXControl::setControl( Control* control )
 {
-
+	control_ = control;
 }
 
 void OSXControl::setCursor( Cursor* cursor )
@@ -1067,17 +1102,28 @@ void OSXControl::setCursor( Cursor* cursor )
 
 void OSXControl::setParent( Control* parent )
 {
-
+	if ( NULL != parent ) {
+		OSXControl* parentPeer = (OSXControl*) parent->getPeer();
+		[parentPeer->view_ addSubview: view_ ];
+	}
 }
 
 Control* OSXControl::getParent()
 {
-	return NULL;
+	Control* result = NULL;
+	NSView* parentView = [view_ superview];
+	
+	OSXControl* osxCtrl = OSXControl::getControlForView( parentView );
+	if ( NULL != osxCtrl ) {
+		result = osxCtrl->control_;
+	}
+	
+	return result;
 }
 
 bool OSXControl::isFocused()
 {
-	return false;
+	return true;
 }
 
 void OSXControl::setFocused()
@@ -1087,7 +1133,7 @@ void OSXControl::setFocused()
 
 bool OSXControl::isEnabled()
 {
-	return false;
+	return true;
 }
 
 void OSXControl::setEnabled( const bool& enabled )
@@ -1102,7 +1148,17 @@ void OSXControl::setFont( Font* font )
 
 void OSXControl::repaint( Rect* repaintRect, const bool& immediately )
 {
-
+	if ( repaintRect ) {
+		NSRect r;
+		r.origin.x = repaintRect->left_;
+		r.origin.y = repaintRect->top_;
+		r.size.width = repaintRect->getWidth();
+		r.size.height = repaintRect->getHeight();
+		[view_ displayRect:r];
+	}
+	else {
+		[view_ display];
+	}
 }
 	
 void OSXControl::keepMouseEvents()
@@ -1117,17 +1173,27 @@ void OSXControl::releaseMouseEvents()
 
 void OSXControl::translateToScreenCoords( Point* pt )
 {
-
+	NSPoint localPt;
+	localPt.x = pt->x_;
+	localPt.y = pt->y_;
+	NSPoint screenPt = [view_ convertPoint: localPt toView:nil];
+	pt->x_ = screenPt.x;
+	pt->y_ = screenPt.y;
 }
 
 void OSXControl::translateFromScreenCoords( Point* pt )
 {
-
+	NSPoint screenPt;
+	screenPt.x = pt->x_;
+	screenPt.y = pt->y_;
+	NSPoint localPt = [view_ convertPoint: screenPt fromView:nil];
+	pt->x_ = localPt.x;
+	pt->y_ = localPt.y;
 }
 	
 void OSXControl::setBorder( Border* border )
 {
-
+	[view_ display];
 }
 	
 void OSXControl::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
@@ -1147,6 +1213,8 @@ void OSXControl::internal_paint( const NSRect& r )
 	
 	OSXGCRef cgr(cgCtx, r );
 	GraphicsContext gc(&cgr);
+	
+	control_->paint( &gc );
 }
 
 };

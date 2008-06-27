@@ -48,6 +48,9 @@ where you installed the VCF.
 #include "vcf/FoundationKit/ResourceBundlePeer.h"
 #include "vcf/GraphicsKit/GraphicsResourceBundlePeer.h"
 #include "vcf/ApplicationKit/OSXAppResourceBundle.h"
+#include "vcf/ApplicationKit/OSXCustomControl.h"
+
+
 
 #define kSleepTime	32767
 /*
@@ -681,7 +684,7 @@ ControlPeer* OSXUIToolkit::internal_createControlPeer( Control* control, Compone
 		break;
 
 		case CT_DEFAULT: case CT_HEAVYWEIGHT:{
-			result = new OSXControl( control );
+			result = new OSXCustomControl( control );
 		}
 		break;
 	}

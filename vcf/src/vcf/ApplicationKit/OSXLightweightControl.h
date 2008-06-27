@@ -13,7 +13,7 @@ where you installed the VCF.
 namespace VCF
 {
 
-class OSXLightweightControl : public Object, public ControlPeer {
+class OSXLightweightControl : public ControlPeer {
 public:
 	OSXLightweightControl( Control* component );
 
@@ -25,25 +25,31 @@ public:
 
 	virtual OSHandleID getHandleID();
 
-	virtual VCF::String getText();
+	virtual String getText();
 
-	virtual void setText( const VCF::String& text );
+	virtual void setText( const String& text );
 
-	virtual void setBounds( VCF::Rect* rect );
+	virtual void setBounds( Rect* rect );
 
-	virtual VCF::Rect getBounds();
+	virtual bool beginSetBounds( const uint32& numberOfChildren );
+
+	virtual void endSetBounds();
+
+	virtual Rect getBounds();
 
 	virtual void setVisible( const bool& visible );
 
 	virtual bool getVisible();
 
-	virtual VCF::Control* getControl();
+	virtual Control* getControl();
 
-	virtual void setControl( VCF::Control* component );
+	virtual void setControl( Control* component );
 
-	virtual void setParent( VCF::Control* parent );
+	virtual void setCursor( Cursor* cursor );
 
-	virtual VCF::Control* getParent();
+	virtual void setParent( Control* parent );
+
+	virtual Control* getParent();
 
 	virtual bool isFocused();
 
@@ -61,31 +67,23 @@ public:
 
 	virtual void releaseMouseEvents();
 
-	virtual void setCursor( Cursor* cursor );
-
-	virtual bool beginSetBounds( const uint32& numberOfChildren );
-
-	virtual void endSetBounds();
-
 	virtual void translateToScreenCoords( Point* pt );
 
 	virtual void translateFromScreenCoords( Point* pt );
-	
-	VCF::Control* getHeavyWeightParent();
-	
-	virtual void setBorder( Border* border ){}
+
+	virtual void setBorder( Border* border );
 	
 	virtual void preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect );
 	
-	virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
-	
+	virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );	
 protected:
-	
-	VCF::Control* component_;
-	VCF::Rect bounds_;
+	Control* getHeavyWeightParent();
+	Control* component_;
+	Rect bounds_;
 	bool visible_;
 	bool enabled_;
 	bool focused_;
+	std::vector<bool> hiddenControls_;
 };
 
 };
