@@ -56,8 +56,9 @@ License:     BSD
 <!--  Include download and sample image information.                       --> 
 
 <ul class=download>
-<li><a href="Article_demo.zip">Download demo project - XXX Kb </a></li>
-<li><a href="Article_src.zip">Download source - XXX Kb</a></li>
+<li><a href="http://downloads.sourceforge.net/vcf/vcf-0.9.8.tar.gz?big_mirror=1">Download VCF source (tar.gz) from SourceForge - 10.5 MB</a></li>
+<li><a href="http://downloads.sourceforge.net/vcf/VCFSrcOnlyInstaller-0.9.8.exe?big_mirror=1">Download VCF Windows Installer from SourceForge - 37.2 MB</a></li>
+
 </ul>
 
 <p><img src="scribble10.png" ></p>
@@ -66,6 +67,112 @@ License:     BSD
 
 <h2>Introduction</h2>
 <p>
+The <a href="http://www.codeproject.com/KB/library/vcfmvc2.aspx">previous 
+article</a> began developing a application based on useing the MVC
+pattern. This article will continue along those lines, demonstrating
+how to share a single model with more than one view/control, using
+menu items, status bars, mouse selection, modification of various
+shape attributes, and interactive scaling, translation, and rotation
+of a selected shape using the mouse. Some of the things discussed 
+here don't <i>exactly</i> fall under the topic of MVC, but instead 
+demonstrate how to make a full fldged application using the 
+framework.
+</p>
+<h2></h2>
+<p>
+The first things we'll do is move the controller class into it's 
+own header. This makes the application class code a bit cleaner to read.
+</p>
+<p>
+Next we're going to change the UI. We're going to divide the main
+window into two halves, the left side will contain a list view of all
+the shapes in the current model, and the right side will hold our 
+graphical view of the model. We'll use a splitter to allow us to manipulate
+the sizing of both halves:
+<pre>
+object Scribble4Window  : VCF::Window
+  object contentPanel : VCF::Panel
+    alignment = AlignClient
+    border = null
+  end
+  
+  object scribbleListing : VCF::ListViewControl
+    alignment = AlignLeft
+    width = 100pt
+    border = null
+    iconStyle = isDetails		
+  end
+  
+  object splitter : VCF::Splitter 		
+  end
+end
+</pre>
+This will create our UI with it's 3 basic components. The contentPanel will
+now become linked to our SplitterView instance. Before we do that let's introduce
+an new element in our RTTI declarations: fields. 
+</p>
+<p>
+We can use VCF's RTTI fields to link a component declared in the VFF resource to
+a member variable in the C++ class. So we can associate the contentPanel object
+declared above with :
+<pre>
+class Scribble4Window : public Window {
+public:
+  Scribble4Window() {
+    
+  }
+  virtual ~Scribble4Window(){};
+  
+  Panel* contentPanel;
+};
+</pre>
+We do this by using the _field_obj_ macro like so:
+<pre>
+_class_rtti_(Scribble4Window, "VCF::Window", "Scribble4Window")
+_field_obj_( Panel*, contentPanel )
+_class_rtti_end_
+</pre>
+Presto! After the Scribble4Window is created and loaded with the contents
+of the VFF resource, the contentPanel will point to the correct instance.
+This means we don't have to use the Component::findComponent() method.
+</p>
+<p>
+Now hooking up the view to the it's new control looks like:
+<pre>
+class Scribble4App : public Application {
+public:
+  virtual bool initRunningApplication(){
+    
+    //rest omitted
+    
+    ScribbleController* controller = new ScribbleController();
+    controller->setName( "controller" );
+    addComponent(controller);
+  
+  
+    Scribble4Window* mainWindow = (Scribble4Window*) Frame::createWindow( classid(Scribble4Window) );
+    setMainWindow(mainWindow);
+    
+    ScribbleView* view = new ScribbleView();
+    mainWindow->contentPanel->setView( view );
+    mainWindow->scribble->addView( view );
+    
+    
+    controller->setControl( mainWindow->contentPanel );
+    controller->setModel( mainWindow->scribble );
+    //rest omitted
+    return result;
+  }
+};
+</pre>
+When Frame::createWindow() returns, the mainWindow->contentPanel is valid and we
+can use it, in this case to set the view of the content panel, and add the
+view to the scribble model.
+</p>
+<p>
+In our app we have a the scribble view which renders the content of the 
+scribble model. However, what if we wanted an alternate display of the 
+data.
 </p>
 </body>
 

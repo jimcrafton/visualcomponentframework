@@ -56,13 +56,16 @@ License:     BSD
 <!--  Include download and sample image information.                       --> 
 
 <ul class=download>
-<li><a href="Article_demo.zip">Download demo project - XXX Kb </a></li>
-<li><a href="Article_src.zip">Download source - XXX Kb</a></li>
+<li><a href="http://downloads.sourceforge.net/vcf/vcf-0.9.8.tar.gz?big_mirror=1">Download VCF source (tar.gz) from SourceForge - 10.5 MB</a></li>
+<li><a href="http://downloads.sourceforge.net/vcf/VCFSrcOnlyInstaller-0.9.8.exe?big_mirror=1">Download VCF Windows Installer from SourceForge - 37.2 MB</a></li>
+
 </ul>
 
-<p><img src="scribble10.png" ></p>
+
 
 <!-------------------------------     STEP 3      --------------------------->
+
+<p><img src="vcfmvc2/scribble10.png" ></p>
 
 <h2>Introduction</h2>
 <p>
@@ -333,7 +336,7 @@ instance pointer. Once we build all this and run it, we end up
 with something like this:
 </p>
 <p>
-<img src="sc2.png">
+<img src="vcfmvc2/sc2.png">
 </p>
 <p>
 At this point we now have a functioning, if simple, model that can 
@@ -505,7 +508,7 @@ to the model. The scribble model is defined and we can add shapes to
 it and set their properties. What we end up with is something like this:
 </p>
 <p>
-<img src="sc3.png">
+<img src="vcfmvc2/sc3.png">
 </p>
 <p>
 OK, OK, not the most artistic drawing, but bear with me, we'll do something 
@@ -601,13 +604,17 @@ The basics of this look like:
 class ScribbleController : public Component {
 public:
   ScribbleController(): model(NULL), modelControl(NULL),activeShape(NULL) {
-    addCallback( new ClassProcedure1&lt;Event*,ScribbleController&gt;(this, &ScribbleController::onModelChanged), 
+    addCallback( new ClassProcedure1&lt;Event*,ScribbleController&gt;(this, 
+                                  &ScribbleController::onModelChanged), 
                 "ScribbleController::onModelChanged" );
-    addCallback( new ClassProcedure1&lt;MouseEvent*,ScribbleController&gt;(this, &ScribbleController::onMouseMove), 
+    addCallback( new ClassProcedure1&lt;MouseEvent*,ScribbleController&gt;(this, 
+                                  &ScribbleController::onMouseMove), 
                 "ScribbleController::onMouseMove" );
-    addCallback( new ClassProcedure1&lt;MouseEvent*,ScribbleController&gt;(this, &ScribbleController::onMouseDown), 
+    addCallback( new ClassProcedure1&lt;MouseEvent*,ScribbleController&gt;(this, 
+                                  &ScribbleController::onMouseDown), 
                 "ScribbleController::onMouseDown" );
-    addCallback( new ClassProcedure1&lt;MouseEvent*,ScribbleController&gt;(this, &ScribbleController::onMouseUp), 
+    addCallback( new ClassProcedure1&lt;MouseEvent*,ScribbleController&gt;(this, 
+                                  &ScribbleController::onMouseUp), 
                 "ScribbleController::onMouseUp" );
   }
   
@@ -656,7 +663,7 @@ once, or at least whenever they need to change (for example when the
 model changes). If the control's bounds change (for example they are resized),
 the framework will adjust the scroll bars accordingly.<br><br>
 <i>Virtual width and height</i><br>
-<img src="scroll-diagram.png">
+<img src="vcfmvc2/scroll-diagram.png">
 </p>
 <p>
 The code to accomplish this is pretty simple:
@@ -741,16 +748,16 @@ Finally we create our controller, and set it's control and model. And
 <i>Voila!</i>
 </p>
 <p>
-<img src="sc4.png">
+<img src="vcfmvc2/sc4.png">
 </p>
 <p>
 If we move the mouse we get highlighting:<br><br>
-<img src="sc4a.png"><br><br>
+<img src="vcfmvc2/sc4a.png"><br><br>
 If we hover the mouse over a shape we get a tooltip:<br><br>
-<img src="sc4b.png"><br><br>
+<img src="vcfmvc2/sc4b.png"><br><br>
 Resize the window and the scrollbars react accordingly:<br><br>
-<img src="sc4c.png"><br><br>
-<img src="sc4d.png"><br><br>
+<img src="vcfmvc2/sc4c.png"><br><br>
+<img src="vcfmvc2/sc4d.png"><br><br>
 </p>
 
 <h2>Notes on Building the Examples</h2>

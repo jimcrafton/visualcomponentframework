@@ -25,13 +25,16 @@ Win32LibraryPeer::~Win32LibraryPeer()
 
 void Win32LibraryPeer::load( const String& libraryFilename )
 {
+#ifdef VCF_WIN32CE
+	libHandle_ = LoadLibraryW( libraryFilename.c_str() );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		libHandle_ = LoadLibraryW( libraryFilename.c_str() );
 	}
 	else {
 		libHandle_ = LoadLibraryA( libraryFilename.ansi_c_str() );
 	}
-
+#endif
 
 	if ( NULL == libHandle_ ){
 		String error = "Win32LibraryPeer::load() exception: \nError loading \"" + libraryFilename + "\"\n" +

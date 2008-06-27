@@ -351,21 +351,29 @@ File* Win32FilePeer::findNextFileInSearch( Directory::Finder* finder )
 			//              otherwise ::FindFirstFileW() could fail.
 			String searchDirFilter = String( L"\\\\?\\" )+ getName() + String( L"*" );
 
+			#ifdef VCF_WIN32CE
+			searchHandle_ = ::FindFirstFileW( searchDirFilter.c_str(), &((Win32FindDataW*)findData_)->findData_ );
+			#else
 			if ( unicodeEnabled ) {
 				searchHandle_ = ::FindFirstFileW( searchDirFilter.c_str(), &((Win32FindDataW*)findData_)->findData_ );
 			} else {
 				searchHandle_ = ::FindFirstFileA( searchDirFilter.ansi_c_str(), &((Win32FindDataA*)findData_)->findData_ );
 			}
+			#endif
 			ok = ( INVALID_HANDLE_VALUE != searchHandle_ );
 
 		} 
 		else {
+			#ifdef VCF_WIN32CE
+			ok = ( 0 != ::FindNextFileW( searchHandle_, &((Win32FindDataW*)findData_)->findData_ ) );
+			#else
 			if ( unicodeEnabled ) {
 				ok = ( 0 != ::FindNextFileW( searchHandle_, &((Win32FindDataW*)findData_)->findData_ ) );
 			} 
 			else {
 				ok = ( 0 != ::FindNextFileA( searchHandle_, &((Win32FindDataA*)findData_)->findData_ ) );
 			}
+			#endif
 		}
 
 		if  ( ok ) {
@@ -601,6 +609,13 @@ void Win32FilePeer::updateStat( File::StatMask statMask/*=File::smMaskAll*/ )
 	file_->internal_removeFromStatMask( File::smAttributes );
 
 	try {
+		#ifdef VCF_WIN32CE
+		uint32 dwFileAttributes = Win32FilePeer::convertAttributesToSystemSpecific( fileAttributes );
+		if ( ! ::SetFileAttributesW( file_->getName().c_str(), dwFileAttributes ) ) {
+			String error = VCFWin32::Win32Utils::getErrorString( GetLastError() );
+			throw BasicException( error );
+		}
+#else
 		bool unicodeEnabled = System::isUnicodeEnabled();
 		if ( unicodeEnabled ) {
 			uint32 dwFileAttributes = Win32FilePeer::convertAttributesToSystemSpecific( fileAttributes );
@@ -615,6 +630,9 @@ void Win32FilePeer::updateStat( File::StatMask statMask/*=File::smMaskAll*/ )
 				throw BasicException( error );
 			}
 		}
+#endif
+
+		
 	}
 	catch ( BasicException& /*be*/ ) {
 		throw; // re-throw
@@ -887,26 +905,32 @@ void Win32FilePeer::remove()
 	String filename = getName();
 	if ( filename[filename.size()-1] == '\\' ) {
 		BOOL res = FALSE;
+#ifdef VCF_WIN32CE
+		res = ::RemoveDirectoryW( filename.c_str() );
+#else
 		if ( System::isUnicodeEnabled() ) {
 			res = ::RemoveDirectoryW( filename.c_str() );
 		}
 		else {
 			res = ::RemoveDirectoryA( filename.ansi_c_str() );
 		}
-
+#endif
 		if ( !res ) {
 			throw BasicFileError( MAKE_ERROR_MSG_2("Unable to remove directory \"" + filename + "\",\nprobably because the directory still contains objects.") );
 		}
 	}
 	else {
 		BOOL res = FALSE;
+		#ifdef VCF_WIN32CE
+		res = ::DeleteFileW( filename.c_str() );
+#else
 		if ( System::isUnicodeEnabled() ) {
 			res = ::DeleteFileW( filename.c_str() );
 		}
 		else {
 			res = ::DeleteFileA( filename.ansi_c_str() );
 		}
-
+#endif
 		if ( !res ) {
 			throw BasicFileError( MAKE_ERROR_MSG_2("Unable to remove file \"" + filename + "\".") );
 		}
@@ -918,14 +942,16 @@ void Win32FilePeer::move( const String& newFileName )
 	BOOL err = FALSE;
 
 	String fileName = getName();
-
+#ifdef VCF_WIN32CE
+	err = ::MoveFileW( fileName.c_str(), FilePath::transformToOSSpecific( newFileName ).c_str() );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		err = ::MoveFileW( fileName.c_str(), FilePath::transformToOSSpecific( newFileName ).c_str() );
 	}
 	else {
 		err = ::MoveFileA( fileName.ansi_c_str(), FilePath::transformToOSSpecific( newFileName ).ansi_c_str() );
 	}
-
+#endif
 	if ( !err ) {
 		throw BasicFileError( MAKE_ERROR_MSG_2("Unable to move file \"" + fileName + "\" to \"" + newFileName + "\".") );
 	}
@@ -937,14 +963,16 @@ void Win32FilePeer::copyTo( const String& copyFileName )
 
 	String src = FilePath::transformToOSSpecific( getName() );
 	String dest = FilePath::transformToOSSpecific( copyFileName );
-
+#ifdef VCF_WIN32CE
+	res = ::CopyFileW( src.c_str(), dest.c_str(), FALSE );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		res = ::CopyFileW( src.c_str(), dest.c_str(), FALSE );
 	}
 	else {
 		res = ::CopyFileA( src.ansi_c_str(), dest.ansi_c_str(), FALSE );
 	}
-
+#endif
 	if ( ! res ) {
 		
 		throw BasicFileError( MAKE_ERROR_MSG_2("Unable to copy \"" + src + "\" to \"" + copyFileName + "\".") );
@@ -1008,6 +1036,14 @@ DateTime Win32FilePeer::convertFileTimeToDateTime( const FILETIME& ft )
 	String dosName;
 
 	try {
+		#ifdef VCF_WIN32CE
+		WIN32_FIND_DATAW findData;
+		HANDLE searchHandle = ::FindFirstFileW( fileName.c_str(), &findData );
+		if ( INVALID_HANDLE_VALUE != searchHandle ) {
+			String error = VCFWin32::Win32Utils::getErrorString( GetLastError() );
+			throw BasicException( MAKE_ERROR_MSG_2(error) );
+		}
+#else
 		bool unicodeEnabled = System::isUnicodeEnabled();
 		if ( unicodeEnabled ) {
 			WIN32_FIND_DATAW findData;
@@ -1016,9 +1052,9 @@ DateTime Win32FilePeer::convertFileTimeToDateTime( const FILETIME& ft )
 				String error = VCFWin32::Win32Utils::getErrorString( GetLastError() );
 				throw BasicException( MAKE_ERROR_MSG_2(error) );
 			}
-#ifndef VCF_WIN32CE
+
 			dosName = findData.cAlternateFileName;
-#endif
+
 		} else {
 			WIN32_FIND_DATAA findData;
 			HANDLE searchHandle = ::FindFirstFileA( fileName.ansi_c_str(), &findData );
@@ -1028,6 +1064,7 @@ DateTime Win32FilePeer::convertFileTimeToDateTime( const FILETIME& ft )
 				throw BasicException( MAKE_ERROR_MSG_2(error) );
 			}
 		}
+#endif		
 	}
 	catch( ... ) {
 		String error = VCFWin32::Win32Utils::getErrorString( GetLastError() );
