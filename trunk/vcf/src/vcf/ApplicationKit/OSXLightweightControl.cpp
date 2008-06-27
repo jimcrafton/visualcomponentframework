@@ -11,7 +11,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/OSXLightweightControl.h"
 
 
-using namespace VCF;
+namespace VCF {
 
 OSXLightweightControl::OSXLightweightControl( Control* component )
 {
@@ -24,6 +24,7 @@ OSXLightweightControl::~OSXLightweightControl()
 {
 
 }
+
 
 void OSXLightweightControl::create( Control* owningControl )
 {
@@ -39,40 +40,40 @@ OSHandleID OSXLightweightControl::getHandleID()
 {
 	OSHandleID result = NULL;
 
-	VCF::Control* parent = getHeavyWeightParent();
+	Control* parent = getHeavyWeightParent();
 	if ( NULL != parent ) {
 		result = parent->getPeer()->getHandleID();
 	}
 	return result;
 }
 
-VCF::String OSXLightweightControl::getText()
+String OSXLightweightControl::getText()
 {
-	VCF::String result = "";
+	String result = "";
 
 	return result;
 }
 
-void OSXLightweightControl::setText( const VCF::String& text )
+void OSXLightweightControl::setText( const String& text )
 {
 
 }
 
-void OSXLightweightControl::setBounds( VCF::Rect* rect )
+void OSXLightweightControl::setBounds( Rect* rect )
 {
 	bounds_.inflate(1,1);
 
-	VCF::Control* parent = getHeavyWeightParent();
+	Control* parent = getHeavyWeightParent();
 	if ( NULL != parent ){
 		parent->repaint( &bounds_ );
 	}
 	bounds_.setRect( rect->left_, rect->top_, rect->right_, rect->bottom_ );
 	VCF::Size sz( bounds_.getWidth(), bounds_.getHeight() );
-	VCF::ControlEvent event( component_, sz );
+	ControlEvent event( component_, sz );
 	component_->handleEvent( &event );
 }
 
-VCF::Rect OSXLightweightControl::getBounds()
+Rect OSXLightweightControl::getBounds()
 {
 	return bounds_;
 }
@@ -98,22 +99,59 @@ bool OSXLightweightControl::getVisible()
 	return visible_;
 }
 
-VCF::Control* OSXLightweightControl::getControl()
+Control* OSXLightweightControl::getControl()
 {
 	return component_;
 }
 
-void OSXLightweightControl::setControl( VCF::Control* component )
+void OSXLightweightControl::setControl( Control* component )
 {
 	component_ = component;
 }
 
-void OSXLightweightControl::setParent( VCF::Control* parent )
+void OSXLightweightControl::setParent( Control* parent )
 {
+	Container* container = component_->getContainer();
 
+	int i = 0;
+
+	if ( NULL == parent ) {
+		hiddenControls_.clear();
+		
+		if ( NULL != container ) {
+			hiddenControls_.resize( container->getChildCount() );
+			Enumerator<Control*>* children = container->getChildren();
+			
+			while ( children->hasMoreElements() ) {
+				Control* child = children->nextElement();
+
+				hiddenControls_[i] = child->getVisible();
+				child->setVisible( false );
+				i++;
+			}
+		}
+	}
+	else {
+		if ( !hiddenControls_.empty() ) {
+
+			std::vector<bool>::iterator it = hiddenControls_.begin();
+			Enumerator<Control*>* children = container->getChildren();
+			
+			VCF_ASSERT( hiddenControls_.size() == container->getChildCount() );
+
+			i = 0;
+			while ( children->hasMoreElements() ) {
+				Control* child = children->nextElement();
+				child->setVisible( hiddenControls_[i] );
+				i++;
+			}
+
+			hiddenControls_.clear();
+		}
+	}
 }
 
-VCF::Control* OSXLightweightControl::getParent()
+Control* OSXLightweightControl::getParent()
 {
 	return component_->getParent();
 }
@@ -143,11 +181,11 @@ void OSXLightweightControl::setFont( Font* font )
 
 }
 
-VCF::Control* OSXLightweightControl::getHeavyWeightParent()
+Control* OSXLightweightControl::getHeavyWeightParent()
 {
 	Control* result = NULL;
 
-	VCF::Control* parent = getParent();
+	Control* parent = getParent();
 	if ( NULL != parent ){
 		bool heavyWeightParent = !parent->isLightWeight();
 		result = parent;
@@ -168,8 +206,8 @@ VCF::Control* OSXLightweightControl::getHeavyWeightParent()
 
 void OSXLightweightControl::repaint( Rect* repaintRect, const bool& immediately )
 {
-	VCF::Control* tmp = NULL;
-	VCF::Control* parent = getHeavyWeightParent();
+	Control* tmp = NULL;
+	Control* parent = getHeavyWeightParent();
 	if ( NULL != parent ){
 		Rect tmpRect;
 		if ( NULL == repaintRect ){
@@ -220,7 +258,7 @@ void OSXLightweightControl::endSetBounds()
 void OSXLightweightControl::translateToScreenCoords( Point* pt )
 {
 	Size offset;
-	VCF::Control* parent = getParent();
+	Control* parent = getParent();
 	if ( NULL != parent ){
 		bool lightWeightParent = parent->isLightWeight();
 		Rect bounds = bounds_;
@@ -260,7 +298,7 @@ void OSXLightweightControl::translateToScreenCoords( Point* pt )
 void OSXLightweightControl::translateFromScreenCoords( Point* pt )
 {
 	Size offset;
-	VCF::Control* parent = getParent();
+	Control* parent = getParent();
 	if ( NULL != parent ){
 		bool lightWeightParent = parent->isLightWeight();
 		Rect bounds = bounds_;
@@ -299,6 +337,11 @@ void OSXLightweightControl::translateFromScreenCoords( Point* pt )
 	}	
 }
 
+void OSXLightweightControl::setBorder( Border* border )
+{
+
+}
+
 void OSXLightweightControl::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
 {
 	
@@ -308,6 +351,11 @@ void OSXLightweightControl::postChildPaint( GraphicsContext* graphicsContext, Co
 {
 	
 }
+
+
+
+
+};
 
 
 /**

@@ -9,12 +9,14 @@ where you installed the VCF.
 */
 
 
+#include "vcf/ApplicationKit/OSXControl.h"
 #include "vcf/ApplicationKit/WindowPeer.h"
+
 
 namespace VCF {
 
 
-class OSXWindow : public ControlPeer, public WindowPeer {
+class OSXWindow : public OSXControl, public WindowPeer {
 public:
 
 	enum WindowState{
@@ -134,10 +136,7 @@ public:
 	void internal_paint( NSRect r );
 protected:
 	NSWindow* window_;
-	Control* control_;
 	Rect bounds_;
-	//RgnHandle mouseTrackRgn_;
-	//MouseTrackingRef mouseTrackRef_;	
 	uint32 currentMouseBtn_;
 	bool internalClose_;		
 };
