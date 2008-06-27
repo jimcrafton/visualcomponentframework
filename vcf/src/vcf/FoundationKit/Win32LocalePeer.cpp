@@ -296,7 +296,9 @@ Win32LocalePeer::Win32LocalePeer():lcid_(0)
 void Win32LocalePeer::setToCurrentThread()
 {
 	lcid_ = GetThreadLocale();
+#ifndef VCF_WIN32CE	
 	crtLocaleStr_ = setlocale( LC_ALL, NULL );
+#endif
 }
 
 void Win32LocalePeer::setLocale( const UnicodeString& language, const UnicodeString& country, const UnicodeString& variant )
@@ -344,6 +346,9 @@ int Win32LocalePeer::collate( const UnicodeString& s1, const UnicodeString& s2 )
 {
 	int result = 0;
 	int cmpRes = CSTR_EQUAL;
+#ifdef VCF_WIN32CE	
+	cmpRes = ::CompareStringW( lcid_, 0, s1.c_str(), s1.size(), s2.c_str(), s2.size() );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		cmpRes = ::CompareStringW( lcid_, 0, s1.c_str(), s1.size(), s2.c_str(), s2.size() );
 	}
@@ -353,6 +358,8 @@ int Win32LocalePeer::collate( const UnicodeString& s1, const UnicodeString& s2 )
 
 		cmpRes = ::CompareStringA( lcid_, 0, tmp1.c_str(), tmp1.size(), tmp2.c_str(), tmp2.size() );
 	}
+#endif
+
 	switch ( cmpRes ) {
 		case CSTR_LESS_THAN : {
 			result = -1;
@@ -376,6 +383,9 @@ int Win32LocalePeer::collate( const UnicodeString& s1, const UnicodeString& s2 )
 int Win32LocalePeer::collateCaseInsensitive( const UnicodeString& s1, const UnicodeString& s2 )
 {
 	int result = 0;
+#ifdef VCF_WIN32CE
+	result = ::CompareStringW( lcid_, NORM_IGNORECASE, s1.c_str(), s1.size(), s2.c_str(), s2.size() );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		result = ::CompareStringW( lcid_, NORM_IGNORECASE, s1.c_str(), s1.size(), s2.c_str(), s2.size() );
 	}
@@ -385,7 +395,7 @@ int Win32LocalePeer::collateCaseInsensitive( const UnicodeString& s1, const Unic
 
 		result = ::CompareStringA( lcid_, NORM_IGNORECASE, tmp1.c_str(), tmp1.size(), tmp2.c_str(), tmp2.size() );
 	}
-
+#endif
 	return result;
 }
 
@@ -418,6 +428,7 @@ void Win32LocalePeer::initNumberFormatForIntW( NUMBERFMTW& fmt )
 
 void Win32LocalePeer::initNumberFormatForIntA( NUMBERFMTA& fmt )
 {
+#ifndef VCF_WIN32CE
 	char tmp[256];
 	GetLocaleInfoA( lcid_, LOCALE_IDIGITS, tmp, 255 );
 	fmt.NumDigits = 0;//atoi( tmp );
@@ -441,6 +452,7 @@ void Win32LocalePeer::initNumberFormatForIntA( NUMBERFMTA& fmt )
 
 		fmt.Grouping = atoi( num.c_str() );
 	}
+#endif
 }
 
 void Win32LocalePeer::initNumberFormatForFloatW( NUMBERFMTW& fmt )
@@ -475,6 +487,7 @@ void Win32LocalePeer::initNumberFormatForFloatW( NUMBERFMTW& fmt )
 
 void Win32LocalePeer::initNumberFormatForFloatA( NUMBERFMTA& fmt )
 {
+#ifndef VCF_WIN32CE
 	char tmp[256];
 	GetLocaleInfoA( lcid_, LOCALE_IDIGITS, tmp, 255 );
 	fmt.NumDigits = atoi( tmp );
@@ -501,12 +514,34 @@ void Win32LocalePeer::initNumberFormatForFloatA( NUMBERFMTA& fmt )
 
 		fmt.Grouping = atoi( num.c_str() );
 	}
+#endif
 }
 
 UnicodeString Win32LocalePeer::toString( const int& val )
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	memset(tmp,0,sizeof(tmp));	
+	swprintf( tmp, L"%d", val );
+	NUMBERFMTW fmt;
+	memset(&fmt,0,sizeof(fmt));
+	
+	initNumberFormatForIntW( fmt );
 
+	int size = ::GetNumberFormatW( lcid_, 0, tmp, &fmt, NULL, 0 );
+	VCFChar* numStr = new VCFChar[size+1];
+	memset(numStr,0,(size+1)*sizeof(VCFChar));
+	::GetNumberFormatW( lcid_, 0, tmp, &fmt, numStr, size );
+
+
+	delete [] fmt.lpDecimalSep;
+	delete [] fmt.lpThousandSep;
+
+	result = numStr;
+
+	delete [] numStr;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];
 		memset(tmp,0,sizeof(tmp));
@@ -555,14 +590,35 @@ UnicodeString Win32LocalePeer::toString( const int& val )
 
 		delete [] numStr;
 	}
-
+#endif
 	return result;
 }
 
 UnicodeString Win32LocalePeer::toString( const unsigned int& val )
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	memset(tmp,0,sizeof(tmp));
+	swprintf( tmp, L"%d", val );
 
+	NUMBERFMTW fmt;
+	memset(&fmt,0,sizeof(fmt));
+	initNumberFormatForIntW( fmt );
+
+	int size = ::GetNumberFormatW( lcid_, 0, tmp, &fmt, NULL, 0 );
+	VCFChar* numStr = new VCFChar[size+1];
+	memset(numStr,0,(size+1)*sizeof(VCFChar));
+	::GetNumberFormatW( lcid_, 0, tmp, &fmt, numStr, size );
+
+
+	delete [] fmt.lpDecimalSep;
+	delete [] fmt.lpThousandSep;
+
+	result = numStr;
+
+	delete [] numStr;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];
 		memset(tmp,0,sizeof(tmp));
@@ -610,13 +666,34 @@ UnicodeString Win32LocalePeer::toString( const unsigned int& val )
 
 		delete [] numStr;
 	}
-
+#endif
 	return result;
 }
 
 UnicodeString Win32LocalePeer::toString( const long& val )
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];;
+	memset(tmp,0,sizeof(tmp));
+	swprintf( tmp, L"%d", val );
+	NUMBERFMTW fmt;
+	memset(&fmt,0,sizeof(fmt));
+	initNumberFormatForIntW( fmt );
+
+	int size = ::GetNumberFormatW( lcid_, 0, tmp, &fmt, NULL, 0 );
+	VCFChar* numStr = new VCFChar[size+1];
+	memset(numStr,0,(size+1)*sizeof(VCFChar));
+	::GetNumberFormatW( lcid_, 0, tmp, &fmt, numStr, size );
+
+
+	delete [] fmt.lpDecimalSep;
+	delete [] fmt.lpThousandSep;
+
+	result = numStr;
+
+	delete [] numStr;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];;
 		memset(tmp,0,sizeof(tmp));
@@ -664,14 +741,34 @@ UnicodeString Win32LocalePeer::toString( const long& val )
 
 		delete [] numStr;
 	}
-
+#endif
 	return result;
 }
 
 UnicodeString Win32LocalePeer::toString( const unsigned long& val )
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];;
+	memset(tmp,0,sizeof(tmp));
+	swprintf( tmp, L"%d", val );
+	NUMBERFMTW fmt;
+	memset(&fmt,0,sizeof(fmt));
+	initNumberFormatForIntW( fmt );
 
+	int size = ::GetNumberFormatW( lcid_, 0, tmp, &fmt, NULL, 0 );
+	VCFChar* numStr = new VCFChar[size+1];
+	memset(numStr,0,(size+1)*sizeof(VCFChar));
+	::GetNumberFormatW( lcid_, 0, tmp, &fmt, numStr, size );
+
+
+	delete [] fmt.lpDecimalSep;
+	delete [] fmt.lpThousandSep;
+
+	result = numStr;
+
+	delete [] numStr;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];;
 		memset(tmp,0,sizeof(tmp));
@@ -719,7 +816,7 @@ UnicodeString Win32LocalePeer::toString( const unsigned long& val )
 
 		delete [] numStr;
 	}
-
+#endif
 
 	return result;
 }
@@ -727,7 +824,28 @@ UnicodeString Win32LocalePeer::toString( const unsigned long& val )
 UnicodeString Win32LocalePeer::toString( const double& val )
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	memset(tmp,0,sizeof(tmp));
+	swprintf( tmp, L"%.08f", val );
 
+	NUMBERFMTW fmt;
+	memset(&fmt,0,sizeof(fmt));
+	initNumberFormatForFloatW( fmt );
+
+	int size = ::GetNumberFormatW( lcid_, 0, tmp, NULL, NULL, 0 );
+	VCFChar* numStr = new VCFChar[size+1];
+	memset(numStr,0,(size+1)*sizeof(VCFChar));
+	::GetNumberFormatW( lcid_, 0, tmp, NULL, numStr, size );
+
+
+	delete [] fmt.lpDecimalSep;
+	delete [] fmt.lpThousandSep;
+
+	result = numStr;
+
+	delete [] numStr;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];
 		memset(tmp,0,sizeof(tmp));
@@ -775,7 +893,7 @@ UnicodeString Win32LocalePeer::toString( const double& val )
 
 		delete [] numStr;
 	}
-
+#endif
 	return result;
 }
 
@@ -783,7 +901,27 @@ UnicodeString Win32LocalePeer::toString( const double& val )
 UnicodeString Win32LocalePeer::toString( const float& val )
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	memset(tmp,0,sizeof(tmp));
+	swprintf( tmp, L"%.08f", val );
+	NUMBERFMTW fmt;
+	memset(&fmt,0,sizeof(fmt));
+	initNumberFormatForFloatW( fmt );
 
+	int size = ::GetNumberFormatW( lcid_, 0, tmp, NULL, NULL, 0 );
+	VCFChar* numStr = new VCFChar[size+1];
+	memset(numStr,0,(size+1)*sizeof(VCFChar));
+	::GetNumberFormatW( lcid_, 0, tmp, NULL, numStr, size );
+
+	delete [] fmt.lpDecimalSep;
+	delete [] fmt.lpThousandSep;
+
+
+	result = numStr;
+
+	delete [] numStr;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];
 		memset(tmp,0,sizeof(tmp));
@@ -831,14 +969,26 @@ UnicodeString Win32LocalePeer::toString( const float& val )
 
 		delete [] numStr;
 	}
-
+#endif
 	return result;
 }
 
 UnicodeString Win32LocalePeer::toStringFromCurrency( const double& val )
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	memset(tmp,0,sizeof(tmp));
+	swprintf( tmp, L"%.08f", val );
+	int size = ::GetCurrencyFormatW( lcid_, 0, tmp, NULL, NULL, 0 );
+	VCFChar* numStr = new VCFChar[size+1];
+	memset(numStr,0,(size+1)*sizeof(VCFChar));
+	::GetCurrencyFormatW( lcid_, 0, tmp, NULL, numStr, size );
 
+	result = numStr;
+
+	delete [] numStr;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];
 		memset(tmp,0,sizeof(tmp));
@@ -871,14 +1021,39 @@ UnicodeString Win32LocalePeer::toStringFromCurrency( const double& val )
 
 		delete [] numStr;
 	}
-
+#endif
 	return result;
 }
 
 UnicodeString Win32LocalePeer::changeToGenericNumberString( const UnicodeString& str )
 {
 	UnicodeString result = str;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	int err = GetLocaleInfoW( lcid_, LOCALE_SDECIMAL, tmp, 255 );
+	UnicodeString s = tmp;
 
+
+	int pos = result.find( s );
+	if ( pos != UnicodeString::npos ) {
+		result.erase( pos, s.size() );
+		result.insert( pos, L"." );
+	}
+
+	err = GetLocaleInfoW( lcid_, LOCALE_STHOUSAND, tmp, 255 );
+
+
+
+	if ( 0 == err ) {
+		err = GetLastError();
+	}
+	s = tmp;
+	pos = result.find( s );
+	while ( pos != UnicodeString::npos ) {
+		result.erase( pos, s.size() );
+		pos = result.find( s );
+	}
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];
 		int err = GetLocaleInfoW( lcid_, LOCALE_SDECIMAL, tmp, 255 );
@@ -933,7 +1108,7 @@ UnicodeString Win32LocalePeer::changeToGenericNumberString( const UnicodeString&
 
 		result = tmpRes;
 	}
-
+#endif
 
 
 	return result;
@@ -1011,7 +1186,39 @@ float Win32LocalePeer::toFloat( const UnicodeString& str )
 double Win32LocalePeer::toDoubleAsCurrency( const UnicodeString& str )
 {
 	double result;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	GetLocaleInfoW( lcid_, LOCALE_SMONDECIMALSEP, tmp, 255 );
+	UnicodeString s = tmp;
 
+	UnicodeString s2 = str;
+	int pos = s2.find( s );
+	if ( pos != UnicodeString::npos ) {
+		s2.erase( pos, s.size() );
+		s2.insert( pos, L"." );
+	}
+
+	GetLocaleInfoW( lcid_, LOCALE_SMONTHOUSANDSEP, tmp, 255 );
+	s = tmp;
+	pos = s2.find( s );
+	while ( pos != UnicodeString::npos ) {
+		s2.erase( pos, s.size() );
+		pos = s2.find( s );
+	}
+
+
+	GetLocaleInfoW( lcid_, LOCALE_SCURRENCY, tmp, 255 );
+	s = tmp;
+	pos = s2.find( s );
+	while ( pos != UnicodeString::npos ) {
+		s2.erase( pos, s.size() );
+		pos = s2.find( s );
+	}
+
+	float f = 0.0f;
+	swscanf( s2.c_str(), L"%f", &f );
+	result = f;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];
 		GetLocaleInfoW( lcid_, LOCALE_SMONDECIMALSEP, tmp, 255 );
@@ -1077,7 +1284,7 @@ double Win32LocalePeer::toDoubleAsCurrency( const UnicodeString& str )
 
 		result = atof( s2.c_str() );
 	}
-
+#endif
 	return result;
 }
 
@@ -1086,7 +1293,18 @@ double Win32LocalePeer::toDoubleAsCurrency( const UnicodeString& str )
 UnicodeString Win32LocalePeer::toLowerCase( const UnicodeString& s )
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	int size = LCMapStringW( lcid_, LCMAP_LOWERCASE, s.c_str(), s.size(), NULL, 0 );
 
+	VCFChar* tmp = new VCFChar[size+1];
+	memset( tmp, 0, (size+1) * sizeof(VCFChar));
+
+	LCMapStringW( lcid_, LCMAP_LOWERCASE, s.c_str(), s.size(), tmp, size );
+
+	result = tmp;
+
+	delete [] tmp;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		int size = LCMapStringW( lcid_, LCMAP_LOWERCASE, s.c_str(), s.size(), NULL, 0 );
 
@@ -1115,14 +1333,25 @@ UnicodeString Win32LocalePeer::toLowerCase( const UnicodeString& s )
 
 		delete [] tmp;
 	}
-
+#endif
 	return result;
 }
 
 UnicodeString Win32LocalePeer::toUpperCase( const UnicodeString& s )
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	int size = LCMapStringW( lcid_, LCMAP_UPPERCASE, s.c_str(), s.size(), NULL, 0 );
 
+	VCFChar* tmp = new VCFChar[size+1];
+	memset( tmp, 0, (size+1) * sizeof(VCFChar));
+
+	LCMapStringW( lcid_, LCMAP_UPPERCASE, s.c_str(), s.size(), tmp, size );
+
+	result = tmp;
+
+	delete [] tmp;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		int size = LCMapStringW( lcid_, LCMAP_UPPERCASE, s.c_str(), s.size(), NULL, 0 );
 
@@ -1151,13 +1380,18 @@ UnicodeString Win32LocalePeer::toUpperCase( const UnicodeString& s )
 
 		delete [] tmp;
 	}
-
+#endif
 	return result;
 }
 
 UnicodeString Win32LocalePeer::getNumberThousandsSeparator()
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	GetLocaleInfoW( lcid_, LOCALE_STHOUSAND, tmp, 255 );
+	result = tmp;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];
 		GetLocaleInfoW( lcid_, LOCALE_STHOUSAND, tmp, 255 );
@@ -1168,12 +1402,18 @@ UnicodeString Win32LocalePeer::getNumberThousandsSeparator()
 		GetLocaleInfoA( lcid_, LOCALE_STHOUSAND, tmp, 255 );
 		result = tmp;
 	}
+#endif
 	return result;
 }
 
 UnicodeString Win32LocalePeer::getNumberDecimalPoint()
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	GetLocaleInfoW( lcid_, LOCALE_SDECIMAL, tmp, 255 );
+	result = tmp;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];
 		GetLocaleInfoW( lcid_, LOCALE_SDECIMAL, tmp, 255 );
@@ -1184,12 +1424,18 @@ UnicodeString Win32LocalePeer::getNumberDecimalPoint()
 		GetLocaleInfoA( lcid_, LOCALE_SDECIMAL, tmp, 255 );
 		result = tmp;
 	}
+#endif
 	return result;
 }
 
 UnicodeString Win32LocalePeer::getNumberGrouping()
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	GetLocaleInfoW( lcid_, LOCALE_SGROUPING, tmp, 255 );
+	result = tmp;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];
 		GetLocaleInfoW( lcid_, LOCALE_SGROUPING, tmp, 255 );
@@ -1200,12 +1446,18 @@ UnicodeString Win32LocalePeer::getNumberGrouping()
 		GetLocaleInfoA( lcid_, LOCALE_SGROUPING, tmp, 255 );
 		result = tmp;
 	}
+#endif
 	return result;
 }
 
 UnicodeString Win32LocalePeer::getCurrencyDecimalPoint()
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	GetLocaleInfoW( lcid_, LOCALE_SMONDECIMALSEP, tmp, 255 );
+	result = tmp;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];
 		GetLocaleInfoW( lcid_, LOCALE_SMONDECIMALSEP, tmp, 255 );
@@ -1216,12 +1468,18 @@ UnicodeString Win32LocalePeer::getCurrencyDecimalPoint()
 		GetLocaleInfoA( lcid_, LOCALE_SMONDECIMALSEP, tmp, 255 );
 		result = tmp;
 	}
+#endif
 	return result;
 }
 
 UnicodeString Win32LocalePeer::getCurrencyThousandsSeparator()
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	GetLocaleInfoW( lcid_, LOCALE_SMONTHOUSANDSEP, tmp, 255 );
+	result = tmp;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];
 		GetLocaleInfoW( lcid_, LOCALE_SMONTHOUSANDSEP, tmp, 255 );
@@ -1232,12 +1490,18 @@ UnicodeString Win32LocalePeer::getCurrencyThousandsSeparator()
 		GetLocaleInfoA( lcid_, LOCALE_SMONTHOUSANDSEP, tmp, 255 );
 		result = tmp;
 	}
+#endif
 	return result;
 }
 
 UnicodeString Win32LocalePeer::getCurrencySymbol()
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	GetLocaleInfoW( lcid_, LOCALE_SCURRENCY, tmp, 255 );
+	result = tmp;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];
 		GetLocaleInfoW( lcid_, LOCALE_SCURRENCY, tmp, 255 );
@@ -1248,12 +1512,18 @@ UnicodeString Win32LocalePeer::getCurrencySymbol()
 		GetLocaleInfoA( lcid_, LOCALE_SCURRENCY, tmp, 255 );
 		result = tmp;
 	}
+#endif
 	return result;
 }
 
 int Win32LocalePeer::getCurrencyFractionalDigits()
 {
 	int result = 0;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	GetLocaleInfoW( lcid_, LOCALE_ICURRDIGITS, tmp, 255 );
+	result = _wtoi(tmp);
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];
 		GetLocaleInfoW( lcid_, LOCALE_ICURRDIGITS, tmp, 255 );
@@ -1264,12 +1534,18 @@ int Win32LocalePeer::getCurrencyFractionalDigits()
 		GetLocaleInfoA( lcid_, LOCALE_ICURRDIGITS, tmp, 255 );
 		result = atoi(tmp);
 	}
+#endif
 	return result;
 }
 
 UnicodeString Win32LocalePeer::getCurrencyPositiveSign()
 {
 	UnicodeString result;
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	GetLocaleInfoW( lcid_, LOCALE_SCURRENCY, tmp, 255 );
+	result = tmp;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar tmp[256];
 		GetLocaleInfoW( lcid_, LOCALE_SCURRENCY, tmp, 255 );
@@ -1280,7 +1556,7 @@ UnicodeString Win32LocalePeer::getCurrencyPositiveSign()
 		GetLocaleInfoA( lcid_, LOCALE_SCURRENCY, tmp, 255 );
 		result = tmp;
 	}
-
+#endif
 	return result;
 }
 
@@ -1294,6 +1570,80 @@ UnicodeString Win32LocalePeer::getCurrencyNegativeSign()
 bool Win32LocalePeer::isCharA( const int32& charTypeMask, const VCFChar& c )
 {
 	int32 mask = 0;
+
+#ifdef VCF_WIN32CE	
+	if ( charTypeMask & ctSpace ) {
+		if ( iswspace( c ) ) {
+			mask |= ctSpace;
+		}
+	}
+
+	if ( charTypeMask & ctPrint ) {
+		if ( iswprint( c ) ) {
+			mask |= ctPrint;
+		}
+	}
+
+	if ( charTypeMask & ctCntrl ) {
+		if ( iswprint( c ) ) {
+			mask |= ctCntrl;
+		}
+	}
+
+	if ( charTypeMask & ctCntrl ) {
+		if ( iswcntrl( c ) ) {
+			mask |= ctCntrl;
+		}
+	}
+
+	if ( charTypeMask & ctUpper ) {
+		if ( iswupper( c ) ) {
+			mask |= ctUpper;
+		}
+	}
+
+	if ( charTypeMask & ctLower ) {
+		if ( iswlower( c ) ) {
+			mask |= ctLower;
+		}
+	}
+
+	if ( charTypeMask & ctDigit ) {
+		if ( iswdigit( c ) ) {
+			mask |= ctDigit;
+		}
+	}
+
+	if ( charTypeMask & ctPunct ) {
+		if ( iswpunct( c ) ) {
+			mask |= ctPunct;
+		}
+	}
+
+	if ( charTypeMask & ctHexDigit ) {
+		if ( iswxdigit( c ) ) {
+			mask |= ctHexDigit;
+		}
+	}
+
+	if ( charTypeMask & ctAlpha ) {
+		if ( iswalpha( c ) ) {
+			mask |= ctAlpha;
+		}
+	}
+
+	if ( charTypeMask & ctAlphaNumeric ) {
+		if ( iswalnum( c ) ) {
+			mask |= ctAlphaNumeric;
+		}
+	}
+
+	if ( charTypeMask & ctGraph ) {
+		if ( iswgraph( c ) ) {
+			mask |= ctGraph;
+		}
+	}
+#else
 
 	UnicodeString oldLocaleStr;
 
@@ -1468,7 +1818,7 @@ bool Win32LocalePeer::isCharA( const int32& charTypeMask, const VCFChar& c )
 
 		setlocale( LC_CTYPE, oldLocaleStr.ansi_c_str() );
 	}
-
+#endif
 
 	return (0 == mask) ? false : true;
 }
@@ -2163,7 +2513,14 @@ uint32 Win32LocalePeer::getLanguageCode()
 String Win32LocalePeer::getLanguage()
 {
 	String result;
-
+#ifdef VCF_WIN32CE
+	int size = ::GetLocaleInfoW( lcid_, LOCALE_SLANGUAGE, NULL, 0 );
+	VCFChar* tmp = new VCFChar[size+1];
+	memset( tmp, 0, (size+1)*sizeof(VCFChar) );
+	::GetLocaleInfoW( lcid_, LOCALE_SLANGUAGE, tmp, size );
+	result = tmp;
+	delete [] tmp;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		int size = ::GetLocaleInfoW( lcid_, LOCALE_SLANGUAGE, NULL, 0 );
 		VCFChar* tmp = new VCFChar[size+1];
@@ -2180,7 +2537,7 @@ String Win32LocalePeer::getLanguage()
 		result = tmp;
 		delete [] tmp;
 	}	
-
+#endif
 	return result;
 }
 

@@ -24,7 +24,15 @@ Win32FileStream::Win32FileStream( const String& filename, const FileStreamAccess
 	}
 	filename_ = filename;
 
-
+#ifdef VCF_WIN32CE
+	fileHandle_ = CreateFileW( filename.c_str(),
+		                       this->translateAccessType( accessType ),
+                               0, //for now
+							   NULL, //for now
+							   translateAccessTypeToCreationType( accessType ),
+							   FILE_ATTRIBUTE_NORMAL,
+							   NULL );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		fileHandle_ = CreateFileW( filename.c_str(),
 		                       this->translateAccessType( accessType ),
@@ -43,7 +51,7 @@ Win32FileStream::Win32FileStream( const String& filename, const FileStreamAccess
 							   FILE_ATTRIBUTE_NORMAL,
 							   NULL );
 	}
-
+#endif
 	if ( INVALID_HANDLE_VALUE == fileHandle_ ){
 
 		throw FileIOError( CANT_ACCESS_FILE + filename + "\nPeer error string: " + Win32Utils::getErrorString(GetLastError()) );

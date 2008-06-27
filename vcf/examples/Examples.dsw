@@ -1557,6 +1557,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Scribble10"=.\MVC\Scribble10\Scribble10.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Scribble2"=.\MVC\Scribble2\Scribble2.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1589,6 +1604,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################

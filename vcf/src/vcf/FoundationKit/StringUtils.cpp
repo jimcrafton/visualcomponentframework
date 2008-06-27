@@ -547,18 +547,24 @@ VCF::String StringUtils::newUUID()
 {
 	VCF::String result = "";
 #if defined(VCF_WIN)
+	#if defined(VCF_WIN32CE)
+		GUID id;
+		CoCreateGuid( &id );
+		char tmp[256];
+		sprintf( tmp, "%08x-%04x-%04x-%x%x-%x%x%x%x%x%x", 
+			id.Data1, id.Data2, id.Data3, id.Data4[0], id.Data4[1],
+			id.Data4[2], id.Data4[3],
+			id.Data4[4], id.Data4[5],
+			id.Data4[6], id.Data4[7]);
+		result = tmp;
+	#else
 	UUID id;
+	
 	if ( RPC_S_OK == ::UuidCreate( &id ) ){
-		#if defined(VCF_WIN32CE)
-		WideChar* tmpid = NULL;
-		RPC_STATUS rpcresult = UuidToString(  &id, reinterpret_cast<unsigned short**>(&tmpid) );
+		
+		
 
-		if ( RPC_S_OUT_OF_MEMORY != rpcresult ) {
-			result = VCF::String( tmpid );
-
-			RpcStringFree( reinterpret_cast<unsigned short**>(&tmpid) );
-		}
-		#else
+		
 		if ( System::isUnicodeEnabled() ) {
 			WideChar* tmpid = NULL;
 			RPC_STATUS rpcresult = UuidToStringW(  &id, reinterpret_cast<unsigned short**>(&tmpid) );
@@ -578,9 +584,9 @@ VCF::String StringUtils::newUUID()
 
 				RpcStringFreeA( (unsigned char**)&tmpid );
 			}
-		}		
-		#endif
+		}
 	}
+	#endif	
 #elif defined(VCF_OSX)
 	CFUUIDRef uuidRef = CFUUIDCreate( kCFAllocatorDefault );
 	CFTextString tmp;

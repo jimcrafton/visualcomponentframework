@@ -74,7 +74,7 @@
 				SubSystem="0"
 				StackReserveSize="65536"
 				StackCommitSize="4096"
-				ImportLibrary="$(OutDir)/FoundationKitDll.lib"
+				ImportLibrary=".\..\..\..\lib/FoundationKit_vc80ce_d.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -300,6 +300,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCFString.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VCFTime.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VCFTime.h"
 				>
 			</File>
 			<File
@@ -842,6 +850,14 @@
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32ProcessIORedirector.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32ProcessIORedirector.h"
