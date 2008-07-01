@@ -25,29 +25,7 @@ namespace VCF
 
 
 class GRAPHICSKIT_API Win32Image;
-/**
-*A Context provides the lowest level graphics interface to the
-*native systems 2D drawing operations. Based loosely on PostScript,
-*a Context takes a series of of drawing operations, or commands
-*(lineTo, moveTo, etc), and then executes them by either filling or
-*strokeing the path(s) that result from the commands. Thus calling
-*ellipse() will not draw anything till the strokePath() or fillPath()
-*methods have been called. All path commands should add their information
-*to a stack of some sort that is then looped through and executed
-*using the appropriate native graphics calls. At each path command
-*a test should be made as to whether the buffer should be cleared.
-*The buffer should be cleared only after the stroke of fill methods
-*have been  called. For example:
-*
-*<p><pre>
-*	ellipse(23,23,45,67) //added to buffer
-*	moveTo(89,100) //add to buffer
-*	lineTo(300,40) //add to buffer
-*	strokePath()
-*	fillPath()
-*	rectangle(200,300,400,400)//buffer cleared, then add to buffer
-*</pre></p>
-*/
+
 class GRAPHICSKIT_API Win32Context  : public Object, public ContextPeer {
 public:
 	Win32Context();
@@ -62,175 +40,66 @@ public:
 	virtual ~Win32Context();
 
 public:
-	/**
-	*
-	*
-	*/
 	virtual void setContext( GraphicsContext* context );
 
-	/**
-	*
-	*
-	*/
 	virtual GraphicsContext* getContext();
 
-	/**
-	*
-	*
-	*/
 	virtual OSHandleID getContextID();
 
-	/**
-	*
-	*
-	*/
 	virtual void setContextID( OSHandleID handle );
 
-	/**
-	*
-	*
-	*/
-	void init();
-
-	/**
-	*
-	*
-	*/
 	virtual void setOrigin( const double& x, const double& y );
 
-	/**
-	*
-	*
-	*/
 	virtual Point getOrigin();
 
-	/**
-	*
-	*
-	*/
-	virtual bool isAntiAliasingOn(){
-		return false;
+	virtual bool isAntiAliasingOn() {
+		return antiAliased_;
 	}
-
-	/**
-	*
-	*
-	*/
-	virtual void setAntiAliasingOn( bool antiAliasingOn ) {} //no-op for now
+	
+	virtual void setAntiAliasingOn( bool antiAliasingOn );
 
 
-	/**
-	*
-	*
-	*/
 	virtual bool prepareForDrawing( int32 drawingOperation );
 
-	/**
-	*
-	*
-	*/
 	virtual void finishedDrawing( int32 drawingOperation );
 
-	/**
-	*
-	*
-	*/
 	virtual bool isMemoryContext();
 
-	/**
-	*
-	*
-	*/
 	virtual void copyContext( const Rect& sourceRect, const Rect& destRect,
 	                          ContextPeer* sourceContext );
-
-
-	/**
-	*
-	*
-	*/
 	virtual void textAt( const Rect& bounds, const String & text, const int32& drawOptions=0 );
 
-	/**
-	*
-	*/
 	virtual double getTextWidth( const String& text );
 
-	/**
-	*
-	*/
 	virtual double getTextHeight( const String& text );
 
-
-	/**
-	*
-	*/
 	virtual void lineTo( const double & x, const double & y );
 
-	/**
-	*
-	*/
 	virtual void moveTo( const double & x, const double & y );
 	
 	virtual void closePath();
 
-	/**
-	*
-	*/
 	virtual void rectangle( const double & x1, const double & y1, const double & x2, const double & y2 );
 
-	/**
-	*
-	*/
 	virtual void roundRect( const double & x1, const double & y1, const double & x2, const double & y2,
 	                        const double & xc, const double & yc );
 
 
-	/**
-	*
-	*/
 	virtual void ellipse( const double & x1, const double & y1, const double & x2, const double & y2 );
 
-	/**
-	*
-	*/
 	virtual void arc( const double & x1, const double & y1, const double & x2, const double & y2, const double & x3,
 	                  const double & y3, const double & x4, const double & y4 );
 
-/*
-	virtual void pie( const double & x1, const double & y1, const double & x2, const double & y2, const double & x3,
-	                  const double & y3, const double & x4, const double & y4 );
-
-	virtual void chord( const double & x1, const double & y1, const double & x2, const double & y2, const double & x3,
-	                    const double & y3, const double & x4, const double & y4 );
-*/
-
-	/**
-	*
-	*/
 	virtual void polyline( const std::vector<Point>& pts );
 
-	/**
-	*
-	*/
 	virtual void curve( const double & x1, const double & y1, const double & x2, const double & y2,
 	                    const double & x3, const double & y3, const double & x4, const double & y4 );
 
-	/**
-	*
-	*
-	*/
 	virtual void drawImage( const double& x, const double& y, Rect* imageBounds, Image* image, int compositeMode );
 
 	virtual void bitBlit( const double& x, const double& y, Rect* imageBounds, Image* image );
 
 
-	/* utility functions */
-
-	/**
-	*
-	*
-	*/
 	void copyToImage( Win32Image* image );
 
 	/**
@@ -362,6 +231,8 @@ protected:
 	GraphicsContext* context_;
 
 	bool alignToBaseline_;
+
+	bool antiAliased_;
 };
 
 };

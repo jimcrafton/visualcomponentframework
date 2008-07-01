@@ -43,6 +43,10 @@ public:
 	virtual OSHandleID getHandleID();
 
 	virtual void setHandleID( OSHandleID handleID );
+
+	virtual bool shouldPerformCleanup() {
+		return false;
+	}
 private:
 	VCF::AbstractApplication* app_;
 	HINSTANCE instanceHandle_;

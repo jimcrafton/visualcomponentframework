@@ -35,14 +35,41 @@ using namespace VCF;
 
 
 
-Win32Context::Win32Context()
+Win32Context::Win32Context():
+	clipRGN_(NULL),
+	pathStarted_(false),	
+	inFillPath_(false),
+	dc_(NULL),
+	memBitmap_(NULL),
+	originalBitmap_(NULL),
+	currentHBrush_(NULL),
+	currentHPen_(NULL),
+	currentHFont_(NULL),
+	currentDCState_(-1),
+	isMemoryCtx_(false),
+	context_(NULL),
+	alignToBaseline_(false),
+	antiAliased_(false)	
 {
-	init();
+	
 }
 
-Win32Context::Win32Context( const uint32& width, const uint32& height )
+Win32Context::Win32Context( const uint32& width, const uint32& height ):
+	clipRGN_(NULL),
+	pathStarted_(false),	
+	inFillPath_(false),
+	dc_(NULL),
+	memBitmap_(NULL),
+	originalBitmap_(NULL),
+	currentHBrush_(NULL),
+	currentHPen_(NULL),
+	currentHFont_(NULL),
+	currentDCState_(-1),
+	isMemoryCtx_(false),
+	context_(NULL),
+	alignToBaseline_(false),
+	antiAliased_(false)	
 {
-	init();
 
 	HDC desktopDC = ::GetDC( ::GetDesktopWindow() );
 
@@ -60,9 +87,22 @@ Win32Context::Win32Context( const uint32& width, const uint32& height )
 	}
 }
 
-Win32Context::Win32Context( OSHandleID contextID )
+Win32Context::Win32Context( OSHandleID contextID ):
+	clipRGN_(NULL),
+	pathStarted_(false),	
+	inFillPath_(false),
+	dc_(NULL),
+	memBitmap_(NULL),
+	originalBitmap_(NULL),
+	currentHBrush_(NULL),
+	currentHPen_(NULL),
+	currentHFont_(NULL),
+	currentDCState_(-1),
+	isMemoryCtx_(false),
+	context_(NULL),
+	alignToBaseline_(false),
+	antiAliased_(false)	
 {
-	init();
 	dc_ = (HDC)contextID;
 }
 
@@ -87,28 +127,6 @@ Win32Context::~Win32Context()
 	//clearBuffer();
 }
 
-void Win32Context::init()
-{
-	dc_ = NULL;
-	clipRGN_ = NULL;
-	context_ = NULL;
-	memBitmap_ = NULL;
-	originalBitmap_ = NULL;
-
-	pathStarted_ = false;
-	isMemoryCtx_ = false;
-	oldOrigin_.x_ = 0.0;
-	oldOrigin_.y_ = 0.0;
-	origin_.x_ = 0.0;
-	origin_.y_ = 0.0;
-	
-	alignToBaseline_ = false;
-
-	currentDCState_ = 0;
-	currentHBrush_ = NULL;
-	currentHPen_ = NULL;
-	currentHFont_ = NULL;
-}
 
 void Win32Context::releaseHandle()
 {
@@ -1135,155 +1153,200 @@ void Win32Context::drawImageAGG(  const double& x, const double& y, Rect* imageB
 
 void Win32Context::rectangle(const double & x1, const double & y1, const double & x2, const double & y2)
 {
-	int fixVal = 0;
-	if ( true == inFillPath_ ){
-		fixVal = 1;
+	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
+
 	}
-	::Rectangle( dc_, (int32)x1, (int32)y1, (int32)(x2 + fixVal), (int32)(y2 + fixVal) );
+	else {
+		int fixVal = 0;
+		if ( true == inFillPath_ ){
+			fixVal = 1;
+		}
+		::Rectangle( dc_, (int32)x1, (int32)y1, (int32)(x2 + fixVal), (int32)(y2 + fixVal) );
+	}
 }
 
 void Win32Context::roundRect(const double & x1, const double & y1, const double & x2, const double & y2,
 							 const double & xc, const double & yc)
 {
-	int fixVal = 0;
-	if ( true == inFillPath_ ){
-		fixVal = 1;
-	}
+	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
 
-	::RoundRect( dc_, (int32)x1, (int32)y1, (int32)x2 + fixVal, (int32)y2 + fixVal, (int32)xc, (int32)yc );
+	}
+	else {
+		int fixVal = 0;
+		if ( true == inFillPath_ ){
+			fixVal = 1;
+		}
+		
+		::RoundRect( dc_, (int32)x1, (int32)y1, (int32)x2 + fixVal, (int32)y2 + fixVal, (int32)xc, (int32)yc );
+	}
 }
 
 void Win32Context::ellipse(const double & x1, const double & y1, const double & x2, const double & y2)
 {
 
-	pathStarted_ = true;
-	//swap out the values to ensure they are normalized since windows is brain dead about this
-	double ax1 = x1;
-	double ay1 = y1;
-	double ax2 = x2;
-	double ay2 = y2;
+	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
 
-	double tmp = x2;
-	if ( ax1 > ax2 ) {
-		ax2 = ax1;
-		ax1 = tmp;
 	}
-	tmp = ay2;
-	if ( ay1 > ay2 ) {
-		ay2 = ay1;
-		ay1 = tmp;
+	else {
+		pathStarted_ = true;
+		//swap out the values to ensure they are normalized since windows is brain dead about this
+		double ax1 = x1;
+		double ay1 = y1;
+		double ax2 = x2;
+		double ay2 = y2;
+		
+		double tmp = x2;
+		if ( ax1 > ax2 ) {
+			ax2 = ax1;
+			ax1 = tmp;
+		}
+		tmp = ay2;
+		if ( ay1 > ay2 ) {
+			ay2 = ay1;
+			ay1 = tmp;
+		}
+		
+		int fixVal = 0;
+		if ( true == inFillPath_ ){
+			fixVal = 1;
+		}
+		
+		::Ellipse( dc_, (int32)ax1, (int32)ay1, (int32)(ax2 + fixVal), (int32)(ay2 + fixVal) );
 	}
-
-	int fixVal = 0;
-	if ( true == inFillPath_ ){
-		fixVal = 1;
-	}
-
-	::Ellipse( dc_, (int32)ax1, (int32)ay1, (int32)(ax2 + fixVal), (int32)(ay2 + fixVal) );
 }
 
 void Win32Context::arc(const double & x1, const double & y1, const double & x2, const double & y2, const double & x3,
 					   const double & y3, const double & x4, const double & y4)
 {
+	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
 
-	pathStarted_ = true;
-	//swap out the values to ensure they are normalized since windows is brain dead about this
-	double ax1 = x1;
-	double ay1 = y1;
-	double ax2 = x2;
-	double ay2 = y2;
-
-	double tmp = x2;
-	if ( ax1 > ax2 ) {
-		ax2 = ax1;
-		ax1 = tmp;
 	}
-	tmp = ay2;
-	if ( ay1 > ay2 ) {
-		ay2 = ay1;
-		ay1 = tmp;
+	else {
+		
+		pathStarted_ = true;
+		//swap out the values to ensure they are normalized since windows is brain dead about this
+		double ax1 = x1;
+		double ay1 = y1;
+		double ax2 = x2;
+		double ay2 = y2;
+		
+		double tmp = x2;
+		if ( ax1 > ax2 ) {
+			ax2 = ax1;
+			ax1 = tmp;
+		}
+		tmp = ay2;
+		if ( ay1 > ay2 ) {
+			ay2 = ay1;
+			ay1 = tmp;
+		}
+		
+		int fixVal = 0;
+		if ( true == inFillPath_ ){
+			fixVal = 1;
+		}
+		
+		::Arc( dc_, (int32)ax1, (int32)ay1, (int32)ax2 + fixVal, (int32)ay2 + fixVal,
+			(int32)x3, (int32)y3, (int32)x4, (int32)y4 );
 	}
-
-	int fixVal = 0;
-	if ( true == inFillPath_ ){
-		fixVal = 1;
-	}
-
-	::Arc( dc_, (int32)ax1, (int32)ay1, (int32)ax2 + fixVal, (int32)ay2 + fixVal,
-				(int32)x3, (int32)y3, (int32)x4, (int32)y4 );
 }
 
 
 void Win32Context::polyline( const std::vector<Point>& pts)
 {
-	POINT* polyPts = new POINT[pts.size()];
-	std::vector<Point>::const_iterator it = pts.begin();
-	int i =0;
-	while ( it != pts.end() ) {
-		const Point& pt = *it;
+	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
 
-		polyPts[i].x = (int32)pt.x_;
-		polyPts[i].y = (int32)pt.y_;
-		it++;
-		i++;
 	}
-	if ( inFillPath_ ){
-		::Polygon( dc_, polyPts, pts.size() );
+	else {
+		POINT* polyPts = new POINT[pts.size()];
+		std::vector<Point>::const_iterator it = pts.begin();
+		int i =0;
+		while ( it != pts.end() ) {
+			const Point& pt = *it;
+			
+			polyPts[i].x = (int32)pt.x_;
+			polyPts[i].y = (int32)pt.y_;
+			it++;
+			i++;
+		}
+		if ( inFillPath_ ){
+			::Polygon( dc_, polyPts, pts.size() );
+		}
+		else{
+			::Polyline( dc_, polyPts, pts.size() );
+		}
+		
+		delete[] polyPts;
 	}
-	else{
-		::Polyline( dc_, polyPts, pts.size() );
-	}
-
-	delete[] polyPts;
 }
 
 void Win32Context::curve(const double & x1, const double & y1, const double & x2, const double & y2,
                          const double & x3, const double & y3, const double & x4, const double & y4 )
 {
-	POINT bezPts[4];
-	memset( &bezPts[0], 0, sizeof(bezPts[0]) * 4 );
+	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
 
-	bezPts[0].x = (int32)x1;
-	bezPts[0].y = (int32)y1;
-
-	bezPts[1].x = (int32)x2;
-	bezPts[1].y = (int32)y2;
-
-	bezPts[2].x = (int32)x3;
-	bezPts[2].y = (int32)y3;
-
-	bezPts[3].x = (int32)x4;
-	bezPts[3].y = (int32)y4;
-
-	if ( inFillPath_ ){
-		//::BeginPath( dc_ );
-		::MoveToEx( dc_, bezPts[0].x, bezPts[0].y, NULL );
-		::PolyBezierTo( dc_, &bezPts[1], 3 );
-		//::EndPath( dc_ );
-		//::FillPath( dc_ );
 	}
 	else {
-		::PolyBezier( dc_, bezPts, 4 );
+		POINT bezPts[4];
+		memset( &bezPts[0], 0, sizeof(bezPts[0]) * 4 );
+		
+		bezPts[0].x = (int32)x1;
+		bezPts[0].y = (int32)y1;
+		
+		bezPts[1].x = (int32)x2;
+		bezPts[1].y = (int32)y2;
+		
+		bezPts[2].x = (int32)x3;
+		bezPts[2].y = (int32)y3;
+		
+		bezPts[3].x = (int32)x4;
+		bezPts[3].y = (int32)y4;
+		
+		if ( inFillPath_ ){
+			//::BeginPath( dc_ );
+			::MoveToEx( dc_, bezPts[0].x, bezPts[0].y, NULL );
+			::PolyBezierTo( dc_, &bezPts[1], 3 );
+			//::EndPath( dc_ );
+			//::FillPath( dc_ );
+		}
+		else {
+			::PolyBezier( dc_, bezPts, 4 );
+		}
 	}
 }
 
 void Win32Context::lineTo(const double & x, const double & y)
 {
-	int32 xx = x;
-	int32 yy = y;
-	::LineTo( dc_, xx, yy );
+	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
+
+	}
+	else {
+		int32 xx = x;
+		int32 yy = y;
+		::LineTo( dc_, xx, yy );
+	}
 }
 
 void Win32Context::moveTo(const double & x, const double & y)
 {
-	int32 xx = x;
-	int32 yy = y;
-	::MoveToEx( dc_, /*(int32)*/xx, /*(int32)*/yy, NULL );
+	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
+
+	}
+	else {
+		int32 xx = x;
+		int32 yy = y;
+		::MoveToEx( dc_, /*(int32)*/xx, /*(int32)*/yy, NULL );
+	}
 }
 
 void Win32Context::closePath()
 {
-	::CloseFigure(dc_);
+	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
+
+	}
+	else {
+		::CloseFigure(dc_);
+	}
 }
 
 
@@ -4682,117 +4745,17 @@ void Win32Context::prepareDCWithContextFont( HFONT& fontHandle )
 	}
 
 	fontHandle = NULL;
-/*
-	DWORD charSet;
-
-	Locale* fontLocale = ctxFont->getLocale();
-	if ( NULL == fontLocale ) {
-		fontLocale = System::getCurrentThreadLocale();
-	}
-
-
-	//fontLocale = NULL;
-
-	if ( NULL == fontLocale ) {
-		charSet = DEFAULT_CHARSET;
-	}
-	else if ( !ctxFont->isTrueType() ) {
-		charSet = DEFAULT_CHARSET;
-	}
-	else {
-
-		LCID lcid = (LCID)PtrToUlong( fontLocale->getPeer()->getHandleID() );
-		WORD langID = LANGIDFROMLCID( lcid );
-
-		WORD primaryLangID = PRIMARYLANGID(langID);
-		WORD subLangID = SUBLANGID(langID);
-
-		switch ( primaryLangID ) {
-			case LANG_LITHUANIAN: case LANG_LATVIAN: case LANG_ESTONIAN: {
-				charSet = BALTIC_CHARSET;
-			}
-			break;
-
-			case LANG_CHINESE: {
-				charSet = CHINESEBIG5_CHARSET;
-
-				if ( SUBLANG_CHINESE_SIMPLIFIED == subLangID ) {
-					charSet = GB2312_CHARSET;
-				}
-			}
-			break;
-
-			case LANG_SLOVENIAN: case LANG_ALBANIAN:
-			case LANG_ROMANIAN: case LANG_BULGARIAN: case LANG_CROATIAN:
-			case LANG_BELARUSIAN: case LANG_UKRAINIAN: case LANG_HUNGARIAN:
-			case LANG_SLOVAK: case LANG_POLISH: case LANG_CZECH: {
-				charSet = EASTEUROPE_CHARSET;
-			}
-			break;
-
-			case LANG_GREEK: {
-				charSet = GREEK_CHARSET;
-			}
-			break;
-
-			case LANG_KOREAN: {
-				charSet = HANGUL_CHARSET;//???JOHAB_CHARSET instead????
-			}
-			break;
-
-			case LANG_RUSSIAN: {
-				charSet = RUSSIAN_CHARSET;
-			}
-			break;
-
-			case LANG_TURKISH: {
-				charSet = TURKISH_CHARSET;
-			}
-			break;
-
-			case LANG_JAPANESE: {
-				charSet = SHIFTJIS_CHARSET;
-			}
-			break;
-
-			case LANG_HEBREW: {
-				charSet = HEBREW_CHARSET;
-			}
-			break;
-
-			case LANG_ARABIC: {
-				charSet = ARABIC_CHARSET;
-			}
-			break;
-
-			case LANG_THAI: {
-				charSet = THAI_CHARSET;
-			}
-			break;
-
-			default : {
-				charSet = DEFAULT_CHARSET;
-			}
-			break;
-		}
-	}
-*/
 
 	if ( System::isUnicodeEnabled() ) {
 		LOGFONTW* logFont = (LOGFONTW*)fontImpl->getFontHandleID();
 
 		LONG oldOrientation = logFont->lfOrientation;
 
-		//DWORD oldCharSet = logFont->lfCharSet;
-
-		//logFont->lfCharSet = charSet;
-
 		logFont->lfOrientation = logFont->lfEscapement = (LONG)(-context_->getRotation() * 10.0);
 
 
 		fontHandle = CreateFontIndirectW( logFont );
 
-		//logFont->lfCharSet = oldCharSet;
 		logFont->lfOrientation = logFont->lfEscapement = oldOrientation;
 	}
 	else {
@@ -4800,15 +4763,10 @@ void Win32Context::prepareDCWithContextFont( HFONT& fontHandle )
 
 		LONG oldOrientation = logFont->lfOrientation;
 
-		//DWORD oldCharSet = logFont->lfCharSet;
-
 		logFont->lfOrientation = logFont->lfEscapement = (LONG)(-context_->getRotation() * 10.0);
-
-		//logFont->lfCharSet = charSet;
 
 		fontHandle = CreateFontIndirectA( logFont );
 
-		//logFont->lfCharSet = oldCharSet;
 		logFont->lfOrientation = logFont->lfEscapement = oldOrientation;
 	}
 }
@@ -4820,7 +4778,6 @@ bool Win32Context::prepareForDrawing( int32 drawingOperation )
 	checkHandle();
 
 	inFillPath_ = false;
-	//pathStarted_ = false;
 
 	if ( NULL != dc_ ){
 
@@ -5023,6 +4980,10 @@ void Win32Context::finishedDrawing( int32 drawingOperation )
 	releaseHandle();
 }
 
+void Win32Context::setAntiAliasingOn( bool antiAliasingOn )
+{
+	antiAliased_ = antiAliasingOn;
+}
 
 /**
 $Id$
