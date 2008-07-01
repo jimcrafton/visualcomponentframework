@@ -15,8 +15,7 @@ where you installed the VCF.
 using namespace VCF;
 
 Win32ControlContext::Win32ControlContext( ControlPeer* controlPeer )
-{
-	Win32Context::init();
+{	
 	if ( NULL == controlPeer ){
 		//throw exception
 	}
