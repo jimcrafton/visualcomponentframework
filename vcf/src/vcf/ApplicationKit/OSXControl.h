@@ -17,13 +17,10 @@ namespace VCF {
 
 @interface VCFControlView : NSView
 {
-	VCF::OSXControl* peer;
-	VCF::Control* control;
+	
 }
 
 
-- (void) setPeerInst: (VCF::OSXControl*) peer;
-- (void) setVCFControl: (VCF::Control*) ctrl;
 @end
 
 
@@ -107,12 +104,21 @@ public:
 	virtual void postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect );
 	
 	void internal_paint( const NSRect& r );
+	
+	static void setViewForPeer( NSView* view, OSXControl* peer );
+	static OSXControl* getPeerForView( NSView* view );
+	
+	static void handleEventForView( NSView* view, NSEvent* event );
+	static void handleSetFrame( NSView* view, const NSRect& rect );
+	
+	virtual void doEventForView( NSView* view, NSEvent* event );
+	virtual void doSetFrame( NSView* view, const NSRect& rect );
 protected:
 	Control* control_;	
 	MouseState mouseState_;
 	::Point lastMousePt_;	
 	NSView* view_;
-	static OSXControl* getControlForView( NSView* view ); 
+	 
 };
 
 

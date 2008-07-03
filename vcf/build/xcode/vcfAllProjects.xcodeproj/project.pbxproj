@@ -11,6 +11,10 @@
 		38847C120E057D38005D0874 /* OSXCustomControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38847C100E057D38005D0874 /* OSXCustomControl.cpp */; };
 		38847C130E057D38005D0874 /* OSXCustomControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 38847C0F0E057D38005D0874 /* OSXCustomControl.h */; };
 		38847C140E057D38005D0874 /* OSXCustomControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38847C100E057D38005D0874 /* OSXCustomControl.cpp */; };
+		38AC99EB0E14834E00E6F8A0 /* VCFTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38AC99E90E14834E00E6F8A0 /* VCFTime.cpp */; };
+		38AC99EC0E14834E00E6F8A0 /* VCFTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 38AC99EA0E14834E00E6F8A0 /* VCFTime.h */; };
+		38AC99ED0E14834E00E6F8A0 /* VCFTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38AC99E90E14834E00E6F8A0 /* VCFTime.cpp */; };
+		38AC99EE0E14834E00E6F8A0 /* VCFTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 38AC99EA0E14834E00E6F8A0 /* VCFTime.h */; };
 		38CFDF640E0481DC00904FA7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB598030DDF49900061EF95 /* Cocoa.framework */; };
 		5E4EB2280932A461009AB90C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E4EB2260932A44F009AB90C /* libz.dylib */; };
 		5E4EB2670932A751009AB90C /* FoundationKit_d.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7340BB082E719300CDD184 /* FoundationKit_d.framework */; };
@@ -1445,6 +1449,8 @@
 /* Begin PBXFileReference section */
 		38847C0F0E057D38005D0874 /* OSXCustomControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSXCustomControl.h; path = ../../src/vcf/ApplicationKit/OSXCustomControl.h; sourceTree = SOURCE_ROOT; };
 		38847C100E057D38005D0874 /* OSXCustomControl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = OSXCustomControl.cpp; path = ../../src/vcf/ApplicationKit/OSXCustomControl.cpp; sourceTree = SOURCE_ROOT; };
+		38AC99E90E14834E00E6F8A0 /* VCFTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VCFTime.cpp; path = ../../src/vcf/FoundationKit/VCFTime.cpp; sourceTree = SOURCE_ROOT; };
+		38AC99EA0E14834E00E6F8A0 /* VCFTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCFTime.h; path = ../../src/vcf/FoundationKit/VCFTime.h; sourceTree = SOURCE_ROOT; };
 		5E092B0E0741D5AD004B45E4 /* OSXMenuBar.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXMenuBar.cpp; path = ../../src/vcf/ApplicationKit/OSXMenuBar.cpp; sourceTree = SOURCE_ROOT; };
 		5E092B0F0741D5AD004B45E4 /* OSXMenuBar.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXMenuBar.h; path = ../../src/vcf/ApplicationKit/OSXMenuBar.h; sourceTree = SOURCE_ROOT; };
 		5E092B240741D94F004B45E4 /* OSXMenuItem.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXMenuItem.cpp; path = ../../src/vcf/ApplicationKit/OSXMenuItem.cpp; sourceTree = SOURCE_ROOT; };
@@ -2362,6 +2368,8 @@
 		5E2C80160641F7DB00A8020D /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				38AC99E90E14834E00E6F8A0 /* VCFTime.cpp */,
+				38AC99EA0E14834E00E6F8A0 /* VCFTime.h */,
 				5EB59AA10DDF86080061EF95 /* Base64Codec.cpp */,
 				5EB59AA20DDF86080061EF95 /* Base64Codec.h */,
 				EA6A4AEB0C249F700057B9F4 /* Delegates.cpp */,
@@ -3428,6 +3436,7 @@
 				EA6A4AEF0C249F700057B9F4 /* Delegates.h in Headers */,
 				EA6A4AF00C249F700057B9F4 /* ThreadedFunctions.h in Headers */,
 				5EB59AA40DDF86090061EF95 /* Base64Codec.h in Headers */,
+				38AC99EC0E14834E00E6F8A0 /* VCFTime.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3849,6 +3858,7 @@
 				5EC1A6F00941EFF8001EA41D /* Waitable.h in Headers */,
 				5EC1A6F10941EFF8001EA41D /* WarningsOffVc.h in Headers */,
 				5EB59AA60DDF86090061EF95 /* Base64Codec.h in Headers */,
+				38AC99EE0E14834E00E6F8A0 /* VCFTime.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4551,6 +4561,7 @@
 				EA96E0010C06657000B66658 /* RunLoopSourcePeer.cpp in Sources */,
 				EA6A4AEE0C249F700057B9F4 /* Delegates.cpp in Sources */,
 				5EB59AA30DDF86090061EF95 /* Base64Codec.cpp in Sources */,
+				38AC99EB0E14834E00E6F8A0 /* VCFTime.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4803,6 +4814,7 @@
 				5EC1A6ED0941EFF8001EA41D /* VCFString.cpp in Sources */,
 				5EC1A6F20941EFF8001EA41D /* XMLParser.cpp in Sources */,
 				5EB59AA50DDF86090061EF95 /* Base64Codec.cpp in Sources */,
+				38AC99ED0E14834E00E6F8A0 /* VCFTime.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

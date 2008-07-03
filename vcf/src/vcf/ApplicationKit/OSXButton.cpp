@@ -10,6 +10,80 @@
 using namespace VCF;
 
 
+@interface VCFButton : NSButton
+{
+
+}
+@end
+
+
+
+@implementation VCFButton
+
+- (BOOL)isFlipped
+{
+	return YES;
+}
+
+
+- (void)drawRect:(NSRect)rect
+{
+	[super drawRect:rect];
+	
+	VCF::OSXControl* peer = VCF::OSXControl::getPeerForView( self );
+	
+	if ( NULL != peer ) {		
+		//peer->internal_paint( rect );
+	}	
+}
+ 
+- (void)setFrame:(NSRect)rect
+{
+	[super setFrame:rect];
+	
+	VCF::OSXControl::handleSetFrame( self, rect );
+}
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+	[super mouseDown:theEvent];
+	
+	VCF::OSXControl::handleEventForView( self, theEvent );
+	
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+	[super mouseUp:theEvent];
+	
+	VCF::OSXControl::handleEventForView( self, theEvent );	
+}
+
+
+- (void)rightMouseDown:(NSEvent *)theEvent
+{
+	[super rightMouseDown:theEvent];
+	
+	VCF::OSXControl::handleEventForView( self, theEvent );
+}
+
+- (void)rightMouseUp:(NSEvent *)theEvent
+{
+	[super rightMouseUp:theEvent];
+	
+	VCF::OSXControl::handleEventForView( self, theEvent );
+}
+
+
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+	[super mouseMoved:theEvent];
+	
+	VCF::OSXControl::handleEventForView( self, theEvent );
+}
+@end
+
+
 OSXButton::OSXButton( CommandButton* control ):
 	OSXControl( control ),
 	commandButton_(control)
@@ -43,147 +117,42 @@ ButtonState OSXButton::getState()
 	
 void OSXButton::create( Control* owningControl )
 {
-	::Rect bounds = {0,0,0,0};
+	NSRect r;
+	r.origin.x = 0;
+	r.origin.y = 0;
+	r.size.width = 1;
+	r.size.height = 1;	
 	
-		/*
-	if ( noErr == CreatePushButtonControl( NULL, &bounds, CFSTR(""), &hiView_ ) ) {
-		
-		control_ = owningControl;
-		OSXControl* thisPtr = this;
-		SetControlProperty( hiView_, 
-							VCF_PROPERTY_CREATOR, 
-							VCF_PROPERTY_CONTROL_VAL, 
-							sizeof(thisPtr), 
-							&thisPtr );
-							
-		SetControlCommandID( hiView_, 'OKBN' );
-		OSStatus err = OSXControl::installStdControlHandler();
-							
-		if ( err != noErr ) {
-			throw RuntimeException( MAKE_ERROR_MSG_2("InstallEventHandler failed for OSXButton!") );
-		}
-	}
-	else {
-		throw RuntimeException( MAKE_ERROR_MSG_2("OSXButton failed to be created!") );
-	}
-	*/
+	view_ = [[VCFButton alloc] initWithFrame:r];
+	NSButton* btn = (NSButton*)view_;
+	[btn setButtonType:NSMomentaryPushButton ];
+	[btn setBezelStyle: NSRoundedBezelStyle];
+	//[btn setBordered:YES];
+	
+	OSXControl::create( owningControl );		
 }
 	
 String OSXButton::getText()
 {
 	String result;
-	//Str255 title;
-	//GetControlTitle( hiView_, title );
 	
+	NSButton* btn = (NSButton*)view_;
+		
+	CFTextString text;
+	text = (CFStringRef) [btn title];	
+	result = text;
 	
-	CFStringRef tmp;
-	//OSStatus err = CopyControlTitleAsCFString( hiView_, &tmp );	
-	//if ( err != noErr ) {
-	//	printf( "CopyControlTitleAsCFString() failed, err: %d\n", err );
-	//}
-	CFTextString title(tmp);
-	CFRelease( tmp );
-	result = title;
 	return result;
 }
 
 void OSXButton::setText( const String& text )
 {	
 	CFTextString tmp(text);
-	
-	//OSStatus err = SetControlTitleWithCFString( hiView_, tmp );
-	//if ( err != noErr ) {
-	//	printf( "SetControlTitleWithCFString() failed, err: %d\n", err );
-	//}
+	CFStringRef t = tmp;
+	NSButton* btn = (NSButton*)view_;
+	[btn setTitle: (NSString*) t ];
 }
-	/*
-OSStatus OSXButton::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent )
-{
-	OSStatus result = eventNotHandledErr;
 	
-    UInt32 whatHappened = GetEventKind (theEvent);
-	TCarbonEvent event( theEvent );
-	
-	switch ( GetEventClass( theEvent ) )  {
-		case kEventClassCommand : {
-			switch( whatHappened ) {
-				case kEventCommandProcess : {
-					printf( "kEventCommandProcess\n" );
-				}
-				break;
-			}
-		}
-		break;
-		 
-		case kEventClassControl : {
-			switch( whatHappened ) {
-				
-			
-				case kEventControlHitTest : {
-				
-					result = ::CallNextEventHandler( nextHandler, theEvent );
-					handleWrappedControlHitTest( theEvent );
-				
-					ControlPartCode part;				   
-					GetEventParameter( theEvent, kEventParamControlPart, typeControlPartCode, NULL,
-										sizeof (part), NULL, &part);	
-					if ( OSXControl::msDown == mouseState_ ) {					
-						state_.setPressed( (part != kControlNoPart) ? true : false );
-					}
-				}
-				break;
-				
-				
-				case kEventControlTrack : {					
-					//handle mouse down event here
-					
-					if ( !control_->isDestroying() ) {					
-						handleWrappedControlTrack( theEvent );												
-					}
-					
-					result = ::CallNextEventHandler( nextHandler, theEvent );
-					
-					if ( !control_->isDestroying() ) {					
-						handleWrappedControlTrackDone( theEvent );
-						
-						VCF::Rect bounds = control_->getClientBounds();
-						VCF::Point pt( lastMousePt_.h , lastMousePt_.v );
-						if ( bounds.containsPt( &pt ) ) {
-							commandButton_->click();
-						}
-						
-						state_.setPressed( false );
-					}
-				}
-				
-
-				case kEventControlDraw : {
-					result = noErr;//::CallNextEventHandler( nextHandler, theEvent );
-					//break;
-					if ( !control_->isDestroying() ) {
-							
-					}
-				}
-				break;
-				
-				default : {
-                    result = OSXControl::handleOSXEvent( nextHandler, theEvent );
-                }
-                break;
-			}
-		}
-		break;
-		
-		default : {
-            result = OSXControl::handleOSXEvent( nextHandler, theEvent );
-        }
-        break; 
-	}	
-	
-	return result;
-	//return OSXControl::handleOSXEvent( nextHandler, theEvent );
-}
-*/
 
 /**
 $Id$

@@ -23,14 +23,16 @@ VCF::uint32 translateButtonMask( NSEvent* event )
 	
 	NSUInteger flags = [event modifierFlags];
 	
-	if ( flags == kEventMouseButtonPrimary ) {
-		result = VCF::mbmLeftButton;
+	if ( flags && kEventMouseButtonPrimary ) {
+		result |= VCF::mbmLeftButton;
 	}
-	else if ( flags == kEventMouseButtonSecondary ) {
-		result = VCF::mbmRightButton;
+	
+	if ( flags && kEventMouseButtonSecondary ) {
+		result |= VCF::mbmRightButton;
 	}
-	else if ( flags == kEventMouseButtonTertiary ) {
-		result = VCF::mbmMiddleButton;
+	
+	if ( flags && kEventMouseButtonTertiary ) {
+		result |= VCF::mbmMiddleButton;
 	}
 	
 	return result;
@@ -81,88 +83,33 @@ VCF::uint32 translateKeyMask( NSEvent* event )
 
 - (void)drawRect:(NSRect)rect
 {
+	VCF::OSXControl* peer = VCF::OSXControl::getPeerForView( self );
+	
 	if ( NULL != peer ) {		
 		peer->internal_paint( rect );
 	}	
 }
-
-- (void) setPeerInst: (VCF::OSXControl*) val
-{
-	peer = val;
-}
-
-
-- (void) setVCFControl: (VCF::Control*) val
-{
-	control = val;
-}
-
  
 - (void)setFrame:(NSRect)rect
 {
 	[super setFrame:rect];
 	
-	VCF::Size sz( rect.size.width, rect.size.height );
-	VCF::ControlEvent e( control, sz );
-	control->handleEvent( &e );
-	
-	
-	VCF::ControlEvent e2( control, VCF::Point(rect.origin.x,rect.origin.y) );
-	control->handleEvent( &e2 );
+	VCF::OSXControl::handleSetFrame( self, rect );
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
 	[super mouseDown:theEvent];
 	
-	NSPoint location = [theEvent locationInWindow];
-	NSPoint local = [self convertPoint:location fromView:nil];
-	VCF::Point pt(local.x, local.y);
-	VCF::uint32 mouseButton = 0;
+	VCF::OSXControl::handleEventForView( self, theEvent );
 	
-	
-	switch ( [theEvent type] ) {
-		case NSLeftMouseDown: { mouseButton = VCF::mbmLeftButton; };
-		break;
-		
-		case NSRightMouseDown: { mouseButton = VCF::mbmRightButton; };
-		break;
-		
-	}
-				
-	VCF::MouseEvent me( control, VCF::Control::MOUSE_DOWN,mouseButton,
-												translateKeyMask( theEvent ), &pt );
-												
-	control->handleEvent( &me );
-	
-	printf( "mouseDown! %0.2f, %0.2f\n", pt.x_, pt.y_  );
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
 	[super mouseUp:theEvent];
 	
-	NSPoint location = [theEvent locationInWindow];
-	NSPoint local = [self convertPoint:location fromView:nil];
-	VCF::Point pt(local.x, local.y);
-	VCF::uint32 mouseButton = 0;
-	
-	
-	switch ( [theEvent type] ) {
-		case NSLeftMouseDown: { mouseButton = VCF::mbmLeftButton; };
-		break;
-		
-		case NSRightMouseDown: { mouseButton = VCF::mbmRightButton; };
-		break;
-		
-	}
-				
-	VCF::MouseEvent me( control, VCF::Control::MOUSE_UP,mouseButton,
-												translateKeyMask( theEvent ), &pt );
-												
-	control->handleEvent( &me );
-	
-	printf( "mouseUp! %0.2f, %0.2f\n", pt.x_, pt.y_  );
+	VCF::OSXControl::handleEventForView( self, theEvent );	
 }
 
 
@@ -170,54 +117,14 @@ VCF::uint32 translateKeyMask( NSEvent* event )
 {
 	[super rightMouseDown:theEvent];
 	
-	NSPoint location = [theEvent locationInWindow];
-	NSPoint local = [self convertPoint:location fromView:nil];
-	VCF::Point pt(local.x, local.y);
-	VCF::uint32 mouseButton = 0;
-	
-	
-	switch ( [theEvent type] ) {
-		case NSLeftMouseDown: { mouseButton = VCF::mbmLeftButton; };
-		break;
-		
-		case NSRightMouseDown: { mouseButton = VCF::mbmRightButton; };
-		break;
-		
-	}
-				
-	VCF::MouseEvent me( control, VCF::Control::MOUSE_DOWN,mouseButton,
-												translateKeyMask( theEvent ), &pt );
-												
-	control->handleEvent( &me );
-	
-	printf( "rmouseDown! %0.2f, %0.2f\n", pt.x_, pt.y_  );
+	VCF::OSXControl::handleEventForView( self, theEvent );
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
 	[super rightMouseUp:theEvent];
 	
-	NSPoint location = [theEvent locationInWindow];
-	NSPoint local = [self convertPoint:location fromView:nil];
-	VCF::Point pt(local.x, local.y);
-	VCF::uint32 mouseButton = 0;
-	
-	
-	switch ( [theEvent type] ) {
-		case NSLeftMouseDown: { mouseButton = VCF::mbmLeftButton; };
-		break;
-		
-		case NSRightMouseDown: { mouseButton = VCF::mbmRightButton; };
-		break;
-		
-	}
-				
-	VCF::MouseEvent me( control, VCF::Control::MOUSE_UP,mouseButton,
-												translateKeyMask( theEvent ), &pt );
-												
-	control->handleEvent( &me );
-	
-	printf( "rmouseUp! %0.2f, %0.2f\n", pt.x_, pt.y_  );
+	VCF::OSXControl::handleEventForView( self, theEvent );
 }
 
 
@@ -225,489 +132,14 @@ VCF::uint32 translateKeyMask( NSEvent* event )
 {
 	[super mouseMoved:theEvent];
 	
-	NSPoint location = [theEvent locationInWindow];
-	NSPoint local = [self convertPoint:location fromView:nil];
-	VCF::Point pt(local.x, local.y);
-	
-	
-	VCF::MouseEvent me( control, VCF::Control::MOUSE_MOVE,translateButtonMask(theEvent),
-									translateKeyMask(theEvent), &pt );
-									
-	control->handleEvent( &me );
-	printf( "mouseMoved! %0.2f, %0.2f\n", pt.x_, pt.y_  );
+	VCF::OSXControl::handleEventForView( self, theEvent );
 }
 
 
 @end
 
 
-
 /*
-
-class OSXControlView : public TView {
-public:
-	
-
-	OSXControlView( HIViewRef inControl ):
-		TView(inControl){
-		
-	}
-	
-	virtual ~OSXControlView() {
-	
-	}
-
-	virtual OSStatus Initialize( TCarbonEvent& inEvent ) {
-		OSStatus res = TView::Initialize( inEvent );
-		
-		return res;
-	}
-	
-	
-	virtual UInt32 GetBehaviors() {
-		return TView::GetBehaviors() | kHIViewAllowsSubviews | kHIViewDoesNotUseSpecialParts;
-            //kControlSupportsEmbedding | kControlSupportsFocus |
-            //kControlWantsActivate | kControlHandlesTracking |
-            //kControlGetsFocusOnClick | kControlSupportsClickActivation;
-	}
-	
-	
-	virtual ControlPartCode HitTest( const HIPoint& inWhere ) {
-		ControlPartCode		part;
-		
-		// Is the mouse in the view?
-		if ( CGRectContainsPoint( Bounds(), inWhere ) )
-			part = 1;
-		else
-			part = kControlNoPart;
-		
-		return part;
-	}
-
-									
-	virtual ControlKind GetKind() {
-		const ControlKind result = { 'OSXv', 'OSXc' };	
-		return result;
-	}
-	
-	virtual OSStatus GetRegion( ControlPartCode inPart, RgnHandle outRgn ) {
-		OSStatus			err = noErr;
-		TRect				bounds;
-		Rect				qdBounds;
-		
-		if ( inPart == kControlContentMetaPart
-				|| inPart == kControlStructureMetaPart
-				) // || inPart == kControlOpaqueRegionMetaPart  )
-		{
-			bounds = Bounds();
-			qdBounds = bounds;
-		
-			RectRgn( outRgn, &qdBounds );
-		}
-		
-		return err;
-	}
-
-	virtual void Draw( RgnHandle inLimitRgn, CGContextRef inContext, GrafPtr port ) {
-	
-	}	
-protected:
-
-};
-
-
-namespace VCF {
-
-static const EventTypeSpec osxHIViewEvents[] =
-{	{ kEventClassCommand, kEventCommandProcess },
-	{ kEventClassCommand, kEventCommandUpdateStatus },
-	
-	{ kEventClassControl, kEventControlInitialize },
-	{ kEventClassControl, kEventControlDraw },
-	{ kEventClassControl, kEventControlHitTest },
-	{ kEventClassControl, kEventControlGetPartRegion },
-	{ kEventClassControl, kEventControlGetData },
-	{ kEventClassControl, kEventControlSetData },
-	{ kEventClassControl, kEventControlGetOptimalBounds },
-	{ kEventClassControl, kEventControlBoundsChanged },
-	{ kEventClassControl, kEventControlTrack },
-	{ kEventClassControl, kEventControlGetSizeConstraints },
-	{ kEventClassControl, kEventControlHit },
-	{ kEventClassControl, kEventControlOwningWindowChanged },
-
-	
-	{ kEventClassKeyboard, kEventRawKeyDown },
-	{ kEventClassKeyboard, kEventRawKeyUp },
-
-	{ kEventClassControl, kEventControlHiliteChanged },
-	{ kEventClassControl, kEventControlActivate },
-	{ kEventClassControl, kEventControlDeactivate },
-	{ kEventClassControl, kEventControlValueFieldChanged },
-	{ kEventClassControl, kEventControlTitleChanged },
-	{ kEventClassControl, kEventControlEnabledStateChanged },
-	{ kEventClassControl, kEventControlOwningWindowChanged },
-    { kEventClassControl, kEventControlSetFocusPart }
-    
-};
-
-
-
-
-
-OSXControl::OSXControl( Control* control ):
-	hiView_(NULL),
-	control_(control),
-	handlerRef_(NULL),
-	mouseState_(OSXControl::msNoState)
-{
-	lastMousePt_.h = 0;
-	lastMousePt_.v = 0;
-}
-
-OSXControl::~OSXControl()
-{
-
-}
-
-OSHandleID OSXControl::getHandleID()
-{
-	return (OSHandleID) hiView_;
-}
-
-EventHandlerUPP OSXControl::getEventHandlerUPP()
-{
-    static EventHandlerUPP result = NULL;
-    if ( NULL == result ) {
-        result = NewEventHandlerUPP( OSXControl::handleOSXEvents );
-    }
-    return result;
-}
-
-OSXControl* OSXControl::getControlFromControlRef( ControlRef control )
-{
-	OSXControl* result = NULL;
-	
-	if ( noErr != GetControlProperty( control, VCF_PROPERTY_CREATOR, 
-									  VCF_PROPERTY_CONTROL_VAL, 
-									  sizeof(OSXControl*), NULL, &result ) ) {
-		result = NULL;
-	}
-	return result;
-}
-
-OSStatus OSXControl::installStdControlHandler()
-{
-	VCF_ASSERT( hiView_ != NULL );
-	
-	return InstallEventHandler( GetControlEventTarget( hiView_ ), 
-							OSXControl::getEventHandlerUPP(),
-							sizeof(osxHIViewEvents) / sizeof(EventTypeSpec), 
-							osxHIViewEvents, 
-							this, 
-							&handlerRef_ );
-}
-
-void OSXControl::create( Control* owningControl )
-{
-	TRect bounds(0,0,0,0);
-	
-	if ( noErr == ViewCreator<OSXControlView>::create( &hiView_, bounds, NULL ) ) {
-		
-		control_ = owningControl;
-		OSXControl* thisPtr = this;
-		SetControlProperty( hiView_, 
-							VCF_PROPERTY_CREATOR, 
-							VCF_PROPERTY_CONTROL_VAL, 
-							sizeof(thisPtr), 
-							&thisPtr );
-
-
-		OSStatus err = installStdControlHandler();
-
-		if ( err != noErr ) {
-			throw RuntimeException( MAKE_ERROR_MSG_2("InstallEventHandler failed for OSXControl!") );
-		}
-	}
-	else {
-		throw RuntimeException( MAKE_ERROR_MSG_2("OSXControl failed to be created!") );
-	}
-}
-
-void OSXControl::destroyControl()
-{
-
-}
-
-
-void OSXControl::setBounds( Rect* rect )
-{
-	TRect r( rect->left_, rect->top_, rect->getWidth(), rect->getHeight() );	
-	HIViewSetFrame( hiView_, r );
-}
-
-bool OSXControl::beginSetBounds( const uint32& numberOfChildren )
-{
-	return true;
-}
-
-void OSXControl::endSetBounds()
-{
-
-}
-
-Rect OSXControl::getBounds()
-{
-	Rect result;
-	
-	HIRect		frame;	
-	HIViewGetFrame( hiView_, &frame );
-	
-	TRect r = frame;
-	
-	result.setRect( r.origin.x, r.origin.y, r.origin.x + r.size.width, r.origin.y + r.size.height ); 
-	
-	return result;
-}
-
-void OSXControl::setVisible( const bool& visible )
-{
-	HIViewSetVisible( hiView_, visible );
-}
-
-bool OSXControl::getVisible()
-{
-	return IsControlVisible(hiView_) ? true : false;
-}
-
-Control* OSXControl::getControl()
-{
-	return control_;
-}
-
-void OSXControl::setControl( Control* component )
-{
-	control_ = component;
-}
-
-void OSXControl::setCursor( Cursor* cursor )
-{
-	if (NULL == cursor) {
-		return;
-	}
-	
-	OSXCursorPeer *peer = (OSXCursorPeer*)cursor->getPeer();
-	
-	if (NULL == peer) {
-		return;
-	}
-	
-	if (peer->isSystemCursor()){
-		SetThemeCursor(peer->getCursorID());
-	}	
-}
-
-void OSXControl::setParent( Control* parent )
-{
-	Frame* windowParent = NULL;
-	
-	if ( NULL != parent && parent->isLightWeight() ) {
-		OSXLightweightControl* lwPeer = dynamic_cast<OSXLightweightControl*>(parent->getPeer());
-		if ( NULL != lwPeer ) {
-			Control* lwParent = lwPeer->getHeavyWeightParent();
-			if ( NULL != lwParent ) {
-				windowParent = dynamic_cast<Frame*>(lwParent);
-			}
-		}
-	}
-	else {
-		windowParent = dynamic_cast<Frame*>(parent);
-	}
-	
-	
-	if ( NULL != windowParent ) {
- 		OSXWindow* osxWnd = dynamic_cast<OSXWindow*>(windowParent->getPeer());
-		WindowRef wnd = (WindowRef) osxWnd->getHandleID();
-		
-		ControlRef contentView = osxWnd->getRootControl();		
-					
-		OSStatus err = HIViewAddSubview( contentView, hiView_ );		
-	}
-	else if ( parent != NULL ) {
-		ControlRef parentControlRef = (ControlRef)parent->getPeer()->getHandleID();
-		OSStatus err = HIViewAddSubview( parentControlRef, hiView_ );
-		if ( err != noErr ) {
-			StringUtils::trace( Format("HIViewAddSubview failed, err: %d\n") % err );
-		}
-	}
-}
-
-Control* OSXControl::getParent()
-{
-	Control* result = NULL;
-	HIViewRef parentRef = HIViewGetSuperview( hiView_ );	
-	
-	OSXControl* parentPeer = OSXControl::getControlFromControlRef( parentRef );
-	if ( NULL != parentPeer ) {
-		result = parentPeer->getControl();
-	}
-	
-	return result;
-}
-
-bool OSXControl::isFocused()
-{
-	WindowRef wnd = GetControlOwner( hiView_ );
-	ControlRef focusedControl = NULL;
-	GetKeyboardFocus( wnd, &focusedControl );	
-	
-	return ( hiView_ == focusedControl ) ? true : false;
-}
-
-void OSXControl::setFocused()
-{
-    EventModifiers mods = 0;
-	HIViewAdvanceFocus( hiView_, mods );    
-}
-
-bool OSXControl::isEnabled()
-{
-	return IsControlEnabled( hiView_ ) ? true : false;
-}
-
-void OSXControl::setEnabled( const bool& enabled )
-{
-	if ( enabled ) {
-		EnableControl( hiView_ );
-	}
-	else {
-		DisableControl( hiView_ );
-	}
-}
-
-void OSXControl::setFont( Font* font )
-{
-	String fontName = font->getName();
-	
-	SInt16 iFONDNumber = 0;
-    Str255 pStr;
-    CopyCStringToPascal( fontName.empty() ? "Arial" : fontName.ansi_c_str(), pStr );
-	iFONDNumber = FMGetFontFamilyFromName( pStr );
-	
-	ControlFontStyleRec fontRec = {0};
-	fontRec.flags = kControlUseForeColorMask | kControlUseFontMask | kControlUseSizeMask | kControlUseFaceMask;
-	fontRec.font = iFONDNumber;
-	fontRec.size = font->getPointSize();
-	if ( font->getBold() ) {
-		fontRec.style |= 1;
-	}
-	
-	if ( font->getItalic() ) {
-		fontRec.style |= 2;
-	}
-	
-	if ( font->getUnderlined() ) {
-		fontRec.style |= 4;
-	}
-	
-	Color* color = font->getColor();
-	color->getRGB16( fontRec.foreColor.red, fontRec.foreColor.green, fontRec.foreColor.blue );
-	SetControlFontStyle( hiView_, &fontRec );	
-}
-
-void OSXControl::repaint( Rect* repaintRect, const bool& immediately )
-{
-	HIViewSetNeedsDisplay( hiView_, true );
-}
-
-void OSXControl::keepMouseEvents()
-{
-
-}
-
-void OSXControl::releaseMouseEvents()
-{
-
-}
-
-void OSXControl::translateToScreenCoords( Point* pt )
-{
-	HIPoint tmpPt;
-	tmpPt.x = pt->x_;
-	tmpPt.y = pt->y_;
-	
-	HIViewConvertPoint( &tmpPt, hiView_, NULL );
-	::Rect r;
-	GetWindowBounds( GetControlOwner(hiView_), kWindowStructureRgn, &r );
-	tmpPt.x += r.left;
-	tmpPt.y += r.top;
-	
-	pt->x_ = tmpPt.x;
-	pt->y_ = tmpPt.y;	
-}
-
-void OSXControl::translateFromScreenCoords( Point* pt )
-{
-	HIPoint tmpPt;
-	tmpPt.x = pt->x_;
-	tmpPt.y = pt->y_;
-	::Rect r;
-	GetWindowBounds( GetControlOwner(hiView_), kWindowStructureRgn, &r );
-	tmpPt.x -= r.left;
-	tmpPt.y -= r.top;
-	
-	HIViewConvertPoint( &tmpPt, NULL, hiView_ );	
-	
-	pt->x_ = tmpPt.x;
-	pt->y_ = tmpPt.y;
-}
-
-
-OSStatus OSXControl::handleOSXEvents(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData)
-{
-	OSXControl* control = (OSXControl*)userData;
-    
-    return control->handleOSXEvent( nextHandler, theEvent );
-}
-
-void OSXControl::setBorder( Border* border )
-{
-	//cause the control to repaint itself!
-	repaint(NULL,false);
-}
-
-OSStatus OSXControl::handleWrappedControlHitTest( EventRef theEvent )
-{
-	GetEventParameter( theEvent, kEventParamMouseLocation, typeQDPoint, NULL,
-					   sizeof (lastMousePt_), NULL, &lastMousePt_);
-	
-	OSXEventMsg msg( theEvent, control_ );
-	
-	Event* mouseMove = UIToolkit::createEventFromNativeOSEventData( &msg );
-	if ( NULL != mouseMove ) {
-		control_->handleEvent( mouseMove );
-		mouseMove->free();
-	}
-	
-	return noErr;
-}
-
-OSStatus OSXControl::handleWrappedControlTrack( EventRef theEvent )
-{
-	//first fire off a mouse down event!
-	mouseState_ = OSXControl::msDown;
-	
-	
-	OSXEventMsg msg( theEvent, control_ );
-	
-	Event* mouseDown = UIToolkit::createEventFromNativeOSEventData( &msg );
-	if ( NULL != mouseDown ) {
-		control_->handleEvent( mouseDown );
-		mouseDown->free();
-	}
-	
-	return noErr;
-}
-
 OSStatus OSXControl::handleWrappedControlTrackDone( EventRef theEvent )
 {
 	WindowRef wnd = GetControlOwner(hiView_);
@@ -832,165 +264,6 @@ OSStatus OSXControl::handleControlTrack( EventRef theEvent )
 	return result;
 }
 
-void OSXControl::preChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* childClipRect )
-{
-	
-}
-
-void OSXControl::postChildPaint( GraphicsContext* graphicsContext, Control* child, Rect* oldClipRect )
-{
-	
-}
-
-OSStatus OSXControl::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent )
-{
-	OSStatus result = eventNotHandledErr;
-    
-	
-    OSXEventMsg msg( theEvent, control_ );
-    Event* vcfEvent = UIToolkit::createEventFromNativeOSEventData( &msg );
-
-//	{ kEventClassControl, kEventControlDeactivate },
-	
-    UInt32 whatHappened = GetEventKind (theEvent);
-	TCarbonEvent event( theEvent );
-	
-	switch ( GetEventClass( theEvent ) )  {	
-		case kEventClassControl : {
-			switch( whatHappened ) {
-				
-				case kEventControlTrack : {					
-					//do mouse tracking to catch the rest!
-					handleControlTrack( theEvent );
-					
-					result = noErr;
-				}
-				
-				case kEventControlHit: {
-					result = ::CallNextEventHandler( nextHandler, theEvent );
-				
-			
-			//		if ( !control_->isDestroying() && (NULL != vcfEvent) ) {
-			//			
-			//			if ( OSXControl::msNoState == mouseState_ ) {							
-			//				control_->handleEvent( vcfEvent );
-			//				mouseState_ = OSXControl::msDown;
-			//				printf( "kEventControlHit, mouseState_ = OSXControl::msDown\n" );
-			//			}
-			//			else if ( OSXControl::msDown == mouseState_ ) {
-			//				mouseState_ = OSXControl::msUp;
-			//				
-			//				MouseEvent* tmpEvent = (MouseEvent*)vcfEvent;
-			//				
-			//				MouseEvent mouseEvent( tmpEvent->getSource(), Control::MOUSE_UP,
-			//										tmpEvent->getButtonMask(),
-			//										tmpEvent->getKeyMask(),
-			//										tmpEvent->getPoint() );
-			//										
-			//				control_->handleEvent( &mouseEvent );						
-			//				
-			//				mouseState_ = OSXControl::msNoState;
-			//				printf( "kEventControlHit, mouseState_ = OSXControl::msNoState\n" );
-			//			}						
-			//		}
-			//		
-							
-				}
-				break;
-				
-
-				case kEventControlDraw : {
-					//don't call next event handler here
-					result = noErr;
-				
-					if ( !control_->isDestroying() ) {
-												
-						GrafPtr port = NULL;										
-						CGContextRef context = NULL;
-						RgnHandle region = NULL;
-						
-						event.GetParameter( kEventParamRgnHandle, &region );
-						event.GetParameter<CGContextRef>( kEventParamCGContextRef, typeCGContextRef, &context );
-						event.GetParameter<GrafPtr>( kEventParamGrafPort, typeGrafPtr, &port );						
-						
-						::Rect rgnBds;
-						GetRegionBounds( region, &rgnBds );						
-						
-						
-						VCF::Rect bounds = control_->getClientBounds();									
-						
-						VCF::GraphicsContext* ctx = control_->getContext();
-						
-						WindowRef wnd = GetControlOwner( hiView_ );
-						::Rect wndR;
-						GetWindowBounds( wnd, kWindowContentRgn, &wndR );
-						
-						
-						HIRect bds;
-						//bounds = control_->getBounds();
-						
-						bds.origin.x = bounds.left_;
-						bds.origin.y = bounds.top_;
-						bds.size.width = bounds.getWidth();
-						bds.size.height = bounds.getHeight();
-						HIViewConvertRect( &bds, hiView_, NULL );
-						
-						bounds.setRect( bds.origin.x,
-										bds.origin.y, 
-										bds.origin.x + bds.size.width,
-										bds.origin.y + bds.size.height );
-																						
-						ctx->setViewableBounds( bounds );
-						
-						
-						OSXContext* osxCtx =  (OSXContext*)ctx->getPeer();
-						
-						bounds.setRect( 0, 0, wndR.right-wndR.left, wndR.bottom-wndR.top );
-						osxCtx->setCGContext( context, port, bounds );
-		
-						int gcs = ctx->saveState();
-		
-						control_->paintBorder( ctx );
-		
-						control_->paint( ctx );	
-						
-						ctx->restoreState( gcs );
-						
-						osxCtx->setCGContext( NULL, 0, bounds );		
-	
-						
-						result = noErr;						
-					}
-				}
-				break;
-				
-				default : {
-                    result = CallNextEventHandler( nextHandler, theEvent );
-					
-                    if ( !control_->isDestroying() ) {
-						if ( NULL != vcfEvent ) {
-							control_->handleEvent( vcfEvent );
-						}
-					}
-                }
-                break;
-			}
-		}
-		break;
-		
-		default : {
-            result = CallNextEventHandler( nextHandler, theEvent );
-        }
-        break; 
-	}
-	
-	if ( NULL != vcfEvent ) {
-        delete vcfEvent;
-    }
-	
-	return result;
-}
-
 	
 };
 
@@ -1003,7 +276,7 @@ namespace VCF {
 typedef std::map<NSView*,OSXControl*> ViewControlMap;
 static ViewControlMap viewControlMap;
 
-OSXControl* OSXControl::getControlForView( NSView* view )
+OSXControl* OSXControl::getPeerForView( NSView* view )
 {
 	OSXControl* result = NULL;
 	ViewControlMap::iterator found = viewControlMap.find( view );
@@ -1011,6 +284,11 @@ OSXControl* OSXControl::getControlForView( NSView* view )
 		result = found->second;
 	}
 	return result;
+}
+
+void OSXControl::setViewForPeer( NSView* view, OSXControl* peer )
+{
+	viewControlMap[ view ] = peer;
 }
 
 OSXControl::OSXControl( Control* control ):
@@ -1032,11 +310,8 @@ OSHandleID OSXControl::getHandleID()
 
 void OSXControl::create( Control* owningControl )
 {
-	VCF_ASSERT( view_ != NULL );
-	[view_ setPeerInst:this];
-	[view_ setVCFControl:owningControl];
-	
-	viewControlMap[ view_ ] = this;
+	VCF_ASSERT( view_ != NULL );	
+	OSXControl::setViewForPeer( view_, this );
 }
 
 void OSXControl::destroyControl()
@@ -1113,7 +388,7 @@ Control* OSXControl::getParent()
 	Control* result = NULL;
 	NSView* parentView = [view_ superview];
 	
-	OSXControl* osxCtrl = OSXControl::getControlForView( parentView );
+	OSXControl* osxCtrl = OSXControl::getPeerForView( parentView );
 	if ( NULL != osxCtrl ) {
 		result = osxCtrl->control_;
 	}
@@ -1123,12 +398,14 @@ Control* OSXControl::getParent()
 
 bool OSXControl::isFocused()
 {
-	return true;
+	NSWindow* wnd = [view_ window];
+	return view_ == [wnd firstResponder];
 }
 
 void OSXControl::setFocused()
 {
-	
+	NSWindow* wnd = [view_ window];
+	[wnd makeFirstResponder:view_];
 }
 
 bool OSXControl::isEnabled()
@@ -1216,6 +493,84 @@ void OSXControl::internal_paint( const NSRect& r )
 	
 	control_->paint( &gc );
 }
+
+
+void OSXControl::handleEventForView( NSView* view, NSEvent* event )
+{
+	VCF::OSXControl* peer = VCF::OSXControl::getPeerForView( view );
+	peer->doEventForView( view, event );
+}
+
+void OSXControl::handleSetFrame( NSView* view, const NSRect& rect )
+{
+	VCF::OSXControl* peer = VCF::OSXControl::getPeerForView( view );
+	peer->doSetFrame( view, rect );
+}
+	
+void OSXControl::doEventForView( NSView* view, NSEvent* event )
+{
+	VCF::Control* control = getControl();
+		
+	switch ( [event type] ) {
+		case NSRightMouseDown: case NSLeftMouseDown: { 
+			VCF::uint32 mouseButton = translateButtonMask(event); 
+			NSPoint location = [event locationInWindow];
+			NSPoint local = [view convertPoint:location fromView:nil];
+			VCF::Point pt(local.x, local.y);
+			
+			VCF::MouseEvent me( control, VCF::Control::MOUSE_DOWN,mouseButton,
+														translateKeyMask( event ), &pt );
+														
+			control->handleEvent( &me );
+		}
+		break;
+		
+		case NSRightMouseUp: case NSLeftMouseUp: { 
+			VCF::uint32 mouseButton = translateButtonMask(event); 
+			NSPoint location = [event locationInWindow];
+			NSPoint local = [view convertPoint:location fromView:nil];
+			VCF::Point pt(local.x, local.y);
+			
+			VCF::MouseEvent me( control, VCF::Control::MOUSE_UP,mouseButton,
+														translateKeyMask( event ), &pt );
+														
+			control->handleEvent( &me );
+		}
+		break;
+		
+		case NSMouseMoved:  { 
+			
+			VCF::Control* control = getControl();
+	
+			NSPoint location = [event locationInWindow];
+			NSPoint local = [view convertPoint:location fromView:nil];
+			VCF::Point pt(local.x, local.y);
+			
+			
+			VCF::MouseEvent me( control, VCF::Control::MOUSE_MOVE,translateButtonMask(event),
+											translateKeyMask(event), &pt );
+											
+			control->handleEvent( &me );
+		}
+		break;
+		
+	}
+}
+
+void OSXControl::doSetFrame( NSView* view, const NSRect& rect )
+{
+	VCF::Control* control = getControl();
+	
+	VCF::Size sz( rect.size.width, rect.size.height );
+	VCF::ControlEvent e( control, sz );
+	control->handleEvent( &e );
+	
+	
+	VCF::ControlEvent e2( control, VCF::Point(rect.origin.x,rect.origin.y) );
+	control->handleEvent( &e2 );
+}
+	
+
 
 };
 
