@@ -155,11 +155,7 @@ where you installed the VCF.
  
 - (void)setFrame:(NSRect)rect
 {
-	[super setFrame:rect];
-	
-	
-	//printf( "VCFWindowContentView set setFrame\n\trect: %d,%d,%d,%d\n", (int)rect.origin.x, (int)rect.origin.y, (int)rect.size.width, (int)rect.size.height );
-	
+	[super setFrame:rect];	
 }
 
 @end
@@ -281,11 +277,11 @@ void OSXWindow::create( Control* owningControl )
 	r.origin.x = 0;
 	r.origin.y = 0;
 	
-	[contentView setVCFControl: owningControl];
-	[contentView setPeerInst: this];
 	[contentView setVCFWindow: this];
 	
 	[contentView initWithFrame:r];
+	
+	OSXControl::setViewForPeer( contentView, this );
 	
 	view_ = contentView;
 
@@ -389,8 +385,6 @@ Control* OSXWindow::getControl()
 void OSXWindow::setControl( Control* control )
 {
 	control_ = control;
-	VCFWindowContentView* contentView = [ window_ contentView];
-	[contentView setVCFControl: control];
 }
 
 void OSXWindow::setCursor( Cursor* cursor )

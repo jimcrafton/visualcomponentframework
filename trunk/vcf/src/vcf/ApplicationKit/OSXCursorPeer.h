@@ -53,9 +53,9 @@ public:
 
 protected:
 	bool isSystemCursor_;
-	ThemeCursor cursorID_; 
+	int32 cursorID_; 
 	Cursor* cursor_;
-    CCrsrHandle cursorHandle_;
+    NSCursor* cursorInst_;
 };
 
 

@@ -12,6 +12,42 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKitPrivate.h"
 #include "vcf/ApplicationKit/OSXColorDialog.h"
 
+@interface OSXColorDialogDelegate : NSObject 
+{
+	BOOL closed_;
+	
+}
+- (id)init;
+- (BOOL)windowShouldClose:(id)sender;
+- (BOOL)isClosed;
+@end
+
+@implementation OSXColorDialogDelegate
+
+- (id)init
+{
+    [super init];
+    closed_ = NO;
+
+    return self;
+}
+
+- (BOOL)windowShouldClose:(id)sender
+{
+    closed_ = YES;
+    
+    [NSApp abortModal];
+    [NSApp stopModal];
+    return YES;
+}
+
+- (BOOL)isClosed
+{
+    return closed_;
+}
+
+@end
+
 
 namespace VCF {
 
@@ -43,28 +79,34 @@ void OSXColorDialog::setTitle( const String& title )
 
 bool OSXColorDialog::execute()
 {
-	bool result = false;
-/*
-	NColorPickerInfo info ;
-	memset( &info, 0, sizeof(info) );
-	info.placeWhere = kCenterOnMainScreen;
-	info.flags = kColorPickerDialogIsMoveable | kColorPickerDialogIsModal;
-	info.theColor.color.rgb.red     = color_.getRed() * 0xffff;
-	info.theColor.color.rgb.green   = color_.getGreen() * 0xffff;
-	info.theColor.color.rgb.blue    = color_.getBlue() * 0xffff;
+	bool result = true;
 	
-	//CopyCStringToPascal( "Hello World", &info.prompt );
+	NSColorPanel* panel = [ NSColorPanel sharedColorPanel];
+	OSXColorDialogDelegate* del = [[OSXColorDialogDelegate alloc] init];
+	[panel setDelegate: del];
+	NSColor* color = [NSColor colorWithCalibratedRed:color_.getRed() green: color_.getGreen()
+						blue:color_.getBlue() alpha:color_.getAlpha() ];
+	[panel setColor: color];
 	
 	
-	OSStatus err = NPickColor ( &info );
-	
-	if ((err == noErr) && info.newColorChosen)	{
-		result = true;
-		color_.setRed( ((double)info.theColor.color.rgb.red) / ((double)0xFFFF) );
-		color_.setGreen( ((double)info.theColor.color.rgb.green) / ((double)0xFFFF) );
-		color_.setBlue( ((double)info.theColor.color.rgb.blue) / ((double)0xFFFF) );
+	NSModalSession session = [NSApp beginModalSessionForWindow:panel];
+	while (true) {
+		[NSApp runModalSession:session];
+		
+		//are done? Yes, if the color dialog was closed
+		if ([del isClosed])
+			break;
 	}
-	*/
+	[NSApp endModalSession:session];
+	
+	[del release];
+	
+	NSColor* panelColor = [panel color];
+	color_.setRed( [panelColor redComponent] );
+	color_.setGreen( [panelColor greenComponent] );
+	color_.setBlue( [panelColor blueComponent] );
+	color_.setAlpha( [panelColor alphaComponent] );
+	
 	return result;
 }
 
