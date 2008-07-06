@@ -623,52 +623,6 @@ VCF::String StringUtils::newUUID()
 }
 
 
-/*
-VCF::String StringUtils::format( VCF::String formatText, ... )
-{
-	//StringUtils::trace( String("WARNING: Using deprecated function!!! - StringUtils::format(...)\n") ); // MP-
-
-	VCF::String result = "";
-
-
-	formatText = StringUtils::convertFormatString( formatText );
-
-	va_list argList;
-
-	va_start( argList, formatText );     // Initialize variable arguments.
-
-	VCFChar* buf = new VCFChar[MAX_TRACE_STRING];
-	memset( buf, 0, MAX_TRACE_STRING*sizeof(VCFChar) );
-
-#ifdef VCF_OSX
-	CFMutableStringRef fmt = CFStringCreateMutable( NULL, 0 );
-
-	CFStringAppendCharacters( fmt, formatText.c_str(), formatText.size() );
-
-	CFStringRef res = CFStringCreateWithFormatAndArguments( NULL, NULL, fmt, argList );
-
-	int length = minVal<uint32>( MAX_TRACE_STRING-1, CFStringGetLength( res ) );
-
-	CFRange range = {0, length };
-	CFStringGetCharacters( res, range, buf );
-	CFRelease( res );
-	CFRelease( fmt );
-
-#elif defined(VCF_POSIX) || defined(VCF_CW_W32)
-	vswprintf( buf, MAX_TRACE_STRING, formatText.c_str(), argList );
-#else
-	_vsnwprintf( buf, MAX_TRACE_STRING, formatText.c_str(), argList );
-#endif
-
-	va_end( argList );              // Reset variable arguments.
-
-	result = buf;
-
-	delete [] buf;
-
-	return result;
-}
-*/
 
 VCF::String StringUtils::toString( const std::type_info& typeInfo )
 {

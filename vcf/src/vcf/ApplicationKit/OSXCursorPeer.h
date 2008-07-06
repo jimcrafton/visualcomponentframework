@@ -22,7 +22,7 @@ public:
 	virtual ~OSXCursorPeer();
 
 	virtual OSHandleID getCursorHandleID(){
-		return (OSHandleID)cursorHandle_;
+		return (OSHandleID)cursorInst_;
 	}
 
 	virtual void createFromImage( Image* cursorImage, Point* hotSpot );

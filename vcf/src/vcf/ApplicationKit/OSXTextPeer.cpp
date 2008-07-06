@@ -327,6 +327,7 @@ void OSXTextPeer::setStyle( unsigned int start, unsigned int length, Dictionary&
 {
 
 /*
+NSText
 	Dictionary::Enumerator* items = styles.getEnumerator();
 	std::vector<TXNTypeAttributes> attrs;
 	Str255 pStr;

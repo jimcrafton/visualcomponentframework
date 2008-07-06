@@ -45,7 +45,7 @@ OSXConditionPeer::OSXConditionPeer( Condition* condition ):
 	blocked_(0),
 	waiting_(0)
 {
-    MPLibraryIsLoaded();
+    //MPLibraryIsLoaded();
 
 
     OSStatus err = MPCreateSemaphore( 1, 1, &gate_ );

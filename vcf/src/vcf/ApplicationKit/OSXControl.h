@@ -29,7 +29,7 @@ namespace VCF {
 
 
 
-class OSXControl : public ControlPeer {
+class OSXControl : public ControlPeer, public ObjectWithCallbacks {
 public:
 	enum MouseState{
 		msNoState=0,

@@ -1535,31 +1535,31 @@
 		5E2C808D0641F81600A8020D /* NoToolKitFoundException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = NoToolKitFoundException.h; path = ../../src/vcf/FoundationKit/NoToolKitFoundException.h; sourceTree = SOURCE_ROOT; };
 		5E2C808E0641F81600A8020D /* Object.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Object.cpp; path = ../../src/vcf/FoundationKit/Object.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C808F0641F81600A8020D /* Object.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Object.h; path = ../../src/vcf/FoundationKit/Object.h; sourceTree = SOURCE_ROOT; };
-		5E2C80920641F81600A8020D /* OSXConditionPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXConditionPeer.cpp; path = ../../src/vcf/FoundationKit/OSXConditionPeer.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C80920641F81600A8020D /* OSXConditionPeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXConditionPeer.cpp; path = ../../src/vcf/FoundationKit/OSXConditionPeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80930641F81600A8020D /* OSXConditionPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXConditionPeer.h; path = ../../src/vcf/FoundationKit/OSXConditionPeer.h; sourceTree = SOURCE_ROOT; };
-		5E2C80940641F81600A8020D /* OSXFilePeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXFilePeer.cpp; path = ../../src/vcf/FoundationKit/OSXFilePeer.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C80940641F81600A8020D /* OSXFilePeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXFilePeer.cpp; path = ../../src/vcf/FoundationKit/OSXFilePeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80950641F81600A8020D /* OSXFilePeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXFilePeer.h; path = ../../src/vcf/FoundationKit/OSXFilePeer.h; sourceTree = SOURCE_ROOT; };
-		5E2C80960641F81600A8020D /* OSXFileStream.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXFileStream.cpp; path = ../../src/vcf/FoundationKit/OSXFileStream.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C80960641F81600A8020D /* OSXFileStream.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXFileStream.cpp; path = ../../src/vcf/FoundationKit/OSXFileStream.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80970641F81600A8020D /* OSXFileStream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXFileStream.h; path = ../../src/vcf/FoundationKit/OSXFileStream.h; sourceTree = SOURCE_ROOT; };
-		5E2C80980641F81600A8020D /* OSXLibraryPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXLibraryPeer.cpp; path = ../../src/vcf/FoundationKit/OSXLibraryPeer.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C80980641F81600A8020D /* OSXLibraryPeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXLibraryPeer.cpp; path = ../../src/vcf/FoundationKit/OSXLibraryPeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80990641F81600A8020D /* OSXLibraryPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXLibraryPeer.h; path = ../../src/vcf/FoundationKit/OSXLibraryPeer.h; sourceTree = SOURCE_ROOT; };
-		5E2C809A0641F81600A8020D /* OSXLocalePeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXLocalePeer.cpp; path = ../../src/vcf/FoundationKit/OSXLocalePeer.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C809A0641F81600A8020D /* OSXLocalePeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXLocalePeer.cpp; path = ../../src/vcf/FoundationKit/OSXLocalePeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C809B0641F81600A8020D /* OSXLocalePeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXLocalePeer.h; path = ../../src/vcf/FoundationKit/OSXLocalePeer.h; sourceTree = SOURCE_ROOT; };
-		5E2C809C0641F81600A8020D /* OSXMutexPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXMutexPeer.cpp; path = ../../src/vcf/FoundationKit/OSXMutexPeer.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C809C0641F81600A8020D /* OSXMutexPeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXMutexPeer.cpp; path = ../../src/vcf/FoundationKit/OSXMutexPeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C809D0641F81600A8020D /* OSXMutexPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXMutexPeer.h; path = ../../src/vcf/FoundationKit/OSXMutexPeer.h; sourceTree = SOURCE_ROOT; };
-		5E2C809E0641F81600A8020D /* OSXPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXPeer.cpp; path = ../../src/vcf/FoundationKit/OSXPeer.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C809E0641F81600A8020D /* OSXPeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXPeer.cpp; path = ../../src/vcf/FoundationKit/OSXPeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C809F0641F81600A8020D /* OSXPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXPeer.h; path = ../../src/vcf/FoundationKit/OSXPeer.h; sourceTree = SOURCE_ROOT; };
-		5E2C80A00641F81600A8020D /* OSXProcessPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXProcessPeer.cpp; path = ../../src/vcf/FoundationKit/OSXProcessPeer.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C80A00641F81600A8020D /* OSXProcessPeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXProcessPeer.cpp; path = ../../src/vcf/FoundationKit/OSXProcessPeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80A10641F81600A8020D /* OSXProcessPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXProcessPeer.h; path = ../../src/vcf/FoundationKit/OSXProcessPeer.h; sourceTree = SOURCE_ROOT; };
-		5E2C80A20641F81600A8020D /* OSXRegistry.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXRegistry.cpp; path = ../../src/vcf/FoundationKit/OSXRegistry.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C80A20641F81600A8020D /* OSXRegistry.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXRegistry.cpp; path = ../../src/vcf/FoundationKit/OSXRegistry.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80A30641F81600A8020D /* OSXRegistry.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXRegistry.h; path = ../../src/vcf/FoundationKit/OSXRegistry.h; sourceTree = SOURCE_ROOT; };
-		5E2C80A40641F81600A8020D /* OSXSemaphorePeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXSemaphorePeer.cpp; path = ../../src/vcf/FoundationKit/OSXSemaphorePeer.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C80A40641F81600A8020D /* OSXSemaphorePeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXSemaphorePeer.cpp; path = ../../src/vcf/FoundationKit/OSXSemaphorePeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80A50641F81600A8020D /* OSXSemaphorePeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXSemaphorePeer.h; path = ../../src/vcf/FoundationKit/OSXSemaphorePeer.h; sourceTree = SOURCE_ROOT; };
-		5E2C80A60641F81600A8020D /* OSXSystemPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXSystemPeer.cpp; path = ../../src/vcf/FoundationKit/OSXSystemPeer.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C80A60641F81600A8020D /* OSXSystemPeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXSystemPeer.cpp; path = ../../src/vcf/FoundationKit/OSXSystemPeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80A70641F81600A8020D /* OSXSystemPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXSystemPeer.h; path = ../../src/vcf/FoundationKit/OSXSystemPeer.h; sourceTree = SOURCE_ROOT; };
-		5E2C80A80641F81600A8020D /* OSXSystemToolkit.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXSystemToolkit.cpp; path = ../../src/vcf/FoundationKit/OSXSystemToolkit.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C80A80641F81600A8020D /* OSXSystemToolkit.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXSystemToolkit.cpp; path = ../../src/vcf/FoundationKit/OSXSystemToolkit.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80A90641F81600A8020D /* OSXSystemToolkit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXSystemToolkit.h; path = ../../src/vcf/FoundationKit/OSXSystemToolkit.h; sourceTree = SOURCE_ROOT; };
-		5E2C80AA0641F81600A8020D /* OSXThread.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXThread.cpp; path = ../../src/vcf/FoundationKit/OSXThread.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C80AA0641F81600A8020D /* OSXThread.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXThread.cpp; path = ../../src/vcf/FoundationKit/OSXThread.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80AB0641F81600A8020D /* OSXThread.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXThread.h; path = ../../src/vcf/FoundationKit/OSXThread.h; sourceTree = SOURCE_ROOT; };
 		5E2C80AC0641F81600A8020D /* OutOfBoundsException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OutOfBoundsException.h; path = ../../src/vcf/FoundationKit/OutOfBoundsException.h; sourceTree = SOURCE_ROOT; };
 		5E2C80AD0641F81600A8020D /* OutputReadyEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OutputReadyEvent.h; path = ../../src/vcf/FoundationKit/OutputReadyEvent.h; sourceTree = SOURCE_ROOT; };
@@ -1588,13 +1588,13 @@
 		5E2C80CF0641F81600A8020D /* StringsMessageLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = StringsMessageLoader.cpp; path = ../../src/vcf/FoundationKit/StringsMessageLoader.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80D00641F81600A8020D /* StringsMessageLoader.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = StringsMessageLoader.h; path = ../../src/vcf/FoundationKit/StringsMessageLoader.h; sourceTree = SOURCE_ROOT; };
 		5E2C80D10641F81600A8020D /* StringTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = StringTokenizer.h; path = ../../src/vcf/FoundationKit/StringTokenizer.h; sourceTree = SOURCE_ROOT; };
-		5E2C80D20641F81600A8020D /* StringUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = StringUtils.cpp; path = ../../src/vcf/FoundationKit/StringUtils.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C80D20641F81600A8020D /* StringUtils.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = StringUtils.cpp; path = ../../src/vcf/FoundationKit/StringUtils.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80D30641F81600A8020D /* StringUtils.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = StringUtils.h; path = ../../src/vcf/FoundationKit/StringUtils.h; sourceTree = SOURCE_ROOT; };
 		5E2C80D40641F81600A8020D /* SynchObject.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SynchObject.h; path = ../../src/vcf/FoundationKit/SynchObject.h; sourceTree = SOURCE_ROOT; };
-		5E2C80D50641F81600A8020D /* System.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = System.cpp; path = ../../src/vcf/FoundationKit/System.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C80D50641F81600A8020D /* System.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = System.cpp; path = ../../src/vcf/FoundationKit/System.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80D60641F81600A8020D /* System.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = System.h; path = ../../src/vcf/FoundationKit/System.h; sourceTree = SOURCE_ROOT; };
 		5E2C80D70641F81600A8020D /* SystemPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SystemPeer.h; path = ../../src/vcf/FoundationKit/SystemPeer.h; sourceTree = SOURCE_ROOT; };
-		5E2C80D80641F81600A8020D /* SystemToolkit.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = SystemToolkit.cpp; path = ../../src/vcf/FoundationKit/SystemToolkit.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C80D80641F81600A8020D /* SystemToolkit.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = SystemToolkit.cpp; path = ../../src/vcf/FoundationKit/SystemToolkit.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80D90641F81600A8020D /* SystemToolkit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SystemToolkit.h; path = ../../src/vcf/FoundationKit/SystemToolkit.h; sourceTree = SOURCE_ROOT; };
 		5E2C80DA0641F81600A8020D /* TextCodec.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = TextCodec.cpp; path = ../../src/vcf/FoundationKit/TextCodec.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80DB0641F81600A8020D /* TextCodec.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = TextCodec.h; path = ../../src/vcf/FoundationKit/TextCodec.h; sourceTree = SOURCE_ROOT; };
@@ -1617,7 +1617,7 @@
 		5E2C80EE0641F81600A8020D /* VCFProcess.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = VCFProcess.cpp; path = ../../src/vcf/FoundationKit/VCFProcess.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80EF0641F81600A8020D /* VCFProcess.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VCFProcess.h; path = ../../src/vcf/FoundationKit/VCFProcess.h; sourceTree = SOURCE_ROOT; };
 		5E2C80F00641F81600A8020D /* VCFRTTIImpl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VCFRTTIImpl.h; path = ../../src/vcf/FoundationKit/VCFRTTIImpl.h; sourceTree = SOURCE_ROOT; };
-		5E2C80F10641F81600A8020D /* VCFString.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = VCFString.cpp; path = ../../src/vcf/FoundationKit/VCFString.cpp; sourceTree = SOURCE_ROOT; };
+		5E2C80F10641F81600A8020D /* VCFString.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = VCFString.cpp; path = ../../src/vcf/FoundationKit/VCFString.cpp; sourceTree = SOURCE_ROOT; };
 		5E2C80F20641F81600A8020D /* VCFString.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VCFString.h; path = ../../src/vcf/FoundationKit/VCFString.h; sourceTree = SOURCE_ROOT; };
 		5E2C80F40641F81600A8020D /* Waitable.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Waitable.h; path = ../../src/vcf/FoundationKit/Waitable.h; sourceTree = SOURCE_ROOT; };
 		5E2C80F50641F81600A8020D /* WarningsOffVc.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = WarningsOffVc.h; path = ../../src/vcf/FoundationKit/WarningsOffVc.h; sourceTree = SOURCE_ROOT; };
@@ -1642,7 +1642,7 @@
 		5E2CDE9B0648693B00A8020D /* Action.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Action.h; path = ../../src/vcf/ApplicationKit/Action.h; sourceTree = SOURCE_ROOT; };
 		5E2CDE9C0648693B00A8020D /* ActionEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ActionEvent.h; path = ../../src/vcf/ApplicationKit/ActionEvent.h; sourceTree = SOURCE_ROOT; };
 		5E2CDE9E0648693B00A8020D /* AppKitPeerConfig.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AppKitPeerConfig.h; path = ../../src/vcf/ApplicationKit/AppKitPeerConfig.h; sourceTree = SOURCE_ROOT; };
-		5E2CDE9F0648693B00A8020D /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = ../../src/vcf/ApplicationKit/Application.cpp; sourceTree = SOURCE_ROOT; };
+		5E2CDE9F0648693B00A8020D /* Application.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = Application.cpp; path = ../../src/vcf/ApplicationKit/Application.cpp; sourceTree = SOURCE_ROOT; };
 		5E2CDEA00648693B00A8020D /* Application.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Application.h; path = ../../src/vcf/ApplicationKit/Application.h; sourceTree = SOURCE_ROOT; };
 		5E2CDEA10648693B00A8020D /* ApplicationException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ApplicationException.h; path = ../../src/vcf/ApplicationKit/ApplicationException.h; sourceTree = SOURCE_ROOT; };
 		5E2CDEA20648693B00A8020D /* ApplicationKit.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ApplicationKit.cpp; path = ../../src/vcf/ApplicationKit/ApplicationKit.cpp; sourceTree = SOURCE_ROOT; };
@@ -2048,7 +2048,7 @@
 		5E8EEA33086F919D005C8304 /* OSXControlContextPeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXControlContextPeer.cpp; path = ../../src/vcf/ApplicationKit/OSXControlContextPeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E8EEA34086F919D005C8304 /* OSXCursorPeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXCursorPeer.cpp; path = ../../src/vcf/ApplicationKit/OSXCursorPeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E8EF5F70857DE000030F875 /* OSXMenuManagerPeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXMenuManagerPeer.cpp; path = ../../src/vcf/ApplicationKit/OSXMenuManagerPeer.cpp; sourceTree = SOURCE_ROOT; };
-		5E9060E9070CFC4B00B184D4 /* OSXResourceBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXResourceBundle.cpp; path = ../../src/vcf/FoundationKit/OSXResourceBundle.cpp; sourceTree = SOURCE_ROOT; };
+		5E9060E9070CFC4B00B184D4 /* OSXResourceBundle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXResourceBundle.cpp; path = ../../src/vcf/FoundationKit/OSXResourceBundle.cpp; sourceTree = SOURCE_ROOT; };
 		5E9407EA08610AF4001790A9 /* OSXClipboard.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXClipboard.cpp; path = ../../src/vcf/ApplicationKit/OSXClipboard.cpp; sourceTree = SOURCE_ROOT; };
 		5E9407EB08610AF4001790A9 /* OSXClipboard.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXClipboard.h; path = ../../src/vcf/ApplicationKit/OSXClipboard.h; sourceTree = SOURCE_ROOT; };
 		5E9409C108611482001790A9 /* OSXMenuManagerPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXMenuManagerPeer.h; path = ../../src/vcf/ApplicationKit/OSXMenuManagerPeer.h; sourceTree = SOURCE_ROOT; };
@@ -2058,7 +2058,7 @@
 		5E949B5E07359C9A00B82507 /* OSXFileOpenDialog.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXFileOpenDialog.h; path = ../../src/vcf/ApplicationKit/OSXFileOpenDialog.h; sourceTree = SOURCE_ROOT; };
 		5E9C1AC906B5F0D7006671C6 /* OSXLightweightControl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXLightweightControl.cpp; path = ../../src/vcf/ApplicationKit/OSXLightweightControl.cpp; sourceTree = SOURCE_ROOT; };
 		5E9C1ACA06B5F0D7006671C6 /* OSXLightweightControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXLightweightControl.h; path = ../../src/vcf/ApplicationKit/OSXLightweightControl.h; sourceTree = SOURCE_ROOT; };
-		5E9C9F49082DD1350050BDDA /* OSXRunLoopPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXRunLoopPeer.cpp; path = ../../src/vcf/FoundationKit/OSXRunLoopPeer.cpp; sourceTree = SOURCE_ROOT; };
+		5E9C9F49082DD1350050BDDA /* OSXRunLoopPeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXRunLoopPeer.cpp; path = ../../src/vcf/FoundationKit/OSXRunLoopPeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E9C9F4C082DD1740050BDDA /* RunLoop.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = RunLoop.cpp; path = ../../src/vcf/FoundationKit/RunLoop.cpp; sourceTree = SOURCE_ROOT; };
 		5E9C9F4D082DD1740050BDDA /* RunLoop.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = RunLoop.h; path = ../../src/vcf/FoundationKit/RunLoop.h; sourceTree = SOURCE_ROOT; };
 		5E9C9F4E082DD1740050BDDA /* RunLoopPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = RunLoopPeer.h; path = ../../src/vcf/FoundationKit/RunLoopPeer.h; sourceTree = SOURCE_ROOT; };
@@ -2066,7 +2066,7 @@
 		5E9C9F50082DD1740050BDDA /* ThreadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ThreadManager.cpp; path = ../../src/vcf/FoundationKit/ThreadManager.cpp; sourceTree = SOURCE_ROOT; };
 		5E9C9F51082DD1740050BDDA /* ThreadManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ThreadManager.h; path = ../../src/vcf/FoundationKit/ThreadManager.h; sourceTree = SOURCE_ROOT; };
 		5E9C9F52082DD1740050BDDA /* ThreadManagerPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ThreadManagerPeer.h; path = ../../src/vcf/FoundationKit/ThreadManagerPeer.h; sourceTree = SOURCE_ROOT; };
-		5E9C9F65082DD23C0050BDDA /* OSXThreadManagerPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OSXThreadManagerPeer.cpp; path = ../../src/vcf/FoundationKit/OSXThreadManagerPeer.cpp; sourceTree = SOURCE_ROOT; };
+		5E9C9F65082DD23C0050BDDA /* OSXThreadManagerPeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXThreadManagerPeer.cpp; path = ../../src/vcf/FoundationKit/OSXThreadManagerPeer.cpp; sourceTree = SOURCE_ROOT; };
 		5E9C9F66082DD23C0050BDDA /* OSXThreadManagerPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXThreadManagerPeer.h; path = ../../src/vcf/FoundationKit/OSXThreadManagerPeer.h; sourceTree = SOURCE_ROOT; };
 		5EA2321A082E9C08009E9B28 /* ApplicationResourceBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ApplicationResourceBundle.cpp; path = ../../src/vcf/ApplicationKit/ApplicationResourceBundle.cpp; sourceTree = SOURCE_ROOT; };
 		5EA2321B082E9C08009E9B28 /* ApplicationResourceBundle.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ApplicationResourceBundle.h; path = ../../src/vcf/ApplicationKit/ApplicationResourceBundle.h; sourceTree = SOURCE_ROOT; };
@@ -2074,7 +2074,7 @@
 		5EA23225082E9C5B009E9B28 /* SystemTray.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SystemTray.h; path = ../../src/vcf/ApplicationKit/SystemTray.h; sourceTree = SOURCE_ROOT; };
 		5EA23226082E9C5B009E9B28 /* SystemTrayPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SystemTrayPeer.h; path = ../../src/vcf/ApplicationKit/SystemTrayPeer.h; sourceTree = SOURCE_ROOT; };
 		5EA9793106F35F4900DD0D5C /* Resource.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = Resource.cpp; path = ../../src/vcf/FoundationKit/Resource.cpp; sourceTree = SOURCE_ROOT; };
-		5EA9793206F35F4900DD0D5C /* ResourceBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ResourceBundle.cpp; path = ../../src/vcf/FoundationKit/ResourceBundle.cpp; sourceTree = SOURCE_ROOT; };
+		5EA9793206F35F4900DD0D5C /* ResourceBundle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = ResourceBundle.cpp; path = ../../src/vcf/FoundationKit/ResourceBundle.cpp; sourceTree = SOURCE_ROOT; };
 		5EAA3D18064737FE00A8020D /* libAgg_d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAgg_d.a; path = ../../lib/libAgg_d.a; sourceTree = SOURCE_ROOT; };
 		5EAA3D1B0647393800A8020D /* AbstractImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractImage.cpp; path = ../../src/vcf/GraphicsKit/AbstractImage.cpp; sourceTree = SOURCE_ROOT; };
 		5EAA3D1C0647393800A8020D /* AbstractImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AbstractImage.h; path = ../../src/vcf/GraphicsKit/AbstractImage.h; sourceTree = SOURCE_ROOT; };
@@ -2198,12 +2198,12 @@
 		EA6D07B30BE2A9110040D69A /* OSXRunLoopPeer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OSXRunLoopPeer.h; path = ../../src/vcf/FoundationKit/OSXRunLoopPeer.h; sourceTree = SOURCE_ROOT; };
 		EA6D080A0BE2AE110040D69A /* RunLoopFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RunLoopFwd.h; path = ../../src/vcf/FoundationKit/RunLoopFwd.h; sourceTree = SOURCE_ROOT; };
 		EA6D09A60BE3B4F20040D69A /* OSXRunLoopTimerPeer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSXRunLoopTimerPeer.h; path = ../../src/vcf/FoundationKit/OSXRunLoopTimerPeer.h; sourceTree = SOURCE_ROOT; };
-		EA6D09A70BE3B4F20040D69A /* OSXRunLoopTimerPeer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OSXRunLoopTimerPeer.cpp; path = ../../src/vcf/FoundationKit/OSXRunLoopTimerPeer.cpp; sourceTree = SOURCE_ROOT; };
+		EA6D09A70BE3B4F20040D69A /* OSXRunLoopTimerPeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = OSXRunLoopTimerPeer.cpp; path = ../../src/vcf/FoundationKit/OSXRunLoopTimerPeer.cpp; sourceTree = SOURCE_ROOT; };
 		EA6D09B00BE3B6850040D69A /* RunLoopTimerPeer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RunLoopTimerPeer.h; path = ../../src/vcf/FoundationKit/RunLoopTimerPeer.h; sourceTree = SOURCE_ROOT; };
 		EA6D09BD0BE3B75D0040D69A /* RunLoopTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RunLoopTimer.h; path = ../../src/vcf/FoundationKit/RunLoopTimer.h; sourceTree = SOURCE_ROOT; };
 		EA6D09BE0BE3B75D0040D69A /* RunLoopTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RunLoopTimer.cpp; path = ../../src/vcf/FoundationKit/RunLoopTimer.cpp; sourceTree = SOURCE_ROOT; };
 		EA6D09D10BE3B9D90040D69A /* OSXRunLoopSourcePeer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSXRunLoopSourcePeer.h; path = ../../src/vcf/FoundationKit/OSXRunLoopSourcePeer.h; sourceTree = SOURCE_ROOT; };
-		EA6D09D20BE3B9D90040D69A /* OSXRunLoopSourcePeer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OSXRunLoopSourcePeer.cpp; path = ../../src/vcf/FoundationKit/OSXRunLoopSourcePeer.cpp; sourceTree = SOURCE_ROOT; };
+		EA6D09D20BE3B9D90040D69A /* OSXRunLoopSourcePeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = OSXRunLoopSourcePeer.cpp; path = ../../src/vcf/FoundationKit/OSXRunLoopSourcePeer.cpp; sourceTree = SOURCE_ROOT; };
 		EA6D09D90BE3BA430040D69A /* RunLoopSourcePeer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RunLoopSourcePeer.h; path = ../../src/vcf/FoundationKit/RunLoopSourcePeer.h; sourceTree = SOURCE_ROOT; };
 		EA6FE8710BC0BB5100B2CD1C /* OSXUIShellPeer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSXUIShellPeer.h; path = ../../src/vcf/ApplicationKit/OSXUIShellPeer.h; sourceTree = SOURCE_ROOT; };
 		EA6FE8740BC0BB6F00B2CD1C /* OSXUIShellPeer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = OSXUIShellPeer.cpp; path = ../../src/vcf/ApplicationKit/OSXUIShellPeer.cpp; sourceTree = SOURCE_ROOT; };
@@ -2725,30 +2725,6 @@
 		5E2CDE71064868C800A8020D /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				5ECC903F0DC3BBCD005F692A /* PopupWindow.cpp */,
-				5ECC90400DC3BBCD005F692A /* PopupWindow.h */,
-				5ECC90410DC3BBCD005F692A /* ThemeBorder.h */,
-				5ECC90420DC3BBCD005F692A /* TransparentWindow.cpp */,
-				5ECC90430DC3BBCD005F692A /* TransparentWindow.h */,
-				5EC480F60CF2904600B805BC /* UIComponent.cpp */,
-				5EC480F70CF2904600B805BC /* UIComponent.h */,
-				EACECC750BC04C81001CA2BC /* MenuManager.cpp */,
-				EACECC760BC04C81001CA2BC /* MenuManager.h */,
-				EACECC770BC04C81001CA2BC /* MenuManagerPeer.h */,
-				EACECC6A0BC04C51001CA2BC /* UIShell.cpp */,
-				EACECC6B0BC04C51001CA2BC /* UIShell.h */,
-				EACECC6C0BC04C51001CA2BC /* UIShellPeer.h */,
-				5E4EBF9F0922E6B300203611 /* CommonColorDialog.cpp */,
-				5E4EBFA00922E6B300203611 /* CommonFileBrowseDialog.cpp */,
-				5E4EBFA10922E6B300203611 /* CommonFileOpenDialog.cpp */,
-				5E4EBFA20922E6B300203611 /* CommonFileSaveDialog.cpp */,
-				5E4EBFA30922E6B300203611 /* CommonFontDialog.cpp */,
-				5E4EBFA40922E6B300203611 /* CommonPrintDialog.cpp */,
-				5EA23224082E9C5B009E9B28 /* SystemTray.cpp */,
-				5EA23225082E9C5B009E9B28 /* SystemTray.h */,
-				5EA23226082E9C5B009E9B28 /* SystemTrayPeer.h */,
-				5EA2321A082E9C08009E9B28 /* ApplicationResourceBundle.cpp */,
-				5EA2321B082E9C08009E9B28 /* ApplicationResourceBundle.h */,
 				5E2CDE7B0648693B00A8020D /* AbstractApplication.cpp */,
 				5E2CDE7D0648693B00A8020D /* AbstractCommand.cpp */,
 				5E2CDE7F0648693B00A8020D /* AbstractComponentEditor.cpp */,
@@ -2758,12 +2734,21 @@
 				5E2CDE9A0648693B00A8020D /* Action.cpp */,
 				5E2CDE9F0648693B00A8020D /* Application.cpp */,
 				5E2CDEA20648693B00A8020D /* ApplicationKit.cpp */,
+				5E2CDEA50648693B00A8020D /* ApplicationKitRTTI.inl */,
+				5EA2321A082E9C08009E9B28 /* ApplicationResourceBundle.cpp */,
+				5EA2321B082E9C08009E9B28 /* ApplicationResourceBundle.h */,
 				5E2CDEAB0648693B00A8020D /* Basic3DBorder.cpp */,
 				5E2CDEAD0648693C00A8020D /* BasicTableItemEditor.cpp */,
 				5E2CDEB60648693C00A8020D /* Clipboard.cpp */,
 				5E2CDEBB0648693C00A8020D /* ColorEtchedBorder.cpp */,
 				5E2CDECC0648693C00A8020D /* CommandGroup.cpp */,
+				5E4EBF9F0922E6B300203611 /* CommonColorDialog.cpp */,
+				5E4EBFA00922E6B300203611 /* CommonFileBrowseDialog.cpp */,
 				5E2CDED40648693C00A8020D /* CommonFileDialog.cpp */,
+				5E4EBFA10922E6B300203611 /* CommonFileOpenDialog.cpp */,
+				5E4EBFA20922E6B300203611 /* CommonFileSaveDialog.cpp */,
+				5E4EBFA30922E6B300203611 /* CommonFontDialog.cpp */,
+				5E4EBFA40922E6B300203611 /* CommonPrintDialog.cpp */,
 				5E2CDEE10648693C00A8020D /* ComponentEditorManager.cpp */,
 				5E2CDEED0648693C00A8020D /* Containers.cpp */,
 				5E2CDEEF0648693C00A8020D /* Control.cpp */,
@@ -2782,16 +2767,31 @@
 				5E2CDF6F0648693C00A8020D /* Light3DBorder.cpp */,
 				5E2CDF7C0648693C00A8020D /* Menu.cpp */,
 				5E2CDF7E0648693C00A8020D /* MenuBar.cpp */,
+				EACECC750BC04C81001CA2BC /* MenuManager.cpp */,
+				EACECC760BC04C81001CA2BC /* MenuManager.h */,
+				EACECC770BC04C81001CA2BC /* MenuManagerPeer.h */,
 				5E2CDF870648693C00A8020D /* MessageDialog.cpp */,
 				5E2CDFA50648693C00A8020D /* PopupMenu.cpp */,
+				5ECC903F0DC3BBCD005F692A /* PopupWindow.cpp */,
+				5ECC90400DC3BBCD005F692A /* PopupWindow.h */,
 				5E2CDFAD0648693C00A8020D /* PropertyEditorManager.cpp */,
 				5E2CDFBD0648693C00A8020D /* ScrollbarManager.cpp */,
+				5EA23224082E9C5B009E9B28 /* SystemTray.cpp */,
+				5EA23225082E9C5B009E9B28 /* SystemTray.h */,
+				5EA23226082E9C5B009E9B28 /* SystemTrayPeer.h */,
+				5ECC90410DC3BBCD005F692A /* ThemeBorder.h */,
 				5E2CDFDD0648693C00A8020D /* TimerComponent.cpp */,
 				5E2CDFE10648693C00A8020D /* TitledBorder.cpp */,
+				5ECC90420DC3BBCD005F692A /* TransparentWindow.cpp */,
+				5ECC90430DC3BBCD005F692A /* TransparentWindow.h */,
+				5EC480F60CF2904600B805BC /* UIComponent.cpp */,
+				5EC480F70CF2904600B805BC /* UIComponent.h */,
+				EACECC6A0BC04C51001CA2BC /* UIShell.cpp */,
+				EACECC6B0BC04C51001CA2BC /* UIShell.h */,
+				EACECC6C0BC04C51001CA2BC /* UIShellPeer.h */,
 				5E2CDFFA0648693C00A8020D /* UIToolkit.cpp */,
 				5E2CDFFE0648693C00A8020D /* UndoRedoStack.cpp */,
 				5E2CE0510648693C00A8020D /* Window.cpp */,
-				5E2CDEA50648693B00A8020D /* ApplicationKitRTTI.inl */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -5047,6 +5047,7 @@
 		5E53A041093A2576007B8C80 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH)";
 				BUILD_DIR = "$(HOME)/Library/Frameworks";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)";
 				COPY_PHASE_STRIP = NO;
