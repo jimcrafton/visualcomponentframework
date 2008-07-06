@@ -14,11 +14,21 @@ using namespace VCF;
 {
 
 }
+
 @end
 
 
 
 @implementation VCFButton
+- (void)buttonAction: (id)sender
+{
+	VCF::OSXControl* peer = VCF::OSXControl::getPeerForView( self );
+	
+	VCF::CommandButton* btn = (VCF::CommandButton*)peer->getControl();
+	if ( !btn->isDesigning() ) {
+		btn->click();
+	}
+}
 
 - (BOOL)isFlipped
 {
@@ -125,6 +135,11 @@ void OSXButton::create( Control* owningControl )
 	
 	view_ = [[VCFButton alloc] initWithFrame:r];
 	NSButton* btn = (NSButton*)view_;
+	
+	[btn setTarget: btn];
+	[btn setAction: @selector(buttonAction:)];
+		
+		
 	[btn setButtonType:NSMomentaryPushButton ];
 	[btn setBezelStyle: NSRoundedBezelStyle];
 	//[btn setBordered:YES];

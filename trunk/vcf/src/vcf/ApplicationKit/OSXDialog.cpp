@@ -316,43 +316,36 @@ void OSXDialog::close()
 
 void OSXDialog::showMessage( const String& message, const String& caption )
 {
-	/*
-	DialogItemIndex itemIndex;
-	CFTextString msg;
-	msg = message;
+	NSAlert *alert = [[NSAlert alloc] init];
+	[alert addButtonWithTitle:@"OK"];
+	[alert setAlertStyle:NSInformationalAlertStyle];
+	CFTextString tmp(message);
+	[alert setMessageText:tmp];
+	
+	tmp = caption;
+	[[alert window] setTitle: tmp];
 	
 	
-	CreateStandardAlert( kAlertPlainAlert, 
-						 msg, 
-						 NULL, 
-						 NULL,
-						 &dialogRef_ );
-						 
-	windowRef_ = GetDialogWindow(dialogRef_);
+	[alert runModal];
 	
-	setText( caption );
-	
-	RunStandardAlert (dialogRef_, NULL, &itemIndex);
-	
-	dialogRef_ = NULL;
-	*/
+	[alert release];
 }
 
 UIToolkit::ModalReturnType OSXDialog::showMessage( const String& message, const String& caption,
 												const int32& messageButtons,	const Dialog::MessageStyle& messageStyle )
 {
 	UIToolkit::ModalReturnType result = UIToolkit::mrNone;
-	/*
 	
-	DialogItemIndex itemIndex;
-	CFTextString msg;
-	msg = message;
+	NSAlert *alert = [[NSAlert alloc] init];
 	
-	AlertStdCFStringAlertParamRec alertParams;
 	
-    AlertType alertType = kAlertPlainAlert;
+	CFTextString tmp(message);
+	[alert setMessageText:tmp];
 	
-	GetStandardAlertDefaultParams(&alertParams,kStdCFStringAlertVersionOne);
+	tmp = caption;
+	[[alert window] setTitle: tmp];
+	
+	NSAlertStyle alertStyle = NSInformationalAlertStyle;
 	
 	switch ( messageStyle ){
 		case Dialog::msDefault: {
@@ -361,131 +354,110 @@ UIToolkit::ModalReturnType OSXDialog::showMessage( const String& message, const 
 		break;
 
 		case Dialog::msError: {
-			alertType = kAlertStopAlert;
+			alertStyle = NSCriticalAlertStyle;
 		}
 		break;
 
 		case Dialog::msInfo: {
-			alertType = kAlertNoteAlert;
+			alertStyle = NSInformationalAlertStyle;
 		}
 		break;
 
 		case Dialog::msWarning: {
-			alertType = kAlertCautionAlert;
+			alertStyle = NSWarningAlertStyle;
 		}
 		break;
 	}
 	
+	[alert setAlertStyle:alertStyle];
+	
 	if ( messageButtons & Dialog::mbOK ) {
-		alertParams.defaultText=(CFStringRef)kAlertDefaultOKText;  
-		alertParams.defaultButton=kAlertStdAlertOKButton;  
+		[alert addButtonWithTitle:@"OK"];
 	}
 	else if ( messageButtons & Dialog::mbOKCancel ) {
-		alertParams.cancelText = (CFStringRef)kAlertDefaultCancelText;
-		alertParams.cancelButton = kAlertStdAlertCancelButton;
+		[alert addButtonWithTitle:@"OK"];
+		[alert addButtonWithTitle:@"Cancel"];
 	}
 	else if ( messageButtons & Dialog::mbYesNo ) {
-		alertParams.defaultText = CFSTR("Yes");
-		
-		alertParams.cancelText = CFSTR("No");
-		alertParams.cancelButton = kAlertStdAlertOtherButton;
+		[alert addButtonWithTitle:@"Yes"];
+		[alert addButtonWithTitle:@"No"];
 	}
 	else if ( messageButtons & Dialog::mbYesNoCancel ) {
-		alertParams.defaultText = CFSTR("Yes");
-		
-		alertParams.cancelText = CFSTR("No");
-		alertParams.cancelButton = kAlertStdAlertOtherButton;
-		
-		alertParams.otherText = CFSTR("Cancel");
+		[alert addButtonWithTitle:@"Yes"];
+		[alert addButtonWithTitle:@"No"];
+		[alert addButtonWithTitle:@"Cancel"];
 	}
 	else if ( messageButtons & Dialog::mbRetryCancel ) {
-		alertParams.defaultText = CFSTR("Retry");
-		
-		alertParams.cancelText = CFSTR("Cancel");
-		alertParams.cancelButton = kAlertStdAlertOtherButton;
+		[alert addButtonWithTitle:@"Retry"];
+		[alert addButtonWithTitle:@"Cancel"];
 	}
 	else if ( messageButtons & Dialog::mbAbortRetryIgnore ) {
-		alertParams.defaultText = CFSTR("Abort");
-		
-		alertParams.cancelText = CFSTR("Retry");
-		alertParams.cancelButton = kAlertStdAlertOtherButton;
-		
-		alertParams.otherText = CFSTR("Ignore");
+		[alert addButtonWithTitle:@"Abort"];
+		[alert addButtonWithTitle:@"Retry"];
+		[alert addButtonWithTitle:@"Ignore"];
 	}
 
 	if ( messageButtons & Dialog::mbHelp ) {
 		
 	}
-						
-	CreateStandardAlert( alertType, 
-						 msg, 
-						 NULL, 
-						 &alertParams,
-						 &dialogRef_ );
-						 
-	windowRef_ = GetDialogWindow(dialogRef_);
 	
-	setText( caption );
 	
-	RunStandardAlert (dialogRef_, NULL, &itemIndex);
+	NSInteger res = [alert runModal];
 	
 	if ( messageButtons & Dialog::mbOK ) {
-		if ( itemIndex == 1 ) {
+		if ( res == NSAlertFirstButtonReturn ) {
 			result = UIToolkit::mrOK;
-		}
-		else {
-			result = UIToolkit::mrCancel;
 		}
 	}
 	else if ( messageButtons & Dialog::mbOKCancel ) {
-		if ( itemIndex == 1 ) {
+		if ( res == NSAlertFirstButtonReturn ) {
 			result = UIToolkit::mrOK;
 		}
-		else if ( itemIndex == 2 ) {
+		else if ( res == NSAlertSecondButtonReturn ) {
 			result = UIToolkit::mrCancel;
 		}
 	}
 	else if ( messageButtons & Dialog::mbYesNo ) {
-		if ( itemIndex == 1 ) {
+		if ( res == NSAlertFirstButtonReturn ) {
 			result = UIToolkit::mrYes;
 		}
-		else if ( itemIndex == 2 ) {
+		else if ( res == NSAlertSecondButtonReturn ) {
 			result = UIToolkit::mrNo;
 		}
 	}
 	else if ( messageButtons & Dialog::mbYesNoCancel ) {
-		if ( itemIndex == 1 ) {
+		if ( res == NSAlertFirstButtonReturn ) {
 			result = UIToolkit::mrYes;
 		}
-		else if ( itemIndex == 2 ) {
+		else if ( res == NSAlertSecondButtonReturn ) {
 			result = UIToolkit::mrNo;
 		}
-		else if ( itemIndex == 3 ) {
+		else if ( res == NSAlertThirdButtonReturn ) {
 			result = UIToolkit::mrCancel;
 		}
 	}
 	else if ( messageButtons & Dialog::mbRetryCancel ) {
-		if ( itemIndex == 1 ) {
+		if ( res == NSAlertFirstButtonReturn ) {
 			result = UIToolkit::mrRetry;
 		}
-		else if ( itemIndex == 2 ) {
+		else if ( res == NSAlertSecondButtonReturn ) {
 			result = UIToolkit::mrCancel;
 		}
 	}
 	else if ( messageButtons & Dialog::mbAbortRetryIgnore ) {
-		if ( itemIndex == 1 ) {
+		if ( res == NSAlertFirstButtonReturn ) {
 			result = UIToolkit::mrAbort;
 		}
-		else if ( itemIndex == 2 ) {
+		else if ( res == NSAlertSecondButtonReturn ) {
 			result = UIToolkit::mrRetry;
 		}
-		else if ( itemIndex == 3 ) {
+		else if ( res == NSAlertThirdButtonReturn ) {
 			result = UIToolkit::mrIgnore;
 		}
-	} 
+	}
 	
-	dialogRef_ = NULL;
-	*/
+	[alert release];
+	
 	return result;
 }
 

@@ -17,7 +17,7 @@ using namespace VCF;
 OSXCursorPeer::OSXCursorPeer( Cursor* cursor ):
 	cursorID_(CursorManager::UNREGISTERED_ID),
 	cursor_(cursor),
-    cursorInst_(0),
+    cursorInst_(nil),
 	isSystemCursor_(false)
 {
     
@@ -26,13 +26,28 @@ OSXCursorPeer::OSXCursorPeer( Cursor* cursor ):
 OSXCursorPeer::~OSXCursorPeer()
 {
     if( !isSystemCursor_ ) {
-       // DisposeCCursor( cursorHandle_ );
+       [cursorInst_ release];
     }
 }
 
 void OSXCursorPeer::createFromImage( Image* cursorImage, Point* hotSpot )
 {
-
+	if( !isSystemCursor_ && (nil != cursorInst_) ) {
+       [cursorInst_ release];
+    }
+	
+	isSystemCursor_ = false;
+	cursorID_ = CursorManager::UNREGISTERED_ID;
+	NSImage* img = nil;
+	NSPoint pt;
+	pt.x = hotSpot->x_;
+	pt.y = hotSpot->y_;	
+	unsigned char* pixPtr = (unsigned char*)cursorImage->getData();
+	uint32 sz =  cursorImage->getWidth() * cursorImage->getHeight();
+	
+	NSData* data = [NSData dataWithBytes:pixPtr length:sz];
+	img = [[NSImage alloc] initWithData:data];
+	cursorInst_ = [[NSCursor alloc] initWithImage: img hotSpot:pt];
 }
 
 void OSXCursorPeer::createSystemCursor( const Cursor::SystemCursorType& systemCursor )
@@ -116,7 +131,7 @@ void OSXCursorPeer::createSystemCursor( const Cursor::SystemCursorType& systemCu
 
 void OSXCursorPeer::createFromResourceName( const String& cursorName, OSHandleID instanceHandle )
 {
-
+	//NSBundle 
 }
 
 

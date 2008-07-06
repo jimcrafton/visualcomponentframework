@@ -9,6 +9,7 @@ where you installed the VCF.
 */
 
 
+#import <Foundation/Foundation.h>
 
 
 namespace VCF {
@@ -225,6 +226,11 @@ public:
 		assign( s );
 		return *this;
 	}
+	
+	CFTextString& operator=( NSString* s ) {
+		assign( (CFStringRef)s );
+		return *this;
+	}
 
     CFTextString& operator=( const char* s ) {
         CFStringRef strRef =
@@ -309,6 +315,10 @@ public:
 			result = unicodeText;
 		}
         return result;
+    }
+	
+	operator NSString* () const {
+        return (NSString*)cfStringRef;
     }
 
     const char* ansi_c_str() const {

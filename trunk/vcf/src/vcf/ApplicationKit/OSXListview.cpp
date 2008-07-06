@@ -620,25 +620,211 @@ void OSXListview::onListModelItemDeleted( Event* e )
 
 */
 
+
+
+
+
+
+@implementation OSXListviewDataSrc
+
+
+- (void)setModel:(VCF::ListModel*)aModel
+{
+	model = aModel;
+}
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
+{	
+	NSInteger result = 0;
+	if ( NULL != model ) {
+		result = model->getCount();
+	}
+	return result;
+}
+
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+	id result = nil;
+	if ( NULL != model ) {
+		NSString* str;
+		VCF::CFTextString tmp;
+		tmp = model->getAsString( rowIndex );
+		str = tmp;
+		[str retain];
+		result = str;
+	}
+	return result;
+}
+
+@end
+
+
+
+
+@interface VCFListView : NSTableView
+{
+
+}
+@end
+
+
+
+@implementation VCFListView
+
+- (BOOL)isFlipped
+{
+	return YES;
+}
+
+
+- (void)drawRect:(NSRect)rect
+{
+	[super drawRect:rect];
+	
+	VCF::OSXControl* peer = VCF::OSXControl::getPeerForView( self );
+	
+	if ( NULL != peer ) {		
+		//peer->internal_paint( rect );
+	}	
+}
+ 
+- (void)setFrame:(NSRect)rect
+{
+	[super setFrame:rect];
+	
+	VCF::OSXControl::handleSetFrame( self, rect );
+}
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+	[super mouseDown:theEvent];
+	
+	VCF::OSXControl::handleEventForView( self, theEvent );
+	
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+	[super mouseUp:theEvent];
+	
+	VCF::OSXControl::handleEventForView( self, theEvent );	
+}
+
+
+- (void)rightMouseDown:(NSEvent *)theEvent
+{
+	[super rightMouseDown:theEvent];
+	
+	VCF::OSXControl::handleEventForView( self, theEvent );
+}
+
+- (void)rightMouseUp:(NSEvent *)theEvent
+{
+	[super rightMouseUp:theEvent];
+	
+	VCF::OSXControl::handleEventForView( self, theEvent );
+}
+
+
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+	[super mouseMoved:theEvent];
+	
+	VCF::OSXControl::handleEventForView( self, theEvent );
+}
+@end
+
+
+
 namespace VCF {
 
 OSXListview::OSXListview( ListViewControl* listviewControl ):
 	OSXControl( listviewControl ),
-	listviewControl_( listviewControl )
+	listviewControl_( listviewControl ),
+	dataSrc_(nil)
 {
-
+	addCallback( new ClassProcedure1<Event*,OSXListview>(this, &OSXListview::onControlModelChanged), "OSXListview::onControlModelChanged" );		
+	addCallback( new ClassProcedure1<Event*,OSXListview>(this, &OSXListview::onListModelChanged), "OSXListview::onListModelChanged" );	
+	addCallback( new ClassProcedure1<Event*,OSXListview>(this, &OSXListview::onColumnModelAdded), "OSXListview::onColumnModelAdded" );	
+	addCallback( new ClassProcedure1<Event*,OSXListview>(this, &OSXListview::onColumnModelRemoved), "OSXListview::onColumnModelRemoved" );	
+	addCallback( new ClassProcedure1<Event*,OSXListview>(this, &OSXListview::onColumnModelChanged), "OSXListview::onColumnModelChanged" );	
+	
+	
+	dataSrc_ = [[OSXListviewDataSrc alloc] init];
 }
 
 OSXListview::~OSXListview()
 {
-	
+	[dataSrc_ release];
 }
 
+void OSXListview::onControlModelChanged( Event* e )
+{
+	Model* model = listviewControl_->getModel();
+	
+	[dataSrc_ setModel: (ListModel*)model];
+	
+	if ( NULL != model ) {
+		model->ModelChanged += getCallback( "OSXListview::onListModelChanged" );
 
 
-void OSXListview::create( Control* owningControl )
+		model =  listviewControl_->getColumnModel();
+		model->ModelChanged += getCallback( "OSXListview::onColumnModelChanged" );
+
+		ColumnModel* cm = (ColumnModel*)model;
+		cm->ItemAdded += getCallback( "OSXListview::onColumnModelAdded" );
+
+		cm->ItemRemoved += getCallback( "OSXListview::onColumnModelRemoved" );
+			
+	}
+	
+	NSTableView* list = (NSTableView*) view_;
+	[list reloadData];
+}
+
+void OSXListview::onListModelChanged( Event* e )
+{
+	NSTableView* list = (NSTableView*) view_;
+	[list reloadData];
+}
+
+void OSXListview::onColumnModelAdded( Event* e )
+{
+	ListModelEvent* lme = (ListModelEvent*)e;	
+	NSNumber* colID = [NSNumber numberWithUnsignedInt: lme->index];
+	NSTableColumn* col = [[NSTableColumn alloc] initWithIdentifier:colID];
+	[col setWidth: 100.0];
+	
+	NSTableView* list = (NSTableView*) view_;
+	[list addTableColumn:col];
+}
+
+void OSXListview::onColumnModelRemoved( Event* e )
 {
 
+}
+
+void OSXListview::onColumnModelChanged( Event* e )
+{
+	NSTableView* list = (NSTableView*) view_;
+	[list reloadData];
+}
+	
+void OSXListview::create( Control* owningControl )
+{
+	NSRect r;
+	r.origin.x = 0;
+	r.origin.y = 0;
+	r.size.width = 1;
+	r.size.height = 1;
+	
+	VCFListView* list = [[VCFListView alloc] initWithFrame:r];
+	[list setDataSource: dataSrc_];
+	view_ = list;
+	
+	owningControl->ControlModelChanged += getCallback( "OSXListview::onControlModelChanged" );
+	
+	OSXControl::create( owningControl );
 }
 
 void OSXListview::selectItem( const uint32& index )
@@ -693,12 +879,14 @@ void OSXListview::rangeSelect( const Rect& selectionRect )
 
 bool OSXListview::allowsMultiSelect()
 {
-	return false;
+	NSTableView* list = (NSTableView*) view_;
+	return [list allowsMultipleSelection] ? true : false;
 }
 
 void OSXListview::setAllowsMultiSelect( const bool& allowsMultiSelect )
 {
-
+	NSTableView* list = (NSTableView*) view_;
+	[list setAllowsMultipleSelection: allowsMultiSelect ? YES : NO ];
 }
 
 void OSXListview::setLargeImageList( ImageList* imageList )
@@ -714,6 +902,8 @@ void OSXListview::setSmallImageList( ImageList* imageList )
 
 bool OSXListview::ensureVisible(const uint32& index, bool partialOK )
 {
+	NSTableView* list = (NSTableView*) view_;
+	[list scrollRowToVisible: index];
 	return false;
 }
 	

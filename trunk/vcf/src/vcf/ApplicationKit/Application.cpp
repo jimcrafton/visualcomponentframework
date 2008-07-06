@@ -12,6 +12,11 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/GraphicsResourceBundle.h"
 #include "vcf/ApplicationKit/ApplicationResourceBundle.h"
 
+#if defined  (VCF_OSX) 
+#include <Cocoa/Cocoa.h>
+#include "vcf/FoundationKit/OSXPeer.h"
+#endif
+
 using namespace VCF;
 
 
@@ -272,13 +277,30 @@ void Application::internal_main()
 void Application::showErrorMessage( const String& message, const String& title )
 {
 
-#ifdef VCF_WIN
+#if defined (VCF_WIN)
 	if ( System::isUnicodeEnabled() ) {
 		::MessageBoxW( NULL, message.c_str(), title.c_str(), MB_OK | MB_ICONERROR );
 	}
 	else {
 		::MessageBoxA( NULL, message.ansi_c_str(), title.ansi_c_str(), MB_OK | MB_ICONERROR );
 	}
+#elif defined (VCF_OSX)	
+	NSAlert *alert = [[NSAlert alloc] init];
+	[alert addButtonWithTitle:@"OK"];
+	[alert setAlertStyle:NSCriticalAlertStyle];
+	CFTextString tmp(title);
+	[alert setMessageText:tmp];
+	tmp = message;
+	[alert setInformativeText:tmp];
+	Application* app = Application::getRunningInstance();
+	if ( app ) {
+		tmp = app->getName();
+		[[alert window] setTitle: (NSString*)tmp];
+	}
+	
+	[alert runModal];
+	[alert release];
+	
 #endif
 
 }
@@ -288,17 +310,36 @@ bool Application::showAssertMessage( const String& message, const String& title 
 	bool result = false;
 	String msg = message;
 	msg += "\nDo you want to continue with the program execution?";
-#ifdef VCF_WIN
+#if defined (VCF_WIN)
 	if ( System::isUnicodeEnabled() ) {
 		if ( IDYES == ::MessageBoxW( NULL, msg.c_str(), title.c_str(), MB_YESNO | MB_ICONERROR ) ) {
 			result = true;
 		}
 	}
 	else {
-		if ( IDYES == ::MessageBoxA( NULL, msg.ansi_c_str(), title.ansi_c_str(), MB_OK | MB_ICONERROR ) ) {
+		if ( IDYES == ::MessageBoxA( NULL, msg.ansi_c_str(), title.ansi_c_str(), MB_YESNO | MB_ICONERROR ) ) {
 			result = true;
 		}
 	}
+#elif defined  (VCF_OSX) 	
+	NSAlert *alert = [[NSAlert alloc] init];
+	[alert addButtonWithTitle:@"Yes"];
+	[alert addButtonWithTitle:@"No"];
+	[alert setAlertStyle:NSCriticalAlertStyle];
+	CFTextString tmp(title);
+	[alert setMessageText:tmp];
+	tmp = msg;
+	[alert setInformativeText:tmp];
+	Application* app = Application::getRunningInstance();
+	if ( app ) {
+		tmp = app->getName();
+		[[alert window] setTitle: (NSString*)tmp];
+	}
+	
+	if ([alert runModal] == NSAlertFirstButtonReturn) {
+		result = true;
+	}
+	[alert release];
 #endif
 
 	return result;

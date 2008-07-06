@@ -12,6 +12,15 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ListviewPeer.h"
 
+@interface OSXListviewDataSrc : NSObject
+{
+	VCF::ListModel* model;
+}
+
+- (void)setModel:(VCF::ListModel*)aModel;
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView;
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex;
+@end
 
 namespace VCF
 {
@@ -82,10 +91,14 @@ public:
 protected:	
 	ListViewControl* listviewControl_;
 	Array<uint32> selectedItems_;
+	OSXListviewDataSrc* dataSrc_;
 	
 	void onControlModelChanged( Event* e );
-	void onListModelItemAdded( Event* e );
-	void onListModelItemDeleted( Event* e );
+	void onListModelChanged( Event* e );
+	void onColumnModelAdded( Event* e );
+	void onColumnModelRemoved( Event* e );	
+	void onColumnModelChanged( Event* e );	
+	
 	
 	//static OSStatus DBItemDataCallback( ControlRef browser, DataBrowserItemID item, 
 	//									DataBrowserPropertyID property, DataBrowserItemDataRef itemData,

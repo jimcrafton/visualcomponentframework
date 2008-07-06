@@ -31,37 +31,27 @@ void OSXFolderBrowseDialog::setTitle( const String& title )
 bool OSXFolderBrowseDialog::execute()
 {
 	bool result = false;
-	/*
-	browseDlgResult_ = false;
-	OSStatus err = NavGetDefaultDialogCreationOptions (&dlgOptions_ );
-	if ( err != noErr ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("NavGetDefaultDialogCreationOptions failed in OSXFolderBrowseDialog::execute()") );
-	}
-	CFTextString dlgTitle;
-	dlgTitle = title_;
-	dlgOptions_.windowTitle = dlgTitle;
-	//dlgOptions_.parentWindow = ActiveNonFloatingWindow() ;						
-	dlgOptions_.modality = kWindowModalityAppModal;
 	
-	NavDialogRef browseForFolder;
-	err = NavCreateChooseFolderDialog( &dlgOptions_, 
-										OSXFolderBrowseDialog::BrowseDlgCallbackProc, 
-										NULL,
-										this,
-										&browseForFolder );
-	if ( err != noErr ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("NavCreateChooseFolderDialog failed in OSXFolderBrowseDialog::execute()") );
+	NSOpenPanel* openPanel = [NSOpenPanel openPanel];
+	[openPanel setCanChooseFiles:NO];
+	[openPanel setAllowsMultipleSelection: NO ];
+	[openPanel setCanChooseDirectories:YES];
+	CFTextString title(title_);
+	[openPanel setTitle:title];
+	
+	CFTextString dir;
+	NSString* dirStr = nil;
+	if ( !directory_.empty() ) {		
+		dir = directory_;
+		dirStr = dir;
 	}
 	
-	err = NavDialogRun( browseForFolder );
-	if ( noErr != err ) {
-		result = false;
+	if ( NSOKButton == [openPanel runModalForDirectory:dirStr file:nil types:nil] ) {
+		dir = [openPanel directory];
+		directory_ = dir;
+		result = true;
 	}
-	else {
-		result = browseDlgResult_;
-	}
-	NavDialogDispose( browseForFolder );
-	*/																	
+																		
 	return result;
 }
 
@@ -75,69 +65,6 @@ String OSXFolderBrowseDialog::getDirectory()
 	return directory_;
 }
 	
-/*
-void OSXFolderBrowseDialog::BrowseDlgCallbackProc( NavEventCallbackMessage callBackSelector, 
-													NavCBRecPtr callBackParms, 
-													void *callBackUD )
-{
-	OSXFolderBrowseDialog* thisPtr = (OSXFolderBrowseDialog*)callBackUD;
-	VCF_ASSERT( thisPtr != NULL );
-	
-	VCF_ASSERT(callBackParms != NULL);
-            
-    if (callBackSelector == kNavCBUserAction) {
-    
-        NavDialogRef dialog = callBackParms->context;
-        
-        switch (callBackParms->userAction) {
-            case kNavUserActionChoose: {
-				NavReplyRecord reply;
-				
-				AEDescList selection;
-				AEKeyword keyword;
-				DescType type;
-				FSRef folder;
-				::Size size;
-				long count;
-	
-                OSStatus err = NavDialogGetReply(dialog, &reply);
-                
-                selection = reply.selection;
-                err = AECountItems(&selection, &count);
-				printf( "AECountItems() %d count: %d\n", err, count );
-				if ( err == noErr ) {
-					err = AEGetNthPtr(&selection, 1, typeFSRef, &keyword, &type, &folder, sizeof(folder), &size);
-                	printf( "AEGetNthPtr() %d\n", err );
-					
-					if ( err == noErr ) {
-						CFRefObject<CFURLRef> url = CFURLCreateFromFSRef( NULL, &folder );
-						
-						char buf[256];
-						
-						if ( CFURLGetFileSystemRepresentation( url, true, (UInt8*)buf, sizeof(buf) ) ) {
-							thisPtr->directory_ = buf;
-						}
-						else {
-							thisPtr->directory_ = OSXStringUtils::extractStringValueFromCFType( url );
-						}
-						printf( "thisPtr->directory_: %s\n", thisPtr->directory_.ansi_c_str() );
-						
-						 
-						
-						thisPtr->browseDlgResult_ = true;						
-					}								
-				}
-			}
-			break;
-                
-            case kNavUserActionCancel: {
-				thisPtr->browseDlgResult_ = false;
-			}
-			break;
-        }
-    }
-}
-*/
 
 };
 
