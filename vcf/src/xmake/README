@@ -1,3 +1,12 @@
+============================================================================================================
+== Note: use of xmake is DEPRECATED as of 2008-07-08                                                      ==
+== This tool is no longer maintained - see bakefiles (bakefile.gen) which are generating                  ==
+== platform-specific buildfiles.                                                                          ==  
+== See http://vcf-online.org/forums/index.php?showtopic=1283&pid=8186&mode=threaded&show=&st=&#entry8186  ==
+============================================================================================================
+
+
+
 This short set of instructions shows you how to build and setup 
 xmake for usage on unix or Win32 systems.
 
