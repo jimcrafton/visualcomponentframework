@@ -92,7 +92,7 @@ protected:
 	ListViewControl* listviewControl_;
 	Array<uint32> selectedItems_;
 	OSXListviewDataSrc* dataSrc_;
-	
+	NSTableView* tableView_;
 	void onControlModelChanged( Event* e );
 	void onListModelChanged( Event* e );
 	void onColumnModelAdded( Event* e );

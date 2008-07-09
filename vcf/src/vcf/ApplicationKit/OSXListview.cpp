@@ -741,7 +741,8 @@ namespace VCF {
 OSXListview::OSXListview( ListViewControl* listviewControl ):
 	OSXControl( listviewControl ),
 	listviewControl_( listviewControl ),
-	dataSrc_(nil)
+	dataSrc_(nil),
+	tableView_(nil)
 {
 	addCallback( new ClassProcedure1<Event*,OSXListview>(this, &OSXListview::onControlModelChanged), "OSXListview::onControlModelChanged" );		
 	addCallback( new ClassProcedure1<Event*,OSXListview>(this, &OSXListview::onListModelChanged), "OSXListview::onListModelChanged" );	
@@ -766,7 +767,8 @@ void OSXListview::onControlModelChanged( Event* e )
 	
 	if ( NULL != model ) {
 		model->ModelChanged += getCallback( "OSXListview::onListModelChanged" );
-
+		ListModel* lm = (ListModel*)model;
+		//lm->add( "item 1" );
 
 		model =  listviewControl_->getColumnModel();
 		model->ModelChanged += getCallback( "OSXListview::onColumnModelChanged" );
@@ -778,14 +780,12 @@ void OSXListview::onControlModelChanged( Event* e )
 			
 	}
 	
-	NSTableView* list = (NSTableView*) view_;
-	[list reloadData];
+	[tableView_ reloadData];
 }
 
 void OSXListview::onListModelChanged( Event* e )
 {
-	NSTableView* list = (NSTableView*) view_;
-	[list reloadData];
+	[tableView_ reloadData];
 }
 
 void OSXListview::onColumnModelAdded( Event* e )
@@ -795,8 +795,7 @@ void OSXListview::onColumnModelAdded( Event* e )
 	NSTableColumn* col = [[NSTableColumn alloc] initWithIdentifier:colID];
 	[col setWidth: 100.0];
 	
-	NSTableView* list = (NSTableView*) view_;
-	[list addTableColumn:col];
+	[tableView_ addTableColumn:col];
 }
 
 void OSXListview::onColumnModelRemoved( Event* e )
@@ -806,8 +805,7 @@ void OSXListview::onColumnModelRemoved( Event* e )
 
 void OSXListview::onColumnModelChanged( Event* e )
 {
-	NSTableView* list = (NSTableView*) view_;
-	[list reloadData];
+	[tableView_ reloadData];
 }
 	
 void OSXListview::create( Control* owningControl )
@@ -820,7 +818,31 @@ void OSXListview::create( Control* owningControl )
 	
 	VCFListView* list = [[VCFListView alloc] initWithFrame:r];
 	[list setDataSource: dataSrc_];
-	view_ = list;
+	
+	NSNumber* colID = [NSNumber numberWithUnsignedInt: 1];
+	NSTableColumn* col = [[NSTableColumn alloc] initWithIdentifier:colID];
+	[col setWidth: 100.0];
+	
+	[list addTableColumn:col];
+	
+	[list setUsesAlternatingRowBackgroundColors:YES];
+	
+	NSScrollView* scrollView = [[NSScrollView alloc] initWithFrame:r];
+	//[scrollView setBorderType:NSNoBorder];
+	
+	[scrollView setHasHorizontalScroller:YES];
+	[scrollView setHasVerticalScroller:YES];
+	
+	
+	[scrollView setAutohidesScrollers:YES];
+	[scrollView setScrollsDynamically:YES];
+	
+	[scrollView setDocumentView:list];
+	
+	tableView_ = list;
+	view_ = scrollView;
+	
+	OSXControl::setViewForPeer( tableView_, this );
 	
 	owningControl->ControlModelChanged += getCallback( "OSXListview::onControlModelChanged" );
 	
@@ -879,14 +901,12 @@ void OSXListview::rangeSelect( const Rect& selectionRect )
 
 bool OSXListview::allowsMultiSelect()
 {
-	NSTableView* list = (NSTableView*) view_;
-	return [list allowsMultipleSelection] ? true : false;
+	return [tableView_ allowsMultipleSelection] ? true : false;
 }
 
 void OSXListview::setAllowsMultiSelect( const bool& allowsMultiSelect )
 {
-	NSTableView* list = (NSTableView*) view_;
-	[list setAllowsMultipleSelection: allowsMultiSelect ? YES : NO ];
+	[tableView_ setAllowsMultipleSelection: allowsMultiSelect ? YES : NO ];
 }
 
 void OSXListview::setLargeImageList( ImageList* imageList )
@@ -902,8 +922,7 @@ void OSXListview::setSmallImageList( ImageList* imageList )
 
 bool OSXListview::ensureVisible(const uint32& index, bool partialOK )
 {
-	NSTableView* list = (NSTableView*) view_;
-	[list scrollRowToVisible: index];
+	[tableView_ scrollRowToVisible: index];
 	return false;
 }
 	
