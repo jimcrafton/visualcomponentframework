@@ -35,7 +35,6 @@ public:
 	static DataObject* createDataObjectFromPasteBoard( PasteboardRef pasteBoard );
 	static void initDataObjectFromPasteBoard( PasteboardRef pasteBoard, DataObject* dataObject );
 protected:
-	CFRefObject<PasteboardRef> globalPasteBoard_;
 
 };
 

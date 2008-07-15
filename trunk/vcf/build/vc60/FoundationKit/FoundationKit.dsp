@@ -756,6 +756,14 @@ SOURCE=..\..\..\src\vcf\FoundationKit\VCFString.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFTime.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFTime.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\WarningsOffVc.h
 # End Source File
 # End Group

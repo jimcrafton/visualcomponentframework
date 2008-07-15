@@ -210,6 +210,12 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl">
@@ -678,6 +684,12 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCFString.h">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VCFTime.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VCFTime.h">
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\WarningsOffVc.h">

@@ -76,21 +76,30 @@ bool Win32Registry::openKey( const String& keyname, const bool& createIfNonExist
 			//throw exception !!!
 		}
 		DWORD disposition = 0;
+#ifdef VCF_WIN32CE
+		result = ( ERROR_SUCCESS == RegCreateKeyExW( tmp, tmpKeyname.c_str(), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &currentKeyHandle_, &disposition ) );
+#else
 		if ( System::isUnicodeEnabled() ) {
 			result = ( ERROR_SUCCESS == RegCreateKeyExW( tmp, tmpKeyname.c_str(), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &currentKeyHandle_, &disposition ) );
 		}
 		else {
 			result = ( ERROR_SUCCESS == RegCreateKeyExA( tmp, tmpKeyname.ansi_c_str(), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &currentKeyHandle_, &disposition ) );
 		}
+#endif
+		
 
 	}
 	else {
+#ifdef VCF_WIN32CE
+		result = ( ERROR_SUCCESS == RegOpenKeyExW( tmp, tmpKeyname.c_str(), 0, KEY_ALL_ACCESS, &currentKeyHandle_ ) );
+#else
 		if ( System::isUnicodeEnabled() ) {
 			result = ( ERROR_SUCCESS == RegOpenKeyExW( tmp, tmpKeyname.c_str(), 0, KEY_ALL_ACCESS, &currentKeyHandle_ ) );
 		}
 		else {
 			result = ( ERROR_SUCCESS == RegOpenKeyExA( tmp, tmpKeyname.ansi_c_str(), 0, KEY_ALL_ACCESS, &currentKeyHandle_ ) );
 		}
+#endif
 	}
 
 	return result;
@@ -103,7 +112,11 @@ bool Win32Registry::removeKey( const String& keyname )
 
 	std::replace_if( tmpKeyname.begin(), tmpKeyname.end(),
 					std::bind2nd(std::equal_to<VCFChar>(),'/') , '\\' );
-
+#ifdef VCF_WIN32CE
+	if ( ERROR_SUCCESS == SHDeleteKeyW( rootKeyHandle_, tmpKeyname.c_str() ) ) {
+		return true;
+	}
+#else
 	if ( System::isUnicodeEnabled() ) {		
 		if ( ERROR_SUCCESS == SHDeleteKeyW( rootKeyHandle_, tmpKeyname.c_str() ) ) {
 			return true;
@@ -114,7 +127,7 @@ bool Win32Registry::removeKey( const String& keyname )
 			return true;
 		}
 	}
-
+#endif
 	return false;
 }
 
@@ -135,6 +148,10 @@ bool Win32Registry::setValue( const String& value, const String& valuename )
 		//env variable that will need expanding
 		regType = REG_EXPAND_SZ;
 	}
+#ifdef VCF_WIN32CE
+	val = (const unsigned char*)value.c_str();
+	resVal = RegSetValueExW( currentKeyHandle_, valuename.c_str(), 0, regType, (BYTE*)val, sizeof(VCF::WideChar)*(value.size()+1) );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		val = (const unsigned char*)value.c_str();
 		resVal = RegSetValueExW( currentKeyHandle_, valuename.c_str(), 0, regType, (BYTE*)val, sizeof(VCF::WideChar)*(value.size()+1) );
@@ -144,20 +161,23 @@ bool Win32Registry::setValue( const String& value, const String& valuename )
 		val = (const unsigned char*)tmp.c_str();
 		resVal = RegSetValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, regType, (BYTE*)val, tmp.size()+1 );
 	}
-
+#endif
 	return (resVal == ERROR_SUCCESS);
 }
 
 bool Win32Registry::setValue( const uint32& value, const String& valuename )
 {
 	LONG resVal = 0;
+#ifdef VCF_WIN32CE
+	resVal = RegSetValueExW( currentKeyHandle_, valuename.c_str(), 0, REG_DWORD, (BYTE*)&value, sizeof(value) );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		resVal = RegSetValueExW( currentKeyHandle_, valuename.c_str(), 0, REG_DWORD, (BYTE*)&value, sizeof(value) );
 	}
 	else {
 		resVal = RegSetValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, REG_DWORD, (BYTE*)&value, sizeof(value) );
 	}
-
+#endif
 	return (resVal == ERROR_SUCCESS);
 }
 
@@ -165,25 +185,32 @@ bool Win32Registry::setValue( const bool& value, const String& valuename )
 {
 	DWORD boolval = (DWORD)value;
 	LONG resVal = 0;
+#ifdef VCF_WIN32CE
+	resVal = RegSetValueExW( currentKeyHandle_, valuename.c_str(), 0, REG_DWORD, (BYTE*)&boolval, sizeof(boolval) );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		resVal = RegSetValueExW( currentKeyHandle_, valuename.c_str(), 0, REG_DWORD, (BYTE*)&boolval, sizeof(boolval) );
 	}
 	else {
 		resVal = RegSetValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, REG_DWORD, (BYTE*)&boolval, sizeof(boolval) );
 	}
-
+#endif
 	return (resVal == ERROR_SUCCESS);
 }
 
 bool Win32Registry::setValue( void* dataBuffer, const uint32& dataBufferSize, const String& valuename )
 {
 	LONG resVal = 0;
+#ifdef VCF_WIN32CE
+	resVal = RegSetValueExW( currentKeyHandle_, valuename.c_str(), 0, REG_BINARY, (BYTE*)dataBuffer, dataBufferSize );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		resVal = RegSetValueExW( currentKeyHandle_, valuename.c_str(), 0, REG_BINARY, (BYTE*)dataBuffer, dataBufferSize );
 	}
 	else {
 		resVal = RegSetValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, REG_BINARY, (BYTE*)dataBuffer, dataBufferSize );
 	}
+#endif
 	return (resVal == ERROR_SUCCESS);
 }
 
@@ -196,17 +223,28 @@ bool Win32Registry::getStringValue( const String& valuename, String& value )
 	bool result = false;
 
 	LONG resVal = 0;
+#ifdef VCF_WIN32CE
+	resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, NULL, &size );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, NULL, &size );
 	}
 	else {
 		resVal = RegQueryValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, &type, NULL, &size );
 	}
-
+#endif
 	if ( resVal == ERROR_SUCCESS ){
 		if ( (type == REG_SZ) && (size > 0) ){
 			buf = new BYTE[size];
 			memset( buf, 0, size*sizeof(BYTE) );
+#ifdef VCF_WIN32CE
+			resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, buf, &size );
+			if ( resVal == ERROR_SUCCESS ){
+
+				value = (VCFChar*)buf;
+				result = true;
+			}
+#else
 			if ( System::isUnicodeEnabled() ) {
 				resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, buf, &size );
 				if ( resVal == ERROR_SUCCESS ){
@@ -224,7 +262,7 @@ bool Win32Registry::getStringValue( const String& valuename, String& value )
 					result = true;
 				}
 			}
-
+#endif
 			delete [] buf;
 		}
 	}
@@ -239,13 +277,16 @@ bool Win32Registry::getIntValue( const String& valuename, uint32& value )
 	DWORD type = 0;
 	DWORD size = sizeof(value);
 	LONG resVal = 0;
-
+#ifdef VCF_WIN32CE
+	resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, (BYTE*)&value, &size );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, (BYTE*)&value, &size );
 	}
 	else {
 		resVal = RegQueryValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, &type, (BYTE*)&value, &size );
 	}
+#endif
 	if ( resVal == ERROR_SUCCESS ){
 		result = true;
 		if ( (type != REG_DWORD) && (size <= 0) ){
@@ -263,12 +304,16 @@ bool Win32Registry::getBoolValue( const String& valuename, bool& value )
 	DWORD type = 0;
 	DWORD size = sizeof(DWORD);
 	LONG resVal = 0;
+#ifdef VCF_WIN32CE
+	resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, (BYTE*)&tmp, &size );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, (BYTE*)&tmp, &size );
 	}
 	else {
 		resVal = RegQueryValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, &type, (BYTE*)&tmp, &size );
 	}
+#endif
 	if ( resVal == ERROR_SUCCESS ){
 		result = true;
 		if ( (type != REG_DWORD) && (size <= 0) ){
@@ -294,24 +339,31 @@ bool Win32Registry::getDataBufValue( const String& valuename, uint32& dataBuffer
 	*dataBuffer = NULL;
 
 	LONG resVal = 0;
-
+#ifdef VCF_WIN32CE
+	resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, NULL, &size );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, NULL, &size );
 	}
 	else {
 		resVal = RegQueryValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, &type, NULL, &size );
 	}
+#endif
 
 	if ( resVal == ERROR_SUCCESS ){
 		if ( (type == REG_BINARY) && (size > 0) ){
 			buf = new BYTE[size]; //callers responsibility to clean up
 			memset( buf, 0, size*sizeof(BYTE) );
+#ifdef VCF_WIN32CE
+			resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, buf, &size );
+#else
 			if ( System::isUnicodeEnabled() ) {
 				resVal = RegQueryValueExW( currentKeyHandle_, valuename.c_str(), 0, &type, buf, &size );
 			}
 			else {
 				resVal = RegQueryValueExA( currentKeyHandle_, valuename.ansi_c_str(), 0, &type, buf, &size );
 			}
+#endif
 
 			if ( resVal == ERROR_SUCCESS ){
 				*dataBuffer = (void*)buf;
@@ -336,7 +388,7 @@ Enumerator<String>* Win32Registry::getKeyNames()
 
 	keys_.clear();
 #ifdef VCF_WIN32CE
-		///??????? RegEnumKeyW doesn't exist????
+		///??????? RegEnumKeyW doesn't exist????	
 #else
 	if ( System::isUnicodeEnabled() ) {
 		WideChar keyName[size];
