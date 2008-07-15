@@ -99,6 +99,7 @@ namespace VCF {
         Rect clientBounds_;
 		bool internalClose_;
 
+		GraphicsContext* windowCtx_;
 #ifdef VCF_WIN
 #pragma pack(push,1)
 		struct _WndProcThunk

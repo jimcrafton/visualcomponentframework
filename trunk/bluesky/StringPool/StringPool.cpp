@@ -1,7 +1,8 @@
 ////StringPool.cpp
 
-//#include "vcf/FoundationKit/FoundationKit.h"
+#include "vcf/FoundationKit/FoundationKit.h"
 
+/*
 #define WIN32_LEAN_AND_MEAN
 
 #pragma warning (disable:4786)
@@ -15,12 +16,17 @@
 
 
 
+*/
+#include <fstream>
+#include <iostream> // for cin/cout
 
 
-typedef unsigned int uint32;
+//typedef unsigned int uint32;
 //typedef unsigned short VCFChar;
-typedef wchar_t VCFChar;
-typedef std::basic_string<VCFChar> String;
+//typedef wchar_t VCFChar;
+//typedef std::basic_string<VCFChar> String;
+
+using namespace VCF;
 
 
 
@@ -74,7 +80,7 @@ inline size_t RoundUp(size_t cb, size_t units)
     return ((cb + units - 1) / units) * units;
 }
 
-#define HAVE_MMX
+//#define HAVE_MMX
 
 class StringPool {
 public:
@@ -165,26 +171,31 @@ public:
 
 	uint32 addString( const VCFChar* str, size_t length );
 
+	bool validString( uint32 index );
 	const VCFChar* getString( uint32 index );
 	size_t getStringLength( uint32 index );
 
 	uint32 incStringRefcount( uint32 index );
 	uint32 decStringRefcount( uint32 index );
+
+	void compact( uint32 index=NoEntry );
+	
 private:
-
-	struct StrEntry {
-		VCFChar* str;
-		size_t length;
-		size_t refcount;		
-	};
-
 	union MemHeader {
 		struct {
-			MemHeader* prev;
+			MemHeader* prev;			
 			size_t  size;
 		};
 		VCFChar alignment;
 	};
+
+
+	struct StrEntry {
+		VCFChar* str;
+		size_t length;
+		size_t refcount;
+		MemHeader* memHdr;
+	};	
 
 
 	VCFChar*  next_;   // first available byte
@@ -192,6 +203,7 @@ private:
 	MemHeader* currentHdr_;   // current block
 	size_t   granularity_;
 	std::vector<StrEntry> stringEntries_;
+	std::vector<size_t> freeEntries_;
 
 	typedef std::multimap<uint32,uint32> StringMapT;
 	typedef StringMapT::iterator StringMapIter;
@@ -261,12 +273,36 @@ VCFChar* StringPool::allocate(const VCFChar* begin, const VCFChar* end)
 	MemHeader* currentHdr = reinterpret_cast<MemHeader*>(nextBytes);
 	currentHdr->prev = currentHdr_;
 	currentHdr->size = allocSize;
+	
+
 	currentHdr_ = currentHdr;
 	next_ = reinterpret_cast<VCFChar*>(currentHdr + 1);
 	
 	return allocate(begin, end);
 }
 
+void StringPool::compact(uint32 index)
+{
+	if ( NoEntry == index ) {
+
+	}
+	else {
+		std::vector<StrEntry>::iterator it = stringEntries_.begin() + index;
+		if ( it != stringEntries_.end() ) {
+			StrEntry& freeEntry = *it;
+			freeEntries_.push_back( index );
+
+			MemHeader* memHdr = freeEntry.memHdr;
+
+			++it;
+			while ( it != stringEntries_.end() ) {
+				StrEntry& entry = *it;
+				
+				++it;
+			}
+		}
+	}
+}
 
 uint32 StringPool::find( const VCFChar* str, size_t length )
 {
@@ -330,6 +366,7 @@ uint32 StringPool::addString( const VCFChar* str, size_t length )
 		entry.length = length;
 		entry.str = newStr;
 		entry.refcount = 0;
+		entry.memHdr = this->currentHdr_;
 
 		stringEntries_.push_back( entry );
 		result = stringEntries_.size()-1;
@@ -357,8 +394,8 @@ uint32 StringPool::decStringRefcount( uint32 index )
 	if ( index < stringEntries_.size() ) {
 		StrEntry& entry = stringEntries_[index];
 		entry.refcount--;
-		if ( 0 == entry.refcount ) {
-			printf( "No more refs to str[\"%.8ls...\":%u]\n", entry.str, entry.length );
+		if ( 0 == entry.refcount ) {			
+			//printf( "No more refs to str[\"%.8ls...\":%u]\n", entry.str, entry.length );
 		}
 		result = entry.refcount;
 	}
@@ -369,7 +406,9 @@ const VCFChar* StringPool::getString( uint32 index )
 {
 	if ( index < stringEntries_.size() && index != NoEntry ) {
 		const StrEntry& entry = stringEntries_[index];
-		return entry.str;
+	//	if ( entry.refcount > 0 ) {
+			return entry.str;
+	//	}
 	}
 
 	return NULL;
@@ -379,10 +418,24 @@ size_t StringPool::getStringLength( uint32 index )
 {
 	if ( index < stringEntries_.size() && index != NoEntry ) {
 		const StrEntry& entry = stringEntries_[index];
-		return entry.length;
+		//if ( entry.refcount > 0 ) {
+			return entry.length;
+		//}
 	}
 
 	return 0;
+}
+
+bool StringPool::validString( uint32 index )
+{
+	if ( index < stringEntries_.size() && index != NoEntry ) {
+		const StrEntry& entry = stringEntries_[index];
+		if ( entry.refcount > 0 ) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 static StringPool stringPool;
@@ -530,6 +583,9 @@ public:
 		return size() == 0;
 	}
 
+	bool valid() const {
+		return stringPool.validString(index_);
+	}
 
 
 	
@@ -775,8 +831,228 @@ protected:
 
 
 
+
+
+
+
+
+using std::string;
+using std::wstring;
+using std::vector;
+
+struct ChDictionaryEntry
+{
+	bool Parse(const wstring& line);
+	wstring trad;
+	wstring simp;
+	wstring pinyin;
+	wstring english;
+};
+
+bool ChDictionaryEntry::Parse(const wstring& line)
+{
+    wstring::size_type start = 0;
+    wstring::size_type end = line.find(L' ', start);
+    if (end == wstring::npos) return false;
+    trad.assign(line, start, end);
+    start = line.find(L'[', end);
+    if (start == wstring::npos) return false;
+    end = line.find(L']', ++start);
+    if (end == wstring::npos) return false;
+    pinyin.assign(line, start, end - start);
+    start = line.find(L'/', end);
+    if (start == wstring::npos) return false;
+    start++;
+    end = line.rfind(L'/');
+    if (end == wstring::npos) return false;
+    if (end <= start) return false;
+    english.assign(line, start, end-start);
+    return true;
+}
+
+class ChDictionary
+{
+public:
+	ChDictionary();
+	int Length() { return v.size(); }
+	const ChDictionaryEntry& Item(int i) { return v[i]; }
+private:
+	vector<ChDictionaryEntry> v;
+};
+
+ChDictionary::ChDictionary()
+{
+	/*std::locale old = std::locale::global(std::locale(".950"));
+
+	std::wifstream src;
+	src.imbue(std::locale(".950"));
+	src.open("cedict.b5");
+	wstring s;
+	int i = 0;
+	while (std::getline(src, s)) {
+		if (s.length() > 0 && s[0] != L'#') {
+			ChDictionaryEntry de;
+			if (de.Parse(s)) {
+				v.push_back(de);
+			}
+		}
+
+		i++;
+	}*/
+
+	FileInputStream fs("cedict.b5");
+	
+	unsigned char* data = new unsigned char[ fs.getSize() ];
+
+	fs.read( data, fs.getSize() );
+
+	String chStr((const char*)data,fs.getSize(),UnicodeString::leChineseTraditionalBig5);
+
+	delete [] data;
+
+
+	StringTokenizer tok(chStr,"\r\n");
+
+	while ( tok.hasMoreElements() ) {
+		String s = tok.nextElement();
+		if (s.length() > 0 && s[0] != L'#') {
+			ChDictionaryEntry de;
+			if (de.Parse(s)) {
+				v.push_back(de);
+			}
+		}
+	}
+
+}
+
+
+
+
+
+
+struct ChDictionaryEntry2
+{
+	bool Parse(const wstring& line);
+	FastString trad;
+	FastString simp;
+	FastString pinyin;
+	FastString english;
+};
+
+bool ChDictionaryEntry2::Parse(const wstring& line)
+{
+    wstring::size_type start = 0;
+    wstring::size_type end = line.find(L' ', start);
+    if (end == wstring::npos) return false;
+
+	const VCFChar* begin = line.c_str();
+
+    trad.assign(begin + start, end - start);
+    start = line.find(L'[', end);
+    if (start == wstring::npos) return false;
+    end = line.find(L']', ++start);
+    if (end == wstring::npos) return false;
+    pinyin.assign(begin + start, end - start);
+    start = line.find(L'/', end);
+    if (start == wstring::npos) return false;
+    start++;
+    end = line.rfind(L'/');
+    if (end == wstring::npos) return false;
+    if (end <= start) return false;
+    english.assign(begin + start, end - start);
+    return true;
+}
+
+class ChDictionary2
+{
+public:
+	ChDictionary2();
+	int Length() { return v.size(); }
+	const ChDictionaryEntry2& Item(int i) { return v[i]; }
+private:
+	vector<ChDictionaryEntry2> v;
+};
+
+ChDictionary2::ChDictionary2()
+{
+	FileInputStream fs("cedict.b5");
+	
+	unsigned char* data = new unsigned char[ fs.getSize() ];
+
+	fs.read( data, fs.getSize() );
+
+	String chStr((const char*)data,fs.getSize(),UnicodeString::leChineseTraditionalBig5);
+
+	delete [] data;
+
+
+	StringTokenizer tok(chStr,"\r\n");
+
+	while ( tok.hasMoreElements() ) {
+		String s = tok.nextElement();
+		if (s.length() > 0 && s[0] != L'#') {
+			ChDictionaryEntry2 de;
+			if (de.Parse(s)) {
+				v.push_back(de);
+			}
+		}
+	}	
+}
+
+
+
+void part2()
+{
+	printf( "part2.....\n" );
+	HiResClock clock;
+
+	clock.start();
+	
+	{
+		ChDictionary dict;
+		clock.stop();
+
+		std::cout << dict.Length() << std::endl;		
+		printf( "basic_string impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
+	}
+
+
+
+
+	
+	
+	{
+		clock.start();
+		ChDictionary2 dict2;
+		clock.stop();
+
+		std::cout << dict2.Length() << std::endl;		
+		printf( "FastString impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
+	}
+
+	{
+		clock.start();
+		ChDictionary2 dict2;
+		clock.stop();
+
+		std::cout << dict2.Length() << std::endl;		
+		printf( "FastString impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
+	}
+
+	{
+		clock.start();
+		ChDictionary2 dict2;
+		clock.stop();
+
+		std::cout << dict2.Length() << std::endl;		
+		printf( "FastString impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
+	}
+}
+
 int main( int argc, char** argv )
 {
+
+	FoundationKit::init( argc, argv );
 
 	HiResClock clock;
 
@@ -956,6 +1232,15 @@ int main( int argc, char** argv )
 	clock.stop();
 
 	printf( "f6 from ansi Length %u, StringLiteral took %0.8f seconds, total took %0.8f seconds\n",f5.length(),clock2.duration(), clock.duration() );
+
+
+
+
+
+	part2();
+
+
+	FoundationKit::terminate();
 
 	return 0;
 }

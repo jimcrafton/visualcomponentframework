@@ -36,7 +36,7 @@ using namespace VCF;
 
 AggUIToolkit::AggUIToolkit() 
 {
-	metricsMgr_ = new AggUIMetricsManager();
+	
 }
 
 ControlPeer* AggUIToolkit::internal_createControlPeer( Control* component, ComponentType componentType )

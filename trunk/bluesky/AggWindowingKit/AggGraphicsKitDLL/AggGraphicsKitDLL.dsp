@@ -119,6 +119,14 @@ SOURCE=..\AggGraphicsToolkit.cpp
 
 SOURCE=..\AggGraphicsToolkit.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\AggUIMetricsManager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\AggUIMetricsManager.h
+# End Source File
 # End Group
 # Begin Group "Core"
 

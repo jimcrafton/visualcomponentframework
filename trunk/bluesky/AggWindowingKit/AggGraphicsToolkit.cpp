@@ -11,6 +11,8 @@
 
 #include "AggGraphicsToolkit.h"
 #include "AggGraphicsPeers.h"
+#include "AggUIMetricsManager.h"
+
 
 using namespace VCF;
 
@@ -51,6 +53,8 @@ AggGraphicsToolkit::AggGraphicsToolkit():
 	fontManager_(fontEngine_)
 {
 	loadSystemColors();
+
+	metricsMgr_ = new AggUIMetricsManager();
 }
 
 AggGraphicsToolkit::~AggGraphicsToolkit()

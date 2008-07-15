@@ -182,6 +182,7 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 				//seekPos_ += have;
 				
 				//tmp += have;
+				
 			} while ( zstream_.avail_out == 0 && res != Z_STREAM_END);
 		}
 
@@ -391,11 +392,17 @@ int main( int argc, char** argv ){
 	
 
 		ZipInputStream zis(&bis);
+		
 
 		uchar* bytes2 = new uchar[fsize + 256];
 
-		zis.read( bytes2, fsize );
+		uint64 rd = zis.read( bytes2, fsize );
 
+		for ( size_t i=0;i<fsize;i++ ) {
+			if ( bytes[i] != bytes2[i] ) {
+				break;
+			}
+		}
 
 		int res = memcmp( bytes, bytes2, fsize );
 
