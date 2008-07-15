@@ -72,7 +72,7 @@ public:
 	}
 
 	inline uint64 read( unsigned char* buffer, const uint64& sizeOfBuffer ) {
-		if ( currentAllocationSize_ < (seekPos_ + sizeOfBuffer) ) {
+		if ( seekPos_ >= currentAllocationSize_ ) {
 			throw NoFreeMemException("No longer have enough memory in this buffer to read from.");
 		}
 

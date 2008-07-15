@@ -2018,6 +2018,23 @@ UnicodeString Win32LocalePeer::toStringFromDate( const DateTime& val, const Unic
 	int size = 0;
 	DWORD flags = (!format.empty()) ? 0 : LOCALE_NOUSEROVERRIDE;
 
+	#ifdef VCF_WIN32CE	
+	const VCFChar* formatStr = NULL;
+	if ( !format.empty() ) {
+		formatStr = format.c_str();
+	}
+
+	size = GetDateFormatW( lcid_, flags, &timeVal, formatStr, NULL, 0 );
+	VCFChar* dateStr = new VCFChar[size+1];
+	memset(dateStr,0,(size+1)*sizeof(VCFChar));
+
+
+	GetDateFormatW( lcid_, flags, &timeVal, formatStr, dateStr, size );
+
+	result = dateStr;
+
+	delete [] dateStr;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		const VCFChar* formatStr = NULL;
 		if ( !format.empty() ) {
@@ -2052,7 +2069,7 @@ UnicodeString Win32LocalePeer::toStringFromDate( const DateTime& val, const Unic
 
 		delete [] dateStr;
 	}
-
+#endif
 	return result;
 }
 
@@ -2081,7 +2098,23 @@ UnicodeString Win32LocalePeer::toStringFromTime( const DateTime& val, const Unic
 
 
 	DWORD flags = (!format.empty()) ? 0 : LOCALE_NOUSEROVERRIDE;
+#ifdef VCF_WIN32CE
+	const VCFChar* formatStr = NULL;
+	if ( !format.empty() ) {
+		formatStr = format.c_str();
+	}
 
+	int size = GetTimeFormatW( lcid_, flags, &timeVal, formatStr, NULL, 0 );
+	VCFChar* dateStr = new VCFChar[size+1];
+	memset(dateStr,0,(size+1)*sizeof(VCFChar));
+
+
+	GetTimeFormatW( lcid_, flags, &timeVal, formatStr, dateStr, size );
+
+	result = dateStr;
+
+	delete [] dateStr;
+#else
 	if ( System::isUnicodeEnabled() ) {
 		const VCFChar* formatStr = NULL;
 		if ( !format.empty() ) {
@@ -2116,7 +2149,7 @@ UnicodeString Win32LocalePeer::toStringFromTime( const DateTime& val, const Unic
 
 		delete [] dateStr;
 	}
-
+#endif
 
 	return result;
 }

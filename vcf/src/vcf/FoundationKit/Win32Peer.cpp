@@ -16,13 +16,16 @@ using namespace VCFWin32;
 void Win32Utils::trace( const VCF::String& text )
 {
 #ifdef _DEBUG
+#ifdef VCF_WIN32CE
+	OutputDebugStringW( text.c_str() );
+#else
 	if ( VCF::System::isUnicodeEnabled() ) {
 		OutputDebugStringW( text.c_str() );
 	}
 	else {
 		OutputDebugStringA( text.ansi_c_str() );
 	}
-
+#endif
 #endif
 }
 
@@ -36,7 +39,21 @@ WORD Win32Utils::getWin32LangID( VCF::Locale* locale )
 VCF::String Win32Utils::getErrorString( const DWORD& errorCode )
 {
 	VCF::String result;
+#ifdef VCF_WIN32CE
+	VCF::VCFChar* msgBuf;
+	DWORD bufSize = FormatMessageW( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+									NULL,
+									errorCode,
+									0, // Default language
+									(LPWSTR) &msgBuf,
+									0,
+									NULL );
 
+	result.append( msgBuf, bufSize );
+
+	// Free the buffer.
+	LocalFree( msgBuf );
+#else
 	if ( VCF::System::isUnicodeEnabled() ) {
 		VCF::VCFChar* msgBuf;
 		DWORD bufSize = FormatMessageW( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
@@ -66,7 +83,7 @@ VCF::String Win32Utils::getErrorString( const DWORD& errorCode )
 		// Free the buffer.
 		LocalFree( msgBuf );
 	}
-
+#endif
 
 	return result;
 }
