@@ -29,6 +29,10 @@ public:
 
 	virtual void setHandleID( OSHandleID handleID );
 
+	virtual bool shouldPerformCleanup() {
+		return false;
+	}
+
 protected:
     AbstractApplication* app_;
 };

@@ -93,15 +93,15 @@ namespace VCF {
         AggControlArray getXCBChildControls() {
             return childControls_;
         }
-/*
-        void paintChildren( xcb_connection_t &connection, const xcb_expose_event_t& event, GraphicsContext* sharedCtx );
 
-		virtual void paintPeer( xcb_connection_t &connection, const xcb_expose_event_t& event, GraphicsContext* sharedCtx );
+        void paintChildren( GraphicsContext* sharedCtx );
 
-		virtual void paintPeerControl( xcb_connection_t &connection, const xcb_expose_event_t& event, GraphicsContext* sharedCtx );
+		virtual void paintPeer( GraphicsContext* sharedCtx );
 
-		virtual void handleMouseEvents(xcb_connection_t &connection, const xcb_generic_event_t& event);
-		*/
+		virtual void paintPeerControl( GraphicsContext* sharedCtx );
+
+		//virtual void handleMouseEvents(xcb_connection_t &connection, const xcb_generic_event_t& event);
+		
 	protected:
 		AggAbstractControl( Control* control );
 

@@ -87,11 +87,9 @@ LRESULT CALLBACK AggWindowPeer::WndProc( HWND hwnd, UINT message, WPARAM wParam,
 				surf.height = r.bottom - r.top;
 				surf.width = r.right - r.left;				
 
-				GraphicsContext gc (&surf) ;
+				thisPtr->windowCtx_->getPeer()->setContextID( &surf );
 
-
-				thisPtr->control_->paint( &gc );
-
+				thisPtr->paintPeer( thisPtr->windowCtx_ );
 			}
 
 
@@ -136,7 +134,9 @@ LRESULT CALLBACK AggWindowPeer::WndProc( HWND hwnd, UINT message, WPARAM wParam,
 			::SelectObject( thisPtr->memDC_, thisPtr->memBMP_ );
 
 
-			result = ::DefWindowProc( thisPtr->hwnd_, message, wParam, lParam );
+			thisPtr->control_->handleEvent( event );
+
+			result = ::DefWindowProc( thisPtr->hwnd_, message, wParam, lParam );			
 		}
 		break;
 
@@ -206,9 +206,10 @@ AggWindowPeer::AggWindowPeer( Control* control, Control* owner ) :
 		internalClose_(false),
 		memDC_(NULL),
 		memBMP_(NULL),
-		memDataPtr_(NULL)
+		memDataPtr_(NULL),
+		windowCtx_(NULL)
 {
-	
+	windowCtx_ = new GraphicsContext(0);
 }
 
 Rect AggWindowPeer::getClientBounds()
@@ -364,6 +365,8 @@ void AggWindowPeer::destroyControl()
 			::DestroyWindow( hwnd_ );
 		}
 	}
+
+	delete windowCtx_;
 
 	if ( NULL != this->memBMP_ ) {
 		DeleteObject( memBMP_ );

@@ -759,14 +759,6 @@ SOURCE=..\AggMenuManagerPeer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\AggUIMetricsManager.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\AggUIMetricsManager.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\AggUIShellPeer.cpp
 # End Source File
 # Begin Source File

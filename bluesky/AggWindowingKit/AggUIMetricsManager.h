@@ -7,7 +7,7 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-#include "vcf/ApplicationKit/UIMetricsManager.h"
+#include "vcf/GraphicsKit/UIMetricsManager.h"
 
 namespace VCF {
 

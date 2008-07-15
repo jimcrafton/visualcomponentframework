@@ -218,8 +218,8 @@ void AggAbstractControl::postChildPaint( GraphicsContext* graphicsContext, Contr
 	//graphicsContext->setClippingRect( oldClipRect );
 }
 
-/*
-void AggAbstractControl::paintChildren( xcb_connection_t &connection, const xcb_expose_event_t& event, GraphicsContext* sharedCtx )
+
+void AggAbstractControl::paintChildren( GraphicsContext* sharedCtx )
 {
     if ( childControls_.empty() ) {
         return;
@@ -275,7 +275,7 @@ void AggAbstractControl::paintChildren( xcb_connection_t &connection, const xcb_
 			sharedCtx->setCurrentTransform( xfrm );
 
 
-		    child->paintPeer( connection, event, sharedCtx );
+		    child->paintPeer( sharedCtx );
 
 		    sharedCtx->restoreState( gcs );
 			sharedCtx->setOrigin( oldOrigin.x_, oldOrigin.y_ );
@@ -284,29 +284,29 @@ void AggAbstractControl::paintChildren( xcb_connection_t &connection, const xcb_
 	}
 }
 
-void AggAbstractControl::paintPeer( xcb_connection_t &connection, const xcb_expose_event_t& event, GraphicsContext* sharedCtx )
+void AggAbstractControl::paintPeer( GraphicsContext* sharedCtx )
 {
     Control* control =  getControl();
 
 
-    paintPeerControl( connection, event, sharedCtx );
+    paintPeerControl( sharedCtx );
 
     control->paintBorder( sharedCtx );
 
     control->paint( sharedCtx );
 
-    paintChildren( connection, event, sharedCtx );
+    paintChildren( sharedCtx );
 
 
 }
 
 
-void AggAbstractControl::paintPeerControl( xcb_connection_t &connection, const xcb_expose_event_t& event, GraphicsContext* sharedCtx )
+void AggAbstractControl::paintPeerControl( GraphicsContext* sharedCtx )
 {
 
 }
 
-
+/*
 void AggAbstractControl::handleMouseEvents(xcb_connection_t &connection, const xcb_generic_event_t& event)
 {
 	switch ( event.response_type ) {
@@ -375,6 +375,8 @@ AggAbstractControl* AggAbstractControl::findControlForMouseEvent( Point pt )
 
 	return result;
 }
+
+
 /**
 $Id$
 */

@@ -5,8 +5,8 @@ Please see License.txt in the top level directory
 where you installed the VCF.
 */
 
-#include "vcf/ApplicationKit/ApplicationKit.h"
-#include "vcf/ApplicationKit/ApplicationKitPrivate.h"
+#include "vcf/GraphicsKit/GraphicsKit.h"
+#include "vcf/GraphicsKit/GraphicsKitPrivate.h"
 #include "AggUIMetricsManager.h"
 
 using namespace VCF;
