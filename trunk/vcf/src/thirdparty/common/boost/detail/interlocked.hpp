@@ -41,6 +41,7 @@ extern "C" long __cdecl _InterlockedCompareExchange( long volatile *, long, long
 # define BOOST_INTERLOCKED_DECREMENT _InterlockedDecrement
 # define BOOST_INTERLOCKED_COMPARE_EXCHANGE _InterlockedCompareExchange
 
+
 #elif defined( WIN32 ) || defined( _WIN32 ) || defined( __WIN32__ )
 
 namespace boost

@@ -22,9 +22,9 @@ where you installed the VCF.
 #include "thirdparty/common/agg/include/agg_span_image_filter_rgba.h"
 #include "thirdparty/common/agg/include/agg_scanline_u.h"
 
-
+#ifndef VCF_WIN32CE
 #include "vcf/GraphicsKit/Win32VisualStylesWrapper.h"
-
+#endif
 
 
 

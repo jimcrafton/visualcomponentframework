@@ -53,10 +53,8 @@ public:
 
 	virtual String getCurrentKey();
 private:
-	std::vector<RegistryValueInfo*> values_;
-	std::vector<String> keys_;
-	EnumeratorContainer<std::vector<RegistryValueInfo*>,RegistryValueInfo*> valuesContainer_;
-	EnumeratorContainer<std::vector<String>,String> keysContainer_;
+	Array<RegistryValueInfo*> values_;
+	Array<String> keys_;	
 	RegistryKeyType rootKeyType_;
 	String currentRegKey_;
 

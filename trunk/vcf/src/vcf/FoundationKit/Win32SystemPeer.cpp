@@ -44,7 +44,11 @@ bool Win32SystemPeer::doesFileExist( const String& fileName )
 
 
 	HANDLE hfile = NULL;
-
+#ifdef VCF_WIN32CE
+	hfile = ::CreateFileW( fileName.c_str(), 0,
+								0/*FILE_SHARE_READ | FILE_SHARE_WRITE*/, NULL,
+								OPEN_EXISTING, FILE_ATTRIBUTE_READONLY | FILE_ATTRIBUTE_SYSTEM, NULL );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		hfile = ::CreateFileW( fileName.c_str(), 0,
 								0/*FILE_SHARE_READ | FILE_SHARE_WRITE*/, NULL,
@@ -55,7 +59,7 @@ bool Win32SystemPeer::doesFileExist( const String& fileName )
 								0/*FILE_SHARE_READ | FILE_SHARE_WRITE*/, NULL,
 								OPEN_EXISTING, FILE_ATTRIBUTE_READONLY | FILE_ATTRIBUTE_SYSTEM, NULL );
 	}
-
+#endif
 
 	if ( INVALID_HANDLE_VALUE == hfile ) {
 		int err = ::GetLastError();
@@ -660,7 +664,19 @@ String Win32SystemPeer::getUserName()
 String Win32SystemPeer::createTempFileName( const String& directory )
 {
 	String result;
+#ifdef VCF_WIN32CE
+	VCF::WideChar tmp[MAX_PATH];
+	memset( tmp,0,sizeof(tmp) );
+	::GetTempFileNameW( directory.c_str(), L"tmp", 0, tmp );
+	result = tmp;
 
+	WIN32_FIND_DATAW fnd;		
+	HANDLE found = ::FindFirstFileW( tmp, &fnd );
+	if ( found != INVALID_HANDLE_VALUE ) {
+		::FindClose(found);
+		::DeleteFileW(tmp);		
+	}
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCF::WideChar tmp[MAX_PATH];
 		memset( tmp,0,sizeof(tmp) );
@@ -687,7 +703,7 @@ String Win32SystemPeer::createTempFileName( const String& directory )
 			::DeleteFileA(tmp);		
 		}
 	}
-
+#endif
 	return result;
 }
 

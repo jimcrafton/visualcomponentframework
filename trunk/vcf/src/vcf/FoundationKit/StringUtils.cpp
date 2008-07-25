@@ -547,7 +547,7 @@ VCF::String StringUtils::newUUID()
 {
 	VCF::String result = "";
 #if defined(VCF_WIN)
-	#if defined(VCF_WIN32CE)
+	#ifdef VCF_WIN32CE
 		GUID id;
 		CoCreateGuid( &id );
 		char tmp[256];
