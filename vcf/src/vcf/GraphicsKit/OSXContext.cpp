@@ -1777,27 +1777,6 @@ void OSXContext::drawThemeHeader( Rect* rect, ButtonState& state )
 	HIRect hr = r;	
 	HIThemeDrawButton( &hr, &drawInfo, contextRef_.cgRef, kHIThemeOrientationNormal, &labelRect );
 	CGContextRestoreGState( contextRef_.cgRef );
-	
-	/*
-    ThemeButtonDrawInfo btnInfo;
-	btnInfo.state = kThemeStateInactive ;
-	
-	btnInfo.value = kThemeButtonOff;
-	
-	if ( state.isPressed() ) {
-		btnInfo.state |= kThemeStatePressed;
-		btnInfo.value = kThemeButtonOn;
-	}
-	
-	if ( state.isActive() && state.isEnabled() ) {
-		btnInfo.state |= kThemeStateActive;
-	}
-	
-	
-	btnInfo.adornment = kThemeAdornmentNone;		    
-
-    DrawThemeButton( r, kThemeListHeaderButton, &btnInfo, NULL, NULL, NULL, 0 );
-	*/
 }
 
 void OSXContext::drawThemeEdge( Rect* rect, DrawUIState& state, const int32& edgeSides, const int32& edgeStyle )

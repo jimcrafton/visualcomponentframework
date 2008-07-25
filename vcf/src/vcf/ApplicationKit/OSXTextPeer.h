@@ -65,7 +65,13 @@ public:
 	virtual void setDefaultStyle( Dictionary& styles );
 
 protected:
-	//TXNObject txnObject_; 
+	
+	NSTextStorage* textStorage_;
+	NSLayoutManager* layoutMgr_;
+	NSTextContainer* container_;
+	
+	
+	
 	Rect margins_;
 };
 

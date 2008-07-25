@@ -11,6 +11,9 @@ where you installed the VCF.
 
 
 #include "vcf/ApplicationKit/ListviewPeer.h"
+namespace VCF {
+	class OSXListview;
+};
 
 @interface OSXListviewDataSrc : NSObject
 {
@@ -20,6 +23,15 @@ where you installed the VCF.
 - (void)setModel:(VCF::ListModel*)aModel;
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView;
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex;
+@end
+
+
+@interface OSXListviewTableDelegate : NSObject 
+{
+	VCF::OSXListview* listView;
+}
+- (void)setListView:(VCF::OSXListview* ) aListView;
+- (BOOL)textShouldBeginEditing:(NSText *)textObject;
 @end
 
 namespace VCF
@@ -88,27 +100,21 @@ public:
 
 	virtual void setDisplayOptions( const int32& displayOptions );
 
+	
 protected:	
 	ListViewControl* listviewControl_;
 	Array<uint32> selectedItems_;
 	OSXListviewDataSrc* dataSrc_;
 	NSTableView* tableView_;
+	OSXListviewTableDelegate* tableDelegate_;
+	
+	bool allowLabelEditing_;
+	
 	void onControlModelChanged( Event* e );
 	void onListModelChanged( Event* e );
 	void onColumnModelAdded( Event* e );
 	void onColumnModelRemoved( Event* e );	
-	void onColumnModelChanged( Event* e );	
-	
-	
-	//static OSStatus DBItemDataCallback( ControlRef browser, DataBrowserItemID item, 
-	//									DataBrowserPropertyID property, DataBrowserItemDataRef itemData,
-	//									Boolean setValue );
-										
-	//static void DBItemNotificationCallback( ControlRef browser, DataBrowserItemID itemID, 
-	//														DataBrowserItemNotification message);
-															
-	//static void findPtForEachItem ( DataBrowserItemID item, DataBrowserItemState state, void *clientData );
-	//void addListItems();
+	void onColumnModelChanged( Event* e );		
 };
 
 
