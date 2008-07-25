@@ -37,13 +37,18 @@ void initMLTE()
 	MLTERefCount ++;
 }
 */
-OSXTextPeer::OSXTextPeer( const bool& autoWordWrap, const bool& multiLined )
-	
+OSXTextPeer::OSXTextPeer( const bool& autoWordWrap, const bool& multiLined ):
+	textStorage_(nil),
+	layoutMgr_(nil),
+	container_(nil)
 {
 	
 }
 
-OSXTextPeer::OSXTextPeer()
+OSXTextPeer::OSXTextPeer():
+	textStorage_(nil),
+	layoutMgr_(nil),
+	container_(nil)
 {
 /*
 	TXNFrameOptions frameOptions;

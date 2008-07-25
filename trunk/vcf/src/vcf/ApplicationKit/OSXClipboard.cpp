@@ -25,10 +25,16 @@ using namespace VCF;
 #define kUTTypePNG CFSTR("public.png")
 
 
+
+
+
+
 String UTItoMimeType( CFStringRef uti )
 {
 	String result;
 
+	
+	
 	if ( UTTypeEqual( uti, kUTTypePlainText ) ) {
 		result = "text/plain";
 	}
@@ -39,7 +45,19 @@ String UTItoMimeType( CFStringRef uti )
 	return result;
 }
 
-
+String MimeTypeToUTI( const String& mime ) 
+{
+	static std::map<String,String> mimeToUTI;
+	if ( mimeToUTI.empty() ) {
+		mimeToUTI[STRING_DATA_TYPE] = CFTextString(kUTTypePlainText);
+		mimeToUTI[RTF_DATA_TYPE] = CFTextString(kUTTypeRTF);
+		mimeToUTI[INTEGER_DATA_TYPE] = CFTextString(kUTTypeRTF);
+		mimeToUTI[OBJECT_DATA_TYPE] = CFTextString(kUTTypeRTF);
+		mimeToUTI[OBJECT_DATA_TYPE] = CFTextString(kUTTypeRTF);
+	}
+	
+	return mimeToUTI[mime];
+}
 
 
 OSXClipboard::OSXClipboard()

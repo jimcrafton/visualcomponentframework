@@ -17,6 +17,14 @@ where you installed the VCF.
 namespace VCF  {
 
 class DataType;
+	
+#define  kVCF_INTEGER_DATA_TYPE		CFSTR("org.vcf.data.integer")
+#define  kVCF_OBJECT_DATA_TYPE		CFSTR("org.vcf.data.object")
+#define  kVCF_FILE_DATA_TYPE		CFSTR("org.vcf.data.file")
+#define  kVCF_BYTE_STREAM_DATA_TYPE		CFSTR("org.vcf.data.byte-stream")	
+#define  kVCF_COMPONENT_DATA_TYPE		CFSTR("org.vcf.data.vff")		
+	
+	
 /**
 *Class OSXClipboard documentation
 */

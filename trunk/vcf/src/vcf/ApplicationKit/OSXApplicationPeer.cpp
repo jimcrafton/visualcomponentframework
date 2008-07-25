@@ -65,6 +65,26 @@ OSXApplicationPeer::~OSXApplicationPeer()
 }
 
 
+void updateMenuWithAppName( NSMenu* menu, NSString* appName ) 
+{
+	NSArray* items = [menu 	itemArray];
+	NSUInteger count = [items count];
+	for ( NSUInteger i=0;i<count;i++ ) {
+		NSMenuItem* item = (NSMenuItem*) [items objectAtIndex:i];
+		NSString* title = [item title];
+		NSRange rng = [title rangeOfString:@"NewApplication"];
+		if ( rng.location != NSNotFound ) {
+			NSString* newTitle = [title stringByReplacingOccurrencesOfString:@"NewApplication" withString:appName];
+			[item setTitle:newTitle];
+		}
+		
+		if ( [item hasSubmenu] ) {
+			updateMenuWithAppName( [item submenu], appName );
+		}
+	}
+}
+
+
 bool OSXApplicationPeer::initApp()
 {
 	bool result = true;
@@ -74,6 +94,14 @@ bool OSXApplicationPeer::initApp()
 	VCFAppDelegate* appDelegate = [[VCFAppDelegate alloc] init];
 	[appInstance_ setDelegate: appDelegate];
 	
+	
+	if ( [NSBundle loadNibNamed:@"ApplicationKit" owner:appDelegate] ) {
+		//NSString* appName = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleName"];
+		String name = app_->getName();
+		CFTextString tmp;
+		tmp = name;
+		updateMenuWithAppName( [appInstance_ mainMenu], tmp );		
+	}	
 	
 	return result;	
 }

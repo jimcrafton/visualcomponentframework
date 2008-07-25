@@ -734,6 +734,19 @@ void OSXListview::onListModelItemDeleted( Event* e )
 }
 @end
 
+@implementation OSXListviewTableDelegate
+
+- (BOOL)textShouldBeginEditing:(NSText *)textObject
+{
+	return listView->getAllowLabelEditing() ? YES : NO;
+}
+
+- (void)setListView:(VCF::OSXListview* ) aListView
+{
+	listView = aListView;
+}
+@end
+
 
 
 namespace VCF {
@@ -742,7 +755,9 @@ OSXListview::OSXListview( ListViewControl* listviewControl ):
 	OSXControl( listviewControl ),
 	listviewControl_( listviewControl ),
 	dataSrc_(nil),
-	tableView_(nil)
+	tableView_(nil),
+	tableDelegate_(nil),
+	allowLabelEditing_(false)
 {
 	addCallback( new ClassProcedure1<Event*,OSXListview>(this, &OSXListview::onControlModelChanged), "OSXListview::onControlModelChanged" );		
 	addCallback( new ClassProcedure1<Event*,OSXListview>(this, &OSXListview::onListModelChanged), "OSXListview::onListModelChanged" );	
@@ -752,6 +767,8 @@ OSXListview::OSXListview( ListViewControl* listviewControl ):
 	
 	
 	dataSrc_ = [[OSXListviewDataSrc alloc] init];
+	tableDelegate_ = [[OSXListviewTableDelegate alloc] init];
+	[tableDelegate_ setListView:this];
 }
 
 OSXListview::~OSXListview()
@@ -842,6 +859,8 @@ void OSXListview::create( Control* owningControl )
 	tableView_ = list;
 	view_ = scrollView;
 	
+	[tableView_ setDelegate: tableDelegate_];
+	
 	OSXControl::setViewForPeer( tableView_, this );
 	
 	owningControl->ControlModelChanged += getCallback( "OSXListview::onControlModelChanged" );
@@ -851,46 +870,71 @@ void OSXListview::create( Control* owningControl )
 
 void OSXListview::selectItem( const uint32& index )
 {
-
+	NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:index];	
+	[tableView_ selectRowIndexes: indexes byExtendingSelection:NO];
+	[indexes release];
 }
 
 uint32 OSXListview::getSelectedItem()
 {
-	return 0;
+	return [tableView_ selectedRow];
 }
 
 void OSXListview::setFocusedItem( const uint32& index )
 {
-
+	NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:index];	
+	[tableView_ selectRowIndexes: indexes byExtendingSelection:NO];
+	[indexes release];
 }
 
 uint32 OSXListview::getFocusedItem()
 {
-	return 0;
+	return [tableView_ selectedRow];
 }
 
 bool OSXListview::isItemSelected( const uint32& index )
 {
-	return false;
+	return [tableView_ isRowSelected:index];
 }
 
 Rect OSXListview::getItemRect( const uint32& index )
 {
-	return Rect();
+	NSRect r = [tableView_ rectOfRow:index];
+	
+	return Rect(r.origin.x,r.origin.y,r.origin.x+r.size.width,r.origin.y+r.size.height);
 }
 
 Rect OSXListview::getItemImageRect( const uint32& index )
 {
-	return Rect();
+	NSRect r = [tableView_ rectOfRow:index];
+	
+	return Rect(r.origin.x,r.origin.y,r.origin.x+r.size.width,r.origin.y+r.size.height);
 }
 
 uint32 OSXListview::hitTest( const Point& point )
 {
-	return 0;
+	NSPoint pt;
+	pt.x = point.x_;
+	pt.y = point.y_;
+	return [tableView_ rowAtPoint:pt];
 }
 
 Enumerator<uint32>* OSXListview::getSelectedItems()
 {
+	selectedItems_.clear();
+	NSIndexSet* indexes = [tableView_ selectedRowIndexes];
+	
+	uint32 count = [indexes count];
+	std::vector<NSUInteger> idxs(count);
+	
+	[indexes getIndexes: &idxs[0] maxCount:count inIndexRange:nil];
+	
+	selectedItems_.resize(count);
+	
+	for (uint32 i=0;i<[	indexes count];i++ ) {
+		selectedItems_[i] = idxs[i];
+	}
+	
 	return selectedItems_.getEnumerator();
 }
 
@@ -968,22 +1012,39 @@ void OSXListview::setIconAlignment( const IconAlignType& iconAlignType )
 
 bool OSXListview::getAllowLabelEditing()
 {
-	return false;
+	return allowLabelEditing_;
 }
 
 void OSXListview::setAllowLabelEditing( const bool& allowLabelEditing )
 {
-
+	allowLabelEditing_ = allowLabelEditing;
 }
 
 int32 OSXListview::getDisplayOptions()
 {
-	return 0;
+	int32 result = lvdoDefault;
+	NSUInteger mask = [tableView_ gridStyleMask];
+	if ( mask != NSTableViewGridNone ) {
+		result |= lvdoGridLines;
+	}
+	return result;
 }	
 
 void OSXListview::setDisplayOptions( const int32& displayOptions )
 {
+//lvdoDefault = 0,
+//	lvdoHotTracking = 1,
+//	lvdoFullRowSelect = 2,
+//	lvdoGridLines = 4
 
+	NSUInteger mask = [tableView_ gridStyleMask];
+	if ( displayOptions & lvdoGridLines ) {
+		mask = NSTableViewSolidVerticalGridLineMask | NSTableViewSolidHorizontalGridLineMask;
+	}
+	else if ( !(displayOptions & lvdoGridLines) ) {
+		mask = NSTableViewGridNone;
+	}
+	[tableView_ setGridStyleMask:mask];
 }
 
 };

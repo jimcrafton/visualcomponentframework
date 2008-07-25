@@ -87,10 +87,12 @@ where you installed the VCF.
 {
 	//printf( "windowWillClose called \n" );
 	VCF::Application* app = VCF::Application::getRunningInstance();
-	if ( app->getMainWindow() == vcfWnd ) {
-		
-		NSApplication* app = [NSApplication sharedApplication];
-		[app stop: app];
+	if ( NULL != app ) {
+		if ( app->getMainWindow() == vcfWnd ) {
+			
+			NSApplication* app = [NSApplication sharedApplication];
+			[app stop: app];
+		}
 	}
 }
 
