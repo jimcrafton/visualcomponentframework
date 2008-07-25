@@ -103,7 +103,7 @@ Setup VCF_ operating system
 		#define WIN32
 	#endif
 
-	#if defined WINCE
+	#if defined _WIN32_WCE
 		#define VCF_WIN32CE
 	#endif
 #endif

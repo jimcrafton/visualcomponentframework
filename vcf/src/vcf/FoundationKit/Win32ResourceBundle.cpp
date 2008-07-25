@@ -49,13 +49,16 @@ String Win32ResourceBundle::getString( const String& resourceName )
 	HINSTANCE hinst = getResourceInstance();
 	String result;
 	HRSRC resHandle = NULL;
+#ifdef VCF_WIN32CE
+	resHandle = ::FindResourceW( hinst, resourceName.c_str(), RT_RCDATA_W );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		resHandle = ::FindResourceW( hinst, resourceName.c_str(), RT_RCDATA_W );
 	}
 	else {
 		resHandle = ::FindResourceA( hinst, resourceName.ansi_c_str(), RT_RCDATA_A );
 	}
-
+#endif
 	if ( NULL != resHandle ){
 		HGLOBAL	data = ::LoadResource( hinst, resHandle );
 		if ( NULL != data ){
@@ -81,6 +84,16 @@ String Win32ResourceBundle::getString( const String& resourceName )
 
 
 		if ( stringID > 0 ) {
+
+#ifdef VCF_WIN32CE
+			wchar_t tmp[256];
+			int ret = ::LoadStringW( hinst, stringID, tmp, 255 );
+			if ( ret ) {
+				tmp[ret] = 0;
+				result = tmp;
+				failedToFindRes = false;
+			}				
+#else 
 			if ( System::isUnicodeEnabled() ) {
 				wchar_t tmp[256];
 				int ret = ::LoadStringW( hinst, stringID, tmp, 255 );
@@ -98,7 +111,8 @@ String Win32ResourceBundle::getString( const String& resourceName )
 					result = tmp;
 					failedToFindRes = false;
 				}
-			}			
+			}
+#endif
 		}
 		else {
 			failedToFindRes = true;
@@ -122,13 +136,16 @@ String Win32ResourceBundle::getVFF( const String& resourceName )
 	bool failedToFindRes = true;
 
 	HRSRC resHandle = NULL;
+#ifdef VCF_WIN32CE
+	resHandle = ::FindResourceW( getResourceInstance(), resourceName.c_str(), L"VFF" );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		resHandle = ::FindResourceW( getResourceInstance(), resourceName.c_str(), L"VFF" );
 	}
 	else {
 		resHandle = ::FindResourceA( getResourceInstance(), resourceName.ansi_c_str(), "VFF" );
 	}
-
+#endif
 	if ( NULL != resHandle ){
 		HGLOBAL	data = ::LoadResource( NULL, resHandle );
 		if ( NULL != data ){
@@ -488,7 +505,7 @@ void getVersionInfoW( VersionMap& map, const String& fileName )
 }
 
 
-
+#ifndef VCF_WIN32CE
 void getVersionInfoA( VersionMap& map, const String& fileName )
 {
 	char fileNameA[MAX_PATH];
@@ -587,7 +604,7 @@ void getVersionInfoA( VersionMap& map, const String& fileName )
 	delete [] buf;
 
 }
-
+#endif
 
 class FindVersionInfoVal {
 public:
@@ -607,14 +624,16 @@ ProgramInfo* Win32ResourceBundle::getProgramInfoFromFileName( const String& file
 	ProgramInfo* result = NULL;
 
 	VersionMap map;
-
+#ifdef VCF_WIN32CE
+	getVersionInfoW( map, fileName );
+#else
 	if ( System::isUnicodeEnabled() ) {
 		getVersionInfoW( map, fileName );
 	}		
 	else {
 		getVersionInfoA( map, fileName );
 	}
-
+#endif
 	if ( !map.empty() ) {
 		String name;
 		String programFileName;
@@ -673,7 +692,11 @@ ProgramInfo* Win32ResourceBundle::getProgramInfoFromFileName( const String& file
 ProgramInfo* Win32ResourceBundle::getProgramInfo()
 {
 	String fileName;
-
+#ifdef VCF_WIN32CE
+	VCF::WideChar tmp[MAX_PATH];		
+	::GetModuleFileNameW( getResourceInstance(), tmp, MAX_PATH );
+	fileName = tmp;		
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCF::WideChar tmp[MAX_PATH];		
 		::GetModuleFileNameW( getResourceInstance(), tmp, MAX_PATH );
@@ -684,7 +707,7 @@ ProgramInfo* Win32ResourceBundle::getProgramInfo()
 		::GetModuleFileNameA( getResourceInstance(), tmp, MAX_PATH );
 		fileName = tmp;		
 	}
-
+#endif
 	return Win32ResourceBundle::getProgramInfoFromFileName(fileName);
 }
 

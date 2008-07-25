@@ -11,6 +11,12 @@
 
 #include "zutil.h"
 
+#ifdef _WIN32_WCE
+#include <windows.h>
+
+#define errno GetLastError()
+#endif
+
 #ifdef NO_DEFLATE       /* for compatibility with old definition */
 #  define NO_GZCOMPRESS
 #endif
@@ -177,7 +183,9 @@ local gzFile gz_open (path, mode, fd)
     }
     s->stream.avail_out = Z_BUFSIZE;
 
+#ifndef _WIN32_WCE
     errno = 0;
+#endif
     s->file = fd < 0 ? F_OPEN(path, fmode) : (FILE*)fdopen(fd, fmode);
 
     if (s->file == NULL) {
@@ -263,7 +271,9 @@ local int get_byte(s)
 {
     if (s->z_eof) return EOF;
     if (s->stream.avail_in == 0) {
-        errno = 0;
+#ifndef _WIN32_WCE
+		errno = 0;
+#endif
         s->stream.avail_in = (uInt)fread(s->inbuf, 1, Z_BUFSIZE, s->file);
         if (s->stream.avail_in == 0) {
             s->z_eof = 1;
@@ -299,7 +309,9 @@ local void check_header(s)
     len = s->stream.avail_in;
     if (len < 2) {
         if (len) s->inbuf[0] = s->stream.next_in[0];
-        errno = 0;
+        #ifndef _WIN32_WCE
+		errno = 0;
+#endif
         len = (uInt)fread(s->inbuf + len, 1, Z_BUFSIZE >> len, s->file);
         if (len == 0 && ferror(s->file)) s->z_err = Z_ERRNO;
         s->stream.avail_in += len;
@@ -448,7 +460,9 @@ int ZEXPORT gzread (file, buf, len)
         }
         if (s->stream.avail_in == 0 && !s->z_eof) {
 
-            errno = 0;
+            #ifndef _WIN32_WCE
+		errno = 0;
+#endif
             s->stream.avail_in = (uInt)fread(s->inbuf, 1, Z_BUFSIZE, s->file);
             if (s->stream.avail_in == 0) {
                 s->z_eof = 1;

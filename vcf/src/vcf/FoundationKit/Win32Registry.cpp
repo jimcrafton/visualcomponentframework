@@ -113,7 +113,7 @@ bool Win32Registry::removeKey( const String& keyname )
 	std::replace_if( tmpKeyname.begin(), tmpKeyname.end(),
 					std::bind2nd(std::equal_to<VCFChar>(),'/') , '\\' );
 #ifdef VCF_WIN32CE
-	if ( ERROR_SUCCESS == SHDeleteKeyW( rootKeyHandle_, tmpKeyname.c_str() ) ) {
+	if ( ERROR_SUCCESS == RegDeleteKey( rootKeyHandle_, tmpKeyname.c_str() ) ) {
 		return true;
 	}
 #else
@@ -411,10 +411,9 @@ Enumerator<String>* Win32Registry::getKeyNames()
 			index ++;
 		}
 	}
-#endif	
-	keysContainer_.initContainer( keys_ );
+#endif		
 
-	return keysContainer_.getEnumerator();
+	return keys_.getEnumerator();
 }
 
 Enumerator<RegistryValueInfo*>* Win32Registry::getValues()
@@ -435,6 +434,53 @@ Enumerator<RegistryValueInfo*>* Win32Registry::getValues()
 	DWORD valNameSize = 256;		
 	DWORD bufferSize = 256;		
 
+#ifdef VCF_WIN32CE
+	WideChar valName[256];	
+	BYTE buffer[sizeof(valName) * sizeof(WideChar)];
+
+	bufferSize = sizeof(buffer);
+	
+	memset( valName, 0, sizeof(valName) * sizeof(WideChar) );
+
+	while ( ERROR_NO_MORE_ITEMS != RegEnumValueW( currentKeyHandle_, index, valName, &valNameSize, NULL, &type, (BYTE*)&buffer, &bufferSize ) ){
+		String tmp = String(valName);
+		RegistryValueInfo* regVal = NULL;
+		VariantData data;
+
+		switch ( type ){
+			case REG_SZ:{
+				String strVal( (WideChar*)buffer );
+				data = strVal;
+				regVal = new RegistryValueInfo( &data, RDT_STRING, tmp );
+			}
+			break;
+
+			case REG_DWORD:{
+				uint32* intVal = (uint32*)buffer;
+				data = *intVal;
+				regVal = new RegistryValueInfo( &data, RDT_INTEGER, tmp );
+			}
+			break;
+
+			case REG_BINARY:{
+				void* dataBuf = NULL;
+				if ( NULL != buffer ){
+					dataBuf = (void*)new char[bufferSize];
+					memcpy( dataBuf, buffer, bufferSize );
+				}
+				regVal = new RegistryValueInfo( NULL, RDT_BINARY, tmp, (char*)dataBuf, bufferSize );
+			}
+			break;
+		}
+
+		values_.push_back( regVal );
+		bufferSize = sizeof(buffer);
+
+		valNameSize = 256;
+		memset( valName, 0, sizeof(valName) * sizeof(WideChar) );
+		index ++;
+	}
+#else
 	if ( System::isUnicodeEnabled() ) {
 		WideChar valName[256];	
 		BYTE buffer[sizeof(valName) * sizeof(WideChar)];
@@ -529,10 +575,9 @@ Enumerator<RegistryValueInfo*>* Win32Registry::getValues()
 			index ++;
 		}
 	}
+#endif
 
-	valuesContainer_.initContainer( values_ );
-
-	return valuesContainer_.getEnumerator();
+	return values_.getEnumerator();
 }
 
 String Win32Registry::getCurrentKey()
