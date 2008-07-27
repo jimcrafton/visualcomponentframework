@@ -50,7 +50,21 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/OSXAppResourceBundle.h"
 #include "vcf/ApplicationKit/OSXCustomControl.h"
 
+#include "vcf/ApplicationKit/PopupWindowPeer.h"
+#include "vcf/ApplicationKit/OSXPopupWindow.h"
 
+#include "vcf/ApplicationKit/TransparentWindowPeer.h"
+#include "vcf/ApplicationKit/OSXTransparentWindow.h"
+
+#include "vcf/ApplicationKit/DropDownPeer.h"
+#include "vcf/ApplicationKit/OSXDropDown.h"
+
+#include "vcf/ApplicationKit/OSXCommonFontDialog.h"
+
+#include "vcf/ApplicationKit/OSXClipboard.h"
+
+#include "vcf/ApplicationKit/SystemTrayPeer.h"
+#include "vcf/ApplicationKit/OSXSystemTray.h"
 
 #define kSleepTime	32767
 /*
@@ -698,17 +712,17 @@ WindowPeer* OSXUIToolkit::internal_createWindowPeer( Control* control, Control* 
 
 PopupWindowPeer* OSXUIToolkit::internal_createPopupWindowPeer( Frame* frame, Window* owner )
 {
-    return NULL;
+    return new OSXPopupWindow(frame,owner);
 }
 
 TransparentWindowPeer* OSXUIToolkit::internal_createTransparentWindowPeer( Frame* frame )
 {
-    return NULL;
+    return new OSXTransparentWindow(frame);
 }
 
 DropDownPeer* OSXUIToolkit::internal_createDropDownPeer( Control* control )
 {
-	return NULL;
+	return new OSXDropDown(control);
 }
 
 
@@ -764,7 +778,7 @@ CommonFolderBrowseDialogPeer* OSXUIToolkit::internal_createCommonFolderBrowseDia
 
 CommonFontDialogPeer* OSXUIToolkit::internal_createCommonFontDialogPeer( Control* owner )
 {
-    return NULL;
+    return new OSXFontDialog(owner);
 }
 
 DragDropPeer* OSXUIToolkit::internal_createDragDropPeer()
@@ -799,7 +813,7 @@ GraphicsResourceBundlePeer* OSXUIToolkit::internal_createGraphicsResourceBundleP
 
 SystemTrayPeer* OSXUIToolkit::internal_createSystemTrayPeer()
 {
-	return NULL;
+	return new OSXSystemTray();
 }
 
 MenuManagerPeer* OSXUIToolkit::internal_createMenuManagerPeer()
@@ -824,7 +838,7 @@ CursorPeer* OSXUIToolkit::internal_createCursorPeer( Cursor* cursor )
 
 ClipboardPeer* OSXUIToolkit::internal_createClipboardPeer()
 {
-    return NULL;
+    return new OSXClipboard();
 }
 
 bool OSXUIToolkit::internal_createCaret( Control* owningControl, Image* caretImage  )

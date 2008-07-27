@@ -118,9 +118,12 @@ void OSXButton::setImage( Image* image )
 		
 ButtonState OSXButton::getState()
 {
-	//state_.setEnabled( IsControlEnabled( hiView_ ) ? true : false );
-	//state_.setActive( IsControlActive( hiView_ ) ? true : false );
-	//state_.setFocused( isFocused() ? true : false );
+	state_.setFocused( isFocused() ? true : false );
+	
+	NSWindow* wnd = [view_ window];
+	state_.setActive( [wnd isKeyWindow] ? true : false );
+	NSControl* ctrl = (NSControl*)view_;
+	state_.setEnabled( [ctrl isEnabled] ? true : false );
 	
 	return state_;
 }
