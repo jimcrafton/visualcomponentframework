@@ -410,17 +410,29 @@ void OSXControl::setFocused()
 
 bool OSXControl::isEnabled()
 {
+	if ( [view_ isKindOfClass: [NSControl class]] ) {
+		NSControl* ctrl = (NSControl*)view_;
+		return [ctrl isEnabled] ? true : false;
+	}
 	return true;
 }
 
 void OSXControl::setEnabled( const bool& enabled )
 {
-
+	if ( [view_ isKindOfClass: [NSControl class]] ) {
+		NSControl* ctrl = (NSControl*)view_;
+		[ctrl setEnabled:enabled ? YES : NO];
+	}
 }
 
 void OSXControl::setFont( Font* font )
 {
-
+	if ( [view_ isKindOfClass: [NSControl class]] ) {
+		NSControl* ctrl = (NSControl*)view_;
+		NSFont* nsFont = nil;
+		//figure out the NSFOnt???
+		//[ctrl setFont:nsFont];
+	}
 }
 
 void OSXControl::repaint( Rect* repaintRect, const bool& immediately )

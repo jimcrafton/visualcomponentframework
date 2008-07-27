@@ -972,11 +972,20 @@ bool OSXListview::ensureVisible(const uint32& index, bool partialOK )
 	
 void OSXListview::setColumnWidth( const uint32& index, const double& width, ColumnAutosizeType type )
 {
-
+	NSArray* columns = [tableView_ tableColumns];
+	NSTableColumn* col = [columns objectAtIndex: index];
+	if ( nil != col ) {
+		[col setWidth: width];
+	}
 }
 
 double OSXListview::getColumnWidth( const uint32& index )
 {
+	NSArray* columns = [tableView_ tableColumns];
+	NSTableColumn* col = [columns objectAtIndex: index];
+	if ( nil != col ) {
+		return [col width];
+	}
 	return 0.0;
 }
 

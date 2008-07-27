@@ -12,6 +12,16 @@
 		38847C130E057D38005D0874 /* OSXCustomControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 38847C0F0E057D38005D0874 /* OSXCustomControl.h */; };
 		38847C140E057D38005D0874 /* OSXCustomControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38847C100E057D38005D0874 /* OSXCustomControl.cpp */; };
 		3888EB200E382CE800DE1A95 /* ApplicationKit.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3888EB1D0E382C9600DE1A95 /* ApplicationKit.xib */; };
+		389BB6920E3C1F2B005E0407 /* OSXPopupWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 389BB6900E3C1F2B005E0407 /* OSXPopupWindow.h */; };
+		389BB6930E3C1F2B005E0407 /* OSXPopupWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389BB6910E3C1F2B005E0407 /* OSXPopupWindow.cpp */; };
+		389BB6970E3C1F6B005E0407 /* OSXTransparentWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 389BB6950E3C1F6B005E0407 /* OSXTransparentWindow.h */; };
+		389BB6980E3C1F6B005E0407 /* OSXTransparentWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389BB6960E3C1F6B005E0407 /* OSXTransparentWindow.cpp */; };
+		389BB69B0E3C1F93005E0407 /* OSXDropDown.h in Headers */ = {isa = PBXBuildFile; fileRef = 389BB6990E3C1F93005E0407 /* OSXDropDown.h */; };
+		389BB69C0E3C1F93005E0407 /* OSXDropDown.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389BB69A0E3C1F93005E0407 /* OSXDropDown.cpp */; };
+		389BB69F0E3C1FC4005E0407 /* OSXCommonFontDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 389BB69D0E3C1FC4005E0407 /* OSXCommonFontDialog.h */; };
+		389BB6A00E3C1FC4005E0407 /* OSXCommonFontDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389BB69E0E3C1FC4005E0407 /* OSXCommonFontDialog.cpp */; };
+		389BB6BF0E3C29CC005E0407 /* OSXSystemTray.h in Headers */ = {isa = PBXBuildFile; fileRef = 389BB6BE0E3C29CC005E0407 /* OSXSystemTray.h */; };
+		389BB6C10E3C2A24005E0407 /* OSXSystemTray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 389BB6C00E3C2A24005E0407 /* OSXSystemTray.cpp */; };
 		38AC99EB0E14834E00E6F8A0 /* VCFTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38AC99E90E14834E00E6F8A0 /* VCFTime.cpp */; };
 		38AC99EC0E14834E00E6F8A0 /* VCFTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 38AC99EA0E14834E00E6F8A0 /* VCFTime.h */; };
 		38AC99ED0E14834E00E6F8A0 /* VCFTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38AC99E90E14834E00E6F8A0 /* VCFTime.cpp */; };
@@ -1451,6 +1461,16 @@
 		38847C0F0E057D38005D0874 /* OSXCustomControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSXCustomControl.h; path = ../../src/vcf/ApplicationKit/OSXCustomControl.h; sourceTree = SOURCE_ROOT; };
 		38847C100E057D38005D0874 /* OSXCustomControl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = OSXCustomControl.cpp; path = ../../src/vcf/ApplicationKit/OSXCustomControl.cpp; sourceTree = SOURCE_ROOT; };
 		3888EB1D0E382C9600DE1A95 /* ApplicationKit.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ApplicationKit.xib; path = ../resources/osx/ApplicationKit.xib; sourceTree = SOURCE_ROOT; };
+		389BB6900E3C1F2B005E0407 /* OSXPopupWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSXPopupWindow.h; path = ../../src/vcf/ApplicationKit/OSXPopupWindow.h; sourceTree = SOURCE_ROOT; };
+		389BB6910E3C1F2B005E0407 /* OSXPopupWindow.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = OSXPopupWindow.cpp; path = ../../src/vcf/ApplicationKit/OSXPopupWindow.cpp; sourceTree = SOURCE_ROOT; };
+		389BB6950E3C1F6B005E0407 /* OSXTransparentWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSXTransparentWindow.h; path = ../../src/vcf/ApplicationKit/OSXTransparentWindow.h; sourceTree = SOURCE_ROOT; };
+		389BB6960E3C1F6B005E0407 /* OSXTransparentWindow.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = OSXTransparentWindow.cpp; path = ../../src/vcf/ApplicationKit/OSXTransparentWindow.cpp; sourceTree = SOURCE_ROOT; };
+		389BB6990E3C1F93005E0407 /* OSXDropDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSXDropDown.h; path = ../../src/vcf/ApplicationKit/OSXDropDown.h; sourceTree = SOURCE_ROOT; };
+		389BB69A0E3C1F93005E0407 /* OSXDropDown.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = OSXDropDown.cpp; path = ../../src/vcf/ApplicationKit/OSXDropDown.cpp; sourceTree = SOURCE_ROOT; };
+		389BB69D0E3C1FC4005E0407 /* OSXCommonFontDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSXCommonFontDialog.h; path = ../../src/vcf/ApplicationKit/OSXCommonFontDialog.h; sourceTree = SOURCE_ROOT; };
+		389BB69E0E3C1FC4005E0407 /* OSXCommonFontDialog.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = OSXCommonFontDialog.cpp; path = ../../src/vcf/ApplicationKit/OSXCommonFontDialog.cpp; sourceTree = SOURCE_ROOT; };
+		389BB6BE0E3C29CC005E0407 /* OSXSystemTray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSXSystemTray.h; path = ../../src/vcf/ApplicationKit/OSXSystemTray.h; sourceTree = SOURCE_ROOT; };
+		389BB6C00E3C2A24005E0407 /* OSXSystemTray.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = OSXSystemTray.cpp; path = ../../src/vcf/ApplicationKit/OSXSystemTray.cpp; sourceTree = SOURCE_ROOT; };
 		38AC99E90E14834E00E6F8A0 /* VCFTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VCFTime.cpp; path = ../../src/vcf/FoundationKit/VCFTime.cpp; sourceTree = SOURCE_ROOT; };
 		38AC99EA0E14834E00E6F8A0 /* VCFTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCFTime.h; path = ../../src/vcf/FoundationKit/VCFTime.h; sourceTree = SOURCE_ROOT; };
 		5E092B0E0741D5AD004B45E4 /* OSXMenuBar.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; name = OSXMenuBar.cpp; path = ../../src/vcf/ApplicationKit/OSXMenuBar.cpp; sourceTree = SOURCE_ROOT; };
@@ -2810,6 +2830,7 @@
 		5E2CDE72064868CD00A8020D /* Peers */ = {
 			isa = PBXGroup;
 			children = (
+				389BB6BE0E3C29CC005E0407 /* OSXSystemTray.h */,
 				5E2CDF930648693C00A8020D /* OSXApplicationPeer.cpp */,
 				5E2CDF940648693C00A8020D /* OSXApplicationPeer.h */,
 				5E834885086A3D78007C5678 /* OSXAppResourceBundle.cpp */,
@@ -2868,6 +2889,15 @@
 				EA6FE8740BC0BB6F00B2CD1C /* OSXUIShellPeer.cpp */,
 				38847C0F0E057D38005D0874 /* OSXCustomControl.h */,
 				38847C100E057D38005D0874 /* OSXCustomControl.cpp */,
+				389BB6900E3C1F2B005E0407 /* OSXPopupWindow.h */,
+				389BB6910E3C1F2B005E0407 /* OSXPopupWindow.cpp */,
+				389BB6950E3C1F6B005E0407 /* OSXTransparentWindow.h */,
+				389BB6960E3C1F6B005E0407 /* OSXTransparentWindow.cpp */,
+				389BB6990E3C1F93005E0407 /* OSXDropDown.h */,
+				389BB69A0E3C1F93005E0407 /* OSXDropDown.cpp */,
+				389BB69D0E3C1FC4005E0407 /* OSXCommonFontDialog.h */,
+				389BB69E0E3C1FC4005E0407 /* OSXCommonFontDialog.cpp */,
+				389BB6C00E3C2A24005E0407 /* OSXSystemTray.cpp */,
 			);
 			name = Peers;
 			sourceTree = "<group>";
@@ -3735,6 +3765,11 @@
 				5ECC90470DC3BBCD005F692A /* ThemeBorder.h in Headers */,
 				5ECC90490DC3BBCD005F692A /* TransparentWindow.h in Headers */,
 				38847C110E057D38005D0874 /* OSXCustomControl.h in Headers */,
+				389BB6920E3C1F2B005E0407 /* OSXPopupWindow.h in Headers */,
+				389BB6970E3C1F6B005E0407 /* OSXTransparentWindow.h in Headers */,
+				389BB69B0E3C1F93005E0407 /* OSXDropDown.h in Headers */,
+				389BB69F0E3C1FC4005E0407 /* OSXCommonFontDialog.h in Headers */,
+				389BB6BF0E3C29CC005E0407 /* OSXSystemTray.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4758,6 +4793,11 @@
 				5ECC90450DC3BBCD005F692A /* PopupWindow.cpp in Sources */,
 				5ECC90480DC3BBCD005F692A /* TransparentWindow.cpp in Sources */,
 				38847C120E057D38005D0874 /* OSXCustomControl.cpp in Sources */,
+				389BB6930E3C1F2B005E0407 /* OSXPopupWindow.cpp in Sources */,
+				389BB6980E3C1F6B005E0407 /* OSXTransparentWindow.cpp in Sources */,
+				389BB69C0E3C1F93005E0407 /* OSXDropDown.cpp in Sources */,
+				389BB6A00E3C1FC4005E0407 /* OSXCommonFontDialog.cpp in Sources */,
+				389BB6C10E3C2A24005E0407 /* OSXSystemTray.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
