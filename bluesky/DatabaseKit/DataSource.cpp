@@ -17,7 +17,7 @@ DataSource::DataSource():
 void DataSource::destroy()
 {
 	setDataSet(NULL);
-	Object::destroy();
+	Component::destroy();
 }
 
 void DataSource::setDataSet( DataSet* val )

@@ -26,7 +26,7 @@ DataField* FieldDefinition::createField()
 	result = dynamic_cast<DataField*>(obj);
 
 	if ( NULL == result ) {
-		obj->free();
+		delete obj;
 		throw DatabaseError("Invalid type of object type created for field.");
 	}
 	
