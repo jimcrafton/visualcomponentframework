@@ -28,7 +28,7 @@ void DataLink::destroy()
 	
 	setDataSource( NULL );
 
-	Object::destroy();
+	Component::destroy();
 }
 
 size_t DataLink::getActiveRecord()

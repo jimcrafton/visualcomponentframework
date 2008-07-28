@@ -24,7 +24,7 @@ namespace VCF {
 	/**
 	\class DataLink DataLink.h "vcf/DatabaseKit/DataLink.h"
 	*/
-	class DATABASEKIT_API DataLink : public Object {
+	class DATABASEKIT_API DataLink : public Component {
 	public:
 		DataLink();
 
