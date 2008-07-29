@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="libAGG"
+	ProjectGUID="{D020A05D-A261-4426-8F92-F3402685CFDD}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>

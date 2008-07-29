@@ -108,8 +108,8 @@ void example1() {
 	System::sleep( 100 );
 
 
-	theMutex->free();
-	theCondition->free();
+	delete theMutex;
+	delete theCondition;
 }
 
 
@@ -124,8 +124,8 @@ public:
 	}
 
 	~bounded_buffer() {
-		buffer_not_full->free();
-		buffer_not_empty->free();
+		delete buffer_not_full;
+		delete buffer_not_empty;
 	}
 
     void send (int m) {

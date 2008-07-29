@@ -11,7 +11,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ControlsKit.h"
 #include "vcf/ApplicationKit/EtchedBorder.h"
 
-#include "vcf/ApplicationKit/DefaultListItem.h"
+#include "vcf/ApplicationKit/ListItem.h"
 
 using namespace VCF;
 
@@ -82,7 +82,7 @@ public:
 		for(int j=0; j<20; j++){
 			String indx = StringUtils::toString(j);
 			String capt = L"Very Ultra Hyper Extra Long ListItem " + indx;		
-			listBoxModel->addItem( new DefaultListItem( listBoxModel, capt ) );			
+			listBoxModel->add( capt );			
 		}
 
 		updateMenuHasHorzScrollbar();

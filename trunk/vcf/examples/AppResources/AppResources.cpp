@@ -29,7 +29,7 @@ public:
 		Resource* textRes = resBundle->getResource( "WhatIsVCF.txt" );
 		if ( NULL != textRes ) {
 			text_.assign( (const char*)textRes->getData(), textRes->getDataSize() );
-			textRes->free();
+			delete textRes;
 		}
 	}
 

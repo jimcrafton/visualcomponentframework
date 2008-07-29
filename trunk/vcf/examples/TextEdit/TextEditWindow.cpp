@@ -30,7 +30,7 @@ TextEditWindow::TextEditWindow():
 	tc->setName( "EditControl" );
 	add( tc, AlignClient );
 
-	tc->setKeepTabbingCharacters( true );
+	tc->setKeepsTabKey( true );
 	setTabStop( false );
 
 	tc->SelectionChanged += 

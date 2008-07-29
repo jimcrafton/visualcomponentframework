@@ -158,17 +158,17 @@ void ReplaceDialog::findNextClicked( VCF::ButtonEvent* e )
 
 	bool addString = true;
 	ListModel* listModel = searchString_->getListModel();
-	VCF::Enumerator<VCF::ListItem*>* items = listModel->getItems();
+	VCF::Enumerator<VCF::VariantData>* items = listModel->getItems();
 	while ( items->hasMoreElements() ) {
-		VCF::ListItem* item = items->nextElement();
-		if ( item->getCaption() == replaceInfo_.searchString_ ) {
+		VariantData item = items->nextElement();
+		if ( replaceInfo_.searchString_ == item ) {
 			addString = false;
 			break;
 		}
 	}
 
 	if ( addString ) {
-		listModel->insertItem( 0, new DefaultListItem( NULL, replaceInfo_.searchString_ ) );
+		listModel->insert( 0, replaceInfo_.searchString_ );
 	}
 
 	replaceInfo_.searchStrings_ = searchStrings_;
@@ -178,7 +178,7 @@ void ReplaceDialog::findNextClicked( VCF::ButtonEvent* e )
 		Dialog::showMessage( "Couldn't find string \"" + replaceInfo_.searchString_ + "\"" );
 	}
 	else {
-		doc->setSelectionRange( replaceInfo_.position_, replaceInfo_.searchString_.size() );
+//		doc->setSelectionRange( replaceInfo_.position_, replaceInfo_.searchString_.size() );
 		replaceInfo_.position_ += replaceInfo_.searchString_.size();
 	}
 }
@@ -196,17 +196,17 @@ void ReplaceDialog::replaceClicked( VCF::ButtonEvent* e )
 
 	bool addString = true;
 	ListModel* listModel = replaceString_->getListModel();
-	VCF::Enumerator<VCF::ListItem*>* items = listModel->getItems();
+	VCF::Enumerator<VCF::VariantData>* items = listModel->getItems();
 	while ( items->hasMoreElements() ) {
-		VCF::ListItem* item = items->nextElement();
-		if ( item->getCaption() == replaceInfo_.replaceString_ ) {
+		VCF::VariantData item = items->nextElement();
+		if ( replaceInfo_.replaceString_ == item ) {
 			addString = false;
 			break;
 		}
 	}
 
 	if ( addString ) {
-		listModel->insertItem( 0, new DefaultListItem( NULL, replaceInfo_.replaceString_ ) );
+		listModel->insert( 0, replaceInfo_.replaceString_ );
 	}
 
 	replaceInfo_.replaceStrings_ = replaceStrings_;
@@ -217,7 +217,7 @@ void ReplaceDialog::replaceClicked( VCF::ButtonEvent* e )
 		Dialog::showMessage( "Couldn't replace string \"" + replaceInfo_.replaceString_ + "\"" );
 	}
 	else {
-		doc->setSelectionRange( replaceInfo_.position_, replaceInfo_.searchString_.size() );
+//		doc->setSelectionRange( replaceInfo_.position_, replaceInfo_.searchString_.size() );
 		replaceInfo_.position_ += replaceInfo_.searchString_.size();
 	}
 }
@@ -234,17 +234,17 @@ void ReplaceDialog::replaceAllClicked( VCF::ButtonEvent* e )
 
 	bool addString = true;
 	ListModel* listModel = replaceString_->getListModel();
-	VCF::Enumerator<VCF::ListItem*>* items = listModel->getItems();
+	VCF::Enumerator<VCF::VariantData>* items = listModel->getItems();
 	while ( items->hasMoreElements() ) {
-		VCF::ListItem* item = items->nextElement();
-		if ( item->getCaption() == replaceInfo_.replaceString_ ) {
+		VCF::VariantData item = items->nextElement();
+		if ( replaceInfo_.replaceString_ == item ) {
 			addString = false;
 			break;
 		}
 	}
 
 	if ( addString ) {
-		listModel->insertItem( 0, new DefaultListItem( NULL, replaceInfo_.replaceString_ ) );
+		listModel->insert( 0, replaceInfo_.replaceString_ );
 	}
 
 	replaceInfo_.replaceStrings_ = replaceStrings_;

@@ -101,7 +101,7 @@ void createFromName()
 						% newInstance->getClassName() );
 
 		// we're done, free the object
-		newInstance->free();
+		delete newInstance;
 	}
 	catch (CantCreateObjectException& ){
 		System::print( "Unable to create class instance\n" );
@@ -131,7 +131,7 @@ void createFromUUID()
 						% newInstance->getClassName() );
 
 		// we're done, free the object
-		newInstance->free();
+		delete newInstance;
 	}
 	catch (CantCreateObjectException& ){
 		System::print( "Unable to create class instance\n" );
@@ -333,7 +333,7 @@ void createAndInvoke()
 		}
 
 		// we're done, free the object
-		newInstance->free();
+		delete newInstance;
 	}
 	catch (CantCreateObjectException& ){
 		System::print( "Unable to create class instance\n" );
@@ -347,8 +347,8 @@ void createAndInvoke()
 class CollT1 : public Object {
 public:
 	_class_rtti_( CollT1, "VCF::Object", "093845lrotelrtkjl" )
-		_property_array_( int, "items", getItem,setItem,addItem,insertItem,removeItem,getItemSize, "" )
-		_property_collection_( double, String, "stuff", getStuff,setStuff,addStuff,insertStuff,removeStuff,getStuffSize, "" )
+		_property_array_( int, "items", getItem,setItem,insertItem,removeItem,getItemSize, "" )
+		_property_collection_( double, String, "stuff", getStuff,setStuff,insertStuff,removeStuff,getStuffSize, "" )
 	_class_rtti_end_
 
 
@@ -377,14 +377,13 @@ public:
 		return items[i];
 	}
 
-	void setItem( const uint32& i, int val, bool addMissingValues ) {
+	void setItem( const uint32& i, int val ) {
 
-		if ( addMissingValues ) {
-			size_t missing = (i+1) - items.size();
-			if ( missing > 0 ) {
-				items.resize( missing + items.size() );
-			}
+		size_t missing = (i+1) - items.size();
+		if ( missing > 0 ) {
+			items.resize( missing + items.size() );
 		}
+		
 
 		items[i] = val;
 	}
@@ -395,7 +394,7 @@ public:
 		
 	}
 
-	void insertStuff( const String& i, double val ){
+	void insertStuff( const String& i, const double& val ){
 		stuff[i] = val;
 	}
 
@@ -447,7 +446,7 @@ void propertyCollections()
 
 	count = p->getCollectionCount();
 
-	p->setAtKey( 1, &VariantData(6461), true );
+	p->setAtKey( 1, &VariantData(6461) );
 
 	count = p->getCollectionCount();
 

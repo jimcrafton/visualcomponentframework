@@ -4,6 +4,7 @@
 	Version="8.00"
 	Name="SketchIt"
 	ProjectGUID="{02E2A176-AB63-4BFD-8341-7695C0365AF8}"
+	RootNamespace="SketchIt"
 	>
 	<Platforms>
 		<Platform
@@ -219,7 +220,7 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath="SketchDocument.cpp"
+				RelativePath="SketchIt.cpp"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -241,26 +242,8 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="SketchIt.cpp"
+				RelativePath=".\SketchModel.cpp"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="SketchTools.cpp"
@@ -333,10 +316,6 @@
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl"
 			>
-			<File
-				RelativePath="SketchDocument.h"
-				>
-			</File>
 			<File
 				RelativePath="SketchTools.h"
 				>

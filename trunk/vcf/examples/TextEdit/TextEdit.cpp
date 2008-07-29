@@ -76,7 +76,7 @@ void TextEdit::onPrint( VCF::Event* e )
 
 		printSession.endPrintingDocument();
 
-		pc->free();
+		delete pc;
 	}
 
 }
@@ -198,11 +198,11 @@ bool TextEdit::initRunningApplication()
 		
 		
 		MenuItem* find = new DefaultMenuItem( "&Find..." );	
-		find->setAcceleratorKey( vkLetterF, kmCtrl );
+		find->setAcceleratorKeyInfo( vkLetterF, kmCtrl );
 		findAction->addTarget( find ); 
 		
 		DefaultMenuItem* replace = new DefaultMenuItem( "&Replace..." );	
-		replace->setAcceleratorKey( vkLetterH, kmCtrl );
+		replace->setAcceleratorKeyInfo( vkLetterH, kmCtrl );
 		replaceAction->addTarget( replace ); 
 		
 		

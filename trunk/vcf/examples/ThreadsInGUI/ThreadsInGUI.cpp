@@ -9,7 +9,7 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ControlsKit.h"
-#include "vcf/ApplicationKit/DefaultListItem.h"
+#include "vcf/ApplicationKit/ListItem.h"
 
 using namespace VCF;
 
@@ -191,7 +191,7 @@ public:
 
 		
 
-		waitCondition_->free();
+		delete waitCondition_;
 	}
 
 	bool waiting() const {
@@ -232,7 +232,7 @@ public:
 			
 
 			if ( !thread->canAutoDelete() ) {
-				thread->free();
+				delete thread;
 				StringUtils::trace( "Freed thread\n" );
 			}
 			
@@ -311,9 +311,8 @@ public:
 	}
 
 	void addThread( ButtonEvent* e ) {
-		ListModel* lm = listBox_->getListModel();
-		ListItem* item = new DefaultListItem();
-		lm->addItem( item );
+		ListModel* lm = listBox_->getListModel();		
+		lm->add( "" );
 
 		
 		Thread* thread = new CounterThread( lm->getCount()-1, 
@@ -330,20 +329,15 @@ public:
 		CounterThreadEvent* thEvent = (CounterThreadEvent*)e;
 
 		ListModel* lm = listBox_->getListModel();
-		ListItem* item = lm->getItemFromIndex( thEvent->index_ );
-
-		item->setCaption( thEvent->info_ );
+		lm->setAsString( thEvent->index_, thEvent->info_ );		
 		listBox_->repaint();
-
 	}
 
 	void threadChanged( Event* e ) {
 		CounterThreadEvent* thEvent = (CounterThreadEvent*)e;
 
 		ListModel* lm = listBox_->getListModel();
-		ListItem* item = lm->getItemFromIndex( thEvent->index_ );
-
-		item->setCaption( thEvent->info_ );
+		lm->setAsString( thEvent->index_, thEvent->info_ );	
 		listBox_->repaint();
 	}
 
@@ -351,10 +345,7 @@ public:
 		CounterThreadEvent* thEvent = (CounterThreadEvent*)e;
 
 		ListModel* lm = listBox_->getListModel();
-		ListItem* item = lm->getItemFromIndex( thEvent->index_ );
-
-		item->setCaption( thEvent->info_ );
-
+		lm->setAsString( thEvent->index_, thEvent->info_ );	
 		listBox_->repaint();
 	}
 

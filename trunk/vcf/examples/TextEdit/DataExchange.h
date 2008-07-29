@@ -166,11 +166,11 @@ public:
 
 		std::vector<VCF::String> result;
 		VCF::ListModel* lm = Base::getListModel();
-		VCF::Enumerator<VCF::ListItem*>* items = lm->getItems();
+		VCF::Enumerator<VCF::VariantData>* items = lm->getItems();
 
 		while ( items->hasMoreElements() ) {
-			VCF::ListItem* item = items->nextElement();
-			result.push_back( item->getCaption() );
+			VCF::VariantData item = items->nextElement();
+			result.push_back( item );
 		}
 
 		std::vector<VCF::String>::iterator found = std::find( result.begin(), result.end(), Base::getCurrentText() );
@@ -188,9 +188,7 @@ public:
 			std::vector<VCF::String>::const_iterator it = val.begin();
 			while ( it != val.end() ) {
 				if ( !(*it).empty() ) {
-					VCF::ListItem* item = new VCF::DefaultListItem();
-					item->setCaption( *it );
-					lm->addItem( item );
+					lm->add( *it );
 				}
 				it ++;
 			}

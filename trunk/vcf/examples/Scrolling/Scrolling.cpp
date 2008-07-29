@@ -11,7 +11,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ControlsKit.h"
 #include "vcf/ApplicationKit/EtchedBorder.h"
 
-#include "vcf/ApplicationKit/DefaultListItem.h"
+#include "vcf/ApplicationKit/ListItem.h"
 
 using namespace VCF;
 

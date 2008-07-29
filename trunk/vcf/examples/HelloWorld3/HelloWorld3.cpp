@@ -58,7 +58,7 @@ public:
 		*and the string value returned by the Rect's toString()
 		*method
 		*/
-		StringUtils::traceWithArgs( Format("HelloWorld3Window constructor @%p, bounds: %s\n")
+		StringUtils::trace( Format("HelloWorld3Window constructor @%p, bounds: %s\n")
 									% this % bounds.toString().c_str() );
 
 		/**

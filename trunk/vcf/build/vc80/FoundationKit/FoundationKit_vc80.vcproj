@@ -4,6 +4,7 @@
 	Version="8.00"
 	Name="FoundationKit"
 	ProjectGUID="{B699126F-83EB-4859-AEB1-AB7D304D9259}"
+	RootNamespace="FoundationKit"
 	>
 	<Platforms>
 		<Platform
@@ -1889,6 +1890,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCFString.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VCFTime.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VCFTime.h"
 				>
 			</File>
 			<File

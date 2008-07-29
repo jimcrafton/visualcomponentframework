@@ -54,7 +54,7 @@ int main( int argc, char** argv ){
 							" size in bytes: " + StringUtils::toString(res->getDataSize()) +
 							" buffer: " + Format( "%p") % res->getData() );
 
-		res->free();
+		delete res;
 	}
 
 	/**
@@ -69,7 +69,7 @@ int main( int argc, char** argv ){
 							" size in bytes: " + StringUtils::toString(res->getDataSize()) +
 							" buffer: " + Format( "%p" ) % res->getData() );
 
-		res->free();
+		delete res;
 	}
 
 
@@ -93,7 +93,7 @@ int main( int argc, char** argv ){
 		System::println( info->getDescription() );		
 
 
-		info->free();
+		delete info;
 	}
 
 	FoundationKit::terminate();

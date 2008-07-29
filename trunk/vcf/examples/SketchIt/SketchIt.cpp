@@ -138,7 +138,7 @@ public:
 													"SketchIt::onUpdateDeleteShape" );
 
 			//add a hotkey to the menuitem
-			editDelete->setAcceleratorKey( vkDelete, 0 );
+			editDelete->setAcceleratorKeyInfo( vkDelete, 0 );
 
 
 

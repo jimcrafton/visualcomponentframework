@@ -90,7 +90,7 @@ public:
 	virtual ~TooltipsWindow(){};
 
 	void onToolTipCB1( ToolTipEvent* e ) {
-		e->setBackgroundColor( Color::getColor("green") );
+		e->backgroundColor = *Color::getColor("green");
 	}
 
 	void onToolTipCB2( ToolTipEvent* e ) {
@@ -98,11 +98,11 @@ public:
 	}
 
 	void onToolTip( ToolTipEvent* e ) {
-		e->setToolTipSize( &Size(200, 100) );
+		e->tooltipSize = Size(200, 100);
 		Cooltip* cooltip = new Cooltip();
 
-		e->setAutoDestroyEmbeddedControl( true );
-		e->setEmbeddedControl( cooltip );
+		e->autoDestroyEmbeddedControl = true;
+		e->embeddedControl = cooltip;
 	}
 };
 

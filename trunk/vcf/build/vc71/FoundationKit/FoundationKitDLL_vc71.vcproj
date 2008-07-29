@@ -1668,6 +1668,12 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\VCFString.h">
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VCFTime.cpp">
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VCFTime.h">
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\WarningsOffVc.h">
 			</File>
 		</Filter>

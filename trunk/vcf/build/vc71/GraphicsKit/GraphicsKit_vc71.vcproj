@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="GraphicsKit"
+	ProjectGUID="{7A99D9E7-6A83-4CDC-AE8F-AB29EBA7839C}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
