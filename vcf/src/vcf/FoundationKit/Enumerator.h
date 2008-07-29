@@ -499,6 +499,10 @@ public:
 		return collection_.assign(n,x);
 	}
 
+	inline iterator insert( size_type pos, const ItemType& x) {
+		return collection_.insert(collection_.begin()+pos,x);
+	}
+
 	inline iterator insert(iterator it, const ItemType& x = ItemType()) {
 		return collection_.insert(it,x);
 	}

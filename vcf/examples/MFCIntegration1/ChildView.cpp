@@ -108,14 +108,14 @@ void CChildView::OnFileInfo()
 		lineCount ++;
 	}
 
-	String msg = StringUtils::format( Format( "%s\nFull path: %s\nBase name: %s\nExtension: %s\nDirectory: %s\nWin32 Path: %s\nNumber of lines: %d") % 
+	String msg = Format( "%s\nFull path: %s\nBase name: %s\nExtension: %s\nDirectory: %s\nWin32 Path: %s\nNumber of lines: %d") % 
 					resString %
 					path.getFileName() %
 					path.getBaseName() %
 					path.getExtension() %
 					path.getPathName( true ) %
 					win32Path.getFileName() %
-					lineCount );
+					lineCount;
 
 
 	AfxMessageBox( msg.ansi_c_str() );

@@ -147,7 +147,7 @@ int main( int argc, char** argv ){
 				catch ( BasicException& e ) {
 					System::errorPrint( &e );
 				}				
-				finder->free();
+				delete finder;
 			}
 	}
 
@@ -198,7 +198,7 @@ int main( int argc, char** argv ){
 		tos.write( 12.433 );
 		tos.write( String("Hello World") );
 
-		fos->free();
+		delete fos;
 
 		FileInputStream* fis = f1.getInputStream();
 
@@ -208,7 +208,7 @@ int main( int argc, char** argv ){
 		
 		System::println( Format("File contents of \"%s\" :\n%s") % f1.getName() % s );
 
-		fis->free();
+		delete fis;
 
 		f1.remove();
 

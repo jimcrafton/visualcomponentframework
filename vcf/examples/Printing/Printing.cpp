@@ -126,7 +126,7 @@ public:
 
 					printSession.endPrintingDocument();
 
-					pc->free();
+					delete pc;
 				}
 				break;
 			}
@@ -138,7 +138,7 @@ public:
 	}
 
 	void onPrintPage( PrintEvent* e ) {
-		StringUtils::traceWithArgs( Format("Printing page %d\n") % e->getCurrentPage() );
+		StringUtils::trace( Format("Printing page %d\n") % e->getCurrentPage() );
 
 		PrintSession* printSession = (PrintSession*)e->getSource();
 		doDrawing( e->getPrintContext(), e->getPageBounds() );

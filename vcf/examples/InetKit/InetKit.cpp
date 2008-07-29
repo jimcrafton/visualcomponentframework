@@ -12,24 +12,20 @@
 using namespace VCF;
 
 
-void onURLAuthenticateEvent( Event* e ) 
+void onURLAuthenticateEvent( URLAuthenticationEvent* e ) 
 {
-	URLAuthenticationEvent* urlEvent = (URLAuthenticationEvent*)e;
-
-	urlEvent->setUserName( "sdfj;sdfkjs;dfklj" );
-	urlEvent->setPassword( "skjfhskdjfhskdjfhk" );
+	e->setUserName( "sdfj;sdfkjs;dfklj" );
+	e->setPassword( "skjfhskdjfhskdjfhk" );
 	
 }
 
-void onURLEvent( Event* e ) 
+void onURLEvent( URLEvent* e ) 
 {
-	URLEvent* urlEvent = (URLEvent*)e;
-
 	static uint32 totalBytes = 0;
 
-	totalBytes += urlEvent->getBytesReceived();
+	totalBytes += e->getBytesReceived();
 
-	System::println( String("Bytes recv'd: ") + urlEvent->getBytesReceived() );
+	System::println( String("Bytes recv'd: ") + e->getBytesReceived() );
 
 	System::println( "Total bytes recv'd: " + System::getCurrentThreadLocale()->toString( totalBytes ) );
 }
@@ -41,15 +37,10 @@ int main( int argc, char** argv ){
 
 	InternetKit::init(argc, argv); 
 	
-	StaticEventHandlerInstance<Event> ev(onURLEvent);
-	StaticEventHandlerInstance<Event> ev2(onURLAuthenticateEvent);
-
-
-
 	URL url ("http://www.your-password-protected-site.com/your/precious/content.html");
 
-	url.DataReceived += &ev;
-	url.AuthenticationRequested += &ev2;
+	url.DataReceived += onURLEvent;
+	url.AuthenticationRequested += onURLAuthenticateEvent;
 
 	try {
 		url.downloadToFile( "test.html" ); 
@@ -84,6 +75,8 @@ int main( int argc, char** argv ){
 									parts[URL::upHost] % 
 									parts[URL::upPort] % 
 									parts[URL::upUrlPath] );
+
+	
 
 	InternetKit::terminate();
 

@@ -206,7 +206,7 @@ public:
 			//singleModel->add( capt );
 			ListItem* item = listBoxSingle->addItem( capt, j / 9 );			
 			if ( j%9 == 0 ) {
-				item->setDisplayState( Item::idsChecked );
+				item->setDisplayState( idsChecked );
 			}
 		}
 

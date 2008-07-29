@@ -98,7 +98,9 @@ public:
 
 	virtual bool canCopyFromDocument();
 
-	virtual bool canPasteToDocument();
+	virtual bool canPasteToDocument() {
+		return false;
+	}
 
 	virtual bool saveAsType( const VCF::String& fileName, const VCF::String& fileType );
 

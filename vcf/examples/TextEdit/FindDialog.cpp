@@ -103,17 +103,17 @@ void FindDialog::findClicked( ButtonEvent* e )
 
 	bool addString = true;
 	ListModel* listModel = searchString_->getListModel();
-	VCF::Enumerator<VCF::ListItem*>* items = listModel->getItems();
+	VCF::Enumerator<VariantData>* items = listModel->getItems();
 	while ( items->hasMoreElements() ) {
-		VCF::ListItem* item = items->nextElement();
-		if ( item->getCaption() == findInfo_.searchString_ ) {
+		VariantData item = items->nextElement();
+		if ( findInfo_.searchString_ == item ) {
 			addString = false;
 			break;
 		}
 	}
 
 	if ( addString ) {
-		listModel->insertItem( 0, new DefaultListItem( NULL, findInfo_.searchString_ ) );
+		listModel->insert( 0, findInfo_.searchString_ );
 	}
 
 	findInfo_.searchStrings_ = searchStrings_;
@@ -123,7 +123,7 @@ void FindDialog::findClicked( ButtonEvent* e )
 		Dialog::showMessage( "Couldn't find string \"" + findInfo_.searchString_ + "\"" );
 	}
 	else {
-		doc->setSelectionRange( findInfo_.position_, findInfo_.searchString_.size() );
+		//doc->setSelectionRange( findInfo_.position_, findInfo_.searchString_.size() );
 		findInfo_.position_ += findInfo_.searchString_.size();
 	}
 

@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="ApplicationKitDLL"
+	ProjectGUID="{B02F7FEE-CAEA-45B5-AEFE-B19C20AE0A68}"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
