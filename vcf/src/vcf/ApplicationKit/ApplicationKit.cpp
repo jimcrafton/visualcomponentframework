@@ -177,6 +177,10 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( DropTarget );
 
 
+		REGISTER_CLASSINFO_EXTERNAL(ObjectModel);
+		REGISTER_CLASSINFO_EXTERNAL(ObjectListModel);		
+		REGISTER_CLASSINFO_EXTERNAL(ObjectColumnModel);
+		REGISTER_CLASSINFO_EXTERNAL(DictionaryModel);
 
 
 

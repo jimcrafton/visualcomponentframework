@@ -31,6 +31,147 @@
 namespace comet
 {
 
+#ifdef _WIN32_WCE
+
+
+
+static const int CY_Divisors[5] = { CY_MULTIPLIER/10000, 
+									CY_MULTIPLIER/1000,
+									CY_MULTIPLIER/100, 
+									CY_MULTIPLIER/10, 
+									CY_MULTIPLIER };
+
+
+#define VARIANT_DutchRound(typ, value, res) do { \
+double whole = value < 0 ? ceil(value) : floor(value); \
+double fract = value - whole; \
+if (fract > 0.5) res = (typ)whole + (typ)1; \
+else if (fract == 0.5) { typ is_odd = (typ)whole & 1; res = whole + is_odd; } \
+else if (fract >= 0.0) res = (typ)whole; \
+else if (fract == -0.5) { typ is_odd = (typ)whole & 1; res = whole - is_odd; } \
+else if (fract > -0.5) res = (typ)whole; \
+else res = (typ)whole - (typ)1; \
+} while(0);
+
+HRESULT _VarR8FromCy(CY i, double* o) { *o = (double)i.int64 / CY_MULTIPLIER_F; return S_OK; }
+
+HRESULT WINAPI VarCyAdd(const CY cyLeft, const CY cyRight, CY* pCyOut)
+{
+  double l,r;
+  _VarR8FromCy(cyLeft, &l);
+  _VarR8FromCy(cyRight, &r);
+  l = l + r;
+  return VarCyFromR8(l, pCyOut);
+}
+
+
+HRESULT WINAPI VarCySub(const CY cyLeft, const CY cyRight, CY* pCyOut)
+{
+  double l,r;
+  _VarR8FromCy(cyLeft, &l);
+  _VarR8FromCy(cyRight, &r);
+  l = l - r;
+  return VarCyFromR8(l, pCyOut);
+}
+
+
+HRESULT WINAPI VarCyMul(const CY cyLeft, const CY cyRight, CY* pCyOut)
+{
+  double l,r;
+  _VarR8FromCy(cyLeft, &l);
+  _VarR8FromCy(cyRight, &r);
+  l = l * r;
+  return VarCyFromR8(l, pCyOut);
+}
+
+HRESULT WINAPI VarCyMulI4(const CY cyLeft, LONG lRight, CY* pCyOut)
+{
+  double l;
+  _VarR8FromCy(cyLeft, &l);
+  l = l * lRight;
+  return VarCyFromR8(l, pCyOut);
+}
+
+HRESULT WINAPI VarCyNeg(const CY cyIn, CY* pCyOut)
+{
+	if (cyIn.Hi == (int)0x80000000 && !cyIn.Lo)
+    return DISP_E_OVERFLOW;
+
+  pCyOut->int64 = -cyIn.int64;
+  return S_OK;
+}
+
+HRESULT WINAPI VarCyRound(const CY cyIn, int cDecimals, CY* pCyOut)
+{
+	if (cDecimals < 0)
+		return E_INVALIDARG;
+
+	if (cDecimals > 3)
+	{
+		/* Rounding to more precision than we have */
+		*pCyOut = cyIn;
+		return S_OK;
+	}
+	else
+	{
+		double d, div = CY_Divisors[cDecimals];
+
+		_VarR8FromCy(cyIn, &d);
+		d = d * div;
+		VARIANT_DutchRound(LONGLONG, d, pCyOut->int64)
+			d = (double)pCyOut->int64 / div * CY_MULTIPLIER_F;
+		VARIANT_DutchRound(LONGLONG, d, pCyOut->int64)
+			return S_OK;
+	}
+}
+
+
+HRESULT WINAPI VarCyCmp(const CY cyLeft, const CY cyRight)
+{
+	HRESULT hRet;
+	CY result;
+
+	/* Subtract right from left, and compare the result to 0 */
+	hRet = VarCySub(cyLeft, cyRight, &result);
+
+	if (SUCCEEDED(hRet))
+	{
+		if (result.int64 < 0)
+			hRet = (HRESULT)VARCMP_LT;
+		else if (result.int64 > 0)
+			hRet = (HRESULT)VARCMP_GT;
+		else
+			hRet = (HRESULT)VARCMP_EQ;
+	}
+	return hRet;
+}
+
+HRESULT WINAPI VarR4CmpR8(float fltLeft, double dblRight)
+{
+	if (fltLeft < dblRight)
+		return VARCMP_LT;
+	else if (fltLeft > dblRight)
+		return VARCMP_GT;
+	return VARCMP_EQ;
+}
+
+HRESULT WINAPI VarCyCmpR8(const CY cyLeft, double dblRight)
+{
+	HRESULT hRet;
+	CY cyRight;
+
+	hRet = VarCyFromR8(dblRight, &cyRight);
+
+	if (SUCCEEDED(hRet))
+		hRet = VarCyCmp(cyLeft, cyRight);
+
+	return hRet;
+}
+
+
+#endif
+
+
 	class bstr_t;
 
 	// currency_t
@@ -360,7 +501,7 @@ namespace comet
 			}
 
 			//! Parse the string to a currency.
-			currency_t &parse( const bstr_t &str, LCID locale =::GetThreadLocale() );
+			currency_t &parse( const bstr_t &str, LCID locale = GetThreadLocale() );
 /*			{
 				VarCyFromStr( str.in(), locale, 0, &cy_ ) | raise_exception;
 				return *this;

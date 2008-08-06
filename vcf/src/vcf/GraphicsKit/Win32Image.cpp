@@ -101,6 +101,8 @@ Win32Image::Win32Image( HICON icon ):
 
 	ICONINFO info;
 	memset(&info,0,sizeof(info));
+#ifdef VCF_WIN32CE
+#else
 	if ( GetIconInfo( icon, &info ) ) {
 		BITMAP bmp;
 		if ( GetObject( info.hbmColor, sizeof(BITMAP), &bmp ) ) {
@@ -112,6 +114,7 @@ Win32Image::Win32Image( HICON icon ):
 			}
 		}
 	}
+#endif
 }
 
 Win32Image::~Win32Image()
@@ -214,12 +217,23 @@ void Win32Image::loadFromFile( const String& fileName )
 	flipBits_ = true;
 
 	HBITMAP hBMP = NULL;
+	UINT loadImageFlags = 0;
+
+#ifndef VCF_WIN32CE
+	loadImageFlags = LR_CREATEDIBSECTION;
+#endif
+
+#ifdef VCF_WIN32CE
+	hBMP = (HBITMAP)LoadImageW( NULL, fileName.c_str(), IMAGE_BITMAP, 0, 0, loadImageFlags );
+#else
 	if ( System::isUnicodeEnabled() ) {
-		hBMP = (HBITMAP)LoadImageW( NULL, fileName.c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE );
+		hBMP = (HBITMAP)LoadImageW( NULL, fileName.c_str(), IMAGE_BITMAP, 0, 0, loadImageFlags );
 	}
 	else {
-		hBMP = (HBITMAP)LoadImageA( NULL, fileName.ansi_c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE );
+		hBMP = (HBITMAP)LoadImageA( NULL, fileName.ansi_c_str(), IMAGE_BITMAP, 0, 0, loadImageFlags );
 	}
+#endif
+	
 
 	if ( NULL == hBMP ) {
 		throw ImageLoaderException(MAKE_ERROR_MSG_2("Image file unreadable - this may be due to an incorrect file name"));

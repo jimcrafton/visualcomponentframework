@@ -9,7 +9,7 @@ where you installed the VCF.
 */
 
 namespace VCF {
-
+#ifndef VCF_WIN32CE
 	struct GRAPHICSKIT_API  Win32PrintInfo {
 		Win32PrintInfo():docInfoPtr_(NULL),printDlgPtr_(NULL) {
 
@@ -142,6 +142,7 @@ namespace VCF {
 			void* docInfoPtr_;
 			void* printDlgPtr_;
 	};
+#endif
 
 	class GRAPHICSKIT_API Win32PrintSession : public Object, public PrintSessionPeer {
 	public:
@@ -182,12 +183,14 @@ namespace VCF {
 		
 		virtual std::vector<uint32> getPrintablePages();
 		virtual void setPrintablePages( const std::vector<uint32>& printablePages );
-
+#ifndef VCF_WIN32CE
 		static BOOL CALLBACK AbortProc( HDC hdc, int iError );
 
 		String title_;
 		Win32PrintInfo printInfo_;
 		HDC printerDC_;	
+#endif
+
 	};
 
 };

@@ -51,6 +51,48 @@
 
 namespace comet {
 
+
+#ifdef _WIN32_WCE
+HRESULT WINAPI VarBstrCmp(BSTR pbstrLeft, BSTR pbstrRight, LCID lcid, DWORD dwFlags)
+{
+	HRESULT hres;
+	int ret;
+
+	if (!pbstrLeft || !*pbstrLeft)
+	{
+		if (!pbstrRight || !*pbstrRight)
+			return VARCMP_EQ;
+		return VARCMP_LT;
+	}
+	else if (!pbstrRight || !*pbstrRight)
+		return VARCMP_GT;
+
+	if (lcid == 0)
+	{
+		unsigned int lenLeft = SysStringByteLen(pbstrLeft);
+		unsigned int lenRight = SysStringByteLen(pbstrRight);
+		ret = memcmp(pbstrLeft, pbstrRight, min(lenLeft, lenRight));
+		if (ret < 0)
+			return VARCMP_LT;
+		if (ret > 0)
+			return VARCMP_GT;
+		if (lenLeft < lenRight)
+			return VARCMP_LT;
+		if (lenLeft > lenRight)
+			return VARCMP_GT;
+		return VARCMP_EQ;
+	}
+	else
+	{
+		hres = CompareStringW(lcid, dwFlags, pbstrLeft, SysStringLen(pbstrLeft),
+			pbstrRight, SysStringLen(pbstrRight)) - 1;
+
+		return hres;
+	}
+}
+
+#endif
+
 	class datetime_t;
 	class currency_t;
 	template<typename T> class com_ptr;
@@ -508,7 +550,7 @@ namespace comet {
 			bool operator==(const bstr_t& s) const
 			{
 				if (str_ == 0 && s.str_ == 0) return true;
-				return ::VarBstrCmp(str_, s.str_, ::GetThreadLocale(), 0) == VARCMP_EQ;
+				return VarBstrCmp(str_, s.str_, GetThreadLocale(), 0) == VARCMP_EQ;
 			}
 
 			bool operator!=(const bstr_t& s) const
@@ -522,7 +564,7 @@ namespace comet {
 
 				if (s.str_ == 0) return false;
 
-				return ::VarBstrCmp(str_, s.str_, ::GetThreadLocale(), 0) == VARCMP_LT;
+				return VarBstrCmp(str_, s.str_, GetThreadLocale(), 0) == VARCMP_LT;
 			}
 
 			bool operator>(const bstr_t& s) const
@@ -533,7 +575,7 @@ namespace comet {
 
 				if (s.str_ == 0) return false;
 
-				return ::VarBstrCmp(str_, s.str_, ::GetThreadLocale(), 0) == VARCMP_GT;
+				return VarBstrCmp(str_, s.str_, GetThreadLocale(), 0) == VARCMP_GT;
 			}
 
 			bool operator>=(const bstr_t& s) const
@@ -552,7 +594,7 @@ namespace comet {
 			*/
 			int cmp(const bstr_t& s, compare_flags_t flags = compare_flags_t(0)) const
 			{
-				HRESULT res = ::VarBstrCmp(str_, s.str_, ::GetThreadLocale(), flags);
+				HRESULT res = VarBstrCmp(str_, s.str_, GetThreadLocale(), flags);
 				switch(res)
 				{
 					case VARCMP_EQ: return 0;

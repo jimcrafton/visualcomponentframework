@@ -94,19 +94,7 @@ public:
 	DELEGATE(ButtonDelegate,ButtonClicked);
 
 	virtual void setName( const String& name );
-	/**
-	*This macro creates a method for adding a listener to the CommandButton's events
-	*/
-	virtual void addButtonClickHandler( EventHandler* handler ) {
-		ButtonClicked += handler;
-	}
-
-	/**
-	*This macro creates a method for removing a listener to the CommandButton's events
-	*/
-	virtual void removeButtonClickHandler( EventHandler* handler ) {
-		ButtonClicked.remove(handler);
-	}
+	
 
 	virtual void paint(GraphicsContext * context);
 

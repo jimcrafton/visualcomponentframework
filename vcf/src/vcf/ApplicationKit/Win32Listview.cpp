@@ -502,13 +502,20 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 								ColumnItem* item = listviewControl_->getColumnItem( (uint32)dispInfo->lParam );
 								
 								if ( NULL != cm ) {
-									if ( dispInfo->mask & HDI_IMAGE ) {
+									
+									if ( NULL != item && dispInfo->mask & HDI_IMAGE ) {
 										dispInfo->iImage = item->getImageIndex();
 									}
 									
 									if ( dispInfo->mask & HDI_TEXT ) {
 										
-										String caption = item->getCaption();
+										String caption;
+										if ( NULL != item ) {
+											caption = item->getCaption();
+										}
+										else {
+											caption = cm->getAsString((uint32)dispInfo->lParam);
+										}
 										
 										unsigned int size = VCF::minVal<unsigned int>( caption.size(), dispInfo->cchTextMax );
 										caption.copy( dispInfo->pszText, size );
@@ -554,19 +561,21 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 											headerItem.mask = HDI_FORMAT | HDI_LPARAM;
 											if ( Header_GetItem( header, index, &headerItem ) ) {
 												item = listviewControl_->getColumnItem( (uint32)headerItem.lParam );
-												if ( !item->isFontDefault() ) {
-
-													Color* fc = item->getFont()->getColor();
-								
-													SetTextColor( cd->hdc, (COLORREF) fc->getColorRef32() );
-
-													Win32Font* fontPeer = dynamic_cast<Win32Font*>( item->getFont()->getFontPeer() );
-													HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( fontPeer );
-													if ( NULL != fontHandle ){
+												if ( NULL != item ) {
+													if ( !item->isFontDefault() ) {
 														
-														oldHeaderFont_ = (HFONT)::SelectObject( cd->hdc, fontHandle );
-
-														wndProcResult |= CDRF_NEWFONT;
+														Color* fc = item->getFont()->getColor();
+														
+														SetTextColor( cd->hdc, (COLORREF) fc->getColorRef32() );
+														
+														Win32Font* fontPeer = dynamic_cast<Win32Font*>( item->getFont()->getFontPeer() );
+														HFONT fontHandle = Win32FontManager::getFontHandleFromFontPeer( fontPeer );
+														if ( NULL != fontHandle ){
+															
+															oldHeaderFont_ = (HFONT)::SelectObject( cd->hdc, fontHandle );
+															
+															wndProcResult |= CDRF_NEWFONT;
+														}
 													}
 												}
 											}
@@ -2236,6 +2245,18 @@ void Win32Listview::onCtrlModelChanged( Event* e )
 
 		cm->ItemRemoved += 
 			getCallback( "Win32Listview::onColumnModelRemoved" );
+
+
+		//build up colums
+		if ( !cm->isEmpty() ) {
+			uint32 count = cm->getCount();
+			ListModelEvent lme(cm);
+
+			for (uint32 i=0;i<count;i++ ) {
+				lme.index = i;
+				onColumnModelAdded(&lme);
+			}
+		}
 	}
 	
 }

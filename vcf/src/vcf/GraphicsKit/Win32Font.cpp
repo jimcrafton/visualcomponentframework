@@ -87,7 +87,10 @@ void Win32Font::init()
 	//WinMe = DEFAULT_GUI_FONT. But Win98, Win2K, WinXP = ANSI_VAR_FONT. JC (aka ddiego)
 
 	HFONT defFont = NULL;
-	
+
+#ifdef VCF_WIN32CE
+	defFont = (HFONT)GetStockObject( SYSTEM_FONT );	
+#else	
 	static OSVERSIONINFO osVersion = {0};
 	if ( 0 == osVersion.dwOSVersionInfoSize ) {
 		osVersion.dwOSVersionInfoSize = sizeof(osVersion);
@@ -96,7 +99,6 @@ void Win32Font::init()
 	
 
 
-	
 
 	if ( VER_PLATFORM_WIN32_NT == osVersion.dwPlatformId ) {
 		if ( osVersion.dwMajorVersion >= 6 ) { //Windows Vista or better!!!
@@ -132,7 +134,7 @@ void Win32Font::init()
 			defFont = (HFONT)GetStockObject( ANSI_VAR_FONT );
 		}
 	}
-
+#endif
 	
 	//defFont = NULL;
 	if ( NULL != defFont ){
@@ -207,7 +209,12 @@ void Win32Font::init()
 	
 
 	if ( pointSize_ > 0.0 ) {
+		
+#ifdef VCF_WIN32CE
+		fontHeight = -( (pointSize_ * GetDeviceCaps( dc, LOGPIXELSY)) / 72 );
+#else
 		fontHeight = -MulDiv( pointSize_, GetDeviceCaps( dc, LOGPIXELSY), 72 );
+#endif
 	}
 
 
@@ -1083,7 +1090,9 @@ void Win32Font::updateLocaleSettings()
 				break;
 
 				case LANG_KOREAN: {
+#ifndef VCF_WIN32CE
 					charSet = HANGUL_CHARSET;//???JOHAB_CHARSET instead????
+#endif
 				}
 				break;
 

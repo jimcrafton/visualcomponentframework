@@ -125,6 +125,10 @@ Setup VCF_ operating system
 #endif
 
 
+#ifdef VCF_WIN32CE
+#define MulDiv(a, b, c) ((a*b)/c) 
+#endif
+
 #ifdef __CYGWIN__
 	#define VCF_CYGWIN
 #endif

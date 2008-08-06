@@ -179,6 +179,44 @@
 #endif
 #endif
 
+#ifdef _WIN32_WCE
+#define GetThreadLocale() LOCALE_USER_DEFAULT
+
+
+#define CY_MULTIPLIER_F 10000.0
+#define CY_MULTIPLIER 10000
+#define VARCMP_LT   0
+#define VARCMP_EQ   1
+#define VARCMP_GT   2
+#define VARCMP_NULL 3
+/* Missing in Windows but useful VTBIT_* defines */
+#define VTBIT_BOOL      (1 << VT_BSTR)
+#define VTBIT_BSTR      (1 << VT_BSTR)
+#define VTBIT_DATE      (1 << VT_DATE)
+#define VTBIT_DISPATCH  (1 << VT_DISPATCH)
+#define VTBIT_EMPTY     (1 << VT_EMPTY)
+#define VTBIT_ERROR     (1 << VT_ERROR)
+#define VTBIT_INT       (1 << VT_INT)
+#define VTBIT_NULL      (1 << VT_NULL)
+#define VTBIT_UINT      (1 << VT_UINT)
+#define VTBIT_UNKNOWN   (1 << VT_UNKNOWN)
+#define VTBIT_VARIANT   (1 << VT_VARIANT)
+#define VTBIT_15        (1 << 15)        /* no variant type with this number */
+#define VTBIT_I1      (1 << VT_I1)
+#define VTBIT_UI1     (1 << VT_UI1)
+#define VTBIT_I2      (1 << VT_I2)
+#define VTBIT_UI2     (1 << VT_UI2)
+#define VTBIT_I4      (1 << VT_I4)
+#define VTBIT_UI4     (1 << VT_UI4)
+#define VTBIT_I8      (1 << VT_I8)
+#define VTBIT_UI8     (1 << VT_UI8)
+#define VTBIT_R4      (1 << VT_R4)
+#define VTBIT_R8      (1 << VT_R8)
+#define VTBIT_CY      (1 << VT_CY)
+#define VTBIT_DECIMAL (1 << VT_DECIMAL)
+
+#endif
+
 #if _MSC_VER <= 1200
 //#define COMET_DO_NOT_SPECIALISE_SWAP_IN_STD
 #endif

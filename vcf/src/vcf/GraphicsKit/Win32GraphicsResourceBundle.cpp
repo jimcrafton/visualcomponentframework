@@ -34,16 +34,22 @@ Image* Win32GraphicsResourceBundle::getImage( const String& resourceName )
 	Image* result = NULL;
 
 	HBITMAP resBMP = NULL;
+	UINT loadImageFlags = 0;
+#ifndef VCF_WIN32CE
+	loadImageFlags = LR_CREATEDIBSECTION;
+#endif
 	if ( System::isUnicodeEnabled() ) {
-		resBMP = (HBITMAP)LoadImageW( getResourceInstance(), resourceName.c_str(), IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
-		
+
+
+		resBMP = (HBITMAP)LoadImageW( getResourceInstance(), resourceName.c_str(), IMAGE_BITMAP, 0, 0, loadImageFlags );
+
 		if ( NULL != resBMP ){
 			result = new Win32Image( resBMP );
 			DeleteObject( resBMP );
 		}
 		else {
 			
-			HICON ico = (HICON)LoadImageW( getResourceInstance(), resourceName.c_str(), IMAGE_ICON, 0, 0, LR_CREATEDIBSECTION );
+			HICON ico = (HICON)LoadImageW( getResourceInstance(), resourceName.c_str(), IMAGE_ICON, 0, 0, loadImageFlags );
 		
 			if ( NULL != ico ) {
 				result = new Win32Image( ico );
@@ -51,7 +57,7 @@ Image* Win32GraphicsResourceBundle::getImage( const String& resourceName )
 				DestroyIcon( ico );
 			}
 			else { //last gasp - try a cursor
-				HCURSOR cursor = (HICON)LoadImageW( getResourceInstance(), resourceName.c_str(), IMAGE_CURSOR, 0, 0, LR_CREATEDIBSECTION );
+				HCURSOR cursor = (HICON)LoadImageW( getResourceInstance(), resourceName.c_str(), IMAGE_CURSOR, 0, 0, loadImageFlags );
 
 				if ( NULL != cursor ) {
 					result = new Win32Image( (HICON)cursor );
@@ -64,7 +70,7 @@ Image* Win32GraphicsResourceBundle::getImage( const String& resourceName )
 	else {
 		const char* resName = resourceName.ansi_c_str();
 
-		resBMP = (HBITMAP)LoadImageA( getResourceInstance(), resName, IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
+		resBMP = (HBITMAP)LoadImageA( getResourceInstance(), resName, IMAGE_BITMAP, 0, 0, loadImageFlags );
 		
 		if ( NULL != resBMP ){
 			result = new Win32Image( resBMP );
@@ -72,7 +78,7 @@ Image* Win32GraphicsResourceBundle::getImage( const String& resourceName )
 		}
 		else {
 			
-			HICON ico = (HICON)LoadImageA( getResourceInstance(), resName, IMAGE_ICON, 0, 0, LR_CREATEDIBSECTION );
+			HICON ico = (HICON)LoadImageA( getResourceInstance(), resName, IMAGE_ICON, 0, 0, loadImageFlags );
 		
 			if ( NULL != ico ) {
 				result = new Win32Image( ico );
@@ -80,7 +86,7 @@ Image* Win32GraphicsResourceBundle::getImage( const String& resourceName )
 				DestroyIcon( ico );
 			}
 			else { //last gasp - try a cursor
-				HCURSOR cursor = (HICON)LoadImageA( getResourceInstance(), resName, IMAGE_CURSOR, 0, 0, LR_CREATEDIBSECTION );
+				HCURSOR cursor = (HICON)LoadImageA( getResourceInstance(), resName, IMAGE_CURSOR, 0, 0, loadImageFlags );
 
 				if ( NULL != cursor ) {
 					result = new Win32Image( (HICON)cursor );

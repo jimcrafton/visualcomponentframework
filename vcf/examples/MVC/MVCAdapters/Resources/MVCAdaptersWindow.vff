@@ -1,0 +1,135 @@
+object MVCAdaptersWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 300
+	width = 320
+	caption = 'MVCAdapters Window'	
+
+
+
+	object hlContainer : VCF::HorizontalLayoutContainer
+		numberOfColumns = 2
+		maxRowHeight = 35
+		rowSpacerHeight = 10
+		widths[0] = 80
+		widths[1] = 80
+
+		tweenWidths[0] = 10
+	end
+
+	object model :  VCF::ObjectModel
+		source = @mo
+	end
+
+	object mo : MyObject 
+		count = 100
+		title = 'Foobler'
+		version = '1.3.7'
+		cost = 17864555.43
+	end 
+
+	
+
+
+	object panel1 : VCF::Panel 
+		alignment = AlignTop
+		height = 150
+		container = @hlContainer
+
+		object lbl1 : VCF::Label
+			caption = 'Count:'
+		end
+
+		object edt1 : VCF::TextControl
+			modelKey = 'count'
+			model = @model
+			readonly = true
+		end
+
+
+		object lbl2 : VCF::Label
+			caption = 'Title:'
+		end
+
+		object edt2 : VCF::TextControl
+			modelKey = 'title'
+			model = @model
+			readonly = true
+		end
+
+
+		object lbl3 : VCF::Label
+			caption = 'Version:'
+		end
+
+		object edt3 : VCF::TextControl
+			modelKey = 'version'
+			model = @model
+			readonly = true
+		end
+
+
+		object lbl4 : VCF::Label
+			caption = 'Cost:'
+		end
+
+		object edt4 : VCF::TextControl
+			modelKey = 'cost'
+			model = @model
+			readonly = true
+		end
+	end
+
+
+
+
+	object mo1 : MyObject 
+		count = 2
+		title = 'asdasd'
+		version = '1.1.7'
+		cost = 64555.4996
+	end 
+
+	object mo2 : MyObject 
+		count = 4
+		title = 'Pols'
+		version = '6.2.7'
+		cost = 5.406
+	end 
+
+	object mo3 : MyObject 
+		count = 23
+		title = 'AAs2weCC'
+		version = '1.1.7'
+		cost = 887.2
+	end 
+
+	object objList : VCF::ObjectListModel
+		objects[0] = @mo1
+		objects[1] = @mo2
+		objects[2] = @mo3
+	end
+
+	object colModel : VCF::ObjectColumnModel
+		listModel = @objList
+	end
+	
+	object panel2 : VCF::Panel
+		alignment = AlignClient
+
+		object list : VCF::ListViewControl
+			iconStyle = isDetails
+			alignment = AlignClient	
+
+			columnModel = @colModel
+			listModel = @objList
+
+			delegates
+				ItemSelectionChanged = [MVCAdaptersApp@MVCAdaptersApp::onSelected]
+			end
+		end
+	end
+	
+
+	
+end

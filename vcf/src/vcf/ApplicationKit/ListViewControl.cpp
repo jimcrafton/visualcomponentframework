@@ -79,62 +79,13 @@ ColumnModel* ListViewControl::getColumnModel()
 {
 	return columnModel_;
 }
-/*
-void ListViewControl::modelChanged( Model* oldModel, Model* newModel )
+
+void ListViewControl::setColumnModel( ColumnModel* val )
 {
-	ListModel* lm = (ListModel*)oldModel;
+	columnModel_ = val;
 
-	if ( NULL != lm ) {
-		CallBack* ev = getCallback( "ListBoxControl::onItemAdded" );
-		if ( NULL == ev ) {
-			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onItemAdded, "ListBoxControl::onItemAdded" );
-		}
-		
-		lm->ItemAdded -= ev;
-
-		ev = getCallback( "ListBoxControl::onItemDeleted" );
-		if ( NULL == ev ) {
-			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onItemDeleted, "ListBoxControl::onItemDeleted" );
-		}
-
-		lm->ItemRemoved -= ev;
-
-		ev = getCallback( "ListBoxControl::onListModelContentsChanged" );
-		if ( NULL == ev ) {
-			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
-		}
-
-		lm->ModelChanged -= ev;
-	}
-
-	lm = dynamic_cast<ListModel*>( newModel );
-	VCF_ASSERT( lm != NULL );
-
-
-	if ( NULL != lm ) {
-		CallBack* ev = getCallback( "ListBoxControl::onItemAdded" );
-		if ( NULL == ev ) {
-			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onItemAdded, "ListBoxControl::onItemAdded" );
-		}
-		
-		lm->ItemAdded += ev;
-
-		ev = getCallback( "ListBoxControl::onItemDeleted" );
-		if ( NULL == ev ) {
-			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onItemDeleted, "ListBoxControl::onItemDeleted" );
-		}
-
-		lm->ItemRemoved += ev;
-
-		ev = getCallback( "ListBoxControl::onListModelContentsChanged" );
-		if ( NULL == ev ) {
-			ev = new ClassProcedure1<ListModelEvent*,ListViewControl>( this, &ListViewControl::onListModelContentsChanged, "ListBoxControl::onListModelContentsChanged" );
-		}
-
-		lm->ModelChanged += ev;
-	}
 }
-*/
+
 
 /*
 void ListViewControl::onItemPaint( ItemEvent* event )
@@ -179,68 +130,6 @@ void ListViewControl::onItemPaint( ItemEvent* event )
 }
 */
 
-/*
-void ListViewControl::onItemAdded( ListModelEvent* event )
-{
-	if ( internalModelChange_ ) {
-		return;
-	}
-
-	inCallbackChange_ = true;
-
-	ListItem* item = new ListItem();
-	addComponent( item );
-	items_.push_back( item );
-	item->setModel( getViewModel() );
-	item->setControl( this );
-	item->setIndex( event->index );	
-
-
-	repaint();
-
-	inCallbackChange_ = false;
-}
-*/
-
-/*
-void ListViewControl::onItemDeleted( ListModelEvent* event )
-{
-	inCallbackChange_ = true;
-//	listviewPeer_->deleteItem( event->getListItem() );
-	Array<ListItem*>::iterator found = items_.begin();
-
-	while ( found != items_.end() ) {
-		ListItem* item = *found;
-		if ( item->getIndex() == event->index ) {
-			break;
-		}
-		++found;
-	}
-
-	if ( found != items_.end() ) {				
-		Array<ListItem*>::iterator it = items_.begin();		
-		while ( it != items_.end() ) {
-			ListItem* item = *it;
-			if ( item->getIndex() > event->index ) {
-				item->setIndex( item->getIndex() - 1 );
-			}
-			
-			++it;
-		}
-		
-		ListItem* item = *found;
-
-		
-
-
-		items_.erase( found );
-		
-		removeComponent( item );
-		item->free();
-	}
-	inCallbackChange_ = false;
-}
-*/
 void ListViewControl::removeSubItemsForItem( ListItem* item )
 {
 	//free up sub items

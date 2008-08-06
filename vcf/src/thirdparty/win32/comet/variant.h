@@ -78,6 +78,213 @@
 
 namespace comet {
 
+#ifdef _WIN32_WCE
+	HRESULT WINAPI SafeArrayGetVartype(SAFEARRAY* psa, VARTYPE* pvt)
+	{
+
+
+		if (!psa || !pvt)
+			return E_INVALIDARG;
+
+		if (psa->fFeatures & FADF_RECORD)
+			*pvt = VT_RECORD;
+		else if ((psa->fFeatures & (FADF_HAVEIID|FADF_DISPATCH)) == (FADF_HAVEIID|FADF_DISPATCH))
+			*pvt = VT_DISPATCH;
+		else if (psa->fFeatures & FADF_HAVEIID)
+			*pvt = VT_UNKNOWN;
+		else if (psa->fFeatures & FADF_HAVEVARTYPE)
+		{
+			VARTYPE vt = VT_VARIANT;// SAFEARRAY_GetHiddenDWORD(psa);
+			*pvt = vt;
+		}
+		else
+			return E_INVALIDARG;
+
+		return S_OK;
+	}
+
+	HRESULT _VarChangeTypeExWrap (VARIANTARG* pvargDest,
+		VARIANTARG* pvargSrc, LCID lcid, USHORT wFlags, VARTYPE vt)
+	{
+		HRESULT res;
+		VARTYPE flags;
+
+		flags = V_VT(pvargSrc) & ~VT_TYPEMASK;
+		V_VT(pvargSrc) &= ~VT_RESERVED;
+		res = VariantChangeTypeEx(pvargDest,pvargSrc,lcid,wFlags,vt);
+		V_VT(pvargSrc) |= flags;
+
+		return res;
+	}
+
+
+	HRESULT WINAPI VarCmp(LPVARIANT left, LPVARIANT right, LCID lcid, DWORD flags)
+	{
+		VARTYPE     lvt, rvt, vt;
+		VARIANT     rv,lv;
+		DWORD       xmask;
+		HRESULT     rc;
+
+		lvt = V_VT(left) & VT_TYPEMASK;
+		rvt = V_VT(right) & VT_TYPEMASK;
+		xmask = (1 << lvt) | (1 << rvt);
+
+		/* If we have any flag set except VT_RESERVED bail out.
+		Same for the left input variant type > VT_INT and for the
+		right input variant type > VT_I8. Yes, VT_INT is only supported
+		as left variant. Go figure */
+		if (((V_VT(left) | V_VT(right)) & ~VT_TYPEMASK & ~VT_RESERVED) ||
+			lvt > VT_INT || rvt > VT_I8) {
+				return DISP_E_BADVARTYPE;
+		}
+
+		/* Don't ask me why but native VarCmp cannot handle: VT_I1, VT_UI2, VT_UI4,
+		VT_UINT and VT_UI8. Tested with DCOM98, Win2k, WinXP */
+		if (rvt == VT_INT || xmask & (VTBIT_I1 | VTBIT_UI2 | VTBIT_UI4 | VTBIT_UI8 |
+			VTBIT_DISPATCH | VTBIT_VARIANT | VTBIT_UNKNOWN | VTBIT_15))
+			return DISP_E_TYPEMISMATCH;
+
+		/* If both variants are VT_ERROR return VARCMP_EQ */
+		if (xmask == VTBIT_ERROR)
+			return VARCMP_EQ;
+		else if (xmask & VTBIT_ERROR)
+			return DISP_E_TYPEMISMATCH;
+
+		if (xmask & VTBIT_NULL)
+			return VARCMP_NULL;
+
+		VariantInit(&lv);
+		VariantInit(&rv);
+
+		/* Two BSTRs, ignore VT_RESERVED */
+		if (xmask == VTBIT_BSTR)
+			return VarBstrCmp(V_BSTR(left), V_BSTR(right), lcid, flags);
+
+		/* A BSTR and an other variant; we have to take care of VT_RESERVED */
+		if (xmask & VTBIT_BSTR) {
+			VARIANT *bstrv, *nonbv;
+			VARTYPE nonbvt;
+			int swap = 0;
+
+			/* Swap the variants so the BSTR is always on the left */
+			if (lvt == VT_BSTR) {
+				bstrv = left;
+				nonbv = right;
+				nonbvt = rvt;
+			} else {
+				swap = 1;
+				bstrv = right;
+				nonbv = left;
+				nonbvt = lvt;
+			}
+
+			/* BSTR and EMPTY: ignore VT_RESERVED */
+			if (nonbvt == VT_EMPTY)
+				rc = (!V_BSTR(bstrv) || !*V_BSTR(bstrv)) ? VARCMP_EQ : VARCMP_GT;
+			else {
+				VARTYPE breserv = V_VT(bstrv) & ~VT_TYPEMASK;
+				VARTYPE nreserv = V_VT(nonbv) & ~VT_TYPEMASK;
+
+				if (!breserv && !nreserv) 
+					/* No VT_RESERVED set ==> BSTR always greater */
+					rc = VARCMP_GT;
+				else if (breserv && !nreserv) {
+					/* BSTR has VT_RESERVED set. Do a string comparison */
+					rc = VariantChangeTypeEx(&rv,nonbv,lcid,0,VT_BSTR);
+					if (FAILED(rc))
+						return rc;
+					rc = VarBstrCmp(V_BSTR(bstrv), V_BSTR(&rv), lcid, flags);
+				} else if (V_BSTR(bstrv) && *V_BSTR(bstrv)) {
+					/* Non NULL nor empty BSTR */
+					/* If the BSTR is not a number the BSTR is greater */
+					rc = _VarChangeTypeExWrap(&lv,bstrv,lcid,0,VT_R8);
+					if (FAILED(rc))
+						rc = VARCMP_GT;
+					else if (breserv && nreserv)
+						/* FIXME: This is strange: with both VT_RESERVED set it
+						looks like the result depends only on the sign of
+						the BSTR number */
+						rc = (V_R8(&lv) >= 0) ? VARCMP_GT : VARCMP_LT;
+					else
+						/* Numeric comparison, will be handled below.
+						VARCMP_NULL used only to break out. */
+						rc = VARCMP_NULL;
+					VariantClear(&lv);
+					VariantClear(&rv);
+				} else
+					/* Empty or NULL BSTR */
+					rc = VARCMP_GT;
+			}
+			/* Fixup the return code if we swapped left and right */
+			if (swap) {
+				if (rc == VARCMP_GT)
+					rc = VARCMP_LT;
+				else if (rc == VARCMP_LT)
+					rc = VARCMP_GT;
+			}
+			if (rc != VARCMP_NULL)
+				return rc;
+		}
+
+		if (xmask & VTBIT_DECIMAL)
+			vt = VT_DECIMAL;
+		else if (xmask & VTBIT_BSTR)
+			vt = VT_R8;
+		else if (xmask & VTBIT_R4)
+			vt = VT_R4;
+		else if (xmask & (VTBIT_R8 | VTBIT_DATE))
+			vt = VT_R8;
+		else if (xmask & VTBIT_CY)
+			vt = VT_CY;
+		else
+			/* default to I8 */
+			vt = VT_I8;
+
+		/* Coerce the variants */
+		rc = _VarChangeTypeExWrap(&lv,left,lcid,0,vt);
+		if (rc == DISP_E_OVERFLOW && vt != VT_R8) {
+			/* Overflow, change to R8 */
+			vt = VT_R8;
+			rc = _VarChangeTypeExWrap(&lv,left,lcid,0,vt);
+		}
+		if (FAILED(rc))
+			return rc;
+		rc = _VarChangeTypeExWrap(&rv,right,lcid,0,vt);
+		if (rc == DISP_E_OVERFLOW && vt != VT_R8) {
+			/* Overflow, change to R8 */
+			vt = VT_R8;
+			rc = _VarChangeTypeExWrap(&lv,left,lcid,0,vt);
+			if (FAILED(rc))
+				return rc;
+			rc = _VarChangeTypeExWrap(&rv,right,lcid,0,vt);
+		}
+		if (FAILED(rc))
+			return rc;
+
+#define _VARCMP(a,b) \
+	(((a) == (b)) ? VARCMP_EQ : (((a) < (b)) ? VARCMP_LT : VARCMP_GT))
+
+		switch (vt) {
+		 case VT_CY:
+			 return VarCyCmp(V_CY(&lv), V_CY(&rv));
+		 case VT_DECIMAL:
+			 return VarDecCmp(&V_DECIMAL(&lv), &V_DECIMAL(&rv));
+		 case VT_I8:
+			 return _VARCMP(V_I8(&lv), V_I8(&rv));
+		 case VT_R4:
+			 return _VARCMP(V_R4(&lv), V_R4(&rv));
+		 case VT_R8:
+			 return _VARCMP(V_R8(&lv), V_R8(&rv));
+		 default:
+			 /* We should never get here */
+			 return E_FAIL;
+		}
+#undef _VARCMP
+	}
+
+#endif
+
+
 	template<typename T> class safearray_t;
 
 	namespace impl {
@@ -684,7 +891,21 @@ namespace comet {
 
 		//! \name Mathematical operators
 		//@{
-		COMET_VARIANT_OPERATOR(+,Add);
+//		COMET_VARIANT_OPERATOR(+,Add);
+
+		variant_t operator+(const variant_t& x) const															
+	{																											
+		VARIANT t;																								
+		::VarAdd(const_cast<VARIANT*>(get_var()), const_cast<VARIANT*>(x.get_var()), &t) | raise_exception;	
+		return auto_attach(t);																					
+	}																											
+																												
+	variant_t& operator+=(const variant_t& x)																
+	{																											
+		return operator=(operator+(x));																		
+	}
+
+
 		COMET_VARIANT_OPERATOR(-,Sub);
 		COMET_VARIANT_OPERATOR(*,Mul);
 		COMET_VARIANT_OPERATOR(/,Div);
