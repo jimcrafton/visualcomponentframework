@@ -21,15 +21,20 @@ using namespace VCF;
 
 
 
-Win32PrintSession::Win32PrintSession():
-	printerDC_(0)
+Win32PrintSession::Win32PrintSession()
+#ifndef VCF_WIN32CE
+:
+printerDC_(0)
+#endif
 {
+#ifndef VCF_WIN32CE
 	if ( System::isUnicodeEnabled() ) {
 		printInfo_.getPrintDlgW().Flags |= PD_RETURNDEFAULT;
 	}
 	else{
 		printInfo_.getPrintDlgA().Flags |= PD_RETURNDEFAULT;
 	}
+#endif
 }
 
 Win32PrintSession::~Win32PrintSession()
@@ -40,21 +45,32 @@ Win32PrintSession::~Win32PrintSession()
 
 String Win32PrintSession::getTitle()
 {
+#ifdef VCF_WIN32CE
+	return L"";	
+#else
 	return title_;	
+#endif
 }
 
 void Win32PrintSession::setTitle( const String& title )
 {
+#ifdef VCF_WIN32CE
+#else
 	title_ = title;
+#endif
 }
 
+#ifndef VCF_WIN32CE
 BOOL CALLBACK Win32PrintSession::AbortProc( HDC hdc, int iError )
 {
 	return TRUE;
 }
+#endif
 
 void Win32PrintSession::setDefaultPageSettings()
 {
+	#ifdef VCF_WIN32CE
+#else
 	HDC hDC = NULL;
 	
 	if ( System::isUnicodeEnabled() ) {
@@ -159,13 +175,17 @@ void Win32PrintSession::setDefaultPageSettings()
 	printInfo_.pages_[0] = 1;
 
 	printInfo_.pageDrawingRect_.setRect( 0, 0, printInfo_.pageSize_.width_, printInfo_.pageSize_.height_ );
-
+#endif
 }
 
 Size Win32PrintSession::getPageSize()
 {
 	Size result;
+	#ifdef VCF_WIN32CE
+	return result;
+#else
 	return printInfo_.pageSize_;
+#endif
 }
 
 void Win32PrintSession::setPageSize( const Size& pageSize )
@@ -180,41 +200,68 @@ void Win32PrintSession::setStandardPageSize( const PrintSession::PageSize& pageS
 
 void Win32PrintSession::setStartPage( const uint32& startPage )
 {	
+	#ifdef VCF_WIN32CE
+#else
 	printInfo_.setStartPage( startPage );
+#endif
 }
 
 uint32 Win32PrintSession::getStartPage()
 {	
+	#ifdef VCF_WIN32CE
+	return 0;
+#else
 	return printInfo_.getStartPage();
+#endif
 }
 
 void Win32PrintSession::setEndPage( const uint32& endPage )
 {
+	#ifdef VCF_WIN32CE
+#else
 	printInfo_.setEndPage( endPage );
+#endif
 }
 
 uint32 Win32PrintSession::getEndPage()
 {
+	#ifdef VCF_WIN32CE
+	return 0;
+#else
 	return printInfo_.getEndPage();
+#endif
 
 }
 Rect Win32PrintSession::getPageDrawingRect()
 {	
+#ifdef VCF_WIN32CE
+	return Rect();
+#else
 	return printInfo_.pageDrawingRect_;
+#endif
 }
 
 void Win32PrintSession::setPageDrawingRect( const Rect& drawingRect )
 {
+	#ifdef VCF_WIN32CE
+#else
 	printInfo_.pageDrawingRect_ = drawingRect;
+#endif
 }
 
 PrintInfoHandle Win32PrintSession::getPrintInfoHandle()
 {
+	#ifdef VCF_WIN32CE
+	return NULL;
+#else
 	return (PrintInfoHandle)&printInfo_;
+#endif
 }
 
 void Win32PrintSession::setPrintInfoHandle( PrintInfoHandle info )
 {
+	#ifdef VCF_WIN32CE
+#else
 	Win32PrintInfo* infoPtr = (Win32PrintInfo*)info;
 
 	if ( NULL != infoPtr ) {
@@ -227,15 +274,21 @@ void Win32PrintSession::setPrintInfoHandle( PrintInfoHandle info )
 			printerDC_ = printInfo_.getPrintDlgA().hDC;
 		}		
 	}
+#endif
 }
 
 void Win32PrintSession::abort()
 {
+#ifndef VCF_WIN32CE
 	::AbortDoc( printerDC_ );
+#endif
 }
 
 PrintContext* Win32PrintSession::beginPrintingDocument()
 {
+	PrintContext* result = NULL;
+	#ifdef VCF_WIN32CE
+#else
 	if ( System::isUnicodeEnabled() ) {
 		printInfo_.getDocInfoW().lpszDocName = title_.c_str();
 		if ( !::StartDocW( printerDC_, &printInfo_.getDocInfoW() ) ) {
@@ -253,49 +306,70 @@ PrintContext* Win32PrintSession::beginPrintingDocument()
 
 	
 
-	PrintContext* result = new PrintContext((OSHandleID)printerDC_);
-
+	result = new PrintContext((OSHandleID)printerDC_);
+#endif
 	return result;
 }
 
 void Win32PrintSession::endPrintingDocument()
 {
+	#ifdef VCF_WIN32CE
+#else
 	if ( !::EndDoc( printerDC_ ) ) {		
 		//throw exception???
 	}
+#endif
 }
 
 void Win32PrintSession::beginPage( PrintContext* context )
 {	
+#ifdef VCF_WIN32CE
+#else
 	VCF_ASSERT( (HDC) context->getPeer()->getContextID() == printerDC_ );
 
 	if ( ! ::StartPage( (HDC) context->getPeer()->getContextID() ) ) {
 		//throw exception???
 	}
+#endif
 }
 
 double Win32PrintSession::getDPI()
 {
+	#ifdef VCF_WIN32CE
+return 0.0;
+#else
 	return GetDeviceCaps( printerDC_, LOGPIXELSY );
+#endif
 }
 
 void Win32PrintSession::endPage( PrintContext* context )
 {
+	#ifdef VCF_WIN32CE
+#else
 	VCF_ASSERT( (HDC) context->getPeer()->getContextID() == printerDC_ );
 
 	if ( ! ::EndPage( (HDC) context->getPeer()->getContextID() ) ) {
 		//throw exception???
 	}
+#endif
 }
 
 std::vector<uint32> Win32PrintSession::getPrintablePages()
 {
+	#ifdef VCF_WIN32CE
+	static std::vector<uint32> res;
+	return res;
+#else
 	return printInfo_.pages_;
+#endif
 }
 
 void Win32PrintSession::setPrintablePages( const std::vector<uint32>& printablePages )
 {
+	#ifdef VCF_WIN32CE
+#else
 	printInfo_.pages_ = printablePages;
+#endif
 }
 
 

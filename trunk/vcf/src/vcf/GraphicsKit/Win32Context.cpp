@@ -24,6 +24,8 @@ where you installed the VCF.
 
 #ifndef VCF_WIN32CE
 #include "vcf/GraphicsKit/Win32VisualStylesWrapper.h"
+#else
+typedef void* HTHEME;
 #endif
 
 
@@ -1246,8 +1248,12 @@ void Win32Context::arc(const double & x1, const double & y1, const double & x2, 
 			fixVal = 1;
 		}
 		
+#ifdef VCF_WIN32CE
+#else
 		::Arc( dc_, (int32)ax1, (int32)ay1, (int32)ax2 + fixVal, (int32)ay2 + fixVal,
 			(int32)x3, (int32)y3, (int32)x4, (int32)y4 );
+#endif
+
 	}
 }
 
@@ -1302,6 +1308,8 @@ void Win32Context::curve(const double & x1, const double & y1, const double & x2
 		bezPts[3].x = (int32)x4;
 		bezPts[3].y = (int32)y4;
 		
+#ifdef VCF_WIN32CE
+#else
 		if ( inFillPath_ ){
 			//::BeginPath( dc_ );
 			::MoveToEx( dc_, bezPts[0].x, bezPts[0].y, NULL );
@@ -1312,6 +1320,7 @@ void Win32Context::curve(const double & x1, const double & y1, const double & x2
 		else {
 			::PolyBezier( dc_, bezPts, 4 );
 		}
+#endif
 	}
 }
 
@@ -1345,7 +1354,10 @@ void Win32Context::closePath()
 
 	}
 	else {
+#ifdef VCF_WIN32CE
+#else
 		::CloseFigure(dc_);
+#endif
 	}
 }
 
@@ -1377,11 +1389,13 @@ void Win32Context::setOrigin( const double& x, const double& y )
 Point Win32Context::getOrigin()
 {
 	checkHandle();
+#ifdef VCF_WIN32CE
+#else
 	POINT pt = {0,0};
 	::GetViewportOrgEx( dc_, &pt );
 	origin_.x_ = pt.x;
 	origin_.y_ = pt.y;
-
+#endif
 	releaseHandle();
 
 	return origin_;
@@ -1506,7 +1520,12 @@ void Win32Context::textAt( const Rect& bounds, const String& text, const int32& 
 		formatOptions |= DT_WORDBREAK;
 	}
 	else {
+#ifdef VCF_WIN32CE
+		formatOptions |= DT_SINGLELINE;
+#else
 		formatOptions |= DT_WORD_ELLIPSIS | DT_SINGLELINE;
+#endif
+		
 	}
 
 	formatOptions |= DT_EXPANDTABS;
@@ -1530,7 +1549,8 @@ void Win32Context::textAt( const Rect& bounds, const String& text, const int32& 
 	//r.right = r.left + textSize.cx;
 	//r.bottom = r.top + textSize.cy;
 
-	
+#ifdef VCF_WIN32CE
+#else
 	if ( System::isUnicodeEnabled() ) {
 		VCFChar* textToDraw = new VCFChar[text.size()+1];
 		memset( textToDraw, 0, (text.size()+1)*sizeof(VCFChar) );
@@ -1597,7 +1617,7 @@ void Win32Context::textAt( const Rect& bounds, const String& text, const int32& 
 		//clean up after ourselves
 		delete[] textToDraw;
 	}
-
+#endif
 
 
 
@@ -1752,7 +1772,10 @@ void Win32Context::drawTransparentBitmap(HDC hdc, HBITMAP hBitmap, int32 xStart,
 	GetObject(hBitmap, sizeof(BITMAP), (LPSTR)&bm);
 	ptSize.x = bm.bmWidth;            // Get width of bitmap
 	ptSize.y = bm.bmHeight;           // Get height of bitmap
+#ifdef VCF_WIN32CE
+#else
 	DPtoLP(hdcTemp, &ptSize, 1);      // Convert from device
+#endif
 	// to logical points
 
 	// Create some DCs to hold temporary data.
@@ -1780,7 +1803,10 @@ void Win32Context::drawTransparentBitmap(HDC hdc, HBITMAP hBitmap, int32 xStart,
 	bmSaveOld   = (HBITMAP)SelectObject(hdcSave, bmSave);
 
 	// Set proper mapping mode.
+#ifdef VCF_WIN32CE
+#else
 	SetMapMode(hdcTemp, GetMapMode(hdc));
+#endif
 
 	// Save the bitmap sent here, because it will be overwritten.
 	BitBlt(hdcSave, 0, 0, ptSize.x, ptSize.y, hdcTemp, 0, 0, SRCCOPY);
@@ -1877,7 +1903,8 @@ void Win32Context::setClippingPath( Path* clippingPath )
 	}
 
 	clipRGN_ = NULL;
-
+#ifdef VCF_WIN32CE
+#else
 	if ( NULL != clippingPath ) {
 		::BeginPath( dc_ );
 
@@ -1926,7 +1953,7 @@ void Win32Context::setClippingPath( Path* clippingPath )
 
 		clipRGN_ = ::PathToRegion( dc_ );
 	}
-
+#endif
 
 	::SelectClipRgn( dc_, clipRGN_ );
 
@@ -1986,11 +2013,14 @@ void Win32Context::drawThemeButtonRect( Rect* rect, ButtonState& state, Rect* ca
 
 	HTHEME theme = NULL;
 
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"BUTTON" );
 	}
+#endif
 
 	if ( theme ) {
+#ifndef VCF_WIN32CE
 		int dcs = SaveDC( dc_ );
 
 		int btnState = 0;
@@ -2037,7 +2067,7 @@ void Win32Context::drawThemeButtonRect( Rect* rect, ButtonState& state, Rect* ca
 		RestoreDC(dc_, dcs );
 
 		DeleteObject( font );
-
+#endif
 	}
 	else {
 		COLORREF backColor = ::GetSysColor( COLOR_3DFACE );
@@ -2070,10 +2100,13 @@ void Win32Context::drawThemeButtonRect( Rect* rect, ButtonState& state, Rect* ca
 
 
 		if ( true == isPressed ) {
+
+#ifndef VCF_WIN32CE
 			HBRUSH shadowBrush = CreateSolidBrush( ::GetSysColor( COLOR_3DSHADOW ) );
 			::FrameRect( dc_, &tmpRect, shadowBrush );
 			DeleteObject( shadowBrush );
 			::OffsetRect( &capRect, 1, 1 );
+#endif
 		}
 		else {
 
@@ -2206,8 +2239,9 @@ void Win32Context::drawThemeButtonRect( Rect* rect, ButtonState& state, Rect* ca
 			//defRect.right -= 1;
 			//defRect.bottom -= 1;
 
-
+#ifndef VCF_WIN32CE
 			FrameRect( dc_, &defRect, (HBRUSH)GetStockObject(BLACK_BRUSH) );
+#endif
 		}
 
 		if ( NULL != oldBrush ) {
@@ -2236,11 +2270,14 @@ void Win32Context::drawThemeCheckboxRect( Rect* rect, ButtonState& state )
 
 	HTHEME theme = NULL;
 
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"BUTTON" );
 	}
+#endif
 
 	if ( theme ) {
+#ifndef VCF_WIN32CE
 		RECT btnRect;
 		btnRect.left = rect->left_;
 		btnRect.top = rect->top_;
@@ -2315,7 +2352,7 @@ void Win32Context::drawThemeCheckboxRect( Rect* rect, ButtonState& state )
 		RestoreDC(dc_, dcs );
 
 		DeleteObject( font );
-
+#endif
 	}
 	else {
 
@@ -2373,12 +2410,13 @@ void Win32Context::drawThemeRadioButtonRect( Rect* rect, ButtonState& state )
 	Rect tmp = *rect;
 
 	HTHEME theme = NULL;
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"BUTTON" );
 	}
-
+#endif
 	if ( theme ) {
+#ifndef VCF_WIN32CE
 		RECT btnRect;
 		btnRect.left = rect->left_;
 		btnRect.top = rect->top_;
@@ -2453,7 +2491,7 @@ void Win32Context::drawThemeRadioButtonRect( Rect* rect, ButtonState& state )
 		RestoreDC(dc_, dcs );
 
 		DeleteObject( font );
-
+#endif
 	}
 	else {
 	/**
@@ -2513,12 +2551,13 @@ void Win32Context::drawThemeComboboxRect( Rect* rect, ButtonState& state )
 	r.top = rect->top_;
 	r.right = rect->right_;
 	r.bottom = rect->bottom_;
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"EDIT" );
 	}
-
+#endif
 	if ( theme ) {
+#ifndef VCF_WIN32CE
 		int dcs = SaveDC( dc_ );
 
 		int btnState = 0;
@@ -2613,6 +2652,7 @@ void Win32Context::drawThemeComboboxRect( Rect* rect, ButtonState& state )
 		RestoreDC(dc_, dcs );
 
 		DeleteObject( font );
+#endif
 	}
 	else {
 
@@ -2622,7 +2662,8 @@ void Win32Context::drawThemeComboboxRect( Rect* rect, ButtonState& state )
 		::FillRect( dc_, &r, (HBRUSH)(COLOR_WINDOW+1) );
 
 		RECT btnRect = r;
-
+#ifdef VCF_WIN32CE
+#else
 		NONCLIENTMETRICS ncm;
 		memset( &ncm, 0, sizeof(NONCLIENTMETRICS) );
 		ncm.cbSize = sizeof(NONCLIENTMETRICS);
@@ -2630,7 +2671,7 @@ void Win32Context::drawThemeComboboxRect( Rect* rect, ButtonState& state )
 		SystemParametersInfo( SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0 );
 
 		btnRect.left = r.right - ncm.iScrollWidth;
-
+#endif
 		::FillRect( dc_, &btnRect, (HBRUSH)(COLOR_3DFACE+1) );
 
 		UINT flags = 0;
@@ -2641,7 +2682,10 @@ void Win32Context::drawThemeComboboxRect( Rect* rect, ButtonState& state )
 			// Native win32 pressed combobox buttons are always flat, so
 			// we're going to do our best to make it look flat in our
 			// combobox emulation too
-			flags |= DFCS_PUSHED | DFCS_FLAT;
+			flags |= DFCS_PUSHED;
+#ifndef VCF_WIN32CE						
+			flags |= DFCS_FLAT;
+#endif
 		}
 
 		if ( !state.isEnabled() ) {
@@ -2684,7 +2728,10 @@ void Win32Context::drawThemeComboboxRect( Rect* rect, ButtonState& state )
 
 		FillRect( dc_, &bkRect, bkBrush );
 		SetTextColor( dc_, textColor );
-		UINT fmt = DT_VCENTER | DT_SINGLELINE | DT_LEFT | DT_EXPANDTABS | DT_END_ELLIPSIS;
+		UINT fmt = DT_VCENTER | DT_SINGLELINE | DT_LEFT | DT_EXPANDTABS;
+#ifndef VCF_WIN32CE
+		fmt |= DT_END_ELLIPSIS;
+#endif
 
 		HFONT font;
 		prepareDCWithContextFont( font );
@@ -2719,13 +2766,14 @@ void Win32Context::drawThemeScrollButtonRect( Rect* rect, ScrollBarState& state 
 
 
 	HTHEME theme = NULL;
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"SCROLLBAR" );
 	}
+#endif
 
 	if ( theme ) {
-
+#ifndef VCF_WIN32CE
 		int scrollState = 0;
 
 		if ( state.isVertical() ) {
@@ -2772,6 +2820,7 @@ void Win32Context::drawThemeScrollButtonRect( Rect* rect, ScrollBarState& state 
 		Win32VisualStylesWrapper::DrawThemeBackground(theme, dc_, SBP_ARROWBTN, scrollState, &r, 0);
 
 		Win32VisualStylesWrapper::CloseThemeData( theme );
+#endif
 	}
 	else {
 
@@ -2813,12 +2862,13 @@ void Win32Context::drawThemeDisclosureButton( Rect* rect, DisclosureButtonState&
 	r.right = (int32)rect->right_;
 	r.bottom = (int32)rect->bottom_;
 
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"TREEVIEW" );
 	}
-
+#endif
 	if ( theme ) {
+#ifndef VCF_WIN32CE
 		SIZE val;
 		memset(&val,0,sizeof(val));
 		int partState = state.isOpened() ? GLPS_OPENED : GLPS_CLOSED;
@@ -2834,6 +2884,7 @@ void Win32Context::drawThemeDisclosureButton( Rect* rect, DisclosureButtonState&
 		Win32VisualStylesWrapper::DrawThemeBackground( theme, dc_, TVP_GLYPH, partState, &r, 0 );
 
 		Win32VisualStylesWrapper::CloseThemeData( theme );
+#endif
 	}
 	else {
 		//old way????
@@ -2894,12 +2945,13 @@ void Win32Context::drawThemeTab( Rect* rect, TabState& state )
 	r.right = (int32)rect->right_;
 	r.bottom = (int32)rect->bottom_;
 
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"TAB" );
 	}
-
+#endif
 	if ( theme ) {
+#ifndef VCF_WIN32CE
 		int dcs = SaveDC( dc_ );
 
 		SetBkMode(dc_, TRANSPARENT);
@@ -2950,6 +3002,7 @@ void Win32Context::drawThemeTab( Rect* rect, TabState& state )
 		DeleteObject( font );
 
 		Win32VisualStylesWrapper::CloseThemeData( theme );
+#endif
 	}
 	else {
 		Color* hilite = GraphicsToolkit::getSystemColor(SYSCOLOR_HIGHLIGHT);
@@ -3030,13 +3083,13 @@ void Win32Context::drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& 
 	r.right = (int32)rect->right_;
 	r.bottom = (int32)rect->bottom_;
 
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"TAB" );
 	}
-
+#endif
 	if ( theme ) {
-
+#ifndef VCF_WIN32CE
 		int dcs = SaveDC( dc_ );
 
 		SetBkMode(dc_, TRANSPARENT);
@@ -3221,6 +3274,7 @@ void Win32Context::drawThemeTabs( Rect* rect, DrawUIState& paneState, TabState& 
 		DeleteObject( font );
 
 		Win32VisualStylesWrapper::CloseThemeData( theme );
+#endif
 	}
 	else {
 
@@ -3242,12 +3296,13 @@ void Win32Context::drawThemeTabPage( Rect* rect, DrawUIState& state )
 	r.right = (int32)rect->right_;
 	r.bottom = (int32)rect->bottom_;
 
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"TAB" );
 	}
-
+#endif
 	if ( theme ) {
+		#ifndef VCF_WIN32CE
 		RECT bodyContent = r;
 		RECT paneContent = r;
 
@@ -3262,6 +3317,7 @@ void Win32Context::drawThemeTabPage( Rect* rect, DrawUIState& state )
 		Win32VisualStylesWrapper::DrawThemeBackground( theme, dc_, TABP_BODY, 1, &paneContent, 0 );
 
 		Win32VisualStylesWrapper::CloseThemeData( theme );
+#endif
 	}
 	else {
 		BackgroundState bkg;
@@ -3286,18 +3342,19 @@ void Win32Context::drawThemeTabContent( Rect* rect, DrawUIState& state )
 	r.right = (int32)rect->right_;
 	r.bottom = (int32)rect->bottom_;
 
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"TAB" );
 	}
-
+#endif
 	if ( theme ) {
-		
+#ifndef VCF_WIN32CE	
 		//Win32VisualStylesWrapper::DrawThemeBackground( theme, dc_, TABP_PANE, 1, &bodyContent, 0 );
 
 		Win32VisualStylesWrapper::DrawThemeBackground( theme, dc_, TABP_BODY, 1, &r, 0 );
 
 		Win32VisualStylesWrapper::CloseThemeData( theme );
+#endif
 	}
 	else {
 		BackgroundState bkg;
@@ -3330,13 +3387,13 @@ void Win32Context::drawThemeTickMarks( Rect* rect, SliderState& state )
 	r.right = (int32)rect->right_;
 	r.bottom = (int32)rect->bottom_;
 
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"TRACKBAR" );
 	}
-
+#endif
 	if ( theme ) {
-
+#ifndef VCF_WIN32CE
 		int tickPart = 0;
 		int tickState = TSS_NORMAL;
 
@@ -3378,6 +3435,7 @@ void Win32Context::drawThemeTickMarks( Rect* rect, SliderState& state )
 			Win32VisualStylesWrapper::GetThemeBackgroundContentRect(theme, dc_, TKP_TRACKVERT, TRVS_NORMAL, &r, &trackContent );
 
 			Win32VisualStylesWrapper::GetThemePartSize(theme, dc_, thmbPart, thmbState, &r, TS_TRUE, &thmbSize );
+
 		}
 		else {
 			tickPart = TKP_TICS;
@@ -3466,6 +3524,7 @@ void Win32Context::drawThemeTickMarks( Rect* rect, SliderState& state )
 			tickVal += incr;
 		}
 		Win32VisualStylesWrapper::CloseThemeData( theme );
+#endif
 	}
 	else {
 
@@ -3545,12 +3604,13 @@ void Win32Context::drawThemeSlider( Rect* rect, SliderState& state )
 	r.right = (int32)rect->right_;
 	r.bottom = (int32)rect->bottom_;
 
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"TRACKBAR" );
 	}
-
+#endif
 	if ( theme ) {
+#ifndef VCF_WIN32CE
 		int trackPart = 0;
 		int trkState = 0;
 
@@ -3663,6 +3723,7 @@ void Win32Context::drawThemeSlider( Rect* rect, SliderState& state )
 
 
 		Win32VisualStylesWrapper::CloseThemeData( theme );
+#endif
 	}
 	else {
 		if ( state.isVertical() ) {
@@ -3681,9 +3742,10 @@ void Win32Context::drawThemeSlider( Rect* rect, SliderState& state )
 
 
 		Size thumbSize;
+#ifndef VCF_WIN32CE
 		thumbSize.width_ = ::GetSystemMetrics( SM_CXHTHUMB )*0.85+1;
 		thumbSize.height_ = ::GetSystemMetrics( SM_CYVTHUMB );
-
+#endif
 		Rect thumbRect = *rect;
 		if ( state.isVertical() ) {
 			thumbRect.top_ = thumbRect.bottom_ - thumbSize.width_;
@@ -3963,13 +4025,13 @@ void Win32Context::drawThemeProgress( Rect* rect, ProgressState& state )
 	r.right = (int32)rect->right_;
 	r.bottom = (int32)rect->bottom_;
 
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"PROGRESS" );
 	}
-
+#endif
 	if ( theme ) {
-
+#ifndef VCF_WIN32CE
 		int dcs = ::SaveDC( dc_ );
 		
 		RECT progressContent;
@@ -4073,6 +4135,7 @@ void Win32Context::drawThemeProgress( Rect* rect, ProgressState& state )
 		DeleteObject( font );
 
 		Win32VisualStylesWrapper::CloseThemeData( theme );
+#endif
 	}
 	else {
 		::DrawEdge( dc_, &r, BDR_SUNKENINNER, BF_TOPLEFT|BF_SOFT );
@@ -4170,12 +4233,13 @@ void Win32Context::drawThemeHeader( Rect* rect, ButtonState& state )
 	r.bottom = (int32)rect->bottom_;
 
 	HTHEME theme = NULL;
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"HEADER" );
 	}
-
+#endif
 	if ( theme ) {
+#ifndef VCF_WIN32CE
 		int dcs = ::SaveDC( dc_ );
 		SetBkMode(dc_, TRANSPARENT);
 		VCF::Font hdrFont = *context_->getCurrentFont();
@@ -4223,7 +4287,7 @@ void Win32Context::drawThemeHeader( Rect* rect, ButtonState& state )
 		DeleteObject( font );
 
 		Win32VisualStylesWrapper::CloseThemeData( theme );
-
+#endif
 	}
 	else {
 		UINT hdrState =  DFCS_BUTTONPUSH;
@@ -4251,12 +4315,13 @@ void Win32Context::drawThemeEdge( Rect* rect, DrawUIState& state, const int32& e
 	r.bottom = (int32)rect->bottom_;
 
 	HTHEME theme = NULL;
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"GLOBALS" );
 	}
-
+#endif
 	if ( theme ) {
+#ifndef VCF_WIN32CE
 		int part = 0;
 
 		UINT edge = 0;
@@ -4331,6 +4396,7 @@ void Win32Context::drawThemeEdge( Rect* rect, DrawUIState& state, const int32& e
 		Win32VisualStylesWrapper::DrawThemeEdge(theme, dc_, part, stateFlags, &r, edge, flags, 0);
 
 		Win32VisualStylesWrapper::CloseThemeData( theme );
+#endif
 	}
 	else {
 		UINT edge = 0;
@@ -4392,11 +4458,13 @@ void Win32Context::drawThemeBorder( Rect* rect, DrawUIState& state )
 
 	switch ( state.getType() ) {
 		case etTextbox : {
+#ifndef VCF_WIN32CE
 			if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 				theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"Edit" );
 			}
-			
+#endif
 			if ( theme ) {
+#ifndef VCF_WIN32CE
 				int part = EP_EDITTEXT;
 				int partState = 0;
 				
@@ -4410,6 +4478,7 @@ void Win32Context::drawThemeBorder( Rect* rect, DrawUIState& state )
 
 				Win32VisualStylesWrapper::DrawThemeBackground(theme, dc_, part, partState, &r, 0);
 				Win32VisualStylesWrapper::CloseThemeData( theme );
+#endif
 			}
 			else {
 				
@@ -4429,11 +4498,11 @@ with the native windowing systems default look and feel
 void Win32Context::drawThemeSizeGripper( Rect* rect, DrawUIState& state )
 {
 	HTHEME theme = NULL;
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"GLOBALS" );
 	}
-
+#endif
 	if ( theme ) {
 	}
 }
@@ -4478,11 +4547,11 @@ void Win32Context::drawThemeMenuItem( Rect* rect, MenuState& state )
 
 
 	HTHEME theme = NULL;
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"MENU" );
 	}
-
+#endif
 	if ( theme ) {
 
 	}
@@ -4591,11 +4660,11 @@ void Win32Context::drawThemeMenuItemText( Rect* rect, MenuState& state )
 	rcText.top = (int32)rect->top_;
 	rcText.right = (int32)rect->right_;
 	rcText.bottom = (int32)rect->bottom_;
-
+#ifndef VCF_WIN32CE
 	if ( Win32VisualStylesWrapper::IsThemeActive() ) {
 		theme = Win32VisualStylesWrapper::OpenThemeData( NULL, L"MENU" );
 	}
-
+#endif
 	if ( theme ) {
 
 	}
@@ -4798,15 +4867,21 @@ bool Win32Context::prepareForDrawing( int32 drawingOperation )
 				logBrush.lbColor = 0;
 				logBrush.lbHatch = 0;
 				logBrush.lbStyle = BS_HOLLOW;
+#ifdef VCF_WIN32CE
+				
+#else
 				currentHBrush_ = ::CreateBrushIndirect( &logBrush );
-
+#endif
 				logBrush.lbColor = currentColor->getColorRef32();
 				logBrush.lbHatch = 0;
 				logBrush.lbStyle = BS_SOLID;
 
-				DWORD penStyle = PS_GEOMETRIC;
+				DWORD penStyle = 0;
+#ifndef VCF_WIN32CE
+				penStyle = PS_GEOMETRIC;
+#endif
 				penStyle |= PS_SOLID;
-
+#ifndef VCF_WIN32CE
 				switch ( context_->getLineCapStyle() ) {
 					case GraphicsContext::lcsButtCap : {
 						penStyle |= PS_ENDCAP_FLAT;
@@ -4823,7 +4898,9 @@ bool Win32Context::prepareForDrawing( int32 drawingOperation )
 					}
 					break;
 				}
+#endif
 
+#ifndef VCF_WIN32CE
 				switch ( context_->getLineJoinStyle() ) {
 					case GraphicsContext::ljsMiterJoin : {
 						penStyle |= PS_JOIN_MITER;
@@ -4840,13 +4917,16 @@ bool Win32Context::prepareForDrawing( int32 drawingOperation )
 					}
 					break;
 				}
+#endif
 
+#ifndef VCF_WIN32CE
 				currentHPen_ = ExtCreatePen( penStyle, (DWORD)context_->getStrokeWidth(),
 											&logBrush, 0, NULL );
 
 
 				SetMiterLimit( dc_, (FLOAT)context_->getMiterLimit(), NULL );
-
+#else
+#endif
 				if ( context_->getCompositingMode() == GraphicsContext::cmXOR ) {
 					SetROP2( dc_, R2_NOTXORPEN );
 				}
@@ -4854,22 +4934,25 @@ bool Win32Context::prepareForDrawing( int32 drawingOperation )
 			break;
 
 			case GraphicsContext::doFill : {
+#ifndef VCF_WIN32CE
 				logBrush.lbColor = currentColor->getColorRef32();
 
 				logBrush.lbStyle = BS_SOLID;
 				logBrush.lbHatch = BS_NULL;
 
 				currentHBrush_ = ::CreateBrushIndirect( &logBrush );
-
+#else
+#endif
 				currentHPen_ = ::CreatePen( PS_NULL, 0, 0 );
 
 				inFillPath_ = true;
-
+#ifndef VCF_WIN32CE
 				//JC: this is new (9/19/2006), I put this in as the default
 				//winding rule for fills. Do we want to leave this as the default....?
 				SetPolyFillMode( dc_, WINDING );
 
 				::BeginPath( dc_ );
+#endif
 			}
 			break;
 
@@ -4936,10 +5019,12 @@ void Win32Context::finishedDrawing( int32 drawingOperation )
 			break;
 
 			case GraphicsContext::doFill : {
-
+#ifndef VCF_WIN32CE
 				::EndPath( dc_ );
 
 				FillPath( dc_ );
+#endif
+				
 			}
 			break;
 

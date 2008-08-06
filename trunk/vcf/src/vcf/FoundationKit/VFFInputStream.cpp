@@ -235,7 +235,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 							}
 
 							
-							if ( (pdObject == prop->getType()) && ('@' == value[0]) ) {
+							if ( (pdObject == prop->getType() || pdVariant == prop->getType()) && ('@' == value[0]) ) {
 								value.erase( 0, 1 );
 								if ( !value.empty() ) {
 									//need to adjust this for arrays/collections!

@@ -24,7 +24,14 @@ where you installed the VCF.
 
 #include "thirdparty/win32/Microsoft/htmlhelp.h"
 
+
+#ifdef VCF_WIN32CE
+#else
 #include "vcf/GraphicsKit/Win32VisualStylesWrapper.h"
+#endif
+
+
+
 #include "vcf/GraphicsKit/DrawUIState.h"
 #include "vcf/GraphicsKit/Win32Image.h"
 
@@ -196,9 +203,11 @@ VCF::Rect AbstractWin32Component::getBounds()
 	VCF::Rect result;
 	RECT r;
  	::GetWindowRect( hwnd_, &r );
-
+#ifdef VCF_WIN32CE
+	LONG_PTR style = ::GetWindowLong( hwnd_, GWL_STYLE );
+#else
 	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
-
+#endif
 	HWND parent = ::GetParent( hwnd_ );
 
 	if ( style & WS_CHILD ){
@@ -242,7 +251,13 @@ void AbstractWin32Component::setVisible( const bool& visible )
 bool AbstractWin32Component::getVisible()
 {
 	bool result = false;
-	LONG_PTR style = GetWindowLongPtr( hwnd_, GWL_STYLE );
+	
+#ifdef VCF_WIN32CE
+	LONG_PTR style = ::GetWindowLong( hwnd_, GWL_STYLE );
+#else
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
+#endif
+
 	result =  (style & WS_VISIBLE ) != 0;
 	return result;
 }
@@ -282,7 +297,11 @@ void AbstractWin32Component::setParent( VCF::Control* parent )
 			::SetParent( hwnd_, wndParent );
 
 			if ( currentParent == dummyParent ) {
+#ifdef VCF_WIN32CE
+				::ShowWindow( hwnd_, SW_SHOWNORMAL );
+#else				
 				::ShowWindow( hwnd_, SW_NORMAL );
+#endif
 			}		
 		}
 	}
@@ -801,7 +820,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 			}
 		}
 		break;
-
+#ifndef VCF_WIN32CE
 		case WM_HELP : {
 			HELPINFO* helpInfo = (HELPINFO*) lParam;
 
@@ -829,7 +848,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 			result = true;
 		}
 		break;
-
+#endif
 
 		case WM_PAINT:{
 			if ( true == isCreated() ){
@@ -882,6 +901,8 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 			}
 
 			if ( false == mouseEnteredControl_ ) {
+#ifdef VCF_WIN32CE
+#else
 				TRACKMOUSEEVENT trackmouseEvent = {0,0,0,0};
 				trackmouseEvent.cbSize = sizeof(trackmouseEvent);
 				trackmouseEvent.dwFlags = TME_LEAVE;
@@ -894,6 +915,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 					event->setType( Control::MOUSE_MOVE );
 				}
+#endif
 			}
 
 			mouseEnteredControl_ = true;
@@ -903,7 +925,8 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		}
 		break;
 
-
+#ifdef VCF_WIN32CE
+#else
 		case WM_MOUSELEAVE: {
 			if ( peerControl_->isNormal() ) {
 				//result = defaultWndProcedure( message, wParam, lParam );
@@ -917,6 +940,8 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 
 		}
 		break;
+#endif
+
 
 		case WM_DRAWITEM : {
 			
@@ -1012,6 +1037,8 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		}
 		break;
 
+#ifdef VCF_WIN32CE
+#else
 		case WM_MENUSELECT : {
 			if ( !peerControl_->isDestroying() ) {
 				UINT uItem = (UINT) LOWORD(wParam);
@@ -1031,7 +1058,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 			}
 		}
 		break;
-
+#endif
 		case WM_INITMENUPOPUP : {
 			if ( !peerControl_->isDestroying() ) {
 				HMENU hmenuPopup = (HMENU) wParam;//thisis the menu handle of the menu popuping up or dropping down
@@ -1585,6 +1612,8 @@ void AbstractWin32Component::setBorder( Border* border )
 LRESULT AbstractWin32Component::handleNCPaint( WPARAM wParam, LPARAM lParam )
 {
 	VCF_ASSERT(NULL != hwnd_);
+#ifdef VCF_WIN32CE
+#else
 	defaultWndProcedure( WM_NCPAINT, wParam, lParam );
 	
 	HDC hdc = GetWindowDC(hwnd_);
@@ -1641,7 +1670,7 @@ LRESULT AbstractWin32Component::handleNCPaint( WPARAM wParam, LPARAM lParam )
 
 	RestoreDC( hdc, dcs );
 	ReleaseDC(hwnd_, hdc);
-
+#endif
 	
 	return 0;
 }

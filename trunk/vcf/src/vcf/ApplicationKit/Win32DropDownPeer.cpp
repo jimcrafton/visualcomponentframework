@@ -629,7 +629,7 @@ VCF::Rect Win32DropDownPeer::getBounds()
 	
 	result.setRect( r.left, r.top, r.right, r.bottom );
 
-	StringUtils::trace( Format("Win32DropDownPeer::getBounds() height is %d\n") % (int)result.getHeight() );
+	//StringUtils::trace( Format("Win32DropDownPeer::getBounds() height is %d\n") % (int)result.getHeight() );
 
 	return result;
 }
@@ -652,7 +652,7 @@ void Win32DropDownPeer::setBounds( VCF::Rect* rect )
 
 	height = rect->getHeight() - ( (r.bottom-r.top) - ih );
 
-	StringUtils::trace( Format("Win32DropDownPeer height is %d\n") % height );
+	//StringUtils::trace( Format("Win32DropDownPeer height is %d\n") % height );
 
 	SendMessage( hwnd_, CB_SETITEMHEIGHT, -1, height );
 	UINT count = SendMessage( hwnd_,  CB_GETCOUNT, 0, 0 );

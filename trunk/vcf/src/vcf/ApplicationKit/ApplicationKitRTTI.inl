@@ -23,6 +23,7 @@ This was created to improved compile times
 #include "vcf/ApplicationKit/HorizontalLayoutContainer.h"
 #include "vcf/ApplicationKit/SimpleListModel.h"
 #include "vcf/ApplicationKit/TreeListModel.h"
+#include "vcf/ApplicationKit/AdapterModels.h"
 
 namespace VCF {
 
@@ -481,6 +482,7 @@ _class_abstract_rtti_(ListModel, "VCF::Model", LISTMODEL_CLASSID)
 	_delegate_(ListModelDelegate, ItemAdded )
 	_delegate_(ListModelDelegate, ItemRemoved )
 	_property_array_( String, "items", getAsString,setAsString,insert,remove,getCount, "" )
+	_property_array_( VariantData, "objects", get,set,insert,remove,getCount, "" )
 	_property_collection2_( VariantData, String, "subItems", getSubItemAtKey,setSubItemAtKey,insertSubItemAtKey,removeSubItemAtKey,getSubItemsCountAtKey, "" )
 _class_rtti_end_
 
@@ -713,7 +715,8 @@ _property_enum_labeled_( IconStyleType, "iconStyle", getIconStyle, setIconStyle,
 _property_enum_labeled_( IconAlignType, "iconAlignment", getIconAlignment, setIconAlignment,
 					   iaNone, iaAutoArrange, 4, IconAlignTypeNames, "");
 
-_property_object_ro_( ColumnModel, "columnModel", getColumnModel, "" );
+_property_object_( ColumnModel, "columnModel", getColumnModel, setColumnModel, "" );
+//_property_object_ro_( ColumnModel, "columnModel", getColumnModel, "" );
 
 _delegate_(MouseDelegate, ColumnItemClicked );
 
@@ -751,7 +754,10 @@ _class_rtti_(PopupMenu, "VCF::Menu", POPUPMENU_CLASSID )
 _class_rtti_end_
 
 
-_class_rtti_(PushButton, "VCF::Object", PUSHBUTTON_CLASSID)
+_class_rtti_(PushButton, "VCF::CustomControl", PUSHBUTTON_CLASSID)
+_property_object_( ImageList, "imageList", getImageList, setImageList, "" );
+_property_( String, "caption", getCaption, setCaption, "" );
+_property_( bool, "showCaption", getShowCaption, setShowCaption, "" );
 _class_rtti_end_
 
 
@@ -1011,6 +1017,27 @@ _class_rtti_end_
 #define DEFAULTLISTMODELPROPERTYEDITOR_CLASSID "9f39a5a5-9910-4ae2-a6b3-c6ff38682283"
 
 _class_rtti_(DefaultListModelPropertyEditor, "VCF::AbstractPropertyEditor", DEFAULTLISTMODELPROPERTYEDITOR_CLASSID)
+_class_rtti_end_
+
+
+
+
+
+
+_class_rtti_(ObjectModel, "VCF::Model", "ObjectModel")
+	_property_object_( Object, "source", getSource, setSource, "" )
+_class_rtti_end_
+
+_class_rtti_(ObjectListModel, "VCF::SimpleListModel", "ObjectListModel")	
+_class_rtti_end_
+
+
+_class_rtti_(DictionaryModel, "VCF::Model", "DictionaryModel")	
+_class_rtti_end_
+
+
+_class_rtti_(ObjectColumnModel, "VCF::ColumnModel", "ObjectColumnModel")	
+	_property_object_( ListModel, "listModel", getListModel, setListModel, "" )
 _class_rtti_end_
 
 

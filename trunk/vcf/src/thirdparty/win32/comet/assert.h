@@ -44,7 +44,7 @@ struct assert_failed : std::runtime_error
 
 # else
 #  define COMET_THROWS_ASSERT throw()
-#  if !defined( __CYGWIN__ ) && !defined( __MINGW32__ )
+#  if !defined( __CYGWIN__ ) && !defined( __MINGW32__ ) && !defined( WINCE )
 
 #   include <crtdbg.h>
 #   define COMET_ASSERT _ASSERTE

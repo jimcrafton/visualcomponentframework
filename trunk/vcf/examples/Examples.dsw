@@ -1158,6 +1158,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "MVCAdapters"=.\MVC\MVCAdapters\MVCAdapters.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "MVCBasics"=.\MVC\MVCBasics\MVCBasics.dsp - Package Owner=<4>
 
 Package=<5>

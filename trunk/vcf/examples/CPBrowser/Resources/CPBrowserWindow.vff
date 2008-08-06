@@ -5,22 +5,72 @@ object CPBrowserWindow  : VCF::Window
 	width = 320
 	caption = 'CPBrowser'		
 
-	object rssDropDown : VCF::DropDownControl 
-		left = 0
-		top = 0
-		height = 35
-		width = 100
+	//object rssDropDown : VCF::DropDownControl 
+	//	left = 0
+	//	top = 0
+	//	height = 35
+	//	width = 100
+//
+//		alignment = AlignTop
+//		visible = true
+//
+//		dropDownCount = 10
+//	end
 
+	object imgList : VCF::ImageList 
+		transparentColor = 'lime'
+		imageWidth = 17
+		imageHeight = 19
+
+		object img1 : VCF::ImageComponent 
+			filename = 'res:back1.bmp'
+		end
+
+		object img2 : VCF::ImageComponent 
+			filename = 'res:back2.bmp'
+		end
+
+		object img3 : VCF::ImageComponent 
+			filename = 'res:back3.bmp'
+		end
+
+		object img4 : VCF::ImageComponent 
+			filename = 'res:back2.bmp'
+		end
+	end
+
+	object nav : VCF::Panel 
+		height = 25
 		alignment = AlignTop
-		visible = true
+		border = null
 
-		dropDownCount = 10
+		object backBtn : VCF::PushButton
+			width = 22
+			alignment = AlignLeft
+			visible = true
+			caption = '<<'
+			//imageList = @imgList
+		end
+
+		object urlProgress : URLProgress
+			alignment = AlignClient
+			visible = true
+		end
+
+		object fwdBtn : VCF::PushButton
+			width = 22
+			alignment = AlignRight
+			visible = true
+			caption = '>>'
+		end
 	end
 
 	object browser : VCF::HTMLBrowserControl 
 		delegates
 			TitleChanged = [CPBrowserApp@CPBrowserApp::onBrowserDocTitleChanged]
 			URLLoaded = [CPBrowserApp@CPBrowserApp::onBrowserURLLoaded]
+			URLLoading = [CPBrowserApp@CPBrowserApp::onBrowserURLLoading]
+			URLLoadingBegun = [CPBrowserApp@CPBrowserApp::onBrowserURLLoadBegun]
 		end
 		alignment = AlignClient
 		allowPopups = false

@@ -104,6 +104,7 @@ public:
 	};
 
 	
+	void setColumnModel( ColumnModel* val );
 
 	ColumnModel* getColumnModel();
 
