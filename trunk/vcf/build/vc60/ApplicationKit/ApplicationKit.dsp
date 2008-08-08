@@ -85,6 +85,10 @@ LIB32=link.exe -lib
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\AdapterModels.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\AppKitPeerConfig.h
 # End Source File
 # Begin Source File

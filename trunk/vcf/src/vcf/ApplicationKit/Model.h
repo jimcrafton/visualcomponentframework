@@ -45,6 +45,317 @@ typedef ModelDelegate::ProcedureType ModelHandler;
 
 
 
+
+
+/**
+\class ValidationEvent Model.h "vcf/ApplicationKit/Model.h"  
+*/
+class APPLICATIONKIT_API ValidationEvent : public VCF::Event {
+public:
+
+	ValidationEvent( Object* source, const uint32& type,
+						const VariantData& k,
+						const VariantData& v ): 
+		Event(source,type),validationOK(false),key(k), value(v){}
+
+	
+	virtual ~ValidationEvent() {}
+	
+	virtual Object* clone( bool deep=false ) {
+		return new ValidationEvent(*this);
+	}
+
+
+	const VariantData& key;
+
+	const VariantData& value;
+
+
+	bool validationOK;
+	String errorMessage;
+};
+
+
+/**
+\class ValidationException Model.h "vcf/ApplicationKit/Model.h"
+*/
+class APPLICATIONKIT_API ValidationException : public BasicException{
+public:
+
+	ValidationException( const String & message ):
+	  BasicException( message ){};
+
+	ValidationException():
+		BasicException( "Validation error occurred." ){};
+
+	ValidationException( const String & message, const int lineNumber ):
+		BasicException(message, lineNumber){};
+
+	virtual ~ValidationException() throw() {};
+}; 
+
+
+
+/**
+ModelValidationDelegate
+handles the following:
+\li onModelValidate
+*/
+
+typedef Delegate1<ValidationEvent*> ValidationDelegate; 
+typedef ValidationDelegate::ProcedureType ValidationHandler;
+
+
+
+
+
+class APPLICATIONKIT_API ValidationFormatter : public Component {
+public:
+	virtual ~ValidationFormatter(){}
+
+	//generally val to string
+	virtual VariantData convertTo( const VariantData& value ) = 0;
+
+	//generally string to val
+	virtual VariantData convertFrom( const VariantData& value ) = 0;
+
+protected:
+
+};
+
+
+class APPLICATIONKIT_API NumericFormatter : public ValidationFormatter {
+public:
+	NumericFormatter(): ValidationFormatter(), numDecimalPlaces_(2){}
+
+	virtual ~NumericFormatter(){}
+
+	virtual VariantData convertTo( const VariantData& value );
+	virtual VariantData convertFrom( const VariantData& value );
+
+	uint32 getNumberOfDecimalPlaces() {
+		return numDecimalPlaces_;
+	}
+
+	void setNumberOfDecimalPlaces( const uint32& val ) {
+		numDecimalPlaces_ = val;
+	}
+protected:
+	uint32 numDecimalPlaces_;
+};
+
+
+
+
+
+
+enum ValidationLogicOp{
+	vlNone = 0,
+	vlAND,
+	vlOR,
+	vlXOR
+};
+
+
+static String ValidationLogicOpNames[] = { "vlNone",
+                                         "vlAND",
+										 "vlOR",
+										 "vlXOR" };
+
+
+class APPLICATIONKIT_API ValidationRule : public Component {
+public:
+	ValidationRule(): logicOp_(vlAND){}
+	virtual ~ValidationRule(){}
+
+
+	virtual bool exec( const VariantData& value ) = 0;
+
+
+	ValidationLogicOp getLogicOp() {
+		return logicOp_;
+	}
+
+	void setLogicOp( const ValidationLogicOp& val ) {
+		logicOp_ = val;
+	}
+
+	String getErrorMessage() {
+		return errorMessage_;
+	}
+
+	void setErrorMessage( const String& val ) {
+		errorMessage_ = val;
+	}
+protected:
+	ValidationLogicOp logicOp_;
+	String errorMessage_;
+
+};
+
+class APPLICATIONKIT_API NullRule : public ValidationRule {
+public:
+	NullRule():allowsNull_(true){}
+	virtual ~NullRule(){}	
+	virtual bool exec( const VariantData& value );
+
+	bool allowsNull() {
+		return allowsNull_;
+	}
+
+	void setAllowsNull( const bool& val ) {
+		allowsNull_ = val;
+	}
+protected:
+	bool allowsNull_;
+};
+
+
+class APPLICATIONKIT_API DataRule : public ValidationRule {
+public:
+	virtual ~DataRule(){}
+
+	VariantData getData() {
+		return data_;
+	}
+
+	void setData( const VariantData& val ) {
+		data_ = val;
+	}
+protected:
+	VariantData data_;
+};
+
+class APPLICATIONKIT_API MinRule : public DataRule {
+public:
+	virtual ~MinRule(){}	
+	virtual bool exec( const VariantData& value );
+};
+
+class APPLICATIONKIT_API MaxRule : public DataRule {
+public:
+	virtual ~MaxRule(){}	
+	virtual bool exec( const VariantData& value );
+};
+
+
+class APPLICATIONKIT_API EqualsRule : public DataRule {
+public:
+	virtual ~EqualsRule(){}	
+	virtual bool exec( const VariantData& value );
+};
+
+
+class APPLICATIONKIT_API SimilarToRule : public DataRule {
+public:
+	virtual ~SimilarToRule(){}	
+	virtual bool exec( const VariantData& value );
+};
+
+
+
+class APPLICATIONKIT_API ValidationRuleCollection : public Component {
+public:
+	virtual ~ValidationRuleCollection(){}
+
+	ValidationRule* getRule( const uint32& i ) {
+		if ( i < rules_.size() ) {
+			return rules_[i];
+		}
+		return NULL;
+	}
+
+	void setRule( const uint32& index, ValidationRule* rule ) {
+		size_t missing = (index+1) - rules_.size();
+		if ( missing > 0 ) {
+			rules_.resize( missing + rules_.size() );
+		}
+		
+		Array<ValidationRule*>::iterator found = 
+			std::find( rules_.begin(), rules_.end(), rule );
+		//don't allow duplicate entries
+		if ( found == rules_.end() ) {
+			rules_[index] = rule;
+		}
+	}
+
+	void insertRule( const uint32& index, ValidationRule* rule ) {
+		Array<ValidationRule*>::iterator found = std::find( rules_.begin(), rules_.end(), rule );
+		//don't allow duplicate entries
+		if ( found == rules_.end() ) {
+			rules_.insert( rules_.begin() + index, rule );
+		}
+	}
+
+	void removeRule( const uint32& index )	{
+		if ( index < rules_.size() ) {
+			rules_.erase( rules_.begin() + index );
+		}
+	}
+
+	uint32 getRuleCount() {
+		return rules_.size();
+	}
+
+	bool isValid( const VariantData& value ) {
+		bool result = true;
+		Array<ValidationRule*>::iterator it = rules_.begin();		
+
+		while ( it != rules_.end() ) {
+			ValidationRule* rule = *it;
+			bool ruleRes = rule->exec( value );
+			
+			if ( it == rules_.begin() ) {
+				result = ruleRes;
+			}
+			else {
+				switch ( rule->getLogicOp() ) {
+					case vlAND : {
+						result = result && ruleRes;
+					}
+					break;
+
+					case vlOR : {
+						result = result || ruleRes;
+					}
+					break;
+				}
+
+
+				if ( !result ) {
+					problem_ = 	rule->getErrorMessage();	
+					break;
+				}
+			}
+			++it;
+		}
+
+		return result;
+	}
+
+	String getValidationProblem() {
+		return problem_;
+	}
+protected:
+	Array<ValidationRule*> rules_;
+	String problem_;
+};
+
+
+
+
+
+enum ModelUpdate {
+	muNone = 0,
+	muOnValidation
+};
+
+
+static String ModelUpdateNames[] = { "muNone",
+                                         "muOnValidation" };
+
+
+
 class View;
 
 #define MODEL_CLASSID		"ED88C0AD-26AB-11d4-B539-00C04F0196DA"
@@ -92,11 +403,14 @@ public:
 
 	enum ModelEvents{
 		MODEL_CHANGED = 2000,
+		MODEL_VALIDATING,
 		MODEL_VALIDATED,
 		MODEL_EMPTIED,
 		MODEL_LAST_EVENT
 	};
 
+
+	
 
 
 	/**
@@ -109,20 +423,82 @@ public:
 	DELEGATE(ModelDelegate,ModelChanged)
 
 	/**
-	@delegate ModelValidate fired when the model's validate() method is called
+	@delegate ModelValidating fired when the model's validate() method is called
 	@event ValidationEvent
 	@see validate()
 	*/
-	DELEGATE(ValidationDelegate,ModelValidate)    
+	DELEGATE(ValidationDelegate,ModelValidating)
+
+
+	/**
+	@delegate ModelValidating fired when the model's validate() method is called
+	@event ValidationEvent
+	@see validate()
+	*/
+	DELEGATE(EventDelegate,ModelValidated)
     
     /**
 	Validate the model.
 	 */
-    virtual void validate() {
-		ValidationEvent e( this );
-		ModelValidate( &e );
+    void validate() {
+		VariantData key = VariantData::null();
+		VariantData value = VariantData::null();
+		validate(key,value);
+	}
+
+	/**
+	Throws an exception if the validation fails.
+	Call with a value and optional key for the value. If there's
+	a formatter present the value may be coerced into something 
+	else using the rules (if any) of the formatter. For example,
+	the value passed in might be a string that represents a number.
+	The string may be limited to 3 decimal places and converted to
+	a double.
+  
+	*/
+	virtual VariantData validate( const VariantData& key, const VariantData& value ) {
+		
+		if ( updateMode_ == muOnValidation ) {
+
+			VariantData tmpVal = value;
+			try {
+				if ( NULL != formatter_ ) {				
+					tmpVal = formatter_->convertFrom( value );
+				}
+			}
+			catch ( BasicException& e ) {
+				throw ValidationException( "Invalid Formatting error: " + e.getMessage() );
+			}
+
+
+			if ( NULL != validator_ ) {
+				if ( !validator_->isValid( tmpVal ) ) {
+					throw ValidationException( "Data value is invalid.\nProblem: " + validator_->getValidationProblem() );
+				}
+			}
+
+
+			ValidationEvent e( this, MODEL_VALIDATING, key, tmpVal );
+			e.validationOK = ModelValidating.empty();
+			ModelValidating( &e );
+			if ( !e.validationOK ) {
+				throw ValidationException( e.errorMessage );
+			}
+
+
+			Event e2(this, MODEL_VALIDATED);
+			ModelValidated( &e2 );
+		}
+
+		return value;
 	}
 	
+	VariantData validate( const VariantData& key, const String& value ) {
+		VariantData v;
+		v.setFromString(value);
+		return validate( key, v );
+	}
+
 
 	/**
 	Returns whether or not the model has an data. The default is true, since 
@@ -187,6 +563,15 @@ public:
 	@see getValue
 	*/
 	virtual String getValueAsString( const VariantData& key=VariantData::null() ) {
+		try {
+			if ( NULL != formatter_ ) {				
+				return formatter_->convertTo( getValue(key) ).toString();
+			}
+		}
+		catch ( BasicException& e ) {
+			throw ValidationException( "Invalid Formatting error: " + e.getMessage() );
+		}
+
 		return getValue(key).toString();
 	}
 
@@ -204,8 +589,7 @@ public:
 	@see setValue()
 	*/
 	virtual void setValueAsString( const String& value, const VariantData& key=VariantData::null() ) {
-		VariantData v;
-		v.setFromString(value);
+		VariantData v = validate( key, value );		
 		setValue( v, key );
 	}
 
@@ -221,6 +605,31 @@ public:
 		return deleteVariantObjects_;
 	}
 
+	ModelUpdate getUpdateMode() {
+		return updateMode_;
+	}
+
+	void setUpdateMode( const ModelUpdate& val ) {
+		updateMode_ = val;
+	}
+
+	ValidationFormatter* getFormatter() {
+		return formatter_;
+	}
+
+	void setFormatter( ValidationFormatter* val ) {
+		formatter_ = val;
+	}
+
+
+	ValidationRuleCollection* getValidator() {
+		return validator_;
+	}
+
+	void setValidator( ValidationRuleCollection* val ) {
+		validator_ = val;
+	}
+
 protected:
 	/**
 	Indicates whether the model deletes the variant objects. If you need to 
@@ -231,6 +640,9 @@ protected:
 	*/
 	bool deleteVariantObjects_;
 	Array<View*> views_;
+	ModelUpdate updateMode_;
+	ValidationFormatter* formatter_;
+	ValidationRuleCollection* validator_;
 
 	/**
 	A virtual method that deletes the object stored by the model. You may choose 
