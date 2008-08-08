@@ -56,7 +56,7 @@ public:
 				String propertyName = key;
 				Property* property = clazz->getProperty( propertyName );
 				if ( NULL != property ) {					
-					VariantData v = value;
+					VariantData v = validate( key, value );
 					property->set( &v );
 					ModelEvent e(this,MODEL_CHANGED);
 					changed(&e);					

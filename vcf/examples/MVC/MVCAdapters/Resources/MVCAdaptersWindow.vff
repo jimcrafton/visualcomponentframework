@@ -17,8 +17,34 @@ object MVCAdaptersWindow  : VCF::Window
 		tweenWidths[0] = 10
 	end
 
+
+	object fmt : VCF::NumericFormatter
+		decimalPlaces = 4
+	end
+
+
+	object min : VCF::MinRule 
+		data = 3.0
+		logicOp = vlOR
+		errorMessage = 'You''re well and truly fucked!'
+	end
+
+	object equals : VCF::EqualsRule 
+		data = 3
+		logicOp = vlOR
+		errorMessage = 'Not equal to 3'
+	end
+
+	object rules : VCF::ValidationRuleCollection
+		rules[0] = @min
+		rules[1] = @equals
+	end
+
 	object model :  VCF::ObjectModel
 		source = @mo
+		formatter = @fmt
+		updateMode = muOnValidation
+		validator = @rules
 	end
 
 	object mo : MyObject 

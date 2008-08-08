@@ -15,7 +15,11 @@ where you installed the VCF.
 using namespace VCF;
 
 
-Model::Model(): deleteVariantObjects_(false)
+Model::Model(): 
+	deleteVariantObjects_(false),
+	updateMode_(muNone),
+	formatter_(NULL),
+	validator_(NULL)
 {
 }
 
@@ -50,6 +54,113 @@ void Model::updateAllViews()
 		view->updateView( this );
 		it++;
 	}
+}
+
+
+
+
+
+bool NullRule::exec( const VariantData& value )
+{
+	if ( !allowsNull_ && value.isNull() ) {
+		return false;
+	}
+
+	return true;
+}
+
+
+bool MinRule::exec( const VariantData& value )
+{
+	if ( value.isInteger() ) {
+		int x = value;
+		int y = data_;
+
+		return x < y;
+	}
+	else if ( value.isReal() ) {
+		double x = value;
+		double y = data_;
+
+		return x < y;
+	}
+
+	return false;
+}
+
+bool MaxRule::exec( const VariantData& value )
+{
+	if ( value.isInteger() ) {
+		int x = value;
+		int y = data_;
+
+		return x > y;
+	}
+	else if ( value.isReal() ) {
+		double x = value;
+		double y = data_;
+
+		return x > y;
+	}
+	return false;
+}
+
+bool EqualsRule::exec( const VariantData& value )
+{
+	if ( value.isInteger() ) {
+		int x = value;
+		int y = data_;
+
+		return x == y;
+	}
+	else if ( value.isReal() ) {
+		double x = value;
+		double y = data_;
+
+		return x == y;
+	}
+
+	return value == data_;
+}
+
+bool SimilarToRule::exec( const VariantData& value )
+{
+	return false;
+}
+
+
+VariantData NumericFormatter::convertTo( const VariantData& value )
+{
+	VariantData result;
+
+	if ( value.isReal() ) {
+		char tmp[256];
+		sprintf( tmp, "%%0.%df", numDecimalPlaces_ );
+		result = Format( String(tmp) ) %  value.DblVal;
+	}
+	else {
+		result = value;
+	}
+
+	return result;
+}
+
+
+VariantData NumericFormatter::convertFrom( const VariantData& value )
+{
+	VariantData result;
+
+	if ( value.isString() ) {
+		String s = value;
+		double d = 0;
+		swscanf( s.c_str(), L"%lf", &d );
+		result = d;
+	}
+	else {
+		result = value;
+	}
+
+	return result;
 }
 
 

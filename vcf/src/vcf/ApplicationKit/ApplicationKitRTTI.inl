@@ -317,15 +317,65 @@ _class_rtti_end_
 
 _class_abstract_rtti_(Model, "VCF::Component", MODEL_CLASSID)
 _delegate_( ModelDelegate, ModelChanged )
-_delegate_( ValidationDelegate, ModelValidate )
+_delegate_( ValidationDelegate, ModelValidating )
+_delegate_( EventDelegate, ModelValidated )
+
+_property_enum_labeled_( ModelUpdate, "updateMode", getUpdateMode, setUpdateMode,
+						   muNone, muOnValidation, 2, ModelUpdateNames, "");
+
+_property_object_( ValidationFormatter, "formatter", getFormatter, setFormatter, "" )
+_property_object_( ValidationRuleCollection, "validator", getValidator, setValidator, "" )
+
 _class_rtti_end_
 
 
-/*
-_class_abstract_rtti_(TextModel, "VCF::TextModel", "VCF::Model", TEXTMODEL_CLASSID)
-_abstract_delegate_("VCF::TextModelEventHandler", TextModel, VCF::TextEvent, TextModelChanged )
+_class_abstract_rtti_(ValidationFormatter, "VCF::Component", "ValidationFormatter")
 _class_rtti_end_
-*/
+
+
+_class_rtti_(NumericFormatter, "VCF::ValidationFormatter", "NumericFormatter")
+	_property_( uint32, "decimalPlaces", getNumberOfDecimalPlaces, setNumberOfDecimalPlaces, "" );
+_class_rtti_end_
+
+
+
+
+
+_class_abstract_rtti_(ValidationRule, "VCF::Component", "ValidationRule")
+	_property_enum_labeled_( ValidationLogicOp, "logicOp", getLogicOp, setLogicOp,
+						   vlNone, vlXOR, 4, ValidationLogicOpNames, "");
+	_property_( String, "errorMessage", getErrorMessage, setErrorMessage, "" );
+_class_rtti_end_
+
+_class_rtti_(NullRule, "VCF::ValidationRule", "NullRule")
+	_property_( bool, "allowsNull", allowsNull, setAllowsNull, "" );
+_class_rtti_end_
+
+
+_class_abstract_rtti_(DataRule, "VCF::ValidationRule", "DataRule")
+	_property_( VariantData, "data", getData, setData, "" );
+_class_rtti_end_
+
+
+_class_rtti_(MinRule, "VCF::DataRule", "MinRule")
+_class_rtti_end_
+
+_class_rtti_(MaxRule, "VCF::DataRule", "MaxRule")
+_class_rtti_end_
+
+_class_rtti_(EqualsRule, "VCF::DataRule", "EqualsRule")
+_class_rtti_end_
+
+_class_rtti_(SimilarToRule, "VCF::DataRule", "SimilarToRule")
+_class_rtti_end_
+
+
+_class_rtti_(ValidationRuleCollection, "VCF::Component", "ValidationRuleCollection")
+	_property_obj_array_(ValidationRule,"rules",getRule,setRule,insertRule,removeRule,getRuleCount,"")
+_class_rtti_end_
+
+
+
 
 _class_rtti_(ColumnItem, "VCF::Item", COLUMNITEM_CLASSID)
 _property_( String, "caption", getCaption, setCaption, "" );
@@ -423,6 +473,8 @@ _class_rtti_end_
 
 _class_abstract_rtti_(Document, "VCF::Model", DOCUMENT_CLASSID)
 _class_rtti_end_
+
+
 
 
 _class_abstract_rtti_(Frame, "VCF::Control", FRAME_CLASSID )

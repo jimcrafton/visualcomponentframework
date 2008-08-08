@@ -184,6 +184,22 @@ void ApplicationKit::init( int argc, char** argv )
 
 
 
+		REGISTER_CLASSINFO_EXTERNAL(ValidationFormatter);
+		REGISTER_CLASSINFO_EXTERNAL(NumericFormatter);
+
+		REGISTER_CLASSINFO_EXTERNAL(ValidationRule);
+		REGISTER_CLASSINFO_EXTERNAL(NullRule);
+		REGISTER_CLASSINFO_EXTERNAL(DataRule);
+
+		REGISTER_CLASSINFO_EXTERNAL(MinRule);
+		REGISTER_CLASSINFO_EXTERNAL(MaxRule);
+		REGISTER_CLASSINFO_EXTERNAL(EqualsRule);
+		REGISTER_CLASSINFO_EXTERNAL(SimilarToRule);
+
+		REGISTER_CLASSINFO_EXTERNAL(ValidationRuleCollection);
+
+
+
 		PropertyEditorManager::initPropertyEditorManager();
 
 		ComponentEditorManager::initComponentEditorManager();

@@ -75,6 +75,11 @@ public:
 		int d[3] = {12,3,444};
 		ArrayModel<int> am( &d[0], 3 );
 
+
+		ObjectModel* objModel = (ObjectModel*)findComponent( "model", true );
+
+		objModel->setValueAsString( "12.0008321", "cost" );
+
 		mainWindow->show();
 		
 		return result;

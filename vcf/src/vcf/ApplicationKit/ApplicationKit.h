@@ -21,7 +21,6 @@ where you installed the VCF.
 
 #include "vcf/ApplicationKit/KeyboardEvent.h"
 #include "vcf/ApplicationKit/ScrollEvent.h"
-#include "vcf/ApplicationKit/ValidationEvent.h"
 
 #include "vcf/FoundationKit/InvalidStateException.h"
 #include "vcf/ApplicationKit/ApplicationException.h"

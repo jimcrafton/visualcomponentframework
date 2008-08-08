@@ -774,6 +774,10 @@ public:
 				type == pdInt64 || type == pdUInt64;
 	}
 
+	bool isString() const {
+		return type == pdString;
+	}
+
 	uint64 sizeOf() const;	
 
 protected:

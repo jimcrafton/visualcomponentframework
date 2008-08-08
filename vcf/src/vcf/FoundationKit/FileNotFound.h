@@ -24,6 +24,11 @@ namespace VCF{
 \class FileNotFound FileNotFound.h "vcf/FoundationKit/FileNotFound.h"
 */
 class FOUNDATIONKIT_API FileNotFound : public BasicFileError {
+public:
+	FileNotFound( const String & message ):
+		BasicFileError( message ){};
+
+		virtual ~FileNotFound() throw() {};
 };
 
 };
