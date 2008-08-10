@@ -20,6 +20,7 @@ object MVCAdaptersWindow  : VCF::Window
 
 	object fmt : VCF::NumericFormatter
 		decimalPlaces = 4
+		appliesToKey = 'cost'
 	end
 
 

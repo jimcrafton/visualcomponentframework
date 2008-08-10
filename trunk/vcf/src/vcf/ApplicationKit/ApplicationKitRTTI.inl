@@ -330,6 +330,7 @@ _class_rtti_end_
 
 
 _class_abstract_rtti_(ValidationFormatter, "VCF::Component", "ValidationFormatter")
+	_property_( VariantData, "appliesToKey", getAppliesToKey, setAppliesToKey, "" );
 _class_rtti_end_
 
 
@@ -345,6 +346,7 @@ _class_abstract_rtti_(ValidationRule, "VCF::Component", "ValidationRule")
 	_property_enum_labeled_( ValidationLogicOp, "logicOp", getLogicOp, setLogicOp,
 						   vlNone, vlXOR, 4, ValidationLogicOpNames, "");
 	_property_( String, "errorMessage", getErrorMessage, setErrorMessage, "" );
+	_property_( VariantData, "appliesToKey", getAppliesToKey, setAppliesToKey, "" );
 _class_rtti_end_
 
 _class_rtti_(NullRule, "VCF::ValidationRule", "NullRule")
@@ -370,7 +372,7 @@ _class_rtti_(SimilarToRule, "VCF::DataRule", "SimilarToRule")
 _class_rtti_end_
 
 
-_class_rtti_(ValidationRuleCollection, "VCF::Component", "ValidationRuleCollection")
+_class_rtti_(ValidationRuleCollection, "VCF::ValidationRule", "ValidationRuleCollection")
 	_property_obj_array_(ValidationRule,"rules",getRule,setRule,insertRule,removeRule,getRuleCount,"")
 _class_rtti_end_
 

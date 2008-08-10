@@ -1166,6 +1166,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -1481,36 +1484,6 @@ Package=<5>
 
 Package=<4>
 {{{
-}}}
-
-###############################################################################
-
-Project: "RemoteObjectKit"=..\build\vc60\RemoteObjectKit\RemoteObjectKit.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name NetworkKitDLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "RemoteObjectKitStatic"=..\build\vc60\RemoteObjectKit\RemoteObjectKitStatic.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name NetworkKit
-    End Project Dependency
 }}}
 
 ###############################################################################

@@ -78,7 +78,7 @@ public:
 
 		ObjectModel* objModel = (ObjectModel*)findComponent( "model", true );
 
-		objModel->setValueAsString( "12.0008321", "cost" );
+		objModel->setValueAsString( "3.1", "cost" );
 
 		mainWindow->show();
 		

@@ -114,13 +114,20 @@ public:
 	virtual ~ValidationFormatter(){}
 
 	//generally val to string
-	virtual VariantData convertTo( const VariantData& value ) = 0;
+	virtual VariantData convertTo( const VariantData& key, const VariantData& value ) = 0;
 
 	//generally string to val
-	virtual VariantData convertFrom( const VariantData& value ) = 0;
+	virtual VariantData convertFrom( const VariantData& key, const VariantData& value ) = 0;
 
+	VariantData getAppliesToKey() {
+		return appliesToKey_;
+	}
+
+	void setAppliesToKey( const VariantData& val ) {
+		appliesToKey_ = val;
+	}
 protected:
-
+	VariantData appliesToKey_;
 };
 
 
@@ -130,8 +137,8 @@ public:
 
 	virtual ~NumericFormatter(){}
 
-	virtual VariantData convertTo( const VariantData& value );
-	virtual VariantData convertFrom( const VariantData& value );
+	virtual VariantData convertTo( const VariantData& key, const VariantData& value );
+	virtual VariantData convertFrom( const VariantData& key, const VariantData& value );
 
 	uint32 getNumberOfDecimalPlaces() {
 		return numDecimalPlaces_;
@@ -169,7 +176,7 @@ public:
 	virtual ~ValidationRule(){}
 
 
-	virtual bool exec( const VariantData& value ) = 0;
+	virtual bool exec( const VariantData& key, const VariantData& value ) = 0;
 
 
 	ValidationLogicOp getLogicOp() {
@@ -187,9 +194,18 @@ public:
 	void setErrorMessage( const String& val ) {
 		errorMessage_ = val;
 	}
-protected:
+
+	VariantData getAppliesToKey() {
+		return appliesToKey_;
+	}
+
+	void setAppliesToKey( const VariantData& val ) {
+		appliesToKey_ = val;
+	}
+protected:	
 	ValidationLogicOp logicOp_;
 	String errorMessage_;
+	VariantData appliesToKey_;
 
 };
 
@@ -197,7 +213,7 @@ class APPLICATIONKIT_API NullRule : public ValidationRule {
 public:
 	NullRule():allowsNull_(true){}
 	virtual ~NullRule(){}	
-	virtual bool exec( const VariantData& value );
+	virtual bool exec( const VariantData& key, const VariantData& value );
 
 	bool allowsNull() {
 		return allowsNull_;
@@ -229,32 +245,32 @@ protected:
 class APPLICATIONKIT_API MinRule : public DataRule {
 public:
 	virtual ~MinRule(){}	
-	virtual bool exec( const VariantData& value );
+	virtual bool exec( const VariantData& key, const VariantData& value );
 };
 
 class APPLICATIONKIT_API MaxRule : public DataRule {
 public:
 	virtual ~MaxRule(){}	
-	virtual bool exec( const VariantData& value );
+	virtual bool exec( const VariantData& key, const VariantData& value );
 };
 
 
 class APPLICATIONKIT_API EqualsRule : public DataRule {
 public:
 	virtual ~EqualsRule(){}	
-	virtual bool exec( const VariantData& value );
+	virtual bool exec( const VariantData& key, const VariantData& value );
 };
 
 
 class APPLICATIONKIT_API SimilarToRule : public DataRule {
 public:
 	virtual ~SimilarToRule(){}	
-	virtual bool exec( const VariantData& value );
+	virtual bool exec( const VariantData& key, const VariantData& value );
 };
 
 
 
-class APPLICATIONKIT_API ValidationRuleCollection : public Component {
+class APPLICATIONKIT_API ValidationRuleCollection : public ValidationRule {
 public:
 	virtual ~ValidationRuleCollection(){}
 
@@ -297,41 +313,10 @@ public:
 		return rules_.size();
 	}
 
-	bool isValid( const VariantData& value ) {
-		bool result = true;
-		Array<ValidationRule*>::iterator it = rules_.begin();		
 
-		while ( it != rules_.end() ) {
-			ValidationRule* rule = *it;
-			bool ruleRes = rule->exec( value );
-			
-			if ( it == rules_.begin() ) {
-				result = ruleRes;
-			}
-			else {
-				switch ( rule->getLogicOp() ) {
-					case vlAND : {
-						result = result && ruleRes;
-					}
-					break;
+	virtual bool exec( const VariantData& key, const VariantData& value );
 
-					case vlOR : {
-						result = result || ruleRes;
-					}
-					break;
-				}
-
-
-				if ( !result ) {
-					problem_ = 	rule->getErrorMessage();	
-					break;
-				}
-			}
-			++it;
-		}
-
-		return result;
-	}
+	bool isValid( const VariantData& key, const VariantData& value );
 
 	String getValidationProblem() {
 		return problem_;
@@ -340,8 +325,6 @@ protected:
 	Array<ValidationRule*> rules_;
 	String problem_;
 };
-
-
 
 
 
@@ -456,42 +439,7 @@ public:
 	a double.
   
 	*/
-	virtual VariantData validate( const VariantData& key, const VariantData& value ) {
-		
-		if ( updateMode_ == muOnValidation ) {
-
-			VariantData tmpVal = value;
-			try {
-				if ( NULL != formatter_ ) {				
-					tmpVal = formatter_->convertFrom( value );
-				}
-			}
-			catch ( BasicException& e ) {
-				throw ValidationException( "Invalid Formatting error: " + e.getMessage() );
-			}
-
-
-			if ( NULL != validator_ ) {
-				if ( !validator_->isValid( tmpVal ) ) {
-					throw ValidationException( "Data value is invalid.\nProblem: " + validator_->getValidationProblem() );
-				}
-			}
-
-
-			ValidationEvent e( this, MODEL_VALIDATING, key, tmpVal );
-			e.validationOK = ModelValidating.empty();
-			ModelValidating( &e );
-			if ( !e.validationOK ) {
-				throw ValidationException( e.errorMessage );
-			}
-
-
-			Event e2(this, MODEL_VALIDATED);
-			ModelValidated( &e2 );
-		}
-
-		return value;
-	}
+	virtual VariantData validate( const VariantData& key, const VariantData& value );
 	
 	VariantData validate( const VariantData& key, const String& value ) {
 		VariantData v;
@@ -565,7 +513,7 @@ public:
 	virtual String getValueAsString( const VariantData& key=VariantData::null() ) {
 		try {
 			if ( NULL != formatter_ ) {				
-				return formatter_->convertTo( getValue(key) ).toString();
+				return formatter_->convertTo( key, getValue(key) ).toString();
 			}
 		}
 		catch ( BasicException& e ) {

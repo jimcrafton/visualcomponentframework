@@ -1796,7 +1796,6 @@ bool VariantData::operator == ( const VariantData& v ) const
 		break;
 
 		case pdString:{
-			return IntVal == v.IntVal;
 			if ( (NULL != StringVal) && (NULL != v.StringVal) ) {
 				return *StringVal == *v.StringVal;
 			}
