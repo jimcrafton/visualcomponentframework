@@ -56,12 +56,105 @@ void Model::updateAllViews()
 	}
 }
 
-
-
-
-
-bool NullRule::exec( const VariantData& value )
+VariantData Model::validate( const VariantData& key, const VariantData& value ) 
 {
+	
+	if ( updateMode_ == muOnValidation ) {
+
+		VariantData tmpVal = value;
+		try {
+			if ( NULL != formatter_ ) {				
+				tmpVal = formatter_->convertFrom( key, value );
+			}
+		}
+		catch ( BasicException& e ) {
+			throw ValidationException( "Invalid Formatting error: " + e.getMessage() );
+		}
+
+
+		if ( NULL != validator_ ) {
+			if ( !validator_->isValid( key, tmpVal ) ) {
+				throw ValidationException( "Data value is invalid.\nProblem: " + validator_->getValidationProblem() );
+			}
+		}
+
+
+		ValidationEvent e( this, MODEL_VALIDATING, key, tmpVal );
+		e.validationOK = ModelValidating.empty();
+		ModelValidating( &e );
+		if ( !e.validationOK ) {
+			throw ValidationException( e.errorMessage );
+		}
+
+
+		Event e2(this, MODEL_VALIDATED);
+		ModelValidated( &e2 );
+	}
+
+	return value;
+}
+
+
+bool ValidationRuleCollection::exec( const VariantData& key, const VariantData& value )
+{
+	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
+		return true;
+	}
+
+	bool result = true;
+	Array<ValidationRule*>::iterator it = rules_.begin();		
+
+	ValidationRule* prevRule = NULL;
+	while ( it != rules_.end() ) {
+		ValidationRule* rule = *it;
+		bool ruleRes = rule->exec( key, value );
+		
+		if ( it == rules_.begin() ) {
+			result = ruleRes;			
+		}
+		else {
+			switch ( prevRule->getLogicOp() ) {
+				case vlAND : {
+					result = result && ruleRes;
+				}
+				break;
+
+				case vlOR : {
+					result = result || ruleRes;
+				}
+				break;
+			}
+
+
+			if ( !result ) {
+				problem_ = 	rule->getErrorMessage();	
+				break;
+			}
+		}
+
+		prevRule = rule;
+		++it;
+	}
+
+	return result;
+}
+
+bool ValidationRuleCollection::isValid( const VariantData& key, const VariantData& value ) 
+{
+	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
+		return true;
+	}
+
+	return exec( key, value );
+}
+
+
+bool NullRule::exec( const VariantData& key, const VariantData& value )
+{
+	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
+		return true;
+	}
+
 	if ( !allowsNull_ && value.isNull() ) {
 		return false;
 	}
@@ -70,8 +163,12 @@ bool NullRule::exec( const VariantData& value )
 }
 
 
-bool MinRule::exec( const VariantData& value )
+bool MinRule::exec( const VariantData& key, const VariantData& value )
 {
+	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
+		return true;
+	}
+
 	if ( value.isInteger() ) {
 		int x = value;
 		int y = data_;
@@ -88,8 +185,12 @@ bool MinRule::exec( const VariantData& value )
 	return false;
 }
 
-bool MaxRule::exec( const VariantData& value )
+bool MaxRule::exec( const VariantData& key, const VariantData& value )
 {
+	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
+		return true;
+	}
+
 	if ( value.isInteger() ) {
 		int x = value;
 		int y = data_;
@@ -105,8 +206,12 @@ bool MaxRule::exec( const VariantData& value )
 	return false;
 }
 
-bool EqualsRule::exec( const VariantData& value )
+bool EqualsRule::exec( const VariantData& key, const VariantData& value )
 {
+	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
+		return true;
+	}
+
 	if ( value.isInteger() ) {
 		int x = value;
 		int y = data_;
@@ -123,14 +228,22 @@ bool EqualsRule::exec( const VariantData& value )
 	return value == data_;
 }
 
-bool SimilarToRule::exec( const VariantData& value )
+bool SimilarToRule::exec( const VariantData& key, const VariantData& value )
 {
+	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
+		return true;
+	}
+
 	return false;
 }
 
 
-VariantData NumericFormatter::convertTo( const VariantData& value )
+VariantData NumericFormatter::convertTo( const VariantData& key, const VariantData& value )
 {
+	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
+		return value;
+	}
+
 	VariantData result;
 
 	if ( value.isReal() ) {
@@ -146,8 +259,13 @@ VariantData NumericFormatter::convertTo( const VariantData& value )
 }
 
 
-VariantData NumericFormatter::convertFrom( const VariantData& value )
+VariantData NumericFormatter::convertFrom( const VariantData& key, const VariantData& value )
 {
+	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
+		return value;
+	}
+
+
 	VariantData result;
 
 	if ( value.isString() ) {

@@ -763,12 +763,16 @@ public:
 	void setFromString( const String& value );
 
 
+	bool isNumber() const {
+		return isReal() || isInteger();
+	}
+
 	bool isReal() const {
 		return type == pdFloat || type == pdDouble;
 	}
 
 	bool isInteger() const {
-		return type == pdInt || pdUInt || 
+		return type == pdInt || type == pdUInt || 
 				type == pdLong || type == pdULong || 
 				type == pdShort || type == pdUShort ||
 				type == pdInt64 || type == pdUInt64;
