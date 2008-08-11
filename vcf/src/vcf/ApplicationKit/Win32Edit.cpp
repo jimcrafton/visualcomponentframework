@@ -101,10 +101,7 @@ public:
 								CLIPFORMAT FAR * lpcfFormat, DWORD reco,
 								BOOL fReally, HGLOBAL hMetaPict) {
 
-		if ( !fReally ) {
-			
-		}
-		return S_FALSE;
+		return E_FAIL;
 	}
 
 	STDMETHODIMP ContextSensitiveHelp ( BOOL fEnterMode) {
@@ -127,7 +124,7 @@ public:
 	STDMETHODIMP GetContextMenu ( WORD seltype, LPOLEOBJECT lpoleobj,
 									CHARRANGE FAR * lpchrg,
 									HMENU FAR * lphmenu) {
-		return E_NOTIMPL;
+		return S_OK;//E_NOTIMPL;
 	}
 };
 
@@ -540,6 +537,38 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 		}
 		break;
+		
+
+		case WM_GETTEXTLENGTH : {
+			
+			VCF::Model* model = textControl_->getViewModel();
+			if ( NULL != model ) {
+				String text = model->getValueAsString( textControl_->getModelKey() );
+				wndProcResult = text.size();
+				result = true;
+			}
+			else {
+				result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+			}
+		}
+		break;
+
+		case WM_GETTEXT : {
+			
+			VCF::Model* model = textControl_->getViewModel();
+			if ( NULL != model ) {
+				String text = model->getValueAsString( textControl_->getModelKey() );
+
+				size_t sz =  minVal<>( (size_t)wParam, text.size());
+
+				wndProcResult = text.copy( (VCFChar*)lParam, sz );
+				result = true;
+			}
+			else {
+				result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+			}			
+		}
+		break;
 
 		case WM_SETTEXT : case EM_STREAMIN : {
 			if ( textControl_->getReadOnly() ) {
@@ -687,12 +716,17 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 					//wndProcResult = 1;
 					result = true;
-				}
 
-				if ( !(peerControl_->getComponentState() & Component::csDesigning) ) {
-					wndProcResult = defaultWndProcedure(  message, wParam, lParam );
-					result = true;
-				}
+
+					if ( !peerControl_->isDesigning() && !event.ignoreKeystroke ) {
+						wndProcResult = defaultWndProcedure( message, wParam, lParam );
+						result = true;
+					}
+					else {
+						wndProcResult = 0;
+						result = true;
+					}
+				}			
 
 
 				editState_ &= ~esKeyEvent;
@@ -762,13 +796,17 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					peerControl_->handleEvent( &event );
 
 					result = true;
-				}
 
-				if ( !peerControl_->isDesigning() ) {
-					wndProcResult = defaultWndProcedure( message, wParam, lParam );
-					result = true;
-				}
-				else if ( peerControl_->isDesigning() ) {
+					if ( !event.ignoreKeystroke ) {
+						wndProcResult = defaultWndProcedure( message, wParam, lParam );
+					}
+					else {
+						wndProcResult = 0;
+						result = true;
+					}
+				}				
+
+				if ( peerControl_->isDesigning() ) {
 					wndProcResult = 0;
 					result = true;
 				}
@@ -986,6 +1024,15 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 	}
 
 	return result;
+}
+
+void Win32Edit::onModelValidationFailed( Event* e )
+{
+	ValidationErrorEvent* ve = (ValidationErrorEvent*)e;
+
+	if ( ve->key == textControl_->getModelKey() ) {
+		setText( textControl_->getViewModel()->getValueAsString( textControl_->getModelKey() ) );
+	}
 }
 
 void Win32Edit::onTextModelTextChanged( ModelEvent* event )
@@ -1247,6 +1294,43 @@ void Win32Edit::setReadOnly( const bool& readonly )
 		options |= ECO_READONLY ;
 	}
 	SendMessage( hwnd_, EM_SETOPTIONS, options, ECOOP_SET ) ;
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
+
+
+	/**
+	JC: I added the code below to make sure that
+	read-ionly mode works. Without it, the control will
+	ignore keystrokes, which is correct, but it 
+	WILL accept drag-drop, which is clean not 
+	what we want. This seems to fix that. If it causes
+	problems, please refer to this
+	http://vcf-online.org/forums/index.php?showtopic=1055
+	and see if that helps identify the issue. What we have now
+	is a sort of mad combination of the two.
+	*/
+	if ( readonly ) {
+		style |= ES_READONLY;
+
+		if ( NULL == richEditCallback_ ) {
+			richEditCallback_ = new Win32RichEditOleCallback();
+			SendMessage( hwnd_, EM_SETOLECALLBACK, 0, (LPARAM)richEditCallback_ );
+		}
+	}
+	else {
+		style &= ~ES_READONLY;		
+
+		if ( richEditCallback_ ) {
+			SendMessage( hwnd_, EM_SETOLECALLBACK, 0, (LPARAM)0 );
+			delete richEditCallback_;
+			richEditCallback_ = NULL;
+		}
+	}
+	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
+	::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
+
+
+	
+	
 }
 
 uint32 Win32Edit::getTotalPrintablePageCount( PrintContext* context )
@@ -1394,15 +1478,23 @@ void Win32Edit::finishPrinting()
 void Win32Edit::onControlModelChanged( Event* e )
 {
 	CallBack* tml = getCallback( "Win32TextModelHandler" );
+	CallBack* tml2 = getCallback( "onModelValidationFailed" );
+
 	if ( NULL == tml ) {
 		tml = new ClassProcedure1<ModelEvent*,Win32Edit>( this, &Win32Edit::onTextModelTextChanged, "Win32TextModelHandler" );
 	}
 
+	if ( NULL == tml2 ) {
+		tml2 = new ClassProcedure1<Event*,Win32Edit>( this, &Win32Edit::onModelValidationFailed, "onModelValidationFailed" );
+	}
+
+	
 
 
 	Model* tm = textControl_->getViewModel();
 	if ( NULL != tm ) {
-		tm->ModelChanged.add( tml );
+		tm->ModelChanged += tml;
+		tm->ModelValidationFailed += tml2;
 		
 		String text = tm->getValueAsString(textControl_->getModelKey());
 		

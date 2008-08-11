@@ -76,6 +76,43 @@ public:
 };
 
 
+
+/**
+\class ValidationEvent Model.h "vcf/ApplicationKit/Model.h"  
+*/
+class APPLICATIONKIT_API ValidationErrorEvent : public VCF::Event {
+public:
+
+	enum ValidationState {
+		vsNone = 0,
+		vsFormattingFailed,
+		vsValidatorRulesFailed,
+		vsValidatingFailed
+	};
+
+	ValidationErrorEvent( Object* source, const uint32& type,
+						const VariantData& k,
+						const VariantData& v ): 
+		Event(source,type),throwException(true),key(k), value(v),state(vsNone){}
+
+	
+	virtual ~ValidationErrorEvent() {}
+	
+	virtual Object* clone( bool deep=false ) {
+		return new ValidationErrorEvent(*this);
+	}
+
+
+	const VariantData& key;
+
+	const VariantData& value;
+
+
+	bool throwException;
+	String errorMessage;
+	ValidationState state;
+};
+
 /**
 \class ValidationException Model.h "vcf/ApplicationKit/Model.h"
 */
@@ -106,6 +143,7 @@ typedef Delegate1<ValidationEvent*> ValidationDelegate;
 typedef ValidationDelegate::ProcedureType ValidationHandler;
 
 
+typedef Delegate1<ValidationErrorEvent*> ValidationErrorDelegate; 
 
 
 
@@ -387,6 +425,7 @@ public:
 	enum ModelEvents{
 		MODEL_CHANGED = 2000,
 		MODEL_VALIDATING,
+		MODEL_VALIDATIONFAILED,
 		MODEL_VALIDATED,
 		MODEL_EMPTIED,
 		MODEL_LAST_EVENT
@@ -412,6 +451,9 @@ public:
 	*/
 	DELEGATE(ValidationDelegate,ModelValidating)
 
+
+	DELEGATE(ValidationErrorDelegate,ModelValidationFailed)
+	
 
 	/**
 	@delegate ModelValidating fired when the model's validate() method is called
@@ -536,10 +578,7 @@ public:
 	Sets the value of the model using a string to specify the data. 
 	@see setValue()
 	*/
-	virtual void setValueAsString( const String& value, const VariantData& key=VariantData::null() ) {
-		VariantData v = validate( key, value );		
-		setValue( v, key );
-	}
+	virtual void setValueAsString( const String& value, const VariantData& key=VariantData::null() );
 
 	/**
 	Indicates whether or not the model will be responsible for deleting objects that may be held 

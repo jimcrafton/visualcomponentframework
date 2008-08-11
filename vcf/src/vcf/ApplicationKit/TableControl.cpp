@@ -1567,7 +1567,7 @@ void TableControl::resizeColumnRowDimensions()
 
 void TableControl::onEditingControlKeyPressed( KeyboardEvent* event )
 {
-	switch ( event->getVirtualCode() ) {
+	switch ( event->virtualKeyCode ) {
 		case vkEscape : {
 			cancelEditing();
 		}
@@ -1585,10 +1585,10 @@ void TableControl::onEditingControlKeyPressed( KeyboardEvent* event )
 
 			KeyboardEvent* event2 =
 				new KeyboardEvent( this, event->getType(),
-									event->getRepeatCount(),
-									event->getKeyMask(),
-									event->getKeyValue(),
-									event->getVirtualCode() );
+									event->repeatCount,
+									event->keyMask,
+									event->keyValue,
+									event->virtualKeyCode );
 
 			handleEvent( event2 );
 
@@ -2463,7 +2463,7 @@ void TableControl::keyDown( KeyboardEvent* e )
 
 	TableModel* tm = getTableModel();
 
-	switch( e->getVirtualCode() ) {
+	switch( e->virtualKeyCode ) {
 		case vkReturn : {
 
 			editCell( clickCell_, Point() );

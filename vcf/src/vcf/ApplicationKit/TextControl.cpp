@@ -19,7 +19,8 @@ where you installed the VCF.
 using namespace VCF;
 
 TextControl::TextControl( const bool& multiLineControl ):
-	readOnly_(false)
+	readOnly_(false),
+	validationStyle_(tvsOnKeyEvent)
 {
 	textPeer_ =	UIToolkit::createTextEditPeer( this, multiLineControl );
 
@@ -394,7 +395,12 @@ void TextControl::handleEvent( Event* event )
 				KeyboardEvent* ke = (KeyboardEvent*)event;
 
 				if ( event->getType() == Control::KEYBOARD_DOWN ) {
-					switch ( ke->getVirtualCode() ) {
+
+					if ( validationStyle_ != tvsOnKeyEvent ) {
+						return;
+					}
+
+					switch ( ke->virtualKeyCode ) {
 						case vkDelete : {
 							uint32 pos =  textPeer_->getSelectionStart();
 
@@ -597,7 +603,7 @@ void TextControl::handleEvent( Event* event )
 
 									uint32 pos =  textPeer_->getCaretPosition();
 									String text;
-									text += ke->getKeyValue();
+									text += ke->keyValue;
 
 									//determine if we have selected text. If we 
 									//have, then delete the selection and *then*
@@ -614,6 +620,17 @@ void TextControl::handleEvent( Event* event )
 
 										newText.insert( pos, text );
 										
+										//check with the formatter and format our
+										//new text. If formatted text is *smaller*
+										//than what we are proposing, then mark the
+										//event so that the peer does NOT process it!
+										if ( model->getFormatter() != NULL ) {
+											String tmp = model->getFormatter()->convertTo( getModelKey(), newText );
+											if ( tmp.size() < newText.size() ) {
+												ke->ignoreKeystroke = true;
+											}
+										}
+
 										model->setValueAsString( newText, this->getModelKey() );
 									}
 									else {
@@ -648,6 +665,14 @@ void TextControl::handleEvent( Event* event )
 
 										newText.insert( pos, text );
 										
+										if ( model->getFormatter() != NULL ) {
+											String tmp = model->getFormatter()->convertTo( getModelKey(), newText );
+											if ( tmp.size() < newText.size() ) {
+												ke->ignoreKeystroke = true;
+											}
+										}
+
+
 										model->setValueAsString( newText, this->getModelKey() );
 									}
 									else {
@@ -669,7 +694,7 @@ void TextControl::handleEvent( Event* event )
 
 				}
 				else {
-					switch ( ke->getVirtualCode() ) {
+					switch ( ke->virtualKeyCode ) {
 						case vkDelete :
 						case vkBackSpace : 
 						case vkLeftArrow : 
@@ -701,20 +726,30 @@ void TextControl::handleEvent( Event* event )
 						case vkF12 : 
 						case vkDownArrow :
 						case vkUpArrow :
-						case vkTab :
-						case vkEnter :{
+						case vkTab :{
 							//no-op for these, since we don't want to add/delete text for them
 						}
 						break;
 
+						case vkEnter :{
+							if ( validationStyle_ == tvsOnEnterKey ) {
+								String text = getPeer()->getText();
+								model->setValueAsString( text, getModelKey() );
+							}
+						}
+						break;
+
 						default : {
+							if ( validationStyle_ != tvsOnKeyEvent ) {
+								return;
+							}
 							// control + characters need not to be treated as inserted characters
 							if ( !ke->hasAltKey() && !ke->hasControlKey() ) {
 
 								uint32 pos =  textPeer_->getCaretPosition();
 
 								String text;
-								text += ke->getKeyValue();
+								text += ke->keyValue;
 
 								if ( !text.empty() ) {
 
@@ -730,12 +765,27 @@ void TextControl::handleEvent( Event* event )
 									if ( NULL == textModel ) {
 										String newText = model->getValueAsString( this->getModelKey() );
 
+										if ( model->getFormatter() != NULL ) {
+											if ( pos >= newText.size() ) {
+												ke->ignoreKeystroke = true;
+												return;
+											}
+										}
+
 										if ( length > 0 ) {
 											newText.erase( pos, length );
 										}
 
 										newText.insert( pos, text );
 										
+										if ( model->getFormatter() != NULL ) {
+											String tmp = model->getFormatter()->convertTo( getModelKey(), newText );
+											if ( tmp.size() < newText.size() ) {
+												ke->ignoreKeystroke = true;
+											}
+										}
+										
+
 										model->setValueAsString( newText, this->getModelKey() );
 									}
 									else {
@@ -761,6 +811,22 @@ void TextControl::handleEvent( Event* event )
 
 		case Control::KEYBOARD_UP : {
 			Control::handleEvent( event );
+		}
+		break;
+
+		case Control::FOCUS_LOST:{
+
+			bool prevFocused = Control::getCurrentFocusedControl() == this;
+
+			Control::handleEvent( event );
+			FocusEvent* focusEvent = (FocusEvent*)event;
+			
+
+			if ( prevFocused && (validationStyle_ == tvsOnFocusChange) ) {
+				String text = getPeer()->getText();
+				Model* model = getViewModel();
+				model->setValueAsString( text, getModelKey() );
+			}
 		}
 		break;
 

@@ -39,6 +39,7 @@ object MVCAdaptersWindow  : VCF::Window
 	object rules : VCF::ValidationRuleCollection
 		rules[0] = @min
 		rules[1] = @equals
+		appliesToKey = 'cost'
 	end
 
 	object model :  VCF::ObjectModel
@@ -52,7 +53,7 @@ object MVCAdaptersWindow  : VCF::Window
 		count = 100
 		title = 'Foobler'
 		version = '1.3.7'
-		cost = 17864555.43
+		cost = 2.17864555043
 	end 
 
 	
@@ -103,7 +104,8 @@ object MVCAdaptersWindow  : VCF::Window
 		object edt4 : VCF::TextControl
 			modelKey = 'cost'
 			model = @model
-			readonly = true
+			//validationStyle = tvsOnEnterKey
+			//readonly = true
 		end
 	end
 

@@ -56,9 +56,23 @@ void Model::updateAllViews()
 	}
 }
 
+void Model::setValueAsString( const String& value, const VariantData& key )
+{
+	VariantData oldVal = getValue(key);
+	try {
+		VariantData v = validate( key, value );		
+		setValue( v, key );
+	}
+	catch ( ValidationException& e ) {
+		Application::showErrorMessage( e.getMessage(), "Validation Error" );
+	}
+
+}
+
+
 VariantData Model::validate( const VariantData& key, const VariantData& value ) 
 {
-	
+	VariantData result = value;
 	if ( updateMode_ == muOnValidation ) {
 
 		VariantData tmpVal = value;
@@ -68,13 +82,35 @@ VariantData Model::validate( const VariantData& key, const VariantData& value )
 			}
 		}
 		catch ( BasicException& e ) {
-			throw ValidationException( "Invalid Formatting error: " + e.getMessage() );
+
+			ValidationErrorEvent errEv(this, MODEL_VALIDATIONFAILED, key, value );
+			errEv.errorMessage = e.getMessage();
+			errEv.state = ValidationErrorEvent::vsFormattingFailed;
+
+			ModelValidationFailed(&errEv);
+			if ( errEv.throwException ) {
+				throw ValidationException( "Invalid Formatting error: " + errEv.errorMessage );
+			}
+			else {
+				return value;
+			}
 		}
 
 
 		if ( NULL != validator_ ) {
 			if ( !validator_->isValid( key, tmpVal ) ) {
-				throw ValidationException( "Data value is invalid.\nProblem: " + validator_->getValidationProblem() );
+
+				ValidationErrorEvent errEv(this, MODEL_VALIDATIONFAILED, key, value );
+				errEv.errorMessage = validator_->getValidationProblem();
+				errEv.state = ValidationErrorEvent::vsValidatorRulesFailed;
+
+				ModelValidationFailed(&errEv);
+				if ( errEv.throwException ) {
+					throw ValidationException( "Data value is invalid.\nProblem: " + errEv.errorMessage );
+				}
+				else {
+					return value;
+				}
 			}
 		}
 
@@ -83,15 +119,28 @@ VariantData Model::validate( const VariantData& key, const VariantData& value )
 		e.validationOK = ModelValidating.empty();
 		ModelValidating( &e );
 		if ( !e.validationOK ) {
-			throw ValidationException( e.errorMessage );
+
+			ValidationErrorEvent errEv(this, MODEL_VALIDATIONFAILED, key, value );
+			errEv.errorMessage = e.errorMessage;
+			errEv.state = ValidationErrorEvent::vsValidatingFailed;
+
+			ModelValidationFailed(&errEv);
+			
+			if ( errEv.throwException ) {
+				throw ValidationException( errEv.errorMessage );
+			}
+			else {
+				return value;
+			}
 		}
 
 
 		Event e2(this, MODEL_VALIDATED);
 		ModelValidated( &e2 );
+		result = tmpVal;
 	}
 
-	return value;
+	return result;
 }
 
 
@@ -107,6 +156,10 @@ bool ValidationRuleCollection::exec( const VariantData& key, const VariantData& 
 	ValidationRule* prevRule = NULL;
 	while ( it != rules_.end() ) {
 		ValidationRule* rule = *it;
+		
+		VariantData oldKey = rule->getAppliesToKey();
+		rule->setAppliesToKey( appliesToKey_ );
+
 		bool ruleRes = rule->exec( key, value );
 		
 		if ( it == rules_.begin() ) {
@@ -131,6 +184,8 @@ bool ValidationRuleCollection::exec( const VariantData& key, const VariantData& 
 				break;
 			}
 		}
+
+		rule->setAppliesToKey( oldKey );
 
 		prevRule = rule;
 		++it;

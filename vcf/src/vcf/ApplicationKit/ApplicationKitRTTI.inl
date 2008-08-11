@@ -873,6 +873,8 @@ _class_rtti_(TextControl, "VCF::Control", TEXTCONTROL_CLASSID )
 _property_( bool, "readonly",getReadOnly, setReadOnly, "" );
 _property_( bool, "textWrapping",getTextWrapping, setTextWrapping, "" );
 _property_( String, "text",getText, setText, "" );
+_property_enum_labeled_( TextValidationStyle, "validationStyle", getValidationStyle, setValidationStyle,
+					   tvsOnKeyEvent, tvsOnEnterKey, 3, TextValidationStyleNames, "");
 _class_rtti_end_
 
 

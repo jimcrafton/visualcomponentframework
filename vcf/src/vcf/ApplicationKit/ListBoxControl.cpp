@@ -753,11 +753,11 @@ void ListBoxControl::keyDown( KeyboardEvent* event )
 			if ( (NULL != item) && (NULL != lm) ) {
 				uint32 index = item->getIndex();
 
-				if ( vkUpArrow == event->getVirtualCode() ) {
+				if ( vkUpArrow == event->virtualKeyCode ) {
 					index --;
 
 				}
-				else if ( vkDownArrow == event->getVirtualCode() ) {
+				else if ( vkDownArrow == event->virtualKeyCode ) {
 					index ++;
 				}
 				Array<ListItem*>::iterator found = 

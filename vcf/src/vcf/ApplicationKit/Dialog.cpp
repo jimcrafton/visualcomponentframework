@@ -346,7 +346,7 @@ Image* Dialog::getIconImage()
 
 void Dialog::keyDown( KeyboardEvent* e )
 {
-	if ( vkEscape == e->getVirtualCode() ) {
+	if ( vkEscape == e->virtualKeyCode ) {
 		e->setConsumed(true);
 		returnValue_ = UIToolkit::mrCancel;
 		close();

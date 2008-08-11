@@ -290,7 +290,7 @@ void SliderControl::keyDown( KeyboardEvent* e )
 {
 	CustomControl::keyDown(e);
 
-	switch ( e->getVirtualCode() ) {
+	switch ( e->virtualKeyCode ) {
 		case vkPgUp : {
 			setPosition( getPosition() + pageIncrement_ );
 		}
