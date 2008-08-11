@@ -26,6 +26,19 @@ namespace VCF {
 class TextEditPeer;
 class Dictionary;
 
+enum TextValidationStyle {	
+	tvsOnKeyEvent,
+	tvsOnFocusChange,
+	tvsOnEnterKey
+
+};
+
+
+
+static String TextValidationStyleNames[] = { "tvsOnKeyEvent",
+                                         "tvsOnFocusChange",
+										 "tvsOnEnterKey" };
+
 
 #define TEXTCONTROL_CLASSID			"ED88C09E-26AB-11d4-B539-00C04F0196DA"
 /**
@@ -221,6 +234,13 @@ public:
 
 	virtual bool generatePropertyValue( const String& fullPropertyName, Property* property, VariantData* value, String& strValue );
 
+	TextValidationStyle getValidationStyle() {
+		return validationStyle_;
+	}
+
+	void setValidationStyle( const TextValidationStyle& val ) {
+		validationStyle_ = val;
+	}
 protected:
 	/**
 	handlers of some standard accelerator events.
@@ -242,6 +262,7 @@ protected:
 protected:
 	TextEditPeer * textPeer_;
 	bool readOnly_;
+	TextValidationStyle validationStyle_;
 
 };
 

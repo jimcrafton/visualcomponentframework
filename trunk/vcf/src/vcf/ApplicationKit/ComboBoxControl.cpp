@@ -579,7 +579,7 @@ void ComboBoxControl::keyPressed( KeyboardEvent* event )
 
 	ListModel* lm = getListModel();
 
-	switch ( event->getVirtualCode() ){
+	switch ( event->virtualKeyCode ){
 		case vkUpArrow :{
 			ListItem* item = getSelectedItem();
 			if ( NULL != item ) {
@@ -761,10 +761,10 @@ void ComboBoxControl::updateEditBounds()
 
 void ComboBoxControl::onEditKeyPressed( KeyboardEvent* event )
 {
-	//if (  vkReturn == event->getVirtualCode() ) {
+	//if (  vkReturn == event->virtualKeyCode) {
 		KeyboardEvent* postedEvent = new KeyboardEvent( event->getSource(), event->getType(),
-														event->getRepeatCount(), event->getKeyMask(),
-														event->getKeyValue(), event->getVirtualCode() );
+														event->repeatCount, event->keyMask,
+														event->keyValue, event->virtualKeyCode );
 		EventHandler* handler = 
 			(EventHandler*) new ClassProcedure1<KeyboardEvent*,ComboBoxControl>( this, &ComboBoxControl::onEditReturnKeyPressed );
 		UIToolkit::postEvent( handler, postedEvent );
@@ -778,7 +778,7 @@ void ComboBoxControl::onEditReturnKeyPressed( KeyboardEvent* event )
 	// we get here only if the focus is on the edit control;
 	// if we select an item, the focus will go to the DropDownListBox instead.
 
-	if ( vkReturn == event->getVirtualCode() ) {
+	if ( vkReturn == event->virtualKeyCode) {
 		if ( NULL != dropDown_ ) {
 			ListItem* item = NULL;//((ComboBoxDropDown*)dropDown_)->getListBox()->getSelectedItem();
 
@@ -807,7 +807,7 @@ void ComboBoxControl::onEditReturnKeyPressed( KeyboardEvent* event )
 		}
 
 	}
-	else if ( vkEscape == event->getVirtualCode() ) {
+	else if ( vkEscape == event->virtualKeyCode) {
 		Event ev( this );
 		closeDropDown( &ev );
 	}
@@ -815,7 +815,7 @@ void ComboBoxControl::onEditReturnKeyPressed( KeyboardEvent* event )
 		if ( NULL != dropDown_ ) {
 			// find the item and select it
 			if ( autoLookup_ ) {
-				bool hasSpecialKey = ( event->getKeyMask() != 0 );
+				bool hasSpecialKey = ( event->keyMask != 0 );
 				if ( !hasSpecialKey ) {
 					String caption, editCaption;
 					editCaption = edit_->getTextModel()->getText();

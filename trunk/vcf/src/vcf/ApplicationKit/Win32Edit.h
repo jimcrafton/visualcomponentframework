@@ -176,6 +176,7 @@ protected:
 	bool stateAllowsModelChange();
 
 	void onTextModelTextChanged( ModelEvent* event );
+	void onModelValidationFailed( Event* e );
 
 	/**
 	this is a fix from Marcello to work around an apparent bug in Win32's handling of
@@ -186,7 +187,6 @@ protected:
 
 	void onControlModelChanged( Event* e );
 
-	//static DWORD CALLBACK EditStreamCallback( DWORD dwCookie, LPBYTE pbBuff, LONG cb, LONG *pcb );
 };
 
 

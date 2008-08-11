@@ -181,7 +181,7 @@ void TreeListControl::keyDown( KeyboardEvent* e )
 {
 	TreeControl::keyDown( e );
 
-	switch( e->getVirtualCode() ) {
+	switch( e->virtualKeyCode ) {
 		case vkReturn : {
 
 			//editCell( clickCell_, Point() );
@@ -239,7 +239,7 @@ void TreeListControl::showColumnHeader( const bool& show )
 
 void TreeListControl::onEditingControlKeyPressed( KeyboardEvent* event ) 
 {
-	switch ( event->getVirtualCode() ) {
+	switch ( event->virtualKeyCode ) {
 		case vkEscape : {
 			cancelEditing();
 		}
@@ -257,10 +257,10 @@ void TreeListControl::onEditingControlKeyPressed( KeyboardEvent* event )
 			
 			KeyboardEvent* event2 =
 				new KeyboardEvent( this, event->getType(),
-				event->getRepeatCount(),
-				event->getKeyMask(),
-				event->getKeyValue(),
-				event->getVirtualCode() );
+				event->repeatCount,
+				event->keyMask,
+				event->keyValue,
+				event->virtualKeyCode );
 			
 			handleEvent( event2 );
 			

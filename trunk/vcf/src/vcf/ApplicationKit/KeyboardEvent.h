@@ -34,16 +34,16 @@ class APPLICATIONKIT_API KeyboardEvent : public Event {
 public:
 
 	KeyboardEvent( Object* source ) : Event(source),
-		keyMask_(0), keyValue_(0), repeatCount_(0), virtualKeyCode_((VirtualKeyCode)0)  {
+		keyMask(0), keyValue(0), repeatCount(0), virtualKeyCode((VirtualKeyCode)0),ignoreKeystroke(false)  {
 
 	}
 
 	KeyboardEvent( Object* source, const uint32& eventType,
-		           const uint32& repeatCount, const uint32& keyMask,
-				   const VCFChar& keyValue,
-				   const VirtualKeyCode& virtKeyValue ): Event(source,eventType),
-		keyMask_(keyMask), keyValue_(keyValue), repeatCount_(repeatCount),
-		virtualKeyCode_(virtKeyValue) {}
+		           const uint32& repCnt, const uint32& km,
+				   const VCFChar& kv,
+				   const VirtualKeyCode& vk ): Event(source,eventType),
+		keyMask(km), keyValue(kv), repeatCount(repCnt),
+		virtualKeyCode(vk),ignoreKeystroke(false) {}
 
 	KeyboardEvent( const KeyboardEvent& rhs ):Event(rhs) {
 		*this = rhs;
@@ -54,50 +54,38 @@ public:
 
 	KeyboardEvent& operator= ( const KeyboardEvent& rhs ) {
 		Event::operator =( rhs );
-		keyMask_ = rhs.keyMask_;
-		keyValue_ = rhs.keyValue_;
-		repeatCount_ = rhs.repeatCount_;
-		virtualKeyCode_ = rhs.virtualKeyCode_;
+		keyMask = rhs.keyMask;
+		keyValue = rhs.keyValue;
+		repeatCount = rhs.repeatCount;
+		virtualKeyCode = rhs.virtualKeyCode;
+		ignoreKeystroke = rhs.ignoreKeystroke;
 		
 		return *this;
 	}
 	
-    uint32 getKeyMask() {
-		return keyMask_;
-	}
-	
-	VCFChar getKeyValue() {
-		return keyValue_;
-	}
-	
-	uint32 getRepeatCount() {
-		return repeatCount_;
-	}
-	
 	bool hasShiftKey() {
-		return ( kmShift & keyMask_ ) != 0;
+		return ( kmShift & keyMask ) != 0;
 	}
 	
 	bool hasAltKey() {
-		return ( kmAlt & keyMask_ ) != 0;
+		return ( kmAlt & keyMask ) != 0;
 	}
 	
 	bool hasControlKey() {
-		return ( kmCtrl & keyMask_ ) != 0;
+		return ( kmCtrl & keyMask ) != 0;
 	}
 	
-	VirtualKeyCode getVirtualCode() {
-		return virtualKeyCode_;
-	}
+	
 	
 	virtual Object* clone( bool deep=false ) {
 		return new KeyboardEvent(*this);
 	}
-private:
-    uint32 keyMask_;
-	VCFChar keyValue_;
-	uint32 repeatCount_;
-	VirtualKeyCode virtualKeyCode_;
+
+    uint32 keyMask;
+	VCFChar keyValue;
+	uint32 repeatCount;
+	VirtualKeyCode virtualKeyCode;
+	bool ignoreKeystroke;
 };
 
 

@@ -582,10 +582,10 @@ void PushButton::mouseClick(  MouseEvent* event )
 
 void PushButton::keyDown( KeyboardEvent* event )
 {
-	if ( vkReturn == event->getVirtualCode() ) {
+	if ( vkReturn == event->virtualKeyCode ) {
 
 	}
-	else if ( vkSpaceBar == event->getVirtualCode() ) {
+	else if ( vkSpaceBar == event->virtualKeyCode ) {
 		isPressed_ = true;
 		repaint();
 	}
@@ -593,10 +593,10 @@ void PushButton::keyDown( KeyboardEvent* event )
 
 void PushButton::keyUp( KeyboardEvent* event )
 {
-	if ( vkReturn == event->getVirtualCode() ) {
+	if ( vkReturn == event->virtualKeyCode ) {
 		click();
 	}
-	else if ( vkSpaceBar == event->getVirtualCode() ) {
+	else if ( vkSpaceBar == event->virtualKeyCode ) {
 		isPressed_ = false;
 		if ( toggled_ ) {
 			isPressed_ = !wasPressed_;

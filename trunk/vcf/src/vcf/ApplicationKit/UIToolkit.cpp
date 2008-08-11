@@ -1061,7 +1061,7 @@ void internal_handleKeyboardButtonEvent ( Event* e )
 
 void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 {
-	if ( vkEscape == event->getVirtualCode() ) {
+	if ( vkEscape == event->virtualKeyCode ) {
 		Frame* frame = Frame::getActiveFrame();
 		if ( NULL != frame ) {
 			Event* e = (Event*)event->clone();
@@ -1076,7 +1076,7 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 	}
 
 	
-	AcceleratorKey::Value key( event->getKeyMask(), event->getVirtualCode() );
+	AcceleratorKey::Value key( event->keyMask, event->virtualKeyCode );
 
 	typedef std::multimap<uint32,AcceleratorKey*>::iterator AccelMapIter;
 	std::pair<AccelMapIter, AccelMapIter> range = acceleratorMap_.equal_range( key );
@@ -1156,10 +1156,10 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 		if ( NULL != ev ) {
 			if ( accelerator->isEnabled() ) {
 				KeyboardEvent* acceleratorEvent = new KeyboardEvent( accelerator, Control::KEYBOARD_ACCELERATOR,
-																	event->getRepeatCount(),
-																	event->getKeyMask(),
-																	event->getKeyValue(),
-																	event->getVirtualCode() );
+																	event->repeatCount,
+																	event->keyMask,
+																	event->keyValue,
+																	event->virtualKeyCode );
 
 				postEvent( (EventHandler*)ev, acceleratorEvent, false );
 			}
@@ -1179,7 +1179,7 @@ void UIToolkit::internal_handleKeyboardEvent( KeyboardEvent* event )
 	}
 	else if ( NULL != control ) {
 
-		VirtualKeyCode keyCode = event->getVirtualCode();
+		VirtualKeyCode keyCode = event->virtualKeyCode;
 		/**
 		as per bug [ 585087 ] Get rid of arrow key tabbing
 		I am commenting the arrow key tabbing out - will
