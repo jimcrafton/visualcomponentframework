@@ -57,6 +57,13 @@ data.
 class APPLICATIONKIT_API TextControl : public Control {
 public:
 
+	enum TextInputState {
+		tisWaitingForInput = 0,
+		tisProcessing = 0x01,
+		tisInputValidated = 0x02,
+		tisInputValidationFailed = 0x04,
+	};
+
 	DELEGATE(TextModelDelegate,SelectionChanged);
 
 	TextControl( const bool& multiLineControl=false );
@@ -69,6 +76,10 @@ public:
 	void setTextModel( TextModel * model );
 
 	TextModel* getTextModel();
+
+
+	virtual void modelChanged( Model* oldModel, Model* newModel );
+
 
 	String getText() {
 		TextModel* tm = getTextModel();
@@ -241,6 +252,22 @@ public:
 	void setValidationStyle( const TextValidationStyle& val ) {
 		validationStyle_ = val;
 	}
+
+	bool isWaitingForInput() {
+		return inputState_ == tisWaitingForInput ? true : false;
+	}
+
+	bool isProcessingInput() {
+		return inputState_ & tisProcessing ? true : false;
+	}
+
+	bool didInputValidate() {
+		return inputState_ & tisInputValidated ? true : false;
+	}
+
+	bool didInputValidationFail() {
+		return inputState_ & tisInputValidationFailed ? true : false;
+	}
 protected:
 	/**
 	handlers of some standard accelerator events.
@@ -259,11 +286,16 @@ protected:
 	*/
 	virtual void gotFocus( FocusEvent* event );
 
-protected:
+	void onModelValidationFailed( Event* e );
+	void onModelValidated( Event* e );
+
+
+
 	TextEditPeer * textPeer_;
 	bool readOnly_;
 	TextValidationStyle validationStyle_;
-
+	int inputState_;
+	
 };
 
 }; // namespace VCF

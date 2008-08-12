@@ -58,7 +58,6 @@ void Model::updateAllViews()
 
 void Model::setValueAsString( const String& value, const VariantData& key )
 {
-	VariantData oldVal = getValue(key);
 	try {
 		VariantData v = validate( key, value );		
 		setValue( v, key );
@@ -135,7 +134,7 @@ VariantData Model::validate( const VariantData& key, const VariantData& value )
 		}
 
 
-		Event e2(this, MODEL_VALIDATED);
+		ValidationEvent e2(this, MODEL_VALIDATED, key, tmpVal);
 		ModelValidated( &e2 );
 		result = tmpVal;
 	}
@@ -305,6 +304,12 @@ VariantData NumericFormatter::convertTo( const VariantData& key, const VariantDa
 		char tmp[256];
 		sprintf( tmp, "%%0.%df", numDecimalPlaces_ );
 		result = Format( String(tmp) ) %  value.DblVal;
+	}
+	else if ( value.isString() ) {
+		double d = value;
+		char tmp[256];
+		sprintf( tmp, "%%0.%df", numDecimalPlaces_ );
+		result = Format( String(tmp) ) %  d;
 	}
 	else {
 		result = value;

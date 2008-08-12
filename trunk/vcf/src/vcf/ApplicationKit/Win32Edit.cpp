@@ -538,7 +538,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		}
 		break;
 		
-
+/*
 		case WM_GETTEXTLENGTH : {
 			
 			VCF::Model* model = textControl_->getViewModel();
@@ -569,6 +569,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			}			
 		}
 		break;
+		*/
 
 		case WM_SETTEXT : case EM_STREAMIN : {
 			if ( textControl_->getReadOnly() ) {
@@ -1026,12 +1027,33 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 	return result;
 }
 
+void Win32Edit::onModelValidated( Event* e )
+{
+	ValidationEvent* ve = (ValidationEvent*)e;
+
+	if ( ve->key == textControl_->getModelKey() ) {
+		String s = getText();
+		String s2;
+		if ( textControl_->getViewModel()->getFormatter() ) {
+			VariantData v = textControl_->getViewModel()->getFormatter()->convertTo( ve->key, ve->value );
+			s2 = (String)v;
+		}
+		else {
+			s2 = ve->value.toString();
+		}
+		
+		if ( s.size() > s2.size() /*|| s.empty()*/ ) {
+			setText( s2 );
+		}		
+	}
+}
+
 void Win32Edit::onModelValidationFailed( Event* e )
 {
 	ValidationErrorEvent* ve = (ValidationErrorEvent*)e;
 
-	if ( ve->key == textControl_->getModelKey() ) {
-		setText( textControl_->getViewModel()->getValueAsString( textControl_->getModelKey() ) );
+	if ( ve->key == textControl_->getModelKey() && textControl_->getViewModel()->getFormatter() ) {
+		setText( textControl_->getViewModel()->getValueAsString( ve->key ) );
 	}
 }
 
@@ -1479,6 +1501,7 @@ void Win32Edit::onControlModelChanged( Event* e )
 {
 	CallBack* tml = getCallback( "Win32TextModelHandler" );
 	CallBack* tml2 = getCallback( "onModelValidationFailed" );
+	CallBack* tml3 = getCallback( "onModelValidated" );
 
 	if ( NULL == tml ) {
 		tml = new ClassProcedure1<ModelEvent*,Win32Edit>( this, &Win32Edit::onTextModelTextChanged, "Win32TextModelHandler" );
@@ -1488,6 +1511,10 @@ void Win32Edit::onControlModelChanged( Event* e )
 		tml2 = new ClassProcedure1<Event*,Win32Edit>( this, &Win32Edit::onModelValidationFailed, "onModelValidationFailed" );
 	}
 
+	if ( NULL == tml3 ) {
+		tml3 = new ClassProcedure1<Event*,Win32Edit>( this, &Win32Edit::onModelValidated, "onModelValidated" );
+	}
+
 	
 
 
@@ -1495,6 +1522,7 @@ void Win32Edit::onControlModelChanged( Event* e )
 	if ( NULL != tm ) {
 		tm->ModelChanged += tml;
 		tm->ModelValidationFailed += tml2;
+		tm->ModelValidated += tml3;
 		
 		String text = tm->getValueAsString(textControl_->getModelKey());
 		

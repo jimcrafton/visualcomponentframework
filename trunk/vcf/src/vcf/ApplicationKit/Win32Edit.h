@@ -177,6 +177,7 @@ protected:
 
 	void onTextModelTextChanged( ModelEvent* event );
 	void onModelValidationFailed( Event* e );
+	void onModelValidated( Event* e );
 
 	/**
 	this is a fix from Marcello to work around an apparent bug in Win32's handling of
