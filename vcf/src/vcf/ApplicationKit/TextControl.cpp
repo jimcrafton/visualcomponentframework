@@ -20,7 +20,8 @@ using namespace VCF;
 
 TextControl::TextControl( const bool& multiLineControl ):
 	readOnly_(false),
-	validationStyle_(tvsOnKeyEvent)
+	validationStyle_(tvsOnKeyEvent),
+	inputState_(0)
 {
 	textPeer_ =	UIToolkit::createTextEditPeer( this, multiLineControl );
 
@@ -42,6 +43,9 @@ TextControl::TextControl( const bool& multiLineControl ):
 	addComponent( getViewModel() );	
 
 	init();
+
+
+
 }
 
 TextControl::~TextControl()
@@ -331,7 +335,7 @@ void TextControl::gotFocus( FocusEvent* event )
 		return;
 	}
 
-	String text = m->getValueAsString( this->getModelKey() );
+	String text = m->getValueAsString( getModelKey() );
 	
 		//tm->getText();
 
@@ -349,9 +353,62 @@ double TextControl::getPreferredHeight()
 	return result;
 }
 
+void TextControl::modelChanged( Model* oldModel, Model* newModel )
+{
+	if ( NULL != oldModel ) {
+		CallBack* cb = getCallback( "TextControl::onModelValidationFailed" );
+		if ( NULL != cb ) {
+			oldModel->ModelValidationFailed -= cb;
+		}
+
+		cb = getCallback( "TextControl::onModelValidated" );
+		if ( NULL != cb ) {
+			oldModel->ModelValidated -= cb;
+		}
+	}
+
+	if ( NULL != newModel ) {
+		CallBack* cb = getCallback( "TextControl::onModelValidationFailed" );
+		if ( NULL == cb ) {
+			cb = new ClassProcedure1<Event*,TextControl>( this, &TextControl::onModelValidationFailed, "TextControl::onModelValidationFailed" );
+		}
+
+		newModel->ModelValidationFailed += cb;
+
+		cb = getCallback( "TextControl::onModelValidated" );
+		if ( NULL == cb ) {
+			cb = new ClassProcedure1<Event*,TextControl>( this, &TextControl::onModelValidated, "TextControl::onModelValidated" );
+		}
+
+		newModel->ModelValidated += cb;
+	}
+}
+
+void TextControl::onModelValidationFailed( Event* e )
+{
+	ValidationErrorEvent* ve = (ValidationErrorEvent*)e;
+
+	if ( ve->key == getModelKey() ) {
+		inputState_ |= tisInputValidationFailed;
+		inputState_ &= ~tisInputValidated;
+	}
+}
+
+void TextControl::onModelValidated( Event* e )
+{
+	ValidationEvent* ve = (ValidationEvent*)e;
+
+	if ( ve->key == getModelKey() ) {
+		inputState_ |= tisInputValidated;
+		inputState_ &= ~tisInputValidationFailed;
+	}
+}
+
 void TextControl::handleEvent( Event* event )
 {
 	switch( event->getType() ) {
+
+		
 
 		/**
 		I moved these two event types together to hopefully better hadnle the 
@@ -362,12 +419,15 @@ void TextControl::handleEvent( Event* event )
 		on the Control::KEYBOARD_PRESSED events
 		*/
 		case Control::KEYBOARD_DOWN : case Control::KEYBOARD_PRESSED : {
+			inputState_ = tisWaitingForInput;
+
 			//do not process any events during design mode
 			if ( isDesigning() ) {
 				Control::handleEvent( event );
 				return;
 			}
 
+			
 			Model* model = getViewModel();
 			TextModel* textModel = dynamic_cast<TextModel*>(model);
 			
@@ -392,11 +452,15 @@ void TextControl::handleEvent( Event* event )
 			*/			
 
 			if ( !getReadOnly() && !(getComponentState() & Component::csDesigning) ) {
+				inputState_ = tisProcessing;
+
+
 				KeyboardEvent* ke = (KeyboardEvent*)event;
 
 				if ( event->getType() == Control::KEYBOARD_DOWN ) {
 
 					if ( validationStyle_ != tvsOnKeyEvent ) {
+						inputState_ = tisWaitingForInput;
 						return;
 					}
 
@@ -405,7 +469,14 @@ void TextControl::handleEvent( Event* event )
 							uint32 pos =  textPeer_->getSelectionStart();
 
 							if ( NULL == textModel ) {
-								String text = model->getValueAsString( this->getModelKey() );
+								String text;
+								if ( NULL != model->getFormatter() ) {
+									text = getPeer()->getText();
+								}
+								else {
+									text = model->getValueAsString( getModelKey() );
+								}
+
 								uint32 size = text.length();
 
 								if ( ( 0 < size ) && pos <= (size-1) ) {
@@ -426,7 +497,10 @@ void TextControl::handleEvent( Event* event )
 
 									if ( 0 != length ) {
 										text.erase( pos, length );
-										model->setValueAsString( text, this->getModelKey() );
+										model->setValueAsString( text, getModelKey() );
+										if ( didInputValidationFail() ) {
+											ke->ignoreKeystroke = true;
+										}
 									}
 								}
 							}
@@ -471,7 +545,14 @@ void TextControl::handleEvent( Event* event )
 							uint32 length = textPeer_->getSelectionCount();			
 
 							if ( NULL == textModel ) {
-								String text = model->getValueAsString( this->getModelKey() );
+								String text;
+								if ( NULL != model->getFormatter() ) {
+									text = getPeer()->getText();
+								}
+								else {
+									text = model->getValueAsString( getModelKey() );
+								}
+
 								uint32 pos =  minVal<uint32>( text.size(), textPeer_->getSelectionStart() );
 								
 								// if the selection is not empty we delete it, but the cursor doesn't move.
@@ -505,7 +586,10 @@ void TextControl::handleEvent( Event* event )
 								
 								if ( 0 != length ) {
 									text.erase( pos, length );
-									model->setValueAsString( text, this->getModelKey() );
+									model->setValueAsString( text, getModelKey() );
+									if ( didInputValidationFail() ) {
+										ke->ignoreKeystroke = true;
+									}
 								}
 							}
 							else {
@@ -612,7 +696,7 @@ void TextControl::handleEvent( Event* event )
 									uint32 length = textPeer_->getSelectionCount();
 
 									if ( NULL == textModel ) {
-										String newText = model->getValueAsString( this->getModelKey() );
+										String newText = model->getValueAsString( getModelKey() );
 
 										if ( length > 0 ) {
 											newText.erase( pos, length );
@@ -631,7 +715,10 @@ void TextControl::handleEvent( Event* event )
 											}
 										}
 
-										model->setValueAsString( newText, this->getModelKey() );
+										model->setValueAsString( newText, getModelKey() );
+										if ( didInputValidationFail() ) {
+											ke->ignoreKeystroke = true;
+										}	
 									}
 									else {
 										if ( length > 0 ) {
@@ -657,7 +744,7 @@ void TextControl::handleEvent( Event* event )
 
 
 									if ( NULL == textModel ) {
-										String newText = model->getValueAsString( this->getModelKey() );
+										String newText = model->getValueAsString( getModelKey() );
 
 										if ( length > 0 ) {
 											newText.erase( pos, length );
@@ -673,7 +760,10 @@ void TextControl::handleEvent( Event* event )
 										}
 
 
-										model->setValueAsString( newText, this->getModelKey() );
+										model->setValueAsString( newText, getModelKey() );
+										if ( didInputValidationFail() ) {
+											ke->ignoreKeystroke = true;
+										}
 									}
 									else {
 										
@@ -741,6 +831,7 @@ void TextControl::handleEvent( Event* event )
 
 						default : {
 							if ( validationStyle_ != tvsOnKeyEvent ) {
+								inputState_ = tisWaitingForInput;
 								return;
 							}
 							// control + characters need not to be treated as inserted characters
@@ -763,14 +854,24 @@ void TextControl::handleEvent( Event* event )
 									uint32 length = textPeer_->getSelectionCount();
 
 									if ( NULL == textModel ) {
-										String newText = model->getValueAsString( this->getModelKey() );
+										//String newText = model->getValueAsString( getModelKey() );
+										String newText;
+								if ( NULL != model->getFormatter() ) {
+									newText = getPeer()->getText();
+								}
+								else {
+									newText = model->getValueAsString( getModelKey() );
+								}
 
+/*
 										if ( model->getFormatter() != NULL ) {
 											if ( pos >= newText.size() ) {
 												ke->ignoreKeystroke = true;
+												inputState_ = tisWaitingForInput;
 												return;
 											}
 										}
+										*/
 
 										if ( length > 0 ) {
 											newText.erase( pos, length );
@@ -786,7 +887,10 @@ void TextControl::handleEvent( Event* event )
 										}
 										
 
-										model->setValueAsString( newText, this->getModelKey() );
+										model->setValueAsString( newText, getModelKey() );
+										if ( didInputValidationFail() ) {
+											ke->ignoreKeystroke = true;
+										}
 									}
 									else {
 										if ( length > 0 ) {
@@ -802,7 +906,8 @@ void TextControl::handleEvent( Event* event )
 						break;
 					}
 
-				}
+					inputState_ = tisWaitingForInput;
+				}				
 			}
 
 			Control::handleEvent( event );
