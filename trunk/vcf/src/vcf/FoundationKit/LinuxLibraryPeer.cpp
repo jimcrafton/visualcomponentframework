@@ -29,7 +29,7 @@ void LinuxLibraryPeer::load( const String& libraryFilename )
 	//done
 	libHandle_ = ::dlopen( libraryFilename.ansi_c_str(), RTLD_LAZY );
 
-	StringUtils::traceWithArgs( Format("dlopen( %s ) returned %p\n") %
+	StringUtils::trace( Format("dlopen( %s ) returned %p\n") %
 								 libraryFilename %  libHandle_ );
 
 	if ( ! libHandle_ ) {
@@ -48,7 +48,7 @@ void* LinuxLibraryPeer::getFunction( const String& functionName )
 	}
 	result = dlsym( libHandle_, functionName.ansi_c_str() );
 	if(result == NULL) {
-		StringUtils::traceWithArgs( Format( "error are: %s\n" ) % String(dlerror()) );
+		StringUtils::trace( Format( "error are: %s\n" ) % String(dlerror()) );
 	}
 	return result;
 }

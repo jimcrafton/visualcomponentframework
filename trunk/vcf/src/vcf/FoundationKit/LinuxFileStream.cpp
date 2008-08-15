@@ -160,7 +160,7 @@ uint64 LinuxFileStream::write( const unsigned char* bytesToWrite, uint64 sizeOfB
     return bytesWritten;
 }
 
-char* LinuxFileStream::getBuffer()
+uchar* LinuxFileStream::getBuffer()
 {
 	// ???
 	return 0;
