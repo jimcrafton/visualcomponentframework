@@ -36,7 +36,7 @@ public:
 
     virtual uint64 write( const unsigned char* bytesToWrite, uint64 sizeOfBytes );
 
-	virtual char* getBuffer();
+	virtual uchar* getBuffer();
 
 private:
 	int fileHandle_;
