@@ -344,7 +344,7 @@ _class_rtti_end_
 
 _class_abstract_rtti_(ValidationRule, "VCF::Component", "ValidationRule")
 	_property_enum_labeled_( ValidationLogicOp, "logicOp", getLogicOp, setLogicOp,
-						   vlNone, vlXOR, 4, ValidationLogicOpNames, "");
+						   vlNone, vlOR, 3, ValidationLogicOpNames, "");
 	_property_( String, "errorMessage", getErrorMessage, setErrorMessage, "" );
 	_property_( VariantData, "appliesToKey", getAppliesToKey, setAppliesToKey, "" );
 _class_rtti_end_

@@ -49,6 +49,43 @@ public:
 	}
 
 
+	virtual ValidationResult validate() {
+		ValidationResult result;
+		result.valid = true;
+
+		if ( NULL != source_ ) {
+			Class* clazz = source_->getClass();
+			if ( NULL != clazz ) {
+				Enumerator<Property*>* props = clazz->getProperties();
+				
+				while ( props->hasMoreElements() ) {
+					Property* prop = props->nextElement();
+					if ( !prop->isCollection() ) {
+						
+						VariantData* v = prop->get();
+						ValidationResult vr = Model::validate( prop->getDisplayName(), *v );
+						
+						if ( !vr ) {
+							result.addFailedRules( vr.getFailedRules() );
+
+							if ( !result.error.empty() ) {
+								result.error += "\n";
+							}
+							result.error += vr.error;
+							result.key = vr.key;
+							result.value = vr.value;
+						}
+						result.valid &= vr.valid;
+						
+						
+					}
+				}
+			}
+		}
+
+		return result;
+	}
+
 	virtual void setValue( const VariantData& value, const VariantData& key=VariantData::null() ) { 
 		if ( NULL != source_ ) {
 			Class* clazz = source_->getClass();
@@ -56,10 +93,12 @@ public:
 				String propertyName = key;
 				Property* property = clazz->getProperty( propertyName );
 				if ( NULL != property ) {					
-					VariantData v = validate( key, value );
-					property->set( &v );
-					ModelEvent e(this,MODEL_CHANGED);
-					changed(&e);					
+					ValidationResult v = Model::validate( key, value );
+					if ( v ) {
+						property->set( &v.value );
+						ModelEvent e(this,MODEL_CHANGED);
+						changed(&e);
+					}
 				}				
 			}
 		}

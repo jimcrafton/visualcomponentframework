@@ -93,7 +93,7 @@ public:
 	ValidationErrorEvent( Object* source, const uint32& type,
 						const VariantData& k,
 						const VariantData& v ): 
-		Event(source,type),throwException(true),key(k), value(v),state(vsNone){}
+		Event(source,type),key(k), value(v),state(vsNone){}
 
 	
 	virtual ~ValidationErrorEvent() {}
@@ -108,7 +108,6 @@ public:
 	const VariantData& value;
 
 
-	bool throwException;
 	String errorMessage;
 	ValidationState state;
 };
@@ -147,15 +146,30 @@ typedef Delegate1<ValidationErrorEvent*> ValidationErrorDelegate;
 
 
 
+
+
 class APPLICATIONKIT_API ValidationFormatter : public Component {
 public:
 	virtual ~ValidationFormatter(){}
 
-	//generally val to string
-	virtual VariantData convertTo( const VariantData& key, const VariantData& value ) = 0;
+	/**
+	Converts a model's raw value, based on it's key, to some other 
+	format, typically a string. For example, if the 
+	value was a double, 1.987023455 it might be converted to
+	"1.99".
 
-	//generally string to val
-	virtual VariantData convertFrom( const VariantData& key, const VariantData& value ) = 0;
+	Flow is from Model ==>> external value
+	*/
+	virtual VariantData convertFromModel( const VariantData& key, const VariantData& value ) = 0;
+
+	/**
+	Converts an value to a value used for the model. FOr example, a string
+	might be converted to a double, so "1.99" might be converted to a 
+	1.99000000.
+
+	Flow is from external value ==>> Model
+	*/
+	virtual VariantData convertToModel( const VariantData& key, const VariantData& value ) = 0;
 
 	VariantData getAppliesToKey() {
 		return appliesToKey_;
@@ -175,8 +189,8 @@ public:
 
 	virtual ~NumericFormatter(){}
 
-	virtual VariantData convertTo( const VariantData& key, const VariantData& value );
-	virtual VariantData convertFrom( const VariantData& key, const VariantData& value );
+	virtual VariantData convertFromModel( const VariantData& key, const VariantData& value );
+	virtual VariantData convertToModel( const VariantData& key, const VariantData& value );
 
 	uint32 getNumberOfDecimalPlaces() {
 		return numDecimalPlaces_;
@@ -197,8 +211,7 @@ protected:
 enum ValidationLogicOp{
 	vlNone = 0,
 	vlAND,
-	vlOR,
-	vlXOR
+	vlOR
 };
 
 
@@ -207,6 +220,8 @@ static String ValidationLogicOpNames[] = { "vlNone",
 										 "vlOR",
 										 "vlXOR" };
 
+class ValidationResult;
+
 
 class APPLICATIONKIT_API ValidationRule : public Component {
 public:
@@ -214,7 +229,7 @@ public:
 	virtual ~ValidationRule(){}
 
 
-	virtual bool exec( const VariantData& key, const VariantData& value ) = 0;
+	virtual bool exec( const VariantData& key, const VariantData& value, ValidationResult& result ) = 0;
 
 
 	ValidationLogicOp getLogicOp() {
@@ -247,11 +262,72 @@ protected:
 
 };
 
+
+
+
+class APPLICATIONKIT_API ValidationResult {
+public:
+
+	ValidationResult(): key(VariantData::null()),value(VariantData::null()),valid(false){}
+
+
+	operator bool () const {
+		return valid;
+	}
+
+	ValidationResult& operator=( const bool& rhs ) {
+		valid = rhs;
+		return *this;
+	}
+
+
+	ValidationResult& operator=( const ValidationException& rhs ) {
+		valid = false;
+		error = rhs.getMessage();
+
+		return *this;
+	}
+
+
+
+	VariantData key;
+	VariantData value;
+
+	String error;
+
+	bool valid;
+
+	void addFailedRule( ValidationRule* rule ) {
+		std::vector<ValidationRule*>::iterator found =
+			std::find( failedRules.begin(), failedRules.end(), rule );
+		if ( found == failedRules.end() ) {
+			failedRules.push_back( rule );
+		}
+	}
+
+	const std::vector<ValidationRule*>& getFailedRules() const {
+		return failedRules;
+	}
+
+	void addFailedRules( const std::vector<ValidationRule*>& val ) {
+		failedRules.insert( failedRules.end(), val.begin(), val.end() );
+	}
+protected:
+	std::vector<ValidationRule*> failedRules;
+};
+
+
+
+
+
+
+
+
 class APPLICATIONKIT_API NullRule : public ValidationRule {
 public:
 	NullRule():allowsNull_(true){}
 	virtual ~NullRule(){}	
-	virtual bool exec( const VariantData& key, const VariantData& value );
+	virtual bool exec( const VariantData& key, const VariantData& value, ValidationResult& result );
 
 	bool allowsNull() {
 		return allowsNull_;
@@ -283,27 +359,27 @@ protected:
 class APPLICATIONKIT_API MinRule : public DataRule {
 public:
 	virtual ~MinRule(){}	
-	virtual bool exec( const VariantData& key, const VariantData& value );
+	virtual bool exec( const VariantData& key, const VariantData& value, ValidationResult& result );
 };
 
 class APPLICATIONKIT_API MaxRule : public DataRule {
 public:
 	virtual ~MaxRule(){}	
-	virtual bool exec( const VariantData& key, const VariantData& value );
+	virtual bool exec( const VariantData& key, const VariantData& value, ValidationResult& result );
 };
 
 
 class APPLICATIONKIT_API EqualsRule : public DataRule {
 public:
 	virtual ~EqualsRule(){}	
-	virtual bool exec( const VariantData& key, const VariantData& value );
+	virtual bool exec( const VariantData& key, const VariantData& value, ValidationResult& result );
 };
 
 
 class APPLICATIONKIT_API SimilarToRule : public DataRule {
 public:
 	virtual ~SimilarToRule(){}	
-	virtual bool exec( const VariantData& key, const VariantData& value );
+	virtual bool exec( const VariantData& key, const VariantData& value, ValidationResult& result );
 };
 
 
@@ -352,13 +428,15 @@ public:
 	}
 
 
-	virtual bool exec( const VariantData& key, const VariantData& value );
+	virtual bool exec( const VariantData& key, const VariantData& value, ValidationResult& result );
 
-	bool isValid( const VariantData& key, const VariantData& value );
+	bool isValid( const VariantData& key, const VariantData& value, ValidationResult& result );
 
 	String getValidationProblem() {
 		return problem_;
 	}
+
+	virtual void handleEvent( Event* e );
 protected:
 	Array<ValidationRule*> rules_;
 	String problem_;
@@ -390,9 +468,9 @@ The model maintains zero or more views. It can update
 the views in one shot by the updateAllViews(). 
 
 The exact kind of data store in the model is up to the implementor
-but all models has some basic common characteristics.
+but all models have some basic common characteristics.
  \li They can be emptied or cleared out by calling the empty() method.
- \li You can determine is the model has any data at all by calling
+ \li You can determine if the model has any data at all by calling
  the isEmpty() method. 
  \li A model's data can be "validated", in other words you can 
  call validate() to determine if the data in the model is in a 
@@ -411,7 +489,9 @@ but all models has some basic common characteristics.
 
 @delegates
 	@del Model::ModelChanged
-	@del Model::ModelValidate
+	@del Model::ModelValidating
+	@del Model::ModelValidationFailed
+	@del Model::ModelValidated
 */
 class APPLICATIONKIT_API Model : public Component {
 public:
@@ -465,10 +545,10 @@ public:
     /**
 	Validate the model.
 	 */
-    void validate() {
+    virtual ValidationResult validate() {
 		VariantData key = VariantData::null();
 		VariantData value = VariantData::null();
-		validate(key,value);
+		return validate(key,value);
 	}
 
 	/**
@@ -481,9 +561,9 @@ public:
 	a double.
   
 	*/
-	virtual VariantData validate( const VariantData& key, const VariantData& value );
+	virtual ValidationResult validate( const VariantData& key, const VariantData& value );
 	
-	VariantData validate( const VariantData& key, const String& value ) {
+	ValidationResult validate( const VariantData& key, const String& value ) {
 		VariantData v;
 		v.setFromString(value);
 		return validate( key, v );
@@ -555,7 +635,7 @@ public:
 	virtual String getValueAsString( const VariantData& key=VariantData::null() ) {
 		try {
 			if ( NULL != formatter_ ) {				
-				return formatter_->convertTo( key, getValue(key) ).toString();
+				return formatter_->convertFromModel( key, getValue(key) ).toString();
 			}
 		}
 		catch ( BasicException& e ) {

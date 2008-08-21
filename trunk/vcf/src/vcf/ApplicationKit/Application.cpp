@@ -279,10 +279,10 @@ void Application::showErrorMessage( const String& message, const String& title )
 
 #if defined (VCF_WIN)
 	if ( System::isUnicodeEnabled() ) {
-		::MessageBoxW( NULL, message.c_str(), title.c_str(), MB_OK | MB_ICONERROR );
+		::MessageBoxW( GetActiveWindow(), message.c_str(), title.c_str(), MB_OK | MB_ICONERROR );
 	}
 	else {
-		::MessageBoxA( NULL, message.ansi_c_str(), title.ansi_c_str(), MB_OK | MB_ICONERROR );
+		::MessageBoxA( GetActiveWindow(), message.ansi_c_str(), title.ansi_c_str(), MB_OK | MB_ICONERROR );
 	}
 #elif defined (VCF_OSX)	
 	NSAlert *alert = [[NSAlert alloc] init];

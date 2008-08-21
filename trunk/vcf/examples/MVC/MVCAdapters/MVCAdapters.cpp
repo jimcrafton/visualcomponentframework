@@ -59,6 +59,8 @@ public:
 
 	MVCAdaptersApp( int argc, char** argv ) : Application(argc, argv) {
 		addCallback( new ClassProcedure1<Event*,MVCAdaptersApp>(this, &MVCAdaptersApp::onSelected), "MVCAdaptersApp::onSelected" );
+		addCallback( new ClassProcedure1<Event*,MVCAdaptersApp>(this, &MVCAdaptersApp::onValidateNow), "MVCAdaptersApp::onValidateNow" );
+		
 	}
 
 	virtual bool initRunningApplication(){
@@ -82,6 +84,8 @@ public:
 
 		mainWindow->show();
 		
+		addToUpdateList();
+
 		return result;
 	}
 
@@ -94,6 +98,37 @@ public:
 
 		ObjectModel* objModel = (ObjectModel*)findComponent( "model", true );
 		objModel->setSource( o );
+	}
+
+	void onValidateNow( Event* ) {
+		ObjectModel* objModel = (ObjectModel*)findComponent( "model", true );
+		ValidationResult r = objModel->validate();
+		if ( !r ) {
+			String errMsg;
+			errMsg = Format("Field '%s' with a value of '%s' is invalid.\n") % (String)r.key % r.value.toString();
+
+			const std::vector<ValidationRule*>& failedRules = r.getFailedRules();
+			
+			for (size_t i=0;i<failedRules.size();i++ ) {
+				errMsg += Format(" * Value '%s' fails because it is %s\n") % r.value.toString() % failedRules[i]->getErrorMessage();
+			}
+			
+
+			Application::showErrorMessage( errMsg, "Validation Error" );
+		}
+	}
+
+	virtual bool updateAction() {
+		
+		ObjectModel* objModel = (ObjectModel*)findComponent( "model", true );
+		ValidationResult r = objModel->validate();
+		if ( !r ) {
+			getMainWindow()->setCaption( "MVCAdapters Window - model invalid" );
+		}
+		else {
+			getMainWindow()->setCaption( "MVCAdapters Window" );
+		}
+		return true;
 	}
 };
 

@@ -55,7 +55,7 @@ public:
      * still true at the end of the listener iterations, then it is safe to apply the changes to the
      * model, other wise the changes are removed.
      */
-    virtual void validate();
+    virtual ValidationResult validate();
 
     /**
      * clears out the model's data
