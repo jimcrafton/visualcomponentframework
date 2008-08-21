@@ -1035,8 +1035,8 @@ void Win32Edit::onModelValidated( Event* e )
 		String s = getText();
 		String s2;
 		if ( textControl_->getViewModel()->getFormatter() ) {
-			VariantData v = textControl_->getViewModel()->getFormatter()->convertTo( ve->key, ve->value );
-			s2 = (String)v;
+			VariantData v = textControl_->getViewModel()->getFormatter()->convertFromModel( ve->key, ve->value );
+			s2 = v.toString();
 		}
 		else {
 			s2 = ve->value.toString();

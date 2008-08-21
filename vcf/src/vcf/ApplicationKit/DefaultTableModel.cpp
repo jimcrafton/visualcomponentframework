@@ -36,9 +36,9 @@ DefaultTableModel::~DefaultTableModel()
 }
 
 
-void DefaultTableModel::validate()
+ValidationResult DefaultTableModel::validate()
 {
-
+	return TableModel::validate();
 }
 
 void DefaultTableModel::empty()

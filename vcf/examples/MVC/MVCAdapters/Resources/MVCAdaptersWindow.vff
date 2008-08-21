@@ -24,22 +24,29 @@ object MVCAdaptersWindow  : VCF::Window
 	end
 
 
-	object min : VCF::MinRule 
-		data = 3.0
-		logicOp = vlOR
-		errorMessage = 'You''re well and truly fucked!'
-	end
-
-	object equals : VCF::EqualsRule 
-		data = 3
-		logicOp = vlOR
-		errorMessage = 'Not equal to 3'
-	end
+	
 
 	object rules : VCF::ValidationRuleCollection
-		rules[0] = @min
-		rules[1] = @equals
+		//alternate way of referencing rules, as opposed
+		//to embedding the objects directly in the rule 
+		//collection
+
+		//rules[0] = @min
+		//rules[1] = @equals
 		appliesToKey = 'cost'
+
+		object min : VCF::MinRule 
+			data = 3.0
+			logicOp = vlOR
+			errorMessage = 'Greater than 3.0'
+		end
+
+		object equals : VCF::EqualsRule 
+			data = 3
+			logicOp = vlOR
+			errorMessage = 'Not equal to 3'
+		end
+
 	end
 
 	object model :  VCF::ObjectModel
@@ -61,7 +68,7 @@ object MVCAdaptersWindow  : VCF::Window
 
 	object panel1 : VCF::Panel 
 		alignment = AlignTop
-		height = 150
+		height = 175
 		container = @hlContainer
 
 		object lbl1 : VCF::Label
@@ -106,6 +113,17 @@ object MVCAdaptersWindow  : VCF::Window
 			model = @model
 			//validationStyle = tvsOnEnterKey
 			//readonly = true
+		end
+
+		object lbl5 : VCF::Label
+			caption = 'Check Validity:'
+		end
+
+		object edt4 : VCF::CommandButton
+			caption = 'Now'
+			delegates
+				ButtonClicked = [MVCAdaptersApp@MVCAdaptersApp::onValidateNow]
+			end
 		end
 	end
 

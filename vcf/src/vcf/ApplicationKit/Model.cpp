@@ -58,58 +58,58 @@ void Model::updateAllViews()
 
 void Model::setValueAsString( const String& value, const VariantData& key )
 {
-	try {
-		VariantData v = validate( key, value );		
-		setValue( v, key );
+	
+	ValidationResult v = validate( key, value );
+	if ( v ) {
+		setValue( v.value, key );
 	}
-	catch ( ValidationException& e ) {
-		Application::showErrorMessage( e.getMessage(), "Validation Error" );
+	else if ( updateMode_ == muOnValidation ) {	
+		Application::showErrorMessage( v.error, "Validation Error" );
 	}
-
 }
 
 
-VariantData Model::validate( const VariantData& key, const VariantData& value ) 
+ValidationResult Model::validate( const VariantData& key, const VariantData& value ) 
 {
-	VariantData result = value;
+	ValidationResult result;
+
+	result.value = value;
+	result.key = key;
+
 	if ( updateMode_ == muOnValidation ) {
 
 		VariantData tmpVal = value;
-		try {
-			if ( NULL != formatter_ ) {				
-				tmpVal = formatter_->convertFrom( key, value );
+		if ( NULL != formatter_ ) {
+			try {				
+				tmpVal = formatter_->convertToModel( key, value );				
 			}
-		}
-		catch ( BasicException& e ) {
+			catch ( BasicException& e ) {
 
-			ValidationErrorEvent errEv(this, MODEL_VALIDATIONFAILED, key, value );
-			errEv.errorMessage = e.getMessage();
-			errEv.state = ValidationErrorEvent::vsFormattingFailed;
+				ValidationErrorEvent errEv(this, MODEL_VALIDATIONFAILED, key, value );
+				errEv.errorMessage = e.getMessage();
+				errEv.state = ValidationErrorEvent::vsFormattingFailed;
 
-			ModelValidationFailed(&errEv);
-			if ( errEv.throwException ) {
-				throw ValidationException( "Invalid Formatting error: " + errEv.errorMessage );
-			}
-			else {
-				return value;
+				ModelValidationFailed(&errEv);
+				
+				result.error = errEv.errorMessage;
+
+				return result;			
 			}
 		}
 
 
 		if ( NULL != validator_ ) {
-			if ( !validator_->isValid( key, tmpVal ) ) {
+			if ( !validator_->isValid( key, tmpVal, result ) ) {
 
 				ValidationErrorEvent errEv(this, MODEL_VALIDATIONFAILED, key, value );
 				errEv.errorMessage = validator_->getValidationProblem();
 				errEv.state = ValidationErrorEvent::vsValidatorRulesFailed;
 
 				ModelValidationFailed(&errEv);
-				if ( errEv.throwException ) {
-					throw ValidationException( "Data value is invalid.\nProblem: " + errEv.errorMessage );
-				}
-				else {
-					return value;
-				}
+
+				result.error = errEv.errorMessage;
+				
+				return result;				
 			}
 		}
 
@@ -125,31 +125,31 @@ VariantData Model::validate( const VariantData& key, const VariantData& value )
 
 			ModelValidationFailed(&errEv);
 			
-			if ( errEv.throwException ) {
-				throw ValidationException( errEv.errorMessage );
-			}
-			else {
-				return value;
-			}
+			result.error = errEv.errorMessage;
+
+			return result;			
 		}
 
 
 		ValidationEvent e2(this, MODEL_VALIDATED, key, tmpVal);
 		ModelValidated( &e2 );
-		result = tmpVal;
+		result.value = tmpVal;
+		result.valid = true;
 	}
 
 	return result;
 }
 
 
-bool ValidationRuleCollection::exec( const VariantData& key, const VariantData& value )
+bool ValidationRuleCollection::exec( const VariantData& key, const VariantData& value, ValidationResult& result )
 {
+	problem_ = "";
+
 	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
 		return true;
 	}
 
-	bool result = true;
+	bool retVal = true;
 	Array<ValidationRule*>::iterator it = rules_.begin();		
 
 	ValidationRule* prevRule = NULL;
@@ -159,51 +159,70 @@ bool ValidationRuleCollection::exec( const VariantData& key, const VariantData& 
 		VariantData oldKey = rule->getAppliesToKey();
 		rule->setAppliesToKey( appliesToKey_ );
 
-		bool ruleRes = rule->exec( key, value );
+		bool ruleRes = rule->exec( key, value, result );
 		
+		if ( !ruleRes ) {
+			result.addFailedRule( rule );
+		}
+
 		if ( it == rules_.begin() ) {
-			result = ruleRes;			
+			retVal = ruleRes;			
 		}
 		else {
 			switch ( prevRule->getLogicOp() ) {
 				case vlAND : {
-					result = result && ruleRes;
+					retVal = retVal && ruleRes;
 				}
 				break;
 
 				case vlOR : {
-					result = result || ruleRes;
+					retVal = retVal || ruleRes;
 				}
-				break;
-			}
-
-
-			if ( !result ) {
-				problem_ = 	rule->getErrorMessage();	
 				break;
 			}
 		}
 
+		if ( !problem_.empty() ) {
+			problem_ += "\n";
+		}
+		problem_ += rule->getErrorMessage();
+
 		rule->setAppliesToKey( oldKey );
+			
 
 		prevRule = rule;
 		++it;
 	}
 
-	return result;
+	return retVal;
 }
 
-bool ValidationRuleCollection::isValid( const VariantData& key, const VariantData& value ) 
+bool ValidationRuleCollection::isValid( const VariantData& key, const VariantData& value, ValidationResult& result ) 
 {
 	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
 		return true;
 	}
 
-	return exec( key, value );
+	return exec( key, value, result );
 }
 
+void ValidationRuleCollection::handleEvent( Event* event )
+{
+	ValidationRule::handleEvent( event );
+	switch ( event->getType() ){
+		case Component::COMPONENT_ADDED : {
+			ComponentEvent* ev = (ComponentEvent*)event;
+			Component* child = ev->getChildComponent();
+			ValidationRule* item = dynamic_cast<ValidationRule*>(child);
+			if ( NULL != item ) {
+				insertRule( getRuleCount(), item );				
+			}
+		}
+		break;
+	}
+}
 
-bool NullRule::exec( const VariantData& key, const VariantData& value )
+bool NullRule::exec( const VariantData& key, const VariantData& value, ValidationResult& result )
 {
 	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
 		return true;
@@ -217,7 +236,7 @@ bool NullRule::exec( const VariantData& key, const VariantData& value )
 }
 
 
-bool MinRule::exec( const VariantData& key, const VariantData& value )
+bool MinRule::exec( const VariantData& key, const VariantData& value, ValidationResult& result )
 {
 	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
 		return true;
@@ -239,7 +258,7 @@ bool MinRule::exec( const VariantData& key, const VariantData& value )
 	return false;
 }
 
-bool MaxRule::exec( const VariantData& key, const VariantData& value )
+bool MaxRule::exec( const VariantData& key, const VariantData& value, ValidationResult& result )
 {
 	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
 		return true;
@@ -260,7 +279,7 @@ bool MaxRule::exec( const VariantData& key, const VariantData& value )
 	return false;
 }
 
-bool EqualsRule::exec( const VariantData& key, const VariantData& value )
+bool EqualsRule::exec( const VariantData& key, const VariantData& value, ValidationResult& result )
 {
 	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
 		return true;
@@ -282,7 +301,7 @@ bool EqualsRule::exec( const VariantData& key, const VariantData& value )
 	return value == data_;
 }
 
-bool SimilarToRule::exec( const VariantData& key, const VariantData& value )
+bool SimilarToRule::exec( const VariantData& key, const VariantData& value, ValidationResult& result )
 {
 	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
 		return true;
@@ -292,7 +311,7 @@ bool SimilarToRule::exec( const VariantData& key, const VariantData& value )
 }
 
 
-VariantData NumericFormatter::convertTo( const VariantData& key, const VariantData& value )
+VariantData NumericFormatter::convertFromModel( const VariantData& key, const VariantData& value )
 {
 	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
 		return value;
@@ -319,7 +338,7 @@ VariantData NumericFormatter::convertTo( const VariantData& key, const VariantDa
 }
 
 
-VariantData NumericFormatter::convertFrom( const VariantData& key, const VariantData& value )
+VariantData NumericFormatter::convertToModel( const VariantData& key, const VariantData& value )
 {
 	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
 		return value;

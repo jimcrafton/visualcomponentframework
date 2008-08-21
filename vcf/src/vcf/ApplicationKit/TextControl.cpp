@@ -709,7 +709,7 @@ void TextControl::handleEvent( Event* event )
 										//than what we are proposing, then mark the
 										//event so that the peer does NOT process it!
 										if ( model->getFormatter() != NULL ) {
-											String tmp = model->getFormatter()->convertTo( getModelKey(), newText );
+											String tmp = model->getFormatter()->convertFromModel( getModelKey(), newText );
 											if ( tmp.size() < newText.size() ) {
 												ke->ignoreKeystroke = true;
 											}
@@ -753,7 +753,7 @@ void TextControl::handleEvent( Event* event )
 										newText.insert( pos, text );
 										
 										if ( model->getFormatter() != NULL ) {
-											String tmp = model->getFormatter()->convertTo( getModelKey(), newText );
+											String tmp = model->getFormatter()->convertFromModel( getModelKey(), newText );
 											if ( tmp.size() < newText.size() ) {
 												ke->ignoreKeystroke = true;
 											}
@@ -880,7 +880,7 @@ void TextControl::handleEvent( Event* event )
 										newText.insert( pos, text );
 										
 										if ( model->getFormatter() != NULL ) {
-											String tmp = model->getFormatter()->convertTo( getModelKey(), newText );
+											String tmp = model->getFormatter()->convertFromModel( getModelKey(), newText );
 											if ( tmp.size() < newText.size() ) {
 												ke->ignoreKeystroke = true;
 											}
