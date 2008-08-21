@@ -134,6 +134,11 @@ public:
 	}
 	
 	void internal_paint( NSRect r );
+	
+	
+	virtual NSUInteger getCreateStyleMask();
+	
+	virtual NSWindow* allocateWindow();
 protected:
 	NSWindow* window_;
 	Rect bounds_;

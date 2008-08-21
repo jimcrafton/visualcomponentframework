@@ -587,67 +587,125 @@ public:
 
 };//end of VCF namespace
 
+@interface OSXPostEvent : NSObject {
+@public	
+	VCF::EventHandler* eventHandler;
+	VCF::Event* event;
+	bool deleteHandler;
+}
+@end
+
+@implementation OSXPostEvent
+@end
+
+
+
+@interface OSXTimerInfo : NSObject 
+{
+	@public
+	
+	VCF::EventHandler* eventHandler;
+}
+@end
+
+@implementation OSXTimerInfo
+@end
+
+
+
+@interface ToolkitDelegate : NSObject
+{
+@public
+	
+}
+- (void) handleTimer:(NSTimer*)theTimer;
+- (void)handleEvent:(OSXPostEvent*) e;
+- (void)didEndSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+@end
+
+
+@implementation ToolkitDelegate
+
+
+- (void) postEvent: (NSNotification *)notification
+{
+	OSXPostEvent* e = [notification object];
+
+	e->eventHandler->invoke( e->event );
+	if ( e->deleteHandler ) {
+		e->eventHandler->free();
+	}
+	
+	[e release];
+}
+
+- (void)didEndSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+    [sheet orderOut:self];
+}
+
+- (void) handleTimer:(NSTimer*)theTimer
+{
+	OSXTimerInfo* info = (OSXTimerInfo*) [theTimer userInfo];
+	
+}
+
+@end
+
 
 using namespace VCF;
 
 
 
 OSXUIToolkit::OSXUIToolkit():
-    quitEventLoop_(false)
-    //eventHandlerRef_(NULL),
-    //handlerUPP_(NULL),
-    //timerUPP_(NULL),
-    //idleTimerUPP_(NULL),
-    //idleTimerRef_(NULL)
+    quitEventLoop_(false),
+	toolkitDelegate_(nil),
+	rlObserver_(NULL)
 {
 	policyMgr_ = new OSXUIPolicyManager();
-    //install event loop callbacks
-	/*
-    handlerUPP_ = NewEventHandlerUPP(OSXUIToolkit::handleOSXApplicationEvents);
-    static EventTypeSpec eventsToHandle[] ={
-                            { kEventClassCommand, kEventCommandProcess },
-                            { kEventClassCommand, kEventCommandUpdateStatus },
-                            { OSXUIToolkit::CustomEventClass, OSXUIToolkit::EventPosted} };
-
-    OSStatus err = InstallEventHandler( GetApplicationEventTarget(),
-                                        handlerUPP_,
-                                        sizeof(eventsToHandle)/sizeof(eventsToHandle[0]),
-                                        eventsToHandle,
-                                        this,
-                                        &eventHandlerRef_ );
-
-    timerUPP_ = NewEventLoopTimerUPP(OSXUIToolkit::handleTimerEvent);
-    idleTimerUPP_ = NewEventLoopIdleTimerUPP(OSXUIToolkit::handleIdleTimer);
-
-    InstallEventLoopIdleTimer( GetCurrentEventLoop(), 0, 0.25,
-                                idleTimerUPP_, this, &idleTimerRef_ );
-
-
-    if ( err != noErr ) {
-        printf( "InstallEventHandler failed" );
-    }
 	
-	*/
+	
+	
+	toolkitDelegate_ = [[ToolkitDelegate alloc] init];
+	[[NSNotificationCenter defaultCenter] addObserver:toolkitDelegate_
+                                             selector:@selector(postEvent:)
+                                                 name:@"OSXUIToolkit_postEvent" 
+                                               object:nil];
+	
+	
+	lastRLDate_ = DateTime::now();
+	
+	CFRunLoopObserverContext ctx = {0};
+	ctx.version = 0;
+	ctx.info = this;
+	
+	
+	rlObserver_ = CFRunLoopObserverCreate( kCFAllocatorDefault, 
+											kCFRunLoopExit, 
+										  true, 0, 
+										  OSXUIToolkit::handleRunLoopObserver, 
+										  &ctx );
+	
+	
+	CFRunLoopAddObserver( CFRunLoopGetMain(), rlObserver_,  kCFRunLoopCommonModes );
 	
 	
 }
 
 OSXUIToolkit::~OSXUIToolkit()
 {
-/*
-    std::map<EventLoopTimerRef,TimeOutHandler>::iterator found = timeoutHandlers_.begin();
+	[toolkitDelegate_ release];
+
+    std::map<EventHandler*,NSTimer*>::iterator found = timeoutHandlers_.begin();
     while ( !timeoutHandlers_.empty() ) {
-        internal_unregisterTimerHandler( found->second.handler_ );
-        found = timeoutHandlers_.begin();
+        NSTimer* timer = found->second;
+		[timer invalidate];
+		[timer release];
     }
+	timeoutHandlers_.clear();
+	
+	CFRelease( rlObserver_ );
 
-
-    DisposeEventHandlerUPP(handlerUPP_);
-    DisposeEventLoopTimerUPP(timerUPP_);
-
-    RemoveEventLoopTimer( idleTimerRef_ );
-    DisposeEventLoopIdleTimerUPP(idleTimerUPP_);
-	*/
     printf( "OSXUIToolkit destroyed\n");
 }
 
@@ -796,11 +854,6 @@ DropTargetPeer* OSXUIToolkit::internal_createDropTargetPeer()
     return new OSXDropTargetPeer();
 }
 
-//DesktopPeer* OSXUIToolkit::internal_createDesktopPeer( Desktop* desktop )
-//{
-//    return new OSXDesktopPeer(desktop);
-//}
-
 ScrollPeer* OSXUIToolkit::internal_createScrollPeer( Control* control )
 {
     return new OSXScrollPeer(control);
@@ -863,127 +916,80 @@ void OSXUIToolkit::internal_setCaretPos( Point* point )
 
 void OSXUIToolkit::internal_postEvent( VCF::EventHandler* eventHandler, Event* event, const bool& deleteHandler )
 {
-    /*
-	EventRef osxEvent = OSXUIToolkit::createUserCarbonEvent(OSXUIToolkit::EventPosted);
-
-
-    OSStatus err = SetEventParameter( osxEvent, OSXUIToolkit::EventHandler,
-                        typeUInt32, OSXUIToolkit::SizeOfEventHandler, &eventHandler );
-    if ( err != noErr ) {
-        printf( "SetEventParameter failed\n" );
-    }
-
-    err = SetEventParameter( osxEvent, OSXUIToolkit::EventHandlerEvent,
-                        typeUInt32, OSXUIToolkit::SizeOfEventHandlerEvent, &event );
-	if ( err != noErr ) {
-        printf( "SetEventParameter failed\n" );
-    }
-
-    Boolean val = deleteHandler ? TRUE : FALSE;
-    err = SetEventParameter( osxEvent, OSXUIToolkit::DeletePostedEvent,
-                        typeBoolean, OSXUIToolkit::SizeOfDeletePostedEvent, &val );
-	if ( err != noErr ) {
-        printf( "SetEventParameter failed\n" );
-    }
-
-    err = PostEventToQueue( GetCurrentEventQueue(), osxEvent, kEventPriorityStandard );
-    if ( err != noErr ) {
-        printf( "PostEventToQueue failed\n" );
-    }
-	*/
+	
+	OSXPostEvent* pe = [[OSXPostEvent alloc] init];
+	pe->eventHandler = eventHandler;
+	pe->event = event;
+	pe->deleteHandler = deleteHandler;
+	
+	NSNotification* todo = [NSNotification notificationWithName:@"OSXUIToolkit_postEvent" 
+                                                         object: pe ];
+    [[NSNotificationQueue defaultQueue] enqueueNotification:todo
+                                               postingStyle:NSPostWhenIdle];
+	
+	
 }
-/*
-void OSXUIToolkit::handleIdleTimer( EventLoopTimerRef inTimer, EventLoopIdleTimerMessage inState, void *inUserData )
-{
-    OSXUIToolkit* toolkit = (OSXUIToolkit*)inUserData;
-
-       switch ( inState ) {
-        case kEventLoopIdleTimerStarted : {
-
-        }
-        break;
-
-        case kEventLoopIdleTimerIdling : {
-            
-            Application* app = Application::getRunningInstance();
-            if ( NULL != app ) {
-				app->idleTime();
-			}
-
-			//check library apps;
-			Enumerator<LibraryApplication*>* registeredLibs = LibraryApplication::getRegisteredLibraries();
-			while ( true == registeredLibs->hasMoreElements() ) {
-				LibraryApplication* libraryApp = registeredLibs->nextElement();
-				libraryApp->idleTime();
-			}
-        }
-        break;
-
-        case kEventLoopIdleTimerStopped : {
-
-        }
-        break;
-    }
-}
-
-void OSXUIToolkit::handleTimerEvent( EventLoopTimerRef inTimer, void * inUserData )
-{
-   OSXUIToolkit* toolkit = (OSXUIToolkit*)inUserData;
-   std::map<EventLoopTimerRef,TimeOutHandler>::iterator found =
-        toolkit->timeoutHandlers_.find( inTimer );
-    if ( found != toolkit->timeoutHandlers_.end() ) {
-        TimeOutHandler& toh = found->second;
-        TimerEvent event( toh.source_, TIMER_EVENT_PULSE );
-		toh.handler_->invoke( &event );
-    }
-}
-*/
 
 void OSXUIToolkit::internal_registerTimerHandler( Object* source, VCF::EventHandler* handler, const uint32& timeoutInMilliSeconds )
 {
-/*
-    TimeOutHandler toh;
-    toh.source_ = source;
-    toh.handler_ = handler;
-
-
-    std::map<EventLoopTimerRef,TimeOutHandler>::iterator found = timeoutHandlers_.begin();
-    while ( found != timeoutHandlers_.end() ) {
-        TimeOutHandler& tmHandler = found->second;
-        if ( tmHandler.handler_ == handler ) {
-            RemoveEventLoopTimer( tmHandler.timerRef_ );
-            timeoutHandlers_.erase( found );
-            break;
-        }
-        found ++;
-    }
-
-    double timeout = ((double)timeoutInMilliSeconds/1000.0);
-
-    InstallEventLoopTimer( GetCurrentEventLoop(),
-                            timeout,
-                            timeout,
-                            timerUPP_,
-                            this,
-                            &toh.timerRef_ );
-
-    timeoutHandlers_[toh.timerRef_] = toh;
-	*/
+	NSRunLoop* runLoop = [NSRunLoop mainRunLoop];
+	double timeout = (double)timeoutInMilliSeconds / 1000.0;
+	
+	
+	OSXTimerInfo* info = [[OSXTimerInfo alloc] init];
+	info->eventHandler = handler;
+	
+	NSTimer* timer = [NSTimer timerWithTimeInterval: timeout target:toolkitDelegate_ selector: @selector(handleTimer:) userInfo: info repeats:YES];
+	
+	
+	timeoutHandlers_[handler] = timer;
+	
+	[runLoop addTimer: timer forMode:NSDefaultRunLoopMode];
 }
 
 void OSXUIToolkit::internal_unregisterTimerHandler( VCF::EventHandler* handler )
 {
-  /*  std::map<EventLoopTimerRef,TimeOutHandler>::iterator found = timeoutHandlers_.begin();
-    while ( found != timeoutHandlers_.end() ) {
-        TimeOutHandler& tmHandler = found->second;
-        if ( tmHandler.handler_ == handler ) {
-            RemoveEventLoopTimer( tmHandler.timerRef_ );
-            timeoutHandlers_.erase( found );
-            break;
-        }
-        found ++;
-    }
-	*/
+	std::map<EventHandler*,NSTimer*>::iterator found = timeoutHandlers_.find( handler );
+	if ( found != timeoutHandlers_.end() ) {
+		NSTimer* timer = found->second;
+		[timer invalidate];
+		[timer release];
+	}	
+}
+
+void OSXUIToolkit::handleRunLoopObserver ( CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info )
+{
+	OSXUIToolkit* thisPtr = (OSXUIToolkit*)info;
+
+	NSEvent *event = [NSApp nextEventMatchingMask: NSAnyEventMask 
+										untilDate: [NSDate date] inMode: NSDefaultRunLoopMode
+										  dequeue:NO];
+	DateTime dt = DateTime::now();
+	
+	DateTimeSpan span = dt - thisPtr->lastRLDate_;	
+		
+	if ( span.getTotalMilliseconds() > 500 ) {
+		if ( !event ) {
+			//NSLog( @"doIdle called on Controller instance activity: %d!", activity );
+			
+			thisPtr->internal_idleTime();
+			
+			Application* runningApp = Application::getRunningInstance();
+			
+			if ( NULL != runningApp ) {
+				runningApp->idleTime();
+			}
+			
+			//check library apps;
+			Enumerator<LibraryApplication*>* registeredLibs = LibraryApplication::getRegisteredLibraries();
+			while ( registeredLibs->hasMoreElements() ) {
+				LibraryApplication* libraryApp = registeredLibs->nextElement();
+				libraryApp->idleTime();
+			}
+			
+			thisPtr->lastRLDate_ = DateTime::now();			
+		}
+	}	
 }
 
 bool OSXUIToolkit::handleAppEvents( NSEvent* event )
@@ -1016,19 +1022,6 @@ void OSXUIToolkit::internal_runEventLoop()
     quitEventLoop_ = false;
 	
 	NSApplication* app = [NSApplication sharedApplication];
-	/*
-	while (!quitEventLoop_) {
-		NSEvent *event = [app nextEventMatchingMask:NSAnyEventMask
-								untilDate:[NSDate distantFuture] 
-								inMode:NSDefaultRunLoopMode dequeue:YES];
-		
-		if (event) {
-			if ( handleAppEvents( event ) ) {
-				[app sendEvent:event];
-			}
-		}
-	}
-*/
 	[app run];
 	
     //reset back to false when finished
@@ -1040,43 +1033,34 @@ UIToolkit::ModalReturnType OSXUIToolkit::internal_runModalEventLoopFor( Control*
 	Frame* ownerFrame = control->getParentFrame();
 		
 	UIToolkit::ModalReturnType result = UIToolkit::mrTrue;
-	/*
-	EventRef theEvent;
-	while  ( ReceiveNextEvent(0, NULL,kEventDurationForever,true, &theEvent)== noErr ) {
-		
-		SendEventToEventTarget (theEvent, GetEventDispatcherTarget());
-				
-		if ( kEventClassCommand == GetEventKind( theEvent ) ) {
-			HICommand		command;
-			GetEventParameter( theEvent, kEventParamDirectObject, typeHICommand, NULL,
-								sizeof( HICommand ), NULL, &command );							
-								
-			if ( command.attributes & kHICommandFromControl ) {
-				if ( kEventCommandProcess == GetEventKind( theEvent ) ) {
-					switch ( command.commandID ) {
-						case kHICommandOK : {
-							//result = UIToolkit::mrOK;
-						}
-						break;
-						
-						case kHICommandCancel : {
-							result = UIToolkit::mrCancel;
-						}
-						break;
-					}
-				}
-			}					
-		}
-		
-		
-		ReleaseEvent(theEvent);
+	
+	
+	NSWindow* peerWnd = (NSWindow*) ownerFrame->getPeer()->getHandleID();
+	
+	Dialog* dialogFrame = dynamic_cast<Dialog*> (ownerFrame);
+	bool asSheet = false;
+	if ( NULL != dialogFrame ) {
+		asSheet = dialogFrame->isSheetModal();
 	}
-	*/
 	
-	//RunAppModalLoopForWindow( controlWindow );
-	
-	
-	//EndAppModalStateForWindow( controlWindow );
+	if ( asSheet ) {
+		
+		Frame* sheetOwner = dialogFrame->getOwner()->getParentFrame();
+		NSWindow* modalWindow = (NSWindow*) sheetOwner->getPeer()->getHandleID();
+		
+		
+		[NSApp beginSheet: peerWnd
+		   modalForWindow: modalWindow
+			modalDelegate: toolkitDelegate_
+		   didEndSelector: @selector(didEndSheet:returnCode:contextInfo:)
+			  contextInfo: nil];
+	}
+	else {
+		NSInteger returnCode = [NSApp runModalForWindow: peerWnd];
+		if ( returnCode > 0 ) {
+			result = (UIToolkit::ModalReturnType) returnCode;
+		}
+	}
 	
     return result;
 }
@@ -1090,129 +1074,6 @@ void OSXUIToolkit::internal_quitCurrentEventLoop()
 	
     quitEventLoop_ = true;
 }
-/*
-OSStatus OSXUIToolkit::handleOSXApplicationEvents( EventHandlerCallRef nextHandler, EventRef osxEvent, void* userData )
-{
-    OSXUIToolkit * toolkit = (OSXUIToolkit*)userData;
-    return toolkit->handleAppEvents( nextHandler, osxEvent );
-}
-
-OSStatus OSXUIToolkit::handleAppEvents( EventHandlerCallRef nextHandler, EventRef osxEvent )
-{
-    OSStatus result = eventNotHandledErr;
-    switch ( GetEventClass( osxEvent ) ) {
-        case OSXUIToolkit::CustomEventClass : {
-            switch ( GetEventKind( osxEvent ) ) {
-                case OSXUIToolkit::EventPosted : {
-                    ::CallNextEventHandler( nextHandler, osxEvent );
-
-                    UInt32 val;
-                    Boolean deleteHandler;
-                    OSStatus err = GetEventParameter( osxEvent,
-                                        OSXUIToolkit::EventHandler,
-                                        typeUInt32,
-                                        NULL,
-                                        OSXUIToolkit::SizeOfEventHandler,
-                                        NULL,
-                                        &val );
-
-                    VCF::EventHandler* eventHandler  = (VCF::EventHandler*)val;
-
-                    err = GetEventParameter( osxEvent,
-                                        OSXUIToolkit::EventHandlerEvent,
-                                        typeUInt32,NULL,
-                                        OSXUIToolkit::SizeOfEventHandlerEvent,NULL,
-                                        &val );
-
-
-                    Event* e = (Event*)val;
-
-                    err = GetEventParameter( osxEvent,
-                                        OSXUIToolkit::DeletePostedEvent,
-                                        typeBoolean,NULL,
-                                        OSXUIToolkit::SizeOfDeletePostedEvent,NULL,
-                                        &deleteHandler );
-
-
-                    if ( (NULL != eventHandler) && (NULL != e ) ) {
-
-                        eventHandler->invoke( e );
-
-                        if ( deleteHandler ) {
-                            eventHandler->free();
-                        }
-                        delete e;
-                    }
-
-                    result = noErr;
-                }
-                break;
-            }
-        }
-        break;
-
-		case kEventClassCommand : {
-			switch ( GetEventKind( osxEvent ) ) {
-				case kEventProcessCommand : {
-					HICommand		command;
-					GetEventParameter( osxEvent, kEventParamDirectObject, typeHICommand, NULL,
-									sizeof( HICommand ), NULL, &command );
-									
-					MenuItem* item = NULL;
-					GetMenuCommandProperty( command.menu.menuRef, 
-										command.commandID,
-										VCF_PROPERTY_CREATOR, 
-										OSXMenuItem::propertyTag,
-										sizeof(item),
-										NULL, &item );
-					
-								
-					if ( NULL != item ) {
-						//cause the menu click method to be called!
-						item->click();
-						result = noErr;
-					}										
-                }
-                break;
-				
-				case kEventCommandUpdateStatus : {
-					HICommand		command;
-					GetEventParameter( osxEvent, kEventParamDirectObject, typeHICommand, NULL,
-									sizeof( HICommand ), NULL, &command );
-									
-					MenuItem* item = NULL;
-					GetMenuCommandProperty( command.menu.menuRef, 
-										command.commandID,
-										VCF_PROPERTY_CREATOR, 
-										OSXMenuItem::propertyTag,
-										sizeof(item),
-										NULL, &item );
-					
-					
-					result = ::CallNextEventHandler( nextHandler, osxEvent );
-								
-					if ( NULL != item ) {					
-						//cause the menu update method to be called!
-						//this updates the menu item
-						item->update();
-					}										
-                }
-                break;
-			}
-		}
-		break;
-		
-        default : {
-            return ::CallNextEventHandler( nextHandler, osxEvent );
-        }
-        break;
-    }
-
-    return result;
-}
-*/
-
-
 
 VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* eventData )
 {
@@ -2303,29 +2164,6 @@ VCF::Event* OSXUIToolkit::internal_createEventFromNativeOSEventData( void* event
 	*/
     return result;
 }
-
-/*
-EventRef OSXUIToolkit::createUserCarbonEvent( UInt32 eventType )
-{
-    EventRef result = NULL;
-
-    OSStatus err = CreateEvent( NULL,
-                                OSXUIToolkit::CustomEventClass,
-                                eventType,
-                                0,
-                                kEventAttributeUserEvent,
-                                &result );
-
-    if ( err != noErr ) {
-        printf( "OSXUIToolkit::createUserCarbonEvent CreateEvent failed!\n" );
-    }
-    else {
-
-    }
-
-    return result;
-}
-*/
 
 VCF::Size OSXUIToolkit::internal_getDragDropDelta()
 {

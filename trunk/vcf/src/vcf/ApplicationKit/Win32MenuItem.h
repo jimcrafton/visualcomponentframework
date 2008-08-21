@@ -34,7 +34,7 @@ public:
 
 	void init();
 
-	virtual OSHandleID getMenuID();
+	virtual OSHandleID getHandleID();
 
 	virtual void addChild( MenuItem* child );
 

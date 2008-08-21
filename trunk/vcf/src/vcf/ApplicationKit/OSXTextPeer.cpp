@@ -14,34 +14,20 @@ where you installed the VCF.
 
 namespace VCF {
 
-/*
-static int MLTERefCount = 0;
 
-void initMLTE()
-{
-	if ( 0 == MLTERefCount ) {
-		TXNInitOptions options;
-		TXNMacOSPreferredFontDescription  defaults;
-		memset( &defaults, 0, sizeof(TXNMacOSPreferredFontDescription) );
-
-		defaults.pointSize = kTXNDefaultFontSize;
-		defaults.fontStyle = kTXNDefaultFontStyle;
-		options = kTXNWantMoviesMask | kTXNWantSoundMask |
-                                         kTXNWantGraphicsMask;
-
-		if ( noErr != TXNInitTextension ( NULL, 0, options) ) {
-			throw RuntimeException( MAKE_ERROR_MSG_2("MLTE TXNInitTextension failed!") );
-		}
-	}
-
-	MLTERefCount ++;
-}
-*/
 OSXTextPeer::OSXTextPeer( const bool& autoWordWrap, const bool& multiLined ):
 	textStorage_(nil),
 	layoutMgr_(nil),
 	container_(nil)
 {
+	textStorage_ = [[NSTextStorage alloc] initWithString:@""];
+	
+	layoutMgr_ = [[NSLayoutManager alloc] init];
+	container_ = [[NSTextContainer alloc] init];
+	[layoutMgr_ addTextContainer:container_];
+	[container_ release];
+	[textStorage_ addLayoutManager:layoutMgr_];
+	[layoutMgr_ release];
 	
 }
 
@@ -50,128 +36,87 @@ OSXTextPeer::OSXTextPeer():
 	layoutMgr_(nil),
 	container_(nil)
 {
-/*
-	TXNFrameOptions frameOptions;
-    frameOptions = kTXNDoFontSubstitutionMask;
-
-	//we may want these in the future
-	//kTXNShowWindowMask | kTXNWantVScrollBarMask |
-	//kTXNWantHScrollBarMask |kTXNDrawGrowIconMask;
-	::HIRect r;
-	r.origin.x = 0;
-	r.origin.y = 0;
-	r.size.width = 0;
-	r.size.height = 0;
-	if ( noErr != TXNCreateObject( &r, frameOptions, &txnObject_ ) ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("MLTE TXNCreateObject failed!") );
-	}
+	textStorage_ = [[NSTextStorage alloc] initWithString:@""];
 	
-	TXNCarbonEventInfo      carbonEventInfo;
-	TXNControlTag           iControlTags[] = { kTXNUseCarbonEvents };  
-	TXNControlData          iControlData[1];
-	carbonEventInfo.useCarbonEvents = false;  
-	carbonEventInfo.filler = 0;
-	carbonEventInfo.flags = 0;   
-	carbonEventInfo.fDictionary = NULL;
-	iControlData[0].uValue = (UInt32) &carbonEventInfo;
-	TXNSetTXNObjectControls( txnObject_, false, 1, iControlTags, iControlData ); 
-	*/
+	layoutMgr_ = [[NSLayoutManager alloc] init];
+	container_ = [[NSTextContainer alloc] init];
+	[layoutMgr_ addTextContainer:container_];
+	[container_ release];
+	[textStorage_ addLayoutManager:layoutMgr_];
+	[layoutMgr_ release];
 }
 
 OSXTextPeer::~OSXTextPeer()
 {
-/*
-	if ( NULL != txnObject_ ) {
-		TXNDeleteObject(txnObject_);
-	}
-	if ( MLTERefCount > 0 ) {
-		MLTERefCount --;
-	}
-
-	if ( MLTERefCount <= 0 ) {
-		TXNTerminateTextension();
-	}
-	*/
+	[textStorage_ release];
 }
 
 
 OSHandleID OSXTextPeer::getTextObjectHandle()
 {
-	OSHandleID result ;
-
-	result = (OSHandleID)0;
-
-	return result;
+	return (OSHandleID)textStorage_;
 }
 
 //storage
 void OSXTextPeer::insertText( unsigned int start, const String& text )
 {
-//	TXNSetData( txnObject_, kTXNUnicodeTextData, text.c_str(), text.size_in_bytes(), start, start );
+	NSMutableString* str = [textStorage_ mutableString];
+	[str insertString: [NSString stringWithCharacters:text.c_str() length:text.size()]  atIndex:start];
 }
 
 void OSXTextPeer::deleteText( unsigned int start, unsigned int length )
 {
-//	TXNSetData( txnObject_, kTXNUnicodeTextData, NULL, 0, start, start+length );
+	NSMutableString* str = [textStorage_ mutableString];
+	NSRange range;
+	range.location = start;
+	range.length = length;
+	[str deleteCharactersInRange:range];	
 }
 
 unsigned int OSXTextPeer::getTextLength()
 {
 	unsigned int result = 0;
 
-//	result = TXNDataSize(txnObject_) / sizeof(UniChar);
-
+	NSMutableString* str = [textStorage_ mutableString];
+	result = [str length];
+	
 	return result;
 }
 
 String OSXTextPeer::getText( unsigned int start, unsigned int length )
 {
 	String result;
-/*
-	Handle data = NULL;
-	if ( noErr == TXNGetData( txnObject_, start, start+length, &data ) ) {
-		HLock(data);
-		CFRefObject<CFDataRef>  stringData = CFDataCreate(kCFAllocatorDefault, (UInt8*)*data, GetHandleSize(data));
-		HUnlock(data);	
-
-
-		CFRefObject<CFStringRef> stringRef = CFStringCreateFromExternalRepresentation(kCFAllocatorDefault, stringData, kCFStringEncodingUnicode);
-		CFTextString tmp(stringRef);
-		result = tmp;
-		
-		DisposeHandle( data );
-	}
-*/
+	
+	VCFChar* buffer = new VCFChar[length];
+	
+	NSRange range;
+	range.location = start;
+	range.length = length;
+	
+	NSMutableString* str = [textStorage_ mutableString];
+	[str getCharacters:buffer range:range];
+	
+	result.append( buffer, length );
+	
+	delete [] buffer;
+	
 	return result;
 }
 
 void OSXTextPeer::paint( GraphicsContext* context, const Rect& paintRect )
-{
-/*
-	OSXContext* ctxPeer = (OSXContext*) context->getPeer();
+{	
+	//[self lockFocus]; this needs to be called before we get here!!!
 	
-	HIRect txBounds;
-	txBounds.origin.x = paintRect.left_;
-	txBounds.origin.y = paintRect.top_;
-	txBounds.size.width = paintRect.getWidth();
-	txBounds.size.height = paintRect.getHeight();
+	NSRange glyphRange = [layoutMgr_ glyphRangeForTextContainer:container_];
 	
-	TXNControlTag  controlTags[] = { kATSUCGContextTag };
-	TXNControlData  controlData[1];
-	controlData[0].uValue = (UInt32) ctxPeer->getCGContext();
-	
-	//set the txnObject_ to use the CGContext associated with the GraphicsContext!
- 	TXNSetTXNObjectControls( txnObject_, false, sizeof( controlTags ) / sizeof( TXNControlTag ),
-								controlTags, controlData );
- 
-	//resize it
-	TXNSetHIRectBounds( txnObject_, &txBounds, &txBounds, false );
-	//recalc the layout
-	TXNRecalcTextLayout( txnObject_ );
-	
-	//draw it!!!
-	TXNDrawObject( txnObject_, NULL, kTXNDrawItemTextMask );	
-	*/
+	NSSize sz;
+	sz.width = paintRect.getWidth();
+	sz.height = paintRect.getHeight();
+	[container_  setContainerSize:sz];
+	NSPoint pt;
+	pt.x = paintRect.left_;
+	pt.y = paintRect.top_;
+	[layoutMgr_ drawGlyphsForGlyphRange: glyphRange atPoint: pt];
 }
 
 void OSXTextPeer::setRightMargin( const double & rightMargin )
@@ -216,10 +161,7 @@ double OSXTextPeer::getBottomMargin()
 
 uint32 OSXTextPeer::getLineCount()
 {
-	uint32 result = 0;
-
-	
-	//TXNGetLineCount( txnObject_, (ItemCount*)&result );
+	uint32 result = 0;	
 	
 	return result;
 }
@@ -228,333 +170,226 @@ VCF::Rect OSXTextPeer::getContentBoundsForWidth(const double& width)
 {
 	VCF::Rect result;
 
-	/*
-	HIRect originalBounds;
-	TXNGetHIRect( txnObject_, kTXNViewRectKey, &originalBounds );
 	
-	//set the tmp bounds that we want to recalc the 
-	//text for
-	HIRect tmpBounds;
-	tmpBounds.origin.x = 0;
-	tmpBounds.origin.y = 0;
-	tmpBounds.size.width = width;
-	tmpBounds.size.height = 10; //doesn't really matter?
-	
-	//recalc the layout
-	TXNSetHIRectBounds( txnObject_, &tmpBounds, &tmpBounds, false );
-	TXNRecalcTextLayout( txnObject_ );
-	
-	ItemCount lines = 0;
-	TXNGetLineCount( txnObject_, &lines );
-	
-	FixedPointNumber lineWidth;
-	FixedPointNumber lineHeight;
-	for ( ItemCount line=0;line<lines;line++ ) {
-		TXNGetLineMetrics( txnObject_, line, &lineWidth, &lineHeight );
-		result.right_ = maxVal<double>( result.right_, lineWidth );
-		result.bottom_ += lineHeight.asDouble();
-	}
-	
-	//reset the old bounds! 
-	TXNSetHIRectBounds( txnObject_, &originalBounds, &originalBounds, false );
-	TXNRecalcTextLayout( txnObject_ );
-	*/
 	return result;
 }
 
 void OSXTextPeer::getStyle( unsigned int start, unsigned int length, Dictionary& styles )
 {
-/*
-	ItemCount count = 0;
-	if ( noErr != TXNCountRunsInRange( txnObject_, start, start+length,&count ) ) {
-		return;
-	}
-	TXNOffset s, e;
-	s = e = 0;
-	TXNDataType dataType = 0;
-	ItemCount attrCount = 7;
-	std::vector<TXNTypeAttributes> attrs(attrCount);
-	Str255 fontName;
-	RGBColor  fontColor;
-	FixedPointNumber size;
-
-	attrs[0].tag = kTXNQDFontNameAttribute;
-	attrs[0].size = kTXNQDFontNameAttributeSize;
-	attrs[0].data.dataPtr = fontName;
-
-	attrs[1].tag = kTXNQDFontColorAttribute;
-	attrs[1].size = kTXNQDFontColorAttributeSize;
-	attrs[1].data.dataPtr = &fontColor;
-
-	attrs[2].tag = kTXNQDFontSizeAttribute;
-	attrs[2].size = kTXNQDFontSizeAttributeSize;
-	attrs[2].data.dataValue = size.asInt();
-
-	attrs[3].tag = kATSUQDBoldfaceTag;
-	attrs[3].size = sizeof(Boolean);
-
-	attrs[4].tag = kATSUQDItalicTag;
-	attrs[4].size = sizeof(Boolean);
-
-	attrs[5].tag = kATSUStyleStrikeThroughTag;
-	attrs[5].size = sizeof(Boolean);
-
-	attrs[6].tag = kATSUQDUnderlineTag;
-	attrs[6].size = sizeof(Boolean);
-
-	for (int index=0;index<count;index ++ ) {
-
-		TXNGetIndexedRunInfoFromRange( txnObject_, index, start, start+length, &s, &e, &dataType, attrCount, &attrs[0] );
-	}
-
-	CFTextString tmp;
-	tmp = fontName;
-
+	NSRange range;
+	range.length = length;
+	range.location = start;
+	NSDictionary* dict = [textStorage_ attributesAtIndex:start 
+							longestEffectiveRange:nil
+												 inRange:range];
 	
-	styles [Text::fsFontName] = (String)tmp;
-
-	Color* color = new Color();
-	styles [Text::fsColor] = color;
-	color->setRed( (double)fontColor.red / 65535.0 );
-	color->setGreen( (double)fontColor.green / 65535.0 );
-	color->setBlue( (double)fontColor.blue / 65535.0 );
-
-	styles [Text::fsPointSize] = (double)size;
-
-	styles [Text::fsBold] = (bool)attrs[3].data.dataValue;
-	styles [Text::fsItalic] = (bool)attrs[4].data.dataValue;
-	styles [Text::fsStrikeout] = (bool)attrs[5].data.dataValue;
-	styles [Text::fsUnderlined] = (bool)attrs[6].data.dataValue;
-*/
+	NSFont* font = [dict objectForKey: NSFontAttributeName];
+	
+	
+	CFTextString tmp;
+	if ( nil != font ) {
+		tmp = [font fontName];
+		styles [Text::fsFontName] = (String)tmp;
+		
+		styles [Text::fsPointSize] = [font pointSize];
+		
+		
+		NSFontManager *fontManager = [NSFontManager sharedFontManager];
+		
+		NSFontTraitMask traits = [fontManager traitsOfFont:font];
+		
+		
+		styles [Text::fsBold] =   NSBoldFontMask & traits ? true : false;
+		styles [Text::fsItalic] = NSItalicFontMask & traits ? true : false;
+	}
+	
+	styles [Text::fsUnderlined] = false;
+	
+	NSNumber* num = [dict objectForKey: NSUnderlineStyleAttributeName];
+	if ( nil != num ) {
+		int val = [num intValue];
+		
+		styles [Text::fsUnderlined] = val != 0 ? true : false;
+	}
+	
+	num = [dict objectForKey: NSStrikethroughStyleAttributeName];
+	if ( nil != num ) {
+		int val = [num intValue];
+		
+		styles [Text::fsStrikeout] = val != 0 ? true : false;
+	}
+	
+	
+	NSColor* foreColor = [dict objectForKey: NSForegroundColorAttributeName];
+	if ( nil != foreColor ) {
+		Color* color = new Color();
+		styles [Text::fsColor] = color;
+		color->setRed( [foreColor redComponent] );
+		color->setGreen( [foreColor greenComponent] );
+		color->setBlue( [foreColor blueComponent] );
+		color->setAlpha( [foreColor alphaComponent] );
+	}	
 }
 
 void OSXTextPeer::setStyle( unsigned int start, unsigned int length, Dictionary& styles )
 {
-
-/*
-NSText
+	NSRange range;
+	range.length = length;
+	range.location = start;
+	
+	
+	NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity: styles.size()];
+	
+	CFTextString tmp;
 	Dictionary::Enumerator* items = styles.getEnumerator();
-	std::vector<TXNTypeAttributes> attrs;
-	Str255 pStr;
-	while ( items->hasMoreElements() ) {
-		Dictionary::pair style = items->nextElement();
-		if ( style.first == Text::fsFontName ) {
-			String s = style.second;
-
-			CFTextString tmp(s);
-
-			TXNTypeAttributes tag;
-			tag.tag = kTXNQDFontNameAttribute;
-			tag.size = kTXNQDFontNameAttributeSize;
-
-			CopyCStringToPascal( s.ansi_c_str(), pStr );
-			tag.data.dataPtr = pStr;
-			attrs.push_back( tag );
-		}
-		else if ( style.first == Text::fsColor ) {
-			Color* color = (Color*)(Object*)style.second;
-			VCF_ASSERT( NULL != color );
-
-			RGBColor  fontColor = { (int)(color->getRed()*65535.0), (int)(color->getGreen()*65535.0), (int)(color->getBlue()*65535.0) };
-			TXNTypeAttributes tag;
-			tag.tag = kTXNQDFontColorAttribute;
-			tag.size = kTXNQDFontColorAttributeSize;
-			tag.data.dataPtr = &fontColor;
-			attrs.push_back( tag );
-		}
-		else if ( style.first == Text::fsPointSize ) {
-			FixedPointNumber val = (double)style.second;
-			TXNTypeAttributes tag;
-			tag.tag = kTXNQDFontSizeAttribute;
-			tag.size = kTXNQDFontSizeAttributeSize;
-			tag.data.dataValue = val.asInt();
-			attrs.push_back( tag );
-		}
-		else if ( style.first == Text::fsBold ) {
-			bool val = style.second;
-
-			TXNTypeAttributes tag;
-			tag.tag = kATSUQDBoldfaceTag;
-			tag.size = sizeof(Boolean);
-			tag.data.dataValue = val;
-			attrs.push_back( tag );
-		}
-		else if ( style.first == Text::fsItalic ) {
-			bool val = style.second;
-			TXNTypeAttributes tag;
-			tag.tag = kATSUQDItalicTag;
-			tag.size = sizeof(Boolean);
-			tag.data.dataValue = val;
-			attrs.push_back( tag );
-		}
-		else if ( style.first == Text::fsStrikeout ) {
-			bool val = style.second;
-
-			TXNTypeAttributes tag;
-			tag.tag = kATSUStyleStrikeThroughTag;
-			tag.size = sizeof(Boolean);
-			tag.data.dataValue = val;
-			attrs.push_back( tag );
-		}
-		else if ( style.first == Text::fsUnderlined ) {
-			TXNTypeAttributes tag;
-			tag.tag = kATSUQDUnderlineTag;
-			tag.size = sizeof(Boolean);
-
-
-			switch ( (int)style.second ) {
-				case Text::utNone : {
-					tag.data.dataValue = false;
-				}
-				break;
-
-				case Text::utSingle : {
-					tag.data.dataValue = true;
-				}
-				break;
-
-				case Text::utDouble : {
-					tag.data.dataValue = true;
-				}
-				break;
-
-				case Text::utDotted : {
-					tag.data.dataValue = true;
-				}
-				break;
+	NSFontTraitMask traits = 0;
+	NSInteger weight = 0;
+	double size = 0;
+	NSFontManager *fontManager = [NSFontManager sharedFontManager];
+	
+	NSFont* font = nil;//[fontManager fontWithFamily:tmp traits:traits weight:weight size:size];
+	
+	if ( styles.keyExists(Text::fsColor) ) {
+		Color* color = (Color*)(Object*)styles[Text::fsColor];
+		VCF_ASSERT( NULL != color );
+		
+		NSColor* foreColor = [NSColor colorWithCalibratedRed:color->getRed() 
+								green:color->getGreen() 
+								blue:color->getBlue() 
+							   alpha:color->getAlpha()];
+		
+		[dict setObject:foreColor forKey:NSForegroundColorAttributeName];
+	}
+	
+	if ( styles.keyExists(Text::fsStrikeout) ) {
+		bool val = styles [Text::fsStrikeout];		
+		
+		NSNumber* num = [NSNumber numberWithInt: val ? 1 : 0];
+		[dict setObject:num forKey:NSStrikethroughStyleAttributeName];
+	}
+	
+	if ( styles.keyExists(Text::psAlignment) ) {
+		int alignment = styles [Text::psAlignment];
+		
+		NSTextAlignment ta = 0;
+		
+		switch ( alignment ) {
+			case Text::paLeft : {
+				ta = NSLeftTextAlignment;
 			}
-
-			attrs.push_back( tag );
+			break;
+				
+			case Text::paCenter : {
+				ta = NSCenterTextAlignment;
+			}
+			break;
+				
+			case Text::paRight : {
+				ta = NSRightTextAlignment;
+			}
+			break;
+				
+			case Text::paJustified : {
+				ta = NSJustifiedTextAlignment;
+			}
+			break;
 		}
-		else if ( style.first == Text::psAlignment ) {
-			int alignment = style.second;
-			
-			TXNControlTag tag = kTXNJustificationTag;
-			TXNControlData data;
-			
-			switch ( alignment ) {
-				case Text::paLeft : {
-					data.uValue = kTXNFlushLeft;
-				}
-				break;
-
-				case Text::paCenter : {
-					data.uValue = kTXNCenter;
-				}
-				break;
-
-				case Text::paRight : {
-					data.uValue = kTXNFlushRight;
-				}
-				break;
-
-				case Text::paJustified : {
-					data.uValue = kTXNForceFullJust;
-				}
-				break;
-			}				
-			
-			TXNSetTXNObjectControls( txnObject_, false, 1, &tag, &data );
+		NSMutableParagraphStyle* ps = [[NSMutableParagraphStyle alloc] init];
+		[ps setParagraphStyle: [NSParagraphStyle defaultParagraphStyle]];
+		[ps setAlignment:ta];
+		
+		[dict setObject:ps forKey:NSParagraphStyleAttributeName];
+	}
+	
+	
+	if ( styles.keyExists(Text::fsUnderlined) ) {
+		int val = styles [Text::fsUnderlined];
+		
+		
+		switch ( val ) {
+			case Text::utNone : {
+				
+			}
+			break;
+				
+			case Text::utSingle : {
+				
+			}
+			break;
+				
+			case Text::utDouble : {
+				
+			}
+			break;
+				
+			case Text::utDotted : {
+				
+			}
+			break;
+		}
+		
+		
+		
+		NSNumber* num = [NSNumber numberWithInt: val ? 1 : 0];
+		[dict setObject:num forKey:NSUnderlineStyleAttributeName];
+	}
+	
+	if ( styles.keyExists(Text::fsFontName) ) {
+		tmp = (String)styles [Text::fsFontName];
+		
+		font = [NSFont fontWithName: tmp size: 0.0f];		
+	}
+	
+	if ( styles.keyExists(Text::fsBold) ) {
+		bool val = styles [Text::fsBold];
+		if ( nil == font ) {
+			font = [NSFont userFontOfSize: 0.0f];
+		}
+		
+		if ( val ) {
+			font = [fontManager convertFont: font  toHaveTrait:NSBoldFontMask];
+		}
+		else {
+			font = [fontManager convertFont: font  toNotHaveTrait:NSBoldFontMask];
 		}
 	}
-
-	if ( !attrs.empty() ) {
-		TXNSetTypeAttributes( txnObject_, attrs.size(), &attrs[0], start, start+length );
+	
+	if ( styles.keyExists(Text::fsItalic) ) {
+		bool val = styles [Text::fsItalic];
+		if ( nil == font ) {
+			font = [NSFont userFontOfSize: 0.0f];
+		}
+		
+		if ( val ) {
+			font = [fontManager convertFont: font  toHaveTrait:NSItalicFontMask];
+		}
+		else {
+			font = [fontManager convertFont: font  toNotHaveTrait:NSItalicFontMask];
+		}
 	}
-	*/
+	
+	if ( styles.keyExists(Text::fsPointSize) ) {
+		double val = styles [Text::fsPointSize];
+		if ( nil == font ) {
+			font = [NSFont userFontOfSize: val];
+		}
+		else {
+			font = [fontManager convertFont: font  toSize:val];
+		}
+	}
+	
+	if ( nil != font ) {
+		[dict setObject:font forKey:NSFontAttributeName];
+	}
+	
+	[textStorage_ setAttributes:dict range:range ];
+	
 }
 
 void OSXTextPeer::setDefaultStyle( Dictionary&  styles )
 {
-/*
-	TXNMacOSPreferredFontDescription defaults;
-	defaults.encoding = CreateTextEncoding(kTextEncodingMacRoman, kTextEncodingDefaultVariant, kTextEncodingDefaultFormat);
-
-
-	Dictionary::Enumerator* items = styles.getEnumerator();
-	while ( items->hasMoreElements() ) {
-		Dictionary::pair style = items->nextElement();
-		if ( style.first == Text::fsFontName ) {
-			AnsiString tmp  = (String)style.second;
-
-			ATSUFindFontFromName ( tmp.c_str(), tmp.length(),
-						kFontFullName, kFontNoPlatform, kFontNoScript, kFontNoLanguage,
-						&defaults.fontID );
-
-		}
-		else if ( style.first == Text::fsColor ) {
-			//Color* color = (Color*)(Object*)style.second;
-			//VCF_ASSERT( NULL != color );
-
-			//RGBColor  fontColor = { (int)(color->getRed()*65535.0), (int)(color->getGreen()*65535.0), (int)(color->getBlue()*65535.0) };
-		}
-		else if ( style.first == Text::fsPointSize ) {
-			FixedPointNumber val = (double)style.second;
-			defaults.pointSize = val;
-		}
-		else if ( style.first == Text::fsBold ) {
-			bool val = style.second;
-		}
-		else if ( style.first == Text::fsItalic ) {
-			bool val = style.second;
-		}
-		else if ( style.first == Text::fsStrikeout ) {
-			bool val = style.second;
-		}
-		else if ( style.first == Text::fsUnderlined ) {
-
-
-			switch ( (int)style.second ) {
-				case Text::utNone : {
-
-				}
-				break;
-
-				case Text::utSingle : {
-
-				}
-				break;
-
-				case Text::utDouble : {
-
-				}
-				break;
-
-				case Text::utDotted : {
-
-				}
-				break;
-			}
-		}
-		else if ( style.first == Text::psAlignment ) {
-			int alignment = style.second;
-
-			switch ( alignment ) {
-				case Text::paLeft : {
-
-				}
-				break;
-
-				case Text::paCenter : {
-
-				}
-				break;
-
-				case Text::paRight : {
-
-				}
-				break;
-
-				case Text::paJustified : {
-
-				}
-				break;
-			}
-		}
-	}
-
-	TXNSetFontDefaults( txnObject_, 1, &defaults );
-	*/
+	
+	//setStyle()
 }
 
 };

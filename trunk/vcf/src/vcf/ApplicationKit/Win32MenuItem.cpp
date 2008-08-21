@@ -115,7 +115,7 @@ void Win32MenuItem::insertSimpleMenuItem( MenuItem* child, HMENU menu )
 
 	if ( child->hasChildren() ){
 		mask |= MIIM_SUBMENU;
-		subMenu = (HMENU) itemImpl->getMenuID();
+		subMenu = (HMENU) itemImpl->getHandleID();
 	}
 
 	
@@ -151,7 +151,7 @@ void Win32MenuItem::insertSimpleMenuItem( MenuItem* child, HMENU menu )
 			int index = menuItem_->getIndex();
 
 			Win32MenuItem* win32ParentImpl = (Win32MenuItem*)parentItem->getPeer();
-			HMENU parentMenuHandle = (HMENU)win32ParentImpl->getMenuID();
+			HMENU parentMenuHandle = (HMENU)win32ParentImpl->getHandleID();
 			
 			MENUITEMINFOW thisInfo;
 			memset(&thisInfo,0,sizeof(thisInfo));			
@@ -162,7 +162,7 @@ void Win32MenuItem::insertSimpleMenuItem( MenuItem* child, HMENU menu )
 			if ( NULL != parentMenuHandle ){
 				if ( ::GetMenuItemInfoW( parentMenuHandle, itemId_, FALSE, &thisInfo ) ){
 					thisInfo.fMask |= MIIM_SUBMENU;
-					thisInfo.hSubMenu = (HMENU)getMenuID();
+					thisInfo.hSubMenu = (HMENU)getHandleID();
 					::SetMenuItemInfoW( parentMenuHandle, itemId_, FALSE, &thisInfo );
 				}
 				else {
@@ -202,7 +202,7 @@ void Win32MenuItem::insertSimpleMenuItem( MenuItem* child, HMENU menu )
 			int index = menuItem_->getIndex();
 
 			Win32MenuItem* win32ParentImpl = (Win32MenuItem*)parentItem->getPeer();
-			HMENU parentMenuHandle = (HMENU)win32ParentImpl->getMenuID();
+			HMENU parentMenuHandle = (HMENU)win32ParentImpl->getHandleID();
 
 			MENUITEMINFOA thisInfo;
 			memset(&thisInfo,0,sizeof(thisInfo));			
@@ -213,7 +213,7 @@ void Win32MenuItem::insertSimpleMenuItem( MenuItem* child, HMENU menu )
 			if ( NULL != parentMenuHandle ){
 				if ( ::GetMenuItemInfoA( parentMenuHandle, itemId_, FALSE, &thisInfo ) ){
 					thisInfo.fMask |= MIIM_SUBMENU;
-					thisInfo.hSubMenu = (HMENU)getMenuID();
+					thisInfo.hSubMenu = (HMENU)getHandleID();
 					::SetMenuItemInfoA( parentMenuHandle, itemId_, FALSE, &thisInfo );
 				}
 				else {
@@ -239,7 +239,7 @@ void Win32MenuItem::fixChildren( MenuItem* child )
 			if ( false == itemPeer->itemAdded_ ) {
 				item->setMenuOwner( child->getMenuOwner() );
 				Win32MenuItem* peer = (Win32MenuItem*) child->getPeer();
-				peer->insertSimpleMenuItem( item, (HMENU)peer->getMenuID() );
+				peer->insertSimpleMenuItem( item, (HMENU)peer->getHandleID() );
 			}
 		}
 	}
@@ -250,7 +250,7 @@ void Win32MenuItem::addChild( MenuItem* child )
 {
 	VCF_ASSERT( NULL != child );
 	
-	insertSimpleMenuItem( child, (HMENU)getMenuID() );	
+	insertSimpleMenuItem( child, (HMENU)getHandleID() );	
 
 	//mark the child as being bound to the peer
 	int32 state = child->getDisplayState();
@@ -270,7 +270,7 @@ void Win32MenuItem::deleteChild( MenuItem* child )
 
 	Win32MenuItem* peer = (Win32MenuItem*)child->getPeer();
 	peer->itemAdded_ = false;
-	DeleteMenu( (HMENU)getMenuID(), peer->itemId_, MF_BYCOMMAND );
+	DeleteMenu( (HMENU)getHandleID(), peer->itemId_, MF_BYCOMMAND );
 }
 
 void Win32MenuItem::deleteChild( const uint32& index )
@@ -279,7 +279,7 @@ void Win32MenuItem::deleteChild( const uint32& index )
 	Win32MenuItem* peer = (Win32MenuItem*)child->getPeer();
 	peer->itemAdded_ = false;
 
-	DeleteMenu( (HMENU)getMenuID(), peer->itemId_, MF_BYCOMMAND );
+	DeleteMenu( (HMENU)getHandleID(), peer->itemId_, MF_BYCOMMAND );
 }
 
 void Win32MenuItem::clearChildren()
@@ -307,7 +307,7 @@ bool Win32MenuItem::isChecked()
 	MenuItem* parent = getParent();
 	if ( NULL != parent ){
 		MenuItemPeer* parentPeer = parent->getPeer();
-		HMENU menuHandle = (HMENU)parentPeer->getMenuID();
+		HMENU menuHandle = (HMENU)parentPeer->getHandleID();
 		if ( NULL != menuHandle ){
 			MENUITEMINFO info;
 			memset(&info,0,sizeof(info));
@@ -336,7 +336,7 @@ void Win32MenuItem::setChecked( const bool& checked )
 	MenuItem* parent = getParent();
 	if ( NULL != parent ){
 		MenuItemPeer* parentPeer = parent->getPeer();
-		HMENU menuHandle = (HMENU)parentPeer->getMenuID();
+		HMENU menuHandle = (HMENU)parentPeer->getHandleID();
 		if ( NULL != menuHandle ){
 			if ( GetMenuItemInfo( menuHandle, itemId_, FALSE, &info ) ){
 				if ( checked ){
@@ -385,8 +385,8 @@ bool Win32MenuItem::isEnabled()
 		info.cbSize = sizeof(MENUITEMINFO);
 		info.fMask = MIIM_STATE;
 		MenuItemPeer* parentPeer = parent->getPeer();
-		HMENU menuHandle = (HMENU)parentPeer->getMenuID();
-		//HMENU menuHandle = (HMENU)getMenuID();
+		HMENU menuHandle = (HMENU)parentPeer->getHandleID();
+		//HMENU menuHandle = (HMENU)getHandleID();
 		if ( NULL != menuHandle ){
 			if ( GetMenuItemInfo( menuHandle, itemId_, FALSE, &info ) ){
 				bool res = ((info.fState == MFS_ENABLED) != 0) ? true : false;
@@ -413,7 +413,7 @@ void Win32MenuItem::setEnabled( const bool& enabled )
 	MenuItem* parent = getParent();
 	if ( NULL != parent ){
 		MenuItemPeer* parentPeer = parent->getPeer();
-		HMENU menuHandle = (HMENU)parentPeer->getMenuID();
+		HMENU menuHandle = (HMENU)parentPeer->getHandleID();
 		if ( NULL != menuHandle ){
 			if ( GetMenuItemInfo( menuHandle, itemId_, FALSE, &info ) ){
 				if ( true == enabled ){
@@ -472,7 +472,7 @@ void Win32MenuItem::setRadioItem( const bool& value )
 			children->nextElement();
 		}
 		MenuItemPeer* parentPeer = parent->getPeer();
-		HMENU menuHandle = (HMENU)parentPeer->getMenuID();
+		HMENU menuHandle = (HMENU)parentPeer->getHandleID();
 
 		CheckMenuRadioItem( menuHandle, 0, count-1, itemId_, MF_BYCOMMAND );
 
@@ -560,7 +560,7 @@ void Win32MenuItem::setCaption( const String& caption )
 		MenuItem* parent = getParent();
 		if ( NULL != parent ){
 			MenuItemPeer* parentPeer = parent->getPeer();
-			HMENU menuHandle = (HMENU)parentPeer->getMenuID();
+			HMENU menuHandle = (HMENU)parentPeer->getHandleID();
 			if ( NULL != menuHandle ){
 				if ( GetMenuItemInfoW( menuHandle, itemId_, FALSE, &info ) ){
 					info.cch = realCaption.size();
@@ -586,7 +586,7 @@ void Win32MenuItem::setCaption( const String& caption )
 		MenuItem* parent = getParent();
 		if ( NULL != parent ){
 			MenuItemPeer* parentPeer = parent->getPeer();
-			HMENU menuHandle = (HMENU)parentPeer->getMenuID();
+			HMENU menuHandle = (HMENU)parentPeer->getHandleID();
 			if ( NULL != menuHandle ){
 				if ( GetMenuItemInfoA( menuHandle, itemId_, FALSE, &info ) ){
 					AnsiString tmpCaption = realCaption;
@@ -610,7 +610,7 @@ void Win32MenuItem::setCaption( const String& caption )
 
 }
 
-OSHandleID Win32MenuItem::getMenuID()
+OSHandleID Win32MenuItem::getHandleID()
 {
 	if ( NULL != menuItem_ ){
 		//throw exception !!!
@@ -701,7 +701,7 @@ void Win32MenuItem::setAsSeparator( const bool& isSeperator )
 	MenuItem* parent = getParent();
 	if ( NULL != parent ){
 		MenuItemPeer* parentPeer = parent->getPeer();
-		HMENU menuHandle = (HMENU)parentPeer->getMenuID();
+		HMENU menuHandle = (HMENU)parentPeer->getHandleID();
 		if ( NULL != menuHandle ){
 			if ( GetMenuItemInfo( menuHandle, itemId_, FALSE, &info ) ){
 				if ( true == isSeperator ) {
@@ -722,7 +722,7 @@ void Win32MenuItem::changePaintState()
 	MenuItem* parent = getParent();
 	if ( NULL != parent ){
 		MenuItemPeer* parentPeer = parent->getPeer();
-		HMENU menuHandle = (HMENU)parentPeer->getMenuID();
+		HMENU menuHandle = (HMENU)parentPeer->getHandleID();
 		
 		if ( NULL != menuHandle ){
 			
@@ -777,7 +777,7 @@ void Win32MenuItem::fillInMeasureItemInfo( MEASUREITEMSTRUCT& measureItemInfo )
 	MenuItem* parent = getParent();
 	if ( NULL != parent ){
 		MenuItemPeer* parentPeer = parent->getPeer();
-		HMENU menuHandle = (HMENU)parentPeer->getMenuID();
+		HMENU menuHandle = (HMENU)parentPeer->getHandleID();
 		if ( NULL != menuHandle ){
 			if ( GetMenuItemInfo( menuHandle, itemId_, FALSE, &info ) ){
 				if ( ODT_MENU != measureItemInfo.CtlType ) {

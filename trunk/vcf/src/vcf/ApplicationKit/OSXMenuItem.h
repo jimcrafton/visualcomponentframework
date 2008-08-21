@@ -34,9 +34,7 @@ public:
 
 	virtual ~OSXMenuItem();
 
-	void init();
-
-	virtual OSHandleID getMenuID();
+	virtual OSHandleID getHandleID();
 
 	virtual void addChild( MenuItem* child );
 
@@ -92,9 +90,8 @@ public:
 protected:
 	uint32 itemID_;
 	MenuItem* menuItem_;
-	//MenuRef itemHandle_;
+	NSMenuItem* nsMenuItem_;
 	bool itemAdded_;
-	//static uint32 globalMenuItemID;
 };
 
 };

@@ -188,77 +188,20 @@ OSXWindow::~OSXWindow()
 
 }
 
+	
+NSUInteger OSXWindow::getCreateStyleMask()
+{
+	return NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
+}
+
+NSWindow* OSXWindow::allocateWindow() 
+{
+	return [NSWindow alloc];	
+}
+	
 void OSXWindow::create( Control* owningControl )
 {
-	/*
-	WindowAttributes attrs=getCreationWinAttrs();// = kWindowCompositingAttribute | kWindowStandardHandlerAttribute;
-	
-	::Rect bounds = {0,0,0,0};
-
-	OSStatus err = CreateNewWindow( getCreationWinClass(), attrs, &bounds, &windowRef_ );
-	if ( noErr != err ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("CreateNewWindow() failed!") );
-	}
-	else {
-		OSXWindow* thisPtr = this;
-		err = SetWindowProperty( windowRef_, 
-								VCF_PROPERTY_CREATOR, 
-								VCF_PROPERTY_WINDOW_VAL, 
-								sizeof(OSXWindow*), 
-								&thisPtr );
-
-		if ( noErr != err ) {
-			throw RuntimeException( MAKE_ERROR_MSG_2("SetWindowProperty() failed!") );
-		}
-		
-		SetThemeWindowBackground( windowRef_, kThemeBrushSheetBackgroundTransparent, true );
-
-		static EventTypeSpec eventsToHandle[] ={
-		                    // { kEventClassWindow, kEventWindowGetIdealSize },
-		                    { kEventClassCommand, kEventCommandProcess },
-		                    //{ kEventClassCommand, kEventCommandUpdateStatus },
-		                    { kEventClassWindow, kEventWindowClose },
-		                    { kEventClassWindow, kEventWindowActivated },
-		                    { kEventClassWindow, kEventWindowDeactivated },
-		                    { kEventClassWindow, kEventWindowFocusAcquired },
-		                    { kEventClassWindow, kEventWindowFocusRelinquish },
-
-		                    { kEventClassWindow, kEventWindowDrawContent },
-		                    { kEventClassMouse, kEventMouseDown },
-		                    { kEventClassMouse, kEventMouseUp },
-		                    { kEventClassMouse, kEventMouseMoved },
-		                    { kEventClassMouse, kEventMouseDragged },
-		                    { kEventClassMouse, kEventMouseEntered },
-		                    { kEventClassMouse, kEventMouseExited },
-		                    { kEventClassMouse, kEventMouseWheelMoved },
-		                    { kEventClassKeyboard, kEventRawKeyDown },
-		                    { kEventClassKeyboard, kEventRawKeyUp },
-		                    { kEventClassWindow, kEventWindowBoundsChanged } };
-
-
-		    InstallWindowEventHandler( windowRef_,
-		                               OSXWindow::getEventHandlerUPP(),
-		                               sizeof(eventsToHandle)/sizeof(eventsToHandle[0]),
-		                               eventsToHandle,
-		                               this,
-		                               &handlerRef_ );
-		
-				
-		static EventTypeSpec contentViewEvents[] ={ { kEventClassControl, kEventControlDraw } };
-		
-		ControlRef root = getRootControl();
-		InstallEventHandler( GetControlEventTarget( root ), 
-							OSXWindow::wndContentViewHandler,
-							sizeof(contentViewEvents) / sizeof(EventTypeSpec), 
-							contentViewEvents, 
-							this, 
-							&contentViewHandlerRef_ );
-		EventHandler* ev = new ClassProcedure1<Event*,Control>( owningControl, &Control::handleEvent );
-		UIToolkit::postEvent( ev, new VCF::ComponentEvent( owningControl, Component::COMPONENT_CREATED ), true );		
-	}
-	*/
-	
-	this->window_ = [NSWindow alloc];
+	this->window_ = allocateWindow();
 	NSRect r;
 	r.size.width = 1;
 	r.size.height = 1;
@@ -266,7 +209,7 @@ void OSXWindow::create( Control* owningControl )
 	r.origin.y = 0;
 	
 	[window_ initWithContentRect: r 
-				styleMask: NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask
+				styleMask: getCreateStyleMask()
 				backing: NSBackingStoreBuffered
 				defer: YES ];
 	
@@ -294,6 +237,9 @@ void OSXWindow::create( Control* owningControl )
 	
 	[window_ setContentView: view_ ];
 	[window_ setAcceptsMouseMovedEvents: YES];
+	
+	EventHandler* ev = new ClassProcedure1<Event*,Control>( owningControl, &Control::handleEvent );
+	UIToolkit::postEvent( ev, new VCF::ComponentEvent( owningControl, Component::COMPONENT_CREATED ), true );
 }
 
 void OSXWindow::destroyControl()

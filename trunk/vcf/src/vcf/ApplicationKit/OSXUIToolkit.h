@@ -11,14 +11,6 @@ where you installed the VCF.
 #include <Cocoa/Cocoa.h>
 
 
-#define VCF_PROPERTY_CREATOR			'VCFA'
-#define VCF_PROPERTY_CONTROL_VAL		'VCFc'
-#define VCF_PROPERTY_WINDOW_VAL			'VCFw'
-
-#define VCF_WINDOW_MOUSE_RGN			'VCfW'
-#define VCF_CONTROL_MOUSE_RGN			'VCfC'
-
-
 namespace VCF {
 
 
@@ -43,22 +35,7 @@ public:
 */
 class OSXUIToolkit :  public UIToolkit {
 public:
-    enum {
-        CustomEventClass = 'vcfc', //VCF Event Class
-        EventPosted = 'vcpe', //Event fired when the toolkit's postEvent is called
-        EventHandler = 'hdlr', //Event handler name for postEvent event
-        EventHandlerEvent = 'hdev', //Event handler event name for a postEvent
-        DeletePostedEvent = 'dele', //indicates whether to delete an event created for postEvent
-        SizeOfEventHandler = sizeof(UInt32),
-        SizeOfEventHandlerEvent = sizeof(UInt32),
-        SizeOfDeletePostedEvent = sizeof(Boolean),
-		cmdRetry = 'VRty',
-		cmdAbort = 'VAbt',
-		cmdIgnore = 'VIgn',
-		cmdYes = 'VYes',
-		cmdNo = 'VNo '
-    };
-
+    
 	OSXUIToolkit();
 
 	virtual ~OSXUIToolkit();
@@ -139,11 +116,11 @@ public:
 
 	virtual void internal_setCaretPos( Point* point );
 
-	virtual void internal_postEvent( VCF::EventHandler* eventHandler, Event* event, const bool& deleteHandler );
+	virtual void internal_postEvent( EventHandler* eventHandler, Event* event, const bool& deleteHandler );
 
-	virtual void internal_registerTimerHandler( Object* source, VCF::EventHandler* handler, const uint32& timeoutInMilliSeconds );
+	virtual void internal_registerTimerHandler( Object* source, EventHandler* handler, const uint32& timeoutInMilliSeconds );
 
-	virtual void internal_unregisterTimerHandler( VCF::EventHandler* handler );
+	virtual void internal_unregisterTimerHandler( EventHandler* handler );
 
 	virtual void internal_runEventLoop();
 
@@ -152,11 +129,8 @@ public:
 	virtual void internal_quitCurrentEventLoop();
 
 	virtual void internal_systemSettingsChanged();
-	/**
-	*@param void* in this implementation, the eventData represents a
-	*pointer to an OSX EventRef structure.
-	*/
-	virtual VCF::Event* internal_createEventFromNativeOSEventData( void* eventData );
+	
+	virtual Event* internal_createEventFromNativeOSEventData( void* eventData );
 
 	virtual Size internal_getDragDropDelta();
 
@@ -166,32 +140,23 @@ public:
 
 	virtual bool internal_displayContextHelpForControl( Control* control, const String& helpBookName, const String& helpDirectory );
 
-	virtual void internal_displayHelpSection( const String& helpBookName, const String& helpDirectory, const String& helpSection );
-	
-	//static EventRef createUserCarbonEvent( UInt32 eventType );
+	virtual void internal_displayHelpSection( const String& helpBookName, const String& helpDirectory, const String& helpSection );	
 protected:
-	//VirtualKeyCode translateKeyCode( guint code );
-	//uint32 translateKeyMask( GdkModifierType keyState );
-	//uint32 translateButtonMask( GdkModifierType buttonState );
-
-	//static OSStatus handleOSXApplicationEvents( EventHandlerCallRef nextHandler,
-      //                                          EventRef osxEvent, void* userData );
-
+	
     bool handleAppEvents( NSEvent* event );
 
-	//std::map<EventLoopTimerRef,TimeOutHandler> timeoutHandlers_;
+	std::map<EventHandler*,NSTimer*> timeoutHandlers_;
     bool quitEventLoop_;
-    //EventHandlerRef eventHandlerRef_;
-    //EventHandlerUPP handlerUPP_;
-    //EventLoopTimerUPP timerUPP_;
-    //EventLoopIdleTimerUPP idleTimerUPP_;
-    //EventLoopTimerRef idleTimerRef_;
-    //void processOSXEvent( EventRecord* eventRec );
-
-    //static void handleTimerEvent( EventLoopTimerRef inTimer, void * inUserData );
-    //static void handleIdleTimer( EventLoopTimerRef inTimer, EventLoopIdleTimerMessage inState, void *inUserData );
-
-
+	
+    
+	NSObject* toolkitDelegate_;
+	CFRunLoopObserverRef rlObserver_;
+	DateTime lastRLDate_;
+	
+	
+	static void handleRunLoopObserver ( CFRunLoopObserverRef observer, CFRunLoopActivity activity, 
+									   void *info );
+	
 };
 
 
