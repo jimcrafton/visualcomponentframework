@@ -175,7 +175,7 @@ public:
 		uint32 result = IndexNotFound;
 
 		Type val = item;
-		Array<Type>::iterator found = std::find( data_.begin(), data_.end(), val );
+		_typename_ Array<Type>::iterator found = std::find( data_.begin(), data_.end(), val );
 		if ( found != data_.end() ) {
 			result = found - data_.begin();
 		}
@@ -185,7 +185,7 @@ public:
 	virtual bool getItems( std::vector<VariantData>& items ) {
 		items.resize( data_.size() );
 		
-		Array<Type>::iterator it1 = data_.begin();
+		_typename_ Array<Type>::iterator it1 = data_.begin();
 		std::vector<VariantData>::iterator it2 = items.begin();
 		while ( it1 != data_.end() ) {
 			*it2 = *it1;
@@ -206,7 +206,7 @@ public:
 			enumData_->resize( data_.size() );
 		}
 		
-		Array<Type>::iterator it1 = data_.begin();
+		_typename_ Array<Type>::iterator it1 = data_.begin();
 		Array<VariantData>::iterator it2 = enumData_->begin();
 		while ( it1 != data_.end() ) {
 			*it2 = *it1;
@@ -261,7 +261,7 @@ protected:
 	}
 
 	virtual bool doRemove( const uint32 & index ) {
-		Array<Type>::iterator found = data_.begin() + index;		
+		_typename_ Array<Type>::iterator found = data_.begin() + index;		
 		if ( found != data_.end() ) {
 			VariantData v = *found;
 			data_.erase( found );	
@@ -329,7 +329,7 @@ public:
 		Object* o = data_[ index ];
 				
 		if ( initProperties(o) ) {				
-			Property* prop = properties_[-1];
+			Property* prop = properties_[(uint32)-1];
 			if ( NULL != prop ) {
 				VariantData v = *prop->get( o );
 				return v.toString();
@@ -383,7 +383,7 @@ protected:
 			if ( NULL != clazz ) {
 				if ( properties_.empty() ) {
 					Enumerator<Property*>* props = clazz->getProperties();
-					uint32 index = -1;
+					uint32 index = (uint32)-1;
 					while ( props->hasMoreElements() ) {
 						Property* prop = props->nextElement();
 						if ( !prop->isCollection() ) {

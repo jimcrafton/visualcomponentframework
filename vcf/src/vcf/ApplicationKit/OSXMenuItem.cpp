@@ -67,27 +67,24 @@ String OSXGenerateCaption( MenuItem* item, OSXMenuItem* peer, String caption )
 OSXMenuItem::OSXMenuItem( MenuItem* item ):
 	itemID_(0),
 	menuItem_(item),
-	itemAdded_(false)
+	itemAdded_(false),
+	nsMenuItem_(nil)
 {
-	init();
+	nsMenuItem_ = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
 }
 
 OSXMenuItem::OSXMenuItem():
 	itemID_(0),
 	menuItem_(NULL),
-	itemAdded_(false)
+	itemAdded_(false),
+	nsMenuItem_(nil)
 {
-	init();
+	nsMenuItem_ = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
 }
 
 OSXMenuItem::~OSXMenuItem()
 {
-}
-
-void OSXMenuItem::init()
-{
-	//OSXMenuItem::globalMenuItemID ++;
-	//itemID_ = OSXMenuItem::globalMenuItemID;
+	[nsMenuItem_ release];
 }
 
 bool OSXMenuItem::isMenuItemRoot( MenuItem* item )
@@ -151,6 +148,7 @@ bool OSXMenuItem::isParentMenuItemRoot( MenuItem* item )
 
 bool OSXMenuItem::isMenuItemRoot()
 {
+	
 	return OSXMenuItem::isMenuItemRoot( menuItem_ );
 }
 
@@ -186,13 +184,26 @@ void OSXMenuItem::insertChild( const uint32& index, MenuItem* child )
 {
 	child->setIndex( index );
 	
+	NSMenu* subMenu = nil;
+	if ( ![nsMenuItem_ hasSubmenu] ) {
+		subMenu = [[NSMenu alloc] initWithTitle:@""];
+		[nsMenuItem_ setSubmenu:subMenu];
+	}
+	NSMenuItem* item = (NSMenuItem*) child->getPeer()->getHandleID();
+	
+	CFTextString title( child->getCaption() );
+	
+	[item setTitle:title];
+	
+	[subMenu insertItem:item atIndex:index];
+	
 	//CFTextString tmp( OSXGenerateCaption( child, (OSXMenuItem*)child->getPeer(), child->getCaption() ) );
 	//is this child a top level menu item?
 	
 	/*
 	if ( OSXMenuItem::isParentMenuItemRoot( child ) ) {
 		OSXMenuItem* peer = (OSXMenuItem*)child->getPeer();		
-		MenuRef handle = (MenuRef) peer->getMenuID();
+		MenuRef handle = (MenuRef) peer->getHandleID();
 		if ( NULL != handle ) {
 			InsertMenu( handle, peer->itemID_ );
 			SetMenuTitleWithCFString( handle, tmp );
@@ -209,12 +220,12 @@ void OSXMenuItem::insertChild( const uint32& index, MenuItem* child )
 		
 		if ( menuItem_->hasChildren() && (!isParentMenuItemRoot()) ) {
 			OSXMenuItem* parentPeer = (OSXMenuItem*)menuItem_->getParent()->getPeer();
-			MenuRef parentRef = (MenuRef) parentPeer->getMenuID();
+			MenuRef parentRef = (MenuRef) parentPeer->getHandleID();
 			int index = menuItem_->getIndex();
 			
 			GetMenuItemHierarchicalMenu( parentRef, index, &handle );
 			if ( NULL == handle ) {		
-				handle = (MenuRef) getMenuID();
+				handle = (MenuRef) getHandleID();
 				
 				//apparently the menu index is 1 based! Go figure!
 				OSStatus err = SetMenuItemHierarchicalMenu( parentRef, index+1, handle );
@@ -224,7 +235,7 @@ void OSXMenuItem::insertChild( const uint32& index, MenuItem* child )
 			}
 		}
 		else {
-			handle = (MenuRef) getMenuID();
+			handle = (MenuRef) getHandleID();
 		}
 		
 		MenuItemIndex childIndex = index;
@@ -250,7 +261,7 @@ void OSXMenuItem::deleteChild( MenuItem* child )
 	int index = child->getIndex();
 /*
 	OSXMenuItem* peer = (OSXMenuItem*)child->getPeer();
-	MenuRef handle = (MenuRef) getMenuID();	
+	MenuRef handle = (MenuRef) getHandleID();	
 	
 	if ( child->hasChildren() ) {
 		DeleteMenu( peer->itemID_ );
@@ -267,7 +278,7 @@ void OSXMenuItem::deleteChild( const uint32& index )
 
 void OSXMenuItem::clearChildren()
 {
-	//MenuRef handle = (MenuRef) getMenuID();	
+	//MenuRef handle = (MenuRef) getHandleID();	
 	int start = 1;
 	//DeleteMenuItems( handle, 1,	menuItem_->getChildCount() );
 }
@@ -278,7 +289,7 @@ bool OSXMenuItem::isChecked()
 	/*
 	MenuItem* parent = menuItem_->getParent();
 	OSXMenuItem* parentPeer = (OSXMenuItem*)parent->getPeer();
- 	MenuRef parentHandle = (MenuRef)parentPeer->getMenuID();
+ 	MenuRef parentHandle = (MenuRef)parentPeer->getHandleID();
 	
 	int index = menuItem_->getIndex()+1;
 	CharParameter markChar = 0;
@@ -298,7 +309,7 @@ void OSXMenuItem::setChecked( const bool& checked )
 	/*
 	MenuItem* parent = menuItem_->getParent();	
 	OSXMenuItem* parentPeer = (OSXMenuItem*)parent->getPeer();
- 	MenuRef parentHandle = (MenuRef)parentPeer->getMenuID();
+ 	MenuRef parentHandle = (MenuRef)parentPeer->getHandleID();
 	
 	int index = menuItem_->getIndex()+1;
 	CharParameter markChar = checked ? checkMark : 0;
@@ -326,7 +337,7 @@ bool OSXMenuItem::isEnabled()
 /*
 	MenuItem* parent = menuItem_->getParent();	
 	OSXMenuItem* parentPeer = (OSXMenuItem*)parent->getPeer();
- 	MenuRef parentHandle = (MenuRef)parentPeer->getMenuID();
+ 	MenuRef parentHandle = (MenuRef)parentPeer->getHandleID();
 	
 	int index = menuItem_->getIndex()+1;
 	*/
@@ -341,7 +352,7 @@ void OSXMenuItem::setEnabled( const bool& enabled )
 	/*
 	MenuItem* parent = menuItem_->getParent();	
 	OSXMenuItem* parentPeer = (OSXMenuItem*)parent->getPeer();
- 	MenuRef parentHandle = (MenuRef)parentPeer->getMenuID();
+ 	MenuRef parentHandle = (MenuRef)parentPeer->getHandleID();
 	
 	int index = menuItem_->getIndex()+1;
 	if ( enabled ) {
@@ -375,7 +386,7 @@ bool OSXMenuItem::getRadioItem()
 	/*
 	MenuItem* parent = menuItem_->getParent();
 	OSXMenuItem* parentPeer = (OSXMenuItem*)parent->getPeer();
- 	MenuRef parentHandle = (MenuRef)parentPeer->getMenuID();
+ 	MenuRef parentHandle = (MenuRef)parentPeer->getHandleID();
 	
 	int index = menuItem_->getIndex()+1;
 	CharParameter markChar = 0;
@@ -395,7 +406,7 @@ void OSXMenuItem::setRadioItem( const bool& value )
 	/*
 	MenuItem* parent = menuItem_->getParent();	
 	OSXMenuItem* parentPeer = (OSXMenuItem*)parent->getPeer();
- 	MenuRef parentHandle = (MenuRef)parentPeer->getMenuID();
+ 	MenuRef parentHandle = (MenuRef)parentPeer->getHandleID();
 	
 	int index = menuItem_->getIndex()+1;
 	CharParameter markChar = value ? diamondMark : 0;
@@ -425,14 +436,14 @@ void OSXMenuItem::setCaption( const String& caption )
 		CFTextString tmp( OSXGenerateCaption( menuItem_, this, caption ) );
 		
 		if ( isParentMenuItemRoot() ) {
-			MenuRef handle = (MenuRef) getMenuID();		
+			MenuRef handle = (MenuRef) getHandleID();		
 			if ( NULL != handle ) {		
 				SetMenuTitleWithCFString( handle, tmp );
 			}
 		}
 		else {
 			OSXMenuItem* peer = (OSXMenuItem*)parent->getPeer();
-			MenuRef ref = (MenuRef) peer->getMenuID();
+			MenuRef ref = (MenuRef) peer->getHandleID();
 			
 			SetMenuItemTextWithCFString( ref, index + 1, tmp );
 		}
@@ -440,14 +451,7 @@ void OSXMenuItem::setCaption( const String& caption )
 	*/
 }
 
-
-/**
-This returns an "id" (handle would be a better name) to the menu item.
-Not all menu items will have a handle.
-If the menuItem_ is the "root" menu item then this is a no-op
-
-*/
-OSHandleID OSXMenuItem::getMenuID()
+OSHandleID OSXMenuItem::getHandleID()
 {
 /*
 	if ( isMenuItemRoot() ) {
@@ -516,30 +520,41 @@ OSHandleID OSXMenuItem::getMenuID()
 		}
 	}
 	*/
-	return (OSHandleID)0;
+	return (OSHandleID)nsMenuItem_;
 }
 
 
 void OSXMenuItem::setAsSeparator( const bool& isSeperator )
 {
-/*
-	MenuItem* parent = menuItem_->getParent();	
-	OSXMenuItem* parentPeer = (OSXMenuItem*)parent->getPeer();
- 	MenuRef parentHandle = (MenuRef)parentPeer->getMenuID();
-	
 	int index = menuItem_->getIndex()+1;
+	NSMenu* menu = [nsMenuItem_ menu];
+	
 	if ( isSeperator ) {
-		ChangeMenuItemAttributes( parentHandle, index, kMenuItemAttrSeparator, 0 );
+		
+		if ( nil != nsMenuItem_ && menu ) {
+			[menu removeItem:nsMenuItem_];
+			[nsMenuItem_ release];
+		}
+		
+		nsMenuItem_ = [NSMenuItem separatorItem];
+		[menu insertItem:nsMenuItem_ atIndex:index];
 	}
-	else{
-		ChangeMenuItemAttributes( parentHandle, index, 0, kMenuItemAttrSeparator );
+	else {
+		if ( nil != nsMenuItem_ && menu ) {
+			[menu removeItem:nsMenuItem_];
+		}
+		
+		nsMenuItem_ = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
+		[menu insertItem:nsMenuItem_ atIndex:index];		
 	}
-	*/
 }
 
 void OSXMenuItem::setAcceleratorKey( AcceleratorKey* accelerator )
 {
-	setCaption( menuItem_->getCaption() );
+	NSString* key = nil; 
+	switch ( accelerator->getKeyCode() ) {
+		
+	}
 }
 
 

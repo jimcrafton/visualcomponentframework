@@ -348,9 +348,9 @@ VariantData NumericFormatter::convertToModel( const VariantData& key, const Vari
 	VariantData result;
 
 	if ( value.isString() ) {
-		String s = value;
-		double d = 0;
-		swscanf( s.c_str(), L"%lf", &d );
+		//String s = value;
+		double d = value;
+		//swscanf( s.c_str(), L"%lf", &d );
 		result = d;
 	}
 	else {

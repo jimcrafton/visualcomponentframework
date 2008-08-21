@@ -16,6 +16,86 @@ where you installed the VCF.
 
 
 
+@interface VCFText : NSTextView
+{
+	
+}
+
+@end
+
+
+
+@implementation VCFText
+
+- (BOOL)isFlipped
+{
+	return YES;
+}
+
+
+- (void)drawRect:(NSRect)rect
+{
+	[super drawRect:rect];
+	
+	VCF::OSXControl* peer = VCF::OSXControl::getPeerForView( self );
+	
+	if ( NULL != peer ) {		
+		//peer->internal_paint( rect );
+	}	
+}
+
+
+- (void)setFrame:(NSRect)rect
+{
+	[super setFrame:rect];
+	
+	VCF::OSXControl::handleSetFrame( self, rect );
+}
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+	[super mouseDown:theEvent];
+	
+	VCF::OSXControl::handleEventForView( self, theEvent );
+	
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+	[super mouseUp:theEvent];
+	
+	VCF::OSXControl::handleEventForView( self, theEvent );	
+}
+
+
+- (void)rightMouseDown:(NSEvent *)theEvent
+{
+	[super rightMouseDown:theEvent];
+	
+	VCF::OSXControl::handleEventForView( self, theEvent );
+}
+
+- (void)rightMouseUp:(NSEvent *)theEvent
+{
+	[super rightMouseUp:theEvent];
+	
+	VCF::OSXControl::handleEventForView( self, theEvent );
+}
+
+
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+	[super mouseMoved:theEvent];
+	
+	VCF::OSXControl::handleEventForView( self, theEvent );
+}
+@end
+
+
+@end
+
+
+
 namespace VCF {
 
 

@@ -27,6 +27,74 @@ using namespace VCF;
 	VCF::CommandButton* btn = (VCF::CommandButton*)peer->getControl();
 	if ( !btn->isDesigning() ) {
 		btn->click();
+		
+		Frame* frame = btn->getParentFrame();
+		Dialog* dlg = dynamic_cast<Dialog*> (frame);
+		if ( NULL != dlg ) {
+			if ( dlg->isSheetModal() ) {
+				NSWindow* modalWnd = (NSWindow*) dlg->getPeer()->getHandleID();
+				if ( nil != modalWnd ) {
+					[NSApp endSheet:modalWnd];
+				}
+			}
+			else {
+				NSInteger code = NSRunStoppedResponse;
+				
+				if ( btn->getCommandType() != BC_NONE ) {
+					switch ( btn->getCommandType() ) {
+						case BC_OK : {
+							code = UIToolkit::mrOK;
+						}
+						break;
+							
+						case BC_CANCEL : {
+							code = UIToolkit::mrCancel;
+						}
+						break;
+						
+						case BC_YES : {
+							code = UIToolkit::mrYes;
+						}
+						break;	
+						
+							
+						case BC_NO : {
+							code = UIToolkit::mrNo;
+						}
+							break;
+							
+						case BC_MAYBE : {
+//							code = UIToolkit::mrOK;
+						}
+							break;
+							
+						case BC_HELP : {
+							code = UIToolkit::mrOK;
+						}
+							break;
+							
+						case BC_IGNORE : {
+							code = UIToolkit::mrIgnore;
+						}
+							break;
+							
+						case BC_RETRY : {
+							code = UIToolkit::mrRetry;
+						}
+							break;
+							
+						case BC_ABORT : {
+							code = UIToolkit::mrAbort;
+						}
+							break;							
+					}
+					
+					code = (NSInteger) btn->getCommandType();
+				}
+				
+				[NSApp stopModalWithCode:code ];
+			}
+		}
 	}
 }
 

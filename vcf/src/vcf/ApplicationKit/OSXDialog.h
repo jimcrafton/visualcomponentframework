@@ -44,9 +44,11 @@ public:
 	virtual UIToolkit::ModalReturnType showMessage( const String& message, const String& caption,
 													const int32& messageButtons,	const Dialog::MessageStyle& messageStyle );
 
-	void init();
-
 	virtual void close();
+	
+	virtual NSUInteger getCreateStyleMask();
+	
+	virtual NSWindow* allocateWindow();
 private:
 	Control* owner_;
 	Dialog* dialogComponent_;

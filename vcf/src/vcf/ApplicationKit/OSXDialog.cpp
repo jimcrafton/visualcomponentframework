@@ -35,161 +35,25 @@ OSXDialog::~OSXDialog()
 
 }
 
-//void OSXDialog::createAsSheetWindow()/
-//{
-	//sheetParent_ = NULL;
-/*
-	WindowAttributes attrs = kWindowCompositingAttribute | kWindowStandardHandlerAttribute;
-	
-	::Rect bounds = {0,0,0,0};
-	
-	OSStatus err = CreateNewWindow( kSheetAlertWindowClass, attrs, &bounds, &windowRef_ );
-	if ( noErr != err ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("CreateNewWindow() failed!") );
-	}
-	else {
-		isWindowSheet_ = true;
-	
-		OSXDialog* thisPtr = this;
-		err = SetWindowProperty( windowRef_, 
-								 VCF_PROPERTY_CREATOR, 
-								 VCF_PROPERTY_WINDOW_VAL, 
-								 sizeof(OSXDialog*), 
-								 &thisPtr );
-		
-		if ( noErr != err ) {
-			throw RuntimeException( MAKE_ERROR_MSG_2("SetWindowProperty() failed!") );
-		}
-		
-		static EventTypeSpec eventsToHandle[] ={
-			// { kEventClassWindow, kEventWindowGetIdealSize },
-			//{ kEventClassCommand, kEventCommandProcess },
-			//{ kEventClassCommand, kEventCommandUpdateStatus },
-		{ kEventClassWindow, kEventWindowClose },
-		{ kEventClassWindow, kEventWindowActivated },
-		{ kEventClassWindow, kEventWindowDeactivated },
-		{ kEventClassWindow, kEventWindowFocusAcquired },
-		{ kEventClassWindow, kEventWindowFocusRelinquish },
-			
-		{ kEventClassWindow, kEventWindowDrawContent },
-		{ kEventClassMouse, kEventMouseDown },
-		{ kEventClassMouse, kEventMouseUp },
-		{ kEventClassMouse, kEventMouseMoved },
-		{ kEventClassMouse, kEventMouseDragged },
-		{ kEventClassMouse, kEventMouseEntered },
-		{ kEventClassMouse, kEventMouseExited },
-		{ kEventClassMouse, kEventMouseWheelMoved },
-		{ kEventClassKeyboard, kEventRawKeyDown },
-		{ kEventClassKeyboard, kEventRawKeyUp },
-		{ kEventClassWindow, kEventWindowBoundsChanged } };
-		
-		
-		InstallWindowEventHandler( windowRef_,
-								   OSXWindow::getEventHandlerUPP(),
-								   sizeof(eventsToHandle)/sizeof(eventsToHandle[0]),
-								   eventsToHandle,
-								   this,
-								   &handlerRef_ );
-		
-		static EventTypeSpec contentViewEvents[] ={ { kEventClassControl, kEventControlDraw } };
-		
-		ControlRef root = getRootControl();
-		InstallEventHandler( GetControlEventTarget( root ), 
-							OSXWindow::wndContentViewHandler,
-							sizeof(contentViewEvents) / sizeof(EventTypeSpec), 
-							contentViewEvents, 
-							this, 
-							&contentViewHandlerRef_ );
-							
-		
-		Frame* ownerFrame = owner_->getParentFrame();
-		sheetParent_ = (WindowRef) ownerFrame->getPeer()->getHandleID();
-	}
-	*/
-//}
+NSUInteger OSXDialog::getCreateStyleMask()
+{
+	return NSTitledWindowMask | NSClosableWindowMask;
+}
 
-//void OSXDialog::createAsWindow()
-//{
-/*	sheetParent_ = NULL;
-	WindowAttributes attrs=getCreationWinAttrs();// = kWindowCompositingAttribute | kWindowStandardHandlerAttribute;
-    
-    ::Rect bounds = {0,0,0,0};
-
-    OSStatus err = CreateNewWindow( getCreationWinClass(), attrs, &bounds, &windowRef_ );
-    if ( noErr != err ) {
-        throw RuntimeException( MAKE_ERROR_MSG_2("CreateNewWindow() failed!") );
-    }
-    else {
-		OSXWindow* thisPtr = this;
-        err = SetWindowProperty( windowRef_, 
-								VCF_PROPERTY_CREATOR, 
-								VCF_PROPERTY_WINDOW_VAL, 
-								sizeof(OSXWindow*), 
-								&thisPtr );
-
-		isWindowSheet_ = false;
-		
-		if ( noErr != err ) {
-            throw RuntimeException( MAKE_ERROR_MSG_2("SetWindowProperty() failed!") );
-        }
-		
-		SetThemeWindowBackground( windowRef_, kThemeBrushSheetBackgroundTransparent, true );
-		
-        static EventTypeSpec eventsToHandle[] ={
-                            // { kEventClassWindow, kEventWindowGetIdealSize },
-                            //{ kEventClassCommand, kEventCommandProcess },
-                            //{ kEventClassCommand, kEventCommandUpdateStatus },
-                            { kEventClassWindow, kEventWindowClose },
-                            { kEventClassWindow, kEventWindowActivated },
-                            { kEventClassWindow, kEventWindowDeactivated },
-                            { kEventClassWindow, kEventWindowFocusAcquired },
-                            { kEventClassWindow, kEventWindowFocusRelinquish },
-
-                            { kEventClassWindow, kEventWindowDrawContent },
-                            { kEventClassMouse, kEventMouseDown },
-                            { kEventClassMouse, kEventMouseUp },
-                            { kEventClassMouse, kEventMouseMoved },
-                            { kEventClassMouse, kEventMouseDragged },
-                            { kEventClassMouse, kEventMouseEntered },
-                            { kEventClassMouse, kEventMouseExited },
-                            { kEventClassMouse, kEventMouseWheelMoved },
-                            { kEventClassKeyboard, kEventRawKeyDown },
-                            { kEventClassKeyboard, kEventRawKeyUp },
-                            { kEventClassWindow, kEventWindowBoundsChanged } };
-
-
-        InstallWindowEventHandler( windowRef_,
-                                    OSXWindow::getEventHandlerUPP(),
-                                    sizeof(eventsToHandle)/sizeof(eventsToHandle[0]),
-                                    eventsToHandle,
-                                    this,
-                                    &handlerRef_ );
-		
-				
-		static EventTypeSpec contentViewEvents[] ={ { kEventClassControl, kEventControlDraw } };
-		
-		ControlRef root = getRootControl();
-		InstallEventHandler( GetControlEventTarget( root ), 
-							OSXWindow::wndContentViewHandler,
-							sizeof(contentViewEvents) / sizeof(EventTypeSpec), 
-							contentViewEvents, 
-							this, 
-							&contentViewHandlerRef_ );
-	}
-	*/
-//}
+NSWindow* OSXDialog::allocateWindow() 
+{
+	return [NSPanel alloc];	
+}
 
 void OSXDialog::create( Control* owningControl )
 {
 	if ( NULL == owner_ ) {
-		OSXWindow::create( owningControl );
+		OSXWindow::create( owningControl );		
+		
 	}
 	else {
 		control_ = owningControl;
 		
-		//createAsSheetWindow();
-		//EventHandler* ev = new ClassProcedure1<Event*,Control>( owningControl, &Control::handleEvent );			
-		//UIToolkit::postEvent( ev, new VCF::ComponentEvent( owningControl, Component::COMPONENT_CREATED ),	true );
 	}
 }
 
@@ -218,10 +82,17 @@ void OSXDialog::setVisible( const bool& visible )
 {
 	//we are being displayed - chewck if we need to 
 	//"turn into" a sheet from a dialog, or vice-versa
-	
-	/*
 	Dialog* dialog = (Dialog*)control_;
 	if ( dialog->isSheetModal() ) {
+		if ( !isWindowSheet_ ) {
+			
+		}
+	}
+	else {
+		
+	}
+	/*
+	
 		//check if we are alread a sheet
 		
 		if ( !isWindowSheet_ ) {
@@ -461,73 +332,6 @@ UIToolkit::ModalReturnType OSXDialog::showMessage( const String& message, const 
 	return result;
 }
 
-void OSXDialog::init()
-{
-
-}
-/*
-OSStatus OSXDialog::handleOSXEvent( EventHandlerCallRef nextHandler, EventRef theEvent )
-{
-	UInt32 whatHappened = GetEventKind (theEvent);
-	switch ( GetEventClass( theEvent ) )  {
-		case kEventClassWindow : {
-            switch( whatHappened ) {
-				case kEventWindowActivated : {
-					printf( "\n\n\t!!!!!!\tOSXDialog kEventWindowActivated\t!!!!!\n\n\n" );
-					
-					printf( "\tActive frame: %p, dialog: %p\n\n", Frame::getActiveFrame(), control_ );
-					
-					return OSXWindow::handleOSXEvent( nextHandler, theEvent );
-				}
-				break;
-				
-                case kEventWindowClose : {
-
-                    OSStatus result = noErr;//::CallNextEventHandler( nextHandler, theEvent );
-
-                    VCF::Dialog* dlg = (VCF::Dialog*)getControl();
-
-                    if ( dlg->allowClose() ) {
-
-                        VCF::FrameEvent event( getControl(), Frame::CLOSE_EVENT );
-
-
-                        dlg->FrameClose( &event );
-
-                        if ( dlg->isModal() ){
-							if ( isWindowSheet_ ) {
-								HideSheetWindow( windowRef_ );
-							}
-							result = ::CallNextEventHandler( nextHandler, theEvent );
-																			
-							//EventLoopRef currentLoop = GetCurrentEventLoop();
-							QuitAppModalLoopForWindow( windowRef_ );
-                        }
-						else if ( dlg->isSheetModal() ) {
-							if ( isWindowSheet_ ) {
-								HideSheetWindow( windowRef_ );
-							}
-							result = ::CallNextEventHandler( nextHandler, theEvent );							
-						}
-						else {						
-							result = ::CallNextEventHandler( nextHandler, theEvent );
-						}
-
-                    }
-					else {
-						result = noErr;
-					}
-					
-					return result;
-                }
-                break;
-			}
-		}
-	}
-				
-	return OSXWindow::handleOSXEvent( nextHandler, theEvent );
-}
-*/
 
 /**
 $Id$

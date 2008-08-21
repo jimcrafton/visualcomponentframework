@@ -25,7 +25,7 @@ class APPLICATIONKIT_API MenuItemPeer {
 public:
 	virtual ~MenuItemPeer(){};
 
-	virtual OSHandleID getMenuID() = 0;
+	virtual OSHandleID getHandleID() = 0;
 
 	virtual void addChild( MenuItem* child ) = 0;
 
