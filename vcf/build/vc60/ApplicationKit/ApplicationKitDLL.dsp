@@ -1162,6 +1162,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DocumentManager.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\InputValidation.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\Item.h
 # End Source File
 # Begin Source File
