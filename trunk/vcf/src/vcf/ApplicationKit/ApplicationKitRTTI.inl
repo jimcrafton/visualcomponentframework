@@ -878,6 +878,21 @@ _property_enum_labeled_( TextValidationStyle, "validationStyle", getValidationSt
 _class_rtti_end_
 
 
+
+
+_class_abstract_rtti_(InputValidator, "VCF::Component", "InputValidator")
+_property_object_( TextControl, "inputControl", getInputControl, setInputControl, "" )
+_class_rtti_end_
+
+
+
+_class_rtti_(AlphaNumericValidator, "VCF::InputValidator", "AlphaNumericValidator")
+_property_( String, "invalidCharacters",getInvalidCharacters, setInvalidCharacters, "" )
+_class_rtti_end_
+
+
+
+
 _class_rtti_(TimerComponent, "VCF::Component", TIMERCOMPONENT_CLASSID)
 _property_( bool, "active",isActive, setActivated, "" );
 _property_( int32, "timeoutInterval", getTimeoutInterval, setTimeoutInterval, "" );

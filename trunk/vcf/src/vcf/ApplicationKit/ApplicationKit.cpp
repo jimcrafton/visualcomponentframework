@@ -12,6 +12,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ControlsKit.h"
 #include "vcf/ApplicationKit/DefaultPropertyEditors.h"
 #include "vcf/ApplicationKit/SimpleListModel.h"
+#include "vcf/ApplicationKit/InputValidation.h"
 
 #include "vcf/FoundationKit/RTTIMacros.h"
 #include "vcf/ApplicationKit/ApplicationKitRTTI.inl"
@@ -197,6 +198,9 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL(SimilarToRule);
 
 		REGISTER_CLASSINFO_EXTERNAL(ValidationRuleCollection);
+
+		REGISTER_CLASSINFO_EXTERNAL(InputValidator);
+		REGISTER_CLASSINFO_EXTERNAL(AlphaNumericValidator);
 
 
 
