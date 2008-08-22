@@ -572,7 +572,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		*/
 
 		case WM_SETTEXT : case EM_STREAMIN : {
-			if ( textControl_->getReadOnly() ) {
+			if ( textControl_->isReadOnly() ) {
 				wndProcResult = 0;
 				result = true;
 			}
@@ -639,7 +639,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 		case WM_KEYDOWN: {
 
-			if ( textControl_->getReadOnly() ) {
+			if ( textControl_->isReadOnly() ) {
 				wndProcResult = 0;
 				result = true;
 			}
@@ -727,16 +727,21 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 						wndProcResult = 0;
 						result = true;
 					}
+
+					if ( editState_ & esTextModelChangedPending ) {
+						setText( textControl_->getText() );
+					}
 				}			
 
 
 				editState_ &= ~esKeyEvent;
+				editState_ &= ~esTextModelChangedPending;
 			}
 		}
 		break;
 
 		case WM_CHAR:  case WM_KEYUP:{
-			if ( textControl_->getReadOnly() ) {
+			if ( textControl_->isReadOnly() ) {
 				wndProcResult = 0;
 				result = true;
 			}
@@ -805,6 +810,10 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 						wndProcResult = 0;
 						result = true;
 					}
+
+					if ( editState_ & esTextModelChangedPending ) {
+						setText( textControl_->getText() );
+					}
 				}				
 
 				if ( peerControl_->isDesigning() ) {
@@ -813,6 +822,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				}
 
 				editState_ &= ~esKeyEvent;
+				editState_ &= ~esTextModelChangedPending;
 			}
 		}
 		break;
@@ -874,7 +884,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		break;
 
 		case WM_CUT : case EM_REDO :case EM_UNDO : case WM_PASTE : {
-			if ( textControl_->getReadOnly() ) {
+			if ( textControl_->isReadOnly() ) {
 				wndProcResult = 0;
 				result = true;
 			}
@@ -1059,40 +1069,42 @@ void Win32Edit::onModelValidationFailed( Event* e )
 
 void Win32Edit::onTextModelTextChanged( ModelEvent* event )
 {
-	if ( (NULL != event) && 
-		!(editState_ & esModelTextChanging) &&
-		!(editState_ & esKeyEvent) ){
+	if ( NULL != event ) {
+		if ( !(editState_ & esModelTextChanging) &&	!(editState_ & esKeyEvent) ) {
+			switch ( event->getType() ) {
+				case TextModel::tmTextInserted : {
+					TextEvent* te = (TextEvent*)event;
+					insertText( te->changeStart,
+												te->changeText );
+				}
+				break;
 
-		switch ( event->getType() ) {
-			case TextModel::tmTextInserted : {
-				TextEvent* te = (TextEvent*)event;
-				insertText( te->changeStart,
-											te->changeText );
+				case TextModel::tmTextReplaced : {
+					TextEvent* te = (TextEvent*)event;
+					String originalText = te->originalText;
+					deleteText( te->changeStart,
+												originalText.size() );
+
+					insertText( te->changeStart,
+												te->changeText );
+				}
+				break;
+
+				case TextModel::tmTextRemoved : {
+					TextEvent* te = (TextEvent*)event;
+					deleteText( te->changeStart,
+												te->changeLength );
+				}
+				break;
+
+				case Model::MODEL_CHANGED : case TextModel::tmTextSet : {
+					setText( textControl_->getViewModel()->getValueAsString( textControl_->getModelKey() ) );
+				}
+				break;
 			}
-			break;
-
-			case TextModel::tmTextReplaced : {
-				TextEvent* te = (TextEvent*)event;
-				String originalText = te->originalText;
-				deleteText( te->changeStart,
-											originalText.size() );
-
-				insertText( te->changeStart,
-											te->changeText );
-			}
-			break;
-
-			case TextModel::tmTextRemoved : {
-				TextEvent* te = (TextEvent*)event;
-				deleteText( te->changeStart,
-											te->changeLength );
-			}
-			break;
-
-			case Model::MODEL_CHANGED : case TextModel::tmTextSet : {
-				setText( textControl_->getViewModel()->getValueAsString( textControl_->getModelKey() ) );
-			}
-			break;
+		}
+		else if ( editState_ & esKeyEvent ) {
+			editState_ |= esTextModelChangedPending;
 		}
 	}
 }
@@ -1535,7 +1547,7 @@ void Win32Edit::onControlModelChanged( Event* e )
 
 void Win32Edit::cut()
 {
-	if ( !textControl_->getReadOnly() ) {
+	if ( !textControl_->isReadOnly() ) {
 		SendMessage( hwnd_, WM_CUT, 0, 0 );
 	}
 }
@@ -1547,7 +1559,7 @@ void Win32Edit::copy()
 
 void Win32Edit::paste()
 {
-	if ( !textControl_->getReadOnly() ) {
+	if ( !textControl_->isReadOnly() ) {
 		SendMessage( hwnd_, WM_PASTE, 0, 0 );
 	}
 }
@@ -1564,7 +1576,7 @@ bool Win32Edit::canRedo()
 
 void Win32Edit::undo()
 {
-	if ( !textControl_->getReadOnly() ) {
+	if ( !textControl_->isReadOnly() ) {
 		SendMessage( hwnd_, EM_UNDO, 0, 0 );
 	}
 }
@@ -1572,7 +1584,7 @@ void Win32Edit::undo()
 void Win32Edit::redo()
 {
 	//this one is necessary too, otherwise the model wouldn't be updated
-	if ( !textControl_->getReadOnly() ) {
+	if ( !textControl_->isReadOnly() ) {
 		SendMessage( hwnd_, EM_REDO, 0, 0 );
 	}
 }

@@ -870,7 +870,7 @@ _class_rtti_end_
 
 
 _class_rtti_(TextControl, "VCF::Control", TEXTCONTROL_CLASSID )
-_property_( bool, "readonly",getReadOnly, setReadOnly, "" );
+_property_( bool, "readonly",isReadOnly, setReadOnly, "" );
 _property_( bool, "textWrapping",getTextWrapping, setTextWrapping, "" );
 _property_( String, "text",getText, setText, "" );
 _property_enum_labeled_( TextValidationStyle, "validationStyle", getValidationStyle, setValidationStyle,

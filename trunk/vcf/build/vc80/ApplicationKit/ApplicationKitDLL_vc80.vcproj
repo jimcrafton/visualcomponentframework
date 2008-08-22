@@ -4,6 +4,7 @@
 	Version="8.00"
 	Name="ApplicationKitDLL"
 	ProjectGUID="{874F1AC3-4F2A-4A20-BE1E-53D351CA08DA}"
+	RootNamespace="ApplicationKitDLL"
 	>
 	<Platforms>
 		<Platform
@@ -2856,6 +2857,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\AdapterModels.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\ColumnItem.cpp"
 				>
 			</File>
@@ -3089,6 +3094,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\DocumentManager.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\InputValidation.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\InputValidation.h"
 				>
 			</File>
 			<File

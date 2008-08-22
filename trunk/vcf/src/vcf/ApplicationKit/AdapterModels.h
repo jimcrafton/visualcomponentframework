@@ -137,7 +137,7 @@ protected:
 
 
 template <typename Type>
-class APPLICATIONKIT_API ArrayModel : public ListModel {
+class  ArrayModel : public ListModel {
 public:
 	ArrayModel(): enumData_(NULL){}
 
