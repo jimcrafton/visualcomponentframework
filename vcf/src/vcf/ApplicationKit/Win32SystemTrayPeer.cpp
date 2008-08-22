@@ -329,7 +329,7 @@ LRESULT Win32SystemTrayPeer::handleTrayMessage( WPARAM wParam, LPARAM lParam )
 			MenuItem* rootItem = popupMenu_->getRootMenuItem();
 			if  ( NULL != rootItem )  {
 				MenuItemPeer* peer = rootItem->getPeer();
-				HMENU menuHandle = (HMENU)peer->getMenuID();
+				HMENU menuHandle = (HMENU)peer->getHandleID();
 				UINT flags = TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD | TPM_NONOTIFY;
 				UINT retVal = ::TrackPopupMenu( menuHandle, flags, pos.x, pos.y, 0, dummyWnd, NULL );
 

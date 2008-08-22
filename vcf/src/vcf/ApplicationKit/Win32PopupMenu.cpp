@@ -69,7 +69,7 @@ MenuItem* Win32PopupMenu::popup( Point* pt )
 			}
 			
 
-			HMENU menuHandle = (HMENU)peer->getMenuID();
+			HMENU menuHandle = (HMENU)peer->getHandleID();
 			UINT flags = TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD | TPM_NONOTIFY;
 			HWND wnd = (HWND)controlPeer->getHandleID();
 			

@@ -109,8 +109,8 @@ object MVCAdaptersWindow  : VCF::Window
 		end
 
 		object edt4 : VCF::TextControl
-			modelKey = 'cost'
-			model = @model
+			//modelKey = 'cost'
+			//model = @model
 			//validationStyle = tvsOnEnterKey
 			//readonly = true
 		end

@@ -25,6 +25,8 @@ namespace VCF {
 
 class TextEditPeer;
 class Dictionary;
+class InputValidator;
+
 
 enum TextValidationStyle {	
 	tvsOnKeyEvent,
@@ -81,21 +83,9 @@ public:
 	virtual void modelChanged( Model* oldModel, Model* newModel );
 
 
-	String getText() {
-		TextModel* tm = getTextModel();
-		if ( NULL != tm ) {
-			return tm->getText();
-		}
+	String getText();
 
-		return String();
-	}
-
-	void setText( const String& val ) {
-		TextModel* tm = getTextModel();
-		if ( NULL != tm ) {
-			tm->setText( val );
-		}
-	}
+	void setText( const String& val );
 
 	uint32 getCaretPosition() ;
 
@@ -148,7 +138,7 @@ public:
 
 	virtual void handleEvent( Event* event );
 
-	bool getReadOnly() {
+	bool isReadOnly() {
 		return readOnly_;
 	}
 
@@ -268,6 +258,12 @@ public:
 	bool didInputValidationFail() {
 		return inputState_ & tisInputValidationFailed ? true : false;
 	}
+
+	InputValidator* getInputValidator() {
+		return inputValidator_;
+	}
+
+	void setInputValidator( InputValidator* val );
 protected:
 	/**
 	handlers of some standard accelerator events.
@@ -295,7 +291,7 @@ protected:
 	bool readOnly_;
 	TextValidationStyle validationStyle_;
 	int inputState_;
-	
+	InputValidator* inputValidator_;
 };
 
 }; // namespace VCF

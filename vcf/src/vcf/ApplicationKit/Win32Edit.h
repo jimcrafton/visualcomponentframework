@@ -36,7 +36,8 @@ public:
 		esPeerTextChanging =		0x0100,
 		esModelTextChanging =		0x0200,
 		esExternalTextChanging =	0x0400, /* means something like undo/redo/cut/paste */		
-		esKeyEvent =				0x1000
+		esKeyEvent =				0x1000,
+		esTextModelChangedPending =	0x2000
 	};
 
 

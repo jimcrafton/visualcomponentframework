@@ -39,7 +39,7 @@ void Win32MenuBar::setFrame( Frame* frame )
 
 		MenuItemPeer* itemImpl = menuRoot_->getPeer();
 
-		HMENU menu = (HMENU) itemImpl->getMenuID();
+		HMENU menu = (HMENU) itemImpl->getHandleID();
 		SetMenu( wnd, menu );
 	}
 	else if ( NULL == frame_ && NULL != oldFrame ) {

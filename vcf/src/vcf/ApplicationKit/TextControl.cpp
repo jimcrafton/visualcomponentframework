@@ -15,13 +15,15 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/TextPeer.h"
 #include "vcf/FoundationKit/Dictionary.h"
 #include "vcf/ApplicationKit/ThemeBorder.h"
+#include "vcf/ApplicationKit/InputValidation.h"
 
 using namespace VCF;
 
 TextControl::TextControl( const bool& multiLineControl ):
 	readOnly_(false),
 	validationStyle_(tvsOnKeyEvent),
-	inputState_(0)
+	inputState_(0),
+	inputValidator_(NULL)
 {
 	textPeer_ =	UIToolkit::createTextEditPeer( this, multiLineControl );
 
@@ -188,6 +190,28 @@ void TextControl::paint( GraphicsContext * context )
 	context->fillPath();
 }
 
+String TextControl::getText() 
+{
+	TextModel* tm = getTextModel();
+	if ( NULL != tm ) {
+		return tm->getText();
+	}
+
+	return getViewModel()->getValueAsString( this->getModelKey() );
+}
+
+void TextControl::setText( const String& val ) 
+{
+	TextModel* tm = getTextModel();
+	if ( NULL != tm ) {
+		tm->setText( val );
+	}
+	else {
+		getViewModel()->setValueAsString( val, getModelKey() );
+	}
+}
+
+
 void TextControl::setTextModel( TextModel * model )
 {
 	setViewModel( model );
@@ -195,7 +219,7 @@ void TextControl::setTextModel( TextModel * model )
 
 TextModel* TextControl::getTextModel()
 {
-	return (TextModel*) getViewModel();
+	return dynamic_cast<TextModel*>( getViewModel() );
 }
 
 uint32 TextControl::getCaretPosition()
@@ -451,7 +475,7 @@ void TextControl::handleEvent( Event* event )
 			a time,	or delete text if appropriate.
 			*/			
 
-			if ( !getReadOnly() && !(getComponentState() & Component::csDesigning) ) {
+			if ( !isReadOnly() && !(getComponentState() & Component::csDesigning) ) {
 				inputState_ = tisProcessing;
 
 
@@ -459,8 +483,18 @@ void TextControl::handleEvent( Event* event )
 
 				if ( event->getType() == Control::KEYBOARD_DOWN ) {
 
+					if ( NULL != inputValidator_ ) {
+						inputValidator_->handleEvent( ke );
+					}
+
 					if ( validationStyle_ != tvsOnKeyEvent ) {
 						inputState_ = tisWaitingForInput;
+						return;
+					}
+
+					//ignoreKeystroke is only meaningful if we have an
+					//input validator set!
+					if ( (NULL != inputValidator_) && (ke->ignoreKeystroke) ) {
 						return;
 					}
 
@@ -784,6 +818,14 @@ void TextControl::handleEvent( Event* event )
 
 				}
 				else {
+
+					if ( NULL != inputValidator_ ) {
+						inputValidator_->handleEvent( ke );
+						if ( ke->ignoreKeystroke ) {
+							return;
+						}
+					}					
+
 					switch ( ke->virtualKeyCode ) {
 						case vkDelete :
 						case vkBackSpace : 
@@ -1021,6 +1063,16 @@ bool TextControl::generatePropertyValue( const String& fullPropertyName, Propert
 	return Control::generatePropertyValue( fullPropertyName, property, value, strValue );
 }
 
+void TextControl::setInputValidator( InputValidator* val )
+{
+	if ( inputValidator_ != val ) {
+		inputValidator_ = val;
+
+		if ( NULL != inputValidator_ ) {
+			inputValidator_->setInputControl(this);
+		}
+	}
+}
 /**
 $Id$
 */
