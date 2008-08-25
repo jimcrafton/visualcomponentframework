@@ -969,6 +969,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "InputValidation"=.\MVC\InputValidation\InputValidation.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKitDLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "InternetKit"=..\build\vc60\InternetKit\InternetKit.dsp - Package Owner=<4>
 
 Package=<5>

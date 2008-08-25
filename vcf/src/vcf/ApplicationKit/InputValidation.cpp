@@ -622,14 +622,15 @@ void NumericValidator::handleEvent( Event* e )
 				return;
 			}
 			
+			String keyValStr(1,ke->keyValue);
 
 			size_t nStart = inputControl_->getSelectionStart();
 			size_t nEnd = nStart + inputControl_->getSelectionCount();
 
-			String text = inputControl_->GetText();
+			String text = inputControl_->getText();
 			String numericText = getNumericText(text);
 			size_t nDecimalPos = text.find(decimalPoint_);
-			size_t nNumericDecimalPos = numericText.Find(decimalPoint_);
+			size_t nNumericDecimalPos = numericText.find(decimalPoint_);
 			size_t nLen = text.length();
 			size_t nNumericLen = numericText.length();
 			size_t nPrefixLen = prefix_.length();
@@ -637,21 +638,21 @@ void NumericValidator::handleEvent( Event* e )
 			bool needAdjustment = false;
 
 			// Check if we're in the prefix's location
-			if ( nStart < nPrefixLen && ::vcf_iswprint(c) ) {
+			if ( nStart < nPrefixLen && ::vcf_iswprint( ke->keyValue ) ) {
 				VCFChar cPrefix = prefix_[nStart];
 
 				// Check if it's the same character as the prefix.
-				if (cPrefix == c && allowEnter(c)) {
+				if (cPrefix == ke->keyValue && allowCharacter(ke->keyValue)) {
 					if (nLen > nStart) {
 						nEnd = (nEnd == nLen ? nEnd : (nStart + 1));
 						//inputControl_->SetSel(nStart, nEnd);
-						//inputControl_->ReplaceSel(CString(c), TRUE);
+						//inputControl_->ReplaceSel(CString(ke->keyValue), TRUE);
 
 						ke->ignoreKeystroke = true;
 					}
 				}
 				// If it's a part of the number, enter the prefix
-				else if (( ::vcf_iswdigit(c) || c == negativeSign_ || c == decimalPoint_) && allowEnter(c)) {
+				else if (( ::vcf_iswdigit(ke->keyValue) || keyValStr == negativeSign_ || keyValStr == decimalPoint_) && allowCharacter(ke->keyValue)) {
 					nEnd = (nEnd == nLen ? nEnd : (nPrefixLen));
 					//inputControl_->SetSel(nStart, nEnd);
 				//	inputControl_->ReplaceSel(prefix_.Mid(nStart), TRUE);
@@ -665,32 +666,34 @@ void NumericValidator::handleEvent( Event* e )
 			}
 
 			// Check if it's a negative sign
-			if (c == negativeSign_ && IsNegativeAllowed()) {
+			if (keyValStr == negativeSign_ && isNegativeAllowed()) {
 				// If it's at the beginning, determine if it should overwritten
 				if (nStart == nPrefixLen)
 				{
-					if (!numericText.IsEmpty() && numericText[0] == negativeSign_ && allowEnter(c))
-					{
+					if (!numericText.empty() && numericText[0] == negativeSign_[0] && allowCharacter(ke->keyValue)) {
 						nEnd = (nEnd == nLen ? nEnd : (nStart + 1));
-						inputControl_->SetSel(nStart, nEnd);
-						inputControl_->ReplaceSel(CString(negativeSign_), TRUE);
+						//inputControl_->SetSel(nStart, nEnd);
+						//inputControl_->ReplaceSel(CString(negativeSign_), TRUE);
+						ke->ignoreKeystroke = true;
 						return;
 					}
 				}
 				// If we're not at the beginning, toggle the sign
-				else if (allowEnter(c))
+				else if (allowCharacter(ke->keyValue))
 				{
-					if (numericText[0] == negativeSign_)
-					{
-						inputControl_->SetSel(nPrefixLen, nPrefixLen + 1);
-						inputControl_->ReplaceSel(_T(""), TRUE);
-						inputControl_->SetSel(nStart - 1, nEnd - 1);
+					if (numericText[0] == negativeSign_[0]) {
+						//inputControl_->SetSel(nPrefixLen, nPrefixLen + 1);
+						//inputControl_->ReplaceSel(_T(""), TRUE);
+						//inputControl_->SetSel(nStart - 1, nEnd - 1);
+
+						ke->ignoreKeystroke = true;
 					}
-					else
-					{
-						inputControl_->SetSel(nPrefixLen, nPrefixLen);
-						inputControl_->ReplaceSel(CString(negativeSign_), TRUE);
-						inputControl_->SetSel(nStart + 1, nEnd + 1);
+					else {
+						//inputControl_->SetSel(nPrefixLen, nPrefixLen);
+						//inputControl_->ReplaceSel(CString(negativeSign_), TRUE);
+						//inputControl_->SetSel(nStart + 1, nEnd + 1);
+
+						ke->ignoreKeystroke = true;
 					}
 
 					return;
@@ -698,70 +701,69 @@ void NumericValidator::handleEvent( Event* e )
 			}
 
 			// Check if it's a decimal point (only one is allowed).
-			else if (c == decimalPoint_ && m_nMaxDecimalPlaces > 0)
-			{
-				if (nDecimalPos >= 0)
-				{
+			else if (keyValStr == decimalPoint_ && maxDecimalPlaces_ > 0) {
+				if (nDecimalPos >= 0) {
 					// Check if we're replacing the decimal point
-					if (nDecimalPos >= nStart && nDecimalPos < nEnd)
+					if (nDecimalPos >= nStart && nDecimalPos < nEnd) {
 						needAdjustment = true;
-					else
-					{	// Otherwise, put the caret on it
-						if (allowEnter(c))
-							inputControl_->SetSel(nDecimalPos + 1, nDecimalPos + 1);
+					}
+					else {	// Otherwise, put the caret on it
+						if (allowCharacter(ke->keyValue)) {
+//							inputControl_->SetSel(nDecimalPos + 1, nDecimalPos + 1);
+						}
+						ke->ignoreKeystroke = true;
 						return;
 					}
 				}
-				else
+				else {
 					needAdjustment = true;
+				}
 			}
 
 			// Check if it's a digit
-			else if (_istdigit(c))
-			{
+			else if ( vcf_iswdigit(ke->keyValue) ) {
 				// Check if we're on the right of the decimal point.
-				if (nDecimalPos >= 0 && nDecimalPos < nStart)
-				{
-					if (numericText.Mid(nNumericDecimalPos + 1).length() == m_nMaxDecimalPlaces)
-					{
-						if (nStart <= nDecimalPos + m_nMaxDecimalPlaces && allowEnter(c))
-						{
+				if (nDecimalPos >= 0 && nDecimalPos < nStart) {
+					if ( numericText.substr(nNumericDecimalPos + 1,numericText.length()-(nNumericDecimalPos + 1)).length() 
+							== maxDecimalPlaces_ ) {
+
+						if (nStart <= nDecimalPos + maxDecimalPlaces_ && allowCharacter(ke->keyValue)) {
 							nEnd = (nEnd == nLen ? nEnd : (nStart + 1));
-							inputControl_->SetSel(nStart, nEnd);
-							inputControl_->ReplaceSel(CString(c), TRUE);
+							//inputControl_->SetSel(nStart, nEnd);
+							//inputControl_->ReplaceSel(CString(ke->keyValue), TRUE);
 						}
+
+						ke->ignoreKeystroke = true;
 						return;
 					}
 				}
 
 				// We're on the left side of the decimal point
-				else 
-				{
-					bool bIsNegative = (!numericText.IsEmpty() && numericText[0] == negativeSign_);
+				else  {
+					bool isNegative = (!numericText.empty() && String(1,numericText[0]) == negativeSign_);
 
 					// Make sure we can still enter digits.
-					if (nStart == m_nMaxWholeDigits + bIsNegative + nSepCount + nPrefixLen)
-					{
-						if (m_uFlags & AddDecimalAfterMaxWholeDigits && m_nMaxDecimalPlaces > 0)
-						{
+					if (nStart == maxWholeDigits_ + isNegative + nSepCount + nPrefixLen) {
+						if (flags_ & vfAddDecimalAfterMaxWholeDigits && maxDecimalPlaces_ > 0) {
 							nEnd = (nEnd == nLen ? nEnd : (nStart + 2));
-							inputControl_->SetSel(nStart, nEnd);
-							inputControl_->ReplaceSel(CString(decimalPoint_) + c, TRUE);
+							//inputControl_->SetSel(nStart, nEnd);
+							//inputControl_->ReplaceSel(CString(decimalPoint_) + ke->keyValue, TRUE);
 						}
+						ke->ignoreKeystroke = true;
 						return;
 					}
 
-					if (numericText.Mid(0, nNumericDecimalPos >= 0 ? nNumericDecimalPos : nNumericLen).length() == m_nMaxWholeDigits + bIsNegative)
-					{
-						if (allowEnter(c))
-						{
-							if (text[nStart] == m_cGroupSeparator)
+					if ( numericText.substr(0, nNumericDecimalPos >= 0 ? nNumericDecimalPos : nNumericLen).length() == maxWholeDigits_ + isNegative ) {
+						if ( allowCharacter(ke->keyValue) ) {
+							if (text[nStart] == groupSeparator_[0]) {
 								nStart++;
+							}
 
 							nEnd = (nEnd == nLen ? nEnd : (nStart + 1));
-							inputControl_->SetSel(nStart, nEnd);
-							inputControl_->ReplaceSel(CString(c), TRUE);
+							//inputControl_->SetSel(nStart, nEnd);
+							//inputControl_->ReplaceSel(CString(ke->keyValue), TRUE);
 						}
+						ke->ignoreKeystroke = true;
 						return;
 					}
 
@@ -770,20 +772,26 @@ void NumericValidator::handleEvent( Event* e )
 			}
 
 			// Check if it's a non-printable character, such as Backspace or Ctrl+C
-			else if (!_istprint(c))
+			else if ( !vcf_iswprint(ke->keyValue) ) {
 				needAdjustment = true;
-			else
+			}
+			else {
+				ke->ignoreKeystroke = true;
 				return;
+			}
 
 			// Check if the character should be entered
-			if (!allowEnter(c))
+			if (!allowCharacter(ke->keyValue)) {
+				ke->ignoreKeystroke = true;
 				return;
+			}
 			
-			Behavior::_OnChar(uChar, nRepCnt, nFlags);
+			//Behavior::_OnChar(uChar, nRepCnt, nFlags);
 
 			// If the decimal point was added/removed or a separator needs adding/removing, adjust the text
-			if (needAdjustment)
-				AdjustSeparators(nSepCount);
+			if ( needAdjustment ) {
+				adjustSeparators(nSepCount);
+			}
 
 		}
 		break;
@@ -1009,10 +1017,10 @@ String NumericValidator::getSeparatedText(const String& text)
 
 	if (digitsInGroup_ > 0) {
 		size_t nLen = result.length();
-		int bIsNegative = (!result.empty() && String(1,result[0]) == negativeSign_);
+		int isNegative = (!result.empty() && String(1,result[0]) == negativeSign_);
 
 		// Loop in reverse and stick the separator every m_nDigitsInGroup digits.
-		for (size_t iPos = nLen - (digitsInGroup_ + 1); iPos >= bIsNegative; iPos -= digitsInGroup_) {
+		for (size_t iPos = nLen - (digitsInGroup_ + 1); iPos >= isNegative; iPos -= digitsInGroup_) {
 			result = result.substr(0,iPos + 1) + groupSeparator_ + result.substr(iPos + 1, result.length()-(iPos+1));
 		}
 	}

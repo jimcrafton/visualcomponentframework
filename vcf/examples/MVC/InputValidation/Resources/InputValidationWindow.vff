@@ -1,0 +1,146 @@
+object InputValidationWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 300
+	width = 320
+	caption = 'InputValidation Window'	
+
+	object fl : VCF::FlowLayoutContainter
+		bottomBorderHeight = 5
+		topBorderHeight = 5
+		rightBorderWidth = 5
+		leftBorderWidth = 5
+		direction = fdHorizontal
+	end
+
+	container = @fl
+
+	object bdr1 : VCF::TitledBorder
+		caption = 'Numeric'
+	end
+
+	object bdr2 : VCF::TitledBorder
+		caption = 'Currency'
+	end
+
+	object bdr3 : VCF::TitledBorder
+		caption = 'Masked Numeric'
+	end
+
+	object bdr4 : VCF::TitledBorder
+		caption = 'Alphanumeric'
+	end
+
+	object bdr5 : VCF::TitledBorder
+		caption = 'Date'
+	end
+
+	object bdr6 : VCF::TitledBorder
+		caption = 'Time'
+	end
+
+	object numericPanel : VCF::Panel		
+		border = @bdr1
+		width = 250
+		height = 250
+
+		object fl1 : VCF::FlowLayoutContainter
+			bottomBorderHeight = 5
+			topBorderHeight = 5
+			rightBorderWidth = 5
+			leftBorderWidth = 5
+			direction = fdVertical
+		end
+
+		object fl1a : VCF::HorizontalLayoutContainer
+			numberOfColumns = 2
+			maxRowHeight = 35
+			rowSpacerHeight = 10
+			widths[0] = 80
+			widths[1] = 80
+
+			tweenWidths[0] = 10
+		end
+
+		container = @fl1
+
+		object numInput : VCF::TextControl
+			height = TextHeight
+		end
+
+		object bdr7 : VCF::TitledBorder
+			caption = 'Digits from Decimal Point'
+		end
+
+		object digitsPanel : VCF::Panel					
+			border = @bdr7
+			container = @fl1a
+			height = 100
+			width = 220
+
+			object lbl1 : VCF::Label
+				caption = 'Left:'
+				height = LabelHeight
+			end
+
+			object edt1 : VCF::TextControl
+				height = TextHeight
+			end
+
+			object lbl2 : VCF::Label
+				caption = 'Right:'
+				height = LabelHeight
+			end
+
+			object edt2 : VCF::TextControl
+				height = TextHeight
+			end
+		end
+
+		object canBeNeg : VCF::CheckBoxControl
+			height = 25
+		end
+
+		object lbl2 : VCF::Label
+			caption = 'Value as Double:'
+			height = LabelHeight
+		end
+
+		object edt3 : VCF::TextControl
+			height = TextHeight
+			enabled = false
+		end
+	end
+
+	object currencyPanel : VCF::Panel		
+		border = @bdr2
+		width = 250
+		height = 100
+	end
+
+	object maskedNumericPanel : VCF::Panel		
+		border = @bdr3
+		width = 150
+		height = 100
+	end
+
+	object alphaNumericPanel : VCF::Panel		
+		border = @bdr4
+		width = 150
+		height = 100
+	end
+
+	object datePanel : VCF::Panel		
+		border = @bdr5
+		width = 150
+		height = 100
+	end
+
+	object timePanel : VCF::Panel		
+		border = @bdr6
+		width = 150
+		height =100
+	end
+
+
+end
