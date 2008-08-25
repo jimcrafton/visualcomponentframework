@@ -298,6 +298,18 @@ _property_( double, "rightBorderWidth", getRightBorderWidth, setRightBorderWidth
 _property_( double, "leftBorderWidth", getLeftBorderWidth, setLeftBorderWidth, "" );
 _class_rtti_end_
 
+
+
+_class_rtti_(FlowLayoutContainter, "VCF::StandardContainer", "FlowLayoutContainter")
+_property_( double, "childSpacer", getChildSpacer, setChildSpacer, "" );
+_property_( bool, "allowContentsToWrap", allowContentsToWrap, setAllowContentsToWrap, "" );
+_property_enum_labeled_( FlowDirection, "direction", getFlowDirection, setFlowDirection,
+					   fdVertical, fdHorizontal, 2, FlowDirectionNames, "");
+_class_rtti_end_
+
+
+
+
 _class_rtti_(ColumnLayoutContainer, "VCF::StandardContainer", COLUMNLAYOUTCONTAINER_CLASSID)
 _property_array_( int, "columnWidths", getColumnWidth,setColumnWidth,insertColumnWidth,removeColumnWidth,getColumnCount, "" )
 _class_rtti_end_
