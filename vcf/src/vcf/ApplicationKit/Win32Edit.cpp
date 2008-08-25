@@ -1241,6 +1241,7 @@ uint32 Win32Edit::getSelectionCount()
 
 void Win32Edit::getSelectionMark( long & start, long & end )
 {
+
 	ITextSelection* selection = NULL;
 	textDocument_->GetSelection( &selection );
 	if ( NULL != selection ) {

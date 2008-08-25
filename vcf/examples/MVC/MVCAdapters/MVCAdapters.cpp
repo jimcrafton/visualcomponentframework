@@ -85,9 +85,11 @@ public:
 
 
 		TextControl* tc = (TextControl*)findComponent("edt4",true);
-		AlphaNumericValidator* v = new AlphaNumericValidator();
+		MaskedValidator* v = new MaskedValidator();
 		tc->setInputValidator( v );
-		v->setMaxCharacters(10);
+		//v->setMaxCharacters(10);
+
+		v->setMask( "(###) ###-#### x####" );
 		
 
 
