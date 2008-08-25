@@ -879,7 +879,7 @@ void TextControl::handleEvent( Event* event )
 							// control + characters need not to be treated as inserted characters
 							if ( !ke->hasAltKey() && !ke->hasControlKey() ) {
 
-								uint32 pos =  textPeer_->getCaretPosition();
+								uint32 pos =  textPeer_->getSelectionStart();
 
 								String text;
 								text += ke->keyValue;

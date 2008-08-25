@@ -54,15 +54,18 @@ void DefaultTextModel::doInsertText( const uint32& index, const String& text )
 void DefaultTextModel::doReplaceText( const uint32& index, const uint32& count, const String& text )
 {
 	VCF_ASSERT( count > 0 );
-	VCF_ASSERT( (index+count) <= text_.size() );
+	
 
 
 	//remove old text
-	String removedText = text_.substr( index, count );
+
+	//String removedText = text_.substr( index, count );
 
 	// this relies on STL to be smart enough to delete only
 	// the count character that are part of the string
-	text_.erase( index, count );
+	if ( !text_.empty() ) {
+		text_.erase( index, count );
+	}
 
 	//insert new text
 	text_.insert( index, text );	
