@@ -112,23 +112,57 @@ void VFFInputStream::getOuterClassNameAndUUID( String& className, String& UUID, 
 	parser_->resetStream();
 }
 
+void VFFInputStream::readDelegate( Component* component, VCF::Class* clazz )
+{
+	String currentSymbol = parser_->tokenString();
+
+	VCFChar token = parser_->nextToken();
+
+	//do delegate
+	switch ( token ) {
+		case '=' :  {
+			processDelegateAsignment( token, currentSymbol, clazz );
+		}
+		break;
+
+		case '.' : {
+			parser_->nextToken();
+			String objPropName = parser_->tokenString();
+			
+
+			Property* prop = clazz->getProperty( currentSymbol );
+			VariantData* value = prop->get();
+			if ( value->type == pdObject ) {
+				Object* object = *value;
+				if ( NULL != object ) {
+					Class* objClass = object->getClass();
+					if ( NULL != clazz ) {
+						readDelegate( component, objClass );
+					}
+					else {
+						StringUtils::trace( Format("Warning: no Class found for delegate property %s.")
+												% currentSymbol.ansi_c_str() );
+					}
+				}
+				else {
+					throw RuntimeException( MAKE_ERROR_MSG_2("object is null - cannot access the object's delegate.") );
+				}
+			}
+			else {
+				throw RuntimeException( MAKE_ERROR_MSG_2("Property is not an object and cannot have delegates.") );
+			}
+		}
+		break;
+	}
+}
+
 void VFFInputStream::readDelegates( VCF::Component* component, VCF::Class* clazz )
 {	
 	if ( parser_->tokenSymbolIs( "delegates" ) ) {	
 
 		while ( (VFFParser::TO_EOF != parser_->getToken()) && (!parser_->tokenSymbolIs( "end" )) ) {
-			String currentSymbol = parser_->tokenString();
 
-			VCFChar token = parser_->nextToken();
-
-			//do delegate
-			switch ( token ) {
-				case '=' :  {
-					processDelegateAsignment( token, currentSymbol, clazz );
-				}
-				break;				
-			}
-
+			readDelegate( component, clazz );
 		}
 
 		parser_->nextToken();
@@ -466,7 +500,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 						//found then pass this into the prop->set() call.
 						//If nothing is found then go for it and pass
 						//in the value as is.
-						if ( (pdObject == prop->getType()) && ('@' == value[0]) ) {
+						if ( /*(pdObject == prop->getType()) &&*/ ('@' == value[0]) ) {
 							//OK our value is actually a component name so we are
 							//going to store it in a list for later, because we may not
 							//have an existing instance of the component yet. To store
@@ -646,24 +680,90 @@ void VFFInputStream::assignDeferredProperties( Component* component )
 		std::vector<DeferredPropertySetter*>::iterator it = deferredProperties_.begin();
 		while ( it != deferredProperties_.end() ) {
 			DeferredPropertySetter* dps = *it;
+
 			Class* clazz = dps->source->getClass();
+
 			Property* prop = clazz->getProperty( dps->propertyName );
+
+			
+			
 			if ( NULL != prop ) {
+				VariantData data;
 				Component* foundComponent = NULL;
-				if ( true == component->bindVariable( &foundComponent, dps->propertyVal ) ) {
-					VariantData data;
-					data = foundComponent;
+				
 
+				
+				String propName = dps->propertyVal;
+				
+				size_t nameDepth = 0;
+				size_t pos = propName.find(".");
+				if ( pos != String::npos ) {
+					Property* valProp = NULL;
+					String componentName;
+					componentName = propName.substr(0,pos);
+					propName.erase( 0, pos+1 );
 
-					if ( prop->isCollection() && dps->keyValid ) {
-						prop->setAtKey( dps->key, &data );
+					if ( component->bindVariable( &foundComponent, componentName ) ) {
+						Class* valClass = foundComponent->getClass();						
+
+						VariantData* propVal = NULL;
+						do {							
+							pos = propName.find(".");
+							
+
+							if ( pos != String::npos ) {
+								valProp = valClass->getProperty( propName.substr(0,pos) );
+								propVal = valProp->get();
+								if ( NULL == propVal ) {
+									throw RuntimeException( "Null property value" );
+								}
+
+								if ( propVal->type != pdObject ) {
+									throw RuntimeException( "Invalid property value - must be an object in order to reference sub properties" );
+								}
+
+								Object* obj = *propVal;
+								if ( NULL == obj ) {
+									throw RuntimeException( "Invalid property value - must be a non-null object in order to reference sub properties" );
+								}
+
+								valClass = obj->getClass();
+		
+							}
+							else {
+								valProp = valClass->getProperty( propName );
+								propVal = valProp->get();
+							}
+							
+							propName.erase( 0, pos+1 );		
+						}while ( pos != String::npos );
+
+						if ( NULL == propVal ) {
+							data = VariantData::null();
+						}
+						else {
+							data = *propVal;
+						}
+
 					}
-					else if ( !prop->isCollection() ) {
-						prop->set( &data );
+					else {
+						StringUtils::trace( Format("Failed to find component %s. Unable to assign deferred property.\n") % dps->propertyVal );
 					}
 				}
 				else {
-					StringUtils::trace( Format("Failed to find component %s. Unable to assign deferred property.\n") % dps->propertyVal );
+					if ( true == component->bindVariable( &foundComponent, propName ) ) {						
+						data = foundComponent;
+					}
+					else {
+						StringUtils::trace( Format("Failed to find component %s. Unable to assign deferred property.\n") % dps->propertyVal );
+					}
+				}
+
+				if ( prop->isCollection() && dps->keyValid ) {
+					prop->setAtKey( dps->key, &data );
+				}
+				else if ( !prop->isCollection() ) {
+					prop->set( &data );
 				}
 			}
 			delete dps;

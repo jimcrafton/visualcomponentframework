@@ -188,6 +188,8 @@ protected:
 
 	void readDelegates( Component* component, VCF::Class* clazz );
 
+	void readDelegate( Component* component, VCF::Class* clazz );
+
 	Component* readObject( Component* componentInstance, int flags );
 		//bool createComponent, bool createChildren );
 

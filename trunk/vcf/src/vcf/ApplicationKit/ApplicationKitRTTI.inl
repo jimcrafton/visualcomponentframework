@@ -887,6 +887,7 @@ _property_( bool, "textWrapping",getTextWrapping, setTextWrapping, "" );
 _property_( String, "text",getText, setText, "" );
 _property_enum_labeled_( TextValidationStyle, "validationStyle", getValidationStyle, setValidationStyle,
 					   tvsOnKeyEvent, tvsOnEnterKey, 3, TextValidationStyleNames, "");
+_property_object_( InputValidator, "inputValidator", getInputValidator, setInputValidator, "" )
 _class_rtti_end_
 
 
@@ -900,6 +901,7 @@ _class_rtti_end_
 
 _class_rtti_(AlphaNumericValidator, "VCF::InputValidator", "AlphaNumericValidator")
 _property_( String, "invalidCharacters",getInvalidCharacters, setInvalidCharacters, "" )
+_property_( uint32, "maxCharacters",getMaxCharacters, setMaxCharacters, "" )
 _class_rtti_end_
 
 
