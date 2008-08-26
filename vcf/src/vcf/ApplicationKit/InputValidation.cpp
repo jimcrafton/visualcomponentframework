@@ -96,7 +96,8 @@ AlphaNumericValidator::AlphaNumericValidator():
 	maxChars_(0),
 	invalidChars_("%'*\"+?><:\\")
 {
-
+	addCallback( new ClassProcedure1<Event*,AlphaNumericValidator>(this, &AlphaNumericValidator::changeMaxCharacters), "AlphaNumericValidator::changeMaxCharacters" );
+	addCallback( new ClassProcedure1<Event*,AlphaNumericValidator>(this, &AlphaNumericValidator::changeInvalidCharacters), "AlphaNumericValidator::changeInvalidCharacters" );
 }
 
 
@@ -120,6 +121,28 @@ String AlphaNumericValidator::getValidText()
 	}
 
 	return result;
+}
+
+void AlphaNumericValidator::changeMaxCharacters( Event* e)
+{
+	Model* model = dynamic_cast<Model*>(e->getSource());
+
+	if ( model ) {
+		String s = model->getValueAsString();
+		if ( !s.empty() ) {
+			setMaxCharacters( StringUtils::fromStringAsUInt(s) );
+		}
+	}
+}
+
+void AlphaNumericValidator::changeInvalidCharacters( Event* e)
+{
+	Model* model = dynamic_cast<Model*>(e->getSource());
+
+	if ( model ) {
+		String s = model->getValueAsString();
+		this->setInvalidCharacters( s );
+	}
 }
 
 void AlphaNumericValidator::handleEvent( Event* e )

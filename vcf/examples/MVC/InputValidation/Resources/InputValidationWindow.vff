@@ -1,8 +1,8 @@
 object InputValidationWindow  : VCF::Window
 	top = 200
 	left = 200
-	height = 300
-	width = 320
+	height = 330pt
+	width = 295pt
 	caption = 'InputValidation Window'	
 
 	object fl : VCF::FlowLayoutContainter
@@ -10,8 +10,14 @@ object InputValidationWindow  : VCF::Window
 		topBorderHeight = 5
 		rightBorderWidth = 5
 		leftBorderWidth = 5
-		direction = fdHorizontal
+		direction = fdVertical
 	end
+
+
+	object alphaNumValidator : VCF::AlphaNumericValidator
+		
+	end
+
 
 	container = @fl
 
@@ -41,8 +47,8 @@ object InputValidationWindow  : VCF::Window
 
 	object numericPanel : VCF::Panel		
 		border = @bdr1
-		width = 250
-		height = 250
+		width = 140pt
+		height = 150pt
 
 		object fl1 : VCF::FlowLayoutContainter
 			bottomBorderHeight = 5
@@ -114,20 +120,132 @@ object InputValidationWindow  : VCF::Window
 
 	object currencyPanel : VCF::Panel		
 		border = @bdr2
-		width = 250
-		height = 100
+		width = 140pt
+		height = 70pt
+
+		object fl2 : VCF::FlowLayoutContainter
+			bottomBorderHeight = 5
+			topBorderHeight = 5
+			rightBorderWidth = 5
+			leftBorderWidth = 5
+			direction = fdVertical
+		end
+
+		container = @fl2
+
+		object currencyInput : VCF::TextControl
+			height = TextHeight
+			width = 130pt
+		end
+
+		object lbl3 : VCF::Label
+			caption = 'Value as Double:'
+			height = LabelHeight
+		end
+
+		object edt4 : VCF::TextControl
+			height = TextHeight
+			enabled = false
+		end
 	end
 
 	object maskedNumericPanel : VCF::Panel		
 		border = @bdr3
-		width = 150
-		height = 100
+		width = 140pt
+		height = 70pt
+
+		object fl3 : VCF::FlowLayoutContainter
+			bottomBorderHeight = 5
+			topBorderHeight = 5
+			rightBorderWidth = 5
+			leftBorderWidth = 5
+			direction = fdVertical
+		end
+
+		container = @fl3
+
+		object maskNumInput : VCF::TextControl
+			height = TextHeight
+			width = 130pt
+		end
+
+		object lbl4 : VCF::Label
+			caption = 'Mask (''#'' = digit):'
+			height = LabelHeight
+		end
+
+		object edt5 : VCF::TextControl
+			height = TextHeight
+		end
 	end
 
 	object alphaNumericPanel : VCF::Panel		
 		border = @bdr4
-		width = 150
-		height = 100
+		width = 140pt
+		height = 150pt
+
+		object fl4 : VCF::FlowLayoutContainter
+			bottomBorderHeight = 5
+			topBorderHeight = 5
+			rightBorderWidth = 5
+			leftBorderWidth = 5
+			direction = fdVertical
+		end
+
+		object fl4a : VCF::HorizontalLayoutContainer
+			numberOfColumns = 2
+			maxRowHeight = 35
+			rowSpacerHeight = 10
+			widths[0] = 80
+			widths[1] = 80
+
+			tweenWidths[0] = 10
+		end
+
+		container = @fl4
+
+		object alphaNumInput : VCF::TextControl
+			height = TextHeight
+
+			inputValidator = @alphaNumValidator
+		end
+
+		object bdr8 : VCF::TitledBorder
+			caption = 'Characters'
+		end
+
+		object charPanel : VCF::Panel					
+			border = @bdr8
+			container = @fl4a
+			height = 80pt
+			width = 130pt
+
+			object lbl5 : VCF::Label
+				caption = 'Invalid:'
+				height = LabelHeight
+			end
+
+			object edt6 : VCF::TextControl
+				height = TextHeight
+				text = @alphaNumValidator.invalidCharacters
+				delegates
+					model.ModelChanged = [alphaNumValidator@AlphaNumericValidator::changeInvalidCharacters]
+				end
+			end
+
+			object lbl6 : VCF::Label
+				caption = 'Max:'
+				height = LabelHeight
+			end
+
+			object edt7 : VCF::TextControl
+				height = TextHeight
+				text = @alphaNumValidator.maxCharacters								
+				delegates
+					model.ModelChanged = [alphaNumValidator@AlphaNumericValidator::changeMaxCharacters]
+				end
+			end
+		end		
 	end
 
 	object datePanel : VCF::Panel		

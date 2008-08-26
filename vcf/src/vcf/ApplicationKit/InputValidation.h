@@ -87,6 +87,7 @@ namespace VCF {
 		}
 
 		bool modifyFlags( uint32 flagToAdd, uint32 flagToRemove );
+		
 	protected:
 		virtual bool allowCharacter( VCFChar ch ) {
 			return true;
@@ -117,6 +118,9 @@ namespace VCF {
 		size_t getMaxCharacters() {
 			return maxChars_;
 		}
+
+		void changeMaxCharacters( Event* );
+		void changeInvalidCharacters( Event* );
 	protected:
 		size_t maxChars_;
 		String invalidChars_;

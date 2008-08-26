@@ -439,6 +439,9 @@ public:
 		if ( NULL != StringVal ) {
 			return *StringVal;
 		}
+		else if ( !isNull() && type != pdUndefined ) {
+			return toString();
+		}
 		return "";
 	};
 
