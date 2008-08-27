@@ -201,6 +201,8 @@ namespace VCF {
 		SymbolArray& getSymbolArray() {
 			return symbols_;
 		}
+
+		void changeMask( Event* );
 	protected:
 		String mask_;
 		SymbolArray symbols_;
@@ -311,6 +313,10 @@ namespace VCF {
 		bool checkIfValid(bool showErrorIfNotValid = true);
 
 
+		void changeMask( Event* );
+		void changeAllowNegative( Event* );
+		void changeMaxWholeDigits( Event* );
+		void changeMaxDecimalPlaces( Event* );
 	protected:
 		int maxWholeDigits_;
 		size_t maxDecimalPlaces_;

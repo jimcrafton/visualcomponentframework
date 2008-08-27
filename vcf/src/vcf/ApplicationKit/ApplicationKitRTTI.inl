@@ -895,6 +895,7 @@ _class_rtti_end_
 
 _class_abstract_rtti_(InputValidator, "VCF::Component", "InputValidator")
 _property_object_( TextControl, "inputControl", getInputControl, setInputControl, "" )
+_property_( uint32, "flags",getFlags, setFlags, "" )
 _class_rtti_end_
 
 
@@ -902,6 +903,29 @@ _class_rtti_end_
 _class_rtti_(AlphaNumericValidator, "VCF::InputValidator", "AlphaNumericValidator")
 _property_( String, "invalidCharacters",getInvalidCharacters, setInvalidCharacters, "" )
 _property_( uint32, "maxCharacters",getMaxCharacters, setMaxCharacters, "" )
+_class_rtti_end_
+
+
+
+_class_rtti_(MaskedValidator, "VCF::InputValidator", "MaskedValidator")
+_property_( String, "mask",getMask, setMask, "" )
+_class_rtti_end_
+
+
+
+_class_rtti_(NumericValidator, "VCF::InputValidator", "NumericValidator")
+_property_( double, "doubleVal",getDouble, setDouble, "" )
+_property_( int, "intVal",getInt, setInt, "" )
+_property_( int, "maxWholeDigits",getMaxWholeDigits, setMaxWholeDigits, "" )
+_property_( uint32, "maxDecimalPlaces",getMaxDecimalPlaces, setMaxDecimalPlaces, "" )
+_property_( bool, "negativeAllowed",isNegativeAllowed, setAllowNegative, "" )
+_property_( uint32, "digitsInGroup",getDigitsInGroup, setDigitsInGroup, "" )
+_property_( String, "decimalSeparator",getDecimalSeparator, setDecimalSeparator, "" )
+_property_( String, "groupSeparator",getGroupSeparator, setGroupSeparator, "" )
+_property_( String, "prefix",getPrefix, setPrefix, "" )
+_property_( String, "mask",getMask, setMask, "" )
+_property_( double, "max",getMax, setMax, "" )
+_property_( double, "min",getMin, setMin, "" )
 _class_rtti_end_
 
 

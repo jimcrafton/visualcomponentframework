@@ -1565,6 +1565,23 @@ UnicodeString Win32LocalePeer::getCurrencyNegativeSign()
 {
 	UnicodeString result;
 
+	#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	GetLocaleInfoW( lcid_, LOCALE_SNEGATIVESIGN, tmp, 255 );
+	result = tmp;
+#else
+	if ( System::isUnicodeEnabled() ) {
+		VCFChar tmp[256];
+		GetLocaleInfoW( lcid_, LOCALE_SNEGATIVESIGN, tmp, 255 );
+		result = tmp;
+	}
+	else {
+		char tmp[256];
+		GetLocaleInfoA( lcid_, LOCALE_SNEGATIVESIGN, tmp, 255 );
+		result = tmp;
+	}
+#endif	
+
 	return result;
 }
 
