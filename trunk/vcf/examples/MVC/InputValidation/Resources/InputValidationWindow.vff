@@ -18,6 +18,14 @@ object InputValidationWindow  : VCF::Window
 		
 	end
 
+	object numericValidator : VCF::NumericValidator
+		
+	end
+
+	object maskedValidator : VCF::MaskedValidator
+		mask = '(###) ###-#### x####'
+	end
+
 
 	container = @fl
 
@@ -72,6 +80,7 @@ object InputValidationWindow  : VCF::Window
 
 		object numInput : VCF::TextControl
 			height = TextHeight
+			inputValidator = @numericValidator
 		end
 
 		object bdr7 : VCF::TitledBorder
@@ -91,6 +100,7 @@ object InputValidationWindow  : VCF::Window
 
 			object edt1 : VCF::TextControl
 				height = TextHeight
+				text = @numericValidator.maxWholeDigits
 			end
 
 			object lbl2 : VCF::Label
@@ -100,11 +110,17 @@ object InputValidationWindow  : VCF::Window
 
 			object edt2 : VCF::TextControl
 				height = TextHeight
+				text = @numericValidator.maxDecimalPlaces
+
+				delegates
+					model.ModelChanged = [numericValidator@NumericValidator::changeMaxDecimalPlaces]
+				end
 			end
 		end
 
 		object canBeNeg : VCF::CheckBoxControl
 			height = 25
+			checked = @numericValidator.negativeAllowed
 		end
 
 		object lbl2 : VCF::Label
@@ -167,6 +183,8 @@ object InputValidationWindow  : VCF::Window
 		object maskNumInput : VCF::TextControl
 			height = TextHeight
 			width = 130pt
+
+			inputValidator = @maskedValidator
 		end
 
 		object lbl4 : VCF::Label
@@ -176,6 +194,7 @@ object InputValidationWindow  : VCF::Window
 
 		object edt5 : VCF::TextControl
 			height = TextHeight
+			text = @maskedValidator.mask
 		end
 	end
 

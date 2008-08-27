@@ -111,7 +111,8 @@ String AlphaNumericValidator::getValidText()
 			result = result.substr( 0, minVal(maxChars_ , result.size()) );
 
 			// Remove any invalid characters from the control's text
-			for (size_t pos = result.size() - 1; pos >= 0; pos--)
+
+			for (int pos = result.size() - 1; pos >= 0; pos--)
 			{
 				if ( invalidChars_.find(result[pos]) != String::npos ) {
 					result = result.substr(0, pos) + result.substr(pos + 1,result.size()-(pos + 1));
@@ -239,6 +240,19 @@ int vcf_iswprint( VCFChar c )
 MaskedValidator::MaskedValidator()
 {
 	symbols_.push_back(Symbol('#', vcf_iswdigit));
+	
+	addCallback( new ClassProcedure1<Event*,MaskedValidator>(this, &MaskedValidator::changeMask), "MaskedValidator::changeMask" );
+}
+
+void MaskedValidator::changeMask( Event* e )
+{
+	Model* model = dynamic_cast<Model*>(e->getSource());
+
+	if ( model ) {
+		String s = model->getValueAsString();
+		
+		setMask( s );		
+	}
 }
 
 String MaskedValidator::getValidText()
@@ -550,8 +564,56 @@ NumericValidator::NumericValidator():
 	decimalPoint_ = locale->getNumberDecimalPoint();
 	groupSeparator_ = locale->getNumberThousandsSeparator();
 	
+	addCallback( new ClassProcedure1<Event*,NumericValidator>(this, &NumericValidator::changeMask), "NumericValidator::changeMask" );
+	addCallback( new ClassProcedure1<Event*,NumericValidator>(this, &NumericValidator::changeAllowNegative), "NumericValidator::changeAllowNegative" );
+	addCallback( new ClassProcedure1<Event*,NumericValidator>(this, &NumericValidator::changeMaxWholeDigits), "NumericValidator::changeMaxWholeDigits" );
+	addCallback( new ClassProcedure1<Event*,NumericValidator>(this, &NumericValidator::changeMaxDecimalPlaces), "NumericValidator::changeMaxDecimalPlaces" );
 }
 
+void NumericValidator::changeMask( Event* e )
+{
+	Model* model = dynamic_cast<Model*>(e->getSource());
+
+	if ( model ) {
+		String s = model->getValueAsString();
+		
+		setMask( s );		
+	}
+}
+
+void NumericValidator::changeAllowNegative( Event* e )
+{
+	Model* model = dynamic_cast<Model*>(e->getSource());
+
+	if ( model ) {
+		VariantData v = model->getValue();
+		
+		this->setAllowNegative( v );
+	}
+}
+
+void NumericValidator::changeMaxWholeDigits( Event* e )
+{
+	Model* model = dynamic_cast<Model*>(e->getSource());
+
+	if ( model ) {
+		VariantData v = model->getValue();
+		
+		this->setMaxWholeDigits( v );
+	}
+}
+
+void NumericValidator::changeMaxDecimalPlaces( Event* e )
+{
+	Model* model = dynamic_cast<Model*>(e->getSource());
+
+	if ( model ) {
+		String s = model->getValueAsString();
+		if ( !s.empty() ) {
+			setMaxDecimalPlaces( StringUtils::fromStringAsUInt(s) );
+		}
+	}
+}
 
 String NumericValidator::getValidText()
 {
@@ -725,7 +787,7 @@ void NumericValidator::handleEvent( Event* e )
 
 			// Check if it's a decimal point (only one is allowed).
 			else if (keyValStr == decimalPoint_ && maxDecimalPlaces_ > 0) {
-				if (nDecimalPos >= 0) {
+				if (nDecimalPos != String::npos) {
 					// Check if we're replacing the decimal point
 					if (nDecimalPos >= nStart && nDecimalPos < nEnd) {
 						needAdjustment = true;
@@ -746,7 +808,7 @@ void NumericValidator::handleEvent( Event* e )
 			// Check if it's a digit
 			else if ( vcf_iswdigit(ke->keyValue) ) {
 				// Check if we're on the right of the decimal point.
-				if (nDecimalPos >= 0 && nDecimalPos < nStart) {
+				if (nDecimalPos != String::npos && nDecimalPos < nStart) {
 					if ( numericText.substr(nNumericDecimalPos + 1,numericText.length()-(nNumericDecimalPos + 1)).length() 
 							== maxDecimalPlaces_ ) {
 
@@ -840,7 +902,11 @@ double NumericValidator::getDouble()
 {
 	Locale* locale = System::getCurrentThreadLocale();
 
-	double result = locale->toDouble( this->getNumericText( inputControl_->getText() ) );
+	double result = 0.0;
+	
+	if ( NULL != inputControl_ ) {
+		result = locale->toDouble( this->getNumericText( inputControl_->getText() ) );
+	}
 
 	return result;
 }
@@ -855,8 +921,10 @@ void NumericValidator::setInt( const int& val )
 int NumericValidator::getInt()
 {
 	Locale* locale = System::getCurrentThreadLocale();
-	int result = locale->toInt( this->getNumericText( inputControl_->getText() ) );
-	return result;
+	if ( NULL != inputControl_ ) {
+		return locale->toInt( this->getNumericText( inputControl_->getText() ) );
+	}
+	return 0;
 }
 
 void NumericValidator::setMaxWholeDigits( const int& val )
@@ -1049,11 +1117,11 @@ String NumericValidator::getSeparatedText(const String& text)
 	}
 
 	// Prepend the prefix, if the number is not empty.
-	if (!result.empty() || nDecimalPos >= 0)
+	if (!result.empty() || (nDecimalPos != String::npos))
 	{
 		result = prefix_ + result;
 
-		if (nDecimalPos >= 0) {
+		if (nDecimalPos != String::npos) {
 			result += numericText.substr(nDecimalPos,numericText.length()-nDecimalPos);
 		}
 	}
