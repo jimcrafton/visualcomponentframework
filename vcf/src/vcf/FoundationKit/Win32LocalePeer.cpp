@@ -1585,6 +1585,54 @@ UnicodeString Win32LocalePeer::getCurrencyNegativeSign()
 	return result;
 }
 
+UnicodeString Win32LocalePeer::getAMSymbol()
+{
+	UnicodeString result;
+
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	GetLocaleInfoW( lcid_, LOCALE_S1159, tmp, 255 );
+	result = tmp;
+#else
+	if ( System::isUnicodeEnabled() ) {
+		VCFChar tmp[256];
+		GetLocaleInfoW( lcid_, LOCALE_S1159, tmp, 255 );
+		result = tmp;
+	}
+	else {
+		char tmp[256];
+		GetLocaleInfoA( lcid_, LOCALE_S1159, tmp, 255 );
+		result = tmp;
+	}
+#endif	
+
+	return result;
+}
+
+UnicodeString Win32LocalePeer::getPMSymbol()
+{
+	UnicodeString result;
+
+#ifdef VCF_WIN32CE
+	VCFChar tmp[256];
+	GetLocaleInfoW( lcid_, LOCALE_S2359, tmp, 255 );
+	result = tmp;
+#else
+	if ( System::isUnicodeEnabled() ) {
+		VCFChar tmp[256];
+		GetLocaleInfoW( lcid_, LOCALE_S2359, tmp, 255 );
+		result = tmp;
+	}
+	else {
+		char tmp[256];
+		GetLocaleInfoA( lcid_, LOCALE_S2359, tmp, 255 );
+		result = tmp;
+	}
+#endif	
+
+	return result;
+}
+
 bool Win32LocalePeer::isCharA( const int32& charTypeMask, const VCFChar& c )
 {
 	int32 mask = 0;

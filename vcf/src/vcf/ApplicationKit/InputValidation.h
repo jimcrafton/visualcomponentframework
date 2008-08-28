@@ -96,6 +96,9 @@ namespace VCF {
 		TextControl* inputControl_;
 
 		uint32 flags_;
+
+		void setAndReplaceSelection( uint32 start, uint32 count, const String& val, int incrementStart=1, bool forcePeer = false );
+		void setAndReplaceSelection( uint32 start, uint32 count, const VCFChar& val, int incrementStart=1, bool forcePeer = false );
 	};
 
 
@@ -113,7 +116,7 @@ namespace VCF {
 			return invalidChars_;
 		}
 
-		void setMaxCharacters( size_t val );
+		void setMaxCharacters( const size_t& val );
 
 		size_t getMaxCharacters() {
 			return maxChars_;
@@ -210,38 +213,91 @@ namespace VCF {
 	};
 
 
+	enum NumericValidationFlags {
+		nvfNone										= 0x0000,
+		nvfCannotBeNegative							= 0x1000,
+		nvfAddDecimalAfterMaxWholeDigits				= 0x2000,
+		nvfPadWithZerosAfterDecimalWhenTextChanges		= 0x4000,
+		nvfPadWithZerosAfterDecimalWhenTextIsSet		= 0x8000,
+
+		nvfOnKillFocus_BeepIfInvalid					= 0x0001,
+		nvfOnKillFocus_BeepIfEmpty					= 0x0002,
+		nvfOnKillFocus_Beep							= 0x0003,
+		nvfOnKillFocus_SetValidIfInvalid				= 0x0004,
+		nvfOnKillFocus_SetValidIfEmpty				= 0x0008,
+		nvfOnKillFocus_SetValid						= 0x000C,
+		nvfOnKillFocus_SetFocusIfInvalid				= 0x0010,
+		nvfOnKillFocus_SetFocusIfEmpty				= 0x0020,
+		nvfOnKillFocus_SetFocus						= 0x0030,
+		nvfOnKillFocus_ShowMessageIfInvalid			= 0x0050,
+		nvfOnKillFocus_ShowMessageIfEmpty				= 0x00A0,
+		nvfOnKillFocus_ShowMessage						= 0x00F0,
+
+		nvfOnKillFocus_PadWithZerosBeforeDecimal		= 0x0100,
+		nvfOnKillFocus_PadWithZerosAfterDecimal		= 0x0200,
+		nvfOnKillFocus_DontPadWithZerosIfEmpty			= 0x0400,
+		nvfOnKillFocus_RemoveExtraLeadingZeros			= 0x0800,
+		nvfOnKillFocus_Max								= 0x0FFF
+	};
+
+	static String NumericValidationFlagNames[] = { "nvfNone",
+										"nvfCannotBeNegative",
+										"nvfAddDecimalAfterMaxWholeDigits",
+										"nvfPadWithZerosAfterDecimalWhenTextChanges",
+										"nvfPadWithZerosAfterDecimalWhenTextIsSet",
+
+										"nvfOnKillFocus_BeepIfInvalid",
+										"nvfOnKillFocus_BeepIfEmpty",
+										"nvfOnKillFocus_Beep",
+										"nvfOnKillFocus_SetValidIfInvalid",
+										"nvfOnKillFocus_SetValidIfEmpty",
+										"nvfOnKillFocus_SetValid",
+										"nvfOnKillFocus_SetFocusIfInvalid",
+										"nvfOnKillFocus_SetFocusIfEmpty",
+										"nvfOnKillFocus_SetFocus",
+										"nvfOnKillFocus_ShowMessageIfInvalid",
+										"nvfOnKillFocus_ShowMessageIfEmpty",
+										"nvfOnKillFocus_ShowMessage",
+
+										"nvfOnKillFocus_PadWithZerosBeforeDecimal",
+										"nvfOnKillFocus_PadWithZerosAfterDecimal",
+										"nvfOnKillFocus_DontPadWithZerosIfEmpty",
+										"nvfOnKillFocus_RemoveExtraLeadingZeros",
+										"nvfOnKillFocus_Max" };
+										 
+										 
+										 
+
+	static uint32 NumericValidationFlagValues[] = { nvfNone,
+										nvfCannotBeNegative,
+										nvfAddDecimalAfterMaxWholeDigits,
+										nvfPadWithZerosAfterDecimalWhenTextChanges,
+										nvfPadWithZerosAfterDecimalWhenTextIsSet,
+
+										nvfOnKillFocus_BeepIfInvalid,
+										nvfOnKillFocus_BeepIfEmpty,
+										nvfOnKillFocus_Beep,
+										nvfOnKillFocus_SetValidIfInvalid,
+										nvfOnKillFocus_SetValidIfEmpty,
+										nvfOnKillFocus_SetValid,
+										nvfOnKillFocus_SetFocusIfInvalid,
+										nvfOnKillFocus_SetFocusIfEmpty,
+										nvfOnKillFocus_SetFocus,
+										nvfOnKillFocus_ShowMessageIfInvalid,
+										nvfOnKillFocus_ShowMessageIfEmpty,
+										nvfOnKillFocus_ShowMessage,
+
+										nvfOnKillFocus_PadWithZerosBeforeDecimal,
+										nvfOnKillFocus_PadWithZerosAfterDecimal,
+										nvfOnKillFocus_DontPadWithZerosIfEmpty,
+										nvfOnKillFocus_RemoveExtraLeadingZeros,
+										nvfOnKillFocus_Max };	
 
 
 	class APPLICATIONKIT_API NumericValidator : public InputValidator {
 	public:
 		NumericValidator();
 
-		enum ValidationFlags {
-			vfNone										= 0x0000,
-			vfCannotBeNegative							= 0x1000,
-			vfAddDecimalAfterMaxWholeDigits				= 0x2000,
-			vfPadWithZerosAfterDecimalWhenTextChanges		= 0x4000,
-			vfPadWithZerosAfterDecimalWhenTextIsSet		= 0x8000,
-
-			vfOnKillFocus_BeepIfInvalid					= 0x0001,
-			vfOnKillFocus_BeepIfEmpty					= 0x0002,
-			vfOnKillFocus_Beep							= 0x0003,
-			vfOnKillFocus_SetValidIfInvalid				= 0x0004,
-			vfOnKillFocus_SetValidIfEmpty				= 0x0008,
-			vfOnKillFocus_SetValid						= 0x000C,
-			vfOnKillFocus_SetFocusIfInvalid				= 0x0010,
-			vfOnKillFocus_SetFocusIfEmpty				= 0x0020,
-			vfOnKillFocus_SetFocus						= 0x0030,
-			vfOnKillFocus_ShowMessageIfInvalid			= 0x0050,
-			vfOnKillFocus_ShowMessageIfEmpty				= 0x00A0,
-			vfOnKillFocus_ShowMessage						= 0x00F0,
-
-			vfOnKillFocus_PadWithZerosBeforeDecimal		= 0x0100,
-			vfOnKillFocus_PadWithZerosAfterDecimal		= 0x0200,
-			vfOnKillFocus_DontPadWithZerosIfEmpty			= 0x0400,
-			vfOnKillFocus_RemoveExtraLeadingZeros			= 0x0800,
-			vfOnKillFocus_Max								= 0x0FFF
-		};
 
 
 		virtual String getValidText();
@@ -341,6 +397,15 @@ namespace VCF {
 		virtual void showErrorMessage();
 		void adjustWithinRange();
 
+	};
+
+
+
+
+	class APPLICATIONKIT_API CurrencyValidator : public NumericValidator {
+	public:
+		CurrencyValidator();
+		virtual ~CurrencyValidator(){}
 	};
 };
 

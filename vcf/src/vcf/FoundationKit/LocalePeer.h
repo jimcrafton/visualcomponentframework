@@ -91,6 +91,8 @@ public:
 	virtual int getCurrencyFractionalDigits() = 0;
 	virtual UnicodeString getCurrencyPositiveSign() = 0;
 	virtual UnicodeString getCurrencyNegativeSign() = 0;
+	virtual UnicodeString getAMSymbol() = 0;
+	virtual UnicodeString getPMSymbol() = 0;
 
 	virtual bool isCharA( const int32& charTypeMask, const VCFChar& c ) = 0;
 

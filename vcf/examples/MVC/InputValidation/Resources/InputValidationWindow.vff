@@ -15,7 +15,7 @@ object InputValidationWindow  : VCF::Window
 
 
 	object alphaNumValidator : VCF::AlphaNumericValidator
-		
+		maxCharacters = 10
 	end
 
 	object numericValidator : VCF::NumericValidator
@@ -120,6 +120,7 @@ object InputValidationWindow  : VCF::Window
 
 		object canBeNeg : VCF::CheckBoxControl
 			height = 25
+			caption = 'Cannot be negative'
 			checked = @numericValidator.negativeAllowed
 		end
 
@@ -195,6 +196,9 @@ object InputValidationWindow  : VCF::Window
 		object edt5 : VCF::TextControl
 			height = TextHeight
 			text = @maskedValidator.mask
+			delegates
+				model.ModelChanged = [maskedValidator@MaskedValidator::changeMask]
+			end
 		end
 	end
 

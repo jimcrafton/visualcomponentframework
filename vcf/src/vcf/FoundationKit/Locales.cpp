@@ -1262,6 +1262,15 @@ Locale::CountryCodes Locale::stringToCountryCode( const UnicodeString& code )
 	return result;
 }
 
+UnicodeString Locale::getAMSymbol()
+{
+	return peer_->getAMSymbol();
+}
+
+UnicodeString Locale::getPMSymbol()
+{
+	return peer_->getPMSymbol();
+}
 
 /**
 $Id$

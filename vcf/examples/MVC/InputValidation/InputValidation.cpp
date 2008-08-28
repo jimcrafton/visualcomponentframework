@@ -3,6 +3,8 @@
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/FoundationKit/RTTIMacros.h"
+#include "vcf/ApplicationKit/AdapterModels.h"
+
 
 using namespace VCF;
 
@@ -31,8 +33,7 @@ public:
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
-		REGISTER_CLASSINFO_EXTERNAL(InputValidationWindow);
-		
+		REGISTER_CLASSINFO_EXTERNAL(InputValidationWindow);		
 		
 
 		Window* mainWindow = Frame::createWindow( classid(InputValidationWindow) );
