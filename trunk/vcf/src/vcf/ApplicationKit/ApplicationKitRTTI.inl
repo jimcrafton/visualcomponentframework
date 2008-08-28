@@ -895,7 +895,6 @@ _class_rtti_end_
 
 _class_abstract_rtti_(InputValidator, "VCF::Component", "InputValidator")
 _property_object_( TextControl, "inputControl", getInputControl, setInputControl, "" )
-_property_( uint32, "flags",getFlags, setFlags, "" )
 _class_rtti_end_
 
 
@@ -926,6 +925,7 @@ _property_( String, "prefix",getPrefix, setPrefix, "" )
 _property_( String, "mask",getMask, setMask, "" )
 _property_( double, "max",getMax, setMax, "" )
 _property_( double, "min",getMin, setMin, "" )
+_property_enumset_( VCF::NumericValidationFlags, "flags", getFlags, setFlags, 22, NumericValidationFlagValues, NumericValidationFlagNames, ""  );
 _class_rtti_end_
 
 
@@ -1149,6 +1149,23 @@ _class_rtti_(ObjectColumnModel, "VCF::ColumnModel", "ObjectColumnModel")
 	_property_object_( ListModel, "listModel", getListModel, setListModel, "" )
 _class_rtti_end_
 
+
+
+_class_rtti_(ValueModel, "VCF::Model", "ValueModel")	
+_class_rtti_end_
+
+
+_class_rtti_(BoolModel, "VCF::Model", "BoolModel")	 //skipping the TypeModel base class - something to note here...
+_class_rtti_end_
+
+_class_rtti_(IntModel, "VCF::Model", "IntModel")	 //skipping the TypeModel base class - something to note here...
+_class_rtti_end_
+
+_class_rtti_(DoubleModel, "VCF::Model", "DoubleModel")	 //skipping the TypeModel base class - something to note here...
+_class_rtti_end_
+
+_class_rtti_(StringModel, "VCF::Model", "StringModel")	 //skipping the TypeModel base class - something to note here...
+_class_rtti_end_
 
 
 

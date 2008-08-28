@@ -796,6 +796,8 @@ public:
 	int getCurrencyFractionalDigits();
 	UnicodeString getCurrencyPositiveSign();
 	UnicodeString getCurrencyNegativeSign();
+	UnicodeString getAMSymbol();
+	UnicodeString getPMSymbol();
 
 	bool isCharA( const int32& charTypeMask, const VCFChar& c );
 

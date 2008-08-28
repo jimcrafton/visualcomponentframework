@@ -66,6 +66,8 @@ public:
 	virtual int getCurrencyFractionalDigits();
 	virtual UnicodeString getCurrencyPositiveSign();
 	virtual UnicodeString getCurrencyNegativeSign();
+	virtual UnicodeString getAMSymbol();
+	virtual UnicodeString getPMSymbol();
 
 	virtual bool isCharA( const int32& charTypeMask, const VCFChar& c );
 

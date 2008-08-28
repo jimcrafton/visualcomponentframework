@@ -531,6 +531,123 @@ protected:
 };
 
 
+
+
+class APPLICATIONKIT_API ValueModel : public Model {
+public:
+	ValueModel():value_(VariantData::null()){}
+	virtual ~ValueModel(){}
+
+
+	virtual bool isEmpty() {
+		
+		return value_.isNull();
+	}
+
+	virtual void setValue( const VariantData& value, const VariantData& key=VariantData::null() ) { 
+		value_ = value;
+		ModelEvent e(this,MODEL_CHANGED);
+		changed(&e);
+	}
+
+	virtual VariantData getValue( const VariantData& key=VariantData::null() ) 	{
+		return value_;
+	}
+protected:
+	VariantData value_;
+};
+
+
+
+template <typename Type>
+class APPLICATIONKIT_API TypeModel : public Model {
+public:
+	typedef Type ValueType;
+
+	TypeModel():value_(ValueType()){}
+	virtual ~TypeModel(){}
+
+	virtual bool isEmpty() {		
+		return false;
+	}
+
+	virtual void setValue( const VariantData& value, const VariantData& key=VariantData::null() ) { 
+		internal_set(value);
+	}
+
+	virtual VariantData getValue( const VariantData& key=VariantData::null() ) 	{
+		return value_;
+	}
+
+	inline TypeModel& operator=( const ValueType& rhs ) {
+		internal_set(rhs);
+		return *this;
+	}
+
+	inline operator ValueType() const {
+		return value_;
+	}
+
+	inline bool operator== ( const ValueType& rhs ) const {
+		return value_ == rhs;
+	}
+
+protected:
+
+	inline void internal_set( const ValueType& rhs ) {
+		value_ = rhs;
+		ModelEvent e(this,MODEL_CHANGED);
+		changed(&e);
+	}
+
+	ValueType value_;
+};
+
+class APPLICATIONKIT_API BoolModel : public TypeModel<bool> {
+public:
+	BoolModel(){}
+	virtual ~BoolModel(){}
+
+	inline BoolModel& operator=( const bool& rhs ) {
+		internal_set(rhs);
+		return *this;
+	}
+};
+
+
+class APPLICATIONKIT_API IntModel : public TypeModel<int64> {
+public:
+	IntModel(){}
+	virtual ~IntModel(){}
+	inline IntModel& operator=( const int64& rhs ) {
+		internal_set(rhs);
+		return *this;
+	}
+};
+
+
+class APPLICATIONKIT_API DoubleModel : public TypeModel<double> {
+public:
+	DoubleModel(){}
+	virtual ~DoubleModel(){}
+	inline DoubleModel& operator=( const double& rhs ) {
+		internal_set(rhs);
+		return *this;
+	}
+};
+
+
+class APPLICATIONKIT_API StringModel : public TypeModel<String> {
+public:
+	StringModel(){}
+	virtual ~StringModel(){}
+	inline StringModel& operator=( const String& rhs ) {
+		internal_set(rhs);
+		return *this;
+	}
+};
+
+
 	
 };
 
