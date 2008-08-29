@@ -264,6 +264,9 @@ public:
 	}
 
 	void setInputValidator( InputValidator* val );
+
+	void internal_processKeyDown( KeyboardEvent* ke );
+	void internal_processKeyPress( KeyboardEvent* ke );
 protected:
 	/**
 	handlers of some standard accelerator events.

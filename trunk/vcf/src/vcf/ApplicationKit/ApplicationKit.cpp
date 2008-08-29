@@ -211,6 +211,8 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL(AlphaNumericValidator);
 		REGISTER_CLASSINFO_EXTERNAL(MaskedValidator);
 		REGISTER_CLASSINFO_EXTERNAL(NumericValidator);
+		REGISTER_CLASSINFO_EXTERNAL(CurrencyValidator);
+		
 
 
 

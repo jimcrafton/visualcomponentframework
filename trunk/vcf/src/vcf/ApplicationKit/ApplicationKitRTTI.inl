@@ -930,6 +930,10 @@ _class_rtti_end_
 
 
 
+_class_rtti_(CurrencyValidator, "VCF::NumericValidator", "CurrencyValidator")
+_class_rtti_end_
+
+
 
 _class_rtti_(TimerComponent, "VCF::Component", TIMERCOMPONENT_CLASSID)
 _property_( bool, "active",isActive, setActivated, "" );
