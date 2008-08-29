@@ -34,7 +34,7 @@ class APPLICATIONKIT_API KeyboardEvent : public Event {
 public:
 
 	KeyboardEvent( Object* source ) : Event(source),
-		keyMask(0), keyValue(0), repeatCount(0), virtualKeyCode((VirtualKeyCode)0),ignoreKeystroke(false)  {
+		keyMask(0), keyValue(0), repeatCount(0), virtualKeyCode((VirtualKeyCode)0),ignoreKeystroke(false),dontProcessKeystroke(false)  {
 
 	}
 
@@ -43,7 +43,7 @@ public:
 				   const VCFChar& kv,
 				   const VirtualKeyCode& vk ): Event(source,eventType),
 		keyMask(km), keyValue(kv), repeatCount(repCnt),
-		virtualKeyCode(vk),ignoreKeystroke(false) {}
+		virtualKeyCode(vk),ignoreKeystroke(false),dontProcessKeystroke(false) {}
 
 	KeyboardEvent( const KeyboardEvent& rhs ):Event(rhs) {
 		*this = rhs;
@@ -59,6 +59,7 @@ public:
 		repeatCount = rhs.repeatCount;
 		virtualKeyCode = rhs.virtualKeyCode;
 		ignoreKeystroke = rhs.ignoreKeystroke;
+		dontProcessKeystroke = rhs.dontProcessKeystroke;
 		
 		return *this;
 	}
@@ -86,6 +87,7 @@ public:
 	uint32 repeatCount;
 	VirtualKeyCode virtualKeyCode;
 	bool ignoreKeystroke;
+	bool dontProcessKeystroke;
 };
 
 

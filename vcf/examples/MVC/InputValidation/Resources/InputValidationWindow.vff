@@ -26,6 +26,10 @@ object InputValidationWindow  : VCF::Window
 		mask = '(###) ###-#### x####'
 	end
 
+	object currencyValidator : VCF::CurrencyValidator
+		
+	end
+
 
 	container = @fl
 
@@ -153,6 +157,7 @@ object InputValidationWindow  : VCF::Window
 		object currencyInput : VCF::TextControl
 			height = TextHeight
 			width = 130pt
+			inputValidator = @currencyValidator
 		end
 
 		object lbl3 : VCF::Label

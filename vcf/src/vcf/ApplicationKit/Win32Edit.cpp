@@ -809,11 +809,13 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					else {
 						wndProcResult = 0;
 						result = true;
-					}
+					}					
 
 					if ( editState_ & esTextModelChangedPending ) {
 						setText( textControl_->getText() );
 					}
+
+					
 				}				
 
 				if ( peerControl_->isDesigning() ) {

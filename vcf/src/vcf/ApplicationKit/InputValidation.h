@@ -384,6 +384,7 @@ namespace VCF {
 		double min_;
 		double max_;
 		bool adjustingSeparators_;
+		bool needsAdjusting_;
 
 		
 		int getGroupSeparatorCount(const String& strText);

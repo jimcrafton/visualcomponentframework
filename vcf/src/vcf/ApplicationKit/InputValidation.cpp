@@ -526,74 +526,7 @@ void MaskedValidator::handleEvent( Event* e )
 		case Control::KEYBOARD_UP : {
 			KeyboardEvent* ke = (KeyboardEvent*)e;
 		}
-		break;
-
-		case Control::FOCUS_LOST : {
-			/*
-			// Check if the value is empty and we don't want to touch it
-			String originalText = this->getNumericText(inputControl_->getText());
-			String text = originalText;
-			size_t nLen = text.length();
-
-			// If desired, remove any extra leading zeros but always leave one in front of the decimal point
-			if (flags_ & nvfOnKillFocus_RemoveExtraLeadingZeros && nLen > 0) {
-				bool bIsNegative = (text[0] == m_cNegativeSign);
-				if (bIsNegative) {
-					text.erase(0,1);
-				}
-
-				text = StringUtils::trimLeft( text, '0' );
-
-				if ( text.IsEmpty() || text[0] == m_cDecimalPoint ) {
-					text.Insert(0, '0');
-				}
-
-				if (bIsNegative) {
-					text.Insert(0, m_cNegativeSign);
-				}
-			}
-			else if (!(flags_ & OnKillFocus_Max) || (nLen == 0 && flags_ & OnKillFocus_DontPadWithZerosIfEmpty))
-				return;
-
-			int nDecimalPos = text.Find(m_cDecimalPoint);
-
-			// Check if we need to pad the number with zeros after the decimal point
-			if (flags_ & OnKillFocus_PadWithZerosAfterDecimal && m_nMaxDecimalPlaces > 0)
-			{
-				if (nDecimalPos < 0)
-				{
-					if (nLen == 0 || text == '-')
-					{
-						text = '0';
-						nLen = 1;
-					}
-					text += m_cDecimalPoint;
-					nDecimalPos = nLen++;
-				}
-
-				InsertZeros(&text, -1, m_nMaxDecimalPlaces - (nLen - nDecimalPos - 1));
-			}
-
-			// Check if we need to pad the number with zeros before the decimal point
-			if (flags_ & OnKillFocus_PadWithZerosBeforeDecimal && m_nMaxWholeDigits > 0)
-			{
-				if (nDecimalPos < 0)
-					nDecimalPos = nLen;
-
-				if (nLen && text[0] == '-')
-					nDecimalPos--;
-
-				InsertZeros(&text, (nLen ? text[0] == '-' : -1), m_nMaxWholeDigits - nDecimalPos);
-			}
-
-			if (text != originalText)
-			{
-				SelectionSaver selection = m_pEdit;	// remember the current selection 
-				m_pEdit->SetWindowText(text);
-			}
-*/
-		}
-		break;
+		break;		
 	}
 }
 
@@ -779,17 +712,21 @@ void NumericValidator::handleEvent( Event* e )
 
 	switch ( e->getType() ) {
 		case Control::KEYBOARD_DOWN : {
+			needsAdjusting_ = false;
 			KeyboardEvent* ke = (KeyboardEvent*)e;
 		}
 		break;
 
-		case Control::KEYBOARD_PRESSED : {
+		case Control::KEYBOARD_PRESSED : {			
+
 			KeyboardEvent* ke = (KeyboardEvent*)e;
 			// Check to see if it's read only
 			if (inputControl_->isReadOnly()) {
 				return;
 			}
 			
+			ke->ignoreKeystroke = true;
+
 			String keyValStr(1,ke->keyValue);
 
 			size_t nStart = inputControl_->getSelectionStart();
@@ -816,9 +753,10 @@ void NumericValidator::handleEvent( Event* e )
 						setAndReplaceSelection( nStart, nEnd-nStart, ke->keyValue );
 
 						//inputControl_->SetSel(nStart, nEnd);
-						//inputControl_->ReplaceSel(String(ke->keyValue), TRUE);
-
-						ke->ignoreKeystroke = true;
+						//inputControl_->ReplaceSel(String(ke->keyValue), TRUE);						
+					}
+					else {
+						ke->ignoreKeystroke = false;
 					}
 				}
 				// If it's a part of the number, enter the prefix
@@ -826,7 +764,7 @@ void NumericValidator::handleEvent( Event* e )
 					nEnd = (nEnd == nLen ? nEnd : (nPrefixLen));
 					//inputControl_->SetSel(nStart, nEnd);
 				//	inputControl_->ReplaceSel(prefix_.Mid(nStart), TRUE);
-					setAndReplaceSelection( nStart, nEnd-nStart, prefix_.substr(nStart,prefix_.size()-nStart) );
+					setAndReplaceSelection( nStart, nEnd-nStart, prefix_.substr(nStart,prefix_.size()-nStart), 1, true );
 
 
 					handleEvent(ke);
@@ -846,8 +784,6 @@ void NumericValidator::handleEvent( Event* e )
 						//inputControl_->SetSel(nStart, nEnd);
 						//inputControl_->ReplaceSel(String(negativeSign_), TRUE);
 						setAndReplaceSelection( nStart, nEnd-nStart, negativeSign_ );
-
-						ke->ignoreKeystroke = true;
 						return;
 					}
 				}
@@ -861,8 +797,6 @@ void NumericValidator::handleEvent( Event* e )
 
 						setAndReplaceSelection( nPrefixLen, 1, L"", 0 );
 						inputControl_->setSelectionMark( nStart - 1, (nEnd - 1) - (nStart - 1) );
-
-						ke->ignoreKeystroke = true;
 					}
 					else {
 						setAndReplaceSelection( nPrefixLen, 0, negativeSign_, 0 );
@@ -871,8 +805,6 @@ void NumericValidator::handleEvent( Event* e )
 						//inputControl_->SetSel(nPrefixLen, nPrefixLen);
 						//inputControl_->ReplaceSel(String(negativeSign_), TRUE);
 						//inputControl_->SetSel(nStart + 1, nEnd + 1);
-
-						ke->ignoreKeystroke = true;
 					}
 
 					return;
@@ -890,8 +822,7 @@ void NumericValidator::handleEvent( Event* e )
 						if (allowCharacter(ke->keyValue)) {
 //							inputControl_->SetSel(nDecimalPos + 1, nDecimalPos + 1);
 							inputControl_->setSelectionMark( nDecimalPos + 1, 0 );
-						}
-						ke->ignoreKeystroke = true;
+						}						
 						return;
 					}
 				}
@@ -914,7 +845,6 @@ void NumericValidator::handleEvent( Event* e )
 							setAndReplaceSelection( nStart, nEnd-nStart, ke->keyValue );
 						}
 
-						ke->ignoreKeystroke = true;
 						return;
 					}
 				}
@@ -933,11 +863,10 @@ void NumericValidator::handleEvent( Event* e )
 							s+= ke->keyValue;
 							setAndReplaceSelection( nStart, nEnd-nStart, s );
 						}
-						ke->ignoreKeystroke = true;
 						return;
 					}
 
-					if ( numericText.substr(0, nNumericDecimalPos >= 0 ? nNumericDecimalPos : nNumericLen).length() == maxWholeDigits_ + isNegative ) {
+					if ( numericText.substr(0, nNumericDecimalPos != String::npos ? nNumericDecimalPos : nNumericLen).length() == maxWholeDigits_ + isNegative ) {
 						if ( allowCharacter(ke->keyValue) ) {
 							if (text[nStart] == groupSeparator_[0]) {
 								nStart++;
@@ -948,7 +877,6 @@ void NumericValidator::handleEvent( Event* e )
 							//inputControl_->ReplaceSel(String(ke->keyValue), TRUE);
 							setAndReplaceSelection( nStart, nEnd-nStart, ke->keyValue );
 						}
-						ke->ignoreKeystroke = true;
 						return;
 					}
 
@@ -961,7 +889,6 @@ void NumericValidator::handleEvent( Event* e )
 				needAdjustment = true;
 			}
 			else {
-				ke->ignoreKeystroke = true;
 				return;
 			}
 
@@ -971,18 +898,90 @@ void NumericValidator::handleEvent( Event* e )
 				return;
 			}
 			
+			ke->ignoreKeystroke = false;
+			inputControl_->internal_processKeyPress( ke );
+			ke->dontProcessKeystroke = true;
+
+			needsAdjusting_ = false;
 			//Behavior::_OnChar(uChar, nRepCnt, nFlags);
 
 			// If the decimal point was added/removed or a separator needs adding/removing, adjust the text
 			if ( needAdjustment ) {
+				needsAdjusting_ = true;
 				adjustSeparators(nSepCount);
 			}
 
 		}
 		break;
 
-		case Control::KEYBOARD_UP : {
-			KeyboardEvent* ke = (KeyboardEvent*)e;
+		case Control::FOCUS_LOST : {
+			
+			// Check if the value is empty and we don't want to touch it
+			String originalText = getNumericText(inputControl_->getText());
+			String text = originalText;
+			size_t nLen = text.length();
+
+			// If desired, remove any extra leading zeros but always leave one in front of the decimal point
+			if (flags_ & nvfOnKillFocus_RemoveExtraLeadingZeros && nLen > 0) {
+				bool bIsNegative = (String(1,text[0]) == negativeSign_);
+				if (bIsNegative) {
+					text.erase(0,1);
+				}
+
+				text = StringUtils::trimLeft( text, '0' );
+
+				if ( text.empty() || String(1,text[0]) == decimalPoint_ ) {
+					text.insert(0, "0");
+				}
+
+				if (bIsNegative) {
+					text.insert(0, negativeSign_);
+				}
+			}
+			else if (!(flags_ & nvfOnKillFocus_Max) || (nLen == 0 && flags_ & nvfOnKillFocus_DontPadWithZerosIfEmpty)) {
+				return;
+			}
+
+			size_t nDecimalPos = text.find(decimalPoint_);
+
+			// Check if we need to pad the number with zeros after the decimal point
+			if (flags_ & nvfOnKillFocus_PadWithZerosAfterDecimal && maxDecimalPlaces_ > 0) {
+				if (nDecimalPos == String::npos) {
+					if (nLen == 0 || text == "-") {
+						text = "0";
+						nLen = 1;
+					}
+					text += decimalPoint_;
+					nDecimalPos = nLen++;
+				}
+
+				NumericValidator::insertZeros(text, -1, maxDecimalPlaces_ - (nLen - nDecimalPos - 1));
+			}
+
+			// Check if we need to pad the number with zeros before the decimal point
+			if (flags_ & nvfOnKillFocus_PadWithZerosBeforeDecimal && maxWholeDigits_ > 0)
+			{
+				if (nDecimalPos == String::npos) {
+					nDecimalPos = nLen;
+				}
+
+				if (nLen && text[0] == '-') {
+					nDecimalPos--;
+				}
+
+				NumericValidator::insertZeros(text, (nLen ? text[0] == '-' : -1), maxWholeDigits_ - nDecimalPos);
+			}
+
+			if (text != originalText) {
+				//SelectionSaver selection = m_pEdit;	// remember the current selection 
+				uint32 selStart = this->inputControl_->getSelectionStart();
+				uint32 selCount = this->inputControl_->getSelectionCount();
+				
+				inputControl_->setText( text );
+
+				inputControl_->setSelectionMark( selStart, selCount );
+			}
+
 		}
 		break;
 	}
@@ -1211,7 +1210,7 @@ String NumericValidator::getSeparatedText(const String& text)
 		int isNegative = (!result.empty() && String(1,result[0]) == negativeSign_);
 
 		// Loop in reverse and stick the separator every m_nDigitsInGroup digits.
-		for (size_t iPos = nLen - (digitsInGroup_ + 1); iPos >= isNegative; iPos -= digitsInGroup_) {
+		for (int iPos = nLen - (digitsInGroup_ + 1); iPos >= isNegative; iPos -= digitsInGroup_) {
 			result = result.substr(0,iPos + 1) + groupSeparator_ + result.substr(iPos + 1, result.length()-(iPos+1));
 		}
 	}
@@ -1304,6 +1303,7 @@ void NumericValidator::adjustSeparators(int currentSeparatorCount)
 
 	if ( text != inputControl_->getText() ) {
 		inputControl_->setText( text );
+		inputControl_->getPeer()->setText( text );
 	}
 
 	// Adjust the current selection if separators were added/removed
