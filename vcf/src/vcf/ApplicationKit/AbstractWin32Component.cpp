@@ -778,7 +778,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		break;
 
 		case  WM_SETFOCUS : {
-			
+/*			
 			HWND hwndLoseFocus = (HWND) wParam;
 			Win32Object* obj = Win32Object::getWin32ObjectFromHWND( hwndLoseFocus );
 			if ( NULL != obj ){
@@ -786,7 +786,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 				StringUtils::trace( Format( "lost focus: %s @ %p\n" ) % obj->getPeerControl()->getClassName() % obj->getPeerControl() );
 
 			}
-			
+*/			
 			if ( NULL != event && (!peerControl_->isDestroying()) ) {
 				peerControl_->handleEvent( event );
 			}
@@ -794,7 +794,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		break;
 
 		case  WM_KILLFOCUS : {
-			
+/*			
 			HWND hwndGetFocus = (HWND) wParam;
 			Win32Object* obj = Win32Object::getWin32ObjectFromHWND( hwndGetFocus );
 			if ( NULL != obj ){
@@ -802,7 +802,7 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 				StringUtils::trace( Format( "gained focus: %s @ %p\n" ) % obj->getPeerControl()->getClassName() % obj->getPeerControl() );
 
 			}
-			
+*/			
 			
 			if ( NULL != event && (!peerControl_->isDestroying()) ) {
 				peerControl_->handleEvent( event );

@@ -444,14 +444,27 @@ protected:
 
 
 
-enum ModelUpdate {
+enum ModelUpdateFlags {
 	muNone = 0,
-	muOnValidation
+	muUsesValidation = 0x0001,
+	muAllowsInvalidData = 0x0002,
+	muDisplayErrorIfInvalid = 0x0004
+
 };
 
 
-static String ModelUpdateNames[] = { "muNone",
-                                         "muOnValidation" };
+
+
+static String ModelUpdateFlagNames[] = { "muNone",
+                                        "muUsesValidation", 
+										"muAllowsInvalidData",
+										"muDisplayErrorIfInvalid" };
+
+
+static uint32 ModelUpdateFlagValues[] = { muNone,
+											muUsesValidation, 
+											muAllowsInvalidData,
+											muDisplayErrorIfInvalid };
 
 
 
@@ -540,7 +553,7 @@ public:
 	@event ValidationEvent
 	@see validate()
 	*/
-	DELEGATE(EventDelegate,ModelValidated)
+	DELEGATE(ValidationDelegate,ModelValidated)
     
     /**
 	Validate the model.
@@ -672,12 +685,12 @@ public:
 		return deleteVariantObjects_;
 	}
 
-	ModelUpdate getUpdateMode() {
-		return updateMode_;
+	uint32 getUpdateFlags() {
+		return updateFlags_;
 	}
 
-	void setUpdateMode( const ModelUpdate& val ) {
-		updateMode_ = val;
+	void setUpdateFlags( const uint32& val ) {
+		updateFlags_ = val;
 	}
 
 	ValidationFormatter* getFormatter() {
@@ -707,7 +720,7 @@ protected:
 	*/
 	bool deleteVariantObjects_;
 	Array<View*> views_;
-	ModelUpdate updateMode_;
+	uint32 updateFlags_;
 	ValidationFormatter* formatter_;
 	ValidationRuleCollection* validator_;
 

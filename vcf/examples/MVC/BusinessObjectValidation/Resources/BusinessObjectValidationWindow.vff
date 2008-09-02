@@ -1,0 +1,207 @@
+object BusinessObjectValidationWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 300
+	width = 320
+	caption = 'BusinessObjectValidation Window'	
+
+
+
+	object businessObject :  VCF::ObjectModel
+		updateFlags = [muUsesValidation,muDisplayErrorIfInvalid,muAllowsInvalidData]
+		validator = @rules
+		delegates 
+			ModelValidationFailed = [BizApp@BizApp::validationFailed]
+			ModelValidated = [BizApp@BizApp::validationOK]
+		end
+	end
+
+	object rules : VCF::ValidationRuleCollection
+		object min : VCF::MaxRule 
+			data = 1900
+			errorMessage = 'Year joined must be greater than 1900'
+			appliesToKey = 'yearJoined'
+		end
+	end
+
+	object images : VCF::ImageList
+		//transparentColor.red = 0
+		//transparentColor.green = 1.0
+		//transparentColor.blue = 0
+		
+		imageWidth = 16
+		imageHeight = 16
+
+		object img1 : VCF::ImageComponent 
+			filename = 'res:new.png'
+		end
+
+		object img2 : VCF::ImageComponent 
+			filename = 'res:save.png'
+		end
+
+		object img3 : VCF::ImageComponent 
+			filename = 'res:delete.png'
+		end
+	end
+
+	object toolbar : VCF::Toolbar 
+		alignment = AlignTop
+		height = 20pt		
+		imageList = @images
+
+		object newBtn : VCF::ToolbarItem
+			caption = 'New'
+			imageIndex = 0
+		end
+
+		object saveBtn : VCF::ToolbarItem
+			caption = 'Save'
+			imageIndex = 1
+		end
+
+		object s : VCF::ToolbarSeparator
+		end
+
+		object deleteBtn : VCF::ToolbarItem
+			caption = 'Delete'
+			imageIndex = 2
+		end
+
+		//put this here to ensure that the button captions get shown
+		showButtonCaptions = true
+		horizontalCaptions = true
+	end
+
+	object label : VCF::Label
+		alignment = AlignTop
+		caption = '  Business Object Validation'
+		font.name = 'Verdana'
+		font.pointSize = 14
+		font.bold = true
+		visible = true
+		height = 22pt
+	end
+
+
+	object form : VCF::Panel
+		alignment = AlignClient
+		border = null
+
+		object hl : VCF::HorizontalLayoutContainer
+			numberOfColumns = 2
+			maxRowHeight = 35
+			rowSpacerHeight = 10
+			widths[0] = 60pt
+
+			tweenWidths[0] = 10
+		end
+
+		container = @hl
+
+		object firstNameLbl : VCF::Label
+			caption = 'First Name'
+			height = LabelHeight
+		end
+
+		object edt1 : VCF::TextControl
+			height = TextHeight
+			modelKey = 'firstName'
+			model = @businessObject
+		end
+
+		object lastNameLbl : VCF::Label
+			caption = 'Last Name'
+			height = LabelHeight
+		end
+
+		object edt2 : VCF::TextControl
+			height = TextHeight
+			modelKey = 'lastName'
+			model = @businessObject
+		end
+
+		object emailLbl : VCF::Label
+			caption = 'Email'
+			height = LabelHeight
+		end
+
+		object edt3 : VCF::TextControl
+			height = TextHeight
+			modelKey = 'email'
+			model = @businessObject
+		end
+
+		object workPhoneLbl : VCF::Label
+			caption = 'Work Phone'
+			height = LabelHeight
+		end
+
+		object edt4 : VCF::TextControl
+			height = TextHeight
+			modelKey = 'workPhone'
+			model = @businessObject
+		end
+
+		object depositLbl : VCF::Label
+			caption = 'Deposit'
+			height = LabelHeight
+		end
+
+		object edt5 : VCF::TextControl
+			height = TextHeight
+			modelKey = 'deposit'
+			model = @businessObject
+		end
+
+		object yearJoinedLbl : VCF::Label
+			caption = 'Year Joined'
+			height = LabelHeight
+		end
+
+		object edt6 : VCF::TextControl
+			height = TextHeight
+			modelKey = 'yearJoined'
+			model = @businessObject
+		end
+
+	end
+
+
+
+	object newAction : VCF::Action
+		targets[0] = @newBtn
+		delegates 
+			Performed  = [BizApp@BizApp::newObject]
+			Update  = [BizApp@BizApp::updateNewObject]
+		end
+	end
+
+	object saveAction : VCF::Action
+		targets[0] = @saveBtn
+		delegates 
+			Performed  = [BizApp@BizApp::saveObject]
+			Update  = [BizApp@BizApp::updateSaveObject]
+		end
+	end
+
+	object deleteAction : VCF::Action
+		targets[0] = @deleteBtn
+		delegates 
+			Performed  = [BizApp@BizApp::deleteObject]
+			Update  = [BizApp@BizApp::updateDeleteObject]
+		end
+	end
+
+	object updateAction : VCF::Action
+		targets[0] = @edt1
+		targets[1] = @edt2
+		targets[2] = @edt3
+		targets[3] = @edt4
+		targets[4] = @edt5
+		targets[5] = @edt6
+		delegates 
+			Update  = [BizApp@BizApp::updateCurrent]
+		end
+	end
+end

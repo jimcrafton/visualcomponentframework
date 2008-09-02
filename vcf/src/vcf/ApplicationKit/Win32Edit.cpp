@@ -718,6 +718,14 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					//wndProcResult = 1;
 					result = true;
 
+					if ( !(editState_ & esKeyEvent) ) {
+						editState_ |= esKeyEvent;
+					}
+
+					if ( !(editState_ & esTextModelChangedPending) ) {
+						editState_ |= esTextModelChangedPending;
+					}
+					
 
 					if ( !peerControl_->isDesigning() && !event.ignoreKeystroke ) {
 						wndProcResult = defaultWndProcedure( message, wParam, lParam );
@@ -1064,8 +1072,14 @@ void Win32Edit::onModelValidationFailed( Event* e )
 {
 	ValidationErrorEvent* ve = (ValidationErrorEvent*)e;
 
-	if ( ve->key == textControl_->getModelKey() && textControl_->getViewModel()->getFormatter() ) {
-		setText( textControl_->getViewModel()->getValueAsString( ve->key ) );
+	if ( ve->key == textControl_->getModelKey() && 
+		textControl_->getViewModel()->getFormatter() &&
+		!(textControl_->getViewModel()->getUpdateFlags() & muAllowsInvalidData) ) {
+		String s = getText();
+		String modelVal = textControl_->getViewModel()->getValueAsString( ve->key );
+		if ( s != modelVal ) {
+			setText( modelVal );
+		}
 	}
 }
 

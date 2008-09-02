@@ -94,7 +94,7 @@ public:
 				Property* property = clazz->getProperty( propertyName );
 				if ( NULL != property ) {					
 					ValidationResult v = Model::validate( key, value );
-					if ( v ) {
+					if ( v || (updateFlags_ & muAllowsInvalidData) ) {
 						property->set( &v.value );
 						ModelEvent e(this,MODEL_CHANGED);
 						changed(&e);

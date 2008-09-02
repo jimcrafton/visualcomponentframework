@@ -17,7 +17,7 @@ using namespace VCF;
 
 Model::Model(): 
 	deleteVariantObjects_(false),
-	updateMode_(muNone),
+	updateFlags_(muDisplayErrorIfInvalid),
 	formatter_(NULL),
 	validator_(NULL)
 {
@@ -60,10 +60,11 @@ void Model::setValueAsString( const String& value, const VariantData& key )
 {
 	
 	ValidationResult v = validate( key, value );
-	if ( v ) {
+	if ( v || (updateFlags_ & muAllowsInvalidData) ) {
 		setValue( v.value, key );
 	}
-	else if ( updateMode_ == muOnValidation ) {	
+	
+	if ( !v && (updateFlags_ & muUsesValidation) && (updateFlags_ & muDisplayErrorIfInvalid) ) {	
 		Application::showErrorMessage( v.error, "Validation Error" );
 	}
 }
@@ -76,7 +77,7 @@ ValidationResult Model::validate( const VariantData& key, const VariantData& val
 	result.value = value;
 	result.key = key;
 
-	if ( updateMode_ == muOnValidation ) {
+	if ( updateFlags_ & muUsesValidation ) {
 
 		VariantData tmpVal = value;
 		if ( NULL != formatter_ ) {
@@ -131,9 +132,12 @@ ValidationResult Model::validate( const VariantData& key, const VariantData& val
 		}
 
 
-		ValidationEvent e2(this, MODEL_VALIDATED, key, tmpVal);
+		ValidationEvent e2(this, MODEL_VALIDATED, key, tmpVal);		
 		ModelValidated( &e2 );
 		result.value = tmpVal;
+		result.valid = true;
+	}
+	else {
 		result.valid = true;
 	}
 
@@ -143,11 +147,7 @@ ValidationResult Model::validate( const VariantData& key, const VariantData& val
 
 bool ValidationRuleCollection::exec( const VariantData& key, const VariantData& value, ValidationResult& result )
 {
-	problem_ = "";
-
-	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
-		return true;
-	}
+	problem_ = "";	
 
 	bool retVal = true;
 	Array<ValidationRule*>::iterator it = rules_.begin();		
@@ -157,9 +157,20 @@ bool ValidationRuleCollection::exec( const VariantData& key, const VariantData& 
 		ValidationRule* rule = *it;
 		
 		VariantData oldKey = rule->getAppliesToKey();
-		rule->setAppliesToKey( appliesToKey_ );
 
-		bool ruleRes = rule->exec( key, value, result );
+		if ( !appliesToKey_.isNull() && !appliesToKey_.isUndefined()  ) {
+			rule->setAppliesToKey( appliesToKey_ );
+		}
+
+		
+
+		bool ruleRes = false;
+		try {
+			ruleRes = rule->exec( key, value, result );
+		}
+		catch (...) {
+			ruleRes = false;
+		}
 		
 		if ( !ruleRes ) {
 			result.addFailedRule( rule );
@@ -187,7 +198,9 @@ bool ValidationRuleCollection::exec( const VariantData& key, const VariantData& 
 		}
 		problem_ += rule->getErrorMessage();
 
-		rule->setAppliesToKey( oldKey );
+		if ( !appliesToKey_.isNull() && !appliesToKey_.isUndefined()  ) {
+			rule->setAppliesToKey( oldKey );
+		}
 			
 
 		prevRule = rule;
@@ -199,10 +212,6 @@ bool ValidationRuleCollection::exec( const VariantData& key, const VariantData& 
 
 bool ValidationRuleCollection::isValid( const VariantData& key, const VariantData& value, ValidationResult& result ) 
 {
-	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
-		return true;
-	}
-
 	return exec( key, value, result );
 }
 
@@ -242,17 +251,17 @@ bool MinRule::exec( const VariantData& key, const VariantData& value, Validation
 		return true;
 	}
 
-	if ( value.isInteger() ) {
-		int x = value;
-		int y = data_;
-
-		return x < y;
-	}
-	else if ( value.isReal() ) {
+	if ( value.isReal() ) {
 		double x = value;
 		double y = data_;
 
 		return x < y;
+	}
+	else {
+		int x = value;
+		int y = data_;
+
+		return x < y; 
 	}
 
 	return false;
@@ -264,18 +273,19 @@ bool MaxRule::exec( const VariantData& key, const VariantData& value, Validation
 		return true;
 	}
 
-	if ( value.isInteger() ) {
-		int x = value;
-		int y = data_;
-
-		return x > y;
-	}
-	else if ( value.isReal() ) {
+	if ( value.isReal() ) {
 		double x = value;
 		double y = data_;
 
 		return x > y;
 	}
+	else {
+		int x = value;
+		int y = data_;
+
+		return x > y;
+	}
+
 	return false;
 }
 
