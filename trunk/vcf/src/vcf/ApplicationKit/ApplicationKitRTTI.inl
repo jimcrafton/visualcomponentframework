@@ -330,10 +330,11 @@ _class_rtti_end_
 _class_abstract_rtti_(Model, "VCF::Component", MODEL_CLASSID)
 _delegate_( ModelDelegate, ModelChanged )
 _delegate_( ValidationDelegate, ModelValidating )
-_delegate_( EventDelegate, ModelValidated )
+_delegate_( ValidationErrorDelegate,ModelValidationFailed )
+_delegate_( ValidationDelegate, ModelValidated )
 
-_property_enum_labeled_( ModelUpdate, "updateMode", getUpdateMode, setUpdateMode,
-						   muNone, muOnValidation, 2, ModelUpdateNames, "");
+_property_enumset_( VCF::ModelUpdateFlags, "updateFlags", getUpdateFlags, setUpdateFlags, 
+						4, ModelUpdateFlagValues, ModelUpdateFlagNames, ""  );
 
 _property_object_( ValidationFormatter, "formatter", getFormatter, setFormatter, "" )
 _property_object_( ValidationRuleCollection, "validator", getValidator, setValidator, "" )
@@ -533,6 +534,12 @@ _property_( bool, "enabled", isEnabled, setEnabled, "" )
 _property_( bool, "checked", isChecked, setChecked, "" )
 _property_( bool, "grouped", isGrouped, setGrouped, "" )
 _class_rtti_end_
+
+
+_class_rtti_(ToolbarSeparator, "VCF::ToolbarItem", "ToolbarSeparator")
+_class_rtti_end_
+
+
 
 _class_rtti_(ListItem, "VCF::Item", LISTITEM_CLASSID)
 _property_( String, "caption", getCaption, setCaption, "" )

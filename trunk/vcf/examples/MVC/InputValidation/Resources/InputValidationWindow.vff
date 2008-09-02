@@ -1,8 +1,8 @@
 object InputValidationWindow  : VCF::Window
 	top = 200
 	left = 200
-	height = 330pt
-	width = 295pt
+	height = 343pt
+	width = 298pt
 	caption = 'InputValidation Window'	
 
 	object fl : VCF::FlowLayoutContainter
@@ -60,7 +60,7 @@ object InputValidationWindow  : VCF::Window
 	object numericPanel : VCF::Panel		
 		border = @bdr1
 		width = 140pt
-		height = 150pt
+		height = 162pt
 
 		object fl1 : VCF::FlowLayoutContainter
 			bottomBorderHeight = 5
@@ -72,11 +72,9 @@ object InputValidationWindow  : VCF::Window
 
 		object fl1a : VCF::HorizontalLayoutContainer
 			numberOfColumns = 2
-			maxRowHeight = 35
-			rowSpacerHeight = 10
-			widths[0] = 80
-			widths[1] = 80
-
+			maxRowHeight = 19pt
+			rowSpacerHeight = 7pt
+			widths[0] = 35pt
 			tweenWidths[0] = 10
 		end
 
@@ -94,8 +92,8 @@ object InputValidationWindow  : VCF::Window
 		object digitsPanel : VCF::Panel					
 			border = @bdr7
 			container = @fl1a
-			height = 100
-			width = 220
+			height = 65pt
+			width = 140pt
 
 			object lbl1 : VCF::Label
 				caption = 'Left:'
@@ -210,7 +208,7 @@ object InputValidationWindow  : VCF::Window
 	object alphaNumericPanel : VCF::Panel		
 		border = @bdr4
 		width = 140pt
-		height = 150pt
+		height = 110pt
 
 		object fl4 : VCF::FlowLayoutContainter
 			bottomBorderHeight = 5
@@ -224,8 +222,7 @@ object InputValidationWindow  : VCF::Window
 			numberOfColumns = 2
 			maxRowHeight = 35
 			rowSpacerHeight = 10
-			widths[0] = 80
-			widths[1] = 80
+			widths[0] = 30pt
 
 			tweenWidths[0] = 10
 		end
@@ -245,7 +242,7 @@ object InputValidationWindow  : VCF::Window
 		object charPanel : VCF::Panel					
 			border = @bdr8
 			container = @fl4a
-			height = 80pt
+			height = 65pt
 			width = 130pt
 
 			object lbl5 : VCF::Label

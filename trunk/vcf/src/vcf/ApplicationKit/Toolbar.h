@@ -173,7 +173,12 @@ protected:
 };
 
 
+class APPLICATIONKIT_API ToolbarSeparator : public ToolbarItem {
+public:
 
+	ToolbarSeparator();
+	virtual ~ToolbarSeparator(){}
+};
 
 
 class ToolbarModel;

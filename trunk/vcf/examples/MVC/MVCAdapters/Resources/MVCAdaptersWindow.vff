@@ -52,7 +52,7 @@ object MVCAdaptersWindow  : VCF::Window
 	object model :  VCF::ObjectModel
 		source = @mo
 		formatter = @fmt
-		updateMode = muOnValidation
+		updateFlags = [muUsesValidation,muDisplayErrorIfInvalid]
 		validator = @rules
 	end
 
@@ -109,8 +109,8 @@ object MVCAdaptersWindow  : VCF::Window
 		end
 
 		object edt4 : VCF::TextControl
-			//modelKey = 'cost'
-			//model = @model
+			modelKey = 'cost'
+			model = @model
 			//validationStyle = tvsOnEnterKey
 			//readonly = true
 		end

@@ -107,10 +107,10 @@ static String FlowDirectionNames[] = { "fdVertical",
 				Control* child = *it;
 				
 				if ( fdHorizontal == direction_ ) {
-					maxChildHeight = maxVal(maxChildHeight,child->getHeight());
+					maxChildHeight = minVal( clientBounds.getHeight(), maxVal(maxChildHeight,child->getHeight()) );
 				}
 				else {
-					maxChildWidth = maxVal(maxChildWidth,child->getWidth());
+					maxChildWidth = minVal( clientBounds.getWidth(), maxVal(maxChildWidth,child->getWidth()) );
 				}				
 				
 				++it;

@@ -482,6 +482,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\EtchedBorder.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\FlowLayoutContainter.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\Frame.cpp
 # End Source File
 # Begin Source File

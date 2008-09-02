@@ -4,8 +4,6 @@
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/AdapterModels.h"
 #include "vcf/ApplicationKit/ListViewControl.h"
-#include "vcf/ApplicationKit/InputValidation.h"
-#include "vcf/ApplicationKit/TextControl.h"
 
 
 #include "vcf/FoundationKit/RTTIMacros.h"
@@ -81,17 +79,7 @@ public:
 
 		ObjectModel* objModel = (ObjectModel*)findComponent( "model", true );
 
-		//objModel->setValueAsString( "3.1", "cost" );
-
-
-		TextControl* tc = (TextControl*)findComponent("edt4",true);
-		MaskedValidator* v = new MaskedValidator();
-		tc->setInputValidator( v );
-		//v->setMaxCharacters(10);
-
-		v->setMask( "(###) ###-#### x####" );
 		
-
 
 		mainWindow->show();
 		

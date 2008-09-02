@@ -729,6 +729,10 @@ public:
 		return pdNull == type;
 	}
 
+	bool isUndefined() const {
+		return pdUndefined == type;
+	}
+
 	/**
 	Mark the variant as "null" and set it's internal
 	values to NULL (or 0).
