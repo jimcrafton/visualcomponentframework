@@ -21,6 +21,10 @@
 #include <iostream> // for cin/cout
 
 
+//#include "C:\code\string_classes\fix_str\SOURCE\fix_str.h"
+
+
+
 //typedef unsigned int uint32;
 //typedef unsigned short VCFChar;
 //typedef wchar_t VCFChar;
@@ -82,6 +86,30 @@ inline size_t RoundUp(size_t cb, size_t units)
 
 //#define HAVE_MMX
 
+
+class StringPool;
+
+union MemHeader {
+	struct {
+		MemHeader* prev;			
+		size_t  size;
+	};
+	VCFChar alignment;
+};
+
+struct StringData {
+	StringData():strPtr(NULL),length(0),refcount(0),memHdr(NULL),pool(NULL),threadID(0),hashID(0){}
+
+	VCFChar* strPtr;
+	size_t length;
+	size_t refcount;
+	MemHeader* memHdr;
+	StringPool* pool;
+	uint32 threadID;
+	uint32 hashID;
+};	
+
+
 class StringPool {
 public:
 	enum { 
@@ -94,7 +122,7 @@ public:
 	StringPool();
 	~StringPool();	
 
-	VCFChar* allocate(const VCFChar* begin, const VCFChar* end);
+	StringData* allocate(const VCFChar* begin, const VCFChar* end);
 
 	static int wmemcmp(const wchar_t *s1, const wchar_t *s2, size_t n) {
 		int result = 0;
@@ -154,15 +182,36 @@ public:
 	}
 
 
+	
+
 	static uint32 hash( const VCFChar* str, size_t length )
     {
-        uint32 result = (uint32)str;
+        uint32 result = 0;
 #if 1
 		result = 0;
 		for (size_t i=0;i<length;i+=1 ) {        
             result = str[i] + (result << 6) + (result << 16) - result;			
 		}
+#else
+		//alternate hash algorithm
+		unsigned char *bp = (unsigned char *)str; /* start of buffer */
+		unsigned char *be = bp + length*sizeof(VCFChar);    /* beyond end of buffer */
+
+		uint32 hval = 0x811c9dc5;
+
+		/* FNV-1 hash each octet in the buffer */
+		while (bp < be) {
+			/* multiply by the 32 bit FNV magic prime mod 2^32 */
+			hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+
+			/* xor the bottom with the current octet */
+			hval ^= (uint32)*bp++;
+		}
+		/* return our new hash value */
+      
+		result = hval;
 #endif
+
         return result;
     }
 
@@ -180,14 +229,15 @@ public:
 
 	void compact( uint32 index=NoEntry );
 	
+	size_t uniqueEntries() const {
+		return stringEntries_.size();
+	}
+
+	size_t totalBytesAllocated() {
+		return totalBytesAllocated_;
+	}
 private:
-	union MemHeader {
-		struct {
-			MemHeader* prev;			
-			size_t  size;
-		};
-		VCFChar alignment;
-	};
+	
 
 
 	struct StrEntry {
@@ -198,14 +248,18 @@ private:
 	};	
 
 
-	VCFChar*  next_;   // first available byte
-	VCFChar*  limit_;  // one past last available byte
+	unsigned char*  next_;   // first available byte
+	unsigned char*  limit_;  // one past last available byte
 	MemHeader* currentHdr_;   // current block
 	size_t   granularity_;
 	std::vector<StrEntry> stringEntries_;
 	std::vector<size_t> freeEntries_;
+	size_t lastStrEntryIdx_;
+	size_t totalBytesAllocated_;
+
 
 	typedef std::multimap<uint32,uint32> StringMapT;
+
 	typedef StringMapT::iterator StringMapIter;
 	typedef StringMapT::const_iterator StringMapConstIter;
 	typedef std::pair<StringMapIter,StringMapIter> StringMapRangeT;
@@ -215,7 +269,7 @@ private:
 
 
 
-	std::multimap<uint32,uint32> stringMap_;
+	StringMapT stringMap_;
 	
 };
 
@@ -224,13 +278,16 @@ StringPool::StringPool():
 	next_(NULL),
 	limit_(NULL),
 	currentHdr_(NULL),
-	granularity_(0)
-
+	granularity_(0),
+	lastStrEntryIdx_(0),
+	totalBytesAllocated_(0)
 {
 	SYSTEM_INFO si;
 	GetSystemInfo(&si);
 	granularity_ = RoundUp(sizeof(MemHeader) + MIN_CBCHUNK,
 								si.dwAllocationGranularity);
+
+
 }
 
 StringPool::~StringPool()
@@ -243,21 +300,37 @@ StringPool::~StringPool()
 	}
 }
 
-VCFChar* StringPool::allocate(const VCFChar* begin, const VCFChar* end)
+StringData* StringPool::allocate(const VCFChar* begin, const VCFChar* end)
 {
-	size_t length = end - begin + 1;
-	VCFChar* tmpPtr = next_;
-	if (next_ + length <= limit_) {
-		next_ += length;
-		memcpy(tmpPtr, begin, length*sizeof(VCFChar));
-		return tmpPtr;
+	size_t length = sizeof(StringData) + ((end - begin) * sizeof(VCFChar)) + sizeof(VCFChar);
+	if ((next_ + length) <= limit_) {
+		StringData* data = (StringData*)next_;
+		data->length = (end - begin);
+		data->memHdr = currentHdr_;
+		data->pool = this;
+		data->refcount = 0;
+		data->strPtr = (VCFChar*) data + sizeof(StringData);
+		data->threadID = ::GetCurrentThreadId();
+		data->hashID = 0;
+
+		next_ += length;// + sizeof(VCFChar); //allow for null term?
+		if ( *next_ != 0 ) {
+			int i = 9;
+			i++;
+		}
+
+		for (size_t i=0;i<data->length;i++) {
+			data->strPtr[i] = begin[i];
+		}
+		//StringPool::wmemcpy( data->strPtr, begin, data->length );
+		return data;
 	}
 	
 	unsigned char* nextBytes = NULL;
 	size_t allocSize = 0;
 
 	if (length <= MAX_CHARALLOC) {	
-		allocSize = RoundUp(length * sizeof(VCFChar) + sizeof(MemHeader), granularity_);
+		allocSize = RoundUp(length + sizeof(MemHeader), granularity_);
 
 		nextBytes = reinterpret_cast<unsigned char*>(
 				VirtualAlloc(NULL, allocSize, MEM_COMMIT, PAGE_READWRITE) );
@@ -268,21 +341,23 @@ VCFChar* StringPool::allocate(const VCFChar* begin, const VCFChar* end)
 		throw(outOfMemException);
 	}
 
+	totalBytesAllocated_ += allocSize;
 	
-	limit_ = reinterpret_cast<VCFChar*>(nextBytes + allocSize);
+	limit_ = reinterpret_cast<unsigned char*>(nextBytes + allocSize);
 	MemHeader* currentHdr = reinterpret_cast<MemHeader*>(nextBytes);
 	currentHdr->prev = currentHdr_;
 	currentHdr->size = allocSize;
 	
 
 	currentHdr_ = currentHdr;
-	next_ = reinterpret_cast<VCFChar*>(currentHdr + 1);
+	next_ = reinterpret_cast<unsigned char*>(currentHdr + sizeof(VCFChar));
 	
 	return allocate(begin, end);
 }
 
 void StringPool::compact(uint32 index)
 {
+	/*
 	if ( NoEntry == index ) {
 
 	}
@@ -302,6 +377,7 @@ void StringPool::compact(uint32 index)
 			}
 		}
 	}
+	*/
 }
 
 uint32 StringPool::find( const VCFChar* str, size_t length )
@@ -313,6 +389,7 @@ uint32 StringPool::find( const VCFChar* str, size_t length )
 	StringMapRangeT found = stringMap_.equal_range( hashID );
 	StringMapIter current = found.first;
 
+	
 	size_t rangeCount = 0;
 	while ( current != found.second ) {
 		rangeCount ++;
@@ -336,7 +413,7 @@ uint32 StringPool::find( const VCFChar* str, size_t length )
 				const StrEntry& entry = stringEntries_[idx];
 				if ( entry.length == length ) {
 					
-					if ( 0 == ::wcscmp( entry.str, str/*, length * sizeof(VCFChar)*/ ) ) {
+					if ( 0 == ::wmemcmp( entry.str, str, length ) ) {
 						result = idx;
 						break;
 					}
@@ -347,7 +424,6 @@ uint32 StringPool::find( const VCFChar* str, size_t length )
 		}
 	}
 	
-
 	return result;
 }
 
@@ -358,20 +434,35 @@ uint32 StringPool::addString( const VCFChar* str, size_t length )
 	result = find( str, length );
 
 	if ( result == NoEntry ) {
-		VCFChar* newStr = allocate( str, str+length );
+		StringData* newStr = allocate( str, str+length );
 
-		uint32 hashID = hash(str, length);
+		newStr->hashID = hash(str, length);
 
-		StrEntry entry;
+		
+		if ( lastStrEntryIdx_ == stringEntries_.size() ) {
+			stringEntries_.resize( stringEntries_.size() + 256 );
+		}
+
+		StrEntry& entry = stringEntries_[lastStrEntryIdx_];
 		entry.length = length;
-		entry.str = newStr;
+		entry.str = newStr->strPtr;
 		entry.refcount = 0;
 		entry.memHdr = this->currentHdr_;
 
-		stringEntries_.push_back( entry );
-		result = stringEntries_.size()-1;
+		result = lastStrEntryIdx_;
 
-		stringMap_.insert(StringMapPairT(hashID,result));
+		lastStrEntryIdx_ ++;
+
+		//////////////////////////////////////////////////////
+		//PERFORMANCE WARNING!!
+		//multimap::insert is *expensive. This is what changes
+		//loading and parsing around 34,000 entries in a dictionary
+		//from taking between 250ms to 137ms (with the insert) to
+		//taking 45ms (without the insert). Ultimately the
+		//multimap needs to go in favor of some other 
+		//associative container.
+		//////////////////////////////////////////////////////
+		stringMap_.insert(StringMapPairT(newStr->hashID,result));
 	}
 
 	return result;
@@ -379,17 +470,21 @@ uint32 StringPool::addString( const VCFChar* str, size_t length )
 
 uint32 StringPool::incStringRefcount( uint32 index )
 {
-	uint32 result = NoEntry;
+	/*uint32 result = NoEntry;
 	if ( index < stringEntries_.size() ) {
 		StrEntry& entry = stringEntries_[index];
 		entry.refcount++;
 		result = entry.refcount;
 	}
 	return result;
+	*/
+	return 0;
 }
 
 uint32 StringPool::decStringRefcount( uint32 index )
 {
+	return 0;
+	/*
 	uint32 result = NoEntry;
 	if ( index < stringEntries_.size() ) {
 		StrEntry& entry = stringEntries_[index];
@@ -400,6 +495,7 @@ uint32 StringPool::decStringRefcount( uint32 index )
 		result = entry.refcount;
 	}
 	return result;
+	*/
 }
 
 const VCFChar* StringPool::getString( uint32 index )
@@ -411,7 +507,7 @@ const VCFChar* StringPool::getString( uint32 index )
 	//	}
 	}
 
-	return NULL;
+	return stringEntries_[index].str;
 }
 
 size_t StringPool::getStringLength( uint32 index )
@@ -567,7 +663,7 @@ public:
 
 
 	bool operator == ( const FastString& rhs ) const {
-		return rhs.index_ == index_;
+		return index_ == rhs.index_;
 	}
 
 	void clear() {
@@ -690,7 +786,8 @@ public:
 				else if (currentStr1 == ptr)
 					break;
 		}
-		return (npos); }
+		return FastString::npos;
+	}
 protected:
 	size_t index_;
 };
@@ -994,6 +1091,7 @@ ChDictionary2::ChDictionary2()
 			ChDictionaryEntry2 de;
 			if (de.Parse(s)) {
 				v.push_back(de);
+				//printf( "eng: %ls\n", de.english.c_str() );
 			}
 		}
 	}	
@@ -1001,11 +1099,117 @@ ChDictionary2::ChDictionary2()
 
 
 
+
+
+
+
+struct ChDictionaryEntry3
+{
+	bool Parse(const FastString& line);
+	FastString trad;
+	FastString simp;
+	FastString pinyin;
+	FastString english;
+};
+
+bool ChDictionaryEntry3::Parse(const FastString& line)
+{
+    FastString::size_type start = 0;
+    FastString::size_type end = line.find(L' ', start);
+    if (end == FastString::npos) return false;
+
+	const VCFChar* begin = line.c_str();
+
+    trad.assign(begin + start, end - start);
+    start = line.find(L'[', end);
+    if (start == wstring::npos) return false;
+    end = line.find(L']', ++start);
+    if (end == wstring::npos) return false;
+    pinyin.assign(begin + start, end - start);
+    start = line.find(L'/', end);
+    if (start == wstring::npos) return false;
+    start++;
+    end = line.rfind(L'/');
+    if (end == wstring::npos) return false;
+    if (end <= start) return false;
+    english.assign(begin + start, end - start);
+    return true;
+}
+
+class ChDictionary3
+{
+public:
+	ChDictionary3();
+	void doit();
+	int Length() { return v.size(); }
+	const ChDictionaryEntry3& Item(int i) { return v[i]; }
+private:
+	vector<ChDictionaryEntry3> v;
+};
+
+ChDictionary3::ChDictionary3()
+{
+	
+}
+
+
+void ChDictionary3::doit()
+{
+	FileInputStream fs("cedict.b5");
+	
+	unsigned char* data = new unsigned char[ fs.getSize() ];
+
+	fs.read( data, fs.getSize() );
+
+	String chStr((const char*)data,fs.getSize(),UnicodeString::leChineseTraditionalBig5);
+
+	delete [] data;
+
+
+	const VCFChar*  P = chStr.c_str();
+	const VCFChar*  start = P;
+	const VCFChar*  line = P;
+
+	size_t sz = chStr.length();
+	while ( P-start < sz ) {
+		if ( *P == '\r' || *P == '\n' ) {
+			if ( *P == '\r' && *(P+1) == '\n' ) {
+				P++;
+			}
+			P++;
+
+			if ((P-line) > 0 && *line != L'#') {
+				ChDictionaryEntry3 de;
+				FastString s(line,(P-line));
+				if (de.Parse(s)) {
+					v.push_back(de);					
+				}
+			}
+
+
+			line = P;
+		}
+		P++;
+	}
+/*
+	while ( tok.hasMoreElements() ) {
+		String s = tok.nextElement();
+		if (s.length() > 0 && s[0] != L'#') {
+			ChDictionaryEntry3 de;
+			if (de.Parse(s)) {
+				v.push_back(de);
+			}
+		}
+	}	*/
+}
+
 void part2()
 {
 	printf( "part2.....\n" );
+	printf( "num entries in string pool: %u\n", stringPool.uniqueEntries() );
+	printf( "total bytes in string pool: %u\n", stringPool.totalBytesAllocated() );
 	HiResClock clock;
-
+/*
 	clock.start();
 	
 	{
@@ -1013,10 +1217,18 @@ void part2()
 		clock.stop();
 
 		std::cout << dict.Length() << std::endl;		
-		printf( "basic_string impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
+		printf( "basic_string (ChDictionary) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
 	}
 
 
+	{
+		clock.start();
+		ChDictionary dict;
+		clock.stop();
+
+		std::cout << dict.Length() << std::endl;		
+		printf( "basic_string (ChDictionary) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
+	}
 
 
 	
@@ -1027,7 +1239,7 @@ void part2()
 		clock.stop();
 
 		std::cout << dict2.Length() << std::endl;		
-		printf( "FastString impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
+		printf( "FastString (ChDictionary2) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
 	}
 
 	{
@@ -1036,7 +1248,7 @@ void part2()
 		clock.stop();
 
 		std::cout << dict2.Length() << std::endl;		
-		printf( "FastString impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
+		printf( "FastString (ChDictionary2) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
 	}
 
 	{
@@ -1045,8 +1257,53 @@ void part2()
 		clock.stop();
 
 		std::cout << dict2.Length() << std::endl;		
-		printf( "FastString impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
+		printf( "FastString (ChDictionary2) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
 	}
+
+*/
+
+
+	{
+		ChDictionary3 dict3;
+		clock.start();
+		dict3.doit();
+		clock.stop();
+
+		std::cout << dict3.Length() << std::endl;		
+		printf( "FastString (ChDictionary3) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
+		printf( "num entries in string pool: %u\n", stringPool.uniqueEntries() );
+	}
+
+	{
+		ChDictionary3 dict3;
+		clock.start();
+		dict3.doit();
+		clock.stop();
+
+		std::cout << dict3.Length() << std::endl;		
+		printf( "FastString (ChDictionary3) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
+		printf( "num entries in string pool: %u\n", stringPool.uniqueEntries() );
+	}
+
+	{
+		ChDictionary3 dict3;
+		clock.start();
+		dict3.doit();
+		clock.stop();
+
+		std::cout << dict3.Length() << std::endl;		
+		printf( "FastString (ChDictionary3) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
+
+		printf( "num entries in string pool: %u\n", stringPool.uniqueEntries() );
+		printf( "total bytes in string pool: %u\n", stringPool.totalBytesAllocated() );
+
+		int idx = 22;
+		printf( "item[%d].english: %ls\n", idx, dict3.Item(idx).english.c_str() );
+		printf( "item[%d].pinyin: %ls\n", idx, dict3.Item(idx).pinyin.c_str() );
+		printf( "item[%d].trad: %ls\n", idx, dict3.Item(idx).trad.c_str() );
+	}
+
+	
 }
 
 int main( int argc, char** argv )
@@ -1216,7 +1473,7 @@ int main( int argc, char** argv )
 
 
 	delete [] tmp;
-	clock.stop();
+	
 
 	printf( "f5 from ansi Length %u, MultiByteToWideChar took %0.8f seconds, total took %0.8f seconds\n",f5.length(),clock2.duration(), clock.duration() );
 
@@ -1239,6 +1496,7 @@ int main( int argc, char** argv )
 
 	part2();
 
+	//Sleep(10000000);
 
 	FoundationKit::terminate();
 
