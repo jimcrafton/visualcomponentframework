@@ -2,6 +2,12 @@
 
 #include "vcf/FoundationKit/FoundationKit.h"
 
+
+#ifdef _MSC_VER 
+#include <comdef.h>
+#endif
+
+
 /*
 #define WIN32_LEAN_AND_MEAN
 
@@ -26,9 +32,9 @@
 
 
 //typedef unsigned int uint32;
-//typedef unsigned short VCFChar;
-//typedef wchar_t VCFChar;
-//typedef std::basic_string<VCFChar> String;
+typedef wchar_t U16Char; //16 bit unicode character codepoint
+//typedef wchar_t U16Char;
+//typedef std::basic_string<U16Char> String;
 
 using namespace VCF;
 
@@ -94,19 +100,25 @@ union MemHeader {
 		MemHeader* prev;			
 		size_t  size;
 	};
-	VCFChar alignment;
+	U16Char alignment;
 };
 
-struct StringData {
-	StringData():strPtr(NULL),length(0),refcount(0),memHdr(NULL),pool(NULL),threadID(0),hashID(0){}
+typedef void* StringDataHandle;
 
-	VCFChar* strPtr;
+
+
+struct StringData {
+	enum StateFlags {
+		SubString = 0x00000001,
+	};
+
+	U16Char* strPtr;
 	size_t length;
 	size_t refcount;
 	MemHeader* memHdr;
-	StringPool* pool;
-	uint32 threadID;
+	StringPool* pool;	
 	uint32 hashID;
+	uint32 flags;
 };	
 
 
@@ -122,9 +134,17 @@ public:
 	StringPool();
 	~StringPool();	
 
-	StringData* allocate(const VCFChar* begin, const VCFChar* end);
+	StringData* allocate(const U16Char* begin, const U16Char* end);
 
-	static int wmemcmp(const wchar_t *s1, const wchar_t *s2, size_t n) {
+	static size_t wstrlen( const U16Char *s1 ) {
+		return ::wcslen( (const wchar_t*)s1 );
+	}
+
+	static const U16Char* wmemchr( const U16Char* buf, U16Char c, size_t count ) {
+		return  (const U16Char*) ::wmemchr( (const wchar_t*)buf, c, count );
+	}
+
+	static int wmemcmp(const U16Char *s1, const U16Char *s2, size_t n) {
 		int result = 0;
 
 		#ifdef HAVE_MMX
@@ -143,12 +163,12 @@ public:
 			emms
 		}
 		#else
-		result = ::wmemcmp( s1, s2, n );
+		result = ::wmemcmp( (const wchar_t*)s1, (const wchar_t*)s2, n );
 		#endif
 		return result;
 	}
 
-	static VCFChar* wmemcpy( VCFChar* dest, const VCFChar* src, uint32 len ) {
+	static U16Char* wmemcpy( U16Char* dest, const U16Char* src, uint32 len ) {
 #ifdef HAVE_MMX
 		size_t numChars = (len / 4); //4 chars at a time
 		size_t leftOver = (len % 4);
@@ -175,7 +195,7 @@ public:
 			memcpy( dest + numChars*4, src + numChars*4, leftOver );
 		}
 #else
-		::wmemcpy( dest, src, len );
+		::wmemcpy( (wchar_t*)dest, (wchar_t*)src, len );
 #endif
 
 		return dest;
@@ -184,7 +204,7 @@ public:
 
 	
 
-	static uint32 hash( const VCFChar* str, size_t length )
+	static uint32 hash( const U16Char* str, size_t length )
     {
         uint32 result = 0;
 #if 1
@@ -195,7 +215,7 @@ public:
 #else
 		//alternate hash algorithm
 		unsigned char *bp = (unsigned char *)str; /* start of buffer */
-		unsigned char *be = bp + length*sizeof(VCFChar);    /* beyond end of buffer */
+		unsigned char *be = bp + length*sizeof(U16Char);    /* beyond end of buffer */
 
 		uint32 hval = 0x811c9dc5;
 
@@ -216,49 +236,65 @@ public:
     }
 
 
-	uint32 find( const VCFChar* str, size_t length );
+	StringData* find( const U16Char* str, size_t length );
 
-	uint32 addString( const VCFChar* str, size_t length );
+	static StringDataHandle addString( const U16Char* str, size_t length );
 
-	bool validString( uint32 index );
-	const VCFChar* getString( uint32 index );
-	size_t getStringLength( uint32 index );
+	static bool validString( StringDataHandle handle );
+	static const U16Char* getString( StringDataHandle handle );
+	static size_t getStringLength( StringDataHandle handle );
 
-	uint32 incStringRefcount( uint32 index );
-	uint32 decStringRefcount( uint32 index );
+	static uint32 incStringRefcount( StringDataHandle handle );
+	static uint32 decStringRefcount( StringDataHandle handle );
+	static bool equals( StringDataHandle lhs, StringDataHandle rhs );
+	static int compare( StringDataHandle lhs, StringDataHandle rhs );
+	
 
 	void compact( uint32 index=NoEntry );
 	
 	size_t uniqueEntries() const {
-		return stringEntries_.size();
+		return stringMap_.size();
 	}
 
 	size_t totalBytesAllocated() {
 		return totalBytesAllocated_;
 	}
+
+
+	uint32 getThreadID() const {
+		return threadID_;
+	}
+
+	void makeCurrentPool() {
+		StringPool::currentStringPool = this;
+	}
+
+	bool compactsMemory() const {
+		return compactMemory_;
+	}
+
+	void setCompactsMemory( bool val ) {
+		compactMemory_ = val;
+	}
+
+	static StringPool* getCurrentPool() {
+		return currentStringPool;
+	}	
+
+	static StringPool* getUsablePool();
 private:
-	
-
-
-	struct StrEntry {
-		VCFChar* str;
-		size_t length;
-		size_t refcount;
-		MemHeader* memHdr;
-	};	
-
 
 	unsigned char*  next_;   // first available byte
 	unsigned char*  limit_;  // one past last available byte
 	MemHeader* currentHdr_;   // current block
 	size_t   granularity_;
-	std::vector<StrEntry> stringEntries_;
-	std::vector<size_t> freeEntries_;
-	size_t lastStrEntryIdx_;
+	std::vector<size_t> freeEntries_;	
 	size_t totalBytesAllocated_;
+	uint32 threadID_;
+	bool compactMemory_;
 
 
-	typedef std::multimap<uint32,uint32> StringMapT;
+	typedef std::multimap<uint32,StringData*> StringMapT;
 
 	typedef StringMapT::iterator StringMapIter;
 	typedef StringMapT::const_iterator StringMapConstIter;
@@ -266,12 +302,72 @@ private:
 	typedef std::pair<StringMapConstIter,StringMapConstIter> StringMapConstRangeT;
 	typedef StringMapT::value_type StringMapPairT;
 
-
-
-
 	StringMapT stringMap_;
 	
+
+
+	static StringPool* currentStringPool;
+
+
+	static DWORD threadPoolTLSIndex;
+	class StringPoolTLSGuard {
+	public:
+		StringPoolTLSGuard() {}
+
+		~StringPoolTLSGuard() {
+
+			std::vector<StringPool*>::iterator it = threadPools.begin();
+			while ( it != threadPools.end() ) {
+				StringPool* pool = *it;
+				delete pool;
+				++it;
+			}
+
+			if ( 0 != StringPool::threadPoolTLSIndex ) {
+				TlsFree( StringPool::threadPoolTLSIndex );
+			}
+		}
+
+		std::vector<StringPool*> threadPools;
+	};
+
+	friend class StringPoolTLSGuard;
+
+	static StringPoolTLSGuard poolTLSGuard;
 };
+
+StringPool* StringPool::currentStringPool = NULL;
+DWORD StringPool::threadPoolTLSIndex = 0;
+
+StringPool::StringPoolTLSGuard StringPool::poolTLSGuard;
+
+
+StringPool* StringPool::getUsablePool()
+{
+	if ( NULL != StringPool::currentStringPool ) {
+		return StringPool::currentStringPool;
+	}
+
+	if ( 0 == StringPool::threadPoolTLSIndex ) {
+		StringPool::threadPoolTLSIndex = TlsAlloc();
+		
+		if ( TLS_OUT_OF_INDEXES == StringPool::threadPoolTLSIndex ) {
+			static std::bad_alloc outOfTLS;
+			throw(outOfTLS);
+		}
+	}
+
+	StringPool* currentThreadPool = (StringPool*) TlsGetValue( StringPool::threadPoolTLSIndex );
+	if ( NULL == currentThreadPool ) {
+		currentThreadPool = new StringPool();
+		StringPool::poolTLSGuard.threadPools.push_back( currentThreadPool );
+		TlsSetValue( StringPool::threadPoolTLSIndex, currentThreadPool );
+	}
+
+	return currentThreadPool;
+}
+
+
 
 
 StringPool::StringPool():
@@ -279,14 +375,16 @@ StringPool::StringPool():
 	limit_(NULL),
 	currentHdr_(NULL),
 	granularity_(0),
-	lastStrEntryIdx_(0),
-	totalBytesAllocated_(0)
+	totalBytesAllocated_(0),
+	threadID_(0),
+	compactMemory_(false)
 {
 	SYSTEM_INFO si;
 	GetSystemInfo(&si);
 	granularity_ = RoundUp(sizeof(MemHeader) + MIN_CBCHUNK,
 								si.dwAllocationGranularity);
 
+	threadID_ = ::GetCurrentThreadId();
 
 }
 
@@ -300,29 +398,20 @@ StringPool::~StringPool()
 	}
 }
 
-StringData* StringPool::allocate(const VCFChar* begin, const VCFChar* end)
+StringData* StringPool::allocate(const U16Char* begin, const U16Char* end)
 {
-	size_t length = sizeof(StringData) + ((end - begin) * sizeof(VCFChar)) + sizeof(VCFChar);
+	size_t length = sizeof(StringData) + ((end - begin) * sizeof(U16Char)) + sizeof(U16Char);
 	if ((next_ + length) <= limit_) {
 		StringData* data = (StringData*)next_;
 		data->length = (end - begin);
 		data->memHdr = currentHdr_;
 		data->pool = this;
 		data->refcount = 0;
-		data->strPtr = (VCFChar*) data + sizeof(StringData);
-		data->threadID = ::GetCurrentThreadId();
+		data->strPtr = (U16Char*) (next_ + sizeof(StringData));
 		data->hashID = 0;
 
-		next_ += length;// + sizeof(VCFChar); //allow for null term?
-		if ( *next_ != 0 ) {
-			int i = 9;
-			i++;
-		}
-
-		for (size_t i=0;i<data->length;i++) {
-			data->strPtr[i] = begin[i];
-		}
-		//StringPool::wmemcpy( data->strPtr, begin, data->length );
+		next_ += length;
+		StringPool::wmemcpy( data->strPtr, begin, data->length );
 		return data;
 	}
 	
@@ -350,7 +439,7 @@ StringData* StringPool::allocate(const VCFChar* begin, const VCFChar* end)
 	
 
 	currentHdr_ = currentHdr;
-	next_ = reinterpret_cast<unsigned char*>(currentHdr + sizeof(VCFChar));
+	next_ = reinterpret_cast<unsigned char*>(currentHdr + sizeof(U16Char));
 	
 	return allocate(begin, end);
 }
@@ -380,9 +469,9 @@ void StringPool::compact(uint32 index)
 	*/
 }
 
-uint32 StringPool::find( const VCFChar* str, size_t length )
+StringData* StringPool::find( const U16Char* str, size_t length )
 {
-	uint32 result = NoEntry;
+	StringData* result = NULL;//NoEntry;
 
 	uint32 hashID = hash(str,length);
 
@@ -398,25 +487,20 @@ uint32 StringPool::find( const VCFChar* str, size_t length )
 
 	current = found.first;
 	if ( rangeCount == 1 ) {
-		uint32 idx = current->second;
-		if ( idx < stringEntries_.size() ) {
-			const StrEntry& entry = stringEntries_[idx];
-			if ( entry.length == length ) {
-				result = idx;
-			}
+		StringData* data = current->second;
+
+		if ( data->length == length ) {
+			result = data;
 		}
+		
 	}
 	else {
 		while ( current != found.second ) {
-			uint32 idx = current->second;
-			if ( idx < stringEntries_.size() ) {
-				const StrEntry& entry = stringEntries_[idx];
-				if ( entry.length == length ) {
-					
-					if ( 0 == ::wmemcmp( entry.str, str, length ) ) {
-						result = idx;
-						break;
-					}
+			StringData* data = current->second;
+			if ( data->length == length ) {
+				if ( 0 == StringPool::wmemcmp( data->strPtr, str, length ) ) {
+					result = data;
+					break;
 				}
 			}
 			
@@ -427,31 +511,23 @@ uint32 StringPool::find( const VCFChar* str, size_t length )
 	return result;
 }
 
-uint32 StringPool::addString( const VCFChar* str, size_t length )
+StringDataHandle StringPool::addString( const U16Char* str, size_t length )
 {
-	uint32 result = NoEntry;
+	StringData* result = NULL;
 
-	result = find( str, length );
+	StringPool* pool = StringPool::getUsablePool();
+	if ( NULL == pool ) {
+		return result;
+	}
 
-	if ( result == NoEntry ) {
-		StringData* newStr = allocate( str, str+length );
+	result = pool->find( str, length );
 
-		newStr->hashID = hash(str, length);
+	if ( result == NULL ) {
+		StringData* newStr = pool->allocate( str, str+length );
 
-		
-		if ( lastStrEntryIdx_ == stringEntries_.size() ) {
-			stringEntries_.resize( stringEntries_.size() + 256 );
-		}
+		newStr->hashID = hash(newStr->strPtr, newStr->length);
 
-		StrEntry& entry = stringEntries_[lastStrEntryIdx_];
-		entry.length = length;
-		entry.str = newStr->strPtr;
-		entry.refcount = 0;
-		entry.memHdr = this->currentHdr_;
-
-		result = lastStrEntryIdx_;
-
-		lastStrEntryIdx_ ++;
+		result = newStr;
 
 		//////////////////////////////////////////////////////
 		//PERFORMANCE WARNING!!
@@ -462,27 +538,59 @@ uint32 StringPool::addString( const VCFChar* str, size_t length )
 		//multimap needs to go in favor of some other 
 		//associative container.
 		//////////////////////////////////////////////////////
-		stringMap_.insert(StringMapPairT(newStr->hashID,result));
+
+		pool->stringMap_.insert(StringMapPairT(newStr->hashID,result));
 	}
 
-	return result;
+	return (StringDataHandle) result;
 }
 
-uint32 StringPool::incStringRefcount( uint32 index )
+uint32 StringPool::incStringRefcount( StringDataHandle handle )
 {
-	/*uint32 result = NoEntry;
-	if ( index < stringEntries_.size() ) {
-		StrEntry& entry = stringEntries_[index];
-		entry.refcount++;
-		result = entry.refcount;
+	if ( NULL != handle ) {
+		StringData* data = (StringData*)handle;
+		if ( !data->pool->compactsMemory() ) {
+			return 0;
+		}
+
+		if ( data->pool->getThreadID() == ::GetCurrentThreadId() ) {
+			data->refcount++;
+		}
+		else {
+			//we need to lock it?
+			data->refcount++;
+		}
+		return data->refcount;
 	}
-	return result;
-	*/
+
 	return 0;
 }
 
-uint32 StringPool::decStringRefcount( uint32 index )
+uint32 StringPool::decStringRefcount( StringDataHandle handle )
 {
+	if ( NULL != handle ) {
+		
+		StringData* data = (StringData*)handle;
+		if ( !data->pool->compactsMemory() ) {
+			return 0;
+		}
+
+		if ( data->pool->getThreadID() == ::GetCurrentThreadId() ) {
+			if ( data->refcount > 0 ) {
+				data->refcount--;
+
+				if ( 0 == data->refcount ) {
+
+				}
+			}
+		}
+		else {
+			//we need to lock it?
+			data->refcount--;
+		}
+		return data->refcount;
+	}
+
 	return 0;
 	/*
 	uint32 result = NoEntry;
@@ -498,44 +606,75 @@ uint32 StringPool::decStringRefcount( uint32 index )
 	*/
 }
 
-const VCFChar* StringPool::getString( uint32 index )
+const U16Char* StringPool::getString( StringDataHandle handle )
 {
-	if ( index < stringEntries_.size() && index != NoEntry ) {
-		const StrEntry& entry = stringEntries_[index];
-	//	if ( entry.refcount > 0 ) {
-			return entry.str;
-	//	}
+	if ( NULL == handle ) {
+		return NULL;
 	}
 
-	return stringEntries_[index].str;
+	return ((StringData*)handle)->strPtr;
 }
 
-size_t StringPool::getStringLength( uint32 index )
+size_t StringPool::getStringLength( StringDataHandle handle )
 {
-	if ( index < stringEntries_.size() && index != NoEntry ) {
-		const StrEntry& entry = stringEntries_[index];
-		//if ( entry.refcount > 0 ) {
-			return entry.length;
-		//}
+	if ( NULL == handle ) {
+		return 0;
 	}
-
-	return 0;
+	return ((StringData*)handle)->length;
 }
 
-bool StringPool::validString( uint32 index )
+bool StringPool::validString( StringDataHandle handle )
 {
-	if ( index < stringEntries_.size() && index != NoEntry ) {
-		const StrEntry& entry = stringEntries_[index];
-		if ( entry.refcount > 0 ) {
-			return true;
-		}
+	if ( NULL != handle ) {
+		return ((StringData*)handle)->refcount > 0;
 	}
 
 	return false;
 }
 
-static StringPool stringPool;
+bool StringPool::equals( StringDataHandle lhs, StringDataHandle rhs )
+{
+	StringData* lhsData = (StringData*)lhs;
+	StringData* rhsData = (StringData*)rhs;
 
+	if ( lhsData == rhsData ) {
+		return true;
+	}
+
+	if ( lhsData->length != rhsData->length ) {
+		return false;
+	}
+
+	if ( (lhsData->pool == rhsData->pool) || (lhsData->pool->getThreadID() == rhsData->pool->getThreadID()) ) {
+		return 0 == StringPool::wmemcmp( lhsData->strPtr, rhsData->strPtr, lhsData->length );
+	}
+	else {
+		//different threads, different pools, do we need to lock here??
+		return 0 == StringPool::wmemcmp( lhsData->strPtr, rhsData->strPtr, lhsData->length );
+	}
+
+	return false;
+}
+
+int StringPool::compare( StringDataHandle lhs, StringDataHandle rhs )
+{
+	StringData* lhsData = (StringData*)lhs;
+	StringData* rhsData = (StringData*)rhs;
+	
+	if ( lhsData == rhsData ) {
+		return 0;
+	}
+
+	if ( (lhsData->pool == rhsData->pool) || (lhsData->pool->getThreadID() == rhsData->pool->getThreadID()) ) {
+		return StringPool::wmemcmp( lhsData->strPtr, rhsData->strPtr, lhsData->length );
+	}
+	else {
+		//different threads, different pools, do we need to lock here??
+		return StringPool::wmemcmp( lhsData->strPtr, rhsData->strPtr, lhsData->length );
+	}
+
+	return 0;
+}
 
 class StringLiteral {
 public:
@@ -557,31 +696,31 @@ public:
 
 		strPtr_ = &storage[0];
 	}
-	StringLiteral( const VCFChar* s ):strPtr_(s){}
+	StringLiteral( const U16Char* s ):strPtr_(s){}
 
-	operator const VCFChar* () const {
+	operator const U16Char* () const {
 		return strPtr_;
 	}
 protected:
-	static std::vector<VCFChar> storage;
-	const VCFChar* strPtr_;
+	static std::vector<U16Char> storage;
+	const U16Char* strPtr_;
 };
 
-std::vector<VCFChar> StringLiteral::storage(StringLiteral::InitialStorageSize);
+std::vector<U16Char> StringLiteral::storage(StringLiteral::InitialStorageSize);
 
 
 class FastString {
 public:
 
-	typedef VCFChar* iterator;
-    typedef const VCFChar* const_iterator;
+	typedef U16Char* iterator;
+    typedef const U16Char* const_iterator;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
-	typedef VCFChar value_type;	
-    typedef VCFChar *pointer;
-    typedef const VCFChar *const_pointer;
-	typedef VCFChar& reference;
-    typedef const VCFChar& const_reference;
+	typedef U16Char value_type;	
+    typedef U16Char *pointer;
+    typedef const U16Char *const_pointer;
+	typedef U16Char& reference;
+    typedef const U16Char& const_reference;
 
 	#if (_MSC_VER <= 1200) && !defined(__GNUC__)
 	typedef std::reverse_iterator<iterator, value_type,
@@ -604,75 +743,75 @@ public:
 
 
 
-	//FastString( const VCFChar* str ): index_(StringPool::NoEntry) {
+	//FastString( const U16Char* str ): index_(StringPool::NoEntry) {
 	//	assign( str, wcslen(str) );
 	//}
 
-	FastString( const VCFChar* str, size_t length ): index_(StringPool::NoEntry) {
+	FastString( const U16Char* str, size_t length ): dataHandle_(NULL) {
 		assign( str, length );
 	}
 
-	FastString(): index_(StringPool::NoEntry){}
+	FastString(): dataHandle_(NULL){}
 
-	FastString( const FastString& f ):index_(f.index_) {
-		stringPool.incStringRefcount(index_);
+	FastString( const FastString& f ):dataHandle_(f.dataHandle_) {
+		StringPool::incStringRefcount(dataHandle_);
 	}
 
 
 	~FastString() {
-		stringPool.decStringRefcount(index_);
+		StringPool::decStringRefcount(dataHandle_);
 	}
 
-	operator const VCFChar*() const {
-		return stringPool.getString(index_);
+	operator const U16Char*() const {
+		return StringPool::getString(dataHandle_);
 	}
 
-	FastString& operator=( const VCFChar* rhs ) {
-		assign( rhs, wcslen(rhs) );
+	FastString& operator=( const U16Char* rhs ) {
+		assign( rhs, StringPool::wstrlen(rhs) );
 		return *this;
 	}
 
 	FastString& operator=( const FastString& rhs ) {
-		stringPool.decStringRefcount(index_);
+		StringPool::decStringRefcount(dataHandle_);
 
-		index_ = rhs.index_;
+		dataHandle_ = rhs.dataHandle_;
 		
-		stringPool.incStringRefcount(index_);
+		StringPool::incStringRefcount(dataHandle_);
 		return *this;
 	}
 
-	void assign( const VCFChar* str, size_t length ) {
-		stringPool.decStringRefcount(index_);
+	void assign( const U16Char* str, size_t length ) {
+		StringPool::decStringRefcount(dataHandle_);
 
-		index_ = stringPool.addString( str, length );
+		dataHandle_ = StringPool::addString( str, length );
 		
-		stringPool.incStringRefcount(index_);
+		StringPool::incStringRefcount(dataHandle_);
 	}
 
-	const VCFChar* c_str() const {
-		return stringPool.getString(index_);
+	const U16Char* c_str() const {
+		return StringPool::getString(dataHandle_);
 	}
 
 	size_t length() const {
-		return stringPool.getStringLength(index_);
+		return StringPool::getStringLength(dataHandle_);
 	}
 
 	size_t size() const {
-		return stringPool.getStringLength(index_);
+		return StringPool::getStringLength(dataHandle_);
 	}
 
 
 	bool operator == ( const FastString& rhs ) const {
-		return index_ == rhs.index_;
+		return StringPool::equals(dataHandle_, rhs.dataHandle_ );
 	}
 
 	void clear() {
-		stringPool.decStringRefcount(index_);
-		index_ = 0;
+		StringPool::decStringRefcount(dataHandle_);
+		dataHandle_ = NULL;
 	}
 
 	bool empty() const {
-		if ( index_ == StringPool::NoEntry ) {
+		if ( NULL == dataHandle_ ) {
 			return true;
 		}
 
@@ -680,17 +819,23 @@ public:
 	}
 
 	bool valid() const {
-		return stringPool.validString(index_);
+		return StringPool::validString(dataHandle_);
 	}
 
+	int compare( const FastString& rhs ) const {
+		return StringPool::compare( dataHandle_, rhs.dataHandle_ );
+	}
 
+	FastString substr( size_type pos, size_type length ) const {
+		return FastString( StringPool::getString(dataHandle_) + pos, length );
+	}
 	
     const_iterator begin() const {
-		return stringPool.getString(index_);
+		return StringPool::getString(dataHandle_);
 	}
 
     const_iterator end() const {
-		return stringPool.getString(index_) + stringPool.getStringLength(index_);
+		return StringPool::getString(dataHandle_) + StringPool::getStringLength(dataHandle_);
 	}
     
     const_reverse_iterator rbegin() const {
@@ -702,21 +847,21 @@ public:
 	}
 
     const_reference at(size_type pos) const {
-		if ( pos >= stringPool.getStringLength(index_) ) {
+		if ( pos >= StringPool::getStringLength(dataHandle_) ) {
 			throw std::out_of_range("array index is too large");
 		}
-		return stringPool.getString(index_)[ pos ];
+		return StringPool::getString(dataHandle_)[ pos ];
 	}
 
     const_reference operator[](size_type pos) const {
-		return stringPool.getString(index_)[ pos ];
+		return StringPool::getString(dataHandle_)[ pos ];
 	}
 
 	void swap( FastString& str ) {
-		if ( str.index_ != index_ ) {			
-			size_t tmp = index_;
-			index_ = str.index_;
-			str.index_ = tmp;
+		if ( str.dataHandle_ != dataHandle_ ) {			
+			StringDataHandle tmp = dataHandle_;
+			dataHandle_ = str.dataHandle_;
+			str.dataHandle_ = tmp;
 		}
 	}
 
@@ -724,32 +869,32 @@ public:
 		return find( str.c_str(), pos, str.size() ); 
 	}
 
-	size_type find(const VCFChar* strPtr, size_type pos = 0) const {
-		return find( strPtr, pos, wcslen(strPtr) ); 
+	size_type find(const U16Char* strPtr, size_type pos = 0) const {
+		return find( strPtr, pos, StringPool::wstrlen(strPtr) ); 
 	}
 
-	size_type find( VCFChar ch, size_type pos = 0) const {
-		return find( (const VCFChar*)&ch, pos, 1); 
+	size_type find( U16Char ch, size_type pos = 0) const {
+		return find( (const U16Char*)&ch, pos, 1); 
 	}
 
-	size_type find( const VCFChar* searchStr, size_type pos, size_type length) const {
-		size_type len = stringPool.getStringLength(index_);
+	size_type find( const U16Char* searchStr, size_type pos, size_type length) const {
+		size_type len = StringPool::getStringLength(dataHandle_);
 
 		if (length == 0 && pos <= len) {
 			return (pos);
 		}
 
 		size_type searchLength = len - pos;
-		const VCFChar* sourceStr = stringPool.getString(index_);
+		const U16Char* sourceStr = StringPool::getString(dataHandle_);
 
 		if ( pos < len && (length <= searchLength) ) {
-			const VCFChar *currentStr1, *currentStr2;
+			const U16Char *currentStr1, *currentStr2;
 			
 			for (searchLength -= length - 1, currentStr2 = sourceStr + pos;
-					(currentStr1 = wmemchr(currentStr2, *searchStr, searchLength )) != 0;
+					(currentStr1 = StringPool::wmemchr(currentStr2, *searchStr, searchLength )) != 0;
 					searchLength -= currentStr1 - currentStr2 + 1, currentStr2 = currentStr1 + 1) {
 
-					if (wmemcmp(currentStr1, searchStr, length) == 0) {
+					if (StringPool::wmemcmp(currentStr1, searchStr, length) == 0) {
 						return (currentStr1 - sourceStr); 
 					}
 			}
@@ -759,37 +904,112 @@ public:
 
 
 
-	size_type rfind(VCFChar c, size_type pos = npos) const {
+	size_type rfind(U16Char c, size_type pos = npos) const {
 		return rfind( &c, pos, 1 );
 	}
 
-	size_type rfind(const VCFChar* strPtr, size_type pos = npos) const {
-		return rfind( strPtr, pos, wcslen(strPtr) );
+	size_type rfind(const U16Char* strPtr, size_type pos = npos) const {
+		return rfind( strPtr, pos, StringPool::wstrlen(strPtr) );
 	}
 
 	size_type rfind(const FastString& str, size_type pos = npos) const {
 		return rfind( str.c_str(), pos, str.length() );
 	}
 
-	size_type rfind( const VCFChar *strPtr, size_type pos, size_type length) const {
-		size_type len = stringPool.getStringLength(index_);
+	size_type rfind( const U16Char *strPtr, size_type pos, size_type length) const {
+		size_type len = StringPool::getStringLength(dataHandle_);
 		if (length == 0) {
 			return (pos < len ? pos : len);
 		}
 
 		if (length <= len) {
-			const VCFChar* ptr = stringPool.getString(index_);
+			const U16Char* ptr = StringPool::getString(dataHandle_);
 
-			for (const VCFChar* currentStr1 = ptr + + (pos < len - length ? pos : len - length); ; --currentStr1)
-				if ( (*currentStr1 == *strPtr) && wmemcmp(currentStr1, strPtr, length) == 0)
+			for (const U16Char* currentStr1 = ptr + + (pos < len - length ? pos : len - length); ; --currentStr1)
+				if ( (*currentStr1 == *strPtr) && StringPool::wmemcmp(currentStr1, strPtr, length) == 0)
 					return (currentStr1 - ptr);
 				else if (currentStr1 == ptr)
 					break;
 		}
 		return FastString::npos;
 	}
+
+
+
+
+	//os specific string type conversion
+	//win32
+
+#ifdef _MSC_VER 
+	operator _bstr_t () const {
+		return _bstr_t( c_str() );
+	}
+
+	FastString& operator=( const _bstr_t& rhs ) {
+		assign( rhs, rhs.length() );
+		return *this;
+	}
+
+	operator _variant_t () const {
+		
+		return _variant_t( _bstr_t(c_str()) );
+	}
+
+	FastString& operator=( const _variant_t& rhs ) {
+		_bstr_t b = rhs;
+		assign( b, b.length() );
+		return *this;
+	}
+
+	
+#endif
+	BSTR toBSTR() const {
+		return SysAllocString(c_str());
+	}
+
+	FastString& assignBSTR( const BSTR& rhs ) {
+		assign( (const U16Char*)rhs, SysStringLen(rhs) );
+		return *this;
+	}
+
+/*
+	operator BSTR() const {
+		return SysAllocString(c_str());
+	}
+
+	FastString& operator=( const BSTR& rhs ) {
+		assign( (const U16Char*)rhs, SysStringLen(rhs) );
+		return *this;
+	}
+*/
+
+	operator VARIANT() const {
+		VARIANT result;
+		VariantInit( &result );
+		result.bstrVal = SysAllocString(c_str());
+		result.vt = VT_BSTR;
+
+		return result;
+	}
+
+	FastString& operator=( const VARIANT& rhs ) {
+		if ( rhs.vt == VT_BSTR ) {
+			assign( (const U16Char*)rhs.bstrVal, SysStringLen(rhs.bstrVal) );
+		}
+		return *this;
+	}
+
+	//stl conversion support
+	operator std::wstring() const {
+		return std::wstring(c_str());
+	}
+
+	FastString& operator=( const std::wstring& rhs ) {
+		assign( rhs.c_str(), rhs.length() );
+		return *this;
+	}
 protected:
-	size_t index_;
+	StringDataHandle dataHandle_;
 };
 
 
@@ -1042,7 +1262,7 @@ bool ChDictionaryEntry2::Parse(const wstring& line)
     wstring::size_type end = line.find(L' ', start);
     if (end == wstring::npos) return false;
 
-	const VCFChar* begin = line.c_str();
+	const U16Char* begin = (const U16Char*)line.c_str();
 
     trad.assign(begin + start, end - start);
     start = line.find(L'[', end);
@@ -1118,7 +1338,7 @@ bool ChDictionaryEntry3::Parse(const FastString& line)
     FastString::size_type end = line.find(L' ', start);
     if (end == FastString::npos) return false;
 
-	const VCFChar* begin = line.c_str();
+	const U16Char* begin = line.c_str();
 
     trad.assign(begin + start, end - start);
     start = line.find(L'[', end);
@@ -1166,9 +1386,9 @@ void ChDictionary3::doit()
 	delete [] data;
 
 
-	const VCFChar*  P = chStr.c_str();
-	const VCFChar*  start = P;
-	const VCFChar*  line = P;
+	const U16Char*  P = (const U16Char*)chStr.c_str();
+	const U16Char*  start = P;
+	const U16Char*  line = P;
 
 	size_t sz = chStr.length();
 	while ( P-start < sz ) {
@@ -1206,10 +1426,10 @@ void ChDictionary3::doit()
 void part2()
 {
 	printf( "part2.....\n" );
-	printf( "num entries in string pool: %u\n", stringPool.uniqueEntries() );
-	printf( "total bytes in string pool: %u\n", stringPool.totalBytesAllocated() );
+	printf( "num entries in string pool: %u\n", StringPool::getUsablePool()->uniqueEntries() );
+	printf( "total bytes in string pool: %u\n", StringPool::getUsablePool()->totalBytesAllocated() );
 	HiResClock clock;
-/*
+
 	clock.start();
 	
 	{
@@ -1260,7 +1480,7 @@ void part2()
 		printf( "FastString (ChDictionary2) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
 	}
 
-*/
+
 
 
 	{
@@ -1271,7 +1491,7 @@ void part2()
 
 		std::cout << dict3.Length() << std::endl;		
 		printf( "FastString (ChDictionary3) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
-		printf( "num entries in string pool: %u\n", stringPool.uniqueEntries() );
+		printf( "num entries in string pool: %u\n", StringPool::getUsablePool()->uniqueEntries() );
 	}
 
 	{
@@ -1282,7 +1502,7 @@ void part2()
 
 		std::cout << dict3.Length() << std::endl;		
 		printf( "FastString (ChDictionary3) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
-		printf( "num entries in string pool: %u\n", stringPool.uniqueEntries() );
+		printf( "num entries in string pool: %u\n", StringPool::getUsablePool()->uniqueEntries() );
 	}
 
 	{
@@ -1294,8 +1514,8 @@ void part2()
 		std::cout << dict3.Length() << std::endl;		
 		printf( "FastString (ChDictionary3) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
 
-		printf( "num entries in string pool: %u\n", stringPool.uniqueEntries() );
-		printf( "total bytes in string pool: %u\n", stringPool.totalBytesAllocated() );
+		printf( "num entries in string pool: %u\n", StringPool::getUsablePool()->uniqueEntries() );
+		printf( "total bytes in string pool: %u\n", StringPool::getUsablePool()->totalBytesAllocated() );
 
 		int idx = 22;
 		printf( "item[%d].english: %ls\n", idx, dict3.Item(idx).english.c_str() );
@@ -1306,14 +1526,36 @@ void part2()
 	
 }
 
+
+
+void part3()
+{
+	FastString fs;
+	_bstr_t b = "asdasdasd";
+
+	fs = b;
+
+	BSTR b2 = fs.toBSTR();
+
+	_variant_t v = fs;
+
+	VARIANT v2 = fs;
+}
+
+
 int main( int argc, char** argv )
 {
 
 	FoundationKit::init( argc, argv );
 
+	
+	StringPool stringPool;
+	stringPool.makeCurrentPool();
+
+
 	HiResClock clock;
 
-	VCFChar t1[5000];
+	U16Char t1[5000];
 
 	size_t BIGSTR2_len = wcslen(BIGSTR2);
 	clock.start();
@@ -1330,7 +1572,7 @@ int main( int argc, char** argv )
 	printf( "::wmemcpy took %0.8f seconds\n", clock.duration() );
 
 	{
-		const VCFChar* s = L"Hola";
+		const U16Char* s = L"Hola";
 		
 		StringPool sp;
 		sp.allocate( s, s+4);
@@ -1342,10 +1584,10 @@ int main( int argc, char** argv )
 		FastString f2 = f;
 		f = v[0];
 		
-		uint32 idx = sp.addString(s,4);
+		StringDataHandle idx = sp.addString(s,4);
 		
 		
-		uint32 idx2 = sp.addString(s,4);
+		StringDataHandle idx2 = sp.addString(s,4);
 	}
 
 	
@@ -1462,7 +1704,7 @@ int main( int argc, char** argv )
 	clock.start();
 	clock2.start();
 	size_t size = MultiByteToWideChar( CP_UTF8, 0, str, stringLength, NULL, 0 );
-	VCFChar* tmp = new VCFChar[size];
+	U16Char* tmp = new U16Char[size];
 
 	int err = MultiByteToWideChar( CP_UTF8, 0, str, stringLength, (LPWSTR)tmp, size );
 
@@ -1486,6 +1728,9 @@ int main( int argc, char** argv )
 	StringLiteral sl("Hello World");
 	clock2.stop();
 	f6 = sl;
+
+	f6 = f6.substr( 5, 5 );
+
 	clock.stop();
 
 	printf( "f6 from ansi Length %u, StringLiteral took %0.8f seconds, total took %0.8f seconds\n",f5.length(),clock2.duration(), clock.duration() );
@@ -1494,7 +1739,10 @@ int main( int argc, char** argv )
 
 
 
-	part2();
+	//part2();
+
+
+	part3();
 
 	//Sleep(10000000);
 
