@@ -1157,9 +1157,7 @@ double Win32LocalePeer::toDouble( const UnicodeString& str )
 	double result;
 
 	if ( System::isUnicodeEnabled() ) {
-		float f = 0.0f;
-		swscanf( changeToGenericNumberString(str).c_str(), L"%f", &f );
-		result = f;
+		result = wcstod( changeToGenericNumberString(str).c_str(), NULL );
 	}
 	else {
 		result = atof( changeToGenericNumberString(str).ansi_c_str() );
@@ -1173,8 +1171,8 @@ float Win32LocalePeer::toFloat( const UnicodeString& str )
 	float result;
 
 	if ( System::isUnicodeEnabled() ) {
-
-		swscanf( changeToGenericNumberString(str).c_str(), L"%f", &result );
+		result = (float)wcstod( changeToGenericNumberString(str).c_str(), NULL );
+		//swscanf( changeToGenericNumberString(str).c_str(), L"%f", &result );
 	}
 	else {
 		result = atof( changeToGenericNumberString(str).ansi_c_str() );

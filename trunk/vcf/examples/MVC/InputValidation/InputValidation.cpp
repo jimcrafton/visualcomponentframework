@@ -4,6 +4,8 @@
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/FoundationKit/RTTIMacros.h"
 #include "vcf/ApplicationKit/AdapterModels.h"
+#include "vcf/ApplicationKit/TextControl.h"
+#include "vcf/ApplicationKit/InputValidation.h"
 
 
 using namespace VCF;
@@ -24,10 +26,13 @@ _class_rtti_end_
 
 
 
-class InputValidationApplication : public Application {
+class InputValidationApp : public Application {
 public:
 
-	InputValidationApplication( int argc, char** argv ) : Application(argc, argv) {
+	InputValidationApp( int argc, char** argv ) : Application(argc, argv) {
+		addCallback( new ClassProcedure1<Event*,InputValidationApp>(this, &InputValidationApp::updateNumericValAsDouble), "InputValidationApp::updateNumericValAsDouble" );
+		addCallback( new ClassProcedure1<Event*,InputValidationApp>(this, &InputValidationApp::updateCurrencyValAsDouble), "InputValidationApp::updateCurrencyValAsDouble" );
+
 
 	}
 
@@ -43,12 +48,27 @@ public:
 		return result;
 	}
 
+	void updateNumericValAsDouble( Event* ) {
+		TextControl* tc = (TextControl*)findComponent( "edt3", true );
+
+		NumericValidator* numInput = (NumericValidator*)findComponent( "numericValidator", true );
+		tc->setText( StringUtils::toString(numInput->getDouble()) );
+
+	}
+
+	void updateCurrencyValAsDouble( Event* ) {
+		TextControl* tc = (TextControl*)findComponent( "edt4", true );
+
+		CurrencyValidator* currencyValidator = (CurrencyValidator*)findComponent( "currencyValidator", true );
+		tc->setText( StringUtils::toString(currencyValidator->getDouble()) );
+	}
+
 };
 
 
 int main(int argc, char *argv[])
 {
-	return ApplicationKitMain<InputValidationApplication>(argc,argv);
+	return ApplicationKitMain<InputValidationApp>(argc,argv);
 }
 
 

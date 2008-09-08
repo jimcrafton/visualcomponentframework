@@ -1,8 +1,8 @@
 object BusinessObjectValidationWindow  : VCF::Window
 	top = 200
 	left = 200
-	height = 300
-	width = 320
+	height = 190pt
+	width = 270pt
 	caption = 'BusinessObjectValidation Window'	
 
 
@@ -22,6 +22,40 @@ object BusinessObjectValidationWindow  : VCF::Window
 			errorMessage = 'Year joined must be greater than 1900'
 			appliesToKey = 'yearJoined'
 		end
+
+		object lastNameNotNull : VCF::NullRule
+			allowsNull = false
+			errorMessage = 'Last name can''t be null'
+			appliesToKey = 'lastName'
+		end
+
+		object firstNameNotNull : VCF::NullRule
+			allowsNull = false
+			errorMessage = 'First name can''t be null'
+			appliesToKey = 'firstName'
+		end
+
+		object emailRules : VCF::ValidationRuleCollection
+			appliesToKey = 'email'
+
+			object emailNotNull : VCF::NullRule
+				allowsNull = false
+				errorMessage = 'Email can''t be null'	
+				logicOp = vlAND
+			end
+
+			object emailData1 : VCF::SimilarToRule
+				data = '&'
+				//errorMessage = 'Email format isn''t correct - needs "@" separator'
+				logicOp = vlAND
+			end
+
+			object emailData2 : VCF::SimilarToRule
+				data = '.'
+				errorMessage = 'Email format isn''t correct - needs "." separator'
+			end
+		end
+		
 	end
 
 	object images : VCF::ImageList

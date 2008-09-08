@@ -83,6 +83,9 @@ object InputValidationWindow  : VCF::Window
 		object numInput : VCF::TextControl
 			height = TextHeight
 			inputValidator = @numericValidator
+			delegates
+				model.ModelChanged = [InputValidationApp@InputValidationApp::updateNumericValAsDouble]
+			end
 		end
 
 		object bdr7 : VCF::TitledBorder
@@ -156,6 +159,9 @@ object InputValidationWindow  : VCF::Window
 			height = TextHeight
 			width = 130pt
 			inputValidator = @currencyValidator
+			delegates
+				model.ModelChanged = [InputValidationApp@InputValidationApp::updateCurrencyValAsDouble]
+			end
 		end
 
 		object lbl3 : VCF::Label

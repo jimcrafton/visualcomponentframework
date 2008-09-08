@@ -241,6 +241,11 @@ bool NullRule::exec( const VariantData& key, const VariantData& value, Validatio
 		return false;
 	}
 
+	if ( !allowsNull_ && value.isString() ) {
+		String s = value;
+		return !s.empty();
+	}
+
 	return true;
 }
 
@@ -315,6 +320,13 @@ bool SimilarToRule::exec( const VariantData& key, const VariantData& value, Vali
 {
 	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
 		return true;
+	}
+
+	if ( data_.isString() && value.isString() ) {		
+		String s1 = data_;
+		String s2 = value;
+
+		return s2.find( s1 ) != String::npos;
 	}
 
 	return false;
