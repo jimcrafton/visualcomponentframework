@@ -869,7 +869,12 @@ void Control::handleEvent( Event* event )
 				FocusGained( focusEvent );
 
 				if (!event->isConsumed() && !isDesigning()) {
-					gotFocus( focusEvent );
+					
+					if ( currentFocusedControl != this ) {
+						currentFocusedControl = this;
+
+						gotFocus( focusEvent );
+					}
 				}
 			}
 			break;

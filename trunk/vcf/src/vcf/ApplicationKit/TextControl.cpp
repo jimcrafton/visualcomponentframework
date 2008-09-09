@@ -680,7 +680,7 @@ void TextControl::internal_processKeyDown( KeyboardEvent* ke )
 					text.erase( pos, length );
 					model->setValueAsString( text, getModelKey() );
 					if ( didInputValidationFail() ) {
-						ke->ignoreKeystroke = true;
+						//ke->ignoreKeystroke = true;
 					}
 				}
 			}
