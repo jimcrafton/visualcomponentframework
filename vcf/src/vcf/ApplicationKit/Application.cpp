@@ -279,7 +279,13 @@ void Application::showErrorMessage( const String& message, const String& title )
 
 #if defined (VCF_WIN)
 	if ( System::isUnicodeEnabled() ) {
-		::MessageBoxW( GetActiveWindow(), message.c_str(), title.c_str(), MB_OK | MB_ICONERROR );
+		Control* c = Control::getCurrentFocusedControl();
+		HWND h = ::GetFocus();
+
+		::MessageBoxW( h, message.c_str(), title.c_str(), MB_OK | MB_ICONERROR );	
+		if ( c ) 
+			c->setFocused();
+		
 	}
 	else {
 		::MessageBoxA( GetActiveWindow(), message.ansi_c_str(), title.ansi_c_str(), MB_OK | MB_ICONERROR );

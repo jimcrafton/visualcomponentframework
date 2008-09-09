@@ -45,7 +45,7 @@ object BusinessObjectValidationWindow  : VCF::Window
 			end
 
 			object emailData1 : VCF::SimilarToRule
-				data = '&'
+				data = '@'
 				//errorMessage = 'Email format isn''t correct - needs "@" separator'
 				logicOp = vlAND
 			end

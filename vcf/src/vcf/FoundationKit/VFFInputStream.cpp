@@ -500,6 +500,9 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 						//found then pass this into the prop->set() call.
 						//If nothing is found then go for it and pass
 						//in the value as is.
+
+						bool deferredProp = false;
+
 						if ( /*(pdObject == prop->getType()) &&*/ ('@' == value[0]) ) {
 							//OK our value is actually a component name so we are
 							//going to store it in a list for later, because we may not
@@ -511,8 +514,15 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 							
 							value.erase( 0, 1 );
 							if ( !value.empty() ) {
-								deferredProperties_.push_back( new DeferredPropertySetter( value, prop->getName(), prop->getSource() ) );
+								deferredProp = true;
 							}
+							else {
+								value.insert( 0, L"@" );
+							}
+						}
+
+						if ( deferredProp ) {							
+							deferredProperties_.push_back( new DeferredPropertySetter( value, prop->getName(), prop->getSource() ) );							
 						}
 						else {
 							String newVal;							

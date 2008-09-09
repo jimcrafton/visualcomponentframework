@@ -866,7 +866,6 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		}
 		break;
 
-		
 		case EN_SELCHANGE : {
 			wndProcResult = 0;
 			result = true;
@@ -1190,49 +1189,67 @@ int Win32Edit::getCRCount( const uint32& begin, const uint32& end, const bool& l
 
 void Win32Edit::setText( const VCF::String& text )
 {
-	editState_ |= esPeerTextChanging;
+	String oldText = getText();
+	if ( oldText != text ) {	
+		editState_ |= esPeerTextChanging;	
+		int firstLine1 = ::SendMessage( hwnd_, EM_GETFIRSTVISIBLELINE, (WPARAM)0, (LPARAM)0 );
 
-	int firstLine1 = ::SendMessage( hwnd_, EM_GETFIRSTVISIBLELINE, (WPARAM)0, (LPARAM)0 );
+		DWORD start = getSelectionStart();
+		DWORD count = getSelectionCount();
 
-	DWORD start = getSelectionStart();
-	DWORD count = getSelectionCount();
+		ITextRange* range;
+		textDocument_->Range( 0, 0, &range );
+		if ( NULL != range ) {
+			
+			long len = 0;
+			range->GetStoryLength( &len );
+			range->SetEnd( len );
+			
+			BSTR str = SysAllocStringLen( text.c_str(), text.length() );
+			
+			range->SetText( str );
+			
+			SysFreeString( str );
+			
+			range->Release();
+		}
+		
 
-	ITextRange* range;
-	textDocument_->Range( 0, 0, &range );
-	if ( NULL != range ) {
+		int diff = oldText.length() - text.length();
 
-		long len = 0;
-		range->GetStoryLength( &len );
-		range->SetEnd( len );
 
-		BSTR str = SysAllocStringLen( text.c_str(), text.length() );
+		if ( diff > 0 ) {
+			if ( start >= text.length() ) {
+				//start = text.length()-1;
+				//count = 0;
+			}
+			else {
+			//	count = min(0, ((int)count)-diff );
+			}
+		}
+		else if ( diff < 0 ) {
+			
+		}
 
-		range->SetText( str );
-
-		SysFreeString( str );
-
-		range->Release();
-	}
-
-	setSelectionMark( start, count );
-
-	int firstLine2 = ::SendMessage( hwnd_, EM_GETFIRSTVISIBLELINE, (WPARAM)0, (LPARAM)0 );
-
-	if ( firstLine2 != firstLine1 ) {
-		// workaround necessary only while insertText is implemented with setText - MP
-		// if we could know the number of lines visible in the editor, we would be able
-		// to save these two calls.
-		// setText() empties the editor first, then puts back the text plus the added text,
-		// but in this way it looses the scrolling position information.
-		// At that point setSelectionMark() will make the selection visible, but at the end
-		// of the page.
-		::SendMessage( hwnd_, EM_LINESCROLL, (WPARAM)0, (LPARAM)(-(firstLine2-firstLine1)) );
-
-		// this will not move the the scrollbar if the selection is already visible
 		setSelectionMark( start, count );
+		
+		int firstLine2 = ::SendMessage( hwnd_, EM_GETFIRSTVISIBLELINE, (WPARAM)0, (LPARAM)0 );
+		
+		if ( firstLine2 != firstLine1 ) {
+			// workaround necessary only while insertText is implemented with setText - MP
+			// if we could know the number of lines visible in the editor, we would be able
+			// to save these two calls.
+			// setText() empties the editor first, then puts back the text plus the added text,
+			// but in this way it looses the scrolling position information.
+			// At that point setSelectionMark() will make the selection visible, but at the end
+			// of the page.
+			::SendMessage( hwnd_, EM_LINESCROLL, (WPARAM)0, (LPARAM)(-(firstLine2-firstLine1)) );
+			
+			// this will not move the the scrollbar if the selection is already visible
+			setSelectionMark( start, count );
+		}
+		editState_ &= ~esPeerTextChanging;
 	}
-
-	editState_ &= ~esPeerTextChanging;
 }
 
 uint32 Win32Edit::getSelectionStart()
