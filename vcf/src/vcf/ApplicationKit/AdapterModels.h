@@ -95,9 +95,14 @@ public:
 				if ( NULL != property ) {					
 					ValidationResult v = Model::validate( key, value );
 					if ( v || (updateFlags_ & muAllowsInvalidData) ) {
-						property->set( &v.value );
-						ModelEvent e(this,MODEL_CHANGED);
-						changed(&e);
+						try {
+							property->set( &v.value );
+							ModelEvent e(this,MODEL_CHANGED);
+							changed(&e);
+						}
+						catch (BasicException& e) {
+							StringUtils::trace( Format("Unable to set property {%s} to value {%s}\n\tException: %s\n") % key.toString() % value.toString() % e.getMessage() );
+						}
 					}
 				}				
 			}

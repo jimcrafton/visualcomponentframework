@@ -443,7 +443,7 @@ void TextControl::handleEvent( Event* event )
 		on the Control::KEYBOARD_PRESSED events
 		*/
 		case Control::KEYBOARD_DOWN : case Control::KEYBOARD_PRESSED : {
-			inputState_ = tisWaitingForInput;
+			
 
 			//do not process any events during design mode
 			if ( isDesigning() ) {
@@ -452,7 +452,10 @@ void TextControl::handleEvent( Event* event )
 			}					
 
 			if ( !isReadOnly() && !(getComponentState() & Component::csDesigning) ) {
-				inputState_ = tisProcessing;
+
+				if ( event->getType() == Control::KEYBOARD_DOWN ) {
+					inputState_ = tisProcessing;
+				}
 
 
 				KeyboardEvent* ke = (KeyboardEvent*)event;
@@ -464,7 +467,7 @@ void TextControl::handleEvent( Event* event )
 					}
 
 					if ( validationStyle_ != tvsOnKeyEvent ) {
-						inputState_ = tisWaitingForInput;
+						
 						return;
 					}
 
@@ -487,7 +490,7 @@ void TextControl::handleEvent( Event* event )
 
 					internal_processKeyPress( ke );
 
-					inputState_ = tisWaitingForInput;
+					//inputState_ = tisWaitingForInput;
 				}				
 			}
 
@@ -500,6 +503,7 @@ void TextControl::handleEvent( Event* event )
 			if ( NULL != inputValidator_ ) {
 				inputValidator_->handleEvent( event );				
 			}	
+			inputState_ = tisWaitingForInput;
 		}
 		break;
 
@@ -680,7 +684,7 @@ void TextControl::internal_processKeyDown( KeyboardEvent* ke )
 					text.erase( pos, length );
 					model->setValueAsString( text, getModelKey() );
 					if ( didInputValidationFail() ) {
-						//ke->ignoreKeystroke = true;
+						ke->ignoreKeystroke = true;
 					}
 				}
 			}

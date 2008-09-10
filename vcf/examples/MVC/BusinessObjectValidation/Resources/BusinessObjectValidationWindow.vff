@@ -1,14 +1,14 @@
 object BusinessObjectValidationWindow  : VCF::Window
 	top = 200
 	left = 200
-	height = 190pt
+	height = 210pt
 	width = 270pt
 	caption = 'BusinessObjectValidation Window'	
 
 
 
 	object businessObject :  VCF::ObjectModel
-		updateFlags = [muUsesValidation,muDisplayErrorIfInvalid,muAllowsInvalidData]
+		updateFlags = [muUsesValidation,muAllowsInvalidData]
 		validator = @rules
 		delegates 
 			ModelValidationFailed = [BizApp@BizApp::validationFailed]
