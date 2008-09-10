@@ -870,12 +870,12 @@ int StringUtils::fromStringAsInt( const VCF::String& value )
 			result = _wtoi( value.c_str() );
 			if ( 0 == result && ( value[0] != '0' ) &&
 					( -1 != swscanf( value.c_str(), W_STR_INT_CONVERSION, &result ) ) ) {
-				throw BasicException( L"Unable to convert: " + value );
+				throw BasicException( L"Unable to convert: {" + value + L"}" );
 			}
 		#else
 			int ret = swscanf( value.c_str(), W_STR_INT_CONVERSION, &result );
 			if ( ret != 1 ) {
-				throw BasicException( L"Unable to convert: " + value );
+				throw BasicException( L"Unable to convert: {" + value + L"}" );
 			}
 		#endif
 	#endif

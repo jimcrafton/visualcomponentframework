@@ -277,18 +277,22 @@ bool MaxRule::exec( const VariantData& key, const VariantData& value, Validation
 	if ( !appliesToKey_.isNull() && (appliesToKey_ != key) ) {
 		return true;
 	}
-
-	if ( value.isReal() ) {
-		double x = value;
-		double y = data_;
-
-		return x > y;
+	try {		
+		if ( value.isReal() ) {
+			double x = value;
+			double y = data_;
+			
+			return x > y;
+		}
+		else {
+			int x = value;
+			int y = data_;
+			
+			return x > y;
+		}
 	}
-	else {
-		int x = value;
-		int y = data_;
-
-		return x > y;
+	catch (...) {
+		return false;
 	}
 
 	return false;

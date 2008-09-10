@@ -811,6 +811,10 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 					result = true;
 
+					if ( !(editState_ & esKeyEvent) ) {
+						editState_ |= esKeyEvent;
+					}
+
 					if ( !event.ignoreKeystroke ) {
 						wndProcResult = defaultWndProcedure( message, wParam, lParam );
 					}
@@ -1220,17 +1224,20 @@ void Win32Edit::setText( const VCF::String& text )
 
 		if ( diff > 0 ) {
 			if ( start >= text.length() ) {
-				//start = text.length()-1;
-				//count = 0;
+				start = text.length();
+				count = 0;
 			}
 			else {
-			//	count = min(0, ((int)count)-diff );
+				count = min(0, ((int)count)-diff );
 			}
 		}
 		else if ( diff < 0 ) {
-			
+			if ( start >= oldText.length() ) {
+				start = text.length();
+				//count = 0;
+			}
 		}
-
+		
 		setSelectionMark( start, count );
 		
 		int firstLine2 = ::SendMessage( hwnd_, EM_GETFIRSTVISIBLELINE, (WPARAM)0, (LPARAM)0 );

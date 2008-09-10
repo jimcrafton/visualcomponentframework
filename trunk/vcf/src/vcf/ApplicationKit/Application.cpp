@@ -279,12 +279,19 @@ void Application::showErrorMessage( const String& message, const String& title )
 
 #if defined (VCF_WIN)
 	if ( System::isUnicodeEnabled() ) {
-		Control* c = Control::getCurrentFocusedControl();
-		HWND h = ::GetFocus();
+		Control* focused = Control::getCurrentFocusedControl();
+		HWND h = NULL;
+		if ( NULL != focused ) {
+			h = (HWND)focused->getPeer()->getHandleID();
+		}
+		else {
+			h = ::GetFocus();
+		}
 
 		::MessageBoxW( h, message.c_str(), title.c_str(), MB_OK | MB_ICONERROR );	
-		if ( c ) 
-			c->setFocused();
+		if ( focused )  {
+			focused->setFocused();
+		}
 		
 	}
 	else {
@@ -318,9 +325,23 @@ bool Application::showAssertMessage( const String& message, const String& title 
 	msg += "\nDo you want to continue with the program execution?";
 #if defined (VCF_WIN)
 	if ( System::isUnicodeEnabled() ) {
-		if ( IDYES == ::MessageBoxW( NULL, msg.c_str(), title.c_str(), MB_YESNO | MB_ICONERROR ) ) {
+		Control* focused = Control::getCurrentFocusedControl();
+		HWND h = NULL;
+		if ( NULL != focused ) {
+			h = (HWND)focused->getPeer()->getHandleID();
+		}
+		else {
+			h = ::GetFocus();
+		}		
+		
+		if ( IDYES == ::MessageBoxW( h, msg.c_str(), title.c_str(), MB_YESNO | MB_ICONERROR ) ) {
 			result = true;
 		}
+
+		if ( focused )  {
+			focused->setFocused();
+		}
+
 	}
 	else {
 		if ( IDYES == ::MessageBoxA( NULL, msg.ansi_c_str(), title.ansi_c_str(), MB_YESNO | MB_ICONERROR ) ) {
