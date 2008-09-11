@@ -129,6 +129,22 @@ void ToolbarItem::setPressed( const bool& val )
 	setDisplayState( state );
 }
 
+void ToolbarItem::setIsDropDown( const bool& val )
+{
+	if ( ( (displayState_ & ToolbarItem::tisDropDown) != 0 ) == val ) {
+		return;
+	}
+
+	int32 state = displayState_;
+	if ( val ) {
+		state |= tisDropDown;
+	}
+	else {
+		state &= ~tisDropDown;
+	}
+	setDisplayState( state );
+}
+
 bool ToolbarItem::isEnabled()
 {
 	return (displayState_ & ToolbarItem::tisEnabled) ? true : false;

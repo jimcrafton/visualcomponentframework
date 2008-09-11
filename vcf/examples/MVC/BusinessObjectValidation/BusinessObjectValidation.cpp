@@ -142,10 +142,17 @@ public:
 		currentBO = NULL;
 		ObjectModel* model = (ObjectModel*)findComponent( "businessObject", true );
 		model->setSource( NULL );
+
+		resetLabel( "firstName" );
+		resetLabel( "lastName" );
+		resetLabel( "email" );
+		resetLabel( "workPhone" );
+		resetLabel( "deposit" );
+		resetLabel( "yearJoined" );
 	}
 
 	void saveObject( Event* ) {
-	
+		Dialog::showMessage( "Saved!\nOK, well not really, but you get the idea..." );
 	}
 
 	void updateNewObject( Event* ) {
@@ -188,6 +195,12 @@ public:
 	void validationOK( Event* e ) {
 		ValidationEvent* ve = (ValidationEvent*)e;
 		Control* c = (Control*)findComponent( ve->key.toString() + "Lbl", true );
+		c->getFont()->setColor( c->getParent()->getFont()->getColor() );
+		c->repaint();
+	}
+
+	void resetLabel( const String& keyName ) {
+		Control* c = (Control*)findComponent( keyName + "Lbl", true );
 		c->getFont()->setColor( c->getParent()->getFont()->getColor() );
 		c->repaint();
 	}

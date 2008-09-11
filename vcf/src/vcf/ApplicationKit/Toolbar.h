@@ -62,7 +62,8 @@ public:
 		tisPressed = 0x20,
 		tisEnabled = 0x40,
 		tisGrouped = 0x100,
-		tisChecked = 0x200
+		tisChecked = 0x200,
+		tisDropDown = 0x400
 	};
 
 	
@@ -136,6 +137,15 @@ public:
 	bool isPressed() {
 		return getDisplayState() & ToolbarItem::tisPressed ? true : false;
 	}
+
+
+	void setIsDropDown( const bool& val );
+
+	bool isDropDown() {
+		return getDisplayState() & ToolbarItem::tisDropDown ? true : false;
+	}
+
+	
 
 	void setItemControl( Control* control );
 

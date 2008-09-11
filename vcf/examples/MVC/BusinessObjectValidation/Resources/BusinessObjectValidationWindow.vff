@@ -87,11 +87,13 @@ object BusinessObjectValidationWindow  : VCF::Window
 		object newBtn : VCF::ToolbarItem
 			caption = 'New'
 			imageIndex = 0
+			tooltip = 'Creates a new business object'
 		end
 
 		object saveBtn : VCF::ToolbarItem
 			caption = 'Save'
 			imageIndex = 1
+			tooltip = 'Saves the current business object if it''s valid'
 		end
 
 		object s : VCF::ToolbarSeparator
@@ -100,7 +102,15 @@ object BusinessObjectValidationWindow  : VCF::Window
 		object deleteBtn : VCF::ToolbarItem
 			caption = 'Delete'
 			imageIndex = 2
+			tooltip = 'Deletes the current business object'
 		end
+
+		object deleteBtn : VCF::ToolbarItem
+			caption = 'blah'
+			
+			dropdown = true
+		end
+
 
 		//put this here to ensure that the button captions get shown
 		showButtonCaptions = true

@@ -153,6 +153,10 @@ bool ValidationRuleCollection::exec( const VariantData& key, const VariantData& 
 	Array<ValidationRule*>::iterator it = rules_.begin();		
 
 	ValidationRule* prevRule = NULL;
+
+	bool needsErrorMsg = this->errorMessage_.empty();
+
+
 	while ( it != rules_.end() ) {
 		ValidationRule* rule = *it;
 		
@@ -173,6 +177,7 @@ bool ValidationRuleCollection::exec( const VariantData& key, const VariantData& 
 		}
 		
 		if ( !ruleRes ) {
+			
 			result.addFailedRule( rule );
 		}
 
