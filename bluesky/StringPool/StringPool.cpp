@@ -1,6 +1,6 @@
 ////StringPool.cpp
 
-#include "vcf/FoundationKit/FoundationKit.h"
+//#include "vcf/FoundationKit/FoundationKit.h"
 
 
 #ifdef _MSC_VER 
@@ -8,7 +8,7 @@
 #endif
 
 
-/*
+
 #define WIN32_LEAN_AND_MEAN
 
 #pragma warning (disable:4786)
@@ -19,10 +19,11 @@
 #include <windows.h>
 #include <stdexcept>
 #include <emmintrin.h>
+#include <algorithm>
 
 
 
-*/
+
 #include <fstream>
 #include <iostream> // for cin/cout
 
@@ -31,12 +32,14 @@
 
 
 
-//typedef unsigned int uint32;
+typedef unsigned int uint32;
+typedef unsigned char uchar;
+typedef unsigned short ushort;
 typedef wchar_t U16Char; //16 bit unicode character codepoint
-//typedef wchar_t U16Char;
-//typedef std::basic_string<U16Char> String;
 
-using namespace VCF;
+typedef std::basic_string<U16Char> String;
+
+
 
 
 
@@ -92,25 +95,185 @@ inline size_t RoundUp(size_t cb, size_t units)
 
 //#define HAVE_MMX
 
+/**
+	Code page values for the locale:
+	*/
+enum LanguageEncoding { 
+	leUnknown = -1,
+	leDefault = 0,
+	leIBM037 = 100,
+	leIBM437,
+	leIBM500,
+	leArabic708,
+	leArabic449,
+	leArabicTransparent,
+	leDOSArabic,
+	leGreek,
+	leBaltic,
+	leLatin1,
+	leLatin2,
+	leCyrillic,
+	leTurkish,
+	leMultilingualLatin1,
+	lePortuguese,
+	leIcelandic,
+	leHebrew,
+	leFrenchCanadian,
+	leArabic864,
+	leNordic,
+	leRussianCyrillic,
+	leModernGreek,
+	leEBCDICLatin2,
+	leThai,
+	leEBCDICGreekModern,
+	leShiftJIS,
+	leSimplifiedChinese,
+	leKorean,
+	leChineseTraditionalBig5,
+	leEBCDICTurkish,
+	leEBCDICLatin1,
+	leEBCDICUSCanada,
+	leEBCDICGermany,
+	leEBCDICDenmarkNorway,
+	leEBCDICFinlandSweden,
+	leEBCDICItaly,
+	leEBCDICLatinAmericaSpain,
+	leEBCDICUnitedKingdom,
+	leEBCDICFrance,
+	leEBCDICInternational,
+	leEBCDICIcelandic,
+	leUTF16LittleEndianByteOrder,
+	leUTF16BigEndianByteOrder,
+	leANSICentralEuropean,
+	leANSICyrillic,
+	leANSILatin1,
+	leANSIGreek,
+	leANSITurkish,
+	leANSIHebrew,
+	leANSIArabic,
+	leANSIBaltic,
+	leANSIVietnamese,
+	leJohabKorean,
+	leMacRoman,
+	leMacJapanese,
+	leMacTraditionalChineseBig5,
+	leMacKorean,
+	leMacArabic,
+	leMacHebrew,
+	leMacGreek,
+	leMacCyrillic,
+	leMacSimplifiedChinese,
+	leMacRomanian,
+	leMacUkrainian,
+	leMacThai,
+	leMacLatin2,
+	leMacIcelandic,
+	leMacTurkish,
+	leMacCroatian,
+	leUTF32LittleEndianByteOrder,
+	leUTF32BigEndianByteOrder,
+	leCNSTaiwan,
+	leTCATaiwan,
+	leEtenTaiwan,
+	leIBM5550Taiwan,
+	leTeleTextTaiwan,
+	leWangTaiwan,
+	leIA5WesternEuropean,
+	leIA5German,
+	leIA5Swedish,
+	leIA5Norwegian,
+	leUSASCII,
+	leT61,
+	leISO6937,
+	leIBM273Germany,
+	leIBM277DenmarkNorway,
+	leIBM278FinlandSweden,
+	leIBM280Italy,
+	leIBM284LatinAmericaSpain,
+	leIBM285UnitedKingdom,
+	leIBM290JapaneseKatakanaExt,
+	leIBM297France,
+	leIBM420Arabic,
+	leIBM423Greek,
+	leIBM424Hebrew,
+	leIBMKoreanExtended,
+	leIBMThai,
+	leRussianKOI8R,
+	leIBM871Icelandic,
+	leIBM880CyrillicRussian,
+	leIBM905Turkish,
+	leIBM00924Latin1,
+	leEUCJapaneseJIS,
+	leSimplifiedChineseGB2312,
+	leKoreanWansung,
+	leEBCDICCyrillicSerbianBulgarian,
+	leUkrainianKOI8U,
+	leISO88591Latin1,
+	leISO88592CentralEuropean,
+	leISO88593Latin3,
+	leISO88594Baltic,
+	leISO88595Cyrillic,
+	leISO88596Arabic,
+	leISO88597Greek,
+	leISO88598HebrewVisual,
+	leISO88599Turkish,
+	leISO885913Estonian,
+	leISO885915Latin9,
+	leEuropa3,
+	leISO88598HebrewLogical,
+	leISO2022JapaneseNoHalfwidthKatakana,
+	leISO2022JapaneseWithHalfwidthKatakana,
+	leISO2022JapaneseAllow1ByteKana,
+	leISO2022Korean,
+	leISO2022SimplifiedChinese,
+	leISO2022TraditionalChinese,
+	leEBCDICJapaneseExt,
+	leEBCDICUSCanadaAndJapanese,
+	leEBCDICKoreanExtAndKorean,
+	leEBCDICSimplifiedChineseExtSimplifiedChinese,
+	leEBCDICSimplifiedChinese,
+	leEBCDICUSCanadaAndTraditionalChinese,
+	leEBCDICJapaneseLatinExtAndJapanese,
+	leEUCJapanese,
+	leEUCSimplifiedChinese,
+	leEUCKorean,
+	leEUCTraditionalChinese,
+	leHZGB2312SimplifiedChinese,
+	leGB18030SimplifiedChinese,
+	leISCIIDevanagari,
+	leISCIIBengali,
+	leISCIITamil,
+	leISCIITelugu,
+	leISCIIAssamese,
+	leISCIIOriya,
+	leISCIIKannada,
+	leISCIIMalayalam,
+	leISCIIGujarati,
+	leISCIIPunjabi,
+	leUTF7,
+	leUTF8
+};
+
 
 class StringPool;
+class FastString;
+
 
 union MemHeader {
 	struct {
 		MemHeader* prev;			
 		size_t  size;
+		unsigned char* next;
+		unsigned char* limit;
 	};
 	U16Char alignment;
 };
 
-typedef void* StringDataHandle;
 
-
-
-struct StringData {
-	enum StateFlags {
-		SubString = 0x00000001,
-	};
+class StringData {
+private:
+	friend class StringPool;
+	friend class FastString;
 
 	U16Char* strPtr;
 	size_t length;
@@ -118,7 +281,7 @@ struct StringData {
 	MemHeader* memHdr;
 	StringPool* pool;	
 	uint32 hashID;
-	uint32 flags;
+	char* ansiStrPtr;
 };	
 
 
@@ -126,7 +289,7 @@ class StringPool {
 public:
 	enum { 
 		MIN_CBCHUNK = 32000,
-        MAX_CHARALLOC = 1024*1024,
+        MAX_CHARALLOC = 0xFFFFFFFF-1, //too low?? 1024*1024,
 		NoEntry = (uint32)-1,
 	};
 
@@ -135,6 +298,9 @@ public:
 	~StringPool();	
 
 	StringData* allocate(const U16Char* begin, const U16Char* end);
+	StringData* allocate( size_t length );
+
+	StringData* transformAnsiToUnicode( const char* str, size_t length, LanguageEncoding encoding );
 
 	static size_t wstrlen( const U16Char *s1 ) {
 		return ::wcslen( (const wchar_t*)s1 );
@@ -238,19 +404,17 @@ public:
 
 	StringData* find( const U16Char* str, size_t length );
 
-	static StringDataHandle addString( const U16Char* str, size_t length );
+	static StringData* addString( const U16Char* str, size_t length );
+	static StringData* addString( const char* str, size_t length, LanguageEncoding encoding );
 
-	static bool validString( StringDataHandle handle );
-	static const U16Char* getString( StringDataHandle handle );
-	static size_t getStringLength( StringDataHandle handle );
-
-	static uint32 incStringRefcount( StringDataHandle handle );
-	static uint32 decStringRefcount( StringDataHandle handle );
-	static bool equals( StringDataHandle lhs, StringDataHandle rhs );
-	static int compare( StringDataHandle lhs, StringDataHandle rhs );
+	static uint32 incStringRefcount( StringData* handle );
+	static uint32 decStringRefcount( StringData* handle );
+	static bool equals( StringData* lhs, StringData* rhs );
+	static int compare( StringData* lhs, StringData* rhs );
 	
+	static char* transformToAnsi( StringData* handle, LanguageEncoding encoding );
 
-	void compact( uint32 index=NoEntry );
+	void compact( MemHeader* header );
 	
 	size_t uniqueEntries() const {
 		return stringMap_.size();
@@ -277,11 +441,19 @@ public:
 		compactMemory_ = val;
 	}
 
+	static unsigned int getNativeEncoding(LanguageEncoding encoding);
+
 	static StringPool* getCurrentPool() {
 		return currentStringPool;
 	}	
 
 	static StringPool* getUsablePool();
+
+
+
+
+
+	
 private:
 
 	unsigned char*  next_;   // first available byte
@@ -294,6 +466,7 @@ private:
 	bool compactMemory_;
 
 
+	
 	typedef std::multimap<uint32,StringData*> StringMapT;
 
 	typedef StringMapT::iterator StringMapIter;
@@ -303,7 +476,7 @@ private:
 	typedef StringMapT::value_type StringMapPairT;
 
 	StringMapT stringMap_;
-	
+	static bool compareStringDataIt( StringMapIter x, StringMapIter y );
 
 
 	static StringPool* currentStringPool;
@@ -369,6 +542,182 @@ StringPool* StringPool::getUsablePool()
 
 
 
+unsigned int StringPool::getNativeEncoding(LanguageEncoding encoding)
+{
+	unsigned int result = -1;
+#ifdef WIN32
+	
+
+	LanguageEncoding tmp = encoding;
+	if ( encoding == leDefault ) {
+		tmp = leUTF8 ;
+		//Locale* locale = System::getCurrentThreadLocale();
+		//if ( NULL != locale ) {
+		//	tmp = locale->getEncoding();
+		//}
+	}
+
+
+	
+	switch (tmp) {				
+		case leIBM037: {result=037;}break;
+		case leIBM437: {result=437;}break;
+		case leIBM500: {result=500;}break;
+		case leArabic708: {result=708;}break;
+		case leArabic449: {result=709;}break;
+		case leArabicTransparent: {result=710;}break;
+		case leDOSArabic: {result=720;}break;
+		case leGreek: {result=737;}break;
+		case leBaltic: {result=775;}break;
+		case leLatin1: {result=850;}break;
+		case leLatin2: {result=852;}break;
+		case leCyrillic: {result=855;}break;
+		case leTurkish: {result=857;}break;
+		case leMultilingualLatin1: {result=858;}break;
+		case lePortuguese: {result=860;}break;
+		case leIcelandic: {result=861;}break;
+		case leHebrew: {result=862;}break;
+		case leFrenchCanadian: {result=863;}break;
+		case leArabic864: {result=864;}break;
+		case leNordic: {result=865;}break;
+		case leRussianCyrillic: {result=866;}break;
+		case leModernGreek: {result=869;}break;
+		case leEBCDICLatin2: {result=870;}break;
+		case leThai: {result=874;}break;
+		case leEBCDICGreekModern: {result=875;}break;
+		case leShiftJIS: {result=932;}break;
+		case leSimplifiedChinese: {result=936;}break;
+		case leKorean: {result=949;}break;
+		case leChineseTraditionalBig5: {result=950;}break;
+		case leEBCDICTurkish: {result=1026;}break;
+		case leEBCDICLatin1: {result=1047;}break;
+		case leEBCDICUSCanada: {result=1140;}break;
+		case leEBCDICGermany: {result=1141;}break;
+		case leEBCDICDenmarkNorway: {result=1142;}break;
+		case leEBCDICFinlandSweden: {result=1143;}break;
+		case leEBCDICItaly: {result=1144;}break;
+		case leEBCDICLatinAmericaSpain: {result=1145;}break;
+		case leEBCDICUnitedKingdom: {result=1146;}break;
+		case leEBCDICFrance: {result=1147;}break;
+		case leEBCDICInternational: {result=1148;}break;
+		case leEBCDICIcelandic: {result=1149;}break;
+		case leUTF16LittleEndianByteOrder: {result=1200;}break;
+		case leUTF16BigEndianByteOrder: {result=1201;}break;
+		case leANSICentralEuropean: {result=1250;}break;
+		case leANSICyrillic: {result=1251;}break;
+		case leANSILatin1: {result=1252;}break;
+		case leANSIGreek: {result=1253;}break;
+		case leANSITurkish: {result=1254;}break;
+		case leANSIHebrew: {result=1255;}break;
+		case leANSIArabic: {result=1256;}break;
+		case leANSIBaltic: {result=1257;}break;
+		case leANSIVietnamese: {result=1258;}break;
+		case leJohabKorean: {result=1361;}break;
+		case leMacRoman: {result=10000;}break;
+		case leMacJapanese: {result=10001;}break;
+		case leMacTraditionalChineseBig5: {result=10002;}break;
+		case leMacKorean: {result=10003;}break;
+		case leMacArabic: {result=10004;}break;
+		case leMacHebrew: {result=10005;}break;
+		case leMacGreek: {result=10006;}break;
+		case leMacCyrillic: {result=10007;}break;
+		case leMacSimplifiedChinese: {result=10008;}break;
+		case leMacRomanian: {result=10010;}break;
+		case leMacUkrainian: {result=10017;}break;
+		case leMacThai: {result=10021;}break;
+		case leMacLatin2: {result=10029;}break;
+		case leMacIcelandic: {result=10079;}break;
+		case leMacTurkish: {result=10081;}break;
+		case leMacCroatian: {result=10082;}break;
+		case leUTF32LittleEndianByteOrder: {result=12000;}break;
+		case leUTF32BigEndianByteOrder: {result=12001;}break;
+		case leCNSTaiwan: {result=20000;}break;
+		case leTCATaiwan: {result=20001;}break;
+		case leEtenTaiwan: {result=20002;}break;
+		case leIBM5550Taiwan: {result=20003;}break;
+		case leTeleTextTaiwan: {result=20004;}break;
+		case leWangTaiwan: {result=20005;}break;
+		case leIA5WesternEuropean: {result=20105;}break;
+		case leIA5German: {result=20106;}break;
+		case leIA5Swedish: {result=20107;}break;
+		case leIA5Norwegian: {result=20108;}break;
+		case leUSASCII: {result=20127;}break;
+		case leT61: {result=20261;}break;
+		case leISO6937: {result=20269;}break;
+		case leIBM273Germany: {result=20273;}break;
+		case leIBM277DenmarkNorway: {result=20277;}break;
+		case leIBM278FinlandSweden: {result=20278;}break;
+		case leIBM280Italy: {result=20280;}break;
+		case leIBM284LatinAmericaSpain: {result=20284;}break;
+		case leIBM285UnitedKingdom: {result=20285;}break;
+		case leIBM290JapaneseKatakanaExt: {result=20290;}break;
+		case leIBM297France: {result=20297;}break;
+		case leIBM420Arabic: {result=20420;}break;
+		case leIBM423Greek: {result=20423;}break;
+		case leIBM424Hebrew: {result=20424;}break;
+		case leIBMKoreanExtended: {result=20833;}break;
+		case leIBMThai: {result=20838;}break;
+		case leRussianKOI8R: {result=20866;}break;
+		case leIBM871Icelandic: {result=20871;}break;
+		case leIBM880CyrillicRussian: {result=20880;}break;
+		case leIBM905Turkish: {result=20905;}break;
+		case leIBM00924Latin1: {result=20924;}break;
+		case leEUCJapaneseJIS: {result=20932;}break;
+		case leSimplifiedChineseGB2312: {result=20936;}break;
+		case leKoreanWansung: {result=20949;}break;
+		case leEBCDICCyrillicSerbianBulgarian: {result=21025;}break;
+		case leUkrainianKOI8U: {result=21866;}break;
+		case leISO88591Latin1: {result=28591;}break;
+		case leISO88592CentralEuropean: {result=28592;}break;
+		case leISO88593Latin3: {result=28593;}break;
+		case leISO88594Baltic: {result=28594;}break;
+		case leISO88595Cyrillic: {result=28595;}break;
+		case leISO88596Arabic: {result=28596;}break;
+		case leISO88597Greek: {result=28597;}break;
+		case leISO88598HebrewVisual: {result=28598;}break;
+		case leISO88599Turkish: {result=28599;}break;
+		case leISO885913Estonian: {result=28603;}break;
+		case leISO885915Latin9: {result=28605;}break;
+		case leEuropa3: {result=29001;}break;
+		case leISO88598HebrewLogical: {result=38598;}break;
+		case leISO2022JapaneseNoHalfwidthKatakana: {result=50220;}break;
+		case leISO2022JapaneseWithHalfwidthKatakana: {result=50221;}break;
+		case leISO2022JapaneseAllow1ByteKana: {result=50222;}break;
+		case leISO2022Korean: {result=50225;}break;
+		case leISO2022SimplifiedChinese: {result=50227;}break;
+		case leISO2022TraditionalChinese: {result=50229;}break;
+		case leEBCDICJapaneseExt: {result=50930;}break;
+		case leEBCDICUSCanadaAndJapanese: {result=50931;}break;
+		case leEBCDICKoreanExtAndKorean: {result=50933;}break;
+		case leEBCDICSimplifiedChineseExtSimplifiedChinese: {result=50935;}break;
+		case leEBCDICSimplifiedChinese: {result=50936;}break;
+		case leEBCDICUSCanadaAndTraditionalChinese: {result=50937;}break;
+		case leEBCDICJapaneseLatinExtAndJapanese: {result=50939;}break;
+		case leEUCJapanese: {result=51932;}break;
+		case leEUCSimplifiedChinese: {result=51936;}break;
+		case leEUCKorean: {result=51949;}break;
+		case leEUCTraditionalChinese: {result=51950;}break;
+		case leHZGB2312SimplifiedChinese: {result=52936;}break;
+		case leGB18030SimplifiedChinese: {result=54936;}break;
+		case leISCIIDevanagari: {result=57002;}break;
+		case leISCIIBengali: {result=57003;}break;
+		case leISCIITamil: {result=57004;}break;
+		case leISCIITelugu: {result=57005;}break;
+		case leISCIIAssamese: {result=57006;}break;
+		case leISCIIOriya: {result=57007;}break;
+		case leISCIIKannada: {result=57008;}break;
+		case leISCIIMalayalam: {result=57009;}break;
+		case leISCIIGujarati: {result=57010;}break;
+		case leISCIIPunjabi: {result=57011;}break;
+		case leUTF7: {result=65000;}break;
+		case leUTF8: {result=65001;}break;
+	}
+	
+#endif
+	return result;
+}
+
+
 
 StringPool::StringPool():
 	next_(NULL),
@@ -398,6 +747,56 @@ StringPool::~StringPool()
 	}
 }
 
+StringData* StringPool::allocate( size_t length )
+{
+	size_t bytesLength = sizeof(StringData) + (length * sizeof(U16Char)) + sizeof(U16Char);
+	if ((next_ + bytesLength) <= limit_) {
+		StringData* data = (StringData*)next_;
+		data->length = length;
+		data->memHdr = currentHdr_;
+		data->pool = this;
+		data->refcount = 0;
+		data->strPtr = (U16Char*) (next_ + sizeof(StringData));
+		data->hashID = 0;
+		data->ansiStrPtr = 0;
+
+		next_ += bytesLength;
+		currentHdr_->next = next_;
+
+		return data;
+	}
+	
+	unsigned char* nextBytes = NULL;
+	size_t allocSize = 0;
+
+	if (bytesLength <= MAX_CHARALLOC) {	
+		allocSize = RoundUp(bytesLength + sizeof(MemHeader), granularity_);
+
+		nextBytes = reinterpret_cast<unsigned char*>(
+				VirtualAlloc(NULL, allocSize, MEM_COMMIT, PAGE_READWRITE) );
+	}
+
+	if (!nextBytes) {
+		static std::bad_alloc outOfMemException;
+		throw(outOfMemException);
+	}
+
+	totalBytesAllocated_ += allocSize;
+	
+	limit_ = reinterpret_cast<unsigned char*>(nextBytes + allocSize);
+	MemHeader* currentHdr = reinterpret_cast<MemHeader*>(nextBytes);
+	currentHdr->prev = currentHdr_;
+	currentHdr->size = allocSize;
+	
+
+	currentHdr_ = currentHdr;
+	next_ = reinterpret_cast<unsigned char*>(currentHdr + sizeof(U16Char));
+	currentHdr_->next = next_;
+	currentHdr_->limit = limit_;
+	
+	return allocate(length);
+}
+
 StringData* StringPool::allocate(const U16Char* begin, const U16Char* end)
 {
 	size_t length = sizeof(StringData) + ((end - begin) * sizeof(U16Char)) + sizeof(U16Char);
@@ -409,8 +808,10 @@ StringData* StringPool::allocate(const U16Char* begin, const U16Char* end)
 		data->refcount = 0;
 		data->strPtr = (U16Char*) (next_ + sizeof(StringData));
 		data->hashID = 0;
+		data->ansiStrPtr = 0;
 
 		next_ += length;
+		currentHdr_->next = next_;
 		StringPool::wmemcpy( data->strPtr, begin, data->length );
 		return data;
 	}
@@ -440,11 +841,19 @@ StringData* StringPool::allocate(const U16Char* begin, const U16Char* end)
 
 	currentHdr_ = currentHdr;
 	next_ = reinterpret_cast<unsigned char*>(currentHdr + sizeof(U16Char));
-	
+	currentHdr_->next = next_;
+	currentHdr_->limit = limit_;
+
+
 	return allocate(begin, end);
 }
 
-void StringPool::compact(uint32 index)
+bool StringPool::compareStringDataIt( StringMapIter x, StringMapIter y )
+{
+	return x->second->strPtr > y->second->strPtr;
+}
+
+void StringPool::compact( MemHeader* header )
 {
 	/*
 	if ( NoEntry == index ) {
@@ -467,6 +876,30 @@ void StringPool::compact(uint32 index)
 		}
 	}
 	*/
+
+	std::vector<StringMapIter> releasableData(256);
+	size_t i = 0;
+	StringMapIter it = stringMap_.begin();
+	while ( it != stringMap_.end() ) {
+		StringData* data = it->second;
+		if ( 0 == data->refcount && header == data->memHdr ) {
+			if ( i == releasableData.size() ) {
+				releasableData.resize( releasableData.size() + 256 );
+			}
+			releasableData[i] = it;
+			i ++;
+		}
+		++it;
+	}
+
+	std::sort( releasableData.begin(), releasableData.end(), StringPool::compareStringDataIt );
+
+	std::vector<StringMapIter>::iterator it2 =  releasableData.begin();
+	while ( it2 != releasableData.end() ) {
+		it = *it2;
+		
+		++it2;
+	}
 }
 
 StringData* StringPool::find( const U16Char* str, size_t length )
@@ -511,7 +944,75 @@ StringData* StringPool::find( const U16Char* str, size_t length )
 	return result;
 }
 
-StringDataHandle StringPool::addString( const U16Char* str, size_t length )
+StringData* StringPool::transformAnsiToUnicode( const char* str, size_t length, LanguageEncoding encoding )
+{
+	StringData* result = NULL;
+
+	unsigned int enc = StringPool::getNativeEncoding(encoding);
+
+	int size = MultiByteToWideChar( enc, 0, str, length, NULL, 0 );
+
+	if ( size <= 0 ) {
+		//throw RuntimeException( L"size > 0 MultiByteToWideChar() failed in UnicodeString::transformAnsiToUnicode()" );
+		return NULL;
+	}
+
+	StringData* newStr = allocate( (size_t)size );
+
+	size = MultiByteToWideChar( enc, 0, str, length, newStr->strPtr, newStr->length );
+
+	result = find( newStr->strPtr, newStr->length );
+
+	if ( NULL == result ) {
+		newStr->hashID = hash(newStr->strPtr, newStr->length);
+		stringMap_.insert(StringMapPairT(newStr->hashID,newStr));
+		result = newStr;
+	}
+	else {
+		size_t bytesLength = sizeof(StringData) + (newStr->length * sizeof(U16Char)) + sizeof(U16Char);
+
+		//reclaim the memory, we don't need it after all, since we found an existing
+		//match
+		next_ -= bytesLength;
+		totalBytesAllocated_ -= bytesLength;
+
+
+	//	currentHdr_ = currentHdr;
+	//next_ = reinterpret_cast<unsigned char*>(currentHdr + sizeof(U16Char));
+
+
+		if ( next_ == reinterpret_cast<unsigned char*>(currentHdr_ + sizeof(U16Char)) ) {
+			//at begining , maybe we take out the whole thing
+			if ( NULL != currentHdr_->prev ) {
+				if ( currentHdr_->prev->next < currentHdr_->prev->limit ) {
+					MemHeader* tmp = currentHdr_;
+					currentHdr_ = currentHdr_->prev;
+					next_ = currentHdr_->next;
+					limit_ = currentHdr_->limit;
+
+					VirtualFree(tmp, tmp->size, MEM_RELEASE);
+				}
+			}
+		}
+	}
+
+	return result;
+}
+
+StringData* StringPool::addString( const char* str, size_t length, LanguageEncoding encoding )
+{
+	StringData* result = NULL;
+	StringPool* pool = StringPool::getUsablePool();
+	if ( NULL == pool ) {
+		return NULL;
+	}
+
+	result = pool->transformAnsiToUnicode( str, length, encoding );	
+
+	return result;
+}
+
+StringData* StringPool::addString( const U16Char* str, size_t length )
 {
 	StringData* result = NULL;
 
@@ -542,10 +1043,48 @@ StringDataHandle StringPool::addString( const U16Char* str, size_t length )
 		pool->stringMap_.insert(StringMapPairT(newStr->hashID,result));
 	}
 
-	return (StringDataHandle) result;
+	return result;
 }
 
-uint32 StringPool::incStringRefcount( StringDataHandle handle )
+char* StringPool::transformToAnsi( StringData* handle, LanguageEncoding encoding )
+{
+	char* result = NULL;
+
+	StringData* data = (StringData*)handle;
+
+	if ( NULL != data ) {
+		int len = data->length;
+		if ( data->length == 0 ) {
+			len = 1;
+		}
+
+		unsigned int enc = StringPool::getNativeEncoding(encoding);
+
+		int size = ::WideCharToMultiByte( enc, 0, data->strPtr, len,
+											NULL, 0, NULL, NULL );
+
+		if ( size <= 0 ) {
+			return NULL;
+		}
+
+		result = new char[size+1];
+
+		if (  0 == ::WideCharToMultiByte( enc, 0, data->strPtr, len,
+											result, size, NULL, NULL ) ) {
+				//WideCharToMultiByte failed
+				delete [] result;
+				result = NULL;
+		}
+		else {
+			result[size] = 0;
+			data->ansiStrPtr = result;
+		}
+	}
+
+	return result;
+}
+
+uint32 StringPool::incStringRefcount( StringData* handle )
 {
 	if ( NULL != handle ) {
 		StringData* data = (StringData*)handle;
@@ -566,7 +1105,7 @@ uint32 StringPool::incStringRefcount( StringDataHandle handle )
 	return 0;
 }
 
-uint32 StringPool::decStringRefcount( StringDataHandle handle )
+uint32 StringPool::decStringRefcount( StringData* handle )
 {
 	if ( NULL != handle ) {
 		
@@ -606,71 +1145,39 @@ uint32 StringPool::decStringRefcount( StringDataHandle handle )
 	*/
 }
 
-const U16Char* StringPool::getString( StringDataHandle handle )
+bool StringPool::equals( StringData* lhs, StringData* rhs )
 {
-	if ( NULL == handle ) {
-		return NULL;
-	}
-
-	return ((StringData*)handle)->strPtr;
-}
-
-size_t StringPool::getStringLength( StringDataHandle handle )
-{
-	if ( NULL == handle ) {
-		return 0;
-	}
-	return ((StringData*)handle)->length;
-}
-
-bool StringPool::validString( StringDataHandle handle )
-{
-	if ( NULL != handle ) {
-		return ((StringData*)handle)->refcount > 0;
-	}
-
-	return false;
-}
-
-bool StringPool::equals( StringDataHandle lhs, StringDataHandle rhs )
-{
-	StringData* lhsData = (StringData*)lhs;
-	StringData* rhsData = (StringData*)rhs;
-
-	if ( lhsData == rhsData ) {
+	if ( lhs == rhs ) {
 		return true;
 	}
 
-	if ( lhsData->length != rhsData->length ) {
+	if ( lhs->length != rhs->length ) {
 		return false;
 	}
 
-	if ( (lhsData->pool == rhsData->pool) || (lhsData->pool->getThreadID() == rhsData->pool->getThreadID()) ) {
-		return 0 == StringPool::wmemcmp( lhsData->strPtr, rhsData->strPtr, lhsData->length );
+	if ( (lhs->pool == rhs->pool) || (lhs->pool->getThreadID() == rhs->pool->getThreadID()) ) {
+		return 0 == StringPool::wmemcmp( lhs->strPtr, rhs->strPtr, lhs->length );
 	}
 	else {
 		//different threads, different pools, do we need to lock here??
-		return 0 == StringPool::wmemcmp( lhsData->strPtr, rhsData->strPtr, lhsData->length );
+		return 0 == StringPool::wmemcmp( lhs->strPtr, rhs->strPtr, lhs->length );
 	}
 
 	return false;
 }
 
-int StringPool::compare( StringDataHandle lhs, StringDataHandle rhs )
+int StringPool::compare( StringData* lhs, StringData* rhs )
 {
-	StringData* lhsData = (StringData*)lhs;
-	StringData* rhsData = (StringData*)rhs;
-	
-	if ( lhsData == rhsData ) {
+	if ( lhs == rhs ) {
 		return 0;
 	}
 
-	if ( (lhsData->pool == rhsData->pool) || (lhsData->pool->getThreadID() == rhsData->pool->getThreadID()) ) {
-		return StringPool::wmemcmp( lhsData->strPtr, rhsData->strPtr, lhsData->length );
+	if ( (lhs->pool == rhs->pool) || (lhs->pool->getThreadID() == rhs->pool->getThreadID()) ) {
+		return StringPool::wmemcmp( lhs->strPtr, rhs->strPtr, lhs->length );
 	}
 	else {
 		//different threads, different pools, do we need to lock here??
-		return StringPool::wmemcmp( lhsData->strPtr, rhsData->strPtr, lhsData->length );
+		return StringPool::wmemcmp( lhs->strPtr, rhs->strPtr, lhs->length );
 	}
 
 	return 0;
@@ -712,6 +1219,17 @@ std::vector<U16Char> StringLiteral::storage(StringLiteral::InitialStorageSize);
 class FastString {
 public:
 
+	enum BOMMarkers {		
+		UTF8BOMSize = sizeof(uchar) * 3,
+		UTF16BOMSize = sizeof(ushort),
+		UTF32BOMSize = sizeof(uint32),
+		UTF8BOM = 0xEFBBBF,
+		UTF16LittleEndianBOM = 0xFFFE,
+		UTF16BigEndianBOM = 0xFEFF,
+		UTF32LittleEndianBOM = 0xFFFE0000,
+		UTF32BigEndianBOM = 0x0000FEFF
+	};
+
 	typedef U16Char* iterator;
     typedef const U16Char* const_iterator;
 	typedef size_t size_type;
@@ -723,15 +1241,15 @@ public:
     typedef const U16Char& const_reference;
 
 	#if (_MSC_VER <= 1200) && !defined(__GNUC__)
-	typedef std::reverse_iterator<iterator, value_type,
-				reference, pointer, difference_type> reverse_iterator;
+		typedef std::reverse_iterator<iterator, value_type,
+					reference, pointer, difference_type> reverse_iterator;
 
-	typedef std::reverse_iterator<const_iterator, value_type,
-				const_reference, const_pointer, difference_type>
-				const_reverse_iterator;
+		typedef std::reverse_iterator<const_iterator, value_type,
+					const_reference, const_pointer, difference_type>
+					const_reverse_iterator;
 	#else
-	typedef std::reverse_iterator<iterator> reverse_iterator;
-	typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+		typedef std::reverse_iterator<iterator> reverse_iterator;
+		typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 	#endif
 		
 
@@ -747,23 +1265,31 @@ public:
 	//	assign( str, wcslen(str) );
 	//}
 
-	FastString( const U16Char* str, size_t length ): dataHandle_(NULL) {
+	FastString( const U16Char* str, size_t length ): data_(NULL) {
 		assign( str, length );
 	}
 
-	FastString(): dataHandle_(NULL){}
+	FastString( const char* str, size_t length, LanguageEncoding encoding=leDefault ): data_(NULL) {
+		assign( str, length, encoding );
+	}
 
-	FastString( const FastString& f ):dataHandle_(f.dataHandle_) {
-		StringPool::incStringRefcount(dataHandle_);
+	FastString( const unsigned char* str, size_t length, LanguageEncoding encoding=leDefault ): data_(NULL) {
+		assign( (const char*)str, length, encoding );
+	}
+
+	FastString(): data_(NULL){}
+
+	FastString( const FastString& f ):data_(f.data_) {
+		StringPool::incStringRefcount(data_);
 	}
 
 
 	~FastString() {
-		StringPool::decStringRefcount(dataHandle_);
+		StringPool::decStringRefcount(data_);
 	}
 
 	operator const U16Char*() const {
-		return StringPool::getString(dataHandle_);
+		return data_->strPtr;
 	}
 
 	FastString& operator=( const U16Char* rhs ) {
@@ -772,46 +1298,73 @@ public:
 	}
 
 	FastString& operator=( const FastString& rhs ) {
-		StringPool::decStringRefcount(dataHandle_);
+		StringPool::decStringRefcount(data_);
 
-		dataHandle_ = rhs.dataHandle_;
+		data_ = rhs.data_;
 		
-		StringPool::incStringRefcount(dataHandle_);
+		StringPool::incStringRefcount(data_);
 		return *this;
 	}
 
 	void assign( const U16Char* str, size_t length ) {
-		StringPool::decStringRefcount(dataHandle_);
+		StringPool::decStringRefcount(data_);
 
-		dataHandle_ = StringPool::addString( str, length );
+		data_ = StringPool::addString( str, length );
 		
-		StringPool::incStringRefcount(dataHandle_);
+		StringPool::incStringRefcount(data_);
+	}
+
+	void assign( const char* str, size_t length, LanguageEncoding encoding=leDefault ) {
+		StringPool::decStringRefcount(data_);
+
+		data_ = StringPool::addString( str, length, encoding );
+		
+		StringPool::incStringRefcount(data_);
 	}
 
 	const U16Char* c_str() const {
-		return StringPool::getString(dataHandle_);
+		return data_->strPtr;
 	}
 
+	const char* ansi_c_str(LanguageEncoding encoding=leDefault) const {
+		if ( NULL == data_ ) {
+			return NULL;
+		}
+
+		if ( NULL == data_->ansiStrPtr ) {
+			StringPool::transformToAnsi( data_, encoding );
+		}
+
+		return data_->ansiStrPtr;
+	}
+
+
 	size_t length() const {
-		return StringPool::getStringLength(dataHandle_);
+		if ( NULL == data_ ) {
+			return 0;
+		}
+		return data_->length;
 	}
 
 	size_t size() const {
-		return StringPool::getStringLength(dataHandle_);
+		if ( NULL == data_ ) {
+			return 0;
+		}
+		return data_->length;
 	}
 
 
 	bool operator == ( const FastString& rhs ) const {
-		return StringPool::equals(dataHandle_, rhs.dataHandle_ );
+		return StringPool::equals(data_, rhs.data_ );
 	}
 
 	void clear() {
-		StringPool::decStringRefcount(dataHandle_);
-		dataHandle_ = NULL;
+		StringPool::decStringRefcount(data_);
+		data_ = NULL;
 	}
 
 	bool empty() const {
-		if ( NULL == dataHandle_ ) {
+		if ( NULL == data_ ) {
 			return true;
 		}
 
@@ -819,23 +1372,33 @@ public:
 	}
 
 	bool valid() const {
-		return StringPool::validString(dataHandle_);
+		if ( NULL == data_ ) {
+			return false;
+		}
+		return data_->refcount > 0;
 	}
 
 	int compare( const FastString& rhs ) const {
-		return StringPool::compare( dataHandle_, rhs.dataHandle_ );
+		return StringPool::compare( data_, rhs.data_ );
 	}
 
 	FastString substr( size_type pos, size_type length ) const {
-		return FastString( StringPool::getString(dataHandle_) + pos, length );
+		return FastString( data_->strPtr + pos, length );
 	}
 	
     const_iterator begin() const {
-		return StringPool::getString(dataHandle_);
+		if ( NULL == data_ ) {
+			return NULL;
+		}
+		return data_->strPtr;
 	}
 
     const_iterator end() const {
-		return StringPool::getString(dataHandle_) + StringPool::getStringLength(dataHandle_);
+		if ( NULL == data_ ) {
+			return NULL;
+		}
+
+		return data_->strPtr + data_->length;
 	}
     
     const_reverse_iterator rbegin() const {
@@ -847,21 +1410,21 @@ public:
 	}
 
     const_reference at(size_type pos) const {
-		if ( pos >= StringPool::getStringLength(dataHandle_) ) {
+		if ( pos >= length() ) {
 			throw std::out_of_range("array index is too large");
 		}
-		return StringPool::getString(dataHandle_)[ pos ];
+		return data_->strPtr[ pos ];
 	}
 
     const_reference operator[](size_type pos) const {
-		return StringPool::getString(dataHandle_)[ pos ];
+		return data_->strPtr[ pos ];
 	}
 
 	void swap( FastString& str ) {
-		if ( str.dataHandle_ != dataHandle_ ) {			
-			StringDataHandle tmp = dataHandle_;
-			dataHandle_ = str.dataHandle_;
-			str.dataHandle_ = tmp;
+		if ( str.data_ != data_ ) {			
+			StringData* tmp = data_;
+			data_ = str.data_;
+			str.data_ = tmp;
 		}
 	}
 
@@ -877,24 +1440,24 @@ public:
 		return find( (const U16Char*)&ch, pos, 1); 
 	}
 
-	size_type find( const U16Char* searchStr, size_type pos, size_type length) const {
-		size_type len = StringPool::getStringLength(dataHandle_);
+	size_type find( const U16Char* searchStr, size_type pos, size_type len) const {
+		size_type strLen = length();
 
-		if (length == 0 && pos <= len) {
+		if (len == 0 && pos <= strLen) {
 			return (pos);
 		}
 
-		size_type searchLength = len - pos;
-		const U16Char* sourceStr = StringPool::getString(dataHandle_);
+		size_type searchLength = strLen - pos;
+		const U16Char* sourceStr = data_->strPtr;
 
-		if ( pos < len && (length <= searchLength) ) {
+		if ( pos < strLen && (len <= searchLength) ) {
 			const U16Char *currentStr1, *currentStr2;
 			
-			for (searchLength -= length - 1, currentStr2 = sourceStr + pos;
+			for (searchLength -= len - 1, currentStr2 = sourceStr + pos;
 					(currentStr1 = StringPool::wmemchr(currentStr2, *searchStr, searchLength )) != 0;
 					searchLength -= currentStr1 - currentStr2 + 1, currentStr2 = currentStr1 + 1) {
 
-					if (StringPool::wmemcmp(currentStr1, searchStr, length) == 0) {
+					if (StringPool::wmemcmp(currentStr1, searchStr, len) == 0) {
 						return (currentStr1 - sourceStr); 
 					}
 			}
@@ -916,17 +1479,17 @@ public:
 		return rfind( str.c_str(), pos, str.length() );
 	}
 
-	size_type rfind( const U16Char *strPtr, size_type pos, size_type length) const {
-		size_type len = StringPool::getStringLength(dataHandle_);
-		if (length == 0) {
-			return (pos < len ? pos : len);
+	size_type rfind( const U16Char *strPtr, size_type pos, size_type len) const {
+		size_type strLen = length();
+		if (len == 0) {
+			return (pos < strLen ? pos : strLen);
 		}
 
-		if (length <= len) {
-			const U16Char* ptr = StringPool::getString(dataHandle_);
+		if (len <= strLen) {
+			const U16Char* ptr = data_->strPtr;
 
-			for (const U16Char* currentStr1 = ptr + + (pos < len - length ? pos : len - length); ; --currentStr1)
-				if ( (*currentStr1 == *strPtr) && StringPool::wmemcmp(currentStr1, strPtr, length) == 0)
+			for (const U16Char* currentStr1 = ptr + + (pos < strLen - len ? pos : strLen - len); ; --currentStr1)
+				if ( (*currentStr1 == *strPtr) && StringPool::wmemcmp(currentStr1, strPtr, len) == 0)
 					return (currentStr1 - ptr);
 				else if (currentStr1 == ptr)
 					break;
@@ -946,7 +1509,7 @@ public:
 	}
 
 	FastString& operator=( const _bstr_t& rhs ) {
-		assign( rhs, rhs.length() );
+		assign( (const wchar_t*)rhs, rhs.length() );
 		return *this;
 	}
 
@@ -957,12 +1520,12 @@ public:
 
 	FastString& operator=( const _variant_t& rhs ) {
 		_bstr_t b = rhs;
-		assign( b, b.length() );
+		assign( (const wchar_t*)b, b.length() );
 		return *this;
-	}
-
-	
+	}	
 #endif
+
+
 	BSTR toBSTR() const {
 		return SysAllocString(c_str());
 	}
@@ -1008,8 +1571,13 @@ public:
 		assign( rhs.c_str(), rhs.length() );
 		return *this;
 	}
+
+
+
+	//utility
+
 protected:
-	StringDataHandle dataHandle_;
+	StringData* data_;
 };
 
 
@@ -1217,18 +1785,54 @@ ChDictionary::ChDictionary()
 		i++;
 	}*/
 
-	FileInputStream fs("cedict.b5");
+	/*
+	std::locale old = std::locale::global(std::locale(".950"));
+
+	std::wifstream src;
+	src.imbue(std::locale(".950"));
+	src.open("cedict.b5");
+	src.seekg( 0, std::ios_base::end );
+	size_t sz = src.tellg();
+	src.seekg( 0, std::ios_base::beg );
 	
-	unsigned char* data = new unsigned char[ fs.getSize() ];
+	unsigned short* data = new unsigned short[ sz ];
 
-	fs.read( data, fs.getSize() );
+	src.read( data, sz );
 
-	String chStr((const char*)data,fs.getSize(),UnicodeString::leChineseTraditionalBig5);
+	wstring chStr( data, sz );//, UnicodeString::leChineseTraditionalBig5);
 
 	delete [] data;
 
 
-	StringTokenizer tok(chStr,"\r\n");
+	const unsigned short* P = chStr.c_str();
+	const unsigned short* start = P;
+	const unsigned short* line = start;
+	wstring s;
+	while ( P-start < sz ) {
+		if ( *P == L'\r' || *P == L'\n' ) {
+			if ( *P == L'\r' && *(P+1) == L'\n' ) {
+				P++;
+			}
+
+			if (P-line > 0 && line[0] != L'#') {
+				s.assign(line,P-line);
+
+				ChDictionaryEntry de;
+				if (de.Parse(s)) {
+					v.push_back(de);
+				}
+			}
+
+
+			P++;
+			line = P;
+		}
+		P++;
+	}
+*/
+
+/*
+	//StringTokenizer tok(chStr,"\r\n");
 
 	while ( tok.hasMoreElements() ) {
 		String s = tok.nextElement();
@@ -1239,7 +1843,7 @@ ChDictionary::ChDictionary()
 			}
 		}
 	}
-
+*/
 }
 
 
@@ -1292,6 +1896,7 @@ private:
 
 ChDictionary2::ChDictionary2()
 {
+	/*
 	FileInputStream fs("cedict.b5");
 	
 	unsigned char* data = new unsigned char[ fs.getSize() ];
@@ -1314,7 +1919,8 @@ ChDictionary2::ChDictionary2()
 				//printf( "eng: %ls\n", de.english.c_str() );
 			}
 		}
-	}	
+	}
+	*/
 }
 
 
@@ -1375,13 +1981,17 @@ ChDictionary3::ChDictionary3()
 
 void ChDictionary3::doit()
 {
-	FileInputStream fs("cedict.b5");
+	FILE* f = fopen("cedict.b5","rb");
+	fseek(f,0,SEEK_END);
+	size_t sz = ftell(f);
+	fseek(f,0,SEEK_SET);
 	
-	unsigned char* data = new unsigned char[ fs.getSize() ];
+	unsigned char* data = new unsigned char[ sz ];
 
-	fs.read( data, fs.getSize() );
+	fread(data,sz,1,f);
+	fclose(f);
 
-	String chStr((const char*)data,fs.getSize(),UnicodeString::leChineseTraditionalBig5);
+	FastString chStr(data,sz,leChineseTraditionalBig5);
 
 	delete [] data;
 
@@ -1390,7 +2000,7 @@ void ChDictionary3::doit()
 	const U16Char*  start = P;
 	const U16Char*  line = P;
 
-	size_t sz = chStr.length();
+	sz = chStr.length();
 	while ( P-start < sz ) {
 		if ( *P == '\r' || *P == '\n' ) {
 			if ( *P == '\r' && *(P+1) == '\n' ) {
@@ -1411,6 +2021,8 @@ void ChDictionary3::doit()
 		}
 		P++;
 	}
+
+  
 /*
 	while ( tok.hasMoreElements() ) {
 		String s = tok.nextElement();
@@ -1546,7 +2158,7 @@ void part3()
 int main( int argc, char** argv )
 {
 
-	FoundationKit::init( argc, argv );
+//	FoundationKit::init( argc, argv );
 
 	
 	StringPool stringPool;
@@ -1584,10 +2196,10 @@ int main( int argc, char** argv )
 		FastString f2 = f;
 		f = v[0];
 		
-		StringDataHandle idx = sp.addString(s,4);
+		StringData* idx = sp.addString(s,4);
 		
 		
-		StringDataHandle idx2 = sp.addString(s,4);
+		StringData* idx2 = sp.addString(s,4);
 	}
 
 	
@@ -1739,14 +2351,14 @@ int main( int argc, char** argv )
 
 
 
-	//part2();
+	part2();
 
 
 	part3();
 
-	//Sleep(10000000);
+	Sleep(10000000);
 
-	FoundationKit::terminate();
+//	FoundationKit::terminate();
 
 	return 0;
 }
