@@ -91,6 +91,10 @@ void Win32Toolbar::create( Control* control )
 
 		SendMessage(hwnd_, TB_SETIMAGELIST, 0, 0 );
 
+		SendMessage(hwnd_, TB_SETEXTENDEDSTYLE, 0, (LPARAM)TBSTYLE_EX_DRAWDDARROWS );
+
+		
+
 
 		currentlyModifyingItem_ = true;
 		Size sz;
@@ -196,6 +200,14 @@ bool Win32Toolbar::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPar
 			LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
 
 			//resizeToolbarItems();
+		}
+		break;
+
+		
+
+		case TBN_DROPDOWN : {
+			NMTOOLBARW* toolbar = (NMTOOLBARW*)lParam;
+			
 		}
 		break;
 
@@ -778,6 +790,15 @@ void Win32Toolbar::onModelChanged( ModelEvent* e )
 						info.fsStyle |= TBSTYLE_CHECK  ;
 					}
 
+
+					if ( state & ToolbarItem::tisDropDown ) {
+						info.dwMask |= TBIF_STYLE ;
+						info.fsStyle |= TBSTYLE_DROPDOWN  ;
+					}
+
+
+					
+
 					if ( state & ToolbarItem::tisEnabled ) {
 						info.dwMask |= TBIF_STATE ;
 						info.fsState |= TBSTATE_ENABLED  ;
@@ -953,6 +974,11 @@ void Win32Toolbar::insertToolbarButton( const uint32& index, ToolbarItem* item, 
 			if ( state & ToolbarItem::tisChecked ) {
 				info.dwMask |= TBIF_STYLE ;
 				info.fsStyle |= TBSTYLE_CHECK  ;
+			}
+
+			if ( state & ToolbarItem::tisDropDown ) {
+				info.dwMask |= TBIF_STYLE ;
+				info.fsStyle |= TBSTYLE_DROPDOWN  ;
 			}
 
 			if ( state & ToolbarItem::tisEnabled ) {

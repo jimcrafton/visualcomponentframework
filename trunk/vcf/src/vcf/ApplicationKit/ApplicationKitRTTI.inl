@@ -533,6 +533,7 @@ _property_object_( Control, "itemControl", getItemControl, setItemControl, "" );
 _property_( bool, "enabled", isEnabled, setEnabled, "" )
 _property_( bool, "checked", isChecked, setChecked, "" )
 _property_( bool, "grouped", isGrouped, setGrouped, "" )
+_property_( bool, "dropdown", isDropDown, setIsDropDown, "" )
 _class_rtti_end_
 
 
