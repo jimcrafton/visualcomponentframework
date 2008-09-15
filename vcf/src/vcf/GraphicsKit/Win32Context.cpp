@@ -1163,7 +1163,11 @@ void Win32Context::rectangle(const double & x1, const double & y1, const double 
 		if ( true == inFillPath_ ){
 			fixVal = 1;
 		}
-		::Rectangle( dc_, (int32)x1, (int32)y1, (int32)(x2 + fixVal), (int32)(y2 + fixVal) );
+		int32 l = x1;
+		int32 t = y1;
+		int32 r = x1 + (x2-x1) + 0.5;
+		int32 b = y1 + (y2-y1) + 0.5;
+		::Rectangle( dc_, l, t, r, b );
 	}
 }
 

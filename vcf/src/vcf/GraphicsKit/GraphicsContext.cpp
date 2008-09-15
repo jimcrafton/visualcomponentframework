@@ -1552,32 +1552,44 @@ void GraphicsContext::execPathOperations()
 				++it;
 
 
-				std::vector<Point> tmpPts(5);
-				tmpPts[0].x_ = pt1.x;
-				tmpPts[0].y_ = pt1.y;
-				tmpPts[1].x_ = pt2.x;
-				tmpPts[1].y_ = pt1.y;
-				tmpPts[2].x_ = pt2.x;
-				tmpPts[2].y_ = pt2.y;
-				tmpPts[3].x_ = pt1.x;
-				tmpPts[3].y_ = pt2.y;
-				tmpPts[4] = tmpPts[0];
+				if ( !transform.isIdentity() && !transform.isTranslationOnly() ) {
+					std::vector<Point> tmpPts(5);
+					tmpPts[0].x_ = pt1.x;
+					tmpPts[0].y_ = pt1.y;
+					tmpPts[1].x_ = pt2.x;
+					tmpPts[1].y_ = pt1.y;
+					tmpPts[2].x_ = pt2.x;
+					tmpPts[2].y_ = pt2.y;
+					tmpPts[3].x_ = pt1.x;
+					tmpPts[3].y_ = pt2.y;
+					tmpPts[4] = tmpPts[0];
 
-				std::vector<Point>::iterator ptIt = tmpPts.begin();
+					std::vector<Point>::iterator ptIt = tmpPts.begin();
 
-				while ( ptIt != tmpPts.end() ) {
-					Point& p = *ptIt;
+					while ( ptIt != tmpPts.end() ) {
+						Point& p = *ptIt;
 
-					transform.apply( p.x_, p.y_ );
+						transform.apply( p.x_, p.y_ );
 
-					++ptIt;
+						++ptIt;
+					}
+
+					contextPeer_->polyline( tmpPts );
 				}
+				else {
+					Point p1;
+					p1.x_ = pt1.x;
+					p1.y_ = pt1.y;
 
-				contextPeer_->polyline( tmpPts );
+					Point p2;
+					p2.x_ = pt2.x;
+					p2.y_ = pt2.y;
 
+					transform.apply( p1.x_, p1.y_ );
+					transform.apply( p2.x_, p2.y_ );
 
-
-				//contextPeer_->rectangle( pt1.x, pt1.y, pt2.x, pt2.y );
+					contextPeer_->rectangle( p1.x_, p1.y_, p2.x_, p2.y_ );
+				}
 			}
 			break;
 
