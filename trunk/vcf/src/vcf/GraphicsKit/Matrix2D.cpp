@@ -327,7 +327,13 @@ bool Matrix2D::isIdentity(double epsilon ) const
            (fabs(matrix_[2][1] - 0.0) < epsilon);
 }
 
-
+bool Matrix2D::isTranslationOnly(double epsilon) const
+{
+	return (fabs(matrix_[0][0] - 1.0) < epsilon) &&
+           (fabs(matrix_[0][1] - 0.0) < epsilon) &&
+           (fabs(matrix_[1][0] - 0.0) < epsilon) && 
+           (fabs(matrix_[1][1] - 1.0) < epsilon);
+}
 
 double Matrix2D::getRotation() const
 {

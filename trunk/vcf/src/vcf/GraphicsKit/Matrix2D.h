@@ -246,6 +246,8 @@ public:
 
 	bool isIdentity(double epsilon = MatrixEpsilon) const;
 
+	bool isTranslationOnly(double epsilon = MatrixEpsilon) const;
+
 	double getRotation() const;
 	double getScaleX() const ;
 	double getScaleY() const ;
