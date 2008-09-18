@@ -12,6 +12,9 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/HTMLDOMElements.h"
 #endif
 
+#include "vcf/FoundationKit/Dictionary.h"
+
+
 
 #if _MSC_VER > 1000
 #   pragma once
@@ -279,7 +282,7 @@ public:
 
 	virtual void paint( GraphicsContext* ctx );
 
-	virtual void afterCreate( ComponentEvent* e );
+	virtual void modelChanged( Model* oldModel, Model* newModel );
 
 	/**
 	Gets the current url of the HTML that the control
@@ -417,9 +420,16 @@ public:
 
 
 	HTMLDocument getDocument();
+
+	void setElementKey( const String& elementName, const VariantData& key );
+
+	void setElementKey( HTMLElement& element, const String& elementName, const VariantData& key );
 protected:
 	HTMLBrowserPeer* browserPeer_;
 	uint32 policyState_;
+	std::map<VariantData,String> elementKeys_;
+
+	void onModelChanged( ModelEvent* e );
 
 private:
 };

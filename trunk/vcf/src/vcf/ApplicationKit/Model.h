@@ -24,17 +24,21 @@ namespace VCF  {
 class APPLICATIONKIT_API ModelEvent : public Event {
 public:
 	ModelEvent( Object* source, const uint32& type ) :
-	  Event( source, type ) {
+	  Event( source, type ),key(NULL),value(NULL) {
 
 	  }
 
-	ModelEvent( Object* source ) : Event(source){}
+	ModelEvent( Object* source ) : Event(source),key(NULL),value(NULL){}
 
 	virtual ~ModelEvent(){};
 
 	virtual Object* clone( bool deep=false ) {
 		return new ModelEvent(*this);
 	}
+
+	const VariantData* key;
+	const VariantData* value;
+
 };
 
 
@@ -625,6 +629,14 @@ public:
 	void changed( ModelEvent* event ) {
 		ModelChanged.invoke( event );
 		updateAllViews();
+	}
+
+
+	void changedKeyValue( const VariantData& key, const VariantData& value, uint32 eventType=MODEL_CHANGED ) {
+		ModelEvent e(this, eventType);
+		e.key = &key;
+		e.value = &value;
+		changed( &e );
 	}
 
 	/**

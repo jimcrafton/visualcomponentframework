@@ -97,8 +97,7 @@ public:
 					if ( v || (updateFlags_ & muAllowsInvalidData) ) {
 						try {
 							property->set( &v.value );
-							ModelEvent e(this,MODEL_CHANGED);
-							changed(&e);
+							changedKeyValue( key, value );
 						}
 						catch (BasicException& e) {
 							StringUtils::trace( Format("Unable to set property {%s} to value {%s}\n\tException: %s\n") % key.toString() % value.toString() % e.getMessage() );
@@ -451,8 +450,7 @@ public:
 	virtual void setValue( const VariantData& value, const VariantData& key=VariantData::null() )  {
 		String strKey = key;
 		data_[ strKey ] = value;
-		ModelEvent e( this, Model::MODEL_CHANGED );
-		changed( &e );
+		changedKeyValue( key, value );
 	}
 
 
@@ -551,8 +549,7 @@ public:
 
 	virtual void setValue( const VariantData& value, const VariantData& key=VariantData::null() ) { 
 		value_ = value;
-		ModelEvent e(this,MODEL_CHANGED);
-		changed(&e);
+		changedKeyValue( key, value );
 	}
 
 	virtual VariantData getValue( const VariantData& key=VariantData::null() ) 	{
@@ -599,10 +596,9 @@ public:
 
 protected:
 
-	inline void internal_set( const ValueType& rhs ) {
+	inline void internal_set( const ValueType& rhs, const VariantData& key=VariantData::null() ) {
 		value_ = rhs;
-		ModelEvent e(this,MODEL_CHANGED);
-		changed(&e);
+		changedKeyValue( key, value_ );
 	}
 
 	ValueType value_;

@@ -1,0 +1,25 @@
+object HtmlMVCWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 300
+	width = 320
+	caption = 'HtmlMVC Window'	
+
+	object browser : VCF::HTMLBrowserControl 
+		delegates
+		//	TitleChanged = [CPBrowserApp@CPBrowserApp::onBrowserDocTitleChanged]
+		//	URLLoaded = [CPBrowserApp@CPBrowserApp::onBrowserURLLoaded]
+		//	URLLoading = [CPBrowserApp@CPBrowserApp::onBrowserURLLoading]
+		//	URLLoadingBegun = [CPBrowserApp@CPBrowserApp::onBrowserURLLoadBegun]
+		end	
+
+		alignment = AlignClient
+		allowPopups = false
+		allowTextSelection = false
+		allowContextMenu = false
+		allowScrollbars = false
+
+
+		currentURL = 'http://www.codeproject.com/'
+	end
+end

@@ -199,6 +199,7 @@ public:
 	void setText( const String& text ) {
 		doSetText( text );
 		TextEvent event( this, TextModel::tmTextSet, 0, text.size() );
+		
 		ModelChanged( &event );
 	}
 
@@ -264,11 +265,14 @@ public:
 	}
 
 	virtual void setValue( const VariantData& value, const VariantData& key=VariantData::null() ) { 
-		setText( value );
-	}
+		String text = value;
+		doSetText( text );
+		TextEvent event( this, TextModel::tmTextSet, 0, text.size() );
+		event.key = &key;
 
-	virtual void setValueAsString( const String& value, const VariantData& key=VariantData::null() ) {
-		setText( value );
+		event.value = &value;
+
+		ModelChanged( &event );
 	}
 
 protected:
