@@ -77,6 +77,7 @@ namespace VCF {
 		
 		size_t calculateRecordSize();
 
+		AnsiString translateDataSetFilterToSQL();
 	private:
 		sqlite3* dbHandle_;
 		sqlite3_stmt* currentStmt_;

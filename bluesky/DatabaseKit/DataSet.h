@@ -190,7 +190,8 @@ namespace VCF {
 	enum FilterOptions {
 		foNoOptions = 0,
 		foCaseInsensitive = 0x01,
-		foNoPartialCompare = 0x02
+		foNoPartialCompare = 0x02,
+		foUsesSQLSyntax = 0x04
 	};
 
 
@@ -554,7 +555,7 @@ namespace VCF {
 
 		void setFilter( const String& val );
 
-		FilterOptions getFilterOptions() {
+		int getFilterOptions() {
 			return filterOptions_;
 		}
 
@@ -708,7 +709,7 @@ namespace VCF {
 		bool defaultFields_;
 		bool filtered_;
 		String filter_;
-		FilterOptions filterOptions_;		
+		int filterOptions_;		
 
 
         std::map<String, VariantData> params_;

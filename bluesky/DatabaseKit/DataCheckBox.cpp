@@ -43,5 +43,5 @@ DataField* DataCheckBox::getField() {
 }
 
 void DataCheckBox::onDataLinkDataChanged( Event* e ) {
-	
+	setChecked( getField()->getAsBoolean() );
 }
