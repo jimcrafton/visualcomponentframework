@@ -791,6 +791,7 @@ public:
 
 	uint64 sizeOf() const;	
 
+	bool operator< (const VariantData& rhs ) const ;
 protected:
 	void setValue( const VariantData& value );
 

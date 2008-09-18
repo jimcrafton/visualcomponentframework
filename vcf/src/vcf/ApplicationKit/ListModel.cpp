@@ -35,6 +35,11 @@ void ListModel::set( const uint32& index, const VariantData& item )
 		ListModelEvent itemEvent( this, lmeItemChanged );
 		itemEvent.item = (VariantData*)&item;
 		itemEvent.index = index;
+
+		VariantData k = index;
+		itemEvent.key = &k;
+		itemEvent.value = &item;
+
 		ModelChanged( &itemEvent );
 	}
 }
@@ -46,6 +51,11 @@ void ListModel::insertSubItem( const uint32& index, const uint32 & subItemIndex,
 		itemEvent.item = (VariantData*) &value;
 		itemEvent.index = index;
 		itemEvent.subIndex = subItemIndex;
+
+		VariantData k = index;
+		itemEvent.key = &k;
+		itemEvent.value = &value;
+
 		ModelChanged( &itemEvent );
 	}
 }

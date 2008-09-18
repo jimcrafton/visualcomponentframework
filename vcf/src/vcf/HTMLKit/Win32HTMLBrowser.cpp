@@ -817,7 +817,7 @@ STDMETHODIMP Win32HTMLBrowser::GetHostInfo( DOCHOSTUIINFO *pInfo )
 
 	pInfo->dwDoubleClick = DOCHOSTUIDBLCLK_DEFAULT;
 
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 STDMETHODIMP Win32HTMLBrowser::OnDocWindowActivate( BOOL fEnable ) 

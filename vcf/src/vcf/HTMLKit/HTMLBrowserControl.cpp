@@ -53,11 +53,6 @@ void HTMLBrowserControl::paint( GraphicsContext* ctx )
 
 }
 
-void HTMLBrowserControl::afterCreate( ComponentEvent* e )
-{
-
-}
-
 String HTMLBrowserControl::getCurrentURL()
 {
 	return browserPeer_->getCurrentURL();
@@ -202,8 +197,45 @@ HTMLDocument HTMLBrowserControl::getDocument()
 	return browserPeer_->getDocument();
 }
 
+void HTMLBrowserControl::setElementKey( const String& elementName, const VariantData& key )
+{
+	elementKeys_[key] = elementName;
+}
 
+void HTMLBrowserControl::setElementKey( HTMLElement& element, const String& elementName, const VariantData& key )
+{
+	if ( element.getID() != elementName ) {
+		element.setID( elementName );
+	}
+	elementKeys_[key] = elementName;
+}
 
+void HTMLBrowserControl::onModelChanged( ModelEvent* e )
+{
+	if ( NULL != e->key && NULL != e->value ) {
+		std::map<VariantData,String>::iterator found = elementKeys_.find( *e->key );
+		if ( found != elementKeys_.end() ) {
+		
+			browserPeer_->setElementText( found->second, e->value->toString() ) ;
+		}
+	}
+}
+
+void HTMLBrowserControl::modelChanged( Model* oldModel, Model* newModel )
+{
+	CallBack* ev = getCallback( "HTMLBrowserControl::onModelChanged" );
+	if ( NULL == ev ) {
+		ev = new ClassProcedure1<ModelEvent*,HTMLBrowserControl>( this, &HTMLBrowserControl::onModelChanged, "HTMLBrowserControl::onModelChanged" );
+	}
+
+	if ( NULL != oldModel ) {
+		oldModel->ModelChanged -= ev;
+	}
+
+	if ( NULL != newModel ) {
+		newModel->ModelChanged += ev;
+	}
+}
 /**
 $Id$
 */

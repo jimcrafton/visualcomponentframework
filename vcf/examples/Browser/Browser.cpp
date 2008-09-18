@@ -19,7 +19,7 @@ namespace VCF {
 		}
 
 		void onCBEditReturnKeyPressed( KeyboardEvent* event ) {
-			if ( vkReturn == event->getVirtualCode() ) {
+			if ( vkReturn == event->virtualKeyCode ) {
 				Event e(this);
 				URLChanged( &e );
 			}
