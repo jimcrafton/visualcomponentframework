@@ -599,6 +599,14 @@ sqlite3* SQLiteDataSetPeer::getHandle()
 	return dbHandle_;
 }
 
+
+AnsiString SQLiteDataSetPeer::translateDataSetFilterToSQL() 
+{
+	AnsiString result;
+
+	return result;
+}
+
 AnsiString SQLiteDataSetPeer::generateSQL()
 {
 	VCF_ASSERT( NULL != dataSet_ );
@@ -619,6 +627,13 @@ AnsiString SQLiteDataSetPeer::generateSQL()
 
 	sqlite3* dbHandle = getHandle();
 
+	if ( !(foCaseInsensitive & dataSet_->getFilterOptions()) ) {
+		result += "PRAGMA case_sensitive_like=ON; ";
+	}
+
+
+	
+
 	result += "SELECT ";
 	for ( size_t i=0;i<fields.size();i++ ) {
 		DataField* field = fields[i];
@@ -632,6 +647,15 @@ AnsiString SQLiteDataSetPeer::generateSQL()
 
 	result += tableName;
 
+	if ( foUsesSQLSyntax & dataSet_->getFilterOptions() && dataSet_->isFiltered() ) {
+		if ( !dataSet_->getFilter().empty() ) {
+			result += " WHERE ";
+			result += dataSet_->getFilter();
+		}
+	}
+	else {
+		result += translateDataSetFilterToSQL();
+	}
 
 	result += ";";
 

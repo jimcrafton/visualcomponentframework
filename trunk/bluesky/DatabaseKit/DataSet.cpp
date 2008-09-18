@@ -15,7 +15,7 @@ DataSet::DataSet()
 	modified_(false),
 	defaultFields_(true),
 	filtered_(false),
-	filterOptions_(foNoOptions),
+	filterOptions_(foCaseInsensitive),
 	recordCount_(0),
 	usableRecordCount_(0),
 	activeRecordIndex_(DataSet::NoRecPos),
