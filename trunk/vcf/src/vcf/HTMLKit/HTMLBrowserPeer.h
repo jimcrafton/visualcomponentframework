@@ -78,6 +78,8 @@ public:
 	virtual bool setElementClickedEventHandler( const String& elementName, EventHandler* handler ) = 0;
 
 	virtual HTMLDocument getDocument() = 0;
+
+	virtual void updateElementForKey( const VariantData& key, const String& elementName ) = 0;
 };
 
 

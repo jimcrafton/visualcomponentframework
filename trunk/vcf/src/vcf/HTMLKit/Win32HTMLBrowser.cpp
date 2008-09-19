@@ -442,11 +442,18 @@ String Win32HTMLBrowser::getElementText( bool textIsHTML, const String& elementN
 
 	if ( !item.is_null() ) {
 		bstr_t val;
-		if ( textIsHTML ) {
-			item->get_innerHTML( val.out() );
+		IHTMLInputElementPtr input = com_cast( item );
+
+		if ( input ) {
+			input->get_value( val.out() );
 		}
 		else {
-			item->get_innerText( val.out() );
+			if ( textIsHTML ) {
+				item->get_innerHTML( val.out() );
+			}
+			else {
+				item->get_innerText( val.out() );
+			}
 		}
 
 		result = val.c_str();
@@ -485,13 +492,21 @@ void Win32HTMLBrowser::setElementText( bool textIsHTML, const String& elementNam
 	
 
 	if ( !item.is_null() ) {
+
+		IHTMLInputElementPtr input = com_cast( item );
+
 		bstr_t val = text.c_str();						
 
-		if ( textIsHTML ) {
-			item->put_innerHTML( val.in() );
+		if ( input ) {
+			input->put_value( val.in() );
 		}
 		else {
-			item->put_innerText( val.in() );
+			if ( textIsHTML ) {
+				item->put_innerHTML( val.in() );
+			}
+			else {
+				item->put_innerText( val.in() );
+			}
 		}
 	}
 }
@@ -643,6 +658,15 @@ void Win32HTMLBrowser::onDocumentComplete( LPDISPATCH pDisp, VARIANT* URL)
 		bstr_t tmp;
 		tmp = URL->bstrVal;
 		e.url = tmp.c_str();
+	}
+
+	std::vector<KeyedHTMLElement> keys;
+	if ( browserCtrl->getKeyedElements( keys ) ) {
+		std::vector<KeyedHTMLElement>::iterator it = keys.begin();
+		while ( it != keys.end() ) {
+			updateElementForKey( it->first, it->second );
+			++it;
+		}
 	}
 
 
@@ -904,9 +928,56 @@ void Win32HTMLBrowser::handleBrowserMessages( MSG* msg )
 
 }
 
+void Win32HTMLBrowser::updateElementForKey( const VariantData& key, const String& elementName )
+{
+	VCF::HTMLElementCollectionPeer collection;	
+	com_ptr<IDispatch> disp;
+	IHTMLDocument2Ptr doc;
+	browser_->get_Document( disp.out() );
+	doc = com_cast( disp );
+	if ( doc ) {
+		doc->get_all( collection.out() );
+		if ( collection ) {
+			VCF::HTMLElementCollection coll2;
+			coll2.setPeer( &collection );
+
+			long len = coll2.getLength();
+
+			for (int i=0;i<len;i++ ) {
+				VCF::HTMLElement* f = coll2[i];
+				if ( NULL != f ) {				
+
+					if ( elementName == f->getID() ) {
 
 
+						IHTMLInputElementPtr input = com_cast( *f->getPeer() );
 
+						if ( input ) {
+							String name = elementName + "_onchange";
+							
+							HTMLEventHandler* htmlHandler = getElementEventHandler(name);
+							if ( NULL == htmlHandler ) {
+								htmlHandler = new HTMLEventHandler();
+								eventHandlers_[name] = htmlHandler;
+							}
+							
+							htmlHandler->eventSource = peerControl_;
+							htmlHandler->handler = (EventHandler*) peerControl_->getCallback( "HTMLBrowserControl::inputElementChanged" ) ;
+							htmlHandler->elementID = elementName;
+							
+							variant_t e;
+							com_ptr<IDispatch> idisp = htmlHandler;
+							
+							e = idisp;							
+							input->put_onchange( e.in() );
+							break;
+						}						
+					}
+				}
+			}			
+		}
+	}	
+}
 
 /**
 $Id$

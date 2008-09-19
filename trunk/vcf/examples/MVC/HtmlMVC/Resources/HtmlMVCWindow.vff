@@ -5,21 +5,40 @@ object HtmlMVCWindow  : VCF::Window
 	width = 320
 	caption = 'HtmlMVC Window'	
 
-	object browser : VCF::HTMLBrowserControl 
-		delegates
-		//	TitleChanged = [CPBrowserApp@CPBrowserApp::onBrowserDocTitleChanged]
-		//	URLLoaded = [CPBrowserApp@CPBrowserApp::onBrowserURLLoaded]
-		//	URLLoading = [CPBrowserApp@CPBrowserApp::onBrowserURLLoading]
-		//	URLLoadingBegun = [CPBrowserApp@CPBrowserApp::onBrowserURLLoadBegun]
-		end	
 
+	object model :  VCF::ObjectModel
+		source = @mo		
+	end
+
+	object mo : MyObject 
+		count = 100
+		title = 'Foobler'
+		version = '1.3.7'
+		cost = 2.17864555043
+	end 
+
+
+
+	object browser : VCF::HTMLBrowserControl 
+		model = @model
+		
 		alignment = AlignClient
 		allowPopups = false
 		allowTextSelection = false
 		allowContextMenu = false
 		allowScrollbars = false
 
+		elementKeys['count'] = 'count'
+		elementKeys['title'] = 'title'
+		elementKeys['version'] = 'version'
+		elementKeys['cost'] = 'cost'
 
-		currentURL = 'http://www.codeproject.com/'
+		updateDOMOnDocumentCompleted = true
+
+		currentURL = 'res:ui.html'
+
+		delegates
+			URLLoaded = [HtmlMVCApplication@HtmlMVCApplication::onDocComplete]
+		end	
 	end
 end

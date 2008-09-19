@@ -42,6 +42,9 @@ HTMLBrowserControl::HTMLBrowserControl():
 	policyState_ |= HTMLBrowserControl::hpAllowsScrollbars;
 	policyState_ |= HTMLBrowserControl::hpAllowsTextSelection;
 
+
+	addCallback( new ClassProcedure1<Event*,HTMLBrowserControl>(this, &HTMLBrowserControl::inputElementChanged), "HTMLBrowserControl::inputElementChanged" );
+	
 }
 
 HTMLBrowserControl::~HTMLBrowserControl()
@@ -196,19 +199,32 @@ bool HTMLBrowserControl::setElementClickedEventHandler( const String& elementNam
 HTMLDocument HTMLBrowserControl::getDocument()
 {	
 	return browserPeer_->getDocument();
-}
+}	
 
-void HTMLBrowserControl::setElementKey( const String& elementName, const VariantData& key )
+void HTMLBrowserControl::setElementNameForKey( const VariantData& key, const String& elementName )
 {
 	elementKeys_[key] = elementName;
+	browserPeer_->updateElementForKey( key, elementName );
 }
 
-void HTMLBrowserControl::setElementKey( HTMLElement& element, const String& elementName, const VariantData& key )
+String HTMLBrowserControl::getElementNameForKey( const VariantData& key )
+{
+	String result;
+
+	std::map<VariantData,String>::iterator found = elementKeys_.find( key );
+	if ( found != elementKeys_.end() ) {	
+		result = found->second;
+	}
+
+	return result;
+}
+
+void HTMLBrowserControl::setKeyForElement( HTMLElement& element, const String& elementName, const VariantData& key )
 {
 	if ( element.getID() != elementName ) {
 		element.setID( elementName );
 	}
-	elementKeys_[key] = elementName;
+	setElementNameForKey( key, elementName );
 }
 
 void HTMLBrowserControl::onModelChanged( ModelEvent* e )
@@ -240,32 +256,70 @@ void HTMLBrowserControl::modelChanged( Model* oldModel, Model* newModel )
 
 
 void HTMLBrowserControl::updateModelFromDOM()
-{
-	Model* model = this->getViewModel();
-	
-	std::map<VariantData,String>::iterator it = elementKeys_.begin();
-	while ( it != elementKeys_.end() ) {
-		browserPeer_->setElementText( it->second, model->getValueAsString( it->first ) );
-		++it;
-	}
-}
-
-void HTMLBrowserControl::updateDOMFromModel()
-{
+{	
 	modelChangeState_ |= InternalDOMDocumentChanged;
 
 	Model* model = this->getViewModel();
-
-	
-	std::map<VariantData,String>::iterator it = elementKeys_.begin();
-	while ( it != elementKeys_.end() ) {
-		model->setValueAsString( browserPeer_->getElementText( it->second ), it->first );
-		++it;
+	if ( NULL != model ) {
+		
+		
+		std::map<VariantData,String>::iterator it = elementKeys_.begin();
+		while ( it != elementKeys_.end() ) {
+			model->setValueAsString( browserPeer_->getElementText( it->second ), it->first );
+			++it;
+		}
 	}
 
 	modelChangeState_ &= ~InternalDOMDocumentChanged;
 }
 
+void HTMLBrowserControl::updateDOMFromModel()
+{
+	Model* model = this->getViewModel();
+	if ( NULL != model ) {
+		
+		std::map<VariantData,String>::iterator it = elementKeys_.begin();
+		while ( it != elementKeys_.end() ) {
+			browserPeer_->setElementText( it->second, model->getValueAsString( it->first ) );
+			++it;
+		}
+	}	
+}
+
+bool HTMLBrowserControl::getKeyedElements( std::vector<KeyedHTMLElement>& keyedElements )
+{
+	std::map<VariantData,String>::iterator it = elementKeys_.begin();
+	while ( it != elementKeys_.end() ) {
+		keyedElements.push_back( KeyedHTMLElement( it->first, it->second ) );
+		++it;
+	}
+	return !keyedElements.empty();
+}
+
+void HTMLBrowserControl::inputElementChanged( Event* e )
+{
+	HTMLElementEvent* he = (HTMLElementEvent*)e;
+
+	Model* model = this->getViewModel();
+	if ( NULL != model ) {
+		
+		
+		std::map<VariantData,String>::iterator it = elementKeys_.begin();
+		while ( it != elementKeys_.end() ) {
+			if ( he->elementID == it->second ) {
+				modelChangeState_ |= InternalDOMDocumentChanged;
+				
+				model->setValueAsString( browserPeer_->getElementText( it->second ), it->first );
+
+				modelChangeState_ &= ~InternalDOMDocumentChanged;
+				break;
+			}
+			++it;
+		}
+	}
+
+	
+}
 
 /**
 $Id$
