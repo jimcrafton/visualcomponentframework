@@ -18,7 +18,8 @@ using namespace VCF;
 
 HTMLBrowserControl::HTMLBrowserControl():
 	browserPeer_(NULL),
-	policyState_(0)
+	policyState_(0),
+	modelChangeState_(0)
 {
 	browserPeer_ = HTMLToolkit::createHTMLBrowserPeer( this );
 
@@ -212,7 +213,7 @@ void HTMLBrowserControl::setElementKey( HTMLElement& element, const String& elem
 
 void HTMLBrowserControl::onModelChanged( ModelEvent* e )
 {
-	if ( NULL != e->key && NULL != e->value ) {
+	if ( (NULL != e->key && NULL != e->value) && !(modelChangeState_ & InternalDOMDocumentChanged) ) {
 		std::map<VariantData,String>::iterator found = elementKeys_.find( *e->key );
 		if ( found != elementKeys_.end() ) {
 		
@@ -236,6 +237,36 @@ void HTMLBrowserControl::modelChanged( Model* oldModel, Model* newModel )
 		newModel->ModelChanged += ev;
 	}
 }
+
+
+void HTMLBrowserControl::updateModelFromDOM()
+{
+	Model* model = this->getViewModel();
+	
+	std::map<VariantData,String>::iterator it = elementKeys_.begin();
+	while ( it != elementKeys_.end() ) {
+		browserPeer_->setElementText( it->second, model->getValueAsString( it->first ) );
+		++it;
+	}
+}
+
+void HTMLBrowserControl::updateDOMFromModel()
+{
+	modelChangeState_ |= InternalDOMDocumentChanged;
+
+	Model* model = this->getViewModel();
+
+	
+	std::map<VariantData,String>::iterator it = elementKeys_.begin();
+	while ( it != elementKeys_.end() ) {
+		model->setValueAsString( browserPeer_->getElementText( it->second ), it->first );
+		++it;
+	}
+
+	modelChangeState_ &= ~InternalDOMDocumentChanged;
+}
+
+
 /**
 $Id$
 */

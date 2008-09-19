@@ -202,6 +202,9 @@ public:
 
 	STDMETHOD(TranslateAccelerator)( LPMSG lpMsg, const GUID *pguidCmdGroup, DWORD nCmdID );
 protected:
+
+	
+
 	String loadingURL_;
 	HWND browserHwnd_;	
 	std::map<String,HTMLEventHandler*> eventHandlers_;
@@ -210,6 +213,7 @@ protected:
 
 	int msgFilterID_;
 	WNDPROC oldBrowserWndProc_;
+	
 
 	String getElementText( bool textIsHTML, const String& elementName );
 	void setElementText( bool textIsHTML, const String& elementName, const String& text );

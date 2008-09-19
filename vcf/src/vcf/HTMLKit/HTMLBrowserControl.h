@@ -207,6 +207,11 @@ public:
 		popup menu of the control if it exists.
 		*/
 		hpAllowDefaultContextMenu  = 0x0010,
+
+		hpUpdateModelOnDocumentCompleted = 0x0020,
+
+		hpUpdateDOMOnDocumentCompleted = 0x0040,
+
 	};
 
 	enum HTMLEvents{
@@ -399,6 +404,39 @@ public:
 		}		
 	}
 
+	bool shouldUpdateModelOnDocumentCompleted() {		
+		return (policyState_ & hpUpdateModelOnDocumentCompleted) ? true : false;
+	}
+
+	void setUpdateModelOnDocumentCompleted( const bool& val ) {
+		if ( val ) {
+			policyState_ |= hpUpdateModelOnDocumentCompleted;
+			if ( policyState_ & hpUpdateDOMOnDocumentCompleted ) {
+				policyState_ &= ~hpUpdateDOMOnDocumentCompleted;
+			}
+		}
+		else {
+			policyState_ &= ~hpUpdateModelOnDocumentCompleted;
+		}
+	}
+
+	bool shouldUpdateDOMOnDocumentCompleted() {		
+		return (policyState_ & hpUpdateDOMOnDocumentCompleted) ? true : false;
+	}
+
+	void setUpdateDOMOnDocumentCompleted( const bool& val ) {
+		if ( val ) {
+			policyState_ |= hpUpdateDOMOnDocumentCompleted;
+			if ( policyState_ & hpUpdateModelOnDocumentCompleted ) {
+				policyState_ &= ~hpUpdateModelOnDocumentCompleted;
+			}
+		}
+		else {
+			policyState_ &= ~hpUpdateDOMOnDocumentCompleted;
+		}
+	}
+
+
 	String getActiveElementID();
 
 	String getElementIDFromPoint( Point* pt );
@@ -424,10 +462,21 @@ public:
 	void setElementKey( const String& elementName, const VariantData& key );
 
 	void setElementKey( HTMLElement& element, const String& elementName, const VariantData& key );
+
+	void updateModelFromDOM();
+	void updateDOMFromModel();
+
 protected:
+	enum {
+		ModelChanged = 0x01,
+		InternalDOMDocumentChanged = 0x02
+	};
+
+
 	HTMLBrowserPeer* browserPeer_;
 	uint32 policyState_;
 	std::map<VariantData,String> elementKeys_;
+	uint32 modelChangeState_;
 
 	void onModelChanged( ModelEvent* e );
 
