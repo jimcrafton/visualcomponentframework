@@ -645,6 +645,14 @@ void Win32HTMLBrowser::onDocumentComplete( LPDISPATCH pDisp, VARIANT* URL)
 		e.url = tmp.c_str();
 	}
 
+
+	if ( browserCtrl->shouldUpdateDOMOnDocumentCompleted() ) {
+		browserCtrl->updateDOMFromModel();
+	} 
+	else if ( browserCtrl->shouldUpdateModelOnDocumentCompleted() ) {
+		browserCtrl->updateModelFromDOM();
+	}
+
 	browserCtrl->URLLoaded( &e );
 }
 

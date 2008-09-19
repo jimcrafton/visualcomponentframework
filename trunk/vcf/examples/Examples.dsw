@@ -348,6 +348,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Diagram"=..\..\..\..\junk\Diagram\Diagram.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Dialogs"=.\Dialogs\Dialogs.dsp - Package Owner=<4>
 
 Package=<5>
