@@ -133,6 +133,8 @@ public:
 	virtual bool setElementClickedEventHandler( const String& elementName, EventHandler* handler );
 
 	virtual HTMLDocument getDocument();
+
+	virtual void updateElementForKey( const VariantData& key, const String& elementName );
 	
 	//callbacks...
 	virtual void onDownloadComplete();

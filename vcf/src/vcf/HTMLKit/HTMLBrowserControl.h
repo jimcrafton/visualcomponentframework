@@ -125,6 +125,9 @@ namespace VCF  {
 
 	typedef Delegate1<HTMLElementEvent*> HTMLElementDelegate; 
 
+
+	typedef std::pair<VariantData,String> KeyedHTMLElement;
+
 /**
 \class HTMLBrowserControl HTMLBrowserControl.h "vcf/HTMLKit/HTMLBrowserControl.h"
 The HTMLBrowserControl provides a wrapper around the native HTML rendering 
@@ -459,9 +462,12 @@ public:
 
 	HTMLDocument getDocument();
 
-	void setElementKey( const String& elementName, const VariantData& key );
+	void setElementNameForKey( const VariantData& key, const String& elementName );
+	String getElementNameForKey( const VariantData& key );
 
-	void setElementKey( HTMLElement& element, const String& elementName, const VariantData& key );
+	void setKeyForElement( HTMLElement& element, const String& elementName, const VariantData& key );
+
+	bool getKeyedElements( std::vector<KeyedHTMLElement>& keyedElements );
 
 	void updateModelFromDOM();
 	void updateDOMFromModel();
@@ -479,6 +485,8 @@ protected:
 	uint32 modelChangeState_;
 
 	void onModelChanged( ModelEvent* e );
+
+	void inputElementChanged( Event* e );
 
 private:
 };

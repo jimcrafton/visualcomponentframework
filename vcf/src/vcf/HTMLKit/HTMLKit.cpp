@@ -24,6 +24,10 @@ _property_( bool, "allowPopups", getAllowsPopupWindows, setAllowsPopupWindows, "
 _property_( bool, "allowScrollbars", getAllowsScrollbars, setAllowsScrollbars, "" );
 _property_( bool, "allowTextSelection", getAllowsTextSelection, setAllowsTextSelection, "" );
 _property_( bool, "allowContextMenu", getAllowDefaultContextMenu, setAllowDefaultContextMenu, "" );
+_property_( bool, "updateModelOnDocumentCompleted", shouldUpdateModelOnDocumentCompleted, setUpdateModelOnDocumentCompleted, "" );
+_property_( bool, "updateDOMOnDocumentCompleted", shouldUpdateDOMOnDocumentCompleted, setUpdateDOMOnDocumentCompleted, "" );
+
+_property_dictionary_( String, VariantData, "elementKeys", getElementNameForKey, setElementNameForKey, "" )
 _class_rtti_end_
 
 
