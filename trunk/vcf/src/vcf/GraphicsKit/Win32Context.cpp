@@ -1163,11 +1163,23 @@ void Win32Context::rectangle(const double & x1, const double & y1, const double 
 		if ( true == inFillPath_ ){
 			fixVal = 1;
 		}
-		int32 l = x1;
-		int32 t = y1;
+		int32 l = x1 + 0.5;
+		int32 t = y1 + 0.5;
 		int32 r = x1 + (x2-x1) + 0.5;
 		int32 b = y1 + (y2-y1) + 0.5;
-		::Rectangle( dc_, l, t, r, b );
+		if ( r-l > 1 ) {
+			r += fixVal;
+		}
+		if ( b-t > 1 ) {
+			b += fixVal;
+		}
+
+		if ( inFillPath_ && (r-l == 1) && (b-t == 1) ) {
+			::SetPixel( dc_, l, t, context_->getColor()->getColorRef32() );
+		}
+		else {
+			::Rectangle( dc_, l, t, r, b );
+		}
 	}
 }
 

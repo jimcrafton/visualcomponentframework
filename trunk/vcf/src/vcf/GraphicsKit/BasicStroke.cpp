@@ -257,7 +257,7 @@ void BasicStroke::render( Path * path )
 					break;
 
 					case PathPoint::ptClose: {
-						context_->lineTo( pt.point_.x_, pt.point_.y_ );
+						context_->closePath( pt.point_.x_, pt.point_.y_ );
 					}
 					break;
 				}
