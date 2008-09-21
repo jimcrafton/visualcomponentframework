@@ -201,17 +201,17 @@ HTMLDocument HTMLBrowserControl::getDocument()
 	return browserPeer_->getDocument();
 }	
 
-void HTMLBrowserControl::setElementNameForKey( const VariantData& key, const String& elementName )
+void HTMLBrowserControl::setKeyForElementName( const String& elementName, const VariantData& key )
 {
-	elementKeys_[key] = elementName;
+	elementKeys_[elementName] = key;
 	browserPeer_->updateElementForKey( key, elementName );
 }
 
-String HTMLBrowserControl::getElementNameForKey( const VariantData& key )
+VariantData HTMLBrowserControl::getKeyForElementName( const String& elementName )
 {
-	String result;
+	VariantData result;
 
-	std::map<VariantData,String>::iterator found = elementKeys_.find( key );
+	std::map<String,VariantData>::iterator found = elementKeys_.find( elementName );
 	if ( found != elementKeys_.end() ) {	
 		result = found->second;
 	}
@@ -224,16 +224,18 @@ void HTMLBrowserControl::setKeyForElement( HTMLElement& element, const String& e
 	if ( element.getID() != elementName ) {
 		element.setID( elementName );
 	}
-	setElementNameForKey( key, elementName );
+	setKeyForElementName( key, elementName );
 }
 
 void HTMLBrowserControl::onModelChanged( ModelEvent* e )
 {
 	if ( (NULL != e->key && NULL != e->value) && !(modelChangeState_ & InternalDOMDocumentChanged) ) {
-		std::map<VariantData,String>::iterator found = elementKeys_.find( *e->key );
-		if ( found != elementKeys_.end() ) {
-		
-			browserPeer_->setElementText( found->second, e->value->toString() ) ;
+		std::map<String,VariantData>::iterator found = elementKeys_.begin();
+		while ( found != elementKeys_.end() ) {
+			if ( found->second == *e->key ) {
+				browserPeer_->setElementText( found->first, e->value->toString() ) ;
+			}
+			++found;
 		}
 	}
 }
@@ -263,9 +265,9 @@ void HTMLBrowserControl::updateModelFromDOM()
 	if ( NULL != model ) {
 		
 		
-		std::map<VariantData,String>::iterator it = elementKeys_.begin();
+		std::map<String,VariantData>::iterator it = elementKeys_.begin();
 		while ( it != elementKeys_.end() ) {
-			model->setValueAsString( browserPeer_->getElementText( it->second ), it->first );
+			model->setValueAsString( browserPeer_->getElementText( it->first ), it->second );
 			++it;
 		}
 	}
@@ -278,9 +280,9 @@ void HTMLBrowserControl::updateDOMFromModel()
 	Model* model = this->getViewModel();
 	if ( NULL != model ) {
 		
-		std::map<VariantData,String>::iterator it = elementKeys_.begin();
+		std::map<String,VariantData>::iterator it = elementKeys_.begin();
 		while ( it != elementKeys_.end() ) {
-			browserPeer_->setElementText( it->second, model->getValueAsString( it->first ) );
+			browserPeer_->setElementText( it->first, model->getValueAsString( it->second ) );
 			++it;
 		}
 	}	
@@ -288,7 +290,7 @@ void HTMLBrowserControl::updateDOMFromModel()
 
 bool HTMLBrowserControl::getKeyedElements( std::vector<KeyedHTMLElement>& keyedElements )
 {
-	std::map<VariantData,String>::iterator it = elementKeys_.begin();
+	std::map<String,VariantData>::iterator it = elementKeys_.begin();
 	while ( it != elementKeys_.end() ) {
 		keyedElements.push_back( KeyedHTMLElement( it->first, it->second ) );
 		++it;
@@ -304,15 +306,14 @@ void HTMLBrowserControl::inputElementChanged( Event* e )
 	if ( NULL != model ) {
 		
 		
-		std::map<VariantData,String>::iterator it = elementKeys_.begin();
+		std::map<String,VariantData>::iterator it = elementKeys_.begin();
 		while ( it != elementKeys_.end() ) {
-			if ( he->elementID == it->second ) {
-				modelChangeState_ |= InternalDOMDocumentChanged;
+			if ( he->elementID == it->first ) {
+				//modelChangeState_ |= InternalDOMDocumentChanged;
 				
-				model->setValueAsString( browserPeer_->getElementText( it->second ), it->first );
+				model->setValueAsString( browserPeer_->getElementText( it->first ), it->second );
 
-				modelChangeState_ &= ~InternalDOMDocumentChanged;
-				break;
+				//modelChangeState_ &= ~InternalDOMDocumentChanged;
 			}
 			++it;
 		}
@@ -320,6 +321,88 @@ void HTMLBrowserControl::inputElementChanged( Event* e )
 
 	
 }
+
+void HTMLBrowserControl::handleEvent( Event* e )
+{
+	Control::handleEvent(e);
+
+	switch ( e->getType() ){
+		case Component::COMPONENT_ADDED : {
+			ComponentEvent* ev = (ComponentEvent*)e;
+			Component* child = ev->getChildComponent();
+			DOMElementComponent* element = dynamic_cast<DOMElementComponent*>(child);
+
+			if ( NULL != element ) {
+				element->setBrowser(this);
+			}
+		}
+		break;
+	}
+}
+
+
+
+
+
+
+
+HTMLDocument DOMDocumentComponent::getDocument()
+{
+	return HTMLDocument();
+}
+
+
+void DOMDocumentComponent::setBrowser( HTMLBrowserControl* browser )
+{
+
+}
+
+void DOMDocumentComponent::handleEvent( Event* e )
+{
+	Component::handleEvent(e);
+}
+
+
+
+String DOMElementComponent::getText()
+{
+	return L"";
+}
+
+void DOMElementComponent::setText( const String& val ) 
+{
+
+}
+
+void DOMElementComponent::handleEvent( Event* e )
+{
+	Component::handleEvent(e);
+
+	switch ( e->getType() ){
+		case Component::COMPONENT_LOADED : {
+			
+			if ( NULL != browser_ ) {
+
+			}
+		}
+		break;
+
+		case HTMLBrowserControl::heURLLoaded : {			
+			if ( NULL != browser_ ) {
+				browser_->getBrowserPeer()->updateCallbacks( this );
+			}
+		}
+		break;
+		
+	}
+}
+
+
+void DOMElementComponent::setBrowser( HTMLBrowserControl* browser )
+{
+	browser_ = browser;
+}
+
 
 /**
 $Id$

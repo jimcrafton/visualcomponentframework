@@ -32,8 +32,18 @@ object HtmlMVCWindow  : VCF::Window
 		elementKeys['title'] = 'title'
 		elementKeys['version'] = 'version'
 		elementKeys['cost'] = 'cost'
+		elementKeys['costLabel'] = 'cost'
+		
 
 		updateDOMOnDocumentCompleted = true
+
+
+
+		object costLabel : VCF::DOMElementComponent 
+			delegates
+				MouseUp = [HtmlMVCApplication@HtmlMVCApplication::onCostDblClick]
+			end
+		end
 
 		currentURL = 'res:ui.html'
 

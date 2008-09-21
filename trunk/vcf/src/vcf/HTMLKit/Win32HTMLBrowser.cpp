@@ -20,7 +20,10 @@ where you installed the VCF.
 
 COM_PTR(IOleInPlaceActiveObject)
 COM_PTR(IOleWindow)
-
+COM_PTR(IHTMLElement2)
+COM_PTR(IHTMLWindow2)
+COM_PTR(IHTMLEventObj)
+ 
 
 
 
@@ -31,12 +34,245 @@ STDMETHODIMP HTMLEventHandler::Invoke( DISPID dispIdMember, REFIID riid, LCID lc
 										WORD wFlags, DISPPARAMS* pDispParams, VARIANT* pVarResult, 
 										EXCEPINFO* pExcepInfo, UINT* puArgErr ) 
 {
-	if ( 0 == dispIdMember && NULL != handler ) {
+	if ( 0 == dispIdMember ) {
 		HTMLElementEvent e(eventSource,HTMLBrowserControl::heElementClicked);
-		e.elementID = elementID;
+		e.elementID = elementID;	
 		
-		handler->invoke( &e );
+		HTMLElement srcElement;
+		HTMLElement fromElement;
+		HTMLElement toElement;
+		VCF::HTMLElementPeer peer;
+
+
+		IHTMLElementPtr htmlElement;
+		IHTMLEventObjPtr eventObj;
+
+		if ( element ) {
+			com_ptr<IDispatch> disp;
+			IHTMLDocument2Ptr doc;
+			element->get_document( disp.out() );
+			doc = com_cast( disp );
+			if ( doc ) {
+				IHTMLWindow2Ptr window;
+				doc->get_parentWindow( window.out() );
+				if ( window ) {
+					
+					window->get_event( eventObj.out() );
+					if ( eventObj ) {
+						eventObj->get_srcElement( htmlElement.out() );
+						if ( htmlElement ) {
+							peer = com_cast( htmlElement );
+							srcElement.setPeer( &peer );
+
+							e.srcElement = &srcElement;
+						}
+
+						eventObj->get_fromElement( htmlElement.out() );
+						if ( htmlElement ) {
+							peer = com_cast( htmlElement );
+							fromElement.setPeer( &peer );
+
+							e.fromElement = &fromElement;
+						}
+
+						eventObj->get_toElement( htmlElement.out() );
+						if ( htmlElement ) {
+							peer = com_cast( htmlElement );
+							toElement.setPeer( &peer );
+
+							e.toElement = &toElement;
+						}
+
+
+						VARIANT_BOOL val = FALSE;
+						eventObj->get_altKey( &val );
+						e.altKey = val ? true : false;
+
+						eventObj->get_cancelBubble( &val );
+						e.cancelBubble = val ? true : false;
+
+						eventObj->get_ctrlKey( &val );
+						e.ctrlKey = val ? true : false;
+
+						eventObj->get_shiftKey( &val );
+						e.shiftKey = val ? true : false;
+
+						variant_t varVal;
+						eventObj->get_returnValue( varVal.out() );
+						e.returnValue = varVal ? true : false;
+
+
+						long lval = 0;
+						eventObj->get_button( &lval );
+						switch ( lval ) {
+							case 0 : {
+								//no button
+							}
+							break;
+
+							case 1 : {
+								e.button = mbmLeftButton;
+							}
+							break;
+
+							case 2 : {
+								e.button = mbmRightButton;
+							}
+							break;
+
+							case 3 : {
+								e.button = mbmLeftButton | mbmRightButton;
+							}
+							break;
+
+							case 4 : {
+								e.button = mbmMiddleButton;
+							}
+							break;
+
+							case 5 : {
+								e.button = mbmLeftButton | mbmMiddleButton;
+							}
+							break;
+
+							case 6 : {
+								e.button = mbmRightButton | mbmMiddleButton;
+							}
+							break;
+
+							case 7 : {
+								e.button = mbmRightButton | mbmMiddleButton | mbmLeftButton;
+							}
+							break;
+						}
+
+
+
+						eventObj->get_clientX( &lval );
+						e.clientX = lval;
+
+						eventObj->get_clientY( &lval );
+						e.clientY = lval;
+
+						eventObj->get_offsetX( &lval );
+						e.offsetX = lval;
+
+						eventObj->get_offsetY( &lval );
+						e.offsetY = lval;
+
+						eventObj->get_screenX( &lval );
+						e.screenX = lval;
+
+						eventObj->get_screenY( &lval );
+						e.screenY = lval;
+
+						eventObj->get_x( &lval );
+						e.x = lval;
+
+						eventObj->get_y( &lval );
+						e.y = lval;
+
+
+						eventObj->get_keyCode( &lval );
+						e.keyCode = lval;
+
+						bstr_t bstrVal;
+						eventObj->get_qualifier( bstrVal.out() );
+
+						e.qualifier = bstrVal;
+
+						eventObj->get_type( bstrVal.out() );
+
+						e.type = bstrVal;
+					}
+				}
+			}			
+		}
 		
+
+		if ( this->eventType != -1 ) {
+			e.setType( eventType );
+			
+			switch ( eventType ) {
+				case HTMLBrowserControl::heElementClicked : {
+					domComponent->Click( &e );
+				}
+				break;
+
+				case HTMLBrowserControl::heElementDblClicked : {
+					domComponent->DblClick( &e );
+				}
+				break;
+
+				case HTMLBrowserControl::heElementDragStart : {
+					domComponent->DragStart( &e );
+				}
+				break;
+
+				case HTMLBrowserControl::heElementDragEnd : {
+					domComponent->DragEnd( &e );
+				}
+				break;
+
+				case HTMLBrowserControl::heElementKeyDown : {
+					domComponent->KeyDown( &e );
+				}
+				break;
+
+				case HTMLBrowserControl::heElementKeyPress : {
+					domComponent->KeyPress( &e );
+				}
+				break;
+
+				case HTMLBrowserControl::heElementKeyUp : {
+					domComponent->KeyUp( &e );
+				}
+				break;
+
+				case HTMLBrowserControl::heElementMouseDown : {
+					domComponent->MouseDown( &e );
+				}
+				break;
+
+				case HTMLBrowserControl::heElementMouseMove : {
+					domComponent->MouseMove( &e );
+				}
+				break;
+
+				case HTMLBrowserControl::heElementMouseOver : {
+					domComponent->MouseOver( &e );
+				}
+				break;
+
+				case HTMLBrowserControl::heElementMouseOut : {
+					domComponent->MouseOut( &e );
+				}
+				break;
+
+				case HTMLBrowserControl::heElementMouseUp : {
+					domComponent->MouseUp( &e );
+				}
+				break;
+			}
+		}
+		else if ( NULL != handler ) {
+			handler->invoke( &e );
+		}
+		
+
+		if ( eventObj ) {
+			VARIANT_BOOL val = e.cancelBubble ? TRUE : FALSE;
+			eventObj->put_cancelBubble( val );
+
+			long lval = e.keyCode;
+			eventObj->put_keyCode( lval );
+
+			variant_t var;
+			var = e.returnValue;
+			eventObj->put_returnValue( var.in() );
+
+		}
+
 		return S_OK;
 	}
 	
@@ -649,8 +885,238 @@ void Win32HTMLBrowser::onNewWindow2( LPDISPATCH* ppDisp, VARIANT_BOOL* Cancel)
 	}
 }
 
+void Win32HTMLBrowser::urlLoaded( Component* component )
+{
+	Enumerator<Component*>* comps = component->getComponents();
+	while ( comps->hasMoreElements() ) {
+		Component* c = comps->nextElement();
+		urlLoaded( c );
+	}
+
+	HTMLEvent e(peerControl_,HTMLBrowserControl::heURLLoaded);
+	component->handleEvent( &e );
+}
+
+
+HTMLEventHandler* Win32HTMLBrowser::createHTMLEventHandler( const String& elementName, const String& name )
+{
+	HTMLEventHandler* result = NULL;
+	result = getElementEventHandler(name);
+	if ( NULL == result ) {
+		result = new HTMLEventHandler();
+		eventHandlers_[name] = result;
+	}
+	
+	result->eventSource = peerControl_;
+	result->handler = NULL;
+	result->elementID = elementName;
+
+	return result;
+}
+
+void Win32HTMLBrowser::updateCallbacks( DOMElementComponent* component )
+{
+	VCF::HTMLElementCollectionPeer collection;	
+	com_ptr<IDispatch> disp;
+	IHTMLDocument2Ptr doc;
+	browser_->get_Document( disp.out() );
+	doc = com_cast( disp );
+	if ( doc ) {
+		doc->get_all( collection.out() );
+		if ( collection ) {
+
+			String elementName = component->getName();
+
+			VCF::HTMLElementCollection coll2;
+			coll2.setPeer( &collection );
+
+			long len = coll2.getLength();
+
+			for (int i=0;i<len;i++ ) {
+				VCF::HTMLElement* f = coll2[i];
+				if ( NULL != f ) {				
+
+					if ( elementName == f->getID() ) {
+
+						variant_t e;
+						com_ptr<IDispatch> idisp;
+						HTMLEventHandler* htmlHandler;
+						String name;
+
+						if ( !component->Click.empty() ) {
+							name = elementName + "_onclick";
+							
+							htmlHandler = createHTMLEventHandler( elementName, name );
+							htmlHandler->domComponent = component;
+							htmlHandler->eventType = HTMLBrowserControl::heElementClicked;
+							htmlHandler->element = *f->getPeer();
+							
+							idisp = htmlHandler;							
+							e = idisp;
+							(*f->getPeer())->put_onclick( e.in() );
+						}
+
+						if ( !component->DblClick.empty() ) {
+							name = elementName + "_ondblclick";
+							
+							htmlHandler = createHTMLEventHandler( elementName, name );
+							htmlHandler->domComponent = component;
+							htmlHandler->eventType = HTMLBrowserControl::heElementDblClicked;
+							htmlHandler->element = *f->getPeer();
+							
+							idisp = htmlHandler;							
+							e = idisp;							
+							(*f->getPeer())->put_ondblclick( e.in() );
+						}
+
+						if ( !component->DragStart.empty() ) {
+							name = elementName + "_ondragstart";
+							
+							htmlHandler = createHTMLEventHandler( elementName, name );
+							htmlHandler->domComponent = component;
+							htmlHandler->eventType = HTMLBrowserControl::heElementDragStart;
+							htmlHandler->element = *f->getPeer();
+							
+							idisp = htmlHandler;							
+							e = idisp;							
+							(*f->getPeer())->put_ondragstart( e.in() );
+						}
+
+						IHTMLElement2Ptr element = com_cast( *f->getPeer() );
+						if ( element ) {
+							if ( !component->DragEnd.empty() ) {
+								name = elementName + "_ondragend";
+								
+								htmlHandler = createHTMLEventHandler( elementName, name );
+								htmlHandler->domComponent = component;
+								htmlHandler->eventType = HTMLBrowserControl::heElementDragEnd;
+								htmlHandler->element = *f->getPeer();
+
+								
+								idisp = htmlHandler;							
+								e = idisp;							
+								element->put_ondragend( e.in() );
+							}
+						}
+
+						if ( !component->KeyDown.empty() ) {
+							name = elementName + "_onkeydown";
+							
+							htmlHandler = createHTMLEventHandler( elementName, name );
+							htmlHandler->domComponent = component;
+							htmlHandler->eventType = HTMLBrowserControl::heElementKeyDown;
+							htmlHandler->element = *f->getPeer();
+							
+							idisp = htmlHandler;							
+							e = idisp;							
+							(*f->getPeer())->put_onkeydown( e.in() );
+						}
+
+						if ( !component->KeyPress.empty() ) {
+							name = elementName + "_onkeypress";
+							
+							htmlHandler = createHTMLEventHandler( elementName, name );
+							htmlHandler->domComponent = component;
+							htmlHandler->eventType = HTMLBrowserControl::heElementKeyPress;
+							htmlHandler->element = *f->getPeer();
+							
+							idisp = htmlHandler;							
+							e = idisp;							
+							(*f->getPeer())->put_onkeypress( e.in() );
+						}
+
+						if ( !component->KeyUp.empty() ) {
+							name = elementName + "_onkeyup";
+							
+							htmlHandler = createHTMLEventHandler( elementName, name );
+							htmlHandler->domComponent = component;
+							htmlHandler->eventType = HTMLBrowserControl::heElementKeyUp;
+							htmlHandler->element = *f->getPeer();
+							
+							idisp = htmlHandler;							
+							e = idisp;							
+							(*f->getPeer())->put_onkeyup( e.in() );
+						}
+
+						if ( !component->MouseDown.empty() ) {
+							name = elementName + "_onmousedown";
+							
+							htmlHandler = createHTMLEventHandler( elementName, name );
+							htmlHandler->domComponent = component;
+							htmlHandler->eventType = HTMLBrowserControl::heElementMouseDown;
+							htmlHandler->element = *f->getPeer();
+							
+							idisp = htmlHandler;							
+							e = idisp;							
+							(*f->getPeer())->put_onmousedown( e.in() );
+						}
+
+						if ( !component->MouseMove.empty() ) {
+							name = elementName + "_onmousemove";
+							
+							htmlHandler = createHTMLEventHandler( elementName, name );
+							htmlHandler->domComponent = component;
+							htmlHandler->eventType = HTMLBrowserControl::heElementMouseMove;
+							htmlHandler->element = *f->getPeer();
+							
+							idisp = htmlHandler;							
+							e = idisp;							
+							(*f->getPeer())->put_onmousemove( e.in() );
+						}
+
+						if ( !component->MouseOver.empty() ) {
+							name = elementName + "_onmouseover";
+							
+							htmlHandler = createHTMLEventHandler( elementName, name );
+							htmlHandler->domComponent = component;
+							htmlHandler->eventType = HTMLBrowserControl::heElementMouseOver;
+							htmlHandler->element = *f->getPeer();
+							
+							idisp = htmlHandler;							
+							e = idisp;							
+							(*f->getPeer())->put_onmouseover( e.in() );
+						}
+
+						if ( !component->MouseOut.empty() ) {
+							name = elementName + "_onmouseout";
+							
+							htmlHandler = createHTMLEventHandler( elementName, name );
+							htmlHandler->domComponent = component;
+							htmlHandler->eventType = HTMLBrowserControl::heElementMouseOut;
+							htmlHandler->element = *f->getPeer();
+							
+							idisp = htmlHandler;							
+							e = idisp;							
+							(*f->getPeer())->put_onmouseout( e.in() );
+						}
+
+						if ( !component->MouseUp.empty() ) {
+							name = elementName + "_onmouseup";
+							
+							htmlHandler = createHTMLEventHandler( elementName, name );
+							htmlHandler->domComponent = component;
+							htmlHandler->eventType = HTMLBrowserControl::heElementMouseUp;
+							htmlHandler->element = *f->getPeer();
+							
+							idisp = htmlHandler;							
+							e = idisp;							
+							(*f->getPeer())->put_onmouseup( e.in() );
+						}
+						
+
+						
+						break;
+					}
+				}
+			}			
+		}
+	}
+}
+
 void Win32HTMLBrowser::onDocumentComplete( LPDISPATCH pDisp, VARIANT* URL)
 {
+	clearHTMLHandlers();
+
 	HTMLEvent e(peerControl_,HTMLBrowserControl::heURLLoaded);
 	HTMLBrowserControl* browserCtrl = (HTMLBrowserControl*)peerControl_;
 
@@ -664,7 +1130,7 @@ void Win32HTMLBrowser::onDocumentComplete( LPDISPATCH pDisp, VARIANT* URL)
 	if ( browserCtrl->getKeyedElements( keys ) ) {
 		std::vector<KeyedHTMLElement>::iterator it = keys.begin();
 		while ( it != keys.end() ) {
-			updateElementForKey( it->first, it->second );
+			updateElementForKey( it->second, it->first );
 			++it;
 		}
 	}
@@ -677,7 +1143,9 @@ void Win32HTMLBrowser::onDocumentComplete( LPDISPATCH pDisp, VARIANT* URL)
 		browserCtrl->updateModelFromDOM();
 	}
 
+	
 	browserCtrl->URLLoaded( &e );
+	urlLoaded( browserCtrl );
 }
 
 void Win32HTMLBrowser::onWindowClosing( VARIANT_BOOL IsChildWindow, VARIANT_BOOL* Cancel )

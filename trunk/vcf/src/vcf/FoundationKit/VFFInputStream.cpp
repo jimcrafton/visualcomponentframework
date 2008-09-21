@@ -675,11 +675,11 @@ void VFFInputStream::readNewComponentInstance( VCF::Component* component )
 
 	readObject( component, VFFInputStream::ufCreateChildren );// | VFFInputStream::ufCreateChildrenIfNoInstance );	
 	
-	componentInputLevel_ = -1;
-
-	component->loaded();
+	componentInputLevel_ = -1;	
 
 	assignDeferredProperties(component);
+
+	componentLoaded( component );
 
 	component->postLoaded( topLevelControlVisibility_ );	
 }
@@ -1102,10 +1102,6 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 		result->setName( objectName );
 		objectName = "";
 	}
-
-	if ( NULL != componentInstance ) {
-		componentInstance->loaded();
-	}
 	
 
 	componentInputLevel_ --;
@@ -1123,15 +1119,26 @@ void VFFInputStream::readComponentInstance( Component* component )
 		component->loading();
 	}
 
-	readObject( component, 0 );
-	
-	component->loaded();
+	readObject( component, 0 );	
 
 	assignDeferredProperties(component);	
+
+	componentLoaded( component );
 
 	componentInputLevel_ = -1;
 
 	component->postLoaded( topLevelControlVisibility_ );
+}
+
+void VFFInputStream::componentLoaded( Component* component )
+{
+	Enumerator<Component*>* comps = component->getComponents();
+	while ( comps->hasMoreElements() ) {
+		Component* c = comps->nextElement();
+		componentLoaded( c );
+	}
+
+	component->loaded();
 }
 
 Component* VFFInputStream::createNewComponent(Component* componentInstance, int flags)
@@ -1243,13 +1250,12 @@ Component* VFFInputStream::readNewComponent()
 	
 	result = readObject( NULL, VFFInputStream::ufCreateComponent | VFFInputStream::ufCreateChildren );	
 
-	if ( NULL != result ) {
-		result->loaded();
-	}	
-
 	assignDeferredProperties( result );
 
 	if ( -1 == componentInputLevel_ ) {
+
+		componentLoaded( result );
+
 		result->postLoaded(topLevelControlVisibility_);
 	}
 

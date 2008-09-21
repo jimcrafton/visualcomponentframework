@@ -38,6 +38,69 @@ class HTMLElementPeer;
 class HTMLInputElementPeer;
 class HTMLDocumentPeer;
 
+
+	/**
+	An event thats used for HTMLElement events. 
+	*/
+	class HTMLKIT_API HTMLElementEvent : public Event {
+	public:
+		HTMLElementEvent( Object* source, uint32 type ):Event(source,type),
+			altKey(false),
+			button(0),
+			cancelBubble(false),
+			clientX(0),
+			clientY(0),
+			ctrlKey(false),
+			keyCode(0),
+			offsetX(0),
+			offsetY(0),		
+			reason(0),
+			returnValue(false),
+			screenX(0),
+			screenY(0),
+			shiftKey(false),
+			srcElement(NULL),
+			fromElement(NULL),
+			toElement(NULL),
+			x(0),
+			y(0)
+		{};
+
+		virtual Object* clone( bool deep=false ) {
+			return new HTMLElementEvent(*this);
+		}
+
+		/**
+		The id of the element that triggered the event.
+		*/
+		String elementID;
+		//standard HTML event object fields
+
+		bool altKey;
+		uint32 button;
+		bool cancelBubble;
+		int clientX;
+		int clientY;
+		bool ctrlKey;
+		VCFChar keyCode;
+		int offsetX;
+		int offsetY;
+		String qualifier;
+		int reason;
+		bool returnValue;
+		int screenX;
+		int screenY;
+		bool shiftKey;
+		HTMLElement* srcElement;
+		HTMLElement* fromElement;
+		HTMLElement* toElement;
+		String type;
+		int x;
+		int y;
+	};
+
+	typedef Delegate1<HTMLElementEvent*> HTMLElementDelegate; 
+
 /**
 \class HTMLElementCollection HTMLDOMElements.h "vcf/HTMLKit/HTMLDOMElements.h"
 This is a collection of 0 or more HTMLElement nodes
@@ -452,6 +515,12 @@ public:
 protected:
 	HTMLInputElementPeer* inputPeer_;
 };
+
+
+
+
+
+
 
 };
 

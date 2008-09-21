@@ -20,6 +20,8 @@ where you installed the VCF.
 
 namespace VCF  {
 
+class DOMElementComponent;
+
 /**
 \class HTMLBrowserPeer HTMLBrowserPeer.h "vcf/HTMLKit/HTMLBrowserPeer.h"
 *HTMLBrowserPeer describes
@@ -80,6 +82,8 @@ public:
 	virtual HTMLDocument getDocument() = 0;
 
 	virtual void updateElementForKey( const VariantData& key, const String& elementName ) = 0;
+
+	virtual void updateCallbacks( DOMElementComponent* ) = 0;
 };
 
 
