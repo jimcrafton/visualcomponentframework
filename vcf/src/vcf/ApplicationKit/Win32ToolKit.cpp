@@ -3768,6 +3768,23 @@ Event* Win32ToolKit::internal_createEventFromNativeOSEventData( void* eventData 
 		}
 		break;
 
+		case WM_MOUSEWHEEL:
+		{
+			VCF::Point pt( Win32UIUtils::getXFromLParam( msg->msg_.lParam ) ,
+				Win32UIUtils::getYFromLParam( msg->msg_.lParam ) );
+		  
+			//edited
+			result = new VCF::MouseEvent ( msg->control_, Control::MOUSE_WHEEL,
+				  Win32UIUtils::translateButtonMask( msg->msg_.wParam ),
+				  Win32UIUtils::translateKeyMask( msg->msg_.wParam ),
+				  &pt );
+
+			//edited
+			short mouseDelta = (short)HIWORD(msg->msg_.wParam);   // wheel rotation
+			((VCF::MouseEvent *)result)->setMouseDelta(mouseDelta);
+		 }
+		 break;
+
 		case WM_MOUSELEAVE: {
 			POINT pt = {0,0};
 			::GetCursorPos( &pt );

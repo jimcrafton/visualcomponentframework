@@ -419,7 +419,8 @@ public:
 		BEFORE_CONTROL_PAINTED,
 		AFTER_CONTROL_PAINTED,
 		BEFORE_POPUP_MENU,
-		CONTROL_EVENTS_LAST
+		CONTROL_EVENTS_LAST,
+		MOUSE_WHEEL
 	};
 
 
@@ -471,7 +472,16 @@ public:
 	DELEGATE(MouseDelegate,MouseClicked);
 
 	/**
-	@delegate MouseMove fires an MouseEvent, with a type set to Control::MOUSE_MOVE.
+	@delegate MouseWheel fires an MouseEvent, with a type set to Control::MOUSE_WHEEL.
+	Fired whenever the control receives a mouse wheel event from the mouse. This is triggered by the
+	underlying windowing system.
+	@event MouseEvent
+	@eventtype Control::MOUSE_WHEEL
+	*/
+	DELEGATE(MouseDelegate,MouseWheel);
+
+	/**
+	@delegate MouseWheel fires an MouseEvent, with a type set to Control::MOUSE_MOVE.
 	Fired whenever the control receives a move event from the mouse. This is triggered by the
 	underlying windowing system.
 	@event MouseEvent
@@ -1004,6 +1014,13 @@ public:
 	*the mouse moves over the control.
 	*/
 	virtual void mouseMove( MouseEvent* event );
+
+	/**
+	*Called when the mouse wheel moves.
+	*override this to provide specific behaviours when
+	*the mouse wheel moves.
+	*/
+	virtual void mouseWheel( MouseEvent* event );
 
 	/**
 	*Called when one (or more) of the mouse buttons are released.
