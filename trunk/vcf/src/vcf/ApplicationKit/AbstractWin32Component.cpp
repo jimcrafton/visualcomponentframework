@@ -1171,6 +1171,12 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 					}
 
 				}
+
+				if (!peerControl_->isDestroying())
+				{
+					event->setType( Control::MOUSE_WHEEL );
+					peerControl_->handleEvent( event );
+				}
 			}
 		}
 		break;

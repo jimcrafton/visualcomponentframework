@@ -732,6 +732,29 @@ void Control::handleEvent( Event* event )
 			}
 			break;
 
+			case MOUSE_WHEEL:
+			{
+				MouseEvent* mouseEvent = (MouseEvent*)event;
+
+			    if (mouseEvent->hasLeftButton() || mouseEvent->hasRightButton() || mouseEvent->hasMiddleButton() ) {
+					if ( (true == getAutoStartDragDrop()) ) { //&& (false == dragDropStarted_) ) {
+						if ( true == canBeginDragDrop( mouseEvent->getPoint() ) ) {
+							//dragDropStarted_ = true;      
+							if ( beginDragDrop ( mouseEvent ) ) {
+								return;
+							}
+						}
+					}
+				}
+			   
+				peer_->setCursor( cursor_ );
+				MouseWheel( mouseEvent );
+				if (!event->isConsumed() && !isDesigning()) {
+					mouseWheel( mouseEvent );
+				}
+			}
+			break;
+
 			case MOUSE_UP:{
 
 				MouseEvent*  mouseEvent = (MouseEvent*)event;
@@ -1117,6 +1140,10 @@ void Control::mouseDown( MouseEvent* event )
 void Control::mouseMove( MouseEvent* event )
 {
 	//probably want to put a modifier here for the scrollable to modify the coords ?
+
+}
+void Control::mouseWheel( MouseEvent* event )
+{
 
 }
 

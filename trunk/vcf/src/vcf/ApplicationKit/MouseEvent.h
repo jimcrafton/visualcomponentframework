@@ -46,7 +46,7 @@ enum MouseButtomMasks{
 class APPLICATIONKIT_API MouseEvent : public Event {
 public:
 	MouseEvent( Object* source ) : Event(source),
-		buttonMask_(0), keyMask_(0){}
+		buttonMask_(0), keyMask_(0), mouseDelta_(0){}
 
 	MouseEvent( Object* source, const uint32& eventType ): Event(source,eventType),
 		buttonMask_(0),keyMask_(0){}
@@ -169,6 +169,22 @@ public:
 		return ( mbmTertiaryButton & buttonMask_ ) != 0;
 	}
 
+	/**
+	Use this function to fetch the the distance the wheel is rotated, expressed in multiples or 
+	divisions of WHEEL_DELTA, which is 120. A positive value indicates that the wheel was rotated forward, 
+	away from the user; a negative value indicates that the wheel was rotated backward, toward the user.
+	*/
+	short getMouseDelta()
+	{
+		return ( mouseDelta_ );
+	}
+
+
+	void setMouseDelta( short value )
+	{
+		mouseDelta_ = value;
+	}
+
 	bool hasShiftKey(){
 		return ( kmShift & keyMask_ ) != 0;
 	}
@@ -185,6 +201,7 @@ private:
     uint32 buttonMask_;
     uint32 keyMask_;
     Point point_;
+	short mouseDelta_;
 };
 
 
