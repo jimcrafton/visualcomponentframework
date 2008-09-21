@@ -33,6 +33,7 @@ enum PropertyDescriptorType{
 	pdChar,
 	pdDouble,
 	pdObject,
+	pdConstObject,
 	pdBool,
 	pdString,
 	pdEnum,

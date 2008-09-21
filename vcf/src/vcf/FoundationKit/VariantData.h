@@ -227,6 +227,16 @@ public:
 	}
 
 	/**
+	creates a VariantData initialized by a const Object* value
+	*/
+	VariantData( const Object* val ) {
+		StringVal = NULL;
+
+		ConstObjVal = val;
+		type = pdConstObject;
+	}
+
+	/**
 	creates a VariantData initialized by a Object& value
 	*/
 	VariantData( Object& val ) {
@@ -242,8 +252,8 @@ public:
 	VariantData( const Object& val ){
 		StringVal = NULL;
 
-		ObjVal = const_cast<Object*>(&val);
-		type = pdObject;
+		ConstObjVal = &val;
+		type = pdConstObject;
 	}
 
 	/**
@@ -422,15 +432,31 @@ public:
 	converts the VariantData to an Object pointer
 	*/
 	operator Object* () const {
+		VCF_ASSERT(type != pdConstObject);
 		return ObjVal;
 	};
+
+	/**
+	converts the VariantData to a pointer to a const Object
+	*/
+	operator const Object* () const {
+		return ConstObjVal;
+	}
 
 	/**
 	converts the VariantData to an Object reference
 	*/
 	operator Object& () const {
+		VCF_ASSERT(type != pdConstObject);
 		return *ObjVal;
 	};
+
+	/**
+	converts the VariantData to a const Object reference
+	*/
+	operator const Object& () const {
+		return *ConstObjVal;
+	}
 
 	/**
 	converts the VariantData to an String
@@ -639,12 +665,29 @@ public:
 	};
 
 	/**
+	Assigns a pointer to a const Object to the VariantData
+	*/
+	VariantData& operator=( const Object* newValue ){
+		ConstObjVal = newValue;
+		type = pdConstObject;
+		return *this;
+	}
+	
+	/**
 	Assigns an Object reference to the VariantData
 	*/
-	VariantData& operator=( const Object& newValue ){
-		//ObjVal->copy( newValue );
-		ObjVal = const_cast<Object*>(&newValue);
+	VariantData& operator=( Object& newValue ){
+		ObjVal = &newValue;
 		type = pdObject;
+		return *this;
+	}
+
+	/**
+	Assigns a const Object reference to the VariantData
+	*/
+	VariantData& operator=( const Object& newValue ){
+		ConstObjVal = &newValue;
+		type = pdConstObject;
 		return *this;
 	};
 
@@ -821,6 +864,7 @@ public:
 			double DblVal;
 			bool BoolVal;
 			Object* ObjVal;
+			const Object* ConstObjVal;
 			EnumValue EnumVal;
 			Interface* InterfaceVal;			
 			int64 Int64Val;
