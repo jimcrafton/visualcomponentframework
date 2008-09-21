@@ -139,8 +139,9 @@ String VariantData::toString() const
 		}
 		break;
 
-		case pdObject:{
-			Object* object = *this;
+		case pdObject:
+		case pdConstObject:{
+			const Object* object = *this;
 			if ( NULL != object ){
 				result += object->toString();
 				/*
@@ -315,6 +316,11 @@ void VariantData::setFromString( const String& value )
 		}
 		break;
 
+		case pdConstObject:{
+			throw NotImplementedException();
+		}
+		break;
+
 		case pdInterface:{
 			if ( NULL != InterfaceVal ){
 				Persistable* persist = dynamic_cast<Persistable*>(InterfaceVal);
@@ -380,7 +386,8 @@ void VariantData::setValue( const VariantData& value )
 		}
 		break;
 
-		case pdObject:{
+		case pdObject:
+		case pdConstObject:{
 			ObjVal = value.ObjVal;
 		}
 		break;
@@ -498,7 +505,8 @@ uint64 VariantData::sizeOf() const
 		}
 		break;
 
-		case pdObject:{
+		case pdObject:
+		case pdConstObject:{
 			if ( NULL != ObjVal ) {
 				result += ObjVal->sizeOf();
 			}
@@ -1775,7 +1783,8 @@ bool VariantData::operator == ( const VariantData& v ) const
 		}
 		break;
 
-		case pdObject:{
+		case pdObject:
+		case pdConstObject:{
 			return ObjVal == v.ObjVal;
 		}
 		break;
@@ -1843,7 +1852,8 @@ bool VariantData::operator< (const VariantData& rhs ) const
 			}
 			break;
 
-			case pdObject:{
+			case pdObject:
+			case pdConstObject:{
 				return ObjVal < rhs.ObjVal;
 			}
 			break;
