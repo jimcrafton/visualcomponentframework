@@ -109,6 +109,24 @@ namespace VCF  {
 	
 
 
+	class HTMLKIT_API HTMLShowMessageEvent : public Event {
+	public:
+		HTMLShowMessageEvent( Object* source, uint32 type ):Event(source,type),displayDefaultUI(true),result(UIToolkit::mrNone) {};
+
+		virtual Object* clone( bool deep=false ) {
+			return new HTMLShowMessageEvent(*this);
+		}
+
+		bool displayDefaultUI;
+		String message;
+		String caption;
+		UIToolkit::ModalReturnType result;
+
+	};
+
+	typedef Delegate1<HTMLShowMessageEvent*> HTMLShowMessageDelegate; 
+
+
 	typedef std::pair<String,VariantData> KeyedHTMLElement;
 
 /**
@@ -210,6 +228,7 @@ public:
 		heNewWindowDisplayed,
 		heTitleChanged,
 		heAuthenticationRequested,
+		heShowMessageRequested,
 		heElementClicked,
 		heElementDblClicked,
 		heElementDragStart,
@@ -281,6 +300,9 @@ public:
 	*/
 	DELEGATE( HTMLAuthenticationDelegate,AuthenticationRequested );
 
+	DELEGATE( HTMLShowMessageDelegate, ShowMessageRequested );
+
+	
 
 	virtual void paint( GraphicsContext* ctx );
 

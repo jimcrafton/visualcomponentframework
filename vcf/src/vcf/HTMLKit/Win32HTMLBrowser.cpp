@@ -1372,6 +1372,33 @@ STDMETHODIMP Win32HTMLBrowser::Authenticate( HWND* phwnd, LPWSTR* pszUsername,
 	return S_OK;
 }
 
+STDMETHODIMP Win32HTMLBrowser::ShowHelp( HWND hwnd, LPOLESTR pszHelpFile, UINT uCommand, DWORD dwData, 
+						POINT ptMouse, IDispatch *pDispatchObjectHit )
+{
+	return E_NOTIMPL;
+}
+
+STDMETHODIMP Win32HTMLBrowser::ShowMessage( HWND hwnd, LPOLESTR lpstrText, LPOLESTR lpstrCaption, DWORD dwType, 
+											LPOLESTR lpstrHelpFile, DWORD dwHelpContext, LRESULT *plResult )
+{
+	HTMLShowMessageEvent e(peerControl_, HTMLBrowserControl::heShowMessageRequested );
+
+	HTMLBrowserControl* browserCtrl = (HTMLBrowserControl*)peerControl_;
+
+	e.caption = lpstrCaption;
+	e.message = lpstrText;
+
+	browserCtrl->ShowMessageRequested( &e );
+
+	if ( !e.displayDefaultUI ) {
+		
+		return S_OK;
+	}
+
+	return E_NOTIMPL;
+}
+
+
 bool Win32HTMLBrowser::processMessageFilter( MSG* msg )
 {
 	if ( msg->message == WM_KEYFIRST && msg->message < WM_KEYLAST ) {
