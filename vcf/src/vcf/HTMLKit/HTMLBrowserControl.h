@@ -106,27 +106,10 @@ namespace VCF  {
 	typedef Delegate1<HTMLNewWindowEvent*> HTMLNewWindowDelegate; 
 
 
-	/**
-	An event thats used for HTMLElement events. 
-	*/
-	class HTMLKIT_API HTMLElementEvent : public Event {
-	public:
-		HTMLElementEvent( Object* source, uint32 type ):Event(source,type) {};
-
-		virtual Object* clone( bool deep=false ) {
-			return new HTMLElementEvent(*this);
-		}
-
-		/**
-		The id of the element that triggered the event.
-		*/
-		String elementID;
-	};
-
-	typedef Delegate1<HTMLElementEvent*> HTMLElementDelegate; 
+	
 
 
-	typedef std::pair<VariantData,String> KeyedHTMLElement;
+	typedef std::pair<String,VariantData> KeyedHTMLElement;
 
 /**
 \class HTMLBrowserControl HTMLBrowserControl.h "vcf/HTMLKit/HTMLBrowserControl.h"
@@ -227,7 +210,18 @@ public:
 		heNewWindowDisplayed,
 		heTitleChanged,
 		heAuthenticationRequested,
-		heElementClicked
+		heElementClicked,
+		heElementDblClicked,
+		heElementDragStart,
+		heElementDragEnd,
+		heElementKeyDown,
+		heElementKeyPress,
+		heElementKeyUp,
+		heElementMouseDown,
+		heElementMouseMove,
+		heElementMouseOver,
+		heElementMouseOut,
+		heElementMouseUp
 	};
 
 	/**
@@ -291,6 +285,8 @@ public:
 	virtual void paint( GraphicsContext* ctx );
 
 	virtual void modelChanged( Model* oldModel, Model* newModel );
+
+	virtual void handleEvent( Event* e );
 
 	/**
 	Gets the current url of the HTML that the control
@@ -462,8 +458,8 @@ public:
 
 	HTMLDocument getDocument();
 
-	void setElementNameForKey( const VariantData& key, const String& elementName );
-	String getElementNameForKey( const VariantData& key );
+	void setKeyForElementName( const String& elementName, const VariantData& key );
+	VariantData getKeyForElementName( const String& elementName );
 
 	void setKeyForElement( HTMLElement& element, const String& elementName, const VariantData& key );
 
@@ -472,6 +468,10 @@ public:
 	void updateModelFromDOM();
 	void updateDOMFromModel();
 
+
+	HTMLBrowserPeer* getBrowserPeer() {
+		return browserPeer_;
+	}
 protected:
 	enum {
 		ModelChanged = 0x01,
@@ -481,7 +481,7 @@ protected:
 
 	HTMLBrowserPeer* browserPeer_;
 	uint32 policyState_;
-	std::map<VariantData,String> elementKeys_;
+	std::map<String,VariantData> elementKeys_;
 	uint32 modelChangeState_;
 
 	void onModelChanged( ModelEvent* e );
@@ -490,6 +490,100 @@ protected:
 
 private:
 };
+
+
+
+
+
+
+
+class HTMLKIT_API DOMDocumentComponent : public Component {
+public:
+	DOMDocumentComponent():browser_(NULL){}
+
+	virtual ~DOMDocumentComponent(){}
+
+
+	HTMLDocument getDocument();
+
+	void setBrowser( HTMLBrowserControl* browser );
+
+	HTMLBrowserControl* getBrowser() {
+		return browser_;
+	}
+
+	virtual void handleEvent( Event* e );
+protected:
+	
+	HTMLBrowserControl* browser_;
+
+};
+
+
+class HTMLKIT_API DOMElementComponent : public Component {
+public:
+	DOMElementComponent():doc_(NULL){}
+
+
+
+	DELEGATE(HTMLElementDelegate, Click);
+	DELEGATE(HTMLElementDelegate, DblClick);
+
+	DELEGATE(HTMLElementDelegate, DragStart);
+	DELEGATE(HTMLElementDelegate, DragEnd);
+
+	DELEGATE(HTMLElementDelegate, KeyDown);
+	DELEGATE(HTMLElementDelegate, KeyPress);
+	DELEGATE(HTMLElementDelegate, KeyUp);
+
+	DELEGATE(HTMLElementDelegate, MouseDown);
+	DELEGATE(HTMLElementDelegate, MouseMove);
+	DELEGATE(HTMLElementDelegate, MouseOut);
+	DELEGATE(HTMLElementDelegate, MouseOver);
+	DELEGATE(HTMLElementDelegate, MouseUp);
+
+
+	String getText();
+	void setText( const String& val );
+	
+	void setDocument( DOMDocumentComponent* doc ) {
+		doc_ = doc;
+	}
+
+	DOMDocumentComponent* getDocument() {
+		return doc_;
+	}
+
+	virtual void handleEvent( Event* e );
+
+	void setBrowser( HTMLBrowserControl* browser );
+
+	HTMLBrowserControl* getBrowser() {
+		return browser_;
+	}
+	
+	
+protected:
+	DOMDocumentComponent* doc_;
+	HTMLBrowserControl* browser_;
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

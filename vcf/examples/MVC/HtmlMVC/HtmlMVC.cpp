@@ -55,6 +55,7 @@ public:
 		HTMLKit::init( argc, argv );
 
 		addCallback( new ClassProcedure1<Event*,HtmlMVCApplication>(this, &HtmlMVCApplication::onDocComplete), "HtmlMVCApplication::onDocComplete" );
+		addCallback( new ClassProcedure1<Event*,HtmlMVCApplication>(this, &HtmlMVCApplication::onCostDblClick), "HtmlMVCApplication::onCostDblClick" );
 	}
 
 	virtual bool initRunningApplication(){
@@ -72,11 +73,10 @@ public:
 
 	void onDocComplete( Event* e ) {
 		HTMLBrowserControl* browser = (HTMLBrowserControl*)findComponent( "browser", true );
-		//browser->setElementNameForKey( "count", "count" );
-		//browser->setElementNameForKey( "title", "title" );
-		//browser->setElementNameForKey( "version", "version" );
-		//browser->setElementNameForKey( "cost", "cost" );
-		//browser->updateDOMFromModel();
+	}
+
+	void onCostDblClick( Event* e ) {
+		Dialog::showMessage( "onCostDblClick invoked!" );
 	}
 
 };

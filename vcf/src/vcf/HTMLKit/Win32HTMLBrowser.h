@@ -46,12 +46,25 @@ struct CLSIDPred {
 };
 
 
-
+enum StdHTMLEventTypes {
+	heClickEvent = 0,
+	heDblClickEvent,
+	heDragStartEvent,
+	heDragEndEvent,
+	heKeyDownEvent,
+	heKeyPressEvent,
+	heKeyUpEvent,
+	heMouseDownEvent,
+	heMouseMoveEvent,
+	heMouseOverEvent,
+	heMouseOutEvent,
+	heMouseUpEvent,
+};
 
 class HTMLEventHandler : public IDispatchImpl {
 public:
 
-	HTMLEventHandler():eventSource(NULL), handler(NULL){}
+	HTMLEventHandler():eventSource(NULL), handler(NULL),domComponent(NULL),eventType(-1){}
 
 	STDMETHOD(Invoke)( DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags, 
 					DISPPARAMS* pDispParams, VARIANT* pVarResult, 
@@ -60,6 +73,9 @@ public:
 	Object* eventSource;
 	EventHandler* handler;
 	String elementID;
+	DOMElementComponent* domComponent;
+	int eventType;
+	IHTMLElementPtr element;
 };
 
 /**
@@ -135,6 +151,11 @@ public:
 	virtual HTMLDocument getDocument();
 
 	virtual void updateElementForKey( const VariantData& key, const String& elementName );
+
+	virtual void updateCallbacks( DOMElementComponent* );
+
+
+
 	
 	//callbacks...
 	virtual void onDownloadComplete();
@@ -236,6 +257,12 @@ protected:
 	void handleBrowserMessages( MSG* msg );
 
 	static LRESULT CALLBACK browserWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void urlLoaded( Component* component );
+
+	HTMLEventHandler* createHTMLEventHandler( const String& elementName, const String& name );
+
+	
 };
 
 

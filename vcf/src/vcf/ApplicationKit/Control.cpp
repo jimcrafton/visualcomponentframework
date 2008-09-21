@@ -262,7 +262,7 @@ bool Control::generatePropertyValue( const String& fullPropertyName, Property* p
 	return UIComponent::generatePropertyValue( fullPropertyName, property, value, strValue );
 }
 
-Rect Control::getBounds()/**throw( InvalidPeer ); -JEC - FIXME later*/
+Rect Control::getBounds()
 {	
 
 	Control* parent = getParent();
@@ -308,7 +308,7 @@ Rect Control::getBounds()/**throw( InvalidPeer ); -JEC - FIXME later*/
 
 
 
-Rect Control::getClientBounds( const bool& includeBorder ) /**throw( InvalidPeer ); -JEC - FIXME later*/
+Rect Control::getClientBounds( const bool& includeBorder ) 
 {	
 	Rect r = peer_->getBounds();
 	clientBounds_->setRect( 0.0, 0.0, r.getWidth(), r.getHeight() );
@@ -321,10 +321,10 @@ Rect Control::getClientBounds( const bool& includeBorder ) /**throw( InvalidPeer
 	return *clientBounds_;
 }
 
-double Control::getLeft() /**throw( InvalidPeer ); -JEC - FIXME later*/
+double Control::getLeft() 
 {
 	
-	//*bounds_ = peer_->getBounds();
+	
 	getBounds();
 
 	return bounds_->left_;
@@ -334,51 +334,51 @@ double Control::getRight()
 {
 
 	getBounds();
-	//*bounds_ = peer_->getBounds();
+	
 
 	return bounds_->right_;
 }
 
-double Control::getBottom() /**throw( InvalidPeer ); -JEC - FIXME later*/
+double Control::getBottom() 
 {
 	getBounds();
-	//*bounds_ = peer_->getBounds();
+	
 
 	return bounds_->bottom_;
 }
 
-double Control::getWidth() /**throw( InvalidPeer ); -JEC - FIXME later*/
+double Control::getWidth() 
 {
 
 	getBounds();
-	//*bounds_ = peer_->getBounds();
+	
 
 	return bounds_->getWidth();
 }
 
-double Control::getTop() /**throw( InvalidPeer ); -JEC - FIXME later*/
+double Control::getTop() 
 {
 
 	getBounds();
-	//*bounds_ = peer_->getBounds();
+	
 
 	return bounds_->top_;
 }
 
-double Control::getHeight() /**throw( InvalidPeer ); -JEC - FIXME later*/
+double Control::getHeight() 
 {
 
 	//double result = 0.0;
 
 	getBounds();
-	//*bounds_ = peer_->getBounds();
+	
 	//result = bounds_->getHeight();
 
 
 	return bounds_->getHeight();
 }
 
-bool Control::getVisible() /**throw( InvalidPeer ); -JEC - FIXME later*/
+bool Control::getVisible() 
 {
 	return (controlState_ & Control::csVisible) ? true : false;//peer_->getVisible();
 }
@@ -535,7 +535,7 @@ void Control::setAlignment( const AlignmentType& alignment )
 	updateAnchorDeltas();
 }
 
-void Control::setLeft( const double& left ) /**throw( InvalidPeer ); -JEC - FIXME later*/
+void Control::setLeft( const double& left ) 
 {
 	double dx = bounds_->getWidth();
 	bounds_->left_ = left;
@@ -543,13 +543,13 @@ void Control::setLeft( const double& left ) /**throw( InvalidPeer ); -JEC - FIXM
 	setBounds( bounds_ );
 }
 
-void Control::setRight( const double& right ) /**throw( InvalidPeer ); -JEC - FIXME later*/
+void Control::setRight( const double& right ) 
 {
 	bounds_->right_ = right;
 	setBounds( bounds_ );
 }
 
-void Control::setWidth( const double& width ) /**throw( InvalidPeer ); -JEC - FIXME later*/
+void Control::setWidth( const double& width ) 
 {
 	if ( bounds_->getWidth() != width ) {
 		bounds_->right_ = bounds_->left_ + width;
@@ -557,7 +557,7 @@ void Control::setWidth( const double& width ) /**throw( InvalidPeer ); -JEC - FI
 	}
 }
 
-void Control::setTop( const double& top ) /**throw( InvalidPeer ); -JEC - FIXME later*/
+void Control::setTop( const double& top ) 
 {
 	double dy = bounds_->getHeight();
 	bounds_->top_ = top;
@@ -565,13 +565,13 @@ void Control::setTop( const double& top ) /**throw( InvalidPeer ); -JEC - FIXME 
 	setBounds( bounds_ );
 }
 
-void Control::setBottom( const double& bottom ) /**throw( InvalidPeer ); -JEC - FIXME later*/
+void Control::setBottom( const double& bottom ) 
 {
 	bounds_->bottom_ = bottom;
 	setBounds( bounds_ );
 }
 
-void Control::setHeight( const double& height ) /**throw( InvalidPeer ); -JEC - FIXME later*/
+void Control::setHeight( const double& height ) 
 {
 	if ( NULL != peer_ ){
 		if ( bounds_->getHeight() != height ) {
@@ -581,7 +581,7 @@ void Control::setHeight( const double& height ) /**throw( InvalidPeer ); -JEC - 
 	};
 }
 
-void Control::setVisible( const bool& visible ) /**throw( InvalidPeer ); -JEC - FIXME later*/
+void Control::setVisible( const bool& visible ) 
 {
 	bool oldVisible = peer_->getVisible();
 	
@@ -966,7 +966,7 @@ ControlPeer* Control::getPeer()
 	return peer_;
 }
 
-void Control::setParent( Control* parent ) /**throw( InvalidPeer ); -JEC - FIXME later*/
+void Control::setParent( Control* parent ) 
 {
 	if ( parent != parent_ ) {
 		ControlEvent event( this, parent );
@@ -1002,7 +1002,7 @@ void Control::setParent( Control* parent ) /**throw( InvalidPeer ); -JEC - FIXME
 	updateAnchorDeltas();
 }
 
-Control* Control::getParent() /**throw( InvalidPeer ); -JEC - FIXME later*/
+Control* Control::getParent() 
 {
 	return parent_;
 }

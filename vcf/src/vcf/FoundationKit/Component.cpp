@@ -149,12 +149,19 @@ void Component::handleEvent( Event* event )
 				beforeDestroy( componentEvent );
 				ComponentDestroyed( componentEvent );
 			}
+			break;			
+
+			case Component::COMPONENT_LOADED : {
+				ComponentEvent* componentEvent = (ComponentEvent*)event;
+				ComponentLoaded( componentEvent );
+			}
 			break;
 
-			//case Component::COMPONENT_NEEDS_UPDATING : {
-			//	updateAction();
-			//}
-			//break;				
+			case Component::COMPONENT_SAVED : {
+				ComponentEvent* componentEvent = (ComponentEvent*)event;
+				ComponentSaved( componentEvent );
+			}
+			break;
 		}
 	}
 }
@@ -422,7 +429,8 @@ void Component::loaded()
 	if ( componentState_ & Component::csLoading ) {
 		componentState_ &= ~Component::csLoading;
 		ComponentEvent e( this, Component::COMPONENT_LOADED );
-		ComponentLoaded( &e );
+
+		handleEvent( &e );		
 	}
 }
 
@@ -431,7 +439,7 @@ void Component::saved()
 	if ( componentState_ & Component::csSaving ) {
 		componentState_ &= ~Component::csSaving;
 		ComponentEvent e( this, Component::COMPONENT_SAVED );
-		ComponentSaved( &e );
+		handleEvent( &e );
 	}
 }
 

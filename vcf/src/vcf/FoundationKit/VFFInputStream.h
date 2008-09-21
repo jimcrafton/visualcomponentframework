@@ -215,6 +215,8 @@ protected:
 	
 	static Component* rootComponent_;
 	static UnitTransformer* transformer;
+
+	void componentLoaded( Component* component );
 };
 
 

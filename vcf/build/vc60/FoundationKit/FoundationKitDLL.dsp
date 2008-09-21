@@ -112,20 +112,12 @@ SOURCE=..\..\..\src\vcf\FoundationKit\FrameworkConfig.h
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\FoundationKit\Base64Codec.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKit.cpp
 # ADD CPP /Yc"vcf/FoundationKit/FoundationKit.h"
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopTimer.cpp
 # End Source File
 # End Group
 # Begin Group "Peers"
@@ -519,6 +511,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\XMLDictOutputStream.h
 # Begin Group "Utils"
 
 # PROP Default_Filter "*.h"
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Base64Codec.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\CommandLine.cpp
@@ -942,6 +938,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSource.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopSourcePeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\RunLoopTimer.cpp
 # End Source File
 # Begin Source File
 
