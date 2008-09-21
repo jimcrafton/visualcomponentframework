@@ -401,6 +401,53 @@ public:
 };
 
 
+class IDocHostShowUIImpl : public IDocHostShowUI {
+public:
+
+	IDocHostShowUIImpl(): realImpl_(NULL) {}
+
+
+	STDMETHOD(QueryInterface)( REFIID iid, void ** ppvObject ) {
+		if ( iid == IID_IDocHostShowUI ) {
+			*ppvObject = (void*)(IDocHostShowUI*)this;
+			return S_OK;
+		}
+		else if ( iid == IID_IUnknown ) {
+			*ppvObject = (void*)(IUnknown*)this;
+			return S_OK;
+		}
+		return E_NOINTERFACE;
+	}
+
+	STDMETHODIMP_(ULONG)AddRef() {
+		return 0;
+	}
+
+	STDMETHODIMP_(ULONG)Release() {
+		return 0;
+	}
+
+
+	STDMETHOD(ShowHelp) ( HWND hwnd, LPOLESTR pszHelpFile, UINT uCommand, DWORD dwData, 
+						POINT ptMouse, IDispatch *pDispatchObjectHit ) {
+
+		if ( NULL != realImpl_ ) {
+			return realImpl_->ShowHelp( hwnd, pszHelpFile, uCommand, dwData, ptMouse, pDispatchObjectHit );
+		}
+		return E_NOTIMPL;
+	}
+
+
+	STDMETHOD(ShowMessage) ( HWND hwnd, LPOLESTR lpstrText, LPOLESTR lpstrCaption, DWORD dwType, 
+								LPOLESTR lpstrHelpFile, DWORD dwHelpContext, LRESULT *plResult ) {
+		if ( NULL != realImpl_ ) {
+			return realImpl_->ShowMessage( hwnd, lpstrText, lpstrCaption, dwType, lpstrHelpFile, dwHelpContext, plResult );
+		}
+		return E_NOTIMPL;
+	}
+
+	IDocHostShowUIImpl* realImpl_;
+};
 
 class IDispatchImpl : public IDispatch {
 public:
@@ -512,7 +559,7 @@ public:
 
 class IOleClientSiteImpl : public IOleClientSite {
 public:
-	IOleClientSiteImpl() : inPlaceSite_(NULL), docUI_(NULL), serviceProvider_(NULL) {}
+	IOleClientSiteImpl() : inPlaceSite_(NULL), docUI_(NULL), docShowUI_(NULL), serviceProvider_(NULL) {}
 
 
 	STDMETHOD(QueryInterface)( REFIID iid, void ** ppvObject ) {
@@ -529,6 +576,9 @@ public:
 		}
 		else if ( iid == IID_IServiceProvider ) {
 			return serviceProvider_->QueryInterface(iid,ppvObject);
+		}
+		else if ( iid == IID_IDocHostShowUI ) {
+			return docShowUI_->QueryInterface(iid,ppvObject);
 		}
 		else if ( iid == IID_IUnknown ) {
 			*ppvObject = (void*)(IUnknown*)this;
@@ -574,6 +624,7 @@ public:
 
 	IOleInPlaceSiteImpl* inPlaceSite_;
 	IDocHostUIHandlerImpl* docUI_;
+	IDocHostShowUIImpl* docShowUI_;
 	IServiceProviderImpl* serviceProvider_;
 };
 
@@ -1585,7 +1636,8 @@ HTMLElement*HTMLElementCollection::operator[](const std::string& name)
 
 class WebBrowserCtrl : public IDispatchImpl, protected IDocHostUIHandlerImpl, 
 						protected IServiceProviderImpl,
-						protected IAuthenticateImpl {
+						protected IAuthenticateImpl,
+						protected IDocHostShowUIImpl {
 public:
 	WebBrowserCtrl():connectionPointCookie_(0),uiStyle_(0) {
 		OleInitialize(NULL);
@@ -1626,6 +1678,12 @@ public:
 		if ( NULL != site_ ) {
 			delete site_->docUI_;
 			site_->docUI_ = NULL;
+
+			delete site_->docShowUI_;
+			site_->docShowUI_ = NULL;
+
+			
+
 			delete site_->inPlaceSite_->frameImpl_;
 			site_->inPlaceSite_->frameImpl_ = NULL;
 			delete site_->inPlaceSite_;
@@ -1645,6 +1703,14 @@ public:
 		site_->docUI_ = new IDocHostUIHandlerImpl();
 		
 		site_->docUI_->realImpl_ = this;
+
+
+		site_->docShowUI_ = new IDocHostShowUIImpl();
+		
+		site_->docShowUI_->realImpl_ = this;
+
+		
+
 
 		site_->inPlaceSite_ = new IOleInPlaceSiteImpl();
 		
@@ -1792,55 +1858,6 @@ public:
 		browser_->get_Busy( &b );
 		return b ? true : false;
 	}
-	
-
-/*
-	void test() {
-		com_ptr<IHTMLElementCollection> collection;
-		IHTMLElementPtr item;
-		com_ptr<IDispatch> disp;
-		IHTMLDocument2Ptr doc;
-		browser_->get_Document( disp.out() );
-		
-		doc = com_cast( disp );
-		if ( doc ) {
-			doc->get_all( collection.out() );
-			if ( collection ) {
-
-				HTMLElementCollection coll2 = collection.in();
-
-				long len = coll2.getLength();
-				//collection->get_length( &len );
-				for (int i=0;i<len;i++ ) {
-					HTMLElement* f = coll2[i];
-					
-					if ( f ) {
-						if ( "IndicativePrices" == f->getID() ) {
-							HTMLElementEventHandlerMethods<WebBrowserCtrl>* eventHandler = 
-								new HTMLElementEventHandlerMethods<WebBrowserCtrl>();
-							
-							eventHandler->add( this, &WebBrowserCtrl::onDoIt );
-							
-							com_ptr<IDispatch> idisp = eventHandler;
-							
-					
-							item = *f;
-
-							variant_t e;
-							e = idisp;
-							
-							item->put_onclick( e.in() );
-							
-						}
-					}
-				}
-			}
-		}
-	}
-*/
-
-
-
 
 	//IDispatch impl
 	//this should get called back by the connection point container...

@@ -19,6 +19,8 @@ _delegate_(HTMLDelegate, StatusChanged );
 _delegate_(HTMLNewWindowDelegate, NewWindowDisplayed );
 _delegate_(HTMLDelegate, TitleChanged );
 _delegate_(HTMLAuthenticationDelegate, AuthenticationRequested );
+_delegate_( HTMLShowMessageDelegate, ShowMessageRequested );
+
 _property_( String, "currentURL", getCurrentURL, setCurrentURL, "" );
 _property_( bool, "allowPopups", getAllowsPopupWindows, setAllowsPopupWindows, "" );
 _property_( bool, "allowScrollbars", getAllowsScrollbars, setAllowsScrollbars, "" );

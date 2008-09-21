@@ -213,6 +213,16 @@ public:
 							LPWSTR* pszPassword);
 
 
+
+	//IDocHostShowUI impl
+	STDMETHOD(ShowHelp) ( HWND hwnd, LPOLESTR pszHelpFile, UINT uCommand, DWORD dwData, 
+						POINT ptMouse, IDispatch *pDispatchObjectHit );
+
+	//IDocHostShowUI impl
+	STDMETHOD(ShowMessage) ( HWND hwnd, LPOLESTR lpstrText, LPOLESTR lpstrCaption, DWORD dwType, 
+								LPOLESTR lpstrHelpFile, DWORD dwHelpContext, LRESULT *plResult );
+
+
 	HTMLEventHandler* getElementEventHandler( const String& name ) {
 		HTMLEventHandler* result = NULL;
 		std::map<String,HTMLEventHandler*>::iterator found = eventHandlers_.find(name);
