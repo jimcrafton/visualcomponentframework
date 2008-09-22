@@ -2632,7 +2632,7 @@ public:
 		val_ = *data;
 
 
-		*field_ = val_;
+		*field_ = (Type)val_;
 	}
 
 	VariantData val_;
@@ -3406,7 +3406,7 @@ void registerEnumPropertyWithLabels( const String& className, const String& prop
 
 
 template <typename FieldType>
-void registerFieldType( const String& className, const String& fieldName, uint32 fieldOffset )
+void registerFieldType( const String& className, const String& fieldName, uint32 fieldOffset, FieldType dummyParam=FieldType() )
 {
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){

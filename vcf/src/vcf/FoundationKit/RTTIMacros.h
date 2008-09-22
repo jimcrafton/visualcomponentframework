@@ -133,12 +133,12 @@ you are finished defining your RTTI.
 
 
 
-#define _field_(FieldType,Field)\
-	VCF::registerFieldType<FieldType>( tmpClassName, VCF::String(#Field), offsetof(RttiClassType,Field) );\
+#define _field_(FieldType,FieldVar)\
+	VCF::registerFieldType<FieldType>( tmpClassName, VCF::String(#FieldVar), offsetof(RttiClassType,FieldVar) );\
 	\
 
-#define _field_obj_(FieldType,Field)\
-	VCF::registerObjectFieldType<FieldType>( tmpClassName, VCF::String(#Field), offsetof(RttiClassType,Field) );\
+#define _field_obj_(FieldType,FieldVar)\
+	VCF::registerObjectFieldType<FieldType>( tmpClassName, VCF::String(#FieldVar), offsetof(RttiClassType,FieldVar) );\
 	\
 
 
