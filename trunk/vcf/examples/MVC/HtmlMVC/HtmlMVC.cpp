@@ -22,6 +22,8 @@ _class_rtti_end_
 
 class MyObject : public Component {
 public:
+	MyObject(): count(0), cost(0){}
+
 	int count;
 	String title;
 	String version;
@@ -39,13 +41,18 @@ public:
 };
 
 
+
 _class_rtti_(MyObject, "VCF::Component", "MyObject")
 	_property_( int, "count", getCount, setCount, "" )
 	_property_( String, "title", getTitle, setTitle, "" )
 	_property_( String, "version", getVersion, setVersion, "" )
 	_property_( double, "cost", getCost, setCost, "" )
-_class_rtti_end_
 
+	_field_( int, count )	
+	_field_( double, cost )
+	_field_( VCF::String, title )
+	_field_( String, version )
+_class_rtti_end_
 
 
 class HtmlMVCApplication : public Application {
@@ -68,6 +75,40 @@ public:
 		setMainWindow(mainWindow);
 		mainWindow->show();
 		
+
+		MyObject m;
+		m.cost = 1002.0091;
+		m.count = 100;
+		m.title = "Hola!";
+
+
+		VCF::registerFieldType<int>( VCF::String("MyObject"), 
+										VCF::String("count"), 
+										offsetof( MyObject, count ) );
+										//(size_t)&(((MyObject *)0)->count) );
+		
+
+
+		TypedField<String> sf;
+		String ftn = sf.getFieldTypeName();
+
+
+		Class* c = m.getClass();
+		Enumerator<Field*>* f = c->getFields();
+		while ( f->hasMoreElements() ) {
+			Field* fld = f->nextElement();
+
+			String s = fld->getFieldTypeName();
+			String s2 = fld->getName();
+			String s3 = typeid(*fld).name();
+
+			VariantData* v = fld->get();
+			VariantData v2 = *v;
+
+		}
+
+
+
 		return result;
 	}
 
