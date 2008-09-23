@@ -28,6 +28,8 @@ object HtmlMVCWindow  : VCF::Window
 		allowContextMenu = false
 		allowScrollbars = false
 
+		notifyForURLTranslation = true
+
 		elementKeys['count'] = 'count'
 		elementKeys['title'] = 'title'
 		elementKeys['version'] = 'version'

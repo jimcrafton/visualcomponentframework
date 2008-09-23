@@ -1,0 +1,124 @@
+object ChatterboxWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 300
+	width = 320
+	caption = 'Chatterbox'	
+	
+	object toolbar : VCF::Toolbar 
+		alignment = AlignTop
+		height = 20pt		
+		
+
+		object prefsBtn : VCF::ToolbarItem
+			caption = 'Preferences'
+			imageIndex = 0
+			tooltip = 'Opens user preferences for Chatterbox'
+		end
+
+
+		//put this here to ensure that the button captions get shown
+		showButtonCaptions = true
+		horizontalCaptions = true
+	end
+
+
+	
+	
+
+	object titleBorder : VCF::EtchedBorder
+		sidesToPaint = 12
+	end
+
+	object titlePanel : VCF::Panel
+		border = @titleBorder
+		height = 22pt
+		alignment = AlignTop
+
+		object title : VCF::Label 
+			alignment = AlignClient
+			font.name = 'Verdana'
+			caption = 'This is Chatterbox - hear me chatter!'
+			textAlignment = taTextCenter
+		end
+	end
+	
+	object usersPane : VCF::Panel 
+		alignment = AlignLeft
+		width = 75pt
+		border = null
+
+
+		object users : VCF::TreeControl
+			alignment = AlignClient
+		end
+
+		object toolsPane : VCF::Panel 
+			height = 15pt
+			alignment = AlignBottom
+			border = null
+		end
+	end
+
+	object splitter : VCF::Splitter 
+		
+	end
+
+	object browserPane : VCF::Panel 
+		border = null
+		alignment = AlignClient 	
+
+		object chatterView : VCF::HTMLBrowserControl 			
+			alignment = AlignClient
+			allowPopups = false
+			//allowTextSelection = false
+			allowContextMenu = false
+			//allowScrollbars = false		
+			
+			//updateDOMOnDocumentCompleted = true
+
+			
+			currentURL = 'res:mainui.html'
+
+			delegates
+				
+			end	
+		end
+
+		object splitter2 : VCF::Splitter 
+			alignment = AlignBottom
+			cursor = 3
+			height = 3.5pt
+		end
+
+		object chatBox : VCF::MultilineTextControl
+			alignment = AlignBottom
+			height = 25pt
+			textWrapping = true
+
+			delegates 
+				KeyDown = [Chatterbox@Chatterbox::userEnteredText]
+			end
+		end
+	end
+
+	object testPanel : VCF::Panel
+		border = null
+		height = 50
+		alignment = AlignBottom
+
+		useColorForBackground = true
+		color = 'mistyrose'
+
+		object addMsg : VCF::CommandButton 
+			top  = 5
+			left = 5
+			width = 50
+			height = 25
+			caption = 'add'
+			delegates
+				ButtonClicked = [Chatterbox@Chatterbox::onTestBtn]
+			end
+		end
+	end
+end

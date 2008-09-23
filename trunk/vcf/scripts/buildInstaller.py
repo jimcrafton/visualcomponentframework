@@ -72,7 +72,7 @@ def main():
 			'.vff', '.inf', '.vcproj', '.sln', '.cpp', '.CPP', '.HPP', '.cxx', '.CXX',
 			'.cur', '.CUR', '.mak', '.txt', '.vsdir', '.vsz', '.js', '.gif', '.htm', '.css',
 			'.bkl', '.inc', '.bcc', '.bpf', '.bpr', '.cbp', '.workspace', '.vc', '.gcc', '.gnu', 
-			'.bkgen', '.dat', '.cfg', '.png', '.xsl', '.py']
+			'.bkgen', '.dat', '.cfg', '.png', '.xsl', '.py', '.msg', '.tbl']
 
 	
 	

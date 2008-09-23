@@ -55,7 +55,10 @@ Rect EtchedBorder::getClientRect( Rect* initialBounds, Control* control )
 {
 	Rect result = *initialBounds;
 
-	double left, top, right, bottom = 0;
+	double left, top, right, bottom;
+
+	left = top = right = bottom = 0;
+
 
 	if ( (sidesToPaint_ & GraphicsContext::etLeftSide  ) != 0 ) left   = -2.0;
 	if ( (sidesToPaint_ & GraphicsContext::etTopSide   ) != 0 ) top    = -2.0;

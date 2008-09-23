@@ -127,6 +127,29 @@ namespace VCF  {
 	typedef Delegate1<HTMLShowMessageEvent*> HTMLShowMessageDelegate; 
 
 
+
+
+	class HTMLKIT_API HTMLTranslateURLEvent : public Event {
+	public:
+		HTMLTranslateURLEvent( Object* source, uint32 type ):Event(source,type),urlTranslated(false) {};
+
+		virtual Object* clone( bool deep=false ) {
+			return new HTMLTranslateURLEvent(*this);
+		}
+
+		bool urlTranslated;
+
+		String scheme;
+		String host;
+		String user;
+		String password;
+		String url;
+		String extra;
+	};
+
+	typedef Delegate1<HTMLTranslateURLEvent*> HTMLTranslateURLDelegate; 
+
+
 	typedef std::pair<String,VariantData> KeyedHTMLElement;
 
 /**
@@ -216,6 +239,8 @@ public:
 
 		hpUpdateDOMOnDocumentCompleted = 0x0040,
 
+		hpNotifyForURLTranslation = 0x0080
+
 	};
 
 	enum HTMLEvents{
@@ -229,6 +254,7 @@ public:
 		heTitleChanged,
 		heAuthenticationRequested,
 		heShowMessageRequested,
+		heTranslateURLRequested,
 		heElementClicked,
 		heElementDblClicked,
 		heElementDragStart,
@@ -302,7 +328,7 @@ public:
 
 	DELEGATE( HTMLShowMessageDelegate, ShowMessageRequested );
 
-	
+	DELEGATE( HTMLTranslateURLDelegate, TranslateURLRequested );
 
 	virtual void paint( GraphicsContext* ctx );
 
@@ -456,6 +482,22 @@ public:
 			policyState_ &= ~hpUpdateDOMOnDocumentCompleted;
 		}
 	}
+
+
+	bool shouldNotifyForURLTranslation() {		
+		return (policyState_ & hpNotifyForURLTranslation) ? true : false;
+	}
+
+	void setNotifyForURLTranslation( const bool& val ) {
+		if ( val ) {
+			policyState_ |= hpNotifyForURLTranslation;
+		}
+		else {
+			policyState_ &= ~hpNotifyForURLTranslation;
+		}
+	}
+
+	
 
 
 	String getActiveElementID();

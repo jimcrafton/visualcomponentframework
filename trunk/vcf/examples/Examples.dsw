@@ -216,6 +216,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Chatterbox"=.\Chatterbox\Chatterbox.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name HTMLKitDll
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "ClassRegistryBrowser"=.\ClassRegistryBrowser\ClassRegistryBrowser.dsp - Package Owner=<4>
 
 Package=<5>

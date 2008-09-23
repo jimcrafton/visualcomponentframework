@@ -74,40 +74,6 @@ public:
 		Window* mainWindow = Frame::createWindow( classid(HtmlMVCWindow) );
 		setMainWindow(mainWindow);
 		mainWindow->show();
-		
-
-		MyObject m;
-		m.cost = 1002.0091;
-		m.count = 100;
-		m.title = "Hola!";
-
-
-		VCF::registerFieldType<int>( VCF::String("MyObject"), 
-										VCF::String("count"), 
-										offsetof( MyObject, count ) );
-										//(size_t)&(((MyObject *)0)->count) );
-		
-
-
-		TypedField<String> sf;
-		String ftn = sf.getFieldTypeName();
-
-
-		Class* c = m.getClass();
-		Enumerator<Field*>* f = c->getFields();
-		while ( f->hasMoreElements() ) {
-			Field* fld = f->nextElement();
-
-			String s = fld->getFieldTypeName();
-			String s2 = fld->getName();
-			String s3 = typeid(*fld).name();
-
-			VariantData* v = fld->get();
-			VariantData v2 = *v;
-
-		}
-
-
 
 		return result;
 	}
