@@ -511,6 +511,12 @@ void Win32HTMLBrowser::stopLoadingURL()
 
 void Win32HTMLBrowser::setFromHTML( const String& html )
 {
+	setCurrentURL( L"about:blank" );
+
+	while ( busy() ) {
+		::Sleep(0);
+	}
+
 	if ( busy() ) {
 		//barf!
 		throw RuntimeException( "The browser is still loading it's document and you can't set the document's HTML while it's loading." );
@@ -1209,7 +1215,99 @@ STDMETHODIMP Win32HTMLBrowser::TranslateUrl( DWORD dwTranslate, OLECHAR *pchURLI
 
 
 	if ( InternetCrackUrlW( s.c_str(), s.size(), 0, &components ) ) {
-		if ( components.nScheme == INTERNET_SCHEME_RES ) {
+
+		HTMLBrowserControl* browserCtrl = (HTMLBrowserControl*)peerControl_;
+
+		bool doResCheck = true;
+
+		if ( browserCtrl->shouldNotifyForURLTranslation() ) {
+			HTMLTranslateURLEvent e(browserCtrl, HTMLBrowserControl::heTranslateURLRequested);
+
+			e.scheme.append( components.lpszScheme, components.dwSchemeLength );
+			e.host.append( components.lpszHostName, components.dwHostNameLength );
+			e.user.append( components.lpszUserName, components.dwUserNameLength );
+			e.password.append( components.lpszPassword, components.dwPasswordLength );
+			e.url.append( components.lpszUrlPath, components.dwUrlPathLength );
+			e.extra.append( components.lpszExtraInfo, components.dwExtraInfoLength );
+
+			browserCtrl->TranslateURLRequested( &e );
+
+
+			if ( e.urlTranslated ) {
+				size_t total = e.extra.length() + e.scheme.length()  + e.host.length() + e.user.length() +
+								 e.password.length() + e.url.length() + 6;
+
+				VCFChar* data = new VCFChar[total];
+				VCFChar* tmp = data;
+				
+
+				URL_COMPONENTSW newURL;
+				newURL.dwStructSize = sizeof(components);
+				newURL.dwSchemeLength = e.scheme.length();
+				newURL.dwHostNameLength = e.host.length();
+				newURL.dwUserNameLength = e.user.length();
+				newURL.dwPasswordLength = e.password.length();
+				newURL.dwUrlPathLength = e.url.length();
+				newURL.dwExtraInfoLength = e.extra.length();
+
+				e.scheme.copy( tmp, e.scheme.length() );
+				tmp[e.scheme.length()] = 0;
+				newURL.lpszScheme = tmp;
+				tmp += e.scheme.length()+1;
+
+				e.host.copy( tmp, e.host.length() );
+				tmp[e.host.length()] = 0;
+				newURL.lpszHostName = tmp;
+				tmp += e.host.length()+1;
+
+				e.user.copy( tmp, e.user.length() );
+				tmp[e.user.length()] = 0;
+				newURL.lpszUserName = tmp;
+				tmp += e.user.length()+1;
+
+				e.password.copy( tmp, e.password.length() );
+				tmp[e.password.length()] = 0;
+				newURL.lpszPassword = tmp;
+				tmp += e.password.length()+1;
+
+				e.url.copy( tmp, e.url.length() );
+				tmp[e.url.length()] = 0;
+				newURL.lpszUrlPath = tmp;
+				tmp += e.url.length()+1;
+
+				e.extra.copy( tmp, e.extra.length() );
+				tmp[e.extra.length()] = 0;
+				newURL.lpszExtraInfo = tmp;
+				tmp += e.extra.length()+1;
+
+
+				DWORD outURLLength = total*2;
+				VCFChar* outURL = new VCFChar[outURLLength];
+				outURLLength = outURLLength * sizeof(VCFChar);
+
+				if ( InternetCreateUrlW( &newURL, ICU_ESCAPE, outURL, &outURLLength ) ) {
+
+					*ppchURLOut = (OLECHAR*) CoTaskMemAlloc( outURLLength + 2 );
+					
+					memcpy( *ppchURLOut, outURL, outURLLength );
+					
+					(*ppchURLOut)[ outURLLength/sizeof(VCFChar) ] = 0;
+					result = S_OK;
+
+				}
+
+				
+				delete [] data;
+				delete [] outURL;
+
+			}
+
+
+
+			doResCheck = !e.urlTranslated;
+		}
+		
+		if ( doResCheck && components.nScheme == INTERNET_SCHEME_RES ) {
 			//check out resources dir first to see if we have anything
 			Application* app = Application::getRunningInstance();
 			if ( NULL != app ) {

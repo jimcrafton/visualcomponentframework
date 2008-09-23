@@ -20,6 +20,7 @@ _delegate_(HTMLNewWindowDelegate, NewWindowDisplayed );
 _delegate_(HTMLDelegate, TitleChanged );
 _delegate_(HTMLAuthenticationDelegate, AuthenticationRequested );
 _delegate_( HTMLShowMessageDelegate, ShowMessageRequested );
+_delegate_( HTMLTranslateURLDelegate, TranslateURLRequested );
 
 _property_( String, "currentURL", getCurrentURL, setCurrentURL, "" );
 _property_( bool, "allowPopups", getAllowsPopupWindows, setAllowsPopupWindows, "" );
@@ -28,6 +29,7 @@ _property_( bool, "allowTextSelection", getAllowsTextSelection, setAllowsTextSel
 _property_( bool, "allowContextMenu", getAllowDefaultContextMenu, setAllowDefaultContextMenu, "" );
 _property_( bool, "updateModelOnDocumentCompleted", shouldUpdateModelOnDocumentCompleted, setUpdateModelOnDocumentCompleted, "" );
 _property_( bool, "updateDOMOnDocumentCompleted", shouldUpdateDOMOnDocumentCompleted, setUpdateDOMOnDocumentCompleted, "" );
+_property_( bool, "notifyForURLTranslation", shouldNotifyForURLTranslation, setNotifyForURLTranslation, "" );
 
 _property_dictionary_( VariantData, String, "elementKeys", getKeyForElementName, setKeyForElementName, "" )
 _class_rtti_end_

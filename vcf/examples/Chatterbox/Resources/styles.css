@@ -1,0 +1,32 @@
+
+
+body {
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 8pt;	
+}
+
+
+.externalUser {
+	align:right
+}
+
+.externalUserMessage {
+	align:right;
+	text-color : blue;
+}
+
+td.contributor {
+	cursor:hand;
+	color : blue;
+	text-decoration: underline;
+}
+
+.user {
+	text-align:left;
+	font-weight: bold;
+}
+
+.userMessage {
+	text-align:left;
+	font-weight: bold;
+}
