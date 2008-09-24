@@ -1,8 +1,8 @@
 object ChatterboxWindow  : VCF::Window
 	top = 200
 	left = 200
-	height = 300
-	width = 320
+	height = 400pt
+	width = 500pt
 	caption = 'Chatterbox'	
 	
 	object toolbar : VCF::Toolbar 
@@ -88,7 +88,8 @@ object ChatterboxWindow  : VCF::Window
 		object splitter2 : VCF::Splitter 
 			alignment = AlignBottom
 			cursor = 3
-			height = 3.5pt
+			height = 5
+			border = null
 		end
 
 		object chatBox : VCF::MultilineTextControl

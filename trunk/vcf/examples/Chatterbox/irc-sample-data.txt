@@ -1,0 +1,59 @@
+NOTICE AUTH :*** Looking up your hostname...
+NOTICE AUTH :*** Found your hostname, welcome back
+NOTICE AUTH :*** Checking ident
+NOTICE AUTH :*** No identd (auth) response
+:verne.freenode.net 001 Unknown[1] :Welcome to the freenode IRC Network Unknown[1]
+:verne.freenode.net 002 Unknown[1] :Your host is verne.freenode.net[verne.freenode.net/6667], running version hyperion-1.0.2b
+NOTICE Unknown[1] :*** Your host is verne.freenode.net[verne.freenode.net/6667], running version hyperion-1.0.2b
+:verne.freenode.net 003 Unknown[1] :This server was created Thu Jun 12 14:59:19 UTC 2008
+:verne.freenode.net 004 Unknown[1] verne.freenode.net hyperion-1.0.2b aAbBcCdDeEfFGhHiIjkKlLmMnNopPQrRsStTuUvVwWxXyYzZ01234569*@ bcdefFhiIklmnoPqstv
+:verne.freenode.net 005 Unknown[1] IRCD=dancer CAPAB CHANTYPES=# EXCEPTS INVEX CHANMODES=bdeIq,k,lfJD,cgijLmnPQrRstz CHANLIMIT=#:20 PREFIX=(ov)@+ MAXLIST=bdeI:50 MODES=4 STATUSMSG=@ KNOCK NICKLEN=16 :are supported by this server
+:verne.freenode.net 005 Unknown[1] SAFELIST CASEMAPPING=ascii CHANNELLEN=30 TOPICLEN=450 KICKLEN=450 KEYLEN=23 USERLEN=10 HOSTLEN=63 SILENCE=50 :are supported by this server
+:verne.freenode.net 251 Unknown[1] :There are 21659 listed and 19882 unlisted users on 29 servers
+:verne.freenode.net 252 Unknown[1] 39 :flagged staff members
+:verne.freenode.net 254 Unknown[1] 21493 :channels formed
+:verne.freenode.net 255 Unknown[1] :I have 2690 clients and 0 servers
+:verne.freenode.net 265 Unknown[1] :Current local  users: 2690  Max: 3274
+:verne.freenode.net 266 Unknown[1] :Current global users: 41541  Max: 50795
+:verne.freenode.net 250 Unknown[1] :Highest connection count: 3276 (3274 clients) (222083 since server was (re)started)
+:verne.freenode.net 375 Unknown[1] :- verne.freenode.net Message of the Day - 
+:verne.freenode.net 372 Unknown[1] :- Welcome to verne.freenode.net in Newark, NJ, US.
+:verne.freenode.net 372 Unknown[1] :- Thanks to Choopa 'www.choopa.com' for providing this server!
+:verne.freenode.net 372 Unknown[1] :- You're using freenode, a service of Peer-Directed Projects
+:verne.freenode.net 372 Unknown[1] :- Center (http://freenode.net/pdpc.shtml).
+:verne.freenode.net 372 Unknown[1] :- 
+:verne.freenode.net 372 Unknown[1] :- By connecting to freenode you indicate that you have read 
+:verne.freenode.net 372 Unknown[1] :- and agree to adhere to our policies and procedures as per 
+:verne.freenode.net 372 Unknown[1] :- the website (http://freenode.net). We would like to remind 
+:verne.freenode.net 372 Unknown[1] :- you that unauthorized public logging of channels on the 
+:verne.freenode.net 372 Unknown[1] :- network is prohibited. Public channel logging should only 
+:verne.freenode.net 372 Unknown[1] :- take place where the channel owner(s) has requested this 
+:verne.freenode.net 372 Unknown[1] :- and users of the channel are all made aware (if you are 
+:verne.freenode.net 372 Unknown[1] :- publically logging your channel, you may wish to keep a 
+:verne.freenode.net 372 Unknown[1] :- notice in topic and perhaps as a on-join message).
+:verne.freenode.net 372 Unknown[1] :- 
+:verne.freenode.net 372 Unknown[1] :- By registering your nickname with Nickserv you agree that you 
+:verne.freenode.net 372 Unknown[1] :- are 13 years of age, or older. For more information about the 
+:verne.freenode.net 372 Unknown[1] :- Children's Online Privacy Protection Act please see their 
+:verne.freenode.net 372 Unknown[1] :- website at (http://www.coppa.org).
+:verne.freenode.net 372 Unknown[1] :- 
+:verne.freenode.net 372 Unknown[1] :- freenode runs an open proxy scanner. Your use of the network
+:verne.freenode.net 372 Unknown[1] :- indicates your acceptance of this policy. For details on
+:verne.freenode.net 372 Unknown[1] :- freenode network policy, please take a look at our policy
+:verne.freenode.net 372 Unknown[1] :- page (http://freenode.net/policy.shtml). Thank you for using
+:verne.freenode.net 372 Unknown[1] :- the network!
+:verne.freenode.net 372 Unknown[1] :- 
+:verne.freenode.net 372 Unknown[1] :- freenode is a service of Peer-Directed Projects Center, an
+:verne.freenode.net 372 Unknown[1] :- IRS 501(c)(3) not-for-profit organization.  Our yearly
+:verne.freenode.net 372 Unknown[1] :- fundraiser will begin soon; if you'd like to donate early,
+:verne.freenode.net 372 Unknown[1] :- please see http://freenode.net/pdpc_donations.shtml for more
+:verne.freenode.net 372 Unknown[1] :- information.  Thank you for using freenode!
+:verne.freenode.net 376 Unknown[1] :End of /MOTD command.
+:Unknown[1]!n=ddiego@user-160vasm.cable.mindspring.com JOIN :#vcf
+:verne.freenode.net 332 Unknown[1] #vcf :boo
+:verne.freenode.net 333 Unknown[1] #vcf Tweakin 1220673556
+:verne.freenode.net 353 Unknown[1] = #vcf :Unknown[1] ddiego Tweakin nexus10 @ChanServ 
+:verne.freenode.net 366 Unknown[1] #vcf :End of /NAMES list.
+
+
+

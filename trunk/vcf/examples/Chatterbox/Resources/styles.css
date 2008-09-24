@@ -3,16 +3,22 @@
 body {
 	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 8pt;	
+	background-image:url('background.png');
+	background-repeat: no-repeat;
 }
 
+
+
+div.externalUser {
+	text-align:right;
+}
 
 .externalUser {
-	align:right
+	
 }
 
-.externalUserMessage {
-	align:right;
-	text-color : blue;
+.externalUserMessage {	
+	color : blue;
 }
 
 td.contributor {
@@ -21,12 +27,11 @@ td.contributor {
 	text-decoration: underline;
 }
 
-.user {
-	text-align:left;
+.user {	
 	font-weight: bold;
 }
 
 .userMessage {
-	text-align:left;
+	
 	font-weight: bold;
 }
