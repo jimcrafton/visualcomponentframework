@@ -5,6 +5,7 @@
 #include <libxml/parser.h>
 #include <libxml/xpathInternals.h>
 
+#include <libxml/HTMLparser.h>
 
 
 #include <libxslt/transform.h>
@@ -883,6 +884,11 @@ void XmlDocument::load( const String& fileName )
 	attach( xmlParseFile( fileName.ansi_c_str() ) );
 }
 
+void XmlDocument::loadHTML( const String& fileName )
+{	
+	attach( htmlParseFile( fileName.ansi_c_str(), NULL ) );
+}
+
 String XmlDocument::toString() const 
 {
 	String xml;
@@ -920,6 +926,19 @@ void XmlDocument::setXML( const String& xml )
 	attach( xmlParseMemory( s.c_str(), s.size() ) );
 }
 
+void XmlDocument::setHTML( const String& html )
+{
+	if ( owned_ ) {
+		if ( resource_ ) {
+			xmlFreeDoc(resource_);
+		}
+		resource_ = NULL;
+	}
+
+	AnsiString s = html;
+
+	attach( htmlParseDoc( (xmlChar*)s.c_str(), NULL  ) );
+}
 
 XmlNode XmlDocument::getRoot() const 
 {

@@ -666,6 +666,8 @@ namespace VCF {
 
 
 		void setXML( const String& xml );
+
+		void setHTML( const String& html );
 		
 		XmlNode getRoot() const;
 
@@ -699,6 +701,8 @@ namespace VCF {
 
 
 		void load( const String& fileName );
+
+		void loadHTML( const String& fileName );
 
 		//virtual Object methods:
 
