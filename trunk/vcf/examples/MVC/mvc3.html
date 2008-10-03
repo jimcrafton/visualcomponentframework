@@ -78,11 +78,12 @@ here don't <i>exactly</i> fall under the topic of MVC, but instead
 demonstrate how to make a full fldged application using the 
 framework.
 </p>
-<h2></h2>
+<h2>Code refactoring</h2>
 <p>
 The first things we'll do is move the controller class into it's 
 own header. This makes the application class code a bit cleaner to read.
 </p>
+<h2>Updating the UI</h2>
 <p>
 Next we're going to change the UI. We're going to divide the main
 window into two halves, the left side will contain a list view of all
@@ -172,7 +173,105 @@ view to the scribble model.
 <p>
 In our app we have a the scribble view which renders the content of the 
 scribble model. However, what if we wanted an alternate display of the 
-data.
+data? For example, perhaps we want a list of all the shapes that make up 
+the scribble model? No problem, that's why we added a list control,
+and set it's model to our instance of a scribble model. This works because
+models may have more than one view/control hooked up to it.
+</p>
+<p>
+To do this, lets adjust our UI accordingly, altering the vff resource like so:
+<pre>  
+object scribbleListing : VCF::ListViewControl
+  //rest omitted
+  model = @scribble  
+end
+</pre>
+This assigns the list control's model to our scribble model instance. Because
+the scribble model is based on a ListModel, the list control can display all
+the shapes in the list. When the model is changed, the list's UI is updated 
+automatically.
+</p>
+
+
+<h2>Status</h2>
+<p>
+A status bar is simple to  - we just use the StatusBar class. We don't 
+need to specify any alignment, it's default is bottom alignment, which
+for our purposes is just fine. 
+<pre>  
+object status : VCF::StatusBar
+  height = 15pt
+  status[0] = 'Status: '
+  status[1] = 'Dimensions: NNN x NNN'
+  status[2] = 'Coords: NNNN, NNNN'
+end
+</pre>
+Assigning "segments" is pretty simple - we just access the status property
+and pass in some string labels. 
+</p>
+
+<h2>Menus</h2>
+<p>
+Let's add some menus to make the application a bit more interesting. We'll 
+add a simple Help > About... menu and a View menu that will allow us to 
+toggle the visibility of our list on the left side and our status bar on
+the bottom.
+<pre>
+object mainMenu : VCF::MenuBar
+  object help : VCF::DefaultMenuItem
+    caption = '&View'
+    object viewListing : VCF::DefaultMenuItem
+      caption = 'Shape &Listing'
+      checked = true
+      delegates
+        MenuItemClicked = [Scribble4App@Scribble4App::onViewListing]
+      end
+    end
+
+    object viewStatusbar : VCF::DefaultMenuItem
+      caption = '&Status Bar'
+      checked = true
+      delegates
+        MenuItemClicked = [Scribble4App@Scribble4App::onViewStatusbar]
+      end
+    end
+  end
+
+  object help : VCF::DefaultMenuItem
+    caption = '&Help'
+    object helpAbout : VCF::DefaultMenuItem
+      caption = '&About...'
+      delegates
+        MenuItemClicked = [Scribble4App@Scribble4App::onAbout]
+      end
+    end
+  end
+end	
+</pre>
+This is fairly self explanatory, the MenuItemClicked is the delegate
+that's fired when a user clicks on a menu item. The display will use the
+ampersand("&") as a mnemonic, adding the "_" underbar to menu item captions.
+The MenuBar is top level menu - you need only one of these. The rest of your
+menu hierarchy, made of MenuItems, is constructed underneath. 
+</p>
+<p>
+The code for modifying the visibility of the status bar or the list control
+is pretty standard: 
+<pre>
+void onViewListing( Event* e ) {
+  Scribble4Window* mainWindow = (Scribble4Window*)getMainWindow();
+  mainWindow->scribbleListing->setVisible( !mainWindow->scribbleListing->getVisible() );
+  MenuItem* item = (MenuItem*)e->getSource();
+  item->setChecked( mainWindow->scribbleListing->getVisible() );
+}
+</pre>
+We toggle the visibility of the mainWindow->scribbleListing control, then
+we alter the menu item that fired this event. Call MenuItem::setChecked()
+will toggle whether or not the menu item displays a check box to the
+left of the item caption.
+</p>
+<p>
+To display our about dialog, we're going to load up a dialog based 
 </p>
 </body>
 
