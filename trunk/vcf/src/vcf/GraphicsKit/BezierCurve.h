@@ -49,6 +49,13 @@ public:
 
 	virtual bool getPoints( std::vector<PathPoint>& points, Matrix2D* transform );
 
+	/**
+	Gets the vector points of this curve.
+	Added this function so that you edit the path points directly instead of having 
+	to copy them each time you need to make an alteration.
+	*/
+	virtual std::vector<PathPoint>* getPoints() { return &points_; }
+
 	virtual void flattenPoints( std::vector<Point>& flattenedPoints );
 
 	/**
