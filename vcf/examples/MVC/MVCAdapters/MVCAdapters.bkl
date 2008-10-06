@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../../build/bakefiles/VCFCommon.bkl"/>
+
+    <exe id="MVCAdapters" template="vcf_exe_gui"
+            cond="OPTION_APPLICATIONKIT=='1'">
+        <dirname>.</dirname>
+        <sources>MVCAdapters.cpp</sources>
+        <vcf-use-ApplicationKit/>
+    </exe>
+</makefile>
+
+<!--
+$Id$
+-->

@@ -14,6 +14,7 @@
         vcf/ApplicationKit/Action.h
         vcf/ApplicationKit/ActionEvent.h
         vcf/ApplicationKit/ActiveXControlHost.h
+        vcf/ApplicationKit/AdapterModels.h
         vcf/ApplicationKit/AppKitPeerConfig.h
         vcf/ApplicationKit/Application.h
         vcf/ApplicationKit/ApplicationException.h
@@ -93,6 +94,7 @@
         vcf/ApplicationKit/DropTarget.h
         vcf/ApplicationKit/DropTargetPeer.h
         vcf/ApplicationKit/EtchedBorder.h
+        vcf/ApplicationKit/FlowLayoutContainter.h
         vcf/ApplicationKit/FocusEvent.h
         vcf/ApplicationKit/Frame.h
         vcf/ApplicationKit/FrameEvent.h
@@ -102,6 +104,7 @@
         vcf/ApplicationKit/ImageControl.h
         vcf/ApplicationKit/ImageList.h
         vcf/ApplicationKit/ImageListEvent.h
+        vcf/ApplicationKit/InputValidation.h
         vcf/ApplicationKit/Item.h
         vcf/ApplicationKit/ItemEditorEvent.h
         vcf/ApplicationKit/ItemEvent.h
@@ -189,7 +192,6 @@
         vcf/ApplicationKit/UIToolkit.h
         vcf/ApplicationKit/UndoRedoEvent.h
         vcf/ApplicationKit/UndoRedoStack.h
-        vcf/ApplicationKit/ValidationEvent.h
         vcf/ApplicationKit/View.h
         vcf/ApplicationKit/WhatsThisHelpEvent.h
         vcf/ApplicationKit/Window.h
@@ -254,6 +256,7 @@
         vcf/ApplicationKit/HeaderControl.cpp
         vcf/ApplicationKit/ImageControl.cpp
         vcf/ApplicationKit/ImageList.cpp
+        vcf/ApplicationKit/InputValidation.cpp
         vcf/ApplicationKit/Label.cpp
         vcf/ApplicationKit/LibraryApplication.cpp
         vcf/ApplicationKit/Light3DBorder.cpp
@@ -427,11 +430,14 @@
         vcf/ApplicationKit/OSXApplicationPeer.h
         vcf/ApplicationKit/OSXButton.h
         vcf/ApplicationKit/OSXColorDialog.h
+        vcf/ApplicationKit/OSXCommonFontDialog.h
         vcf/ApplicationKit/OSXControl.h
         vcf/ApplicationKit/OSXControlContextPeer.h
         vcf/ApplicationKit/OSXCursorPeer.h
+        vcf/ApplicationKit/OSXCustomControl.h
         vcf/ApplicationKit/OSXDesktopPeer.h
         vcf/ApplicationKit/OSXDialog.h
+        vcf/ApplicationKit/OSXDropDown.h
         vcf/ApplicationKit/OSXFileOpenDialog.h
         vcf/ApplicationKit/OSXFileSaveDialog.h
         vcf/ApplicationKit/OSXFolderBrowseDialog.h
@@ -439,6 +445,9 @@
         vcf/ApplicationKit/OSXMenuBar.h
         vcf/ApplicationKit/OSXMenuItem.h
         vcf/ApplicationKit/OSXMenuManagerPeer.h
+        vcf/ApplicationKit/OSXPopupWindow.h
+        vcf/ApplicationKit/OSXSystemTray.h
+        vcf/ApplicationKit/OSXTransparentWindow.h
         vcf/ApplicationKit/OSXUIShellPeer.h
         vcf/ApplicationKit/OSXUIToolkit.h
         vcf/ApplicationKit/OSXWindow.h
@@ -449,11 +458,14 @@
         vcf/ApplicationKit/OSXApplicationPeer.cpp
         vcf/ApplicationKit/OSXButton.cpp
         vcf/ApplicationKit/OSXColorDialog.cpp
+        vcf/ApplicationKit/OSXCommonFontDialog.cpp
         vcf/ApplicationKit/OSXControl.cpp
         vcf/ApplicationKit/OSXControlContextPeer.cpp
         vcf/ApplicationKit/OSXCursorPeer.cpp
+        vcf/ApplicationKit/OSXCustomControl.cpp
         vcf/ApplicationKit/OSXDesktopPeer.cpp
         vcf/ApplicationKit/OSXDialog.cpp
+        vcf/ApplicationKit/OSXDropDown.cpp
         vcf/ApplicationKit/OSXFileOpenDialog.cpp
         vcf/ApplicationKit/OSXFileSaveDialog.cpp
         vcf/ApplicationKit/OSXFolderBrowseDialog.cpp
@@ -461,6 +473,9 @@
         vcf/ApplicationKit/OSXMenuBar.cpp
         vcf/ApplicationKit/OSXMenuItem.cpp
         vcf/ApplicationKit/OSXMenuManagerPeer.cpp
+        vcf/ApplicationKit/OSXPopupWindow.cpp
+        vcf/ApplicationKit/OSXSystemTray.cpp
+        vcf/ApplicationKit/OSXTransparentWindow.cpp
         vcf/ApplicationKit/OSXUIShellPeer.cpp
         vcf/ApplicationKit/OSXUIToolkit.cpp
         vcf/ApplicationKit/OSXWindow.cpp
