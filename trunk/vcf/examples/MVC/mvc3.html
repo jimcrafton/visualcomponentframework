@@ -271,7 +271,89 @@ will toggle whether or not the menu item displays a check box to the
 left of the item caption.
 </p>
 <p>
-To display our about dialog, we're going to load up a dialog based 
+At this point we end up with something like so:
+</p>
+<p>
+<img src="sc5.png">
+</p>
+<h2>Displaying a Dialog</h2>
+<p>
+To display our program's about dialog, we're going to load up a dialog based resource from another
+vff file. We'll start by creating our dialog class:
+<pre>
+class AboutDialog : public Dialog {
+public:
+  Label* program;
+  Label* author;
+  Label* company;
+  Label* copyright;
+  AboutDialog(){}
+
+  virtual ~AboutDialog()
+  {
+
+  }
+};
+</pre>
+
+Next we'll add support for RTTI and expose our classes public fields:
+<pre>
+_class_rtti_(AboutDialog, "VCF::Dialog", "AboutDialog")
+_field_obj_( Label*, program )
+_field_obj_( Label*, copyright )
+_field_obj_( Label*, author )
+_field_obj_( Label*, company )
+_class_rtti_end_
+</pre>
+
+Finally, we'll create our AboutDialog.vff resource:
+<pre>
+object AboutDialog : VCF::Dialog 
+  height = 150pt
+  width = 220pt
+  caption = 'About Scribble 4'
+
+  object hlContainer : VCF::HorizontalLayoutContainer
+    numberOfColumns = 2
+    maxRowHeight = 35
+    rowSpacerHeight = 10
+    widths[0] = 80
+    widths[1] = 80
+
+    tweenWidths[0] = 10
+  end
+
+  object program : VCF::Label 
+    alignment = AlignTop
+    height = 50
+    font.pointSize = 18
+    textAlignment = taTextCenter
+  end
+    
+  object panel : VCF::Panel 
+    border = null
+    alignment = AlignClient
+    container = @hlContainer
+
+    object lbl1 : VCF::Label 
+      caption = 'Copyright:' 
+    end
+//rest omitted...
+  end	
+end
+</pre>
+All pretty standard at this point, the exception of the HorizontalLayoutContainer object. A HorizontalLayoutContainer
+is a specialized form of a Container class, which are used to perform layout tasks for a control. If a control
+has a valid container instance assigned to it, then the control can have child controls added to it. The actual
+layout is performed by the Container instance. In this case the HorizontalLayoutContainer is used to layout
+controls in a kind of tabular format.
+</p>
+<p>
+To display the dialog we'll look at our event handler code that handles the Help > About... menu item's click
+event. 
+<pre>
+
+</pre>
 </p>
 </body>
 

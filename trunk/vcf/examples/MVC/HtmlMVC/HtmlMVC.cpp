@@ -83,7 +83,21 @@ public:
 	}
 
 	void onCostDblClick( Event* e ) {
-		Dialog::showMessage( "onCostDblClick invoked!" );
+		HTMLBrowserControl* browser = (HTMLBrowserControl*)findComponent( "browser", true );
+
+		HTMLDocument doc = browser->getDocument();
+		HTMLElementCollection all = doc.getAll();
+		HTMLElement* found = NULL;
+		for (int i=0;i<all.getLength();i++ ) {
+			found = all.item(i);
+			if ( found->getID() == L"root" ) {
+				String html = found->getInnerHTML();
+				html += "<div>More Content</div>";
+				found->setInnerHTML( html );
+
+				break;
+			}
+		}
 	}
 
 };

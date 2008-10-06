@@ -8,6 +8,7 @@ object HtmlMVCWindow  : VCF::Window
 
 	object model :  VCF::ObjectModel
 		source = @mo		
+		useFields = true
 	end
 
 	object mo : MyObject 
@@ -25,8 +26,8 @@ object HtmlMVCWindow  : VCF::Window
 		alignment = AlignClient
 		allowPopups = false
 		allowTextSelection = false
-		allowContextMenu = false
-		allowScrollbars = false
+		//allowContextMenu = false
+		//allowScrollbars = false
 
 		notifyForURLTranslation = true
 

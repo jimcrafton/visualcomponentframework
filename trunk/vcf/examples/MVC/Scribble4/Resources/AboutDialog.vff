@@ -27,6 +27,7 @@ object AboutDialog : VCF::Dialog
 
 		object lbl1 : VCF::Label 
 			caption = 'Copyright:' 
+			whatsThisHelpString = 'Copyright notice warning off the forces of freetard evil.'
 		end
 
 		object copyright : VCF::Label 			
@@ -35,6 +36,7 @@ object AboutDialog : VCF::Dialog
 
 		object lbl2 : VCF::Label 
 			caption = 'Author:' 
+			whatsThisHelpString = 'The name of the individual(s) responsible for this madness.'
 		end
 
 		object author : VCF::Label 			
@@ -43,7 +45,7 @@ object AboutDialog : VCF::Dialog
 	
 		object lbl3 : VCF::Label 
 			caption = 'Company:' 
-			whatThisHelpString = 'The company that produced the product.'
+			whatsThisHelpString = 'The company that produced the product.'
 		end
 
 		object company : VCF::Label 			
