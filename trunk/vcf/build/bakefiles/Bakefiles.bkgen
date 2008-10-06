@@ -15,12 +15,12 @@
     
 
     <add-formats>
-        borland,mingw,gnu,msvc,msvc6prj,msvs2003prj,msvs2005prj
+        borland,mingw,gnu,msvc,msvc6prj,msvs2003prj,msvs2005prj,msvs2008prj
     </add-formats>
 
 
     <del-formats files="../../examples/*.bkl">
-        msvc6prj,msvs2003prj,msvs2005prj
+        msvc6prj,msvs2003prj,msvs2005prj,msvs2008prj
     </del-formats>
 
     <!--
@@ -28,19 +28,19 @@
     since they will overwrite existed ones.
     -->
     <del-formats files="../../examples/*/*.bkl,../../examples/*/*/*.bkl">
-        msvc6prj,msvs2003prj,msvs2005prj
+        msvc6prj,msvs2003prj,msvs2005prj,msvs2008prj
     </del-formats>
     <del-formats files="../../src/BlackBox/*.bkl">
-        msvc6prj,msvs2003prj,msvs2005prj
+        msvc6prj,msvs2003prj,msvs2005prj,msvs2008prj
     </del-formats>
     <del-formats files="../../src/createbundle/*.bkl">
-        msvc6prj,msvs2003prj,msvs2005prj
+        msvc6prj,msvs2003prj,msvs2005prj,msvs2008prj
     </del-formats>
     <del-formats files="../../src/createinfo/*.bkl">
-        msvc6prj,msvs2003prj,msvs2005prj
+        msvc6prj,msvs2003prj,msvs2005prj,msvs2008prj
     </del-formats>
     <del-formats files="../../src/xmake/*.bkl">
-        msvc6prj,msvs2003prj,msvs2005prj
+        msvc6prj,msvs2003prj,msvs2005prj,msvs2008prj
     </del-formats>
 
 
@@ -65,30 +65,34 @@
     <add-flags files="VCF.bkl" formats="msvs2005prj">
         -o..\bakefiles.gen\msvs2005prj\VCF.sln
     </add-flags>
+    <add-flags files="VCF.bkl" formats="msvs2008prj">
+        -o..\bakefiles.gen\msvs2008prj\VCF.sln
+    </add-flags>
 
+    <add-flags files="*" formats="borland,mingw,msvc,gnu">-DVCF_ROOT_BKGEN=../..</add-flags>
+    <add-flags files="*" formats="msvc6prj,msvs2003prj,msvs2005prj,msvs2008prj">-DVCF_ROOT_BKGEN=../../..</add-flags>
+    <add-flags files="../../*/*">-DVCF_ROOT_BKGEN=..</add-flags>
+    <add-flags files="../../*/*/*">-DVCF_ROOT_BKGEN=../..</add-flags>
+    <add-flags files="../../*/*/*/*">-DVCF_ROOT_BKGEN=../../..</add-flags>
 
     <add-flags formats="borland,mingw,msvc,gnu">
         -DWRITE_OPTIONS_FILE=0
     </add-flags>
 
-
-    <add-flags files="*" formats="borland,mingw,msvc,gnu">-DVCF_ROOT_BKGEN=../..</add-flags>
-    <add-flags files="*" formats="msvc6prj,msvs2003prj,msvs2005prj">-DVCF_ROOT_BKGEN=../../..</add-flags>
-    <add-flags files="../../*/*">-DVCF_ROOT_BKGEN=..</add-flags>
-    <add-flags files="../../*/*/*">-DVCF_ROOT_BKGEN=../..</add-flags>
-    <add-flags files="../../*/*/*/*">-DVCF_ROOT_BKGEN=../../..</add-flags>
-
-
     <add-flags files="VCF.bkl" formats="borland">
+        -DWRITE_OPTIONS_FILE=1
         -DOPTIONS_FILE=config.bcc
     </add-flags>
     <add-flags files="VCF.bkl" formats="mingw">
+        -DWRITE_OPTIONS_FILE=1
         -DOPTIONS_FILE=config.gcc
     </add-flags>
     <add-flags files="VCF.bkl" formats="gnu">
+        -DWRITE_OPTIONS_FILE=1
         -DOPTIONS_FILE=config.gnu
     </add-flags>
     <add-flags files="VCF.bkl" formats="msvc">
+        -DWRITE_OPTIONS_FILE=1
         -DOPTIONS_FILE=config.vc
     </add-flags>
 

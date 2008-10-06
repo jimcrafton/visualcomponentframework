@@ -130,6 +130,7 @@
         vcf/FoundationKit/VCFProcess.h
         vcf/FoundationKit/VCFRTTIImpl.h
         vcf/FoundationKit/VCFString.h
+        vcf/FoundationKit/VCFTime.h
         vcf/FoundationKit/VFFInputStream.h
         vcf/FoundationKit/VFFOutputStream.h
         vcf/FoundationKit/VFFParser.h
@@ -192,6 +193,7 @@
         vcf/FoundationKit/VCFMath.cpp
         vcf/FoundationKit/VCFProcess.cpp
         vcf/FoundationKit/VCFString.cpp
+        vcf/FoundationKit/VCFTime.cpp
         vcf/FoundationKit/VFFInputStream.cpp
         vcf/FoundationKit/VFFOutputStream.cpp
         vcf/FoundationKit/VFFParser.cpp

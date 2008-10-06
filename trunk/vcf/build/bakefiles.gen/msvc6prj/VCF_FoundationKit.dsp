@@ -446,6 +446,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\VCFString.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFTime.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp
 # End Source File
 # Begin Source File
@@ -1043,6 +1047,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\VCFRTTIImpl.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\VCFString.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\VCFTime.h
 # End Source File
 # Begin Source File
 

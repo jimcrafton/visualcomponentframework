@@ -24,6 +24,7 @@
     <subproject id="BasicContainers" template="example"/>
     <subproject id="Browser" template="example"/>
     <subproject id="Cards" template="example"/>
+    <subproject id="Chatterbox" template="example"/>
     <subproject id="ClassRegistryBrowser" template="example"/>
     <subproject id="Colors" template="example"/>
     <subproject id="Combos" template="example"/>
@@ -117,9 +118,13 @@
     <!--
     MVC
     -->
+    <subproject id="BusinessObjectValidation" template="example_mvc"/>
     <subproject id="DocViewAdvanced" template="example_mvc"/>
     <subproject id="DocViewBasics" template="example_mvc"/>
+    <subproject id="HtmlMVC" template="example_mvc"/>
+    <subproject id="InputValidation" template="example_mvc"/>
     <subproject id="ModelData" template="example_mvc"/>
+    <subproject id="MVCAdapters" template="example_mvc"/>
     <subproject id="MVCBasics" template="example_mvc"/>
     <subproject id="Scribble1" template="example_mvc"/>
     <subproject id="Scribble2" template="example_mvc"/>
@@ -130,6 +135,7 @@
     <subproject id="Scribble7" template="example_mvc"/>
     <subproject id="Scribble8" template="example_mvc"/>
     <subproject id="Scribble9" template="example_mvc"/>
+    <subproject id="Scribble10" template="example_mvc"/>
 
 
     <!--

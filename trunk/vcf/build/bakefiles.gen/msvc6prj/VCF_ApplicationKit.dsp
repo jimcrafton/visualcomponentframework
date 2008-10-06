@@ -505,6 +505,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ImageList.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\InputValidation.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\Label.cpp
 # End Source File
 # Begin Source File
@@ -893,6 +897,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ActiveXControlHost.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\AdapterModels.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\AppKitPeerConfig.h
 # End Source File
 # Begin Source File
@@ -1213,6 +1221,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\EtchedBorder.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\FlowLayoutContainter.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\FocusEvent.h
 # End Source File
 # Begin Source File
@@ -1246,6 +1258,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ImageList.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\ImageListEvent.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\InputValidation.h
 # End Source File
 # Begin Source File
 
@@ -1602,10 +1618,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\UndoRedoStack.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\VCFCOM.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\ValidationEvent.h
 # End Source File
 # Begin Source File
 

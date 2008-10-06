@@ -76,17 +76,6 @@
             <dependency-of>all</dependency-of>
         </subproject>
 
-
-        <action id="xmake">
-            <is-phony>1</is-phony>
-            <depends>xmake_</depends>
-        </action>
-        <subproject id="xmake_">
-            <installable>no</installable>
-            <dir>../../src/xmake</dir>
-            <dependency-of>all</dependency-of>
-        </subproject>
-
     </if>
 
 </makefile>
