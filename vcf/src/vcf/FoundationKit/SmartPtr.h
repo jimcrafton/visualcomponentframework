@@ -43,6 +43,28 @@ namespace VCF  {
     using boost::get_deleter;
 }
 
+
+
+
+
+#define SHARED_PTR(ClassT) \
+typedef VCF::SmartPtr<ClassT>::Shared ClassT##Ptr;
+
+template <typename T>
+_typename_ VCF::SmartPtr<T>::Shared _new( T* obj ) 
+{
+	return VCF::SmartPtr<T>::Shared(obj, &VCF::SmartPtr<T>::Deleter);
+}
+
+
+template <typename T>
+_typename_ VCF::SmartPtr<T>::Shared _new() 
+{
+	return VCF::SmartPtr<T>::Shared( new T(), &VCF::SmartPtr<T>::Deleter);
+}
+
+
+
 #endif // _VCF_SMARTPTR_H__
 
 /**
