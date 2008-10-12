@@ -19,9 +19,9 @@ where you installed the VCF.
 
 namespace VCF {
 
-time_t vcftime( time_t *timer );
+FOUNDATIONKIT_API time_t vcftime( time_t *timer );
 
-struct tm* vcflocaltime( const time_t *timer );
+FOUNDATIONKIT_API struct tm* vcflocaltime( const time_t *timer );
 
 };
 
