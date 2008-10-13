@@ -876,7 +876,7 @@ public:
 
 	
 	virtual void keyDown( KeyboardEvent* e ) {
-		if ( e->getVirtualCode() == vkDelete ) {
+		if ( vkDelete == e->virtualKeyCode ) {
 			controller->deleteCurrentShape();
 		}
 	}

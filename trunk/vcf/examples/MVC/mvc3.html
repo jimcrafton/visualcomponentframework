@@ -278,8 +278,8 @@ At this point we end up with something like so:
 </p>
 <h2>Displaying a Dialog</h2>
 <p>
-To display our program's about dialog, we're going to load up a dialog based resource from another
-vff file. We'll start by creating our dialog class:
+To display our program's about dialog, we're going to load up a dialog based resource 
+from another vff file. We'll start by creating our dialog class:
 <pre>
 class AboutDialog : public Dialog {
 public:
@@ -296,7 +296,7 @@ public:
 };
 </pre>
 
-Next we'll add support for RTTI and expose our classes public fields:
+Next we'll add support for RTTI and expose our class's public fields:
 <pre>
 _class_rtti_(AboutDialog, "VCF::Dialog", "AboutDialog")
 _field_obj_( Label*, program )
@@ -342,18 +342,57 @@ object AboutDialog : VCF::Dialog
   end	
 end
 </pre>
-All pretty standard at this point, the exception of the HorizontalLayoutContainer object. A HorizontalLayoutContainer
-is a specialized form of a Container class, which are used to perform layout tasks for a control. If a control
-has a valid container instance assigned to it, then the control can have child controls added to it. The actual
-layout is performed by the Container instance. In this case the HorizontalLayoutContainer is used to layout
+All pretty standard at this point with the exception of the HorizontalLayoutContainer object. 
+A HorizontalLayoutContainer is a specialized form of a Container class, which are used to 
+perform layout tasks for a control. If a control has a valid container instance assigned to 
+it, then the control can have child controls added to it. The actual layout is performed by 
+the Container instance. In this case the HorizontalLayoutContainer is used to layout
 controls in a kind of tabular format.
 </p>
 <p>
-To display the dialog we'll look at our event handler code that handles the Help > About... menu item's click
-event. 
+To display the dialog we'll look at our event handler code that handles the Help > About... 
+menu item's click event. 
 <pre>
-
+void onAbout(Event*) {		
+		AboutDialog* aboutDlg = (AboutDialog*)Frame::createDialog( classid(AboutDialog) );
+		ProgramInfo* info = this->getResourceBundle()->getProgramInfo();
+		if ( NULL != info ) {
+			aboutDlg->program->setCaption( info->getProgramName() );
+			aboutDlg->author->setCaption( info->getAuthor() );
+			aboutDlg->company->setCaption( info->getCompany() );
+			aboutDlg->copyright->setCaption( info->getCopyright() );
+			delete info;
+		}
+		aboutDlg->showModal();
+		delete aboutDlg;		
+	}  
 </pre>
+Fairly simple. We create the dialog via the call to Frame::createDialog(). The getProgramInfo() 
+call returns information about the program, either Win32 resource specific info (from the 
+VS_VERSIONINFO structure) or from a property list file in the Resources directory. Calling 
+showModal() displays the dialog in modal loop, and blocks till you dismiss the dialog.
+</p>
+<p>
+OK, at this point we've redesigned our interface, and have two different views of the same
+data. Let's wire everything together now:
+<pre>
+Scribble4Window* mainWindow = (Scribble4Window*) Frame::createWindow( classid(Scribble4Window) );
+setMainWindow(mainWindow);
+
+ScribbleView* view = new ScribbleView();
+mainWindow->contentPanel->setView( view );
+mainWindow->scribble->addView( view );
+
+
+controller->setControl( mainWindow->contentPanel );
+controller->setModel( mainWindow->scribble );
+
+Rect r = mainWindow->scribble->getMaxBounds();
+mainWindow->status->setStatusPaneText( 1, Format("Dimensions: %0.1f x %0.1f") % r.getWidth() % r.getHeight() );
+
+mainWindow->show();
+</pre>
+This hooks up the scribble view to the content panel 
 </p>
 </body>
 
