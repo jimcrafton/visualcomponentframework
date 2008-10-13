@@ -82,10 +82,8 @@ public:
 		return result;
 	}
 
-	void onAbout(Event*) {
-		typedef SmartPtr<AboutDialog> AboutDialogPtr;
-
-		AboutDialogPtr::Shared aboutDlg = AboutDialogPtr::New( (AboutDialog*)Frame::createDialog( classid(AboutDialog) ) );
+	void onAbout(Event*) {		
+		AboutDialog* aboutDlg = (AboutDialog*)Frame::createDialog( classid(AboutDialog) );
 		ProgramInfo* info = this->getResourceBundle()->getProgramInfo();
 		if ( NULL != info ) {
 			aboutDlg->program->setCaption( info->getProgramName() );
@@ -95,7 +93,7 @@ public:
 			delete info;
 		}
 		aboutDlg->showModal();
-		
+		delete aboutDlg;		
 	}
 
 	void onContentMouseMove( MouseEvent* e ) {

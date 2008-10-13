@@ -19,7 +19,17 @@
 #include "ScribbleDocument.h"
 
 
+
+
+
+
 using namespace VCF;
+
+
+
+
+
+
 
 class AboutDialog : public Dialog {
 public:
@@ -34,6 +44,11 @@ public:
 
 	}
 };
+
+
+
+
+SHARED_PTR(AboutDialog)
 
 
 
@@ -133,9 +148,11 @@ public:
 	}
 
 	void onAbout(Event*) {
-		typedef SmartPtr<AboutDialog> AboutDialogPtr;
+		//typedef SmartPtr<AboutDialog> AboutDialogPtr;
 
-		AboutDialogPtr::Shared aboutDlg = AboutDialogPtr::New( (AboutDialog*)Frame::createDialog( classid(AboutDialog) ) );
+		//AboutDialogPtr::Shared aboutDlg = AboutDialogPtr::New( (AboutDialog*)Frame::createDialog( classid(AboutDialog) ) );
+
+		AboutDialogPtr aboutDlg = _new( (AboutDialog*)Frame::createDialog( classid(AboutDialog) ) );
 		ProgramInfo* info = this->getResourceBundle()->getProgramInfo();
 		if ( NULL != info ) {
 			aboutDlg->program->setCaption( info->getProgramName() );
@@ -226,7 +243,7 @@ public:
 	}
 	
 	void onListKeyDown( KeyboardEvent* e ) {	
-		if ( e->getVirtualCode() == vkDelete ) {
+		if ( vkDelete == e->virtualKeyCode ) {
 			ScribbleController* controller = (ScribbleController*) findComponent("controller",true);		
 			controller->deleteCurrentShape();
 
