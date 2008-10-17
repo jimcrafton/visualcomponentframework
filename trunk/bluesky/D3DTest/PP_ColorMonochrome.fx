@@ -110,9 +110,39 @@ sampler2D g_samSceneVelocity = sampler_state
 //float3 LuminanceConv = { 0.2125f, 0.7154f, 0.0721f };
 float3 LuminanceConv = { 0.0125f, 0.7154f, 0.9721f };
 
+
+float timer;
+float amt;
+
+
 float4 PostProcessPS( float2 Tex : TEXCOORD0 ) : COLOR0
 {
-    return 1.0f - dot( (float3)tex2D( g_samSrcColor, Tex ), LuminanceConv );
+    //return 1.0f - dot( (float3)tex2D( g_samSrcColor, Tex ), LuminanceConv );
+
+	//Tex.x*=0.5f;
+
+//float temp=Tex.x;
+//Tex.x=Tex.y;
+//Tex.y=temp;
+
+
+float2 wave;
+
+wave.y = Tex.y + (sin((Tex.x*15)+timer)*amt);
+wave.x = Tex.x + (sin((Tex.y*5)+timer)*amt);
+
+
+	float4 c=tex2D(g_samSrcColor,wave);
+//c.r *= 0.5f+sin(Tex.y*50)*2;
+//c.g *= 0.5f+cos(Tex.y*2)*2;
+//c.b *= 0.5f+sin(Tex.x*15)*2;
+
+//c.r+=0.3f;
+
+c.b+=0.7f;
+c.r-=0.25f;
+
+return c;
 }
 
 
