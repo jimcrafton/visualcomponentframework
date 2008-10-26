@@ -276,7 +276,11 @@ namespace comet {
 
 		template< typename CONT, typename TRAITS>
 		class sa_debug_iterator : public std::iterator<std::random_access_iterator_tag, typename TRAITS::value_type>,
-			public access_operator<type_traits::is_class_pointer<typename TRAITS::value_type>::result>::base<typename TRAITS::raw, sa_debug_iterator<CONT,TRAITS> >
+			public access_operator<type_traits::is_class_pointer<typename TRAITS::value_type>::result>::
+#ifdef VCF_MINGW
+			template
+#endif
+			base<typename TRAITS::raw, sa_debug_iterator<CONT,TRAITS> >
 		{
 		public:
 			const CONT *cont_;
@@ -326,7 +330,11 @@ namespace comet {
 			typename TRAITS::reference operator[](size_t n) {
 				COMET_ASSERT( cont_!=NULL);
 				COMET_ASSERT( (get_const_raw()+ n) >= cont_->begin().get_raw());
+#ifdef VCF_MINGW
+				COMET_ASSERT( (get_const_raw()+n) < cont_->end().get_raw() );
+#else
 				COMET_ASSERT( (get_cosnt_raw()+n) < cont_->end().get_raw() );
+#endif
 				return iter_[n];
 			}
 
@@ -421,7 +429,11 @@ namespace comet {
 		/** \internal
 		 */
 		template<typename T, typename TR> class sa_iterator : public std::iterator<std::random_access_iterator_tag, typename TR::value_type>,
-			public access_operator<type_traits::is_class_pointer<T>::result>::base< T, sa_iterator<T,TR> >
+			public access_operator<type_traits::is_class_pointer<T>::result>::
+#ifdef VCF_MINGW
+			template
+#endif
+			base< T, sa_iterator<T,TR> >
 
 		{
 			typedef sa_iterator<T, nonconst_traits<T> > nonconst_self;
@@ -649,21 +661,35 @@ namespace comet {
 		const_reference back() const { return *(end() - 1); }
 
 	private:
-		template<enum impl::sa_traits_extras_type STET>
+		template<enum impl::sa_traits_extras_type STET
+#ifdef VCF_MINGW
+		, int FAKE = 0
+#endif
+		>
 		struct get_extras
 		{
 			 static void *extras(){ return 0; }
 		};
+#ifdef VCF_MINGW
+		template<int FAKE>
+		struct get_extras<impl::stet_record, FAKE>;
+#else
 		template<>
 		struct get_extras<impl::stet_record>
 		{
 			static void *extras(){ return impl::sa_traits<T>::get_record_info().in(); }
 		};
+#endif
+#ifdef VCF_MINGW
+		template<int FAKE>
+		struct get_extras<impl::stet_iid, FAKE>;
+#else
 		template<>
 		struct get_extras<impl::stet_iid>
 		{
 			static void *extras(){ return impl::sa_traits<T>::iid().in_ptr(); }
 		};
+#endif
 
 	public:
 
@@ -933,7 +959,7 @@ public:
 			safearray_t t(size()+1, lb);
 
 			iterator i1 = begin(), i2 = t.begin();
-			
+
 			for (;i1 != end() ; ++i1, ++i2)
 				std::swap(*i1, *i2);
 
@@ -962,7 +988,7 @@ public:
 			safearray_t t(size()+1, lb);
 
 			iterator i1 = begin(), i2 = t.begin();
-			
+
 			*i2 = val;
 
 			for (++i2; i1 != end(); ++i1, ++i2)
@@ -1246,9 +1272,17 @@ public:
 	protected:
 		SAFEARRAY* psa_;
 
-		template< enum impl::sa_traits_check_type STCT >
+		template< enum impl::sa_traits_check_type STCT
+#ifdef VCF_MINGW
+		, int FAKE = 0
+#endif
+		>
 		struct traits_sanity_check
 		{ static inline void check( const SAFEARRAY *psa) {  } };
+#ifdef VCF_MINGW
+		template<int FAKE>
+		struct traits_sanity_check<impl::stct_vt_ok, FAKE>;
+#else
 		template<>
 		struct traits_sanity_check<impl::stct_vt_ok>
 		{
@@ -1262,8 +1296,14 @@ public:
 				}
 			}
 		};
+#endif
+#ifdef VCF_MINGW
+		template<int FAKE>
+		struct traits_sanity_check<impl::stct_iid_ok, FAKE>;
+#else
 		template<>
-		struct traits_sanity_check<impl::stct_iid_ok> {
+		struct traits_sanity_check<impl::stct_iid_ok>
+		{
 			static void check(SAFEARRAY *psa)
 			{
 				uuid_t iid;
@@ -1272,6 +1312,7 @@ public:
 					throw std::runtime_error("safearray_t: IID mismatch");
 			}
 		};
+#endif
 
 		/// Make sure the passed in safearray agrees with the type of the safearray_t
 		static void sanity_check(SAFEARRAY* psa) {
@@ -1284,6 +1325,47 @@ public:
 
 	};
 	//@}
+
+#ifdef VCF_MINGW
+    template<typename T>
+    template<int FAKE = 0>
+    struct safearray_t<T>::get_extras<impl::stet_record, FAKE>
+	{
+		static void *extras(){ return impl::sa_traits<T>::get_record_info().in(); }
+	};
+	template<typename T>
+	template<int FAKE = 0>
+	struct safearray_t<T>::get_extras<impl::stet_iid, FAKE>
+	{
+		static void *extras(){ return impl::sa_traits<T>::iid().in_ptr(); }
+	};
+
+	template<typename T>
+	template<int FAKE = 0>
+	struct safearray_t<T>::traits_sanity_check<impl::stct_vt_ok, FAKE>
+	{
+		static void check(SAFEARRAY *psa) {
+			if ((psa->fFeatures & FADF_HAVEVARTYPE)!=0)
+			{
+				VARTYPE vt;
+				::SafeArrayGetVartype(psa, &vt) | raise_exception ;
+				if(vt !=  impl::sa_traits<T>::vt)
+					throw std::runtime_error("safearray_t: VarType mismatch");
+			}
+		}
+	};
+	template<typename T>
+	template<int FAKE = 0>
+	struct safearray_t<T>::traits_sanity_check<impl::stct_iid_ok, FAKE> {
+		static void check(SAFEARRAY *psa)
+		{
+			uuid_t iid;
+			::SafeArrayGetIID(psa, &iid) | raise_exception;
+			if( iid != impl::sa_traits<T>::iid() )
+				throw std::runtime_error("safearray_t: IID mismatch");
+		}
+	};
+#endif
 
 	namespace impl {
 

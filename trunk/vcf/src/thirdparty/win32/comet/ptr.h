@@ -159,10 +159,12 @@ namespace comet {
 	class variant_t;
 	template<typename Itf> class com_ptr;
 	class identity_ptr;
+#ifndef VCF_MINGW
 	namespace thread_model{
 		enum thread_model_t;
 	};
 	template<typename T, enum thread_model::thread_model_t TM, COMET_LIST_TEMPLATE_0 > struct coclass;
+#endif
 	template<class C> struct aggregate_inner_unknown ;
 
 	// comet implementation details
@@ -329,7 +331,11 @@ namespace comet {
 			/*! Used for construction from a variant.  Always QIs to
 			 * guarantee this is the identity.
 			 */
-			inline explicit identity_ptr(const impl::try_cast_t<variant_t>& v) throw(com_error);
+			inline explicit identity_ptr(const impl::try_cast_t<variant_t>& v) 
+#ifndef VCF_MINGW
+				throw(com_error)
+#endif
+				;
 
 			//! Constructor from Com Cast.
 			/*! Used for construction from any Interface pointer.  Always QIs to
@@ -347,7 +353,11 @@ namespace comet {
 			/*! Used for construction from a variant.  Always QIs to
 			 * guarantee this is the identity.
 			 */
-			inline explicit identity_ptr(const impl::com_cast_t<variant_t>& v) throw(com_error);
+			inline explicit identity_ptr(const impl::com_cast_t<variant_t>& v) 
+#ifndef VCF_MINGW
+				throw(com_error)
+#endif
+				;
 
 			//! Constructions of null pointer
 			/*!
@@ -357,7 +367,10 @@ namespace comet {
 				\exception com_error
 					Throws E_POINTER if a non-zero value is specified.
 			*/
-			explicit identity_ptr(int null) throw(com_error)
+			explicit identity_ptr(int null) 
+#ifndef VCF_MINGW
+				throw(com_error)
+#endif
 				: ptr_(NULL)
 			{ if(null != 0) raise_exception(E_POINTER); }
 
@@ -389,7 +402,10 @@ namespace comet {
 				\exception com_error
 					Throw E_POINTER if a non-zero value is specified.
 			*/
-			identity_ptr& operator=(int null) throw(com_error)
+			identity_ptr& operator=(int null) 
+#ifndef VCF_MINGW
+				throw(com_error)
+#endif
 			{ if(null != 0) raise_exception(E_POINTER); release(); return *this; }
 
 			/// Get at the raw pointer.
@@ -449,7 +465,7 @@ namespace comet {
 			IUnknown *ptr_;
 
 			void swap(identity_ptr& x) throw()
-			{ 
+			{
 			  /*
 			  * This is ugly as hell but it is the only way to make this work
 			  * For details take a look at QC4957
@@ -641,7 +657,10 @@ namespace comet {
 			\exception com_error
 				Throws E_NOINTERFACE if cast fails.
 		*/
-		com_ptr(const impl::try_cast_t<variant_t>& v) throw(com_error)
+		com_ptr(const impl::try_cast_t<variant_t>& v) 
+#ifndef VCF_MINGW
+			throw(com_error)
+#endif
 		{ create(v.get()); }
 
 		//! Construction from a raw interface pointer
@@ -676,7 +695,10 @@ namespace comet {
 
 			\exception com_error
 		*/
-		explicit com_ptr(const uuid_t& clsid, DWORD dwClsContext = CLSCTX_ALL) throw(com_error)
+		explicit com_ptr(const uuid_t& clsid, DWORD dwClsContext = CLSCTX_ALL) 
+#ifndef VCF_MINGW
+			throw(com_error)
+#endif
 		{ create(clsid, NULL, dwClsContext); }
 
 		//! Construction of aggregated object from CLSID
@@ -690,7 +712,10 @@ namespace comet {
 
 			\exception com_error
 		*/
-		/*template<typename Itf2>*/ com_ptr(const uuid_t& clsid, const com_ptr< ::IUnknown>& outer, DWORD dwClsContext = CLSCTX_ALL) throw(com_error)
+		/*template<typename Itf2>*/ com_ptr(const uuid_t& clsid, const com_ptr< ::IUnknown>& outer, DWORD dwClsContext = CLSCTX_ALL) 
+#ifndef VCF_MINGW
+			throw(com_error)
+#endif
 		{ create(clsid, outer, dwClsContext); }
 
 		//! Constructions of null pointer
@@ -701,7 +726,10 @@ namespace comet {
 			\exception com_error
 				Throws E_POINTER if a non-zero value is specified.
 		*/
-		explicit com_ptr(int null) throw(com_error)
+		explicit com_ptr(int null) 
+#ifndef VCF_MINGW
+			throw(com_error)
+#endif
 			: ptr_(NULL)
 		{ if(null != 0) raise_exception(E_POINTER); }
 
@@ -714,7 +742,10 @@ namespace comet {
 
 			\exception com_error
 		*/
-		explicit com_ptr(const wchar_t* progid, DWORD dwClsContext = CLSCTX_ALL) throw(com_error)
+		explicit com_ptr(const wchar_t* progid, DWORD dwClsContext = CLSCTX_ALL) 
+#ifndef VCF_MINGW
+			throw(com_error)
+#endif
 		{ create(progid, 0, dwClsContext); }
 
 		//! Construction from ProgID
@@ -728,7 +759,10 @@ namespace comet {
 
 			\exception com_error
 		*/
-		/*template<typename Itf2> */com_ptr(const wchar_t* progid, const com_ptr< ::IUnknown>& outer, DWORD dwClsContext = CLSCTX_ALL) throw(com_error)
+		/*template<typename Itf2> */com_ptr(const wchar_t* progid, const com_ptr< ::IUnknown>& outer, DWORD dwClsContext = CLSCTX_ALL) 
+#ifndef VCF_MINGW
+			throw(com_error)
+#endif
 		{ create(progid, outer, dwClsContext); }
 
 		//! Construction using CoGetObject
@@ -741,7 +775,10 @@ namespace comet {
 
 			\note The methods of IUnknown are deliberately hidden.
 		*/
-		safe_interface_pointer operator->() const throw(com_error)
+		safe_interface_pointer operator->() const 
+#ifndef VCF_MINGW
+			throw(com_error)
+#endif
 		{ if( ptr_ == NULL) raise_exception(E_POINTER);	return get_safe_ptr(); }
 
 		//! Assignment of raw interface pointer
@@ -805,7 +842,10 @@ namespace comet {
 			\exception com_error
 				Throw E_POINTER if a non-zero value is specified.
 		*/
-		com_ptr& operator=(int null) throw(com_error)
+		com_ptr& operator=(int null) 
+#ifndef VCF_MINGW
+			throw(com_error)
+#endif
 		{ if(null != 0) raise_exception(E_POINTER); release(); return *this; }
 
 		//! Attaching assignment
@@ -822,7 +862,10 @@ namespace comet {
 
 	private:
 		template<typename Itf2>
-		int compare_unknown(const com_ptr<Itf2>& x) const throw(com_error)
+		int compare_unknown(const com_ptr<Itf2>& x) const 
+#ifndef VCF_MINGW
+			throw(com_error)
+#endif
 		{
 			if ( (void *)ptr_ ==  (void *)x.get()) return 0;
 			::IUnknown* p1 = 0;
@@ -840,10 +883,16 @@ namespace comet {
 
 			return p1 - p2;
 		}
-		int compare_unknown(const identity_ptr& x) const throw(com_error)
+		int compare_unknown(const identity_ptr& x) const 
+#ifndef VCF_MINGW
+			throw(com_error)
+#endif
 		{
 			if (ptr_ == x.get()) return 0;
 			::IUnknown* p1 = 0;
+#ifdef VCF_MINGW
+			::IUnknown* p2 = 0;
+#endif
 
 			if (ptr_ != NULL) {
 				Unknown_caller_::QueryInterface(x.get(), uuidof< ::IUnknown >(), reinterpret_cast<void**>(&p2)) | raise_exception;
@@ -918,12 +967,12 @@ namespace comet {
 			This method is very fast, since it does not call AddRef or Release.
 		*/
 		void swap(com_ptr& x) throw()
-		{ 
+		{
 			  #if defined(VCF_BCC6) && defined(__SGI_STL_PORT)
 			  _STL::swap(ptr_, x.ptr_);
 			  #else
 			  std::swap(ptr_, x.ptr_);
-			  #endif		    
+			  #endif
 		}
 
 		//! Detaches ownership.
@@ -1020,12 +1069,22 @@ namespace comet {
 
 	   inline void create_nothrow(const variant_t& v) throw();
 
-	   inline void create(const variant_t& v) throw(com_error);
+	   inline void create(const variant_t& v) 
+#ifndef VCF_MINGW
+			throw(com_error)
+#endif
+			;
 
-	   void create(const uuid_t& clsid, const com_ptr< ::IUnknown>& outer, DWORD dwClsContext = CLSCTX_ALL) throw(com_error)
+	   void create(const uuid_t& clsid, const com_ptr< ::IUnknown>& outer, DWORD dwClsContext = CLSCTX_ALL) 
+#ifndef VCF_MINGW
+throw(com_error)
+#endif
 	   { CoCreateInstance(clsid, outer.in(), dwClsContext, iid(), reinterpret_cast<void**>(&ptr_)) | raise_exception; }
 
-	   void create(const wchar_t* clsidString, const com_ptr< ::IUnknown>& outer, DWORD dwClsContext = CLSCTX_ALL) throw(com_error)
+	   void create(const wchar_t* clsidString, const com_ptr< ::IUnknown>& outer, DWORD dwClsContext = CLSCTX_ALL) 
+#ifndef VCF_MINGW
+throw(com_error)
+#endif
 	   {
 		   if (clsidString == NULL) raise_exception(E_INVALIDARG);
 
@@ -1039,7 +1098,10 @@ namespace comet {
 		   create(clsid, outer, dwClsContext);;
 	   }
 
-	   void create(const wchar_t* name, BIND_OPTS& bind_opts) throw(com_error)
+	   void create(const wchar_t* name, BIND_OPTS& bind_opts) 
+#ifndef VCF_MINGW
+throw(com_error)
+#endif
 	   { CoGetObject(name, &bind_opts, iid(), reinterpret_cast<void**>(&ptr_)) | raise_exception; }
 	}; // class
 
@@ -1062,7 +1124,10 @@ namespace comet {
 		\exception com_error
 			Throws E_POINTER if a non-zero value is specified.
 	*/
-	static inline bool operator==(int null, const identity_ptr& x) throw(com_error)
+	static inline bool operator==(int null, const identity_ptr& x) 
+#ifndef VCF_MINGW
+throw(com_error)
+#endif
 	{ if(null != 0) raise_exception(E_POINTER); return x.is_null(); }
 
 	//! Comparison with null
@@ -1084,7 +1149,10 @@ namespace comet {
 		\exception com_error
 			Throws E_POINTER if a non-zero value is specified.
 	*/
-	inline static bool operator!=(int null, const identity_ptr& x) throw(com_error)
+	inline static bool operator!=(int null, const identity_ptr& x) 
+#ifndef VCF_MINGW
+throw(com_error)
+#endif
 	{ if(null != 0) raise_exception(E_POINTER); return !x.is_null(); }
 
 	namespace impl {
@@ -1171,7 +1239,10 @@ namespace comet {
 		Unknown_caller_::QueryInterface(pUnk,iid(), reinterpret_cast<void**>(&ptr_));
 	}
 	template<typename Itf>
-	inline void com_ptr<Itf>::create(const variant_t& v) throw(com_error)
+	inline void com_ptr<Itf>::create(const variant_t& v) 
+#ifndef VCF_MINGW
+throw(com_error)
+#endif
 	{
 		ptr_ = 0;
 		::IUnknown *pUnk;
@@ -1200,7 +1271,10 @@ namespace comet {
 		Unknown_caller_::QueryInterface(pUnk,iid(), reinterpret_cast<void**>(&ptr_)) | raise_exception;
 	}
 
-	inline identity_ptr::identity_ptr(const impl::try_cast_t<variant_t>& v) throw(com_error)
+	inline identity_ptr::identity_ptr(const impl::try_cast_t<variant_t>& v) 
+#ifndef VCF_MINGW
+throw(com_error)
+#endif
 		: ptr_(NULL)
 	{
 		VARIANT vv = v.get().get();
@@ -1230,7 +1304,10 @@ namespace comet {
 		pUnk->QueryInterface( IID_IUnknown, reinterpret_cast<void **>(&ptr_)) | raise_exception;
 	}
 
-	inline identity_ptr::identity_ptr(const impl::com_cast_t<variant_t>& v) throw(com_error)
+	inline identity_ptr::identity_ptr(const impl::com_cast_t<variant_t>& v) 
+#ifndef VCF_MINGW
+throw(com_error)
+#endif
 		: ptr_(NULL)
 	{
 		VARIANT vv = v.get().get();

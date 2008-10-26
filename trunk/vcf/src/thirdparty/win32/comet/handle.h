@@ -142,6 +142,11 @@ namespace comet {
 		  #ifdef VCF_BCC
 		  typedef handle_policy_base_t<H, INVALID_HANDLE_>::value_type value_type;
 		  #endif
+		  #ifdef VCF_MINGW
+		  typedef class handle_policy_base_t<H, INVALID_HANDLE_>::value_type value_type;
+		  using handle_policy_base_t<H, INVALID_HANDLE_>::get_handle_ptr;
+		  using handle_policy_base_t<H, INVALID_HANDLE_>::get_handle;
+		  #endif
 			/// Call destroy_handle
 			static inline bool destroy_( value_type h)
 			{
@@ -265,7 +270,11 @@ namespace comet {
 			{ return *reinterpret_cast<C_ *>(&val); }
 
 			/// Destroy a reference.
-			static bool destroy_reference(value_type H) 
+#ifdef VCF_MINGW
+			static bool destroy_reference(value_type h)
+#else
+			static bool destroy_reference(value_type H)
+#endif
 			{
 				return true;
 			}
@@ -302,24 +311,24 @@ namespace comet {
 	{
 		return rhs.close();
 	}
-  
+
   //template <>
   //struct auto_handle_t;
-  
+
 	/// Wrapper for HANDLE type
 	template<typename ERROR_POLICY= handle_nothrow_error_policy_t>
 	#ifdef VCF_BCC
 	struct auto_handle_t : auto_handle_wrap_t< auto_handle_t<ERROR_POLICY>, HANDLE, 0, ERROR_POLICY >
   #else
-	struct auto_handle_t : auto_handle_wrap_t< auto_handle_t<ERROR_POLICY>, HANDLE, 0, ERROR_POLICY > 
-  #endif	  
+	struct auto_handle_t : auto_handle_wrap_t< auto_handle_t<ERROR_POLICY>, HANDLE, 0, ERROR_POLICY >
+  #endif
 	{
 		#ifdef VCF_BCC
 		typedef auto_handle_wrap_t< auto_handle_t<ERROR_POLICY>, HANDLE, 0, ERROR_POLICY > handle_base;
     #else
 		typedef auto_handle_wrap_t< auto_handle_t<ERROR_POLICY>, HANDLE, 0, ERROR_POLICY > handle_base;
     #endif
-    
+
 		/// Default constructor.
 		auto_handle_t() {}
 		/// Copy constructor.
@@ -363,7 +372,11 @@ namespace comet {
 		{}
 		~auto_reference_t()
 		{
+#ifdef VCF_MINGW
+			destroy_reference(T::detach_handle());
+#else
 			destroy_reference(detach_handle());
+#endif
 		}
 	};
 	//@}

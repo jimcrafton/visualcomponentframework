@@ -64,6 +64,11 @@ namespace comet {
 
 	/** Throw COM error using com_error, using HRESULT and IErrorInfo.
 	  */
+#ifdef VCF_MINGW
+    namespace impl {
+    void throw_com_error_(HRESULT hr, const com_ptr<IErrorInfo>& ei);
+    }
+#endif
 	template<typename Itf> inline void throw_com_error(Itf* p, HRESULT hr)
 	{
 		if (impl::supports_ErrorInfo(p))
@@ -80,6 +85,9 @@ namespace comet {
 	class com_error : public std::runtime_error
 	{
 	public:
+#ifdef VCF_MINGW
+        virtual ~com_error() throw (){}
+#endif
 		//! Construct com_error from HRESULT.
 		/*!
 			\param hr
