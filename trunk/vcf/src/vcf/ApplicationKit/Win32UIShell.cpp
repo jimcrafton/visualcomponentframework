@@ -194,7 +194,7 @@ void Win32UIShell::performFileOp( int operationType, const std::vector<String>& 
 	if ( System::isUnicodeEnabled() ) {
 
 		SHFILEOPSTRUCTW fileOp = {0};
-		
+
 		if ( Frame::getActiveFrame() != NULL ) {
 			fileOp.hwnd = (HWND)Frame::getActiveFrame()->getPeer()->getHandleID();
 		}
@@ -257,9 +257,9 @@ void Win32UIShell::performFileOp( int operationType, const std::vector<String>& 
 				sz += s.length() + 1;
 				++it;
 			}
-			
+
 			sz += 1;
-			
+
 			destBuf = new VCFChar[sz];
 			tmp = destBuf;
 			it = destFiles.begin();
@@ -289,7 +289,7 @@ void Win32UIShell::performFileOp( int operationType, const std::vector<String>& 
 		}
 
 		if ( fileOp.fAnyOperationsAborted ) {
-			
+
 		}
 
 		delete [] srcBuf;
@@ -297,7 +297,7 @@ void Win32UIShell::performFileOp( int operationType, const std::vector<String>& 
 	}
 	else {
 
-	}	
+	}
 }
 
 void Win32UIShell::launch( const String& fileName, const String& parameters )
@@ -310,7 +310,7 @@ void Win32UIShell::launch( const String& fileName, const String& parameters )
 		info.lpVerb = L"Open";
 		info.lpFile = fileName.c_str();
 		info.lpParameters = parameters.c_str();
-		
+
 		if ( !ShellExecuteExW( &info ) ) {
 			//int err = GetLastError();
 		}
@@ -323,7 +323,7 @@ void Win32UIShell::launch( const String& fileName, const String& parameters )
 		info.lpVerb = "Open";
 		info.lpFile = fileName.ansi_c_str();
 		info.lpParameters = parameters.ansi_c_str();
-		
+
 		if ( !ShellExecuteExA( &info ) ) {
 			//int err = GetLastError();
 		}
@@ -336,16 +336,16 @@ void Win32UIShell::openTrash()
 
 		LPITEMIDLIST  idList = NULL;
 		HRESULT hr = SHGetSpecialFolderLocation( NULL, CSIDL_BITBUCKET, &idList );
-	
+
 		if ( SUCCEEDED(hr) ) {
-			
+
 			SHELLEXECUTEINFOW info = {0};
 			info.cbSize = sizeof(info);
 			info.fMask = SEE_MASK_FLAG_DDEWAIT | SEE_MASK_IDLIST;
 			info.nShow = SW_SHOWNORMAL;
 			info.lpIDList = idList;
-			
-			
+
+
 			ShellExecuteExW( &info );
 
 			CoTaskMemFree( idList );
@@ -354,16 +354,16 @@ void Win32UIShell::openTrash()
 	else {
 		LPITEMIDLIST  idList = NULL;
 		HRESULT hr = SHGetSpecialFolderLocation( NULL, CSIDL_BITBUCKET, &idList );
-	
+
 		if ( SUCCEEDED(hr) ) {
-			
+
 			SHELLEXECUTEINFOA info = {0};
 			info.cbSize = sizeof(info);
 			info.fMask = SEE_MASK_FLAG_DDEWAIT | SEE_MASK_IDLIST;
 			info.nShow = SW_SHOWNORMAL;
 			info.lpIDList = idList;
-			
-			
+
+
 			ShellExecuteExA( &info );
 
 			CoTaskMemFree( idList );
@@ -381,16 +381,16 @@ void Win32UIShell::emptyTrash()
 	if ( System::isUnicodeEnabled() ) {
 		HRESULT hr = SHEmptyRecycleBinW( hwnd, L"", 0 );
 		if ( FAILED(hr) ) {
-			
+
 		}
 	}
 	else {
 		HRESULT hr = SHEmptyRecycleBinA( hwnd, "", 0 );
 		if ( FAILED(hr) ) {
-			
+
 		}
 	}
-	
+
 }
 
 
@@ -433,11 +433,30 @@ MIMEType Win32UIShell::getMIMEType( const String& fileName )
 	MIMEType result;
 	if ( System::isUnicodeEnabled() ) {
 		SHFILEINFOW shInfo = {0};
-		SHGetFileInfoW( fileName.c_str(), 0, &shInfo, sizeof(shInfo), 
+		SHGetFileInfoW( fileName.c_str(), 0, &shInfo, sizeof(shInfo),
 						SHGFI_ATTRIBUTES  | SHGFI_DISPLAYNAME  | SHGFI_EXETYPE | SHGFI_TYPENAME );
-		
+
 		VCFChar* tmp2;
+#ifdef VCF_MINGW
+// mingw does not provide urlmon.h so we have to go walkabout
+        HINSTANCE hinst = LoadLibrary(TEXT("urlmon.dll"));
+        HRESULT hr = NULL;
+        typedef HRESULT (*Call) (LPBC, LPCWSTR, LPVOID, DWORD, LPCWSTR, DWORD, LPWSTR*, DWORD);
+        if (hinst) {
+            Call FindMimeFromData = (Call) GetProcAddress(hinst, "FindMimeFromData");
+            if (FindMimeFromData) {
+                hr = (*FindMimeFromData)( NULL, fileName.c_str(), NULL, 0, NULL, 0, &tmp2, 0 );
+            }
+            else {
+                BasicException("GetProcAddress for FindMimeFromData failed");
+            }
+        }
+        else {
+            BasicException("LoadLibrary for urlmon.dll failed");
+        }
+#else
 		HRESULT hr = FindMimeFromData( NULL, fileName.c_str(), NULL, 0, NULL, 0, &tmp2, 0 );
+#endif
 		if ( SUCCEEDED(hr) ) {
 			result = MIMEType(tmp2);
 		}
@@ -453,10 +472,10 @@ void Win32UIShell::createFileAssociation( const FileAssociationInfo& info, bool 
 	if ( ext[0] != '.' ) {
 		ext.insert( 0, "." );
 	}
-	
+
 	Registry reg;
 
-	
+
 	String key = "";
 	if ( forAllUsers ) {
 		key += ext;
@@ -464,13 +483,13 @@ void Win32UIShell::createFileAssociation( const FileAssociationInfo& info, bool 
 		reg.openKey( key, true );
 		reg.setValue( info.documentClass, "" );
 		reg.setValue( info.mimeType, "Content Type" );
-		
+
 		key = "";
 		key += info.documentClass;
 		reg.setRoot( RKT_ROOT );
 		reg.openKey( key, true );
 		reg.setValue( info.documentDescription, "" );
-		
+
 		if ( !info.documentIconPath.empty() ) {
 			reg.setRoot( RKT_ROOT );
 			reg.openKey( key + "\\DefaultIcon", true );
@@ -481,7 +500,7 @@ void Win32UIShell::createFileAssociation( const FileAssociationInfo& info, bool 
 		reg.openKey( key + "\\shell\\open\\command", true );
 		String launchStr = "\"";
 		launchStr += info.launchingProgram + "\" \"%1\"";
-		
+
 		reg.setValue( launchStr, "" );
 	}
 	else {
@@ -491,13 +510,13 @@ void Win32UIShell::createFileAssociation( const FileAssociationInfo& info, bool 
 		reg.openKey( key, true );
 		reg.setValue( info.documentClass, "" );
 		reg.setValue( info.mimeType, "Content Type" );
-		
+
 		key = "Software\\Classes\\";
 		key += info.documentClass;
 		reg.setRoot( RKT_CURRENT_USER );
 		reg.openKey( key, true );
 		reg.setValue( info.documentDescription, "" );
-		
+
 		if ( !info.documentIconPath.empty() ) {
 			reg.setRoot( RKT_CURRENT_USER );
 			reg.openKey( key + "\\DefaultIcon", true );
@@ -508,10 +527,10 @@ void Win32UIShell::createFileAssociation( const FileAssociationInfo& info, bool 
 		reg.openKey( key + "\\shell\\open\\command", true );
 		String launchStr = "\"";
 		launchStr += info.launchingProgram + "\" \"%1\"";
-		
+
 		reg.setValue( launchStr, "" );
 	}
-	
+
 
 	SHChangeNotify( SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL );
 }
@@ -522,7 +541,7 @@ void Win32UIShell::removeFileAssociation( const FileAssociationInfo& info, bool 
 	if ( ext[0] != '.' ) {
 		ext.insert( 0, "." );
 	}
-	
+
 	Registry reg;
 	String key = "";
 
