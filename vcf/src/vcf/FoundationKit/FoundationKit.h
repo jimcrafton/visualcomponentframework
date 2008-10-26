@@ -73,7 +73,7 @@ where you installed the VCF.
 		#endif
 
 		#include <aygshell.h>
-		#pragma comment(lib, "aygshell.lib") 
+		#pragma comment(lib, "aygshell.lib")
 
 		#include <windows.h>
 
@@ -90,7 +90,7 @@ where you installed the VCF.
 
 		#if _WIN32_WCE < 0x500 && ( defined(WIN32_PLATFORM_PSPC) || defined(WIN32_PLATFORM_WFSP) )
 			#pragma comment(lib, "ccrtrtti.lib")
-			#ifdef _X86_	
+			#ifdef _X86_
 				#if defined(_DEBUG)
 					#pragma comment(lib, "libcmtx86d.lib")
 				#else
@@ -105,18 +105,20 @@ where you installed the VCF.
 		#include <process.h>
 		//include std windoze headers for peers....
 		#include <windows.h>
-		
+
 
 		#include <commctrl.h> //make sure to link with comctl32.lib
 		#include <shlobj.h>
-		#include <shobjidl.h> // some interfaces were moved from shlobj.h in Vista
+		#ifndef VCF_MINGW
+            #include <shobjidl.h> // some interfaces were moved from shlobj.h in Vista
+        #endif
 	#endif
-	
-	
+
+
 
 
 	//#include "Rpcdce.h" //make sure to link with Rpcrt4.lib
-	
+
 #endif //VCF_WIN
 
 
@@ -187,17 +189,17 @@ namespace VCF{
 	/**
 	\class FoundationKit FoundationKit.h "vcf/FoundationKit/FoundationKit.h"
 	The FoundationKit class is used to initialize the Foundation Kit runtime.
-	This includes registering the basic classes in the runtime system, such as the 
+	This includes registering the basic classes in the runtime system, such as the
 	correct SystemToolkit implementation, and the ClassRegistry.
-	
+
 	FoundationKit::init() MUST be called at start up before anything else in the
 	VCF is used.
 	FoundationKit::terminate() MUST be called to free up any resources used by the
 	FoundationKit.
-	
+
 	An example of proper usage looks like this:
 	\code
-	int main( int argc, char** argv ) 
+	int main( int argc, char** argv )
 	{
 		VCF::FoundationKit::init(argc, argv);
 
@@ -209,7 +211,7 @@ namespace VCF{
 	}
 	\endcode
 
-	
+
 	The FoundationKit is cannot be instantiated nor can it be derived from.
 	@see SystemToolkit
 	@see ClassRegistry
@@ -218,8 +220,8 @@ namespace VCF{
 	public:
 		/**
 		This is a special case exception used \em only for the
-		triggering of an asertion, through the call to 
-		FoundationKit::assertCondition(). By having this as a 
+		triggering of an asertion, through the call to
+		FoundationKit::assertCondition(). By having this as a
 		special case and \em not deriving from BasicException,
 		an assertion is prevented from being caught in a BasicException
 		try/catch block.
@@ -227,13 +229,13 @@ namespace VCF{
 		class Assertion : public std::exception {
 		public:
 			Assertion( const String& msg ) :msg_(msg){}
-			
+
 			virtual ~Assertion() throw() {} //make GCC happy :)
-			
+
 			virtual const char *what() const throw() {
 				return msg_.ansi_c_str();
 			}
-			
+
 		private:
 			String msg_;
 		};
@@ -253,17 +255,17 @@ namespace VCF{
 		returns the CommandLine contents as passed into
 		the FoundationKit::init() function. The CommandLine allows you
 		easy access to any command like arguments passed into your application.
-		See the CommandLine class for examples of how to use this class. 
+		See the CommandLine class for examples of how to use this class.
 		@see CommandLine
 		*/
 		static const CommandLine& getCommandLine();
 
 		/**
-		
-		Use this to cause an assert to be fired. Currently an assert is implemented 
+
+		Use this to cause an assert to be fired. Currently an assert is implemented
 		by throwing an exception. An assert is triggered if the condition is false.
-		
-		As a general rule you don't need to call this directly, instead use the VCF_ASSERT 
+
+		As a general rule you don't need to call this directly, instead use the VCF_ASSERT
 		macro's because in addition to a message the macro will be able to also include
 		the file and line number where the assertion was triggered, which is more useful.
 		@param bool the condition - if this value is false, then an assert is triggered
@@ -429,136 +431,136 @@ What follows is documentation for the main VCF source documentaion page.
 
 \mainpage
 
-This document is meant, first of all, as a general introduction to the VCF. It 
-intends to orient you to the basic concepts of how the VCF is designed and how 
-to begin using the features. Here’s what it won’t do: It won’t teach you how 
-to program; nor will it show you details about features of the framework (see 
-the Reference Manual for this information); nor will it present you with 
-step-by-step information about how to build a program. No, this document will 
-paint a “big picture” of what’s going on in the VCF. Enough rambling… now onto 
+This document is meant, first of all, as a general introduction to the VCF. It
+intends to orient you to the basic concepts of how the VCF is designed and how
+to begin using the features. Here’s what it won’t do: It won’t teach you how
+to program; nor will it show you details about features of the framework (see
+the Reference Manual for this information); nor will it present you with
+step-by-step information about how to build a program. No, this document will
+paint a “big picture” of what’s going on in the VCF. Enough rambling… now onto
 the details.
 
 \par Understanding the kits of the VCF
-The VCF is organized into a series of kits. Each one is built into a separate 
+The VCF is organized into a series of kits. Each one is built into a separate
 library. Here are the main ones:
 
-\li ApplicationKit: This kit contains the items directly used in building an 
-application, items like combo boxes, radio buttons, and panels. These are 
-generally GUI-oriented items. If you are developing a standard application, you 
+\li ApplicationKit: This kit contains the items directly used in building an
+application, items like combo boxes, radio buttons, and panels. These are
+generally GUI-oriented items. If you are developing a standard application, you
 will use this kit most often.
 
-\li FoundationKit: This kit contains items foundational to the features in any 
-application, items like threads, strings, and XML parsers. Without a doubt, this 
+\li FoundationKit: This kit contains items foundational to the features in any
+application, items like threads, strings, and XML parsers. Without a doubt, this
 kit will make your application more powerful.
 
-\li GraphicsKit: This kit contains items pertaining to the graphics features in 
-any application, items like fonts, lines, and Bezier curves. If you want to add 
+\li GraphicsKit: This kit contains items pertaining to the graphics features in
+any application, items like fonts, lines, and Bezier curves. If you want to add
 pizzazz to your application, this kit is your best bet.
 
 
-The VCF also has additional secondary kits that perform specific functions. At 
+The VCF also has additional secondary kits that perform specific functions. At
 the moment, we have three:
 \li HTMLKit: This kit provides for displaying and manipulating HTML via
 the underlying browser libraries provided by the platform. On Microsoft
-windows this currently means using the functionality provided by the 
+windows this currently means using the functionality provided by the
 COM based WebBrowser control and MSHTML DLL.
 
 \li InternetKit: This kit provides easy access to common web protocols, namely
-http and ftp, again, wrapping the platform support that already exists. On 
-Microsoft windows this currently means using the functionality provided 
+http and ftp, again, wrapping the platform support that already exists. On
+Microsoft windows this currently means using the functionality provided
 by the Urlmon library.
 
-\li JavaScriptKit: This kit provides basic support for scripting your 
+\li JavaScriptKit: This kit provides basic support for scripting your
 C++ classes using java script. The current implementation is based on
 the java script interpreter written by Mozilla.
 
-\li NetworkKit: This kit contains items pertaining to network interactions in any 
-application, containing items like sockets. If your application demands 
+\li NetworkKit: This kit contains items pertaining to network interactions in any
+application, containing items like sockets. If your application demands
 multi-party interaction, use this kit.
 
-\li OpenGLKit: This kit facilitates the display of OpenGL code within an application. 
+\li OpenGLKit: This kit facilitates the display of OpenGL code within an application.
 If you wish to use three-dimensional graphics, an OpenGLControl will be a good friend.
 
 \li RegExKit: This kit add support for using regular expressions within the VCF.
 
-\li RemoteObjectKit: This is kit was started as an experiment to determine if the 
-  RTTI functions could be used to create a small library suitable for distributed 
-  objects, something akin to COM/DCOM but much more practical and easy to use. At 
-  this point it is more of a proof of concept - it works, but needs to be revamped 
+\li RemoteObjectKit: This is kit was started as an experiment to determine if the
+  RTTI functions could be used to create a small library suitable for distributed
+  objects, something akin to COM/DCOM but much more practical and easy to use. At
+  this point it is more of a proof of concept - it works, but needs to be revamped
   before using it for anything more than experiments.
 
 
 
-Since components’ interactions with the operating system vary from system to 
-system, each kit contains implementations of the generalized components. Classes 
-prefaced with Win32 pertain to 32-bit Windows environments; those prefaced with 
-Linux, to Linux; with OSX, to Mac OS X. Generally, you need not access the 
-specific implementation; you can keep to the generalized classes. (In other 
-words, use class VCF::Thread, not class VCF::Win32Thread.). These classes also 
-represent the concrete implementations of the various peer interfaces that are 
-used to describe the various OS services. Peer classes are used by the internals 
+Since components’ interactions with the operating system vary from system to
+system, each kit contains implementations of the generalized components. Classes
+prefaced with Win32 pertain to 32-bit Windows environments; those prefaced with
+Linux, to Linux; with OSX, to Mac OS X. Generally, you need not access the
+specific implementation; you can keep to the generalized classes. (In other
+words, use class VCF::Thread, not class VCF::Win32Thread.). These classes also
+represent the concrete implementations of the various peer interfaces that are
+used to describe the various OS services. Peer classes are used by the internals
 of the framework.
 
 \par Using examples to start your application
-A standard download of the VCF will contain an examples directory, replete with 
-basic demonstrations of features of the VCF. If you are completely unaware of how 
+A standard download of the VCF will contain an examples directory, replete with
+basic demonstrations of features of the VCF. If you are completely unaware of how
 to use a feature, it is best first to consult one of these examples.
 
-For example, if you want to use a slider control (like one Windows uses to control 
-the volume), use VisualStudio to open up the project in examples/Sliders. If you 
-build this project, it will appear in the examples/Sliders/vcXX/Debug directory. 
-Here, you will see horizontal and vertical sliders, sliders with different begin 
-and end values, sliders which send update events upon moving, etc. You can read 
+For example, if you want to use a slider control (like one Windows uses to control
+the volume), use VisualStudio to open up the project in examples/Sliders. If you
+build this project, it will appear in the examples/Sliders/vcXX/Debug directory.
+Here, you will see horizontal and vertical sliders, sliders with different begin
+and end values, sliders which send update events upon moving, etc. You can read
 the code and use these ideas to begin your application.
 
 
-If you aren’t sure which example contains a certain item, perform a recursive 
-search through the examples directory with your item’s name. Then open up one of 
+If you aren’t sure which example contains a certain item, perform a recursive
+search through the examples directory with your item’s name. Then open up one of
 the projects that contains the item.
 
 \par Fine-tuning your application via the source manual
-Of course, examples can’t exhaustively demonstrate all of the features of an 
-application. Thus the API is available to facilitate your creative use of the 
-features. To view this, see the Source Manual. The Class List will show a list 
+Of course, examples can’t exhaustively demonstrate all of the features of an
+application. Thus the API is available to facilitate your creative use of the
+features. To view this, see the Source Manual. The Class List will show a list
 of the classes.
 
-When you click on a class, you will see its inheritance diagram. If you wish to 
+When you click on a class, you will see its inheritance diagram. If you wish to
 view the class’s inherited members, click the “List of all members” link.
 
 \par Sifting through the functions
-The purpose of each function is designed to be easily understandable and not 
-cryptic. If the class is a control, a paint method will paint the control; you 
+The purpose of each function is designed to be easily understandable and not
+cryptic. If the class is a control, a paint method will paint the control; you
 should not call this method as it is called automatically.
 
 
-Sometimes methods have models which represent a collection of multiple items. For 
-example, a ListBoxControl (a vertical list of items) uses a ListModel (available 
-via the getListModel command) to manage a group of ListItems. To build a list, 
-create a DefaultListItem (an implementation of ListItem), add it to the ListModel 
+Sometimes methods have models which represent a collection of multiple items. For
+example, a ListBoxControl (a vertical list of items) uses a ListModel (available
+via the getListModel command) to manage a group of ListItems. To build a list,
+create a DefaultListItem (an implementation of ListItem), add it to the ListModel
 via addItem, and it will be added to the ListBoxControl.
 
-Other methods use events. There may be various event-handler methods present in 
+Other methods use events. There may be various event-handler methods present in
 a class. Again, you will usually not access these directly.
 
 
-A control can be positioned and sized via the setBounds method, or via setLeft, 
-setRight, setTop, setBottom, setWidth, and setHeight methods. These are 
+A control can be positioned and sized via the setBounds method, or via setLeft,
+setRight, setTop, setBottom, setWidth, and setHeight methods. These are
 universally inherited from the base Control class.
 
-Some items use enumerations to specify particular functionalities. You can click 
-on the class name to view a full description of the enumeration. An example from 
+Some items use enumerations to specify particular functionalities. You can click
+on the class name to view a full description of the enumeration. An example from
 the directory should help you flesh this out.
 
 
 \par Understanding accessories
-If you wish to add event handlers to a control, various delegates are accessible 
-in a class. The delegate names should adequately describe their functionality as 
-distinguished from each other. An EventHandler can be added to each delegate to 
-handle an event occurring at a certain point in the code. There are several types 
-of EventHandlers; you can use the \c GenericEventHandler or fetch the specific type 
+If you wish to add event handlers to a control, various delegates are accessible
+in a class. The delegate names should adequately describe their functionality as
+distinguished from each other. An EventHandler can be added to each delegate to
+handle an event occurring at a certain point in the code. There are several types
+of EventHandlers; you can use the \c GenericEventHandler or fetch the specific type
 of EventHandler for your specific need.
 
-In the following example, an EventHandler is added to a ListBoxControl, calling 
+In the following example, an EventHandler is added to a ListBoxControl, calling
 the function onChange every time the selection is changed in the ListBox.
 
 \code
@@ -572,25 +574,25 @@ lbc->SelectionChanged += new
 Sometimes, a method is available to add events, in lieu of a Delegate.
 
 \par Going back to the original source
-If you need to know the exact details of how a function acts, you may access the 
-original source code. Sometimes, you may need to access the specific 
-implementation for your operating system. It will be available in the 
-src/vcf/[KitName]/ directory. Be sure to read the class – header and cxx file – 
+If you need to know the exact details of how a function acts, you may access the
+original source code. Sometimes, you may need to access the specific
+implementation for your operating system. It will be available in the
+src/vcf/[KitName]/ directory. Be sure to read the class – header and cxx file –
 thoroughly so that you understand everything that is going on.
 
 \par Suggesting new functionality
-Suppose you wish to change how a function operates, or that you wish to add new 
-functionality to a class. You can change the source code directly to make this 
-happen. You may want to suggest the change in the forums or talk over the change 
+Suppose you wish to change how a function operates, or that you wish to add new
+functionality to a class. You can change the source code directly to make this
+happen. You may want to suggest the change in the forums or talk over the change
 to ensure that you don’t unnecessarily break something.
 
-Or suppose that you wish to create your own custom classes. You can inherit from 
-a base class much as the already existing classes do. For example, you can 
-inherit from class VCF::CustomControl to make your own control. You may need to 
-write the paint method, much as the other controls do, to be sure that it is 
+Or suppose that you wish to create your own custom classes. You can inherit from
+a base class much as the already existing classes do. For example, you can
+inherit from class VCF::CustomControl to make your own control. You may need to
+write the paint method, much as the other controls do, to be sure that it is
 painted correctly.
 
-If you run into trouble, be sure to pose a question in the forums. Chances are 
+If you run into trouble, be sure to pose a question in the forums. Chances are
 that someone will be able to relate to your concern.
 
 */
