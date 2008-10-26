@@ -50,7 +50,7 @@ class Win32RichEditOleCallback : public  IRichEditOleCallback {
 public:
 	STDMETHODIMP QueryInterface( REFIID iid, void ** ppvObject ) {
 		String uuidStr;
-		
+
 		if ( iid == IID_IRichEditOleCallback ) {
 			*ppvObject = (void*) (IRichEditOleCallback*)this;
 		}
@@ -145,7 +145,7 @@ Win32Edit::Win32Edit( TextControl* component, const bool& isMultiLineControl ):
 	textWrapping_(false)
 {
 	if ( isMultiLineControl ) {
-		editState_ |= esMultiLined; 
+		editState_ |= esMultiLined;
 	}
 }
 
@@ -156,7 +156,7 @@ Win32Edit::~Win32Edit()
 	}
 	if ( NULL != richEditCallback_ ) {
 		SendMessage( hwnd_, EM_SETOLECALLBACK, 0, (LPARAM)0 );
-		delete richEditCallback_;		
+		delete richEditCallback_;
 	}
 }
 
@@ -240,7 +240,7 @@ void Win32Edit::create( Control* owningControl )
 
 		//make sure that we get ALL richedit change notfications!
 		::SendMessage( hwnd_, EM_SETEVENTMASK, 0, ENM_CHANGE | ENM_SELCHANGE );
-		
+
 
 		textControl_->ControlModelChanged +=
 			new ClassProcedure1<Event*,Win32Edit>( this, &Win32Edit::onControlModelChanged, "Win32Edit::onControlModelChanged" );
@@ -371,7 +371,7 @@ String Win32Edit::getText( unsigned int start, unsigned int length )
 }
 
 String Win32Edit::getText()
-{	
+{
 	String result;
 	ITextRange* range;
 	textDocument_->Range( 0, 0, &range );
@@ -384,11 +384,11 @@ String Win32Edit::getText()
 		range->GetText( &str );
 
 		/**
-		don't copy the very last character as this will be a 
+		don't copy the very last character as this will be a
 		0x0D, from MSDN:
-		"Another important feature is that all stories contain 
-		an undeletable final CR (0xD) character at the end. So 
-		even an empty story has a single character, namely the 
+		"Another important feature is that all stories contain
+		an undeletable final CR (0xD) character at the end. So
+		even an empty story has a single character, namely the
 		final CR."
 		*/
 
@@ -506,7 +506,7 @@ bool Win32Edit::stateAllowsModelChange()
 {
 	bool result = false;
 
-	if ( !(editState_ & esStyleChanging) && 
+	if ( !(editState_ & esStyleChanging) &&
 		!(editState_ & esPeerTextChanging) &&
 		!(editState_ & esKeyEvent) &&
 		!(editState_ & esExternalTextChanging) ) {
@@ -520,7 +520,7 @@ bool Win32Edit::stateAllowsModelChange()
 bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam, LRESULT& wndProcResult, WNDPROC defaultWndProc )
 {
 	bool result = false;
-	wndProcResult = 0;	
+	wndProcResult = 0;
 
 	switch ( message ) {
 
@@ -537,10 +537,10 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 
 		}
 		break;
-		
+
 /*
 		case WM_GETTEXTLENGTH : {
-			
+
 			VCF::Model* model = textControl_->getViewModel();
 			if ( NULL != model ) {
 				String text = model->getValueAsString( textControl_->getModelKey() );
@@ -554,7 +554,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 		break;
 
 		case WM_GETTEXT : {
-			
+
 			VCF::Model* model = textControl_->getViewModel();
 			if ( NULL != model ) {
 				String text = model->getValueAsString( textControl_->getModelKey() );
@@ -566,7 +566,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			}
 			else {
 				result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
-			}			
+			}
 		}
 		break;
 		*/
@@ -578,19 +578,19 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			}
 			else {
 				result = true;
-				
+
 				editState_ |= esPeerTextChanging;
-				
+
 				//let the default rich text code handle this!
 				wndProcResult = defaultWndProcedure( message, wParam, lParam );
-				
+
 				//modify the model, but ignore an change notifications to us!
 				editState_ |= esModelTextChanging;
-				
+
 				textControl_->getViewModel()->setValueAsString( getText(), textControl_->getModelKey() );
-				
+
 				editState_ &= ~esModelTextChanging;
-				
+
 				editState_ &= ~esPeerTextChanging;
 			}
 		}
@@ -650,12 +650,12 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				uint32 virtKeyCode = Win32UIUtils::translateVKCode( wParam );
 
 				switch ( virtKeyCode ) {
-					case vkLeftArrow : 
-					case vkRightArrow : 
-					case vkPgUp : 
-					case vkPgDown : 
-					case vkHome : 
-					case vkEnd : 
+					case vkLeftArrow :
+					case vkRightArrow :
+					case vkPgUp :
+					case vkPgDown :
+					case vkHome :
+					case vkEnd :
 					case vkDownArrow :
 					case vkUpArrow : {
 						long start = 0;
@@ -687,12 +687,12 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					peerControl_->handleEvent( &event );
 
 					switch ( virtKeyCode ) {
-						case vkLeftArrow : 
-						case vkRightArrow : 
-						case vkPgUp : 
-						case vkPgDown : 
-						case vkHome : 
-						case vkEnd : 
+						case vkLeftArrow :
+						case vkRightArrow :
+						case vkPgUp :
+						case vkPgDown :
+						case vkHome :
+						case vkEnd :
 						case vkDownArrow :
 						case vkUpArrow : {
 
@@ -725,7 +725,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					if ( !(editState_ & esTextModelChangedPending) ) {
 						editState_ |= esTextModelChangedPending;
 					}
-					
+
 
 					if ( !peerControl_->isDesigning() && !event.ignoreKeystroke ) {
 						wndProcResult = defaultWndProcedure( message, wParam, lParam );
@@ -739,7 +739,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					if ( editState_ & esTextModelChangedPending ) {
 						setText( textControl_->getText() );
 					}
-				}			
+				}
 
 
 				editState_ &= ~esKeyEvent;
@@ -754,14 +754,14 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				result = true;
 			}
 			else {
-				
+
 				editState_ |= esKeyEvent;
 
 				/**
 				JC
 				I moved the defaultWndProcedure(  message, wParam, lParam );
-				block *after* I call the peerControl_->handleEvent() 
-				method. Otherwise the caretpos is "wrong", for lack of a better 
+				block *after* I call the peerControl_->handleEvent()
+				method. Otherwise the caretpos is "wrong", for lack of a better
 				word, which in turn screws up where data is removed from the model.
 				*/
 				if ( !peerControl_->isDestroying() && !peerControl_->isDesigning() ) {
@@ -784,7 +784,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 							/**
 							JC
 							if the character is a graphic char (like ":" or "a")
-							then re-calculate the virtual key code, based on the 
+							then re-calculate the virtual key code, based on the
 							character value. This was put here to overcome a bug
 							when handling WM_CHAR's from the numpad, which gives
 							us the right character, but a bogus virtual key
@@ -821,14 +821,14 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 					else {
 						wndProcResult = 0;
 						result = true;
-					}					
+					}
 
 					if ( editState_ & esTextModelChangedPending ) {
 						setText( textControl_->getText() );
 					}
 
-					
-				}				
+
+				}
 
 				if ( peerControl_->isDesigning() ) {
 					wndProcResult = 0;
@@ -862,7 +862,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 						editState_ &= ~esModelTextChanging;
 					}
 				}
-				break; 
+				break;
 
 
 			}
@@ -874,7 +874,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			wndProcResult = 0;
 			result = true;
 
-			
+
 
 			SELCHANGE* selChange = (SELCHANGE*)lParam;
 
@@ -892,7 +892,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 				textControl_->SelectionChanged( &event );
 			}
 
-			
+
 		}
 		break;
 
@@ -904,22 +904,22 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			else {
 				wndProcResult = 0;
 				result = false;
-	
+
 				editState_ |= esExternalTextChanging;
-	
+
 				if ( !peerControl_->isDesigning() ) {
 					wndProcResult = defaultWndProcedure(  message, wParam, lParam );
 					result = true;
 				}
-	
+
 				// copy the control's text into the model
-				
+
 				VCF::Model* model = textControl_->getViewModel();
 				if ( NULL != model ) {
 					editState_ |= esModelTextChanging;
-					
+
 					String text = getText();
-					
+
 					/*if ( WM_PASTE == message ) {
 						//remove \r\n and replace with \n
 						uint32 pos = text.find( "\r\n" );
@@ -928,13 +928,13 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 							pos = text.find( "\r\n" );
 						}
 					}*/
-	
+
 					model->setValueAsString( text, textControl_->getModelKey() );
-					
+
 					editState_ &= ~esModelTextChanging;
 				}
-				
-				
+
+
 				editState_ &= ~esExternalTextChanging;
 			}
 		}
@@ -1017,7 +1017,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			currentSelStart_ = s;
 
 			editState_ |= esGotFocus;
-			
+
 			result = true;
 			AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 		}
@@ -1038,7 +1038,7 @@ bool Win32Edit::handleEventMessages( UINT message, WPARAM wParam, LPARAM lParam,
 			break;
 */
 
-		default: {	
+		default: {
 
 			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 
@@ -1064,10 +1064,10 @@ void Win32Edit::onModelValidated( Event* e )
 		else {
 			s2 = ve->value.toString();
 		}
-		
+
 		if ( s.size() > s2.size() /*|| s.empty()*/ ) {
 			setText( s2 );
-		}		
+		}
 	}
 }
 
@@ -1075,7 +1075,7 @@ void Win32Edit::onModelValidationFailed( Event* e )
 {
 	ValidationErrorEvent* ve = (ValidationErrorEvent*)e;
 
-	if ( ve->key == textControl_->getModelKey() && 
+	if ( ve->key == textControl_->getModelKey() &&
 		textControl_->getViewModel()->getFormatter() &&
 		!(textControl_->getViewModel()->getUpdateFlags() & muAllowsInvalidData) ) {
 		String s = getText();
@@ -1194,8 +1194,8 @@ int Win32Edit::getCRCount( const uint32& begin, const uint32& end, const bool& l
 void Win32Edit::setText( const VCF::String& text )
 {
 	String oldText = getText();
-	if ( oldText != text ) {	
-		editState_ |= esPeerTextChanging;	
+	if ( oldText != text ) {
+		editState_ |= esPeerTextChanging;
 		int firstLine1 = ::SendMessage( hwnd_, EM_GETFIRSTVISIBLELINE, (WPARAM)0, (LPARAM)0 );
 
 		DWORD start = getSelectionStart();
@@ -1204,20 +1204,20 @@ void Win32Edit::setText( const VCF::String& text )
 		ITextRange* range;
 		textDocument_->Range( 0, 0, &range );
 		if ( NULL != range ) {
-			
+
 			long len = 0;
 			range->GetStoryLength( &len );
 			range->SetEnd( len );
-			
+
 			BSTR str = SysAllocStringLen( text.c_str(), text.length() );
-			
+
 			range->SetText( str );
-			
+
 			SysFreeString( str );
-			
+
 			range->Release();
 		}
-		
+
 
 		int diff = oldText.length() - text.length();
 
@@ -1228,7 +1228,7 @@ void Win32Edit::setText( const VCF::String& text )
 				count = 0;
 			}
 			else {
-				count = min(0, ((int)count)-diff );
+				count = minVal(0, ((int)count)-diff );
 			}
 		}
 		else if ( diff < 0 ) {
@@ -1237,11 +1237,11 @@ void Win32Edit::setText( const VCF::String& text )
 				//count = 0;
 			}
 		}
-		
+
 		setSelectionMark( start, count );
-		
+
 		int firstLine2 = ::SendMessage( hwnd_, EM_GETFIRSTVISIBLELINE, (WPARAM)0, (LPARAM)0 );
-		
+
 		if ( firstLine2 != firstLine1 ) {
 			// workaround necessary only while insertText is implemented with setText - MP
 			// if we could know the number of lines visible in the editor, we would be able
@@ -1251,7 +1251,7 @@ void Win32Edit::setText( const VCF::String& text )
 			// At that point setSelectionMark() will make the selection visible, but at the end
 			// of the page.
 			::SendMessage( hwnd_, EM_LINESCROLL, (WPARAM)0, (LPARAM)(-(firstLine2-firstLine1)) );
-			
+
 			// this will not move the the scrollbar if the selection is already visible
 			setSelectionMark( start, count );
 		}
@@ -1298,29 +1298,29 @@ void Win32Edit::getSelectionMark( long & start, long & end )
 		start = start + crCount;
 		end = start + count + crCountSpan;
 
-		
+
 		selection->Release();
 	}
 }
 
 void Win32Edit::clearSelection()
 {
-	::SendMessage( hwnd_, EM_SETSEL, (WPARAM)-1, (LPARAM)0 );	
+	::SendMessage( hwnd_, EM_SETSEL, (WPARAM)-1, (LPARAM)0 );
 }
 
 void Win32Edit::setSelectionMark( const uint32& start, const uint32& count )
 {
 	uint32 end = start + count;
-   
+
    	int crCount = getCRCount( 0, start, true );
    	int crCountSpan = getCRCount( start, end, true );	//fix 2004/01/14 was false before which gives error that seem almost random
-   
-   
+
+
    	unsigned long adjustedStart = start - crCount;
    	unsigned long adjustedCount = count - crCountSpan;
    	end = adjustedStart + adjustedCount;
 
-	::SendMessage( hwnd_, EM_SETSEL, (WPARAM)adjustedStart, (LPARAM)end );	
+	::SendMessage( hwnd_, EM_SETSEL, (WPARAM)adjustedStart, (LPARAM)end );
 }
 
 
@@ -1375,8 +1375,8 @@ void Win32Edit::setReadOnly( const bool& readonly )
 	/**
 	JC: I added the code below to make sure that
 	read-ionly mode works. Without it, the control will
-	ignore keystrokes, which is correct, but it 
-	WILL accept drag-drop, which is clean not 
+	ignore keystrokes, which is correct, but it
+	WILL accept drag-drop, which is clean not
 	what we want. This seems to fix that. If it causes
 	problems, please refer to this
 	http://vcf-online.org/forums/index.php?showtopic=1055
@@ -1392,7 +1392,7 @@ void Win32Edit::setReadOnly( const bool& readonly )
 		}
 	}
 	else {
-		style &= ~ES_READONLY;		
+		style &= ~ES_READONLY;
 
 		if ( richEditCallback_ ) {
 			SendMessage( hwnd_, EM_SETOLECALLBACK, 0, (LPARAM)0 );
@@ -1404,8 +1404,8 @@ void Win32Edit::setReadOnly( const bool& readonly )
 	::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
 
 
-	
-	
+
+
 }
 
 uint32 Win32Edit::getTotalPrintablePageCount( PrintContext* context )
@@ -1568,7 +1568,7 @@ void Win32Edit::onControlModelChanged( Event* e )
 		tml3 = new ClassProcedure1<Event*,Win32Edit>( this, &Win32Edit::onModelValidated, "onModelValidated" );
 	}
 
-	
+
 
 
 	Model* tm = textControl_->getViewModel();
@@ -1576,9 +1576,9 @@ void Win32Edit::onControlModelChanged( Event* e )
 		tm->ModelChanged += tml;
 		tm->ModelValidationFailed += tml2;
 		tm->ModelValidated += tml3;
-		
+
 		String text = tm->getValueAsString(textControl_->getModelKey());
-		
+
 		setText( text );
 	}
 	else {
