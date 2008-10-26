@@ -1,16 +1,16 @@
-/** \file 
+/** \file
   * Common utility classes wrappers.
   */
 /*
  * Copyright © 2000, 2001 Sofus Mortensen
  *
- * This material is provided "as is", with absolutely no warranty 
- * expressed or implied. Any use is at your own risk. Permission to 
- * use or copy this software for any purpose is hereby granted without 
- * fee, provided the above notices are retained on all copies. 
- * Permission to modify the code and to distribute modified code is 
- * granted, provided the above notices are retained, and a notice that 
- * the code was modified is included with the above copyright notice. 
+ * This material is provided "as is", with absolutely no warranty
+ * expressed or implied. Any use is at your own risk. Permission to
+ * use or copy this software for any purpose is hereby granted without
+ * fee, provided the above notices are retained on all copies.
+ * Permission to modify the code and to distribute modified code is
+ * granted, provided the above notices are retained, and a notice that
+ * the code was modified is included with the above copyright notice.
  *
  * This header is part of comet.
  * http://www.lambdasoft.dk/comet
@@ -29,17 +29,17 @@ namespace comet {
 	namespace impl {
 		template<typename T> T* bad_alloc_check(T* x)
 		{
-			if (!x) throw std::bad_alloc(); 
+			if (!x) throw std::bad_alloc();
 			return x;
 		}
-	
+
 		/** Implementation struct for auto_attach.
 		 * \internal
 		 */
 		template<typename T> class auto_attach_t
 		{
 		public:
-			explicit auto_attach_t(const T& v) : val_(v) {}; 
+			explicit auto_attach_t(const T& v) : val_(v) {};
 			const T& get() const { return val_; }
 		private:
 			const T& val_;
@@ -68,6 +68,9 @@ namespace comet {
 		enum sa_traits_check_type { stct_features_ok, stct_vt_ok, stct_iid_ok };
 		enum sa_traits_extras_type { stet_null, stet_record, stet_iid };
 
+#ifdef VCF_MINGW
+        template<typename Itf> inline const uuid_t& uuidof(Itf * = 0) throw();
+#endif
 		// Interface traits are needed by all interfaces so that we can create
 		// safearrays of the types.
 		template<typename INTERFACE, VARTYPE VT, long FEATURE_FLAG>
@@ -76,12 +79,12 @@ namespace comet {
 			enum { vt = VT };
 			enum { check_type = stct_iid_ok };
 			enum { extras_type = stet_iid };
-			
+
 			typedef INTERFACE* raw;
 			typedef com_ptr<INTERFACE>  value_type;
 			typedef com_ptr<INTERFACE> & reference;
 			typedef const com_ptr<INTERFACE> & const_reference;
-			
+
 			static reference create_reference(raw& x) { return *reinterpret_cast<com_ptr< INTERFACE>*>(&x); }
 			static const_reference create_const_reference(raw& x) { return *reinterpret_cast<const com_ptr< INTERFACE >*>(&x); }
 			typedef nonconst_traits<com_ptr<INTERFACE> > nct;
@@ -95,27 +98,27 @@ namespace comet {
 		/** Basic safearray traits  - used by enums.
 		 * \internal
 		 */
-		template<typename T, VARTYPE VT> struct basic_sa_traits 
+		template<typename T, VARTYPE VT> struct basic_sa_traits
 		{
 			enum { vt = VT };
 			enum { check_type = stct_vt_ok };
 			enum { extras_type = stet_null };
-			
+
 			typedef T raw;
 			typedef T value_type;
 			typedef T& reference;
 			typedef const T& const_reference;
-			
+
 			static reference create_reference(T& x) { return x; }
 			static const_reference create_const_reference(T& x) { return x; }
-			
+
 			typedef T* iterator;
 			typedef const T* const_iterator;
 
 			static bool are_features_ok(unsigned short) { return true; }
 		};
 	}
-	
+
 	/*! \addtogroup COMType
 	 */
 	//@{
@@ -139,7 +142,7 @@ namespace comet {
 	public:
 		operator VARIANT_BOOL*() { return &vb_; }
 		bool_out(bool& b) : b_(b) {}
-		~bool_out() { b_ = vb_ ? true : false; } 
+		~bool_out() { b_ = vb_ ? true : false; }
 	private:
 		bool_out &operator=( const bool_out &);
 		VARIANT_BOOL vb_;
@@ -170,7 +173,7 @@ namespace comet {
 	public:
 		operator VARIANT_BOOL*() { return &vb_; }
 		bool_inout(bool& b) : b_(b), vb_(b ? COMET_VARIANT_TRUE : COMET_VARIANT_FALSE) {}
-		~bool_inout() { b_ = vb_ ? true : false; } 
+		~bool_inout() { b_ = vb_ ? true : false; }
 	private:
 		bool_inout &operator=(const bool_inout &);
 		VARIANT_BOOL vb_;
