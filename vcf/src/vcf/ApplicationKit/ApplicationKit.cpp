@@ -185,6 +185,7 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL(ObjectListModel);		
 		REGISTER_CLASSINFO_EXTERNAL(ObjectColumnModel);
 		REGISTER_CLASSINFO_EXTERNAL(DictionaryModel);
+		REGISTER_CLASSINFO_EXTERNAL(DictionaryListModel);		
 		REGISTER_CLASSINFO_EXTERNAL(ValueModel);
 		REGISTER_CLASSINFO_EXTERNAL(BoolModel);
 		REGISTER_CLASSINFO_EXTERNAL(IntModel);

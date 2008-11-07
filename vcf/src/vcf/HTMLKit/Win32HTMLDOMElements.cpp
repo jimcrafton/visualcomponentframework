@@ -448,17 +448,6 @@ VCF::String VCF::HTMLElement::getOuterText() const {
 	return VCF::String(tmp.c_str());
 }
 
-
-void VCF::HTMLElement::insertAdjacentHTML( const VCF::String& where, const VCF::String& html ) 
-{
-	(*peer_)->insertAdjacentHTML( bstr_t(where.c_str()).in(), bstr_t(html.c_str()).in() );		
-}
-
-void VCF::HTMLElement::insertAdjacentText( const VCF::String& where, const VCF::String& text ) 
-{
-	(*peer_)->insertAdjacentText( bstr_t(where.c_str()).in(), bstr_t(text.c_str()).in() );		
-}
-
 VCF::HTMLElement VCF::HTMLElement::getParentTextEdit() const 
 {
 	VCF::HTMLElement result;

@@ -99,9 +99,8 @@ public:
 
 	void setPosition( const double& val );
 
-	bool hasTickMarks() {
-		return hasTickMarks_;
-	}
+	bool hasTickMarks();
+
 	void setHasTickMarks( const bool& val );
 
 
@@ -141,7 +140,6 @@ protected:
 	double minVal_;
 	double maxVal_;
 	double position_;
-	bool hasTickMarks_;
 	int32 tickMarkStyle_;
 	int32 tickFrequency_;
 	Point dragPosStart_;
