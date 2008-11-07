@@ -22,7 +22,6 @@ SliderControl::SliderControl():
 	minVal_(0.0),
 	maxVal_(100.0),
 	position_(0.0),
-	hasTickMarks_(true),
 	tickMarkStyle_(SliderControl::tmsTopLeft|SliderControl::tmsBottomRight),
 	tickFrequency_(10),
 	pressed_(false),
@@ -58,9 +57,20 @@ void SliderControl::setPosition( const double& val )
 	PositionChanged(&e);
 }
 
+bool SliderControl::hasTickMarks()
+{
+	return tickMarkStyle_ == SliderControl::tmsNone ? false : true;
+}
+
 void SliderControl::setHasTickMarks( const bool& val )
 {
-	hasTickMarks_ = val;
+	if ( val ) {
+		tickMarkStyle_ = SliderControl::tmsTopLeft | SliderControl::tmsBottomRight;
+	}
+	else {
+		tickMarkStyle_ = SliderControl::tmsNone;
+	}
+	
 	repaint();
 }
 

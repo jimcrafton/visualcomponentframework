@@ -305,6 +305,13 @@ _property_( double, "childSpacer", getChildSpacer, setChildSpacer, "" );
 _property_( bool, "allowContentsToWrap", allowContentsToWrap, setAllowContentsToWrap, "" );
 _property_enum_labeled_( FlowDirection, "direction", getFlowDirection, setFlowDirection,
 					   fdVertical, fdHorizontal, 2, FlowDirectionNames, "");
+
+_property_enum_labeled_( HorizontalFlowAlignment, "horizontalAlign", getHorizontalAlign, setHorizontalAlign,
+					   hfLeftAlign, hfRightAlign, 3, HorizontalFlowAlignmentNames, "");
+
+_property_enum_labeled_( VerticalFlowAlignment, "verticalAlign", getVerticalAlign, setVerticalAlign,
+					   vfTopAlign, vfBottomAlign, 3, VerticalFlowAlignmentNames, "");
+
 _class_rtti_end_
 
 
@@ -1038,7 +1045,9 @@ _property_( double, "position", getPosition, setPosition, "" );
 _property_( bool, "tickMarks", hasTickMarks, setHasTickMarks, "" );
 _property_( int32, "tickFrequency", getTickFrequency, setTickFrequency, "" );
 _property_( double, "stepIncrement", getStepIncrement, setStepIncrement, "" );
-_property_( double, "stepIncrement", getPageIncrement, setPageIncrement, "" );
+_property_( double, "pageIncrement", getPageIncrement, setPageIncrement, "" );
+_delegate_(EventDelegate, PositionChanged )
+
 _class_rtti_end_
 
 
@@ -1147,6 +1156,7 @@ _class_rtti_end_
 
 _class_rtti_(ObjectModel, "VCF::Model", "ObjectModel")
 	_property_object_( Object, "source", getSource, setSource, "" )
+	_property_( bool, "useFields", useFields, setUseFields, "" );
 _class_rtti_end_
 
 _class_rtti_(ObjectListModel, "VCF::SimpleListModel", "ObjectListModel")	
@@ -1154,6 +1164,10 @@ _class_rtti_end_
 
 
 _class_rtti_(DictionaryModel, "VCF::Model", "DictionaryModel")	
+_class_rtti_end_
+
+_class_rtti_(DictionaryListModel, "VCF::ListModel", "DictionaryListModel")	
+_property_object_( Dictionary, "dictionary", getDictionary, setDictionary, "" );
 _class_rtti_end_
 
 

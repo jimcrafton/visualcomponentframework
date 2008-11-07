@@ -30,7 +30,7 @@ namespace VCF {
 
 class APPLICATIONKIT_API ObjectModel : public Model {
 public:
-	ObjectModel():source_(NULL){}
+	ObjectModel():source_(NULL),useFields_(false){}
 
 	virtual bool isEmpty() {
 		
@@ -49,6 +49,15 @@ public:
 	}
 
 
+	bool useFields() {
+		return useFields_;
+	}	
+
+	void setUseFields( const bool& val ) {
+		useFields_ = val;
+	}
+
+
 	virtual ValidationResult validate() {
 		ValidationResult result;
 		result.valid = true;
@@ -56,28 +65,33 @@ public:
 		if ( NULL != source_ ) {
 			Class* clazz = source_->getClass();
 			if ( NULL != clazz ) {
-				Enumerator<Property*>* props = clazz->getProperties();
-				
-				while ( props->hasMoreElements() ) {
-					Property* prop = props->nextElement();
-					if ( !prop->isCollection() ) {
-						
-						VariantData* v = prop->get();
-						ValidationResult vr = Model::validate( prop->getDisplayName(), *v );
-						
-						if ( !vr ) {
-							result.addFailedRules( vr.getFailedRules() );
+				if ( useFields_ ) {
 
-							if ( !result.error.empty() ) {
-								result.error += "\n";
+				}
+				else {
+					Enumerator<Property*>* props = clazz->getProperties();
+					
+					while ( props->hasMoreElements() ) {
+						Property* prop = props->nextElement();
+						if ( !prop->isCollection() ) {
+							
+							VariantData* v = prop->get();
+							ValidationResult vr = Model::validate( prop->getDisplayName(), *v );
+							
+							if ( !vr ) {
+								result.addFailedRules( vr.getFailedRules() );
+								
+								if ( !result.error.empty() ) {
+									result.error += "\n";
+								}
+								result.error += vr.error;
+								result.key = vr.key;
+								result.value = vr.value;
 							}
-							result.error += vr.error;
-							result.key = vr.key;
-							result.value = vr.value;
+							result.valid &= vr.valid;
+							
+							
 						}
-						result.valid &= vr.valid;
-						
-						
 					}
 				}
 			}
@@ -91,19 +105,37 @@ public:
 			Class* clazz = source_->getClass();
 			if ( NULL != clazz ) {
 				String propertyName = key;
-				Property* property = clazz->getProperty( propertyName );
-				if ( NULL != property ) {					
-					ValidationResult v = Model::validate( key, value );
-					if ( v || (updateFlags_ & muAllowsInvalidData) ) {
-						try {
-							property->set( &v.value );
-							changedKeyValue( key, value );
-						}
-						catch (BasicException& e) {
-							StringUtils::trace( Format("Unable to set property {%s} to value {%s}\n\tException: %s\n") % key.toString() % value.toString() % e.getMessage() );
+
+				if ( useFields_ ) {
+					Field* field = clazz->getField( propertyName );
+					if ( NULL != field ) {						
+						ValidationResult v = Model::validate( key, value );
+						if ( v || (updateFlags_ & muAllowsInvalidData) ) {
+							try {
+								field->set( &v.value );
+								changedKeyValue( key, v.value );
+							}
+							catch (BasicException& e) {
+								StringUtils::trace( Format("Unable to set field {%s} to value {%s}\n\tException: %s\n") % key.toString() % value.toString() % e.getMessage() );
+							}
 						}
 					}
-				}				
+				}
+				else {
+					Property* property = clazz->getProperty( propertyName );
+					if ( NULL != property ) {					
+						ValidationResult v = Model::validate( key, value );
+						if ( v || (updateFlags_ & muAllowsInvalidData) ) {
+							try {
+								property->set( &v.value );
+								changedKeyValue( key, v.value );
+							}
+							catch (BasicException& e) {
+								StringUtils::trace( Format("Unable to set property {%s} to value {%s}\n\tException: %s\n") % key.toString() % value.toString() % e.getMessage() );
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -113,20 +145,32 @@ public:
 			Class* clazz = source_->getClass();
 			if ( NULL != clazz ) {
 				String propertyName = key;
-				Property* property = clazz->getProperty( propertyName );
-				if ( NULL != property ) {					
-					VariantData* v = property->get();
-					if ( NULL != v ) {
+				if ( useFields_ ) {
+					Field* field = clazz->getField( propertyName );
+					if ( NULL != field ) {
+						VariantData* v = field->get();
 						return *v;
 					}
-				}				
+				}
+				else {
+					Property* property = clazz->getProperty( propertyName );
+					if ( NULL != property ) {					
+						VariantData* v = property->get();
+						if ( NULL != v ) {
+							return *v;
+						}
+					}	
+				}
 			}
 		}
 
 		return VariantData::null();
 	}
+
+
 protected:
 	Object* source_;
+	bool useFields_;
 };
 
 
@@ -426,7 +470,162 @@ protected:
 
 
 
+class APPLICATIONKIT_API DictionaryListModel : public ListModel {
+public:
+	DictionaryListModel() : ListModel(),dictionary_(NULL) {}
 
+	Dictionary* getDictionary() {
+		return dictionary_;
+	}
+
+	void setDictionary( Dictionary* val ) {
+		dictionary_ = val;
+
+		if ( NULL != dictionary_ ) {
+			getItems( dictArray_ );	
+			
+			ModelEvent e(this,MODEL_CHANGED);
+			changed(&e);
+		}
+	}
+
+
+	virtual bool isEmpty() {
+		
+		if ( NULL != dictionary_ ) {
+			return dictionary_->empty();
+		}
+
+		return false;
+	}
+
+	virtual void empty() {
+		if ( NULL != dictionary_ ) {
+			dictionary_->clear();
+		}
+
+		dictArray_.clear();
+	}
+
+	virtual VariantData get( const uint32& index ) {
+		if ( NULL != dictionary_ ) {
+			uint32 i = 0;
+			Dictionary::Enumerator* items = dictionary_->getEnumerator();
+			while ( items->hasMoreElements() ) {
+				Dictionary::pair item = items->nextElement();
+
+				if ( index == i ) {
+					return item.first;
+				}
+				++i;
+			}
+		}
+
+		return VariantData::null();
+	}
+
+	virtual uint32 getIndexOf( const VariantData& item ) {
+		uint32 result = 0;
+		Dictionary::Enumerator* items = dictionary_->getEnumerator();
+		while ( items->hasMoreElements() ) {
+			Dictionary::pair data = items->nextElement();
+			
+			if ( data.second == item ) {
+				return result;
+			}
+
+			result++;
+		}
+		
+		return ListModel::InvalidIndex;
+	}
+
+	virtual bool getItems( std::vector<VariantData>& arrayOfItems ) {
+
+		Dictionary::Enumerator* items = dictionary_->getEnumerator();
+		while ( items->hasMoreElements() ) {
+			Dictionary::pair data = items->nextElement();
+			arrayOfItems.push_back( data.second );
+		}
+
+		return !arrayOfItems.empty();
+	}
+
+	virtual Enumerator<VariantData>* getItems() {
+		return dictArray_.getEnumerator();
+	}
+
+	virtual bool getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items ) {
+		return false;
+	}
+
+	virtual uint32 getCount() {
+		if ( NULL != dictionary_ ) {
+			return dictionary_->size();
+		}
+		return 0;
+	}
+
+	virtual VariantData getValue( const VariantData& key=VariantData::null() ) 	{
+		if ( NULL != dictionary_ ) {
+			return (*dictionary_)[ key.toString() ];
+		}
+
+		return VariantData::null();
+	}
+
+	virtual void setValue( const VariantData& value, const VariantData& key=VariantData::null() )  {
+		if ( NULL != dictionary_ ) {
+			(*dictionary_)[ key.toString() ] = value;
+			changedKeyValue( key, value );
+		}		
+	}
+
+protected:	
+	virtual bool doInsert( const uint32 & index, const VariantData& item ) {
+		return true;
+	}
+
+	virtual bool doRemove( const uint32 & index ) {
+		if ( NULL != dictionary_ ) {
+			uint32 i = 0;
+			Dictionary::Enumerator* items = dictionary_->getEnumerator();
+			while ( items->hasMoreElements() ) {
+				Dictionary::pair item = items->nextElement();
+
+				if ( index == i ) {
+					dictionary_->remove( item.first );
+					return true;
+				}
+				++i;
+			}
+		}
+
+		return false;
+	}
+
+	virtual bool doSet( const uint32& index, const VariantData& val ) {
+		if ( NULL != dictionary_ ) {
+			uint32 i = 0;
+			Dictionary::Enumerator* items = dictionary_->getEnumerator();
+			while ( items->hasMoreElements() ) {
+				Dictionary::pair item = items->nextElement();
+
+				if ( index == i ) {
+					item.second = val;
+					return true;
+				}
+				++i;
+			}
+		}
+
+		return false;
+	}
+
+
+	Dictionary* dictionary_;
+	Array<VariantData> dictArray_;
+};
 
 
 class APPLICATIONKIT_API DictionaryModel : public Model {

@@ -502,6 +502,14 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ImageList.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\InputValidation.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\InputValidation.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\LibraryApplication.cpp
 # End Source File
 # Begin Source File

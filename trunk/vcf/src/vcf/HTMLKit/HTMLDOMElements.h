@@ -238,11 +238,6 @@ public:
 
 	String getOuterText() const ;
 
-
-	void insertAdjacentHTML( const String& where, const String& html ) ;
-
-	void insertAdjacentText( const String& where, const String& text ) ;
-
 	HTMLElement getParentTextEdit() const ;
 
 	bool getIsTextEdit() const ;
