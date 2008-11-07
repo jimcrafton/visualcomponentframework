@@ -1,0 +1,147 @@
+object ColCvtWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 435
+	width = 480
+	caption = 'ColCvt Window'	
+
+
+	object hlContainer : VCF::HorizontalLayoutContainer
+		numberOfColumns = 2
+		maxRowHeight = 35
+		rowSpacerHeight = 10
+		widths[0] = 200
+		widths[1] = 35
+
+		tweenWidths[0] = 10
+	end
+	container = @hlContainer
+
+	object lbl1 : VCF::Label		
+		caption = 'Color:'
+	end
+
+	object col : VCF::Label
+		width = 90pt //120px
+		color = 'red'
+		transparent = false
+	end
+
+	object lbl2 : VCF::Label		
+		caption = 'Red:'
+	end
+
+	object sliderRed : VCF::SliderControl		
+		minValue = 0
+		maxValue = 1000
+		tickMarks = false
+		tickFrequency = 0
+		delegates
+			 PositionChanged = [ColCvtApp@ColCvtApp::onRed]
+		end
+	end
+
+	object lbl3 : VCF::Label		
+		caption = 'Green:'
+	end
+
+	object sliderGreen : VCF::SliderControl		
+		minValue = 0
+		maxValue = 1000
+		tickMarks = false
+		tickFrequency = 0
+
+		delegates
+			 PositionChanged = [ColCvtApp@ColCvtApp::onGreen]
+		end
+	end
+
+	object lbl4 : VCF::Label		
+		caption = 'Blue:'
+	end
+
+	object sliderBlue : VCF::SliderControl		
+		minValue = 0
+		maxValue = 1000
+		tickMarks = false
+		tickFrequency = 0
+		delegates
+			 PositionChanged = [ColCvtApp@ColCvtApp::onBlue]
+		end
+	end
+
+	object lbl4 : VCF::Label		
+		caption = 'RGB:'
+	end
+
+	object rgbVals : VCF::Label		
+		caption = '???'
+	end
+
+	object lbl5 : VCF::Label		
+		caption = 'HLS:'
+	end
+
+	object hlsVals : VCF::Label		
+		caption = '???'
+	end
+
+	object lbl6 : VCF::Label		
+		caption = 'HSV:'
+	end
+
+	object hsvVals : VCF::Label		
+		caption = '???'
+	end
+
+
+	object lbl7 : VCF::Label		
+		caption = 'CMY:'
+	end
+
+	object cmyVals : VCF::Label		
+		caption = '???'
+	end
+
+
+	object lbl8 : VCF::Label		
+		caption = 'CMYK:'
+	end
+
+	object cmykVals : VCF::Label		
+		caption = '???'
+	end
+
+
+	object lbl9 : VCF::Label		
+		caption = 'XYZ (Observer: 2°, Illuminant: D65):'
+	end
+
+	object xyzVals : VCF::Label		
+		caption = '???'
+	end
+
+	object lbl10 : VCF::Label		
+		caption = 'CIE-L*ab (Observer: 2°, Illuminant: D65):'
+	end
+
+	object labVals : VCF::Label		
+		caption = '???'
+	end
+
+	object lbl11 : VCF::Label		
+		caption = 'Yuv:'
+	end
+
+	object yuvVals : VCF::Label		
+		caption = '???'
+	end
+
+	object lbl12 : VCF::Label		
+		caption = 'Yuv (8 bit):'
+	end
+
+	object yuv8Vals : VCF::Label		
+		caption = '???'
+	end
+end

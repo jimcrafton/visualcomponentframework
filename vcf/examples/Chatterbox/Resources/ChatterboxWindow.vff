@@ -16,6 +16,16 @@ object ChatterboxWindow  : VCF::Window
 			tooltip = 'Opens user preferences for Chatterbox'
 		end
 
+		object profsBtn : VCF::ToolbarItem
+			caption = 'Profiles'
+			imageIndex = 0
+			tooltip = 'Opens user profiles for Chatterbox'
+
+			delegates
+				ItemClicked = [Chatterbox@Chatterbox::editProfiles]
+			end
+		end
+
 
 		//put this here to ensure that the button captions get shown
 		showButtonCaptions = true

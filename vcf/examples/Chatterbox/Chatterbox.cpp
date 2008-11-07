@@ -11,10 +11,15 @@
 #include "vcf/NetworkKit/IPAddress.h"
 #include "vcf/FoundationKit/Dictionary.h"
 #include "vcf/FoundationKit/StringTokenizer.h"
+#include "vcf/FoundationKit/XMLDictOutputStream.h"
+#include "vcf/FoundationKit/XMLDictInputStream.h"
 
+#include "vcf/ApplicationKit/AdapterModels.h"
 
 
 using namespace VCF;
+
+
 
 
 
@@ -27,6 +32,16 @@ public:
 _class_rtti_(ChatterboxWindow, "VCF::Window", "ChatterboxWindow")
 _class_rtti_end_
 
+
+
+
+class ProfilesManager : public Dialog {
+public:
+	ProfilesManager() {}
+	virtual ~ProfilesManager(){};
+};
+_class_rtti_(ProfilesManager, "VCF::Dialog", "ProfilesManager")
+_class_rtti_end_
 
 
 
@@ -218,6 +233,9 @@ public:
 
 	TCPSocket* ircConnection;
 	IRCReadThread* currentIRCThread;
+	Dictionary userProfiles;
+
+
 
 	Chatterbox( int argc, char** argv ) : Application(argc, argv) {
 		HTMLKit::init( argc, argv );
@@ -228,11 +246,16 @@ public:
 
 		addCallback( new ClassProcedure1<KeyboardEvent*,Chatterbox>(this, &Chatterbox::userEnteredText), "Chatterbox::userEnteredText" );
 		addCallback( new ClassProcedure1<Event*,Chatterbox>(this, &Chatterbox::onTestBtn), "Chatterbox::onTestBtn" );
+
+		addCallback( new ClassProcedure1<Event*,Chatterbox>(this, &Chatterbox::editProfiles), "Chatterbox::editProfiles" );
+		
 	}
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
 		REGISTER_CLASSINFO_EXTERNAL(ChatterboxWindow);
+		REGISTER_CLASSINFO_EXTERNAL(ProfilesManager);
+		
 
 
 		currentUser = System::getUserName();
@@ -242,6 +265,11 @@ public:
 		setMainWindow(mainWindow);
 		mainWindow->show();
 
+
+		readUserProfiles();
+
+
+		addProfile( "jim", "Jim C", "jimc" );
 
 		connectToServer( "irc.freenode.net", 6667, "ddiego" );
 		
@@ -363,6 +391,68 @@ public:
 		msg += " \r\n";
 		sos.write( (const uchar*)msg.c_str(), msg.size() );
 
+	}
+
+
+	void readUserProfiles() {
+		String profilePath = System::getCommonDirectory( System::cdUserProgramData ) + "/" + getName() + "/profileData.xml";
+		File profile(profilePath,File::ofRead);		
+
+		FileInputStream* fs = profile.getInputStream();
+		if ( NULL != fs ) {
+			
+			XMLDictInputStream xis(fs);
+			
+			userProfiles.clear();
+			
+			//read in the dictionary from the stream
+			xis >> &userProfiles;
+
+			delete fs;
+		}
+
+
+		//userProfiles
+	}
+
+	void saveUserProfiles() {
+		String profilePath = System::getCommonDirectory( System::cdUserProgramData ) + "/" + getName() + "/"; 
+		File profile;
+		profile.create( profilePath );
+
+		profile.create( profilePath + "profileData.xml", File::ofWrite );
+
+		OutputStream* fs = profile.getOutputStream();
+
+		XMLDictOutputStream xos(fs);
+
+		xos << &userProfiles;
+
+
+		delete fs;
+	}
+
+	void addProfile( const String& userName, const String& realName, const String& nickName )  {
+		Dictionary* profile = new Dictionary();
+		(*profile)["userName"] = userName;
+		(*profile)["realName"] = realName;
+		(*profile)["nickName"] = nickName;
+
+		userProfiles[userName] = profile;
+	}
+
+	void editProfiles( Event* ) {
+		ProfilesManager* dlg = (ProfilesManager*) Frame::createDialog( classid(ProfilesManager) );
+
+		DictionaryListModel* m = (DictionaryListModel*)dlg->findComponent( "profiles" );
+
+		
+
+		m->setDictionary( &userProfiles );
+
+		dlg->showModal();
+
+		delete dlg;
 	}
 };
 
