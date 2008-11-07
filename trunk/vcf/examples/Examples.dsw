@@ -1674,21 +1674,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ScrollBugs"=..\..\..\..\junk\ScrollBugs\ScrollBugs.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "Scrolling"=.\Scrolling\Scrolling.dsp - Package Owner=<4>
 
 Package=<5>
