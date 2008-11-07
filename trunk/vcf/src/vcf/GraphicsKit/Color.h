@@ -593,13 +593,18 @@ public:
 	void setHSL( const double& h, const double& l, const double& s);
 
 	void getCMYK(double& c, double& m, double& y, double& k) const;
+	void getCMY(double& c, double& m, double& y) const;
 	void setCMYK( const double& c, const double& m, const double& y, const double& k);
 
-	void getLab() const;
-	void setLab();
+	void getXYZ(double& x, double& y, double& z) const;
 
-	void getYUV() const;
-	void setYUV();
+	void getLab(double& L, double& a, double& b) const;
+	void setLab(const double& L, const double& a, const double& b);
+
+	void getYUV(double& y, double& u, double& v) const;
+	void getYUV8Bit(uchar& y, uchar& u, uchar& v) const;
+	void setYUV(const double& y, const double& u, const double& v);
+	void setYUV8Bit( const uchar& y, const uchar& u, const uchar& v);
 
 	virtual void copyColor( const Color* source );
 
@@ -1508,30 +1513,175 @@ inline void Color::setHSL( const double& h, const double& l, const double& s ) {
 	b_ = rgb.B;
 }
 
+inline void Color::getCMY(double& c, double& m, double& y) const
+{
+	c = 1.0 - r_;
+	m = 1.0 - g_;
+	y = 1.0 - b_;
+}
+
 inline void Color::getCMYK( double& c, double& m, double& y, double& k ) const {
-	throw NotImplementedException();
+	/**
+	Algorithm from http://www.easyrgb.com/index.php?X=MATH&H=11#text11
+	*/
+
+	c = 1.0 - r_;
+	m = 1.0 - g_;
+	y = 1.0 - b_;
+
+	double var_K = 1.0;
+		
+	if ( c < var_K ) {  
+		var_K = c;
+	}
+	
+	if ( m < var_K ) {
+		var_K = m;
+	}
+	
+	if ( y < var_K ) {
+		var_K = y;
+	}
+
+	if ( var_K == 1.0 ) { //Black
+	   c = 0;
+	   m = 0;
+	   y = 0;
+	}
+	else {
+	   c = ( c - var_K ) / ( 1.0 - var_K );
+	   m = ( m - var_K ) / ( 1.0 - var_K );
+	   y = ( y - var_K ) / ( 1.0 - var_K );
+	}
+	k = var_K;
 }
 
 inline void Color::setCMYK( const double& c, const double& m, const double& y, const double& k ) {
 	throw NotImplementedException();
 }
 
-inline void Color::getLab() const {
+inline void Color::getXYZ(double& x, double& y, double& z) const {
+	double var_R = r_;
+	double var_G = g_;
+	double var_B = b_;
+	if ( var_R > 0.04045 ) {
+		var_R = pow( ( var_R + 0.055 ) / 1.055, 2.4 );
+	}
+	else {
+		var_R = var_R / 12.92;
+	}
+	
+	if ( var_G > 0.04045 ) {
+		var_G = pow( ( var_G + 0.055 ) / 1.055 , 2.4 );
+	}
+	else {
+		var_G = var_G / 12.92;
+	}
+	
+	if ( var_B > 0.04045 ) {
+		var_B = pow( ( var_B + 0.055 ) / 1.055, 2.4 );
+	}
+	else {
+		var_B = var_B / 12.92;
+	}
+
+
+	var_R = var_R * 100.0;
+	var_G = var_G * 100.0;
+	var_B = var_B * 100.0;
+	
+	//Observer. = 2°, Illuminant = D65
+	x = var_R * 0.4124 + var_G * 0.3576 + var_B * 0.1805;
+	y = var_R * 0.2126 + var_G * 0.7152 + var_B * 0.0722;
+	z = var_R * 0.0193 + var_G * 0.1192 + var_B * 0.9505;
+}
+
+inline void Color::getLab(double& L, double& a, double& b) const {
+	double x,y,z;
+
+	getXYZ(x,y,z);
+
+	double var_X = x / 95.047;          //ref_X =  95.047   Observer= 2°, Illuminant= D65
+	double var_Y = y / 100.0;          //ref_Y = 100.000
+	double var_Z = z / 108.883;          //ref_Z = 108.883
+
+	if ( var_X > 0.008856 ) {
+		var_X = pow(var_X, 1.0/3.0 );
+	}
+	else  {
+		var_X = ( 7.787 * var_X ) + ( 16.0 / 116.0 );
+	}
+
+	if ( var_Y > 0.008856 ) {
+		var_Y = pow( var_Y, 1.0/3.0 );
+	}
+	else {
+		var_Y = ( 7.787 * var_Y ) + ( 16.0 / 116.0 );
+	}
+
+	if ( var_Z > 0.008856 ) {
+		var_Z = pow( var_Z, 1.0/3.0 );
+	}
+	else {
+		var_Z = ( 7.787 * var_Z ) + ( 16.0 / 116.0 );
+	}
+
+	L = ( 116.0 * var_Y ) - 16.0;
+	a = 500.0 * ( var_X - var_Y );
+	b = 200.0 * ( var_Y - var_Z );
+}
+
+inline void Color::setLab( const double& L, const double& a, const double& b ) {
 	throw NotImplementedException();
 }
 
-inline void Color::setLab() {
+inline void Color::getYUV(double& y, double& u, double& v) const {
+	//algorithm from http://en.wikipedia.org/wiki/YUV
+	double wR, wG, wB;
+	wR = 0.299;
+	wB = 0.114;
+	wG = 1.0 - wR - wB; //0.587
+	y = wR * r_ + wG * g_ + wB * b_;
+	u = 0.436 * ((b_-y) / (1.0-wB));
+	v = 0.615 * ((r_-y) / (1.0-wR));
+}
+
+inline void Color::getYUV8Bit(uchar& y, uchar& u, uchar& v) const {
+	//algorithm from http://msdn.microsoft.com/en-us/library/ms893078.aspx
+
+	uchar R,G,B;
+	getRGB8( R,G,B );
+	
+	y = ( (  66 * R + 129 * G +  25 * B + 128) >> 8) +  16;
+	u = ( ( -38 * R -  74 * G + 112 * B + 128) >> 8) + 128;
+	v = ( ( 112 * R -  94 * G -  18 * B + 128) >> 8) + 128;
+}
+
+inline void Color::setYUV(const double& y, const double& u, const double& v) {
 	throw NotImplementedException();
 }
 
-inline void Color::getYUV() const {
-	throw NotImplementedException();
-}
+inline void Color::setYUV8Bit( const uchar& y, const uchar& u, const uchar& v)
+{
+	//algorithm from http://msdn.microsoft.com/en-us/library/ms893078.aspx
+	uchar C = y - 16;
+	uchar D = u - 128;
+	uchar E = v - 128;
 
-inline void Color::setYUV() {
-	throw NotImplementedException();
-}
 
+	ushort R = (298 * C + 409 * E + 128) >> 8;
+	R = minVal<ushort>( 0, maxVal<ushort>(R,255) );
+
+	ushort G = (298 * C - 100 * D - 208 * E + 128) >> 8;
+	G = minVal<ushort>( 0, maxVal<ushort>(G,255) );
+
+	ushort B = (298 * C + 516 * D + 128) >> 8;
+	B = minVal<ushort>( 0, maxVal<ushort>(B,255) );
+
+	r_ = (double)R / 255.0;
+	g_ = (double)G / 255.0;
+	b_ = (double)B / 255.0;
+}
 
 inline void Color::copyColor( const Color* color ) {
 	if ( NULL != color ){
