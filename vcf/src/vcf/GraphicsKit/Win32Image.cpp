@@ -220,7 +220,7 @@ void Win32Image::loadFromFile( const String& fileName )
 	UINT loadImageFlags = 0;
 
 #ifndef VCF_WIN32CE
-	loadImageFlags = LR_CREATEDIBSECTION;
+	loadImageFlags = LR_CREATEDIBSECTION | LR_LOADFROMFILE;
 #endif
 
 #ifdef VCF_WIN32CE

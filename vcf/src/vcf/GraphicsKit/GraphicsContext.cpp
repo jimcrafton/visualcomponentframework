@@ -1816,6 +1816,7 @@ void GraphicsContext::deleteRenderArea()
 
 void GraphicsContext::flushRenderArea()
 {
+	renderArea_->image->getImageContext()->setOrigin( 0,0 );
 	getPeer()->setContextID( renderArea_->oldContextID );
 
 	if ( viewableBounds_.isNull() ) {

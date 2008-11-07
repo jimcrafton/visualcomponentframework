@@ -785,7 +785,7 @@ String Color::toHexCode8( const ColorPackScheme& cps, const ColorType& ct )
 	uc = (uint8)(c * Color::xFF + 0.5);
 
 	switch ( cps ) {
-		case Color::cpsARGB : {
+		case Color::cpsRGB : case Color::cpsARGB : {
 			//uint32 rgb = 0;
 			//((uint8*)(&rgb))[2] = cr;
 			//((uint8*)(&rgb))[1] = cg;
