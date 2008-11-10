@@ -90,12 +90,15 @@ public:
 
 	/**
 	@delegate Performed this is fired when the action's perform()
-	method is called.
-	@event ActionEvent
+	method is called. Check the event type and confirm that it's a
+	Action::ActionPerformedEvent before casting to an ActionEvent type.
+	Otherwise it's whatever event the target might normally fire, 
+	such as a ButtonEvent.
+	@event Event
 	@eventtype Action::ActionPerformedEvent
 	@see perform()
 	*/
-	DELEGATE(ActionDelegate,Performed);
+	DELEGATE(EventDelegate,Performed);
 
 	/**
 	This is called by a target (or the framework itself) to tell the action to fire off an
@@ -115,6 +118,8 @@ public:
 	to all the event handlers attached to the Performed delegate.
 	*/
 	void perform( Event* event=NULL );
+
+	void perform( UIComponent* target );
 
 	/**
 	adds a target to the action

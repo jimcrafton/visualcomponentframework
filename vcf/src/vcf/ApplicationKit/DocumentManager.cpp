@@ -761,6 +761,14 @@ Action* DocumentManager::getAction( uint32 tag )
 	return result;
 }
 
+void DocumentManager::addActionTarget( uint32 tag, UIComponent* target )
+{
+	ActionMap::iterator found = actionsMap_.find( tag );
+	if ( found != actionsMap_.end() ) {
+		found->second->addTarget( target );
+	}
+}
+
 void DocumentManager::addAction( uint32 tag, Action* action )
 {
 	actionsMap_[tag] = action;

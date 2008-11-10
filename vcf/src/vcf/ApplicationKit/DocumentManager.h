@@ -550,6 +550,8 @@ public:
 	*/
 	Action* getAction( uint32 tag );
 
+	void addActionTarget( uint32 tag, UIComponent* target );
+
 	/**
 	* performs a cut operation on the document,
 	* if the document allows for it.
@@ -1631,6 +1633,10 @@ Window* DocumentManagerImpl<AppClass,DocInterfacePolicy>::getWindowForNewDocumen
 		}
 		else {
 			result = new Window();
+		}
+
+		if ( NULL != result ) {
+			app_->addComponent(result);
 		}
 	}
 

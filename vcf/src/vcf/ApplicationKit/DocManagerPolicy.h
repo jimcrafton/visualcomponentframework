@@ -307,6 +307,8 @@ public:
 			Document* currentDoc = found->second;
 			if ( doc == currentDoc ) {
 				window = doc->getWindow();
+				Application* app = Application::getRunningInstance();
+				app->removeComponent( window );
 				break;
 			}
 			++found;
@@ -318,7 +320,7 @@ public:
 			Document* currentDoc = found->second;
 			
 			window->setView( NULL );
-			window->setViewModel( NULL );
+			window->setViewModel( NULL );			
 
 			// In a map: erase() invalidates all iterators on the erased element
 			//		and does not invalidate any other iterator.
@@ -362,8 +364,7 @@ public:
 	*/
 	bool closeDocumentWindow( Window* window ) {
 		
-		window->close();
-
+		window->close();	
 		
 		return true;
 	}
