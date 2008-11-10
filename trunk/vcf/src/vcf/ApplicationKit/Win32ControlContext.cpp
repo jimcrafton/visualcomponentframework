@@ -57,17 +57,23 @@ void Win32ControlContext::checkHandle()
 		}
 
 		//check to see if we need to offset the origin
-		if ( true == owningControl->isLightWeight() ) {
+		if ( owningControl->isLightWeight() ) {
 			Rect bounds = owningControl->getBounds();
-			double originX = bounds.left_;
-			double originY = bounds.top_;
+			//double originX = bounds.left_;
+			//double originY = bounds.top_;
+			
+			oldOrigin_.x_ = origin_.x_;
+			oldOrigin_.y_ = origin_.y_;
+
+			origin_.x_ = bounds.left_;
+			origin_.y_ = bounds.top_;
 			POINT oldOrigin = {0,0};
-			BOOL result = ::SetViewportOrgEx( dc_, (int32)originX, (int32)originY, &oldOrigin );
-			if ( FALSE == result ) {
+			BOOL result = 1;//::SetViewportOrgEx( dc_, (int32)originX, (int32)originY, &oldOrigin );
+			if ( !result ) {
 				throw RuntimeException( MAKE_ERROR_MSG_2("SetViewportOrgEx() failed for win32 Context") );
 			}
-			oldOrigin_.x_ = oldOrigin.x;
-			oldOrigin_.y_ = oldOrigin.y;
+			//oldOrigin_.x_ = oldOrigin.x;
+			//oldOrigin_.y_ = oldOrigin.y;
 		}
 	}
 }
@@ -79,9 +85,13 @@ void Win32ControlContext::releaseHandle()
 	if ( (NULL != owningControlCtx_->getOwningControl()) && (NULL != dc_) ){
 		Control* owningControl = owningControlCtx_->getOwningControl();
 		ControlPeer* peer = owningControl->getPeer();
-		if ( true == owningControl->isLightWeight() ) {
-			BOOL result = ::SetViewportOrgEx( dc_, (int32)oldOrigin_.x_, (int32)oldOrigin_.y_, NULL );
-			if ( FALSE == result ) {
+		if ( owningControl->isLightWeight() ) {
+			
+			origin_.x_ = oldOrigin_.x_;
+			origin_.y_ = oldOrigin_.y_;
+
+			BOOL result = 1;//::SetViewportOrgEx( dc_, (int32)oldOrigin_.x_, (int32)oldOrigin_.y_, NULL );
+			if ( !result ) {
 				throw RuntimeException( MAKE_ERROR_MSG_2("SetViewportOrgEx() failed for win32 Context") );
 			}
 		}

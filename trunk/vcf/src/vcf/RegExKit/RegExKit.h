@@ -18,6 +18,11 @@ where you installed the VCF.
 
 
 
+#ifdef _LIB_CPLVERNUM
+#		undef _LIB_CPLVERNUM
+#endif
+
+
 /**
 Handle the extension based on the compiler
 */
@@ -47,6 +52,7 @@ Handle the extension based on the compiler
 #     define _LIB_CPLVERNUM "bcc"
 #  endif
 # endif
+
 
 
 #ifdef _DEBUG
@@ -80,6 +86,15 @@ Handle the extension based on the compiler
 	#endif
 
 #endif //VCF_MSC
+
+
+
+// fast workaround so to be able to easily come back if we want
+#ifdef _LIB_CPLVERNUM
+#		undef _LIB_CPLVERNUM
+#   define _LIB_CPLVERNUM ""
+#endif
+
 
 
 //this sets up a "dependencies" set of defines

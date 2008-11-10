@@ -44,7 +44,7 @@ object HtmlMVCWindow  : VCF::Window
 
 		object costLabel : VCF::DOMElementComponent 
 			delegates
-				MouseUp = [HtmlMVCApplication@HtmlMVCApplication::onCostDblClick]
+				DblClick = [HtmlMVCApplication@HtmlMVCApplication::onCostDblClick]
 			end
 		end
 
