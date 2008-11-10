@@ -56,7 +56,8 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"/>
+				Culture="1033"
+				ResourceOutputFileName="../../../Lib/$(InputName).res"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -110,7 +111,8 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"/>
+				Culture="1033"
+				ResourceOutputFileName="../../../Lib/$(InputName).res"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool

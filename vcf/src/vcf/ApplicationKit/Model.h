@@ -593,7 +593,7 @@ public:
 	it. It is up to implementers to return something meaningful here.
 	*/
 	virtual bool isEmpty() {
-		VCF_ASSERT( false ); //we shouldn't get here
+		VCF_ASSERT2( false, "isEmpty() needs to be implemented by your custom Model based class!" ); //we shouldn't get here		
 		return true;
 	}
 

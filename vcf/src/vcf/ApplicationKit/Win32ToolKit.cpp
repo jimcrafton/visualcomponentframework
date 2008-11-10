@@ -3191,6 +3191,11 @@ Win32ToolKit::Win32ToolKit():
 	whatsThisHelpActive_(false)
 
 {
+
+	if ( NULL == Win32ToolKit_toolkitHInstance ) {
+		Win32ToolKit_toolkitHInstance = ::GetModuleHandle( NULL );
+	}
+
 	if ( System::isUnicodeEnabled() ) {
 		VCF_POST_EVENT = RegisterWindowMessageW( L"VCF_POST_EVENT" );
 	}

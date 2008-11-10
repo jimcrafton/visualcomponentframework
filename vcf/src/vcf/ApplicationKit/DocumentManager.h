@@ -1619,18 +1619,18 @@ Window* DocumentManagerImpl<AppClass,DocInterfacePolicy>::getWindowForNewDocumen
 		}
 	}
 	else {
-		// in a MDI policy the new window for the document is a new window
-		result = Frame::createWindow( ClassRegistry::getClass(info.windowClass) );
+		// in a MDI policy the new window for the document is a new window		
 		
-		if ( NULL == result ) {
-			
-			if ( info.windowClass.empty() ) {
-				result = new Window();
-			}
-			else {
+		if ( !info.windowClass.empty() ) {			
+			result = Frame::createWindow( ClassRegistry::getClass(info.windowClass) );
+			if ( NULL == result ) {			
+				//probably not a resource based window, try just creating the window class
 				Object* windowObj = ClassRegistry::createNewInstance( info.windowClass );
 				result = dynamic_cast<Window*>(windowObj);
 			}
+		}
+		else {
+			result = new Window();
 		}
 	}
 
@@ -1900,11 +1900,11 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 	else {
 		//throw exception !
 		if ( NULL == newDocument ) {
-			throw RuntimeException( "Unable to create document of type: \"" + info.docClass + "\"" );
+			throw RuntimeException( "Unable to create document of type: \"" + info.docClass + "\".\nCheck the applications resource .xml file for a valid DocumentClass entry with valid class name, \nand make sure that the class is registered with the VCF ClassRegistry." );
 		}
 
 		if ( NULL == newModel ) {
-			throw RuntimeException( "Unable to create model of type: \"" + info.modelClass + "\"" );
+			throw RuntimeException( "Unable to create model of type: \"" + info.modelClass + "\". \nCheck the applications resource .xml file for a valid ModelClass entry with valid class name, \nand make sure that the class is registered with the VCF ClassRegistry." );
 		}
 	}
 
@@ -1947,18 +1947,20 @@ template < typename AppClass, typename DocInterfacePolicy >
 Model* DocumentManagerImpl<AppClass,DocInterfacePolicy>::createModelFromType( const DocumentInfo& info ) {
 	Model* result = NULL;
 
-	Class* clazz = NULL;
-	Object* objInstance = NULL;
-	try {
-		objInstance = ClassRegistry::createNewInstance( info.modelClass );
-	}
-	catch (...) {		
-		objInstance = ClassRegistry::createNewInstanceFromClassID( info.modelClass );
-	}
-
-	result = dynamic_cast<Model*>( objInstance );
-	if ( NULL == result ) {
-		delete objInstance;
+	if ( !info.modelClass.empty() ) {
+		Class* clazz = NULL;
+		Object* objInstance = NULL;
+		try {
+			objInstance = ClassRegistry::createNewInstance( info.modelClass );
+		}
+		catch (...) {
+			objInstance = ClassRegistry::createNewInstanceFromClassID( info.modelClass );
+		}
+		
+		result = dynamic_cast<Model*>( objInstance );
+		if ( NULL == result ) {
+			delete objInstance;
+		}
 	}
 
 	return result;

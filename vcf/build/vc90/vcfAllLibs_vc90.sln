@@ -123,6 +123,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vcfAllStaticLibs", "vcfAllS
 		{40C8AEAA-CB38-4C47-9382-D48B1C08BB04} = {40C8AEAA-CB38-4C47-9382-D48B1C08BB04}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScintillaKit", "ScintillaKit\ScintillaKit_90.vcproj", "{15EF3B50-484F-4B0F-B122-5BED845123BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -241,6 +243,10 @@ Global
 		{DC67ED0C-F94E-4B62-8330-52FC9D9CF0F4}.Debug|Win32.Build.0 = Debug|Win32
 		{DC67ED0C-F94E-4B62-8330-52FC9D9CF0F4}.Release|Win32.ActiveCfg = Release|Win32
 		{DC67ED0C-F94E-4B62-8330-52FC9D9CF0F4}.Release|Win32.Build.0 = Release|Win32
+		{15EF3B50-484F-4B0F-B122-5BED845123BB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{15EF3B50-484F-4B0F-B122-5BED845123BB}.Debug|Win32.Build.0 = Debug|Win32
+		{15EF3B50-484F-4B0F-B122-5BED845123BB}.Release|Win32.ActiveCfg = Release|Win32
+		{15EF3B50-484F-4B0F-B122-5BED845123BB}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

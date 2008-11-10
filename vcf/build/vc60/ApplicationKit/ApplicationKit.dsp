@@ -502,14 +502,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ImageList.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\InputValidation.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\InputValidation.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\LibraryApplication.cpp
 # End Source File
 # Begin Source File
@@ -1086,18 +1078,6 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ScrollEvent.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\TableModelEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\TabModelEvent.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ApplicationKit\TextEvent.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\..\src\vcf\ApplicationKit\TimerEvent.h
 # End Source File
 # Begin Source File
@@ -1219,6 +1199,14 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DocumentManager.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\DocumentManager.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\InputValidation.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\InputValidation.h
 # End Source File
 # Begin Source File
 
