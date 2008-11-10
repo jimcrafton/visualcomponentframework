@@ -69,12 +69,19 @@ void Action::update()
 void Action::perform( Event* event )
 {
 	if ( NULL != event ) {
-		Performed( (ActionEvent*)event );
+		Performed( event );
 	}
 	else {
 		ActionEvent e( this, Action::ActionPerformedEvent );
 		Performed( &e );
 	}
+}
+
+void Action::perform( UIComponent* target )
+{
+	ActionEvent e( this, Action::ActionPerformedEvent );
+	e.target = target;
+	Performed( &e );
 }
 
 void Action::addTarget( UIComponent* target )

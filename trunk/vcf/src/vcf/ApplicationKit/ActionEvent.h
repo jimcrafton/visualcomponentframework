@@ -30,13 +30,16 @@ public:
 
 	ActionEvent( Object* source, const uint32& eventType ):
 	  Event(source,eventType),enabled_(true), state_(0),modified_(false),
-	  checked_(false),exlusiveChecked_(false){}
+	  checked_(false),exlusiveChecked_(false),target(NULL){}
+
 
 	ActionEvent( const ActionEvent& rhs ):Event(rhs),enabled_(true), state_(0),modified_(false),
-		checked_(false),exlusiveChecked_(false) {
+		checked_(false),exlusiveChecked_(false),target(NULL) {
 		*this = rhs;
 	}
 
+
+/*
 	ActionEvent& operator=( const ActionEvent& rhs ) {
 		Event::operator =( rhs );
 
@@ -50,6 +53,8 @@ public:
 
 		return *this;
 	}
+	*/
+
 
 	virtual Object* clone( bool deep=false ) {
 		return new ActionEvent(*this);
@@ -164,6 +169,8 @@ public:
 	String getStatusText() {
 		return statusText_;
 	}
+
+	UIComponent* target;
 protected:
 	String text_;
 	bool enabled_;

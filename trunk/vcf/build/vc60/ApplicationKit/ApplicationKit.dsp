@@ -66,7 +66,7 @@ LIB32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
 # ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/win32" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "NO_MFC" /D "USE_GRAPHICSKIT_LIB" /Yu"vcf/ApplicationKit/ApplicationKit.h" /Fd"..\..\..\Lib\ApplicationKit_vc6_sd.pdb" /FD /GZ /Zm200 /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /fo"../../../Lib/ApplicationKit.res" /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo /o"../../../Lib/ApplicationKit_vc6_sd.bsc"
@@ -126,6 +126,16 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\TreeListModel.h
 # Begin Source File
 
 SOURCE=..\..\resources\win32\ApplicationKit.rc
+
+!IF  "$(CFG)" == "ApplicationKit - Win32 Release"
+
+# ADD BASE RSC /l 0x409 /i "\code\vcfdev\dev\vcf\build\resources\win32"
+# ADD RSC /l 0x409 /fo"../../../Lib/ApplicationKit.res" /i "\code\vcfdev\dev\vcf\build\resources\win32"
+
+!ELSEIF  "$(CFG)" == "ApplicationKit - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 

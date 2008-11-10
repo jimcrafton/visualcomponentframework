@@ -24,6 +24,8 @@ This was created to improved compile times
 #include "vcf/ApplicationKit/SimpleListModel.h"
 #include "vcf/ApplicationKit/TreeListModel.h"
 #include "vcf/ApplicationKit/AdapterModels.h"
+#include "vcf/ApplicationKit/PagedContainer.h"
+
 
 namespace VCF {
 
@@ -227,7 +229,7 @@ _class_rtti_(Action, "VCF::Component", ACTION_CLASSID)
 _property_obj_dictionary_(UIComponent,uint32,"targets",getTarget,setTarget,getTargetIndexes,"")
 _property_object_( AcceleratorKey, "accelerator", getAccelerator, setAcceleratorKey, "" );
 _delegate_( ActionDelegate, Update )
-_delegate_( ActionDelegate, Performed )
+_delegate_( EventDelegate, Performed )
 _class_rtti_end_
 
 
@@ -319,6 +321,11 @@ _class_rtti_end_
 
 _class_rtti_(ColumnLayoutContainer, "VCF::StandardContainer", COLUMNLAYOUTCONTAINER_CLASSID)
 _property_array_( int, "columnWidths", getColumnWidth,setColumnWidth,insertColumnWidth,removeColumnWidth,getColumnCount, "" )
+_class_rtti_end_
+
+
+_class_rtti_(PagedContainer, "VCF::StandardContainer", "VCF::PagedContainer")
+
 _class_rtti_end_
 
 _class_rtti_(HorizontalLayoutContainer, "VCF::StandardContainer", HORIZONTALLAYOUTCONTAINER_CLASSID)

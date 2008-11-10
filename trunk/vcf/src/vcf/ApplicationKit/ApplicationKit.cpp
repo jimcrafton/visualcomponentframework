@@ -120,6 +120,8 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( AbstractContainer );
 		REGISTER_CLASSINFO_EXTERNAL( StandardContainer );
 		REGISTER_CLASSINFO_EXTERNAL( ColumnLayoutContainer );
+		REGISTER_CLASSINFO_EXTERNAL( PagedContainer );
+		
 		REGISTER_CLASSINFO_EXTERNAL( HorizontalLayoutContainer );
 		REGISTER_CLASSINFO_EXTERNAL( FlowLayoutContainter );
 
