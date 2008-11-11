@@ -67,7 +67,7 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I ".\libharu-2.0.8\include" /I "$(VCF_ROOT)/thirdparty/common/ZLib" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_CONSOLE" /D "USE_FOUNDATIONKIT_DLL" /D "HPDF_NOZLIB" /D "HPDF_NOPNGLIB" /FD /GZ /I$(VCF_ROOT)/src /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I ".\libharu\include" /I "$(VCF_ROOT)/thirdparty/common/ZLib" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_CONSOLE" /D "USE_FOUNDATIONKIT_DLL" /D "HPDF_NOZLIB" /D "HPDF_NOPNGLIB" /FD /GZ /I$(VCF_ROOT)/src /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -106,203 +106,203 @@ SOURCE=.\PDFKit.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_annotation.c"
+SOURCE=".\libharu\src\hpdf_annotation.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_array.c"
+SOURCE=".\libharu\src\hpdf_array.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_binary.c"
+SOURCE=".\libharu\src\hpdf_binary.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_boolean.c"
+SOURCE=".\libharu\src\hpdf_boolean.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_catalog.c"
+SOURCE=".\libharu\src\hpdf_catalog.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_destination.c"
+SOURCE=".\libharu\src\hpdf_destination.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_dict.c"
+SOURCE=".\libharu\src\hpdf_dict.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_doc.c"
+SOURCE=".\libharu\src\hpdf_doc.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_doc_png.c"
+SOURCE=".\libharu\src\hpdf_doc_png.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_encoder.c"
+SOURCE=".\libharu\src\hpdf_encoder.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_encoder_cns.c"
+SOURCE=".\libharu\src\hpdf_encoder_cns.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_encoder_cnt.c"
+SOURCE=".\libharu\src\hpdf_encoder_cnt.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_encoder_jp.c"
+SOURCE=".\libharu\src\hpdf_encoder_jp.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_encoder_kr.c"
+SOURCE=".\libharu\src\hpdf_encoder_kr.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_encrypt.c"
+SOURCE=".\libharu\src\hpdf_encrypt.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_encryptdict.c"
+SOURCE=".\libharu\src\hpdf_encryptdict.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_error.c"
+SOURCE=".\libharu\src\hpdf_error.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_ext_gstate.c"
+SOURCE=".\libharu\src\hpdf_ext_gstate.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_font.c"
+SOURCE=".\libharu\src\hpdf_font.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_font_cid.c"
+SOURCE=".\libharu\src\hpdf_font_cid.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_font_tt.c"
+SOURCE=".\libharu\src\hpdf_font_tt.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_font_type1.c"
+SOURCE=".\libharu\src\hpdf_font_type1.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_fontdef.c"
+SOURCE=".\libharu\src\hpdf_fontdef.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_fontdef_base14.c"
+SOURCE=".\libharu\src\hpdf_fontdef_base14.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_fontdef_cid.c"
+SOURCE=".\libharu\src\hpdf_fontdef_cid.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_fontdef_cns.c"
+SOURCE=".\libharu\src\hpdf_fontdef_cns.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_fontdef_cnt.c"
+SOURCE=".\libharu\src\hpdf_fontdef_cnt.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_fontdef_jp.c"
+SOURCE=".\libharu\src\hpdf_fontdef_jp.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_fontdef_kr.c"
+SOURCE=".\libharu\src\hpdf_fontdef_kr.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_fontdef_tt.c"
+SOURCE=".\libharu\src\hpdf_fontdef_tt.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_fontdef_type1.c"
+SOURCE=".\libharu\src\hpdf_fontdef_type1.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_gstate.c"
+SOURCE=".\libharu\src\hpdf_gstate.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_image.c"
+SOURCE=".\libharu\src\hpdf_image.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_image_png.c"
+SOURCE=".\libharu\src\hpdf_image_png.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_info.c"
+SOURCE=".\libharu\src\hpdf_info.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_list.c"
+SOURCE=".\libharu\src\hpdf_list.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_mmgr.c"
+SOURCE=".\libharu\src\hpdf_mmgr.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_name.c"
+SOURCE=".\libharu\src\hpdf_name.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_null.c"
+SOURCE=".\libharu\src\hpdf_null.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_number.c"
+SOURCE=".\libharu\src\hpdf_number.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_objects.c"
+SOURCE=".\libharu\src\hpdf_objects.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_outline.c"
+SOURCE=".\libharu\src\hpdf_outline.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_page_label.c"
+SOURCE=".\libharu\src\hpdf_page_label.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_page_operator.c"
+SOURCE=".\libharu\src\hpdf_page_operator.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_pages.c"
+SOURCE=".\libharu\src\hpdf_pages.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_real.c"
+SOURCE=".\libharu\src\hpdf_real.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_streams.c"
+SOURCE=".\libharu\src\hpdf_streams.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_string.c"
+SOURCE=".\libharu\src\hpdf_string.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_utils.c"
+SOURCE=".\libharu\src\hpdf_utils.c"
 # End Source File
 # Begin Source File
 
-SOURCE=".\libharu-2.0.8\src\hpdf_xref.c"
+SOURCE=".\libharu\src\hpdf_xref.c"
 # End Source File
 # End Group
 # End Target

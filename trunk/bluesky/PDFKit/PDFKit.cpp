@@ -801,7 +801,7 @@ int main( int argc, char** argv ){
 
 
 	{
-		FilePath fp = "F:/code/vcfdev/dev/bluesky/PDFKit/test2.pdf";
+		FilePath fp = "c:\\code\\Direct X.pdf";//"F:/code/vcfdev/dev/bluesky/PDFKit/test2.pdf";
 		FilePath fp2 = "E:\\Documents and Settings\\Jim\\My Documents\\CFPreferences.pdf";
 
 		FileInputStream is( fp ); // "test2.pdf");
