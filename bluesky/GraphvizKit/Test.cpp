@@ -2,10 +2,6 @@
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
-
-
-#define USE_GRAPHVIZKIT_LIB
-
 #include "GraphvizKit.h"
 
 
@@ -41,11 +37,11 @@ using namespace VCF;
 
 class TestWindow : public Window {
 public:
-	TestWindow() : 
-		graph( agmemread( DOT_ER ) ) //agopen("g", AGDIGRAPH) )
-		
+	TestWindow()
 		{
 		setCaption( "Test" );	
+
+		graph.load( DOT_ER );
 
 		//Agdisc_t agd;
 		

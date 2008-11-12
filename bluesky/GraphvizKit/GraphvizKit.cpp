@@ -345,3 +345,41 @@ boolean GraphvizKit::install(GVC_t * gvc, api_t api,
 	
 	return TRUE;
 }
+
+void AGraph::freeGraph( Agraph_t* g ) 
+{
+	agclose(g);
+}
+void AGraph::layout()  
+{
+	GVC_t* gvc = GraphvizKit::getContext();
+	
+	gvLayout( gvc, graph_.get(), "dot" );			
+}
+
+void AGraph::render( GraphicsContext* ctx ) 
+{
+	
+	GraphvizKit::renderGraph( graph_.get(), ctx );
+	
+	GVC_t* gvc = GraphvizKit::getContext();
+}
+
+void AGraph::load( const String& graph )
+{
+	AnsiString tmp(graph);
+	std::vector<char> data(tmp.size()+1);
+	data.assign( tmp.begin(), tmp.end() );
+
+	graph_ = AgraphPtr( agmemread( &data.front() ), &AGraph::freeGraph );
+}	
+
+void AGraph::loadFromFile( const String& filename )
+{
+	FILE* f = fopen( filename.ansi_c_str(), "rb" );
+	if ( NULL != f ) {
+		graph_ = AgraphPtr( agread( f ), &AGraph::freeGraph );
+
+		fclose(f);
+	}
+}
