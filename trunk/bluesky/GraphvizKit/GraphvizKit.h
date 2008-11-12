@@ -46,7 +46,7 @@ Handle the extension based on the compiler
 # endif
 
 
-#ifdef _DEBUG
+#ifdef _DEBUG 
 	#define GRAPHVIZKIT_LIBDLL	"GraphvizKit_"_LIB_CPLVERNUM"_d.lib"
 	#define GRAPHVIZKIT_LIBS	"GraphvizKit_"_LIB_CPLVERNUM"_sd.lib"
 #else
@@ -88,12 +88,12 @@ Handle the extension based on the compiler
 #endif
 
 #ifdef GRAPHVIZKIT_DLL
-# 	ifndef USE_FOUNDATIONKIT_DLL
-#		define USE_FOUNDATIONKIT_DLL
+# 	ifndef USE_GRAPHICSKIT_DLL
+#		define USE_GRAPHICSKIT_DLL
 # 	endif
 #elif defined (GRAPHVIZKIT_LIB)
-# 	ifndef USE_FOUNDATIONKIT_LIB
-#		define USE_FOUNDATIONKIT_LIB
+# 	ifndef USE_GRAPHICSKIT_LIB
+#		define USE_GRAPHICSKIT_LIB
 # 	endif
 #endif
 
@@ -120,7 +120,7 @@ Handle the extension based on the compiler
 
 namespace VCF {
 
-typedef SmartPtr<Agraph_t>::Shared AgraphPtr;
+
 
 	
 enum {
@@ -164,11 +164,13 @@ enum {
 
 
 
-
-
+	typedef SmartPtr<Agraph_t>::Shared AgraphPtr;
 
 	class GRAPHVIZKIT_API AGraph {
 	public:
+
+		AGraph() {
+		}
 
 		AGraph( Agraph_t* g ):graph_(g,&AGraph::freeGraph) {}
 
@@ -176,35 +178,30 @@ enum {
 			graph_ = rhs.graph_;
 		}
 
+		
+
 		AGraph& operator=(const AGraph& rhs) {
 			graph_ = rhs.graph_;
 			return *this;
 		}		
 
-		void layout()  {
-			GVC_t* gvc = GraphvizKit::getContext();
+		void layout();
 
-			gvLayout( gvc, graph_.get(), "dot" );			
-		}
+		void render( GraphicsContext* ctx );		
+	
 
-		void render( GraphicsContext* ctx ) {
+		void load( const String& graph );
 
-			GraphvizKit::renderGraph( graph_.get(), ctx );
-
-			GVC_t* gvc = GraphvizKit::getContext();
-		}
-		
+		void loadFromFile( const String& filename );
 
 		Agraph_t* get() {
 			return graph_.get();
-		}
-    
+		}    
+
 	protected:
 		AgraphPtr graph_;
 
-		static void freeGraph( Agraph_t* g ) {
-			agclose(g);
-		}
+		static void freeGraph( Agraph_t* g );
 
 	private:
 		

@@ -15,6 +15,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "GraphvizKitDLL"=.\GraphvizKitDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Test"=.\Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -24,7 +36,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name GraphvizKit
+    Project_Dep_Name GraphvizKitDLL
     End Project Dependency
 }}}
 
