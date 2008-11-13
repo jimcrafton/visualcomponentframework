@@ -1,0 +1,9 @@
+object RenderMainWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 300
+	width = 320
+	caption = 'Renderer Window'	
+
+	
+end
