@@ -955,6 +955,8 @@ protected:
 	*/
 	GraphicsState* currentGraphicsState_;
 
+	int drawingState_;
+
 
 	void renderImage( agg::rendering_buffer& destBuffer, Rect& destRect, ImageOperation& imgOp );
 

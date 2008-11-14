@@ -236,7 +236,8 @@ GraphicsContext::GraphicsContext():
 	renderArea_(NULL),
 	currentDrawingState_(GraphicsContext::gsNone),
 	graphicsStateIndex_(0),
-	currentGraphicsState_(NULL)
+	currentGraphicsState_(NULL),
+	drawingState_(0)
 
 {
 	GraphicsState* newState = new GraphicsState();
@@ -257,7 +258,8 @@ GraphicsContext::GraphicsContext( const uint32& width, const uint32& height ):
 	renderArea_(NULL),
 	currentDrawingState_(GraphicsContext::gsNone),
 	graphicsStateIndex_(0),
-	currentGraphicsState_(NULL)
+	currentGraphicsState_(NULL),
+	drawingState_(0)
 {
 	GraphicsState* newState = new GraphicsState();
 	newState->owningContext_ = this;
@@ -287,7 +289,8 @@ GraphicsContext::GraphicsContext( OSHandleID contextID ):
 	currentDrawingState_(GraphicsContext::gsNone),
 	renderArea_(NULL),
 	graphicsStateIndex_(0),
-	currentGraphicsState_(NULL)
+	currentGraphicsState_(NULL),
+	drawingState_(0)
 {
 	GraphicsState* newState = new GraphicsState();
 	newState->owningContext_ = this;
@@ -487,6 +490,7 @@ void GraphicsContext::bitBlit( const double& x, const double& y, Rect* imageBoun
 		}
 	}
 
+	drawingState_ = GraphicsContext::doImage;
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doImage ) ) {
 
 		VCF_ASSERT( imageBounds->getWidth() <= image->getWidth() );
@@ -496,6 +500,7 @@ void GraphicsContext::bitBlit( const double& x, const double& y, Rect* imageBoun
 
 		contextPeer_->finishedDrawing( 	GraphicsContext::doImage );
 	}
+	drawingState_ = 0;
 }
 
 void GraphicsContext::drawImageWithState( const double& x, const double& y, Image * image, const bool& enabled, const bool& renderImmediately )
@@ -523,12 +528,14 @@ void GraphicsContext::drawPartialImage( const double& x, const double& y, Rect* 
 	}
 
 	if ( renderImmediately ) {
+		drawingState_ = GraphicsContext::doImage;
 		if ( contextPeer_->prepareForDrawing( GraphicsContext::doImage ) ) {
 
 			contextPeer_->drawImage( x, y, imageBounds, image, getCompositingMode() );
 
 			contextPeer_->finishedDrawing( 	GraphicsContext::doImage );
 		}
+		drawingState_ = 0;
 	}
 	else {
 		ImageOperation imgOp;
@@ -794,6 +801,7 @@ void GraphicsContext::renderImages( bool freeImages )
 	std::vector<Image*> imagesToDelete;
 	std::vector<ImageOperation>::iterator it = imageOperations_.begin();
 
+	drawingState_ = GraphicsContext::doImage;
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doImage ) ) {
 
 
@@ -843,6 +851,7 @@ void GraphicsContext::renderImages( bool freeImages )
 
 		contextPeer_->finishedDrawing( 	GraphicsContext::doImage );
 	}
+	drawingState_ = 0;
 }
 
 void GraphicsContext::textWithStateAt( const double& x, const double& y, const String& text, const bool& enabled )
@@ -882,11 +891,13 @@ void GraphicsContext::textAt(const double & x, const double & y, const String & 
 	tmp.offset( xx - tmp.left_, yy - tmp.top_ );
 
 
+	drawingState_ = GraphicsContext::doText;
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doText ) ) {
 		contextPeer_->textAt( tmp, text );
 
 		contextPeer_->finishedDrawing( 	GraphicsContext::doText );
 	}
+	drawingState_ = 0;
 }
 
 void GraphicsContext::textAt( const double & x, const double & y, const String& text, const int32 drawOptions )
@@ -900,12 +911,14 @@ void GraphicsContext::textAt( const double & x, const double & y, const String& 
 
 	bounds.offset( xx - bounds.left_, yy - bounds.top_ );
 
+	drawingState_ = GraphicsContext::doText;
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doText ) ) {
 
 		contextPeer_->textAt( bounds, text, drawOptions );
 
 		contextPeer_->finishedDrawing( 	GraphicsContext::doText );
 	}
+	drawingState_ = 0;
 }
 
 
@@ -1027,22 +1040,29 @@ void GraphicsContext::closePath( const double& x, const double& y )
 
 void GraphicsContext::fillPath()
 {
+	drawingState_ = GraphicsContext::doFill;
+
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doFill ) ) {
 
 		execPathOperations();
 
 		contextPeer_->finishedDrawing( 	GraphicsContext::doFill );
 	}
+	drawingState_ = 0;
 }
 
 void GraphicsContext::strokePath()
 {
-	if ( contextPeer_->prepareForDrawing( GraphicsContext::doStroke ) ) {
+	drawingState_ = GraphicsContext::doStroke;
+
+	if ( contextPeer_->prepareForDrawing( GraphicsContext::doStroke ) ) {		
 
 		execPathOperations();
 
 		contextPeer_->finishedDrawing( 	GraphicsContext::doStroke );
 	}
+
+	drawingState_ = 0;
 }
 
 ContextPeer* GraphicsContext::getPeer()
@@ -1178,11 +1198,13 @@ void GraphicsContext::textBoundedBy( Rect* bounds, const String& text, const boo
 	currentGraphicsState_->transformMatrix_.apply( xx, yy );
 	tmp.offset( xx - tmp.left_, yy - tmp.top_ );
 
+	drawingState_ = GraphicsContext::doText;
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doText ) ) {
 		contextPeer_->textAt( tmp, text, drawOptions );
 
 		contextPeer_->finishedDrawing( 	GraphicsContext::doText );
 	}
+	drawingState_ = 0;
 }
 
 void GraphicsContext::textBoundedBy( Rect* bounds, const String& text, const int32 drawOptions )
@@ -1195,11 +1217,13 @@ void GraphicsContext::textBoundedBy( Rect* bounds, const String& text, const int
 
 	tmp.offset( xx - tmp.left_, yy - tmp.top_ );
 
+	drawingState_ = GraphicsContext::doText;
 	if ( contextPeer_->prepareForDrawing( GraphicsContext::doText ) ) {
 		contextPeer_->textAt( tmp, text, drawOptions );
 
 		contextPeer_->finishedDrawing( 	GraphicsContext::doText );
 	}
+	drawingState_ = 0;
 }
 
 
@@ -1441,231 +1465,467 @@ void GraphicsContext::execPathOperations()
 
 	Matrix2D& transform = currentGraphicsState_->transformMatrix_;
 
-	while ( it != pathOperations_.end() ) {
-		PointOperation& pointOp = *it;
 
-		switch ( pointOp.primitive ){
-			case PointOperation::ptMoveTo : {
-				currentGraphicsState_->currentMoveTo_.x_ = pointOp.x;
-				currentGraphicsState_->currentMoveTo_.y_ = pointOp.y;
+	if ( contextPeer_->isAntiAliasingOn() ) {
+		agg::rendering_buffer& renderingBuffer = *getRenderingBuffer();
+		agg::path_storage path;
+		agg::rasterizer_scanline_aa<> rasterizer;
+		PointOperation pt, p2, c1, c2;
 
-				tmpX = pointOp.x;
-				tmpY = pointOp.y;
-				transform.apply( tmpX, tmpY );
 
-				contextPeer_->moveTo( tmpX, tmpY );
-				++it;
-			}
-			break;
 
-			case PointOperation::ptLineTo :{
-				tmpX = pointOp.x;
-				tmpY = pointOp.y;
-				transform.apply( tmpX, tmpY );
+		rasterizer.clip_box( 0, 0,viewableBounds_.getWidth(),viewableBounds_.getHeight() );
 
-				contextPeer_->lineTo( tmpX, tmpY );
-				++it;
-			}
-			break;
+		while ( it != pathOperations_.end() ) {			
+			PointOperation& pointOp = *it;
 
-			case PointOperation::ptPolyLine :{
-				std::vector<Point> tmpPts;
-				PointOperation::PrimitiveType type = pointOp.primitive;
+			switch ( pointOp.primitive ){
+				case PointOperation::ptMoveTo : {
+					currentGraphicsState_->currentMoveTo_.x_ = pointOp.x;
+					currentGraphicsState_->currentMoveTo_.y_ = pointOp.y;
+					
+					path.move_to( pointOp.x, pointOp.y );
 
-				while ( (it != pathOperations_.end()) && (type == PointOperation::ptPolyLine) ) {
-					PointOperation& pt = *it;
-					type = pt.primitive;
-					tmpX = pt.x;
-					tmpY = pt.y;
-					transform.apply( tmpX, tmpY );
-
-					tmpPts.push_back( Point(tmpX,tmpY) );
 					++it;
 				}
+				break;
 
-				contextPeer_->polyline( tmpPts );
-			}
-			break;
+				case PointOperation::ptLineTo :{
+					path.line_to( pointOp.x, pointOp.y );
 
-			case PointOperation::ptBezier :{
-				/*
-				if ( (remaingOps - 3) < 0 ){
-					//throw exception !!
+					++it;
 				}
-				*/
-				if ( (pathOperations_.end() - it) < 4 ) {
-					throw RuntimeException( MAKE_ERROR_MSG_2("Not enough path operations left to complete the bezier curve") );
+				break;
+
+				case PointOperation::ptPolyLine :{
+					path.move_to( pointOp.x, pointOp.y );
+
+					++it;
+					while ( it != pathOperations_.end() ) {
+						pointOp = *it;
+						if ( pointOp.primitive == PointOperation::ptPolyLine ) {
+							path.line_to( pointOp.x, pointOp.y );
+						}
+						else {
+							break;
+						}
+						
+						++it;
+					}
+
+					
 				}
+				break;
 
-				Point p1;
-				Point p2;
-				Point p3;
-				Point p4;
+				case PointOperation::ptBezier :{
+					/*
+					if ( (remaingOps - 3) < 0 ){
+						//throw exception !!
+					}
+					*/
+					if ( (pathOperations_.end() - it) < 4 ) {
+						throw RuntimeException( MAKE_ERROR_MSG_2("Not enough path operations left to complete the bezier curve") );
+					}
 
-				PointOperation& pt1 = *it;
+					PointOperation& pt1 = *it;
 
+					++it;
 
-				p1.x_ = pt1.x;
-				p1.y_ = pt1.y;
+					PointOperation& pt2 = *it;
+					++it;
 
-				transform.apply( p1.x_, p1.y_ );
+					PointOperation& pt3 = *it;
+					++it;
 
-				++it;
+					PointOperation& pt4 = *it;
+					++it;
 
-				PointOperation& pt2 = *it;
-				p2.x_ = pt2.x;
-				p2.y_ = pt2.y;
-
-				transform.apply( p2.x_, p2.y_ );
-
-				++it;
-
-				PointOperation& pt3 = *it;
-				p3.x_ = pt3.x;
-				p3.y_ = pt3.y;
-
-				transform.apply( p3.x_, p3.y_ );
-
-				++it;
-
-				PointOperation& pt4 = *it;
-				p4.x_ = pt4.x;
-				p4.y_ = pt4.y;
-
-				transform.apply( p4.x_, p4.y_ );
-
-				++it;
-
-				contextPeer_->curve( p1.x_, p1.y_, p2.x_, p2.y_,
-										p3.x_, p3.y_, p4.x_, p4.y_ );
+					path.move_to( pt1.x, pt1.y );
+					path.curve4( pt2.x, pt2.y,
+											pt3.x, pt3.y, pt4.x, pt4.y );
 
 
+				}
+				break;
+
+				case PointOperation::ptRect:{
+
+					PointOperation& pt1 = *it;
+					++it;
+
+					PointOperation& pt2 = *it;
+					++it;
+
+
+					path.move_to( pt1.x, pt1.y );
+					path.line_to( pt2.x, pt1.y );
+					path.line_to( pt2.x, pt2.y );
+					path.line_to( pt1.x, pt2.y );					
+					path.close_polygon();
+
+				}
+				break;
+
+				case PointOperation::ptRoundRect :{
+					PointOperation& pt1 = *it;
+					++it;
+
+					PointOperation& pt2 = *it;
+					++it;
+
+					PointOperation& pt3 = *it;
+					++it;
+
+				}
+				break;
+
+				case PointOperation::ptEllipse : {
+					PointOperation& pt1 = *it;
+					++it;
+
+					PointOperation& pt2 = *it;
+					++it;
+				}
+				break;
+
+				case PointOperation::ptArc :{
+					if ( (pathOperations_.end() - it) < 3 ) {
+						throw RuntimeException( MAKE_ERROR_MSG_2("Not enough path operations left to complete the bezier curve") );
+					}
+
+					PointOperation& pt1 = *it;
+					++it;
+
+					PointOperation& pt2 = *it;
+					++it;
+
+					PointOperation& pt3 = *it;
+					++it;
+
+
+					
+				}
+				break;
+
+				case PointOperation::ptClose : {
+					PointOperation& pt = *it;
+					path.move_to( pt.x, pt.y );
+					path.close_polygon();
+
+					++it;
+				}
+				break;
+
+				default : {
+					it = pathOperations_.end();
+					break; //quit the loop
+				}
+				break;
+			}			
+		}
+
+
+		agg::trans_affine mat = transform;
+		if ( GraphicsContext::doStroke == drawingState_ ) {
+			mat*=agg::trans_affine_translation(0.5,0.5);
+		}
+
+		Point org = getOrigin();
+		mat *= agg::trans_affine_translation( org.x_, org.y_  );
+		agg::conv_curve<agg::path_storage> smooth(path);
+
+		if ( GraphicsContext::doFill == drawingState_ ) {			
+			agg::conv_transform< agg::conv_curve< agg::path_storage > > xfrmedPath(smooth,mat);			
+			rasterizer.add_path( xfrmedPath );			
+		}
+		else {
+			agg::conv_transform< agg::conv_curve< agg::path_storage > > xfrmedPath(smooth,mat);
+
+			int lcs = 0;
+			int ljs = 0;
+
+			switch ( getLineCapStyle() ) {
+				case GraphicsContext::lcsButtCap : {
+					lcs = agg::butt_cap;
+				}
+				break;
+
+				case GraphicsContext::lcsRoundCap : {
+					lcs = agg::round_cap;
+				}
+				break;
+
+				case GraphicsContext::lcsSquareCap : {
+					lcs = agg::square_cap;
+				}
+				break;
 			}
-			break;
 
-			case PointOperation::ptRect:{
+			switch ( getLineJoinStyle() ) {
+				case GraphicsContext::ljsMiterJoin : {
+					ljs = agg::miter_join;
+				}
+				break;
 
-				PointOperation& pt1 = *it;
-				++it;
+				case GraphicsContext::ljsRoundJoin : {
+					ljs = agg::round_join;
+				}
+				break;
 
-				PointOperation& pt2 = *it;
-				++it;
+				case GraphicsContext::ljsBevelJoin : {
+					ljs = agg::bevel_join;
+				}
+				break;
+			}
+
+			agg::conv_stroke< agg::conv_transform< agg::conv_curve< agg::path_storage > > >  stroke(xfrmedPath);
+				
+			stroke.width( maxVal<>( 0.5, getStrokeWidth() ) );
+			stroke.line_cap( (agg::line_cap_e)lcs );
+			stroke.line_join( (agg::line_join_e)ljs );
+			stroke.miter_limit( getMiterLimit() );
+			
+			rasterizer.add_path( stroke );
+		}
 
 
-				if ( !transform.isIdentity() && !transform.isTranslationOnly() ) {
-					std::vector<Point> tmpPts(5);
-					tmpPts[0].x_ = pt1.x;
-					tmpPts[0].y_ = pt1.y;
-					tmpPts[1].x_ = pt2.x;
-					tmpPts[1].y_ = pt1.y;
-					tmpPts[2].x_ = pt2.x;
-					tmpPts[2].y_ = pt2.y;
-					tmpPts[3].x_ = pt1.x;
-					tmpPts[3].y_ = pt2.y;
-					tmpPts[4] = tmpPts[0];
+		resetRenderAreaAlpha();
 
-					std::vector<Point>::iterator ptIt = tmpPts.begin();
+		Color* color = getColor();
+		renderScanlinesSolid( *this, rasterizer, 
+								agg::rgba(color->getRed(),color->getGreen(),
+											color->getBlue(),color->getAlpha()) );
+		
 
-					while ( ptIt != tmpPts.end() ) {
-						Point& p = *ptIt;
+	}
+	else {
 
-						transform.apply( p.x_, p.y_ );
+		while ( it != pathOperations_.end() ) {
+			PointOperation& pointOp = *it;
 
-						++ptIt;
+			switch ( pointOp.primitive ){
+				case PointOperation::ptMoveTo : {
+					currentGraphicsState_->currentMoveTo_.x_ = pointOp.x;
+					currentGraphicsState_->currentMoveTo_.y_ = pointOp.y;
+
+					tmpX = pointOp.x;
+					tmpY = pointOp.y;
+					transform.apply( tmpX, tmpY );
+
+					contextPeer_->moveTo( tmpX, tmpY );
+					++it;
+				}
+				break;
+
+				case PointOperation::ptLineTo :{
+					tmpX = pointOp.x;
+					tmpY = pointOp.y;
+					transform.apply( tmpX, tmpY );
+
+					contextPeer_->lineTo( tmpX, tmpY );
+					++it;
+				}
+				break;
+
+				case PointOperation::ptPolyLine :{
+					std::vector<Point> tmpPts;
+					PointOperation::PrimitiveType type = pointOp.primitive;
+
+					while ( (it != pathOperations_.end()) && (type == PointOperation::ptPolyLine) ) {
+						PointOperation& pt = *it;
+						type = pt.primitive;
+						tmpX = pt.x;
+						tmpY = pt.y;
+						transform.apply( tmpX, tmpY );
+
+						tmpPts.push_back( Point(tmpX,tmpY) );
+						++it;
 					}
 
 					contextPeer_->polyline( tmpPts );
 				}
-				else {
+				break;
+
+				case PointOperation::ptBezier :{
+					/*
+					if ( (remaingOps - 3) < 0 ){
+						//throw exception !!
+					}
+					*/
+					if ( (pathOperations_.end() - it) < 4 ) {
+						throw RuntimeException( MAKE_ERROR_MSG_2("Not enough path operations left to complete the bezier curve") );
+					}
+
 					Point p1;
+					Point p2;
+					Point p3;
+					Point p4;
+
+					PointOperation& pt1 = *it;
+
+
 					p1.x_ = pt1.x;
 					p1.y_ = pt1.y;
 
-					Point p2;
+					transform.apply( p1.x_, p1.y_ );
+
+					++it;
+
+					PointOperation& pt2 = *it;
 					p2.x_ = pt2.x;
 					p2.y_ = pt2.y;
 
-					transform.apply( p1.x_, p1.y_ );
 					transform.apply( p2.x_, p2.y_ );
 
-					contextPeer_->rectangle( p1.x_, p1.y_, p2.x_, p2.y_ );
+					++it;
+
+					PointOperation& pt3 = *it;
+					p3.x_ = pt3.x;
+					p3.y_ = pt3.y;
+
+					transform.apply( p3.x_, p3.y_ );
+
+					++it;
+
+					PointOperation& pt4 = *it;
+					p4.x_ = pt4.x;
+					p4.y_ = pt4.y;
+
+					transform.apply( p4.x_, p4.y_ );
+
+					++it;
+
+					contextPeer_->curve( p1.x_, p1.y_, p2.x_, p2.y_,
+											p3.x_, p3.y_, p4.x_, p4.y_ );
+
+
 				}
-			}
-			break;
+				break;
 
-			case PointOperation::ptRoundRect :{
+				case PointOperation::ptRect:{
+
+					PointOperation& pt1 = *it;
+					++it;
+
+					PointOperation& pt2 = *it;
+					++it;
 
 
+					if ( !transform.isIdentity() && !transform.isTranslationOnly() ) {
+						std::vector<Point> tmpPts(5);
+						tmpPts[0].x_ = pt1.x;
+						tmpPts[0].y_ = pt1.y;
+						tmpPts[1].x_ = pt2.x;
+						tmpPts[1].y_ = pt1.y;
+						tmpPts[2].x_ = pt2.x;
+						tmpPts[2].y_ = pt2.y;
+						tmpPts[3].x_ = pt1.x;
+						tmpPts[3].y_ = pt2.y;
+						tmpPts[4] = tmpPts[0];
 
-				PointOperation& pt1 = *it;
-				++it;
+						std::vector<Point>::iterator ptIt = tmpPts.begin();
 
-				PointOperation& pt2 = *it;
-				++it;
+						while ( ptIt != tmpPts.end() ) {
+							Point& p = *ptIt;
 
-				PointOperation& pt3 = *it;
-				++it;
+							transform.apply( p.x_, p.y_ );
 
-				std::vector<Point> tmpPts;
-				buildRoundRect( pt1.x, pt1.y, pt2.x, pt2.y, pt3.x, pt3.y, tmpPts, transform );
+							++ptIt;
+						}
 
-				contextPeer_->polyline( tmpPts );
+						contextPeer_->polyline( tmpPts );
+					}
+					else {
+						Point p1;
+						p1.x_ = pt1.x;
+						p1.y_ = pt1.y;
 
-			}
-			break;
+						Point p2;
+						p2.x_ = pt2.x;
+						p2.y_ = pt2.y;
 
-			case PointOperation::ptEllipse : {
-				PointOperation& pt1 = *it;
-				++it;
+						transform.apply( p1.x_, p1.y_ );
+						transform.apply( p2.x_, p2.y_ );
 
-				PointOperation& pt2 = *it;
-				++it;
-
-				//contextPeer_->ellipse( pt1.x, pt1.y, pt2.x, pt2.y );
-
-				std::vector<Point> tmpPts;
-				buildEllipse( pt1.x, pt1.y, pt2.x, pt2.y, tmpPts, transform );
-
-				contextPeer_->polyline( tmpPts );
-			}
-			break;
-
-			case PointOperation::ptArc :{
-				if ( (pathOperations_.end() - it) < 3 ) {
-					throw RuntimeException( MAKE_ERROR_MSG_2("Not enough path operations left to complete the bezier curve") );
+						contextPeer_->rectangle( p1.x_, p1.y_, p2.x_, p2.y_ );
+					}
 				}
+				break;
 
-				PointOperation& pt1 = *it;
-				++it;
-
-				PointOperation& pt2 = *it;
-				++it;
-
-				PointOperation& pt3 = *it;
-				++it;
+				case PointOperation::ptRoundRect :{
 
 
-				std::vector<Point> tmpPts;
-				buildArc( pt1.x, pt1.y, pt2.x, pt2.y, pt3.x, pt3.y, tmpPts, transform );
 
-				contextPeer_->polyline( tmpPts );
+					PointOperation& pt1 = *it;
+					++it;
+
+					PointOperation& pt2 = *it;
+					++it;
+
+					PointOperation& pt3 = *it;
+					++it;
+
+					std::vector<Point> tmpPts;
+					buildRoundRect( pt1.x, pt1.y, pt2.x, pt2.y, pt3.x, pt3.y, tmpPts, transform );
+
+					contextPeer_->polyline( tmpPts );
+
+				}
+				break;
+
+				case PointOperation::ptEllipse : {
+					PointOperation& pt1 = *it;
+					++it;
+
+					PointOperation& pt2 = *it;
+					++it;
+
+					//contextPeer_->ellipse( pt1.x, pt1.y, pt2.x, pt2.y );
+
+					std::vector<Point> tmpPts;
+					buildEllipse( pt1.x, pt1.y, pt2.x, pt2.y, tmpPts, transform );
+
+					contextPeer_->polyline( tmpPts );
+				}
+				break;
+
+				case PointOperation::ptArc :{
+					if ( (pathOperations_.end() - it) < 3 ) {
+						throw RuntimeException( MAKE_ERROR_MSG_2("Not enough path operations left to complete the bezier curve") );
+					}
+
+					PointOperation& pt1 = *it;
+					++it;
+
+					PointOperation& pt2 = *it;
+					++it;
+
+					PointOperation& pt3 = *it;
+					++it;
+
+
+					std::vector<Point> tmpPts;
+					buildArc( pt1.x, pt1.y, pt2.x, pt2.y, pt3.x, pt3.y, tmpPts, transform );
+
+					contextPeer_->polyline( tmpPts );
+				}
+				break;
+
+				case PointOperation::ptClose : {
+					PointOperation& pt = *it;
+					contextPeer_->lineTo( pt.x, pt.y );
+					contextPeer_->closePath();
+
+					++it;
+				}
+				break;
+
+				default : {
+					it = pathOperations_.end();
+					break; //quit the loop
+				}
+				break;
 			}
-			break;
-
-			case PointOperation::ptClose : {
-				PointOperation& pt = *it;
-				contextPeer_->lineTo( pt.x, pt.y );
-				contextPeer_->closePath();
-
-				++it;
-			}
-			break;
-
-			default : {
-				it = pathOperations_.end();
-				break; //quit the loop
-			}
-			break;
 		}
 	}
 
@@ -2036,8 +2296,31 @@ bool GraphicsContext::isAntiAliasingOn()
 }
 
 void GraphicsContext::setAntiAliasingOn( bool antiAliasingOn )
-{
-	contextPeer_->setAntiAliasingOn( antiAliasingOn );
+{	
+
+	if ( contextPeer_->isAntiAliasingOn() != antiAliasingOn ) {
+		
+		contextPeer_->setAntiAliasingOn( antiAliasingOn );
+		
+		if ( antiAliasingOn ) {
+			renderArea_->rect.setRect(0,0,viewableBounds_.getWidth(),viewableBounds_.getHeight());
+			
+			if ( NULL == renderArea_->renderBuffer ) {			
+				renderArea_->renderBuffer = new agg::rendering_buffer();
+			}
+			
+			renderArea_->scanline = new agg::scanline_u8();
+			
+			contextPeer_->attachToRenderBuffer( *renderArea_->renderBuffer );
+
+			
+			
+		}
+		else {
+			deleteRenderArea();
+		}
+		
+	}
 }
 
 

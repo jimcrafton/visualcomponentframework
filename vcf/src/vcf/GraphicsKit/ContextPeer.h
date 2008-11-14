@@ -162,6 +162,9 @@ public:
 	*/
 	virtual bool isMemoryContext() = 0;
 
+
+	virtual void attachToRenderBuffer( agg::rendering_buffer& renderBuffer ) = 0;
+
 	/**
 	*returns whether or not the XOR Mode is turned on.
 	*@return bool if the return is true then the
