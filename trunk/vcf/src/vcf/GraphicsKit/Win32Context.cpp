@@ -42,8 +42,8 @@ Win32Context::Win32Context():
 	pathStarted_(false),	
 	inFillPath_(false),
 	dc_(NULL),
-	memBitmap_(NULL),
-	originalBitmap_(NULL),
+	//memBitmap_(NULL),
+	//originalBitmap_(NULL),
 	currentHBrush_(NULL),
 	currentHPen_(NULL),
 	currentHFont_(NULL),
@@ -61,8 +61,8 @@ Win32Context::Win32Context( const uint32& width, const uint32& height ):
 	pathStarted_(false),	
 	inFillPath_(false),
 	dc_(NULL),
-	memBitmap_(NULL),
-	originalBitmap_(NULL),
+	//memBitmap_(NULL),
+	//originalBitmap_(NULL),
 	currentHBrush_(NULL),
 	currentHPen_(NULL),
 	currentHFont_(NULL),
@@ -73,20 +73,24 @@ Win32Context::Win32Context( const uint32& width, const uint32& height ):
 	antiAliased_(false)	
 {
 
-	HDC desktopDC = ::GetDC( ::GetDesktopWindow() );
+	//HDC desktopDC = ::GetDC( ::GetDesktopWindow() );
 
-	dc_ = ::CreateCompatibleDC( desktopDC );
-	if ( NULL == dc_ ) {
-		throw RuntimeException( MAKE_ERROR_MSG_2("Unable to create compatible Device Context for win32 context") );
-	}
-	memBitmap_ = ::CreateCompatibleBitmap( desktopDC, width, height );
-	originalBitmap_ = (HBITMAP)::SelectObject( dc_, memBitmap_ );
-	ReleaseDC( ::GetDesktopWindow(), desktopDC );
-	isMemoryCtx_ = true;
-	if ( NULL == memBitmap_ ){
+	//dc_ = ::CreateCompatibleDC( desktopDC );
+	//if ( NULL == dc_ ) {
+	//	throw RuntimeException( MAKE_ERROR_MSG_2("Unable to create compatible Device Context for win32 context") );
+	//}
+	memBitmap_.setSize( width, height );//  = ::CreateCompatibleBitmap( desktopDC, width, height );
+
+	dc_ = memBitmap_.dc();
+
+	if ( NULL == dc_ ){
 		//throw exception
 		throw RuntimeException( MAKE_ERROR_MSG_2("Unable to create memory bitmap for win32 context") );
 	}
+
+	//originalBitmap_ = (HBITMAP)::SelectObject( dc_, memBitmap_ );
+	//ReleaseDC( ::GetDesktopWindow(), desktopDC );
+	isMemoryCtx_ = true;
 }
 
 Win32Context::Win32Context( OSHandleID contextID ):
@@ -94,8 +98,8 @@ Win32Context::Win32Context( OSHandleID contextID ):
 	pathStarted_(false),	
 	inFillPath_(false),
 	dc_(NULL),
-	memBitmap_(NULL),
-	originalBitmap_(NULL),
+	//memBitmap_(NULL),
+	//originalBitmap_(NULL),
 	currentHBrush_(NULL),
 	currentHPen_(NULL),
 	currentHFont_(NULL),
@@ -114,6 +118,7 @@ Win32Context::~Win32Context()
 		::DeleteObject( clipRGN_ );
 	}
 
+	/*
 	if ( NULL != memBitmap_ ){
 		::SelectObject( dc_, originalBitmap_ );
 		::DeleteObject( memBitmap_ );
@@ -125,6 +130,9 @@ Win32Context::~Win32Context()
 		}
 	}
 	dc_ = NULL;
+	*/
+
+
 
 	//clearBuffer();
 }
@@ -5084,6 +5092,17 @@ void Win32Context::finishedDrawing( int32 drawingOperation )
 void Win32Context::setAntiAliasingOn( bool antiAliasingOn )
 {
 	antiAliased_ = antiAliasingOn;
+}
+
+void Win32Context::attachToRenderBuffer( agg::rendering_buffer& renderBuffer )
+{
+	if ( isMemoryCtx_ ) {
+		renderBuffer.attach( (unsigned char*)memBitmap_.data(),
+													memBitmap_.bmpInfo()->bmiHeader.biWidth,
+													abs(memBitmap_.bmpInfo()->bmiHeader.biHeight),
+													memBitmap_.bmpInfo()->bmiHeader.biWidth * 4 );//assume full color
+
+	}
 }
 
 /**

@@ -18,7 +18,7 @@ where you installed the VCF.
 
 
 #include <deque>
-
+#include "Win32Image.h"
 
 namespace VCF
 {
@@ -64,6 +64,8 @@ public:
 	virtual void finishedDrawing( int32 drawingOperation );
 
 	virtual bool isMemoryContext();
+
+	virtual void attachToRenderBuffer( agg::rendering_buffer& renderBuffer );
 
 	virtual void copyContext( const Rect& sourceRect, const Rect& destRect,
 	                          ContextPeer* sourceContext );
@@ -218,8 +220,8 @@ protected:
 	Point origin_;
 	bool inFillPath_;
 	HDC dc_;
-	HBITMAP memBitmap_;
-	HBITMAP originalBitmap_;
+	HBitmap32Bit memBitmap_;
+	//HBITMAP originalBitmap_;
 
 	HBRUSH currentHBrush_;
 	HPEN currentHPen_;
