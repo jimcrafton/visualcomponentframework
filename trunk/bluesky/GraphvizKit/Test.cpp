@@ -114,7 +114,11 @@ public:
 	AGraph graph;
 
 	virtual void paint( GraphicsContext* ctx ) {
+		
+
 		Window::paint(ctx);
+
+		ctx->setAntiAliasingOn(true);
 
 		//ctx->setScale( 0.75,0.75 );
 
