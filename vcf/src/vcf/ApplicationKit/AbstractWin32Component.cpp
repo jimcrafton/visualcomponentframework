@@ -43,9 +43,7 @@ using namespace VCFWin32;
 
 
 AbstractWin32Component::AbstractWin32Component():
-	memDC_(NULL),
-	originalMemBMP_(NULL),
-	memBMP_(NULL),
+	memCtx_(NULL),
 	mouseEnteredControl_(false),	
 	memDCState_(0),
 	destroyed_(false),
@@ -57,9 +55,7 @@ AbstractWin32Component::AbstractWin32Component():
 }
 
 AbstractWin32Component::AbstractWin32Component( Control* component ):
-	memDC_(NULL),
-	originalMemBMP_(NULL),
-	memBMP_(NULL),
+	memCtx_(NULL),
 	mouseEnteredControl_(false),	
 	memDCState_(0),
 	destroyed_(false),
@@ -103,11 +99,11 @@ void AbstractWin32Component::destroyControl()
 	peerControl_ = NULL;
 
 
-	if ( NULL != memDC_ ) {
-		DeleteDC( memDC_ );
+	if ( NULL != memCtx_ ) {
+		delete memCtx_;
 	}
 
-	memDC_ = NULL;
+	memCtx_ = NULL;
 }
 
 AbstractWin32Component::~AbstractWin32Component()
@@ -117,7 +113,7 @@ AbstractWin32Component::~AbstractWin32Component()
 
 void AbstractWin32Component::init()
 {
-	memDC_ = NULL;
+//	memDC_ = NULL;
 	mouseEnteredControl_ = false;
 
 	cachedMessages_ = new std::vector<MSG>();	
@@ -358,137 +354,52 @@ void AbstractWin32Component::setFont( Font* font )
 	}
 }
 
+void AbstractWin32Component::prepForDoubleBufferPaint( HDC wmPaintDC, const Rect& paintRect )
+{
+	if ( peerControl_->isDoubleBuffered() && 
+				!paintRect.isNull() && 
+				!paintRect.isEmpty() ) {
+
+
+		if ( NULL != memCtx_ ) {
+			delete memCtx_;
+		}
+		memCtx_ = new GraphicsContext( paintRect.getWidth(), paintRect.getHeight() );
+
+		memCtx_->setViewableBounds( paintRect );
+
+		if ( peerControl_->isUsingRenderBuffer() ) {
+			memCtx_->setAntiAliasingOn( true );
+		}
+	}
+}
+
 HDC AbstractWin32Component::doControlPaint( HDC paintDC, RECT paintRect, RECT* exclusionRect, int whatToPaint  )
 {
 	HDC result = NULL;
 
 	if ( !peerControl_->isDestroying() ) {	
-		
-		ControlGraphicsContext ctrlCtx(peerControl_);
-		GraphicsContext* ctx = &ctrlCtx;
-		
 		Rect viewableRect(paintRect.left, paintRect.top,
 			paintRect.right, paintRect.bottom );
 
-		ctx->setViewableBounds( viewableRect );
-		Image* renderArea = ctx->getRenderArea();
-		
-		if ( peerControl_->isUsingRenderBuffer() && 
+		if ( peerControl_->isDoubleBuffered() && 
 				!viewableRect.isNull() && 
-				!viewableRect.isEmpty() /*&&
-				(NULL != renderArea)*/ ) {
+				!viewableRect.isEmpty() ) {
 
-/*
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-VERY VERY SLOOOOOOWWWWW!!!! 
-We need to revamp this when we are using the render buffer
-wee need to cache something here and just blit out the contents
-unless we resize the control or there's some other indicator
-that the control needs a real paint cycle.
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-*/
-
-
-			((ControlGraphicsContext*)ctx)->setOwningControl( NULL );
-
-			ctx->setRenderArea( viewableRect );
-			
-
-			if ( NULL != exclusionRect ) {
-				ExcludeClipRect( paintDC, exclusionRect->left, exclusionRect->top,
-							exclusionRect->right, exclusionRect->bottom );
-			}
-
-			int gcs = ctx->saveState();
-
-			switch( whatToPaint ) {
-				case cpBorderOnly : {
-					peerControl_->paintBorder( ctx );
-				}
-				break;
-
-				case cpControlOnly : {
-					peerControl_->internal_beforePaint( ctx );
-
-					peerControl_->paint( ctx );
-
-					peerControl_->internal_afterPaint( ctx );
-
-				}
-				break;
-
-				case cpBorderAndControl : {
-					peerControl_->paintBorder( ctx );
-					
-					peerControl_->internal_beforePaint( ctx );
-
-					peerControl_->paint( ctx );
-
-					peerControl_->internal_afterPaint( ctx );
-				}
-				break;
-			}
-			ctx->restoreState( gcs );
-			
-			ctx->flushRenderArea();
-
-			Win32Image* img = (Win32Image*)ctx->getRenderArea();			
-
-			BitBlt( paintDC, paintRect.left, paintRect.top, 
-					paintRect.right - paintRect.left,
-					paintRect.bottom - paintRect.top,
-					img->getDC(), paintRect.left, paintRect.top, SRCCOPY );
-
-			ctx->setViewableBounds( Rect(0,0,0,0) );
-
-			((ControlGraphicsContext*)ctx)->setOwningControl( peerControl_ );
-
-			result = paintDC;
-		}
-		else if ( true == peerControl_->isDoubleBuffered() ) {
-
-			if ( NULL == memDC_ ) {
-				// we need a memory HDC, so we create it here one compatible 
-				// with the HDC of the entire screen
-				HDC dc = ::GetDC(GetDesktopWindow());
-				memDC_ = ::CreateCompatibleDC( dc );
-				::ReleaseDC( GetDesktopWindow(), dc );
-			}
-
+			prepForDoubleBufferPaint( paintDC, viewableRect );
+			GraphicsContext* ctx = memCtx_;
 
 			Rect dirtyRect( paintRect.left,paintRect.top,paintRect.right,paintRect.bottom);
 			
-			// implements double buffering by painting everything 
-			//  in a memory device context first
-
-			memBMP_ = ::CreateCompatibleBitmap( paintDC,
-					paintRect.right - paintRect.left,
-					paintRect.bottom - paintRect.top );
-
-			memDCState_ = ::SaveDC( memDC_ );
-			originalMemBMP_ = (HBITMAP)::SelectObject( memDC_, memBMP_ );
-
-
-
 			// changes the origin of the paint coordinates, by specifying which
 			// point of the device context points to the origin of the window.
-			POINT oldOrg;
-			memset(&oldOrg,0,sizeof(oldOrg));
-			::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
+
+			ctx->setOrigin( -paintRect.left, -paintRect.top );
 			
-			/**
-			* we prevents the owning control of the context to alter
-			* the HDC and the viewport, as this is done here using 
-			* the DC given by the system with the message itself.
-			* We temporarly use a memory context as teh current 
-			* HDC for the Graphics context because we are 
-			* doing double buffering.
-			*/
-			ctx->getPeer()->setContextID( (OSHandleID)memDC_ );
-			((ControlGraphicsContext*)ctx)->setOwningControl( NULL );				
-			
+			ctx->setCurrentFont( peerControl_->getFont() );
+			//Font* font = ctx->getCurrentFont();
+			//font->setPointSize( font->getPointSize() );
+
 			// save the state of Graphics control so to be fully restored after the paint.
 			int gcs = ctx->saveState();
 
@@ -522,26 +433,25 @@ that the control needs a real paint cycle.
 
 			ctx->restoreState( gcs );
 
-			((ControlGraphicsContext*)ctx)->setOwningControl( peerControl_ );
-
-
 			//reset back to original origin
 
-			::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
+			ctx->setOrigin( -paintRect.left, -paintRect.top );
 
-			
-			result = memDC_;
+			//::SetViewportOrgEx( memDC_, -paintRect.left, -paintRect.top, &oldOrg );
+			result = (HDC)ctx->getPeer()->getContextID();
+			ctx->setViewableBounds( Rect( 0,0,0,0 ) );
 		
 		}
-		else {
-			
+		else if ( !viewableRect.isNull() && !viewableRect.isEmpty() ) {
+			GraphicsContext gc((OSHandleID)paintDC);
+			GraphicsContext* ctx = &gc;
+			ctx->setViewableBounds( viewableRect );
+
 			/**
 			* we prevents the owning control of the context to alter
 			* the HDC and the viewport, as this is done here using 
 			* the DC given by the system with the message itself.
 			*/
-			ctx->getPeer()->setContextID( (OSHandleID)paintDC );
-			((ControlGraphicsContext*)ctx)->setOwningControl( NULL );
 
 			if ( NULL != exclusionRect ) {
 				ExcludeClipRect( paintDC, exclusionRect->left, exclusionRect->top,
@@ -578,14 +488,11 @@ that the control needs a real paint cycle.
 			}
 
 			ctx->restoreState( gcs );
-
-			((ControlGraphicsContext*)ctx)->setOwningControl( peerControl_ );
 			
 			result = paintDC;
+
+			ctx->setViewableBounds( Rect( 0,0,0,0 ) );
 		}
-		
-		ctx->setViewableBounds( Rect( 0,0,0,0 ) );
-		
 	}
 
 	return result;
@@ -595,41 +502,30 @@ void AbstractWin32Component::updatePaintDC( HDC paintDC, RECT paintRect, RECT* e
 {	
 
 	if ( !peerControl_->isDestroying() ) {
-		if ( true == peerControl_->isDoubleBuffered() && !peerControl_->isUsingRenderBuffer() ) {
-			VCF_ASSERT( memDCState_ != 0 );
-			VCF_ASSERT( originalMemBMP_ != 0 );
-			VCF_ASSERT( memBMP_ != 0 );
+		if ( peerControl_->isDoubleBuffered() 
+			 &&  ((paintRect.right-paintRect.left) != 0)
+			 &&  ((paintRect.bottom-paintRect.top) != 0) ) {
+			VCF_ASSERT( memCtx_ != NULL );
+			//VCF_ASSERT( originalMemBMP_ != 0 );
+			//VCF_ASSERT( memBMP_ != 0 );
 
 			if ( NULL != exclusionRect ) {
 				ExcludeClipRect( paintDC, exclusionRect->left, exclusionRect->top,
 									exclusionRect->right, exclusionRect->bottom );
 			}
 
+			HDC memDC = (HDC) memCtx_->getPeer()->getContextID();
 			/**
 			* does the final part of the double buffering mechanism
 			* copies the memory context into the device context
 			* given by the system with the paint message itself.
 			*/
-			int err = /*::BitBlt( ps.hdc, 0, 0,
-					  (int)clientBounds.getWidth(),
-					  (int)clientBounds.getHeight(),
-					  memDC_, 0, 0, SRCCOPY );*/			
-
-					  ::BitBlt( paintDC, paintRect.left, paintRect.top,
+			int err = ::BitBlt( paintDC, paintRect.left, paintRect.top,
 					  paintRect.right - paintRect.left,
 					  paintRect.bottom - paintRect.top,
-					  memDC_, paintRect.left, paintRect.top, SRCCOPY );
+					  memDC, paintRect.left, paintRect.top, SRCCOPY );
 			
-			
-			::RestoreDC ( memDC_, memDCState_ );
-			
-			::DeleteObject( memBMP_ );
-			
-			memBMP_ = NULL;
-			originalMemBMP_ = NULL;
-			memDCState_ = 0;
-			
-			if ( err == FALSE ) {
+			if ( !err ) {
 				err = GetLastError();
 				StringUtils::trace( Format("error in BitBlt during drawing of double buffered Comp: error code=%d\n") %	
 											err );

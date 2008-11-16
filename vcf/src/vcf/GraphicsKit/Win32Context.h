@@ -30,9 +30,8 @@ class GRAPHICSKIT_API Win32Context  : public Object, public ContextPeer {
 public:
 	Win32Context();
 
-	/**
-	* creates a new HDC from scratch
-	*/
+	Win32Context( Image* image );
+
 	Win32Context( const uint32& width, const uint32& height );
 
 	Win32Context( OSHandleID contextID );

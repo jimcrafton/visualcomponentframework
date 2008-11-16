@@ -60,6 +60,8 @@ public:
 		controller->setName( "controller" );
 		addComponent(controller);		
 
+		
+
 		view = new ScribbleView();
 
 		DocumentManager* docMgr = DocumentManager::getDocumentManager();

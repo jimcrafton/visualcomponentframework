@@ -19,7 +19,8 @@ where you installed the VCF.
 */
 
 // We don't need any of this if we've disabled pragma linking
-#ifndef VCF_DISABLE_PRAGMA_LINKING
+#ifdef VCF_DISABLE_PRAGMA_LINKING
+#else //VCF_DISABLE_PRAGMA_LINKING
 
 
 //If using the All-in-1 library, this task has already been done

@@ -393,12 +393,10 @@ public:
 				BasicFill fill;
 				fill.setColor( &Color(alpha_,alpha_,alpha_,alpha_) );
 
+				//maskCtx->setAntiAliasingOn(true);
+
 
 				maskCtx->setCurrentFill( &fill );
-
-
-				maskCtx->setRenderArea( Rect(0,0,maskImage->getWidth(), maskImage->getHeight()) );
-
 
 				Matrix2D m;
 				m *= Matrix2D::translation( -(pathBounds.left_  /*+ maskImage->getWidth()/2.0*/ ), 
@@ -416,9 +414,6 @@ public:
 				maskCtx->draw( path );
 
 				maskCtx->setCurrentFill( NULL );
-
-
-				maskCtx->flushRenderArea();
 			}
 
 

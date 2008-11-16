@@ -428,6 +428,8 @@ _property_( double, "width", getWidth, setWidth, "" );
 _property_( double, "height", getHeight, setHeight, "" );
 _property_( bool, "enabled", isEnabled, setEnabled, "" );
 _property_( bool, "doubleBuffered", isDoubleBuffered, setDoubleBuffered, "" );
+_property_( bool, "usingRenderBuffer", isUsingRenderBuffer, setUsingRenderBuffer, "" );
+
 _property_( bool, "useParentFont", useParentFont, setUseParentFont, "" );
 _property_( bool, "autoStartDragDrop", getAutoStartDragDrop, setAutoStartDragDrop, "" );
 _property_( bool, "tabStop", getTabStop, setTabStop, "" );

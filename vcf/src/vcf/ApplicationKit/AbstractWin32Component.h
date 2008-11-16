@@ -120,32 +120,22 @@ public:
 	void updatePaintDC( HDC paintDC, RECT paintRect, RECT* exclusionRect );
 
 protected:
-	/**
-	*
-	*
-	*/
 	LRESULT handleNCPaint( WPARAM wParam, LPARAM lParam );
 
-	/**
-	*
-	*
-	*/
 	LRESULT handleNCCalcSize( WPARAM wParam, LPARAM lParam );
 
+	void prepForDoubleBufferPaint( HDC wmPaintDC, const Rect& paintRect ); 
 protected:
 	void init();
-	HDC memDC_;
-	HBITMAP originalMemBMP_;
-	HBITMAP memBMP_;
-	bool mouseEnteredControl_;	
+	GraphicsContext* memCtx_;
 	int memDCState_;
+	bool mouseEnteredControl_;
 	bool destroyed_;
 
 	//this starts off false - the control just ignores messages UNTIL 
 	//it recv's a VCF_CONTROL_CREATE message - at that point it's
 	//set to true
 	bool canProcessMessages_;
-
 	std::vector<MSG>* cachedMessages_;
 
 	void registerForFontChanges();

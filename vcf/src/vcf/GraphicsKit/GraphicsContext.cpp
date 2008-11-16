@@ -30,8 +30,8 @@ namespace VCF {
 
 class RenderArea {
 public:
-	RenderArea():image(NULL),renderBuffer(NULL),alphaVal(NULL),alphaSize(1),
-					alphaState(GraphicsContext::rasDefault),scanline(NULL),oldContextID(0){
+	RenderArea():renderBuffer(NULL),alphaVal(NULL),alphaSize(1),
+					alphaState(GraphicsContext::rasDefault),scanline(NULL){
 
 	}
 
@@ -41,18 +41,15 @@ public:
 			renderBuffer->attach( NULL, 0, 0, 0 );
 			delete renderBuffer;
 		}
-		delete image;
 	}
 
 	Rect rect;
-	Image* image;
 	agg::rendering_buffer* renderBuffer;
 	uchar* alphaVal;
 	size_t alphaSize;
 	GraphicsContext::RenderAreaAlphaState alphaState;
 	Rect viewableBounds;
 	agg::scanline_u8* scanline;
-	OSHandleID oldContextID;
 };
 
 
@@ -230,36 +227,14 @@ void GraphicsState::compositeMatrix()
 }
 
 
-
-GraphicsContext::GraphicsContext():
-	contextPeer_(NULL),
-	renderArea_(NULL),
-	currentDrawingState_(GraphicsContext::gsNone),
-	graphicsStateIndex_(0),
-	currentGraphicsState_(NULL),
-	drawingState_(0)
-
-{
-	GraphicsState* newState = new GraphicsState();
-	newState->owningContext_ = this;
-	stateCollection_.push_back( newState );
-	currentGraphicsState_ = stateCollection_[graphicsStateIndex_];
-
-	Font& font = currentGraphicsState_->font_;
-	font.setGraphicsContext( this );
-
-	renderArea_ = new RenderArea();
-
-	init();
-}
-
 GraphicsContext::GraphicsContext( const uint32& width, const uint32& height ):
 	contextPeer_(NULL),
 	renderArea_(NULL),
 	currentDrawingState_(GraphicsContext::gsNone),
 	graphicsStateIndex_(0),
 	currentGraphicsState_(NULL),
-	drawingState_(0)
+	drawingState_(0),
+	ctxImage_(NULL)
 {
 	GraphicsState* newState = new GraphicsState();
 	newState->owningContext_ = this;
@@ -284,13 +259,48 @@ GraphicsContext::GraphicsContext( const uint32& width, const uint32& height ):
 
 }
 
+	
+
+GraphicsContext::GraphicsContext( Image* image ):
+	contextPeer_(NULL),
+	renderArea_(NULL),
+	currentDrawingState_(GraphicsContext::gsNone),
+	graphicsStateIndex_(0),
+	currentGraphicsState_(NULL),
+	drawingState_(0),
+	ctxImage_(image)
+{
+	GraphicsState* newState = new GraphicsState();
+	newState->owningContext_ = this;
+	stateCollection_.push_back( newState );
+	currentGraphicsState_ = stateCollection_[graphicsStateIndex_];
+
+	contextPeer_ = GraphicsToolkit::createContextPeer( image );
+	if ( NULL == contextPeer_ ){
+		//throw exception
+	}
+
+	contextPeer_->setContext( this );
+
+	renderArea_ = new RenderArea();
+
+	init();
+	Font& font = currentGraphicsState_->font_;
+	font.setGraphicsContext( this );
+
+	font.setPointSize( font.getPointSize() );
+
+
+}
+
 GraphicsContext::GraphicsContext( OSHandleID contextID ):
 	contextPeer_(NULL),
 	currentDrawingState_(GraphicsContext::gsNone),
 	renderArea_(NULL),
 	graphicsStateIndex_(0),
 	currentGraphicsState_(NULL),
-	drawingState_(0)
+	drawingState_(0),
+	ctxImage_(NULL)
 {
 	GraphicsState* newState = new GraphicsState();
 	newState->owningContext_ = this;
@@ -1942,30 +1952,33 @@ void GraphicsContext::checkPathOperations()
 
 void GraphicsContext::cacheRenderAreaAlpha()
 {
-	if ( (NULL != renderArea_->image) && (renderArea_->alphaState != rasDirty) && (NULL == renderArea_->alphaVal) ) {
+	if ( (NULL != renderArea_->renderBuffer) && (renderArea_->alphaState != rasDirty) 
+			&& (NULL == renderArea_->alphaVal) ) {
 		renderArea_->alphaVal = new uchar[ renderArea_->alphaSize ];
 
-		ColorPixels pix(renderArea_->image);
-		ColorPixels::Type* bits = pix;
+
+		ColorPixels::Type* bits = (ColorPixels::Type*) renderArea_->renderBuffer->buf();
 
 		for (size_t i=0;i<renderArea_->alphaSize;i++ ) {
 			renderArea_->alphaVal[i] = bits[i].a;
 		}
+
+
 	}
 }
 
 void GraphicsContext::renderAreaAlphaOverwritten()
 {
-	if ( NULL != renderArea_->image ) {
+	if ( NULL != renderArea_->renderBuffer ) {
 		renderArea_->alphaState = rasDirty;
 	}
 }
 
 void GraphicsContext::setRenderAreaAlphaSize( bool usingNonDefaultAlpha )
 {
-	if ( NULL != renderArea_->image ) {
+	if ( NULL != renderArea_->renderBuffer ) {
 		if ( usingNonDefaultAlpha ) {
-			renderArea_->alphaSize = renderArea_->image->getHeight() * renderArea_->image->getWidth();
+			renderArea_->alphaSize = renderArea_->renderBuffer->height() * renderArea_->renderBuffer->width();
 		}
 		else {
 			renderArea_->alphaSize = 1;
@@ -1975,13 +1988,12 @@ void GraphicsContext::setRenderAreaAlphaSize( bool usingNonDefaultAlpha )
 
 void GraphicsContext::resetRenderAreaAlpha()
 {
-	if ( (NULL != renderArea_->image) && (renderArea_->alphaState == rasDirty) && (NULL != renderArea_->alphaVal) ) {
+	if ( (NULL != renderArea_->renderBuffer) && (renderArea_->alphaState == rasDirty) && (NULL != renderArea_->alphaVal) ) {
 
-		ColorPixels pix(renderArea_->image);
-		ColorPixels::Type* bits = pix;
-
+		ColorPixels::Type* bits = (ColorPixels::Type*) renderArea_->renderBuffer->buf();
+		
 		if ( 1 == renderArea_->alphaSize ) {
-			size_t sz = pix.height() * pix.width();
+			size_t sz = renderArea_->renderBuffer->height() * renderArea_->renderBuffer->width();
 
 			for (size_t i=0;i<sz;i++ ) {
 				 bits[i].a = renderArea_->alphaVal[0];
@@ -2003,7 +2015,7 @@ void GraphicsContext::resetRenderAreaAlpha()
 	}
 }
 
-
+/*
 Image* GraphicsContext::getRenderArea()
 {
 	return renderArea_->image;
@@ -2013,7 +2025,7 @@ bool GraphicsContext::hasRenderArea()
 {
 	return NULL != renderArea_->image;
 }
-
+*/
 agg::rendering_buffer* GraphicsContext::getRenderingBuffer()
 {
 	return renderArea_->renderBuffer;
@@ -2031,7 +2043,12 @@ agg::scanline_u8& GraphicsContext::internal_getRenderAreaScanline()
 	return *renderArea_->scanline;
 }
 
+Image* GraphicsContext::getContextImage()
+{
+	return ctxImage_;
+}
 
+/*
 void GraphicsContext::setRenderArea( Rect bounds )
 {
 	renderArea_->rect = bounds;
@@ -2058,21 +2075,6 @@ void GraphicsContext::setRenderArea( Rect bounds )
 	getPeer()->setContextID( renderArea_->image->getImageContext()->getPeer()->getContextID() );
 }
 
-void GraphicsContext::deleteRenderArea()
-{
-	renderArea_->renderBuffer->attach( NULL, 0, 0, 0 );
-	delete renderArea_->renderBuffer;
-
-	delete renderArea_->image;
-
-	delete renderArea_->scanline;
-
-	renderArea_->renderBuffer = NULL;
-	renderArea_->scanline = NULL;
-	renderArea_->image = NULL;
-	renderArea_->alphaState = rasDefault;
-	renderArea_->alphaSize = 1;
-}
 
 void GraphicsContext::flushRenderArea()
 {
@@ -2097,6 +2099,19 @@ void GraphicsContext::flushRenderArea()
 		//drawPartialImage(  viewableBounds_.getTopLeft(), &tmp, renderArea_ );
 		bitBlit( viewableBounds_.getTopLeft(), renderArea_->image );
 	}
+}
+*/
+
+void GraphicsContext::deleteRenderArea()
+{
+	renderArea_->renderBuffer->attach( NULL, 0, 0, 0 );
+	delete renderArea_->renderBuffer;
+	delete renderArea_->scanline;
+
+	renderArea_->renderBuffer = NULL;
+	renderArea_->scanline = NULL;
+	renderArea_->alphaState = rasDefault;
+	renderArea_->alphaSize = 1;
 }
 
 void GraphicsContext::buildArc( double centerX,  double centerY,
@@ -2323,6 +2338,12 @@ void GraphicsContext::setAntiAliasingOn( bool antiAliasingOn )
 	}
 }
 
+void GraphicsContext::resizeMemoryContext( const uint32& newWidth, const uint32& newHeight )
+{
+	if ( contextPeer_->isMemoryContext() ) {
+		//resize it
+	}
+}
 
 };	// namespace VCF
 

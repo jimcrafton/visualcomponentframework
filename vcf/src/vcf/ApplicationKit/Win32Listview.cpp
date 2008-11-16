@@ -675,54 +675,49 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 			}
 
 
-			if ( NULL == memDC_ ) {
-				//create here
-				HDC dc = ::GetDC(0);
-				memDC_ = ::CreateCompatibleDC( dc );
-				::ReleaseDC( 0,	dc );
-			}
-			memBMP_ = ::CreateCompatibleBitmap( dc,
-					r.right - r.left,
-					r.bottom - r.top );
-			memDCState_ = ::SaveDC( memDC_ );
+			Rect paintRect(r.left, r.top,r.right, r.bottom );
 
-			originalMemBMP_ = (HBITMAP)::SelectObject( memDC_, memBMP_ );
+			this->prepForDoubleBufferPaint( dc, paintRect );
 
-			::SetViewportOrgEx( memDC_, -r.left, -r.top, NULL );
+			HDC memDC = (HDC) memCtx_->getPeer()->getContextID();
+
+			::SetViewportOrgEx( memDC, -r.left, -r.top, NULL );
 
 			Color* color = listviewControl_->getColor();
 			COLORREF backColor = color->getColorRef32();
 
 			HBRUSH bkBrush = CreateSolidBrush( backColor );
-			FillRect( memDC_, &r, bkBrush );
+			FillRect( memDC, &r, bkBrush );
 			DeleteObject( bkBrush );
 
 
 
-			::SetViewportOrgEx( memDC_, -r.left, -r.top, NULL );
+			::SetViewportOrgEx( memDC, -r.left, -r.top, NULL );
 
-			ControlGraphicsContext ctrlCtx(peerControl_);
-			currentCtx_ = &ctrlCtx;			
+			currentCtx_ = memCtx_;
 
-			currentCtx_->setViewableBounds( Rect(r.left, r.top,
-											r.right, r.bottom ) );
+			//ControlGraphicsContext ctrlCtx(peerControl_);
+			//currentCtx_ = &ctrlCtx;			
 
-			currentCtx_->getPeer()->setContextID( (OSHandleID)memDC_ );
-			((ControlGraphicsContext*)currentCtx_)->setOwningControl( NULL );
+			//currentCtx_->setViewableBounds( Rect(r.left, r.top,
+			//								r.right, r.bottom ) );
+
+			//currentCtx_->getPeer()->setContextID( (OSHandleID)memDC_ );
+			//((ControlGraphicsContext*)currentCtx_)->setOwningControl( NULL );
 
 
-			defaultWndProcedure( WM_PAINT, (WPARAM)memDC_, 0 );
+			defaultWndProcedure( WM_PAINT, (WPARAM)memDC, 0 );
 
-			((ControlGraphicsContext*)currentCtx_)->setOwningControl( peerControl_ );
+			//((ControlGraphicsContext*)currentCtx_)->setOwningControl( peerControl_ );
 
 
 			::BitBlt( dc, r.left, r.top,
 					  r.right - r.left,
 					  r.bottom - r.top,
-					  memDC_, r.left, r.top, SRCCOPY );
-			::RestoreDC ( memDC_, memDCState_ );
+					  memDC, r.left, r.top, SRCCOPY );
+			//::RestoreDC ( memDC_, memDCState_ );
 
-			::DeleteObject( memBMP_ );
+			//::DeleteObject( memBMP_ );
 
 
 			currentCtx_ = NULL;

@@ -12,7 +12,8 @@ where you installed the VCF.
 using namespace VCF;
 
 
-ControlGraphicsContext::ControlGraphicsContext( Control* control )
+ControlGraphicsContext::ControlGraphicsContext( Control* control ):
+	GraphicsContext((OSHandleID)NULL)
 {
 	init();
 	contextPeer_ = UIToolkit::createContextPeer( control );

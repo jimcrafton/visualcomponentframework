@@ -263,7 +263,7 @@ bool Win32Dialog::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 			Win32Object* obj = Win32Object::getWin32ObjectFromHWND( hwndLoseFocus );
 			if ( NULL != obj ){
 
-				StringUtils::trace( Format( "lost focus: %s @ %p\n" ) % obj->getPeerControl()->getClassName() % obj->getPeerControl() );
+//				StringUtils::trace( Format( "lost focus: %s @ %p\n" ) % obj->getPeerControl()->getClassName() % obj->getPeerControl() );
 
 			}
 			
@@ -277,7 +277,7 @@ bool Win32Dialog::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 			Win32Object* obj = Win32Object::getWin32ObjectFromHWND( hwndGetFocus );
 			if ( NULL != obj ){
 
-				StringUtils::trace( Format( "gained focus: %s @ %p\n" ) % obj->getPeerControl()->getClassName() % obj->getPeerControl() );
+			//	StringUtils::trace( Format( "gained focus: %s @ %p\n" ) % obj->getPeerControl()->getClassName() % obj->getPeerControl() );
 
 			}
 			
