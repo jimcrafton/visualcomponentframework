@@ -2165,37 +2165,32 @@ LRESULT Win32Tree::treeWndPaint(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 	GetClientRect( hwnd_, &paintRect );
 	
 	//paintRect = ps.rcPaint;
+
 	
-	if ( NULL == memDC_ ) {
-		//create here
-		HDC tmpDC = ::GetDC(0);
-		memDC_ = ::CreateCompatibleDC( tmpDC );
-		::ReleaseDC( 0,	tmpDC );
-	}
+	Rect treeRect(paintRect.left, paintRect.top,
+		paintRect.right, paintRect.bottom);
+
+	this->prepForDoubleBufferPaint( dc, treeRect );
+	HDC memDC = (HDC) memCtx_->getPeer()->getContextID();
+
+	currentCtx_ = memCtx_;
 	
+	//memBMP_ = ::CreateCompatibleBitmap( dc,
+	//	paintRect.right - paintRect.left,
+	//	paintRect.bottom - paintRect.top );
 	
-	GraphicsContext ctrlCtx(memDC_);
-	currentCtx_ = &ctrlCtx;
-	
-	currentCtx_->setViewableBounds( Rect(paintRect.left, paintRect.top,
-		paintRect.right, paintRect.bottom ) );
-	
-	memBMP_ = ::CreateCompatibleBitmap( dc,
-		paintRect.right - paintRect.left,
-		paintRect.bottom - paintRect.top );
-	
-	memDCState_ = ::SaveDC( memDC_ );
-	originalMemBMP_ = (HBITMAP)::SelectObject( memDC_, memBMP_ );
+	//memDCState_ = ::SaveDC( memDC_ );
+	//originalMemBMP_ = (HBITMAP)::SelectObject( memDC_, memBMP_ );
 	
 	POINT oldOrg;
 	memset(&oldOrg,0,sizeof(oldOrg));
-	::SetViewportOrgEx( memDC_, -paintRect.left, -(paintRect.top), &oldOrg );			
+	::SetViewportOrgEx( memDC, -paintRect.left, -(paintRect.top), &oldOrg );			
 	
 	Color* color = peerControl_->getColor();
 	COLORREF backColor = color->getColorRef32();
 	
 	HBRUSH bkBrush = CreateSolidBrush( backColor );
-	FillRect( memDC_, &paintRect, bkBrush );
+	FillRect( memDC, &paintRect, bkBrush );
 	DeleteObject( bkBrush );	
 	
 	int gcs = currentCtx_->saveState();
@@ -2214,30 +2209,30 @@ LRESULT Win32Tree::treeWndPaint(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 	
 	
 	//reset back to original origin
-	::SetViewportOrgEx( memDC_, paintRect.left, paintRect.top, &oldOrg );
+	::SetViewportOrgEx( memDC, paintRect.left, paintRect.top, &oldOrg );
 	
 	//let the tree control's DefWndProc do windwos painting
 	
 	if ( System::isUnicodeEnabled() ) {
-		result = CallWindowProcW( oldTreeWndProc_, hWnd, WM_PAINT, (WPARAM)memDC_, lParam );
+		result = CallWindowProcW( oldTreeWndProc_, hWnd, WM_PAINT, (WPARAM)memDC, lParam );
 	}
 	else {
-		result = CallWindowProcA( oldTreeWndProc_, hWnd, WM_PAINT, (WPARAM)memDC_, lParam );
+		result = CallWindowProcA( oldTreeWndProc_, hWnd, WM_PAINT, (WPARAM)memDC, lParam );
 	}
 	
 	
 	::BitBlt( dc, paintRect.left, paintRect.top,
 		paintRect.right - paintRect.left,
 		paintRect.bottom - paintRect.top,
-		memDC_, 0, 0, SRCCOPY );
+		memDC, 0, 0, SRCCOPY );
 	
-	::RestoreDC ( memDC_, memDCState_ );
+	//::RestoreDC ( memDC_, memDCState_ );
 	
-	::DeleteObject( memBMP_ );
+	//::DeleteObject( memBMP_ );
 	
-	memBMP_ = NULL;
-	originalMemBMP_ = NULL;
-	memDCState_ = 0;
+	//memBMP_ = NULL;
+	//originalMemBMP_ = NULL;
+	//memDCState_ = 0;
 	
 	
 	

@@ -56,6 +56,39 @@ Win32Context::Win32Context():
 	
 }
 
+Win32Context::Win32Context( Image* image ):
+	clipRGN_(NULL),
+	pathStarted_(false),	
+	inFillPath_(false),
+	dc_(NULL),
+	currentHBrush_(NULL),
+	currentHPen_(NULL),
+	currentHFont_(NULL),
+	currentDCState_(-1),
+	isMemoryCtx_(false),
+	context_(NULL),
+	alignToBaseline_(false),
+	antiAliased_(false)	
+{
+	
+	if ( Image::itColor == image->getType() ) {
+		Win32Image* win32Img = (Win32Image*)image;
+
+		dc_ = win32Img->getDC();
+	}
+	else {
+		Win32GrayScaleImage* win32Img = (Win32GrayScaleImage*)image;
+
+		dc_ = win32Img->getDC();
+	}
+
+	if ( NULL == dc_ ){
+		//throw exception
+		throw RuntimeException( MAKE_ERROR_MSG_2("Unable to create memory bitmap for win32 context") );
+	}
+	isMemoryCtx_ = true;
+}
+
 Win32Context::Win32Context( const uint32& width, const uint32& height ):
 	clipRGN_(NULL),
 	pathStarted_(false),	
@@ -73,23 +106,13 @@ Win32Context::Win32Context( const uint32& width, const uint32& height ):
 	antiAliased_(false)	
 {
 
-	//HDC desktopDC = ::GetDC( ::GetDesktopWindow() );
-
-	//dc_ = ::CreateCompatibleDC( desktopDC );
-	//if ( NULL == dc_ ) {
-	//	throw RuntimeException( MAKE_ERROR_MSG_2("Unable to create compatible Device Context for win32 context") );
-	//}
-	memBitmap_.setSize( width, height );//  = ::CreateCompatibleBitmap( desktopDC, width, height );
-
+	memBitmap_.setSize( width, height );
 	dc_ = memBitmap_.dc();
 
 	if ( NULL == dc_ ){
 		//throw exception
 		throw RuntimeException( MAKE_ERROR_MSG_2("Unable to create memory bitmap for win32 context") );
 	}
-
-	//originalBitmap_ = (HBITMAP)::SelectObject( dc_, memBitmap_ );
-	//ReleaseDC( ::GetDesktopWindow(), desktopDC );
 	isMemoryCtx_ = true;
 }
 
@@ -117,24 +140,6 @@ Win32Context::~Win32Context()
 	if ( NULL != clipRGN_ ) {
 		::DeleteObject( clipRGN_ );
 	}
-
-	/*
-	if ( NULL != memBitmap_ ){
-		::SelectObject( dc_, originalBitmap_ );
-		::DeleteObject( memBitmap_ );
-	}
-
-	if ( true == isMemoryCtx_ ) {
-		if ( NULL != dc_ ) {
-			::DeleteDC( dc_ );
-		}
-	}
-	dc_ = NULL;
-	*/
-
-
-
-	//clearBuffer();
 }
 
 
@@ -1163,10 +1168,7 @@ void Win32Context::drawImageAGG(  const double& x, const double& y, Rect* imageB
 
 void Win32Context::rectangle(const double & x1, const double & y1, const double & x2, const double & y2)
 {
-	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
-
-	}
-	else {
+	if ( !antiAliased_ ) {
 		int fixVal = 0;
 		if ( true == inFillPath_ ){
 			fixVal = 1;
@@ -1194,10 +1196,7 @@ void Win32Context::rectangle(const double & x1, const double & y1, const double 
 void Win32Context::roundRect(const double & x1, const double & y1, const double & x2, const double & y2,
 							 const double & xc, const double & yc)
 {
-	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
-
-	}
-	else {
+	if ( !antiAliased_ ) {
 		int fixVal = 0;
 		if ( true == inFillPath_ ){
 			fixVal = 1;
@@ -1210,10 +1209,7 @@ void Win32Context::roundRect(const double & x1, const double & y1, const double 
 void Win32Context::ellipse(const double & x1, const double & y1, const double & x2, const double & y2)
 {
 
-	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
-
-	}
-	else {
+	if ( !antiAliased_ ) {
 		pathStarted_ = true;
 		//swap out the values to ensure they are normalized since windows is brain dead about this
 		double ax1 = x1;
@@ -1244,10 +1240,7 @@ void Win32Context::ellipse(const double & x1, const double & y1, const double & 
 void Win32Context::arc(const double & x1, const double & y1, const double & x2, const double & y2, const double & x3,
 					   const double & y3, const double & x4, const double & y4)
 {
-	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
-
-	}
-	else {
+	if ( !antiAliased_ ) {
 		
 		pathStarted_ = true;
 		//swap out the values to ensure they are normalized since windows is brain dead about this
@@ -1284,10 +1277,7 @@ void Win32Context::arc(const double & x1, const double & y1, const double & x2, 
 
 void Win32Context::polyline( const std::vector<Point>& pts)
 {
-	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
-
-	}
-	else {
+	if ( !antiAliased_ ) {
 		POINT* polyPts = new POINT[pts.size()];
 		std::vector<Point>::const_iterator it = pts.begin();
 		int i =0;
@@ -1313,10 +1303,7 @@ void Win32Context::polyline( const std::vector<Point>& pts)
 void Win32Context::curve(const double & x1, const double & y1, const double & x2, const double & y2,
                          const double & x3, const double & y3, const double & x4, const double & y4 )
 {
-	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
-
-	}
-	else {
+	if ( !antiAliased_ ) {
 		POINT bezPts[4];
 		memset( &bezPts[0], 0, sizeof(bezPts[0]) * 4 );
 		
@@ -1350,10 +1337,7 @@ void Win32Context::curve(const double & x1, const double & y1, const double & x2
 
 void Win32Context::lineTo(const double & x, const double & y)
 {
-	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
-
-	}
-	else {
+	if ( !antiAliased_ ) {
 		int32 xx = x;
 		int32 yy = y;
 		::LineTo( dc_, xx, yy );
@@ -1362,10 +1346,7 @@ void Win32Context::lineTo(const double & x, const double & y)
 
 void Win32Context::moveTo(const double & x, const double & y)
 {
-	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
-
-	}
-	else {
+	if ( !antiAliased_ ) {
 		int32 xx = x;
 		int32 yy = y;
 		::MoveToEx( dc_, /*(int32)*/xx, /*(int32)*/yy, NULL );
@@ -1374,10 +1355,7 @@ void Win32Context::moveTo(const double & x, const double & y)
 
 void Win32Context::closePath()
 {
-	if ( this->antiAliased_ && NULL != context_->getRenderArea() ) {
-
-	}
-	else {
+	if ( !antiAliased_ ) {
 #ifdef VCF_WIN32CE
 #else
 		::CloseFigure(dc_);
@@ -5097,11 +5075,21 @@ void Win32Context::setAntiAliasingOn( bool antiAliasingOn )
 void Win32Context::attachToRenderBuffer( agg::rendering_buffer& renderBuffer )
 {
 	if ( isMemoryCtx_ ) {
-		renderBuffer.attach( (unsigned char*)memBitmap_.data(),
+
+		Image* img = context_->getContextImage();
+		if ( img ) {
+			renderBuffer.attach( (unsigned char*)img->getData(),
+									img->getWidth(),
+									img->getHeight(),
+									img->getWidth() * img->getType() );
+
+		}
+		else {
+			renderBuffer.attach( (unsigned char*)memBitmap_.data(),
 													memBitmap_.bmpInfo()->bmiHeader.biWidth,
 													abs(memBitmap_.bmpInfo()->bmiHeader.biHeight),
 													memBitmap_.bmpInfo()->bmiHeader.biWidth * 4 );//assume full color
-
+		}
 	}
 }
 

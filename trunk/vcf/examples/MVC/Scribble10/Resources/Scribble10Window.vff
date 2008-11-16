@@ -14,6 +14,10 @@ object Scribble10Window  : VCF::Window
 		alignment = AlignClient
 		border = null;
 
+		//toggle this to change whether or not anti-aliasing is used
+		usingRenderBuffer = true
+
+
 		delegates 
 			MouseMove = [Scribble10App@Scribble10App::onContentMouseMove, controller@ScribbleController::onMouseMove]
 			MouseDown = [Scribble10App@Scribble10App::onContentMouseDown, controller@ScribbleController::onMouseDown]

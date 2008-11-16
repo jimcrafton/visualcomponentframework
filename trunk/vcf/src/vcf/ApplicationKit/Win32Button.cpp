@@ -132,70 +132,55 @@ bool Win32Button::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 			CommandButton* button = (CommandButton*)peerControl_;
 			button->setIsPressed( drawItem->itemState & ODS_SELECTED ? true : false );
 
-			ControlGraphicsContext ctrlCtx(peerControl_);
-			VCF::GraphicsContext* ctx = &ctrlCtx;
+			
 			if ( peerControl_->isDoubleBuffered() ){
 
-				if ( NULL == memDC_ ) {
-						//create here
-					HDC dc = ::GetDC(0);
-					memDC_ = ::CreateCompatibleDC( dc );
-					::ReleaseDC( 0,	dc );
-				}
-
-				int dcState = ::SaveDC( drawItem->hDC );
 				Rect tmp(drawItem->rcItem.left, drawItem->rcItem.top, drawItem->rcItem.right, drawItem->rcItem.bottom);
 
-				HBITMAP memBitmap =
-					::CreateCompatibleBitmap( drawItem->hDC,
-												drawItem->rcItem.right - drawItem->rcItem.left,
-												drawItem->rcItem.bottom - drawItem->rcItem.top );
+				this->prepForDoubleBufferPaint( drawItem->hDC, tmp );
 
-				HBITMAP oldBMP = (HBITMAP)::SelectObject( memDC_, memBitmap );
+				int dcState = ::SaveDC( drawItem->hDC );
+				
+				HDC memDC = (HDC)memCtx_->getPeer()->getContextID();
 
 				//clear the memdc
 				Control* parent = peerControl_->getParent();
 				Color* bkColor = parent->getColor();
 				HBRUSH bkBr = CreateSolidBrush( RGB( bkColor->getRed()*255.0, bkColor->getGreen()*255.0, bkColor->getBlue()*255.0 ) );
-				FillRect( memDC_, &drawItem->rcItem, bkBr );
+				FillRect( memDC, &drawItem->rcItem, bkBr );
 				DeleteObject( bkBr );
 
 
-				::SetViewportOrgEx( memDC_, -drawItem->rcItem.left, -drawItem->rcItem.top, NULL );
+				//::SetViewportOrgEx( memDC, -drawItem->rcItem.left, -drawItem->rcItem.top, NULL );
 
-				//::BitBlt( memDC_, 0, 0,
-				//					drawItem->rcItem.right - drawItem->rcItem.left,
-				//					drawItem->rcItem.bottom - drawItem->rcItem.top,
-				//					drawItem->hDC, drawItem->rcItem.left, drawItem->rcItem.top, SRCCOPY );
+				memCtx_->setOrigin( -drawItem->rcItem.left, -drawItem->rcItem.top );
+
 
 				
+				//ctx->getPeer()->setContextID( (OSHandleID)memDC_ );
+
+				//((ControlGraphicsContext*)ctx)->setOwningControl( NULL );
+
+				peerControl_->internal_beforePaint( memCtx_ );
+
+				peerControl_->paint( memCtx_ );
+
+				peerControl_->internal_afterPaint( memCtx_ );
 
 
-				ctx->getPeer()->setContextID( (OSHandleID)memDC_ );
+				//((ControlGraphicsContext*)ctx)->setOwningControl( peerControl_ );
 
-				((ControlGraphicsContext*)ctx)->setOwningControl( NULL );
+				memCtx_->setOrigin( -drawItem->rcItem.left, -drawItem->rcItem.top );
 
-				peerControl_->internal_beforePaint( ctx );
-
-				peerControl_->paint( ctx );
-
-				peerControl_->internal_afterPaint( ctx );
-
-
-				((ControlGraphicsContext*)ctx)->setOwningControl( peerControl_ );
-
-				::SetViewportOrgEx( memDC_, -drawItem->rcItem.left, -drawItem->rcItem.top, NULL );
+				//::SetViewportOrgEx( memDC, -drawItem->rcItem.left, -drawItem->rcItem.top, NULL );
 
 				int err = ::BitBlt( drawItem->hDC, drawItem->rcItem.left, drawItem->rcItem.top,
 									drawItem->rcItem.right - drawItem->rcItem.left,
 									drawItem->rcItem.bottom - drawItem->rcItem.top,
-									memDC_, drawItem->rcItem.left, drawItem->rcItem.top, SRCCOPY );
+									 memDC, drawItem->rcItem.left, drawItem->rcItem.top, SRCCOPY );
 
-				::SelectObject( memDC_, oldBMP );
-
-				::DeleteObject( memBitmap );
-
-				::RestoreDC ( memDC_, dcState );
+				
+				::RestoreDC ( drawItem->hDC, dcState );
 
 				if ( err == FALSE ) {
 					err = GetLastError();
@@ -204,13 +189,15 @@ bool Win32Button::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 				}
 			}
 			else {
-				ctx->getPeer()->setContextID( (OSHandleID)drawItem->hDC );
+				ControlGraphicsContext ctrlCtx(peerControl_);
+				
+				ctrlCtx.getPeer()->setContextID( (OSHandleID)drawItem->hDC );
 
-				peerControl_->internal_beforePaint( ctx );
+				peerControl_->internal_beforePaint( &ctrlCtx );
 
-				peerControl_->paint( ctx );
+				peerControl_->paint( &ctrlCtx );
 
-				peerControl_->internal_afterPaint( ctx );
+				peerControl_->internal_afterPaint( &ctrlCtx );
 			}
 			wndProcResult = TRUE;
 			result = true;

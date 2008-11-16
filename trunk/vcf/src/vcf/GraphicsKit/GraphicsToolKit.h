@@ -117,13 +117,15 @@ public:
 
 	static ContextPeer* createContextPeer( OSHandleID contextID );
 
+	static ContextPeer* createContextPeer( Image* image );
+
 	static FontPeer* createFontPeer( const String& fontName );
 
 	static FontPeer* createFontPeer( const String& fontName, const double& pointSize );
 
 	static Image* createImage( const uint32& width, const uint32& height, const Image::ImageType& imageType = Image::itColor );
 
-	static Image* createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType = Image::itColor );
+	static Image* createImage( GraphicsContext* context, Rect* rect, const Image::ImageType& imageType = Image::itColor );	
 
 	static PrintSessionPeer* createPrintSessionPeer();
 
@@ -209,6 +211,8 @@ protected:
 	virtual ContextPeer* internal_createContextPeer( const uint32& width, const uint32& height ) = 0;
 
 	virtual ContextPeer* internal_createContextPeer( OSHandleID contextID ) = 0;
+
+	virtual ContextPeer* internal_createContextPeer( Image* image ) = 0;
 
 	virtual FontPeer* internal_createFontPeer( const String& fontName )  = 0;
 

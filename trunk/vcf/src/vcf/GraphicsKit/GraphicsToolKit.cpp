@@ -69,6 +69,11 @@ ContextPeer* GraphicsToolkit::createContextPeer( OSHandleID contextID )
 	return GraphicsToolkit::graphicsToolkitInstance->internal_createContextPeer( contextID );
 }
 
+ContextPeer* GraphicsToolkit::createContextPeer( Image* image )
+{
+	return GraphicsToolkit::graphicsToolkitInstance->internal_createContextPeer( image );
+}
+
 FontPeer* GraphicsToolkit::createFontPeer( const String& fontName )
 {
 	return GraphicsToolkit::graphicsToolkitInstance->internal_createFontPeer( fontName );

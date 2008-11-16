@@ -29,6 +29,8 @@ public:
 
 	virtual ContextPeer* internal_createContextPeer( OSHandleID contextID );
 
+	virtual ContextPeer* internal_createContextPeer( Image* image );
+
 	virtual FontPeer* internal_createFontPeer( const String& fontName );
 
 	virtual FontPeer* internal_createFontPeer( const String& fontName, const double& pointSize );

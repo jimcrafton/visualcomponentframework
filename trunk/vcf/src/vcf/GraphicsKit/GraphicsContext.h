@@ -101,8 +101,6 @@ have been  called. For example:
 */
 class GRAPHICSKIT_API GraphicsContext : public Object {
 public:
-	GraphicsContext( );
-
 	/**
 	Creates a new blank graphics context of the specified width and height
 	*/
@@ -113,6 +111,8 @@ public:
 	Doing this should caryy over any of the current settings of the context that the contextID represents.
 	*/
 	GraphicsContext( OSHandleID contextID );
+
+	GraphicsContext( Image* image );
 
 	virtual ~GraphicsContext( );
 
@@ -339,25 +339,10 @@ public:
 	}
 
 	/**
-	This method sets the image bounds for the drawing
-	area image. This gets called by the framework to designate
-	an image that should be used to draw on, essectially a
-	"back buffer" that can be used to draw on, and then blitted
-	back onto the GraphicsContext. This is used to draw on
-	for anti-aliased graphics.
-	*/
-	void setRenderArea( Rect bounds );
-
-	/**
 	This deletes the drawing area, and frees any resources
 	associated with it.
 	*/
 	void deleteRenderArea( );
-
-	/**
-	Draws the drawing area image on to the graphics context.
-	*/
-	void flushRenderArea( );
 
 	void cacheRenderAreaAlpha();
 
@@ -367,15 +352,25 @@ public:
 
 	void renderAreaAlphaOverwritten();
 
-	void setRenderAreaAlphaSize( bool usingNonDefaultAlpha );	
-
-	Image* getRenderArea();
+	void setRenderAreaAlphaSize( bool usingNonDefaultAlpha );
 
 	agg::rendering_buffer* getRenderingBuffer();
 
 	void setRenderingBuffer( agg::rendering_buffer* buffer );
 
 	agg::scanline_u8& internal_getRenderAreaScanline();
+
+	void resizeMemoryContext( const uint32& newWidth, const uint32& newHeight );
+
+	/**
+	Returns the image that this context is associated with. Using 
+	any of the calls here will cause the shapes to be rendered in the
+	images buffer. May be NULL. Can only be changed by creating a new
+	graphics context.
+	*/
+	Image* getContextImage();
+
+
 
 	/**
 	saves the state of a Graphics context after the
@@ -924,14 +919,6 @@ protected:
 	GraphicsDrawingState currentDrawingState_;
 	std::vector<PointOperation> pathOperations_;
 	std::vector<ImageOperation> imageOperations_;
-	/*
-	Image* renderArea_;
-	Point drawingAreaTopLeft_;
-	agg::rendering_buffer* renderBuffer_;
-	uchar* renderAreaAlphaVal_;
-	size_t renderAreaAlphaSize_;
-	RenderAreaAlphaState renderAreaAlphaState_;
-	*/
 	Rect viewableBounds_;
 
 	RenderArea* renderArea_;
@@ -956,6 +943,8 @@ protected:
 	GraphicsState* currentGraphicsState_;
 
 	int drawingState_;
+
+	Image* ctxImage_;
 
 
 	void renderImage( agg::rendering_buffer& destBuffer, Rect& destRect, ImageOperation& imgOp );

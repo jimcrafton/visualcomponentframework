@@ -21,12 +21,12 @@ where you installed the VCF.
 class HBitmapData {
 public:
 	HBitmapData(): dc_(NULL), hbmp_(NULL), hOldBitmap_(NULL), data_(NULL), bmpInfo_(NULL) {
-		dc_ = CreateCompatibleDC( NULL );
+		//dc_ = CreateCompatibleDC( NULL );
 	}
 
-	HBitmapData( HDC dc ): dc_(NULL), hbmp_(NULL), hOldBitmap_(NULL), data_(NULL), bmpInfo_(NULL) {
-		dc_ = CreateCompatibleDC( dc );
-	}
+	//HBitmapData( HDC dc ): dc_(NULL), hbmp_(NULL), hOldBitmap_(NULL), data_(NULL), bmpInfo_(NULL) {
+	//	//dc_ = CreateCompatibleDC( dc );
+	//}
 
 	~HBitmapData(){
 		if ( NULL != hbmp_ ) {
@@ -96,6 +96,11 @@ class HBitmap32Bit : public HBitmapData {
 public:
 	
 	void setSize( size_t width, size_t height ) {
+
+		if ( NULL == dc_ ) {
+			dc_ = CreateCompatibleDC( NULL );
+		}
+
 		if ( hbmp_ ) {
 			::SelectObject( dc_, hOldBitmap_ );
 			DeleteObject( hbmp_ );
@@ -132,6 +137,10 @@ public:
 	
 
 	void setSize( size_t width, size_t height ) {
+		if ( NULL == dc_ ) {
+			dc_ = CreateCompatibleDC( NULL );
+		}
+
 		if ( hbmp_ ) {
 			::SelectObject( dc_, hOldBitmap_ );
 			::DeleteObject( hbmp_ );

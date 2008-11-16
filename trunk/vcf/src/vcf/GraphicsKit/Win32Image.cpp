@@ -148,13 +148,7 @@ void Win32Image::init()
 
 	//hBitmap_ = NULL;
 
-	palette_ = NULL;
-
-	//dc_ = ::CreateCompatibleDC( NULL );
-
-	//the deletion of the context_ should delete the
-	//dc_ handle
-	context_ = new GraphicsContext( (OSHandleID)hbmp_.dc() );
+	palette_ = NULL;	
 }
 
 void Win32Image::setSize( const uint32 & width, const uint32 & height )
@@ -700,11 +694,7 @@ void Win32GrayScaleImage::init()
 	IMTRAITS::setImageType( flags_, SysGrayscalePixelType::Traits::getTraitsImageType() );
 	IMTRAITS::setPixelLayoutOrder( flags_, Image::ploBGRA );
 
-	palette_ = NULL;
-
-	//the deletion of the context_ should delete the
-	//dc_ handle
-	context_ = new GraphicsContext( (OSHandleID)hbmp_.dc() );
+	palette_ = NULL;	
 }
 
 void Win32GrayScaleImage::setSize( const uint32 & width, const uint32 & height )

@@ -562,7 +562,7 @@ bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 		break;
 
 		case WM_PAINT:{
-			if ( true == isCreated() ){
+			if ( isCreated() ){
 				if ( peerControl_->getComponentState() != Component::csDestroying ) {
 					if( !GetUpdateRect( hwnd_, NULL, FALSE ) ){
 						wndProcResult = 0;
@@ -573,6 +573,9 @@ bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 					PAINTSTRUCT ps;
 					HDC contextID = 0;
 					contextID = ::BeginPaint( hwnd_, &ps);
+
+					Rect r(ps.rcPaint.left,ps.rcPaint.top,ps.rcPaint.right,ps.rcPaint.bottom);
+					this->prepForDoubleBufferPaint(ps.hdc,r);
 
 					doControlPaint( contextID, ps.rcPaint, NULL, cpControlOnly );
 					updatePaintDC( contextID, ps.rcPaint, NULL );

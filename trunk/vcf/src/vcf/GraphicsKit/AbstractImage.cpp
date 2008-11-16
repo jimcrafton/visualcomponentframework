@@ -24,6 +24,8 @@ AbstractImage::AbstractImage( const bool& needsMemAlloc ):
 	needsMemAlloc_(needsMemAlloc)
 {
 	//imageBits_ = new ImageBits(0,0,needsMemAlloc);	
+
+	
 }
 
 AbstractImage::~AbstractImage()
@@ -63,6 +65,10 @@ uint32 AbstractImage::getHeight(){
 
 GraphicsContext* AbstractImage::getImageContext()
 {
+	if ( NULL == context_ ) {
+		context_ = new GraphicsContext( this );
+	}
+
 	return context_;
 }
 /*

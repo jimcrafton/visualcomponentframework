@@ -1466,6 +1466,11 @@ ContextPeer* Win32GraphicsToolkit::internal_createContextPeer( const uint32& wid
 	return new Win32Context( width, height );
 }
 
+ContextPeer* Win32GraphicsToolkit::internal_createContextPeer( Image* image )
+{
+	return new Win32Context( image );
+}
+
 FontPeer* Win32GraphicsToolkit::internal_createFontPeer( const String& fontName )
 {
 	return new Win32Font( fontName );
@@ -1527,75 +1532,75 @@ PrintSessionPeer* Win32GraphicsToolkit::internal_createPrintSessionPeer()
 void Win32GraphicsToolkit::loadSystemColors()
 {
 	Color* sysColor = NULL;
-	sysColor = new Color( ::GetSysColor( COLOR_BTNSHADOW ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_BTNSHADOW ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_SHADOW] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_SHADOW";
 
-	sysColor = new Color( ::GetSysColor( COLOR_3DFACE ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_3DFACE ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_FACE] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_FACE";
 
-	sysColor = new Color( ::GetSysColor( COLOR_3DHILIGHT ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_3DHILIGHT ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_HIGHLIGHT] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_HIGHLIGHT";
 
-	sysColor = new Color( ::GetSysColor( COLOR_ACTIVECAPTION ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_ACTIVECAPTION ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_ACTIVE_CAPTION] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_ACTIVE_CAPTION";
 
-	sysColor = new Color( ::GetSysColor( COLOR_ACTIVEBORDER ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_ACTIVEBORDER ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_ACTIVE_BORDER] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_ACTIVE_BORDER";
 
-	sysColor = new Color( ::GetSysColor( COLOR_DESKTOP ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_DESKTOP ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_DESKTOP] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_DESKTOP";
 
-	sysColor = new Color( ::GetSysColor( COLOR_CAPTIONTEXT ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_CAPTIONTEXT ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_CAPTION_TEXT] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_CAPTION_TEXT";
 
-	sysColor = new Color( ::GetSysColor( COLOR_HIGHLIGHT ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_HIGHLIGHT ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_SELECTION] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_SELECTION";
 
-	sysColor = new Color( ::GetSysColor( COLOR_HIGHLIGHTTEXT ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_HIGHLIGHTTEXT ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_SELECTION_TEXT] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_SELECTION_TEXT";
 
-	sysColor = new Color( ::GetSysColor( COLOR_INACTIVEBORDER ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_INACTIVEBORDER ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_INACTIVE_BORDER] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_INACTIVE_BORDER";
 
-	sysColor = new Color( ::GetSysColor( COLOR_INACTIVECAPTION ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_INACTIVECAPTION ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_INACTIVE_CAPTION] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_INACTIVE_CAPTION";
 
-	sysColor = new Color( ::GetSysColor( COLOR_INFOBK ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_INFOBK ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_TOOLTIP] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_TOOLTIP";
 
-	sysColor = new Color( ::GetSysColor( COLOR_INFOTEXT ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_INFOTEXT ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_TOOLTIP_TEXT] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_TOOLTIP_TEXT";
 
-	sysColor = new Color( ::GetSysColor( COLOR_MENU ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_MENU ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_MENU] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_MENU";
 
-	sysColor = new Color( ::GetSysColor( COLOR_MENUTEXT ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_MENUTEXT ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_MENU_TEXT] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_MENU_TEXT";
 
-	sysColor = new Color( ::GetSysColor( COLOR_WINDOW ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_WINDOW ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_WINDOW] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_WINDOW";
 
-	sysColor = new Color( ::GetSysColor( COLOR_WINDOWTEXT ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_WINDOWTEXT ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_WINDOW_TEXT] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_WINDOW_TEXT";
 
-	sysColor = new Color( ::GetSysColor( COLOR_WINDOWFRAME ), Color::cpsABGR );
+	sysColor = new Color( ::GetSysColor( COLOR_WINDOWFRAME ), Color::cpsBGR );
 	systemColors_[SYSCOLOR_WINDOW_FRAME] = sysColor;
 	(*systemColorNameMap_)[*sysColor] = "SYSCOLOR_WINDOW_FRAME";
 
