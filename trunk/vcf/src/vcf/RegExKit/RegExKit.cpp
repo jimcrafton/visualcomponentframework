@@ -156,6 +156,8 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
 		if (this->init()!=ONIG_NORMAL) {
 			// Need some sort of error handling code here, but for now...
 			StringUtils::trace("Some sort of Onig-based error in compile()");
+
+			throw RuntimeException( "Error in Host::compile() with expression: \n" + expression_ );
 		}
 	}
 
@@ -204,6 +206,7 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
 			if (status!=ONIG_MISMATCH) {
 				// some error handling here, but for now...
 				StringUtils::trace("Some sort of Onig-based error in find()");
+				throw RuntimeException( "Error in Host::find() with expression: \n" + expression_ );
 			}
 			else if (pos==first_) { // There are no matches
 				pastTheEnd_.linkedNext_=true;
@@ -249,6 +252,7 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
 			if (status !=ONIG_MISMATCH) {
 				// some error handling here, but for now...
 				StringUtils::trace("Some sort of Onig-based error in rfind()");
+				throw RuntimeException( "Error in Host::rfind() with expression: \n" + expression_ );
 			}
 			else if (pos==last_) { // There are no matches
 				pastTheEnd_.linkedNext_=true;

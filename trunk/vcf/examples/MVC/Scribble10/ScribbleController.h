@@ -87,6 +87,12 @@ public:
 		
 		TextControl* tc = (TextControl*)findComponent("strokeWidth",true);
 		tc->setText( StringUtils::toString(shape->getStrokeWidth()) );
+
+		tc = (TextControl*)findComponent("strokeOpacity",true);
+		tc->setText( StringUtils::toString(shape->getStroke()->getAlpha()) );
+
+		tc = (TextControl*)findComponent("fillOpacity",true);
+		tc->setText( StringUtils::toString(shape->getFill()->getAlpha()) );
 	}
 	
 
@@ -103,6 +109,12 @@ public:
 		TextControl* tc = (TextControl*)findComponent("strokeWidth",true);
 		width = StringUtils::fromStringAsDouble(tc->getText());
 
+		tc = (TextControl*)findComponent("strokeOpacity",true);
+
+		strokeColor.setAlpha( StringUtils::fromStringAsDouble(tc->getText()) );
+
+		tc = (TextControl*)findComponent("fillOpacity",true);
+		fillColor.setAlpha( StringUtils::fromStringAsDouble(tc->getText()) );
 	}
 
 	void onDoColor(Event* e) {

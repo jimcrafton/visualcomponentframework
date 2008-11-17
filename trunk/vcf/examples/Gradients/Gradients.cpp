@@ -276,7 +276,7 @@ public:
 		shadow.setRadius( 16 );
 
 		curve.clear();
-
+/*
 		Rect rect(mousePt.x_ - 100,mousePt.y_ - 50,mousePt.x_ + 100,mousePt.y_ + 50);
 		curve.rectangle( rect );
 		ctx->draw( &curve );
@@ -286,7 +286,7 @@ public:
 		//ctx->setColor( &Color("blue") );
 		//ctx->rectangle( &rect );
 		//ctx->fillPath();
-
+*/
 		ctx->setCurrentFill( NULL );
 		ctx->setCompositingMode( GraphicsContext::cmSource );
 	
@@ -421,7 +421,7 @@ public:
 
 	}
 
-
+/*
 	virtual void mouseMove( MouseEvent* e ) {
 		Window::mouseMove(e);
 		if ( e->hasLeftButton() ) {
@@ -453,6 +453,7 @@ public:
 	}
 
 	Point mousePt;
+	*/
 };
 
 

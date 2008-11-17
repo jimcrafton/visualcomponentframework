@@ -83,10 +83,18 @@ public:
 			if (it != host.end()) {
 				++it;
 			}
-		} else {
-			host.changeSearchExpression(text);
-			lastExpression = text;
-			it = host.begin();
+		} 
+		else {
+			try { 
+				host.changeSearchExpression(text);
+				lastExpression = text;
+				it = host.begin();
+			}
+			catch ( BasicException& e ) {
+				Dialog::showMessage( e.getMessage() );
+				it = host.end();
+				return;
+			}
 		}
 		if (it != host.end()) {
 			showMatch(it);
@@ -118,7 +126,7 @@ public:
 	}
 
 	void onKeyDown(KeyboardEvent* e) {
-		VCFChar pressed = e->getKeyValue();
+		VCFChar pressed = e->keyValue;
 		if (pressed == '\r') {
 			findNext(e);
 		}
