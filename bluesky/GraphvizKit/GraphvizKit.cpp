@@ -383,3 +383,29 @@ void AGraph::loadFromFile( const String& filename )
 		fclose(f);
 	}
 }
+
+Size AGraph::getBoundsSize() const
+{
+	Size result;
+
+	Agraph_t* g = graph_.get();
+	if ( g ) {
+		result.width_ = abs(g->u.bb.UR.x - g->u.bb.LL.x);
+		result.height_ = abs(g->u.bb.UR.y - g->u.bb.LL.y);
+	}
+
+	return result;
+}
+
+Rect AGraph::getBoundingBox() const
+{
+	Rect result;
+
+	Agraph_t* g = graph_.get();
+	if ( g ) {
+		result.setRect( g->u.bb.LL.x, g->u.bb.LL.y,
+						g->u.bb.UR.x, g->u.bb.UR.y );
+	}
+
+	return result;
+}

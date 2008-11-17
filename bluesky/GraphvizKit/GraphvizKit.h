@@ -198,6 +198,12 @@ enum {
 			return graph_.get();
 		}    
 
+		bool null() const {
+			return graph_.get() == NULL ? true : false;
+		}
+
+		Size getBoundsSize() const;
+		Rect getBoundingBox() const;
 	protected:
 		AgraphPtr graph_;
 
