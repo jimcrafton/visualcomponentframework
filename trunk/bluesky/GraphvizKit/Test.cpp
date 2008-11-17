@@ -2,7 +2,9 @@
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
+#include "vcf/ApplicationKit/Panel.h"
 #include "GraphvizKit.h"
+#include "vcf/FoundationKit/RTTIMacros.h"
 
 
 
@@ -34,14 +36,49 @@ using namespace VCF;
 	"}"\
 
 
-
-class TestWindow : public Window {
+class DotViewPane : public Panel {
 public:
-	TestWindow()
-		{
-		setCaption( "Test" );	
 
-		graph.load( DOT_ER );
+	DotViewPane(): checkSB(false){}
+	void loadFromFile( const String& fileName ) {
+		graph.loadFromFile(fileName);
+
+		graph.layout();
+
+		checkSB = true;
+
+		repaint();
+	}
+
+	virtual void paint( GraphicsContext* ctx ) {
+		Panel::paint(ctx);
+		ctx->setAntiAliasingOn(true);
+
+		if ( !graph.null() ) {
+
+			//if ( checkSB ) {
+				
+				getScrollable()->setVirtualViewWidth( graph.getBoundsSize().width_ );
+				getScrollable()->setVirtualViewHeight( graph.getBoundsSize().height_ );
+			//}
+
+			checkSB = false;
+
+			graph.render(ctx);
+		}
+	}
+
+	AGraph graph;
+	bool checkSB;
+};
+
+class DotViewer : public Window {
+public:
+	DotViewer()
+		{
+		//setCaption( "Test" );	
+
+		//graph.load( DOT_ER );
 
 		//Agdisc_t agd;
 		
@@ -103,52 +140,42 @@ public:
 		agsafeset(n, "color", "red", "");
 */
 
-		graph.layout();
+		//graph.layout();
 
 		
 
 	}
 
-	virtual ~TestWindow(){};
-
-	AGraph graph;
-
-	virtual void paint( GraphicsContext* ctx ) {
-		
-
-		Window::paint(ctx);
-
-		ctx->setAntiAliasingOn(true);
-
-		//ctx->setScale( 0.75,0.75 );
-
-		graph.render(ctx);
-
-		//GVC_t* gvc = GraphvizKit::getContext();	
-
-		//ctx->setTranslation( (gvc->bb.UR.x - gvc->bb.LL.x) + 10, 0 );
-
-		//graph.render(ctx);	
-	}
+	virtual ~DotViewer(){};
 };
 
 
 
+_class_rtti_(DotViewer, "VCF::Window", "DotViewer")
+_class_rtti_end_
 
-class TestApplication : public Application {
+_class_rtti_(DotViewPane, "VCF::Panel", "DotViewPane")
+_class_rtti_end_
+
+
+class DotViewApp : public Application {
 public:
 
-	TestApplication( int argc, char** argv ) : Application(argc, argv) {
+	DotViewApp( int argc, char** argv ) : Application(argc, argv) {
 		GraphvizKit::init(argc,argv);
+
+		addCallback( new ClassProcedure1<Event*,DotViewApp>(this, &DotViewApp::onFileOpen), "DotViewApp::onFileOpen" );
 	}
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
 		
-		Window* mainWindow = new TestWindow();
+		REGISTER_CLASSINFO_EXTERNAL(DotViewer);
+		REGISTER_CLASSINFO_EXTERNAL(DotViewPane);
+
+		Window* mainWindow = Frame::createWindow( classid(DotViewer) );
 		setMainWindow(mainWindow);
-		mainWindow->setBounds( 100.0, 100.0, 500.0, 500.0 );
-		mainWindow->show();		
+		mainWindow->show();
 		
 		return result;
 	}
@@ -160,12 +187,21 @@ public:
 		Application::terminateRunningApplication();
 	}
 
+	void onFileOpen( Event* ) {
+		CommonFileOpenDialog fo;
+
+		if ( fo.execute() ) {
+
+			DotViewPane* pane = (DotViewPane*) findComponent( "viewPane", true );
+			pane->loadFromFile( fo.getFileName() );
+		}
+	}
 };
 
 
 int main(int argc, char *argv[])
 {
-	return ApplicationKitMain<TestApplication>(argc,argv);
+	return ApplicationKitMain<DotViewApp>(argc,argv);
 }
 
 

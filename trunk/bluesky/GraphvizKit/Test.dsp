@@ -68,7 +68,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)\src" /I "lib/fdpgen" /I "lib/graph" /I "lib/cdt" /I "lib/gvc" /I "lib/common" /I "lib/pathplan" /I "./" /I "lib/circogen" /I "lib/neatogen" /I "lib/pack" /I "lib/twopigen" /I "lib/dotgen" /I "windows" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "USE_APPLICATIONKIT_DLL" /D "USE_GRAPHVIZKIT_DLL" /FD /GZ /I$(VCF_ROOT)/src /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)\src" /I "lib/fdpgen" /I "lib/graph" /I "lib/cdt" /I "lib/gvc" /I "lib/common" /I "lib/pathplan" /I "./" /I "lib/circogen" /I "lib/neatogen" /I "lib/pack" /I "lib/twopigen" /I "lib/dotgen" /I "windows" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "USE_APPLICATIONKIT_LIB" /D "USE_GRAPHVIZKIT_LIB" /FD /GZ /I$(VCF_ROOT)/src /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -93,6 +93,10 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\Test.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\test.rc
 # End Source File
 # End Group
 # Begin Group "Header Files"

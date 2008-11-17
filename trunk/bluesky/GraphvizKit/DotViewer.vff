@@ -1,0 +1,34 @@
+object DotViewer : VCF::Window 
+	top = 100
+	left = 100
+	width = 500
+	height = 400
+
+	caption = 'DOT File Viewer'
+
+	object viewPane : DotViewPane
+		alignment = AlignClient
+		border = null
+
+	end
+
+	
+	object scrollbarMgr : VCF::ScrollbarManager
+		target = @viewPane
+		hasVerticalScrollbar = true
+		hasHorizontalScrollbar = true
+	end
+
+	object menuBar : VCF::MenuBar
+		object fileMenu : VCF::DefaultMenuItem
+			caption = 'File'
+
+			object openFile : VCF::DefaultMenuItem
+				caption = 'Open...'
+				delegates 
+					MenuItemClicked = [DotViewApp@DotViewApp::onFileOpen]
+				end
+			end
+		end
+	end
+end

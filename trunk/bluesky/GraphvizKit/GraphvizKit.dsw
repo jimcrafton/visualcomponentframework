@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ApplicationKitDLL"=..\..\vcf\build\vc60\ApplicationKit\ApplicationKitDLL.dsp - Package Owner=<4>
+Project: "ApplicationKit"=..\..\vcf\build\vc60\ApplicationKit\ApplicationKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -12,13 +12,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name GraphicsKitDLL
+    Project_Dep_Name GraphicsKit
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "GraphicsKitDLL"=..\..\vcf\build\vc60\GraphicsKit\GraphicsKitDLL.dsp - Package Owner=<4>
+Project: "FoundationKit"=..\..\vcf\build\vc60\FoundationKit\FoundationKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -26,6 +26,33 @@ Package=<5>
 
 Package=<4>
 {{{
+}}}
+
+###############################################################################
+
+Project: "GraphicsKit"=..\..\vcf\build\vc60\GraphicsKit\GraphicsKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name FoundationKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libAGG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibJPEG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name LibPNG
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ZLib
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -38,11 +65,38 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name GraphicsKit
+    End Project Dependency
 }}}
 
 ###############################################################################
 
 Project: "GraphvizKitDLL"=.\GraphvizKitDLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LibJPEG"=..\..\vcf\src\thirdparty\common\LibJPEG\LibJPEG.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "LibPNG"=..\..\vcf\src\thirdparty\common\LibPNG\LibPNG.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -63,11 +117,35 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name GraphvizKitDLL
+    Project_Dep_Name ApplicationKit
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
+    Project_Dep_Name GraphvizKit
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ZLib"=..\..\vcf\src\thirdparty\common\ZLib\ZLib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libAGG"=..\..\vcf\build\vc60\GraphicsKit\libAGG.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
