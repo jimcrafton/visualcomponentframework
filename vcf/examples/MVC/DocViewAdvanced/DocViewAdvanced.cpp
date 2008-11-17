@@ -586,7 +586,7 @@ public:
 
 	void onKeyUp( KeyboardEvent* e ) {
 
-		if ( e->getVirtualCode() == vkDelete ) {
+		if ( e->virtualKeyCode == vkDelete ) {
 			model_->empty();
 		}
 	}

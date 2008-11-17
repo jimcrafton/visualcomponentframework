@@ -144,7 +144,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
+    Project_Dep_Name ApplicationKit
     End Project Dependency
 }}}
 
@@ -174,7 +174,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
+    Project_Dep_Name ApplicationKit
     End Project Dependency
 }}}
 
@@ -248,6 +248,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name HTMLKit
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ColCvt"=.\ColorConversions\ColCvt.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -804,7 +816,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
+    Project_Dep_Name ApplicationKit
     End Project Dependency
 }}}
 
@@ -987,7 +999,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name HTMLKitDll
+    Project_Dep_Name HTMLKit
     End Project Dependency
 }}}
 
@@ -1041,7 +1053,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
+    Project_Dep_Name ApplicationKit
     End Project Dependency
 }}}
 
@@ -1104,16 +1116,16 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
+    Project_Dep_Name ApplicationKit
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name HTMLKitDll
+    Project_Dep_Name HTMLKit
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name InternetKitDLL
+    Project_Dep_Name InternetKit
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name XMLKitDLL
+    Project_Dep_Name XMLKitLib
     End Project Dependency
 }}}
 
@@ -1245,7 +1257,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
+    Project_Dep_Name ApplicationKit
     End Project Dependency
 }}}
 
@@ -1284,7 +1296,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
+    Project_Dep_Name ApplicationKit
     End Project Dependency
 }}}
 
@@ -1374,10 +1386,10 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
+    Project_Dep_Name ApplicationKit
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name OpenGLKitDLL
+    Project_Dep_Name OpenGLKit
     End Project Dependency
 }}}
 
@@ -1521,10 +1533,10 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
+    Project_Dep_Name ApplicationKit
     End Project Dependency
     Begin Project Dependency
-    Project_Dep_Name RegExKitDLL
+    Project_Dep_Name RegExKit
     End Project Dependency
 }}}
 
@@ -1629,7 +1641,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
+    Project_Dep_Name ApplicationKit
     End Project Dependency
 }}}
 
@@ -1848,7 +1860,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
+    Project_Dep_Name ApplicationKit
     End Project Dependency
 }}}
 
@@ -2031,7 +2043,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name ApplicationKitDLL
+    Project_Dep_Name ApplicationKit
     End Project Dependency
 }}}
 

@@ -1,8 +1,8 @@
 object ShapeEditDialog : VCF::Dialog 
 	caption = 'Edit Shape'
 
-	height = 250
-	width = 250
+	height = 220pt
+	width = 250pt
 
 	object hlContainer : VCF::HorizontalLayoutContainer
 		numberOfColumns = 2
@@ -56,6 +56,22 @@ object ShapeEditDialog : VCF::Dialog
 			delegates
 				MouseDoubleClicked = [ShapeEditDialog@ShapeEditDialog::onDoColor]
 			end
+		end
+
+		object lbl5 : VCF::Label 
+			caption = 'Stroke Opacity:'
+		end
+
+		object strokeOpacity : VCF::TextControl 
+			
+		end
+
+		object lbl6 : VCF::Label 
+			caption = 'Fill Opacity:'
+		end
+
+		object fillOpacity : VCF::TextControl 
+			
 		end
 	end
 

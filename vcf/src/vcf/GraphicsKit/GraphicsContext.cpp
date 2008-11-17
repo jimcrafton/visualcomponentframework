@@ -1595,6 +1595,12 @@ void GraphicsContext::execPathOperations()
 
 					PointOperation& pt2 = *it;
 					++it;
+					agg::ellipse ellipseShape( pt1.x + ((pt2.x-pt1.x)/2.0), 
+												pt1.y + ((pt2.y-pt1.y)/2.0),
+												abs(static_cast<int32>(pt2.x-pt1.x))/2.0, 
+												abs(static_cast<int32>(pt2.y-pt1.y))/2.0, 100 );
+
+					path.concat_path( ellipseShape );
 				}
 				break;
 

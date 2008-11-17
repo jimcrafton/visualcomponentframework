@@ -11,7 +11,7 @@
 
 #include "vcf/HTMLKit/HTMLKit.h"
 #if !defined(VCF_DISABLE_PRAGMA_LINKING)
-#   define USE_INTERNETKIT_DLL
+#   define USE_INTERNETKIT_LIB
 #endif
 
 #include "vcf/InternetKit/InternetKit.h"
