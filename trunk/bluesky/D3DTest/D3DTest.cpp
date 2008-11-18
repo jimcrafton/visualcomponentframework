@@ -148,10 +148,6 @@ IKImage::IKImage( const uchar* data, const Size& dimensions )
 
 }
 
-IKImage::IKImage( const uchar* data, const Size& dimensions )
-{
-
-}
 
 IKImage::IKImage( const String& fileName )
 {
@@ -219,7 +215,7 @@ public:
 
 		setDoubleBuffered(false);
 		
-		textureFile = "Lotus2mq.jpg";
+		textureFile = "logo.png";//"Lotus2mq.jpg";
 	}
 
 	virtual ~D3DTestWindow(){};
@@ -615,7 +611,7 @@ public:
 			ppEffect->SetFloat("timer",timer);
 
 			timer += 0.150f;
-
+/*
 			UINT cPasses, p;
 			ppEffect->Begin( &cPasses, 0 );
 			for( p = 0; p < cPasses; ++p )
@@ -630,7 +626,7 @@ public:
 				ppEffect->EndPass();
 			}
 
-
+*/
 			
 
 //			RECT r = {0};
@@ -688,10 +684,6 @@ public:
 		D3DTestWindow* mainWindow = new D3DTestWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( 100.0, 100.0, 500.0, 500.0 );
-
-		Panel* p = new Panel();
-		mainWindow->add(p);
-		p->setBounds( 100, 50, 300, 75 );
 
 		mainWindow->show();
 
