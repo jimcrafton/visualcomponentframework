@@ -162,24 +162,11 @@ public:
 	*/
 	virtual bool isMemoryContext() = 0;
 
+	virtual Image::ImageType getMemoryCtxImageType() = 0;
 
 	virtual void attachToRenderBuffer( agg::rendering_buffer& renderBuffer ) = 0;
 
-	/**
-	*returns whether or not the XOR Mode is turned on.
-	*@return bool if the return is true then the
-	*XOR mode is on, which means that colors are alternated
-	*at the pixel level. Thus a line drawn once, and then
-	*a second time at the same coordinates will erase itself
-	*/
-	//virtual bool isXORModeOn() = 0;
-
-	/**
-	*Turns the XOR mode on or off.
-	*@param bool XORModeOn, if true then turns the XORMode on
-	*otherwise if it's false it turns it off.
-	*/
-	//virtual void setXORModeOn( const bool& XORModeOn ) = 0;
+	virtual void resizeMemoryContext( const uint32& newWidth, const uint32& newHeight ) = 0;
 
 	virtual bool isAntiAliasingOn() = 0;
 

@@ -1,0 +1,3 @@
+//CompositionTypes.rc
+
+CompositionTypesWindow VFF "Resources/CompositionTypesWindow.vff"

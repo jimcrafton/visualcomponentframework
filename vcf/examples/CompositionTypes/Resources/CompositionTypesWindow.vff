@@ -1,0 +1,275 @@
+object CompositionTypesWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 700
+	width = 800
+	caption = 'CompositionTypes'	
+
+	object compView : CompositionsView
+		alignment = AlignClient
+		usingRenderBuffer = true		
+	end
+
+	object compBorder : VCF::TitledBorder
+		caption = 'Composite Modes'
+	end
+
+
+	object title1 : VCF::TitledBorder
+		caption = 'Circle color'
+	end
+
+	object title2 : VCF::TitledBorder
+		caption = 'Circle Opacity'
+	end
+
+	object title3 : VCF::TitledBorder
+		caption = 'Composite Mode'
+	end
+	
+	object modes : VCF::Panel 
+		border = @compBorder
+		alignment = AlignRight
+		width = 200
+
+		object vertCont : VCF::FlowLayoutContainter
+			bottomBorderHeight = 5
+			topBorderHeight = 5
+			rightBorderWidth = 5
+			leftBorderWidth = 5
+			direction = fdVertical
+		end
+
+		object vertCont2 : VCF::FlowLayoutContainter
+			bottomBorderHeight = 5
+			topBorderHeight = 5
+			rightBorderWidth = 5
+			leftBorderWidth = 5
+			direction = fdVertical
+		end
+
+		object vertCont3 : VCF::FlowLayoutContainter
+			bottomBorderHeight = 5
+			topBorderHeight = 5
+			rightBorderWidth = 5
+			leftBorderWidth = 5
+			direction = fdVertical
+		end
+
+		object vertCont4 : VCF::FlowLayoutContainter
+			bottomBorderHeight = 5
+			topBorderHeight = 5
+			rightBorderWidth = 5
+			leftBorderWidth = 5
+			direction = fdVertical
+		end
+
+		container = @vertCont
+
+		object circColor : VCF::Panel 
+			height = 75
+			width = 200
+			border = @title1
+			container = @vertCont3
+
+			object circColVal : VCF::SliderControl
+				width = 200
+				height = 25
+				tickMarks = false
+				tickFrequency = 0
+				delegates
+					 PositionChanged = [compView@CompositionsView::onCircleColChanged]
+				end
+			end
+		end
+
+		object circAlpha : VCF::Panel 
+			height = 75
+			width = 200
+			border = @title2
+			container = @vertCont4
+
+			object circAlphaVal : VCF::SliderControl
+				width = 200
+				height = 25
+				tickMarks = false
+				tickFrequency = 0
+				position = 100
+				delegates
+					 PositionChanged = [compView@CompositionsView::onCircleAlphaChanged]
+				end
+			end
+		end
+
+		
+
+		object compositeMode : VCF::Panel 
+			height = 400
+			width = 200
+			border = @title3
+
+			container = @vertCont2
+
+			object clrMode : VCF::RadioButtonControl
+				caption = 'Clear'
+				width = 100
+				height = RadioboxHeight
+				tag=0
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object srcMode : VCF::RadioButtonControl
+				caption = 'Source'
+				width = 100
+				height = RadioboxHeight
+				tag=1
+
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object destMode : VCF::RadioButtonControl
+				caption = 'Destination'
+				width = 100
+				height = RadioboxHeight
+				tag=2
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object srcOverMode : VCF::RadioButtonControl
+				caption = 'cmSrcOver'
+				width = 100
+				height = RadioboxHeight
+				tag=3
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object destOver : VCF::RadioButtonControl
+				caption = 'cmDestOver'
+				width = 100
+				height = RadioboxHeight
+				tag=4
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object srcIn : VCF::RadioButtonControl
+				caption = 'cmSrcIn'
+				width = 100
+				height = RadioboxHeight
+				tag=5
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmSrcOut : VCF::RadioButtonControl
+				caption = 'cmSrcOut'
+				width = 100
+				height = RadioboxHeight
+				tag=6
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmDestOut : VCF::RadioButtonControl
+				caption = 'cmDestOut'
+				width = 100
+				height = RadioboxHeight
+				tag=7
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmSrcATop : VCF::RadioButtonControl
+				caption = 'cmSrcATop'
+				width = 100
+				height = RadioboxHeight
+				tag=8
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmDestATop : VCF::RadioButtonControl
+				caption = 'cmDestATop'
+				width = 100
+				height = RadioboxHeight
+				tag=9
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmXOR : VCF::RadioButtonControl
+				caption = 'cmXOR'
+				width = 100
+				height = RadioboxHeight
+				tag=10
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmPlus : VCF::RadioButtonControl
+				caption = 'cmPlus'
+				width = 100
+				height = RadioboxHeight
+				tag=11
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmMinus : VCF::RadioButtonControl
+				caption = 'cmMinus'
+				width = 100
+				height = RadioboxHeight
+				tag=12
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmMultiply : VCF::RadioButtonControl
+				caption = 'cmMultiply'
+				width = 100
+				height = RadioboxHeight
+				tag=13
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmScreen : VCF::RadioButtonControl
+				caption = 'cmScreen'
+				width = 100
+				height = RadioboxHeight
+				tag=14
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmOverlay : VCF::RadioButtonControl
+				caption = 'cmOverlay'
+				width = 100
+				height = RadioboxHeight
+				tag=15
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+		end
+	end
+end

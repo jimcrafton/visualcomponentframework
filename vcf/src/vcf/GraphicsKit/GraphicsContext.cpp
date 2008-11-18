@@ -1483,8 +1483,12 @@ void GraphicsContext::execPathOperations()
 		PointOperation pt, p2, c1, c2;
 
 
-
-		rasterizer.clip_box( 0, 0,viewableBounds_.getWidth(),viewableBounds_.getHeight() );
+		if ( viewableBounds_.isEmpty() && NULL != ctxImage_ ) {
+			rasterizer.clip_box( 0, 0,ctxImage_->getWidth(),ctxImage_->getHeight() );
+		}
+		else {
+			rasterizer.clip_box( 0, 0,viewableBounds_.getWidth(),viewableBounds_.getHeight() );
+		}
 
 		while ( it != pathOperations_.end() ) {			
 			PointOperation& pointOp = *it;
@@ -2324,7 +2328,13 @@ void GraphicsContext::setAntiAliasingOn( bool antiAliasingOn )
 		contextPeer_->setAntiAliasingOn( antiAliasingOn );
 		
 		if ( antiAliasingOn ) {
-			renderArea_->rect.setRect(0,0,viewableBounds_.getWidth(),viewableBounds_.getHeight());
+
+			if ( NULL != ctxImage_ ) {
+				renderArea_->rect.setRect(0,0,ctxImage_->getWidth(),ctxImage_->getHeight());
+			}
+			else {
+				renderArea_->rect.setRect(0,0,viewableBounds_.getWidth(),viewableBounds_.getHeight());
+			}
 			
 			if ( NULL == renderArea_->renderBuffer ) {			
 				renderArea_->renderBuffer = new agg::rendering_buffer();
@@ -2344,11 +2354,29 @@ void GraphicsContext::setAntiAliasingOn( bool antiAliasingOn )
 	}
 }
 
-void GraphicsContext::resizeMemoryContext( const uint32& newWidth, const uint32& newHeight )
+void GraphicsContext::setViewableBounds( const Rect& bounds ) 
+{
+	viewableBounds_ = bounds;
+	if ( contextPeer_->isMemoryContext() ) {
+		contextPeer_->resizeMemoryContext( viewableBounds_.getWidth(), viewableBounds_.getHeight() );
+		if ( contextPeer_->isAntiAliasingOn() ) {
+			renderArea_->rect.setRect(0,0,viewableBounds_.getWidth(), viewableBounds_.getHeight());
+			contextPeer_->attachToRenderBuffer( *renderArea_->renderBuffer );
+		}
+	}
+}
+
+Image::ImageType GraphicsContext::getMemoryCtxImageType() 
 {
 	if ( contextPeer_->isMemoryContext() ) {
-		//resize it
+		if ( NULL != ctxImage_ ) {
+			return ctxImage_->getType();
+		}
+		else {
+			return contextPeer_->getMemoryCtxImageType();
+		}
 	}
+	return Image::itUnknown;
 }
 
 };	// namespace VCF

@@ -152,7 +152,9 @@ public:
 		/**
 		Indicates a Grayscale image with one channel
 		*/
-		itGrayscale = 1
+		itGrayscale = 1,
+
+		itUnknown = 0
 	};
 
 	/**
