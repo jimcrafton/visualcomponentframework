@@ -33,6 +33,33 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ColCvt"=..\..\vcf\examples\ColorConversions\ColCvt.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CompositionTypes"=..\..\VCF\EXAMPLES\CompositionTypes\CompositionTypes.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "D3DTest"=.\D3DTest.dsp - Package Owner=<4>
 
 Package=<5>
@@ -73,6 +100,36 @@ Package=<4>
 ###############################################################################
 
 Project: "HTMLKitDll"=..\..\vcf\build\vc60\HTMLKit\HTMLKitDll.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "OGLDraw"=.\OGLDraw.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name OpenGLKit
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "OpenGLKit"=..\..\vcf\build\vc60\OpenGLKit\OpenGLKit.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
