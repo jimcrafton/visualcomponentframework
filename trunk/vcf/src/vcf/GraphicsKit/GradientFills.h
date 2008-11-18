@@ -254,9 +254,9 @@ protected:
 
 	typedef agg::span_interpolator_linear<> InterpolatorType;
 	typedef color_type ColorT;
+	
 	typedef std::vector<ColorT> ColorProfileVector;
-	typedef component_order OrderT;
-	typedef agg::renderer_base<pixfmt> RendererBase;
+	typedef std::vector<agg::gray8> GrayscaleColorProfileVector;
 	
 	double alpha_;
 	GraphicsContext* context_;	
@@ -297,6 +297,14 @@ protected:
 		buildColorProfile();
 	}
 
+	
+	void convertColorProfileToGrayscale( GrayscaleColorProfileVector& grayColors ) {
+		grayColors.resize( colorProfile_.size() );
+
+		for ( uint32 i=0;i<colorProfile_.size();i++ ) {
+			grayColors[i] = agg::gray8(colorProfile_[i]);
+		}
+	}
 
 	void buildColorProfile() {
 
@@ -442,7 +450,7 @@ protected:
 		agg::gradient_radial func;
         GradientSpanGen      span_gen(inter, func, colorProfile_, startRadius_, endRadius_);
 
-		renderScanlines( *context_, renderingBuffer, rasterizer, span_alloc, span_gen ); 
+		//renderScanlines( *context_, renderingBuffer, rasterizer, span_alloc, span_gen ); 
 	}
 
 	double startRadius_;
@@ -481,28 +489,44 @@ public:
 protected:
 	virtual void renderGradient( agg::rendering_buffer& renderingBuffer, agg::rasterizer_scanline_aa<>& rasterizer )	{
 		
+		Point org = context_->getOrigin();		
+		agg::trans_affine mat;		
+		mat *= gradientMatrix_;
+		mat *= agg::trans_affine_translation( org.x_, org.y_  );
+		mat.invert();		
+		
+		InterpolatorType      inter(mat);
+		agg::gradient_x func;
+		
 
-		typedef agg::span_gradient<ColorT, 
+		if ( context_->getMemoryCtxImageType() == Image::itColor ) {
+			typedef agg::span_gradient<ColorT, 
                                    InterpolatorType,
                                    agg::gradient_x,
                                    ColorProfileVector > GradientSpanGen;
 
-		typedef agg::span_allocator<GradientSpanGen::color_type> GradientSpanAlloc;
-		GradientSpanAlloc    span_alloc;		
+			typedef agg::span_allocator<GradientSpanGen::color_type> GradientSpanAlloc;
+			GradientSpanAlloc    span_alloc;
+			GradientSpanGen      span_gen(inter, func, colorProfile_, start_, end_);
 
-		Point org = context_->getOrigin();
+			renderScanlines( *context_, renderingBuffer, rasterizer, span_alloc, span_gen ); 
+		}
+		else {
+			typedef agg::span_gradient<agg::gray8, 
+                                   InterpolatorType,
+                                   agg::gradient_x,
+                                   GrayscaleColorProfileVector > GradientSpanGen;
 
-		agg::trans_affine mat;		
-		mat *= gradientMatrix_;
-		mat *= agg::trans_affine_translation( org.x_, org.y_  );
-		mat.invert();
+			typedef agg::span_allocator<GradientSpanGen::color_type> GradientSpanAlloc;
+			
+			GrayscaleColorProfileVector grayColors;
+			convertColorProfileToGrayscale( grayColors );
 
+			GradientSpanAlloc    span_alloc;			
+			GradientSpanGen      span_gen(inter, func, grayColors, start_, end_);
 
-		InterpolatorType      inter(mat);
-		agg::gradient_x func;
-        GradientSpanGen      span_gen(inter, func, colorProfile_, start_, end_);
-
-		renderScanlines( *context_, renderingBuffer, rasterizer, span_alloc, span_gen ); 
+			renderScanlinesGreyscale( *context_, renderingBuffer, rasterizer, span_alloc, span_gen ); 
+		}
 	}
 
 	double start_;
@@ -602,7 +626,7 @@ public:
 protected:
 	virtual void renderGradient( agg::rendering_buffer& renderingBuffer, agg::rasterizer_scanline_aa<>& rasterizer )	{
 		
-		typedef agg::span_gradient<ColorT, 
+		typedef agg::span_gradient<agg::gray8, 
                                    InterpolatorType,
                                    agg::gradient_conic,
                                    ColorProfileVector > GradientSpanGen;
@@ -624,7 +648,7 @@ protected:
 		agg::gradient_conic conic;
         GradientSpanGen      span_gen(inter, conic, colorProfile_, 0, 100);
 
-		renderScanlines( *context_, renderingBuffer, rasterizer, span_alloc, span_gen ); 
+		//renderScanlines( *context_, renderingBuffer, rasterizer, span_alloc, span_gen ); 
 	}
 
 	double start_;

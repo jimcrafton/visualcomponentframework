@@ -64,7 +64,11 @@ public:
 
 	virtual bool isMemoryContext();
 
+	virtual Image::ImageType getMemoryCtxImageType();
+
 	virtual void attachToRenderBuffer( agg::rendering_buffer& renderBuffer );
+
+	virtual void resizeMemoryContext( const uint32& newWidth, const uint32& newHeight );
 
 	virtual void copyContext( const Rect& sourceRect, const Rect& destRect,
 	                          ContextPeer* sourceContext );

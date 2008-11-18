@@ -1430,6 +1430,18 @@ bool Win32Context::isMemoryContext()
 	return isMemoryCtx_;
 }
 
+Image::ImageType Win32Context::getMemoryCtxImageType() 
+{
+	if ( isMemoryContext() ) {
+
+		if ( NULL != memBitmap_.data() ) {
+			return 	Image::itColor;
+		}
+	}	
+
+	return Image::itUnknown;
+}
+
 void Win32Context::copyToImage( Win32Image* image )
 {
 
@@ -5078,10 +5090,24 @@ void Win32Context::attachToRenderBuffer( agg::rendering_buffer& renderBuffer )
 
 		Image* img = context_->getContextImage();
 		if ( img ) {
-			renderBuffer.attach( (unsigned char*)img->getData(),
+
+			if ( img->getType() == 1 ) {
+				uint32 stride = ((img->getWidth() * SysGrayscalePixelType::Traits::getTraitsChannelSize() + 31) & (~31)) / 8;
+
+				renderBuffer.attach( (unsigned char*)img->getData(),
+									img->getWidth(),
+									img->getHeight(),
+									stride );
+
+			}
+			else {
+				renderBuffer.attach( (unsigned char*)img->getData(),
 									img->getWidth(),
 									img->getHeight(),
 									img->getWidth() * img->getType() );
+			}
+
+			
 
 		}
 		else {
@@ -5091,6 +5117,11 @@ void Win32Context::attachToRenderBuffer( agg::rendering_buffer& renderBuffer )
 													memBitmap_.bmpInfo()->bmiHeader.biWidth * 4 );//assume full color
 		}
 	}
+}
+
+void Win32Context::resizeMemoryContext( const uint32& newWidth, const uint32& newHeight )
+{
+
 }
 
 /**

@@ -17,7 +17,9 @@ where you installed the VCF.
 #if defined(AGG_GRAY8)
 
 #include "thirdparty/common/agg/include/agg_pixfmt_gray.h"
+
 #define pix_format agg::pix_format_gray8
+
 typedef agg::pixfmt_gray8 pixformat;
 typedef agg::pixfmt_gray8_pre pixfmt_pre;
 typedef agg::gray8 color_type;

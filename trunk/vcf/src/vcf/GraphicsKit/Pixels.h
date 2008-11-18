@@ -647,29 +647,31 @@ namespace VCF {
 			uint32 y = 0;
 			uint32 x = 0;
 			Type* rowPtr = channelData;
+			PixType* srcPtr = ptr_;
 			while ( y < height_ ) {
-				rowPtr += incr;
+				
 				x = 0;
 				Type* tmp = rowPtr;
+				
 				while ( x < width_ ) {
 					switch ( Field ) {
 						case ccRed : {
-							tmp[x] = ptr_[result].r;
+							tmp[x] = srcPtr[x].r;
 						}
 						break;
 
 						case ccGreen : {
-							tmp[x] = ptr_[result].g;
+							tmp[x] = srcPtr[x].g;
 						}
 						break;
 
 						case ccBlue : {
-							tmp[x] = ptr_[result].b;
+							tmp[x] = srcPtr[x].b;
 						}
 						break;
 
 						case ccAlpha : {
-							tmp[x] = ptr_[result].a;
+							tmp[x] = srcPtr[x].a;
 						}
 						break;
 					}
@@ -677,6 +679,9 @@ namespace VCF {
 					result ++;
 					x++;
 				}
+
+				rowPtr += incr;
+				srcPtr += width_;
 				y++;
 			}
 
@@ -692,29 +697,31 @@ namespace VCF {
 			uint32 y = 0;
 			uint32 x = 0;
 			const Type* rowPtr = channelData;
+			PixType* srcPtr = ptr_;
+
 			while ( y < height_ ) {
-				rowPtr += incr;
+				
 				x = 0;
 				const Type* tmp = rowPtr;
 				while ( x < width_ ) {
 					switch ( Field ) {
 						case ccRed : {
-							ptr_[result].r = tmp[x];
+							srcPtr[x].r = tmp[x];
 						}
 						break;
 
 						case ccGreen : {
-							ptr_[result].g = tmp[x];
+							srcPtr[x].g = tmp[x];
 						}
 						break;
 
 						case ccBlue : {
-							ptr_[result].b = tmp[x];
+							srcPtr[x].b = tmp[x];
 						}
 						break;
 
 						case ccAlpha : {
-							ptr_[result].a = tmp[x];
+							srcPtr[x].a = tmp[x];
 						}
 						break;
 					}
@@ -722,6 +729,8 @@ namespace VCF {
 					result ++;
 					x++;
 				}
+				rowPtr += incr;
+				srcPtr += width_;
 				y++;
 			}
 			return result;

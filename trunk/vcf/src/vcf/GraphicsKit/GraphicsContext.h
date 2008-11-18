@@ -64,6 +64,15 @@ void renderScanlines( GraphicsContext& gc,
 										SpanGenT& spanGenerator );
 
 
+template<typename SpanAllocT, typename SpanGenT>
+void renderScanlinesGreyscale( GraphicsContext& gc,
+										agg::rendering_buffer& renderingBuffer,
+										agg::rasterizer_scanline_aa<>& rasterizer,
+										SpanAllocT& spanAllocater,
+										SpanGenT& spanGenerator );
+
+
+
 void renderScanlinesSolid( GraphicsContext& gc,
 							agg::rasterizer_scanline_aa<>& rasterizer,
 							const agg::rgba& color );
@@ -334,9 +343,7 @@ public:
 		return viewableBounds_;
 	}
 
-	void setViewableBounds( const Rect& bounds ) {
-		viewableBounds_ = bounds;
-	}
+	void setViewableBounds( const Rect& bounds );
 
 	/**
 	This deletes the drawing area, and frees any resources
@@ -360,8 +367,6 @@ public:
 
 	agg::scanline_u8& internal_getRenderAreaScanline();
 
-	void resizeMemoryContext( const uint32& newWidth, const uint32& newHeight );
-
 	/**
 	Returns the image that this context is associated with. Using 
 	any of the calls here will cause the shapes to be rendered in the
@@ -371,6 +376,7 @@ public:
 	Image* getContextImage();
 
 
+	Image::ImageType getMemoryCtxImageType();
 
 	/**
 	saves the state of a Graphics context after the
@@ -1066,61 +1072,131 @@ void renderScanlines( GraphicsContext& gc,
 										SpanAllocT& spanAllocater,
 										SpanGenT& spanGenerator )
 {	
-	typedef agg::renderer_base<pixfmt> RendererBase;
 
-	typedef agg::comp_op_adaptor_rgba<color_type, component_order> blender_type;
-	typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
-	typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
+	if ( gc.getMemoryCtxImageType() == Image::itColor ) {
+		typedef agg::renderer_base<pixfmt> RendererBase;
 
-	agg::scanline_u8& scanline = gc.internal_getRenderAreaScanline();
+		typedef agg::comp_op_adaptor_rgba<color_type, component_order> blender_type;
+		typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
+		typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
+
+		agg::scanline_u8& scanline = gc.internal_getRenderAreaScanline();
 
 
-	if ( GraphicsContext::cmSource == gc.getCompositingMode() ) {
-		pixfmt pix(renderingBuffer);
-		RendererBase rb(pix);
-		agg::render_scanlines_aa( rasterizer, scanline, rb, spanAllocater, spanGenerator );
+		if ( GraphicsContext::cmSource == gc.getCompositingMode() ) {
+			pixfmt pix(renderingBuffer);
+			RendererBase rb(pix);
+			agg::render_scanlines_aa( rasterizer, scanline, rb, spanAllocater, spanGenerator );
+		}
+		else {
+			pixfmt_type pix(renderingBuffer);
+			pix.comp_op( gc.getCompositingMode() );
+
+			comp_renderer_type crb(pix);
+			agg::render_scanlines_aa( rasterizer, scanline, crb, spanAllocater, spanGenerator );
+		}
 	}
-	else {
-		pixfmt_type pix(renderingBuffer);
-		pix.comp_op( gc.getCompositingMode() );
-
-		comp_renderer_type crb(pix);
-		agg::render_scanlines_aa( rasterizer, scanline, crb, spanAllocater, spanGenerator );
-	}	
 }
+
+
+template<typename SpanAllocT, typename SpanGenT>
+void renderScanlinesGreyscale( GraphicsContext& gc,
+										agg::rendering_buffer& renderingBuffer,
+										agg::rasterizer_scanline_aa<>& rasterizer,
+										SpanAllocT& spanAllocater,
+										SpanGenT& spanGenerator )
+{	
+
+	if ( gc.getMemoryCtxImageType() == Image::itGrayscale ) {
+		typedef agg::renderer_base<agg::pixfmt_gray8> RendererBase;
+
+		//typedef agg::comp_op_adaptor_rgba<agg::gray8, component_order> blender_type;
+		//typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
+		//typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
+
+		agg::scanline_u8& scanline = gc.internal_getRenderAreaScanline();
+
+
+//		if ( GraphicsContext::cmSource == gc.getCompositingMode() ) {
+			agg::pixfmt_gray8 pix(renderingBuffer);
+			RendererBase rb(pix);
+			agg::render_scanlines_aa( rasterizer, scanline, rb, spanAllocater, spanGenerator );
+		//}
+		//else {
+		//	pixfmt_type pix(renderingBuffer);
+		//	pix.comp_op( gc.getCompositingMode() );
+//
+//			comp_renderer_type crb(pix);
+//			agg::render_scanlines_aa( rasterizer, scanline, crb, spanAllocater, spanGenerator );
+//		}
+	}
+}
+
+
 
 inline void renderScanlinesSolid( GraphicsContext& gc,
 										agg::rasterizer_scanline_aa<>& rasterizer,
 										const agg::rgba& color )
 {	
-	typedef agg::renderer_base<pixfmt> RendererBase;
-	typedef agg::renderer_scanline_aa_solid<RendererBase> RendererSolid;
-	
-	typedef agg::comp_op_adaptor_rgba<color_type, component_order> blender_type;
-	typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
-	typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
-	
-	agg::rendering_buffer& renderingBuffer = *gc.getRenderingBuffer();
-	
-	agg::scanline_u8& scanline = gc.internal_getRenderAreaScanline();
-	
-	if ( GraphicsContext::cmSource == gc.getCompositingMode() ) {
-		pixfmt pixf(renderingBuffer);
-		RendererBase renb(pixf);
-		RendererSolid renderer( renb );
+	if ( gc.getMemoryCtxImageType() == Image::itColor ) {
+		typedef agg::renderer_base<pixfmt> RendererBase;
+		typedef agg::renderer_scanline_aa_solid<RendererBase> RendererSolid;
 		
-		renderer.color(color);
+		typedef agg::comp_op_adaptor_rgba<color_type, component_order> blender_type;
+		typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
+		typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
 		
+		agg::rendering_buffer& renderingBuffer = *gc.getRenderingBuffer();
 		
-		agg::render_scanlines(rasterizer, scanline, renderer);
+		agg::scanline_u8& scanline = gc.internal_getRenderAreaScanline();
+		
+		if ( GraphicsContext::cmSource == gc.getCompositingMode() ) {
+			pixfmt pixf(renderingBuffer);
+			RendererBase renb(pixf);
+			RendererSolid renderer( renb );
+			
+			renderer.color(color);
+			
+			
+			agg::render_scanlines(rasterizer, scanline, renderer);
+		}
+		else {
+			pixfmt_type pixf(renderingBuffer);
+			pixf.comp_op( gc.getCompositingMode() );
+			comp_renderer_type renb(pixf);
+			
+			agg::render_scanlines_aa_solid(rasterizer, scanline, renb, color);
+		}
 	}
 	else {
-		pixfmt_type pixf(renderingBuffer);
-		pixf.comp_op( gc.getCompositingMode() );
-		comp_renderer_type renb(pixf);
+		typedef agg::renderer_base<agg::pixfmt_gray8> RendererBase;
+		typedef agg::renderer_scanline_aa_solid<RendererBase> RendererSolid;
 		
-		agg::render_scanlines_aa_solid(rasterizer, scanline, renb, color);
-	}	
+		//typedef agg::comp_op_adaptor_rgba<agg::gray8, component_order> blender_type;
+		//typedef agg::pixfmt_custom_blend_rgba<blender_type, agg::rendering_buffer> pixfmt_type;
+		//typedef agg::renderer_base<pixfmt_type> comp_renderer_type;
+		
+		agg::rendering_buffer& renderingBuffer = *gc.getRenderingBuffer();
+		
+		agg::scanline_u8& scanline = gc.internal_getRenderAreaScanline();
+		
+		//if ( GraphicsContext::cmSource == gc.getCompositingMode() ) {
+			agg::pixfmt_gray8 pixf(renderingBuffer);
+			RendererBase renb(pixf);
+			RendererSolid renderer( renb );
+			
+			renderer.color(color);			
+			
+			agg::render_scanlines(rasterizer, scanline, renderer);
+		//}
+		//else {
+		//	pixfmt_type pixf(renderingBuffer);
+		//	pixf.comp_op( gc.getCompositingMode() );
+		//	comp_renderer_type renb(pixf);
+		//	
+		//	agg::render_scanlines_aa_solid(rasterizer, scanline, renb, color);
+		//}
+	}
 }
 
 
