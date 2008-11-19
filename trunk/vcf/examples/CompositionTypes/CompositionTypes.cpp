@@ -13,9 +13,15 @@ class CompositionsView : public CustomControl {
 public:
 
 	CompositionsView() {
-		background = GraphicsToolkit::createImage( "res:lily.png" );	
+		try {		
+			background = GraphicsToolkit::createImage( "res:lily.png" );	
+		}
+		catch ( ... ) {
+			background = NULL;
+		}
 
 		compMode = GraphicsContext::cmSource;
+		modeFillColor.setHSL( 0.0, 0.50, 1.0 );
 		
 		addCallback( new ClassProcedure1<Event*,CompositionsView>(this, &CompositionsView::onCircleColChanged), "CompositionsView::onCircleColChanged" );
 		addCallback( new ClassProcedure1<Event*,CompositionsView>(this, &CompositionsView::onCircleAlphaChanged), "CompositionsView::onCircleAlphaChanged" );	
@@ -136,7 +142,7 @@ public:
 				fill.setColorLocation( 1, 0.848 );
 				fill.setMidPoint( 0, 0.9 );				
 
-				fill.setStart( r.left_ );
+				fill.setStart( r.left_ + 100 );
 				fill.setEnd( r.right_ );
 				
 				ImageContext ictx = alphaImg;
@@ -201,6 +207,10 @@ public:
 			modePt = *e->getPoint();
 			repaint();
 		}
+	}
+
+	virtual void mouseDblClick(MouseEvent*) {
+		Dialog::showMessage( "Lily image:\nAuthor:marc50\nTitle:Water Lotus Revisited\nURL:http://www.flickr.com/photos/marc50/288161827/" );
 	}
 
 	Point modePt;
