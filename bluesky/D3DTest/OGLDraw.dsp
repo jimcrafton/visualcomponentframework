@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "USE_APPKIT_LIB" /FD /I$(VCF_ROOT)/src  /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "glew/include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "USE_APPKIT_LIB" /D "USE_OPENGLKIT_LIB" /D "GLEW_STATIC" /FD /I$(VCF_ROOT)/src /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib  /nologo /entry:"mainCRTStartup" /subsystem:windows /incremental:yes /machine:I386 /libpath:$(VCF_ROOT)/lib
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib /nologo /entry:"mainCRTStartup" /subsystem:windows /incremental:yes /machine:I386 /out:"OGLDraw.exe" /libpath:"glew/lib" /libpath:$(VCF_ROOT)/lib
 # SUBTRACT LINK32 /profile /map /debug
 
 !ELSEIF  "$(CFG)" == "OGLDraw - Win32 Debug"
@@ -69,8 +69,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "OGLDraw___Win32_Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "USE_APPKIT_LIB" /FD /GZ /I$(VCF_ROOT)/src  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "glew/include" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "USE_APPKIT_LIB" /D "USE_OPENGLKIT_LIB" /D "GLEW_STATIC" /FD /GZ /I$(VCF_ROOT)/src /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -80,8 +80,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib  /nologo /entry:"mainCRTStartup" /subsystem:windows /machine:I386 /pdbtype:sept /libpath:$(VCF_ROOT)/lib
-# SUBTRACT LINK32 /incremental:no /debug
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib rpcrt4.lib /nologo /entry:"mainCRTStartup" /subsystem:windows /debug /machine:I386 /out:"OGLDraw_d.exe" /pdbtype:sept /libpath:"glew/lib" /libpath:$(VCF_ROOT)/lib
+# SUBTRACT LINK32 /incremental:no
 
 !ENDIF 
 

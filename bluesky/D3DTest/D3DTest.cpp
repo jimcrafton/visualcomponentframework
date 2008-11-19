@@ -62,16 +62,47 @@ struct PANELVERTEX
 namespace VCF {
 
 
+class StackCallback {
+public:
+	StackCallback():callback_(NULL){}
+
+	~StackCallback(){
+		if ( NULL != callback_ ) {
+			callback_->free();
+		}
+	}
+
+	operator CallBack* () {
+		return callback_;
+	}
+
+	CallBack *operator->() {
+		return callback_;
+	}
+
+	StackCallback& operator=( CallBack* rhs ) {
+		callback_ = rhs;
+		return *this;
+	}
+private:
+	CallBack* callback_;
+};
 
 class ImageKit {
 public:
 	static void init( int argc, char** argv );
 	static void terminate();
 
+	static void attachControl( Control* c );
+	static void detachControl( Control* c );
 protected:
 	static ImageKit* instance;
 	IDirect3D9Ptr d3d_;
-
+	typedef std::map<Control*,IDirect3DDevice9Ptr> DeviceMap;
+	DeviceMap devices_;
+	
+	StackCallback onResize_;
+	static void controlResized(Event* e);
 private:
 	ImageKit();
 	~ImageKit();
@@ -119,6 +150,73 @@ void ImageKit::terminate()
 	delete ImageKit::instance;
 }
 
+void ImageKit::controlResized(Event* e)
+{
+	Control* c = (Control*)e->getSource();
+
+	DeviceMap::iterator found = ImageKit::instance->devices_.find( c );
+	if ( found != ImageKit::instance->devices_.end() ) {
+
+	}
+
+}
+
+void ImageKit::attachControl( Control* c )
+{
+	DeviceMap::iterator found = ImageKit::instance->devices_.find( c );
+	if ( found == ImageKit::instance->devices_.end() ) {
+		IDirect3DDevice9Ptr device;
+
+		Rect r = c->getClientBounds();
+
+		D3DPRESENT_PARAMETERS params = {0};
+
+		params.Windowed = TRUE; //Windowed or Fullscreen
+		params.SwapEffect = D3DSWAPEFFECT_COPY; //discards the previous frames
+		params.BackBufferFormat = D3DFMT_A8R8G8B8; //The display format
+		params.BackBufferCount = 1; //Number of back buffers
+		params.BackBufferHeight = r.getHeight(); //height of the backbuffer
+		params.BackBufferWidth = r.getWidth(); //width of the backbuffer
+		params.hDeviceWindow = (HWND)c->getPeer()->getHandleID(); //handle to our window
+		params.AutoDepthStencilFormat = D3DFMT_D16; //The stencil format
+		params.EnableAutoDepthStencil = TRUE;
+		params.FullScreen_RefreshRateInHz = 0;
+		params.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;
+		
+
+		HRESULT res = 
+			ImageKit::instance->d3d_->CreateDevice( D3DADAPTER_DEFAULT, 
+													D3DDEVTYPE_HAL, 
+													NULL,
+													D3DCREATE_HARDWARE_VERTEXPROCESSING, 
+													&params, 
+													device.out() );
+
+
+		res = device->SetRenderState(D3DRS_LIGHTING, FALSE);
+		device->SetRenderState(D3DRS_ALPHABLENDENABLE,  TRUE);
+		device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+		device->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+
+
+		ImageKit::instance->onResize_ = new Procedure1<Event*>(ImageKit::controlResized);
+		c->ControlSized += ImageKit::instance->onResize_;
+
+		ImageKit::instance->devices_[c] = device;
+	}
+}
+
+void ImageKit::detachControl( Control* c )
+{
+	DeviceMap::iterator found = ImageKit::instance->devices_.find( c );
+	if ( found != ImageKit::instance->devices_.end() ) {
+		IDirect3DDevice9Ptr device = found->second;
+		ImageKit::instance->devices_.erase( found );
+		device = NULL;
+	}
+}
 
 
 
@@ -147,7 +245,6 @@ IKImage::IKImage( const uchar* data, const Size& dimensions )
 {
 
 }
-
 
 IKImage::IKImage( const String& fileName )
 {
@@ -253,7 +350,7 @@ public:
 
 
 
-		
+		/*
 
 		D3DXMATRIX Ortho2D;	
 		D3DXMATRIX Identity;
@@ -266,7 +363,7 @@ public:
 		device->SetTransform(D3DTS_PROJECTION, &Ortho2D);
 		device->SetTransform(D3DTS_WORLD, &Identity);
 		device->SetTransform(D3DTS_VIEW, &Identity);
-
+*/
 
 
 
@@ -457,7 +554,6 @@ public:
 
 		res = vertBuf->Unlock();
 
-
 		device->CreateTexture(w, h,
                                  1,
                                  D3DUSAGE_RENDERTARGET,
@@ -605,7 +701,7 @@ public:
 
 			static float timer = 0.0f;
 
-			float amt = 0.0461f;
+			float amt = 0.00461f;
 
 			ppEffect->SetFloat("amt",amt);
 			ppEffect->SetFloat("timer",timer);
@@ -620,6 +716,7 @@ public:
 				
 				ppEffect->BeginPass( p );
 	
+
 				//device->SetStreamSource( 0, vertBuf.in(), 0, sizeof( PANELVERTEX ) );
 				//device->DrawPrimitive( D3DPT_TRIANGLESTRIP, 0, 2 );
 				

@@ -132,15 +132,22 @@ wave.y = Tex.y + (sin((Tex.x*15)+timer)*amt);
 wave.x = Tex.x + (sin((Tex.y*5)+timer)*amt);
 
 
-	float4 c=tex2D(g_samSrcColor,wave);
+	float4 c=tex2D(g_samSrcColor,Tex);
+
+	//c.r = 1.0f - c.r;
+	//c.g = 1.0f - c.g;
+	//c.b = 1.0f - c.b;
+
 //c.r *= 0.5f+sin(Tex.y*50)*2;
 //c.g *= 0.5f+cos(Tex.y*2)*2;
 //c.b *= 0.5f+sin(Tex.x*15)*2;
 
 //c.r+=0.3f;
 
-c.b+=0.7f;
-c.r-=0.25f;
+//c.b+=0.7f;
+//c.r-=0.25f;
+
+
 
 return c;
 }
