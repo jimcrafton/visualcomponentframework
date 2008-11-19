@@ -41,29 +41,75 @@ public:
 
 	}
 
+	GLuint texture;
+	GLuint tex2;
+
+	uint32 imWidth;
+	uint32 imHeight;
+
 	virtual void paint(GraphicsContext * context) {
 		OpenGLControl::paint( context );
 
 		static initialized = false;
 
 		if ( !initialized ) {
+			texture = -1;
+			tex2 = -1;
+
 			GLenum err = glewInit();
-		prog = glCreateProgramObjectARB();
+			prog = glCreateProgramObjectARB();
 
 
-		frag = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
+			String s;
+			{
+				FileInputStream fis( "frag.shader" );		
+				fis >> s;
+			}
 
-		AnsiString src = FRAG_CODE;
-		int len = src.size();
-		const char* srcStr = src.c_str();
-		glShaderSourceARB(frag, 1, (const GLcharARB**)&srcStr, &len);
+			frag = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
 
-		glCompileShaderARB(frag);
-		glAttachObjectARB(prog, frag);
-		glLinkProgramARB(prog);
+			AnsiString src = s;
+			int len = src.size();
+			const char* srcStr = src.c_str();
+			glShaderSourceARB(frag, 1, (const GLcharARB**)&srcStr, &len);
+
+			glCompileShaderARB(frag);
 
 
-		
+			int i;
+			glGetObjectParameterivARB(frag,GL_OBJECT_COMPILE_STATUS_ARB,&i);
+			char* s2 = (char*)malloc(32768);
+			glGetInfoLogARB(frag,32768,NULL,s2);
+			s = String("Compile Log:\n") +  s2;
+			::free(s2);
+			Dialog::showMessage( s );
+
+
+
+			glAttachObjectARB(prog, frag);
+			glLinkProgramARB(prog);
+
+
+			
+
+			
+			Image* img = GraphicsToolkit::createImage( "res:logo.png" );
+			if ( img ) {
+				imWidth = img->getWidth();
+				imHeight = img->getHeight();
+
+				glGenTextures(1, &texture);
+				glGenTextures(1, &tex2);
+				
+				
+				glBindTexture(GL_TEXTURE_2D, texture);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Use nice (linear) scaling
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Use nice (linear) scaling
+				glTexImage2D(GL_TEXTURE_2D, 0, 4, img->getWidth(), img->getHeight(), 
+					0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, img->getData() );
+
+				delete img;
+			}
 		}
 
 		initialized = true;
@@ -89,17 +135,9 @@ public:
 		glClear(GL_COLOR_BUFFER_BIT);
 
 
-		Image* img = GraphicsToolkit::createImage( "res:logo.png" );
-		if ( img ) {
+		
 
-			GLuint texture;
-			glGenTextures(1, &texture);
-			glBindTexture(GL_TEXTURE_2D, texture);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Use nice (linear) scaling
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Use nice (linear) scaling
-			glTexImage2D(GL_TEXTURE_2D, 0, 4, img->getWidth(), img->getHeight(), 
-							0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, img->getData() );
-
+		if ( texture != -1 ) {
 
 
 			glBindTexture(GL_TEXTURE_2D, texture);
@@ -107,8 +145,8 @@ public:
 			glColor4f(1.0, 1.0, 1.0, alpha);
 
 			uint32 h,w;
-			w = img->getWidth();
-			h = img->getHeight();
+			w = imWidth;
+			h = imHeight;
 
 			int x,y;
 			x = 10;
@@ -118,7 +156,17 @@ public:
 			u=0.5;
 			v=0.5;
 
-			glUseProgramObjectARB( prog);
+			glUseProgramObjectARB( prog );
+			int u1 = glGetUniformLocationARB(prog, "myTexture");
+			glActiveTexture(GL_TEXTURE0 + 0);
+			glBindTexture(GL_TEXTURE_2D, texture);
+			glUniform1iARB(u1, 0);
+
+
+
+
+
+
 
 			glBegin(GL_POLYGON);
 			glTexCoord2f(0.0, 0.0);
@@ -142,8 +190,8 @@ public:
 			u=1.0;
 			v=1.0;
 
-			w = img->getWidth()/2;
-			h = img->getHeight()/2;
+			w = imWidth/2;
+			h = imHeight/2;
 
 			glBegin(GL_POLYGON);
 			glTexCoord2f(0.0, 0.0);
@@ -167,8 +215,8 @@ public:
 			u=1.0;
 			v=1.0;
 
-			w = img->getWidth();
-			h = img->getHeight();
+			w = imWidth;
+			h = imHeight;
 
 
 			glBegin(GL_POLYGON);
@@ -187,13 +235,66 @@ public:
 			glEnd();
 
 
-			delete img;
+			x = 10;
+			y = 300;
+			u=1.0;
+			v=1.0;
+
+			w = imWidth;
+			h = imHeight;
+
+			glUseProgramObjectARB(0);
+
+			glBegin(GL_POLYGON);
+			glTexCoord2f(0.0, 0.0);
+			glVertex2i(x, y);
+
+			glTexCoord2f(u, 0.0);
+			glVertex2i(x+w, y);
+
+			glTexCoord2f(u, v);
+			glVertex2i(x+w, y+h);
+
+			glTexCoord2f(0.0, v);
+			glVertex2i(x, y+h);
+
+			glEnd();
+
+
+			glUseProgramObjectARB(prog);
+
+			x = 10;
+			y = 320;
+			u=1.0;
+			v=1.0;
+
+			w = imWidth;
+			h = imHeight;
+
+
+			glBegin(GL_POLYGON);
+			glTexCoord2f(0.0, 0.0);
+			glVertex2i(x, y);
+
+			glTexCoord2f(u, 0.0);
+			glVertex2i(x+w, y);
+
+			glTexCoord2f(u, v);
+			glVertex2i(x+w, y+h);
+
+			glTexCoord2f(0.0, v);
+			glVertex2i(x, y+h);
+
+			glEnd();			
 		}
 
 		
 
 
 		swapBuffers();
+
+		context->rectangle( 100, 300, 200, 400 );
+		context->fillPath();
 	}
 };
 

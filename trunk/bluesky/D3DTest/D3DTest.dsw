@@ -122,6 +122,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name OpenGLKit
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name glew_static
+    End Project Dependency
 }}}
 
 ###############################################################################
