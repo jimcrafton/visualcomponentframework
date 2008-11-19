@@ -151,16 +151,22 @@ String System::findResourceDirectory( const String& fileName, Locale* locale )
 				//add the dir sep at the end to be proper
 				result += FilePath::getDirectorySeparator();
 			}
-			else {
-				//if we still don't have anything, then
-				//assume the path where the application lives.
-				//this works for app's that aren't using the 
-				//bundle dir layout.
-				result = appPath.getPathName(true);
-			}
+		}		
+		else {
+			//if we still don't have anything, then
+			//assume the path where the application lives.
+			//this works for app's that aren't using the 
+			//bundle dir layout.
+			appPath = fileName;
+			result = appPath.getPathName(true);
+
 		}
 
-		cachedResourceDirMap[fileName] = result;
+		
+
+		if ( !result.empty() ) {
+			cachedResourceDirMap[fileName] = result;
+		}
 	}
 
 	return result;

@@ -1,7 +1,7 @@
 object CompositionTypesWindow  : VCF::Window
 	top = 200
 	left = 200
-	height = 700
+	height = 790
 	width = 800
 	caption = 'CompositionTypes'	
 
@@ -38,6 +38,7 @@ object CompositionTypesWindow  : VCF::Window
 			rightBorderWidth = 5
 			leftBorderWidth = 5
 			direction = fdVertical
+			allowContentsToWrap = false
 		end
 
 		object vertCont2 : VCF::FlowLayoutContainter
@@ -46,6 +47,7 @@ object CompositionTypesWindow  : VCF::Window
 			rightBorderWidth = 5
 			leftBorderWidth = 5
 			direction = fdVertical
+			allowContentsToWrap = false
 		end
 
 		object vertCont3 : VCF::FlowLayoutContainter
@@ -104,7 +106,7 @@ object CompositionTypesWindow  : VCF::Window
 		
 
 		object compositeMode : VCF::Panel 
-			height = 400
+			height = 575
 			width = 200
 			border = @title3
 
@@ -266,6 +268,96 @@ object CompositionTypesWindow  : VCF::Window
 				width = 100
 				height = RadioboxHeight
 				tag=15
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmDarken : VCF::RadioButtonControl
+				caption = 'cmDarken'
+				width = 100
+				height = RadioboxHeight
+				tag=16
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmLighten : VCF::RadioButtonControl
+				caption = 'cmLighten'
+				width = 100
+				height = RadioboxHeight
+				tag=17
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmColorDodge : VCF::RadioButtonControl
+				caption = 'cmColorDodge'
+				width = 100
+				height = RadioboxHeight
+				tag=18
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmColorBurn : VCF::RadioButtonControl
+				caption = 'cmColorBurn'
+				width = 100
+				height = RadioboxHeight
+				tag=19
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmHardLight : VCF::RadioButtonControl
+				caption = 'cmHardLight'
+				width = 100
+				height = RadioboxHeight
+				tag=20
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmSoftLight : VCF::RadioButtonControl
+				caption = 'cmSoftLight'
+				width = 100
+				height = RadioboxHeight
+				tag=21
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmExclusion : VCF::RadioButtonControl
+				caption = 'cmExclusion'
+				width = 100
+				height = RadioboxHeight
+				tag=22
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmDifference : VCF::RadioButtonControl
+				caption = 'cmDifference'
+				width = 100
+				height = RadioboxHeight
+				tag=23
+				delegates
+					 ButtonClicked = [compView@CompositionsView::onCompMode]
+				end				
+			end
+
+			object cmContrast : VCF::RadioButtonControl
+				caption = 'cmContrast'
+				width = 100
+				height = RadioboxHeight
+				tag=24
 				delegates
 					 ButtonClicked = [compView@CompositionsView::onCompMode]
 				end				
