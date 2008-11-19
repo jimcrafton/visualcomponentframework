@@ -45,7 +45,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CompositionTypes"=..\..\VCF\EXAMPLES\CompositionTypes\CompositionTypes.dsp - Package Owner=<4>
+Project: "CompositionTypes"=..\..\vcf\examples\CompositionTypes\CompositionTypes.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -53,9 +53,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKit
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -142,6 +139,18 @@ Package=<4>
 ###############################################################################
 
 Project: "UIlib"=..\..\..\..\directui\UIlib\UIlib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "glew_static"=.\glew\build\vc6\glew_static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

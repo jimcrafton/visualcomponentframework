@@ -2,16 +2,74 @@
 
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
+
+
+
+#include "GL/glew.h"
+
+
+
+
 #include "vcf/OpenGLKit/OpenGLKit.h"
 #include "vcf/OpenGLKit/VCFOpenGL.h"
 
+
+#ifdef _DEBUG
+#pragma comment (lib,"glew32sd.lib")
+#else
+#pragma comment (lib,"glew32s.lib")
+#endif
+
 using namespace VCF;
+
+
+#define FRAG_CODE	"void main()\n"\
+	"{\n"\
+		"gl_FragColor = vec4(0.4,0.4,0.8,1.0);\n"\
+	"}\n"
+
 
 class OGLView : public OpenGLControl {
 public:
 
+	GLuint frag;
+	GLuint prog;
+
+	OGLView() {
+
+		
+
+	}
+
 	virtual void paint(GraphicsContext * context) {
 		OpenGLControl::paint( context );
+
+		static initialized = false;
+
+		if ( !initialized ) {
+			GLenum err = glewInit();
+		prog = glCreateProgramObjectARB();
+
+
+		frag = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
+
+		AnsiString src = FRAG_CODE;
+		int len = src.size();
+		const char* srcStr = src.c_str();
+		glShaderSourceARB(frag, 1, (const GLcharARB**)&srcStr, &len);
+
+		glCompileShaderARB(frag);
+		glAttachObjectARB(prog, frag);
+		glLinkProgramARB(prog);
+
+
+		
+		}
+
+		initialized = true;
+
+
+
 
 		Rect r = getClientBounds();
 
@@ -31,7 +89,7 @@ public:
 		glClear(GL_COLOR_BUFFER_BIT);
 
 
-		Image* img = GraphicsToolkit::createImage( "C:\\code\\vcfdev\\dev\\bluesky\\D3DTest\\logo.png" );
+		Image* img = GraphicsToolkit::createImage( "res:logo.png" );
 		if ( img ) {
 
 			GLuint texture;
@@ -59,6 +117,8 @@ public:
 			double u,v;
 			u=0.5;
 			v=0.5;
+
+			glUseProgramObjectARB( prog);
 
 			glBegin(GL_POLYGON);
 			glTexCoord2f(0.0, 0.0);
@@ -110,6 +170,7 @@ public:
 			w = img->getWidth();
 			h = img->getHeight();
 
+
 			glBegin(GL_POLYGON);
 			glTexCoord2f(0.0, 0.0);
 			glVertex2i(x, y);
@@ -156,12 +217,15 @@ class OGLDrawApplication : public Application {
 public:
 
 	OGLDrawApplication( int argc, char** argv ) : Application(argc, argv) {
-
+		
+		OpenGLKit::init(argc,argv);
 	}
 
 	virtual bool initRunningApplication(){
 		bool result = Application::initRunningApplication();
 		
+		
+
 		Window* mainWindow = new OGLDrawWindow();
 		setMainWindow(mainWindow);
 		mainWindow->setBounds( 100.0, 100.0, 700.0, 500.0 );
