@@ -1,6 +1,8 @@
 //OGLDraw.cpp
 
 
+
+
 #include "vcf/ApplicationKit/ApplicationKit.h"
 
 
@@ -14,7 +16,7 @@
 #include "vcf/OpenGLKit/VCFOpenGL.h"
 
 
-#ifdef _DEBUG
+#ifdef  _DEBUG
 #pragma comment (lib,"glew32sd.lib")
 #else
 #pragma comment (lib,"glew32s.lib")
@@ -62,7 +64,7 @@ public:
 
 			String s;
 			{
-				FileInputStream fis( "frag.shader" );		
+				FileInputStream fis("frag.shader");
 				fis >> s;
 			}
 
