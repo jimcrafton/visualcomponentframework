@@ -18,8 +18,13 @@ where you installed the VCF.
 namespace VCF {
 
 bool System::unicodeEnabled = false;
+struct ResDirName {
+	ResDirName() : localeNames(false){}
 
-static std::map<String,String> cachedResourceDirMap;
+	String resDir;
+	bool localeNames;
+};
+static std::map<String,ResDirName> cachedResourceDirMap;
 
 
 System* System::getInstance()
@@ -96,15 +101,20 @@ String System::findResourceDirectory( const String& fileName, Locale* locale )
 
 	String result;	
 	bool foundDir = false;
+	ResDirName val;
 
-	std::map<String,String>::iterator found = cachedResourceDirMap.find( fileName );
+	std::map<String,ResDirName>::iterator found = cachedResourceDirMap.find( fileName );
 	if ( found != cachedResourceDirMap.end() ) {
-		result = found->second;
-		String localeName = locale->getName();
-		foundDir = result.find( localeName ) != String::npos;
+		result = found->second.resDir;
+		foundDir = true;
+		if ( found->second.localeNames ) {
+			String localeName = locale->getName();
+			foundDir = result.find( localeName ) != String::npos;
+		}
 	}
 
 	if ( !foundDir ) {
+		result = String();
 		FilePath appPath = fileName;
 
 		UnicodeString appDir = appPath.getPathName(true);
@@ -146,6 +156,7 @@ String System::findResourceDirectory( const String& fileName, Locale* locale )
 				String localeName = locale->getName();
 				tmp = result + FilePath::getDirectorySeparator() + localeName;
 				if ( File::exists( tmp ) ) {
+					val.localeNames = true;
 					result = tmp;
 				}
 				//add the dir sep at the end to be proper
@@ -158,15 +169,18 @@ String System::findResourceDirectory( const String& fileName, Locale* locale )
 			//this works for app's that aren't using the 
 			//bundle dir layout.
 			appPath = fileName;
-			result = appPath.getPathName(true);
-
+			result = appPath.getPathName();
 		}
 
 		
 
 		if ( !result.empty() ) {
-			cachedResourceDirMap[fileName] = result;
+			
+			val.resDir = result;
+			cachedResourceDirMap[fileName] = val;
 		}
+
+		StringUtils::trace( Format("findResourceDirectory: %s for filename: %s\n") % result % fileName );
 	}
 
 	return result;
