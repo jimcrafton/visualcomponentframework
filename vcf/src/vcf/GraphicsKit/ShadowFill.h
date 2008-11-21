@@ -363,7 +363,11 @@ public:
 			Point org = context_->getOrigin();
 			mat *= agg::trans_affine_translation( org.x_, org.y_  );
 			
-			agg::conv_transform< agg::path_storage > xfrmedPath(fillPath,mat);
+			agg::conv_curve<agg::path_storage> smooth(fillPath);
+
+			agg::conv_transform< agg::conv_curve< agg::path_storage > > 
+				xfrmedPath(smooth,mat);
+
 
 			Rect pathBounds;
 			uint32 pid[1] = {0};
@@ -390,43 +394,30 @@ public:
 
 			{
 				ImageContext maskCtx = maskImage;
-				BasicFill fill;
-				fill.setColor( &Color(alpha_,alpha_,alpha_,alpha_) );
-
-				//maskCtx->setAntiAliasingOn(true);
-
-
-				maskCtx->setCurrentFill( &fill );
-
-				Matrix2D m;
-				m *= Matrix2D::translation( -(pathBounds.left_  /*+ maskImage->getWidth()/2.0*/ ), 
-											-(pathBounds.top_ /*+ maskImage->getHeight()/2.0*/ ) );
-
-				m *= *context_->getCurrentTransform();
 				
-			
-				//m *= Matrix2D::translation( (pathBounds.left_  /*+ maskImage->getWidth()/2.0*/ ), 
-				//							(pathBounds.top_ /*+ maskImage->getHeight()/2.0*/ ) );
+				maskCtx->setAntiAliasingOn(true);
+				agg::trans_affine m;
+				m *= agg::trans_affine_translation( -pathBounds.left_,//  + maskImage->getWidth()/2.0, 
+											-pathBounds.top_ ); //+ maskImage->getHeight()/2.0 );
 				
-
-				maskCtx->setCurrentTransform( m );
-
-				maskCtx->draw( path );
-
-				maskCtx->setCurrentFill( NULL );
-			}
+				m *= mat;
 
 
-			
+				agg::conv_transform< agg::conv_transform< agg::conv_curve< agg::path_storage > > >
+					xpath2( xfrmedPath, m );
 
-			agg::rendering_buffer maskRb;
-			maskRb.attach( (unsigned char*)maskImage->getData(), maskImage->getWidth(), maskImage->getHeight(),
-								maskImage->getWidth() );
+				agg::rasterizer_scanline_aa<> rasterizer;
 
-			agg::pixfmt_gray8 pixf(maskRb);
+				rasterizer.clip_box( 0, 0, img->getWidth(), img->getHeight() ); 
+				rasterizer.add_path( xpath2 );
 
-			stack_blur_x_gray8(pixf, radius_);
-			stack_blur_y_gray8(pixf, radius_);
+				renderScanlinesSolidGreyscale( *maskCtx, rasterizer, agg::rgba(alpha_,alpha_,alpha_,alpha_) );				
+
+				agg::pixfmt_gray8 pixf(*maskCtx->getRenderingBuffer());
+
+				stack_blur_x_gray8(pixf, radius_);
+				stack_blur_y_gray8(pixf, radius_);
+			}			
 
 			mask.updateFromImage( maskImage );
 				
@@ -447,29 +438,7 @@ public:
 			context_->renderImages();
 
 			context_->restoreState( gcs );
-/*
-
-			agg::rendering_buffer& renderingBuffer = *context_->getRenderingBuffer();
-			agg::rasterizer_scanline_aa<> rasterizer;
-			
-
-			
-			agg::conv_curve<agg::path_storage> smooth(fillPath);
-			
-			agg::conv_transform< agg::conv_curve< agg::path_storage > > xfrmedPath2(smooth,mat);
-
-
-			
-			rasterizer.add_path( xfrmedPath2 );
-
-			
-
-			context_->resetRenderAreaAlpha();
-
-			renderScanlinesSolid( *context_, rasterizer, agg::rgba(color_.getRed(),color_.getGreen(),color_.getBlue(),color_.getAlpha()) );
-			*/
 		}
-
 	}
 
 	void setAlpha( const double& val ) {
