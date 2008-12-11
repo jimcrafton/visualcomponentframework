@@ -56,15 +56,16 @@ public:
 
 		if ( !graph.null() ) {
 
-			//if ( checkSB ) {
-				
-				getScrollable()->setVirtualViewWidth( graph.getBoundsSize().width_ );
-				getScrollable()->setVirtualViewHeight( graph.getBoundsSize().height_ );
-			//}
+			graph.render(ctx);
+
+
+			if ( checkSB ) {
+				Rect r = graph.getTransformedBoundingBox();				
+				getScrollable()->setVirtualViewWidth( r.getWidth() );
+				getScrollable()->setVirtualViewHeight( r.getHeight() );
+			}
 
 			checkSB = false;
-
-			graph.render(ctx);
 		}
 	}
 

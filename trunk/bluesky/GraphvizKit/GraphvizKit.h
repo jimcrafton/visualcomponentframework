@@ -127,6 +127,7 @@ enum {
 	FORMAT_BMP = 1
 };
 
+	class AGraph;
 
 	class GRAPHVIZKIT_API GraphvizKit {
 	public:
@@ -139,6 +140,8 @@ enum {
 		}
 
 		static void renderGraph( Agraph_t* g, GraphicsContext* ctx );
+
+		static void renderGraph( AGraph* g, GraphicsContext* ctx );
 	private:
 		static GVC_t* gvCtx;
 		static GraphicsContext* currentCtx;
@@ -162,6 +165,65 @@ enum {
 
 	};
 
+
+
+	class GRAPHVIZKIT_API ANode {
+	public:
+		ANode(): node_(NULL){}
+
+		ANode(const ANode& rhs): node_(rhs.node_){}
+
+		ANode(Agnode_t* node): node_(node){}
+
+
+		ANode& operator=(const ANode& rhs) {
+			node_ = rhs.node_;
+			return *this;
+		}
+
+		ANode& operator=(Agnode_t* rhs) {
+			node_ = rhs;
+			return *this;
+		}
+
+
+
+
+
+	protected:
+		Agnode_t* node_;
+	};
+
+
+	
+	class GRAPHVIZKIT_API AEdge {
+	public:
+		AEdge(): edge_(NULL){}
+
+		AEdge(const AEdge& rhs): edge_(rhs.edge_){}
+
+		AEdge(Agedge_t* edge_): edge_(edge_){}
+
+
+		AEdge& operator=(const AEdge& rhs) {
+			edge_ = rhs.edge_;
+			return *this;
+		}
+
+		AEdge& operator=(Agedge_t* rhs) {
+			edge_ = rhs;
+			return *this;
+		}
+
+
+
+
+
+	protected:
+		Agedge_t* edge_;
+	};
+
+	
 
 
 	typedef SmartPtr<Agraph_t>::Shared AgraphPtr;
@@ -204,8 +266,43 @@ enum {
 
 		Size getBoundsSize() const;
 		Rect getBoundingBox() const;
+
+		Rect getTransformedBoundingBox() const;
+
+
+
+		Agnode_t* node( const String& nodeName );
+
+		Agnode_t* find( const String& nodeName ) const;
+
+		Agnode_t* firstNode() const;
+		Agnode_t* nextNode( Agnode_t* node ) const;
+		Agnode_t* prevNode( Agnode_t* node ) const;
+		Agnode_t* lastNode() const;
+
+
+		Agedge_t* edge( Agnode_t* n1, Agnode_t* n2 );
+
+		Agedge_t* findEdge( Agnode_t* n1, Agnode_t* n2 ) const;
+
+		Agedge_t* firstEdge( Agnode_t* n ) const;
+		Agedge_t* nextEdge( Agedge_t* edge, Agnode_t* n ) const;
+
+		Agedge_t* firstIn(  Agnode_t* n ) const;
+		Agedge_t* nextIn(  Agedge_t* edge ) const;
+
+		Agedge_t* firstOut(  Agnode_t* n ) const;
+		Agedge_t* nextOut(  Agedge_t* edge ) const;
+
+
+		GVC_t* context() const;
+		
+		void setTransformMatrix( const Matrix2D& m ) {
+			matrix_ = m;
+		}
 	protected:
 		AgraphPtr graph_;
+		Matrix2D matrix_;
 
 		static void freeGraph( Agraph_t* g );
 

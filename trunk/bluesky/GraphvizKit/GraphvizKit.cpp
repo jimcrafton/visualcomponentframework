@@ -12,6 +12,17 @@ GraphicsContext* GraphvizKit::currentCtx = NULL;
 
 static int lastGS = 0;
 
+struct GraphVizRenderCtx {
+	GraphVizRenderCtx():ctx(NULL), graph(NULL){}
+
+	GraphicsContext* ctx;
+	AGraph* graph;
+	
+};
+
+static GraphVizRenderCtx* currentCtx;
+
+
 
 void GraphvizKit::init( int argc, char** argv )
 {
@@ -92,11 +103,30 @@ void GraphvizKit::terminate()
 
 void GraphvizKit::renderGraph( Agraph_t* g, GraphicsContext* ctx )
 {
-	GraphvizKit::currentCtx = ctx;
+	GraphVizRenderCtx rc;
+	rc.ctx = ctx;
+
+	::currentCtx = &rc;
+
+	
 	gvRender(GraphvizKit::gvCtx, g, "graphicsctx", NULL);
-	GraphvizKit::currentCtx = NULL;
+	
+	::currentCtx = NULL;
 }
 
+void GraphvizKit::renderGraph( AGraph* g, GraphicsContext* ctx )
+{
+	GraphVizRenderCtx rc;
+	rc.ctx = ctx;
+	rc.graph = g;
+
+	::currentCtx = &rc;
+
+	
+	gvRender(GraphvizKit::gvCtx, g->get(), "graphicsctx", NULL);
+	
+	::currentCtx = NULL;
+}
 
 void GraphvizKit::beginJob(GVJ_t *job)
 {
@@ -112,14 +142,15 @@ void GraphvizKit::endJob(GVJ_t *job)
 void GraphvizKit::beginPage(GVJ_t *job)
 {
 	if (!job->external_context && !job->context) {
-		job->context = GraphvizKit::currentCtx;
+		job->context = ::currentCtx;//GraphvizKit::currentCtx;
 		
 		
 	}
 
-	GraphicsContext* ctx = (GraphicsContext*)job->context;
-	if ( NULL != ctx ) {
-		lastGS = ctx->saveState();
+	GraphVizRenderCtx* rc = (GraphVizRenderCtx*)job->context;
+
+	if ( NULL != rc ) {
+		lastGS = rc->ctx->saveState();
 
 		Matrix2D mat;// = Matrix2D::translation( 0, job->height );
 		mat *= Matrix2D::scaling( job->scale.x, job->scale.y );
@@ -127,19 +158,22 @@ void GraphvizKit::beginPage(GVJ_t *job)
 		mat *= Matrix2D::translation( job->translation.x, job->translation.y );
 
 
-		Matrix2D adjustedMat = *ctx->getCurrentTransform();
+		Matrix2D adjustedMat = *rc->ctx->getCurrentTransform();
 		adjustedMat *= mat;
-		ctx->setCurrentTransform( adjustedMat );
+		rc->ctx->setCurrentTransform( adjustedMat );
 
+		if ( rc->graph ) {
+			rc->graph->setTransformMatrix( adjustedMat );
+		}
 	}
 }
 
 
 void GraphvizKit::endPage(GVJ_t *job)
 {
-	GraphicsContext* ctx = (GraphicsContext*)job->context;
-	if ( NULL != ctx ) {
-		ctx->restoreState(lastGS);
+	GraphVizRenderCtx* rc = (GraphVizRenderCtx*)job->context;
+	if ( NULL != rc ) {
+		rc->ctx->restoreState(lastGS);
 	}
 }
 
@@ -150,9 +184,9 @@ void GraphvizKit::beginAnchor(GVJ_t *job, char *url, char *tooltip, char *target
 
 void GraphvizKit::textpara(GVJ_t *job, pointf p, textpara_t *para)
 {
-	GraphicsContext* ctx = (GraphicsContext*)job->context;
+	GraphVizRenderCtx* rc = (GraphVizRenderCtx*)job->context;
 
-	int gcs = ctx->saveState();
+	int gcs = rc->ctx->saveState();
 
 	String text = para->str;
 
@@ -178,17 +212,17 @@ void GraphvizKit::textpara(GVJ_t *job, pointf p, textpara_t *para)
 
 	Font f( para->fontname, para->fontsize );
 
-	ctx->setCurrentFont( &f);
+	rc->ctx->setCurrentFont( &f);
 
-	ctx->textAt( p.x, p.y, text );
+	rc->ctx->textAt( p.x, p.y, text );
 
 
-	ctx->restoreState(gcs);
+	rc->ctx->restoreState(gcs);
 }
 
 void GraphvizKit::ellipse(GVJ_t *job, pointf *A, int filled)
 {
-	GraphicsContext* ctx = (GraphicsContext*)job->context;
+	GraphVizRenderCtx* rc = (GraphVizRenderCtx*)job->context;
 
 	Rect r;
 	r.left_ = A[0].x - (A[1].x - A[0].x)/2.0;
@@ -197,25 +231,25 @@ void GraphvizKit::ellipse(GVJ_t *job, pointf *A, int filled)
 	r.top_ = A[0].y - (A[1].y - A[0].y)/2.0;
 	r.bottom_ = A[0].y + (A[1].y - A[0].y)/2.0;
 
-	ctx->ellipse( r.left_, r.top_, r.right_, r.bottom_ );
+	rc->ctx->ellipse( r.left_, r.top_, r.right_, r.bottom_ );
 
 	if (filled) {
 		Color c(job->obj->fillcolor.u.RGBA [0], job->obj->fillcolor.u.RGBA [1], job->obj->fillcolor.u.RGBA [2], job->obj->fillcolor.u.RGBA [3] );
 
-		ctx->setColor(&c);
+		rc->ctx->setColor(&c);
 
-		ctx->fillPath();
+		rc->ctx->fillPath();
 	}
 
 	Color c2(job->obj->pencolor.u.RGBA [0], job->obj->pencolor.u.RGBA [1], job->obj->pencolor.u.RGBA [2], job->obj->pencolor.u.RGBA [3] );
-	ctx->setColor(&c2);
+	rc->ctx->setColor(&c2);
 
-	ctx->strokePath();
+	rc->ctx->strokePath();
 }
 
 void GraphvizKit::polygon(GVJ_t *job, pointf *A, int n, int filled)
 {
-	GraphicsContext* ctx = (GraphicsContext*)job->context;
+	GraphVizRenderCtx* rc = (GraphVizRenderCtx*)job->context;
 
 	std::vector<Point> pts(n);
 
@@ -224,34 +258,32 @@ void GraphvizKit::polygon(GVJ_t *job, pointf *A, int n, int filled)
 		pts[i].y_ = A[i].y;
 	}
 
-	ctx->polyline(pts);
-	ctx->closePath(pts[0]);
+	rc->ctx->polyline(pts);
+	rc->ctx->closePath(pts[0]);
 
 
 
 	if (filled) {
 		Color c(job->obj->fillcolor.u.RGBA [0], job->obj->fillcolor.u.RGBA [1], job->obj->fillcolor.u.RGBA [2], job->obj->fillcolor.u.RGBA [3] );
 
-		ctx->setColor(&c);
+		rc->ctx->setColor(&c);
 
-		ctx->fillPath();
+		rc->ctx->fillPath();
 	}
 
 	Color c2(job->obj->pencolor.u.RGBA [0], job->obj->pencolor.u.RGBA [1], job->obj->pencolor.u.RGBA [2], job->obj->pencolor.u.RGBA [3] );
-	ctx->setColor(&c2);
+	rc->ctx->setColor(&c2);
 
-	ctx->strokePath();
+	rc->ctx->strokePath();
 }
 
 void GraphvizKit::bezier(GVJ_t *job, pointf *A, int n, int arrow_at_start, int arrow_at_end, int filled)
 {
-	GraphicsContext* ctx = (GraphicsContext*)job->context;
-
-	
+	GraphVizRenderCtx* rc = (GraphVizRenderCtx*)job->context;	
 
 	for (int i=0;i<n;i++ ) {
 		if ( i> 0 && (i%3 == 0)) {
-			ctx->curve( A[i-3].x, A[i-3].y,
+			rc->ctx->curve( A[i-3].x, A[i-3].y,
 						A[i-2].x, A[i-2].y,
 						A[i-1].x, A[i-1].y,
 						A[i].x, A[i].y );
@@ -264,20 +296,20 @@ void GraphvizKit::bezier(GVJ_t *job, pointf *A, int n, int arrow_at_start, int a
 	if (filled) {
 		Color c(job->obj->fillcolor.u.RGBA [0], job->obj->fillcolor.u.RGBA [1], job->obj->fillcolor.u.RGBA [2], job->obj->fillcolor.u.RGBA [3] );
 
-		ctx->setColor(&c);
+		rc->ctx->setColor(&c);
 
-		ctx->fillPath();
+		rc->ctx->fillPath();
 	}
 
 	Color c2(job->obj->pencolor.u.RGBA [0], job->obj->pencolor.u.RGBA [1], job->obj->pencolor.u.RGBA [2], job->obj->pencolor.u.RGBA [3] );
-	ctx->setColor(&c2);
+	rc->ctx->setColor(&c2);
 
-	ctx->strokePath();
+	rc->ctx->strokePath();
 }
 
 void GraphvizKit::polyline(GVJ_t *job, pointf *A, int n)
 {
-	GraphicsContext* ctx = (GraphicsContext*)job->context;
+	GraphVizRenderCtx* rc = (GraphVizRenderCtx*)job->context;	
 
 	std::vector<Point> pts(n);
 
@@ -287,9 +319,9 @@ void GraphvizKit::polyline(GVJ_t *job, pointf *A, int n)
 	}
 	
 	Color c2(job->obj->pencolor.u.RGBA [0], job->obj->pencolor.u.RGBA [1], job->obj->pencolor.u.RGBA [2], job->obj->pencolor.u.RGBA [3] );
-	ctx->setColor(&c2);
+	rc->ctx->setColor(&c2);
 
-	ctx->strokePath();
+	rc->ctx->strokePath();
 }
 
 
@@ -354,15 +386,12 @@ void AGraph::layout()
 {
 	GVC_t* gvc = GraphvizKit::getContext();
 	
-	gvLayout( gvc, graph_.get(), "dot" );			
+	gvLayout( gvc, graph_.get(), "dot" );
 }
 
 void AGraph::render( GraphicsContext* ctx ) 
-{
-	
-	GraphvizKit::renderGraph( graph_.get(), ctx );
-	
-	GVC_t* gvc = GraphvizKit::getContext();
+{	
+	GraphvizKit::renderGraph( this, ctx );	
 }
 
 void AGraph::load( const String& graph )
@@ -409,3 +438,93 @@ Rect AGraph::getBoundingBox() const
 
 	return result;
 }
+
+Agnode_t* AGraph::node( const String& nodeName )
+{
+	return agnode( graph_.get(), (char*)nodeName.ansi_c_str() );
+}
+
+Agnode_t* AGraph::find( const String& nodeName ) const
+{
+	return agfindnode( graph_.get(), (char*)nodeName.ansi_c_str() );
+}
+
+Agnode_t* AGraph::firstNode() const
+{
+	return agfstnode( graph_.get() );
+}
+
+Agnode_t* AGraph::nextNode( Agnode_t* node ) const
+{
+	return agnxtnode( graph_.get(), node );
+}
+
+Agnode_t* AGraph::prevNode( Agnode_t* node ) const
+{
+	return agprvnode( graph_.get(), node );
+}
+
+Agnode_t* AGraph::lastNode() const
+{
+	return aglstnode( graph_.get() );
+}
+
+Agedge_t* AGraph::edge( Agnode_t* n1, Agnode_t* n2 )
+{
+	return agedge( graph_.get(), n1, n2 );
+}
+
+Agedge_t* AGraph::findEdge( Agnode_t* n1, Agnode_t* n2 ) const
+{
+	return agfindedge( graph_.get(), n1, n2 );
+}
+
+Agedge_t* AGraph::firstEdge( Agnode_t* n ) const
+{
+	return agfstedge( graph_.get(), n );
+}
+
+Agedge_t* AGraph::nextEdge( Agedge_t* edge, Agnode_t* n ) const
+{
+	return agnxtedge( graph_.get(), edge, n );
+}
+
+Agedge_t* AGraph::firstIn(  Agnode_t* n ) const
+{
+	return agfstin( graph_.get(), n );
+}
+
+Agedge_t* AGraph::nextIn(  Agedge_t* edge ) const
+{
+	return agnxtin( graph_.get(), edge );
+}
+
+Agedge_t* AGraph::firstOut(  Agnode_t* n ) const
+{
+	return agfstout( graph_.get(), n );
+}
+
+Agedge_t* AGraph::nextOut(  Agedge_t* edge ) const
+{
+	return agnxtout( graph_.get(), edge );
+}
+
+GVC_t* AGraph::context() const
+{
+	return GD_gvc( graph_.get() );
+}
+
+Rect AGraph::getTransformedBoundingBox() const
+{
+	Rect result;
+
+	box bb = GD_bb( graph_.get() );
+
+	result.setRect( bb.LL.x, bb.LL.y,
+					bb.UR.x, bb.UR.y );
+
+	result = matrix_.apply( &result );
+
+	return result;
+}
+
