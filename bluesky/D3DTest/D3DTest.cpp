@@ -640,6 +640,9 @@ public:
 
 			res = device->SetRenderTarget( 0, renderSurf.in() );
 
+			
+
+
 			device->Clear( 0, //number of rectangles to clear, 0 for all
 								NULL, //rects to be cleared, NULL for entire buffer
 								D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER, //the buffers to clear
@@ -649,6 +652,9 @@ public:
 								);
 
 			device->BeginScene();
+			device->SetSamplerState( 0, D3DSAMP_MAGFILTER,  D3DTEXF_NONE );
+			device->SetSamplerState( 0, D3DSAMP_MINFILTER,  D3DTEXF_NONE );
+			device->SetSamplerState( 0, D3DSAMP_MIPFILTER,  D3DTEXF_NONE );
 
 			res = device->SetFVF(D3DFVF_PANELVERTEX);
 			res = device->SetTexture(0, tex.in());
@@ -687,7 +693,12 @@ public:
 
 			device->BeginScene();
 
+			device->SetSamplerState( 0, D3DSAMP_MAGFILTER,  D3DTEXF_NONE );
+			device->SetSamplerState( 0, D3DSAMP_MINFILTER,  D3DTEXF_NONE );
+			device->SetSamplerState( 0, D3DSAMP_MIPFILTER,  D3DTEXF_NONE );
+
 			device->SetTexture(0, renderTex.in());
+			
 
 
 			device->SetStreamSource(0, renderVertBuf.in(), 0, sizeof(PANELVERTEX));
@@ -697,14 +708,14 @@ public:
 
 			
 
-			ppEffect->SetTechnique( "PostProcess" );
+			//ppEffect->SetTechnique( "PostProcess" );
 
 			static float timer = 0.0f;
 
 			float amt = 0.00461f;
 
-			ppEffect->SetFloat("amt",amt);
-			ppEffect->SetFloat("timer",timer);
+			//ppEffect->SetFloat("amt",amt);
+			//ppEffect->SetFloat("timer",timer);
 
 			timer += 0.150f;
 /*
