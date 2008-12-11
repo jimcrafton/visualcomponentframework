@@ -32,7 +32,7 @@ public:
 	virtual void makeCurrent();
 private:
 	Control* owningControl_;
-	GraphicsContext* glContext_;
+	HDC dc_;
 	HGLRC hrc_;
 	bool isInitialized_;
 };

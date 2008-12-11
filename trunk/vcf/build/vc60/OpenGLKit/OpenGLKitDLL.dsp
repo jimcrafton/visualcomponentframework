@@ -113,6 +113,10 @@ SOURCE=..\..\..\src\vcf\OpenGLKit\Win32OpenGLPeer.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\OpenGLKit\OpenGLContext.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\OpenGLKit\OpenGLControl.h
 # End Source File
 # Begin Source File
@@ -136,9 +140,5 @@ SOURCE=..\..\..\src\vcf\OpenGLKit\VCFOpenGL.h
 SOURCE=..\..\..\src\vcf\OpenGLKit\Win32OpenGLPeer.h
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\OpenGLKit\OpenGLContext.h
-# End Source File
 # End Target
 # End Project

@@ -41,6 +41,10 @@ public:
 			renderBuffer->attach( NULL, 0, 0, 0 );
 			delete renderBuffer;
 		}
+
+		if ( NULL != scanline ) {
+			delete scanline;
+		}
 	}
 
 	Rect rect;
@@ -336,7 +340,7 @@ GraphicsContext::~GraphicsContext()
 		it ++;
 	}
 	stateCollection_.clear();
-
+	
 	delete renderArea_;
 }
 
@@ -1629,8 +1633,9 @@ void GraphicsContext::execPathOperations()
 
 				case PointOperation::ptClose : {
 					PointOperation& pt = *it;
-					path.move_to( pt.x, pt.y );
+					
 					path.close_polygon();
+					path.move_to( pt.x, pt.y );
 
 					++it;
 				}
@@ -2113,8 +2118,8 @@ void GraphicsContext::flushRenderArea()
 */
 
 void GraphicsContext::deleteRenderArea()
-{
-	renderArea_->renderBuffer->attach( NULL, 0, 0, 0 );
+{	
+	renderArea_->renderBuffer->attach( NULL, 0, 0, 0 );	
 	delete renderArea_->renderBuffer;
 	delete renderArea_->scanline;
 
@@ -2356,9 +2361,19 @@ void GraphicsContext::setAntiAliasingOn( bool antiAliasingOn )
 
 void GraphicsContext::setViewableBounds( const Rect& bounds ) 
 {
+	bool update = false;
+
+	if ( viewableBounds_.getWidth() != bounds.getWidth() ||
+			viewableBounds_.getHeight() != bounds.getHeight() ) {
+		update = true;
+	}
+
 	viewableBounds_ = bounds;
-	if ( contextPeer_->isMemoryContext() ) {
-		contextPeer_->resizeMemoryContext( viewableBounds_.getWidth(), viewableBounds_.getHeight() );
+
+	
+	if ( contextPeer_->isMemoryContext() && update ) {
+		
+		//contextPeer_->resizeMemoryContext( viewableBounds_.getWidth(), viewableBounds_.getHeight() );
 		if ( contextPeer_->isAntiAliasingOn() ) {
 			renderArea_->rect.setRect(0,0,viewableBounds_.getWidth(), viewableBounds_.getHeight());
 			contextPeer_->attachToRenderBuffer( *renderArea_->renderBuffer );

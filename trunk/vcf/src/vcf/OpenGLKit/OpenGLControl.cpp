@@ -45,10 +45,13 @@ void OpenGLControl::swapBuffers(){
 	}
 }
 
-void OpenGLControl::afterCreate( ComponentEvent* event )
+void OpenGLControl::makeCurrent()
 {
-	CustomControl::afterCreate( event );
+	if ( NULL != glContext_ ){
+		glContext_->makeCurrent();
+	}
 }
+
 
 
 /**

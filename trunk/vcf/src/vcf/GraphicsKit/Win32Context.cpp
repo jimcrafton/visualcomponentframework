@@ -5121,7 +5121,15 @@ void Win32Context::attachToRenderBuffer( agg::rendering_buffer& renderBuffer )
 
 void Win32Context::resizeMemoryContext( const uint32& newWidth, const uint32& newHeight )
 {
-
+	if ( isMemoryCtx_ ) {
+		memBitmap_.setSize( newWidth, newHeight );
+		dc_ = memBitmap_.dc();
+		
+		if ( NULL == dc_ ){
+			//throw exception
+			throw RuntimeException( MAKE_ERROR_MSG_2("Unable to resize memory bitmap for win32 context") );
+		}
+	}
 }
 
 /**

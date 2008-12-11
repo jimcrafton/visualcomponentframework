@@ -1011,39 +1011,78 @@ void DateTimeSpan::subtract( const DateTime& lhs, const DateTime& rhs )
 	end_ = lhs.time_;
 	delta_ = end_ - start_;
 
-	DateTime::Iterator<ByMonth> monthIt = rhs;
-	unsigned int ey = lhs.getYear();
-	unsigned int em = lhs.getMonth();
-	unsigned int sy = rhs.getYear();
-	
-	months_ = 0;
-	while ( true ) {
-		if ( (*monthIt).getYear() == ey ) {
-			if ( (*monthIt).getMonth() == em ) {
-				break;
-			}
-		}
-		++months_;
+	uint64 oneDay = DateTime::ONEDAY; 
 
-		++monthIt;
+	//JEC  - this is a fix to make this a little more 
+	//efficient, when making this call repeatedly in a loop it turns out 
+	//it burns quite a bit of CPU without these if/then tests
+	if ( delta_ < DateTime::ONEDAY ) {
+		years_ = 0;
+		months_ = 0;
+		days_ = 0;
 	}
-
-	years_ = abs(static_cast<int>(ey-sy));
-
-	if ( years_ > 0 ) {
-		if ( lhs > rhs ) {
-			if ( lhs.getMonth() < rhs.getMonth() ) {
-				years_ --;
-			}
-		}
-		else {
-			if ( rhs.getMonth() < lhs.getMonth() ) {
-				years_ --;
-			}
-		}
+	else if ( delta_ > DateTime::ONEDAY && (delta_ <= (oneDay * 26)) ) {
+		years_ = 0;
+		months_ = 0;
+		days_ = (unsigned long) (delta_ / DateTime::ONEDAY);
 	}
+	else if ( delta_ < (oneDay * 28) ) {
+		DateTime::Iterator<ByMonth> monthIt = rhs;
 
-	days_ = delta_ / DateTime::ONEDAY;
+		unsigned int ey = lhs.getYear();
+		unsigned int em = lhs.getMonth();
+		unsigned int sy = rhs.getYear();
+
+		months_ = 0;		
+		while ( true ) {
+			if ( (*monthIt).getYear() == ey ) {
+				if ( (*monthIt).getMonth() == em ) {
+					break;
+				}
+			}
+			++months_;
+
+			++monthIt;
+		}
+
+		years_ = 0;
+		days_ = (unsigned long) (delta_ / DateTime::ONEDAY);
+	}
+	else {
+		DateTime::Iterator<ByMonth> monthIt = rhs;
+		unsigned int ey = lhs.getYear();
+		unsigned int em = lhs.getMonth();
+		unsigned int sy = rhs.getYear();
+		
+		months_ = 0;
+		while ( true ) {
+			if ( (*monthIt).getYear() == ey ) {
+				if ( (*monthIt).getMonth() == em ) {
+					break;
+				}
+			}
+			++months_;
+			
+			++monthIt;
+		}
+		
+		years_ = abs(static_cast<int>(ey-sy));
+		
+		if ( years_ > 0 ) {
+			if ( lhs > rhs ) {
+				if ( lhs.getMonth() < rhs.getMonth() ) {
+					years_ --;
+				}
+			}
+			else {
+				if ( rhs.getMonth() < lhs.getMonth() ) {
+					years_ --;
+				}
+			}
+		}
+		
+		days_ = delta_ / DateTime::ONEDAY;
+	}	
 }
 
 uint32 DateTimeSpan::getYears() const
