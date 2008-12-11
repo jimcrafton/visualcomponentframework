@@ -151,6 +151,8 @@ class IKImage;
 class IKImageContext {
 public:
 
+	IKImageContext();
+
 	void initView( const double width, const double& height );
 
 	void draw( const double& x, const double& y, IKImage* image );
@@ -166,9 +168,17 @@ public:
 	Matrix2D getTransformMatrix() const {
 		return xfrm_;
 	}
-protected:
 
+	void setOpacity( const double& val ) {
+		opacity_ = val;
+	}
+
+	double getOpacity() const {
+		return opacity_;
+	}
+protected:
 	Matrix2D xfrm_;
+	double opacity_;
 };
 
 
@@ -405,6 +415,7 @@ void IKImage::initFromImage( Image* image )
 	glGenTextures( 1, &imageHandle_ );
 
 	glBindTexture(GL_TEXTURE_2D, imageHandle_);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Use nice (linear) scaling
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Use nice (linear) scaling
 	glTexImage2D(GL_TEXTURE_2D, 0, 
@@ -461,6 +472,12 @@ void IKImage::destroyTexture()
 
 
 
+IKImageContext::IKImageContext():
+	opacity_(1.0)
+{
+
+}
+
 void IKImageContext::initView( const double width, const double& height )
 {
 	glMatrixMode (GL_PROJECTION);
@@ -505,6 +522,8 @@ void IKImageContext::draw( const double& x, const double& y, IKImage* image )
 	GLMat m;
 	m = xfrm_;
 	glMultMatrixd( m );
+
+	glColor4f(1.0, 1.0, 1.0, opacity_);
 
 	glBegin(GL_POLYGON);
 
@@ -734,6 +753,19 @@ public:
 		ic.multiTransformMatrix( Matrix2D::rotation(a) * Matrix2D::scaling(1.3,1.3) );
 		
 		ic.draw( 10, 10, &img );
+
+
+		ic.setTransformMatrix( Matrix2D::translation( 50, 100 ) );
+		ic.setOpacity( sin( 0.1250 * (a/6.28) ) );
+		ic.draw( 10, 10, &img );
+
+		ic.setTransformMatrix( Matrix2D() );
+		ic.draw( 30, 210, &img );
+		ic.draw( 130, 310, &img );
+
+		ic.multiTransformMatrix( Matrix2D::rotation(a) );
+		ic.draw( 10, 210, &img );
+		ic.draw( 231, 410, &img );
 
 		a += 1.0;
 		/*
