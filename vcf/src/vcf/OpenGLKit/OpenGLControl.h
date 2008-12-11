@@ -69,10 +69,9 @@ public:
 	<a href="http://edr.euro.apple.com/documentation/GraphicsImaging/Reference/AGL_OpenGL/Reference/reference.html#//apple_ref/doc/uid/TP30000414-F15030">
 	aglSwapBuffers</a>.
 	*/
-	virtual void swapBuffers();
+	virtual void swapBuffers();	
 
-	virtual void afterCreate( ComponentEvent* event );
-
+	void makeCurrent();
 protected:
 	OpenGLContext* glContext_;
 };
