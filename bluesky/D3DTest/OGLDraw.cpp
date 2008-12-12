@@ -230,6 +230,8 @@ public:
 	IKFilter();
 	virtual ~IKFilter();
 
+	void initFromResource( const String& resourceName );
+
 	std::vector<String> getInputNames() {
 		return inputNames_;
 	}
@@ -239,6 +241,9 @@ public:
 	}
 	
 	void apply();
+
+	VariantData getValue( const String& name );
+	void setValue( const String& name, const VariantData& val );
 protected:
 	GLuint fragment_;
 	GLuint program_;
@@ -247,8 +252,9 @@ protected:
 	std::vector<String> inputNames_;
 	std::vector<String> outputNames_;
 	
-	void initProgram();
+	void initProgram( const String& data );
 
+	
 };
 
 
@@ -564,22 +570,77 @@ IKFilter::~IKFilter()
 
 }
 
+void IKFilter::initFromResource( const String& resourceName )
+{
+	String resName = resourceName + ".shader";
+	Resource* res = System::getResourceBundle()->getResource( resName );
+
+	if ( NULL != res ) {
+		
+		String data;
+		
+		data.append( (const char*)res->getData(), res->getDataSize() );
+
+		initProgram( data ); 
+
+		delete res;
+	}
+	else {
+		throw RuntimeException( "Shader resource doesn't exist!" );
+	}
+}
+
+VariantData IKFilter::getValue( const String& name )
+{
+	VariantData result = VariantData::null();
+
+	
+
+	Class* clazz = this->getClass();
+	Property* p = clazz->getProperty( name );
+	if ( NULL != p ) {
+		GLint varLocation = glGetUniformLocationARB( program_, name.ansi_c_str() );
+		switch ( p->getType() ) {
+			case pdFloat : case pdDouble : {
+				float f = 0;
+				glGetUniformfvARB( program_, varLocation, &f );
+				result = f;
+			}
+			break;
+
+			case pdInt : case pdUInt : case pdLong : case pdULong : {
+				int i = 0;
+				glGetUniformivARB( program_, varLocation, &i );
+				result = i;
+			}
+			break;
+		}
+	}
+
+	return result;
+}
+
+void IKFilter::setValue( const String& name, const VariantData& val )
+{
+
+}
+
 void IKFilter::apply()
 {
 	glUseProgramObjectARB( program_ );
 }
 
-void IKFilter::initProgram()
+void IKFilter::initProgram( const String& data )
 {
 	program_ = fragment_ = 0;
 	program_ = glCreateProgramObjectARB();
 
 	
-	String data;
-	{
-		FileInputStream fis(fragmentFilename_);
-		fis >> data;
-	}
+	//String data;
+	//{
+	//	FileInputStream fis(fragmentFilename_);
+	//	fis >> data;
+	//}
 
 	if( !data.empty() ) {
 
