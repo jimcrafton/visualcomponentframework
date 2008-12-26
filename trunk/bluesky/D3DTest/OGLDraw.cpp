@@ -5,7 +5,7 @@
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/FoundationKit/Dictionary.h"
-
+#include "vcf/FoundationKit/RTTIMacros.h"
 
 
 #include "GL/glew.h"
@@ -146,6 +146,7 @@ private:
 
 
 class IKImage;
+class IKFilter;
 
 
 class IKImageContext {
@@ -208,17 +209,39 @@ public:
 	Size getSize() const {
 		return size_;
 	}
+
+	IKFilter* getFilter() {
+		return filter_;
+	}
+
+	void setFilter( IKFilter* filter ) {
+		filter_ = filter;
+	}
 protected:
 
 	friend class IKImageContext;
+	friend class IKFilter;
 
 	uint32 imageHandle_;
 	Size size_;
+	IKFilter* filter_;	
 
 	void bind();
 
 
 	void destroyTexture();
+
+	void attach( IKImage* img ) {
+		imageHandle_ = img->imageHandle_;
+	}
+
+	uint32 detach() {
+		uint32 result = imageHandle_;
+		imageHandle_ = NullHandle;
+
+		return result;
+	}
+
 };
 
 
@@ -244,10 +267,38 @@ public:
 
 	VariantData getValue( const String& name );
 	void setValue( const String& name, const VariantData& val );
+
+	IKImage* getInputImage() {
+		return inputImage_;
+	}
+
+	void setInputImage( IKImage* val ) {
+		inputImage_ = val;
+	}
+
+	IKImage* getOutputImage() {
+
+		if ( NULL == outputImage_ ) {
+			outputImage_ = new IKImage();
+		}
+
+		outputImage_->attach(inputImage_);
+		
+		outputImage_->setFilter(this);
+
+		return outputImage_;
+	}
+
+
 protected:
 	GLuint fragment_;
 	GLuint program_;
 	String fragmentFilename_;
+	String compileStatus_;
+
+	IKImage* inputImage_;
+	IKImage* outputImage_;
+
 
 	std::vector<String> inputNames_;
 	std::vector<String> outputNames_;
@@ -257,10 +308,35 @@ protected:
 	
 };
 
+_class_rtti_(IKFilter, "VCF::Object", "IKFilter")
+_class_rtti_end_
 
 
+class HueAdjust : public IKFilter {
+public:
+	HueAdjust():hueVal_(0){ 
+		inputNames_.push_back("hueVal"); 
+
+		initFromResource( "HueAdjust" );
+	}
 
 
+	double getHueVal() {
+		return hueVal_;
+	}
+
+	void setHueVal( const double& val ) {
+		hueVal_ = val;
+	}
+
+
+	double hueVal_;
+};
+
+
+_class_rtti_(HueAdjust, "VCF::IKFilter", "HueAdjust")
+_property_( double, "hueVal", getHueVal, setHueVal, "" );
+_class_rtti_end_
 
 
 ImageKit* ImageKit::instance = NULL;
@@ -353,6 +429,15 @@ void ImageKit::init( int argc, char** argv )
 	DestroyWindow(hwnd);
 	UnregisterClassW(wcex.lpszClassName, wcex.hInstance);
 #endif
+
+
+
+
+
+
+	REGISTER_CLASSINFO_EXTERNAL(IKFilter);
+	REGISTER_CLASSINFO_EXTERNAL(HueAdjust);
+
 }
 
 void ImageKit::terminate()
@@ -372,37 +457,37 @@ void ImageKit::terminate()
 
 
 
-IKImage::IKImage():Object(),imageHandle_(IKImage::NullHandle)
+IKImage::IKImage():Object(),imageHandle_(IKImage::NullHandle),filter_(NULL)
 {
 
 }
 
 IKImage::IKImage( Image* image )
-	:Object(),imageHandle_(IKImage::NullHandle)
+	:Object(),imageHandle_(IKImage::NullHandle),filter_(NULL)
 {
 
 }
 
 IKImage::IKImage( const uchar* data, const size_t& size, const MIMEType& type  )
-	:Object(),imageHandle_(IKImage::NullHandle)
+	:Object(),imageHandle_(IKImage::NullHandle),filter_(NULL)
 {
 
 }
 
 IKImage::IKImage( const uchar* data, const size_t& size )
-:Object(),imageHandle_(IKImage::NullHandle)
+:Object(),imageHandle_(IKImage::NullHandle),filter_(NULL)
 {
 
 }
 
 IKImage::IKImage( const uchar* data, const Size& dimensions )
-:Object(),imageHandle_(IKImage::NullHandle)
+:Object(),imageHandle_(IKImage::NullHandle),filter_(NULL)
 {
 
 }
 
 IKImage::IKImage( const String& fileName )
-:Object(),imageHandle_(IKImage::NullHandle)
+:Object(),imageHandle_(IKImage::NullHandle),filter_(NULL)
 {
 
 }
@@ -514,42 +599,118 @@ void IKImageContext::draw( const double& x, const double& y, IKImage* image )
  glShadeModel(GL_SMOOTH);
 */
 
+
+
+
+	IKFilter* filter = image->getFilter();
+	if ( filter ) {
+
+		std::vector<IKImage*> images;
+		std::vector<IKFilter*> filters;
+
+
+		while ( NULL != filter ) {
+			IKImage* inImage = filter->getInputImage();
+			if ( NULL == inImage ) {
+				break;
+			}
+			images.insert( images.begin(), inImage );
+			filters.insert( filters.begin(), filter );
+
+			filter = inImage->getFilter();
+		}
+
+
+		std::vector<IKImage*>::iterator imgIt = images.begin();
+		std::vector<IKFilter*>::iterator filterIt = filters.begin();
+		while (imgIt != images.end()) {
+
+			IKImage* img = *imgIt;			
+
+			filter = *filterIt;
+
+			filter->apply();
+
+			double u=1.0;
+			double v=1.0;
+			
+			Size sz = img->getSize();
+			glPushMatrix();
+			
+			GLMat m;
+			m = xfrm_;
+			glMultMatrixd( m );
+			
+			glColor4f(1.0, 1.0, 1.0, opacity_);
+			
+			glBegin(GL_POLYGON);
+			
+			
+				glTexCoord2f(0.0, 0.0);
+				glVertex2i(x, y);
+				
+				glTexCoord2f(u, 0.0);
+				glVertex2i(x+sz.width_, y);
+				
+				glTexCoord2f(u, v);
+				glVertex2i(x+sz.width_, y+sz.height_);
+				
+				glTexCoord2f(0.0, v);
+				glVertex2i(x, y+sz.height_);
+			
+			
+			glEnd();
+			
+			glPopMatrix();
+
+			glUseProgramObjectARB(0);
+
+			++imgIt;
+			++filterIt;
+		}
+
+	}
+	else {		
+		image->bind();
+		
+		double u=1.0;
+		double v=1.0;
+		
+		Size sz = image->getSize();
+		glPushMatrix();
+		
+		GLMat m;
+		m = xfrm_;
+		glMultMatrixd( m );
+		
+		glColor4f(1.0, 1.0, 1.0, opacity_);
+		
+		glBegin(GL_POLYGON);
+		
+		
+			glTexCoord2f(0.0, 0.0);
+			glVertex2i(x, y);
+			
+			glTexCoord2f(u, 0.0);
+			glVertex2i(x+sz.width_, y);
+			
+			glTexCoord2f(u, v);
+			glVertex2i(x+sz.width_, y+sz.height_);
+			
+			glTexCoord2f(0.0, v);
+			glVertex2i(x, y+sz.height_);
+		
+		
+		glEnd();
+		
+		glPopMatrix();
+
+	}
+
+
 	
 
-	glActiveTexture(GL_TEXTURE0 + 0);
-	image->bind();
-
-	double u=1.0;
-	double v=1.0;
-
-	Size sz = image->getSize();
-	glPushMatrix();
-
-	GLMat m;
-	m = xfrm_;
-	glMultMatrixd( m );
-
-	glColor4f(1.0, 1.0, 1.0, opacity_);
-
-	glBegin(GL_POLYGON);
-
-
-		glTexCoord2f(0.0, 0.0);
-		glVertex2i(x, y);
-
-		glTexCoord2f(u, 0.0);
-		glVertex2i(x+sz.width_, y);
-
-		glTexCoord2f(u, v);
-		glVertex2i(x+sz.width_, y+sz.height_);
-
-		glTexCoord2f(0.0, v);
-		glVertex2i(x, y+sz.height_);
-
-		
-	glEnd();
-
-	glPopMatrix();
+	
 
 /*
 	glDisable (GL_LINE_SMOOTH);
@@ -560,14 +721,16 @@ void IKImageContext::draw( const double& x, const double& y, IKImage* image )
 
 
 
-IKFilter::IKFilter()
+IKFilter::IKFilter():
+	inputImage_(NULL),
+	outputImage_(NULL)
 {
 
 }
 
 IKFilter::~IKFilter()
 {
-
+	delete outputImage_;
 }
 
 void IKFilter::initFromResource( const String& resourceName )
@@ -599,6 +762,7 @@ VariantData IKFilter::getValue( const String& name )
 	Class* clazz = this->getClass();
 	Property* p = clazz->getProperty( name );
 	if ( NULL != p ) {
+		/*
 		GLint varLocation = glGetUniformLocationARB( program_, name.ansi_c_str() );
 		switch ( p->getType() ) {
 			case pdFloat : case pdDouble : {
@@ -614,7 +778,8 @@ VariantData IKFilter::getValue( const String& name )
 				result = i;
 			}
 			break;
-		}
+		}*/
+		result = *p->get();
 	}
 
 	return result;
@@ -622,25 +787,60 @@ VariantData IKFilter::getValue( const String& name )
 
 void IKFilter::setValue( const String& name, const VariantData& val )
 {
-
+	Class* clazz = this->getClass();
+	Property* p = clazz->getProperty( name );
+	if ( NULL != p ) {
+		VariantData tmp = val;
+		p->set( &tmp );
+	}
 }
 
 void IKFilter::apply()
 {
-	glUseProgramObjectARB( program_ );
+	inputImage_->bind();
+
+	glUseProgramObjectARB( program_ );	
+
+	//this should set up a sampler for the shader? I hope...
+	int u1 = glGetUniformLocationARB(program_, "inputImage");
+	glActiveTexture(GL_TEXTURE0 + 0);
+	inputImage_->bind();
+	glUniform1iARB(u1, 0);	
+
+	std::vector<String>::iterator it = inputNames_.begin();
+	while ( it != inputNames_.end() ) {
+		AnsiString s = *it;
+
+		int location = glGetUniformLocationARB( program_, s.c_str() );
+
+
+		VariantData v = getValue( *it );
+
+		switch ( v.type ) {
+			case pdFloat : case pdDouble : {
+				float f = v;
+				glUniform1fARB( location, f );
+			}
+			break;
+
+			case pdInt : case pdUInt : case pdLong : case pdULong : {
+				int i = v;
+				glUniform1iARB( location, i );
+			}
+			break;
+		}
+
+		++it;
+	}
+
+
+	
 }
 
 void IKFilter::initProgram( const String& data )
 {
 	program_ = fragment_ = 0;
 	program_ = glCreateProgramObjectARB();
-
-	
-	//String data;
-	//{
-	//	FileInputStream fis(fragmentFilename_);
-	//	fis >> data;
-	//}
 
 	if( !data.empty() ) {
 
@@ -658,10 +858,10 @@ void IKFilter::initProgram( const String& data )
 		
 		char* errString = (char*)malloc(32768);
 		glGetInfoLogARB(fragment_,32768,NULL,errString);
-		//s = String("Compile Log:\n") +  s2;
-		::free(errString);
-		//Dialog::showMessage( s );
 
+		compileStatus_ = errString;
+		
+		::free(errString);
 
 		glAttachObjectARB(program_, fragment_);
 		glLinkProgramARB(program_);
@@ -685,7 +885,7 @@ public:
 
 	OGLView() {
 
-		
+		hueAdj = NULL;
 
 	}
 
@@ -696,6 +896,7 @@ public:
 	//uint32 imHeight;
 
 	IKImage img;
+	HueAdjust* hueAdj;
 
 	virtual void sizeChange( ControlEvent* e ) {
 		OpenGLControl::sizeChange(e);
@@ -779,6 +980,9 @@ public:
 			*/
 
 			img.initFromFile( "res:logo.png" );
+
+
+			hueAdj = new HueAdjust();
 		}
 
 		initialized = true;
@@ -829,6 +1033,23 @@ public:
 		ic.draw( 231, 410, &img );
 
 		a += 1.0;
+
+
+
+
+
+		
+
+		hueAdj->setInputImage( &img );
+		hueAdj->setHueVal( 2.5 );
+
+		ic.setTransformMatrix( Matrix2D() );
+		ic.setOpacity( 1.0 );
+		ic.draw( 300, 510, hueAdj->getOutputImage() );
+
+
+
+
 		/*
 
 		if ( texture != -1 ) {
