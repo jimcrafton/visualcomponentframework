@@ -1281,6 +1281,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\InputValidation.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\LibraryApplication.cpp"
 				>
 				<FileConfiguration
