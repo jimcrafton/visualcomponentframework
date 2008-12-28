@@ -75,7 +75,7 @@ public:
 	virtual double getPreferredHeight();
 
 	virtual double getPreferredWidth();
-private:
+protected:
 	String caption_;
 	TextAlignmentType textAlignment_;
 	TextVerticalAlignment textVerticalAlignment_;
