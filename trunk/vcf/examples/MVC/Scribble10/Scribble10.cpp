@@ -27,6 +27,97 @@ using namespace VCF;
 
 
 
+class RangeEdit : public Label {
+public:
+	
+	VariantData value_;
+
+	VariantData deltaVal_;
+
+	void increment() {
+
+	}
+
+	void decrement() {
+
+	}
+
+
+	void setValue( const VariantData& v ) {
+		Model* model  = getViewModel();
+		if ( NULL != model ) {
+			model->setValue( v, getModelKey() );
+		}
+		else {
+			value_ = v;
+		}
+	}
+
+	VariantData getValue() {
+		Model* model  = getViewModel();
+		if ( NULL != model ) {
+			return model->getValue( getModelKey() );
+		}
+		
+		return value_;
+	}
+
+
+	virtual void paint( GraphicsContext* context ) {
+		CustomControl::paint( context );
+
+		context->setCurrentFont( getFont() );
+		
+
+		String inc = L" + ";
+		String dec = L" - ";
+
+		double y = 0.0;
+		double x = 0.0;
+		
+		String caption;
+		if ( getUseLocaleStrings() ) {
+			caption = System::getCurrentThreadLocale()->translate( caption_ );
+		}
+		else {
+			caption = caption_;
+		}
+		
+		caption += L" : ";
+
+
+		Model* model  = getViewModel();
+		if ( NULL != model ) {
+			caption += model->getValueAsString( getModelKey() );
+		}
+		else {
+			caption += value_.toString();
+		}
+		
+		
+		
+		int32 drawOptions = GraphicsContext::tdoCenterHorzAlign | GraphicsContext::tdoCenterVertAlign;
+		Rect bounds = getClientBounds();		
+
+		Rect tmp = bounds;
+		tmp.right_ = tmp.left_ + context->getTextWidth( dec );
+		context->textBoundedBy( &tmp, dec, drawOptions );
+
+		tmp = bounds;
+		tmp.left_ = tmp.right_ - context->getTextWidth( inc );
+		context->textBoundedBy( &tmp, inc, drawOptions );
+
+		bounds.left_ += context->getTextWidth( dec );
+		bounds.right_ -= context->getTextWidth( inc );
+
+		//x = VCF::maxVal<double>( 1.0, (bounds.getWidth()/2.0) - (context->getTextWidth( caption ) / 2.0) );		
+		//y = (bounds.getHeight()/2.0) - (context->getTextHeight(caption)/2.0);
+
+
+		context->textBoundedBy( &bounds, caption, drawOptions );
+	}
+};
+
 
 
 
