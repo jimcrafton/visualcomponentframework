@@ -3,21 +3,6 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "App"=..\..\..\..\directui\App\App.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name UIlib
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "ApplicationKit"=..\..\vcf\build\vc60\ApplicationKit\ApplicationKit.dsp - Package Owner=<4>
 
 Package=<5>

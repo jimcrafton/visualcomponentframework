@@ -241,8 +241,9 @@ protected:
 
 		return result;
 	}
-
+	
 };
+
 
 
 
@@ -254,6 +255,7 @@ public:
 	virtual ~IKFilter();
 
 	void initFromResource( const String& resourceName );
+	void initFromFile( const String& fileName );
 
 	std::vector<String> getInputNames() {
 		return inputNames_;
@@ -311,7 +313,6 @@ protected:
 _class_rtti_(IKFilter, "VCF::Object", "IKFilter")
 _class_rtti_end_
 
-
 class HueAdjust : public IKFilter {
 public:
 	HueAdjust():hueVal_(0){ 
@@ -339,6 +340,36 @@ _property_( double, "hueVal", getHueVal, setHueVal, "" );
 _class_rtti_end_
 
 
+
+
+class Brighten : public IKFilter {
+public:
+	Brighten():brightness_(0){ 
+		inputNames_.push_back("brightness"); 
+
+		initFromResource( "Brighten" );
+	}
+
+
+	double getBrightness() {
+		return brightness_;
+	}
+
+	void setBrightness( const double& val ) {
+		brightness_ = val;
+	}
+
+
+	double brightness_;
+};
+
+
+_class_rtti_(Brighten, "VCF::IKFilter", "Brighten")
+_property_( double, "brightness", getBrightness, setBrightness, "" );
+_class_rtti_end_
+
+
+
 ImageKit* ImageKit::instance = NULL;
 
 ImageKit::ImageKit()
@@ -351,14 +382,22 @@ ImageKit::~ImageKit()
 	
 }
 
-void ImageKit::init( int argc, char** argv )
-{
-	ImageKit::instance = new ImageKit();
+
+
+class GLInit {
+public:
+#ifdef WIN32
+	WNDCLASSEXW wcex;
+	HWND hwnd;
+	HDC dc;
+	HGLRC hrc;
+#endif
+
+
+	GLInit(){
 
 #ifdef WIN32
-	//init glew
-	WNDCLASSEXW wcex;
-	
+	//init glew	
 	wcex.cbSize = sizeof(wcex);
 	
 	wcex.style			= 0;
@@ -375,7 +414,7 @@ void ImageKit::init( int argc, char** argv )
 	
 	RegisterClassExW(&wcex);
 	
-	HWND hwnd = ::CreateWindowExW( 0,
+	hwnd = ::CreateWindowExW( 0,
 		wcex.lpszClassName,
 		NULL,
 		WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
@@ -386,9 +425,7 @@ void ImageKit::init( int argc, char** argv )
 		NULL,
 		NULL, wcex.hInstance, NULL );
 	
-	int e = GetLastError();
-	
-	HDC dc = ::GetDC( hwnd );
+	dc = ::GetDC( hwnd );
 	PIXELFORMATDESCRIPTOR pfd =
 	{
 		sizeof(PIXELFORMATDESCRIPTOR),  // size of this pfd
@@ -413,31 +450,40 @@ void ImageKit::init( int argc, char** argv )
 	
 	int pixelformat = ChoosePixelFormat( dc, &pfd );
 	::SetPixelFormat( dc, pixelformat, &pfd );
-	HGLRC hrc = wglCreateContext( dc );
+	hrc = wglCreateContext( dc );
 	wglMakeCurrent( dc, hrc );
-	
-	
-	GLenum err = glewInit();
-	if (GLEW_OK != err) {
-		Dialog::showMessage( String("Error: ") + (const char*)glewGetString(err) ); 
-	}
-	
-	wglMakeCurrent( NULL, NULL );
-	wglDeleteContext( hrc );
-
-	ReleaseDC( hwnd, dc );
-	DestroyWindow(hwnd);
-	UnregisterClassW(wcex.lpszClassName, wcex.hInstance);
 #endif
 
+	}
 
+	~GLInit() {
+		wglMakeCurrent( NULL, NULL );
+		wglDeleteContext( hrc );
 
+		ReleaseDC( hwnd, dc );
+		DestroyWindow(hwnd);
+		UnregisterClassW(wcex.lpszClassName, wcex.hInstance);
+	}
+};
 
+void ImageKit::init( int argc, char** argv )
+{
+	ImageKit::instance = new ImageKit();
 
+	{
+		GLInit g;		
+		//init glew		
+		GLenum err = glewInit();
+		if (GLEW_OK != err) {
+			Dialog::showMessage( String("Error: ") + (const char*)glewGetString(err) ); 
+		}		
+	}
 
 	REGISTER_CLASSINFO_EXTERNAL(IKFilter);
 	REGISTER_CLASSINFO_EXTERNAL(HueAdjust);
 
+	REGISTER_CLASSINFO_EXTERNAL(Brighten);
+	
 }
 
 void ImageKit::terminate()
@@ -753,6 +799,17 @@ void IKFilter::initFromResource( const String& resourceName )
 	}
 }
 
+void IKFilter::initFromFile( const String& fileName )
+{
+	String data;
+	{
+		FileInputStream fis(fileName);
+		fis >> data;
+	}
+
+	initProgram( data ); 
+}
+
 VariantData IKFilter::getValue( const String& name )
 {
 	VariantData result = VariantData::null();
@@ -787,6 +844,7 @@ VariantData IKFilter::getValue( const String& name )
 
 void IKFilter::setValue( const String& name, const VariantData& val )
 {
+
 	Class* clazz = this->getClass();
 	Property* p = clazz->getProperty( name );
 	if ( NULL != p ) {
@@ -797,8 +855,6 @@ void IKFilter::setValue( const String& name, const VariantData& val )
 
 void IKFilter::apply()
 {
-	inputImage_->bind();
-
 	glUseProgramObjectARB( program_ );	
 
 	//this should set up a sampler for the shader? I hope...
@@ -842,11 +898,56 @@ void IKFilter::initProgram( const String& data )
 	program_ = fragment_ = 0;
 	program_ = glCreateProgramObjectARB();
 
+	if ( 0 == program_ ) {
+		const char* errStr = (const char*)gluErrorString( glGetError() );
+		String s = L"OpenGL error creating program object: ";
+		s += errStr;
+		throw RuntimeException( s );
+	}
+
 	if( !data.empty() ) {
 
 		fragment_ = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
 
-		AnsiString src = data;
+		if ( 0 == fragment_ ) {
+			const char* errStr = (const char*)gluErrorString( glGetError() );
+			String s = L"OpenGL error creating fragment shader object: ";
+			s += errStr;
+			throw RuntimeException( s );
+		}
+
+		AnsiString src = "uniform sampler2D inputImage;\n";
+
+		std::vector<String>::iterator it = inputNames_.begin();
+		Class* clazz = this->getClass();
+
+		while ( it != inputNames_.end() ) {
+			AnsiString s = *it;
+
+			Property* property = clazz->getProperty( *it );
+			
+			switch ( property->getType() ) {
+				case pdFloat : case pdDouble : {
+					src += "uniform float " + s + ";\n";
+					
+				}
+				break;
+				
+				case pdInt : case pdUInt : case pdLong : case pdULong : {
+					src += "uniform int " + s + ";\n";
+				}
+				break;
+			}
+			
+			++it;
+		}
+		
+
+		src += data + "\n";
+
+		src += "void main (void) { gl_FragColor = shaderMain( inputImage ); }";		
+
+
 		int len = src.size();
 		const char* srcStr = src.c_str();
 		glShaderSourceARB(fragment_, 1, (const GLcharARB**)&srcStr, &len);
@@ -897,6 +998,7 @@ public:
 
 	IKImage img;
 	HueAdjust* hueAdj;
+	Brighten* bright;
 
 	virtual void sizeChange( ControlEvent* e ) {
 		OpenGLControl::sizeChange(e);
@@ -983,6 +1085,8 @@ public:
 
 
 			hueAdj = new HueAdjust();
+
+			bright = new Brighten();
 		}
 
 		initialized = true;
@@ -1041,11 +1145,14 @@ public:
 		
 
 		hueAdj->setInputImage( &img );
-		hueAdj->setHueVal( 2.5 );
+		hueAdj->setHueVal( 1.5 );
+
+		bright->setInputImage( hueAdj->getOutputImage() );
+		bright->setBrightness( 0.5 );
 
 		ic.setTransformMatrix( Matrix2D() );
 		ic.setOpacity( 1.0 );
-		ic.draw( 300, 510, hueAdj->getOutputImage() );
+		ic.draw( 300, 510, bright->getOutputImage() );
 
 
 
