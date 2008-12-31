@@ -134,12 +134,18 @@ public:
 	static void init( int argc, char** argv );
 	static void terminate();
 
-	static void attachControl( Control* c );
-	static void detachControl( Control* c );
+	static void initDefaultFBO();
+	static void destroyDefaultFBO();
+
+	static GLuint getDefaultFBO() {
+		return ImageKit::defaultFrameBufferObj;
+	}
 protected:
 	static ImageKit* instance;
 	
 private:
+	static GLuint defaultFrameBufferObj; 
+
 	ImageKit();
 	~ImageKit();
 };
@@ -147,6 +153,8 @@ private:
 
 class IKImage;
 class IKFilter;
+
+
 
 
 class IKImageContext {
@@ -177,9 +185,13 @@ public:
 	double getOpacity() const {
 		return opacity_;
 	}
+
+	
 protected:
 	Matrix2D xfrm_;
 	double opacity_;
+
+	
 };
 
 
@@ -217,6 +229,13 @@ public:
 	void setFilter( IKFilter* filter ) {
 		filter_ = filter;
 	}
+
+
+	uint32 getHandle() const {
+		return imageHandle_;
+	}
+
+	void setHandle( const uint32& val );
 protected:
 
 	friend class IKImageContext;
@@ -225,6 +244,8 @@ protected:
 	uint32 imageHandle_;
 	Size size_;
 	IKFilter* filter_;	
+
+	static std::map<uint32,Size> texDimensionsMap;
 
 	void bind();
 
@@ -492,6 +513,24 @@ void ImageKit::terminate()
 }
 
 
+GLuint ImageKit::defaultFrameBufferObj = 0;
+
+void ImageKit::initDefaultFBO()
+{	
+	if ( 0 == ImageKit::defaultFrameBufferObj ) {
+		glGenFramebuffersEXT( 1, &ImageKit::defaultFrameBufferObj );	
+		if ( 0 == ImageKit::defaultFrameBufferObj ) {
+			throw RuntimeException( L"Invalid FBO instance - unable to generate a new instance." );
+		}
+	}
+}
+
+void ImageKit::destroyDefaultFBO()
+{
+	if ( 0 != ImageKit::defaultFrameBufferObj ) {
+		glDeleteFramebuffersEXT( 1, &ImageKit::defaultFrameBufferObj );
+	}
+}
 
 
 
@@ -500,6 +539,7 @@ void ImageKit::terminate()
 
 
 
+std::map<uint32,Size> IKImage::texDimensionsMap;
 
 
 
@@ -567,6 +607,19 @@ void IKImage::initFromImage( Image* image )
 	size_.width_ = image->getWidth();
 	size_.height_ = image->getHeight();
 
+	IKImage::texDimensionsMap[imageHandle_] = size_;
+}
+
+void IKImage::setHandle( const uint32& val )
+{
+	if ( imageHandle_ != val ) {
+		imageHandle_ = val;
+		
+		std::map<uint32,Size>::iterator found = IKImage::texDimensionsMap.find(imageHandle_);
+		if ( found != IKImage::texDimensionsMap.end() ) {
+			size_ = found->second;
+		}
+	}
 }
 
 void IKImage::initFromData( const uchar* data, const size_t& size, const MIMEType& type )
@@ -601,6 +654,12 @@ void IKImage::bind()
 void IKImage::destroyTexture()
 {
 	if ( imageHandle_ != IKImage::NullHandle ) {
+
+		std::map<uint32,Size>::iterator found = IKImage::texDimensionsMap.find(imageHandle_);
+		if ( found != IKImage::texDimensionsMap.end() ) {
+			IKImage::texDimensionsMap.erase( found );
+		}
+
 		glDeleteTextures( 1, &imageHandle_ );
 
 		imageHandle_ = IKImage::NullHandle;
@@ -612,7 +671,7 @@ void IKImage::destroyTexture()
 IKImageContext::IKImageContext():
 	opacity_(1.0)
 {
-
+	ImageKit::initDefaultFBO();
 }
 
 void IKImageContext::initView( const double width, const double& height )
