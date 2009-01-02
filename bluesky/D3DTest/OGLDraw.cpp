@@ -128,6 +128,38 @@ public:
 };
 
 
+struct Dimensions {
+	Dimensions(): width(0), height(0){}
+	Dimensions( const Size& sz ): width(sz.width_), height(sz.height_){}
+
+	Dimensions& operator=( const Size& rhs ) {
+		width = rhs.width_;
+		height = rhs.height_;
+		return *this;
+	}
+
+	operator Size() const {
+		return Size( width, height );
+	}
+
+	bool operator ==( const Dimensions& rhs ) const {
+		return width == rhs.width && height == rhs.height;
+	}
+
+	bool operator !=( const Dimensions& rhs ) const {
+		return !operator ==(rhs);
+	}
+
+	uint32 width;
+	uint32 height;
+};
+
+
+class IKImage;
+class IKFilter;
+
+
+
 
 class ImageKit {
 public:
@@ -140,6 +172,7 @@ public:
 	static GLuint getDefaultFBO() {
 		return ImageKit::defaultFrameBufferObj;
 	}
+
 protected:
 	static ImageKit* instance;
 	
@@ -150,9 +183,6 @@ private:
 	~ImageKit();
 };
 
-
-class IKImage;
-class IKFilter;
 
 
 
@@ -190,6 +220,7 @@ public:
 protected:
 	Matrix2D xfrm_;
 	double opacity_;
+	Size viewSize;
 
 	
 };
@@ -205,9 +236,10 @@ public:
 
 	IKImage();
 	IKImage( Image* image );
+	IKImage( const Dimensions& dimensions );
 	IKImage( const uchar* data, const size_t& size, const MIMEType& type  );
 	IKImage( const uchar* data, const size_t& size );
-	IKImage( const uchar* data, const Size& dimensions );
+	IKImage( const uchar* data, const Dimensions& dimensions );
 	IKImage( const String& fileName );
 
 	virtual ~IKImage();
@@ -215,10 +247,11 @@ public:
 	void initFromImage( Image* image );
 	void initFromData( const uchar* data, const size_t& size, const MIMEType& type );
 	void initFromData( const uchar* data, const size_t& size );
-	void initFromBits( const uchar* data, const Size& dimensions );
+	void initFromBits( const uchar* data, const Dimensions& dimensions );
+	void initFromDimensions( const Dimensions& dimensions );
 	void initFromFile( const String& fileName );
 
-	Size getSize() const {
+	Dimensions getSize() const {
 		return size_;
 	}
 
@@ -242,10 +275,10 @@ protected:
 	friend class IKFilter;
 
 	uint32 imageHandle_;
-	Size size_;
+	Dimensions size_;
 	IKFilter* filter_;	
 
-	static std::map<uint32,Size> texDimensionsMap;
+	static std::map<uint32,Dimensions> texDimensionsMap;
 
 	void bind();
 
@@ -295,23 +328,9 @@ public:
 		return inputImage_;
 	}
 
-	void setInputImage( IKImage* val ) {
-		inputImage_ = val;
-	}
+	void setInputImage( IKImage* val );
 
-	IKImage* getOutputImage() {
-
-		if ( NULL == outputImage_ ) {
-			outputImage_ = new IKImage();
-		}
-
-		outputImage_->attach(inputImage_);
-		
-		outputImage_->setFilter(this);
-
-		return outputImage_;
-	}
-
+	IKImage* getOutputImage();
 
 protected:
 	GLuint fragment_;
@@ -539,7 +558,7 @@ void ImageKit::destroyDefaultFBO()
 
 
 
-std::map<uint32,Size> IKImage::texDimensionsMap;
+std::map<uint32,Dimensions> IKImage::texDimensionsMap;
 
 
 
@@ -566,7 +585,7 @@ IKImage::IKImage( const uchar* data, const size_t& size )
 
 }
 
-IKImage::IKImage( const uchar* data, const Size& dimensions )
+IKImage::IKImage( const uchar* data, const Dimensions& dimensions )
 :Object(),imageHandle_(IKImage::NullHandle),filter_(NULL)
 {
 
@@ -585,6 +604,24 @@ IKImage::~IKImage()
 
 void IKImage::initFromImage( Image* image )
 {
+	Size sz;
+	sz.width_ = image->getWidth();
+	sz.height_ = image->getHeight();
+
+	initFromDimensions( sz );
+	glTexImage2D(GL_TEXTURE_2D, 0, 
+				image->getType() , 
+				image->getWidth(), 
+				image->getHeight(), 
+				0, 
+				image->getType() == Image::itColor ? GL_BGRA_EXT : GL_LUMINANCE, 
+				GL_UNSIGNED_BYTE, 
+				image->getData() );
+	
+}
+
+void IKImage::initFromDimensions( const Dimensions& dimensions )
+{
 	if ( imageHandle_ != IKImage::NullHandle ) {
 		glDeleteTextures( 1, &imageHandle_ );
 	}
@@ -595,19 +632,19 @@ void IKImage::initFromImage( Image* image )
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Use nice (linear) scaling
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Use nice (linear) scaling
-	glTexImage2D(GL_TEXTURE_2D, 0, 
-				image->getType() , 
-				image->getWidth(), 
-				image->getHeight(), 
-				0, 
-				image->getType() == Image::itColor ? GL_BGRA_EXT : GL_LUMINANCE, 
-				GL_UNSIGNED_BYTE, 
-				image->getData() );
 
-	size_.width_ = image->getWidth();
-	size_.height_ = image->getHeight();
-
+	size_ = dimensions;
 	IKImage::texDimensionsMap[imageHandle_] = size_;
+
+
+	glTexImage2D(GL_TEXTURE_2D, 0, 
+				Image::itColor , 
+				size_.width, 
+				size_.height, 
+				0, 
+				GL_BGRA_EXT, 
+				GL_UNSIGNED_BYTE, 
+				NULL );
 }
 
 void IKImage::setHandle( const uint32& val )
@@ -615,7 +652,7 @@ void IKImage::setHandle( const uint32& val )
 	if ( imageHandle_ != val ) {
 		imageHandle_ = val;
 		
-		std::map<uint32,Size>::iterator found = IKImage::texDimensionsMap.find(imageHandle_);
+		std::map<uint32,Dimensions>::iterator found = IKImage::texDimensionsMap.find(imageHandle_);
 		if ( found != IKImage::texDimensionsMap.end() ) {
 			size_ = found->second;
 		}
@@ -632,7 +669,7 @@ void IKImage::initFromData( const uchar* data, const size_t& size )
 
 }
 
-void IKImage::initFromBits( const uchar* data, const Size& dimensions )
+void IKImage::initFromBits( const uchar* data, const Dimensions& dimensions )
 {
 
 }
@@ -655,7 +692,7 @@ void IKImage::destroyTexture()
 {
 	if ( imageHandle_ != IKImage::NullHandle ) {
 
-		std::map<uint32,Size>::iterator found = IKImage::texDimensionsMap.find(imageHandle_);
+		std::map<uint32,Dimensions>::iterator found = IKImage::texDimensionsMap.find(imageHandle_);
 		if ( found != IKImage::texDimensionsMap.end() ) {
 			IKImage::texDimensionsMap.erase( found );
 		}
@@ -676,11 +713,15 @@ IKImageContext::IKImageContext():
 
 void IKImageContext::initView( const double width, const double& height )
 {
+	viewSize.width_ = width;
+	viewSize.height_ = height;
+
+
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity();
 
-	glOrtho(0, width, height, 0, -1, 1);
-	glViewport( 0, 0, width, height );
+	glOrtho(0, viewSize.width_, viewSize.height_, 0, -1, 1);
+	glViewport( 0, 0, viewSize.width_, viewSize.height_ );
 	
 	glDisable(GL_DEPTH_TEST);		
 
@@ -690,6 +731,7 @@ void IKImageContext::initView( const double width, const double& height )
 	
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);		
 }
+
 
 
 void IKImageContext::draw( const double& x, const double& y, IKImage* image )
@@ -705,11 +747,22 @@ void IKImageContext::draw( const double& x, const double& y, IKImage* image )
 */
 
 
-
+	Dimensions imgSz = image->getSize();
+	double u=1.0;
+	double v=1.0;
 
 	IKFilter* filter = image->getFilter();
 	if ( filter ) {
 
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, ImageKit::getDefaultFBO() );
+		
+		glMatrixMode (GL_PROJECTION);
+		glLoadIdentity();
+
+		glOrtho(0, imgSz.width, 0, imgSz.height, -1, 1);
+		glViewport(0,0,imgSz.width, imgSz.height);
+
+	
 		std::vector<IKImage*> images;
 		std::vector<IKFilter*> filters;
 
@@ -736,15 +789,21 @@ void IKImageContext::draw( const double& x, const double& y, IKImage* image )
 
 			filter->apply();
 
-			double u=1.0;
-			double v=1.0;
+			IKImage* outImg = filter->getOutputImage();
+
+			outImg->bind();
+
+			glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, outImg->getHandle(), 0);
+
+
+
+			img->bind();
+
+
+			u=1.0;
+			v=1.0;
 			
-			Size sz = img->getSize();
-			glPushMatrix();
-			
-			GLMat m;
-			m = xfrm_;
-			glMultMatrixd( m );
+			Dimensions sz = img->getSize();
 			
 			glColor4f(1.0, 1.0, 1.0, opacity_);
 			
@@ -752,21 +811,19 @@ void IKImageContext::draw( const double& x, const double& y, IKImage* image )
 			
 			
 				glTexCoord2f(0.0, 0.0);
-				glVertex2i(x, y);
+				glVertex2i(0, 0);
 				
 				glTexCoord2f(u, 0.0);
-				glVertex2i(x+sz.width_, y);
+				glVertex2i(sz.width, 0);
 				
 				glTexCoord2f(u, v);
-				glVertex2i(x+sz.width_, y+sz.height_);
+				glVertex2i(sz.width, sz.height);
 				
 				glTexCoord2f(0.0, v);
-				glVertex2i(x, y+sz.height_);
+				glVertex2i(0, sz.height);
 			
 			
 			glEnd();
-			
-			glPopMatrix();
 
 			glUseProgramObjectARB(0);
 
@@ -774,12 +831,60 @@ void IKImageContext::draw( const double& x, const double& y, IKImage* image )
 			++filterIt;
 		}
 
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+
+
+		glMatrixMode (GL_PROJECTION);
+		glLoadIdentity();
+
+		glOrtho(0, viewSize.width_, viewSize.height_, 0, -1, 1);
+		glViewport(0,0,viewSize.width_, viewSize.height_);
+
+
+		filter = filters.back();
+		IKImage* outImg = filter->getOutputImage();
+		outImg->bind();
+
+
+		
+
+		imgSz = outImg->getSize();
+		u=1.0;
+		v=1.0;
+		glPushMatrix();
+		
+		GLMat m;
+		m = xfrm_;
+		glMultMatrixd( m );
+		
+		glColor4f(1.0, 1.0, 1.0, opacity_);
+		
+		glBegin(GL_POLYGON);
+		
+		
+			glTexCoord2f(0.0, 0.0);
+			glVertex2i(x, y);
+			
+			glTexCoord2f(u, 0.0);
+			glVertex2i(x+imgSz.width, y);
+			
+			glTexCoord2f(u, v);
+			glVertex2i(x+imgSz.width, y+imgSz.height);
+			
+			glTexCoord2f(0.0, v);
+			glVertex2i(x, y+imgSz.height);
+		
+		
+		glEnd();
+		
+		glPopMatrix();
+
 	}
 	else {		
 		image->bind();
 		
-		double u=1.0;
-		double v=1.0;
+		u=1.0;
+		v=1.0;
 		
 		Size sz = image->getSize();
 		glPushMatrix();
@@ -838,6 +943,27 @@ IKFilter::~IKFilter()
 	delete outputImage_;
 }
 
+void IKFilter::setInputImage( IKImage* val )
+{
+	inputImage_ = val;
+}
+
+IKImage* IKFilter::getOutputImage() 
+{
+
+	if ( NULL == outputImage_ ) {
+		outputImage_ = new IKImage();
+	}
+
+	if ( outputImage_->getSize() != inputImage_->getSize() ) {	
+		outputImage_->initFromDimensions( inputImage_->getSize() );
+	}	
+
+	outputImage_->setFilter(this);
+
+	return outputImage_;
+}
+
 void IKFilter::initFromResource( const String& resourceName )
 {
 	String resName = resourceName + ".shader";
@@ -878,23 +1004,6 @@ VariantData IKFilter::getValue( const String& name )
 	Class* clazz = this->getClass();
 	Property* p = clazz->getProperty( name );
 	if ( NULL != p ) {
-		/*
-		GLint varLocation = glGetUniformLocationARB( program_, name.ansi_c_str() );
-		switch ( p->getType() ) {
-			case pdFloat : case pdDouble : {
-				float f = 0;
-				glGetUniformfvARB( program_, varLocation, &f );
-				result = f;
-			}
-			break;
-
-			case pdInt : case pdUInt : case pdLong : case pdULong : {
-				int i = 0;
-				glGetUniformivARB( program_, varLocation, &i );
-				result = i;
-			}
-			break;
-		}*/
 		result = *p->get();
 	}
 
@@ -1049,24 +1158,9 @@ public:
 
 	}
 
-	//GLuint texture;
-	//GLuint tex2;
-
-	//uint32 imWidth;
-	//uint32 imHeight;
-
 	IKImage img;
 	HueAdjust* hueAdj;
 	Brighten* bright;
-
-	virtual void sizeChange( ControlEvent* e ) {
-		OpenGLControl::sizeChange(e);
-		//makeCurrent();
-
-		//doGL();
-
-		//swapBuffers();
-	}
 
 
 	void doGL()
@@ -1077,68 +1171,6 @@ public:
 
 
 			initialized = true;
-			//texture = -1;
-			//tex2 = -1;
-
-			//glewInit takes over 110 ms!!!??? Why so slow???
-			//GLenum err = glewInit();
-/*
-			prog = glCreateProgramObjectARB();
-
-
-			String s;
-			{
-				FileInputStream fis("frag.shader");
-				fis >> s;
-			}
-
-			frag = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
-
-			AnsiString src = s;
-			int len = src.size();
-			const char* srcStr = src.c_str();
-			glShaderSourceARB(frag, 1, (const GLcharARB**)&srcStr, &len);
-
-			glCompileShaderARB(frag);
-
-
-			//int i;
-			//glGetObjectParameterivARB(frag,GL_OBJECT_COMPILE_STATUS_ARB,&i);
-
-			//char* s2 = (char*)malloc(32768);
-			//glGetInfoLogARB(frag,32768,NULL,s2);
-			//s = String("Compile Log:\n") +  s2;
-			//::free(s2);
-			//Dialog::showMessage( s );
-
-
-
-			glAttachObjectARB(prog, frag);
-			glLinkProgramARB(prog);
-
-*/
-
-
-/*
-			
-			Image* img = GraphicsToolkit::createImage( "res:logo.png" );
-			if ( img ) {
-				imWidth = img->getWidth();
-				imHeight = img->getHeight();
-
-				glGenTextures(1, &texture);
-				glGenTextures(1, &tex2);
-				
-				
-				glBindTexture(GL_TEXTURE_2D, texture);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Use nice (linear) scaling
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Use nice (linear) scaling
-				glTexImage2D(GL_TEXTURE_2D, 0, 4, img->getWidth(), img->getHeight(), 
-					0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, img->getData() );
-
-				delete img;
-			}
-			*/
 
 			img.initFromFile( "res:logo.png" );
 
@@ -1155,20 +1187,6 @@ public:
 		Rect r = getClientBounds();
 
 		IKImageContext ic;
-
-		/*
-		glMatrixMode (GL_PROJECTION);
-		glLoadIdentity();
-
-		glOrtho(0, r.getWidth(), r.getHeight(), 0, -1, 1);
-		glViewport( 0, 0, r.getWidth(), r.getHeight() );
-		
-		glDisable(GL_DEPTH_TEST);		
-
-		glEnable(GL_TEXTURE_2D);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		*/
 
 		ic.initView( r.getWidth(), r.getHeight() );
 
@@ -1211,164 +1229,7 @@ public:
 
 		ic.setTransformMatrix( Matrix2D() );
 		ic.setOpacity( 1.0 );
-		ic.draw( 300, 510, bright->getOutputImage() );
-
-
-
-
-		/*
-
-		if ( texture != -1 ) {
-
-
-			glBindTexture(GL_TEXTURE_2D, texture);
-			float alpha = 1.0;
-			glColor4f(1.0, 1.0, 1.0, alpha);
-
-			uint32 h,w;
-			w = imWidth;
-			h = imHeight;
-
-			int x,y;
-			x = 10;
-			y = 10;
-
-			double u,v;
-			u=0.5;
-			v=0.5;
-
-			glUseProgramObjectARB( prog );
-			int u1 = glGetUniformLocationARB(prog, "myTexture");
-			glActiveTexture(GL_TEXTURE0 + 0);
-			glBindTexture(GL_TEXTURE_2D, texture);
-			glUniform1iARB(u1, 0);
-
-
-
-
-
-
-
-			glBegin(GL_POLYGON);
-			glTexCoord2f(0.0, 0.0);
-			glVertex2i(x, y);
-
-			glTexCoord2f(u, 0.0);
-			glVertex2i(x+w, y);
-
-			glTexCoord2f(u, v);
-			glVertex2i(x+w, y+h);
-
-			glTexCoord2f(0.0, v);
-			glVertex2i(x, y+h);
-
-			glEnd();
-
-
-
-			x = 10;
-			y = 100;
-			u=1.0;
-			v=1.0;
-
-			w = imWidth/2;
-			h = imHeight/2;
-
-			glBegin(GL_POLYGON);
-			glTexCoord2f(0.0, 0.0);
-			glVertex2i(x, y);
-
-			glTexCoord2f(u, 0.0);
-			glVertex2i(x+w, y);
-
-			glTexCoord2f(u, v);
-			glVertex2i(x+w, y+h);
-
-			glTexCoord2f(0.0, v);
-			glVertex2i(x, y+h);
-
-			glEnd();
-
-
-
-			x = 10;
-			y = 200;
-			u=1.0;
-			v=1.0;
-
-			w = imWidth;
-			h = imHeight;
-
-
-			glBegin(GL_POLYGON);
-			glTexCoord2f(0.0, 0.0);
-			glVertex2i(x, y);
-
-			glTexCoord2f(u, 0.0);
-			glVertex2i(x+w, y);
-
-			glTexCoord2f(u, v);
-			glVertex2i(x+w, y+h);
-
-			glTexCoord2f(0.0, v);
-			glVertex2i(x, y+h);
-
-			glEnd();
-
-
-			x = 10;
-			y = 300;
-			u=1.0;
-			v=1.0;
-
-			w = imWidth;
-			h = imHeight;
-
-			glUseProgramObjectARB(0);
-
-			glBegin(GL_POLYGON);
-			glTexCoord2f(0.0, 0.0);
-			glVertex2i(x, y);
-
-			glTexCoord2f(u, 0.0);
-			glVertex2i(x+w, y);
-
-			glTexCoord2f(u, v);
-			glVertex2i(x+w, y+h);
-
-			glTexCoord2f(0.0, v);
-			glVertex2i(x, y+h);
-
-			glEnd();
-
-
-			glUseProgramObjectARB(prog);
-
-			x = 10;
-			y = 320;
-			u=1.0;
-			v=1.0;
-
-			w = imWidth;
-			h = imHeight;
-
-
-			glBegin(GL_POLYGON);
-			glTexCoord2f(0.0, 0.0);
-			glVertex2i(x, y);
-
-			glTexCoord2f(u, 0.0);
-			glVertex2i(x+w, y);
-
-			glTexCoord2f(u, v);
-			glVertex2i(x+w, y+h);
-
-			glTexCoord2f(0.0, v);
-			glVertex2i(x, y+h);
-
-			glEnd();			
-		}
-*/
+		ic.draw( 300, 350, bright->getOutputImage() );
 	}
 
 
