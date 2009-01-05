@@ -70,6 +70,8 @@ public:
 	Brighten* bright;
 	Mixer* mix;
 
+	IKFilter* tmp;
+
 	IKImage img2;
 
 	void doGL()
@@ -90,6 +92,10 @@ public:
 			bright = new Brighten();
 
 			mix = new Mixer();
+
+			tmp = new IKFilter();
+			tmp->initFromResource( "test" );
+
 		}
 
 		initialized = true;
@@ -139,13 +145,14 @@ public:
 		//bright->setInputImage( hueAdj->getOutputImage() );
 		//bright->setBrightness( 0.5 );
 
-		mix->setInputImage( &img );
-		mix->setInput2Image( &img2 );
+		//mix->setInputImage( &img );
+		//mix->setInput2Image( &img2 );
 
+		tmp->setInputImage( &img );
 		ic.setTransformMatrix( Matrix2D() );
 		ic.setOpacity( 1.0 );		
 
-		ic.draw( 300, 350, mix->getOutputImage() );
+		ic.draw( 300, 350, tmp->getOutputImage() );
 	}
 
 
