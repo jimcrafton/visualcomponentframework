@@ -106,6 +106,10 @@ SOURCE=.\HueAdjust.shader
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImageKit.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\OGLDraw.cpp
 # End Source File
 # End Group
