@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="ScintillaKitFiles.bkl"/>
+
+    <template id="ScintillaKit_base">
+        <set var="LIBRARY_NAME">$(SCINTILLAKIT_NAME)</set>
+        <!--
+        <set var="LIBRARY_PRECOMP_HDR">vcf$(DIRSEP)ScintillaKit$(DIRSEP)ScintillaKit.h</set>
+        <set var="LIBRARY_PRECOMP_SRC">vcf$(DIRSEP)ScintillaKit$(DIRSEP)ScintillaKit.cpp</set>
+        -->
+
+        <headers>$(SCINTILLAKIT_HDR)</headers>
+        <sources>$(SCINTILLAKIT_SRC)</sources>
+
+        <vcf-include-scintilla/>
+        <vcf-use-ApplicationKit/>
+
+        <library>scintilla_lib</library>
+        <define>SCI_LEXER</define>
+    </template>
+
+    <lib id="ScintillaKit_lib" template="ScintillaKit_base,vcf_lib"
+            cond="OPTION_SHARED=='0' and OPTION_SCINTILLAKIT=='1' and OPTION_ALLIN1=='0'">
+        <depends>ApplicationKit_lib</depends>
+    </lib>
+
+    <dll id="ScintillaKit_dll" template="ScintillaKit_base,vcf_dll"
+            cond="OPTION_SHARED=='1' and OPTION_SCINTILLAKIT=='1' and OPTION_ALLIN1=='0'">
+        <define>SCINTILLAKIT_DLL</define>
+        <define>SCINTILLAKIT_EXPORTS</define>
+
+        <res-include>../../src/thirdparty/common/scintilla/win32</res-include>
+        <win32-res>../src/thirdparty/common/scintilla/win32/ScintRes.rc</win32-res>
+
+        <depends>ApplicationKit_dll</depends>
+    </dll>
+
+    <set var="MSVC6PRJ_MERGED_TARGETS" append="1"
+            cond="OPTION_SCINTILLAKIT=='1' and OPTION_ALLIN1=='0'">
+        ScintillaKit=ScintillaKit_lib+ScintillaKit_dll
+    </set>
+</makefile>
+
+<!--
+$Id$
+-->

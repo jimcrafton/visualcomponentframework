@@ -26,9 +26,11 @@
     <subproject id="Cards" template="example"/>
     <subproject id="Chatterbox" template="example"/>
     <subproject id="ClassRegistryBrowser" template="example"/>
+    <subproject id="ColorConversions" template="example"/>
     <subproject id="Colors" template="example"/>
     <subproject id="Combos" template="example"/>
     <subproject id="CommonDirectories" template="example"/>
+    <subproject id="CompositionTypes" template="example"/>
     <subproject id="Conditions" template="example"/>
     <subproject id="Controls" template="example"/>
     <subproject id="CopyAndPaste" template="example"/>

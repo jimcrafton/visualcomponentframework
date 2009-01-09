@@ -67,6 +67,8 @@
                 <sys-lib>ws2_32</sys-lib>
                 <sys-lib>opengl32</sys-lib>
                 <sys-lib>glu32</sys-lib>
+                <sys-lib>shlwapi</sys-lib>
+                <sys-lib>imm32</sys-lib>
             </if>
 
             <if cond="FORMAT in ['msvc','msvc6prj','msvs2005prj','borland']">

@@ -57,8 +57,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 ..\..\..\lib\fdlibm_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_vc6_d.pdb"
-# ADD LINK32 ..\..\..\lib\fdlibm_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_vc6_d.pdb"
+# ADD BASE LINK32 ..\..\..\lib\fdlibm_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_vc6_d.pdb"
+# ADD LINK32 ..\..\..\lib\fdlibm_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_vc6_d.pdb"
 
 !ELSEIF  "$(CFG)" == "js_dll - Win32 vc6 DLL Release"
 
@@ -82,8 +82,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 ..\..\..\lib\fdlibm_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6.lib" /pdb:"..\..\..\lib\..\bin\js_vc6.pdb"
-# ADD LINK32 ..\..\..\lib\fdlibm_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6.lib" /pdb:"..\..\..\lib\..\bin\js_vc6.pdb"
+# ADD BASE LINK32 ..\..\..\lib\fdlibm_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6.lib" /pdb:"..\..\..\lib\..\bin\js_vc6.pdb"
+# ADD LINK32 ..\..\..\lib\fdlibm_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6.lib" /pdb:"..\..\..\lib\..\bin\js_vc6.pdb"
 
 !ELSEIF  "$(CFG)" == "js_dll - Win32 vc6 LIB Debug"
 
@@ -107,8 +107,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 ..\..\..\lib\fdlibm_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_vc6_d.pdb"
-# ADD LINK32 ..\..\..\lib\fdlibm_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_vc6_d.pdb"
+# ADD BASE LINK32 ..\..\..\lib\fdlibm_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_vc6_d.pdb"
+# ADD LINK32 ..\..\..\lib\fdlibm_vc6_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_vc6_d.pdb"
 
 !ELSEIF  "$(CFG)" == "js_dll - Win32 vc6 LIB Release"
 
@@ -132,8 +132,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 ..\..\..\lib\fdlibm_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6.lib" /pdb:"..\..\..\lib\..\bin\js_vc6.pdb"
-# ADD LINK32 ..\..\..\lib\fdlibm_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6.lib" /pdb:"..\..\..\lib\..\bin\js_vc6.pdb"
+# ADD BASE LINK32 ..\..\..\lib\fdlibm_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6.lib" /pdb:"..\..\..\lib\..\bin\js_vc6.pdb"
+# ADD LINK32 ..\..\..\lib\fdlibm_vc6_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_vc6.lib" /pdb:"..\..\..\lib\..\bin\js_vc6.pdb"
 
 !ELSEIF  "$(CFG)" == "js_dll - Win32 DLL Debug"
 
@@ -157,8 +157,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 ..\..\..\lib\fdlibm_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_d.pdb"
-# ADD LINK32 ..\..\..\lib\fdlibm_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_d.pdb"
+# ADD BASE LINK32 ..\..\..\lib\fdlibm_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_d.pdb"
+# ADD LINK32 ..\..\..\lib\fdlibm_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_d.pdb"
 
 !ELSEIF  "$(CFG)" == "js_dll - Win32 DLL Release"
 
@@ -182,8 +182,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 ..\..\..\lib\fdlibm_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js.lib" /pdb:"..\..\..\lib\..\bin\js.pdb"
-# ADD LINK32 ..\..\..\lib\fdlibm_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js.lib" /pdb:"..\..\..\lib\..\bin\js.pdb"
+# ADD BASE LINK32 ..\..\..\lib\fdlibm_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js.lib" /pdb:"..\..\..\lib\..\bin\js.pdb"
+# ADD LINK32 ..\..\..\lib\fdlibm_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js.lib" /pdb:"..\..\..\lib\..\bin\js.pdb"
 
 !ELSEIF  "$(CFG)" == "js_dll - Win32 LIB Debug"
 
@@ -207,8 +207,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 ..\..\..\lib\fdlibm_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_d.pdb"
-# ADD LINK32 ..\..\..\lib\fdlibm_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_d.pdb"
+# ADD BASE LINK32 ..\..\..\lib\fdlibm_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_d.pdb"
+# ADD LINK32 ..\..\..\lib\fdlibm_sd.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js_d.lib" /debug /pdb:"..\..\..\lib\..\bin\js_d.pdb"
 
 !ELSEIF  "$(CFG)" == "js_dll - Win32 LIB Release"
 
@@ -232,8 +232,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 ..\..\..\lib\fdlibm_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js.lib" /pdb:"..\..\..\lib\..\bin\js.pdb"
-# ADD LINK32 ..\..\..\lib\fdlibm_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js.lib" /pdb:"..\..\..\lib\..\bin\js.pdb"
+# ADD BASE LINK32 ..\..\..\lib\fdlibm_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js.lib" /pdb:"..\..\..\lib\..\bin\js.pdb"
+# ADD LINK32 ..\..\..\lib\fdlibm_s.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\js.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\js.lib" /pdb:"..\..\..\lib\..\bin\js.pdb"
 
 !ENDIF
 

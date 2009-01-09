@@ -21,6 +21,7 @@
         <set var="OPTION_REGEXKIT">1</set>
         <set var="OPTION_XMLKIT">1</set>
         <set var="OPTION_JAVASCRIPTKIT">1</set>
+        <set var="OPTION_SCINTILLAKIT">1</set>
         <set var="OPTION_ZLIB">1</set>
         <set var="OPTION_AGG">1</set>
         <set var="OPTION_LIBJPEG">1</set>
@@ -33,6 +34,7 @@
         <set var="OPTION_LIBXSLT">1</set>
         <set var="OPTION_FDLIBM">1</set>
         <set var="OPTION_JS">1</set>
+        <set var="OPTION_SCINTILLA">1</set>
     </if>
 
     

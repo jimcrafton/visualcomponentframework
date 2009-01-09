@@ -70,6 +70,12 @@
             <depends>JavaScriptKit_dll</depends>
         </action>
         
+        <action id="ScintillaKit" cond="OPTION_SCINTILLAKIT=='1'">
+            <is-phony>1</is-phony>
+            <depends>ScintillaKit_lib</depends>
+            <depends>ScintillaKit_dll</depends>
+        </action>
+        
         <action id="ImageFormats" cond="OPTION_IMAGEFORMATS=='1' and PLATFORM_WIN32=='1'">
             <is-phony>1</is-phony>
             <depends>ImageFormats_lib</depends>
@@ -129,6 +135,11 @@
         <action id="js" cond="OPTION_JS=='1'">
             <is-phony>1</is-phony>
             <depends>js_dll</depends>
+        </action>
+
+        <action id="scintilla" cond="OPTION_SCINTILLA=='1'">
+            <is-phony>1</is-phony>
+            <depends>scintilla_lib</depends>
         </action>
 
     </if>

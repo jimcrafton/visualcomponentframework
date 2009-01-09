@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <set var="SCINTILLAKIT_HDR" hints="files">
+        vcf/ScintillaKit/ScintillaKit.h
+    </set>
+
+    <set var="SCINTILLAKIT_SRC" hints="files">
+        vcf/ScintillaKit/ScintillaKit.cpp
+    </set>
+
+    <set var="SCINTILLAKIT_WIN_HDR" hints="files">
+        vcf/ScintillaKit/ScintillaPeer.h
+    </set>
+
+    <set var="SCINTILLAKIT_WIN_SRC" hints="files">
+        vcf/ScintillaKit/ScintillaPeer.cpp
+    </set>
+
+    <set var="SCINTILLAKIT_HDR" append="1" hints="files">
+        <if cond="PLATFORM_WIN32=='1'">$(SCINTILLAKIT_WIN_HDR)</if>
+    </set>
+
+    <set var="SCINTILLAKIT_SRC" append="1" hints="files">
+        <if cond="PLATFORM_WIN32=='1'">$(SCINTILLAKIT_WIN_SRC)</if>
+    </set>
+</makefile>
+
+<!--
+$Id$
+-->
