@@ -1,10 +1,11 @@
-//test.shader
+//brightpass.shader
+//used as part of a bloom effect, not really complete?
 
 
 
 vec4 shaderMain( sampler2D inImage )
 {
-	float brightPassThreshold = 0.21;
+	float brightPassThreshold = 0.6;
 
 	vec3 luminanceVector = vec3(0.2125, 0.7154, 0.0721);
     vec4 sample = texture2D(inImage, gl_TexCoord[0].st);
