@@ -33,6 +33,7 @@
     <include file="libxslt.bkl"/>
     <include file="fdlibm.bkl"/>
     <include file="js.bkl"/>
+    <include file="scintilla.bkl"/>
 
     <include file="FoundationKit.bkl"/>
     <include file="GraphicsKit.bkl"/>
@@ -45,6 +46,7 @@
     <include file="RegExKit.bkl"/>
     <include file="XMLKit.bkl"/>
     <include file="JavaScriptKit.bkl"/>
+    <include file="ScintillaKit.bkl"/>
 
     <include file="Allin1.bkl"/>
 

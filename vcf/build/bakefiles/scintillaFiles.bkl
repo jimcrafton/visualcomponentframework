@@ -1,0 +1,100 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="SCINTILLA_HDR" hints="files">
+        thirdparty/common/scintilla/include/Accessor.h
+        thirdparty/common/scintilla/include/KeyWords.h
+        thirdparty/common/scintilla/include/Platform.h
+        thirdparty/common/scintilla/include/PropSet.h
+        thirdparty/common/scintilla/include/SciLexer.h
+        thirdparty/common/scintilla/include/Scintilla.h
+        thirdparty/common/scintilla/include/ScintillaWidget.h
+        thirdparty/common/scintilla/include/SString.h
+        thirdparty/common/scintilla/include/WinDefs.h
+        thirdparty/common/scintilla/include/WindowAccessor.h
+        thirdparty/common/scintilla/src/AutoComplete.h
+        thirdparty/common/scintilla/src/CallTip.h
+        thirdparty/common/scintilla/src/CellBuffer.h
+        thirdparty/common/scintilla/src/ContractionState.h
+        thirdparty/common/scintilla/src/Document.h
+        thirdparty/common/scintilla/src/DocumentAccessor.h
+        thirdparty/common/scintilla/src/Editor.h
+        thirdparty/common/scintilla/src/Indicator.h
+        thirdparty/common/scintilla/src/KeyMap.h
+        thirdparty/common/scintilla/src/LineMarker.h
+        thirdparty/common/scintilla/src/RESearch.h
+        thirdparty/common/scintilla/src/ScintillaBase.h
+        thirdparty/common/scintilla/src/Style.h
+        thirdparty/common/scintilla/src/StyleContext.h
+        thirdparty/common/scintilla/src/SVector.h
+        thirdparty/common/scintilla/src/UniConversion.h
+        thirdparty/common/scintilla/src/ViewStyle.h
+        thirdparty/common/scintilla/src/XPM.h
+    </set>
+
+    <set var="SCINTILLA_SRC" hints="files">
+        thirdparty/common/scintilla/src/AutoComplete.cxx
+        thirdparty/common/scintilla/src/CallTip.cxx
+        thirdparty/common/scintilla/src/CellBuffer.cxx
+        thirdparty/common/scintilla/src/ContractionState.cxx
+        thirdparty/common/scintilla/src/Document.cxx
+        thirdparty/common/scintilla/src/DocumentAccessor.cxx
+        thirdparty/common/scintilla/src/Editor.cxx
+        thirdparty/common/scintilla/src/Indicator.cxx
+        thirdparty/common/scintilla/src/KeyMap.cxx
+        thirdparty/common/scintilla/src/KeyWords.cxx
+        thirdparty/common/scintilla/src/LexAda.cxx
+        thirdparty/common/scintilla/src/LexAsm.cxx
+        thirdparty/common/scintilla/src/LexAVE.cxx
+        thirdparty/common/scintilla/src/LexBaan.cxx
+        thirdparty/common/scintilla/src/LexBullant.cxx
+        thirdparty/common/scintilla/src/LexConf.cxx
+        thirdparty/common/scintilla/src/LexCPP.cxx
+        thirdparty/common/scintilla/src/LexCrontab.cxx
+        thirdparty/common/scintilla/src/LexCSS.cxx
+        thirdparty/common/scintilla/src/LexEiffel.cxx
+        thirdparty/common/scintilla/src/LexFortran.cxx
+        thirdparty/common/scintilla/src/LexHTML.cxx
+        thirdparty/common/scintilla/src/LexLisp.cxx
+        thirdparty/common/scintilla/src/LexLua.cxx
+        thirdparty/common/scintilla/src/LexMatlab.cxx
+        thirdparty/common/scintilla/src/LexOthers.cxx
+        thirdparty/common/scintilla/src/LexPascal.cxx
+        thirdparty/common/scintilla/src/LexPerl.cxx
+        thirdparty/common/scintilla/src/LexPython.cxx
+        thirdparty/common/scintilla/src/LexRuby.cxx
+        thirdparty/common/scintilla/src/LexSQL.cxx
+        thirdparty/common/scintilla/src/LexVB.cxx
+        thirdparty/common/scintilla/src/LineMarker.cxx
+        thirdparty/common/scintilla/src/PropSet.cxx
+        thirdparty/common/scintilla/src/RESearch.cxx
+        thirdparty/common/scintilla/src/ScintillaBase.cxx
+        thirdparty/common/scintilla/src/Style.cxx
+        thirdparty/common/scintilla/src/StyleContext.cxx
+        thirdparty/common/scintilla/src/UniConversion.cxx
+        thirdparty/common/scintilla/src/ViewStyle.cxx
+        thirdparty/common/scintilla/src/WindowAccessor.cxx
+        thirdparty/common/scintilla/src/XPM.cxx
+    </set>
+
+    <set var="SCINTILLA_HDR" append="1" hints="files">
+        <if cond="PLATFORM_WIN32=='1'">
+            thirdparty/common/scintilla/win32/ExternalLexer.h
+            thirdparty/common/scintilla/win32/PlatformRes.h
+        </if>
+    </set>
+
+    <set var="SCINTILLA_SRC" append="1" hints="files">
+        <if cond="PLATFORM_WIN32=='1'">
+            thirdparty/common/scintilla/win32/ExternalLexer.cxx
+            thirdparty/common/scintilla/win32/PlatWin.cxx
+            thirdparty/common/scintilla/win32/ScintillaWin.cxx
+        </if>
+    </set>
+
+</makefile>
+
+<!--
+$Id$
+-->

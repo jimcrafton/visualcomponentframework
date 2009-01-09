@@ -60,11 +60,11 @@ void testConstructors()
 	VCF_ASSERT( v11.type == pdBool );
 	printVariant(v11);
 
-	VariantData v12 = (int64)8797852412;
+	VariantData v12 = (int64) VCF_LIT64(8797852412);
 	VCF_ASSERT( v12.type == pdInt64 );
 	printVariant(v12);
 
-	VariantData v13 = (uint64)8797852413;
+	VariantData v13 = (uint64) VCF_LIT64(8797852413);
 	VCF_ASSERT( v13.type == pdUInt64 );
 	printVariant(v13);
 

@@ -93,7 +93,15 @@
             <if cond="OPTION_JAVASCRIPTKIT=='1'">$(JAVASCRIPTKIT_SRC)</if>
         </set>
 
+
+        <set var="ALLIN1_SCINTILLAKIT_HDR" hints="files">
+            <if cond="OPTION_SCINTILLAKIT=='1'">$(SCINTILLAKIT_HDR)</if>
+        </set>
+        <set var="ALLIN1_SCINTILLAKIT_SRC" hints="files">
+            <if cond="OPTION_SCINTILLAKIT=='1'">$(SCINTILLAKIT_SRC)</if>
+        </set>
         
+
         <headers>
             $(ALLIN1_FOUNDATIONKIT_HDR)
             $(ALLIN1_GRAPHICSKIT_HDR)
@@ -106,6 +114,7 @@
             $(ALLIN1_REGEXKIT_HDR)
             $(ALLIN1_XMLKIT_HDR)
             $(ALLIN1_JAVASCRIPTKIT_HDR)
+            $(ALLIN1_SCINTILLAKIT_HDR)
         </headers>
         <sources>
             $(ALLIN1_FOUNDATIONKIT_SRC)
@@ -119,6 +128,7 @@
             $(ALLIN1_REGEXKIT_SRC)
             $(ALLIN1_XMLKIT_SRC)
             $(ALLIN1_JAVASCRIPTKIT_SRC)
+            $(ALLIN1_SCINTILLAKIT_SRC)
         </sources>
 
         
@@ -168,12 +178,14 @@
         </set>
         <library>$(ALLIN1_LIBXML_LIB)</library>
         <define>LIBXML_STATIC</define>
+        <vcf-include-libxml/>
 
         <set var="ALLIN1_LIBXSLT_LIB">
             <if cond="OPTION_LIBXSLT=='1'">libxslt_lib</if>
         </set>
         <library>$(ALLIN1_LIBXSLT_LIB)</library>
         <define>LIBXSLT_STATIC</define>
+        <vcf-include-libxslt/>
 
         <set var="ALLIN1_FDLIBM_LIB">
             <if cond="OPTION_FDLIBM=='1'">fdlibm_lib</if>
@@ -185,6 +197,12 @@
         </set>
         <library>$(ALLIN1_JS_DLL)</library>
         <define>$(substituteFromDict( TOOLSET, {'win32':'XP_WIN', 'unix':'XP_UNIX'} ))</define>
+
+        <set var="ALLIN1_SCINTILLA_LIB">
+            <if cond="OPTION_SCINTILLA=='1'">scintilla_lib</if>
+        </set>
+        <library>$(ALLIN1_SCINTILLA_LIB)</library>
+        <vcf-include-scintilla/>
 
         <vcf-include-thirdparty/>
     </template>
@@ -217,6 +235,10 @@
         <define>XMLKIT_EXPORTS</define>
         <define>JAVASCRIPTKIT_DLL</define>
         <define>JAVASCRIPTKIT_EXPORTS</define>
+        <!--
+        <define>SCINTILLAKIT_DLL</define>
+        <define>SCINTILLAKIT_EXPORTS</define>
+        -->
 
         <res-include>../../build/resources/win32</res-include>
         <win32-res>../build/resources/win32/ApplicationKit.rc</win32-res>

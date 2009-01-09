@@ -57,6 +57,11 @@
         $(vcf.getDllFilename( JS_NAME ))
     </set>
 
+    <set var="SCINTILLA_NAME">scintilla</set>
+    <set var="SCINTILLA_FILENAME" make_var="1">
+        $(vcf.getLibFilename( SCINTILLA_NAME ))
+    </set>
+    
     <set var="FOUNDATIONKIT_NAME">FoundationKit</set>
     <set var="FOUNDATIONKIT_FILENAME" make_var="1">
         $(vcf.getFilename( FOUNDATIONKIT_NAME ))
@@ -110,6 +115,11 @@
     <set var="JAVASCRIPTKIT_NAME">JavaScriptKit</set>
     <set var="JAVASCRIPTKIT_FILENAME" make_var="1">
         $(vcf.getFilename( JAVASCRIPTKIT_NAME ))
+    </set>
+    
+    <set var="SCINTILLAKIT_NAME">ScintillaKit</set>
+    <set var="SCINTILLAKIT_FILENAME" make_var="1">
+        $(vcf.getFilename( SCINTILLAKIT_NAME ))
     </set>
     
     <set var="ALLIN1_NAME">VCF</set>

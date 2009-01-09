@@ -57,8 +57,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc6_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\NetworkKit_vc6_d.pdb"
-# ADD LINK32 FoundationKit_vc6_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\NetworkKit_vc6_d.pdb"
+# ADD BASE LINK32 FoundationKit_vc6_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\NetworkKit_vc6_d.pdb"
+# ADD LINK32 FoundationKit_vc6_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc6_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc6_d.lib" /debug /pdb:"..\..\..\lib\..\bin\NetworkKit_vc6_d.pdb"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc6 DLL Release"
 
@@ -82,8 +82,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_vc6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc6.lib" /pdb:"..\..\..\lib\..\bin\NetworkKit_vc6.pdb"
-# ADD LINK32 FoundationKit_vc6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc6.lib" /pdb:"..\..\..\lib\..\bin\NetworkKit_vc6.pdb"
+# ADD BASE LINK32 FoundationKit_vc6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc6.lib" /pdb:"..\..\..\lib\..\bin\NetworkKit_vc6.pdb"
+# ADD LINK32 FoundationKit_vc6.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_vc6.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_vc6.lib" /pdb:"..\..\..\lib\..\bin\NetworkKit_vc6.pdb"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 vc6 LIB Debug"
 
@@ -153,8 +153,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_d.lib" /debug /pdb:"..\..\..\lib\..\bin\NetworkKit_d.pdb"
-# ADD LINK32 FoundationKit_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_d.lib" /debug /pdb:"..\..\..\lib\..\bin\NetworkKit_d.pdb"
+# ADD BASE LINK32 FoundationKit_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_d.lib" /debug /pdb:"..\..\..\lib\..\bin\NetworkKit_d.pdb"
+# ADD LINK32 FoundationKit_d.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit_d.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit_d.lib" /debug /pdb:"..\..\..\lib\..\bin\NetworkKit_d.pdb"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 DLL Release"
 
@@ -178,8 +178,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 FoundationKit.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit.lib" /pdb:"..\..\..\lib\..\bin\NetworkKit.pdb"
-# ADD LINK32 FoundationKit.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit.lib" /pdb:"..\..\..\lib\..\bin\NetworkKit.pdb"
+# ADD BASE LINK32 FoundationKit.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit.lib" /pdb:"..\..\..\lib\..\bin\NetworkKit.pdb"
+# ADD LINK32 FoundationKit.lib rpcrt4.lib odbc32.lib odbccp32.lib version.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib ws2_32.lib opengl32.lib glu32.lib shlwapi.lib imm32.lib oleacc.lib urlmon.lib /nologo /dll /machine:i386 /out:"..\..\..\lib\..\bin\NetworkKit.dll" /libpath:"..\..\..\lib" /implib:"..\..\..\lib\NetworkKit.lib" /pdb:"..\..\..\lib\..\bin\NetworkKit.pdb"
 
 !ELSEIF  "$(CFG)" == "NetworkKit - Win32 LIB Debug"
 

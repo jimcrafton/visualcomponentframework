@@ -135,6 +135,7 @@
         vcf/ApplicationKit/ModelViewKit.h
         vcf/ApplicationKit/MouseEvent.h
         vcf/ApplicationKit/MultilineTextControl.h
+        vcf/ApplicationKit/PagedContainer.h
         vcf/ApplicationKit/Panel.h
         vcf/ApplicationKit/PopupMenu.h
         vcf/ApplicationKit/PopupMenuPeer.h

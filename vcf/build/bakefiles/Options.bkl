@@ -251,6 +251,16 @@ Compile the libxslt library:
         </description>
     </option>
 
+    <option name="OPTION_SCINTILLA">
+        <values>0,1</values>
+        <default-value>
+            $(vcf.getOptionValue( 'OPTION_SCINTILLA', '1' ))
+        </default-value>
+        <description>
+            Compile the scintilla library:
+        </description>
+    </option>
+
 
     <!--
     Kits.
@@ -311,7 +321,7 @@ Compile HTMLKit:
     <option name="OPTION_OPENGLKIT">
         <values>0,1</values>
         <default-value>
-            $(vcf.getOptionValue( 'OPTION_OPENGLKIT', '0' ))
+            $(vcf.getOptionValue( 'OPTION_OPENGLKIT', '1' ))
         </default-value>
         <description>
 Depends on:
@@ -397,6 +407,18 @@ Depends on:
     OPTION_FOUNDATIONKIT
     OPTION_FDLIBM
 Compile JavaScriptKit:
+        </description>
+    </option>
+
+    <option name="OPTION_SCINTILLAKIT">
+        <values>0,1</values>
+        <default-value>
+            $(vcf.getOptionValue( 'OPTION_SCINTILLAKIT', '1' ))
+        </default-value>
+        <description>
+Depends on:
+    OPTION_APPLICATIONKIT
+Compile ScintillaKit:
         </description>
     </option>
 
