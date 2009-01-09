@@ -109,7 +109,7 @@ void DocumentManager::init()
 
 		const VariantArray& docTypes = properties.getArray( "DocumentTypes" );
 		for (size_t i=0;i<docTypes.data.size();i++ ) {
-			const PropertyListing& dict =  (const PropertyListing&)(const Object&) docTypes.data[i];
+			const PropertyListing& dict =  (const PropertyListing&)(Object&) docTypes.data[i];
 			
 			if ( !dict.keyExists("TypeExtensions") ) {
 				throw RuntimeException( "Invalid Document Info file - missing 'TypeExtensions' key" );
