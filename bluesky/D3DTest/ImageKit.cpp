@@ -3,6 +3,7 @@
 #include "ImageKit.h"
 #include "vcf/FoundationKit/Dictionary.h"
 #include "vcf/FoundationKit/RTTIMacros.h"
+#include "vcf/OpenGLKit/OpenGLToolkit.h"
 
 using namespace VCF;
 
@@ -30,6 +31,70 @@ _class_rtti_(Mixer, "VCF::IKFilter", "Mixer")
 _property_object_( IKImage, "input2Image", getInput2Image, setInput2Image, "" );
 _class_rtti_end_
 
+
+
+class GLMatrix {
+public:
+
+	GLMatrix(){
+		ident();
+	}
+
+	GLMatrix& operator=( const Matrix2D& rhs ) {
+		ident();
+
+		mat[0] = rhs[Matrix2D::mei00];
+		mat[1] = rhs[Matrix2D::mei01];
+		mat[2] = 0.0;//z ignored
+		mat[3] = rhs[Matrix2D::mei02];
+
+		mat[4] = rhs[Matrix2D::mei10];
+		mat[5] = rhs[Matrix2D::mei11];
+		mat[6] = 0.0;//z ignored
+		mat[7] = rhs[Matrix2D::mei12];
+
+		mat[8] = 0.0;
+		mat[9] = 0.0;
+		mat[10] = 1.0;//z ignored
+		mat[11] = 0.0;
+
+		mat[12] = rhs[Matrix2D::mei20];
+		mat[13] = rhs[Matrix2D::mei21];
+		mat[14] = 0.0;//z ignored
+		mat[15] = rhs[Matrix2D::mei22];
+
+		return *this;
+	}
+
+	operator double* () {
+		return &mat[0];
+	}
+
+	operator const double* () const {
+		return &mat[0];
+	}
+
+	double mat[16];
+
+	void ident() {
+		mat[0] = 1.0;
+		mat[1] = 0.0;
+		mat[2] = 0.0;
+		mat[3] = 0.0;
+		mat[4] = 0.0;
+		mat[5] = 1.0;
+		mat[6] = 0.0;
+		mat[7] = 0.0;
+		mat[8] = 1.0;
+		mat[9] = 0.0;
+		mat[10] = 0.0;
+		mat[11] = 1.0;
+		mat[12] = 0.0;
+		mat[13] = 0.0;
+		mat[14] = 0.0;
+		mat[15] = 1.0;
+	}
+};
 
 
 
@@ -331,10 +396,75 @@ void IKImage::destroyTexture()
 
 
 
+
+
+
+
+
+
+
+
+std::map<Control*,OpenGLPeer*> IKImageContext::glPeerMap;
+
+
+void IKImageContext::controlDestroyed(ComponentEvent* e)
+{
+	std::map<Control*,OpenGLPeer*>::iterator found = IKImageContext::glPeerMap.find( (Control*)e->getSource() );
+	if ( found != IKImageContext::glPeerMap.end() ) {
+		OpenGLPeer* peer = found->second;
+		delete peer;
+		IKImageContext::glPeerMap.erase( found );
+	}	
+}
+
+
+
+
+
 IKImageContext::IKImageContext():
-	opacity_(1.0)
+	opacity_(1.0),
+		glPeer_(NULL)
 {
 	ImageKit::initDefaultFBO();
+}
+
+IKImageContext::IKImageContext( Control* control ):
+	opacity_(1.0),
+		glPeer_(NULL)
+{
+
+	std::map<Control*,OpenGLPeer*>::iterator found = IKImageContext::glPeerMap.find( control );
+	if ( found == IKImageContext::glPeerMap.end() ) {
+
+		control->setDoubleBuffered( false );
+
+		control->ComponentDestroyed += IKImageContext::controlDestroyed;
+
+		glPeer_ = OpenGLToolkit::createOpenGLPeer( NULL );
+
+		glPeer_->initGL( control );
+		IKImageContext::glPeerMap[control] = glPeer_;
+	}
+	else {
+		glPeer_ = found->second;
+	}
+
+	glPeer_->makeCurrent();
+	
+	ImageKit::initDefaultFBO();
+}
+
+IKImageContext::~IKImageContext()
+{
+	if ( NULL != glPeer_ ) {
+		glPeer_->swapBuffers();
+	}
+}
+
+void IKImageContext::clear( Color* color )
+{
+	glClearColor( color->getRed(), color->getGreen(), color->getBlue(), color->getAlpha() );
+	glClear(GL_COLOR_BUFFER_BIT);	
 }
 
 void IKImageContext::initView( const double width, const double& height )

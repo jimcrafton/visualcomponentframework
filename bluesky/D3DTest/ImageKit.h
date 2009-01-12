@@ -66,70 +66,6 @@ Handle the extension based on the compiler
 namespace VCF {
 
 
-class GLMatrix {
-public:
-
-	GLMatrix(){
-		ident();
-	}
-
-	GLMatrix& operator=( const Matrix2D& rhs ) {
-		ident();
-
-		mat[0] = rhs[Matrix2D::mei00];
-		mat[1] = rhs[Matrix2D::mei01];
-		mat[2] = 0.0;//z ignored
-		mat[3] = rhs[Matrix2D::mei02];
-
-		mat[4] = rhs[Matrix2D::mei10];
-		mat[5] = rhs[Matrix2D::mei11];
-		mat[6] = 0.0;//z ignored
-		mat[7] = rhs[Matrix2D::mei12];
-
-		mat[8] = 0.0;
-		mat[9] = 0.0;
-		mat[10] = 1.0;//z ignored
-		mat[11] = 0.0;
-
-		mat[12] = rhs[Matrix2D::mei20];
-		mat[13] = rhs[Matrix2D::mei21];
-		mat[14] = 0.0;//z ignored
-		mat[15] = rhs[Matrix2D::mei22];
-
-		return *this;
-	}
-
-	operator double* () {
-		return &mat[0];
-	}
-
-	operator const double* () const {
-		return &mat[0];
-	}
-
-	double mat[16];
-
-	void ident() {
-		mat[0] = 1.0;
-		mat[1] = 0.0;
-		mat[2] = 0.0;
-		mat[3] = 0.0;
-		mat[4] = 0.0;
-		mat[5] = 1.0;
-		mat[6] = 0.0;
-		mat[7] = 0.0;
-		mat[8] = 1.0;
-		mat[9] = 0.0;
-		mat[10] = 0.0;
-		mat[11] = 1.0;
-		mat[12] = 0.0;
-		mat[13] = 0.0;
-		mat[14] = 0.0;
-		mat[15] = 1.0;
-	}
-};
-
-
 struct Dimensions {
 	Dimensions(): width(0), height(0){}
 	Dimensions( const Size& sz ): width(sz.width_), height(sz.height_){}
@@ -173,9 +109,7 @@ public:
 
 	static GLuint getDefaultFBO() {
 		return ImageKit::defaultFrameBufferObj;
-	}
-
-	
+	}	
 								
 protected:
 	static ImageKit* instance;
@@ -191,10 +125,15 @@ private:
 
 
 
+
 class IKImageContext {
 public:
 
 	IKImageContext();
+
+	IKImageContext( Control* control );
+
+	~IKImageContext();
 
 	void initView( const double width, const double& height );
 
@@ -220,13 +159,17 @@ public:
 		return opacity_;
 	}
 
-	
+	void clear( Color* color );
 protected:
 	Matrix2D xfrm_;
 	double opacity_;
 	Size viewSize;
 
-	
+	OpenGLPeer* glPeer_;
+
+
+	static void controlDestroyed(ComponentEvent* e); 
+	static std::map<Control*,OpenGLPeer*> glPeerMap;
 };
 
 
@@ -339,6 +282,8 @@ public:
 
 	void initFromResource( const String& resourceName );
 	void initFromFile( const String& fileName );
+
+	virtual void setDefaults(){};
 
 	std::vector<String> getInputNames() {
 		return inputNames_;
