@@ -714,11 +714,11 @@ public:
 
 			float amt = 0.00461f;
 
-			//ppEffect->SetFloat("amt",amt);
-			//ppEffect->SetFloat("timer",timer);
+			ppEffect->SetFloat("amt",amt);
+			ppEffect->SetFloat("timer",timer);
 
 			timer += 0.150f;
-/*
+
 			UINT cPasses, p;
 			ppEffect->Begin( &cPasses, 0 );
 			for( p = 0; p < cPasses; ++p )
@@ -734,7 +734,7 @@ public:
 				ppEffect->EndPass();
 			}
 
-*/
+
 			
 
 //			RECT r = {0};

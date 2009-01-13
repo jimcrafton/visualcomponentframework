@@ -408,7 +408,7 @@ public:
 
 		hueAdj = NULL;
 		setDoubleBuffered( false );
-
+/*
 		BasicOpAnimation<SinOp>* sinAnim = new BasicOpAnimation<SinOp>(SinOp());
 		sinAnim->setDuration( 30 );
 		sinAnim->setSource( this );
@@ -437,9 +437,7 @@ public:
 
 
 		BasicAnimation* a;// = new BasicAnimation();
-		/*
 		
-		*/
 
 
 		a = new BasicAnimation();
@@ -456,7 +454,7 @@ public:
 		a->start();
 		addComponent( a );
 
-
+*/
 		
 
 		angle_ = 0;
@@ -496,7 +494,7 @@ public:
 			initialized = true;
 
 			img.initFromFile( "res:logo.png" );
-			img2.initFromFile( "res:logo2.png" );
+			//img2.initFromFile( "C:\\Documents and Settings\\jcrafton\\Desktop\\1.jpg" );
 
 
 			hueAdj = new HueAdjust();
@@ -507,7 +505,7 @@ public:
 
 			tmp = new IKFilter();
 			tmp->initFromResource( "test" );
-
+/*
 
 			BasicAnimation* a = new BasicAnimation();
 			a->setDuration( 5 );
@@ -518,7 +516,7 @@ public:
 			a->setTargetControl( this );
 			
 			a->start();
-			addComponent( a );
+			addComponent( a );*/
 
 		}
 
@@ -548,7 +546,7 @@ public:
 		ic.draw( 231, 410, &img );
 		
 
-		hueAdj->setInputImage( &img );
+		//hueAdj->setInputImage( &img );
 		//hueAdj->setHueVal( 1.5 );
 
 		//bright->setInputImage( hueAdj->getOutputImage() );
@@ -557,11 +555,11 @@ public:
 		//mix->setInputImage( &img );
 		//mix->setInput2Image( &img2 );
 
-		//tmp->setInputImage( &img );
+		tmp->setInputImage( &img );
 		ic.setTransformMatrix( Matrix2D() );
 		ic.setOpacity( 1.0 );		
 
-		ic.draw( 300, 350, hueAdj->getOutputImage() );
+		ic.draw( 300, 350, tmp->getOutputImage() );
 	}
 
 
