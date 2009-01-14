@@ -474,6 +474,7 @@ public:
 	HueAdjust* hueAdj;
 	Brighten* bright;
 	Mixer* mix;
+	GaussianBlur* blur;
 
 	IKFilter* tmp;
 
@@ -505,6 +506,9 @@ public:
 
 			tmp = new IKFilter();
 			tmp->initFromResource( "test" );
+
+			blur = new GaussianBlur();
+
 /*
 
 			BasicAnimation* a = new BasicAnimation();
@@ -555,11 +559,14 @@ public:
 		//mix->setInputImage( &img );
 		//mix->setInput2Image( &img2 );
 
-		tmp->setInputImage( &img );
+		blur->setInputImage( &img );
+		blur->blurAmount = 2;//.0050;
 		ic.setTransformMatrix( Matrix2D() );
 		ic.setOpacity( 1.0 );		
+		ic.draw( 300, 350 - (img.getSize().height + 10), &img );
 
-		ic.draw( 300, 350, tmp->getOutputImage() );
+
+		ic.draw( 300, 350, blur->getOutputImage() );
 	}
 
 

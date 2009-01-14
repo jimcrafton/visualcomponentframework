@@ -31,6 +31,10 @@ _class_rtti_(Mixer, "VCF::IKFilter", "Mixer")
 _property_object_( IKImage, "input2Image", getInput2Image, setInput2Image, "" );
 _class_rtti_end_
 
+_class_rtti_(GaussianBlur, "VCF::IKFilter", "GaussianBlur")
+_class_rtti_end_
+
+
 
 
 class GLMatrix {
@@ -213,6 +217,8 @@ void ImageKit::init( int argc, char** argv )
 
 	REGISTER_CLASSINFO_EXTERNAL(Brighten);
 	REGISTER_CLASSINFO_EXTERNAL(Mixer);
+	REGISTER_CLASSINFO_EXTERNAL(GaussianBlur);
+	
 	
 	
 }
@@ -879,16 +885,9 @@ void IKFilter::setValue( const String& name, const VariantData& val )
 	}
 }
 
-void IKFilter::apply()
+void IKFilter::initFilterVariables()
 {
-	glUseProgramObjectARB( program_ );	
-
 	int activeTexIndex = 0;
-	//this should set up a sampler for the shader? I hope...
-	int u1 = glGetUniformLocationARB(program_, "inputImage");
-	glActiveTexture(GL_TEXTURE0 + activeTexIndex);
-	inputImage_->bind();
-	glUniform1iARB(u1, activeTexIndex);	
 
 	std::vector<String>::iterator it = inputNames_.begin();
 	while ( it != inputNames_.end() ) {
@@ -929,6 +928,21 @@ void IKFilter::apply()
 
 		++it;
 	}
+}
+
+void IKFilter::apply()
+{
+	glUseProgramObjectARB( program_ );	
+
+	int activeTexIndex = 0;
+	//this should set up a sampler for the shader? I hope...
+	int u1 = glGetUniformLocationARB(program_, "inputImage");
+	glActiveTexture(GL_TEXTURE0 + activeTexIndex);
+	inputImage_->bind();
+	glUniform1iARB(u1, activeTexIndex);	
+
+	
+	initFilterVariables();
 
 
 	glActiveTexture(GL_TEXTURE0);

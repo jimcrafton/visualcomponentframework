@@ -337,6 +337,8 @@ protected:
 	
 	void initProgram( const String& data );
 
+	virtual void initFilterVariables();
+
 	typedef std::map<String,IKFilterInfo> FilterMap;
 
 	static FilterMap registeredFilters;
@@ -404,6 +406,71 @@ public:
 	double brightness_;
 };
 
+class GaussianBlur : public IKFilter {
+public:
+	enum {
+		RADIUS =  7,
+		KERNEL_SIZE = (RADIUS * 2 + 1),
+	};
+	float blurKernel[KERNEL_SIZE];
+	float offsets[KERNEL_SIZE*2]; //array of vec2
+
+	GaussianBlur() {
+
+		blurRadius = 7;
+		blurAmount = 3.0;
+
+		initFromResource( "GaussianBlur" );		
+	}
+
+	int blurRadius;
+	float blurAmount;
+protected:
+	virtual void initFilterVariables() {
+		IKFilter::initFilterVariables();  
+        float sigma = blurRadius / blurAmount;
+
+        float twoSigmaSquare = 2.0f * sigma * sigma;
+        float sigmaRoot = sqrt(twoSigmaSquare * 3.1428);
+        float total = 0.0f;
+        float distance = 0.0f;
+        int index = 0;
+		int i = 0;
+
+		memset(blurKernel,sizeof(float)*KERNEL_SIZE,0);
+		memset(offsets,sizeof(float)*(KERNEL_SIZE*2),0);
+
+        for ( i= -blurRadius; i <= blurRadius; ++i)
+        {
+            distance = i * i;
+            index = i + blurRadius;
+            blurKernel[index] =  exp(-distance / twoSigmaSquare) / sigmaRoot;
+            total += blurKernel[index];
+        }
+
+        for ( i = 0; i < KERNEL_SIZE; ++i)
+            blurKernel[i] /= total;
+
+		float xOffset = 1.0f / getInputImage()->getSize().width;
+        float yOffset = 1.0f / getInputImage()->getSize().height;
+
+        for ( i = -blurRadius; i <= blurRadius; ++i)
+        {
+            index = (i + blurRadius) * 2;
+            offsets[index] = i * xOffset;
+			offsets[index+1] = i * yOffset;
+        }
+
+
+		int location = glGetUniformLocationARB( program_, "blurKernel" );
+
+		glUniform1fvARB( location, KERNEL_SIZE, &blurKernel[0] );
+
+		location = glGetUniformLocationARB( program_, "offsets" );
+
+		glUniform2fvARB( location, KERNEL_SIZE*2, &offsets[0] );
+	}
+};
 
 
 class Mixer : public IKFilter {
