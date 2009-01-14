@@ -24,6 +24,9 @@ public:
 	virtual ~OpenGLPeer(){};
 
 	virtual void initGL( GraphicsContext * context ) = 0;
+
+	virtual void initGL( Control* control ) = 0;
+
 	virtual void swapBuffers() = 0;
 
 	virtual void makeCurrent() = 0;
