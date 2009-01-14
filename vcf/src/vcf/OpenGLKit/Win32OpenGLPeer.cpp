@@ -19,7 +19,6 @@ using namespace VCF;
 
 Win32OpenGLPeer::Win32OpenGLPeer( Control* owningControl ):
 		owningControl_(owningControl),
-		dc_(NULL),
 		hrc_(NULL),
 		isInitialized_(false)
 {		
@@ -27,11 +26,66 @@ Win32OpenGLPeer::Win32OpenGLPeer( Control* owningControl ):
 }
 
 Win32OpenGLPeer::~Win32OpenGLPeer()
+{	
+	// We don't need the DC to release the rendering context
+	wglMakeCurrent( NULL, NULL );
+	wglDeleteContext( hrc_ );	
+}
+
+void Win32OpenGLPeer::initGL( Control* control )
 {
-	if ( NULL != dc_ ){
-		// We don't need the DC to release the rendering context
-		wglMakeCurrent( NULL, NULL );
-		wglDeleteContext( hrc_ );
+	if ( true == isInitialized_ ){
+		return;
+	}
+
+	owningControl_ = control;
+
+	HWND hwnd = (HWND)(control->getPeer()->getHandleID());
+	HDC dc = ::GetDC(hwnd);
+
+	if ( NULL != dc ){
+		PIXELFORMATDESCRIPTOR pfd =
+		{
+			sizeof(PIXELFORMATDESCRIPTOR),  // size of this pfd
+				1,                              // version number
+				PFD_DRAW_TO_WINDOW |            // support window
+				PFD_SUPPORT_OPENGL |          // support OpenGL
+				PFD_DOUBLEBUFFER,             // double buffered
+				PFD_TYPE_RGBA,                  // RGBA type
+				24,                             // 24-bit color depth
+				0, 0, 0, 0, 0, 0,               // color bits ignored
+				0,                              // no alpha buffer
+				0,                              // shift bit ignored
+				0,                              // no accumulation buffer
+				0, 0, 0, 0,                     // accum bits ignored
+				32,                             // 32-bit z-buffer
+				0,                              // no stencil buffer
+				0,                              // no auxiliary buffer
+				PFD_MAIN_PLANE,                 // main layer
+				0,                              // reserved
+				0, 0, 0                         // layer masks ignored
+		};
+
+		int pixelformat = ChoosePixelFormat( dc, &pfd );
+		if ( pixelformat == 0 ){
+			String errmsg = VCFWin32::Win32Utils::getErrorString( GetLastError() );
+			StringUtils::trace( Format( String("Error selecting pixelformat for GL context (" __FILE__ ":%d):\n") + errmsg ) % __LINE__);
+			VCF_ASSERT(pixelformat != 0);
+			throw BasicException(errmsg);
+		}
+
+		bool setPixelSuccess = ( TRUE == ::SetPixelFormat( dc, pixelformat, &pfd ) );
+		if ( !setPixelSuccess ){
+			String errmsg = VCFWin32::Win32Utils::getErrorString( GetLastError() );
+			StringUtils::trace( Format( String("Error setting pixelformat for GL context (" __FILE__ ":%d):\n") + errmsg ) % __LINE__);
+			throw BasicException(errmsg);
+		}
+
+		hrc_ = wglCreateContext( dc );
+		isInitialized_ = ( wglMakeCurrent( dc, hrc_ ) ) ? true : false;
+		VCF_ASSERT(isInitialized_);
+
+		ReleaseDC(hwnd,dc);
 	}
 }
 

@@ -27,12 +27,13 @@ public:
 
 	virtual void initGL( GraphicsContext * context );
 
+	virtual void initGL( Control* control );
+
 	virtual void swapBuffers();
 
 	virtual void makeCurrent();
 private:
 	Control* owningControl_;
-	HDC dc_;
 	HGLRC hrc_;
 	bool isInitialized_;
 };
