@@ -16,11 +16,11 @@ vec4 shaderMain( sampler2D inImage )
     
     for (int i = 0; i < KERNEL_SIZE; ++i) 
 	{
-		color.rgb += texture2D( inImage, gl_TexCoord[0].xy + offsets[i] ) * blurKernel[i];
+		//color.rgb += (texture2D( inImage, gl_TexCoord[0].xy + offsets[i] ) * blurKernel[i]).rgb;
 
-		//color.rgb += texture2D( inImage, vec2(gl_TexCoord[0].x + offsets[i].x, gl_TexCoord[0].y) ) * blurKernel[i];
-		//color2.rgb += texture2D( inImage, vec2(gl_TexCoord[0].x, gl_TexCoord[0].y + offsets[i].y) ) * blurKernel[i];
+		color.rgb += (texture2D( inImage, vec2(gl_TexCoord[0].x + offsets[i].x, gl_TexCoord[0].y) ) * blurKernel[i]).rgb;
+		color2.rgb += (texture2D( inImage, vec2(gl_TexCoord[0].x, gl_TexCoord[0].y + offsets[i].y) ) * blurKernel[i]).rgb;
 	}
         
-    return  color;
+    return  color * color2;
 }

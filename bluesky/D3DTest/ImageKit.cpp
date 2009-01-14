@@ -453,6 +453,9 @@ IKImageContext::IKImageContext( Control* control ):
 	}
 	else {
 		glPeer_ = found->second;
+		if ( control->isDoubleBuffered() ) {
+			control->setDoubleBuffered( false );
+		}
 	}
 
 	glPeer_->makeCurrent();
@@ -844,7 +847,7 @@ void IKFilter::initFromResource( const String& resourceName )
 		delete res;
 	}
 	else {
-		throw RuntimeException( "Shader resource doesn't exist!" );
+		throw RuntimeException( "Shader resource doesn't exist! Shader requested was: " + resName );
 	}
 }
 
@@ -954,9 +957,11 @@ void IKFilter::initProgram( const String& data )
 	program_ = fragment_ = 0;
 	program_ = glCreateProgramObjectARB();
 
+	String shaderClassName = StringUtils::toString( typeid(*this) );
+
 	if ( 0 == program_ ) {
 		const char* errStr = (const char*)gluErrorString( glGetError() );
-		String s = L"OpenGL error creating program object: ";
+		String s = L"OpenGL error creating program object for shader " + shaderClassName + ": ";
 		s += errStr;
 		throw RuntimeException( s );
 	}
@@ -967,7 +972,7 @@ void IKFilter::initProgram( const String& data )
 
 		if ( 0 == fragment_ ) {
 			const char* errStr = (const char*)gluErrorString( glGetError() );
-			String s = L"OpenGL error creating fragment shader object: ";
+			String s = L"OpenGL error creating fragment shader object for shader " + shaderClassName + ": ";
 			s += errStr;
 			throw RuntimeException( s );
 		}
@@ -1027,7 +1032,7 @@ void IKFilter::initProgram( const String& data )
 		
 
 		if( !status ) {
-			throw RuntimeException( "Shader compile failed. \n" + compileStatus_ );
+			throw RuntimeException( "Shader compile failed for shader " + shaderClassName + ".\n" + compileStatus_ );
 		}
 
 		::free(errString);
