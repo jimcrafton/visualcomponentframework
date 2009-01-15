@@ -495,7 +495,7 @@ public:
 			initialized = true;
 
 			img.initFromFile( "res:logo.png" );
-			img2.initFromFile( "C:\\Documents and Settings\\jcrafton\\Desktop\\1.jpg" );
+			//img2.initFromFile( "C:\\Documents and Settings\\jcrafton\\Desktop\\1.jpg" );
 
 
 			hueAdj = new HueAdjust();
@@ -560,14 +560,15 @@ public:
 		//mix->setInput2Image( &img2 );
 
 		double y = 10;
-		blur->setInputImage( &img2 );
+		blur->setInputImage( &img );
 		blur->blurAmount = 2;//.0050;
 		ic.setTransformMatrix( Matrix2D() );
 		ic.setOpacity( 1.0 );		
 		ic.draw( 300, y, blur->getOutputImage() );
 
 
-		ic.draw( 300, y + img2.getSize().height + 10, &img2 );
+		ic.draw( 300, y + img.getSize().height + 10, &img );
+
 	}
 
 
