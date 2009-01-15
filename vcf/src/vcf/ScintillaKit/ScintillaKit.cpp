@@ -27,8 +27,11 @@ using namespace VCF;
 
 
 _class_rtti_(SciTextControl, "VCF::CustomControl", "SciTextControl")
+_property_( String, "text", getText, setText, "" );
 _class_rtti_end_
 
+_class_rtti_(SciTextModel, "VCF::TextModel", "SciTextModel")
+_class_rtti_end_
 
 
 
@@ -627,6 +630,16 @@ void SciTextControl::handleEvent( Event* e )
 	//}
 }
 
+String SciTextControl::getText()
+{
+	return getTextModel()->getText();
+}
+
+void SciTextControl::setText( const String& text )
+{
+	getTextModel()->setText( text );
+}
+
 
 SciTextModel::SciTextModel():
 	TextModel(),
@@ -728,7 +741,8 @@ void SciTextModel::setSelection( const String& selectionText )
 
 void ScintillaKit::init( int argc, char** argv )
 {
-	REGISTER_CLASSINFO_EXTERNAL(SciTextControl)
+	REGISTER_CLASSINFO_EXTERNAL(SciTextModel);
+	REGISTER_CLASSINFO_EXTERNAL(SciTextControl);		
 }
 
 void ScintillaKit::terminate()
