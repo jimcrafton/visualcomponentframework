@@ -866,6 +866,11 @@ void IKFilter::initFromFile( const String& fileName )
 	initProgram( data ); 
 }
 
+void IKFilter::initFromData( const String& filterCode )
+{
+	initProgram( filterCode ); 
+}
+
 VariantData IKFilter::getValue( const String& name )
 {
 	VariantData result = VariantData::null();

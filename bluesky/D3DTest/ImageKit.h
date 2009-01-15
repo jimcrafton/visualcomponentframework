@@ -13,8 +13,11 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+#define GLEW_STATIC
 
 #include "GL/glew.h"
+
+
 #include "vcf/OpenGLKit/OpenGLKit.h"
 #include "vcf/OpenGLKit/VCFOpenGL.h"
 
@@ -288,6 +291,7 @@ public:
 
 	void initFromResource( const String& resourceName );
 	void initFromFile( const String& fileName );
+	void initFromData( const String& filterCode );
 
 	virtual void setDefaults(){};
 
