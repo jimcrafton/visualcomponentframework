@@ -216,6 +216,8 @@ public:
 	}
 
 	void setHandle( const uint32& val );
+
+	void renderToImage( Image* image );
 protected:
 
 	friend class IKImageContext;
@@ -242,6 +244,10 @@ protected:
 
 		return result;
 	}
+	
+
+	void render( const double& x, const double& y );
+	void renderToFBO( int fbo );
 	
 };
 

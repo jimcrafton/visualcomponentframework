@@ -270,6 +270,12 @@ IKImage::IKImage( Image* image )
 
 }
 
+IKImage::IKImage( const Dimensions& dimensions )
+	:Object(),imageHandle_(IKImage::NullHandle),filter_(NULL)
+{
+	initFromDimensions(dimensions);
+}
+
 IKImage::IKImage( const uchar* data, const size_t& size, const MIMEType& type  )
 	:Object(),imageHandle_(IKImage::NullHandle),filter_(NULL)
 {
@@ -402,7 +408,72 @@ void IKImage::destroyTexture()
 
 
 
+void IKImage::render( const double& x, const double& y )
+{
+	double u=1.0;
+	double v=1.0;	
 
+	glBegin(GL_POLYGON);	
+	
+		glTexCoord2f(0.0, 0.0);
+		glVertex2i(x, y);
+		
+		glTexCoord2f(u, 0.0);
+		glVertex2i(x+size_.width, y);
+		
+		glTexCoord2f(u, v);
+		glVertex2i(x+size_.width, y+size_.height);
+		
+		glTexCoord2f(0.0, v);
+		glVertex2i(x, y+size_.height);	
+	
+	glEnd();
+}
+
+void IKImage::renderToFBO( int fbo )
+{
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fbo );
+	glMatrixMode (GL_PROJECTION);
+	glLoadIdentity();
+
+	glOrtho(0, size_.width, 0, size_.height, -1, 1);
+	glViewport(0,0,size_.width, size_.height);
+
+	bind();
+
+	render(0,0);
+}
+
+void IKImage::renderToImage( Image* image )
+{
+	IKImage tmpImg(size_);
+
+	int tmpFBO = 0;
+	
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, ImageKit::getDefaultFBO() );
+
+	tmpImg.bind();
+	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, tmpImg.getHandle(), 0);
+
+	renderToFBO( ImageKit::getDefaultFBO() );
+
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0 );
+
+
+	bind();
+
+	//glTexImage2D(GL_TEXTURE_2D, 0, 
+	//			Image::itColor , 
+	//			size_.width, 
+	//			size_.height, 
+	//			0, 
+	//			GL_BGRA_EXT, 
+	//			GL_UNSIGNED_BYTE, 
+	//			NULL );
+
+
+	glGetTexImage( GL_TEXTURE_2D, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image->getData() );
+}
 
 
 
@@ -552,33 +623,10 @@ void IKImageContext::draw( const double& x, const double& y, IKImage* image )
 
 			filter->apply();
 
-			//img->bind();
-
-
-			u=1.0;
-			v=1.0;
-			
-			Dimensions sz = img->getSize();
-			
 			glColor4f(1.0, 1.0, 1.0, opacity_);
-			
-			glBegin(GL_POLYGON);
-			
-			
-				glTexCoord2f(0.0, 0.0);
-				glVertex2i(0, 0);
-				
-				glTexCoord2f(u, 0.0);
-				glVertex2i(sz.width, 0);
-				
-				glTexCoord2f(u, v);
-				glVertex2i(sz.width, sz.height);
-				
-				glTexCoord2f(0.0, v);
-				glVertex2i(0, sz.height);
-			
-			
-			glEnd();
+		
+
+			outImg->render( 0, 0 );
 
 			glUseProgramObjectARB(0);
 
@@ -597,50 +645,21 @@ void IKImageContext::draw( const double& x, const double& y, IKImage* image )
 
 
 		filter = filters.back();
-		IKImage* outImg = filter->getOutputImage();
-		outImg->bind();
+		IKImage* outImg = filter->getOutputImage();	
 
-
-		
-
-		imgSz = outImg->getSize();
-		u=1.0;
-		v=1.0;
 		glPushMatrix();
-		
 		
 		GLMatrix m;
 		m = xfrm_;
 		glMultMatrixd( m );		
 		
 		glColor4f(1.0, 1.0, 1.0, opacity_);
-		
-		glBegin(GL_POLYGON);
-		
-		
-			glTexCoord2f(0.0, 0.0);
-			glVertex2i(x, y);
-			
-			glTexCoord2f(u, 0.0);
-			glVertex2i(x+imgSz.width, y);
-			
-			glTexCoord2f(u, v);
-			glVertex2i(x+imgSz.width, y+imgSz.height);
-			
-			glTexCoord2f(0.0, v);
-			glVertex2i(x, y+imgSz.height);
-		
-		
-		glEnd();
+		outImg->bind();
+		outImg->render( x, y );
 		
 		glPopMatrix();
 	}
 	else {		
-		image->bind();
-		
-		u=1.0;
-		v=1.0;
-		
 		Size sz = image->getSize();
 		glPushMatrix();
 		
@@ -649,24 +668,9 @@ void IKImageContext::draw( const double& x, const double& y, IKImage* image )
 		glMultMatrixd( m );
 		
 		glColor4f(1.0, 1.0, 1.0, opacity_);
-		
-		glBegin(GL_POLYGON);
-		
-		
-			glTexCoord2f(0.0, 0.0);
-			glVertex2i(x, y);
-			
-			glTexCoord2f(u, 0.0);
-			glVertex2i(x+sz.width_, y);
-			
-			glTexCoord2f(u, v);
-			glVertex2i(x+sz.width_, y+sz.height_);
-			
-			glTexCoord2f(0.0, v);
-			glVertex2i(x, y+sz.height_);
-		
-		
-		glEnd();
+
+		image->bind();
+		image->render(x,y);		
 		
 		glPopMatrix();
 
