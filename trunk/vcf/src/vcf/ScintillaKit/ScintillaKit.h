@@ -540,6 +540,8 @@ public:
 	*/
 	void stopTypingTimer();
 
+	String getText();
+	void setText( const String& text );
 protected:
 	/**
 	* called by the timer.
