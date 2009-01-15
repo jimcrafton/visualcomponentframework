@@ -1,0 +1,60 @@
+object FilterTestWindow  : VCF::Window
+	top = 200
+	left = 200
+	height = 300
+	width = 320
+	caption = 'Filter Test'	
+
+	settings['mainwindow.top'].name = 'top'
+	settings['mainwindow.left'].name = 'left'
+	settings['mainwindow.width'].name = 'width'
+	settings['mainwindow.height'].name = 'height'
+
+
+	
+	object shaderEdit : VCF::SciTextControl
+		height = 200
+		alignment = AlignTop
+		settings['editor.height'].name = 'height'		
+	end
+
+	object splitter : VCF::Splitter 
+		alignment = AlignTop
+		height = 5
+	end
+
+	object view : ImageView
+		height = 100
+		alignment = AlignClient			
+	end
+	
+	object status : VCF::StatusBar
+		height = 15pt
+		status[0] = 'Status: '
+		status[1] = 'Dimensions: NNN x NNN'
+
+		settings['status.visible'].name = 'visible'
+	end
+
+	object mainMenu : VCF::MenuBar
+		object file : VCF::DefaultMenuItem
+			caption = '&File'
+			object fileOpen : VCF::DefaultMenuItem
+				caption = 'Open Image...'	
+				delegates
+					MenuItemClicked = [view@ImageView::openImage]
+				end			
+			end
+		end
+
+		object filter : VCF::DefaultMenuItem
+			caption = 'F&ilter'
+			object filterCompile : VCF::DefaultMenuItem
+				caption = 'Compile'	
+				delegates
+					MenuItemClicked = [view@ImageView::compileFilter]
+				end			
+			end
+		end
+	end
+end

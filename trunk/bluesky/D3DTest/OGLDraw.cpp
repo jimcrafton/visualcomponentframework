@@ -494,7 +494,7 @@ public:
 
 			initialized = true;
 
-			img.initFromFile( "res:logo.png" );
+			img.initFromFile( "logo.png" );
 			//img2.initFromFile( "C:\\Documents and Settings\\jcrafton\\Desktop\\1.jpg" );
 
 

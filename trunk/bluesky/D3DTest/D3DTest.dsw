@@ -54,6 +54,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "FilterTest"=.\FilterTest.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "FoundationKit"=..\..\vcf\build\vc60\FoundationKit\FoundationKit.dsp - Package Owner=<4>
 
 Package=<5>
