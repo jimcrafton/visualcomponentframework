@@ -55,6 +55,22 @@ object FilterTestWindow  : VCF::Window
 					MenuItemClicked = [view@ImageView::compileFilter]
 				end			
 			end
+
+			object filterOpen : VCF::DefaultMenuItem
+				caption = '&Open...'	
+				delegates
+					MenuItemClicked = [FilterTest@FilterTest::openFilter]
+				end			
+			end
+
+			object filterSaveAs : VCF::DefaultMenuItem
+				caption = 'Save &As...'	
+				delegates
+					MenuItemClicked = [FilterTest@FilterTest::saveFilterAs]
+				end			
+			end
+
+			
 		end
 	end
 end

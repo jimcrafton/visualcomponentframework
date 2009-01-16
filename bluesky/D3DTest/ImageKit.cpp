@@ -586,6 +586,9 @@ void IKImageContext::draw( const double& x, const double& y, IKImage* image )
 
 		glOrtho(0, imgSz.width, 0, imgSz.height, -1, 1);
 		glViewport(0,0,imgSz.width, imgSz.height);
+		glEnable(GL_BLEND);
+	
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);		
 
 	
 		std::vector<IKImage*> images;

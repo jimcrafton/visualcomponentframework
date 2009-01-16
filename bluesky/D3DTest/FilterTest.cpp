@@ -20,10 +20,69 @@ public:
 		
 	}
 
+	virtual ~ImageView(){}
+
 	IKFilter* filter;
 
 	IKImage image;
 	bool useFilterImage;
+	Point lastPt;
+	Point currentTrans;
+	double currentScaleFactor;
+	double currentAngle;
+
+	virtual void mouseWheel( MouseEvent* e ) {
+		if ( e->getMouseDelta() > 0 ) {
+			currentScaleFactor += 0.05;
+		}
+		else {
+			currentScaleFactor -= 0.05;
+		}
+
+		currentScaleFactor = minVal( 5.0, maxVal( 0.0015, currentScaleFactor ) );
+		repaint();
+	}
+
+	virtual void mouseDown( MouseEvent* e ) {
+		setFocused();
+		if ( e->hasLeftButton() ) {			
+			lastPt = *e->getPoint();
+			keepMouseEvents();
+		}
+		else if ( e->hasRightButton() ) {
+			keepMouseEvents();
+		}
+	}
+
+	virtual void mouseUp( MouseEvent* e ) {
+		if ( e->hasLeftButton() ) {
+			lastPt = *e->getPoint();
+			releaseMouseEvents();
+		}
+		else if ( e->hasRightButton() ) {
+			releaseMouseEvents();			
+		}
+	}
+
+	virtual void mouseMove( MouseEvent* e ) {
+		if ( e->hasLeftButton() ) {
+			currentTrans.x_ +=  (e->getPoint()->x_ - lastPt.x_);
+			currentTrans.y_ +=  (e->getPoint()->y_ - lastPt.y_);
+			lastPt = *e->getPoint();
+			repaint();
+		}
+		else if ( e->hasRightButton() ) {
+			currentAngle += 0.5;
+			repaint();
+		}
+	}
+
+	void resetXfrms() {
+		currentTrans.x_ = 0;
+		currentTrans.y_ = 0;
+		currentScaleFactor = 1.0;
+		currentAngle = 0;
+	}
 
 	virtual void paint( GraphicsContext* ) {
 		IKImageContext ic(this);
@@ -36,10 +95,23 @@ public:
 
 		ic.initView( r.getWidth(), r.getHeight() );
 
+		double x = r.getWidth()/2.0;
+		double y = r.getHeight()/2.0;
+		
+		//ic.multiTransformMatrix( Matrix2D::translation(x,y) );
+		
+		ic.multiTransformMatrix( Matrix2D::translation(currentTrans.x_,currentTrans.y_) * 
+								Matrix2D::scaling( currentScaleFactor, currentScaleFactor ) *
+								Matrix2D::rotation(currentAngle) );
+
+		//ic.multiTransformMatrix( Matrix2D::translation(-x,-y) );
+
 		ic.clear( &Color(0.0,0.0,0.0,1.0) );
 
-		double x = r.getWidth()/2.0 - image.getSize().width/2;
-		double y = r.getHeight()/2.0 - image.getSize().height/2;
+		
+
+		x = r.getWidth()/2.0 - image.getSize().width/2;
+		y = r.getHeight()/2.0 - image.getSize().height/2;
 
 		if ( image.getHandle() != 0 && !useFilterImage ) {
 
@@ -88,7 +160,10 @@ public:
 			StatusBar* status = (StatusBar*)Application::getRunningInstance()->findComponent( "status", true );
 			status->setStatusPaneText( 1, Format("Dimensions: %d x %d") % image.getSize().width % image.getSize().height );
 
+			resetXfrms();
+
 			useFilterImage = false;
+			setFocused();
 			repaint();
 		}
 	}
@@ -118,6 +193,35 @@ public:
 		OpenGLKit::init(argc,argv);
 		ImageKit::init(argc,argv);
 		ScintillaKit::init(argc,argv);
+
+		addCallback( new ClassProcedure1<Event*,FilterTest>(this, &FilterTest::saveFilterAs), "FilterTest::saveFilterAs" );
+		addCallback( new ClassProcedure1<Event*,FilterTest>(this, &FilterTest::openFilter), "FilterTest::openFilter" );
+	}
+
+	void saveFilterAs( Event* ) {
+		CommonFileSaveDialog dlg( getMainWindow() );
+		dlg.addFilter( "ImageKit Filter (*.shader)", "*.shader" );
+		if ( dlg.execute() ) {
+			Control* shaderEdit = (Control*)findComponent( "shaderEdit", true );
+
+			FileOutputStream fos(dlg.getFileName());
+			AnsiString s = shaderEdit->getModel()->getValueAsString();
+			fos.write( (const uchar*)s.c_str(), s.length() );
+		}
+	}
+
+	void openFilter( Event* ) {
+		CommonFileOpenDialog dlg( getMainWindow() );
+		dlg.addFilter( "ImageKit Filter (*.shader)", "*.shader" );
+		if ( dlg.execute() ) {
+			Control* shaderEdit = (Control*)findComponent( "shaderEdit", true );
+
+			FileInputStream fis(dlg.getFileName());
+			
+			String s;
+			fis >> s;
+			shaderEdit->getModel()->setValueAsString( s );
+		}
 	}
 
 	virtual bool initRunningApplication(){
