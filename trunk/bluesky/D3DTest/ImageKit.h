@@ -316,6 +316,10 @@ public:
 
 	IKImage* getOutputImage();
 
+	String getCompileStatus() {
+		return compileStatus_;
+	}
+
 	static FilterPropertyAttributes getFilterAttributes( IKFilter* filter );
 
 	static FilterCategories getFilterCategories( IKFilter* filter );
