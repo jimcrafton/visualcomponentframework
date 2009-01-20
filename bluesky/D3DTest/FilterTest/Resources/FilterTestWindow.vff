@@ -10,12 +10,29 @@ object FilterTestWindow  : VCF::Window
 	settings['mainwindow.width'].name = 'width'
 	settings['mainwindow.height'].name = 'height'
 
-
-	
-	object shaderEdit : VCF::SciTextControl
+	object editPanel : VCF::Panel
 		height = 200
 		alignment = AlignTop
-		settings['editor.height'].name = 'height'		
+		settings['editorPane.height'].name = 'height'
+		border = null
+
+		object shaderEdit : VCF::SciTextControl
+			height = 200
+			alignment = AlignClient			
+		end
+
+		object splitter2 : VCF::Splitter 
+			alignment = AlignBottom
+			height = 5
+		end
+
+		object shaderErrors : VCF::MultilineTextControl
+			height = 1
+			visible = false
+			readonly = true
+			textWrapping = false
+			alignment = AlignBottom
+		end
 	end
 
 	object splitter : VCF::Splitter 
@@ -45,8 +62,40 @@ object FilterTestWindow  : VCF::Window
 					MenuItemClicked = [view@ImageView::openImage]
 				end			
 			end
+
+			object fileSaveAs : VCF::DefaultMenuItem
+				caption = 'Save Image...'	
+				delegates
+					MenuItemClicked = [view@ImageView::saveImage]
+				end			
+			end
 		end
 
+		object file : VCF::DefaultMenuItem
+			caption = '&View'
+			
+			object viewEditor : VCF::DefaultMenuItem
+				caption = 'Reset Image'	
+				delegates
+					MenuItemClicked = [view@ImageView::resetImage]
+				end			
+			end
+
+			object viewEditor : VCF::DefaultMenuItem
+				caption = 'Editor'	
+				delegates
+					MenuItemClicked = [FilterTest@FilterTest::viewEditor]
+				end			
+			end
+
+			object viewStatus : VCF::DefaultMenuItem
+				caption = 'Status bar'	
+				delegates
+					MenuItemClicked = [FilterTest@FilterTest::viewStatus]
+				end			
+			end
+
+		end
 		object filter : VCF::DefaultMenuItem
 			caption = 'F&ilter'
 			object filterCompile : VCF::DefaultMenuItem

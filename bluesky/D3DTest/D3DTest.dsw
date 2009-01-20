@@ -114,6 +114,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Scribble10"=..\..\vcf\examples\MVC\Scribble10\Scribble10.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "UIlib"=..\..\..\..\directui\UIlib\UIlib.dsp - Package Owner=<4>
 
 Package=<5>
