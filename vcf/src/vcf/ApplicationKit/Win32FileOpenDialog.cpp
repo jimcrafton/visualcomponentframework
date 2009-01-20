@@ -137,7 +137,14 @@ bool Win32FileOpenDialog::executeW()
 	filter = filter_.begin();
 	String tmp;
 	while ( filter != filter_.end() ){
-		tmp += *filter + '\0';
+		String s = *filter;
+		if ( ((filter - filter_.begin()) % 2) != 0 ) {
+			if ( s.find( "*." ) == String::npos ) {
+				s = "*." + s;
+			}
+		}
+
+		tmp += s + '\0';
 		filter++;
 	}
 	tmp += '\0';
@@ -295,8 +302,15 @@ bool Win32FileOpenDialog::executeA()
 	filter = filter_.begin();
 	String tmp;
 	while ( filter != filter_.end() ){
-		tmp += *filter + '\0';
-		filter++;
+		String s = *filter;
+		if ( ((filter - filter_.begin()) % 2) != 0 ) {
+			if ( s.find( "*." ) == String::npos ) {
+				s = "*." + s;
+			}
+		}
+
+		tmp += s + '\0';
+		filter++;		
 	}
 	tmp += '\0';
 	tmp.copy( tmpFilter, tmp.size() );
