@@ -129,8 +129,15 @@ bool Win32FileSaveDialog::executeW()
 	filter = filter_.begin();
 	String tmp;
 	while ( filter != filter_.end() ){
-		tmp += *filter + '\0';
-		filter++;
+		String s = *filter;
+		if ( ((filter - filter_.begin()) % 2) != 0 ) {
+			if ( s.find( "*." ) == String::npos ) {
+				s = "*." + s;
+			}
+		}
+
+		tmp += s + '\0';
+		filter++;		
 	}
 	tmp += '\0';
 	tmp.copy( tmpFilter, tmp.size() );
@@ -283,8 +290,15 @@ bool Win32FileSaveDialog::executeA()
 	filter = filter_.begin();
 	String tmp;
 	while ( filter != filter_.end() ){
-		tmp += *filter + '\0';
-		filter++;
+		String s = *filter;
+		if ( ((filter - filter_.begin()) % 2) != 0 ) {
+			if ( s.find( "*." ) == String::npos ) {
+				s = "*." + s;
+			}
+		}
+
+		tmp += s + '\0';
+		filter++;		
 	}
 	tmp += '\0';
 	tmp.copy( tmpFilter, tmp.size() );
