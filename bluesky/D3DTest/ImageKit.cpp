@@ -21,10 +21,17 @@ _class_rtti_end_
 
 
 _class_rtti_(Brighten, "VCF::IKFilter", "Brighten")
-_property_( double, "brightness", getBrightness, setBrightness, "" );
+	_attribute_("category", "Image Processing")
+	_attribute_("displayName", "Brighten")
+	_property_( double, "brightness", getBrightness, setBrightness, "" );
+	_property_attr_("brightness", "min", 0.0 );
+	_property_attr_("brightness", "max", 1.0 );
+	_property_attr_("brightness", "default", 0.5 );
 _class_rtti_end_
 
 
+
+	
 
 
 _class_rtti_(Mixer, "VCF::IKFilter", "Mixer")
@@ -200,10 +207,6 @@ public:
 };
 
 
-_filter_rtti_( Brighten )
-	_filter_category_("Image Processing")
-	_filter_prop_attr_(0.0, 1.0, 0.5, "brightness","brightness")
-_filter_rtti_end_
 
 
 void ImageKit::init( int argc, char** argv )
@@ -226,7 +229,7 @@ void ImageKit::init( int argc, char** argv )
 	REGISTER_CLASSINFO_EXTERNAL(Mixer);
 	REGISTER_CLASSINFO_EXTERNAL(GaussianBlur);
 	
-	REGISTER_IKFILTER( Brighten );
+	
 }
 
 void ImageKit::terminate()

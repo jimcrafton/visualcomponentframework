@@ -364,60 +364,6 @@ protected:
 
 
 
-class IKFilterReg {
-public:
-	String name;
-	String displayName;
-	FilterCategories categories;
-	FilterPropertyAttributes propAttrs;
-};
-
-
-
-#define _filter_rtti_(x) \
-class x##IKFilterReg : public VCF::IKFilterReg { \
-public: \
-	x##IKFilterReg( const String& s) { name = VCF::StringUtils::getClassNameFromTypeInfo(typeid(x)); displayName = s; \
-\
-
-#define _filter_category_(cat) \
-	categories.push_back( VCF::String(cat) );\
-\
-
-
-#define _filter_prop_attr_(minimum, maximum, defaultValue, dispName, propName) \
-	{ \
-		VCF::FilterPropertyAttribute attr;\
-		attr.minVal = VCF::VariantData(minimum);\
-		attr.minVal = VCF::VariantData(maximum);\
-		attr.minVal = VCF::VariantData(defaultValue);\
-		attr.displayName = VCF::String(dispName);\
-		attr.propertyName = VCF::String(propName);\
-		propAttrs.push_back( attr );\
-	}\
-\
-
-#define _filter_rtti_end_   \
-		VCF::IKFilter::registerFilter( name, displayName, categories, propAttrs ); \
-	}\
-};\
-\
-
-
-#define REGISTER_IKFILTER(x) \
-{ x##IKFilterReg tmp( #x ); } \
-	\
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -84,18 +84,38 @@ object FilterTestWindow  : VCF::Window
 		settings['status.visible'].name = 'visible'
 	end
 
+	object ak1 : VCF::AcceleratorKey 
+		keyCode = vkLetterO
+		modifiers = [kmCtrl]
+		enabled = true
+	end
+
+	object ak2 : VCF::AcceleratorKey 
+		keyCode = vkLetterS
+		modifiers = [kmCtrl]
+		enabled = true
+	end
+
+	object ak3 : VCF::AcceleratorKey 
+		keyCode = vkF5
+		enabled = true
+	end
+
+
 	object mainMenu : VCF::MenuBar
 		object file : VCF::DefaultMenuItem
 			caption = '&File'
 			object fileOpen : VCF::DefaultMenuItem
-				caption = 'Open Image...'	
+				caption = 'Open Image...'
+				accelerator = @ak1	
 				delegates
 					MenuItemClicked = [view@ImageView::openImage]
 				end			
 			end
 
 			object fileSaveAs : VCF::DefaultMenuItem
-				caption = 'Save Image...'	
+				caption = 'Save Image...'
+				accelerator = @ak2						
 				delegates
 					MenuItemClicked = [view@ImageView::saveImage]
 				end			
@@ -131,6 +151,7 @@ object FilterTestWindow  : VCF::Window
 			caption = 'F&ilter'
 			object filterCompile : VCF::DefaultMenuItem
 				caption = 'Compile'	
+				accelerator = @ak3
 				delegates
 					MenuItemClicked = [view@ImageView::compileFilter]
 				end			
