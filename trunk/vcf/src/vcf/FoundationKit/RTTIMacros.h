@@ -142,6 +142,10 @@ you are finished defining your RTTI.
 	\
 
 
+#define _attribute_(AttrName,AttrVar)\
+	VCF::registerAttribute( tmpClassName, VCF::String(AttrName), VCF::VariantData(AttrVar) );\
+	\
+
 /**
 *Registers that the class fires an event. By declaring this it is expected that
 *there are methods for adding event handler of the specified type that fire
@@ -167,6 +171,11 @@ you are finished defining your RTTI.
 
 
 #define _abstract_delegate_(DelegateType,DelegateID)	 _abstract_event_(DelegateType,DelegateID) 
+
+
+#define _property_attr_(PropName,AttrName,AttrVar)\
+	VCF::registerPropertyAttribute( tmpClassName, VCF::String(PropName), VCF::String(AttrName), VCF::VariantData(AttrVar) );\
+	\
 
 #define _property_( type, propName, getFunc, setFunc, description ) \
 	VCF::registerPrimitiveProperty<type>( tmpClassName, VCF::String(propName), \

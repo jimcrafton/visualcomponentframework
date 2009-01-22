@@ -346,6 +346,37 @@ public:
 
 	void addInterface( InterfaceClass* newInterface );
 
+
+	/**
+	Gets all the attributes of a class
+	*/
+	Enumerator<VariantData>* getAttributes() const {
+		return attributes_.getEnumerator();
+	}
+
+	bool hasAttribute( const String& attrName ) const;
+	VariantData getAttribute( const String& attrName ) const;
+
+	/**
+	Adds an attribute to a class. This is simply a way to add meta-data 
+	to a class using name-value pairs. The attrName represents the 
+	attribute name, and the attrVal is a variant that represents it's
+	value. An example might be a class version number, or a display name
+	for a class. The rtti macro syntax uses the _attribute_ macro, and
+	might look like this:
+	\code
+		_class_rtti_(Foo, "VCF::Object", FOO_CLASSID)
+		_attribute_( "version", "1.2" )
+		_attribute_( "display Name", "Foo Class" )
+		_attribute_( "supportsCOM", true )
+		_attribute_( "COM-CLASSID", "{F2247FA6-EECA-4da0-967B-79E7FBDB04DA}" )
+		_class_rtti_end_(Foo)
+	\endcode
+	These are just some examples of what you might do with them
+	*/
+	void addAttribute( const String& attrName, const VariantData& attrVal );
+
+
 	/**
 	compares an object to the stored object instance. This uses
 	typeid which is OK in GCC. The actual compare is made in compareObject()
@@ -397,7 +428,7 @@ private:
 	Map<String,Method*> methods_;
 	Map<String, DelegateProperty*> delegates_;
 	Map<String, InterfaceClass*> interfaces_;
-
+	Map<String,VariantData> attributes_;
 };
 
 

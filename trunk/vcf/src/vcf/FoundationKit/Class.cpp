@@ -485,6 +485,28 @@ uint32 Class::sizeOf() const
 
 	return result;
 }
+
+bool Class::hasAttribute( const String& attrName ) const
+{
+	Map<String,VariantData>::const_iterator found = attributes_.find( attrName );
+	return found != attributes_.end();
+}
+
+VariantData Class::getAttribute( const String& attrName ) const
+{
+	Map<String,VariantData>::const_iterator found = attributes_.find( attrName );
+	if ( found != attributes_.end() ) {
+		return found->second;
+	}
+
+	return VariantData::null();
+}
+
+void Class::addAttribute( const String& attrName, const VariantData& attrVal ) 
+{
+	attributes_[attrName] = attrVal;
+}
+
 /**
 $Id$
 */
