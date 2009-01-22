@@ -5,6 +5,7 @@
 #include "vcf/FoundationKit/RTTIMacros.h"
 #include "vcf/ScintillaKit/ScintillaKit.h"
 #include "vcf/ApplicationKit/StatusBar.h"
+#include "vcf/ApplicationKit/ListModel.h"
 
 #include "ImageKit.h"
 
@@ -152,7 +153,10 @@ public:
 	void compileFilter( Event* e ) {
 		Control* shaderEdit = (Control*)Application::getRunningInstance()->findComponent( "shaderEdit", true );
 		Control* shaderErrors = (Control*)Application::getRunningInstance()->findComponent( "shaderErrors", true );
+		Control* splitter = (Control*)Application::getRunningInstance()->findComponent( "splitter2", true );
+
 		shaderErrors->setVisible(false);
+		splitter->setVisible(false);
 
 		String text = shaderEdit->getModel()->getValueAsString();
 
@@ -167,9 +171,11 @@ public:
 			useFilterImage = true;
 			repaint();
 		}
-		catch (BasicException&){
-			shaderErrors->setHeight( 100 );
-			shaderErrors->setVisible(true);			
+		catch (BasicException&){			
+			shaderErrors->setHeight( 100 );			
+			shaderErrors->setVisible(true);	
+			splitter->setVisible(true);
+			
 			shaderErrors->getModel()->setValueAsString( filter->getCompileStatus() );
 			useFilterImage = false;
 			repaint();
@@ -280,6 +286,8 @@ public:
 	void viewEditor( Event* e ) {
 		Control* editPanel = (Control*)Application::getRunningInstance()->findComponent( "editPanel", true );
 		editPanel->setVisible( !editPanel->getVisible() );
+		Control* splitter = (Control*)Application::getRunningInstance()->findComponent( "splitter", true );
+		splitter->setVisible( !splitter->getVisible() );
 
 		MenuItem* item = (MenuItem*)e->getSource();
 		item->setChecked( editPanel->getVisible() );
@@ -288,6 +296,8 @@ public:
 	void viewStatus( Event* e ) {
 		Control* status = (Control*)Application::getRunningInstance()->findComponent( "status", true );
 		status->setVisible( !status->getVisible() );
+		
+
 
 		MenuItem* item = (MenuItem*)e->getSource();
 		item->setChecked( status->getVisible() );
@@ -335,6 +345,21 @@ public:
 		delete res;
 
 		shaderEdit->getModel()->setValueAsString( defaultText );
+
+
+		Control* filterList = (Control*)Application::getRunningInstance()->findComponent( "filtersList", true );
+		ListModel* lm = (ListModel*)filterList->getModel();
+		FilterCategories categories = IKFilter::getCategories();
+		for ( FilterCategories::iterator i=categories.begin();i!=categories.end();i++ ) {
+			const String& category = *i;
+			Array<String> filterNames = IKFilter::getFiltersForCategory( category );
+
+			for ( Array<String>::iterator j=filterNames.begin();j!=filterNames.end();j++ ) {
+				const String& filter = *j;
+				lm->add( IKFilter::getFilterDisplayName(filter) );
+			}
+		}
+
 
 		mainWindow->initializeSettings(true);
 		mainWindow->show();

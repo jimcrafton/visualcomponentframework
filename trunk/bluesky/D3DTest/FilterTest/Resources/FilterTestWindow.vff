@@ -16,28 +16,59 @@ object FilterTestWindow  : VCF::Window
 		settings['editorPane.height'].name = 'height'
 		border = null
 
-		object shaderEdit : VCF::SciTextControl
-			height = 200
-			alignment = AlignClient			
+		object customFilterPane : VCF::Panel
+			alignment = AlignLeft
+			width = 300
+			border = null
+			
+			settings['customFilterPane.width'].name = 'width'
+
+			object shaderEdit : VCF::SciTextControl
+				height = 200
+				alignment = AlignClient			
+			end
+
+			object splitter2 : VCF::Splitter 
+				visible = false
+				alignment = AlignBottom
+				height = 5			
+				cursor = SCT_SPLIT_HORZ			
+			end
+
+			object shaderErrors : VCF::MultilineTextControl
+				height = 1
+				visible = false
+				readonly = true
+				textWrapping = false
+				alignment = AlignBottom
+			end
+		end
+		
+		object splitter3 : VCF::Splitter 	
 		end
 
-		object splitter2 : VCF::Splitter 
-			alignment = AlignBottom
-			height = 5
-		end
+		object defaultFiltersPane : VCF::Panel
+			border = null
+			alignment = AlignClient
 
-		object shaderErrors : VCF::MultilineTextControl
-			height = 1
-			visible = false
-			readonly = true
-			textWrapping = false
-			alignment = AlignBottom
+			object filtersList : VCF::ListViewControl 
+				alignment = AlignTop
+				height = 100
+				border = null
+				iconStyle = isDetails
+
+				object col1 : VCF::ColumnItem 
+					caption = 'Filters'
+					settings['filtersList.colWidth'].name = 'width'
+				end
+			end
 		end
 	end
 
 	object splitter : VCF::Splitter 
 		alignment = AlignTop
 		height = 5
+		cursor = SCT_SPLIT_HORZ
 	end
 
 	object view : ImageView
