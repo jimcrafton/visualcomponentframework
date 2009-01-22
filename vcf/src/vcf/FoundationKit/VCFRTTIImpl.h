@@ -3403,6 +3403,30 @@ void registerEnumPropertyWithLabels( const String& className, const String& prop
 	}
 };
 
+inline 
+void registerAttribute( const String& className, const String& attrName, const VariantData& attrVal )
+{
+	Class* clazz = ClassRegistry::getClass( className );
+	if ( NULL != clazz ){
+		if ( !clazz->hasAttribute( attrName ) ) {
+			clazz->addAttribute( attrName, attrVal );
+		}
+	}
+}
+
+
+inline 
+void registerPropertyAttribute( const String& className, const String& propName, const String& attrName, const VariantData& attrVal )
+{
+	Class* clazz = ClassRegistry::getClass( className );
+	if ( NULL != clazz ){
+		Property* prop = clazz->getProperty( propName );
+		if ( NULL != prop ){
+			prop->addAttribute( attrName, attrVal );
+		}
+	}
+}
+
 
 
 template <typename FieldType>

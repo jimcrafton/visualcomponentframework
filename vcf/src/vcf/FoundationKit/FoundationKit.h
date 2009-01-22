@@ -351,11 +351,11 @@ namespace VCF{
 
 
 
-
-
+#include "vcf/FoundationKit/Enum.h"
+#include "vcf/FoundationKit/VariantData.h"
 #include "vcf/FoundationKit/Class.h"
 #include "vcf/FoundationKit/InterfaceClass.h"
-#include "vcf/FoundationKit/Enum.h"
+
 #include "vcf/FoundationKit/PropertyChangeException.h"
 
 #include "vcf/FoundationKit/BasicFileError.h"
@@ -367,15 +367,10 @@ namespace VCF{
 #include "vcf/FoundationKit/BasicInputStream.h"
 #include "vcf/FoundationKit/BasicOutputStream.h"
 #include "vcf/FoundationKit/PropertyChangeEvent.h"
-#include "vcf/FoundationKit/VariantData.h"
 #include "vcf/FoundationKit/Property.h"
 #include "vcf/FoundationKit/Method.h"
 #include "vcf/FoundationKit/Field.h"
 #include "vcf/FoundationKit/ClassRegistry.h"
-//#include "vcf/FoundationKit/ObjectWithEvents.h"
-
-//#include "vcf/FoundationKit/VCFRTTIImpl.h"
-//#include "vcf/FoundationKit/ClassInfo.h"
 
 
 

@@ -29,7 +29,7 @@ through the enum type. This works best with enums
 that have members whose value changes in intervals
 of 1.
 */
-class FOUNDATIONKIT_API Enum : public Object{
+class FOUNDATIONKIT_API Enum {
 public:
 	Enum(){};
 
@@ -67,9 +67,13 @@ public:
 	*/
 	virtual void set( const int& intVal ) = 0;
 
+	
+
 	operator int (){
 		return get();
 	};
+
+	virtual String toString() = 0;
 
 	/**
 	*sets the enum val from a string. The default behaviour

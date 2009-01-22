@@ -35,7 +35,8 @@ public:
 		isReadOnly_(false),			
 		type_(pdUndefined),
 		source_(NULL),
-		bound_(false){
+		bound_(false),
+		attributes_(NULL){
 		
 		//prop_count ++;
 		//StringUtils::trace( "Created Property\n\tProperty Count = " + StringUtils::toString(prop_count) + "\n" );
@@ -47,7 +48,8 @@ public:
 		isReadOnly_(false),
 		type_(pdUndefined),
 		source_(NULL),
-		bound_(false){
+		bound_(false),
+		attributes_(NULL){
 
 		name_ = prop.name_;
 		displayName_ = prop.displayName_;
@@ -63,6 +65,7 @@ public:
 	};
 
 	virtual ~Property(){
+		delete attributes_;
 		//prop_count --;
 		//StringUtils::trace( "Deleted Property\n\tProperty Count = " + StringUtils::toString(prop_count) + "\n" );
 	};
@@ -78,6 +81,20 @@ public:
 		type_ = rhs.type_;
 		source_ = rhs.source_;
 		bound_ = rhs.bound_;
+	
+		if ( NULL != rhs.attributes_ ) {				
+			if ( NULL == attributes_ ) {
+				attributes_ = new Map<String,VariantData>();
+			}
+
+			*attributes_ = *rhs.attributes_;
+		}
+		else {
+			if ( NULL != attributes_ ) {
+				attributes_->clear();
+			}
+		}
+		
 
 		return *this;
 	};
@@ -136,6 +153,62 @@ public:
 	void setName( const String& name ){
 		name_ = name;
 	};
+
+
+
+	Enumerator<VariantData>* getAttributes() const {
+		if ( NULL != attributes_ ) {
+			return attributes_->getEnumerator();
+		}
+
+		return NULL;
+	}
+
+	bool hasAttribute( const String& attrName ) const {
+		if ( NULL != attributes_ ) {
+			Map<String,VariantData>::const_iterator found = attributes_->find( attrName );
+			return found != attributes_->end();
+		}
+
+		return false;
+	}
+
+	VariantData getAttribute( const String& attrName ) const {
+		if ( NULL != attributes_ ) {
+			Map<String,VariantData>::const_iterator found = attributes_->find( attrName );
+			if ( found != attributes_->end() ) {
+				return found->second;
+			}
+		}
+
+		return VariantData::null();
+	}
+
+	/**
+	Adds an attribute to a property. This is simply a way to add meta-data 
+	to a property using name-value pairs. The attrName represents the 
+	attribute name, and the attrVal is a variant that represents it's
+	value. An example might be a minimum value for the property, or a 
+	a default value. The rtti macro syntax uses the _property_attr_ macro, and
+	might look like this:
+	\code
+		_class_rtti_(Foo, "VCF::Object", FOO_CLASSID)
+		_property_( double, "fooVal", getFooVal, setFooVal, "The foo value property" )
+		_property_attr_( "fooVal", "defaultValue", 12.201 ) 
+		_class_rtti_end_(Foo)
+	\endcode
+	These are just some examples of what you might do with them.
+
+	Note that the property must be defined \em before this can be called,
+	so the order you declare the macros is important.	
+	*/
+	void addAttribute( const String& attrName, const VariantData& attrVal ) {
+		if ( NULL == attributes_ ) {
+			attributes_ = new Map<String,VariantData>();
+		}
+
+		(*attributes_)[ attrName ] = attrVal;
+	}
 
 	/**
 	*This function returns the class name of the property's type.
@@ -464,6 +537,7 @@ private:
 	PropertyDescriptorType type_;
 	Object* source_;
 	bool bound_;
+	Map<String,VariantData>* attributes_;
 };
 
 
