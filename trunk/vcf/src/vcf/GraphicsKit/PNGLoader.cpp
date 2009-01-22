@@ -551,6 +551,10 @@ Image* PNGLoader::loadImageFromStream( InputStream* stream )
 	
 	png_read_end(png_ptr, info_ptr);
 
+	if ( NULL == result ) {
+		throw RuntimeException( MAKE_ERROR_MSG_2("Unable to read PNG file."));
+	}
+
 	ColorPixels pixels(result); 
 	SysPixelType* pix = pixels;
 
