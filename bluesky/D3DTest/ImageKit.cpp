@@ -199,6 +199,13 @@ public:
 	}
 };
 
+
+_filter_rtti_( Brighten )
+	_filter_category_("Image Processing")
+	_filter_prop_attr_(0.0, 1.0, 0.5, "brightness","brightness")
+_filter_rtti_end_
+
+
 void ImageKit::init( int argc, char** argv )
 {
 	ImageKit::instance = new ImageKit();
@@ -219,8 +226,7 @@ void ImageKit::init( int argc, char** argv )
 	REGISTER_CLASSINFO_EXTERNAL(Mixer);
 	REGISTER_CLASSINFO_EXTERNAL(GaussianBlur);
 	
-	
-	
+	REGISTER_IKFILTER( Brighten );
 }
 
 void ImageKit::terminate()
@@ -753,6 +759,18 @@ void IKFilter::registerFilter( const String& filterClassName, const String& filt
 
 		IKFilter::registeredFilters[filterClassName] = info;
 	}
+}
+
+String IKFilter::getFilterDisplayName( const String& filterClassName )
+{
+	String result;
+
+	IKFilter::FilterMap::iterator found = IKFilter::registeredFilters.find( filterClassName );
+	if ( found != IKFilter::registeredFilters.end() ) {
+		result = found->second.displayName;
+	}
+
+	return result;
 }
 
 FilterPropertyAttribute IKFilter::getFilterAttribute( const String& filterClassName, const String& propertyName )
