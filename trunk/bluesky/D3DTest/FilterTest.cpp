@@ -54,6 +54,7 @@ public:
 			keepMouseEvents();
 		}
 		else if ( e->hasRightButton() ) {
+			lastPt = *e->getPoint();
 			keepMouseEvents();
 		}
 	}
@@ -82,9 +83,15 @@ public:
 			Point center = r.getCenter();			
 			Point p = *e->getPoint();
 
-			double dx = p.x_ - center.x_;
-			double dy = p.y_ - center.y_;
-			currentAngle = (atan2( dx, dy ) * 180.0/M_PI) * -1.0;
+			double dx = lastPt.x_ - center.x_;
+			double dy = lastPt.y_ - center.y_;
+			double prevAngle = (atan2( dx, dy ) * 180.0/M_PI) * -1.0;
+
+			dx = p.x_ - center.x_;
+			dy = p.y_ - center.y_;
+			currentAngle += ((atan2( dx, dy ) * 180.0/M_PI) * -1.0) - prevAngle;
+
+			lastPt = *e->getPoint();
 
 			updateStatus();
 
