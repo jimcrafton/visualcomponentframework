@@ -55,8 +55,11 @@ public:
 
 	CursorPeer* getPeer();
 
+	static void registerConstants();
 protected:
 	CursorPeer* peer_;
+
+	static String getCursorConstants( const String& name );
 };
 
 

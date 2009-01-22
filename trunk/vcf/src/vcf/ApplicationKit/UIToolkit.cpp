@@ -267,6 +267,8 @@ void UIToolkit::init()
 	VFFInputStream::registerComponentConstant( CC_CONTROL_HSPACE, UIToolkit::getControlConstants );
 	VFFInputStream::registerComponentConstant( CC_INFO_TOPSPACE, UIToolkit::getControlConstants );
 	VFFInputStream::registerComponentConstant( CC_INFO_BOTTOMSPACE, UIToolkit::getControlConstants );
+
+	Cursor::registerConstants();	
 }
 
 void UIToolkit::initToolKit()
