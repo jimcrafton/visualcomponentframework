@@ -4,6 +4,7 @@
 #include "vcf/FoundationKit/Dictionary.h"
 #include "vcf/FoundationKit/RTTIMacros.h"
 #include "vcf/OpenGLKit/OpenGLToolkit.h"
+#include "vcf/FoundationKit/StringTokenizer.h"
 
 using namespace VCF;
 
@@ -21,12 +22,13 @@ _class_rtti_end_
 
 
 _class_rtti_(Brighten, "VCF::IKFilter", "Brighten")
-	_attribute_("category", "Image Processing")
-	_attribute_("displayName", "Brighten")
+	_attribute_(IKFilter::CategoryAttr, "Image Processing")
+	_attribute_(IKFilter::DisplayNameAttr, "Brighten")
 	_property_( double, "brightness", getBrightness, setBrightness, "" );
-	_property_attr_("brightness", "min", 0.0 );
-	_property_attr_("brightness", "max", 1.0 );
-	_property_attr_("brightness", "default", 0.5 );
+	_property_attr_("brightness", IKFilter::MinAttr, 0.0 );
+	_property_attr_("brightness", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("brightness", IKFilter::DefaultAttr, 0.5 );
+	_property_attr_("brightness", IKFilter::InputAttr, true );	
 _class_rtti_end_
 
 
@@ -39,8 +41,37 @@ _property_object_( IKImage, "input2Image", getInput2Image, setInput2Image, "" );
 _class_rtti_end_
 
 _class_rtti_(GaussianBlur, "VCF::IKFilter", "GaussianBlur")
+	_attribute_(IKFilter::CategoryAttr, "Image Processing")
+	_attribute_(IKFilter::DisplayNameAttr, "Gaussian Blur")
+	_property_( int, "radius", getRadius, setRadius, "" );
+	_property_attr_("radius", IKFilter::MinAttr, 1 );
+	_property_attr_("radius", IKFilter::MaxAttr, 10 );
+	_property_attr_("radius", IKFilter::DefaultAttr, 7 );
+	_property_attr_("radius", IKFilter::InputAttr, true );	
+
+	_property_( float, "amount", getAmount, setAmount, "" );
+	_property_attr_("amount", IKFilter::MinAttr, 0.0 );
+	_property_attr_("amount", IKFilter::MaxAttr, 5.0 );
+	_property_attr_("amount", IKFilter::DefaultAttr, 2.0 );
+	_property_attr_("amount", IKFilter::InputAttr, true );	
 _class_rtti_end_
 
+
+_class_rtti_(Emboss, "VCF::IKFilter", "Emboss")
+	_attribute_(IKFilter::CategoryAttr, "Image Processing")
+	_attribute_(IKFilter::DisplayNameAttr, "Emboss")
+	_property_( float, "displacement", getDisplacement, setDisplacement, "" );
+	_property_attr_("displacement", IKFilter::MinAttr, 0.00001 );
+	_property_attr_("displacement", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("displacement", IKFilter::DefaultAttr, 0.001 );
+	_property_attr_("displacement", IKFilter::InputAttr, true );	
+
+	_property_( float, "intensity", getIntensity, setIntensity, "" );
+	_property_attr_("intensity", IKFilter::MinAttr, 0.0 );
+	_property_attr_("intensity", IKFilter::MaxAttr, 5.0 );
+	_property_attr_("intensity", IKFilter::DefaultAttr, 2.0 );
+	_property_attr_("intensity", IKFilter::InputAttr, true );	
+_class_rtti_end_
 
 
 
@@ -228,6 +259,7 @@ void ImageKit::init( int argc, char** argv )
 	REGISTER_CLASSINFO_EXTERNAL(Brighten);
 	REGISTER_CLASSINFO_EXTERNAL(Mixer);
 	REGISTER_CLASSINFO_EXTERNAL(GaussianBlur);
+	REGISTER_CLASSINFO_EXTERNAL(Emboss);
 	
 	
 }
@@ -700,7 +732,15 @@ void IKImageContext::draw( const double& x, const double& y, IKImage* image )
 }
 
 
-IKFilter::FilterMap IKFilter::registeredFilters;
+
+const String& IKFilter::CategoryAttr = "category";
+const String& IKFilter::DisplayNameAttr = "displayName";
+const String& IKFilter::MinAttr = "min";
+const String& IKFilter::MaxAttr = "max";
+const String& IKFilter::DefaultAttr = "default";
+const String& IKFilter::InputAttr = "input";
+const String& IKFilter::OutputAttr = "output";
+
 
 
 IKFilter::IKFilter():
@@ -729,9 +769,26 @@ FilterPropertyAttributes IKFilter::getFilterAttributes( const String& filterClas
 {
 	FilterPropertyAttributes result;
 
-	IKFilter::FilterMap::iterator found = IKFilter::registeredFilters.find( filterClassName );
-	if ( found != IKFilter::registeredFilters.end() ) {
-		result = found->second.attributes;
+	Class* clazz = ClassRegistry::getClass( filterClassName );
+	if ( NULL != clazz ) {
+		Enumerator<Property*>* props = clazz->getProperties();
+		while ( props->hasMoreElements() ) {
+			Property* prop = props->nextElement();
+
+			if ( prop->hasAttribute( IKFilter::DefaultAttr ) && 
+				prop->hasAttribute( IKFilter::MinAttr ) && 
+				prop->hasAttribute( IKFilter::MaxAttr ) ) {
+
+				FilterPropertyAttribute info;
+				info.defaultVal = prop->getAttribute( IKFilter::DefaultAttr );
+				info.minVal = prop->getAttribute( IKFilter::MinAttr );
+				info.maxVal = prop->getAttribute( IKFilter::MaxAttr );
+				info.displayName = prop->getDisplayName();
+				info.propertyName = prop->getName();
+
+				result.push_back( info );
+			}
+		}
 	}
 
 	return result;
@@ -741,9 +798,12 @@ FilterCategories IKFilter::getFilterCategories( const String& filterClassName )
 {
 	FilterCategories result;
 
-	IKFilter::FilterMap::iterator found = IKFilter::registeredFilters.find( filterClassName );
-	if ( found != IKFilter::registeredFilters.end() ) {
-		result = found->second.categories;
+	Class* clazz = ClassRegistry::getClass( filterClassName );
+	if ( NULL != clazz ) {
+		String cats = clazz->getAttribute( IKFilter::CategoryAttr );
+
+		StringTokenizer tok(cats,",");
+		tok.getElements( result );
 	}
 
 	return result;
@@ -752,44 +812,66 @@ FilterCategories IKFilter::getFilterCategories( const String& filterClassName )
 void IKFilter::registerFilter( const String& filterClassName, const String& filterDisplayName, 
 					const FilterCategories& categories, const FilterPropertyAttributes& attributes )
 {
-	IKFilter::FilterMap::iterator found = IKFilter::registeredFilters.find( filterClassName );
-	if ( found == IKFilter::registeredFilters.end() ) {
-		IKFilterInfo info;
-		info.displayName = filterDisplayName;
-		info.categories = categories;
-		info.attributes = attributes;
-		info.className = filterClassName;
+	Class* clazz = ClassRegistry::getClass( filterClassName );
+	if ( NULL != clazz ) {
+		String catString;
+		FilterCategories::const_iterator it = categories.begin();
+		while ( it != categories.end() ) {
+			if ( it != categories.begin() ) {
+				catString += ",";
+			}
+			catString += *it;
+			++it;
+		}
 
-		IKFilter::registeredFilters[filterClassName] = info;
+
+		clazz->addAttribute( IKFilter::CategoryAttr, catString );
+		clazz->addAttribute( IKFilter::DisplayNameAttr, filterDisplayName );
+
+		FilterPropertyAttributes::const_iterator it2 = attributes.begin();
+		while ( it2 != attributes.end() ) {
+			const FilterPropertyAttribute& attr = *it2;
+
+			Property* prop = clazz->getProperty( attr.propertyName );
+			if ( NULL != prop ) {
+				prop->addAttribute( IKFilter::DefaultAttr, attr.defaultVal );
+				prop->addAttribute( IKFilter::MinAttr, attr.minVal );
+				prop->addAttribute( IKFilter::MaxAttr, attr.maxVal );
+			}
+			++it2;
+		}
 	}
 }
 
 String IKFilter::getFilterDisplayName( const String& filterClassName )
 {
-	String result;
-
-	IKFilter::FilterMap::iterator found = IKFilter::registeredFilters.find( filterClassName );
-	if ( found != IKFilter::registeredFilters.end() ) {
-		result = found->second.displayName;
+	Class* clazz = ClassRegistry::getClass( filterClassName );
+	if ( NULL != clazz ) {
+		return clazz->getAttribute( IKFilter::DisplayNameAttr );
 	}
 
-	return result;
+	return String();
 }
 
 FilterPropertyAttribute IKFilter::getFilterAttribute( const String& filterClassName, const String& propertyName )
 {
 	FilterPropertyAttribute result;
 	
-	IKFilter::FilterMap::iterator found = IKFilter::registeredFilters.find( filterClassName );
-	if ( found != IKFilter::registeredFilters.end() ) {
-		FilterPropertyAttributes::iterator it = found->second.attributes.begin();
-		while ( it != found->second.attributes.end() ) {
-			const FilterPropertyAttribute& attr = *it;
-			if ( attr.propertyName == propertyName ) {
-				result = attr;
-				break;
+	Class* clazz = ClassRegistry::getClass( filterClassName );
+	if ( NULL != clazz ) {		
+		Property* prop = clazz->getProperty(propertyName );
+
+		if ( prop != NULL ) {
+			if ( prop->hasAttribute( IKFilter::DefaultAttr ) && 
+				prop->hasAttribute( IKFilter::MinAttr ) && 
+				prop->hasAttribute( IKFilter::MaxAttr ) ) {
+				
+				result.defaultVal = prop->getAttribute( IKFilter::DefaultAttr );
+				result.minVal = prop->getAttribute( IKFilter::MinAttr );
+				result.maxVal = prop->getAttribute( IKFilter::MaxAttr );
+				result.displayName = prop->getDisplayName();
+				result.propertyName = prop->getName();
 			}
-			++it;
 		}
 	}
 
@@ -800,37 +882,40 @@ FilterCategories IKFilter::getCategories()
 {
 	FilterCategories result;
 
-	IKFilter::FilterMap::iterator it = IKFilter::registeredFilters.begin();
-	while ( it != IKFilter::registeredFilters.end() ) {
-		const FilterCategories& categories = it->second.categories;
-		
-		FilterCategories::const_iterator it2 = categories.begin();
-		while ( it2 != categories.end() ) {
-			FilterCategories::iterator found = std::find( result.begin(), result.end(), *it2 );
-			if ( found == result.end() ) {
-				result.push_back( *it2 );
-			}
-			++it2;
-		}	
+	std::vector<VariantData> vals = ClassRegistry::getAttrValuesByClass( classid(IKFilter), IKFilter::CategoryAttr );
 
+	std::vector<VariantData>::iterator it = vals.begin();
+	while ( it != vals.end() ) {
+		result.push_back( *it );
 		++it;
 	}
 
-	return result;
+	return result;	
 }
 
 Array<String> IKFilter::getFiltersForCategory( const String& category )
 {
 	Array<String> result;
 
-	IKFilter::FilterMap::iterator it = IKFilter::registeredFilters.begin();
-	while ( it != IKFilter::registeredFilters.end() ) {
-		const FilterCategories& categories = it->second.categories;
+
+	std::vector<Class*> classes = ClassRegistry::getClassesWithAttribute( classid(IKFilter), IKFilter::CategoryAttr );
+
+	std::vector<Class*>::iterator it = classes.begin();
+	while ( it != classes.end() ) {
+		Class* clazz = *it;
+
+		String catStr = clazz->getAttribute( IKFilter::CategoryAttr );
+
+		StringTokenizer tok(catStr,",");
 		
-		FilterCategories::const_iterator found = std::find( categories.begin(), categories.end(), category );
-		if ( found != categories.end() ) {
-			result.push_back( it->second.className );
+		while ( tok.hasMoreElements() ) {
+			String cat = tok.nextElement();
+
+			if ( cat == category ) {
+				result.push_back( clazz->getClassName() );
+			}
 		}
+
 		++it;
 	}
 

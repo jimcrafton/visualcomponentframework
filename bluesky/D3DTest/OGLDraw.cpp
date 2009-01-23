@@ -550,8 +550,8 @@ public:
 		ic.draw( 231, 410, &img );
 		
 
-		//hueAdj->setInputImage( &img );
-		//hueAdj->setHueVal( 1.5 );
+		hueAdj->setInputImage( &img );
+		hueAdj->setHueVal( 1.5 );
 
 		//bright->setInputImage( hueAdj->getOutputImage() );
 		//bright->setBrightness( 0.5 );
@@ -560,7 +560,7 @@ public:
 		//mix->setInput2Image( &img2 );
 
 		double y = 10;
-		blur->setInputImage( &img );
+		blur->setInputImage( hueAdj->getOutputImage() );
 		blur->blurAmount = 2;//.0050;
 		ic.setTransformMatrix( Matrix2D() );
 		ic.setOpacity( 1.0 );		
