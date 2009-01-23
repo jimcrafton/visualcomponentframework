@@ -98,7 +98,7 @@ public:
 	/**
 	*gets the time the event was created.
 	*/
-    time_t getTime() const ;
+    DateTime getTime() const ;
 
 	/*
 	*sets the user data. User data is simply a place to store any sort of user specific info
@@ -117,7 +117,7 @@ protected:
     Object* source_;
 	void* userData_;
     uint32 eventType_;
-    time_t time_;
+    DateTime time_;
 };
 
 
@@ -161,8 +161,8 @@ inline Event::Event( Object* source, const uint32& eventType )
 inline void Event::init()
 {
 	consumed_ = false;
-	time_ = 0;
-	vcftime( &time_ );
+	
+	time_ = DateTime::now();
 }
 
 inline Object* Event::getSource() const 
@@ -180,7 +180,7 @@ inline void Event::setType( const uint32& type )
 	eventType_ = type;
 }
 
-inline time_t Event::getTime() const 
+inline DateTime Event::getTime() const 
 {
 	return time_;
 }
