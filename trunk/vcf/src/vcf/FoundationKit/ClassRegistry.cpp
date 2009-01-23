@@ -906,7 +906,12 @@ std::vector<VariantData> ClassRegistry::getAttrValuesByClass( const String& clas
 		Class* clazz = *it2;
 
 		if ( clazz->relatedTo( className ) ) {
-			result.push_back(  clazz->getAttribute( attr ) );
+			VariantData val = clazz->getAttribute( attr );
+			std::vector<VariantData>::iterator found = std::find( result.begin(), result.end(), val );
+
+			if ( found == result.end() ) {
+				result.push_back( val );
+			}
 		}
 
 		++it2;
