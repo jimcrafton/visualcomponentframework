@@ -495,6 +495,8 @@ Image* PNGLoader::loadImageFromStream( InputStream* stream )
 
 		case PNG_COLOR_TYPE_GRAY:
 		case PNG_COLOR_TYPE_GRAY_ALPHA:
+			result = GraphicsToolkit::createImage( width, height, Image::itGrayscale );
+
 			imageData = new unsigned char[ height * (width * png_ptr->channels) ];
 
 			/*
@@ -555,43 +557,63 @@ Image* PNGLoader::loadImageFromStream( InputStream* stream )
 		throw RuntimeException( MAKE_ERROR_MSG_2("Unable to read PNG file."));
 	}
 
-	ColorPixels pixels(result); 
-	SysPixelType* pix = pixels;
 
-	unsigned int index = 0;
-	unsigned int pixIndex = 0;
-	for (unsigned int y=0;y<height;y++ ) {		
-		for ( unsigned int x=0;x<width;x++ ) {
-			pixIndex = y*width + x;
-			index = y * (width * png_ptr->channels) + (x * png_ptr->channels);
+	if ( result->getType() == Image::itGrayscale ) {
+		GrayPixels pixels(result); 
+		unsigned char* pix = &pixels.buffer()->value;
 
-			pix[pixIndex].r = pix[pixIndex].g = pix[pixIndex].b = imageData[index];
+		unsigned int index = 0;
+		unsigned int pixIndex = 0;
+		for (unsigned int y=0;y<height;y++ ) {		
+			for ( unsigned int x=0;x<width;x++ ) {
+				pixIndex = y*width + x;
+				index = y * (width * png_ptr->channels) + (x * png_ptr->channels);
 
-			for (int channel=0;channel<png_ptr->channels;channel++ ) {				
-				switch ( channel ) {
-					case 0 : {
-						pix[pixIndex].b = imageData[index + channel];
-					}
-					break;
-
-					case 1 : {
-						pix[pixIndex].g = imageData[index + channel];
-					}
-					break;
-
-					case 2 : {
-						pix[pixIndex].r = imageData[index + channel];
-					}
-					break;
-
-					case 3 : {
-						pix[pixIndex].a = imageData[index + channel];
-					}
-					break;
-				}
-			}
-		}	
+				pix[pixIndex] = imageData[index];
+			}	
+		}
 	}
+	else { //color
+		ColorPixels pixels(result); 
+		SysPixelType* pix = pixels;
+
+		unsigned int index = 0;
+		unsigned int pixIndex = 0;
+		for (unsigned int y=0;y<height;y++ ) {		
+			for ( unsigned int x=0;x<width;x++ ) {
+				pixIndex = y*width + x;
+				index = y * (width * png_ptr->channels) + (x * png_ptr->channels);
+
+				pix[pixIndex].r = pix[pixIndex].g = pix[pixIndex].b = imageData[index];
+
+				for (int channel=0;channel<png_ptr->channels;channel++ ) {				
+					switch ( channel ) {
+						case 0 : {
+							pix[pixIndex].b = imageData[index + channel];
+						}
+						break;
+
+						case 1 : {
+							pix[pixIndex].g = imageData[index + channel];
+						}
+						break;
+
+						case 2 : {
+							pix[pixIndex].r = imageData[index + channel];
+						}
+						break;
+
+						case 3 : {
+							pix[pixIndex].a = imageData[index + channel];
+						}
+						break;
+					}
+				}
+			}	
+		}
+	}
+
+	
 
 	delete [] imageData;
 
