@@ -286,6 +286,16 @@ public:
 
 class IKFilter : public Object {
 public:
+
+	static const String& CategoryAttr;
+	static const String& DisplayNameAttr;
+	static const String& MinAttr;
+	static const String& MaxAttr;
+	static const String& DefaultAttr;
+	static const String& InputAttr;
+	static const String& OutputAttr;
+
+
 	IKFilter();
 	virtual ~IKFilter();
 
@@ -353,11 +363,6 @@ protected:
 	void initProgram( const String& data );
 
 	virtual void initFilterVariables();
-
-	typedef std::map<String,IKFilterInfo> FilterMap;
-
-	static FilterMap registeredFilters;
-
 	
 };
 
@@ -430,9 +435,26 @@ public:
 		initFromResource( "GaussianBlur" );		
 	}
 
+	int getRadius() {
+		return blurRadius;
+	}
+
+	void setRadius( const int& val ) {
+		blurRadius = val;
+	}
+
+	float getAmount() {
+		return blurAmount;
+	}
+
+	void setAmount( const float& val ) {
+		blurAmount = val;
+	}
+protected:
+
 	int blurRadius;
 	float blurAmount;
-protected:
+
 	virtual void initFilterVariables() {
 		IKFilter::initFilterVariables();  
         float sigma = blurRadius / blurAmount;
@@ -479,6 +501,35 @@ protected:
 	}
 };
 
+
+class Emboss : public IKFilter {
+public:
+	Emboss() {		
+		displacement = 0.001f;
+		intensity = 2.0f;
+		initFromResource( "Emboss" );		
+	}
+
+
+	float getDisplacement() {
+		return displacement;
+	}
+
+	void setDisplacement( const float& val ) {
+		displacement = val;
+	}
+
+	float getIntensity() {
+		return intensity;
+	}
+
+	void setIntensity( const float& val ) {
+		intensity = val;
+	}
+protected:
+	float displacement;
+	float intensity;
+};
 
 class Mixer : public IKFilter {
 public:
