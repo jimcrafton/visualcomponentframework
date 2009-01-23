@@ -27,7 +27,7 @@ the Window class.
 
 */
 #define classid(classType) \
-	VCF::ClassRegistry::getClass( #classType )\
+	VCF::ClassRegistry::getClass( VCF::StringUtils::getClassNameFromTypeInfo(typeid(classType)) )\
 	\
 
 
