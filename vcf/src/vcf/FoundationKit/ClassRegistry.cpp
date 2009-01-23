@@ -816,6 +816,107 @@ void ClassRegistry::removeInterface( InterfaceClass* interfaceClass )
 	}
 }
 
+std::vector<Class*> ClassRegistry::getClassesWithAttribute( const String& attr )
+{
+	std::vector<String> attrs(1);
+	attrs[0] = attr;
+	return ClassRegistry::getClassesWithAttributes( attrs );
+}
+
+std::vector<Class*> ClassRegistry::getClassesWithAttributes( const std::vector<String>& attrs )
+{
+	std::vector<Class*> result;
+
+#ifdef VCF_RTTI
+	ClassRegistry* reg = ClassRegistry::getClassRegistry();
+
+
+	std::vector<String>::const_iterator attrIt;
+
+	std::map<String,Class*>::iterator it = reg->classMap_.begin();
+	while ( it != reg->classMap_.end() ) {
+		Class* clazz = it->second;
+
+		for ( attrIt = attrs.begin();attrIt!=attrs.end();attrIt++ ) {
+			if ( clazz->hasAttribute(*attrIt) ) {
+				result.push_back( clazz );
+				break;
+			}
+		}
+
+		++it;
+	}
+#endif
+
+	return result;
+}
+
+std::vector<Class*> ClassRegistry::getClassesWithAttribute( const String& className, const String& attr )
+{
+	std::vector<String> attrs(1);
+	attrs[0] = attr;
+	return ClassRegistry::getClassesWithAttributes( className, attrs );
+}
+
+std::vector<Class*> ClassRegistry::getClassesWithAttributes( const String& className, const std::vector<String>& attrs )
+{
+	std::vector<Class*> result;
+#ifdef VCF_RTTI
+	ClassRegistry* reg = ClassRegistry::getClassRegistry();
+
+
+	std::vector<String>::const_iterator attrIt;
+
+	std::map<String,Class*>::iterator it = reg->classMap_.begin();
+	while ( it != reg->classMap_.end() ) {
+		Class* clazz = it->second;
+
+		for ( attrIt = attrs.begin();attrIt!=attrs.end();attrIt++ ) {
+			if ( clazz->hasAttribute(*attrIt) && clazz->relatedTo( className ) ) {
+				result.push_back( clazz );
+				break;
+			}
+		}
+
+		++it;
+	}
+#endif
+	return result;
+}
+
+std::vector<VariantData> ClassRegistry::getAttrValuesByClass( const String& className, const String& attr )
+{
+	std::vector<VariantData> result;
+#ifdef VCF_RTTI
+	ClassRegistry* reg = ClassRegistry::getClassRegistry();
+	std::vector<Class*> classes;
+	std::map<String,Class*>::iterator it = reg->classMap_.begin();
+	while ( it != reg->classMap_.end() ) {
+		Class* clazz = it->second;
+		if ( clazz->hasAttribute(attr) ) {
+			classes.push_back( clazz );
+		}		
+
+		++it;
+	}
+
+
+	std::vector<Class*>::iterator it2 = classes.begin();
+	while ( it2 != classes.end() ) {
+		Class* clazz = *it2;
+
+		if ( clazz->relatedTo( className ) ) {
+			result.push_back(  clazz->getAttribute( attr ) );
+		}
+
+		++it2;
+	}
+
+	
+
+#endif
+	return result;
+}
 
 /**
 $Id$

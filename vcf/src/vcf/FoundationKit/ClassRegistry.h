@@ -202,6 +202,27 @@ public:
 	static void removeClass( Class* clazz );
 
 	static void removeInterface( InterfaceClass* interfaceClass );
+
+	static std::vector<Class*> getClassesWithAttribute( const String& attr );
+	static std::vector<Class*> getClassesWithAttributes( const std::vector<String>& attrs );
+
+	static std::vector<Class*> getClassesWithAttribute( Class* clazz, const String& attr ) {
+		return ClassRegistry::getClassesWithAttribute( clazz->getClassName(), attr );	
+	}
+
+	static std::vector<Class*> getClassesWithAttributes( Class* clazz, const std::vector<String>& attrs ) {
+		return ClassRegistry::getClassesWithAttributes( clazz->getClassName(), attrs );
+	}
+
+
+	static std::vector<Class*> getClassesWithAttribute( const String& className, const String& attr );
+	static std::vector<Class*> getClassesWithAttributes( const String& className, const std::vector<String>& attrs );
+
+	static std::vector<VariantData> getAttrValuesByClass( Class* clazz, const String& attr ) {
+		return ClassRegistry::getAttrValuesByClass( clazz->getClassName(), attr );
+	}
+
+	static std::vector<VariantData> getAttrValuesByClass( const String& className, const String& attr );
 protected:
 	Class* internal_getClass( const String& className );
 

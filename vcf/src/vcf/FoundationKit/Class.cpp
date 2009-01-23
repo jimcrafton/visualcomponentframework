@@ -507,6 +507,41 @@ void Class::addAttribute( const String& attrName, const VariantData& attrVal )
 	attributes_[attrName] = attrVal;
 }
 
+bool Class::derivesFrom( const String& className ) const
+{
+	if ( className == className_ ) {
+		return false;
+	}
+
+
+	Class* super = this->getSuperClass();
+	while ( NULL != super ) {
+		if ( super->getClassName() == className ) {
+			return true;
+		}
+		super = super->getSuperClass();
+	}
+
+	return false;
+}
+
+bool Class::relatedTo( const String& className ) const 
+{
+	if ( className == className_ ) {
+		return true;
+	}
+
+
+	Class* super = this->getSuperClass();
+	while ( NULL != super ) {
+		if ( super->getClassName() == className ) {
+			return true;
+		}
+		super = super->getSuperClass();
+	}
+
+	return false;
+}
 /**
 $Id$
 */

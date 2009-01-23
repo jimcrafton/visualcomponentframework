@@ -197,6 +197,17 @@ public:
 	*/
 	String getClassName() const ;
 
+	bool derivesFrom( const String& className ) const; 
+	bool derivesFrom( const Class* clazz ) const {
+		return derivesFrom( clazz->getClassName() );
+	}
+
+	//includes self in comparison with className
+	bool relatedTo( const String& className ) const; 
+	bool relatedTo( const Class* clazz ) const {
+		return relatedTo( clazz->getClassName() );
+	}
+
 	/**
 	returns an enumerator containing the Property values
 	the enumerator does not reflect the order in which the properties were added.
