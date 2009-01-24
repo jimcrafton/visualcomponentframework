@@ -18,32 +18,6 @@ Package=<4>
 
 ###############################################################################
 
-<<<<<<< .mine
-=======
-Project: "FilterTest"=.\FilterTest.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKit
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name glew_static
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name OpenGLKit
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ScintillaKit
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "FoundationKit"=..\..\vcf\build\vc60\FoundationKit\FoundationKit.dsp - Package Owner=<4>
 
 Package=<5>
@@ -65,13 +39,18 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name FoundationKit
+    Project_Dep_Name ApplicationKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name OpenGLKit
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name glew_static
     End Project Dependency
 }}}
 
 ###############################################################################
 
->>>>>>> .r3753
 Project: "OGLDraw"=.\OGLDraw.dsp - Package Owner=<4>
 
 Package=<5>
@@ -80,7 +59,6 @@ Package=<5>
 
 Package=<4>
 {{{
-<<<<<<< .mine
     Begin Project Dependency
     Project_Dep_Name ApplicationKit
     End Project Dependency
@@ -94,56 +72,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FoundationKit"=..\..\vcf\build\vc60\FoundationKit\FoundationKit.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "GraphicsKit"=..\..\vcf\build\vc60\GraphicsKit\GraphicsKit.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-=======
->>>>>>> .r3753
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKit
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name OpenGLKit
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name glew_static
-    End Project Dependency
-}}}
-
-###############################################################################
-
-<<<<<<< .mine
-=======
-Project: "OpenGLKit"=..\..\vcf\build\vc60\OpenGLKit\OpenGLKit.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
->>>>>>> .r3753
 Project: "ScintillaKit"=..\..\vcf\build\vc60\ScintillaKit\ScintillaKit.dsp - Package Owner=<4>
 
 Package=<5>
@@ -157,30 +85,6 @@ Package=<4>
 ###############################################################################
 
 Project: "Scribble10"=..\..\vcf\examples\MVC\Scribble10\Scribble10.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "ScintillaKit"=..\..\vcf\build\vc60\ScintillaKit\ScintillaKit.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "UIlib"=..\..\..\..\directui\UIlib\UIlib.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
