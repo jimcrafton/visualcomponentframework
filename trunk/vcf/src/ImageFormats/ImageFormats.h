@@ -17,6 +17,9 @@ public:
 
 	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
 	
+	virtual VCF::Image* loadImageFromBytes( const unsigned char* imageData, const VCF::uint64& dataLength );
+
+	virtual VCF::Image* loadImageFromStream( VCF::InputStream* stream );
 
 	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
 
@@ -34,6 +37,9 @@ public:
 
 	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
 	
+	virtual VCF::Image* loadImageFromBytes( const unsigned char* imageData, const VCF::uint64& dataLength );
+
+	virtual VCF::Image* loadImageFromStream( VCF::InputStream* stream );
 
 	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
 
@@ -51,6 +57,9 @@ public:
 
 	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
 	
+	virtual  VCF::Image* loadImageFromBytes( const unsigned char* imageData, const VCF::uint64& dataLength );
+	
+	virtual VCF::Image* loadImageFromStream( VCF::InputStream* stream );
 
 	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
 
@@ -67,7 +76,10 @@ public:
 	virtual ~PSDLoader() {};
 
 	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
-	
+
+	virtual VCF::Image* loadImageFromBytes( const unsigned char* imageData, const VCF::uint64& dataLength );
+
+	virtual VCF::Image* loadImageFromStream( VCF::InputStream* stream );
 
 	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
 
@@ -85,6 +97,9 @@ public:
 
 	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
 	
+	virtual VCF::Image* loadImageFromBytes( const unsigned char* imageData, const VCF::uint64& dataLength );
+
+	virtual VCF::Image* loadImageFromStream( VCF::InputStream* stream );
 
 	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
 
@@ -102,6 +117,9 @@ public:
 
 	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
 	
+	virtual VCF::Image* loadImageFromBytes( const unsigned char* imageData, const VCF::uint64& dataLength );
+
+	virtual VCF::Image* loadImageFromStream( VCF::InputStream* stream );
 
 	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
 
@@ -119,6 +137,9 @@ public:
 
 	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
 	
+	virtual VCF::Image* loadImageFromBytes( const unsigned char* imageData, const VCF::uint64& dataLength );
+
+	virtual VCF::Image* loadImageFromStream( VCF::InputStream* stream );
 
 	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
 
@@ -135,7 +156,10 @@ public:
 	virtual ~SGILoader() {};
 
 	virtual VCF::Image* loadImageFromFile( const VCF::String& fileName );
-	
+
+	virtual VCF::Image* loadImageFromBytes( const unsigned char* imageData, const VCF::uint64& dataLength );
+
+	virtual VCF::Image* loadImageFromStream( VCF::InputStream* stream );
 
 	virtual void saveImageToFile( const VCF::String& fileName, VCF::Image* image );
 

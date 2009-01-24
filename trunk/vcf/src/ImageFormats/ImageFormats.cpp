@@ -72,6 +72,16 @@ Image* TIFFLoader::loadImageFromFile( const String& fileName )
 
 }
 	
+Image* TIFFLoader::loadImageFromBytes( const unsigned char* imageData, const uint64& dataLength )
+{
+	return NULL;
+}
+
+VCF::Image* TIFFLoader::loadImageFromStream( VCF::InputStream* stream )
+{
+	return NULL;
+}
+
 void TIFFLoader::saveImageToFile( const String& fileName, Image* image )
 {
 	uint32 width = image->getWidth();
@@ -88,7 +98,19 @@ Image* IFFLoader::loadImageFromFile( const String& fileName )
 
 	return result;
 }
+
 	
+Image* IFFLoader::loadImageFromBytes( const unsigned char* imageData, const uint64& dataLength )
+{
+	return NULL;
+}
+
+VCF::Image* IFFLoader::loadImageFromStream( VCF::InputStream* stream )
+{
+	return NULL;
+}
+
+
 void IFFLoader::saveImageToFile( const String& fileName, Image* image )
 {
 	
@@ -104,6 +126,16 @@ Image* PCXLoader::loadImageFromFile( const String& fileName )
 	return result;
 }
 	
+Image* PCXLoader::loadImageFromBytes( const unsigned char* imageData, const uint64& dataLength )
+{
+	return NULL;
+}
+
+VCF::Image* PCXLoader::loadImageFromStream( VCF::InputStream* stream )
+{
+	return NULL;
+}
+
 void PCXLoader::saveImageToFile( const String& fileName, Image* image )
 {
 	
@@ -118,7 +150,19 @@ Image* PSDLoader::loadImageFromFile( const String& fileName )
 
 	return result;
 }
+
+VCF::Image* PSDLoader::loadImageFromStream( VCF::InputStream* stream )
+{
+	return NULL;
+}
+
 	
+Image* PSDLoader::loadImageFromBytes( const unsigned char* imageData, const uint64& dataLength )
+{
+	return NULL;
+}
+
+
 void PSDLoader::saveImageToFile( const String& fileName, Image* image )
 {
 	
@@ -134,6 +178,16 @@ Image* TARGALoader::loadImageFromFile( const String& fileName )
 	return result;
 }
 	
+Image* TARGALoader::loadImageFromBytes( const unsigned char* imageData, const uint64& dataLength )
+{
+	return NULL;
+}
+
+VCF::Image* TARGALoader::loadImageFromStream( VCF::InputStream* stream )
+{
+	return NULL;
+}
+	
 void TARGALoader::saveImageToFile( const String& fileName, Image* image )
 {
 	
@@ -147,7 +201,18 @@ Image* PGMLoader::loadImageFromFile( const String& fileName )
 
 	return result;
 }
-	
+
+
+Image* PGMLoader::loadImageFromBytes( const unsigned char* imageData, const uint64& dataLength )
+{
+	return NULL;
+}
+
+VCF::Image* PGMLoader::loadImageFromStream( VCF::InputStream* stream )
+{
+	return NULL;
+}
+
 void PGMLoader::saveImageToFile( const String& fileName, Image* image )
 {
 	
@@ -162,6 +227,17 @@ Image* PICTLoader::loadImageFromFile( const String& fileName )
 
 	return result;
 }
+
+Image* PICTLoader::loadImageFromBytes( const unsigned char* imageData, const uint64& dataLength )
+{
+	return NULL;
+}
+
+VCF::Image* PICTLoader::loadImageFromStream( VCF::InputStream* stream )
+{
+	return NULL;
+}
+
 	
 void PICTLoader::saveImageToFile( const String& fileName, Image* image )
 {
@@ -176,6 +252,16 @@ Image* SGILoader::loadImageFromFile( const String& fileName )
 	result = loadImageFromFile( fileName );
 
 	return result;
+}
+
+Image* SGILoader::loadImageFromBytes( const unsigned char* imageData, const uint64& dataLength )
+{
+	return NULL;
+}
+
+VCF::Image* SGILoader::loadImageFromStream( VCF::InputStream* stream )
+{
+	return NULL;
 }
 	
 void SGILoader::saveImageToFile( const String& fileName, Image* image )
