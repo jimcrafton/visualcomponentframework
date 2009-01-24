@@ -923,6 +923,55 @@ std::vector<VariantData> ClassRegistry::getAttrValuesByClass( const String& clas
 	return result;
 }
 
+
+Class* ClassRegistry::getClassWithAttrValue( const String& attr, const VariantData& value )
+{
+	Class* result = NULL;
+#ifdef VCF_RTTI
+	ClassRegistry* reg = ClassRegistry::getClassRegistry();
+	
+	std::map<String,Class*>::iterator it = reg->classMap_.begin();
+	while ( it != reg->classMap_.end() ) {
+		Class* clazz = it->second;
+		if ( clazz->hasAttribute(attr) ) {
+			if ( clazz->getAttribute( attr ) == value ) {
+				result = clazz;
+				break;
+			}
+		}		
+
+		++it;
+	}
+#endif
+
+	return result;
+}
+
+Class* ClassRegistry::getClassWithAttrValue( const String& className, const String& attr, const VariantData& value )
+{
+	Class* result = NULL;
+#ifdef VCF_RTTI
+	ClassRegistry* reg = ClassRegistry::getClassRegistry();
+	
+	std::map<String,Class*>::iterator it = reg->classMap_.begin();
+	while ( it != reg->classMap_.end() ) {
+		Class* clazz = it->second;
+		if ( clazz->relatedTo( className ) ) {
+			if ( clazz->hasAttribute(attr) ) {
+				if ( clazz->getAttribute( attr ) == value ) {
+					result = clazz;
+					break;
+				}
+			}
+		}
+
+		++it;
+	}
+#endif
+
+	return result;
+}
+
 /**
 $Id$
 */

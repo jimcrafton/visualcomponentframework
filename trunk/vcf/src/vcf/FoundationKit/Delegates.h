@@ -64,6 +64,10 @@ public:
 		return TypeArray();
 	};
 
+	size_t getArgumentCount() const {
+		return getArgumentTypes().size();
+	}
+
 	static void addArgumentTypeInfo( TypeArray& types, const std::type_info& ti ) {	
 		types.push_back( &ti );
 	}
@@ -77,9 +81,9 @@ public:
 
 		TypeArray rhsTypes = rhs.getArgumentTypes();
 		
-		result = types.size() == rhsTypes.size();
-		if ( types.size() == rhsTypes.size() ) {
-			for (size_t i=0;i<types.size();i++ ) {
+		result = types.size() >= rhsTypes.size();
+		if ( types.size() >= rhsTypes.size() ) {
+			for (size_t i=0;i<rhsTypes.size();i++ ) {
 				result = FunctionTypeInfo::typesMatch( *(types[i]), *(rhsTypes[i]) );
 				if ( !result ) {
 					break;
@@ -93,6 +97,8 @@ public:
 
 		return result;
 	}
+
+	
 };
 
 
@@ -1068,20 +1074,7 @@ public:
 		invoke( p1 );
 	}
 
-	void invoke( P1 p1 ) {
-		std::vector<CallBack*> tmp;
-		getCallbacks(tmp);
-
-		std::vector<CallBack*>::iterator it = tmp.begin();
-		while ( it != tmp.end() ) {
-			CallBack* cb = *it;
-			ProcedureType* callBack = (ProcedureType*)cb;
-
-			callBack->invoke( p1 );
-
-			++it;
-		}
-	}
+	void invoke( P1 p1 );
 
 	
 	AsyncResult* beginInvoke( P1 p1, AsyncCallback* callback ) {
@@ -1426,9 +1419,29 @@ public:
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
 			CallBack* cb = *it;
-			ProcedureType* callBack = (ProcedureType*)cb;
 
-			callBack->invoke( p1, p2 );
+			switch ( cb->getArgumentCount() ) {
+				case 0 : {
+					Procedure* callBack = (Procedure*)cb;
+					callBack->invoke();
+				}
+				break;
+
+				case 1 : {
+					Procedure1<P1>* callBack = (Procedure1<P1>*)cb;
+					callBack->invoke( p1 );
+				}
+				break;
+
+				default : {
+					ProcedureType* callBack = (ProcedureType*)cb;
+
+					callBack->invoke( p1, p2 );
+				}
+				break;
+			}
+
+			
 
 			++it;
 		}
@@ -1603,9 +1616,33 @@ public:
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
 			CallBack* cb = *it;
-			ProcedureType* callBack = (ProcedureType*)cb;
 
-			callBack->invoke( p1, p2, p3 );
+			switch ( cb->getArgumentCount() ) {
+				case 0 : {
+					Procedure* callBack = (Procedure*)cb;
+					callBack->invoke();
+				}
+				break;
+
+				case 1 : {
+					Procedure1<P1>* callBack = (Procedure1<P1>*)cb;
+					callBack->invoke( p1 );
+				}
+				break;
+
+				case 2 : {
+					Procedure2<P1,P2>* callBack = (Procedure2<P1,P2>*)cb;
+					callBack->invoke( p1, p2 );
+				}
+				break;
+
+				default : {
+					ProcedureType* callBack = (ProcedureType*)cb;
+
+					callBack->invoke( p1, p2, p3 );
+				}
+				break;
+			}
 
 			++it;
 		}
@@ -1785,9 +1822,38 @@ public:
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
 			CallBack* cb = *it;
-			ProcedureType* callBack = (ProcedureType*)cb;
+			switch ( cb->getArgumentCount() ) {
+				case 0 : {
+					Procedure* callBack = (Procedure*)cb;
+					callBack->invoke();
+				}
+				break;
 
-			callBack->invoke( p1, p2, p3, p4 );
+				case 1 : {
+					Procedure1<P1>* callBack = (Procedure1<P1>*)cb;
+					callBack->invoke( p1 );
+				}
+				break;
+
+				case 2 : {
+					Procedure2<P1,P2>* callBack = (Procedure2<P1,P2>*)cb;
+					callBack->invoke( p1, p2 );
+				}
+				break;
+
+				case 3 : {
+					Procedure3<P1,P2,P3>* callBack = (Procedure3<P1,P2,P3>*)cb;
+					callBack->invoke( p1, p2, p3 );
+				}
+				break;
+
+				default : {
+					ProcedureType* callBack = (ProcedureType*)cb;
+
+					callBack->invoke( p1, p2, p3, p4 );
+				}
+				break;
+			}
 
 			++it;
 		}
@@ -1969,9 +2035,46 @@ public:
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
 			CallBack* cb = *it;
-			ProcedureType* callBack = (ProcedureType*)cb;
+			
+			switch ( cb->getArgumentCount() ) {
+				case 0 : {
+					Procedure* callBack = (Procedure*)cb;
+					callBack->invoke();
+				}
+				break;
 
-			callBack->invoke( p1, p2, p3, p4, p5 );
+				case 1 : {
+					Procedure1<P1>* callBack = (Procedure1<P1>*)cb;
+					callBack->invoke( p1 );
+				}
+				break;
+
+				case 2 : {
+					Procedure2<P1,P2>* callBack = (Procedure2<P1,P2>*)cb;
+					callBack->invoke( p1, p2 );
+				}
+				break;
+
+				case 3 : {
+					Procedure3<P1,P2,P3>* callBack = (Procedure3<P1,P2,P3>*)cb;
+					callBack->invoke( p1, p2, p3 );
+				}
+				break;
+
+				case 4 : {
+					Procedure4<P1,P2,P3,P4>* callBack = (Procedure4<P1,P2,P3,P4>*)cb;
+					callBack->invoke( p1, p2, p3, p4 );
+				}
+				break;
+
+				default : {
+					ProcedureType* callBack = (ProcedureType*)cb;
+
+					callBack->invoke( p1, p2, p3, p4, p5 );
+				}
+				break;
+			}
+
 
 			++it;
 		}
@@ -2159,9 +2262,51 @@ public:
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
 			CallBack* cb = *it;
-			ProcedureType* callBack = (ProcedureType*)cb;
+			
+			switch ( cb->getArgumentCount() ) {
+				case 0 : {
+					Procedure* callBack = (Procedure*)cb;
+					callBack->invoke();
+				}
+				break;
 
-			callBack->invoke( p1, p2, p3, p4, p5, p6 );
+				case 1 : {
+					Procedure1<P1>* callBack = (Procedure1<P1>*)cb;
+					callBack->invoke( p1 );
+				}
+				break;
+
+				case 2 : {
+					Procedure2<P1,P2>* callBack = (Procedure2<P1,P2>*)cb;
+					callBack->invoke( p1, p2 );
+				}
+				break;
+
+				case 3 : {
+					Procedure3<P1,P2,P3>* callBack = (Procedure3<P1,P2,P3>*)cb;
+					callBack->invoke( p1, p2, p3 );
+				}
+				break;
+
+				case 4 : {
+					Procedure4<P1,P2,P3,P4>* callBack = (Procedure4<P1,P2,P3,P4>*)cb;
+					callBack->invoke( p1, p2, p3, p4 );
+				}
+				break;
+
+				case 5 : {
+					Procedure5<P1,P2,P3,P4,P5>* callBack = (Procedure5<P1,P2,P3,P4,P5>*)cb;
+					callBack->invoke( p1, p2, p3, p4, p5 );
+				}
+				break;
+
+				default : {
+					ProcedureType* callBack = (ProcedureType*)cb;
+
+					callBack->invoke( p1, p2, p3, p4, p5, p6 );
+				}
+				break;
+			}
 
 			++it;
 		}
@@ -2343,9 +2488,57 @@ public:
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
 			CallBack* cb = *it;
-			ProcedureType* callBack = (ProcedureType*)cb;
+			
+			switch ( cb->getArgumentCount() ) {
+				case 0 : {
+					Procedure* callBack = (Procedure*)cb;
+					callBack->invoke();
+				}
+				break;
 
-			callBack->invoke( p1, p2, p3, p4, p5, p6, p7 );
+				case 1 : {
+					Procedure1<P1>* callBack = (Procedure1<P1>*)cb;
+					callBack->invoke( p1 );
+				}
+				break;
+
+				case 2 : {
+					Procedure2<P1,P2>* callBack = (Procedure2<P1,P2>*)cb;
+					callBack->invoke( p1, p2 );
+				}
+				break;
+
+				case 3 : {
+					Procedure3<P1,P2,P3>* callBack = (Procedure3<P1,P2,P3>*)cb;
+					callBack->invoke( p1, p2, p3 );
+				}
+				break;
+
+				case 4 : {
+					Procedure4<P1,P2,P3,P4>* callBack = (Procedure4<P1,P2,P3,P4>*)cb;
+					callBack->invoke( p1, p2, p3, p4 );
+				}
+				break;
+
+				case 5 : {
+					Procedure5<P1,P2,P3,P4,P5>* callBack = (Procedure5<P1,P2,P3,P4,P5>*)cb;
+					callBack->invoke( p1, p2, p3, p4, p5 );
+				}
+				break;
+
+				case 6 : {
+					Procedure6<P1,P2,P3,P4,P5,P6>* callBack = (Procedure6<P1,P2,P3,P4,P5,P6>*)cb;
+					callBack->invoke( p1, p2, p3, p4, p5, p6 );
+				}
+				break;
+
+				default : {
+					ProcedureType* callBack = (ProcedureType*)cb;
+
+					callBack->invoke( p1, p2, p3, p4, p5, p6, p7 );
+				}
+				break;
+			}
 
 			++it;
 		}
@@ -2536,9 +2729,63 @@ public:
 		std::vector<CallBack*>::iterator it = tmp.begin();
 		while ( it != tmp.end() ) {
 			CallBack* cb = *it;
-			ProcedureType* callBack = (ProcedureType*)cb;
+			
+			switch ( cb->getArgumentCount() ) {
+				case 0 : {
+					Procedure* callBack = (Procedure*)cb;
+					callBack->invoke();
+				}
+				break;
 
-			callBack->invoke( p1, p2, p3, p4, p5, p6, p7, p8 );
+				case 1 : {
+					Procedure1<P1>* callBack = (Procedure1<P1>*)cb;
+					callBack->invoke( p1 );
+				}
+				break;
+
+				case 2 : {
+					Procedure2<P1,P2>* callBack = (Procedure2<P1,P2>*)cb;
+					callBack->invoke( p1, p2 );
+				}
+				break;
+
+				case 3 : {
+					Procedure3<P1,P2,P3>* callBack = (Procedure3<P1,P2,P3>*)cb;
+					callBack->invoke( p1, p2, p3 );
+				}
+				break;
+
+				case 4 : {
+					Procedure4<P1,P2,P3,P4>* callBack = (Procedure4<P1,P2,P3,P4>*)cb;
+					callBack->invoke( p1, p2, p3, p4 );
+				}
+				break;
+
+				case 5 : {
+					Procedure5<P1,P2,P3,P4,P5>* callBack = (Procedure5<P1,P2,P3,P4,P5>*)cb;
+					callBack->invoke( p1, p2, p3, p4, p5 );
+				}
+				break;
+
+				case 6 : {
+					Procedure6<P1,P2,P3,P4,P5,P6>* callBack = (Procedure6<P1,P2,P3,P4,P5,P6>*)cb;
+					callBack->invoke( p1, p2, p3, p4, p5, p6 );
+				}
+				break;
+
+				case 7 : {
+					Procedure7<P1,P2,P3,P4,P5,P6,P7>* callBack = (Procedure6<P1,P2,P3,P4,P5,P6,P7>*)cb;
+					callBack->invoke( p1, p2, p3, p4, p5, p6, p7 );
+				}
+				break;
+
+				default : {
+					ProcedureType* callBack = (ProcedureType*)cb;
+
+					callBack->invoke( p1, p2, p3, p4, p5, p6, p7, p8 );
+				}
+				break;
+			}
 
 			++it;
 		}
@@ -3103,9 +3350,24 @@ public:
 				std::vector<CallBack*>::iterator it = functions->begin();
 				while ( it != functions->end() ) {
 					CallBack* cb = *it;
-					CallbackType* callBack = (CallbackType*)cb;
+
+					switch ( cb->getArgumentCount() ) {
+						case 0 : {
+							Function<ReturnType>* callBack = (Function<ReturnType>*)cb;
 					
-					results[i] = callBack->invoke( p1 );
+							results[i] = callBack->invoke();
+						}
+						break;
+
+						default : {
+							CallbackType* callBack = (CallbackType*)cb;
+					
+							results[i] = callBack->invoke( p1 );
+						}
+						break;
+					}
+
+					
 					
 					++i;
 					++it;
@@ -3307,9 +3569,29 @@ public:
 				std::vector<CallBack*>::iterator it = functions->begin();
 				while ( it != functions->end() ) {
 					CallBack* cb = *it;
-					CallbackType* callBack = (CallbackType*)cb;
 					
-					results[i] = callBack->invoke( p1, p2 );
+					switch ( cb->getArgumentCount() ) {
+						case 0 : {
+							Function<ReturnType>* callBack = (Function<ReturnType>*)cb;
+					
+							results[i] = callBack->invoke();
+						}
+						break;
+
+						case 1 : {
+							Function1<ReturnType,P1>* callBack = (Function1<ReturnType,P1>*)cb;
+					
+							results[i] = callBack->invoke( p1 );
+						}
+						break;
+
+						default : {
+							CallbackType* callBack = (CallbackType*)cb;
+					
+							results[i] = callBack->invoke( p1, p2 );
+						}
+						break;
+					}
 					
 					++i;
 					++it;
@@ -3520,9 +3802,36 @@ public:
 				std::vector<CallBack*>::iterator it = functions->begin();
 				while ( it != functions->end() ) {
 					CallBack* cb = *it;
-					CallbackType* callBack = (CallbackType*)cb;
 					
-					results[i] = callBack->invoke( p1, p2, p3 );
+					switch ( cb->getArgumentCount() ) {
+						case 0 : {
+							Function<ReturnType>* callBack = (Function<ReturnType>*)cb;
+					
+							results[i] = callBack->invoke();
+						}
+						break;
+
+						case 1 : {
+							Function1<ReturnType,P1>* callBack = (Function1<ReturnType,P1>*)cb;
+					
+							results[i] = callBack->invoke( p1 );
+						}
+						break;
+
+						case 2 : {
+							Function2<ReturnType,P1,P2>* callBack = (Function2<ReturnType,P1,P2>*)cb;
+					
+							results[i] = callBack->invoke( p1, p2 );
+						}
+						break;
+
+						default : {
+							CallbackType* callBack = (CallbackType*)cb;
+					
+							results[i] = callBack->invoke( p1, p2, p3 );
+						}
+						break;
+					}
 					
 					++i;
 					++it;
@@ -3741,9 +4050,43 @@ public:
 				std::vector<CallBack*>::iterator it = functions->begin();
 				while ( it != functions->end() ) {
 					CallBack* cb = *it;
-					CallbackType* callBack = (CallbackType*)cb;
 					
-					results[i] = callBack->invoke( p1, p2, p3, p4 );
+					switch ( cb->getArgumentCount() ) {
+						case 0 : {
+							Function<ReturnType>* callBack = (Function<ReturnType>*)cb;
+					
+							results[i] = callBack->invoke();
+						}
+						break;
+
+						case 1 : {
+							Function1<ReturnType,P1>* callBack = (Function1<ReturnType,P1>*)cb;
+					
+							results[i] = callBack->invoke( p1 );
+						}
+						break;
+
+						case 2 : {
+							Function2<ReturnType,P1,P2>* callBack = (Function2<ReturnType,P1,P2>*)cb;
+					
+							results[i] = callBack->invoke( p1, p2 );
+						}
+						break;
+
+						case 3 : {
+							Function3<ReturnType,P1,P2,P3>* callBack = (Function3<ReturnType,P1,P2,P3>*)cb;
+					
+							results[i] = callBack->invoke( p1, p2, p3 );
+						}
+						break;
+
+						default : {
+							CallbackType* callBack = (CallbackType*)cb;
+					
+							results[i] = callBack->invoke( p1, p2, p3, p4 );
+						}
+						break;
+					}
 					
 					++i;
 					++it;
@@ -3969,9 +4312,50 @@ public:
 				std::vector<CallBack*>::iterator it = functions->begin();
 				while ( it != functions->end() ) {
 					CallBack* cb = *it;
-					CallbackType* callBack = (CallbackType*)cb;
 					
-					results[i] = callBack->invoke( p1, p2, p3, p4, p5 );
+					switch ( cb->getArgumentCount() ) {
+						case 0 : {
+							Function<ReturnType>* callBack = (Function<ReturnType>*)cb;
+					
+							results[i] = callBack->invoke();
+						}
+						break;
+
+						case 1 : {
+							Function1<ReturnType,P1>* callBack = (Function1<ReturnType,P1>*)cb;
+					
+							results[i] = callBack->invoke( p1 );
+						}
+						break;
+
+						case 2 : {
+							Function2<ReturnType,P1,P2>* callBack = (Function2<ReturnType,P1,P2>*)cb;
+					
+							results[i] = callBack->invoke( p1, p2 );
+						}
+						break;
+
+						case 3 : {
+							Function3<ReturnType,P1,P2,P3>* callBack = (Function3<ReturnType,P1,P2,P3>*)cb;
+					
+							results[i] = callBack->invoke( p1, p2, p3 );
+						}
+						break;
+
+						case 4 : {
+							Function4<ReturnType,P1,P2,P3,P4>* callBack = (Function4<ReturnType,P1,P2,P3,P4>*)cb;
+					
+							results[i] = callBack->invoke( p1, p2, p3, p4 );
+						}
+						break;
+
+						default : {
+							CallbackType* callBack = (CallbackType*)cb;
+					
+							results[i] = callBack->invoke( p1, p2, p3, p4, p5 );
+						}
+						break;
+					}
 					
 					++i;
 					++it;
@@ -4210,9 +4594,57 @@ public:
 				std::vector<CallBack*>::iterator it = functions->begin();
 				while ( it != functions->end() ) {
 					CallBack* cb = *it;
-					CallbackType* callBack = (CallbackType*)cb;
 					
-					results[i] = callBack->invoke( p1, p2, p3, p4, p5, p6 );
+					switch ( cb->getArgumentCount() ) {
+						case 0 : {
+							Function<ReturnType>* callBack = (Function<ReturnType>*)cb;
+					
+							results[i] = callBack->invoke();
+						}
+						break;
+
+						case 1 : {
+							Function1<ReturnType,P1>* callBack = (Function1<ReturnType,P1>*)cb;
+					
+							results[i] = callBack->invoke( p1 );
+						}
+						break;
+
+						case 2 : {
+							Function2<ReturnType,P1,P2>* callBack = (Function2<ReturnType,P1,P2>*)cb;
+					
+							results[i] = callBack->invoke( p1, p2 );
+						}
+						break;
+
+						case 3 : {
+							Function3<ReturnType,P1,P2,P3>* callBack = (Function3<ReturnType,P1,P2,P3>*)cb;
+					
+							results[i] = callBack->invoke( p1, p2, p3 );
+						}
+						break;
+
+						case 4 : {
+							Function4<ReturnType,P1,P2,P3,P4>* callBack = (Function4<ReturnType,P1,P2,P3,P4>*)cb;
+					
+							results[i] = callBack->invoke( p1, p2, p3, p4 );
+						}
+						break;
+
+						case 5 : {
+							Function5<ReturnType,P1,P2,P3,P4,P5>* callBack = (Function5<ReturnType,P1,P2,P3,P4,P5>*)cb;
+					
+							results[i] = callBack->invoke( p1, p2, p3, p4, p5 );
+						}
+						break;
+
+						default : {
+							CallbackType* callBack = (CallbackType*)cb;
+					
+							results[i] = callBack->invoke( p1, p2, p3, p4, p5, p6 );
+						}
+						break;
+					}
 					
 					++i;
 					++it;
@@ -4767,6 +5199,29 @@ template <typename P1>
 inline void Delegate1<P1>::functionFinished( AsyncResult* res, Runnable* runnable )
 {
 	//no-op for procedures - they don't return values!
+}
+
+template <typename P1>
+inline void Delegate1<P1>::invoke( P1 p1 ) 
+{
+	std::vector<CallBack*> tmp;
+	getCallbacks(tmp);
+
+	std::vector<CallBack*>::iterator it = tmp.begin();
+	while ( it != tmp.end() ) {
+		CallBack* cb = *it;
+		ProcedureType* callBack = (ProcedureType*)cb;
+
+		if ( callBack->getArgumentCount() < 1 ) {
+			Procedure* proc = (Procedure*)cb;
+			proc->invoke();
+		}
+		else {
+			callBack->invoke( p1 );
+		}
+
+		++it;
+	}
 }
 
 template <typename P1,typename P2>

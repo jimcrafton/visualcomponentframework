@@ -1828,7 +1828,7 @@ bool VariantData::operator< (const VariantData& rhs ) const
 			break;
 
 			case pdFloat:{
-				return FloatVal == rhs.FloatVal;
+				return FloatVal < rhs.FloatVal;
 			}
 			break;
 
@@ -1884,6 +1884,194 @@ bool VariantData::operator< (const VariantData& rhs ) const
 	return false;
 }
 
+bool VariantData::operator> (const VariantData& rhs ) const 
+{
+	if ( type == rhs.type ) {
+		switch ( type ) {
+			case pdULong: case pdUInt: case pdUShort: case pdShort: 
+			case pdChar: case pdLong: case pdInt: {
+				return IntVal > rhs.IntVal;
+			}
+			break;
+
+			case pdFloat:{
+				return FloatVal > rhs.FloatVal;
+			}
+			break;
+
+			case pdDouble:{
+				return DblVal > rhs.DblVal;
+			}
+			break;
+
+			case pdDateTimeSpan: case pdDateTime:{
+				return UInt64Val > rhs.UInt64Val;
+			}
+			break;
+
+			case pdInt64:{
+				return Int64Val > rhs.Int64Val;
+			}
+			break;
+
+			case pdUInt64:{
+				return UInt64Val > rhs.UInt64Val;
+			}
+			break;
+
+			case pdObject:
+			case pdConstObject:{
+				return ObjVal > rhs.ObjVal;
+			}
+			break;
+
+			case pdVoidPointer:{
+				return VoidPtrVal > rhs.VoidPtrVal;
+			}
+			break;
+
+			case pdString:{
+				if ( (NULL != StringVal) && (NULL != rhs.StringVal) ) {
+					return *StringVal > *rhs.StringVal;
+				}
+				else if ( (NULL != StringVal) && (NULL == rhs.StringVal) ) {
+					return false;
+				}
+				else if ( (NULL == StringVal) && (NULL != rhs.StringVal) ) {
+					return true;
+				}
+			}
+			break; 
+		}
+	}
+	return false;
+}
+
+bool VariantData::operator<= (const VariantData& rhs ) const 
+{
+	if ( type == rhs.type ) {
+		switch ( type ) {
+			case pdULong: case pdUInt: case pdUShort: case pdShort: 
+			case pdChar: case pdLong: case pdInt: {
+				return IntVal <= rhs.IntVal;
+			}
+			break;
+
+			case pdFloat:{
+				return FloatVal <= rhs.FloatVal;
+			}
+			break;
+
+			case pdDouble:{
+				return DblVal <= rhs.DblVal;
+			}
+			break;
+
+			case pdDateTimeSpan: case pdDateTime:{
+				return UInt64Val <= rhs.UInt64Val;
+			}
+			break;
+
+			case pdInt64:{
+				return Int64Val <= rhs.Int64Val;
+			}
+			break;
+
+			case pdUInt64:{
+				return UInt64Val <= rhs.UInt64Val;
+			}
+			break;
+
+			case pdObject:
+			case pdConstObject:{
+				return ObjVal <= rhs.ObjVal;
+			}
+			break;
+
+			case pdVoidPointer:{
+				return VoidPtrVal <= rhs.VoidPtrVal;
+			}
+			break;
+
+			case pdString:{
+				if ( (NULL != StringVal) && (NULL != rhs.StringVal) ) {
+					return *StringVal <= *rhs.StringVal;
+				}
+				else if ( (NULL != StringVal) && (NULL == rhs.StringVal) ) {
+					return false;
+				}
+				else if ( (NULL == StringVal) && (NULL != rhs.StringVal) ) {
+					return true;
+				}
+			}
+			break; 
+		}
+	}
+	return false;
+}
+
+bool VariantData::operator>= (const VariantData& rhs ) const 
+{
+	if ( type == rhs.type ) {
+		switch ( type ) {
+			case pdULong: case pdUInt: case pdUShort: case pdShort: 
+			case pdChar: case pdLong: case pdInt: {
+				return IntVal >= rhs.IntVal;
+			}
+			break;
+
+			case pdFloat:{
+				return FloatVal >= rhs.FloatVal;
+			}
+			break;
+
+			case pdDouble:{
+				return DblVal >= rhs.DblVal;
+			}
+			break;
+
+			case pdDateTimeSpan: case pdDateTime:{
+				return UInt64Val >= rhs.UInt64Val;
+			}
+			break;
+
+			case pdInt64:{
+				return Int64Val >= rhs.Int64Val;
+			}
+			break;
+
+			case pdUInt64:{
+				return UInt64Val >= rhs.UInt64Val;
+			}
+			break;
+
+			case pdObject:
+			case pdConstObject:{
+				return ObjVal >= rhs.ObjVal;
+			}
+			break;
+
+			case pdVoidPointer:{
+				return VoidPtrVal >= rhs.VoidPtrVal;
+			}
+			break;
+
+			case pdString:{
+				if ( (NULL != StringVal) && (NULL != rhs.StringVal) ) {
+					return *StringVal >= *rhs.StringVal;
+				}
+				else if ( (NULL != StringVal) && (NULL == rhs.StringVal) ) {
+					return false;
+				}
+				else if ( (NULL == StringVal) && (NULL != rhs.StringVal) ) {
+					return true;
+				}
+			}
+			break; 
+		}
+	}
+	return false;
+}
 /**
 $Id$
 */
