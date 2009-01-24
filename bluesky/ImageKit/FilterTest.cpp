@@ -95,13 +95,13 @@ public:
 		else {
 
 			if ( !minValue_.isNull() && !maxValue_.isNull() ) {
-				value_ = minVal( maxValue_, maxVal( minValue_, v ) );
+				//value_ = minVal<VariantData>( maxValue_, maxVal<VariantData>( minValue_, v ) );
 			}
 			else if ( !minValue_.isNull() && maxValue_.isNull() ) {
-				value_ = maxVal( minValue_, v );
+				//value_ = maxVal<VariantData>( minValue_, v );
 			}
 			else if ( minValue_.isNull() && !maxValue_.isNull() ) {
-				value_ = minVal( maxValue_, v );
+				//value_ = minVal<VariantData>( maxValue_, v );
 			}
 			else {
 				value_ = v;
@@ -640,10 +640,10 @@ public:
 		ListModel* lm = lv->getListModel();
 		String s = lm->get( lv->getSelectedItem() );
 
-		Class* clazz = ClassRegistry::getClassWithAttrValue( classid(IKFilter), IKFilter::DisplayNameAttr, s );
-		if ( NULL != clazz ) {
-			Object* o = clazz->createInstance();
-		}
+		//Class* clazz = ClassRegistry::getClassWithAttrValue( classid(IKFilter), IKFilter::DisplayNameAttr, s );
+		//if ( NULL != clazz ) {
+		//	Object* o = clazz->createInstance();
+		//}
 	}
 
 	void viewEditor( Event* e ) {
