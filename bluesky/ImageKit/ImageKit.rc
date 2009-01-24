@@ -1,0 +1,4 @@
+
+Brighten.shader			RCDATA		"Brighten.shader"
+Emboss.shader			RCDATA		"Emboss.shader"
+GaussianBlur.shader		RCDATA		"GaussianBlur.shader"
