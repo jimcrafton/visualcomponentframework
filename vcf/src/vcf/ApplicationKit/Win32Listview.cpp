@@ -2346,7 +2346,7 @@ void Win32Listview::onColumnModelChanged( Event* e )
 
 TextAlignmentType Win32Listview::getColumnTextAlignment( const uint32& index )
 {
-	TextAlignmentType result;
+	TextAlignmentType result = TextAlignmentType();
 
 	HWND header = ListView_GetHeader( hwnd_ );
 	if ( NULL != header ) {

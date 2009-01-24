@@ -1500,6 +1500,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\VCFTime.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\VFFParser.cpp"
 				>
 				<FileConfiguration

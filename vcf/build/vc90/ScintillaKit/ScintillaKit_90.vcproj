@@ -70,7 +70,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="../../../lib/ScintillaKit_vc6_sd.lib"
+				OutputFile="../../../lib/ScintillaKit_vc90_sd.lib"
 				SuppressStartupBanner="true"
 			/>
 			<Tool
@@ -146,7 +146,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile=".\Release\ScintillaKit.lib"
+				OutputFile="../../../lib/ScintillaKit_vc90_s.lib"
 				SuppressStartupBanner="true"
 			/>
 			<Tool
