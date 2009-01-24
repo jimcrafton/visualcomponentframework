@@ -223,6 +223,12 @@ public:
 	}
 
 	static std::vector<VariantData> getAttrValuesByClass( const String& className, const String& attr );
+
+	static Class* getClassWithAttrValue( const String& attr, const VariantData& value );
+	static Class* getClassWithAttrValue( const String& className, const String& attr, const VariantData& value );
+	static Class* getClassWithAttrValue( Class* clazz, const String& attr, const VariantData& value ) {
+		return ClassRegistry::getClassWithAttrValue( clazz->getClassName(), attr, value );
+	}
 protected:
 	Class* internal_getClass( const String& className );
 

@@ -533,8 +533,41 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 								assignmentToken == VFFParser::TO_FLOAT ) {
 								value = transform( value );
 							}
+
+							VariantData varVal;
+							if ( prop->getType() == pdVariant ) {
+								//try and guess type from context
+								switch ( assignmentToken ) {
+									case VFFParser::TO_STRING: {
+										varVal.type = pdString;
+									}
+									break;
+
+									case VFFParser::TO_INTEGER: {
+										varVal.type = pdInt;
+									}
+									break;
+
+									case VFFParser::TO_FLOAT: {
+										varVal.type = pdDouble;
+									}
+									break;
+
+									default : {
+										if ( value == "true" || value == "false" ) {
+											varVal.type = pdBool;
+										}
+									}
+									break;
+								}
+								varVal.setFromString( value );
+								prop->set( &varVal );
+							}
+							else {
+								prop->set( value );
+							}
+
 							
-							prop->set( value );
 
 							if ( 0 == componentInputLevel_ ) {
 								if ( (prop->getName() == "visible") ||
