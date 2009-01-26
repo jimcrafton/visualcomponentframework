@@ -1816,6 +1816,117 @@ bool VariantData::operator == ( const VariantData& v ) const
 	return false;
 }
 
+VariantData VariantData::convertToType( PropertyDescriptorType valType ) const 
+{
+	VariantData result;
+
+	result.type = valType;
+
+	
+	switch ( valType ) {
+		case pdInt:{
+			result = convertToInt();
+		}
+		break;
+
+		case pdLong:{
+			result = convertToLong();
+		}
+		break;
+
+		case pdShort:{
+			result = convertToShort();
+		}
+		break;
+
+		case pdUShort:{
+			result = convertToUShort();
+		}
+		break;
+
+		case pdUInt:{
+			result = convertToUInt();
+		}
+		break;
+
+		case pdULong:{
+			result = convertToULong();
+		}
+		break;
+
+		case pdFloat:{
+			result = convertToFloat();
+		}
+		break;
+
+		case pdChar:{
+			result = convertToChar();
+		}
+		break;
+
+		case pdDouble:{
+			result = convertToDbl();
+		}
+		break;
+
+		case pdBool:{
+			result = convertToBool();
+		}
+		break;
+
+		case pdInt64:{
+			result = convertToInt64();
+		}
+		break;
+
+		case pdUInt64:{
+			result = convertToUInt64();
+		}
+		break;
+
+		case pdVoidPointer:{
+			result = convertToVoidPtr();
+		}
+		break;
+
+		case pdDateTime:{
+			result = convertToUInt64();
+		}
+		break;
+
+		case pdDateTimeSpan:{
+			result = convertToUInt64();
+		}
+		break;
+
+		case pdString:{
+			result = toString();
+		}
+		break;
+
+		case pdObject:{
+			result.ObjVal = ObjVal;
+		}
+		break;
+
+		case pdConstObject:{
+			throw NotImplementedException();
+		}
+		break;
+
+		case pdInterface:{
+			result.InterfaceVal = InterfaceVal;
+		}
+		break;
+
+		case pdEnum:{
+			result.EnumVal = EnumVal;
+		}
+		break;
+	}
+
+	return result;
+}
 
 bool VariantData::operator< (const VariantData& rhs ) const 
 {
@@ -1878,14 +1989,15 @@ bool VariantData::operator< (const VariantData& rhs ) const
 		}
 	}
 	else {
-
+		VariantData tmp = rhs.convertToType(type);
+		return *this < tmp;
 	}
 
 	return false;
 }
 
 bool VariantData::operator> (const VariantData& rhs ) const 
-{
+{	
 	if ( type == rhs.type ) {
 		switch ( type ) {
 			case pdULong: case pdUInt: case pdUShort: case pdShort: 
@@ -1943,6 +2055,10 @@ bool VariantData::operator> (const VariantData& rhs ) const
 			}
 			break; 
 		}
+	}
+	else {
+		VariantData tmp = rhs.convertToType(type);
+		return *this > tmp;
 	}
 	return false;
 }
@@ -2007,6 +2123,10 @@ bool VariantData::operator<= (const VariantData& rhs ) const
 			break; 
 		}
 	}
+	else {
+		VariantData tmp = rhs.convertToType(type);
+		return *this <= tmp;
+	}
 	return false;
 }
 
@@ -2070,6 +2190,11 @@ bool VariantData::operator>= (const VariantData& rhs ) const
 			break; 
 		}
 	}
+	else {
+		VariantData tmp = rhs.convertToType(type);
+		return *this >= tmp;
+	}
+
 	return false;
 }
 /**
