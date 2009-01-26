@@ -246,6 +246,19 @@ void ImageKit::init( int argc, char** argv )
 
 	{
 		GLInit g;		
+
+		AnsiString s = (const char*)glGetString(GL_VERSION);
+		size_t dotPos = s.find(".");
+		if ( dotPos != String::npos ) {
+			int majorVersion = StringUtils::fromStringAsInt( s.substr(0,dotPos) );
+			if ( majorVersion < ImageKit::MinOpenGLVersion ) {
+				throw RuntimeException( "The Open GL version for this machine is too old.\nImageKit will not work correctly on this PC.\nTry updating your video card drivers." );
+			}
+		}
+		else {
+			throw RuntimeException( "Unable to determine valid Open GL version.\nImageKit will not work correctly on this PC.\nTry updating your video card drivers." );
+		}
+
 		//init glew		
 		GLenum err = glewInit();
 		if (GLEW_OK != err) {

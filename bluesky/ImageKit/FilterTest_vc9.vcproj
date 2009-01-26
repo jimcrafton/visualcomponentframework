@@ -292,6 +292,66 @@
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 			>
 		</Filter>
+		<Filter
+			Name="Shaders"
+			>
+			<File
+				RelativePath=".\blackandwhite.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\blur.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\Brighten.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\brightpass.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\emboss.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\frag.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\GaussianBlur.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\HueAdjust.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\laplace.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\Mixer.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\RadialBlur.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\test.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\wavy.shader"
+				>
+			</File>
+			<File
+				RelativePath=".\wavy2.shader"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="FilterTest\Resources\FilterTestWindow.vff"
 			>

@@ -8,6 +8,7 @@
 #include "vcf/ApplicationKit/ListModel.h"
 #include "vcf/ApplicationKit/ListViewControl.h"
 #include "vcf/ApplicationKit/Label.h"
+#include "vcf/ApplicationKit/TextControl.h"
 
 #include "ImageKit.h"
 
@@ -18,7 +19,7 @@ using namespace VCF;
 
 
 
-class RangeEdit : public Label {
+class RangeEdit : public ControlContainer {
 public:
 
 	enum HitState {
@@ -29,7 +30,7 @@ public:
 		hsDecPressed,
 	};
 	
-	RangeEdit() : fractionalDelta_(0.10),buttonState_(0), minValue_(VariantData::null()), maxValue_(VariantData::null()) {
+	RangeEdit() : ControlContainer(false), fractionalDelta_(0.10),buttonState_(0), minValue_(VariantData::null()), maxValue_(VariantData::null()) {
 		incStr = L"+";
 		decStr = L"-";
 	}
@@ -95,13 +96,13 @@ public:
 		else {
 
 			if ( !minValue_.isNull() && !maxValue_.isNull() ) {
-				//value_ = minVal<VariantData>( maxValue_, maxVal<VariantData>( minValue_, v ) );
+				value_ = minVal<>( maxValue_, maxVal<>( minValue_, v ) );
 			}
 			else if ( !minValue_.isNull() && maxValue_.isNull() ) {
-				//value_ = maxVal<VariantData>( minValue_, v );
+				value_ = maxVal<>( minValue_, v );
 			}
 			else if ( minValue_.isNull() && !maxValue_.isNull() ) {
-				//value_ = minVal<VariantData>( maxValue_, v );
+				value_ = minVal<>( maxValue_, v );
 			}
 			else {
 				value_ = v;
@@ -152,7 +153,7 @@ public:
 	}
 
 	virtual void paint( GraphicsContext* context ) {
-		CustomControl::paint( context );
+		ControlContainer::paint( context );
 
 		context->setCurrentFont( getFont() );
 		
@@ -162,10 +163,10 @@ public:
 		
 		String caption;
 		if ( getUseLocaleStrings() ) {
-			caption = System::getCurrentThreadLocale()->translate( caption_ );
+			caption = System::getCurrentThreadLocale()->translate( "" );
 		}
 		else {
-			caption = caption_;
+			caption = "";
 		}
 		
 		if ( !caption.empty() ) {
@@ -303,13 +304,19 @@ public:
 
 	virtual void mouseUp( MouseEvent* e ) {		
 		if ( e->hasLeftButton() ) {
-			Rect r = getIncRect();
-			if ( r.containsPt( e->getPoint() ) ) {
-				increment();
+
+			if ( e->hasShiftKey() ) {
+				edit();
 			}
-			else if ( getDecRect().containsPt( e->getPoint() ) ) {
-				decrement();
-			}		
+			else {
+				Rect r = getIncRect();
+				if ( r.containsPt( e->getPoint() ) ) {
+					increment();
+				}
+				else if ( getDecRect().containsPt( e->getPoint() ) ) {
+					decrement();
+				}
+			}
 		}
 
 		releaseMouseEvents();
@@ -328,9 +335,41 @@ public:
 		result.right_ = result.left_ + getFont()->getTextWidth( decStr );
 		return result;
 	}
+
+	Rect getEditRect() {
+		Rect r1 = getDecRect();
+		Rect r2 = getIncRect();
+		Rect result;
+		result = getClientBounds();
+		result.left_ = r1.right_;
+		result.right_ = r2.left_;
+		return result;
+	}
+
+	void edit() {
+
+		//Container* container = getContainer();
+		//if ( NULL == container ) {
+		//	container = new StandardContainer();
+		//	setContainer( container );
+		//}
+
+		editor_ = new TextControl();
+		
+		editor_->setBorder( NULL );
+		Rect editRect = getEditRect();
+		//translateToScreenCoords( &editRect );
+		//translateFromScreenCoords( &editRect );
+		editor_->setBounds( &editRect );
+		editor_->getModel()->setValue( value_ );
+
+		add( editor_ );
+	}
 protected:
 	VariantData value_;
 	VariantData deltaVal_;
+
+	TextControl* editor_;
 
 	VariantData minValue_;
 	VariantData maxValue_;
@@ -343,7 +382,7 @@ protected:
 };
 
 
-_class_rtti_(RangeEdit, "VCF::Label", "RangeEdit")
+_class_rtti_(RangeEdit, "VCF::ControlContainer", "RangeEdit")
 _property_( VariantData, "value", getValue, setValue, "" );
 _property_( VariantData, "min", getMinVal, setMinVal, "" );
 _property_( VariantData, "max", getMaxVal, setMaxVal, "" );
@@ -357,10 +396,10 @@ class ImageView : public CustomControl {
 public:
 
 	ImageView(): CustomControl(),filter(NULL),useFilterImage(false) {
-		addCallback( new ClassProcedure1<Event*,ImageView>(this, &ImageView::openImage), "ImageView::openImage" );
-		addCallback( new ClassProcedure1<Event*,ImageView>(this, &ImageView::compileFilter), "ImageView::compileFilter" );
-		addCallback( new ClassProcedure1<Event*,ImageView>(this, &ImageView::saveImage), "ImageView::saveImage" );
-		addCallback( new ClassProcedure1<Event*,ImageView>(this, &ImageView::resetImage), "ImageView::resetImage" );
+		addCallback( new ClassProcedure<ImageView>(this, &ImageView::openImage), "ImageView::openImage" );
+		addCallback( new ClassProcedure<ImageView>(this, &ImageView::compileFilter), "ImageView::compileFilter" );
+		addCallback( new ClassProcedure<ImageView>(this, &ImageView::saveImage), "ImageView::saveImage" );
+		addCallback( new ClassProcedure<ImageView>(this, &ImageView::resetImage), "ImageView::resetImage" );
 		
 	}
 
@@ -494,13 +533,13 @@ public:
 
 
 	
-	void resetImage( Event* e ) {
+	void resetImage() {
 		resetXfrms();
 		useFilterImage = false;
 		repaint();
 	}
 
-	void compileFilter( Event* e ) {
+	void compileFilter() {
 		Control* shaderEdit = (Control*)Application::getRunningInstance()->findComponent( "shaderEdit", true );
 		Control* shaderErrors = (Control*)Application::getRunningInstance()->findComponent( "shaderErrors", true );
 		Control* splitter = (Control*)Application::getRunningInstance()->findComponent( "splitter2", true );
@@ -534,7 +573,7 @@ public:
 
 	
 
-	void saveImage( Event* ) {
+	void saveImage() {
 		CommonFileSaveDialog dlg( this );
 		std::vector< std::pair<String,String> > contentTypes;
 		GraphicsToolkit::getAvailableImageTypes( contentTypes );
@@ -574,7 +613,7 @@ public:
 		}
 	}
 
-	void openImage( Event* ) {
+	void openImage() {
 		CommonFileOpenDialog dlg( this );
 		std::vector< std::pair<String,String> > contentTypes;
 		GraphicsToolkit::getAvailableImageTypes( contentTypes );
@@ -627,8 +666,8 @@ public:
 		ImageKit::init(argc,argv);
 		ScintillaKit::init(argc,argv);
 
-		addCallback( new ClassProcedure1<Event*,FilterTest>(this, &FilterTest::saveFilterAs), "FilterTest::saveFilterAs" );
-		addCallback( new ClassProcedure1<Event*,FilterTest>(this, &FilterTest::openFilter), "FilterTest::openFilter" );		
+		addCallback( new ClassProcedure<FilterTest>(this, &FilterTest::saveFilterAs), "FilterTest::saveFilterAs" );
+		addCallback( new ClassProcedure<FilterTest>(this, &FilterTest::openFilter), "FilterTest::openFilter" );		
 		addCallback( new ClassProcedure1<Event*,FilterTest>(this, &FilterTest::viewEditor), "FilterTest::viewEditor" );		
 		addCallback( new ClassProcedure1<Event*,FilterTest>(this, &FilterTest::viewStatus), "FilterTest::viewStatus" );		
 		addCallback( new ClassProcedure1<Event*,FilterTest>(this, &FilterTest::changeFilter), "FilterTest::changeFilter" );	
@@ -640,10 +679,10 @@ public:
 		ListModel* lm = lv->getListModel();
 		String s = lm->get( lv->getSelectedItem() );
 
-		//Class* clazz = ClassRegistry::getClassWithAttrValue( classid(IKFilter), IKFilter::DisplayNameAttr, s );
-		//if ( NULL != clazz ) {
-		//	Object* o = clazz->createInstance();
-		//}
+		Class* clazz = ClassRegistry::getClassWithAttrValue( classid(IKFilter), IKFilter::DisplayNameAttr, s );
+		if ( NULL != clazz ) {
+			Object* o = clazz->createInstance();
+		}
 	}
 
 	void viewEditor( Event* e ) {
@@ -666,7 +705,7 @@ public:
 		item->setChecked( status->getVisible() );
 	}
 
-	void saveFilterAs( Event* ) {
+	void saveFilterAs() {
 		CommonFileSaveDialog dlg( getMainWindow() );
 		dlg.addFilter( "ImageKit Filter (*.shader)", "*.shader" );
 		if ( dlg.execute() ) {
@@ -678,7 +717,7 @@ public:
 		}
 	}
 
-	void openFilter( Event* ) {
+	void openFilter() {
 		CommonFileOpenDialog dlg( getMainWindow() );
 		dlg.addFilter( "ImageKit Filter (*.shader)", "*.shader" );
 		if ( dlg.execute() ) {

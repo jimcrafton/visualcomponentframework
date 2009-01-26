@@ -92,7 +92,7 @@ object FilterTestWindow  : VCF::Window
 					delta = 0.050
 					min = 0.0
 					max = 1.0
-					caption = 'Bonus:'
+					//caption = 'Bonus:'
 				end
 			end
 		end

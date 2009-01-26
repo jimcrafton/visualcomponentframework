@@ -37,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScintillaKit", "..\..\vcf\b
 		{05A85BAA-A813-4EF2-A8B8-9F47B79FEC9A} = {05A85BAA-A813-4EF2-A8B8-9F47B79FEC9A}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Alignment", "..\..\vcf\examples\Alignment\Alignment_vc90.vcproj", "{68C5476A-A17F-481D-9B54-2BF4A52FD70C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug MX|Win32 = Debug MX|Win32
@@ -117,6 +119,14 @@ Global
 		{15EF3B50-484F-4B0F-B122-5BED845123BB}.Release MX|Win32.Build.0 = Release|Win32
 		{15EF3B50-484F-4B0F-B122-5BED845123BB}.Release|Win32.ActiveCfg = Release|Win32
 		{15EF3B50-484F-4B0F-B122-5BED845123BB}.Release|Win32.Build.0 = Release|Win32
+		{68C5476A-A17F-481D-9B54-2BF4A52FD70C}.Debug MX|Win32.ActiveCfg = Debug|Win32
+		{68C5476A-A17F-481D-9B54-2BF4A52FD70C}.Debug MX|Win32.Build.0 = Debug|Win32
+		{68C5476A-A17F-481D-9B54-2BF4A52FD70C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{68C5476A-A17F-481D-9B54-2BF4A52FD70C}.Debug|Win32.Build.0 = Debug|Win32
+		{68C5476A-A17F-481D-9B54-2BF4A52FD70C}.Release MX|Win32.ActiveCfg = Release|Win32
+		{68C5476A-A17F-481D-9B54-2BF4A52FD70C}.Release MX|Win32.Build.0 = Release|Win32
+		{68C5476A-A17F-481D-9B54-2BF4A52FD70C}.Release|Win32.ActiveCfg = Release|Win32
+		{68C5476A-A17F-481D-9B54-2BF4A52FD70C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
