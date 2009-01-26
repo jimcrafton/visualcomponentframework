@@ -268,8 +268,10 @@ void LightweightComponent::translateToScreenCoords( Point* pt )
 		bool lightWeightParent = parent->isLightWeight();
 		Rect bounds = this->bounds_;
 
-		//offset.width_ += bounds.left_;
-		//offset.height_ += bounds.top_;
+
+		//JEC - this was commented out, and I don't know why???
+		offset.width_ += bounds.left_;
+		offset.height_ += bounds.top_;
 
 		while ( (lightWeightParent) && (parent!=NULL) ){
 
