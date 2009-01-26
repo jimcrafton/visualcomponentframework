@@ -9,6 +9,8 @@
 #include "vcf/ApplicationKit/ListViewControl.h"
 #include "vcf/ApplicationKit/Label.h"
 #include "vcf/ApplicationKit/TextControl.h"
+#include "vcf/FoundationKit/Dictionary.h"
+#include "vcf/ApplicationKit/TextPeer.h"
 
 #include "ImageKit.h"
 
@@ -19,7 +21,7 @@ using namespace VCF;
 
 
 
-class RangeEdit : public ControlContainer {
+class RangeEdit : public Label {
 public:
 
 	enum HitState {
@@ -30,9 +32,21 @@ public:
 		hsDecPressed,
 	};
 	
-	RangeEdit() : ControlContainer(false), fractionalDelta_(0.10),buttonState_(0), minValue_(VariantData::null()), maxValue_(VariantData::null()) {
+	RangeEdit() : Label(), 
+		fractionalDelta_(0.10),
+		buttonState_(0), 
+		minValue_(VariantData::null()), 
+		maxValue_(VariantData::null()),
+		editor_(NULL) {
+
 		incStr = L"+";
 		decStr = L"-";
+
+		
+		addCallback( new ClassProcedure<RangeEdit>(this, &RangeEdit::editorLostFocus), "RangeEdit::editorLostFocus" );
+		addCallback( new ClassProcedure1<Event*,RangeEdit>(this, &RangeEdit::endEditing), "RangeEdit::endEditing" );		
+		addCallback( new ClassProcedure1<KeyboardEvent*,RangeEdit>(this, &RangeEdit::onEditorKeyPressed), "RangeEdit::onEditorKeyPressed" );
+		
 	}
 
 	void increment() {
@@ -94,18 +108,23 @@ public:
 			model->setValue( v, getModelKey() );
 		}
 		else {
+			VariantData v2 = v;
+
+			if ( !value_.isUndefined() ) {
+				v2 = v.convertToType(value_.type);
+			}
 
 			if ( !minValue_.isNull() && !maxValue_.isNull() ) {
-				value_ = minVal<>( maxValue_, maxVal<>( minValue_, v ) );
+				value_ = minVal<>( maxValue_, maxVal<>( minValue_, v2 ) );
 			}
 			else if ( !minValue_.isNull() && maxValue_.isNull() ) {
-				value_ = maxVal<>( minValue_, v );
+				value_ = maxVal<>( minValue_, v2 );
 			}
 			else if ( minValue_.isNull() && !maxValue_.isNull() ) {
-				value_ = minVal<>( maxValue_, v );
+				value_ = minVal<>( maxValue_, v2 );
 			}
 			else {
-				value_ = v;
+				value_ = v2;
 			}
 		}
 	}
@@ -153,7 +172,7 @@ public:
 	}
 
 	virtual void paint( GraphicsContext* context ) {
-		ControlContainer::paint( context );
+		CustomControl::paint( context );
 
 		context->setCurrentFont( getFont() );
 		
@@ -348,22 +367,49 @@ public:
 
 	void edit() {
 
-		//Container* container = getContainer();
-		//if ( NULL == container ) {
-		//	container = new StandardContainer();
-		//	setContainer( container );
-		//}
+		Container* container = getContainer();
+		if ( NULL == container ) {
+			container = new StandardContainer();
+			setContainer( container );
+		}
 
-		editor_ = new TextControl();
-		
-		editor_->setBorder( NULL );
-		Rect editRect = getEditRect();
-		//translateToScreenCoords( &editRect );
-		//translateFromScreenCoords( &editRect );
-		editor_->setBounds( &editRect );
-		editor_->getModel()->setValue( value_ );
+		if ( NULL == editor_ ) {			
+			editor_ = new TextControl();
+			
+			editor_->setBorder( NULL );
+			Rect editRect = getEditRect();
+			editor_->setBounds( &editRect );
 
-		add( editor_ );
+			String s = value_;
+
+			editor_->getModel()->setValue( s );
+
+			Dictionary styles;
+			styles[ Text::psAlignment ] = Text::paCenter;
+			editor_->setDefaultStyle( styles );
+
+			
+			
+			container->add( editor_ );
+			editor_->FocusLost += getCallback("RangeEdit::editorLostFocus");
+			editor_->KeyPressed += getCallback("RangeEdit::onEditorKeyPressed");
+			
+			editor_->setFocused();
+			editor_->selectAll();
+		}
+	}
+
+	void endEdit( bool applyEditValue=true ) {
+
+		if ( applyEditValue ) {
+			VariantData v = editor_->getModel()->getValue();
+
+			setValue( v );
+		}
+
+		editor_->FocusLost -= getCallback("RangeEdit::editorLostFocus");
+		editor_->KeyPressed -= getCallback("RangeEdit::onEditorKeyPressed");
+		UIToolkit::postEvent( (EventHandler*)getCallback("RangeEdit::endEditing"), NULL, false );
 	}
 protected:
 	VariantData value_;
@@ -379,10 +425,38 @@ protected:
 	String decStr;
 	int buttonState_;
 	Point lastPt_;
+
+	void editorLostFocus() {
+		endEdit();
+	}
+
+	void endEditing(Event*) {
+		if ( NULL == editor_ ) {
+			return;
+		}
+
+		Container* container = getContainer();
+		if ( NULL != container ) {
+			container->remove( editor_ );
+			editor_->getOwner()->removeComponent( editor_ );
+			editor_->free();
+		}
+		editor_ = NULL;
+		repaint();
+	}
+
+	void onEditorKeyPressed( KeyboardEvent* e ) {
+		if ( vkEscape == e->virtualKeyCode ) {
+			endEdit(false);
+		}
+		else if ( vkEnter == e->virtualKeyCode ) {
+			endEdit(true);
+		}
+	}
 };
 
 
-_class_rtti_(RangeEdit, "VCF::ControlContainer", "RangeEdit")
+_class_rtti_(RangeEdit, "VCF::Label", "RangeEdit")
 _property_( VariantData, "value", getValue, setValue, "" );
 _property_( VariantData, "min", getMinVal, setMinVal, "" );
 _property_( VariantData, "max", getMaxVal, setMaxVal, "" );
