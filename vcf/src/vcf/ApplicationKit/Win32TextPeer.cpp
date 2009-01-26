@@ -1038,6 +1038,10 @@ void Win32TextPeer::setStyle( unsigned int start, unsigned int length, Dictionar
 void Win32TextPeer::setDefaultStyle( Dictionary&  styles )
 {
 	if ( NULL == host_ ) {
+
+
+		setStyle( 0,0, styles );
+
 		return;
 	}
 

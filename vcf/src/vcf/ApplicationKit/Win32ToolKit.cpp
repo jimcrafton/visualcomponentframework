@@ -2461,8 +2461,12 @@ public:
 	}
 
 	virtual ~Win32PostEventRecord() {
-		delete event_;
+		if ( NULL != event_ ) {
+			delete event_;
+		}
+
 		event_ = NULL;
+
 		if ( true == deleteHandler_ ) {
 			handler_->free();
 		}

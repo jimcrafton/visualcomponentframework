@@ -839,6 +839,8 @@ public:
 
 	bool operator<= (const VariantData& rhs ) const ;
 	bool operator>= (const VariantData& rhs ) const ;
+
+	VariantData convertToType( PropertyDescriptorType valType ) const ;
 protected:
 	void setValue( const VariantData& value );
 
