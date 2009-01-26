@@ -104,6 +104,10 @@ class IKFilter;
 
 class ImageKit {
 public:
+	enum {
+		MinOpenGLVersion = 2
+	};
+
 	static void init( int argc, char** argv );
 	static void terminate();
 
