@@ -423,15 +423,7 @@ void Control::setUsingRenderBuffer( const bool& useRenderBuffer )
 	}
 
 	if ( useRenderBuffer ) {
-//		if ( NULL == context_->getRenderArea() ) {
-//			context_->setRenderArea( getBounds() );
-//		}
 		repaint();
-	}
-	else {
-		//if ( NULL != context_->getRenderArea() ) {
-//			context_->deleteRenderArea();
-		//}
 	}
 }
 
