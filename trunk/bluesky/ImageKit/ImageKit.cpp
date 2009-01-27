@@ -45,8 +45,8 @@ _class_rtti_(GaussianBlur, "VCF::IKFilter", "GaussianBlur")
 	_attribute_(IKFilter::DisplayNameAttr, "Gaussian Blur")
 	_property_( int, "radius", getRadius, setRadius, "" );
 	_property_attr_("radius", IKFilter::MinAttr, 1 );
-	_property_attr_("radius", IKFilter::MaxAttr, 10 );
-	_property_attr_("radius", IKFilter::DefaultAttr, 7 );
+	_property_attr_("radius", IKFilter::MaxAttr, 7 );
+	_property_attr_("radius", IKFilter::DefaultAttr, 4 );
 	_property_attr_("radius", IKFilter::InputAttr, true );	
 
 	_property_( float, "amount", getAmount, setAmount, "" );
@@ -62,7 +62,7 @@ _class_rtti_(Emboss, "VCF::IKFilter", "Emboss")
 	_attribute_(IKFilter::DisplayNameAttr, "Emboss")
 	_property_( float, "displacement", getDisplacement, setDisplacement, "" );
 	_property_attr_("displacement", IKFilter::MinAttr, 0.00001 );
-	_property_attr_("displacement", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("displacement", IKFilter::MaxAttr, 0.005 );
 	_property_attr_("displacement", IKFilter::DefaultAttr, 0.001 );
 	_property_attr_("displacement", IKFilter::InputAttr, true );	
 
