@@ -18,7 +18,9 @@
 
 using namespace VCF;
 
+class RangeEdit;
 
+typedef Delegate3<VariantData,VariantData,RangeEdit*> ValueChangeDelegate;
 
 
 class RangeEdit : public Label {
@@ -31,6 +33,8 @@ public:
 		hsIncPressed,
 		hsDecPressed,
 	};
+
+	DELEGATE(ValueChangeDelegate, ValueChanged);
 	
 	RangeEdit() : Label(), 
 		fractionalDelta_(0.10),
@@ -110,6 +114,8 @@ public:
 		else {
 			VariantData v2 = v;
 
+			VariantData oldVal = value_;
+
 			if ( !value_.isUndefined() ) {
 				v2 = v.convertToType(value_.type);
 			}
@@ -125,6 +131,10 @@ public:
 			}
 			else {
 				value_ = v2;
+			}
+
+			if ( oldVal != value_ ) {
+				ValueChanged( oldVal, value_, this );
 			}
 		}
 	}
@@ -725,6 +735,16 @@ public:
 		repaint();
 	}
 
+	void valueChanged( VariantData oldVal, VariantData newVal, RangeEdit* re, const String& propName ) {
+
+		if ( NULL != filter_ ) {
+			Class* clazz= filter_->getClass();
+			Property* prop = clazz->getProperty( propName );
+
+			prop->set( &newVal );
+			repaint();
+		}
+	}
 };
 
 _class_rtti_(ImageView, "VCF::CustomControl", "ImageView")
@@ -757,8 +777,17 @@ public:
 		addCallback( new ClassProcedure1<Event*,FilterTest>(this, &FilterTest::viewEditor), "FilterTest::viewEditor" );		
 		addCallback( new ClassProcedure1<Event*,FilterTest>(this, &FilterTest::viewStatus), "FilterTest::viewStatus" );		
 		addCallback( new ClassProcedure1<Event*,FilterTest>(this, &FilterTest::changeFilter), "FilterTest::changeFilter" );	
+		addCallback( new ClassProcedure3<VariantData,VariantData,RangeEdit*,FilterTest>(this, &FilterTest::valueChanged), "FilterTest::valueChanged" );	
 	}
 
+	std::map<RangeEdit*,String> filterPropNames;
+
+	void valueChanged( VariantData v1, VariantData v2, RangeEdit* re ) {
+
+		ImageView* view = (ImageView*)Application::getRunningInstance()->findComponent( "view", true );
+
+		view->valueChanged( v1, v2, re, filterPropNames[re] );
+	}
 
 	void changeFilter(Event* e) {
 		ListViewControl* lv = (ListViewControl*) e->getSource();
@@ -778,6 +807,7 @@ public:
 			Container* container = editorPane->getContainer();
 
 			container->clear();
+			filterPropNames.clear();
 			
 			Class* clazz = filter->getClass();
 			Enumerator<Property*>* props = clazz->getProperties();
@@ -796,6 +826,9 @@ public:
 					double min = re->getMinVal();
 					double max = re->getMaxVal();
 					re->setDelta( 0.05 / (max-min) );
+
+					filterPropNames[re] = prop->getName();
+					re->ValueChanged += getCallback( "FilterTest::valueChanged" );
 
 					re->setValue( prop->getAttribute( IKFilter::DefaultAttr ) );					
 

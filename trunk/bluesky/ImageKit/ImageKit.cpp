@@ -1023,7 +1023,20 @@ void IKFilter::initFilterVariables()
 {
 	int activeTexIndex = 0;
 
+	
+	if ( inputNames_.empty() ) {
+		Class* clazz = getClass();
+		Enumerator<Property*>* props = clazz->getProperties();
+		while ( props->hasMoreElements() ) {
+			Property* prop = props->nextElement();
+			if ( prop->hasAttribute( IKFilter::InputAttr ) ) {
+				inputNames_.push_back( prop->getName() );
+			}
+		}
+	}
+
 	std::vector<String>::iterator it = inputNames_.begin();
+
 	while ( it != inputNames_.end() ) {
 		AnsiString s = *it;
 
@@ -1110,35 +1123,36 @@ void IKFilter::initProgram( const String& data )
 
 		AnsiString src = "uniform sampler2D inputImage;\n";
 
-		std::vector<String>::iterator it = inputNames_.begin();
-		Class* clazz = this->getClass();
+		
+		Class* clazz = getClass();
+		Enumerator<Property*>* props = clazz->getProperties();
 
-		while ( it != inputNames_.end() ) {
-			AnsiString s = *it;
+		while ( props->hasMoreElements() ) {
+			Property* property = props->nextElement();
 
-			Property* property = clazz->getProperty( *it );
-			
-			switch ( property->getType() ) {
-				case pdFloat : case pdDouble : {
-					src += "uniform float " + s + ";\n";
-					
-				}
-				break;
+			if ( property->hasAttribute( IKFilter::InputAttr ) ) {
+				AnsiString s = property->getName();
 				
-				case pdInt : case pdUInt : case pdLong : case pdULong : {
-					src += "uniform int " + s + ";\n";
-				}
-				break;
-
-				case pdObject : {
-					if ( property->getTypeClassName() == StringUtils::getClassNameFromTypeInfo(typeid(IKImage)) ) {
-						src += "uniform sampler2D " + s + ";\n";
+				switch ( property->getType() ) {
+					case pdFloat : case pdDouble : {
+						src += "uniform float " + s + ";\n";
+						
 					}
+					break;
+					
+					case pdInt : case pdUInt : case pdLong : case pdULong : {
+						src += "uniform int " + s + ";\n";
+					}
+					break;
+
+					case pdObject : {
+						if ( property->getTypeClassName() == StringUtils::getClassNameFromTypeInfo(typeid(IKImage)) ) {
+							src += "uniform sampler2D " + s + ";\n";
+						}
+					}
+					break;
 				}
-				break;
 			}
-			
-			++it;
 		}
 		
 
