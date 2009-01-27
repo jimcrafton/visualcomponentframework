@@ -37,6 +37,8 @@ public:
 	DELEGATE(ValueChangeDelegate, ValueChanged);
 	
 	RangeEdit() : Label(), 
+		value_(VariantData::null()), 
+		deltaVal_(1), 
 		fractionalDelta_(0.10),
 		buttonState_(0), 
 		minValue_(VariantData::null()), 
@@ -61,7 +63,7 @@ public:
 		}
 		else if ( value_.isInteger() ) {
 			int v = value_;
-			v += (int)deltaVal_;
+			v += ceil((double)deltaVal_ + 0.5);
 			setValue( v );
 		}
 	}
@@ -74,7 +76,7 @@ public:
 		}
 		else if ( value_.isInteger() ) {
 			int v = value_;
-			v -= (int)deltaVal_;
+			v -= ceil((double)deltaVal_ + 0.5);
 			setValue( v );
 		}
 	}
@@ -116,7 +118,7 @@ public:
 
 			VariantData oldVal = value_;
 
-			if ( !value_.isUndefined() ) {
+			if ( !value_.isUndefined() && !value_.isNull() ) {
 				v2 = v.convertToType(value_.type);
 			}
 
@@ -216,6 +218,9 @@ public:
 		int32 drawOptions = GraphicsContext::tdoCenterHorzAlign | GraphicsContext::tdoCenterVertAlign;
 		Rect bounds = getClientBounds();		
 
+		Rect incRect = getIncRect();
+		Rect decRect = getDecRect();
+
 		Rect tmp = bounds;
 		tmp.right_ = tmp.left_ + context->getTextWidth( decStr );
 
@@ -227,21 +232,21 @@ public:
 			c.setHSL(h,l,s);
 			context->setColor(&c);
 
-			context->rectangle( &tmp );
+			context->rectangle( &decRect );
 			context->fillPath();
 
-			context->textBoundedBy( &tmp, decStr, drawOptions );
+			context->textBoundedBy( &decRect, decStr, drawOptions );
 		}
 		else if ( buttonState_ == hsDecPressed ) {
 			//context->setColor(  );
 
-			context->rectangle( &tmp );
+			context->rectangle( &decRect );
 			context->fillPath();
 
-			context->textBoundedBy( &tmp, decStr, drawOptions );
+			context->textBoundedBy( &decRect, decStr, drawOptions );
 		}
 		else {
-			context->textBoundedBy( &tmp, decStr, drawOptions );
+			context->textBoundedBy( &decRect, decStr, drawOptions );
 		}
 
 		
@@ -256,20 +261,20 @@ public:
 			c.setHSL(h,l,s);
 			context->setColor(&c);
 
-			context->rectangle( &tmp );
+			context->rectangle( &incRect );
 			context->fillPath();
 
-			context->textBoundedBy( &tmp, incStr, drawOptions );
+			context->textBoundedBy( &incRect, incStr, drawOptions );
 		}
 		else if ( buttonState_ == hsIncPressed ) {
 
 		}
 		else {
-			context->textBoundedBy( &tmp, incStr, drawOptions );
+			context->textBoundedBy( &incRect, incStr, drawOptions );
 		}
 
-		bounds.left_ += context->getTextWidth( decStr );
-		bounds.right_ -= context->getTextWidth( incStr );
+		bounds.left_ = decRect.right_;
+		bounds.right_ = incRect.left_;
 
 		//x = VCF::maxVal<double>( 1.0, (bounds.getWidth()/2.0) - (context->getTextWidth( caption ) / 2.0) );		
 		//y = (bounds.getHeight()/2.0) - (context->getTextHeight(caption)/2.0);
@@ -331,7 +336,9 @@ public:
 		}
 	}
 
-	virtual void mouseUp( MouseEvent* e ) {		
+	virtual void mouseUp( MouseEvent* e ) {	
+		
+
 		if ( e->hasLeftButton() ) {
 
 			if ( e->hasShiftKey() ) {
@@ -355,13 +362,15 @@ public:
 
 	Rect getIncRect() {
 		Rect result = getClientBounds();
-		result.left_ = result.right_ - getFont()->getTextWidth( incStr );
+		String s = " " + incStr + " ";
+		result.left_ = result.right_ - getFont()->getTextWidth( s );
 		return result;
 	}
 
 	Rect getDecRect() {
 		Rect result = getClientBounds();
-		result.right_ = result.left_ + getFont()->getTextWidth( decStr );
+		String s = " " + decStr + " ";
+		result.right_ = result.left_ + getFont()->getTextWidth( s );
 		return result;
 	}
 
