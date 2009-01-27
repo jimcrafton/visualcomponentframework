@@ -83,17 +83,17 @@ object FilterTestWindow  : VCF::Window
 				container = @hl
 
 
-				object l1 : VCF::Label
-					caption = 'Stuff:'
-				end
+				//object l1 : VCF::Label
+				//	caption = 'Stuff:'
+				//end
 
-				object r1 : RangeEdit
-					value = 0.50
-					delta = 0.050
-					min = 0.0
-					max = 1.0
-					//caption = 'Bonus:'
-				end
+				//object r1 : RangeEdit
+				//	value = 0.50
+				//	delta = 0.050
+				//	min = 0.0
+				//	max = 1.0
+				//	//caption = 'Bonus:'
+				//end
 			end
 		end
 	end
