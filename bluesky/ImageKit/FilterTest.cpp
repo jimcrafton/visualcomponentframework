@@ -469,7 +469,7 @@ _class_rtti_end_
 class ImageView : public CustomControl {
 public:
 
-	ImageView(): CustomControl(),filter(NULL),useFilterImage(false) {
+	ImageView(): CustomControl(),filter_(NULL),useFilterImage(false) {
 		addCallback( new ClassProcedure<ImageView>(this, &ImageView::openImage), "ImageView::openImage" );
 		addCallback( new ClassProcedure<ImageView>(this, &ImageView::compileFilter), "ImageView::compileFilter" );
 		addCallback( new ClassProcedure<ImageView>(this, &ImageView::saveImage), "ImageView::saveImage" );
@@ -478,10 +478,10 @@ public:
 	}
 
 	virtual ~ImageView(){ 
-		delete filter;
+		delete filter_;
 	}
 
-	IKFilter* filter;
+	IKFilter* filter_;
 
 	IKImage image;
 	bool useFilterImage;
@@ -576,8 +576,8 @@ public:
 
 		Rect r = getClientBounds();
 
-		if ( NULL == filter ) {
-			filter = new IKFilter();
+		if ( NULL == filter_ ) {
+			filter_ = new IKFilter();
 		}
 
 		ic.initView( r.getWidth(), r.getHeight() );
@@ -601,7 +601,7 @@ public:
 
 		}
 		else if ( useFilterImage ) {
-			ic.draw( x, y, filter->getOutputImage() );
+			ic.draw( x, y, filter_->getOutputImage() );
 		}
 	}
 
@@ -623,14 +623,14 @@ public:
 
 		String text = shaderEdit->getModel()->getValueAsString();
 
-		if ( NULL == filter ) {
-			filter = new IKFilter();
+		if ( NULL == filter_ ) {
+			filter_ = new IKFilter();
 		}
 
 
 		try {
-			filter->initFromData( text );
-			filter->setInputImage( &image );
+			filter_->initFromData( text );
+			filter_->setInputImage( &image );
 			useFilterImage = true;
 			repaint();
 		}
@@ -639,7 +639,7 @@ public:
 			shaderErrors->setVisible(true);	
 			splitter->setVisible(true);
 			
-			shaderErrors->getModel()->setValueAsString( filter->getCompileStatus() );
+			shaderErrors->getModel()->setValueAsString( filter_->getCompileStatus() );
 			useFilterImage = false;
 			repaint();
 		}
@@ -672,7 +672,7 @@ public:
 				img = &image;
 			}
 			else if ( useFilterImage ) {
-				img = filter->getOutputImage();
+				img = filter_->getOutputImage();
 			}
 
 			if ( NULL != img ) {
@@ -713,6 +713,18 @@ public:
 			updateStatus();
 		}
 	}
+
+	void setFilter( IKFilter* filter ) {
+		if ( NULL != filter_ ) {
+			delete filter_;	
+		}
+
+		filter_ = filter;
+		filter_->setInputImage( &image );
+		useFilterImage = true;
+		repaint();
+	}
+
 };
 
 _class_rtti_(ImageView, "VCF::CustomControl", "ImageView")
@@ -756,6 +768,43 @@ public:
 		Class* clazz = ClassRegistry::getClassWithAttrValue( classid(IKFilter), IKFilter::DisplayNameAttr, s );
 		if ( NULL != clazz ) {
 			Object* o = clazz->createInstance();
+
+			ImageView* view = (ImageView*)Application::getRunningInstance()->findComponent( "view", true );
+
+			IKFilter* filter = (IKFilter*)o;
+			view->setFilter( filter );
+
+			Control* editorPane = (Control*)Application::getRunningInstance()->findComponent( "editorPane", true );
+			Container* container = editorPane->getContainer();
+
+			container->clear();
+			
+			Class* clazz = filter->getClass();
+			Enumerator<Property*>* props = clazz->getProperties();
+			while ( props->hasMoreElements() ) {
+				Property* prop = props->nextElement();
+
+				if ( prop->hasAttribute( IKFilter::InputAttr ) ) {
+					Label* propLabel = new Label();
+					propLabel->setCaption( prop->getDisplayName() );
+					container->add( propLabel );
+
+
+					RangeEdit* re = new RangeEdit();
+					re->setMinVal( prop->getAttribute( IKFilter::MinAttr ) );
+					re->setMaxVal( prop->getAttribute( IKFilter::MaxAttr ) );
+					double min = re->getMinVal();
+					double max = re->getMaxVal();
+					re->setDelta( 0.05 / (max-min) );
+
+					re->setValue( prop->getAttribute( IKFilter::DefaultAttr ) );					
+
+					container->add( re );
+				}
+			}
+			
+			container->resizeChildren(NULL);
+			editorPane->repaint();
 		}
 	}
 
@@ -833,8 +882,8 @@ public:
 			Array<String> filterNames = IKFilter::getFiltersForCategory( category );
 
 			for ( Array<String>::iterator j=filterNames.begin();j!=filterNames.end();j++ ) {
-				const String& filter = *j;
-				lm->add( IKFilter::getFilterDisplayName(filter) );
+				const String& filter_ = *j;
+				lm->add( IKFilter::getFilterDisplayName(filter_) );
 			}
 		}
 
