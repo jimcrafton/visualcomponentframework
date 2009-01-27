@@ -1409,8 +1409,6 @@ bool AbstractWin32Component::handleEventMessages( UINT message, WPARAM wParam, L
 		break;
 
 		default:{
-			//result = defaultWndProcedure( message, wParam, lParam );			
-
 			if ( NULL != event ) {
 				peerControl_->handleEvent( event );
 			}

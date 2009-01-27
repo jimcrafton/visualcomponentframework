@@ -53,6 +53,11 @@ AbstractContainer::~AbstractContainer()
 
 void AbstractContainer::containerResized( ControlEvent* event )
 {
+	Control* control = getContainerControl();
+	if ( control->getContainer() != this ) {
+		return;
+	}
+
 	resizeChildren( NULL );
 }
 
@@ -63,6 +68,11 @@ void AbstractContainer::containerResized( ControlEvent* event )
 */
 void AbstractContainer::onMouseEvent( MouseEvent* event )
 {
+	Control* control = getContainerControl();
+	if ( control->getContainer() != this ) {
+		return;
+	}
+
 	Control* previousMouseEnteredChild = Control::getPreviousMouseOverControl();
 	Point tmp(0.0,0.0);
 	tmp = *event->getPoint();
