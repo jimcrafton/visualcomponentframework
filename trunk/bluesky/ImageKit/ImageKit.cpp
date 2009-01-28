@@ -74,6 +74,99 @@ _class_rtti_(Emboss, "VCF::IKFilter", "Emboss")
 _class_rtti_end_
 
 
+_class_rtti_(BrightPass, "VCF::IKFilter", "BrightPass")
+	_attribute_(IKFilter::CategoryAttr, "Image Processing")
+	_attribute_(IKFilter::DisplayNameAttr, "Bright Pass")
+	_property_( double, "threshold", getThreshold, setThreshold, "" );
+	_property_attr_("threshold", IKFilter::MinAttr, 0.0 );
+	_property_attr_("threshold", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("threshold", IKFilter::DefaultAttr, 0.5 );
+	_property_attr_("threshold", IKFilter::InputAttr, true );	
+_class_rtti_end_
+
+
+
+_class_rtti_(RadialBlur, "VCF::IKFilter", "RadialBlur")
+	_attribute_(IKFilter::CategoryAttr, "Image Processing")
+	_attribute_(IKFilter::DisplayNameAttr, "Radial Blur")
+
+	_property_( double, "centerX", getCenterX, setCenterX, "" );
+	_property_attr_("centerX", IKFilter::MinAttr, 0.0 );
+	_property_attr_("centerX", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("centerX", IKFilter::DefaultAttr, 0.5 );
+	_property_attr_("centerX", IKFilter::InputAttr, true );	
+
+	_property_( double, "centerY", getCenterY, setCenterY, "" );
+	_property_attr_("centerY", IKFilter::MinAttr, 0.0 );
+	_property_attr_("centerY", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("centerY", IKFilter::DefaultAttr, 0.5 );
+	_property_attr_("centerY", IKFilter::InputAttr, true );	
+
+
+	_property_( double, "progress", getProgress, setProgress, "" );
+	_property_attr_("progress", IKFilter::MinAttr, 0.0 );
+	_property_attr_("progress", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("progress", IKFilter::DefaultAttr, 0.0 );
+	_property_attr_("progress", IKFilter::InputAttr, true );	
+
+	_property_( int, "count", getCount, setCount, "" );
+	_property_attr_("count", IKFilter::MinAttr, 1 );
+	_property_attr_("count", IKFilter::MaxAttr, 24 );
+	_property_attr_("count", IKFilter::DefaultAttr, 24 );
+	_property_attr_("count", IKFilter::InputAttr, true );	
+
+_class_rtti_end_
+
+
+
+_class_rtti_(Wavy, "VCF::IKFilter", "Wavy")
+	_attribute_(IKFilter::CategoryAttr, "Image Processing")
+	_attribute_(IKFilter::DisplayNameAttr, "Wavy")
+
+	_property_( double, "amplitude", getAmplitude, setAmplitude, "" );
+	_property_attr_("amplitude", IKFilter::MinAttr, 0.0 );
+	_property_attr_("amplitude", IKFilter::MaxAttr, 10.0 );
+	_property_attr_("amplitude", IKFilter::DefaultAttr, 0.5 );
+	_property_attr_("amplitude", IKFilter::InputAttr, true );	
+
+	_property_( double, "frequency", getFrequency, setFrequency, "" );
+	_property_attr_("frequency", IKFilter::MinAttr, 0.0 );
+	_property_attr_("frequency", IKFilter::MaxAttr, 10.0 );
+	_property_attr_("frequency", IKFilter::DefaultAttr, 0.5 );
+	_property_attr_("frequency", IKFilter::InputAttr, true );	
+_class_rtti_end_
+
+
+
+_class_rtti_(Wavy2, "VCF::IKFilter", "Wavy2")
+	_attribute_(IKFilter::CategoryAttr, "Image Processing")
+	_attribute_(IKFilter::DisplayNameAttr, "Wavy2")
+
+	_property_( double, "amount", getAmount, setAmount, "" );
+	_property_attr_("amount", IKFilter::MinAttr, 0.0 );
+	_property_attr_("amount", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("amount", IKFilter::DefaultAttr, 0.5 );
+	_property_attr_("amount", IKFilter::InputAttr, true );	
+
+	_property_( double, "xAmplitude", getXAmplitude, setXAmplitude, "" );
+	_property_attr_("xAmplitude", IKFilter::MinAttr, 0.0 );
+	_property_attr_("xAmplitude", IKFilter::MaxAttr, 10.0 );
+	_property_attr_("xAmplitude", IKFilter::DefaultAttr, 0.5 );
+	_property_attr_("xAmplitude", IKFilter::InputAttr, true );	
+
+	_property_( double, "yAmplitude", getYAmplitude, setYAmplitude, "" );
+	_property_attr_("yAmplitude", IKFilter::MinAttr, 0.0 );
+	_property_attr_("yAmplitude", IKFilter::MaxAttr, 10.0 );
+	_property_attr_("yAmplitude", IKFilter::DefaultAttr, 0.5 );
+	_property_attr_("yAmplitude", IKFilter::InputAttr, true );	
+
+	_property_( double, "progress", getProgress, setProgress, "" );
+	_property_attr_("progress", IKFilter::MinAttr, 0.0 );
+	_property_attr_("progress", IKFilter::MaxAttr, 100.0 );
+	_property_attr_("progress", IKFilter::DefaultAttr, 0.0 );
+	_property_attr_("progress", IKFilter::InputAttr, true );	
+_class_rtti_end_
+
 
 class GLMatrix {
 public:
@@ -273,8 +366,10 @@ void ImageKit::init( int argc, char** argv )
 	REGISTER_CLASSINFO_EXTERNAL(Mixer);
 	REGISTER_CLASSINFO_EXTERNAL(GaussianBlur);
 	REGISTER_CLASSINFO_EXTERNAL(Emboss);
-	
-	
+	REGISTER_CLASSINFO_EXTERNAL(BrightPass);
+	REGISTER_CLASSINFO_EXTERNAL(RadialBlur);
+	REGISTER_CLASSINFO_EXTERNAL(Wavy);
+	REGISTER_CLASSINFO_EXTERNAL(Wavy2);
 }
 
 void ImageKit::terminate()
@@ -758,7 +853,8 @@ const String& IKFilter::OutputAttr = "output";
 
 IKFilter::IKFilter():
 	inputImage_(NULL),
-	outputImage_(NULL)
+	outputImage_(NULL),
+	insertBuiltins_(false)
 {
 
 }
@@ -1153,6 +1249,23 @@ void IKFilter::initProgram( const String& data )
 					break;
 				}
 			}
+		}
+
+
+
+		//add built in functions
+
+		if ( insertBuiltins_ ) {			
+			Resource* res = System::getResourceBundle()->getResource( "builtins.shader" );
+			if ( NULL != res ) {
+				src.append( (const char*)res->getData(), res->getDataSize() );
+				delete res;
+
+				src += "\n\n";
+			}
+			else {
+				throw RuntimeException( "Shader built in functions don't exist! Most likely reason is that the builtins.shader resource file is missing." );
+			}			
 		}
 		
 

@@ -312,6 +312,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\builtins.shader"
+				>
+			</File>
+			<File
 				RelativePath=".\emboss.shader"
 				>
 			</File>
