@@ -30,9 +30,15 @@ jpeg_error_exit (j_common_ptr cinfo)
 {
 	(*cinfo->err->output_message)(cinfo);
 
+	char buffer[JMSG_LENGTH_MAX];
+
+	(*cinfo->err->format_message)(cinfo, buffer);
+
+	VCF::String jpgErr = buffer;
+
 	jpeg_destroy(cinfo);
 
-	throw VCF::RuntimeException(MAKE_ERROR_MSG_2("Error in JPEG library."));
+	throw VCF::RuntimeException(MAKE_ERROR_MSG_2("Error in JPEG library. " + jpgErr));
 }
 
 METHODDEF(void)
