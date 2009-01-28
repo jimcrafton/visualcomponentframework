@@ -23,6 +23,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphicsKit", "..\..\vcf\bu
 	ProjectSection(ProjectDependencies) = postProject
 		{B699126F-83EB-4859-AEB1-AB7D304D9259} = {B699126F-83EB-4859-AEB1-AB7D304D9259}
 		{EA6C4D89-BC71-4879-8940-6B664B941090} = {EA6C4D89-BC71-4879-8940-6B664B941090}
+		{03EEE5C6-142A-4894-B7D6-13FD32EA52BE} = {03EEE5C6-142A-4894-B7D6-13FD32EA52BE}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libAGG", "..\..\vcf\build\vc90\GraphicsKit\libAGG_vc90.vcproj", "{EA6C4D89-BC71-4879-8940-6B664B941090}"
@@ -36,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScintillaKit", "..\..\vcf\b
 	ProjectSection(ProjectDependencies) = postProject
 		{05A85BAA-A813-4EF2-A8B8-9F47B79FEC9A} = {05A85BAA-A813-4EF2-A8B8-9F47B79FEC9A}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibJPEG", "..\..\vcf\src\thirdparty\common\LibJPEG\LibJPEG_vc90.vcproj", "{03EEE5C6-142A-4894-B7D6-13FD32EA52BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,7 +59,6 @@ Global
 		{270C347D-5C4C-48F7-9971-399CC44DB6A9}.Debug MX|Win32.ActiveCfg = Debug|Win32
 		{270C347D-5C4C-48F7-9971-399CC44DB6A9}.Debug MX|Win32.Build.0 = Debug|Win32
 		{270C347D-5C4C-48F7-9971-399CC44DB6A9}.Debug|Win32.ActiveCfg = Debug|Win32
-		{270C347D-5C4C-48F7-9971-399CC44DB6A9}.Debug|Win32.Build.0 = Debug|Win32
 		{270C347D-5C4C-48F7-9971-399CC44DB6A9}.Release MX|Win32.ActiveCfg = Release|Win32
 		{270C347D-5C4C-48F7-9971-399CC44DB6A9}.Release MX|Win32.Build.0 = Release|Win32
 		{270C347D-5C4C-48F7-9971-399CC44DB6A9}.Release|Win32.ActiveCfg = Release|Win32
@@ -117,6 +119,14 @@ Global
 		{15EF3B50-484F-4B0F-B122-5BED845123BB}.Release MX|Win32.Build.0 = Release|Win32
 		{15EF3B50-484F-4B0F-B122-5BED845123BB}.Release|Win32.ActiveCfg = Release|Win32
 		{15EF3B50-484F-4B0F-B122-5BED845123BB}.Release|Win32.Build.0 = Release|Win32
+		{03EEE5C6-142A-4894-B7D6-13FD32EA52BE}.Debug MX|Win32.ActiveCfg = Debug|Win32
+		{03EEE5C6-142A-4894-B7D6-13FD32EA52BE}.Debug MX|Win32.Build.0 = Debug|Win32
+		{03EEE5C6-142A-4894-B7D6-13FD32EA52BE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{03EEE5C6-142A-4894-B7D6-13FD32EA52BE}.Debug|Win32.Build.0 = Debug|Win32
+		{03EEE5C6-142A-4894-B7D6-13FD32EA52BE}.Release MX|Win32.ActiveCfg = Release|Win32
+		{03EEE5C6-142A-4894-B7D6-13FD32EA52BE}.Release MX|Win32.Build.0 = Release|Win32
+		{03EEE5C6-142A-4894-B7D6-13FD32EA52BE}.Release|Win32.ActiveCfg = Release|Win32
+		{03EEE5C6-142A-4894-B7D6-13FD32EA52BE}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

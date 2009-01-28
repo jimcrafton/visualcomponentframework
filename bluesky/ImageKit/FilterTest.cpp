@@ -642,10 +642,11 @@ public:
 
 		String text = shaderEdit->getModel()->getValueAsString();
 
-		if ( NULL == filter_ ) {
-			filter_ = new IKFilter();
+		if ( NULL != filter_ ) {
+			delete filter_;		
 		}
 
+		filter_ = new IKFilter();
 
 		try {
 			filter_->initFromData( text );

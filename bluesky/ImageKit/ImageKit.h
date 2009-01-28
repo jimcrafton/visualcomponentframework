@@ -360,6 +360,7 @@ protected:
 	IKImage* inputImage_;
 	IKImage* outputImage_;
 
+	bool insertBuiltins_;
 
 	std::vector<String> inputNames_;
 	std::vector<String> outputNames_;
@@ -553,6 +554,145 @@ public:
 };
 
 
+class BrightPass : public IKFilter {
+public:
+	BrightPass(){
+		initFromResource( "BrightPass" );
+	}
+
+	double getThreshold() {
+		return threshold;
+	}
+
+	void setThreshold( const double& val ) {
+		threshold = val;
+	}
+	double threshold;
+
+};
+
+class RadialBlur : public IKFilter {
+public:
+	RadialBlur(){
+		
+		initFromResource( "RadialBlur" );
+	}
+
+	double getCenterX() {
+		return centerX;
+	}
+
+	void setCenterX( const double& val ) {
+		centerX = val;
+	}
+
+	double getCenterY() {
+		return centerY;
+	}
+
+	void setCenterY( const double& val ) {
+		centerY = val;
+	}
+
+	double getProgress() {
+		return progress;
+	}
+
+	void setProgress( const double& val ) {
+		progress = val;
+	}
+
+	int getCount() {
+		return count;
+	}
+
+	void setCount( const int& val ) {
+		count = val;
+	}
+
+	double centerX;
+	double centerY;
+	double progress;
+	int count;
+
+};
+
+
+
+class Wavy : public IKFilter {
+public:
+	Wavy(){
+		
+		initFromResource( "Wavy" );
+	}
+
+	double getAmplitude() {
+		return amplitude;
+	}
+
+	void setAmplitude( const double& val ) {
+		amplitude = val;
+	}
+
+	double getFrequency() {
+		return frequency;
+	}
+
+	void setFrequency( const double& val ) {
+		frequency = val;
+	}
+
+	double amplitude;
+	double frequency;
+};
+
+
+
+
+class Wavy2 : public IKFilter {
+public:
+	Wavy2(){
+		
+		initFromResource( "Wavy2" );
+	}
+
+	double getAmount() {
+		return amount;
+	}
+
+	void setAmount( const double& val ) {
+		amount = val;
+	}
+
+	double getXAmplitude() {
+		return xAmplitude;
+	}
+
+	void setXAmplitude( const double& val ) {
+		xAmplitude = val;
+	}
+
+	double getYAmplitude() {
+		return yAmplitude;
+	}
+
+	void setYAmplitude( const double& val ) {
+		yAmplitude = val;
+	}
+
+	double getProgress() {
+		return progress;
+	}
+
+	void setProgress( const double& val ) {
+		progress = val;
+	}
+
+	double amount;
+	double xAmplitude;
+	double yAmplitude;
+	double progress;
+};
 };
 
 
