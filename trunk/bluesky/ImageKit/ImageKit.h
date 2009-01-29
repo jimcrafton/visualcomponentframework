@@ -652,7 +652,7 @@ public:
 class Wavy2 : public IKFilter {
 public:
 	Wavy2(){
-		
+		insertBuiltins_ = true;
 		initFromResource( "Wavy2" );
 	}
 
@@ -692,6 +692,379 @@ public:
 	double xAmplitude;
 	double yAmplitude;
 	double progress;
+};
+
+
+
+class BlackAndWhite : public IKFilter {
+public:
+	BlackAndWhite(){
+		
+		initFromResource( "BlackAndWhite" );
+	}
+
+	double getMidpoint() {
+		return midpoint;
+	}
+
+	void setMidpoint( const double& val ) {
+		midpoint = val;
+	}
+
+	double midpoint;
+};
+
+
+class Bloom : public IKFilter {
+public:
+	Bloom(){
+		insertBuiltins_ = true;
+		initFromResource( "Bloom" );
+	}
+
+	double getBloomIntensity() {
+		return bloomIntensity;
+	}
+
+	void setBloomIntensity( const double& val ) {
+		bloomIntensity = val;
+	}
+
+	double getBaseIntensity() {
+		return baseIntensity;
+	}
+
+	void setBaseIntensity( const double& val ) {
+		baseIntensity = val;
+	}
+
+	double getBloomSaturation() {
+		return bloomSaturation;
+	}
+
+	void setBloomSaturation( const double& val ) {
+		bloomSaturation = val;
+	}
+
+	double getBaseSaturation() {
+		return baseSaturation;
+	}
+
+	void setBaseSaturation( const double& val ) {
+		baseSaturation = val;
+	}
+
+	double getThreshold() {
+		return threshold;
+	}
+
+	void setThreshold( const double& val ) {
+		threshold = val;
+	}
+	
+
+	double bloomIntensity;
+	double baseIntensity;
+	double bloomSaturation;
+	double baseSaturation;
+	double threshold;
+	
+};
+
+
+class Pixelate : public IKFilter {
+public:
+	Pixelate(){
+		insertBuiltins_ = true;
+		initFromResource( "Pixelate" );
+	}
+
+	double getProgress() {
+		return progress;
+	}
+
+	void setProgress( const double& val ) {
+		progress = val;
+	}
+	double progress;
+	
+};
+
+
+class LightStreak : public IKFilter {
+public:
+	LightStreak(){
+		insertBuiltins_ = true;
+		initFromResource( "LightStreak" );
+	}
+
+	double getBrightThreshold() {
+		return brightThreshold;
+	}
+
+	void setBrightThreshold( const double& val ) {
+		brightThreshold = val;
+	}
+
+	double getScale() {
+		return scale;
+	}
+
+	void setScale( const double& val ) {
+		scale = val;
+	}
+
+	double getAttenuation() {
+		return attenuation;
+	}
+
+	void setAttenuation( const double& val ) {
+		attenuation = val;
+	}
+
+	double getXDirection() {
+		return xDirection;
+	}
+
+	void setXDirection( const double& val ) {
+		xDirection = val;
+	}
+
+	double getYDirection() {
+		return yDirection;
+	}
+
+	void setYDirection( const double& val ) {
+		yDirection = val;
+	}
+
+	double getPixelWidth() {
+		return pixelWidth;
+	}
+
+	void setPixelWidth( const double& val ) {
+		pixelWidth = val;
+	}
+
+	double getPixelHeight() {
+		return pixelHeight;
+	}
+
+	void setPixelHeight( const double& val ) {
+		pixelHeight = val;
+	}
+
+	int getNumSamples() {
+		return numSamples;
+	}
+
+	void setNumSamples( const int& val ) {
+		numSamples = val;
+	}
+
+	int getIteration() {
+		return iteration;
+	}
+
+	void setIteration( const int& val ) {
+		iteration = val;
+	}
+
+	double brightThreshold;
+	double scale;
+	double attenuation;
+	double xDirection;
+	double yDirection;
+    double pixelWidth;
+	double pixelHeight;
+    int numSamples;
+	int iteration;
+};
+
+
+
+class Ripple : public IKFilter {
+public:
+	Ripple(){
+		insertBuiltins_ = true;
+		initFromResource( "Ripple" );
+	}
+
+	double getCenterX() {
+		return centerX;
+	}
+
+	void setCenterX( const double& val ) {
+		centerX = val;
+	}
+
+	double getCenterY() {
+		return centerY;
+	}
+
+	void setCenterY( const double& val ) {
+		centerY = val;
+	}
+
+	double getAmplitude() {
+		return amplitude;
+	}
+
+	void setAmplitude( const double& val ) {
+		amplitude = val;
+	}
+
+	double getFrequency() {
+		return frequency;
+	}
+
+	void setFrequency( const double& val ) {
+		frequency = val;
+	}
+
+	double getPhase() {
+		return phase;
+	}
+
+	void setPhase( const double& val ) {
+		phase = val;
+	}
+
+	double centerX;
+	double centerY;
+	double amplitude;
+	double frequency;
+	double phase;
+};
+
+
+
+class Swirl : public IKFilter {
+public:
+	Swirl(){
+		insertBuiltins_ = true;
+		initFromResource( "Swirl" );
+	}
+
+	double getCenterX() {
+		return centerX;
+	}
+
+	void setCenterX( const double& val ) {
+		centerX = val;
+	}
+
+	double getCenterY() {
+		return centerY;
+	}
+
+	void setCenterY( const double& val ) {
+		centerY = val;
+	}
+
+	double getSpiralStrength() {
+		return spiralStrength;
+	}
+
+	void setSpiralStrength( const double& val ) {
+		spiralStrength = val;
+	}
+
+	double getXFrequency() {
+		return xFrequency;
+	}
+
+	void setXFrequency( const double& val ) {
+		xFrequency = val;
+	}
+
+	double getYFrequency() {
+		return yFrequency;
+	}
+
+	void setYFrequency( const double& val ) {
+		yFrequency = val;
+	}
+
+	double centerX;
+	double centerY;
+	double spiralStrength;
+	double xFrequency;
+	double yFrequency;
+};
+
+class Pinch : public IKFilter {
+public:
+	Pinch(){
+		insertBuiltins_ = true;
+		initFromResource( "Pinch" );
+	}
+
+	double getCenterX() {
+		return centerX;
+	}
+
+	void setCenterX( const double& val ) {
+		centerX = val;
+	}
+
+	double getCenterY() {
+		return centerY;
+	}
+
+	void setCenterY( const double& val ) {
+		centerY = val;
+	}
+
+	double getRadius() {
+		return radius;
+	}
+
+	void setRadius( const double& val ) {
+		radius = val;
+	}
+
+	double getAmount() {
+		return amount;
+	}
+
+	void setAmount( const double& val ) {
+		amount = val;
+	}
+
+	double centerX;
+	double centerY;
+	double radius;
+	double amount;	
+};
+
+
+
+class DirectionalBlur : public IKFilter {
+public:
+	DirectionalBlur(){
+		insertBuiltins_ = true;
+		initFromResource( "DirectionalBlur" );
+	}
+
+	double getAngle() {
+		return angle;
+	}
+
+	void setAngle( const double& val ) {
+		angle = val;
+	}
+
+	double getAmount() {
+		return amount;
+	}
+
+	void setAmount( const double& val ) {
+		amount = val;
+	}
+
+	double angle;
+	double amount;	
 };
 };
 

@@ -168,6 +168,252 @@ _class_rtti_(Wavy2, "VCF::IKFilter", "Wavy2")
 _class_rtti_end_
 
 
+_class_rtti_(BlackAndWhite, "VCF::IKFilter", "BlackAndWhite")
+	_attribute_(IKFilter::CategoryAttr, "Image Processing")
+	_attribute_(IKFilter::DisplayNameAttr, "Black and White")
+
+	_property_( double, "midpoint", getMidpoint, setMidpoint, "" );
+	_property_attr_("midpoint", IKFilter::MinAttr, 0.0 );
+	_property_attr_("midpoint", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("midpoint", IKFilter::DefaultAttr, 0.8 );
+	_property_attr_("midpoint", IKFilter::InputAttr, true );
+_class_rtti_end_
+
+
+
+_class_rtti_(Bloom, "VCF::IKFilter", "Bloom")
+	_attribute_(IKFilter::CategoryAttr, "Image Processing")
+	_attribute_(IKFilter::DisplayNameAttr, "Bloom")
+
+	_property_( double, "bloomIntensity", getBloomIntensity, setBloomIntensity, "" );
+	_property_attr_("bloomIntensity", IKFilter::MinAttr, 0.0 );
+	_property_attr_("bloomIntensity", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("bloomIntensity", IKFilter::DefaultAttr, 0.8 );
+	_property_attr_("bloomIntensity", IKFilter::InputAttr, true );
+
+	_property_( double, "baseIntensity", getBaseIntensity, setBaseIntensity, "" );
+	_property_attr_("baseIntensity", IKFilter::MinAttr, 0.0 );
+	_property_attr_("baseIntensity", IKFilter::MaxAttr, 10.0 );
+	_property_attr_("baseIntensity", IKFilter::DefaultAttr, 0.8 );
+	_property_attr_("baseIntensity", IKFilter::InputAttr, true );
+
+	_property_( double, "bloomSaturation", getBloomSaturation, setBloomSaturation, "" );
+	_property_attr_("bloomSaturation", IKFilter::MinAttr, 0.0 );
+	_property_attr_("bloomSaturation", IKFilter::MaxAttr, 10.0 );
+	_property_attr_("bloomSaturation", IKFilter::DefaultAttr, 0.8 );
+	_property_attr_("bloomSaturation", IKFilter::InputAttr, true );
+
+	_property_( double, "baseSaturation", getBaseSaturation, setBaseSaturation, "" );
+	_property_attr_("baseSaturation", IKFilter::MinAttr, 0.0 );
+	_property_attr_("baseSaturation", IKFilter::MaxAttr, 10.0 );
+	_property_attr_("baseSaturation", IKFilter::DefaultAttr, 0.8 );
+	_property_attr_("baseSaturation", IKFilter::InputAttr, true );
+
+	_property_( double, "threshold", getThreshold, setThreshold, "" );
+	_property_attr_("threshold", IKFilter::MinAttr, 0.0 );
+	_property_attr_("threshold", IKFilter::MaxAttr, 10.0 );
+	_property_attr_("threshold", IKFilter::DefaultAttr, 0.8 );
+	_property_attr_("threshold", IKFilter::InputAttr, true );
+	
+_class_rtti_end_
+	
+
+_class_rtti_(Pixelate, "VCF::IKFilter", "Pixelate")
+	_attribute_(IKFilter::CategoryAttr, "Image Processing")
+	_attribute_(IKFilter::DisplayNameAttr, "Pixelate")
+
+	_property_( double, "progress", getProgress, setProgress, "" );
+	_property_attr_("progress", IKFilter::MinAttr, 0.0 );
+	_property_attr_("progress", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("progress", IKFilter::DefaultAttr, 0.20 );
+	_property_attr_("progress", IKFilter::InputAttr, true );	
+_class_rtti_end_
+
+
+_class_rtti_(LightStreak, "VCF::IKFilter", "LightStreak")
+	_attribute_(IKFilter::CategoryAttr, "Image Processing")
+	_attribute_(IKFilter::DisplayNameAttr, "Light Streak")
+
+	_property_( double, "brightThreshold", getBrightThreshold, setBrightThreshold, "" );
+	_property_attr_("brightThreshold", IKFilter::MinAttr, 0.0 );
+	_property_attr_("brightThreshold", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("brightThreshold", IKFilter::DefaultAttr, 0.20 );
+	_property_attr_("brightThreshold", IKFilter::InputAttr, true );	
+
+	_property_( double, "scale", getScale, setScale, "" );
+	_property_attr_("scale", IKFilter::MinAttr, 0.0 );
+	_property_attr_("scale", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("scale", IKFilter::DefaultAttr, 0.20 );
+	_property_attr_("scale", IKFilter::InputAttr, true );	
+
+	_property_( double, "attenuation", getAttenuation, setAttenuation, "" );
+	_property_attr_("attenuation", IKFilter::MinAttr, 0.0 );
+	_property_attr_("attenuation", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("attenuation", IKFilter::DefaultAttr, 0.20 );
+	_property_attr_("attenuation", IKFilter::InputAttr, true );	
+
+	_property_( double, "xDirection", getXDirection, setXDirection, "" );
+	_property_attr_("xDirection", IKFilter::MinAttr, 0.0 );
+	_property_attr_("xDirection", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("xDirection", IKFilter::DefaultAttr, 0.20 );
+	_property_attr_("xDirection", IKFilter::InputAttr, true );	
+
+	_property_( double, "yDirection", getYDirection, setYDirection, "" );
+	_property_attr_("yDirection", IKFilter::MinAttr, 0.0 );
+	_property_attr_("yDirection", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("yDirection", IKFilter::DefaultAttr, 0.20 );
+	_property_attr_("yDirection", IKFilter::InputAttr, true );	
+
+	
+	_property_( double, "pixelWidth", getPixelWidth, setPixelWidth, "" );
+	_property_attr_("pixelWidth", IKFilter::MinAttr, 0.0 );
+	_property_attr_("pixelWidth", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("pixelWidth", IKFilter::DefaultAttr, 0.0009766 );
+	_property_attr_("pixelWidth", IKFilter::InputAttr, true );	
+
+	_property_( double, "pixelHeight", getPixelHeight, setPixelHeight, "" );
+	_property_attr_("pixelHeight", IKFilter::MinAttr, 0.0 );
+	_property_attr_("pixelHeight", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("pixelHeight", IKFilter::DefaultAttr, 0.0013021 );
+	_property_attr_("pixelHeight", IKFilter::InputAttr, true );	
+
+	_property_( int, "numSamples", getNumSamples, setNumSamples, "" );
+	_property_attr_("numSamples", IKFilter::MinAttr, 1 );
+	_property_attr_("numSamples", IKFilter::MaxAttr, 10 );
+	_property_attr_("numSamples", IKFilter::DefaultAttr, 2 );
+	_property_attr_("numSamples", IKFilter::InputAttr, true );	
+
+	_property_( int, "iteration", getIteration, setIteration, "" );
+	_property_attr_("iteration", IKFilter::MinAttr, 1 );
+	_property_attr_("iteration", IKFilter::MaxAttr, 5 );
+	_property_attr_("iteration", IKFilter::DefaultAttr, 1 );
+	_property_attr_("iteration", IKFilter::InputAttr, true );	
+_class_rtti_end_
+
+
+_class_rtti_(Ripple, "VCF::IKFilter", "Ripple")
+	_attribute_(IKFilter::CategoryAttr, "Image Processing")
+	_attribute_(IKFilter::DisplayNameAttr, "Ripple")
+
+	_property_( double, "centerX", getCenterX, setCenterX, "" );
+	_property_attr_("centerX", IKFilter::MinAttr, 0.0 );
+	_property_attr_("centerX", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("centerX", IKFilter::DefaultAttr, 0.50 );
+	_property_attr_("centerX", IKFilter::InputAttr, true );	
+
+	_property_( double, "centerY", getCenterY, setCenterY, "" );
+	_property_attr_("centerY", IKFilter::MinAttr, 0.0 );
+	_property_attr_("centerY", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("centerY", IKFilter::DefaultAttr, 0.50 );
+	_property_attr_("centerY", IKFilter::InputAttr, true );
+
+	_property_( double, "amplitude", getAmplitude, setAmplitude, "" );
+	_property_attr_("amplitude", IKFilter::MinAttr, 0.0 );
+	_property_attr_("amplitude", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("amplitude", IKFilter::DefaultAttr, 0.20 );
+	_property_attr_("amplitude", IKFilter::InputAttr, true );	
+
+	_property_( double, "frequency", getFrequency, setFrequency, "" );
+	_property_attr_("frequency", IKFilter::MinAttr, 0.0 );
+	_property_attr_("frequency", IKFilter::MaxAttr, 100.0 );
+	_property_attr_("frequency", IKFilter::DefaultAttr, 50.0 );
+	_property_attr_("frequency", IKFilter::InputAttr, true );	
+
+	_property_( double, "phase", getPhase, setPhase, "" );
+	_property_attr_("phase", IKFilter::MinAttr, 0.0 );
+	_property_attr_("phase", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("phase", IKFilter::DefaultAttr, 0.20 );
+	_property_attr_("phase", IKFilter::InputAttr, true );		
+_class_rtti_end_
+
+
+
+_class_rtti_(Swirl, "VCF::IKFilter", "Swirl")
+	_attribute_(IKFilter::CategoryAttr, "Image Processing")
+	_attribute_(IKFilter::DisplayNameAttr, "Swirl")
+
+	_property_( double, "centerX", getCenterX, setCenterX, "" );
+	_property_attr_("centerX", IKFilter::MinAttr, 0.0 );
+	_property_attr_("centerX", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("centerX", IKFilter::DefaultAttr, 0.50 );
+	_property_attr_("centerX", IKFilter::InputAttr, true );	
+
+	_property_( double, "centerY", getCenterY, setCenterY, "" );
+	_property_attr_("centerY", IKFilter::MinAttr, 0.0 );
+	_property_attr_("centerY", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("centerY", IKFilter::DefaultAttr, 0.50 );
+	_property_attr_("centerY", IKFilter::InputAttr, true );
+
+	_property_( double, "spiralStrength", getSpiralStrength, setSpiralStrength, "" );
+	_property_attr_("spiralStrength", IKFilter::MinAttr, 0.0 );
+	_property_attr_("spiralStrength", IKFilter::MaxAttr, 10.0 );
+	_property_attr_("spiralStrength", IKFilter::DefaultAttr, 1.150 );
+	_property_attr_("spiralStrength", IKFilter::InputAttr, true );	
+
+	_property_( double, "xFrequency", getXFrequency, setXFrequency, "" );
+	_property_attr_("xFrequency", IKFilter::MinAttr, 0.0 );
+	_property_attr_("xFrequency", IKFilter::MaxAttr, 100.0 );
+	_property_attr_("xFrequency", IKFilter::DefaultAttr, 1.0 );
+	_property_attr_("xFrequency", IKFilter::InputAttr, true );	
+
+	_property_( double, "yFrequency", getYFrequency, setYFrequency, "" );
+	_property_attr_("yFrequency", IKFilter::MinAttr, 0.0 );
+	_property_attr_("yFrequency", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("yFrequency", IKFilter::DefaultAttr, 1.0 );
+	_property_attr_("yFrequency", IKFilter::InputAttr, true );		
+_class_rtti_end_
+
+
+
+_class_rtti_(Pinch, "VCF::IKFilter", "Pinch")
+	_attribute_(IKFilter::CategoryAttr, "Image Processing")
+	_attribute_(IKFilter::DisplayNameAttr, "Pinch")
+
+	_property_( double, "centerX", getCenterX, setCenterX, "" );
+	_property_attr_("centerX", IKFilter::MinAttr, 0.0 );
+	_property_attr_("centerX", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("centerX", IKFilter::DefaultAttr, 0.50 );
+	_property_attr_("centerX", IKFilter::InputAttr, true );	
+
+	_property_( double, "centerY", getCenterY, setCenterY, "" );
+	_property_attr_("centerY", IKFilter::MinAttr, 0.0 );
+	_property_attr_("centerY", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("centerY", IKFilter::DefaultAttr, 0.50 );
+	_property_attr_("centerY", IKFilter::InputAttr, true );
+
+	_property_( double, "radius", getRadius, setRadius, "" );
+	_property_attr_("radius", IKFilter::MinAttr, 0.0 );
+	_property_attr_("radius", IKFilter::MaxAttr, 1.0 );
+	_property_attr_("radius", IKFilter::DefaultAttr, 0.5 );
+	_property_attr_("radius", IKFilter::InputAttr, true );	
+
+	_property_( double, "amount", getAmount, setAmount, "" );
+	_property_attr_("amount", IKFilter::MinAttr, 0.0 );
+	_property_attr_("amount", IKFilter::MaxAttr, 100.0 );
+	_property_attr_("amount", IKFilter::DefaultAttr, 1.0 );
+	_property_attr_("amount", IKFilter::InputAttr, true );	
+_class_rtti_end_
+
+
+
+
+_class_rtti_(DirectionalBlur, "VCF::IKFilter", "DirectionalBlur")
+	_attribute_(IKFilter::CategoryAttr, "Image Processing")
+	_attribute_(IKFilter::DisplayNameAttr, "Directional Blur")
+
+	_property_( double, "angle", getAngle, setAngle, "" );
+	_property_attr_("angle", IKFilter::MinAttr, 0.0 );
+	_property_attr_("angle", IKFilter::MaxAttr, 360.0 );
+	_property_attr_("angle", IKFilter::DefaultAttr, 0.0 );
+	_property_attr_("angle", IKFilter::InputAttr, true );	
+
+	_property_( double, "amount", getAmount, setAmount, "" );
+	_property_attr_("amount", IKFilter::MinAttr, 0.0 );
+	_property_attr_("amount", IKFilter::MaxAttr, 100.0 );
+	_property_attr_("amount", IKFilter::DefaultAttr, 0.50 );
+	_property_attr_("amount", IKFilter::InputAttr, true );
+_class_rtti_end_
+
 class GLMatrix {
 public:
 
@@ -370,6 +616,14 @@ void ImageKit::init( int argc, char** argv )
 	REGISTER_CLASSINFO_EXTERNAL(RadialBlur);
 	REGISTER_CLASSINFO_EXTERNAL(Wavy);
 	REGISTER_CLASSINFO_EXTERNAL(Wavy2);
+	REGISTER_CLASSINFO_EXTERNAL(BlackAndWhite);
+	REGISTER_CLASSINFO_EXTERNAL(Bloom);
+	REGISTER_CLASSINFO_EXTERNAL(Pixelate);
+	REGISTER_CLASSINFO_EXTERNAL(LightStreak);
+	REGISTER_CLASSINFO_EXTERNAL(Ripple);
+	REGISTER_CLASSINFO_EXTERNAL(Swirl);
+	REGISTER_CLASSINFO_EXTERNAL(Pinch);
+	REGISTER_CLASSINFO_EXTERNAL(DirectionalBlur);	
 }
 
 void ImageKit::terminate()
@@ -1290,6 +1544,7 @@ void IKFilter::initProgram( const String& data )
 		
 
 		if( !status ) {
+			StringUtils::trace( src );
 			throw RuntimeException( "Shader compile failed for shader " + shaderClassName + ".\n" + compileStatus_ );
 		}
 
