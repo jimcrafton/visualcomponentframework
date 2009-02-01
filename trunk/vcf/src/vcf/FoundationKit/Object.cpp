@@ -16,15 +16,15 @@ std::list<void*> Object::allocatedObjects;
 #endif
 
 Object::Object()
-    : refCount_( 0 )
-	//initialized to zero
+    : refCount_( 1 )
+	//initialized to one
 	//so a release after creating this object
 	//will automaitically free it
 {
 }
 
 Object::Object(const Object &obj)
-    : refCount_(0)
+    : refCount_(1)
 {
 }
 
