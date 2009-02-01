@@ -20,7 +20,9 @@ class RefCount {
 
 public:
     RefCount(){
-		refCount_ = 0;
+		refCount_ = 1; // initialize to one 
+                   // so the first call to removeRef
+                   // deletes the object
 	};
 
     virtual ~RefCount() {
