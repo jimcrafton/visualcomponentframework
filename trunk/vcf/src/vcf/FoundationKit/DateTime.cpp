@@ -559,6 +559,15 @@ uint32 DateTime::getNumberOfDaysInMonth( uint32 year, DateTime::Months month )
 	return result;
 }
 
+void DateTime::setDate( const uint32& year, const uint32& day )
+{
+	if ( (day > 365) || (day < 1) ) {
+		throw BadDateFormat( BAD_DAY_VALUE );
+	}
+	
+	set( year, 1, 1, 0, 0, 0, 0 );
+	time_ += (day * DateTime::ONEDAY);
+}
 
 uint32 DateTime::getDayOfYear() const
 {
