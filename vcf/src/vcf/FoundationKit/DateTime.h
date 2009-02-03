@@ -284,6 +284,20 @@ public:
 					const uint32& day );
 
 	/**
+	Setting the date causes the current time to reset to 0:0:0.
+	So if you have a DateTime object that is set to Jan 23, 2123 12:23:22, and
+	you call setDate( 2003, 6, 12 ), the result will be a DateTime object set
+	to June 12, 2003 00:00:00.
+
+	@param uint32 the year
+
+	@param uint32 the day of the year. This must be a value between 1 and 365. Values
+	outside of this range will cause a BadDateFormat exception to be thrown.
+	@throw BadDateFormat
+	*/
+	void setDate( const uint32& year, const uint32& day );
+
+	/**
 	Setting the time via this function keeps the current date. So
 	if you have a DateTime object that is set to Jan 23, 2123 12:23:22, and
 	you call setTime( 16, 2, 45 ) , the result will be a DateTime object set
