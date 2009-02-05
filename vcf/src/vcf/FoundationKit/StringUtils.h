@@ -26,6 +26,7 @@ namespace VCF {
 class DateTime;
 class VariantData;
 class Format;
+class Locale;
 
 /**
 \class StringUtils StringUtils.h "vcf/FoundationKit/StringUtils.h"
@@ -455,7 +456,7 @@ public:
 	@param String a string with formatting codes in it.
 	@return String the newly formatted string
 	*/
-	static VCF::String format( const DateTime& date, const String& formatting );
+	static VCF::String format( const DateTime& date, const String& formatting, Locale* locale=NULL );
 
 	/**
 	This functions is used to change, if neccessary, a format string
