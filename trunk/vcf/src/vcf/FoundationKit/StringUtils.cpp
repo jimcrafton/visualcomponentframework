@@ -1150,7 +1150,7 @@ bool StringUtils::fromStringAsBool( const VCF::String& value )
 }
 
 
-VCF::String StringUtils::format( const DateTime& date, const String& formatting )
+VCF::String StringUtils::format( const DateTime& date, const String& formatting, Locale* locale )
 {
 	String result;
 
@@ -1246,7 +1246,11 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 				case 'c' : {
 					result.append( current, (p-current) -formatArgCount );
 
-					result += L"{insert Locale date/time here}";
+					//result += L"{insert Locale date/time here}";
+
+					if ( NULL != locale ) {
+						result += locale->toStringFromDate( date ) + " " + locale->toStringFromTime( date );  
+					}
 
 					current = p + 1;
 					hashCharFound = false;
@@ -1508,7 +1512,15 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 				case 'P' : {
 					result.append( current, (p-current) -formatArgCount );
 
-					result += L"{Locale's AM/PM indicator}";
+					if ( NULL != locale ) {
+
+						if ( date.getHour() > 11 ) {
+							result += locale->getPMSymbol();
+						}
+						else {
+							result += locale->getAMSymbol();
+						}
+					}
 
 					current = p + 1;
 					hashCharFound = false;
@@ -1690,7 +1702,11 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 				case 'x' : {
 					result.append( current, (p-current) -formatArgCount );
 
-					result += L"{Locale's Date}";
+					if ( NULL != locale ) {
+						result += locale->toStringFromDate( date );  
+					}
+
+					//result += L"{Locale's Date}";
 
 					current = p + 1;
 					hashCharFound = false;
@@ -1702,7 +1718,9 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting 
 				case 'X' : {
 					result.append( current, (p-current) -formatArgCount );
 
-					result += L"{Locale's Time}";
+					if ( NULL != locale ) {
+						result += locale->toStringFromTime( date );  
+					}
 
 					current = p + 1;
 					hashCharFound = false;
