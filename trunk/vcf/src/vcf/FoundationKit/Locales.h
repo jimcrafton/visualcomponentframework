@@ -762,7 +762,7 @@ public:
 	double toDouble( const UnicodeString& str );
 	float toFloat( const UnicodeString& str );
 	double toDoubleAsCurrency( const UnicodeString& str );
-	DateTime toDateTime( const UnicodeString& str );
+	DateTime toDateTime( const UnicodeString& str, const String& format );
 
 	/**
 	Transforms all alpha numeric characters in a string to lower case.
