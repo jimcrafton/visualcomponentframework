@@ -17,6 +17,708 @@ where you installed the VCF.
 using namespace VCF;
 
 
+class CalendarData {
+public:
+
+	CalendarData() :calType(0), shortDays(7), longDays(7),shortMonths(13),longMonths(13) {}
+
+	DWORD calType;
+	std::vector<String> shortDays;
+	std::vector<String> longDays;
+
+	std::vector<String> shortMonths;
+	std::vector<String> longMonths;
+};
+
+class DateTimeParser {
+public:
+
+	DateTimeParser( LocalePeer* val ) {
+		locale_ = val;
+		lcID_ = (LCID)locale_->getHandleID();
+		init();
+	}
+
+	enum FormatParseState {
+		fpsSeparators = 0,
+		fpsStartTag, //% char found
+		fpsFormatter, 
+		fpsDone
+	};
+
+	DateTime parse( const String& dateString, const String& formatting ) {
+		DateTime result;
+
+		if ( formatting.size() < 2 ) {
+			throw RuntimeException( "Invalid formatting string for datetime parsing." );
+		}
+
+
+		const VCFChar* fmtPtr = formatting.c_str();
+		const VCFChar* fmtStart = fmtPtr;
+		const VCFChar* fmtDelimS = fmtPtr;
+		int fmtSize = formatting.size();
+
+
+		const VCFChar* dsPtr = dateString.c_str();
+		const VCFChar* dsStart = dsPtr;
+		const VCFChar* dsCurrent = dsPtr;
+		int dsSize = dateString.size();
+		size_t lastDelimPos = 0;
+		int currentFmtChar = -1;
+
+		size_t day, month, year, hour, minute, second, millis;
+		day = month = year = -1;
+		hour = minute = second = millis = 0;
+
+		int state = fpsSeparators;
+
+		bool using365Day = false;
+		bool hashCharFound = false;
+
+		do {	
+
+			while ( dsPtr-dsStart < dsSize ) {
+				switch ( *dsPtr ) {
+					case '\n': case '\r': case ' ': case '\t': {
+						dsPtr ++;
+					}
+					break;
+				}
+
+				dsCurrent = dsPtr;
+				break;
+			}
+
+			switch ( *fmtPtr ) {
+				case '%' : {
+					state = fpsStartTag;
+					hashCharFound = false;
+				}
+				break;
+			}
+
+
+			switch ( state ) {
+				case fpsSeparators : {
+					fmtPtr++;
+				}
+				break;
+
+				case fpsStartTag : {					
+					fmtPtr++;
+					state = fpsFormatter;
+				}
+				break;
+
+				case fpsFormatter : {
+					if ( '#' == *fmtPtr ) {
+						fmtPtr ++;
+						hashCharFound = true;
+					}
+					currentFmtChar = *fmtPtr;
+					state = fpsDone;
+				}
+				break;
+
+				case fpsDone : {
+					fmtDelimS = fmtPtr + 1;				
+
+					String val;
+					size_t extraIncr = 0;
+					switch ( currentFmtChar ) {
+						case 'B' : case 'b' : {
+							while ( dsCurrent-dsStart < dsSize ) {
+								if ( *dsCurrent == *fmtDelimS ) {
+									break;
+								}
+								dsCurrent++;
+							}
+							
+							val.append( dsPtr, dsCurrent - dsPtr );
+
+							//short month
+
+							if ( currentFmtChar == 'B' ) {
+								for (size_t i=0;i<data_->longMonths.size();i++) {
+									if ( 0 == StringUtils::noCaseCompare( this->data_->longMonths[i], val ) ) {
+										month = i+1;
+										break;
+									}
+								}
+							}
+							else {
+								for (size_t i=0;i<data_->shortMonths.size();i++) {
+									if ( 0 == StringUtils::noCaseCompare( this->data_->shortMonths[i], val ) ) {
+										month = i+1;
+										break;
+									}
+								}
+							}
+
+							extraIncr = 1;
+						}
+						break;
+
+						case 'A' : case 'a' : {
+							while ( dsCurrent-dsStart < dsSize ) {
+								if ( *dsCurrent == *fmtDelimS ) {
+									break;
+								}
+								dsCurrent++;
+							}
+							
+							val.append( dsPtr, dsCurrent - dsPtr );
+
+							//short month
+
+							if ( currentFmtChar == 'A' ) {
+								for (size_t i=0;i<data_->longDays.size();i++) {
+									if ( 0 == StringUtils::noCaseCompare( this->data_->longDays[i], val ) ) {
+										day = i+1;
+										break;
+									}
+								}
+							}
+							else {
+								for (size_t i=0;i<data_->shortDays.size();i++) {
+									if ( 0 == StringUtils::noCaseCompare( this->data_->shortDays[i], val ) ) {
+										day = i+1;
+										break;
+									}
+								}
+							}
+
+							extraIncr = 1;
+						}
+						break;
+
+						case 'd' : {
+
+							if ( hashCharFound ) {
+								while ( dsCurrent-dsStart < dsSize ) {
+									if ( *dsCurrent == *fmtDelimS ) {
+										break;
+									}
+									dsCurrent++;
+								}
+								
+								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+							}
+							else {
+								if ( ((dsPtr+2)-dsStart) > dsSize ) {
+									throw RuntimeException( "Date string too small" );
+								}
+								//day 01-31
+								val.append( dsPtr, 2 );
+							}
+
+							
+
+							day = locale_->toUInt( val );
+							
+						}
+						break;
+
+						case 'Y' : {
+							if ( hashCharFound ) {
+								while ( dsCurrent-dsStart < dsSize ) {
+									if ( *dsCurrent == *fmtDelimS ) {
+										break;
+									}
+									dsCurrent++;
+								}
+								
+								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 4 ) );
+								extraIncr = 1;
+							}
+							else {
+								if ( ((dsPtr+4)-dsStart) > dsSize ) {
+									throw RuntimeException( "Date string too small" );
+								}
+								//year with century
+								val.append( dsPtr, 4 );
+							}
+
+							year = locale_->toUInt( val );
+							
+						}
+						break;
+
+						case 'y' : {
+							//year without century
+							if ( hashCharFound ) {
+								while ( dsCurrent-dsStart < dsSize ) {
+									if ( *dsCurrent == *fmtDelimS ) {
+										break;
+									}
+									dsCurrent++;
+								}
+								
+								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+								extraIncr = 1;
+							}
+							else {
+								if ( ((dsPtr+2)-dsStart) > dsSize ) {
+									throw RuntimeException( "Date string too small" );
+								}
+								//year with century
+								val.append( dsPtr, 2 );
+							}
+
+							year = locale_->toUInt( val );
+							
+						}
+						break;
+
+
+						case 'H' : {
+							//%H - Hour in 24-hour format (00  23)
+							if ( hashCharFound ) {
+								while ( dsCurrent-dsStart < dsSize ) {
+									if ( *dsCurrent == *fmtDelimS ) {
+										break;
+									}
+									dsCurrent++;
+								}
+								
+								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+								extraIncr = 1;
+							}
+							else {
+								if ( ((dsPtr+2)-dsStart) > dsSize ) {
+									throw RuntimeException( "Date string too small" );
+								}
+								//year with century
+								val.append( dsPtr, 2 );
+							}
+
+							hour = locale_->toUInt( val );
+							
+						}
+						break;
+
+						case 'I' : {
+							//%I - Hour in 12-hour format (01  12)
+							if ( hashCharFound ) {
+								while ( dsCurrent-dsStart < dsSize ) {
+									if ( *dsCurrent == *fmtDelimS ) {
+										break;
+									}
+									dsCurrent++;
+								}
+								
+								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+								extraIncr = 1;
+							}
+							else {
+								if ( ((dsPtr+2)-dsStart) > dsSize ) {
+									throw RuntimeException( "Date string too small" );
+								}
+								//year with century
+								val.append( dsPtr, 2 );
+							}
+
+							hour = locale_->toUInt( val );
+							
+						}
+						break;
+
+						case 'm' : {
+							//%m - Month as decimal number (01  12)
+							if ( hashCharFound ) {
+								while ( dsCurrent-dsStart < dsSize ) {
+									if ( *dsCurrent == *fmtDelimS ) {
+										break;
+									}
+									dsCurrent++;
+								}
+								
+								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+								extraIncr = 1;
+							}
+							else {
+								if ( ((dsPtr+2)-dsStart) > dsSize ) {
+									throw RuntimeException( "Date string too small" );
+								}
+								//year with century
+								val.append( dsPtr, 2 );
+							}
+
+							month = locale_->toUInt( val );
+							
+						}
+						break;
+
+						case 'M' : {
+							//%M - Minute as decimal number (00  59)
+							if ( hashCharFound ) {
+								while ( dsCurrent-dsStart < dsSize ) {
+									if ( *dsCurrent == *fmtDelimS ) {
+										break;
+									}
+									dsCurrent++;
+								}
+								
+								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+								extraIncr = 1;
+							}
+							else {
+								if ( ((dsPtr+2)-dsStart) > dsSize ) {
+									throw RuntimeException( "Date string too small" );
+								}
+								//year with century
+								val.append( dsPtr, 2 );
+							}
+
+							minute = locale_->toUInt( val );
+							
+						}
+						break;
+
+						case 'P' : {
+							//%P - Current locale's A.M./P.M. indicator for 12-hour clock
+							
+							while ( dsCurrent-dsStart < dsSize ) {
+								if ( *dsCurrent == *fmtDelimS ) {
+									break;
+								}
+								dsCurrent++;
+							}
+								
+							val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+							extraIncr = 1;
+							
+							//minute = locale_->toUInt( val );
+							
+						}
+						break;
+
+						case 's' : {
+							//%s - millisecond part
+							if ( hashCharFound ) {
+								while ( dsCurrent-dsStart < dsSize ) {
+									if ( *dsCurrent == *fmtDelimS ) {
+										break;
+									}
+									dsCurrent++;
+								}
+								
+								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 3 ) );
+								extraIncr = 1;
+							}
+							else {
+								if ( ((dsPtr+3)-dsStart) > dsSize ) {
+									throw RuntimeException( "Date string too small" );
+								}
+								//year with century
+								val.append( dsPtr, 3 );
+							}
+
+							millis = locale_->toUInt( val );
+							
+						}
+						break;
+
+						case 'S' : {
+							//%S - Second as decimal number (00  59)
+							if ( hashCharFound ) {
+								while ( dsCurrent-dsStart < dsSize ) {
+									if ( *dsCurrent == *fmtDelimS ) {
+										break;
+									}
+									dsCurrent++;
+								}
+								
+								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+								extraIncr = 1;
+							}
+							else {
+								if ( ((dsPtr+2)-dsStart) > dsSize ) {
+									throw RuntimeException( "Date string too small" );
+								}
+								//year with century
+								val.append( dsPtr, 2 );
+							}
+
+							second = locale_->toUInt( val );
+							
+						}
+						break;
+
+						case 'w' : {
+							//%w - Weekday as decimal number (0  6; Sunday is 0)
+							
+							while ( dsCurrent-dsStart < dsSize ) {
+								if ( *dsCurrent == *fmtDelimS ) {
+									break;
+								}
+								dsCurrent++;
+							}
+							
+							val.append( dsPtr, dsCurrent - dsPtr );
+							extraIncr = 1;
+						}
+						break;
+
+						case 'W' : {
+							//%W - Week of year as decimal number, with Monday as first day of week (00  53)
+							
+							if ( hashCharFound ) {
+								while ( dsCurrent-dsStart < dsSize ) {
+									if ( *dsCurrent == *fmtDelimS ) {
+										break;
+									}
+									dsCurrent++;
+								}
+								
+								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+								extraIncr = 1;
+							}
+							else {
+								if ( ((dsPtr+2)-dsStart) > dsSize ) {
+									throw RuntimeException( "Date string too small" );
+								}
+								//year with century
+								val.append( dsPtr, 2 );
+							}
+
+
+						}
+						break;
+
+						case 'D' : case 'j' : {
+							using365Day = true;
+
+							while ( dsCurrent-dsStart < dsSize ) {
+								if ( *dsCurrent == *fmtDelimS ) {
+									break;
+								}
+								dsCurrent++;
+							}
+							
+							val.append( dsPtr, dsCurrent - dsPtr );
+
+							day = locale_->toUInt( val );
+
+							extraIncr = 1;
+							
+						}
+						break;
+					}
+
+					
+
+					dsPtr += val.size() + extraIncr;
+					while ( dsPtr-dsStart < dsSize ) {
+						if ( *dsPtr == *fmtDelimS ) {
+							dsPtr++;
+						}
+						else {
+							break;
+						}
+					}
+
+
+					fmtPtr++;
+					state = fpsSeparators;
+					
+				}
+				break;
+			}
+
+		} while ( ((dsPtr-dsStart) < dsSize) && ((fmtPtr-fmtStart) < fmtSize) );
+
+
+		if ( year == -1 ) {
+			throw RuntimeException( "The data and/or format string(s) probably invalid, no year was specified");
+		}
+
+		if ( using365Day ) {
+			if ( day == -1 ) {
+				throw RuntimeException( "The data and/or format string(s) probably invalid, no day was specified");
+			}
+		}
+		else {
+			if ( month == -1 ) {
+				throw RuntimeException( "The data and/or format string(s) probably invalid, no month was specified");
+			}
+			
+			if ( day == -1 ) {
+				throw RuntimeException( "The data and/or format string(s) probably invalid, no day was specified");
+			}
+		}
+		
+		if ( using365Day ) {
+			result.setDate( year, day );
+			result.setTime( hour, minute, second );
+			result.incrMilliSecond( millis );
+		}
+		else {
+			result.set( year, month, day, hour, minute, second, millis );
+		}
+
+		return result;
+	}
+
+protected:
+	LocalePeer* locale_;
+	LCID lcID_;
+	CalendarData* data_;
+	void init() {
+		std::map<LCID,CalendarData*>::iterator found = 
+			DateTimeParser::calendarMap.find( this->lcID_ );
+		if ( found == DateTimeParser::calendarMap.end() ) {
+			CalendarData* data = new CalendarData();
+
+
+			if ( !GetLocaleInfoW( lcID_, LOCALE_ICALENDARTYPE | LOCALE_RETURN_NUMBER, (LPWSTR)&data->calType, sizeof(data->calType) ) ) {
+				throw RuntimeException( "Failed to determine calendar type" );
+			}
+
+			WCHAR tmp[256];
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVDAYNAME1, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortDays[0] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVDAYNAME2, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortDays[1] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVDAYNAME3, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortDays[2] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVDAYNAME4, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortDays[3] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVDAYNAME5, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortDays[4] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVDAYNAME6, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortDays[5] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVDAYNAME7, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortDays[6] = tmp;
+
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SDAYNAME1, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longDays[0] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SDAYNAME2, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longDays[1] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SDAYNAME3, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longDays[2] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SDAYNAME4, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longDays[3] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SDAYNAME5, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longDays[4] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SDAYNAME6, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longDays[5] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SDAYNAME7, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longDays[6] = tmp;
+
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVMONTHNAME1, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortMonths[0] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVMONTHNAME2, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortMonths[1] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVMONTHNAME3, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortMonths[2] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVMONTHNAME4, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortMonths[3] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVMONTHNAME5, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortMonths[4] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVMONTHNAME6, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortMonths[5] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVMONTHNAME7, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortMonths[6] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVMONTHNAME8, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortMonths[7] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVMONTHNAME9, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortMonths[8] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVMONTHNAME10, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortMonths[9] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVMONTHNAME11, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortMonths[10] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVMONTHNAME12, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortMonths[11] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SABBREVMONTHNAME13, &tmp[0], sizeof(tmp)-1, NULL );
+			data->shortMonths[12] = tmp;
+
+
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SMONTHNAME1, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longMonths[0] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SMONTHNAME2, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longMonths[1] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SMONTHNAME3, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longMonths[2] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SMONTHNAME4, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longMonths[3] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SMONTHNAME5, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longMonths[4] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SMONTHNAME6, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longMonths[5] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SMONTHNAME7, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longMonths[6] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SMONTHNAME8, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longMonths[7] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SMONTHNAME9, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longMonths[8] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SMONTHNAME10, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longMonths[9] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SMONTHNAME11, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longMonths[10] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SMONTHNAME12, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longMonths[11] = tmp;
+
+			GetCalendarInfoW( lcID_, data->calType, CAL_SMONTHNAME13, &tmp[0], sizeof(tmp)-1, NULL );
+			data->longMonths[12] = tmp;
+
+			DateTimeParser::calendarMap[this->lcID_] = data;
+
+			data_ = data;
+		}
+		else {
+			data_ = found->second;
+		}
+	}
+
+	static std::map<LCID,CalendarData*> calendarMap; 
+};
+
+std::map<LCID,CalendarData*> DateTimeParser::calendarMap;
+
+
+
+
+
 
 std::map<AnsiString,int> Win32LocalePeer::langIDs;
 std::map<AnsiString,int> Win32LocalePeer::countryIDs;
@@ -2047,10 +2749,12 @@ DoTime:
 
 
 
-DateTime Win32LocalePeer::toDateTime( const UnicodeString& str )
+DateTime Win32LocalePeer::toDateTime( const UnicodeString& str, const String& format )
 {
-	DateTime result;
+	DateTimeParser parser(this);
 
+	DateTime result = parser.parse( str, format );
+/*
 	OLECHAR* tmp = new OLECHAR[str.size()+1];
 	memset( tmp, 0, sizeof(OLECHAR) * str.size()+1 );
 
@@ -2063,6 +2767,8 @@ DateTime Win32LocalePeer::toDateTime( const UnicodeString& str )
 
 
 	DateTimeFromOleDate( d, result );
+	*/
+
 
 	return result;
 }
