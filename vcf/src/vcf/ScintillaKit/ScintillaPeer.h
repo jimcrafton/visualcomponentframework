@@ -149,9 +149,6 @@ public:
 		autoIndent_ = val;
 	}
 
-	void setIndentMaintain( bool val ) {
-		indentMaintain_ = val;
-	}
 
 	virtual void cut();
 
@@ -170,6 +167,30 @@ public:
 	virtual void setTextWrapping( const bool& val );
 
 	virtual bool getTextWrapping();
+
+	
+	virtual bool getIndentMaintain() {
+		return indentMaintain_;
+	}
+
+	virtual void setIndentMaintain( bool val ) {
+		indentMaintain_ = val;
+	}
+	
+	virtual uint32 getTabWidth();
+	virtual void setTabWidth( const uint32& val );
+	
+	virtual uint32 getIndent();
+	virtual void setIndent( const uint32& val );
+	
+	virtual bool areIndentGuidesVisible();
+	virtual void setIndentGuidesVisible( const bool& val );
+	
+	virtual bool isWhiteSpaceVisible();
+	virtual void setWhiteSpaceVisible( const bool& val );
+	
+	virtual bool isEOLVisible();
+	virtual void setEOLVisible( const bool& val );
 protected:
 
 	friend class ScintillaHook;

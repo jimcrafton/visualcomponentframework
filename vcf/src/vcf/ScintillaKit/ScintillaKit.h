@@ -62,9 +62,9 @@ where you installed the VCF.
 #ifdef USE_SCINTILLAKIT_DLL
 //	using dynamic link library
 #	ifdef _DEBUG
-#		pragma comment(lib, "ScintillaKit"_LIB_CPLVERNUM"_d.lib")
+#		pragma comment(lib, "ScintillaKit_"_LIB_CPLVERNUM"_d.lib")
 #	else
-#		pragma comment(lib, "ScintillaKit"_LIB_CPLVERNUM".lib")
+#		pragma comment(lib, "ScintillaKit_"_LIB_CPLVERNUM".lib")
 #	endif
 #elif USE_SCINTILLAKIT_LIB
 //	using statically linked library
@@ -470,6 +470,26 @@ public:
 
 	virtual void setTextWrapping( const bool& val ) = 0;
 	virtual bool getTextWrapping() = 0;
+
+
+	virtual bool getIndentMaintain() = 0;
+	virtual void setIndentMaintain( bool val ) = 0;
+
+	virtual uint32 getTabWidth() = 0;
+	virtual void setTabWidth( const uint32& val ) = 0;
+
+	virtual uint32 getIndent() = 0;
+	virtual void setIndent( const uint32& val ) = 0;
+
+	virtual bool areIndentGuidesVisible() = 0;
+	virtual void setIndentGuidesVisible( const bool& val ) = 0;
+
+	virtual bool isWhiteSpaceVisible() = 0;
+	virtual void setWhiteSpaceVisible( const bool& val ) = 0;
+
+	virtual bool isEOLVisible() = 0;
+	virtual void setEOLVisible( const bool& val ) = 0;
+
 };
 
 
@@ -542,10 +562,29 @@ public:
 	* disables the timer.
 	* It is called at each timer pulse.
 	*/
-	void stopTypingTimer();
+	virtual void stopTypingTimer();
 
 	String getText();
 	void setText( const String& text );
+
+
+	bool getIndentMaintain();
+	void setIndentMaintain( bool val );
+	
+	uint32 getTabWidth();
+	void setTabWidth( const uint32& val );
+	
+	uint32 getIndent();
+	void setIndent( const uint32& val );
+	
+	bool areIndentGuidesVisible();
+	void setIndentGuidesVisible( const bool& val );
+	
+	bool isWhiteSpaceVisible();
+	void setWhiteSpaceVisible( const bool& val );
+	
+	bool isEOLVisible();
+	void setEOLVisible( const bool& val );
 protected:
 	/**
 	* called by the timer.

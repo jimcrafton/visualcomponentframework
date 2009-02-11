@@ -1812,4 +1812,54 @@ bool Win32ScintillaPeer::getTextWrapping()
 }
 
 
+uint32 Win32ScintillaPeer::getTabWidth()
+{
+	return sendScintillaMessage( SCI_GETTABWIDTH, 0, 0 );
+}
+
+void Win32ScintillaPeer::setTabWidth( const uint32& val )
+{
+	sendScintillaMessage( SCI_SETTABWIDTH, val, 0 );
+}
+
+uint32 Win32ScintillaPeer::getIndent()
+{
+	return sendScintillaMessage( SCI_GETINDENT, 0, 0 );
+}	
+
+void Win32ScintillaPeer::setIndent( const uint32& val )
+{
+	sendScintillaMessage( SCI_SETINDENT, val, 0 );
+}
+
+bool Win32ScintillaPeer::areIndentGuidesVisible()
+{
+	return sendScintillaMessage( SCI_GETINDENTATIONGUIDES, 0, 0 );
+}
+
+void Win32ScintillaPeer::setIndentGuidesVisible( const bool& val )
+{
+	sendScintillaMessage( SCI_SETINDENTATIONGUIDES, val, 0 );
+}
+
+bool Win32ScintillaPeer::isWhiteSpaceVisible()
+{
+	return sendScintillaMessage( SCI_GETVIEWWS, 0, 0 );
+}
+
+void Win32ScintillaPeer::setWhiteSpaceVisible( const bool& val )
+{
+	sendScintillaMessage( SCI_SETVIEWWS, val, 0 );
+}
+
+bool Win32ScintillaPeer::isEOLVisible()
+{
+	return sendScintillaMessage( SCI_GETVIEWEOL, 0, 0 );
+}
+
+void Win32ScintillaPeer::setEOLVisible( const bool& val )
+{
+	sendScintillaMessage( SCI_SETVIEWEOL, val, 0 );
+}
+
 

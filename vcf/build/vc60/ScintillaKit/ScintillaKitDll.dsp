@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="ScintillaKit" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="ScintillaKitDll" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
-# TARGTYPE "Win32 (x86) Static Library" 0x0104
+# TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 
-CFG=ScintillaKit - Win32 Debug
+CFG=ScintillaKitDll - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "ScintillaKit.mak".
+!MESSAGE NMAKE /f "ScintillaKitDll.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "ScintillaKit.mak" CFG="ScintillaKit - Win32 Debug"
+!MESSAGE NMAKE /f "ScintillaKitDll.mak" CFG="ScintillaKitDll - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ScintillaKit - Win32 Release" (based on "Win32 (x86) Static Library")
-!MESSAGE "ScintillaKit - Win32 Debug" (based on "Win32 (x86) Static Library")
+!MESSAGE "ScintillaKitDll - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "ScintillaKitDll - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
@@ -26,84 +26,67 @@ CFG=ScintillaKit - Win32 Debug
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
+MTL=midl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "ScintillaKit - Win32 Release"
+!IF  "$(CFG)" == "ScintillaKitDll - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "Release"
-# PROP BASE Intermediate_Dir "Release"
+# PROP BASE Output_Dir "ScintillaKitDll___Win32_Release"
+# PROP BASE Intermediate_Dir "ScintillaKitDll___Win32_Release"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release"
+# PROP Output_Dir "ScintillaKitDll___Win32_Release"
+# PROP Intermediate_Dir "ScintillaKitDll___Win32_Release"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/common/scintilla/include" /I "$(VCF_ROOT)/src/thirdparty/common/scintilla/src" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "USE_APPLICATIONKIT_LIB" /D "STATIC_BUILD" /D "SCI_LEXER" /YX /FD /c
+# ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SCINTILLAKITDLL_EXPORTS" /YX /FD /c
+# ADD CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SCINTILLAKITDLL_EXPORTS" /YX /FD /c
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
 
-!ELSEIF  "$(CFG)" == "ScintillaKit - Win32 Debug"
+!ELSEIF  "$(CFG)" == "ScintillaKitDll - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Debug"
-# PROP BASE Intermediate_Dir "Debug"
+# PROP BASE Output_Dir "ScintillaKitDll___Win32_Debug"
+# PROP BASE Intermediate_Dir "ScintillaKitDll___Win32_Debug"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "DebugS"
-# PROP Intermediate_Dir "DebugS"
+# PROP Output_Dir "Debug"
+# PROP Intermediate_Dir "Debug"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/common/scintilla/include" /I "$(VCF_ROOT)/src/thirdparty/common/scintilla/src" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "USE_APPLICATIONKIT_LIB" /D "STATIC_BUILD" /D "SCI_LEXER" /YX /FD /GZ /c
+# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SCINTILLAKITDLL_EXPORTS" /YX /FD /GZ  /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "$(VCF_ROOT)/src" /I "$(VCF_ROOT)/src/thirdparty/common/scintilla/include" /I "$(VCF_ROOT)/src/thirdparty/common/scintilla/src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "USE_APPLICATIONKIT_DLL" /D "STATIC_BUILD" /D "SCI_LEXER" /D "SCINTILLAKIT_EXPORTS" /D "SCINTILLAKIT_DLL" /YX /FD /GZ  /c
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
-LIB32=link.exe -lib
-# ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo /out:"../../../lib/ScintillaKit_vc6_sd.lib"
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"../../../bin/ScintillaKit_vc6_d.dll" /implib:"../../../lib/ScintillaKit_vc6_d.lib" /pdbtype:sept /libpath:"$(VCF_ROOT)/lib"
+# SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
 
 # Begin Target
 
-# Name "ScintillaKit - Win32 Release"
-# Name "ScintillaKit - Win32 Debug"
-# Begin Group "Source Files"
-
-# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ScintillaKit\ScintillaKit.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ScintillaKit\ScintillaKit.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ScintillaKit\ScintillaPeer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\src\vcf\ScintillaKit\ScintillaPeer.h
-# End Source File
-# End Group
-# Begin Group "Header Files"
-
-# PROP Default_Filter "h;hpp;hxx;hm;inl"
-# End Group
+# Name "ScintillaKitDll - Win32 Release"
+# Name "ScintillaKitDll - Win32 Debug"
 # Begin Group "scintilla"
 
 # PROP Default_Filter ""
@@ -362,6 +345,30 @@ SOURCE=..\..\..\src\thirdparty\common\scintilla\src\XPM.cxx
 # Begin Source File
 
 SOURCE=..\..\..\src\thirdparty\common\scintilla\src\XPM.h
+# End Source File
+# End Group
+# Begin Group "Header Files"
+
+# PROP Default_Filter ""
+# End Group
+# Begin Group "Source Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ScintillaKit\ScintillaKit.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ScintillaKit\ScintillaKit.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ScintillaKit\ScintillaPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ScintillaKit\ScintillaPeer.h
 # End Source File
 # End Group
 # End Target
