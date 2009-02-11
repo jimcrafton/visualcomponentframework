@@ -641,6 +641,89 @@ void SciTextControl::setText( const String& text )
 }
 
 
+
+bool SciTextControl::getIndentMaintain()
+{
+	ScintillaPeer* peer = dynamic_cast<ScintillaPeer*>(getPeer());
+	return peer->getIndentMaintain();
+}
+
+void SciTextControl::setIndentMaintain( bool val )
+{
+	ScintillaPeer* peer = dynamic_cast<ScintillaPeer*>(getPeer());
+	peer->setIndentMaintain(val);
+}
+
+uint32 SciTextControl::getTabWidth()
+{
+	ScintillaPeer* peer = dynamic_cast<ScintillaPeer*>(getPeer());
+	return peer->getTabWidth();
+}
+
+void SciTextControl::setTabWidth( const uint32& val )
+{
+	ScintillaPeer* peer = dynamic_cast<ScintillaPeer*>(getPeer());
+	peer->setTabWidth(val);
+}
+
+uint32 SciTextControl::getIndent()
+{
+	ScintillaPeer* peer = dynamic_cast<ScintillaPeer*>(getPeer());
+	return peer->getIndent();
+}
+
+void SciTextControl::setIndent( const uint32& val )
+{
+	ScintillaPeer* peer = dynamic_cast<ScintillaPeer*>(getPeer());
+	peer->setIndent(val);
+}
+
+bool SciTextControl::areIndentGuidesVisible()
+{
+	ScintillaPeer* peer = dynamic_cast<ScintillaPeer*>(getPeer());
+	return peer->areIndentGuidesVisible();
+}
+
+void SciTextControl::setIndentGuidesVisible( const bool& val )
+{
+	ScintillaPeer* peer = dynamic_cast<ScintillaPeer*>(getPeer());
+	peer->setIndentGuidesVisible(val);
+}
+
+bool SciTextControl::isWhiteSpaceVisible()
+{
+	ScintillaPeer* peer = dynamic_cast<ScintillaPeer*>(getPeer());
+	return peer->isWhiteSpaceVisible();
+}
+
+void SciTextControl::setWhiteSpaceVisible( const bool& val )
+{
+	ScintillaPeer* peer = dynamic_cast<ScintillaPeer*>(getPeer());
+	peer->setWhiteSpaceVisible(val);
+}
+
+bool SciTextControl::isEOLVisible()
+{
+	ScintillaPeer* peer = dynamic_cast<ScintillaPeer*>(getPeer());
+	return peer->isEOLVisible();
+}
+
+void SciTextControl::setEOLVisible( const bool& val )
+{	
+	ScintillaPeer* peer = dynamic_cast<ScintillaPeer*>(getPeer());
+	peer->setEOLVisible(val);
+}
+
+
+
+
+
+
+
+
+
+
+
 SciTextModel::SciTextModel():
 	TextModel(),
 		sciPeer_(NULL),
@@ -738,6 +821,8 @@ void SciTextModel::setSelection( const String& selectionText )
 
 	sciPeer_->setSelectionMark( selStart, selectionText.size() );
 }
+
+
 
 void ScintillaKit::init( int argc, char** argv )
 {
