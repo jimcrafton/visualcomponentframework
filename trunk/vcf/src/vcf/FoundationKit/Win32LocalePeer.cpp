@@ -999,7 +999,7 @@ void Win32LocalePeer::setToCurrentThread()
 {
 	lcid_ = GetThreadLocale();
 
-#ifndef VCF_WIN32CE	
+#ifndef VCF_WIN32CE
 	crtLocaleStr_ = setlocale( LC_ALL, NULL );
 #endif
 }
@@ -1049,7 +1049,7 @@ int Win32LocalePeer::collate( const UnicodeString& s1, const UnicodeString& s2 )
 {
 	int result = 0;
 	int cmpRes = CSTR_EQUAL;
-#ifdef VCF_WIN32CE	
+#ifdef VCF_WIN32CE
 	cmpRes = ::CompareStringW( lcid_, 0, s1.c_str(), s1.size(), s2.c_str(), s2.size() );
 #else
 	if ( System::isUnicodeEnabled() ) {
@@ -1068,12 +1068,12 @@ int Win32LocalePeer::collate( const UnicodeString& s1, const UnicodeString& s2 )
 			result = -1;
 		}
 		break;
-		
+
 		case CSTR_EQUAL : {
 			result = 0;
 		}
 		break;
-		
+
 		case CSTR_GREATER_THAN : {
 			result = 1;
 		}
@@ -1120,7 +1120,7 @@ void Win32LocalePeer::initNumberFormatForIntW( NUMBERFMTW& fmt )
 	GetLocaleInfoW( lcid_, LOCALE_SGROUPING, tmp, 255 );
 
 	UnicodeString s = tmp;
-	int pos = s.find( ";" );
+	size_t pos = s.find( ";" );
 	if ( pos != UnicodeString::npos ) {
 		//take the first group number
 		UnicodeString num = s.substr( 0, pos );
@@ -1148,7 +1148,7 @@ void Win32LocalePeer::initNumberFormatForIntA( NUMBERFMTA& fmt )
 	GetLocaleInfoA( lcid_, LOCALE_SGROUPING, tmp, 255 );
 
 	AnsiString s = tmp;
-	int pos = s.find( ";" );
+	size_t pos = s.find( ";" );
 	if ( pos != AnsiString::npos ) {
 		//take the first group number
 		AnsiString num = s.substr( 0, pos );
@@ -1179,7 +1179,7 @@ void Win32LocalePeer::initNumberFormatForFloatW( NUMBERFMTW& fmt )
 	GetLocaleInfoW( lcid_, LOCALE_SGROUPING, tmp, 255 );
 
 	UnicodeString s = tmp;
-	int pos = s.find( L";" );
+	size_t pos = s.find( L";" );
 	if ( pos != UnicodeString::npos ) {
 		//take the first group number
 		UnicodeString num = s.substr( 0, pos );
@@ -1210,7 +1210,7 @@ void Win32LocalePeer::initNumberFormatForFloatA( NUMBERFMTA& fmt )
 	GetLocaleInfoA( lcid_, LOCALE_SGROUPING, tmp, 255 );
 
 	AnsiString s = tmp;
-	int pos = s.find( ";" );
+	size_t pos = s.find( ";" );
 	if ( pos != AnsiString::npos ) {
 		//take the first group number
 		AnsiString num = s.substr( 0, pos );
@@ -1225,11 +1225,11 @@ UnicodeString Win32LocalePeer::toString( const int& val )
 	UnicodeString result;
 #ifdef VCF_WIN32CE
 	VCFChar tmp[256];
-	memset(tmp,0,sizeof(tmp));	
+	memset(tmp,0,sizeof(tmp));
 	swprintf( tmp, L"%d", val );
 	NUMBERFMTW fmt;
 	memset(&fmt,0,sizeof(fmt));
-	
+
 	initNumberFormatForIntW( fmt );
 
 	int size = ::GetNumberFormatW( lcid_, 0, tmp, &fmt, NULL, 0 );
@@ -1255,7 +1255,7 @@ UnicodeString Win32LocalePeer::toString( const int& val )
 	#endif
 		NUMBERFMTW fmt;
 		memset(&fmt,0,sizeof(fmt));
-		
+
 		initNumberFormatForIntW( fmt );
 
 		int size = ::GetNumberFormatW( lcid_, 0, tmp, &fmt, NULL, 0 );
@@ -1737,7 +1737,7 @@ UnicodeString Win32LocalePeer::changeToGenericNumberString( const UnicodeString&
 	UnicodeString s = tmp;
 
 
-	int pos = result.find( s );
+	size_t pos = result.find( s );
 	if ( pos != UnicodeString::npos ) {
 		result.erase( pos, s.size() );
 		result.insert( pos, L"." );
@@ -1763,7 +1763,7 @@ UnicodeString Win32LocalePeer::changeToGenericNumberString( const UnicodeString&
 		UnicodeString s = tmp;
 
 
-		int pos = result.find( s );
+		size_t pos = result.find( s );
 		if ( pos != UnicodeString::npos ) {
 			result.erase( pos, s.size() );
 			result.insert( pos, L"." );
@@ -1789,7 +1789,7 @@ UnicodeString Win32LocalePeer::changeToGenericNumberString( const UnicodeString&
 		AnsiString s = tmp;
 
 		AnsiString tmpRes = result;
-		int pos = tmpRes.find( s );
+		size_t pos = tmpRes.find( s );
 		if ( pos != AnsiString::npos ) {
 			tmpRes.erase( pos, s.size() );
 			tmpRes.insert( pos, "." );
@@ -1893,7 +1893,7 @@ double Win32LocalePeer::toDoubleAsCurrency( const UnicodeString& str )
 	UnicodeString s = tmp;
 
 	UnicodeString s2 = str;
-	int pos = s2.find( s );
+	size_t pos = s2.find( s );
 	if ( pos != UnicodeString::npos ) {
 		s2.erase( pos, s.size() );
 		s2.insert( pos, L"." );
@@ -1926,7 +1926,7 @@ double Win32LocalePeer::toDoubleAsCurrency( const UnicodeString& str )
 		UnicodeString s = tmp;
 
 		UnicodeString s2 = str;
-		int pos = s2.find( s );
+		size_t pos = s2.find( s );
 		if ( pos != UnicodeString::npos ) {
 			s2.erase( pos, s.size() );
 			s2.insert( pos, L"." );
@@ -1959,7 +1959,7 @@ double Win32LocalePeer::toDoubleAsCurrency( const UnicodeString& str )
 		AnsiString s = tmp;
 
 		AnsiString s2 = str;
-		int pos = s2.find( s );
+		size_t pos = s2.find( s );
 		if ( pos != AnsiString::npos ) {
 			s2.erase( pos, s.size() );
 			s2.insert( pos, "." );
@@ -2280,7 +2280,7 @@ UnicodeString Win32LocalePeer::getCurrencyNegativeSign()
 		GetLocaleInfoA( lcid_, LOCALE_SNEGATIVESIGN, tmp, 255 );
 		result = tmp;
 	}
-#endif	
+#endif
 
 	return result;
 }
@@ -2304,7 +2304,7 @@ UnicodeString Win32LocalePeer::getAMSymbol()
 		GetLocaleInfoA( lcid_, LOCALE_S1159, tmp, 255 );
 		result = tmp;
 	}
-#endif	
+#endif
 
 	return result;
 }
@@ -2328,7 +2328,7 @@ UnicodeString Win32LocalePeer::getPMSymbol()
 		GetLocaleInfoA( lcid_, LOCALE_S2359, tmp, 255 );
 		result = tmp;
 	}
-#endif	
+#endif
 
 	return result;
 }
@@ -2337,7 +2337,7 @@ bool Win32LocalePeer::isCharA( const int32& charTypeMask, const VCFChar& c )
 {
 	int32 mask = 0;
 
-#ifdef VCF_WIN32CE	
+#ifdef VCF_WIN32CE
 	if ( charTypeMask & ctSpace ) {
 		if ( iswspace( c ) ) {
 			mask |= ctSpace;
@@ -2415,10 +2415,10 @@ bool Win32LocalePeer::isCharA( const int32& charTypeMask, const VCFChar& c )
 
 
 	if ( System::isUnicodeEnabled() ) {
-	
+
 	#ifdef VCF_CW
 		oldLocaleStr = setlocale( LC_CTYPE, NULL );
-		
+
 		setlocale( LC_CTYPE, crtLocaleStr_.ansi_c_str() );
 	#else
 
@@ -2427,7 +2427,7 @@ bool Win32LocalePeer::isCharA( const int32& charTypeMask, const VCFChar& c )
 		}
 
 		oldLocaleStr = _wsetlocale( LC_CTYPE, NULL );
-		
+
 		UnicodeString tmp(crtLocaleStr_);
 		_wsetlocale( LC_CTYPE, tmp.c_str() );
 	#endif
@@ -2739,7 +2739,7 @@ DoTime:
 
 
 
-	dest.set( tmDest.tm_year, tmDest.tm_mon+1, tmDest.tm_mday, 
+	dest.set( tmDest.tm_year, tmDest.tm_mon+1, tmDest.tm_mday,
 				tmDest.tm_hour, tmDest.tm_min, tmDest.tm_sec );
 
 
@@ -2793,7 +2793,7 @@ UnicodeString Win32LocalePeer::toStringFromDate( const DateTime& val, const Unic
 	int size = 0;
 	DWORD flags = (!format.empty()) ? 0 : LOCALE_NOUSEROVERRIDE;
 
-	#ifdef VCF_WIN32CE	
+	#ifdef VCF_WIN32CE
 	const VCFChar* formatStr = NULL;
 	if ( !format.empty() ) {
 		formatStr = format.c_str();
@@ -3344,7 +3344,7 @@ String Win32LocalePeer::getLanguage()
 		::GetLocaleInfoA( lcid_, LOCALE_SLANGUAGE, tmp, size );
 		result = tmp;
 		delete [] tmp;
-	}	
+	}
 #endif
 	return result;
 }
