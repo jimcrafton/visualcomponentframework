@@ -75,7 +75,7 @@
 		<link>
 			<name>FoundationKit</name>
 			<type>2</type>
-			<location>C:/Users/Aaron/Software Projects/remote/vcf/vcf/src/vcf/FoundationKit</location>
+			<location>VCF_ROOT/src/vcf/FoundationKit</location>
 		</link>
 	</linkedResources>
 </projectDescription>
