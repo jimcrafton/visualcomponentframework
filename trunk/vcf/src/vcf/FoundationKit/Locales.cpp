@@ -23,7 +23,7 @@ using namespace VCF;
 Locale::Locale( const UnicodeString& languageCode, const UnicodeString& countryCode ):
 peer_(NULL),encoding_(UnicodeString::leUnknown)
 {
-		
+
 	peer_ = SystemToolkit::createLocalePeer();
 	if ( NULL == peer_ ) {
 		throw InvalidPeer( MAKE_ERROR_MSG_2( "No Locale peer found" ) );
@@ -43,7 +43,7 @@ Locale::Locale( const Locale::LanguageCodes& languageCode, const Locale::Country
 	peer_->setLocale( Locale::languageCodeToString(languageCode), Locale::countryCodeToString(countryCode), "" );
 }
 
-Locale::~Locale() 
+Locale::~Locale()
 {
 	delete peer_;
 	peer_ = NULL;
@@ -69,7 +69,7 @@ UnicodeString Locale::getLanguageName()
 {
 	UnicodeString result = peer_->getLanguage();
 
-	if ( result.empty() ) {	
+	if ( result.empty() ) {
 
 		switch ( getLanguageCode() ) {
 			case Locale::lcAfar  : {
@@ -231,11 +231,6 @@ UnicodeString Locale::getLanguageName()
 				result="ChurchSlavic";
 			}
 			break;
-
-
-
-
-
 
 			case Locale::lcChuvash  : {
 				result="Chuvash";
@@ -1015,6 +1010,11 @@ UnicodeString Locale::getLanguageName()
 
 			case Locale::lcZulu  : {
 				result="Zulu";
+			}
+			break;
+
+			case Locale::lcUndefined  : {
+				result="Undefined";
 			}
 			break;
 		}
