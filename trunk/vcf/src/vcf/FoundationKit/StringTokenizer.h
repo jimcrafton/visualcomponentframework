@@ -58,20 +58,20 @@ public:
 		elements.clear();
 
 
-		while ( ((ptr_-start_) < dataSize_) && ((backPtr_-start_) > 0) ) {
+		while ( ((size_t)(ptr_-start_) < dataSize_) && ((backPtr_-start_) > 0) ) {
 			String result;
 			size_t pos = data_.find_first_of( delimiter_, ptr_-start_ );
 			if ( pos != String::npos ) {
 				result.append( ptr_,  (start_ + pos)-ptr_ );
 				ptr_ = start_ + pos+1;
 				pos = delimiter_.find( *ptr_ );
-				while ( (pos != String::npos) && ((ptr_-start_) < dataSize_) ) {
+				while ( (pos != String::npos) && ((size_t)(ptr_-start_) < dataSize_) ) {
 					ptr_ ++;
 					pos = delimiter_.find( *ptr_ );
 				}
 			}
 			else {
-				if ( (ptr_-start_) < dataSize_ ) {
+				if ( (size_t)(ptr_-start_) < dataSize_ ) {
 					result.append( ptr_, dataSize_ - (ptr_-start_) );
 				}
 				ptr_ = start_ + dataSize_;
@@ -86,8 +86,8 @@ public:
 			reset(backward);
 		}
 		backward_ = backward;
-		return backward_ ? ((ptr_-start_) > 0) && ((backPtr_-start_) < dataSize_)
-							: ((ptr_-start_) < dataSize_) && ((backPtr_-start_) > 0);
+		return backward_ ? ((size_t)(ptr_-start_) > 0) && ((size_t)(backPtr_-start_) < dataSize_)
+							: ((size_t)(ptr_-start_) < dataSize_) && ((size_t)(backPtr_-start_) > 0);
 	}
 
 	virtual String nextElement() {
@@ -99,13 +99,13 @@ public:
 				result.append( ptr_,  (start_ + pos)-ptr_ );
 				ptr_ = start_ + pos+1;
 				pos = delimiter_.find( *ptr_ );
-				while ( (pos != String::npos) && ((ptr_-start_) < dataSize_) ) {
+				while ( (pos != String::npos) && ((size_t)(ptr_-start_) < dataSize_) ) {
 					ptr_ ++;
 					pos = delimiter_.find( *ptr_ );
 				}
 			}
 			else {
-				if ( (ptr_-start_) < dataSize_ ) {
+				if ( (size_t)(ptr_-start_) < dataSize_ ) {
 					result.append( ptr_, dataSize_ - (ptr_-start_) );
 				}
 				ptr_ = start_ + dataSize_;
@@ -115,7 +115,7 @@ public:
 			size_t pos = data_.find_last_of( delimiter_, ptr_-start_ );
 			if ( pos != String::npos ) {
 				//pos ++;
-				if ( (ptr_-start_) == dataSize_ ) {
+				if ( (size_t)(ptr_-start_) == dataSize_ ) {
 					result.append( start_ + pos+1, ptr_ - (start_ + pos) );
 				}
 				else {
@@ -149,13 +149,13 @@ public:
 				result.append( backPtr_,  (start_ + pos)-backPtr_ );
 				backPtr_ = start_ + pos+1;
 				pos = delimiter_.find( *backPtr_ );
-				while ( (pos != String::npos) && ((backPtr_-start_) < dataSize_) ) {
+				while ( (pos != String::npos) && ((size_t)(backPtr_-start_) < dataSize_) ) {
 					ptr_ ++;
 					pos = delimiter_.find( *backPtr_ );
 				}
 			}
 			else {
-				if ( (backPtr_-start_) < dataSize_ ) {
+				if ( (size_t)(backPtr_-start_) < dataSize_ ) {
 					result.append( backPtr_, dataSize_ - (backPtr_-start_) );
 				}
 				backPtr_ = start_ + dataSize_;
@@ -165,7 +165,7 @@ public:
 			size_t pos = data_.find_last_of( delimiter_, backPtr_-start_ );
 			if ( pos != String::npos ) {
 				//pos ++;
-				if ( (backPtr_-start_) == dataSize_ ) {
+				if ( (size_t)(backPtr_-start_) == dataSize_ ) {
 					result.append( start_ + pos+1, backPtr_ - (start_ + pos) );
 				}
 				else {
