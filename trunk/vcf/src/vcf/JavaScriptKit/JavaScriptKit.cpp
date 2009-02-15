@@ -7,7 +7,7 @@ where you installed the VCF.
 */
 
 
-#include "JavaScriptKit.h"
+#include "vcf/JavaScriptKit/JavaScriptKit.h"
 
 
 using namespace VCF;
@@ -15,16 +15,16 @@ using namespace VCF;
 
 void JavaScriptKit::init( int argc, char **argv )
 {
-	
+
 }
 
 void JavaScriptKit::terminate()
 {
-	
+
 }
 
 
-String convertClassNameToJSClassName( const String& className ) 
+String convertClassNameToJSClassName( const String& className )
 {
 	String result = className;
 
@@ -54,7 +54,7 @@ JavaScriptEngine::JavaScriptEngine():
 	m_globalClass(NULL),
 	globalDelegateClass_(NULL)
 {
-		
+
 	m_globalClass = (JSClass*)malloc(sizeof(JSClass));
 	memset( m_globalClass, 0, sizeof(JSClass) );
 
@@ -71,7 +71,7 @@ JavaScriptEngine::JavaScriptEngine():
 
 	/* initialize the JS run time, and return result in rt */
 	m_runTime = JS_NewRuntime(0x100000);
-	
+
 	/* if rt does not have a value, end the program here */
 	if (NULL == m_runTime) {
 		throw RuntimeException( MAKE_ERROR_MSG_2( "JavaScript runtime is NULL - could not be allocated" ) );
@@ -79,18 +79,18 @@ JavaScriptEngine::JavaScriptEngine():
 
 	/* establish a context */
 	m_context = JS_NewContext(m_runTime, 0x1000);
-	
+
 	/* if cx does not have a value, end the program here */
 	if (m_context == NULL) {
 		throw RuntimeException( MAKE_ERROR_MSG_2( "JavaScript context is NULL - could not be allocated by runtime engine" ) );
-	}	
-	
+	}
+
 	/* initialize the built-in JS objects and the global object */
-	m_global = JS_NewObject(m_context, m_globalClass, NULL, NULL); 
-    
+	m_global = JS_NewObject(m_context, m_globalClass, NULL, NULL);
+
 	int builtins = JS_InitStandardClasses(m_context, m_global);
 
-	
+
 
 
 	JS_SetErrorReporter( m_context, JavaScriptEngine::rawErrorReporter );
@@ -118,7 +118,7 @@ JavaScriptEngine::~JavaScriptEngine()
 		if ( ce.m_methodCount ) {
 			::free( ce.m_methods );
 		}
-		
+
 		it ++;
 	}
 
@@ -165,24 +165,24 @@ void JavaScriptEngine::initVCFGlobalClasses()
 	globalDelegateClass_->finalize =	JavaScriptEngine::finalize;
 	globalDelegateClass_->getProperty =	JavaScriptEngine::getObjProperty;
 	globalDelegateClass_->setProperty =	JavaScriptEngine::setObjProperty;
-	
-	
+
+
 	JSPropertySpec* jsClassProperties = (JSPropertySpec*)malloc(sizeof(JSPropertySpec) * 1);
 	memset( jsClassProperties, 0, sizeof(JSPropertySpec) * 1 );
-	
+
 	JSFunctionSpec* jsClassMethods = (JSFunctionSpec*)malloc( sizeof(JSFunctionSpec) * 1 );
 	memset( jsClassMethods, 0, sizeof(JSFunctionSpec) * 1 );
 
 	JS_InitClass(m_context,     // context
 							m_global,        // global object
-							NULL,  // parent proto 
+							NULL,  // parent proto
 							globalDelegateClass_,      // JSClass
 							JavaScriptEngine::constructor,            // JSNative ctor
 							0,             // ctor args
 							jsClassProperties,  // proto props
 							jsClassMethods,     // proto funcs
 							NULL,        // ctor props (static)
-							NULL);    
+							NULL);
 
 
 
@@ -209,7 +209,7 @@ void JavaScriptEngine::initVCFGlobalClasses()
 	globalEventClass_.m_jsClass->setProperty =	JS_PropertyStub; //event's are read only for now
 
 	//source,time,type,
-	
+
 	globalEventClass_.m_propCount = 4;
 	globalEventClass_.m_props = (JSPropertySpec*)malloc(sizeof(JSPropertySpec) * globalEventClass_.m_propCount);
 	memset( globalEventClass_.m_props, 0, sizeof(JSPropertySpec) * globalEventClass_.m_propCount );
@@ -235,10 +235,10 @@ void JavaScriptEngine::initVCFGlobalClasses()
 			break;
 		}
 
-		
+
 		tmp.copy( propName, tmp.size() );
 		names_.push_back( propName );
-		
+
 		globalEventClass_.m_props[i].name = propName;
 		globalEventClass_.m_props[i].tinyid = i;
 	}
@@ -248,26 +248,26 @@ void JavaScriptEngine::initVCFGlobalClasses()
 
 	JS_InitClass(m_context,     // context
 							m_global,        // global object
-							NULL,  // parent proto 
+							NULL,  // parent proto
 							globalEventClass_.m_jsClass,      // JSClass
 							JavaScriptEngine::constructor,            // JSNative ctor
 							0,             // ctor args
 							globalEventClass_.m_props,  // proto props
 							globalEventClass_.m_methods,     // proto funcs
 							NULL,        // ctor props (static)
-							NULL);    
+							NULL);
 }
 
 void JavaScriptEngine::updateFromClassRegistry()
 {
-	
+
 	std::vector<char*>::iterator it = names_.begin();
 	while ( it != names_.end() ) {
 		delete [] *it;
 		it ++;
 	}
 	names_.clear();
-	
+
 
 	initVCFGlobalClasses();
 
@@ -280,7 +280,7 @@ void JavaScriptEngine::updateFromClassRegistry()
 
 		//this c_str() assignment below works only because
 		//the std::string class is ref counted - if a different
-		//string class were to be used this would have to looked at		
+		//string class were to be used this would have to looked at
 
 		char* className = new char[255];
 		memset(className,0,255);
@@ -306,7 +306,7 @@ void JavaScriptEngine::updateFromClassRegistry()
 
 		JSObject *proto = NULL;
 
-		
+
 		ulong pc = clazz->getPropertyCount() + 1;
 
 		int eventCount = 0;
@@ -342,7 +342,7 @@ void JavaScriptEngine::updateFromClassRegistry()
 			names_.push_back( propName );
 
 			jsClassProperties[i].name = propName;
-			jsClassProperties[i].tinyid = i;			
+			jsClassProperties[i].tinyid = i;
 
 			i++;
 		}
@@ -358,10 +358,10 @@ void JavaScriptEngine::updateFromClassRegistry()
 			names_.push_back( methodName );
 
 			jsClassMethods[i].name = methodName;
-			jsClassMethods[i].nargs = method->getArgCount();			
+			jsClassMethods[i].nargs = method->getArgCount();
 			jsClassMethods[i].call = JavaScriptEngine::methodCall;
 			i++;
-		}		
+		}
 
 		//set i to the last property index
 		//then add teh events as properties
@@ -370,7 +370,7 @@ void JavaScriptEngine::updateFromClassRegistry()
 		while ( events->hasMoreElements() ) {
 			DelegateProperty* event = events->nextElement();
 			if ( !event->isAbstract() ) {
-				
+
 				tmp = event->getDelegateName();
 				char* delegateName = new char[255];
 				memset(delegateName,0,255);
@@ -392,18 +392,18 @@ void JavaScriptEngine::updateFromClassRegistry()
 
 		proto = JS_InitClass(m_context,     // context
 							m_global,        // global object
-							NULL,  // parent proto 
+							NULL,  // parent proto
 							jsClassToReg,      // JSClass
 							JavaScriptEngine::constructor,            // JSNative ctor
 							0,             // ctor args
 							entry.m_props,  // proto props
 							entry.m_methods,     // proto funcs
 							NULL,        // ctor props (static)
-							NULL);    
+							NULL);
 
 
 		m_jsClassMap[String(jsClassToReg->name)] = entry;
-		
+
 
 		tmpClass =  JS_GetClass(proto);
 	}
@@ -417,13 +417,13 @@ void JavaScriptEngine::internal_executeScript( const String& script, const Strin
 
 	ScriptExecuting( &event );
 
-	jsval rval; 
+	jsval rval;
 	int lineno = 0;
 	AnsiString ansiScript = script;
-	JS_EvaluateScript(m_context, m_global, ansiScript.c_str(), ansiScript.size(), 
-						fileName.empty() ? NULL : fileName.ansi_c_str(), 
-						lineno, 
-						&rval); 
+	JS_EvaluateScript(m_context, m_global, ansiScript.c_str(), ansiScript.size(),
+						fileName.empty() ? NULL : fileName.ansi_c_str(),
+						lineno,
+						&rval);
 }
 
 void JavaScriptEngine::executeScript( const String& script )
@@ -446,14 +446,14 @@ JSBool JavaScriptEngine::methodCall(JSContext *cx, JSObject *obj, uintN argc, js
 {
 	JSBool result = JS_FALSE;
 	JSFunction* fun = cx->fp->fun;
-	const char* funcName = JS_GetFunctionName( fun );//->atom 
+	const char* funcName = JS_GetFunctionName( fun );//->atom
 
 
 	//StringUtils::trace( Format( "JavaScriptEngine::methodCall()\n\tobj: %p\n\t funcName: %s\n\targc: %d\n" ) % obj % funcName % argc );
 
 	JSClass* clazz = JS_GetClass( obj );
 
-	String className = clazz->name;	
+	String className = clazz->name;
 
 	JavaScriptEngine* eng = &JavaScriptEngine::engine();
 	InstanceMap::iterator found2 = eng->m_jsObjectInstances.find( obj );
@@ -466,7 +466,7 @@ JSBool JavaScriptEngine::methodCall(JSContext *cx, JSObject *obj, uintN argc, js
 
 		Method* method = ce.m_vcfClass->getMethod( String(funcName) );
 		if ( NULL != method ) {
-			
+
 			if ( method->getArgCount() == argc ) {
 				VariantData** args = NULL;
 				if ( argc > 0 ) {
@@ -489,9 +489,9 @@ JSBool JavaScriptEngine::methodCall(JSContext *cx, JSObject *obj, uintN argc, js
 
 					JS_ReportError( eng->m_context, "VCF Exception thrown: %s", e.getMessage().c_str() );
 				}
-				
+
 				eng->assignVariantToJSVal( &retVal, rval );
-				
+
 
 				for (int i=0;i<argc;i++ ) {
 					delete args[i];
@@ -510,7 +510,7 @@ JSBool JavaScriptEngine::getObjProperty(JSContext *cx, JSObject *obj, jsval id, 
 	JSClass* clazz = JS_GetClass( obj );
 
 	className = clazz->name;
-	
+
 
 	JavaScriptEngine* eng = &JavaScriptEngine::engine();
 	InstanceMap::iterator found2 = eng->m_jsObjectInstances.find( obj );
@@ -519,26 +519,26 @@ JSBool JavaScriptEngine::getObjProperty(JSContext *cx, JSObject *obj, jsval id, 
 	if ( (found != eng->m_jsClassMap.end()) && (found2 != eng->m_jsObjectInstances.end()) ) {
 		JavaScriptEngine::ClassEntry& ce = found->second;
 		JavaScriptEngine::ObjectInstanceEntry& ie = found2->second;
-		
+
 		if ( (JSVAL_IS_INT(id)) && (ce.m_propCount > 0) ) {
 			int i = JSVAL_TO_INT(id);
-			
+
 			Property* prop = ce.m_vcfClass->getProperty( String(ce.m_props[i].name) );
 			if ( NULL != prop ) {
-				
+
 				prop->setSource( ie.instance_ );
 
 				VariantData* val = prop->get();
 
 				eng->assignVariantToJSVal( val, vp );
-				
+
 			}
 			else {
 				//try and get and event
 				DelegateProperty* eventProp = ce.m_vcfClass->getDelegate( String(ce.m_props[i].name) );
 
 				//check to see if our value is actually a Function!
-				
+
 				if ( NULL != eventProp ) {
 					if ( !eventProp->isAbstract() ) {
 						eventProp->setSource( ie.instance_ );
@@ -547,8 +547,8 @@ JSBool JavaScriptEngine::getObjProperty(JSContext *cx, JSObject *obj, jsval id, 
 
 							//create a new object for hte delegate and map it to our instance
 							//of the delegate
-							//JSObject* obj = JS_NewObject( JavaScriptEngine::engine().m_context, 
-							//								JavaScriptEngine::engine().globalDelegateClass_, 
+							//JSObject* obj = JS_NewObject( JavaScriptEngine::engine().m_context,
+							//								JavaScriptEngine::engine().globalDelegateClass_,
 							//								NULL, NULL );
 							//JavaScriptEngine::engine().jsDelegateInstances_[obj] = delegateSrc;
 							//*vp = OBJECT_TO_JSVAL(obj);
@@ -556,7 +556,7 @@ JSBool JavaScriptEngine::getObjProperty(JSContext *cx, JSObject *obj, jsval id, 
 					}
 				}
 			}
-		}	
+		}
 	}
 	else if ( className == "VCFEvent" ){
 		if ( JSVAL_IS_INT(id) ) {
@@ -578,7 +578,7 @@ JSBool JavaScriptEngine::getObjProperty(JSContext *cx, JSObject *obj, jsval id, 
 			eng->assignVariantToJSVal( &vd, vp );
 		}
 	}
-	
+
 	return JS_TRUE;
 }
 
@@ -589,7 +589,7 @@ bool JavaScriptEngine::assignVariantToJSVal( VariantData* vd, jsval* vp )
 	if ( NULL == vd ) {
 		return false;
 	}
-	
+
 	switch ( vd->type ) {
 		case pdInt:{
 			JS_NewNumberValue( JavaScriptEngine::engine().m_context, 0, vp);
@@ -642,12 +642,12 @@ bool JavaScriptEngine::assignVariantToJSVal( VariantData* vd, jsval* vp )
 
 		case pdBool:{
 			JS_NewNumberValue( JavaScriptEngine::engine().m_context, 0, vp);
-			bool i = *vd;		
+			bool i = *vd;
 			*vp = i ? BOOLEAN_TO_JSVAL(true) : BOOLEAN_TO_JSVAL(false);
 		}
 		break;
 
-		case pdObject:{				
+		case pdObject:{
 			Object* object = *vd;
 			if ( NULL != object ){
 				Class* clazz = object->getClass();
@@ -657,7 +657,7 @@ bool JavaScriptEngine::assignVariantToJSVal( VariantData* vd, jsval* vp )
 				if ( found != JavaScriptEngine::engine().m_jsClassMap.end() ) {
 					ClassEntry& entry = found->second;
 
-					JSObject* obj = JS_NewObject( JavaScriptEngine::engine().m_context, 
+					JSObject* obj = JS_NewObject( JavaScriptEngine::engine().m_context,
 												entry.m_jsClass, NULL, NULL );
 
 					ObjectInstanceEntry ie;
@@ -672,19 +672,19 @@ bool JavaScriptEngine::assignVariantToJSVal( VariantData* vd, jsval* vp )
 			}
 		}
 		break;
-		
+
 		case pdString:{
 			String s = *vd;
 			AnsiString tmp = s;
-			JSString* jsString = JS_NewStringCopyN( JavaScriptEngine::engine().m_context, 
+			JSString* jsString = JS_NewStringCopyN( JavaScriptEngine::engine().m_context,
 											tmp.c_str(), tmp.size() );
 			*vp = STRING_TO_JSVAL(jsString);
-			
+
 		}
-		break;		
+		break;
 	}
 
-	
+
 
 	return result;
 }
@@ -697,7 +697,7 @@ bool JavaScriptEngine::assignJSValToVariant( jsval* vp, VariantData* vd )
 			JSBool boolVal = 0.0;
 			JSBool res = JS_ValueToBoolean( m_context, *vp, &boolVal );
 			if ( res ) {
-				*vd = (boolVal) ? true : false;	
+				*vd = (boolVal) ? true : false;
 				result = true;
 			}
 		}
@@ -705,7 +705,7 @@ bool JavaScriptEngine::assignJSValToVariant( jsval* vp, VariantData* vd )
 			jsdouble dbl = 0.0;
 			JSBool res = JS_ValueToNumber( m_context, *vp, &dbl );
 			if ( res ) {
-				*vd = (double)dbl;	
+				*vd = (double)dbl;
 				result = true;
 			}
 		}
@@ -713,7 +713,7 @@ bool JavaScriptEngine::assignJSValToVariant( jsval* vp, VariantData* vd )
 			long i32 = 0;
 			JSBool res = JS_ValueToInt32( m_context, *vp, &i32 );
 			if ( res ) {
-				*vd = i32;	
+				*vd = i32;
 				result = true;
 			}
 		}
@@ -722,9 +722,9 @@ bool JavaScriptEngine::assignJSValToVariant( jsval* vp, VariantData* vd )
 			const char* bytes = JS_GetStringBytes(s);
 			*vd = String(bytes);
 			result = true;
-		}		
+		}
 		else { //its a JSOBJECT!
-		
+
 		}
 	}
 
@@ -740,7 +740,7 @@ public:
 	}
 
 	virtual void invoke( Event* e ) {
-		JavaScriptEngine::invokeEventhandler( e, function_, functionName_ );		
+		JavaScriptEngine::invokeEventhandler( e, function_, functionName_ );
 	}
 
 	JSFunction* function_;
@@ -750,27 +750,27 @@ public:
 void JavaScriptEngine::invokeEventhandler( Event* e, JSFunction* function, const VCF::String& functionName )
 {
 	JavaScriptEngine* eng = &JavaScriptEngine::engine();
-	
+
 	JSObject* obj =  eng->newObjectFromVCFEvent( e );
 	jsval returnVal;
 	jsval arg[1];
 
 	arg[0] = OBJECT_TO_JSVAL(obj);
-	
-	
+
+
 	if ( NULL != function ) {
-		JS_CallFunction( eng->m_context, 
-			JS_GetFunctionObject(function), 
+		JS_CallFunction( eng->m_context,
+			JS_GetFunctionObject(function),
 			function,
 			1,
 			&arg[0],
 			&returnVal );
-		
-		
+
+
 	}
 	else {
-		JS_CallFunctionName( eng->m_context, 
-			eng->m_context->globalObject, 
+		JS_CallFunctionName( eng->m_context,
+			eng->m_context->globalObject,
 			functionName.ansi_c_str(),
 			1,
 			&arg[0],
@@ -782,8 +782,8 @@ JSObject* JavaScriptEngine::newObjectFromVCFEvent( VCF::Event* e )
 {
 	JSObject* result = NULL;
 
-	result = JS_NewObject( JavaScriptEngine::engine().m_context, 
-												JavaScriptEngine::engine().globalEventClass_.m_jsClass, 
+	result = JS_NewObject( JavaScriptEngine::engine().m_context,
+												JavaScriptEngine::engine().globalEventClass_.m_jsClass,
 												NULL, NULL );
 
 	JS_SetPrivate( JavaScriptEngine::engine().m_context, result, (void*)e );
@@ -796,7 +796,7 @@ JSBool JavaScriptEngine::setObjProperty(JSContext *cx, JSObject *obj, jsval id, 
 	String className;
 	JSClass* clazz = JS_GetClass( obj );
 
-	className = clazz->name;	
+	className = clazz->name;
 
 	JavaScriptEngine* eng = &JavaScriptEngine::engine();
 	InstanceMap::iterator found2 = eng->m_jsObjectInstances.find( obj );
@@ -808,16 +808,16 @@ JSBool JavaScriptEngine::setObjProperty(JSContext *cx, JSObject *obj, jsval id, 
 
 		if ( (JSVAL_IS_INT(id)) && (ce.m_propCount > 0) ) {
 			int i = JSVAL_TO_INT(id);
-			
+
 			Property* prop = ce.m_vcfClass->getProperty( String(ce.m_props[i].name) );
 			if ( NULL != prop ) {
-				
+
 				prop->setSource( ie.instance_ );
 
 				VariantData val;
 				if ( eng->assignJSValToVariant( vp, &val ) ) {
 					prop->set( &val );
-				}								
+				}
 			}
 			else {
 				DelegateProperty* eventProp = ce.m_vcfClass->getDelegate( String(ce.m_props[i].name) );
@@ -830,25 +830,25 @@ JSBool JavaScriptEngine::setObjProperty(JSContext *cx, JSObject *obj, jsval id, 
 							String name = Format( "%sEventHandler" ) % eventProp->getDelegateName();
 
 							JSEngineEventHandler* eventHandler = new JSEngineEventHandler();
-							
+
 
 
 							//check to see if our value is actually a String!
 							JSType type = JS_TypeOfValue( cx, *vp );
-							if ( JSTYPE_FUNCTION == type ) {					
-								
+							if ( JSTYPE_FUNCTION == type ) {
+
 								//add event handler for function name
 								eventHandler->function_ = JS_ValueToFunction( cx, *vp );
-								
+
 							}
-							else if ( JSTYPE_STRING == type ) {					
+							else if ( JSTYPE_STRING == type ) {
 								JSString* s = JS_ValueToString( cx, *vp );
 								const char* bytes = JS_GetStringBytes(s);
 								eventHandler->functionName_ = String(bytes);
 
 								//add event handler for function name
-								
-								
+
+
 							}
 
 							delegateSrc->add( eventHandler );
@@ -858,7 +858,7 @@ JSBool JavaScriptEngine::setObjProperty(JSContext *cx, JSObject *obj, jsval id, 
 						}
 					}
 				}
-			}			
+			}
 		}
 	}
 	return JS_TRUE;
@@ -866,13 +866,13 @@ JSBool JavaScriptEngine::setObjProperty(JSContext *cx, JSObject *obj, jsval id, 
 
 JSBool JavaScriptEngine::enumerate(JSContext *cx, JSObject *obj)
 {
-	
+
 	return JS_TRUE;
 }
 
 JSBool JavaScriptEngine::resolve(JSContext *cx, JSObject *obj, jsval id)
 {
-	
+
 	String className;
 	JSClass* clazz = JS_GetClass( obj );
 
@@ -886,24 +886,24 @@ JSBool JavaScriptEngine::resolve(JSContext *cx, JSObject *obj, jsval id)
 		if ( found->second.releasable_ ) {
 			ulong res = vcfObj->addRef();
 			StringUtils::trace( Format( "refcount: %d Object::toString(): %s\n" ) % res % vcfObj->toString() );
-		}		
+		}
 	}
-	
+
 	return JS_TRUE;
 }
 
-JSBool JavaScriptEngine::constructor(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval) 
+JSBool JavaScriptEngine::constructor(JSContext *cx, JSObject *obj, uintN argc, jsval *argv, jsval *rval)
 {
 	String className;
 	JSClass* clazz = JS_GetClass( obj );
 
-	className = clazz->name;	
+	className = clazz->name;
 
 	JavaScriptEngine* eng = &JavaScriptEngine::engine();
 	std::map<String,JavaScriptEngine::ClassEntry>::iterator found = eng->m_jsClassMap.find( className );
 	if ( found != eng->m_jsClassMap.end() ) {
-		StringUtils::trace( Format( "JavaScriptEngine::constructor for class: %s, argcount: %d\n\tcx->lastMessage: %s\n\tobj: %p\n" ) % 
-													className % argc % cx->lastMessage % obj );	
+		StringUtils::trace( Format( "JavaScriptEngine::constructor for class: %s, argcount: %d\n\tcx->lastMessage: %s\n\tobj: %p\n" ) %
+													className % argc % cx->lastMessage % obj );
 
 		JavaScriptEngine::ClassEntry& ce = found->second;
 		Object* vcfObj = NULL;
@@ -917,7 +917,7 @@ JSBool JavaScriptEngine::constructor(JSContext *cx, JSObject *obj, uintN argc, j
 		}
 	}
 
-	
+
 
 	//m_jsObjectInstances
 
@@ -925,17 +925,17 @@ JSBool JavaScriptEngine::constructor(JSContext *cx, JSObject *obj, uintN argc, j
 }
 
 void JavaScriptEngine::finalize(JSContext *cx, JSObject *obj)
-{	
+{
 	JavaScriptEngine* eng = &JavaScriptEngine::engine();
 
 	String className;
 	JSClass* clazz = JS_GetClass( obj );
 
-	className = clazz->name;	
+	className = clazz->name;
 
 	std::map<JSObject*,ObjectInstanceEntry>::iterator found = eng->m_jsObjectInstances.find(obj);
 	if ( found != eng->m_jsObjectInstances.end() ) {
-		//StringUtils::trace( Format( "JavaScriptEngine::finalize\n\tcx->lastMessage: %s\n\tobj: %p\n" ) % cx->lastMessage % obj );	
+		//StringUtils::trace( Format( "JavaScriptEngine::finalize\n\tcx->lastMessage: %s\n\tobj: %p\n" ) % cx->lastMessage % obj );
 
 		ObjectInstanceEntry& entry = found->second;
 		Object* vcfObj = entry.instance_;
@@ -945,7 +945,7 @@ void JavaScriptEngine::finalize(JSContext *cx, JSObject *obj)
 		Enumerator<DelegateProperty*>* events = clazz->getDelegates();
 		while ( events->hasMoreElements() ) {
 			DelegateProperty* e = events->nextElement();
-			
+
 			Delegate* delegate = e->getDelegateInstance(vcfObj);
 
 			EventHandlerMapRange range = eng->jsEventHandlers_.equal_range( delegate );
@@ -966,7 +966,7 @@ void JavaScriptEngine::finalize(JSContext *cx, JSObject *obj)
 				eng->m_jsObjectInstances.erase( found );
 				StringUtils::trace( Format( "Object %p freed and removed from map!\n" ) % vcfObj );
 			}
-		}		
+		}
 	}
 	else {
 		JS_FinalizeStub( cx, obj );
@@ -995,7 +995,7 @@ void JavaScriptEngine::defineGlobalObject( Object* object )
 	Class* clazz = object->getClass();
 	if ( NULL != clazz ) {
 		String className = convertClassNameToJSClassName( clazz->getClassName() );
-		
+
 		std::map<String,JavaScriptEngine::ClassEntry>::iterator found = m_jsClassMap.find( className );
 		if ( found != m_jsClassMap.end() ) {
 			JavaScriptEngine::ClassEntry& ce = found->second;
