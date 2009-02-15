@@ -61,13 +61,13 @@ using namespace VCF;
 
 
 Win32Thread::Win32Thread( Thread* thread, bool mainThread ):
-	security_(NULL),
 	threadID_(0),
+	owningProcessID_(0),
 	initFlags_(CREATE_SUSPENDED),
+	security_(NULL),
 	stackSize_(0),
 	threadHandle_(0),
 	thread_(thread),
-	owningProcessID_(0),
 	active_(false),
 	mainThread_(mainThread)
 {
@@ -138,7 +138,7 @@ unsigned __stdcall Win32Thread::threadProc( void* param )
 		peer->active_ = true;
 
 		Thread* thread = peer->thread_;
-		bool autoDeleteThread = thread->canAutoDelete();		
+		bool autoDeleteThread = thread->canAutoDelete();
 
 		if ( !thread->internal_run() ) {
 			result = 1;
