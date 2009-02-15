@@ -52,7 +52,7 @@ int UnicodeString::adjustForBOMMarker( UnicodeString::AnsiChar*& stringPtr, uint
 							bom = 0;
 							bom  = (stringPtr[0] << 24) | (stringPtr[1] << 16) | (stringPtr[2] << 8) | stringPtr[3];
 
-							if ( (UnicodeString::UTF32LittleEndianBOM == bom) || 
+							if ( (UnicodeString::UTF32LittleEndianBOM == bom) ||
 									(UnicodeString::UTF32BigEndianBOM == bom) ) {
 								StringUtils::trace( "Unable to translate UTF32 BOM string\n" );
 
@@ -176,11 +176,11 @@ unsigned int UnicodeStringGetEncoding(UnicodeString::LanguageEncoding encoding)
 {
 	unsigned int result = -1;
 #ifdef VCF_WIN
-	
+
 
 	UnicodeString::LanguageEncoding tmp = encoding;
 	if ( encoding == UnicodeString::leDefault ) {
-		
+
 		Locale* locale = System::getCurrentThreadLocale();
 		if ( NULL != locale ) {
 			tmp = locale->getEncoding();
@@ -188,8 +188,8 @@ unsigned int UnicodeStringGetEncoding(UnicodeString::LanguageEncoding encoding)
 	}
 
 
-	
-	switch (tmp) {				
+
+	switch (tmp) {
 		case UnicodeString::leIBM037: {result=037;}break;
 		case UnicodeString::leIBM437: {result=437;}break;
 		case UnicodeString::leIBM500: {result=500;}break;
@@ -341,8 +341,10 @@ unsigned int UnicodeStringGetEncoding(UnicodeString::LanguageEncoding encoding)
 		case UnicodeString::leISCIIPunjabi: {result=57011;}break;
 		case UnicodeString::leUTF7: {result=65000;}break;
 		case UnicodeString::leUTF8: {result=65001;}break;
+		case UnicodeString::leDefault: {}break;
+		case UnicodeString::leUnknown: {}break;
 	}
-	
+
 #endif
 	return result;
 }
@@ -359,8 +361,8 @@ void UnicodeString::transformAnsiToUnicode( const UnicodeString::AnsiChar* str, 
 	#ifdef VCF_WIN
 
 		/***
-		What code page do we want to use here???? CP_ACP may not be the 
-		most appropriate one to use. First let's try and examine the 
+		What code page do we want to use here???? CP_ACP may not be the
+		most appropriate one to use. First let's try and examine the
 		current locale
 		*/
 
@@ -432,7 +434,7 @@ UnicodeString::UniChar UnicodeString::transformAnsiCharToUnicodeChar( UnicodeStr
 
 #ifdef VCF_WIN
 	UINT codePage = CP_ACP;
-	
+
 	if ( sysEncoding != (unsigned int)-1 ) {
 		codePage = sysEncoding;
 	}
@@ -475,9 +477,9 @@ UnicodeString::AnsiChar UnicodeString::transformUnicodeCharToAnsiChar( UnicodeSt
 	unsigned int sysEncoding = UnicodeStringGetEncoding(encoding);
 
 #ifdef VCF_WIN
-	
+
 	UINT codePage = CP_ACP;
-	
+
 	if ( sysEncoding != (unsigned int)-1 ) {
 		codePage = sysEncoding;
 	}
@@ -499,21 +501,21 @@ UnicodeString::AnsiChar UnicodeString::transformUnicodeCharToAnsiChar( UnicodeSt
 	CFRange r = {0,tmp.length()};
 	CFIndex size2 = 0;
 	CFStringGetBytes( tmp, r, CFStringGetSystemEncoding(), '?', false, NULL, 0, &size2 );
-	
+
 	if ( !(size2 > 0) ) {
 		throw RuntimeException( L"size <= 0 CFStringGetBytes() failed" );
 	}
-	
+
 	size2 = minVal<CFIndex>( 1, size2 );
-	
-	
+
+
 	if (  0 == ::CFStringGetBytes( tmp, r, CFStringGetSystemEncoding(), '?', false,
 									(UInt8*)&result, size2, &size2 ) ) {
 		//CFStringGetBytes failed
 		throw RuntimeException( L"CFStringGetBytes failed" );
 		result = 0;
 	}
-	
+
 #elif defined(VCF_POSIX)
 	int size = wctomb(NULL, c);
 
@@ -548,7 +550,7 @@ UnicodeString::AnsiChar* UnicodeString::transformUnicodeToAnsi( const UnicodeStr
 
 #ifdef VCF_WIN
 	UINT codePage = CP_ACP;
-	
+
 	if ( sysEncoding != (unsigned int)-1 ) {
 		codePage = sysEncoding;
 	}
@@ -650,16 +652,16 @@ UnicodeString::AnsiChar* UnicodeString::transformUnicodeToAnsi( const UnicodeStr
 	return result;
 }
 
-void UnicodeString::decode_ansi( TextCodec* codec, UnicodeString::AnsiChar* str, UnicodeString::size_type& strSize, LanguageEncoding encoding ) const 
+void UnicodeString::decode_ansi( TextCodec* codec, UnicodeString::AnsiChar* str, UnicodeString::size_type& strSize, LanguageEncoding encoding ) const
 {
 	VCF_ASSERT ( str != NULL );
 
-	uint32 size = codec->convertToAnsiString( *this, str, strSize, encoding );	
-	
+	uint32 size = codec->convertToAnsiString( *this, str, strSize, encoding );
+
 	if ( size < strSize ) {
 		str[size] = 0;
 	}
-	
+
 	strSize = size;
 }
 
@@ -729,7 +731,7 @@ bool UnicodeString::operator <( const UnicodeString::AnsiChar* rhs ) const
 
 bool UnicodeString::operator <=( const UnicodeString::AnsiChar* rhs ) const
 {
-	
+
 	UnicodeString tmp;
 	if ( rhs != NULL ) {
 		UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
@@ -758,7 +760,7 @@ UnicodeString& UnicodeString::operator=(UnicodeString::AnsiChar c)
 }
 
 const UnicodeString::AnsiChar* UnicodeString::ansi_c_str(LanguageEncoding encoding) const
-{	
+{
 	if ( NULL == ansiDataBuffer_  ) {
 		ansiDataBuffer_ = UnicodeString::transformUnicodeToAnsi( *this, encoding );
 	}
@@ -775,8 +777,8 @@ UnicodeString& UnicodeString::operator+=(UnicodeString::AnsiChar c)
 
 UnicodeString& UnicodeString::operator+=(const AnsiChar* rhs )
 {
-	
-	
+
+
 	UnicodeString tmp;
 	if ( rhs != NULL ) {
 		UnicodeString::transformAnsiToUnicode( rhs, strlen(rhs), tmp.data_ );
@@ -848,7 +850,7 @@ UnicodeString& UnicodeString::assign(const UnicodeString::AnsiChar *s, UnicodeSt
 }
 
 UnicodeString& UnicodeString::assign(const UnicodeString::AnsiChar *s)
-{	
+{
 	UnicodeString tmp;
 	if ( s != NULL ) {
 		UnicodeString::transformAnsiToUnicode( s, strlen(s), tmp.data_ );
@@ -880,7 +882,7 @@ UnicodeString& UnicodeString::insert(UnicodeString::size_type p0, const UnicodeS
 
 UnicodeString& UnicodeString::insert(UnicodeString::size_type p0, const UnicodeString::AnsiChar *s)
 {
-	
+
 	UnicodeString tmp;
 	if ( s != NULL ) {
 		UnicodeString::transformAnsiToUnicode( s, strlen(s), tmp.data_ );
@@ -1000,7 +1002,7 @@ and return the result
 
 
 	return copyStr.copy( s, n, pos );
-	
+
 }
 
 UnicodeString::size_type UnicodeString::find(const UnicodeString::AnsiChar *s, UnicodeString::size_type pos, UnicodeString::size_type n) const
@@ -1170,7 +1172,7 @@ int UnicodeString::compare(UnicodeString::size_type p0, UnicodeString::size_type
 uint64 UnicodeString::sizeOf() const
 {
 	uint64 result  = sizeof(UnicodeString);
-	
+
 	result +=  data_.capacity() * sizeof(VCFChar);
 
 	return result;
