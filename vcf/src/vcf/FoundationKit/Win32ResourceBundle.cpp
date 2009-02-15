@@ -31,12 +31,12 @@ using namespace VCF;
 Win32ResourceBundle::Win32ResourceBundle():
 	foundResName_(false)
 {
-	
+
 }
 
 Win32ResourceBundle::~Win32ResourceBundle()
 {
-	
+
 }
 
 String Win32ResourceBundle::getString( const String& resourceName )
@@ -71,8 +71,8 @@ String Win32ResourceBundle::getString( const String& resourceName )
 			#endif
 		}
 	}
-	else {		
-		//try and see if the resourceName is an int id and find it via 
+	else {
+		//try and see if the resourceName is an int id and find it via
 		//throw exception- resource not found !!!!
 		uint32 stringID = 0;
 		try {
@@ -92,8 +92,8 @@ String Win32ResourceBundle::getString( const String& resourceName )
 				tmp[ret] = 0;
 				result = tmp;
 				failedToFindRes = false;
-			}				
-#else 
+			}
+#else
 			if ( System::isUnicodeEnabled() ) {
 				wchar_t tmp[256];
 				int ret = ::LoadStringW( hinst, stringID, tmp, 255 );
@@ -101,7 +101,7 @@ String Win32ResourceBundle::getString( const String& resourceName )
 					tmp[ret] = 0;
 					result = tmp;
 					failedToFindRes = false;
-				}				
+				}
 			}
 			else {
 				char tmp[256];
@@ -122,9 +122,9 @@ String Win32ResourceBundle::getString( const String& resourceName )
 
 
 	if ( failedToFindRes ) {
-		//look in the resource .strings file 
-		
-		result = System::getCurrentThreadLocale()->translate( resourceName );		
+		//look in the resource .strings file
+
+		result = System::getCurrentThreadLocale()->translate( resourceName );
 	}
 
 	return result;
@@ -183,8 +183,6 @@ Resource* Win32ResourceBundle::getResource( const String& resourceName )
 {
 	Resource* result = NULL;
 
-	bool failedToFindRes = true;
-
 	foundResName_ = false;
 	foundResType_ = "\0";
 
@@ -194,35 +192,35 @@ Resource* Win32ResourceBundle::getResource( const String& resourceName )
 
 	/**
 	JC
-	we are using the ansi version as there isn't 
+	we are using the ansi version as there isn't
 	a wide string verion of the ENUMRESTYPEPROC
-	in the base version of the SDK headers that 
+	in the base version of the SDK headers that
 	come with vc6.
-	The problem is that both the EnumResourceTypesA and 
-	EnumResourceTypeW functions are defined to take the 
-	same ENUMRESTYPEPROC, where in later version's of the 
+	The problem is that both the EnumResourceTypesA and
+	EnumResourceTypeW functions are defined to take the
+	same ENUMRESTYPEPROC, where in later version's of the
 	SDK header the EnumResourceTypesA uses a ENUMRESTYPEPROCA
-	function pointer, and the EnumResourceTypesW uses a 
+	function pointer, and the EnumResourceTypesW uses a
 	ENUMRESTYPEPROCW argument.
 	*/
 	::EnumResourceTypesA( getResourceInstance(),
 							 Win32ResourceBundle::EnumResTypeProcA,
 							 (LPARAM)this );
-	
+
 	if ( true == foundResName_ ){
 		HRSRC resHandle = NULL;
 
-		
+
 		resHandle = ::FindResourceA( getResourceInstance(),
 			                              resourceName.ansi_c_str(),
 										  foundResType_ );
-		
+
 
 		if ( NULL != resHandle ){
 			HGLOBAL	dataHandle = ::LoadResource( NULL, resHandle );
 			if ( NULL != dataHandle ){
 				void* data = ::LockResource( dataHandle );
-				int size = ::SizeofResource( getResourceInstance(), resHandle );				
+				int size = ::SizeofResource( getResourceInstance(), resHandle );
 				return new Resource( data, size, resourceName );
 			}
 		}
@@ -237,16 +235,15 @@ Resource* Win32ResourceBundle::getResource( const String& resourceName )
 	//if we got this far then look for files!
 
 	String localeName = System::getCurrentThreadLocale()->getName();
-	
-	bool fileExists = false;
+
 	String fileName = System::findResourceDirectory() +	resourceName;
-	
+
 	if ( File::exists( fileName ) ) {
 		FileInputStream fs(fileName);
 		uint32 size = fs.getSize();
 		char* buf = new char[size];
 		fs.read( (unsigned char*)buf, size );
-		
+
 
 		result = new Resource( buf, size, resourceName );
 		delete [] buf;
@@ -280,8 +277,8 @@ BOOL CALLBACK Win32ResourceBundle::EnumResNameProcA( HMODULE hModule, const char
 	BOOL result = TRUE;
 	Win32ResourceBundle* thisPtr = (Win32ResourceBundle*)lParam;
 
-	
-	
+
+
 	if ( StringUtils::lowerCase(thisPtr->searchResName_) == StringUtils::lowerCase(lpszName) ) {
 		thisPtr->foundResName_ = true;
 		thisPtr->foundResType_ = lpszType;
@@ -293,8 +290,8 @@ BOOL CALLBACK Win32ResourceBundle::EnumResNameProcA( HMODULE hModule, const char
 HINSTANCE Win32ResourceBundle::getResourceInstance()
 {
 	HINSTANCE result = ::GetModuleHandle(NULL);
-	
-	
+
+
 	return result;
 }
 
@@ -310,7 +307,7 @@ HINSTANCE Win32ResourceBundle::getResourceInstance()
  * THIS CODE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTY
  * OF ANY KIND, EITHER EXPRESSED OR IMPLIED. IN PARTICULAR, NO WARRANTY IS MADE
  * THAT THE CODE IS FREE OF DEFECTS, MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE
- * OR NON-INFRINGING. IN NO EVENT WILL THE AUTHOR BE LIABLE FOR ANY COSTS OR DAMAGES 
+ * OR NON-INFRINGING. IN NO EVENT WILL THE AUTHOR BE LIABLE FOR ANY COSTS OR DAMAGES
  * ARISING FROM ANY USE OF THIS CODE. NO USE OF THIS CODE IS AUTHORIZED EXCEPT UNDER
  * THIS DISCLAIMER.
  *
@@ -320,77 +317,77 @@ HINSTANCE Win32ResourceBundle::getResourceInstance()
 */
 
 template <typename CharType >
-struct VCF_VS_VERSIONINFO { 
-  WORD  wLength; 
-  WORD  wValueLength; 
-  WORD  wType; 
-  CharType szKey[1]; 
-  WORD  Padding1[1]; 
-  VS_FIXEDFILEINFO Value; 
-  WORD  Padding2[1]; 
-  WORD  Children[1]; 
+struct VCF_VS_VERSIONINFO {
+  WORD  wLength;
+  WORD  wValueLength;
+  WORD  wType;
+  CharType szKey[1];
+  WORD  Padding1[1];
+  VS_FIXEDFILEINFO Value;
+  WORD  Padding2[1];
+  WORD  Children[1];
 };
 typedef VCF_VS_VERSIONINFO<VCF::WideChar> VS_VERSIONINFO_W;
 typedef VCF_VS_VERSIONINFO<char> VS_VERSIONINFO_A;
 
 template <typename CharType >
-struct VCF_String { 
-  WORD   wLength; 
-  WORD   wValueLength; 
-  WORD   wType; 
-  CharType  szKey[1]; 
-  WORD   Padding[1]; 
-  WORD   Value[1]; 
-}; 
+struct VCF_String {
+  WORD   wLength;
+  WORD   wValueLength;
+  WORD   wType;
+  CharType  szKey[1];
+  WORD   Padding[1];
+  WORD   Value[1];
+};
 
 typedef VCF_String<VCF::WideChar> String_W;
 typedef VCF_String<char> String_A;
 
 template <typename CharType >
-struct VCF_StringTable { 
-  WORD   wLength; 
-  WORD   wValueLength; 
-  WORD   wType; 
-  CharType  szKey[1]; 
-  WORD   Padding[1]; 
-  VCF_String<CharType> Children[1]; 
+struct VCF_StringTable {
+  WORD   wLength;
+  WORD   wValueLength;
+  WORD   wType;
+  CharType  szKey[1];
+  WORD   Padding[1];
+  VCF_String<CharType> Children[1];
 };
 typedef VCF_StringTable<VCF::WideChar> StringTable_W;
 typedef VCF_StringTable<char> StringTable_A;
 
 template <typename CharType >
-struct VCF_StringFileInfo { 
-  WORD        wLength; 
-  WORD        wValueLength; 
-  WORD        wType; 
-  CharType       szKey[1]; 
-  WORD        Padding[1]; 
-  VCF_StringTable<CharType> Children[1]; 
+struct VCF_StringFileInfo {
+  WORD        wLength;
+  WORD        wValueLength;
+  WORD        wType;
+  CharType       szKey[1];
+  WORD        Padding[1];
+  VCF_StringTable<CharType> Children[1];
 };
 typedef VCF_StringFileInfo<VCF::WideChar> StringFileInfo_W;
 typedef VCF_StringFileInfo<char> StringFileInfo_A;
 
 template <typename CharType >
-struct VCF_Var { 
-  WORD  wLength; 
-  WORD  wValueLength; 
-  WORD  wType; 
-  CharType szKey[1]; 
-  WORD  Padding[1]; 
-  DWORD Value[1]; 
-}; 
+struct VCF_Var {
+  WORD  wLength;
+  WORD  wValueLength;
+  WORD  wType;
+  CharType szKey[1];
+  WORD  Padding[1];
+  DWORD Value[1];
+};
 typedef VCF_Var<VCF::WideChar> Var_W;
 typedef VCF_Var<char> Var_A;
 
 template <typename CharType >
-struct VCF_VarFileInfo { 
-  WORD  wLength; 
-  WORD  wValueLength; 
-  WORD  wType; 
-  CharType szKey[1]; 
-  WORD  Padding[1]; 
-  VCF_Var<CharType>  Children[1]; 
-}; 
+struct VCF_VarFileInfo {
+  WORD  wLength;
+  WORD  wValueLength;
+  WORD  wType;
+  CharType szKey[1];
+  WORD  Padding[1];
+  VCF_Var<CharType>  Children[1];
+};
 typedef VCF_VarFileInfo<VCF::WideChar> VarFileInfo_W;
 typedef VCF_VarFileInfo<char> VarFileInfo_A;
 
@@ -422,7 +419,7 @@ void getVersionInfoW( VersionMap& map, const String& fileName )
 	unsigned char* buf = new unsigned char[size*sizeof(VCF::WideChar)];
 	memset(buf, 0, size*sizeof(VCF::WideChar));
 
-	
+
 
 	if ( !GetFileVersionInfoW(fileNameW, 0, size, buf) ) {
 		delete [] buf;
@@ -433,7 +430,7 @@ void getVersionInfoW( VersionMap& map, const String& fileName )
 
 	String key = versionInfo->szKey;
 
-	
+
 	VCF_ASSERT( key == L"VS_VERSION_INFO");
 
 
@@ -446,7 +443,7 @@ void getVersionInfoW( VersionMap& map, const String& fileName )
 
 	std::pair<String,String> entry;
 
-	
+
 	// Iterate over the 'Children' elements of VS_VERSIONINFO (either StringFileInfo or VarFileInfo)
 	StringFileInfo_W* strFileInfo = (StringFileInfo_W*) VS_ROUNDPOS(((byte*)fixedFileInfo) + versionInfo->wValueLength, fixedFileInfo, 4);
 	for ( ; ((byte*) strFileInfo) < (((byte*) versionInfo) + versionInfo->wLength); strFileInfo = (StringFileInfo_W*)VS_ROUNDPOS((((byte*) strFileInfo) + strFileInfo->wLength), strFileInfo, 4)) { // StringFileInfo_W / VarFileInfo
@@ -457,7 +454,7 @@ void getVersionInfoW( VersionMap& map, const String& fileName )
 			// Iterate through the StringTable elements of StringFileInfo
 			StringTable_W* strTable = (StringTable_W*) VS_ROUNDPOS(&strFileInfo->szKey[wcslen(strFileInfo->szKey)+1], strFileInfo, 4);
 			for ( ; ((byte*) strTable) < (((byte*) strFileInfo) + strFileInfo->wLength); strTable = (StringTable_W*)VS_ROUNDPOS((((byte*) strTable) + strTable->wLength), strTable, 4)) {
-				
+
 				entry.first = String(L"LangID");
 				entry.second = strTable->szKey;
 				map.insert( entry );
@@ -486,8 +483,8 @@ void getVersionInfoW( VersionMap& map, const String& fileName )
 			// Iterate through the Var elements of VarFileInfo (there should be only one, but just in case...)
 			Var_W* element = (Var_W*) VS_ROUNDPOS(&varFileInfo->szKey[wcslen(varFileInfo->szKey)+1], varFileInfo, 4);
 			for ( ; ((byte*) element) < (((byte*) varFileInfo) + varFileInfo->wLength); element = (Var_W*)VS_ROUNDPOS((((byte*) element) + element->wLength), element, 4)) {
-				
-				entry.first = element->szKey;				
+
+				entry.first = element->szKey;
 
 				// Iterate through the array of pairs of 16-bit language ID values that make up the standard 'Translation' VarFileInfo element.
 				WORD* wordElement = (WORD*) VS_ROUNDPOS(&element->szKey[wcslen(element->szKey)+1], element, 4);
@@ -524,7 +521,7 @@ void getVersionInfoA( VersionMap& map, const String& fileName )
 	unsigned char* buf = new unsigned char[size];
 	memset(buf, 0, size*sizeof(unsigned char));
 
-	
+
 
 	if ( !GetFileVersionInfoA(fileNameA, 0, size, buf) ) {
 		delete [] buf;
@@ -535,7 +532,7 @@ void getVersionInfoA( VersionMap& map, const String& fileName )
 
 	String key = versionInfo->szKey;
 
-	
+
 	VCF_ASSERT( key == L"VS_VERSION_INFO");
 
 
@@ -548,7 +545,7 @@ void getVersionInfoA( VersionMap& map, const String& fileName )
 
 	std::pair<String,String> entry;
 
-	
+
 	// Iterate over the 'Children' elements of VS_VERSIONINFO (either StringFileInfo or VarFileInfo)
 	StringFileInfo_A* strFileInfo = (StringFileInfo_A*) VS_ROUNDPOS(((byte*)fixedFileInfo) + versionInfo->wValueLength, fixedFileInfo, 4);
 	for ( ; ((byte*) strFileInfo) < (((byte*) versionInfo) + versionInfo->wLength); strFileInfo = (StringFileInfo_A*)VS_ROUNDPOS((((byte*) strFileInfo) + strFileInfo->wLength), strFileInfo, 4)) { // StringFileInfo_A / VarFileInfo
@@ -559,7 +556,7 @@ void getVersionInfoA( VersionMap& map, const String& fileName )
 			// Iterate through the StringTable elements of StringFileInfo
 			StringTable_A* strTable = (StringTable_A*) VS_ROUNDPOS(&strFileInfo->szKey[strlen(strFileInfo->szKey)+1], strFileInfo, 4);
 			for ( ; ((byte*) strTable) < (((byte*) strFileInfo) + strFileInfo->wLength); strTable = (StringTable_A*)VS_ROUNDPOS((((byte*) strTable) + strTable->wLength), strTable, 4)) {
-				
+
 				entry.first = String(L"LangID");
 				entry.second = strTable->szKey;
 				map.insert( entry );
@@ -571,7 +568,7 @@ void getVersionInfoA( VersionMap& map, const String& fileName )
 				String_A* strElement = (String_A*) VS_ROUNDPOS(&strTable->szKey[strlen(strTable->szKey)+1], strTable, 4);
 				for ( ; ((byte*) strElement) < (((byte*) strTable) + strTable->wLength); strElement = (String_A*) VS_ROUNDPOS((((byte*) strElement) + strElement->wLength), strElement, 4)) {
 					char* strValue = (char*) VS_ROUNDPOS(&strElement->szKey[strlen(strElement->szKey)+1], strElement, 4);
-					
+
 					entry.first = strElement->szKey;
 					entry.second.assign( strValue, strElement->wValueLength );
 					map.insert( entry );
@@ -587,8 +584,8 @@ void getVersionInfoA( VersionMap& map, const String& fileName )
 			// Iterate through the Var elements of VarFileInfo (there should be only one, but just in case...)
 			Var_A* element = (Var_A*) VS_ROUNDPOS(&varFileInfo->szKey[strlen(varFileInfo->szKey)+1], varFileInfo, 4);
 			for ( ; ((byte*) element) < (((byte*) varFileInfo) + varFileInfo->wLength); element = (Var_A*)VS_ROUNDPOS((((byte*) element) + element->wLength), element, 4)) {
-				
-				entry.first = element->szKey;				
+
+				entry.first = element->szKey;
 
 				// Iterate through the array of pairs of 16-bit language ID values that make up the standard 'Translation' VarFileInfo element.
 				WORD* wordElement = (WORD*) VS_ROUNDPOS(&element->szKey[strlen(element->szKey)+1], element, 4);
@@ -612,7 +609,7 @@ public:
 
 	bool operator() ( const std::pair<String,String>& x ) const {
 		String x1 = StringUtils::lowerCase( x.first );
-		int pos = x1.find( value_ );
+		size_t pos = x1.find( value_ );
 		return pos != String::npos;
 	}
 
@@ -629,7 +626,7 @@ ProgramInfo* Win32ResourceBundle::getProgramInfoFromFileName( const String& file
 #else
 	if ( System::isUnicodeEnabled() ) {
 		getVersionInfoW( map, fileName );
-	}		
+	}
 	else {
 		getVersionInfoA( map, fileName );
 	}
@@ -643,7 +640,7 @@ ProgramInfo* Win32ResourceBundle::getProgramInfoFromFileName( const String& file
 		String description;
 		String programVersion;
 		String fileVersion;
-	
+
 		VersionMap::iterator found =  std::find_if( map.begin(), map.end(), FindVersionInfoVal("Author") );
 		if ( found != map.end() ) {
 			author = found->second;
@@ -678,7 +675,7 @@ ProgramInfo* Win32ResourceBundle::getProgramInfoFromFileName( const String& file
 		if ( found != map.end() ) {
 			programVersion = found->second;
 		}
-		
+
 		programFileName = fileName;
 
 
@@ -693,19 +690,19 @@ ProgramInfo* Win32ResourceBundle::getProgramInfo()
 {
 	String fileName;
 #ifdef VCF_WIN32CE
-	VCF::WideChar tmp[MAX_PATH];		
+	VCF::WideChar tmp[MAX_PATH];
 	::GetModuleFileNameW( getResourceInstance(), tmp, MAX_PATH );
-	fileName = tmp;		
+	fileName = tmp;
 #else
 	if ( System::isUnicodeEnabled() ) {
-		VCF::WideChar tmp[MAX_PATH];		
+		VCF::WideChar tmp[MAX_PATH];
 		::GetModuleFileNameW( getResourceInstance(), tmp, MAX_PATH );
-		fileName = tmp;		
-	}		
+		fileName = tmp;
+	}
 	else {
 		char tmp[MAX_PATH];
 		::GetModuleFileNameA( getResourceInstance(), tmp, MAX_PATH );
-		fileName = tmp;		
+		fileName = tmp;
 	}
 #endif
 	return Win32ResourceBundle::getProgramInfoFromFileName(fileName);
