@@ -195,9 +195,13 @@ String StringUtils::lowerCase( const String& text )
 	VCFChar* copyText = new VCFChar[text.size()+1];
 	memset(copyText, 0, (text.size()+1)*sizeof(VCFChar) );
 	text.copy( copyText, text.size() );
-	for (int n=0; n<text.size(); n++)
+	for (int n=0; n<(int)text.size(); n++)
 	{
+#ifdef VCF_MINGW
+		copyText[n] = towlower(copyText[n]);
+#else
 		copyText[n] = std::towlower(copyText[n]);
+#endif
 	}
 
 	result = copyText;
@@ -229,9 +233,13 @@ String StringUtils::upperCase( const VCF::String& text )
 	VCFChar* copyText = new VCFChar[text.size()+1];
 	memset(copyText, 0, (text.size()+1)*sizeof(VCFChar) );
 	text.copy( copyText, text.size() );
-	for (int n=0; n<text.size(); n++)
+	for (int n=0; n<(int)text.size(); n++)
 	{
+#ifdef VCF_MINGW
+		copyText[n] = towupper(copyText[n]);
+#else
 		copyText[n] = std::towupper(copyText[n]);
+#endif
 	}
 
 	result = copyText;
@@ -551,7 +559,7 @@ VCF::String StringUtils::newUUID()
 		GUID id;
 		CoCreateGuid( &id );
 		char tmp[256];
-		sprintf( tmp, "%08x-%04x-%04x-%x%x-%x%x%x%x%x%x", 
+		sprintf( tmp, "%08x-%04x-%04x-%x%x-%x%x%x%x%x%x",
 			id.Data1, id.Data2, id.Data3, id.Data4[0], id.Data4[1],
 			id.Data4[2], id.Data4[3],
 			id.Data4[4], id.Data4[5],
@@ -559,12 +567,12 @@ VCF::String StringUtils::newUUID()
 		result = tmp;
 	#else
 	UUID id;
-	
-	if ( RPC_S_OK == ::UuidCreate( &id ) ){
-		
-		
 
-		
+	if ( RPC_S_OK == ::UuidCreate( &id ) ){
+
+
+
+
 		if ( System::isUnicodeEnabled() ) {
 			WideChar* tmpid = NULL;
 			RPC_STATUS rpcresult = UuidToStringW(  &id, reinterpret_cast<unsigned short**>(&tmpid) );
@@ -586,7 +594,7 @@ VCF::String StringUtils::newUUID()
 			}
 		}
 	}
-	#endif	
+	#endif
 #elif defined(VCF_OSX)
 	CFUUIDRef uuidRef = CFUUIDCreate( kCFAllocatorDefault );
 	CFTextString tmp;
@@ -1158,13 +1166,11 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting,
 	const VCFChar* start = p;
 	const VCFChar* current = p;
 	int size = formatting.size();
-	int pos = 0;
 	uint32 y = date.getYear();
 	uint32 m = date.getMonth();
 	uint32 d = date.getDay();
 
 	VCFChar tmp[256];
-	int tmpLen = sizeof(tmp)/sizeof(VCFChar);
 	memset( tmp, 0, sizeof(tmp) );
 
 	bool hashCharFound = false;
@@ -2351,6 +2357,10 @@ VCF::String StringUtils::translateVKCodeToString( VirtualKeyCode code )
 		}
 		break;
 
+		case vkUndefined: {
+			result = "Undefined";
+		}
+		break;
 	}
 
 	return result;
