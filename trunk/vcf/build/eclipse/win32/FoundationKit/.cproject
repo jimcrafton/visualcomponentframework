@@ -23,7 +23,7 @@
 <folderInfo id="cdt.managedbuild.config.gnu.mingw.so.debug.1145768022." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.gnu.mingw.so.debug.61286893" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.so.debug">
 <targetPlatform id="cdt.managedbuild.target.gnu.platform.mingw.so.debug.598812532" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.mingw.so.debug"/>
-<builder buildPath="${workspace_loc:/FoundationKit/Debug}" id="cdt.managedbuild.tool.gnu.builder.mingw.base.1506035795" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" parallelBuildOn="true" parallelizationNumber="4" superClass="cdt.managedbuild.tool.gnu.builder.mingw.base">
+<builder buildPath="${workspace_loc:/FoundationKit/Debug}" id="cdt.managedbuild.tool.gnu.builder.mingw.base.1506035795" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" parallelBuildOn="false" parallelizationNumber="4" superClass="cdt.managedbuild.tool.gnu.builder.mingw.base">
 <outputEntries>
 <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="Debug"/>
 <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="Release"/>
@@ -516,7 +516,7 @@
 <folderInfo id="cdt.managedbuild.config.gnu.mingw.so.release.64127487." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.gnu.mingw.so.release.902879975" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.so.release">
 <targetPlatform id="cdt.managedbuild.target.gnu.platform.mingw.so.release.424498694" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.mingw.so.release"/>
-<builder buildPath="${workspace_loc:/FoundationKit/Release}" id="cdt.managedbuild.tool.gnu.builder.mingw.base.1565418564" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" parallelBuildOn="true" parallelizationNumber="4" superClass="cdt.managedbuild.tool.gnu.builder.mingw.base"/>
+<builder buildPath="${workspace_loc:/FoundationKit/Release}" id="cdt.managedbuild.tool.gnu.builder.mingw.base.1565418564" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" parallelBuildOn="false" parallelizationNumber="4" superClass="cdt.managedbuild.tool.gnu.builder.mingw.base"/>
 <tool id="cdt.managedbuild.tool.gnu.assembler.mingw.so.release.32297992" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.so.release">
 <inputType id="cdt.managedbuild.tool.gnu.assembler.input.1090682050" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 </tool>
