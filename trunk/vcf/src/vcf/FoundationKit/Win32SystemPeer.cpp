@@ -20,7 +20,7 @@ using namespace VCF;
 
 Win32SystemPeer::Win32SystemPeer()
 {
-	
+
 }
 
 Win32SystemPeer::~Win32SystemPeer()
@@ -124,21 +124,21 @@ void Win32SystemPeer::addPathDirectory( const String& directory )
 #ifdef VCF_WIN32CE
 #else
 	String tmpDir = StringUtils::trimRight( directory, '\\' );
-	
+
 	if ( System::isUnicodeEnabled() ) {
 		String newValue;
 		String variableName = L"PATH";
 		int charRequired = 32767; // max size accepted by SetEnvironmentVariable including trailing null terminator.
 		VCFChar* path = new VCFChar[charRequired];
 		memset( path, 0, charRequired*sizeof(VCFChar) );
-		
+
 		if ( ::GetEnvironmentVariableW( variableName.c_str(), path, charRequired ) ) { // here size is the number of TCHARs
 			newValue = path;
 			newValue += ";" + tmpDir;
 
-			if ( newValue.size() > (charRequired-1) ) {
+			if ( newValue.size() > (size_t)(charRequired-1) ) {
 				//warn about the path potentially being too long
-				StringUtils::trace( "WARNING: Path being assigned is greater than 32766 characters!\n" ); 
+				StringUtils::trace( "WARNING: Path being assigned is greater than 32766 characters!\n" );
 			}
 			SetEnvironmentVariableW( variableName.c_str(), newValue.c_str() );
 		}
@@ -151,14 +151,14 @@ void Win32SystemPeer::addPathDirectory( const String& directory )
 		int charRequired = 32767; // max size accepted by SetEnvironmentVariable including trailing null terminator.
 		char* path = new char[charRequired];
 		memset( path, 0, charRequired*sizeof(char) );
-		
+
 		if ( ::GetEnvironmentVariableA( variableName.c_str(), path, charRequired ) ) { // here size is the number of TCHARs
 			newValue = path;
 			newValue += ";" + tmpDir;
 
-			if ( newValue.size() > (charRequired-1) ) {
+			if ( newValue.size() > (size_t)(charRequired-1) ) {
 				//warn about the path potentially being too long
-				StringUtils::trace( "WARNING: Path being assigned is greater than 32766 characters!\n" ); 
+				StringUtils::trace( "WARNING: Path being assigned is greater than 32766 characters!\n" );
 			}
 			SetEnvironmentVariableA( variableName.c_str(), newValue.c_str() );
 		}
@@ -236,7 +236,7 @@ bool Win32SystemPeer::isUnicodeEnabled()
 
 	OSVERSIONINFO osVersion;
 	memset(&osVersion,0,sizeof(osVersion));
-		
+
 	osVersion.dwOSVersionInfoSize = sizeof(osVersion);
 
 	GetVersionEx( &osVersion );
@@ -308,8 +308,8 @@ DateTime Win32SystemPeer::convertUTCTimeToLocalTime( const DateTime& date )
 	}
 
 	result.set( st.wYear, st.wMonth, st.wDay,
-						st.wHour, st.wMinute, st.wSecond, 
-						st.wMilliseconds );	
+						st.wHour, st.wMinute, st.wSecond,
+						st.wMilliseconds );
 	return result;
 }
 
@@ -356,7 +356,7 @@ DateTime Win32SystemPeer::convertLocalTimeToUTCTime( const DateTime& date )
 	}
 
 	result.set( st.wYear, st.wMonth, st.wDay,
-						st.wHour, st.wMinute, st.wSecond, 
+						st.wHour, st.wMinute, st.wSecond,
 						st.wMilliseconds );
 
 	return result;
@@ -367,7 +367,7 @@ String Win32SystemPeer::getOSName()
 	String result;
 	OSVERSIONINFO osVersion;
 	memset(&osVersion,0,sizeof(osVersion));
-		
+
 	osVersion.dwOSVersionInfoSize = sizeof(osVersion);
 	::GetVersionEx( &osVersion );
 	//need a way to tell WinCE???
@@ -382,7 +382,7 @@ String Win32SystemPeer::getOSName()
 	else {
 		result = "Windows";
 	}
-	
+
 
 	return result;
 }
@@ -393,10 +393,10 @@ String Win32SystemPeer::getOSVersion()
 	String result;
 	OSVERSIONINFO osVersion;
 	memset(&osVersion,0,sizeof(osVersion));
-		
+
 	osVersion.dwOSVersionInfoSize = sizeof(osVersion);
 	::GetVersionEx( &osVersion );
-	
+
 	result = Format("%d.%d %d") % osVersion.dwMajorVersion % osVersion.dwMinorVersion % osVersion.dwBuildNumber;
 
 	return result;
@@ -438,7 +438,7 @@ String Win32SystemPeer::getCommonDirectory( System::CommonDirectory directory )
 					result = tmp;
 				}
 			}
-			
+
 		}
 		break;
 
@@ -491,7 +491,7 @@ String Win32SystemPeer::getCommonDirectory( System::CommonDirectory directory )
 		break;
 
 		case System::cdUserTemp : {
-			
+
 			if ( VER_PLATFORM_WIN32_NT == osVersion.dwPlatformId ) {
 				result = getEnvironmentVariable( "TEMP" );
 				/*
@@ -506,7 +506,7 @@ String Win32SystemPeer::getCommonDirectory( System::CommonDirectory directory )
 							BYTE* buf = NULL;
 							buf = new BYTE[(size+1)*sizeof(VCF::WideChar)];
 							memset( buf, 0, (size+1)*sizeof(VCF::WideChar) );
-							if ( ERROR_SUCCESS == RegQueryValueExW( key, L"TEMP", 0, &type, buf, &size ) ) {								
+							if ( ERROR_SUCCESS == RegQueryValueExW( key, L"TEMP", 0, &type, buf, &size ) ) {
 								result = (VCF::WideChar*)buf;
 							}
 						}
@@ -552,7 +552,7 @@ String Win32SystemPeer::getCommonDirectory( System::CommonDirectory directory )
 		}
 		break;
 
-		case System::cdSystemPrograms : {			
+		case System::cdSystemPrograms : {
 			result = getEnvironmentVariable( "PROGRAMFILES" );
 		}
 		break;
@@ -572,7 +572,7 @@ String Win32SystemPeer::getCommonDirectory( System::CommonDirectory directory )
 							BYTE* buf = NULL;
 							buf = new BYTE[(size+1)*sizeof(VCF::WideChar)];
 							memset( buf, 0, (size+1)*sizeof(VCF::WideChar) );
-							if ( ERROR_SUCCESS == RegQueryValueExW( key, L"TEMP", 0, &type, buf, &size ) ) {								
+							if ( ERROR_SUCCESS == RegQueryValueExW( key, L"TEMP", 0, &type, buf, &size ) ) {
 								VCF::WideChar tmp[MAX_PATH];
 								ExpandEnvironmentStringsW( (VCF::WideChar*)buf, tmp, MAX_PATH );
 								result = tmp;
@@ -596,7 +596,7 @@ String Win32SystemPeer::getCommonDirectory( System::CommonDirectory directory )
 							}
 						}
 					}
-				}	
+				}
 			}
 			else {
 				result = getEnvironmentVariable( "TEMP" );
@@ -622,16 +622,16 @@ String Win32SystemPeer::getComputerName()
 	size -= 1;
 	if ( System::isUnicodeEnabled() ) {
 		VCF::WideChar tmp[MAX_COMPUTERNAME_LENGTH + 25];
-		if ( GetComputerNameW( tmp, &size ) ) {			
+		if ( GetComputerNameW( tmp, &size ) ) {
 			result = tmp;
 		}
-	}		
+	}
 	else {
 		char tmp[MAX_COMPUTERNAME_LENGTH + 25];
-		if ( GetComputerNameA( tmp, &size ) ) {			
+		if ( GetComputerNameA( tmp, &size ) ) {
 			result = tmp;
 		}
-	}	
+	}
 #endif
 	return result;
 }
@@ -647,13 +647,13 @@ String Win32SystemPeer::getUserName()
 	size -= 1;
 	if ( System::isUnicodeEnabled() ) {
 		VCF::WideChar tmp[UNLEN + 25];
-		if ( GetUserNameW( tmp, &size ) ) {			
+		if ( GetUserNameW( tmp, &size ) ) {
 			result = tmp;
 		}
-	}		
+	}
 	else {
 		char tmp[UNLEN + 25];
-		if ( GetUserNameA( tmp, &size ) ) {			
+		if ( GetUserNameA( tmp, &size ) ) {
 			result = tmp;
 		}
 	}
@@ -670,11 +670,11 @@ String Win32SystemPeer::createTempFileName( const String& directory )
 	::GetTempFileNameW( directory.c_str(), L"tmp", 0, tmp );
 	result = tmp;
 
-	WIN32_FIND_DATAW fnd;		
+	WIN32_FIND_DATAW fnd;
 	HANDLE found = ::FindFirstFileW( tmp, &fnd );
 	if ( found != INVALID_HANDLE_VALUE ) {
 		::FindClose(found);
-		::DeleteFileW(tmp);		
+		::DeleteFileW(tmp);
 	}
 #else
 	if ( System::isUnicodeEnabled() ) {
@@ -683,11 +683,11 @@ String Win32SystemPeer::createTempFileName( const String& directory )
 		::GetTempFileNameW( directory.c_str(), L"tmp", 0, tmp );
 		result = tmp;
 
-		WIN32_FIND_DATAW fnd;		
+		WIN32_FIND_DATAW fnd;
 		HANDLE found = ::FindFirstFileW( tmp, &fnd );
 		if ( found != INVALID_HANDLE_VALUE ) {
 			::FindClose(found);
-			::DeleteFileW(tmp);		
+			::DeleteFileW(tmp);
 		}
 	}
 	else {
@@ -696,11 +696,11 @@ String Win32SystemPeer::createTempFileName( const String& directory )
 		::GetTempFileNameA( directory.ansi_c_str(), "tmp", 0, tmp );
 		result = tmp;
 
-		WIN32_FIND_DATAA fnd;		
+		WIN32_FIND_DATAA fnd;
 		HANDLE found = ::FindFirstFileA( tmp, &fnd );
 		if ( found != INVALID_HANDLE_VALUE ) {
 			::FindClose(found);
-			::DeleteFileA(tmp);		
+			::DeleteFileA(tmp);
 		}
 	}
 #endif
@@ -711,7 +711,7 @@ void Win32SystemPeer::setTimeZoneToLocal( const DateTime& currentDate, TimeZone&
 {
 	TIME_ZONE_INFORMATION tzi = {0};
 	GetTimeZoneInformation( &tzi );
-	
+
 
 	DateTime stdDate;
 	DateTime dstDate;
@@ -722,13 +722,13 @@ void Win32SystemPeer::setTimeZoneToLocal( const DateTime& currentDate, TimeZone&
 			stdDate = currentDate;
 			stdDate.setDate( stdDate.getYear(), tzi.StandardDate.wMonth, 1 );
 
-			
+
 			while ( (int)stdDate.getWeekDay() != tzi.StandardDate.wDayOfWeek ) {
 				stdDate.incrDay();
 			}
 
 			int d = 1;
-			
+
 			unsigned int mon = stdDate.getMonth();
 			while ( (stdDate.getMonth() == mon) && (d < tzi.StandardDate.wDay) ) {
 				stdDate.incrDay(7);//increment a week forward
@@ -746,13 +746,13 @@ void Win32SystemPeer::setTimeZoneToLocal( const DateTime& currentDate, TimeZone&
 			dstDate = currentDate;
 			dstDate.setDate( dstDate.getYear(), tzi.DaylightDate.wMonth, 1 );
 
-			
+
 			while ( (int)dstDate.getWeekDay() != tzi.DaylightDate.wDayOfWeek ) {
 				dstDate.incrDay();
 			}
 
 			int d = 1;
-			
+
 			unsigned int mon = dstDate.getMonth();
 			while ( (dstDate.getMonth() == mon) && (d < tzi.DaylightDate.wDay) ) {
 				dstDate.incrDay(7);//increment a week forward
@@ -768,7 +768,7 @@ void Win32SystemPeer::setTimeZoneToLocal( const DateTime& currentDate, TimeZone&
 
 		if ( (currentDate >= dstDate) && (currentDate < stdDate) ) {
 			dst = true;
-		}		
+		}
 	}
 
 
